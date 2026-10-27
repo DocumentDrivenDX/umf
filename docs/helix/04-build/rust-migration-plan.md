@@ -6649,12 +6649,14 @@ the pre-spent private helper budget, a raw accessor, and native `oneOf`
 diagnostic-array ordering. Both return `complete:false` and `authority:false`,
 remain opt-in, and leave default routes and policy enforcement unchanged.
 
-The four reviewed protection operations have candidate ledger mappings, pending
-a source-coherent inventory and ledger recapture. Mapping is not retirement.
-The retirement audit found that the ledger currently counts every executable
-name as an open default-route gap without a route-specific retired disposition.
-Add that disposition and paired Node/browser evidence checks while keeping all
-current gaps open. The next concrete retirement review is the Core Inspector
+The five reviewed protection operations now have accepted opt-in ledger mappings
+in the [source-coherent recapture](evidence/rust-migration/r8-symbol-inventory/README.md):
+77 accepted mappings, 845 unmapped executable names, and all 922 logical
+default-route gaps open. Mapping is not retirement. The ledger now records
+independent open Node/browser dispositions, a separate reference-only status,
+and paired-route counting tests. Production generation has no caller-supplied
+retirement override; future retirement still needs a validated evidence gate.
+The next concrete retirement review is the Core Inspector
 trio, but its historical installed host-error differences, remaining
 default-reachable TypeScript consumers, and stale archive closure require a
 fresh fixed-point Node, Bun and Chromium replay and direct-callsite review

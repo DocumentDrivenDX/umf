@@ -1091,3 +1091,45 @@ node --test scripts/rust-migration/r8/gap-ledger.test.mjs
 bun test tests/metamodel
 bun scripts/metamodel-browser.ts
 ```
+
+## Protection-binding source-coherent recapture — 2026-10-26
+
+After the opt-in protection query-property and typed-parameter Node/WASM
+bindings at `2ef24d6a6`, the canonical metamodel, action-plan identity,
+nine-resource Python mirror, condition-aware inventory and gap ledger were
+regenerated in that order. Their current SHA-256 values are:
+
+| Artifact | SHA-256 |
+| --- | --- |
+| `spec/metamodel/generated/manifest.json` | `5d5a5e504951860adcb76c17ce6bc379037476fb9556b5ce359ace8ef4fa9556b` |
+| `src/extensions/actions/plan-identity.ts` | `980e6b49736003164409ca732fa0072fd511bb9817af57e95fad1d3579426856` |
+| `python/src/umf/action_runtime_resource_manifest.json` | `30d65f75f48cbb232f3efa36f1d918a31639ab73452e20c211221a4d4d9439a6` |
+| `inventory.json` | `27257b8aca2c84560a8b99321a9b542f87d1373cc9ec3fc426498c3824d1ee16` |
+| `gap-ledger.json` | `62bd01d3d85d63f5f8c5caca5e9a246f6e5f86107496cf27a488e14403fe58e3` |
+
+The inventory records ten routes, 3,375 route-specific runtime declarations,
+1,126 unique declaration names and 506 source files. The ledger has 3,360
+condition-specific public-root rows: 922 logical executable names, 77 accepted
+opt-in Rust mappings, 845 without accepted mappings, and **922 open logical
+default-route retirement gaps**. Each default root still has 922 executable
+rows, 50 Rust-selected declarations and zero retired declarations. The
+reference route retains 922 TypeScript executable rows. The five new
+protection mappings are bounded candidate ownership, not default selections.
+
+The ledger's new route-aware retirement status is deliberately open for every
+production Node/browser executable row and `reference-only` for the explicit
+reference route. Its 52-test suite includes synthetic paired-route accounting
+that would count three retired pairs as 919 logical gaps, but production ledger
+generation has no retirement-evidence override. This prevents arbitrary
+hash-shaped evidence from lowering the count. A reviewed current-source
+evidence gate and direct TypeScript-consumer analysis are required before a
+real row may be retired.
+
+The metamodel, action identity, Python resource mirror, inventory and ledger
+`--check` modes pass. The metamodel suite passes 61/61, the ledger suite passes
+52/52, typecheck and `check:core-authority` pass, and real Chromium 153
+metamodel replay passes 139 cases across its two profiles without page errors.
+`check:rust-boundaries` passes with zero V8 debt, zero findings, its negative
+controls, and 16 plus 19 Python tests. The focused protection binding receipts
+remain opt-in and source-scoped; this recapture is not an installed SDK archive
+or a release qualification.

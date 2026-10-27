@@ -6,7 +6,7 @@ import { readFileSync } from 'node:fs';
 import { cp, mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { buildLedger, collectPythonPackageAssets, collectPythonSourceFiles } from './gap-ledger.mjs';
+import { buildLedger, collectPythonPackageAssets, collectPythonSourceFiles, summarizeDefaultRouteRetirement } from './gap-ledger.mjs';
 import { requiredR8RouteFamilies, validateR8InstalledRouteEvidence } from './installed-route-evidence.mjs';
 import { normalizeR8RouteHostReceipt } from './installed-route-receipt-adapter.mjs';
 
@@ -60,6 +60,66 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
   assert.equal(archivedGate.status, 'pass');
   assert.equal(archivedGate.archive.sourceClosureSha256, '6f4f21c1dfbdde5959f6e5386419c0c2f90b3a8f0512d148b60825e93afce593');
   assert.equal(archivedGate.boundedOperations, 24);
+});
+
+test('default retirement evidence is independent per root and keeps the TypeScript reference route', () => {
+  const names = ['inspectCoreScalarType', 'inspectCoreRecordMembers', 'inspectCoreReferenceLinks'];
+  const bySource = new Map([
+    ['inspectCoreScalarType', 'src/model/scalar-type.ts'],
+    ['inspectCoreRecordMembers', 'src/model/record-members.ts'],
+    ['inspectCoreReferenceLinks', 'src/model/reference-links.ts'],
+  ]);
+  const symbols = names.flatMap((name, index) => [
+    { routeId: 'package-root-node', exportName: name, declarationName: name, declarationKind: 'BindingElement', source: 'src/index-node-v4.ts', line: 30 + index, sourceSha256: 'a'.repeat(64) },
+    { routeId: 'package-root-browser', exportName: name, declarationName: name, declarationKind: 'BindingElement', source: 'src/index-browser-v4.ts', line: 30 + index, sourceSha256: 'b'.repeat(64) },
+    { routeId: 'package-reference', exportName: name, declarationName: name, declarationKind: 'FunctionDeclaration', source: bySource.get(name), line: 10 + index, sourceSha256: 'c'.repeat(64) },
+  ]);
+  const fixtureInventory = { symbols };
+  const open = buildLedger({ ...args, inventory: fixtureInventory });
+  assert.equal(open.counts.executableDefaultRouteGaps, 3);
+  assert.equal(open.counts.executableDefaultRouteGapsByRoute['package-root-node'].executableDefaultRouteGaps, 3);
+  assert.equal(open.counts.executableDefaultRouteGapsByRoute['package-root-browser'].executableDefaultRouteGaps, 3);
+  assert.equal(open.counts.executableDefaultRouteGapsByRoute['package-reference'].retainedReferenceExecutableRows, 3);
+  assert.ok(open.rows.filter(row => row.routeId === 'package-root-node' || row.routeId === 'package-root-browser').every(row => row.defaultRouteRetirement.status === 'open'));
+  assert.ok(open.rows.filter(row => row.routeId === 'package-reference').every(row => row.defaultRouteRetirement.status === 'reference-only'));
+
+  const nodeOnlyRows = open.rows.map(row => row.routeId === 'package-root-node'
+    ? { ...row, defaultRouteRetirement: { status: 'retired', evidence: [{ path: 'synthetic/node.json', sha256: 'd'.repeat(64) }] } }
+    : row);
+  const nodeOnly = summarizeDefaultRouteRetirement(nodeOnlyRows);
+  assert.equal(nodeOnly.logicalGaps, 3, 'a logical gap remains while the browser route is open');
+  assert.deepEqual(nodeOnly.byRoute['package-root-node'], { open: 0, retired: 3 });
+  assert.deepEqual(nodeOnly.byRoute['package-root-browser'], { open: 3, retired: 0 });
+
+  const pairedRows = open.rows.map(row => ['package-root-node', 'package-root-browser'].includes(row.routeId)
+    ? { ...row, defaultRouteRetirement: { status: 'retired', evidence: [{ path: `synthetic/${row.routeId}.json`, sha256: 'e'.repeat(64) }] } }
+    : row);
+  const paired = summarizeDefaultRouteRetirement(pairedRows);
+  assert.equal(paired.logicalGaps, 0);
+  assert.deepEqual(paired.byRoute['package-root-node'], { open: 0, retired: 3 });
+  assert.deepEqual(paired.byRoute['package-root-browser'], { open: 0, retired: 3 });
+  assert.equal(open.rows.filter(row => row.routeId === 'package-reference' && row.defaultRouteRetirement.status === 'reference-only').length, 3);
+
+  assert.throws(() => summarizeDefaultRouteRetirement(open.rows.filter(row => row.routeId !== 'package-root-browser')), /requires both Node and browser rows/);
+  assert.throws(() => summarizeDefaultRouteRetirement(open.rows.map(row => row.routeId === 'package-root-node'
+    ? { ...row, defaultRouteRetirement: { status: 'reference-only', evidence: [] } }
+    : row)), /missing or invalid default retirement status/);
+});
+
+test('retiring three paired logical names lowers the current default gap count by three only', () => {
+  const open = currentGeneratedLedger();
+  const names = ['inspectCoreScalarType', 'inspectCoreRecordMembers', 'inspectCoreReferenceLinks'];
+  assert.equal(open.counts.executableDefaultRouteGaps, 922);
+  const pairedRows = open.rows.map(row => names.includes(row.exportName) && ['package-root-node', 'package-root-browser'].includes(row.routeId)
+    ? { ...row, defaultRouteRetirement: { status: 'retired', evidence: [{ path: `synthetic/${row.routeId}/${row.exportName}.json`, sha256: '9'.repeat(64) }] } }
+    : row);
+  const summary = summarizeDefaultRouteRetirement(pairedRows);
+  assert.equal(summary.logicalGaps, 919);
+  assert.deepEqual(summary.byRoute['package-root-node'], { open: 919, retired: 3 });
+  assert.deepEqual(summary.byRoute['package-root-browser'], { open: 919, retired: 3 });
+  assert.equal(open.counts.executableDefaultRouteGapsByRoute['package-reference'].retainedReferenceExecutableRows, 922);
+  assert.equal(open.rows.filter(row => row.routeId === 'package-reference' && names.includes(row.exportName) && row.defaultRouteRetirement.status === 'reference-only').length, 3);
+  assert.equal(open.rows.filter(row => row.routeId === 'package-reference' && row.rowKind === 'executable').length, 922);
 });
 
 test('five JavaScript numeric root bindings retain exact Rust ownership without retiring gaps', () => {
@@ -207,8 +267,8 @@ test('Schema Properties source selections keep exact CONTRACT-049 mappings separ
     assert.equal(reference.sourceSelectedImplementation, null);
     assert.equal(reference.implementationStatus, 'TypeScript reference implementation remains explicit');
   }
-  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 72);
-  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 850);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 77);
+  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 845);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
   const aggregate = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/aggregate.json', 'utf8'));
   const aggregateNames = Object.values(aggregate.families).flatMap(family => family.operations);
@@ -2041,6 +2101,62 @@ test('security truth and composition map only their four reviewed opt-in operati
     assert.ok(pin.rustSourceClosure.some(item => item.path === 'crates/umf-core/src/security_logic.rs'));
     assert.ok(pin.focusedTestClosure.some(item => item.path === 'bindings/core/node/tests/security-logic.test.js'));
     if (row.routeId === 'package-reference') assert.equal(row.sourceSelectedImplementation, null);
+  }
+});
+
+test('bounded protection operations map to their reviewed Rust candidates without retiring default routes', () => {
+  const operations = [
+    ['inspectProtectionFunction', 'src/extensions/security/protection/functions.ts', 'umf_core::security_functions::evaluate_security_protection_function_candidate', 'r8-security-protection-functions'],
+    ['evaluateProtectionValue', 'src/extensions/security/protection/functions.ts', 'umf_core::security_functions::evaluate_security_protection_function_candidate', 'r8-security-protection-functions'],
+    ['resolveSecurityProtectionSources', 'src/extensions/security/protection/references.ts', 'umf_core::security_logic::resolve_security_protection_sources_candidate', 'r8-security-protection-source-binding'],
+    ['inspectProtectionQueryProperties', 'src/extensions/security/protection/queries.ts', 'umf_core::security_queries::inspect_security_protection_query_properties_candidate', 'r8-security-protection-query-properties-binding'],
+    ['validateProtectionParameters', 'src/extensions/security/protection/parameters.ts', 'umf_core::security_parameters::validate_security_protection_parameters_candidate', 'r8-security-protection-parameters-binding'],
+  ];
+  const symbols = operations.flatMap(([exportName, source], index) =>
+    ['package-root-node', 'package-root-browser', 'package-reference'].map((routeId, routeIndex) => ({
+      routeId, exportName, declarationName: exportName,
+      declarationKind: 'FunctionDeclaration', source,
+      line: index * 3 + routeIndex + 1, sourceSha256: 'd'.repeat(64),
+    })));
+  const ledger = buildLedger({ ...args, inventory: { symbols } });
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 5);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 5);
+  for (const [exportName, , rustOperation, evidenceFamily] of operations) {
+    const rows = ledger.rows.filter(row => row.exportName === exportName);
+    assert.equal(rows.length, 3);
+    for (const row of rows) {
+      assert.equal(row.acceptedRustOperation, rustOperation);
+      assert.equal(row.bindingRouteStatus, 'unproven');
+      assert.equal(row.bindingRoute, null);
+      assert.match(row.acceptedOperationEvidence.defaultRouteStatus, /remain open|retire declarations|remains TypeScript/);
+      assert.ok(row.acceptedOperationEvidence.evidenceClosure.some(item => item.path.endsWith(`${evidenceFamily}/README.md`)));
+      assert.ok(row.acceptedOperationEvidence.rustSourceClosure.some(item => item.path.startsWith('crates/umf-core/src/')));
+      assert.ok(row.acceptedOperationEvidence.focusedTestClosure.some(item => item.path.startsWith('crates/umf-core-wire/src/')));
+    }
+  }
+  const queryRows = ledger.rows.filter(row => row.exportName === 'inspectProtectionQueryProperties');
+  for (const row of queryRows) {
+    assert.match(row.acceptedOperationEvidence.scopeRule, /19 of 22/);
+    assert.match(row.acceptedOperationEvidence.scopeRule, /three range-identity\/field cases/i);
+    assert.match(row.acceptedOperationEvidence.scopeRule, /bounded tagged host evidence only/);
+    assert.match(row.acceptedOperationEvidence.scopeRule, /raw accessor\/Proxy observations are outside tagged JSON/);
+  }
+  const functionRows = ledger.rows.filter(row => ['inspectProtectionFunction', 'evaluateProtectionValue'].includes(row.exportName));
+  for (const row of functionRows) {
+    assert.match(row.acceptedOperationEvidence.scopeRule, /25 exact tagged source-backed cases/);
+    assert.match(row.acceptedOperationEvidence.scopeRule, /four predecessor cases are excluded/);
+    assert.match(row.acceptedOperationEvidence.scopeRule, /native\/keyed\/vault behavior/);
+  }
+  const parameterRows = ledger.rows.filter(row => row.exportName === 'validateProtectionParameters');
+  assert.equal(parameterRows.length, 3);
+  for (const row of parameterRows) {
+    assert.match(row.acceptedOperationEvidence.scopeRule, /eight of eleven tagged/);
+    assert.match(row.acceptedOperationEvidence.scopeRule, /noncanonical integer diagnostic-order case/);
+    assert.match(row.acceptedOperationEvidence.scopeRule, /internal pre-spent helper-budget case/);
+    assert.match(row.acceptedOperationEvidence.scopeRule, /tagged-inexpressible accessor case/);
+    assert.match(row.acceptedOperationEvidence.scopeRule, /incomplete and non-authoritative/);
+    assert.match(row.acceptedOperationEvidence.scopeRule, /default-route retirement are excluded/);
+    assert.equal(row.acceptedRustOperation, 'umf_core::security_parameters::validate_security_protection_parameters_candidate');
   }
 });
 

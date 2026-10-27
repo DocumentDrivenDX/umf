@@ -202,6 +202,53 @@ accept('src/extensions/security/logic.ts', [
   'crates/umf-core-wire/tests/security_logic_wire.rs',
   'bindings/core/node/tests/security-logic.test.js',
 ]);
+accept('src/extensions/security/protection/functions.ts', [
+  ['inspectProtectionFunction', 'evaluate_security_protection_function_candidate'],
+  ['evaluateProtectionValue', 'evaluate_security_protection_function_candidate'],
+], 'umf_core::security_functions', 'crates/umf-core/src/security_functions.rs', [
+  'docs/helix/04-build/evidence/rust-migration/r8-security-protection-functions/README.md',
+  'docs/helix/04-build/evidence/rust-migration/r8-security-protection-functions/predecessor.json',
+  'docs/helix/04-build/evidence/rust-migration/r8-security-protection-functions/binding-replay.json',
+], [
+  'crates/umf-core-wire/src/security_functions_binding.rs',
+  'bindings/core/node/tests/security-functions.test.js',
+  'scripts/rust-migration/r8/security-functions-binding-browser.mjs',
+]);
+accept('src/extensions/security/protection/references.ts', [
+  ['resolveSecurityProtectionSources', 'resolve_security_protection_sources_candidate'],
+], 'umf_core::security_logic', 'crates/umf-core/src/security_logic.rs', [
+  'docs/helix/04-build/evidence/rust-migration/r8-security-protection-resolution/README.md',
+  'docs/helix/04-build/evidence/rust-migration/r8-security-protection-resolution/predecessor.json',
+  'docs/helix/04-build/evidence/rust-migration/r8-security-protection-source-binding/README.md',
+  'docs/helix/04-build/evidence/rust-migration/r8-security-protection-source-binding/node.json',
+  'docs/helix/04-build/evidence/rust-migration/r8-security-protection-source-binding/bun.json',
+  'docs/helix/04-build/evidence/rust-migration/r8-security-protection-source-binding/chromium.json',
+], [
+  'crates/umf-core-wire/src/security_protection_source_binding.rs',
+  'bindings/core/node/tests/security-protection-source.test.js',
+  'scripts/rust-migration/r8/security-protection-source-binding-node.mjs',
+  'scripts/rust-migration/r8/security-protection-source-binding-browser.mjs',
+]);
+accept('src/extensions/security/protection/queries.ts', [
+  ['inspectProtectionQueryProperties', 'inspect_security_protection_query_properties_candidate'],
+], 'umf_core::security_queries', 'crates/umf-core/src/security_queries.rs', [
+  'docs/helix/04-build/evidence/rust-migration/r8-security-protection-query-properties/README.md',
+  'docs/helix/04-build/evidence/rust-migration/r8-security-protection-query-properties/predecessor.json',
+  'docs/helix/04-build/evidence/rust-migration/r8-security-protection-query-properties-binding/README.md',
+], [
+  'crates/umf-core-wire/src/security_queries_binding.rs',
+]);
+accept('src/extensions/security/protection/parameters.ts', [
+  ['validateProtectionParameters', 'validate_security_protection_parameters_candidate'],
+], 'umf_core::security_parameters', 'crates/umf-core/src/security_parameters.rs', [
+  'docs/helix/04-build/evidence/rust-migration/r8-security-protection-parameters/README.md',
+  'docs/helix/04-build/evidence/rust-migration/r8-security-protection-parameters/predecessor.json',
+  'docs/helix/04-build/evidence/rust-migration/r8-security-protection-parameters-binding/README.md',
+], [
+  'crates/umf-core-wire/src/security_parameters_binding.rs',
+  'bindings/core/node/tests/security-protection-parameters.test.js',
+  'scripts/rust-migration/r8/security-protection-parameters-binding-browser.mjs',
+]);
 accept('src/model/native-json.ts', [['parseNativeJson', 'NativeJsonTree::parse_json']], 'umf_core::native_json', 'crates/umf-core/src/native_json.rs', [
   'docs/helix/04-build/evidence/rust-migration/r8-native-json-parser/README.md',
   'docs/helix/04-build/evidence/rust-migration/r5-json-schema-tree-operations/predecessor.json',
@@ -325,6 +372,14 @@ function acceptedOperationEvidence(mapping, routeStatus = 'legacy-fixture') {
       ? 'Source/evidence hashes pin identity only; the linked R8 JSON-number packet defines string-input parity and its remaining host/default-route gates.'
       : mapping.evidencePaths.some(file => file.includes('/r8-security-truth-logic-binding/'))
         ? 'Source/evidence hashes pin identity only; the linked CONTRACT-062 truth/composition packet defines admitted JSON parity for already-evaluated rules, excluding Registry, backend authorization, and default-route retirement.'
+      : mapping.evidencePaths.some(file => file.includes('/r8-security-protection-functions/'))
+        ? 'The linked packet defines 25 exact tagged source-backed cases for inspectProtectionFunction/evaluateProtectionValue and the five admitted mask/generalize recipes; four predecessor cases are excluded from exact tagged replay (two host accessor observations and two known native diagnostic-order differences). Results remain incomplete and non-authoritative; native/keyed/vault behavior, broader recipes and default-route retirement are excluded.'
+      : mapping.evidencePaths.some(file => file.includes('/r8-security-protection-source-binding/'))
+        ? 'The linked packet defines ten exact tagged source-resolution cases for resolveSecurityProtectionSources, with one raw-host accessor observation outside tagged JSON. It resolves data and references only; domains, interpretation, authorization and default-route retirement remain excluded.'
+      : mapping.evidencePaths.some(file => file.includes('/r8-security-protection-query-properties-binding/'))
+        ? 'The linked Node/WASM host packet replays 19 of 22 tagged inspectProtectionQueryProperties operations. Three range-identity/field cases are excluded, and raw accessor/Proxy observations are outside tagged JSON. This is bounded tagged host evidence only; it does not establish full operation parity, enforcement, authority, or default-route retirement.'
+      : mapping.evidencePaths.some(file => file.includes('/r8-security-protection-parameters-binding/'))
+        ? 'The linked Node/WASM packet replays eight of eleven tagged validateProtectionParameters cases for the bounded typed-literal and range-bucket Field subset. The noncanonical integer diagnostic-order case, internal pre-spent helper-budget case, and tagged-inexpressible accessor case are excluded from exact parity; host admission separately rejects accessors without invoking them. Results remain incomplete and non-authoritative; parameter naming/arity/type compatibility, policy interpretation, authorization, native enforcement, installed-route support and default-route retirement are excluded.'
       : mapping.evidencePaths.some(file => file.includes('/r8-core-relationship-selection-binding/'))
         ? 'Source/evidence hashes pin identity only; the linked relationship-selection packet defines 16-case opt-in host parity, excluding Registry callbacks and JavaScript error class identity.'
       : 'Source/evidence hashes pin identity only; the linked R5 packet defines the bounded operation subset and its remaining gates.',
@@ -1902,6 +1957,11 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
         || (row.exportName === 'securityNot' && sourceSelection?.status === 'source-selected-installed-private-source-pinned')
         ? sourceSelection.bindingRoute : null,
       bindingRouteStatus: sourceSelection?.status === 'source-selected-installed-private-current-cohort' ? 'installed-private-current-cohort' : sourceSelection?.status === 'source-selected-installed-private-source-pinned' ? 'installed-private-source-pinned-not-current' : sourceSelection?.status === 'source-selected-installed-private-provisional' ? 'installed-private-provisional-not-current' : 'unproven',
+      defaultRouteRetirement: inert
+        ? { status: 'not-applicable', evidence: [] }
+        : row.routeId === 'package-reference'
+        ? { status: 'reference-only', evidence: [] }
+        : { status: 'open', evidence: [] },
       disposition,
     };
   });
@@ -2040,6 +2100,7 @@ export function buildLedger({ inventory, packageJson, packageBytes = Buffer.from
     if (!logicalRows.has(key)) logicalRows.set(key, row);
   }
   const logical = [...logicalRows.values()];
+  const retirementSummary = summarizeDefaultRouteRetirement(rows);
   const routeCounts = Object.fromEntries(['package-root-node', 'package-root-browser', 'package-reference'].map(routeId => {
     const routeRows = rows.filter(row => row.routeId === routeId);
     return [routeId, {
@@ -2047,7 +2108,8 @@ export function buildLedger({ inventory, packageJson, packageBytes = Buffer.from
       executableDeclarations: routeRows.filter(row => row.rowKind === 'executable').length,
       inertJsonDeclarations: routeRows.filter(row => row.rowKind === 'generated-inert-json').length,
       rustSelectedSourceDeclarations: routeRows.filter(row => row.sourceSelectedImplementation !== null).length,
-      executableDefaultRouteGaps: routeId === 'package-reference' ? null : routeRows.filter(row => row.rowKind === 'executable').length,
+      executableDefaultRouteGaps: routeId === 'package-reference' ? null : routeRows.filter(row => row.rowKind === 'executable' && row.defaultRouteRetirement.status !== 'retired').length,
+      retiredExecutableDeclarations: routeId === 'package-reference' ? 0 : routeRows.filter(row => row.rowKind === 'executable' && row.defaultRouteRetirement.status === 'retired').length,
       retainedReferenceExecutableRows: routeId === 'package-reference' ? routeRows.filter(row => row.rowKind === 'executable').length : 0,
     }];
   }));
@@ -2074,8 +2136,9 @@ export function buildLedger({ inventory, packageJson, packageBytes = Buffer.from
     routeInertJsonRows: rows.filter(row => row.rowKind === 'generated-inert-json').length,
     executableWithAcceptedOptInRustOperation: logical.filter(row => row.rowKind === 'executable' && row.acceptedRustOperation).length,
     executableWithoutAcceptedRustMapping: logical.filter(row => row.rowKind === 'executable' && !row.acceptedRustOperation).length,
-    executableDefaultRouteGaps: logical.filter(row => row.rowKind === 'executable').length,
-    executableDefaultRouteGapDefinition: 'Unique logical executable export names unresolved for retirement from default Node/browser roots; each root has its own route count. Rust-selected entries remain gaps until complete required parity and retirement review; bounded current private-archive qualification is reported separately, and ./reference is reported separately.',
+    executableDefaultRouteGaps: retirementSummary.logicalGaps,
+    executableDefaultRouteGapDefinition: 'Unique logical executable export names for which at least one default Node/browser route remains open. A logical name is retired only when both default-root rows have an explicit retired disposition with evidence. ./reference is reported separately and may remain TypeScript.',
+    executableDefaultRouteRetirementsByRoute: Object.fromEntries(['package-root-node', 'package-root-browser'].map(routeId => [routeId, routeCounts[routeId].retiredExecutableDeclarations])),
     executableDefaultRouteGapsByRoute: routeCounts,
     sourceSelectedRustOverrides: Object.values(routeCounts).reduce((sum, route) => sum + route.rustSelectedSourceDeclarations, 0),
     bindingRoutesProven: new Set(rows.filter(row => row.rowKind === 'executable' && row.bindingRouteStatus === 'installed-private-current-cohort').map(row => row.logicalDeclarationKey)).size,
@@ -2125,6 +2188,42 @@ export function buildLedger({ inventory, packageJson, packageBytes = Buffer.from
       'Source-selected Rust V4, cardinality, facets, compact Dataset validation, and four Core Keys declarations are reported separately from accepted opt-in operation mappings. Their current integrated-source qualification and retirement gates remain open.',
     ],
   };
+}
+
+export function summarizeDefaultRouteRetirement(rows) {
+  const groups = new Map();
+  const byRoute = {
+    'package-root-node': { open: 0, retired: 0 },
+    'package-root-browser': { open: 0, retired: 0 },
+  };
+  for (const row of rows) {
+    if (row.rowKind !== 'executable') continue;
+    if (Object.hasOwn(byRoute, row.routeId)) {
+      if (!row.defaultRouteRetirement || !['open', 'retired'].includes(row.defaultRouteRetirement.status)) {
+        throw new Error(`missing or invalid default retirement status for ${row.routeId}:${row.exportName}`);
+      }
+      byRoute[row.routeId][row.defaultRouteRetirement.status]++;
+      const group = groups.get(row.logicalDeclarationKey) ?? new Map();
+      if (group.has(row.routeId)) throw new Error(`duplicate logical declaration route: ${row.logicalDeclarationKey} (${row.routeId})`);
+      group.set(row.routeId, row.defaultRouteRetirement.status);
+      groups.set(row.logicalDeclarationKey, group);
+    } else if (row.routeId === 'package-root') {
+      // Legacy unit fixtures have a single undifferentiated default route.
+      if (row.defaultRouteRetirement?.status !== 'retired') groups.set(row.logicalDeclarationKey, new Map([['package-root', 'open']]));
+    }
+  }
+  let logicalGaps = 0;
+  for (const [logicalKey, group] of groups) {
+    if (group.has('package-root')) {
+      if (group.get('package-root') !== 'retired') logicalGaps++;
+      continue;
+    }
+    if (!group.has('package-root-node') || !group.has('package-root-browser')) {
+      throw new Error(`logical default retirement requires both Node and browser rows: ${logicalKey}`);
+    }
+    if (group.get('package-root-node') !== 'retired' || group.get('package-root-browser') !== 'retired') logicalGaps++;
+  }
+  return { logicalGaps, byRoute };
 }
 
 function buildRuntimeExportDispositionSupplement() {
