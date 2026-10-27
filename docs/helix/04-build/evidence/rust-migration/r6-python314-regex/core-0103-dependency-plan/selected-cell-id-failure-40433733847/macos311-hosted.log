@@ -1,0 +1,536 @@
+﻿2026-10-27T01:49:15.0414460Z Current runner version: '2.338.0'
+2026-10-27T01:49:15.0429330Z ##[group]Runner Image Provisioner
+2026-10-27T01:49:15.0429820Z Hosted Compute Agent
+2026-10-27T01:49:15.0430180Z Version: 20260828.587
+2026-10-27T01:49:15.0430580Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+2026-10-27T01:49:15.0431050Z Build Date: 2026-08-28T16:44:25Z
+2026-10-27T01:49:15.0431470Z Worker ID: {55955396-7b07-4c93-9f17-02b0a5ac41cd}
+2026-10-27T01:49:15.0431930Z Azure Region: westus
+2026-10-27T01:49:15.0432310Z ##[endgroup]
+2026-10-27T01:49:15.0433130Z ##[group]Operating System
+2026-10-27T01:49:15.0433520Z macOS
+2026-10-27T01:49:15.0433840Z 15.7.9
+2026-10-27T01:49:15.0434160Z 24G830
+2026-10-27T01:49:15.0434480Z ##[endgroup]
+2026-10-27T01:49:15.0434830Z ##[group]Runner Image
+2026-10-27T01:49:15.0435200Z Image: macos-15-arm64
+2026-10-27T01:49:15.0435560Z Version: 20260907.0337.1
+2026-10-27T01:49:15.0436360Z Included Software: https://github.com/actions/runner-images/blob/macos-15-arm64/20260907.0337/images/macos/macos-15-arm64-Readme.md
+2026-10-27T01:49:15.0437450Z Image Release: https://github.com/actions/runner-images/releases/tag/macos-15-arm64%2F20260907.0337
+2026-10-27T01:49:15.0438090Z ##[endgroup]
+2026-10-27T01:49:15.0438800Z ##[group]GITHUB_TOKEN Permissions
+2026-10-27T01:49:15.0439780Z Contents: read
+2026-10-27T01:49:15.0440130Z Metadata: read
+2026-10-27T01:49:15.0440480Z ##[endgroup]
+2026-10-27T01:49:15.0441780Z Secret source: Actions
+2026-10-27T01:49:15.0442340Z Cache mode: write
+2026-10-27T01:49:15.0442860Z Prepare workflow directory
+2026-10-27T01:49:15.0683990Z Prepare all required actions
+2026-10-27T01:49:15.0723730Z Getting action download info
+2026-10-27T01:49:15.5154120Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-27T01:49:15.7892650Z Download action repository 'actions/download-artifact@v4' (SHA:d3f86a106a0bac45b974a628896c90dbdf5c8093)
+2026-10-27T01:49:16.2114690Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-10-27T01:49:16.2859180Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-27T01:49:16.4755260Z Complete job name: macos-arm64 Python 3.11.9 selected release wheel
+2026-10-27T01:49:16.5219930Z ##[group]Run python3 - "$RUNNER_TEMP/core-wheel-bounds" <<'PY'
+2026-10-27T01:49:16.5220560Z [36;1mpython3 - "$RUNNER_TEMP/core-wheel-bounds" <<'PY'[0m
+2026-10-27T01:49:16.5221040Z [36;1mimport json, pathlib, sys, time[0m
+2026-10-27T01:49:16.5221590Z [36;1mroot = pathlib.Path(sys.argv[1]); root.mkdir(parents=True, exist_ok=True)[0m
+2026-10-27T01:49:16.5222130Z [36;1mnow = time.monotonic()[0m
+2026-10-27T01:49:16.5223090Z [36;1mlimits = {"totalSeconds": 1200, "cleanupReserveSeconds": 60, "timeoutKillGraceSeconds": 10, "drainMarginSeconds": 2, "childSeconds": 180, "aggregateLogBytes": 1048576, "artifactBytes": 16777216}[0m
+2026-10-27T01:49:16.5224720Z [36;1m(root / "deadline.json").write_text(json.dumps({"profile": "umf.core-python-qualification-deadline/1", "startedMonotonic": now, "deadlineMonotonic": now + limits["totalSeconds"], **limits}, sort_keys=True) + "\n")[0m
+2026-10-27T01:49:16.5226460Z [36;1m(root / "failure-receipt.json").write_text(json.dumps({"profile": "umf.core-python-qualification-run/1", "status": "failed_or_incomplete", "commands": [], "limits": limits}, sort_keys=True) + "\n")[0m
+2026-10-27T01:49:16.5227430Z [36;1mPY[0m
+2026-10-27T01:49:16.5268070Z shell: /bin/bash -e {0}
+2026-10-27T01:49:16.5268610Z ##[endgroup]
+2026-10-27T01:49:16.7323610Z ##[group]Run actions/checkout@v4
+2026-10-27T01:49:16.7324060Z with:
+2026-10-27T01:49:16.7324390Z   repository: DocumentDrivenDX/umf
+2026-10-27T01:49:16.7326920Z   token: ***
+2026-10-27T01:49:16.7327240Z   ssh-strict: true
+2026-10-27T01:49:16.7327570Z   ssh-user: git
+2026-10-27T01:49:16.7327900Z   persist-credentials: true
+2026-10-27T01:49:16.7328270Z   clean: true
+2026-10-27T01:49:16.7328620Z   sparse-checkout-cone-mode: true
+2026-10-27T01:49:16.7329000Z   fetch-depth: 1
+2026-10-27T01:49:16.7329680Z   fetch-tags: false
+2026-10-27T01:49:16.7330000Z   show-progress: true
+2026-10-27T01:49:16.7330320Z   lfs: false
+2026-10-27T01:49:16.7330620Z   submodules: false
+2026-10-27T01:49:16.7330950Z   set-safe-directory: true
+2026-10-27T01:49:16.7331310Z   allow-unsafe-pr-checkout: false
+2026-10-27T01:49:16.7331700Z ##[endgroup]
+2026-10-27T01:49:17.0841380Z Syncing repository: DocumentDrivenDX/umf
+2026-10-27T01:49:17.0842770Z ##[group]Getting Git version info
+2026-10-27T01:49:17.0843340Z Working directory is '/Users/runner/work/umf/umf'
+2026-10-27T01:49:17.0844100Z [command]/opt/homebrew/bin/git version
+2026-10-27T01:49:17.1386490Z git version 2.55.0
+2026-10-27T01:49:17.1399240Z ##[endgroup]
+2026-10-27T01:49:17.1405930Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/6d16ba74-8463-478d-9d0d-33ab8d38db80/.gitconfig'
+2026-10-27T01:49:17.1413150Z Temporarily overriding HOME='/Users/runner/work/_temp/6d16ba74-8463-478d-9d0d-33ab8d38db80' before making global git config changes
+2026-10-27T01:49:17.1414310Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-27T01:49:17.1416480Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/umf/umf
+2026-10-27T01:49:17.1539580Z Deleting the contents of '/Users/runner/work/umf/umf'
+2026-10-27T01:49:17.1541480Z ##[group]Initializing the repository
+2026-10-27T01:49:17.1546020Z [command]/opt/homebrew/bin/git init /Users/runner/work/umf/umf
+2026-10-27T01:49:17.1796530Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-27T01:49:17.1798800Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-27T01:49:17.1802120Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-27T01:49:17.1802850Z hint: call:
+2026-10-27T01:49:17.1803360Z hint:
+2026-10-27T01:49:17.1803920Z hint: 	git config --global init.defaultBranch <name>
+2026-10-27T01:49:17.1804610Z hint:
+2026-10-27T01:49:17.1805260Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-27T01:49:17.1807190Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-27T01:49:17.1807840Z hint:
+2026-10-27T01:49:17.1808800Z hint: 	git branch -m <name>
+2026-10-27T01:49:17.1809270Z hint:
+2026-10-27T01:49:17.1809990Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-27T01:49:17.1811930Z Initialized empty Git repository in /Users/runner/work/umf/umf/.git/
+2026-10-27T01:49:17.1814630Z [command]/opt/homebrew/bin/git remote add origin https://github.com/DocumentDrivenDX/umf
+2026-10-27T01:49:17.1943460Z ##[endgroup]
+2026-10-27T01:49:17.1944720Z ##[group]Disabling automatic garbage collection
+2026-10-27T01:49:17.1945580Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+2026-10-27T01:49:17.1958790Z ##[endgroup]
+2026-10-27T01:49:17.1959490Z ##[group]Setting up auth
+2026-10-27T01:49:17.1963420Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T01:49:17.2022810Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-27T01:49:17.2908570Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T01:49:17.2969270Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-27T01:49:17.3660110Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T01:49:17.3714640Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-27T01:49:17.4362560Z [command]/opt/homebrew/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-27T01:49:17.4470870Z ##[endgroup]
+2026-10-27T01:49:17.4471640Z ##[group]Fetching the repository
+2026-10-27T01:49:17.4476070Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +ffda8a08d6f09ecd55ef3c79f5db75fdf8781973:refs/remotes/origin/codex/core-python314-generation
+2026-10-27T01:49:51.3138670Z From https://github.com/DocumentDrivenDX/umf
+2026-10-27T01:49:51.3141440Z  * [new ref]           ffda8a08d6f09ecd55ef3c79f5db75fdf8781973 -> origin/codex/core-python314-generation
+2026-10-27T01:49:51.3209850Z ##[endgroup]
+2026-10-27T01:49:51.3211310Z ##[group]Determining the checkout info
+2026-10-27T01:49:51.3223010Z ##[endgroup]
+2026-10-27T01:49:51.3232110Z [command]/opt/homebrew/bin/git sparse-checkout disable
+2026-10-27T01:49:51.3317140Z [command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-27T01:49:51.3380220Z ##[group]Checking out the ref
+2026-10-27T01:49:51.3384110Z [command]/opt/homebrew/bin/git checkout --progress --force -B codex/core-python314-generation refs/remotes/origin/codex/core-python314-generation
+2026-10-27T01:49:52.6302490Z Updating files:   4% (2596/61936)
+2026-10-27T01:49:53.2653520Z Updating files:   5% (3097/61936)
+2026-10-27T01:49:53.3994960Z Updating files:   6% (3717/61936)
+2026-10-27T01:49:53.5611260Z Updating files:   6% (3882/61936)
+2026-10-27T01:49:54.1831630Z Updating files:   7% (4336/61936)
+2026-10-27T01:49:54.4091460Z Updating files:   8% (4955/61936)
+2026-10-27T01:49:54.6396620Z Updating files:   8% (5259/61936)
+2026-10-27T01:49:54.8176210Z Updating files:   9% (5575/61936)
+2026-10-27T01:49:55.2557630Z Updating files:  10% (6194/61936)
+2026-10-27T01:49:55.4110450Z Updating files:  11% (6813/61936)
+2026-10-27T01:49:56.3383510Z Updating files:  11% (7103/61936)
+2026-10-27T01:49:56.4159020Z Updating files:  12% (7433/61936)
+2026-10-27T01:49:57.4643890Z Updating files:  12% (7441/61936)
+2026-10-27T01:49:57.5767140Z Updating files:  12% (7918/61936)
+2026-10-27T01:49:58.3091260Z Updating files:  13% (8052/61936)
+2026-10-27T01:49:58.4030190Z Updating files:  14% (8672/61936)
+2026-10-27T01:49:58.5128830Z Updating files:  14% (9111/61936)
+2026-10-27T01:49:58.7872640Z Updating files:  15% (9291/61936)
+2026-10-27T01:49:59.4209720Z Updating files:  16% (9910/61936)
+2026-10-27T01:49:59.8677560Z Updating files:  16% (9962/61936)
+2026-10-27T01:50:00.3818520Z Updating files:  17% (10530/61936)
+2026-10-27T01:50:00.4062470Z Updating files:  18% (11149/61936)
+2026-10-27T01:50:01.0208260Z Updating files:  18% (11165/61936)
+2026-10-27T01:50:01.3543180Z Updating files:  19% (11768/61936)
+2026-10-27T01:50:01.4046500Z Updating files:  20% (12388/61936)
+2026-10-27T01:50:01.4981750Z Updating files:  20% (12707/61936)
+2026-10-27T01:50:01.6934340Z Updating files:  21% (13007/61936)
+2026-10-27T01:50:01.8456160Z Updating files:  22% (13626/61936)
+2026-10-27T01:50:02.0231730Z Updating files:  23% (14246/61936)
+2026-10-27T01:50:02.2260170Z Updating files:  24% (14865/61936)
+2026-10-27T01:50:02.3595660Z Updating files:  25% (15484/61936)
+2026-10-27T01:50:02.4058210Z Updating files:  26% (16104/61936)
+2026-10-27T01:50:02.5699140Z Updating files:  26% (16254/61936)
+2026-10-27T01:50:02.6845710Z Updating files:  27% (16723/61936)
+2026-10-27T01:50:02.8615930Z Updating files:  28% (17343/61936)
+2026-10-27T01:50:03.0923660Z Updating files:  29% (17962/61936)
+2026-10-27T01:50:03.2129830Z Updating files:  30% (18581/61936)
+2026-10-27T01:50:03.3587220Z Updating files:  31% (19201/61936)
+2026-10-27T01:50:03.4200590Z Updating files:  32% (19820/61936)
+2026-10-27T01:50:04.4736470Z Updating files:  32% (19835/61936)
+2026-10-27T01:50:05.4166890Z Updating files:  32% (19907/61936)
+2026-10-27T01:50:06.4191050Z Updating files:  32% (19967/61936)
+2026-10-27T01:50:07.3392060Z Updating files:  32% (20057/61936)
+2026-10-27T01:50:07.4111770Z Updating files:  33% (20439/61936)
+2026-10-27T01:50:07.7856960Z Updating files:  33% (20503/61936)
+2026-10-27T01:50:08.0570780Z Updating files:  34% (21059/61936)
+2026-10-27T01:50:08.1354490Z Updating files:  35% (21678/61936)
+2026-10-27T01:50:08.2398980Z Updating files:  36% (22297/61936)
+2026-10-27T01:50:08.3733540Z Updating files:  37% (22917/61936)
+2026-10-27T01:50:08.4092050Z Updating files:  38% (23536/61936)
+2026-10-27T01:50:08.4972380Z Updating files:  38% (23601/61936)
+2026-10-27T01:50:08.5649030Z Updating files:  39% (24156/61936)
+2026-10-27T01:50:08.6367580Z Updating files:  40% (24775/61936)
+2026-10-27T01:50:08.7253160Z Updating files:  41% (25394/61936)
+2026-10-27T01:50:09.1656150Z Updating files:  42% (26014/61936)
+2026-10-27T01:50:09.2671520Z Updating files:  43% (26633/61936)
+2026-10-27T01:50:09.4269630Z Updating files:  44% (27252/61936)
+2026-10-27T01:50:09.5425650Z Updating files:  44% (27375/61936)
+2026-10-27T01:50:09.7344740Z Updating files:  45% (27872/61936)
+2026-10-27T01:50:09.8492600Z Updating files:  46% (28491/61936)
+2026-10-27T01:50:09.9700010Z Updating files:  47% (29110/61936)
+2026-10-27T01:50:10.2647320Z Updating files:  48% (29730/61936)
+2026-10-27T01:50:10.3336400Z Updating files:  49% (30349/61936)
+2026-10-27T01:50:10.4124660Z Updating files:  50% (30968/61936)
+2026-10-27T01:50:10.4844720Z Updating files:  50% (31272/61936)
+2026-10-27T01:50:10.5526220Z Updating files:  51% (31588/61936)
+2026-10-27T01:50:10.6366130Z Updating files:  52% (32207/61936)
+2026-10-27T01:50:10.6868330Z Updating files:  53% (32827/61936)
+2026-10-27T01:50:10.7945920Z Updating files:  54% (33446/61936)
+2026-10-27T01:50:10.9277050Z Updating files:  55% (34065/61936)
+2026-10-27T01:50:11.0405600Z Updating files:  56% (34685/61936)
+2026-10-27T01:50:11.1385690Z Updating files:  57% (35304/61936)
+2026-10-27T01:50:11.2624250Z Updating files:  58% (35923/61936)
+2026-10-27T01:50:11.3789160Z Updating files:  59% (36543/61936)
+2026-10-27T01:50:11.4097510Z Updating files:  60% (37162/61936)
+2026-10-27T01:50:11.5150690Z Updating files:  60% (37326/61936)
+2026-10-27T01:50:11.5988030Z Updating files:  61% (37781/61936)
+2026-10-27T01:50:11.6980460Z Updating files:  62% (38401/61936)
+2026-10-27T01:50:11.7820660Z Updating files:  63% (39020/61936)
+2026-10-27T01:50:11.8940900Z Updating files:  64% (39640/61936)
+2026-10-27T01:50:11.9751600Z Updating files:  65% (40259/61936)
+2026-10-27T01:50:12.0343910Z Updating files:  66% (40878/61936)
+2026-10-27T01:50:12.1068580Z Updating files:  67% (41498/61936)
+2026-10-27T01:50:12.2225650Z Updating files:  68% (42117/61936)
+2026-10-27T01:50:12.3246710Z Updating files:  69% (42736/61936)
+2026-10-27T01:50:12.4120630Z Updating files:  70% (43356/61936)
+2026-10-27T01:50:12.4714600Z Updating files:  70% (43566/61936)
+2026-10-27T01:50:12.5209130Z Updating files:  71% (43975/61936)
+2026-10-27T01:50:12.5712150Z Updating files:  72% (44594/61936)
+2026-10-27T01:50:12.6308910Z Updating files:  73% (45214/61936)
+2026-10-27T01:50:12.6775820Z Updating files:  74% (45833/61936)
+2026-10-27T01:50:12.7331550Z Updating files:  75% (46452/61936)
+2026-10-27T01:50:12.7845580Z Updating files:  76% (47072/61936)
+2026-10-27T01:50:12.8345300Z Updating files:  77% (47691/61936)
+2026-10-27T01:50:12.9281930Z Updating files:  78% (48311/61936)
+2026-10-27T01:50:12.9867100Z Updating files:  79% (48930/61936)
+2026-10-27T01:50:13.0972640Z Updating files:  80% (49549/61936)
+2026-10-27T01:50:13.2229890Z Updating files:  81% (50169/61936)
+2026-10-27T01:50:13.3721720Z Updating files:  82% (50788/61936)
+2026-10-27T01:50:13.4101710Z Updating files:  83% (51407/61936)
+2026-10-27T01:50:13.4558720Z Updating files:  83% (51584/61936)
+2026-10-27T01:50:13.5379070Z Updating files:  84% (52027/61936)
+2026-10-27T01:50:13.6361500Z Updating files:  85% (52646/61936)
+2026-10-27T01:50:13.6913370Z Updating files:  86% (53265/61936)
+2026-10-27T01:50:13.7462260Z Updating files:  87% (53885/61936)
+2026-10-27T01:50:13.8206730Z Updating files:  88% (54504/61936)
+2026-10-27T01:50:13.8988370Z Updating files:  89% (55124/61936)
+2026-10-27T01:50:14.0048780Z Updating files:  90% (55743/61936)
+2026-10-27T01:50:14.0572290Z Updating files:  91% (56362/61936)
+2026-10-27T01:50:14.1194700Z Updating files:  92% (56982/61936)
+2026-10-27T01:50:14.1731530Z Updating files:  93% (57601/61936)
+2026-10-27T01:50:14.2314300Z Updating files:  94% (58220/61936)
+2026-10-27T01:50:14.3801650Z Updating files:  95% (58840/61936)
+2026-10-27T01:50:14.4115730Z Updating files:  96% (59459/61936)
+2026-10-27T01:50:14.4485910Z Updating files:  96% (59750/61936)
+2026-10-27T01:50:14.5103710Z Updating files:  97% (60078/61936)
+2026-10-27T01:50:14.5656910Z Updating files:  98% (60698/61936)
+2026-10-27T01:50:14.6673740Z Updating files:  99% (61317/61936)
+2026-10-27T01:50:14.6674980Z Updating files: 100% (61936/61936)
+2026-10-27T01:50:14.6675500Z Updating files: 100% (61936/61936), done.
+2026-10-27T01:50:14.7396810Z Switched to a new branch 'codex/core-python314-generation'
+2026-10-27T01:50:14.7403910Z branch 'codex/core-python314-generation' set up to track 'origin/codex/core-python314-generation'.
+2026-10-27T01:50:14.7530510Z ##[endgroup]
+2026-10-27T01:50:14.7763310Z [command]/opt/homebrew/bin/git log -1 --format=%H
+2026-10-27T01:50:14.7871990Z ffda8a08d6f09ecd55ef3c79f5db75fdf8781973
+2026-10-27T01:50:14.8192050Z ##[group]Run python - "$RECEIPT" <<'PY'
+2026-10-27T01:50:14.8192460Z [36;1mpython - "$RECEIPT" <<'PY'[0m
+2026-10-27T01:50:14.8192850Z [36;1mimport json, os, pathlib, sys[0m
+2026-10-27T01:50:14.8193210Z [36;1mpathlib.Path(sys.argv[1]).write_text(json.dumps({[0m
+2026-10-27T01:50:14.8193780Z [36;1m    "profile": "umf.core-python314-installed-release-cell/1",[0m
+2026-10-27T01:50:14.8194230Z [36;1m    "status": "failed_or_incomplete",[0m
+2026-10-27T01:50:14.8194570Z [36;1m    "cohort": os.environ["COHORT"],[0m
+2026-10-27T01:50:14.8195010Z [36;1m    "requestedPython": os.environ["PYTHON_VERSION"],[0m
+2026-10-27T01:50:14.8195480Z [36;1m    "sourceRevision": os.environ["SOURCE_REVISION"],[0m
+2026-10-27T01:50:14.8195920Z [36;1m}, sort_keys=True, indent=2) + "\n", encoding="utf-8")[0m
+2026-10-27T01:50:14.8196240Z [36;1mPY[0m
+2026-10-27T01:50:14.8532030Z shell: /bin/bash -e {0}
+2026-10-27T01:50:14.8532270Z env:
+2026-10-27T01:50:14.8532740Z   RECEIPT: /Users/runner/work/_temp/umf-selected-wheel-cell.json
+2026-10-27T01:50:14.8533060Z   COHORT: macos-arm64
+2026-10-27T01:50:14.8533320Z   PYTHON_VERSION: 3.11.9
+2026-10-27T01:50:14.8533590Z   SOURCE_REVISION: ffda8a08d6f09ecd55ef3c79f5db75fdf8781973
+2026-10-27T01:50:14.8533930Z ##[endgroup]
+2026-10-27T01:50:15.1746860Z ##[group]Run actions/download-artifact@v4
+2026-10-27T01:50:15.1747150Z with:
+2026-10-27T01:50:15.1747340Z   name: umf-core-0.10.3-release-linux-x86_64
+2026-10-27T01:50:15.1747620Z   path: /Users/runner/work/_temp/umf-release-linux
+2026-10-27T01:50:15.1747860Z   merge-multiple: false
+2026-10-27T01:50:15.1748060Z   repository: DocumentDrivenDX/umf
+2026-10-27T01:50:15.1748260Z   run-id: 40433733847
+2026-10-27T01:50:15.1748440Z ##[endgroup]
+2026-10-27T01:50:15.3682170Z Downloading single artifact
+2026-10-27T01:50:15.3906880Z (node:5815) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-27T01:50:15.3908490Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-27T01:50:15.7012640Z Preparing to download the following artifacts:
+2026-10-27T01:50:15.7013780Z - umf-core-0.10.3-release-linux-x86_64 (ID: 12702684642, Size: 5895170, Expected Digest: sha256:8b4a52d84288977b46f0ac239e91532c7282f89c2993de26306f49d4d299a7f5)
+2026-10-27T01:50:15.9822210Z Redirecting to blob download url: https://productionresultssa5.blob.core.windows.net/actions-results/b6c0d972-9e7c-4e0a-bedb-eac9132112a3/workflow-job-run-b40df7ad-ee38-545e-8188-968171ff0791/artifacts/4e4605bd2fde240fbcc98af8be1d8f5a08c7698b2031e0960c667a39dacff7f9.zip
+2026-10-27T01:50:15.9928820Z Starting download of artifact to: /Users/runner/work/_temp/umf-release-linux
+2026-10-27T01:50:16.2618870Z (node:5815) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+2026-10-27T01:50:17.2695240Z SHA256 digest of downloaded artifact is 8b4a52d84288977b46f0ac239e91532c7282f89c2993de26306f49d4d299a7f5
+2026-10-27T01:50:17.2705430Z Artifact download completed successfully.
+2026-10-27T01:50:17.2729670Z Total of 1 artifact(s) downloaded
+2026-10-27T01:50:17.2730660Z Download artifact has finished successfully
+2026-10-27T01:50:17.2811950Z ##[group]Run actions/download-artifact@v4
+2026-10-27T01:50:17.2812190Z with:
+2026-10-27T01:50:17.2812400Z   name: umf-core-0.10.3-release-macos-arm64
+2026-10-27T01:50:17.2812690Z   path: /Users/runner/work/_temp/umf-release-macos
+2026-10-27T01:50:17.2812950Z   merge-multiple: false
+2026-10-27T01:50:17.2813220Z   repository: DocumentDrivenDX/umf
+2026-10-27T01:50:17.2813480Z   run-id: 40433733847
+2026-10-27T01:50:17.2813720Z ##[endgroup]
+2026-10-27T01:50:17.4471360Z Downloading single artifact
+2026-10-27T01:50:17.4574310Z (node:5818) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-27T01:50:17.4673650Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-27T01:50:17.7439650Z Preparing to download the following artifacts:
+2026-10-27T01:50:17.7448430Z - umf-core-0.10.3-release-macos-arm64 (ID: 12703123628, Size: 5604087, Expected Digest: sha256:18f0a8bb9a0c4c25d6e49e7fb904e3e2a1d28c01a0339271655e00a1f1667bff)
+2026-10-27T01:50:17.9698670Z Redirecting to blob download url: https://productionresultssa5.blob.core.windows.net/actions-results/b6c0d972-9e7c-4e0a-bedb-eac9132112a3/workflow-job-run-73be5199-2562-5f6a-a072-7f99ff92f743/artifacts/3186ebd170db89df5c74d44c3434de46e170e3b260bfd78ea946caa0c2c4d312.zip
+2026-10-27T01:50:17.9700410Z Starting download of artifact to: /Users/runner/work/_temp/umf-release-macos
+2026-10-27T01:50:18.2812710Z (node:5818) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+2026-10-27T01:50:19.3301080Z SHA256 digest of downloaded artifact is 18f0a8bb9a0c4c25d6e49e7fb904e3e2a1d28c01a0339271655e00a1f1667bff
+2026-10-27T01:50:19.3313520Z Artifact download completed successfully.
+2026-10-27T01:50:19.3313860Z Total of 1 artifact(s) downloaded
+2026-10-27T01:50:19.3314100Z Download artifact has finished successfully
+2026-10-27T01:50:19.3447760Z ##[group]Run actions/setup-python@v5
+2026-10-27T01:50:19.3448000Z with:
+2026-10-27T01:50:19.3448170Z   python-version: 3.11.9
+2026-10-27T01:50:19.3448400Z   architecture: arm64
+2026-10-27T01:50:19.3448590Z   check-latest: false
+2026-10-27T01:50:19.3450370Z   token: ***
+2026-10-27T01:50:19.3450550Z   update-environment: true
+2026-10-27T01:50:19.3450760Z   allow-prereleases: false
+2026-10-27T01:50:19.3450950Z   freethreaded: false
+2026-10-27T01:50:19.3451140Z ##[endgroup]
+2026-10-27T01:50:19.6089900Z ##[group]Installed versions
+2026-10-27T01:50:19.6401870Z (node:5989) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-27T01:50:19.6402530Z Successfully set up CPython (3.11.9)
+2026-10-27T01:50:19.6403160Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-27T01:50:19.6404490Z ##[endgroup]
+2026-10-27T01:50:19.6502490Z ##[group]Run python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name require-platform-and-select-artifacts -- \
+2026-10-27T01:50:19.6503450Z [36;1mpython3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name require-platform-and-select-artifacts -- \[0m
+2026-10-27T01:50:19.6504190Z [36;1m  python - "$RUNNER_TEMP/umf-release-linux" "$RUNNER_TEMP/umf-release-macos" "$GITHUB_OUTPUT" <<'PY'[0m
+2026-10-27T01:50:19.6505430Z [36;1mimport hashlib, json, os, pathlib, platform, stat, sys, sysconfig, zipfile[0m
+2026-10-27T01:50:19.6506860Z [36;1mlinux_dir, mac_dir, output = map(pathlib.Path, sys.argv[1:])[0m
+2026-10-27T01:50:19.6523860Z [36;1mif platform.machine().lower() != os.environ["EXPECTED_MACHINE"] or str(sys.version_info.minor) != os.environ["EXPECTED_PYTHON_MINOR"]:[0m
+2026-10-27T01:50:19.6525610Z [36;1m    raise SystemExit("Runner architecture or exact Python minor changed")[0m
+2026-10-27T01:50:19.6526200Z [36;1mlinux_root = linux_dir / "umf-release-selected"[0m
+2026-10-27T01:50:19.6526540Z [36;1mmac_root = mac_dir / "umf-release-selected"[0m
+2026-10-27T01:50:19.6526920Z [36;1mlinux = json.loads((linux_root / "selection.json").read_text(encoding="utf-8"))[0m
+2026-10-27T01:50:19.6527400Z [36;1mmac = json.loads((mac_root / "selection.json").read_text(encoding="utf-8"))[0m
+2026-10-27T01:50:19.6527860Z [36;1mif linux.get("status") != "passed" or mac.get("status") != "passed":[0m
+2026-10-27T01:50:19.6528300Z [36;1m    raise SystemExit("A platform release selection is not qualified")[0m
+2026-10-27T01:50:19.6528690Z [36;1mlinux_sdist = linux_root / "umf_core-0.10.3.tar.gz"[0m
+2026-10-27T01:50:19.6529020Z [36;1mmac_sdist = mac_root / "umf_core-0.10.3.tar.gz"[0m
+2026-10-27T01:50:19.6529690Z [36;1mif not linux_sdist.is_file() or not mac_sdist.is_file() or linux_sdist.stat().st_size > 16777216 or mac_sdist.stat().st_size > 16777216 or linux_sdist.read_bytes() != mac_sdist.read_bytes():[0m
+2026-10-27T01:50:19.6530460Z [36;1m    raise SystemExit("Producer cohorts did not select the same common source archive bytes")[0m
+2026-10-27T01:50:19.6530930Z [36;1mfor root, selection in ((linux_root, linux), (mac_root, mac)):[0m
+2026-10-27T01:50:19.6531300Z [36;1m    selected = selection.get("selectedWheel", {})[0m
+2026-10-27T01:50:19.6531620Z [36;1m    wheel = root / selected.get("path", "")[0m
+2026-10-27T01:50:19.6531990Z [36;1m    if not wheel.is_file() or wheel.is_symlink() or wheel.stat().st_size > 16777216:[0m
+2026-10-27T01:50:19.6532440Z [36;1m        raise SystemExit("Selected wheel is not a bounded regular artifact")[0m
+2026-10-27T01:50:19.6532980Z [36;1m    if not wheel.is_file() or hashlib.sha256(wheel.read_bytes()).hexdigest() != selected.get("sha256"):[0m
+2026-10-27T01:50:19.6533510Z [36;1m        raise SystemExit("Selected wheel bytes differ from the producer receipt")[0m
+2026-10-27T01:50:19.6533890Z [36;1m    with zipfile.ZipFile(wheel) as archive:[0m
+2026-10-27T01:50:19.6534230Z [36;1m        native = archive.read("umf/_rust_core.abi3.so")[0m
+2026-10-27T01:50:19.6534620Z [36;1m    if hashlib.sha256(native).hexdigest() != selection.get("nativeSha256"):[0m
+2026-10-27T01:50:19.6535090Z [36;1m        raise SystemExit("Selected native bytes differ from the producer receipt")[0m
+2026-10-27T01:50:19.6535640Z [36;1m    if selection.get("sdist", {}).get("sha256") != hashlib.sha256(linux_sdist.read_bytes()).hexdigest():[0m
+2026-10-27T01:50:19.6536170Z [36;1m        raise SystemExit("Producer sdist receipt differs from the common archive")[0m
+2026-10-27T01:50:19.6536540Z [36;1mplatform_key = os.environ["PLATFORM"][0m
+2026-10-27T01:50:19.6536860Z [36;1mroot = linux_dir if platform_key == "linux" else mac_dir[0m
+2026-10-27T01:50:19.6537230Z [36;1mselection = linux if platform_key == "linux" else mac[0m
+2026-10-27T01:50:19.6537590Z [36;1mwheel = root / selection["selectedWheel"]["path"][0m
+2026-10-27T01:50:19.6538940Z [36;1moutput.write_text(f"selected_wheel={wheel}\nsdist_sha256={selection['sdist']['sha256']}\nselected_native_sha256={selection['nativeSha256']}\nselected_wheel_sha256={selection['selectedWheel']['sha256']}\n", encoding="utf-8")[0m
+2026-10-27T01:50:19.6539710Z [36;1mPY[0m
+2026-10-27T01:50:19.6589460Z shell: /bin/bash -e {0}
+2026-10-27T01:50:19.6589690Z env:
+2026-10-27T01:50:19.6589960Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-10-27T01:50:19.6590490Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.11.9/arm64/lib/pkgconfig
+2026-10-27T01:50:19.6590930Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-10-27T01:50:19.6591320Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-10-27T01:50:19.6591720Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-10-27T01:50:19.6592040Z   EXPECTED_MACHINE: arm64
+2026-10-27T01:50:19.6592520Z   EXPECTED_PYTHON_MINOR: 11
+2026-10-27T01:50:19.6592720Z   PLATFORM: macos
+2026-10-27T01:50:19.6592920Z   COHORT: macos-arm64
+2026-10-27T01:50:19.6593100Z ##[endgroup]
+2026-10-27T01:50:20.4048100Z ##[group]Run python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name fetch-test-wheel-cohort -- \
+2026-10-27T01:50:20.4048940Z [36;1mpython3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name fetch-test-wheel-cohort -- \[0m
+2026-10-27T01:50:20.4049700Z [36;1m  python3 tools/core_python_qualification_runner.py fetch-wheels --lock qualification-inputs/core-0.10.3-wheel-input-lock.json \[0m
+2026-10-27T01:50:20.4050320Z [36;1m    --profile test --cell "$CELL_ID" --output "$RUNNER_TEMP/core-test-wheels"[0m
+2026-10-27T01:50:20.4084110Z shell: /bin/bash -e {0}
+2026-10-27T01:50:20.4084300Z env:
+2026-10-27T01:50:20.4084560Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-10-27T01:50:20.4085040Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.11.9/arm64/lib/pkgconfig
+2026-10-27T01:50:20.4085470Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-10-27T01:50:20.4085890Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-10-27T01:50:20.4086270Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-10-27T01:50:20.4086600Z   CELL_ID: macos-arm64-py11
+2026-10-27T01:50:20.4086790Z ##[endgroup]
+2026-10-27T01:50:20.7538160Z Bounded command failed; inspect /Users/runner/work/_temp/core-wheel-bounds/logs/002-fetch-test-wheel-cohort.log
+2026-10-27T01:50:20.7657940Z ##[error]Process completed with exit code 1.
+2026-10-27T01:50:20.7737830Z ##[group]Run if [[ ! -x "$RUNNER_TEMP/core-selected-venv/bin/python" || ! -f "$SELECTED_WHEEL" ]]; then
+2026-10-27T01:50:20.7738460Z [36;1mif [[ ! -x "$RUNNER_TEMP/core-selected-venv/bin/python" || ! -f "$SELECTED_WHEEL" ]]; then[0m
+2026-10-27T01:50:20.7738960Z [36;1m  echo 'Post-test selected wheel verifier prerequisites are unavailable' >&2[0m
+2026-10-27T01:50:20.7739350Z [36;1m  exit 1[0m
+2026-10-27T01:50:20.7739530Z [36;1mfi[0m
+2026-10-27T01:50:20.7740010Z [36;1mpython3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name selected-wheel-post-test-verifier -- \[0m
+2026-10-27T01:50:20.7740720Z [36;1m  "$RUNNER_TEMP/core-selected-venv/bin/python" -I -B tools/verify_python_artifacts.py \[0m
+2026-10-27T01:50:20.7741240Z [36;1m    --wheel "$SELECTED_WHEEL" --expected-version 0.10.3 --verify-installed-wheel \[0m
+2026-10-27T01:50:20.7741700Z [36;1m    --receipt "$RUNNER_TEMP/umf-selected-wheel-posttest.json"[0m
+2026-10-27T01:50:20.7774950Z shell: /bin/bash -e {0}
+2026-10-27T01:50:20.7775160Z env:
+2026-10-27T01:50:20.7775420Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-10-27T01:50:20.7775860Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.11.9/arm64/lib/pkgconfig
+2026-10-27T01:50:20.7776300Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-10-27T01:50:20.7776680Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-10-27T01:50:20.7777060Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-10-27T01:50:20.7777540Z   SELECTED_WHEEL: /Users/runner/work/_temp/umf-release-macos/umf_core-0.10.3-cp311-abi3-macosx_11_0_arm64.whl
+2026-10-27T01:50:20.7777970Z ##[endgroup]
+2026-10-27T01:50:20.8106130Z Post-test selected wheel verifier prerequisites are unavailable
+2026-10-27T01:50:20.8107790Z ##[error]Process completed with exit code 1.
+2026-10-27T01:50:20.8138940Z ##[group]Run python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name finalize-selected-cell-receipt -- \
+2026-10-27T01:50:20.8139870Z [36;1mpython3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name finalize-selected-cell-receipt -- \[0m
+2026-10-27T01:50:20.8140990Z [36;1m  python - "$RUNNER_TEMP/umf-selected-wheel-cell.json" "$RUNNER_TEMP/umf-selected-wheel-installed.json" "$RUNNER_TEMP/umf-selected-wheel-posttest.json" "$RUNNER_TEMP/umf-selected-wheel-probes.json" "$RUNNER_TEMP/umf-selected-wheel-tests.xml" <<'PY'[0m
+2026-10-27T01:50:20.8142160Z [36;1mimport hashlib, json, os, pathlib, sys, xml.etree.ElementTree as ET[0m
+2026-10-27T01:50:20.8142690Z [36;1mreceipt_path, installed_path, posttest_path, probe_path, junit_path = map(pathlib.Path, sys.argv[1:])[0m
+2026-10-27T01:50:20.8143190Z [36;1mreceipt = json.loads(receipt_path.read_text(encoding="utf-8"))[0m
+2026-10-27T01:50:20.8143760Z [36;1minstalled = json.loads(installed_path.read_text(encoding="utf-8")) if installed_path.is_file() else None[0m
+2026-10-27T01:50:20.8144380Z [36;1mposttest = json.loads(posttest_path.read_text(encoding="utf-8")) if posttest_path.is_file() else None[0m
+2026-10-27T01:50:20.8144970Z [36;1mprobes = json.loads(probe_path.read_text(encoding="utf-8")) if probe_path.is_file() else None[0m
+2026-10-27T01:50:20.8145350Z [36;1mcounts = None[0m
+2026-10-27T01:50:20.8145560Z [36;1mif junit_path.is_file():[0m
+2026-10-27T01:50:20.8145890Z [36;1m    if junit_path.is_symlink() or junit_path.stat().st_size > 16777216:[0m
+2026-10-27T01:50:20.8146330Z [36;1m        raise SystemExit("Selected cell test report exceeds its fixed read bound")[0m
+2026-10-27T01:50:20.8146730Z [36;1m    root = ET.parse(junit_path).getroot()[0m
+2026-10-27T01:50:20.8147120Z [36;1m    suites = [root] if root.tag == "testsuite" else list(root.findall("testsuite"))[0m
+2026-10-27T01:50:20.8147670Z [36;1m    counts = {key: sum(int(suite.get(key, "0")) for suite in suites) for key in ("tests", "errors", "failures", "skipped")}[0m
+2026-10-27T01:50:20.8148310Z [36;1mwheel_path = pathlib.Path(os.environ["SELECTED_WHEEL"]) if os.environ.get("SELECTED_WHEEL") else None[0m
+2026-10-27T01:50:20.8148730Z [36;1mreceipt.update({[0m
+2026-10-27T01:50:20.8149030Z [36;1m    "cohort": os.environ["COHORT"], "platform": os.environ["PLATFORM"],[0m
+2026-10-27T01:50:20.8149540Z [36;1m    "requestedPython": os.environ["PYTHON_VERSION"], "sourceRevision": os.environ["SOURCE_REVISION"],[0m
+2026-10-27T01:50:20.8150220Z [36;1m    "testOutcome": os.environ.get("TEST_OUTCOME", "not_run"), "probeOutcome": os.environ.get("PROBE_OUTCOME", "not_run"), "testCounts": counts,[0m
+2026-10-27T01:50:20.8150880Z [36;1m    "installedPayload": installed, "postTestPayload": posttest, "runtimeProbes": probes,[0m
+2026-10-27T01:50:20.8151380Z [36;1m    "expectedNativeSha256": os.environ.get("EXPECTED_NATIVE_SHA256"),[0m
+2026-10-27T01:50:20.8151790Z [36;1m    "expectedWheelSha256": os.environ.get("EXPECTED_WHEEL_SHA256"),[0m
+2026-10-27T01:50:20.8152200Z [36;1m    "commonSdistSha256": os.environ.get("EXPECTED_SDIST_SHA256"),[0m
+2026-10-27T01:50:20.8152790Z [36;1m    "selectedWheelSha256": hashlib.sha256(wheel_path.read_bytes()).hexdigest() if wheel_path and wheel_path.is_file() else None,[0m
+2026-10-27T01:50:20.8153290Z [36;1m})[0m
+2026-10-27T01:50:20.8154780Z [36;1mexpected_probes = (probes is not None and probes.get("python") == os.environ["PYTHON_VERSION"] and probes.get("umfVersion") == "0.10.3" and probes.get("semanticCoreVersion") == "0.10.0" and probes.get("pydanticVersion") == "2.14.1" and probes.get("pydanticCoreVersion") == "2.50.1" and probes.get("documentRoundTrips") == {"json": True, "yaml": True} and (os.environ["EXPECTED_PYTHON_MINOR"] != "14" or probes.get("profile314Probes") == {"strictEndAnchor": True, "emptyInputNonBoundary": True, "unicode16Word": True, "futureProfileRefused": True}))[0m
+2026-10-27T01:50:20.8157640Z [36;1mpayload_parity = (installed is not None and posttest is not None and installed.get("status") == "passed" and posttest.get("status") == "passed" and installed.get("wheel_sha256") == os.environ.get("EXPECTED_WHEEL_SHA256") and posttest.get("wheel_sha256") == installed.get("wheel_sha256") and installed.get("native_sha256") == os.environ.get("EXPECTED_NATIVE_SHA256") and posttest.get("native_sha256") == installed.get("native_sha256") and posttest.get("package_file_count") == installed.get("package_file_count"))[0m
+2026-10-27T01:50:20.8160180Z [36;1mpassed = (payload_parity and expected_probes and receipt.get("commonSdistSha256") == os.environ.get("EXPECTED_SDIST_SHA256") and counts is not None and counts["tests"] == 254 and counts["errors"] == 0 and counts["failures"] == 0 and counts["skipped"] == 0 and os.environ.get("TEST_OUTCOME") == "success" and os.environ.get("PROBE_OUTCOME") == "success" and receipt.get("selectedWheelSha256") == os.environ.get("EXPECTED_WHEEL_SHA256"))[0m
+2026-10-27T01:50:20.8161510Z [36;1mreceipt["status"] = "passed" if passed else "failed_or_incomplete"[0m
+2026-10-27T01:50:20.8162000Z [36;1mreceipt_path.write_text(json.dumps(receipt, sort_keys=True, indent=2) + "\n", encoding="utf-8")[0m
+2026-10-27T01:50:20.8162400Z [36;1mif not passed:[0m
+2026-10-27T01:50:20.8162790Z [36;1m    raise SystemExit("Selected release wheel cell did not complete the installed suite with zero skips")[0m
+2026-10-27T01:50:20.8163190Z [36;1mPY[0m
+2026-10-27T01:50:20.8195760Z shell: /bin/bash -e {0}
+2026-10-27T01:50:20.8195960Z env:
+2026-10-27T01:50:20.8196240Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-10-27T01:50:20.8196680Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.11.9/arm64/lib/pkgconfig
+2026-10-27T01:50:20.8197110Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-10-27T01:50:20.8197490Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-10-27T01:50:20.8197890Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-10-27T01:50:20.8198200Z   TEST_OUTCOME: skipped
+2026-10-27T01:50:20.8198430Z   PROBE_OUTCOME: skipped
+2026-10-27T01:50:20.8198710Z   COHORT: macos-arm64
+2026-10-27T01:50:20.8198890Z   PLATFORM: macos
+2026-10-27T01:50:20.8199100Z   PYTHON_VERSION: 3.11.9
+2026-10-27T01:50:20.8199410Z   SOURCE_REVISION: ffda8a08d6f09ecd55ef3c79f5db75fdf8781973
+2026-10-27T01:50:20.8199900Z   SELECTED_WHEEL: /Users/runner/work/_temp/umf-release-macos/umf_core-0.10.3-cp311-abi3-macosx_11_0_arm64.whl
+2026-10-27T01:50:20.8200570Z   EXPECTED_WHEEL_SHA256: dc2586793e1492d1f825bd9e12f27d5db9f9330ae2343d9e7773c7052f1f6ea6
+2026-10-27T01:50:20.8201190Z   EXPECTED_NATIVE_SHA256: df3dca411dfe11b045e6cd858bc5e3999c314fbe946826ba3b98f1a7d6934256
+2026-10-27T01:50:20.8201780Z   EXPECTED_SDIST_SHA256: 61b3e12a84f68f890fa34e2da14bbda47e101b7c6eadd5207680827e8daa694c
+2026-10-27T01:50:20.8202190Z   EXPECTED_PYTHON_MINOR: 11
+2026-10-27T01:50:20.8202400Z ##[endgroup]
+2026-10-27T01:50:20.9502250Z Bounded command failed; inspect /Users/runner/work/_temp/core-wheel-bounds/logs/003-finalize-selected-cell-receipt.log
+2026-10-27T01:50:20.9561830Z ##[error]Process completed with exit code 1.
+2026-10-27T01:50:20.9610520Z ##[group]Run set -euo pipefail
+2026-10-27T01:50:20.9610870Z [36;1mset -euo pipefail[0m
+2026-10-27T01:50:20.9611090Z [36;1mshopt -s nullglob[0m
+2026-10-27T01:50:20.9611270Z [36;1mfiles=()[0m
+2026-10-27T01:50:20.9611430Z [36;1mfor path in \[0m
+2026-10-27T01:50:20.9611730Z [36;1m  "$RUNNER_TEMP/umf-selected-wheel-cell.json" \[0m
+2026-10-27T01:50:20.9612050Z [36;1m  "$RUNNER_TEMP/umf-selected-wheel-installed.json" \[0m
+2026-10-27T01:50:20.9612400Z [36;1m  "$RUNNER_TEMP/umf-selected-wheel-posttest.json" \[0m
+2026-10-27T01:50:20.9612730Z [36;1m  "$RUNNER_TEMP/umf-selected-wheel-probes.json" \[0m
+2026-10-27T01:50:20.9613030Z [36;1m  "$RUNNER_TEMP/umf-selected-wheel-tests.xml" \[0m
+2026-10-27T01:50:20.9613330Z [36;1m  "$RUNNER_TEMP/core-wheel-bounds/deadline.json" \[0m
+2026-10-27T01:50:20.9613670Z [36;1m  "$RUNNER_TEMP/core-wheel-bounds/failure-receipt.json" \[0m
+2026-10-27T01:50:20.9614020Z [36;1m  "$RUNNER_TEMP/core-wheel-bounds/commands.json" \[0m
+2026-10-27T01:50:20.9614350Z [36;1m  "$RUNNER_TEMP/core-wheel-bounds/logs"/*; do[0m
+2026-10-27T01:50:20.9614620Z [36;1m  [[ -f "$path" ]] && files+=("$path")[0m
+2026-10-27T01:50:20.9614900Z [36;1mdone[0m
+2026-10-27T01:50:20.9615400Z [36;1mif ! python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name assemble-selected-cell-evidence -- \[0m
+2026-10-27T01:50:20.9616330Z [36;1m  python3 tools/core_python_qualification_runner.py bundle --maximum-bytes 16777216 \[0m
+2026-10-27T01:50:20.9616810Z [36;1m    --output "$RUNNER_TEMP/core-selected-evidence" "${files[@]}"; then[0m
+2026-10-27T01:50:20.9617390Z [36;1m  python3 - "$RUNNER_TEMP/core-wheel-bounds/commands.json" "$RUNNER_TEMP/core-wheel-bounds/last-command-failure.json" <<'PY'[0m
+2026-10-27T01:50:20.9617880Z [36;1mimport json, pathlib, sys[0m
+2026-10-27T01:50:20.9618140Z [36;1msource, output = map(pathlib.Path, sys.argv[1:])[0m
+2026-10-27T01:50:20.9618650Z [36;1mrows = json.loads(source.read_text(encoding="utf-8")) if source.is_file() and source.stat().st_size <= 1048576 else [][0m
+2026-10-27T01:50:20.9619110Z [36;1mlast = rows[-1] if rows else {}[0m
+2026-10-27T01:50:20.9619710Z [36;1mkeys = ("name", "startedUtc", "endedUtc", "appliedAllowanceSeconds", "rawExitCode", "captureExitCode", "timedOut", "overflow", "observedBytes", "capturedBytes", "logSha256")[0m
+2026-10-27T01:50:20.9620790Z [36;1moutput.write_text(json.dumps({"profile": "umf.core-python-qualification-failure/1", "status": "failed_or_incomplete", "lastCommand": {key: last.get(key) for key in keys}}, sort_keys=True, indent=2) + "\n", encoding="utf-8")[0m
+2026-10-27T01:50:20.9621490Z [36;1mPY[0m
+2026-10-27T01:50:20.9621790Z [36;1m  python3 tools/core_python_qualification_runner.py bundle --maximum-bytes 16777216 \[0m
+2026-10-27T01:50:20.9622490Z [36;1m    --output "$RUNNER_TEMP/core-selected-evidence" "$RUNNER_TEMP/core-wheel-bounds/deadline.json" "$RUNNER_TEMP/core-wheel-bounds/last-command-failure.json"[0m
+2026-10-27T01:50:20.9623030Z [36;1m  exit 1[0m
+2026-10-27T01:50:20.9623180Z [36;1mfi[0m
+2026-10-27T01:50:20.9655670Z shell: /bin/bash -e {0}
+2026-10-27T01:50:20.9655860Z env:
+2026-10-27T01:50:20.9656090Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-10-27T01:50:20.9656510Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.11.9/arm64/lib/pkgconfig
+2026-10-27T01:50:20.9656950Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-10-27T01:50:20.9657360Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-10-27T01:50:20.9657770Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-10-27T01:50:20.9658080Z ##[endgroup]
+2026-10-27T01:50:21.2962600Z ##[group]Run actions/upload-artifact@v4
+2026-10-27T01:50:21.2963050Z with:
+2026-10-27T01:50:21.2963260Z   name: umf-core-0.10.3-installed-macos-arm64-py11
+2026-10-27T01:50:21.2963620Z   path: /Users/runner/work/_temp/core-selected-evidence/*
+2026-10-27T01:50:21.2963920Z   if-no-files-found: error
+2026-10-27T01:50:21.2964140Z   compression-level: 6
+2026-10-27T01:50:21.2964370Z   overwrite: false
+2026-10-27T01:50:21.2964610Z   include-hidden-files: false
+2026-10-27T01:50:21.2964830Z env:
+2026-10-27T01:50:21.2965080Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-10-27T01:50:21.2965570Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.11.9/arm64/lib/pkgconfig
+2026-10-27T01:50:21.2966000Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-10-27T01:50:21.2966380Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-10-27T01:50:21.2966850Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.11.9/arm64
+2026-10-27T01:50:21.2967150Z ##[endgroup]
+2026-10-27T01:50:21.4483910Z (node:6013) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-27T01:50:21.4484970Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-27T01:50:21.4542120Z With the provided path, there will be 7 files uploaded
+2026-10-27T01:50:21.4543540Z Artifact name is valid!
+2026-10-27T01:50:21.4543970Z Root directory input is valid!
+2026-10-27T01:50:21.8570330Z Beginning upload of artifact content to blob storage
+2026-10-27T01:50:21.9171300Z (node:6013) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-27T01:50:22.1726840Z Uploaded bytes 4020
+2026-10-27T01:50:22.2453580Z Finished uploading artifact content to blob storage!
+2026-10-27T01:50:22.2478550Z SHA256 digest of uploaded artifact zip is c93945f4f1ea1bf4d1a389fe7e530a1608b02f09eeb54d0a0b60497fc5fcfa9f
+2026-10-27T01:50:22.2479300Z Finalizing artifact upload
+2026-10-27T01:50:22.7671150Z Artifact umf-core-0.10.3-installed-macos-arm64-py11.zip successfully finalized. Artifact ID 12703725858
+2026-10-27T01:50:22.7672360Z Artifact umf-core-0.10.3-installed-macos-arm64-py11 has been successfully uploaded! Final size is 4020 bytes. Artifact ID is 12703725858
+2026-10-27T01:50:22.7887300Z Artifact download URL: https://github.com/DocumentDrivenDX/umf/actions/runs/40433733847/artifacts/12703725858
+2026-10-27T01:50:22.8282210Z Post job cleanup.
+2026-10-27T01:50:22.9227000Z [command]/opt/homebrew/bin/git version
+2026-10-27T01:50:22.9289660Z git version 2.55.0
+2026-10-27T01:50:22.9309640Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/598de780-5196-4a9f-878f-12e0f31adb29/.gitconfig'
+2026-10-27T01:50:22.9317340Z Temporarily overriding HOME='/Users/runner/work/_temp/598de780-5196-4a9f-878f-12e0f31adb29' before making global git config changes
+2026-10-27T01:50:22.9318330Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-27T01:50:22.9321370Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/umf/umf
+2026-10-27T01:50:22.9387270Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T01:50:22.9447560Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-27T01:50:23.0288490Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T01:50:23.0338220Z http.https://github.com/.extraheader
+2026-10-27T01:50:23.0345290Z [command]/opt/homebrew/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-27T01:50:23.0403570Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-27T01:50:23.1260370Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T01:50:23.1320510Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-27T01:50:23.2319740Z Cleaning up orphan processes
+2026-10-27T01:50:23.7609710Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/download-artifact@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

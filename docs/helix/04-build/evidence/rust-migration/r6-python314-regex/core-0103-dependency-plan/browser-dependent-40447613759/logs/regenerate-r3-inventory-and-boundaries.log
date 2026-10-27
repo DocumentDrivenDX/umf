@@ -1,0 +1,22 @@
+R3_DIAGNOSTIC inventory:start
+/home/runner/work/umf/umf/tools/security/pg-old-snapshot-admission-probe.py:30: SyntaxWarning: invalid escape sequence '\w'
+  self.process.stdin.write((text+';\n\\echo '+marker+' :SQLSTATE :LAST_ERROR_MESSAGE\n\warn STDERR_'+marker+'\n').encode());deadline=time.monotonic()+10
+Wrote docs/helix/04-build/evidence/rust-migration/r3/inventory.json: 578 source modules; 359 active scripts; 244 JS locked packages
+R3_DIAGNOSTIC inventory:passed
+R3_DIAGNOSTIC boundaries:start
+$ python3 scripts/rust-inventory.py --check && python3 scripts/check-rust-boundaries.py && python3 tests/rust-inventory/test_boundaries.py && python3 tests/rust-inventory/test_inventory.py
+/home/runner/work/umf/umf/tools/security/pg-old-snapshot-admission-probe.py:30: SyntaxWarning: invalid escape sequence '\w'
+  self.process.stdin.write((text+';\n\\echo '+marker+' :SQLSTATE :LAST_ERROR_MESSAGE\n\warn STDERR_'+marker+'\n').encode());deadline=time.monotonic()+10
+Rust inventory current: 578 source modules; 359 active scripts
+{"status": "pass", "checkedSourceModules": 587, "cargoStatus": "resolved", "productionCoreStatus": "pass", "v8DebtCount": 2, "negativeControls": {"allowedPureRustDependency": "pass", "forbiddenHostDependency": "pass", "legacyV8AllowedOnlyAtExactDebtFile": "pass", "unscopedV8ImportRejected": "pass", "privateCrossPackageImportRejected": "pass", "allowedRelativeImportAccepted": "pass", "temporaryManifestAllowedDependency": "pass", "temporaryManifestForbiddenDependency": "pass", "bindingSourceEngineImportRejected": "pass"}, "findingCount": 0}
+...............
+----------------------------------------------------------------------
+Ran 15 tests in 0.712s
+
+OK
+.............
+----------------------------------------------------------------------
+Ran 13 tests in 0.046s
+
+OK
+R3_DIAGNOSTIC boundaries:passed

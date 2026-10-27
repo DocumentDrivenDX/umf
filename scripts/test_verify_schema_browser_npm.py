@@ -238,7 +238,7 @@ class DownloadedArtifactTests(unittest.TestCase):
         workflow = (Path(__file__).parents[1] / ".github/workflows/publish-schema-browser-npm.yml").read_text()
         publish_step = workflow.split("- name: Publish only the verified GitHub release tarball with OIDC", 1)[1]
         publish_step = publish_step.split("- name:", 1)[0]
-        self.assertIn("npm publish \"verified/documentdrivendx-umf-schema-browser-$VERSION.tgz\"", publish_step)
+        self.assertIn("npm publish \"./verified/documentdrivendx-umf-schema-browser-$VERSION.tgz\"", publish_step)
         self.assertIn("--ignore-scripts", publish_step)
         self.assertIn("id-token: write", workflow)
 

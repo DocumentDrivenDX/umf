@@ -27,7 +27,7 @@ from .serialization import (
 )
 from .validation import inspect_extension_kinds, validate_document
 
-__version__ = "0.10.2"
+__version__ = "0.10.3"
 __all__ = [
     "CoreItemTypeReference",
     "CoreSemanticTypeReference",

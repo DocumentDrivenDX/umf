@@ -22,6 +22,7 @@ fn independent_cpython_info_prefilter_corpus_all_profiles() {
             "11" => (PythonReVersion::V3_11, "3.11"),
             "12" => (PythonReVersion::V3_12, "3.12"),
             "13" => (PythonReVersion::V3_13, "3.13"),
+            "14" => (PythonReVersion::V3_14, "3.14"),
             other => panic!("unknown Python minor {other}"),
         };
         let pattern = codepoints(fields[6]);
@@ -51,7 +52,7 @@ fn independent_cpython_info_prefilter_corpus_all_profiles() {
             ));
         }
     }
-    assert_eq!(rows, 15_120 * 3, "independent INFO outcome row count");
+    assert_eq!(rows, 15_120 * 4, "independent INFO outcome row count");
     assert!(
         failures.is_empty(),
         "{} independent CPython INFO mismatches; first 100:\n{}",

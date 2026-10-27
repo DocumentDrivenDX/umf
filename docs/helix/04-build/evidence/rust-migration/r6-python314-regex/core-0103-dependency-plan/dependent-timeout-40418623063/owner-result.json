@@ -1,0 +1,18 @@
+{
+  "status": "DEPENDENT_R3_COMMAND_TIMEOUT",
+  "sourceCommit": "6d081bbbfa8f2aaaf1b7f30026a2a70121f0cc4c",
+  "runId": 40418623063,
+  "attempt": 1,
+  "artifactId": 12697006126,
+  "artifactBytes": 3165,
+  "artifactSha256": "47f54cf0f683f4d4dde93305337bfcfe4be81884359a331c3ecfe138da81b4b9",
+  "command": "python scripts/rust-inventory.py && bun run check:rust-boundaries",
+  "rawExit": 124,
+  "captureExit": 0,
+  "durationMs": 180020,
+  "limitSeconds": 180,
+  "logBytes": 0,
+  "locatedSubcommand": null,
+  "precedingEvidence": "Ordered set-e recipe reached final R3 step after metamodel/action/codegen commands; individual preceding command rows and outputs not retained in failure family. No dependent output adoption or full check claim.",
+  "outputAdoption": null
+}

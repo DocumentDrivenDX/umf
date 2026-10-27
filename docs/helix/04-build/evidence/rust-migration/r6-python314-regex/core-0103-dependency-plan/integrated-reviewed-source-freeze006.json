@@ -1,0 +1,176 @@
+{
+  "status": "REVIEWED_SOURCE_EXECUTED_TO_VERIFIED_ARCHIVE_PREFIX_BOUNDARY",
+  "sourceHead": "bee06c5abae6f3b76652bc54bb052fc6f191c6e6",
+  "wheelCommit": "f374ebf79486f23a38a018ef79e7a461ad593a04",
+  "acceptedRegexSource": "5549ea45c5301bb8c608888d5f2ad14dc66d961e",
+  "actualMain": "c0fbbbc56ea0df228aef4da51f58c30caab24114",
+  "sourceCorrespondence": "Normal accepted tool-identity workflow and exact one-character lock corrections integrated; all other reviewed CG/CW bytes preserved, with the two exact CI branch exclusions. Actual generation has not begun.",
+  "files": [
+    {
+      "path": ".github/workflows/access-boundaries.yml",
+      "bytes": 25980,
+      "sha256": "f05570c87773fcf9669c058d82989414ddef498fb228be91a4a1cd66fd47ac7d"
+    },
+    {
+      "path": ".github/workflows/actions.yml",
+      "bytes": 1471,
+      "sha256": "81140ba3bc3bf1f258f9dc48e65be22b592187c371506d15085876240f7c249b"
+    },
+    {
+      "path": ".github/workflows/core-python314-generation.yml",
+      "bytes": 61596,
+      "sha256": "5150adcc6f4fc758f686756b40a8886c097df01739bfeb5555e29450d74a7f2a"
+    },
+    {
+      "path": ".github/workflows/python.yml",
+      "bytes": 974,
+      "sha256": "3fc3dd139663a8e9994ea4fe1d28ba1efa79588d5a370f725af22323bf9a523a"
+    },
+    {
+      "path": ".github/workflows/rust-core.yml",
+      "bytes": 3259,
+      "sha256": "ef0678ca7f64b2b70db21a5b386c210c660864a29b1b2bd3ffdd3b8f6c066708"
+    },
+    {
+      "path": ".github/workflows/rust-spike.yml",
+      "bytes": 940,
+      "sha256": "9735589858797922b677b92b2c6faff240ed8453e01221e839268304e42e134d"
+    },
+    {
+      "path": ".github/workflows/sql-containment.yml",
+      "bytes": 2140,
+      "sha256": "1cc4ad69baa2bc20b7e9cf2e42501038e8cf4e46dedc9f5fd6cc062cb4fe3e58"
+    },
+    {
+      "path": "crates/umf-core/tests/python_regex_hex_independent.rs",
+      "bytes": 1761,
+      "sha256": "425147b2f3fde310a8d2579308b246e226792721716264bd5ee51ceea0c69e21"
+    },
+    {
+      "path": "crates/umf-core/tests/python_regex_independent.rs",
+      "bytes": 2686,
+      "sha256": "d19c3e61be17aad5fbc34193b0dd8643b9df3f30995e07b8b736bd1a2e184093"
+    },
+    {
+      "path": "crates/umf-core/tests/python_regex_info_independent.rs",
+      "bytes": 2335,
+      "sha256": "77dfdffa38ed1ef623266331ce1b98f493bda092c0e864b170f6caf17ab0d0b9"
+    },
+    {
+      "path": "crates/umf-core/tools/extend_python_re_314.py",
+      "bytes": 9688,
+      "sha256": "2063a74ae8e825c4cb7cc9fdde730f01eda3dc0f44d4ec5ae8a1384873c8c4b4"
+    },
+    {
+      "path": "crates/umf-core/tools/generate_independent_python_re_boundaries.py",
+      "bytes": 8891,
+      "sha256": "14fd8e77bfeb91a05a222ae87337156569cd82a2c375f99e7e260098d2f35504"
+    },
+    {
+      "path": "crates/umf-core/tools/generate_independent_python_re_hex.py",
+      "bytes": 3537,
+      "sha256": "cfe76557ac8996fd0ab95b17d21852d9f59d50f820f981120b1022700dbebcb6"
+    },
+    {
+      "path": "crates/umf-core/tools/generate_independent_python_re_info.py",
+      "bytes": 4602,
+      "sha256": "283c07014258892177758643e24ba5e9e3a49c6b355e821790d87fd102c49b9b"
+    },
+    {
+      "path": "python/README.md",
+      "bytes": 5518,
+      "sha256": "7ed22c59e989c8f3856554c9abac6c5bdcea34a8ff560425656663938272ae7e"
+    },
+    {
+      "path": "python/pyproject.toml",
+      "bytes": 1430,
+      "sha256": "b498b238d1c084f91efdc1375b4495fcea4c85ebb29154ada27c2e2977314fad"
+    },
+    {
+      "path": "python/src/umf/__init__.py",
+      "bytes": 1258,
+      "sha256": "dc7dfb07f414068211402d0c478c359f0da810a6f60b2317dc5d012b721a4a13"
+    },
+    {
+      "path": "python/tests/test_core.py",
+      "bytes": 8921,
+      "sha256": "f9cdc2cd406a2c413b4d4531333ea76e9a393ef5a05760ea63bc8438750dd651"
+    },
+    {
+      "path": "python/tests/test_distribution_artifact.py",
+      "bytes": 28105,
+      "sha256": "e2bb987ed1e8a648607da3b95bed6b3d25401b5df007f668b64eeeab44f1cf94"
+    },
+    {
+      "path": "python/tests/test_python_artifact_custody.py",
+      "bytes": 4848,
+      "sha256": "88239260e336349072c78a5263975ea0d3879bee5dad3d66c268fadeea1d325a"
+    },
+    {
+      "path": "python/tests/test_python_artifact_version.py",
+      "bytes": 3740,
+      "sha256": "d3a9c59e90faebcab133511e5aad3c1d649f97896406ed41ea44a3cd902f08a1"
+    },
+    {
+      "path": "python/tests/test_python_sdist.py",
+      "bytes": 14516,
+      "sha256": "710b13fa53bacb7a36575d4baf5a7217c2de99b5d47b59f64916158f175040e3"
+    },
+    {
+      "path": "qualification-inputs/core-python314-generation.json",
+      "bytes": 4686,
+      "sha256": "918b83a3e4261129e37a74611ac9029b416d0f832d7f0157262999997a189f7d"
+    },
+    {
+      "path": ".github/workflows/python-action-runtime.yml",
+      "bytes": 56608,
+      "sha256": "867497f2ab4e908e00f848da22319771c0dfdadf87a509c06dbb7baaeb313dbd"
+    },
+    {
+      "path": ".github/workflows/core-0.10.3-public-install-proof.yml",
+      "bytes": 29913,
+      "sha256": "67d6918c171c84ea54b66cfaed632f8fbf03cde8f84f90890f3e593420723c66"
+    },
+    {
+      "path": "tools/core_python_qualification_runner.py",
+      "bytes": 14349,
+      "sha256": "68a89974e0dc002b88fa5d6b50213d30a2f9cb4080c000982ef966655ef945f8"
+    },
+    {
+      "path": "tools/qualify_python_release_wheel.py",
+      "bytes": 17900,
+      "sha256": "fbb1caabd4ff62ce4e1bb4313888a85d216a869908e4a1afbc736404f912e404"
+    },
+    {
+      "path": "tools/verify_core_public_producer.py",
+      "bytes": 14307,
+      "sha256": "3c1d58cc75bf5cdf11c2f49c3f07a3d6841305d7ea41e9dc6cb8331bb1ccf712"
+    },
+    {
+      "path": "tools/verify_core_public_release.py",
+      "bytes": 17643,
+      "sha256": "5e661bb2be37c39f2dd498daca440a73d7f924006a49dd65c6357e679b58f5ad"
+    },
+    {
+      "path": "qualification-inputs/core-0.10.3-wheel-input-lock.json",
+      "bytes": 7611,
+      "sha256": "9bd2f8db08dd8bd911f680fec8716abe8726961e7d204aa71ac4f271d810d44f"
+    },
+    {
+      "path": "qualification-inputs/core-0.10.3-public-install-proof.json",
+      "bytes": 1514,
+      "sha256": "edcf7931363b56040985a7f6c307a0b2c8cbe2725cec43e3ad36cf6ae0b505ae"
+    }
+  ],
+  "generationRun": {
+    "id": 40412777274,
+    "attempt": 1,
+    "sourceCommit": "bee06c5abae6f3b76652bc54bb052fc6f191c6e6",
+    "job": 121887425017,
+    "phase": "regex-artifacts",
+    "status": "FAILED_INSPECT_EXTRACT_CPYTHON314",
+    "outputAdoption": null
+  },
+  "qualificationClaim": false,
+  "publicReleaseStatus": "HELD"
+}
