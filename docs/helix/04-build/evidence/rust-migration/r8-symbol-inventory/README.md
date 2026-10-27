@@ -59,7 +59,28 @@ ddx:
 
 # R8 TypeScript public runtime export map
 
-**Current source recapture (2026-10-26):** The inventory and condition-aware
+**Current source recapture (2026-10-26, numeric V4 selection):** After the
+five CONTRACT-049 numeric bindings, strict access import policy, Selection
+private host continuation and generated metamodel/resource refresh, the
+inventory records 3,375 route-specific declarations across 506 source files,
+1,126 unique export names and 1,120 declarations per default or reference
+root. Each default root has 922 executable declarations and 198 JSON resource
+aliases. The inventory SHA-256 is
+`cfb13382c1ce6ffdf1a394917f2e3fd461b2076451bde7e8661b57c41cfdde11`.
+The condition-aware ledger SHA-256 is
+`58a1b95d0d411f362eaf37658854fb182c647ae61784ed6d048db88c7143e14a`.
+It records 922 logical executable gaps, 72 names with accepted opt-in Rust
+mappings, 850 unmapped names, 50 source-selected declarations per V4 root and
+five binding routes proven by the prior gated current-source cohort. The five
+new numeric selections are source-selected-only: one derived private archive
+passed Node/Bun/Chromium behavior replay but used 11 generated-source
+transforms, so it does not qualify this current-source fixed point or retire
+any gap. The reference route remains TypeScript. The generator `--check`
+modes, exact-shape negative control and full 49-case ledger suite pass for
+this recapture. Resource authority counts remain 56 generated-known, 49
+authored-known, 88 candidate-generated and 5 unresolved.
+
+**Prior source recapture (2026-10-26):** The inventory and condition-aware
 gap ledger were regenerated from the current ten package conditions after the
 V4 Node/browser entries grew to 45 direct declarations each. The inventory
 and ledger were recaptured after commits `2b953bfec`, `e3de811e6`, `38b572c60`,

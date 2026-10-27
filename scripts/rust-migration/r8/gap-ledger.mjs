@@ -27,6 +27,16 @@ const accept = (source, exports, rustModule, rustSource, evidence, focusedTest) 
     focusedTestPaths: Array.isArray(focusedTest) ? focusedTest : [focusedTest],
   });
 };
+accept('src/adapters/javascript-numeric.ts', [
+  ['exactDecimal', 'exact_decimal'],
+  ['integerFromBigInt', 'integer_from_bigint'],
+  ['integerToBigInt', 'integer_to_bigint'],
+  ['admitJavascriptNumber', 'admit_javascript_number'],
+  ['numericToNumberLossless', 'numeric_to_number_lossless'],
+], 'umf_core::javascript_numeric', 'crates/umf-core/src/javascript_numeric.rs', [
+  'r5-javascript-numeric/README.md',
+  'r5-javascript-numeric/oracle-output.json',
+], ['crates/umf-core/src/javascript_numeric.rs', 'scripts/rust-migration/r5/javascript-numeric-parity.ts', 'scripts/rust-migration/r5/javascript-numeric-browser.ts']);
 accept('src/model/semantic-types.ts', [['inspectCoreSemanticTypes', 'inspect_core_semantic_types']], 'umf_core::core_semantic_types', 'crates/umf-core/src/core_semantic_types.rs', ['r5-core-semantic-types/README.md', 'r5-core-semantic-types/frozen-typescript.json'], 'crates/umf-core/tests/r5_core_semantic_types.rs');
 accept('src/model/semantic-types.ts', [['getCoreSemanticTypes', 'get_core_semantic_types']], 'umf_core::core_semantic_types', 'crates/umf-core/src/core_semantic_types.rs', ['r5-core-semantic-types/README.md', 'r5-core-semantic-types/frozen-typescript.json'], 'crates/umf-core/tests/r5_core_semantic_types.rs');
 accept('src/model/semantic-types.ts', [['declareCoreSemanticTypes', 'declare_core_semantic_types']], 'umf_core::core_semantic_types', 'crates/umf-core/src/core_semantic_types.rs', ['r5-core-semantic-types/README.md', 'r5-core-semantic-types/frozen-typescript.json'], 'crates/umf-core/tests/r5_core_semantic_types.rs');
@@ -334,6 +344,31 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
   if (source !== null && source !== defaultEntry
       && !(schemaPropertiesNames.includes(exportName) && source === 'src/model/schema-properties.ts')) return null;
   const closure = paths => [...new Set(paths)].sort().map(file => ({ path: file, sha256: digest(read(file)) }));
+  const numericSymbols = new Map([
+    ['exactDecimal', 'exact_decimal'],
+    ['integerFromBigInt', 'integer_from_bigint'],
+    ['integerToBigInt', 'integer_to_bigint'],
+    ['admitJavascriptNumber', 'admit_javascript_number'],
+    ['numericToNumberLossless', 'numeric_to_number_lossless'],
+  ]);
+  if (numericSymbols.has(exportName)) {
+    return {
+      status: 'source-selected-only',
+      rustOwner: `umf_core::javascript_numeric::${numericSymbols.get(exportName)}`,
+      wireOperation: `javascript-numeric/${exportName}`,
+      bindingRoute: browser ? 'V4 browser root -> WASM numeric facade -> Rust wire' : 'V4 Node root -> Node-API numeric facade -> Rust wire',
+      sourceClosure: closure([
+        defaultEntry, 'src/access/rust-javascript-numeric-default.ts',
+        'src/adapters/javascript-numeric.ts',
+        browser ? 'bindings/core/wasm/src/javascript-numeric.js' : 'bindings/core/node/src/javascript-numeric.js',
+        browser ? 'bindings/core/wasm/index.js' : 'bindings/core/node/index.js',
+        'crates/umf-core-wire/src/javascript_numeric_runtime.rs',
+        'crates/umf-core/src/javascript_numeric.rs',
+        'docs/helix/04-build/evidence/rust-migration/r5-javascript-numeric/README.md',
+      ]),
+      qualificationStatus: 'The current Node/browser root source selects the bounded CONTRACT-049 Rust numeric facade. One derived private archive passed installed Node/Bun/Chromium behavior replay but required 11 generated-source transforms; current-source fixed-point qualification, resource bounds and retirement remain open.',
+    };
+  }
   const temporal = new Map([
     ['parseGregorianDate', ['umf_core::gregorian_date::parse_gregorian_date', 'crates/umf-core/src/gregorian_date.rs', 'crates/umf-core-wire/tests/gregorian_date_wire.rs']],
     ['truncateGregorianDate', ['umf_core::gregorian_date::truncate_gregorian_date', 'crates/umf-core/src/gregorian_date.rs', 'crates/umf-core-wire/tests/gregorian_date_wire.rs']],
@@ -717,6 +752,10 @@ function operationMapping(row) {
   if (direct) return direct;
   if (['package-root-node', 'package-root-browser'].includes(row.routeId)
       && ['src/index-node-v4.ts', 'src/index-browser-v4.ts'].includes(row.source)) {
+    if (['exactDecimal', 'integerFromBigInt', 'integerToBigInt', 'admitJavascriptNumber', 'numericToNumberLossless'].includes(row.exportName)
+        && row.declarationName === row.exportName && row.declarationKind === 'BindingElement') {
+      return accepted.get(`src/adapters/javascript-numeric.ts#${row.exportName}`) ?? null;
+    }
     if (row.exportName === 'securityNot' && row.declarationName === 'securityNot'
         && row.declarationKind === 'VariableDeclaration' && row.initializerShape === 'call-expression') {
       return accepted.get(`src/extensions/security/logic.ts#securityNot`) ?? null;
@@ -1750,6 +1789,8 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
       && ['declareCoreSchemaProperties', 'inspectCoreSchemaProperties', 'validateCoreFieldValue', 'resolveCoreDefault'].includes(row.exportName);
     const selectedBit128 = mapping && ['package-root-node', 'package-root-browser'].includes(row.routeId)
       && ['parseBits128', 'parseUuid', 'bits128FromBytes', 'bits128ToBytes', 'uuidFromBits128', 'uuidToBits128', 'compareBits128', 'bits128ToWords', 'bits128FromWords', 'bits128ToInteger', 'bits128FromInteger'].includes(row.exportName);
+    const selectedJavascriptNumeric = mapping && selectedBySource
+      && ['exactDecimal', 'integerFromBigInt', 'integerToBigInt', 'admitJavascriptNumber', 'numericToNumberLossless'].includes(row.exportName);
     const operation = operationOwnership(row.exportName, row.routeId === 'package-root-node' ? 'default-node' : row.routeId === 'package-root-browser' ? 'default-browser' : row.routeId === 'package-reference' ? 'explicit-reference' : 'legacy-fixture');
     const routeDetails = {
       'package-root-node': {
@@ -1766,6 +1807,7 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
           : row.exportName === 'securityNot' && selectedBySource ? 'Guarded Rust securityNot adapter selected by V4 source route; private installed Node/Bun/Chromium evidence is pinned to fixed-point source commit dc746ad53; current-source qualification, broader parity, release qualification and retirement remain open'
           : ['inspectCoreKeys', 'lookupCoreKey', 'declareCoreRecordMembers', 'declareCoreKey'].includes(row.exportName) ? 'Rust Core Keys operation selected by source route; aggregate installed qualification pending for current worktree'
           : selectedBit128 ? 'Rust Bit128/UUID operation selected by source route; installed qualification pending'
+          : selectedJavascriptNumeric ? 'Rust JavaScript numeric operation selected by source route; derived installed behavior replay passed, current-source fixed-point qualification pending'
           : ['inspectCoreScalarType', 'inspectCoreRecordMembers', 'inspectCoreReferenceLinks'].includes(row.exportName) && selectedBySource ? 'Rust core inspector selected by source route; current private installed archive passed 26 frozen cases, while selected host-error envelopes differ; retirement open'
           : ['validateCsvBooleanLexical', 'verifyCsvBooleanLexical'].includes(row.exportName) && selectedBySource ? 'Rust CSV Boolean lexical operation selected by source route; current private installed archive passed 14 frozen and 18 adversarial cases; retirement open'
           : inert ? 'TypeScript package-root data export remains default' : 'inherited TypeScript implementation remains default',
@@ -1784,6 +1826,7 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
           : row.exportName === 'securityNot' && selectedBySource ? 'Guarded Rust securityNot adapter selected by V4 source route; private installed Node/Bun/Chromium evidence is pinned to fixed-point source commit dc746ad53; current-source qualification, broader parity, release qualification and retirement remain open'
           : ['inspectCoreKeys', 'lookupCoreKey', 'declareCoreRecordMembers', 'declareCoreKey'].includes(row.exportName) ? 'Rust Core Keys operation selected by source route; aggregate installed qualification pending for current worktree'
           : selectedBit128 ? 'Rust Bit128/UUID operation selected by source route; installed qualification pending'
+          : selectedJavascriptNumeric ? 'Rust JavaScript numeric operation selected by source route; derived installed behavior replay passed, current-source fixed-point qualification pending'
           : ['inspectCoreScalarType', 'inspectCoreRecordMembers', 'inspectCoreReferenceLinks'].includes(row.exportName) && selectedBySource ? 'Rust core inspector selected by source route; current private installed archive passed 26 frozen cases, while selected host-error envelopes differ; retirement open'
           : ['validateCsvBooleanLexical', 'verifyCsvBooleanLexical'].includes(row.exportName) && selectedBySource ? 'Rust CSV Boolean lexical operation selected by source route; current private installed archive passed 14 frozen and 18 adversarial cases; retirement open'
           : inert ? 'TypeScript package-root data export remains default' : 'inherited TypeScript implementation remains default',
@@ -1828,6 +1871,8 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
             ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust CSV Boolean lexical operation selected by source route; current private archive passed 14 frozen and 18 adversarial installed cases; broader host parity and retirement remain open`
           : selectedBit128
             ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust Bit128/UUID operation source-selected only; installed Node/Bun/Chromium qualification pending; zero declarations retired`
+          : selectedJavascriptNumeric
+            ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust JavaScript numeric operation selected by source route; derived installed behavior replay passed, current-source fixed-point qualification pending; retirement gap remains open`
           : mapping
             ? `bounded opt-in Rust core operation exists; ${row.routeId === 'package-root-browser' ? 'browser' : row.routeId === 'package-root-node' ? 'Node' : 'package-root'} TypeScript implementation remains in route; zero declarations retired`
             : `${row.routeId === 'package-root-browser' ? 'browser' : row.routeId === 'package-root-node' ? 'Node' : 'package-root'} route remains TypeScript; exact Rust operation and retirement disposition unresolved`;
@@ -1884,6 +1929,18 @@ function logicalDeclarationSignature(row) {
     || ['inspectCoreKeys', 'lookupCoreKey', 'declareCoreRecordMembers', 'declareCoreKey'].includes(row.exportName)
     || ['inspectCoreRecordMembers', 'inspectCoreReferenceLinks', 'inspectCoreScalarType', 'validateCsvBooleanLexical', 'verifyCsvBooleanLexical'].includes(row.exportName)
     || ['inspectCoreCardinality', 'declareCoreCardinality', 'verifyCoreCardinalityDeclaration', 'inspectCoreFacets', 'declareCoreFacets', 'verifyCoreFacetDeclaration', 'historicalCoreFacetPatch'].includes(row.exportName);
+  // The five CONTRACT-049 names normalize only their exact V4 bindings and
+  // explicit reference functions. A same-named declaration elsewhere remains
+  // multiplicity-sensitive and cannot conceal source or declaration drift.
+  const numericConditionShape = ['exactDecimal', 'integerFromBigInt', 'integerToBigInt', 'admitJavascriptNumber', 'numericToNumberLossless'].includes(row.exportName)
+    && row.declarationName === row.exportName
+    && (row.routeId === 'package-root-node'
+      ? row.source === 'src/index-node-v4.ts' && row.declarationKind === 'BindingElement'
+      : row.routeId === 'package-root-browser'
+        ? row.source === 'src/index-browser-v4.ts' && row.declarationKind === 'BindingElement'
+        : row.routeId === 'package-reference'
+          ? row.source === 'src/adapters/javascript-numeric.ts' && row.declarationKind === 'FunctionDeclaration' && row.initializerShape === 'not-applicable'
+          : false);
   // Only securityNot's exact V4 root binding shape is normalized to the
   // reference function declaration. Any other shape/name/source remains
   // multiplicity-sensitive, so this cannot hide a broader route drift.
@@ -1896,7 +1953,7 @@ function logicalDeclarationSignature(row) {
         : row.routeId === 'package-reference'
           ? row.source === 'src/extensions/security/logic.ts' && row.declarationKind === 'FunctionDeclaration' && row.initializerShape === 'not-applicable'
           : false);
-  const kind = (conditionBoundExport || securityNotConditionShape)
+  const kind = (conditionBoundExport || numericConditionShape || securityNotConditionShape)
     && ['package-root-node', 'package-root-browser', 'package-reference'].includes(row.routeId)
     ? 'condition-selected-root-binding'
     : row.declarationKind;

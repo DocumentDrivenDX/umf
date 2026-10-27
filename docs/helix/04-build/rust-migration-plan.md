@@ -6451,3 +6451,97 @@ executable default routes.
 Installed Python/Node/browser cohorts, coordinated release gates and publication
 must pass before a full-port or release claim. The current R8 census remains
 922 logical gaps (67 accepted opt-in Rust mappings, 855 unowned).
+
+### R8 exact public capture and artifact-reference core — 2026-10-26
+
+The [public capture exact-terminal cut](evidence/rust-migration/r8-public-capture-exact-terminal/README.md)
+selects the DTO-free PyO3 validator only when an exact empty parameter tuple
+and built-in `Node`/`RecordRef` with empty steps admit one of `all`, `first`,
+`one`, `count`, or `exists`. Raw instance dictionaries, keys and operation text
+are bounded before graph accessor reads. Outside-profile inputs go directly to
+the Python predecessor, including parameters, other terminals and nonempty
+steps. Sol independently replayed seven CPython 3.13.16 source-overlay files:
+137 tests and three subtests pass. Current-source `umf-core==0.11.0` and
+`umf_access==0.1.0.dev7` wheels now build offline after synchronizing the
+canonical action-runtime manifest. An isolated CPython 3.14.8 macOS arm64
+installation resolves both packages from site-packages. Sol independently
+replayed the five admitted operations with `_validate_node` patched to fail:
+all five select the Rust validator and complete four capture observations.
+The earlier installed old-core wheel still exercises the guarded Python
+fallback. Exact wheel member/source hashes, isolated install commands and
+dependency limitations are recorded in the linked evidence. Hosted platform
+cohorts, full capture semantics and publication remain gates.
+
+The follow-on [direct empty-step `group_count` candidate](evidence/rust-migration/r8-public-capture-group-count-terminal/README.md)
+bumps the exact profile to `0.3.0` and admits one more predecessor-accepted
+base `Node` shape. The normal DSL does not emit this empty-step grouped count;
+it is reachable through direct public `Node` construction. Sol independently
+reran its seven-file source-overlay cohort: 139 tests and three subtests pass.
+The later [installed `0.3.0` two-wheel receipt](evidence/rust-migration/r8-public-capture-group-count-terminal/README.md)
+selects all six exact empty-step terminals from isolated CPython 3.14.8
+site-packages on macOS arm64. The PyO3 profile preflight happens before graph
+reads; the old `0.2.0` wheel falls back to Python for the sixth terminal.
+This is a six-shape installed qualification, not general capture parity or a
+hosted release matrix.
+
+The [private Selection iterator continuation](evidence/rust-migration/r8-selection-callback-trace/README.md)
+matches primitive iterator, missing/noncallable `next`, and primitive next
+result failures without rereading caller objects. The 30-case same-host
+Node/Bun/Chromium receipt is private; arbitrary callback and resource-limit
+parity, complete host behavior and default selection remain open. The
+[selected-key capture observer](evidence/rust-migration/r8-python-captured-graph-selected-key/README.md)
+also remains private after 124 passing CPython overlay tests and three
+subtests; it consumes live reads after terminal and Join-owner preflight and
+must not retry Python after `unsupported-after-read`.
+
+The [artifact-reference Rust core](evidence/rust-migration/r8-artifact-reference-core/README.md)
+now computes the ordered diagnostic pass after structural domain-pack
+validation. Sol reviewed a one-diagnostic duplicate correction and exact
+UTF-16 key handling; two focused Rust tests pass. A follow-on
+[bounded opt-in Node/WASM wire route](evidence/rust-migration/r8-artifact-reference-binding/README.md)
+matches four focused Node tests after structural pack validation and passes two
+Rust wire tests. Its inspection dimensions are capped. The
+[real Chromium opt-in receipt](evidence/rust-migration/r8-artifact-reference-binding/README.md)
+also matches exact UTF-16 diagnostics and refusal controls. Installed-package
+replay remains open. No default route
+selects it, so it retires no executable gap. The next dependency is installed
+same-host differential evidence, then an explicit default-route decision that
+respects the structural-validation precondition.
+
+The metamodel compiler outputs were regenerated after the new Rust module,
+and the nine-resource Python action-runtime manifest was synchronized from
+those canonical spec outputs. `check:metamodel` and the action-runtime
+manifest check pass. The final action-plan identity, R8 inventory/ledger and
+all release gates must be refreshed after concurrent default-route work
+settles. Neither private slice retires an executable default-route gap.
+
+### R8 Selection false-result and JavaScript numeric route — 2026-10-26
+
+The [private Selection false-result receipt](evidence/rust-migration/r8-selection-kind-runtime-false-refusal/README.md)
+extends the callback protocol through the `kindRuntime.valid === false`
+branch. Rust reads the live diagnostics only after the false validity result;
+the host applies live `JSON.stringify` and native Error coercion. Sol reran the
+seven focused Rust tests, four focused Bun tests, and 36 exact outcomes and
+traces in Node. The checked-in Node, Bun and real-Chromium receipts also report
+36/36 outcomes and traces each. The true-success branch, arbitrary host
+effects, resource-order parity and V4 default selection remain open.
+
+The [five CONTRACT-049 JavaScript numeric V4 bindings](evidence/rust-migration/r8-javascript-numeric-default-route/README.md)
+select the retained Rust engine through exact Node and browser facades. The
+strict unified-client checker continues to scan every `src/access/` file, with
+exact audited per-file imports; its negative controls reject new imports and
+host hooks. The private installed replay passed 27 independent numeric oracle
+vectors and same-host refusal, proxy-trace and context controls in Node, Bun
+and Chromium. That archive required 11 generated-source transforms, so the
+receipt is behavior-only: current-source fixed-point packaging, focused
+resource-bound qualification and retirement remain open. The explicit
+`./reference` route continues to execute TypeScript.
+
+The ledger now recognizes these five opt-in Rust operations as source-selected
+only, preserving a single logical gap per export and condition-specific route
+status. The [regenerated inventory and ledger](evidence/rust-migration/r8-symbol-inventory/README.md)
+record 922 logical executable gaps, 72 accepted opt-in Rust mappings and 850
+unmapped names; the 49-case ledger suite passes. Metamodel, Python resource
+mirror, action-plan identity and real-Chromium metamodel checks pass for this
+source cohort. Installed fixed-point replay, focused resource qualification and
+the release matrix still gate any full-port, merge or release claim.

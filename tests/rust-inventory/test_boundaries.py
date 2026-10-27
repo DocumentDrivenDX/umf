@@ -45,6 +45,8 @@ class BoundaryRuleTests(unittest.TestCase):
             self.assertEqual("retired-python-core-runtime", findings[0]["rule"])
         findings = MODULE.scan_text("bindings/core/node/index.js", "import {validateDocument} from '../../../../src/validation/document';")
         self.assertEqual("rust-binding-semantic-fallback", findings[0]["rule"])
+        self.assertEqual([], MODULE.scan_text("bindings/core/node/tests/reference.test.js", "import {validateDocument} from '../../../../src/validation/document';"))
+        self.assertEqual("rust-binding-semantic-fallback", MODULE.scan_text("bindings/core/node/src/reference.js", "import {validateDocument} from '../../../../src/validation/document';")[0]["rule"])
         self.assertEqual([], MODULE.scan_text("src/validation/document.ts", "import {validate} from './reference'"))
 
     def test_cross_package_private_import_is_rejected(self):

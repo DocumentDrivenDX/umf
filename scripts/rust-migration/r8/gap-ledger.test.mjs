@@ -38,7 +38,7 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
   const entries = new Map(inventoryReceipt.defaultRouteEntrySelections.map(selection => [selection.routeId, selection]));
   for (const routeId of ['package-root-node', 'package-root-browser']) {
     const selection = entries.get(routeId);
-    assert.equal(selection.directExportCount, 45);
+    assert.equal(selection.directExportCount, 50);
     assert.ok(expected.every(name => selection.directExports.includes(name)), `${routeId} misses an override`);
     const rows = ledger.rows.filter(row => row.routeId === routeId && expected.includes(row.exportName));
     assert.equal(rows.length, expected.length);
@@ -55,11 +55,48 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
   assert.equal(reference.length, expected.length);
   assert.ok(reference.every(row => row.sourceSelectedImplementation === null));
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
-  assert.equal(ledger.counts.sourceSelectedRustOverrides, 90);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 100);
   const archivedGate = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/gate-result.json', 'utf8'));
   assert.equal(archivedGate.status, 'pass');
   assert.equal(archivedGate.archive.sourceClosureSha256, '6f4f21c1dfbdde5959f6e5386419c0c2f90b3a8f0512d148b60825e93afce593');
   assert.equal(archivedGate.boundedOperations, 24);
+});
+
+test('five JavaScript numeric root bindings retain exact Rust ownership without retiring gaps', () => {
+  const ledger = currentGeneratedLedger();
+  const currentInventory = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/inventory.json', 'utf8'));
+  const names = ['exactDecimal', 'integerFromBigInt', 'integerToBigInt', 'admitJavascriptNumber', 'numericToNumberLossless'];
+  for (const name of names) {
+    const rows = ['package-root-node', 'package-root-browser', 'package-reference']
+      .map(routeId => ledger.rows.find(row => row.routeId === routeId && row.exportName === name));
+    assert.ok(rows.every(Boolean), `${name} is missing a condition route`);
+    assert.equal(new Set(rows.map(row => row.logicalDeclarationKey)).size, 1, `${name} must count once`);
+    for (const row of rows.slice(0, 2)) {
+      assert.equal(row.sourceSelectedImplementation.status, 'source-selected-only');
+      assert.match(row.acceptedRustOperation, /^umf_core::javascript_numeric::/);
+      assert.equal(row.bindingRouteStatus, 'unproven');
+      assert.match(row.disposition, /retirement gap remains open/);
+    }
+    assert.equal(rows[2].sourceSelectedImplementation, null);
+    assert.equal(rows[2].implementationStatus, 'TypeScript reference implementation remains explicit');
+    const declarations = ['package-root-node', 'package-root-browser', 'package-reference']
+      .map(routeId => currentInventory.symbols.find(row => row.routeId === routeId && row.exportName === name));
+    assert.ok(declarations.every(Boolean));
+    assert.deepEqual(declarations.map(row => [row.source, row.declarationKind]), [
+      ['src/index-node-v4.ts', 'BindingElement'],
+      ['src/index-browser-v4.ts', 'BindingElement'],
+      ['src/adapters/javascript-numeric.ts', 'FunctionDeclaration'],
+    ]);
+    for (const mutation of [
+      row => ({ ...row, source: 'src/index.ts' }),
+      row => ({ ...row, declarationKind: 'FunctionDeclaration' }),
+      row => ({ ...row, declarationName: `${name}Alias` }),
+    ]) {
+      const changed = declarations.map(row => row.routeId === 'package-root-node' ? mutation(row) : row);
+      assert.throws(() => buildLedger({ ...args, inventory: { symbols: changed } }), /declaration multiplicity differs/);
+    }
+  }
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
 });
 
 test('securityNot normalizes only the exact V4 binding and TypeScript reference declaration shapes', () => {
@@ -170,8 +207,8 @@ test('Schema Properties source selections keep exact CONTRACT-049 mappings separ
     assert.equal(reference.sourceSelectedImplementation, null);
     assert.equal(reference.implementationStatus, 'TypeScript reference implementation remains explicit');
   }
-  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 67);
-  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 855);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 72);
+  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 850);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
   const aggregate = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/aggregate.json', 'utf8'));
   const aggregateNames = Object.values(aggregate.families).flatMap(family => family.operations);

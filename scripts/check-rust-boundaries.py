@@ -77,7 +77,10 @@ def scan_text(path: str, source: str, *, allowed_debt: dict[str, dict[str, objec
     is_engine_source = path.startswith("src/") or path.startswith("python/src/") or path.startswith("python/umf_access/src/") or path.startswith("python/umf_codegen/src/") or path.startswith("bindings/")
     if path.startswith("python/src/umf/") and path.endswith(".py") and RETIRED_CORE_RUNTIME_IMPORTS.search(source):
         findings.append({"rule": "retired-python-core-runtime", "path": path, "message": "Production Python core imports a retired schema/YAML semantic runtime"})
-    if path.startswith("bindings/core/") and path.endswith((".ts", ".js", ".mjs")) and RUST_BINDING_FALLBACK.search(source):
+    # Binding tests compare against the independent TypeScript oracle. The
+    # fallback prohibition applies to shipped binding code, not test fixtures.
+    binding_test = re.match(r"^bindings/core/[^/]+/tests/", path) is not None
+    if path.startswith("bindings/core/") and not binding_test and path.endswith((".ts", ".js", ".mjs")) and RUST_BINDING_FALLBACK.search(source):
         findings.append({"rule": "rust-binding-semantic-fallback", "path": path, "message": "Production Rust binding reaches the separate TypeScript reference semantic implementation"})
     if is_engine_source and FORBIDDEN_TS_IMPORTS.search(source):
         findings.append({"rule": "forbidden-javascript-engine-import", "path": path, "message": "UMF library source imports a JavaScript engine/runtime loader"})
