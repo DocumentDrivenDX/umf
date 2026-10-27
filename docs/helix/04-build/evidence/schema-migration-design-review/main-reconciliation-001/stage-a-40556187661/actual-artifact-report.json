@@ -1,0 +1,161 @@
+{
+  "status": "SUCCESSFUL_STAGE_A_ARTIFACT_ONLY_GENERATION; not source adoption or qualification",
+  "workflowRun": {
+    "id": 40556187661,
+    "attempt": 1,
+    "status": "completed",
+    "conclusion": "success",
+    "branch": "codex/migration-main-metering-generation",
+    "event": "push",
+    "sourceCommit": "a2cc9c2ff5510d0b6653d50102bd406e3b4556c6",
+    "sourceTree": "bf5dd87d56295c24837885d27ccf8c19bbb78a56",
+    "workflowPath": ".github/workflows/r2-metering-stage-a.yml",
+    "workflowSha": "a2cc9c2ff5510d0b6653d50102bd406e3b4556c6",
+    "startedAt": "2026-10-27T18:02:19Z",
+    "completedUpdatedAt": "2026-10-27T18:04:29Z",
+    "jobId": 122372748412,
+    "jobName": "generate-accounted-companion",
+    "jobConclusion": "success"
+  },
+  "artifact": {
+    "id": 12757082809,
+    "name": "umf-r2-metering-stage-a-40556187661-1",
+    "sizeInBytes": 1532353,
+    "sha256": "122767b97a6da87342321e133a033693fd83df759f939f1bc41c56928c89fc37",
+    "createdAt": "2026-10-27T18:04:27Z",
+    "expiresAt": "2026-11-03T18:04:26Z",
+    "zipPath": "/private/tmp/migration-stageA-40556187661/umf-r2-metering-stage-a-40556187661-1.zip",
+    "members": [
+      {
+        "name": "core-validators-accounted.ts",
+        "bytes": 1525352,
+        "sha256": "5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29"
+      },
+      {
+        "name": "generator.log",
+        "bytes": 844,
+        "sha256": "42b3749d1e615976f34973bec14ed6d4ce50b76df7be1fab2dc6c37f7b013bbb"
+      },
+      {
+        "name": "identity.txt",
+        "bytes": 1249,
+        "sha256": "ebe83a3804e69c1862d487d098f400fa4ea3a9e462d9ec02bc29009bf502e17f"
+      },
+      {
+        "name": "install.log",
+        "bytes": 1055,
+        "sha256": "ca83ae847ef0f72c51ef0edce034dce2a5e539143020759ac77bebfe0c726d5c"
+      },
+      {
+        "name": "manifest.json",
+        "bytes": 2231,
+        "sha256": "67570dddf2c1218381d55ce8e9e7c026e0087772790d6dd9f9f6115e60a8ec79"
+      },
+      {
+        "name": "source-pins.sha256",
+        "bytes": 858,
+        "sha256": "2c3071baeb289c5bc41ce903dbb4597f14cb471e316259baac252887bdfc454c"
+      }
+    ],
+    "uncompressedTotalBytes": 1531589
+  },
+  "manifest": {
+    "profile": "umf.r2-metering-generated-companion/1",
+    "run": {
+      "eventName": "push",
+      "id": "40556187661",
+      "attempt": "1",
+      "sha": "a2cc9c2ff5510d0b6653d50102bd406e3b4556c6",
+      "ref": "refs/heads/codex/migration-main-metering-generation",
+      "workflowRef": "DocumentDrivenDX/umf/.github/workflows/r2-metering-stage-a.yml@refs/heads/codex/migration-main-metering-generation",
+      "workflowSha": "a2cc9c2ff5510d0b6653d50102bd406e3b4556c6"
+    },
+    "inputs": [
+      {
+        "path": "src/generated/core-validators.ts",
+        "kind": "source",
+        "sha256": "563602e0f21f6d6b0efd1ae069dbda28926e085585b4bf0430347b65ff2bd0ff",
+        "bytes": 305070
+      },
+      {
+        "path": "spec/core/schema.json",
+        "kind": "schema",
+        "sha256": "c6004664eb93dcef28ce6e0583f91225b618aa0fb42967a892242402557cf71d",
+        "bytes": 45342
+      },
+      {
+        "path": "spec/core/semantic-type-reference.schema.json",
+        "kind": "schema",
+        "sha256": "207abbad54ebf8c660a958e2deda072a5a3236b5b8df5af8a8656f90c3e46ba9",
+        "bytes": 45463
+      },
+      {
+        "path": "spec/core/extension-package.schema.json",
+        "kind": "schema",
+        "sha256": "4df3c8f92c5baa2c52f965d83b681ff306392bf9ba333bd39213a8f1065ac766",
+        "bytes": 45001
+      }
+    ],
+    "lockedFiles": [
+      {
+        "path": "package.json",
+        "sha256": "c7b69fba001805dc9cd4e26e84a9b786be379c1413d020c34600c063d287101b"
+      },
+      {
+        "path": "bun.lock",
+        "sha256": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4"
+      },
+      {
+        "path": "bunfig.toml",
+        "sha256": "b9fc65eca9014c5179380259d70e76385a6a80788fa9a2df5fb3eaa5554fd2fe"
+      },
+      {
+        "path": "scripts/metamodel/structural-accounting.ts",
+        "sha256": "a5071f3512145e772007339c80de8100d95c873279d9fda519eef5be6681e9b7"
+      }
+    ],
+    "generator": {
+      "path": "scripts/metamodel/structural-accounting.ts",
+      "invocationCount": 1,
+      "outputPurpose": "stage-a"
+    },
+    "output": {
+      "path": "core-validators-accounted.ts",
+      "sha256": "5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29",
+      "bytes": 1525352
+    },
+    "execution": {
+      "artifactOnly": true,
+      "companionEvaluated": false,
+      "publicValidatorChanged": false
+    }
+  },
+  "identityText": "profile=umf.r2-metering-stage-a/1\nevent=push\nref=refs/heads/codex/migration-main-metering-generation\ncommit=a2cc9c2ff5510d0b6653d50102bd406e3b4556c6\nworkflow_ref=DocumentDrivenDX/umf/.github/workflows/r2-metering-stage-a.yml@refs/heads/codex/migration-main-metering-generation\nworkflow_sha=a2cc9c2ff5510d0b6653d50102bd406e3b4556c6\nrun_id=40556187661\nattempt=1\nrunner=ubuntu-24.04\nbun_version=1.4.3\nbun_path=/home/runner/.bun/bin/bun\nbun_binary_sha256=7ce7d6b654eddeec20afddf2396317fba6dc19ab52788a27e894e1806bf8f24b\npin_manifest=qualification-inputs/r2-metering-stage-a.sha256\npin_manifest_sha256=2c3071baeb289c5bc41ce903dbb4597f14cb471e316259baac252887bdfc454c\ninstall_exit=0\nargv=python3 bounded-capture timeout=160 bun install --frozen-lockfile --ignore-scripts\nexit=0 bytes_written=1055 aggregate_log_overflow=false timed_out=false\ntypescript_api_version=5.9.3\ngenerator_exit=0\nargv=python3 bounded-capture timeout=90 bun scripts/qualification/r2-metering-generate.ts\nexit=0 bytes_written=844 aggregate_log_overflow=false timed_out=false\ncompanion_sha256=5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29\ncompanion_bytes=1525352\nmanifest_sha256=67570dddf2c1218381d55ce8e9e7c026e0087772790d6dd9f9f6115e60a8ec79\nmanifest_bytes=2231\n",
+  "sourcePinsText": "563602e0f21f6d6b0efd1ae069dbda28926e085585b4bf0430347b65ff2bd0ff  src/generated/core-validators.ts\nc6004664eb93dcef28ce6e0583f91225b618aa0fb42967a892242402557cf71d  spec/core/schema.json\n207abbad54ebf8c660a958e2deda072a5a3236b5b8df5af8a8656f90c3e46ba9  spec/core/semantic-type-reference.schema.json\n4df3c8f92c5baa2c52f965d83b681ff306392bf9ba333bd39213a8f1065ac766  spec/core/extension-package.schema.json\na5071f3512145e772007339c80de8100d95c873279d9fda519eef5be6681e9b7  scripts/metamodel/structural-accounting.ts\ne865dffcdedec0b996b6345a38c7a010d780dfb93b33eb8712b88914e7c0add5  scripts/qualification/r2-metering-generate.ts\nc7b69fba001805dc9cd4e26e84a9b786be379c1413d020c34600c063d287101b  package.json\n5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4  bun.lock\nb9fc65eca9014c5179380259d70e76385a6a80788fa9a2df5fb3eaa5554fd2fe  bunfig.toml\n",
+  "checks": {
+    "exactSixMemberRoster": true,
+    "pinManifestSha256": "2c3071baeb289c5bc41ce903dbb4597f14cb471e316259baac252887bdfc454c",
+    "manifestOutputMatchesCompanion": true,
+    "inputRosterExact4": true,
+    "workflowSixMemberAndAllCurrentCaps": true,
+    "combinedInstallGeneratorLogsBytes": 1899,
+    "perLogBytes": {
+      "install.log": 1055,
+      "generator.log": 844
+    },
+    "companionUnder4000000": true,
+    "manifestUnder16384": true,
+    "eachLogUnder1000000": true,
+    "combinedLogsUnder1000000": true,
+    "artifactUnder16000000": true
+  },
+  "files": {
+    "core-validators-accounted.ts": "/private/tmp/migration-stageA-40556187661/core-validators-accounted.ts",
+    "generator.log": "/private/tmp/migration-stageA-40556187661/generator.log",
+    "identity.txt": "/private/tmp/migration-stageA-40556187661/identity.txt",
+    "install.log": "/private/tmp/migration-stageA-40556187661/install.log",
+    "manifest.json": "/private/tmp/migration-stageA-40556187661/manifest.json",
+    "source-pins.sha256": "/private/tmp/migration-stageA-40556187661/source-pins.sha256"
+  },
+  "restriction": "Companion source content was not viewed, parsed, executed, or used as qualification evidence; only bytes/size/SHA-256 were inspected."
+}

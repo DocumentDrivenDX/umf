@@ -1,0 +1,15 @@
+ 7 | const GENERATED_SOURCE_SHA256='4a88fd9bc398c56d71e535841322dcf10d2851e16b026c14679e2d79062e90a7';
+ 8 | const EXPECTED_VALIDATORS={checkCore:'validate20',checkSemanticTypeReference:'validate44',checkPackage:'validate57',checkCoreLiteral:'validate58',checkSemanticTypeReferences:'validate61'} as const;
+ 9 | const ACCOUNTING_PATH='/generated/core';
+10 | let generatedCallableNames=new Set<string>();
+11 | let activeTransformationContext:ts.TransformationContext|undefined;
+12 | function fail(code:string,detail:string):never{throw new Error(`STRUCTURAL_ACCOUNTING_${code}:${detail}`);}
+                                                              ^
+error: STRUCTURAL_ACCOUNTING_SOURCE_PIN:generated standalone bytes differ
+      at fail (/home/runner/work/umf/umf/scripts/metamodel/structural-accounting.ts:12:58)
+      at structuralAccountingSource (/home/runner/work/umf/umf/scripts/metamodel/structural-accounting.ts:257:55)
+      at main (/home/runner/work/umf/umf/scripts/qualification/r2-metering-generate.ts:65:18)
+
+::error file=scripts/metamodel/structural-accounting.ts,line=12,col=58,title=error: STRUCTURAL_ACCOUNTING_SOURCE_PIN%3Agenerated standalone bytes differ::%0A      at fail (/home/runner/work/umf/umf/scripts/metamodel/structural-accounting.ts:12:58)%0A      at structuralAccountingSource (/home/runner/work/umf/umf/scripts/metamodel/structural-accounting.ts:257:55)%0A      at main (/home/runner/work/umf/umf/scripts/qualification/r2-metering-generate.ts:65:18)
+
+Bun v1.4.3 (Linux x64)

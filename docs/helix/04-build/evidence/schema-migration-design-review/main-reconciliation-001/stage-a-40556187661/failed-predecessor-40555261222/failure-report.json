@@ -1,0 +1,82 @@
+{
+  "run": {
+    "id": 40555261222,
+    "attempt": 1,
+    "status": "completed",
+    "conclusion": "failure",
+    "event": "push",
+    "branch": "codex/migration-main-metering-generation",
+    "sourceCommit": "1721fd7c0a747b87ba1e972e54a1dc1a222e0016",
+    "sourceTree": "6d69d058d8d7ca34c42f110a1c043b7d230e0488",
+    "startedAt": "2026-10-27T17:56:24Z",
+    "updatedAt": "2026-10-27T17:58:23Z"
+  },
+  "job": {
+    "id": 122369508079,
+    "name": "generate-accounted-companion",
+    "conclusion": "failure",
+    "step7": "Generate one artifact-only accounted companion: failure",
+    "checkout": "success",
+    "bun": "success",
+    "sourceCohort": "success",
+    "install": "success",
+    "finalize": "success",
+    "upload": "success"
+  },
+  "artifact": {
+    "id": 12756527373,
+    "name": "umf-r2-metering-stage-a-40555261222-1",
+    "apiBytes": 4965,
+    "apiDigest": "sha256:64828821d157a32f27730da79b37b3b7057e0c2690325fce75c9f6ee36bd6012",
+    "localZipBytes": 4965,
+    "localZipSha256": "64828821d157a32f27730da79b37b3b7057e0c2690325fce75c9f6ee36bd6012",
+    "createdAt": "2026-10-27T17:58:18Z",
+    "expiresAt": "2026-11-03T17:58:17Z",
+    "members": [
+      {
+        "name": "generator.log",
+        "bytes": 1511,
+        "sha256": "12d3aec0fd52bafac844ed484eefd4bdef0badeef127424d9a8e3dd10418672f"
+      },
+      {
+        "name": "identity.txt",
+        "bytes": 1043,
+        "sha256": "f4dd8eb57dd0af4e959d53bcc4457d077452ab8f89a553f4524cbd0dd0e4801f"
+      },
+      {
+        "name": "install.log",
+        "bytes": 1055,
+        "sha256": "bf53249ff66e1b83040d9cd94fadbaf07ff37a2cd94e1e031616eeed4c9c6e6d"
+      },
+      {
+        "name": "source-pins.sha256",
+        "bytes": 858,
+        "sha256": "d885bdc91de07b2df883395c967d6368ad7928f61f965cf6e00f9eb08e3938d0"
+      }
+    ]
+  },
+  "failure": {
+    "generatorExit": 1,
+    "stdoutBytes": 1511,
+    "stdoutSha256": "12d3aec0fd52bafac844ed484eefd4bdef0badeef127424d9a8e3dd10418672f",
+    "message": "STRUCTURAL_ACCOUNTING_SOURCE_PIN:generated standalone bytes differ",
+    "at": "scripts/metamodel/structural-accounting.ts:257",
+    "caller": "scripts/qualification/r2-metering-generate.ts:65",
+    "generatorLogPath": "/private/tmp/migration-stageA-40555261222/generator.log"
+  },
+  "receipt": {
+    "pinManifestSha256": "d885bdc91de07b2df883395c967d6368ad7928f61f965cf6e00f9eb08e3938d0",
+    "sourcePinsMemberSha256": "d885bdc91de07b2df883395c967d6368ad7928f61f965cf6e00f9eb08e3938d0",
+    "installExit": 0,
+    "typescriptApiVersion": "5.9.3",
+    "bunVersion": "1.4.3"
+  },
+  "artifactInterpretation": "Failure-only four-member diagnostic artifact. No manifest.json or core-validators-accounted.ts was emitted; no generated output exists to inspect, review, or adopt. The six-name roster remains the workflow success roster; failure evidence is retained as a four-member artifact.",
+  "files": {
+    "zip": "/private/tmp/migration-stageA-40555261222/umf-r2-metering-stage-a-40555261222-1.zip",
+    "identity": "/private/tmp/migration-stageA-40555261222/identity.txt",
+    "sourcePins": "/private/tmp/migration-stageA-40555261222/source-pins.sha256",
+    "installLog": "/private/tmp/migration-stageA-40555261222/install.log",
+    "generatorLog": "/private/tmp/migration-stageA-40555261222/generator.log"
+  }
+}
