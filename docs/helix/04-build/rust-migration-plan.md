@@ -7771,3 +7771,31 @@ assertion beside the current 3.11.17 assertion. The exact helper pin, Bun
 runner pin and test assertion were corrected, with a mismatched-helper
 negative control and 40 distribution-artifact tests passing locally. Hosted
 reruns of those corrections and all remaining Linux cohorts are still open.
+
+### R8 post-merge current-source replay refresh — 2026-10-27
+
+After merge `3e02db411`, the Compact five-case and Security And/Or 68-case
+source packets were replayed against one fresh 1,958-input build. The immutable
+manifest SHA-256 is
+`8b3a7fa5d854f709d6ca7888758e7099ef9b8c5707f0722bdc16f64735890cf2`; source
+closure SHA-256 is
+`0f8f116988ba2da74a13085790824cb9a4f2dc8deda9a5abdb2a594aa14f20dd`.
+Node 26.3.0, Bun 1.4.3, and Chromium 153.0.8010.12 pass the Compact cases
+with 14 Rust calls or WASM dispatches per host. They also pass all Security
+cases with 30 valid calls per host and zero invalid calls. The security fixture
+is byte-identical to the preserved packet fixture (SHA-256
+`d5dddb6766cadd5f9e3c45ef40f7d9fc8d5d486d59d3163b236477ef6966308d`). See
+the refreshed [Compact packet](evidence/rust-migration/r8-compact-dataset-verify-source/README.md)
+and [Security packet](evidence/rust-migration/r8-security-and-or-v4-source-replay-current/README.md)
+for receipt hashes and limits. These remain bounded source-replay evidence,
+not installed archive or release qualification.
+
+The packet checksums validate. The generated gap ledger was reviewed and
+regenerated for the refreshed receipts and merged metamodel inputs. Its 365
+value changes are provenance hashes only; route counts and dispositions remain
+unchanged at 922 open logical executable default routes and zero retired.
+The generated ledger SHA-256 is
+`5cbf92bddfe5a0053c44ccba8b23999fb1af48c4b09461d27af984ec21bf135e`.
+This checkpoint predates the new Cardinality acceptance test source; a later
+current-source replay and ledger refresh will be required after that test is
+integrated.
