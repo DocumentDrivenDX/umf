@@ -150,6 +150,13 @@ export function createSemanticTypeRegistry(options = {}) {
   const {controls} = codegenOptions(options);
   return createSemanticTypeRegistryEngine(addon, {getControlBridge:()=>hasControls(controls)?createControlBridge(controls):undefined,ErrorType:UmfCoreError});
 }
+
+/** Create the default-root registry adapter with the exact TypeScript callback contract. */
+export function createDefaultSemanticTypeRegistry(options = {}) {
+  if (typeof addon.executeSemanticValueWire !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
+  const {controls} = codegenOptions(options);
+  return createSemanticTypeRegistryEngine(addon, {getControlBridge:()=>hasControls(controls)?createControlBridge(controls):undefined,ErrorType:UmfCoreError,callbackProfile:'typescript'});
+}
 export {JsonSchemaUmfError as UmfError};
 function temporalResult(wire) {
   if (typeof wire === 'string' && wire.startsWith('ERR|')) {

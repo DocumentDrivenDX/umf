@@ -27,7 +27,9 @@ const allowedImports:Record<string,readonly string[]>={
  'rust-javascript-numeric-default.ts':['../adapters/javascript-numeric','../model/json','../model/errors'],
  'rust-relationships-default.ts':['../model/relationships','../model/types','../model/json','../model/errors'],
  'rust-record-type-default.ts':['../model/field-kind','../model/record-type','../model/types','../model/json','../model/errors'],
+ 'rust-record-values-default.ts':['../model/record-values'],
  'rust-schema-properties-default.ts':['../model/schema-properties','../model/schema-literals','../model/types'],
+ 'rust-semantic-types-default.ts':['../model/errors','../model/semantic-types','../model/types','../extensions/semantic-types'],
  'rust-selection-default.ts':['../model/selection','../model/types','../registry/registry'],
  'rust-runtime.ts':['../model/errors','./rust-candidate','./rust-host-reads-v3','./rust-host-reads-v4'],
  'table-client.ts':['../model/types','../extensions/tables','./types'],
@@ -39,7 +41,9 @@ const allowedImports:Record<string,readonly string[]>={
 const typeOnlyImports:Record<string,readonly string[]>={
  'rust-core-evolution-candidate.ts':['../model/types','../model/evolution'],
  'rust-record-type-default.ts':['../model/field-kind','../model/record-type','../model/types'],
+ 'rust-record-values-default.ts':['../model/record-values'],
  'rust-selection-default.ts':['../model/selection','../model/types','../registry/registry'],
+ 'rust-semantic-types-default.ts':['../model/semantic-types','../model/types','../extensions/semantic-types'],
  'rust-javascript-numeric-default.ts':['../adapters/javascript-numeric'],
 };
 const forbidden=new Set(['Bun','process','require','fetch','eval','Function','Buffer','XMLHttpRequest','WebSocket']);

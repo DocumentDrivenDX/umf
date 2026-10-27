@@ -1,0 +1,65 @@
+{
+  "format": "umf.r8.default-route-retirement-cohort/1",
+  "status": "pass",
+  "cohortId": "darwin-arm64",
+  "platform": {
+    "os": "darwin",
+    "arch": "aarch64",
+    "nodeArch": "arm64",
+    "nativeTarget": "aarch64-apple-darwin"
+  },
+  "archiveSha256": "ff89d87351b29e9762ac5bd76370944c437a1827e8dc5c32ede2fc53b8e2591a",
+  "sourceClosureSha256": "97e2325ecc8c630e13914027a2ca0f161f109843cb566faad0bf2fc96d254613",
+  "sourceInputCount": 3530,
+  "packageManifestSha256": "1bd5f6cc6db6a5e9ef0e395a19aa6504e8a9a130a2fcbd3faaf4effbac7bb23a",
+  "liveSourceManifestSha256": "ee1720fb9740e4623a6f2143f3be63dcb5379a86578a4d9c32400867cb1d4528",
+  "memberManifestSha256": "6dd21760ac768e78a47cd497dd0ea14af66ecf5f4fc10cf20014e47d655ee3b0",
+  "archiveMemberCount": 1803,
+  "receipts": {
+    "inspectCoreRelationships": {
+      "node": "f0d54f08474cbba001e771bc06c6ffea27078fe822e35323eec9b52ee7bbbf4d",
+      "bun": "cd2f5b624ccfcdda10143a33c59b6718685d630ed423593fe591a775db30d86d",
+      "chromium": "a9748a02fb0168feb6c136d06ee131a72e74f104ee954b00ce056e0224ac2160"
+    },
+    "lookupCoreRelationship": {
+      "node": "88ef7c676f7eb3d7c269cfbf0dd86bf2d34860094253ceb1320b28de3d892c2b",
+      "bun": "285a345e64d92b7584bffcb5118ecb4a6fdc0e788ce9259e4dfacb07bdb94ba3",
+      "chromium": "d7ce1f2a1d061ac4d0f908a9a003ab4c43f7f8570411dc7b894b2abb17c31a1e"
+    },
+    "declareCoreRelationship": {
+      "node": "cd3af50ffebcb72c188b2f14e862a3ff4b965929a47704809829b1f1119516ac",
+      "bun": "1510db497bc475dad3169066d4dfde3160f97a23a6ad265ffda9cafabfe44bab",
+      "chromium": "e798c418e1533441232cdab5c3c356612963736c7cb21d5c40ada30215051331"
+    },
+    "verifyCoreRelationshipOperation": {
+      "node": "c358422ff6c4000290eacc3b67ebc65bea6546dcf60bf77f0ed68cca8e5404b6",
+      "bun": "ba10b533d620d275f0b01f50fb976b40d14cd80fe3286478db5ef3252f1caf2b",
+      "chromium": "abb97524f8d439f317d7e447544cd5381f3b624ffdb0cf397a92b9f87f7f2c03"
+    },
+    "inspectCoreScalarType": {
+      "node": "82f7ca6476b6913191d32632b00b90e82fbe1a0e519fcbaa74d6b2ea26891e0a",
+      "bun": "50ef8b03ba14962eb11b90da5687ff8aa94a1770dbf65786b1a20b85817cb4bc",
+      "chromium": "46f46afa6a96969a3bea0a289bd4471080070081d0eef70e46927e08befa6445"
+    },
+    "inspectCoreRecordMembers": {
+      "node": "14ef9e6887291617b81bfed8831d7bdac8a27a0148146cd50c7dd8722027e504",
+      "bun": "914e3f306207d54edfd707c2a0f4a11959c0f752d05c346459fbba4dfb26953e",
+      "chromium": "9f4f5dc84b2a8fee1df0ee4205f9e15b04a91684b810cca91371c1fb60216f8f"
+    },
+    "inspectCoreReferenceLinks": {
+      "node": "c62e1074d7c5a53d2609dd529f06022f75760c40577030b802205e16c780e9ee",
+      "bun": "d638a6eb42b3ebd5d82de54825d5e72554f78b9c472f64b4f9f74f6365a7b853",
+      "chromium": "cec5f7c2de6e9c07b8c833570ce9d5d8d1dc40c8c2758942599836aea316aa9f"
+    },
+    "validateCsvBooleanLexical": {
+      "node": "06fc58e229ed80993017e0c696b968cd27d7fae3c991c7a137d3563ba0b9a9e6",
+      "bun": "8967be950b15e93d876d13cefaa1bc44848c734dbfd6ffdcfd12b5b1e76cf79d",
+      "chromium": "18d7d140ac87f8eb4a504aa5dad77cfc8af6973aa18c6d2f67fcb19f3a1e9e3a"
+    },
+    "verifyCsvBooleanLexical": {
+      "node": "787243188a9c919a0cbb6db7c2788c5e48159cc8493c76c6c4133ef7b8ce77ff",
+      "bun": "cab136fc91a0038a6c5d00241c236f7b0d7ce8d418e412164a222a2e163a83a9",
+      "chromium": "f39eae7a4237465c23df835db728820c0db5d1672633c8c15f337202df1fa7c5"
+    }
+  }
+}

@@ -59,6 +59,35 @@ test('the Record Type facade cannot restore a predecessor value import', () => {
 		.toContain('rust-record-type-default.ts: value re-export from type-only module ../model/record-type');
 });
 
+test('the Record Values facade keeps its predecessor import type-only and isolated', () => {
+	const source = "import type {CoreRecordValueCheck} from '../model/record-values';\n";
+	expect(checkAccessSource('rust-record-values-default.ts', source)).toEqual([]);
+	expect(checkAccessSource('rust-record-type-default.ts', source)).toContain(
+		'rust-record-type-default.ts: unapproved import ../model/record-values',
+	);
+	expect(checkAccessSource('rust-record-values-default.ts',
+		"import {validateCoreRecordValues} from '../model/record-values';\n"))
+		.toContain('rust-record-values-default.ts: value import from type-only module ../model/record-values');
+	expect(checkAccessSource('rust-record-values-default.ts',
+		"export * from '../model/record-values';\n"))
+		.toContain('rust-record-values-default.ts: value re-export from type-only module ../model/record-values');
+});
+
+test('the Semantic Types facade cannot import executable predecessor semantics', () => {
+	expect(checkAccessSource('rust-semantic-types-default.ts',
+		"import type {CoreSemanticTypeIdentity} from '../model/semantic-types';\n"))
+		.toEqual([]);
+	expect(checkAccessSource('rust-semantic-types-default.ts',
+		"import {validateCoreSemanticTypeValue} from '../model/semantic-types';\n"))
+		.toContain('rust-semantic-types-default.ts: value import from type-only module ../model/semantic-types');
+	expect(checkAccessSource('rust-semantic-types-default.ts',
+		"import {SemanticTypeRegistry} from '../extensions/semantic-types';\n"))
+		.toContain('rust-semantic-types-default.ts: value import from type-only module ../extensions/semantic-types');
+	expect(checkAccessSource('rust-record-values-default.ts',
+		"import type {CoreSemanticTypeIdentity} from '../model/semantic-types';\n"))
+		.toContain('rust-record-values-default.ts: unapproved import ../model/semantic-types');
+});
+
 test('the Core Evolution candidate keeps predecessor declarations type-only', () => {
 	const allowed = checkAccessSource(
 		'rust-core-evolution-candidate.ts',

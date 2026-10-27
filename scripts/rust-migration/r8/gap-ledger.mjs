@@ -541,7 +541,7 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
       && declaration.declarationKind === 'BindingElement'
       && declaration.initializerShape === 'not-applicable') {
     const operation = exportName === 'securityAnd' ? 'security_and' : 'security_or';
-    const evidenceDir = 'docs/helix/04-build/evidence/rust-migration/r8-security-and-or-v4-source-replay';
+    const evidenceDir = 'docs/helix/04-build/evidence/rust-migration/r8-security-and-or-v4-source-replay-current';
     const evidencePaths = ['predecessor.json', 'node.json', 'bun.json', 'chromium.json'].map(file => `${evidenceDir}/${file}`);
     const receipts = ['node', 'bun', 'chromium'].map(host => ({ host, receipt: json(`${evidenceDir}/${host}.json`) }));
     const predecessorPath = `${evidenceDir}/predecessor.json`;
@@ -2169,6 +2169,25 @@ function logicalDeclarationSignature(row) {
         : row.routeId === 'package-reference'
           ? row.source === 'src/extensions/binding/raw-profiles.ts' && row.declarationKind === 'VariableDeclaration' && row.initializerShape === 'call-expression'
           : false);
+  // These exact V4 selections differ in declaration shape from the retained
+  // TypeScript reference. Shape normalization neither proves Rust parity nor
+  // retires any logical gap; source, kind and initializer drift still fail.
+  const newlySelectedReferenceShapes = {
+    validateCoreRecordValues: ['src/model/record-values.ts', 'FunctionDeclaration'],
+    SemanticTypeRegistry: ['src/extensions/semantic-types/index.ts', 'ClassDeclaration'],
+    validateSemanticTypeValue: ['src/extensions/semantic-types/index.ts', 'FunctionDeclaration'],
+    validateCoreSemanticTypeValue: ['src/model/semantic-types.ts', 'FunctionDeclaration'],
+  };
+  const newlySelectedReferenceShape = newlySelectedReferenceShapes[row.exportName];
+  const newDefaultConditionShape = newlySelectedReferenceShape
+    && row.declarationName === row.exportName
+    && (row.routeId === 'package-root-node'
+      ? row.source === 'src/index-node-v4.ts' && row.declarationKind === (row.exportName === 'validateCoreRecordValues' ? 'VariableDeclaration' : 'BindingElement') && row.initializerShape === (row.exportName === 'validateCoreRecordValues' ? 'call-expression' : 'not-applicable')
+      : row.routeId === 'package-root-browser'
+        ? row.source === 'src/index-browser-v4.ts' && row.declarationKind === (row.exportName === 'validateCoreRecordValues' ? 'VariableDeclaration' : 'BindingElement') && row.initializerShape === (row.exportName === 'validateCoreRecordValues' ? 'call-expression' : 'not-applicable')
+        : row.routeId === 'package-reference'
+          ? row.source === newlySelectedReferenceShape[0] && row.declarationKind === newlySelectedReferenceShape[1] && row.initializerShape === 'not-applicable'
+          : false);
   const relationshipConsumerReferenceShapes = {
     'avro-projection': ['src/core-ideals/relationship-avro-projection.ts', 'VariableDeclaration', 'other-expression'],
     'tablespec-projection': ['src/core-ideals/relationship-tablespec-projection.ts', 'VariableDeclaration', 'other-expression'],
@@ -2195,7 +2214,7 @@ function logicalDeclarationSignature(row) {
         : row.routeId === 'package-reference'
           ? row.source === relationshipConsumerReferenceShape[0] && row.declarationKind === relationshipConsumerReferenceShape[1] && row.initializerShape === relationshipConsumerReferenceShape[2]
           : false);
-  const kind = (conditionBoundExport || numericConditionShape || securityNotConditionShape || securityAndOrConditionShape || rawTableBindingConditionShape || relationshipConsumerConditionShape)
+  const kind = (conditionBoundExport || numericConditionShape || securityNotConditionShape || securityAndOrConditionShape || rawTableBindingConditionShape || relationshipConsumerConditionShape || newDefaultConditionShape)
     && ['package-root-node', 'package-root-browser', 'package-reference'].includes(row.routeId)
     ? 'condition-selected-root-binding'
     : row.declarationKind;

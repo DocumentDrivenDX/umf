@@ -476,8 +476,10 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
   const entries = new Map(inventoryReceipt.defaultRouteEntrySelections.map(selection => [selection.routeId, selection]));
   for (const routeId of ['package-root-node', 'package-root-browser']) {
     const selection = entries.get(routeId);
-    assert.equal(selection.directExportCount, 78);
+    assert.equal(selection.directExportCount, 82);
     assert.ok(expected.every(name => selection.directExports.includes(name)), `${routeId} misses an override`);
+    assert.ok(['validateCoreRecordValues','SemanticTypeRegistry','validateSemanticTypeValue','validateCoreSemanticTypeValue']
+      .every(name => selection.directExports.includes(name)), `${routeId} misses a new V4 selection`);
     const rows = ledger.rows.filter(row => row.routeId === routeId && expected.includes(row.exportName));
     assert.equal(rows.length, expected.length);
     assert.ok(rows.every(row => row.sourceSelectedImplementation !== null));
@@ -2744,7 +2746,7 @@ test('securityAnd/securityOr V4 bindings normalize exactly and carry source-only
       assert.equal(row.bindingRouteStatus, 'unproven');
       assert.equal(row.defaultRouteRetirement.status, 'open');
       for (const host of ['node', 'bun', 'chromium']) {
-        assert.ok(row.sourceSelectedImplementation.qualificationEvidenceClosure.some(item => item.path.endsWith(`/r8-security-and-or-v4-source-replay/${host}.json`)));
+        assert.ok(row.sourceSelectedImplementation.qualificationEvidenceClosure.some(item => item.path.endsWith(`/r8-security-and-or-v4-source-replay-current/${host}.json`)));
       }
     }
     const reference = ledger.rows.find(item => item.routeId === 'package-reference' && item.exportName === name);
@@ -2757,6 +2759,29 @@ test('securityAnd/securityOr V4 bindings normalize exactly and carry source-only
   const changed = symbols.map(row => row.routeId === 'package-root-node' && row.exportName === 'securityAnd'
     ? { ...row, declarationKind: 'FunctionDeclaration' } : row);
   assert.throws(() => buildLedger({ ...args, inventory: { symbols: changed } }), /declaration multiplicity differs/);
+});
+
+test('Record Values and Semantic Types V4 shapes normalize only exact declarations', () => {
+  const names = ['validateCoreRecordValues', 'SemanticTypeRegistry', 'validateSemanticTypeValue', 'validateCoreSemanticTypeValue'];
+  const symbols = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/inventory.json', 'utf8')).symbols
+    .filter(row => names.includes(row.exportName) && ['package-root-node', 'package-root-browser', 'package-reference'].includes(row.routeId));
+  assert.equal(symbols.length, 12);
+  const ledger = buildLedger({ ...args, inventory: { symbols } });
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 4);
+  for (const name of names) {
+    for (const routeId of ['package-root-node', 'package-root-browser']) {
+      const row = ledger.rows.find(item => item.routeId === routeId && item.exportName === name);
+      assert.equal(row.defaultRouteRetirement.status, 'open');
+    }
+  }
+  for (const name of names) {
+    const changed = symbols.map(row => row.routeId === 'package-root-node' && row.exportName === name
+      ? { ...row, declarationKind: 'FunctionDeclaration' } : row);
+    assert.throws(() => buildLedger({ ...args, inventory: { symbols: changed } }), /declaration multiplicity differs/);
+  }
+  const moved = symbols.map(row => row.routeId === 'package-root-browser' && row.exportName === 'validateSemanticTypeValue'
+    ? { ...row, source: 'src/access/rust-semantic-types-default.ts' } : row);
+  assert.throws(() => buildLedger({ ...args, inventory: { symbols: moved } }), /declaration multiplicity differs/);
 });
 
 test('bounded protection operations map to their reviewed Rust candidates without retiring default routes', () => {

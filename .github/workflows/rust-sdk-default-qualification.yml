@@ -52,9 +52,10 @@ jobs:
           rustc --version
           cargo --version
           wasm-bindgen --version
-      - run: bun run typecheck
       - name: Build native and browser SDK assets from a private source snapshot
         run: bun scripts/package-sdk-rust-default.ts
+      - name: Typecheck with generated WASM bindings present
+        run: bun run typecheck
       - name: Require fixed-point source and private qualification status
         run: >-
           bun -e 'const m=JSON.parse(await Bun.file("dist/rust-default-manifest.json").text());

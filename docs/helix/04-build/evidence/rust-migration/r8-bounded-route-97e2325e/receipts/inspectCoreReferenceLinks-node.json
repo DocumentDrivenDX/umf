@@ -1,0 +1,211 @@
+{
+  "format": "umf.r8.default-route-retirement-host-receipt/2",
+  "status": "pass",
+  "runtime": "node",
+  "hostVersion": "v26.12.1",
+  "cohortId": "darwin-arm64",
+  "hostPlatform": {
+    "os": "darwin",
+    "arch": "arm64"
+  },
+  "archiveSha256": "ff89d87351b29e9762ac5bd76370944c437a1827e8dc5c32ede2fc53b8e2591a",
+  "sourceClosureSha256": "97e2325ecc8c630e13914027a2ca0f161f109843cb566faad0bf2fc96d254613",
+  "packetSha256": "b53c9d0c228fe700bec8c5ac9d74196217590affb00621b9d733aa445b198181",
+  "defaultRoute": {
+    "routeId": "package-root-node",
+    "entryMember": "dist/umf-node.js",
+    "entrySha256": "b6d568c1ac5b391ebec107e22310a3e4c8f361f57656524ec8885e8e2d85c98c",
+    "artifactMembers": [
+      {
+        "path": "dist/umf_core_node.node",
+        "sha256": "65cb22e314409d9a497eb2d1f6d22c60f7b43b4428fec9ef192dc014e38d99dc"
+      }
+    ]
+  },
+  "referenceRoute": {
+    "routeId": "package-reference",
+    "entryMember": "dist/umf.js",
+    "entrySha256": "9b284b558cc4449fd4222aef35808205e840df430bde5f36dfe69dfbc1176e54",
+    "artifactMembers": []
+  },
+  "cases": [
+    {
+      "id": "inspectCoreReferenceLinks.known",
+      "defaultOutcome": {
+        "status": "returned",
+        "value": {
+          "identity": {
+            "element": "field",
+            "module": "m"
+          },
+          "meaning": {
+            "links": [
+              {
+                "index": 0,
+                "path": "/modules/0/elements/1/references/0",
+                "reference": {
+                  "element": "target",
+                  "module": "m",
+                  "role": "record-type"
+                },
+                "target": {
+                  "identity": {
+                    "element": "target",
+                    "module": "m"
+                  },
+                  "kind": "record",
+                  "path": "/modules/0/elements/2"
+                },
+                "typeAssertion": "unverified",
+                "uninterpretedPaths": []
+              }
+            ],
+            "state": "present"
+          },
+          "operation": "inspect-core-reference-links",
+          "path": "/modules/0/elements/1/references",
+          "provenance": "unverified",
+          "source": {
+            "id": "reference-links-fixture",
+            "modules": [
+              {
+                "elements": [
+                  {
+                    "extensions": {},
+                    "id": "owner",
+                    "kind": "record",
+                    "members": []
+                  },
+                  {
+                    "extensions": {},
+                    "id": "field",
+                    "kind": "field",
+                    "references": [
+                      {
+                        "element": "target",
+                        "module": "m",
+                        "role": "record-type"
+                      }
+                    ],
+                    "scalarType": "string"
+                  },
+                  {
+                    "extensions": {},
+                    "id": "target",
+                    "kind": "record",
+                    "members": []
+                  }
+                ],
+                "id": "m",
+                "namespace": "m"
+              }
+            ],
+            "umf": "0.10.0",
+            "vocabularies": {}
+          },
+          "version": "0.3.0"
+        }
+      },
+      "defaultTrace": [],
+      "defaultRustCalls": 1,
+      "referenceOutcome": {
+        "status": "returned",
+        "value": {
+          "identity": {
+            "element": "field",
+            "module": "m"
+          },
+          "meaning": {
+            "links": [
+              {
+                "index": 0,
+                "path": "/modules/0/elements/1/references/0",
+                "reference": {
+                  "element": "target",
+                  "module": "m",
+                  "role": "record-type"
+                },
+                "target": {
+                  "identity": {
+                    "element": "target",
+                    "module": "m"
+                  },
+                  "kind": "record",
+                  "path": "/modules/0/elements/2"
+                },
+                "typeAssertion": "unverified",
+                "uninterpretedPaths": []
+              }
+            ],
+            "state": "present"
+          },
+          "operation": "inspect-core-reference-links",
+          "path": "/modules/0/elements/1/references",
+          "provenance": "unverified",
+          "source": {
+            "id": "reference-links-fixture",
+            "modules": [
+              {
+                "elements": [
+                  {
+                    "extensions": {},
+                    "id": "owner",
+                    "kind": "record",
+                    "members": []
+                  },
+                  {
+                    "extensions": {},
+                    "id": "field",
+                    "kind": "field",
+                    "references": [
+                      {
+                        "element": "target",
+                        "module": "m",
+                        "role": "record-type"
+                      }
+                    ],
+                    "scalarType": "string"
+                  },
+                  {
+                    "extensions": {},
+                    "id": "target",
+                    "kind": "record",
+                    "members": []
+                  }
+                ],
+                "id": "m",
+                "namespace": "m"
+              }
+            ],
+            "umf": "0.10.0",
+            "vocabularies": {}
+          },
+          "version": "0.3.0"
+        }
+      },
+      "referenceTrace": [],
+      "referenceRustCalls": 0
+    },
+    {
+      "id": "inspectCoreReferenceLinks.accessor_source",
+      "defaultOutcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "NON_JSON",
+        "path": "/probe",
+        "message": "Hidden fields and accessors cannot be serialized faithfully"
+      },
+      "defaultTrace": [],
+      "defaultRustCalls": 0,
+      "referenceOutcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "NON_JSON",
+        "path": "/probe",
+        "message": "Hidden fields and accessors cannot be serialized faithfully"
+      },
+      "referenceTrace": [],
+      "referenceRustCalls": 0
+    }
+  ]
+}

@@ -13,15 +13,16 @@ export function frameWork() {
 }
 
 /** Caller-owned synchronous validator registry. Each call reconstructs the Rust registry. */
-export function createSemanticTypeRegistry(addon,{getControlBridge=()=>undefined,ErrorType=SemanticValueError}={}) {
+export function createSemanticTypeRegistry(addon,{getControlBridge=()=>undefined,ErrorType=SemanticValueError,callbackProfile='report-work'}={}) {
   const entries=[];
   const callbacks=new Map();
+  const localEntries=[];
   let nextToken=1;
   const invoke=(op,fields={},withHostControls=true)=>{
     const callbackMap=new Map(callbacks);
     const dispatcher=(token,requestWire)=>{
-      const validator=callbackMap.get(token);
-      if(!validator)return encodeWire({status:'threw',message:'Validator token is unavailable',reportedWork:0});
+      const callback=callbackMap.get(token);
+      if(!callback)return encodeWire({status:'threw',message:'Validator token is unavailable',reportedWork:0});
       let reportedWork=0;
       let reportFault;
       const reportWork=units=>{
@@ -40,7 +41,11 @@ export function createSemanticTypeRegistry(addon,{getControlBridge=()=>undefined
       let result;
       try {
         const input=fromWire(JSON.parse(requestWire));
-        result=validator(input.value,input.definition,Object.freeze({reportWork}));
+        const value=input.value;
+        if(callbackProfile==='typescript') {
+          const definition=fromWire(JSON.parse(encodeWire(callback.definition)));
+          result=callback.validator(value,definition);
+        } else result=callback(value,input.definition,Object.freeze({reportWork}));
       } catch(error) {
         return reportFault?resource(reportFault.code,reportFault.message):callbackFailure(error);
       }
@@ -69,13 +74,23 @@ export function createSemanticTypeRegistry(addon,{getControlBridge=()=>undefined
       const token=validator===undefined||!validFunction?null:nextToken++;
       const copiedReference=fromWire(JSON.parse(encodeWire(reference)));
       invoke('registry/admitReference',{entries:[],reference:copiedReference},false);
-      const candidate={reference:copiedReference,definition:fromWire(JSON.parse(encodeWire(definition))),validatorPresent:validator!==undefined,validatorIsFunction:validFunction,validatorToken:token};
+      const copiedDefinition=fromWire(JSON.parse(encodeWire(definition)));
+      const receiver={definition:copiedDefinition,validator};
+      const candidate={reference:copiedReference,definition:copiedDefinition,validatorPresent:validator!==undefined,validatorIsFunction:validFunction,validatorToken:token};
       invoke('registry/admit',{entries:[...entries,candidate]});
       entries.push(candidate);
-      if(token!==null)callbacks.set(token,validator);
+      if(callbackProfile==='typescript')localEntries.push({key:JSON.stringify([copiedReference.vocabulary,copiedReference.version,copiedReference.term]),receiver});
+      if(token!==null)callbacks.set(token,callbackProfile==='typescript'?receiver:validator);
       return this;
     },
-    lookup(reference){const result=invoke('registry/lookup',{entries,reference});return result===null?undefined:result;},
+    lookup(reference){
+      const result=invoke('registry/lookup',{entries,reference});
+      if(result===null)return undefined;
+      if(callbackProfile!=='typescript')return result;
+      const key=JSON.stringify([reference?.vocabulary,reference?.version,reference?.term]);
+      const local=localEntries.find(row=>row.key===key);
+      return local?fromWire(JSON.parse(encodeWire(local.receiver.definition))):result;
+    },
     check(reference,value){
       const copiedReference=fromWire(JSON.parse(encodeWire(reference)));
       const projection=entries.map(entry=>({reference:entry.reference,validatorPresent:entry.validatorToken!==null}));

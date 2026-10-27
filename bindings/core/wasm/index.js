@@ -84,14 +84,20 @@ function hasBrowserRuntime(host) {
 }
 
 /** Create the opt-in synchronous trusted semantic validator registry over WASM. */
-function createSemanticTypeRegistryAdmitted(module, controls) {
+function createSemanticTypeRegistryAdmitted(module, controls, callbackProfile = 'report-work') {
   if (typeof module?.executeSemanticValueWire !== 'function') throw new Error('WASM_BINDING_MISSING');
-  return createSemanticTypeRegistryWithWire(module, {getControlBridge: () => hasControls(controls) ? createControlBridge(controls) : undefined, ErrorType: UmfCoreError});
+  return createSemanticTypeRegistryWithWire(module, {getControlBridge: () => hasControls(controls) ? createControlBridge(controls) : undefined, ErrorType: UmfCoreError,callbackProfile});
 }
 
 export function createSemanticTypeRegistry(module, options = {}) {
   const {controls} = codegenOptions(options);
   return createSemanticTypeRegistryAdmitted(module, controls);
+}
+
+/** Create the default-root registry adapter with the exact TypeScript callback contract. */
+export function createDefaultSemanticTypeRegistry(module, options = {}) {
+  const {controls} = codegenOptions(options);
+  return createSemanticTypeRegistryAdmitted(module, controls, 'typescript');
 }
 
 /** Initialize the opt-in browser semantic value registry over the Rust/WASM module. */
@@ -101,6 +107,15 @@ export async function initializeSemanticValueWasm(loader = () => import('./pkg/u
   const module = await loader();
   if (typeof module.default === 'function') await module.default();
   return createSemanticTypeRegistryAdmitted(module, controls);
+}
+
+/** Initialize the default-root semantic registry with the TypeScript callback contract. */
+export async function initializeDefaultSemanticValueWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+  const {controls} = codegenOptions(options);
+  if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
+  const module = await loader();
+  if (typeof module.default === 'function') await module.default();
+  return createSemanticTypeRegistryAdmitted(module, controls, 'typescript');
 }
 
 export function createTemporalEngine(module) {

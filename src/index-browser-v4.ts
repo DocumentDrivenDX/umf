@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createPythonClientRustCandidateV4} from './browser-v4';
 import {initializePythonClientRustDefaultV4} from './access/rust-default-v4';
-import {initializeCoreModelRootWasm,createCoreRecordTypeEngine,createSecurityLogicEngine,createJavascriptNumericEngine,initializeBit128Wasm,initializeTemporalWasm,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError} from '../bindings/core/wasm/index.js';
+import {initializeCoreModelRootWasm,initializeCoreRecordValuesHostInputWasm,createDefaultSemanticTypeRegistry,createCoreRecordTypeEngine,createSecurityLogicEngine,createJavascriptNumericEngine,initializeBit128Wasm,initializeTemporalWasm,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError} from '../bindings/core/wasm/index.js';
 import {CORE_MODEL_RESOURCES} from './access/core-model-resources';
 import {bindCoreCardinalityRust} from './access/rust-cardinality-default';
 import {bindCoreDatasetValuesCompactRust} from './access/rust-dataset-values-compact-default';
@@ -14,6 +14,8 @@ import {bindCoreInspectorsRust} from './access/rust-core-inspectors-default';
 import {bindCoreSchemaPropertiesRust} from './access/rust-schema-properties-default';
 import {bindJavascriptNumericRust} from './access/rust-javascript-numeric-default';
 import {bindCoreRecordTypeRust} from './access/rust-record-type-default';
+import {bindCoreRecordValuesRust} from './access/rust-record-values-default';
+import {bindSemanticTypesRust} from './access/rust-semantic-types-default';
 import {createSecurityNotRustAdapter} from './extensions/security/rust-not-adapter';
 import {createSecurityLogicRustAdapter} from './extensions/security/rust-logic-adapter';
 import {createRawTableBindingInspector} from './extensions/binding/raw-profiles-inspector';
@@ -29,6 +31,9 @@ import {createRelationshipPostgresql} from './core-ideals/relationship-postgresq
 const generatePythonClient=await initializePythonClientRustDefaultV4(()=>createPythonClientRustCandidateV4());
 const wasmModule=await import('../bindings/core/wasm/pkg/umf_core_wasm.js');
 const model=await initializeCoreModelRootWasm(CORE_MODEL_RESOURCES,async()=>wasmModule);
+const recordValuesHost=await initializeCoreRecordValuesHostInputWasm(CORE_MODEL_RESOURCES,async()=>wasmModule);
+const validateCoreRecordValues=bindCoreRecordValuesRust(recordValuesHost);
+const {SemanticTypeRegistry,validateSemanticTypeValue,validateCoreSemanticTypeValue}=bindSemanticTypesRust(()=>createDefaultSemanticTypeRegistry(wasmModule),CORE_MODEL_RESOURCES);
 const securityEngine=createSecurityLogicEngine(wasmModule);
 const securityNot=createSecurityNotRustAdapter(securityEngine);
 const {securityAnd,securityOr}=createSecurityLogicRustAdapter(securityEngine);
@@ -57,5 +62,5 @@ const {projectRelationshipToExtra,verifyRelationshipExtra,recoverRelationshipExt
 const {projectRelationshipsToPostgresql,verifyRelationshipPostgresqlProjection,recoverRelationshipPostgresqlIdeal,recoverRelationshipPostgresqlNative}=createRelationshipPostgresql(relationshipConsumers);
 const {parseBits128,parseUuid,bits128FromBytes,bits128ToBytes,uuidFromBits128,uuidToBits128,compareBits128,bits128ToWords,bits128FromWords,bits128ToInteger,bits128FromInteger}=bindBit128Rust(await initializeBit128Wasm(),isBit128EngineError);
 export * from './index-v4-default';
-export {generatePythonClient,exactDecimal,integerFromBigInt,integerToBigInt,admitJavascriptNumber,numericToNumberLossless,inspectCoreCardinality,declareCoreCardinality,verifyCoreCardinalityDeclaration,validateCoreDatasetValuesCompact,inspectCoreFacets,declareCoreFacets,verifyCoreFacetDeclaration,historicalCoreFacetPatch,inspectCoreKeys,lookupCoreKey,declareCoreRecordMembers,declareCoreKey,verifyCoreKeyOperation,inspectCoreRelationships,lookupCoreRelationship,declareCoreRelationship,verifyCoreRelationshipOperation,inspectCoreScalarType,inspectCoreRecordMembers,inspectCoreReferenceLinks,inspectRawTableBinding,inspectCoreSchemaProperties,declareCoreSchemaProperties,validateCoreFieldValue,resolveCoreDefault,declareCoreRecordType,verifyCoreRecordTypeDeclaration,parseBits128,parseUuid,bits128FromBytes,bits128ToBytes,uuidFromBits128,uuidToBits128,compareBits128,bits128ToWords,bits128FromWords,bits128ToInteger,bits128FromInteger,validateCsvBooleanLexical,verifyCsvBooleanLexical,parseGregorianDate,truncateGregorianDate,parseRfc3339ExactInstant,sameRfc3339ExactInstant,securityNot,securityAnd,securityOr};
+export {generatePythonClient,exactDecimal,integerFromBigInt,integerToBigInt,admitJavascriptNumber,numericToNumberLossless,inspectCoreCardinality,declareCoreCardinality,verifyCoreCardinalityDeclaration,validateCoreDatasetValuesCompact,inspectCoreFacets,declareCoreFacets,verifyCoreFacetDeclaration,historicalCoreFacetPatch,inspectCoreKeys,lookupCoreKey,declareCoreRecordMembers,declareCoreKey,verifyCoreKeyOperation,inspectCoreRelationships,lookupCoreRelationship,declareCoreRelationship,verifyCoreRelationshipOperation,inspectCoreScalarType,inspectCoreRecordMembers,inspectCoreReferenceLinks,inspectRawTableBinding,inspectCoreSchemaProperties,declareCoreSchemaProperties,validateCoreFieldValue,resolveCoreDefault,validateCoreRecordValues,SemanticTypeRegistry,validateSemanticTypeValue,validateCoreSemanticTypeValue,declareCoreRecordType,verifyCoreRecordTypeDeclaration,parseBits128,parseUuid,bits128FromBytes,bits128ToBytes,uuidFromBits128,uuidToBits128,compareBits128,bits128ToWords,bits128FromWords,bits128ToInteger,bits128FromInteger,validateCsvBooleanLexical,verifyCsvBooleanLexical,parseGregorianDate,truncateGregorianDate,parseRfc3339ExactInstant,sameRfc3339ExactInstant,securityNot,securityAnd,securityOr};
 export {projectRelationshipToAvro,verifyRelationshipAvroProjection,recoverRelationshipAvroIdeal,recoverRelationshipAvroNative,projectRelationshipToTableSpec,verifyRelationshipTableSpecProjection,recoverRelationshipTableSpecIdeal,recoverRelationshipTableSpecNativeSources,projectRelationshipToSqlServer,verifyRelationshipSqlServerProjection,recoverRelationshipSqlServerIdeal,recoverRelationshipSqlServerBinding,recoverRelationshipSqlServerNative,projectRelationshipToParquet,verifyRelationshipParquetProjection,recoverRelationshipParquetIdeal,recoverRelationshipParquetNative,projectRelationshipToExtra,verifyRelationshipExtra,recoverRelationshipExtraIdeal,recoverRelationshipExtraNative,projectRelationshipsToPostgresql,verifyRelationshipPostgresqlProjection,recoverRelationshipPostgresqlIdeal,recoverRelationshipPostgresqlNative};

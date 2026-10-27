@@ -1,6 +1,7 @@
 import {describe,expect,test} from 'bun:test';
 import {readFileSync} from 'node:fs';
 import {createSemanticTypeRegistry,UmfCoreError} from '../index.js';
+import {createDefaultSemanticTypeRegistry} from '../index.js';
 import {frameWork} from '../src/semantic-value.js';
 
 const ref=term=>({vocabulary:'example.test',version:'1.0.0',term});
@@ -135,4 +136,37 @@ describe('opt-in Rust semantic value registry',()=>{
     try { registry.validateCoreSemanticTypeValue(resources,source,{module:'absent',element:'e'},circular); throw new Error('expected identity refusal'); }
     catch(error) { expect(error).toBeInstanceOf(UmfCoreError); expect(error.code).toBe('SEMANTIC_TYPE_MISSING'); }
   },20_000);
+});
+
+test('default-profile binder preserves the TypeScript class and callback receiver contract',async()=>{
+  const {bindSemanticTypesRust}=await import('../../../../src/access/rust-semantic-types-default.ts');
+  const {SemanticTypeRegistry,validateSemanticTypeValue}=bindSemanticTypesRust(()=>createDefaultSemanticTypeRegistry(),{});
+  const reference=ref('default-contract');
+  const receiverSnapshots=[];
+  const receivers=[];
+  const validator=function(value,definition) {
+    receivers.push(this);
+    receiverSnapshots.push({arity:arguments.length,keys:Object.keys(this),definition:structuredClone(definition)});
+    if(receiverSnapshots.length===1)this.definition.nested.value='changed-through-this';
+    return {status:'valid',complete:true,issues:[]};
+  };
+  const registry=new SemanticTypeRegistry();
+  expect(registry).toBeInstanceOf(SemanticTypeRegistry);
+  expect(registry.constructor.name).toBe('SemanticTypeRegistry');
+  expect(Object.getPrototypeOf(registry)).toBe(SemanticTypeRegistry.prototype);
+  expect(registry.register(reference,{nested:{value:'initial'}},validator)).toBe(registry);
+  expect(registry.register({...reference,version:'2.0.0'},{})).toBe(registry);
+  expect(validateSemanticTypeValue(reference,null,registry).status).toBe('valid');
+  expect(registry.check(reference,null).status).toBe('valid');
+  expect(receiverSnapshots.map(row=>row.arity)).toEqual([2,2]);
+  expect(receiverSnapshots[0]).toEqual({arity:2,keys:['definition','validator'],definition:{nested:{value:'initial'}}});
+  expect(receiverSnapshots[1].definition).toEqual({nested:{value:'changed-through-this'}});
+  expect(receivers[0]).toBe(receivers[1]);
+  expect(receivers[0]).toMatchObject({definition:{nested:{value:'changed-through-this'}},validator});
+  expect(registry.lookup(reference)).toEqual({nested:{value:'changed-through-this'}});
+  const {UmfError}=await import('../../../../src/model/errors.ts');
+  try {registry.register({...reference,term:''},{});throw new Error('expected bad identity refusal');}
+  catch(error) {expect(error).toBeInstanceOf(UmfError);expect({name:error.name,code:error.code,message:error.message,path:error.path}).toEqual({name:'UmfError',code:'SEMANTIC_TYPE_STRUCTURE',message:'Expected vocabulary, exact version and term strings',path:''});}
+  try {registry.register(reference,{});throw new Error('expected duplicate refusal');}
+  catch(error) {expect(error).toBeInstanceOf(UmfError);expect({name:error.name,code:error.code,message:error.message,path:error.path}).toEqual({name:'UmfError',code:'SEMANTIC_TYPE_DUPLICATE',message:'Exact semantic term already registered',path:''});}
 });

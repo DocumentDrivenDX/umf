@@ -6998,7 +6998,63 @@ budgets are also frozen. Diagnostic replay of the expanded packets passed in
 Node, Bun, and Chromium against the d5 archive with zero reference-route
 Rust calls, but the archive predates the expanded packets and harnesses. The
 Record cases preserve present-null versus absent without inserting a default;
-`validateCoreRecordValues` remains TypeScript-owned and is excluded from the
-two-operation Rust retirement manifest. A fresh fixed-point archive and both
+they are TypeScript-only in the d5 and 97e archive cohorts and are excluded
+from the two-operation CSV Rust retirement manifest. A fresh fixed-point archive and both
 hosted cohorts must replay these exact packet hashes before current-source
 qualification.
+
+### R8 97e fixed-point archive and new V4 source selections — 2026-10-27
+
+The [97e macOS arm64 cohort](evidence/rust-migration/r8-bounded-route-97e2325e/README.md)
+pins the private archive SHA-256
+`ff89d87351b29e9762ac5bd76370944c437a1827e8dc5c32ede2fc53b8e2591a`
+and fixed-point source closure SHA-256
+`97e2325ecc8c630e13914027a2ca0f161f109843cb566faad0bf2fc96d254613`
+(3,530 inputs, zero generated transforms, 1,803 regular members). Its 27
+bounded default/reference receipts include the expanded CSV packet and pass
+in Node 26.12.1, Bun 1.4.3, and Chromium 153.0.8010.12. The full installed
+SDK and 68-case security truth-fold suites pass on that same archive. This
+snapshot predates the following Record Values and Semantic Types V4 edits.
+
+`validateCoreRecordValues` now selects the existing raw-input Rust host engine
+through the V4 Node/Bun and browser roots. The tagged-wire model route is not
+used for this boundary. The source-root Bun replay passes all 24 frozen R5
+cases and host admission, while a fresh-WASM Chromium source replay passes the
+same 24 cases and two accessor preflights with no getter invocation or Node
+globals. The function remains synchronous with its predecessor name and arity.
+An installed Node/Bun/Chromium replay on a new archive, full CONTRACT-049
+acceptance, and two-platform qualification remain open. The strict access
+boundary checker scans every `src/access` file and grants this binder only
+type imports from the predecessor; negative tests reject a value import,
+cross-file grant reuse, dynamic imports, and host hooks.
+
+The V4 roots also select `SemanticTypeRegistry`,
+`validateSemanticTypeValue`, and `validateCoreSemanticTypeValue` through the
+Rust semantic value engine. A default-profile adapter restores the exported
+class, fluent instance identity, and two-argument callback with a stable
+entry-shaped receiver; the opt-in three-argument `reportWork` profile remains
+separate. Source-root tests compare direct results, refusals, aggregate
+ordering, callback receiver/mutation and lookup with the TypeScript
+predecessor. The native Node/Bun tests pass 10 cases, and a real Chromium
+WASM replay passes callback arity/receiver and existing core controls.
+Installed-package default-route evidence, broader CONTRACT-078 acceptance,
+and hard isolation of trusted callbacks remain open. Both new selections
+require a fresh fixed-point archive and paired macOS arm64/Linux x64 cohorts.
+
+The hosted bounded matrix attempted the 97e PR snapshot but Linux typecheck
+ran before generated WASM bindings existed. The workflow now builds those
+bindings before typechecking. That failed attempt is not cohort evidence;
+rerun both hosts on the next pushed source snapshot. Core Facets gained a
+focused facade regression control for request/receipt admission order and
+public Rust-error translation; no source fix was needed.
+
+The [current R8 inventory and ledger](evidence/rust-migration/r8-symbol-inventory/README.md)
+were regenerated after the four explicit V4 exports. They show 52
+source-selected declarations in each default root, 81 accepted opt-in Rust
+mappings, 841 unmapped executable names, **922 open logical gaps and zero
+retired rows**. Exact normalization for the new root declaration shapes has
+source/kind/initializer drift controls. The
+[Security And/Or source replay](evidence/rust-migration/r8-security-and-or-v4-source-replay-current/README.md)
+was rebuilt and passed its 68 cases in Node, Bun and Chromium against the
+current roots, preserving the earlier receipts. This is source evidence only;
+it does not satisfy installed acceptance or release gates.

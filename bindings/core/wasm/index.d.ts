@@ -52,6 +52,11 @@ export interface SemanticTypeRegistry {
 }
 export declare function createSemanticTypeRegistry(module: any, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): SemanticTypeRegistry;
 export declare function initializeSemanticValueWasm(loader?: () => Promise<any>, host?: typeof globalThis, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): Promise<SemanticTypeRegistry>;
+export interface DefaultSemanticTypeRegistry extends Omit<SemanticTypeRegistry, 'register'> {
+  register(reference: unknown, definition: unknown, validator?: (value: unknown, definition: unknown) => unknown): this;
+}
+export declare function createDefaultSemanticTypeRegistry(module: any, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): DefaultSemanticTypeRegistry;
+export declare function initializeDefaultSemanticValueWasm(loader?: () => Promise<any>, host?: typeof globalThis, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): Promise<DefaultSemanticTypeRegistry>;
 export declare const GREGORIAN_DATE_PROFILE: 'umf-gregorian-date/1.0.0';
 export declare const RFC3339_EXACT_INSTANT_PROFILE: 'umf-rfc3339-exact-instant/1.0.0';
 export declare const RFC3339_EXACT_INSTANT_MAXIMUM_BYTES: 1048576;

@@ -11,6 +11,10 @@ export interface UmfSemanticTypeRegistry {
   validateCoreSemanticTypeValue(resources: UmfCoreResources, source: unknown, identity: {module: string; element: string}, value: unknown): unknown;
 }
 export declare function createSemanticTypeRegistry(options?: {profile?: 'cooperative'|'hard-isolated'; controls?: UmfCoreControls}): UmfSemanticTypeRegistry;
+export interface DefaultSemanticTypeRegistry extends Omit<UmfSemanticTypeRegistry, 'register'> {
+  register(reference: SemanticTypeReference, definition: Record<string, unknown>, validator?: (value: unknown, definition: Record<string, unknown>) => unknown): this;
+}
+export declare function createDefaultSemanticTypeRegistry(options?: {profile?: 'cooperative'|'hard-isolated'; controls?: UmfCoreControls}): DefaultSemanticTypeRegistry;
 /** Semantic refusals from the opt-in JSON Schema adapter retain the TypeScript UmfError name. */
 export declare class UmfError extends Error { readonly code: string; readonly path: string }
 export declare function copyJson(value: unknown, limits?: {maxDepth?: number; maxValues?: number}): unknown;

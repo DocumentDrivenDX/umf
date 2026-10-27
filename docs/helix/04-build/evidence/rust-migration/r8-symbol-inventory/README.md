@@ -59,6 +59,26 @@ ddx:
 
 # R8 TypeScript public runtime export map
 
+**Current source recapture (2026-10-27, Record Values and Semantic Types V4
+selections):** The inventory records 3,375 route-specific declarations across
+509 source files, 1,126 unique export names, and 1,120 declarations per Node,
+browser and `./reference` root. Each default route still has 922 executable
+declarations and 198 JSON resource aliases. The inventory SHA-256 is
+`ef0df12c6cf8be94fb6e6cbdb969109b74a34375f79c34aa68fda58c202a98c0`.
+The condition-aware ledger SHA-256 is
+`93c1d8f3ca113eb4b4a7204820b4bd9afd267f11f7231f72ebccc3bb18aa8509`.
+It records **922 open logical executable default-route gaps, zero retired**,
+81 accepted opt-in Rust mappings, 841 unmapped names, and 52 source-selected
+declarations in each V4 root. The four newly explicit exports are Record
+Values validation plus the Semantic Types registry and two value functions;
+only Record Values and the core semantic aggregate have accepted exact Rust
+operation mappings in this ledger. Exact declaration-shape controls reject
+source, kind and initializer drift for all four. The Security And/Or V4
+source replay was recaptured against these roots in Node, Bun and Chromium;
+the earlier source-pinned receipts remain preserved separately. This is a
+source census and bounded replay, not installed two-platform qualification
+or retirement evidence.
+
 **Current source recapture (2026-10-26, Core Relationship consumer factories):**
 The Avro, TableSpec, SQL Server, Parquet, extras and PostgreSQL consumer
 factories are now injected with the Rust Core Relationship lookup and

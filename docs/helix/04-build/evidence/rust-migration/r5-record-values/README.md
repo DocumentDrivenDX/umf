@@ -238,3 +238,32 @@ control and absent Node globals passed. The reviewed receipt is
 No P1/P2 remains in the bounded opt-in host-admission scope. These receipts do
 not qualify default routing, a current integrated SDK archive, Chromium's
 100,001-item limit, or hard memory isolation.
+
+## Bounded V4 default-root selection
+
+The V4 Node/Bun and browser roots now explicitly select
+`validateCoreRecordValues` through the existing `umf.host-json/1` Record Values
+host-input engines. The tagged-wire `model.validateCoreRecordValues` method is
+not used for this raw-input boundary: the host-input path owns source → identity
+→ values admission, distinguishes absent from present-null, preserves retained
+unknown source members, and returns the predecessor-shaped result. The V4
+export remains synchronous after root initialization and has no TypeScript
+fallback.
+
+`tests/rust-migration/r5-record-values-default.test.ts` compares the V4 Node
+root with all frozen TypeScript result/refusal cases and checks accessor
+preflight plus retained unknown content. Run it with
+`bun test tests/rust-migration/r5-record-values-default.test.ts`. The test
+passed on Bun 1.4.3 in the shared Rust worktree (24 frozen cases and two host
+admission checks; 53 assertions). The installed replay harness
+`scripts/rust-migration/r5/record-values-default-node.mjs` applies the same
+frozen packets to a V4 Node root selected by
+`UMF_R5_RECORD_VALUES_DEFAULT_ENTRY`; the source-entry smoke replay passed on
+Bun 1.4.3 with all 24 frozen cases and three host cases. The fresh-WASM browser
+runner `scripts/rust-migration/r5/record-values-default-chromium.mjs` passed the
+same 24 frozen cases and two accessor-preflight cases in Chromium 153.0.8010.12,
+with zero getter calls and no Node globals. This is evidence for the live V4
+browser source entry, not an installed archive. Installed-package replay and
+the broader integrated default-route qualification remain pending. This
+bounded source selection does not claim native row enforcement, TypeScript
+retirement, or release readiness.
