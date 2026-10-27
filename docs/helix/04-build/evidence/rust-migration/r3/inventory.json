@@ -215,12 +215,12 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "6406b161744893bb68d90d759ae8175daf68197c1392cd9a1b37a329a6e0bcee",
+    "sourceCohortSha256": "636399c99cdfec09397e8d1139882633f552617c2ddd21b33fff4f7799c85f6a",
     "typescriptApi": "5.9.3"
   },
   "counts": {
     "activeScriptFiles": 359,
-    "algorithmSymbols": 10464,
+    "algorithmSymbols": 10465,
     "pythonModules": 105,
     "rustBuildInputs": 79,
     "rustModules": 128,
@@ -9186,6 +9186,7 @@
         "_verifier",
         "_wheel",
         "_write_finalizer_inputs",
+        "junit_for",
         "test_exact_wheel_payload_and_record_are_accepted",
         "test_hatch_hook_loads_its_native_inspector_outside_project_directory",
         "test_installed_wheel_payload_and_record_match_the_exact_archive",
@@ -9206,12 +9207,12 @@
         "test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels",
         "test_workflow_independently_installs_and_qualifies_both_native_artifacts"
       ],
-      "bytes": 28105,
+      "bytes": 30221,
       "disposition": "unreferenced-test-source",
       "language": "py",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "python/tests/test_distribution_artifact.py",
-      "sha256": "e2bb987ed1e8a648607da3b95bed6b3d25401b5df007f668b64eeeab44f1cf94"
+      "sha256": "0d58a6e9cde35d01d41eacda35e5afd903cf1511d7660bdd09f8e94e0a50d417"
     },
     {
       "activationEvidence": [],

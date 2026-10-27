@@ -1,5 +1,5 @@
 {
-  "status": "CURRENT_RESOURCE_PINS_AND_ALL35_OUTPUTS_ADOPTED_AWAITING_WHEEL_QUALIFICATION",
+  "status": "FINAL_HEADER_CORRECTION_AND_EXACT35_GENERATED_OUTPUTS_ADOPTED_AWAITING_CURRENT_SOURCE_QUALIFICATION",
   "baseCommit": "d5022e37840329d351bcd6c27fe7d7aad4758544",
   "donorCommit": "f4a410c0522135065a0b20e8d2b69705fddcbac4",
   "extractionCommit": "ad5e59591",
@@ -332,5 +332,38 @@
     "evidence": "fixture-dependent-40427500505",
     "custodySha256": "6fe4acd39760c329835aa2659e5447e0f9831d32a914b3e71f0738ee9136ed34",
     "status": "PASS_GENERATION_ONLY_NOT_ADOPTED"
+  },
+  "headerCorrectedDependentGeneration": {
+    "evidence": "header-dependent-40429082165",
+    "custodySha256": "36a717fd1ff99a49f93ce74f9ebdd274edaf18387b2032660356485da1fedb5b",
+    "outputAdoption": {
+      "status": "PASS_DEPENDENT_GENERATION_ARTIFACTS_ONLY",
+      "sourceCommit": "615cf757ef5028e1deb46d9d36b3b30b547b2f07",
+      "runId": "40429082165",
+      "runAttempt": "1",
+      "artifactId": "12701281426",
+      "artifactSha256": "4e7afadf5f6ef08378a18156342af318481575ba6b527ce1008a13c4a430c4b8",
+      "receiptSha256": "af96e116964e2fece6e9b0be22aded15e509952430070909235df8b6f678ba56",
+      "archiveSha256": "b8467763f0be4421cfcf9290d63f38404225de1d9710370d020d8113fe897ae2",
+      "outputManifestSha256": "0c3f0a973e6addbe2e12a5138bac28bd1d985539b61968f854bbdb93062f3c0f",
+      "reviewSha256": "3452dbc16e7dda5a2929f56b19d8244e55b58686762440b62683b43cac898f43",
+      "outputs": {
+        "src/extensions/actions/plan-identity.ts": "1cfb0097941a3457c77fb1398d44a827fcb7979dee969e23e6c0f7153cadc628",
+        "docs/helix/04-build/evidence/rust-migration/r3/inventory.json": "9f37b2d84b89564a54ee844b224a443d46d10ba56c8d70f90aaf6c92b1b27e5f",
+        "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz": "6b36c2935f6772737de2b0ca96b2cc845487c8c214512f8135967319f375eba6",
+        "python/umf_codegen/src/umf_codegen/_assets/notices/ajv/LICENSE": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3",
+        "python/umf_codegen/src/umf_codegen/_assets/notices/ajv/package.json": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
+        "python/umf_codegen/src/umf_codegen/_assets/notices/fast-deep-equal/LICENSE": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a",
+        "python/umf_codegen/src/umf_codegen/_assets/notices/fast-deep-equal/package.json": "a5c63940db0260739be9e2ac67f3aac268df4db5770420ee4e34e493152f97d2",
+        "python/umf_codegen/src/umf_codegen/_assets/notices/fast-uri/LICENSE": "b010b0dfdfdb23d7396e03b82cd4621fc9bb8f95d6b0aea70b9c24e12074c786",
+        "python/umf_codegen/src/umf_codegen/_assets/notices/fast-uri/package.json": "30cad05aad3d3596513706451dbfc7e0422f9c1d00f2903ecc34580327d54bc7",
+        "python/umf_codegen/src/umf_codegen/_assets/notices/json-schema-traverse/LICENSE": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a",
+        "python/umf_codegen/src/umf_codegen/_assets/notices/json-schema-traverse/package.json": "156fb24af02845c190701360d06dfda35ef04282e34a734289ea9535ad9819ae",
+        "python/umf_codegen/src/umf_codegen/_assets/notices/yaml/LICENSE": "5bba27375d93e9119f76c1015f7672cf9ad5f70952296e0842fb2243d6376869",
+        "python/umf_codegen/src/umf_codegen/_assets/notices/yaml/package.json": "1c6441703d8204a23ded0d37ddf57c3b69d821dc392f20852d1f605bb9b8861c",
+        "python/umf_codegen/src/umf_codegen/_assets/manifest.json": "282882b703b4838c935caf7651823ce0830aa0119e6366fe46c1da32a7112601",
+        "python/umf_codegen/src/umf_codegen/_release.py": "b432f509b10ab7b921390abf0b47cb7cfc21a21a28dc74677e373423ed7f4a8e"
+      }
+    }
   }
 }
