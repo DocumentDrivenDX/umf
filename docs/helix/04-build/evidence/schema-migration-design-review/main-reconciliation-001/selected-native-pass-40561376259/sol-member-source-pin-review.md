@@ -1,0 +1,17 @@
+# Current Core native-member consumer source/pin closure
+
+SOURCE ACCEPT narrow fourfile native-member correction plus exactthree existingnative34 pinrows, to combine with alreadyaccepted depth16 sourcefix before onegenuinechangedsource existinggenerationpush. Actualoutputs/qualification remain separate. Coregate/archive/nativehashes unchanged; actualnative40561376259 checkpoint preserved at its ownsource.
+
+Reviewed exactsourcepostimages:
+- tests/codegen/acquire_offline_cohort.py7bc10736496b3116eb81b9688321f15e3996e636024f9c0e07f4a96d27911d7f
+- tests/codegen/aggregate_cohort.pyd46695d30f816428f62ce0f9086b5d60ed106c0960291eb75fcadf597f38b739
+- tests/codegen/offline_mirror_probe.pyb8cc2330539640168d97491aeb118922a796b4a30d20fcc66cb3ec0d19aabee7
+- tests/codegen/test_aggregate_cohort.pyef5e0a409cca028649734089b2b79cfcc343304d9b47cb3e0473cae8ae15102c
+
+PublishedLinux/Mac solemodule independentlyreadas umf/_rust_core.abi3.so; originalnativehashesc51b…/df3d… unchanged. Acquisition/Linux+Macsourceconstants now exactmember. Aggregate/nativeoffline require declaredmember for exactcurrentreleaseTag and compare declaredpath to actualsinglearchivemember, inadditionto originalreceiptpath/wheel/nativehash/installedchecks. Macdiscovery recognizes so/dylib/pyd to detectaliases/extras but finalexactsolemember remains publishedroot.so, not platformbasedfallback. WrongLinuxpath/samehash and coherentlyrehashedMacdylibalias have focusedrefusalfixtures. InitialsplitLinuxpositivefixture leftover wrongnestedliteral was corrected; legacyfour-runtime syntheticpaths and intentionalwrongpathmutant remain untouched. No other strictlegacycanonicalization/matrix/profile/closure/cap/guardchanges.
+
+NativeJSONposte101b3745bb221a8f0f98ce03bf192cc8ceb7c7044672908dbf3ff3b5b187f2c: independently all34sourcehashes match currentfiles, rowset/order preserved, only3valueschanged (acquire/offline/aggregate), allotherJSON/metadata/purposes/status/target/caps exactbaseline. Portable97 unchanged6fd661b7cb0ae6a4dfd097ee6e88fa2bc1e8b3c503898373c17505bd8470854f, allactualhashesmatch. VerificationledgerSHAa8bbfce7de14b0922b2d9a1fa46a92a3bd09340b9de5b9d6783eb4dbabec290d checked. No fabricatedgenerated/outputpins. SeparateHELD SDKH knownmembercorrection accepted inda66de9b…review, noHpush/READY/CI.
+
+Root may commit reviewedsource/pins with exactdepthfixafa9d3ea… (prior4f191ea4…closure), retain actualcheckoutfailure/nativecheckpoint evidence, and use existingownedchangedsourcegeneration. Realmetamodel11correspondence/adoption/originalselfFIRST→dependent27custody must follow actualoutputs before newqualification; no unchangedretry/manualgeneratedhashpatch. Fullportable/currentnative/API/D5/full18aggregate/normal/SDKrelease/publicproof remainopen. No MacCI/newframework/caps/Coregate reopening/G03–G11/managed/Praxis admission.
+
+Method: source/text/hash/JSON/readonlyGitdiff plus retainednativeZIP/publishedwheelinspection; no candidateimports/tests/AST/YAML/native/generator/Git/CImutation byreviewer.

@@ -93,7 +93,7 @@
       "purpose": "Frozen Bun dependency graph"
     },
     "tests/codegen/acquire_offline_cohort.py": {
-      "sha256": "fb2a1a12869ab805a8e1ccad007ca981ea9ad80fe27ccb4f6bd62d2a27b545fe",
+      "sha256": "7bc10736496b3116eb81b9688321f15e3996e636024f9c0e07f4a96d27911d7f",
       "purpose": "Existing current-source cohort acquisition and lock construction"
     },
     "scripts/python-package-mirror.py": {
@@ -101,7 +101,7 @@
       "purpose": "Existing wheel mirror and hash-lock implementation"
     },
     "tests/codegen/offline_mirror_probe.py": {
-      "sha256": "acbf84135ed8788a7ce6860063efcf32688ee4b4c7c6fb809a18cb1edfb99de0",
+      "sha256": "b8cc2330539640168d97491aeb118922a796b4a30d20fcc66cb3ec0d19aabee7",
       "purpose": "Existing offline installation and network-denial probe"
     },
     "tests/codegen/verify_mini_racer_wheel.py": {
@@ -193,7 +193,7 @@
       "purpose": "Strict immutable-release selector and exact original18 dependency-closure guard imported by current acquisition and probe"
     },
     "tests/codegen/aggregate_cohort.py": {
-      "sha256": "2deb613f42505a4c125feb23da219ce768d6756a6d3ee404b56c6c2441db9b61",
+      "sha256": "d46695d30f816428f62ce0f9086b5d60ed106c0960291eb75fcadf597f38b739",
       "purpose": "Closed four-cell union validator imported by offline probe; selected-native gate uses the existing single-cell mode"
     }
   },

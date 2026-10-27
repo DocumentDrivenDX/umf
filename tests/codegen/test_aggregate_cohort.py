@@ -482,14 +482,14 @@ class SplitAggregateCohortTests(unittest.TestCase):
             "filename": "umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl",
             "sha256": "6" * 64, "nativeSha256": hashlib.sha256(b"linux-core").hexdigest(),
             "sizeBytes": 0,
-            "nativeMember": "umf/_rust/_rust_core.abi3.so", "producerArtifactId": 10,
+            "nativeMember": "umf/_rust_core.abi3.so", "producerArtifactId": 10,
             "producerArtifactName": "core-linux", "producerArtifactSha256": "8" * 64,
             "producerArtifactSizeBytes": 123}
         core_mac = {**common_core, "url": "https://example.invalid/core/mac.whl",
             "filename": "umf_core-0.10.3-cp311-abi3-macosx_11_0_arm64.whl",
             "sha256": "9" * 64, "nativeSha256": hashlib.sha256(b"mac-core").hexdigest(),
             "sizeBytes": 0,
-            "nativeMember": "umf/_rust/_rust_core.abi3.dylib", "producerArtifactId": 11,
+            "nativeMember": "umf/_rust_core.abi3.so", "producerArtifactId": 11,
             "producerArtifactName": "core-mac", "producerArtifactSha256": "a" * 64,
             "producerArtifactSizeBytes": 124}
         weft_linux = {"kind": "immutable-release-wheel", "release": "v0.4.55",
@@ -535,7 +535,7 @@ class SplitAggregateCohortTests(unittest.TestCase):
         wheel["source"] = source
         return path, wheel
 
-    def _build_inputs(self):
+    def _build_inputs(self, mac_native_member=None):
         (packages, versions, requirements, sources, core_linux, core_mac,
          weft_linux, weft_mac) = self._source_rows()
         self.input_root.mkdir()
@@ -546,8 +546,8 @@ class SplitAggregateCohortTests(unittest.TestCase):
         }
         artifact_paths = {"umf-core": {"linux": core_linux, "mac": core_mac},
                           "umf-weft": {"linux": weft_linux, "mac": weft_mac}}
-        native_data = {"linux": ("umf/_rust/_rust_core.abi3.so", b"linux-core"),
-                       "mac": ("umf/_rust/_rust_core.abi3.dylib", b"mac-core")}
+        native_data = {"linux": ("umf/_rust_core.abi3.so", b"linux-core"),
+                       "mac": (mac_native_member or "umf/_rust_core.abi3.so", b"mac-core")}
         runtime_packages = []
         runtime_wheels = []
         runtime_receipts = {}
@@ -729,6 +729,35 @@ class SplitAggregateCohortTests(unittest.TestCase):
         manifest_path.write_text(json.dumps(manifest, sort_keys=True) + "\n", encoding="utf-8")
         with self.assertRaisesRegex(ValueError, "umf-access wheel differs from the exact Linux universal source bytes"):
             self._assemble_with_release_patches(core_linux, core_mac, weft_linux, weft_mac)
+
+    def test_split_core_native_path_must_match_locked_release_declaration(self):
+        self._build_inputs()
+        cell_root = self.input_root / "linux-x86_64-py311"
+        lock_path = cell_root / "cohort.lock.json"
+        lock = json.loads(lock_path.read_text())
+        receipt = json.loads((cell_root / "offline-mirror-receipt.json").read_text())
+        core = next(row for row in lock["packages"] if row["distribution"] == "umf-core")
+        core["source"]["nativeMember"] = "umf/_rust/_rust_core.abi3.so"
+        with self.assertRaisesRegex(ValueError, "native member path differs from its release source declaration"):
+            AGGREGATE.validate_core_native_custody(lock, receipt, cell_root / "wheelhouse")
+
+    def test_split_mac_target_refuses_dylib_alias_for_published_so_member(self):
+        (_packages, _versions, _sources, core_linux, core_mac,
+         weft_linux, weft_mac, _targets) = self._build_inputs(
+             mac_native_member="umf/_rust_core.abi3.dylib")
+        linux_root = self.input_root / "linux-x86_64-py311"
+        lock, checked = AGGREGATE.MIRROR.locked_wheels(
+            linux_root / "cohort.lock.json", linux_root / "wheelhouse")
+        runtime_packages = {AGGREGATE.MIRROR.normalized_name(row["distribution"]): row
+                            for row in lock["packages"]}
+        union = {row["filename"]: row for row in checked}
+        mac_root = self.input_root / "artifact-targets" / "macos-arm64-py311"
+        with ExitStack() as stack:
+            for context in self._release_patches(core_linux, core_mac, weft_linux, weft_mac):
+                stack.enter_context(context)
+            with self.assertRaisesRegex(ValueError, "Core Mac wheel must contain one native member"):
+                AGGREGATE.validate_artifact_target(
+                    mac_root, "macos-arm64-py311", self.source_commit, runtime_packages, union)
 
     def test_split_validation_refuses_coherent_nineteenth_linux_distribution(self):
         (_packages, _versions, _sources, core_linux, core_mac,

@@ -265,6 +265,7 @@ with tempfile.TemporaryDirectory(prefix='umf-offline-mirror-') as directory:
     if len(core_wheels) != 1:
         raise SystemExit('Selected Core must have exactly one immutable wheel in the lock')
     core_wheel = args.wheelhouse / core_wheels[0]['filename']
+    core_source = core_wheels[0].get('source', {})
     with zipfile.ZipFile(core_wheel) as archive:
         native_members = [name for name in archive.namelist()
                           if name.startswith('umf/') and name.endswith(('.abi3.so', '.abi3.dylib', '.abi3.pyd'))
@@ -273,6 +274,12 @@ with tempfile.TemporaryDirectory(prefix='umf-offline-mirror-') as directory:
             raise SystemExit('Selected Core wheel must contain exactly one umf._rust_core native extension')
         native_member = native_members[0]
         wheel_native_sha = hashlib.sha256(archive.read(native_member)).hexdigest()
+    declared_native_member = core_source.get('nativeMember')
+    if (core_source.get('releaseTag') == AGGREGATE.CORE_LINUX_RELEASE['releaseTag']
+            and not isinstance(declared_native_member, str)):
+        raise SystemExit('Current Core source must declare its exact native member path')
+    if declared_native_member is not None and declared_native_member != native_member:
+        raise SystemExit('Selected Core wheel native member path differs from its locked source declaration')
     native_probe = subprocess.run(
         network_prefix + [str(python), '-I', '-c', "\nimport hashlib, importlib.machinery, importlib.metadata, json, pathlib\nfrom umf import current_core_version, read_document, validate_document, write_document\nfrom umf._rust import _rust_core\nimport umf\nmodule_path = pathlib.Path(_rust_core.__file__).resolve()\nsite = pathlib.Path(umf.__file__).resolve().parent.parent\nassert isinstance(_rust_core.__spec__.loader, importlib.machinery.ExtensionFileLoader)\nassert module_path.is_relative_to(site)\nassert module_path.parent == pathlib.Path(umf.__file__).resolve().parent\nsource = {'umf': current_core_version(), 'id': 'offline-native-core-probe', 'vocabularies': {}, 'modules': []}\nassert validate_document(source).valid\nroundtrip = json.loads(write_document(read_document(json.dumps(source), format='json'), format='json'))\nassert roundtrip == source\nprint(json.dumps({'distributionVersion': importlib.metadata.version('umf-core'), 'semanticCoreVersion': current_core_version(), 'modulePath': str(module_path), 'nativeSha256': hashlib.sha256(module_path.read_bytes()).hexdigest(), 'roundtrip': roundtrip}))\n"],
         check=False, text=True, capture_output=True,

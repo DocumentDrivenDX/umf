@@ -1,0 +1,367 @@
+{
+  "artifactId": 12761877331,
+  "artifactName": "g02-g03-native-qualification-a4af875748b085ac531fe06089a675a0ea1059fc",
+  "entries": [
+    {
+      "path": "cohort-mirror-manifest.json",
+      "sha256": "8409c21924e4fe8534aa403f1df2491fa2b68785464415e898ed9d72e866e67e",
+      "sizeBytes": 23966
+    },
+    {
+      "path": "cohort.lock.json",
+      "sha256": "56b2ef7593324bfbd5306a1c4b2aee1fb511c3c89d73b3e52168d3084457418b",
+      "sizeBytes": 45374
+    },
+    {
+      "path": "command-records.jsonl",
+      "sha256": "0cc850294306701ed9f55ec2e008aba828539fdf36a753d5ddf3061a3e8203b0",
+      "sizeBytes": 23461
+    },
+    {
+      "path": "copy-hashes.json",
+      "sha256": "537b166b3350b1297cd746c48552d306d1628e7ef65c1eb4dd3ef9500023f350",
+      "sizeBytes": 6967
+    },
+    {
+      "path": "g02-temporal-fixture.json",
+      "sha256": "91a419debb54378a60982480259c48e02860695229ef8eed748a25758f8426fb",
+      "sizeBytes": 75686
+    },
+    {
+      "path": "g03-defaults-fixture.json",
+      "sha256": "de8736519bcb9aa1bb3c59c62734d6f31035378e192e317295fdd766e513108f",
+      "sizeBytes": 146171
+    },
+    {
+      "path": "logs/builder-install.log",
+      "sha256": "372e38109341be80b4920acc01fd914455a6388a8c937df262104ae84c1bad49",
+      "sizeBytes": 1727
+    },
+    {
+      "path": "logs/builder-venv.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/builder-wheel-download.log",
+      "sha256": "2cd82db0d2458a2efe719623f9381045b79b10a4a557e18eed0405fc50bf5c94",
+      "sizeBytes": 2058
+    },
+    {
+      "path": "logs/bun-install.log",
+      "sha256": "a26e3ac567c45e711ddb47e869e8ee221ee54f08c01baea01457f93437d9ade6",
+      "sizeBytes": 1052
+    },
+    {
+      "path": "logs/codegen-refresh-hash-check.log",
+      "sha256": "7deb1623aeba7ae1a32e7c96ec280148fda27d92eb74fd293c490e905704ba87",
+      "sizeBytes": 45
+    },
+    {
+      "path": "logs/codegen-refresh-output-hashes.log",
+      "sha256": "57743e1c909237f62b3fa8d6353da4a07fb3af6d648eb24368e4484e6ba7d88f",
+      "sizeBytes": 156
+    },
+    {
+      "path": "logs/codegen-refresh.log",
+      "sha256": "72a7fef4da20f96153504e4944b3ad0dc1d9a7e30ca2e38ac4fef6ba9590d043",
+      "sizeBytes": 58
+    },
+    {
+      "path": "logs/cohort-build.log",
+      "sha256": "0b3506e2041ad17a68774a77c480022a35723c679a9566413c9bccf9a65eb43a",
+      "sizeBytes": 7619
+    },
+    {
+      "path": "logs/cohort-install.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/current-codegen-corpus.log",
+      "sha256": "408234e2b1ca5a6afca35f03bcf848045b0c8a25b50ad9fc022c02c4a938706b",
+      "sizeBytes": 1487
+    },
+    {
+      "path": "logs/finalize-receipt.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/fixture-guards.log",
+      "sha256": "70702aae8f699dba097a074fb6d43a42a6545c95c48f0f9967021ea38b022a01",
+      "sizeBytes": 275
+    },
+    {
+      "path": "logs/g02-fixture.log",
+      "sha256": "18584bb4aa650fd29b70b9324f8e566dc376084f171cbb2a37fe40e96fc18434",
+      "sizeBytes": 433
+    },
+    {
+      "path": "logs/g02-temporal-native.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/g03-admission-refusal.log",
+      "sha256": "0599bf808a8e3efe2f163ab257ab9fc6d325922ad1af01b783b64f37d02fad36",
+      "sizeBytes": 189
+    },
+    {
+      "path": "logs/g03-commit-observation.log",
+      "sha256": "b3e8c5ae28b27e8e9feab98b1e81443bf9e5b9c3b7a82c59138902748182ca06",
+      "sizeBytes": 193
+    },
+    {
+      "path": "logs/g03-domain-currentTimestamp.log",
+      "sha256": "6808558efb656fa60807b21a6ddcd3ddd6c2bf5e7be79c3955a853663f1cc849",
+      "sizeBytes": 203
+    },
+    {
+      "path": "logs/g03-domain-date.log",
+      "sha256": "83d1344d815de06c9855dd0d46e5bf97a9644568a378d00809adc9ae23307021",
+      "sizeBytes": 179
+    },
+    {
+      "path": "logs/g03-domain-decimal.log",
+      "sha256": "44d83b441839d37c42bfc96b77c288ca656c1b9a436f0f84676cc76b0b5039aa",
+      "sizeBytes": 185
+    },
+    {
+      "path": "logs/g03-domain-text.log",
+      "sha256": "5411c8d74c76a36971f08f8d900892809cc01e17bfa0a936f19eec1dd12a3d98",
+      "sizeBytes": 179
+    },
+    {
+      "path": "logs/g03-domain-uuid-selected.log",
+      "sha256": "808308da85963e12a2d26e331f45db8486ad3f7df05ed6917764bbf7cf95477d",
+      "sizeBytes": 197
+    },
+    {
+      "path": "logs/g03-empty.log",
+      "sha256": "72413ba1a55632aff2d125a37344d3b1d8bd5616d52649366531662cbe9d0280",
+      "sizeBytes": 167
+    },
+    {
+      "path": "logs/g03-finalize-before-publication.log",
+      "sha256": "98af5b5031e9642931454ce0c4c88b47ead8aee767a249612ed91f08bc7b112f",
+      "sizeBytes": 211
+    },
+    {
+      "path": "logs/g03-finalize-observation.log",
+      "sha256": "0222154c103ebbd33b9267dda188895e140fa0d046530728596d9c5ebab3bf6c",
+      "sizeBytes": 197
+    },
+    {
+      "path": "logs/g03-fixture.log",
+      "sha256": "3dd61c4417241bad75451f97a5cadbe31026eb43287b459fa87babdd2b3ee6f8",
+      "sizeBytes": 1106
+    },
+    {
+      "path": "logs/g03-required.log",
+      "sha256": "3ca4cf7fbd1cfcbdeaeda646bdd0b7caa969f6fd677f7e7ee1e4653685adcaf1",
+      "sizeBytes": 173
+    },
+    {
+      "path": "logs/g03-rollback.log",
+      "sha256": "1cdf9620eea6733f46ac0af3ed3b6115b001f4dc272df6275429d17569b97ed3",
+      "sizeBytes": 173
+    },
+    {
+      "path": "logs/g03-semantics.log",
+      "sha256": "ad69bd7a39da3342e537dbdf7791e67ff65e5f1cf9de65048783ff8db199e081",
+      "sizeBytes": 176
+    },
+    {
+      "path": "logs/g03-tampering.log",
+      "sha256": "8d4f4157753dc799fd28a0f1de343243c33ddaeede6d3d54f9e2fc8065ab79cf",
+      "sizeBytes": 175
+    },
+    {
+      "path": "logs/g03-transitions.log",
+      "sha256": "5227170a3c6580c93cb70bc3d6afcb824b3d20620c72b9c60c91ca649bb35e0a",
+      "sizeBytes": 179
+    },
+    {
+      "path": "logs/g03-unknown-no-commit.log",
+      "sha256": "f5f3e912c84c11a5678a83e21299316afdfe437219022df32958f26d9a7d3876",
+      "sizeBytes": 191
+    },
+    {
+      "path": "logs/g03-writer-barrier.log",
+      "sha256": "7c5170d33812374ab94ac14d56282349dec10506bef3177e8505d80178982986",
+      "sizeBytes": 185
+    },
+    {
+      "path": "logs/locked-check.log",
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+      "sizeBytes": 30
+    },
+    {
+      "path": "logs/locked-install.log",
+      "sha256": "3be22ca5894b2dad2c98b74dd0d4d6d06aa4b2f57625029f0526c7c71f0ce2f7",
+      "sizeBytes": 4783
+    },
+    {
+      "path": "logs/mini-racer-verify.log",
+      "sha256": "b0291c4d68914286a6a089e57b547b8fdf3443629ced7832ebffeedee3ab778b",
+      "sizeBytes": 194
+    },
+    {
+      "path": "logs/mini-racer-download.log",
+      "sha256": "cc39cc9121d412a2f493d2393cdb996119866a115d749f73226e8c6c04d92d2a",
+      "sizeBytes": 498
+    },
+    {
+      "path": "logs/offline-cohort-probe.log",
+      "sha256": "b412ed6d42050f159cbec2bd6c26d07311ae0b91972268a533c36971b64e389c",
+      "sizeBytes": 711
+    },
+    {
+      "path": "logs/postgres-version.log",
+      "sha256": "2fe1eb871b5ce5c2ff947e594f47653b39b5a1bf18a4585e4075565faf116434",
+      "sizeBytes": 101
+    },
+    {
+      "path": "logs/source-pins.log",
+      "sha256": "a7b68e0b39050b2fb20ac5626e6632c72a864d41dfe600eb2dff5d0467579061",
+      "sizeBytes": 79
+    },
+    {
+      "path": "monotonic-deadline-ms",
+      "sha256": "660cc003dfa6bfc2aff0dcdcfd7c0df3d53055d5e8425858c7f6cea2b511e687",
+      "sizeBytes": 8
+    },
+    {
+      "path": "logs/toolchain-identity.log",
+      "sha256": "705afd8bfc94d19426067f66763b2d162ce9d90b79a2dafc8e7306cfe0400b09",
+      "sizeBytes": 948
+    },
+    {
+      "path": "monotonic-start-ms",
+      "sha256": "475443dcec0cc4084abef3c2433147d111a91ec737bd7259397ea19309611cdc",
+      "sizeBytes": 6
+    },
+    {
+      "path": "receipt.json",
+      "sha256": "a5b938be5e4d0bc0a33baec2f33ab40d54c57a246ea798d302eabc4f3d4e4da5",
+      "sizeBytes": 2262
+    },
+    {
+      "path": "reports/codegen-generated-outputs.json",
+      "sha256": "dcc68d75aecd792d6962590cd716e013745fa6dc2a0f64b0639f7ddb556d6cdf",
+      "sizeBytes": 34441
+    },
+    {
+      "path": "reports/g02-temporal-native.json",
+      "sha256": "40be0107075eaf016b4f611643a083444f12aad3252e2d913e7727d0c2bde441",
+      "sizeBytes": 13731
+    },
+    {
+      "path": "reports/g03-admission-refusal.json",
+      "sha256": "add680c78718cc3054f8a29afd68dd47fcfeddded906aeada9f63380238562c1",
+      "sizeBytes": 3936
+    },
+    {
+      "path": "reports/g03-commit-observation.json",
+      "sha256": "7034f984b75ba2edf12f2ef525814711cc1e553e8bdd1ea03f8fbeb3c28d468c",
+      "sizeBytes": 64920
+    },
+    {
+      "path": "reports/g03-domain-currentTimestamp.json",
+      "sha256": "91fd66b81a17bc2487c8e0ec71c9ed967c4d46cf7f91087117b396663cfad031",
+      "sizeBytes": 70811
+    },
+    {
+      "path": "reports/g03-domain-date.json",
+      "sha256": "a65067a26d09a4866c7d52df75e4ed88ec24953b9b62b92584b306a871a735bb",
+      "sizeBytes": 70701
+    },
+    {
+      "path": "reports/g03-domain-text.json",
+      "sha256": "064fc46bca2521d78ddc5e02ff4223058244e769bb6e78cc00ad515307b3e650",
+      "sizeBytes": 68801
+    },
+    {
+      "path": "reports/g03-domain-decimal.json",
+      "sha256": "15c15e52dea4744356b85afffcb6b225b8d15b027830b494b65ced65f666651e",
+      "sizeBytes": 70967
+    },
+    {
+      "path": "reports/g03-domain-uuid-selected.json",
+      "sha256": "5ceaac1ca90916d3748a8f33654f3de7aee2d639009f1bba4f42e1d897bc6142",
+      "sizeBytes": 69230
+    },
+    {
+      "path": "reports/g03-empty.json",
+      "sha256": "0c3b1ff8358712f95857f349eaa9fd06e9d57ae41160cba45ca8c4459ae0bcb1",
+      "sizeBytes": 180786
+    },
+    {
+      "path": "reports/g03-finalize-before-publication.json",
+      "sha256": "8cd9815ea66f4bc89cf0c2f869fa3ef21a1794e6868479cf34ec16e35eae1b99",
+      "sizeBytes": 112455
+    },
+    {
+      "path": "reports/g03-finalize-observation.json",
+      "sha256": "b29217e8aae6b0fb99ff04a08ab9ca9c0d8e276280f12288008198007676ff18",
+      "sizeBytes": 111670
+    },
+    {
+      "path": "reports/g03-required.json",
+      "sha256": "e167baec3aeaee5bddf18245c9cfee57e29d394ab479efba4f2d2645de8ae9a3",
+      "sizeBytes": 126537
+    },
+    {
+      "path": "reports/g03-rollback.json",
+      "sha256": "14d96a26f093f701258f1572a3104d98b995cdffe43e5a3df1f637cdbaf9d4be",
+      "sizeBytes": 66307
+    },
+    {
+      "path": "reports/g03-semantics.json",
+      "sha256": "5fa5a23d0c549eab9357bd007b2ffe068c7b93758ef04f1550f5eb8fc45449c1",
+      "sizeBytes": 134554
+    },
+    {
+      "path": "reports/g03-tampering.json",
+      "sha256": "9d031a89017ac69b55252f0563586e465b8e210f1ddf47f3522d13076051967f",
+      "sizeBytes": 64839
+    },
+    {
+      "path": "reports/g03-transitions.json",
+      "sha256": "c2bece7fe36ae7d11871da442216c7638164466b7cbdd70db722f72f9a271a31",
+      "sizeBytes": 184369
+    },
+    {
+      "path": "reports/g03-unknown-no-commit.json",
+      "sha256": "fd3c5ded051b37f237fda34aad50b36185087866bfd9baec6d20e571167f915b",
+      "sizeBytes": 8070
+    },
+    {
+      "path": "reports/g03-writer-barrier.json",
+      "sha256": "2bbbe706b862ac482778451c92926ed9b836d71afa6df9047d9f9cc3ead9b339",
+      "sizeBytes": 64915
+    },
+    {
+      "path": "reports/offline-cohort.json",
+      "sha256": "710da3b8a6d1169195af5be6b95a27372ebe7940eb594b5b7fe993bdd6755883",
+      "sizeBytes": 3124
+    },
+    {
+      "path": "run-manifest.json",
+      "sha256": "bfd30ca186db14fa32a1505c9e67fcc1530cdb25dcd0a07811f64ac8dd7a2927",
+      "sizeBytes": 47889
+    },
+    {
+      "path": "toolchain.json",
+      "sha256": "df32a56bc29ad2a0787704fbcb480a22170751025dfdcc751993b28a586acde1",
+      "sizeBytes": 1022
+    }
+  ],
+  "expandedBytes": 1924488,
+  "headSha": "a4af875748b085ac531fe06089a675a0ea1059fc",
+  "runAttempt": 1,
+  "runId": 40561376259,
+  "zipBytes": 211479,
+  "zipSha256": "6c1d1741bd6b77185cf91afc3123381a6ffd3be7cb9481242be5bd9f8e390596"
+}

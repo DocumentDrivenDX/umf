@@ -54,7 +54,7 @@ CORE_MAC_RELEASE = {
     'producerArtifactId': 12712708341, 'producerArtifactName': 'umf-core-0.10.3-release-macos-arm64',
     'producerArtifactSha256': '7758601bd5c2487f55dff837297aac20b83f5aca3a77b76a10376fff9e9e4730',
     'producerArtifactSizeBytes': 5604087,
-    'nativeMember': 'umf/_rust/_rust_core.abi3.dylib',
+    'nativeMember': 'umf/_rust_core.abi3.so',
     'repository': 'https://github.com/DocumentDrivenDX/umf',
     'url': 'https://github.com/DocumentDrivenDX/umf/releases/download/python-v0.10.3/umf_core-0.10.3-cp311-abi3-macosx_11_0_arm64.whl',
     'filename': 'umf_core-0.10.3-cp311-abi3-macosx_11_0_arm64.whl',
@@ -65,7 +65,7 @@ CORE_MAC_RELEASE = {
     'sdistSha256': '61b3e12a84f68f890fa34e2da14bbda47e101b7c6eadd5207680827e8daa694c',
     'sdistFilename': 'umf_core-0.10.3.tar.gz',
     'sdistSizeBytes': 2826487,
-    'member': 'umf/_rust/_rust_core.abi3.dylib',
+    'member': 'umf/_rust_core.abi3.so',
 }
 CORE_LINUX_RELEASE = {
     'releaseTag': 'python-v0.10.3', 'sourceCommit': '7d334dec45948953718bfacd3ed6dd199cadba79',
@@ -76,7 +76,7 @@ CORE_LINUX_RELEASE = {
     'producerWorkflowRunId': 40448360241, 'producerWorkflowRunAttempt': 1,
     'producerArtifactId': 12709765210, 'producerArtifactName': 'umf-core-0.10.3-release-linux-x86_64',
     'producerArtifactSha256': 'b14e112d3bbe65b1eeb49bf6d55afc307564b76f2ee4abecdcf19a632f078b53',
-    'producerArtifactSizeBytes': 5895170, 'nativeMember': 'umf/_rust/_rust_core.abi3.so',
+    'producerArtifactSizeBytes': 5895170, 'nativeMember': 'umf/_rust_core.abi3.so',
     'repository': 'https://github.com/DocumentDrivenDX/umf',
     'url': 'https://github.com/DocumentDrivenDX/umf/releases/download/python-v0.10.3/umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl',
     'filename': 'umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl',
@@ -176,7 +176,9 @@ def validate_core_native_custody(lock: dict[str, Any], receipt: dict[str, Any],
     if actual_native_sha != native_sha:
         raise ValueError('Child Core native hash differs from its exact locked wheel member')
     declared_member = source.get('nativeMember')
-    if declared_member is not None and declared_member != members[0]:
+    current_release_member = source.get('releaseTag') == CORE_LINUX_RELEASE['releaseTag']
+    if ((current_release_member and not isinstance(declared_member, str))
+            or (declared_member is not None and declared_member != members[0])):
         raise ValueError('Child Core native member path differs from its release source declaration')
 
 
@@ -822,7 +824,8 @@ def validate_artifact_target(target_root: Path, target_id: str, source_commit: s
     if any(core.get(key) != value for key, value in CORE_MAC_RELEASE.items() if key != 'member'):
         raise ValueError(f'{target_id}: published Core Mac wheel/native custody differs from exact release tuple')
     native_rows = [item for item in zipfile.ZipFile(actual_paths[core['filename']]).namelist()
-                   if item.startswith('umf/') and item.endswith('.abi3.dylib') and item.rsplit('/', 1)[-1].startswith('_rust_core')]
+                   if item.startswith('umf/') and item.endswith(('.abi3.so', '.abi3.dylib', '.abi3.pyd'))
+                   and item.rsplit('/', 1)[-1].startswith('_rust_core')]
     if native_rows != [CORE_MAC_RELEASE['member']]:
         raise ValueError(f'{target_id}: Core Mac wheel must contain one native member')
     with zipfile.ZipFile(actual_paths[core['filename']]) as archive:
