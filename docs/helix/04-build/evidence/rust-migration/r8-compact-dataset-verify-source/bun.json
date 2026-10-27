@@ -8,13 +8,13 @@
   "host": "bun",
   "runtime": "Bun 1.4.3",
   "buildBinding": {
-    "manifest": "/private/tmp/umf-r8-compact-postmerge-v2-20261027/compact-dataset-verify-build-manifest.json",
-    "sha256": "8b3a7fa5d854f709d6ca7888758e7099ef9b8c5707f0722bdc16f64735890cf2",
-    "sourceClosureSha256": "0f8f116988ba2da74a13085790824cb9a4f2dc8deda9a5abdb2a594aa14f20dd",
+    "manifest": "/private/tmp/umf-r8-compact-fixedpoint-20261027/compact-dataset-verify-build-manifest.json",
+    "sha256": "5962a782eac5ffd09f4c64c1b98828dfc648d2439b7a401cdb105e5378a15d70",
+    "sourceClosureSha256": "60e9ef033087b32ae195653662afb8955338f82314d108f8ac0f14d773aba30a",
     "artifacts": {
       "nodeAddon": {
         "path": "umf_core_node.node",
-        "sha256": "65341990cb037703f87a460174234de03c18d9b34854368a8e6ddda49d5ded1e"
+        "sha256": "ca601fb58ddd98abd6f057285240147c9284f6c7de39bdfdc0fe211d29e9e1c8"
       },
       "wasm": {
         "path": "umf_core_wasm_bg.wasm",
@@ -26,20 +26,20 @@
       },
       "referenceBundle": {
         "path": "umf.js",
-        "sha256": "2de611dc6569afc4155ea904179a98762f26a69aecdaf78f37ca4cdb7df2dcde"
+        "sha256": "75f2e9a26c945ff1e9d1fa3431ac80dfc7da02b6ef4f58b6519eef1b20cc49de"
       },
       "nodeBundle": {
         "path": "umf-node.js",
-        "sha256": "02be6b1461a20773533a7d34f13bcd821f4ad9c5127cc97074d7c01f636cf4d8"
+        "sha256": "8c9720e9e591fc78b39afc56589ffded6e41d639e46c6888a64ba46a26d61b09"
       },
       "browserBundle": {
         "path": "umf-browser.js",
-        "sha256": "9271a514a5b3ff59f4df265d5fa5557144dac99f89f1a5d4d230e5d2f9dbd61f"
+        "sha256": "aee436eb39653a32b95de5aedff9b8cbc3fef47e17f3369c8fead2caf74776c7"
       }
     }
   },
   "sourceClosure": {
-    "sha256": "0f8f116988ba2da74a13085790824cb9a4f2dc8deda9a5abdb2a594aa14f20dd",
+    "sha256": "60e9ef033087b32ae195653662afb8955338f82314d108f8ac0f14d773aba30a",
     "files": {
       ".cargo/config.toml": "84fd4fa17fd967cae6006ba1b0dc430904239dec921c1441dd657387ee802d6c",
       "bindings/core/node/build.rs": "fcbd1ff3f627a7553fa1704dc6f558998daff8bc256015c37aace62cc49ce584",
@@ -301,6 +301,7 @@
       "crates/umf-core-wire/tests/r5_schema_defaults.rs": "563a84f303133f062e87f251c0f8f17b3ccde2a8a53ee5c7bdf92bd0135100be",
       "crates/umf-core-wire/tests/r5_schema_properties_wire.rs": "ef2af909e77c7ac4663787882a4392ca44e68f4c99f35b4858833235c5d32292",
       "crates/umf-core-wire/tests/r5_semantic_types_wire.rs": "8dc1c8b7538e5ef77cf6d357b136ee0f189ee1afcac40bdf5ecff046a0ba5779",
+      "crates/umf-core-wire/tests/r8_cardinality_acceptance.rs": "aad72cc3f8fb62864696730ede42ed712a48954daf3f9d67a7d56d88fb109b50",
       "crates/umf-core-wire/tests/r8_core_relationship_selection_wire.rs": "dd5d2729c05e193fd259fbabd9b2a7079251fbc8ae35bf17f094586821c987ae",
       "crates/umf-core-wire/tests/r8_json_number_wire.rs": "abe7410c0aab0c74d524ffd69465248e615600fa7a950588388f1cf1bda404ed",
       "crates/umf-core-wire/tests/r8_json_value_serialization_wire.rs": "2ba67ed399da67bca1dc191241e1d96b7df003b7ef405d1b61fde2089ac1a478",
@@ -1450,7 +1451,7 @@
       "spec/loader-preservation/1.0.0/profile.json": "7aa4bac9443e341e421754f61753cecba624d828a15f82a3951211b4bd51177f",
       "spec/metamodel/generated/core-constraints.json": "66a5aaa171c33e740b07244d258cdba8fdf2179b2a5eef5698d4f53cb5089f50",
       "spec/metamodel/generated/domain-policy.json": "40fed05577559632c9b76fbfa42b21737c703616b36d8478ed6482b21901eb05",
-      "spec/metamodel/generated/manifest.json": "00c0fb17a1304d757b23950f5cb94d05b4423eadc57d4fe0a0f80330ad2ac6be",
+      "spec/metamodel/generated/manifest.json": "f84e1ddae4fc63e9379c62be0c2dc87a0b7f100648d4c574c9e51acaf08b3140",
       "spec/metamodel/generated/python-shapes.json": "4dc13795bdfe6163379604c0c96d3d6124c89493d441064871b2f6700ef7105f",
       "spec/metamodel/package.json": "8c193403146173a328611bee864392777b798a13c491ef8bed0bcc4e43b2d16f",
       "spec/metamodel/umf.yaml": "35b72a7f6aa86c98398192e5b67d5841d77127743c671c742dd871a7baee58ca",
@@ -1786,7 +1787,7 @@
       "src/extensions/actions/manifest-types.ts": "b3467de1b7e82c74de45ceacc2e11b137d9f1453ab77c00f8ce9eb2f04695c2e",
       "src/extensions/actions/manifests.ts": "e734083c06f7f375cf512555c99762eade63768633568479a347c860f659a206",
       "src/extensions/actions/plan-artifacts.ts": "dba1e670712221ef92b02ad2c3b7fb7924b4dd542e69a3bc12cefda98f544840",
-      "src/extensions/actions/plan-identity.ts": "81eca34b28f7a5ea0de37ade28ea77a3cd614b4a14680d2a8de092eac0e5e4e3",
+      "src/extensions/actions/plan-identity.ts": "03fe59537582783a825886b6e081bd8114703eb6abd47d9e2865879d94bc2bc6",
       "src/extensions/actions/plan-structure.ts": "f9c4cc40dfdf240f74177b24719f18e24dda6a6b80cba329767c3cb8b7162d83",
       "src/extensions/actions/plan-types.ts": "889215057a455e66ab18db89d53940e7bed44c02d66852667f7975cc345b6549",
       "src/extensions/actions/plans.ts": "7d4bdefc02f40159afe5fea3161e94a296a0af99b0e8028661c9f7fdb5221782",

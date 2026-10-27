@@ -8,13 +8,13 @@
     "reference": "private source-built TypeScript root"
   },
   "buildBinding": {
-    "manifest": "/private/tmp/umf-r8-compact-postmerge-v2-20261027/compact-dataset-verify-build-manifest.json",
-    "sha256": "8b3a7fa5d854f709d6ca7888758e7099ef9b8c5707f0722bdc16f64735890cf2",
-    "sourceClosureSha256": "0f8f116988ba2da74a13085790824cb9a4f2dc8deda9a5abdb2a594aa14f20dd",
+    "manifest": "/private/tmp/umf-r8-compact-fixedpoint-20261027/compact-dataset-verify-build-manifest.json",
+    "sha256": "5962a782eac5ffd09f4c64c1b98828dfc648d2439b7a401cdb105e5378a15d70",
+    "sourceClosureSha256": "60e9ef033087b32ae195653662afb8955338f82314d108f8ac0f14d773aba30a",
     "artifacts": {
       "nodeAddon": {
         "path": "umf_core_node.node",
-        "sha256": "65341990cb037703f87a460174234de03c18d9b34854368a8e6ddda49d5ded1e"
+        "sha256": "ca601fb58ddd98abd6f057285240147c9284f6c7de39bdfdc0fe211d29e9e1c8"
       },
       "wasm": {
         "path": "umf_core_wasm_bg.wasm",
@@ -26,15 +26,15 @@
       },
       "referenceBundle": {
         "path": "umf.js",
-        "sha256": "2de611dc6569afc4155ea904179a98762f26a69aecdaf78f37ca4cdb7df2dcde"
+        "sha256": "75f2e9a26c945ff1e9d1fa3431ac80dfc7da02b6ef4f58b6519eef1b20cc49de"
       },
       "nodeBundle": {
         "path": "umf-node.js",
-        "sha256": "02be6b1461a20773533a7d34f13bcd821f4ad9c5127cc97074d7c01f636cf4d8"
+        "sha256": "8c9720e9e591fc78b39afc56589ffded6e41d639e46c6888a64ba46a26d61b09"
       },
       "browserBundle": {
         "path": "umf-browser.js",
-        "sha256": "9271a514a5b3ff59f4df265d5fa5557144dac99f89f1a5d4d230e5d2f9dbd61f"
+        "sha256": "aee436eb39653a32b95de5aedff9b8cbc3fef47e17f3369c8fead2caf74776c7"
       }
     }
   },
@@ -66,9 +66,9 @@
     }
   },
   "build": {
-    "dist": "/private/tmp/umf-r8-compact-postmerge-v2-20261027",
+    "dist": "/private/tmp/umf-r8-compact-fixedpoint-20261027",
     "wasmBindgen": "0.2.100",
-    "nodeAddonSha256": "65341990cb037703f87a460174234de03c18d9b34854368a8e6ddda49d5ded1e"
+    "nodeAddonSha256": "ca601fb58ddd98abd6f057285240147c9284f6c7de39bdfdc0fe211d29e9e1c8"
   },
   "fixture": {
     "path": "/private/tmp/umf-r8-security-postmerge-fixture.json",

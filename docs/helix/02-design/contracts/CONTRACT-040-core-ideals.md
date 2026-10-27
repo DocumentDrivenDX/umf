@@ -22,9 +22,11 @@ ddx:
 **Type:** semantic schema/library contract. **Version:** proposed core semantic
 revision 1. **Status:** Field and Nullability ideals have passed their qualified
 five-system admission/delivery gates. Cardinality core 0.4.0 has passed
-core-task acceptance. All five priority Cardinality bindings have qualified acceptance; the separate
-ideal admission and five-system delivery gate passes. See the Cardinality gate
-checkpoint below. Native equivalence remains unclaimed.
+core-task acceptance. The five-binding Cardinality admission and delivery
+result below is a historical cohort; the [current conformance record](../../../../fixtures/validation/cardinality-conformance.json)
+reports current native qualification as `UNQUALIFIED`. The [R8 migration plan](../../04-build/rust-migration-plan.md)
+tracks current-source and installed-route evidence separately. Native equivalence
+remains unclaimed.
 Facet core 0.5.0 and all five priority facet bindings have passed
 qualified acceptance. Facets now pass the separate ideal-admission and qualified five-system delivery gate. Native equivalence remains unclaimed; native payloads and unknown extension content remain attached. Key is the next ordered concept. See the
 [facet gate admission record](../../04-build/evidence/facet-gate-admission.md).
@@ -652,19 +654,22 @@ Unknown reference metadata and full native source context remain recoverable.
 
 ### Cardinality gate checkpoint
 
-The [conformance record](../../../../fixtures/validation/cardinality-conformance.json) supersedes earlier Cardinality admission/gate-pending
-notes. Ideal admission passes the two-binding minimum; qualified delivery passes
-all five priority bindings. Neither result claims native equivalence. Facets may
-now proceed under TD-043 after its representation/version decision is amended
-for the current 0.4.0 baseline; key follows the facets five-system gate.
+The historical Cardinality admission record passed the two-binding minimum and
+its five-binding delivery cohort passed. The [current conformance record](../../../../fixtures/validation/cardinality-conformance.json)
+retains those fingerprints but reports `idealAdmitted: false`, zero currently
+qualified native bindings, and `priorityDelivery: false` pending fresh native
+execution. Neither the historical result nor current source behavior claims
+native equivalence. Facets proceeded under TD-043 from the 0.4.0 baseline;
+current Cardinality release qualification remains a separate gate.
 
-`bun scripts/core-ideals/cardinality-conformance.ts` verifies current core/binding
-acceptance and native/Chromium proof fingerprints, including every combined
-five-system oracle/browser entrypoint. `bun test ./tests/core-ideals/cardinality-conformance.test.ts`
-checks the gate's positive matrix and rejection of missing, stale, unsafe or failed
-evidence. These checks replay current captured evidence; they do not rerun native
-engines or authenticate receipts. The preceding 76-step Parquet acceptance refresh
-supplies the unchanged native/browser baseline.
+`bun scripts/core-ideals/cardinality-conformance.ts` checks current
+source-functional core/binding behavior and retained native/Chromium proof
+fingerprints, including every combined five-system oracle/browser entrypoint.
+`bun test ./tests/core-ideals/cardinality-conformance.test.ts` checks the
+historical gate's positive matrix and rejection of missing, stale, unsafe or
+failed evidence. These checks replay captured evidence; they do not rerun native
+engines or authenticate fresh receipts. The preceding 76-step Parquet acceptance
+refresh is a retained native/browser baseline.
 
 The gate exercises 508 authored cases and 696 native cases: 166 strict projection
 blocks, 684 ideal recoveries and 932 native recoveries across JSON/YAML. All four

@@ -7796,6 +7796,77 @@ value changes are provenance hashes only; route counts and dispositions remain
 unchanged at 922 open logical executable default routes and zero retired.
 The generated ledger SHA-256 is
 `5cbf92bddfe5a0053c44ccba8b23999fb1af48c4b09461d27af984ec21bf135e`.
-This checkpoint predates the new Cardinality acceptance test source; a later
-current-source replay and ledger refresh will be required after that test is
-integrated.
+This checkpoint predates the new Cardinality acceptance test source. Its
+current-source replay and ledger refresh are recorded in the next checkpoint.
+
+### R8 Cardinality acceptance and retirement gate audit — 2026-10-27
+
+The new Rust wire matrix at
+`crates/umf-core-wire/tests/r8_cardinality_acceptance.rs` passes its focused
+test. It covers authored Core Cardinality inspection, declaration, refusal,
+opaque item metadata retention, and receipt consistency on the current source.
+This is bounded core-authoring evidence, not complete five-system acceptance.
+The test entered the metamodel workspace inventory, so its generated manifest
+and downstream Action producer identity were refreshed in that order. Both
+generator `--check` commands, the full application-and-tools typecheck, core
+authority check, Rust/V8 boundary census, and unified-client/access boundaries
+now pass. A separate one-line tools tuple annotation repaired the full
+typecheck without changing runtime behavior.
+
+The current Cardinality conformance generator deliberately reports
+`idealAdmitted: false` and zero currently qualified native bindings. Its older
+positive five-binding packet proves a historical concept-acceptance cohort;
+retained fingerprints do not authenticate fresh native/browser execution. The
+R8 `/2` default-route validator likewise accepts two-platform receipts only as
+bounded evidence, and the retirement validator rejects that format until a
+complete CONTRACT-040 acceptance proof exists. Therefore the three Cardinality
+logical names remain open. A disposable exact-source five-binding environment
+is prepared for current native/browser execution, with its Java and Chromium
+versions recorded as a new cohort; no current five-system result is claimed yet.
+The next gates are a fixed-point rebuild after the CONTRACT-040 status edit,
+a hosted Linux x64 installed replay, fresh five-binding receipts, and a
+reviewed acceptance-capable retirement evidence interface.
+The total remains 922 open logical executable routes
+and zero retired.
+
+The Compact Dataset and Security Node, Bun and Chromium replays now share
+immutable source manifest SHA-256
+`5962a782eac5ffd09f4c64c1b98828dfc648d2439b7a401cdb105e5378a15d70`
+and a 1,959-file source closure
+`60e9ef033087b32ae195653662afb8955338f82314d108f8ac0f14d773aba30a`.
+Compact passes five cases on each host, with 14 Rust calls on Node and Bun and
+14 WASM dispatches in Chromium 153. Security passes 68 cases per host, with 30
+valid Rust calls and zero refusals. The packets' recursive checksums pass.
+The independently regenerated R8 ledger SHA-256 is
+`cb9ef94664142d5be0202539c66b79f81a4e05da5cbc4e2fabe27e24be2f60f0`:
+96 rows change: 90 resource-ownership provenance rows for the generated
+manifest and corrected CONTRACT-040 status, and six current route-receipt
+rows. Counts and route dispositions remain unchanged. This is
+source-tree evidence, not installed-release qualification.
+
+The [Docker-emulated Linux x64 archive packet](evidence/rust-migration/r8-cardinality-linux-x64-emulated-b505/README.md)
+records a clean `b50523cda` SDK build with zero source transforms and source
+closure SHA-256
+`5564642b25543372aa160df665c5b696664ec447397f09f7de0ec95dfebe0eeb`,
+matching the separate macOS arm64 build from that source. Archive integrity
+passed 9/9 checks; the full TypeScript typecheck passed. Its installed
+Cardinality receipt passed the three operation routes on Node 26.12.1, Bun
+1.4.3, and Chromium 153.0.8010.12 with packaged WASM and no external browser
+requests. Archive SHA-256 is
+`eea56e3ae4b00f55b322064d641043d35d374604ec0a0be1dc04f527d8a1fdfc`;
+the raw receipt SHA-256 is
+`52e64280b0a7a5f4bbac6e969a09b13b0497d5ccfbe2ee7d4a8eacd08c565d0a`.
+This is emulated local provenance, not hosted Linux CI, CONTRACT-040
+five-binding acceptance, default-route retirement, or release qualification.
+Because CONTRACT-040 is an input to the SDK source closure, the later status
+correction makes this frozen `b50523cda` archive historical relative to the
+edited branch; a new exact-source archive replay is required.
+
+Fresh five-binding work encountered a TableSpec source-version mismatch before
+native qualification: the clean current TableSpec checkout's
+`src/tablespec/type_mappings.py` does not match UMF's pinned native fixture.
+An exact historical source blob was located at TableSpec commit `bb34a0382`
+(lineage `v0.0.9-5-gbb34a03`), enabling a separately labeled pinned-version
+replay. No current TableSpec or five-system qualification is claimed. The
+CONTRACT-040 status text now distinguishes its historical five-binding gate
+from the current conformance record's `UNQUALIFIED` native state.
