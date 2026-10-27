@@ -57,6 +57,28 @@ retire ledger gaps or qualify every input shape, platform, architecture, full
 SDK behavior, or release readiness. The earlier archive receipt below remains
 historical evidence for its own cohort.
 
+### Nested host-object admission probe
+
+The four prior host refusals placed their accessor, hidden property, or symbol
+on the source root. The installed nested probe adds each of those shapes to
+`modules[0].elements[0]`, an element other than the one selected by each
+inspector. Across all three inspectors and installed default/reference routes,
+Node 26.12.1, Bun 1.4.3, and Chromium 153.0.8010.12 returned the same
+`UmfError/NON_JSON` message and deep JSON Pointer path. Accessor counters stayed
+at zero. Chromium loaded the packaged WASM. This specifically checks that
+admission traverses an unrelated nested part of the retained source tree; it
+does not establish exhaustive deep host-object or proxy behavior.
+
+The [nested-shape receipt](nested-host-shapes-4c3187be9.json) pins the archive,
+source closure, harness, and predecessor packet container. Reproduce with:
+
+```sh
+bun docs/helix/04-build/evidence/rust-migration/r8-core-inspectors-installed/nested-host-shapes-current-source.mjs \
+  /private/tmp/umf-current-4c3187be9/umf-sdk.tgz \
+  64e46f86bfb2ffbd97066d84d8a36cbd5a5cd48f45d6337a2400b4b4a79286ff \
+  7870eee151f2633c48f49194e20f2bc590cbfabc62b80ef7abffeefa095e91f9
+```
+
 The isolated harness replays the exact frozen predecessor container for the
 three default-selected inspector exports from the private SDK archive
 `/private/tmp/umf-r8-csv-boolean-default/umf-sdk.tgz`. The archive SHA-256 is
