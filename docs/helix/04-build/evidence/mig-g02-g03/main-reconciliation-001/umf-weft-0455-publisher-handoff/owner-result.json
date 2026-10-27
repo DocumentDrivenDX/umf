@@ -1,0 +1,24 @@
+{
+  "status": "ACTUAL_PUBLISHER_HANDOFF_VERIFIED_PUBLIC_METADATA_NOT_CONSUMER_ADMISSION",
+  "distribution": "umf-weft",
+  "version": "0.4.55",
+  "source": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+  "tag": "v0.4.55",
+  "releaseId": 424900540,
+  "immutable": true,
+  "rootVerification": "Fresh GitHub release and PyPI metadata exactly match owner three-wheel hashes; actual OIDC/source/public-consumer receipts retained. Root did not execute wheel code.",
+  "scope": "Mac installed packaging plus nine frozen refusal-response Rust/Python/Chromium comparisons; Linux packaging only. No positive-query or native PostgreSQL claim. Consumer admission remains separate.",
+  "sdist": "none; not produced",
+  "consumerPins": "UNCHANGED until complete actual Core0.10.3 tuple and original18closure/37D5/fourcellunion/native/API gates",
+  "parallelSourceCompatibilityPlanSha256": "89c524347b21adc1da4fe7170e07efc57584819c4c905729820999c90bd4dac3",
+  "compatibilitySource": {
+    "status": "SOURCE_ACCEPTED_TEST_EXECUTION_PENDING_COMPLETE_COHORT",
+    "files": {
+      "python/umf_access/src/umf_access/build/catalog.py": "02312f775de2197cfdca0ad8b11e5790e3f0ab37ebc8cfca4bab857c3bcb1afa",
+      "python/umf_access/tests/test_catalog_configuration.py": "292fca21cb3410242b1cad67be8fa79b38eb648f0d02209b7cf1dc9096b0a1c8"
+    },
+    "closureSha256": "eb300df55d9d94855bc1d3fe7ea2fda1aee0b563721b1b804092ecdbbf4eba45",
+    "scope": "Exact explicitly declared weft-sql or umf-weft only; one metadata lookup/version/provenance binding, no cross-name fallback; original production pins and gates unchanged."
+  },
+  "stablePublisherEvidence": "https://github.com/DocumentDrivenDX/weft/tree/876fedbd9fd27979d292a5c5d8cc795ea48b6754/docs/helix/05-deploy/evidence/pypi-0.4.55"
+}
