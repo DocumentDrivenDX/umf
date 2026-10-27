@@ -1,0 +1,627 @@
+{
+  "format": "umf.r8.csv-boolean-retirement-extension/1",
+  "status": "pass",
+  "scope": [
+    "validateCsvBooleanLexical",
+    "verifyCsvBooleanLexical"
+  ],
+  "capturedSourceRevision": "4c3187be9",
+  "archive": {
+    "path": "/private/tmp/umf-current-4c3187be9/umf-sdk.tgz",
+    "sha256": "64e46f86bfb2ffbd97066d84d8a36cbd5a5cd48f45d6337a2400b4b4a79286ff",
+    "bytes": 43323241,
+    "manifestSha256": "dff445c3e5e5bc46edf1d46b5bed46a92199c0db6f66a6673feb93c2114105cf"
+  },
+  "sourceClosure": {
+    "sha256": "7870eee151f2633c48f49194e20f2bc590cbfabc62b80ef7abffeefa095e91f9",
+    "capturedLiveSha256": "7870eee151f2633c48f49194e20f2bc590cbfabc62b80ef7abffeefa095e91f9",
+    "fileCount": 3461,
+    "transform": {
+      "status": "fixed-point",
+      "generatedInputs": []
+    }
+  },
+  "packageRoutes": {
+    "node": "./dist/umf-node.js",
+    "browser": "./dist/umf-browser.js",
+    "reference": "./dist/umf.js"
+  },
+  "node": {
+    "runtime": {
+      "name": "Node",
+      "version": "v26.12.1"
+    },
+    "selected": "file:///private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-csv-retirement-79826-1793063819986/node_modules/@umf/core/dist/umf-node.js",
+    "reference": "file:///private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-csv-retirement-79826-1793063819986/node_modules/@umf/core/dist/umf.js",
+    "cases": {
+      "oracle.token.true": {
+        "status": "accepted",
+        "expectedBoolean": true,
+        "actualBoolean": true,
+        "originalToken": "true",
+        "provenance": "unverified"
+      },
+      "oracle.token.True": {
+        "status": "accepted",
+        "expectedBoolean": true,
+        "actualBoolean": true,
+        "originalToken": "True",
+        "provenance": "unverified"
+      },
+      "oracle.token.false": {
+        "status": "accepted",
+        "expectedBoolean": false,
+        "actualBoolean": false,
+        "originalToken": "false",
+        "provenance": "unverified"
+      },
+      "oracle.token.False": {
+        "status": "accepted",
+        "expectedBoolean": false,
+        "actualBoolean": false,
+        "originalToken": "False",
+        "provenance": "unverified"
+      },
+      "oracle.reject.\"TRUE\"": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Expected explicit closed Boolean lexical profile request"
+      },
+      "oracle.reject.\"tRuE\"": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Expected explicit closed Boolean lexical profile request"
+      },
+      "oracle.reject.\" true\"": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Expected explicit closed Boolean lexical profile request"
+      },
+      "oracle.reject.\"false \"": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Expected explicit closed Boolean lexical profile request"
+      },
+      "oracle.reject.\"0\"": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Expected explicit closed Boolean lexical profile request"
+      },
+      "oracle.reject.\"1\"": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Expected explicit closed Boolean lexical profile request"
+      },
+      "oracle.reject.\"Ｔｒｕｅ\"": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Expected explicit closed Boolean lexical profile request"
+      },
+      "oracle.missingToken": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Expected explicit closed Boolean lexical profile request"
+      },
+      "oracle.nullToken": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Expected explicit closed Boolean lexical profile request"
+      },
+      "coreFieldValidity": {
+        "receipt": {
+          "valid": false,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "CORE_SCHEMA_PROPERTIES",
+              "path": "",
+              "message": "Literal is not an allowed value",
+              "severity": "error"
+            }
+          ]
+        },
+        "publicFieldVerdict": {
+          "valid": false,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "CORE_SCHEMA_PROPERTIES",
+              "path": "",
+              "message": "Literal is not an allowed value",
+              "severity": "error"
+            }
+          ]
+        }
+      },
+      "receiptTamper.expectedSource": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Stale or forged Boolean lexical receipt"
+      },
+      "receiptTamper.expectedRequest": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Stale or forged Boolean lexical receipt"
+      },
+      "receiptTamper.receiptSource": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Stale or forged Boolean lexical receipt"
+      },
+      "receiptTamper.receiptRequest": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Stale or forged Boolean lexical receipt"
+      },
+      "receiptTamper.typedBoolean": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Stale or forged Boolean lexical receipt"
+      },
+      "receiptTamper.validation": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Stale or forged Boolean lexical receipt"
+      },
+      "receiptTamper.missingOperationField": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Malformed Boolean lexical receipt"
+      },
+      "receiptTamper.extraOperationField": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Malformed Boolean lexical receipt"
+      },
+      "sourceProxyContinuation": {
+        "sameThrownObject": true,
+        "ownKeysCalls": 2,
+        "requestOwnKeysCalls": 0
+      },
+      "oversizedReceiptBeforeExpectedInputs": {
+        "result": {
+          "status": "refused",
+          "name": "UmfError",
+          "code": "LIMIT",
+          "path": "",
+          "message": "Boolean lexical serialized JSON exceeds byte limit"
+        },
+        "sourceReflection": 0,
+        "requestReflection": 0
+      }
+    }
+  },
+  "bun": {
+    "runtime": {
+      "name": "Bun",
+      "version": "1.4.3",
+      "nodeCompatibilityVersion": "v26.3.0"
+    },
+    "selected": "file:///private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-csv-retirement-79826-1793063819986/node_modules/@umf/core/dist/umf-node.js",
+    "reference": "file:///private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-csv-retirement-79826-1793063819986/node_modules/@umf/core/dist/umf.js",
+    "cases": {
+      "oracle.token.true": {
+        "status": "accepted",
+        "expectedBoolean": true,
+        "actualBoolean": true,
+        "originalToken": "true",
+        "provenance": "unverified"
+      },
+      "oracle.token.True": {
+        "status": "accepted",
+        "expectedBoolean": true,
+        "actualBoolean": true,
+        "originalToken": "True",
+        "provenance": "unverified"
+      },
+      "oracle.token.false": {
+        "status": "accepted",
+        "expectedBoolean": false,
+        "actualBoolean": false,
+        "originalToken": "false",
+        "provenance": "unverified"
+      },
+      "oracle.token.False": {
+        "status": "accepted",
+        "expectedBoolean": false,
+        "actualBoolean": false,
+        "originalToken": "False",
+        "provenance": "unverified"
+      },
+      "oracle.reject.\"TRUE\"": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Expected explicit closed Boolean lexical profile request"
+      },
+      "oracle.reject.\"tRuE\"": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Expected explicit closed Boolean lexical profile request"
+      },
+      "oracle.reject.\" true\"": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Expected explicit closed Boolean lexical profile request"
+      },
+      "oracle.reject.\"false \"": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Expected explicit closed Boolean lexical profile request"
+      },
+      "oracle.reject.\"0\"": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Expected explicit closed Boolean lexical profile request"
+      },
+      "oracle.reject.\"1\"": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Expected explicit closed Boolean lexical profile request"
+      },
+      "oracle.reject.\"Ｔｒｕｅ\"": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Expected explicit closed Boolean lexical profile request"
+      },
+      "oracle.missingToken": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Expected explicit closed Boolean lexical profile request"
+      },
+      "oracle.nullToken": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Expected explicit closed Boolean lexical profile request"
+      },
+      "coreFieldValidity": {
+        "receipt": {
+          "valid": false,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "CORE_SCHEMA_PROPERTIES",
+              "path": "",
+              "message": "Literal is not an allowed value",
+              "severity": "error"
+            }
+          ]
+        },
+        "publicFieldVerdict": {
+          "valid": false,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "CORE_SCHEMA_PROPERTIES",
+              "path": "",
+              "message": "Literal is not an allowed value",
+              "severity": "error"
+            }
+          ]
+        }
+      },
+      "receiptTamper.expectedSource": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Stale or forged Boolean lexical receipt"
+      },
+      "receiptTamper.expectedRequest": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Stale or forged Boolean lexical receipt"
+      },
+      "receiptTamper.receiptSource": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Stale or forged Boolean lexical receipt"
+      },
+      "receiptTamper.receiptRequest": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Stale or forged Boolean lexical receipt"
+      },
+      "receiptTamper.typedBoolean": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Stale or forged Boolean lexical receipt"
+      },
+      "receiptTamper.validation": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Stale or forged Boolean lexical receipt"
+      },
+      "receiptTamper.missingOperationField": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Malformed Boolean lexical receipt"
+      },
+      "receiptTamper.extraOperationField": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Malformed Boolean lexical receipt"
+      },
+      "sourceProxyContinuation": {
+        "sameThrownObject": true,
+        "ownKeysCalls": 2,
+        "requestOwnKeysCalls": 0
+      },
+      "oversizedReceiptBeforeExpectedInputs": {
+        "result": {
+          "status": "refused",
+          "name": "UmfError",
+          "code": "LIMIT",
+          "path": "",
+          "message": "Boolean lexical serialized JSON exceeds byte limit"
+        },
+        "sourceReflection": 0,
+        "requestReflection": 0
+      }
+    }
+  },
+  "chromium": {
+    "version": "153.0.8010.12",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+    "cases": {
+      "oracle.token.true": {
+        "status": "accepted",
+        "expectedBoolean": true,
+        "actualBoolean": true,
+        "originalToken": "true",
+        "provenance": "unverified"
+      },
+      "oracle.token.True": {
+        "status": "accepted",
+        "expectedBoolean": true,
+        "actualBoolean": true,
+        "originalToken": "True",
+        "provenance": "unverified"
+      },
+      "oracle.token.false": {
+        "status": "accepted",
+        "expectedBoolean": false,
+        "actualBoolean": false,
+        "originalToken": "false",
+        "provenance": "unverified"
+      },
+      "oracle.token.False": {
+        "status": "accepted",
+        "expectedBoolean": false,
+        "actualBoolean": false,
+        "originalToken": "False",
+        "provenance": "unverified"
+      },
+      "oracle.reject.\"TRUE\"": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Expected explicit closed Boolean lexical profile request"
+      },
+      "oracle.reject.\"tRuE\"": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Expected explicit closed Boolean lexical profile request"
+      },
+      "oracle.reject.\" true\"": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Expected explicit closed Boolean lexical profile request"
+      },
+      "oracle.reject.\"false \"": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Expected explicit closed Boolean lexical profile request"
+      },
+      "oracle.reject.\"0\"": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Expected explicit closed Boolean lexical profile request"
+      },
+      "oracle.reject.\"1\"": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Expected explicit closed Boolean lexical profile request"
+      },
+      "oracle.reject.\"Ｔｒｕｅ\"": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Expected explicit closed Boolean lexical profile request"
+      },
+      "oracle.missingToken": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Expected explicit closed Boolean lexical profile request"
+      },
+      "oracle.nullToken": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Expected explicit closed Boolean lexical profile request"
+      },
+      "coreFieldValidity": {
+        "receipt": {
+          "valid": false,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "CORE_SCHEMA_PROPERTIES",
+              "path": "",
+              "message": "Literal is not an allowed value",
+              "severity": "error"
+            }
+          ]
+        },
+        "publicFieldVerdict": {
+          "valid": false,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "CORE_SCHEMA_PROPERTIES",
+              "path": "",
+              "message": "Literal is not an allowed value",
+              "severity": "error"
+            }
+          ]
+        }
+      },
+      "receiptTamper.expectedSource": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Stale or forged Boolean lexical receipt"
+      },
+      "receiptTamper.expectedRequest": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Stale or forged Boolean lexical receipt"
+      },
+      "receiptTamper.receiptSource": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Stale or forged Boolean lexical receipt"
+      },
+      "receiptTamper.receiptRequest": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Stale or forged Boolean lexical receipt"
+      },
+      "receiptTamper.typedBoolean": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Stale or forged Boolean lexical receipt"
+      },
+      "receiptTamper.validation": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Stale or forged Boolean lexical receipt"
+      },
+      "receiptTamper.missingOperationField": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Malformed Boolean lexical receipt"
+      },
+      "receiptTamper.extraOperationField": {
+        "status": "refused",
+        "name": "UmfError",
+        "code": "CSV_BOOLEAN_LEXICAL",
+        "path": "",
+        "message": "Malformed Boolean lexical receipt"
+      },
+      "sourceProxyContinuation": {
+        "sameThrownObject": true,
+        "ownKeysCalls": 2,
+        "requestOwnKeysCalls": 0
+      },
+      "oversizedReceiptBeforeExpectedInputs": {
+        "result": {
+          "status": "refused",
+          "name": "UmfError",
+          "code": "LIMIT",
+          "path": "",
+          "message": "Boolean lexical serialized JSON exceeds byte limit"
+        },
+        "sourceReflection": 0,
+        "requestReflection": 0
+      }
+    },
+    "wasmRequested": true
+  },
+  "harnessSha256": "3f8745674fa9896bd3edd708e1f1fa21fb3c031c53d368a054a9d5e10245fd38",
+  "casesSha256": "54f3ff4ffe2000c6454973074f9b2639692cea2c79fb1a50c7b59ffc7477943f",
+  "qualification": "Private contract-derived extension evidence for these two exports only. Does not retire ledger rows or qualify wider CSV/SDK/release behavior."
+}
