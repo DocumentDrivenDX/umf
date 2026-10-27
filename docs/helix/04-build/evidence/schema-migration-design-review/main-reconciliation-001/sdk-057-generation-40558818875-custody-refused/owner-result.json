@@ -1,0 +1,15 @@
+{
+  "status": "GENERATION_PASS_CUSTODY_REFUSED_NOT_ADOPTED",
+  "sourceCommit": "dccac853503027aeedf01571d241601f0987e310",
+  "runId": 40558818875,
+  "runAttempt": 1,
+  "artifactId": 12759150405,
+  "artifactSha256": "be04a9af2151e0e71748227c79b39452951e35cb6dd3fd150072c15419cc88c5",
+  "actualHostedStatus": "GENERATED_ARTIFACT_ONLY",
+  "sourceInputsReceiptSha256": "5f17f4ccebb993d859f68e9d094fb6414b1895c529db3869006e1b79ea30d24f",
+  "actualFinalSourceInputsSha256": "f9d9da425dc0de303a8fab69f2073f69a021c158f7bf92d000d4fa6bba8bd4a0",
+  "outputAdopted": false,
+  "qualifiesMergedSource": false,
+  "sourceReviewSha256": "f2f25e0d8232e65aebcfdb15b8ac5158ccdbc28f1c178b738b5420172a59c285",
+  "claims": "Original selfFIRST and dependent generators passed under original caps. Actual artifact retained unchanged; adoption refused because receipt hashes source-inputs before metamodel augmentation. Source producer is corrected separately for a genuine changed-source successor. No runtime/native/SDK release qualification."
+}

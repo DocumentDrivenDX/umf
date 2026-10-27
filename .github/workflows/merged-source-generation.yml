@@ -816,6 +816,7 @@ jobs:
                   "backend":{"name":metamodel_manifest.get("backend",{}).get("name"),"ownership":metamodel_manifest.get("backend",{}).get("ownership"),"inputs":backend_map},
                   "outputRoster":{name:{"sha256":sha(metamodel_stage/name),"bytes":(metamodel_stage/name).stat().st_size} for name in metamodel_paths}}
               source_inputs_path.write_text(json.dumps(source_inputs_record,indent=2,sort_keys=True)+"\n")
+              receipt["sourceInputsSha256"]=sha(source_inputs_path)
               files=sorted(p for p in outputs.rglob("*") if p.is_file())
               expected_output_paths={dest.removeprefix("outputs/") for dest in sources.values()}|{"python/umf_codegen/src/umf_codegen/_assets/"+name for name in expected}
               if {p.relative_to(outputs).as_posix() for p in files}!=expected_output_paths or len(files)!=27: raise ValueError("artifact output roster is not the closed27-file metamodel plus action/codegen/R3 union")

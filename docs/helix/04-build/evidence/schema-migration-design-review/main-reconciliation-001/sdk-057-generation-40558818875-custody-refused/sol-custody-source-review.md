@@ -1,0 +1,11 @@
+# Actual27 custody HELD; finite source digest correction
+
+Actual40558818875 output SOURCE ADOPTION HELD for finalsourcehash closure.
+
+SOURCE ACCEPT exact one-line workflow correction,65888bytes SHA2568f2d358fa0384f910f75a0d3f02bc6b3309d129bdac8eb14d437e44a6d7d87c8. Removing only added receipt["sourceInputsSha256"]=sha(source_inputs_path) after final source_inputs_path.write_text reconstructs complete dccac853503027aeedf01571d241601f0987e310 workflowblob byte-for-byte. No other workflow/gate/cap/ordering behavior changes.
+
+Actual40558818875 artifact has correct27outputhashes/true11+4closure/actualoriginalselfFIRST15commands/R3zero findings, but generatedreceipt claims sourceInputsSha2565f17f4ccebb993d859f68e9d094fb6414b1895c529db3869006e1b79ea30d24f while archivedfinalsource-inputs hashesf9d9da425dc0de303a8fab69f2073f69a021c158f7bf92d000d4fa6bba8bd4a0. Independently removing only metamodelGeneration and originalJSONserialization reconstructs5f17… exactly. Rootcause is producer hash before finalsourceinputsaugmentation. Actualcapture preserved; no in-place receiptpatch/adoption.
+
+Correction recomputes digest from actualfinalwrittenbytes; earlierguards/seedfailurecapture retained. Root may commit and normalchangedsourcepush existingownedmergedgenerationroute. Actualsuccessorreceipt/finalsourcehash/outputcustody must be reviewed before sourceadoption; no unchangedrerun/outputpreacceptance. Fullruntime/SDK/opengates unchanged. No localcandidateexecution/tests/AST/YAML/Git/CI mutation by reviewer.
+
+Draft notes SOURCE ACCEPT only: docs/helix/05-deploy/sdk-release-notes-0.5.7.md SHA357d166bed9fa77d4d3d60cf6ea2ad4d8299aefcd70a0eaa1c4080bfcd6fad07. Frontmatter/IDs and complete historicalarchive byteequal baseline; current draft correctly distinguishes Core03M/P/semanticCore0.10.0, explicitumf-weft55 metadata/import/wiremeanings, Linux2runtime/Macartifact profile, retainedMac3.11/macOS15.7.9 versus staticmacos11tag/noMac11runtime/noMac14qualification, actualStageA/metamodel11sourceadoption only and openSDK/native/G03–G11/managed/Praxis gates. Weftpackaging/ninerefusal/Linuxpackaging-only limits match retained ownerreceipt. No newactual40558818875 outputacceptance/PASS claimed. Root may include exactdraftnotes alongside narrowproducerfix; no releasepublication authorized here.
