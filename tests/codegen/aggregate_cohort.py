@@ -1031,9 +1031,10 @@ def validate_artifact_aggregate(index_path: Path, selected_cell: str, mirror_pat
         children[cell_id] = {'lock': lock, 'lockSha256': lock_ref['sha256'], 'receipt': receipt}
         for package in lock.get('packages', []):
             name = MIRROR.normalized_name(package.get('distribution', ''))
-            if name in runtime_packages and runtime_packages[name] != package:
+            row = {**package, 'source': canonical_split_source(package['source'])}
+            if name in runtime_packages and runtime_packages[name] != row:
                 raise ValueError(f'Linux runtime package provenance conflicts: {name}')
-            runtime_packages[name] = package
+            runtime_packages[name] = row
     target_entries = index.get('artifactTargets')
     if not isinstance(target_entries, list) or [item.get('id') for item in target_entries if isinstance(item, dict)] != sorted(MAC_ARTIFACT_TARGETS):
         raise ValueError('Aggregate must bind exactly the two declared Mac artifact targets')

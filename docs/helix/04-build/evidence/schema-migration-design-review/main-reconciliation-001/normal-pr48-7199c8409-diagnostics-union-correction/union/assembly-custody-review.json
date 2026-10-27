@@ -1,0 +1,203 @@
+{
+  "aggregate": {
+    "coverage": {
+      "artifactTargets": [
+        "macos-arm64-py311",
+        "macos-arm64-py314"
+      ],
+      "macReplay": "not-performed",
+      "qualifiedRuntimeCells": [
+        "linux-x86_64-py311",
+        "linux-x86_64-py314"
+      ],
+      "refreshedMacRuntime": "unqualified"
+    },
+    "profile": "umf.embedder-wheel-linux-runtime-macos-inputs/1",
+    "sha256": "71b425a6737e684e8c221d903e539448e59e08b84a84098ef1bd3d1794aa9cf3",
+    "sourceCommit": "06494602fe83d1af90f743243dad6afb7921206c",
+    "status": "assembled"
+  },
+  "artifact": {
+    "bytes": 201567988,
+    "expandedBytes": 207547412,
+    "id": 12772836170,
+    "path": "/private/tmp/migration-aggregate-40582138791-12772836170/artifact.zip",
+    "safeMembers": 90,
+    "sha256": "a80627f7fcb75c19002bfab1af9874d8acbefd633ce6cf692d763842c52feee1"
+  },
+  "generatorCorpus": {
+    "bytes": 3500077,
+    "rows": 30,
+    "sha256": "80b8059d48490761bc98255d58409d96f46b399d78b79d0dd9aa43d30d7e6187"
+  },
+  "linuxCells": {
+    "linux-x86_64-py311": {
+      "architecture": "x86_64",
+      "libc": "glibc >= 2.34",
+      "offlineReceipt": "passed",
+      "os": "ubuntu-24.04",
+      "python": "3.11.17",
+      "uniquePackages": 18,
+      "wheels": 18
+    },
+    "linux-x86_64-py314": {
+      "architecture": "x86_64",
+      "libc": "glibc >= 2.34",
+      "offlineReceipt": "passed",
+      "os": "ubuntu-24.04",
+      "python": "3.14.8",
+      "uniquePackages": 18,
+      "wheels": 18
+    }
+  },
+  "macArtifactOnlyTargets": {
+    "macos-arm64-py311": {
+      "selection": {
+        "kind": "declared-target-wheel-tags",
+        "observedRuntime": false
+      },
+      "status": "verified-artifact-inputs",
+      "target": {
+        "architecture": "arm64",
+        "id": "macos-arm64-py311",
+        "libc": "not applicable",
+        "os": "macos-14",
+        "python": "3.11"
+      },
+      "uniquePackages": 18,
+      "wheels": 18
+    },
+    "macos-arm64-py314": {
+      "selection": {
+        "kind": "declared-target-wheel-tags",
+        "observedRuntime": false
+      },
+      "status": "verified-artifact-inputs",
+      "target": {
+        "architecture": "arm64",
+        "id": "macos-arm64-py314",
+        "libc": "not applicable",
+        "os": "macos-14",
+        "python": "3.14"
+      },
+      "uniquePackages": 18,
+      "wheels": 18
+    }
+  },
+  "producerSources": {
+    "umf-access": [
+      {
+        "filename": "umf_access-0.1.0.dev8-py3-none-any.whl",
+        "sha256": "c2182bf6cd542febfef8dea4d728fec500e2dd08dd5a029d7b3b94e6a7f0c950",
+        "size": 580002,
+        "source": {
+          "commit": "06494602fe83d1af90f743243dad6afb7921206c",
+          "kind": "repository-wheel",
+          "path": "python/umf_access"
+        }
+      }
+    ],
+    "umf-codegen": [
+      {
+        "filename": "umf_codegen-0.1.0a5-py3-none-any.whl",
+        "sha256": "36a6f7e0ab92feb9cb20ed8842cc3c1f073cdd3ff2c4edff137c1fcbc3ace158",
+        "size": 261296,
+        "source": {
+          "commit": "06494602fe83d1af90f743243dad6afb7921206c",
+          "kind": "repository-wheel",
+          "path": "python/umf_codegen"
+        }
+      }
+    ],
+    "umf-core": [
+      {
+        "filename": "umf_core-0.10.3-cp311-abi3-macosx_11_0_arm64.whl",
+        "sha256": "dc2586793e1492d1f825bd9e12f27d5db9f9330ae2343d9e7773c7052f1f6ea6",
+        "size": 3331547,
+        "source": {
+          "kind": "immutable-release-wheel",
+          "producerCommit": "34a337b2d398b5ae33954cc250f6237bc1661c21",
+          "producerTree": "0379258db62e498a4b489d2b7f613e99e63c0a4b",
+          "producerWorkflowPath": ".github/workflows/python-action-runtime.yml",
+          "producerWorkflowRunAttempt": 1,
+          "producerWorkflowRunId": 40448360241,
+          "release": "python-v0.10.3",
+          "releaseCommit": "7d334dec45948953718bfacd3ed6dd199cadba79",
+          "releaseTag": "python-v0.10.3",
+          "repository": "https://github.com/DocumentDrivenDX/umf",
+          "sdistFilename": "umf_core-0.10.3.tar.gz",
+          "sdistSha256": "61b3e12a84f68f890fa34e2da14bbda47e101b7c6eadd5207680827e8daa694c",
+          "sdistSizeBytes": 2826487,
+          "sdistUrl": "https://github.com/DocumentDrivenDX/umf/releases/download/python-v0.10.3/umf_core-0.10.3.tar.gz",
+          "sourceCommit": "7d334dec45948953718bfacd3ed6dd199cadba79"
+        }
+      },
+      {
+        "filename": "umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl",
+        "sha256": "cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75",
+        "size": 3612043,
+        "source": {
+          "kind": "immutable-release-wheel",
+          "producerCommit": "34a337b2d398b5ae33954cc250f6237bc1661c21",
+          "producerTree": "0379258db62e498a4b489d2b7f613e99e63c0a4b",
+          "producerWorkflowPath": ".github/workflows/python-action-runtime.yml",
+          "producerWorkflowRunAttempt": 1,
+          "producerWorkflowRunId": 40448360241,
+          "release": "python-v0.10.3",
+          "releaseCommit": "7d334dec45948953718bfacd3ed6dd199cadba79",
+          "releaseTag": "python-v0.10.3",
+          "repository": "https://github.com/DocumentDrivenDX/umf",
+          "sdistFilename": "umf_core-0.10.3.tar.gz",
+          "sdistSha256": "61b3e12a84f68f890fa34e2da14bbda47e101b7c6eadd5207680827e8daa694c",
+          "sdistSizeBytes": 2826487,
+          "sdistUrl": "https://github.com/DocumentDrivenDX/umf/releases/download/python-v0.10.3/umf_core-0.10.3.tar.gz",
+          "sourceCommit": "7d334dec45948953718bfacd3ed6dd199cadba79"
+        }
+      }
+    ],
+    "umf-weft": [
+      {
+        "filename": "umf_weft-0.4.55-cp39-abi3-macosx_11_0_arm64.whl",
+        "sha256": "b411545189ed573dadd4fd121e00665391f700ebe37e4a5e4ce139a97c03d7e9",
+        "size": 11179376,
+        "source": {
+          "kind": "immutable-release-wheel",
+          "producerCommit": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+          "release": "v0.4.55",
+          "releaseId": 424900540
+        }
+      },
+      {
+        "filename": "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "sha256": "b34ca17fa37412afa7b8e8bd86aac8ee67a3c895a9b253221e1d582b39073a85",
+        "size": 14347375,
+        "source": {
+          "kind": "immutable-release-wheel",
+          "producerCommit": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+          "release": "v0.4.55",
+          "releaseId": 424900540
+        }
+      }
+    ]
+  },
+  "review": {
+    "allChecksPass": true,
+    "checks": [
+      "30 exact physical wheel hash/size identities in both mirror and wheelhouse",
+      "all METADATA digests, normalized name and versions match union lock",
+      "child locks contain exact 18 distinct distributions and match each union row identity/source",
+      "Mac target manifests contain exact 18 distinct distributions represented in union; only declared-target selection, no runtime claim",
+      "aggregate crossreferences hash-bound; Core release M and producer P identities retained separately"
+    ],
+    "errors": []
+  },
+  "union": {
+    "copiesByteIdentical": true,
+    "manifestSha256": "9f1c10b9b3516e1e78b0b278526a5bf450cc6dfc7a20764516b261757efd3aec",
+    "mirrorPhysicalFiles": 30,
+    "mirrorRows": 30,
+    "rows": 30,
+    "sha256": "a71cc1b4ecf45747ce41c30db2d0df5d98a4ef718c0b456b28fb2a1bb8aa629b",
+    "wheelhousePhysicalFiles": 30
+  }
+}

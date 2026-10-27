@@ -519,17 +519,13 @@ class SplitAggregateCohortTests(unittest.TestCase):
                     "publisherHashSource": "PyPI JSON release metadata"}
         return packages, versions, requirements, sources, core_linux, core_mac, weft_linux, weft_mac
 
-    def _wheel(self, wheelhouse, distribution, version, requirements, platform_tag, source, native=None):
+    def _wheel(self, wheelhouse, distribution, version, requirements, platform_tag, source, native=None,
+               marker=""):
         normalized = distribution.replace("-", "_")
-        if distribution == "umf-core":
-            filename = f"{normalized}-{version}-{platform_tag}.whl"
-        elif distribution == "umf-weft":
-            filename = f"{normalized}-{version}-{platform_tag}.whl"
-        else:
-            filename = f"{normalized}-{version}-py3-none-any.whl"
+        filename = f"{normalized}-{version}-{platform_tag}.whl"
         path = wheelhouse / filename
         native_member, native_bytes = native if native else (None, b"")
-        path.write_bytes(_wheel_bytes(distribution, version, native_member=native_member,
+        path.write_bytes(_wheel_bytes(distribution, version, marker=marker, native_member=native_member,
                                       native_bytes=native_bytes, requires_dist=requirements))
         wheel = AGGREGATE.MIRROR.wheel_metadata(path)
         wheel["source"] = source
@@ -583,11 +579,18 @@ class SplitAggregateCohortTests(unittest.TestCase):
                     native = None
                     tag = ("cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64" if flavor == "linux"
                            else "cp39-abi3-macosx_11_0_arm64")
+                elif flavor == "linux" and name in {"psycopg-binary", "pydantic-core", "rpds-py"}:
+                    native = None
+                    interpreter = "cp311" if python == "3.11" else "cp314"
+                    tag = f"{interpreter}-{interpreter}-manylinux_2_17_x86_64.manylinux2014_x86_64"
                 else:
                     native, tag = None, "py3-none-any"
+                marker = (f"{identity}:{name}:{python}"
+                          if flavor == "linux" and name in {"psycopg-binary", "pydantic-core", "rpds-py"}
+                          else "")
                 package_rows.append({"distribution": package["distribution"], "version": version, "source": source})
                 _path, wheel = self._wheel(wheelhouse, package["distribution"], version,
-                                           requirements[name], tag, source, native)
+                                           requirements[name], tag, source, native, marker)
                 if name in artifact_paths:
                     source["filename"], source["sha256"], source["sizeBytes"] = (
                         wheel["filename"], wheel["sha256"], wheel["size"])
@@ -679,6 +682,19 @@ class SplitAggregateCohortTests(unittest.TestCase):
     def test_split_profile_binds_two_linux_receipts_and_two_data_only_mac_targets(self):
         (packages, _versions, _sources, core_linux, core_mac,
          weft_linux, weft_mac, _targets) = self._build_inputs()
+        for distribution in ("psycopg-binary", "pydantic-core", "rpds-py"):
+            per_cell = {}
+            for cell_id in sorted(AGGREGATE.LINUX_RUNTIME_CELLS):
+                child = json.loads((self.input_root / cell_id / "cohort.lock.json").read_text())
+                package = next(row for row in child["packages"] if row["distribution"] == distribution)
+                wheel = next(row for row in child["wheels"] if row["distribution"] == distribution)
+                self.assertEqual(package["source"]["publisherArtifactSha256"], wheel["sha256"])
+                self.assertEqual(package["source"]["publisherArtifactSizeBytes"], wheel["size"])
+                self.assertEqual(package["source"]["sizeBytes"], wheel["size"])
+                self.assertEqual(wheel["source"], package["source"])
+                per_cell[cell_id] = (wheel["filename"], wheel["sha256"])
+            self.assertNotEqual(per_cell["linux-x86_64-py311"][0], per_cell["linux-x86_64-py314"][0])
+            self.assertNotEqual(per_cell["linux-x86_64-py311"][1], per_cell["linux-x86_64-py314"][1])
         with patch.object(AGGREGATE, "CORE_LINUX_RELEASE", {key: core_linux[key] for key in AGGREGATE.CORE_LINUX_RELEASE}), \
              patch.object(AGGREGATE, "CORE_MAC_RELEASE", {**{key: core_mac[key] for key in AGGREGATE.CORE_MAC_RELEASE if key != "member"},
                                                             "member": core_mac["nativeMember"]}), \
@@ -706,6 +722,69 @@ class SplitAggregateCohortTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "unknown or missing fields"):
                 AGGREGATE.validate_aggregate(
                     self.output / "aggregate.json", "linux-x86_64-py311", self.output / "mirror")
+
+    def test_split_validation_refuses_rehashed_logical_release_metadata_drift(self):
+        (_packages, _versions, _sources, core_linux, core_mac,
+         weft_linux, weft_mac, _targets) = self._build_inputs()
+        self._assemble_with_release_patches(core_linux, core_mac, weft_linux, weft_mac)
+        target_id = "macos-arm64-py311"
+        manifest_path = self.output / "artifact-targets" / target_id / "artifact-target.json"
+        manifest = json.loads(manifest_path.read_text())
+        package = next(row for row in manifest["packages"] if row["distribution"] == "pydantic-core")
+        package["source"]["releaseMetadata"] += "/drift"
+        wheel = next(row for row in manifest["wheels"] if row["distribution"] == "pydantic-core")
+        wheel["source"] = package["source"]
+        manifest_path.write_text(json.dumps(manifest, sort_keys=True) + "\n", encoding="utf-8")
+        index_path = self.output / "aggregate.json"
+        index = json.loads(index_path.read_text())
+        target = next(row for row in index["artifactTargets"] if row["id"] == target_id)
+        target["artifactManifest"]["sha256"] = _sha256(manifest_path)
+        index_path.write_text(json.dumps(index, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+        with ExitStack() as stack:
+            for context in self._release_patches(core_linux, core_mac, weft_linux, weft_mac):
+                stack.enter_context(context)
+            stack.enter_context(patch.object(AGGREGATE.sys, "version", "3.11.17 synthetic"))
+            stack.enter_context(patch.object(AGGREGATE.sys, "version_info", SimpleNamespace(major=3, minor=11)))
+            stack.enter_context(patch.object(
+                AGGREGATE.MIRROR, "select_runner_cell", side_effect=lambda cells, _python: cells[0] if cells else None))
+            with self.assertRaisesRegex(ValueError, "PyPI artifact source metadata is incomplete for pydantic-core"):
+                AGGREGATE.validate_artifact_aggregate(
+                    index_path, "linux-x86_64-py311", self.output / "mirror")
+
+    def test_split_validation_refuses_rehashed_cross_cell_logical_source_drift(self):
+        (_packages, _versions, _sources, core_linux, core_mac,
+         weft_linux, weft_mac, _targets) = self._build_inputs()
+        self._assemble_with_release_patches(core_linux, core_mac, weft_linux, weft_mac)
+        cell_id = "linux-x86_64-py314"
+        index_path = self.output / "aggregate.json"
+        index = json.loads(index_path.read_text())
+        runtime = next(row for row in index["runtimeCells"] if row["id"] == cell_id)
+        lock_path = self.output / runtime["lock"]["path"]
+        lock = json.loads(lock_path.read_text())
+        package = next(row for row in lock["packages"] if row["distribution"] == "pydantic-core")
+        package["source"]["releaseMetadata"] += "/drift"
+        wheel = next(row for row in lock["wheels"] if row["distribution"] == "pydantic-core")
+        wheel["source"] = package["source"]
+        lock_path.write_text(json.dumps(lock, sort_keys=True) + "\n", encoding="utf-8")
+        runtime["lock"]["sha256"] = _sha256(lock_path)
+        receipt_path = self.output / runtime["qualificationReceipt"]["path"]
+        receipt = json.loads(receipt_path.read_text())
+        receipt["lockSha256"] = runtime["lock"]["sha256"]
+        receipt_path.write_text(json.dumps(receipt, sort_keys=True) + "\n", encoding="utf-8")
+        runtime["qualificationReceipt"]["sha256"] = _sha256(receipt_path)
+        index_path.write_text(json.dumps(index, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+        with ExitStack() as stack:
+            for context in self._release_patches(core_linux, core_mac, weft_linux, weft_mac):
+                stack.enter_context(context)
+            stack.enter_context(patch.object(AGGREGATE.sys, "version", "3.11.17 synthetic"))
+            stack.enter_context(patch.object(AGGREGATE.sys, "version_info", SimpleNamespace(major=3, minor=11)))
+            stack.enter_context(patch.object(
+                AGGREGATE.MIRROR, "select_runner_cell", side_effect=lambda cells, _python: cells[0] if cells else None))
+            with self.assertRaisesRegex(ValueError, "Linux runtime package provenance conflicts: pydantic-core"):
+                AGGREGATE.validate_artifact_aggregate(
+                    index_path, "linux-x86_64-py311", self.output / "mirror")
 
     def test_split_validation_refuses_rehashed_noncanonical_mirror_source(self):
         (_packages, _versions, _sources, core_linux, core_mac,

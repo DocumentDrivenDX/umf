@@ -818,6 +818,69 @@ jobs:
               if "command" in message or "commands" in message: return "command-evidence-invalid"
               if "report" in message or "oracle" in message or "fault" in message: return "report-evidence-invalid"
               return "finalizer-validation-failed" if isinstance(error,ValueError) else "finalizer-internal-failure"
+          validation_error_codes=(
+              ("missing:","required-evidence-file-missing"),
+              ("run/source identity mismatch","run-source-identity-mismatch"),
+              ("harness workflow identity mismatch","harness-workflow-identity-mismatch"),
+              ("commands incomplete","commands-incomplete"),
+              ("aggregate D5 deadline or evidence reserve exceeded","aggregate-deadline-or-reserve-exceeded"),
+              ("command roster mismatch","command-roster-mismatch"),
+              ("completion record does not bind exact command roster","completion-command-roster-mismatch"),
+              ("command failed, exceeded 180 seconds, or capture truncated","command-result-invalid"),
+              ("missing command log:","command-log-missing"),
+              ("command log custody mismatch:","command-log-custody-mismatch"),
+              ("current cohort custody incomplete","current-cohort-custody-incomplete"),
+              ("reviewed original/observation-parent identity mismatch","reviewed-observation-parent-identity-mismatch"),
+              ("reviewed executed metadata successors mismatch","reviewed-metadata-successor-identity-mismatch"),
+              ("complete 18-wheel filename/hash/size map mismatch","cohort-wheel-map-mismatch"),
+              ("D5 original/successor replay custody mismatch:","replay-input-custody-mismatch"),
+              ("retained observation-parent source mismatch","observation-parent-source-mismatch"),
+              ("retained observation-parent custody mismatch","observation-parent-custody-mismatch"),
+              ("executed metadata oracle source mismatch","metadata-oracle-source-mismatch"),
+              ("executed no-default metadata source mismatch","no-default-source-mismatch"),
+              ("metadata-successor custody mismatch","metadata-successor-custody-mismatch"),
+              ("SDK release payload missing or exceeds 2 MiB","release-payload-missing-or-over-cap"),
+              ("SDK release payload identity or roster mismatch","release-payload-identity-or-roster-mismatch"),
+              ("SDK release wheel is not unique in current lock:","release-wheel-not-unique-in-lock"),
+              ("SDK release payload does not match exact locked Access/Codegen wheel rows","release-payload-wheel-map-mismatch"),
+              ("SDK release payload wheel bytes mismatch","release-payload-wheel-bytes-mismatch"),
+              ("published Core native member mismatch","published-core-native-member-mismatch"),
+              ("cohort lock digest mismatch","cohort-lock-digest-mismatch"),
+              ("mirror manifest digest mismatch","mirror-manifest-digest-mismatch"),
+              ("fixed report roster mismatch","fixed-report-roster-mismatch"),
+              ("oracle report failed:","oracle-report-failed"),
+              ("oracle original/successor/fixture provenance mismatch:","oracle-report-provenance-mismatch"),
+              ("actual native row/column/future-default observations missing or malformed:","oracle-row-observations-invalid"),
+              ("oracle current owner manifest mismatch:","oracle-owner-manifest-mismatch"),
+              ("oracle PostgreSQL identity mismatch:","oracle-postgresql-identity-mismatch"),
+              ("independent oracle case total is not 37","oracle-case-total-mismatch"),
+              ("decimal ambient-operator SQLSTATE/rollback control missing","decimal-ambient-operator-control-missing"),
+              ("decimal nonfinite used/unused branch control missing","decimal-nonfinite-branch-control-missing"),
+              ("decimal lost-commit controls missing","decimal-lost-commit-controls-missing"),
+              ("eq-null lost-commit controls missing","eq-null-lost-commit-controls-missing"),
+              ("no-default report incomplete/current cohort mismatch","no-default-report-or-cohort-mismatch"),
+              ("no-default successor runner/fixture mismatch","no-default-runner-fixture-mismatch"),
+              ("fault recovery or cleanup incomplete:","fault-recovery-or-cleanup-incomplete"),
+              ("fault current owner manifest mismatch:","fault-owner-manifest-mismatch"),
+              ("uncertain database/role/schema cleanup or PostgreSQL identity","final-database-cleanup-or-identity-mismatch"),
+          )
+          def validation_failure_codes(error):
+              message=str(error)
+              direct_codes={"evidence directory missing":"evidence-directory-missing",
+                  "required evidence missing":"required-evidence-missing",
+                  "aggregate raw logs exceed 1 MiB":"raw-log-cap-exceeded",
+                  "evidence exceeds 16 MiB before parsing or staging":"evidence-cap-exceeded",
+                  "staged evidence exceeds 16 MiB":"staged-evidence-cap-exceeded",
+                  "final receipt would exceed the 16 MiB evidence cap":"final-receipt-cap-exceeded"}
+              if message in direct_codes and message!="required evidence missing":
+                  return [direct_codes[message]]
+              observed=list(errors) if message=="required evidence missing" else message.split("; ")
+              codes=[direct_codes[message]] if message=="required evidence missing" else []
+              for prefix,code in validation_error_codes:
+                  if any(item==prefix or (prefix.endswith(":") and item.startswith(prefix)) for item in observed): codes.append(code)
+              if not observed or any(not any(item==prefix or (prefix.endswith(":") and item.startswith(prefix)) for prefix,_ in validation_error_codes) for item in observed):
+                  codes.append("unknown-validation-branch")
+              return codes if len(codes)<=len(validation_error_codes)+1 else ["unknown-validation-branch"]
           def diagnostic_failure_code(error):
               message=str(error)
               if message=="failure raw logs exceed 1 MiB": return "failure-log-cap-exceeded"
@@ -972,7 +1035,7 @@ jobs:
               print(json.dumps(result,sort_keys=True))
           except BaseException as error:
               shutil.rmtree(upload,ignore_errors=True); upload.mkdir(parents=True,exist_ok=True)
-              result={"status":"FAIL_OR_UNKNOWN","sourceCommit":os.environ["GITHUB_SHA"],"runId":os.environ["GITHUB_RUN_ID"],"runAttempt":os.environ["GITHUB_RUN_ATTEMPT"],"ref":os.environ["GITHUB_REF"],"workflow":os.environ.get("GITHUB_WORKFLOW"),"event":os.environ.get("GITHUB_EVENT_NAME"),"reason":"fixed D5 report/custody/cleanup finalizer did not close","errorClass":type(error).__name__,"finalizerFailureCode":finalizer_failure_code(error),"activeCommand":active_command_snapshot()}
+              result={"status":"FAIL_OR_UNKNOWN","sourceCommit":os.environ["GITHUB_SHA"],"runId":os.environ["GITHUB_RUN_ID"],"runAttempt":os.environ["GITHUB_RUN_ATTEMPT"],"ref":os.environ["GITHUB_REF"],"workflow":os.environ.get("GITHUB_WORKFLOW"),"event":os.environ.get("GITHUB_EVENT_NAME"),"reason":"fixed D5 report/custody/cleanup finalizer did not close","errorClass":type(error).__name__,"finalizerFailureCode":finalizer_failure_code(error),"validationFailureCodes":validation_failure_codes(error),"activeCommand":active_command_snapshot()}
               try:
                   import stat
                   selected=[]
@@ -988,6 +1051,14 @@ jobs:
                               if not stat.S_ISDIR(info.st_mode): raise ValueError("unsafe failure evidence directory")
                               for entry in os.scandir(directory):
                                   candidate=pathlib.Path(entry.path)
+                                  if dirname=="reports" and entry.name=="plans":
+                                      plans_info=entry.stat(follow_symlinks=False)
+                                      if not stat.S_ISDIR(plans_info.st_mode): raise ValueError("unsafe failure evidence directory")
+                                      for plan in os.scandir(candidate):
+                                          if re.fullmatch(r"[0-9a-f]{64}\.json",plan.name) is None: raise ValueError("unexpected failure evidence entry")
+                                          if not stat.S_ISREG(plan.stat(follow_symlinks=False).st_mode): raise ValueError("unsafe failure evidence file")
+                                          selected.append(pathlib.Path(plan.path))
+                                      continue
                                   allowed={name+".log" for name in expected_names} if dirname=="logs" else failure_report_names
                                   if entry.name not in allowed: raise ValueError("unexpected failure evidence entry")
                                   selected.append(candidate)

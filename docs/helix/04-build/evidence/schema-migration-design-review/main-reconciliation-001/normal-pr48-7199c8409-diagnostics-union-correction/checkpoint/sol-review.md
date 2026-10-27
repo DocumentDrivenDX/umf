@@ -1,0 +1,11 @@
+# Source7199 portable + selected-native: Sol actual checkpoint review
+
+ACCEPT truthful checkpoint retention ONLY for exact source `7199c8409d0a67f3a99c1f1fd62ffc0f078d6eb2`. This does not qualify local lint successor941cb337d or complete normal PR/release gates. No evidence-only source commit is required by this review.
+
+Portable40582129844: exact ZIP74206 bytes SHA-256 `acd0e301c9bd59960d5cba55e07b47ba40e47df8368256e9649f7fe7160e19ce`;17 safe members/1565304 expanded. Independently reviewed11 stages exit0/untruncated,97 immutable7199 source pins exact (manifest1c1d83fecdc20588341b795ce503e0cfbcd06c8073a7d2bebcdbea0e33c94026), companion5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29 exact.187Bunpass/0fail/1982expects; Chromium156/156/no failures/pageErrors/externalRequests;291s aggregate. Artifact cap receipt1565246 excludes its own58 bytes; actual1565304 remains within16MiB.
+
+Native40582128904: exact ZIP211538 bytes SHA-256 `e6a59953f631f61a98f6da8982b6a01ce1120f2cfb45f9c56d73e95c6cb4fd2a`;71 safe unique members/1924514 expanded, integrity clean.40 archived commands raw/capture exits0/untruncated, exact log lengths/hashes; every report hash matches. All34 pinned source rows match immutable7199 Git bytes; manifest `0913e719eecf0b465f67e233045efb151e5e113e886bcbe0c8c138af0090b7e6`; cohort lock `bb7c18614997b7938979b2117e99893420fe1960adecd489c3c4f408e558db6b`. Five G02 cases/78checks/maxWorkers2/shared-role cleanup VERIFIED; thirteen selected G03 scenario families pass. Receipt captured logs26511 and artifacts1916277 within original1MiB/16MiB caps. Actual expanded archive includes final receipts and remains bounded.
+
+Scope remains PASS_SELECTED_NATIVE_SUBCASES_FULL_CASE_OPEN: N12 UNQUALIFIED pending compatible Weft .2 cohort; N14/full campaign OPEN; final combined gate OPEN. No Mac runtime, full G03, SDK0.5.7 release/publication, or pending D5/normal-gate success is implied. Source7199 Ruff failure and local reviewed correction remain separate actual history; successor still needs genuine generation/output adoption and its own required qualification.
+
+Read-only stdlib ZIP/JSON/text/hash and immutable Git blob inspection only. No candidate execution, imports, tests, AST/YAML parsing, CI/Git mutation or Mac CI.
