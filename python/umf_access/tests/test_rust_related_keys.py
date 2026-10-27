@@ -131,10 +131,16 @@ class RustRelatedKeyParserTests(unittest.TestCase):
         self.assertEqual(error.__context__.pos, position)
 
     def test_surrogates_and_deep_parser_controls(self) -> None:
-        # Raw lone surrogates remain ordinary Python code points in Key values.
+        # The native parser preserves the JSON string code point. CONTRACT-049
+        # still requires generated String values to reject an unpaired surrogate.
         text = '{"items":[["\\ud800"]],"truncated":false}'
-        result = decode_related_keys(text, self.metadata, OrderKey)
-        self.assertEqual(tuple(map(ord, result.items[0].order_id)), (0xD800,))
+        if sys.implementation.name == "cpython" and sys.version_info[:2] in ((3, 11), (3, 14)):
+            from umf_access.rust_related_keys import loads
+
+            payload = loads(text)
+            self.assertEqual(tuple(map(ord, payload["items"][0][0])), (0xD800,))
+        with self.assertRaisesRegex(CodecError, "invalid carrier or authored rule"):
+            decode_related_keys(text, self.metadata, OrderKey)
 
         deep = "[" * 1200 + "null" + "]" * 1200
         if sys.version_info[:2] == (3, 11):

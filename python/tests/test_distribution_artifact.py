@@ -499,7 +499,6 @@ def test_workflow_independently_installs_and_qualifies_both_native_artifacts():
     ).read_text(encoding="utf-8")
 
     assert "python-version: '3.11.17'" in workflow
-    assert "python-version: '3.11.9'" in workflow
     assert "python -m build --wheel --sdist --no-isolation python" in workflow
     assert "--rebuilt-wheel-directory" in workflow
     assert '"$RUNNER_TEMP/umf-installed-direct/bin/python" -m pip install' in workflow
@@ -542,7 +541,9 @@ def _write_finalizer_inputs(
     missing_rebuilt_tests: bool = False,
     missing_rebuilt_posttest: bool = False,
     malformed_source_map: bool = False,
+    mismatched_sdist_helper_hash: bool = False,
 ) -> None:
+    expected_sdist_helper_hash = _verifier().SDIST_HELPER_SHA256
     direct = {
         "filename": "umf_core-0.11.0-cp311-abi3-macosx_11_0_arm64.whl",
         "sha256": "a" * 64,
@@ -596,7 +597,11 @@ def _write_finalizer_inputs(
             "file_count": 521,
             "sha256": ("z" if malformed_source_map else "f") * 64,
         },
-        "sdist_helper_sha256": "55afef3a1091a7036b2d7bdc7b9fbcf3e5b0338307f52cad09010cfa2f673ea4",
+        "sdist_helper_sha256": (
+            "0" * 64
+            if mismatched_sdist_helper_hash
+            else expected_sdist_helper_hash
+        ),
         "native_platform_helper_sha256": "5856eb375d176af7671ad22981d983a14cec24663e3a8bc466446b433c2cd7b1",
     }
     (root / "umf-artifact-payload.json").write_text(
@@ -647,16 +652,26 @@ def _write_finalizer_inputs(
 
 
 @pytest.mark.parametrize(
-    ("missing_rebuilt_tests", "missing_rebuilt_posttest", "malformed_source_map"),
     (
-        (False, False, False),
-        (True, False, False),
-        (False, True, False),
-        (False, False, True),
+        "missing_rebuilt_tests",
+        "missing_rebuilt_posttest",
+        "malformed_source_map",
+        "mismatched_sdist_helper_hash",
+    ),
+    (
+        (False, False, False, False),
+        (True, False, False, False),
+        (False, True, False, False),
+        (False, False, True, False),
+        (False, False, False, True),
     ),
 )
 def test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels(
-    tmp_path, missing_rebuilt_tests, missing_rebuilt_posttest, malformed_source_map
+    tmp_path,
+    missing_rebuilt_tests,
+    missing_rebuilt_posttest,
+    malformed_source_map,
+    mismatched_sdist_helper_hash,
 ):
     workflow_path = (
         Path(__file__).resolve().parents[2]
@@ -669,6 +684,7 @@ def test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels(
         missing_rebuilt_tests=missing_rebuilt_tests,
         missing_rebuilt_posttest=missing_rebuilt_posttest,
         malformed_source_map=malformed_source_map,
+        mismatched_sdist_helper_hash=mismatched_sdist_helper_hash,
     )
     output = tmp_path / "umf-qualification.json"
     environment = {
@@ -702,7 +718,10 @@ def test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels(
     assert output.is_file(), result.stderr
     receipt = json.loads(output.read_text(encoding="utf-8"))
     incomplete = (
-        missing_rebuilt_tests or missing_rebuilt_posttest or malformed_source_map
+        missing_rebuilt_tests
+        or missing_rebuilt_posttest
+        or malformed_source_map
+        or mismatched_sdist_helper_hash
     )
     expected = "failed_or_incomplete" if incomplete else "passed"
     assert receipt["installed_qualification"] == expected

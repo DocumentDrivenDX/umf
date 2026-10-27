@@ -2,7 +2,9 @@
 """Finite reachable typed-factory graph controls; native oracle is separate."""
 import importlib.util
 import json
+import subprocess
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -13,6 +15,40 @@ ROOT = Path(__file__).resolve().parents[3]
 
 
 class JoinRefinementMatrix(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls._generated = tempfile.TemporaryDirectory(prefix="umf-access-refinement-")
+        try:
+            result = subprocess.run(
+                [
+                    "bun",
+                    str(ROOT / "scripts/generate-access-refinement-fixture.ts"),
+                    cls._generated.name,
+                ],
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+        except Exception:
+            cls._generated.cleanup()
+            raise
+        if result.returncode:
+            cls._generated.cleanup()
+            raise RuntimeError(
+                "refinement fixture generation failed:\n" + result.stdout + result.stderr
+            )
+        cls._generated_path = cls._generated.name
+        sys.path.insert(0, cls._generated_path)
+
+    @classmethod
+    def tearDownClass(cls):
+        sys.path.remove(cls._generated_path)
+        for name in tuple(sys.modules):
+            if name == "refinement_shop" or name.startswith("refinement_shop."):
+                del sys.modules[name]
+        cls._generated.cleanup()
+
     def test_every_reachable_graph_edge_and_phase_matches_explicit_sql_table(self):
         path = ROOT / "tests/compilation/python/static/joins/refinement_matrix.py"
         spec = importlib.util.spec_from_file_location("join_refinement_matrix_controls", path)
@@ -34,12 +70,21 @@ class JoinRefinementMatrix(unittest.TestCase):
     def test_malformed_duplicate_owner_graph_refuses_without_looping(self):
         from dataclasses import replace
 
-        from commerce import Order
+        from refinement_shop import Order
         from umf_access.dsl import Node, OptionalJoin
         with self.assertRaisesRegex(TypeError, "navigation roots differ"):
-            replace(Order.c.customer, target=Order.objects.ref)
+            replace(
+                Order.c.parent,
+                source_query=replace(
+                    Order.c.parent.source_query,
+                    source=replace(
+                        Order.c.parent.source_query.source,
+                        document_id="other-document",
+                    ),
+                ),
+            )
         # Legacy Join metadata has no navigation-root constructor gate; its
         # finite graph admission must independently reject the same corruption.
-        relation = OptionalJoin(Order.c.customer.ref, Order.objects.ref, optional=True)
+        relation = OptionalJoin(Order.c.parent.ref, Order.objects.ref, optional=True)
         with self.assertRaisesRegex(ValueError, "distinct explicit alias"):
             nullable_join_owners((Node("join", (relation, "inner")),))

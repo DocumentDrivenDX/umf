@@ -7705,6 +7705,27 @@ error shape. This is a bounded private cohort; Linux installed parity,
 CONTRACT-040's complete acceptance matrix and exact resource-authority closure
 remain required before any of its three logical names can retire.
 
+The [full installed SDK packet](evidence/rust-migration/r8-full-sdk-b991bc20/README.md)
+also passed against this exact archive on Node 26.12.1, Bun 1.4.3 and
+Chromium 153.0.8010.12 in 1,223,817 ms. Its preflight verified 3,549 source
+inputs, 1,806 payload hashes and 1,807 tar members. The installed replay
+covered 31 R3 cases, 27 numeric and six boundary cases, 66 Cardinality,
+19 Facets, 14 Keys, 11 Bit128 and 19 Compact cases, and a 68-case Security
+And/Or packet with 30 Rust/WASM calls per host. Missing/corrupt native and
+WASM assets refused at their intended boundaries. The installed receipt SHA-256
+is `0fed52e384d272416edbccff2e462750bdde893d3e5c5f891bacd2fcb6632d2e`.
+This remains a single private macOS arm64 cohort, not Linux or release
+qualification; no macOS CI ran.
+
+The [Cardinality resource/source closure](evidence/rust-migration/r8-cardinality-resource-source-closure/README.md)
+binds the generated v4 schema, separately authored v6 schema and five shared
+Core resources to the metamodel output manifest and the same private archive.
+All seven archive members match current source bytes. An independent audit of
+the archive's 3,549 captured-live source inputs found zero differences from
+commit `1453af78d3da71693b551a31609a126190591407`. This closes provenance
+for this bounded source/archive cohort; the complete CONTRACT-040 acceptance
+matrix, Linux installed parity and three-row retirement review remain open.
+
 The Rust core library suite passed 473 tests; Python core and Rust-core tests
 passed 196, action-resource/sdist tests passed 47, and 53 focused Bun tests
 passed with 317 assertions. TypeScript typecheck, the strict Python and
@@ -7725,3 +7746,28 @@ preserve full decode-before-cardinality and cursor/metadata/final-size order.
 The ordinary JSON inherited-array-setter mismatch, broad default-route
 catalog, Linux x64 and coordinated release cohorts, merge and publication
 remain open. The complete Rust port and release are not qualified.
+
+The follow-on read-frame investigation keeps the public non-count cardinality
+branch in Python. `table_reads._prepare_owned` checks only Weft's
+`nativeReadGuard` metadata; the sync, async and SQLAlchemy paths execute its
+compiled SQL and materialize with `fetchall()` before `result_frame` can act.
+CONTRACT-079 places the 8 MiB visible-value guard, including lookahead, in the
+PostgreSQL statement. The current installed packet has no live database read
+showing SQLSTATE 22012 before delivery, and the existing Weft compiler packet
+records `nativeExecutionQualified:false`. The Rust helper remains private
+until installed Weft/UMF SQL custody, bound provenance and positive/oversize
+live PostgreSQL receipts prove that ordering across supported drivers. Its
+private tests now cover one/optional/many/page boundaries, later-row decode
+precedence, page cursor and metadata order, and profile refusal (9 tests,
+21 subtests). This does not retire any ledger row.
+
+The first hosted Linux checks on commit `1453af78d` exposed three stale
+qualification pins. The Python action-runtime job built both direct and
+sdist-rebuilt artifacts and passed 255 installed tests on each, but its final
+receipt expected the previous sdist helper SHA-256. The command job selected
+Bun 1.4.2 while the current-source action receipt correctly requires 1.4.3;
+the Python test job's only failure was a contradictory obsolete 3.11.9 workflow
+assertion beside the current 3.11.17 assertion. The exact helper pin, Bun
+runner pin and test assertion were corrected, with a mismatched-helper
+negative control and 40 distribution-artifact tests passing locally. Hosted
+reruns of those corrections and all remaining Linux cohorts are still open.

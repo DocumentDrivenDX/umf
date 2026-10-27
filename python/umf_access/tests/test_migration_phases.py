@@ -23,7 +23,10 @@ def plan():
         {'id':'phase-00004','kind':'constraint-add','transaction':'required','steps':['step-00004']},
         {'id':'phase-00005','kind':'constraint-validation','transaction':'required','steps':['step-00005']},
     ]
-    return {'steps':steps,'phases':phases,'executionProfile':{
+    # CONTRACT-081 U1 uses options 0.2 with execution profile 0.1.
+    return {'steps':steps,'phases':phases,
+            'options':{'version':'umf.table-migration-options/0.2'},
+            'executionProfile':{
         'version':'umf.table-migration-execution/0.1',
         'progressRelation':'umf_lifecycle_progress','ownerOnly':True}}
 

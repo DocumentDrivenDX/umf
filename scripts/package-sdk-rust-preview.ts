@@ -118,7 +118,6 @@ try{
  root=snapshotRoot;
  process.chdir(snapshotRoot);
 
- await run([process.execPath,'node_modules/typescript/bin/tsc','--emitDeclarationOnly','--outDir',dist]);
  const nodeBuild=await Bun.build({entrypoints:['src/index-node-v4.ts'],outdir:dist,naming:'umf-rust-codegen-preview-v4-node.js',target:'node',format:'esm'});
  if(!nodeBuild.success)throw new Error(nodeBuild.logs.join('\n'));
  const defaultBuild=await Bun.build({entrypoints:['src/index.ts'],outdir:dist,naming:'umf.js',target:'browser',format:'esm'});
@@ -143,6 +142,12 @@ try{
  const bindgenError=await new Response(bindgen.stderr).text();
  if(await bindgen.exited!==0||bindgenVersion.trim()!=='wasm-bindgen 0.2.100')throw new Error(`Expected wasm-bindgen 0.2.100, got ${(bindgenVersion+bindgenError).trim()}`);
  await run(['wasm-bindgen','--target','web','--out-dir',wasmOut,'--out-name','umf_core_wasm',join(cargoTarget,'wasm32-unknown-unknown/release/umf_core_wasm.wasm')]);
+ // TypeScript follows the browser entry's generated WASM import when emitting
+ // declarations, so stage the generated binding declaration beside its source.
+ const wasmSourcePackage=join(root,'bindings/core/wasm/pkg');
+ await mkdir(wasmSourcePackage,{recursive:true});
+ await cp(join(wasmOut,'umf_core_wasm.d.ts'),join(wasmSourcePackage,'umf_core_wasm.d.ts'));
+ await run([process.execPath,'node_modules/typescript/bin/tsc','--emitDeclarationOnly','--outDir',dist]);
  // The browser root bundle inlines the generated wasm-bindgen glue; its
  // import.meta.url therefore resolves the binary beside that root bundle.
  await cp(join(wasmOut,'umf_core_wasm_bg.wasm'),join(dist,'umf_core_wasm_bg.wasm'));

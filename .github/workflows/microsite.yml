@@ -153,6 +153,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: 1.90.0
+          targets: wasm32-unknown-unknown
       - name: Fetch locked native compiler dependencies
         run: cargo fetch --locked
       - name: Verify generated metamodel authority and retirement boundaries
@@ -172,6 +173,8 @@ jobs:
       - name: Install immutable producer dependencies
         working-directory: .tools/schema-browser-producer
         run: bun install --frozen-lockfile
+      - name: Install pinned WASM binding generator
+        run: cargo install wasm-bindgen-cli --locked --version 0.2.100
       - name: Verify candidate reproducibility and immutable released producer
         run: bun scripts/schema-browser-reproducibility.ts --producer-source .tools/schema-browser-producer
       - name: Restore action build runtime
