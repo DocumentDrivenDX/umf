@@ -27,15 +27,20 @@ class InventoryTests(unittest.TestCase):
     def test_template_complete_inventory_accepts(self):
         selector.validate_exact_wheel_inventory(self.packages, self.good)
 
-    def test_default_profile_roots_are_four_products_with_mini_racer_from_metadata(self):
+    def test_current_profile_roots_separate_two_linux_cells_from_mac_artifact_targets(self):
         template = json.loads((ROOT / 'python/packaging/embedder-wheel-lock.template.json').read_text())
         roots = template['packageRoots']
-        self.assertEqual(roots['production'], ['umf-core', 'umf-access', 'umf-codegen', 'weft-sql'])
+        self.assertEqual(roots['production'], ['umf-core', 'umf-access', 'umf-codegen', 'umf-weft'])
         self.assertEqual(roots['qualificationDrivers'], [
             'psycopg', 'psycopg-binary', 'jsonschema', 'ruamel-yaml'])
         self.assertNotIn('mini-racer', roots['production'])
         self.assertIn('mini-racer', [item['distribution'] for item in template['packages']])
         self.assertEqual(len(template['packages']), 18)
+        self.assertEqual([cell['os'] for cell in template['intendedCells']], ['ubuntu-24.04', 'ubuntu-24.04'])
+        self.assertEqual([target['id'] for target in template['artifactTargets']],
+                         ['macos-arm64-py311', 'macos-arm64-py314'])
+        self.assertTrue(all('runnerIdentity' not in target and 'installedSha256' not in target
+                            for target in template['artifactTargets']))
         self.assertEqual(
             {item['distribution'] for item in template['packages']}
             & {'attrs', 'jsonschema', 'jsonschema-specifications', 'referencing', 'rpds-py', 'ruamel-yaml'},

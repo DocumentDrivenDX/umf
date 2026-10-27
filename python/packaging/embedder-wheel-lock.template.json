@@ -1,23 +1,25 @@
 {
   "profile": "umf.embedder-wheel-lock/1",
   "status": "template",
-  "description": "U7/U8 administrative Python wheel cohort. The cells below are intended qualification targets, not completed support claims. Capture exact immutable wheel hashes and receipts after release candidates are built; never treat this template as an install lock.",
+  "description": "U7/U8 administrative Python wheel cohort. Linux cells are intended runtime-qualification targets; Mac targets are separately declared artifact-input selections and never runtime claims. Capture exact immutable wheel hashes and receipts after release candidates are built; never treat this template as an install lock.",
   "coreSemanticVersion": "0.10.0",
   "packageRoots": {
-    "production": ["umf-core", "umf-access", "umf-codegen", "weft-sql"],
+    "production": ["umf-core", "umf-access", "umf-codegen", "umf-weft"],
     "qualificationDrivers": ["psycopg", "psycopg-binary", "jsonschema", "ruamel-yaml"]
   },
   "intendedCells": [
     {"os": "ubuntu-24.04", "architecture": "x86_64", "libc": "glibc >= 2.34", "python": "3.11"},
-    {"os": "ubuntu-24.04", "architecture": "x86_64", "libc": "glibc >= 2.34", "python": "3.14"},
-    {"os": "macos-14", "architecture": "arm64", "libc": "not applicable", "python": "3.11"},
-    {"os": "macos-14", "architecture": "arm64", "libc": "not applicable", "python": "3.14"}
+    {"os": "ubuntu-24.04", "architecture": "x86_64", "libc": "glibc >= 2.34", "python": "3.14"}
+  ],
+  "artifactTargets": [
+    {"id": "macos-arm64-py311", "os": "macos-14", "architecture": "arm64", "python": "3.11", "libc": "not applicable"},
+    {"id": "macos-arm64-py314", "os": "macos-14", "architecture": "arm64", "python": "3.14", "libc": "not applicable"}
   ],
   "packages": [
     {"distribution": "umf-access", "version": "0.1.0.dev8", "source": {"kind": "repository-wheel", "path": "python/umf_access", "commit": "FILL_AT_CANDIDATE_FREEZE"}},
     {"distribution": "umf-codegen", "version": "0.1.0a5", "source": {"kind": "repository-wheel", "path": "python/umf_codegen", "commit": "FILL_AT_CANDIDATE_FREEZE"}},
-    {"distribution": "umf-core", "version": "0.10.2", "source": {"kind": "immutable-release-wheel", "release": "python-v0.10.2", "sha256": "FILL_FROM_EXISTING_RELEASE_CUSTODY"}},
-    {"distribution": "weft-sql", "version": "0.4.53", "source": {"kind": "immutable-release-wheel", "release": "weft-sql 0.4.53", "sha256": "FILL_FROM_EXISTING_RELEASE_CUSTODY"}},
+    {"distribution": "umf-core", "version": "0.10.3", "source": {"kind": "immutable-release-wheel", "release": "python-v0.10.3", "sha256": "FILL_FROM_CURRENT_RELEASE_CUSTODY"}},
+    {"distribution": "umf-weft", "version": "0.4.55", "source": {"kind": "immutable-release-wheel", "release": "v0.4.55", "sha256": "FILL_FROM_CURRENT_RELEASE_CUSTODY"}},
     {"distribution": "mini-racer", "version": "0.14.1", "source": {"kind": "pypi-wheel", "url": "https://pypi.org/project/mini-racer/0.14.1/"}},
     {"distribution": "annotated-types", "version": "0.8.0", "source": {"kind": "pypi-wheel", "url": "https://pypi.org/project/annotated-types/0.8.0/"}},
     {"distribution": "attrs", "version": "26.1.0", "source": {"kind": "pypi-wheel", "url": "https://pypi.org/project/attrs/26.1.0/"}},

@@ -92,7 +92,7 @@ for original in stage_one["sources"]:
         }
     )
 configuration["umf"] = {"documents": documents}
-configuration["weft"] = {"distribution": "weft-sql", "version": version("weft-sql")}
+configuration["weft"] = {"distribution": "umf-weft", "version": version("umf-weft")}
 (generated / "native-catalog-config.json").write_text(json.dumps(configuration))
 for extra in ([], ["--check"]):
     command(

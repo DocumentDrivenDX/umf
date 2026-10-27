@@ -98,6 +98,6 @@ with psycopg.connect(a.dsn,autocommit=True) as admin:
  finally:
   if made_db:admin.execute(sql.SQL('DROP DATABASE {} WITH (FORCE)').format(sql.Identifier(db)))
   for role in reversed(made):admin.execute(sql.SQL('DROP ROLE {}').format(sql.Identifier(role)))
-report={'server':server,'cases':1,'packages':{'umf-access':version('umf-access'),'umf-codegen':version('umf-codegen'),'weft-sql':version('weft-sql'),'umf-core':version('umf-core')},'fixtureSha256':fixture_sha,'runnerSha256':runner_sha,'receipt':receipt,'checks':checks}
+report={'server':server,'cases':1,'packages':{'umf-access':version('umf-access'),'umf-codegen':version('umf-codegen'),'umf-weft':version('umf-weft'),'umf-core':version('umf-core')},'fixtureSha256':fixture_sha,'runnerSha256':runner_sha,'receipt':receipt,'checks':checks}
 a.report.write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps({'server':server,'cases':1,'checks':checks},separators=(',',':')))

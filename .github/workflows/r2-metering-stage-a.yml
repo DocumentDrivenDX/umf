@@ -115,7 +115,7 @@ jobs:
           esac
           test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
           pin_sha="$(sha256sum qualification-inputs/r2-metering-stage-a.sha256 | cut -d ' ' -f 1)"
-          test "$pin_sha" = ffeb22448d5f941ca67e7d9746728141c07a7e211314cf9efda35d9bda0103e1
+          test "$pin_sha" = d885bdc91de07b2df883395c967d6368ad7928f61f965cf6e00f9eb08e3938d0
           sha256sum -c qualification-inputs/r2-metering-stage-a.sha256
           bun_version="$(bun --version)"
           test "$bun_version" = 1.4.3

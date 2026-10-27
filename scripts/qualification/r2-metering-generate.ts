@@ -10,10 +10,10 @@ import {fileURLToPath} from 'node:url';
 import {structuralAccountingSource} from '../metamodel/structural-accounting';
 
 const INPUTS=[
- {path:'src/generated/core-validators.ts',sha256:'4a88fd9bc398c56d71e535841322dcf10d2851e16b026c14679e2d79062e90a7',kind:'source'},
- {path:'spec/core/schema.json',sha256:'bdcf1c6b8a197dfbd769ea47a879eaabeeb1d71cc00cab1f9e600175354c5da7',kind:'schema'},
- {path:'spec/core/semantic-type-reference.schema.json',sha256:'48def42448706bbdfe68c458746d23610767feae0da6456735674524b8018887',kind:'schema'},
- {path:'spec/core/extension-package.schema.json',sha256:'a4f4694b3ae32ef47a898f49fdce969b890f1ac901fc6747a43cb8c9c6c77c35',kind:'schema'},
+ {path:'src/generated/core-validators.ts',sha256:'563602e0f21f6d6b0efd1ae069dbda28926e085585b4bf0430347b65ff2bd0ff',kind:'source'},
+ {path:'spec/core/schema.json',sha256:'c6004664eb93dcef28ce6e0583f91225b618aa0fb42967a892242402557cf71d',kind:'schema'},
+ {path:'spec/core/semantic-type-reference.schema.json',sha256:'207abbad54ebf8c660a958e2deda072a5a3236b5b8df5af8a8656f90c3e46ba9',kind:'schema'},
+ {path:'spec/core/extension-package.schema.json',sha256:'4df3c8f92c5baa2c52f965d83b681ff306392bf9ba333bd39213a8f1065ac766',kind:'schema'},
 ] as const;
 type OutputPurpose='stage-a'|'stage-b-reproduction';
 function outputPurpose():OutputPurpose{

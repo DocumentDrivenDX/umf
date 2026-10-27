@@ -208,18 +208,18 @@ jobs:
             --expected-os ubuntu-24.04 \
             --expected-architecture x86_64 \
             --expected-python 3.11 \
-            --core-wheel-url 'https://github.com/DocumentDrivenDX/umf/releases/download/python-v0.10.2/umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl' \
-            --core-wheel-filename 'umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl' \
-            --core-wheel-sha256 '708f967747b0539b9ca7b6a5f39d1017eea8ddb1d07cd62f4f46592e088f6f39' \
-            --core-version '0.10.2' \
-            --core-release-tag 'python-v0.10.2' \
-            --core-source-commit '6337b4b5f65144387ce5c0bbf9cbad955a921c8f' \
+            --core-wheel-url 'https://github.com/DocumentDrivenDX/umf/releases/download/python-v0.10.3/umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl' \
+            --core-wheel-filename 'umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl' \
+            --core-wheel-sha256 'cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75' \
+            --core-version '0.10.3' \
+            --core-release-tag 'python-v0.10.3' \
+            --core-source-commit '7d334dec45948953718bfacd3ed6dd199cadba79' \
             --core-repository-url 'https://github.com/DocumentDrivenDX/umf' \
-            --core-sdist-url 'https://github.com/DocumentDrivenDX/umf/releases/download/python-v0.10.2/umf_core-0.10.2.tar.gz' \
-            --core-sdist-sha256 '90a107aaa507930e1d71c0cf208b77182d06c0bf2a1b13681fd5f7b6ed74cb9d' \
-            --weft-wheel-url "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.53/weft_sql-0.4.53-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl" \
-            --weft-wheel-filename 'weft_sql-0.4.53-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl' \
-            --weft-wheel-sha256 "db01c4cf6357d674f1591609a2b9c83a9322ad8f8937c345e5950cc1582b83d2" \
+            --core-sdist-url 'https://github.com/DocumentDrivenDX/umf/releases/download/python-v0.10.3/umf_core-0.10.3.tar.gz' \
+            --core-sdist-sha256 '61b3e12a84f68f890fa34e2da14bbda47e101b7c6eadd5207680827e8daa694c' \
+            --weft-wheel-url "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.55/umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl" \
+            --weft-wheel-filename 'umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl' \
+            --weft-wheel-sha256 "b34ca17fa37412afa7b8e8bd86aac8ee67a3c895a9b253221e1d582b39073a85" \
             --mini-racer-wheel /tmp/g02-mini-racer-wheelhouse/*.whl
       - name: Qualify the hash-locked declared wheel mirror with missing, tampered and network-denial controls
         run: >-
@@ -238,7 +238,7 @@ jobs:
             -r /tmp/umf-g02-cohort/mirror/requirements.lock
           /tmp/g02-native-installed/bin/python -I -m pip --isolated check
           /tmp/g02-native-installed/bin/python -I -c \
-            "from importlib.metadata import version; assert version('weft-sql')=='0.4.53'; assert version('umf-access')=='0.1.0.dev8'; assert version('umf-codegen')=='0.1.0a5'; assert version('umf-core')=='0.10.2'"
+            "from importlib.metadata import version; assert version('umf-weft')=='0.4.55'; assert version('umf-access')=='0.1.0.dev8'; assert version('umf-codegen')=='0.1.0a5'; assert version('umf-core')=='0.10.3'"
           /tmp/g02-native-installed/bin/python -I - <<'PY'
           import psycopg
           with psycopg.connect('host=127.0.0.1 port=5432 dbname=postgres user=postgres') as connection:
@@ -312,7 +312,7 @@ jobs:
           manifest={
             'candidate':'G02-native-${{ github.sha }}',
             'sourceCommit':'${{ github.sha }}',
-            'weftReleasePin':{'version':'0.4.53','url':'https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.53/weft_sql-0.4.53-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl','sha256':'db01c4cf6357d674f1591609a2b9c83a9322ad8f8937c345e5950cc1582b83d2'},
+            'weftReleasePin':{'distribution':'umf-weft','version':'0.4.55','url':'https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.55/umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl','sha256':'b34ca17fa37412afa7b8e8bd86aac8ee67a3c895a9b253221e1d582b39073a85'},
             'cohortLockSha256':hashlib.sha256((root/'cohort.lock.json').read_bytes()).hexdigest(),
             'embeddedGeneratorManifestSha256':hashlib.sha256(pathlib.Path('python/umf_codegen/src/umf_codegen/_assets/manifest.json').read_bytes()).hexdigest(),
             'embeddedGeneratorInputHashes':json.loads(pathlib.Path('python/umf_codegen/src/umf_codegen/_assets/manifest.json').read_text())['inputs'],
@@ -542,13 +542,46 @@ jobs:
           (evidence/"replay"/"oracle-successor.py.gz").write_bytes(compressed)
           (evidence/"replay"/"oracle-successor.patch").write_bytes(patch)
           (evidence/"replay"/"oracle-successor-custody.json").write_bytes(custody)
+          metadata_root=pathlib.Path("docs/helix/04-build/evidence/mig-g02/independent-review/d5-weft55-metadata-successor")
+          nd_gz=(metadata_root/"no-default-runner-d5-weft55-metadata-successor.py.gz").read_bytes()
+          nd_patch=(metadata_root/"no-default-parent-to-successor.patch").read_bytes()
+          meta_gz=(metadata_root/"installed-text-oracle-d5-weft55-metadata-successor.py.gz").read_bytes()
+          meta_patch=(metadata_root/"row-observation-parent-to-successor.patch").read_bytes()
+          meta_custody=(metadata_root/"custody.json").read_bytes()
+          fixed={"no-default-runner-d5-weft55-metadata-successor.py.gz":"870a220eb95ec41c232bc578ca9cf0d0a94296d40efd92aa8696a167d1d6a6cc",
+                 "no-default-parent-to-successor.patch":"042262de18502a6f44534a21d75d402f8e81211a1c5886cca68ad538af2fa9d8",
+                 "installed-text-oracle-d5-weft55-metadata-successor.py.gz":"edb4bbf6a709ea4971a8e234b1e8ef6b648de2252eb7b134adc4f2a803bb2407",
+                 "row-observation-parent-to-successor.patch":"fdacd514f6dfba0be8df9474fd5ed1bd19f5dca265674c60644ab400a26221ab",
+                 "custody.json":"6ae8277fbd3cf65e785134161c255d1d4a97de222d18dc59d15a401279d6735f"}
+          for name,payload in (("no-default-runner-d5-weft55-metadata-successor.py.gz",nd_gz),("no-default-parent-to-successor.patch",nd_patch),
+                               ("installed-text-oracle-d5-weft55-metadata-successor.py.gz",meta_gz),("row-observation-parent-to-successor.patch",meta_patch),("custody.json",meta_custody)):
+              assert hashlib.sha256(payload).hexdigest()==fixed[name],name
+          record=json.loads(meta_custody); nd_source=gzip.decompress(nd_gz); meta_source=gzip.decompress(meta_gz)
+          assert hashlib.sha256(nd_source).hexdigest()=="b25c3e319f4173366214156bdd2dd255f1c08ba8bddf6a21f647ddc6b4aef955"
+          assert hashlib.sha256(meta_source).hexdigest()=="e197d3630079c597964aa81b875ef6e7cd53f1c2fab42018bdb5a8684bf53600"
+          original_nd=(replay/"candidate-009/no-default-runner.py").read_bytes()
+          patch_nd="".join(difflib.unified_diff(original_nd.decode().splitlines(keepends=True),nd_source.decode().splitlines(keepends=True),fromfile="candidate-009/no-default-runner.py",tofile="candidate-009/no-default-runner-d5-weft55-metadata-successor.py")).encode()
+          patch_meta="".join(difflib.unified_diff(successor.decode().splitlines(keepends=True),meta_source.decode().splitlines(keepends=True),fromfile="candidate-009/installed-text-oracle-d5-row-observation-successor.py",tofile="candidate-009/installed-text-oracle-d5-weft55-metadata-successor.py")).encode()
+          assert patch_nd==nd_patch and patch_meta==meta_patch
+          assert record["originalArchive"]["sha256"]==hashlib.sha256(archive.read_bytes()).hexdigest()
+          assert record["originalNoDefault"]["sha256"]==hashlib.sha256(original_nd).hexdigest()
+          assert record["originalOracle"]["sha256"]==hashlib.sha256(original).hexdigest()
+          assert record["rowObservationParent"]["sourceSha256"]==hashlib.sha256(successor).hexdigest()
+          assert record["successors"]["noDefault"]["sourceSha256"]==hashlib.sha256(nd_source).hexdigest()
+          assert record["successors"]["rowObservationOracle"]["sourceSha256"]==hashlib.sha256(meta_source).hexdigest()
+          (replay/"candidate-009/no-default-runner-d5-weft55-metadata-successor.py").write_bytes(nd_source)
+          (replay/"candidate-009/installed-text-oracle-d5-weft55-metadata-successor.py").write_bytes(meta_source)
+          for name,payload in (("no-default-metadata-successor.py.gz",nd_gz),("no-default-metadata-successor.patch",nd_patch),
+                               ("metadata-oracle-successor.py.gz",meta_gz),("metadata-oracle-successor.patch",meta_patch),
+                               ("metadata-successor-custody.json",meta_custody)):
+              (evidence/"replay"/name).write_bytes(payload)
           PY
 
           run_bounded create-fresh-venv 120 python -m venv "$VENV"
           run_bounded install-complete-current-cohort-offline 180 "$VENV/bin/python" -I -m pip --isolated install --disable-pip-version-check --no-cache-dir --no-index --only-binary=:all: --find-links /tmp/umf-g02-cohort/wheelhouse --require-hashes -r /tmp/umf-g02-cohort/mirror/requirements.lock
           run_bounded pip-check-and-version-identity 120 "$VENV/bin/python" -I - <<'PY'
           import importlib.metadata as m, json, pathlib
-          expected={"umf-access":"0.1.0.dev8","umf-codegen":"0.1.0a5","weft-sql":"0.4.53","umf-core":"0.10.2","mini-racer":"0.14.1"}
+          expected={"umf-access":"0.1.0.dev8","umf-codegen":"0.1.0a5","umf-weft":"0.4.55","umf-core":"0.10.3","mini-racer":"0.14.1"}
           actual={name:m.version(name) for name in expected}
           assert actual==expected,actual
           pathlib.Path(__import__("os").environ["D5_ROOT"],"evidence","installed-versions.json").write_text(json.dumps({"versions":actual,"python":__import__("sys").version},sort_keys=True,indent=2)+"\n")
@@ -573,12 +606,12 @@ jobs:
                   for info in z.infolist():
                       if info.is_dir(): continue
                       body=z.read(info.filename); members.append({"path":info.filename,"bytes":len(body),"sha256":hashlib.sha256(body).hexdigest()})
-                      if wheel.name=="umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl" and info.filename.endswith(".so"):
+                      if wheel.name=="umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl" and info.filename.endswith(".so"):
                           core_native.append({"path":info.filename,"bytes":len(body),"sha256":hashlib.sha256(body).hexdigest()})
               wheel_details[wheel.name]={"sha256":digest,"bytes":len(raw),"members":members}
           assert artifacts==locked_wheels, ("complete physical wheel map differs from all 18 locked rows",artifacts,locked_wheels)
-          assert artifacts.get("umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl",{}).get("sha256")=="708f967747b0539b9ca7b6a5f39d1017eea8ddb1d07cd62f4f46592e088f6f39"
-          assert len(core_native)==1 and core_native[0]["sha256"]=="78dd1542f723b4f4d8c336c137caa478974a981ed759ada171a5877d7e0368a8"
+          assert artifacts.get("umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl",{}).get("sha256")=="cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75"
+          assert len(core_native)==1 and core_native[0]["sha256"]=="c51b511a06bc1ccde6cc2208d33a4fb70ef66c67507ba8f2a6ea05fd2543cf57"
           normalize=lambda value: re.sub(r"[-_.]+","-",value).lower()
           lock_names=[normalize(row["distribution"]) for row in lock["packages"]]
           assert len(lock_names)==len(set(lock_names)), ("normalized lock distribution collision",lock_names)
@@ -618,12 +651,20 @@ jobs:
              "wheelCount":len(wheels),"wheels":wheel_details,"artifacts":artifacts,"installedDistributions":installed,
              "coreNativeMember":core_native[0],"replayArchiveSha256":"092b2db842101fe9aac485e05c8d79775b048602b671189a9c83e91467a64d86",
              "oracleSha256":"5dfddd7f1bd7f6e254e927292246ceddf5debfe172995ad267d4bbbfd32c2ea4",
-             "oracleSuccessorSha256":"89ba88c6187bee2f350e4448266f6aa470a42862fc146f97e1b43edccdd41639",
-             "oracleSuccessorGzipSha256":"1f2e5d676a8480838d973962e23a5cb3687c6798beecb038d5a31e324d40875e",
-             "oracleSuccessorPatchSha256":"660733be45ea13036d1aa8b29bb858803c606bcd15ac0963933d1483b38bead6",
-             "oracleSuccessorCustodySha256":"0865f14764f68dfc6e2818a54e336e2034720c696f797a6066816fdf5414957e",
+             "oracleObservationParentSha256":"89ba88c6187bee2f350e4448266f6aa470a42862fc146f97e1b43edccdd41639",
+             "oracleObservationParentGzipSha256":"1f2e5d676a8480838d973962e23a5cb3687c6798beecb038d5a31e324d40875e",
+             "oracleObservationParentPatchSha256":"660733be45ea13036d1aa8b29bb858803c606bcd15ac0963933d1483b38bead6",
+             "oracleObservationParentCustodySha256":"0865f14764f68dfc6e2818a54e336e2034720c696f797a6066816fdf5414957e",
+             "oracleSuccessorSha256":"e197d3630079c597964aa81b875ef6e7cd53f1c2fab42018bdb5a8684bf53600",
+             "oracleSuccessorGzipSha256":"edb4bbf6a709ea4971a8e234b1e8ef6b648de2252eb7b134adc4f2a803bb2407",
+             "oracleSuccessorPatchSha256":"fdacd514f6dfba0be8df9474fd5ed1bd19f5dca265674c60644ab400a26221ab",
+             "oracleSuccessorCustodySha256":"6ae8277fbd3cf65e785134161c255d1d4a97de222d18dc59d15a401279d6735f",
+             "noDefaultOriginalRunnerSha256":"a756e43e7f91d7d55eeb34d639790636bf4af92b6de0fec191d956d0ff568a07",
+             "noDefaultRunnerSha256":"b25c3e319f4173366214156bdd2dd255f1c08ba8bddf6a21f647ddc6b4aef955",
+             "noDefaultRunnerGzipSha256":"870a220eb95ec41c232bc578ca9cf0d0a94296d40efd92aa8696a167d1d6a6cc",
+             "noDefaultRunnerPatchSha256":"042262de18502a6f44534a21d75d402f8e81211a1c5886cca68ad538af2fa9d8",
+             "noDefaultRunnerCustodySha256":"6ae8277fbd3cf65e785134161c255d1d4a97de222d18dc59d15a401279d6735f",
              "faultRunnerSha256":"f34931dfea75db09014978f7d069284f50080b8b700e96603c28e03fe7f9433d",
-             "noDefaultRunnerSha256":"a756e43e7f91d7d55eeb34d639790636bf4af92b6de0fec191d956d0ff568a07",
              "fixtureSha256":"c29ee30dd76e6e4fbbf6ceea64cb22d77764c2a349081819d0d7ac1c1dc59af1"}
           out.write_text(json.dumps(manifest,sort_keys=True,indent=2)+"\n")
           owner_copy=pathlib.Path(d5)/"venv-parent"/"owner-artifacts.json"
@@ -643,7 +684,7 @@ jobs:
           open(path,"w").write(json.dumps({"server":server,"serverVersionNum":number,"databases":databases,"roles":roles,"schemas":schemas},sort_keys=True,indent=2)+"\n")
           PY
 
-          ORACLE="$D5_ROOT/evidence/replay/candidate-009/installed-text-oracle-d5-row-observation-successor.py"
+          ORACLE="$D5_ROOT/evidence/replay/candidate-009/installed-text-oracle-d5-weft55-metadata-successor.py"
           REPORTS="$EVIDENCE/reports"
           run_bounded oracle-date 180 "$VENV/bin/python" -I "$ORACLE" --dsn "$PG_DSN" --report "$REPORTS/oracle-date.json" --domain date
           run_bounded oracle-integer 180 "$VENV/bin/python" -I "$ORACLE" --dsn "$PG_DSN" --report "$REPORTS/oracle-integer.json" --domain integer
@@ -662,7 +703,7 @@ jobs:
           run_bounded oracle-empty-table 180 "$VENV/bin/python" -I "$ORACLE" --dsn "$PG_DSN" --report "$REPORTS/oracle-empty-table.json" --empty-table --case valid
           run_bounded oracle-all-populated 180 "$VENV/bin/python" -I "$ORACLE" --dsn "$PG_DSN" --report "$REPORTS/oracle-all-populated.json" --all-populated --shape existing --case valid
 
-          run_bounded no-default-replay 180 "$VENV/bin/python" -I "$D5_ROOT/evidence/replay/candidate-009/no-default-runner.py" --dsn "$PG_DSN" --fixture "$D5_ROOT/evidence/replay/candidate-009/no-default-fixture.json" --report "$REPORTS/no-default.json"
+          run_bounded no-default-replay 180 "$VENV/bin/python" -I "$D5_ROOT/evidence/replay/candidate-009/no-default-runner-d5-weft55-metadata-successor.py" --dsn "$PG_DSN" --fixture "$D5_ROOT/evidence/replay/candidate-009/no-default-fixture.json" --report "$REPORTS/no-default.json"
           FAULT="$D5_ROOT/evidence/replay/candidate-009/fault-runner.py"
           FIXTURE="$D5_ROOT/evidence/replay/candidate-009/fault-fixture.json"
           for scenario in fenced-resume backfill-commit-lost existing-target-commit-lost; do
@@ -787,19 +828,26 @@ jobs:
                   body=log.read_bytes()
                   if len(body)!=row.get("logBytes") or hashlib.sha256(body).hexdigest()!=row.get("logSha256"): errors.append("command log custody mismatch:"+row["name"])
               if owner.get("status")!="frozen-current-D5-cohort" or owner.get("sourceCommit")!=os.environ["GITHUB_SHA"] or owner.get("wheelCount")!=18 or len(owner.get("artifacts",{}))!=18: errors.append("current cohort custody incomplete")
-              if owner.get("oracleSha256")!="5dfddd7f1bd7f6e254e927292246ceddf5debfe172995ad267d4bbbfd32c2ea4" or owner.get("oracleSuccessorSha256")!="89ba88c6187bee2f350e4448266f6aa470a42862fc146f97e1b43edccdd41639" or owner.get("oracleSuccessorGzipSha256")!="1f2e5d676a8480838d973962e23a5cb3687c6798beecb038d5a31e324d40875e" or owner.get("oracleSuccessorPatchSha256")!="660733be45ea13036d1aa8b29bb858803c606bcd15ac0963933d1483b38bead6" or owner.get("oracleSuccessorCustodySha256")!="0865f14764f68dfc6e2818a54e336e2034720c696f797a6066816fdf5414957e": errors.append("reviewed original/successor identity mismatch")
+              if owner.get("oracleSha256")!="5dfddd7f1bd7f6e254e927292246ceddf5debfe172995ad267d4bbbfd32c2ea4" or owner.get("oracleObservationParentSha256")!="89ba88c6187bee2f350e4448266f6aa470a42862fc146f97e1b43edccdd41639" or owner.get("oracleObservationParentGzipSha256")!="1f2e5d676a8480838d973962e23a5cb3687c6798beecb038d5a31e324d40875e" or owner.get("oracleObservationParentPatchSha256")!="660733be45ea13036d1aa8b29bb858803c606bcd15ac0963933d1483b38bead6" or owner.get("oracleObservationParentCustodySha256")!="0865f14764f68dfc6e2818a54e336e2034720c696f797a6066816fdf5414957e": errors.append("reviewed original/observation-parent identity mismatch")
+              if owner.get("oracleSuccessorSha256")!="e197d3630079c597964aa81b875ef6e7cd53f1c2fab42018bdb5a8684bf53600" or owner.get("oracleSuccessorGzipSha256")!="edb4bbf6a709ea4971a8e234b1e8ef6b648de2252eb7b134adc4f2a803bb2407" or owner.get("oracleSuccessorPatchSha256")!="fdacd514f6dfba0be8df9474fd5ed1bd19f5dca265674c60644ab400a26221ab" or owner.get("oracleSuccessorCustodySha256")!="6ae8277fbd3cf65e785134161c255d1d4a97de222d18dc59d15a401279d6735f" or owner.get("noDefaultOriginalRunnerSha256")!="a756e43e7f91d7d55eeb34d639790636bf4af92b6de0fec191d956d0ff568a07" or owner.get("noDefaultRunnerSha256")!="b25c3e319f4173366214156bdd2dd255f1c08ba8bddf6a21f647ddc6b4aef955" or owner.get("noDefaultRunnerGzipSha256")!="870a220eb95ec41c232bc578ca9cf0d0a94296d40efd92aa8696a167d1d6a6cc" or owner.get("noDefaultRunnerPatchSha256")!="042262de18502a6f44534a21d75d402f8e81211a1c5886cca68ad538af2fa9d8" or owner.get("noDefaultRunnerCustodySha256")!="6ae8277fbd3cf65e785134161c255d1d4a97de222d18dc59d15a401279d6735f": errors.append("reviewed executed metadata successors mismatch")
               lock_obj=json.loads((evidence/"cohort.lock.json").read_text())
               lock_rows=lock_obj.get("wheels",[])
               locked_map={row.get("filename"): {"sha256":row.get("sha256"),"bytes":row.get("size")} for row in lock_rows}
               if len(locked_map)!=18 or owner.get("artifacts")!=locked_map: errors.append("complete 18-wheel filename/hash/size map mismatch")
-              replay=evidence/"replay"; expected_replay={"archive.tar.gz":"092b2db842101fe9aac485e05c8d79775b048602b671189a9c83e91467a64d86","fixture.json.gz":"c29ee30dd76e6e4fbbf6ceea64cb22d77764c2a349081819d0d7ac1c1dc59af1","oracle-successor.py.gz":owner.get("oracleSuccessorGzipSha256"),"oracle-successor.patch":owner.get("oracleSuccessorPatchSha256"),"oracle-successor-custody.json":owner.get("oracleSuccessorCustodySha256")}
+              replay=evidence/"replay"; expected_replay={"archive.tar.gz":"092b2db842101fe9aac485e05c8d79775b048602b671189a9c83e91467a64d86","fixture.json.gz":"c29ee30dd76e6e4fbbf6ceea64cb22d77764c2a349081819d0d7ac1c1dc59af1","oracle-successor.py.gz":owner.get("oracleObservationParentGzipSha256"),"oracle-successor.patch":owner.get("oracleObservationParentPatchSha256"),"oracle-successor-custody.json":owner.get("oracleObservationParentCustodySha256"),"no-default-metadata-successor.py.gz":owner.get("noDefaultRunnerGzipSha256"),"no-default-metadata-successor.patch":owner.get("noDefaultRunnerPatchSha256"),"metadata-oracle-successor.py.gz":owner.get("oracleSuccessorGzipSha256"),"metadata-oracle-successor.patch":owner.get("oracleSuccessorPatchSha256"),"metadata-successor-custody.json":owner.get("oracleSuccessorCustodySha256")}
               for filename,digest in expected_replay.items():
                   path=replay/filename
                   if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest()!=digest: errors.append("D5 original/successor replay custody mismatch:"+filename)
-              successor_path=replay/"candidate-009/installed-text-oracle-d5-row-observation-successor.py"
-              if not successor_path.is_file() or hashlib.sha256(successor_path.read_bytes()).hexdigest()!=owner.get("oracleSuccessorSha256"): errors.append("executed observation successor source mismatch")
-              successor_custody=json.loads((replay/"oracle-successor-custody.json").read_text())
-              if successor_custody.get("originalArchiveSha256")!="092b2db842101fe9aac485e05c8d79775b048602b671189a9c83e91467a64d86" or successor_custody.get("originalOracleSha256")!=owner.get("oracleSha256") or successor_custody.get("fixtureSha256")!="c29ee30dd76e6e4fbbf6ceea64cb22d77764c2a349081819d0d7ac1c1dc59af1" or successor_custody.get("successorSha256")!=owner.get("oracleSuccessorSha256") or successor_custody.get("successorGzipSha256")!=owner.get("oracleSuccessorGzipSha256") or successor_custody.get("successorPatchSha256")!=owner.get("oracleSuccessorPatchSha256"): errors.append("successor custody receipt mismatch")
+              observation_parent_path=replay/"candidate-009/installed-text-oracle-d5-row-observation-successor.py"
+              if not observation_parent_path.is_file() or hashlib.sha256(observation_parent_path.read_bytes()).hexdigest()!=owner.get("oracleObservationParentSha256"): errors.append("retained observation-parent source mismatch")
+              observation_parent_custody=json.loads((replay/"oracle-successor-custody.json").read_text())
+              if observation_parent_custody.get("originalArchiveSha256")!="092b2db842101fe9aac485e05c8d79775b048602b671189a9c83e91467a64d86" or observation_parent_custody.get("originalOracleSha256")!=owner.get("oracleSha256") or observation_parent_custody.get("fixtureSha256")!="c29ee30dd76e6e4fbbf6ceea64cb22d77764c2a349081819d0d7ac1c1dc59af1" or observation_parent_custody.get("successorSha256")!=owner.get("oracleObservationParentSha256") or observation_parent_custody.get("successorGzipSha256")!=owner.get("oracleObservationParentGzipSha256") or observation_parent_custody.get("successorPatchSha256")!=owner.get("oracleObservationParentPatchSha256"): errors.append("retained observation-parent custody mismatch")
+              successor_path=replay/"candidate-009/installed-text-oracle-d5-weft55-metadata-successor.py"
+              if not successor_path.is_file() or hashlib.sha256(successor_path.read_bytes()).hexdigest()!=owner.get("oracleSuccessorSha256"): errors.append("executed metadata oracle source mismatch")
+              nd_successor_path=replay/"candidate-009/no-default-runner-d5-weft55-metadata-successor.py"
+              if not nd_successor_path.is_file() or hashlib.sha256(nd_successor_path.read_bytes()).hexdigest()!=owner.get("noDefaultRunnerSha256"): errors.append("executed no-default metadata source mismatch")
+              metadata_custody=json.loads((replay/"metadata-successor-custody.json").read_text())
+              if metadata_custody.get("originalArchive",{}).get("sha256")!="092b2db842101fe9aac485e05c8d79775b048602b671189a9c83e91467a64d86" or metadata_custody.get("originalOracle",{}).get("sha256")!=owner.get("oracleSha256") or metadata_custody.get("originalNoDefault",{}).get("sha256")!=owner.get("noDefaultOriginalRunnerSha256") or metadata_custody.get("rowObservationParent",{}).get("sourceSha256")!=owner.get("oracleObservationParentSha256") or metadata_custody.get("successors",{}).get("rowObservationOracle",{}).get("sourceSha256")!=owner.get("oracleSuccessorSha256") or metadata_custody.get("successors",{}).get("noDefault",{}).get("sourceSha256")!=owner.get("noDefaultRunnerSha256"): errors.append("metadata-successor custody mismatch")
               payload=root/"release-payload"; payload_files=[p for p in payload.iterdir() if p.is_file()] if payload.is_dir() else []
               payload_names={p.name for p in payload_files}
               payload_receipt=payload/"release-payload-receipt.json"
@@ -818,7 +866,7 @@ jobs:
                   for item in payload_json.get("wheels",[]):
                       path=payload/item.get("filename","")
                       if not path.is_file() or path.stat().st_size!=item.get("bytes") or hashlib.sha256(path.read_bytes()).hexdigest()!=item.get("sha256"): errors.append("SDK release payload wheel bytes mismatch")
-              if owner.get("coreNativeMember",{}).get("sha256")!="78dd1542f723b4f4d8c336c137caa478974a981ed759ada171a5877d7e0368a8": errors.append("published Core native member mismatch")
+              if owner.get("coreNativeMember",{}).get("sha256")!="c51b511a06bc1ccde6cc2208d33a4fb70ef66c67507ba8f2a6ea05fd2543cf57": errors.append("published Core native member mismatch")
               if owner.get("cohortLockSha256")!=hashlib.sha256((evidence/"cohort.lock.json").read_bytes()).hexdigest(): errors.append("cohort lock digest mismatch")
               if owner.get("mirrorManifestSha256")!=hashlib.sha256((evidence/"mirror-manifest.json").read_bytes()).hexdigest(): errors.append("mirror manifest digest mismatch")
               actual_reports={p.name for p in (evidence/"reports").glob("*.json")}
@@ -848,8 +896,8 @@ jobs:
               eq_unknown={event for case in eq for event in case.get("unknownCommitAfterRealPhase",[])}
               if eq_unknown!={"backfill-tighten","backfill-add"}: errors.append("eq-null lost-commit controls missing")
               nd=json.loads((evidence/"reports/no-default.json").read_text())
-              if len(nd.get("checks",[]))!=19 or nd.get("packages")!={"umf-access":"0.1.0.dev8","umf-codegen":"0.1.0a5","weft-sql":"0.4.53","umf-core":"0.10.2"} or "PostgreSQL 18.6" not in nd.get("server",""): errors.append("no-default report incomplete/current cohort mismatch")
-              if nd.get("runnerSha256")!="a756e43e7f91d7d55eeb34d639790636bf4af92b6de0fec191d956d0ff568a07" or nd.get("fixtureSha256")!="ba3c914d6590ed86640c22c6f4dbd1447168efca833b03c47f9270e2dc8c3af5": errors.append("no-default frozen runner/fixture mismatch")
+              if len(nd.get("checks",[]))!=19 or nd.get("packages")!={"umf-access":"0.1.0.dev8","umf-codegen":"0.1.0a5","umf-weft":"0.4.55","umf-core":"0.10.3"} or "PostgreSQL 18.6" not in nd.get("server",""): errors.append("no-default report incomplete/current cohort mismatch")
+              if nd.get("runnerSha256")!=owner.get("noDefaultRunnerSha256") or nd.get("fixtureSha256")!="ba3c914d6590ed86640c22c6f4dbd1447168efca833b03c47f9270e2dc8c3af5": errors.append("no-default successor runner/fixture mismatch")
               for scenario,count in (("fenced-resume",33),("backfill-commit-lost",27),("existing-target-commit-lost",27)):
                   report=json.loads((evidence/"reports"/("fault-"+scenario+".json")).read_text())
                   obs=report.get("observations",{}); cleanup=obs.get("cleanup",{})
@@ -964,23 +1012,23 @@ jobs:
             cell-id: linux-x86_64-py311
             architecture: x86_64
             mini-racer-platform: linux-x86_64-glibc-2.27+
-            core-wheel-filename: umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl
-            core-wheel-url: https://github.com/DocumentDrivenDX/umf/releases/download/python-v0.10.2/umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl
-            core-wheel-sha256: 708f967747b0539b9ca7b6a5f39d1017eea8ddb1d07cd62f4f46592e088f6f39
-            weft-wheel-filename: weft_sql-0.4.53-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
-            weft-wheel-url: https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.53/weft_sql-0.4.53-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
-            weft-wheel-sha256: db01c4cf6357d674f1591609a2b9c83a9322ad8f8937c345e5950cc1582b83d2
+            core-wheel-filename: umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl
+            core-wheel-url: https://github.com/DocumentDrivenDX/umf/releases/download/python-v0.10.3/umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl
+            core-wheel-sha256: cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75
+            weft-wheel-filename: umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+            weft-wheel-url: https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.55/umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+            weft-wheel-sha256: b34ca17fa37412afa7b8e8bd86aac8ee67a3c895a9b253221e1d582b39073a85
             python-version: '3.11'
           - os: ubuntu-24.04
             cell-id: linux-x86_64-py314
             architecture: x86_64
             mini-racer-platform: linux-x86_64-glibc-2.27+
-            core-wheel-filename: umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl
-            core-wheel-url: https://github.com/DocumentDrivenDX/umf/releases/download/python-v0.10.2/umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl
-            core-wheel-sha256: 708f967747b0539b9ca7b6a5f39d1017eea8ddb1d07cd62f4f46592e088f6f39
-            weft-wheel-filename: weft_sql-0.4.53-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
-            weft-wheel-url: https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.53/weft_sql-0.4.53-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
-            weft-wheel-sha256: db01c4cf6357d674f1591609a2b9c83a9322ad8f8937c345e5950cc1582b83d2
+            core-wheel-filename: umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl
+            core-wheel-url: https://github.com/DocumentDrivenDX/umf/releases/download/python-v0.10.3/umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl
+            core-wheel-sha256: cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75
+            weft-wheel-filename: umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+            weft-wheel-url: https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.55/umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+            weft-wheel-sha256: b34ca17fa37412afa7b8e8bd86aac8ee67a3c895a9b253221e1d582b39073a85
             python-version: '3.14'
     steps:
       - uses: actions/checkout@v4
@@ -1075,12 +1123,12 @@ jobs:
           --core-wheel-url '${{ matrix.core-wheel-url }}'
           --core-wheel-filename '${{ matrix.core-wheel-filename }}'
           --core-wheel-sha256 '${{ matrix.core-wheel-sha256 }}'
-          --core-version '0.10.2'
-          --core-release-tag 'python-v0.10.2'
-          --core-source-commit '6337b4b5f65144387ce5c0bbf9cbad955a921c8f'
+          --core-version '0.10.3'
+          --core-release-tag 'python-v0.10.3'
+          --core-source-commit '7d334dec45948953718bfacd3ed6dd199cadba79'
           --core-repository-url 'https://github.com/DocumentDrivenDX/umf'
-          --core-sdist-url 'https://github.com/DocumentDrivenDX/umf/releases/download/python-v0.10.2/umf_core-0.10.2.tar.gz'
-          --core-sdist-sha256 '90a107aaa507930e1d71c0cf208b77182d06c0bf2a1b13681fd5f7b6ed74cb9d'
+          --core-sdist-url 'https://github.com/DocumentDrivenDX/umf/releases/download/python-v0.10.3/umf_core-0.10.3.tar.gz'
+          --core-sdist-sha256 '61b3e12a84f68f890fa34e2da14bbda47e101b7c6eadd5207680827e8daa694c'
           --weft-wheel-url '${{ matrix.weft-wheel-url }}'
           --weft-wheel-filename '${{ matrix.weft-wheel-filename }}'
           --weft-wheel-sha256 '${{ matrix.weft-wheel-sha256 }}'
@@ -1114,7 +1162,7 @@ jobs:
 
 
   aggregate-python-cohort:
-    name: assemble closed four-cell Python wheel union
+    name: assemble two Linux runtime replays plus Mac artifact inputs
     runs-on: ubuntu-24.04
     needs: python-codegen
     steps:
@@ -1126,7 +1174,7 @@ jobs:
         with:
           pattern: codegen-*
           path: /tmp/codegen-cell-artifacts
-      - name: Bind all four producer locks and release inputs to the cell IDs
+      - name: Bind both Linux runtime locks and release inputs to the cell IDs
         run: |
           set -euo pipefail
           input=/tmp/aggregate-input
@@ -1134,8 +1182,6 @@ jobs:
           declare -A ids=(
             [codegen-ubuntu-24.04-py3.11]=linux-x86_64-py311
             [codegen-ubuntu-24.04-py3.14]=linux-x86_64-py314
-            [codegen-macos-14-py3.11]=macos-arm64-py311
-            [codegen-macos-14-py3.14]=macos-arm64-py314
           )
           for artifact in "${!ids[@]}"; do
             root="/tmp/codegen-cell-artifacts/$artifact"
@@ -1153,14 +1199,25 @@ jobs:
           root=pathlib.Path('/tmp/codegen-cell-artifacts')
           target=pathlib.Path('/tmp/aggregate-generator-corpus.json')
           matches=sorted(root.rglob('umf-codegen-corpus.json'))
-          assert len(matches)==4, len(matches)
+          assert len(matches)==2, len(matches)
           digests={hashlib.sha256(path.read_bytes()).hexdigest() for path in matches}
           assert len(digests)==1, 'producer source corpora differ'
           shutil.copyfile(matches[0], target)
           PY
-      - name: Assemble and verify the one closed aggregate mirror
+      - name: Acquire declared Mac wheel inputs without installing or executing them
+        run: |
+          set -euo pipefail
+          python tests/codegen/acquire_offline_cohort.py \
+            --output-dir /tmp/aggregate-input/artifact-targets/macos-arm64-py311 \
+            --source-commit '${{ github.sha }}' --artifact-target macos-arm64-py311 \
+            --source-cohort-root /tmp/aggregate-input
+          python tests/codegen/acquire_offline_cohort.py \
+            --output-dir /tmp/aggregate-input/artifact-targets/macos-arm64-py314 \
+            --source-commit '${{ github.sha }}' --artifact-target macos-arm64-py314 \
+            --source-cohort-root /tmp/aggregate-input
+      - name: Assemble and verify the closed Linux-runtime/Mac-artifact union
         run: >-
-          python -I tests/codegen/aggregate_cohort.py assemble
+          python -I tests/codegen/aggregate_cohort.py assemble-linux-runtime-macos-inputs
           --input-root /tmp/aggregate-input
           --output /tmp/umf-aggregate-cohort
           --source-commit '${{ github.sha }}'

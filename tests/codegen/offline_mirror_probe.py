@@ -49,16 +49,26 @@ if aggregate_mode:
     if not args.expected_source_commit:
         raise SystemExit('Aggregate mode requires --expected-source-commit')
     try:
-        aggregate_index, lock, checked_wheels = AGGREGATE.validate_aggregate(
-            args.aggregate_index, args.selected_cell, args.mirror)
+        aggregate_shape = MIRROR.read_json(args.aggregate_index)
+        if aggregate_shape.get('profile') == AGGREGATE.PROFILE:
+            aggregate_index, lock, checked_wheels = AGGREGATE.validate_aggregate(
+                args.aggregate_index, args.selected_cell, args.mirror)
+        elif aggregate_shape.get('profile') == AGGREGATE.ARTIFACT_PROFILE:
+            aggregate_index, lock, checked_wheels = AGGREGATE.validate_artifact_aggregate(
+                args.aggregate_index, args.selected_cell, args.mirror)
+        else:
+            raise ValueError('Aggregate profile is not one of the two closed supported profiles')
     except (OSError, ValueError, KeyError, TypeError) as error:
         raise SystemExit(f'Aggregate validation refused: {error}') from None
     if aggregate_index.get('sourceCommit') != args.expected_source_commit:
         raise SystemExit('Aggregate source commit differs from this checked-out candidate')
     aggregate_root = args.aggregate_index.parent
     args.wheelhouse = aggregate_root / aggregate_index['union']['wheelhouse']
+    runtime_entries = (aggregate_index['runtimeCells']
+                       if aggregate_index['profile'] == AGGREGATE.ARTIFACT_PROFILE
+                       else aggregate_index['cells'])
     args.lock = aggregate_root / next(
-        cell['lock']['path'] for cell in aggregate_index['cells']
+        cell['lock']['path'] for cell in runtime_entries
         if cell['id'] == args.selected_cell)
     requirements_file = None
 else:
@@ -308,7 +318,7 @@ with tempfile.TemporaryDirectory(prefix='umf-offline-mirror-') as directory:
     }
     if aggregate_mode:
         receipt['aggregate'] = {
-            'profile': AGGREGATE.PROFILE,
+            'profile': aggregate_index['profile'],
             'indexSha256': MIRROR.sha256(args.aggregate_index),
             'sourceCommit': aggregate_index['sourceCommit'],
             'selectedCell': args.selected_cell,

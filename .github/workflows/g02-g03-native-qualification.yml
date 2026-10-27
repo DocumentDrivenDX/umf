@@ -304,9 +304,9 @@ jobs:
             --expected-os ubuntu-24.04 \
             --expected-architecture x86_64 \
             --expected-python 3.11 \
-            --weft-wheel-url "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.53/weft_sql-0.4.53-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl" \
-            --weft-wheel-filename 'weft_sql-0.4.53-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl' \
-            --weft-wheel-sha256 "db01c4cf6357d674f1591609a2b9c83a9322ad8f8937c345e5950cc1582b83d2" \
+            --weft-wheel-url "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.55/umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl" \
+            --weft-wheel-filename 'umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl' \
+            --weft-wheel-sha256 "b34ca17fa37412afa7b8e8bd86aac8ee67a3c895a9b253221e1d582b39073a85" \
             --mini-racer-wheel "$WORK/mini-racer"/*.whl
           run_bounded current-codegen-corpus 180 bun scripts/codegen-corpus.ts /tmp/g02-g03-current-codegen-corpus.json
           run_bounded offline-cohort-probe 180 python -I tests/codegen/offline_mirror_probe.py \
@@ -436,14 +436,14 @@ jobs:
           for distribution in ("umf-access", "umf-codegen"):
               assert packages[distribution]["source"]["commit"] == source_commit
           weft_pin = pins["dependencyPins"]["weft"]
-          assert packages["weft-sql"]["version"] == weft_pin["version"]
-          assert packages["weft-sql"]["source"]["sha256"] == weft_pin["sha256"]
+          assert packages["umf-weft"]["version"] == weft_pin["version"]
+          assert packages["umf-weft"]["source"]["sha256"] == weft_pin["sha256"]
           core_pin = pins["dependencyPins"]["core"]
           assert packages["umf-core"]["version"] == core_pin["version"]
           assert packages["umf-core"]["source"]["sha256"] == core_pin["sha256"]
           core_wheels = [wheel for wheel in cohort["wheels"] if wheel["distribution"] == "umf-core"]
           assert len(core_wheels) == 1 and core_wheels[0]["filename"] == core_pin["wheel"]
-          runtime_distributions = ("umf-access", "umf-codegen", "weft-sql", "umf-core")
+          runtime_distributions = ("umf-access", "umf-codegen", "umf-weft", "umf-core")
           runtime_versions = {name: packages[name]["version"] for name in runtime_distributions}
           assert g02["packages"] == runtime_versions
 

@@ -102,7 +102,7 @@ def installed_cohort_snapshot() -> dict[str, object]:
     packages: dict[str, object] = {}
     total_files = 0
     total_bytes = 0
-    for name in ("umf-access", "umf-codegen", "weft-sql", "umf-core", "psycopg", "psycopg-binary"):
+    for name in ("umf-access", "umf-codegen", "umf-weft", "umf-core", "psycopg", "psycopg-binary"):
         metadata = distribution(name)
         listed = metadata.files
         if listed is None:
@@ -1438,7 +1438,7 @@ def main() -> int:
         "scenario": args.scenario,
         "sourceStatus": "SOURCE_ONLY_ALL_NATIVE_CASES_UNRUN",
         "packages": {name: installed_version_or_none(name)
-                     for name in ("umf-access", "umf-codegen", "weft-sql", "umf-core")},
+                     for name in ("umf-access", "umf-codegen", "umf-weft", "umf-core")},
         "caseStatus": fixture["caseStatus"],
         "checks": [],
     }

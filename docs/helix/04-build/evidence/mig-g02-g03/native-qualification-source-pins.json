@@ -34,21 +34,21 @@
     }
   },
   "dependencyPins": {
-    "sourceCohort": "current UMF wheels built from github.sha and recorded in cohort.lock.json",
+    "sourceCohort": "Current Access/Codegen wheels built from github.sha; published Core and Weft retain their separate release/build identities in cohort.lock.json.",
     "cohortProfile": "python/packaging/embedder-wheel-lock.template.json",
-    "cohortProfileSha256": "726108e5a03af52c24d3c1efc36b37f6bdd53bdcd698af97f5165f07b1a1ee30",
+    "cohortProfileSha256": "1ad4bf560a2c499e76fc434aa1f43adffc4d19d0be60699d0ed1f2ab1cd997d9",
     "weft": {
-      "distribution": "weft-sql",
-      "version": "0.4.53",
-      "wheel": "weft_sql-0.4.53-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
-      "sha256": "db01c4cf6357d674f1591609a2b9c83a9322ad8f8937c345e5950cc1582b83d2"
+      "distribution": "umf-weft",
+      "version": "0.4.55",
+      "wheel": "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sha256": "b34ca17fa37412afa7b8e8bd86aac8ee67a3c895a9b253221e1d582b39073a85"
     },
     "core": {
       "distribution": "umf-core",
-      "version": "0.10.2",
-      "wheel": "umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl",
-      "sha256": "708f967747b0539b9ca7b6a5f39d1017eea8ddb1d07cd62f4f46592e088f6f39",
-      "nativeSha256": "78dd1542f723b4f4d8c336c137caa478974a981ed759ada171a5877d7e0368a8"
+      "version": "0.10.3",
+      "wheel": "umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl",
+      "sha256": "cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75",
+      "nativeSha256": "c51b511a06bc1ccde6cc2208d33a4fb70ef66c67507ba8f2a6ea05fd2543cf57"
     },
     "wheelBuilder": {
       "build": "1.3.0",
@@ -65,7 +65,7 @@
       "purpose": "G02 temporal five-case fixture generator"
     },
     "tests/lifecycle/g02-temporal-native.py": {
-      "sha256": "13155d45458c1706a99b22fec4474832dfbe892e6eb9981c4ca550c9a35998a8",
+      "sha256": "5c11f8861ba66161ca6a578e6ac4b6f384da655275d608fe28c1eedcfb19280e",
       "purpose": "G02 temporal PostgreSQL 18 native runner"
     },
     "tests/lifecycle/g03-defaults-native-fixture.ts": {
@@ -73,7 +73,7 @@
       "purpose": "G03 fixed-source fixture and case-status generator"
     },
     "tests/lifecycle/g03-defaults-native.py": {
-      "sha256": "361f250158e10ade881e78baf480d534e0b27ecf6c70062b9955e2110e23c0ed",
+      "sha256": "2f4553a0f6c1c364aecc0541d4a4bbf876cce8bb5407514cf8f4473470b51958",
       "purpose": "G03 selected-scenario PostgreSQL 18 native runner"
     },
     "tests/lifecycle/g03_campaign_orchestration.py": {
@@ -93,7 +93,7 @@
       "purpose": "Frozen Bun dependency graph"
     },
     "tests/codegen/acquire_offline_cohort.py": {
-      "sha256": "72d9d5b9e3886f54c63e25d2f851b626d833eacd6c8bbe4bbf26f518c0812ce0",
+      "sha256": "fb2a1a12869ab805a8e1ccad007ca981ea9ad80fe27ccb4f6bd62d2a27b545fe",
       "purpose": "Existing current-source cohort acquisition and lock construction"
     },
     "scripts/python-package-mirror.py": {
@@ -101,7 +101,7 @@
       "purpose": "Existing wheel mirror and hash-lock implementation"
     },
     "tests/codegen/offline_mirror_probe.py": {
-      "sha256": "9f135a31b06eca07402b4ceaa33bc270de7cb2715126308b203755c1da4fac90",
+      "sha256": "acbf84135ed8788a7ce6860063efcf32688ee4b4c7c6fb809a18cb1edfb99de0",
       "purpose": "Existing offline installation and network-denial probe"
     },
     "tests/codegen/verify_mini_racer_wheel.py": {
@@ -181,7 +181,7 @@
       "purpose": "Reviewed pre-rebuild bundled YAML package metadata output"
     },
     "python/packaging/embedder-wheel-lock.template.json": {
-      "sha256": "726108e5a03af52c24d3c1efc36b37f6bdd53bdcd698af97f5165f07b1a1ee30",
+      "sha256": "1ad4bf560a2c499e76fc434aa1f43adffc4d19d0be60699d0ed1f2ab1cd997d9",
       "purpose": "Existing 18-wheel public dependency cohort template"
     },
     "docs/helix/04-build/evidence/mig-g02-g03/build-tools-requirements.txt": {
@@ -189,11 +189,11 @@
       "purpose": "Hash-locked public wheel builder toolchain"
     },
     "tests/codegen/cohort_selector.py": {
-      "sha256": "65e4e20c5bd21d0c94af0d7f0fca496210242cc36a0b17e28d6f2192ade8cee0",
+      "sha256": "a300e173f000c949c5d3ab3f385b083279a58294c91276847af74b72ef391bb7",
       "purpose": "Strict immutable-release selector and exact original18 dependency-closure guard imported by current acquisition and probe"
     },
     "tests/codegen/aggregate_cohort.py": {
-      "sha256": "9e2def3d465c6f3295936f019a566c5541583c1b1327e40e2c0a22d3e9b68584",
+      "sha256": "2deb613f42505a4c125feb23da219ce768d6756a6d3ee404b56c6c2441db9b61",
       "purpose": "Closed four-cell union validator imported by offline probe; selected-native gate uses the existing single-cell mode"
     }
   },
@@ -277,5 +277,6 @@
     "noPrivateOrManagedTargets": true,
     "disposableServiceOnly": true,
     "noLocalVmOrUserDatabase": true
-  }
+  },
+  "reviewBasisScope": "Historical baseline source acceptance only. Current combined-source acceptance is recorded separately with the exact candidate/source ledger; this preserved baseline receipt does not accept the refresh."
 }

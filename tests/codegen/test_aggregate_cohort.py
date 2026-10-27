@@ -10,6 +10,7 @@ import sys
 import tempfile
 import unittest
 import zipfile
+from contextlib import ExitStack
 from pathlib import Path
 from types import SimpleNamespace
 from typing import Any
@@ -30,14 +31,16 @@ def _sha256(path: Path) -> str:
 
 
 def _wheel_bytes(distribution: str, version: str, marker: str = "",
-                 native_member: str | None = None, native_bytes: bytes = b"") -> bytes:
+                 native_member: str | None = None, native_bytes: bytes = b"",
+                 requires_dist: list[str] | None = None) -> bytes:
     normalized = AGGREGATE.MIRROR.normalized_name(distribution).replace("-", "_")
     dist_info = f"{normalized}-{version}.dist-info"
     from io import BytesIO
 
     buffer = BytesIO()
     with zipfile.ZipFile(buffer, "w", zipfile.ZIP_DEFLATED) as archive:
-        metadata = f"Metadata-Version: 2.1\nName: {distribution}\nVersion: {version}\n\n"
+        metadata = f"Metadata-Version: 2.1\nName: {distribution}\nVersion: {version}\n"
+        metadata += ''.join(f"Requires-Dist: {requirement}\n" for requirement in (requires_dist or [])) + "\n"
         for name, content in (
             (f"{dist_info}/METADATA", metadata.encode()),
             (f"{dist_info}/RECORD", b""),
@@ -233,6 +236,27 @@ class AggregateCohortTests(unittest.TestCase):
         self.assertEqual({wheel["filename"] for wheel in wheels},
                          {item["filename"] for item in lock["wheels"]})
 
+    def test_legacy_source_provenance_fields_are_not_erased(self):
+        self._make_cells()
+        cell_id = sorted(AGGREGATE.CELLS)[-1]
+        lock_path = self.input_root / cell_id / "cohort.lock.json"
+        lock = json.loads(lock_path.read_text())
+        source = lock["packages"][0]["source"]
+        native_member = ("umf/_rust/_rust_core.abi3.dylib"
+                         if AGGREGATE.CELLS[cell_id][0].startswith("macos-")
+                         else "umf/_rust/_rust_core.abi3.so")
+        source.update({"sizeBytes": 123, "nativeMember": native_member,
+                       "producerArtifactName": "different-producer-artifact",
+                       "producerArtifactSizeBytes": 456})
+        lock["wheels"][0]["source"] = dict(source)
+        lock_path.write_text(json.dumps(lock, sort_keys=True) + "\n", encoding="utf-8")
+        receipt_path = lock_path.parent / "offline-mirror-receipt.json"
+        receipt = json.loads(receipt_path.read_text())
+        receipt["lockSha256"] = _sha256(lock_path)
+        receipt_path.write_text(json.dumps(receipt, sort_keys=True) + "\n", encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "Conflicting source provenance for umf-core"):
+            AGGREGATE.assemble(self.input_root, self.output, "c" * 40)
+
     def test_child_hash_tampering_refuses_before_selected_install(self):
         result = self._assemble()
         child_lock = self.output / result["cells"][0]["lock"]["path"]
@@ -421,6 +445,344 @@ class AggregateCohortTests(unittest.TestCase):
         self._assemble()
         with self.assertRaisesRegex(ValueError, "Refusing to reuse aggregate output directory"):
             AGGREGATE.assemble(self.input_root, self.output, "c" * 40)
+
+
+class SplitAggregateCohortTests(unittest.TestCase):
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory(prefix="umf-split-aggregate-test-")
+        self.root = Path(self.temporary.name).resolve()
+        self.input_root = self.root / "input"
+        self.output = self.root / "aggregate"
+        self.source_commit = "c" * 40
+
+    def tearDown(self):
+        self.temporary.cleanup()
+
+    def _source_rows(self):
+        template = json.loads((ROOT / "python/packaging/embedder-wheel-lock.template.json").read_text())
+        packages = template["packages"]
+        versions = {AGGREGATE.MIRROR.normalized_name(row["distribution"]): row["version"] for row in packages}
+        requirements = {
+            name: [f"{row['distribution']}=={row['version']}" for row in packages
+                   if AGGREGATE.MIRROR.normalized_name(row["distribution"]) != name]
+            for name in versions
+        }
+        common_core = {
+            "kind": "immutable-release-wheel", "releaseTag": "python-v0.10.3",
+            "releaseCommit": "7" * 40, "sourceCommit": "7" * 40, "release": "python-v0.10.3",
+            "producerCommit": "3" * 40, "producerTree": "4" * 40,
+            "producerWorkflowPath": ".github/workflows/python-action-runtime.yml",
+            "producerWorkflowRunId": 40448360241, "producerWorkflowRunAttempt": 1,
+            "repository": "https://github.com/DocumentDrivenDX/umf",
+            "sdistUrl": "https://github.com/DocumentDrivenDX/umf/releases/download/python-v0.10.3/umf_core-0.10.3.tar.gz",
+            "sdistSha256": "5" * 64, "sdistFilename": "umf_core-0.10.3.tar.gz",
+            "sdistSizeBytes": 456,
+        }
+        core_linux = {**common_core, "url": "https://example.invalid/core/linux.whl",
+            "filename": "umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl",
+            "sha256": "6" * 64, "nativeSha256": hashlib.sha256(b"linux-core").hexdigest(),
+            "sizeBytes": 0,
+            "nativeMember": "umf/_rust/_rust_core.abi3.so", "producerArtifactId": 10,
+            "producerArtifactName": "core-linux", "producerArtifactSha256": "8" * 64,
+            "producerArtifactSizeBytes": 123}
+        core_mac = {**common_core, "url": "https://example.invalid/core/mac.whl",
+            "filename": "umf_core-0.10.3-cp311-abi3-macosx_11_0_arm64.whl",
+            "sha256": "9" * 64, "nativeSha256": hashlib.sha256(b"mac-core").hexdigest(),
+            "sizeBytes": 0,
+            "nativeMember": "umf/_rust/_rust_core.abi3.dylib", "producerArtifactId": 11,
+            "producerArtifactName": "core-mac", "producerArtifactSha256": "a" * 64,
+            "producerArtifactSizeBytes": 124}
+        weft_linux = {"kind": "immutable-release-wheel", "release": "v0.4.55",
+            "producerCommit": "b" * 40, "releaseId": 424900540,
+            "url": "https://example.invalid/weft/linux.whl",
+            "filename": "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "sha256": "b" * 64, "sizeBytes": 0}
+        weft_mac = {**weft_linux, "url": "https://example.invalid/weft/mac.whl",
+            "filename": "umf_weft-0.4.55-cp39-abi3-macosx_11_0_arm64.whl", "sha256": "c" * 64}
+        sources = {}
+        for name, version in versions.items():
+            if name == "umf-core":
+                sources[name] = core_linux
+            elif name == "umf-weft":
+                sources[name] = weft_linux
+            elif name in {"umf-access", "umf-codegen"}:
+                sources[name] = {"kind": "repository-wheel", "path": f"python/{name.replace('-', '_')}",
+                                 "commit": self.source_commit}
+            else:
+                project = name.replace("-", ".") if name == "ruamel-yaml" else name
+                project_url = f"https://pypi.org/project/{project}/{version}/"
+                sources[name] = {"kind": "pypi-wheel", "url": project_url,
+                    "index": "https://pypi.org/simple",
+                    "releaseMetadata": f"https://pypi.org/pypi/{project}/{version}/json",
+                    "publisherArtifactSha256": "d" * 64,
+                    "publisherArtifactSizeBytes": 0, "sizeBytes": 0,
+                    "publisherHashSource": "PyPI JSON release metadata"}
+        return packages, versions, requirements, sources, core_linux, core_mac, weft_linux, weft_mac
+
+    def _wheel(self, wheelhouse, distribution, version, requirements, platform_tag, source, native=None):
+        normalized = distribution.replace("-", "_")
+        if distribution == "umf-core":
+            filename = f"{normalized}-{version}-{platform_tag}.whl"
+        elif distribution == "umf-weft":
+            filename = f"{normalized}-{version}-{platform_tag}.whl"
+        else:
+            filename = f"{normalized}-{version}-py3-none-any.whl"
+        path = wheelhouse / filename
+        native_member, native_bytes = native if native else (None, b"")
+        path.write_bytes(_wheel_bytes(distribution, version, native_member=native_member,
+                                      native_bytes=native_bytes, requires_dist=requirements))
+        wheel = AGGREGATE.MIRROR.wheel_metadata(path)
+        wheel["source"] = source
+        return path, wheel
+
+    def _build_inputs(self):
+        (packages, versions, requirements, sources, core_linux, core_mac,
+         weft_linux, weft_mac) = self._source_rows()
+        self.input_root.mkdir()
+        target_specs = {
+            **{cell_id: (os_name, arch, python, False) for cell_id, (os_name, arch, python)
+               in AGGREGATE.LINUX_RUNTIME_CELLS.items()},
+            **{target_id: (*target, True) for target_id, target in AGGREGATE.MAC_ARTIFACT_TARGETS.items()},
+        }
+        artifact_paths = {"umf-core": {"linux": core_linux, "mac": core_mac},
+                          "umf-weft": {"linux": weft_linux, "mac": weft_mac}}
+        native_data = {"linux": ("umf/_rust/_rust_core.abi3.so", b"linux-core"),
+                       "mac": ("umf/_rust/_rust_core.abi3.dylib", b"mac-core")}
+        runtime_packages = []
+        runtime_wheels = []
+        runtime_receipts = {}
+        artifact_target_roots = {}
+        for identity, (os_name, arch, python, data_only) in target_specs.items():
+            flavor = "mac" if data_only else "linux"
+            if data_only:
+                target_root = self.input_root / "artifact-targets" / identity
+                wheelhouse = target_root / "wheelhouse"
+                wheelhouse.mkdir(parents=True)
+            else:
+                cell_root = self.input_root / identity
+                wheelhouse = cell_root / "wheelhouse"
+                wheelhouse.mkdir(parents=True)
+            package_rows = []
+            wheel_rows = []
+            metadata_by_name = {}
+            for package in packages:
+                name = AGGREGATE.MIRROR.normalized_name(package["distribution"])
+                source = dict(sources[name])
+                if name in artifact_paths:
+                    source = dict(artifact_paths[name][flavor])
+                elif data_only and name in {"umf-access", "umf-codegen"}:
+                    source = dict(sources[name])
+                version = versions[name]
+                if name == "umf-core":
+                    native_member, native_bytes = native_data[flavor]
+                    native = (native_member, native_bytes)
+                    tag = ("cp311-abi3-manylinux_2_34_x86_64" if flavor == "linux"
+                           else "cp311-abi3-macosx_11_0_arm64")
+                    source["nativeSha256"] = hashlib.sha256(native_bytes).hexdigest()
+                elif name == "umf-weft":
+                    native = None
+                    tag = ("cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64" if flavor == "linux"
+                           else "cp39-abi3-macosx_11_0_arm64")
+                else:
+                    native, tag = None, "py3-none-any"
+                package_rows.append({"distribution": package["distribution"], "version": version, "source": source})
+                _path, wheel = self._wheel(wheelhouse, package["distribution"], version,
+                                           requirements[name], tag, source, native)
+                if name in artifact_paths:
+                    source["filename"], source["sha256"], source["sizeBytes"] = (
+                        wheel["filename"], wheel["sha256"], wheel["size"])
+                    artifact_paths[name][flavor].update({
+                        "filename": wheel["filename"], "sha256": wheel["sha256"], "sizeBytes": wheel["size"]})
+                if name not in {"umf-core", "umf-weft", "umf-access", "umf-codegen"}:
+                    source["publisherArtifactSha256"] = wheel["sha256"]
+                    source["publisherArtifactSizeBytes"] = wheel["size"]
+                    source["sizeBytes"] = wheel["size"]
+                wheel_rows.append({"filename": wheel["filename"], "distribution": package["distribution"],
+                                   "version": version, "sha256": wheel["sha256"], "source": source})
+                metadata_by_name[name] = wheel
+            roots = {"production": ["umf-core", "umf-access", "umf-codegen", "umf-weft"],
+                     "qualificationDrivers": ["psycopg", "psycopg-binary", "jsonschema", "ruamel-yaml"]}
+            if data_only:
+                target = {"id": identity, "os": os_name, "architecture": arch, "python": python,
+                          "libc": "not applicable"}
+                marker = {"implementation_name": "cpython", "implementation_version": python + ".0",
+                    "os_name": "posix", "platform_machine": "arm64", "platform_release": "",
+                    "platform_system": "Darwin", "platform_version": "", "python_full_version": python + ".0",
+                    "python_version": python, "sys_platform": "darwin", "platform_python_implementation": "CPython",
+                    "python_implementation": "CPython", "extra": ""}
+                resolution = AGGREGATE.SELECTOR.resolve_dependency_closure(
+                    roots["production"] + roots["qualificationDrivers"], package_rows,
+                    metadata_by_name, marker)
+                manifest = {"profile": "umf.embedder-wheel-artifact-target/1", "status": "verified-artifact-inputs",
+                    "target": target, "selection": {"kind": "declared-target-wheel-tags", "observedRuntime": False},
+                    "sourceCommit": self.source_commit, "coreSemanticVersion": "0.10.0",
+                    "packageRoots": roots, "packages": package_rows,
+                    "wheels": sorted(metadata_by_name.values(), key=lambda item: item["filename"]),
+                    "dependencyResolution": {"method": "exact wheel METADATA under declared target marker environment",
+                        "markerEnvironment": marker, "selectedNormalizedDistributions": resolution["selectedNormalizedDistributions"],
+                        "checkedRequirements": resolution["checkedRequirements"]}}
+                target_manifest = target_root / "artifact-target.json"
+                target_manifest.write_text(json.dumps(manifest, sort_keys=True) + "\n")
+                artifact_target_roots[identity] = target_root
+            else:
+                intended = [{"os": os_name, "architecture": arch, "python": python,
+                             "libc": "glibc >= 2.34"}]
+                runtime_python = python + (".17" if python == "3.11" else ".0")
+                marker = {"python_full_version": runtime_python, "platform_machine": arch,
+                          "sys_platform": "linux"}
+                resolution = AGGREGATE.SELECTOR.resolve_dependency_closure(
+                    roots["production"] + roots["qualificationDrivers"], package_rows,
+                    metadata_by_name, {"python_version": python, "extra": ""})
+                lock = {"profile": AGGREGATE.MIRROR.PROFILE, "status": "locked", "cohort": "synthetic-current",
+                    "intendedCells": intended, "packageRoots": roots, "coreSemanticVersion": "0.10.0",
+                    "dependencyResolution": {"markerEnvironment": marker,
+                        "selectedNormalizedDistributions": resolution["selectedNormalizedDistributions"],
+                        "checkedRequirements": resolution["checkedRequirements"]},
+                    "packages": package_rows, "wheels": wheel_rows}
+                lock_path = cell_root / "cohort.lock.json"
+                lock_path.write_text(json.dumps(lock, sort_keys=True) + "\n")
+                core_wheel = next(item for item in wheel_rows if item["distribution"] == "umf-core")
+                core_source = next(item["source"] for item in package_rows if item["distribution"] == "umf-core")
+                native_member = core_source["nativeMember"]
+                native_sha = core_source["nativeSha256"]
+                receipt = {"status": "passed", "lockSha256": _sha256(lock_path),
+                    "coreNative": {"wheel": core_wheel["filename"], "wheelSha256": core_wheel["sha256"],
+                        "member": native_member, "memberSha256": native_sha, "installedSha256": native_sha,
+                        "distributionVersion": "0.10.3", "semanticCoreVersion": "0.10.0"},
+                    "cell": {"os": os_name, "architecture": arch, "python": runtime_python,
+                        "runnerIdentity": {"system": "Linux", "architecture": arch}}}
+                (cell_root / "offline-mirror-receipt.json").write_text(json.dumps(receipt, sort_keys=True) + "\n")
+                runtime_packages = package_rows
+                runtime_wheels.append(wheel_rows)
+                runtime_receipts[identity] = lock
+        return packages, versions, sources, core_linux, core_mac, weft_linux, weft_mac, artifact_target_roots
+
+    def _release_patches(self, core_linux, core_mac, weft_linux, weft_mac):
+        return (
+            patch.object(AGGREGATE, "CORE_LINUX_RELEASE",
+                         {key: core_linux[key] for key in AGGREGATE.CORE_LINUX_RELEASE}),
+            patch.object(AGGREGATE, "CORE_MAC_RELEASE",
+                         {**{key: core_mac[key] for key in AGGREGATE.CORE_MAC_RELEASE if key != "member"},
+                          "member": core_mac["nativeMember"]}),
+            patch.object(AGGREGATE, "WEFT_LINUX_RELEASE", weft_linux),
+            patch.object(AGGREGATE, "WEFT_MAC_RELEASE", weft_mac),
+        )
+
+    def _assemble_with_release_patches(self, core_linux, core_mac, weft_linux, weft_mac):
+        with ExitStack() as stack:
+            for context in self._release_patches(core_linux, core_mac, weft_linux, weft_mac):
+                stack.enter_context(context)
+            return AGGREGATE.assemble_linux_runtime_macos_inputs(
+                self.input_root, self.output, self.source_commit)
+
+    def test_split_profile_binds_two_linux_receipts_and_two_data_only_mac_targets(self):
+        (packages, _versions, _sources, core_linux, core_mac,
+         weft_linux, weft_mac, _targets) = self._build_inputs()
+        with patch.object(AGGREGATE, "CORE_LINUX_RELEASE", {key: core_linux[key] for key in AGGREGATE.CORE_LINUX_RELEASE}), \
+             patch.object(AGGREGATE, "CORE_MAC_RELEASE", {**{key: core_mac[key] for key in AGGREGATE.CORE_MAC_RELEASE if key != "member"},
+                                                            "member": core_mac["nativeMember"]}), \
+             patch.object(AGGREGATE, "WEFT_LINUX_RELEASE", weft_linux), \
+             patch.object(AGGREGATE, "WEFT_MAC_RELEASE", weft_mac):
+            index = AGGREGATE.assemble_linux_runtime_macos_inputs(self.input_root, self.output, self.source_commit)
+            self.assertEqual(index["profile"], AGGREGATE.ARTIFACT_PROFILE)
+            self.assertEqual(index["coverage"]["qualifiedRuntimeCells"], sorted(AGGREGATE.LINUX_RUNTIME_CELLS))
+            self.assertEqual(index["coverage"]["refreshedMacRuntime"], "unqualified")
+            self.assertEqual(index["coverage"]["macReplay"], "not-performed")
+            self.assertEqual(len(index["runtimeCells"]), 2)
+            self.assertEqual(len(index["artifactTargets"]), 2)
+            self.assertTrue(all("runtimeIdentity" not in target and "qualificationReceipt" not in target
+                                for target in index["artifactTargets"]))
+            with patch.object(AGGREGATE.sys, "version", "3.11.17 synthetic"), \
+                 patch.object(AGGREGATE.sys, "version_info", SimpleNamespace(major=3, minor=11)), \
+                 patch.object(AGGREGATE.MIRROR, "select_runner_cell", side_effect=lambda cells, _python: cells[0] if cells else None):
+                checked, lock, _wheels = AGGREGATE.validate_artifact_aggregate(
+                    self.output / "aggregate.json", "linux-x86_64-py311", self.output / "mirror")
+            self.assertEqual(len(lock["packages"]), 18)
+            self.assertEqual(checked["coverage"]["macReplay"], "not-performed")
+            with self.assertRaisesRegex(ValueError, "Only the two declared Linux runtime cells"):
+                AGGREGATE.validate_artifact_aggregate(
+                    self.output / "aggregate.json", "macos-arm64-py311", self.output / "mirror")
+            with self.assertRaisesRegex(ValueError, "unknown or missing fields"):
+                AGGREGATE.validate_aggregate(
+                    self.output / "aggregate.json", "linux-x86_64-py311", self.output / "mirror")
+
+    def test_split_target_refuses_rehashed_alternate_access_wheel(self):
+        (_packages, _versions, _sources, core_linux, core_mac,
+         weft_linux, weft_mac, _targets) = self._build_inputs()
+        target_id = "macos-arm64-py311"
+        target_root = self.input_root / "artifact-targets" / target_id
+        manifest_path = target_root / "artifact-target.json"
+        manifest = json.loads(manifest_path.read_text())
+        row = next(item for item in manifest["wheels"] if item["distribution"] == "umf-access")
+        original_path = target_root / "wheelhouse" / row["filename"]
+        original_metadata = AGGREGATE.MIRROR.wheel_metadata(original_path)
+        alternate_filename = row["filename"].replace(
+            "-py3-none-any.whl", "-1-py3-none-any.whl")
+        alternate_path = target_root / "wheelhouse" / alternate_filename
+        alternate_path.write_bytes(_wheel_bytes(
+            "umf-access", row["version"], marker="alternate-artifact-bytes",
+            requires_dist=original_metadata.get("requiresDist", [])))
+        original_path.unlink()
+        alternate = AGGREGATE.MIRROR.wheel_metadata(alternate_path)
+        alternate["source"] = row["source"]
+        manifest["wheels"] = [alternate if item is row else item for item in manifest["wheels"]]
+        manifest_path.write_text(json.dumps(manifest, sort_keys=True) + "\n", encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "umf-access wheel differs from the exact Linux universal source bytes"):
+            self._assemble_with_release_patches(core_linux, core_mac, weft_linux, weft_mac)
+
+    def test_split_validation_refuses_coherent_nineteenth_linux_distribution(self):
+        (_packages, _versions, _sources, core_linux, core_mac,
+         weft_linux, weft_mac, _targets) = self._build_inputs()
+        self._assemble_with_release_patches(core_linux, core_mac, weft_linux, weft_mac)
+
+        index_path = self.output / "aggregate.json"
+        index = json.loads(index_path.read_text())
+        wheel_dir = self.output / "wheelhouse"
+        extra_source = {"kind": "synthetic-extra", "commit": self.source_commit}
+        extra_path = wheel_dir / "split_extra-1.0-py3-none-any.whl"
+        extra_path.write_bytes(_wheel_bytes("split-extra", "1.0"))
+        extra_metadata = AGGREGATE.MIRROR.wheel_metadata(extra_path)
+        extra_metadata["source"] = extra_source
+        extra_package = {"distribution": "split-extra", "version": "1.0", "source": extra_source}
+        extra_child_wheel = {"filename": extra_metadata["filename"],
+                             "distribution": "split-extra", "version": "1.0",
+                             "sha256": extra_metadata["sha256"], "source": extra_source}
+
+        for entry in index["runtimeCells"]:
+            lock_path = self.output / entry["lock"]["path"]
+            lock = json.loads(lock_path.read_text())
+            lock["packages"].append(extra_package)
+            lock["wheels"].append(extra_child_wheel)
+            lock_path.write_text(json.dumps(lock, sort_keys=True) + "\n", encoding="utf-8")
+            entry["lock"]["sha256"] = _sha256(lock_path)
+            receipt_path = self.output / entry["qualificationReceipt"]["path"]
+            receipt = json.loads(receipt_path.read_text())
+            receipt["lockSha256"] = entry["lock"]["sha256"]
+            receipt_path.write_text(json.dumps(receipt, sort_keys=True) + "\n", encoding="utf-8")
+            entry["qualificationReceipt"]["sha256"] = _sha256(receipt_path)
+
+        union_lock_path = self.output / index["union"]["lock"]["path"]
+        union_lock = json.loads(union_lock_path.read_text())
+        union_lock["packages"].append(extra_package)
+        extra_union_wheel = {key: extra_metadata[key] for key in
+                             ("filename", "sha256", "size", "distribution", "version")}
+        extra_union_wheel["metadataSha256"] = AGGREGATE.metadata_digest(extra_path)
+        extra_union_wheel["source"] = extra_source
+        union_lock["wheels"].append(extra_union_wheel)
+        union_lock["packages"].sort(key=lambda item: AGGREGATE.MIRROR.normalized_name(item["distribution"]))
+        union_lock["wheels"].sort(key=lambda item: item["filename"])
+        union_lock_path.write_text(json.dumps(union_lock, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        index["union"]["lock"]["sha256"] = _sha256(union_lock_path)
+        index["union"]["inventory"].append(extra_union_wheel)
+        index["union"]["inventory"].sort(key=lambda item: item["filename"])
+        mirror_path = self.output / index["union"]["mirror"]
+        shutil.rmtree(mirror_path)
+        AGGREGATE.MIRROR.build_mirror(union_lock_path, wheel_dir, mirror_path)
+        index["union"]["mirrorManifest"]["sha256"] = _sha256(mirror_path / "manifest.json")
+        index_path.write_text(json.dumps(index, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+        with self.assertRaisesRegex(ValueError, "exact unique original18 distributions"):
+            AGGREGATE.validate_artifact_aggregate(index_path, "linux-x86_64-py311", mirror_path)
 
 
 if __name__ == "__main__":

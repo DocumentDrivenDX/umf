@@ -1,0 +1,190 @@
+{
+  "limits": {
+    "cellSeconds": 1200,
+    "sdistBytes": 16777216,
+    "wheelBytes": 16777216
+  },
+  "producer": {
+    "event": "workflow_dispatch",
+    "headBranch": "codex/core-python314-generation",
+    "retainedBuild": {
+      "artifacts": [
+        {
+          "id": 12708559992,
+          "name": "umf-python-action-runtime-linux-x86_64",
+          "sha256": "1258b5f6f5d4c2a700aa0c7c04b3ec3aaf85ad7f3e65c67b838cad4838c479d8",
+          "sizeBytes": 10225196
+        },
+        {
+          "id": 12713123008,
+          "name": "umf-python-action-runtime-macos-arm64",
+          "sha256": "702c6d96c844e308ea29f0116b75c0ebecc17c36262f8456aeb15f91a77c3e48",
+          "sizeBytes": 8770184
+        },
+        {
+          "id": 12709765210,
+          "name": "umf-core-0.10.3-release-linux-x86_64",
+          "sha256": "b14e112d3bbe65b1eeb49bf6d55afc307564b76f2ee4abecdcf19a632f078b53",
+          "sizeBytes": 5895170
+        },
+        {
+          "id": 12712708341,
+          "name": "umf-core-0.10.3-release-macos-arm64",
+          "sha256": "7758601bd5c2487f55dff837297aac20b83f5aca3a77b76a10376fff9e9e4730",
+          "sizeBytes": 5604087
+        },
+        {
+          "id": 12712644670,
+          "name": "umf-core-0.10.3-installed-linux-x86_64-py11",
+          "sha256": "432a5d96e7b7aeed93d3cd76253dd7032495a80f9a197efcb938e54165f4e09b",
+          "sizeBytes": 13201
+        },
+        {
+          "id": 12713508187,
+          "name": "umf-core-0.10.3-installed-linux-x86_64-py14",
+          "sha256": "be4ee43e1417b71f3b942361edcc28b17f79b3f837c26cbadaa239581f356375",
+          "sizeBytes": 13405
+        },
+        {
+          "id": 12717852883,
+          "name": "umf-core-0.10.3-installed-macos-arm64-py11",
+          "sha256": "37fcd9b5960e8ed6598ffcbed0497eb95e95e8b0e3b61d0f1e9e4dc671143959",
+          "sizeBytes": 13442
+        }
+      ],
+      "attemptJobRosterSha256": "866cbd89f555c562a942c8ccae52f47daf86a52723d7090a7ed870bb382a7cf7",
+      "attemptJsonSha256": "74dc0d0e5942b25734ac88af6e695b89344e188d213e54414946fe64d49c78bd",
+      "coverage": {
+        "cancelledSelectedCell": "macos-arm64-py14",
+        "macosPython314": "unqualified",
+        "qualifiedProducerCohorts": [
+          "linux-x86_64",
+          "macos-arm64"
+        ],
+        "qualifiedSelectedCells": [
+          "linux-x86_64-py11",
+          "linux-x86_64-py14",
+          "macos-arm64-py11"
+        ]
+      },
+      "jobs": [
+        {
+          "conclusion": "success",
+          "id": 122004937598,
+          "name": "qualify-installed-artifact (linux-x86_64, ubuntu-24.04, x64, 3.11.17, x86_64, linux_x86_64)",
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "id": 122004937315,
+          "name": "qualify-installed-artifact (macos-arm64, macos-15, arm64, 3.11.9, arm64, macos_arm64)",
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "id": 122037259839,
+          "name": "linux-x86_64 Python 3.11.17 selected release wheel",
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "id": 122037259894,
+          "name": "linux-x86_64 Python 3.14.8 selected release wheel",
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "id": 122037259849,
+          "name": "macos-arm64 Python 3.11.9 selected release wheel",
+          "status": "completed"
+        },
+        {
+          "conclusion": "cancelled",
+          "id": 122037259968,
+          "name": "macos-arm64 Python 3.14.8 selected release wheel",
+          "status": "completed"
+        }
+      ],
+      "profile": "umf.core-retained-s34-producer/1",
+      "runConclusion": "cancelled",
+      "runJsonSha256": "cd6391428d262d066eb4f2adb4b138106bec97ddd9bf81dd9aabf4df1525e193",
+      "runStatus": "completed"
+    },
+    "sourceCommit": "34a337b2d398b5ae33954cc250f6237bc1661c21",
+    "sourceTree": "0379258db62e498a4b489d2b7f613e99e63c0a4b",
+    "workflowPath": ".github/workflows/python-action-runtime.yml",
+    "workflowRunAttempt": 1,
+    "workflowRunId": 40448360241
+  },
+  "profile": "umf.core-0.10.3-public-install-proof-inputs/1",
+  "publicRelease": {
+    "assets": {
+      "linuxWheel": {
+        "filename": "umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl",
+        "nativeSha256": "c51b511a06bc1ccde6cc2208d33a4fb70ef66c67507ba8f2a6ea05fd2543cf57",
+        "sha256": "cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75",
+        "sizeBytes": 3612043
+      },
+      "macosWheel": {
+        "filename": "umf_core-0.10.3-cp311-abi3-macosx_11_0_arm64.whl",
+        "nativeSha256": "df3dca411dfe11b045e6cd858bc5e3999c314fbe946826ba3b98f1a7d6934256",
+        "sha256": "dc2586793e1492d1f825bd9e12f27d5db9f9330ae2343d9e7773c7052f1f6ea6",
+        "sizeBytes": 3331547
+      },
+      "sdist": {
+        "filename": "umf_core-0.10.3.tar.gz",
+        "sha256": "61b3e12a84f68f890fa34e2da14bbda47e101b7c6eadd5207680827e8daa694c",
+        "sizeBytes": 2826487
+      }
+    },
+    "commit": "7d334dec45948953718bfacd3ed6dd199cadba79",
+    "metadata": {
+      "evidence": {
+        "filename": "umf-core-0.10.3-qualification-evidence.zip",
+        "sha256": "14713f395acf0cb3fe13dd458c4693af9c03f0ad048200dfacb328fe1a20550e",
+        "sizeBytes": 2083191
+      },
+      "inventory": {
+        "filename": "PUBLIC_ASSET_INVENTORY.json",
+        "sha256": "b98e7abf73e775e9c067c133f687e8e6f8d5df2acbec3edb6190266222c314b5",
+        "sizeBytes": 1849
+      },
+      "notes": {
+        "filename": "RELEASE_NOTES.md",
+        "sha256": "c2b5025affbdbe34aa973cd25a7b4d8441f95ef5fa5c9e9379b1d32cb7b116ad",
+        "sizeBytes": 3202
+      },
+      "qualification": {
+        "filename": "qualification.json",
+        "sha256": "6a0018d085c4dc111cf342eb91898832dc682c70b38f88f1f7ae4bb42d51cffa",
+        "sizeBytes": 9650
+      },
+      "releasePins": {
+        "filename": "release-pins.json",
+        "sha256": "745b2cad823d8ef4a3f811cb3604ea166dc8672693454e0da19252fe8bcc11e6",
+        "sizeBytes": 506
+      },
+      "sha256Sums": {
+        "filename": "SHA256SUMS",
+        "sha256": "89ba91c22f51992adb6588010eb3871730b834a5fc0bec71406d96b990dd3cf0",
+        "sizeBytes": 867
+      },
+      "sourceCi": {
+        "filename": "current-source-ci.json",
+        "sha256": "67c88a308f13da039629f494d299417f0708abb3554247f65178909df7092157",
+        "sizeBytes": 2066
+      }
+    },
+    "sourceCorrespondence": {
+      "archiveFileCount": 531,
+      "producerMapSha256": "3eed351abf9255eb36316089b3d3b2b6ee1985b117468fbbe4bedeceda1b24a6",
+      "producerTestSha256": "57c2bc4de660798ac1028b93f480ddb77934b2110fce03a72d968039667ae8c1",
+      "profile": "umf.core-retained-sdist-source-correspondence/1",
+      "releaseMapSha256": "a779c17b35489cfe8fb43fbd2413ba5b1dd6fcb0b758da5bd2b62233636a1089",
+      "releaseTestSha256": "49538fff2e27cddedab2e0e97ae14f5d3ad741bd0607926e15846168d149a1cc",
+      "testPath": "tests/test_distribution_artifact.py"
+    },
+    "tag": "python-v0.10.3"
+  },
+  "status": "READY"
+}

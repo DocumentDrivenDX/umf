@@ -407,7 +407,7 @@ def main():
             'deadlineSeconds':180,'schedulingDeadlineReserveSeconds':5,'deadlineExceeded':deadline_hit,
             'cleanupUnknown':unknown_active or not databases_cleanup_known or (bool(created_roles) and role_cleanup!='VERIFIED'),
             'setupErrorType':fatal_type,'fixtureSha256':fixture_sha,'runnerSha256':runner_sha,
-            'provenance':fixture['provenance'],'packages':{name:version(name) for name in ('umf-access','umf-codegen','weft-sql','umf-core')},
+            'provenance':fixture['provenance'],'packages':{name:version(name) for name in ('umf-access','umf-codegen','umf-weft','umf-core')},
             'checks':flattened_checks}
     if fatal_type is not None:
         report['setupFailure']=fatal_failure

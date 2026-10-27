@@ -196,7 +196,7 @@ config = {
     ],
 }
 (generated / "original-model.json").write_text(model)
-config["weft"] = {"distribution": "weft-sql", "version": version("weft-sql")}
+config["weft"] = {"distribution": "umf-weft", "version": version("umf-weft")}
 documents = []
 for alias, text in original_sources.items():
     path = "original-" + alias + ".json"

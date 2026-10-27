@@ -8,8 +8,8 @@ import urllib.parse
 EXPECTED_PROFILE_VERSIONS = {
     'umf-access': '0.1.0.dev8',
     'umf-codegen': '0.1.0a5',
-    'umf-core': '0.10.2',
-    'weft-sql': '0.4.53',
+    'umf-core': '0.10.3',
+    'umf-weft': '0.4.55',
     'mini-racer': '0.14.1',
     'annotated-types': '0.8.0',
     'attrs': '26.1.0',
