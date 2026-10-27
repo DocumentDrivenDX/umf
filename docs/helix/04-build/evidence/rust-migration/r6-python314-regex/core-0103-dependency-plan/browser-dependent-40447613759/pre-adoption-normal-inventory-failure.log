@@ -1,0 +1,32 @@
+inventory-boundaries	Check the migration inventory and module boundaries	﻿2026-10-27T04:05:34.4700177Z ##[group]Run bun run check:rust-boundaries
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:34.4700501Z ^[[36;1mbun run check:rust-boundaries^[[0m
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:34.4752707Z shell: /usr/bin/bash -e {0}
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:34.4752863Z env:
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:34.4753021Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:34.4753265Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:34.4753501Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:34.4753712Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:34.4753921Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:34.4754138Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:34.4754326Z   CARGO_HOME: /home/runner/.cargo
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:34.4754465Z   CARGO_INCREMENTAL: 0
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:34.4754597Z   CARGO_TERM_COLOR: always
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:34.4754726Z ##[endgroup]
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:34.5032557Z $ python3 scripts/rust-inventory.py --check && python3 scripts/check-rust-boundaries.py && python3 tests/rust-inventory/test_boundaries.py && python3 tests/rust-inventory/test_inventory.py
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:53.1835429Z /home/runner/work/umf/umf/tools/security/pg-old-snapshot-admission-probe.py:30: SyntaxWarning: invalid escape sequence '\w'
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:53.1836425Z   self.process.stdin.write((text+';\n\\echo '+marker+' :SQLSTATE :LAST_ERROR_MESSAGE\n\warn STDERR_'+marker+'\n').encode());deadline=time.monotonic()+10
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:54.7114727Z Rust inventory is stale: /home/runner/work/umf/umf/docs/helix/04-build/evidence/rust-migration/r3/inventory.json
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:54.7415983Z Differing top-level sections: capture, counts, scripts
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:54.7416743Z   /capture/sourceCohortSha256: expected "e4d19542419bfa8fac145f6f629520da11477a8291b536ba5641083410b3271a"; actual "c54c7cb0811383ad75a0cadf0f1e1741c375427ad455cc0268d7355cbc3588bb"
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:54.7417460Z   /counts/algorithmSymbols: expected 10474; actual 10477
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:54.7417952Z   /scripts/1485/algorithmSymbols/2: expected "parseRegexOutcome"; actual "parseCanonicalInteger"
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:54.7418464Z   /scripts/1485/algorithmSymbols/3: expected "withExamples"; actual "parseCodepoints"
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:54.7418967Z   /scripts/1485/algorithmSymbols/4: expected "yamlMap"; actual "parsePython314Outcome"
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:54.7419438Z   /scripts/1485/algorithmSymbols/5: expected "<missing>"; actual "parseRegexOutcome"
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:54.7420020Z   /scripts/1485/algorithmSymbols/6: expected "<missing>"; actual "withExamples"
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:54.7420432Z   /scripts/1485/algorithmSymbols/7: expected "<missing>"; actual "yamlMap"
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:54.7420767Z   /scripts/1485/bytes: expected 24818; actual 30694
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:54.7421414Z   /scripts/1485/sha256: expected "ef392b0b73898e736eb912f6c85c97c7c4d869131c8d49e2ab5f33eef5e4135d"; actual "4d9311a5c1d067435fa43ba5e92287b7943fec50fb9dc75350d06195dc96e4f4"
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:54.7422073Z   ... additional differences omitted (showing first 10)
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:54.7610643Z error: script "check:rust-boundaries" exited with code 1
+inventory-boundaries	Check the migration inventory and module boundaries	2026-10-27T04:05:54.7629522Z ##[error]Process completed with exit code 1.

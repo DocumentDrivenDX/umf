@@ -215,12 +215,12 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "e4d19542419bfa8fac145f6f629520da11477a8291b536ba5641083410b3271a",
+    "sourceCohortSha256": "c54c7cb0811383ad75a0cadf0f1e1741c375427ad455cc0268d7355cbc3588bb",
     "typescriptApi": "5.9.3"
   },
   "counts": {
     "activeScriptFiles": 359,
-    "algorithmSymbols": 10474,
+    "algorithmSymbols": 10477,
     "pythonModules": 105,
     "rustBuildInputs": 79,
     "rustModules": 128,
@@ -33094,16 +33094,19 @@
       "algorithmSymbols": [
         "get",
         "nested",
+        "parseCanonicalInteger",
+        "parseCodepoints",
+        "parsePython314Outcome",
         "parseRegexOutcome",
         "withExamples",
         "yamlMap"
       ],
-      "bytes": 24818,
+      "bytes": 30694,
       "disposition": "unreferenced-script-source",
       "language": "ts",
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "scripts/rust-core/browser-conformance.ts",
-      "sha256": "ef392b0b73898e736eb912f6c85c97c7c4d869131c8d49e2ab5f33eef5e4135d"
+      "sha256": "4d9311a5c1d067435fa43ba5e92287b7943fec50fb9dc75350d06195dc96e4f4"
     },
     {
       "activationEvidence": [],
@@ -33229,12 +33232,12 @@
         "sourceClosure",
         "walk"
       ],
-      "bytes": 68532,
+      "bytes": 68860,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/rust-core/full-conformance.ts",
-      "sha256": "8470a9b414d1837dd6cebb865a870e677fc02048bcd3309535a952e43ae2af67"
+      "sha256": "93b53d6d3430fa4a146a53ef7c27dc68652311107af27151d177dfd3721062a1"
     },
     {
       "activationEvidence": [],
