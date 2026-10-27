@@ -1,0 +1,991 @@
+python	Set up job	﻿2026-10-27T00:23:02.1610456Z Current runner version: '2.338.0'
+python	Set up job	2026-10-27T00:23:02.1637010Z ##[group]Runner Image Provisioner
+python	Set up job	2026-10-27T00:23:02.1638036Z Hosted Compute Agent
+python	Set up job	2026-10-27T00:23:02.1638632Z Version: 20261021.618
+python	Set up job	2026-10-27T00:23:02.1639316Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+python	Set up job	2026-10-27T00:23:02.1640087Z Build Date: 2026-10-21T00:45:21Z
+python	Set up job	2026-10-27T00:23:02.1640775Z Worker ID: {d3cc3375-40bf-4795-8509-ef3c0d27a46b}
+python	Set up job	2026-10-27T00:23:02.1641884Z Region: westus3
+python	Set up job	2026-10-27T00:23:02.1642477Z Cloud: Azure
+python	Set up job	2026-10-27T00:23:02.1643054Z ##[endgroup]
+python	Set up job	2026-10-27T00:23:02.1644579Z ##[group]Operating System
+python	Set up job	2026-10-27T00:23:02.1645227Z Ubuntu
+python	Set up job	2026-10-27T00:23:02.1645865Z 26.04.1
+python	Set up job	2026-10-27T00:23:02.1646384Z LTS
+python	Set up job	2026-10-27T00:23:02.1646932Z ##[endgroup]
+python	Set up job	2026-10-27T00:23:02.1647541Z ##[group]Runner Image
+python	Set up job	2026-10-27T00:23:02.1648143Z Image: ubuntu-26.04
+python	Set up job	2026-10-27T00:23:02.1648758Z Version: 20261012.163.1
+python	Set up job	2026-10-27T00:23:02.1649831Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261012.163/images/ubuntu/Ubuntu2604-Readme.md
+python	Set up job	2026-10-27T00:23:02.1652194Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261012.163
+python	Set up job	2026-10-27T00:23:02.1653178Z ##[endgroup]
+python	Set up job	2026-10-27T00:23:02.1654460Z ##[group]GITHUB_TOKEN Permissions
+python	Set up job	2026-10-27T00:23:02.1656345Z Contents: read
+python	Set up job	2026-10-27T00:23:02.1657099Z Metadata: read
+python	Set up job	2026-10-27T00:23:02.1657670Z Packages: read
+python	Set up job	2026-10-27T00:23:02.1658208Z ##[endgroup]
+python	Set up job	2026-10-27T00:23:02.1661128Z Secret source: Actions
+python	Set up job	2026-10-27T00:23:02.1662207Z Cache mode: write
+python	Set up job	2026-10-27T00:23:02.1663124Z Prepare workflow directory
+python	Set up job	2026-10-27T00:23:02.2064962Z Prepare all required actions
+python	Set up job	2026-10-27T00:23:02.2113626Z Getting action download info
+python	Set up job	2026-10-27T00:23:02.5198972Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+python	Set up job	2026-10-27T00:23:02.6235080Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+python	Set up job	2026-10-27T00:23:02.6963583Z Download action repository 'dtolnay/rust-toolchain@stable' (SHA:b725eda525362e7cf34af9a7243cac1e3f01a7ec)
+python	Set up job	2026-10-27T00:23:02.9359459Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+python	Set up job	2026-10-27T00:23:03.1572614Z Complete job name: python
+python	Run actions/checkout@v4	﻿2026-10-27T00:23:03.2493571Z ##[group]Run actions/checkout@v4
+python	Run actions/checkout@v4	2026-10-27T00:23:03.2494537Z with:
+python	Run actions/checkout@v4	2026-10-27T00:23:03.2495042Z   repository: DocumentDrivenDX/umf
+python	Run actions/checkout@v4	2026-10-27T00:23:03.2499250Z   token: ***
+python	Run actions/checkout@v4	2026-10-27T00:23:03.2499716Z   ssh-strict: true
+python	Run actions/checkout@v4	2026-10-27T00:23:03.2500184Z   ssh-user: git
+python	Run actions/checkout@v4	2026-10-27T00:23:03.2500660Z   persist-credentials: true
+python	Run actions/checkout@v4	2026-10-27T00:23:03.2501472Z   clean: true
+python	Run actions/checkout@v4	2026-10-27T00:23:03.2501973Z   sparse-checkout-cone-mode: true
+python	Run actions/checkout@v4	2026-10-27T00:23:03.2502534Z   fetch-depth: 1
+python	Run actions/checkout@v4	2026-10-27T00:23:03.2503009Z   fetch-tags: false
+python	Run actions/checkout@v4	2026-10-27T00:23:03.2503489Z   show-progress: true
+python	Run actions/checkout@v4	2026-10-27T00:23:03.2503970Z   lfs: false
+python	Run actions/checkout@v4	2026-10-27T00:23:03.2504409Z   submodules: false
+python	Run actions/checkout@v4	2026-10-27T00:23:03.2504893Z   set-safe-directory: true
+python	Run actions/checkout@v4	2026-10-27T00:23:03.2505456Z   allow-unsafe-pr-checkout: false
+python	Run actions/checkout@v4	2026-10-27T00:23:03.2506357Z ##[endgroup]
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5618595Z Syncing repository: DocumentDrivenDX/umf
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5621406Z ##[group]Getting Git version info
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5622378Z Working directory is '/home/runner/work/umf/umf'
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5623554Z [command]/usr/bin/git version
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5624227Z git version 2.55.0
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5626649Z ##[endgroup]
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5633769Z Temporarily overriding HOME='/home/runner/work/_temp/219c91de-523b-4365-b3c8-7ef2b4fa6354' before making global git config changes
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5636718Z Adding repository directory to the temporary git global config as a safe directory
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5638912Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5642444Z Deleting the contents of '/home/runner/work/umf/umf'
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5646963Z ##[group]Initializing the repository
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5652604Z [command]/usr/bin/git init /home/runner/work/umf/umf
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5792054Z hint: Using 'master' as the name for the initial branch. This default branch name
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5794746Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5797912Z hint: to use in all of your new repositories, which will suppress this warning,
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5799516Z hint: call:
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5800990Z hint:
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5802937Z hint: 	git config --global init.defaultBranch <name>
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5804456Z hint:
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5806515Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5808871Z hint: 'development'. The just-created branch can be renamed via this command:
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5811110Z hint:
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5812559Z hint: 	git branch -m <name>
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5813977Z hint:
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5815789Z hint: Disable this message with "git config set advice.defaultBranchName false"
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5817672Z Initialized empty Git repository in /home/runner/work/umf/umf/.git/
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5821529Z [command]/usr/bin/git remote add origin https://github.com/DocumentDrivenDX/umf
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5865502Z ##[endgroup]
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5866910Z ##[group]Disabling automatic garbage collection
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5870325Z [command]/usr/bin/git config --local gc.auto 0
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5913002Z ##[endgroup]
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5914385Z ##[group]Setting up auth
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5921268Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+python	Run actions/checkout@v4	2026-10-27T00:23:03.5961976Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+python	Run actions/checkout@v4	2026-10-27T00:23:03.6454464Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+python	Run actions/checkout@v4	2026-10-27T00:23:03.6490573Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+python	Run actions/checkout@v4	2026-10-27T00:23:03.6777677Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+python	Run actions/checkout@v4	2026-10-27T00:23:03.6816649Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+python	Run actions/checkout@v4	2026-10-27T00:23:03.7099921Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+python	Run actions/checkout@v4	2026-10-27T00:23:03.7142561Z ##[endgroup]
+python	Run actions/checkout@v4	2026-10-27T00:23:03.7143800Z ##[group]Fetching the repository
+python	Run actions/checkout@v4	2026-10-27T00:23:03.7153581Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +ee05f7b36842044abfe0fb63bf42ddbafba3043b:refs/remotes/pull/60/merge
+python	Run actions/checkout@v4	2026-10-27T00:23:30.9894774Z From https://github.com/DocumentDrivenDX/umf
+python	Run actions/checkout@v4	2026-10-27T00:23:30.9895909Z  * [new ref]           ee05f7b36842044abfe0fb63bf42ddbafba3043b -> pull/60/merge
+python	Run actions/checkout@v4	2026-10-27T00:23:30.9900620Z ##[endgroup]
+python	Run actions/checkout@v4	2026-10-27T00:23:30.9901574Z ##[group]Determining the checkout info
+python	Run actions/checkout@v4	2026-10-27T00:23:30.9903720Z ##[endgroup]
+python	Run actions/checkout@v4	2026-10-27T00:23:30.9911598Z [command]/usr/bin/git sparse-checkout disable
+python	Run actions/checkout@v4	2026-10-27T00:23:30.9976679Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+python	Run actions/checkout@v4	2026-10-27T00:23:31.0010098Z ##[group]Checking out the ref
+python	Run actions/checkout@v4	2026-10-27T00:23:31.0014789Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/60/merge
+python	Run actions/checkout@v4	2026-10-27T00:23:32.1577114Z Updating files:   5% (3636/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:32.2776489Z Updating files:   6% (3709/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:32.6104011Z Updating files:   7% (4327/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:32.6892277Z Updating files:   8% (4945/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:32.7507011Z Updating files:   9% (5563/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:32.9464113Z Updating files:  10% (6181/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:33.2092885Z Updating files:  11% (6799/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:33.4746041Z Updating files:  11% (7169/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:33.9926127Z Updating files:  12% (7417/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:34.0762802Z Updating files:  13% (8035/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:34.3777473Z Updating files:  13% (8156/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:34.4244328Z Updating files:  14% (8653/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:34.8772799Z Updating files:  15% (9271/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:34.9627566Z Updating files:  16% (9889/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:35.0647601Z Updating files:  17% (10507/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:35.1588721Z Updating files:  17% (10726/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:35.4239303Z Updating files:  18% (11125/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:35.4967976Z Updating files:  19% (11743/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:35.5322024Z Updating files:  20% (12361/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:35.5641340Z Updating files:  21% (12979/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:35.5938696Z Updating files:  22% (13597/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:35.6300005Z Updating files:  23% (14215/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:35.6594720Z Updating files:  24% (14833/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:35.6898227Z Updating files:  25% (15451/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:35.7209870Z Updating files:  26% (16069/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:35.7499306Z Updating files:  27% (16687/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:35.8001947Z Updating files:  28% (17305/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:35.8447018Z Updating files:  29% (17923/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:35.8765460Z Updating files:  30% (18541/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:36.0617976Z Updating files:  31% (19159/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:36.7576636Z Updating files:  31% (19700/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:37.1526002Z Updating files:  32% (19777/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:38.0716078Z Updating files:  32% (19793/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:39.0930576Z Updating files:  32% (19874/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:39.6048493Z Updating files:  32% (19948/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:39.7620494Z Updating files:  33% (20395/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:39.8951732Z Updating files:  34% (21013/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:39.9445081Z Updating files:  35% (21631/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:39.9796489Z Updating files:  36% (22249/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:40.0170424Z Updating files:  37% (22867/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:40.0457456Z Updating files:  38% (23485/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:40.0526283Z Updating files:  39% (24103/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:40.0748534Z Updating files:  39% (24241/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:40.1023320Z Updating files:  40% (24721/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:40.1307825Z Updating files:  41% (25339/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:40.3455068Z Updating files:  42% (25957/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:40.4096394Z Updating files:  43% (26575/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:40.5057667Z Updating files:  44% (27193/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:40.6806865Z Updating files:  45% (27811/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:40.7266769Z Updating files:  46% (28429/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:40.7651785Z Updating files:  47% (29047/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:40.9505975Z Updating files:  48% (29665/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:40.9989538Z Updating files:  49% (30283/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.0527247Z Updating files:  50% (30901/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.0757621Z Updating files:  50% (31153/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.1161693Z Updating files:  51% (31519/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.1728523Z Updating files:  52% (32137/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.1971488Z Updating files:  53% (32755/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.2227781Z Updating files:  54% (33373/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.2662974Z Updating files:  55% (33991/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.3302065Z Updating files:  56% (34609/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.3632097Z Updating files:  57% (35227/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.3983516Z Updating files:  58% (35845/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.4541975Z Updating files:  59% (36463/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.5028386Z Updating files:  60% (37081/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.5562756Z Updating files:  61% (37699/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.5838883Z Updating files:  62% (38317/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.6086609Z Updating files:  63% (38935/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.6308520Z Updating files:  64% (39553/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.6572419Z Updating files:  65% (40171/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.6900299Z Updating files:  66% (40789/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.7263910Z Updating files:  67% (41407/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.7673635Z Updating files:  68% (42025/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.8107301Z Updating files:  69% (42643/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.8511719Z Updating files:  70% (43261/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.8778710Z Updating files:  71% (43879/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.9013460Z Updating files:  72% (44497/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.9243183Z Updating files:  73% (45115/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.9473839Z Updating files:  74% (45733/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.9698876Z Updating files:  75% (46351/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:41.9932348Z Updating files:  76% (46969/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:42.0189404Z Updating files:  77% (47587/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:42.0406832Z Updating files:  78% (48205/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:42.0528111Z Updating files:  79% (48823/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:42.0683375Z Updating files:  79% (49151/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:42.1002475Z Updating files:  80% (49441/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:42.1717218Z Updating files:  81% (50059/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:42.2490463Z Updating files:  82% (50677/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:42.3028064Z Updating files:  83% (51295/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:42.3532755Z Updating files:  84% (51913/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:42.3785036Z Updating files:  85% (52531/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:42.4050605Z Updating files:  86% (53149/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:42.4742968Z Updating files:  87% (53767/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:42.4999594Z Updating files:  88% (54385/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:42.5314776Z Updating files:  89% (55003/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:42.5549175Z Updating files:  90% (55621/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:42.5901756Z Updating files:  91% (56239/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:42.6346725Z Updating files:  92% (56857/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:42.6671959Z Updating files:  93% (57475/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:42.7042895Z Updating files:  94% (58093/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:42.8338284Z Updating files:  95% (58711/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:42.8830199Z Updating files:  96% (59329/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:42.9240578Z Updating files:  97% (59947/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:42.9582662Z Updating files:  98% (60565/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:43.0102660Z Updating files:  99% (61183/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:43.0103492Z Updating files: 100% (61801/61801)
+python	Run actions/checkout@v4	2026-10-27T00:23:43.0103931Z Updating files: 100% (61801/61801), done.
+python	Run actions/checkout@v4	2026-10-27T00:23:43.1295429Z Note: switching to 'refs/remotes/pull/60/merge'.
+python	Run actions/checkout@v4	2026-10-27T00:23:43.1296300Z 
+python	Run actions/checkout@v4	2026-10-27T00:23:43.1296681Z You are in 'detached HEAD' state. You can look around, make experimental
+python	Run actions/checkout@v4	2026-10-27T00:23:43.1297641Z changes and commit them, and you can discard any commits you make in this
+python	Run actions/checkout@v4	2026-10-27T00:23:43.1298569Z state without impacting any branches by switching back to a branch.
+python	Run actions/checkout@v4	2026-10-27T00:23:43.1299148Z 
+python	Run actions/checkout@v4	2026-10-27T00:23:43.1299530Z If you want to create a new branch to retain commits you create, you may
+python	Run actions/checkout@v4	2026-10-27T00:23:43.1300479Z do so (now or later) by using -c with the switch command. Example:
+python	Run actions/checkout@v4	2026-10-27T00:23:43.1301274Z 
+python	Run actions/checkout@v4	2026-10-27T00:23:43.1301475Z   git switch -c <new-branch-name>
+python	Run actions/checkout@v4	2026-10-27T00:23:43.1301801Z 
+python	Run actions/checkout@v4	2026-10-27T00:23:43.1301982Z Or undo this operation with:
+python	Run actions/checkout@v4	2026-10-27T00:23:43.1302288Z 
+python	Run actions/checkout@v4	2026-10-27T00:23:43.1302445Z   git switch -
+python	Run actions/checkout@v4	2026-10-27T00:23:43.1302667Z 
+python	Run actions/checkout@v4	2026-10-27T00:23:43.1303057Z Turn off this advice by setting config variable advice.detachedHead to false
+python	Run actions/checkout@v4	2026-10-27T00:23:43.1303670Z 
+python	Run actions/checkout@v4	2026-10-27T00:23:43.1304349Z HEAD is now at ee05f7b3 Merge ae11ea4203753a02339e5abd751ec3798662e32d into 96cb35263fef75548b00eb000815c6c48b3baea7
+python	Run actions/checkout@v4	2026-10-27T00:23:43.1555117Z ##[endgroup]
+python	Run actions/checkout@v4	2026-10-27T00:23:43.1608420Z [command]/usr/bin/git log -1 --format=%H
+python	Run actions/checkout@v4	2026-10-27T00:23:43.1642560Z ee05f7b36842044abfe0fb63bf42ddbafba3043b
+python	Isolate Rust toolchain state	﻿2026-10-27T00:23:43.2927549Z ##[group]Run printf 'RUSTUP_HOME=%s/umf-rustup\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
+python	Isolate Rust toolchain state	2026-10-27T00:23:43.2928249Z ^[[36;1mprintf 'RUSTUP_HOME=%s/umf-rustup\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"^[[0m
+python	Isolate Rust toolchain state	2026-10-27T00:23:44.0369190Z shell: /usr/bin/bash -e {0}
+python	Isolate Rust toolchain state	2026-10-27T00:23:44.0369536Z ##[endgroup]
+python	Run actions/setup-python@v5	﻿2026-10-27T00:23:44.0589436Z ##[group]Run actions/setup-python@v5
+python	Run actions/setup-python@v5	2026-10-27T00:23:44.0589750Z with:
+python	Run actions/setup-python@v5	2026-10-27T00:23:44.0589960Z   python-version: 3.12
+python	Run actions/setup-python@v5	2026-10-27T00:23:44.0590378Z   check-latest: false
+python	Run actions/setup-python@v5	2026-10-27T00:23:44.0593307Z   token: ***
+python	Run actions/setup-python@v5	2026-10-27T00:23:44.0593546Z   update-environment: true
+python	Run actions/setup-python@v5	2026-10-27T00:23:44.0593797Z   allow-prereleases: false
+python	Run actions/setup-python@v5	2026-10-27T00:23:44.0594040Z   freethreaded: false
+python	Run actions/setup-python@v5	2026-10-27T00:23:44.0594249Z env:
+python	Run actions/setup-python@v5	2026-10-27T00:23:44.0594513Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run actions/setup-python@v5	2026-10-27T00:23:44.0594812Z ##[endgroup]
+python	Run actions/setup-python@v5	2026-10-27T00:23:44.2169665Z ##[group]Installed versions
+python	Run actions/setup-python@v5	2026-10-27T00:23:44.2291474Z (node:2389) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+python	Run actions/setup-python@v5	2026-10-27T00:23:44.2293143Z (Use `node --trace-deprecation ...` to show where the warning was created)
+python	Run actions/setup-python@v5	2026-10-27T00:23:44.2294186Z Successfully set up CPython (3.12.15)
+python	Run actions/setup-python@v5	2026-10-27T00:23:44.2295287Z ##[endgroup]
+python	Run dtolnay/rust-toolchain@stable	﻿2026-10-27T00:23:44.2610713Z ##[group]Run dtolnay/rust-toolchain@stable
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2611350Z with:
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2611725Z   toolchain: 1.90.0
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2612048Z   components: rustfmt
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2612285Z env:
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2612629Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2613309Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2614066Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2614597Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2615011Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2615409Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2615827Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2616236Z ##[endgroup]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2753387Z ##[start-action display=Parse toolchain version;id=__dtolnay_rust-toolchain.parse]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2807372Z ##[group]Run if [[ -z $toolchain ]]; then
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2807846Z ^[[36;1mif [[ -z $toolchain ]]; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2808397Z ^[[36;1m  # GitHub does not enforce `required: true` inputs itself. https://github.com/actions/runner/issues/1070^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2808990Z ^[[36;1m  echo "'toolchain' is a required input" >&2^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2809292Z ^[[36;1m  exit 1^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2809629Z ^[[36;1melif [[ $toolchain =~ ^stable' '[0-9]+' '(year|month|week|day)s?' 'ago$ ]]; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2810047Z ^[[36;1m  if [[ Linux == macOS ]]; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2810579Z ^[[36;1m    echo "toolchain=1.$((($(date -v-$(sed 's/stable \([0-9]*\) \(.\).*/\1\2/' <<< $toolchain) +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2811524Z ^[[36;1m  else^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2812041Z ^[[36;1m    echo "toolchain=1.$((($(date --date "${toolchain#stable }" +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2812510Z ^[[36;1m  fi^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2812829Z ^[[36;1melif [[ $toolchain =~ ^stable' 'minus' '[0-9]+' 'releases?$ ]]; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2813369Z ^[[36;1m  echo "toolchain=1.$((($(date +%s)/60/60/24-16569)/7/6-${toolchain//[^0-9]/}))" >> $GITHUB_OUTPUT^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2813846Z ^[[36;1melif [[ $toolchain =~ ^1\.[0-9]+$ ]]; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2814373Z ^[[36;1m  echo "toolchain=1.$((i=${toolchain#1.}, c=($(date +%s)/60/60/24-16569)/7/6, i+9*i*(10*i<=c)+90*i*(100*i<=c)))" >> $GITHUB_OUTPUT^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2814880Z ^[[36;1melse^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2815082Z ^[[36;1m  delimiter=EOF^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2815393Z ^[[36;1m  while [[ $toolchain == *$delimiter* ]]; do delimiter+=_; done^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2815904Z ^[[36;1m  printf 'toolchain<<%s\n%s\n%s\n' "$delimiter" "$toolchain" "$delimiter" >> $GITHUB_OUTPUT^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2816325Z ^[[36;1mfi^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2897508Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2897867Z env:
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2898112Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2898507Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2898945Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2899572Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2899976Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2900369Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2900904Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2901243Z   toolchain: 1.90.0
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.2901451Z ##[endgroup]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3029686Z ##[end-action id=__dtolnay_rust-toolchain.parse;outcome=success;conclusion=success;duration_ms=27]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3034894Z ##[start-action display=Set $CARGO_HOME;id=__dtolnay_rust-toolchain.__run]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3060003Z ##[group]Run echo CARGO_HOME=${CARGO_HOME:-"$HOME/.cargo"} >> $GITHUB_ENV
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3060727Z ^[[36;1mecho CARGO_HOME=${CARGO_HOME:-"$HOME/.cargo"} >> $GITHUB_ENV^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3121332Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3121706Z env:
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3121952Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3122332Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3122770Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3123213Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3123624Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3124019Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3124414Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3124739Z ##[endgroup]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3212687Z ##[end-action id=__dtolnay_rust-toolchain.__run;outcome=success;conclusion=success;duration_ms=17]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3215001Z ##[start-action display=Install rustup if needed;id=__dtolnay_rust-toolchain.__run_2]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3244527Z ##[group]Run if ! command -v rustup &>/dev/null; then
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3244963Z ^[[36;1mif ! command -v rustup &>/dev/null; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3245735Z ^[[36;1m  curl --proto '=https' --tlsv1.2 --retry 10 --retry-connrefused --location --silent --show-error --fail https://sh.rustup.rs | sh -s -- --default-toolchain none -y^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3246475Z ^[[36;1m  echo "$CARGO_HOME/bin" >> $GITHUB_PATH^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3246759Z ^[[36;1mfi^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3304142Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3304487Z env:
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3304723Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3305099Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3305533Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3305959Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3306354Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3306742Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3307128Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3307467Z   CARGO_HOME: /home/runner/.cargo
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3307730Z ##[endgroup]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3396265Z ##[end-action id=__dtolnay_rust-toolchain.__run_2;outcome=success;conclusion=success;duration_ms=18]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3398597Z ##[start-action display=Install rustup if needed on windows;id=__dtolnay_rust-toolchain.__run_3]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3405033Z ##[end-action id=__dtolnay_rust-toolchain.__run_3;outcome=skipped;conclusion=skipped;duration_ms=0]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3418528Z ##[start-action display=rustup toolchain install 1.90.0;id=__dtolnay_rust-toolchain.__run_4]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3441545Z ##[group]Run set -f  # split targets and components on commas and whitespace, without glob expansion
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3442246Z ^[[36;1mset -f  # split targets and components on commas and whitespace, without glob expansion^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3442849Z ^[[36;1mflags=()^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3443130Z ^[[36;1mfor t in ${targets//,/ }; do flags+=(--target "$t"); done^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3443546Z ^[[36;1mfor c in ${components//,/ }; do flags+=(--component "$c"); done^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3444046Z ^[[36;1mif [[ $toolchain == nightly && -n $components ]]; then flags+=(--allow-downgrade); fi^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3444476Z ^[[36;1mlog=$(mktemp)^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3444714Z ^[[36;1mtrap 'rm -f "$log"' EXIT^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3444974Z ^[[36;1mfor attempt in 1 2 3 4 5; do^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3445550Z ^[[36;1m  if rustup toolchain install "$toolchain" "${flags[@]}" --profile minimal --no-self-update --force-non-host 2>&1 | tee "$log"; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3446125Z ^[[36;1m    break^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3446332Z ^[[36;1m  else^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3446536Z ^[[36;1m    status=$?^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3446915Z ^[[36;1m  fi^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3447212Z ^[[36;1m  if [[ $attempt == 5 ]] || ! grep -Fq 'checksum failed for ' "$log" \^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3447786Z ^[[36;1m      || ! grep -Fq 'this is likely due to an ongoing update of the official release server' "$log"; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3448258Z ^[[36;1m    exit "$status"^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3448486Z ^[[36;1m  fi^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3448840Z ^[[36;1m  echo "Retrying rustup toolchain install in 30 seconds (retry $attempt of 4)" >&2^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3449261Z ^[[36;1m  sleep 30^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3449463Z ^[[36;1mdone^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3507081Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3507428Z env:
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3507670Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3508057Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3508485Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3508926Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3509328Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3509734Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3510122Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3510464Z   CARGO_HOME: /home/runner/.cargo
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3510712Z   toolchain: 1.90.0
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3511097Z   targets: 
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3511291Z   components: rustfmt
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3511512Z   RUSTUP_PERMIT_COPY_RENAME: 1
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.3511747Z ##[endgroup]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.4092053Z info: syncing channel updates for 1.90.0-x86_64-unknown-linux-gnu
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.6053117Z info: latest update on 2025-09-18 for version 1.90.0 (1159e78c4 2025-09-14)
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:44.6057403Z info: downloading 4 components
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.7754350Z 
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.7832664Z   1.90.0-x86_64-unknown-linux-gnu installed - rustc 1.90.0 (1159e78c4 2025-09-14)
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.7833091Z 
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.7836722Z info: default toolchain set to 1.90.0-x86_64-unknown-linux-gnu
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8007800Z ##[end-action id=__dtolnay_rust-toolchain.__run_4;outcome=success;conclusion=success;duration_ms=8458]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8015527Z ##[start-action display=rustup default 1.90.0;id=__dtolnay_rust-toolchain.__run_5]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8035467Z ##[group]Run rustup default "$toolchain" --force-non-host
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8035888Z ^[[36;1mrustup default "$toolchain" --force-non-host^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8097203Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8097548Z env:
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8097789Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8098161Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8098595Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8099032Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8099453Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8100031Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8100416Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8100753Z   CARGO_HOME: /home/runner/.cargo
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8101357Z   toolchain: 1.90.0
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8101562Z ##[endgroup]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8234033Z info: using existing install for 1.90.0-x86_64-unknown-linux-gnu
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8240018Z info: default toolchain set to 1.90.0-x86_64-unknown-linux-gnu
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8240530Z 
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8317347Z   1.90.0-x86_64-unknown-linux-gnu unchanged - rustc 1.90.0 (1159e78c4 2025-09-14)
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8318699Z info: note that the toolchain '1.90.0-x86_64-unknown-linux-gnu' is currently in use (overridden by '/home/runner/work/umf/umf/rust-toolchain.toml')
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8319278Z 
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8336033Z ##[end-action id=__dtolnay_rust-toolchain.__run_5;outcome=success;conclusion=success;duration_ms=31]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8339967Z ##[start-action display=Create cachekey;id=__dtolnay_rust-toolchain.rustc-version]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8359646Z ##[group]Run DATE=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-date: \(20[0-9][0-9]\)-\([01][0-9]\)-\([0-3][0-9]\)$/\1\2\3/p')
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8360574Z ^[[36;1mDATE=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-date: \(20[0-9][0-9]\)-\([01][0-9]\)-\([0-3][0-9]\)$/\1\2\3/p')^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8361718Z ^[[36;1mHASH=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-hash: //p')^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8362255Z ^[[36;1mecho "cachekey=$(echo $DATE$HASH | head -c12)" >> $GITHUB_OUTPUT^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8423790Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8424147Z env:
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8424389Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8424788Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8425227Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8425690Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8426088Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8426471Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8426855Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8427197Z   CARGO_HOME: /home/runner/.cargo
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8427456Z   toolchain: 1.90.0
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8427674Z ##[endgroup]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8816294Z ##[end-action id=__dtolnay_rust-toolchain.rustc-version;outcome=success;conclusion=success;duration_ms=47]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8819263Z ##[start-action display=Disable incremental compilation;id=__dtolnay_rust-toolchain.__run_6]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8840604Z ##[group]Run if [ -z "${CARGO_INCREMENTAL+set}" ]; then
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8841542Z ^[[36;1mif [ -z "${CARGO_INCREMENTAL+set}" ]; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8842017Z ^[[36;1m  echo CARGO_INCREMENTAL=0 >> $GITHUB_ENV^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8842486Z ^[[36;1mfi^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8904121Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8904677Z env:
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8905019Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8905572Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8906128Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8906655Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8907239Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8907715Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8908265Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8908716Z   CARGO_HOME: /home/runner/.cargo
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.8909066Z ##[endgroup]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9015978Z ##[end-action id=__dtolnay_rust-toolchain.__run_6;outcome=success;conclusion=success;duration_ms=19]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9018420Z ##[start-action display=Enable colors in Cargo output;id=__dtolnay_rust-toolchain.__run_7]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9037135Z ##[group]Run if [ -z "${CARGO_TERM_COLOR+set}" ]; then
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9037510Z ^[[36;1mif [ -z "${CARGO_TERM_COLOR+set}" ]; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9037848Z ^[[36;1m  echo CARGO_TERM_COLOR=always >> $GITHUB_ENV^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9038147Z ^[[36;1mfi^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9096103Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9096451Z env:
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9096693Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9097065Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9097490Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9097910Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9098491Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9098873Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9099284Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9099626Z   CARGO_HOME: /home/runner/.cargo
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9099884Z   CARGO_INCREMENTAL: 0
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9100098Z ##[endgroup]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9185150Z ##[end-action id=__dtolnay_rust-toolchain.__run_7;outcome=success;conclusion=success;duration_ms=16]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9188944Z ##[start-action display=Enable Cargo sparse registry;id=__dtolnay_rust-toolchain.__run_8]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9208231Z ##[group]Run # implemented in 1.66, stabilized in 1.68, made default in 1.70
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9208758Z ^[[36;1m# implemented in 1.66, stabilized in 1.68, made default in 1.70^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9209487Z ^[[36;1mif [ -z "${CARGO_REGISTRIES_CRATES_IO_PROTOCOL+set}" -o -f "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol ]; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9210261Z ^[[36;1m  if rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.6[89]\.'; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9211253Z ^[[36;1m    touch "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol || true^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9211826Z ^[[36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse >> $GITHUB_ENV^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9212352Z ^[[36;1m  elif rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.6[67]\.'; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9212945Z ^[[36;1m    touch "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol || true^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9213481Z ^[[36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=git >> $GITHUB_ENV^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9213834Z ^[[36;1m  fi^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9214023Z ^[[36;1mfi^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9269713Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9270054Z env:
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9270303Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9270680Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9271292Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9271746Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9272131Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9272537Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9272931Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9273269Z   CARGO_HOME: /home/runner/.cargo
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9273516Z   CARGO_INCREMENTAL: 0
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9273737Z   CARGO_TERM_COLOR: always
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9273958Z   toolchain: 1.90.0
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9274170Z ##[endgroup]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9614968Z ##[end-action id=__dtolnay_rust-toolchain.__run_8;outcome=success;conclusion=success;duration_ms=42]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9619127Z ##[start-action display=Work around spurious network errors in curl 8.0;id=__dtolnay_rust-toolchain.__run_9]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9640527Z ##[group]Run # https://rust-lang.zulipchat.com/#narrow/stream/246057-t-cargo/topic/timeout.20investigation
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9641808Z ^[[36;1m# https://rust-lang.zulipchat.com/#narrow/stream/246057-t-cargo/topic/timeout.20investigation^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9642453Z ^[[36;1mif rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.7[01]\.'; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9642936Z ^[[36;1m  echo CARGO_HTTP_MULTIPLEXING=false >> $GITHUB_ENV^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9643258Z ^[[36;1mfi^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9704285Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9704635Z env:
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9704879Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9705267Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9705711Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9706332Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9706742Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9707141Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9707534Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9707878Z   CARGO_HOME: /home/runner/.cargo
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9708136Z   CARGO_INCREMENTAL: 0
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9708364Z   CARGO_TERM_COLOR: always
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9708589Z   toolchain: 1.90.0
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9708800Z ##[endgroup]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9925717Z ##[end-action id=__dtolnay_rust-toolchain.__run_9;outcome=success;conclusion=success;duration_ms=30]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9931239Z ##[start-action display=rustc +1.90.0 --version --verbose;id=__dtolnay_rust-toolchain.__run_10]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9951252Z ##[group]Run rustc +"$toolchain" --version --verbose
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:52.9951696Z ^[[36;1mrustc +"$toolchain" --version --verbose^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:53.0013320Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:53.0013699Z env:
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:53.0013988Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:53.0014408Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:53.0014905Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:53.0015380Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:53.0015763Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:53.0016163Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:53.0016561Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:53.0016949Z   CARGO_HOME: /home/runner/.cargo
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:53.0017243Z   CARGO_INCREMENTAL: 0
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:53.0017494Z   CARGO_TERM_COLOR: always
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:53.0017745Z   toolchain: 1.90.0
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:53.0017963Z ##[endgroup]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:53.0221230Z rustc 1.90.0 (1159e78c4 2025-09-14)
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:53.0222096Z binary: rustc
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:53.0222856Z commit-hash: 1159e78c4747b02ef996e55082b704c09b970588
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:53.0223674Z commit-date: 2025-09-14
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:53.0224313Z host: x86_64-unknown-linux-gnu
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:53.0225025Z release: 1.90.0
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:53.0225699Z LLVM version: 20.1.8
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T00:23:53.0242111Z ##[end-action id=__dtolnay_rust-toolchain.__run_10;outcome=success;conclusion=success;duration_ms=30]
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	﻿2026-10-27T00:23:53.0302971Z ##[group]Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:23:53.0303646Z ^[[36;1mpython -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'^[[0m
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:23:53.0364771Z shell: /usr/bin/bash -e {0}
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:23:53.0365024Z env:
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:23:53.0365271Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:23:53.0365652Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:23:53.0366101Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:23:53.0366542Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:23:53.0367119Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:23:53.0367512Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:23:53.0367908Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:23:53.0368245Z   CARGO_HOME: /home/runner/.cargo
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:23:53.0368491Z   CARGO_INCREMENTAL: 0
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:23:53.0368746Z   CARGO_TERM_COLOR: always
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:23:53.0368964Z ##[endgroup]
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:23:53.7497906Z Processing ./python
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:23:53.7514796Z   Installing build dependencies: started
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:23:54.4816792Z   Installing build dependencies: finished with status 'done'
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:23:54.4823891Z   Getting requirements to build wheel: started
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:23:54.6560359Z   Getting requirements to build wheel: finished with status 'done'
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:23:54.6567986Z   Preparing metadata (pyproject.toml): started
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:46.7666345Z   Preparing metadata (pyproject.toml): finished with status 'done'
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:46.8251716Z Collecting pytest
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:46.8747521Z   Downloading pytest-9.1.1-py3-none-any.whl.metadata (7.6 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:47.2141443Z Collecting ruff==0.17.1
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:47.2242203Z   Downloading ruff-0.17.1-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (20 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:47.2419305Z Collecting build
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:47.2518052Z   Downloading build-1.6.1-py3-none-any.whl.metadata (5.6 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:47.2660241Z Collecting hatchling<2,>=1.27
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:47.2673844Z   Using cached hatchling-1.32.4-py3-none-any.whl.metadata (3.9 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:47.3675146Z Collecting pydantic<3,>=2.11 (from umf-core==0.10.3)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:47.3782067Z   Downloading pydantic-2.14.1-py3-none-any.whl.metadata (133 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:47.4061622Z Collecting packaging>=24.2 (from hatchling<2,>=1.27)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:47.4074616Z   Using cached packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:47.4140445Z Collecting pathspec>=0.10.1 (from hatchling<2,>=1.27)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:47.4153583Z   Using cached pathspec-1.1.1-py3-none-any.whl.metadata (14 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:47.4221403Z Collecting pluggy>=1.0.0 (from hatchling<2,>=1.27)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:47.4233714Z   Using cached pluggy-1.7.0-py3-none-any.whl.metadata (5.0 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:47.4327826Z Collecting tomlkit>=0.11.1 (from hatchling<2,>=1.27)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:47.4340151Z   Using cached tomlkit-0.15.2-py3-none-any.whl.metadata (3.4 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:47.4537179Z Collecting trove-classifiers (from hatchling<2,>=1.27)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:47.4549927Z   Using cached trove_classifiers-2026.9.21.13-py3-none-any.whl.metadata (2.4 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:47.4641452Z Collecting annotated-types>=0.6.0 (from pydantic<3,>=2.11->umf-core==0.10.3)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:47.4739216Z   Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.1528964Z Collecting pydantic-core==2.50.1 (from pydantic<3,>=2.11->umf-core==0.10.3)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.1630745Z   Downloading pydantic_core-2.50.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.5 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.1778090Z Collecting typing-extensions>=4.16.0 (from pydantic<3,>=2.11->umf-core==0.10.3)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.1875871Z   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.1977892Z Collecting typing-inspection>=0.4.4 (from pydantic<3,>=2.11->umf-core==0.10.3)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.2075004Z   Downloading typing_inspection-0.4.4-py3-none-any.whl.metadata (2.6 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.2203068Z Collecting iniconfig>=1.0.1 (from pytest)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.2301460Z   Downloading iniconfig-2.3.1-py3-none-any.whl.metadata (2.8 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.2500524Z Collecting pygments>=2.7.2 (from pytest)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.2600721Z   Downloading pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.2718309Z Collecting pyproject_hooks (from build)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.2815827Z   Downloading pyproject_hooks-1.3.3-py3-none-any.whl.metadata (1.3 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.2978109Z Downloading ruff-0.17.1-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (10.4 MB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.3634307Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.4/10.4 MB 186.1 MB/s  0:00:00
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.3647470Z Using cached hatchling-1.32.4-py3-none-any.whl (78 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.3746790Z Downloading pydantic-2.14.1-py3-none-any.whl (488 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.3877307Z Downloading pydantic_core-2.50.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.2 MB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.3975716Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.2/2.2 MB 260.7 MB/s  0:00:00
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.4073242Z Downloading pytest-9.1.1-py3-none-any.whl (386 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.4117616Z Using cached pluggy-1.7.0-py3-none-any.whl (27 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.4214206Z Downloading build-1.6.1-py3-none-any.whl (31 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.4328487Z Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.4444830Z Downloading iniconfig-2.3.1-py3-none-any.whl (7.6 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.4473693Z Using cached packaging-26.3-py3-none-any.whl (129 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.4485839Z Using cached pathspec-1.1.1-py3-none-any.whl (57 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.4587806Z Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.4659306Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 207.4 MB/s  0:00:00
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.4671527Z Using cached tomlkit-0.15.2-py3-none-any.whl (52 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.4770464Z Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.4893157Z Downloading typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.5008334Z Downloading pyproject_hooks-1.3.3-py3-none-any.whl (10 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.5037291Z Using cached trove_classifiers-2026.9.21.13-py3-none-any.whl (14 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.5582102Z Building wheels for collected packages: umf-core
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.5588609Z   Building wheel for umf-core (pyproject.toml): started
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.5941330Z   Building wheel for umf-core (pyproject.toml): finished with status 'done'
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.5974774Z   Created wheel for umf-core: filename=umf_core-0.10.3-cp311-abi3-linux_x86_64.whl size=3610680 sha256=511779aba812279ca1e1e5a84d0169f08d6bab81387b5fe2e157d85bbcd75a1f
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.5976780Z   Stored in directory: /tmp/pip-ephem-wheel-cache-6itmbghn/wheels/ab/15/ac/d46ad78b5110a5a0bf7805d13317043550eb468f03bce8ceb0
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.5997646Z Successfully built umf-core
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:48.6409539Z Installing collected packages: trove-classifiers, typing-extensions, tomlkit, ruff, pyproject_hooks, pygments, pluggy, pathspec, packaging, iniconfig, annotated-types, typing-inspection, pytest, pydantic-core, hatchling, build, pydantic, umf-core
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:50.5724009Z 
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:50.5746823Z Successfully installed annotated-types-0.8.0 build-1.6.1 hatchling-1.32.4 iniconfig-2.3.1 packaging-26.3 pathspec-1.1.1 pluggy-1.7.0 pydantic-2.14.1 pydantic-core-2.50.1 pygments-2.21.0 pyproject_hooks-1.3.3 pytest-9.1.1 ruff-0.17.1 tomlkit-0.15.2 trove-classifiers-2026.9.21.13 typing-extensions-4.16.0 typing-inspection-0.4.4 umf-core-0.10.3
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:50.5755154Z 
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:50.5755633Z [notice] A new release of pip is available: 26.2.1 -> 26.2.2
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T00:24:50.5756214Z [notice] To update, run: pip install --upgrade pip
+python	Run python -m pytest python/tests -q	﻿2026-10-27T00:24:50.6805072Z ##[group]Run python -m pytest python/tests -q
+python	Run python -m pytest python/tests -q	2026-10-27T00:24:50.6805488Z ^[[36;1mpython -m pytest python/tests -q^[[0m
+python	Run python -m pytest python/tests -q	2026-10-27T00:24:50.6865816Z shell: /usr/bin/bash -e {0}
+python	Run python -m pytest python/tests -q	2026-10-27T00:24:50.6866105Z env:
+python	Run python -m pytest python/tests -q	2026-10-27T00:24:50.6866354Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run python -m pytest python/tests -q	2026-10-27T00:24:50.6866758Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run python -m pytest python/tests -q	2026-10-27T00:24:50.6867201Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run python -m pytest python/tests -q	2026-10-27T00:24:50.6867648Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run python -m pytest python/tests -q	2026-10-27T00:24:50.6868056Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run python -m pytest python/tests -q	2026-10-27T00:24:50.6868754Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run python -m pytest python/tests -q	2026-10-27T00:24:50.6869151Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run python -m pytest python/tests -q	2026-10-27T00:24:50.6869503Z   CARGO_HOME: /home/runner/.cargo
+python	Run python -m pytest python/tests -q	2026-10-27T00:24:50.6869757Z   CARGO_INCREMENTAL: 0
+python	Run python -m pytest python/tests -q	2026-10-27T00:24:50.6869982Z   CARGO_TERM_COLOR: always
+python	Run python -m pytest python/tests -q	2026-10-27T00:24:50.6870245Z ##[endgroup]
+python	Run python -m pytest python/tests -q	2026-10-27T00:24:59.7668045Z ........................................................................ [ 22%]
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:01.6491721Z ........................................................................ [ 45%]
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:04.3663730Z ........................................................................ [ 68%]
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:19.8773558Z ...........FFFFF........................................................ [ 90%]
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9393860Z .............................                                            [100%]
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9394730Z =================================== FAILURES ===================================
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9395595Z ___ test_workflow_independently_installs_and_qualifies_both_native_artifacts ___
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9396242Z 
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9396662Z     def test_workflow_independently_installs_and_qualifies_both_native_artifacts():
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9397441Z         workflow = (
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9397874Z             Path(__file__).resolve().parents[2]
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9398524Z             / ".github/workflows/python-action-runtime.yml"
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9399136Z         ).read_text(encoding="utf-8")
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9399579Z     
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9399958Z         assert "python-version: '3.11.17'" in workflow
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9400531Z         assert "python-version: '3.11.9'" in workflow
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9401561Z         assert "python -m build --wheel --sdist --no-isolation python" in workflow
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9402380Z         assert "--rebuilt-wheel-directory" in workflow
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9403249Z         assert '"$RUNNER_TEMP/umf-installed-direct/bin/python" -m pip install' in workflow
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9404072Z         assert (
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9404681Z             '"$RUNNER_TEMP/umf-installed-sdist-rebuilt/bin/python" -m pip install'
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9405442Z             in workflow
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9405833Z         )
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9406264Z         assert "id: direct_installed_tests" in workflow
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9406936Z         assert "id: rebuilt_installed_tests" in workflow
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9407763Z >       assert workflow.count("python/tests/test_action_fixture_vectors.py") == 2
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9408557Z E       AssertionError: assert 3 == 2
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9409531Z E        +  where 3 = <built-in method count of str object at 0x64ca44142740>('python/tests/test_action_fixture_vectors.py')
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9412524Z E        +    where <built-in method count of str object at 0x64ca44142740> = 'name: Python action-runtime artifact qualification\n\non:\n  push:\n    branches-ignore:\n      - codex/core-0102-inv...ted-python-minor }}\n          path: ${{ runner.temp }}/core-selected-evidence/*\n          if-no-files-found: error\n'.count
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9414647Z 
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9414998Z python/tests/test_distribution_artifact.py:462: AssertionError
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9415991Z _ test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels[False-False-False] _
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9417145Z 
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9417612Z tmp_path = PosixPath('/tmp/pytest-of-runner/pytest-0/test_workflow_finalizer_requir0')
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9418507Z missing_rebuilt_tests = False, missing_rebuilt_posttest = False
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9419106Z malformed_source_map = False
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9419372Z 
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9419535Z     @pytest.mark.parametrize(
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9420138Z         ("missing_rebuilt_tests", "missing_rebuilt_posttest", "malformed_source_map"),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9421064Z         (
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9421442Z             (False, False, False),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9421849Z             (True, False, False),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9422514Z             (False, True, False),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9422902Z             (False, False, True),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9423248Z         ),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9423507Z     )
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9424016Z     def test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels(
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9424918Z         tmp_path, missing_rebuilt_tests, missing_rebuilt_posttest, malformed_source_map
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9425564Z     ):
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9425847Z         workflow_path = (
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9426232Z             Path(__file__).resolve().parents[2]
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9426754Z             / ".github/workflows/python-action-runtime.yml"
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9427222Z         )
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9427588Z         workflow = workflow_path.read_text(encoding="utf-8")
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9428280Z         finalizer = _finalizer_source(workflow)
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9428739Z         _write_finalizer_inputs(
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9429116Z             tmp_path,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9429513Z             missing_rebuilt_tests=missing_rebuilt_tests,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9430073Z             missing_rebuilt_posttest=missing_rebuilt_posttest,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9430627Z             malformed_source_map=malformed_source_map,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9431321Z         )
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9431666Z         output = tmp_path / "umf-qualification.json"
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9432144Z         environment = {
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9432463Z             **os.environ,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9432807Z             "COHORT": "macos-arm64",
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9433224Z             "SOURCE_REVISION": "e" * 40,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9433627Z             "RUN_ID": "123",
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9433972Z             "RUN_ATTEMPT": "1",
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9434346Z             "RUNNER_TEMP": str(tmp_path),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9434779Z             "DIRECT_TEST_OUTCOME": "success",
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9435229Z             "SDIST_REBUILT_TEST_OUTCOME": "success",
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9435649Z         }
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9435912Z     
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9436198Z         result = subprocess.run(
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9436553Z             [
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9436844Z                 sys.executable,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9437199Z                 "-c",
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9437515Z                 finalizer,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9438032Z                 str(workflow_path.parents[2] / "tools/verify_python_artifacts.py"),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9438724Z                 str(tmp_path / "umf-artifact-payload.json"),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9439255Z                 str(tmp_path / "umf-rustc-version.txt"),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9439745Z                 str(tmp_path / "umf-cargo-version.txt"),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9440183Z                 str(output),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9440505Z             ],
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9440957Z             check=False,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9441297Z             capture_output=True,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9441647Z             text=True,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9441955Z             env=environment,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9442280Z         )
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9442521Z     
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9442816Z         assert output.is_file(), result.stderr
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9443331Z         receipt = json.loads(output.read_text(encoding="utf-8"))
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9443853Z         incomplete = (
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9444384Z             missing_rebuilt_tests or missing_rebuilt_posttest or malformed_source_map
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9445227Z         )
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9445632Z         expected = "failed_or_incomplete" if incomplete else "passed"
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9446281Z >       assert receipt["installed_qualification"] == expected
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9446895Z E       AssertionError: assert 'failed_or_incomplete' == 'passed'
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9447380Z E         
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9447645Z E         - passed
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9447953Z E         + failed_or_incomplete
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9448194Z 
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9448454Z python/tests/test_distribution_artifact.py:643: AssertionError
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9449465Z _ test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels[True-False-False] _
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9450076Z 
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9450443Z tmp_path = PosixPath('/tmp/pytest-of-runner/pytest-0/test_workflow_finalizer_requir1')
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9451450Z missing_rebuilt_tests = True, missing_rebuilt_posttest = False
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9451984Z malformed_source_map = False
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9452263Z 
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9452414Z     @pytest.mark.parametrize(
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9452992Z         ("missing_rebuilt_tests", "missing_rebuilt_posttest", "malformed_source_map"),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9453597Z         (
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9453895Z             (False, False, False),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9454268Z             (True, False, False),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9454622Z             (False, True, False),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9454977Z             (False, False, True),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9455313Z         ),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9455575Z     )
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9456076Z     def test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels(
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9456998Z         tmp_path, missing_rebuilt_tests, missing_rebuilt_posttest, malformed_source_map
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9457650Z     ):
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9457948Z         workflow_path = (
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9458325Z             Path(__file__).resolve().parents[2]
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9458856Z             / ".github/workflows/python-action-runtime.yml"
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9459324Z         )
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9459698Z         workflow = workflow_path.read_text(encoding="utf-8")
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9460233Z         finalizer = _finalizer_source(workflow)
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9460687Z         _write_finalizer_inputs(
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9461236Z             tmp_path,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9461631Z             missing_rebuilt_tests=missing_rebuilt_tests,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9462206Z             missing_rebuilt_posttest=missing_rebuilt_posttest,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9462755Z             malformed_source_map=malformed_source_map,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9463198Z         )
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9463540Z         output = tmp_path / "umf-qualification.json"
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9464006Z         environment = {
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9464340Z             **os.environ,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9464690Z             "COHORT": "macos-arm64",
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9465095Z             "SOURCE_REVISION": "e" * 40,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9465522Z             "RUN_ID": "123",
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9465876Z             "RUN_ATTEMPT": "1",
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9466378Z             "RUNNER_TEMP": str(tmp_path),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9466823Z             "DIRECT_TEST_OUTCOME": "success",
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9467301Z             "SDIST_REBUILT_TEST_OUTCOME": "success",
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9467733Z         }
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9467992Z     
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9468288Z         result = subprocess.run(
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9468663Z             [
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9468965Z                 sys.executable,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9469321Z                 "-c",
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9469641Z                 finalizer,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9470180Z                 str(workflow_path.parents[2] / "tools/verify_python_artifacts.py"),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9471066Z                 str(tmp_path / "umf-artifact-payload.json"),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9471633Z                 str(tmp_path / "umf-rustc-version.txt"),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9472151Z                 str(tmp_path / "umf-cargo-version.txt"),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9472831Z                 str(output),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9473172Z             ],
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9473458Z             check=False,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9473807Z             capture_output=True,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9474173Z             text=True,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9474494Z             env=environment,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9474839Z         )
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9475107Z     
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9475416Z         assert output.is_file(), result.stderr
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9475957Z         receipt = json.loads(output.read_text(encoding="utf-8"))
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9476470Z         incomplete = (
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9477204Z             missing_rebuilt_tests or missing_rebuilt_posttest or malformed_source_map
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9477823Z         )
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9478239Z         expected = "failed_or_incomplete" if incomplete else "passed"
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9478887Z         assert receipt["installed_qualification"] == expected
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9479447Z         assert receipt["native_byte_identity"] is False
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9480119Z >       assert receipt["installed_artifacts"]["direct"]["qualification"] == "passed"
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9481067Z E       AssertionError: assert 'failed_or_incomplete' == 'passed'
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9481599Z E         
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9481884Z E         - passed
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9482210Z E         + failed_or_incomplete
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9482473Z 
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9482742Z python/tests/test_distribution_artifact.py:645: AssertionError
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9483583Z _ test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels[False-True-False] _
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9484196Z 
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9484581Z tmp_path = PosixPath('/tmp/pytest-of-runner/pytest-0/test_workflow_finalizer_requir2')
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9485365Z missing_rebuilt_tests = False, missing_rebuilt_posttest = True
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9485905Z malformed_source_map = False
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9486153Z 
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9486303Z     @pytest.mark.parametrize(
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9486895Z         ("missing_rebuilt_tests", "missing_rebuilt_posttest", "malformed_source_map"),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9487517Z         (
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9487832Z             (False, False, False),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9488229Z             (True, False, False),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9488610Z             (False, True, False),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9488979Z             (False, False, True),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9489328Z         ),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9489673Z     )
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9490182Z     def test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels(
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9491274Z         tmp_path, missing_rebuilt_tests, missing_rebuilt_posttest, malformed_source_map
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9491918Z     ):
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9492203Z         workflow_path = (
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9492585Z             Path(__file__).resolve().parents[2]
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9493106Z             / ".github/workflows/python-action-runtime.yml"
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9493579Z         )
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9690244Z         workflow = workflow_path.read_text(encoding="utf-8")
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9691240Z         finalizer = _finalizer_source(workflow)
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9691763Z         _write_finalizer_inputs(
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9692189Z             tmp_path,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9692600Z             missing_rebuilt_tests=missing_rebuilt_tests,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9693182Z             missing_rebuilt_posttest=missing_rebuilt_posttest,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9693760Z             malformed_source_map=malformed_source_map,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9694215Z         )
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9694571Z         output = tmp_path / "umf-qualification.json"
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9695094Z         environment = {
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9695447Z             **os.environ,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9695797Z             "COHORT": "macos-arm64",
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9696215Z             "SOURCE_REVISION": "e" * 40,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9696633Z             "RUN_ID": "123",
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9696996Z             "RUN_ATTEMPT": "1",
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9697838Z             "RUNNER_TEMP": str(tmp_path),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9698312Z             "DIRECT_TEST_OUTCOME": "success",
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9698825Z             "SDIST_REBUILT_TEST_OUTCOME": "success",
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9699281Z         }
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9699575Z     
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9699879Z         result = subprocess.run(
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9700259Z             [
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9700587Z                 sys.executable,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9701244Z                 "-c",
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9701601Z                 finalizer,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9702180Z                 str(workflow_path.parents[2] / "tools/verify_python_artifacts.py"),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9703105Z                 str(tmp_path / "umf-artifact-payload.json"),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9703674Z                 str(tmp_path / "umf-rustc-version.txt"),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9704210Z                 str(tmp_path / "umf-cargo-version.txt"),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9704736Z                 str(output),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9705100Z             ],
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9705413Z             check=False,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9705789Z             capture_output=True,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9706183Z             text=True,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9706523Z             env=environment,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9706879Z         )
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9707155Z     
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9707484Z         assert output.is_file(), result.stderr
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9708057Z         receipt = json.loads(output.read_text(encoding="utf-8"))
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9708588Z         incomplete = (
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9709150Z             missing_rebuilt_tests or missing_rebuilt_posttest or malformed_source_map
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9709797Z         )
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9710227Z         expected = "failed_or_incomplete" if incomplete else "passed"
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9711382Z         assert receipt["installed_qualification"] == expected
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9711938Z         assert receipt["native_byte_identity"] is False
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9712401Z >       assert receipt["installed_artifacts"]["direct"]["qualification"] == "passed"
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9712927Z E       AssertionError: assert 'failed_or_incomplete' == 'passed'
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9713275Z E         
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9713470Z E         - passed
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9713692Z E         + failed_or_incomplete
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9713862Z 
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9714041Z python/tests/test_distribution_artifact.py:645: AssertionError
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9714583Z _ test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels[False-False-True] _
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9714964Z 
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9715222Z tmp_path = PosixPath('/tmp/pytest-of-runner/pytest-0/test_workflow_finalizer_requir3')
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9715754Z missing_rebuilt_tests = False, missing_rebuilt_posttest = False
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9716108Z malformed_source_map = True
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9716300Z 
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9716403Z     @pytest.mark.parametrize(
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9716774Z         ("missing_rebuilt_tests", "missing_rebuilt_posttest", "malformed_source_map"),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9717172Z         (
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9717367Z             (False, False, False),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9717616Z             (True, False, False),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9717863Z             (False, True, False),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9718103Z             (False, False, True),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9718325Z         ),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9718501Z     )
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9718830Z     def test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels(
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9719374Z         tmp_path, missing_rebuilt_tests, missing_rebuilt_posttest, malformed_source_map
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9719778Z     ):
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9719966Z         workflow_path = (
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9720219Z             Path(__file__).resolve().parents[2]
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9720555Z             / ".github/workflows/python-action-runtime.yml"
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9721172Z         )
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9721488Z         workflow = workflow_path.read_text(encoding="utf-8")
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9722128Z         finalizer = _finalizer_source(workflow)
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9722433Z         _write_finalizer_inputs(
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9722681Z             tmp_path,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9722938Z             missing_rebuilt_tests=missing_rebuilt_tests,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9723302Z             missing_rebuilt_posttest=missing_rebuilt_posttest,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9723654Z             malformed_source_map=malformed_source_map,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9723955Z         )
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9724185Z         output = tmp_path / "umf-qualification.json"
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9724493Z         environment = {
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9724716Z             **os.environ,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9725216Z             "COHORT": "macos-arm64",
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9725484Z             "SOURCE_REVISION": "e" * 40,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9725746Z             "RUN_ID": "123",
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9725984Z             "RUN_ATTEMPT": "1",
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9726235Z             "RUNNER_TEMP": str(tmp_path),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9726526Z             "DIRECT_TEST_OUTCOME": "success",
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9726828Z             "SDIST_REBUILT_TEST_OUTCOME": "success",
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9727103Z         }
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9727282Z     
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9727480Z         result = subprocess.run(
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9727720Z             [
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9727923Z                 sys.executable,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9728161Z                 "-c",
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9728366Z                 finalizer,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9728706Z                 str(workflow_path.parents[2] / "tools/verify_python_artifacts.py"),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9729135Z                 str(tmp_path / "umf-artifact-payload.json"),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9729519Z                 str(tmp_path / "umf-rustc-version.txt"),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9729849Z                 str(tmp_path / "umf-cargo-version.txt"),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9730145Z                 str(output),
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9730360Z             ],
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9730551Z             check=False,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9731028Z             capture_output=True,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9731296Z             text=True,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9731517Z             env=environment,
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9731733Z         )
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9731905Z     
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9732105Z         assert output.is_file(), result.stderr
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9732453Z         receipt = json.loads(output.read_text(encoding="utf-8"))
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9732790Z         incomplete = (
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9733124Z             missing_rebuilt_tests or missing_rebuilt_posttest or malformed_source_map
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9733508Z         )
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9733780Z         expected = "failed_or_incomplete" if incomplete else "passed"
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9734200Z         assert receipt["installed_qualification"] == expected
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9734565Z         assert receipt["native_byte_identity"] is False
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9735000Z >       assert receipt["installed_artifacts"]["direct"]["qualification"] == "passed"
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9735478Z E       AssertionError: assert 'failed_or_incomplete' == 'passed'
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9735808Z E         
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9736005Z E         - passed
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9736274Z E         + failed_or_incomplete
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9736434Z 
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9736614Z python/tests/test_distribution_artifact.py:645: AssertionError
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9737024Z =========================== short test summary info ============================
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9737828Z FAILED python/tests/test_distribution_artifact.py::test_workflow_independently_installs_and_qualifies_both_native_artifacts - AssertionError: assert 3 == 2
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9738743Z  +  where 3 = <built-in method count of str object at 0x64ca44142740>('python/tests/test_action_fixture_vectors.py')
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9740125Z  +    where <built-in method count of str object at 0x64ca44142740> = 'name: Python action-runtime artifact qualification\n\non:\n  push:\n    branches-ignore:\n      - codex/core-0102-inv...ted-python-minor }}\n          path: ${{ runner.temp }}/core-selected-evidence/*\n          if-no-files-found: error\n'.count
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9743743Z FAILED python/tests/test_distribution_artifact.py::test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels[False-False-False] - AssertionError: assert 'failed_or_incomplete' == 'passed'
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9745245Z   
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9745581Z   - passed
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9745816Z   + failed_or_incomplete
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9746637Z FAILED python/tests/test_distribution_artifact.py::test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels[True-False-False] - AssertionError: assert 'failed_or_incomplete' == 'passed'
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9747705Z   
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9747883Z   - passed
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9748090Z   + failed_or_incomplete
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9748890Z FAILED python/tests/test_distribution_artifact.py::test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels[False-True-False] - AssertionError: assert 'failed_or_incomplete' == 'passed'
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9749705Z   
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9749880Z   - passed
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9750075Z   + failed_or_incomplete
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9751170Z FAILED python/tests/test_distribution_artifact.py::test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels[False-False-True] - AssertionError: assert 'failed_or_incomplete' == 'passed'
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9752001Z   
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9752172Z   - passed
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9752371Z   + failed_or_incomplete
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:25.9752610Z 5 failed, 312 passed in 34.98s
+python	Run python -m pytest python/tests -q	2026-10-27T00:25:26.0409151Z ##[error]Process completed with exit code 1.
+python	Post Run actions/checkout@v4	﻿2026-10-27T00:25:26.0541500Z Post job cleanup.
+python	Post Run actions/checkout@v4	2026-10-27T00:25:26.1505857Z [command]/usr/bin/git version
+python	Post Run actions/checkout@v4	2026-10-27T00:25:26.1560102Z git version 2.55.0
+python	Post Run actions/checkout@v4	2026-10-27T00:25:26.1606905Z Temporarily overriding HOME='/home/runner/work/_temp/09908beb-d29f-42a2-b534-c1972e070531' before making global git config changes
+python	Post Run actions/checkout@v4	2026-10-27T00:25:26.1608335Z Adding repository directory to the temporary git global config as a safe directory
+python	Post Run actions/checkout@v4	2026-10-27T00:25:26.1613642Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf
+python	Post Run actions/checkout@v4	2026-10-27T00:25:26.1660529Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+python	Post Run actions/checkout@v4	2026-10-27T00:25:26.1701080Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+python	Post Run actions/checkout@v4	2026-10-27T00:25:26.2156707Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+python	Post Run actions/checkout@v4	2026-10-27T00:25:26.2182344Z http.https://github.com/.extraheader
+python	Post Run actions/checkout@v4	2026-10-27T00:25:26.2196811Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+python	Post Run actions/checkout@v4	2026-10-27T00:25:26.2240570Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+python	Post Run actions/checkout@v4	2026-10-27T00:25:26.2706077Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+python	Post Run actions/checkout@v4	2026-10-27T00:25:26.2750107Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+python	Complete job	﻿2026-10-27T00:25:26.3327803Z Cleaning up orphan processes
+python	Complete job	2026-10-27T00:25:26.3715357Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

@@ -447,6 +447,14 @@ def test_workflow_independently_installs_and_qualifies_both_native_artifacts():
         Path(__file__).resolve().parents[2]
         / ".github/workflows/python-action-runtime.yml"
     ).read_text(encoding="utf-8")
+    producer_start_marker = "  qualify-installed-artifact:\n"
+    selected_start_marker = "  qualify-selected-release-wheel-four-cells:\n"
+    assert workflow.count(producer_start_marker) == 1
+    assert workflow.count(selected_start_marker) == 1
+    producer_start = workflow.index(producer_start_marker)
+    selected_start = workflow.index(selected_start_marker)
+    assert producer_start < selected_start
+    producer_workflow = workflow[producer_start:selected_start]
 
     assert "python-version: '3.11.17'" in workflow
     assert "python-version: '3.11.9'" in workflow
@@ -457,9 +465,19 @@ def test_workflow_independently_installs_and_qualifies_both_native_artifacts():
         '"$RUNNER_TEMP/umf-installed-sdist-rebuilt/bin/python" -m pip install'
         in workflow
     )
-    assert "id: direct_installed_tests" in workflow
-    assert "id: rebuilt_installed_tests" in workflow
-    assert workflow.count("python/tests/test_action_fixture_vectors.py") == 2
+    assert producer_workflow.count("id: direct_installed_tests") == 1
+    assert producer_workflow.count("id: rebuilt_installed_tests") == 1
+    assert producer_workflow.count("python/tests/test_action_fixture_vectors.py") == 2
+    for step_id in ("direct_installed_tests", "rebuilt_installed_tests"):
+        step_marker = f"id: {step_id}"
+        step_index = producer_workflow.index(step_marker)
+        step_start = producer_workflow.rfind("      - name:", 0, step_index)
+        next_step = producer_workflow.find("\n      - name:", step_index)
+        step_end = len(producer_workflow) if next_step < 0 else next_step
+        assert step_start >= 0
+        assert producer_workflow[step_start:step_end].count(
+            "python/tests/test_action_fixture_vectors.py"
+        ) == 1
     assert 'counts["skipped"] == 0' in workflow
     assert (
         'installed_artifacts.get("direct", {}).get("qualification") == "passed"'
@@ -492,6 +510,7 @@ def _write_finalizer_inputs(
     missing_rebuilt_tests: bool = False,
     missing_rebuilt_posttest: bool = False,
     malformed_source_map: bool = False,
+    junit_failure: tuple[str, int, int] | None = None,
 ) -> None:
     direct = {
         "filename": "umf_core-0.10.3-cp311-abi3-macosx_11_0_arm64.whl",
@@ -573,25 +592,48 @@ def _write_finalizer_inputs(
                 ),
                 encoding="utf-8",
             )
-    junit = '<testsuite tests="1" errors="0" failures="0" skipped="0" />\n'
-    (root / "umf-direct-action-tests.xml").write_text(junit, encoding="utf-8")
+    def junit_for(role: str) -> str:
+        tests, skipped = (254, 0)
+        if junit_failure is not None and junit_failure[0] == role:
+            _, tests, skipped = junit_failure
+        return (
+            f'<testsuite tests="{tests}" errors="0" failures="0" '
+            f'skipped="{skipped}" />\n'
+        )
+
+    (root / "umf-direct-action-tests.xml").write_text(
+        junit_for("direct"), encoding="utf-8"
+    )
     if not missing_rebuilt_tests:
         (root / "umf-sdist-rebuilt-action-tests.xml").write_text(
-            junit, encoding="utf-8"
+            junit_for("sdist-rebuilt"), encoding="utf-8"
         )
 
 
 @pytest.mark.parametrize(
-    ("missing_rebuilt_tests", "missing_rebuilt_posttest", "malformed_source_map"),
     (
-        (False, False, False),
-        (True, False, False),
-        (False, True, False),
-        (False, False, True),
+        "missing_rebuilt_tests",
+        "missing_rebuilt_posttest",
+        "malformed_source_map",
+        "junit_failure",
+    ),
+    (
+        (False, False, False, None),
+        (True, False, False, None),
+        (False, True, False, None),
+        (False, False, True, None),
+        (False, False, False, ("direct", 253, 0)),
+        (False, False, False, ("direct", 254, 1)),
+        (False, False, False, ("sdist-rebuilt", 253, 0)),
+        (False, False, False, ("sdist-rebuilt", 254, 1)),
     ),
 )
 def test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels(
-    tmp_path, missing_rebuilt_tests, missing_rebuilt_posttest, malformed_source_map
+    tmp_path,
+    missing_rebuilt_tests,
+    missing_rebuilt_posttest,
+    malformed_source_map,
+    junit_failure,
 ):
     workflow_path = (
         Path(__file__).resolve().parents[2]
@@ -604,6 +646,7 @@ def test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels(
         missing_rebuilt_tests=missing_rebuilt_tests,
         missing_rebuilt_posttest=missing_rebuilt_posttest,
         malformed_source_map=malformed_source_map,
+        junit_failure=junit_failure,
     )
     output = tmp_path / "umf-qualification.json"
     environment = {
@@ -637,15 +680,28 @@ def test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels(
     assert output.is_file(), result.stderr
     receipt = json.loads(output.read_text(encoding="utf-8"))
     incomplete = (
-        missing_rebuilt_tests or missing_rebuilt_posttest or malformed_source_map
+        missing_rebuilt_tests
+        or missing_rebuilt_posttest
+        or malformed_source_map
+        or junit_failure is not None
     )
     expected = "failed_or_incomplete" if incomplete else "passed"
     assert receipt["installed_qualification"] == expected
     assert receipt["native_byte_identity"] is False
-    assert receipt["installed_artifacts"]["direct"]["qualification"] == "passed"
+    direct_expected = (
+        "failed_or_incomplete"
+        if junit_failure is not None and junit_failure[0] == "direct"
+        else "passed"
+    )
+    assert (
+        receipt["installed_artifacts"]["direct"]["qualification"]
+        == direct_expected
+    )
     rebuilt_expected = (
         "failed_or_incomplete"
-        if missing_rebuilt_tests or missing_rebuilt_posttest
+        if missing_rebuilt_tests
+        or missing_rebuilt_posttest
+        or (junit_failure is not None and junit_failure[0] == "sdist-rebuilt")
         else "passed"
     )
     assert (

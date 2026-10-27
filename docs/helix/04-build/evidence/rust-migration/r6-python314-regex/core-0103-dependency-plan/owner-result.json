@@ -290,5 +290,25 @@
         "python/umf_codegen/src/umf_codegen/_release.py": "b432f509b10ab7b921390abf0b47cb7cfc21a21a28dc74677e373423ed7f4a8e"
       }
     }
+  },
+  "pythonFixtureFailures": {
+    "evidence": "python-fixture-failures-40425439533",
+    "custodySha256": "b3bd2f137274698ba8140084ff4946d2f11dd2279c2b7193af9fb7134dae297f",
+    "status": "FIVE_ACTUAL_FAILURES_AWAITING_TEST_ONLY_CORRECTION",
+    "sourceCorrection": {
+      "status": "SOURCE_ACCEPTED_AWAITING_GENUINE_DEPENDENT_REGENERATION_AND_NEW_SOURCE_QUALIFICATION",
+      "testPath": "python/tests/test_distribution_artifact.py",
+      "testBytes": 30221,
+      "testSha256": "7229a3ad8a9a336caa75a428ae2ddc5094ae39e6a919780c5a0a6a48ec2d2064",
+      "plan": "sol-artifact-fixture-plan001.md",
+      "planSha256": "e8573a085bb9d09d34d731d3f2ec4f3c48a7e40b111d8159d9361b94b9eec23a",
+      "closure": "sol-artifact-fixture-closure001.md",
+      "closureSha256": "a0ad7361121c2ad8264fb284f823df58c0e2b57c18aaee6406df2e2df1da121e",
+      "actualTestResult": null,
+      "unchangedInstalledSuiteCount": 254,
+      "priorSourceProducerRun": 40425451431,
+      "priorSourceCommit": "ae11ea4203753a02339e5abd751ec3798662e32d",
+      "scope": "Synthetic finalizer fixture controls only; source included in sdist requires actual new-source archives. Existing runs preserved; no release admission."
+    }
   }
 }
