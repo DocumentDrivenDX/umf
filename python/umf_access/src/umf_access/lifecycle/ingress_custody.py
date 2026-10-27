@@ -10,10 +10,7 @@ bootstrap-enrolled native owner/supervisor adapter is implemented.
 from __future__ import annotations
 
 import fcntl
-import hashlib
-import json
 import os
-import re
 import stat
 import tempfile
 from collections.abc import Iterator
@@ -21,35 +18,35 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
 
-from .target_custody_codec import (
-    CustodyJournalError as CustodyJournalError,
-    JOURNAL_PROFILE as JOURNAL_PROFILE,
-    JOURNAL_PROFILE_02 as JOURNAL_PROFILE_02,
-    _HEX as _HEX,
-    _KINDS as _KINDS,
-    _KINDS_02 as _KINDS_02,
-    _MAX_BYTES as _MAX_BYTES,
-    _MAX_EVENTS as _MAX_EVENTS,
-    _MAX_SAFE as _MAX_SAFE,
-    _OWNER_REQUEST_KIND as _OWNER_REQUEST_KIND,
-    _UUID as _UUID,
-    _canonical as _canonical,
-    _canonical_path as _canonical_path,
-    _closed as _closed,
-    _decimal as _decimal,
-    _digest as _digest,
-    _hex as _hex,
-    _pairs_no_duplicates as _pairs_no_duplicates,
-    _read_json as _read_json,
-    _replay as _replay,
-    _safe_uint32 as _safe_uint32,
-    _text as _text,
-    _uuid as _uuid,
-    _validate_event_payload as _validate_event_payload,
-    _validate_observation as _validate_observation,
-    _validate_owner_payload as _validate_owner_payload,
-    validate_original_target_custody_record as validate_original_target_custody_record,
-)
+from . import target_custody_codec as _target_custody_codec
+
+CustodyJournalError = _target_custody_codec.CustodyJournalError
+JOURNAL_PROFILE = _target_custody_codec.JOURNAL_PROFILE
+JOURNAL_PROFILE_02 = _target_custody_codec.JOURNAL_PROFILE_02
+_HEX = _target_custody_codec._HEX
+_KINDS = _target_custody_codec._KINDS
+_KINDS_02 = _target_custody_codec._KINDS_02
+_MAX_BYTES = _target_custody_codec._MAX_BYTES
+_MAX_EVENTS = _target_custody_codec._MAX_EVENTS
+_MAX_SAFE = _target_custody_codec._MAX_SAFE
+_OWNER_REQUEST_KIND = _target_custody_codec._OWNER_REQUEST_KIND
+_UUID = _target_custody_codec._UUID
+_canonical = _target_custody_codec._canonical
+_canonical_path = _target_custody_codec._canonical_path
+_closed = _target_custody_codec._closed
+_decimal = _target_custody_codec._decimal
+_digest = _target_custody_codec._digest
+_hex = _target_custody_codec._hex
+_pairs_no_duplicates = _target_custody_codec._pairs_no_duplicates
+_read_json = _target_custody_codec._read_json
+_replay = _target_custody_codec._replay
+_safe_uint32 = _target_custody_codec._safe_uint32
+_text = _target_custody_codec._text
+_uuid = _target_custody_codec._uuid
+_validate_event_payload = _target_custody_codec._validate_event_payload
+_validate_observation = _target_custody_codec._validate_observation
+_validate_owner_payload = _target_custody_codec._validate_owner_payload
+validate_original_target_custody_record = _target_custody_codec.validate_original_target_custody_record
 
 
 _OWNER_RESOLVER_SEAL = object()

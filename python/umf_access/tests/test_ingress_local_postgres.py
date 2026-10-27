@@ -600,12 +600,14 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
                 raise AssertionError('subclass supervisor must not reach lease')
 
         for supervisor in (ForgedSupervisor(), object.__new__(DerivedSupervisor)):
-            with self.subTest(supervisor_type=type(supervisor).__name__):
-                with self.assertRaisesRegex(
-                        CatalogError, 'row-originals-store-recovery-unavailable'):
-                    open_originals_store_recovery(
-                        supervisor, object(),
-                        provider_id='33333333-3333-4333-8333-333333333333')
+            with (
+                self.subTest(supervisor_type=type(supervisor).__name__),
+                self.assertRaisesRegex(
+                    CatalogError, 'row-originals-store-recovery-unavailable'),
+            ):
+                open_originals_store_recovery(
+                    supervisor, object(),
+                    provider_id='33333333-3333-4333-8333-333333333333')
 
     def test_original_store_readonly_transaction_refuses_active_caller_transaction(self):
         supervisor = object.__new__(LocalPostgresSupervisor)

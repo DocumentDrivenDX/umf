@@ -20,6 +20,7 @@ from umf_access.lifecycle.host import (
     apply_migration_on_host,
 )
 from umf_access.lifecycle.progress import _phase_digest, _verified_phases
+
 _TARGET = {"table": "items", "field": {"module": "demo", "element": "total"}}
 _PATH = "/modules/0/extensions/umf.tables/tables/0/columns/0/default"
 _PROFILE = {"version": "umf.table-migration-execution/0.4",

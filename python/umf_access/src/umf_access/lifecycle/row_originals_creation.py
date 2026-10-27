@@ -10,29 +10,29 @@ import base64
 import hashlib
 from typing import Any
 
+from . import row_originals_receipt as _row_originals_receipt
 from .catalog import CatalogError, _all, _one
-from .row_originals_receipt import (
-    COMMENT_PREFIX as COMMENT_PREFIX,
-    MAX_OBJECTS,
-    MAX_RECEIPT_BYTES,
-    RECEIPT_PROFILE,
-    _FIXED_NOT_NULL_COLUMNS,
-    _constraint_definition,
-    _digest as _digest,
-    _expected_fk_trigger_signatures as _expected_fk_trigger_signatures,
-    _expected_ri_trigger as _expected_ri_trigger,
-    _no_duplicates as _no_duplicates,
-    _safe_int as _safe_int,
-    _uuid as _uuid,
-    _validate_fk_trigger_set,
-    _validate_not_null_constraint,
-    _validate_ri_trigger,
-    canonical_bytes,
-    decode_comment,
-    encode_comment,
-    validate_objects,
-    validate_receipt,
-)
+
+COMMENT_PREFIX = _row_originals_receipt.COMMENT_PREFIX
+MAX_OBJECTS = _row_originals_receipt.MAX_OBJECTS
+MAX_RECEIPT_BYTES = _row_originals_receipt.MAX_RECEIPT_BYTES
+RECEIPT_PROFILE = _row_originals_receipt.RECEIPT_PROFILE
+_FIXED_NOT_NULL_COLUMNS = _row_originals_receipt._FIXED_NOT_NULL_COLUMNS
+_constraint_definition = _row_originals_receipt._constraint_definition
+_digest = _row_originals_receipt._digest
+_expected_fk_trigger_signatures = _row_originals_receipt._expected_fk_trigger_signatures
+_expected_ri_trigger = _row_originals_receipt._expected_ri_trigger
+_no_duplicates = _row_originals_receipt._no_duplicates
+_safe_int = _row_originals_receipt._safe_int
+_uuid = _row_originals_receipt._uuid
+_validate_fk_trigger_set = _row_originals_receipt._validate_fk_trigger_set
+_validate_not_null_constraint = _row_originals_receipt._validate_not_null_constraint
+_validate_ri_trigger = _row_originals_receipt._validate_ri_trigger
+canonical_bytes = _row_originals_receipt.canonical_bytes
+decode_comment = _row_originals_receipt.decode_comment
+encode_comment = _row_originals_receipt.encode_comment
+validate_objects = _row_originals_receipt.validate_objects
+validate_receipt = _row_originals_receipt.validate_receipt
 
 
 def _fail(code: str = 'row-originals-creation-receipt-invalid') -> None:

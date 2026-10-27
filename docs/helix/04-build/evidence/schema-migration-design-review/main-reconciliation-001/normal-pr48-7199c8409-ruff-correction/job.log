@@ -1,0 +1,1630 @@
+python	Set up job	﻿2026-10-27T20:57:50.5014326Z Current runner version: '2.338.0'
+python	Set up job	2026-10-27T20:57:50.5034745Z ##[group]Runner Image Provisioner
+python	Set up job	2026-10-27T20:57:50.5035320Z Hosted Compute Agent
+python	Set up job	2026-10-27T20:57:50.5035761Z Version: 20261021.618
+python	Set up job	2026-10-27T20:57:50.5036142Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+python	Set up job	2026-10-27T20:57:50.5036610Z Build Date: 2026-10-21T00:45:21Z
+python	Set up job	2026-10-27T20:57:50.5037100Z Worker ID: {830b38f7-0242-4411-bad0-e6d942aa5020}
+python	Set up job	2026-10-27T20:57:50.5037515Z Region: centralus
+python	Set up job	2026-10-27T20:57:50.5037900Z Cloud: Azure
+python	Set up job	2026-10-27T20:57:50.5038242Z ##[endgroup]
+python	Set up job	2026-10-27T20:57:50.5039088Z ##[group]Operating System
+python	Set up job	2026-10-27T20:57:50.5039506Z Ubuntu
+python	Set up job	2026-10-27T20:57:50.5039831Z 26.04.1
+python	Set up job	2026-10-27T20:57:50.5040185Z LTS
+python	Set up job	2026-10-27T20:57:50.5040506Z ##[endgroup]
+python	Set up job	2026-10-27T20:57:50.5040832Z ##[group]Runner Image
+python	Set up job	2026-10-27T20:57:50.5041307Z Image: ubuntu-26.04
+python	Set up job	2026-10-27T20:57:50.5041657Z Version: 20261025.179.1
+python	Set up job	2026-10-27T20:57:50.5042319Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261025.179/images/ubuntu/Ubuntu2604-Readme.md
+python	Set up job	2026-10-27T20:57:50.5043350Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261025.179
+python	Set up job	2026-10-27T20:57:50.5044025Z ##[endgroup]
+python	Set up job	2026-10-27T20:57:50.5044852Z ##[group]GITHUB_TOKEN Permissions
+python	Set up job	2026-10-27T20:57:50.5046232Z Contents: read
+python	Set up job	2026-10-27T20:57:50.5046880Z Metadata: read
+python	Set up job	2026-10-27T20:57:50.5047423Z Packages: read
+python	Set up job	2026-10-27T20:57:50.5047770Z ##[endgroup]
+python	Set up job	2026-10-27T20:57:50.5049657Z Secret source: Actions
+python	Set up job	2026-10-27T20:57:50.5050304Z Cache mode: write
+python	Set up job	2026-10-27T20:57:50.5050780Z Prepare workflow directory
+python	Set up job	2026-10-27T20:57:50.5291277Z Prepare all required actions
+python	Set up job	2026-10-27T20:57:50.5325731Z Getting action download info
+python	Set up job	2026-10-27T20:57:50.7934360Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+python	Set up job	2026-10-27T20:57:50.9114410Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+python	Set up job	2026-10-27T20:57:51.1624213Z Download action repository 'dtolnay/rust-toolchain@stable' (SHA:b725eda525362e7cf34af9a7243cac1e3f01a7ec)
+python	Set up job	2026-10-27T20:57:51.3108080Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+python	Set up job	2026-10-27T20:57:51.5242816Z Complete job name: python
+python	Run actions/checkout@v4	﻿2026-10-27T20:57:51.5850010Z ##[group]Run actions/checkout@v4
+python	Run actions/checkout@v4	2026-10-27T20:57:51.5850492Z with:
+python	Run actions/checkout@v4	2026-10-27T20:57:51.5850750Z   repository: DocumentDrivenDX/umf
+python	Run actions/checkout@v4	2026-10-27T20:57:51.5852946Z   token: ***
+python	Run actions/checkout@v4	2026-10-27T20:57:51.5853189Z   ssh-strict: true
+python	Run actions/checkout@v4	2026-10-27T20:57:51.5853445Z   ssh-user: git
+python	Run actions/checkout@v4	2026-10-27T20:57:51.5853707Z   persist-credentials: true
+python	Run actions/checkout@v4	2026-10-27T20:57:51.5853991Z   clean: true
+python	Run actions/checkout@v4	2026-10-27T20:57:51.5854241Z   sparse-checkout-cone-mode: true
+python	Run actions/checkout@v4	2026-10-27T20:57:51.5854648Z   fetch-depth: 1
+python	Run actions/checkout@v4	2026-10-27T20:57:51.5854888Z   fetch-tags: false
+python	Run actions/checkout@v4	2026-10-27T20:57:51.5855137Z   show-progress: true
+python	Run actions/checkout@v4	2026-10-27T20:57:51.5855390Z   lfs: false
+python	Run actions/checkout@v4	2026-10-27T20:57:51.5855625Z   submodules: false
+python	Run actions/checkout@v4	2026-10-27T20:57:51.5855881Z   set-safe-directory: true
+python	Run actions/checkout@v4	2026-10-27T20:57:51.5856185Z   allow-unsafe-pr-checkout: false
+python	Run actions/checkout@v4	2026-10-27T20:57:51.5856558Z ##[endgroup]
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8350621Z Syncing repository: DocumentDrivenDX/umf
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8352438Z ##[group]Getting Git version info
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8353015Z Working directory is '/home/runner/work/umf/umf'
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8353980Z [command]/usr/bin/git version
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8354433Z git version 2.56.0
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8356115Z ##[endgroup]
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8360191Z Temporarily overriding HOME='/home/runner/work/_temp/83874942-4c76-4407-8dc9-dfedcf2f6972' before making global git config changes
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8361485Z Adding repository directory to the temporary git global config as a safe directory
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8362472Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8367432Z Deleting the contents of '/home/runner/work/umf/umf'
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8370236Z ##[group]Initializing the repository
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8375077Z [command]/usr/bin/git init /home/runner/work/umf/umf
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8486336Z hint: Using 'master' as the name for the initial branch. This default branch name
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8487394Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8488261Z hint: to use in all of your new repositories, which will suppress this warning,
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8488920Z hint: call:
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8489276Z hint:
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8489742Z hint: 	git config --global init.defaultBranch <name>
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8490288Z hint:
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8490812Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8491648Z hint: 'development'. The just-created branch can be renamed via this command:
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8492311Z hint:
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8492681Z hint: 	git branch -m <name>
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8493105Z hint:
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8493661Z hint: Disable this message with "git config set advice.defaultBranchName false"
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8498304Z Initialized empty Git repository in /home/runner/work/umf/umf/.git/
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8509903Z [command]/usr/bin/git remote add origin https://github.com/DocumentDrivenDX/umf
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8567915Z ##[endgroup]
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8568755Z ##[group]Disabling automatic garbage collection
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8572014Z [command]/usr/bin/git config --local gc.auto 0
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8625154Z ##[endgroup]
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8625999Z ##[group]Setting up auth
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8632756Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+python	Run actions/checkout@v4	2026-10-27T20:57:51.8674144Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+python	Run actions/checkout@v4	2026-10-27T20:57:51.9114228Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+python	Run actions/checkout@v4	2026-10-27T20:57:51.9145205Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+python	Run actions/checkout@v4	2026-10-27T20:57:51.9381200Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+python	Run actions/checkout@v4	2026-10-27T20:57:51.9412101Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+python	Run actions/checkout@v4	2026-10-27T20:57:51.9650052Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+python	Run actions/checkout@v4	2026-10-27T20:57:52.0273218Z ##[endgroup]
+python	Run actions/checkout@v4	2026-10-27T20:57:52.0274800Z ##[group]Fetching the repository
+python	Run actions/checkout@v4	2026-10-27T20:57:52.0282648Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +06494602fe83d1af90f743243dad6afb7921206c:refs/remotes/pull/48/merge
+python	Run actions/checkout@v4	2026-10-27T20:58:12.0721996Z From https://github.com/DocumentDrivenDX/umf
+python	Run actions/checkout@v4	2026-10-27T20:58:12.0722720Z  * [new ref]           06494602fe83d1af90f743243dad6afb7921206c -> pull/48/merge
+python	Run actions/checkout@v4	2026-10-27T20:58:12.0725744Z ##[endgroup]
+python	Run actions/checkout@v4	2026-10-27T20:58:12.0726224Z ##[group]Determining the checkout info
+python	Run actions/checkout@v4	2026-10-27T20:58:12.0727888Z ##[endgroup]
+python	Run actions/checkout@v4	2026-10-27T20:58:12.0733048Z [command]/usr/bin/git sparse-checkout disable
+python	Run actions/checkout@v4	2026-10-27T20:58:12.0787013Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+python	Run actions/checkout@v4	2026-10-27T20:58:12.0820945Z ##[group]Checking out the ref
+python	Run actions/checkout@v4	2026-10-27T20:58:12.0825008Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/48/merge
+python	Run actions/checkout@v4	2026-10-27T20:58:13.3786917Z Updating files:   7% (4488/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:13.4340491Z Updating files:   8% (5122/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:13.4635060Z Updating files:   9% (5762/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:13.6056005Z Updating files:  10% (6402/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:13.6759064Z Updating files:  11% (7042/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:13.7479844Z Updating files:  12% (7682/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:13.7818506Z Updating files:  13% (8322/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:14.1222055Z Updating files:  14% (8963/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:14.1804741Z Updating files:  14% (9411/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:14.6826575Z Updating files:  15% (9603/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:14.9517045Z Updating files:  16% (10243/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:14.9805864Z Updating files:  17% (10883/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:15.1432592Z Updating files:  18% (11523/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:15.3392982Z Updating files:  18% (11875/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:15.4546413Z Updating files:  19% (12163/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:15.6510243Z Updating files:  20% (12803/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:15.8181707Z Updating files:  21% (13444/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:15.8452239Z Updating files:  22% (14084/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:15.8750972Z Updating files:  23% (14724/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:15.8966155Z Updating files:  24% (15364/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:15.9172536Z Updating files:  25% (16004/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:15.9404895Z Updating files:  26% (16644/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:15.9618113Z Updating files:  27% (17285/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:15.9848640Z Updating files:  28% (17925/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:16.0068705Z Updating files:  29% (18565/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:16.0359250Z Updating files:  30% (19205/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:16.0762287Z Updating files:  31% (19845/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:16.0980144Z Updating files:  32% (20485/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:16.1238023Z Updating files:  33% (21125/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:16.1659712Z Updating files:  33% (21659/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:17.3149032Z Updating files:  34% (21766/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:18.2716429Z Updating files:  34% (21865/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:19.2539698Z Updating files:  34% (21899/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:20.2626356Z Updating files:  34% (21932/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:21.2407177Z Updating files:  34% (21960/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:22.2890900Z Updating files:  34% (21987/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:23.1715513Z Updating files:  34% (22014/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:23.5634728Z Updating files:  34% (22034/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:24.0481071Z Updating files:  35% (22406/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:24.1232978Z Updating files:  36% (23046/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:24.3141252Z Updating files:  36% (23206/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:24.3943169Z Updating files:  37% (23686/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:24.4402908Z Updating files:  38% (24326/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:24.5187575Z Updating files:  39% (24966/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:24.5749799Z Updating files:  40% (25606/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:24.6147107Z Updating files:  41% (26247/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:24.6516235Z Updating files:  42% (26887/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:24.7002624Z Updating files:  43% (27527/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:25.1313717Z Updating files:  44% (28167/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:25.2485335Z Updating files:  44% (28232/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:25.5686218Z Updating files:  45% (28807/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:25.7339896Z Updating files:  46% (29447/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:25.9377597Z Updating files:  47% (30088/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:26.0582514Z Updating files:  48% (30728/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:26.1268208Z Updating files:  49% (31368/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:26.1523972Z Updating files:  49% (31725/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:26.4476357Z Updating files:  50% (32008/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:26.5293406Z Updating files:  51% (32648/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:26.5750582Z Updating files:  52% (33288/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:26.6610674Z Updating files:  53% (33928/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:26.7051311Z Updating files:  54% (34569/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:26.7223431Z Updating files:  55% (35209/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:26.7456171Z Updating files:  56% (35849/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:26.8670369Z Updating files:  57% (36489/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:26.9479271Z Updating files:  58% (37129/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:26.9867106Z Updating files:  59% (37769/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:27.1237652Z Updating files:  60% (38409/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:27.1247578Z Updating files:  60% (39016/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:27.1934304Z Updating files:  61% (39050/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:27.2544688Z Updating files:  62% (39690/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:27.2740923Z Updating files:  63% (40330/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:27.2925741Z Updating files:  64% (40970/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:27.3095007Z Updating files:  65% (41610/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:27.3284590Z Updating files:  66% (42250/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:27.3518610Z Updating files:  67% (42891/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:27.4050510Z Updating files:  68% (43531/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:27.5335046Z Updating files:  69% (44171/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:27.6808307Z Updating files:  70% (44811/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:27.7084911Z Updating files:  71% (45451/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:27.7309071Z Updating files:  72% (46091/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:27.7481884Z Updating files:  73% (46731/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:27.7638987Z Updating files:  74% (47372/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:27.7789915Z Updating files:  75% (48012/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:27.7945829Z Updating files:  76% (48652/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:27.8133342Z Updating files:  77% (49292/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:27.8285592Z Updating files:  78% (49932/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:27.8446665Z Updating files:  79% (50572/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:27.8635389Z Updating files:  80% (51212/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:27.9546512Z Updating files:  81% (51853/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:28.1120253Z Updating files:  82% (52493/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:28.1260122Z Updating files:  83% (53133/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:28.2999520Z Updating files:  83% (53180/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:28.4009052Z Updating files:  84% (53773/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:28.4303060Z Updating files:  85% (54413/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:28.4490907Z Updating files:  86% (55053/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:28.4680774Z Updating files:  87% (55694/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:28.5225911Z Updating files:  88% (56334/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:28.5465858Z Updating files:  89% (56974/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:28.5641859Z Updating files:  90% (57614/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:28.5853312Z Updating files:  91% (58254/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:28.6229132Z Updating files:  92% (58894/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:28.6479527Z Updating files:  93% (59534/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:28.6730002Z Updating files:  94% (60175/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:28.8107314Z Updating files:  95% (60815/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:28.8807907Z Updating files:  96% (61455/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:28.9237347Z Updating files:  97% (62095/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:29.1479178Z Updating files:  98% (62735/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:29.1738949Z Updating files:  98% (62753/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:29.2130201Z Updating files:  99% (63375/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:29.2130951Z Updating files: 100% (64015/64015)
+python	Run actions/checkout@v4	2026-10-27T20:58:29.2131208Z Updating files: 100% (64015/64015), done.
+python	Run actions/checkout@v4	2026-10-27T20:58:29.3125439Z Note: switching to 'refs/remotes/pull/48/merge'.
+python	Run actions/checkout@v4	2026-10-27T20:58:29.3126026Z 
+python	Run actions/checkout@v4	2026-10-27T20:58:29.3126341Z You are in 'detached HEAD' state. You can look around, make experimental
+python	Run actions/checkout@v4	2026-10-27T20:58:29.3126808Z changes and commit them, and you can discard any commits you make in this
+python	Run actions/checkout@v4	2026-10-27T20:58:29.3127287Z state without impacting any branches by switching back to a branch.
+python	Run actions/checkout@v4	2026-10-27T20:58:29.3127573Z 
+python	Run actions/checkout@v4	2026-10-27T20:58:29.3127758Z If you want to create a new branch to retain commits you create, you may
+python	Run actions/checkout@v4	2026-10-27T20:58:29.3128249Z do so (now or later) by using -c with the switch command. Example:
+python	Run actions/checkout@v4	2026-10-27T20:58:29.3128495Z 
+python	Run actions/checkout@v4	2026-10-27T20:58:29.3128604Z   git switch -c <new-branch-name>
+python	Run actions/checkout@v4	2026-10-27T20:58:29.3128794Z 
+python	Run actions/checkout@v4	2026-10-27T20:58:29.3128908Z Or undo this operation with:
+python	Run actions/checkout@v4	2026-10-27T20:58:29.3129072Z 
+python	Run actions/checkout@v4	2026-10-27T20:58:29.3129182Z   git switch -
+python	Run actions/checkout@v4	2026-10-27T20:58:29.3129303Z 
+python	Run actions/checkout@v4	2026-10-27T20:58:29.3129517Z Turn off this advice by setting config variable advice.detachedHead to false
+python	Run actions/checkout@v4	2026-10-27T20:58:29.3129815Z 
+python	Run actions/checkout@v4	2026-10-27T20:58:29.3130153Z HEAD is now at 06494602 Merge 7199c8409d0a67f3a99c1f1fd62ffc0f078d6eb2 into 7d334dec45948953718bfacd3ed6dd199cadba79
+python	Run actions/checkout@v4	2026-10-27T20:58:29.3403240Z ##[endgroup]
+python	Run actions/checkout@v4	2026-10-27T20:58:29.3461804Z [command]/usr/bin/git log -1 --format=%H
+python	Run actions/checkout@v4	2026-10-27T20:58:29.3482728Z 06494602fe83d1af90f743243dad6afb7921206c
+python	Isolate Rust toolchain state	﻿2026-10-27T20:58:29.4743394Z ##[group]Run printf 'RUSTUP_HOME=%s/umf-rustup\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
+python	Isolate Rust toolchain state	2026-10-27T20:58:29.4743834Z ^[[36;1mprintf 'RUSTUP_HOME=%s/umf-rustup\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"^[[0m
+python	Isolate Rust toolchain state	2026-10-27T20:58:29.4774901Z shell: /usr/bin/bash -e {0}
+python	Isolate Rust toolchain state	2026-10-27T20:58:29.4775115Z ##[endgroup]
+python	Run actions/setup-python@v5	﻿2026-10-27T20:58:29.7736947Z ##[group]Run actions/setup-python@v5
+python	Run actions/setup-python@v5	2026-10-27T20:58:29.7737169Z with:
+python	Run actions/setup-python@v5	2026-10-27T20:58:29.7737303Z   python-version: 3.12
+python	Run actions/setup-python@v5	2026-10-27T20:58:29.7737444Z   check-latest: false
+python	Run actions/setup-python@v5	2026-10-27T20:58:29.7738904Z   token: ***
+python	Run actions/setup-python@v5	2026-10-27T20:58:29.7739031Z   update-environment: true
+python	Run actions/setup-python@v5	2026-10-27T20:58:29.7739181Z   allow-prereleases: false
+python	Run actions/setup-python@v5	2026-10-27T20:58:29.7739322Z   freethreaded: false
+python	Run actions/setup-python@v5	2026-10-27T20:58:29.7739449Z env:
+python	Run actions/setup-python@v5	2026-10-27T20:58:29.7739593Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run actions/setup-python@v5	2026-10-27T20:58:29.7739773Z ##[endgroup]
+python	Run actions/setup-python@v5	2026-10-27T20:58:29.8728755Z ##[group]Installed versions
+python	Run actions/setup-python@v5	2026-10-27T20:58:29.8826905Z (node:2164) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+python	Run actions/setup-python@v5	2026-10-27T20:58:29.8827534Z (Use `node --trace-deprecation ...` to show where the warning was created)
+python	Run actions/setup-python@v5	2026-10-27T20:58:29.8827888Z Successfully set up CPython (3.12.15)
+python	Run actions/setup-python@v5	2026-10-27T20:58:29.8828354Z ##[endgroup]
+python	Run dtolnay/rust-toolchain@stable	﻿2026-10-27T20:58:30.0006700Z ##[group]Run dtolnay/rust-toolchain@stable
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.0006934Z with:
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.0007079Z   toolchain: 1.90.0
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.0007227Z   components: rustfmt
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.0007380Z env:
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.0007542Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.0007799Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.0008106Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.0008398Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.0008651Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.0008894Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.0009148Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.0009356Z ##[endgroup]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.0092544Z ##[start-action display=Parse toolchain version;id=__dtolnay_rust-toolchain.parse]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1113440Z ##[group]Run if [[ -z $toolchain ]]; then
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1113847Z ^[[36;1mif [[ -z $toolchain ]]; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1114209Z ^[[36;1m  # GitHub does not enforce `required: true` inputs itself. https://github.com/actions/runner/issues/1070^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1114691Z ^[[36;1m  echo "'toolchain' is a required input" >&2^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1114884Z ^[[36;1m  exit 1^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1115106Z ^[[36;1melif [[ $toolchain =~ ^stable' '[0-9]+' '(year|month|week|day)s?' 'ago$ ]]; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1115377Z ^[[36;1m  if [[ Linux == macOS ]]; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1115749Z ^[[36;1m    echo "toolchain=1.$((($(date -v-$(sed 's/stable \([0-9]*\) \(.\).*/\1\2/' <<< $toolchain) +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1116086Z ^[[36;1m  else^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1116341Z ^[[36;1m    echo "toolchain=1.$((($(date --date "${toolchain#stable }" +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1116643Z ^[[36;1m  fi^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1116849Z ^[[36;1melif [[ $toolchain =~ ^stable' 'minus' '[0-9]+' 'releases?$ ]]; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1117212Z ^[[36;1m  echo "toolchain=1.$((($(date +%s)/60/60/24-16569)/7/6-${toolchain//[^0-9]/}))" >> $GITHUB_OUTPUT^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1117513Z ^[[36;1melif [[ $toolchain =~ ^1\.[0-9]+$ ]]; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1117825Z ^[[36;1m  echo "toolchain=1.$((i=${toolchain#1.}, c=($(date +%s)/60/60/24-16569)/7/6, i+9*i*(10*i<=c)+90*i*(100*i<=c)))" >> $GITHUB_OUTPUT^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1118126Z ^[[36;1melse^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1118265Z ^[[36;1m  delimiter=EOF^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1118455Z ^[[36;1m  while [[ $toolchain == *$delimiter* ]]; do delimiter+=_; done^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1118750Z ^[[36;1m  printf 'toolchain<<%s\n%s\n%s\n' "$delimiter" "$toolchain" "$delimiter" >> $GITHUB_OUTPUT^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1118998Z ^[[36;1mfi^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1166451Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1166924Z env:
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1167095Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1167335Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1167587Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1167846Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1168081Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1168314Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1168556Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1168748Z   toolchain: 1.90.0
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.1168883Z ##[endgroup]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.2449156Z ##[end-action id=__dtolnay_rust-toolchain.parse;outcome=success;conclusion=success;duration_ms=235]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.2452843Z ##[start-action display=Set $CARGO_HOME;id=__dtolnay_rust-toolchain.__run]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.3281761Z ##[group]Run echo CARGO_HOME=${CARGO_HOME:-"$HOME/.cargo"} >> $GITHUB_ENV
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.3282365Z ^[[36;1mecho CARGO_HOME=${CARGO_HOME:-"$HOME/.cargo"} >> $GITHUB_ENV^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.3310102Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.3310339Z env:
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.3310532Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.3310796Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.3311100Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.3311363Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.3311602Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.3311833Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.3312077Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.3312268Z ##[endgroup]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.4010051Z ##[end-action id=__dtolnay_rust-toolchain.__run;outcome=success;conclusion=success;duration_ms=155]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.4012331Z ##[start-action display=Install rustup if needed;id=__dtolnay_rust-toolchain.__run_2]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.5170606Z ##[group]Run if ! command -v rustup &>/dev/null; then
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.5170897Z ^[[36;1mif ! command -v rustup &>/dev/null; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.5171376Z ^[[36;1m  curl --proto '=https' --tlsv1.2 --retry 10 --retry-connrefused --location --silent --show-error --fail https://sh.rustup.rs | sh -s -- --default-toolchain none -y^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.5171821Z ^[[36;1m  echo "$CARGO_HOME/bin" >> $GITHUB_PATH^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.5172011Z ^[[36;1mfi^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.5200794Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.5201009Z env:
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.5201164Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.5201389Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.5201643Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.5201911Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.5202153Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.5202377Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.5202604Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.5202802Z   CARGO_HOME: /home/runner/.cargo
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.5202955Z ##[endgroup]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.6389776Z ##[end-action id=__dtolnay_rust-toolchain.__run_2;outcome=success;conclusion=success;duration_ms=237]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.6391952Z ##[start-action display=Install rustup if needed on windows;id=__dtolnay_rust-toolchain.__run_3]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.6398037Z ##[end-action id=__dtolnay_rust-toolchain.__run_3;outcome=skipped;conclusion=skipped;duration_ms=0]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.6407821Z ##[start-action display=rustup toolchain install 1.90.0;id=__dtolnay_rust-toolchain.__run_4]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7558570Z ##[group]Run set -f  # split targets and components on commas and whitespace, without glob expansion
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7559046Z ^[[36;1mset -f  # split targets and components on commas and whitespace, without glob expansion^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7559303Z ^[[36;1mflags=()^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7559471Z ^[[36;1mfor t in ${targets//,/ }; do flags+=(--target "$t"); done^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7559711Z ^[[36;1mfor c in ${components//,/ }; do flags+=(--component "$c"); done^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7560000Z ^[[36;1mif [[ $toolchain == nightly && -n $components ]]; then flags+=(--allow-downgrade); fi^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7560251Z ^[[36;1mlog=$(mktemp)^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7560388Z ^[[36;1mtrap 'rm -f "$log"' EXIT^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7560544Z ^[[36;1mfor attempt in 1 2 3 4 5; do^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7560873Z ^[[36;1m  if rustup toolchain install "$toolchain" "${flags[@]}" --profile minimal --no-self-update --force-non-host 2>&1 | tee "$log"; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7561199Z ^[[36;1m    break^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7561318Z ^[[36;1m  else^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7561704Z ^[[36;1m    status=$?^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7561825Z ^[[36;1m  fi^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7561999Z ^[[36;1m  if [[ $attempt == 5 ]] || ! grep -Fq 'checksum failed for ' "$log" \^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7562329Z ^[[36;1m      || ! grep -Fq 'this is likely due to an ongoing update of the official release server' "$log"; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7562595Z ^[[36;1m    exit "$status"^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7562731Z ^[[36;1m  fi^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7562939Z ^[[36;1m  echo "Retrying rustup toolchain install in 30 seconds (retry $attempt of 4)" >&2^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7563177Z ^[[36;1m  sleep 30^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7563303Z ^[[36;1mdone^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7591130Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7591333Z env:
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7591482Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7591708Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7591963Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7592216Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7592439Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7592656Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7592878Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7593076Z   CARGO_HOME: /home/runner/.cargo
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7593221Z   toolchain: 1.90.0
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7593346Z   targets: 
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7593460Z   components: rustfmt
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7593598Z   RUSTUP_PERMIT_COPY_RENAME: 1
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.7593742Z ##[endgroup]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:30.9256201Z info: syncing channel updates for 1.90.0-x86_64-unknown-linux-gnu
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:31.4265106Z info: latest update on 2025-09-18 for version 1.90.0 (1159e78c4 2025-09-14)
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:31.4266220Z info: downloading 4 components
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:39.9545922Z 
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:39.9621196Z   1.90.0-x86_64-unknown-linux-gnu installed - rustc 1.90.0 (1159e78c4 2025-09-14)
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:39.9621537Z 
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:39.9745991Z info: default toolchain set to 1.90.0-x86_64-unknown-linux-gnu
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0182110Z ##[end-action id=__dtolnay_rust-toolchain.__run_4;outcome=success;conclusion=success;duration_ms=9377]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0190025Z ##[start-action display=rustup default 1.90.0;id=__dtolnay_rust-toolchain.__run_5]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0208042Z ##[group]Run rustup default "$toolchain" --force-non-host
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0208336Z ^[[36;1mrustup default "$toolchain" --force-non-host^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0234935Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0235155Z env:
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0235320Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0235541Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0235784Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0236231Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0236473Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0236689Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0236908Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0237105Z   CARGO_HOME: /home/runner/.cargo
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0237258Z   toolchain: 1.90.0
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0237389Z ##[endgroup]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0364303Z info: using existing install for 1.90.0-x86_64-unknown-linux-gnu
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0643203Z info: default toolchain set to 1.90.0-x86_64-unknown-linux-gnu
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0643572Z 
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0725969Z   1.90.0-x86_64-unknown-linux-gnu unchanged - rustc 1.90.0 (1159e78c4 2025-09-14)
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0726792Z info: note that the toolchain '1.90.0-x86_64-unknown-linux-gnu' is currently in use (overridden by '/home/runner/work/umf/umf/rust-toolchain.toml')
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0727349Z 
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0744816Z ##[end-action id=__dtolnay_rust-toolchain.__run_5;outcome=success;conclusion=success;duration_ms=55]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0748602Z ##[start-action display=Create cachekey;id=__dtolnay_rust-toolchain.rustc-version]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0763738Z ##[group]Run DATE=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-date: \(20[0-9][0-9]\)-\([01][0-9]\)-\([0-3][0-9]\)$/\1\2\3/p')
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0764269Z ^[[36;1mDATE=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-date: \(20[0-9][0-9]\)-\([01][0-9]\)-\([0-3][0-9]\)$/\1\2\3/p')^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0764857Z ^[[36;1mHASH=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-hash: //p')^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0765163Z ^[[36;1mecho "cachekey=$(echo $DATE$HASH | head -c12)" >> $GITHUB_OUTPUT^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0791569Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0791771Z env:
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0791931Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0792158Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0792403Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0792640Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0792862Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0793082Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0793302Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0793499Z   CARGO_HOME: /home/runner/.cargo
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0793644Z   toolchain: 1.90.0
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.0793768Z ##[endgroup]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1148789Z ##[end-action id=__dtolnay_rust-toolchain.rustc-version;outcome=success;conclusion=success;duration_ms=39]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1151299Z ##[start-action display=Disable incremental compilation;id=__dtolnay_rust-toolchain.__run_6]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1747173Z ##[group]Run if [ -z "${CARGO_INCREMENTAL+set}" ]; then
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1747581Z ^[[36;1mif [ -z "${CARGO_INCREMENTAL+set}" ]; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1747887Z ^[[36;1m  echo CARGO_INCREMENTAL=0 >> $GITHUB_ENV^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1748143Z ^[[36;1mfi^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1774604Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1790360Z env:
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1790625Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1790968Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1791416Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1791814Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1792196Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1792603Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1792964Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1793545Z   CARGO_HOME: /home/runner/.cargo
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1793765Z ##[endgroup]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1870331Z ##[end-action id=__dtolnay_rust-toolchain.__run_6;outcome=success;conclusion=success;duration_ms=71]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1872545Z ##[start-action display=Enable colors in Cargo output;id=__dtolnay_rust-toolchain.__run_7]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1895221Z ##[group]Run if [ -z "${CARGO_TERM_COLOR+set}" ]; then
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1895494Z ^[[36;1mif [ -z "${CARGO_TERM_COLOR+set}" ]; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1895703Z ^[[36;1m  echo CARGO_TERM_COLOR=always >> $GITHUB_ENV^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1895893Z ^[[36;1mfi^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1921670Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1921874Z env:
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1922030Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1922255Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1922511Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1922791Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1923202Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1923450Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1923703Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1923922Z   CARGO_HOME: /home/runner/.cargo
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1924088Z   CARGO_INCREMENTAL: 0
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.1924226Z ##[endgroup]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2121361Z ##[end-action id=__dtolnay_rust-toolchain.__run_7;outcome=success;conclusion=success;duration_ms=24]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2125750Z ##[start-action display=Enable Cargo sparse registry;id=__dtolnay_rust-toolchain.__run_8]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2143505Z ##[group]Run # implemented in 1.66, stabilized in 1.68, made default in 1.70
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2143881Z ^[[36;1m# implemented in 1.66, stabilized in 1.68, made default in 1.70^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2144370Z ^[[36;1mif [ -z "${CARGO_REGISTRIES_CRATES_IO_PROTOCOL+set}" -o -f "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol ]; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2145126Z ^[[36;1m  if rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.6[89]\.'; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2145496Z ^[[36;1m    touch "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol || true^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2145844Z ^[[36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse >> $GITHUB_ENV^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2146159Z ^[[36;1m  elif rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.6[67]\.'; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2146516Z ^[[36;1m    touch "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol || true^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2146829Z ^[[36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=git >> $GITHUB_ENV^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2147035Z ^[[36;1m  fi^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2147156Z ^[[36;1mfi^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2173018Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2173223Z env:
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2173377Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2173593Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2173842Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2174084Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2174307Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2174606Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2174840Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2175041Z   CARGO_HOME: /home/runner/.cargo
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2175191Z   CARGO_INCREMENTAL: 0
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2175329Z   CARGO_TERM_COLOR: always
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2175464Z   toolchain: 1.90.0
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2175611Z ##[endgroup]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2498219Z ##[end-action id=__dtolnay_rust-toolchain.__run_8;outcome=success;conclusion=success;duration_ms=37]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2502384Z ##[start-action display=Work around spurious network errors in curl 8.0;id=__dtolnay_rust-toolchain.__run_9]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2533817Z ##[group]Run # https://rust-lang.zulipchat.com/#narrow/stream/246057-t-cargo/topic/timeout.20investigation
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2534319Z ^[[36;1m# https://rust-lang.zulipchat.com/#narrow/stream/246057-t-cargo/topic/timeout.20investigation^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2534880Z ^[[36;1mif rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.7[01]\.'; then^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2535208Z ^[[36;1m  echo CARGO_HTTP_MULTIPLEXING=false >> $GITHUB_ENV^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2535512Z ^[[36;1mfi^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2562036Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2562245Z env:
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2562410Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2562622Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2562883Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2563300Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2563520Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2563742Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2563965Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2564162Z   CARGO_HOME: /home/runner/.cargo
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2564316Z   CARGO_INCREMENTAL: 0
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2564636Z   CARGO_TERM_COLOR: always
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2564783Z   toolchain: 1.90.0
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2564918Z ##[endgroup]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2776945Z ##[end-action id=__dtolnay_rust-toolchain.__run_9;outcome=success;conclusion=success;duration_ms=27]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2781899Z ##[start-action display=rustc +1.90.0 --version --verbose;id=__dtolnay_rust-toolchain.__run_10]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2831721Z ##[group]Run rustc +"$toolchain" --version --verbose
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2832023Z ^[[36;1mrustc +"$toolchain" --version --verbose^[[0m
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2859515Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2859730Z env:
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2859877Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2860091Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2860333Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2860576Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2860789Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2861005Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2861229Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2861435Z   CARGO_HOME: /home/runner/.cargo
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2861591Z   CARGO_INCREMENTAL: 0
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2861730Z   CARGO_TERM_COLOR: always
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2861885Z   toolchain: 1.90.0
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.2862012Z ##[endgroup]
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.3018188Z rustc 1.90.0 (1159e78c4 2025-09-14)
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.3018602Z binary: rustc
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.3018877Z commit-hash: 1159e78c4747b02ef996e55082b704c09b970588
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.3019176Z commit-date: 2025-09-14
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.3019394Z host: x86_64-unknown-linux-gnu
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.3019613Z release: 1.90.0
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.3019815Z LLVM version: 20.1.8
+python	Run dtolnay/rust-toolchain@stable	2026-10-27T20:58:40.3040522Z ##[end-action id=__dtolnay_rust-toolchain.__run_10;outcome=success;conclusion=success;duration_ms=25]
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	﻿2026-10-27T20:58:40.3093190Z ##[group]Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:58:40.3095464Z ^[[36;1mpython -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'^[[0m
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:58:40.3139349Z shell: /usr/bin/bash -e {0}
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:58:40.3139610Z env:
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:58:40.3139822Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:58:40.3140370Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:58:40.3140800Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:58:40.3141225Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:58:40.3141582Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:58:40.3141946Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:58:40.3142293Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:58:40.3142607Z   CARGO_HOME: /home/runner/.cargo
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:58:40.3142837Z   CARGO_INCREMENTAL: 0
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:58:40.3143127Z   CARGO_TERM_COLOR: always
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:58:40.3143339Z ##[endgroup]
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:58:41.1378361Z Processing ./python
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:58:41.1393500Z   Installing build dependencies: started
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:58:44.3974199Z   Installing build dependencies: finished with status 'done'
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:58:44.3979122Z   Getting requirements to build wheel: started
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:58:44.5624782Z   Getting requirements to build wheel: finished with status 'done'
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:58:44.5631808Z   Preparing metadata (pyproject.toml): started
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:24.6032559Z   Preparing metadata (pyproject.toml): finished with status 'done'
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:24.6801797Z Collecting pytest
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:24.7368797Z   Downloading pytest-9.1.1-py3-none-any.whl.metadata (7.6 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:24.9912112Z Collecting ruff==0.17.1
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.0060649Z   Downloading ruff-0.17.1-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (20 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.0308030Z Collecting build
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.0441483Z   Downloading build-1.6.1-py3-none-any.whl.metadata (5.6 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.0595697Z Collecting hatchling<2,>=1.27
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.0607754Z   Using cached hatchling-1.32.4-py3-none-any.whl.metadata (3.9 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.1330202Z Collecting pydantic<3,>=2.11 (from umf-core==0.10.3)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.1463578Z   Downloading pydantic-2.14.1-py3-none-any.whl.metadata (133 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.1787922Z Collecting packaging>=24.2 (from hatchling<2,>=1.27)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.1799347Z   Using cached packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.1846146Z Collecting pathspec>=0.10.1 (from hatchling<2,>=1.27)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.1856300Z   Using cached pathspec-1.1.1-py3-none-any.whl.metadata (14 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.1905502Z Collecting pluggy>=1.0.0 (from hatchling<2,>=1.27)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.1916060Z   Using cached pluggy-1.7.0-py3-none-any.whl.metadata (5.0 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.1980537Z Collecting tomlkit>=0.11.1 (from hatchling<2,>=1.27)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.1992246Z   Using cached tomlkit-0.15.2-py3-none-any.whl.metadata (3.4 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.2122822Z Collecting trove-classifiers (from hatchling<2,>=1.27)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.2134826Z   Using cached trove_classifiers-2026.9.21.13-py3-none-any.whl.metadata (2.4 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.2312348Z Collecting annotated-types>=0.6.0 (from pydantic<3,>=2.11->umf-core==0.10.3)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.2444103Z   Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.6859118Z Collecting pydantic-core==2.50.1 (from pydantic<3,>=2.11->umf-core==0.10.3)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.6994137Z   Downloading pydantic_core-2.50.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.5 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.7210771Z Collecting typing-extensions>=4.16.0 (from pydantic<3,>=2.11->umf-core==0.10.3)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.7343289Z   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.7535800Z Collecting typing-inspection>=0.4.4 (from pydantic<3,>=2.11->umf-core==0.10.3)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.7670185Z   Downloading typing_inspection-0.4.4-py3-none-any.whl.metadata (2.6 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.7871397Z Collecting iniconfig>=1.0.1 (from pytest)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.8013763Z   Downloading iniconfig-2.3.1-py3-none-any.whl.metadata (2.8 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.8281063Z Collecting pygments>=2.7.2 (from pytest)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.8414050Z   Downloading pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.8617478Z Collecting pyproject_hooks (from build)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.8751045Z   Downloading pyproject_hooks-1.3.3-py3-none-any.whl.metadata (1.3 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:25.8938244Z Downloading ruff-0.17.1-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (10.4 MB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:26.0107181Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.4/10.4 MB 98.0 MB/s  0:00:00
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:26.0118002Z Using cached hatchling-1.32.4-py3-none-any.whl (78 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:26.0253129Z Downloading pydantic-2.14.1-py3-none-any.whl (488 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:26.0424090Z Downloading pydantic_core-2.50.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.2 MB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:26.0586112Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.2/2.2 MB 128.6 MB/s  0:00:00
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:26.0719372Z Downloading pytest-9.1.1-py3-none-any.whl (386 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:26.0762813Z Using cached pluggy-1.7.0-py3-none-any.whl (27 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:26.0898262Z Downloading build-1.6.1-py3-none-any.whl (31 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:26.1053127Z Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:26.1203021Z Downloading iniconfig-2.3.1-py3-none-any.whl (7.6 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:26.1283287Z Using cached packaging-26.3-py3-none-any.whl (129 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:26.1294147Z Using cached pathspec-1.1.1-py3-none-any.whl (57 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:26.1428829Z Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:26.1486076Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 259.0 MB/s  0:00:00
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:26.1497393Z Using cached tomlkit-0.15.2-py3-none-any.whl (52 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:26.1630178Z Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:26.1781154Z Downloading typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:26.1934155Z Downloading pyproject_hooks-1.3.3-py3-none-any.whl (10 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:26.1966967Z Using cached trove_classifiers-2026.9.21.13-py3-none-any.whl (14 kB)
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:26.2459861Z Building wheels for collected packages: umf-core
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:26.2467155Z   Building wheel for umf-core (pyproject.toml): started
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:26.3038481Z   Building wheel for umf-core (pyproject.toml): finished with status 'done'
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:26.3065567Z   Created wheel for umf-core: filename=umf_core-0.10.3-cp311-abi3-linux_x86_64.whl size=3611895 sha256=5a9daa8ecada8c2504f90b94d3e8b858d9978622cde9d9793a0242028be0d288
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:26.3066568Z   Stored in directory: /tmp/pip-ephem-wheel-cache-xq97jwkn/wheels/ab/15/ac/d46ad78b5110a5a0bf7805d13317043550eb468f03bce8ceb0
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:26.3084646Z Successfully built umf-core
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:26.3354676Z Installing collected packages: trove-classifiers, typing-extensions, tomlkit, ruff, pyproject_hooks, pygments, pluggy, pathspec, packaging, iniconfig, annotated-types, typing-inspection, pytest, pydantic-core, hatchling, build, pydantic, umf-core
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:27.8404435Z 
+python	Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'	2026-10-27T20:59:27.8420855Z Successfully installed annotated-types-0.8.0 build-1.6.1 hatchling-1.32.4 iniconfig-2.3.1 packaging-26.3 pathspec-1.1.1 pluggy-1.7.0 pydantic-2.14.1 pydantic-core-2.50.1 pygments-2.21.0 pyproject_hooks-1.3.3 pytest-9.1.1 ruff-0.17.1 tomlkit-0.15.2 trove-classifiers-2026.9.21.13 typing-extensions-4.16.0 typing-inspection-0.4.4 umf-core-0.10.3
+python	Run python -m pytest python/tests -q	﻿2026-10-27T20:59:28.0536980Z ##[group]Run python -m pytest python/tests -q
+python	Run python -m pytest python/tests -q	2026-10-27T20:59:28.0537238Z ^[[36;1mpython -m pytest python/tests -q^[[0m
+python	Run python -m pytest python/tests -q	2026-10-27T20:59:28.0563533Z shell: /usr/bin/bash -e {0}
+python	Run python -m pytest python/tests -q	2026-10-27T20:59:28.0563696Z env:
+python	Run python -m pytest python/tests -q	2026-10-27T20:59:28.0563845Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run python -m pytest python/tests -q	2026-10-27T20:59:28.0564075Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run python -m pytest python/tests -q	2026-10-27T20:59:28.0564330Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run python -m pytest python/tests -q	2026-10-27T20:59:28.0564735Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run python -m pytest python/tests -q	2026-10-27T20:59:28.0565168Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run python -m pytest python/tests -q	2026-10-27T20:59:28.0565397Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run python -m pytest python/tests -q	2026-10-27T20:59:28.0565629Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run python -m pytest python/tests -q	2026-10-27T20:59:28.0565832Z   CARGO_HOME: /home/runner/.cargo
+python	Run python -m pytest python/tests -q	2026-10-27T20:59:28.0565984Z   CARGO_INCREMENTAL: 0
+python	Run python -m pytest python/tests -q	2026-10-27T20:59:28.0566127Z   CARGO_TERM_COLOR: always
+python	Run python -m pytest python/tests -q	2026-10-27T20:59:28.0566326Z ##[endgroup]
+python	Run python -m pytest python/tests -q	2026-10-27T20:59:35.5798180Z ........................................................................ [ 18%]
+python	Run python -m pytest python/tests -q	2026-10-27T20:59:36.9114210Z ........................................................................ [ 36%]
+python	Run python -m pytest python/tests -q	2026-10-27T20:59:38.8118775Z ........................................................................ [ 54%]
+python	Run python -m pytest python/tests -q	2026-10-27T20:59:38.9767667Z ........................................................................ [ 72%]
+python	Run python -m pytest python/tests -q	2026-10-27T20:59:40.2823959Z ........................................................................ [ 90%]
+python	Run python -m pytest python/tests -q	2026-10-27T20:59:52.0771458Z .....................................                                    [100%]
+python	Run python -m pytest python/tests -q	2026-10-27T20:59:52.0771990Z 397 passed in 23.07s
+python	Run ruff check python	﻿2026-10-27T20:59:52.2155465Z ##[group]Run ruff check python
+python	Run ruff check python	2026-10-27T20:59:52.2155703Z ^[[36;1mruff check python^[[0m
+python	Run ruff check python	2026-10-27T20:59:52.2182123Z shell: /usr/bin/bash -e {0}
+python	Run ruff check python	2026-10-27T20:59:52.2182301Z env:
+python	Run ruff check python	2026-10-27T20:59:52.2182465Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+python	Run ruff check python	2026-10-27T20:59:52.2182708Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run ruff check python	2026-10-27T20:59:52.2182977Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+python	Run ruff check python	2026-10-27T20:59:52.2183231Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run ruff check python	2026-10-27T20:59:52.2183459Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run ruff check python	2026-10-27T20:59:52.2183689Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+python	Run ruff check python	2026-10-27T20:59:52.2183949Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+python	Run ruff check python	2026-10-27T20:59:52.2184184Z   CARGO_HOME: /home/runner/.cargo
+python	Run ruff check python	2026-10-27T20:59:52.2184382Z   CARGO_INCREMENTAL: 0
+python	Run ruff check python	2026-10-27T20:59:52.2184666Z   CARGO_TERM_COLOR: always
+python	Run ruff check python	2026-10-27T20:59:52.2184819Z ##[endgroup]
+python	Run ruff check python	2026-10-27T20:59:52.3322985Z I001 [*] Import block is un-sorted or un-formatted
+python	Run ruff check python	2026-10-27T20:59:52.3323645Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:10:1
+python	Run ruff check python	2026-10-27T20:59:52.3323982Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3324272Z  8 |   bootstrap-enrolled native owner/supervisor adapter is implemented.
+python	Run ruff check python	2026-10-27T20:59:52.3324762Z  9 |   """
+python	Run ruff check python	2026-10-27T20:59:52.3324961Z 10 | / from __future__ import annotations
+python	Run ruff check python	2026-10-27T20:59:52.3325152Z 11 | |
+python	Run ruff check python	2026-10-27T20:59:52.3325276Z 12 | | import fcntl
+python	Run ruff check python	2026-10-27T20:59:52.3325412Z 13 | | import hashlib
+python	Run ruff check python	2026-10-27T20:59:52.3325645Z 14 | | import json
+python	Run ruff check python	2026-10-27T20:59:52.3325831Z 15 | | import os
+python	Run ruff check python	2026-10-27T20:59:52.3326015Z 16 | | import re
+python	Run ruff check python	2026-10-27T20:59:52.3326172Z 17 | | import stat
+python	Run ruff check python	2026-10-27T20:59:52.3326301Z 18 | | import tempfile
+python	Run ruff check python	2026-10-27T20:59:52.3326526Z 19 | | from collections.abc import Iterator
+python	Run ruff check python	2026-10-27T20:59:52.3326834Z 20 | | from contextlib import contextmanager
+python	Run ruff check python	2026-10-27T20:59:52.3327088Z 21 | | from pathlib import Path
+python	Run ruff check python	2026-10-27T20:59:52.3327328Z 22 | | from typing import Any
+python	Run ruff check python	2026-10-27T20:59:52.3327538Z 23 | |
+python	Run ruff check python	2026-10-27T20:59:52.3327732Z 24 | | from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3328036Z 25 | |     CustodyJournalError as CustodyJournalError,
+python	Run ruff check python	2026-10-27T20:59:52.3328321Z 26 | |     JOURNAL_PROFILE as JOURNAL_PROFILE,
+python	Run ruff check python	2026-10-27T20:59:52.3328597Z 27 | |     JOURNAL_PROFILE_02 as JOURNAL_PROFILE_02,
+python	Run ruff check python	2026-10-27T20:59:52.3328850Z 28 | |     _HEX as _HEX,
+python	Run ruff check python	2026-10-27T20:59:52.3329050Z 29 | |     _KINDS as _KINDS,
+python	Run ruff check python	2026-10-27T20:59:52.3329258Z 30 | |     _KINDS_02 as _KINDS_02,
+python	Run ruff check python	2026-10-27T20:59:52.3329481Z 31 | |     _MAX_BYTES as _MAX_BYTES,
+python	Run ruff check python	2026-10-27T20:59:52.3329707Z 32 | |     _MAX_EVENTS as _MAX_EVENTS,
+python	Run ruff check python	2026-10-27T20:59:52.3329930Z 33 | |     _MAX_SAFE as _MAX_SAFE,
+python	Run ruff check python	2026-10-27T20:59:52.3330167Z 34 | |     _OWNER_REQUEST_KIND as _OWNER_REQUEST_KIND,
+python	Run ruff check python	2026-10-27T20:59:52.3330749Z 35 | |     _UUID as _UUID,
+python	Run ruff check python	2026-10-27T20:59:52.3330963Z 36 | |     _canonical as _canonical,
+python	Run ruff check python	2026-10-27T20:59:52.3331212Z 37 | |     _canonical_path as _canonical_path,
+python	Run ruff check python	2026-10-27T20:59:52.3331481Z 38 | |     _closed as _closed,
+python	Run ruff check python	2026-10-27T20:59:52.3331697Z 39 | |     _decimal as _decimal,
+python	Run ruff check python	2026-10-27T20:59:52.3331918Z 40 | |     _digest as _digest,
+python	Run ruff check python	2026-10-27T20:59:52.3332066Z 41 | |     _hex as _hex,
+python	Run ruff check python	2026-10-27T20:59:52.3332246Z 42 | |     _pairs_no_duplicates as _pairs_no_duplicates,
+python	Run ruff check python	2026-10-27T20:59:52.3332437Z 43 | |     _read_json as _read_json,
+python	Run ruff check python	2026-10-27T20:59:52.3332594Z 44 | |     _replay as _replay,
+python	Run ruff check python	2026-10-27T20:59:52.3332749Z 45 | |     _safe_uint32 as _safe_uint32,
+python	Run ruff check python	2026-10-27T20:59:52.3332904Z 46 | |     _text as _text,
+python	Run ruff check python	2026-10-27T20:59:52.3333034Z 47 | |     _uuid as _uuid,
+python	Run ruff check python	2026-10-27T20:59:52.3333201Z 48 | |     _validate_event_payload as _validate_event_payload,
+python	Run ruff check python	2026-10-27T20:59:52.3333418Z 49 | |     _validate_observation as _validate_observation,
+python	Run ruff check python	2026-10-27T20:59:52.3333643Z 50 | |     _validate_owner_payload as _validate_owner_payload,
+python	Run ruff check python	2026-10-27T20:59:52.3333922Z 51 | |     validate_original_target_custody_record as validate_original_target_custody_record,
+python	Run ruff check python	2026-10-27T20:59:52.3334371Z 52 | | )
+python	Run ruff check python	2026-10-27T20:59:52.3334647Z    | |_^
+python	Run ruff check python	2026-10-27T20:59:52.3334770Z help: Organize imports
+python	Run ruff check python	2026-10-27T20:59:52.3334895Z     |
+python	Run ruff check python	2026-10-27T20:59:52.3335020Z 24  | from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3335218Z     -     CustodyJournalError as CustodyJournalError,
+python	Run ruff check python	2026-10-27T20:59:52.3335415Z     -     JOURNAL_PROFILE as JOURNAL_PROFILE,
+python	Run ruff check python	2026-10-27T20:59:52.3335599Z     -     JOURNAL_PROFILE_02 as JOURNAL_PROFILE_02,
+python	Run ruff check python	2026-10-27T20:59:52.3335769Z 25  |     _HEX as _HEX,
+python	Run ruff check python	2026-10-27T20:59:52.3335896Z 26  + )
+python	Run ruff check python	2026-10-27T20:59:52.3336025Z 27  + from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3336190Z 28  |     _KINDS as _KINDS,
+python	Run ruff check python	2026-10-27T20:59:52.3336326Z 29  + )
+python	Run ruff check python	2026-10-27T20:59:52.3336452Z 30  + from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3336621Z 31  |     _KINDS_02 as _KINDS_02,
+python	Run ruff check python	2026-10-27T20:59:52.3336763Z 32  + )
+python	Run ruff check python	2026-10-27T20:59:52.3336883Z 33  + from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3337052Z 34  |     _MAX_BYTES as _MAX_BYTES,
+python	Run ruff check python	2026-10-27T20:59:52.3337193Z 35  + )
+python	Run ruff check python	2026-10-27T20:59:52.3337311Z 36  + from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3337474Z 37  |     _MAX_EVENTS as _MAX_EVENTS,
+python	Run ruff check python	2026-10-27T20:59:52.3337617Z 38  + )
+python	Run ruff check python	2026-10-27T20:59:52.3337735Z 39  + from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3337896Z 40  |     _MAX_SAFE as _MAX_SAFE,
+python	Run ruff check python	2026-10-27T20:59:52.3338033Z 41  + )
+python	Run ruff check python	2026-10-27T20:59:52.3338153Z 42  + from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3338329Z 43  |     _OWNER_REQUEST_KIND as _OWNER_REQUEST_KIND,
+python	Run ruff check python	2026-10-27T20:59:52.3338499Z 44  + )
+python	Run ruff check python	2026-10-27T20:59:52.3338616Z 45  + from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3338772Z 46  |     _UUID as _UUID,
+python	Run ruff check python	2026-10-27T20:59:52.3338900Z 47  + )
+python	Run ruff check python	2026-10-27T20:59:52.3339016Z 48  + from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3339193Z 49  +     JOURNAL_PROFILE as JOURNAL_PROFILE,
+python	Run ruff check python	2026-10-27T20:59:52.3339350Z 50  + )
+python	Run ruff check python	2026-10-27T20:59:52.3339473Z 51  + from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3339652Z 52  +     JOURNAL_PROFILE_02 as JOURNAL_PROFILE_02,
+python	Run ruff check python	2026-10-27T20:59:52.3339813Z 53  + )
+python	Run ruff check python	2026-10-27T20:59:52.3339931Z 54  + from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3340116Z 55  +     CustodyJournalError as CustodyJournalError,
+python	Run ruff check python	2026-10-27T20:59:52.3340282Z 56  + )
+python	Run ruff check python	2026-10-27T20:59:52.3340398Z 57  + from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3340558Z 58  |     _canonical as _canonical,
+python	Run ruff check python	2026-10-27T20:59:52.3340700Z 59  + )
+python	Run ruff check python	2026-10-27T20:59:52.3340819Z 60  + from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3340994Z 61  |     _canonical_path as _canonical_path,
+python	Run ruff check python	2026-10-27T20:59:52.3341147Z 62  + )
+python	Run ruff check python	2026-10-27T20:59:52.3341263Z 63  + from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3341420Z 64  |     _closed as _closed,
+python	Run ruff check python	2026-10-27T20:59:52.3341553Z 65  + )
+python	Run ruff check python	2026-10-27T20:59:52.3341871Z 66  + from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3342034Z 67  |     _decimal as _decimal,
+python	Run ruff check python	2026-10-27T20:59:52.3342170Z 68  + )
+python	Run ruff check python	2026-10-27T20:59:52.3342300Z 69  + from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3342467Z 70  |     _digest as _digest,
+python	Run ruff check python	2026-10-27T20:59:52.3342613Z 71  + )
+python	Run ruff check python	2026-10-27T20:59:52.3342744Z 72  + from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3342908Z 73  |     _hex as _hex,
+python	Run ruff check python	2026-10-27T20:59:52.3343036Z 74  + )
+python	Run ruff check python	2026-10-27T20:59:52.3343156Z 75  + from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3343345Z 76  |     _pairs_no_duplicates as _pairs_no_duplicates,
+python	Run ruff check python	2026-10-27T20:59:52.3343522Z 77  + )
+python	Run ruff check python	2026-10-27T20:59:52.3343648Z 78  + from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3343815Z 79  |     _read_json as _read_json,
+python	Run ruff check python	2026-10-27T20:59:52.3343962Z 80  + )
+python	Run ruff check python	2026-10-27T20:59:52.3344085Z 81  + from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3344249Z 82  |     _replay as _replay,
+python	Run ruff check python	2026-10-27T20:59:52.3344391Z 83  + )
+python	Run ruff check python	2026-10-27T20:59:52.3344670Z 84  + from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3344866Z 85  |     _safe_uint32 as _safe_uint32,
+python	Run ruff check python	2026-10-27T20:59:52.3345016Z 86  + )
+python	Run ruff check python	2026-10-27T20:59:52.3345267Z 87  + from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3345425Z 88  |     _text as _text,
+python	Run ruff check python	2026-10-27T20:59:52.3345553Z 89  + )
+python	Run ruff check python	2026-10-27T20:59:52.3345671Z 90  + from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3345829Z 91  |     _uuid as _uuid,
+python	Run ruff check python	2026-10-27T20:59:52.3345957Z 92  + )
+python	Run ruff check python	2026-10-27T20:59:52.3346083Z 93  + from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3346302Z 94  |     _validate_event_payload as _validate_event_payload,
+python	Run ruff check python	2026-10-27T20:59:52.3346495Z 95  + )
+python	Run ruff check python	2026-10-27T20:59:52.3346617Z 96  + from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3346801Z 97  |     _validate_observation as _validate_observation,
+python	Run ruff check python	2026-10-27T20:59:52.3346974Z 98  + )
+python	Run ruff check python	2026-10-27T20:59:52.3347271Z 99  + from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3347468Z 100 |     _validate_owner_payload as _validate_owner_payload,
+python	Run ruff check python	2026-10-27T20:59:52.3347661Z 101 + )
+python	Run ruff check python	2026-10-27T20:59:52.3347788Z 102 + from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3348064Z 103 |     validate_original_target_custody_record as validate_original_target_custody_record,
+python	Run ruff check python	2026-10-27T20:59:52.3348326Z 104 | )
+python	Run ruff check python	2026-10-27T20:59:52.3348435Z     -
+python	Run ruff check python	2026-10-27T20:59:52.3348542Z 105 |
+python	Run ruff check python	2026-10-27T20:59:52.3348647Z     |
+python	Run ruff check python	2026-10-27T20:59:52.3348713Z 
+python	Run ruff check python	2026-10-27T20:59:52.3348784Z F401 [*] `hashlib` imported but unused
+python	Run ruff check python	2026-10-27T20:59:52.3349012Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:13:8
+python	Run ruff check python	2026-10-27T20:59:52.3349230Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3349343Z 12 | import fcntl
+python	Run ruff check python	2026-10-27T20:59:52.3349467Z 13 | import hashlib
+python	Run ruff check python	2026-10-27T20:59:52.3349589Z    |        ^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3349710Z 14 | import json
+python	Run ruff check python	2026-10-27T20:59:52.3349835Z 15 | import os
+python	Run ruff check python	2026-10-27T20:59:52.3349955Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3350080Z help: Remove unused import: `hashlib`
+python	Run ruff check python	2026-10-27T20:59:52.3350230Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3350337Z 12 | import fcntl
+python	Run ruff check python	2026-10-27T20:59:52.3350462Z    - import hashlib
+python	Run ruff check python	2026-10-27T20:59:52.3350581Z 13 | import json
+python	Run ruff check python	2026-10-27T20:59:52.3350697Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3350762Z 
+python	Run ruff check python	2026-10-27T20:59:52.3350826Z F401 [*] `json` imported but unused
+python	Run ruff check python	2026-10-27T20:59:52.3351040Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:14:8
+python	Run ruff check python	2026-10-27T20:59:52.3351247Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3351354Z 12 | import fcntl
+python	Run ruff check python	2026-10-27T20:59:52.3351474Z 13 | import hashlib
+python	Run ruff check python	2026-10-27T20:59:52.3351602Z 14 | import json
+python	Run ruff check python	2026-10-27T20:59:52.3351717Z    |        ^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3351831Z 15 | import os
+python	Run ruff check python	2026-10-27T20:59:52.3351954Z 16 | import re
+python	Run ruff check python	2026-10-27T20:59:52.3352070Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3352195Z help: Remove unused import: `json`
+python	Run ruff check python	2026-10-27T20:59:52.3352347Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3352456Z 13 | import hashlib
+python	Run ruff check python	2026-10-27T20:59:52.3352575Z    - import json
+python	Run ruff check python	2026-10-27T20:59:52.3352711Z 14 | import os
+python	Run ruff check python	2026-10-27T20:59:52.3352827Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3352887Z 
+python	Run ruff check python	2026-10-27T20:59:52.3353064Z F401 [*] `re` imported but unused
+python	Run ruff check python	2026-10-27T20:59:52.3353272Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:16:8
+python	Run ruff check python	2026-10-27T20:59:52.3353484Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3353591Z 14 | import json
+python	Run ruff check python	2026-10-27T20:59:52.3353713Z 15 | import os
+python	Run ruff check python	2026-10-27T20:59:52.3353836Z 16 | import re
+python	Run ruff check python	2026-10-27T20:59:52.3353953Z    |        ^^
+python	Run ruff check python	2026-10-27T20:59:52.3354075Z 17 | import stat
+python	Run ruff check python	2026-10-27T20:59:52.3354198Z 18 | import tempfile
+python	Run ruff check python	2026-10-27T20:59:52.3354320Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3354436Z help: Remove unused import: `re`
+python	Run ruff check python	2026-10-27T20:59:52.3354767Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3354872Z 15 | import os
+python	Run ruff check python	2026-10-27T20:59:52.3354990Z    - import re
+python	Run ruff check python	2026-10-27T20:59:52.3355106Z 16 | import stat
+python	Run ruff check python	2026-10-27T20:59:52.3355219Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3355274Z 
+python	Run ruff check python	2026-10-27T20:59:52.3355368Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3355608Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:25:5
+python	Run ruff check python	2026-10-27T20:59:52.3355816Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3355937Z 24 | from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3356127Z 25 |     CustodyJournalError as CustodyJournalError,
+python	Run ruff check python	2026-10-27T20:59:52.3356320Z    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3356596Z 26 |     JOURNAL_PROFILE as JOURNAL_PROFILE,
+python	Run ruff check python	2026-10-27T20:59:52.3356779Z 27 |     JOURNAL_PROFILE_02 as JOURNAL_PROFILE_02,
+python	Run ruff check python	2026-10-27T20:59:52.3356954Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3357069Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3357201Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3357321Z 24 | from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3357508Z    -     CustodyJournalError as CustodyJournalError,
+python	Run ruff check python	2026-10-27T20:59:52.3357696Z 25 +     CustodyJournalError,
+python	Run ruff check python	2026-10-27T20:59:52.3357856Z 26 |     JOURNAL_PROFILE as JOURNAL_PROFILE,
+python	Run ruff check python	2026-10-27T20:59:52.3358016Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3358332Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3358541Z 
+python	Run ruff check python	2026-10-27T20:59:52.3358659Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3359021Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:26:5
+python	Run ruff check python	2026-10-27T20:59:52.3359317Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3359489Z 24 | from .target_custody_codec import (
+python	Run ruff check python	2026-10-27T20:59:52.3359763Z 25 |     CustodyJournalError as CustodyJournalError,
+python	Run ruff check python	2026-10-27T20:59:52.3360059Z 26 |     JOURNAL_PROFILE as JOURNAL_PROFILE,
+python	Run ruff check python	2026-10-27T20:59:52.3360328Z    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3360595Z 27 |     JOURNAL_PROFILE_02 as JOURNAL_PROFILE_02,
+python	Run ruff check python	2026-10-27T20:59:52.3360845Z 28 |     _HEX as _HEX,
+python	Run ruff check python	2026-10-27T20:59:52.3361026Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3361198Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3361403Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3361607Z 25 |     CustodyJournalError as CustodyJournalError,
+python	Run ruff check python	2026-10-27T20:59:52.3361904Z    -     JOURNAL_PROFILE as JOURNAL_PROFILE,
+python	Run ruff check python	2026-10-27T20:59:52.3362209Z 26 +     JOURNAL_PROFILE,
+python	Run ruff check python	2026-10-27T20:59:52.3362442Z 27 |     JOURNAL_PROFILE_02 as JOURNAL_PROFILE_02,
+python	Run ruff check python	2026-10-27T20:59:52.3362697Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3362927Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3363166Z 
+python	Run ruff check python	2026-10-27T20:59:52.3363298Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3363676Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:27:5
+python	Run ruff check python	2026-10-27T20:59:52.3364006Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3364218Z 25 |     CustodyJournalError as CustodyJournalError,
+python	Run ruff check python	2026-10-27T20:59:52.3364673Z 26 |     JOURNAL_PROFILE as JOURNAL_PROFILE,
+python	Run ruff check python	2026-10-27T20:59:52.3364952Z 27 |     JOURNAL_PROFILE_02 as JOURNAL_PROFILE_02,
+python	Run ruff check python	2026-10-27T20:59:52.3365218Z    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3365447Z 28 |     _HEX as _HEX,
+python	Run ruff check python	2026-10-27T20:59:52.3365646Z 29 |     _KINDS as _KINDS,
+python	Run ruff check python	2026-10-27T20:59:52.3365832Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3365997Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3366194Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3366374Z 26 |     JOURNAL_PROFILE as JOURNAL_PROFILE,
+python	Run ruff check python	2026-10-27T20:59:52.3366639Z    -     JOURNAL_PROFILE_02 as JOURNAL_PROFILE_02,
+python	Run ruff check python	2026-10-27T20:59:52.3367011Z 27 +     JOURNAL_PROFILE_02,
+python	Run ruff check python	2026-10-27T20:59:52.3367150Z 28 |     _HEX as _HEX,
+python	Run ruff check python	2026-10-27T20:59:52.3367272Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3367418Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3367562Z 
+python	Run ruff check python	2026-10-27T20:59:52.3367644Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3367876Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:28:5
+python	Run ruff check python	2026-10-27T20:59:52.3368081Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3368200Z 26 |     JOURNAL_PROFILE as JOURNAL_PROFILE,
+python	Run ruff check python	2026-10-27T20:59:52.3368377Z 27 |     JOURNAL_PROFILE_02 as JOURNAL_PROFILE_02,
+python	Run ruff check python	2026-10-27T20:59:52.3368549Z 28 |     _HEX as _HEX,
+python	Run ruff check python	2026-10-27T20:59:52.3368673Z    |     ^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3368799Z 29 |     _KINDS as _KINDS,
+python	Run ruff check python	2026-10-27T20:59:52.3368941Z 30 |     _KINDS_02 as _KINDS_02,
+python	Run ruff check python	2026-10-27T20:59:52.3369079Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3369193Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3369322Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3369446Z 27 |     JOURNAL_PROFILE_02 as JOURNAL_PROFILE_02,
+python	Run ruff check python	2026-10-27T20:59:52.3369614Z    -     _HEX as _HEX,
+python	Run ruff check python	2026-10-27T20:59:52.3369746Z 28 +     _HEX,
+python	Run ruff check python	2026-10-27T20:59:52.3369870Z 29 |     _KINDS as _KINDS,
+python	Run ruff check python	2026-10-27T20:59:52.3370105Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3370253Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3370390Z 
+python	Run ruff check python	2026-10-27T20:59:52.3370477Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3370716Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:29:5
+python	Run ruff check python	2026-10-27T20:59:52.3370925Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3371054Z 27 |     JOURNAL_PROFILE_02 as JOURNAL_PROFILE_02,
+python	Run ruff check python	2026-10-27T20:59:52.3371226Z 28 |     _HEX as _HEX,
+python	Run ruff check python	2026-10-27T20:59:52.3371357Z 29 |     _KINDS as _KINDS,
+python	Run ruff check python	2026-10-27T20:59:52.3371495Z    |     ^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3371640Z 30 |     _KINDS_02 as _KINDS_02,
+python	Run ruff check python	2026-10-27T20:59:52.3371791Z 31 |     _MAX_BYTES as _MAX_BYTES,
+python	Run ruff check python	2026-10-27T20:59:52.3371931Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3372046Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3372178Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3372285Z 28 |     _HEX as _HEX,
+python	Run ruff check python	2026-10-27T20:59:52.3372419Z    -     _KINDS as _KINDS,
+python	Run ruff check python	2026-10-27T20:59:52.3372552Z 29 +     _KINDS,
+python	Run ruff check python	2026-10-27T20:59:52.3372678Z 30 |     _KINDS_02 as _KINDS_02,
+python	Run ruff check python	2026-10-27T20:59:52.3372814Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3372961Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3373102Z 
+python	Run ruff check python	2026-10-27T20:59:52.3373186Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3373491Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:30:5
+python	Run ruff check python	2026-10-27T20:59:52.3373694Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3373835Z 28 |     _HEX as _HEX,
+python	Run ruff check python	2026-10-27T20:59:52.3373964Z 29 |     _KINDS as _KINDS,
+python	Run ruff check python	2026-10-27T20:59:52.3374094Z 30 |     _KINDS_02 as _KINDS_02,
+python	Run ruff check python	2026-10-27T20:59:52.3374233Z    |     ^^^^^^^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3374373Z 31 |     _MAX_BYTES as _MAX_BYTES,
+python	Run ruff check python	2026-10-27T20:59:52.3375288Z 32 |     _MAX_EVENTS as _MAX_EVENTS,
+python	Run ruff check python	2026-10-27T20:59:52.3375437Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3375551Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3375681Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3375789Z 29 |     _KINDS as _KINDS,
+python	Run ruff check python	2026-10-27T20:59:52.3375924Z    -     _KINDS_02 as _KINDS_02,
+python	Run ruff check python	2026-10-27T20:59:52.3376065Z 30 +     _KINDS_02,
+python	Run ruff check python	2026-10-27T20:59:52.3376192Z 31 |     _MAX_BYTES as _MAX_BYTES,
+python	Run ruff check python	2026-10-27T20:59:52.3376330Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3376467Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3376608Z 
+python	Run ruff check python	2026-10-27T20:59:52.3376688Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3376923Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:31:5
+python	Run ruff check python	2026-10-27T20:59:52.3377130Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3377240Z 29 |     _KINDS as _KINDS,
+python	Run ruff check python	2026-10-27T20:59:52.3377381Z 30 |     _KINDS_02 as _KINDS_02,
+python	Run ruff check python	2026-10-27T20:59:52.3377526Z 31 |     _MAX_BYTES as _MAX_BYTES,
+python	Run ruff check python	2026-10-27T20:59:52.3377669Z    |     ^^^^^^^^^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3377813Z 32 |     _MAX_EVENTS as _MAX_EVENTS,
+python	Run ruff check python	2026-10-27T20:59:52.3377962Z 33 |     _MAX_SAFE as _MAX_SAFE,
+python	Run ruff check python	2026-10-27T20:59:52.3378315Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3378427Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3378557Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3378665Z 30 |     _KINDS_02 as _KINDS_02,
+python	Run ruff check python	2026-10-27T20:59:52.3378814Z    -     _MAX_BYTES as _MAX_BYTES,
+python	Run ruff check python	2026-10-27T20:59:52.3378956Z 31 +     _MAX_BYTES,
+python	Run ruff check python	2026-10-27T20:59:52.3379086Z 32 |     _MAX_EVENTS as _MAX_EVENTS,
+python	Run ruff check python	2026-10-27T20:59:52.3379225Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3379365Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3379505Z 
+python	Run ruff check python	2026-10-27T20:59:52.3379586Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3379816Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:32:5
+python	Run ruff check python	2026-10-27T20:59:52.3380019Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3380130Z 30 |     _KINDS_02 as _KINDS_02,
+python	Run ruff check python	2026-10-27T20:59:52.3380278Z 31 |     _MAX_BYTES as _MAX_BYTES,
+python	Run ruff check python	2026-10-27T20:59:52.3380423Z 32 |     _MAX_EVENTS as _MAX_EVENTS,
+python	Run ruff check python	2026-10-27T20:59:52.3380574Z    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3380718Z 33 |     _MAX_SAFE as _MAX_SAFE,
+python	Run ruff check python	2026-10-27T20:59:52.3380876Z 34 |     _OWNER_REQUEST_KIND as _OWNER_REQUEST_KIND,
+python	Run ruff check python	2026-10-27T20:59:52.3381038Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3381241Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3381370Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3381480Z 31 |     _MAX_BYTES as _MAX_BYTES,
+python	Run ruff check python	2026-10-27T20:59:52.3381627Z    -     _MAX_EVENTS as _MAX_EVENTS,
+python	Run ruff check python	2026-10-27T20:59:52.3381781Z 32 +     _MAX_EVENTS,
+python	Run ruff check python	2026-10-27T20:59:52.3381907Z 33 |     _MAX_SAFE as _MAX_SAFE,
+python	Run ruff check python	2026-10-27T20:59:52.3382040Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3382184Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3382319Z 
+python	Run ruff check python	2026-10-27T20:59:52.3382400Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3382631Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:33:5
+python	Run ruff check python	2026-10-27T20:59:52.3382829Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3382960Z 31 |     _MAX_BYTES as _MAX_BYTES,
+python	Run ruff check python	2026-10-27T20:59:52.3383107Z 32 |     _MAX_EVENTS as _MAX_EVENTS,
+python	Run ruff check python	2026-10-27T20:59:52.3383254Z 33 |     _MAX_SAFE as _MAX_SAFE,
+python	Run ruff check python	2026-10-27T20:59:52.3383407Z    |     ^^^^^^^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3383570Z 34 |     _OWNER_REQUEST_KIND as _OWNER_REQUEST_KIND,
+python	Run ruff check python	2026-10-27T20:59:52.3383748Z 35 |     _UUID as _UUID,
+python	Run ruff check python	2026-10-27T20:59:52.3383873Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3383990Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3384128Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3384245Z 32 |     _MAX_EVENTS as _MAX_EVENTS,
+python	Run ruff check python	2026-10-27T20:59:52.3384398Z    -     _MAX_SAFE as _MAX_SAFE,
+python	Run ruff check python	2026-10-27T20:59:52.3384740Z 33 +     _MAX_SAFE,
+python	Run ruff check python	2026-10-27T20:59:52.3384907Z 34 |     _OWNER_REQUEST_KIND as _OWNER_REQUEST_KIND,
+python	Run ruff check python	2026-10-27T20:59:52.3385081Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3385231Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3385371Z 
+python	Run ruff check python	2026-10-27T20:59:52.3385455Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3385685Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:34:5
+python	Run ruff check python	2026-10-27T20:59:52.3385884Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3385995Z 32 |     _MAX_EVENTS as _MAX_EVENTS,
+python	Run ruff check python	2026-10-27T20:59:52.3386148Z 33 |     _MAX_SAFE as _MAX_SAFE,
+python	Run ruff check python	2026-10-27T20:59:52.3386306Z 34 |     _OWNER_REQUEST_KIND as _OWNER_REQUEST_KIND,
+python	Run ruff check python	2026-10-27T20:59:52.3386486Z    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3386644Z 35 |     _UUID as _UUID,
+python	Run ruff check python	2026-10-27T20:59:52.3386788Z 36 |     _canonical as _canonical,
+python	Run ruff check python	2026-10-27T20:59:52.3386927Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3387040Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3387171Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3387278Z 33 |     _MAX_SAFE as _MAX_SAFE,
+python	Run ruff check python	2026-10-27T20:59:52.3387439Z    -     _OWNER_REQUEST_KIND as _OWNER_REQUEST_KIND,
+python	Run ruff check python	2026-10-27T20:59:52.3387613Z 34 +     _OWNER_REQUEST_KIND,
+python	Run ruff check python	2026-10-27T20:59:52.3387751Z 35 |     _UUID as _UUID,
+python	Run ruff check python	2026-10-27T20:59:52.3387875Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3388018Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3388160Z 
+python	Run ruff check python	2026-10-27T20:59:52.3388245Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3388473Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:35:5
+python	Run ruff check python	2026-10-27T20:59:52.3388776Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3388887Z 33 |     _MAX_SAFE as _MAX_SAFE,
+python	Run ruff check python	2026-10-27T20:59:52.3389052Z 34 |     _OWNER_REQUEST_KIND as _OWNER_REQUEST_KIND,
+python	Run ruff check python	2026-10-27T20:59:52.3389218Z 35 |     _UUID as _UUID,
+python	Run ruff check python	2026-10-27T20:59:52.3389347Z    |     ^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3389482Z 36 |     _canonical as _canonical,
+python	Run ruff check python	2026-10-27T20:59:52.3389641Z 37 |     _canonical_path as _canonical_path,
+python	Run ruff check python	2026-10-27T20:59:52.3389798Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3389913Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3390047Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3390176Z 34 |     _OWNER_REQUEST_KIND as _OWNER_REQUEST_KIND,
+python	Run ruff check python	2026-10-27T20:59:52.3390345Z    -     _UUID as _UUID,
+python	Run ruff check python	2026-10-27T20:59:52.3390481Z 35 +     _UUID,
+python	Run ruff check python	2026-10-27T20:59:52.3390610Z 36 |     _canonical as _canonical,
+python	Run ruff check python	2026-10-27T20:59:52.3390750Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3390895Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3391037Z 
+python	Run ruff check python	2026-10-27T20:59:52.3391119Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3391349Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:36:5
+python	Run ruff check python	2026-10-27T20:59:52.3391648Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3391836Z 34 |     _OWNER_REQUEST_KIND as _OWNER_REQUEST_KIND,
+python	Run ruff check python	2026-10-27T20:59:52.3392009Z 35 |     _UUID as _UUID,
+python	Run ruff check python	2026-10-27T20:59:52.3392144Z 36 |     _canonical as _canonical,
+python	Run ruff check python	2026-10-27T20:59:52.3392288Z    |     ^^^^^^^^^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3392442Z 37 |     _canonical_path as _canonical_path,
+python	Run ruff check python	2026-10-27T20:59:52.3392606Z 38 |     _closed as _closed,
+python	Run ruff check python	2026-10-27T20:59:52.3392738Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3392852Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3392979Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3393087Z 35 |     _UUID as _UUID,
+python	Run ruff check python	2026-10-27T20:59:52.3393226Z    -     _canonical as _canonical,
+python	Run ruff check python	2026-10-27T20:59:52.3393368Z 36 +     _canonical,
+python	Run ruff check python	2026-10-27T20:59:52.3393507Z 37 |     _canonical_path as _canonical_path,
+python	Run ruff check python	2026-10-27T20:59:52.3393662Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3393804Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3393950Z 
+python	Run ruff check python	2026-10-27T20:59:52.3394031Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3394263Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:37:5
+python	Run ruff check python	2026-10-27T20:59:52.3394602Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3394716Z 35 |     _UUID as _UUID,
+python	Run ruff check python	2026-10-27T20:59:52.3394852Z 36 |     _canonical as _canonical,
+python	Run ruff check python	2026-10-27T20:59:52.3395013Z 37 |     _canonical_path as _canonical_path,
+python	Run ruff check python	2026-10-27T20:59:52.3395174Z    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3395334Z 38 |     _closed as _closed,
+python	Run ruff check python	2026-10-27T20:59:52.3395483Z 39 |     _decimal as _decimal,
+python	Run ruff check python	2026-10-27T20:59:52.3395620Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3395732Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3395859Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3395969Z 36 |     _canonical as _canonical,
+python	Run ruff check python	2026-10-27T20:59:52.3396127Z    -     _canonical_path as _canonical_path,
+python	Run ruff check python	2026-10-27T20:59:52.3396292Z 37 +     _canonical_path,
+python	Run ruff check python	2026-10-27T20:59:52.3396433Z 38 |     _closed as _closed,
+python	Run ruff check python	2026-10-27T20:59:52.3396570Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3396716Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3396850Z 
+python	Run ruff check python	2026-10-27T20:59:52.3396934Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3397161Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:38:5
+python	Run ruff check python	2026-10-27T20:59:52.3397357Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3397468Z 36 |     _canonical as _canonical,
+python	Run ruff check python	2026-10-27T20:59:52.3397627Z 37 |     _canonical_path as _canonical_path,
+python	Run ruff check python	2026-10-27T20:59:52.3397784Z 38 |     _closed as _closed,
+python	Run ruff check python	2026-10-27T20:59:52.3397919Z    |     ^^^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3398059Z 39 |     _decimal as _decimal,
+python	Run ruff check python	2026-10-27T20:59:52.3398201Z 40 |     _digest as _digest,
+python	Run ruff check python	2026-10-27T20:59:52.3398330Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3398442Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3398571Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3398691Z 37 |     _canonical_path as _canonical_path,
+python	Run ruff check python	2026-10-27T20:59:52.3398849Z    -     _closed as _closed,
+python	Run ruff check python	2026-10-27T20:59:52.3399192Z 38 +     _closed,
+python	Run ruff check python	2026-10-27T20:59:52.3399318Z 39 |     _decimal as _decimal,
+python	Run ruff check python	2026-10-27T20:59:52.3399451Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3399599Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3399741Z 
+python	Run ruff check python	2026-10-27T20:59:52.3399823Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3400053Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:39:5
+python	Run ruff check python	2026-10-27T20:59:52.3400251Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3400372Z 37 |     _canonical_path as _canonical_path,
+python	Run ruff check python	2026-10-27T20:59:52.3400529Z 38 |     _closed as _closed,
+python	Run ruff check python	2026-10-27T20:59:52.3400666Z 39 |     _decimal as _decimal,
+python	Run ruff check python	2026-10-27T20:59:52.3400803Z    |     ^^^^^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3400942Z 40 |     _digest as _digest,
+python	Run ruff check python	2026-10-27T20:59:52.3401074Z 41 |     _hex as _hex,
+python	Run ruff check python	2026-10-27T20:59:52.3401193Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3401312Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3401451Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3401568Z 38 |     _closed as _closed,
+python	Run ruff check python	2026-10-27T20:59:52.3401763Z    -     _decimal as _decimal,
+python	Run ruff check python	2026-10-27T20:59:52.3401945Z 39 +     _decimal,
+python	Run ruff check python	2026-10-27T20:59:52.3402068Z 40 |     _digest as _digest,
+python	Run ruff check python	2026-10-27T20:59:52.3402290Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3402434Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3402582Z 
+python	Run ruff check python	2026-10-27T20:59:52.3402662Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3402894Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:40:5
+python	Run ruff check python	2026-10-27T20:59:52.3403104Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3403213Z 38 |     _closed as _closed,
+python	Run ruff check python	2026-10-27T20:59:52.3403350Z 39 |     _decimal as _decimal,
+python	Run ruff check python	2026-10-27T20:59:52.3403492Z 40 |     _digest as _digest,
+python	Run ruff check python	2026-10-27T20:59:52.3403632Z    |     ^^^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3403765Z 41 |     _hex as _hex,
+python	Run ruff check python	2026-10-27T20:59:52.3403921Z 42 |     _pairs_no_duplicates as _pairs_no_duplicates,
+python	Run ruff check python	2026-10-27T20:59:52.3404093Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3404211Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3404353Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3404585Z 39 |     _decimal as _decimal,
+python	Run ruff check python	2026-10-27T20:59:52.3404746Z    -     _digest as _digest,
+python	Run ruff check python	2026-10-27T20:59:52.3404876Z 40 +     _digest,
+python	Run ruff check python	2026-10-27T20:59:52.3404997Z 41 |     _hex as _hex,
+python	Run ruff check python	2026-10-27T20:59:52.3405116Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3405257Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3405392Z 
+python	Run ruff check python	2026-10-27T20:59:52.3405476Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3405716Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:41:5
+python	Run ruff check python	2026-10-27T20:59:52.3405921Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3406037Z 39 |     _decimal as _decimal,
+python	Run ruff check python	2026-10-27T20:59:52.3406177Z 40 |     _digest as _digest,
+python	Run ruff check python	2026-10-27T20:59:52.3406316Z 41 |     _hex as _hex,
+python	Run ruff check python	2026-10-27T20:59:52.3406440Z    |     ^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3406586Z 42 |     _pairs_no_duplicates as _pairs_no_duplicates,
+python	Run ruff check python	2026-10-27T20:59:52.3406763Z 43 |     _read_json as _read_json,
+python	Run ruff check python	2026-10-27T20:59:52.3406903Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3407134Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3407264Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3407372Z 40 |     _digest as _digest,
+python	Run ruff check python	2026-10-27T20:59:52.3407505Z    -     _hex as _hex,
+python	Run ruff check python	2026-10-27T20:59:52.3407628Z 41 +     _hex,
+python	Run ruff check python	2026-10-27T20:59:52.3407767Z 42 |     _pairs_no_duplicates as _pairs_no_duplicates,
+python	Run ruff check python	2026-10-27T20:59:52.3407936Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3408077Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3408209Z 
+python	Run ruff check python	2026-10-27T20:59:52.3408293Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3408525Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:42:5
+python	Run ruff check python	2026-10-27T20:59:52.3408726Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3408832Z 40 |     _digest as _digest,
+python	Run ruff check python	2026-10-27T20:59:52.3408962Z 41 |     _hex as _hex,
+python	Run ruff check python	2026-10-27T20:59:52.3409125Z 42 |     _pairs_no_duplicates as _pairs_no_duplicates,
+python	Run ruff check python	2026-10-27T20:59:52.3409313Z    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3409480Z 43 |     _read_json as _read_json,
+python	Run ruff check python	2026-10-27T20:59:52.3409734Z 44 |     _replay as _replay,
+python	Run ruff check python	2026-10-27T20:59:52.3409862Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3409976Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3410113Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3410219Z 41 |     _hex as _hex,
+python	Run ruff check python	2026-10-27T20:59:52.3410371Z    -     _pairs_no_duplicates as _pairs_no_duplicates,
+python	Run ruff check python	2026-10-27T20:59:52.3410550Z 42 +     _pairs_no_duplicates,
+python	Run ruff check python	2026-10-27T20:59:52.3410699Z 43 |     _read_json as _read_json,
+python	Run ruff check python	2026-10-27T20:59:52.3410839Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3410981Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3411124Z 
+python	Run ruff check python	2026-10-27T20:59:52.3411208Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3411437Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:43:5
+python	Run ruff check python	2026-10-27T20:59:52.3411634Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3411739Z 41 |     _hex as _hex,
+python	Run ruff check python	2026-10-27T20:59:52.3411889Z 42 |     _pairs_no_duplicates as _pairs_no_duplicates,
+python	Run ruff check python	2026-10-27T20:59:52.3412063Z 43 |     _read_json as _read_json,
+python	Run ruff check python	2026-10-27T20:59:52.3412212Z    |     ^^^^^^^^^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3427595Z 44 |     _replay as _replay,
+python	Run ruff check python	2026-10-27T20:59:52.3427894Z 45 |     _safe_uint32 as _safe_uint32,
+python	Run ruff check python	2026-10-27T20:59:52.3428332Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3428496Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3428689Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3428887Z 42 |     _pairs_no_duplicates as _pairs_no_duplicates,
+python	Run ruff check python	2026-10-27T20:59:52.3429161Z    -     _read_json as _read_json,
+python	Run ruff check python	2026-10-27T20:59:52.3429385Z 43 +     _read_json,
+python	Run ruff check python	2026-10-27T20:59:52.3429576Z 44 |     _replay as _replay,
+python	Run ruff check python	2026-10-27T20:59:52.3429775Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3429993Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3430200Z 
+python	Run ruff check python	2026-10-27T20:59:52.3430329Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3430677Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:44:5
+python	Run ruff check python	2026-10-27T20:59:52.3430993Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3431191Z 42 |     _pairs_no_duplicates as _pairs_no_duplicates,
+python	Run ruff check python	2026-10-27T20:59:52.3431469Z 43 |     _read_json as _read_json,
+python	Run ruff check python	2026-10-27T20:59:52.3431699Z 44 |     _replay as _replay,
+python	Run ruff check python	2026-10-27T20:59:52.3431901Z    |     ^^^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3432112Z 45 |     _safe_uint32 as _safe_uint32,
+python	Run ruff check python	2026-10-27T20:59:52.3432340Z 46 |     _text as _text,
+python	Run ruff check python	2026-10-27T20:59:52.3432524Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3432691Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3432884Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3433044Z 43 |     _read_json as _read_json,
+python	Run ruff check python	2026-10-27T20:59:52.3433262Z    -     _replay as _replay,
+python	Run ruff check python	2026-10-27T20:59:52.3433486Z 44 +     _replay,
+python	Run ruff check python	2026-10-27T20:59:52.3433679Z 45 |     _safe_uint32 as _safe_uint32,
+python	Run ruff check python	2026-10-27T20:59:52.3433894Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3434107Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3434312Z 
+python	Run ruff check python	2026-10-27T20:59:52.3434441Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3435021Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:45:5
+python	Run ruff check python	2026-10-27T20:59:52.3435345Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3435524Z 43 |     _read_json as _read_json,
+python	Run ruff check python	2026-10-27T20:59:52.3435747Z 44 |     _replay as _replay,
+python	Run ruff check python	2026-10-27T20:59:52.3435963Z 45 |     _safe_uint32 as _safe_uint32,
+python	Run ruff check python	2026-10-27T20:59:52.3436199Z    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3436426Z 46 |     _text as _text,
+python	Run ruff check python	2026-10-27T20:59:52.3436633Z 47 |     _uuid as _uuid,
+python	Run ruff check python	2026-10-27T20:59:52.3436822Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3436993Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3437199Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3437368Z 44 |     _replay as _replay,
+python	Run ruff check python	2026-10-27T20:59:52.3437593Z    -     _safe_uint32 as _safe_uint32,
+python	Run ruff check python	2026-10-27T20:59:52.3437814Z 45 +     _safe_uint32,
+python	Run ruff check python	2026-10-27T20:59:52.3438009Z 46 |     _text as _text,
+python	Run ruff check python	2026-10-27T20:59:52.3438194Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3438409Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3438622Z 
+python	Run ruff check python	2026-10-27T20:59:52.3438750Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3439103Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:46:5
+python	Run ruff check python	2026-10-27T20:59:52.3439662Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3439836Z 44 |     _replay as _replay,
+python	Run ruff check python	2026-10-27T20:59:52.3440045Z 45 |     _safe_uint32 as _safe_uint32,
+python	Run ruff check python	2026-10-27T20:59:52.3440281Z 46 |     _text as _text,
+python	Run ruff check python	2026-10-27T20:59:52.3440479Z    |     ^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3440671Z 47 |     _uuid as _uuid,
+python	Run ruff check python	2026-10-27T20:59:52.3440924Z 48 |     _validate_event_payload as _validate_event_payload,
+python	Run ruff check python	2026-10-27T20:59:52.3441196Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3441374Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3441580Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3441756Z 45 |     _safe_uint32 as _safe_uint32,
+python	Run ruff check python	2026-10-27T20:59:52.3441995Z    -     _text as _text,
+python	Run ruff check python	2026-10-27T20:59:52.3442189Z 46 +     _text,
+python	Run ruff check python	2026-10-27T20:59:52.3442375Z 47 |     _uuid as _uuid,
+python	Run ruff check python	2026-10-27T20:59:52.3442564Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3442787Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3443008Z 
+python	Run ruff check python	2026-10-27T20:59:52.3443139Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3443522Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:47:5
+python	Run ruff check python	2026-10-27T20:59:52.3443844Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3444031Z 45 |     _safe_uint32 as _safe_uint32,
+python	Run ruff check python	2026-10-27T20:59:52.3444740Z 46 |     _text as _text,
+python	Run ruff check python	2026-10-27T20:59:52.3444953Z 47 |     _uuid as _uuid,
+python	Run ruff check python	2026-10-27T20:59:52.3445163Z    |     ^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3445418Z 48 |     _validate_event_payload as _validate_event_payload,
+python	Run ruff check python	2026-10-27T20:59:52.3445771Z 49 |     _validate_observation as _validate_observation,
+python	Run ruff check python	2026-10-27T20:59:52.3446052Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3446235Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3446447Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3446620Z 46 |     _text as _text,
+python	Run ruff check python	2026-10-27T20:59:52.3446833Z    -     _uuid as _uuid,
+python	Run ruff check python	2026-10-27T20:59:52.3447053Z 47 +     _uuid,
+python	Run ruff check python	2026-10-27T20:59:52.3447314Z 48 |     _validate_event_payload as _validate_event_payload,
+python	Run ruff check python	2026-10-27T20:59:52.3447600Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3447831Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3448060Z 
+python	Run ruff check python	2026-10-27T20:59:52.3448200Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3448598Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:48:5
+python	Run ruff check python	2026-10-27T20:59:52.3448937Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3449106Z 46 |     _text as _text,
+python	Run ruff check python	2026-10-27T20:59:52.3449307Z 47 |     _uuid as _uuid,
+python	Run ruff check python	2026-10-27T20:59:52.3449553Z 48 |     _validate_event_payload as _validate_event_payload,
+python	Run ruff check python	2026-10-27T20:59:52.3449859Z    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3450169Z 49 |     _validate_observation as _validate_observation,
+python	Run ruff check python	2026-10-27T20:59:52.3450513Z 50 |     _validate_owner_payload as _validate_owner_payload,
+python	Run ruff check python	2026-10-27T20:59:52.3450821Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3451014Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3451226Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3451398Z 47 |     _uuid as _uuid,
+python	Run ruff check python	2026-10-27T20:59:52.3451668Z    -     _validate_event_payload as _validate_event_payload,
+python	Run ruff check python	2026-10-27T20:59:52.3451985Z 48 +     _validate_event_payload,
+python	Run ruff check python	2026-10-27T20:59:52.3452277Z 49 |     _validate_observation as _validate_observation,
+python	Run ruff check python	2026-10-27T20:59:52.3452559Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3452792Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3453018Z 
+python	Run ruff check python	2026-10-27T20:59:52.3453157Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3453545Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:49:5
+python	Run ruff check python	2026-10-27T20:59:52.3453895Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3454080Z 47 |     _uuid as _uuid,
+python	Run ruff check python	2026-10-27T20:59:52.3454330Z 48 |     _validate_event_payload as _validate_event_payload,
+python	Run ruff check python	2026-10-27T20:59:52.3454865Z 49 |     _validate_observation as _validate_observation,
+python	Run ruff check python	2026-10-27T20:59:52.3455156Z    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3455451Z 50 |     _validate_owner_payload as _validate_owner_payload,
+python	Run ruff check python	2026-10-27T20:59:52.3455895Z 51 |     validate_original_target_custody_record as validate_original_target_custody_record,
+python	Run ruff check python	2026-10-27T20:59:52.3456495Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3456681Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3456888Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3457106Z 48 |     _validate_event_payload as _validate_event_payload,
+python	Run ruff check python	2026-10-27T20:59:52.3457441Z    -     _validate_observation as _validate_observation,
+python	Run ruff check python	2026-10-27T20:59:52.3457734Z 49 +     _validate_observation,
+python	Run ruff check python	2026-10-27T20:59:52.3458012Z 50 |     _validate_owner_payload as _validate_owner_payload,
+python	Run ruff check python	2026-10-27T20:59:52.3458310Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3458551Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3458789Z 
+python	Run ruff check python	2026-10-27T20:59:52.3458931Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3459343Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:50:5
+python	Run ruff check python	2026-10-27T20:59:52.3459677Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3459899Z 48 |     _validate_event_payload as _validate_event_payload,
+python	Run ruff check python	2026-10-27T20:59:52.3460245Z 49 |     _validate_observation as _validate_observation,
+python	Run ruff check python	2026-10-27T20:59:52.3460584Z 50 |     _validate_owner_payload as _validate_owner_payload,
+python	Run ruff check python	2026-10-27T20:59:52.3460902Z    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3461320Z 51 |     validate_original_target_custody_record as validate_original_target_custody_record,
+python	Run ruff check python	2026-10-27T20:59:52.3461902Z 52 | )
+python	Run ruff check python	2026-10-27T20:59:52.3462067Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3462247Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3462457Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3462679Z 49 |     _validate_observation as _validate_observation,
+python	Run ruff check python	2026-10-27T20:59:52.3463031Z    -     _validate_owner_payload as _validate_owner_payload,
+python	Run ruff check python	2026-10-27T20:59:52.3463341Z 50 +     _validate_owner_payload,
+python	Run ruff check python	2026-10-27T20:59:52.3463714Z 51 |     validate_original_target_custody_record as validate_original_target_custody_record,
+python	Run ruff check python	2026-10-27T20:59:52.3464093Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3464334Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3464755Z 
+python	Run ruff check python	2026-10-27T20:59:52.3464894Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3465277Z   --> python/umf_access/src/umf_access/lifecycle/ingress_custody.py:51:5
+python	Run ruff check python	2026-10-27T20:59:52.3465606Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3465825Z 49 |     _validate_observation as _validate_observation,
+python	Run ruff check python	2026-10-27T20:59:52.3466166Z 50 |     _validate_owner_payload as _validate_owner_payload,
+python	Run ruff check python	2026-10-27T20:59:52.3466603Z 51 |     validate_original_target_custody_record as validate_original_target_custody_record,
+python	Run ruff check python	2026-10-27T20:59:52.3467055Z    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3467339Z 52 | )
+python	Run ruff check python	2026-10-27T20:59:52.3467500Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3467668Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3467924Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3468137Z 50 |     _validate_owner_payload as _validate_owner_payload,
+python	Run ruff check python	2026-10-27T20:59:52.3468624Z    -     validate_original_target_custody_record as validate_original_target_custody_record,
+python	Run ruff check python	2026-10-27T20:59:52.3469109Z 51 +     validate_original_target_custody_record,
+python	Run ruff check python	2026-10-27T20:59:52.3469422Z 52 | )
+python	Run ruff check python	2026-10-27T20:59:52.3469609Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3469839Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3470088Z 
+python	Run ruff check python	2026-10-27T20:59:52.3470249Z I001 [*] Import block is un-sorted or un-formatted
+python	Run ruff check python	2026-10-27T20:59:52.3470640Z   --> python/umf_access/src/umf_access/lifecycle/row_originals_creation.py:7:1
+python	Run ruff check python	2026-10-27T20:59:52.3471052Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3471338Z  5 |   in the external supervisor/custodian registry and is required separately.
+python	Run ruff check python	2026-10-27T20:59:52.3471742Z  6 |   """
+python	Run ruff check python	2026-10-27T20:59:52.3471937Z  7 | / from __future__ import annotations
+python	Run ruff check python	2026-10-27T20:59:52.3472201Z  8 | |
+python	Run ruff check python	2026-10-27T20:59:52.3472410Z  9 | | import base64
+python	Run ruff check python	2026-10-27T20:59:52.3472608Z 10 | | import hashlib
+python	Run ruff check python	2026-10-27T20:59:52.3472846Z 11 | | from typing import Any
+python	Run ruff check python	2026-10-27T20:59:52.3473093Z 12 | |
+python	Run ruff check python	2026-10-27T20:59:52.3473304Z 13 | | from .catalog import CatalogError, _all, _one
+python	Run ruff check python	2026-10-27T20:59:52.3473641Z 14 | | from .row_originals_receipt import (
+python	Run ruff check python	2026-10-27T20:59:52.3474008Z 15 | |     COMMENT_PREFIX as COMMENT_PREFIX,
+python	Run ruff check python	2026-10-27T20:59:52.3474729Z 16 | |     MAX_OBJECTS,
+python	Run ruff check python	2026-10-27T20:59:52.3474939Z 17 | |     MAX_RECEIPT_BYTES,
+python	Run ruff check python	2026-10-27T20:59:52.3475225Z 18 | |     RECEIPT_PROFILE,
+python	Run ruff check python	2026-10-27T20:59:52.3475450Z 19 | |     _FIXED_NOT_NULL_COLUMNS,
+python	Run ruff check python	2026-10-27T20:59:52.3475711Z 20 | |     _constraint_definition,
+python	Run ruff check python	2026-10-27T20:59:52.3475985Z 21 | |     _digest as _digest,
+python	Run ruff check python	2026-10-27T20:59:52.3476318Z 22 | |     _expected_fk_trigger_signatures as _expected_fk_trigger_signatures,
+python	Run ruff check python	2026-10-27T20:59:52.3476764Z 23 | |     _expected_ri_trigger as _expected_ri_trigger,
+python	Run ruff check python	2026-10-27T20:59:52.3477056Z 24 | |     _no_duplicates as _no_duplicates,
+python	Run ruff check python	2026-10-27T20:59:52.3477360Z 25 | |     _safe_int as _safe_int,
+python	Run ruff check python	2026-10-27T20:59:52.3477586Z 26 | |     _uuid as _uuid,
+python	Run ruff check python	2026-10-27T20:59:52.3477822Z 27 | |     _validate_fk_trigger_set,
+python	Run ruff check python	2026-10-27T20:59:52.3478126Z 28 | |     _validate_not_null_constraint,
+python	Run ruff check python	2026-10-27T20:59:52.3478354Z 29 | |     _validate_ri_trigger,
+python	Run ruff check python	2026-10-27T20:59:52.3478538Z 30 | |     canonical_bytes,
+python	Run ruff check python	2026-10-27T20:59:52.3478712Z 31 | |     decode_comment,
+python	Run ruff check python	2026-10-27T20:59:52.3478847Z 32 | |     encode_comment,
+python	Run ruff check python	2026-10-27T20:59:52.3478986Z 33 | |     validate_objects,
+python	Run ruff check python	2026-10-27T20:59:52.3479320Z 34 | |     validate_receipt,
+python	Run ruff check python	2026-10-27T20:59:52.3479472Z 35 | | )
+python	Run ruff check python	2026-10-27T20:59:52.3479577Z    | |_^
+python	Run ruff check python	2026-10-27T20:59:52.3479689Z help: Organize imports
+python	Run ruff check python	2026-10-27T20:59:52.3479816Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3479938Z 14 | from .row_originals_receipt import (
+python	Run ruff check python	2026-10-27T20:59:52.3480113Z    -     COMMENT_PREFIX as COMMENT_PREFIX,
+python	Run ruff check python	2026-10-27T20:59:52.3480282Z 15 +     _FIXED_NOT_NULL_COLUMNS,
+python	Run ruff check python	2026-10-27T20:59:52.3480431Z 16 |     MAX_OBJECTS,
+python	Run ruff check python	2026-10-27T20:59:52.3480560Z 17 |     MAX_RECEIPT_BYTES,
+python	Run ruff check python	2026-10-27T20:59:52.3480701Z 18 |     RECEIPT_PROFILE,
+python	Run ruff check python	2026-10-27T20:59:52.3480841Z    -     _FIXED_NOT_NULL_COLUMNS,
+python	Run ruff check python	2026-10-27T20:59:52.3480996Z 19 |     _constraint_definition,
+python	Run ruff check python	2026-10-27T20:59:52.3481141Z    -     _digest as _digest,
+python	Run ruff check python	2026-10-27T20:59:52.3481338Z    -     _expected_fk_trigger_signatures as _expected_fk_trigger_signatures,
+python	Run ruff check python	2026-10-27T20:59:52.3481579Z    -     _expected_ri_trigger as _expected_ri_trigger,
+python	Run ruff check python	2026-10-27T20:59:52.3481765Z    -     _no_duplicates as _no_duplicates,
+python	Run ruff check python	2026-10-27T20:59:52.3481929Z    -     _safe_int as _safe_int,
+python	Run ruff check python	2026-10-27T20:59:52.3482075Z    -     _uuid as _uuid,
+python	Run ruff check python	2026-10-27T20:59:52.3482214Z 20 |     _validate_fk_trigger_set,
+python	Run ruff check python	2026-10-27T20:59:52.3482412Z --------------------------------------------------------------------------------
+python	Run ruff check python	2026-10-27T20:59:52.3482610Z 28 | )
+python	Run ruff check python	2026-10-27T20:59:52.3482738Z 29 + from .row_originals_receipt import (
+python	Run ruff check python	2026-10-27T20:59:52.3482908Z 30 +     COMMENT_PREFIX as COMMENT_PREFIX,
+python	Run ruff check python	2026-10-27T20:59:52.3483054Z 31 + )
+python	Run ruff check python	2026-10-27T20:59:52.3483175Z 32 + from .row_originals_receipt import (
+python	Run ruff check python	2026-10-27T20:59:52.3483332Z 33 +     _digest as _digest,
+python	Run ruff check python	2026-10-27T20:59:52.3483458Z 34 + )
+python	Run ruff check python	2026-10-27T20:59:52.3483576Z 35 + from .row_originals_receipt import (
+python	Run ruff check python	2026-10-27T20:59:52.3483793Z 36 +     _expected_fk_trigger_signatures as _expected_fk_trigger_signatures,
+python	Run ruff check python	2026-10-27T20:59:52.3483996Z 37 + )
+python	Run ruff check python	2026-10-27T20:59:52.3484115Z 38 + from .row_originals_receipt import (
+python	Run ruff check python	2026-10-27T20:59:52.3484293Z 39 +     _expected_ri_trigger as _expected_ri_trigger,
+python	Run ruff check python	2026-10-27T20:59:52.3484714Z 40 + )
+python	Run ruff check python	2026-10-27T20:59:52.3484838Z 41 + from .row_originals_receipt import (
+python	Run ruff check python	2026-10-27T20:59:52.3485005Z 42 +     _no_duplicates as _no_duplicates,
+python	Run ruff check python	2026-10-27T20:59:52.3485155Z 43 + )
+python	Run ruff check python	2026-10-27T20:59:52.3485297Z 44 + from .row_originals_receipt import (
+python	Run ruff check python	2026-10-27T20:59:52.3485477Z 45 +     _safe_int as _safe_int,
+python	Run ruff check python	2026-10-27T20:59:52.3485654Z 46 + )
+python	Run ruff check python	2026-10-27T20:59:52.3485793Z 47 + from .row_originals_receipt import (
+python	Run ruff check python	2026-10-27T20:59:52.3485949Z 48 +     _uuid as _uuid,
+python	Run ruff check python	2026-10-27T20:59:52.3486075Z 49 + )
+python	Run ruff check python	2026-10-27T20:59:52.3486178Z 50 |
+python	Run ruff check python	2026-10-27T20:59:52.3486285Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3486345Z 
+python	Run ruff check python	2026-10-27T20:59:52.3486432Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3486682Z   --> python/umf_access/src/umf_access/lifecycle/row_originals_creation.py:15:5
+python	Run ruff check python	2026-10-27T20:59:52.3487015Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3487147Z 13 | from .catalog import CatalogError, _all, _one
+python	Run ruff check python	2026-10-27T20:59:52.3487339Z 14 | from .row_originals_receipt import (
+python	Run ruff check python	2026-10-27T20:59:52.3487508Z 15 |     COMMENT_PREFIX as COMMENT_PREFIX,
+python	Run ruff check python	2026-10-27T20:59:52.3487667Z    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3487812Z 16 |     MAX_OBJECTS,
+python	Run ruff check python	2026-10-27T20:59:52.3487944Z 17 |     MAX_RECEIPT_BYTES,
+python	Run ruff check python	2026-10-27T20:59:52.3488073Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3488187Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3488315Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3488432Z 14 | from .row_originals_receipt import (
+python	Run ruff check python	2026-10-27T20:59:52.3488598Z    -     COMMENT_PREFIX as COMMENT_PREFIX,
+python	Run ruff check python	2026-10-27T20:59:52.3488754Z 15 +     COMMENT_PREFIX,
+python	Run ruff check python	2026-10-27T20:59:52.3488889Z 16 |     MAX_OBJECTS,
+python	Run ruff check python	2026-10-27T20:59:52.3489012Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3489158Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3489296Z 
+python	Run ruff check python	2026-10-27T20:59:52.3489378Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3489626Z   --> python/umf_access/src/umf_access/lifecycle/row_originals_creation.py:21:5
+python	Run ruff check python	2026-10-27T20:59:52.3490006Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3490118Z 19 |     _FIXED_NOT_NULL_COLUMNS,
+python	Run ruff check python	2026-10-27T20:59:52.3490269Z 20 |     _constraint_definition,
+python	Run ruff check python	2026-10-27T20:59:52.3490412Z 21 |     _digest as _digest,
+python	Run ruff check python	2026-10-27T20:59:52.3490550Z    |     ^^^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3490738Z 22 |     _expected_fk_trigger_signatures as _expected_fk_trigger_signatures,
+python	Run ruff check python	2026-10-27T20:59:52.3490971Z 23 |     _expected_ri_trigger as _expected_ri_trigger,
+python	Run ruff check python	2026-10-27T20:59:52.3491133Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3491246Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3491372Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3491482Z 20 |     _constraint_definition,
+python	Run ruff check python	2026-10-27T20:59:52.3491625Z    -     _digest as _digest,
+python	Run ruff check python	2026-10-27T20:59:52.3491763Z 21 +     _digest,
+python	Run ruff check python	2026-10-27T20:59:52.3491942Z 22 |     _expected_fk_trigger_signatures as _expected_fk_trigger_signatures,
+python	Run ruff check python	2026-10-27T20:59:52.3492144Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3492291Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3492424Z 
+python	Run ruff check python	2026-10-27T20:59:52.3492507Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3492752Z   --> python/umf_access/src/umf_access/lifecycle/row_originals_creation.py:22:5
+python	Run ruff check python	2026-10-27T20:59:52.3492966Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3493078Z 20 |     _constraint_definition,
+python	Run ruff check python	2026-10-27T20:59:52.3493220Z 21 |     _digest as _digest,
+python	Run ruff check python	2026-10-27T20:59:52.3493410Z 22 |     _expected_fk_trigger_signatures as _expected_fk_trigger_signatures,
+python	Run ruff check python	2026-10-27T20:59:52.3493642Z    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3493836Z 23 |     _expected_ri_trigger as _expected_ri_trigger,
+python	Run ruff check python	2026-10-27T20:59:52.3494025Z 24 |     _no_duplicates as _no_duplicates,
+python	Run ruff check python	2026-10-27T20:59:52.3494174Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3494285Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3494412Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3494682Z 21 |     _digest as _digest,
+python	Run ruff check python	2026-10-27T20:59:52.3494879Z    -     _expected_fk_trigger_signatures as _expected_fk_trigger_signatures,
+python	Run ruff check python	2026-10-27T20:59:52.3495098Z 22 +     _expected_fk_trigger_signatures,
+python	Run ruff check python	2026-10-27T20:59:52.3495280Z 23 |     _expected_ri_trigger as _expected_ri_trigger,
+python	Run ruff check python	2026-10-27T20:59:52.3495441Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3495585Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3495724Z 
+python	Run ruff check python	2026-10-27T20:59:52.3495809Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3496051Z   --> python/umf_access/src/umf_access/lifecycle/row_originals_creation.py:23:5
+python	Run ruff check python	2026-10-27T20:59:52.3496259Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3496365Z 21 |     _digest as _digest,
+python	Run ruff check python	2026-10-27T20:59:52.3496552Z 22 |     _expected_fk_trigger_signatures as _expected_fk_trigger_signatures,
+python	Run ruff check python	2026-10-27T20:59:52.3496778Z 23 |     _expected_ri_trigger as _expected_ri_trigger,
+python	Run ruff check python	2026-10-27T20:59:52.3496955Z    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3497122Z 24 |     _no_duplicates as _no_duplicates,
+python	Run ruff check python	2026-10-27T20:59:52.3497392Z 25 |     _safe_int as _safe_int,
+python	Run ruff check python	2026-10-27T20:59:52.3497529Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3497642Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3497771Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3497928Z 22 |     _expected_fk_trigger_signatures as _expected_fk_trigger_signatures,
+python	Run ruff check python	2026-10-27T20:59:52.3498155Z    -     _expected_ri_trigger as _expected_ri_trigger,
+python	Run ruff check python	2026-10-27T20:59:52.3498330Z 23 +     _expected_ri_trigger,
+python	Run ruff check python	2026-10-27T20:59:52.3498480Z 24 |     _no_duplicates as _no_duplicates,
+python	Run ruff check python	2026-10-27T20:59:52.3498649Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3498793Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3498934Z 
+python	Run ruff check python	2026-10-27T20:59:52.3499018Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3499264Z   --> python/umf_access/src/umf_access/lifecycle/row_originals_creation.py:24:5
+python	Run ruff check python	2026-10-27T20:59:52.3499478Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3499646Z 22 |     _expected_fk_trigger_signatures as _expected_fk_trigger_signatures,
+python	Run ruff check python	2026-10-27T20:59:52.3499881Z 23 |     _expected_ri_trigger as _expected_ri_trigger,
+python	Run ruff check python	2026-10-27T20:59:52.3500056Z 24 |     _no_duplicates as _no_duplicates,
+python	Run ruff check python	2026-10-27T20:59:52.3500300Z    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3500451Z 25 |     _safe_int as _safe_int,
+python	Run ruff check python	2026-10-27T20:59:52.3500594Z 26 |     _uuid as _uuid,
+python	Run ruff check python	2026-10-27T20:59:52.3500717Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3500837Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3500967Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3501098Z 23 |     _expected_ri_trigger as _expected_ri_trigger,
+python	Run ruff check python	2026-10-27T20:59:52.3501277Z    -     _no_duplicates as _no_duplicates,
+python	Run ruff check python	2026-10-27T20:59:52.3501433Z 24 +     _no_duplicates,
+python	Run ruff check python	2026-10-27T20:59:52.3501567Z 25 |     _safe_int as _safe_int,
+python	Run ruff check python	2026-10-27T20:59:52.3501702Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3501843Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3501982Z 
+python	Run ruff check python	2026-10-27T20:59:52.3502060Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3502301Z   --> python/umf_access/src/umf_access/lifecycle/row_originals_creation.py:25:5
+python	Run ruff check python	2026-10-27T20:59:52.3502520Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3502648Z 23 |     _expected_ri_trigger as _expected_ri_trigger,
+python	Run ruff check python	2026-10-27T20:59:52.3502830Z 24 |     _no_duplicates as _no_duplicates,
+python	Run ruff check python	2026-10-27T20:59:52.3502986Z 25 |     _safe_int as _safe_int,
+python	Run ruff check python	2026-10-27T20:59:52.3503128Z    |     ^^^^^^^^^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3503268Z 26 |     _uuid as _uuid,
+python	Run ruff check python	2026-10-27T20:59:52.3503406Z 27 |     _validate_fk_trigger_set,
+python	Run ruff check python	2026-10-27T20:59:52.3503547Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3503657Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3503788Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3503906Z 24 |     _no_duplicates as _no_duplicates,
+python	Run ruff check python	2026-10-27T20:59:52.3504070Z    -     _safe_int as _safe_int,
+python	Run ruff check python	2026-10-27T20:59:52.3504209Z 25 +     _safe_int,
+python	Run ruff check python	2026-10-27T20:59:52.3504329Z 26 |     _uuid as _uuid,
+python	Run ruff check python	2026-10-27T20:59:52.3504619Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3504767Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3504904Z 
+python	Run ruff check python	2026-10-27T20:59:52.3504985Z PLC0414 Import alias does not rename original package
+python	Run ruff check python	2026-10-27T20:59:52.3505224Z   --> python/umf_access/src/umf_access/lifecycle/row_originals_creation.py:26:5
+python	Run ruff check python	2026-10-27T20:59:52.3505437Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3505552Z 24 |     _no_duplicates as _no_duplicates,
+python	Run ruff check python	2026-10-27T20:59:52.3505716Z 25 |     _safe_int as _safe_int,
+python	Run ruff check python	2026-10-27T20:59:52.3505860Z 26 |     _uuid as _uuid,
+python	Run ruff check python	2026-10-27T20:59:52.3505990Z    |     ^^^^^^^^^^^^^^
+python	Run ruff check python	2026-10-27T20:59:52.3506123Z 27 |     _validate_fk_trigger_set,
+python	Run ruff check python	2026-10-27T20:59:52.3506281Z 28 |     _validate_not_null_constraint,
+python	Run ruff check python	2026-10-27T20:59:52.3506427Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3506537Z help: Remove import alias
+python	Run ruff check python	2026-10-27T20:59:52.3506666Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3506774Z 25 |     _safe_int as _safe_int,
+python	Run ruff check python	2026-10-27T20:59:52.3506913Z    -     _uuid as _uuid,
+python	Run ruff check python	2026-10-27T20:59:52.3507038Z 26 +     _uuid,
+python	Run ruff check python	2026-10-27T20:59:52.3507170Z 27 |     _validate_fk_trigger_set,
+python	Run ruff check python	2026-10-27T20:59:52.3507308Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3507449Z note: This is an unsafe fix and may change runtime behavior
+python	Run ruff check python	2026-10-27T20:59:52.3507689Z 
+python	Run ruff check python	2026-10-27T20:59:52.3507770Z I001 [*] Import block is un-sorted or un-formatted
+python	Run ruff check python	2026-10-27T20:59:52.3507964Z   --> python/umf_access/tests/test_g03_host.py:3:1
+python	Run ruff check python	2026-10-27T20:59:52.3508130Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3508269Z  1 |   # SPDX-License-Identifier: MIT OR Apache-2.0
+python	Run ruff check python	2026-10-27T20:59:52.3508507Z  2 |   """G03 host custody admission and required-phase recovery controls."""
+python	Run ruff check python	2026-10-27T20:59:52.3508729Z  3 | / from __future__ import annotations
+python	Run ruff check python	2026-10-27T20:59:52.3508881Z  4 | |
+python	Run ruff check python	2026-10-27T20:59:52.3509000Z  5 | | import unittest
+python	Run ruff check python	2026-10-27T20:59:52.3509145Z  6 | | from contextlib import contextmanager
+python	Run ruff check python	2026-10-27T20:59:52.3509316Z  7 | | from datetime import UTC, datetime
+python	Run ruff check python	2026-10-27T20:59:52.3509485Z  8 | | from unittest.mock import patch
+python	Run ruff check python	2026-10-27T20:59:52.3509635Z  9 | |
+python	Run ruff check python	2026-10-27T20:59:52.3509775Z 10 | | from umf_access.lifecycle.approval import (
+python	Run ruff check python	2026-10-27T20:59:52.3509955Z 11 | |     APPROVAL_PROFILE,
+python	Run ruff check python	2026-10-27T20:59:52.3510101Z 12 | |     ApprovalReceipt,
+python	Run ruff check python	2026-10-27T20:59:52.3510244Z 13 | |     TargetIdentity,
+python	Run ruff check python	2026-10-27T20:59:52.3510371Z 14 | | )
+python	Run ruff check python	2026-10-27T20:59:52.3510527Z 15 | | from umf_access.lifecycle.catalog import CatalogError
+python	Run ruff check python	2026-10-27T20:59:52.3510822Z 16 | | from umf_access.lifecycle.host import (
+python	Run ruff check python	2026-10-27T20:59:52.3510996Z 17 | |     HostCapabilities,
+python	Run ruff check python	2026-10-27T20:59:52.3511141Z 18 | |     HostOutcomeUnknown,
+python	Run ruff check python	2026-10-27T20:59:52.3511286Z 19 | |     PhaseReceipt,
+python	Run ruff check python	2026-10-27T20:59:52.3511429Z 20 | |     apply_migration_on_host,
+python	Run ruff check python	2026-10-27T20:59:52.3511570Z 21 | | )
+python	Run ruff check python	2026-10-27T20:59:52.3511756Z 22 | | from umf_access.lifecycle.progress import _phase_digest, _verified_phases
+python	Run ruff check python	2026-10-27T20:59:52.3512111Z    | |_________________________________________________________________________^
+python	Run ruff check python	2026-10-27T20:59:52.3512368Z 23 |   _TARGET = {"table": "items", "field": {"module": "demo", "element": "total"}}
+python	Run ruff check python	2026-10-27T20:59:52.3512655Z 24 |   _PATH = "/modules/0/extensions/umf.tables/tables/0/columns/0/default"
+python	Run ruff check python	2026-10-27T20:59:52.3512856Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3512974Z help: Organize imports
+python	Run ruff check python	2026-10-27T20:59:52.3513100Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3513287Z 22 | from umf_access.lifecycle.progress import _phase_digest, _verified_phases
+python	Run ruff check python	2026-10-27T20:59:52.3513512Z 23 +
+python	Run ruff check python	2026-10-27T20:59:52.3513681Z 24 | _TARGET = {"table": "items", "field": {"module": "demo", "element": "total"}}
+python	Run ruff check python	2026-10-27T20:59:52.3513882Z    |
+python	Run ruff check python	2026-10-27T20:59:52.3513943Z 
+python	Run ruff check python	2026-10-27T20:59:52.3514110Z SIM117 Use a single `with` statement with multiple contexts instead of nested `with` statements
+python	Run ruff check python	2026-10-27T20:59:52.3514417Z    --> python/umf_access/tests/test_ingress_local_postgres.py:603:13
+python	Run ruff check python	2026-10-27T20:59:52.3514788Z     |
+python	Run ruff check python	2026-10-27T20:59:52.3514983Z 602 |           for supervisor in (ForgedSupervisor(), object.__new__(DerivedSupervisor)):
+python	Run ruff check python	2026-10-27T20:59:52.3515280Z 603 | /             with self.subTest(supervisor_type=type(supervisor).__name__):
+python	Run ruff check python	2026-10-27T20:59:52.3515515Z 604 | |                 with self.assertRaisesRegex(
+python	Run ruff check python	2026-10-27T20:59:52.3515756Z 605 | |                         CatalogError, 'row-originals-store-recovery-unavailable'):
+python	Run ruff check python	2026-10-27T20:59:52.3516028Z     | |__________________________________________________________________________________^
+python	Run ruff check python	2026-10-27T20:59:52.3516254Z 606 |                       open_originals_store_recovery(
+python	Run ruff check python	2026-10-27T20:59:52.3516445Z 607 |                           supervisor, object(),
+python	Run ruff check python	2026-10-27T20:59:52.3516612Z     |
+python	Run ruff check python	2026-10-27T20:59:52.3516734Z help: Combine `with` statements
+python	Run ruff check python	2026-10-27T20:59:52.3516828Z 
+python	Run ruff check python	2026-10-27T20:59:52.3516882Z Found 41 errors.
+python	Run ruff check python	2026-10-27T20:59:52.3517108Z [*] 6 fixable with `--fix` (34 unsafe fixes available with `--fix --unsafe-fixes`).
+python	Run ruff check python	2026-10-27T20:59:52.3526695Z ##[error]Process completed with exit code 1.
+python	Post Run actions/checkout@v4	﻿2026-10-27T20:59:52.3630503Z Post job cleanup.
+python	Post Run actions/checkout@v4	2026-10-27T20:59:52.4321687Z [command]/usr/bin/git version
+python	Post Run actions/checkout@v4	2026-10-27T20:59:52.4361777Z git version 2.56.0
+python	Post Run actions/checkout@v4	2026-10-27T20:59:52.4394339Z Temporarily overriding HOME='/home/runner/work/_temp/5fea31a6-324a-4525-b4f5-ddf4b72dc459' before making global git config changes
+python	Post Run actions/checkout@v4	2026-10-27T20:59:52.4395601Z Adding repository directory to the temporary git global config as a safe directory
+python	Post Run actions/checkout@v4	2026-10-27T20:59:52.4399554Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf
+python	Post Run actions/checkout@v4	2026-10-27T20:59:52.4449668Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+python	Post Run actions/checkout@v4	2026-10-27T20:59:52.4490929Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+python	Post Run actions/checkout@v4	2026-10-27T20:59:52.4924877Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+python	Post Run actions/checkout@v4	2026-10-27T20:59:52.4957655Z http.https://github.com/.extraheader
+python	Post Run actions/checkout@v4	2026-10-27T20:59:52.4970120Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+python	Post Run actions/checkout@v4	2026-10-27T20:59:52.5019870Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+python	Post Run actions/checkout@v4	2026-10-27T20:59:52.5366667Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+python	Post Run actions/checkout@v4	2026-10-27T20:59:52.5405288Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+python	Complete job	﻿2026-10-27T20:59:52.5924016Z Cleaning up orphan processes
+python	Complete job	2026-10-27T20:59:52.6210142Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
