@@ -6,16 +6,16 @@ import {rustMetamodel} from './rust';
 import {structuralSource} from './structural';
 const root=resolve(import.meta.dir,'../..'),json=(v:any)=>JSON.stringify(v,null,2)+'\n',hash=(v:string|Uint8Array)=>createHash('sha256').update(v).digest('hex');
 const ACCOUNTED_COMPANION_PATH='src/generated/core-validators-accounted.ts';
-const ACCOUNTED_COMPANION_SHA256='314cac8416711899285bc3f1a734765d557f7446f7ab0cf58d3dbd2a7dfdd81e';
+const ACCOUNTED_COMPANION_SHA256='5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29';
 const ACCOUNTED_COMPANION_BYTES=1525352;
-const STAGE_A_BASE='docs/helix/04-build/evidence/schema-migration-design-review/main-reconciliation-001/stage-a-40273176398';
-const ADOPTED_SOURCE_INPUTS='docs/helix/04-build/evidence/schema-migration-design-review/main-reconciliation-001/sdk-057-generation-40391320829-adopted/source-inputs.json';
-const ADOPTED_SOURCE_INPUTS_SHA256='70f25355a30c0a66fbd3e8f72a53704e139d6beb4e206433e0d3067c13b9195a';
+const STAGE_A_BASE='docs/helix/04-build/evidence/schema-migration-design-review/main-reconciliation-001/stage-a-40556187661';
+const ADOPTED_SOURCE_INPUTS='docs/helix/04-build/evidence/schema-migration-design-review/main-reconciliation-001/stage-a-40556187661/adopted-source-inputs.json';
+const ADOPTED_SOURCE_INPUTS_SHA256='628b8ddf065adbdc7f9251390fcf240b58d1b717d6c8ad1146f11b9d60e7a501';
 const ACCOUNTED_INPUTS={
- 'src/generated/core-validators.ts':'4a88fd9bc398c56d71e535841322dcf10d2851e16b026c14679e2d79062e90a7',
- 'spec/core/schema.json':'bdcf1c6b8a197dfbd769ea47a879eaabeeb1d71cc00cab1f9e600175354c5da7',
- 'spec/core/semantic-type-reference.schema.json':'48def42448706bbdfe68c458746d23610767feae0da6456735674524b8018887',
- 'spec/core/extension-package.schema.json':'a4f4694b3ae32ef47a898f49fdce969b890f1ac901fc6747a43cb8c9c6c77c35',
+ 'src/generated/core-validators.ts':'563602e0f21f6d6b0efd1ae069dbda28926e085585b4bf0430347b65ff2bd0ff',
+ 'spec/core/schema.json':'c6004664eb93dcef28ce6e0583f91225b618aa0fb42967a892242402557cf71d',
+ 'spec/core/semantic-type-reference.schema.json':'207abbad54ebf8c660a958e2deda072a5a3236b5b8df5af8a8656f90c3e46ba9',
+ 'spec/core/extension-package.schema.json':'4df3c8f92c5baa2c52f965d83b681ff306392bf9ba333bd39213a8f1065ac766',
 } as const;
 const OUTPUT_PATHS=[
  'spec/core/schema.json','spec/core/semantic-type-reference.schema.json','spec/core/extension-package.schema.json',
@@ -38,16 +38,16 @@ async function accountedCompanionCustody(){
  const adopted=JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(adoptedBytes));
  const custody=adopted.adoptedR2Companion;
  if(!custody||custody.path!==ACCOUNTED_COMPANION_PATH||custody.sha256!==ACCOUNTED_COMPANION_SHA256||custody.bytes!==ACCOUNTED_COMPANION_BYTES
-   ||custody.adoptionCommit!=='63762c9ac233debf1cb6021a3db1fcdc763e64aa'||custody.stageARunId!=='40273176398'
-   ||custody.stageASourceCommit!=='85f4a645cd14e7673a83fc475d3dd66dcc629edc'||custody.artifactId!==12629535479
-   ||custody.artifactSha256!=='a848f70c9c5494b549bbfb7ca6fd69fa926494b8227fa2d7484c3ad38e310e0c')throw Error('METAMODEL_COMPANION_ADOPTION_IDENTITY');
+   ||custody.adoptionCommit!=='97d15f9937163a3ab2a9e17eb08796a4734cbd68'||custody.stageARunId!=='40556187661'
+   ||custody.stageASourceCommit!=='a2cc9c2ff5510d0b6653d50102bd406e3b4556c6'||custody.artifactId!==12757082809
+   ||custody.artifactSha256!=='122767b97a6da87342321e133a033693fd83df759f939f1bc41c56928c89fc37')throw Error('METAMODEL_COMPANION_ADOPTION_IDENTITY');
  const stageManifestPath=`${STAGE_A_BASE}/manifest.json`,stageOwnerPath=`${STAGE_A_BASE}/owner-result.json`,stageReviewPath=`${STAGE_A_BASE}/sol-output-source-review.md`,stagePinsPath=`${STAGE_A_BASE}/source-pins.sha256`;
  const [manifestBytes,ownerBytes,reviewBytes,pinsBytes]=await Promise.all([stageManifestPath,stageOwnerPath,stageReviewPath,stagePinsPath].map(regularBytes));
  if(hash(manifestBytes)!==custody.provenanceManifestSha256||hash(ownerBytes)!==custody.ownerResultSha256
    ||hash(reviewBytes)!==custody.sourceOutputReviewSha256||hash(pinsBytes)!==custody.sourcePinsSha256
-   ||hash(reviewBytes)!=='cb7a1e4141460b415665f561dbb395b188dcff623d2dfd8ebadf451ad797b757')throw Error('METAMODEL_COMPANION_STAGE_A_CUSTODY');
+   ||hash(reviewBytes)!=='0f97c192a6e0fc7dfb4fbe3c05f25807053de7a7bc4b44261d9cb64abf8cab27')throw Error('METAMODEL_COMPANION_STAGE_A_CUSTODY');
  const manifest=JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(manifestBytes)),owner=JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(ownerBytes));
- if(manifest.profile!=='umf.r2-metering-generated-companion/1'||manifest.run?.id!=='40273176398'||manifest.run?.sha!==custody.stageASourceCommit
+ if(manifest.profile!=='umf.r2-metering-generated-companion/1'||manifest.run?.id!=='40556187661'||manifest.run?.sha!==custody.stageASourceCommit
    ||manifest.output?.path!=='core-validators-accounted.ts'||manifest.output?.sha256!==ACCOUNTED_COMPANION_SHA256||manifest.output?.bytes!==ACCOUNTED_COMPANION_BYTES
    ||manifest.generator?.outputPurpose!=='stage-a'||manifest.execution?.artifactOnly!==true||manifest.execution?.companionEvaluated!==false
    ||owner.status!=='GENERATION_PASS_SOURCE_OUTPUT_ADOPTED'||owner.artifactId!==custody.artifactId||owner.artifactSha256!==custody.artifactSha256

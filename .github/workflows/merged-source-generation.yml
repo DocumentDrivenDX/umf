@@ -78,7 +78,7 @@ jobs:
           test "$GITHUB_REF" = refs/heads/codex/migration-merged-generation
           test "$GITHUB_REPOSITORY" = DocumentDrivenDX/umf
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
-          git merge-base --is-ancestor 63762c9ac233debf1cb6021a3db1fcdc763e64aa "$GITHUB_SHA"
+          git merge-base --is-ancestor 97d15f9937163a3ab2a9e17eb08796a4734cbd68 "$GITHUB_SHA"
           git merge-base --is-ancestor 7d334dec45948953718bfacd3ed6dd199cadba79 "$GITHUB_SHA"
           test -z "$(git status --porcelain)"
           test "$(bun --version)" = 1.4.3
@@ -98,7 +98,7 @@ jobs:
           def sha(path): return hashlib.sha256(path.read_bytes()).hexdigest()
           companion_path="src/generated/core-validators-accounted.ts"
           companion=root/companion_path
-          expected_companion_sha="314cac8416711899285bc3f1a734765d557f7446f7ab0cf58d3dbd2a7dfdd81e"
+          expected_companion_sha="5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29"
           expected_companion_bytes=1525352
           if not companion.is_file() or companion.stat().st_size!=expected_companion_bytes or sha(companion)!=expected_companion_sha:
               raise SystemExit("adopted accounted companion bytes do not match the reviewed Stage-A output")
@@ -119,7 +119,7 @@ jobs:
               or core_resource.get("file")!="coreSchema.json" or core_resource.get("source")!="spec/core/schema.json"
               or core_resource.get("sha256")!=sha(core_schema_path)):
               raise SystemExit("Core schema resource mapping or pinned digest does not match actual schema bytes")
-          provenance_root=pathlib.Path("docs/helix/04-build/evidence/schema-migration-design-review/main-reconciliation-001/stage-a-40273176398")
+          provenance_root=pathlib.Path("docs/helix/04-build/evidence/schema-migration-design-review/main-reconciliation-001/stage-a-40556187661")
           manifest_rel=provenance_root/"manifest.json"
           identity_rel=provenance_root/"identity.txt"
           owner_rel=provenance_root/"owner-result.json"
@@ -132,18 +132,18 @@ jobs:
           review_path=root/review_rel
           sums_path=root/sums_rel
           source_pins_path=root/source_pins_rel
-          expected_manifest_sha="def3865107a9a961ec74757e6bdec46a86f8fc39fdd0a502a829f9c83b297289"
-          expected_stage_pins_sha="ffeb22448d5f941ca67e7d9746728141c07a7e211314cf9efda35d9bda0103e1"
+          expected_manifest_sha="67570dddf2c1218381d55ce8e9e7c026e0087772790d6dd9f9f6115e60a8ec79"
+          expected_stage_pins_sha="2c3071baeb289c5bc41ce903dbb4597f14cb471e316259baac252887bdfc454c"
           if sha(manifest_path)!=expected_manifest_sha:
               raise SystemExit("Stage-A companion provenance manifest hash mismatch")
           if sha(source_pins_path)!=expected_stage_pins_sha:
               raise SystemExit("Stage-A source pin manifest hash mismatch")
           manifest=json.loads(manifest_path.read_bytes())
-          expected_run={"eventName":"push","id":"40273176398","attempt":"1",
-                        "sha":"85f4a645cd14e7673a83fc475d3dd66dcc629edc",
+          expected_run={"eventName":"push","id":"40556187661","attempt":"1",
+                        "sha":"a2cc9c2ff5510d0b6653d50102bd406e3b4556c6",
                         "ref":"refs/heads/codex/migration-main-metering-generation",
                         "workflowRef":"DocumentDrivenDX/umf/.github/workflows/r2-metering-stage-a.yml@refs/heads/codex/migration-main-metering-generation",
-                        "workflowSha":"85f4a645cd14e7673a83fc475d3dd66dcc629edc"}
+                        "workflowSha":"a2cc9c2ff5510d0b6653d50102bd406e3b4556c6"}
           if manifest.get("profile")!="umf.r2-metering-generated-companion/1" or manifest.get("run")!=expected_run:
               raise SystemExit("Stage-A manifest run identity mismatch")
           if manifest.get("output")!={"path":"core-validators-accounted.ts","sha256":expected_companion_sha,"bytes":expected_companion_bytes}:
@@ -172,18 +172,18 @@ jobs:
                   or row.get("bytes")!=source.stat().st_size):
                   raise SystemExit("Current source bytes differ from the Stage-A pinned input: "+name)
           owner=json.loads(owner_path.read_bytes())
-          if owner.get("status")!="GENERATION_PASS_SOURCE_OUTPUT_ADOPTED" or owner.get("runId")!=40273176398 or owner.get("sourceCommit")!=expected_run["sha"]:
+          if owner.get("status")!="GENERATION_PASS_SOURCE_OUTPUT_ADOPTED" or owner.get("runId")!=40556187661 or owner.get("sourceCommit")!=expected_run["sha"]:
               raise SystemExit("Stage-A owner receipt identity mismatch")
-          if owner.get("artifactId")!=12629535479 or owner.get("artifactSha256")!="a848f70c9c5494b549bbfb7ca6fd69fa926494b8227fa2d7484c3ad38e310e0c" or owner.get("output")!=manifest["output"]:
+          if owner.get("artifactId")!=12757082809 or owner.get("artifactSha256")!="122767b97a6da87342321e133a033693fd83df759f939f1bc41c56928c89fc37" or owner.get("output")!=manifest["output"]:
               raise SystemExit("Stage-A artifact receipt mismatch")
-          expected_review_sha="cb7a1e4141460b415665f561dbb395b188dcff623d2dfd8ebadf451ad797b757"
+          expected_review_sha="0f97c192a6e0fc7dfb4fbe3c05f25807053de7a7bc4b44261d9cb64abf8cab27"
           if sha(review_path)!=expected_review_sha or owner.get("outputSourceReviewSha256")!=expected_review_sha:
               raise SystemExit("Stage-A source-output adoption review mismatch")
-          if owner.get("adoptionTarget")!=companion_path or owner.get("adoptionParentCommit")!="c7190cf4928416a0169257a07d88a775c186a19c":
+          if owner.get("adoptionTarget")!=companion_path or owner.get("adoptionParentCommit")!="a2cc9c2ff5510d0b6653d50102bd406e3b4556c6":
               raise SystemExit("Stage-A adoption parent identity mismatch")
           identity=identity_path.read_text()
           for value in ("profile=umf.r2-metering-stage-a/1", "event=push", "ref="+expected_run["ref"],
-                        "commit="+expected_run["sha"], "run_id=40273176398", "attempt=1",
+                        "commit="+expected_run["sha"], "run_id=40556187661", "attempt=1",
                         "workflow_ref="+expected_run["workflowRef"],"workflow_sha="+expected_run["workflowSha"],
                         "pin_manifest_sha256="+expected_stage_pins_sha,
                         "companion_sha256="+expected_companion_sha, "companion_bytes=1525352",
@@ -265,9 +265,9 @@ jobs:
                              "python/src/umf/action_runtime_resource_manifest.json","spec/core/schema.json"]},
                          "adoptedR2Companion":{"path":companion_path,"sha256":expected_companion_sha,
                            "bytes":expected_companion_bytes,"provenanceManifestPath":manifest_rel.as_posix(),
-                           "provenanceManifestSha256":expected_manifest_sha,"stageARunId":"40273176398",
-                           "stageASourceCommit":expected_run["sha"],"artifactId":12629535479,
-                           "artifactSha256":owner["artifactSha256"],"adoptionCommit":"63762c9ac233debf1cb6021a3db1fcdc763e64aa",
+                           "provenanceManifestSha256":expected_manifest_sha,"stageARunId":"40556187661",
+                           "stageASourceCommit":expected_run["sha"],"artifactId":12757082809,
+                           "artifactSha256":owner["artifactSha256"],"adoptionCommit":"97d15f9937163a3ab2a9e17eb08796a4734cbd68",
                            "ownerResultPath":owner_rel.as_posix(),"ownerResultSha256":sha(owner_path),
                            "sourcePinsSha256":expected_stage_pins_sha,
                            "sourceOutputReviewPath":review_rel.as_posix(),"sourceOutputReviewSha256":expected_review_sha},
@@ -487,7 +487,7 @@ jobs:
           PY
           run_bounded prepare-metamodel-stage 30 python -I - "$METAMODEL_STAGE_DIR" <<'PY'
           import hashlib,os,pathlib,shutil,sys
-          root=pathlib.Path.cwd(); stage=pathlib.Path(sys.argv[1]); expected='314cac8416711899285bc3f1a734765d557f7446f7ab0cf58d3dbd2a7dfdd81e'
+          root=pathlib.Path.cwd(); stage=pathlib.Path(sys.argv[1]); expected='5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29'
           source=root/'src/generated/core-validators-accounted.ts'
           if stage.parent.resolve()!=pathlib.Path(os.environ['RUNNER_TEMP']).resolve() or stage.exists(): raise SystemExit('metamodel stage path is not fresh and runner-local')
           info=source.lstat()
@@ -701,7 +701,7 @@ jobs:
                    "historicalPlaceholderReceipt":"historical-placeholder-inputs.json","generatedFiles":{}}
           source_input_receipt=evidence/"source-inputs.json"
           if source_input_receipt.is_file(): receipt["sourceInputsSha256"]=sha(source_input_receipt)
-          receipt["adoptedR2CompanionSha256"]="314cac8416711899285bc3f1a734765d557f7446f7ab0cf58d3dbd2a7dfdd81e"
+          receipt["adoptedR2CompanionSha256"]="5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29"
           try:
               if os.environ["GITHUB_REF"]!="refs/heads/codex/migration-merged-generation": raise ValueError("unexpected qualification branch")
               if os.environ.get("METAMODEL_DEPENDENT_GENERATION_READY")!="true": raise ValueError("full generation requires exact adopted metamodel correspondence")
@@ -767,11 +767,11 @@ jobs:
               source_inputs=evidence/"source-inputs.json"
               if not source_inputs.is_file(): raise ValueError("frozen merged source input roster is missing")
               receipt["sourceInputsSha256"]=sha(source_inputs)
-              receipt["adoptedR2CompanionSha256"]="314cac8416711899285bc3f1a734765d557f7446f7ab0cf58d3dbd2a7dfdd81e"
+              receipt["adoptedR2CompanionSha256"]="5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29"
               source_input_receipt=json.loads(source_inputs.read_bytes())
               if source_input_receipt.get("sourceCommit")!=os.environ["GITHUB_SHA"]: raise ValueError("source roster commit identity mismatch")
               companion=source_input_receipt.get("adoptedR2Companion",{})
-              if companion.get("sha256")!=receipt["adoptedR2CompanionSha256"] or companion.get("adoptionCommit")!="63762c9ac233debf1cb6021a3db1fcdc763e64aa": raise ValueError("source roster companion adoption mismatch")
+              if companion.get("sha256")!=receipt["adoptedR2CompanionSha256"] or companion.get("adoptionCommit")!="97d15f9937163a3ab2a9e17eb08796a4734cbd68": raise ValueError("source roster companion adoption mismatch")
               receipt["generatedFiles"]["python/umf_codegen/src/umf_codegen/_assets/generator.js.gz"]={"sha256":sha(outputs/"python/umf_codegen/src/umf_codegen/_assets/generator.js.gz"),"bytes":(outputs/"python/umf_codegen/src/umf_codegen/_assets/generator.js.gz").stat().st_size}
               metamodel_manifest_path=metamodel_stage/"spec/metamodel/generated/manifest.json"
               metamodel_manifest=json.loads(metamodel_manifest_path.read_bytes())

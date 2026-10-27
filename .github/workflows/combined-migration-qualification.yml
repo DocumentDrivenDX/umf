@@ -137,7 +137,7 @@ jobs:
             printf 'missing_generated_reproduction=%s\n' "$generated" > "$evidence/reproduction-compare.log"
             failed=1
           fi
-          test "$(sha256sum src/generated/core-validators-accounted.ts | cut -d ' ' -f 1)" = 314cac8416711899285bc3f1a734765d557f7446f7ab0cf58d3dbd2a7dfdd81e || failed=1
+          test "$(sha256sum src/generated/core-validators-accounted.ts | cut -d ' ' -f 1)" = 5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29 || failed=1
           test "$(bun -e 'console.log(JSON.parse(await Bun.file("node_modules/typescript-api/package.json").text()).version)')" = 5.9.3 || failed=1
           test "$(bun -e 'console.log(JSON.parse(await Bun.file("node_modules/typescript/package.json").text()).version)')" = 7.0.2 || failed=1
           test "$(bun -e 'console.log(JSON.parse(await Bun.file("node_modules/playwright/package.json").text()).version)')" = 1.63.0 || failed=1
