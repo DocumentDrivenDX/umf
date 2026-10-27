@@ -3,7 +3,6 @@
 import copy
 
 import pytest
-
 from umf import SemanticTypeRegistry, SemanticValidatorContextV1
 from umf._rust import UmfCoreError
 
@@ -134,7 +133,7 @@ def test_invalid_report_work_is_host_control():
 def _caught_invalid_work(context):
     try:
         context.report_work(-1)
-    except Exception:
+    except Exception:  # noqa: BLE001, S110 -- a validator may throw anything after reporting invalid work; the recorded control fault must remain authoritative
         pass
     return {"status": "valid", "complete": True, "issues": []}
 

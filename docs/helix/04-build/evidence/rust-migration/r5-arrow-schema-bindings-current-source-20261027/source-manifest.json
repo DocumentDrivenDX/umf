@@ -1,6 +1,6 @@
 {
   "profile": "opt-in Arrow schema JSON; source-current replay; no default route selected",
-  "refreshNote": "The action plan-identity TypeScript source was regenerated after the prior packet. It is recorded in the source cohort but is not an Arrow runtime or Rust build dependency. Current Cargo build commands were rerun and completed without rebuilding those artifacts; their hashes remain unchanged. The previous receipts are preserved under historical/pre-plan-identity-regeneration-20261027/.",
+  "refreshNote": "Refreshed against the current source after Python Ruff cleanup and generated metamodel/action identity changes. Node and WASM artifacts were rebuilt into fresh, separate private Cargo targets; Node, Bun, and real Chromium each replayed the full binding packet. Python/CLI additions remain pinned as the contemporaneous source cohort; Arrow behavior is exercised through native Node and WASM bindings.",
   "platform": "darwin-arm64",
   "toolchain": {
     "rustc": "1.90.0",
@@ -10,29 +10,29 @@
     "wasmBindgen": "0.2.100"
   },
   "buildCommands": [
-    "mkdir -p /private/tmp/umf-arrow-refresh-node-package && cp -R bindings/core/node/. /private/tmp/umf-arrow-refresh-node-package/",
-    "PATH=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:$PATH CARGO_TARGET_DIR=/private/tmp/umf-arrow-refresh-node cargo build --release --locked --offline --manifest-path bindings/core/node/Cargo.toml",
-    "cp /private/tmp/umf-arrow-refresh-node/release/libumf_core_node.dylib /private/tmp/umf-arrow-refresh-node-package/umf_core_node.node",
-    "PATH=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:$PATH CARGO_TARGET_DIR=/private/tmp/umf-arrow-refresh-wasm CARGO_BUILD_JOBS=2 CARGO_INCREMENTAL=0 cargo build --release --locked --offline --manifest-path bindings/core/wasm/Cargo.toml --target wasm32-unknown-unknown",
-    "PATH=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:/private/tmp/umf-wasm-bindgen-0.2.100/bin:$PATH wasm-bindgen --target web --out-dir /private/tmp/umf-arrow-refresh-wasm/pkg --out-name umf_core_wasm /private/tmp/umf-arrow-refresh-wasm/wasm32-unknown-unknown/release/umf_core_wasm.wasm"
+    "mkdir -p /private/tmp/umf-arrow-final-lint-node-package && cp -R bindings/core/node/. /private/tmp/umf-arrow-final-lint-node-package/",
+    "PATH=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:$PATH CARGO_TARGET_DIR=/private/tmp/umf-arrow-final-lint-node cargo build --release --locked --offline --manifest-path bindings/core/node/Cargo.toml",
+    "cp /private/tmp/umf-arrow-final-lint-node/release/libumf_core_node.dylib /private/tmp/umf-arrow-final-lint-node-package/umf_core_node.node",
+    "PATH=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:$PATH CARGO_TARGET_DIR=/private/tmp/umf-arrow-final-lint-wasm CARGO_BUILD_JOBS=2 CARGO_INCREMENTAL=0 cargo build --release --locked --offline --manifest-path bindings/core/wasm/Cargo.toml --target wasm32-unknown-unknown",
+    "PATH=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:/private/tmp/umf-wasm-bindgen-0.2.100/bin:$PATH wasm-bindgen --target web --out-dir /private/tmp/umf-arrow-final-lint-wasm/pkg --out-name umf_core_wasm /private/tmp/umf-arrow-final-lint-wasm/wasm32-unknown-unknown/release/umf_core_wasm.wasm"
   ],
   "replayCommands": [
-    "node docs/helix/04-build/evidence/rust-migration/r5-arrow-schema-bindings-20261027/replay.mjs /private/tmp/umf-arrow-refresh-node-package",
-    "bun docs/helix/04-build/evidence/rust-migration/r5-arrow-schema-bindings-20261027/replay.mjs /private/tmp/umf-arrow-refresh-node-package",
-    "UMF_CHROMIUM_PORT=41751 bun bindings/core/wasm/tests/arrow-schema-session.chromium.mjs /private/tmp/umf-arrow-refresh-wasm/pkg",
-    "PATH=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:$PATH CARGO_TARGET_DIR=/private/tmp/umf-arrow-refresh-node cargo test --locked --offline -p umf-core-wire --test r8_arrow_schema_wire"
+    "node docs/helix/04-build/evidence/rust-migration/r5-arrow-schema-bindings-20261027/replay.mjs /private/tmp/umf-arrow-final-lint-node-package",
+    "bun docs/helix/04-build/evidence/rust-migration/r5-arrow-schema-bindings-20261027/replay.mjs /private/tmp/umf-arrow-final-lint-node-package",
+    "UMF_CHROMIUM_PORT=41731 UMF_CHROMIUM_PATH='/Users/erik/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing' bun bindings/core/wasm/tests/arrow-schema-session.chromium.mjs /private/tmp/umf-arrow-final-lint-wasm/pkg",
+    "PATH=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:$PATH CARGO_TARGET_DIR=/private/tmp/umf-arrow-final-lint-node cargo test --locked --offline -p umf-core-wire --test r8_arrow_schema_wire"
   ],
   "privateArtifacts": {
     "nodeAddon": {
-      "path": "/private/tmp/umf-arrow-refresh-node-package/umf_core_node.node",
-      "sha256": "4bb25908f20e84d0d7cacd0465de1a22d3b8143532bcbd9bfd0d1ee3f001ca29"
+      "path": "/private/tmp/umf-arrow-final-lint-node-package/umf_core_node.node",
+      "sha256": "162bf7d4bfc91e5e55ba7300af3fd28af85751f50f798ad4cfd015130635f222"
     },
     "wasmBinary": {
-      "path": "/private/tmp/umf-arrow-refresh-wasm/pkg/umf_core_wasm_bg.wasm",
-      "sha256": "a31f92c138e810fbb89194f8ac7ace193ef16b0a189bf3121dd85f95e0aea2fa"
+      "path": "/private/tmp/umf-arrow-final-lint-wasm/pkg/umf_core_wasm_bg.wasm",
+      "sha256": "039ef9ae576b1b568e57ec946f8d0415a116b1eacc1e0f3f18cc3dcde92419cd"
     },
     "wasmJavaScript": {
-      "path": "/private/tmp/umf-arrow-refresh-wasm/pkg/umf_core_wasm.js",
+      "path": "/private/tmp/umf-arrow-final-lint-wasm/pkg/umf_core_wasm.js",
       "sha256": "f242eb8fa149d66c2c059f7d28c78d40ce8cbf5af3f6b14762843e75e4a42132"
     }
   },
@@ -71,7 +71,7 @@
     "bindings/core/node/src/temporal.js": "f09199ca4e6db6f3402cfddd9861076a23642af6ae3dd8182846ad727799b699",
     "bindings/core/node/src/wire.js": "5a59889a7484b69554b628aa45c58bad6f71bb4c47679ae63d72f2e8a8e0daea",
     "bindings/core/python/Cargo.toml": "190f17abce90c387affa8a01a875c98d81ebfbfce2ae7b525a9624701bb7e165",
-    "bindings/core/python/src/lib.rs": "3e15cdd887c039fcf2e5b3a7fe52e61cad7ec2786baccc8ef50e00332a136f13",
+    "bindings/core/python/src/lib.rs": "212d62a4756c02af4166980245a1e73c3e97589315f264f1dea0c33f487315bd",
     "bindings/core/wasm/Cargo.toml": "5633ccb692f4cc80b9fe55a1ab9ca2ceb99642c9132d986b8f850cc4a67633c3",
     "bindings/core/wasm/index.d.ts": "13cbe7532d264a9bd73ef9e99d27e147c681eccdbb5b414aa3cb25d1c37d33f1",
     "bindings/core/wasm/index.js": "8afcce3a335036fdf3dcb3e1e19e8f840992f37a42fcaaacb6ea11f3044eca4b",
@@ -101,8 +101,12 @@
     "bindings/core/wasm/src/shared-sources.json": "f04b8032ca28d0cd0dde58b77c9c305eda5a5306a33690d0de09aaa96a5725be",
     "bindings/core/wasm/src/wire.js": "5a59889a7484b69554b628aa45c58bad6f71bb4c47679ae63d72f2e8a8e0daea",
     "bindings/core/wasm/tests/arrow-schema-session.chromium.mjs": "e0f1b16d3d15c52dc6d12d64bd865af9a6fb8de7f3039c3ff3eb39b9f43c6e71",
+    "crates/umf-cli/src/main.rs": "38d55c4fb63f66cc2e58a64bf5a1b22be9703013aa8ab0d9b64077853bf36186",
+    "crates/umf-cli/tests/csv_boolean_lexical_cli.rs": "d58c03b6bd81385485169987e0657e1431d312cfd35d0f20de96154f690305b9",
+    "crates/umf-cli/tests/facets_cli.rs": "b209b769153ef36de852948e5842f7c1248baf1ca0a5d36835a5494baf757a35",
     "crates/umf-core-wire/Cargo.toml": "b37090d28cc8aec419bca6eb908492bdadca17c2822619c04e25458cd21751dc",
-    "crates/umf-core-wire/src/lib.rs": "58ebcd06b10d836a29f648de321b56d805381028dd39c21c40bb64e99361793c",
+    "crates/umf-core-wire/src/lib.rs": "f14660a95e7d68413a24a732f4e603dd3be78d5c56e2fb74f3fcf2b68b66ca04",
+    "crates/umf-core-wire/tests/r5_core_facets_wire.rs": "f00bf4a1e66b5b0ccc683abda98f0018071097e535ea4ca521d90003cb19986b",
     "crates/umf-core-wire/tests/r8_arrow_schema_wire.rs": "d41425bf3dc700b2326cb532520f4642c18fb320b199b77c0449caa9d7100f2f",
     "crates/umf-core/Cargo.toml": "95dd21a18ac1b3e0ed9f129c00ef35738176c2b7684873a20797c5e24782541a",
     "crates/umf-core/src/arrow_schema.rs": "3bd73039ba9d7d810d4c0a2ffb5c4c6cf120bbcd7f1fe531cfd811916b45f44f",
@@ -111,10 +115,14 @@
     "crates/umf-core/tests/r5_arrow_schema.rs": "6c3613259e37ed4d25c6b3cc6d2909ce67b8378f105e6f78a65957b20dae6bb2",
     "docs/helix/04-build/evidence/rust-migration/r5-arrow-schema-bindings-20261027/replay.mjs": "efb32cbef9fc21bc27411160fbed4fa3ad20f10fab51aa8b347a523321dce988",
     "fixtures/arrow/schema-cases.json": "ecaf8ce3ece8fc449fdb7838d10509bddc651b43e3ff1097793f090c15709c3a",
-    "python/src/umf/action_runtime.py": "f17526c1d9bde7d089df870b74c9bab4517a57b59f8eaa142af0af8fa66614d0",
+    "python/src/umf/action_runtime.py": "bc943a9ef1694bae393ba4d2738450ff1caf13b64a4cb4bcdf1ac45ac22b6a98",
     "python/src/umf/action_runtime_resource_manifest.json": "92a31e5a44f0e156ff043a5ae68a04f901d582489f6452b5242638b12490a67f",
+    "python/src/umf/rust_csv_boolean_lexical.py": "688ded52e10ecb6485fe3d72101b94421f502f4d78563356d9295fdc6228e676",
+    "python/src/umf/rust_facets.py": "90dc87073bf2a16f6c9a370c072f965c6be4fdeb631e7070bc08feb88cb3fb98",
     "python/src/umf/rust_schema_properties.py": "a2bd508daeb4deb355aa23d108f4a13e6e631dc900492d2f632db11b0b1017d4",
-    "python/tests/test_rust_schema_properties.py": "03c3df8e9c956f248c5e729f1b69be370eb1142a61e1e52506f21d9af7cb5568",
+    "python/tests/test_rust_csv_boolean_lexical.py": "bac4d670db4d4d455c6123f951d636fc1aa0350e933be74e7e5710f2023a9032",
+    "python/tests/test_rust_facets.py": "1e3870d0e616e4d1a7a877a0fba9361fe08b5f1e1a631895d01a8702142ff5da",
+    "python/tests/test_rust_schema_properties.py": "cc4d1abb6dcdbb9fb763ac71d69bc8bc6a6c1d11cd59b7a04c101ac68c205065",
     "python/umf_access/src/umf_access/generated_core.py": "814ff81252c8204517fadf37e09f2e07ea3ee07f0ffd0c88f3e3a696d42b3f37",
     "python/umf_codegen/src/umf_codegen/_release.py": "0e455bfa9e0b6d1f619a4af36481ae753d0672d06f0ef81dac4ff55fdbd27271",
     "python/umf_codegen/src/umf_codegen/_resources/core.constraints.json": "eba7f8914c6327efc7955f02a5cd69652d843eca96b2d93fcf6ae17b77e4455c",
@@ -133,11 +141,11 @@
     "spec/extensions/arrow/schema.json": "e0d111ebbb39277667ef3e7dace7f1dead9833e2f1e621db5b1354a603889677",
     "spec/metamodel/generated/core-constraints.json": "eba7f8914c6327efc7955f02a5cd69652d843eca96b2d93fcf6ae17b77e4455c",
     "spec/metamodel/generated/domain-policy.json": "e4494106784fb968e05ebdda1faa3a36ba779baf22d20eb057220155806f11b1",
-    "spec/metamodel/generated/manifest.json": "d3c53834314514f6dc7ff8adb960ae8f0984b6e05b7c31335a7d697f9e645813",
+    "spec/metamodel/generated/manifest.json": "0bf05a181f9e9e12cb82dfc18fc18e30900fc30ad4218c6f9c43d14bf4b8c23e",
     "spec/metamodel/generated/python-shapes.json": "0d7301ea5a49f5a27904ea6ebda56205acf22215d071f62c02dd31068806e83e",
     "spec/metamodel/umf.yaml": "35b72a7f6aa86c98398192e5b67d5841d77127743c671c742dd871a7baee58ca",
     "src/adapters/arrow/index.ts": "8fbb5d8a00ee1cc49f0e3f725347eeb2d7ad47653c689e96d3b10e5848c94da5",
-    "src/extensions/actions/plan-identity.ts": "cd104adefbc27d9e51870ca4e316d414cbc8bb5de2e458b1cd673035f8049c5b",
+    "src/extensions/actions/plan-identity.ts": "ce429d59eec48618584f52a7390b4fec9c2633ab6441dfa0d60ce705062a615f",
     "src/generated/core-model.ts": "70a14dd94aad5ce60943ab1f2055e4a43b6c80464200c88ecffb0e2a3fa4a061",
     "src/generated/core-validators.ts": "ef244debe038cee9a46872df06100796b57813fd6e313b55fd0cbf3368c25fb9",
     "src/model/json.ts": "d0a06bd26beb215d262b92f5c47d5cea9e85291bb4a780f0aea98b8277c15f98",

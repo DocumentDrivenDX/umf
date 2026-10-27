@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 import ast
-from pathlib import Path
 import unittest
+from pathlib import Path
 from unittest.mock import patch
 
 SOURCE = Path(__file__).resolve().parents[1] / "src/umf_access/reviewed.py"
@@ -15,7 +15,7 @@ selected = [
     and node.name in {"ReadBuildError", "_dbapi", "_dbapi_order"}
 ]
 namespace: dict[str, object] = {}
-exec(compile(ast.Module(body=selected, type_ignores=[]), str(SOURCE), "exec"), namespace)
+exec(compile(ast.Module(body=selected, type_ignores=[]), str(SOURCE), "exec"), namespace)  # noqa: S102 - execute only AST-selected local definitions for an isolated test.
 ReadBuildError = namespace["ReadBuildError"]
 _dbapi = namespace["_dbapi"]
 _dbapi_order = namespace["_dbapi_order"]
@@ -41,13 +41,11 @@ class ReviewedDBAPITransport(unittest.TestCase):
         def lexical_refusal(_sql):
             raise ReadBuildError("unterminated compiler SQL comment")
 
-        with patch.dict(namespace, {"_parameter_positions": lexical_refusal}):
-            with self.assertRaisesRegex(ReadBuildError, "unterminated compiler SQL comment"):
+        with patch.dict(namespace, {"_parameter_positions": lexical_refusal}), self.assertRaisesRegex(ReadBuildError, "unterminated compiler SQL comment"):
                 _dbapi_order("$3 /* unclosed", ["only"])
 
     def test_completed_scan_then_refuses_out_of_inventory_ordinal(self):
-        with patch.dict(namespace, {"_parameter_positions": lambda value: [(0, 2, 1)]}):
-            with self.assertRaisesRegex(ReadBuildError, "compiler parameter ordinal outside inventory"):
+        with patch.dict(namespace, {"_parameter_positions": lambda value: [(0, 2, 1)]}), self.assertRaisesRegex(ReadBuildError, "compiler parameter ordinal outside inventory"):
                 _dbapi_order("$2", ["only"])
 
 

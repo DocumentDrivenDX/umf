@@ -7,7 +7,6 @@ import json
 from pathlib import Path
 
 import pytest
-
 from umf import rust_avro_fields
 
 PACKET = (
@@ -202,7 +201,6 @@ def test_deadline_controls_preserve_missing_elapsed_and_callback_errors() -> Non
     def no_clock() -> None:
         nonlocal missing_clock_calls
         missing_clock_calls += 1
-        return None
 
     with pytest.raises(ValueError) as missing_clock:
         rust_avro_fields.derive_fields(root, now=no_clock, deadline_ms=1)

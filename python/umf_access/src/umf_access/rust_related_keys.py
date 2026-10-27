@@ -15,6 +15,7 @@ import sys
 from typing import Any
 
 from umf import rust_related_keys as _core
+
 from .types import RelatedKeyParserUnavailable
 
 _PROFILE = "umf-r6-related-key-json/0.1.0"
@@ -140,7 +141,7 @@ def truss_component_type_matches(value: object, carrier: object) -> bool:
         elif kind in (str, int, bool) or item is None:
             continue
         elif kind is float:
-            if item != item or item in (float("inf"), float("-inf")):
+            if item != item or item in (float("inf"), float("-inf")):  # noqa: PLR0124 - self-inequality detects NaN without coercion.
                 raise RelatedKeyParserUnavailable(
                     "Rust Truss component profile requires finite JSON numbers"
                 )

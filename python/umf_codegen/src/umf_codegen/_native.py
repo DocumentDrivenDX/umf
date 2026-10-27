@@ -8,13 +8,13 @@ import math
 import os
 import selectors
 import subprocess
-import sys
 import time
+from collections.abc import Iterator
 from contextlib import contextmanager
 from importlib import resources
 from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
-from typing import Any, Iterator
+from typing import Any
 
 from ._release import (
     CODEGEN_CLI_PROTOCOL_VERSION,
@@ -78,7 +78,7 @@ def _cli_binary() -> Iterator[Path]:
             yield path
     except GenerationError:
         raise
-    except Exception as error:  # noqa: BLE001 -- sanitize missing wheel resources
+    except Exception as error:
         raise GenerationError("ENGINE_UNAVAILABLE", "Pinned native codegen CLI is unavailable") from error
 
 
@@ -91,13 +91,13 @@ def _verify_native() -> tuple[Any, type[ValueError]]:
         from umf.rust_codegen import UmfCoreError, encode_codegen_cli_request_json
 
         if not callable(getattr(_rust_core, "execute_codegen_wire", None)):
-            raise ImportError("Native codegen wire API is missing")
+            raise ImportError("Native codegen wire API is missing")  # noqa: TRY004 -- absent installed capability is an import/availability failure, not caller type error
         if _rust_core.engine_version() != UMF_CORE_ENGINE_VERSION:
             raise ImportError("Native core ABI identity differs")
         if _rust_core.codegen_protocol_version() != CODEGEN_PROTOCOL_VERSION:
             raise ImportError("Native codegen protocol identity differs")
         if not callable(encode_codegen_cli_request_json):
-            raise ImportError("Native codegen CLI request helper is missing")
+            raise ImportError("Native codegen CLI request helper is missing")  # noqa: TRY004 -- absent installed capability is an import/availability failure, not caller type error
         return encode_codegen_cli_request_json, UmfCoreError
     except (ImportError, PackageNotFoundError, AttributeError, ValueError, RuntimeError) as error:
         raise GenerationError(
@@ -128,7 +128,7 @@ def _load_resource_manifest() -> dict[str, Any]:
             if root.joinpath(filename).read_bytes() != core_root.joinpath(*core_path.split("/")).read_bytes():
                 raise ValueError("Native UMF core resource cohort differs")
         return manifest
-    except Exception as error:  # noqa: BLE001 -- sanitize package/resource failures
+    except Exception as error:
         raise GenerationError("ENGINE_UNAVAILABLE", "Pinned native codegen resources are unavailable") from error
 
 

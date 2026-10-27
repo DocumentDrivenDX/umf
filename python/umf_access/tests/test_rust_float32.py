@@ -38,7 +38,7 @@ def _rational_binary32_exact(value: float) -> str:
         return "valid"
     if exact < Fraction(1, 1 << 126):
         return "valid" if (exact * (1 << 149)).denominator == 1 else "vector value requires float32 rounding"
-    numerator, denominator = exact.numerator, exact.denominator
+    numerator = exact.numerator
     # A normal binary32 value has at most 24 significant bits after removing
     # powers of two; its exponent is already bounded by the finite check above.
     while numerator % 2 == 0:
@@ -62,7 +62,8 @@ class RustFloat32Tests(unittest.TestCase):
                 elif validator == "vector":
                     check = FieldValidator(kind="vector", dimensions=case["dimensions"])
                 else:
-                    check = lambda item: validate_vector(item, dimensions=case["dimensions"])
+                    dimensions = case["dimensions"]
+                    check = lambda item, dimensions=dimensions: validate_vector(item, dimensions=dimensions)
                 if outcome == "same-input":
                     self.assertIs(check(value), value)
                 else:
@@ -89,16 +90,14 @@ class RustFloat32Tests(unittest.TestCase):
             pass
 
         for value in (1, True, "1.0", FloatSub(1.0)):
-            with self.subTest(value=type(value).__name__):
-                with self.assertRaises((TypeError, ValueError)):
+            with self.subTest(value=type(value).__name__), self.assertRaises((TypeError, ValueError)):
                     rust_values.access_float32_classify(value)
 
     def test_bridge_fails_closed_on_missing_or_mismatched_profile(self) -> None:
         from umf import rust_values
 
         value = 1.0
-        with patch.object(rust_values, "access_float32_profile_version", return_value="umf-access-float32/9.9"):
-            with self.assertRaisesRegex(ValueRuleError, "required float32 profile"):
+        with patch.object(rust_values, "access_float32_profile_version", return_value="umf-access-float32/9.9"), self.assertRaisesRegex(ValueRuleError, "required float32 profile"):
                 validate_float32(value)
 
 

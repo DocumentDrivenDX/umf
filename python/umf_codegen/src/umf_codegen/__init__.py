@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import Literal, TypedDict, cast
 
 from ._native import GenerationError, execute
+
 __version__ = "0.2.0"
 
 

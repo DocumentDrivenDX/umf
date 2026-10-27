@@ -68,23 +68,25 @@ class RustPairCustodyTests(unittest.TestCase):
                 ("123", "1", "attacker/umf/.github/workflows/python-coordinated-release.yml@refs/heads/main"),
             )
             for run_id, attempt, workflow_ref in cases:
-                with self.subTest(run_id=run_id, attempt=attempt, workflow_ref=workflow_ref):
-                    with patch.object(
+                with (
+                    self.subTest(run_id=run_id, attempt=attempt, workflow_ref=workflow_ref),
+                    patch.object(
                         custody.pair,
                         "prepare",
                         return_value={"sourceRevision": "a" * 40, "runId": run_id},
-                    ):
-                        with self.assertRaises(ValueError):
-                            custody.prepare(
-                                temporary,
-                                aggregate,
-                                ROOT,
-                                "a" * 40,
-                                run_id,
-                                attempt,
-                                workflow_ref,
-                                "org/umf",
-                            )
+                    ),
+                    self.assertRaises(ValueError),
+                ):
+                    custody.prepare(
+                        temporary,
+                        aggregate,
+                        ROOT,
+                        "a" * 40,
+                        run_id,
+                        attempt,
+                        workflow_ref,
+                        "org/umf",
+                    )
 
     def test_workflow_keeps_read_only_nonpublishing_custody_gate(self) -> None:
         workflow = (ROOT / ".github/workflows/python-coordinated-release.yml").read_text()
@@ -103,22 +105,24 @@ class RustPairCustodyTests(unittest.TestCase):
             (other_checkout / "tools").mkdir()
             aggregate = other_checkout / "matrix.json"
             aggregate.write_text("receipt")
-            with patch.object(
-                custody.pair,
-                "prepare",
-                return_value={"sourceRevision": "a" * 40, "runId": "123"},
+            with (
+                patch.object(
+                    custody.pair,
+                    "prepare",
+                    return_value={"sourceRevision": "a" * 40, "runId": "123"},
+                ),
+                self.assertRaisesRegex(ValueError, "outside the source repository"),
             ):
-                with self.assertRaisesRegex(ValueError, "outside the source repository"):
-                    custody.prepare(
-                        other_checkout,
-                        aggregate,
-                        other_checkout,
-                        "a" * 40,
-                        "123",
-                        "1",
-                        "org/umf/.github/workflows/python-coordinated-release.yml@refs/heads/main",
-                        "org/umf",
-                    )
+                custody.prepare(
+                    other_checkout,
+                    aggregate,
+                    other_checkout,
+                    "a" * 40,
+                    "123",
+                    "1",
+                    "org/umf/.github/workflows/python-coordinated-release.yml@refs/heads/main",
+                    "org/umf",
+                )
 
     def test_manifest_preserves_verified_six_cohort_custody(self) -> None:
         with tempfile.TemporaryDirectory() as raw:
@@ -145,18 +149,20 @@ class RustPairCustodyTests(unittest.TestCase):
             aggregate = temporary / "matrix.json"
             aggregate.write_text("receipt")
             base = {"sourceRevision": "a" * 40, "runId": "123", "qualificationScope": "linux-only", "aggregateReceiptSchema": "umf.python-coordinated-release-matrix/1"}
-            with patch.object(custody.pair, "prepare", return_value=base):
-                with self.assertRaisesRegex(ValueError, "matching scope"):
-                    custody.prepare(
-                        temporary,
-                        aggregate,
-                        ROOT,
-                        "a" * 40,
-                        "123",
-                        "1",
-                        "org/umf/.github/workflows/python-coordinated-release.yml@refs/heads/main",
-                        "org/umf",
-                    )
+            with (
+                patch.object(custody.pair, "prepare", return_value=base),
+                self.assertRaisesRegex(ValueError, "matching scope"),
+            ):
+                custody.prepare(
+                    temporary,
+                    aggregate,
+                    ROOT,
+                    "a" * 40,
+                    "123",
+                    "1",
+                    "org/umf/.github/workflows/python-coordinated-release.yml@refs/heads/main",
+                    "org/umf",
+                )
 
 
 if __name__ == "__main__":

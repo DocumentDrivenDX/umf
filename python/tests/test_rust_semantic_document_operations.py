@@ -4,7 +4,6 @@ import json
 from pathlib import Path
 
 import pytest
-
 from umf import (
     declare_core_semantic_types,
     get_core_semantic_types,
@@ -14,7 +13,6 @@ from umf import (
     verify_core_semantic_type_declaration,
 )
 from umf._rust import UmfCoreError
-
 
 ROOT = Path(__file__).resolve().parents[2]
 

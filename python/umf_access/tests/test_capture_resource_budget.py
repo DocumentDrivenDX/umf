@@ -2,14 +2,13 @@
 from __future__ import annotations
 
 import pytest
-
 from umf import _rust
 from umf_access.rust_catalog_render import (
-    _DtoBudgetExceeded,
-    _EncodingBudget,
     _MAX_CAPTURE_DEPTH,
     _MAX_CAPTURE_NODES,
     _MAX_CAPTURE_UTF8_BYTES,
+    _DtoBudgetExceeded,
+    _EncodingBudget,
 )
 
 

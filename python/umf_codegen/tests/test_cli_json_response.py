@@ -54,9 +54,11 @@ class CliJsonResponseTests(unittest.TestCase):
         self.assertEqual(result["result"]["text"], "caf\u00e9\ud800")
 
     def test_enforces_response_byte_limit(self):
-        with patch("umf_codegen._native._MAX_RESPONSE", 10):
-            with self.assertRaises(GenerationError) as caught:
-                self.decode(b'{"ok":true,"result":{}}')
+        with (
+            patch("umf_codegen._native._MAX_RESPONSE", 10),
+            self.assertRaises(GenerationError) as caught,
+        ):
+            self.decode(b'{"ok":true,"result":{}}')
         self.assertEqual(caught.exception.code, "GENERATION_CAPACITY")
 
     def test_checks_deadline_after_parse_and_during_traversal(self):

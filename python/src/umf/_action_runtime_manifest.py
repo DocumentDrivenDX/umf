@@ -1,11 +1,10 @@
-#!/usr/bin/env python3
 """Single stdlib authority for the fixed action-runtime resource inventory."""
 from __future__ import annotations
 
 import hashlib
 import json
-from pathlib import Path
 import re
+from pathlib import Path
 
 RESOURCES = (
     ("actionsPackage", "actionsPackage.json", "spec/extensions/actions/package.json"),

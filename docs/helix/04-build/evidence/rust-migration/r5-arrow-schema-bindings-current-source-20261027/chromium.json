@@ -1,8 +1,8 @@
 {
   "status": "pass",
   "browser": "Chromium 153.0.8010.12",
-  "elapsedMs": 6596,
-  "wasmSha256": "a31f92c138e810fbb89194f8ac7ace193ef16b0a189bf3121dd85f95e0aea2fa",
+  "elapsedMs": 6723,
+  "wasmSha256": "039ef9ae576b1b568e57ec946f8d0415a116b1eacc1e0f3f18cc3dcde92419cd",
   "wasmJsSha256": "f242eb8fa149d66c2c059f7d28c78d40ce8cbf5af3f6b14762843e75e4a42132",
   "packetSha256": "f408879504a24999d06619182ccf8f9d0ffeeedf93f469003c6572b768bf7200",
   "bindingBundleSha256": "ba957dcd977e7a395f5519071b25b49e74a8341c616acdecf27064d943a2245d",
@@ -13,5 +13,5 @@
   "focusedImports": 16,
   "focusedOperations": 26,
   "exactWasmCalls": 302,
-  "hostSpecificSkipped": "proxy-reflection-throw-identity: TypeScript preserves proxy trap thrown-object identity, which cannot be transferred through the JSON wire"
+  "hostSpecificSkipped": "proxy-reflection-throw-identity: TypeScript preserves proxy trap thrown-object identity, which cannot be transferred through the WASM wire"
 }

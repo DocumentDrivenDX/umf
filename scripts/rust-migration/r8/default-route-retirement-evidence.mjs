@@ -199,6 +199,7 @@ export function verifyPacket(root, pin, op) {
     ? ['format', 'profile', 'contractId', 'exportName', 'rustOwner', 'cases']
     : ['format', 'contractId', 'exportName', 'rustOwner', 'cases'], `${op.exportName} frozen packet`);
   if ((allRust ? packet.profile !== 'all-rust' : packet.format !== 'umf.r8.default-route-retirement-packet/1') || packet.contractId !== op.contract.id || packet.exportName !== op.exportName || packet.rustOwner !== op.rustOwner || !Array.isArray(packet.cases) || packet.cases.length < 1) throw new Error(`${op.exportName} frozen packet identity is invalid`);
+  if (allRust && op.contract.id !== 'CONTRACT-040') throw new Error(`${op.exportName} all-Rust Cardinality packet requires CONTRACT-040`);
   if (allRust && !['inspectCoreCardinality', 'declareCoreCardinality', 'verifyCoreCardinalityDeclaration'].includes(op.exportName)) throw new Error(`${op.exportName} all-Rust packet profile is unsupported`);
   const ids = new Set();
   for (const item of packet.cases) {

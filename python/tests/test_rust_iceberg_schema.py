@@ -5,10 +5,8 @@ import json
 from pathlib import Path
 
 import pytest
-
 from umf import _rust
 from umf import rust_iceberg_schema as iceberg
-
 
 ROOT = Path(__file__).resolve().parents[2]
 BASELINE = ROOT / "docs/helix/04-build/evidence/rust-migration/r5-iceberg-schema/baseline.json"

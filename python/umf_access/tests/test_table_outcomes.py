@@ -7,8 +7,7 @@ import unittest
 from typing import ClassVar
 from unittest.mock import patch
 
-from umf_access.unified import SessionError, SessionIdentity
-from umf_access.unified import outcome_values
+from umf_access.unified import SessionError, SessionIdentity, outcome_values
 from umf_access.unified.outcome_values import (
     outcome_from_record,
     outcome_invocation,

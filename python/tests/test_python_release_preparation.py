@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import importlib.util
 import json
-from pathlib import Path
 import sys
+from pathlib import Path
 
 import pytest
 
@@ -20,7 +20,7 @@ preparation = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(preparation)
 
 sys.path.insert(0, str(ROOT / "python/tests"))
-from test_python_release_matrix import _matrix, _linux_matrix, REVISION, RUN_ID
+from test_python_release_matrix import REVISION, RUN_ID, _linux_matrix, _matrix
 
 
 def _aggregate(root: Path, path: Path) -> dict:

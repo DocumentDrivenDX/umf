@@ -6,8 +6,8 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
-from pathlib import Path
 import unittest
+from pathlib import Path
 
 from umf_access.build.catalog import CatalogBuildError, _native_column_bindings
 from umf_access.rust_catalog_custody import evaluate, profile_version

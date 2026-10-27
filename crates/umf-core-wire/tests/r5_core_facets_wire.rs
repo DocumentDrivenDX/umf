@@ -311,3 +311,57 @@ fn tagged_facet_operations_match_frozen_predecessor_and_regressions() {
         }
     }
 }
+
+#[test]
+fn bounded_facets_executor_exposes_only_four_public_operations() {
+    let input = parse(r#"{"integerWidth":{"bits":8,"signed":true}}"#);
+    let accepted = {
+        let fields = vec![
+            (
+                "op".into(),
+                Value::string_utf8("model/historicalCoreFacetPatch"),
+            ),
+            ("resources".into(), resources()),
+            ("input".into(), input),
+        ];
+        let wire = encode(&Value::Object(fields), &mut transport_context()).unwrap();
+        let mut control = |_amount: usize| Ok(());
+        serde_json::from_str::<serde_json::Value>(
+            &umf_core_wire::execute_core_facets_request_with_control(
+                &wire,
+                ResourceProfile::Cooperative,
+                &mut NoCapabilities,
+                &mut control,
+            ),
+        )
+        .unwrap()
+    };
+    assert_eq!(accepted["status"], "ok", "{accepted}");
+
+    for op in [
+        "model/admitCoreFacetRequest",
+        "model/prepareCoreFacetVerification",
+        "model/finishCoreFacetVerification",
+        "model/inspectCoreCardinality",
+    ] {
+        let wire = encode(
+            &Value::Object(vec![
+                ("op".into(), Value::string_utf8(op)),
+                ("resources".into(), resources()),
+            ]),
+            &mut transport_context(),
+        )
+        .unwrap();
+        let mut control = |_amount: usize| Ok(());
+        let response: serde_json::Value =
+            serde_json::from_str(&umf_core_wire::execute_core_facets_request_with_control(
+                &wire,
+                ResourceProfile::Cooperative,
+                &mut NoCapabilities,
+                &mut control,
+            ))
+            .unwrap();
+        assert_eq!(response["status"], "error", "{op}");
+        assert_eq!(response["code"], "REQUEST", "{op}");
+    }
+}

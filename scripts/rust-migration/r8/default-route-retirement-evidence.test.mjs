@@ -4,7 +4,7 @@ import { createHash } from 'node:crypto';
 import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { verifyPacket, verifyHostReceipt } from './default-route-retirement-evidence.mjs';
+import { verifyPacket, verifyHostReceipt, validateDefaultRouteRetirementEvidence } from './default-route-retirement-evidence.mjs';
 
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const operation = {
@@ -17,7 +17,7 @@ const cases = [
   { id: 'known', input: { kind: 'known' }, expectedOutcome: outcome, expectedTrace: [], expectedDefaultRustCalls: 1 },
   { id: 'host-refusal', input: { kind: 'proxy' }, expectedOutcome: { status: 'threw', code: 'PROXY' }, expectedTrace: ['ownKeys'], expectedDefaultRustCalls: 1 },
 ];
-const packet = () => ({ format: 'umf.r8.default-route-retirement-packet/2', profile: 'all-rust', contractId: 'CONTRACT-040', exportName: operation.exportName, rustOwner: operation.rustOwner, cases: structuredClone(cases) });
+const packet = (contractId = 'CONTRACT-040') => ({ format: 'umf.r8.default-route-retirement-packet/2', profile: 'all-rust', contractId, exportName: operation.exportName, rustOwner: operation.rustOwner, cases: structuredClone(cases) });
 const cohort = { id: 'darwin-arm64', platform: { os: 'darwin', nodeArch: 'arm64' }, archive: { sha256: 'a'.repeat(64), sourceClosureSha256: 'b'.repeat(64) } };
 const members = { 'dist/umf-node.js': 'c'.repeat(64), 'dist/umf_core_node.node': 'd'.repeat(64), 'dist/umf.js': 'e'.repeat(64) };
 const routes = { 'package-root-node': 'dist/umf-node.js', 'package-reference': 'dist/umf.js' };
@@ -80,6 +80,9 @@ test('all-Rust packet rejects false preflight claims and invalid case inventorie
   const otherPacket = { ...packet(), exportName: otherOperation.exportName };
   const otherPin = await pin(root, 'unrelated.json', otherPacket);
   assert.throws(() => verifyPacket(root, otherPin, otherOperation), /unsupported/);
+  const wrongContractOperation = { ...operation, contract: { id: 'CONTRACT-062' } };
+  const wrongContractPin = await pin(root, 'wrong-contract.json', packet('CONTRACT-062'));
+  assert.throws(() => verifyPacket(root, wrongContractPin, wrongContractOperation), /requires CONTRACT-040/);
 });
 
 test('legacy mixed packet still requires real Rust and zero-call preflight cases', async t => {
@@ -91,4 +94,11 @@ test('legacy mixed packet still requires real Rust and zero-call preflight cases
   legacy.cases.pop();
   const missingPin = await pin(root, 'missing-preflight.json', legacy);
   assert.throws(() => verifyPacket(root, missingPin, operation), /preflight refusal/);
+});
+
+test('bounded /2 Cardinality evidence still cannot retire a default-route row', () => {
+  assert.throws(
+    () => validateDefaultRouteRetirementEvidence({ format: 'umf.r8.default-route-retirement-evidence/2' }, [], { root: process.cwd() }),
+    /CONTRACT acceptance coverage required.*cannot retire/,
+  );
 });

@@ -6,7 +6,6 @@ import hmac
 from types import SimpleNamespace
 
 import pytest
-
 from umf import rust_outcome_values
 
 

@@ -11,7 +11,6 @@ from unittest.mock import patch
 from umf_access.types import ValueRuleError
 from umf_access.values import validate_decimal, validate_integer
 
-
 ROOT = Path(__file__).parents[3]
 FROZEN = ROOT / "docs/helix/04-build/evidence/rust-migration/r6-exact-values/frozen-predecessor.json"
 
@@ -105,8 +104,7 @@ class RustExactValuesTests(unittest.TestCase):
 
         self.assertEqual(rust_values.access_values_profile_version(), "umf-access-values/0.1.0")
         original = Decimal("1.20")
-        with patch.object(rust_values, "access_values_profile_version", return_value="umf-access-values/9.9.9"):
-            with self.assertRaisesRegex(ValueRuleError, "required values profile"):
+        with patch.object(rust_values, "access_values_profile_version", return_value="umf-access-values/9.9.9"), self.assertRaisesRegex(ValueRuleError, "required values profile"):
                 validate_decimal(original, precision=3, scale=2)
 
 

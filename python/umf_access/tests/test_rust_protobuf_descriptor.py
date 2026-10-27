@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import pytest
-
 from umf import rust_protobuf_descriptor
 
 

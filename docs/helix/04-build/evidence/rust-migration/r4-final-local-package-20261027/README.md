@@ -37,39 +37,14 @@ ddx:
       kind: informed_by
 ---
 
-# R4 local Python package rebuild and installed probes
+# R4 current-source local Python package qualification
 
-Core, Codegen and Access source distributions were built from the current
-shared worktree. Each wheel was then rebuilt from its extracted sdist. The
-core artifact includes the current Rust core-wire source, Arrow and
-Cardinality wrappers, and Core Schema Properties wrapper. The package and
-source closure hashes are recorded in [final-qualification.json](final-qualification.json).
-The complete 499-file current source inventory is retained in
-[source-closure.json](source-closure.json). Artifact member manifests and
-archives remain in `/private/tmp/umf-r4-final-local-20261027/current/`; their
-manifest SHA-256 is in the qualification receipt.
+Core, Codegen and Access source distributions were built from the current stable worktree after the Facets and CSV Boolean wrapper additions and regenerated metamodel/action/codegen resource identities. Each wheel was rebuilt from its extracted sdist. The core wheel contains the current Rust core-wire/PyO3 binding and installs with its `cp311-abi3` tag on CPython 3.11.17 and 3.13.16. Artifact member hashes and selected source hashes are recorded in `final-qualification.json`; the complete 505-file source inventory is in [source-closure.json](source-closure.json). Private archives and the member manifest are under `/private/tmp/umf-r4-refresh-20261027/current/`.
 
-The extracted-sdist builds used Hatchling 1.27.0 and Rust 1.90.0 on macOS
-arm64. The core wheel has the `cp311-abi3` tag and installed cleanly on
-CPython 3.11.17 and 3.13.16. Both environments passed `uv pip check`; Node
-and Bun were absent from the installed-probe PATH.
+Both isolated environments passed `uv pip check` (16 compatible packages). `umf` imported from installed site-packages, and Node/Bun were absent from PATH. The full Python suite passed in both environments: CPython 3.11.17 reported 630 passed plus five subtests in 640.11 seconds; CPython 3.13.16 reported 630 passed plus five subtests in 648.12 seconds.
 
-After the workflow-only source pin correction, the full core Python suite
-passed in both installed environments: CPython 3.11.17 reported 613 passed,
-five passing subtests in 496.96 seconds; CPython 3.13.16 reported 613 passed,
-five passing subtests in 500.15 seconds. Each run emitted one pytest cache
-warning because the shared worktree denied writing `.pytest_cache`; test
-execution completed successfully. Focused Arrow, Cardinality, Core Schema
-Properties, source-distribution and resource tests also passed 66/66 in both
-runtimes, and the post-correction artifact-custody/finalizer tests passed
-11/11 in each runtime.
+The focused current-source subset passed 208/208 on Python 3.11.17 (57.34s) and 208/208 on Python 3.13.16 (56.90s). It includes all 16 Facets and CSV Boolean wrapper tests; those also passed separately on both interpreters. The isolated Iceberg replay passed in 347.59 seconds.
 
-The 499-file source closure was independently checked after these runs. The
-R4 inventory generator's 495-file base matched exactly; the four additional
-packet entries (the workflow, Cardinality and Schema Properties tests, and
-artifact verifier) also matched their recorded SHA-256 values.
-
-This is private local package evidence only. No macOS CI, release, publication,
-or default-route retirement is claimed.
+This is private local macOS arm64 package evidence. No macOS CI, other platform, release, publication, or default-route retirement is claimed. The core package was built with Hatchling 1.27.0 and Rust 1.90.0.
 
 [`SHA256SUMS`](SHA256SUMS) pins the checked-in evidence files.

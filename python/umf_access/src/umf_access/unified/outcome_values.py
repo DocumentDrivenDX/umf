@@ -8,6 +8,7 @@ import json
 import re
 
 from umf import rust_outcome_values
+
 from .operation_values import canonical, loads
 from .session_policy import SessionError
 
@@ -137,7 +138,7 @@ def _outcome_effect_frame_admit_rust(value, items, max_rows):
             if not -(2**63) <= item <= 2**64-1:
                 raise SessionError('native outcome effect-frame profile refuses out-of-range JSON integers')
         elif kind is float:
-            if item != item or item in (float('inf'),float('-inf')):
+            if item != item or item in (float('inf'),float('-inf')):  # noqa: PLR0124 - self-inequality detects NaN without coercion.
                 raise SessionError('native outcome effect-frame profile refuses non-finite JSON numbers')
         elif kind not in (bool,) and item is not None:
             raise SessionError('native outcome effect-frame profile refuses non-JSON values')

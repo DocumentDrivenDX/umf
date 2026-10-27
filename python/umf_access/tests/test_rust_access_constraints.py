@@ -8,7 +8,6 @@ from typing import Annotated, ClassVar
 from unittest.mock import patch
 
 from pydantic import BeforeValidator
-
 from umf_access.codec_support import decode_model, encode_model
 from umf_access.types import StrictModel, ValueRuleError
 from umf_access.values import FieldValidator, validate_allowed, validate_length
@@ -87,14 +86,13 @@ class RustAccessConstraintTests(unittest.TestCase):
             (True, (True,)), (7, (7,)), (1 << 4096, (1 << 4096,)),
             ("é", ("e\u0301", "é")), (b"\xff", (b"\xff",)),
             (Decimal("1.200"), (Decimal("1.2"),)),
-            (Decimal("-0.00"), (Decimal("0"),)),
+            (Decimal("-0.00"), (Decimal(0),)),
         )
         for value, allowed in cases:
             with self.subTest(value_type=type(value).__name__, value=str(value)[:16]):
                 self.assertIs(validate_allowed(value, allowed), value)
         for value, allowed in ((True, (1,)), (1, (True,)), (float("nan"), (float("nan"),)), (Decimal("NaN"), (Decimal("NaN"),))):
-            with self.subTest(value_type=type(value).__name__):
-                with self.assertRaisesRegex(ValueRuleError, "^value outside authored allowed values$"):
+            with self.subTest(value_type=type(value).__name__), self.assertRaisesRegex(ValueRuleError, "^value outside authored allowed values$"):
                     validate_allowed(value, allowed)
         value = "ok"
         self.assertIs(validate_allowed(value, ("\ud800", "ok")), value)

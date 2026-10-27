@@ -11,7 +11,6 @@ import types
 from importlib.metadata import distribution
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 
 
@@ -32,7 +31,7 @@ def pointer(value, path):
 def caught(call):
     try:
         return call(), None
-    except Exception as error:  # exact code/message are asserted by caller
+    except Exception as error:  # noqa: BLE001 -- predecessor replay asserts exact outcomes for arbitrary adapter failures
         return None, error
 
 
@@ -48,7 +47,6 @@ def main() -> None:
     if args.namespace_shim:
         install_namespace_shim()
 
-    from umf import _rust
     from umf import rust_iceberg_schema as api
 
     packet_path = ROOT / "docs/helix/04-build/evidence/rust-migration/r5-iceberg-schema/baseline.json"
@@ -57,7 +55,7 @@ def main() -> None:
     for case in baseline["authoredCases"]:
         operations = case["operations"]
         source = (ROOT / case["path"]).read_text()
-        document, error = caught(lambda: api.import_schema(source, operations["import"].get("id", case["id"])))
+        document, error = caught(lambda source=source, operations=operations, case=case: api.import_schema(source, operations["import"].get("id", case["id"])))
         if operations["import"]["status"] == "error":
             authored_rejected += 1
             equal(getattr(error, "code", None), operations["import"]["error"]["code"], case["id"] + " import code")
@@ -69,7 +67,7 @@ def main() -> None:
         equal(api.export_schema(document), operations["export"]["nativeJson"], case["id"] + " export")
         equal(api.get_node(document, operations["get"]["path"]), operations["get"]["value"], case["id"] + " getNode")
         missing = operations["getMissing"]
-        _, error = caught(lambda: api.get_node(document, missing["path"]))
+        _, error = caught(lambda document=document, missing=missing: api.get_node(document, missing["path"]))
         equal((getattr(error, "code", None), str(error)),
               (missing["error"]["code"], missing["error"]["message"]), case["id"] + " missing getNode")
         edit = operations["proposeEdit"]
@@ -85,7 +83,7 @@ def main() -> None:
         upstream_doc = json.loads((ROOT / "fixtures/iceberg/upstream" / source_info["path"]).read_text())
         native = json.dumps(pointer(upstream_doc, source_info["pointer"]), ensure_ascii=True, separators=(",", ":"))
         if "operations" not in case:
-            _, error = caught(lambda: api.import_schema(native, source_info["id"]))
+            _, error = caught(lambda native=native, source_info=source_info: api.import_schema(native, source_info["id"]))
             equal((getattr(error, "code", None), str(error)),
                   (case["error"]["code"], case["error"]["message"]), source_info["id"] + " import refusal")
             upstream_rejected += 1

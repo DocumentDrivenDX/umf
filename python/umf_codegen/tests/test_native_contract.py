@@ -3,22 +3,20 @@
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 import os
+import struct
 import sys
 import time
+import tracemalloc
 import types
 import unittest
-import importlib.util
-import struct
-import tracemalloc
 from pathlib import Path
 from unittest.mock import patch
 
-from umf_codegen import GenerationError
-from umf_codegen import _native
+from umf_codegen import GenerationError, _native
 from umf_codegen._release import CODEGEN_PROTOCOL_VERSION, RESOURCE_MANIFEST_SHA256
-
 
 ROOT = Path(__file__).resolve().parents[1]
 RESOURCE_DIR = ROOT / "src/umf_codegen/_resources"
@@ -48,9 +46,11 @@ class NativeCodegenContract(unittest.TestCase):
                 self._verify_native_with(protocol=protocol, expected="ENGINE_UNAVAILABLE")
 
     def test_wrong_native_package_version_refuses(self):
-        with patch.object(_native, "version", return_value="0.10.0"):
-            with self.assertRaises(GenerationError) as caught:
-                _native._verify_native()
+        with (
+            patch.object(_native, "version", return_value="0.10.0"),
+            self.assertRaises(GenerationError) as caught,
+        ):
+            _native._verify_native()
         self.assertEqual(caught.exception.code, "ENGINE_UNAVAILABLE")
 
     def test_malformed_cli_error_cannot_escape_as_python_type_error(self):
@@ -185,9 +185,8 @@ class NativeCodegenContract(unittest.TestCase):
             sys.modules,
             {"umf": types.ModuleType("umf"), "umf._rust": rust_module,
              "umf.rust_codegen": codegen_module},
-        ):
-            with self.assertRaises(GenerationError) as caught:
-                _native._verify_native()
+        ), self.assertRaises(GenerationError) as caught:
+            _native._verify_native()
         self.assertEqual(caught.exception.code, expected)
 
 

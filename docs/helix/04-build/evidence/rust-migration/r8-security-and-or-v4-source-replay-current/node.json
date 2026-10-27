@@ -2,23 +2,23 @@
   "format": "umf-r8-security-and-or-v4-source-replay/2",
   "status": "pass",
   "host": "node",
-  "runtime": "v26.12.1",
+  "runtime": "v26.3.0",
   "route": {
     "default": "private source-built V4 Node root",
     "reference": "private source-built TypeScript root"
   },
   "buildBinding": {
-    "manifest": "/private/tmp/umf-r8-plan-identity-refresh-20261027/compact-dataset-verify-build-manifest.json",
-    "sha256": "9501e340a2e8905378926b7415e1d247a57ed3fa1bb070ccd241de73a4943cb7",
-    "sourceClosureSha256": "a917c501d6882ba7a0b737232f69ea3acc859848e0e497c0c8760a314577991f",
+    "manifest": "/private/tmp/r8-compact-security-replay-20261027/dist/compact-dataset-verify-build-manifest.json",
+    "sha256": "43a735c629f357ca85d99708055a86c38a73522375ac7334eae79d7138ad8b3e",
+    "sourceClosureSha256": "ca6d3b7c893833073d2cd79a8a13d3909f0428dd16c6305f9115d6c2a33b2c21",
     "artifacts": {
       "nodeAddon": {
         "path": "umf_core_node.node",
-        "sha256": "720a4aec260270fc3498089d90be54657af6098569b47a55be111889a29b08a8"
+        "sha256": "86f09010ebd16b4ccca102be6340374992c56e5cb4bbad2f21b4b84541f80112"
       },
       "wasm": {
         "path": "umf_core_wasm_bg.wasm",
-        "sha256": "a31f92c138e810fbb89194f8ac7ace193ef16b0a189bf3121dd85f95e0aea2fa"
+        "sha256": "039ef9ae576b1b568e57ec946f8d0415a116b1eacc1e0f3f18cc3dcde92419cd"
       },
       "wasmGlue": {
         "path": "wasm/umf_core_wasm.js",
@@ -26,15 +26,15 @@
       },
       "referenceBundle": {
         "path": "umf.js",
-        "sha256": "c318bfb415e2b0bae3d0e7d03bafbc59f6f1515ece97b8b7fc2120dbcff1ae35"
+        "sha256": "97dd6d2f66a86abb6db63198ad8e7cbfe9620ec3c4928fbada1640f2afcd2315"
       },
       "nodeBundle": {
         "path": "umf-node.js",
-        "sha256": "97582411c150483eb2d77369e3a91131fa89d2aeb26b2316c78b41e8b6e8f851"
+        "sha256": "158e2a57f4cffa770d176290136d9f192686011808b12538c6215bec42cda8d6"
       },
       "browserBundle": {
         "path": "umf-browser.js",
-        "sha256": "aafca73c9aca6803d8794302995b7c586863999e5bdd266fb7cc3201718f4f47"
+        "sha256": "9952f630de8be6c7166a5c9773d5b6027a945eca2dd9ca5e066811d8b47a6c56"
       }
     }
   },
@@ -66,9 +66,9 @@
     }
   },
   "build": {
-    "dist": "/private/tmp/umf-r8-plan-identity-refresh-20261027",
+    "dist": "/private/tmp/r8-compact-security-replay-20261027/dist",
     "wasmBindgen": "0.2.100",
-    "nodeAddonSha256": "720a4aec260270fc3498089d90be54657af6098569b47a55be111889a29b08a8"
+    "nodeAddonSha256": "86f09010ebd16b4ccca102be6340374992c56e5cb4bbad2f21b4b84541f80112"
   },
   "fixture": {
     "path": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/docs/helix/04-build/evidence/rust-migration/r8-security-and-or-v4-source-replay-current/predecessor.json",

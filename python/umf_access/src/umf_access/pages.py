@@ -112,7 +112,7 @@ def stream_page_size(
         )
     else:
         minimum_matches = native.access_stream_page_size_minimum_comparison_valid(
-            not (minimum_value != 1)
+            not (minimum_value != 1)  # noqa: SIM202 - preserve a non-exact-int object's __ne__ semantics.
         )
     if not minimum_matches:
         raise ReadObligationUnmet("invalid original stream page-size obligation")
@@ -126,7 +126,7 @@ def stream_page_size(
         )
     else:
         maximum_within_range = native.access_stream_page_size_maximum_comparison_valid(
-            True if 1 <= maximum_value <= 1000 else False
+            True if 1 <= maximum_value <= 1000 else False  # noqa: SIM210 - preserve truth conversion at the comparison boundary.
         )
     if not maximum_within_range:
         raise ReadObligationUnmet("invalid original stream page-size obligation")
@@ -148,7 +148,7 @@ def stream_page_size(
     )
     if not native.access_stream_page_size_slot_count_valid(len(slots)):
         raise ReadObligationUnmet("original stream page-size parameter differs")
-    carrier_matches = not (slots[0].get("carrier") != "integer")
+    carrier_matches = not (slots[0].get("carrier") != "integer")  # noqa: SIM202 - preserve arbitrary carrier value __ne__ semantics.
     if not native.access_stream_page_size_slot_carrier_valid(carrier_matches):
         raise ReadObligationUnmet("original stream page-size parameter differs")
     is_exact_false = slots[0].get("nullable", False) is False

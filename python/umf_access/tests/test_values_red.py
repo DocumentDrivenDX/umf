@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 """Red specification for proposed runtime ABI; not generated-model acceptance."""
 
-import unittest
 import sys
+import unittest
 from datetime import date, datetime, timedelta, timezone
 from decimal import Decimal, localcontext
 from types import ModuleType, SimpleNamespace

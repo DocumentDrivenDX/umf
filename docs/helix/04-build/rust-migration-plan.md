@@ -8519,3 +8519,66 @@ suite passed 13/13, and all 3,574 live source hashes still match the packet.
 This establishes bounded current-source route evidence on macOS only. It does
 not satisfy the Linux cohort, complete CONTRACT-040 acceptance or retirement
 gate, or the release matrix.
+
+### R5/R8 bounded binding and qualification continuation — 2026-10-27
+
+The next opt-in binding slice adds the four public Core Facets operations and
+the two public CSV Boolean lexical operations to the shared Rust core-wire,
+Python extension, and pure Rust CLI. The binding whitelists reject internal
+stages. The Python facades keep tagged-wire conversion and generated-resource
+loading explicit; the CLI has bounded stdin, work, and deadline controls.
+Focused source tests passed for each family in Rust wire, Python, and CLI,
+including an empty executable `PATH` for CLI cases. These are bounded local
+binding tests, not installed default-route, native-system, or release evidence.
+No logical default-route gap is retired by adding an opt-in surface.
+
+The R8 `/2` retirement validator now requires the complete governing
+CONTRACT-040 acceptance packet even when a bounded Cardinality packet reports
+all-Rust calls. A rehashed wrong-contract negative control passes. The
+current 11-case Darwin Cardinality packet remains valid only for its pinned
+source closure; it cannot establish the five-system conformance matrix or
+matching Linux cohort. The implementation and release plan therefore remains
+open at 922 logical executable default-route gaps and zero retired.
+
+The source qualification order is fixed: settle hand-edited Python/Rust source
+and lint, regenerate the metamodel manifest, regenerate action-plan identity,
+check resource mirrors and action-source review hashes, then recapture host
+replays, R8 inventory/ledger, and installed Python artifacts. A hash receipt
+from an earlier source closure is historical evidence, even when its tests
+passed. The Python workflow also needs full checkout history for its
+artifact-custody tests, which resolve an exact historical commit tree; the
+checkout was changed to fetch full history. Hosted CI must confirm this repair.
+
+The post-lint [Arrow packet](evidence/rust-migration/r5-arrow-schema-bindings-current-source-20261027/README.md)
+now pins 118 source hashes and passes 302 exact opt-in Rust/WASM calls each on
+Node 26.12.1, Bun 1.4.3, and Chromium 153.0.8010.12. A second
+[Compact/Security source replay](evidence/rust-migration/r8-symbol-inventory/README.md#post-lint-fixed-point-replay--2026-10-27)
+pins one 1,975-file build closure; Compact passes five cases/14 calls per host
+and Security 68 cases/30 valid calls/zero refusal calls per host. The
+condition-aware R8 ledger was regenerated and checked with 922 logical
+default-route gaps, zero retired, 81 accepted opt-in mappings and 841 without
+accepted mappings. None of these source-local receipts qualifies a default
+route or release.
+
+Hosted Linux preview-archive CI exposed an incomplete private workspace
+snapshot: the preview builder omitted `umf-tagged-wire` and
+`umf-metamodel-cli`, then failed to resolve the direct browser-root import of
+generated WASM glue. The snapshot list and resolver were repaired, and a
+private Darwin arm64 preview archive now builds with a pinned source closure.
+Its installed Node 26.12.1, Bun 1.4.3 and Chromium 153.0.8010.12 replay
+passes, including missing-native and corrupt-WASM refusal controls. The
+archive contains 519 members (517 recorded assets) and has SHA-256
+`2c4fabd3e1a4c01589aa08fd7feda88e8cefd2f281d63a8f0998cdf9f568b78b`.
+This is preview-only, source-built Darwin evidence. Hosted Linux CI must
+confirm the same builder repair; it is not a default SDK or release claim.
+
+The refreshed [R4 local package packet](evidence/rust-migration/r4-final-local-package-20261027/README.md)
+pins 505 final-source inputs, three extracted-sdist package wheels and their
+artifact hashes. Isolated CPython 3.11.17 and 3.13.16 installations each
+passed `uv pip check`, 208 focused tests (including all 16 new Facets/CSV
+binding tests), and the full 630-test suite plus five subtests. The long
+Iceberg replay passed in 347.59 seconds on CPython 3.11; it explained the
+earlier interrupted runs and is included in both final full-suite passes.
+This is a private local macOS arm64 cohort without Node/Bun in the probe path.
+It does not satisfy the hosted six-cohort release matrix or default-route
+retirement.

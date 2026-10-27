@@ -12,8 +12,8 @@ from importlib.resources import files
 from pathlib import Path
 from typing import Any
 
-from .rust_codegen import CodegenEngine, UmfCodegenError
 from ._action_runtime_manifest import RESOURCES as _RESOURCE_ENTRIES
+from .rust_codegen import CodegenEngine, UmfCodegenError
 
 _MANIFEST_SHA256 = "92a31e5a44f0e156ff043a5ae68a04f901d582489f6452b5242638b12490a67f"
 _RESOURCE_FILES = {key: (filename, source) for key, filename, source in _RESOURCE_ENTRIES}

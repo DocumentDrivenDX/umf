@@ -6,7 +6,6 @@ import json
 import unittest
 from pathlib import Path
 
-
 FIXTURES = Path(__file__).parent / "fixtures/rust-catalog-capture"
 
 

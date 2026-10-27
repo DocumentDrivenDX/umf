@@ -4,16 +4,16 @@
 import argparse
 import hashlib
 import importlib
-import importlib.util
 import importlib.metadata
+import importlib.util
 import json
-from pathlib import Path
 import platform
 import sys
+from pathlib import Path
 from types import UnionType
 from typing import Union, get_args, get_origin
-from umf_access.types import MISSING
 
+from umf_access.types import MISSING
 
 PREDECESSOR_REVISION = "bf8bf6031^"
 PREDECESSOR_SHA256 = "492f68954ca66f3fbd15eb008f7e1d6fa690829d9c31e3ec3d85ecb09a7e67a6"

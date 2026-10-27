@@ -6,7 +6,6 @@ import json
 import unittest
 from pathlib import Path
 
-
 FIXTURES = Path(__file__).parent / "fixtures/rust-catalog-capture"
 NEGATIVE_SHA256 = "af737cbfdc02a6c3e80dcbc951ab412e84581dea67f03e1eb966b6a59baffc0e"
 

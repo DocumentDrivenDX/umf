@@ -7,7 +7,6 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 from pydantic import BaseModel, ConfigDict
-
 from umf._rust import _rust_core
 from umf_access.codec_support import CodecField, encode_model
 from umf_access.types import ValueRuleError
@@ -63,8 +62,7 @@ class AccessTemporalCodecTests(unittest.TestCase):
             access_temporal_canonical_token=lambda *args: "unexpected",
             access_temporal_profile_version=lambda: "umf-access-temporal/other",
         )
-        with patch("umf._rust._rust_core", native):
-            with self.assertRaisesRegex(ValueRuleError, "required temporal profile"):
+        with patch("umf._rust._rust_core", native), self.assertRaisesRegex(ValueRuleError, "required temporal profile"):
                 temporal_token("instant", datetime(2024, 1, 1, tzinfo=UTC))
 
     def test_raw_native_microsecond_bounds_are_exact_and_value_free(self):

@@ -1636,6 +1636,40 @@ pub fn execute_cardinality_request_with_control(
 
 pub const CORE_CARDINALITY_BINDING_PROFILE: &str = "umf-core-cardinality/0.1.0";
 
+/// Execute only the four public Core Facets operations through the shared
+/// request engine. Internal admission/verification phases remain inaccessible
+/// through this narrow binding surface.
+pub fn execute_core_facets_request_with_control(
+    wire_json: &str,
+    profile: ResourceProfile,
+    capabilities: &mut dyn Capabilities,
+    control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+) -> String {
+    let operation = {
+        let mut context = Context::ordinary().with_host_control(control);
+        match context.with_tagged_transport_limit(|ctx| decode(wire_json, ctx)) {
+            Ok(request) => field(&request, "op")
+                .and_then(as_utf16)
+                .and_then(|value| value.to_utf8().ok()),
+            Err(error) => return result_envelope(Err(error)),
+        }
+    };
+    if !matches!(
+        operation.as_deref(),
+        Some(
+            "model/inspectCoreFacets"
+                | "model/declareCoreFacets"
+                | "model/verifyCoreFacetDeclaration"
+                | "model/historicalCoreFacetPatch"
+        )
+    ) {
+        return result_envelope(Err(fail("REQUEST", "Expected a Core Facets operation")));
+    }
+    execute_request_with_control(wire_json, profile, capabilities, control)
+}
+
+pub const CORE_FACETS_BINDING_PROFILE: &str = "umf-core-facets/0.1.0";
+
 /// Execute only the four public Core Schema Properties operations through the
 /// shared request engine, keeping this opt-in binding narrower than core-wire.
 pub fn execute_schema_properties_request_with_control(
@@ -1671,6 +1705,38 @@ pub fn execute_schema_properties_request_with_control(
 }
 
 pub const CORE_SCHEMA_PROPERTIES_BINDING_PROFILE: &str = "umf-core-schema-properties/0.1.0";
+
+/// Execute only the public CSV Boolean validation and receipt-verification
+/// operations. The prepare/finish implementation stages remain internal so an
+/// opt-in binding cannot widen its public operation set accidentally.
+pub fn execute_csv_boolean_lexical_request_with_control(
+    wire_json: &str,
+    profile: ResourceProfile,
+    capabilities: &mut dyn Capabilities,
+    control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+) -> String {
+    let operation = {
+        let mut context = Context::ordinary().with_host_control(control);
+        match context.with_tagged_transport_limit(|ctx| decode(wire_json, ctx)) {
+            Ok(request) => field(&request, "op")
+                .and_then(as_utf16)
+                .and_then(|value| value.to_utf8().ok()),
+            Err(error) => return result_envelope(Err(error)),
+        }
+    };
+    if !matches!(
+        operation.as_deref(),
+        Some("model/validateCsvBooleanLexical" | "model/verifyCsvBooleanLexical")
+    ) {
+        return result_envelope(Err(fail(
+            "REQUEST",
+            "Expected a CSV Boolean lexical validation or verification operation",
+        )));
+    }
+    execute_request_with_control(wire_json, profile, capabilities, control)
+}
+
+pub const CSV_BOOLEAN_LEXICAL_BINDING_PROFILE: &str = "umf-csv-boolean-lexical/0.1.0";
 
 /// Private opt-in variant that reuses a caller-owned Engine while preserving
 /// the ordinary request decoder, registry admission, callbacks, and contexts.

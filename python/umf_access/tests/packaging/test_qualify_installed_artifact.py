@@ -5,16 +5,16 @@ from __future__ import annotations
 import hashlib
 import importlib.metadata
 import json
-from pathlib import Path
 import stat
 import subprocess
 import sys
 import tempfile
 import types
 import unittest
-from unittest.mock import patch
 import warnings
 import zipfile
+from pathlib import Path
+from unittest.mock import patch
 
 import qualify_installed_artifact as gate
 
@@ -58,6 +58,7 @@ class QualificationTests(unittest.TestCase):
             "typing-extensions>=4.16,<5",
             "umf-core==0.11.0",
         ]
+        assert dependencies[0] == "pydantic>=2.13,<3"
         wheel = base / "umf_access-0.1.0.dev7-py3-none-any.whl"
         wheel_dependencies = [
             "pydantic<3,>=2.13",
@@ -264,8 +265,7 @@ class QualificationTests(unittest.TestCase):
             subprocess.CompletedProcess([], 0, f"{ROOT}\n", ""),
             subprocess.CompletedProcess([], 0, " M python/umf_access/src/umf_access/capture.py\n", ""),
         ]
-        with patch.object(gate.subprocess, "run", side_effect=responses):
-            with self.assertRaisesRegex(ValueError, "selected source checkout is dirty"):
+        with patch.object(gate.subprocess, "run", side_effect=responses), self.assertRaisesRegex(ValueError, "selected source checkout is dirty"):
                 gate.source_closure(PACKAGE, PROFILE)
 
     def test_wrong_core_wheel_digest_refuses(self):

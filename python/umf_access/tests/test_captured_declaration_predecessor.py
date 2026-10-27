@@ -5,7 +5,6 @@ import json
 import unittest
 from pathlib import Path
 
-
 PACKET = Path(__file__).parent / "fixtures/rust-catalog-capture/declarations-v1.json"
 
 

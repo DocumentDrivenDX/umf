@@ -1,16 +1,15 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 
 import importlib.util
-from pathlib import Path
 import subprocess
 import sys
 import tempfile
 import unittest
+from pathlib import Path
 from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).parent))
 import qualify_installed_artifact as installed_gate
-
 
 MODULE_PATH = Path(__file__).with_name("qualify_capture_semantics.py")
 SPEC = importlib.util.spec_from_file_location("capture_qualification", MODULE_PATH)
@@ -137,8 +136,7 @@ class CaptureQualificationControls(unittest.TestCase):
             subprocess.CompletedProcess([], 0, f"{root}\n", ""),
             subprocess.CompletedProcess([], 0, " M python/umf_access/src/umf_access/capture.py\n", ""),
         ]
-        with patch.object(installed_gate.subprocess, "run", side_effect=responses):
-            with self.assertRaisesRegex(ValueError, "selected source checkout is dirty"):
+        with patch.object(installed_gate.subprocess, "run", side_effect=responses), self.assertRaisesRegex(ValueError, "selected source checkout is dirty"):
                 installed_gate.source_closure(
                     root / "python/umf_access", root / "python/umf_access/compatibility-profile-dev7-local-candidate.json"
                 )

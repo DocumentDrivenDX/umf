@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 from copy import deepcopy
-import pytest
 
+import pytest
 from umf import _rust
 from umf import rust_json_schema as schema
 

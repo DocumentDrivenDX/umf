@@ -3,8 +3,7 @@
 import unittest
 from types import SimpleNamespace
 
-from umf_access.unified import SessionError, SessionIdentity
-from umf_access.unified import table_writes
+from umf_access.unified import SessionError, SessionIdentity, table_writes
 from umf_access.unified.outcome_values import outcome_record, outcome_slot
 
 
@@ -21,7 +20,7 @@ class Probe:
 
     def outcome_steps(self, stage, *args):
         self.events.append(stage)
-        value = yield stage
+        yield stage
         if stage == "read":
             return self.stored
         return None

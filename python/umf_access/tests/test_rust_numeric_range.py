@@ -11,7 +11,6 @@ from unittest.mock import patch
 from umf_access.types import ValueRuleError
 from umf_access.values import validate_range
 
-
 ROOT = Path(__file__).parents[3]
 FROZEN = (
     ROOT
@@ -132,14 +131,13 @@ class RustNumericRangeTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueRuleError, "required range profile"):
                 validate_range(original, minimum=0)
             with self.assertRaisesRegex(ValueRuleError, "range bound carrier mismatch"):
-                validate_range(original, minimum=Decimal("0"))
+                validate_range(original, minimum=Decimal(0))
         with patch.object(
             rust_values,
             "access_range_profile_version",
             return_value="umf-access-range/9.9.9",
-        ):
-            with self.assertRaisesRegex(ValueRuleError, "required range profile"):
-                validate_range(1, minimum=0)
+        ), self.assertRaisesRegex(ValueRuleError, "required range profile"):
+            validate_range(1, minimum=0)
 
         native = _rust._rust_core
         with self.assertRaisesRegex(ValueError, "integer range carrier required"):
@@ -150,9 +148,8 @@ class RustNumericRangeTests(unittest.TestCase):
             (0, (1,), True),
             [0, (1,), 0],
         ):
-            with self.subTest(left=left):
-                with self.assertRaises(ValueError):
-                    native.access_range_compare_decimal(left, (0, (1,), 0))
+            with self.subTest(left=left), self.assertRaises(ValueError):
+                native.access_range_compare_decimal(left, (0, (1,), 0))
 
 
 if __name__ == "__main__":

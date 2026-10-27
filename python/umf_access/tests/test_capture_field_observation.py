@@ -25,7 +25,6 @@ def test_private_all_empty_profile_uses_native_terminal_observer():
 
 
 def test_private_all_empty_observation_and_dto_encoding_share_work_session():
-    from umf import _rust
     from umf_access.rust_catalog_render import _capture_exact_empty_all_candidate
 
     root = RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
@@ -447,9 +446,8 @@ def test_accessor_exception_instance_and_class_escape_unchanged(failing_field, e
 
     class ObservedField(FieldRef):
         def __getattribute__(self, name: str):
-            if name in {"module", "element", "alias"}:
-                if armed:
-                    reads.append(name)
+            if armed and name in {"module", "element", "alias"}:
+                reads.append(name)
             if armed and name == failing_field:
                 raise exception
             return super().__getattribute__(name)
@@ -576,7 +574,6 @@ def test_field_join_tuple_visit_preserves_dfs_and_owner_component_order():
                 reads.append("join.ref")
             return super().__getattribute__(name)
 
-    root = RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
     target = RecordRef("demo", "Target", (FieldRef("demo", "Target", "id"),))
     direct = ObservedField("demo", "Root", "direct")
     relation_ref = ObservedField("demo", "Root", "target_id")
@@ -932,7 +929,6 @@ def test_terminal_walker_runs_into_pass_for_group_count():
 
 def test_terminal_walker_refuses_join_with_absent_source():
     root = RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
-    source = RecordRef("demo", "Absent", (FieldRef("demo", "Absent", "id"),))
     target = RecordRef("demo", "Target", (FieldRef("demo", "Target", "id"),))
     relation = RequiredJoin(FieldRef("demo", "Absent", "target_id"), target)
     node = Node("all", (root, (Node("join", (relation,)),)))

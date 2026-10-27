@@ -42,8 +42,7 @@ class RustTrussComponentProfile(unittest.TestCase):
             ({"family": "string", "facets": {}, "nullable": False}, object()),
             ({"family": "string", "facets": {"x": shared, "y": shared}, "nullable": False}, "string"),
         ):
-            with self.subTest(value_type=type(value), carrier_type=type(carrier)):
-                with self.assertRaises(RelatedKeyParserUnavailable):
+            with self.subTest(value_type=type(value), carrier_type=type(carrier)), self.assertRaises(RelatedKeyParserUnavailable):
                     truss_component_type_matches(value, carrier)
 
         cycle = {}

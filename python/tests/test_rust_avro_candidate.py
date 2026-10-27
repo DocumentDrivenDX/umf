@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 import json
-from pathlib import Path
 import unittest
+from pathlib import Path
 
 from umf import rust_avro_candidate
 

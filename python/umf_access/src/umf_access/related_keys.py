@@ -5,9 +5,10 @@ from __future__ import annotations
 import json
 import re
 import sys
+from collections.abc import Callable
 from decimal import Decimal, InvalidOperation
 from types import GenericAlias
-from typing import Callable, cast
+from typing import cast
 
 from pydantic import BaseModel
 

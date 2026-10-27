@@ -65,9 +65,9 @@ class RustRelatedKeyParserTests(unittest.TestCase):
                 )
 
     def test_capability_failure_is_deferred_and_maps_at_postgres_boundary(self) -> None:
+        import umf_access.rust_related_keys as rust_parser
         from umf_access.pages import ReadObligationUnmet
         from umf_access.postgres_read import _output_value
-        import umf_access.rust_related_keys as rust_parser
 
         if sys.implementation.name != "cpython" or sys.version_info[:2] not in ((3, 11), (3, 14)):
             self.skipTest("default Rust parser is staged only for CPython 3.11 and 3.14")
@@ -82,8 +82,7 @@ class RustRelatedKeyParserTests(unittest.TestCase):
                     {"carrier": "related-keys", "decoder": self.metadata},
                     key_model=OrderKey,
                 )
-        with patch.object(rust_parser, "profile_version", side_effect=AttributeError("missing capability")):
-            with self.assertRaisesRegex(ReadObligationUnmet, "native related-Key decoder capability unavailable"):
+        with patch.object(rust_parser, "profile_version", side_effect=AttributeError("missing capability")), self.assertRaisesRegex(ReadObligationUnmet, "native related-Key decoder capability unavailable"):
                 _output_value(
                     '{"items":[],"truncated":false}',
                     {"carrier": "related-keys", "decoder": self.metadata},
@@ -230,7 +229,7 @@ class RustRelatedKeyParserTests(unittest.TestCase):
                 for container_depth in range(1, 221):
                     payload = "[" * container_depth + "null" + "]" * container_depth
 
-                    def invoke():
+                    def invoke(decoder=decoder, payload=payload):
                         return decoder(payload, self.metadata, OrderKey)
 
                     def ambient(depth: int):

@@ -7,7 +7,15 @@ import json
 from dataclasses import dataclass
 from typing import Any
 
-from ._rust import UmfCoreError, _checked_envelope, _from_wire, _rust_core, _wire, copy_json, encode_wire
+from ._rust import (
+    UmfCoreError,
+    _checked_envelope,
+    _from_wire,
+    _rust_core,
+    _wire,
+    copy_json,
+    encode_wire,
+)
 
 _MAX_SAFE = 2**53 - 1
 _MAX_FRAME_UNITS = 1_048_576
@@ -37,7 +45,7 @@ def _units(value: str) -> int:
 def _exception_message(error: BaseException) -> str:
     try:
         return str(error)[:_MAX_MESSAGE_UNITS]
-    except BaseException:
+    except BaseException:  # noqa: BLE001 -- an exception's __str__ may itself raise; keep the host response formatter total
         return ""
 
 
@@ -56,7 +64,13 @@ class SemanticTypeRegistry:
         self._entries: list[dict[str, Any]] = []
         self._callbacks: dict[int, Any] = {}
         self._next_token = 1
-        self._controls = dict(max_work=max_work, meter=meter, is_cancelled=is_cancelled, now=now, deadline_ms=deadline_ms)
+        self._controls = {
+            "max_work": max_work,
+            "meter": meter,
+            "is_cancelled": is_cancelled,
+            "now": now,
+            "deadline_ms": deadline_ms,
+        }
 
     def _dispatch(self, callbacks: dict[int, Any], token: int, request_wire: str) -> str:
         callback = callbacks.get(token)
@@ -87,7 +101,7 @@ class SemanticTypeRegistry:
             if report_fault and error is report_fault[0]:
                 return _response({"status": "resource", "code": error.code, "message": error.message}, lambda _amount: None, reported=reported)
             return _response({"status": "threw", "message": _exception_message(error)}, lambda _amount: None, reported=reported)
-        except Exception as error:
+        except Exception as error:  # noqa: BLE001 -- user validators may raise any Exception; preserve it in the callback result envelope
             if report_fault:
                 fault = report_fault[0]
                 return _response({"status": "resource", "code": fault.code, "message": fault.message}, lambda _amount: None, reported=reported)

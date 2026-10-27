@@ -19,39 +19,27 @@ ddx:
 
 # Arrow schema JSON current-source replay
 
-This refreshed packet supersedes the earlier Arrow binding receipt after
-current-tree changes to schema-property resources and generated metamodel
-provenance. A later regeneration also changed the recorded
-`src/extensions/actions/plan-identity.ts` source hash; the source manifest now
-pins that current file. It is not an Arrow runtime/build dependency, so the
-rerun Cargo builds correctly reused the already-built artifacts. The Node and
-WASM artifact hashes are unchanged. Prior receipts are preserved under
-[`historical/pre-plan-identity-regeneration-20261027/`](historical/pre-plan-identity-regeneration-20261027/)
-and are not relabeled as current.
+This packet refreshes the opt-in five-operation Arrow schema JSON binding after
+Python Ruff cleanup and generated metamodel/action identity changes. It pins the
+current source cohort and rebuilt Node/WASM artifacts; no default route is
+selected. The Node addon and WASM package were built from fresh, separate private
+Cargo targets under /private/tmp/umf-arrow-final-lint-node and
+/private/tmp/umf-arrow-final-lint-wasm.
 
-This is an opt-in five-operation Arrow schema JSON qualification only. It does
-not select a default route and does not qualify native Apache Arrow, IPC,
-array-data, PyArrow, Python, CLI, the package release, or complete Rust port.
+Node 26.12.1, Bun 1.4.3 and real Chromium 153.0.8010.12 each passed 52 authored
+cases across import, inspect, export, getNode and proposeNodeEdit (260 corpus
+operations), plus 17 focused cases: 16 JSON-wire imports and 26 focused
+operations. Each host performed 302 counted binding calls. The focused checks
+include cancellation/work-limit controls, disposal, diagnostics, exact output,
+and source immutability. The wire-only proxy reflection thrown-object identity
+case remains unqualified because the thrown object cannot cross the JSON wire.
+The focused Rust core-wire tests passed 2/2. Fresh Node addon SHA-256: `162bf7d4bfc91e5e55ba7300af3fd28af85751f50f798ad4cfd015130635f222`; WASM binary SHA-256: `039ef9ae576b1b568e57ec946f8d0415a116b1eacc1e0f3f18cc3dcde92419cd`; WASM glue SHA-256: `f242eb8fa149d66c2c059f7d28c78d40ce8cbf5af3f6b14762843e75e4a42132`.
 
-The host cohorts each replay 52 authored cases across import, inspect, export,
-getNode, and proposeNodeEdit (260 corpus operations), plus 17 focused cases
-represented as 16 JSON-wire imports and 26 focused operations (302 exact
-binding calls). Setup/call cancellation, setup/call work limits, disposal,
-exact output bytes, diagnostics and source immutability are checked. The
-`proxy-reflection-throw-identity` case preserves TypeScript Proxy trap thrown
-object identity and cannot cross this JSON wire; it remains explicitly
-unqualified. See each host receipt and the source manifest for versions,
-durations, commands and hashes.
-
-The replay harness is reused from the historical packet at
-[`r5-arrow-schema-bindings-20261027/replay.mjs`](../r5-arrow-schema-bindings-20261027/replay.mjs);
-the real Chromium harness remains at
-[`arrow-schema-session.chromium.mjs`](../../../../../../bindings/core/wasm/tests/arrow-schema-session.chromium.mjs).
-Both harness hashes are included in this packet's current source closure.
-
-[`source-manifest.json`](source-manifest.json) pins all inputs used by these
-builds and replays, including current generated provenance resources and the
-schema-properties core-wire/PyO3 source additions. The build uses the separate
-targets `/private/tmp/umf-arrow-refresh-node` and
-`/private/tmp/umf-arrow-refresh-wasm` so it does not replace a shared addon or
-interfere with other package builds. `SHA256SUMS` pins this packet.
+This is opt-in Arrow schema JSON evidence only. It does not select default
+routing or qualify native Apache Arrow, IPC, array data, PyArrow, Python/CLI
+Arrow operations, package release, or the complete Rust port. See
+[source-manifest.json](source-manifest.json) for exact source hashes,
+commands, toolchain/platform and private artifact hashes. Host receipts contain
+runtime versions, timings, call counts and replay packet hashes. The prior
+packet remains available in commit 289fdeb; this refresh adds no historical
+copy.

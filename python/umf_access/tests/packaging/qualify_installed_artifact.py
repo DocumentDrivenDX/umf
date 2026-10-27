@@ -3,21 +3,20 @@
 from __future__ import annotations
 
 import argparse
-from collections import Counter
 import hashlib
 import importlib
-import importlib.util
 import importlib.metadata
+import importlib.util
 import json
-from pathlib import Path
 import platform
-import re
 import stat
 import subprocess
 import sys
 import tomllib
 import zipfile
+from collections import Counter
 from email.parser import BytesParser
+from pathlib import Path
 
 _REPLAY_PATH = Path(__file__).with_name("replay_installed.py")
 _REPLAY_SPEC = importlib.util.spec_from_file_location("_umf_access_replay_installed", _REPLAY_PATH)
@@ -279,7 +278,7 @@ def main() -> int:
             args.source_root,
             args.cohort,
         )
-    except Exception as error:
+    except Exception as error:  # noqa: BLE001 - receipt generation must cover every qualification failure.
         reason = str(error)
         profile_identity_blocked = reason == (
             "source package identity differs from pinned access profile: "
@@ -301,7 +300,7 @@ def main() -> int:
         if args.profile.is_file() and args.source_root.is_dir():
             try:
                 receipt["sourceClosure"] = source_closure(args.source_root, args.profile)
-            except Exception:
+            except Exception:  # noqa: BLE001 - retain a blocked receipt if closure inspection itself fails.
                 receipt["sourceClosureStatus"] = "unavailable"
     args.receipt.parent.mkdir(parents=True, exist_ok=True)
     args.receipt.write_text(json.dumps(receipt, sort_keys=True, separators=(",", ":")) + "\n")

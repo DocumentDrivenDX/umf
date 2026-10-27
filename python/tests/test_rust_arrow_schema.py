@@ -2,7 +2,6 @@
 """Focused installed-binding checks for the opt-in Arrow schema profile."""
 
 import pytest
-
 from umf import _rust
 from umf import rust_arrow_schema as arrow
 

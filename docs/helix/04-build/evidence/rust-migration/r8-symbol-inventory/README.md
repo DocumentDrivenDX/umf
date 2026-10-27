@@ -1386,3 +1386,42 @@ accepted opt-in Rust operation names, 841 without accepted mapping, and five
 bounded current-source binding routes. This source replay does not establish
 installed SDK qualification, complete semantic parity, or declaration
 retirement.
+
+## Facets and CSV Boolean opt-in source refresh — 2026-10-27
+
+After adding narrow opt-in Facets and CSV Boolean lexical Python/CLI bindings,
+the inventory was deliberately regenerated. It still records 3,375 route
+declarations across 509 source files and 1,126 unique names; its current
+SHA-256 is `1bba1489fa9402edfe5e5daeba8eb77eee21033ca6b38c5182e3dfb2a3907e72`.
+The Compact Dataset and Security And/Or source replays passed on Node, Bun,
+and real Chromium against one private build manifest SHA-256
+`11733381ed77cbf6fb14d66cbb34836b2df72beda67d8ff7781093dc643b644a`
+and 1,975-file source closure SHA-256
+`a5dd80bb04a458db5aed74374d0e3da30eca68d3860ace6a928e724b291298e6`.
+Compact passed five cases with 14 Rust/WASM calls per host; Security passed
+68 cases with 30 valid calls and zero refusal calls per host. The current
+ledger SHA-256 is
+`4b82e0f322270ba3f3d50b7fcae2984dd08755b1705c288ef83adbbf6b6eb0d8`.
+It still has **922 open logical executable default-route gaps and zero
+retired**. The new binding surfaces do not retire any route or qualify a
+release.
+
+## Post-lint fixed-point replay — 2026-10-27
+
+After the Python source cleanup and regenerated metamodel/action identity,
+the current Compact Dataset and Security And/Or receipts were recaptured
+against one private SDK build. Its manifest SHA-256 is
+`43a735c629f357ca85d99708055a86c38a73522375ac7334eae79d7138ad8b3e`;
+the 1,975-file source closure SHA-256 is
+`ca6d3b7c893833073d2cd79a8a13d3909f0428dd16c6305f9115d6c2a33b2c21`.
+Node 26.3.0, Bun 1.4.3 and real Chromium 153.0.8010.12 each passed five
+Compact cases with 14 Rust/WASM calls and 68 Security cases with 30 valid
+calls and zero refusal calls. The packet SHA256SUMS verify 78 Compact and
+50 Security files. The deliberate inventory remains 3,375 route declarations
+and SHA-256 `1bba1489fa9402edfe5e5daeba8eb77eee21033ca6b38c5182e3dfb2a3907e72`.
+The regenerated ledger SHA-256 is
+`fc46ba9d0b90f49bc5947ded2c721c58ffd90400353d6e2be2f48a42032cc5b8`:
+**922 open logical executable default-route gaps, zero retired**, 81 accepted
+opt-in mappings and 841 without an accepted mapping. These are bounded
+source replays; installed archive, full contract and release qualification
+remain open.

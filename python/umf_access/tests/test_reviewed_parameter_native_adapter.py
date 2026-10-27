@@ -2,11 +2,11 @@
 """Focused host-side checks for the Rust-reviewed-parameter protocol."""
 from __future__ import annotations
 
+import ast
+import re
 import sys
 import types
 import unittest
-import ast
-import re
 from pathlib import Path
 from unittest.mock import patch
 
@@ -18,7 +18,7 @@ selected = [
     and node.name in {"ReadBuildError", "_parameter_positions", "_parameter_positions_python"}
 ]
 namespace = {"re": re}
-exec(compile(ast.Module(body=selected, type_ignores=[]), str(SOURCE), "exec"), namespace)
+exec(compile(ast.Module(body=selected, type_ignores=[]), str(SOURCE), "exec"), namespace)  # noqa: S102 - execute only AST-selected local definitions for an isolated test.
 ReadBuildError = namespace["ReadBuildError"]
 _parameter_positions = namespace["_parameter_positions"]
 _parameter_positions_python = namespace["_parameter_positions_python"]
@@ -60,7 +60,7 @@ class NativeReviewedParameterAdapter(unittest.TestCase):
             {"kind": "placeholder", "start": 6, "end": 8, "digits": "1"},
             {"kind": "done"},
         ])
-        parent, rust = _installed_core(scanner)
+        parent, _ = _installed_core(scanner)
         with patch.dict(sys.modules, {"umf": parent}):
             sql = "éE'\\' $1'"
             self.assertEqual(_parameter_positions(sql), [(6, 8, 0)])
@@ -75,9 +75,8 @@ class NativeReviewedParameterAdapter(unittest.TestCase):
             {"kind": "placeholder", "start": 0, "end": len(digits) + 1, "digits": digits},
             {"kind": "error", "code": "unterminated_quote", "message": "unterminated compiler SQL quote"},
         ])
-        parent, rust = _installed_core(scanner)
-        with patch.dict(sys.modules, {"umf": parent}):
-            with self.assertRaises(ValueError):
+        parent, _ = _installed_core(scanner)
+        with patch.dict(sys.modules, {"umf": parent}), self.assertRaises(ValueError):
                 _parameter_positions("$" + digits + "'")
         self.assertEqual(scanner.calls, 1)
 
@@ -86,9 +85,8 @@ class NativeReviewedParameterAdapter(unittest.TestCase):
             "kind": "error", "code": "unterminated_quote",
             "message": "unterminated compiler SQL quote",
         }])
-        parent, rust = _installed_core(scanner)
-        with patch.dict(sys.modules, {"umf": parent}):
-            with self.assertRaises(ReadBuildError) as caught:
+        parent, _ = _installed_core(scanner)
+        with patch.dict(sys.modules, {"umf": parent}), self.assertRaises(ReadBuildError) as caught:
                 _parameter_positions("'open")
         self.assertEqual(str(caught.exception), "unterminated compiler SQL quote")
         self.assertIsNone(caught.exception.__cause__)
@@ -109,16 +107,14 @@ class NativeReviewedParameterAdapter(unittest.TestCase):
 
     def test_invalid_event_fails_closed(self):
         scanner = _Scanner([{"kind": "placeholder", "start": 0, "end": 2, "digits": "2"}])
-        parent, rust = _installed_core(scanner)
-        with patch.dict(sys.modules, {"umf": parent}):
-            with self.assertRaisesRegex(ReadBuildError, "native reviewed scanner result differs"):
+        parent, _ = _installed_core(scanner)
+        with patch.dict(sys.modules, {"umf": parent}), self.assertRaisesRegex(ReadBuildError, "native reviewed scanner result differs"):
                 _parameter_positions("$1")
 
     def test_empty_digit_event_refuses_without_index_error(self):
         scanner = _Scanner([{"kind": "placeholder", "start": 0, "end": 1, "digits": ""}])
-        parent, rust = _installed_core(scanner)
-        with patch.dict(sys.modules, {"umf": parent}):
-            with self.assertRaisesRegex(ReadBuildError, "native reviewed scanner result differs"):
+        parent, _ = _installed_core(scanner)
+        with patch.dict(sys.modules, {"umf": parent}), self.assertRaisesRegex(ReadBuildError, "native reviewed scanner result differs"):
                 _parameter_positions("$")
 
     def test_binding_memory_error_passes_through_adapter(self):
@@ -126,8 +122,7 @@ class NativeReviewedParameterAdapter(unittest.TestCase):
         def fail_allocation(source):
             raise MemoryError("reviewed SQL ordinal allocation failed")
         rust.ReviewedParameterScanner = fail_allocation
-        with patch.dict(sys.modules, {"umf": parent}):
-            with self.assertRaisesRegex(MemoryError, "ordinal allocation failed"):
+        with patch.dict(sys.modules, {"umf": parent}), self.assertRaisesRegex(MemoryError, "ordinal allocation failed"):
                 _parameter_positions("$1")
 
     def test_missing_bridge_capability_keeps_explicit_refusal(self):
@@ -136,8 +131,7 @@ class NativeReviewedParameterAdapter(unittest.TestCase):
             access_reviewed_parameter_profile_version=None,
             ReviewedParameterScanner=None,
         )
-        with patch.dict(sys.modules, {"umf": parent}):
-            with self.assertRaisesRegex(ReadBuildError, "lacks reviewed parameter profile"):
+        with patch.dict(sys.modules, {"umf": parent}), self.assertRaisesRegex(ReadBuildError, "lacks reviewed parameter profile"):
                 _parameter_positions("$1")
 
 

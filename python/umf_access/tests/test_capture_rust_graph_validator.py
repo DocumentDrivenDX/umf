@@ -448,9 +448,8 @@ def test_public_capture_with_parameters_keeps_parameter_map_first_fault(monkeypa
         _rust._rust_core,
         "access_validate_capture_exact_empty_terminal_with_session",
         side_effect=AssertionError("parameterized capture must remain Python-selected"),
-    ) as validate:
-        with pytest.raises(LookupError) as caught:
-            capture(declaration)
+    ) as validate, pytest.raises(LookupError) as caught:
+        capture(declaration)
     assert caught.value is sentinel
     assert events == ["optional-name", "parameter-map-name"]
     assert graph_reads == ["op", "args", "args", "args", "args"]

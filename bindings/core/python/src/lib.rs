@@ -668,6 +668,46 @@ fn execute_core_cardinality_wire(
 }
 
 #[pyfunction]
+fn core_facets_profile_version() -> &'static str {
+    umf_core_wire::CORE_FACETS_BINDING_PROFILE
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, max_work=None, timeout_ms=None))]
+fn execute_core_facets_wire(
+    wire_json: &str,
+    max_work: Option<usize>,
+    timeout_ms: Option<u64>,
+) -> String {
+    let started = std::time::Instant::now();
+    let mut remaining = max_work.unwrap_or(usize::MAX);
+    let mut control = |amount: usize| {
+        if amount > remaining {
+            return Err(EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Core Facets work budget exhausted",
+            ));
+        }
+        remaining -= amount;
+        if timeout_ms.is_some_and(|limit| started.elapsed().as_millis() >= u128::from(limit)) {
+            return Err(EngineError::new(
+                "DEADLINE",
+                Utf16::default(),
+                "Core Facets deadline elapsed",
+            ));
+        }
+        Ok(())
+    };
+    umf_core_wire::execute_core_facets_request_with_control(
+        wire_json,
+        umf_core::ResourceProfile::Cooperative,
+        &mut NoPythonCapabilities,
+        &mut control,
+    )
+}
+
+#[pyfunction]
 fn core_schema_properties_profile_version() -> &'static str {
     umf_core_wire::CORE_SCHEMA_PROPERTIES_BINDING_PROFILE
 }
@@ -700,6 +740,46 @@ fn execute_core_schema_properties_wire(
         Ok(())
     };
     umf_core_wire::execute_schema_properties_request_with_control(
+        wire_json,
+        umf_core::ResourceProfile::Cooperative,
+        &mut NoPythonCapabilities,
+        &mut control,
+    )
+}
+
+#[pyfunction]
+fn csv_boolean_lexical_profile_version() -> &'static str {
+    umf_core_wire::CSV_BOOLEAN_LEXICAL_BINDING_PROFILE
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, max_work=None, timeout_ms=None))]
+fn execute_csv_boolean_lexical_wire(
+    wire_json: &str,
+    max_work: Option<usize>,
+    timeout_ms: Option<u64>,
+) -> String {
+    let started = std::time::Instant::now();
+    let mut remaining = max_work.unwrap_or(usize::MAX);
+    let mut control = |amount: usize| {
+        if amount > remaining {
+            return Err(EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "CSV Boolean lexical work budget exhausted",
+            ));
+        }
+        remaining -= amount;
+        if timeout_ms.is_some_and(|limit| started.elapsed().as_millis() >= u128::from(limit)) {
+            return Err(EngineError::new(
+                "DEADLINE",
+                Utf16::default(),
+                "CSV Boolean lexical deadline elapsed",
+            ));
+        }
+        Ok(())
+    };
+    umf_core_wire::execute_csv_boolean_lexical_request_with_control(
         wire_json,
         umf_core::ResourceProfile::Cooperative,
         &mut NoPythonCapabilities,
@@ -5390,8 +5470,12 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(execute_protobuf_inspect_wire, module)?)?;
     module.add_function(wrap_pyfunction!(core_cardinality_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_core_cardinality_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(core_facets_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_core_facets_wire, module)?)?;
     module.add_function(wrap_pyfunction!(core_schema_properties_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_core_schema_properties_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(csv_boolean_lexical_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_csv_boolean_lexical_wire, module)?)?;
     module.add_function(wrap_pyfunction!(json_schema_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_json_schema_wire, module)?)?;
     module.add_function(wrap_pyfunction!(avro_fields_derive, module)?)?;

@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import json
 import math
-from collections.abc import Callable
 from typing import Any
 
 from . import _rust
@@ -36,12 +35,12 @@ def _controls(max_work, meter, is_cancelled, now, deadline_ms):
         if amount and meter is not None:
             try:
                 meter(amount)
-            except Exception as error:
+            except Exception as error:  # noqa: BLE001 -- host callbacks may raise arbitrary failures, translated into explicit control outcomes
                 return ("METER_FAILURE", str(error), "")
         if is_cancelled is not None:
             try:
                 cancelled = is_cancelled()
-            except Exception as error:
+            except Exception as error:  # noqa: BLE001 -- host callbacks may raise arbitrary failures, translated into explicit control outcomes
                 return ("CANCELLATION_CHECK_FAILURE", str(error), "")
             if type(cancelled) is not bool:
                 return ("CANCELLATION_CHECK_FAILURE", "Cancellation callback must return bool", "")
@@ -50,7 +49,7 @@ def _controls(max_work, meter, is_cancelled, now, deadline_ms):
         if deadline_ms is not None:
             try:
                 current = now()
-            except Exception as error:
+            except Exception as error:  # noqa: BLE001 -- host callbacks may raise arbitrary failures, translated into explicit control outcomes
                 return ("CLOCK_CAPABILITY_REQUIRED", str(error), "")
             if type(current) not in (int, float) or (type(current) is float and not math.isfinite(current)):
                 return ("CLOCK_CAPABILITY_REQUIRED", "Host clock must return a finite number", "")

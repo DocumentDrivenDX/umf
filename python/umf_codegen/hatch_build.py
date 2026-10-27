@@ -3,9 +3,9 @@
 import ast
 import hashlib
 import json
-from pathlib import Path
 import subprocess
 import sys
+from pathlib import Path
 
 from hatchling.builders.hooks.plugin.interface import BuildHookInterface
 

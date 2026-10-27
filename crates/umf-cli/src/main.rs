@@ -29,6 +29,8 @@ const PROTOBUF_DOCUMENT_EXPORT_CLI_PROFILE: &str = "umf.protobuf-document-export
 const MAX_AVRO_CANDIDATE_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 const MAX_JSON_SCHEMA_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 const MAX_CARDINALITY_REQUEST_BYTES: usize = 32 * 1024 * 1024;
+const MAX_CSV_BOOLEAN_LEXICAL_REQUEST_BYTES: usize = 32 * 1024 * 1024;
+const MAX_FACETS_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 
 fn main() {
     #[cfg(feature = "codegen")]
@@ -599,6 +601,12 @@ fn run(args: Vec<String>) -> Result<(), String> {
     if args.first().map(String::as_str) == Some("cardinality") {
         return cardinality_run(&args[1..]);
     }
+    if args.first().map(String::as_str) == Some("csv-boolean-lexical") {
+        return csv_boolean_lexical_run(&args[1..]);
+    }
+    if args.first().map(String::as_str) == Some("facets") {
+        return facets_run(&args[1..]);
+    }
     if args.first().map(String::as_str) == Some("reference") {
         return reference_run(&args[1..]);
     }
@@ -623,7 +631,7 @@ fn run(args: Vec<String>) -> Result<(), String> {
     }
     if args.first().map(String::as_str) != Some("metamodel") {
         return Err(
-            "usage: umf <metamodel|reference|cardinality|iceberg|arrow|protobuf|avro|json-schema> ...".into(),
+            "usage: umf <metamodel|reference|cardinality|facets|csv-boolean-lexical|iceberg|arrow|protobuf|avro|json-schema> ...".into(),
         );
     }
     let operation = args
@@ -849,6 +857,184 @@ fn cardinality_run(args: &[String]) -> Result<(), String> {
     println!(
         "{}",
         umf_core_wire::execute_cardinality_request_with_control(
+            &wire,
+            umf_core::ResourceProfile::Cooperative,
+            &mut capabilities,
+            &mut control,
+        )
+    );
+    Ok(())
+}
+
+fn csv_boolean_lexical_run(args: &[String]) -> Result<(), String> {
+    const PROFILE: &str = umf_core_wire::CSV_BOOLEAN_LEXICAL_BINDING_PROFILE;
+    if args == ["--version"] {
+        println!(
+            "{{\"profile\":\"{PROFILE}\",\"version\":\"{}\"}}",
+            env!("CARGO_PKG_VERSION"),
+        );
+        return Ok(());
+    }
+    if args == ["--capabilities"] {
+        println!(
+            "{{\"profile\":\"{PROFILE}\",\"operations\":[\"model/validateCsvBooleanLexical\",\"model/verifyCsvBooleanLexical\"],\"resourceProfile\":\"cooperative\"}}"
+        );
+        return Ok(());
+    }
+    let invalid = || {
+        "usage: umf csv-boolean-lexical <--version|--capabilities|--stdin-wire [--max-work N] [--timeout-ms N]>".to_owned()
+    };
+    let mut stdin_wire = false;
+    let mut max_work = None;
+    let mut timeout_ms = None;
+    let mut index = 0;
+    while index < args.len() {
+        match args[index].as_str() {
+            "--stdin-wire" if !stdin_wire => stdin_wire = true,
+            "--max-work" if max_work.is_none() => {
+                index += 1;
+                max_work = Some(
+                    args.get(index)
+                        .ok_or_else(invalid)?
+                        .parse::<u64>()
+                        .map_err(|_| "--max-work requires a nonnegative integer".to_owned())?,
+                );
+            }
+            "--timeout-ms" if timeout_ms.is_none() => {
+                index += 1;
+                timeout_ms = Some(
+                    args.get(index)
+                        .ok_or_else(invalid)?
+                        .parse::<u64>()
+                        .map_err(|_| "--timeout-ms requires a nonnegative integer".to_owned())?,
+                );
+            }
+            _ => return Err(invalid()),
+        }
+        index += 1;
+    }
+    if !stdin_wire {
+        return Err(invalid());
+    }
+    let started = std::time::Instant::now();
+    let wire = String::from_utf8(read_limited(
+        io::stdin(),
+        MAX_CSV_BOOLEAN_LEXICAL_REQUEST_BYTES,
+    )?)
+    .map_err(|_| "CSV Boolean lexical wire request is not valid UTF-8".to_owned())?;
+    let mut remaining = max_work.unwrap_or(u64::MAX);
+    let mut control = |amount: usize| {
+        let amount = amount as u64;
+        if amount > remaining {
+            return Err(umf_core::EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "CSV Boolean lexical work budget exhausted",
+            ));
+        }
+        remaining -= amount;
+        if timeout_ms.is_some_and(|limit| started.elapsed().as_millis() >= u128::from(limit)) {
+            return Err(umf_core::EngineError::new(
+                "DEADLINE",
+                Utf16::default(),
+                "CSV Boolean lexical deadline elapsed",
+            ));
+        }
+        Ok(())
+    };
+    let mut capabilities = BaselineCapabilities { enabled: false };
+    println!(
+        "{}",
+        umf_core_wire::execute_csv_boolean_lexical_request_with_control(
+            &wire,
+            umf_core::ResourceProfile::Cooperative,
+            &mut capabilities,
+            &mut control,
+        )
+    );
+    Ok(())
+}
+
+fn facets_run(args: &[String]) -> Result<(), String> {
+    const PROFILE: &str = umf_core_wire::CORE_FACETS_BINDING_PROFILE;
+    if args == ["--version"] {
+        println!(
+            "{{\"profile\":\"{PROFILE}\",\"version\":\"{}\"}}",
+            env!("CARGO_PKG_VERSION"),
+        );
+        return Ok(());
+    }
+    if args == ["--capabilities"] {
+        println!(
+            "{{\"profile\":\"{PROFILE}\",\"operations\":[\"model/inspectCoreFacets\",\"model/declareCoreFacets\",\"model/verifyCoreFacetDeclaration\",\"model/historicalCoreFacetPatch\"],\"resourceProfile\":\"cooperative\"}}"
+        );
+        return Ok(());
+    }
+    let invalid = || {
+        "usage: umf facets <--version|--capabilities|--stdin-wire [--max-work N] [--timeout-ms N]>"
+            .to_owned()
+    };
+    let mut stdin_wire = false;
+    let mut max_work = None;
+    let mut timeout_ms = None;
+    let mut index = 0;
+    while index < args.len() {
+        match args[index].as_str() {
+            "--stdin-wire" if !stdin_wire => stdin_wire = true,
+            "--max-work" if max_work.is_none() => {
+                index += 1;
+                max_work = Some(
+                    args.get(index)
+                        .ok_or_else(invalid)?
+                        .parse::<u64>()
+                        .map_err(|_| "--max-work requires a nonnegative integer".to_owned())?,
+                );
+            }
+            "--timeout-ms" if timeout_ms.is_none() => {
+                index += 1;
+                timeout_ms = Some(
+                    args.get(index)
+                        .ok_or_else(invalid)?
+                        .parse::<u64>()
+                        .map_err(|_| "--timeout-ms requires a nonnegative integer".to_owned())?,
+                );
+            }
+            _ => return Err(invalid()),
+        }
+        index += 1;
+    }
+    if !stdin_wire {
+        return Err(invalid());
+    }
+    let started = std::time::Instant::now();
+    let wire = String::from_utf8(read_limited(io::stdin(), MAX_FACETS_REQUEST_BYTES)?)
+        .map_err(|_| "Core Facets wire request is not valid UTF-8".to_owned())?;
+    // The deadline includes bounded stdin intake; max_work meters Rust
+    // core-wire work after transport intake, not the bytes read from stdin.
+    let mut remaining = max_work.unwrap_or(u64::MAX);
+    let mut control = |amount: usize| {
+        let amount = amount as u64;
+        if amount > remaining {
+            return Err(umf_core::EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Core Facets work budget exhausted",
+            ));
+        }
+        remaining -= amount;
+        if timeout_ms.is_some_and(|limit| started.elapsed().as_millis() >= u128::from(limit)) {
+            return Err(umf_core::EngineError::new(
+                "DEADLINE",
+                Utf16::default(),
+                "Core Facets deadline elapsed",
+            ));
+        }
+        Ok(())
+    };
+    let mut capabilities = BaselineCapabilities { enabled: false };
+    println!(
+        "{}",
+        umf_core_wire::execute_core_facets_request_with_control(
             &wire,
             umf_core::ResourceProfile::Cooperative,
             &mut capabilities,

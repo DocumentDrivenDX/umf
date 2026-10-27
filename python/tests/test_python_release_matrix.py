@@ -60,7 +60,6 @@ def _cohort_artifact(root: Path, cohort: str, expected: tuple[str, str, str]) ->
         "distribution_version": "0.11.0",
         "semantic_core_version": "0.10.0",
         "platform": {"system": "linux" if system == "Linux" else "darwin", "machine": machine, "python": python_version, "python_platform": "linux_x86_64" if system == "Linux" else "macosx_11_0_arm64"},
-        "platform": {"system": "linux" if system == "Linux" else "darwin", "machine": machine, "python": python_version, "python_platform": "linux_x86_64" if system == "Linux" else "macosx_11_0_arm64"},
         "artifacts": {
             "direct": {"filename": core_wheel, "sha256": _hash(payloads[core_wheel])},
             "sdist_rebuilt": {"filename": rebuilt_name, "sha256": _hash(rebuilt_path.read_bytes())},
@@ -248,6 +247,16 @@ def test_matrix_rejects_wrong_host_for_named_cohort(tmp_path: Path) -> None:
     receipt["host"]["machine"] = "arm64"
     _write_json(path, receipt)
     with pytest.raises(ValueError, match="host differs from expected cohort"):
+        matrix.verify_matrix(root, REVISION, RUN_ID)
+
+
+def test_matrix_rejects_wrong_core_receipt_platform(tmp_path: Path) -> None:
+    root = _matrix(tmp_path)
+    path = root / "python-release-linux-x86_64-cpython-311" / "umf-core-artifact-receipt.json"
+    receipt = json.loads(path.read_text())
+    receipt["platform"]["machine"] = "arm64"
+    _write_json(path, receipt)
+    with pytest.raises(ValueError, match="Core receipt host differs from expected cohort"):
         matrix.verify_matrix(root, REVISION, RUN_ID)
 
 

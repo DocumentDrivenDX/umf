@@ -83,7 +83,7 @@ def _native() -> Any:
     observe_empty_search_leg = getattr(core, "access_observe_capture_empty_search_leg", None)
     try:
         available = callable(version) and version() == _PROFILE
-    except Exception:
+    except Exception:  # noqa: BLE001 - capability probe failures must fail closed as unavailable.
         available = False
     if not (
         available

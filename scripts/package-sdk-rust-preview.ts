@@ -56,9 +56,11 @@ try{
  const cargoSourceFiles=[
   ...await filesUnder(join(root,'crates/umf-core')),
   ...await filesUnder(join(root,'crates/umf-core-wire')),
+  ...await filesUnder(join(root,'crates/umf-tagged-wire')),
   ...await filesUnder(join(root,'crates/umf-codegen')),
   ...await filesUnder(join(root,'crates/umf-cli')),
   ...await filesUnder(join(root,'crates/umf-metamodel')),
+  ...await filesUnder(join(root,'crates/umf-metamodel-cli')),
   ...await filesUnder(join(root,'crates/rust-spike-core')),
   ...await filesUnder(join(root,'crates/rust-spike-cli')),
   ...await filesUnder(join(root,'bindings/core/node/src')),
@@ -153,7 +155,9 @@ try{
  await cp(join(wasmOut,'umf_core_wasm_bg.wasm'),join(dist,'umf_core_wasm_bg.wasm'));
  const browserBuild=await Bun.build({
   entrypoints:['src/index-browser-v4.ts'],outdir:dist,naming:'umf-rust-codegen-preview-v4-browser.js',target:'browser',format:'esm',
-  plugins:[{name:'preview-built-wasm-glue',setup(build){build.onResolve({filter:/^\.\/pkg\/umf_core_wasm\.js$/},args=>args.importer.endsWith('bindings/core/wasm/index.js')?{path:join(wasmOut,'umf_core_wasm.js')}:undefined)}}],
+  plugins:[{name:'preview-built-wasm-glue',setup(build){build.onResolve({filter:/umf_core_wasm\.js$/},args=>
+   args.importer.endsWith('bindings/core/wasm/index.js')||args.importer.endsWith('src/index-browser-v4.ts')
+    ?{path:join(wasmOut,'umf_core_wasm.js')}:undefined)}}],
  });
  if(!browserBuild.success)throw new Error(browserBuild.logs.join('\n'));
 

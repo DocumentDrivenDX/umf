@@ -5,9 +5,9 @@ from __future__ import annotations
 
 import hashlib
 import json
-from pathlib import Path
 import tempfile
 import unittest
+from pathlib import Path
 
 from umf_access.build.catalog import CatalogBuildError, _check_native_column_sources
 from umf_access.rust_catalog_custody import check_sources

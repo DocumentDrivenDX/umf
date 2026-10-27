@@ -1,9 +1,7 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 import pytest
-
 from umf import rust_cardinality
 from umf._rust import UmfCoreError
-
 
 SOURCE = {
     "umf": "0.10.0",

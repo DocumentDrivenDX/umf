@@ -1,13 +1,13 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 """Opt-in post-authentication receipt effect-frame admission controls."""
-import unittest
 import math
 import re
+import unittest
 from unittest.mock import patch
 
+from umf import rust_outcome_values as native_outcome_values
 from umf_access.unified.outcome_values import _outcome_effect_frame_admit_rust
 from umf_access.unified.session_policy import SessionError
-from umf import rust_outcome_values as native_outcome_values
 
 
 def frame(effects, response_digest="a" * 64):
@@ -105,16 +105,13 @@ class RustOutcomeEffectFrame(unittest.TestCase):
             native_outcome_values.effect_frame_admission("{}", 0, 10, "other-profile")
 
     def test_profile_handshake_distinguishes_mismatch_from_unavailable(self):
-        with patch.object(native_outcome_values, "effect_frame_profile_version", return_value="other-profile"):
-            with self.assertRaisesRegex(SessionError, "capability profile mismatch"):
+        with patch.object(native_outcome_values, "effect_frame_profile_version", return_value="other-profile"), self.assertRaisesRegex(SessionError, "capability profile mismatch"):
                 _outcome_effect_frame_admit_rust(frame([]), 0, 10)
 
-        with patch.object(native_outcome_values, "effect_frame_profile_version", side_effect=AttributeError("missing")):
-            with self.assertRaisesRegex(SessionError, "capability unavailable"):
+        with patch.object(native_outcome_values, "effect_frame_profile_version", side_effect=AttributeError("missing")), self.assertRaisesRegex(SessionError, "capability unavailable"):
                 _outcome_effect_frame_admit_rust(frame([]), 0, 10)
 
-        with patch.object(native_outcome_values, "effect_frame_profile_version", side_effect=RuntimeError("crypto profile mismatch")):
-            with self.assertRaisesRegex(RuntimeError, "crypto profile mismatch"):
+        with patch.object(native_outcome_values, "effect_frame_profile_version", side_effect=RuntimeError("crypto profile mismatch")), self.assertRaisesRegex(RuntimeError, "crypto profile mismatch"):
                 _outcome_effect_frame_admit_rust(frame([]), 0, 10)
 
 
