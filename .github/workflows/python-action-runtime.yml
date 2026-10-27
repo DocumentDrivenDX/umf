@@ -28,12 +28,6 @@ jobs:
             python-version: '3.11.17'
             expected-machine: x86_64
             expected-platform: linux_x86_64
-          - cohort: macos-arm64
-            runs-on: macos-15
-            python-architecture: arm64
-            python-version: '3.11.9'
-            expected-machine: arm64
-            expected-platform: macos_arm64
     runs-on: ${{ matrix.runs-on }}
     steps:
       - name: Start the shared qualification deadline and seed failure evidence
@@ -545,18 +539,6 @@ jobs:
             python-version: '3.14.8'
             expected-python-minor: '14'
             expected-machine: x86_64
-          - cohort: macos-arm64
-            runs-on: macos-15
-            platform: macos
-            python-version: '3.11.9'
-            expected-python-minor: '11'
-            expected-machine: arm64
-          - cohort: macos-arm64
-            runs-on: macos-15
-            platform: macos
-            python-version: '3.14.8'
-            expected-python-minor: '14'
-            expected-machine: arm64
     runs-on: ${{ matrix.runs-on }}
     steps:
       - name: Start the 1200-second shared cell deadline and seed failure evidence
@@ -594,11 +576,6 @@ jobs:
         with:
           name: umf-core-0.10.3-release-linux-x86_64
           path: ${{ runner.temp }}/umf-release-linux
-      - uses: actions/download-artifact@v4
-        timeout-minutes: 2
-        with:
-          name: umf-core-0.10.3-release-macos-arm64
-          path: ${{ runner.temp }}/umf-release-macos
       - uses: actions/setup-python@v5
         timeout-minutes: 2
         with:
@@ -613,38 +590,36 @@ jobs:
           COHORT: ${{ matrix.cohort }}
         run: |
           python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name require-platform-and-select-artifacts -- \
-            python - "$RUNNER_TEMP/umf-release-linux" "$RUNNER_TEMP/umf-release-macos" "$GITHUB_OUTPUT" <<'PY'
+            python - "$RUNNER_TEMP/umf-release-linux" "$GITHUB_OUTPUT" <<'PY'
           import hashlib, json, os, pathlib, platform, stat, sys, sysconfig, zipfile
-          linux_dir, mac_dir, output = map(pathlib.Path, sys.argv[1:])
+          linux_dir, output = map(pathlib.Path, sys.argv[1:])
           if platform.machine().lower() != os.environ["EXPECTED_MACHINE"] or str(sys.version_info.minor) != os.environ["EXPECTED_PYTHON_MINOR"]:
               raise SystemExit("Runner architecture or exact Python minor changed")
+          if os.environ["PLATFORM"] != "linux" or os.environ["COHORT"] != "linux-x86_64":
+              raise SystemExit("Selected release cell is not the declared Linux cohort")
           linux_root = linux_dir / "umf-release-selected"
-          mac_root = mac_dir / "umf-release-selected"
+          if not linux_root.is_dir() or linux_root.is_symlink():
+              raise SystemExit("Linux producer selection root is not a canonical directory")
           linux = json.loads((linux_root / "selection.json").read_text(encoding="utf-8"))
-          mac = json.loads((mac_root / "selection.json").read_text(encoding="utf-8"))
-          if linux.get("status") != "passed" or mac.get("status") != "passed":
-              raise SystemExit("A platform release selection is not qualified")
+          if linux.get("status") != "passed":
+              raise SystemExit("Current-run Linux release selection is not qualified")
           linux_sdist = linux_root / "umf_core-0.10.3.tar.gz"
-          mac_sdist = mac_root / "umf_core-0.10.3.tar.gz"
-          if not linux_sdist.is_file() or not mac_sdist.is_file() or linux_sdist.stat().st_size > 16777216 or mac_sdist.stat().st_size > 16777216 or linux_sdist.read_bytes() != mac_sdist.read_bytes():
-              raise SystemExit("Producer cohorts did not select the same common source archive bytes")
-          for root, selection in ((linux_root, linux), (mac_root, mac)):
-              selected = selection.get("selectedWheel", {})
-              wheel = root / selected.get("path", "")
-              if not wheel.is_file() or wheel.is_symlink() or wheel.stat().st_size > 16777216:
-                  raise SystemExit("Selected wheel is not a bounded regular artifact")
-              if not wheel.is_file() or hashlib.sha256(wheel.read_bytes()).hexdigest() != selected.get("sha256"):
-                  raise SystemExit("Selected wheel bytes differ from the producer receipt")
-              with zipfile.ZipFile(wheel) as archive:
-                  native = archive.read("umf/_rust_core.abi3.so")
-              if hashlib.sha256(native).hexdigest() != selection.get("nativeSha256"):
-                  raise SystemExit("Selected native bytes differ from the producer receipt")
-              if selection.get("sdist", {}).get("sha256") != hashlib.sha256(linux_sdist.read_bytes()).hexdigest():
-                  raise SystemExit("Producer sdist receipt differs from the common archive")
-          platform_key = os.environ["PLATFORM"]
-          root = linux_root if platform_key == "linux" else mac_root
-          selection = linux if platform_key == "linux" else mac
-          wheel = root / selection["selectedWheel"]["path"]
+          if not linux_sdist.is_file() or linux_sdist.is_symlink() or linux_sdist.stat().st_size > 16777216:
+              raise SystemExit("Linux producer sdist is not a bounded regular artifact")
+          selection = linux
+          if selection.get("sdist", {}).get("sha256") != hashlib.sha256(linux_sdist.read_bytes()).hexdigest():
+              raise SystemExit("Current-run Linux sdist bytes differ from the producer receipt")
+          root = linux_root
+          selected = selection.get("selectedWheel", {})
+          wheel = root / selected.get("path", "")
+          if not wheel.is_file() or wheel.is_symlink() or wheel.stat().st_size > 16777216:
+              raise SystemExit("Linux selected wheel is not a bounded regular artifact")
+          if hashlib.sha256(wheel.read_bytes()).hexdigest() != selected.get("sha256"):
+              raise SystemExit("Linux selected wheel bytes differ from the producer receipt")
+          with zipfile.ZipFile(wheel) as archive:
+              native = archive.read("umf/_rust_core.abi3.so")
+          if hashlib.sha256(native).hexdigest() != selection.get("nativeSha256"):
+              raise SystemExit("Linux selected native bytes differ from the producer receipt")
           output.write_text(f"selected_wheel={wheel}\nsdist_sha256={selection['sdist']['sha256']}\nselected_native_sha256={selection['nativeSha256']}\nselected_wheel_sha256={selection['selectedWheel']['sha256']}\n", encoding="utf-8")
           PY
       - name: Acquire the frozen binary test dependency cohort

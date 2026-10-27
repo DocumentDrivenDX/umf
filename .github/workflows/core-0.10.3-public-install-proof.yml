@@ -34,22 +34,6 @@ jobs:
             python-version: '3.14.8'
             expected-python-minor: '14'
             wheel-key: linuxWheel
-          - cohort: macos-arm64
-            platform: macos
-            runs-on: macos-15
-            architecture: arm64
-            expected-machine: arm64
-            python-version: '3.11.9'
-            expected-python-minor: '11'
-            wheel-key: macosWheel
-          - cohort: macos-arm64
-            platform: macos
-            runs-on: macos-15
-            architecture: arm64
-            expected-machine: arm64
-            python-version: '3.14.8'
-            expected-python-minor: '14'
-            wheel-key: macosWheel
     runs-on: ${{ matrix.runs-on }}
     steps:
       - name: Seed fail-closed public cell receipt

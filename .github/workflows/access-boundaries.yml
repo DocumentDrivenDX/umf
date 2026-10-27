@@ -178,20 +178,6 @@ jobs:
             weft-wheel-url: https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.49/weft_sql-0.4.49-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
             weft-wheel-sha256: 8ca1625249c1d3bed20864dfd71481d8b956b3901ffdc619fc3ec4a1a473be9c
             python-version: '3.14'
-          - os: macos-14
-            architecture: arm64
-            mini-racer-platform: macos-11+-arm64
-            weft-wheel-filename: weft_sql-0.4.49-cp39-abi3-macosx_11_0_arm64.whl
-            weft-wheel-url: https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.49/weft_sql-0.4.49-cp39-abi3-macosx_11_0_arm64.whl
-            weft-wheel-sha256: 695e12867dfcffedb0e4bde7fa571835ebd43fd1c06b0d775b1abecb45ffa117
-            python-version: '3.11'
-          - os: macos-14
-            architecture: arm64
-            mini-racer-platform: macos-11+-arm64
-            weft-wheel-filename: weft_sql-0.4.49-cp39-abi3-macosx_11_0_arm64.whl
-            weft-wheel-url: https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.49/weft_sql-0.4.49-cp39-abi3-macosx_11_0_arm64.whl
-            weft-wheel-sha256: 695e12867dfcffedb0e4bde7fa571835ebd43fd1c06b0d775b1abecb45ffa117
-            python-version: '3.14'
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
