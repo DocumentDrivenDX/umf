@@ -25,7 +25,7 @@
     "spec/core/dataset-value-compact-operation.schema.json": "89f502aa0cea1a75fba2ff586c795c875a980b96af3e01d3117538e9fe12e74e",
     "spec/core/dataset-value-operation.schema.json": "217cc3c05e10cec1bb4e93cca1205c039f596e95080cba075823a9b8b351013d",
     "spec/core/element-selection.schema.json": "74b35be467972d71c4a3b80d056c2c691ca7cdc59fe90cb62e4f85bf2812a555",
-    "spec/core/extension-package.schema.json": "5909c5967f622ab5610e77bc38f1ff56ddc62f78586dc652486a19c41e1beb24",
+    "spec/core/extension-package.schema.json": "3a40a6f76093e83cd539991d425c5399af298bf64410c5de27140aee3867d37d",
     "spec/core/facet-operation-v3.schema.json": "74c1ca75e2bac44afd0010292b82741618e9cb031cc37159667fa4f4ff95fd9f",
     "spec/core/facet-operation-v5.schema.json": "de87a6c79500be2b99337f5a885698b24b9e4d47a997c6d3cd649c90ea853bca",
     "spec/core/facet-selection.schema.json": "0938c3c36076271fd7ac4e9b3afa8e2362e604dbbbe250819910bc482d53e9a7",
@@ -99,8 +99,8 @@
     "spec/core/relationship-sqlserver-projection.schema.json": "85e3731ed297279e144cc48061510f37fe67fb8963d0470197173d1feade9a1f",
     "spec/core/relationship-tablespec-projection.schema.json": "ec590e8f313d6490a835daba071cd1feb0098d5ae5acbab9197c3ff87a2963c8",
     "spec/core/schema-properties-selection.schema.json": "893cf29692b0ba9c21037a90e0361b8adc19a2c3007cee84f22092276004f641",
-    "spec/core/schema.json": "653902cb7167364d32318d471e96b420cfb0920aa2e1efd62efd05d0737b9f64",
-    "spec/core/semantic-type-reference.schema.json": "3c50d927b8e0f67cff4151618a45ae4818926ee0c7f6a29c078668c483f91aed",
+    "spec/core/schema.json": "5dbc7edafff2889c6ac428618018072b6398334b4d54a1bebcbad768e07d5d5b",
+    "spec/core/semantic-type-reference.schema.json": "5774ead85baae3122602496396c238359deef1e53c980c4be3cb00f718a4d162",
     "spec/core/semantic-types-operation.schema.json": "021935d916e82ea471500dffadf2830469c782b28382d71aeea195df724fe727",
     "spec/core/semantic-types-selection.schema.json": "529d97cfd8ff7b5e201967c7156dc8c9439d5984ac1ee755bdb60a2d505bdead",
     "spec/core/sqlserver-cardinality-classification.schema.json": "f5278fc86194afc79494e3d43ed9519f888bf8d12c30d57ec0de24dc668e3f2f",
@@ -432,9 +432,9 @@
     "src/extensions/security/write.ts": "c539c09f504e3d6c6ade86b71674081208945271ba4cc8122f4cc020bba9447d",
     "src/extensions/semantic-types/index.ts": "64482ca4d9d8abd65b19b342e1722eaff8497ce52ff44bf5dc3a7ca6f415c6e2",
     "src/extensions/tables/index.ts": "c6e0ce267d8dd4a77bedc7322556357a2a2293cbf395c14cdf85fc1843f3a4be",
-    "src/generated/core-model.ts": "dd945d4ac1edd621c7a213a48e5142d5b4a44f82635da775955abc8052ad3bd2",
-    "src/index-browser-v4.ts": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
-    "src/index-node-v4.ts": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+    "src/generated/core-model.ts": "c1c0730a36a77c181ab821e13aa945bf6001c8bad3be0644561937d63f7eb6a5",
+    "src/index-browser-v4.ts": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
+    "src/index-node-v4.ts": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
     "src/model/bit128-field.ts": "07ee2a1dcb14c491774f3902e3788454615af17a25166efd04e014001e9a6c27",
     "src/model/bit128.ts": "c4db81a14022db2413ee991e8705d3bee688d0ed1e7c880e6170520a2694d543",
     "src/model/cardinality.ts": "30274929e3bc395b6d6066849aacb95305841f8138de242bd3d0609bcd64e76c",
@@ -532,7 +532,7 @@
     "authorityClosure": [
       {
         "path": "bindings/core/node/index.js",
-        "sha256": "1de555d59ef8793f1b2c493d00c2d4625151cf08ce488604a9cd1f1dd3bcaa18"
+        "sha256": "0896a4553f4051783627a2a76f9a2803ab99d2e70d06450b021e1daf6f8bf8fb"
       },
       {
         "path": "bindings/core/node/src/bit128.js",
@@ -544,7 +544,7 @@
       },
       {
         "path": "bindings/core/wasm/index.js",
-        "sha256": "0643ce8f38004185cdf646e233ac2234d82872782e960b9917971afeef7f87f8"
+        "sha256": "a54827a6c249c59ff9a8cb4e98d61d8e3cab2b26474942c7ea22e55e6a100d92"
       },
       {
         "path": "crates/umf-core-wire/src/lib.rs",
@@ -592,11 +592,11 @@
       },
       {
         "path": "src/index-browser-v4.ts",
-        "sha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53"
+        "sha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a"
       },
       {
         "path": "src/index-node-v4.ts",
-        "sha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3"
+        "sha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802"
       },
       {
         "path": "src/model/bit128.ts",
@@ -732,7 +732,7 @@
     {
       "routeId": "package-root-node",
       "entry": "src/index-node-v4.ts",
-      "entrySha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "entrySha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "directExportCount": 87,
       "directExports": [
         "SemanticTypeRegistry",
@@ -827,7 +827,7 @@
     {
       "routeId": "package-root-browser",
       "entry": "src/index-browser-v4.ts",
-      "entrySha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "entrySha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "directExportCount": 87,
       "directExports": [
         "SemanticTypeRegistry",
@@ -4249,7 +4249,7 @@
       "migrationDisposition": "unreviewed",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "653902cb7167364d32318d471e96b420cfb0920aa2e1efd62efd05d0737b9f64",
+      "sourceSha256": "5dbc7edafff2889c6ac428618018072b6398334b4d54a1bebcbad768e07d5d5b",
       "ownerKind": "generated-data",
       "candidateOwner": "authored or generated JSON resource; metamodel and contract authority vary by file",
       "disposition": "retain versioned data; identify source authority and installed asset route separately"
@@ -4268,7 +4268,7 @@
       "migrationDisposition": "unreviewed",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "653902cb7167364d32318d471e96b420cfb0920aa2e1efd62efd05d0737b9f64",
+      "sourceSha256": "5dbc7edafff2889c6ac428618018072b6398334b4d54a1bebcbad768e07d5d5b",
       "ownerKind": "generated-data",
       "candidateOwner": "authored or generated JSON resource; metamodel and contract authority vary by file",
       "disposition": "retain versioned data; identify source authority and installed asset route separately"
@@ -4306,7 +4306,7 @@
       "migrationDisposition": "unreviewed",
       "source": "spec/core/semantic-type-reference.schema.json",
       "line": 1,
-      "sourceSha256": "3c50d927b8e0f67cff4151618a45ae4818926ee0c7f6a29c078668c483f91aed",
+      "sourceSha256": "5774ead85baae3122602496396c238359deef1e53c980c4be3cb00f718a4d162",
       "ownerKind": "generated-data",
       "candidateOwner": "authored or generated JSON resource; metamodel and contract authority vary by file",
       "disposition": "retain versioned data; identify source authority and installed asset route separately"
@@ -4515,7 +4515,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/generated/core-model.ts",
       "line": 3,
-      "sourceSha256": "dd945d4ac1edd621c7a213a48e5142d5b4a44f82635da775955abc8052ad3bd2",
+      "sourceSha256": "c1c0730a36a77c181ab821e13aa945bf6001c8bad3be0644561937d63f7eb6a5",
       "ownerKind": "generated-data",
       "candidateOwner": "ADR-005 metamodel authority / generated inert data",
       "disposition": "retain generated data; rebuild from authored metamodel; executable helpers require separate owner"
@@ -7213,7 +7213,7 @@
       "migrationDisposition": "unreviewed",
       "source": "spec/core/extension-package.schema.json",
       "line": 1,
-      "sourceSha256": "5909c5967f622ab5610e77bc38f1ff56ddc62f78586dc652486a19c41e1beb24",
+      "sourceSha256": "3a40a6f76093e83cd539991d425c5399af298bf64410c5de27140aee3867d37d",
       "ownerKind": "generated-data",
       "candidateOwner": "authored or generated JSON resource; metamodel and contract authority vary by file",
       "disposition": "retain versioned data; identify source authority and installed asset route separately"
@@ -22603,7 +22603,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 44,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -23628,8 +23628,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 66,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 67,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -23647,8 +23647,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 66,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 67,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -23666,8 +23666,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 66,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 67,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -23685,8 +23685,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 66,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 67,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -23704,8 +23704,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 66,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 67,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -23723,8 +23723,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 66,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 67,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -24692,8 +24692,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 66,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 67,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -25529,7 +25529,7 @@
       "migrationDisposition": "unreviewed",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "653902cb7167364d32318d471e96b420cfb0920aa2e1efd62efd05d0737b9f64",
+      "sourceSha256": "5dbc7edafff2889c6ac428618018072b6398334b4d54a1bebcbad768e07d5d5b",
       "ownerKind": "generated-data",
       "candidateOwner": "authored or generated JSON resource; metamodel and contract authority vary by file",
       "disposition": "retain versioned data; identify source authority and installed asset route separately"
@@ -25548,7 +25548,7 @@
       "migrationDisposition": "unreviewed",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "653902cb7167364d32318d471e96b420cfb0920aa2e1efd62efd05d0737b9f64",
+      "sourceSha256": "5dbc7edafff2889c6ac428618018072b6398334b4d54a1bebcbad768e07d5d5b",
       "ownerKind": "generated-data",
       "candidateOwner": "authored or generated JSON resource; metamodel and contract authority vary by file",
       "disposition": "retain versioned data; identify source authority and installed asset route separately"
@@ -25586,7 +25586,7 @@
       "migrationDisposition": "unreviewed",
       "source": "spec/core/semantic-type-reference.schema.json",
       "line": 1,
-      "sourceSha256": "3c50d927b8e0f67cff4151618a45ae4818926ee0c7f6a29c078668c483f91aed",
+      "sourceSha256": "5774ead85baae3122602496396c238359deef1e53c980c4be3cb00f718a4d162",
       "ownerKind": "generated-data",
       "candidateOwner": "authored or generated JSON resource; metamodel and contract authority vary by file",
       "disposition": "retain versioned data; identify source authority and installed asset route separately"
@@ -25795,7 +25795,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/generated/core-model.ts",
       "line": 3,
-      "sourceSha256": "dd945d4ac1edd621c7a213a48e5142d5b4a44f82635da775955abc8052ad3bd2",
+      "sourceSha256": "c1c0730a36a77c181ab821e13aa945bf6001c8bad3be0644561937d63f7eb6a5",
       "ownerKind": "generated-data",
       "candidateOwner": "ADR-005 metamodel authority / generated inert data",
       "disposition": "retain generated data; rebuild from authored metamodel; executable helpers require separate owner"
@@ -26269,8 +26269,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 53,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 54,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -26307,8 +26307,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 55,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 56,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -26326,8 +26326,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 56,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 57,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -26364,8 +26364,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 56,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 57,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -26384,7 +26384,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 46,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -26402,8 +26402,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 58,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 59,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -26422,7 +26422,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 52,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -26441,7 +26441,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 35,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -27638,7 +27638,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 44,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -28493,7 +28493,7 @@
       "migrationDisposition": "unreviewed",
       "source": "spec/core/extension-package.schema.json",
       "line": 1,
-      "sourceSha256": "5909c5967f622ab5610e77bc38f1ff56ddc62f78586dc652486a19c41e1beb24",
+      "sourceSha256": "3a40a6f76093e83cd539991d425c5399af298bf64410c5de27140aee3867d37d",
       "ownerKind": "generated-data",
       "candidateOwner": "authored or generated JSON resource; metamodel and contract authority vary by file",
       "disposition": "retain versioned data; identify source authority and installed asset route separately"
@@ -28968,7 +28968,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 32,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -29063,7 +29063,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 35,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -30107,8 +30107,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 55,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 56,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -31133,8 +31133,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 53,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 54,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -31190,8 +31190,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 55,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 56,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -31209,8 +31209,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 56,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 57,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -31248,7 +31248,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 50,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -31267,7 +31267,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 50,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -31285,8 +31285,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 58,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 59,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -31305,7 +31305,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 50,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -31324,7 +31324,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 52,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -31343,7 +31343,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 35,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -32255,7 +32255,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 51,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -32540,7 +32540,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 44,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -32559,7 +32559,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 44,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -32938,8 +32938,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 56,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 57,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -32957,8 +32957,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 58,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 59,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -33186,7 +33186,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 44,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -34306,8 +34306,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 66,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 67,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -34326,7 +34326,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 48,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -34383,7 +34383,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 48,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -34401,8 +34401,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 66,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 67,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -36320,8 +36320,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 65,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 66,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -36339,8 +36339,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 60,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 61,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -36358,8 +36358,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 64,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 65,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -36377,8 +36377,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 63,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 64,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -36396,8 +36396,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 62,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 63,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -36415,8 +36415,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 61,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 62,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -39151,8 +39151,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 60,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 61,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -39170,8 +39170,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 60,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 61,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -39189,8 +39189,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 64,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 65,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -39208,8 +39208,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 64,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 65,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -39227,8 +39227,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 63,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 64,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -39246,8 +39246,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 63,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 64,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -39265,8 +39265,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 65,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 66,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -39284,8 +39284,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 65,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 66,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -39303,8 +39303,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 62,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 63,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -39322,8 +39322,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 62,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 63,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -39341,8 +39341,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 62,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 63,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -39360,8 +39360,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 61,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 62,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -39379,8 +39379,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 61,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 62,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -39950,7 +39950,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 52,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -40178,7 +40178,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 48,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -40254,7 +40254,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 42,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -40311,7 +40311,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 41,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -40330,7 +40330,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 42,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -40577,7 +40577,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 38,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -41888,7 +41888,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 48,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -42096,8 +42096,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 66,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 67,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -42115,8 +42115,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 66,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 67,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -42191,8 +42191,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 54,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 55,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -42211,7 +42211,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 52,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -42230,7 +42230,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 37,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -42249,7 +42249,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 38,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -42268,7 +42268,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 49,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -42420,7 +42420,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 38,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -42571,8 +42571,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 53,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 54,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -42609,8 +42609,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 54,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 55,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -42647,8 +42647,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 55,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 56,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -42666,8 +42666,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 56,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 57,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -42743,7 +42743,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 46,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -42761,8 +42761,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 58,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 59,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -42781,7 +42781,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 35,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -42800,7 +42800,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
       "line": 49,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -43217,8 +43217,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 60,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 61,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -43236,8 +43236,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 64,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 65,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -43255,8 +43255,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 63,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 64,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -43274,8 +43274,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 65,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 66,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -43293,8 +43293,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 62,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 63,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -43312,8 +43312,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-browser-v4.ts",
-      "line": 61,
-      "sourceSha256": "6e2ee7e6efac4811fb26eedab95581a0e7029a891ebe58b2924a5e3e6ceabc53",
+      "line": 62,
+      "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -43883,7 +43883,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 52,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -44908,8 +44908,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 67,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 68,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -44927,8 +44927,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 67,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 68,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -44946,8 +44946,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 67,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 68,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -44965,8 +44965,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 67,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 68,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -44984,8 +44984,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 67,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 68,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -45003,8 +45003,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 67,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 68,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -45972,8 +45972,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 67,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 68,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -46809,7 +46809,7 @@
       "migrationDisposition": "unreviewed",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "653902cb7167364d32318d471e96b420cfb0920aa2e1efd62efd05d0737b9f64",
+      "sourceSha256": "5dbc7edafff2889c6ac428618018072b6398334b4d54a1bebcbad768e07d5d5b",
       "ownerKind": "generated-data",
       "candidateOwner": "authored or generated JSON resource; metamodel and contract authority vary by file",
       "disposition": "retain versioned data; identify source authority and installed asset route separately"
@@ -46828,7 +46828,7 @@
       "migrationDisposition": "unreviewed",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "653902cb7167364d32318d471e96b420cfb0920aa2e1efd62efd05d0737b9f64",
+      "sourceSha256": "5dbc7edafff2889c6ac428618018072b6398334b4d54a1bebcbad768e07d5d5b",
       "ownerKind": "generated-data",
       "candidateOwner": "authored or generated JSON resource; metamodel and contract authority vary by file",
       "disposition": "retain versioned data; identify source authority and installed asset route separately"
@@ -46866,7 +46866,7 @@
       "migrationDisposition": "unreviewed",
       "source": "spec/core/semantic-type-reference.schema.json",
       "line": 1,
-      "sourceSha256": "3c50d927b8e0f67cff4151618a45ae4818926ee0c7f6a29c078668c483f91aed",
+      "sourceSha256": "5774ead85baae3122602496396c238359deef1e53c980c4be3cb00f718a4d162",
       "ownerKind": "generated-data",
       "candidateOwner": "authored or generated JSON resource; metamodel and contract authority vary by file",
       "disposition": "retain versioned data; identify source authority and installed asset route separately"
@@ -47075,7 +47075,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/generated/core-model.ts",
       "line": 3,
-      "sourceSha256": "dd945d4ac1edd621c7a213a48e5142d5b4a44f82635da775955abc8052ad3bd2",
+      "sourceSha256": "c1c0730a36a77c181ab821e13aa945bf6001c8bad3be0644561937d63f7eb6a5",
       "ownerKind": "generated-data",
       "candidateOwner": "ADR-005 metamodel authority / generated inert data",
       "disposition": "retain generated data; rebuild from authored metamodel; executable helpers require separate owner"
@@ -47549,8 +47549,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 54,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 55,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -47587,8 +47587,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 56,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 57,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -47606,8 +47606,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 57,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 58,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -47644,8 +47644,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 57,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 58,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -47664,7 +47664,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 42,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -47682,8 +47682,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 59,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 60,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -47702,7 +47702,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 53,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -47721,7 +47721,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 37,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -48918,7 +48918,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 52,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -49773,7 +49773,7 @@
       "migrationDisposition": "unreviewed",
       "source": "spec/core/extension-package.schema.json",
       "line": 1,
-      "sourceSha256": "5909c5967f622ab5610e77bc38f1ff56ddc62f78586dc652486a19c41e1beb24",
+      "sourceSha256": "3a40a6f76093e83cd539991d425c5399af298bf64410c5de27140aee3867d37d",
       "ownerKind": "generated-data",
       "candidateOwner": "authored or generated JSON resource; metamodel and contract authority vary by file",
       "disposition": "retain versioned data; identify source authority and installed asset route separately"
@@ -50248,7 +50248,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 35,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -50343,7 +50343,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 37,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -51387,8 +51387,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 56,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 57,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -52413,8 +52413,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 54,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 55,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -52470,8 +52470,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 56,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 57,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -52489,8 +52489,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 57,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 58,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -52528,7 +52528,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 49,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -52547,7 +52547,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 49,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -52565,8 +52565,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 59,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 60,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -52585,7 +52585,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 49,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -52604,7 +52604,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 53,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -52623,7 +52623,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 37,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -53535,7 +53535,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 50,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -53820,7 +53820,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 52,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -53839,7 +53839,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 52,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -54218,8 +54218,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 57,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 58,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -54237,8 +54237,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 59,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 60,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -54466,7 +54466,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 52,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -55586,8 +55586,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 67,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 68,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -55606,7 +55606,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 47,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -55663,7 +55663,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 47,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -55681,8 +55681,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 67,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 68,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -57600,8 +57600,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 66,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 67,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -57619,8 +57619,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 61,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 62,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -57638,8 +57638,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 65,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 66,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -57657,8 +57657,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 64,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 65,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -57676,8 +57676,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 63,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 64,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -57695,8 +57695,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 62,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 63,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -60431,8 +60431,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 61,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 62,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -60450,8 +60450,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 61,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 62,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -60469,8 +60469,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 65,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 66,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -60488,8 +60488,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 65,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 66,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -60507,8 +60507,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 64,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 65,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -60526,8 +60526,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 64,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 65,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -60545,8 +60545,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 66,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 67,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -60564,8 +60564,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 66,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 67,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -60583,8 +60583,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 63,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 64,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -60602,8 +60602,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 63,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 64,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -60621,8 +60621,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 63,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 64,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -60640,8 +60640,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 62,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 63,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -60659,8 +60659,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 62,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 63,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -61230,7 +61230,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 53,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -61458,7 +61458,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 47,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -61534,7 +61534,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 46,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -61591,7 +61591,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 45,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -61610,7 +61610,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 46,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -61857,7 +61857,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 39,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -63168,7 +63168,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 47,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -63376,8 +63376,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 67,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 68,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -63395,8 +63395,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 67,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 68,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -63471,8 +63471,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 55,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 56,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -63491,7 +63491,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 53,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -63510,7 +63510,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 38,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -63529,7 +63529,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 39,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -63548,7 +63548,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 48,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -63700,7 +63700,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 39,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -63851,8 +63851,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 54,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 55,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -63889,8 +63889,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 55,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 56,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -63927,8 +63927,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 56,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 57,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -63946,8 +63946,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 57,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 58,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -64023,7 +64023,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 42,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -64041,8 +64041,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 59,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 60,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -64061,7 +64061,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 37,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -64080,7 +64080,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
       "line": 48,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -64497,8 +64497,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 61,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 62,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -64516,8 +64516,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 65,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 66,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -64535,8 +64535,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 64,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 65,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -64554,8 +64554,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 66,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 67,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -64573,8 +64573,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 63,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 64,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"
@@ -64592,8 +64592,8 @@
       "initializerShape": "not-applicable",
       "migrationDisposition": "unreviewed",
       "source": "src/index-node-v4.ts",
-      "line": 62,
-      "sourceSha256": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+      "line": 63,
+      "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
       "ownerKind": "host",
       "candidateOwner": "Node/Bun or browser binding facade",
       "disposition": "retain thin host loading, value conversion, and capability boundary; verify each delegated export enters Rust"

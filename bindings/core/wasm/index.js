@@ -23,6 +23,7 @@ const CORE_KIND_NULLABILITY_RUNTIME = Symbol('core-kind-nullability-runtime');
 const CORE_KIND_NULLABILITY_PREPARED = Symbol('core-kind-nullability-prepared');
 export {isWireAdmissionError} from './src/wire.js';
 export {isBit128EngineError};
+export {isHostJsonResponseError} from './src/host-json.js';
 
 /** Invoke the opt-in Rust reference pass over tagged wire. The caller must have structurally validated pack first. */
 export function executeArtifactReferencesBindingWire(module, wireJson, controlDispatcher) {

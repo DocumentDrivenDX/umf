@@ -4,10 +4,11 @@ import {bindCoreCardinalityRust} from '../../src/access/rust-cardinality-default
 import {CORE_MODEL_RESOURCES} from '../../src/access/core-model-resources';
 import {UmfError} from '../../src/model/errors';
 import {copyJson} from '../../src/model/json';
-import {createCoreModelEngine} from '../../bindings/core/node/index.js';
+import {createCoreModelEngine,createCoreCardinalityHostInputEngine,isHostJsonResponseError} from '../../bindings/core/node/index.js';
+import {inspectCoreCardinality as referenceInspect,declareCoreCardinality as referenceDeclare,verifyCoreCardinalityDeclaration as referenceVerify} from '../../src/model/cardinality';
 
 const frozen=await Bun.file('docs/helix/04-build/evidence/rust-migration/r5-model-bindings/frozen-cardinality-typescript.json').json();
-const api=bindCoreCardinalityRust(createCoreModelEngine(CORE_MODEL_RESOURCES));
+const api=bindCoreCardinalityRust(createCoreCardinalityHostInputEngine(CORE_MODEL_RESOURCES),isHostJsonResponseError);
 const genericApi=createCoreModelEngine(CORE_MODEL_RESOURCES);
 const canonical=(value:unknown):string=>Array.isArray(value)?`[${value.map(canonical).join(',')}]`:value!==null&&typeof value==='object'?`{${Object.keys(value).sort().map(key=>`${JSON.stringify(key)}:${canonical((value as Record<string,unknown>)[key])}`).join(',')}}`:JSON.stringify(value);
 const capture=(operation:()=>unknown)=>{try{return {ok:true,value:operation()};}catch(error){const value=error as {code?:unknown;message?:unknown;path?:unknown};return {ok:false,error:{code:value.code??'',message:value.message??String(error),path:value.path??''}};}};
@@ -66,4 +67,41 @@ test('generic host admission preserves its remaining distinct refusal behavior',
  expect(accessorResult.predecessor).toMatchObject({name:'UmfError',code:'NON_JSON',path:'/future'});
  expect(accessorResult.rustRoute).toMatchObject({name:'AdmissionError',code:'ACCESSOR_PROPERTY',path:'/source/future'});
  expect(getterCalls).toBe(0);
+});
+
+test('default Cardinality route refines the explicit TypeScript reference, including refusal details and Rust call order',()=>{
+ const source=structuredClone(frozen.document),identity=structuredClone(frozen.identity),request=structuredClone(frozen.request);
+ const rootApi=createCoreCardinalityHostInputEngine(CORE_MODEL_RESOURCES);
+ const events:string[]=[];
+ const observed={
+  inspectCoreCardinality:(...args:Parameters<typeof rootApi.inspectCoreCardinality>)=>{events.push('inspect');return rootApi.inspectCoreCardinality(...args);},
+  declareCoreCardinality:(...args:Parameters<typeof rootApi.declareCoreCardinality>)=>{events.push('declare');return rootApi.declareCoreCardinality(...args);},
+  verifyCoreCardinalityDeclaration:(...args:Parameters<typeof rootApi.verifyCoreCardinalityDeclaration>)=>{events.push('verify');return rootApi.verifyCoreCardinalityDeclaration(...args);},
+ };
+ const routed=bindCoreCardinalityRust(observed as any,isHostJsonResponseError);
+ const referenceReceipt=referenceDeclare(source as any,identity as any,request as any);
+ expect(canonical(routed.inspectCoreCardinality(source as any,identity as any))).toBe(canonical(referenceInspect(source as any,identity as any)));
+ const receipt=routed.declareCoreCardinality(source as any,identity as any,request as any);
+ expect(canonical(receipt)).toBe(canonical(referenceReceipt));
+ expect(canonical(routed.verifyCoreCardinalityDeclaration(receipt as any,receipt.target as any))).toBe(canonical(referenceVerify(referenceReceipt as any,referenceReceipt.target as any)));
+ expect(events).toEqual(['inspect','declare','verify']);
+
+ const capture=(operation:()=>unknown)=>{try{return {ok:true,value:operation()};}catch(error){const e=error as {code?:unknown;message?:unknown;path?:unknown};return {ok:false,error:{code:e.code??'',message:e.message??String(error),path:e.path??''}};}};
+ const compareRefusal=(label:string,ref:()=>unknown,def:()=>unknown)=>{
+  const expected=capture(ref),actual=capture(def);
+  expect(canonical(actual),label).toBe(canonical(expected));
+ };
+ compareRefusal('unknown cardinality overwrite',()=>referenceDeclare(frozen.unknown as any,identity as any,{cardinality:'one'} as any),()=>routed.declareCoreCardinality(frozen.unknown as any,identity as any,{cardinality:'one'} as any));
+ compareRefusal('missing identity',()=>referenceInspect(source as any,{module:'absent',element:'absent'} as any),()=>routed.inspectCoreCardinality(source as any,{module:'absent',element:'absent'} as any));
+ const stale=structuredClone(receipt.target);(stale as any).id='changed';
+ compareRefusal('stale declaration',()=>referenceVerify(referenceReceipt as any,stale as any),()=>routed.verifyCoreCardinalityDeclaration(receipt as any,stale as any));
+});
+
+test('default Cardinality adapter preserves unrelated thrown sentinel identity',()=>{
+ const sentinel=new Error('caller sentinel');
+ const routed=bindCoreCardinalityRust({
+  inspectCoreCardinality(){throw sentinel;},declareCoreCardinality(){throw sentinel;},verifyCoreCardinalityDeclaration(){throw sentinel;},
+ } as any,()=>false);
+ try{routed.inspectCoreCardinality(frozen.document as any,frozen.identity as any);throw new Error('expected sentinel');}
+ catch(error){expect(error).toBe(sentinel);}
 });

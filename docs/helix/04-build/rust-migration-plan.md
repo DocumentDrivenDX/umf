@@ -7595,3 +7595,133 @@ public result reconstruction and bounded host work. Keep ordinary JSON opt-in
 and the ledger at **922 open, zero retired**. Hosted Linux checks, broader
 portable semantic ownership, independent integration review and release remain
 open.
+
+### R8 Cardinality host-input production cut and Python resource repair — 2026-10-27
+
+The Node and browser V4 package roots now route the three Core Cardinality
+authoring operations through the existing Rust-owned host-input engine. The
+public facade no longer executes TypeScript `copyJson`; Rust orders the
+source, identity, request and receipt admission through opaque host reflection.
+The packaged `CORE_MODEL_RESOURCES` are fixed at factory setup; the host-input
+engine still refuses callback controls, so no broader resource-control claim is
+made. A host-json response-error marker converts only Rust response failures
+to the public `UmfError`, leaving arbitrary caller-thrown objects untouched.
+The explicit TypeScript reference export remains available for comparison.
+
+The [current installed Cardinality packet](evidence/rust-migration/r8-cardinality-host-default-ab4731e7/README.md)
+pins a zero-transform local macOS arm64 SDK archive at SHA-256
+`78a6ab851b87cab09584b88d67fc98d543fc2da27846c18669be5e305d997079`;
+source and captured-live closure both equal
+`ab4731e7748e20eed2c560f6da926153af47e098dfa8706f41b1f4e3589ea117`.
+Its bounded installed replay passed on Node 26.12.1, Bun 1.4.3 and Chromium
+153.0.8010.12, including the frozen predecessor outcomes, direct reference
+comparison, refusal shapes, Proxy order, thrown identity and browser WASM
+loading. The focused source test passed 4 cases and 36 assertions; the Rust
+library suite passed 472 tests. The metamodel outputs and generated action
+identity were refreshed to a fixed point. The Python wheel's nine-resource
+manifest was also synchronized after Linux CI exposed stale canonical hashes;
+the manifest check and 47 action-resource/sdist tests now pass locally.
+The full installed SDK replay subsequently passed against this exact archive on
+all three hosts, including its R3, numeric, Cardinality, Facets, Keys, Bit128,
+Compact Dataset and Security And/Or packets and missing/corrupt asset refusals.
+Its [receipt](evidence/rust-migration/r8-cardinality-host-default-ab4731e7/installed-sdk-receipt.json)
+is historical once later source changes enter the worktree.
+
+This is a bounded private macOS archive result, with no macOS CI. The previous
+`9b89b757` archive is historical for this route change. Before any retirement,
+capture the matching Linux x64 archive and installed Node/Bun/Chromium receipts
+for the committed source, bind the embedded Cardinality v4/v6 operation
+schemas and shared Core resources to their transitive current source
+authority, and complete the CONTRACT-040 authoring
+and refusal acceptance matrix rather than relying on this frozen subset.
+Retire only the three exact logical names if both platform cohorts and the
+operation-specific acceptance gate pass. The current ledger remains **922 open
+logical default-route gaps, zero retired**. The remaining Python-owned access
+semantics, ordinary-JSON inherited-setter residual, broad default-route
+catalog, integration, merge and release are still open.
+
+### R8 Python count-result composition and Linux CI repair — 2026-10-27
+
+The `umf_access.unified.operation_values.result_frame` count branch now selects
+the versioned Rust read-frame shape check, existing Rust native token decision,
+and a new Rust-owned count response composer. The production boundary keeps
+the database row and scalar decode in Python: Rust checks row count and width
+in the predecessor's host-read order, then Python decodes the one value before
+Rust rejects a negative token. Metadata reads and final response construction
+follow that refusal. The Rust composer accepts exact built-in text arguments,
+streams canonical JSON into a capped 8 MiB buffer, and preserves the public
+count DTO and bound error text. `one`, `optional`, `many` and `page` response
+composition, cursors, and broader Python access behavior remain Python-owned.
+This slice imposes no earlier work or row cap; complete access-stream resource
+ownership and mixed host-object qualification remain open.
+
+The Python access import graph now has an explicit shared capture type and no
+capture/observer cycle. Its private Rust graph candidate retains exactly four
+named capture primitives under an AST-scoped exception; new private imports and
+host hooks still refuse. The checker reports 98 modules and zero violations,
+with 30 focused boundary tests. The count result route passed 17 focused Python
+tests, the Rust unit test and PyO3 build. The action-rule current-source receipt
+was refreshed after generated provenance moved, while its nine captured
+outcomes remained unchanged. The core authority scanner retains eight exact
+frozen old-version refusal controls without relaxing its global rule. Clean
+Linux SDK workflows now generate WASM declarations before repository typecheck;
+hosted CI must still run on the committed source. No macOS CI is requested.
+
+The new Rust source changed metamodel provenance. Generated schema/model files,
+the Python core and codegen nine-resource mirrors, and action producer identity
+were refreshed together; their fixed-point checks pass. This invalidates the
+historical `ab4731e7` SDK source closure. A coherent Security/Compact source
+replay, regenerated gap ledger, new fixed-point SDK archive, Linux installed
+qualification and the full port/release gates were outstanding at that
+checkpoint; the next section records the new local evidence.
+
+### R8 coherent source and local artifact checkpoint — 2026-10-27
+
+The [current Compact source packet](evidence/rust-migration/r8-compact-dataset-verify-source/README.md)
+and [Security source packet](evidence/rust-migration/r8-security-and-or-v4-source-replay-current/README.md)
+now share one immutable manifest, SHA-256
+`50f19d4e492f8f00afbfe9a91ccfe94e093839703adfbd8b72b44e59f18aa5c8`,
+and a 1,958-file source closure
+`8ef3b7d6e5eec0e64dbd3f9b7d1170602de3882dbc0db5173cb037cbe33bb711`.
+Node 26.12.1, Bun 1.4.3 and Chromium 153.0.8010.12 each passed five Compact
+cases with 14 Rust/WASM dispatches and 68 Security cases with 30 dispatches.
+The five Compact freezer payloads remain byte-identical; their source index
+records refreshed schema provenance. The [inventory and ledger](evidence/rust-migration/r8-symbol-inventory/README.md)
+checks pass at SHA-256 `cc3f62c7c496e63f3a55d5c2c24e00d985b1daf5b5e689932cf4ee29cad29050`
+and `bf4e07bb1c0aa82e4a7852269f06c32eccfcdb565a31de28c0cb7683f82c9580`:
+3,375 declarations across 509 files, **922 open logical executable default-route
+gaps, zero retired**.
+
+The new private macOS arm64 SDK archive is SHA-256
+`b6288048969bc163255064fe7c391fd8043b6e3bcfb6e4b0817e24aa65c62dc6`.
+Its 1,806 payload-member hashes and manifest SHA-256
+`e8e1e781298577dcb169160a1881253fb81c8b08bbc31372c5a3632cfeecf718`
+bind a zero-transform source and captured-live closure
+`b991bc20731f42efd3a73aebd922f8cea7c6927346a63e197e467cf9f1eb028f`.
+Nine package integrity tests pass. The [installed Core Cardinality replay](evidence/rust-migration/r8-cardinality-final-installed/README.md)
+against this exact archive passed on Node, Bun and Chromium, including frozen TypeScript
+outcomes, host admission order, Proxy traces, caller-thrown identity and public
+error shape. This is a bounded private cohort; Linux installed parity,
+CONTRACT-040's complete acceptance matrix and exact resource-authority closure
+remain required before any of its three logical names can retire.
+
+The Rust core library suite passed 473 tests; Python core and Rust-core tests
+passed 196, action-resource/sdist tests passed 47, and 53 focused Bun tests
+passed with 317 assertions. TypeScript typecheck, the strict Python and
+TypeScript access boundaries, core authority, metamodel, action identity,
+Rust/V8 boundary census and action-source review hashes pass locally. The
+[macOS Python artifact packet](evidence/rust-migration/r8-macos-python-current-20261027/README.md)
+records six freshly built arm64 core, codegen and access distributions,
+installed PyO3 count composition, codegen generation and 26 focused access
+tests with 33 subtests. The core sdist-rebuilt native binaries differ bytewise
+from the direct wheel; the receipt records both hashes and makes no native-byte
+reproducibility claim. No macOS CI ran.
+
+The next Python production slice is non-count read-frame cardinality, but its
+existing Rust helper still accepts caller-supplied row counts and bounds without
+shared resource charging. Prove the `pg18-read-frame/0.1` guard and bound
+provenance through the installed PostgreSQL route before selecting it publicly;
+preserve full decode-before-cardinality and cursor/metadata/final-size order.
+The ordinary JSON inherited-array-setter mismatch, broad default-route
+catalog, Linux x64 and coordinated release cohorts, merge and publication
+remain open. The complete Rust port and release are not qualified.

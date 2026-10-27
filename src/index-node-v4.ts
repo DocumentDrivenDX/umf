@@ -27,7 +27,7 @@ import {createRelationshipPostgresql} from './core-ideals/relationship-postgresq
 // Module import resolves only after the native engine is ready. The function
 // exported below remains synchronous and never falls back to TypeScript.
 assertPythonClientRustPlatformV4(process.platform,process.arch);
-const [{createCoreModelRootEngine,createCoreRecordValuesHostInputEngine,createDefaultSemanticTypeRegistry,createCoreRecordTypeEngine,createBit128Engine,createTemporalEngine,createSecurityLogicEngine,createJavascriptNumericEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError},{CORE_MODEL_RESOURCES},{createPythonClientRustCandidateV4}]=await Promise.all([
+const [{createCoreModelRootEngine,createCoreCardinalityHostInputEngine,createCoreRecordValuesHostInputEngine,createDefaultSemanticTypeRegistry,createCoreRecordTypeEngine,createBit128Engine,createTemporalEngine,createSecurityLogicEngine,createJavascriptNumericEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError},{CORE_MODEL_RESOURCES},{createPythonClientRustCandidateV4}]=await Promise.all([
  import('../bindings/core/node/index.js'),
  import('./access/core-model-resources'),
  import('./node-v4'),
@@ -51,7 +51,8 @@ const inspectRawTableBinding=createRawTableBindingInspector(inspectCoreRecordMem
 const javascriptNumeric=bindJavascriptNumericRust(()=>createJavascriptNumericEngine(CORE_MODEL_RESOURCES));
 const {exactDecimal,integerFromBigInt,integerToBigInt,admitJavascriptNumber,numericToNumberLossless}=javascriptNumeric;
 const {inspectCoreSchemaProperties,declareCoreSchemaProperties,validateCoreFieldValue,resolveCoreDefault}=bindCoreSchemaPropertiesRust(model);
-const {inspectCoreCardinality,declareCoreCardinality,verifyCoreCardinalityDeclaration}=bindCoreCardinalityRust(model);
+const cardinality=bindCoreCardinalityRust(createCoreCardinalityHostInputEngine(CORE_MODEL_RESOURCES),isHostJsonResponseError);
+const {inspectCoreCardinality,declareCoreCardinality,verifyCoreCardinalityDeclaration}=cardinality;
 const {validateCoreDatasetValuesCompact,verifyCoreDatasetValuesCompact}=bindCoreDatasetValuesCompactRust(model,isNativeUmfCoreError);
 const {inspectCoreFacets,declareCoreFacets,verifyCoreFacetDeclaration,historicalCoreFacetPatch}=bindCoreFacetsRust(model);
 const {inspectCoreKeys,lookupCoreKey,declareCoreRecordMembers,declareCoreKey,verifyCoreKeyOperation}=bindCoreKeysRust(model,isNativeUmfCoreError);

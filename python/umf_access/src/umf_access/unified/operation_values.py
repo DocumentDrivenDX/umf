@@ -307,13 +307,52 @@ def key_literal(value,carrier):
     return value
 
 
+_COUNT_RESULT_FRAME_PROFILE = 'umf-operation-count-result-frame/0.1.0'
+
+def _count_result_frame_rust(program,integer_token):
+    if type(integer_token) is not str:
+        raise SessionError('exact native count token required')
+    try:
+        from umf import rust_operation_values
+    except ImportError as error:
+        raise SessionError('native count-result-frame capability unavailable') from error
+    try:
+        profile=rust_operation_values.operation_count_result_frame_profile_version()
+    except AttributeError as error:
+        raise SessionError('native count-result-frame capability unavailable') from error
+    if profile!=_COUNT_RESULT_FRAME_PROFILE:
+        raise SessionError('native count-result-frame capability profile mismatch')
+    try:
+        result=rust_operation_values.operation_count_result_frame(
+            program['module'],program['operation'],program['binding']['modelSha256'],integer_token)
+    except AttributeError as error:
+        raise SessionError('native count-result-frame capability unavailable') from error
+    except (ValueError,TypeError,UnicodeError) as error:
+        message=str(error)
+        if message in ('native count is negative','native result value differs from its declared carrier',
+                       'native wire frame bound exceeded'):
+            raise SessionError(message) from None
+        raise SessionError('native count-result-frame capability refused the DTO') from None
+    if type(result) is not str:
+        raise SessionError('native count-result-frame capability returned an invalid result')
+    return result
+
+
 def result_frame(program,rows,scope,secret):
     outputs=program['outputs'];result=program['result'];kind=result['kind'];bound=result['maxRows']
     if kind=='count':
-        if len(rows)!=1 or len(rows[0])!=1:raise SessionError('native count cardinality differs')
+        _read_frame_shape_rust(kind,0,rows)
         count=value_from_native(rows[0][0],outputs[0])
-        if count['integerToken'].startswith('-'):raise SessionError('native count is negative')
-        response={'kind':'count','count':count}
+        # Keep the predecessor's lookup/type failure order, then send only the
+        # exact built-in decoded integer-token DTO across the Rust boundary.
+        integer_token=count['integerToken']
+        if type(count) is not dict or set(count)!={'integerToken'} or type(integer_token) is not str:
+            raise SessionError('native count result DTO is unsupported')
+        if not _count_token_nonnegative_rust(integer_token):
+            raise SessionError('native count is negative')
+        response_json=_count_result_frame_rust(program,integer_token)
+        try:return json.loads(response_json)
+        except (ValueError,TypeError,RecursionError):raise SessionError('native count result DTO is invalid') from None
     else:
         if any(len(row)!=len(outputs) for row in rows):raise SessionError('native result arity differs')
         decoded=[{out['field']['element']:value_from_native(value,out) for out,value in zip(outputs,row)} for row in rows]

@@ -34,6 +34,11 @@ jobs:
           targets: wasm32-unknown-unknown
       - run: bun install --frozen-lockfile
       - run: cargo install wasm-bindgen-cli --locked --version 0.2.100
+      - name: Build browser WASM bindings for typecheck
+        run: |
+          cargo build --release --locked --manifest-path bindings/core/wasm/Cargo.toml --target wasm32-unknown-unknown
+          mkdir -p bindings/core/wasm/pkg
+          wasm-bindgen --target web --out-dir bindings/core/wasm/pkg --out-name umf_core_wasm target/wasm32-unknown-unknown/release/umf_core_wasm.wasm
       - run: bun run typecheck
       - run: bun scripts/package-sdk-rust-preview.ts
       - run: bunx playwright install --with-deps chromium

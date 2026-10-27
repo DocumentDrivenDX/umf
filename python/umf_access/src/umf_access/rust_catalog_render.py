@@ -523,14 +523,16 @@ def _captured_graph_base(value: object) -> type | None:
     ``type.__mro__`` admits real subclasses while refusing spoofable module or
     class-name metadata and ``isinstance``-style ``__class__`` masquerades.
     """
-    from umf_access.dsl._expressions import Join
-    from umf_access.dsl._nodes import FieldRef, Node, RecordRef
-    from umf_access.dsl.navigation import (
+    from umf_access.dsl import (
+        FieldRef,
+        Join,
         ManyNavigation,
+        Node,
         OptionalNavigation,
+        RecordRef,
         RequiredNavigation,
+        SearchLeg,
     )
-    from umf_access.dsl.search import SearchLeg
 
     # Navigation classes precede their Join ancestry so Rust retains the
     # closed navigation family and its selected source/target roots.

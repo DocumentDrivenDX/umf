@@ -10,6 +10,8 @@ use std::{fmt, fmt::Write as _};
 
 pub const PROFILE_VERSION: &str = "umf-operation-values/0.1.0";
 pub const COUNT_TOKEN_PROFILE_VERSION: &str = "umf-operation-count-token/0.1.0";
+pub const COUNT_RESULT_FRAME_PROFILE_VERSION: &str = "umf-operation-count-result-frame/0.1.0";
+pub const MAX_OPERATION_FRAME: usize = 8 * 1024 * 1024;
 pub const MAX_CURSOR: usize = 16_384;
 const MAX_CURSOR_JSON: usize = 12_239;
 
@@ -20,6 +22,8 @@ pub enum OperationValuesError {
     CursorCapacity,
     Cursor,
     NativeKeyAbsent,
+    CountNegative,
+    CountValue,
 }
 impl fmt::Display for OperationValuesError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -29,6 +33,8 @@ impl fmt::Display for OperationValuesError {
             Self::CursorCapacity => "cursor capacity exceeded",
             Self::Cursor => "invalid cursor",
             Self::NativeKeyAbsent => "native cursor key is absent",
+            Self::CountNegative => "native count is negative",
+            Self::CountValue => "native result value differs from its declared carrier",
         })
     }
 }
@@ -233,6 +239,79 @@ pub fn native_token_classify(
                     .all(|byte| byte.is_ascii_hexdigit() && !byte.is_ascii_uppercase()),
         ),
     })
+}
+
+struct BoundedFrameWriter {
+    bytes: Vec<u8>,
+    exceeded: bool,
+}
+
+impl BoundedFrameWriter {
+    fn write_raw(&mut self, bytes: &[u8]) -> Result<(), OperationValuesError> {
+        std::io::Write::write_all(self, bytes).map_err(|_| {
+            if self.exceeded {
+                OperationValuesError::FrameBound
+            } else {
+                OperationValuesError::Json
+            }
+        })
+    }
+
+    fn write_json_text(&mut self, text: &str) -> Result<(), OperationValuesError> {
+        serde_json::to_writer(&mut *self, text).map_err(|_| {
+            if self.exceeded {
+                OperationValuesError::FrameBound
+            } else {
+                OperationValuesError::Json
+            }
+        })
+    }
+}
+
+impl std::io::Write for BoundedFrameWriter {
+    fn write(&mut self, bytes: &[u8]) -> std::io::Result<usize> {
+        if self.bytes.len().saturating_add(bytes.len()) > MAX_OPERATION_FRAME {
+            self.exceeded = true;
+            return Err(std::io::Error::other("native wire frame bound exceeded"));
+        }
+        self.bytes.extend_from_slice(bytes);
+        Ok(bytes.len())
+    }
+
+    fn flush(&mut self) -> std::io::Result<()> {
+        Ok(())
+    }
+}
+
+/// Compose and bound the exact built-in count result DTO. Host values must already
+/// have been decoded by the caller; this function accepts only its integer token.
+pub fn count_result_frame(
+    module: &str,
+    operation: &str,
+    source_digest: &str,
+    integer_token: &str,
+) -> Result<String, OperationValuesError> {
+    if integer_token.starts_with('-') {
+        return Err(OperationValuesError::CountNegative);
+    }
+    if !valid_integer_token(integer_token) {
+        return Err(OperationValuesError::CountValue);
+    }
+    let mut writer = BoundedFrameWriter {
+        bytes: Vec::new(),
+        exceeded: false,
+    };
+    // Keys are emitted in the same order as Python's canonical bounded encoder.
+    writer.write_raw(b"{\"count\":{\"integerToken\":")?;
+    writer.write_json_text(integer_token)?;
+    writer.write_raw(b"},\"kind\":\"count\",\"module\":")?;
+    writer.write_json_text(module)?;
+    writer.write_raw(b",\"operation\":")?;
+    writer.write_json_text(operation)?;
+    writer.write_raw(b",\"sourceDigest\":")?;
+    writer.write_json_text(source_digest)?;
+    writer.write_raw(b",\"version\":\"umf.table-read-result/0.1\"}")?;
+    String::from_utf8(writer.bytes).map_err(|_| OperationValuesError::Json)
 }
 
 /// Classify the exact nonnegative integer-token subset used by native count
@@ -827,6 +906,26 @@ mod tests {
         assert_eq!(
             classify(NativeTokenKind::Decimal, "1e100000000000000000000x"),
             NativeTokenDecision::Refused
+        );
+    }
+    #[test]
+    fn count_result_frame_is_exact_and_bounded() {
+        let json = count_result_frame("demo", "count", "abc", "9007199254740993").unwrap();
+        let value: serde_json::Value = serde_json::from_str(&json).unwrap();
+        assert_eq!(value["kind"], "count");
+        assert_eq!(value["count"]["integerToken"], "9007199254740993");
+        assert_eq!(value["version"], "umf.table-read-result/0.1");
+        assert_eq!(
+            count_result_frame("demo", "count", "abc", "-0"),
+            Err(OperationValuesError::CountNegative)
+        );
+        assert_eq!(
+            count_result_frame("demo", "count", "abc", "01"),
+            Err(OperationValuesError::CountValue)
+        );
+        assert_eq!(
+            count_result_frame(&"x".repeat(MAX_OPERATION_FRAME), "count", "abc", "0"),
+            Err(OperationValuesError::FrameBound)
         );
     }
 }

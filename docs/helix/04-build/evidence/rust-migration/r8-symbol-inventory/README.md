@@ -59,46 +59,19 @@ ddx:
 
 # R8 TypeScript public runtime export map
 
-**Current source recapture (2026-10-27, Compact Dataset verifier V4
-selection after the ordinary JSON diagnostic and current-index repair):** The inventory records 3,375 route-specific declarations across
-509 source files, 1,126 unique export names, and 1,120 declarations per Node,
-browser and `./reference` root. Each default route still has 922 executable
-declarations and 198 JSON resource aliases. The inventory SHA-256 is
-`017d33882125f9e6df005515040bc87fa60f0659cab76610090a3a4c9a7059ea`.
-The condition-aware ledger SHA-256 is
-`821fe5501fe5fa3bfaf8c491b623d8e5b0b3094579025ffcfac534b8575c4e21`.
-It records **922 open logical executable default-route gaps, zero retired**,
-81 accepted opt-in Rust mappings, 841 unmapped names, and 57 reviewed
-source-selected Rust declarations in each V4 root. The newly direct Rust
-model-engine exports include `inspectCoreSemanticTypes`, `getCoreSemanticTypes`,
-`declareCoreSemanticTypes`, `verifyCoreSemanticTypeDeclaration`, and
-`verifyCoreDatasetValuesCompact`; the
-earlier Record Values validation, Semantic Types registry, and two value
-functions remain selected. The semantic-types quartet has exact Rust operation mappings and bounded
-16-case source-level Node, Bun, and Chromium replay. Compact Dataset verification
-has an exact `umf_core::dataset_values::verify_core_dataset_values_compact`
-mapping and five-case frozen-predecessor replay in Node, Bun, and Chromium.
-The current receipts bind one 1,958-file immutable source closure
-(`fe21235aaf399b3adf616ef5ce4d6c9a91cafe75dd1b5e1ed22b084d63edb832`)
-and build manifest (`2d204008769e77edbb8d4c78eee7cac2d589957dd9441f9f62303f0996b84cf3`).
-The current frozen index records regenerated schema provenance while its five
-case payloads remain byte-identical to the historical index. This is
-source-only evidence, not installed SDK qualification, complete Dataset semantics,
-or retirement. Exact
-declaration-shape controls reject source, kind and initializer drift for the
-eight Semantic Types selections and the compact verifier binding. The Security And/Or V4
-source replay was recaptured against these roots in Node, Bun and Chromium;
-the earlier source-pinned receipts remain preserved separately. This is a
-source census and bounded replay, not installed two-platform qualification
-or retirement evidence.
+**Current source recapture (2026-10-27, count-result and access-boundary closure):** The inventory records 3,375 route-specific declarations across 509 source files, 1,126 unique export names, and 1,120 declarations per Node, browser, and ./reference root. Each default root has 922 executable declarations and 198 JSON resource aliases. Inventory SHA-256: `cc3f62c7c496e63f3a55d5c2c24e00d985b1daf5b5e689932cf4ee29cad29050`. Condition-aware ledger SHA-256: `bf4e07bb1c0aa82e4a7852269f06c32eccfcdb565a31de28c0cb7683f82c9580`. It records **922 open logical executable default-route gaps and zero retired**, with 81 accepted opt-in Rust mappings, 841 unmapped names, and 57 source-selected Rust declarations in each V4 root. The ledger's source-selected override count is 114 across both roots; source selection does not retire declarations.
 
-The separate [current installed SDK packet](../r8-full-sdk-9b89b757/README.md)
-passes the private macOS arm64 archive on Node 26.12.1, Bun 1.4.3 and real
+The current Compact Dataset verifier has exact Rust operation mapping and five frozen-predecessor cases; Security And/Or V4 covers 68 truth-fold and raw-admission cases. Their Node, Bun, and Chromium source replays pass against one immutable build manifest, SHA-256 `50f19d4e492f8f00afbfe9a91ccfe94e093839703adfbd8b72b44e59f18aa5c8`, and 1,958-file source closure `8ef3b7d6e5eec0e64dbd3f9b7d1170602de3882dbc0db5173cb037cbe33bb711`. The compact frozen payloads remain byte-identical while the current source index records refreshed schema provenance. These bounded current-source replays do not establish installed SDK qualification, complete Dataset or Security semantics, or declaration retirement.
+
+The separate [historical installed SDK packet](../r8-full-sdk-9b89b757/README.md)
+passed a private macOS arm64 archive on Node 26.12.1, Bun 1.4.3 and real
 Chromium 153.0.8010.12 with a zero-transform 3,549-input source closure
 `9b89b757176d03f518af3aa1a97f446e672d791a3f85629df490a6da07c085bf`.
-It includes the frozen 66-case Core Cardinality route probe, but the selected
-TypeScript binder still performs `copyJson` admission before Rust. The three
-Cardinality names therefore remain unretired. The current machine ledger marks
+That source cohort included the frozen 66-case Core Cardinality route probe,
+but its selected TypeScript binder still performed `copyJson` admission before
+Rust. The later host-input production cut removed that admission from the
+default facade; the current installed and complete acceptance gates are still
+separate. The three Cardinality names remain unretired. The current machine ledger marks
 the Core Cardinality v4 resource `generated-authority-known`; the earlier
 [authority decision](resource-authority-closure-decision-20261026.md) is a
 historical cohort, as its dated correction records. All 922 logical default

@@ -36,7 +36,7 @@ def observe_selected_key_preflight(
     """
     from umf import _rust
 
-    from umf_access.dsl._nodes import Node, RecordRef
+    from umf_access.dsl import Node, RecordRef
 
     if terminal_op not in ("get", "page"):
         raise TypeError("selected-key terminal must be get or page")
@@ -125,12 +125,10 @@ def observe_terminal_join_owners(node: object) -> dict[str, object]:
     claim complete captured-graph validation and must not select the public
     capture route.
     """
-    from umf_access.dsl._nodes import Node, RecordRef
+    from umf_access.dsl import Node, RecordRef
 
     core = _native()
-    from umf_access.dsl._expressions import Join
-    from umf_access.dsl._nodes import FieldRef
-    from umf_access.dsl.search import SearchLeg
+    from umf_access.dsl import FieldRef, Join, SearchLeg
 
     result = core.access_observe_capture_terminal_join_owners(
         node, Node, RecordRef, FieldRef, Join, SearchLeg
@@ -179,9 +177,7 @@ def observe_all_empty_capture_profile(node: object, session: object | None = Non
         session = session_type((1 << 64) - 1)
     if type(session) is not session_type:
         raise TypeError("capture profile requires a native resource session")
-    from umf_access.dsl._expressions import Join
-    from umf_access.dsl._nodes import FieldRef, Node, RecordRef
-    from umf_access.dsl.search import SearchLeg
+    from umf_access.dsl import FieldRef, Join, Node, RecordRef, SearchLeg
 
     session.charge_work(1)
     if type(node) is not Node:
@@ -280,9 +276,7 @@ def observe_field_join_tuple(
         for owner in allowed_owners
     ):
         raise TypeError("allowed owners must be exact (str, str, str | None) tuples")
-    from umf_access.dsl._expressions import Join
-    from umf_access.dsl._nodes import FieldRef, Node, RecordRef
-    from umf_access.dsl.search import SearchLeg
+    from umf_access.dsl import FieldRef, Join, Node, RecordRef, SearchLeg
 
     core = _native()
     core.access_observe_capture_field_join_tuple(
@@ -292,9 +286,7 @@ def observe_field_join_tuple(
 
 def observe_empty_search_leg(value: object, root_record: object) -> None:
     """Observe SearchLeg's empty-value, empty-legs predecessor branch."""
-    from umf_access.dsl._expressions import Join
-    from umf_access.dsl._nodes import FieldRef, Node, RecordRef
-    from umf_access.dsl.search import SearchLeg
+    from umf_access.dsl import FieldRef, Join, Node, RecordRef, SearchLeg
 
     core = _native()
     core.access_observe_capture_empty_search_leg(
@@ -308,16 +300,14 @@ def observe_keyword_search_leg(
     parameter: object,
 ) -> None:
     """Observe one exact keyword/vector leg against its resolved parameter."""
-    from umf_access.capture import CapturedParameter
+    from umf_access.capture_types import CapturedParameter
     from umf_access.types import Vector
 
     if type(parameter) is not CapturedParameter or type(parameter.name) is not str:
         raise TypeError("keyword search observation requires a captured parameter")
     string_carrier = parameter.carrier is str
     vector_carrier = parameter.carrier is Vector
-    from umf_access.dsl._expressions import Join
-    from umf_access.dsl._nodes import FieldRef, Node, RecordRef
-    from umf_access.dsl.search import SearchLeg
+    from umf_access.dsl import FieldRef, Join, Node, RecordRef, SearchLeg
 
     core = _native()
     observe = getattr(core, "access_observe_capture_keyword_search_leg", None)

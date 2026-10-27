@@ -38,7 +38,7 @@ def check(root: Path) -> int:
                "targets": {"runtime", "dsl", "foundation"}, "conformance": {"runtime", "foundation"},
                "facade": {"dsl", "runtime", "foundation"}}
     helpers = {"types": "foundation", "values": "foundation", "codec_support": "foundation", "generated_core": "foundation",
-               "related_keys": "runtime", "rust_related_keys": "runtime", "rust_catalog_custody": "runtime", "rust_catalog_render": "runtime", "verification": "targets", "managed_delta": "targets", "managed_actions": "targets", "managed_bulk": "targets", "managed_support": "targets", "delta_read": "targets", "postgres_search": "targets", "unity_search": "targets", "search_catalog": "runtime", "commands": "runtime", "manifest_commands": "runtime", "bulk": "runtime", "postgres_bulk": "targets", "native_program": "runtime", "native_actions": "targets", "catalog": "runtime", "reviewed": "runtime", "postgres_read": "targets", "capture": "dsl", "protocols": "runtime", "pages": "runtime", "adoption": "runtime", "engine_catalog": "runtime", "unified": "targets"}
+               "related_keys": "runtime", "rust_related_keys": "runtime", "rust_catalog_custody": "runtime", "rust_catalog_render": "runtime", "verification": "targets", "managed_delta": "targets", "managed_actions": "targets", "managed_bulk": "targets", "managed_support": "targets", "delta_read": "targets", "postgres_search": "targets", "unity_search": "targets", "search_catalog": "runtime", "commands": "runtime", "manifest_commands": "runtime", "bulk": "runtime", "postgres_bulk": "targets", "native_program": "runtime", "native_actions": "targets", "catalog": "runtime", "reviewed": "runtime", "postgres_read": "targets", "capture": "dsl", "capture_types": "dsl", "rust_capture_observe": "dsl", "rust_catalog_render_v2": "runtime", "protocols": "runtime", "pages": "runtime", "adoption": "runtime", "engine_catalog": "runtime", "unified": "targets"}
     # Keep the administrative host, approval and optional parser adapters
     # explicit in the module map. They remain within the lifecycle owner.
     helpers.update({"host": "lifecycle", "approval": "lifecycle",
@@ -79,7 +79,7 @@ def check(root: Path) -> int:
         parts = name.split(".")
         return helpers.get(parts[1], parts[1]) if len(parts) > 1 else "facade"
 
-    def edge(name: str, target: str, member: str = "") -> None:
+    def edge(name: str, target: str, member: str = "", line: int = 0) -> None:
         path = modules[name]
         source_owner = owner(name)
         if name == 'umf_access.lifecycle.sql_containment' and not (
@@ -96,7 +96,16 @@ def check(root: Path) -> int:
                               and member in {'CatalogError','prepare_table_head','prepare_table_correspondence'})
                 if target_owner not in allowed.get(source_owner, set()) and not head_probe:
                     fail(path, "DEPENDENCY", f"{source_owner} -> {target_owner}")
-                if target.count(".") != 1 or member.startswith("_"):
+                # The opt-in graph-capture candidate intentionally reuses four
+                # exact capture primitives. Keep this seam local to its facade;
+                # other runtime modules and additional private names remain denied.
+                private_capture_candidate = (
+                    name == "umf_access.rust_catalog_render"
+                    and line in candidate_capture_import_lines
+                    and target == "umf_access.capture"
+                    and member in {"_canonical", "_invoke", "_parameters", "_validate_node"}
+                )
+                if (target.count(".") != 1 or member.startswith("_")) and not private_capture_candidate:
                     fail(path, "PRIVATE", f"use public boundary of {target_owner}")
             return
         package = target.split(".")[0]
@@ -130,15 +139,20 @@ def check(root: Path) -> int:
             or name == 'umf_access.unified.outcome_values' and member == 'rust_outcome_values'
             or name == 'umf_access.reviewed' and member == 'rust_reviewed_parameters'
             or name == 'umf_access.rust_related_keys' and member == 'rust_related_keys'
-            or name in {'umf_access.rust_catalog_custody', 'umf_access.rust_catalog_render'}
+            or name in {'umf_access.rust_catalog_custody', 'umf_access.rust_catalog_render', 'umf_access.rust_catalog_render_v2'}
             and member == 'rust_access_catalog'))
         seed_compiler = (name == 'umf_access.lifecycle.seeds' and target == 'weft' and member == 'compile_table_seed_json'
                          or name == 'umf_access.lifecycle.backfills' and target == 'weft' and member == 'prepare_table_operation_module_json')
+        private_capture_core = (target == "umf" and member == "_rust" and name in {
+            "umf_access.capture", "umf_access.rust_capture_observe", "umf_access.rust_catalog_render"
+        })
+        if name == "umf_access.unified.operation_values" and target == "umf" and member == "rust_values":
+            public_core_values = True
         # The optional containment adapter has one narrow parser entry point;
         # the pure checker module must not import the parser or its dependencies.
         containment_parser = (name == 'umf_access.lifecycle.sql_containment_parser'
                               and target == 'pglast.parser' and member == 'parse_sql_json')
-        if package not in permitted and not spark_error and not typing_backport and not psycopg2_cursor and not table_read_compiler and not seed_compiler and not public_core_values and not containment_parser:
+        if package not in permitted and not spark_error and not typing_backport and not psycopg2_cursor and not table_read_compiler and not seed_compiler and not public_core_values and not containment_parser and not private_capture_core:
             fail(path, "DEPENDENCY", f"{target} outside approved imports for {source_owner}")
         metadata_pin = (name == 'umf_access.lifecycle.sql_containment_parser'
                         and target == 'importlib.metadata' and member in {'version', 'PackageNotFoundError'})
@@ -157,10 +171,18 @@ def check(root: Path) -> int:
         except (SyntaxError, UnicodeError) as error:
             fail(path, "SYNTAX", str(error))
             continue
+        candidate_capture_import_lines = {
+            imported.lineno
+            for function in ast.walk(tree)
+            if isinstance(function, (ast.FunctionDef, ast.AsyncFunctionDef))
+            and function.name == "capture_with_rust_graph_validator"
+            for imported in ast.walk(function)
+            if isinstance(imported, ast.ImportFrom)
+        }
         for node in ast.walk(tree):
             if isinstance(node, ast.Import):
                 for alias in node.names:
-                    edge(name, alias.name)
+                    edge(name, alias.name, line=node.lineno)
             elif isinstance(node, ast.ImportFrom):
                 target = node.module or ""
                 if node.level:
@@ -172,7 +194,7 @@ def check(root: Path) -> int:
                     target = ".".join(prefix + ([target] if target else []))
                 for alias in node.names:
                     child = f"{target}.{alias.name}"
-                    edge(name, child if child in modules else target, alias.name)
+                    edge(name, child if child in modules else target, alias.name, node.lineno)
                     if alias.name == "*":
                         fail(path, "PRIVATE", "star imports hide public ownership")
             elif isinstance(node, ast.Name) and node.id in {"__import__", "eval", "exec", "compile"}:

@@ -15,7 +15,8 @@ from typing import Any, Union, cast, get_args, get_origin, get_type_hints
 
 from pydantic import BaseModel
 
-from .dsl import GeneratedSource, Join, Param, Terminal
+from .capture_types import CapturedParameter
+from .dsl import Join, Param, Terminal
 from .dsl._context import CURRENT, CaptureContext
 
 # Explicit public re-export is required by static consumers.
@@ -33,16 +34,6 @@ from .dsl._nodes import ProjectionRef as ProjectionRef  # noqa: PLC0414 -- Expli
 from .dsl.render import render_logical as render_logical  # noqa: PLC0414 -- Explicit typed public re-export.
 from .dsl.search import SearchLeg
 from .types import MISSING, ActionRef, ActionSource, Vector
-
-
-@dataclass(frozen=True)
-class CapturedParameter:
-    name: str
-    carrier: object
-    optional: bool
-    key_components: tuple[str, ...] = ()
-    key_identity: tuple[tuple[str, str], ...] = ()
-    key_source: GeneratedSource | None = None
 
 
 @dataclass(frozen=True)
@@ -427,6 +418,7 @@ def capture(function: Callable[..., Any]) -> CapturedDeclaration:
         if type(parameters) is tuple and not parameters:
             try:
                 from umf import _rust
+
                 from .rust_capture_observe import validate_exact_empty_terminal_profile
             except ImportError:
                 _validate_node(node, parameters)

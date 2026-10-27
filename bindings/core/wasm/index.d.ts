@@ -44,6 +44,7 @@ export declare function isNativeUmfCoreError(error: unknown): boolean;
 /** Run artifactReferences/inspect over umf.core-wire/1. The pack must be structurally validated before this call. */
 export declare function executeArtifactReferencesBindingWire(module: any, wireJson: string, controlDispatcher?: Function): string;
 export declare function isBit128EngineError(error: unknown): boolean;
+export declare function isHostJsonResponseError(error: unknown): boolean;
 export interface SemanticTypeRegistry {
   register(reference: unknown, definition: unknown, validator?: (value: unknown, definition: unknown, context: {reportWork(units: number): void}) => unknown): this;
   lookup(reference: unknown): unknown;

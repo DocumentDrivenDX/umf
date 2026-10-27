@@ -20,6 +20,18 @@ def operation_count_token_nonnegative(token: str) -> bool:
     return _rust._rust_core.operation_count_token_nonnegative(token)
 
 
+def operation_count_result_frame_profile_version() -> str:
+    return _rust._rust_core.operation_count_result_frame_profile_version()
+
+
+def operation_count_result_frame(
+    module: str, operation: str, source_digest: str, integer_token: str
+) -> str:
+    return _rust._rust_core.operation_count_result_frame(
+        module, operation, source_digest, integer_token
+    )
+
+
 def operation_canonical(json_text: str) -> str:
     return _rust._rust_core.operation_canonical(json_text)
 

@@ -15,7 +15,7 @@ const allowedImports:Record<string,readonly string[]>={
  'read-json-value-ordinary.ts':['../model/errors','../model/types'],
  'rust-bit128-default.ts':['../model/bit128','../model/uuid','../model/errors'],
  'rust-candidate.ts':[],
- 'rust-cardinality-default.ts':['../model/cardinality','../model/types','../model/errors','../model/json'],
+ 'rust-cardinality-default.ts':['../model/cardinality','../model/types','../model/errors'],
  'rust-core-inspectors-default.ts':['../model/scalar-type','../model/record-members','../model/reference-links','../model/types','../model/errors'],
  'rust-core-semantic-types-default.ts':['../model/errors','../model/semantic-types','../model/types'],
  'rust-core-evolution-candidate.ts':['../model/types','../model/evolution','../model/errors'],

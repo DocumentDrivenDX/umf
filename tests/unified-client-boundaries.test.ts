@@ -29,6 +29,14 @@ test('an audited Rust facade import grant does not transfer to another facade', 
 	);
 });
 
+test('the Cardinality production facade cannot restore TypeScript JSON copying', () => {
+	const errors = checkAccessSource(
+		'rust-cardinality-default.ts',
+		"import {copyJson} from '../model/json';\n",
+	);
+	expect(errors).toContain('rust-cardinality-default.ts: unapproved import ../model/json');
+});
+
 test('the Record Type facade has only its exact audited model imports', () => {
 	const allowed = checkAccessSource(
 		'rust-record-type-default.ts',

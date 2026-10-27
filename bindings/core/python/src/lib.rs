@@ -335,6 +335,34 @@ fn operation_count_token_profile_version() -> &'static str {
 }
 
 #[pyfunction]
+fn operation_count_result_frame_profile_version() -> &'static str {
+    umf_core::operation_values::COUNT_RESULT_FRAME_PROFILE_VERSION
+}
+
+fn exact_count_result_text<'a>(value: &'a Bound<'a, PyAny>) -> PyResult<&'a str> {
+    if !value.is_exact_instance_of::<PyString>() {
+        return Err(PyValueError::new_err("exact count result text required"));
+    }
+    value.extract::<&str>()
+}
+
+#[pyfunction]
+fn operation_count_result_frame(
+    module_name: &Bound<'_, PyAny>,
+    operation_name: &Bound<'_, PyAny>,
+    source_digest: &Bound<'_, PyAny>,
+    integer_token: &Bound<'_, PyAny>,
+) -> PyResult<String> {
+    umf_core::operation_values::count_result_frame(
+        exact_count_result_text(module_name)?,
+        exact_count_result_text(operation_name)?,
+        exact_count_result_text(source_digest)?,
+        exact_count_result_text(integer_token)?,
+    )
+    .map_err(|error| PyValueError::new_err(error.to_string()))
+}
+
+#[pyfunction]
 fn operation_count_token_nonnegative(token: &Bound<'_, PyAny>) -> PyResult<bool> {
     if !token.is_exact_instance_of::<PyString>() {
         return Err(PyValueError::new_err("exact count token required"));
@@ -5221,6 +5249,11 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
         module
     )?)?;
     module.add_function(wrap_pyfunction!(operation_count_token_nonnegative, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        operation_count_result_frame_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(operation_count_result_frame, module)?)?;
     module.add_function(wrap_pyfunction!(avro_fields_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(iceberg_schema_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_iceberg_wire, module)?)?;

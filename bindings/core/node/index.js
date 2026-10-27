@@ -25,6 +25,7 @@ import {createSemanticTypeRegistry as createSemanticTypeRegistryEngine} from './
 
 export {isWireAdmissionError} from './src/wire.js';
 export {isBit128EngineError};
+export {isHostJsonResponseError} from './src/host-json.js';
 const nativeUmfCoreErrors = new WeakSet();
 const weakSetHas = Function.call.bind(WeakSet.prototype.has);
 const weakSetAdd = Function.call.bind(WeakSet.prototype.add);

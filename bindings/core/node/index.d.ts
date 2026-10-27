@@ -41,6 +41,7 @@ export interface UmfBit128Engine {
 }
 export declare function createBit128Engine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): UmfBit128Engine;
 export declare function isBit128EngineError(error: unknown): boolean;
+export declare function isHostJsonResponseError(error: unknown): boolean;
 export interface UmfJsonNumberEngine { assertExactJsonNumber(token: string): void }
 export declare function createJsonNumberEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): UmfJsonNumberEngine;
 export type JavascriptNumericLiteral = {integerToken: string} | {decimalToken: string};

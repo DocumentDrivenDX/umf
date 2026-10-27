@@ -1,5 +1,9 @@
 // Private synchronous umf.host-json/1 dispatcher. User objects remain opaque
 // to Rust; only this invocation-local closure performs captured reflection.
+const hostJsonResponseErrors = new WeakSet();
+const weakSetAdd = Function.call.bind(WeakSet.prototype.add);
+const weakSetHas = Function.call.bind(WeakSet.prototype.has);
+function isHostJsonResponseError(error) { return error !== null && (typeof error === 'object' || typeof error === 'function') && weakSetHas(hostJsonResponseErrors, error); }
 const parse = JSON.parse.bind(JSON);
 const stringify = JSON.stringify.bind(JSON);
 const getPrototypeOf = Object.getPrototypeOf;
@@ -528,7 +532,9 @@ function executeHostInput(addon, resources, operation, inputs, ErrorType, contro
     if (response.status === 'error') {
       const path = fromUnits(response.pathUnits);
       const message = fromUnits(response.messageUnits);
-      throw new ErrorType(response.code, message, path);
+      const error = new ErrorType(response.code, message, path);
+      weakSetAdd(hostJsonResponseErrors, error);
+      throw error;
     }
     if (response.status !== 'ok' || typeof response.wire !== 'string') throw new NativeTypeError('Malformed umf.core-wire/1 result envelope');
     const result = parse(response.wire);
@@ -644,4 +650,4 @@ function fromUnits(units) {
   return result;
 }
 
-export {declareCoreSchemaPropertiesHostInput, schemaPropertiesHostInput, cardinalityHostInput, coreElementSelectionHostInput, coreOpaqueReturnHostInput, kindRuntimeValidationHostInput, createCoreElementSelectionHostInputEngine, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse};
+export {isHostJsonResponseError, declareCoreSchemaPropertiesHostInput, schemaPropertiesHostInput, cardinalityHostInput, coreElementSelectionHostInput, coreOpaqueReturnHostInput, kindRuntimeValidationHostInput, createCoreElementSelectionHostInputEngine, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse};

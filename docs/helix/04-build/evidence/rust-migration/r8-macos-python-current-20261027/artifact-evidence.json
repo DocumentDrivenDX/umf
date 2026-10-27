@@ -1,0 +1,275 @@
+{
+  "access": {
+    "packageSourceClosureSha256": "b8eaad0ba27d407a31f04ebbd042ad407bbcb425d35e57c61ab10168e2535b13",
+    "packageSourceFileCount": 94,
+    "packageSourceFilesSha256": {
+      "__init__.py": "f644bef73ad6ad86d77a26cef93597e2d44204610f595d55b5f2cb51e701a5c9",
+      "adoption.py": "a5bee5fca13c6b7d9b4de7d4750369ada9d86ab766e2a8f7bb0ac4272708c493",
+      "build/__init__.py": "3b98eab54e92a1498ba16d0177b25775cda9cdb238463b8dd35ad57767720c9a",
+      "build/approximate.py": "b56c32a1f2c3cdff5b066e3c993bbe773145db91b1cabcb0558020b0f2e7821f",
+      "build/catalog.py": "cb2bd0b998cd151ef513acb040b2431b33976bc1d44902479e83b9f7f6154471",
+      "build/commands.py": "864673972f87ebde353663cfabb5354b6b1b435ec727f872c6588ea00ae5705d",
+      "build/pg_privileges.py": "e0134e635bf6aca696c1e389f25b89b059e0929f358bd38b89d087a02316fa96",
+      "build/privileges.py": "c96b5fe90c5770f547794f5bd062fd379233212aa9c2fb9e189311c7b3dca387",
+      "build/search.py": "01a44211c5f8fd6fa3dba67458e3b245a44bb6c401b6ef3d479a8718be3aafba",
+      "build/unity_search.py": "391679d8f10646425e563f4a4cf68e08181af42837a2aed1506243fd0a8663a6",
+      "bulk.py": "9db882b228d3d3ffd6d92b171399cdb380456589de14ee3bccc72f71d74b568e",
+      "capture.py": "d5ccf59de64e768031a57768e1d815020dada9576f9c54d44054d1d3f5e39081",
+      "capture_types.py": "bd25567e60bb7a27d3bfbbb1217f08658f5db5249f1902348ddd10e5075f5177",
+      "catalog.py": "188e816ccad9ed609c1382ea8090471a5ed1266f412742e69b7800d32ed455ec",
+      "codec_support.py": "43964e1ed65d92413ffd197dfa2446c9ce0c9201a597c23c9ef462c6a8220227",
+      "commands.py": "5cddc06e4097d683b9085306e8a5f00bf67ab2019550d725b34c2c6af318b8e9",
+      "delta_read.py": "e9666bee963e78f474c416f1c1a37f59da935d1c585ceedcbdc49b8718d8c64f",
+      "dsl/__init__.py": "6e53549c13931ed48fc4cebd5a28d2e7aa523707f3293261529efbde6fa846e2",
+      "dsl/_context.py": "16214f294fd6f2d74d2d57b7ece87496e8d587830f8f98206f8093d17e54f963",
+      "dsl/_expressions.py": "3620e652e4bf1b8af6a3668e50b07ab2ecadb3449df731cd8b1c79a88ece9e64",
+      "dsl/_joined.py": "f66dd88b0ef8c8d7f4d755e863a4ea3a83699801b44b005533f77d390273e9b8",
+      "dsl/_nodes.py": "2791cb533f42521ca6f807eb51230a2b1fc72f1e046ebd3877df36550d4953e5",
+      "dsl/_query.py": "ee819f9db981c99075096c797c2686cbd320ae0abe4b4f2a2c10d42ee13da7e7",
+      "dsl/_selection.py": "0b6d05700830e85e09d8f58c960bcb646e7d3d8b14008590b79d438e4e7e42e3",
+      "dsl/navigation.py": "ce8a4b8b7dc27cc60f9c30f725b50c8a004216cd6186ba9861cb0cc6da05ff9f",
+      "dsl/render.py": "8e57926de9cb62d499e549e5edf575d93220c5e0f460fb376a475e774d9c845b",
+      "dsl/search.py": "098dde6988a2bb31450fce655d53fb1921dead9d78cee6ba0ba1eb0bd5719dd5",
+      "engine_catalog.py": "b79e8b42fddb9380643adcb2b05a09d6e16032b92b7f9c4835d7af48c537bb61",
+      "generated_core.py": "37ac0060288abd3c01d945a1467a2500678ffed9b60969e6d91acda94a59eb4e",
+      "lifecycle/__init__.py": "c243930dd3fc30f237075edb46585f80a3b51a31883c80fea383b82178fb0911",
+      "lifecycle/approval.py": "f0f13fff327646a7f2a3865349dfe6a755862b24ae0b1d034dcde0f30cc9ee4a",
+      "lifecycle/backfills.py": "2e022fba246c064665be8c6d2e704015d97171d2b9751323369e2e354fa2caaa",
+      "lifecycle/catalog.py": "13340488820d85ae1568dee5af9bcb925a0ba4988fc2fefac94a58125fd00427",
+      "lifecycle/cli.py": "b6c150517c2c90496c60c40d0b442f694305dd02c0fb3f3e5ffb1a210e1a516b",
+      "lifecycle/concurrent.py": "fa3ac5cd8e850b54d03459e5aaae7840867dfd500f1a97cd2c42738c2ca2d826",
+      "lifecycle/correspondence.py": "ebb5459b27b9f364e732963bf79e1d6c48653d6adb708dba019c162efd1fb6f5",
+      "lifecycle/head.py": "025fd74dc70efc84c45777cdaaa2ac4120a8d47afd8a293b804c9acf569ddc13",
+      "lifecycle/head_view.py": "f0183dc8339d172a50fa2c8246133fc1ae366beda101303298841c87566710f5",
+      "lifecycle/host.py": "dc6379f1ea6c977ff6b197ab745f511a9de03ad0f97ee590ce07e6c2b0400ee7",
+      "lifecycle/ledger.py": "f3b3fc1e1696ce43b888ba32d9776f424d1766db05e6e46289ea63beaaa92b19",
+      "lifecycle/ledger_schema.py": "aa84acbcff775748c7899ac529ee5bf4f3893f484e55d5d43be8830d8112c02b",
+      "lifecycle/mixed.py": "27f6e7fef86bc164647d513d98d85a9a7646047b8a1b88189402021ae643f7c9",
+      "lifecycle/outcome_schema.py": "8b35182db7379c25addba58704a078f4e54bbd705a68c69ebd2677d469a0b182",
+      "lifecycle/phase_fence.py": "1ed3b51369b371b36614a03dfe4ddccd0c33b5880f8394b0df52f23e7973a4d6",
+      "lifecycle/privileges.py": "be3194dd93078f88a01c68ad35421e6638c102ee56b4d4cc55ad23d948065762",
+      "lifecycle/probe.py": "0b9ae3424c06b8a98c37a1e2bf9d92236b4f6b82b7c9466279469cc5fbc792f1",
+      "lifecycle/progress.py": "ba2fa8a90834f389f388b5774fbeedc5deee6bf9cd18ee8bf73619b136dfad6c",
+      "lifecycle/roles.py": "278afdf5cb715a56ca3676a0cdbb9e6e82942be73dcbaa755ba0a4908d674d53",
+      "lifecycle/seeds.py": "5908aac50eb5b21406f14f80b35253ac6bff595d8f5d2c2f26eb31e341f434c2",
+      "lifecycle/sql_containment.py": "f30920592ede995797833a59abcb7d5579038df6789b53fee33abd5779e7c7f0",
+      "lifecycle/sql_containment_cli.py": "d169146d0b21dc422ddc5660dae78371276ab0cec2b5825eee4012a749a6b276",
+      "lifecycle/sql_containment_parser.py": "7b558196f99e913c89a38fc42dfaa5b8909b64408d5110f67214d210f496fee2",
+      "lifecycle/table_boundary.py": "e7031de620fa2b0608c3b0d4475ebef8e053ce1d42fd831aa3bdd56fda7928fa",
+      "lifecycle/witness.py": "8fa345e730df5a1ff6e0d5a21d2b814ff1b160a41da707b5f12ed7861dad9fbe",
+      "managed_actions.py": "a9dd5273a1e62179a763444299363cdf107d7dc7979c32ff73f4f27eef68271b",
+      "managed_bulk.py": "efa4fc3d8d0da9527ac3a73a448c57d2a1b0d879e111ef59b3efc9c8488267ca",
+      "managed_delta.py": "9e84f26f6d0732bd9e7a271bc953e11625364475e0e8b48f64a39f3bdbe6a530",
+      "managed_support.py": "29f6c910978177c3a1bafe3d688d533feac9d2489e6a78127e5fb37e923f9195",
+      "manifest_commands.py": "273750266edb54490643fb1eac1f7f3313287b1b97ef17593802f87fd0cc5e51",
+      "native_actions.py": "9df1fd4711c4af0c19bb696af044d84b15d3bcddfb4ae8915a58478f203f345c",
+      "native_program.py": "32d633f32305787f1775c8e1b1a6e4d58a3d1c271b311e736d65fdce6ce173bc",
+      "pages.py": "69605b4154d1b46086bdd3467351597431728630fb78deda88d1043437b282a6",
+      "postgres_bulk.py": "4e004d00becaeb2b61b580ef5afafa89d005a341ca32080864eb4cd8fef682d7",
+      "postgres_read.py": "51002e22de961cec878a85370aecd9458dce9d30e9bf279c5789567dcf3246ab",
+      "postgres_search.py": "4ea58d6e0ba25ba2f6fcdee460f26b97f21d9c2e2485974aa601172a1e477993",
+      "protocols.py": "3ab0070094d4b9027fa359066ef77a5a36919d2568e5c59603e1b704033a9935",
+      "py.typed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "related_keys.py": "96ef82f8dc48eec32751be38da717d24a742c0e2b37e46c489c8df291453cead",
+      "reviewed.py": "a5e10e1101229deaae38e05394c93e77217a4e8eca00fc7d41a17eacc48871be",
+      "rust_capture_observe.py": "aa20dee7f9b7851076dbddb54f79da58783642a4daadc50b68bb5aa2129d38fe",
+      "rust_catalog_custody.py": "607e0b0eb4b30c90ce37281b34622362d1d80c797055592982dc960abc950eae",
+      "rust_catalog_render.py": "32a32a111e9bfebb8dd5d2a45cfce6b781186a890b50d31ccd1a6ba42e5db323",
+      "rust_catalog_render_v2.py": "41d059eb810ebf9c712f248455d2a3f856a455e6f50252ee7505c7d801dd2bc8",
+      "rust_related_keys.py": "3bbc7037084866573ac18a807f6fe2177be56f11e85b7276fc522a97a8da5e42",
+      "search_catalog.py": "fc96bac2765565c4f7b35f669489fd6a7bcb3efe5a77bbd097128c1babd86f16",
+      "targets.py": "68873ff903b1754c23c8a425a6879acc52163e4c4c83a778f627111faadc7674",
+      "types.py": "d351d98cc0076342cfac4914103ab32eafbf6140adec1a28b4066f8ef9b0c3cc",
+      "unified/__init__.py": "0840a2129c63979b7ee2306056f665a9b31842347e7171cb8bb9081c58312445",
+      "unified/_binding.py": "360e51fda03e337ba635fc3cfc2b6361354f022ee61930a3408f4faa3b9ce555",
+      "unified/head_session.py": "6caff86e43cb9ccc8ceeb935fcfa01605c9c1e8f833e662ea4d5ef1c7d3e19d9",
+      "unified/native_binding.py": "75c0e369d9f38ad5272560f1943974d56358520e13ccaa49856ed454ad67312d",
+      "unified/operation_values.py": "3fb2d4ed3129916d9a7f8cf4dc2764278d15a5c38a8416b8eae62675d5b6e7cb",
+      "unified/outcome_values.py": "145d11fdeafe050cc62479aa8de4390cced54da1cb1c02e94c746121d4b73922",
+      "unified/session_async.py": "ae6aeaa3269e6a3275fb554c583bd9616c119fee014ac36eef3825751e8d3abe",
+      "unified/session_binding.py": "3f28499a4a8ea56d526e4c852b880a16b8ae4e1454a2caceb474beb4d40f120c",
+      "unified/session_policy.py": "c267a73ae12c942e94675282351d7a15aa46780f7e9707eea1e9287c2f45f254",
+      "unified/session_psycopg2.py": "aef93b0099c8a863f176491e32f9ae56a8a4479e01a241866549affea5bc52bd",
+      "unified/session_sqlalchemy.py": "77f14f4c87402fdf747f3065623853006415c5abc2a5bcbd2c92ddaa84f344c9",
+      "unified/session_sync.py": "2ebc160b442ea0fce6aa00d0b035bc096b24a6fc8755ddb5e3295706b6062b28",
+      "unified/table_reads.py": "2a1295d60bbcedd9425fd4881e0bd35e487a7abeba7caed5effc43b250ecde66",
+      "unified/table_writes.py": "089f809fbe5baa4a97a0c9dff11889de6cc42bd0d446ae2ee4541438483e6785",
+      "unity_search.py": "b16c8697b239a814ad89d05891bb1d6de6b7160a9f95b69c6098ffa58d3b873b",
+      "values.py": "939377d2501352f387d2a11a01c7a63cb4e8942790a13a9b8e8b96354cf92515",
+      "verification.py": "88321e4c3c1bd8f796f8518da312f73efab82835d166974e2a71722f2c842aba"
+    },
+    "sdistRebuildMatchesDirectWheel": true,
+    "sdistRebuildWheelSha256": "4eb5882cef3907110af5526240774234dd0da60d3e2fb51c961ad5dae3896e76"
+  },
+  "artifacts": {
+    "umf_access-0.1.0.dev7-py3-none-any.whl": {
+      "sha256": "4eb5882cef3907110af5526240774234dd0da60d3e2fb51c961ad5dae3896e76",
+      "sizeBytes": 359465
+    },
+    "umf_access-0.1.0.dev7.tar.gz": {
+      "sha256": "2991f1414b5878966dd9358bef4750cf0b953066c3c1b7f2306bdf0b4d8dcbfe",
+      "sizeBytes": 291940
+    },
+    "umf_codegen-0.2.0-py3-none-any.whl": {
+      "sha256": "8a40e5ea2a24c074ac56c5ba1179a831fffa536fd8207677515ae619a4102d52",
+      "sizeBytes": 63642
+    },
+    "umf_codegen-0.2.0.tar.gz": {
+      "sha256": "b2c00665b86cc7368d5c8c0b18a66fa8ab41383986920c23639c1e3f61a4e27d",
+      "sizeBytes": 51067
+    },
+    "umf_core-0.11.0-cp311-abi3-macosx_11_0_arm64.whl": {
+      "sha256": "19ee8cdc64c3b1007dae4a7bdf96cf1ca920146fe8f1d398cbd8df89da77b558",
+      "sizeBytes": 9252124
+    },
+    "umf_core-0.11.0.tar.gz": {
+      "sha256": "d614e1f31dae005178aa42515cf6e519467f10a3bd38aed666015506e0f38ae7",
+      "sizeBytes": 11941311
+    }
+  },
+  "codegen": {
+    "resourceCount": 9,
+    "resourceManifestSha256": "9a4a3d96f4e953e75098dcfe2ab8518d8b9a5f94c2bcea8e213801127841d4ff",
+    "sdistRebuildMatchesDirectWheel": true,
+    "sdistRebuildWheelSha256": "8a40e5ea2a24c074ac56c5ba1179a831fffa536fd8207677515ae619a4102d52",
+    "sourceMirrorClosureSha256": "2a11d689165dfe75868abff0c274f26adf58522de44f76e5459bacb670027013",
+    "sourceMirrorFileCount": 24,
+    "sourceMirrorFilesSha256": {
+      ".gitignore": "820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d",
+      "LICENSE-APACHE": "a7f097f28b47176d49dddc086575d24d94149493f5b8e9bb829a0eee3eba74ee",
+      "LICENSE-MIT": "f1409ffd0dff471f9f5078c8f2cc2c070147daae3197812234b5919c1f820702",
+      "LICENSE.md": "76dfb87aed22180562cee6180096117e659e66d130285c56a67d5f09a788e0e5",
+      "README.md": "c9c0cba2a3cfcb0a136977807f21821cc78aaabacf23216e5bdd21165bd740ae",
+      "hatch_build.py": "d96edad5e257f19081c9ba65eb3e757b8c1c515bf89240525efaf19fbd1baef0",
+      "pyproject.toml": "ba11f571ba9ba8b4a039c80a58d998f17993ecf66ad53db151da2abc507bff25",
+      "src/umf_codegen/__init__.py": "887cd9fc14af208af821f1a5d72413b6a39dac827bcd944a3057ba86d65d5320",
+      "src/umf_codegen/__main__.py": "a839c18cc28fbce5498e88a10057c6422e4c293eb719f39a17ffa039769e33a6",
+      "src/umf_codegen/_embedded.py": "6ab305d65650b9fd6dd6614e684eb986036f1f7ba35058373e540298d2fbd449",
+      "src/umf_codegen/_native.py": "6dffae8dc59d720713be61957d08fe53dcfb4ebcef4358e911a3e4ecb7648b67",
+      "src/umf_codegen/_release.py": "aa1b33347cea076a99cf31120d4b66b455ce6104ec1104b278e68113dc7e95bf",
+      "src/umf_codegen/_resources/actions.package.json": "b77e7cee2ac6ad9d482122a63d0ab6044c341b2757135a0c896213c3fa596d62",
+      "src/umf_codegen/_resources/binding.package.json": "f3326533dcf3d2227955bae2261ab005eaf8692e289c7461f2015fd40565a78f",
+      "src/umf_codegen/_resources/core.constraints.json": "98576d2de4b8d048c092dc30e16fd95eef17b41d2e1f42126cb27e078ccbe66b",
+      "src/umf_codegen/_resources/core.domain-policy.json": "1c3cf10aa0005e3ccb6ab6772c82a38a3e2a284385590ca7a5aceaabc2bee8e8",
+      "src/umf_codegen/_resources/core.package-schema.json": "3a40a6f76093e83cd539991d425c5399af298bf64410c5de27140aee3867d37d",
+      "src/umf_codegen/_resources/core.reference-schema.json": "5774ead85baae3122602496396c238359deef1e53c980c4be3cb00f718a4d162",
+      "src/umf_codegen/_resources/core.schema.json": "5dbc7edafff2889c6ac428618018072b6398334b4d54a1bebcbad768e07d5d5b",
+      "src/umf_codegen/_resources/manifest.json": "9a4a3d96f4e953e75098dcfe2ab8518d8b9a5f94c2bcea8e213801127841d4ff",
+      "src/umf_codegen/_resources/stable-binding.package.json": "0550ae86d0cf07f9e61fb78bbb3a2eeb370838681a1483b1088409ddaeb0631e",
+      "src/umf_codegen/_resources/tables.package.json": "beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d",
+      "src/umf_codegen/_writer.py": "61a30ef49ba532fdff09f4f86de985b527dcb7e0f6c777bc3f386d545c792082",
+      "src/umf_codegen/py.typed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "cohort": "private local macOS arm64 only; no CI ran",
+  "commands": [
+    {
+      "command": "CARGO=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo CARGO_TARGET_DIR=/private/tmp/umf-r8-macos-python-current-20261027-103251/cargo-target CARGO_NET_OFFLINE=true MACOSX_DEPLOYMENT_TARGET=11.0 PATH=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:$PATH .venv/bin/python -m hatchling build -d /private/tmp/umf-r8-macos-python-current-20261027-103251/core -t wheel -t sdist",
+      "cwd": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/python"
+    },
+    {
+      "command": "../.venv/bin/python -m hatchling build -d /private/tmp/umf-r8-macos-python-current-20261027-103251/codegen -t wheel -t sdist",
+      "cwd": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/python/umf_codegen"
+    },
+    {
+      "command": "../.venv/bin/python -m hatchling build -d /private/tmp/umf-r8-macos-python-current-20261027-103251/access -t wheel -t sdist",
+      "cwd": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/python/umf_access"
+    },
+    {
+      "command": "python/.venv/bin/python tools/verify_python_artifacts.py --wheel /private/tmp/umf-r8-macos-python-current-20261027-103251/core/umf_core-0.11.0-cp311-abi3-macosx_11_0_arm64.whl --sdist /private/tmp/umf-r8-macos-python-current-20261027-103251/core/umf_core-0.11.0.tar.gz --expected-version 0.11.0 --expected-platform macos_arm64 --repository /Users/erik/.codex/worktrees/rust-binding-spike/umf --rebuilt-wheel-directory /private/tmp/umf-r8-macos-python-current-20261027-103251/core-rebuilt --receipt /private/tmp/umf-r8-macos-python-current-20261027-103251/core-artifact-receipt.json",
+      "cwd": "/Users/erik/.codex/worktrees/rust-binding-spike/umf"
+    },
+    {
+      "command": "python/.venv/bin/python scripts/rust-migration/r4/sync_codegen_resources.py --check",
+      "cwd": "/Users/erik/.codex/worktrees/rust-binding-spike/umf"
+    },
+    {
+      "command": "PYTHONPATH=/private/tmp/umf-r8-macos-python-current-20261027-103251/build-tools /Users/erik/.codex/worktrees/rust-binding-spike/umf/python/.venv/bin/python -m hatchling build -d /private/tmp/umf-r8-macos-python-current-20261027-103251/codegen-rebuilt -t wheel",
+      "cwd": "/private/tmp/umf-r8-macos-python-current-20261027-103251/codegen-sdist-unpack/umf_codegen-0.2.0"
+    },
+    {
+      "command": "UV_CACHE_DIR=/private/tmp/umf-r8-macos-python-current-20261027-103251/uv-cache uv venv --offline --python 3.14 /private/tmp/umf-r8-macos-python-current-20261027-103251/installed-venv-314",
+      "cwd": "/Users/erik/.codex/worktrees/rust-binding-spike/umf"
+    },
+    {
+      "command": "UV_CACHE_DIR=/private/tmp/umf-r8-macos-python-current-20261027-103251/uv-cache uv pip install --offline --python /private/tmp/umf-r8-macos-python-current-20261027-103251/installed-venv-314/bin/python --no-deps /private/tmp/umf-r8-macos-python-current-20261027-103251/core/umf_core-0.11.0-cp311-abi3-macosx_11_0_arm64.whl /private/tmp/umf-r8-macos-python-current-20261027-103251/codegen/umf_codegen-0.2.0-py3-none-any.whl /private/tmp/umf-r8-macos-python-current-20261027-103251/access/umf_access-0.1.0.dev7-py3-none-any.whl /private/tmp/umf-pinned-build-wheels/pydantic-2.14.1-py3-none-any.whl /private/tmp/umf-pinned-build-wheels/pydantic_core-2.50.1-cp314-cp314-macosx_11_0_arm64.whl /private/tmp/umf-pinned-build-wheels/annotated_types-0.8.0-py3-none-any.whl /private/tmp/umf-pinned-build-wheels/typing_extensions-4.16.0-py3-none-any.whl /private/tmp/umf-pinned-build-wheels/typing_inspection-0.4.4-py3-none-any.whl",
+      "cwd": "/Users/erik/.codex/worktrees/rust-binding-spike/umf"
+    },
+    {
+      "command": "PYTHONPATH=/private/tmp/umf-r8-macos-python-current-20261027-103251/installed-venv-314/lib/python3.14/site-packages:/Users/erik/.codex/worktrees/rust-binding-spike/umf/python/.venv/lib/python3.13/site-packages /opt/homebrew/bin/python3.14 -m pytest -q -p no:cacheprovider python/umf_access/tests/test_rust_count_result_frame.py python/umf_access/tests/test_rust_count_token.py python/umf_access/tests/test_operation_values_rust.py python/umf_access/tests/test_rust_read_frame.py",
+      "cwd": "/Users/erik/.codex/worktrees/rust-binding-spike/umf"
+    },
+    {
+      "command": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/python/.venv/bin/python -m hatchling build -d /private/tmp/umf-r8-macos-python-current-20261027-103251/access-rebuilt -t wheel",
+      "cwd": "/private/tmp/umf-r8-macos-python-current-20261027-103251/access-sdist-unpack/umf_access-0.1.0.dev7"
+    }
+  ],
+  "core": {
+    "actionRuntimeResourceCount": 9,
+    "actionRuntimeResourceManifestSha256": "51b5580d33815067912e5c64a8358de943a969a3a410df8d30adc7200057d436",
+    "actionRuntimeResourceSha256": {
+      "actionsPackage.json": "b77e7cee2ac6ad9d482122a63d0ab6044c341b2757135a0c896213c3fa596d62",
+      "bindingPackage.json": "f3326533dcf3d2227955bae2261ab005eaf8692e289c7461f2015fd40565a78f",
+      "constraints.json": "98576d2de4b8d048c092dc30e16fd95eef17b41d2e1f42126cb27e078ccbe66b",
+      "coreSchema.json": "5dbc7edafff2889c6ac428618018072b6398334b4d54a1bebcbad768e07d5d5b",
+      "domainPolicy.json": "1c3cf10aa0005e3ccb6ab6772c82a38a3e2a284385590ca7a5aceaabc2bee8e8",
+      "packageSchema.json": "3a40a6f76093e83cd539991d425c5399af298bf64410c5de27140aee3867d37d",
+      "referenceSchema.json": "5774ead85baae3122602496396c238359deef1e53c980c4be3cb00f718a4d162",
+      "stableBindingPackage.json": "0550ae86d0cf07f9e61fb78bbb3a2eeb370838681a1483b1088409ddaeb0631e",
+      "tablesPackage.json": "beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d"
+    },
+    "artifactVerifierReceipt": "core-artifact-receipt.json",
+    "artifactVerifierReceiptSha256": "2462d60f0158b316f680046f71c490cf23f901f7d3c33ce833f52e8d24376ecc",
+    "packagePayloadSha256": "46a24bfaaab184d0873c07f466e8848577074c212fb35cc38e0bad17bd9f546b",
+    "sdistBuildInputCount": 1000,
+    "sdistBuildInputsSha256": "091b08f547aad1f27f71679842fc74c5105ab17d1821e7dc2541af21da5b3538",
+    "sdistRebuild": {
+      "metadata_byte_identity": true,
+      "native_byte_identity": false,
+      "native_byte_identity_by_member": {
+        "umf/_bin/umf": false,
+        "umf/_rust_core.abi3.so": false
+      },
+      "non_native_package_payload_matches": true,
+      "tag_matches": true,
+      "version_matches": true,
+      "wheel_byte_identity": true
+    },
+    "sourcePayloadVerification": "passed",
+    "wheelMinimumMacOS": "11.0.0",
+    "wheelNativeMachine": "arm64",
+    "wheelTag": "cp311-abi3-macosx_11_0_arm64"
+  },
+  "host": {
+    "buildPython": "3.13.16",
+    "cargo": "1.90.0",
+    "hatchling": "1.32.4",
+    "installedReplayPython": "3.14.8",
+    "macOSVersion": "27.0.1",
+    "machine": "arm64",
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "rustc": "1.90.0",
+    "uv": "uv 0.13.3 (Homebrew 2026-10-20 aarch64-apple-darwin)"
+  },
+  "installedReplay": {
+    "codegenCliHelp": "passed",
+    "codegenGeneration": "passed; 7 files",
+    "countResultExactLargeInteger": "9007199254740993",
+    "countResultProfile": "umf-operation-count-result-frame/0.1.0",
+    "pythonModulePaths": "verified for umf, umf_access, umf_codegen",
+    "wheelInstall": "offline uv install into fresh CPython 3.14.8 venv; package imports resolve under that venv site-packages"
+  },
+  "limitations": [
+    "One private local macOS arm64 cohort only; no macOS CI was requested or run.",
+    "This does not satisfy the hosted Linux cohort or coordinated release matrix and is not publication/release evidence.",
+    "Build used supported CPython 3.13.16; installed wheel replay and focused tests used CPython 3.14.8. No CPython 3.11/3.12 runs were performed.",
+    "The CPython 3.13 venv held pytest/Hatchling; offline artifact installation used local pinned dependency wheels, including a CPython 3.14 pydantic-core wheel. Network was unnecessary for builds and was unavailable in the sandbox."
+  ],
+  "publishing": false,
+  "schema": "umf.r8-local-macos-python-artifacts/1",
+  "status": "passed",
+  "tests": {
+    "command": "PYTHONPATH=/private/tmp/umf-r8-macos-python-current-20261027-103251/installed-venv-314/lib/python3.14/site-packages:/Users/erik/.codex/worktrees/rust-binding-spike/umf/python/.venv/lib/python3.13/site-packages /opt/homebrew/bin/python3.14 -m pytest -q -p no:cacheprovider python/umf_access/tests/test_rust_count_result_frame.py python/umf_access/tests/test_rust_count_token.py python/umf_access/tests/test_operation_values_rust.py python/umf_access/tests/test_rust_read_frame.py",
+    "result": "26 passed, 33 subtests passed"
+  }
+}

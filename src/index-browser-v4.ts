@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createPythonClientRustCandidateV4} from './browser-v4';
 import {initializePythonClientRustDefaultV4} from './access/rust-default-v4';
-import {initializeCoreModelRootWasm,initializeCoreRecordValuesHostInputWasm,createDefaultSemanticTypeRegistry,createCoreRecordTypeEngine,createSecurityLogicEngine,createJavascriptNumericEngine,initializeBit128Wasm,initializeTemporalWasm,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError} from '../bindings/core/wasm/index.js';
+import {initializeCoreModelRootWasm,initializeCoreRecordValuesHostInputWasm,createDefaultSemanticTypeRegistry,createCoreCardinalityHostInputEngine,createCoreRecordTypeEngine,createSecurityLogicEngine,createJavascriptNumericEngine,initializeBit128Wasm,initializeTemporalWasm,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError} from '../bindings/core/wasm/index.js';
 import {CORE_MODEL_RESOURCES} from './access/core-model-resources';
 import {bindCoreCardinalityRust} from './access/rust-cardinality-default';
 import {bindCoreDatasetValuesCompactRust} from './access/rust-dataset-values-compact-default';
@@ -50,7 +50,8 @@ const {validateCsvBooleanLexical,verifyCsvBooleanLexical}=bindCsvBooleanLexicalR
 const {inspectCoreScalarType,inspectCoreRecordMembers,inspectCoreReferenceLinks}=bindCoreInspectorsRust(model,isWireAdmissionError,isNativeUmfCoreError);
 const inspectRawTableBinding=createRawTableBindingInspector(inspectCoreRecordMembers);
 const {inspectCoreSchemaProperties,declareCoreSchemaProperties,validateCoreFieldValue,resolveCoreDefault}=bindCoreSchemaPropertiesRust(model);
-const {inspectCoreCardinality,declareCoreCardinality,verifyCoreCardinalityDeclaration}=bindCoreCardinalityRust(model);
+const cardinality=bindCoreCardinalityRust(createCoreCardinalityHostInputEngine(wasmModule,CORE_MODEL_RESOURCES),isHostJsonResponseError);
+const {inspectCoreCardinality,declareCoreCardinality,verifyCoreCardinalityDeclaration}=cardinality;
 const {validateCoreDatasetValuesCompact,verifyCoreDatasetValuesCompact}=bindCoreDatasetValuesCompactRust(model,isNativeUmfCoreError);
 const {inspectCoreFacets,declareCoreFacets,verifyCoreFacetDeclaration,historicalCoreFacetPatch}=bindCoreFacetsRust(model);
 const {inspectCoreKeys,lookupCoreKey,declareCoreRecordMembers,declareCoreKey,verifyCoreKeyOperation}=bindCoreKeysRust(model,isNativeUmfCoreError);
