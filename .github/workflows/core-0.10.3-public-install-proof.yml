@@ -197,13 +197,10 @@ jobs:
       - name: Check out the exact qualified producer source
         if: steps.packet.outcome == 'success'
         timeout-minutes: 2
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ steps.packet.outputs.producer_source_commit }}
-          path: producer-source
-          persist-credentials: false
-          fetch-depth: 1
-          submodules: false
+        env:
+          PRODUCER_COMMIT: ${{ steps.packet.outputs.producer_source_commit }}
+        run: |
+          git -c core.hooksPath=/dev/null -C release-source worktree add --detach "$GITHUB_WORKSPACE/producer-source" "$PRODUCER_COMMIT"
       - uses: actions/setup-python@v5
         if: steps.packet.outcome == 'success'
         timeout-minutes: 2
