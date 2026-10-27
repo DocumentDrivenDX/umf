@@ -6567,3 +6567,62 @@ source cohort. The Selection and JSON Schema changes after that capture require
 fresh inventory, ledger, generated-resource and installed-package evidence.
 Full parity across the remaining gaps, the hosted release matrix, review and
 integration still gate any full-port, merge or release claim.
+
+### R8 fixed-point recapture and bounded route qualifications — 2026-10-26
+
+The [canonical recapture](evidence/rust-migration/r8-symbol-inventory/README.md)
+at commit `4c3187be9` passed metamodel, nine-resource Python action-runtime,
+action-plan identity, 49 ledger tests, 61 metamodel tests, and a real-Chromium
+metamodel replay. The ledger still records 922 logical default-route retirement
+gaps, 72 accepted opt-in Rust mappings, and 850 unmapped names. Its 50
+Rust-selected declarations per V4 root are route selections, not retirement.
+
+A private fixed-point SDK archive from that clean commit has matching captured
+and live source-closure SHA-256
+`7870eee151f2633c48f49194e20f2bc590cbfabc62b80ef7abffeefa095e91f9`
+over 3,461 inputs and zero generated transformations. Its archive SHA-256 is
+`64e46f86bfb2ffbd97066d84d8a36cbd5a5cd48f45d6337a2400b4b4a79286ff`.
+The [aggregate installed SDK replay](evidence/rust-migration/r8-javascript-numeric-default-route/installed-replay-4c3187be9.json),
+SHA-256 `4f37e09655457ca4e8c4f02a3dfee0e9fce82411da7628275dbe1d2ec83bab1b`,
+passed on that sealed archive in Node
+26.12.1, Bun 1.4.3, and Chromium 153.0.8010.12. It covers 31 R3 cases, 27
+JavaScript numeric vectors plus six input-boundary cases, the selected
+cardinality, facets, Core Keys, Bit128/UUID and Compact Dataset cohorts, and
+three package-route tamper refusals. Missing/corrupt native and WASM controls
+also refused. Its 1,083,467 ms duration covers the whole package replay and
+is not a numeric performance measurement. The first attempt completed Node
+and Bun but could not bind a local Chromium server in the sandbox; an exact
+rerun with loopback permission produced the complete receipt. This archive
+predates the later opt-in JSON Schema Rust change and is private, not a release
+artifact.
+
+On that sealed archive, the [CSV Boolean extension](evidence/rust-migration/r8-csv-boolean-retirement-extension/README.md)
+passed 24 contract-derived default/reference cases in Node, Bun, and Chromium,
+including token truth values, absent/null refusal, receipt tampering, a proxy
+continuation, and receipt-limit precedence. The [Core Inspector replay](evidence/rust-migration/r8-core-inspectors-installed/README.md)
+passed 26 frozen cases for three inspectors and additional root and nested
+host-admission probes on the same hosts. Both receipts are private and scoped;
+neither retires a ledger row or qualifies a release.
+
+The [opt-in JSON Schema profile correction](evidence/rust-migration/r8-json-schema-additional-properties/README.md)
+admits `additionalProperties:false` and schema-valued forms only inside the
+existing recursive grammar. Rust tests, a fresh Node addon and real-Chromium
+WASM agree with same-host TypeScript for four root/nested cases; an unsupported
+nested keyword remains visibly incomplete. This post-archive Rust source change
+requires a new source closure before it can contribute to any current-source
+installed SDK claim. JSON Schema's eight-operation default cutover and broader
+host/profile parity remain open.
+
+A [fresh `parseNativeJson` host-boundary observation](evidence/rust-migration/r8-json-schema-parse-native-json-host/README.md)
+shows a separate wrong-type gap in Node and Chromium: direct TypeScript reads
+host getters and coercion hooks in source order, while descriptor-safe Rust wire
+admission rejects those objects before the callbacks. CONTRACT-002 specifies a
+text input, so no partial coercion shim was added. If arbitrary JavaScript
+wrong-type parity is required for default cutover, it needs an explicit host
+callback protocol and first-fault review across the eight-operation family.
+
+The next model-only candidate is Core Evolution's inspect/verify pair. Its
+historical `0.8.0` contract conflicts with the current `0.10.0` candidate and
+frozen packet. Keep that route opt-in/private while the governing version and
+duplicate CONTRACT-058 identities are resolved; do not relabel the current
+candidate as contract-conforming by inference.
