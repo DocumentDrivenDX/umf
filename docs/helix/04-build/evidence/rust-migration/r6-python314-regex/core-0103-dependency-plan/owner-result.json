@@ -472,5 +472,15 @@
     "runId": 40439183104,
     "reviewSha256": "3f39418c60d6052629df0b128a3d9e35ffcde4a7565342fc2e8e895fbef5c165",
     "scope": "Consistency only, not installed/release admission."
+  },
+  "browserProfileFailure": {
+    "evidence": "browser-profile-failure-40443272156",
+    "custodySha256": "27a45de2e2dd02d9c88faeee09f513c1794824878b8fd996baa0c9b074b3725e",
+    "status": "ACTUAL_BROWSER_PROFILE_GUARD_FAILURE_TWO_FILE_SOURCE_REPAIR_ACCEPTED_RUNTIME_PENDING"
+  },
+  "testToolsConsistency": {
+    "evidence": "test-tools-consistency-40443265984",
+    "custodySha256": "4c5fa4f585753c5212a576361a1603054c644c6a762ae0eca5c531f0b7c831bf",
+    "status": "PASS_ACTUAL_CONSISTENCY_ONLY_NO_READOPTION"
   }
 }

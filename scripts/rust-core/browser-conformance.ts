@@ -62,6 +62,7 @@ try {
     let infoOutcomeLines: string[] = [];
     let hexFixture: any = null;
     let hexOutcomeLines: string[] = [];
+    let python314OutcomeLines: string[] = [];
     let schemaDepthProbe: string | null = null;
     if (regexConformance) {
       regexFixture = await get('crates/umf-core/tests/fixtures/cpython-re/independent-boundaries.json');
@@ -76,6 +77,9 @@ try {
       const hexOutcomesResponse = await fetch(`${origin}/crates/umf-core/tests/fixtures/cpython-re/independent-hex-outcomes.tsv`);
       if (!hexOutcomesResponse.ok) throw new Error('Could not load independent CPython hex outcomes');
       hexOutcomeLines = (await hexOutcomesResponse.text()).trimEnd().split('\n');
+      const python314OutcomesResponse = await fetch(`${origin}/crates/umf-core/tests/fixtures/cpython-re/outcomes-3.14.tsv`);
+      if (!python314OutcomesResponse.ok) throw new Error('Could not load CPython 3.14 profile outcomes');
+      python314OutcomeLines = (await python314OutcomesResponse.text()).trimEnd().split('\n');
     }
     if (corpus.profile !== 'umf.current-conformance/1' || corpus.cases.length !== 139) throw new Error('Wrong frozen core corpus');
     const glue = await import(`${origin}/bindings/core/wasm/index.js`);
@@ -85,8 +89,9 @@ try {
     let regexChecked = 0;
     let infoChecked = 0;
     let hexChecked = 0;
+    let python314Checked = 0;
     if (regexConformance && (typeof wasmModule.pythonRegexProbe !== 'function'
-      || regexFixture.profile !== 'umf.independent-python-re-boundaries/1' || regexFixture.cases.length !== 6372 || regexOutcomeLines.length !== 6372 * 3)) {
+      || regexFixture.profile !== 'umf.independent-python-re-boundaries/1' || regexFixture.cases.length !== 6372 || regexOutcomeLines.length !== 6372 * 4)) {
       throw new Error('Wrong independent CPython regex corpus/profile');
     }
     if (schemaDepthConformance) {
@@ -108,7 +113,7 @@ try {
       if (fields.length !== 7) throw new Error('Malformed seven-field CPython regex outcome');
       const [minorText, id, operation, expected, span, textCsv, patternCsv] = fields as [string, string, string, string, string, string, string];
       const item = cases.get(id);
-      if (!['11', '12', '13'].includes(minorText) || !item
+      if (!['11', '12', '13', '14'].includes(minorText) || !item
         || !['compile', 'search'].includes(operation) || operation !== item.operation
         || textCsv !== (item.textCodepoints ?? []).join(',') || patternCsv !== item.patternCodepoints.join(',')) {
         throw new Error(`CPython regex outcome/input binding mismatch for ${id}`);
@@ -136,12 +141,13 @@ try {
     const matchedControl = '11\tcontrol\tsearch\tM\t0,1\t97\t97';
     if (parseRegexOutcome(matchedControl, controlCases, new Set()).expectedWire !== 'M\t0\t1'
       || parseRegexOutcome('12\tcontrol\tsearch\tN\t-\t97\t97', controlCases, new Set()).expectedWire !== 'N'
-      || parseRegexOutcome('13\tcontrol\tsearch\tE\t-\t97\t97', controlCases, new Set()).expectedWire !== 'E') {
+      || parseRegexOutcome('13\tcontrol\tsearch\tE\t-\t97\t97', controlCases, new Set()).expectedWire !== 'E'
+      || parseRegexOutcome('14\tcontrol\tsearch\tM\t0,1\t97\t97', controlCases, new Set()).expectedWire !== 'M\t0\t1') {
       throw new Error('CPython regex outcome parser positive control failed');
     }
     const malformedControls = [
       '11\tcontrol\tsearch\tN',
-      '14\tcontrol\tsearch\tN\t-\t97\t97',
+      '15\tcontrol\tsearch\tN\t-\t97\t97',
       '11\tunknown\tsearch\tN\t-\t97\t97',
       '11\tcontrol\tcompile\tN\t-\t97\t97',
       '11\tcontrol\tsearch\tX\t-\t97\t97',
@@ -162,7 +168,92 @@ try {
     let duplicateRefused = false;
     try { parseRegexOutcome(matchedControl, controlCases, duplicateControl); } catch { duplicateRefused = true; }
     if (!duplicateRefused) throw new Error('Duplicate CPython regex outcome control accepted');
+    if (wasmModule.pythonRegexProbe(15, 'search', [97], [97]) !== 'X') {
+      throw new Error('CPython regex future-profile refusal control failed');
+    }
+    const python314FamilyCounts = new Map<string, number>([
+      ['cpython-re_tests', 403],
+      ['python314-boundary-and-end-empty', 1],
+      ['python314-negative-boundary-empty', 1],
+      ['python314-negative-boundary-word', 1],
+      ['python314-z-absolute-end', 1],
+      ['python314-z-strict-end', 1],
+      ['unicode16-new-case-pair', 1],
+      ['unicode16-new-decimal-digit', 1],
+      ['unicode16-new-letter-word', 1],
+      ['unicode16-new-name', 1],
+    ]);
+    const parsePython314Outcome = (line: string) => {
+      const fields = line.split('\t');
+      if (fields.length !== 6) throw new Error('Malformed six-field CPython 3.14 outcome');
+      const [status, startText, endText, patternText, textText, family] = fields;
+      if (!['E', 'M', 'N'].includes(status) || !python314FamilyCounts.has(family)) {
+        throw new Error('Malformed CPython 3.14 status or family');
+      }
+      const parseCanonicalInteger = (value: string) => {
+        if (!/^(?:0|[1-9]\d*)$/.test(value)) throw new Error('Malformed CPython 3.14 integer');
+        const parsed = Number(value);
+        if (!Number.isSafeInteger(parsed)) throw new Error('Out-of-range CPython 3.14 integer');
+        return parsed;
+      };
+      const parseCodepoints = (value: string) => value === '' ? [] : value.split(',').map((part) => {
+        const codepoint = parseCanonicalInteger(part);
+        if (codepoint > 0x10ffff) throw new Error('Out-of-range CPython 3.14 codepoint');
+        return codepoint;
+      });
+      const start = parseCanonicalInteger(startText);
+      const end = parseCanonicalInteger(endText);
+      const patternCodepoints = parseCodepoints(patternText);
+      const textCodepoints = parseCodepoints(textText);
+      if (status === 'M') {
+        if (start > end || end > textCodepoints.length) throw new Error('Out-of-range CPython 3.14 match span');
+      } else if (start !== 0 || end !== 0) {
+        throw new Error('Malformed CPython 3.14 non-match span');
+      }
+      return {
+        family,
+        patternCodepoints,
+        textCodepoints,
+        expectedWire: status === 'M' ? `M\t${start}\t${end}` : status,
+      };
+    };
+    const appendixControl = parsePython314Outcome('M\t0\t1\t97\t97\tcpython-re_tests');
+    if (appendixControl.expectedWire !== 'M\t0\t1'
+      || appendixControl.patternCodepoints.join(',') !== '97'
+      || appendixControl.textCodepoints.join(',') !== '97') {
+      throw new Error('CPython 3.14 appendix parser positive control failed');
+    }
+    const malformedPython314Controls = [
+      'M\t0\t1\t97\t97',
+      'X\t0\t0\t97\t97\tcpython-re_tests',
+      'M\t0\t1\t097\t97\tcpython-re_tests',
+      'M\t1\t0\t97\t97\tcpython-re_tests',
+      'M\t0\t1\t97\t97\tunknown-family',
+    ];
+    for (const line of malformedPython314Controls) {
+      let refused = false;
+      try { parsePython314Outcome(line); } catch { refused = true; }
+      if (!refused) throw new Error('CPython 3.14 appendix parser negative control accepted');
+    }
+    const python314Differences = [];
+    const observedPython314Families = new Map<string, number>();
+    for (const [ordinal, line] of python314OutcomeLines.entries()) {
+      const outcome = parsePython314Outcome(line);
+      observedPython314Families.set(outcome.family, (observedPython314Families.get(outcome.family) ?? 0) + 1);
+      const actual = wasmModule.pythonRegexProbe(14, 'search', outcome.patternCodepoints, outcome.textCodepoints);
+      python314Checked++;
+      if (actual !== outcome.expectedWire) {
+        python314Differences.push({ordinal, family: outcome.family, expected: outcome.expectedWire, actual});
+      }
+    }
+    if (python314OutcomeLines.length !== 412 || python314Checked !== 412
+      || observedPython314Families.size !== python314FamilyCounts.size
+      || [...python314FamilyCounts].some(([family, count]) => observedPython314Families.get(family) !== count)
+      || python314Differences.length) {
+      throw new Error(`Production WASM CPython 3.14 appendix mismatch (${python314Differences.length}/${python314Checked}): ${JSON.stringify(python314Differences.slice(0, 5))}`);
+    }
     const regexCases = new Map<string, any>(regexFixture.cases.map((item: any): [string, any] => [item.id, item]));
+    if (regexCases.size !== regexFixture.cases.length) throw new Error('Duplicate independent CPython regex case ID');
     const regexDifferences = [];
     const regexSeen = new Set<string>();
     for (const line of regexOutcomeLines) {
@@ -171,11 +262,14 @@ try {
       regexChecked++;
       if (actual !== expectedWire) regexDifferences.push({minor, id, operation, expected: expectedWire, actual});
     }
-    if (regexChecked !== 6372 * 3 || regexDifferences.length) {
+    const regexMinorCoverage = [11, 12, 13, 14].map((minor) =>
+      [...regexCases.keys()].filter((id) => regexSeen.has(`${minor}\t${id}`)).length);
+    if (regexChecked !== 6372 * 4 || regexDifferences.length || regexMinorCoverage.some((count) => count !== regexCases.size)) {
       throw new Error(`Production WASM Python regex corpus mismatch (${regexDifferences.length}/${regexChecked}): ${JSON.stringify(regexDifferences.slice(0, 5))}`);
     }
     const infoCases = new Map<string, any>(infoFixture.cases.map((item: any): [string, any] => [item.id, item]));
-    if (infoFixture.profile !== 'umf.independent-python-re-info/1' || infoFixture.cases.length !== 15120 || infoOutcomeLines.length !== 15120 * 3) {
+    if (infoCases.size !== infoFixture.cases.length) throw new Error('Duplicate independent CPython INFO case ID');
+    if (infoFixture.profile !== 'umf.independent-python-re-info/1' || infoFixture.cases.length !== 15120 || infoOutcomeLines.length !== 15120 * 4) {
       throw new Error('Wrong independent CPython INFO corpus/profile');
     }
     const infoDifferences = [];
@@ -186,11 +280,14 @@ try {
       infoChecked++;
       if (actual !== expectedWire) infoDifferences.push({minor, id, operation, expected: expectedWire, actual});
     }
-    if (infoChecked !== 15120 * 3 || infoDifferences.length) {
+    const infoMinorCoverage = [11, 12, 13, 14].map((minor) =>
+      [...infoCases.keys()].filter((id) => infoSeen.has(`${minor}\t${id}`)).length);
+    if (infoChecked !== 15120 * 4 || infoDifferences.length || infoMinorCoverage.some((count) => count !== infoCases.size)) {
       throw new Error(`Production WASM Python INFO corpus mismatch (${infoDifferences.length}/${infoChecked}): ${JSON.stringify(infoDifferences.slice(0, 5))}`);
     }
     const hexCases = new Map<string, any>(hexFixture.cases.map((item: any): [string, any] => [item.id, item]));
-    if (hexFixture.profile !== 'umf.independent-python-re-hex/1' || hexFixture.cases.length !== 2022 || hexOutcomeLines.length !== 2022 * 3) {
+    if (hexCases.size !== hexFixture.cases.length) throw new Error('Duplicate independent CPython hex case ID');
+    if (hexFixture.profile !== 'umf.independent-python-re-hex/1' || hexFixture.cases.length !== 2022 || hexOutcomeLines.length !== 2022 * 4) {
       throw new Error('Wrong independent CPython hex corpus/profile');
     }
     const hexDifferences = [];
@@ -201,7 +298,9 @@ try {
       hexChecked++;
       if (actual !== expectedWire) hexDifferences.push({minor, id, operation, expected: expectedWire, actual});
     }
-    if (hexChecked !== 2022 * 3 || hexDifferences.length) {
+    const hexMinorCoverage = [11, 12, 13, 14].map((minor) =>
+      [...hexCases.keys()].filter((id) => hexSeen.has(`${minor}\t${id}`)).length);
+    if (hexChecked !== 2022 * 4 || hexDifferences.length || hexMinorCoverage.some((count) => count !== hexCases.size)) {
       throw new Error(`Production WASM Python hex corpus mismatch (${hexDifferences.length}/${hexChecked}): ${JSON.stringify(hexDifferences.slice(0, 5))}`);
     }
     }
@@ -375,10 +474,11 @@ try {
       if (error.code !== 'RESOURCE_PROFILE_UNAVAILABLE') throw error;
     }
     return {status: 'pass', engineVersion: engine.engineVersion, wasmQualification: regexConformance ? 'python-regex-feature' : 'default-production', cases: corpus.cases.length,
-      ...(regexConformance ? {regexOutcomeParserControls: 15, wideWorkCounter: 'u64-portable-chunks-and-refusal', pythonRegexCasesPerProfile: regexFixture.cases.length, pythonRegexComparisons: regexChecked,
+      ...(regexConformance ? {regexOutcomeParserControls: 16, python314AppendixParserControls: 6, python314AppendixComparisons: python314Checked,
+        wideWorkCounter: 'u64-portable-chunks-and-refusal', pythonRegexCasesPerProfile: regexFixture.cases.length, pythonRegexComparisons: regexChecked,
         pythonRegexInfoCasesPerProfile: infoFixture.cases.length, pythonRegexInfoComparisons: infoChecked,
         pythonRegexHexCasesPerProfile: hexFixture.cases.length, pythonRegexHexComparisons: hexChecked,
-        pythonRegexProfiles: [11, 12, 13]} : {}),
+        pythonRegexProfiles: [11, 12, 13, 14]} : {}),
       ...(schemaDepthConformance ? {schemaDepth128Accepted129Refused: schemaDepthProbe === 'pass', annotatedVisitorDepth128Accepted129Refused: schemaDepthProbe === 'pass'} : {}),
       rawSurrogateCallback: true, jsonYamlRoundTrip: true, copiedTextUnits: 6_000_000, sourceTextUnits: 4_000_000, maxDocumentDepth: 128,
       inventoryExtensionDepth: {accepted: 122, refused: 123}, hostControls: ['meter', 'cancel', 'deadline', 'reentry']};

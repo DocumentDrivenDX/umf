@@ -479,7 +479,7 @@ try {
     UMF_WASM_REGEX_CONFORMANCE: '1',
     UMF_WASM_SCHEMA_DEPTH_CONFORMANCE: '1',
   });
-  results.chromiumRegexFeatureWasm = outputRecord('real-chromium-python-regex-feature-wasm-70542-outcomes-plus-139-core-and-schema-depth-128-129', browser);
+  results.chromiumRegexFeatureWasm = outputRecord('real-chromium-python-regex-feature-wasm-94056-shared-plus-412-python314-outcomes-plus-139-core-and-schema-depth-128-129', browser);
   artifacts.pythonRegexCorpus = {
     fixtureSha256: hashBytes(await readFile(resolve(root, 'crates/umf-core/tests/fixtures/cpython-re/independent-boundaries.json'))),
     outcomesSha256: hashBytes(await readFile(resolve(root, 'crates/umf-core/tests/fixtures/cpython-re/independent-outcomes.tsv'))),
@@ -487,6 +487,8 @@ try {
     infoOutcomesSha256: hashBytes(await readFile(resolve(root, 'crates/umf-core/tests/fixtures/cpython-re/independent-info-outcomes.tsv'))),
     hexFixtureSha256: hashBytes(await readFile(resolve(root, 'crates/umf-core/tests/fixtures/cpython-re/independent-hex-boundaries.json'))),
     hexOutcomesSha256: hashBytes(await readFile(resolve(root, 'crates/umf-core/tests/fixtures/cpython-re/independent-hex-outcomes.tsv'))),
+    python314AppendixSha256: hashBytes(await readFile(resolve(root, 'crates/umf-core/tests/fixtures/cpython-re/outcomes-3.14.tsv'))),
+    python314AppendixBytes: (await readFile(resolve(root, 'crates/umf-core/tests/fixtures/cpython-re/outcomes-3.14.tsv'))).byteLength,
   };
 
   const pythonWorkspace = join(workspace, 'python-wheel');
@@ -997,7 +999,7 @@ try {
     qualifications: {
       python: 'wheel install and wheel rebuilt from sdist, outside checkout; full public Python suite, frozen 139 and host controls, 9,282 schema admission decisions, official JSON Schema outcome controls, 2,586 Python numeric schema predecessor cases, 7,671 Python schema evaluation-order/reference/annotation/resource-scope/resource-identity/anchor/URI public method observations including the approved narrow legacy2019 additionalProperties correction, 263 error metadata/subject/path records, and 6 runtime TypeError observations with phase attribution',
       javascript: 'npm-packed native addon installed outside checkout, tested under Node and Bun',
-      browser: 'real Chromium qualifies the default shipped WASM separately for 139 boundaries and the conformance-feature WASM for 70,542 frozen Python regex outcomes plus the 139 core boundaries, with no external requests',
+      browser: 'real Chromium qualifies the default shipped WASM separately for 139 boundaries and the conformance-feature WASM for 94,056 shared Python regex outcomes plus 412 Python 3.14 profile outcomes and 139 core boundaries, with no external requests',
       cli: 'native binary validated against the frozen 139 corpus with PATH empty',
       resourceProfile: 'cooperative host controls exercised; HardIsolated remains refused before work',
     },
