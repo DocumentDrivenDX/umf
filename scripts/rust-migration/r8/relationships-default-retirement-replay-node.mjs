@@ -18,6 +18,9 @@ const canonical=value=>JSON.stringify(stable(value));
 const archiveSha256=process.env.UMF_R8_RETIREMENT_ARCHIVE_SHA256;
 const sourceClosureSha256=process.env.UMF_R8_RETIREMENT_SOURCE_CLOSURE_SHA256;
 if(!archiveSha256||!sourceClosureSha256)throw new Error('Archive and source-closure pins are required');
+const cohortId=process.platform==='darwin'&&process.arch==='arm64'?'darwin-arm64':process.platform==='linux'&&process.arch==='x64'?'linux-x86_64':null;
+if(!cohortId)throw new Error(`Unsupported retirement host cohort: ${process.platform}/${process.arch}`);
+const hostPlatform={os:process.platform,arch:process.arch};
 const require=createRequire(import.meta.url);
 const addon=require(join(archive,'dist/umf_core_node.node'));
 const original=addon.executeRequestWire;
@@ -65,7 +68,7 @@ for(const exportName of packetNames){
   defaultCases.push({id:item.id,defaultOutcome,defaultTrace:trace,defaultRustCalls:defaultCalls,referenceOutcome,referenceTrace:refTrace,referenceRustCalls:referenceCalls});
  }
  const nodeEntryBytes=await readFile(defaultEntry),referenceBytes=await readFile(referenceEntry),addonBytes=await readFile(join(archive,'dist/umf_core_node.node'));
- const receipt={format:'umf.r8.default-route-retirement-host-receipt/1',status:'pass',runtime:process.versions.bun?'bun':'node',hostVersion:process.versions.bun?Bun.version:process.version,archiveSha256,sourceClosureSha256,packetSha256:hash(packetBytes),defaultRoute:{routeId:'package-root-node',entryMember:'dist/umf-node.js',entrySha256:hash(nodeEntryBytes),artifactMembers:[{path:'dist/umf_core_node.node',sha256:hash(addonBytes)}]},referenceRoute:{routeId:'package-reference',entryMember:'dist/umf.js',entrySha256:hash(referenceBytes),artifactMembers:[]},cases:defaultCases};
+ const receipt={format:'umf.r8.default-route-retirement-host-receipt/2',status:'pass',runtime:process.versions.bun?'bun':'node',hostVersion:process.versions.bun?Bun.version:process.version,cohortId,hostPlatform,archiveSha256,sourceClosureSha256,packetSha256:hash(packetBytes),defaultRoute:{routeId:'package-root-node',entryMember:'dist/umf-node.js',entrySha256:hash(nodeEntryBytes),artifactMembers:[{path:'dist/umf_core_node.node',sha256:hash(addonBytes)}]},referenceRoute:{routeId:'package-reference',entryMember:'dist/umf.js',entrySha256:hash(referenceBytes),artifactMembers:[]},cases:defaultCases};
  await writeFile(join(out,`${exportName}-${process.versions.bun?'bun':'node'}.json`),`${JSON.stringify(receipt,null,2)}\n`);
  console.log(JSON.stringify({exportName,runtime,caseCount:defaultCases.length,defaultRustCalls:defaultCases.map(c=>c.defaultRustCalls),packetSha256:receipt.packetSha256}));
 }

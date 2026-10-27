@@ -9,7 +9,16 @@ const sha = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
 const hashPattern = /^[a-f0-9]{64}$/;
 const defaultRoutes = ['package-root-node', 'package-root-browser'];
 const runtimes = ['node', 'bun', 'chromium'];
-const canonical = value => JSON.stringify(value);
+const requiredCohorts = {
+  'darwin-arm64': { os: 'darwin', arch: 'aarch64', nodeArch: 'arm64', nativeTarget: 'aarch64-apple-darwin' },
+  'linux-x86_64': { os: 'linux', arch: 'x86_64', nodeArch: 'x64', nativeTarget: 'x86_64-unknown-linux-gnu' },
+};
+const stable = value => Array.isArray(value)
+  ? value.map(stable)
+  : value && typeof value === 'object'
+    ? Object.fromEntries(Object.keys(value).sort().map(key => [key, stable(value[key])]))
+    : value;
+const canonical = value => JSON.stringify(stable(value));
 const sameStringMap = (left, right) => {
   if (!left || !right || Array.isArray(left) || Array.isArray(right)) return false;
   const leftKeys = Object.keys(left).sort();
@@ -19,6 +28,11 @@ const sameStringMap = (left, right) => {
 
 function requireExactKeys(value, keys, label) {
   if (!value || typeof value !== 'object' || Array.isArray(value) || Object.keys(value).sort().join('\0') !== [...keys].sort().join('\0')) throw new Error(`${label} has missing or unknown fields`);
+}
+
+function verifyFixedPointTransform(transform, label) {
+  requireExactKeys(transform, ['status', 'generatedInputs'], `${label} transform`);
+  if (transform.status !== 'fixed-point' || !Array.isArray(transform.generatedInputs) || transform.generatedInputs.length !== 0) throw new Error(`${label} transform is not an exact fixed-point record`);
 }
 
 function readPinned(root, pin, label, json = false) {
@@ -102,7 +116,8 @@ export function tarMembers(bytes) {
   return { members: Object.fromEntries(Object.entries(members).map(([name, digest]) => [name.slice('package/'.length), digest])), files };
 }
 
-function verifyArchive(root, archive, expectedMembers, sourceManifestPin) {
+function verifyArchive(root, cohort, expectedMembers, sourceManifestPin) {
+  const { archive } = cohort;
   if (!hashPattern.test(archive.sha256 ?? '')) throw new Error('SDK archive needs an explicit SHA-256 pin');
   const bytes = path.isAbsolute(archive.path)
     ? fs.readFileSync(fs.realpathSync(archive.path))
@@ -119,9 +134,14 @@ function verifyArchive(root, archive, expectedMembers, sourceManifestPin) {
   const rustManifest = JSON.parse(rustManifestBytes.toString('utf8'));
   const source = rustManifest.sourceClosure;
   const sourceDoc = readPinned(root, sourceManifestPin, 'live source closure manifest', true).json.sourceClosure;
+  const archivePlatform = rustManifest.platform;
+  const archivePlatformIdentity = archivePlatform && { os: archivePlatform.os, arch: archivePlatform.arch, nodeArch: archivePlatform.nodeArch, nativeTarget: archivePlatform.nativeTarget };
+  if (canonical(archivePlatformIdentity) !== canonical(cohort.platform)) throw new Error(`${cohort.id} archive platform differs from its cohort pin`);
+  verifyFixedPointTransform(source?.transform, 'archive Rust manifest source closure');
+  verifyFixedPointTransform(sourceDoc?.transform, 'pinned live-source manifest');
   if (!source || source.sha256 !== archive.sourceClosureSha256 || source.capturedLiveSha256 !== archive.sourceClosureSha256 ||
-      source.fileCount !== archive.sourceInputCount || source.transform?.status !== 'fixed-point' ||
-      source.transform?.generatedInputs?.length !== 0 || !sameStringMap(source.liveInputs, sourceDoc.inputs)) {
+      source.fileCount !== archive.sourceInputCount || canonical(source.transform) !== canonical(sourceDoc.transform) ||
+      !sameStringMap(source.liveInputs, sourceDoc.inputs)) {
     throw new Error('archive Rust manifest source closure differs from the pinned live-source manifest');
   }
 }
@@ -133,7 +153,9 @@ function contractIdFromMarkdown(source) {
 function verifyLiveSourceManifest(root, pin, archive) {
   const sourceDoc = readPinned(root, pin, 'live source manifest', true).json;
   const closure = sourceDoc.sourceClosure;
-  if (!closure || closure.sha256 !== archive.sourceClosureSha256 || closure.capturedLiveSha256 !== archive.sourceClosureSha256 || closure.fileCount !== archive.sourceInputCount || closure.transform?.status !== 'fixed-point' || closure.transform?.generatedInputs?.length !== 0) throw new Error('live-source manifest is not a matching fixed-point closure');
+  if (!closure) throw new Error('live-source manifest is not a matching fixed-point closure');
+  verifyFixedPointTransform(closure.transform, 'live-source manifest');
+  if (closure.sha256 !== archive.sourceClosureSha256 || closure.capturedLiveSha256 !== archive.sourceClosureSha256 || closure.fileCount !== archive.sourceInputCount) throw new Error('live-source manifest is not a matching fixed-point closure');
   const inputs = closure.inputs;
   if (!inputs || Array.isArray(inputs) || Object.keys(inputs).length !== archive.sourceInputCount) throw new Error('live-source manifest input map is incomplete');
   const tree = crypto.createHash('sha256');
@@ -184,12 +206,17 @@ function verifyPacket(root, pin, op) {
   return { packet, packetSha256: pin.sha256, cases: new Map(packet.cases.map(item => [item.id, item])) };
 }
 
-function verifyHostReceipt(root, pin, op, packet, archive, members, routeMembers) {
+function verifyHostReceipt(root, pin, op, packet, cohort, members, routeMembers) {
   const receipt = readPinned(root, pin, `${op.exportName}/${pin.runtime} raw receipt`, true).json;
-  requireExactKeys(receipt, ['format', 'status', 'runtime', 'hostVersion', 'archiveSha256', 'sourceClosureSha256', 'packetSha256', 'defaultRoute', 'referenceRoute', 'cases'], `${op.exportName}/${pin.runtime} raw receipt`);
-  if (receipt.format !== 'umf.r8.default-route-retirement-host-receipt/1' || receipt.status !== 'pass' || receipt.runtime !== pin.runtime || typeof receipt.hostVersion !== 'string' || !receipt.hostVersion) throw new Error(`${op.exportName}/${pin.runtime} raw receipt identity/status is invalid`);
-  if (receipt.archiveSha256 !== archive.sha256 || receipt.sourceClosureSha256 !== archive.sourceClosureSha256 || receipt.packetSha256 !== packet.packetSha256) throw new Error(`${op.exportName}/${pin.runtime} archive, closure or packet identity mismatch`);
+  requireExactKeys(receipt, ['format', 'status', 'runtime', 'hostVersion', 'cohortId', 'hostPlatform', 'archiveSha256', 'sourceClosureSha256', 'packetSha256', 'defaultRoute', 'referenceRoute', 'cases'], `${op.exportName}/${cohort.id}/${pin.runtime} raw receipt`);
+  if (receipt.format !== 'umf.r8.default-route-retirement-host-receipt/2' || receipt.status !== 'pass' || receipt.runtime !== pin.runtime || typeof receipt.hostVersion !== 'string' || !receipt.hostVersion) throw new Error(`${op.exportName}/${cohort.id}/${pin.runtime} raw receipt identity/status is invalid`);
+  const expectedHostPlatform = { os: cohort.platform.os, arch: cohort.platform.nodeArch };
+  if (receipt.cohortId !== cohort.id || canonical(receipt.hostPlatform) !== canonical(expectedHostPlatform) ||
+      receipt.archiveSha256 !== cohort.archive.sha256 || receipt.sourceClosureSha256 !== cohort.archive.sourceClosureSha256 || receipt.packetSha256 !== packet.packetSha256) {
+    throw new Error(`${op.exportName}/${cohort.id}/${pin.runtime} archive, source closure, host platform or packet identity mismatch`);
+  }
   const expectedRoute = pin.runtime === 'chromium' ? 'package-root-browser' : 'package-root-node';
+  const expectedArtifact = pin.runtime === 'chromium' ? 'dist/umf_core_wasm_bg.wasm' : 'dist/umf_core_node.node';
   for (const [name, route, requiredMembers] of [
     ['defaultRoute', expectedRoute, true],
     ['referenceRoute', 'package-reference', false],
@@ -197,7 +224,7 @@ function verifyHostReceipt(root, pin, op, packet, archive, members, routeMembers
     const routeEvidence = receipt[name];
     requireExactKeys(routeEvidence, ['routeId', 'entryMember', 'entrySha256', 'artifactMembers'], `${op.exportName}/${pin.runtime} ${name}`);
     if (routeEvidence.routeId !== route || routeEvidence.entryMember !== routeMembers[route] || members[routeEvidence.entryMember] !== routeEvidence.entrySha256 || !hashPattern.test(routeEvidence.entrySha256 ?? '')) throw new Error(`${op.exportName}/${pin.runtime} ${name} entry is not bound to its package condition and archive member`);
-    if (!Array.isArray(routeEvidence.artifactMembers) || (requiredMembers && routeEvidence.artifactMembers.length < 1)) throw new Error(`${op.exportName}/${pin.runtime} ${name} artifact members are missing`);
+    if (!Array.isArray(routeEvidence.artifactMembers) || (requiredMembers && (routeEvidence.artifactMembers.length !== 1 || routeEvidence.artifactMembers[0]?.path !== expectedArtifact))) throw new Error(`${op.exportName}/${pin.runtime} ${name} artifact member does not identify the exact runtime payload`);
     for (const artifact of routeEvidence.artifactMembers) {
       requireExactKeys(artifact, ['path', 'sha256'], `${op.exportName}/${pin.runtime} artifact member`);
       if (!hashPattern.test(artifact.sha256 ?? '') || members[artifact.path] !== artifact.sha256) throw new Error(`${op.exportName}/${pin.runtime} artifact hash does not match archive member ${artifact.path}`);
@@ -216,23 +243,46 @@ function verifyHostReceipt(root, pin, op, packet, archive, members, routeMembers
   }
 }
 
-export function validateDefaultRouteRetirementEvidence(manifest, rows, { root }) {
-  if (!manifest || manifest.format !== 'umf.r8.default-route-retirement-evidence/1' || manifest.status !== 'pass') throw new Error('unsupported or non-pass default-route retirement evidence');
-  requireExactKeys(manifest, ['format', 'status', 'archive', 'liveSourceManifest', 'memberManifest', 'archivePackageManifest', 'operations'], 'retirement manifest');
-  requireExactKeys(manifest.archive, ['path', 'sha256', 'sourceClosureSha256', 'sourceInputCount', 'generatedTransformCount', 'packageManifestSha256'], 'archive');
-  for (const [label, pin] of [['live source manifest', manifest.liveSourceManifest], ['archive member manifest', manifest.memberManifest], ['extracted archive package manifest', manifest.archivePackageManifest]]) requireExactKeys(pin, ['path', 'sha256'], label);
-  const archive = manifest.archive;
-  if (typeof archive.path !== 'string' || !archive.path || !hashPattern.test(archive.sha256 ?? '') || !hashPattern.test(archive.sourceClosureSha256 ?? '') || !hashPattern.test(archive.packageManifestSha256 ?? '') || !Number.isSafeInteger(archive.sourceInputCount) || archive.sourceInputCount < 1 || archive.generatedTransformCount !== 0) throw new Error('retirement archive must identify a fixed-point source closure and pinned archive path');
-  const liveInputs = verifyLiveSourceManifest(root, manifest.liveSourceManifest, archive);
+export function validateBoundedDefaultRouteEvidence(manifest, rows, { root }) {
+  if (!manifest || manifest.format !== 'umf.r8.default-route-retirement-evidence/2' || manifest.status !== 'pass') throw new Error('unsupported or non-pass bounded default-route evidence');
+  requireExactKeys(manifest, ['format', 'status', 'liveSourceManifest', 'cohorts', 'operations'], 'retirement manifest');
+  requireExactKeys(manifest.liveSourceManifest, ['path', 'sha256'], 'live source manifest');
+  if (!Array.isArray(manifest.cohorts) || manifest.cohorts.length !== Object.keys(requiredCohorts).length) throw new Error('retirement evidence requires exactly the darwin-arm64 and linux-x86_64 cohorts');
+  const cohorts = new Map();
+  for (const cohort of manifest.cohorts) {
+    requireExactKeys(cohort, ['id', 'platform', 'archive', 'memberManifest', 'archivePackageManifest'], 'archive cohort');
+    if (!Object.hasOwn(requiredCohorts, cohort.id) || cohorts.has(cohort.id)) throw new Error('retirement evidence has an unknown or duplicate archive cohort');
+    requireExactKeys(cohort.platform, ['os', 'arch', 'nodeArch', 'nativeTarget'], `${cohort.id} platform`);
+    if (canonical(cohort.platform) !== canonical(requiredCohorts[cohort.id])) throw new Error(`${cohort.id} platform pin is invalid`);
+    requireExactKeys(cohort.archive, ['path', 'sha256', 'sourceClosureSha256', 'sourceInputCount', 'generatedTransformCount', 'packageManifestSha256'], `${cohort.id} archive`);
+    for (const [label, pin] of [['archive member manifest', cohort.memberManifest], ['extracted archive package manifest', cohort.archivePackageManifest]]) requireExactKeys(pin, ['path', 'sha256'], `${cohort.id} ${label}`);
+    const archive = cohort.archive;
+    if (typeof archive.path !== 'string' || !archive.path || !hashPattern.test(archive.sha256 ?? '') || !hashPattern.test(archive.sourceClosureSha256 ?? '') || !hashPattern.test(archive.packageManifestSha256 ?? '') || !Number.isSafeInteger(archive.sourceInputCount) || archive.sourceInputCount < 1 || archive.generatedTransformCount !== 0) throw new Error(`${cohort.id} archive must identify a fixed-point source closure and pinned archive path`);
+    cohorts.set(cohort.id, cohort);
+  }
+  if (Object.keys(requiredCohorts).some(id => !cohorts.has(id))) throw new Error('retirement evidence is missing a required archive cohort');
+  const [firstCohort] = cohorts.values();
+  const liveInputs = verifyLiveSourceManifest(root, manifest.liveSourceManifest, firstCohort.archive);
+  const sourceIdentity = {
+    sourceClosureSha256: firstCohort.archive.sourceClosureSha256,
+    sourceInputCount: firstCohort.archive.sourceInputCount,
+    generatedTransformCount: firstCohort.archive.generatedTransformCount,
+  };
+  const cohortArchiveData = new Map();
+  for (const cohort of cohorts.values()) {
+    const archive = cohort.archive;
+    if (archive.sourceClosureSha256 !== sourceIdentity.sourceClosureSha256 || archive.sourceInputCount !== sourceIdentity.sourceInputCount || archive.generatedTransformCount !== sourceIdentity.generatedTransformCount) throw new Error(`${cohort.id} archive does not share the fixed-point source closure`);
+    const { members, routeMembers } = verifyMemberManifest(root, cohort.memberManifest, cohort.archivePackageManifest, archive, liveInputs);
+    verifyArchive(root, cohort, members, manifest.liveSourceManifest);
+    cohortArchiveData.set(cohort.id, { members, routeMembers });
+  }
   if (!liveInputs['package.json'] || !liveInputs['scripts/package-sdk.py']) throw new Error('live source closure omits package.json or scripts/package-sdk.py');
-  const { members, routeMembers } = verifyMemberManifest(root, manifest.memberManifest, manifest.archivePackageManifest, archive, liveInputs);
-  verifyArchive(root, archive, members, manifest.liveSourceManifest);
   if (!Array.isArray(manifest.operations) || manifest.operations.length === 0) throw new Error('retirement evidence needs operations');
   const byPair = new Map();
   const usedLogical = new Set();
   const referenceRows = rows.filter(row => row.routeId === 'package-reference');
   for (const op of manifest.operations) {
-    requireExactKeys(op, ['exportName', 'logicalDeclarationKey', 'contract', 'rustOwner', 'rows', 'packet', 'receipts'], `operation ${op?.exportName ?? '?'}`);
+    requireExactKeys(op, ['exportName', 'logicalDeclarationKey', 'contract', 'rustOwner', 'rows', 'packet', 'receiptCohorts'], `operation ${op?.exportName ?? '?'}`);
     if (typeof op.exportName !== 'string' || typeof op.logicalDeclarationKey !== 'string' || !op.logicalDeclarationKey || typeof op.rustOwner !== 'string' || !op.rustOwner) throw new Error('operation identity, contract and Rust owner are required');
     if (usedLogical.has(op.logicalDeclarationKey)) throw new Error(`duplicate retirement operation: ${op.logicalDeclarationKey}`);
     usedLogical.add(op.logicalDeclarationKey);
@@ -260,20 +310,37 @@ export function validateDefaultRouteRetirementEvidence(manifest, rows, { root })
     if (seenRoutes.size !== 2) throw new Error(`${op.exportName} lacks a default route row`);
     const refMatches = referenceRows.filter(row => row.logicalDeclarationKey === op.logicalDeclarationKey && row.exportName === op.exportName);
     if (refMatches.length !== 1 || refMatches[0].sourceSelectedImplementation !== null) throw new Error(`${op.exportName} lacks the explicit TypeScript reference row`);
-    if (!Array.isArray(op.receipts) || op.receipts.length !== 3) throw new Error(`${op.exportName} needs Node, Bun and Chromium receipts`);
-    const seenRuntimes = new Set();
-    for (const pin of op.receipts) {
-      requireExactKeys(pin, ['runtime', 'path', 'sha256'], `${op.exportName} receipt pin`);
-      if (!runtimes.includes(pin.runtime) || seenRuntimes.has(pin.runtime)) throw new Error(`${op.exportName} has missing or duplicate host receipt`);
-      seenRuntimes.add(pin.runtime);
-      verifyHostReceipt(root, pin, op, packet, archive, members, routeMembers);
-      const route = pin.runtime === 'chromium' ? 'package-root-browser' : 'package-root-node';
-      const key = `${route}\0${op.logicalDeclarationKey}`;
-      const existing = byPair.get(key) ?? { status: 'retired', contractId: op.contract.id, rustOwner: op.rustOwner, evidence: [{ path: op.contract.path, sha256: op.contract.sha256 }, { path: op.packet.path, sha256: op.packet.sha256 }] };
-      existing.evidence.push({ path: pin.path, sha256: pin.sha256 });
-      byPair.set(key, existing);
+    if (!Array.isArray(op.receiptCohorts) || op.receiptCohorts.length !== cohorts.size) throw new Error(`${op.exportName} needs receipts for both archive cohorts`);
+    const seenCohorts = new Set();
+    for (const receiptGroup of op.receiptCohorts) {
+      requireExactKeys(receiptGroup, ['cohortId', 'receipts'], `${op.exportName} receipt cohort`);
+      const cohort = cohorts.get(receiptGroup.cohortId);
+      if (!cohort || seenCohorts.has(receiptGroup.cohortId)) throw new Error(`${op.exportName} has an unknown or duplicate receipt cohort`);
+      seenCohorts.add(receiptGroup.cohortId);
+      if (!Array.isArray(receiptGroup.receipts) || receiptGroup.receipts.length !== runtimes.length) throw new Error(`${op.exportName}/${cohort.id} needs Node, Bun and Chromium receipts`);
+      const seenRuntimes = new Set();
+      const { members, routeMembers } = cohortArchiveData.get(cohort.id);
+      for (const pin of receiptGroup.receipts) {
+        requireExactKeys(pin, ['runtime', 'path', 'sha256'], `${op.exportName}/${cohort.id} receipt pin`);
+        if (!runtimes.includes(pin.runtime) || seenRuntimes.has(pin.runtime)) throw new Error(`${op.exportName}/${cohort.id} has missing or duplicate host receipt`);
+        seenRuntimes.add(pin.runtime);
+        verifyHostReceipt(root, pin, op, packet, cohort, members, routeMembers);
+        const route = pin.runtime === 'chromium' ? 'package-root-browser' : 'package-root-node';
+        const key = `${route}\0${op.logicalDeclarationKey}`;
+        const existing = byPair.get(key) ?? { status: 'bounded', contractId: op.contract.id, rustOwner: op.rustOwner, evidence: [{ path: op.contract.path, sha256: op.contract.sha256 }, { path: op.packet.path, sha256: op.packet.sha256 }] };
+        existing.evidence.push({ path: pin.path, sha256: pin.sha256 });
+        byPair.set(key, existing);
+      }
+      if (seenRuntimes.size !== runtimes.length) throw new Error(`${op.exportName}/${cohort.id} needs all three host receipts`);
     }
-    if (seenRuntimes.size !== 3) throw new Error(`${op.exportName} needs all three host receipts`);
+    if (seenCohorts.size !== cohorts.size) throw new Error(`${op.exportName} is missing a required cohort receipt group`);
   }
   return byPair;
+}
+
+export function validateDefaultRouteRetirementEvidence(manifest, rows, { root }) {
+  if (manifest?.format === 'umf.r8.default-route-retirement-evidence/2') {
+    throw new Error('CONTRACT acceptance coverage required: /2 bounded default-route evidence cannot retire ledger rows');
+  }
+  throw new Error('unsupported default-route retirement evidence; no retirement schema is currently accepted');
 }

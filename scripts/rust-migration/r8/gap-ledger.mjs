@@ -39,6 +39,17 @@ accept('src/adapters/javascript-numeric.ts', [
   'r5-javascript-numeric/oracle-output.json',
 ], ['crates/umf-core/src/javascript_numeric.rs', 'scripts/rust-migration/r5/javascript-numeric-parity.ts', 'scripts/rust-migration/r5/javascript-numeric-browser.ts']);
 accept('src/model/semantic-types.ts', [['inspectCoreSemanticTypes', 'inspect_core_semantic_types']], 'umf_core::core_semantic_types', 'crates/umf-core/src/core_semantic_types.rs', ['r5-core-semantic-types/README.md', 'r5-core-semantic-types/frozen-typescript.json'], 'crates/umf-core/tests/r5_core_semantic_types.rs');
+accept('src/model/csv-boolean-lexical.ts', [
+  ['validateCsvBooleanLexical', 'validate_csv_boolean_lexical'],
+  ['verifyCsvBooleanLexical', 'verify_csv_boolean_lexical'],
+], 'umf_core::csv_boolean_lexical', 'crates/umf-core/src/csv_boolean_lexical.rs', [
+  'r5-csv-boolean-default-route/README.md',
+  'r8-csv-boolean-default-route/retirement-review.md',
+  'r8-csv-boolean-default-retirement-replay/README.md',
+], [
+  'crates/umf-core/tests/r5_csv_boolean_lexical.rs',
+  'crates/umf-core-wire/tests/r5_csv_boolean_lexical_wire.rs',
+]);
 accept('src/model/semantic-types.ts', [['getCoreSemanticTypes', 'get_core_semantic_types']], 'umf_core::core_semantic_types', 'crates/umf-core/src/core_semantic_types.rs', ['r5-core-semantic-types/README.md', 'r5-core-semantic-types/frozen-typescript.json'], 'crates/umf-core/tests/r5_core_semantic_types.rs');
 accept('src/model/semantic-types.ts', [['declareCoreSemanticTypes', 'declare_core_semantic_types']], 'umf_core::core_semantic_types', 'crates/umf-core/src/core_semantic_types.rs', ['r5-core-semantic-types/README.md', 'r5-core-semantic-types/frozen-typescript.json'], 'crates/umf-core/tests/r5_core_semantic_types.rs');
 accept('src/model/semantic-types.ts', [['verifyCoreSemanticTypeDeclaration', 'verify_core_semantic_type_declaration']], 'umf_core::core_semantic_types', 'crates/umf-core/src/core_semantic_types.rs', ['r5-core-semantic-types/README.md', 'r5-core-semantic-types/frozen-typescript.json'], 'crates/umf-core/tests/r5_core_semantic_types.rs');
@@ -61,6 +72,27 @@ accept('src/model/record-members.ts', [['inspectCoreRecordMembers', 'inspect_cor
   'crates/umf-core-wire/tests/r5_record_members_inspection.rs',
   'bindings/core/node/tests/core-record-members-inspection.test.js',
   'bindings/core/wasm/tests/record-members-retained.test.js',
+]);
+accept('src/model/scalar-type.ts', [['inspectCoreScalarType', 'inspect_core_scalar_type']], 'umf_core::scalar_type_inspection', [
+  'crates/umf-core/src/scalar_type_inspection.rs',
+], [
+  'docs/helix/04-build/evidence/rust-migration/r5-scalar-type-inspection/README.md',
+  'docs/helix/04-build/evidence/rust-migration/r5-scalar-type-inspection/frozen-typescript.json',
+  'docs/helix/04-build/evidence/rust-migration/r8-core-inspectors-installed/README.md',
+  'docs/helix/04-build/evidence/rust-migration/r8-core-inspectors-installed/receipt.json',
+], [
+  'crates/umf-core-wire/tests/r5_scalar_type_inspection.rs',
+]);
+accept('src/model/reference-links.ts', [['inspectCoreReferenceLinks', 'inspect_core_reference_links']], 'umf_core::reference_links_inspection', [
+  'crates/umf-core/src/reference_links_inspection.rs',
+], [
+  'docs/helix/04-build/evidence/rust-migration/r5-reference-links-inspection/README.md',
+  'docs/helix/04-build/evidence/rust-migration/r5-reference-links-inspection/frozen-typescript.json',
+  'docs/helix/04-build/evidence/rust-migration/r8-core-inspectors-installed/README.md',
+  'docs/helix/04-build/evidence/rust-migration/r8-core-inspectors-installed/receipt.json',
+], [
+  'crates/umf-core/tests/r5_reference_links_inspection.rs',
+  'crates/umf-core-wire/tests/r5_reference_links_inspection.rs',
 ]);
 accept('src/model/dataset-values.ts', [['validateCoreDatasetValues', 'validate_core_dataset_values'], ['verifyCoreDatasetValues', 'verify_core_dataset_values']], 'umf_core::dataset_values', 'crates/umf-core/src/dataset_values.rs', ['r5-dataset-values/README.md', 'r5-dataset-values/frozen-typescript.json', 'r5-dataset-values/frozen-verify-typescript.json'], 'crates/umf-core/tests/r5_dataset_values.rs');
 accept('src/model/dataset-values-compact.ts', [['validateCoreDatasetValuesCompact', 'validate_core_dataset_values_compact'], ['verifyCoreDatasetValuesCompact', 'verify_core_dataset_values_compact']], 'umf_core::dataset_values', 'crates/umf-core/src/dataset_values.rs', ['r5-dataset-values-compact/README.md', 'r5-dataset-values-compact/index.json'], 'crates/umf-core/tests/r5_dataset_values_compact.rs');
@@ -850,6 +882,21 @@ function operationMapping(row) {
   if (direct) return direct;
   if (['package-root-node', 'package-root-browser'].includes(row.routeId)
       && ['src/index-node-v4.ts', 'src/index-browser-v4.ts'].includes(row.source)) {
+    if (['validateCsvBooleanLexical', 'verifyCsvBooleanLexical'].includes(row.exportName)
+        && row.declarationName === row.exportName && row.declarationKind === 'BindingElement'
+        && row.initializerShape === 'not-applicable') {
+      return accepted.get(`src/model/csv-boolean-lexical.ts#${row.exportName}`) ?? null;
+    }
+    if (['inspectCoreScalarType', 'inspectCoreRecordMembers', 'inspectCoreReferenceLinks'].includes(row.exportName)
+        && row.declarationName === row.exportName && row.declarationKind === 'BindingElement'
+        && row.initializerShape === 'not-applicable') {
+      const sourceByInspector = {
+        inspectCoreScalarType: 'src/model/scalar-type.ts',
+        inspectCoreRecordMembers: 'src/model/record-members.ts',
+        inspectCoreReferenceLinks: 'src/model/reference-links.ts',
+      };
+      return accepted.get(`${sourceByInspector[row.exportName]}#${row.exportName}`) ?? null;
+    }
     if (['exactDecimal', 'integerFromBigInt', 'integerToBigInt', 'admitJavascriptNumber', 'numericToNumberLossless'].includes(row.exportName)
         && row.declarationName === row.exportName && row.declarationKind === 'BindingElement') {
       return accepted.get(`src/adapters/javascript-numeric.ts#${row.exportName}`) ?? null;

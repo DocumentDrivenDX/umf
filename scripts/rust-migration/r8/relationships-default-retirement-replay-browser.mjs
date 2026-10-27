@@ -10,6 +10,9 @@ import {chromium} from 'playwright';
 const root=process.cwd(),archive=resolve(process.env.UMF_R8_RETIREMENT_ARCHIVE_ROOT??''),out=resolve(process.env.UMF_R8_RETIREMENT_RECEIPT_DIR??'');
 const archiveSha256=process.env.UMF_R8_RETIREMENT_ARCHIVE_SHA256,sourceClosureSha256=process.env.UMF_R8_RETIREMENT_SOURCE_CLOSURE_SHA256;
 if(!process.env.UMF_R8_RETIREMENT_ARCHIVE_ROOT||!process.env.UMF_R8_RETIREMENT_RECEIPT_DIR||!archiveSha256||!sourceClosureSha256)throw new Error('Archive, receipt directory and source pins are required');
+const cohortId=process.platform==='darwin'&&process.arch==='arm64'?'darwin-arm64':process.platform==='linux'&&process.arch==='x64'?'linux-x86_64':null;
+if(!cohortId)throw new Error(`Unsupported retirement host cohort: ${process.platform}/${process.arch}`);
+const hostPlatform={os:process.platform,arch:process.arch};
 const evidence='docs/helix/04-build/evidence/rust-migration/r8-relationships-default-retirement-replay';
 const packets={};for(const name of ['inspectCoreRelationships','lookupCoreRelationship','declareCoreRelationship','verifyCoreRelationshipOperation'])packets[name]=JSON.parse(await readFile(join(root,evidence,`${name}.packet.json`),'utf8'));
 const files={browser:await readFile(join(archive,'dist/umf-browser.js')),reference:await readFile(join(archive,'dist/umf.js')),wasm:await readFile(join(archive,'dist/umf_core_wasm_bg.wasm'))};
@@ -75,7 +78,7 @@ try{
  const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
  for(const [name,cases] of Object.entries(result.receipts)){
   const packetBytes=await readFile(join(root,evidence,`${name}.packet.json`));
-  const receipt={format:'umf.r8.default-route-retirement-host-receipt/1',status:'pass',runtime:'chromium',hostVersion:browser.version(),archiveSha256,sourceClosureSha256,packetSha256:hash(packetBytes),defaultRoute:{routeId:'package-root-browser',entryMember:'dist/umf-browser.js',entrySha256:hash(files.browser),artifactMembers:[{path:'dist/umf_core_wasm_bg.wasm',sha256:hash(files.wasm)}]},referenceRoute:{routeId:'package-reference',entryMember:'dist/umf.js',entrySha256:hash(files.reference),artifactMembers:[]},cases};
+  const receipt={format:'umf.r8.default-route-retirement-host-receipt/2',status:'pass',runtime:'chromium',hostVersion:browser.version(),cohortId,hostPlatform,archiveSha256,sourceClosureSha256,packetSha256:hash(packetBytes),defaultRoute:{routeId:'package-root-browser',entryMember:'dist/umf-browser.js',entrySha256:hash(files.browser),artifactMembers:[{path:'dist/umf_core_wasm_bg.wasm',sha256:hash(files.wasm)}]},referenceRoute:{routeId:'package-reference',entryMember:'dist/umf.js',entrySha256:hash(files.reference),artifactMembers:[]},cases};
   await writeFile(join(out,`${name}-chromium.json`),`${JSON.stringify(receipt,null,2)}\n`);
   console.log(JSON.stringify({exportName:name,runtime:'Chromium '+browser.version(),caseCount:cases.length,defaultRustCalls:cases.map(c=>c.defaultRustCalls),packetSha256:receipt.packetSha256,nodeGlobalsAbsent:result.nodeGlobalsAbsent}));
  }

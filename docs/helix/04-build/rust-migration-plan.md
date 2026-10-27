@@ -6877,3 +6877,128 @@ Rust invocation on success and none on refusal or `./reference`. This is a
 bounded harness check; no new archive containing the packets has yet been
 built, and the Inspector and non-root TypeScript callsite retirement decisions
 remain open. The ledger stays at **922 open, zero retired**.
+
+### R8 current-source installed archive and two-cohort retirement decision — 2026-10-27
+
+The [current-source archive and replay bundle](evidence/rust-migration/r8-default-retirement-current-46ae463ea/README.md)
+records a fixed-point private macOS arm64 SDK from `46ae463ea`, archive
+SHA-256 `fe9b101303207574cc68f50bf4853590f683b51cbde9db39e03083c87e60a998`,
+source closure SHA-256
+`a75f3a86b75f48f2695fa2785cce8fc230c16a25c439f1a360343bc616ef3da1`,
+3,518 source inputs, and zero generated-input transforms. The complete
+installed SDK harness passed Node 26.12.1, Bun 1.4.3, and Chromium
+153.0.8010.12, including package export conditions, the bounded R3 and
+resource-sensitive packets, and missing/corrupt native and WASM refusals.
+The installed receipt is preserved with the evidence bundle. This validates
+the tested macOS archive; it does not qualify a release or close the R8 ledger.
+
+Four Core Relationship and three Core Inspector frozen packets were separately
+replayed against that same archive through the default and explicit TypeScript
+reference routes on Node, Bun, and Chromium. Their 21 raw receipts are pinned in
+the bundle. A source-level security truth-fold diagnostic also passed the 68
+frozen cases against the extracted archive, but its receipt does not bind the
+full installed package closure or count reference-route Rust calls, so a formal
+installed replay remains required. At the source revision of this archive, the
+validator rejected the otherwise matching Relationship values because it
+compared object property order, and two Inspector operations lacked accepted
+Rust-owner mappings. Both source defects have since been corrected; the old
+archive cannot qualify the changed source. Neither finding marks a row retired.
+
+The ledger's `retired` status is global across the supported default-route
+platforms. A single macOS archive cannot substantiate it. The `/2` evidence
+validator requires exact macOS arm64 and Linux x64 cohorts, each with an
+independently hashed archive, complete member map, exact native target,
+platform-matched Node/Bun/Chromium raw operation receipts, and the same
+fixed-point current source closure and packet. It also pins the full source
+transform and runtime-specific native or WASM member. The initial macOS bundle
+remains a diagnostic source snapshot; source edits to the validator, ledger or
+harness require rebuilding both cohorts. The hosted workflow captures both
+archives and receipts and assembles a self-contained bounded matrix. It has
+not yet completed on GitHub; its retained artifacts still need durable release
+provenance.
+
+Sol review found that one successful case and one preflight refusal per
+operation cannot establish the contract acceptance surface. The `/2` validator
+therefore records **bounded route evidence only**; the ledger retirement
+entrypoint rejects `/2` and keeps every row open. A future retirement format
+must bind operation-specific contract acceptance coverage across both archive
+cohorts and all declared hosts before any global gap can close. CONTRACT-053's
+four lexical tokens alone do not cover Boolean constraints, unsupported token
+classes, wrong Field kinds, changed or forged receipts, and byte limits. The
+[new CSV Boolean packets](evidence/rust-migration/r8-csv-boolean-default-retirement-replay/README.md)
+add an exact post-prepare and zero-call preflight distinction and passed a
+diagnostic Node/Bun/Chromium replay against the older
+`fe65bf01` archive, but that archive predates their source closure. Its full
+installed harness reached the final security receipt check after Node and Bun
+R3 and Chromium replay, then failed because it read the runner's console
+summary as a full receipt. The raw 68-case security replay passed; the harness
+read has been corrected in source and requires a fresh fixed-point archive.
+The [current ledger](evidence/rust-migration/r8-symbol-inventory/gap-ledger.json)
+at SHA-256 `b32b0d579c588d167a96796a2651fb1b63ea9bae8da77ae53e47173264ff0c2c`
+records **81 accepted opt-in Rust mappings, 841 unmapped names, 922 open
+logical default-route gaps, and zero retired rows**. R8
+integration, full contract coverage, the remaining gaps, merge, and release
+remain open.
+
+For CSV retirement, combine the existing 14-case predecessor and 18-case
+adversarial host corpus with the new per-case Rust-call and reference-route
+controls. Add explicit String Field, map cardinality, old core version,
+unsupported token classes, missing/null/wrong-type token, changed and forged
+receipt components, and an independently qualified Record API case that keeps
+present-null distinct from absent without inserting a default. The historical
+`inputByteLimit` exact-boundary fixture omitted the required token, so its
+exact-size branch currently proves request-shape refusal rather than the
+4,000,000-byte boundary; repair that fixture before claiming the limit. Replay
+the completed acceptance set against both fixed-point archive cohorts in Node,
+Bun, and Chromium, recording default/reference outcomes, traces, and Rust-call
+counts. Repeat equivalent contract-acceptance review for the Relationship and
+Inspector packets before defining a retirement schema.
+
+### R8 d5 fixed-point installed archive checkpoint — 2026-10-27
+
+The [d5 macOS arm64 cohort](evidence/rust-migration/r8-bounded-route-d5e1783d/README.md)
+pins private SDK archive SHA-256
+`7105a7f69118367cefe1e156481a6e3c85bad49c63157f1956f85dcef52383e2`
+and fixed-point source closure SHA-256
+`d5e1783d7f615c8c1877df4f3d9ded43e68039f6b8f4d307e13ea79c190fa8f9`
+(3,529 inputs, zero generated transforms, 1,803 regular archive members).
+Its 27 raw default/reference route receipts pass the four Relationship,
+three Inspector, and two CSV Boolean bounded packets in Node 26.12.1, Bun
+1.4.3, and Chromium 153.0.8010.12. The complete installed SDK harness
+passed on the same archive, including 31 R3 cases and missing/corrupt native
+and WASM refusals. The installed 68-case security truth-fold replay passed
+30 valid Rust/WASM invocations per host with zero refusal and reference-route
+calls. The full installed and security receipts are retained in that bundle.
+
+The separate [Core Cardinality diagnostic](evidence/rust-migration/r8-core-cardinality-d5e1783d/README.md)
+passes the trio's existing frozen installed replay on this archive in all
+three hosts, including admission order, Proxy traces, error identity and
+browser WASM loading. The Cardinality binder still performs TypeScript
+`copyJson` admission before Rust. These macOS receipts qualify only their
+frozen subsets on the d5 source snapshot. The Linux x64 archive, combined
+hosted matrix, full contract acceptance, remaining 922 logical retirement
+gaps, integration, and release remain open. Later source edits require a new
+fixed-point archive before a current-source claim.
+
+The [Compact Dataset diagnostic](evidence/rust-migration/r8-compact-dataset-installed/d5e1783d-20261027/README.md)
+also passed its 17 frozen `validateCoreDatasetValuesCompact` cases on that
+archive in Node, Bun, and Chromium, including admission and Proxy traces,
+detached copies, work limits, and the paired 349/350 boundary. It does not
+exercise `verifyCoreDatasetValuesCompact`; that operation's cumulative
+`ValueWork` parity remains open. The Core Facets current-source route gate
+still needs a fresh source-coherent capture because its historical receipt
+pins an older `bindings/core/node/index.d.ts` hash.
+
+The [expanded CSV Boolean acceptance packet](evidence/rust-migration/r8-csv-boolean-default-retirement-replay/README.md)
+now freezes 44 validation, 17 verification, and two separate TypeScript-only
+Record presence cases. It repairs the exact input boundary with a present but
+unsupported token: 4,000,000 serialized bytes reach request validation,
+while 4,000,001 reach the Rust input limit. Paired exact and over-limit receipt
+budgets are also frozen. Diagnostic replay of the expanded packets passed in
+Node, Bun, and Chromium against the d5 archive with zero reference-route
+Rust calls, but the archive predates the expanded packets and harnesses. The
+Record cases preserve present-null versus absent without inserting a default;
+`validateCoreRecordValues` remains TypeScript-owned and is excluded from the
+two-operation Rust retirement manifest. A fresh fixed-point archive and both
+hosted cohorts must replay these exact packet hashes before current-source
+qualification.

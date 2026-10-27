@@ -10,6 +10,9 @@ import {pathToFileURL} from 'node:url';
 const root=process.cwd(),archive=resolve(process.env.UMF_R8_INSPECTOR_ARCHIVE_ROOT??''),out=resolve(process.env.UMF_R8_INSPECTOR_RECEIPT_DIR??'');
 const archiveSha256=process.env.UMF_R8_INSPECTOR_ARCHIVE_SHA256,sourceClosureSha256=process.env.UMF_R8_INSPECTOR_SOURCE_CLOSURE_SHA256;
 if(!process.env.UMF_R8_INSPECTOR_ARCHIVE_ROOT||!process.env.UMF_R8_INSPECTOR_RECEIPT_DIR||!archiveSha256||!sourceClosureSha256)throw new Error('Archive root, receipt directory and source pins are required');
+const cohortId=process.platform==='darwin'&&process.arch==='arm64'?'darwin-arm64':process.platform==='linux'&&process.arch==='x64'?'linux-x86_64':null;
+if(!cohortId)throw new Error(`Unsupported retirement host cohort: ${process.platform}/${process.arch}`);
+const hostPlatform={os:process.platform,arch:process.arch};
 const evidence='docs/helix/04-build/evidence/rust-migration/r8-inspectors-default-retirement-replay';
 const names=['inspectCoreScalarType','inspectCoreRecordMembers','inspectCoreReferenceLinks'];
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
@@ -47,7 +50,7 @@ for(const name of names){
  }
  defaultEntry=await readFile(join(archive,'dist/umf-node.js'));referenceEntry=await readFile(join(archive,'dist/umf.js'));addonBytes=await readFile(join(archive,'dist/umf_core_node.node'));
  const packetBytes=await readFile(join(root,evidence,`${name}.packet.json`));
- const receipt={format:'umf.r8.default-route-retirement-host-receipt/1',status:'pass',runtime:process.versions.bun?'bun':'node',hostVersion:process.versions.bun?Bun.version:process.version,archiveSha256,sourceClosureSha256,packetSha256:hash(packetBytes),defaultRoute:{routeId:'package-root-node',entryMember:'dist/umf-node.js',entrySha256:hash(defaultEntry),artifactMembers:[{path:'dist/umf_core_node.node',sha256:hash(addonBytes)}]},referenceRoute:{routeId:'package-reference',entryMember:'dist/umf.js',entrySha256:hash(referenceEntry),artifactMembers:[]},cases};
+ const receipt={format:'umf.r8.default-route-retirement-host-receipt/2',status:'pass',runtime:process.versions.bun?'bun':'node',hostVersion:process.versions.bun?Bun.version:process.version,cohortId,hostPlatform,archiveSha256,sourceClosureSha256,packetSha256:hash(packetBytes),defaultRoute:{routeId:'package-root-node',entryMember:'dist/umf-node.js',entrySha256:hash(defaultEntry),artifactMembers:[{path:'dist/umf_core_node.node',sha256:hash(addonBytes)}]},referenceRoute:{routeId:'package-reference',entryMember:'dist/umf.js',entrySha256:hash(referenceEntry),artifactMembers:[]},cases};
  await writeFile(join(out,`${name}-${process.versions.bun?'bun':'node'}.json`),JSON.stringify(receipt,null,2)+'\n');
  console.log(JSON.stringify({exportName:name,runtime,caseCount:cases.length,defaultRustCalls:cases.map(item=>item.defaultRustCalls),packetSha256:receipt.packetSha256}));
 }

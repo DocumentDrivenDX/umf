@@ -69,6 +69,11 @@ jobs:
       - run: bunx playwright install --with-deps chromium
       - name: Replay installed SDK in Node, Bun, and Chromium
         run: bun scripts/test-sdk-rust-default.ts .cache/sdk-distribution/umf-sdk.tgz
+      - name: Capture exact default and reference operation receipts
+        run: >-
+          node scripts/rust-migration/r8/capture-default-route-cohort.mjs
+          .cache/sdk-distribution/umf-sdk.tgz
+          .cache/sdk-distribution/retirement-cohort
       - name: Preserve qualified archive and installed replay receipt
         uses: actions/upload-artifact@v4
         with:
@@ -77,4 +82,47 @@ jobs:
             .cache/sdk-distribution/umf-sdk.tgz
             .cache/sdk-distribution/manifest.json
             .cache/sdk-distribution/installed-test-receipt.json
+            .cache/sdk-distribution/security-and-or-installed-receipt.json
+            .cache/sdk-distribution/retirement-cohort/archive-source-cohort.json
+            .cache/sdk-distribution/retirement-cohort/archive-members.json
+            .cache/sdk-distribution/retirement-cohort/archive-package.json
+            .cache/sdk-distribution/retirement-cohort/cohort.json
+            .cache/sdk-distribution/retirement-cohort/receipts/
+          include-hidden-files: true
+          if-no-files-found: error
+
+  bounded-route-matrix:
+    needs: default-archive
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26.12.1
+      - run: bun install --frozen-lockfile
+      - name: Require current gap ledger before cohort aggregation
+        run: node scripts/rust-migration/r8/gap-ledger.mjs --check
+      - name: Retrieve exact macOS arm64 archive cohort
+        uses: actions/download-artifact@v4
+        with:
+          name: umf-rust-sdk-default-macos-arm64
+          path: .cache/sdk-distribution/retirement-matrix/darwin-arm64
+      - name: Retrieve exact Linux x64 archive cohort
+        uses: actions/download-artifact@v4
+        with:
+          name: umf-rust-sdk-default-linux-x86_64
+          path: .cache/sdk-distribution/retirement-matrix/linux-x86_64
+      - name: Validate the two-cohort bounded route evidence
+        run: >-
+          node scripts/rust-migration/r8/aggregate-default-route-cohorts.mjs
+          .cache/sdk-distribution/retirement-matrix
+      - name: Preserve self-contained bounded route matrix
+        uses: actions/upload-artifact@v4
+        with:
+          name: umf-rust-sdk-default-bounded-matrix
+          path: .cache/sdk-distribution/retirement-matrix/
+          include-hidden-files: true
           if-no-files-found: error

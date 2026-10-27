@@ -1,0 +1,861 @@
+{
+  "format": "umf.r8.default-route-retirement-host-receipt/2",
+  "status": "pass",
+  "runtime": "chromium",
+  "hostVersion": "153.0.8010.12",
+  "cohortId": "darwin-arm64",
+  "hostPlatform": {
+    "os": "darwin",
+    "arch": "arm64"
+  },
+  "archiveSha256": "7105a7f69118367cefe1e156481a6e3c85bad49c63157f1956f85dcef52383e2",
+  "sourceClosureSha256": "d5e1783d7f615c8c1877df4f3d9ded43e68039f6b8f4d307e13ea79c190fa8f9",
+  "packetSha256": "8b9d643d054083cb9b18d250d82c9bf866823dcae93244a91cc47d31735d16a7",
+  "defaultRoute": {
+    "routeId": "package-root-browser",
+    "entryMember": "dist/umf-browser.js",
+    "entrySha256": "be2313a690515c0488008c70d561ed234a5c127365c70e28f7c974f6980b376b",
+    "artifactMembers": [
+      {
+        "path": "dist/umf_core_wasm_bg.wasm",
+        "sha256": "3d349086ad5c22e27f685508ab395f2b44b21119075b7fbd85e96ddff6b9e939"
+      }
+    ]
+  },
+  "referenceRoute": {
+    "routeId": "package-reference",
+    "entryMember": "dist/umf.js",
+    "entrySha256": "9b284b558cc4449fd4222aef35808205e840df430bde5f36dfe69dfbc1176e54",
+    "artifactMembers": []
+  },
+  "cases": [
+    {
+      "id": "inspectCoreRelationships.valid",
+      "defaultOutcome": {
+        "status": "returned",
+        "value": {
+          "diagnostics": [
+            {
+              "code": "UNKNOWN_EXTENSION",
+              "message": "Exact extension version unavailable; content retained",
+              "path": "/vocabularies/future",
+              "severity": "warning"
+            }
+          ],
+          "identity": {
+            "module": "m"
+          },
+          "meaning": {
+            "relationships": [
+              {
+                "directed": true,
+                "id": "order-customer",
+                "inverse": "orders",
+                "name": "customer",
+                "source": [
+                  {
+                    "element": "Order",
+                    "module": "m"
+                  }
+                ],
+                "sourceMultiplicity": {
+                  "max": "*",
+                  "min": 0
+                },
+                "target": [
+                  {
+                    "element": "Customer",
+                    "key": "identity",
+                    "module": "m"
+                  }
+                ],
+                "targetLifecycle": "independent",
+                "targetMultiplicity": {
+                  "max": 1,
+                  "min": 1
+                }
+              }
+            ],
+            "state": "known",
+            "uninterpretedPaths": []
+          },
+          "operation": "inspect-core-relationships",
+          "path": "/modules/0/relationships",
+          "provenance": "unverified",
+          "residuals": [],
+          "source": {
+            "extensions": {
+              "future": {
+                "unknown": [
+                  "9007199254740993",
+                  null
+                ]
+              }
+            },
+            "id": "relationships",
+            "modules": [
+              {
+                "elements": [
+                  {
+                    "extensions": {},
+                    "id": "Order",
+                    "keys": [
+                      {
+                        "fields": [
+                          {
+                            "element": "Order.id",
+                            "module": "m"
+                          }
+                        ],
+                        "id": "identity",
+                        "name": "Identity",
+                        "primary": true
+                      }
+                    ],
+                    "kind": "record",
+                    "members": [
+                      {
+                        "element": "Order.id",
+                        "module": "m"
+                      }
+                    ]
+                  },
+                  {
+                    "cardinality": "one",
+                    "extensions": {},
+                    "id": "Order.id",
+                    "kind": "field",
+                    "nullability": "required",
+                    "scalarType": "integer"
+                  },
+                  {
+                    "extensions": {},
+                    "id": "Customer",
+                    "keys": [
+                      {
+                        "fields": [
+                          {
+                            "element": "Customer.id",
+                            "module": "m"
+                          }
+                        ],
+                        "id": "identity",
+                        "name": "Identity",
+                        "primary": true
+                      },
+                      {
+                        "fields": [
+                          {
+                            "element": "Customer.code",
+                            "module": "m"
+                          }
+                        ],
+                        "id": "account-number",
+                        "name": "Account number"
+                      }
+                    ],
+                    "kind": "record",
+                    "members": [
+                      {
+                        "element": "Customer.id",
+                        "module": "m"
+                      },
+                      {
+                        "element": "Customer.code",
+                        "module": "m"
+                      }
+                    ]
+                  },
+                  {
+                    "cardinality": "one",
+                    "extensions": {},
+                    "id": "Customer.id",
+                    "kind": "field",
+                    "nullability": "required",
+                    "scalarType": "integer"
+                  },
+                  {
+                    "extensions": {},
+                    "id": "Product",
+                    "keys": [
+                      {
+                        "fields": [
+                          {
+                            "element": "Product.id",
+                            "module": "m"
+                          }
+                        ],
+                        "id": "identity",
+                        "name": "Identity",
+                        "primary": true
+                      }
+                    ],
+                    "kind": "record",
+                    "members": [
+                      {
+                        "element": "Product.id",
+                        "module": "m"
+                      }
+                    ]
+                  },
+                  {
+                    "cardinality": "one",
+                    "extensions": {},
+                    "id": "Product.id",
+                    "kind": "field",
+                    "nullability": "required",
+                    "scalarType": "integer"
+                  },
+                  {
+                    "extensions": {},
+                    "id": "Person",
+                    "keys": [
+                      {
+                        "fields": [
+                          {
+                            "element": "Person.id",
+                            "module": "m"
+                          }
+                        ],
+                        "id": "identity",
+                        "name": "Identity",
+                        "primary": true
+                      }
+                    ],
+                    "kind": "record",
+                    "members": [
+                      {
+                        "element": "Person.id",
+                        "module": "m"
+                      }
+                    ]
+                  },
+                  {
+                    "cardinality": "one",
+                    "extensions": {},
+                    "id": "Person.id",
+                    "kind": "field",
+                    "nullability": "required",
+                    "scalarType": "integer"
+                  },
+                  {
+                    "extensions": {},
+                    "id": "Company",
+                    "keys": [
+                      {
+                        "fields": [
+                          {
+                            "element": "Company.id",
+                            "module": "m"
+                          }
+                        ],
+                        "id": "identity",
+                        "name": "Identity",
+                        "primary": true
+                      }
+                    ],
+                    "kind": "record",
+                    "members": [
+                      {
+                        "element": "Company.id",
+                        "module": "m"
+                      }
+                    ]
+                  },
+                  {
+                    "cardinality": "one",
+                    "extensions": {},
+                    "id": "Company.id",
+                    "kind": "field",
+                    "nullability": "required",
+                    "scalarType": "integer"
+                  },
+                  {
+                    "extensions": {},
+                    "id": "Student",
+                    "keys": [
+                      {
+                        "fields": [
+                          {
+                            "element": "Student.id",
+                            "module": "m"
+                          }
+                        ],
+                        "id": "identity",
+                        "name": "Identity",
+                        "primary": true
+                      }
+                    ],
+                    "kind": "record",
+                    "members": [
+                      {
+                        "element": "Student.id",
+                        "module": "m"
+                      }
+                    ]
+                  },
+                  {
+                    "cardinality": "one",
+                    "extensions": {},
+                    "id": "Student.id",
+                    "kind": "field",
+                    "nullability": "required",
+                    "scalarType": "integer"
+                  },
+                  {
+                    "extensions": {},
+                    "id": "Course",
+                    "keys": [
+                      {
+                        "fields": [
+                          {
+                            "element": "Course.id",
+                            "module": "m"
+                          }
+                        ],
+                        "id": "identity",
+                        "name": "Identity",
+                        "primary": true
+                      }
+                    ],
+                    "kind": "record",
+                    "members": [
+                      {
+                        "element": "Course.id",
+                        "module": "m"
+                      }
+                    ]
+                  },
+                  {
+                    "cardinality": "one",
+                    "extensions": {},
+                    "id": "Course.id",
+                    "kind": "field",
+                    "nullability": "required",
+                    "scalarType": "integer"
+                  },
+                  {
+                    "extensions": {},
+                    "id": "Enrollment",
+                    "keys": [
+                      {
+                        "fields": [
+                          {
+                            "element": "Enrollment.id",
+                            "module": "m"
+                          }
+                        ],
+                        "id": "identity",
+                        "name": "Identity",
+                        "primary": true
+                      }
+                    ],
+                    "kind": "record",
+                    "members": [
+                      {
+                        "element": "Enrollment.id",
+                        "module": "m"
+                      },
+                      {
+                        "element": "Enrollment.grade",
+                        "module": "m"
+                      }
+                    ]
+                  },
+                  {
+                    "cardinality": "one",
+                    "extensions": {},
+                    "id": "Enrollment.id",
+                    "kind": "field",
+                    "nullability": "required",
+                    "scalarType": "integer"
+                  },
+                  {
+                    "cardinality": "one",
+                    "extensions": {},
+                    "id": "Customer.code",
+                    "kind": "field",
+                    "nullability": "required",
+                    "scalarType": "string"
+                  },
+                  {
+                    "cardinality": "one",
+                    "extensions": {},
+                    "id": "Enrollment.grade",
+                    "kind": "field",
+                    "nullability": "absent-allowed",
+                    "scalarType": "string"
+                  }
+                ],
+                "id": "m",
+                "namespace": "domain",
+                "relationships": [
+                  {
+                    "directed": true,
+                    "id": "order-customer",
+                    "inverse": "orders",
+                    "name": "customer",
+                    "source": [
+                      {
+                        "element": "Order",
+                        "module": "m"
+                      }
+                    ],
+                    "sourceMultiplicity": {
+                      "max": "*",
+                      "min": 0
+                    },
+                    "target": [
+                      {
+                        "element": "Customer",
+                        "key": "identity",
+                        "module": "m"
+                      }
+                    ],
+                    "targetLifecycle": "independent",
+                    "targetMultiplicity": {
+                      "max": 1,
+                      "min": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "umf": "0.10.0",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            }
+          },
+          "version": "3.0.0"
+        }
+      },
+      "defaultTrace": [],
+      "defaultRustCalls": 1,
+      "referenceOutcome": {
+        "status": "returned",
+        "value": {
+          "diagnostics": [
+            {
+              "code": "UNKNOWN_EXTENSION",
+              "message": "Exact extension version unavailable; content retained",
+              "path": "/vocabularies/future",
+              "severity": "warning"
+            }
+          ],
+          "identity": {
+            "module": "m"
+          },
+          "meaning": {
+            "relationships": [
+              {
+                "directed": true,
+                "id": "order-customer",
+                "inverse": "orders",
+                "name": "customer",
+                "source": [
+                  {
+                    "element": "Order",
+                    "module": "m"
+                  }
+                ],
+                "sourceMultiplicity": {
+                  "max": "*",
+                  "min": 0
+                },
+                "target": [
+                  {
+                    "element": "Customer",
+                    "key": "identity",
+                    "module": "m"
+                  }
+                ],
+                "targetLifecycle": "independent",
+                "targetMultiplicity": {
+                  "max": 1,
+                  "min": 1
+                }
+              }
+            ],
+            "state": "known",
+            "uninterpretedPaths": []
+          },
+          "operation": "inspect-core-relationships",
+          "path": "/modules/0/relationships",
+          "provenance": "unverified",
+          "residuals": [],
+          "source": {
+            "extensions": {
+              "future": {
+                "unknown": [
+                  "9007199254740993",
+                  null
+                ]
+              }
+            },
+            "id": "relationships",
+            "modules": [
+              {
+                "elements": [
+                  {
+                    "extensions": {},
+                    "id": "Order",
+                    "keys": [
+                      {
+                        "fields": [
+                          {
+                            "element": "Order.id",
+                            "module": "m"
+                          }
+                        ],
+                        "id": "identity",
+                        "name": "Identity",
+                        "primary": true
+                      }
+                    ],
+                    "kind": "record",
+                    "members": [
+                      {
+                        "element": "Order.id",
+                        "module": "m"
+                      }
+                    ]
+                  },
+                  {
+                    "cardinality": "one",
+                    "extensions": {},
+                    "id": "Order.id",
+                    "kind": "field",
+                    "nullability": "required",
+                    "scalarType": "integer"
+                  },
+                  {
+                    "extensions": {},
+                    "id": "Customer",
+                    "keys": [
+                      {
+                        "fields": [
+                          {
+                            "element": "Customer.id",
+                            "module": "m"
+                          }
+                        ],
+                        "id": "identity",
+                        "name": "Identity",
+                        "primary": true
+                      },
+                      {
+                        "fields": [
+                          {
+                            "element": "Customer.code",
+                            "module": "m"
+                          }
+                        ],
+                        "id": "account-number",
+                        "name": "Account number"
+                      }
+                    ],
+                    "kind": "record",
+                    "members": [
+                      {
+                        "element": "Customer.id",
+                        "module": "m"
+                      },
+                      {
+                        "element": "Customer.code",
+                        "module": "m"
+                      }
+                    ]
+                  },
+                  {
+                    "cardinality": "one",
+                    "extensions": {},
+                    "id": "Customer.id",
+                    "kind": "field",
+                    "nullability": "required",
+                    "scalarType": "integer"
+                  },
+                  {
+                    "extensions": {},
+                    "id": "Product",
+                    "keys": [
+                      {
+                        "fields": [
+                          {
+                            "element": "Product.id",
+                            "module": "m"
+                          }
+                        ],
+                        "id": "identity",
+                        "name": "Identity",
+                        "primary": true
+                      }
+                    ],
+                    "kind": "record",
+                    "members": [
+                      {
+                        "element": "Product.id",
+                        "module": "m"
+                      }
+                    ]
+                  },
+                  {
+                    "cardinality": "one",
+                    "extensions": {},
+                    "id": "Product.id",
+                    "kind": "field",
+                    "nullability": "required",
+                    "scalarType": "integer"
+                  },
+                  {
+                    "extensions": {},
+                    "id": "Person",
+                    "keys": [
+                      {
+                        "fields": [
+                          {
+                            "element": "Person.id",
+                            "module": "m"
+                          }
+                        ],
+                        "id": "identity",
+                        "name": "Identity",
+                        "primary": true
+                      }
+                    ],
+                    "kind": "record",
+                    "members": [
+                      {
+                        "element": "Person.id",
+                        "module": "m"
+                      }
+                    ]
+                  },
+                  {
+                    "cardinality": "one",
+                    "extensions": {},
+                    "id": "Person.id",
+                    "kind": "field",
+                    "nullability": "required",
+                    "scalarType": "integer"
+                  },
+                  {
+                    "extensions": {},
+                    "id": "Company",
+                    "keys": [
+                      {
+                        "fields": [
+                          {
+                            "element": "Company.id",
+                            "module": "m"
+                          }
+                        ],
+                        "id": "identity",
+                        "name": "Identity",
+                        "primary": true
+                      }
+                    ],
+                    "kind": "record",
+                    "members": [
+                      {
+                        "element": "Company.id",
+                        "module": "m"
+                      }
+                    ]
+                  },
+                  {
+                    "cardinality": "one",
+                    "extensions": {},
+                    "id": "Company.id",
+                    "kind": "field",
+                    "nullability": "required",
+                    "scalarType": "integer"
+                  },
+                  {
+                    "extensions": {},
+                    "id": "Student",
+                    "keys": [
+                      {
+                        "fields": [
+                          {
+                            "element": "Student.id",
+                            "module": "m"
+                          }
+                        ],
+                        "id": "identity",
+                        "name": "Identity",
+                        "primary": true
+                      }
+                    ],
+                    "kind": "record",
+                    "members": [
+                      {
+                        "element": "Student.id",
+                        "module": "m"
+                      }
+                    ]
+                  },
+                  {
+                    "cardinality": "one",
+                    "extensions": {},
+                    "id": "Student.id",
+                    "kind": "field",
+                    "nullability": "required",
+                    "scalarType": "integer"
+                  },
+                  {
+                    "extensions": {},
+                    "id": "Course",
+                    "keys": [
+                      {
+                        "fields": [
+                          {
+                            "element": "Course.id",
+                            "module": "m"
+                          }
+                        ],
+                        "id": "identity",
+                        "name": "Identity",
+                        "primary": true
+                      }
+                    ],
+                    "kind": "record",
+                    "members": [
+                      {
+                        "element": "Course.id",
+                        "module": "m"
+                      }
+                    ]
+                  },
+                  {
+                    "cardinality": "one",
+                    "extensions": {},
+                    "id": "Course.id",
+                    "kind": "field",
+                    "nullability": "required",
+                    "scalarType": "integer"
+                  },
+                  {
+                    "extensions": {},
+                    "id": "Enrollment",
+                    "keys": [
+                      {
+                        "fields": [
+                          {
+                            "element": "Enrollment.id",
+                            "module": "m"
+                          }
+                        ],
+                        "id": "identity",
+                        "name": "Identity",
+                        "primary": true
+                      }
+                    ],
+                    "kind": "record",
+                    "members": [
+                      {
+                        "element": "Enrollment.id",
+                        "module": "m"
+                      },
+                      {
+                        "element": "Enrollment.grade",
+                        "module": "m"
+                      }
+                    ]
+                  },
+                  {
+                    "cardinality": "one",
+                    "extensions": {},
+                    "id": "Enrollment.id",
+                    "kind": "field",
+                    "nullability": "required",
+                    "scalarType": "integer"
+                  },
+                  {
+                    "cardinality": "one",
+                    "extensions": {},
+                    "id": "Customer.code",
+                    "kind": "field",
+                    "nullability": "required",
+                    "scalarType": "string"
+                  },
+                  {
+                    "cardinality": "one",
+                    "extensions": {},
+                    "id": "Enrollment.grade",
+                    "kind": "field",
+                    "nullability": "absent-allowed",
+                    "scalarType": "string"
+                  }
+                ],
+                "id": "m",
+                "namespace": "domain",
+                "relationships": [
+                  {
+                    "directed": true,
+                    "id": "order-customer",
+                    "inverse": "orders",
+                    "name": "customer",
+                    "source": [
+                      {
+                        "element": "Order",
+                        "module": "m"
+                      }
+                    ],
+                    "sourceMultiplicity": {
+                      "max": "*",
+                      "min": 0
+                    },
+                    "target": [
+                      {
+                        "element": "Customer",
+                        "key": "identity",
+                        "module": "m"
+                      }
+                    ],
+                    "targetLifecycle": "independent",
+                    "targetMultiplicity": {
+                      "max": 1,
+                      "min": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "umf": "0.10.0",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            }
+          },
+          "version": "3.0.0"
+        }
+      },
+      "referenceTrace": [],
+      "referenceRustCalls": 0
+    },
+    {
+      "id": "inspect.source-before-identity",
+      "defaultOutcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "NON_JSON",
+        "path": "/umf",
+        "message": "Hidden fields and accessors cannot be serialized faithfully"
+      },
+      "defaultTrace": [],
+      "defaultRustCalls": 0,
+      "referenceOutcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "NON_JSON",
+        "path": "/umf",
+        "message": "Hidden fields and accessors cannot be serialized faithfully"
+      },
+      "referenceTrace": [],
+      "referenceRustCalls": 0
+    }
+  ]
+}
