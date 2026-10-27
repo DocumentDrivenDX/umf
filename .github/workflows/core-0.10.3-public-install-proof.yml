@@ -217,7 +217,7 @@ jobs:
       - name: Acquire frozen binary public test cohort
         if: steps.release.outcome == 'success'
         env:
-          CELL_ID: ${{ matrix.cohort }}-py${{ matrix.expected-python-minor }}
+          CELL_ID: ${{ matrix.cohort }}-py3${{ matrix.expected-python-minor }}
         run: |
           python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name fetch-public-test-wheels -- \
             python3 tools/core_python_qualification_runner.py fetch-wheels --lock qualification-inputs/core-0.10.3-wheel-input-lock.json \

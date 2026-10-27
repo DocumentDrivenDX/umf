@@ -1,5 +1,5 @@
 {
-  "status": "WHEEL_FRAMING_AND_EXACT35_GENERATED_OUTPUTS_ADOPTED_AWAITING_CURRENT_SOURCE_QUALIFICATION",
+  "status": "PRODUCERS_AND_SELECTION_PASSED_SELECTED_CELL_ACQUISITION_REFUSED",
   "baseCommit": "d5022e37840329d351bcd6c27fe7d7aad4758544",
   "donorCommit": "f4a410c0522135065a0b20e8d2b69705fddcbac4",
   "extractionCommit": "ad5e59591",
@@ -439,5 +439,10 @@
     "evidence": "wheel-framing-python-pass-40432703941",
     "custodySha256": "b548e37886c1f9c4afaa109efd3dfec876d978b2fef25e3477c9b2ef6fd80279",
     "status": "PASS_341_TESTS_RUFF_AND_PACKAGE_BUILDS"
+  },
+  "selectedCellIdFailure": {
+    "evidence": "selected-cell-id-failure-40433733847",
+    "custodySha256": "08f02845d55966b1bd46871f3ff9d8d32927318f22f7e4713bb5eaadf9f1d02c",
+    "status": "ACTUAL_PREINSTALL_FAILURE_LOCATED_TWO_LITERAL_SOURCE_CORRECTION_ACCEPTED_RUNTIME_PENDING"
   }
 }
