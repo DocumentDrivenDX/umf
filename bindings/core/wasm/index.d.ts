@@ -82,6 +82,7 @@ export interface UmfSecurityLogicEngine {
 }
 export declare function createSecurityLogicEngine(module: any, options?: {controls?: UmfCoreControls}): UmfSecurityLogicEngine;
 export declare const SECURITY_FUNCTIONS_PROFILE: 'umf.security-functions/1';
+export declare const SECURITY_PROTECTION_SOURCE_PROFILE: 'umf.security-protection-source/1';
 export interface SecurityProtectionFunctionResult {
   readonly status: 'reference-ready' | 'transformed' | 'refused';
   readonly complete: false;
@@ -96,6 +97,19 @@ export interface UmfSecurityFunctionsEngine {
   evaluateProtectionValue(policy: unknown, catalog: unknown, closure: unknown, selection: unknown): SecurityProtectionFunctionResult;
 }
 export declare function createSecurityFunctionsEngine(module: any): UmfSecurityFunctionsEngine;
+export interface SecurityProtectionSourceResult {
+  readonly status: 'resolved-source' | 'refused';
+  readonly complete: false;
+  readonly authority: false;
+  readonly policy: unknown;
+  readonly catalog: unknown;
+  readonly references: readonly {readonly ruleIndex: number; readonly disclosureIndex: number; readonly transformIndex: number}[];
+  readonly diagnostics: readonly {readonly code: string; readonly path: string; readonly message: string; readonly severity: 'error' | 'warning'}[];
+}
+export interface UmfSecurityProtectionSourceEngine {
+  resolveSecurityProtectionSources(policy: unknown, catalog: unknown): SecurityProtectionSourceResult;
+}
+export declare function createSecurityProtectionSourceEngine(module: any): UmfSecurityProtectionSourceEngine;
 export type GregorianDateUnit = 'year' | 'quarter' | 'month' | 'day';
 export interface GregorianDate { readonly profile: typeof GREGORIAN_DATE_PROFILE; readonly originalText: string; readonly year: number; readonly month: number; readonly day: number }
 export interface Rfc3339ExactInstant { readonly profile: typeof RFC3339_EXACT_INSTANT_PROFILE; readonly originalText: string; readonly utcSeconds: string; readonly fractionalDigits: string; readonly originalOffset: string; readonly localOffsetKnown: boolean }

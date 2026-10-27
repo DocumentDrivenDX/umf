@@ -10,6 +10,7 @@ const pairs = [
   ['bindings/core/node/src/javascript-numeric.js', 'bindings/core/wasm/src/javascript-numeric.js'],
   ['bindings/core/node/src/security-logic.js', 'bindings/core/wasm/src/security-logic.js'],
   ['bindings/core/node/src/security-functions.js', 'bindings/core/wasm/src/security-functions.js'],
+  ['bindings/core/node/src/security-protection-source.js', 'bindings/core/wasm/src/security-protection-source.js'],
   ['bindings/core/node/src/bit128.js', 'bindings/core/wasm/src/bit128.js'],
   ['bindings/core/node/src/json-number.js', 'bindings/core/wasm/src/json-number.js'],
   ['bindings/core/node/src/json-schema.js', 'bindings/core/wasm/src/json-schema.js'],

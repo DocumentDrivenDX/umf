@@ -63,6 +63,7 @@ export interface UmfSecurityLogicEngine {
 }
 export declare function createSecurityLogicEngine(options?: {controls?: UmfCoreControls}): UmfSecurityLogicEngine;
 export declare const SECURITY_FUNCTIONS_PROFILE: 'umf.security-functions/1';
+export declare const SECURITY_PROTECTION_SOURCE_PROFILE: 'umf.security-protection-source/1';
 export interface SecurityProtectionFunctionResult {
   readonly status: 'reference-ready' | 'transformed' | 'refused';
   readonly complete: false;
@@ -77,6 +78,19 @@ export interface UmfSecurityFunctionsEngine {
   evaluateProtectionValue(policy: unknown, catalog: unknown, closure: unknown, selection: unknown): SecurityProtectionFunctionResult;
 }
 export declare function createSecurityFunctionsEngine(): UmfSecurityFunctionsEngine;
+export interface SecurityProtectionSourceResult {
+  readonly status: 'resolved-source' | 'refused';
+  readonly complete: false;
+  readonly authority: false;
+  readonly policy: unknown;
+  readonly catalog: unknown;
+  readonly references: readonly {readonly ruleIndex: number; readonly disclosureIndex: number; readonly transformIndex: number}[];
+  readonly diagnostics: readonly {readonly code: string; readonly path: string; readonly message: string; readonly severity: 'error' | 'warning'}[];
+}
+export interface UmfSecurityProtectionSourceEngine {
+  resolveSecurityProtectionSources(policy: unknown, catalog: unknown): SecurityProtectionSourceResult;
+}
+export declare function createSecurityProtectionSourceEngine(): UmfSecurityProtectionSourceEngine;
 export declare const GREGORIAN_DATE_PROFILE: 'umf-gregorian-date/1.0.0';
 export declare const RFC3339_EXACT_INSTANT_PROFILE: 'umf-rfc3339-exact-instant/1.0.0';
 export declare const RFC3339_EXACT_INSTANT_MAXIMUM_BYTES: 1048576;

@@ -3,6 +3,7 @@ import {createHostReadResponseFrames, encodeRequestWire, encodeWire, fromWire, r
 import {createJavascriptNumericEngine as createNumericEngine, JAVASCRIPT_NUMERIC_PROFILE} from './src/javascript-numeric.js';
 import {createSecurityLogicEngine as createSecurityLogicEngineWithWire, SECURITY_LOGIC_PROFILE} from './src/security-logic.js';
 import {createSecurityFunctionsEngine as createSecurityFunctionsEngineWithWire, SECURITY_FUNCTIONS_PROFILE} from './src/security-functions.js';
+import {createSecurityProtectionSourceEngine as createSecurityProtectionSourceEngineWithWire, SECURITY_PROTECTION_SOURCE_PROFILE} from './src/security-protection-source.js';
 import {createCoreModelOperations} from './src/core-model.js';
 import {createCoreKeyTupleOperations} from './src/core-key-tuple.js';
 import {createCoreKeysOperations} from './src/core-keys.js';
@@ -70,6 +71,7 @@ export function executeArtifactReferencesBindingWire(wireJson, controlDispatcher
 export {JAVASCRIPT_NUMERIC_PROFILE};
 export {SECURITY_LOGIC_PROFILE};
 export {SECURITY_FUNCTIONS_PROFILE};
+export {SECURITY_PROTECTION_SOURCE_PROFILE};
 export {BIT128_PROFILE};
 export {JSON_NUMBER_PROFILE};
 export function createBit128Engine(options = {}) {
@@ -99,6 +101,12 @@ export function createSecurityLogicEngine(options = {}) {
 export function createSecurityFunctionsEngine() {
   if (typeof addon.executeSecurityFunctionsWire !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
   return createSecurityFunctionsEngineWithWire(wire => addon.executeSecurityFunctionsWire(wire), UmfCoreError);
+}
+
+/** Create the opt-in protection source identity and transform-reference resolver. */
+export function createSecurityProtectionSourceEngine() {
+  if (typeof addon.executeSecurityProtectionSourceWire !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
+  return createSecurityProtectionSourceEngineWithWire(wire => addon.executeSecurityProtectionSourceWire(wire), UmfCoreError);
 }
 
 export const GREGORIAN_DATE_PROFILE = 'umf-gregorian-date/1.0.0';

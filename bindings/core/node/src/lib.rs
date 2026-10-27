@@ -667,6 +667,13 @@ pub fn execute_security_functions_wire(wire_json: String) -> String {
     umf_core_wire::security_functions_binding::execute_security_functions_wire(&wire_json)
 }
 
+#[napi(js_name = "executeSecurityProtectionSourceWire")]
+pub fn execute_security_protection_source_wire(wire_json: String) -> String {
+    umf_core_wire::security_protection_source_binding::execute_security_protection_source_wire(
+        &wire_json,
+    )
+}
+
 #[napi(js_name = "securityNotScalar")]
 pub fn security_not_scalar(
     env: Env,
