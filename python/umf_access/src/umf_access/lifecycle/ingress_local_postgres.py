@@ -3624,8 +3624,8 @@ class LocalPostgresSupervisor:
         from .ingress_custody import (
             ExternalCustodyJournal,
             _bind_owner_registration_resolver,
-            _bootstrap_original_02_target_custodian,
             _bootstrap_local_target_custodian,
+            _bootstrap_original_02_target_custodian,
         )
         control = self._target_paths['control']
         resolver = _bind_owner_registration_resolver(
@@ -4707,8 +4707,8 @@ class LocalPostgresSupervisor:
         from .ingress_custody import (
             ExternalCustodyJournal,
             _bind_owner_registration_resolver,
-            _bootstrap_original_02_target_custodian,
             _bootstrap_local_target_custodian,
+            _bootstrap_original_02_target_custodian,
         )
         owner_request = OwnerEnrollmentRequest(
             _owner_capability_seal(), self, _OWNER_KIND)
@@ -6957,88 +6957,6 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name"""
                 or type(row[3]) is not int or row[3] != attempt._backend_pid
                 or row[4] != attempt._backend_start or row[5] != 'aborted'):
             raise LocalPostgresError('local-postgresql-store-attempt-noncommit-unproven')
-
-    def open_originals_store_recovery(
-            self, connection: object, *, provider_id: str) -> object:
-        """Issue a restricted provider for one exact original store journal key."""
-        with self._original_control_lease(operation_kind='store'):
-            self._require_original_control_lease(operation_kind='store')
-            if (type(provider_id) is not str
-                    or provider_id != self._provider_id
-                    or self._journal is None or self._custodian is None
-                    or (self._custody_handle is None
-                        and self._pending_original_store_recovery is None)):
-                raise LocalPostgresError(
-                    'local-postgresql-store-recovery-unavailable')
-            target = (self._custody_handle if self._custody_handle is not None
-                      else self._pending_original_store_recovery[0])
-            self._require_original_store_recovery_target(target)
-            try:
-                from psycopg import Connection
-                if type(connection) is not Connection or connection.closed:
-                    raise LocalPostgresError(
-                        'local-postgresql-store-recovery-connection-invalid')
-                if int(connection.info.transaction_status) != 0:
-                    raise LocalPostgresError(
-                        'local-postgresql-store-readonly-transaction-active')
-                from .ingress_custody import JOURNAL_PROFILE_02, _replay
-                from .row_originals import (
-                    _RECOVERY_PROVIDER_SEAL,
-                    STORE_PROFILE,
-                    PgRowOriginalsStore,
-                )
-                target_reference = self._custodian._public_reference(
-                    target)
-                verified_target = self._custodian._resolve_target_custody(
-                    target)
-                if (verified_target.reference != target_reference
-                        or target_reference.get('custodianId') != self._custodian_id
-                        or target_reference.get('resourceId') is None
-                        or target_reference.get('incarnation') is None):
-                    raise LocalPostgresError(
-                        'local-postgresql-store-recovery-target-invalid')
-                store = _store_descriptor(STORE_PROFILE, provider_id)
-                external_doc = self._custodian._journal._load()
-                external = _replay(
-                    external_doc['events'], profile=JOURNAL_PROFILE_02)
-                key = (target_reference['registrationId'], self._provider_id,
-                       self._bound_installation_id, store['profile'],
-                       store['storeId'], store['schemaName'])
-                matches = [(candidate, state) for candidate, state
-                           in external['stores'].items() if candidate == key]
-                if len(matches) != 1:
-                    raise LocalPostgresError(
-                        'local-postgresql-store-recovery-outcome-unresolved')
-                _selected_key, state = matches[0]
-                reserved_events = [event for event in external_doc['events']
-                                   if event['kind'] == 'originals-store-reserved'
-                                   and event['payload']['reservation']['reservationId']
-                                       == state.get('id')]
-                if (state.get('status') not in {
-                        'reserved', 'observed-committed', 'confirmed'}
-                        or len(reserved_events) != 1
-                        or reserved_events[0]['payload']['reservation'].get('store') != store
-                        or reserved_events[0]['payload']['reservation'].get(
-                            'targetCustody') != target_reference):
-                    raise LocalPostgresError(
-                        'local-postgresql-store-recovery-prefix-invalid')
-                supervisor_intent = next((event['payload']
-                    for event in self._journal.read()['events']
-                    if event['kind'] == 'creation-intent'), None)
-                if type(supervisor_intent) is not dict:
-                    raise LocalPostgresError(
-                        'local-postgresql-store-recovery-unavailable')
-                return PgRowOriginalsStore._from_recovery(
-                    _RECOVERY_PROVIDER_SEAL, supervisor=self,
-                    connection=connection, provider_id=provider_id,
-                    installation_id=self._bound_installation_id,
-                    controller_role=supervisor_intent['controllerName'],
-                    custodian=self._custodian, target=target)
-            except LocalPostgresError:
-                raise
-            except Exception:  # noqa: BLE001 -- no authority from malformed prefix
-                raise LocalPostgresError(
-                    'local-postgresql-store-recovery-unavailable') from None
 
     def recover_originals_store_creation(
             self, target: object, connection: object, *,

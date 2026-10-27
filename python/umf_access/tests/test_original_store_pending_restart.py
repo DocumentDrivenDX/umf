@@ -35,7 +35,10 @@ from umf_access.lifecycle.owner_authority import (
     _canonical_bytes,
     create_owner_authority_session,
 )
-from umf_access.lifecycle.row_originals import STORE_PROFILE
+from umf_access.lifecycle.row_originals import (
+    STORE_PROFILE,
+    open_originals_store_recovery,
+)
 
 
 class _Cursor:
@@ -675,8 +678,9 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                         Connection=_FakeConnection, connect=fake_psycopg_connect,
                         rows=psycopg_rows_fixture)
                     with patch.dict(sys.modules, {'psycopg': psycopg_fixture}):
-                        recovery_provider = restarted_supervisor.open_originals_store_recovery(
-                            caller_connection, provider_id=provider_id)
+                        recovery_provider = open_originals_store_recovery(
+                            restarted_supervisor, caller_connection,
+                            provider_id=provider_id)
                     with self.assertRaisesRegex(Exception, 'store-recovery-only'):
                         recovery_provider.create()
                     with self.assertRaisesRegex(Exception, 'store-recovery-only'):
@@ -1041,8 +1045,9 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                     self.assertIsNone(after_pending_supervisor.custody_handle)
                     pending_connection = _FakeConnection(db)
                     with patch.dict(sys.modules, {'psycopg': psycopg_fixture}):
-                        pending_provider = after_pending_supervisor.open_originals_store_recovery(
-                            pending_connection, provider_id=provider_id)
+                        pending_provider = open_originals_store_recovery(
+                            after_pending_supervisor, pending_connection,
+                            provider_id=provider_id)
                     with self.assertRaisesRegex(Exception, 'store-recovery-only'):
                         pending_provider.create()
                     with self.assertRaisesRegex(Exception, 'store-recovery-only'):

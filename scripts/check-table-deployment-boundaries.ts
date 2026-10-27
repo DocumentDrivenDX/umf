@@ -47,6 +47,14 @@ function exactAccountingTypeRoute(file:string,node:ts.Node):boolean{
  const clause=node.importClause,bindings=clause?.namedBindings;
  return Boolean(clause?.isTypeOnly&&!clause.name&&bindings&&ts.isNamedImports(bindings)&&bindings.elements.length===1&&!bindings.elements[0]!.propertyName&&bindings.elements[0]!.name.text==='AccountingContext'&&!bindings.elements[0]!.isTypeOnly);
 }
+const r2InventoryOptionTypes=new Set(['TableInventoryArchiveSource','TableInventoryDiscoveryConversion','TableInventoryDiscoveryIntent','TableInventoryRetirement','TableInventorySourceHistory']);
+function exactR2InventoryOptionTypesRoute(file:string,node:ts.Node):boolean{
+ if(file!=='migration/inventory-r2-context.ts'||!ts.isImportDeclaration(node)||!ts.isStringLiteral(node.moduleSpecifier)||node.moduleSpecifier.text!=='./inventory-options')return false;
+ const clause=node.importClause,bindings=clause?.namedBindings;
+ if(!clause||!clause.isTypeOnly||clause.name||!bindings||!ts.isNamedImports(bindings)||bindings.elements.length!==r2InventoryOptionTypes.size||bindings.elements.some(element=>element.propertyName||element.isTypeOnly))return false;
+ const names=bindings.elements.map(element=>element.name.text);
+ return new Set(names).size===r2InventoryOptionTypes.size&&names.every(name=>r2InventoryOptionTypes.has(name));
+}
 function exactDocumentAccountingRoute(file:string,node:ts.Node):boolean{
  if(!['index.ts','migration/internal.ts'].includes(file)||!ts.isImportDeclaration(node)||!ts.isStringLiteral(node.moduleSpecifier)||node.moduleSpecifier.text!=='../model/document-accounting')return false;
  const clause=node.importClause,bindings=clause?.namedBindings;
@@ -58,7 +66,7 @@ export function checkTableDeploymentBoundaries(sources:Record<string,string>):st
   if(!owners[file]){errors.push(file+': module has no declared owner');continue;}
   const source=ts.createSourceFile(file,text,ts.ScriptTarget.Latest,true);
   const visit=(node:ts.Node):void=>{
-   if((ts.isImportDeclaration(node)||ts.isExportDeclaration(node))&&node.moduleSpecifier&&ts.isStringLiteral(node.moduleSpecifier)&&!owners[file]!.includes(node.moduleSpecifier.text)&&!exactAccountingTypeRoute(file,node)&&!exactDocumentAccountingRoute(file,node))errors.push(file+': unapproved dependency '+node.moduleSpecifier.text);
+   if((ts.isImportDeclaration(node)||ts.isExportDeclaration(node))&&node.moduleSpecifier&&ts.isStringLiteral(node.moduleSpecifier)&&!owners[file]!.includes(node.moduleSpecifier.text)&&!exactAccountingTypeRoute(file,node)&&!exactR2InventoryOptionTypesRoute(file,node)&&!exactDocumentAccountingRoute(file,node))errors.push(file+': unapproved dependency '+node.moduleSpecifier.text);
    if(ts.isCallExpression(node)&&node.expression.kind===ts.SyntaxKind.ImportKeyword)errors.push(file+': dynamic import');
    if(ts.isIdentifier(node)&&forbidden.has(node.text))errors.push(file+': host/executable hook '+node.text);
    ts.forEachChild(node,visit);

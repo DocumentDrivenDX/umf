@@ -55,7 +55,7 @@ class MigrationPhaseTests(unittest.TestCase):
             with self.subTest(mutate=mutate):
                 value = copy.deepcopy(plan())
                 mutate(value)
-                with self.assertRaisesRegex(  # noqa: SIM117 -- mutation must remain outside expected-error scope
+                with self.assertRaisesRegex(
                         CatalogError, 'mixed-phase-profile'):
                     _verified_phases(value)
 
@@ -261,7 +261,7 @@ class MigrationPhaseTests(unittest.TestCase):
             with self.subTest(mutation=mutate):
                 candidate = copy.deepcopy(case)
                 mutate(candidate)
-                with self.assertRaisesRegex(  # noqa: SIM117 -- keep mutation outside expected-error scope
+                with self.assertRaisesRegex(
                         CatalogError, 'mixed-phase-profile'):
                     _verified_phases(candidate)
 

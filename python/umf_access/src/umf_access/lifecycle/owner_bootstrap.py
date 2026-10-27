@@ -1195,7 +1195,7 @@ def _verify_target_custody_journal_resource(enrollment: dict[str, Any]) -> None:
         raise LocalPostgresError('target-custody-journal-birth-incomplete') from None
     if lock_raw != b'':
         raise LocalPostgresError('target-custody-journal-birth-incomplete')
-    from .ingress_custody import (
+    from .target_custody_codec import (
         CustodyJournalError,
         validate_original_target_custody_record,
     )

@@ -10,14 +10,21 @@ from pathlib import Path
 def approved_lifecycle_external_import(name: str, target: str, member: str, *,
                                        verifier_scope: bool = False,
                                        native_wait_scope: bool = False,
+                                       native_connection_scope: bool = False,
                                        imported_as: str | None = None) -> bool:
     """Return only the reviewed host-API exceptions for lifecycle modules."""
-    if name == "umf_access.lifecycle.ingress_local_postgres":
-        if target == "psycopg" and member == "connect":
+    if name in {"umf_access.lifecycle.ingress_local_postgres",
+                "umf_access.lifecycle.row_originals"}:
+        if (target == "psycopg" and member == "Connection"
+                and native_connection_scope and imported_as is None):
             return True
-        return (native_wait_scope and imported_as is None
-                and ((target == "psycopg" and member in {"Connection", "Cursor"})
-                     or (target == "psycopg._enums" and member in {"Ready", "Wait"})))
+        if name == "umf_access.lifecycle.ingress_local_postgres":
+            if target == "psycopg" and member == "connect":
+                return True
+            return (native_wait_scope and imported_as is None
+                    and ((target == "psycopg" and member in {"Connection", "Cursor"})
+                         or (target == "psycopg._enums" and member in {"Ready", "Wait"})))
+        return False
     if name == "umf_access.lifecycle.ingress_store":
         return target == "psycopg.pq" and member == "TransactionStatus"
     verifier_modules = {
@@ -77,6 +84,7 @@ def check(root: Path) -> int:
                     "conversion_policy": "lifecycle", "row_originals": "lifecycle",
                     "row_originals_creation": "lifecycle",
                     "row_originals_receipt": "lifecycle",
+                    "target_custody_codec": "lifecycle",
                     "generation_enrollment_authority": "lifecycle",
                     "generation_authority_bootstrap": "lifecycle",
                     "supervisor_journal_codec": "lifecycle",
@@ -120,7 +128,8 @@ def check(root: Path) -> int:
         return helpers.get(parts[1], parts[1]) if len(parts) > 1 else "facade"
 
     def edge(name: str, target: str, member: str = "", *, verifier_scope: bool = False,
-             native_wait_scope: bool = False, imported_as: str | None = None) -> None:
+             native_wait_scope: bool = False, native_connection_scope: bool = False,
+             imported_as: str | None = None) -> None:
         path = modules[name]
         source_owner = owner(name)
         if (name == "umf_access.lifecycle.generation_root_registry"
@@ -157,6 +166,7 @@ def check(root: Path) -> int:
                       or target == "psycopg.types.json" and member == "Jsonb"
                       or approved_lifecycle_external_import(name, target, member, verifier_scope=verifier_scope,
                                                             native_wait_scope=native_wait_scope,
+                                                            native_connection_scope=native_connection_scope,
                                                             imported_as=imported_as)
                       or target == "umf_codegen" and member in {"verify_table_deployment", "verify_table_migration"}
                       or name == "umf_access.lifecycle.ledger" and target == "umf_codegen" and member == "compile_table_migration"
@@ -186,7 +196,9 @@ def check(root: Path) -> int:
                               and target == 'pglast.parser' and member == 'parse_sql_json')
         if package not in permitted and not spark_error and not typing_backport and not psycopg2_cursor and not table_read_compiler and not seed_compiler and not containment_parser and not approved_lifecycle_external_import(
                 name, target, member, verifier_scope=verifier_scope,
-                native_wait_scope=native_wait_scope, imported_as=imported_as):
+                native_wait_scope=native_wait_scope,
+                native_connection_scope=native_connection_scope,
+                imported_as=imported_as):
             fail(path, "DEPENDENCY", f"{target} outside approved imports for {source_owner}")
         metadata_pin = (name == 'umf_access.lifecycle.sql_containment_parser'
                         and target == 'importlib.metadata' and member in {'version', 'PackageNotFoundError'})
@@ -269,6 +281,47 @@ def check(root: Path) -> int:
                 current = parent
             return True
 
+        def exact_native_connection_scope(
+                node: ast.AST, *, module_name: str = name,
+                module_tree: ast.AST = tree,
+                parent_nodes: dict[ast.AST, ast.AST] = parents) -> bool:
+            allowed_scopes: list[ast.FunctionDef] = []
+            if module_name == "umf_access.lifecycle.ingress_local_postgres":
+                classes = [item for item in module_tree.body
+                           if isinstance(item, ast.ClassDef)
+                           and item.name == "LocalPostgresSupervisor"]
+                if len(classes) != 1:
+                    return False
+                methods = [item for item in classes[0].body
+                           if isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef))
+                           and item.name == "_capture_original_store_timeout_lower_bounds"]
+                if len(methods) != 1 or not isinstance(methods[0], ast.FunctionDef):
+                    return False
+                allowed_scopes.append(methods[0])
+            elif module_name == "umf_access.lifecycle.row_originals":
+                functions = [item for item in module_tree.body
+                             if isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef))
+                             and item.name == "open_originals_store_recovery"]
+                if len(functions) != 1 or not isinstance(functions[0], ast.FunctionDef):
+                    return False
+                allowed_scopes.append(functions[0])
+            else:
+                return False
+            allowed = set(allowed_scopes)
+            current = node
+            while current not in allowed:
+                parent = parent_nodes.get(current)
+                if parent is None:
+                    return False
+                if parent in allowed:
+                    current = parent
+                    continue
+                if isinstance(parent, (ast.FunctionDef, ast.AsyncFunctionDef,
+                                       ast.ClassDef)):
+                    return False
+                current = parent
+            return True
+
         def approved_verifier_scope(node: ast.AST, *, module_name: str = name,
                                     parent_nodes: dict[ast.AST, ast.AST] = parents,
                                     method: ast.FunctionDef | ast.AsyncFunctionDef | None = verifier_method
@@ -303,10 +356,13 @@ def check(root: Path) -> int:
         for node in ast.walk(tree):
             lazy_verifier_scope = approved_verifier_scope(node)
             native_wait_scope = exact_native_wait_scope(node)
+            native_connection_scope = exact_native_connection_scope(node)
             if isinstance(node, ast.Import):
                 for alias in node.names:
                     edge(name, alias.name, verifier_scope=lazy_verifier_scope,
-                         native_wait_scope=native_wait_scope, imported_as=alias.asname)
+                         native_wait_scope=native_wait_scope,
+                         native_connection_scope=native_connection_scope,
+                         imported_as=alias.asname)
             elif isinstance(node, ast.ImportFrom):
                 target = node.module or ""
                 if node.level:
@@ -320,6 +376,7 @@ def check(root: Path) -> int:
                     child = f"{target}.{alias.name}"
                     edge(name, child if child in modules else target, alias.name,
                          verifier_scope=lazy_verifier_scope, native_wait_scope=native_wait_scope,
+                         native_connection_scope=native_connection_scope,
                          imported_as=alias.asname)
                     if alias.name == "*":
                         fail(path, "PRIVATE", "star imports hide public ownership")

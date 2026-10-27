@@ -1128,7 +1128,7 @@ def validate_artifact_aggregate(index_path: Path, selected_cell: str, mirror_pat
         raise ValueError('Shared mirror manifest wheel map has an extra or missing filename')
     for filename, item in expected_by_file.items():
         expected_manifest_row = MIRROR.wheel_metadata(wheel_dir / filename)
-        expected_manifest_row['source'] = expected_wheels[filename].get('source')
+        expected_manifest_row['source'] = item['source']
         if manifest_by_filename[filename] != expected_manifest_row:
             raise ValueError(f'Shared mirror manifest differs from exact union wheel record: {filename}')
     with tempfile.TemporaryDirectory(prefix='umf-split-aggregate-mirror-check-') as temporary:

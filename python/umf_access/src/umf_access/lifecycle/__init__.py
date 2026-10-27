@@ -4,7 +4,6 @@ from .approval import ApprovalBinding, ApprovalReceipt, TargetIdentity
 from .catalog import CatalogError, verify_native_catalog
 from .concurrent import apply_concurrent_indexes
 from .correspondence import prepare_table_correspondence
-from .head import prepare_table_head, read_table_head
 from .generation_ingress import (
     EpochProvisionRequest,
     EpochProvisionReservation,
@@ -22,6 +21,7 @@ from .generation_ingress import (
     TargetCustody,
     TargetReservation,
 )
+from .head import prepare_table_head, read_table_head
 from .host import (
     HostCapabilities,
     HostOutcomeUnknown,

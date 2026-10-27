@@ -39,6 +39,20 @@ test('accounting context is admitted only as its exact named type import',()=>{
  ])expect(checkTableDeploymentBoundaries({[file]:text}).length).toBeGreaterThan(0);
  expect(checkTableDeploymentBoundaries({'migration/unknown.ts':route}).length).toBeGreaterThan(0);
 });
+test('R2 inventory options are admitted only as the exact five named type imports',()=>{
+ const file='migration/inventory-r2-context.ts';
+ const route="import type {TableInventoryArchiveSource,TableInventoryDiscoveryConversion,TableInventoryDiscoveryIntent,TableInventoryRetirement,TableInventorySourceHistory} from './inventory-options';";
+ expect(checkTableDeploymentBoundaries({[file]:route})).toEqual([]);
+ for(const text of [
+  "import {TableInventoryArchiveSource,TableInventoryDiscoveryConversion,TableInventoryDiscoveryIntent,TableInventoryRetirement,TableInventorySourceHistory} from './inventory-options';",
+  "import type {TableInventoryArchiveSource as ArchiveSource,TableInventoryDiscoveryConversion,TableInventoryDiscoveryIntent,TableInventoryRetirement,TableInventorySourceHistory} from './inventory-options';",
+  "import type {TableInventoryArchiveSource,TableInventoryDiscoveryConversion,TableInventoryDiscoveryIntent,TableInventoryRetirement} from './inventory-options';",
+  "import type {TableInventoryArchiveSource,TableInventoryDiscoveryConversion,TableInventoryDiscoveryIntent,TableInventoryRetirement,TableInventoryRetirement} from './inventory-options';",
+  "import type {TableInventoryArchiveSource,TableInventoryDiscoveryConversion,TableInventoryDiscoveryIntent,TableInventoryRetirement,TableInventorySourceHistory,Other} from './inventory-options';",
+  "import type {TableInventoryArchiveSource,TableInventoryDiscoveryConversion,TableInventoryDiscoveryIntent,TableInventoryRetirement,TableInventorySourceHistory} from './inventory-options'; import {runtimeValue} from './inventory-options';",
+ ])expect(checkTableDeploymentBoundaries({[file]:text}).length).toBeGreaterThan(0);
+ expect(checkTableDeploymentBoundaries({'migration/g11-source.ts':route}).length).toBeGreaterThan(0);
+});
 test('deployment and migration entrypoints admit only the named runtime document-accounting helper',()=>{
  const route="import {readJsonDocumentWithAccounting} from '../model/document-accounting';";
  for(const file of ['index.ts','migration/internal.ts'])expect(checkTableDeploymentBoundaries({[file]:route})).toEqual([]);

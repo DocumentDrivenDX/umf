@@ -481,8 +481,15 @@ def reserve_originals_store_creation(supervisor: object, evidence: object,
                                      ) -> tuple[object, dict[str, Any]]:
     """Resolve the exact supervisor-issued original reservation before DDL."""
     from .row_originals_receipt import (
-        MAX_RECEIPT_BYTES, _RESERVATION_KEYS, _RESERVATION_PROFILE, _no_duplicates,
-        _digest, _fail, _safe_int, _uuid, canonical_bytes,
+        _RESERVATION_KEYS,
+        _RESERVATION_PROFILE,
+        MAX_RECEIPT_BYTES,
+        _digest,
+        _fail,
+        _no_duplicates,
+        _safe_int,
+        _uuid,
+        canonical_bytes,
     )
     try:
         from .ingress_local_postgres import LocalPostgresSupervisor
@@ -1615,3 +1622,91 @@ def _strict_ident(value: str) -> str:
     if type(value) is not str or not value or '\x00' in value:
         _fail('row-originals-record-invalid')
     return value
+
+
+def open_originals_store_recovery(supervisor: object, connection: object, *,
+                                  provider_id: str) -> object:
+    """Issue a restricted provider for one exact original store journal key."""
+    try:
+        from .ingress_local_postgres import (
+            LocalPostgresError,
+            LocalPostgresSupervisor,
+            _store_descriptor,
+        )
+    except ImportError:
+        _fail('row-originals-store-recovery-unavailable')
+    if type(supervisor) is not LocalPostgresSupervisor:
+        _fail('row-originals-store-recovery-unavailable')
+    with supervisor._original_control_lease(operation_kind='store'):
+        supervisor._require_original_control_lease(operation_kind='store')
+        if (type(provider_id) is not str
+                or provider_id != supervisor._provider_id
+                or supervisor._journal is None or supervisor._custodian is None
+                or (supervisor._custody_handle is None
+                    and supervisor._pending_original_store_recovery is None)):
+            raise LocalPostgresError(
+                'local-postgresql-store-recovery-unavailable')
+        target = (supervisor._custody_handle if supervisor._custody_handle is not None
+                  else supervisor._pending_original_store_recovery[0])
+        supervisor._require_original_store_recovery_target(target)
+        try:
+            from psycopg import Connection
+            if type(connection) is not Connection or connection.closed:
+                raise LocalPostgresError(
+                    'local-postgresql-store-recovery-connection-invalid')
+            if int(connection.info.transaction_status) != 0:
+                raise LocalPostgresError(
+                    'local-postgresql-store-readonly-transaction-active')
+            from .ingress_custody import JOURNAL_PROFILE_02, _replay
+            target_reference = supervisor._custodian._public_reference(
+                target)
+            verified_target = supervisor._custodian._resolve_target_custody(
+                target)
+            if (verified_target.reference != target_reference
+                    or target_reference.get('custodianId') != supervisor._custodian_id
+                    or target_reference.get('resourceId') is None
+                    or target_reference.get('incarnation') is None):
+                raise LocalPostgresError(
+                    'local-postgresql-store-recovery-target-invalid')
+            store = _store_descriptor(STORE_PROFILE, provider_id)
+            external_doc = supervisor._custodian._journal._load()
+            external = _replay(
+                external_doc['events'], profile=JOURNAL_PROFILE_02)
+            key = (target_reference['registrationId'], supervisor._provider_id,
+                   supervisor._bound_installation_id, store['profile'],
+                   store['storeId'], store['schemaName'])
+            matches = [(candidate, state) for candidate, state
+                       in external['stores'].items() if candidate == key]
+            if len(matches) != 1:
+                raise LocalPostgresError(
+                    'local-postgresql-store-recovery-outcome-unresolved')
+            _selected_key, state = matches[0]
+            reserved_events = [event for event in external_doc['events']
+                               if event['kind'] == 'originals-store-reserved'
+                               and event['payload']['reservation']['reservationId']
+                                   == state.get('id')]
+            if (state.get('status') not in {
+                    'reserved', 'observed-committed', 'confirmed'}
+                    or len(reserved_events) != 1
+                    or reserved_events[0]['payload']['reservation'].get('store') != store
+                    or reserved_events[0]['payload']['reservation'].get(
+                        'targetCustody') != target_reference):
+                raise LocalPostgresError(
+                    'local-postgresql-store-recovery-prefix-invalid')
+            supervisor_intent = next((event['payload']
+                for event in supervisor._journal.read()['events']
+                if event['kind'] == 'creation-intent'), None)
+            if type(supervisor_intent) is not dict:
+                raise LocalPostgresError(
+                    'local-postgresql-store-recovery-unavailable')
+            return PgRowOriginalsStore._from_recovery(
+                _RECOVERY_PROVIDER_SEAL, supervisor=supervisor,
+                connection=connection, provider_id=provider_id,
+                installation_id=supervisor._bound_installation_id,
+                controller_role=supervisor_intent['controllerName'],
+                custodian=supervisor._custodian, target=target)
+        except LocalPostgresError:
+            raise
+        except Exception:  # noqa: BLE001 -- no authority from malformed prefix
+            raise LocalPostgresError(
+                'local-postgresql-store-recovery-unavailable') from None

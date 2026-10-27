@@ -53,8 +53,9 @@ class ConfigurationTests(unittest.TestCase):
    with self.subTest(selected=selected),tempfile.TemporaryDirectory() as tmp:
     root=Path(tmp);config,_=self._source_pinned_configuration(root,selected)
     def installed_version(name, selected=selected, other=other):return 'wrong' if name==selected else 'exact' if name==other else 'unexpected'
-    with patch('importlib.metadata.version',side_effect=installed_version) as metadata_version:
-     with self.assertRaises(CatalogBuildError):resolve_configuration(config,root)
+    with (patch('importlib.metadata.version',side_effect=installed_version) as metadata_version,
+          self.assertRaises(CatalogBuildError)):
+     resolve_configuration(config,root)
     metadata_version.assert_called_once_with(selected)
 
  def test_selected_distribution_absence_never_falls_back(self):
@@ -65,8 +66,9 @@ class ConfigurationTests(unittest.TestCase):
     def installed_version(name, selected=selected, other=other):
      if name==selected:raise PackageNotFoundError(selected)
      return 'exact' if name==other else 'unexpected'
-    with patch('importlib.metadata.version',side_effect=installed_version) as metadata_version:
-     with self.assertRaises(PackageNotFoundError):resolve_configuration(config,root)
+    with (patch('importlib.metadata.version',side_effect=installed_version) as metadata_version,
+          self.assertRaises(PackageNotFoundError)):
+     resolve_configuration(config,root)
     metadata_version.assert_called_once_with(selected)
 
  def test_noncanonical_distribution_selections_refuse_before_metadata_lookup(self):
@@ -82,8 +84,9 @@ class ConfigurationTests(unittest.TestCase):
   for pin in invalid_pins:
    with self.subTest(pin=pin),tempfile.TemporaryDirectory() as tmp:
     root=Path(tmp);config,_=self._source_pinned_configuration(root,'weft-sql');config['weft']=pin
-    with patch('importlib.metadata.version',return_value='exact') as metadata_version:
-     with self.assertRaises(CatalogBuildError):resolve_configuration(config,root)
+    with (patch('importlib.metadata.version',return_value='exact') as metadata_version,
+          self.assertRaises(CatalogBuildError)):
+     resolve_configuration(config,root)
     metadata_version.assert_not_called()
 
  def test_unsafe_sources_and_unexpected_configuration_refuse(self):

@@ -24,6 +24,12 @@ class LifecycleExternalImportPolicyTests(unittest.TestCase):
                                  'psycopg', 'connect'))
         self.assertFalse(allowed('umf_access.lifecycle.ingress_local_postgres',
                                  'psycopg', 'Connection'))
+        self.assertTrue(allowed('umf_access.lifecycle.row_originals',
+                                'psycopg', 'Connection', native_connection_scope=True))
+        self.assertFalse(allowed('umf_access.lifecycle.row_originals',
+                                 'psycopg', 'Connection'))
+        self.assertFalse(allowed('umf_access.lifecycle.row_originals',
+                                 'psycopg', 'Cursor', native_connection_scope=True))
 
     def test_native_wait_protocol_symbols_require_exact_scope_and_unaliased_names(self):
         allowed = _CHECKER.approved_lifecycle_external_import
@@ -82,6 +88,80 @@ class NativeWaitImportScopeCheckerTests(unittest.TestCase):
         result, output = self._check_source(
             'def _execute_original_store_sql():\n'
             '    from psycopg import Connection\n', module='ingress_store')
+        self.assertEqual(result, 1, output)
+        self.assertIn('PRIVATE', output)
+
+    def test_connection_import_is_limited_to_supervisor_method_and_facade_function(self):
+        source = ('class LocalPostgresSupervisor:\n'
+                  '    def _capture_original_store_timeout_lower_bounds(self):\n'
+                  '        from psycopg import Connection\n')
+        result, output = self._check_source(source)
+        self.assertEqual(result, 0, output)
+        facade = ('def open_originals_store_recovery(supervisor, connection):\n'
+                  '    from psycopg import Connection\n')
+        result, output = self._check_source(facade, module='row_originals')
+        self.assertEqual(result, 0, output)
+
+    def test_connection_import_rejects_aliases_wrong_files_and_nested_scopes(self):
+        sources = (
+            ('class LocalPostgresSupervisor:\n'
+             '    def _capture_original_store_timeout_lower_bounds(self):\n'
+             '        from psycopg import Connection as DriverConnection\n'),
+            ('class LocalPostgresSupervisor:\n'
+             '    def unrelated(self):\n'
+             '        from psycopg import Connection\n'),
+            ('class LocalPostgresSupervisor:\n'
+             '    def open_originals_store_recovery(self):\n'
+             '        from psycopg import Connection\n'
+             '    def _capture_original_store_timeout_lower_bounds(self):\n'
+             '        pass\n'),
+            ('class LocalPostgresSupervisor:\n'
+             '    def _capture_original_store_timeout_lower_bounds(self):\n'
+             '        def nested():\n'
+             '            from psycopg import Connection\n'),
+            ('class LocalPostgresSupervisor:\n'
+             '    def _capture_original_store_timeout_lower_bounds(self):\n'
+             '        from psycopg import Connection, Cursor\n'),
+            ('class LocalPostgresSupervisor:\n'
+             '    def _capture_original_store_timeout_lower_bounds(self):\n'
+             '        from psycopg import Connection\n'
+             '    def _capture_original_store_timeout_lower_bounds(self):\n'
+             '        pass\n'),
+        )
+        for source in sources:
+            with self.subTest(source=source):
+                result, output = self._check_source(source)
+                self.assertEqual(result, 1, output)
+                self.assertIn('PRIVATE', output)
+        facade_sources = (
+            ('def unrelated():\n'
+             '    from psycopg import Connection\n'),
+            ('def open_originals_store_recovery(supervisor, connection):\n'
+             '    def nested():\n'
+             '        from psycopg import Connection\n'),
+            ('def open_originals_store_recovery(supervisor, connection):\n'
+             '    from psycopg import Connection as DriverConnection\n'),
+            ('def open_originals_store_recovery(supervisor, connection):\n'
+             '    from psycopg import Connection, Cursor\n'),
+            ('def open_originals_store_recovery(supervisor, connection):\n'
+             '    from psycopg import Connection\n'
+             'def open_originals_store_recovery(supervisor, connection):\n'
+             '    pass\n'),
+        )
+        for source in facade_sources:
+            with self.subTest(source=source):
+                result, output = self._check_source(source, module='row_originals')
+                self.assertEqual(result, 1, output)
+                self.assertIn('PRIVATE', output)
+        result, output = self._check_source(
+            'def open_originals_store_recovery(supervisor, connection):\n'
+            '    from psycopg import Connection\n', module='row_originals_creation')
+        self.assertEqual(result, 1, output)
+        self.assertIn('PRIVATE', output)
+        result, output = self._check_source(
+            'class LocalPostgresSupervisor:\n'
+            '    def _capture_original_store_timeout_lower_bounds(self):\n'
+            '        from psycopg import Connection\n', module='ingress_store')
         self.assertEqual(result, 1, output)
         self.assertIn('PRIVATE', output)
 

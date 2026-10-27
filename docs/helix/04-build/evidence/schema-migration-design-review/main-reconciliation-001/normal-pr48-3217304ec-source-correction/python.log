@@ -1,0 +1,1310 @@
+﻿2026-10-27T20:10:44.7305520Z Current runner version: '2.338.0'
+2026-10-27T20:10:44.7331739Z ##[group]Runner Image Provisioner
+2026-10-27T20:10:44.7332670Z Hosted Compute Agent
+2026-10-27T20:10:44.7333305Z Version: 20261021.618
+2026-10-27T20:10:44.7334103Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-10-27T20:10:44.7334869Z Build Date: 2026-10-21T00:45:21Z
+2026-10-27T20:10:44.7335571Z Worker ID: {916c67fd-0e2e-46e1-94a2-ffb78b091b1e}
+2026-10-27T20:10:44.7336393Z Region: westcentralus
+2026-10-27T20:10:44.7337013Z Cloud: Azure
+2026-10-27T20:10:44.7337657Z ##[endgroup]
+2026-10-27T20:10:44.7339040Z ##[group]Operating System
+2026-10-27T20:10:44.7339717Z Ubuntu
+2026-10-27T20:10:44.7340370Z 26.04.1
+2026-10-27T20:10:44.7341078Z LTS
+2026-10-27T20:10:44.7341713Z ##[endgroup]
+2026-10-27T20:10:44.7342319Z ##[group]Runner Image
+2026-10-27T20:10:44.7342980Z Image: ubuntu-26.04
+2026-10-27T20:10:44.7343649Z Version: 20261012.163.1
+2026-10-27T20:10:44.7345009Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261012.163/images/ubuntu/Ubuntu2604-Readme.md
+2026-10-27T20:10:44.7346669Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261012.163
+2026-10-27T20:10:44.7347663Z ##[endgroup]
+2026-10-27T20:10:44.7348996Z ##[group]GITHUB_TOKEN Permissions
+2026-10-27T20:10:44.7351242Z Contents: read
+2026-10-27T20:10:44.7351993Z Metadata: read
+2026-10-27T20:10:44.7352592Z Packages: read
+2026-10-27T20:10:44.7353269Z ##[endgroup]
+2026-10-27T20:10:44.7355887Z Secret source: Actions
+2026-10-27T20:10:44.7356887Z Cache mode: write
+2026-10-27T20:10:44.7357721Z Prepare workflow directory
+2026-10-27T20:10:44.7760390Z Prepare all required actions
+2026-10-27T20:10:44.7809180Z Getting action download info
+2026-10-27T20:10:45.0946563Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-27T20:10:45.1828491Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-10-27T20:10:45.2596780Z Download action repository 'dtolnay/rust-toolchain@stable' (SHA:b725eda525362e7cf34af9a7243cac1e3f01a7ec)
+2026-10-27T20:10:45.4912530Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-27T20:10:45.7040763Z Complete job name: python
+2026-10-27T20:10:45.7913575Z ##[group]Run actions/checkout@v4
+2026-10-27T20:10:45.7914428Z with:
+2026-10-27T20:10:45.7914890Z   repository: DocumentDrivenDX/umf
+2026-10-27T20:10:45.7918763Z   token: ***
+2026-10-27T20:10:45.7919212Z   ssh-strict: true
+2026-10-27T20:10:45.7919657Z   ssh-user: git
+2026-10-27T20:10:45.7920105Z   persist-credentials: true
+2026-10-27T20:10:45.7920597Z   clean: true
+2026-10-27T20:10:45.7921217Z   sparse-checkout-cone-mode: true
+2026-10-27T20:10:45.7921739Z   fetch-depth: 1
+2026-10-27T20:10:45.7922178Z   fetch-tags: false
+2026-10-27T20:10:45.7922627Z   show-progress: true
+2026-10-27T20:10:45.7923075Z   lfs: false
+2026-10-27T20:10:45.7923506Z   submodules: false
+2026-10-27T20:10:45.7923957Z   set-safe-directory: true
+2026-10-27T20:10:45.7924485Z   allow-unsafe-pr-checkout: false
+2026-10-27T20:10:45.7925260Z ##[endgroup]
+2026-10-27T20:10:46.0196768Z Syncing repository: DocumentDrivenDX/umf
+2026-10-27T20:10:46.0199094Z ##[group]Getting Git version info
+2026-10-27T20:10:46.0200135Z Working directory is '/home/runner/work/umf/umf'
+2026-10-27T20:10:46.0201428Z [command]/usr/bin/git version
+2026-10-27T20:10:46.0202179Z git version 2.55.0
+2026-10-27T20:10:46.0204546Z ##[endgroup]
+2026-10-27T20:10:46.0209555Z Temporarily overriding HOME='/home/runner/work/_temp/0183ba12-fb57-4b20-a2cf-61090af90c82' before making global git config changes
+2026-10-27T20:10:46.0211804Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-27T20:10:46.0212876Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf
+2026-10-27T20:10:46.0218559Z Deleting the contents of '/home/runner/work/umf/umf'
+2026-10-27T20:10:46.0223120Z ##[group]Initializing the repository
+2026-10-27T20:10:46.0239416Z [command]/usr/bin/git init /home/runner/work/umf/umf
+2026-10-27T20:10:46.0321738Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-27T20:10:46.0324671Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-27T20:10:46.0326275Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-27T20:10:46.0327191Z hint: call:
+2026-10-27T20:10:46.0327711Z hint:
+2026-10-27T20:10:46.0328339Z hint: 	git config --global init.defaultBranch <name>
+2026-10-27T20:10:46.0329071Z hint:
+2026-10-27T20:10:46.0329767Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-27T20:10:46.0330799Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-27T20:10:46.0331993Z hint:
+2026-10-27T20:10:46.0332421Z hint: 	git branch -m <name>
+2026-10-27T20:10:46.0332911Z hint:
+2026-10-27T20:10:46.0333544Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-27T20:10:46.0334481Z Initialized empty Git repository in /home/runner/work/umf/umf/.git/
+2026-10-27T20:10:46.0337711Z [command]/usr/bin/git remote add origin https://github.com/DocumentDrivenDX/umf
+2026-10-27T20:10:46.0388174Z ##[endgroup]
+2026-10-27T20:10:46.0389494Z ##[group]Disabling automatic garbage collection
+2026-10-27T20:10:46.0391547Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-27T20:10:46.0438554Z ##[endgroup]
+2026-10-27T20:10:46.0439690Z ##[group]Setting up auth
+2026-10-27T20:10:46.0446213Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T20:10:46.0493810Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-27T20:10:46.0920418Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T20:10:46.0961035Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-27T20:10:46.1271901Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T20:10:46.1309471Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-27T20:10:46.1632714Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-27T20:10:46.1678053Z ##[endgroup]
+2026-10-27T20:10:46.1679788Z ##[group]Fetching the repository
+2026-10-27T20:10:46.1689934Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +469f4aff13aba39de48631711114be7a3f56cbf5:refs/remotes/pull/48/merge
+2026-10-27T20:11:26.6082123Z From https://github.com/DocumentDrivenDX/umf
+2026-10-27T20:11:26.6084223Z  * [new ref]           469f4aff13aba39de48631711114be7a3f56cbf5 -> pull/48/merge
+2026-10-27T20:11:26.6099855Z ##[endgroup]
+2026-10-27T20:11:26.6109755Z ##[group]Determining the checkout info
+2026-10-27T20:11:26.6110849Z ##[endgroup]
+2026-10-27T20:11:26.6111798Z [command]/usr/bin/git sparse-checkout disable
+2026-10-27T20:11:26.6160823Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-27T20:11:26.6202422Z ##[group]Checking out the ref
+2026-10-27T20:11:26.6204453Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/48/merge
+2026-10-27T20:11:27.8936648Z Updating files:   5% (3631/63964)
+2026-10-27T20:11:28.0315587Z Updating files:   6% (3838/63964)
+2026-10-27T20:11:28.3744664Z Updating files:   7% (4478/63964)
+2026-10-27T20:11:28.4498901Z Updating files:   8% (5118/63964)
+2026-10-27T20:11:28.4902343Z Updating files:   9% (5757/63964)
+2026-10-27T20:11:28.6789980Z Updating files:  10% (6397/63964)
+2026-10-27T20:11:28.6817399Z Updating files:  10% (7028/63964)
+2026-10-27T20:11:28.7764366Z Updating files:  11% (7037/63964)
+2026-10-27T20:11:28.8735205Z Updating files:  12% (7676/63964)
+2026-10-27T20:11:28.9190521Z Updating files:  13% (8316/63964)
+2026-10-27T20:11:29.5293127Z Updating files:  14% (8955/63964)
+2026-10-27T20:11:29.7137929Z Updating files:  15% (9595/63964)
+2026-10-27T20:11:30.1815997Z Updating files:  15% (9772/63964)
+2026-10-27T20:11:30.4810233Z Updating files:  16% (10235/63964)
+2026-10-27T20:11:30.5167398Z Updating files:  17% (10874/63964)
+2026-10-27T20:11:30.7268749Z Updating files:  18% (11514/63964)
+2026-10-27T20:11:31.0238621Z Updating files:  18% (11825/63964)
+2026-10-27T20:11:31.1877601Z Updating files:  19% (12154/63964)
+2026-10-27T20:11:31.3481834Z Updating files:  20% (12793/63964)
+2026-10-27T20:11:31.5771439Z Updating files:  21% (13433/63964)
+2026-10-27T20:11:31.6130366Z Updating files:  22% (14073/63964)
+2026-10-27T20:11:31.6523684Z Updating files:  23% (14712/63964)
+2026-10-27T20:11:31.6784899Z Updating files:  24% (15352/63964)
+2026-10-27T20:11:31.6817613Z Updating files:  24% (15908/63964)
+2026-10-27T20:11:31.7109471Z Updating files:  25% (15991/63964)
+2026-10-27T20:11:31.7424240Z Updating files:  26% (16631/63964)
+2026-10-27T20:11:31.7721258Z Updating files:  27% (17271/63964)
+2026-10-27T20:11:31.8028152Z Updating files:  28% (17910/63964)
+2026-10-27T20:11:31.8326461Z Updating files:  29% (18550/63964)
+2026-10-27T20:11:31.8715150Z Updating files:  30% (19190/63964)
+2026-10-27T20:11:31.9264127Z Updating files:  31% (19829/63964)
+2026-10-27T20:11:31.9565697Z Updating files:  32% (20469/63964)
+2026-10-27T20:11:32.4877550Z Updating files:  33% (21109/63964)
+2026-10-27T20:11:32.7471906Z Updating files:  34% (21748/63964)
+2026-10-27T20:11:33.7502674Z Updating files:  34% (21779/63964)
+2026-10-27T20:11:34.6893169Z Updating files:  34% (21849/63964)
+2026-10-27T20:11:35.6805435Z Updating files:  34% (21923/63964)
+2026-10-27T20:11:36.0229347Z Updating files:  34% (21981/63964)
+2026-10-27T20:11:36.1773781Z Updating files:  35% (22388/63964)
+2026-10-27T20:11:36.3234591Z Updating files:  36% (23028/63964)
+2026-10-27T20:11:36.3679901Z Updating files:  37% (23667/63964)
+2026-10-27T20:11:36.4042400Z Updating files:  38% (24307/63964)
+2026-10-27T20:11:36.4387383Z Updating files:  39% (24946/63964)
+2026-10-27T20:11:36.4685425Z Updating files:  40% (25586/63964)
+2026-10-27T20:11:36.4983695Z Updating files:  41% (26226/63964)
+2026-10-27T20:11:36.5255146Z Updating files:  42% (26865/63964)
+2026-10-27T20:11:36.5552241Z Updating files:  43% (27505/63964)
+2026-10-27T20:11:36.6796186Z Updating files:  44% (28145/63964)
+2026-10-27T20:11:36.7828621Z Updating files:  44% (28219/63964)
+2026-10-27T20:11:36.9059428Z Updating files:  45% (28784/63964)
+2026-10-27T20:11:36.9618462Z Updating files:  46% (29424/63964)
+2026-10-27T20:11:37.0747158Z Updating files:  47% (30064/63964)
+2026-10-27T20:11:37.1136053Z Updating files:  48% (30703/63964)
+2026-10-27T20:11:37.1598443Z Updating files:  49% (31343/63964)
+2026-10-27T20:11:37.3647378Z Updating files:  50% (31982/63964)
+2026-10-27T20:11:37.4482518Z Updating files:  51% (32622/63964)
+2026-10-27T20:11:37.4818702Z Updating files:  52% (33262/63964)
+2026-10-27T20:11:37.6799992Z Updating files:  53% (33901/63964)
+2026-10-27T20:11:37.6823919Z Updating files:  53% (34535/63964)
+2026-10-27T20:11:37.7069028Z Updating files:  54% (34541/63964)
+2026-10-27T20:11:37.7293850Z Updating files:  55% (35181/63964)
+2026-10-27T20:11:37.7616720Z Updating files:  56% (35820/63964)
+2026-10-27T20:11:37.8201528Z Updating files:  57% (36460/63964)
+2026-10-27T20:11:37.8649904Z Updating files:  58% (37100/63964)
+2026-10-27T20:11:37.8996991Z Updating files:  59% (37739/63964)
+2026-10-27T20:11:37.9525931Z Updating files:  60% (38379/63964)
+2026-10-27T20:11:37.9996820Z Updating files:  61% (39019/63964)
+2026-10-27T20:11:38.0531539Z Updating files:  62% (39658/63964)
+2026-10-27T20:11:38.0794887Z Updating files:  63% (40298/63964)
+2026-10-27T20:11:38.1034185Z Updating files:  64% (40937/63964)
+2026-10-27T20:11:38.1248703Z Updating files:  65% (41577/63964)
+2026-10-27T20:11:38.1541571Z Updating files:  66% (42217/63964)
+2026-10-27T20:11:38.1864652Z Updating files:  67% (42856/63964)
+2026-10-27T20:11:38.2247061Z Updating files:  68% (43496/63964)
+2026-10-27T20:11:38.2664415Z Updating files:  69% (44136/63964)
+2026-10-27T20:11:38.3240025Z Updating files:  70% (44775/63964)
+2026-10-27T20:11:38.3520547Z Updating files:  71% (45415/63964)
+2026-10-27T20:11:38.3741457Z Updating files:  72% (46055/63964)
+2026-10-27T20:11:38.3987616Z Updating files:  73% (46694/63964)
+2026-10-27T20:11:38.4198777Z Updating files:  74% (47334/63964)
+2026-10-27T20:11:38.4409322Z Updating files:  75% (47973/63964)
+2026-10-27T20:11:38.4626240Z Updating files:  76% (48613/63964)
+2026-10-27T20:11:38.4891592Z Updating files:  77% (49253/63964)
+2026-10-27T20:11:38.5106555Z Updating files:  78% (49892/63964)
+2026-10-27T20:11:38.5330048Z Updating files:  79% (50532/63964)
+2026-10-27T20:11:38.5581374Z Updating files:  80% (51172/63964)
+2026-10-27T20:11:38.6170593Z Updating files:  81% (51811/63964)
+2026-10-27T20:11:38.6799126Z Updating files:  82% (52451/63964)
+2026-10-27T20:11:38.6910148Z Updating files:  82% (53016/63964)
+2026-10-27T20:11:38.7727716Z Updating files:  83% (53091/63964)
+2026-10-27T20:11:38.8194542Z Updating files:  84% (53730/63964)
+2026-10-27T20:11:38.8481118Z Updating files:  85% (54370/63964)
+2026-10-27T20:11:38.8729215Z Updating files:  86% (55010/63964)
+2026-10-27T20:11:38.8981393Z Updating files:  87% (55649/63964)
+2026-10-27T20:11:38.9716793Z Updating files:  88% (56289/63964)
+2026-10-27T20:11:39.0034571Z Updating files:  89% (56928/63964)
+2026-10-27T20:11:39.0267005Z Updating files:  90% (57568/63964)
+2026-10-27T20:11:39.0549850Z Updating files:  91% (58208/63964)
+2026-10-27T20:11:39.1064163Z Updating files:  92% (58847/63964)
+2026-10-27T20:11:39.1411194Z Updating files:  93% (59487/63964)
+2026-10-27T20:11:39.1753289Z Updating files:  94% (60127/63964)
+2026-10-27T20:11:39.3165616Z Updating files:  95% (60766/63964)
+2026-10-27T20:11:39.3673798Z Updating files:  96% (61406/63964)
+2026-10-27T20:11:39.9236867Z Updating files:  97% (62046/63964)
+2026-10-27T20:11:39.9526867Z Updating files:  97% (62320/63964)
+2026-10-27T20:11:39.9892081Z Updating files:  98% (62685/63964)
+2026-10-27T20:11:40.0437597Z Updating files:  99% (63325/63964)
+2026-10-27T20:11:40.0437953Z Updating files: 100% (63964/63964)
+2026-10-27T20:11:40.0438545Z Updating files: 100% (63964/63964), done.
+2026-10-27T20:11:40.2700291Z Note: switching to 'refs/remotes/pull/48/merge'.
+2026-10-27T20:11:40.2700588Z 
+2026-10-27T20:11:40.2701207Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-27T20:11:40.2701758Z changes and commit them, and you can discard any commits you make in this
+2026-10-27T20:11:40.2702429Z state without impacting any branches by switching back to a branch.
+2026-10-27T20:11:40.2702824Z 
+2026-10-27T20:11:40.2703177Z If you want to create a new branch to retain commits you create, you may
+2026-10-27T20:11:40.2703810Z do so (now or later) by using -c with the switch command. Example:
+2026-10-27T20:11:40.2704186Z 
+2026-10-27T20:11:40.2704398Z   git switch -c <new-branch-name>
+2026-10-27T20:11:40.2704643Z 
+2026-10-27T20:11:40.2704861Z Or undo this operation with:
+2026-10-27T20:11:40.2705187Z 
+2026-10-27T20:11:40.2705375Z   git switch -
+2026-10-27T20:11:40.2705560Z 
+2026-10-27T20:11:40.2705989Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-27T20:11:40.2706388Z 
+2026-10-27T20:11:40.2706919Z HEAD is now at 469f4aff Merge 3217304eca8652fa6cd02afde8ead1ca95224aa8 into 7d334dec45948953718bfacd3ed6dd199cadba79
+2026-10-27T20:11:40.3025776Z ##[endgroup]
+2026-10-27T20:11:40.3078180Z [command]/usr/bin/git log -1 --format=%H
+2026-10-27T20:11:40.3113534Z 469f4aff13aba39de48631711114be7a3f56cbf5
+2026-10-27T20:11:40.3368468Z ##[group]Run printf 'RUSTUP_HOME=%s/umf-rustup\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
+2026-10-27T20:11:40.3369113Z [36;1mprintf 'RUSTUP_HOME=%s/umf-rustup\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"[0m
+2026-10-27T20:11:40.3518001Z shell: /usr/bin/bash -e {0}
+2026-10-27T20:11:40.3518307Z ##[endgroup]
+2026-10-27T20:11:40.3738120Z ##[group]Run actions/setup-python@v5
+2026-10-27T20:11:40.3738418Z with:
+2026-10-27T20:11:40.3738651Z   python-version: 3.12
+2026-10-27T20:11:40.3738890Z   check-latest: false
+2026-10-27T20:11:40.3741642Z   token: ***
+2026-10-27T20:11:40.3741877Z   update-environment: true
+2026-10-27T20:11:40.3742144Z   allow-prereleases: false
+2026-10-27T20:11:40.3742388Z   freethreaded: false
+2026-10-27T20:11:40.3742610Z env:
+2026-10-27T20:11:40.3742862Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T20:11:40.3743168Z ##[endgroup]
+2026-10-27T20:11:40.5145573Z ##[group]Installed versions
+2026-10-27T20:11:40.5242901Z (node:2476) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-27T20:11:40.5243793Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-27T20:11:40.5244676Z Successfully set up CPython (3.12.15)
+2026-10-27T20:11:40.5245469Z ##[endgroup]
+2026-10-27T20:11:40.5597743Z ##[group]Run dtolnay/rust-toolchain@stable
+2026-10-27T20:11:40.5598080Z with:
+2026-10-27T20:11:40.5598294Z   toolchain: 1.90.0
+2026-10-27T20:11:40.5598513Z   components: rustfmt
+2026-10-27T20:11:40.5598741Z env:
+2026-10-27T20:11:40.5598990Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T20:11:40.5599383Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:40.5599865Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T20:11:40.5600301Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:40.5600686Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:40.5601247Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:40.5601635Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T20:11:40.5601960Z ##[endgroup]
+2026-10-27T20:11:40.5675866Z ##[start-action display=Parse toolchain version;id=__dtolnay_rust-toolchain.parse]
+2026-10-27T20:11:40.5758012Z ##[group]Run if [[ -z $toolchain ]]; then
+2026-10-27T20:11:40.5758427Z [36;1mif [[ -z $toolchain ]]; then[0m
+2026-10-27T20:11:40.5758992Z [36;1m  # GitHub does not enforce `required: true` inputs itself. https://github.com/actions/runner/issues/1070[0m
+2026-10-27T20:11:40.5759555Z [36;1m  echo "'toolchain' is a required input" >&2[0m
+2026-10-27T20:11:40.5759862Z [36;1m  exit 1[0m
+2026-10-27T20:11:40.5760204Z [36;1melif [[ $toolchain =~ ^stable' '[0-9]+' '(year|month|week|day)s?' 'ago$ ]]; then[0m
+2026-10-27T20:11:40.5760617Z [36;1m  if [[ Linux == macOS ]]; then[0m
+2026-10-27T20:11:40.5761431Z [36;1m    echo "toolchain=1.$((($(date -v-$(sed 's/stable \([0-9]*\) \(.\).*/\1\2/' <<< $toolchain) +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT[0m
+2026-10-27T20:11:40.5761950Z [36;1m  else[0m
+2026-10-27T20:11:40.5762376Z [36;1m    echo "toolchain=1.$((($(date --date "${toolchain#stable }" +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT[0m
+2026-10-27T20:11:40.5762862Z [36;1m  fi[0m
+2026-10-27T20:11:40.5763187Z [36;1melif [[ $toolchain =~ ^stable' 'minus' '[0-9]+' 'releases?$ ]]; then[0m
+2026-10-27T20:11:40.5763731Z [36;1m  echo "toolchain=1.$((($(date +%s)/60/60/24-16569)/7/6-${toolchain//[^0-9]/}))" >> $GITHUB_OUTPUT[0m
+2026-10-27T20:11:40.5764206Z [36;1melif [[ $toolchain =~ ^1\.[0-9]+$ ]]; then[0m
+2026-10-27T20:11:40.5764735Z [36;1m  echo "toolchain=1.$((i=${toolchain#1.}, c=($(date +%s)/60/60/24-16569)/7/6, i+9*i*(10*i<=c)+90*i*(100*i<=c)))" >> $GITHUB_OUTPUT[0m
+2026-10-27T20:11:40.5765225Z [36;1melse[0m
+2026-10-27T20:11:40.5765434Z [36;1m  delimiter=EOF[0m
+2026-10-27T20:11:40.5765753Z [36;1m  while [[ $toolchain == *$delimiter* ]]; do delimiter+=_; done[0m
+2026-10-27T20:11:40.5766259Z [36;1m  printf 'toolchain<<%s\n%s\n%s\n' "$delimiter" "$toolchain" "$delimiter" >> $GITHUB_OUTPUT[0m
+2026-10-27T20:11:40.5766669Z [36;1mfi[0m
+2026-10-27T20:11:40.5848772Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T20:11:40.5849146Z env:
+2026-10-27T20:11:40.5849424Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T20:11:40.5850010Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:40.5850442Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T20:11:40.5850978Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:40.5851374Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:40.5851760Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:40.5852138Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T20:11:40.5852471Z   toolchain: 1.90.0
+2026-10-27T20:11:40.5852693Z ##[endgroup]
+2026-10-27T20:11:40.5986692Z ##[end-action id=__dtolnay_rust-toolchain.parse;outcome=success;conclusion=success;duration_ms=30]
+2026-10-27T20:11:40.5992472Z ##[start-action display=Set $CARGO_HOME;id=__dtolnay_rust-toolchain.__run]
+2026-10-27T20:11:40.6017597Z ##[group]Run echo CARGO_HOME=${CARGO_HOME:-"$HOME/.cargo"} >> $GITHUB_ENV
+2026-10-27T20:11:40.6018119Z [36;1mecho CARGO_HOME=${CARGO_HOME:-"$HOME/.cargo"} >> $GITHUB_ENV[0m
+2026-10-27T20:11:40.6088174Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T20:11:40.6088540Z env:
+2026-10-27T20:11:40.6088811Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T20:11:40.6089197Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:40.6089638Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T20:11:40.6090076Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:40.6090455Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:40.6090860Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:40.6091459Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T20:11:40.6091790Z ##[endgroup]
+2026-10-27T20:11:40.6198646Z ##[end-action id=__dtolnay_rust-toolchain.__run;outcome=success;conclusion=success;duration_ms=20]
+2026-10-27T20:11:40.6201699Z ##[start-action display=Install rustup if needed;id=__dtolnay_rust-toolchain.__run_2]
+2026-10-27T20:11:40.6230285Z ##[group]Run if ! command -v rustup &>/dev/null; then
+2026-10-27T20:11:40.6230690Z [36;1mif ! command -v rustup &>/dev/null; then[0m
+2026-10-27T20:11:40.6231630Z [36;1m  curl --proto '=https' --tlsv1.2 --retry 10 --retry-connrefused --location --silent --show-error --fail https://sh.rustup.rs | sh -s -- --default-toolchain none -y[0m
+2026-10-27T20:11:40.6232369Z [36;1m  echo "$CARGO_HOME/bin" >> $GITHUB_PATH[0m
+2026-10-27T20:11:40.6232658Z [36;1mfi[0m
+2026-10-27T20:11:40.6300638Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T20:11:40.6301106Z env:
+2026-10-27T20:11:40.6301368Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T20:11:40.6301746Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:40.6302181Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T20:11:40.6302624Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:40.6303022Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:40.6303417Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:40.6303828Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T20:11:40.6304170Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T20:11:40.6304433Z ##[endgroup]
+2026-10-27T20:11:40.6406851Z ##[end-action id=__dtolnay_rust-toolchain.__run_2;outcome=success;conclusion=success;duration_ms=20]
+2026-10-27T20:11:40.6409702Z ##[start-action display=Install rustup if needed on windows;id=__dtolnay_rust-toolchain.__run_3]
+2026-10-27T20:11:40.6416999Z ##[end-action id=__dtolnay_rust-toolchain.__run_3;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-10-27T20:11:40.6431462Z ##[start-action display=rustup toolchain install 1.90.0;id=__dtolnay_rust-toolchain.__run_4]
+2026-10-27T20:11:40.6454725Z ##[group]Run set -f  # split targets and components on commas and whitespace, without glob expansion
+2026-10-27T20:11:40.6455584Z [36;1mset -f  # split targets and components on commas and whitespace, without glob expansion[0m
+2026-10-27T20:11:40.6456021Z [36;1mflags=()[0m
+2026-10-27T20:11:40.6456321Z [36;1mfor t in ${targets//,/ }; do flags+=(--target "$t"); done[0m
+2026-10-27T20:11:40.6456733Z [36;1mfor c in ${components//,/ }; do flags+=(--component "$c"); done[0m
+2026-10-27T20:11:40.6457232Z [36;1mif [[ $toolchain == nightly && -n $components ]]; then flags+=(--allow-downgrade); fi[0m
+2026-10-27T20:11:40.6457650Z [36;1mlog=$(mktemp)[0m
+2026-10-27T20:11:40.6457896Z [36;1mtrap 'rm -f "$log"' EXIT[0m
+2026-10-27T20:11:40.6458166Z [36;1mfor attempt in 1 2 3 4 5; do[0m
+2026-10-27T20:11:40.6458730Z [36;1m  if rustup toolchain install "$toolchain" "${flags[@]}" --profile minimal --no-self-update --force-non-host 2>&1 | tee "$log"; then[0m
+2026-10-27T20:11:40.6459277Z [36;1m    break[0m
+2026-10-27T20:11:40.6459489Z [36;1m  else[0m
+2026-10-27T20:11:40.6459865Z [36;1m    status=$?[0m
+2026-10-27T20:11:40.6460101Z [36;1m  fi[0m
+2026-10-27T20:11:40.6460413Z [36;1m  if [[ $attempt == 5 ]] || ! grep -Fq 'checksum failed for ' "$log" \[0m
+2026-10-27T20:11:40.6461228Z [36;1m      || ! grep -Fq 'this is likely due to an ongoing update of the official release server' "$log"; then[0m
+2026-10-27T20:11:40.6461702Z [36;1m    exit "$status"[0m
+2026-10-27T20:11:40.6461939Z [36;1m  fi[0m
+2026-10-27T20:11:40.6462302Z [36;1m  echo "Retrying rustup toolchain install in 30 seconds (retry $attempt of 4)" >&2[0m
+2026-10-27T20:11:40.6462722Z [36;1m  sleep 30[0m
+2026-10-27T20:11:40.6462936Z [36;1mdone[0m
+2026-10-27T20:11:40.6531984Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T20:11:40.6532338Z env:
+2026-10-27T20:11:40.6532587Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T20:11:40.6532969Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:40.6533421Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T20:11:40.6533853Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:40.6534230Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:40.6534612Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:40.6534982Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T20:11:40.6535322Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T20:11:40.6535577Z   toolchain: 1.90.0
+2026-10-27T20:11:40.6535789Z   targets: 
+2026-10-27T20:11:40.6535991Z   components: rustfmt
+2026-10-27T20:11:40.6536228Z   RUSTUP_PERMIT_COPY_RENAME: 1
+2026-10-27T20:11:40.6536472Z ##[endgroup]
+2026-10-27T20:11:40.6947169Z info: syncing channel updates for 1.90.0-x86_64-unknown-linux-gnu
+2026-10-27T20:11:40.9644091Z info: latest update on 2025-09-18 for version 1.90.0 (1159e78c4 2025-09-14)
+2026-10-27T20:11:40.9648681Z info: downloading 4 components
+2026-10-27T20:11:49.7164878Z 
+2026-10-27T20:11:49.7260206Z   1.90.0-x86_64-unknown-linux-gnu installed - rustc 1.90.0 (1159e78c4 2025-09-14)
+2026-10-27T20:11:49.7260646Z 
+2026-10-27T20:11:49.7264508Z info: default toolchain set to 1.90.0-x86_64-unknown-linux-gnu
+2026-10-27T20:11:49.7464337Z ##[end-action id=__dtolnay_rust-toolchain.__run_4;outcome=success;conclusion=success;duration_ms=9103]
+2026-10-27T20:11:49.7474500Z ##[start-action display=rustup default 1.90.0;id=__dtolnay_rust-toolchain.__run_5]
+2026-10-27T20:11:49.7501510Z ##[group]Run rustup default "$toolchain" --force-non-host
+2026-10-27T20:11:49.7501964Z [36;1mrustup default "$toolchain" --force-non-host[0m
+2026-10-27T20:11:49.7577229Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T20:11:49.7577591Z env:
+2026-10-27T20:11:49.7577845Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T20:11:49.7578227Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.7578655Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T20:11:49.7579104Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.7579693Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.7580079Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.7580464Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T20:11:49.7580803Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T20:11:49.7581313Z   toolchain: 1.90.0
+2026-10-27T20:11:49.7581547Z ##[endgroup]
+2026-10-27T20:11:49.7733778Z info: using existing install for 1.90.0-x86_64-unknown-linux-gnu
+2026-10-27T20:11:49.7739645Z info: default toolchain set to 1.90.0-x86_64-unknown-linux-gnu
+2026-10-27T20:11:49.7740101Z 
+2026-10-27T20:11:49.7827667Z   1.90.0-x86_64-unknown-linux-gnu unchanged - rustc 1.90.0 (1159e78c4 2025-09-14)
+2026-10-27T20:11:49.7828035Z 
+2026-10-27T20:11:49.7831985Z info: note that the toolchain '1.90.0-x86_64-unknown-linux-gnu' is currently in use (overridden by '/home/runner/work/umf/umf/rust-toolchain.toml')
+2026-10-27T20:11:49.7848622Z ##[end-action id=__dtolnay_rust-toolchain.__run_5;outcome=success;conclusion=success;duration_ms=37]
+2026-10-27T20:11:49.7853699Z ##[start-action display=Create cachekey;id=__dtolnay_rust-toolchain.rustc-version]
+2026-10-27T20:11:49.7879153Z ##[group]Run DATE=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-date: \(20[0-9][0-9]\)-\([01][0-9]\)-\([0-3][0-9]\)$/\1\2\3/p')
+2026-10-27T20:11:49.7880000Z [36;1mDATE=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-date: \(20[0-9][0-9]\)-\([01][0-9]\)-\([0-3][0-9]\)$/\1\2\3/p')[0m
+2026-10-27T20:11:49.7880670Z [36;1mHASH=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-hash: //p')[0m
+2026-10-27T20:11:49.7881418Z [36;1mecho "cachekey=$(echo $DATE$HASH | head -c12)" >> $GITHUB_OUTPUT[0m
+2026-10-27T20:11:49.7957532Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T20:11:49.7957897Z env:
+2026-10-27T20:11:49.7958177Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T20:11:49.7958564Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.7959016Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T20:11:49.7959437Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.7959817Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.7960204Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.7960587Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T20:11:49.7961194Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T20:11:49.7961456Z   toolchain: 1.90.0
+2026-10-27T20:11:49.7961695Z ##[endgroup]
+2026-10-27T20:11:49.8409456Z ##[end-action id=__dtolnay_rust-toolchain.rustc-version;outcome=success;conclusion=success;duration_ms=55]
+2026-10-27T20:11:49.8413254Z ##[start-action display=Disable incremental compilation;id=__dtolnay_rust-toolchain.__run_6]
+2026-10-27T20:11:49.8441760Z ##[group]Run if [ -z "${CARGO_INCREMENTAL+set}" ]; then
+2026-10-27T20:11:49.8442404Z [36;1mif [ -z "${CARGO_INCREMENTAL+set}" ]; then[0m
+2026-10-27T20:11:49.8442883Z [36;1m  echo CARGO_INCREMENTAL=0 >> $GITHUB_ENV[0m
+2026-10-27T20:11:49.8443381Z [36;1mfi[0m
+2026-10-27T20:11:49.8523732Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T20:11:49.8524417Z env:
+2026-10-27T20:11:49.8524786Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T20:11:49.8525314Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.8525870Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T20:11:49.8526429Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.8527009Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.8527567Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.8528097Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T20:11:49.8528589Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T20:11:49.8549431Z ##[endgroup]
+2026-10-27T20:11:49.8665669Z ##[end-action id=__dtolnay_rust-toolchain.__run_6;outcome=success;conclusion=success;duration_ms=25]
+2026-10-27T20:11:49.8668371Z ##[start-action display=Enable colors in Cargo output;id=__dtolnay_rust-toolchain.__run_7]
+2026-10-27T20:11:49.8694121Z ##[group]Run if [ -z "${CARGO_TERM_COLOR+set}" ]; then
+2026-10-27T20:11:49.8694521Z [36;1mif [ -z "${CARGO_TERM_COLOR+set}" ]; then[0m
+2026-10-27T20:11:49.8694877Z [36;1m  echo CARGO_TERM_COLOR=always >> $GITHUB_ENV[0m
+2026-10-27T20:11:49.8695174Z [36;1mfi[0m
+2026-10-27T20:11:49.8765964Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T20:11:49.8766338Z env:
+2026-10-27T20:11:49.8766609Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T20:11:49.8767013Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.8767451Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T20:11:49.8768072Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.8768473Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.8768859Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.8769250Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T20:11:49.8769618Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T20:11:49.8769880Z   CARGO_INCREMENTAL: 0
+2026-10-27T20:11:49.8770112Z ##[endgroup]
+2026-10-27T20:11:49.8877269Z ##[end-action id=__dtolnay_rust-toolchain.__run_7;outcome=success;conclusion=success;duration_ms=20]
+2026-10-27T20:11:49.8882258Z ##[start-action display=Enable Cargo sparse registry;id=__dtolnay_rust-toolchain.__run_8]
+2026-10-27T20:11:49.8907955Z ##[group]Run # implemented in 1.66, stabilized in 1.68, made default in 1.70
+2026-10-27T20:11:49.8908530Z [36;1m# implemented in 1.66, stabilized in 1.68, made default in 1.70[0m
+2026-10-27T20:11:49.8909282Z [36;1mif [ -z "${CARGO_REGISTRIES_CRATES_IO_PROTOCOL+set}" -o -f "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol ]; then[0m
+2026-10-27T20:11:49.8910038Z [36;1m  if rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.6[89]\.'; then[0m
+2026-10-27T20:11:49.8910649Z [36;1m    touch "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol || true[0m
+2026-10-27T20:11:49.8911466Z [36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse >> $GITHUB_ENV[0m
+2026-10-27T20:11:49.8911994Z [36;1m  elif rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.6[67]\.'; then[0m
+2026-10-27T20:11:49.8912570Z [36;1m    touch "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol || true[0m
+2026-10-27T20:11:49.8913080Z [36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=git >> $GITHUB_ENV[0m
+2026-10-27T20:11:49.8913436Z [36;1m  fi[0m
+2026-10-27T20:11:49.8913645Z [36;1mfi[0m
+2026-10-27T20:11:49.8986596Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T20:11:49.8986977Z env:
+2026-10-27T20:11:49.8987245Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T20:11:49.8987630Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.8988062Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T20:11:49.8988489Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.8988866Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.8989251Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.8989631Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T20:11:49.8989988Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T20:11:49.8990244Z   CARGO_INCREMENTAL: 0
+2026-10-27T20:11:49.8990477Z   CARGO_TERM_COLOR: always
+2026-10-27T20:11:49.8990710Z   toolchain: 1.90.0
+2026-10-27T20:11:49.8991116Z ##[endgroup]
+2026-10-27T20:11:49.9395182Z ##[end-action id=__dtolnay_rust-toolchain.__run_8;outcome=success;conclusion=success;duration_ms=51]
+2026-10-27T20:11:49.9400244Z ##[start-action display=Work around spurious network errors in curl 8.0;id=__dtolnay_rust-toolchain.__run_9]
+2026-10-27T20:11:49.9427306Z ##[group]Run # https://rust-lang.zulipchat.com/#narrow/stream/246057-t-cargo/topic/timeout.20investigation
+2026-10-27T20:11:49.9428065Z [36;1m# https://rust-lang.zulipchat.com/#narrow/stream/246057-t-cargo/topic/timeout.20investigation[0m
+2026-10-27T20:11:49.9428709Z [36;1mif rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.7[01]\.'; then[0m
+2026-10-27T20:11:49.9429189Z [36;1m  echo CARGO_HTTP_MULTIPLEXING=false >> $GITHUB_ENV[0m
+2026-10-27T20:11:49.9429508Z [36;1mfi[0m
+2026-10-27T20:11:49.9508727Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T20:11:49.9509090Z env:
+2026-10-27T20:11:49.9509354Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T20:11:49.9509739Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.9510383Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T20:11:49.9510834Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.9511427Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.9511816Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.9512207Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T20:11:49.9512552Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T20:11:49.9512816Z   CARGO_INCREMENTAL: 0
+2026-10-27T20:11:49.9513053Z   CARGO_TERM_COLOR: always
+2026-10-27T20:11:49.9513287Z   toolchain: 1.90.0
+2026-10-27T20:11:49.9513512Z ##[endgroup]
+2026-10-27T20:11:49.9776711Z ##[end-action id=__dtolnay_rust-toolchain.__run_9;outcome=success;conclusion=success;duration_ms=37]
+2026-10-27T20:11:49.9783322Z ##[start-action display=rustc +1.90.0 --version --verbose;id=__dtolnay_rust-toolchain.__run_10]
+2026-10-27T20:11:49.9809531Z ##[group]Run rustc +"$toolchain" --version --verbose
+2026-10-27T20:11:49.9809986Z [36;1mrustc +"$toolchain" --version --verbose[0m
+2026-10-27T20:11:49.9888056Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T20:11:49.9888422Z env:
+2026-10-27T20:11:49.9888681Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T20:11:49.9889054Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.9889491Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T20:11:49.9889939Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.9890347Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.9890746Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:49.9891475Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T20:11:49.9891858Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T20:11:49.9892141Z   CARGO_INCREMENTAL: 0
+2026-10-27T20:11:49.9892384Z   CARGO_TERM_COLOR: always
+2026-10-27T20:11:49.9892623Z   toolchain: 1.90.0
+2026-10-27T20:11:49.9892863Z ##[endgroup]
+2026-10-27T20:11:50.0132656Z rustc 1.90.0 (1159e78c4 2025-09-14)
+2026-10-27T20:11:50.0133195Z binary: rustc
+2026-10-27T20:11:50.0133614Z commit-hash: 1159e78c4747b02ef996e55082b704c09b970588
+2026-10-27T20:11:50.0134135Z commit-date: 2025-09-14
+2026-10-27T20:11:50.0134508Z host: x86_64-unknown-linux-gnu
+2026-10-27T20:11:50.0134889Z release: 1.90.0
+2026-10-27T20:11:50.0135244Z LLVM version: 20.1.8
+2026-10-27T20:11:50.0156235Z ##[end-action id=__dtolnay_rust-toolchain.__run_10;outcome=success;conclusion=success;duration_ms=37]
+2026-10-27T20:11:50.0229344Z ##[group]Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'
+2026-10-27T20:11:50.0229978Z [36;1mpython -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'[0m
+2026-10-27T20:11:50.0309122Z shell: /usr/bin/bash -e {0}
+2026-10-27T20:11:50.0309417Z env:
+2026-10-27T20:11:50.0309704Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T20:11:50.0310134Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:50.0310838Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T20:11:50.0311466Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:50.0311865Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:50.0312266Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:11:50.0312673Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T20:11:50.0313044Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T20:11:50.0313372Z   CARGO_INCREMENTAL: 0
+2026-10-27T20:11:50.0313612Z   CARGO_TERM_COLOR: always
+2026-10-27T20:11:50.0313855Z ##[endgroup]
+2026-10-27T20:11:50.6999090Z Processing ./python
+2026-10-27T20:11:50.7015928Z   Installing build dependencies: started
+2026-10-27T20:11:51.9671617Z   Installing build dependencies: finished with status 'done'
+2026-10-27T20:11:51.9676391Z   Getting requirements to build wheel: started
+2026-10-27T20:11:52.1462704Z   Getting requirements to build wheel: finished with status 'done'
+2026-10-27T20:11:52.1469746Z   Preparing metadata (pyproject.toml): started
+2026-10-27T20:12:41.7318826Z   Preparing metadata (pyproject.toml): finished with status 'done'
+2026-10-27T20:12:41.8478205Z Collecting pytest
+2026-10-27T20:12:41.9185997Z   Downloading pytest-9.1.1-py3-none-any.whl.metadata (7.6 kB)
+2026-10-27T20:12:42.2752811Z Collecting ruff==0.17.1
+2026-10-27T20:12:42.2978355Z   Downloading ruff-0.17.1-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (20 kB)
+2026-10-27T20:12:42.3483756Z Collecting build
+2026-10-27T20:12:42.3897226Z   Downloading build-1.6.1-py3-none-any.whl.metadata (5.6 kB)
+2026-10-27T20:12:42.4025559Z Collecting hatchling<2,>=1.27
+2026-10-27T20:12:42.4037835Z   Using cached hatchling-1.32.4-py3-none-any.whl.metadata (3.9 kB)
+2026-10-27T20:12:42.5166828Z Collecting pydantic<3,>=2.11 (from umf-core==0.10.3)
+2026-10-27T20:12:42.5395507Z   Downloading pydantic-2.14.1-py3-none-any.whl.metadata (133 kB)
+2026-10-27T20:12:42.5901454Z Collecting packaging>=24.2 (from hatchling<2,>=1.27)
+2026-10-27T20:12:42.5912602Z   Using cached packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+2026-10-27T20:12:42.5970489Z Collecting pathspec>=0.10.1 (from hatchling<2,>=1.27)
+2026-10-27T20:12:42.5981685Z   Using cached pathspec-1.1.1-py3-none-any.whl.metadata (14 kB)
+2026-10-27T20:12:42.6042515Z Collecting pluggy>=1.0.0 (from hatchling<2,>=1.27)
+2026-10-27T20:12:42.6053839Z   Using cached pluggy-1.7.0-py3-none-any.whl.metadata (5.0 kB)
+2026-10-27T20:12:42.6136313Z Collecting tomlkit>=0.11.1 (from hatchling<2,>=1.27)
+2026-10-27T20:12:42.6147314Z   Using cached tomlkit-0.15.2-py3-none-any.whl.metadata (3.4 kB)
+2026-10-27T20:12:42.6322206Z Collecting trove-classifiers (from hatchling<2,>=1.27)
+2026-10-27T20:12:42.6334935Z   Using cached trove_classifiers-2026.9.21.13-py3-none-any.whl.metadata (2.4 kB)
+2026-10-27T20:12:42.6582114Z Collecting annotated-types>=0.6.0 (from pydantic<3,>=2.11->umf-core==0.10.3)
+2026-10-27T20:12:42.6777796Z   Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+2026-10-27T20:12:43.3229900Z Collecting pydantic-core==2.50.1 (from pydantic<3,>=2.11->umf-core==0.10.3)
+2026-10-27T20:12:43.3423820Z   Downloading pydantic_core-2.50.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.5 kB)
+2026-10-27T20:12:43.3718286Z Collecting typing-extensions>=4.16.0 (from pydantic<3,>=2.11->umf-core==0.10.3)
+2026-10-27T20:12:43.3908006Z   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+2026-10-27T20:12:43.4160816Z Collecting typing-inspection>=0.4.4 (from pydantic<3,>=2.11->umf-core==0.10.3)
+2026-10-27T20:12:43.4358771Z   Downloading typing_inspection-0.4.4-py3-none-any.whl.metadata (2.6 kB)
+2026-10-27T20:12:43.4618641Z Collecting iniconfig>=1.0.1 (from pytest)
+2026-10-27T20:12:43.4810239Z   Downloading iniconfig-2.3.1-py3-none-any.whl.metadata (2.8 kB)
+2026-10-27T20:12:43.5137915Z Collecting pygments>=2.7.2 (from pytest)
+2026-10-27T20:12:43.5331183Z   Downloading pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+2026-10-27T20:12:43.5606067Z Collecting pyproject_hooks (from build)
+2026-10-27T20:12:43.5796655Z   Downloading pyproject_hooks-1.3.3-py3-none-any.whl.metadata (1.3 kB)
+2026-10-27T20:12:43.6050715Z Downloading ruff-0.17.1-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (10.4 MB)
+2026-10-27T20:12:43.7202293Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.4/10.4 MB 107.8 MB/s  0:00:00
+2026-10-27T20:12:43.7215853Z Using cached hatchling-1.32.4-py3-none-any.whl (78 kB)
+2026-10-27T20:12:43.7410368Z Downloading pydantic-2.14.1-py3-none-any.whl (488 kB)
+2026-10-27T20:12:43.7633597Z Downloading pydantic_core-2.50.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.2 MB)
+2026-10-27T20:12:43.7726943Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.2/2.2 MB 272.6 MB/s  0:00:00
+2026-10-27T20:12:43.7924409Z Downloading pytest-9.1.1-py3-none-any.whl (386 kB)
+2026-10-27T20:12:43.7973040Z Using cached pluggy-1.7.0-py3-none-any.whl (27 kB)
+2026-10-27T20:12:43.8165380Z Downloading build-1.6.1-py3-none-any.whl (31 kB)
+2026-10-27T20:12:43.8371344Z Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+2026-10-27T20:12:43.8582749Z Downloading iniconfig-2.3.1-py3-none-any.whl (7.6 kB)
+2026-10-27T20:12:43.8610719Z Using cached packaging-26.3-py3-none-any.whl (129 kB)
+2026-10-27T20:12:43.8622630Z Using cached pathspec-1.1.1-py3-none-any.whl (57 kB)
+2026-10-27T20:12:43.9236280Z Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
+2026-10-27T20:12:43.9546344Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 68.3 MB/s  0:00:00
+2026-10-27T20:12:43.9567570Z Using cached tomlkit-0.15.2-py3-none-any.whl (52 kB)
+2026-10-27T20:12:43.9892434Z Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+2026-10-27T20:12:44.0435769Z Downloading typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+2026-10-27T20:12:44.0901654Z Downloading pyproject_hooks-1.3.3-py3-none-any.whl (10 kB)
+2026-10-27T20:12:44.0941645Z Using cached trove_classifiers-2026.9.21.13-py3-none-any.whl (14 kB)
+2026-10-27T20:12:44.1480486Z Building wheels for collected packages: umf-core
+2026-10-27T20:12:44.1486771Z   Building wheel for umf-core (pyproject.toml): started
+2026-10-27T20:12:44.1857575Z   Building wheel for umf-core (pyproject.toml): finished with status 'done'
+2026-10-27T20:12:44.1893867Z   Created wheel for umf-core: filename=umf_core-0.10.3-cp311-abi3-linux_x86_64.whl size=3611895 sha256=5a9daa8ecada8c2504f90b94d3e8b858d9978622cde9d9793a0242028be0d288
+2026-10-27T20:12:44.1895546Z   Stored in directory: /tmp/pip-ephem-wheel-cache-ansn0h4f/wheels/ab/15/ac/d46ad78b5110a5a0bf7805d13317043550eb468f03bce8ceb0
+2026-10-27T20:12:44.1915085Z Successfully built umf-core
+2026-10-27T20:12:44.2298239Z Installing collected packages: trove-classifiers, typing-extensions, tomlkit, ruff, pyproject_hooks, pygments, pluggy, pathspec, packaging, iniconfig, annotated-types, typing-inspection, pytest, pydantic-core, hatchling, build, pydantic, umf-core
+2026-10-27T20:12:46.2092221Z 
+2026-10-27T20:12:46.2113552Z Successfully installed annotated-types-0.8.0 build-1.6.1 hatchling-1.32.4 iniconfig-2.3.1 packaging-26.3 pathspec-1.1.1 pluggy-1.7.0 pydantic-2.14.1 pydantic-core-2.50.1 pygments-2.21.0 pyproject_hooks-1.3.3 pytest-9.1.1 ruff-0.17.1 tomlkit-0.15.2 trove-classifiers-2026.9.21.13 typing-extensions-4.16.0 typing-inspection-0.4.4 umf-core-0.10.3
+2026-10-27T20:12:46.2122214Z 
+2026-10-27T20:12:46.2122621Z [notice] A new release of pip is available: 26.2.1 -> 26.2.2
+2026-10-27T20:12:46.2123219Z [notice] To update, run: pip install --upgrade pip
+2026-10-27T20:12:46.3239534Z ##[group]Run python -m pytest python/tests -q
+2026-10-27T20:12:46.3239963Z [36;1mpython -m pytest python/tests -q[0m
+2026-10-27T20:12:46.3306327Z shell: /usr/bin/bash -e {0}
+2026-10-27T20:12:46.3306595Z env:
+2026-10-27T20:12:46.3306844Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T20:12:46.3307229Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:12:46.3307663Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T20:12:46.3308086Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:12:46.3308676Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:12:46.3309056Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:12:46.3309431Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T20:12:46.3309771Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T20:12:46.3310027Z   CARGO_INCREMENTAL: 0
+2026-10-27T20:12:46.3310317Z   CARGO_TERM_COLOR: always
+2026-10-27T20:12:46.3310553Z ##[endgroup]
+2026-10-27T20:12:55.3811088Z ........................................................................ [ 18%]
+2026-10-27T20:12:57.2825223Z ........................................................................ [ 36%]
+2026-10-27T20:13:00.0565023Z ........................................................................ [ 54%]
+2026-10-27T20:13:00.2901707Z ........................................................................ [ 72%]
+2026-10-27T20:13:02.0303806Z ........................................................................ [ 90%]
+2026-10-27T20:13:22.0806279Z .....................................                                    [100%]
+2026-10-27T20:13:22.0808112Z 397 passed in 35.43s
+2026-10-27T20:13:22.1550516Z ##[group]Run ruff check python
+2026-10-27T20:13:22.1550853Z [36;1mruff check python[0m
+2026-10-27T20:13:22.1616751Z shell: /usr/bin/bash -e {0}
+2026-10-27T20:13:22.1617011Z env:
+2026-10-27T20:13:22.1617266Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T20:13:22.1617668Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:13:22.1618105Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T20:13:22.1618525Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:13:22.1618908Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:13:22.1619283Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:13:22.1619660Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T20:13:22.1620012Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T20:13:22.1620273Z   CARGO_INCREMENTAL: 0
+2026-10-27T20:13:22.1620504Z   CARGO_TERM_COLOR: always
+2026-10-27T20:13:22.1620783Z ##[endgroup]
+2026-10-27T20:13:22.3129407Z I001 [*] Import block is un-sorted or un-formatted
+2026-10-27T20:13:22.3130193Z   --> python/umf_access/src/umf_access/lifecycle/__init__.py:3:1
+2026-10-27T20:13:22.3130753Z    |
+2026-10-27T20:13:22.3131298Z  1 |   # SPDX-License-Identifier: MIT OR Apache-2.0
+2026-10-27T20:13:22.3132068Z  2 |   """Administrative table lifecycle and head observation; no implicit pool or driver."""
+2026-10-27T20:13:22.3132995Z  3 | / from .approval import ApprovalBinding, ApprovalReceipt, TargetIdentity
+2026-10-27T20:13:22.3133751Z  4 | | from .catalog import CatalogError, verify_native_catalog
+2026-10-27T20:13:22.3134360Z  5 | | from .concurrent import apply_concurrent_indexes
+2026-10-27T20:13:22.3134994Z  6 | | from .correspondence import prepare_table_correspondence
+2026-10-27T20:13:22.3135666Z  7 | | from .head import prepare_table_head, read_table_head
+2026-10-27T20:13:22.3136188Z  8 | | from .generation_ingress import (
+2026-10-27T20:13:22.3136669Z  9 | |     EpochProvisionRequest,
+2026-10-27T20:13:22.3137106Z 10 | |     EpochProvisionReservation,
+2026-10-27T20:13:22.3137526Z 11 | |     GenerationAdmission,
+2026-10-27T20:13:22.3137889Z 12 | |     GenerationEnrollment,
+2026-10-27T20:13:22.3138258Z 13 | |     GenerationFenceReceipt,
+2026-10-27T20:13:22.3138647Z 14 | |     GenerationIngressLease,
+2026-10-27T20:13:22.3139061Z 15 | |     GenerationIngressProvider,
+2026-10-27T20:13:22.3139489Z 16 | |     GenerationIngressRequest,
+2026-10-27T20:13:22.3139899Z 17 | |     GenerationObservation,
+2026-10-27T20:13:22.3140289Z 18 | |     GenerationTransition,
+2026-10-27T20:13:22.3140677Z 19 | |     OwnerEnrollmentRequest,
+2026-10-27T20:13:22.3141281Z 20 | |     PreparedGenerationEpoch,
+2026-10-27T20:13:22.3141680Z 21 | |     TargetCustodian,
+2026-10-27T20:13:22.3142048Z 22 | |     TargetCustody,
+2026-10-27T20:13:22.3142715Z 23 | |     TargetReservation,
+2026-10-27T20:13:22.3143059Z 24 | | )
+2026-10-27T20:13:22.3143346Z 25 | | from .host import (
+2026-10-27T20:13:22.3143713Z 26 | |     HostCapabilities,
+2026-10-27T20:13:22.3144034Z 27 | |     HostOutcomeUnknown,
+2026-10-27T20:13:22.3144278Z 28 | |     MigrationHost,
+2026-10-27T20:13:22.3144504Z 29 | |     MigrationRequest,
+2026-10-27T20:13:22.3144751Z 30 | |     PsycopgMigrationHost,
+2026-10-27T20:13:22.3145012Z 31 | |     apply_migration_on_host,
+2026-10-27T20:13:22.3145258Z 32 | | )
+2026-10-27T20:13:22.3145548Z 33 | | from .ledger import apply_table_migration, inspect_table_history
+2026-10-27T20:13:22.3145946Z 34 | | from .mixed import apply_mixed_migration
+2026-10-27T20:13:22.3146249Z 35 | | from .phase_policy import (
+2026-10-27T20:13:22.3146511Z 36 | |     DERIVED_ADMIN_MODULE_PROFILE,
+2026-10-27T20:13:22.3146806Z 37 | |     FieldReplacementExecutionPolicy,
+2026-10-27T20:13:22.3147093Z 38 | |     PhaseBudgetCounter,
+2026-10-27T20:13:22.3147338Z 39 | |     PhaseDeadline,
+2026-10-27T20:13:22.3147574Z 40 | |     validate_phase_budget_receipt,
+2026-10-27T20:13:22.3147837Z 41 | | )
+2026-10-27T20:13:22.3148377Z 42 | | from .privileges import verify_native_privileges
+2026-10-27T20:13:22.3148744Z 43 | | from .roles import verify_native_role_scope
+2026-10-27T20:13:22.3149196Z 44 | | from .sql_containment import ContainmentRefused, SqlParser, check_sql_containment
+2026-10-27T20:13:22.3149708Z    | |_________________________________________________________________________________^
+2026-10-27T20:13:22.3150047Z 45 |
+2026-10-27T20:13:22.3151668Z 46 |   __all__ = ["DERIVED_ADMIN_MODULE_PROFILE", "ApprovalBinding", "ApprovalReceipt", "CatalogError", "ContainmentRefused", "EpochProvisi…
+2026-10-27T20:13:22.3152637Z    |
+2026-10-27T20:13:22.3152907Z help: Organize imports
+2026-10-27T20:13:22.3153213Z    |
+2026-10-27T20:13:22.3153592Z 6  | from .correspondence import prepare_table_correspondence
+2026-10-27T20:13:22.3154190Z    - from .head import prepare_table_head, read_table_head
+2026-10-27T20:13:22.3154707Z 7  | from .generation_ingress import (
+2026-10-27T20:13:22.3155216Z --------------------------------------------------------------------------------
+2026-10-27T20:13:22.3155731Z 23 | )
+2026-10-27T20:13:22.3156084Z 24 + from .head import prepare_table_head, read_table_head
+2026-10-27T20:13:22.3156546Z 25 | from .host import (
+2026-10-27T20:13:22.3156850Z    |
+2026-10-27T20:13:22.3157000Z 
+2026-10-27T20:13:22.3157177Z I001 [*] Import block is un-sorted or un-formatted
+2026-10-27T20:13:22.3157820Z     --> python/umf_access/src/umf_access/lifecycle/ingress_local_postgres.py:3624:9
+2026-10-27T20:13:22.3158410Z      |
+2026-10-27T20:13:22.3158781Z 3622 |                   or self._journal is None or self._launch is None):
+2026-10-27T20:13:22.3159529Z 3623 |               raise LocalPostgresError('local-postgresql-original-target-unverified')
+2026-10-27T20:13:22.3160207Z 3624 | /         from .ingress_custody import (
+2026-10-27T20:13:22.3160647Z 3625 | |             ExternalCustodyJournal,
+2026-10-27T20:13:22.3161258Z 3626 | |             _bind_owner_registration_resolver,
+2026-10-27T20:13:22.3161762Z 3627 | |             _bootstrap_original_02_target_custodian,
+2026-10-27T20:13:22.3162266Z 3628 | |             _bootstrap_local_target_custodian,
+2026-10-27T20:13:22.3162681Z 3629 | |         )
+2026-10-27T20:13:22.3162959Z      | |_________^
+2026-10-27T20:13:22.3163292Z 3630 |           control = self._target_paths['control']
+2026-10-27T20:13:22.3163813Z 3631 |           resolver = _bind_owner_registration_resolver(
+2026-10-27T20:13:22.3164258Z      |
+2026-10-27T20:13:22.3164521Z help: Organize imports
+2026-10-27T20:13:22.3164817Z      |
+2026-10-27T20:13:22.3165114Z 3626 |             _bind_owner_registration_resolver,
+2026-10-27T20:13:22.3165577Z 3627 +             _bootstrap_local_target_custodian,
+2026-10-27T20:13:22.3166063Z 3628 |             _bootstrap_original_02_target_custodian,
+2026-10-27T20:13:22.3166543Z      -             _bootstrap_local_target_custodian,
+2026-10-27T20:13:22.3167206Z 3629 |         )
+2026-10-27T20:13:22.3167475Z      |
+2026-10-27T20:13:22.3167750Z 
+2026-10-27T20:13:22.3167931Z I001 [*] Import block is un-sorted or un-formatted
+2026-10-27T20:13:22.3168568Z     --> python/umf_access/src/umf_access/lifecycle/ingress_local_postgres.py:4707:9
+2026-10-27T20:13:22.3169142Z      |
+2026-10-27T20:13:22.3169448Z 4705 |               'scope': _OWNER_APPROVAL_SCOPE,
+2026-10-27T20:13:22.3169864Z 4706 |           }}
+2026-10-27T20:13:22.3170188Z 4707 | /         from .ingress_custody import (
+2026-10-27T20:13:22.3170637Z 4708 | |             ExternalCustodyJournal,
+2026-10-27T20:13:22.3171253Z 4709 | |             _bind_owner_registration_resolver,
+2026-10-27T20:13:22.3171755Z 4710 | |             _bootstrap_original_02_target_custodian,
+2026-10-27T20:13:22.3172247Z 4711 | |             _bootstrap_local_target_custodian,
+2026-10-27T20:13:22.3172656Z 4712 | |         )
+2026-10-27T20:13:22.3172924Z      | |_________^
+2026-10-27T20:13:22.3173272Z 4713 |           owner_request = OwnerEnrollmentRequest(
+2026-10-27T20:13:22.3173812Z 4714 |               _owner_capability_seal(), self, _OWNER_KIND)
+2026-10-27T20:13:22.3174254Z      |
+2026-10-27T20:13:22.3174722Z help: Organize imports
+2026-10-27T20:13:22.3175028Z      |
+2026-10-27T20:13:22.3175342Z 4709 |             _bind_owner_registration_resolver,
+2026-10-27T20:13:22.3175811Z 4710 +             _bootstrap_local_target_custodian,
+2026-10-27T20:13:22.3176288Z 4711 |             _bootstrap_original_02_target_custodian,
+2026-10-27T20:13:22.3176770Z      -             _bootstrap_local_target_custodian,
+2026-10-27T20:13:22.3177257Z 4712 |         )
+2026-10-27T20:13:22.3177542Z      |
+2026-10-27T20:13:22.3177700Z 
+2026-10-27T20:13:22.3177872Z I001 [*] Import block is un-sorted or un-formatted
+2026-10-27T20:13:22.3178481Z    --> python/umf_access/src/umf_access/lifecycle/row_originals.py:483:5
+2026-10-27T20:13:22.3179004Z     |
+2026-10-27T20:13:22.3179375Z 481 |                                        ) -> tuple[object, dict[str, Any]]:
+2026-10-27T20:13:22.3180092Z 482 |       """Resolve the exact supervisor-issued original reservation before DDL."""
+2026-10-27T20:13:22.3181007Z 483 | /     from .row_originals_receipt import (
+2026-10-27T20:13:22.3181695Z 484 | |         MAX_RECEIPT_BYTES, _RESERVATION_KEYS, _RESERVATION_PROFILE, _no_duplicates,
+2026-10-27T20:13:22.3182422Z 485 | |         _digest, _fail, _safe_int, _uuid, canonical_bytes,
+2026-10-27T20:13:22.3182842Z 486 | |     )
+2026-10-27T20:13:22.3183090Z     | |_____^
+2026-10-27T20:13:22.3183335Z 487 |       try:
+2026-10-27T20:13:22.3183739Z 488 |           from .ingress_local_postgres import LocalPostgresSupervisor
+2026-10-27T20:13:22.3184233Z     |
+2026-10-27T20:13:22.3184489Z help: Organize imports
+2026-10-27T20:13:22.3184769Z     |
+2026-10-27T20:13:22.3185048Z 483 |     from .row_originals_receipt import (
+2026-10-27T20:13:22.3185648Z     -         MAX_RECEIPT_BYTES, _RESERVATION_KEYS, _RESERVATION_PROFILE, _no_duplicates,
+2026-10-27T20:13:22.3186371Z     -         _digest, _fail, _safe_int, _uuid, canonical_bytes,
+2026-10-27T20:13:22.3186862Z 484 +         _RESERVATION_KEYS,
+2026-10-27T20:13:22.3187244Z 485 +         _RESERVATION_PROFILE,
+2026-10-27T20:13:22.3187641Z 486 +         MAX_RECEIPT_BYTES,
+2026-10-27T20:13:22.3187986Z 487 +         _digest,
+2026-10-27T20:13:22.3188286Z 488 +         _fail,
+2026-10-27T20:13:22.3188604Z 489 +         _no_duplicates,
+2026-10-27T20:13:22.3188955Z 490 +         _safe_int,
+2026-10-27T20:13:22.3189270Z 491 +         _uuid,
+2026-10-27T20:13:22.3189585Z 492 +         canonical_bytes,
+2026-10-27T20:13:22.3189932Z 493 |     )
+2026-10-27T20:13:22.3190194Z     |
+2026-10-27T20:13:22.3190331Z 
+2026-10-27T20:13:22.3190507Z I001 [*] Import block is un-sorted or un-formatted
+2026-10-27T20:13:22.3191236Z   --> python/umf_access/src/umf_access/lifecycle/row_originals_creation.py:7:1
+2026-10-27T20:13:22.3191769Z    |
+2026-10-27T20:13:22.3192202Z  5 |   in the external supervisor/custodian registry and is required separately.
+2026-10-27T20:13:22.3192947Z  6 |   """
+2026-10-27T20:13:22.3193257Z  7 | / from __future__ import annotations
+2026-10-27T20:13:22.3193653Z  8 | |
+2026-10-27T20:13:22.3193925Z  9 | | import base64
+2026-10-27T20:13:22.3194259Z 10 | | import hashlib
+2026-10-27T20:13:22.3194570Z 11 | | import json
+2026-10-27T20:13:22.3194873Z 12 | | from typing import Any
+2026-10-27T20:13:22.3195202Z 13 | |
+2026-10-27T20:13:22.3195518Z 14 | | from .catalog import CatalogError, _all, _one
+2026-10-27T20:13:22.3195954Z 15 | |
+2026-10-27T20:13:22.3196264Z 16 | | from .row_originals_receipt import (
+2026-10-27T20:13:22.3196676Z 17 | |     COMMENT_PREFIX,
+2026-10-27T20:13:22.3197016Z 18 | |     MAX_OBJECTS,
+2026-10-27T20:13:22.3197351Z 19 | |     MAX_RECEIPT_BYTES,
+2026-10-27T20:13:22.3197707Z 20 | |     RECEIPT_PROFILE,
+2026-10-27T20:13:22.3198066Z 21 | |     _constraint_definition,
+2026-10-27T20:13:22.3198403Z 22 | |     _digest,
+2026-10-27T20:13:22.3198701Z 23 | |     _expected_fk_trigger_signatures,
+2026-10-27T20:13:22.3199089Z 24 | |     _expected_ri_trigger,
+2026-10-27T20:13:22.3199427Z 25 | |     _no_duplicates,
+2026-10-27T20:13:22.3199734Z 26 | |     _safe_int,
+2026-10-27T20:13:22.3200007Z 27 | |     _uuid,
+2026-10-27T20:13:22.3200462Z 28 | |     _validate_fk_trigger_set,
+2026-10-27T20:13:22.3200840Z 29 | |     _validate_not_null_constraint,
+2026-10-27T20:13:22.3201394Z 30 | |     _validate_ri_trigger,
+2026-10-27T20:13:22.3201767Z 31 | |     canonical_bytes,
+2026-10-27T20:13:22.3202123Z 32 | |     decode_comment,
+2026-10-27T20:13:22.3202453Z 33 | |     encode_comment,
+2026-10-27T20:13:22.3202787Z 34 | |     validate_objects,
+2026-10-27T20:13:22.3203141Z 35 | |     validate_receipt,
+2026-10-27T20:13:22.3203467Z 36 | | )
+2026-10-27T20:13:22.3203727Z    | |_^
+2026-10-27T20:13:22.3203983Z 37 |
+2026-10-27T20:13:22.3204516Z 38 |   def _fail(code: str = 'row-originals-creation-receipt-invalid') -> None:
+2026-10-27T20:13:22.3205122Z    |
+2026-10-27T20:13:22.3205408Z help: Organize imports
+2026-10-27T20:13:22.3205730Z    |
+2026-10-27T20:13:22.3206042Z 14 | from .catalog import CatalogError, _all, _one
+2026-10-27T20:13:22.3206455Z    -
+2026-10-27T20:13:22.3206740Z 15 | from .row_originals_receipt import (
+2026-10-27T20:13:22.3207240Z --------------------------------------------------------------------------------
+2026-10-27T20:13:22.3207725Z 36 |
+2026-10-27T20:13:22.3207962Z 37 +
+2026-10-27T20:13:22.3208380Z 38 | def _fail(code: str = 'row-originals-creation-receipt-invalid') -> None:
+2026-10-27T20:13:22.3208944Z    |
+2026-10-27T20:13:22.3209098Z 
+2026-10-27T20:13:22.3209244Z F401 [*] `json` imported but unused
+2026-10-27T20:13:22.3209847Z   --> python/umf_access/src/umf_access/lifecycle/row_originals_creation.py:11:8
+2026-10-27T20:13:22.3210423Z    |
+2026-10-27T20:13:22.3210680Z  9 | import base64
+2026-10-27T20:13:22.3211428Z 10 | import hashlib
+2026-10-27T20:13:22.3211739Z 11 | import json
+2026-10-27T20:13:22.3212031Z    |        ^^^^
+2026-10-27T20:13:22.3212328Z 12 | from typing import Any
+2026-10-27T20:13:22.3212652Z    |
+2026-10-27T20:13:22.3212943Z help: Remove unused import: `json`
+2026-10-27T20:13:22.3213316Z    |
+2026-10-27T20:13:22.3213576Z 10 | import hashlib
+2026-10-27T20:13:22.3213872Z    - import json
+2026-10-27T20:13:22.3214187Z 11 | from typing import Any
+2026-10-27T20:13:22.3214502Z    |
+2026-10-27T20:13:22.3214638Z 
+2026-10-27T20:13:22.3214900Z F401 [*] `.row_originals_receipt.COMMENT_PREFIX` imported but unused
+2026-10-27T20:13:22.3215624Z   --> python/umf_access/src/umf_access/lifecycle/row_originals_creation.py:17:5
+2026-10-27T20:13:22.3216198Z    |
+2026-10-27T20:13:22.3216487Z 16 | from .row_originals_receipt import (
+2026-10-27T20:13:22.3216907Z 17 |     COMMENT_PREFIX,
+2026-10-27T20:13:22.3217237Z    |     ^^^^^^^^^^^^^^
+2026-10-27T20:13:22.3217552Z 18 |     MAX_OBJECTS,
+2026-10-27T20:13:22.3217854Z 19 |     MAX_RECEIPT_BYTES,
+2026-10-27T20:13:22.3218165Z    |
+2026-10-27T20:13:22.3218516Z help: Remove unused import
+2026-10-27T20:13:22.3218860Z    |
+2026-10-27T20:13:22.3219160Z 16 | from .row_originals_receipt import (
+2026-10-27T20:13:22.3219788Z    -     COMMENT_PREFIX,
+2026-10-27T20:13:22.3220107Z 17 |     MAX_OBJECTS,
+2026-10-27T20:13:22.3220401Z 18 |     MAX_RECEIPT_BYTES,
+2026-10-27T20:13:22.3220724Z 19 |     RECEIPT_PROFILE,
+2026-10-27T20:13:22.3221216Z 20 |     _constraint_definition,
+2026-10-27T20:13:22.3221555Z    -     _digest,
+2026-10-27T20:13:22.3221887Z    -     _expected_fk_trigger_signatures,
+2026-10-27T20:13:22.3222299Z    -     _expected_ri_trigger,
+2026-10-27T20:13:22.3222667Z    -     _no_duplicates,
+2026-10-27T20:13:22.3223004Z    -     _safe_int,
+2026-10-27T20:13:22.3223306Z    -     _uuid,
+2026-10-27T20:13:22.3223622Z 21 |     _validate_fk_trigger_set,
+2026-10-27T20:13:22.3223991Z    |
+2026-10-27T20:13:22.3224146Z 
+2026-10-27T20:13:22.3224372Z F401 [*] `.row_originals_receipt._digest` imported but unused
+2026-10-27T20:13:22.3225078Z   --> python/umf_access/src/umf_access/lifecycle/row_originals_creation.py:22:5
+2026-10-27T20:13:22.3225677Z    |
+2026-10-27T20:13:22.3225947Z 20 |     RECEIPT_PROFILE,
+2026-10-27T20:13:22.3226281Z 21 |     _constraint_definition,
+2026-10-27T20:13:22.3226615Z 22 |     _digest,
+2026-10-27T20:13:22.3226875Z    |     ^^^^^^^
+2026-10-27T20:13:22.3227096Z 23 |     _expected_fk_trigger_signatures,
+2026-10-27T20:13:22.3227524Z 24 |     _expected_ri_trigger,
+2026-10-27T20:13:22.3227752Z    |
+2026-10-27T20:13:22.3227945Z help: Remove unused import
+2026-10-27T20:13:22.3228166Z    |
+2026-10-27T20:13:22.3228373Z 16 | from .row_originals_receipt import (
+2026-10-27T20:13:22.3228643Z    -     COMMENT_PREFIX,
+2026-10-27T20:13:22.3228869Z 17 |     MAX_OBJECTS,
+2026-10-27T20:13:22.3229098Z 18 |     MAX_RECEIPT_BYTES,
+2026-10-27T20:13:22.3229332Z 19 |     RECEIPT_PROFILE,
+2026-10-27T20:13:22.3229630Z 20 |     _constraint_definition,
+2026-10-27T20:13:22.3229994Z    -     _digest,
+2026-10-27T20:13:22.3230334Z    -     _expected_fk_trigger_signatures,
+2026-10-27T20:13:22.3230759Z    -     _expected_ri_trigger,
+2026-10-27T20:13:22.3231271Z    -     _no_duplicates,
+2026-10-27T20:13:22.3231586Z    -     _safe_int,
+2026-10-27T20:13:22.3231898Z    -     _uuid,
+2026-10-27T20:13:22.3232212Z 21 |     _validate_fk_trigger_set,
+2026-10-27T20:13:22.3232561Z    |
+2026-10-27T20:13:22.3232665Z 
+2026-10-27T20:13:22.3232903Z F401 [*] `.row_originals_receipt._expected_fk_trigger_signatures` imported but unused
+2026-10-27T20:13:22.3233430Z   --> python/umf_access/src/umf_access/lifecycle/row_originals_creation.py:23:5
+2026-10-27T20:13:22.3233808Z    |
+2026-10-27T20:13:22.3234006Z 21 |     _constraint_definition,
+2026-10-27T20:13:22.3234245Z 22 |     _digest,
+2026-10-27T20:13:22.3234478Z 23 |     _expected_fk_trigger_signatures,
+2026-10-27T20:13:22.3234749Z    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-27T20:13:22.3235008Z 24 |     _expected_ri_trigger,
+2026-10-27T20:13:22.3235255Z 25 |     _no_duplicates,
+2026-10-27T20:13:22.3235467Z    |
+2026-10-27T20:13:22.3235661Z help: Remove unused import
+2026-10-27T20:13:22.3235887Z    |
+2026-10-27T20:13:22.3236092Z 16 | from .row_originals_receipt import (
+2026-10-27T20:13:22.3236360Z    -     COMMENT_PREFIX,
+2026-10-27T20:13:22.3236585Z 17 |     MAX_OBJECTS,
+2026-10-27T20:13:22.3236805Z 18 |     MAX_RECEIPT_BYTES,
+2026-10-27T20:13:22.3237049Z 19 |     RECEIPT_PROFILE,
+2026-10-27T20:13:22.3237286Z 20 |     _constraint_definition,
+2026-10-27T20:13:22.3237522Z    -     _digest,
+2026-10-27T20:13:22.3237751Z    -     _expected_fk_trigger_signatures,
+2026-10-27T20:13:22.3238029Z    -     _expected_ri_trigger,
+2026-10-27T20:13:22.3238267Z    -     _no_duplicates,
+2026-10-27T20:13:22.3238501Z    -     _safe_int,
+2026-10-27T20:13:22.3238709Z    -     _uuid,
+2026-10-27T20:13:22.3238932Z 21 |     _validate_fk_trigger_set,
+2026-10-27T20:13:22.3239186Z    |
+2026-10-27T20:13:22.3239298Z 
+2026-10-27T20:13:22.3239487Z F401 [*] `.row_originals_receipt._expected_ri_trigger` imported but unused
+2026-10-27T20:13:22.3239986Z   --> python/umf_access/src/umf_access/lifecycle/row_originals_creation.py:24:5
+2026-10-27T20:13:22.3240368Z    |
+2026-10-27T20:13:22.3240554Z 22 |     _digest,
+2026-10-27T20:13:22.3240781Z 23 |     _expected_fk_trigger_signatures,
+2026-10-27T20:13:22.3241538Z 24 |     _expected_ri_trigger,
+2026-10-27T20:13:22.3241785Z    |     ^^^^^^^^^^^^^^^^^^^^
+2026-10-27T20:13:22.3242021Z 25 |     _no_duplicates,
+2026-10-27T20:13:22.3242252Z 26 |     _safe_int,
+2026-10-27T20:13:22.3242457Z    |
+2026-10-27T20:13:22.3242661Z help: Remove unused import
+2026-10-27T20:13:22.3242902Z    |
+2026-10-27T20:13:22.3243109Z 16 | from .row_originals_receipt import (
+2026-10-27T20:13:22.3243386Z    -     COMMENT_PREFIX,
+2026-10-27T20:13:22.3243607Z 17 |     MAX_OBJECTS,
+2026-10-27T20:13:22.3243828Z 18 |     MAX_RECEIPT_BYTES,
+2026-10-27T20:13:22.3244074Z 19 |     RECEIPT_PROFILE,
+2026-10-27T20:13:22.3244322Z 20 |     _constraint_definition,
+2026-10-27T20:13:22.3244570Z    -     _digest,
+2026-10-27T20:13:22.3244801Z    -     _expected_fk_trigger_signatures,
+2026-10-27T20:13:22.3245081Z    -     _expected_ri_trigger,
+2026-10-27T20:13:22.3245322Z    -     _no_duplicates,
+2026-10-27T20:13:22.3245552Z    -     _safe_int,
+2026-10-27T20:13:22.3245761Z    -     _uuid,
+2026-10-27T20:13:22.3245982Z 21 |     _validate_fk_trigger_set,
+2026-10-27T20:13:22.3246223Z    |
+2026-10-27T20:13:22.3246327Z 
+2026-10-27T20:13:22.3246660Z F401 [*] `.row_originals_receipt._no_duplicates` imported but unused
+2026-10-27T20:13:22.3247134Z   --> python/umf_access/src/umf_access/lifecycle/row_originals_creation.py:25:5
+2026-10-27T20:13:22.3247514Z    |
+2026-10-27T20:13:22.3247718Z 23 |     _expected_fk_trigger_signatures,
+2026-10-27T20:13:22.3247990Z 24 |     _expected_ri_trigger,
+2026-10-27T20:13:22.3248228Z 25 |     _no_duplicates,
+2026-10-27T20:13:22.3248451Z    |     ^^^^^^^^^^^^^^
+2026-10-27T20:13:22.3248667Z 26 |     _safe_int,
+2026-10-27T20:13:22.3248863Z 27 |     _uuid,
+2026-10-27T20:13:22.3249054Z    |
+2026-10-27T20:13:22.3249252Z help: Remove unused import
+2026-10-27T20:13:22.3249478Z    |
+2026-10-27T20:13:22.3249681Z 16 | from .row_originals_receipt import (
+2026-10-27T20:13:22.3249947Z    -     COMMENT_PREFIX,
+2026-10-27T20:13:22.3250162Z 17 |     MAX_OBJECTS,
+2026-10-27T20:13:22.3250388Z 18 |     MAX_RECEIPT_BYTES,
+2026-10-27T20:13:22.3250621Z 19 |     RECEIPT_PROFILE,
+2026-10-27T20:13:22.3251070Z 20 |     _constraint_definition,
+2026-10-27T20:13:22.3251406Z    -     _digest,
+2026-10-27T20:13:22.3251632Z    -     _expected_fk_trigger_signatures,
+2026-10-27T20:13:22.3251907Z    -     _expected_ri_trigger,
+2026-10-27T20:13:22.3252152Z    -     _no_duplicates,
+2026-10-27T20:13:22.3252373Z    -     _safe_int,
+2026-10-27T20:13:22.3252580Z    -     _uuid,
+2026-10-27T20:13:22.3252798Z 21 |     _validate_fk_trigger_set,
+2026-10-27T20:13:22.3253046Z    |
+2026-10-27T20:13:22.3253158Z 
+2026-10-27T20:13:22.3253316Z F401 [*] `.row_originals_receipt._safe_int` imported but unused
+2026-10-27T20:13:22.3253782Z   --> python/umf_access/src/umf_access/lifecycle/row_originals_creation.py:26:5
+2026-10-27T20:13:22.3254164Z    |
+2026-10-27T20:13:22.3254370Z 24 |     _expected_ri_trigger,
+2026-10-27T20:13:22.3254613Z 25 |     _no_duplicates,
+2026-10-27T20:13:22.3254837Z 26 |     _safe_int,
+2026-10-27T20:13:22.3255045Z    |     ^^^^^^^^^
+2026-10-27T20:13:22.3255245Z 27 |     _uuid,
+2026-10-27T20:13:22.3255457Z 28 |     _validate_fk_trigger_set,
+2026-10-27T20:13:22.3255721Z    |
+2026-10-27T20:13:22.3255920Z help: Remove unused import
+2026-10-27T20:13:22.3256150Z    |
+2026-10-27T20:13:22.3256355Z 16 | from .row_originals_receipt import (
+2026-10-27T20:13:22.3256643Z    -     COMMENT_PREFIX,
+2026-10-27T20:13:22.3256870Z 17 |     MAX_OBJECTS,
+2026-10-27T20:13:22.3257094Z 18 |     MAX_RECEIPT_BYTES,
+2026-10-27T20:13:22.3257342Z 19 |     RECEIPT_PROFILE,
+2026-10-27T20:13:22.3257583Z 20 |     _constraint_definition,
+2026-10-27T20:13:22.3257824Z    -     _digest,
+2026-10-27T20:13:22.3258052Z    -     _expected_fk_trigger_signatures,
+2026-10-27T20:13:22.3258334Z    -     _expected_ri_trigger,
+2026-10-27T20:13:22.3258578Z    -     _no_duplicates,
+2026-10-27T20:13:22.3258802Z    -     _safe_int,
+2026-10-27T20:13:22.3259014Z    -     _uuid,
+2026-10-27T20:13:22.3259230Z 21 |     _validate_fk_trigger_set,
+2026-10-27T20:13:22.3259617Z    |
+2026-10-27T20:13:22.3259719Z 
+2026-10-27T20:13:22.3259867Z F401 [*] `.row_originals_receipt._uuid` imported but unused
+2026-10-27T20:13:22.3260308Z   --> python/umf_access/src/umf_access/lifecycle/row_originals_creation.py:27:5
+2026-10-27T20:13:22.3260685Z    |
+2026-10-27T20:13:22.3261020Z 25 |     _no_duplicates,
+2026-10-27T20:13:22.3261255Z 26 |     _safe_int,
+2026-10-27T20:13:22.3261458Z 27 |     _uuid,
+2026-10-27T20:13:22.3261656Z    |     ^^^^^
+2026-10-27T20:13:22.3261867Z 28 |     _validate_fk_trigger_set,
+2026-10-27T20:13:22.3262144Z 29 |     _validate_not_null_constraint,
+2026-10-27T20:13:22.3262403Z    |
+2026-10-27T20:13:22.3262598Z help: Remove unused import
+2026-10-27T20:13:22.3262828Z    |
+2026-10-27T20:13:22.3263045Z 16 | from .row_originals_receipt import (
+2026-10-27T20:13:22.3263361Z    -     COMMENT_PREFIX,
+2026-10-27T20:13:22.3263588Z 17 |     MAX_OBJECTS,
+2026-10-27T20:13:22.3263812Z 18 |     MAX_RECEIPT_BYTES,
+2026-10-27T20:13:22.3264050Z 19 |     RECEIPT_PROFILE,
+2026-10-27T20:13:22.3264300Z 20 |     _constraint_definition,
+2026-10-27T20:13:22.3264547Z    -     _digest,
+2026-10-27T20:13:22.3264774Z    -     _expected_fk_trigger_signatures,
+2026-10-27T20:13:22.3265202Z    -     _expected_ri_trigger,
+2026-10-27T20:13:22.3265450Z    -     _no_duplicates,
+2026-10-27T20:13:22.3265666Z    -     _safe_int,
+2026-10-27T20:13:22.3265870Z    -     _uuid,
+2026-10-27T20:13:22.3266078Z 21 |     _validate_fk_trigger_set,
+2026-10-27T20:13:22.3266321Z    |
+2026-10-27T20:13:22.3266427Z 
+2026-10-27T20:13:22.3266546Z F821 Undefined name `_FIXED_NOT_NULL_COLUMNS`
+2026-10-27T20:13:22.3266974Z    --> python/umf_access/src/umf_access/lifecycle/row_originals_creation.py:269:29
+2026-10-27T20:13:22.3267374Z     |
+2026-10-27T20:13:22.3267655Z 267 |             'row_tables_record_check', 'row_tables_record_digest_check',
+2026-10-27T20:13:22.3268031Z 268 |             *(f'row_tables_{column}_not_null'
+2026-10-27T20:13:22.3268384Z 269 |               for column in _FIXED_NOT_NULL_COLUMNS['row_tables']),
+2026-10-27T20:13:22.3268749Z     |                             ^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-27T20:13:22.3269022Z 270 |         },
+2026-10-27T20:13:22.3269234Z 271 |         'archives': {
+2026-10-27T20:13:22.3269451Z     |
+2026-10-27T20:13:22.3269558Z 
+2026-10-27T20:13:22.3269667Z F821 Undefined name `_FIXED_NOT_NULL_COLUMNS`
+2026-10-27T20:13:22.3270073Z    --> python/umf_access/src/umf_access/lifecycle/row_originals_creation.py:277:29
+2026-10-27T20:13:22.3270447Z     |
+2026-10-27T20:13:22.3270705Z 275 |             'archives_record_check', 'archives_record_digest_check',
+2026-10-27T20:13:22.3271263Z 276 |             *(f'archives_{column}_not_null'
+2026-10-27T20:13:22.3271614Z 277 |               for column in _FIXED_NOT_NULL_COLUMNS['archives']),
+2026-10-27T20:13:22.3271960Z     |                             ^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-27T20:13:22.3272226Z 278 |         },
+2026-10-27T20:13:22.3272442Z 279 |         'issued_instances': {
+2026-10-27T20:13:22.3272688Z     |
+2026-10-27T20:13:22.3272810Z 
+2026-10-27T20:13:22.3272922Z F821 Undefined name `_FIXED_NOT_NULL_COLUMNS`
+2026-10-27T20:13:22.3273331Z    --> python/umf_access/src/umf_access/lifecycle/row_originals_creation.py:282:29
+2026-10-27T20:13:22.3273710Z     |
+2026-10-27T20:13:22.3273993Z 280 |             'issued_instances_pkey', 'issued_instances_table_token_fkey',
+2026-10-27T20:13:22.3274384Z 281 |             *(f'issued_instances_{column}_not_null'
+2026-10-27T20:13:22.3274753Z 282 |               for column in _FIXED_NOT_NULL_COLUMNS['issued_instances']),
+2026-10-27T20:13:22.3275102Z     |                             ^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-27T20:13:22.3275361Z 283 |         },
+2026-10-27T20:13:22.3275558Z 284 |     }
+2026-10-27T20:13:22.3275746Z     |
+2026-10-27T20:13:22.3275851Z 
+2026-10-27T20:13:22.3276150Z SIM117 Use a single `with` statement with multiple contexts instead of nested `with` statements
+2026-10-27T20:13:22.3276665Z   --> python/umf_access/tests/test_catalog_configuration.py:56:5
+2026-10-27T20:13:22.3277151Z    |
+2026-10-27T20:13:22.3277468Z 54 |       root=Path(tmp);config,_=self._source_pinned_configuration(root,selected)
+2026-10-27T20:13:22.3278368Z 55 |       def installed_version(name, selected=selected, other=other):return 'wrong' if name==selected else 'exact' if name==other else 'u…
+2026-10-27T20:13:22.3279116Z 56 | /     with patch('importlib.metadata.version',side_effect=installed_version) as metadata_version:
+2026-10-27T20:13:22.3279733Z 57 | |      with self.assertRaises(CatalogBuildError):resolve_configuration(config,root)
+2026-10-27T20:13:22.3280175Z    | |_______________________________________________^
+2026-10-27T20:13:22.3280519Z 58 |       metadata_version.assert_called_once_with(selected)
+2026-10-27T20:13:22.3280828Z    |
+2026-10-27T20:13:22.3281223Z help: Combine `with` statements
+2026-10-27T20:13:22.3281383Z 
+2026-10-27T20:13:22.3281648Z SIM117 Use a single `with` statement with multiple contexts instead of nested `with` statements
+2026-10-27T20:13:22.3282158Z   --> python/umf_access/tests/test_catalog_configuration.py:68:5
+2026-10-27T20:13:22.3282499Z    |
+2026-10-27T20:13:22.3282759Z 66 |        if name==selected:raise PackageNotFoundError(selected)
+2026-10-27T20:13:22.3283287Z 67 |        return 'exact' if name==other else 'unexpected'
+2026-10-27T20:13:22.3283795Z 68 | /     with patch('importlib.metadata.version',side_effect=installed_version) as metadata_version:
+2026-10-27T20:13:22.3284399Z 69 | |      with self.assertRaises(PackageNotFoundError):resolve_configuration(config,root)
+2026-10-27T20:13:22.3284848Z    | |__________________________________________________^
+2026-10-27T20:13:22.3285192Z 70 |       metadata_version.assert_called_once_with(selected)
+2026-10-27T20:13:22.3285496Z    |
+2026-10-27T20:13:22.3285698Z help: Combine `with` statements
+2026-10-27T20:13:22.3285873Z 
+2026-10-27T20:13:22.3286123Z SIM117 Use a single `with` statement with multiple contexts instead of nested `with` statements
+2026-10-27T20:13:22.3286628Z   --> python/umf_access/tests/test_catalog_configuration.py:85:5
+2026-10-27T20:13:22.3286963Z    |
+2026-10-27T20:13:22.3287256Z 83 |      with self.subTest(pin=pin),tempfile.TemporaryDirectory() as tmp:
+2026-10-27T20:13:22.3287810Z 84 |       root=Path(tmp);config,_=self._source_pinned_configuration(root,'weft-sql');config['weft']=pin
+2026-10-27T20:13:22.3288401Z 85 | /     with patch('importlib.metadata.version',return_value='exact') as metadata_version:
+2026-10-27T20:13:22.3288955Z 86 | |      with self.assertRaises(CatalogBuildError):resolve_configuration(config,root)
+2026-10-27T20:13:22.3289379Z    | |_______________________________________________^
+2026-10-27T20:13:22.3289689Z 87 |       metadata_version.assert_not_called()
+2026-10-27T20:13:22.3289968Z    |
+2026-10-27T20:13:22.3290173Z help: Combine `with` statements
+2026-10-27T20:13:22.3290349Z 
+2026-10-27T20:13:22.3290480Z I001 [*] Import block is un-sorted or un-formatted
+2026-10-27T20:13:22.3290812Z   --> python/umf_access/tests/test_g03_host.py:3:1
+2026-10-27T20:13:22.3291351Z    |
+2026-10-27T20:13:22.3291595Z  1 |   # SPDX-License-Identifier: MIT OR Apache-2.0
+2026-10-27T20:13:22.3292011Z  2 |   """G03 host custody admission and required-phase recovery controls."""
+2026-10-27T20:13:22.3292405Z  3 | / from __future__ import annotations
+2026-10-27T20:13:22.3292674Z  4 | |
+2026-10-27T20:13:22.3292872Z  5 | | import unittest
+2026-10-27T20:13:22.3293123Z  6 | | from contextlib import contextmanager
+2026-10-27T20:13:22.3293427Z  7 | | from datetime import UTC, datetime
+2026-10-27T20:13:22.3293712Z  8 | | from unittest.mock import patch
+2026-10-27T20:13:22.3293969Z  9 | |
+2026-10-27T20:13:22.3294196Z 10 | | from umf_access.lifecycle.approval import (
+2026-10-27T20:13:22.3294503Z 11 | |     APPROVAL_PROFILE,
+2026-10-27T20:13:22.3294754Z 12 | |     ApprovalReceipt,
+2026-10-27T20:13:22.3294991Z 13 | |     TargetIdentity,
+2026-10-27T20:13:22.3295215Z 14 | | )
+2026-10-27T20:13:22.3295468Z 15 | | from umf_access.lifecycle.catalog import CatalogError
+2026-10-27T20:13:22.3295823Z 16 | | from umf_access.lifecycle.host import (
+2026-10-27T20:13:22.3296277Z 17 | |     HostCapabilities,
+2026-10-27T20:13:22.3296531Z 18 | |     HostOutcomeUnknown,
+2026-10-27T20:13:22.3296782Z 19 | |     PhaseReceipt,
+2026-10-27T20:13:22.3297028Z 20 | |     apply_migration_on_host,
+2026-10-27T20:13:22.3297280Z 21 | | )
+2026-10-27T20:13:22.3297602Z 22 | | from umf_access.lifecycle.progress import _phase_digest, _verified_phases
+2026-10-27T20:13:22.3298058Z    | |_________________________________________________________________________^
+2026-10-27T20:13:22.3298386Z help: Organize imports
+2026-10-27T20:13:22.3298597Z    |
+2026-10-27T20:13:22.3298774Z 23 |
+2026-10-27T20:13:22.3298949Z    -
+2026-10-27T20:13:22.3299244Z 24 | _TARGET = {"table": "items", "field": {"module": "demo", "element": "total"}}
+2026-10-27T20:13:22.3299599Z    |
+2026-10-27T20:13:22.3299695Z 
+2026-10-27T20:13:22.3299823Z I001 [*] Import block is un-sorted or un-formatted
+2026-10-27T20:13:22.3300190Z   --> python/umf_access/tests/test_ingress_local_postgres.py:2:1
+2026-10-27T20:13:22.3300525Z    |
+2026-10-27T20:13:22.3300798Z  1 |   """Source controls for the concrete G11 local owner supervisor."""
+2026-10-27T20:13:22.3301337Z  2 | / from __future__ import annotations
+2026-10-27T20:13:22.3301720Z  3 | |
+2026-10-27T20:13:22.3301914Z  4 | | import copy
+2026-10-27T20:13:22.3302129Z  5 | | import hashlib
+2026-10-27T20:13:22.3302352Z  6 | | import json
+2026-10-27T20:13:22.3302554Z  7 | | import os
+2026-10-27T20:13:22.3302757Z  8 | | import sys
+2026-10-27T20:13:22.3302969Z  9 | | import tempfile
+2026-10-27T20:13:22.3303183Z 10 | | import time
+2026-10-27T20:13:22.3303394Z 11 | | import unittest
+2026-10-27T20:13:22.3303604Z 12 | | import uuid
+2026-10-27T20:13:22.3303832Z 13 | | from contextlib import contextmanager
+2026-10-27T20:13:22.3304117Z 14 | | from enum import IntEnum
+2026-10-27T20:13:22.3304406Z 15 | | from pathlib import Path
+2026-10-27T20:13:22.3304667Z 16 | | from types import SimpleNamespace
+2026-10-27T20:13:22.3304967Z 17 | | from unittest.mock import Mock, patch
+2026-10-27T20:13:22.3305232Z 18 | |
+2026-10-27T20:13:22.3305509Z 19 | | from umf_access.lifecycle import ingress_local_postgres as native
+2026-10-27T20:13:22.3305955Z 20 | | from umf_access.lifecycle import owner_bootstrap as bootstrap
+2026-10-27T20:13:22.3306368Z 21 | | from umf_access.lifecycle.ingress_local_postgres import (
+2026-10-27T20:13:22.3306707Z 22 | |     _NATIVE_EFFECT_OUTCOME_SEAL,
+2026-10-27T20:13:22.3306988Z 23 | |     _ORIGINAL_STORE_ATTEMPT_SEAL,
+2026-10-27T20:13:22.3307279Z 24 | |     _ORIGINAL_STORE_BUDGET_SEAL,
+2026-10-27T20:13:22.3307552Z 25 | |     _ORIGINAL_STORE_RESERVATION_SEAL,
+2026-10-27T20:13:22.3307842Z 26 | |     _VERIFIED_STORE_PREPARATION_SEAL,
+2026-10-27T20:13:22.3308118Z 27 | |     LocalPostgresError,
+2026-10-27T20:13:22.3308378Z 28 | |     LocalPostgresSupervisor,
+2026-10-27T20:13:22.3308644Z 29 | |     _AttachedPostmaster,
+2026-10-27T20:13:22.3308906Z 30 | |     _BudgetedOriginalStoreConnection,
+2026-10-27T20:13:22.3309230Z 31 | |     _BudgetedOriginalStoreReadonlyConnection,
+2026-10-27T20:13:22.3309537Z 32 | |     _canonical,
+2026-10-27T20:13:22.3309744Z 33 | |     _digest,
+2026-10-27T20:13:22.3309969Z 34 | |     _membership_grant_statements,
+2026-10-27T20:13:22.3310257Z 35 | |     _NativeAttestation,
+2026-10-27T20:13:22.3310517Z 36 | |     _NativeEffectReservation,
+2026-10-27T20:13:22.3310788Z 37 | |     _ordered_membership_payload,
+2026-10-27T20:13:22.3311235Z 38 | |     _ordered_required_memberships,
+2026-10-27T20:13:22.3311526Z 39 | |     _OriginalStoreCreationAttempt,
+2026-10-27T20:13:22.3328570Z 40 | |     _OriginalStoreCreationBudget,
+2026-10-27T20:13:22.3329107Z 41 | |     _OriginalStoreCreationReservation,
+2026-10-27T20:13:22.3329591Z 42 | |     _owner_registration_approval_payload,
+2026-10-27T20:13:22.3329941Z 43 | |     _postmaster_pidfile_matches,
+2026-10-27T20:13:22.3330245Z 44 | |     _PreparedOriginalPrincipals,
+2026-10-27T20:13:22.3330522Z 45 | |     _PreparedTargetRegistration,
+2026-10-27T20:13:22.3330799Z 46 | |     _private_directory,
+2026-10-27T20:13:22.3331238Z 47 | |     _read_bootstrap_enrollment,
+2026-10-27T20:13:22.3331759Z 48 | |     _read_owned_regular_nofollow,
+2026-10-27T20:13:22.3332047Z 49 | |     _registration_intent_bytes,
+2026-10-27T20:13:22.3332323Z 50 | |     _render_config,
+2026-10-27T20:13:22.3332554Z 51 | |     _render_hba,
+2026-10-27T20:13:22.3332783Z 52 | |     _store_descriptor,
+2026-10-27T20:13:22.3333061Z 53 | |     _validate_bootstrap_context_journal,
+2026-10-27T20:13:22.3333365Z 54 | |     _SupervisorJournal,
+2026-10-27T20:13:22.3333623Z 55 | |     _VerifiedNativeEffectOutcome,
+2026-10-27T20:13:22.3333923Z 56 | |     _VerifiedNativeStorePreparation,
+2026-10-27T20:13:22.3334225Z 57 | |     _verify_bootstrap_enrollment,
+2026-10-27T20:13:22.3334497Z 58 | |     _write_private,
+2026-10-27T20:13:22.3334725Z 59 | | )
+2026-10-27T20:13:22.3335044Z 60 | | from umf_access.lifecycle.owner_authority import OwnerApprovalRequest
+2026-10-27T20:13:22.3335508Z    | |_____________________________________________________________________^
+2026-10-27T20:13:22.3335840Z help: Organize imports
+2026-10-27T20:13:22.3336069Z    |
+2026-10-27T20:13:22.3336264Z 52 |     _store_descriptor,
+2026-10-27T20:13:22.3336510Z 53 +     _SupervisorJournal,
+2026-10-27T20:13:22.3336911Z 54 |     _validate_bootstrap_context_journal,
+2026-10-27T20:13:22.3337219Z    -     _SupervisorJournal,
+2026-10-27T20:13:22.3337483Z 55 |     _VerifiedNativeEffectOutcome,
+2026-10-27T20:13:22.3337747Z    |
+2026-10-27T20:13:22.3337862Z 
+2026-10-27T20:13:22.3338009Z RUF100 [*] Unused `noqa` directive (unused: `SIM117`)
+2026-10-27T20:13:22.3338416Z    --> python/umf_access/tests/test_ingress_local_postgres.py:563:43
+2026-10-27T20:13:22.3338764Z     |
+2026-10-27T20:13:22.3339028Z 561 |                     self.assertEqual(operation_kind, 'store')):
+2026-10-27T20:13:22.3339444Z 562 |             supervisor._require_original_store_recovery_target(target)
+2026-10-27T20:13:22.3340055Z 563 |             with self.assertRaisesRegex(  # noqa: SIM117 -- refusal assertion must follow first successful validation
+2026-10-27T20:13:22.3340594Z     |                                           ^^^^^^^^^^^^^^
+2026-10-27T20:13:22.3341202Z 564 |                     LocalPostgresError, 'local-postgresql-store-recovery-unverified'):
+2026-10-27T20:13:22.3341727Z 565 |                 supervisor._require_original_store_recovery_target(object())
+2026-10-27T20:13:22.3342084Z     |
+2026-10-27T20:13:22.3342292Z help: Remove unused `noqa` directive
+2026-10-27T20:13:22.3342551Z     |
+2026-10-27T20:13:22.3342827Z 562 |             supervisor._require_original_store_recovery_target(target)
+2026-10-27T20:13:22.3343410Z     -             with self.assertRaisesRegex(  # noqa: SIM117 -- refusal assertion must follow first successful validation
+2026-10-27T20:13:22.3343942Z 563 +             with self.assertRaisesRegex(
+2026-10-27T20:13:22.3344378Z 564 |                     LocalPostgresError, 'local-postgresql-store-recovery-unverified'):
+2026-10-27T20:13:22.3344772Z     |
+2026-10-27T20:13:22.3344880Z 
+2026-10-27T20:13:22.3345144Z SIM117 Use a single `with` statement with multiple contexts instead of nested `with` statements
+2026-10-27T20:13:22.3345672Z    --> python/umf_access/tests/test_ingress_local_postgres.py:599:9
+2026-10-27T20:13:22.3346015Z     |
+2026-10-27T20:13:22.3346228Z 597 |           connection = Connection()
+2026-10-27T20:13:22.3346507Z 598 |           budget = object()
+2026-10-27T20:13:22.3346894Z 599 | /         with (_patch_supervisor_method('_require_original_store_readonly_budget',
+2026-10-27T20:13:22.3347332Z 600 | |                                        return_value=1_000),
+2026-10-27T20:13:22.3347657Z 601 | |               self.assertRaisesRegex(
+2026-10-27T20:13:22.3347955Z 602 | |                   LocalPostgresError,
+2026-10-27T20:13:22.3348336Z 603 | |                   'local-postgresql-store-readonly-transaction-active')):
+2026-10-27T20:13:22.3348850Z 604 | |             with supervisor._original_store_readonly_transaction(connection, budget):
+2026-10-27T20:13:22.3349349Z     | |_____________________________________________________________________________________^
+2026-10-27T20:13:22.3349951Z 605 |                   self.fail('active caller transaction must not be adopted')
+2026-10-27T20:13:22.3350296Z     |
+2026-10-27T20:13:22.3350510Z help: Combine `with` statements
+2026-10-27T20:13:22.3350684Z 
+2026-10-27T20:13:22.3350818Z RUF100 [*] Unused `noqa` directive (unused: `SIM117`)
+2026-10-27T20:13:22.3351398Z   --> python/umf_access/tests/test_migration_phases.py:58:47
+2026-10-27T20:13:22.3351717Z    |
+2026-10-27T20:13:22.3351940Z 56 |                 value = copy.deepcopy(plan())
+2026-10-27T20:13:22.3352244Z 57 |                 mutate(value)
+2026-10-27T20:13:22.3352723Z 58 |                 with self.assertRaisesRegex(  # noqa: SIM117 -- mutation must remain outside expected-error scope
+2026-10-27T20:13:22.3353225Z    |                                               ^^^^^^^^^^^^^^
+2026-10-27T20:13:22.3353561Z 59 |                         CatalogError, 'mixed-phase-profile'):
+2026-10-27T20:13:22.3353904Z 60 |                     _verified_phases(value)
+2026-10-27T20:13:22.3354183Z    |
+2026-10-27T20:13:22.3354379Z help: Remove unused `noqa` directive
+2026-10-27T20:13:22.3354630Z    |
+2026-10-27T20:13:22.3354954Z 57 |                 mutate(value)
+2026-10-27T20:13:22.3355407Z    -                 with self.assertRaisesRegex(  # noqa: SIM117 -- mutation must remain outside expected-error scope
+2026-10-27T20:13:22.3355905Z 58 +                 with self.assertRaisesRegex(
+2026-10-27T20:13:22.3356227Z 59 |                         CatalogError, 'mixed-phase-profile'):
+2026-10-27T20:13:22.3356513Z    |
+2026-10-27T20:13:22.3356608Z 
+2026-10-27T20:13:22.3356739Z RUF100 [*] Unused `noqa` directive (unused: `SIM117`)
+2026-10-27T20:13:22.3357101Z    --> python/umf_access/tests/test_migration_phases.py:264:47
+2026-10-27T20:13:22.3357413Z     |
+2026-10-27T20:13:22.3357629Z 262 |                 candidate = copy.deepcopy(case)
+2026-10-27T20:13:22.3357921Z 263 |                 mutate(candidate)
+2026-10-27T20:13:22.3358371Z 264 |                 with self.assertRaisesRegex(  # noqa: SIM117 -- keep mutation outside expected-error scope
+2026-10-27T20:13:22.3358853Z     |                                               ^^^^^^^^^^^^^^
+2026-10-27T20:13:22.3359187Z 265 |                         CatalogError, 'mixed-phase-profile'):
+2026-10-27T20:13:22.3359519Z 266 |                     _verified_phases(candidate)
+2026-10-27T20:13:22.3359786Z     |
+2026-10-27T20:13:22.3359982Z help: Remove unused `noqa` directive
+2026-10-27T20:13:22.3360225Z     |
+2026-10-27T20:13:22.3360409Z 263 |                 mutate(candidate)
+2026-10-27T20:13:22.3360838Z     -                 with self.assertRaisesRegex(  # noqa: SIM117 -- keep mutation outside expected-error scope
+2026-10-27T20:13:22.3361558Z 264 +                 with self.assertRaisesRegex(
+2026-10-27T20:13:22.3361914Z 265 |                         CatalogError, 'mixed-phase-profile'):
+2026-10-27T20:13:22.3362219Z     |
+2026-10-27T20:13:22.3362323Z 
+2026-10-27T20:13:22.3362415Z Found 25 errors.
+2026-10-27T20:13:22.3362669Z [*] 18 fixable with `--fix`.
+2026-10-27T20:13:22.3373929Z ##[error]Process completed with exit code 1.
+2026-10-27T20:13:22.3518422Z Post job cleanup.
+2026-10-27T20:13:22.4413980Z [command]/usr/bin/git version
+2026-10-27T20:13:22.4459353Z git version 2.55.0
+2026-10-27T20:13:22.4500114Z Temporarily overriding HOME='/home/runner/work/_temp/eb9275d6-63b8-457f-8ed2-a8588d7d15a0' before making global git config changes
+2026-10-27T20:13:22.4501545Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-27T20:13:22.4506445Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf
+2026-10-27T20:13:22.4552939Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T20:13:22.4594745Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-27T20:13:22.5074653Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T20:13:22.5125296Z http.https://github.com/.extraheader
+2026-10-27T20:13:22.5127261Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-27T20:13:22.5166858Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-27T20:13:22.5626938Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T20:13:22.5666312Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-27T20:13:22.6255008Z Cleaning up orphan processes
+2026-10-27T20:13:22.6617348Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

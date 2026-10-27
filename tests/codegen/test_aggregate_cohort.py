@@ -707,6 +707,32 @@ class SplitAggregateCohortTests(unittest.TestCase):
                 AGGREGATE.validate_aggregate(
                     self.output / "aggregate.json", "linux-x86_64-py311", self.output / "mirror")
 
+    def test_split_validation_refuses_rehashed_noncanonical_mirror_source(self):
+        (_packages, _versions, _sources, core_linux, core_mac,
+         weft_linux, weft_mac, _targets) = self._build_inputs()
+        self._assemble_with_release_patches(core_linux, core_mac, weft_linux, weft_mac)
+        index_path = self.output / "aggregate.json"
+        index = json.loads(index_path.read_text())
+        mirror_manifest_path = self.output / "mirror" / "manifest.json"
+        manifest = json.loads(mirror_manifest_path.read_text())
+        row = next(item for item in manifest["wheels"]
+                   if item["filename"] == "annotated_types-0.8.0-py3-none-any.whl")
+        row["source"]["publisherArtifactSha256"] = "f" * 64
+        mirror_manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n")
+        index["union"]["mirrorManifest"]["sha256"] = _sha256(mirror_manifest_path)
+        index_path.write_text(json.dumps(index, indent=2, sort_keys=True) + "\n")
+
+        with ExitStack() as stack:
+            for context in self._release_patches(core_linux, core_mac, weft_linux, weft_mac):
+                stack.enter_context(context)
+            stack.enter_context(patch.object(AGGREGATE.sys, "version", "3.11.17 synthetic"))
+            stack.enter_context(patch.object(AGGREGATE.sys, "version_info", SimpleNamespace(major=3, minor=11)))
+            stack.enter_context(patch.object(
+                AGGREGATE.MIRROR, "select_runner_cell", side_effect=lambda cells, _python: cells[0] if cells else None))
+            with self.assertRaisesRegex(ValueError, "Shared mirror manifest differs from exact union wheel record"):
+                AGGREGATE.validate_artifact_aggregate(
+                    index_path, "linux-x86_64-py311", self.output / "mirror")
+
     def test_split_target_refuses_rehashed_alternate_access_wheel(self):
         (_packages, _versions, _sources, core_linux, core_mac,
          weft_linux, weft_mac, _targets) = self._build_inputs()

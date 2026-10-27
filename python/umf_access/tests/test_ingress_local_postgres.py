@@ -50,14 +50,15 @@ from umf_access.lifecycle.ingress_local_postgres import (
     _render_config,
     _render_hba,
     _store_descriptor,
-    _validate_bootstrap_context_journal,
     _SupervisorJournal,
+    _validate_bootstrap_context_journal,
     _VerifiedNativeEffectOutcome,
     _VerifiedNativeStorePreparation,
     _verify_bootstrap_enrollment,
     _write_private,
 )
 from umf_access.lifecycle.owner_authority import OwnerApprovalRequest
+from umf_access.lifecycle.row_originals import open_originals_store_recovery
 
 
 def _patch_supervisor_method(method, **kwargs):
@@ -242,8 +243,8 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
               _patch_supervisor_method('_original_control_lease',
                             side_effect=lambda _supervisor, *, operation_kind:
                                 _synthetic_control_lease(supervisor, operation_kind))):
-            provider = supervisor.open_originals_store_recovery(
-                connection, provider_id=provider_id)
+            provider = open_originals_store_recovery(
+                supervisor, connection, provider_id=provider_id)
         self.assertIs(type(provider), PgRowOriginalsStore)
         self.assertTrue(provider._recovery_only)
         self.assertIs(provider._target, target)
@@ -312,8 +313,8 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
               self.assertRaisesRegex(
                   LocalPostgresError,
                   'local-postgresql-store-recovery-outcome-unresolved')):
-            unselected.open_originals_store_recovery(
-                connection, provider_id=provider_id)
+            open_originals_store_recovery(
+                unselected, connection, provider_id=provider_id)
 
     def test_registration_classifies_reserved_no_intent_without_core_rehydration(self):
         from umf_access.lifecycle.ingress_custody import (
@@ -492,8 +493,8 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
               _patch_supervisor_method('_original_control_lease',
                            side_effect=lambda _supervisor, *, operation_kind:
                                _synthetic_control_lease(supervisor, operation_kind))):
-            provider = supervisor.open_originals_store_recovery(
-                connection, provider_id=provider_id)
+            provider = open_originals_store_recovery(
+                supervisor, connection, provider_id=provider_id)
         self.assertTrue(provider._recovery_only)
         self.assertIs(provider._target, target)
         self.assertIsNone(provider._creation_reservation)
@@ -560,7 +561,7 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
                 side_effect=lambda _supervisor, *, operation_kind:
                     self.assertEqual(operation_kind, 'store')):
             supervisor._require_original_store_recovery_target(target)
-            with self.assertRaisesRegex(  # noqa: SIM117 -- refusal assertion must follow first successful validation
+            with self.assertRaisesRegex(
                     LocalPostgresError, 'local-postgresql-store-recovery-unverified'):
                 supervisor._require_original_store_recovery_target(object())
         self.assertIsNone(supervisor._custody_handle)
@@ -583,8 +584,28 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
                       _synthetic_control_lease(supervisor, operation_kind)),
               self.assertRaisesRegex(
                   LocalPostgresError, 'local-postgresql-store-recovery-unavailable')):
-            supervisor.open_originals_store_recovery(
-                Connection(), provider_id='44444444-4444-4444-8444-444444444444')
+            open_originals_store_recovery(
+                supervisor, Connection(),
+                provider_id='44444444-4444-4444-8444-444444444444')
+
+    def test_public_recovery_facade_rejects_forged_and_subclass_supervisors_before_lease(self):
+        from umf_access.lifecycle.row_originals import CatalogError
+
+        class ForgedSupervisor:
+            def _original_control_lease(self, *, operation_kind):
+                raise AssertionError('forged supervisor must not reach lease')
+
+        class DerivedSupervisor(LocalPostgresSupervisor):
+            def _original_control_lease(self, *, operation_kind):
+                raise AssertionError('subclass supervisor must not reach lease')
+
+        for supervisor in (ForgedSupervisor(), object.__new__(DerivedSupervisor)):
+            with self.subTest(supervisor_type=type(supervisor).__name__):
+                with self.assertRaisesRegex(
+                        CatalogError, 'row-originals-store-recovery-unavailable'):
+                    open_originals_store_recovery(
+                        supervisor, object(),
+                        provider_id='33333333-3333-4333-8333-333333333333')
 
     def test_original_store_readonly_transaction_refuses_active_caller_transaction(self):
         supervisor = object.__new__(LocalPostgresSupervisor)
@@ -600,9 +621,9 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
                                        return_value=1_000),
               self.assertRaisesRegex(
                   LocalPostgresError,
-                  'local-postgresql-store-readonly-transaction-active')):
-            with supervisor._original_store_readonly_transaction(connection, budget):
-                self.fail('active caller transaction must not be adopted')
+                  'local-postgresql-store-readonly-transaction-active'),
+              supervisor._original_store_readonly_transaction(connection, budget)):
+            self.fail('active caller transaction must not be adopted')
 
     def test_original_store_readonly_sql_clamps_to_remaining_and_lower_timeouts(self):
         supervisor = object.__new__(LocalPostgresSupervisor)

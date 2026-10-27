@@ -50,7 +50,7 @@ jobs:
         timeout-minutes: 2
         with:
           persist-credentials: false
-          fetch-depth: 16
+          fetch-depth: 24
 
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # immutable Bun setup action
         timeout-minutes: 2

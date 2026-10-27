@@ -8,23 +8,22 @@ from __future__ import annotations
 
 import base64
 import hashlib
-import json
 from typing import Any
 
 from .catalog import CatalogError, _all, _one
-
 from .row_originals_receipt import (
-    COMMENT_PREFIX,
+    COMMENT_PREFIX as COMMENT_PREFIX,
     MAX_OBJECTS,
     MAX_RECEIPT_BYTES,
     RECEIPT_PROFILE,
+    _FIXED_NOT_NULL_COLUMNS,
     _constraint_definition,
-    _digest,
-    _expected_fk_trigger_signatures,
-    _expected_ri_trigger,
-    _no_duplicates,
-    _safe_int,
-    _uuid,
+    _digest as _digest,
+    _expected_fk_trigger_signatures as _expected_fk_trigger_signatures,
+    _expected_ri_trigger as _expected_ri_trigger,
+    _no_duplicates as _no_duplicates,
+    _safe_int as _safe_int,
+    _uuid as _uuid,
     _validate_fk_trigger_set,
     _validate_not_null_constraint,
     _validate_ri_trigger,
@@ -34,6 +33,7 @@ from .row_originals_receipt import (
     validate_objects,
     validate_receipt,
 )
+
 
 def _fail(code: str = 'row-originals-creation-receipt-invalid') -> None:
     raise CatalogError(code)

@@ -381,6 +381,7 @@ jobs:
           WORK="$D5_ROOT/work"
           VENV_PARENT="$D5_ROOT/venv-parent"
           VENV="$VENV_PARENT/venv"
+          ACTIVE_COMMAND="$EVIDENCE/active-command.json"
           mkdir -p "$WORK" "$VENV_PARENT" "$EVIDENCE/logs" "$EVIDENCE/reports" "$EVIDENCE/replay"
           : > "$EVIDENCE/command-records.jsonl"
 
@@ -402,6 +403,15 @@ jobs:
             available_log_bytes=$((1048576 - prior_log_bytes))
             if (( available_log_bytes < 0 )); then available_log_bytes=0; fi
             started_ms="$now_ms"
+            python -I - "$ACTIVE_COMMAND" "$name" "$started_ms" "$limit" <<'PY'
+          import json, os, pathlib, sys
+          path=pathlib.Path(sys.argv[1]); temporary=path.with_name(path.name+".tmp")
+          payload={"name":sys.argv[2],"startedMonotonicMs":int(sys.argv[3]),"selectedLimitSeconds":int(sys.argv[4])}
+          with temporary.open("w",encoding="utf-8") as stream:
+              stream.write(json.dumps(payload,sort_keys=True,separators=(",",":"))+"\n")
+              stream.flush(); os.fsync(stream.fileno())
+          os.replace(temporary,path)
+          PY
             : > "$log"
             set +e
             timeout --signal=TERM --kill-after=10s "${limit}s" "$@" 2>&1 | python -I -c '
@@ -453,7 +463,7 @@ jobs:
             capture_status="${pipeline_status[1]}"
             ended_ms="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"
             python -I - "$EVIDENCE/command-records.jsonl" "$log" "$name" "$status" "$capture_status" "$((ended_ms - started_ms))" "$limit" "$@" <<'PY'
-          import hashlib, json, pathlib, sys
+          import hashlib, json, os, pathlib, sys
           records, log_path, name, raw_exit, capture_exit, duration, limit_seconds, *argv = sys.argv[1:]
           payload = pathlib.Path(log_path).read_bytes()
           record = {"name":name,"stage":name,"argv":argv,"rawExit":int(raw_exit),
@@ -464,7 +474,9 @@ jobs:
                     "truncationMarker":"LOG TRUNCATED: output exceeded aggregate capture cap" if int(capture_exit)==75 else None}
           with pathlib.Path(records).open("a",encoding="utf-8") as stream:
               stream.write(json.dumps(record,sort_keys=True)+"\n")
+              stream.flush(); os.fsync(stream.fileno())
           PY
+            rm -f "$ACTIVE_COMMAND"
             if (( status != 0 || capture_status != 0 )); then
               echo "D5 command $name failed: raw exit $status, capture exit $capture_status, limit ${limit}s" >&2
               return 1
@@ -782,7 +794,7 @@ jobs:
           GITHUB_REF: ${{ github.ref }}
         run: |
           python -I - <<'PY'
-          import hashlib, json, os, pathlib, re, shutil, sys, time
+          import hashlib, json, os, pathlib, re, shutil, stat, sys, time
           root=pathlib.Path(os.environ["D5_ROOT"]); evidence=root/"evidence"; upload=root/"upload"
           receipt=upload/"d5-receipt.json"; upload.mkdir(parents=True,exist_ok=True)
           expected_oracles={"oracle-date":4,"oracle-integer":4,"oracle-decimal":4,"oracle-text":4,
@@ -796,6 +808,46 @@ jobs:
           failure_report_names={"resource-baseline.json","resource-final.json","no-default.json",
             *["oracle-"+x+".json" for x in ("date","integer","decimal","text","eq-null","ne-null","not-eq-value","not-ne-null","coalesce-empty","enum","unique","foreign-key","varchar-loss","bound-excess","empty-table","all-populated")],
             *["fault-"+x+".json" for x in ("fenced-resume","backfill-commit-lost","existing-target-commit-lost")]}
+          def finalizer_failure_code(error):
+              message=str(error)
+              if message=="evidence directory missing": return "evidence-directory-missing"
+              if message=="required evidence missing": return "required-evidence-missing"
+              if message=="aggregate raw logs exceed 1 MiB": return "raw-log-cap-exceeded"
+              if message=="evidence exceeds 16 MiB before parsing or staging": return "evidence-cap-exceeded"
+              if "aggregate D5 deadline or evidence reserve exceeded" in message: return "deadline-evidence-invalid"
+              if "command" in message or "commands" in message: return "command-evidence-invalid"
+              if "report" in message or "oracle" in message or "fault" in message: return "report-evidence-invalid"
+              return "finalizer-validation-failed" if isinstance(error,ValueError) else "finalizer-internal-failure"
+          def diagnostic_failure_code(error):
+              message=str(error)
+              if message=="failure raw logs exceed 1 MiB": return "failure-log-cap-exceeded"
+              if message=="failure evidence and complete receipt exceed 16 MiB": return "failure-evidence-cap-exceeded"
+              if message=="unexpected failure evidence entry": return "unexpected-failure-entry"
+              if message.startswith("unsafe failure evidence"): return "unsafe-failure-evidence"
+              if message in ("failure evidence changed after stat","failure evidence copy mismatch"): return "failure-evidence-copy-mismatch"
+              return "failure-diagnostics-unavailable"
+          def active_command_snapshot():
+              path=evidence/"active-command.json"
+              try:
+                  before=path.lstat()
+                  if not stat.S_ISREG(before.st_mode) or before.st_size>512: return None
+                  with path.open("rb") as stream:
+                      opened=os.fstat(stream.fileno())
+                      if not stat.S_ISREG(opened.st_mode) or (opened.st_dev,opened.st_ino)!=(before.st_dev,before.st_ino): return None
+                      raw=stream.read(513)
+                  after=path.lstat()
+                  if len(raw)>512 or not stat.S_ISREG(after.st_mode): return None
+                  if (before.st_dev,before.st_ino,before.st_size,before.st_mtime_ns)!=(after.st_dev,after.st_ino,after.st_size,after.st_mtime_ns): return None
+                  if (opened.st_dev,opened.st_ino,opened.st_size)!=(after.st_dev,after.st_ino,after.st_size): return None
+                  value=json.loads(raw.decode("utf-8"))
+                  if not isinstance(value,dict): return None
+                  if set(value)!={"name","startedMonotonicMs","selectedLimitSeconds"}: return None
+                  if value.get("name") not in expected_names: return None
+                  if type(value.get("startedMonotonicMs")) is not int or value["startedMonotonicMs"]<0: return None
+                  if type(value.get("selectedLimitSeconds")) is not int or not 1<=value["selectedLimitSeconds"]<=180: return None
+                  return value
+              except (OSError,ValueError,TypeError):
+                  return None
           errors=[]; files=[]
           try:
               if not evidence.is_dir(): raise ValueError("evidence directory missing")
@@ -920,12 +972,12 @@ jobs:
               print(json.dumps(result,sort_keys=True))
           except BaseException as error:
               shutil.rmtree(upload,ignore_errors=True); upload.mkdir(parents=True,exist_ok=True)
-              result={"status":"FAIL_OR_UNKNOWN","sourceCommit":os.environ["GITHUB_SHA"],"runId":os.environ["GITHUB_RUN_ID"],"runAttempt":os.environ["GITHUB_RUN_ATTEMPT"],"ref":os.environ["GITHUB_REF"],"workflow":os.environ.get("GITHUB_WORKFLOW"),"event":os.environ.get("GITHUB_EVENT_NAME"),"reason":"fixed D5 report/custody/cleanup finalizer did not close","errorClass":type(error).__name__}
+              result={"status":"FAIL_OR_UNKNOWN","sourceCommit":os.environ["GITHUB_SHA"],"runId":os.environ["GITHUB_RUN_ID"],"runAttempt":os.environ["GITHUB_RUN_ATTEMPT"],"ref":os.environ["GITHUB_REF"],"workflow":os.environ.get("GITHUB_WORKFLOW"),"event":os.environ.get("GITHUB_EVENT_NAME"),"reason":"fixed D5 report/custody/cleanup finalizer did not close","errorClass":type(error).__name__,"finalizerFailureCode":finalizer_failure_code(error),"activeCommand":active_command_snapshot()}
               try:
                   import stat
                   selected=[]
                   if evidence.is_dir() and not evidence.is_symlink():
-                      fixed=("qualification-inputs.json","command-records.jsonl","owner-artifacts.json","cohort.lock.json","mirror-manifest.json","installed-versions.json","execution-complete.json")
+                      fixed=("qualification-inputs.json","command-records.jsonl","owner-artifacts.json","cohort.lock.json","mirror-manifest.json","installed-versions.json","execution-complete.json","active-command.json")
                       for name in fixed:
                           candidate=evidence/name
                           if candidate.exists() or candidate.is_symlink(): selected.append(candidate)
@@ -963,7 +1015,7 @@ jobs:
                   for child in list(upload.iterdir()):
                       if child.is_dir(): shutil.rmtree(child,ignore_errors=True)
                       else: child.unlink(missing_ok=True)
-                  result["failureEvidence"]={"status":"receipt-only-because-diagnostics-unavailable-or-over-cap","errorClass":type(staging_error).__name__}
+                  result["failureEvidence"]={"status":"receipt-only-because-diagnostics-unavailable-or-over-cap","errorClass":type(staging_error).__name__,"failureCode":diagnostic_failure_code(staging_error)}
                   (upload/"d5-receipt.json").write_text(json.dumps(result,sort_keys=True,indent=2)+"\n")
               print(json.dumps(result,sort_keys=True),file=sys.stderr)
               raise SystemExit(1)
