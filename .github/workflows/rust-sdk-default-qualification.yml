@@ -40,6 +40,8 @@ jobs:
           toolchain: 1.90.0
           targets: wasm32-unknown-unknown
       - run: bun install --frozen-lockfile
+      - name: Prefetch locked Rust dependencies for offline snapshot builds
+        run: cargo fetch --locked
       - run: cargo install wasm-bindgen-cli --locked --version 0.2.100
       - name: Assert and record host/toolchain cohort
         env:
