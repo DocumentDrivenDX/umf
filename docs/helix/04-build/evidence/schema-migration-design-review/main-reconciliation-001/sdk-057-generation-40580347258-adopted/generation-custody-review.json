@@ -1,0 +1,366 @@
+{
+  "artifact": {
+    "bytes": 736895,
+    "expandedBytes": 4726830,
+    "id": 12770575959,
+    "name": "umf-merged-source-generated-bc61be889067d3e9bd537ea2c7910e189ffb46e1-40580347258-1",
+    "sha256": "dbc962520f66e29af3fdcaa27725eece16aec4f57cc30f18c252be84d5c3803e",
+    "zipEntries": 51,
+    "zipRosterVerified": true
+  },
+  "capturedTerminalFiles": {
+    "artifact.zip": {
+      "bytes": 736895,
+      "sha256": "dbc962520f66e29af3fdcaa27725eece16aec4f57cc30f18c252be84d5c3803e"
+    },
+    "artifacts-terminal.json": {
+      "bytes": 811,
+      "sha256": "7f4a238dae6bffc82a57c2094aaa39b453a679962cc4e57ebe3dd6c4c6d3020b"
+    },
+    "job.log": {
+      "bytes": 141615,
+      "sha256": "bc59bfe319405e8300d99e22a02637e51f5bcbf4fd2eae3c1e33da093e1e5ee8"
+    },
+    "jobs-terminal.json": {
+      "bytes": 4105,
+      "sha256": "2c2281f7ea26a9db797ecb512c785cbb3daed05b7ccc13a0768599ff534dcbd0"
+    },
+    "run-terminal.json": {
+      "bytes": 12380,
+      "sha256": "0124d442796c6baf24a73931708c20b1c5897575d0a1236318427b370e955ceb"
+    }
+  },
+  "commands": {
+    "allRawAndCaptureExitZero": true,
+    "allUntruncated": true,
+    "count": 15,
+    "logBytes": 7911,
+    "maximumCommandDurationMs": 61300,
+    "records": [
+      {
+        "argv": [
+          "bun",
+          "install",
+          "--frozen-lockfile",
+          "--ignore-scripts"
+        ],
+        "captureExit": 0,
+        "durationMs": 710,
+        "logBytes": 1055,
+        "logSha256": "4ef7507ea968bd7a1be12223e8229739a5c5e4e158af780081ee864eb7d8d92e",
+        "name": "bun-install",
+        "rawExit": 0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "cargo",
+          "fetch",
+          "--locked"
+        ],
+        "captureExit": 0,
+        "durationMs": 1000,
+        "logBytes": 5892,
+        "logSha256": "153b1711ed24a969982b0e9eeca179f87c86c00f2020c15716cfb451fde4dc0a",
+        "name": "cargo-fetch",
+        "rawExit": 0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "python",
+          "-I",
+          "-",
+          "/home/runner/work/_temp/umf-merged-generation/historical-placeholder-inputs.json"
+        ],
+        "captureExit": 0,
+        "durationMs": 40,
+        "logBytes": 0,
+        "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "name": "pre-generation-placeholders",
+        "rawExit": 0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "python",
+          "-I",
+          "-",
+          "/home/runner/work/_temp/umf-merged-generation/toolchain-identity.json"
+        ],
+        "captureExit": 0,
+        "durationMs": 230,
+        "logBytes": 0,
+        "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "name": "toolchain-identity",
+        "rawExit": 0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "python",
+          "-I",
+          "-",
+          "/home/runner/work/_temp/umf-metamodel-stage-40580347258-1"
+        ],
+        "captureExit": 0,
+        "durationMs": 40,
+        "logBytes": 0,
+        "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "name": "prepare-metamodel-stage",
+        "rawExit": 0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "bun",
+          "scripts/metamodel/build.ts",
+          "--output-root",
+          "/home/runner/work/_temp/umf-metamodel-stage-40580347258-1"
+        ],
+        "captureExit": 0,
+        "durationMs": 21870,
+        "logBytes": 28,
+        "logSha256": "a17ba752d0908a9338faa1226fd65b71b8f6520ba0c26c33c703abef0a6bc947",
+        "name": "metamodel-output-generation",
+        "rawExit": 0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "bun",
+          "scripts/metamodel/build.ts",
+          "--check",
+          "--output-root",
+          "/home/runner/work/_temp/umf-metamodel-stage-40580347258-1"
+        ],
+        "captureExit": 0,
+        "durationMs": 880,
+        "logBytes": 26,
+        "logSha256": "43e3788efea3f089bab832bb205ab8973317ac51128f3c3a0ff0548b1b63c6f9",
+        "name": "metamodel-output-stage-check",
+        "rawExit": 0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "python",
+          "-I",
+          "-",
+          "/home/runner/work/_temp/umf-metamodel-stage-40580347258-1",
+          "/home/runner/work/_temp/umf-merged-generation/metamodel-phase.json",
+          "/home/runner/work/_temp/umf-merged-generation/metamodel-phase-ready"
+        ],
+        "captureExit": 0,
+        "durationMs": 40,
+        "logBytes": 0,
+        "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "name": "metamodel-output-correspondence",
+        "rawExit": 0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "bun",
+          "run",
+          "check:metamodel"
+        ],
+        "captureExit": 0,
+        "durationMs": 2030,
+        "logBytes": 130,
+        "logSha256": "cdfec78cd381b0b011ab240602e4f18d127df3fb053c00991ccb0f5688724276",
+        "name": "check-adopted-metamodel-and-self",
+        "rawExit": 0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "bun",
+          "scripts/actions-plan-identity.ts"
+        ],
+        "captureExit": 0,
+        "durationMs": 150,
+        "logBytes": 0,
+        "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "name": "action-plan-identity",
+        "rawExit": 0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "bun",
+          "scripts/build-codegen.ts"
+        ],
+        "captureExit": 0,
+        "durationMs": 180,
+        "logBytes": 58,
+        "logSha256": "72a7fef4da20f96153504e4944b3ad0dc1d9a7e30ca2e38ac4fef6ba9590d043",
+        "name": "codegen-assets",
+        "rawExit": 0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "bun",
+          "scripts/actions-plan-identity.ts",
+          "--check"
+        ],
+        "captureExit": 0,
+        "durationMs": 150,
+        "logBytes": 0,
+        "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "name": "action-plan-identity-check",
+        "rawExit": 0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "bun",
+          "scripts/build-codegen.ts",
+          "--check"
+        ],
+        "captureExit": 0,
+        "durationMs": 190,
+        "logBytes": 45,
+        "logSha256": "7deb1623aeba7ae1a32e7c96ec280148fda27d92eb74fd293c490e905704ba87",
+        "name": "codegen-assets-check",
+        "rawExit": 0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "python",
+          "-I",
+          "scripts/rust-inventory.py"
+        ],
+        "captureExit": 0,
+        "durationMs": 61300,
+        "logBytes": 132,
+        "logSha256": "101fc5be54ddf8ced903bff8835899b9fa7b9894ca5096c8c969e9763e75a30a",
+        "name": "r3-inventory",
+        "rawExit": 0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "python",
+          "-I",
+          "scripts/check-rust-boundaries.py"
+        ],
+        "captureExit": 0,
+        "durationMs": 1680,
+        "logBytes": 545,
+        "logSha256": "99437ba6a0c69b7add1c8bbdef3da0adeca3d7a94b93f3f43e0b758ead532f6a",
+        "name": "r3-boundary-check",
+        "rawExit": 0,
+        "truncated": false
+      }
+    ],
+    "recordsSha256": "37d584e31b7cf9b30ab8ab7b7ba6cca3b3301affa69741539553397412fa79d7",
+    "totalRecordedCommandDurationMs": 90490
+  },
+  "generatedOutputs": {
+    "allHashesAndDeclaredSizesMatch": true,
+    "bytes": 4628468,
+    "count": 27,
+    "historicalPlaceholderInputCount": 6,
+    "historicalPlaceholdersAreQualificationEvidence": false,
+    "sourceTreeDifferences": [
+      {
+        "committedSha256": "fa58fdf3c4725aa4a330a2d63141b337b9c20f6767557949d27787f54d24516c",
+        "generatedSha256": "63898d97108d217ae2ed325d3b7b357839476c9328fad1f05de9e5d71351699e",
+        "path": "docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json"
+      },
+      {
+        "committedSha256": "f10b9f7f452d829320201365f55f1182722218d41393835ffdec6d451d917baf",
+        "generatedSha256": "9caa800d7e8900c006efb6f891a94b3e7097f3084473557d4244b3c2f2f4b40f",
+        "path": "docs/helix/04-build/evidence/rust-migration/r3/inventory.json"
+      }
+    ],
+    "sourceTreeEqualCount": 25
+  },
+  "generationReceipt": {
+    "path": "extracted/generated-source-receipt.json",
+    "qualifiesMergedSource": false,
+    "r3BoundaryStatus": "pass",
+    "sha256": "348d9b4e1cc5646e796955d6fa573c5a53236b8b84891d1ed2fa87b36f376249",
+    "status": "GENERATED_ARTIFACT_ONLY"
+  },
+  "job": {
+    "completedAt": "2026-10-27T20:51:23Z",
+    "conclusion": "success",
+    "id": 122457740836,
+    "name": "generate",
+    "startedAt": "2026-10-27T20:48:46Z",
+    "status": "completed"
+  },
+  "limits": {
+    "aggregateWorkSeconds": 1800,
+    "artifactMaximumBytes": 16777216,
+    "capturedCommandLogsMaximumBytes": 1048576,
+    "evidenceReserveSeconds": 60
+  },
+  "metamodel": {
+    "adoptedCompanionInputsMatch": true,
+    "committedCanonicalOutputCount": 11,
+    "committedOutputsMatch": true,
+    "companionSha256": "5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29",
+    "phase": "DEPENDENT_GENERATION_READY",
+    "stageCanonicalOutputCount": 11
+  },
+  "profile": "umf.merged-source-generation-custody-review/1",
+  "reviewScope": "Data-only custody and source correspondence; no source adoption or qualification claim.",
+  "sourceIdentity": {
+    "allPinnedSourceBlobsMatchCommit": true,
+    "commit": "bc61be889067d3e9bd537ea2c7910e189ffb46e1",
+    "pinnedSourceInputCount": 26,
+    "ref": "refs/heads/codex/migration-merged-generation",
+    "sourceInputsSha256": "43b9cdd82e4822bae8215e83828e1a8cc33b8f6e0b17cafbce0d92969c2f3f30",
+    "tree": "d8cd03324ff7e2a9571a0774a8ed1dad41ff4605"
+  },
+  "toolchain": {
+    "bun": {
+      "binarySha256": "7ce7d6b654eddeec20afddf2396317fba6dc19ab52788a27e894e1806bf8f24b",
+      "path": "/home/runner/.bun/bin/bun",
+      "version": "1.4.3"
+    },
+    "cargo": {
+      "binarySha256": "dda7234360b7f578ca8b0ddcb80145646fa61a67c1720a5abc7051b35c9fcb71",
+      "path": "/home/runner/.cargo/bin/rustup",
+      "version": "cargo 1.90.0 (840b83a10 2025-07-30)"
+    },
+    "git": {
+      "binarySha256": "d4d2ba562243015206d4248edfec871a74786499292d00ed072dbca2f5ae8073",
+      "path": "/usr/bin/git",
+      "version": "git version 2.55.0"
+    },
+    "python": {
+      "binarySha256": "d601e62487858384d3000725c3b2e16e86ff11a6ad0b0810b76281e45426ea62",
+      "path": "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11",
+      "version": "Python 3.11.17"
+    },
+    "rustc": {
+      "binarySha256": "dda7234360b7f578ca8b0ddcb80145646fa61a67c1720a5abc7051b35c9fcb71",
+      "path": "/home/runner/.cargo/bin/rustup",
+      "version": "rustc 1.90.0 (1159e78c4 2025-09-14)"
+    },
+    "timeout": {
+      "binarySha256": "12690a043dfd555a6c14ccc1564f5649c18f1762c0d6ff66729948130898ec52",
+      "path": "/usr/bin/timeout",
+      "version": "timeout (GNU coreutils) 9.4\nCopyright (C) 2023 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n\nWritten by P\u00e1draig Brady."
+    }
+  },
+  "workflow": {
+    "branch": "codex/migration-merged-generation",
+    "conclusion": "success",
+    "createdAt": "2026-10-27T20:41:54Z",
+    "event": "push",
+    "headCommit": "bc61be889067d3e9bd537ea2c7910e189ffb46e1",
+    "runAttempt": 1,
+    "runId": 40580347258,
+    "runUrl": "https://github.com/DocumentDrivenDX/umf/actions/runs/40580347258",
+    "startedAt": "2026-10-27T20:41:54Z",
+    "status": "completed",
+    "updatedAt": "2026-10-27T20:51:24Z"
+  }
+}
