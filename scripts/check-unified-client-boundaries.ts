@@ -24,6 +24,7 @@ const allowedImports:Record<string,readonly string[]>={
  'rust-host-reads-v3.ts':['./rust-candidate'],
  'rust-host-reads-v4.ts':['./rust-candidate','./rust-host-reads-v3'],
  'rust-keys-default.ts':['../model/keys','../model/key-tuple','../model/types','../model/json','../model/errors'],
+ 'rust-javascript-numeric-default.ts':['../adapters/javascript-numeric','../model/json','../model/errors'],
  'rust-relationships-default.ts':['../model/relationships','../model/types','../model/json','../model/errors'],
  'rust-record-type-default.ts':['../model/field-kind','../model/record-type','../model/types','../model/json','../model/errors'],
  'rust-schema-properties-default.ts':['../model/schema-properties','../model/schema-literals','../model/types'],
@@ -39,6 +40,7 @@ const typeOnlyImports:Record<string,readonly string[]>={
  'rust-core-evolution-candidate.ts':['../model/types','../model/evolution'],
  'rust-record-type-default.ts':['../model/field-kind','../model/record-type','../model/types'],
  'rust-selection-default.ts':['../model/selection','../model/types','../registry/registry'],
+ 'rust-javascript-numeric-default.ts':['../adapters/javascript-numeric'],
 };
 const forbidden=new Set(['Bun','process','require','fetch','eval','Function','Buffer','XMLHttpRequest','WebSocket']);
 export function checkAccessSource(file:string,text:string):string[]{

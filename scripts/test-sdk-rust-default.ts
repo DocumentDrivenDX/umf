@@ -19,6 +19,8 @@ const facetsPacket=JSON.parse(await readFile('docs/helix/04-build/evidence/rust-
 const facetsRegression=JSON.parse(await readFile('docs/helix/04-build/evidence/rust-migration/r5-core-facets/regression-cases.json','utf8')) as any;
 const keysPacket=JSON.parse(await readFile('docs/helix/04-build/evidence/rust-migration/r5-core-keys-default-route/frozen-typescript.json','utf8')) as any;
 const bit128Packet=JSON.parse(await readFile('scripts/rust-migration/r5/bit128-default-route/predecessor.json','utf8')) as any;
+const javascriptNumericOracle=JSON.parse(await readFile('docs/helix/04-build/evidence/rust-migration/r5-javascript-numeric/oracle-output.json','utf8')) as {op:string;token?:string;bits?:string;scalarType?:'integer'|'decimal';integer?:boolean;oracle:{ok:boolean;value:unknown}}[];
+const javascriptNumericDocument=JSON.parse(await readFile('tests/lifecycle/fixtures/legacy-note.json','utf8')) as unknown;
 const compactDirectory='docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact-default-cutover';
 const compactCases=await Promise.all((await readdir(compactDirectory))
  .filter(name=>name.startsWith('frozen-')&&name.endsWith('.json')&&name!=='frozen-forged-receipt.json')
@@ -26,6 +28,46 @@ const compactCases=await Promise.all((await readdir(compactDirectory))
  .map(async name=>({...JSON.parse(await readFile(join(compactDirectory,name),'utf8')) as any,__filename:name})));
 if(compactCases.length!==19)throw new Error(`Expected 19 frozen compact Dataset validation vectors, found ${compactCases.length}`);
 const canonical=(value:unknown):string=>JSON.stringify(value,(key,item)=>item&&typeof item==='object'&&!Array.isArray(item)?Object.fromEntries(Object.keys(item).sort().map(name=>[name,item[name]])):item);
+const javascriptNumericReplaySnippet=`
+const numericRows=${JSON.stringify(javascriptNumericOracle)};
+const numericContext={document:${JSON.stringify(javascriptNumericDocument)},field:{module:'note_lifecycle',element:'notes__note_id'}};
+const numericCanonical=value=>JSON.stringify(value,(_key,item)=>typeof item==='bigint'?item.toString():item);
+const numericCall=(api,row)=>{
+ switch(row.op){
+  case 'exactDecimal': return api.exactDecimal(row.token);
+  case 'integerFromBigInt': return api.integerFromBigInt(BigInt(row.token));
+  case 'integerToBigInt': return api.integerToBigInt({integerToken:row.token}).toString();
+  case 'admitJavascriptNumber': { const bytes=Uint8Array.from(row.bits.match(/../g),part=>Number.parseInt(part,16)); return api.admitJavascriptNumber(new DataView(bytes.buffer).getFloat64(0,false),row.scalarType); }
+  case 'numericToNumberLossless': return api.numericToNumberLossless(row.integer?{integerToken:row.token}:{decimalToken:row.token});
+  default: throw new Error('Unknown numeric oracle operation: '+row.op);
+ }
+};
+if(!['exactDecimal','integerFromBigInt','integerToBigInt','admitJavascriptNumber','numericToNumberLossless'].every(name=>typeof root[name]==='function'))throw new Error('Rust JavaScript numeric root exports missing');
+let numericDefaultFirstCallMs;
+for(const row of numericRows){
+ const outcomes=[root,referenceCore].map((api,index)=>{const started=performance.now();try{return {ok:true,value:numericCall(api,row)}}catch{return {ok:false,value:null}}finally{if(index===0&&numericDefaultFirstCallMs===undefined)numericDefaultFirstCallMs=performance.now()-started}});
+ for(const outcome of outcomes)if(outcome.ok!==row.oracle.ok||(outcome.ok&&numericCanonical(outcome.value)!==numericCanonical(row.oracle.value)))throw new Error('JavaScript numeric route disagrees with independent oracle: '+JSON.stringify({row,outcome}));
+ if(outcomes[0].ok!==outcomes[1].ok||(outcomes[0].ok&&numericCanonical(outcomes[0].value)!==numericCanonical(outcomes[1].value)))throw new Error('JavaScript numeric Rust/reference root mismatch: '+row.op);
+}
+const numericCapture=operation=>{try{return {ok:true,value:operation()}}catch(error){return {ok:false,error:{code:error.code??'',path:error.path??'',message:error.message??String(error)}}}};
+let numericGetterCalls=0;const numericAccessor={get decimalToken(){numericGetterCalls++;return '1'}};
+const numericRefusals=[
+ ['infinity',api=>api.admitJavascriptNumber(Infinity,'decimal')],
+ ['nan',api=>api.admitJavascriptNumber(NaN,'decimal')],
+ ['negative-zero',api=>api.admitJavascriptNumber(-0,'decimal')],
+ ['extra-carrier',api=>api.numericToNumberLossless({decimalToken:'1',future:true})],
+ ['symbol-carrier',api=>api.numericToNumberLossless(Object.assign({decimalToken:'1'},{[Symbol('future')]:true}))],
+ ['accessor-carrier',api=>api.numericToNumberLossless(numericAccessor)],
+];
+for(const [label,operation] of numericRefusals){const outcomes=[root,referenceCore].map(api=>numericCapture(()=>operation(api)));if(numericCanonical(outcomes[0])!==numericCanonical(outcomes[1]))throw new Error('JavaScript numeric host refusal differs from reference: '+label+' '+numericCanonical(outcomes));}
+if(numericGetterCalls!==0)throw new Error('JavaScript numeric accessor admission invoked a getter');
+const numericProxyTrace=api=>{const trace=[];const target={decimalToken:'1'};const proxy=new Proxy(target,{getPrototypeOf(value){trace.push('getPrototypeOf');return Reflect.getPrototypeOf(value)},ownKeys(value){trace.push('ownKeys');return Reflect.ownKeys(value)},getOwnPropertyDescriptor(value,key){trace.push('descriptor:'+String(key));return Reflect.getOwnPropertyDescriptor(value,key)}});const result=numericCapture(()=>api.numericToNumberLossless(proxy));return {trace,result}};
+const numericProxyOutcomes=[root,referenceCore].map(numericProxyTrace);
+if(numericCanonical(numericProxyOutcomes[0])!==numericCanonical(numericProxyOutcomes[1]))throw new Error('JavaScript numeric proxy reflection order differs from reference: '+numericCanonical(numericProxyOutcomes));
+const numericContextOutcomes=[root,referenceCore].map(api=>numericCapture(()=>api.integerFromBigInt(1n,numericContext)));
+if(numericCanonical(numericContextOutcomes[0])!==numericCanonical(numericContextOutcomes[1])||!numericContextOutcomes[0].ok)throw new Error('JavaScript numeric Field-context validation differs from reference');
+const numericCaseCount=numericRows.length;
+`;
 const cardinalityReplaySnippet=`
 const cp=${JSON.stringify(cardinalityPacket)};
 const cardCapture=fn=>{try{return {ok:true,value:fn()}}catch(error){return {ok:false,error:{code:error.code??'',message:error.message??String(error),path:error.path??''}}}};
@@ -290,7 +332,7 @@ try{
  const rootConditions=packageManifest.exports?.['.'];assert(rootConditions,'installed package root export is missing');
  const referenceConditions=packageManifest.exports?.['./reference'];assert(referenceConditions,'installed package reference export is missing');
  const browserRootEntry=rootConditions.browser;assert(browserRootEntry,'installed browser route is missing');
- const localSmoke=`import {readFile} from 'node:fs/promises';import * as root from '@umf/core';import * as reference from '@umf/core/reference';const referenceCore=reference;if(typeof root.generatePythonClient!=='function'||typeof reference.generatePythonClient!=='function')throw new Error('source package route missing');const request={text:await readFile('tests/unified/commerce.json','utf8'),package:'shop'};const canonical=value=>JSON.stringify(value,(key,item)=>item&&typeof item==='object'&&!Array.isArray(item)?Object.fromEntries(Object.keys(item).sort().map(name=>[name,item[name]])):item);const a=root.generatePythonClient(request),b=reference.generatePythonClient(request);if(a&&typeof a.then==='function'||canonical(a)!==canonical(b))throw new Error('source package Rust/reference route mismatch');${cardinalityReplaySnippet}${facetsReplaySnippet}${keysReplaySnippet}${bit128ReplaySnippet}`;
+ const localSmoke=`import {readFile} from 'node:fs/promises';import * as reference from '@umf/core/reference';const rootImportStarted=performance.now();const root=await import('@umf/core');const defaultRootInitializationMs=performance.now()-rootImportStarted;const referenceCore=reference;if(typeof root.generatePythonClient!=='function'||typeof reference.generatePythonClient!=='function')throw new Error('source package route missing');const request={text:await readFile('tests/unified/commerce.json','utf8'),package:'shop'};const canonical=value=>JSON.stringify(value,(key,item)=>item&&typeof item==='object'&&!Array.isArray(item)?Object.fromEntries(Object.keys(item).sort().map(name=>[name,item[name]])):item);const a=root.generatePythonClient(request),b=reference.generatePythonClient(request);if(a&&typeof a.then==='function'||canonical(a)!==canonical(b))throw new Error('source package Rust/reference route mismatch');${javascriptNumericReplaySnippet}${cardinalityReplaySnippet}${facetsReplaySnippet}${keysReplaySnippet}${bit128ReplaySnippet}`;
  await run(['node','--input-type=module','-e',localSmoke],process.cwd());
  await run(['bun','--eval',localSmoke],process.cwd());
  assert(manifest.format==='umf.r7-rust-sdk-default/1'&&manifest.releaseStatus.startsWith('private-r7-default-route-qualification-'),'default-route manifest identity/status mismatch');
@@ -320,7 +362,7 @@ try{
  const corpusFile=join(scratch,'operations.json');await writeFile(corpusFile,JSON.stringify(corpus));
  const legacyEntry='@umf/core/reference';
  const smoke=`import {readFile} from 'node:fs/promises';
-import * as root from '@umf/core';
+const rootImportStarted=performance.now();const root=await import('@umf/core');const defaultRootInitializationMs=performance.now()-rootImportStarted;
 const legacy=await import(${JSON.stringify(legacyEntry)});
 const referenceCore=legacy;
 const loader=await import('@umf/core/loader-contract');
@@ -334,6 +376,7 @@ ${cardinalityReplaySnippet}
 ${facetsReplaySnippet}
 ${keysReplaySnippet}
 ${bit128ReplaySnippet}
+${javascriptNumericReplaySnippet}
 const compactCases=${JSON.stringify(compactCases)};
 ${compactReplaySnippet}
 const frozen=JSON.parse(await readFile(new URL('./operations.json',import.meta.url),'utf8'));
@@ -346,15 +389,17 @@ let touched=0,caught;try{root.generatePythonClient({...request,records:new Proxy
 if(touched!==0||caught?.code!=='RESOURCE_LIMIT'||caught?.path!=='/records'||caught?.message!=='V4 host-read resource limit exceeded')throw new Error('Node root raw-position control failed');
 let single;try{root.generatePythonClient({...request,records:[{module:'x'.repeat(4_000_000),element:''}]})}catch(error){single=error}
 if(single?.code!=='RESOURCE_LIMIT'||single?.path!=='/records'||single?.message!=='V4 host-read resource limit exceeded')throw new Error('Node root single-identity budget control failed');
-console.log(JSON.stringify({files:actual.files.length,synchronous:true,r3Cases:cases.length,cardinalityCases:cardinalityCaseCount,facetsCases:facetCaseCount,keysCases:keyCaseCount,bit128Cases:bit128CaseCount,bit128BufferInput:bitBufferInput,bitUmfErrorIdentity,compactValidateCases:compactValidateCaseCount,compactValidateFiles,exports:Object.keys(root).length,rawLimit:caught.code,singleIdentityLimit:single.path,node:process.version,bun:typeof Bun==='undefined'?undefined:Bun.version}));`;
+console.log(JSON.stringify({files:actual.files.length,synchronous:true,r3Cases:cases.length,numericCases:numericCaseCount,defaultRootInitializationMs,numericDefaultFirstCallMs,cardinalityCases:cardinalityCaseCount,facetsCases:facetCaseCount,keysCases:keyCaseCount,bit128Cases:bit128CaseCount,bit128BufferInput:bitBufferInput,bitUmfErrorIdentity,compactValidateCases:compactValidateCaseCount,compactValidateFiles,exports:Object.keys(root).length,rawLimit:caught.code,singleIdentityLimit:single.path,node:process.version,bun:typeof Bun==='undefined'?undefined:Bun.version}));`;
  const smokeFile=join(scratch,'smoke.mjs');await writeFile(smokeFile,smoke);
+ console.log(JSON.stringify({stage:'node-r3-replay-start'}));
  const node=await run(['node',smokeFile]);
  console.log(JSON.stringify({stage:'node-r3-replay',elapsedMs:Date.now()-testStarted}));
+ console.log(JSON.stringify({stage:'bun-r3-replay-start'}));
  const bun=await run(['bun',smokeFile]);
  console.log(JSON.stringify({stage:'bun-r3-replay',elapsedMs:Date.now()-testStarted}));
- const nodeEntry=JSON.parse(node) as {files:number;synchronous:boolean;cardinalityCases:number;facetsCases:number;keysCases:number;bit128Cases:number;bit128BufferInput:string;bitUmfErrorIdentity:boolean;compactValidateCases:number;compactValidateFiles:string[];node?:string;bun?:string};
- const bunEntry=JSON.parse(bun) as {files:number;synchronous:boolean;cardinalityCases:number;facetsCases:number;keysCases:number;bit128Cases:number;bit128BufferInput:string;bitUmfErrorIdentity:boolean;compactValidateCases:number;compactValidateFiles:string[];node?:string;bun?:string};
- assert(nodeEntry.synchronous&&bunEntry.synchronous&&nodeEntry.files===7&&bunEntry.files===7&&nodeEntry.cardinalityCases===66&&bunEntry.cardinalityCases===66&&nodeEntry.facetsCases===19&&bunEntry.facetsCases===19&&nodeEntry.keysCases===14&&bunEntry.keysCases===14&&nodeEntry.bit128Cases===11&&bunEntry.bit128Cases===11&&nodeEntry.bit128BufferInput==='accepted-and-copied'&&bunEntry.bit128BufferInput==='accepted-and-copied'&&nodeEntry.bitUmfErrorIdentity&&bunEntry.bitUmfErrorIdentity&&nodeEntry.compactValidateCases===19&&bunEntry.compactValidateCases===19,`Node/Bun installed replay aggregate mismatch: ${JSON.stringify({nodeEntry,bunEntry})}`);
+const nodeEntry=JSON.parse(node) as {files:number;synchronous:boolean;numericCases:number;defaultRootInitializationMs:number;numericDefaultFirstCallMs:number;cardinalityCases:number;facetsCases:number;keysCases:number;bit128Cases:number;bit128BufferInput:string;bitUmfErrorIdentity:boolean;compactValidateCases:number;compactValidateFiles:string[];node?:string;bun?:string};
+ const bunEntry=JSON.parse(bun) as {files:number;synchronous:boolean;numericCases:number;defaultRootInitializationMs:number;numericDefaultFirstCallMs:number;cardinalityCases:number;facetsCases:number;keysCases:number;bit128Cases:number;bit128BufferInput:string;bitUmfErrorIdentity:boolean;compactValidateCases:number;compactValidateFiles:string[];node?:string;bun?:string};
+ assert(nodeEntry.synchronous&&bunEntry.synchronous&&nodeEntry.files===7&&bunEntry.files===7&&nodeEntry.numericCases===27&&bunEntry.numericCases===27&&nodeEntry.defaultRootInitializationMs>0&&bunEntry.defaultRootInitializationMs>0&&nodeEntry.numericDefaultFirstCallMs>0&&bunEntry.numericDefaultFirstCallMs>0&&nodeEntry.cardinalityCases===66&&bunEntry.cardinalityCases===66&&nodeEntry.facetsCases===19&&bunEntry.facetsCases===19&&nodeEntry.keysCases===14&&bunEntry.keysCases===14&&nodeEntry.bit128Cases===11&&bunEntry.bit128Cases===11&&nodeEntry.bit128BufferInput==='accepted-and-copied'&&bunEntry.bit128BufferInput==='accepted-and-copied'&&nodeEntry.bitUmfErrorIdentity&&bunEntry.bitUmfErrorIdentity&&nodeEntry.compactValidateCases===19&&bunEntry.compactValidateCases===19,`Node/Bun installed replay aggregate mismatch: ${JSON.stringify({nodeEntry,bunEntry})}`);
  assert(JSON.stringify(nodeEntry.compactValidateFiles)===JSON.stringify(bunEntry.compactValidateFiles)&&!nodeEntry.compactValidateFiles.includes('frozen-forged-receipt.json'),'Node/Bun compact Dataset vector manifests differ or include verifier-only receipt');
 
  const missing=join(scratch,'missing');const missingPackage=join(missing,'node_modules/@umf/core');await mkdir(missingPackage,{recursive:true});
@@ -402,7 +447,7 @@ console.log(JSON.stringify({files:actual.files.length,synchronous:true,r3Cases:c
  }});serverPort=candidatePort;break}catch(error){lastBindError=error;if(!String(error).includes('EADDRINUSE'))throw error}
  }
  if(!server)throw new Error(`Could not bind Chromium replay server after 20 loopback ports: ${String(lastBindError)}`);
- const browserCheck=`import * as root from '@umf/core';
+const browserCheck=`const rootImportStarted=performance.now();const root=await import('@umf/core');const defaultRootInitializationMs=performance.now()-rootImportStarted;
 import * as legacy from '@umf/core/reference';
 const referenceCore=legacy;
 const canonical=value=>JSON.stringify(value,(key,item)=>item&&typeof item==='object'&&!Array.isArray(item)?Object.fromEntries(Object.keys(item).sort().map(name=>[name,item[name]])):item);
@@ -411,6 +456,7 @@ ${cardinalityReplaySnippet}
 ${facetsReplaySnippet}
 ${keysReplaySnippet}
 ${bit128ReplaySnippet}
+${javascriptNumericReplaySnippet}
 const compactCases=await(await fetch('/compact-cases.json')).json();
 ${compactReplaySnippet}
 const corpus=await(await fetch('/operations.json')).json();const cases=corpus.cases.filter(item=>item.operation==='generatePythonClient');
@@ -421,13 +467,14 @@ let touched=0,caught;try{root.generatePythonClient({...request,actions:new Proxy
 if(touched!==0||caught?.code!=='RESOURCE_LIMIT'||caught?.path!=='/actions')throw new Error('browser root action raw-limit control failed');
 let single;try{root.generatePythonClient({...request,records:[{module:'x'.repeat(4_000_000),element:''}]})}catch(error){single=error}
 if(single?.code!=='RESOURCE_LIMIT'||single?.path!=='/records'||single?.message!=='V4 host-read resource limit exceeded')throw new Error('browser root single-identity budget control failed');
-window.browserRootResult={files:out.files.length,synchronous:true,r3Cases:cases.length,cardinalityCases:cardinalityCaseCount,facetsCases:facetCaseCount,keysCases:keyCaseCount,bit128Cases:bit128CaseCount,bit128BufferInput:bitBufferInput,bitUmfErrorIdentity,compactValidateCases:compactValidateCaseCount,compactValidateFiles,exports:Object.keys(root).length,rawLimit:caught.code,singleIdentityLimit:single.path};`;
+window.browserRootResult={files:out.files.length,synchronous:true,r3Cases:cases.length,numericCases:numericCaseCount,defaultRootInitializationMs,numericDefaultFirstCallMs,cardinalityCases:cardinalityCaseCount,facetsCases:facetCaseCount,keysCases:keyCaseCount,bit128Cases:bit128CaseCount,bit128BufferInput:bitBufferInput,bitUmfErrorIdentity,compactValidateCases:compactValidateCaseCount,compactValidateFiles,exports:Object.keys(root).length,rawLimit:caught.code,singleIdentityLimit:single.path};`;
+ console.log(JSON.stringify({stage:'chromium-r3-replay-start'}));
  const browser=await chromium.launch({headless:true});
  try{
   const page=await browser.newPage();const external:string[]=[];const pageErrors:string[]=[];const browserLogs:string[]=[];const requests:string[]=[];const badResponses:string[]=[];page.on('request',request=>{requests.push(request.url());if(!request.url().startsWith(server!.url.href))external.push(request.url())});page.on('response',response=>{if(response.status()>=400)badResponses.push(`${response.status()} ${response.url()}`)});page.on('pageerror',error=>pageErrors.push(error.stack??error.message));page.on('console',message=>{if(message.type()==='error')browserLogs.push(message.text())});
   await page.goto(server.url.href);try{await page.waitForFunction(()=>Boolean((window as unknown as {browserRootResult?:unknown}).browserRootResult),undefined,{timeout:600000})}catch{throw new Error(`Browser root import failed: ${pageErrors.join('\n')} ${browserLogs.join('\n')} bad=${badResponses.join(',')} requests=${requests.join(',')}`)}
-  const result=await page.evaluate(()=> (window as unknown as {browserRootResult:{files:number;synchronous:boolean;r3Cases:number;cardinalityCases:number;facetsCases:number;keysCases:number;bit128Cases:number;bit128BufferInput:string;bitUmfErrorIdentity:boolean;compactValidateCases:number;compactValidateFiles:string[];exports:number;rawLimit:string;singleIdentityLimit:string}}).browserRootResult);
-  assert(result.files===7&&result.synchronous&&result.r3Cases===31&&result.cardinalityCases===66&&result.facetsCases===19&&result.keysCases===14&&result.bit128Cases===11&&result.bit128BufferInput==='unavailable'&&result.bitUmfErrorIdentity&&result.compactValidateCases===19&&result.exports>0&&result.rawLimit==='RESOURCE_LIMIT'&&result.singleIdentityLimit==='/records'&&external.length===0,'browser root parity, frozen replay, error identity, sync, resource limit, or network boundary failed');
+  const result=await page.evaluate(()=> (window as unknown as {browserRootResult:{files:number;synchronous:boolean;r3Cases:number;numericCases:number;defaultRootInitializationMs:number;numericDefaultFirstCallMs:number;cardinalityCases:number;facetsCases:number;keysCases:number;bit128Cases:number;bit128BufferInput:string;bitUmfErrorIdentity:boolean;compactValidateCases:number;compactValidateFiles:string[];exports:number;rawLimit:string;singleIdentityLimit:string}}).browserRootResult);
+  assert(result.files===7&&result.synchronous&&result.r3Cases===31&&result.numericCases===27&&result.defaultRootInitializationMs>0&&result.numericDefaultFirstCallMs>0&&result.cardinalityCases===66&&result.facetsCases===19&&result.keysCases===14&&result.bit128Cases===11&&result.bit128BufferInput==='unavailable'&&result.bitUmfErrorIdentity&&result.compactValidateCases===19&&result.exports>0&&result.rawLimit==='RESOURCE_LIMIT'&&result.singleIdentityLimit==='/records'&&external.length===0,'browser root parity, frozen replay, error identity, sync, resource limit, or network boundary failed');
   const corrupt=await page.evaluate(async(modulePath)=>{
    try{await import(modulePath);return ''}catch(error){return error instanceof Error?error.message:String(error)}
   },`/corrupt/${browserRootEntry.replace(/^\.\//,'')}`);
@@ -436,7 +483,7 @@ window.browserRootResult={files:out.files.length,synchronous:true,r3Cases:cases.
    try{await import(missingPath);return ''}catch(error){return error instanceof Error?error.message:String(error)}
   },`/missing/${browserRootEntry.replace(/^\.\//,'')}`);
   assert(missingWasm&&requests.some(url=>url.includes('/missing/dist/umf_core_wasm_bg.wasm'))&&badResponses.some(item=>item.includes('/missing/dist/umf_core_wasm_bg.wasm')),'missing browser WASM did not fail at its requested asset boundary');
-  const receipt={status:'passed',archive:archive.split('/').at(-1),archiveSha256:createHash('sha256').update(await readFile(archive)).digest('hex'),packageRootConditions:rootConditions,referenceConditions,routeTamperRefusals:3,platform:manifest.platform,node:nodeEntry.node,bun:bunEntry.bun,browser:`Chromium ${browser.version()}`,serverPort,files:result.files,r3Cases:result.r3Cases,cardinalityCases:result.cardinalityCases,facetsCases:result.facetsCases,keysCases:result.keysCases,bit128Functions:bit128Packet.publicFunctions,bit128PacketSha256:await Bun.CryptoHasher.hash('sha256',await readFile('scripts/rust-migration/r5/bit128-default-route/predecessor.json'),'hex'),bit128Cases:result.bit128Cases,bit128NodeBufferInput:nodeEntry.bit128BufferInput,bit128BunBufferInput:bunEntry.bit128BufferInput,bit128BrowserBufferInput:result.bit128BufferInput,bit128UmfErrorIdentity:{node:nodeEntry.bitUmfErrorIdentity,bun:bunEntry.bitUmfErrorIdentity,browser:result.bitUmfErrorIdentity},compactValidateCases:result.compactValidateCases,compactValidateFiles:result.compactValidateFiles,exports:result.exports,sourcePackageNodeAndBun:true,missingNativeRefused:true,corruptNativeRefused:true,corruptWasmRefused:true,missingWasmRefused:true,assetCount:Object.keys(manifest.assets).length,archiveMemberCount:archiveMembers.length,sourceTreeSha256:manifest.sourceClosure.sha256,sourceTransformStatus:manifest.sourceClosure.transform.status,sourceTransformCount:manifest.sourceClosure.transform.generatedInputs.length,totalElapsedMs:Date.now()-testStarted};
+  const receipt={status:'passed',archive:archive.split('/').at(-1),archiveSha256:createHash('sha256').update(await readFile(archive)).digest('hex'),packageRootConditions:rootConditions,referenceConditions,routeTamperRefusals:3,platform:manifest.platform,node:nodeEntry.node,bun:bunEntry.bun,browser:`Chromium ${browser.version()}`,serverPort,files:result.files,r3Cases:result.r3Cases,javascriptNumericCases:result.numericCases,javascriptNumericDefaultRootInitializationMs:{node:nodeEntry.defaultRootInitializationMs,bun:bunEntry.defaultRootInitializationMs,browser:result.defaultRootInitializationMs},javascriptNumericDefaultFirstCallMs:{node:nodeEntry.numericDefaultFirstCallMs,bun:bunEntry.numericDefaultFirstCallMs,browser:result.numericDefaultFirstCallMs},cardinalityCases:result.cardinalityCases,facetsCases:result.facetsCases,keysCases:result.keysCases,bit128Functions:bit128Packet.publicFunctions,bit128PacketSha256:await Bun.CryptoHasher.hash('sha256',await readFile('scripts/rust-migration/r5/bit128-default-route/predecessor.json'),'hex'),bit128Cases:result.bit128Cases,bit128NodeBufferInput:nodeEntry.bit128BufferInput,bit128BunBufferInput:bunEntry.bit128BufferInput,bit128BrowserBufferInput:result.bit128BufferInput,bit128UmfErrorIdentity:{node:nodeEntry.bitUmfErrorIdentity,bun:bunEntry.bitUmfErrorIdentity,browser:result.bitUmfErrorIdentity},compactValidateCases:result.compactValidateCases,compactValidateFiles:result.compactValidateFiles,exports:result.exports,sourcePackageNodeAndBun:true,missingNativeRefused:true,corruptNativeRefused:true,corruptWasmRefused:true,missingWasmRefused:true,assetCount:Object.keys(manifest.assets).length,archiveMemberCount:archiveMembers.length,sourceTreeSha256:manifest.sourceClosure.sha256,sourceTransformStatus:manifest.sourceClosure.transform.status,sourceTransformCount:manifest.sourceClosure.transform.generatedInputs.length,totalElapsedMs:Date.now()-testStarted};
   const receiptPath=join(resolve(archive,'..'),'installed-test-receipt.json');
   await writeFile(receiptPath,JSON.stringify(receipt,null,2)+'\n');
   console.log(JSON.stringify(receipt));

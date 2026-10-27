@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createPythonClientRustCandidateV4} from './browser-v4';
 import {initializePythonClientRustDefaultV4} from './access/rust-default-v4';
-import {initializeCoreModelRootWasm,createCoreRecordTypeEngine,createSecurityLogicEngine,initializeBit128Wasm,initializeTemporalWasm,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError} from '../bindings/core/wasm/index.js';
+import {initializeCoreModelRootWasm,createCoreRecordTypeEngine,createSecurityLogicEngine,createJavascriptNumericEngine,initializeBit128Wasm,initializeTemporalWasm,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError} from '../bindings/core/wasm/index.js';
 import {CORE_MODEL_RESOURCES} from './access/core-model-resources';
 import {bindCoreCardinalityRust} from './access/rust-cardinality-default';
 import {bindCoreDatasetValuesCompactRust} from './access/rust-dataset-values-compact-default';
@@ -12,6 +12,7 @@ import {bindBit128Rust} from './access/rust-bit128-default';
 import {bindCsvBooleanLexicalRust} from './access/rust-csv-boolean-default';
 import {bindCoreInspectorsRust} from './access/rust-core-inspectors-default';
 import {bindCoreSchemaPropertiesRust} from './access/rust-schema-properties-default';
+import {bindJavascriptNumericRust} from './access/rust-javascript-numeric-default';
 import {bindCoreRecordTypeRust} from './access/rust-record-type-default';
 import {createSecurityNotRustAdapter} from './extensions/security/rust-not-adapter';
 
@@ -21,6 +22,8 @@ const generatePythonClient=await initializePythonClientRustDefaultV4(()=>createP
 const wasmModule=await import('../bindings/core/wasm/pkg/umf_core_wasm.js');
 const model=await initializeCoreModelRootWasm(CORE_MODEL_RESOURCES,async()=>wasmModule);
 const securityNot=createSecurityNotRustAdapter(createSecurityLogicEngine(wasmModule));
+const javascriptNumeric=bindJavascriptNumericRust(()=>createJavascriptNumericEngine(wasmModule,CORE_MODEL_RESOURCES));
+const {exactDecimal,integerFromBigInt,integerToBigInt,admitJavascriptNumber,numericToNumberLossless}=javascriptNumeric;
 const recordType=bindCoreRecordTypeRust(createCoreRecordTypeEngine(wasmModule,CORE_MODEL_RESOURCES),isNativeUmfCoreError);
 const {declareCoreRecordType,verifyCoreRecordTypeDeclaration}=recordType;
 const temporal=await initializeTemporalWasm();
@@ -35,4 +38,4 @@ const {inspectCoreKeys,lookupCoreKey,declareCoreRecordMembers,declareCoreKey,ver
 const {inspectCoreRelationships,lookupCoreRelationship,declareCoreRelationship,verifyCoreRelationshipOperation}=bindCoreRelationshipsRust(model);
 const {parseBits128,parseUuid,bits128FromBytes,bits128ToBytes,uuidFromBits128,uuidToBits128,compareBits128,bits128ToWords,bits128FromWords,bits128ToInteger,bits128FromInteger}=bindBit128Rust(await initializeBit128Wasm(),isBit128EngineError);
 export * from './index';
-export {generatePythonClient,inspectCoreCardinality,declareCoreCardinality,verifyCoreCardinalityDeclaration,validateCoreDatasetValuesCompact,inspectCoreFacets,declareCoreFacets,verifyCoreFacetDeclaration,historicalCoreFacetPatch,inspectCoreKeys,lookupCoreKey,declareCoreRecordMembers,declareCoreKey,verifyCoreKeyOperation,inspectCoreRelationships,lookupCoreRelationship,declareCoreRelationship,verifyCoreRelationshipOperation,inspectCoreScalarType,inspectCoreRecordMembers,inspectCoreReferenceLinks,inspectCoreSchemaProperties,declareCoreSchemaProperties,validateCoreFieldValue,resolveCoreDefault,declareCoreRecordType,verifyCoreRecordTypeDeclaration,parseBits128,parseUuid,bits128FromBytes,bits128ToBytes,uuidFromBits128,uuidToBits128,compareBits128,bits128ToWords,bits128FromWords,bits128ToInteger,bits128FromInteger,validateCsvBooleanLexical,verifyCsvBooleanLexical,parseGregorianDate,truncateGregorianDate,parseRfc3339ExactInstant,sameRfc3339ExactInstant,securityNot};
+export {generatePythonClient,exactDecimal,integerFromBigInt,integerToBigInt,admitJavascriptNumber,numericToNumberLossless,inspectCoreCardinality,declareCoreCardinality,verifyCoreCardinalityDeclaration,validateCoreDatasetValuesCompact,inspectCoreFacets,declareCoreFacets,verifyCoreFacetDeclaration,historicalCoreFacetPatch,inspectCoreKeys,lookupCoreKey,declareCoreRecordMembers,declareCoreKey,verifyCoreKeyOperation,inspectCoreRelationships,lookupCoreRelationship,declareCoreRelationship,verifyCoreRelationshipOperation,inspectCoreScalarType,inspectCoreRecordMembers,inspectCoreReferenceLinks,inspectCoreSchemaProperties,declareCoreSchemaProperties,validateCoreFieldValue,resolveCoreDefault,declareCoreRecordType,verifyCoreRecordTypeDeclaration,parseBits128,parseUuid,bits128FromBytes,bits128ToBytes,uuidFromBits128,uuidToBits128,compareBits128,bits128ToWords,bits128FromWords,bits128ToInteger,bits128FromInteger,validateCsvBooleanLexical,verifyCsvBooleanLexical,parseGregorianDate,truncateGregorianDate,parseRfc3339ExactInstant,sameRfc3339ExactInstant,securityNot};
