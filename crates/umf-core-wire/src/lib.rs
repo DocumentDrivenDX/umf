@@ -661,6 +661,17 @@ fn execute_json_schema_wire_inner(
                     ),
                 ])
             }
+            "validateJsonSchemaDocumentForGet" => {
+                match runtime {
+                    Some(runtime) => {
+                        schema::payload_from_document_with_runtime(document()?, runtime, &mut ctx)?;
+                    }
+                    None => {
+                        schema::payload_from_document(document()?, &mut ctx)?;
+                    }
+                }
+                Value::Bool(true)
+            }
             "getJsonSchemaNode" => {
                 let pointer = field(&request, "pointer")
                     .and_then(as_utf16)

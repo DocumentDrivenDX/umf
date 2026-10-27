@@ -1,6 +1,7 @@
 import {describe, expect, test} from 'bun:test';
 import {createJsonSchemaOperations as createNodeOperations, jsonSchemaFailureError, UmfError} from '../src/json-schema.js';
 import {createJsonSchemaOperations as createWasmOperations} from '../../wasm/src/json-schema.js';
+import {getJsonSchemaNode as sourceGetJsonSchemaNode} from '../../../../src/adapters/json-schema/index.ts';
 
 for (const [host, factory] of [['Node', createNodeOperations], ['WASM', createWasmOperations]]) {
   describe(`${host} JSON Schema wrapper shapes`, () => {
@@ -93,7 +94,7 @@ for (const [host, factory] of [['Node', createNodeOperations], ['WASM', createWa
         for (const operation of ['getJsonSchemaNode', 'editJsonSchemaNode']) {
           let dispatches = 0;
           let preflights = 0;
-          const api = factory(() => { dispatches++; throw new Error('dispatch must not run'); }, () => { preflights++; return {}; });
+          const api = factory(() => { dispatches++; return true; }, () => { preflights++; return {}; });
           const invoke = () => operation === 'getJsonSchemaNode'
             ? api.getJsonSchemaNode({}, pointer)
             : api.editJsonSchemaNode({}, pointer, 'false');
@@ -105,12 +106,38 @@ for (const [host, factory] of [['Node', createNodeOperations], ['WASM', createWa
             expect(error).toBeInstanceOf(TypeError);
             expect(error.message).toBe(sourceError.message);
           }
-          expect(dispatches).toBe(0);
-          // edit validates the pointer before any document/replacement admission;
-          // get performs the opt-in host preflight before its pointer guard.
+          expect(dispatches).toBe(operation === 'getJsonSchemaNode' ? 1 : 0);
+          // edit validates pointer first; get preflights and sends document-only
+          // validation before the native pointer error to preserve predecessor order.
           expect(preflights).toBe(operation === 'getJsonSchemaNode' ? 1 : 0);
         }
       }
+    });
+
+    test('matches predecessor first fault when invalid document and non-string pointer cross', () => {
+      const document = {};
+      const pointer = 7;
+      let expected;
+      try { sourceGetJsonSchemaNode(document, pointer); } catch (error) { expected = error; }
+      const api = factory((op) => {
+        if (op === 'validateJsonSchemaDocumentForGet') throw expected;
+        throw new Error('get dispatch must not run');
+      }, () => ({}));
+      let actual;
+      try { api.getJsonSchemaNode(document, pointer); } catch (error) { actual = error; }
+      expect(actual).toBe(expected);
+    });
+
+    test('preserves document Proxy sentinel before observing crossed pointer', () => {
+      const events = [];
+      const sentinel = new Error('document ownKeys sentinel');
+      const document = new Proxy({}, {ownKeys() { events.push('document.ownKeys'); throw sentinel; }});
+      const pointer = Object.defineProperty({}, 'startsWith', {get() { events.push('pointer.startsWith'); return () => true; }});
+      const api = factory((_op, fields) => { Reflect.ownKeys(fields.document); return true; }, () => ({}));
+      let actual;
+      try { api.getJsonSchemaNode(document, pointer); } catch (error) { actual = error; }
+      expect(actual).toBe(sentinel);
+      expect(events).toEqual(['document.ownKeys']);
     });
 
     test('preserves a non-string pointer startsWith method call before dispatch', () => {
@@ -124,7 +151,7 @@ for (const [host, factory] of [['Node', createNodeOperations], ['WASM', createWa
           : api.editJsonSchemaNode({}, pointer, 'false');
         expect(result).toBe('dispatched');
         expect(trace).toEqual(['/']);
-        expect(dispatches).toBe(1);
+        expect(dispatches).toBe(operation === 'getJsonSchemaNode' ? 2 : 1);
       }
     });
   });

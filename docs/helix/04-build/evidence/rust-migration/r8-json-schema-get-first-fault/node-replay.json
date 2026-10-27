@@ -1,0 +1,41 @@
+{
+  "cases": [
+    {
+      "case": "invalid-document + numeric pointer",
+      "expected": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "INVALID_DOCUMENT",
+        "message": "[{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"\",\"message\":\"must have required property 'umf'\",\"severity\":\"error\"},{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"\",\"message\":\"must have required property 'id'\",\"severity\":\"error\"},{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"\",\"message\":\"must have required property 'vocabularies'\",\"severity\":\"error\"},{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"\",\"message\":\"must have required property 'modules'\",\"severity\":\"error\"}]"
+      },
+      "actual": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "INVALID_DOCUMENT",
+        "message": "[{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"\",\"message\":\"must have required property 'umf'\",\"severity\":\"error\"},{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"\",\"message\":\"must have required property 'id'\",\"severity\":\"error\"},{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"\",\"message\":\"must have required property 'vocabularies'\",\"severity\":\"error\"},{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"\",\"message\":\"must have required property 'modules'\",\"severity\":\"error\"}]"
+      }
+    },
+    {
+      "case": "edit stays pointer-first",
+      "expected": {
+        "status": "threw",
+        "name": "TypeError",
+        "code": null,
+        "message": "pointer.startsWith is not a function"
+      },
+      "actual": {
+        "status": "threw",
+        "name": "TypeError",
+        "code": null,
+        "message": "pointer.startsWith is not a function"
+      }
+    },
+    {
+      "case": "Proxy ownKeys sentinel precedes pointer getter",
+      "identityPreserved": true,
+      "events": [
+        "document.ownKeys"
+      ]
+    }
+  ]
+}

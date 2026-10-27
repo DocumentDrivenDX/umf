@@ -64,6 +64,22 @@ fn json_schema_dispatcher_covers_seven_closed_operations() {
         fields.extend(extra);
         result_wire(&execute_json_schema_wire(&request(op, fields)));
     }
+
+    let valid_document = decode(&document, &mut Context::ordinary()).unwrap();
+    let validated = execute_json_schema_wire(&request(
+        "validateJsonSchemaDocumentForGet",
+        vec![("document", valid_document)],
+    ));
+    let validated_value = decode(&result_wire(&validated), &mut Context::ordinary()).unwrap();
+    assert!(matches!(validated_value, Value::Bool(true)));
+
+    let invalid = execute_json_schema_wire(&request(
+        "validateJsonSchemaDocumentForGet",
+        vec![("document", object(vec![]))],
+    ));
+    let envelope: serde_json::Value = serde_json::from_str(&invalid).unwrap();
+    assert_eq!(envelope["status"], "error");
+    assert_eq!(envelope["code"], "INVALID_DOCUMENT");
 }
 
 #[test]
