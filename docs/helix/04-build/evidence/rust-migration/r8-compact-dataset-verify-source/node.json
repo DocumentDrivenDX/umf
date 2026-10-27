@@ -6,15 +6,15 @@
     "reference": "source-built TypeScript root"
   },
   "host": "node",
-  "runtime": "v26.3.0",
+  "runtime": "v26.12.1",
   "buildBinding": {
-    "manifest": "/private/tmp/compact-v4-build-fixedpoint-20261027c/compact-dataset-verify-build-manifest.json",
-    "sha256": "4d25c856fdac60bd5e0ae9c0bf7ac9afeda235251c13c05f313e3c6da96e5f3e",
-    "sourceClosureSha256": "2f83e19ace175ceb538d0b7aba94926a41a868c3af4ad87d52d73a996b88fd31",
+    "manifest": "/private/tmp/umf-r8-compact-v4-action-identity-20261027a/compact-dataset-verify-build-manifest.json",
+    "sha256": "9d70a420cc76a308bd42d3984993bc616919e718f3073bceb332822625b363cc",
+    "sourceClosureSha256": "d0d54682e6bc91b1eaa31d55d2b425b0bfbe706b6e2fe3be966422cccd2cc264",
     "artifacts": {
       "nodeAddon": {
         "path": "umf_core_node.node",
-        "sha256": "dedfaf986ba5d0d645563c5813bf12867178453beea89a0fa0729697d95fb026"
+        "sha256": "080f647ff8eb37a5182b916c0be10b78561e1f60aad9837323cfa5a9b53d8aad"
       },
       "wasm": {
         "path": "umf_core_wasm_bg.wasm",
@@ -26,20 +26,20 @@
       },
       "referenceBundle": {
         "path": "umf.js",
-        "sha256": "f0ea542197e247a966fc7d82425ff1fa7cf1484994db5e7260d94e5418b35682"
+        "sha256": "a05e8167c27302982207782ea08776daa57390756cd5257926768a8a444bffbf"
       },
       "nodeBundle": {
         "path": "umf-node.js",
-        "sha256": "6d76457aa6516c39dd17c99a252b779e26b695bd09a130132f93637bf2be3e7b"
+        "sha256": "69313444952873614cd43afb7b3394d5554fdce8015a3cb8eebacc31c141e2a8"
       },
       "browserBundle": {
         "path": "umf-browser.js",
-        "sha256": "37078690abe20b140bc8399b8e47a8e12357bef780673fb2f5e6159a22ac47b1"
+        "sha256": "99559dab1eaebc957b2061012d0ae2ea10e1b44a2203fee96ab03a957045c8d4"
       }
     }
   },
   "sourceClosure": {
-    "sha256": "2f83e19ace175ceb538d0b7aba94926a41a868c3af4ad87d52d73a996b88fd31",
+    "sha256": "d0d54682e6bc91b1eaa31d55d2b425b0bfbe706b6e2fe3be966422cccd2cc264",
     "files": {
       ".cargo/config.toml": "84fd4fa17fd967cae6006ba1b0dc430904239dec921c1441dd657387ee802d6c",
       "bindings/core/node/build.rs": "fcbd1ff3f627a7553fa1704dc6f558998daff8bc256015c37aace62cc49ce584",
@@ -71,9 +71,10 @@
       "bindings/core/node/src/json-schema-import-session.js": "55b701eb96b0afd34ae1c72c200f7465ea6ee7028b78b8e5fb99892e93daf4b8",
       "bindings/core/node/src/json-schema-import-source.js": "a880ce70c0dba2fe3958c63635090f03c0a91128fb2117706b32be52bb14af36",
       "bindings/core/node/src/json-schema.js": "7e590ca4e5cf21780db3193a7c7f148426f903b78215418abb2d094681303064",
-      "bindings/core/node/src/lib.rs": "708d60825a01ae6a6d75cbd572f21a0cbfeb72f5d8344cb35a99cdf1aeb234d6",
+      "bindings/core/node/src/lib.rs": "0c2876b03d1366c29343240e8a905a63e6063df45f7a81c74148a2ae1df095fd",
       "bindings/core/node/src/protobuf_document.rs": "0be958c9fda7c3915c740d8f71fc9b646f17900c56c3aa14e5d5188afa65b3ae",
       "bindings/core/node/src/protobuf_source.rs": "1332521092f1975778660e5083ea7dc39cd051d76c123a44ba18358b85699d97",
+      "bindings/core/node/src/read_json_value.rs": "e9b62271d474490e09c85736137cb8975cebcd6283217a871c4c2f6c39f1595f",
       "bindings/core/node/src/record_members_inspection.rs": "e33bfdc557f4ad76d7052409232bfb9ef8d363ccdf1ef81d6dc8224644b0d5cc",
       "bindings/core/node/src/record-members-inspection.js": "cbf934ec3533bc2bee8a4dc6708cd2e3b8f2e3c03cf2644b1117d1671fd66e7e",
       "bindings/core/node/src/security-functions.js": "e306ea52f0ef682b43cf752a50798169093d5a50b0fe6d45b205276581648638",
@@ -1443,7 +1444,7 @@
       "spec/loader-preservation/1.0.0/profile.json": "7aa4bac9443e341e421754f61753cecba624d828a15f82a3951211b4bd51177f",
       "spec/metamodel/generated/core-constraints.json": "255ca318705114055250e96504776e1c430ccfc55f24b69a990053b6a384ecdb",
       "spec/metamodel/generated/domain-policy.json": "6e7a4cde0ca79b4c2951ec4bc0bc1b360c33dc7bc243a2ec2102406d5a8e4847",
-      "spec/metamodel/generated/manifest.json": "8b6fbf8f611bdb08222c1809479cecf058bfe453f832017241cc346cf3bbffa8",
+      "spec/metamodel/generated/manifest.json": "55830c8d0aaf8b9f38fcc92c9553aa010f4d9770ab55b60cc5a69d52dd525f5d",
       "spec/metamodel/generated/python-shapes.json": "7258f76bacaaa1ed87cae3a83f6279f92da70c1bbeaa9b6a8c39bb9e0a253b71",
       "spec/metamodel/package.json": "8c193403146173a328611bee864392777b798a13c491ef8bed0bcc4e43b2d16f",
       "spec/metamodel/umf.yaml": "35b72a7f6aa86c98398192e5b67d5841d77127743c671c742dd871a7baee58ca",
@@ -1477,6 +1478,7 @@
       "src/access/core-model-resources.ts": "096f69a855762dd8c7c54a3cd3b080e0dadad00050e0d84ecf2cf4eac2ee4e40",
       "src/access/index.ts": "77256da4a67a6437607dabc78109080e75018dbef5df40d052ad966d761b4d0c",
       "src/access/python-runtime.ts": "e7634778fabcfd95752638f7ba874b133fc4857b38aa7d38fe614ce2dd57feeb",
+      "src/access/read-json-value-ordinary.ts": "e1af34e745dec592851ff8eb88964a4bc8417f1f3d5fa96aacf0e327d6ffffd4",
       "src/access/rust-bit128-default.ts": "682f5f9eb9981b73c86bf929f2f0bbbb020a3db033ce7ba73a90ef10dfeaf995",
       "src/access/rust-candidate.ts": "c1dddd62281368cc5b8a4369d36e7db9b73f9c82977121fc333cee7e2a2ed6e3",
       "src/access/rust-cardinality-default.ts": "48cba860cb6d5509bd81fa1e56f4ebbad71d0a81e265f6121e259baf58ab4ce7",
@@ -1778,7 +1780,7 @@
       "src/extensions/actions/manifest-types.ts": "b3467de1b7e82c74de45ceacc2e11b137d9f1453ab77c00f8ce9eb2f04695c2e",
       "src/extensions/actions/manifests.ts": "e734083c06f7f375cf512555c99762eade63768633568479a347c860f659a206",
       "src/extensions/actions/plan-artifacts.ts": "dba1e670712221ef92b02ad2c3b7fb7924b4dd542e69a3bc12cefda98f544840",
-      "src/extensions/actions/plan-identity.ts": "525e20080bdcc27588dbf46064a74f8e5c4ac1f44adf5db775068e089acabc8e",
+      "src/extensions/actions/plan-identity.ts": "c958509e9b26dd049aacf939856962c142de34c60bcd31dcb9236471cc2f5128",
       "src/extensions/actions/plan-structure.ts": "f9c4cc40dfdf240f74177b24719f18e24dda6a6b80cba329767c3cb8b7162d83",
       "src/extensions/actions/plan-types.ts": "889215057a455e66ab18db89d53940e7bed44c02d66852667f7975cc345b6549",
       "src/extensions/actions/plans.ts": "7d4bdefc02f40159afe5fea3161e94a296a0af99b0e8028661c9f7fdb5221782",

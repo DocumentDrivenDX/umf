@@ -19,53 +19,56 @@ ddx:
       kind: extends
 ---
 
-# Compact Dataset verifier V4 source and installed replay
+# Compact Dataset verifier V4 source replay
 
-Node, Bun, and real headless Chromium replayed the five frozen predecessor
-cases through the V4 default route and matched the TypeScript reference
-outcomes and errors. The fresh Node/WASM artifacts and complete deterministic
-source closure are bound to immutable [`build-manifest.json`](build-manifest.json).
-The closure walks implementation roots, bindings, specs, and configuration,
-excludes build caches, and rejects symlinks. The builder pins sources before
-compilation and rejects drift before publishing the manifest; each replay
-checks the exact closure and all six compiled artifacts. Negative controls
-cover transitive Rust changes, build-time drift, and stale artifacts.
+This current-source replay covers the five frozen predecessor cases through the
+V4 default route. It includes the opt-in N-API `readJsonValue` primitive binding
+and the `src/access` facade in the pinned implementation closure. The fresh
+Node/WASM build and all 1,952 source-closure file hashes are bound to the
+immutable [`build-manifest.json`](build-manifest.json). The closure includes
+`bindings/core/node/src/read_json_value.rs`
+(`e9b62271d474490e09c85736137cb8975cebcd6283217a871c4c2f6c39f1595f`) and
+`src/access/read-json-value-ordinary.ts`
+(`e1af34e745dec592851ff8eb88964a4bc8417f1f3d5fa96aacf0e327d6ffffd4`). It
+walks implementation roots, bindings, specs, and configuration, excludes build
+caches, and rejects symlinks. The builder pins sources before compilation and
+rejects source drift before publishing its manifest. Each replay checks the
+exact source closure and all six compiled artifacts before executing.
 
-The current source-closure SHA-256 is
-`2f83e19ace175ceb538d0b7aba94926a41a868c3af4ad87d52d73a996b88fd31`; manifest
+The build used fresh private output at
+`/private/tmp/umf-r8-compact-v4-read-json-value-20261027a`. Its source-closure
 SHA-256 is
-`4d25c856fdac60bd5e0ae9c0bf7ac9afeda235251c13c05f313e3c6da96e5f3e`. Node
-26.12.1 and Bun 1.4.3 each passed all five cases and made 14 native Rust calls.
-Chromium 153.0.8010.12 passed all cases, loaded the manifest-pinned WASM, and
-had no Node globals. Receipt SHA-256 values are Node
-`d4e38ca0dcf797724bdbb7c28d57759bd62df86b1b97b5b1ded0c79bd89d7fd3`, Bun
-`48484f7fafd6f47c0fe602b98112292d2f6bc5484e86c97e704cde47b9e1d47b`, and
-Chromium `7f0e9b5550a100d024e277365b726588e928a46a4f9136e7b4c705c31790d015`.
+`d0d54682e6bc91b1eaa31d55d2b425b0bfbe706b6e2fe3be966422cccd2cc264`; the
+build-manifest SHA-256 is
+`9d70a420cc76a308bd42d3984993bc616919e718f3073bceb332822625b363cc`. The six
+artifact SHA-256 values are recorded in the manifest: Node addon
+`080f647ff8eb37a5182b916c0be10b78561e1f60aad9837323cfa5a9b53d8aad`, WASM
+`111007da675e270f072044dff0e7e39e6d5013bca2aca71af91fd22e177fad8a`, WASM glue
+`ea57d12a681ac63b7ccd6109c217afab539044bbd57488fdac0edf7d94ec9329`, reference
+bundle `a05e8167c27302982207782ea08776daa57390756cd5257926768a8a444bffbf`, Node
+bundle `69313444952873614cd43afb7b3394d5554fdce8015a3cb8eebacc31c141e2a8`, and
+browser bundle `99559dab1eaebc957b2061012d0ae2ea10e1b44a2203fee96ab03a957045c8d4`.
+The manifest records Rust/Cargo 1.90.0, wasm-bindgen 0.2.100, and Bun 1.4.3.
 
-The five frozen payloads remain byte-identical. Their hashes, current manifest,
-receipts, and preserved historical artifacts are in [`SHA256SUMS`](SHA256SUMS).
-The previous index remains available as
+Node 26.12.1 and Bun 1.4.3 each passed all five cases and made 14 native Rust
+calls. Chromium 153.0.8010.12 passed all five cases, loaded the manifest-pinned
+WASM, and had no Node globals. It made the expected WASM calls for every case.
+Each receipt pins the same source closure and six artifacts. The exact receipt
+hashes are Node
+`c16c4252aadcbfce9735b7f0f7d46f62f5c6d96ff7f9d20d4c77c0a3c52c3d4a`, Bun
+`a2b4097e5e1299f63dc33f9ae8a84eb219009bc76d05075a73ed032a87e2795b`, and
+Chromium `e8f0a5c9840b57a7356831dd146affb79bf55fa1f2c5f7e334f9c9011ccc19d8`.
+
+The five frozen payloads remain byte-identical. Their hashes, the current
+manifest and receipts, and preserved historical artifacts are in
+[`SHA256SUMS`](SHA256SUMS). The prior pre-metamodel index remains available as
 [`historical-index-pre-metamodel-refresh.json`](historical-index-pre-metamodel-refresh.json).
+The immediately prior source cohort, before the final action-plan identity regeneration, is preserved in
+[`historical-pre-final-action-plan-identity/`](historical-pre-final-action-plan-identity/). The earlier pre-binding cohort remains in
+[`historical-pre-read-json-value-binding/`](historical-pre-read-json-value-binding/).
 
-The exact fixed-point installed SDK archive was also replayed. The separate
-[installed evidence](../r8-compact-dataset-verify-installed-499d13c2/README.md)
-records `qualified-pass` for archive SHA-256
-`5ec44a154649cc0ddfd17279f9d686f7f87bcc92277ff113721c45d6173b4f89` and source
-closure
-`499d13c2e4a4a2373eea763ab3fe359861fb1218a24ae030bddf4f405bf18df5`, with zero
-transforms. It checks all archive members and confirms the packaged closure
-pins the replay harness and all packet inputs. For every case, `./reference`
-made zero native/WASM calls and the default route made two; browser requests
-were local only, and packaged roots were identified.
-
-This evidence is bounded to the listed compact verifier cases and host
-controls. It does not cover every Dataset semantic or declaration retirement.
-Prior source cohorts remain preserved under
-[`historical-pre-semantic-error-fix/`](historical-pre-semantic-error-fix/),
-[`historical-pre-semantic-types-public-typing-fix/`](historical-pre-semantic-types-public-typing-fix/),
-and
-[`historical-typed-cohort-pre-canonical-action-generator/`](historical-typed-cohort-pre-canonical-action-generator/).
-
-Use `--build <fresh-private-output-dir>` once, then run Node, Bun, and browser
-replay modes against that same directory. See
+This is source-tree evidence for the listed compact verifier cases and host
+controls. It does not qualify an installed SDK archive, a release, every Dataset
+semantic, or declaration retirement. Run `--build <fresh-private-output-dir>`
+once, then Node, Bun, and browser replay modes against that same directory. See
 [`compact-dataset-verify-v4-source-replay.mjs`](../../../../../../scripts/rust-migration/r8/compact-dataset-verify-v4-source-replay.mjs).

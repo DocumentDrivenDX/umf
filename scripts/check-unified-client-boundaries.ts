@@ -12,6 +12,7 @@ const allowedImports:Record<string,readonly string[]>={
  'core-model-resources.ts':['../../spec/core/schema.json','../../spec/core/semantic-type-reference.schema.json','../../spec/core/extension-package.schema.json','../../spec/metamodel/generated/core-constraints.json','../../spec/metamodel/generated/domain-policy.json'],
  'index.ts':['../model/document','../model/types','../extensions/actions/structure','../extensions/actions/analysis','../extensions/actions/types','../compilation/bundle/index','./python-runtime','./table-runtime','./table-client','./constants','./types'],
  'python-runtime.ts':['./constants'],
+ 'read-json-value-ordinary.ts':['../model/errors','../model/types'],
  'rust-bit128-default.ts':['../model/bit128','../model/uuid','../model/errors'],
  'rust-candidate.ts':[],
  'rust-cardinality-default.ts':['../model/cardinality','../model/types','../model/errors','../model/json'],
@@ -40,6 +41,7 @@ const allowedImports:Record<string,readonly string[]>={
 // These predecessor modules supply declarations only. A value import would
 // restore executable TypeScript behavior behind the Rust-selected facade.
 const typeOnlyImports:Record<string,readonly string[]>={
+ 'read-json-value-ordinary.ts':['../model/types'],
  'rust-core-evolution-candidate.ts':['../model/types','../model/evolution'],
  'rust-core-semantic-types-default.ts':['../model/semantic-types','../model/types'],
  'rust-record-type-default.ts':['../model/field-kind','../model/record-type','../model/types'],

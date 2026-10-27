@@ -194,3 +194,18 @@ test('import type nodes obey the exact per-file allowlist', () => {
 
 	expect(errors).toContain('rust-facets-default.ts: unapproved import type node:fs');
 });
+
+test('ordinary Rust JSON facade allows only its audited error and type imports', () => {
+	const allowed = checkAccessSource(
+		'read-json-value-ordinary.ts',
+		"import {UmfError} from '../model/errors';\nimport type {Json} from '../model/types';\n",
+	);
+	expect(allowed).toEqual([]);
+	const denied = checkAccessSource(
+		'read-json-value-ordinary.ts',
+		"import {copyJson} from '../model/json';\nimport {Json} from '../model/types';\nconst env = process.env;\n",
+	);
+	expect(denied).toContain('read-json-value-ordinary.ts: unapproved import ../model/json');
+	expect(denied).toContain('read-json-value-ordinary.ts: value import from type-only module ../model/types');
+	expect(denied).toContain('read-json-value-ordinary.ts: host or executable hook process');
+});

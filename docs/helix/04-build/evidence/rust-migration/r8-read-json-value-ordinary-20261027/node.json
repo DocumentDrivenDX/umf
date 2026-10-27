@@ -1,0 +1,5284 @@
+{
+  "packet": "r8-read-json-value-ordinary-20261027-v1",
+  "runtime": {
+    "node": "v26.12.1",
+    "bun": null,
+    "v8": "14.6.202.34-node.40"
+  },
+  "count": 59,
+  "rows": [
+    {
+      "id": "yaml-string",
+      "format": "yaml",
+      "reference": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "object",
+            "id": 0,
+            "prototype": "null",
+            "extensible": true,
+            "keys": [
+              "a",
+              "b"
+            ],
+            "descriptors": [
+              {
+                "key": "a",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 1
+                }
+              },
+              {
+                "key": "b",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "array",
+                  "id": 1,
+                  "prototype": "Array.prototype",
+                  "extensible": true,
+                  "keys": [
+                    "0",
+                    "1",
+                    "length"
+                  ],
+                  "descriptors": [
+                    {
+                      "key": "0",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "value": {
+                        "type": "boolean",
+                        "value": true
+                      }
+                    },
+                    {
+                      "key": "1",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "value": {
+                        "type": "null",
+                        "value": null
+                      }
+                    },
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": false,
+                      "writable": true,
+                      "value": {
+                        "type": "number",
+                        "value": 2
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "object",
+            "id": 0,
+            "prototype": "null",
+            "extensible": true,
+            "keys": [
+              "a",
+              "b"
+            ],
+            "descriptors": [
+              {
+                "key": "a",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 1
+                }
+              },
+              {
+                "key": "b",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "array",
+                  "id": 1,
+                  "prototype": "Array.prototype",
+                  "extensible": true,
+                  "keys": [
+                    "0",
+                    "1",
+                    "length"
+                  ],
+                  "descriptors": [
+                    {
+                      "key": "0",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "value": {
+                        "type": "boolean",
+                        "value": true
+                      }
+                    },
+                    {
+                      "key": "1",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "value": {
+                        "type": "null",
+                        "value": null
+                      }
+                    },
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": false,
+                      "writable": true,
+                      "value": {
+                        "type": "number",
+                        "value": 2
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "json-string",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "object",
+            "id": 0,
+            "prototype": "null",
+            "extensible": true,
+            "keys": [
+              "b",
+              "a"
+            ],
+            "descriptors": [
+              {
+                "key": "b",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 2
+                }
+              },
+              {
+                "key": "a",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "array",
+                  "id": 1,
+                  "prototype": "Array.prototype",
+                  "extensible": true,
+                  "keys": [
+                    "0",
+                    "1",
+                    "length"
+                  ],
+                  "descriptors": [
+                    {
+                      "key": "0",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "value": {
+                        "type": "boolean",
+                        "value": true
+                      }
+                    },
+                    {
+                      "key": "1",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "value": {
+                        "type": "null",
+                        "value": null
+                      }
+                    },
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": false,
+                      "writable": true,
+                      "value": {
+                        "type": "number",
+                        "value": 2
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "object",
+            "id": 0,
+            "prototype": "null",
+            "extensible": true,
+            "keys": [
+              "b",
+              "a"
+            ],
+            "descriptors": [
+              {
+                "key": "b",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 2
+                }
+              },
+              {
+                "key": "a",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "array",
+                  "id": 1,
+                  "prototype": "Array.prototype",
+                  "extensible": true,
+                  "keys": [
+                    "0",
+                    "1",
+                    "length"
+                  ],
+                  "descriptors": [
+                    {
+                      "key": "0",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "value": {
+                        "type": "boolean",
+                        "value": true
+                      }
+                    },
+                    {
+                      "key": "1",
+                      "enumerable": true,
+                      "configurable": true,
+                      "writable": true,
+                      "value": {
+                        "type": "null",
+                        "value": null
+                      }
+                    },
+                    {
+                      "key": "length",
+                      "enumerable": false,
+                      "configurable": false,
+                      "writable": true,
+                      "value": {
+                        "type": "number",
+                        "value": 2
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "json-primitive-results",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "array",
+            "id": 0,
+            "prototype": "Array.prototype",
+            "extensible": true,
+            "keys": [
+              "0",
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "null",
+                  "value": null
+                }
+              },
+              {
+                "key": "1",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "boolean",
+                  "value": false
+                }
+              },
+              {
+                "key": "2",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "boolean",
+                  "value": true
+                }
+              },
+              {
+                "key": "3",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 0
+                }
+              },
+              {
+                "key": "4",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 1
+                }
+              },
+              {
+                "key": "5",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 1,
+                  "utf16Sha256": "14f825b2bbc32dd8d196367fa8776873069c12a8954d8da7513aa7704ddd09eb"
+                }
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": false,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 6
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "array",
+            "id": 0,
+            "prototype": "Array.prototype",
+            "extensible": true,
+            "keys": [
+              "0",
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "null",
+                  "value": null
+                }
+              },
+              {
+                "key": "1",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "boolean",
+                  "value": false
+                }
+              },
+              {
+                "key": "2",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "boolean",
+                  "value": true
+                }
+              },
+              {
+                "key": "3",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 0
+                }
+              },
+              {
+                "key": "4",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 1
+                }
+              },
+              {
+                "key": "5",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 1,
+                  "utf16Sha256": "14f825b2bbc32dd8d196367fa8776873069c12a8954d8da7513aa7704ddd09eb"
+                }
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": false,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 6
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "json-toPrimitive-string",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "primitive.Symbol(Symbol.toPrimitive):string"
+        ]
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "primitive.Symbol(Symbol.toPrimitive):string"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "json-toPrimitive-number",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "primitive-number.Symbol(Symbol.toPrimitive):string"
+        ]
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "primitive-number.Symbol(Symbol.toPrimitive):string"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "json-toString",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "to-string.toString:"
+        ]
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "to-string.toString:"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "json-valueOf-fallback",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "value-of.toString:",
+          "value-of.valueOf:"
+        ]
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "value-of.toString:",
+          "value-of.valueOf:"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "json-throwing-toPrimitive",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "UmfError",
+          "name": "UmfError",
+          "code": "SYNTAX",
+          "path": "",
+          "message": "Invalid JSON syntax",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "UmfError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message",
+              "code",
+              "path",
+              "name"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 19,
+                  "utf16Sha256": "45355aa0dc31eaa7bf8676c9aba03f04851e67275aba45f399bb1c1da4dafd82"
+                }
+              },
+              {
+                "key": "code",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 6,
+                  "utf16Sha256": "ed85162d2e587f5a08638c159dac78113e7dc6d209584b2f5323ed99942538a1"
+                }
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 0,
+                  "utf16Sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 8,
+                  "utf16Sha256": "e73dc0009bc1aa69bd5e3ef159a48b74c4424f0fce2bde681f81dc40f84b262e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "throw-primitive.Symbol(Symbol.toPrimitive):string"
+        ]
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "UmfError",
+          "name": "UmfError",
+          "code": "SYNTAX",
+          "path": "",
+          "message": "Invalid JSON syntax",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "UmfError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message",
+              "code",
+              "path",
+              "name"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 19,
+                  "utf16Sha256": "45355aa0dc31eaa7bf8676c9aba03f04851e67275aba45f399bb1c1da4dafd82"
+                }
+              },
+              {
+                "key": "code",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 6,
+                  "utf16Sha256": "ed85162d2e587f5a08638c159dac78113e7dc6d209584b2f5323ed99942538a1"
+                }
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 0,
+                  "utf16Sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 8,
+                  "utf16Sha256": "e73dc0009bc1aa69bd5e3ef159a48b74c4424f0fce2bde681f81dc40f84b262e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "throw-primitive.Symbol(Symbol.toPrimitive):string"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "json-throwing-toString",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "UmfError",
+          "name": "UmfError",
+          "code": "SYNTAX",
+          "path": "",
+          "message": "Invalid JSON syntax",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "UmfError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message",
+              "code",
+              "path",
+              "name"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 19,
+                  "utf16Sha256": "45355aa0dc31eaa7bf8676c9aba03f04851e67275aba45f399bb1c1da4dafd82"
+                }
+              },
+              {
+                "key": "code",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 6,
+                  "utf16Sha256": "ed85162d2e587f5a08638c159dac78113e7dc6d209584b2f5323ed99942538a1"
+                }
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 0,
+                  "utf16Sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 8,
+                  "utf16Sha256": "e73dc0009bc1aa69bd5e3ef159a48b74c4424f0fce2bde681f81dc40f84b262e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "throw-string.toString:"
+        ]
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "UmfError",
+          "name": "UmfError",
+          "code": "SYNTAX",
+          "path": "",
+          "message": "Invalid JSON syntax",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "UmfError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message",
+              "code",
+              "path",
+              "name"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 19,
+                  "utf16Sha256": "45355aa0dc31eaa7bf8676c9aba03f04851e67275aba45f399bb1c1da4dafd82"
+                }
+              },
+              {
+                "key": "code",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 6,
+                  "utf16Sha256": "ed85162d2e587f5a08638c159dac78113e7dc6d209584b2f5323ed99942538a1"
+                }
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 0,
+                  "utf16Sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 8,
+                  "utf16Sha256": "e73dc0009bc1aa69bd5e3ef159a48b74c4424f0fce2bde681f81dc40f84b262e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "throw-string.toString:"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "json-throwing-valueOf",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "UmfError",
+          "name": "UmfError",
+          "code": "SYNTAX",
+          "path": "",
+          "message": "Invalid JSON syntax",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "UmfError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message",
+              "code",
+              "path",
+              "name"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 19,
+                  "utf16Sha256": "45355aa0dc31eaa7bf8676c9aba03f04851e67275aba45f399bb1c1da4dafd82"
+                }
+              },
+              {
+                "key": "code",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 6,
+                  "utf16Sha256": "ed85162d2e587f5a08638c159dac78113e7dc6d209584b2f5323ed99942538a1"
+                }
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 0,
+                  "utf16Sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 8,
+                  "utf16Sha256": "e73dc0009bc1aa69bd5e3ef159a48b74c4424f0fce2bde681f81dc40f84b262e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "throw-value.toString:",
+          "throw-value.valueOf:"
+        ]
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "UmfError",
+          "name": "UmfError",
+          "code": "SYNTAX",
+          "path": "",
+          "message": "Invalid JSON syntax",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "UmfError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message",
+              "code",
+              "path",
+              "name"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 19,
+                  "utf16Sha256": "45355aa0dc31eaa7bf8676c9aba03f04851e67275aba45f399bb1c1da4dafd82"
+                }
+              },
+              {
+                "key": "code",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 6,
+                  "utf16Sha256": "ed85162d2e587f5a08638c159dac78113e7dc6d209584b2f5323ed99942538a1"
+                }
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 0,
+                  "utf16Sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 8,
+                  "utf16Sha256": "e73dc0009bc1aa69bd5e3ef159a48b74c4424f0fce2bde681f81dc40f84b262e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "throw-value.toString:",
+          "throw-value.valueOf:"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-undefined",
+      "format": "yaml",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "Cannot read properties of undefined (reading 'length')",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 54,
+                  "utf16Sha256": "ff63b67c2824dbdb817623602218d477aec7a95d0ca7d80cc2a8884296f5210d"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "Cannot read properties of undefined (reading 'length')",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 54,
+                  "utf16Sha256": "ff63b67c2824dbdb817623602218d477aec7a95d0ca7d80cc2a8884296f5210d"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "json-undefined",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "Cannot read properties of undefined (reading 'length')",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 54,
+                  "utf16Sha256": "ff63b67c2824dbdb817623602218d477aec7a95d0ca7d80cc2a8884296f5210d"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "Cannot read properties of undefined (reading 'length')",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 54,
+                  "utf16Sha256": "ff63b67c2824dbdb817623602218d477aec7a95d0ca7d80cc2a8884296f5210d"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-null",
+      "format": "yaml",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "Cannot read properties of null (reading 'length')",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 49,
+                  "utf16Sha256": "fb16bf3ae9d7e545742b8d12824f745462a74d2af73f72930a7a8ac6da749c18"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "Cannot read properties of null (reading 'length')",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 49,
+                  "utf16Sha256": "fb16bf3ae9d7e545742b8d12824f745462a74d2af73f72930a7a8ac6da749c18"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "json-null",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "Cannot read properties of null (reading 'length')",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 49,
+                  "utf16Sha256": "fb16bf3ae9d7e545742b8d12824f745462a74d2af73f72930a7a8ac6da749c18"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "Cannot read properties of null (reading 'length')",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 49,
+                  "utf16Sha256": "fb16bf3ae9d7e545742b8d12824f745462a74d2af73f72930a7a8ac6da749c18"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-false",
+      "format": "yaml",
+      "reference": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "null",
+            "value": null
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "null",
+            "value": null
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "json-false",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "null",
+            "value": null
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "null",
+            "value": null
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-zero",
+      "format": "yaml",
+      "reference": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "null",
+            "value": null
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "null",
+            "value": null
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "json-zero",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "null",
+            "value": null
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "null",
+            "value": null
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-negative-zero",
+      "format": "yaml",
+      "reference": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "null",
+            "value": null
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "null",
+            "value": null
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "json-negative-zero",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "null",
+            "value": null
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "null",
+            "value": null
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-nan",
+      "format": "yaml",
+      "reference": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "null",
+            "value": null
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "null",
+            "value": null
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "json-nan",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "UmfError",
+          "name": "UmfError",
+          "code": "SYNTAX",
+          "path": "",
+          "message": "Invalid JSON syntax",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "UmfError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message",
+              "code",
+              "path",
+              "name"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 19,
+                  "utf16Sha256": "45355aa0dc31eaa7bf8676c9aba03f04851e67275aba45f399bb1c1da4dafd82"
+                }
+              },
+              {
+                "key": "code",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 6,
+                  "utf16Sha256": "ed85162d2e587f5a08638c159dac78113e7dc6d209584b2f5323ed99942538a1"
+                }
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 0,
+                  "utf16Sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 8,
+                  "utf16Sha256": "e73dc0009bc1aa69bd5e3ef159a48b74c4424f0fce2bde681f81dc40f84b262e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "UmfError",
+          "name": "UmfError",
+          "code": "SYNTAX",
+          "path": "",
+          "message": "Invalid JSON syntax",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "UmfError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message",
+              "code",
+              "path",
+              "name"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 19,
+                  "utf16Sha256": "45355aa0dc31eaa7bf8676c9aba03f04851e67275aba45f399bb1c1da4dafd82"
+                }
+              },
+              {
+                "key": "code",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 6,
+                  "utf16Sha256": "ed85162d2e587f5a08638c159dac78113e7dc6d209584b2f5323ed99942538a1"
+                }
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 0,
+                  "utf16Sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 8,
+                  "utf16Sha256": "e73dc0009bc1aa69bd5e3ef159a48b74c4424f0fce2bde681f81dc40f84b262e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-bigint-zero",
+      "format": "yaml",
+      "reference": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "null",
+            "value": null
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "null",
+            "value": null
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "json-bigint-zero",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "null",
+            "value": null
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "null",
+            "value": null
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-symbol",
+      "format": "yaml",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "json-symbol",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "UmfError",
+          "name": "UmfError",
+          "code": "SYNTAX",
+          "path": "",
+          "message": "Invalid JSON syntax",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "UmfError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message",
+              "code",
+              "path",
+              "name"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 19,
+                  "utf16Sha256": "45355aa0dc31eaa7bf8676c9aba03f04851e67275aba45f399bb1c1da4dafd82"
+                }
+              },
+              {
+                "key": "code",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 6,
+                  "utf16Sha256": "ed85162d2e587f5a08638c159dac78113e7dc6d209584b2f5323ed99942538a1"
+                }
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 0,
+                  "utf16Sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 8,
+                  "utf16Sha256": "e73dc0009bc1aa69bd5e3ef159a48b74c4424f0fce2bde681f81dc40f84b262e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "UmfError",
+          "name": "UmfError",
+          "code": "SYNTAX",
+          "path": "",
+          "message": "Invalid JSON syntax",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "UmfError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message",
+              "code",
+              "path",
+              "name"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 19,
+                  "utf16Sha256": "45355aa0dc31eaa7bf8676c9aba03f04851e67275aba45f399bb1c1da4dafd82"
+                }
+              },
+              {
+                "key": "code",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 6,
+                  "utf16Sha256": "ed85162d2e587f5a08638c159dac78113e7dc6d209584b2f5323ed99942538a1"
+                }
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 0,
+                  "utf16Sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 8,
+                  "utf16Sha256": "e73dc0009bc1aa69bd5e3ef159a48b74c4424f0fce2bde681f81dc40f84b262e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-truthy-number",
+      "format": "yaml",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "json-truthy-number",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-truthy-boolean",
+      "format": "yaml",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "json-truthy-boolean",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-truthy-bigint",
+      "format": "yaml",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "json-truthy-bigint",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-truthy-nonstring",
+      "format": "yaml",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "format-nonstring-no-coercion",
+      "format": "non-string",
+      "reference": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "object",
+            "id": 0,
+            "prototype": "null",
+            "extensible": true,
+            "keys": [
+              "x"
+            ],
+            "descriptors": [
+              {
+                "key": "x",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 1
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "object",
+            "id": 0,
+            "prototype": "null",
+            "extensible": true,
+            "keys": [
+              "x"
+            ],
+            "descriptors": [
+              {
+                "key": "x",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 1
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "first-length-getter",
+      "format": "yaml",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "length:get:1",
+          "length:get:1"
+        ]
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "length:get:1",
+          "length:get:1"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "first-length-throws-sentinel",
+      "format": "yaml",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": true,
+          "identityIsControlSentinel": false,
+          "constructorName": "Object",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "Object.prototype",
+            "extensible": false,
+            "keys": [
+              "sentinel"
+            ],
+            "descriptors": [
+              {
+                "key": "sentinel",
+                "enumerable": true,
+                "configurable": false,
+                "writable": false,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 29,
+                  "utf16Sha256": "2caded447cc495861f3e61877a97a7ab356bffe7dea43594c4c2a1d57793fbc8"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "length:throw"
+        ]
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": true,
+          "identityIsControlSentinel": false,
+          "constructorName": "Object",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "Object.prototype",
+            "extensible": false,
+            "keys": [
+              "sentinel"
+            ],
+            "descriptors": [
+              {
+                "key": "sentinel",
+                "enumerable": true,
+                "configurable": false,
+                "writable": false,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 29,
+                  "utf16Sha256": "2caded447cc495861f3e61877a97a7ab356bffe7dea43594c4c2a1d57793fbc8"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "length:throw"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "length-control-failure-outside-json-catch",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": true,
+          "constructorName": "Object",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "Object.prototype",
+            "extensible": false,
+            "keys": [
+              "control"
+            ],
+            "descriptors": [
+              {
+                "key": "control",
+                "enumerable": true,
+                "configurable": false,
+                "writable": false,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 35,
+                  "utf16Sha256": "ad30ec6d549a49c5578cdf5f890c23994cc947c326ebcbbfdbabea1d91e05ade"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "length:control-failure"
+        ]
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": true,
+          "constructorName": "Object",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "Object.prototype",
+            "extensible": false,
+            "keys": [
+              "control"
+            ],
+            "descriptors": [
+              {
+                "key": "control",
+                "enumerable": true,
+                "configurable": false,
+                "writable": false,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 35,
+                  "utf16Sha256": "ad30ec6d549a49c5578cdf5f890c23994cc947c326ebcbbfdbabea1d91e05ade"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "length:control-failure"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "first-length-throws-undefined",
+      "format": "yaml",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "own": {
+            "type": "undefined"
+          }
+        },
+        "trace": [
+          "length:throw-undefined"
+        ]
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "own": {
+            "type": "undefined"
+          }
+        },
+        "trace": [
+          "length:throw-undefined"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "stateful-length-two-reads",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "length:1",
+          "get:Symbol(Symbol.toPrimitive)",
+          "get:toString",
+          "toString",
+          "length:2"
+        ]
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "length:1",
+          "get:Symbol(Symbol.toPrimitive)",
+          "get:toString",
+          "toString",
+          "length:2"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "second-length-throws-sentinel",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": true,
+          "identityIsControlSentinel": false,
+          "constructorName": "Object",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "Object.prototype",
+            "extensible": false,
+            "keys": [
+              "sentinel"
+            ],
+            "descriptors": [
+              {
+                "key": "sentinel",
+                "enumerable": true,
+                "configurable": false,
+                "writable": false,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 29,
+                  "utf16Sha256": "2caded447cc495861f3e61877a97a7ab356bffe7dea43594c4c2a1d57793fbc8"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "length:1",
+          "toString",
+          "length:2-throw"
+        ]
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": true,
+          "identityIsControlSentinel": false,
+          "constructorName": "Object",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "Object.prototype",
+            "extensible": false,
+            "keys": [
+              "sentinel"
+            ],
+            "descriptors": [
+              {
+                "key": "sentinel",
+                "enumerable": true,
+                "configurable": false,
+                "writable": false,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 29,
+                  "utf16Sha256": "2caded447cc495861f3e61877a97a7ab356bffe7dea43594c4c2a1d57793fbc8"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "length:1",
+          "toString",
+          "length:2-throw"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "proxy-length-and-format",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "proxy:length",
+          "proxy:Symbol(Symbol.toPrimitive)",
+          "proxy:toString",
+          "toString",
+          "proxy:length"
+        ]
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "proxy:length",
+          "proxy:Symbol(Symbol.toPrimitive)",
+          "proxy:toString",
+          "toString",
+          "proxy:length"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "callable-json-source",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "callable.toString"
+        ]
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "callable.toString"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "boxed-string-json",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "boxed-string-yaml",
+      "format": "yaml",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "TypeError",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "TypeError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 22,
+                  "utf16Sha256": "55375f5fecf4f2f78df504ee2e2e00e1d642ef5f92159aa0c5a60d02c4fd178e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "exact-limit-minus-one",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "UmfError",
+          "name": "UmfError",
+          "code": "SYNTAX",
+          "path": "",
+          "message": "Invalid JSON syntax",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "UmfError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message",
+              "code",
+              "path",
+              "name"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 19,
+                  "utf16Sha256": "45355aa0dc31eaa7bf8676c9aba03f04851e67275aba45f399bb1c1da4dafd82"
+                }
+              },
+              {
+                "key": "code",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 6,
+                  "utf16Sha256": "ed85162d2e587f5a08638c159dac78113e7dc6d209584b2f5323ed99942538a1"
+                }
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 0,
+                  "utf16Sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 8,
+                  "utf16Sha256": "e73dc0009bc1aa69bd5e3ef159a48b74c4424f0fce2bde681f81dc40f84b262e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "UmfError",
+          "name": "UmfError",
+          "code": "SYNTAX",
+          "path": "",
+          "message": "Invalid JSON syntax",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "UmfError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message",
+              "code",
+              "path",
+              "name"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 19,
+                  "utf16Sha256": "45355aa0dc31eaa7bf8676c9aba03f04851e67275aba45f399bb1c1da4dafd82"
+                }
+              },
+              {
+                "key": "code",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 6,
+                  "utf16Sha256": "ed85162d2e587f5a08638c159dac78113e7dc6d209584b2f5323ed99942538a1"
+                }
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 0,
+                  "utf16Sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 8,
+                  "utf16Sha256": "e73dc0009bc1aa69bd5e3ef159a48b74c4424f0fce2bde681f81dc40f84b262e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "exact-limit",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "UmfError",
+          "name": "UmfError",
+          "code": "SYNTAX",
+          "path": "",
+          "message": "Invalid JSON syntax",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "UmfError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message",
+              "code",
+              "path",
+              "name"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 19,
+                  "utf16Sha256": "45355aa0dc31eaa7bf8676c9aba03f04851e67275aba45f399bb1c1da4dafd82"
+                }
+              },
+              {
+                "key": "code",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 6,
+                  "utf16Sha256": "ed85162d2e587f5a08638c159dac78113e7dc6d209584b2f5323ed99942538a1"
+                }
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 0,
+                  "utf16Sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 8,
+                  "utf16Sha256": "e73dc0009bc1aa69bd5e3ef159a48b74c4424f0fce2bde681f81dc40f84b262e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "UmfError",
+          "name": "UmfError",
+          "code": "SYNTAX",
+          "path": "",
+          "message": "Invalid JSON syntax",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "UmfError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message",
+              "code",
+              "path",
+              "name"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 19,
+                  "utf16Sha256": "45355aa0dc31eaa7bf8676c9aba03f04851e67275aba45f399bb1c1da4dafd82"
+                }
+              },
+              {
+                "key": "code",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 6,
+                  "utf16Sha256": "ed85162d2e587f5a08638c159dac78113e7dc6d209584b2f5323ed99942538a1"
+                }
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 0,
+                  "utf16Sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 8,
+                  "utf16Sha256": "e73dc0009bc1aa69bd5e3ef159a48b74c4424f0fce2bde681f81dc40f84b262e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "exact-limit-plus-one",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "UmfError",
+          "name": "UmfError",
+          "code": "LIMIT",
+          "path": "",
+          "message": "Source text exceeds limit",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "UmfError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message",
+              "code",
+              "path",
+              "name"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 25,
+                  "utf16Sha256": "d9682e8c5e3122438aea58e66f86722311e2b426ae0e6e9d1a1e278030bc9dfa"
+                }
+              },
+              {
+                "key": "code",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 5,
+                  "utf16Sha256": "6764c1628f974958de8554efeb1d80e12c5c1e5820a2a724ebec2b4ba19364cb"
+                }
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 0,
+                  "utf16Sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 8,
+                  "utf16Sha256": "e73dc0009bc1aa69bd5e3ef159a48b74c4424f0fce2bde681f81dc40f84b262e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "UmfError",
+          "name": "UmfError",
+          "code": "LIMIT",
+          "path": "",
+          "message": "Source text exceeds limit",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "UmfError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message",
+              "code",
+              "path",
+              "name"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 25,
+                  "utf16Sha256": "d9682e8c5e3122438aea58e66f86722311e2b426ae0e6e9d1a1e278030bc9dfa"
+                }
+              },
+              {
+                "key": "code",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 5,
+                  "utf16Sha256": "6764c1628f974958de8554efeb1d80e12c5c1e5820a2a724ebec2b4ba19364cb"
+                }
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 0,
+                  "utf16Sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 8,
+                  "utf16Sha256": "e73dc0009bc1aa69bd5e3ef159a48b74c4424f0fce2bde681f81dc40f84b262e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "exact-limit-valid",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "string",
+            "utf16Length": 3999998,
+            "utf16Sha256": "8a8f1ecc293272306d109c6e79e16366dbd6f254bc9df6bc379ac5011ebe1144"
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "string",
+            "utf16Length": 3999998,
+            "utf16Sha256": "8a8f1ecc293272306d109c6e79e16366dbd6f254bc9df6bc379ac5011ebe1144"
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "utf16-limit-astral-exact",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "string",
+            "utf16Length": 3999998,
+            "utf16Sha256": "02b34658133ac8bab81704ee36509b0837e567303a40806d510626e90b577a0e"
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "string",
+            "utf16Length": 3999998,
+            "utf16Sha256": "02b34658133ac8bab81704ee36509b0837e567303a40806d510626e90b577a0e"
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "utf16-limit-astral-plus-one",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "UmfError",
+          "name": "UmfError",
+          "code": "LIMIT",
+          "path": "",
+          "message": "Source text exceeds limit",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "UmfError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message",
+              "code",
+              "path",
+              "name"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 25,
+                  "utf16Sha256": "d9682e8c5e3122438aea58e66f86722311e2b426ae0e6e9d1a1e278030bc9dfa"
+                }
+              },
+              {
+                "key": "code",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 5,
+                  "utf16Sha256": "6764c1628f974958de8554efeb1d80e12c5c1e5820a2a724ebec2b4ba19364cb"
+                }
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 0,
+                  "utf16Sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 8,
+                  "utf16Sha256": "e73dc0009bc1aa69bd5e3ef159a48b74c4424f0fce2bde681f81dc40f84b262e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "UmfError",
+          "name": "UmfError",
+          "code": "LIMIT",
+          "path": "",
+          "message": "Source text exceeds limit",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "UmfError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message",
+              "code",
+              "path",
+              "name"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 25,
+                  "utf16Sha256": "d9682e8c5e3122438aea58e66f86722311e2b426ae0e6e9d1a1e278030bc9dfa"
+                }
+              },
+              {
+                "key": "code",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 5,
+                  "utf16Sha256": "6764c1628f974958de8554efeb1d80e12c5c1e5820a2a724ebec2b4ba19364cb"
+                }
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 0,
+                  "utf16Sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                }
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 8,
+                  "utf16Sha256": "e73dc0009bc1aa69bd5e3ef159a48b74c4424f0fce2bde681f81dc40f84b262e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "json-lone-surrogate-value",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "string",
+            "utf16Length": 1,
+            "utf16Sha256": "205022e3428b7c8276cf247b36e4e512db5651e5cb3472c253d9ee893a8ac750"
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "string",
+            "utf16Length": 1,
+            "utf16Sha256": "205022e3428b7c8276cf247b36e4e512db5651e5cb3472c253d9ee893a8ac750"
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "json-lone-surrogate-key",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "object",
+            "id": 0,
+            "prototype": "null",
+            "extensible": true,
+            "keys": [
+              "\ud800"
+            ],
+            "descriptors": [
+              {
+                "key": "\ud800",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 1,
+                  "utf16Sha256": "924310d6e64a28d18d5eb0933cd24dcaea16af5a2674f1f11bc0805d80c12069"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "object",
+            "id": 0,
+            "prototype": "null",
+            "extensible": true,
+            "keys": [
+              "\ud800"
+            ],
+            "descriptors": [
+              {
+                "key": "\ud800",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 1,
+                  "utf16Sha256": "924310d6e64a28d18d5eb0933cd24dcaea16af5a2674f1f11bc0805d80c12069"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-lone-surrogate-value",
+      "format": "yaml",
+      "reference": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "string",
+            "utf16Length": 1,
+            "utf16Sha256": "205022e3428b7c8276cf247b36e4e512db5651e5cb3472c253d9ee893a8ac750"
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "string",
+            "utf16Length": 1,
+            "utf16Sha256": "205022e3428b7c8276cf247b36e4e512db5651e5cb3472c253d9ee893a8ac750"
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-lone-surrogate-key",
+      "format": "yaml",
+      "reference": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "object",
+            "id": 0,
+            "prototype": "null",
+            "extensible": true,
+            "keys": [
+              "\ud800"
+            ],
+            "descriptors": [
+              {
+                "key": "\ud800",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 1
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "object",
+            "id": 0,
+            "prototype": "null",
+            "extensible": true,
+            "keys": [
+              "\ud800"
+            ],
+            "descriptors": [
+              {
+                "key": "\ud800",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 1
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-lone-surrogate-error-path",
+      "format": "yaml",
+      "reference": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "UmfError",
+          "name": "UmfError",
+          "code": "NUMBER",
+          "path": "/\ud800",
+          "message": "Integer exceeds exact JavaScript range",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "UmfError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message",
+              "code",
+              "path",
+              "name"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 38,
+                  "utf16Sha256": "235e0c3eb95d0cadb96730c93360b2f188b42701df14cb76485b17edf8c9f0ca"
+                }
+              },
+              {
+                "key": "code",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 6,
+                  "utf16Sha256": "3dfa6e8c1b998f625a9a088fa3d47d3fd00715b5a58aa5012e0277aed4fa2990"
+                }
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 2,
+                  "utf16Sha256": "b300de721e0ba4473322f1e8d073fd1f9044d12533c2fb3cb72372b929463d0a"
+                }
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 8,
+                  "utf16Sha256": "e73dc0009bc1aa69bd5e3ef159a48b74c4424f0fce2bde681f81dc40f84b262e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "throw",
+          "hasThrown": true,
+          "identityIsSentinel": false,
+          "identityIsControlSentinel": false,
+          "constructorName": "UmfError",
+          "name": "UmfError",
+          "code": "NUMBER",
+          "path": "/\ud800",
+          "message": "Integer exceeds exact JavaScript range",
+          "own": {
+            "type": "object",
+            "id": 0,
+            "prototype": "UmfError",
+            "extensible": true,
+            "keys": [
+              "stack",
+              "message",
+              "code",
+              "path",
+              "name"
+            ],
+            "descriptors": [
+              {
+                "key": "stack",
+                "enumerable": false,
+                "configurable": true,
+                "getter": "<anonymous>",
+                "setter": "<anonymous>"
+              },
+              {
+                "key": "message",
+                "enumerable": false,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 38,
+                  "utf16Sha256": "235e0c3eb95d0cadb96730c93360b2f188b42701df14cb76485b17edf8c9f0ca"
+                }
+              },
+              {
+                "key": "code",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 6,
+                  "utf16Sha256": "3dfa6e8c1b998f625a9a088fa3d47d3fd00715b5a58aa5012e0277aed4fa2990"
+                }
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 2,
+                  "utf16Sha256": "b300de721e0ba4473322f1e8d073fd1f9044d12533c2fb3cb72372b929463d0a"
+                }
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "string",
+                  "utf16Length": 8,
+                  "utf16Sha256": "e73dc0009bc1aa69bd5e3ef159a48b74c4424f0fce2bde681f81dc40f84b262e"
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-null-prototype-ordered-own-descriptors",
+      "format": "yaml",
+      "reference": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "object",
+            "id": 0,
+            "prototype": "null",
+            "extensible": true,
+            "keys": [
+              "z",
+              "__proto__",
+              "a"
+            ],
+            "descriptors": [
+              {
+                "key": "z",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 1
+                }
+              },
+              {
+                "key": "__proto__",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 2
+                }
+              },
+              {
+                "key": "a",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 3
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "object",
+            "id": 0,
+            "prototype": "null",
+            "extensible": true,
+            "keys": [
+              "z",
+              "__proto__",
+              "a"
+            ],
+            "descriptors": [
+              {
+                "key": "z",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 1
+                }
+              },
+              {
+                "key": "__proto__",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 2
+                }
+              },
+              {
+                "key": "a",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 3
+                }
+              }
+            ]
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "array-own-index-under-inherited-setter",
+      "format": "yaml",
+      "reference": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "array",
+            "id": 0,
+            "prototype": "Array.prototype",
+            "extensible": true,
+            "keys": [
+              "0",
+              "1",
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 41
+                }
+              },
+              {
+                "key": "1",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 42
+                }
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": false,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 2
+                }
+              }
+            ]
+          },
+          "inheritedArrayIndexSetterCalls": 5
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "array",
+            "id": 0,
+            "prototype": "Array.prototype",
+            "extensible": true,
+            "keys": [
+              "0",
+              "1",
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 41
+                }
+              },
+              {
+                "key": "1",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 42
+                }
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": false,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 2
+                }
+              }
+            ]
+          },
+          "inheritedArrayIndexSetterCalls": 5
+        },
+        "trace": []
+      },
+      "matches": true
+    },
+    {
+      "id": "json-preflight-live-parse-lookup",
+      "format": "json",
+      "reference": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "array",
+            "id": 0,
+            "prototype": "Array.prototype",
+            "extensible": true,
+            "keys": [
+              "0",
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 1
+                }
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": false,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 1
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "get:JSON.parse",
+          "call:true:[1]"
+        ]
+      },
+      "default": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "array",
+            "id": 0,
+            "prototype": "Array.prototype",
+            "extensible": true,
+            "keys": [
+              "0",
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 1
+                }
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": false,
+                "writable": true,
+                "value": {
+                  "type": "number",
+                  "value": 1
+                }
+              }
+            ]
+          }
+        },
+        "trace": [
+          "get:JSON.parse",
+          "call:true:[1]"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "resource-control-unavailable-public-api",
+      "format": "yaml",
+      "reference": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "null",
+            "value": null
+          }
+        },
+        "trace": []
+      },
+      "default": {
+        "outcome": {
+          "kind": "return",
+          "shape": {
+            "type": "null",
+            "value": null
+          }
+        },
+        "trace": []
+      },
+      "matches": true
+    }
+  ]
+}

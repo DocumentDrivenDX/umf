@@ -7421,3 +7421,55 @@ The [improved raw-host `readJsonValue` N-API spike](evidence/rust-migration/r8-r
 A supplemental 39-case `readJsonValue` falsy-input packet now matches the TypeScript reference/default and temporary raw-host N-API candidate on Node 26.12.1 and Bun 1.4.3, including `NaN`, `0n`, signed zero, and other falsy/truthy non-string inputs ([evidence](evidence/rust-migration/r8-read-json-value-falsy-expansion-20261027/README.md)). This remains a scoped host-runtime spike: no WASM/browser claim or default-route selection follows. Open gates include isolated-surrogate error-path preservation, output object shape/prototype validation, thrown-value identity during length/coercion, Context shared-ledger metering for host JSON preflight, and complete transitive source closure; general inputs, production facade, and installed SDK qualification also remain open.
 
 The proposed production binding boundary is documented in the [ordinary-profile Rust interface proposal](evidence/rust-migration/r8-read-json-value-production-interface-proposal-20261027/README.md). Initial scope is private Rust sequencing over an opaque raw host handle, one Context, exact UTF-16 success/error transport, null-prototype result checks, and direct shape/error-identity acceptance in Node/Bun before WASM/Chromium. The second length read supplies YAML's `endOffset` during compose third-argument evaluation before the generator body, without coercion; its access remains observable. The YAML lexer accepts primitive strings unchanged, treats falsy nonstrings as an empty stream, and throws `TypeError` for truthy nonstrings. Catalog JSON stays TypeScript-selected pending a separate design for raw scanner reads and dynamic JSON.parse lookup. Host JSON.parse remains synchronous and opaque: shared Context checkpoints cannot guarantee hard bounds or interruption, and the first raw length may be small before a large coercion. No source route/default change is authorized; fresh source closure and installed replay remain later gates.
+
+### R8 ordinary readJsonValue acceptance freeze — 2026-10-27
+
+The [59-case ordinary-profile packet](evidence/rust-migration/r8-read-json-value-ordinary-20261027/README.md)
+matches the TypeScript reference and default source routes on Node 26.12.1
+and Bun 1.4.3. It directly compares result prototypes, own keys and
+descriptors, error fields, thrown-value identity and ordered host traces.
+It includes nonstring coercion, live JSON.parse, stateful length reads,
+UTF-16 boundaries, lone surrogates, and inherited-setter controls. It is a
+baseline, not a Rust or browser parity receipt.
+
+An explicit dedicated-entry Rust N-API slice for primitive-string ordinary inputs is
+under qualification. Keep all 59 baseline cases in the acceptance packet,
+including cases outside that bounded slice; record supported cases and
+mismatches separately. The [18-case dedicated-entry replay](evidence/rust-migration/r8-read-json-value-ordinary-20261027/package-parity.md)
+matches 15 cases on each of Node and Bun and retains three blockers: valid
+JSON duplicate keys produce different public diagnostics; an inherited array
+index setter has a different observable call count; and a live `JSON.parse`
+override accepting malformed input exposes Rust's extra native JSON preflight.
+Repair and rerun exact parity before extending source selection. The
+general raw-host handle, controls across host callbacks, catalog profile,
+WASM/Chromium binding, installed SDK replay, and default-route change remain
+open. The default Node/browser package roots retain their prior export shape.
+Hosted SDK and six-cohort Python jobs at the fixed-point checkpoint
+were queued when this note was written; no hosted pass is claimed.
+
+After adding this opt-in seam, the earlier source-bound Compact and Security
+receipts were made historical and replayed on one current immutable build.
+The generated action-plan producer identity and metamodel manifest were
+refreshed to a fixed point before that build; the interim pre-identity replay
+is also retained as historical evidence.
+The [current source manifest](evidence/rust-migration/r8-compact-dataset-verify-source/build-manifest.json)
+has SHA-256 `9d70a420cc76a308bd42d3984993bc616919e718f3073bceb332822625b363cc`
+and closure `d0d54682e6bc91b1eaa31d55d2b425b0bfbe706b6e2fe3be966422cccd2cc264`.
+The five-case Compact and 68-case Security packets pass Node 26.12.1, Bun
+1.4.3 and real Chromium 153.0.8010.12 against that build. The recaptured
+[R8 ledger](evidence/rust-migration/r8-symbol-inventory/README.md) has
+SHA-256 `8c22bcd000582fc48dc29345fe0c6f631e132b6a1bb033e08494908c0ee6fb1c`
+and still counts 922 open logical default-route gaps, zero retired.
+The prior `ef9f20c8` installed archive qualifies its captured earlier source;
+the current source needs a new zero-transform installed archive before any
+installed or release claim.
+
+Next, make the TypeScript-order JSON path honor the predecessor's successful
+live preflight by entering YAML parsing without a second native JSON syntax
+gate; verify duplicate diagnostics and a modified live parser against the
+frozen oracle before accepting that repair. Separately trace the YAML
+parser's inherited-array-setter calls and their throw/order behavior; do not
+paper over them with a post-parse callback count. Then move raw-source
+length/coercion/throw handles and frame reconstruction under the reviewed
+single-Context host protocol, qualify the same semantics in WASM/Chromium,
+and only consider default selection after an installed fixed-point replay.

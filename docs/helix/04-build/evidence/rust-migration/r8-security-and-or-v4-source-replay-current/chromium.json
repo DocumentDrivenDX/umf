@@ -11,13 +11,13 @@
     "reference": "private source-built TypeScript root"
   },
   "buildBinding": {
-    "manifest": "/private/tmp/compact-v4-build-fixedpoint-20261027c/compact-dataset-verify-build-manifest.json",
-    "sha256": "4d25c856fdac60bd5e0ae9c0bf7ac9afeda235251c13c05f313e3c6da96e5f3e",
-    "sourceClosureSha256": "2f83e19ace175ceb538d0b7aba94926a41a868c3af4ad87d52d73a996b88fd31",
+    "manifest": "/private/tmp/umf-r8-compact-v4-action-identity-20261027a/compact-dataset-verify-build-manifest.json",
+    "sha256": "9d70a420cc76a308bd42d3984993bc616919e718f3073bceb332822625b363cc",
+    "sourceClosureSha256": "d0d54682e6bc91b1eaa31d55d2b425b0bfbe706b6e2fe3be966422cccd2cc264",
     "artifacts": {
       "nodeAddon": {
         "path": "umf_core_node.node",
-        "sha256": "dedfaf986ba5d0d645563c5813bf12867178453beea89a0fa0729697d95fb026"
+        "sha256": "080f647ff8eb37a5182b916c0be10b78561e1f60aad9837323cfa5a9b53d8aad"
       },
       "wasm": {
         "path": "umf_core_wasm_bg.wasm",
@@ -29,15 +29,15 @@
       },
       "referenceBundle": {
         "path": "umf.js",
-        "sha256": "f0ea542197e247a966fc7d82425ff1fa7cf1484994db5e7260d94e5418b35682"
+        "sha256": "a05e8167c27302982207782ea08776daa57390756cd5257926768a8a444bffbf"
       },
       "nodeBundle": {
         "path": "umf-node.js",
-        "sha256": "6d76457aa6516c39dd17c99a252b779e26b695bd09a130132f93637bf2be3e7b"
+        "sha256": "69313444952873614cd43afb7b3394d5554fdce8015a3cb8eebacc31c141e2a8"
       },
       "browserBundle": {
         "path": "umf-browser.js",
-        "sha256": "37078690abe20b140bc8399b8e47a8e12357bef780673fb2f5e6159a22ac47b1"
+        "sha256": "99559dab1eaebc957b2061012d0ae2ea10e1b44a2203fee96ab03a957045c8d4"
       }
     }
   },
@@ -69,7 +69,7 @@
     }
   },
   "build": {
-    "dist": "/private/tmp/compact-v4-build-fixedpoint-20261027c",
+    "dist": "/private/tmp/umf-r8-compact-v4-action-identity-20261027a",
     "wasmBindgen": "0.2.100",
     "wasmSha256": "111007da675e270f072044dff0e7e39e6d5013bca2aca71af91fd22e177fad8a"
   },

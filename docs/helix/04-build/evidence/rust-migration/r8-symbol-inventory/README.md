@@ -1264,3 +1264,25 @@ The only change from the preceding ledger is the SHA-256 of
 `scripts/rust-migration/r8/security-and-or-installed-replay.mjs` in the
 repository script census. All counts remain unchanged: 922 open logical
 default-route gaps and zero retirements.
+
+## Opt-in ordinary JSON binding source recapture — 2026-10-27
+
+The isolated primitive-string `readJsonValue` N-API seam adds no default
+Node/browser export. The symbol inventory remains SHA-256
+`1ee0ccbaaa27749d92a6f4820ccf3e962d3a027829b6284b0fe0ec72fcd9958c`.
+Because the shared N-API source and generated metamodel manifest changed,
+the five-case [Compact verifier replay](../r8-compact-dataset-verify-source/README.md)
+and 68-case [Security And/Or replay](../r8-security-and-or-v4-source-replay-current/README.md)
+were rebuilt and rerun on Node 26.12.1, Bun 1.4.3 and real Chromium
+153.0.8010.12. Both host sets bind to the same immutable build manifest,
+SHA-256 `9d70a420cc76a308bd42d3984993bc616919e718f3073bceb332822625b363cc`,
+with source closure
+`d0d54682e6bc91b1eaa31d55d2b425b0bfbe706b6e2fe3be966422cccd2cc264`.
+Prior exact receipts remain under each packet's historical directory.
+
+The regenerated [ledger](gap-ledger.json) SHA-256 is
+`8c22bcd000582fc48dc29345fe0c6f631e132b6a1bb033e08494908c0ee6fb1c`.
+It still records **922 open logical default-route gaps and zero retired**,
+with 81 accepted opt-in mappings and 841 unmapped names. The isolated
+ordinary JSON binding is a failing opt-in parity spike and adds no accepted
+mapping or installed qualification.
