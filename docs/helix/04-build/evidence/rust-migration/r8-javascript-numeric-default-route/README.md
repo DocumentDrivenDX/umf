@@ -57,8 +57,31 @@ duration includes all package operations and checks and must not be attributed
 to numeric initialization or the numeric first call. R5 independently measured
 400,381,003 metered setup work units and 200 for an operation; those are work
 measurements, not a proof of a time, memory, or input-size ceiling for every
-installed facade path. Focused package-root resource qualification remains
-open.
+installed facade path.
+
+## Focused resource-bound qualification
+
+[`resource-bound-qualification-20261026.json`](resource-bound-qualification-20261026.json)
+records six public-root input checks on the fixed-point archive through Node,
+Bun, and real Chromium. It covers the CONTRACT-049 token and exponent text
+ceilings, over-budget and over-depth Field contexts, accessor admission without
+getter invocation, and preservation of an admitted long token. Each refusal's
+code/path/message was compared with the packaged TypeScript reference. The
+receipt separately hashes the historical archive/source closure and the
+current replay/test scripts; the new scripts are not archive members.
+
+The same archive's raw Node runtime was separately exercised under Node and
+Bun for setup and per-operation `RESOURCE_LIMIT`, `CANCELLED`, and `DEADLINE`
+callbacks. These are lower-level opt-in runtime controls, not controls exposed
+by the five default root exports. The available saved R8 WebAssembly build's
+generated binding lacks the prepared numeric runtime class needed by the
+opt-in factory harness, so WASM opt-in callback qualification remains open.
+Public-root browser input checks passed against the fixed-point archive's
+browser entry.
+
+The qualification is limited to these bounded inputs and callbacks. It does
+not establish full numeric parity or configurable resource controls on the
+default root.
 
 ## Earlier derived cohort
 

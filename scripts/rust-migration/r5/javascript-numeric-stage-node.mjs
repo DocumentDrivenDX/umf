@@ -26,11 +26,19 @@ const forged = JSON.parse(addon.executeJavascriptNumericWire(encodeRequestWire({
 })));
 assert.equal(resultError(forged)?.code, 'REQUEST');
 
+assert.equal(refusalCode(() => new addon.JavascriptNumericRuntime(encodeWire(resources), () => encodeRequestWire({ok:false, code:'CANCELLED', message:'setup cancelled'}))), 'CANCELLED');
+assert.equal(refusalCode(() => new addon.JavascriptNumericRuntime(encodeWire(resources), () => encodeRequestWire({ok:false, code:'DEADLINE', message:'setup deadline'}))), 'DEADLINE');
+
 let setupWork = 0;
 const runtime = new addon.JavascriptNumericRuntime(encodeWire(resources), (amount) => { setupWork += amount; return ''; });
 assert.ok(setupWork > 0, 'resource setup should use its own control path');
 resources.coreSchema = null;
 assert.equal(refusalCode(() => new addon.JavascriptNumericRuntime(encodeWire({coreSchema:{}}), () => encodeRequestWire({ok:false, code:'RESOURCE_LIMIT', message:'setup refusal'}))), 'RESOURCE_LIMIT');
+
+
+assert.equal(refusalCode(() => runtime.prepare('exactDecimal', encodeWire({token:'1'}), () => encodeRequestWire({ok:false, code:'CANCELLED', message:'operation cancelled'}))), 'CANCELLED');
+assert.equal(refusalCode(() => runtime.prepare('exactDecimal', encodeWire({token:'1'}), () => encodeRequestWire({ok:false, code:'DEADLINE', message:'operation deadline'}))), 'DEADLINE');
+assert.equal(refusalCode(() => runtime.prepare('exactDecimal', encodeWire({token:'1'}), () => encodeRequestWire({ok:false, code:'RESOURCE_LIMIT', message:'operation work limit'}))), 'RESOURCE_LIMIT');
 const options = {document, field:{module:'note_lifecycle', element:'notes__note_id'}};
 let operationWork = 0;
 const stage = runtime.prepare('integerFromBigInt', encodeWire({token:'1'}), (amount) => { operationWork += amount; return ''; });
@@ -50,4 +58,4 @@ const invalidResult = fromWire(JSON.parse(failedStage.validateContext(encodeWire
 assert.equal(invalidResult.valid, false);
 assert.equal(refusalCode(() => failedStage.validateContext(encodeWire(options))), 'JAVASCRIPT_NUMERIC_STAGE');
 
-console.log(JSON.stringify({status:'pass', forgedWireRefused:true, setupWork, operationWork, stageOneShotAfterSuccess:true, stageOneShotAfterFailure:true}));
+console.log(JSON.stringify({status:'pass', forgedWireRefused:true, setupWork, operationWork, stageOneShotAfterSuccess:true, stageOneShotAfterFailure:true, setupRefusal:'RESOURCE_LIMIT', setupCancellation:'CANCELLED', setupDeadline:'DEADLINE', operationRefusal:'RESOURCE_LIMIT', operationCancellation:'CANCELLED', operationDeadline:'DEADLINE'}));

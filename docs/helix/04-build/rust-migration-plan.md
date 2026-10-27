@@ -6530,12 +6530,32 @@ The [five CONTRACT-049 JavaScript numeric V4 bindings](evidence/rust-migration/r
 select the retained Rust engine through exact Node and browser facades. The
 strict unified-client checker continues to scan every `src/access/` file, with
 exact audited per-file imports; its negative controls reject new imports and
-host hooks. The private installed replay passed 27 independent numeric oracle
-vectors and same-host refusal, proxy-trace and context controls in Node, Bun
-and Chromium. That archive required 11 generated-source transforms, so the
-receipt is behavior-only: current-source fixed-point packaging, focused
-resource-bound qualification and retirement remain open. The explicit
-`./reference` route continues to execute TypeScript.
+host hooks. A first private installed replay passed 27 independent numeric
+oracle vectors and same-host refusal, proxy-trace and context controls in Node,
+Bun and Chromium, but its archive required 11 generated-source transforms.
+The follow-on fixed-point archive from commit `ca9cda964` has zero transforms
+and matching live/source closure hashes; its installed Node, Bun and Chromium
+replay passed the same 27 cases plus package route and asset-refusal controls.
+The [focused archive-pinned resource replay](evidence/rust-migration/r8-javascript-numeric-default-route/README.md)
+passes six public-root input bounds against the packaged TypeScript reference
+in Node, Bun and Chromium. Raw opt-in Node runtime callbacks also pass setup
+and per-operation resource, cancellation and deadline controls under Node and
+Bun. The saved R8 WASM binding lacks the prepared numeric runtime class, so
+opt-in WASM callback qualification is open. These bounded cases do not prove
+universal resource behavior or full numeric parity. The explicit `./reference`
+route continues to execute TypeScript.
+
+The [private Selection valid-result continuation](evidence/rust-migration/r8-selection-kind-runtime-valid-success/README.md)
+retains the caller's `kindRuntime` result through final `/sourceValidation`
+copying and skips a conflicting Rust static validation. A source rejected by
+that static check but accepted by the caller produces the same Selection and
+callback trace in Node, Bun and Chromium; the final-copy accessor refusal also
+matches. The [JSON Schema `get` first-fault correction](evidence/rust-migration/r8-json-schema-get-first-fault/README.md)
+validates an invalid document before a non-string pointer in private Node and
+WASM bindings, matching the predecessor in focused Node and Chromium replays.
+Its extra validation call leaves control-budget equivalence open. Both slices
+remain opt-in; they establish neither full operation parity nor default-route
+retirement.
 
 The ledger now recognizes these five opt-in Rust operations as source-selected
 only, preserving a single logical gap per export and condition-specific route
@@ -6543,5 +6563,7 @@ status. The [regenerated inventory and ledger](evidence/rust-migration/r8-symbol
 record 922 logical executable gaps, 72 accepted opt-in Rust mappings and 850
 unmapped names; the 49-case ledger suite passes. Metamodel, Python resource
 mirror, action-plan identity and real-Chromium metamodel checks pass for this
-source cohort. Installed fixed-point replay, focused resource qualification and
-the release matrix still gate any full-port, merge or release claim.
+source cohort. The Selection and JSON Schema changes after that capture require
+fresh inventory, ledger, generated-resource and installed-package evidence.
+Full parity across the remaining gaps, the hosted release matrix, review and
+integration still gate any full-port, merge or release claim.

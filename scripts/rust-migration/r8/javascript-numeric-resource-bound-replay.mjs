@@ -1,0 +1,50 @@
+import assert from 'node:assert/strict';
+import {createServer} from 'node:http';
+import {execFileSync} from 'node:child_process';
+import {createHash} from 'node:crypto';
+import {mkdtemp,rm} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {readFile} from 'node:fs/promises';
+import {resolve,join,relative,isAbsolute,sep} from 'node:path';
+import {pathToFileURL} from 'node:url';
+import {chromium} from 'playwright';
+const archive=resolve(process.argv[2]??'');
+if(!process.argv[2])throw new Error('Pass the fixed-point SDK archive path');
+const archiveSha=createHash('sha256').update(await readFile(archive)).digest('hex');
+if(archiveSha!=='2bcfaa75f6a084d321364aef2ad9fed03e83ebbebddc47c2efcad60b6935898b')throw new Error('Archive SHA-256 is not the reviewed fixed-point cohort: '+archiveSha);
+const scratch=await mkdtemp(join(tmpdir(),'umf-r8-numeric-resource-bound-'));
+execFileSync('tar',['-xzf',archive,'--strip-components=1','-C',scratch]);
+const pkg=scratch;
+const manifestSha=createHash('sha256').update(await readFile(join(pkg,'manifest.json'))).digest('hex');
+if(manifestSha!=='2d38b9d2b3181fbe89a3db8f06c32d5282f87e4971c1e2890409e86f370a6960')throw new Error('Archive manifest SHA-256 mismatch: '+manifestSha);
+const manifest=JSON.parse(await readFile(join(pkg,'manifest.json'),'utf8'));
+if(manifest.sourceTreeSha256!=='1574ba33fb2e50e282ba6be18cbe215a88f8d2b54b103912cf278041eb15f084'||manifest.sourceTransformStatus!=='fixed-point')throw new Error('Archive source closure is not the reviewed fixed point');
+const refPath=join(pkg,'dist/umf.js');
+const nodePath=join(pkg,'dist/umf-node.js');
+const context={document:JSON.parse(await readFile('tests/lifecycle/fixtures/legacy-note.json','utf8')),field:{module:'note_lifecycle',element:'notes__note_id'}};
+const cases=(root,ref)=>{
+ const capture=fn=>{try{return {ok:true,value:fn()}}catch(e){return {ok:false,error:{code:e.code??'',path:e.path??'',message:e.message??String(e)}}}};
+ const canonical=x=>JSON.stringify(x,(k,v)=>v&&typeof v==='object'&&!Array.isArray(v)?Object.fromEntries(Object.keys(v).sort().map(a=>[a,v[a]])):v);
+ const equal=(name,fn)=>{const a=capture(()=>fn(root)),b=capture(()=>fn(ref));assert.equal(canonical(a),canonical(b),name+' differs from reference: '+canonical({root:a,reference:b}));return a};
+ const out=[];
+ const check=(name,fn,expected)=>{const r=equal(name,fn);if(expected==='accepted')assert.equal(r.ok,true,name);else {assert.equal(r.ok,false,name);assert.equal(r.error.code,expected,name+' code');}out.push({name,code:r.error?.code??'ACCEPTED',path:r.error?.path??''});};
+ check('token-over-4m',api=>api.exactDecimal('1'.repeat(4_000_001)),'LIMIT');
+ check('exponent-over-32',api=>api.exactDecimal('1e'+'9'.repeat(33)),'LIMIT');
+ const oversized={...context,future:Array(100_001).fill(0)};
+ check('context-over-100k',api=>api.integerFromBigInt(1n,oversized),'LIMIT');
+ const deep={};let tail=deep;for(let i=0;i<132;i++){tail.next={};tail=tail.next;}
+ check('context-over-depth',api=>api.integerFromBigInt(1n,{...context,future:deep}),'LIMIT');
+ let getter=0;const access={...context,future:{get value(){getter++;return 1}}};
+ const r=equal('context-getter-refusal',api=>api.integerFromBigInt(1n,access));assert.equal(r.ok,false);assert.equal(getter,0);out.push({name:'context-getter-refusal',code:r.error.code,path:r.error.path,getterCalls:getter});
+ const long='1'.repeat(100_001);for(const api of [root,ref])assert.equal(api.exactDecimal(long).decimalToken.length,long.length);out.push({name:'bounded-long-token-preserved',code:'ACCEPTED',length:long.length});
+ return out;
+};
+const root=await import(pathToFileURL(nodePath));const ref=await import(pathToFileURL(refPath));
+const rootOut=cases(root,ref);
+const mime=p=>p.endsWith('.js')?'text/javascript':p.endsWith('.wasm')?'application/wasm':p.endsWith('.json')?'application/json':'application/octet-stream';
+const server=createServer(async(req,res)=>{try{const path=decodeURIComponent(new URL(req.url,'http://localhost').pathname);const p=resolve(pkg,'.'+path);const rel=relative(pkg,p);if(isAbsolute(rel)||rel==='..'||rel.startsWith('..'+sep))throw Error('path');const data=await readFile(p);res.writeHead(200,{'content-type':mime(p),'access-control-allow-origin':'*'});res.end(data);}catch{res.writeHead(404);res.end('not found')}});
+await new Promise(r=>server.listen(0,'127.0.0.1',r));let browser;let browserOut;
+try{browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage();await page.goto(`http://127.0.0.1:${server.address().port}/dist/`);browserOut=await page.evaluate(async context=>{const [root,ref]=await Promise.all([import('./umf-browser.js'),import('./umf.js')]);const cap=fn=>{try{return {ok:true,value:fn()}}catch(e){return {ok:false,error:{code:e.code??'',path:e.path??'',message:e.message??String(e)}}}};const canon=x=>JSON.stringify(x,(k,v)=>v&&typeof v==='object'&&!Array.isArray(v)?Object.fromEntries(Object.keys(v).sort().map(a=>[a,v[a]])):v);const out=[];const eq=(name,fn,expected)=>{const a=cap(()=>fn(root)),b=cap(()=>fn(ref));if(canon(a)!==canon(b))throw Error(name+' root/reference mismatch '+canon({a,b}));if(expected==='accepted'? !a.ok : (a.ok||a.error.code!==expected))throw Error(name+' expectation mismatch '+canon(a));out.push({name,code:a.error?.code??'ACCEPTED',path:a.error?.path??''})};eq('token-over-4m',x=>x.exactDecimal('1'.repeat(4000001)),'LIMIT');eq('exponent-over-32',x=>x.exactDecimal('1e'+'9'.repeat(33)),'LIMIT');eq('context-over-100k',x=>x.integerFromBigInt(1n,{...context,future:Array(100001).fill(0)}),'LIMIT');let d={},t=d;for(let i=0;i<132;i++){t.next={};t=t.next}eq('context-over-depth',x=>x.integerFromBigInt(1n,{...context,future:d}),'LIMIT');let getter=0;const access={...context,future:{get value(){getter++;return 1}}};const a=cap(()=>root.integerFromBigInt(1n,access)),b=cap(()=>ref.integerFromBigInt(1n,access));if(canon(a)!==canon(b)||a.ok||getter!==0)throw Error('context getter admission mismatch '+canon({a,b,getter}));out.push({name:'context-getter-refusal',code:a.error.code,path:a.error.path,getterCalls:getter});const long='1'.repeat(100001);if(root.exactDecimal(long).decimalToken.length!==long.length||ref.exactDecimal(long).decimalToken.length!==long.length)throw Error('bounded long token changed');out.push({name:'bounded-long-token-preserved',code:'ACCEPTED',length:long.length});return out;},context);}
+finally{await browser?.close();server.close();}
+console.log(JSON.stringify({status:'pass',qualification:'fixed-point installed package public-root input bounds only',archive:{sha256:archiveSha,manifestSha256:manifestSha,sourceClosureSha256:manifest.sourceTreeSha256},runtime:{node:process.version,bun:process.versions.bun??null},chromium:browser.version(),cases:rootOut.length,hostCases:rootOut,browserCases:browserOut}));
+await rm(scratch,{recursive:true,force:true});
