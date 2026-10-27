@@ -1,0 +1,521 @@
+* Getting build dependencies for wheel...
+* Building wheel...
+[1m[32m    Updating[0m crates.io index
+[1m[32m Downloading[0m crates ...
+[1m[32m  Downloaded[0m rustversion v1.0.23
+[1m[32m  Downloaded[0m unindent v0.2.4
+[1m[32m  Downloaded[0m cpufeatures v0.2.17
+[1m[32m  Downloaded[0m cfg-if v1.0.5
+[1m[32m  Downloaded[0m generic-array v0.14.7
+[1m[32m  Downloaded[0m crypto-common v0.1.7
+[1m[32m  Downloaded[0m heck v0.5.0
+[1m[32m  Downloaded[0m block-buffer v0.10.4
+[1m[32m  Downloaded[0m version_check v0.9.5
+[1m[32m  Downloaded[0m pyo3-macros v0.23.5
+[1m[32m  Downloaded[0m autocfg v1.5.1
+[1m[32m  Downloaded[0m ryu-js v1.0.3
+[1m[32m  Downloaded[0m itoa v1.0.18
+[1m[32m  Downloaded[0m thiserror v2.0.21
+[1m[32m  Downloaded[0m num-integer v0.1.47
+[1m[32m  Downloaded[0m indoc v2.0.8
+[1m[32m  Downloaded[0m thiserror-impl v2.0.21
+[1m[32m  Downloaded[0m target-lexicon v0.12.16
+[1m[32m  Downloaded[0m sha2 v0.10.8
+[1m[32m  Downloaded[0m ryu v1.0.23
+[1m[32m  Downloaded[0m unicode-ident v1.0.27
+[1m[32m  Downloaded[0m serde_derive v1.0.219
+[1m[32m  Downloaded[0m serde v1.0.219
+[1m[32m  Downloaded[0m typenum v1.20.1
+[1m[32m  Downloaded[0m memchr v2.8.3
+[1m[32m  Downloaded[0m num-bigint v0.4.8
+[1m[32m  Downloaded[0m serde_json v1.0.140
+[1m[32m  Downloaded[0m once_cell v1.21.4
+[1m[32m  Downloaded[0m pyo3-macros-backend v0.23.5
+[1m[32m  Downloaded[0m pyo3-ffi v0.23.5
+[1m[32m  Downloaded[0m proc-macro2 v1.0.107
+[1m[32m  Downloaded[0m num-traits v0.2.19
+[1m[32m  Downloaded[0m digest v0.10.7
+[1m[32m  Downloaded[0m pyo3-build-config v0.23.5
+[1m[32m  Downloaded[0m syn v2.0.119
+[1m[32m  Downloaded[0m syn v3.0.9
+[1m[32m  Downloaded[0m quote v1.0.47
+[1m[32m  Downloaded[0m arraydeque v0.5.1
+[1m[32m  Downloaded[0m memoffset v0.9.1
+[1m[32m  Downloaded[0m regress v0.12.0
+[1m[32m  Downloaded[0m libc v0.2.191
+[1m[32m  Downloaded[0m pyo3 v0.23.5
+[1m[32m   Compiling[0m proc-macro2 v1.0.107
+[1m[32m   Compiling[0m target-lexicon v0.12.16
+[1m[32m   Compiling[0m quote v1.0.47
+[1m[32m   Compiling[0m unicode-ident v1.0.27
+[1m[32m   Compiling[0m once_cell v1.21.4
+[1m[32m   Compiling[0m autocfg v1.5.1
+[1m[32m   Compiling[0m version_check v0.9.5
+[1m[32m   Compiling[0m generic-array v0.14.7
+[1m[32m   Compiling[0m num-traits v0.2.19
+[1m[32m   Compiling[0m typenum v1.20.1
+[1m[32m   Compiling[0m pyo3-build-config v0.23.5
+[1m[32m   Compiling[0m thiserror v2.0.21
+[1m[32m   Compiling[0m syn v2.0.119
+[1m[32m   Compiling[0m syn v3.0.9
+[1m[32m   Compiling[0m memchr v2.8.3
+[1m[32m   Compiling[0m num-integer v0.1.47
+[1m[32m   Compiling[0m pyo3-ffi v0.23.5
+[1m[32m   Compiling[0m pyo3-macros-backend v0.23.5
+[1m[32m   Compiling[0m block-buffer v0.10.4
+[1m[32m   Compiling[0m crypto-common v0.1.7
+[1m[32m   Compiling[0m cfg-if v1.0.5
+[1m[32m   Compiling[0m arraydeque v0.5.1
+[1m[32m   Compiling[0m serde v1.0.219
+[1m[32m   Compiling[0m libc v0.2.191
+[1m[32m   Compiling[0m thiserror-impl v2.0.21
+[1m[32m   Compiling[0m digest v0.10.7
+[1m[32m   Compiling[0m num-bigint v0.4.8
+[1m[32m   Compiling[0m regress v0.12.0
+[1m[32m   Compiling[0m saphyr-parser v0.1.0 (/home/runner/work/umf/umf/crates/umf-core/vendor/saphyr-parser)
+[1m[32m   Compiling[0m memoffset v0.9.1
+[1m[32m   Compiling[0m heck v0.5.0
+[1m[32m   Compiling[0m serde_json v1.0.140
+[1m[32m   Compiling[0m ryu-js v1.0.3
+[1m[32m   Compiling[0m serde_derive v1.0.219
+[1m[32m   Compiling[0m cpufeatures v0.2.17
+[1m[32m   Compiling[0m sha2 v0.10.8
+[1m[32m   Compiling[0m umf-core v0.1.0 (/home/runner/work/umf/umf/crates/umf-core)
+[1m[32m   Compiling[0m pyo3 v0.23.5
+[1m[32m   Compiling[0m ryu v1.0.23
+[1m[32m   Compiling[0m itoa v1.0.18
+[1m[32m   Compiling[0m umf-codegen v0.1.0 (/home/runner/work/umf/umf/crates/umf-codegen)
+[1m[32m   Compiling[0m pyo3-macros v0.23.5
+[1m[32m   Compiling[0m umf-core-python v0.1.0 (/home/runner/work/umf/umf/bindings/core/python)
+[1m[32m   Compiling[0m indoc v2.0.8
+[1m[32m   Compiling[0m unindent v0.2.4
+[0m[1m[33mwarning[0m[0m[1m: function `index` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/access/mod.rs:104:4[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m104[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn index<'a>(value: &'a Value, i: usize) -> &'a Value {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^^[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m    [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `#[warn(dead_code)]` on by default[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `ref_matches` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/access/mod.rs:109:4[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m109[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn ref_matches(value: &Value, module: &str, element: &str) -> bool {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `string_array` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/access/mod.rs:127:4[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m127[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn string_array(value: &Value) -> Option<Vec<String>> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `is_version` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/access/mod.rs:141:4[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m141[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn is_version(value: &str) -> bool {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `reference` is never used[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/access/inspection.rs:95:4[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m95[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn reference(v: &Value) -> Option<(Utf16, Utf16)> {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `ref_eq` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/access/inspection.rs:116:4[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m116[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn ref_eq(v: &Value, module: &Utf16, element: &Utf16) -> bool {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `pointer_escape` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/access/inspection.rs:119:4[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m119[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn pointer_escape(value: &Utf16) -> Utf16 {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `path` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/access/inspection.rs:181:4[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m181[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn path(base: &str, segment: &Utf16) -> Utf16 {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `find_module` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/access/inspection.rs:273:4[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m273[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn find_module<'a>(doc: &'a Value, id: &Utf16) -> Option<(usize, &'a Value)> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `find_element` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/access/inspection.rs:279:4[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m279[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn find_element<'a>([0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `value_ref` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/access/inspection.rs:429:4[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m429[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn value_ref(v: &Value) -> Option<(Utf16, Utf16)> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `binding_pair` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/access/inspection.rs:435:4[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m435[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn binding_pair(v: &Value) -> Option<(Utf16, Utf16)> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `keys_for_record` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/access/inspection.rs:464:4[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m464[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn keys_for_record<'a>(doc: &'a Value, module: &Utf16, element: &Utf16) -> &'a [Value] {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `item_ref` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/access/inspection.rs:470:4[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m470[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn item_ref(doc: &Value, module: &Utf16, element: &Utf16) -> Option<(Utf16, Utf16)> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `resolve_dependency_field` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/access/inspection.rs:596:15[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m596[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(super) fn resolve_dependency_field([0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m               [0m[0m[1m[33m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `pointer_escape` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/actions/mod.rs:106:4[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m106[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn pointer_escape(value: &str) -> String {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: associated functions `from_inspection` and `blocked_diagnostics` are never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/deployment/mod.rs:357:8[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m330[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mimpl Refusal {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;12m------------[0m[0m [0m[0m[1m[38;5;12massociated functions in this implementation[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m357[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn from_inspection(inspection: &Value) -> Self {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m360[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn blocked_diagnostics(diagnostics: Vec<umf_core::Diagnostic>) -> Self {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `blocked_diagnostics` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/deployment/mod.rs:382:4[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m382[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn blocked_diagnostics(diagnostics: Vec<umf_core::Diagnostic>) -> Value {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^^^^^^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: multiple fields are never read[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/generation/client.rs:383:5[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m380[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mstruct RelationInfo {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[38;5;12m------------[0m[0m [0m[0m[1m[38;5;12mfields in this struct[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m383[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    owner_module: String,[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m     [0m[0m[1m[33m^^^^^^^^^^^^[0m
+[0m[1m[38;5;12m384[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    owner_element: String,[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m     [0m[0m[1m[33m^^^^^^^^^^^^^[0m
+[0m[1m[38;5;12m385[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    target_module: String,[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m     [0m[0m[1m[33m^^^^^^^^^^^^^[0m
+[0m[1m[38;5;12m386[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    target_element: String,[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m     [0m[0m[1m[33m^^^^^^^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m391[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    key: String,[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m     [0m[0m[1m[33m^^^[0m
+[0m[1m[38;5;12m392[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    pointer: String,[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m     [0m[0m[1m[33m^^^^^^^[0m
+[0m[1m[38;5;12m393[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    logical_name: Option<Value>,[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m     [0m[0m[1m[33m^^^^^^^^^^^^[0m
+[0m[1m[38;5;12m394[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    to_one: bool,[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m     [0m[0m[1m[33m^^^^^^[0m
+[0m[1m[38;5;12m395[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    optional: bool,[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m     [0m[0m[1m[33m^^^^^^^^[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m    [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `RelationInfo` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis[0m
+
+[0m[1m[33mwarning[0m[0m[1m: field `declaration` is never read[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/generation/client.rs:402:5[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m400[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mstruct TableCommand {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[38;5;12m------------[0m[0m [0m[0m[1m[38;5;12mfield in this struct[0m
+[0m[1m[38;5;12m401[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    info: Value,[0m
+[0m[1m[38;5;12m402[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    declaration: Value,[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m     [0m[0m[1m[33m^^^^^^^^^^^[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m    [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `TableCommand` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `number_text` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/generation/client.rs:840:4[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m840[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn number_text(value: &Value) -> String {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `utf16_cmp` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/generation/python.rs:136:15[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m136[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) fn utf16_cmp(a: &Utf16, b: &Utf16) -> std::cmp::Ordering {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m               [0m[0m[1m[33m^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `sha256_hex` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/generation/python.rs:140:15[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m140[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) fn sha256_hex(bytes: &[u8]) -> String {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m               [0m[0m[1m[33m^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `source_bytes` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/generation/python.rs:146:15[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m146[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) fn source_bytes(text: &Utf16) -> Result<Vec<u8>, EngineError> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m               [0m[0m[1m[33m^^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `text` is never used[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/generation/value.rs:10:15[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m10[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) fn text(value: &Value) -> Option<String> {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m               [0m[0m[1m[33m^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `text_at` is never used[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/generation/value.rs:17:15[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m17[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) fn text_at(value: &Value, key: &str) -> Option<String> {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m               [0m[0m[1m[33m^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `boolean` is never used[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/generation/value.rs:29:15[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m29[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) fn boolean(value: &Value) -> Option<bool> {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m               [0m[0m[1m[33m^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `number` is never used[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/generation/value.rs:36:15[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m36[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) fn number(value: &Value) -> Option<f64> {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m               [0m[0m[1m[33m^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `string` is never used[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/generation/value.rs:43:15[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m43[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) fn string(value: impl AsRef<str>) -> Value {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m               [0m[0m[1m[33m^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `bool` is never used[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/generation/value.rs:47:15[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m47[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) fn bool(value: bool) -> Value {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m               [0m[0m[1m[33m^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `member_path` is never used[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/generation/value.rs:68:15[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m68[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) fn member_path(index: usize, member: &str) -> Utf16 {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m               [0m[0m[1m[33m^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `err` is never used[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/generation/value.rs:72:15[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m72[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) fn err(code: &str, path: impl Into<Utf16>, message: &str) -> EngineError {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m               [0m[0m[1m[33m^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `precharge` is never used[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/generation/value.rs:78:15[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m78[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) fn precharge([0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m               [0m[0m[1m[33m^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `copy_field` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/migration/mod.rs:253:4[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m253[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn copy_field(value: &Value, key: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `item_by_id` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/migration/mod.rs:385:4[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m385[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn item_by_id<'a>(items: &'a [Value], id: &Value) -> Option<&'a Value> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `validation_selected` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/umf-codegen/src/migration/mod.rs:806:4[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m806[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn validation_selected(options: Option<&Value>, table: &str, constraint: &str, kind: &str) -> bool {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^^^^^^^^^^^^^^^^[0m
+
+[1m[32m   Compiling[0m umf-core-wire v0.1.0 (/home/runner/work/umf/umf/crates/umf-core-wire)
+[1m[33mwarning[0m[1m:[0m `umf-codegen` (lib) generated 36 warnings
+[0m[1m[33mwarning[0m[0m[1m: use of deprecated associated function `pyo3::types::PyDict::new_bound`: renamed to `PyDict::new`[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/python_value.rs:51:30[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m51[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m        let kwargs = PyDict::new_bound(py);[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m                              [0m[0m[1m[33m^^^^^^^^^[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `#[warn(deprecated)]` on by default[0m
+
+[0m[1m[33mwarning[0m[0m[1m: use of deprecated associated function `pyo3::types::PyBytes::new_bound`: renamed to `PyBytes::new`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/python_value.rs:165:34[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m165[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m            let bytes = PyBytes::new_bound(py, &bytes);[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                                  [0m[0m[1m[33m^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: use of deprecated associated function `pyo3::types::PyDict::new_bound`: renamed to `PyDict::new`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/python_value.rs:166:34[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m166[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m            let kwargs = PyDict::new_bound(py);[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                                  [0m[0m[1m[33m^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: use of deprecated associated function `pyo3::types::PyList::empty_bound`: renamed to `PyList::empty`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/python_value.rs:179:34[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m179[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m            let output = PyList::empty_bound(py);[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                                  [0m[0m[1m[33m^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: use of deprecated associated function `pyo3::types::PyDict::new_bound`: renamed to `PyDict::new`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/python_value.rs:187:34[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m187[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m            let output = PyDict::new_bound(py);[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                                  [0m[0m[1m[33m^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: use of deprecated method `pyo3::Python::<'py>::import_bound`: renamed to `Python::import`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/python_value.rs:208:18[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m208[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    let chr = py.import_bound("builtins")?.getattr("chr")?;[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                  [0m[0m[1m[33m^^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: use of deprecated associated function `pyo3::types::PyList::empty_bound`: renamed to `PyList::empty`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/python_value.rs:209:26[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m209[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    let output = PyList::empty_bound(py);[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                          [0m[0m[1m[33m^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: use of deprecated associated function `pyo3::types::PyString::new_bound`: renamed to `PyString::new`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/python_value.rs:213:18[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m213[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    Ok(PyString::new_bound(py, "")[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                  [0m[0m[1m[33m^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: use of deprecated associated function `pyo3::types::PyList::empty_bound`: renamed to `PyList::empty`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/lib.rs:285:35[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m285[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m        let diagnostics = PyList::empty_bound(py);[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                                   [0m[0m[1m[33m^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: use of deprecated associated function `pyo3::types::PyDict::new_bound`: renamed to `PyDict::new`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/lib.rs:292:32[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m292[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m            let item = PyDict::new_bound(py);[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                                [0m[0m[1m[33m^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: use of deprecated associated function `pyo3::types::PyList::empty_bound`: renamed to `PyList::empty`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/lib.rs:373:35[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m373[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m        let diagnostics = PyList::empty_bound(py);[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                                   [0m[0m[1m[33m^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: use of deprecated associated function `pyo3::types::PyDict::new_bound`: renamed to `PyDict::new`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/lib.rs:380:32[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m380[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m            let item = PyDict::new_bound(py);[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                                [0m[0m[1m[33m^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: use of deprecated associated function `pyo3::types::PyList::empty_bound`: renamed to `PyList::empty`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/lib.rs:448:26[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m448[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    let output = PyList::empty_bound(py);[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                          [0m[0m[1m[33m^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: use of deprecated associated function `pyo3::types::PyDict::new_bound`: renamed to `PyDict::new`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/lib.rs:903:30[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m903[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m        let result = PyDict::new_bound(py);[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                              [0m[0m[1m[33m^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: use of deprecated associated function `pyo3::types::PyList::empty_bound`: renamed to `PyList::empty`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/lib.rs:908:35[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m908[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m        let diagnostics = PyList::empty_bound(py);[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                                   [0m[0m[1m[33m^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: use of deprecated associated function `pyo3::types::PyDict::new_bound`: renamed to `PyDict::new`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/lib.rs:912:32[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m912[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m            let item = PyDict::new_bound(py);[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                                [0m[0m[1m[33m^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: use of deprecated associated function `pyo3::types::PyList::empty_bound`: renamed to `PyList::empty`[0m
+[0m    [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/lib.rs:1000:26[0m
+[0m     [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m1000[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    let output = PyList::empty_bound(py);[0m
+[0m     [0m[0m[1m[38;5;12m|[0m[0m                          [0m[0m[1m[33m^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: use of deprecated associated function `pyo3::types::PyDict::new_bound`: renamed to `PyDict::new`[0m
+[0m    [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/lib.rs:1004:28[0m
+[0m     [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m1004[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m        let item = PyDict::new_bound(py);[0m
+[0m     [0m[0m[1m[38;5;12m|[0m[0m                            [0m[0m[1m[33m^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: use of deprecated associated function `pyo3::types::PyDict::new_bound`: renamed to `PyDict::new`[0m
+[0m    [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/lib.rs:1315:30[0m
+[0m     [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m1315[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m        let kwargs = PyDict::new_bound(self.py);[0m
+[0m     [0m[0m[1m[38;5;12m|[0m[0m                              [0m[0m[1m[33m^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: use of deprecated method `pyo3::Python::<'py>::import_bound`: renamed to `Python::import`[0m
+[0m    [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/lib.rs:1428:10[0m
+[0m     [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m1428[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m        .import_bound("json")[0m
+[0m     [0m[0m[1m[38;5;12m|[0m[0m          [0m[0m[1m[33m^^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: use of deprecated method `pyo3::Python::<'py>::import_bound`: renamed to `Python::import`[0m
+[0m    [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/lib.rs:1433:10[0m
+[0m     [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m1433[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m        .import_bound("umf._rust")[0m
+[0m     [0m[0m[1m[38;5;12m|[0m[0m          [0m[0m[1m[33m^^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: use of deprecated associated function `pyo3::types::PyBytes::new_bound`: renamed to `PyBytes::new`[0m
+[0m    [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/lib.rs:1455:17[0m
+[0m     [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m1455[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    Ok(PyBytes::new_bound(py, &bytes)[0m
+[0m     [0m[0m[1m[38;5;12m|[0m[0m                 [0m[0m[1m[33m^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: use of deprecated method `pyo3::PyErr::value_bound`: renamed to `PyErr::value`[0m
+[0m    [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/lib.rs:1492:10[0m
+[0m     [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m1492[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m        .value_bound(py)[0m
+[0m     [0m[0m[1m[38;5;12m|[0m[0m          [0m[0m[1m[33m^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: use of deprecated method `pyo3::PyErr::value_bound`: renamed to `PyErr::value`[0m
+[0m    [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/lib.rs:1511:17[0m
+[0m     [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m1511[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    match error.value_bound(py).str() {[0m
+[0m     [0m[0m[1m[38;5;12m|[0m[0m                 [0m[0m[1m[33m^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: use of deprecated method `pyo3::Python::<'py>::import_bound`: renamed to `Python::import`[0m
+[0m    [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/lib.rs:1541:10[0m
+[0m     [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m1541[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m        .import_bound("umf._rust")[0m
+[0m     [0m[0m[1m[38;5;12m|[0m[0m          [0m[0m[1m[33m^^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: use of deprecated associated function `pyo3::PyErr::from_value_bound`: renamed to `PyErr::from_value`[0m
+[0m    [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/lib.rs:1545:29[0m
+[0m     [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m1545[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m        Ok(value) => PyErr::from_value_bound(value),[0m
+[0m     [0m[0m[1m[38;5;12m|[0m[0m                             [0m[0m[1m[33m^^^^^^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: use of deprecated method `pyo3::PyErr::value_bound`: renamed to `PyErr::value`[0m
+[0m    [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/lib.rs:1564:10[0m
+[0m     [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m1564[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m        .value_bound(py)[0m
+[0m     [0m[0m[1m[38;5;12m|[0m[0m          [0m[0m[1m[33m^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: unused variable: `py`[0m
+[0m    [0m[0m[1m[38;5;12m--> [0m[0mbindings/core/python/src/lib.rs:1460:18[0m
+[0m     [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m1460[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn extract_utf16(py: Python<'_>, value: &Bound<'_, PyAny>) -> PyResult<Utf16> {[0m
+[0m     [0m[0m[1m[38;5;12m|[0m[0m                  [0m[0m[1m[33m^^[0m[0m [0m[0m[1m[33mhelp: if this is intentional, prefix it with an underscore: `_py`[0m
+[0m     [0m[0m[1m[38;5;12m|[0m
+[0m     [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `#[warn(unused_variables)]` on by default[0m
+
+[1m[33mwarning[0m[1m:[0m `umf-core-python` (lib) generated 28 warnings
+[1m[32m    Finished[0m `release` profile [optimized] target(s) in 48.01s
+* Getting build dependencies for sdist...
+* Building sdist...
+Successfully built umf_core-0.10.3-cp311-abi3-linux_x86_64.whl and umf_core-0.10.3.tar.gz

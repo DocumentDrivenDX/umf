@@ -1,5 +1,5 @@
 {
-  "status": "REGEX9_METAMODEL11_DEPENDENT15_ADOPTED_AWAITING_INSTALLED_WHEEL_QUALIFICATION",
+  "status": "ACTION_RESOURCE_PIN_SOURCE_ACCEPTED_AWAITING_GENUINE_DEPENDENT_REGEN",
   "baseCommit": "d5022e37840329d351bcd6c27fe7d7aad4758544",
   "donorCommit": "f4a410c0522135065a0b20e8d2b69705fddcbac4",
   "extractionCommit": "ad5e59591",
@@ -202,5 +202,26 @@
     "ref": "codex/core-python314-generation",
     "inputs": {},
     "required": "Two installed direct/sdist-rebuilt producer jobs plus original four selected release-wheel Linux/macOS x Python3.11/3.14 cells; actual repaired Linux wheel, common sdist, 254-test suite and retained14 probes. Public proof remains HELD until actual release tuple."
+  },
+  "coreDraftPullRequest": "https://github.com/DocumentDrivenDX/umf/pull/60",
+  "wheelResourcePinFailure": {
+    "evidence": "wheel-resource-pin-failure-40423293596",
+    "custodySha256": "41be54d33e0e1f26fa9a5c73214eba37687bb61937f8ca41ab0f036cbad488ba",
+    "installedQualification": false,
+    "fourCellQualification": false,
+    "plan": "sol-action-resource-pin-plan001.md",
+    "planSha256": "e982608899355f3fced0c1d23f60145ff028182e78def47f6b38dec994e1e5fd",
+    "sourceCorrection": {
+      "status": "SOURCE_ACCEPTED",
+      "manifestSha256": "44cf34f1d8925517c993c652af47cc9a3605a90e053de1f7944b7a654b3baf74",
+      "runtimeSha256": "de56a24520a2fd71c13815bae89a5116974dd83099e4e6c1ff0747ab59639ac2",
+      "closure": "sol-action-resource-pin-closure001.md",
+      "closureSha256": "59309b9e33536279f8d360efa52b36c1aebdb04d4f3dd0e9f36f514641ac791c"
+    }
+  },
+  "adoptedSourceConsistency": {
+    "evidence": "adopted-source-consistency-40423290778",
+    "custodySha256": "f77e383caf5686ef64113d568c1b669551bd9766bf9a280c8608af6216e5aa00",
+    "status": "PASS_EXACT15_ROOT_CORRESPONDENCE"
   }
 }
