@@ -110,6 +110,7 @@ pub mod security_domains;
 pub mod security_functions;
 pub mod security_logic;
 pub mod security_parameters;
+pub mod security_queries;
 pub mod selection;
 pub mod selection_host_json;
 pub(crate) mod selection_diagnostics;

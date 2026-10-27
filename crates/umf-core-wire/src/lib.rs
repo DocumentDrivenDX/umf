@@ -29,6 +29,7 @@ pub mod security_domains_binding;
 pub mod security_functions_binding;
 pub mod security_logic_binding;
 pub mod security_parameters_binding;
+pub mod security_queries_binding;
 pub mod security_protection_source_binding;
 pub mod semantic_value;
 #[cfg(feature = "codegen")]
