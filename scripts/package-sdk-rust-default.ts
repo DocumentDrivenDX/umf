@@ -91,6 +91,7 @@ try{
   join(root,'bindings/core/node/package.json'),join(root,'bindings/core/wasm/package.json'),
   join(root,'.cargo/config.toml'),
   join(root,'scripts/package-sdk-rust-default.ts'),join(root,'scripts/test-sdk-rust-default.ts'),
+  join(root,'scripts/rust-migration/r8/v4-default-facade.mjs'),join(root,'scripts/rust-migration/r8/v4-default-facade.test.mjs'),
   join(root,'scripts/rust-migration/r5/freeze-core-keys-default.ts'),
   join(root,'scripts/rust-migration/r5/bit128-default-route/freeze.ts'),
   join(root,'scripts/rust-migration/r5/bit128-default-route/predecessor.json'),
@@ -171,6 +172,7 @@ try{
  root=snapshotRoot;
  process.chdir(snapshotRoot);
 
+ await run([process.execPath,'scripts/rust-migration/r8/v4-default-facade.mjs','--check']);
  const cargoEnv={CARGO_TARGET_DIR:cargoTarget};
  await run([process.execPath,'scripts/metamodel/build.ts'],{env:cargoEnv});
  await run([process.execPath,'scripts/actions-plan-identity.ts']);

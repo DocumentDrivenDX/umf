@@ -6766,3 +6766,43 @@ remove shadowed TypeScript bodies from default bundles while preserving
 `./reference` and every public declaration. These gates precede any Inspector
 or Relationship retirement, full-port claim,
 merge, or release.
+
+### R8 V4 default facade source cut and 26aa installed continuation — 2026-10-27
+
+The private SDK archive from clean source commit `26aa44ca1` is sealed. Its
+bounded installed relationship-consumer replay now passes 18/18 cases on Node
+26.12.1 and Bun 1.4.3, and 15/15 browser-capable cases on Chromium 153.0.8010.12.
+The [installed relationship-consumer evidence](evidence/rust-migration/r8-relationship-consumers-installed/README.md)
+matches the frozen outcomes and getter traces and proves Rust invocation on the
+default routes plus zero Rust calls through `./reference`. PostgreSQL is
+excluded from Chromium and uses an externally supplied, separately
+Node-targeted backend with its dependency and source hashes pinned in the
+receipt; this is not self-contained PostgreSQL support in the archive.
+The archive receipt at
+[`r8-sdk-26aa44ca1-private-package`](evidence/rust-migration/r8-sdk-26aa44ca1-private-package/README.md)
+records package provenance only, and this archive predates the facade source
+cut below. It is not installed qualification of that cut.
+
+The V4 Node and browser roots now route their inherited API through a generated
+explicit facade. The source checker preserves all 1,886 type/value export
+names (1,120 runtime facets and 771 type facets), and bundle-input checks
+exclude the reference barrel plus all 11 targeted Inspector/Relationship
+TypeScript operation modules. The generated facade's `--check` is wired into
+the private SDK source builder. Frozen current-source relationship behavior
+passes 18/18 in Node and 15/15 in real Chromium using a regenerated private
+WASM package; both replay receipts pin the generated facade and action-plan
+identity inputs. See the [facade evidence](evidence/rust-migration/r8-v4-default-facade-slice/README.md)
+and [barrel separation record](evidence/rust-migration/r8-v4-default-barrel-separation-plan/README.md).
+
+The recaptured R8 inventory is 3,375 route-specific declarations across 509
+files (SHA-256 `159ed518151d3eab681b28f97d542c9c51a2017ab78efcbe11aa00695bfe9b7c`);
+the gap ledger SHA-256 is
+`383ede15de7b95d297e488ad8eb342bfdd308ede116b1eca549f03604b1c5010`.
+Retirement remains **922 open logical default-route gaps**, comprising 77
+accepted opt-in Rust mappings and 845 unmapped names; neither V4 route has a
+retired declaration. Bundle exclusion is not source declaration retirement.
+The next gate is a clean archive containing the facade source followed by
+installed default/reference replay across supported hosts. The bounded
+relationship-consumer replay does not qualify the facade source cohort, retire
+any declaration, or establish full-port or release readiness. Those claims
+remain open.

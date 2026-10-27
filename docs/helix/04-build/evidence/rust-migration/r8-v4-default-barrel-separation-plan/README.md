@@ -15,13 +15,15 @@ ddx:
       kind: informed_by
     - id: umf.evidence.rust-migration.r8-core-inspectors-installed
       kind: informed_by
+    - id: umf.evidence.rust-migration.r8-v4-default-facade-slice
+      kind: informed_by
     - id: CONTRACT-001
       kind: informed_by
     - id: CONTRACT-040
       kind: informed_by
 ---
 
-# R8 V4 default barrel separation plan
+# R8 V4 default barrel separation plan and implementation record
 
 ## Baseline and boundary
 
@@ -34,10 +36,13 @@ browser, and reference. Its scope cautions that root selection does not retire
 inherited TypeScript algorithms. `package.json` also points both root and
 `./reference` type conditions at the common `dist/src/index.d.ts`.
 
-This proposal is restricted to removing the Inspector and Relationship
+This work is restricted to removing the Inspector and Relationship
 TypeScript bodies shadowed by V4's selected runtime exports, without changing
-the reference route or the 1,120-name default runtime surface. It is a plan,
-not evidence of a completed bundle change. The installed evidence at
+the reference route or the 1,120-name default runtime surface. The current
+source implementation and its frozen behavior evidence are recorded in
+[`r8-v4-default-facade-slice`](../r8-v4-default-facade-slice/README.md).
+This is a source and bundle-graph result, not declaration retirement. The
+installed evidence at
 [`r8-core-inspectors-installed/current-5e7138383-20261026`](../r8-core-inspectors-installed/current-5e7138383-20261026/README.md)
 qualifies only that pinned archive and its cases.
 
@@ -154,3 +159,22 @@ This design preserves public exports by construction while removing only
 selected shadowed TS bodies from the V4 runtime graph. A successful typecheck
 or matching runtime output alone is insufficient; all listed export-graph,
 bundle-graph, host, and route checks are required before claiming the change.
+
+## Current source checkpoint
+
+The V4 roots now export a generated explicit facade instead of the broad
+`src/index.ts` barrel. Checker validation preserves 1,886 exported names and
+their type/value facets (1,120 runtime facets and 771 type facets) across
+reference, Node V4, and browser V4. The generated facade omits the 33
+shadowed Inspector/Relationship TypeScript runtime bindings. A Node and
+Chromium bundle-input test confirms the broad reference barrel and all 11
+targeted TypeScript operation bodies are absent from default V4 bundles, while Rust
+bindings and the six relationship factory modules remain present.
+
+The frozen V4 relationship replay passes in Node (18/18 cases) and real
+Chromium (15/15 cases) using freshly built, pinned Rust 1.90.0 and
+wasm-bindgen 0.2.100 artifacts. The 26aa installed archive is a separate
+sealed snapshot and was not overwritten. This source change does not modify
+`src/index.ts` or its reference export graph; it does not assert TypeScript
+declaration deletion, zero remaining non-root callers, or retired ledger
+rows. The R8 inventory and gap ledger retain their prior retirement counts.
