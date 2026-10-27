@@ -269,12 +269,12 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "633ebb8aa94962d6c0c81047025fdac316761cb433ce603e000024dd98687bbc",
+    "sourceCohortSha256": "cc76a2a02fb8c20234fc412b6a094fd0ef88d631226b17d01adf26b7170e6d16",
     "typescriptApi": "5.9.3"
   },
   "counts": {
     "activeScriptFiles": 431,
-    "algorithmSymbols": 12611,
+    "algorithmSymbols": 12613,
     "pythonModules": 124,
     "rustBuildInputs": 79,
     "rustModules": 128,
@@ -31587,12 +31587,12 @@
         "visit",
         "workspaceClosure"
       ],
-      "bytes": 14317,
+      "bytes": 14361,
       "disposition": "rust-compiler-build-host-bridge",
       "language": "ts",
       "migrationObligation": "R2 native compiler process/provenance plus explicit third-party Ajv build backend; no UMF compiler fallback",
       "path": "scripts/metamodel/build.ts",
-      "sha256": "9b9ca28f0823596a322f3c7886ce19f18101eb99b06f99d4be7b6e6e340273e3"
+      "sha256": "fefe96e0f84eb14d4bf7d9bcceaad1f7df7b8583e770f0e41fa5e463145747fa"
     },
     {
       "activationEvidence": [
@@ -34415,12 +34415,12 @@
         "validateSourceClosure",
         "verifyAssets"
       ],
-      "bytes": 15947,
+      "bytes": 16318,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/qualify-schema-browser-release.ts",
-      "sha256": "c0111db270cc778037d2a260685fbcbdf0bc68f5d9fd04268e0a2fee9aa389e3"
+      "sha256": "1240d350977fd3942466c6bbbd2e6dceec91ceb83998734d6f5b058ad3104c5f"
     },
     {
       "activationEvidence": [
@@ -35584,12 +35584,12 @@
         "withExamples",
         "yamlMap"
       ],
-      "bytes": 30694,
+      "bytes": 30944,
       "disposition": "unreferenced-script-source",
       "language": "ts",
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "scripts/rust-core/browser-conformance.ts",
-      "sha256": "4d9311a5c1d067435fa43ba5e92287b7943fec50fb9dc75350d06195dc96e4f4"
+      "sha256": "29db09f617cf4d82cdce6d18e43262bd62a1841e0f3098ffbd77370ae48fdbe0"
     },
     {
       "activationEvidence": [],
@@ -40328,12 +40328,12 @@
         "fetch",
         "pypi_artifact_hash"
       ],
-      "bytes": 36780,
+      "bytes": 36765,
       "disposition": "test-oracle-fixture-algorithm",
       "language": "py",
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/codegen/acquire_offline_cohort.py",
-      "sha256": "fb2a1a12869ab805a8e1ccad007ca981ea9ad80fe27ccb4f6bd62d2a27b545fe"
+      "sha256": "7bc10736496b3116eb81b9688321f15e3996e636024f9c0e07f4a96d27911d7f"
     },
     {
       "activationEvidence": [
@@ -40363,12 +40363,12 @@
         "validate_current_release_sources",
         "validate_split_runtime_lock"
       ],
-      "bytes": 80299,
+      "bytes": 80496,
       "disposition": "test-oracle-fixture-algorithm",
       "language": "py",
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/codegen/aggregate_cohort.py",
-      "sha256": "2deb613f42505a4c125feb23da219ce768d6756a6d3ee404b56c6c2441db9b61"
+      "sha256": "d46695d30f816428f62ce0f9086b5d60ed106c0960291eb75fcadf597f38b739"
     },
     {
       "activationEvidence": [
@@ -40476,12 +40476,12 @@
       ],
       "active": true,
       "algorithmSymbols": [],
-      "bytes": 19776,
+      "bytes": 20321,
       "disposition": "test-oracle-fixture-algorithm",
       "language": "py",
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/codegen/offline_mirror_probe.py",
-      "sha256": "acbf84135ed8788a7ce6860063efcf32688ee4b4c7c6fb809a18cb1edfb99de0"
+      "sha256": "b8cc2330539640168d97491aeb118922a796b4a30d20fcc66cb3ec0d19aabee7"
     },
     {
       "activationEvidence": [],
@@ -40556,6 +40556,8 @@
         "test_rebound_child_lock_with_wrong_cell_identity_refuses",
         "test_rehashed_union_lock_provenance_mutant_refuses",
         "test_same_filename_with_different_bytes_refuses",
+        "test_split_core_native_path_must_match_locked_release_declaration",
+        "test_split_mac_target_refuses_dylib_alias_for_published_so_member",
         "test_split_profile_binds_two_linux_receipts_and_two_data_only_mac_targets",
         "test_split_target_refuses_rehashed_alternate_access_wheel",
         "test_split_validation_refuses_coherent_nineteenth_linux_distribution",
@@ -40565,12 +40567,12 @@
         "test_unsafe_union_path_refuses_before_path_use",
         "test_wrong_selected_environment_refuses"
       ],
-      "bytes": 45164,
+      "bytes": 47064,
       "disposition": "test-oracle-fixture-algorithm",
       "language": "py",
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/codegen/test_aggregate_cohort.py",
-      "sha256": "e4d34c07b26830585c941c7ceecdbad00c04b8c7de1f58f06dfc2fbeecd3ad51"
+      "sha256": "ef5e0a409cca028649734089b2b79cfcc343304d9b47cb3e0473cae8ae15102c"
     },
     {
       "activationEvidence": [
@@ -40918,12 +40920,12 @@
         "rejects",
         "run"
       ],
-      "bytes": 20361,
+      "bytes": 20469,
       "disposition": "test-oracle-fixture-algorithm",
       "language": "ts",
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/compilation/boundaries.test.ts",
-      "sha256": "f5a55c08358af39ea5b23ccc46fa1a9d48431e7130e0c2b3b5aa462cc0ace94b"
+      "sha256": "0eda53df9c2744522f3b970192e06187adcaaccdf9b656cacd372e67a6daf265"
     },
     {
       "activationEvidence": [
@@ -69906,7 +69908,7 @@
         "actionPlanProducerBuild"
       ],
       "resolvedImports": [],
-      "sha256": "0ad8f9ee30eb839955d359b860acb6b35441140d7a8b213e78713a98602cbebb"
+      "sha256": "e88f87c9c9c186f2c91e75012a27531538879a144b68136a931069209d17103f"
     },
     {
       "bytes": 4286,
