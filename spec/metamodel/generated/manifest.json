@@ -216,7 +216,7 @@
     "crates/rust-spike-cli/src/main.rs": "f1773533ffba68a42130246d1ae7882fb50f48a2afa0ebfabc7cd6689e7bb15e",
     "crates/rust-spike-core/Cargo.toml": "ae580f8c3ed0b339635b4b1050fb7ba613051f8a84a1f33d54a786b6053f4c7b",
     "crates/rust-spike-core/src/lib.rs": "706e8ed26c1a4a11628c99c053e9f92679b2ce43b7fd702ce0fe06315ef00184",
-    "scripts/metamodel/build.ts": "9b9ca28f0823596a322f3c7886ce19f18101eb99b06f99d4be7b6e6e340273e3",
+    "scripts/metamodel/build.ts": "fefe96e0f84eb14d4bf7d9bcceaad1f7df7b8583e770f0e41fa5e463145747fa",
     "scripts/metamodel/rust.ts": "f3459b4732527299c2f0068f96fb5eaad0cf6d32a8e1a07fb30b2a3954160493",
     "scripts/metamodel/structural.ts": "5a938650d2c67681c68439e9cfcda797132bfbb4dea692e3ca9b78382be7a964",
     "src/validation/json-equality.ts": "a9ecbd0d4d513223889eaf83d053bc0d48e8020f8a73cae3fe32a8bc06d1e20f",
@@ -448,7 +448,7 @@
     "name": "Ajv standalone",
     "ownership": "explicit third-party build-time JavaScript backend; Rust owns portable metamodel outputs",
     "inputs": {
-      "scripts/metamodel/build.ts": "9b9ca28f0823596a322f3c7886ce19f18101eb99b06f99d4be7b6e6e340273e3",
+      "scripts/metamodel/build.ts": "fefe96e0f84eb14d4bf7d9bcceaad1f7df7b8583e770f0e41fa5e463145747fa",
       "scripts/metamodel/rust.ts": "f3459b4732527299c2f0068f96fb5eaad0cf6d32a8e1a07fb30b2a3954160493",
       "scripts/metamodel/structural.ts": "5a938650d2c67681c68439e9cfcda797132bfbb4dea692e3ca9b78382be7a964",
       "src/validation/json-equality.ts": "a9ecbd0d4d513223889eaf83d053bc0d48e8020f8a73cae3fe32a8bc06d1e20f",
