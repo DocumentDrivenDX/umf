@@ -101,7 +101,10 @@ The predecessor comparison composes the frozen 30-case seven-operation packet
 and the 11 `editJsonSchemaNode` cases from the frozen 22-case tree-operation
 packet. It excludes that packet's 11 `parseNativeJson` cases. Both input packet
 hashes, exact IDs, host-order controls, and historical differences are recorded
-in [predecessor-manifest.json](predecessor-manifest.json).
+in [predecessor-manifest.json](predecessor-manifest.json). A later scoped
+wrong-type boundary observation for the opt-in `parseNativeJson` binding is
+recorded separately in
+[`r8-json-schema-parse-native-json-host/README.md`](../r8-json-schema-parse-native-json-host/README.md).
 
 ## Prepared runtime captured cohort
 
