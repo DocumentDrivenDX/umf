@@ -1032,3 +1032,59 @@ opt-in Rust operation mappings, 855 executable names without an accepted
 mapping, five bounded binding routes, and all 922 logical default-route
 retirement gaps. The new private Selection, captured-graph and release-custody
 slices do not change the default route or qualify a release.
+
+## Current canonical regeneration after Selection and JSON Schema changes (2026-10-26)
+
+After the current source cohort settled, the Rust-owned metamodel outputs,
+Python action-runtime resource manifest, and action-plan identity were
+regenerated. `bun scripts/metamodel/build.ts --check` passed with an isolated
+compiler cache; `python3 scripts/rust-migration/r8/sync_action_runtime_resources.py
+--check`, `bun scripts/actions-plan-identity.ts --check`, and both inventory and
+ledger `--check` modes passed. The Chromium metamodel replay also passed in
+Headless Chrome 153.0.8010.12: 138 strict-core cases and one explicit
+registry-callback case, zero failures, zero page errors. The browser bundle
+SHA-256 is `fde174503508a72b346fb462735635d18af924759775aa5d183264755d373fa6`;
+its receipt is [here](../../metamodel-authority/browser/receipt.json).
+
+The refreshed metamodel manifest SHA-256 is
+`05f1a8b008cc4b26abf27827aa1ae830ee75381cdb3677a3828274ff0c130644`;
+`spec/core/schema.json` is
+`44545e8ae80e2c09395cf858642439b74380a74a57a62045eb72ba893228bcff`, and the
+generated validator module is
+`e2632ca495273514f8cc465b90a6b6e12f1652036bd7cecc6193b89ab76da602`. The
+nine-resource Python action-runtime manifest is pinned at
+`30f577c87aff09972122cc136d02608a9d9f125668ed2f8a502721c2afa40b0d`; the
+refreshed action-plan identity source is
+`37a2df2a4c65c19ed0e0679202ca31e67348dc843710d125f7d3ebc036b23acc`.
+
+The condition-aware inventory is SHA-256
+`81172c51cb0941ec6736e72a461a707517524b3595916c2ce87aeacaa884d34d`: ten
+routes, 3,375 route-specific runtime declarations, 1,126 unique declaration
+names, and 506 source files. The regenerated ledger is SHA-256
+`e04e253d95e0a48ec6915c00f5cc1dab29f631f523967aa055c3e5b41d4b8f64`. It
+records 3,360 route rows, 922 executable names, 72 with an accepted opt-in Rust
+operation, 850 without a Rust mapping, 922 logical default-route retirement
+gaps, 198 resource aliases across 189 unique files, and resource authority
+counts of 56 generated-known, 49 authored-known, 88 candidate-generated, and
+5 unresolved. The 49-case gap-ledger suite passes 49/49; the metamodel suite
+passes 61/61. This source census does not retire declarations or qualify a
+release. Existing bounded current-source route counts stay separately scoped
+in the ledger.
+
+Reproduce the snapshots and checks with:
+
+```sh
+bun scripts/metamodel/build.ts
+bun scripts/actions-plan-identity.ts
+python3 scripts/rust-migration/r8/sync_action_runtime_resources.py --write
+node scripts/rust-migration/r8/symbol-inventory.mjs
+node scripts/rust-migration/r8/gap-ledger.mjs
+bun scripts/metamodel/build.ts --check
+bun scripts/actions-plan-identity.ts --check
+python3 scripts/rust-migration/r8/sync_action_runtime_resources.py --check
+node scripts/rust-migration/r8/symbol-inventory.mjs --check
+node scripts/rust-migration/r8/gap-ledger.mjs --check
+node --test scripts/rust-migration/r8/gap-ledger.test.mjs
+bun test tests/metamodel
+bun scripts/metamodel-browser.ts
+```
