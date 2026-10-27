@@ -1,0 +1,47 @@
+{
+  "status": "CW_F1_F6_CLOSURE_REVIEW_PENDING",
+  "sourceHead": "9ddd4e95bf3f2b211ee03fd18992862335edf143",
+  "scope": "Frozen wheel/public-proof correction slice; no runtime qualification, publication, dispatch or generated output adoption. Public release packet remains HELD.",
+  "files": [
+    {
+      "path": ".github/workflows/python-action-runtime.yml",
+      "sha256": "e0ad44a1be0d7838e270c87ac6e05ff0ff591b84e364fbc166347bca0331beaf",
+      "bytes": 49066
+    },
+    {
+      "path": ".github/workflows/core-0.10.3-public-install-proof.yml",
+      "sha256": "436adfdc1bb71402b52d40302cdb5de04530fdfdb4fefb3962fe1ecc1fa4e0e5",
+      "bytes": 29424
+    },
+    {
+      "path": "tools/core_python_qualification_runner.py",
+      "sha256": "28f94fae67b6f654f1603c154717833384c541fa37b2ae17494b81a426544462",
+      "bytes": 11198
+    },
+    {
+      "path": "tools/qualify_python_release_wheel.py",
+      "sha256": "ec025d1564af77f04d25db2c97de3bf98e5e7fb32048d67814ae0a182f8c05b4",
+      "bytes": 16607
+    },
+    {
+      "path": "tools/verify_core_public_producer.py",
+      "sha256": "4b1e5cc0370d9d23bb5922c73bc3598ecb946f4b49ba8f823800be987d84d240",
+      "bytes": 13393
+    },
+    {
+      "path": "tools/verify_core_public_release.py",
+      "sha256": "8a10c139b6761cb9c7e30538096cbacbfcbcd8b1d8db24dd4692e80ff6ee52fc",
+      "bytes": 14377
+    },
+    {
+      "path": "qualification-inputs/core-0.10.3-wheel-input-lock.json",
+      "sha256": "9bd2f8db08dd8bd911f680fec8716abe8726961e7d204aa71ac4f271d810d44f",
+      "bytes": 7611
+    },
+    {
+      "path": "qualification-inputs/core-0.10.3-public-install-proof.json",
+      "sha256": "95e97bc0671f923a6e953804238579c42a9c0bc63396cb92096de83b7a51be73",
+      "bytes": 1180
+    }
+  ]
+}

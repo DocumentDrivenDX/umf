@@ -12,7 +12,7 @@ import pytest
 
 _HELPER_PATH = Path(__file__).resolve().parents[2] / "tools/_python_sdist.py"
 assert hashlib.sha256(_HELPER_PATH.read_bytes()).hexdigest() == (
-    "9e069554ddd6433599bc2a3533a249d17023acbf698e294bf77ca8b2784b2b66"
+    "2332cbf58b624be77fda737ddfe0e9b5afc0b2990b32cebcd6cbec1fcbf6f901"
 )
 _HELPER_SPEC = importlib.util.spec_from_file_location(
     "umf_test_python_sdist", _HELPER_PATH
@@ -298,6 +298,18 @@ def test_exact_source_and_archive_inventory_returns_canonical_manifest(
         result["files"], sort_keys=True, separators=(",", ":")
     ).encode()
     assert result["sha256"] == hashlib.sha256(canonical).hexdigest()
+
+
+def test_nested_python_distribution_outputs_are_excluded(tmp_path: Path) -> None:
+    checkout, _archive, _files = _fixture(tmp_path)
+    before = sdist._source_inventory(checkout)
+    _write(
+        checkout,
+        "python/umf_codegen/dist/umf_codegen-0.2.0.tar.gz",
+        b"generated package distribution\n",
+    )
+    after = sdist._source_inventory(checkout)
+    assert after == before
 
 
 def test_action_runtime_helper_map_must_match_build_declarations(

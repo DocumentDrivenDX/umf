@@ -1,0 +1,41 @@
+{
+  "aggregateArtifactLimitBytes": 16777216,
+  "aggregateDeadlineSeconds": 1800,
+  "aggregateLogLimitBytes": 1048576,
+  "childMaximumSeconds": 180,
+  "cleanupReserveSeconds": 60,
+  "event": "push",
+  "failureOnlyReceipt": true,
+  "generationStepOutcome": "failure",
+  "lastCommand": {
+    "captureExit": 0,
+    "endedAtUtc": "2026-10-26T22:10:57.039789369Z",
+    "limitSeconds": 180,
+    "logBytes": 143,
+    "logSha256": "6042b5573ae401410f5103de04c520572f0c07d1f87bd6f7e32e0e1d99f1847c",
+    "monotonicDurationMs": 330,
+    "monotonicEndMs": 119960,
+    "monotonicStartMs": 119630,
+    "name": "source-preflight",
+    "rawExit": 1,
+    "startedAtUtc": "2026-10-26T22:10:56.720751311Z",
+    "truncated": false
+  },
+  "preflightDiagnostic": {
+    "actualStatus": 0,
+    "component": "crates/umf-core/tests/fixtures/cpython-re/independent-hex-outcomes.tsv",
+    "pinnedCommit": "d5022e37840329d351bcd6c27fe7d7aad4758544",
+    "profile": "umf.core-python314-preflight-diagnostic/1",
+    "reasonCode": "REGEX_PREIMAGE_SHA_MISMATCH"
+  },
+  "profile": "umf.core-python314-generation/1",
+  "qualificationClaim": false,
+  "rawLogsUploaded": false,
+  "reasonCode": "generation_step_failed",
+  "ref": "refs/heads/codex/core-python314-generation",
+  "runAttempt": "1",
+  "runId": "40410190099",
+  "sourceCommit": "5549ea45c5301bb8c608888d5f2ad14dc66d961e",
+  "status": "FAIL_OR_UNKNOWN",
+  "timeoutKillGraceSeconds": 10
+}

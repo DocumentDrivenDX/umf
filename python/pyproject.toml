@@ -9,7 +9,7 @@ name = "umf-core"
 version = "0.11.0"
 description = "Official Python document models and extension machinery for UMF"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.11,<3.15"
 dependencies = ["pydantic>=2.11,<3"]
 
 [project.urls]

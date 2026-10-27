@@ -6,13 +6,16 @@ portable constraint programs and Python shape data. Pydantic provides access
 models; it does not define a competing format. Consumer extensions and execution
 policies remain in consumer repositories.
 
-Install the qualified release wheel:
+Historical Core 0.10.0 pure-Python wheel:
 
 ```sh
 pip install https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.1/umf_core-0.10.0-py3-none-any.whl
 ```
 
-The release URL above identifies the existing published Python artifact. The
+The URL above is a historical artifact and does not identify the current native
+runtime. Core 0.10.2 is published through the [GitHub release](https://github.com/DocumentDrivenDX/umf/releases/tag/python-v0.10.2)
+and [PyPI](https://pypi.org/project/umf-core/0.10.2/). Its publication path is
+configured and verified; its evidence does not qualify CPython 3.14. The
 development source builds a platform-specific native Rust extension instead:
 
 ```sh
@@ -26,9 +29,8 @@ Node, Bun or V8. Native import failures are explicit; there is no semantic
 fallback. Pydantic remains the Python access-model dependency. This development
 change does not publish or replace the release linked above.
 
-The GitHub release and its checksums identify the distributed wheel.
-PyPI publication is not configured. The separately distributed experimental `umf_access` host adapter is
-not required to read or validate UMF documents.
+The separately distributed experimental `umf_access` host adapter is not
+required to read or validate UMF documents.
 
 Development distribution version `0.11.0` is distinct from the UMF document/core version
 `0.10.0`. The existing `0.10.0` pure-Python wheel linked above is metadata-only
@@ -39,6 +41,9 @@ bounded admission profile is specified by
 [CONTRACT-906](../docs/helix/02-design/contracts/CONTRACT-906-single-set-admission.md).
 No installation URL for the `0.11.0` native wheel is listed until its
 platform-specific release assets are published and qualified.
+The `0.11.0` package metadata admits Python `>=3.11,<3.15`, matching the
+versioned Python 3.11–3.14 profiles; the native engine continues to refuse
+unsupported future minors explicitly.
 
 ```python
 from umf import read_document, validate_document, write_document

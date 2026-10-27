@@ -27,13 +27,23 @@ for case in json.load(sys.stdin):
  else:results.append({'status':'compiled'})
 print(json.dumps({'version':sys.version,'executable':sys.executable,'unicodeVersion':unicodedata.unidata_version,'results':results},ensure_ascii=True))
 '''
-assert len(sys.argv)==4,'pass exact CPython3.11/3.12/3.13 interpreter paths'
-oracles={}
-for minor,exe in zip((11,12,13),sys.argv[1:]):
- item=json.loads(subprocess.check_output([exe,'-c',runner,str(minor)],input=json.dumps(cases).encode()));item['executableSha256']=hashlib.sha256(pathlib.Path(exe).resolve().read_bytes()).hexdigest();oracles[f'3.{minor}']=item
-fixture=root/'tests/fixtures/cpython-re/independent-hex-boundaries.json';fixture.write_text(json.dumps({'profile':'umf.independent-python-re-hex/1','generatorSha256':hashlib.sha256(pathlib.Path(__file__).read_bytes()).hexdigest(),'scope':'Additive reviewer-owned compile-only escape admission boundaries, exact u32 inputs, all three profiles; original frozen fixtures unchanged.','cases':cases,'oracles':oracles},ensure_ascii=True,separators=(',',':'))+'\n')
-rows=[]
-for minor,oracle in oracles.items():
- for case,result in zip(cases,oracle['results']):rows.append('\t'.join([minor[2:],case['id'],'compile','E' if result['status']=='compile-error' else 'N','-','',','.join(map(str,case['patternCodepoints']))]))
-tsv=fixture.with_name('independent-hex-outcomes.tsv');tsv.write_text('\n'.join(rows)+'\n')
-print(json.dumps({'cases':len(cases),'outcomes':len(rows),'fixtureSha256':hashlib.sha256(fixture.read_bytes()).hexdigest(),'tsvSha256':hashlib.sha256(tsv.read_bytes()).hexdigest()}))
+assert len(sys.argv)==3 and sys.argv[1]=='--python314','usage: generate_independent_python_re_hex.py --python314 PY314'
+exe=sys.argv[2]
+fixture=root/'tests/fixtures/cpython-re/independent-hex-boundaries.json'
+record=json.loads(fixture.read_text(encoding='utf-8'))
+if record.get('cases')!=cases or set(record.get('oracles',{}))!={'3.11','3.12','3.13'}:
+ raise SystemExit('frozen 3.11–3.13 hex fixture does not match this generator preimage')
+oracle=json.loads(subprocess.check_output([exe,'-c',runner,'14'],input=json.dumps(cases).encode()))
+if oracle.get('unicodeVersion')!='16.0.0':raise SystemExit('CPython 3.14 oracle is not using Unicode 16.0.0')
+oracle['executableSha256']=hashlib.sha256(pathlib.Path(exe).resolve().read_bytes()).hexdigest()
+record['python314GeneratorSha256']=hashlib.sha256(pathlib.Path(__file__).read_bytes()).hexdigest()
+record['python314Scope']='CPython 3.14.8 / Unicode 16.0.0 oracle only; prior 3.11–3.13 oracle records and TSV rows are retained byte-for-byte.'
+record['oracles']['3.14']=oracle
+fixture.write_text(json.dumps(record,ensure_ascii=True,separators=(',',':'))+'\n')
+tsv=fixture.with_name('independent-hex-outcomes.tsv')
+old_rows=tsv.read_text(encoding='ascii').splitlines()
+if len(old_rows)!=len(cases)*3 or any(row.split('\t',1)[0] not in {'11','12','13'} for row in old_rows):
+ raise SystemExit('frozen 3.11–3.13 hex outcome rows are incomplete or unexpected')
+rows=['\t'.join(['14',case['id'],'compile','E' if result['status']=='compile-error' else 'N','-','',','.join(map(str,case['patternCodepoints']))]) for case,result in zip(cases,oracle['results'])]
+tsv.write_text('\n'.join(old_rows+rows)+'\n')
+print(json.dumps({'cases':len(cases),'outcomes':len(old_rows)+len(rows),'fixtureSha256':hashlib.sha256(fixture.read_bytes()).hexdigest(),'tsvSha256':hashlib.sha256(tsv.read_bytes()).hexdigest(),'version':oracle['version'].split()[0],'unicodeVersion':oracle['unicodeVersion']}))

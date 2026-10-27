@@ -22,6 +22,7 @@ fn independent_cpython_hex_escape_corpus_all_profiles() {
             "11" => (PythonReVersion::V3_11, "3.11"),
             "12" => (PythonReVersion::V3_12, "3.12"),
             "13" => (PythonReVersion::V3_13, "3.13"),
+            "14" => (PythonReVersion::V3_14, "3.14"),
             other => panic!("unknown Python minor {other}"),
         };
         let pattern = codepoints(fields[6]);
@@ -34,7 +35,7 @@ fn independent_cpython_hex_escape_corpus_all_profiles() {
             failures.push(format!("{label} {} failed to compile", fields[1]));
         }
     }
-    assert_eq!(rows, 2_022 * 3, "independent hex outcome row count");
+    assert_eq!(rows, 2_022 * 4, "independent hex outcome row count");
     assert!(
         failures.is_empty(),
         "{} independent CPython hex mismatches; first 100:\n{}",

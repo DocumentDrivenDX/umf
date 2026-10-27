@@ -178,6 +178,10 @@ jobs:
             python-version: '3.11'
           - os: ubuntu-24.04
             architecture: x86_64
+            mini-racer-platform: linux-x86_64-glibc-2.27+
+            weft-wheel-filename: weft_sql-0.4.49-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+            weft-wheel-url: https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.49/weft_sql-0.4.49-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+            weft-wheel-sha256: 8ca1625249c1d3bed20864dfd71481d8b956b3901ffdc619fc3ec4a1a473be9c
             python-version: '3.14'
     steps:
       - uses: actions/checkout@v4

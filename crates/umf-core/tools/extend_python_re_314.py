@@ -14,24 +14,35 @@ import pathlib
 import subprocess
 import sys
 
-ROOT = pathlib.Path(__file__).resolve().parents[1]
-TABLES = ROOT / "src/python_re_tables.rs"
-NAMES = ROOT / "src/python_re_names.dat"
+SOURCE_ROOT = pathlib.Path(__file__).resolve().parents[1]
+TABLES = SOURCE_ROOT / "src/python_re_tables.rs"
+NAMES = SOURCE_ROOT / "src/python_re_names.dat"
 ALIASES = pathlib.Path(__file__).resolve().parent / "unicode/NameAliases-16.0.0.txt"
-FIXTURES = ROOT / "tests/fixtures/cpython-re"
+FIXTURES = SOURCE_ROOT / "tests/fixtures/cpython-re"
+RE_TESTS = FIXTURES / "re_tests.py"
+FIXTURE_LICENSE = FIXTURES / "PSF-LICENSE.txt"
 PROFILE_START = "// BEGIN GENERATED CPYTHON 3.14 PROFILE"
 PROFILE_END = "// END GENERATED CPYTHON 3.14 PROFILE"
 
-if len(sys.argv) != 2:
-    raise SystemExit("usage: extend_python_re_314.py PYTHON314")
+if len(sys.argv) != 3:
+    raise SystemExit("usage: extend_python_re_314.py PYTHON314 STAGING_ROOT")
 
 interpreter = pathlib.Path(sys.argv[1]).resolve()
+stage = pathlib.Path(sys.argv[2]).resolve()
+TABLES = stage / "src/python_re_tables.rs"
+NAMES = stage / "src/python_re_names.dat"
+FIXTURES = stage / "tests/fixtures/cpython-re"
+RE_TESTS = FIXTURES / "re_tests.py"
+FIXTURE_LICENSE = FIXTURES / "PSF-LICENSE.txt"
 version = subprocess.check_output(
     [str(interpreter), "-c", "import sys; print('.'.join(map(str,sys.version_info[:3])))"],
     text=True,
 ).strip()
-if not version.startswith("3.14."):
-    raise SystemExit(f"expected CPython 3.14, got {version}")
+implementation = subprocess.check_output(
+    [str(interpreter), "-c", "import platform; print(platform.python_implementation())"], text=True
+).strip()
+if implementation != "CPython" or version != "3.14.8":
+    raise SystemExit(f"expected CPython 3.14.8, got {implementation} {version}")
 
 # Reuse the exact table-producing program from the canonical generator.
 table_generator = pathlib.Path(__file__).with_name("generate_python_re_tables.py")
@@ -53,20 +64,25 @@ unicode_version = subprocess.check_output(
     [str(interpreter), "-c", "import unicodedata; print(unicodedata.unidata_version)"],
     text=True,
 ).strip()
+if unicode_version != "16.0.0":
+    raise SystemExit(f"expected Unicode 16.0.0, got {unicode_version}")
+if not TABLES.is_file() or not NAMES.is_file() or not RE_TESTS.is_file() or not FIXTURE_LICENSE.is_file():
+    raise SystemExit("staging root is missing a pinned Python regex generation input")
 block = (
     f"{PROFILE_START}\n"
     f"// CPython {version}; Unicode {unicode_version}\n"
     f"// Interpreter executable SHA256: {interpreter_hash}\n"
+    f"// Canonical generator SHA256: {hashlib.sha256(table_generator.read_bytes()).hexdigest()}\n"
+    f"// CPython re_tests.py SHA256: {hashlib.sha256(RE_TESTS.read_bytes()).hexdigest()}\n"
+    f"// CPython fixture license SHA256: {hashlib.sha256(FIXTURE_LICENSE.read_bytes()).hexdigest()}\n"
     f"// Unicode name alias input {ALIASES.name} SHA256: {alias_hash}\n"
     f"// Incremental generator SHA256: {generator_hash}\n"
     f"// Generated table payload SHA256: {table_hash}\n"
     f"{table_output}\n{PROFILE_END}"
 )
 source = TABLES.read_text(encoding="utf-8")
-if PROFILE_START in source and PROFILE_END in source:
-    before, rest = source.split(PROFILE_START, 1)
-    _, after = rest.split(PROFILE_END, 1)
-    source = before.rstrip() + "\n\n" + after.lstrip("\n")
+if PROFILE_START in source or PROFILE_END in source:
+    raise SystemExit("staging tables must be the unextended main preimage")
 TABLES.write_text(source.rstrip() + "\n\n" + block + "\n", encoding="utf-8")
 
 # Decode the existing prefix-compressed name buckets, add names admitted by
@@ -97,6 +113,9 @@ for first in range(128):
         name = previous[:prefix] + suffix
         available[name] = (codepoint, minor)
         previous = name
+if any(minor > 13 for _codepoint, minor in available.values()):
+    raise SystemExit("staging name table must contain only frozen 3.11–3.13 mappings")
+previous_names = available.copy()
 
 name_program = r'''
 import unicodedata as u
@@ -111,6 +130,8 @@ for line in ALIASES.read_text(encoding="utf-8").splitlines():
     if body:
         codepoint, alias, _kind = (field.strip() for field in body.split(";"))
         available.setdefault(alias.upper(), (int(codepoint, 16), 14))
+if any(available.get(name) != value for name, value in previous_names.items()):
+    raise SystemExit("an existing Python name mapping changed during 3.14 extension")
 
 records = bytearray()
 offsets: dict[int, tuple[int, int]] = {}
@@ -148,7 +169,7 @@ NAMES.write_bytes(header + records)
 # new Unicode 16 codepoint/casefold controls using CPython's own re module.
 cases = []
 for pattern, text, _outcome, *_ in __import__("runpy").run_path(
-    str(FIXTURES / "re_tests.py")
+    str(RE_TESTS)
 )["tests"]:
     cases.append((pattern, text, "cpython-re_tests"))
 cases.extend(
@@ -188,6 +209,9 @@ print(
             "rows": len(outcomes.splitlines()),
             "interpreterSha256": interpreter_hash,
             "aliasSourceSha256": alias_hash,
+            "canonicalGeneratorSha256": hashlib.sha256(table_generator.read_bytes()).hexdigest(),
+            "reTestsSha256": hashlib.sha256(RE_TESTS.read_bytes()).hexdigest(),
+            "fixtureLicenseSha256": hashlib.sha256(FIXTURE_LICENSE.read_bytes()).hexdigest(),
             "generatorSha256": generator_hash,
         },
         sort_keys=True,

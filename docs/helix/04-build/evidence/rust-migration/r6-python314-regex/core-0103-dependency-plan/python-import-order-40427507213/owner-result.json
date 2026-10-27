@@ -1,0 +1,15 @@
+{
+  "status": "321_TESTS_PASS_ONE_RUFF_I001_FAILURE",
+  "runId": 40427507213,
+  "jobId": 121936841105,
+  "headCommit": "0413e337f6584f5d2cfaca19858f4587d32c1ed8",
+  "testFileSha256": "7229a3ad8a9a336caa75a428ae2ddc5094ae39e6a919780c5a0a6a48ec2d2064",
+  "tests": 321,
+  "failures": 0,
+  "durationSeconds": 26.97,
+  "lintErrorCount": 1,
+  "rule": "I001",
+  "path": "python/tests/test_distribution_artifact.py",
+  "sourceCorrection": null,
+  "scope": "Actual existing gate now reaches Ruff after all tests pass. Exact import ordering suggestion retained. No configuration waiver, production change or release admission."
+}

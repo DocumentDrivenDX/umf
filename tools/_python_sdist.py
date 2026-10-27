@@ -466,7 +466,7 @@ def _source_inventory(checkout: Path) -> dict[str, str]:
         excluded_dirs=_PYTHON_BUILD_DIRS,
         excluded_suffixes=_PYTHON_BUILD_SUFFIXES,
         reject_symlinks=True,
-        excluded_paths={"python/dist"},
+        excluded_paths={"python/dist", "python/umf_codegen/dist"},
     )
     try:
         pyproject = tomllib.loads(

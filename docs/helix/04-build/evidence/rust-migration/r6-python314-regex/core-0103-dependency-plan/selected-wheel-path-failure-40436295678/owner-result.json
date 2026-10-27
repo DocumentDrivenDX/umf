@@ -1,0 +1,22 @@
+{
+  "status": "TEST_COHORT_FETCH_PASSED_SELECTED_WHEEL_INSTALL_PATH_MISSING_BEFORE_TESTS",
+  "sourceCommit": "f4a2bc36dadf6145f27e743f2ad6d534c69319f0",
+  "runId": 40436295678,
+  "jobId": 121971783522,
+  "artifactId": 12705830126,
+  "failingCommand": "install-test-and-selected-wheels",
+  "actualMissingPath": "/home/runner/work/_temp/umf-release-linux/umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl",
+  "actualArtifactMember": "umf-release-selected/umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl",
+  "testCohortFetchPassed": true,
+  "installedPayloadVerified": false,
+  "cellTestsExecuted": false,
+  "sourceCause": "Selection validation uses nested linux_root/mac_root, but output construction chooses the parent linux_dir/mac_dir.",
+  "correction": {
+    "status": "ONE_LINE_SOURCE_CORRECTION_ACCEPTED_CHANGED_SOURCE_EXECUTION_PENDING",
+    "planSha256": "e09ef94b92b1312975a323d97198accc098edf63b8540ed5c38752fb66aade14",
+    "reviewSha256": "a654adaaf0a6899bc954308b187590479b5ecb0c421bd6542f1fd675e69f9c25",
+    "nativeWorkflowSha256": "807fd5b6008f27263b2714459d8acdac2186b7a36b036f33dfa5242e36acd2ab",
+    "scope": "Emit from same nested root already verified; no flattening/fallback or gate changes. Actual same-source consistency and original producer/four-cell qualification still required."
+  },
+  "scope": "Both original direct/rebuilt producers and archive selections independently accepted at this exact source; selected-cell admission remains open. Other jobs preserved."
+}

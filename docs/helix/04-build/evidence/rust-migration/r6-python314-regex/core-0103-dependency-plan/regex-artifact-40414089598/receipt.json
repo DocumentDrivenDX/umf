@@ -1,0 +1,135 @@
+{
+  "archiveBytes": 1275649,
+  "archiveSha256": "7e90c0b357689058c1a4cd0d0aa7da81e76dc428bd451d8283fafd6885e641ee",
+  "claims": {
+    "actionIdentityAndCodegenCheck": false,
+    "adoption": false,
+    "generatedArtifacts": true,
+    "installedWheelQualification": false,
+    "metamodelCheck": false,
+    "release": false,
+    "rustInventoryCheck": false
+  },
+  "cpPython": {
+    "executableSha256": "a5230d8adbd26c2185d77fb003597c4ee9c44c2369fc179122ff7c3a3a58ae59",
+    "runtime": {
+      "executable": "/opt/hostedtoolcache/Python/3.14.8/x64/bin/python3.14",
+      "extensionModules": "/opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/lib-dynload",
+      "implementation": "CPython",
+      "installation": {
+        "archiveSha256": "fa74abc70a55c10f6631967784878704eef81bbde9b8ec27469534f6ba997cb3",
+        "failureCode": null,
+        "mode": "fresh-verified-extraction",
+        "prefix": "/opt/hostedtoolcache/Python/3.14.8/x64",
+        "profile": "umf.core-python314-installation/1",
+        "quarantinePath": "/opt/hostedtoolcache/Python/3.14.8/x64.codex-quarantine-40414089598-1-ca3388d2478cc81ed71dd341cb4aa7f8418acacd",
+        "quarantinedOriginal": true,
+        "runAttempt": "1",
+        "runId": "40414089598",
+        "sourceCommit": "ca3388d2478cc81ed71dd341cb4aa7f8418acacd",
+        "status": "FRESH_EXTRACTION_COMPLETE"
+      },
+      "libpython": "/opt/hostedtoolcache/Python/3.14.8/x64/lib/libpython3.14.so.1.0",
+      "loaderEnvironment": {
+        "LD_LIBRARY_PATH": "/opt/hostedtoolcache/Python/3.14.8/x64/lib"
+      },
+      "stdlib": "/opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14",
+      "unicodeDataExtension": "/opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/lib-dynload/unicodedata.cpython-314-x86_64-linux-gnu.so",
+      "unicodeVersion": "16.0.0",
+      "version": "3.14.8"
+    },
+    "unicodeVersion": "16.0.0",
+    "version": "3.14.8"
+  },
+  "event": "push",
+  "outputCount": 9,
+  "outputManifestSha256": "57c74b67b7f1690f16a5d51e5f416da8a9d906e680f6363e48155e28e592b7df",
+  "phase": "regex-artifacts",
+  "profile": "umf.core-python314-generation/1",
+  "ref": "refs/heads/codex/core-python314-generation",
+  "runAttempt": "1",
+  "runId": "40414089598",
+  "sourceCommit": "ca3388d2478cc81ed71dd341cb4aa7f8418acacd",
+  "sourceInputsSha256": "918b83a3e4261129e37a74611ac9029b416d0f832d7f0157262999997a189f7d",
+  "status": "PASS_REGEX_GENERATION_ARTIFACTS_ONLY",
+  "tools": {
+    "profile": "umf.core-python314-tool-observations/1",
+    "rustSelection": {
+      "cargoPayloadPath": "/home/runner/.rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin/cargo",
+      "cargoPayloadSha256": "51de284e8bb0d03dcee595a0fb1cb3a952fe9e7e4b953a8b1467b7f71725b561",
+      "cargoPayloadVersion": "cargo 1.90.0 (840b83a10 2025-07-30)",
+      "code": null,
+      "rustcPayloadPath": "/home/runner/.rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin/rustc",
+      "rustcPayloadSha256": "e6abf55ab1859e7c990be77fd593f51661ea99fb2fde626ae9f4108aaa34e7fa",
+      "rustcPayloadVersion": "rustc 1.90.0 (1159e78c4 2025-09-14)",
+      "rustupBinarySha256": "dda7234360b7f578ca8b0ddcb80145646fa61a67c1720a5abc7051b35c9fcb71",
+      "rustupInvocationPath": "/home/runner/.cargo/bin/rustup",
+      "rustupResolvedPath": "/home/runner/.cargo/bin/rustup",
+      "status": "observed"
+    },
+    "status": "VERSION_GUARDS_PASS",
+    "tools": {
+      "bun": {
+        "code": null,
+        "invocationPath": "/home/runner/.bun/bin/bun",
+        "resolvedBinarySha256": "7ce7d6b654eddeec20afddf2396317fba6dc19ab52788a27e894e1806bf8f24b",
+        "resolvedPath": "/home/runner/.bun/bin/bun",
+        "returnStatus": 0,
+        "status": "observed",
+        "versionBytes": 6,
+        "versionText": "1.4.3"
+      },
+      "cargo": {
+        "code": null,
+        "invocationPath": "/home/runner/.cargo/bin/cargo",
+        "resolvedBinarySha256": "dda7234360b7f578ca8b0ddcb80145646fa61a67c1720a5abc7051b35c9fcb71",
+        "resolvedPath": "/home/runner/.cargo/bin/rustup",
+        "returnStatus": 0,
+        "status": "observed",
+        "versionBytes": 36,
+        "versionText": "cargo 1.90.0 (840b83a10 2025-07-30)"
+      },
+      "curl": {
+        "code": null,
+        "invocationPath": "/usr/bin/curl",
+        "resolvedBinarySha256": "8fb310957fb556e3f66a2d66418d72ad5487569f5855cae5ca782ca215b08133",
+        "resolvedPath": "/usr/bin/curl",
+        "returnStatus": 0,
+        "status": "observed",
+        "versionBytes": 573,
+        "versionText": "curl 8.5.0 (x86_64-pc-linux-gnu) libcurl/8.5.0 OpenSSL/3.0.13 zlib/1.3 brotli/1.1.0 zstd/1.5.5 libidn2/2.3.7 libpsl/0.21.2 (+libidn2/2.3.7) libssh/0.10.6/openssl/zlib nghttp2/1.59.0 librtmp/2.3 OpenLDAP/2.6.10\nRelease-Date: 2023-12-06, security patched: 8.5.0-2ubuntu10.15\nProtocols: dict file ftp ftps gopher gophers http https imap imaps ldap ldaps mqtt pop3 pop3s rtmp rtsp scp sftp smb smbs smtp smtps telnet tftp\nFeatures: alt-svc AsynchDNS brotli GSS-API HSTS HTTP2 HTTPS-proxy IDN IPv6 Kerberos Largefile libz NTLM PSL SPNEGO SSL threadsafe TLS-SRP UnixSockets zstd"
+      },
+      "python": {
+        "code": null,
+        "invocationPath": "/opt/hostedtoolcache/Python/3.12.15/x64/bin/python",
+        "resolvedBinarySha256": "53dab24bf9e0e9c490088a53d71770b6f027b057678b313648e75f7fc87a675e",
+        "resolvedPath": "/opt/hostedtoolcache/Python/3.12.15/x64/bin/python3.12",
+        "returnStatus": 0,
+        "status": "observed",
+        "versionBytes": 15,
+        "versionText": "Python 3.12.15"
+      },
+      "rustc": {
+        "code": null,
+        "invocationPath": "/home/runner/.cargo/bin/rustc",
+        "resolvedBinarySha256": "dda7234360b7f578ca8b0ddcb80145646fa61a67c1720a5abc7051b35c9fcb71",
+        "resolvedPath": "/home/runner/.cargo/bin/rustup",
+        "returnStatus": 0,
+        "status": "observed",
+        "versionBytes": 36,
+        "versionText": "rustc 1.90.0 (1159e78c4 2025-09-14)"
+      },
+      "timeout": {
+        "code": null,
+        "invocationPath": "/usr/bin/timeout",
+        "resolvedBinarySha256": "12690a043dfd555a6c14ccc1564f5649c18f1762c0d6ff66729948130898ec52",
+        "resolvedPath": "/usr/bin/timeout",
+        "returnStatus": 0,
+        "status": "observed",
+        "versionBytes": 307,
+        "versionText": "timeout (GNU coreutils) 9.4\nCopyright (C) 2023 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n\nWritten by P\u00e1draig Brady."
+      }
+    }
+  },
+  "uncompressedOutputBytes": 16593815
+}
