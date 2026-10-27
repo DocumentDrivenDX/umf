@@ -379,6 +379,11 @@ function executeHostInput(addon, resources, operation, inputs, ErrorType, contro
           reply = {kind: 'opaque-value', value: opaqueValue(liveJson.stringify(diagnostics))};
           break;
         }
+        case 'stringify-opaque-value': {
+          const liveJson = globalThis.JSON;
+          reply = {kind: 'opaque-value', value: opaqueValue(liveJson.stringify(invocationValue(request.value)))};
+          break;
+        }
         case 'construct-error-carrier': {
           const value = invocationValue(request.value);
           reply = {kind: 'opaque-value', value: opaqueValue(new NativeError(value))};

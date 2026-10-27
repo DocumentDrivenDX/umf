@@ -245,6 +245,136 @@ test('private Selection kindRuntime reads result.valid at the consumer branch be
   expect(referenceTrace.slice(0, actualTrace.length)).toEqual(actualTrace);
 });
 
+test('private Selection kindRuntime false result reads then stringifies the original diagnostics value', () => {
+  const makeRegistry = trace => {
+    const diagnostics = Object.defineProperty({}, 'toJSON', {
+      get() {
+        trace.push('diagnostics.toJSON:get');
+        return function() { trace.push('diagnostics.toJSON:call'); return [{code: 'CALLER', severity: 'error'}]; };
+      },
+    });
+    const result = {
+      get valid() { trace.push('validation.valid:get'); return false; },
+      get diagnostics() { trace.push('validation.diagnostics:get'); return diagnostics; },
+    };
+    const runtime = {validateDocument() { trace.push('validateDocument:call'); return result; }};
+    return {kindRuntime: runtime, registrations() { trace.push('registrations:call'); return []; }};
+  };
+  const referenceTrace = [], actualTrace = [];
+  let reference, actual;
+  try { typescriptSelectCoreElements(packet.source, packet.queries.all, makeRegistry(referenceTrace)); }
+  catch (error) { reference = error; }
+  try { coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all, makeRegistry(actualTrace), UmfCoreError); }
+  catch (error) { actual = error; }
+  expect(reference?.code).toBe('CORE_SELECTION_SOURCE');
+  expect(actual?.code).toBe('CORE_SELECTION_SOURCE');
+  expect(actual.code).toBe(reference.code);
+  expect(actual.message).toBe(reference.message);
+  expect(actualTrace).toEqual(referenceTrace);
+  expect(actual.message).toBe('[{"code":"CALLER","severity":"error"}]');
+});
+
+test('private Selection kindRuntime false result matches JSON.stringify undefined and UTF-16 string results', () => {
+  const makeRegistry = (trace, diagnostics) => ({
+    kindRuntime: {validateDocument() {
+      return {
+        get valid() { trace.push('valid:get'); return false; },
+        get diagnostics() { trace.push('diagnostics:get'); return diagnostics; },
+      };
+    }},
+    registrations() { trace.push('registrations:call'); return []; },
+  });
+  for (const [label, diagnostics, stringifyOverride, expectedMessage] of [
+    ['undefined', undefined, undefined, ''],
+    ['unpaired UTF-16', [], () => '\ud800', '\ud800'],
+  ]) {
+    const referenceTrace = [], actualTrace = [];
+    let reference, actual;
+    const originalStringify = JSON.stringify;
+    if (stringifyOverride) JSON.stringify = stringifyOverride;
+    try {
+      try { typescriptSelectCoreElements(packet.source, packet.queries.all, makeRegistry(referenceTrace, diagnostics)); }
+      catch (error) { reference = error; }
+      try { coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all, makeRegistry(actualTrace, diagnostics), UmfCoreError); }
+      catch (error) { actual = error; }
+    } finally {
+      JSON.stringify = originalStringify;
+    }
+    expect(reference?.code).toBe('CORE_SELECTION_SOURCE');
+    expect(actual?.code).toBe('CORE_SELECTION_SOURCE');
+    expect(actual.code).toBe(reference.code);
+    expect(actual.message).toBe(expectedMessage);
+    expect(actual.message).toBe(reference.message);
+    expect(actualTrace).toEqual(referenceTrace);
+  }
+});
+
+test('private Selection kindRuntime false result uses native Error coercion for non-string stringify results', () => {
+  const originalStringify = JSON.stringify;
+  const run = (registry, trace) => {
+    JSON.stringify = function() {
+      trace.push('JSON.stringify:call');
+      return {[Symbol.toPrimitive](hint) { trace.push(`message:coerce:${hint}`); return 'coerced refusal'; }};
+    };
+    try { typescriptSelectCoreElements(packet.source, packet.queries.all, registry); }
+    catch (error) { return error; }
+    finally { JSON.stringify = originalStringify; }
+  };
+  const makeRegistry = trace => ({
+    kindRuntime: {validateDocument() { return {valid: false, diagnostics: []}; }},
+    registrations() { return []; },
+  });
+  const referenceTrace = [], actualTrace = [];
+  const reference = run(makeRegistry(referenceTrace), referenceTrace);
+  JSON.stringify = function() {
+    actualTrace.push('JSON.stringify:call');
+    return {[Symbol.toPrimitive](hint) { actualTrace.push(`message:coerce:${hint}`); return 'coerced refusal'; }};
+  };
+  let actual;
+  try { coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all, makeRegistry(actualTrace), UmfCoreError); }
+  catch (error) { actual = error; }
+  finally { JSON.stringify = originalStringify; }
+  expect(reference?.code).toBe('CORE_SELECTION_SOURCE');
+  expect(actual?.code).toBe(reference.code);
+  expect(actual.message).toBe(reference.message);
+  expect(actual.message).toBe('coerced refusal');
+  expect(actualTrace).toEqual(referenceTrace);
+});
+
+test('private Selection kindRuntime false result preserves diagnostics and toJSON throw identity', () => {
+  for (const throwingStage of ['diagnostics', 'toJSON-getter', 'toJSON-call']) {
+    const sentinel = Object.freeze({throwingStage});
+    const makeRegistry = trace => {
+      let diagnostics = [];
+      if (throwingStage === 'toJSON-getter') {
+        diagnostics = Object.defineProperty({}, 'toJSON', {get() { trace.push('diagnostics.toJSON:get'); throw sentinel; }});
+      } else if (throwingStage === 'toJSON-call') {
+        diagnostics = Object.defineProperty({}, 'toJSON', {get() {
+          trace.push('diagnostics.toJSON:get');
+          return function() { trace.push('diagnostics.toJSON:call'); throw sentinel; };
+        }});
+      }
+      const result = {
+        get valid() { trace.push('validation.valid:get'); return false; },
+        get diagnostics() { trace.push('validation.diagnostics:get'); if (throwingStage === 'diagnostics') throw sentinel; return diagnostics; },
+      };
+      return {
+        kindRuntime: {validateDocument() { trace.push('validateDocument:call'); return result; }},
+        registrations() { trace.push('registrations:call'); return []; },
+      };
+    };
+    const referenceTrace = [], actualTrace = [];
+    let reference, actual;
+    try { typescriptSelectCoreElements(packet.source, packet.queries.all, makeRegistry(referenceTrace)); }
+    catch (error) { reference = error; }
+    try { coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all, makeRegistry(actualTrace), UmfCoreError); }
+    catch (error) { actual = error; }
+    expect(reference).toBe(sentinel);
+    expect(actual).toBe(sentinel);
+    expect(actualTrace).toEqual(referenceTrace);
+  }
+});
+
 test('private Selection kindRuntime preserves a thrown result.valid getter value and stops at that read', () => {
   const sentinel = Object.freeze({validGetter: 'thrown'});
   const trace = [];

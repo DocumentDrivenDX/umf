@@ -214,6 +214,9 @@ pub enum HostJsonEvent {
     /// Serialize the exact ordered mixture of Rust-authored diagnostics and
     /// opaque callback diagnostics with the host's live JSON.stringify.
     StringifyDiagnosticArray { items: Vec<HostDiagnosticArrayItem> },
+    /// Apply the host's live JSON.stringify to one exact caller-owned value.
+    /// Used after Selection observes a false caller validation result.
+    StringifyOpaqueValue { value: HostInvokeValue },
     /// Construct the native Error carrier for a JSON.stringify result without
     /// reading its `message` property.
     ConstructErrorCarrier { value: HostInvokeValue },

@@ -32,6 +32,15 @@ function makeRegistry(Registry, events, handlers) {
   return registry;
 }
 
+function makeKindRuntimeRegistry(Registry, events, result, expectedThrown) {
+  const runtime = {validateDocument() { events.push('kindRuntime.validateDocument:call'); return result; }};
+  const registry = new Registry(runtime);
+  Object.defineProperty(registry, 'kindRuntime', {get() { events.push('registry.kindRuntime:get'); return runtime; }});
+  const registrations = registry.registrations.bind(registry);
+  registry.registrations = function() { events.push('registry.registrations:call'); return registrations(); };
+  return {registry, ...(expectedThrown ? {expectedThrown} : {})};
+}
+
 function documentFor(ids = ['alpha']) {
   const doc = source();
   doc.vocabularies = Object.fromEntries(ids.map(id => [id, {version: '1.0.0'}]));
@@ -46,6 +55,8 @@ function runOne({Registry, selectCoreElements, candidate, name, make}) {
     const events = [];
     const input = make(events);
     const select = candidateFlag ? candidate : selectCoreElements;
+    const originalStringify = JSON.stringify;
+    if (input.stringifyOverride) JSON.stringify = input.stringifyOverride;
     try {
       const value = select(input.source, input.query, input.registry);
       return {ok: true, value, events};
@@ -53,6 +64,8 @@ function runOne({Registry, selectCoreElements, candidate, name, make}) {
       return {ok: false, error: {identity: input.expectedThrown === error,
         name: error?.name, code: error?.code, path: error?.path, message: error?.message,
         value: error === input.expectedThrown ? 'expected-object' : undefined}, events};
+    } finally {
+      JSON.stringify = originalStringify;
     }
   };
   const reference = run(false), rust = run(true);
@@ -62,6 +75,62 @@ function runOne({Registry, selectCoreElements, candidate, name, make}) {
 
 export function runSelectionCallbackSuite({Registry, selectCoreElements, candidate}) {
   const cases = [
+    {name: 'selection-kind-runtime-false-diagnostics-tojson-order', make: events => {
+      const diagnostics = Object.defineProperty({}, 'toJSON', {get() {
+        events.push('diagnostics.toJSON:get');
+        return function() { events.push('diagnostics.toJSON:call'); return [{code: 'CALLER', severity: 'error'}]; };
+      }});
+      const result = {
+        get valid() { events.push('validation.valid:get'); return false; },
+        get diagnostics() { events.push('validation.diagnostics:get'); return diagnostics; },
+      };
+      return {source: documentFor(), query: {references: 'none'}, ...makeKindRuntimeRegistry(Registry, events, result)};
+    }},
+    {name: 'selection-kind-runtime-false-diagnostics-undefined-stringify', make: events => {
+      const result = {
+        get valid() { events.push('validation.valid:get'); return false; },
+        get diagnostics() { events.push('validation.diagnostics:get'); return undefined; },
+      };
+      return {source: documentFor(), query: {references: 'none'}, ...makeKindRuntimeRegistry(Registry, events, result)};
+    }},
+    {name: 'selection-kind-runtime-false-nonstring-stringify-error-coercion', make: events => {
+      const result = {valid: false, diagnostics: []};
+      const registry = makeKindRuntimeRegistry(Registry, events, result).registry;
+      return {source: documentFor(), query: {references: 'none'}, registry,
+        stringifyOverride() {
+          events.push('JSON.stringify:call');
+          return {[Symbol.toPrimitive](hint) { events.push(`message:coerce:${hint}`); return 'coerced refusal'; }};
+        }};
+    }},
+    {name: 'selection-kind-runtime-false-diagnostics-getter-throws', make: events => {
+      const expectedThrown = Object.freeze({stage: 'diagnostics-getter'});
+      const result = {
+        get valid() { events.push('validation.valid:get'); return false; },
+        get diagnostics() { events.push('validation.diagnostics:get'); throw expectedThrown; },
+      };
+      return {source: documentFor(), query: {references: 'none'}, ...makeKindRuntimeRegistry(Registry, events, result, expectedThrown)};
+    }},
+    {name: 'selection-kind-runtime-false-diagnostics-tojson-getter-throws', make: events => {
+      const expectedThrown = Object.freeze({stage: 'toJSON-getter'});
+      const diagnostics = Object.defineProperty({}, 'toJSON', {get() { events.push('diagnostics.toJSON:get'); throw expectedThrown; }});
+      const result = {
+        get valid() { events.push('validation.valid:get'); return false; },
+        get diagnostics() { events.push('validation.diagnostics:get'); return diagnostics; },
+      };
+      return {source: documentFor(), query: {references: 'none'}, ...makeKindRuntimeRegistry(Registry, events, result, expectedThrown)};
+    }},
+    {name: 'selection-kind-runtime-false-diagnostics-tojson-call-throws', make: events => {
+      const expectedThrown = Object.freeze({stage: 'toJSON-call'});
+      const diagnostics = Object.defineProperty({}, 'toJSON', {get() {
+        events.push('diagnostics.toJSON:get');
+        return function() { events.push('diagnostics.toJSON:call'); throw expectedThrown; };
+      }});
+      const result = {
+        get valid() { events.push('validation.valid:get'); return false; },
+        get diagnostics() { events.push('validation.diagnostics:get'); return diagnostics; },
+      };
+      return {source: documentFor(), query: {references: 'none'}, ...makeKindRuntimeRegistry(Registry, events, result, expectedThrown)};
+    }},
     {name: 'warning-diagnostic', make: events => ({source: documentFor(), query: {references: 'none'}, registry: makeRegistry(Registry, events, {
       alpha: () => [warning('CALLER_WARNING', '/extensions/alpha', 'retained warning', {future: 'keep'})],
     })})},

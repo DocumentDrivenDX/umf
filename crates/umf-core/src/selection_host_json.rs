@@ -289,9 +289,9 @@ impl RegistrationProvider for HostProvider<'_> {
 }
 
 impl HostProvider<'_> {
-    /// Invoke a caller kindRuntime at Selection's validation branch and read
-    /// only the returned `.valid` value. The caller deliberately stops after
-    /// this branch until diagnostics and successful-result copying are wired.
+    /// Invoke caller kindRuntime at Selection's validation branch. A false
+    /// result follows the predecessor refusal path through native stringify;
+    /// successful-result copying remains a separate boundary.
     fn kind_runtime_validity(
         &self,
         source: &Value,
@@ -343,7 +343,53 @@ impl HostProvider<'_> {
             _ => return Err(protocol_error()),
         };
         let valid = get_property(&mut **host, ctx, &result, "valid")?;
-        Ok(Some(valid.is_truthy()))
+        if valid.is_truthy() {
+            return Ok(Some(true));
+        }
+        let diagnostics = get_property(&mut **host, ctx, &result, "diagnostics")?;
+        let diagnostics = opaque_value(&diagnostics, &mut **host)?;
+        ctx.charge_work(1, Utf16::default())?;
+        let serialized = match host.reflect(HostJsonEvent::StringifyOpaqueValue { value: diagnostics })? {
+            HostJsonReply::OpaqueValue(value) => value,
+            _ => return Err(protocol_error()),
+        };
+        ctx.charge_work(1, Utf16::default())?;
+        let serialized = match serialized {
+            HostOpaqueValue::String(value) => {
+                if value.units > ctx.limits().max_text_units {
+                    return Err(EngineError::new(
+                        "LIMIT",
+                        Utf16::default(),
+                        "JSON structural limit exceeded",
+                    ));
+                }
+                ctx.charge_work(
+                    value.units.saturating_add(value.units.div_ceil(8192)),
+                    Utf16::default(),
+                )?;
+                HostInvokeValue::Json(Value::String(read_host_string(&mut **host, &value)?))
+            }
+            value => opaque_value(&value, &mut **host)?,
+        };
+        let error_carrier = match host.reflect(HostJsonEvent::ConstructErrorCarrier {
+            value: serialized,
+        })? {
+            HostJsonReply::OpaqueValue(value) => value,
+            _ => return Err(protocol_error()),
+        };
+        let message = get_property(&mut **host, ctx, &error_carrier, "message")?;
+        let message = match message {
+            HostOpaqueValue::String(value) => {
+                ctx.charge_work(
+                    value.units.saturating_add(value.units.div_ceil(8192)),
+                    Utf16::default(),
+                )?;
+                read_host_string(&mut **host, &value)?
+            }
+            HostOpaqueValue::Undefined => Utf16::default(),
+            _ => return Err(protocol_error()),
+        };
+        Err(EngineError::new("CORE_SELECTION_SOURCE", Utf16::default(), message))
     }
 
     fn source_validation_value(
@@ -616,7 +662,7 @@ pub(crate) fn reject_host_semantics() -> EngineError {
 #[cfg(test)]
 mod opaque_return_tests {
     use super::*;
-    use crate::{host_json::{HostJsonReply, HostOpaqueValue}, Context};
+    use crate::{host_json::{HostJsonReply, HostOpaqueValue, HostStringRef}, Context};
 
     struct ScriptedHost {
         reply: Option<HostJsonReply>,
@@ -795,5 +841,46 @@ mod opaque_return_tests {
             key: HostOpaqueKey::String(ref key),
             semantic_catch: false,
         } if key == &Utf16::from("valid").into_units()));
+    }
+
+    #[test]
+    fn false_kind_runtime_result_reads_and_stringifies_diagnostics_after_valid() {
+        let message = Utf16::from("[{\"code\":\"CALLER\"}]");
+        let units = message.clone().into_units();
+        let mut host = SequenceHost {
+            replies: [
+                object(20), object(20), function(21), function(22), invoked_object(23),
+                invoked_object(24),
+                HostJsonReply::OpaqueValue(HostOpaqueValue::Boolean(false)),
+                object(25),
+                HostJsonReply::OpaqueValue(HostOpaqueValue::String(HostStringRef::fake("[{\"code\":\"CALLER\"}]"))),
+                HostJsonReply::Utf16Chunk { offset: 0, units: units.clone() },
+                object(26),
+                HostJsonReply::OpaqueValue(HostOpaqueValue::String(HostStringRef::fake("[{\"code\":\"CALLER\"}]"))),
+                HostJsonReply::Utf16Chunk { offset: 0, units: units.clone() },
+            ].into_iter().map(Ok).collect(),
+            events: Vec::new(),
+        };
+        let provider = HostProvider { registry: Some(12), host: RefCell::new(&mut host) };
+        let mut ctx = Context::ordinary();
+        let error = provider.kind_runtime_validity(
+            &Value::Object(vec![(Utf16::from("marker"), Value::Bool(true))]),
+            &mut ctx,
+        ).unwrap_err();
+        assert_eq!(error.code, "CORE_SELECTION_SOURCE");
+        assert_eq!(error.message, Utf16::from("[{\"code\":\"CALLER\"}]"));
+        drop(provider);
+        assert!(matches!(host.events.get(6), Some(HostJsonEvent::GetOpaqueProperty {
+            receiver: HostInvokeValue::Opaque(24), key: HostOpaqueKey::String(key), ..
+        }) if key == &Utf16::from("valid").into_units()));
+        assert!(matches!(host.events.get(7), Some(HostJsonEvent::GetOpaqueProperty {
+            receiver: HostInvokeValue::Opaque(24), key: HostOpaqueKey::String(key), ..
+        }) if key == &Utf16::from("diagnostics").into_units()));
+        assert_eq!(host.events.get(8), Some(&HostJsonEvent::StringifyOpaqueValue {
+            value: HostInvokeValue::Opaque(25),
+        }));
+        assert!(matches!(host.events.get(10), Some(HostJsonEvent::ConstructErrorCarrier {
+            value: HostInvokeValue::Json(Value::String(value)),
+        }) if value == &message));
     }
 }

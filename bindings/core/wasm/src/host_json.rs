@@ -678,6 +678,10 @@ fn event_json(event: &HostJsonEvent) -> String {
             }).collect::<Vec<_>>().join(",");
             format!(r#"{{"event":"stringify-diagnostic-array","items":[{items}]}}"#)
         }
+        HostJsonEvent::StringifyOpaqueValue { value } => format!(
+            r#"{{"event":"stringify-opaque-value","value":{}}}"#,
+            host_invoke_value_wire_json(value),
+        ),
         HostJsonEvent::ConstructErrorCarrier { value } => format!(
             r#"{{"event":"construct-error-carrier","value":{}}}"#,
             host_invoke_value_wire_json(value),
@@ -838,6 +842,7 @@ fn decode_reply(
         }
         HostJsonEvent::StringConcat { .. }
         | HostJsonEvent::StringifyDiagnosticArray { .. }
+        | HostJsonEvent::StringifyOpaqueValue { .. }
         | HostJsonEvent::ConstructErrorCarrier { .. } => matches!(kind.as_str(), "opaque-value" | "host-exception"),
         HostJsonEvent::CloseOpaqueIterator { .. } => kind == "iterator-closed",
         HostJsonEvent::MaterializeSpreadFailure { .. } => kind == "spread-failure",
