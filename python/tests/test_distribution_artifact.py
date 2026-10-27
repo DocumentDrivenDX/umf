@@ -1100,49 +1100,36 @@ def test_retained_source_map_rejects_noncanonical_paths():
 @pytest.fixture(scope="module")
 def retained_sdist_source_fixture():
     verifier = _core_public_release_verifier()
-    repository = Path(__file__).resolve().parents[2]
-    helper_path = repository / "tools/_python_sdist.py"
-    spec = importlib.util.spec_from_file_location(
-        "umf_test_retained_sdist_inventory", helper_path
+    capture_path = Path(__file__).parent / "fixtures/core-0.10.3-retained-source-maps.json"
+    capture = json.loads(capture_path.read_text(encoding="utf-8"))
+    assert capture["schema"] == "umf.core-retained-source-map-capture/1"
+    producer_capture = capture["producer"]
+    release_capture = capture["release"]
+    assert producer_capture["sourceCommit"] == "34a337b2d398b5ae33954cc250f6237bc1661c21"
+    assert producer_capture["artifact"] == {
+        "filename": verifier.RETAINED_ARCHIVES["sdist"]["filename"],
+        "sizeBytes": 2_826_487,
+        "sha256": verifier.RETAINED_ARCHIVES["sdist"]["sha256"],
+    }
+    assert release_capture["sourceCommit"] == "7d334dec45948953718bfacd3ed6dd199cadba79"
+    assert release_capture["sourceTree"] == "6fee5688f1ddf521c098e2c8eefd762a85bfaebc"
+    assert release_capture["sourceCorrespondenceSha256"] == (
+        "00ee665471f8055a10cc81828d9d6070b5db0beb7702da0f10e6bef113189665"
     )
-    assert spec is not None and spec.loader is not None
-    helper = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(helper)
-
-    release_files = helper._source_inventory(repository)
-    assert release_files[verifier.RETAINED_TEST_PATH] != verifier.RETAINED_TEST_OLD_SHA256
-    release_files["PKG-INFO"] = (
-        "aa760d74b8bc9a535520613f5d2788c50f5aed9ca5b3b59fbd941b9711d29b93"
-    )
-    producer_files = dict(release_files)
-    producer_files[verifier.RETAINED_TEST_PATH] = verifier.RETAINED_TEST_OLD_SHA256
-    manifest_digest = hashlib.sha256(
-        json.dumps(
-            producer_files, sort_keys=True, separators=(",", ":"), ensure_ascii=True
-        ).encode("ascii")
-    ).hexdigest()
-    assert len(release_files) == 531
+    producer_files = producer_capture["files"]
+    release_files = release_capture["files"]
+    manifest_digest = verifier._canonical_source_map(producer_files)["sha256"]
+    release_map_digest = verifier._canonical_source_map(release_files)["sha256"]
+    assert len(producer_files) == len(release_files) == 531
     assert manifest_digest == verifier.RETAINED_SOURCE_MAP_SHA256
+    assert release_map_digest == release_capture["mapSha256"]
     manifest = {
         "schema": "umf.python-sdist-build-inputs/1",
         "file_count": len(producer_files),
         "sha256": manifest_digest,
         "files": producer_files,
     }
-    release_map_digest = hashlib.sha256(
-        json.dumps(
-            release_files, sort_keys=True, separators=(",", ":"), ensure_ascii=True
-        ).encode("ascii")
-    ).hexdigest()
-    correspondence = {
-        "profile": verifier.RETAINED_SOURCE_PROFILE,
-        "archiveFileCount": 531,
-        "producerMapSha256": verifier.RETAINED_SOURCE_MAP_SHA256,
-        "releaseMapSha256": release_map_digest,
-        "testPath": verifier.RETAINED_TEST_PATH,
-        "producerTestSha256": verifier.RETAINED_TEST_OLD_SHA256,
-        "releaseTestSha256": release_files[verifier.RETAINED_TEST_PATH],
-    }
+    correspondence = capture["sourceCorrespondence"]
     return {
         "verifier": verifier,
         "producerFiles": producer_files,

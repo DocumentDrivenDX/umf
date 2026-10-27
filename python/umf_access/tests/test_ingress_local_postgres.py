@@ -1203,7 +1203,7 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
                                events.append(('refresh', budget))),
               patch('umf_access.lifecycle.ingress_local_postgres._execute_original_store_sql',
                     side_effect=stalled_first_query),
-              patch('umf_access.lifecycle.row_originals_creation.reserve_originals_store_creation',
+              patch('umf_access.lifecycle.row_originals.reserve_originals_store_creation',
                     side_effect=AssertionError('reservation must follow controller query')),
               self.assertRaisesRegex(
                   LocalPostgresError, 'local-postgresql-store-budget-exhausted')):

@@ -598,7 +598,8 @@ class SplitAggregateCohortTests(unittest.TestCase):
                     source["publisherArtifactSizeBytes"] = wheel["size"]
                     source["sizeBytes"] = wheel["size"]
                 wheel_rows.append({"filename": wheel["filename"], "distribution": package["distribution"],
-                                   "version": version, "sha256": wheel["sha256"], "source": source})
+                                   "version": version, "sha256": wheel["sha256"], "size": wheel["size"],
+                                   "source": source})
                 metadata_by_name[name] = wheel
             roots = {"production": ["umf-core", "umf-access", "umf-codegen", "umf-weft"],
                      "qualificationDrivers": ["psycopg", "psycopg-binary", "jsonschema", "ruamel-yaml"]}

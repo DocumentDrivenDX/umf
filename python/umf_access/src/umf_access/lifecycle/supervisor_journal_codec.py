@@ -5,7 +5,7 @@ from __future__ import annotations
 import base64
 import hashlib
 import json
-import os
+import posixpath
 import re
 from typing import Any
 
@@ -173,7 +173,7 @@ def validate_target_custody_birth(value: object, *, enrollment: dict[str, Any]) 
     control_home = native.get('controlHome')
     if (type(control_home) is not str or not control_home.startswith('/')
             or '\x00' in control_home or control_home.rstrip('/') != control_home
-            or os.path.normpath(control_home) != control_home):
+            or posixpath.normpath(control_home) != control_home):
         raise SupervisorJournalCodecError('target-custody-journal-birth-invalid')
     path = control_home + '/target-custody.json'
     if (value.get('path') != path

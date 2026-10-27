@@ -8,10 +8,16 @@ from pathlib import Path
 
 
 def approved_lifecycle_external_import(name: str, target: str, member: str, *,
-                                       verifier_scope: bool = False) -> bool:
+                                       verifier_scope: bool = False,
+                                       native_wait_scope: bool = False,
+                                       imported_as: str | None = None) -> bool:
     """Return only the reviewed host-API exceptions for lifecycle modules."""
     if name == "umf_access.lifecycle.ingress_local_postgres":
-        return target == "psycopg" and member == "connect"
+        if target == "psycopg" and member == "connect":
+            return True
+        return (native_wait_scope and imported_as is None
+                and ((target == "psycopg" and member in {"Connection", "Cursor"})
+                     or (target == "psycopg._enums" and member in {"Ready", "Wait"})))
     if name == "umf_access.lifecycle.ingress_store":
         return target == "psycopg.pq" and member == "TransactionStatus"
     verifier_modules = {
@@ -70,6 +76,7 @@ def check(root: Path) -> int:
                     "ingress_local_postgres": "lifecycle", "ingress_store": "lifecycle",
                     "conversion_policy": "lifecycle", "row_originals": "lifecycle",
                     "row_originals_creation": "lifecycle",
+                    "row_originals_receipt": "lifecycle",
                     "generation_enrollment_authority": "lifecycle",
                     "generation_authority_bootstrap": "lifecycle",
                     "supervisor_journal_codec": "lifecycle",
@@ -112,14 +119,15 @@ def check(root: Path) -> int:
         parts = name.split(".")
         return helpers.get(parts[1], parts[1]) if len(parts) > 1 else "facade"
 
-    def edge(name: str, target: str, member: str = "", *, verifier_scope: bool = False) -> None:
+    def edge(name: str, target: str, member: str = "", *, verifier_scope: bool = False,
+             native_wait_scope: bool = False, imported_as: str | None = None) -> None:
         path = modules[name]
         source_owner = owner(name)
         if (name == "umf_access.lifecycle.generation_root_registry"
                 and target not in {"__future__", "typing",
                                    "umf_access.lifecycle.generation_authority_bootstrap"}):
             fail(path, "PURE", "root registry byte transitions may import only typing and the root verifier")
-        codec_imports = {"__future__", "base64", "hashlib", "json", "re", "typing",
+        codec_imports = {"__future__", "base64", "hashlib", "json", "posixpath", "re", "typing",
                          "umf_access.lifecycle.generation_authority_bootstrap",
                          "umf_access.lifecycle.generation_root_registry"}
         if (name == "umf_access.lifecycle.supervisor_journal_codec"
@@ -147,7 +155,9 @@ def check(root: Path) -> int:
         if source_owner == "lifecycle" and package in {"psycopg", "umf_codegen"}:
             public = (target == "psycopg" and member == "Error" or target == "psycopg.rows" and member == "tuple_row"
                       or target == "psycopg.types.json" and member == "Jsonb"
-                      or approved_lifecycle_external_import(name, target, member, verifier_scope=verifier_scope)
+                      or approved_lifecycle_external_import(name, target, member, verifier_scope=verifier_scope,
+                                                            native_wait_scope=native_wait_scope,
+                                                            imported_as=imported_as)
                       or target == "umf_codegen" and member in {"verify_table_deployment", "verify_table_migration"}
                       or name == "umf_access.lifecycle.ledger" and target == "umf_codegen" and member == "compile_table_migration"
                       or name == "umf_access.lifecycle.concurrent" and target == "umf_codegen" and member == "compile_table_deployment"
@@ -175,7 +185,8 @@ def check(root: Path) -> int:
         containment_parser = (name == 'umf_access.lifecycle.sql_containment_parser'
                               and target == 'pglast.parser' and member == 'parse_sql_json')
         if package not in permitted and not spark_error and not typing_backport and not psycopg2_cursor and not table_read_compiler and not seed_compiler and not containment_parser and not approved_lifecycle_external_import(
-                name, target, member, verifier_scope=verifier_scope):
+                name, target, member, verifier_scope=verifier_scope,
+                native_wait_scope=native_wait_scope, imported_as=imported_as):
             fail(path, "DEPENDENCY", f"{target} outside approved imports for {source_owner}")
         metadata_pin = (name == 'umf_access.lifecycle.sql_containment_parser'
                         and target == 'importlib.metadata' and member in {'version', 'PackageNotFoundError'})
@@ -234,6 +245,30 @@ def check(root: Path) -> int:
 
         verifier_method = exact_verifier_method()
 
+        def exact_native_wait_scope(node: ast.AST, *, module_name: str = name,
+                                    module_tree: ast.AST = tree,
+                                    parent_nodes: dict[ast.AST, ast.AST] = parents) -> bool:
+            if module_name != "umf_access.lifecycle.ingress_local_postgres":
+                return False
+            functions = [item for item in module_tree.body
+                         if isinstance(item, ast.FunctionDef)
+                         and item.name == "_execute_original_store_sql"]
+            if len(functions) != 1:
+                return False
+            function = functions[0]
+            current = node
+            while current is not function:
+                parent = parent_nodes.get(current)
+                if parent is None:
+                    return False
+                if parent is function:
+                    current = parent
+                    continue
+                if isinstance(parent, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                    return False
+                current = parent
+            return True
+
         def approved_verifier_scope(node: ast.AST, *, module_name: str = name,
                                     parent_nodes: dict[ast.AST, ast.AST] = parents,
                                     method: ast.FunctionDef | ast.AsyncFunctionDef | None = verifier_method
@@ -267,9 +302,11 @@ def check(root: Path) -> int:
 
         for node in ast.walk(tree):
             lazy_verifier_scope = approved_verifier_scope(node)
+            native_wait_scope = exact_native_wait_scope(node)
             if isinstance(node, ast.Import):
                 for alias in node.names:
-                    edge(name, alias.name, verifier_scope=lazy_verifier_scope)
+                    edge(name, alias.name, verifier_scope=lazy_verifier_scope,
+                         native_wait_scope=native_wait_scope, imported_as=alias.asname)
             elif isinstance(node, ast.ImportFrom):
                 target = node.module or ""
                 if node.level:
@@ -282,7 +319,8 @@ def check(root: Path) -> int:
                 for alias in node.names:
                     child = f"{target}.{alias.name}"
                     edge(name, child if child in modules else target, alias.name,
-                         verifier_scope=lazy_verifier_scope)
+                         verifier_scope=lazy_verifier_scope, native_wait_scope=native_wait_scope,
+                         imported_as=alias.asname)
                     if alias.name == "*":
                         fail(path, "PRIVATE", "star imports hide public ownership")
             elif isinstance(node, ast.Name) and node.id in {"__import__", "eval", "exec", "compile"}:

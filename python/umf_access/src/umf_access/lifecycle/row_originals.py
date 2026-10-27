@@ -457,6 +457,114 @@ class OriginalArchive:
         return '<OriginalArchive opaque>'
 
 
+def _reservation_receipt_fields(record_bytes: bytes, record: dict[str, Any],
+                                target_reference: dict[str, Any]) -> dict[str, Any]:
+    """Derive the public receipt links from the exact original reservation."""
+    from .row_originals_receipt import canonical_bytes
+
+    return {
+        'providerId': record['providerId'],
+        'installationId': record['installationId'],
+        'storeId': record['providerId'],
+        'reservationDigest': hashlib.sha256(record_bytes).hexdigest(),
+        'creationRequestDigest': record['creationRequestDigest'],
+        'creationApprovalDigest': record['creationApprovalDigest'],
+        'targetCustodyDigest': hashlib.sha256(canonical_bytes(target_reference)).hexdigest(),
+    }
+
+
+def reserve_originals_store_creation(supervisor: object, evidence: object,
+                                     approval: object, custodian: object,
+                                     target: object, store: dict[str, Any],
+                                     connection: Any,
+                                     *, creation_budget: object | None = None,
+                                     ) -> tuple[object, dict[str, Any]]:
+    """Resolve the exact supervisor-issued original reservation before DDL."""
+    from .row_originals_receipt import (
+        MAX_RECEIPT_BYTES, _RESERVATION_KEYS, _RESERVATION_PROFILE, _no_duplicates,
+        _digest, _fail, _safe_int, _uuid, canonical_bytes,
+    )
+    try:
+        from .ingress_local_postgres import LocalPostgresSupervisor
+    except ImportError:
+        _fail('row-originals-creation-reservation-unavailable')
+    if type(supervisor) is not LocalPostgresSupervisor:
+        _fail('row-originals-creation-reservation-invalid')
+    if type(store) is not dict:
+        _fail('row-originals-creation-reservation-invalid')
+    try:
+        from .generation_ingress import TargetCustody
+        from .ingress_custody import LocalTargetCustodian
+    except ImportError:
+        _fail('row-originals-creation-reservation-unavailable')
+    if type(custodian) is not LocalTargetCustodian or type(target) is not TargetCustody:
+        _fail('row-originals-creation-reservation-invalid')
+    expected_store = {
+        'profile': 'umf.native-row-originals-store/0.1',
+        'storeId': store.get('storeId'),
+        'schemaName': store.get('schemaName'),
+    }
+    if set(store) != {'profile', 'storeId', 'schemaName'} or store != expected_store:
+        _fail('row-originals-creation-reservation-invalid')
+    try:
+        reservation = supervisor.reserve_originals_store_creation(
+            evidence, approval, custodian=custodian, target=target, store=store,
+            connection=connection, creation_budget=creation_budget)
+        verified = supervisor._resolve_originals_store_creation_reservation(
+            reservation, evidence=evidence, approval=approval,
+            custodian=custodian, target=target, store=store,
+            budget_reservation=reservation)
+    except CatalogError:
+        raise
+    except Exception:  # noqa: BLE001 -- authority implementation details stay private
+        _fail('row-originals-creation-reservation-invalid')
+    if verified is not reservation:
+        _fail('row-originals-creation-reservation-invalid')
+    record_bytes = getattr(reservation, 'record_bytes', None)
+    if type(record_bytes) is not bytes:
+        _fail('row-originals-creation-reservation-invalid')
+    try:
+        record = json.loads(record_bytes, object_pairs_hook=_no_duplicates)
+    except (json.JSONDecodeError, UnicodeDecodeError, CatalogError, RecursionError):
+        _fail('row-originals-creation-reservation-invalid')
+    if (canonical_bytes(record) != record_bytes or type(record) is not dict
+            or set(record) != _RESERVATION_KEYS
+            or record['profile'] != _RESERVATION_PROFILE):
+        _fail('row-originals-creation-reservation-invalid')
+    _uuid(record['reservationId'])
+    provider_id = _uuid(record['providerId'])
+    if record['providerId'] != store.get('storeId'):
+        _fail('row-originals-creation-reservation-invalid')
+    installation_id = record['installationId']
+    try:
+        installation_size = len(installation_id.encode('utf-8')) if type(installation_id) is str else MAX_RECEIPT_BYTES + 1
+    except UnicodeEncodeError:
+        _fail('row-originals-creation-reservation-invalid')
+    if (type(installation_id) is not str or not installation_id or '\x00' in installation_id
+            or installation_size > 256):
+        _fail('row-originals-creation-reservation-invalid')
+    if (provider_id != supervisor._provider_id
+            or installation_id != supervisor._bound_installation_id):
+        _fail('row-originals-creation-reservation-invalid')
+    _digest(record['creationRequestDigest'])
+    _digest(record['creationApprovalDigest'])
+    _digest(record['nativeAuthorityEvidenceDigest'])
+    _digest(record['configurationDigest'])
+    _safe_int(record['custodySequence'], 1, 2**53 - 1)
+    target_reference = custodian._public_reference(target)
+    if record['targetCustody'] != target_reference:
+        _fail('row-originals-creation-reservation-invalid')
+    if record['store'] != store:
+        _fail('row-originals-creation-reservation-invalid')
+    try:
+        if (approval.intent_digest != record['creationRequestDigest']
+                or approval.approval_digest != record['creationApprovalDigest']):
+            _fail('row-originals-creation-reservation-invalid')
+    except AttributeError:
+        _fail('row-originals-creation-reservation-invalid')
+    receipt_fields = _reservation_receipt_fields(record_bytes, record, target_reference)
+    return reservation, receipt_fields
+
 class PgRowOriginalsStore:
     """Private same-database store for typed original values and row identity.
 
@@ -575,10 +683,7 @@ class PgRowOriginalsStore:
         self._require_tx()
         if self._schema_oid is not None or self._creation_reservation is not None:
             _fail('row-originals-store-already-created')
-        from .row_originals_creation import (
-            observe_and_write_receipt,
-            reserve_originals_store_creation,
-        )
+        from .row_originals_creation import observe_and_write_receipt
         store = {'profile': STORE_PROFILE, 'storeId': self._provider_id,
                  'schemaName': self._schema}
         budget = self._supervisor._mint_original_store_creation_budget(

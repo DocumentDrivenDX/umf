@@ -670,7 +670,7 @@ def _validate_event_payload(kind: str, payload: Any, *, profile: str = JOURNAL_P
                     or type(payload['schemaOid']) is not int
                     or not 1 <= payload['schemaOid'] <= 2**32 - 1):
                 raise CustodyJournalError('journal-invalid')
-            from .row_originals_creation import canonical_bytes, validate_receipt
+            from .row_originals_receipt import canonical_bytes, validate_receipt
             receipt = validate_receipt(payload['nativeReceipt'])
             if (canonical_bytes(receipt) != canonical_bytes(payload['nativeReceipt'])
                     or payload['nativeReceiptDigest'] != _digest(receipt)

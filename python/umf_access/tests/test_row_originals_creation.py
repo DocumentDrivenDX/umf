@@ -320,7 +320,7 @@ class RowOriginalsCreationTests(unittest.TestCase):
         }
         record_bytes = creation.canonical_bytes(record)
         target = {'profile': 'custody/1', 'digest': 'a' * 64}
-        fields = creation._reservation_receipt_fields(record_bytes, record, target)
+        fields = originals._reservation_receipt_fields(record_bytes, record, target)
         self.assertEqual(fields['reservationDigest'], hashlib.sha256(record_bytes).hexdigest())
         self.assertEqual(fields['targetCustodyDigest'],
                          hashlib.sha256(creation.canonical_bytes(target)).hexdigest())

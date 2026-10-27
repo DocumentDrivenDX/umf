@@ -3,6 +3,7 @@
 import {afterAll,beforeAll,describe,test,expect} from 'bun:test';
 import {nativeMetamodelExecutable} from '../../scripts/metamodel/rust';
 import {readFile,mkdtemp,mkdir,writeFile,copyFile,symlink,readdir,stat,rm} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
 import {join,dirname,resolve} from 'node:path';
 import {tmpdir} from 'node:os';
 import {compileModel,parseModel} from '../../scripts/metamodel/compile';
@@ -79,11 +80,11 @@ describe('closed authored compiler vocabulary',()=>{
  test('public metadata mutation cannot change default active validation',()=>{const before=validateDocument(doc),exposed=domainPolicy as any,saved=exposed.literal.refinements;try{exposed.literal.refinements=[];exposed.structuralDiagnostic.code='TAMPERED';expect(validateDocument(doc)).toEqual(before);expect(validateDocument({...doc,umf:'retired'}).diagnostics[0]!.code).toBe('SEMANTIC_TYPE_STRUCTURE');}finally{exposed.literal.refinements=saved;exposed.structuralDiagnostic.code='SEMANTIC_TYPE_STRUCTURE';}});
  test('current self-model validates with declared vocabulary and old markers reject',async()=>{const registry=new Registry().register(await Bun.file(join(root,'spec/metamodel/package.json')).json());expect(validateDocument(model(),registry).valid).toBe(true);for(const version of ['0.1.0','0.8.0','0.9.0'])expect(validateDocument({...doc,umf:version}).valid).toBe(false);expect(validateDocument(doc).complete).toBe(true);});
 });
-describe('clean source generation',()=>{
- let dir:string,manifest:any,initialStatus:number|null;
+describe('clean-output generation with separately owned companion custody',()=>{
+ let dir:string,outputDir:string,manifest:any,initialStatus:number|null;
  const run=async(check=false)=>{
   const cleanEnv={...process.env};delete cleanEnv.UMF_METAMODEL_CLI;
-  const child=Bun.spawn([process.execPath,join(dir,'scripts/metamodel/build.ts'),...(check?['--check']:[]),'--output-root',dir],{cwd:dir,env:cleanEnv,stdout:'pipe',stderr:'pipe'});
+  const child=Bun.spawn([process.execPath,join(dir,'scripts/metamodel/build.ts'),...(check?['--check']:[]),'--output-root',outputDir],{cwd:dir,env:cleanEnv,stdout:'pipe',stderr:'pipe'});
   const [status,,stderr]=await Promise.all([child.exited,new Response(child.stdout).text(),new Response(child.stderr).text()]);
   return {status,stderr};
  };
@@ -91,23 +92,55 @@ describe('clean source generation',()=>{
  // fixed-point/no-write assertions' existing 120-second execution budget.
  beforeAll(async()=>{
   dir=await mkdtemp(join(tmpdir(),'umf-metamodel-clean-'));
+  outputDir=await mkdtemp(join(tmpdir(),'umf-metamodel-output-'));
   manifest=await Bun.file(join(root,'spec/metamodel/generated/manifest.json')).json();
-  const paths=Object.keys(manifest.sources);
+  const companion=manifest.separatelyOwned?.accountedCompanion,stage=companion?.stageA;
+  if(!companion||!stage)throw Error('clean generation requires separately owned accounted companion custody');
+  const inputPaths=Object.keys(companion.inputs??{}).sort();
+  const expectedInputPaths=['src/generated/core-validators.ts','spec/core/schema.json','spec/core/semantic-type-reference.schema.json','spec/core/extension-package.schema.json'].sort();
+  expect(inputPaths).toEqual(expectedInputPaths);
+  for(const path of inputPaths){
+   const binding=companion.inputs[path],bytes=await readFile(join(root,path));
+   expect(bytes.byteLength).toBe(binding.bytes);
+   expect(createHash('sha256').update(bytes).digest('hex')).toBe(binding.sha256);
+  }
+  const stageBase=dirname(stage.manifestPath),custodyPaths=[companion.path,...inputPaths,stage.manifestPath,stage.ownerResultPath,stage.sourceReviewPath,
+   join(stageBase,'source-pins.sha256'),join(stageBase,'identity.txt'),join(stageBase,'SHA256SUMS'),
+   join(stageBase,'adopted-source-inputs.json')];
+  // Preserve the declared source cohort and reviewed companion/input custody;
+  // retain only the explicitly pinned overlapping inputs and keep the output target empty.
+  const paths=[...new Set([...Object.keys(manifest.sources),...custodyPaths])];
   await Promise.all([...new Set(paths.map(path=>dirname(join(dir,path))))].map(path=>mkdir(path,{recursive:true})));
   let next=0;
   await Promise.all(Array.from({length:Math.min(16,paths.length)},async()=>{
    while(next<paths.length){const path=paths[next++]!;await copyFile(join(root,path),join(dir,path));}
   }));
   await symlink(join(root,'node_modules'),join(dir,'node_modules'),'dir');
-  const initial=await run();if(initial.status!==0)throw Error(initial.stderr);initialStatus=initial.status;
+  const canonicalOutputs=[...Object.keys(manifest.outputs),'spec/metamodel/generated/manifest.json'];
+  expect(canonicalOutputs).toHaveLength(11);
+  for(const path of canonicalOutputs){
+   let present=false;
+   try{await stat(join(outputDir,path));present=true;}catch(error){if(!(error instanceof Error)||!('code'in error)||error.code!=='ENOENT')throw error;}
+   expect(present).toBe(false);
+  }
+  const initial=await run();if(initial.status!==0)throw Error(initial.stderr);
+  // The accounted companion is a separately owned, pinned output, not one of
+  // the eleven generated files. Retain its verified bytes for the check pass.
+  const companionOutput=join(outputDir,companion.path);await mkdir(dirname(companionOutput),{recursive:true});await copyFile(join(dir,companion.path),companionOutput);
+  initialStatus=initial.status;
  },180_000);
- afterAll(async()=>{if(dir)await Bun.$`rm -r ${dir}`.quiet();},120_000);
- test('clean generation has no derived dependency; fixed point and no-write check enforce inventory',async()=>{
+ afterAll(async()=>{if(dir)await Bun.$`rm -r ${dir}`.quiet();if(outputDir)await Bun.$`rm -r ${outputDir}`.quiet();},120_000);
+ test('fresh output fixed point and no-write check enforce the generated inventory',async()=>{
   expect(initialStatus).toBe(0);
   const files=[...Object.keys(manifest.outputs),'spec/metamodel/generated/manifest.json'];
-  const snapshots=await Promise.all(files.map(async path=>({path,text:await readFile(join(dir,path),'utf8'),mtime:(await stat(join(dir,path))).mtimeMs})));
+  const snapshots=await Promise.all(files.map(async path=>({path,text:await readFile(join(outputDir,path),'utf8'),mtime:(await stat(join(outputDir,path))).mtimeMs})));
   expect((await run(true)).status).toBe(0);
-  for(const file of snapshots){expect(await readFile(join(dir,file.path),'utf8')).toBe(file.text);expect((await stat(join(dir,file.path))).mtimeMs).toBe(file.mtime);}
-  await writeFile(join(dir,'src/generated/unexpected.ts'),'export const surprise=true;');expect((await run(true)).status).toBe(1);
+  for(const file of snapshots){expect(await readFile(join(outputDir,file.path),'utf8')).toBe(file.text);expect((await stat(join(outputDir,file.path))).mtimeMs).toBe(file.mtime);}
+  const first=snapshots[0]!;
+  await writeFile(join(outputDir,first.path),first.text+'\n');expect((await run(true)).status).toBe(1);
+  await writeFile(join(outputDir,first.path),first.text);
+  await rm(join(outputDir,first.path));expect((await run(true)).status).toBe(1);
+  await writeFile(join(outputDir,first.path),first.text);
+  await writeFile(join(outputDir,'src/generated/unexpected.ts'),'export const surprise=true;');expect((await run(true)).status).toBe(1);
  },120_000);
 });

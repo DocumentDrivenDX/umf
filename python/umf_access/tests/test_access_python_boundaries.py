@@ -25,6 +25,66 @@ class LifecycleExternalImportPolicyTests(unittest.TestCase):
         self.assertFalse(allowed('umf_access.lifecycle.ingress_local_postgres',
                                  'psycopg', 'Connection'))
 
+    def test_native_wait_protocol_symbols_require_exact_scope_and_unaliased_names(self):
+        allowed = _CHECKER.approved_lifecycle_external_import
+        module = 'umf_access.lifecycle.ingress_local_postgres'
+        for target, member in (('psycopg', 'Connection'), ('psycopg', 'Cursor'),
+                               ('psycopg._enums', 'Ready'), ('psycopg._enums', 'Wait')):
+            self.assertTrue(allowed(module, target, member, native_wait_scope=True))
+            self.assertFalse(allowed(module, target, member))
+            self.assertFalse(allowed(module, target, member, native_wait_scope=True,
+                                     imported_as='Alias'))
+            self.assertFalse(allowed('umf_access.lifecycle.ingress_store', target, member,
+                                     native_wait_scope=True))
+        for target, member in (('psycopg', 'AsyncConnection'), ('psycopg._enums', 'Reset')):
+            self.assertFalse(allowed(module, target, member, native_wait_scope=True))
+
+
+class NativeWaitImportScopeCheckerTests(unittest.TestCase):
+    def _check_source(self, source_text: str, module: str = 'ingress_local_postgres') -> tuple[int, str]:
+        with tempfile.TemporaryDirectory(prefix='umf-native-wait-boundary-') as temporary:
+            root = Path(temporary)
+            source = root / 'python/umf_access/src/umf_access/lifecycle'
+            source.mkdir(parents=True)
+            (source / f'{module}.py').write_text(source_text, encoding='utf-8')
+            output = io.StringIO()
+            with contextlib.redirect_stderr(output), contextlib.redirect_stdout(output):
+                result = _CHECKER.check(root)
+            return result, output.getvalue()
+
+    def test_exact_driver_symbols_are_allowed_only_in_the_direct_adapter_function(self):
+        source = ('def _execute_original_store_sql():\n'
+                  '    try:\n'
+                  '        from psycopg import Connection, Cursor\n'
+                  '        from psycopg._enums import Ready, Wait\n'
+                  '    except ImportError:\n'
+                  '        raise\n')
+        result, output = self._check_source(source)
+        self.assertEqual(result, 0, output)
+
+    def test_top_level_nested_aliased_and_other_module_imports_are_refused(self):
+        sources = (
+            ('from psycopg import Connection\n'
+             'def _execute_original_store_sql():\n    pass\n'),
+            ('def _execute_original_store_sql():\n'
+             '    def nested():\n'
+             '        from psycopg._enums import Ready\n'),
+            ('def _execute_original_store_sql():\n'
+             '    from psycopg import Connection as DriverConnection\n'),
+            ('def _execute_original_store_sql():\n'
+             '    from psycopg._enums import Reset\n'),
+        )
+        for source in sources:
+            with self.subTest(source=source):
+                result, output = self._check_source(source)
+                self.assertEqual(result, 1, output)
+                self.assertIn('PRIVATE', output)
+        result, output = self._check_source(
+            'def _execute_original_store_sql():\n'
+            '    from psycopg import Connection\n', module='ingress_store')
+        self.assertEqual(result, 1, output)
+        self.assertIn('PRIVATE', output)
+
     def test_transaction_status_exception_is_module_and_symbol_specific(self):
         allowed = _CHECKER.approved_lifecycle_external_import
         self.assertTrue(allowed('umf_access.lifecycle.ingress_store',
@@ -310,7 +370,7 @@ class SupervisorJournalCodecBoundaryTests(unittest.TestCase):
 
     def test_codec_allows_only_its_native_free_standard_library(self):
         allowed = ('from __future__ import annotations\n'
-                   'import base64, hashlib, json, re\n'
+                   'import base64, hashlib, json, posixpath, re\n'
                    'from typing import Any\n')
         result, output = self._check_module(allowed)
         self.assertEqual(result, 0, output)
