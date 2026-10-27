@@ -6,13 +6,11 @@ from __future__ import annotations
 import ast
 import base64
 import csv
-from email.parser import Parser
 import hashlib
 import importlib.util
 import io
 import json
 import os
-from pathlib import Path
 import re
 import struct
 import subprocess
@@ -22,9 +20,11 @@ import textwrap
 import tomllib
 import types
 import zipfile
+from email.parser import Parser
+from pathlib import Path
 
-from packaging.specifiers import SpecifierSet
 import pytest
+from packaging.specifiers import SpecifierSet
 
 
 def _verifier():

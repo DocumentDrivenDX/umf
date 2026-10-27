@@ -310,5 +310,27 @@
       "priorSourceCommit": "ae11ea4203753a02339e5abd751ec3798662e32d",
       "scope": "Synthetic finalizer fixture controls only; source included in sdist requires actual new-source archives. Existing runs preserved; no release admission."
     }
+  },
+  "correctedFixturePrNativeProducers": {
+    "evidence": "pr-native-producers-40427507277",
+    "custodySha256": "f59de3dae05baef51593a01e27f5fc52deafd1d818b88a0f127443e2426a1a00",
+    "status": "PASS_ORIGINAL_PR_PRODUCERS_ONLY"
+  },
+  "pythonImportOrderFailure": {
+    "evidence": "python-import-order-40427507213",
+    "custodySha256": "75238f8c2a37530b4c9382a5c4089d26c7f583045db4b013c03f2b9952940330",
+    "status": "321_TESTS_PASS_ONE_RUFF_I001_FAILURE",
+    "sourceCorrection": {
+      "status": "SOURCE_ACCEPTED_AWAITING_GENUINE_GENERATION_AND_GATES",
+      "testSha256": "0d58a6e9cde35d01d41eacda35e5afd903cf1511d7660bdd09f8e94e0a50d417",
+      "plan": "sol-import-order-plan001.md",
+      "closure": "sol-import-order-closure001.md",
+      "closureSha256": "7d25e24433b50caa8d54a0358c1248fde2434dc676f0390bc4df5449e319e288"
+    }
+  },
+  "fixtureDependentGeneration": {
+    "evidence": "fixture-dependent-40427500505",
+    "custodySha256": "6fe4acd39760c329835aa2659e5447e0f9831d32a914b3e71f0738ee9136ed34",
+    "status": "PASS_GENERATION_ONLY_NOT_ADOPTED"
   }
 }
