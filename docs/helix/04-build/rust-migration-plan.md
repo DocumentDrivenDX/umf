@@ -6563,6 +6563,7 @@ Its extra validation call leaves control-budget equivalence open. Both slices
 remain opt-in; they establish neither full operation parity nor default-route
 retirement.
 
+
 The ledger now recognizes these five opt-in Rust operations as source-selected
 only, preserving a single logical gap per export and condition-specific route
 status. The [regenerated inventory and ledger](evidence/rust-migration/r8-symbol-inventory/README.md)
@@ -8582,3 +8583,106 @@ earlier interrupted runs and is included in both final full-suite passes.
 This is a private local macOS arm64 cohort without Node/Bun in the probe path.
 It does not satisfy the hosted six-cohort release matrix or default-route
 retirement.
+
+### R8 next slice decision: exact Arrow IPC capture — 2026-10-27
+
+The next bounded adapter slice is CONTRACT-016's three exact-source IPC
+operations: `captureArrowIpc`, `exportArrowIpcCapture`, and
+`inspectArrowIpcCapture`. The production Rust owner will load the core
+validation resources and pinned `umf.arrow.ipc` 0.1.0 package from source,
+use one controlled context per call, and preserve the existing envelope and
+ordered diagnostics. The opt-in tagged-wire operations are
+`arrow.ipc.capture`, `arrow.ipc.export`, and `arrow.ipc.inspect`; capture
+receives lowercase hexadecimal source bytes plus the caller's ID, export
+returns lowercase hexadecimal bytes, and the Node/Bun/browser wrappers
+convert to copied `Uint8Array` values. Python and the pure Rust CLI expose
+the same Rust-owned operations. The byte limit is 1,000,000, including empty,
+invalid, unsupported, and trailing native content. Unknown extension fields
+remain in UMF but block native byte export. Inspection always reports
+`complete:false`; it makes no native Arrow validity claim. This is an opt-in
+profile, with no default SDK or V4 route change.
+
+The first evidence gate is a frozen TypeScript predecessor corpus covering
+the 18 native fixtures, boundary bytes, mutations, malformed capture
+envelopes, unknown representation fields, and ordered diagnostics. Rust wire
+and CLI tests, Python installed-package tests, and Node/Bun/Chromium exact
+replay must use one current source closure. A later native semantic IPC
+slice will be separately governed; this capture slice does not implement
+`observeArrowIpcCapture`, `exportArrowSchemaIpc`, layout, or data decoding.
+The R8 ledger and release gates remain open until current-source installed
+artifact and default-route evidence qualifies a complete route.
+
+The parallel Selection review found a separate default-route blocker.
+`selectCoreElements` still comes from TypeScript in both V4 roots. The private
+Rust host-input route has frozen graph and callback schedules, but arbitrary
+caller `Registry` iterables, property traps, resource boundaries, and
+installed-package parity are unqualified. CONTRACT-045's cross-document
+`documentBoundary` successor is also outside the current local-only selector.
+The public Selection route therefore stays unchanged until those behaviors
+have an exact cross-host predecessor replay and a declared contract scope.
+
+### R8 Arrow IPC capture checkpoint and next access boundary — 2026-10-27
+
+The CONTRACT-016 exact-source capture slice is implemented as an opt-in Rust
+owner in `umf-core`, with a tagged-wire dispatch, pure Rust CLI, installed
+Python facade, Node NAPI facade, and browser WASM facade. The Rust context
+loads the generated core validation resources and pinned `umf.arrow.ipc`
+0.1.0 package from repository source. The operation preserves empty, invalid,
+unsupported and trailing bytes, copies exported bytes, rejects more than
+1,000,000 source bytes, and refuses byte export if unknown representation
+fields have been added. Inspection keeps ordered diagnostics and
+`complete:false`. It neither interprets native Arrow IPC framing nor changes
+the default TypeScript route.
+
+The frozen [TypeScript predecessor](evidence/rust-migration/r5-arrow-ipc-capture-predecessor-20261027/README.md)
+has 23 byte cases, seven mutated envelopes and copy controls. Fresh
+[Node, Bun, Chromium and CLI receipts](evidence/rust-migration/r5-arrow-ipc-capture-bindings-current-source-20261027/README.md)
+match the bounded packet on Node 26.12.1, Bun 1.4.3, Chromium 153.0.8010.12
+and Rust 1.90.0. Each JavaScript host passed 23 cases, seven mutations and 88
+public calls, including the exact 1,000,000-byte and 1,000,001-byte boundary;
+the independent pure Rust CLI passed 23 cases, seven mutations and 84
+operations. Focused Rust wire and CLI tests passed 4/4 and 3/3; seven wrapper
+tests passed with 179 assertions. A fresh [installed CPython 3.13.16 macOS
+arm64 wheel](evidence/rust-migration/r5-arrow-ipc-python-20261027/README.md)
+passed six focused tests, including all 18 authored IPC fixtures, exact-limit
+byte equality, over-limit refusal and resource controls. These are private
+local source and artifact receipts, not cross-platform release evidence.
+`observeArrowIpcCapture`, Arrow schema IPC export, native layout, data
+decoding, complete native-oracle conformance, and default-route retirement
+remain separate open work.
+The raw JavaScript wrong-type error class and cross-realm `Uint8Array`
+admission also differ from the TypeScript default and need an explicit
+contract decision before any default cutover.
+
+The hosted coordinated Python validation for the previous branch head found
+one checker defect: the strict `umf_codegen` per-file import allowlist omitted
+`collections.abc` in `_native.py`. The corrected policy continues to scan
+every package module, allows that import only for the audited native facade,
+and has a negative control that rejects it in `__init__.py`. The local
+checker, three focused negative-control tests, and Ruff now pass. Hosted
+checks must rerun on the next pushed head; their earlier result does not
+qualify this source cohort.
+
+The first [PostgreSQL search-fusion predecessor packet](evidence/rust-migration/r8-postgres-search-rrf-20261027/README.md)
+freezes nine replayable Python `_finish` outcomes under CONTRACT-074, including
+the admitted `rrf(k=10**400)` path that raises Python `OverflowError` during
+score division. Its
+candidate production seam is Rust-owned reciprocal-rank score accumulation
+and ordering over already-admitted leg observations, with PostgreSQL
+execution, row decoding, Pydantic construction, opaque-row Python equality,
+and hydration remaining host responsibilities. The exact key-comparison
+boundary and arbitrarily large positive RRF constants still need a scoped
+decision before implementation. This packet makes no Rust parity or default
+route claim.
+
+The source-bound Security And/Or and Compact Dataset V4 replay receipts were
+refreshed from one final shared binding-source build. The Compact predecessor's
+five outcome payloads are byte-identical to the prior packet; its provenance
+index changed with the generated schema source. Node, Bun and Chromium passed
+all five Compact cases and all 68 Security And/Or cases per host. Historical
+receipts remain preserved beside the current packets. The checked R8 ledger
+SHA-256 is `e61d3232e265f08258d58e77fbe6c9b5e1e8903ca7717088305297b2e1c9a879`.
+It records **84 accepted opt-in Rust mappings, 838 executable names without an
+accepted mapping, 922 logical default-route gaps and zero retired**. The three
+Arrow IPC mappings add bounded opt-in ownership; they do not select or retire
+any default route.

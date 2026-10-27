@@ -352,6 +352,7 @@ export declare function initializeCoreKindNullabilityHostInputWasm(resources: Um
 }>;
 export declare const ICEBERG_SCHEMA_PROFILE: 'umf-r5-iceberg-schema/0.1.0';
 export declare const ARROW_SCHEMA_PROFILE: 'umf-r8-arrow-schema/0.1.0';
+export declare const ARROW_IPC_PROFILE: 'umf-r8-arrow-ipc/0.1.0';
 export declare const PROTOBUF_INSPECT_PROFILE: 'umf-r5-protobuf-inspect/0.1.0';
 export declare const PROTOBUF_DOCUMENT_PROFILE: 'umf-r8-protobuf-descriptor-document/0.1.0';
 export declare const AVRO_FIELDS_PROFILE: 'umf-r5-avro-fields/0.1.0';
@@ -454,6 +455,16 @@ export interface ArrowSchemaEngine {
 }
 /** Create the opt-in Arrow integration-schema JSON preservation engine; this does not activate a default route. */
 export declare function createArrowSchemaEngine(module: any, options?: {profile?: 'cooperative' | 'hard-isolated'; setupControls?: UmfCoreControls; controls?: UmfCoreControls}): ArrowSchemaEngine;
+
+export interface ArrowIpcEngine {
+  readonly profile: typeof ARROW_IPC_PROFILE;
+  readonly capabilities: Readonly<{profile: typeof ARROW_IPC_PROFILE; maxBytes: 1_000_000; exactSource: true; complete: false}>;
+  captureArrowIpc(bytes: Uint8Array, options: {id: string}): unknown;
+  exportArrowIpcCapture(document: unknown): Uint8Array;
+  inspectArrowIpcCapture(document: unknown): unknown;
+}
+/** Create the opt-in exact-source Arrow IPC capture engine; no default route is changed. */
+export declare function createArrowIpcEngine(module: any, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): ArrowIpcEngine;
 export declare function createJsonSchemaEngine(module: any, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): JsonSchemaEngine;
 /** Private string-input staged import profile; the default route is unchanged. */
 export declare const JSON_SCHEMA_STAGED_IMPORT_PROFILE: 'umf-r8-json-schema-staged-wasm-private/0.1.0';

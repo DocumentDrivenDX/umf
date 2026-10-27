@@ -179,6 +179,36 @@ accept('src/adapters/rfc3339-exact-instant.ts', [
   'docs/helix/04-build/evidence/rust-migration/r5-temporal-default-route/README.md',
   'docs/helix/04-build/evidence/rust-migration/r5-temporal-default-route/sol-review.md',
 ], ['crates/umf-core-wire/tests/rfc3339_exact_instant_wire.rs', 'scripts/rust-migration/r5/temporal-default-route-node.ts', 'scripts/rust-migration/r5/temporal-default-route-browser.ts']);
+accept('src/adapters/arrow/capture.ts', [
+  ['captureArrowIpc', 'capture_arrow_ipc'],
+  ['exportArrowIpcCapture', 'export_arrow_ipc_capture'],
+  ['inspectArrowIpcCapture', 'inspect_arrow_ipc_capture'],
+], 'umf_core::arrow_ipc_capture', [
+  'crates/umf-core/src/arrow_ipc_capture.rs',
+  'crates/umf-core-wire/src/lib.rs',
+  'bindings/core/node/src/arrow-ipc.js',
+  'bindings/core/wasm/src/arrow-ipc.js',
+  'python/src/umf/rust_arrow_ipc.py',
+  'crates/umf-cli/src/main.rs',
+], [
+  'docs/helix/02-design/contracts/CONTRACT-016-arrow.md',
+  'docs/helix/04-build/evidence/rust-migration/r5-arrow-ipc-capture-predecessor-20261027/README.md',
+  'docs/helix/04-build/evidence/rust-migration/r5-arrow-ipc-capture-predecessor-20261027/typescript-arrow-ipc-capture.json.gz',
+  'docs/helix/04-build/evidence/rust-migration/r5-arrow-ipc-capture-bindings-current-source-20261027/README.md',
+  'docs/helix/04-build/evidence/rust-migration/r5-arrow-ipc-capture-bindings-current-source-20261027/source-manifest.json',
+  'docs/helix/04-build/evidence/rust-migration/r5-arrow-ipc-capture-bindings-current-source-20261027/node.json',
+  'docs/helix/04-build/evidence/rust-migration/r5-arrow-ipc-capture-bindings-current-source-20261027/bun.json',
+  'docs/helix/04-build/evidence/rust-migration/r5-arrow-ipc-capture-bindings-current-source-20261027/chromium.json',
+  'docs/helix/04-build/evidence/rust-migration/r5-arrow-ipc-capture-bindings-current-source-20261027/cli.json',
+  'docs/helix/04-build/evidence/rust-migration/r5-arrow-ipc-python-20261027/receipt.json',
+], [
+  'crates/umf-core-wire/tests/r5_arrow_ipc_capture_wire.rs',
+  'crates/umf-cli/tests/arrow_ipc_cli.rs',
+  'bindings/core/node/tests/arrow-ipc-wrapper.test.js',
+  'bindings/core/node/tests/arrow-ipc-current-source.mjs',
+  'bindings/core/wasm/tests/arrow-ipc-current-source.chromium.mjs',
+  'python/tests/test_rust_arrow_ipc.py',
+]);
 accept('src/model/relationships.ts', [
   ['inspectCoreRelationships', 'inspect_core_relationships'],
   ['lookupCoreRelationship', 'lookup_core_relationship'],
@@ -399,7 +429,9 @@ function acceptedOperationEvidence(mapping, routeStatus = 'legacy-fixture') {
     rustSourceClosure: closure(mapping.rustSourcePaths),
     evidenceClosure: closure(mapping.evidencePaths),
     focusedTestClosure: closure(mapping.focusedTestPaths),
-    scopeRule: mapping.evidencePaths.some(file => file.includes('/r8-json-value-serialization/'))
+    scopeRule: mapping.evidencePaths.some(file => file.includes('/r5-arrow-ipc-capture-bindings-current-source-20261027/'))
+      ? 'The linked CONTRACT-016 packet proves only exact-source Arrow IPC capture, export and incomplete inspection for 23 bounded byte cases and seven mutations on fresh local Rust CLI, installed Python wheel, Node/Bun NAPI and Chromium WASM. Raw JavaScript wrong-type and cross-realm admission remain unqualified. It excludes native IPC semantics, observation callbacks, cross-platform release qualification, and default-route retirement.'
+      : mapping.evidencePaths.some(file => file.includes('/r8-json-value-serialization/'))
       ? 'The linked R8 packet defines the exact 24-case TypeScript serialization subset and current-source Node/Bun native, Node/Bun WASM, and Chromium WASM replays; installed package qualification, broader YAML behavior, arbitrary Proxy behavior, and default-route retirement remain open.'
       : mapping.evidencePaths.some(file => file.includes('/r8-json-number-predecessor/'))
       ? 'Source/evidence hashes pin identity only; the linked R8 JSON-number packet defines string-input parity and its remaining host/default-route gates.'

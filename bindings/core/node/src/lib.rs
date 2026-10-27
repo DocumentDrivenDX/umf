@@ -481,6 +481,28 @@ pub fn arrow_schema_profile_version() -> &'static str {
     umf_core_wire::ARROW_SCHEMA_PROFILE
 }
 
+#[napi(js_name = "executeArrowIpcWire")]
+pub fn execute_arrow_ipc_wire(
+    env: Env,
+    wire_json: String,
+    control_dispatcher: Option<JsFunction>,
+) -> NapiResult<String> {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = NodeControl { env, dispatcher };
+        let mut hook = |amount| control.check(amount);
+        Ok(umf_core_wire::execute_arrow_ipc_wire_with_control(
+            &wire_json, &mut hook,
+        ))
+    } else {
+        Ok(umf_core_wire::execute_arrow_ipc_wire(&wire_json))
+    }
+}
+
+#[napi(js_name = "arrowIpcProfileVersion")]
+pub fn arrow_ipc_profile_version() -> &'static str {
+    umf_core_wire::ARROW_IPC_PROFILE
+}
+
 
 #[napi(js_name = "executeProtobufInspectWire")]
 pub fn execute_protobuf_inspect_wire(

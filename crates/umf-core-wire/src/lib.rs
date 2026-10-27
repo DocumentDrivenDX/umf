@@ -1,6 +1,111 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Private `umf.core-wire/1` transport shared by native language bindings.
 pub mod access_temporal_binding;
+pub mod arrow_ipc_capture_binding {
+    //! Explicit tagged-wire owner for exact IPC byte capture operations.
+    use umf_core::{
+        arrow_ipc_capture::{
+            ArrowIpcResources, capture_arrow_ipc, export_arrow_ipc_capture,
+            inspect_arrow_ipc_capture,
+        },
+        Context, EngineError, Utf16, Value,
+    };
+
+    use crate::{decode, encode, field, result_envelope, text_field};
+
+    fn err(message: &'static str) -> EngineError {
+        EngineError::new("REQUEST", Utf16::default(), message)
+    }
+
+    fn unhex(source: &str) -> Result<Vec<u8>, EngineError> {
+        if source.len() > 2_000_000 {
+            return Err(EngineError::new(
+                "ARROW_IPC_LIMIT",
+                Utf16::default(),
+                "Expected at most 1000000 source bytes",
+            ));
+        }
+        if source.len() % 2 != 0
+            || !source
+                .bytes()
+                .all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b))
+        {
+            return Err(err("bytes must be bounded lowercase hexadecimal"));
+        }
+        source
+            .as_bytes()
+            .chunks_exact(2)
+            .map(|pair| {
+                let nibble = |b: u8| {
+                    if b <= b'9' {
+                        b - b'0'
+                    } else {
+                        b - b'a' + 10
+                    }
+                };
+                Ok((nibble(pair[0]) << 4) | nibble(pair[1]))
+            })
+            .collect()
+    }
+
+    fn hex(bytes: &[u8]) -> String {
+        const HEX: &[u8; 16] = b"0123456789abcdef";
+        bytes
+            .iter()
+            .flat_map(|byte| {
+                [HEX[(byte >> 4) as usize] as char, HEX[(byte & 15) as usize] as char]
+            })
+            .collect()
+    }
+
+    pub fn execute_wire(wire: &str) -> String {
+        let mut no_control = |_: usize| Ok(());
+        execute_wire_with_control(wire, &mut no_control)
+    }
+
+    pub fn execute_wire_with_control(
+        wire: &str,
+        control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+    ) -> String {
+        let result = (|| {
+            let mut ctx = Context::ordinary().with_host_control(control);
+            let request = ctx.with_tagged_transport_limit(|ctx| decode(wire, ctx))?;
+            let operation = text_field(&request, "op").ok_or_else(|| err("op is required"))?;
+            let resources = ArrowIpcResources::new(&mut ctx)?;
+            let result = match operation.as_str() {
+                "arrow.ipc.capture" => {
+                    let bytes = unhex(
+                        &text_field(&request, "bytes").ok_or_else(|| err("bytes is required"))?,
+                    )?;
+                    let id = match field(&request, "id") {
+                        Some(Value::String(value)) => value.clone(),
+                        _ => return Err(err("id is required")),
+                    };
+                    capture_arrow_ipc(&bytes, &id, &resources, &mut ctx)?
+                }
+                "arrow.ipc.export" => {
+                    let document = field(&request, "document")
+                        .ok_or_else(|| err("document is required"))?;
+                    Value::string_utf8(hex(&export_arrow_ipc_capture(
+                        document,
+                        &resources,
+                        &mut ctx,
+                    )?))
+                }
+                "arrow.ipc.inspect" => {
+                    let document = field(&request, "document")
+                        .ok_or_else(|| err("document is required"))?;
+                    inspect_arrow_ipc_capture(document, &resources, &mut ctx)?
+                }
+                _ => return Err(err("Unknown Arrow IPC capture operation")),
+            };
+            encode(&result, &mut ctx)
+        })();
+        result_envelope(result)
+    }
+}
+pub const ARROW_IPC_PROFILE: &str = "umf-r8-arrow-ipc/0.1.0";
+pub use arrow_ipc_capture_binding::{execute_wire as execute_arrow_ipc_wire, execute_wire_with_control as execute_arrow_ipc_wire_with_control};
 pub mod artifact_references_binding;
 #[cfg(feature = "codegen")]
 mod codegen;

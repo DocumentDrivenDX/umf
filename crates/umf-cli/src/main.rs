@@ -16,6 +16,9 @@ const MAX_REFERENCE_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 const MAX_ICEBERG_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 #[cfg(feature = "embedded-adapters")]
 const MAX_ARROW_SCHEMA_REQUEST_BYTES: usize = 32 * 1024 * 1024;
+#[cfg(feature = "embedded-adapters")]
+// A 1 MB source becomes 2 MB of hex, then expands as tagged UTF-16 units.
+const MAX_ARROW_IPC_REQUEST_BYTES: usize = 12 * 1024 * 1024;
 const MAX_PROTOBUF_INSPECT_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 #[cfg(feature = "embedded-adapters")]
 const MAX_PROTOBUF_DESCRIPTOR_INPUT_BYTES: usize = 4_000_000;
@@ -1128,6 +1131,9 @@ fn iceberg_run(args: &[String]) -> Result<(), String> {
 
 #[cfg(feature = "embedded-adapters")]
 fn arrow_run(args: &[String]) -> Result<(), String> {
+    if args.first().map(String::as_str) == Some("ipc") {
+        return arrow_ipc_run(&args[1..]);
+    }
     if args == ["schema", "--version"] {
         println!(
             "{{\"profile\":\"{}\",\"version\":\"{}\"}}",
@@ -1204,6 +1210,85 @@ fn arrow_run(args: &[String]) -> Result<(), String> {
     println!(
         "{}",
         umf_core_wire::execute_arrow_schema_wire_with_control(&wire, &mut control)
+    );
+    Ok(())
+}
+
+#[cfg(feature = "embedded-adapters")]
+fn arrow_ipc_run(args: &[String]) -> Result<(), String> {
+    if args == ["--version"] {
+        println!(
+            "{{\"profile\":\"{}\",\"version\":\"{}\"}}",
+            umf_core_wire::ARROW_IPC_PROFILE,
+            env!("CARGO_PKG_VERSION"),
+        );
+        return Ok(());
+    }
+    if args == ["--capabilities"] {
+        println!(
+            "{{\"profile\":\"{}\",\"operations\":[\"arrow.ipc.capture\",\"arrow.ipc.export\",\"arrow.ipc.inspect\"],\"resourceProfile\":\"cooperative\",\"maxSourceBytes\":1000000}}",
+            umf_core_wire::ARROW_IPC_PROFILE,
+        );
+        return Ok(());
+    }
+    let mut stdin_wire = false;
+    let mut max_work = None;
+    let mut timeout_ms = None;
+    let mut index = 0;
+    while index < args.len() {
+        match args[index].as_str() {
+            "--stdin-wire" if !stdin_wire => stdin_wire = true,
+            "--max-work" if max_work.is_none() => {
+                index += 1;
+                max_work = Some(
+                    args.get(index)
+                        .ok_or("--max-work requires a value")?
+                        .parse::<u64>()
+                        .map_err(|_| "--max-work requires a nonnegative integer")?,
+                );
+            }
+            "--timeout-ms" if timeout_ms.is_none() => {
+                index += 1;
+                timeout_ms = Some(
+                    args.get(index)
+                        .ok_or("--timeout-ms requires a value")?
+                        .parse::<u64>()
+                        .map_err(|_| "--timeout-ms requires a nonnegative integer")?,
+                );
+            }
+            _ => return Err("invalid Arrow IPC option".into()),
+        }
+        index += 1;
+    }
+    if !stdin_wire {
+        return Err("usage: umf arrow ipc <--version|--capabilities|--stdin-wire [--max-work N] [--timeout-ms N]>".into());
+    }
+    let started = std::time::Instant::now();
+    let wire = String::from_utf8(read_limited(io::stdin(), MAX_ARROW_IPC_REQUEST_BYTES)?)
+        .map_err(|_| "Arrow IPC wire request is not valid UTF-8".to_owned())?;
+    let mut remaining = max_work.unwrap_or(u64::MAX);
+    let mut control = |amount: usize| {
+        let amount = amount as u64;
+        if amount > remaining {
+            return Err(umf_core::EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Arrow IPC work budget exhausted",
+            ));
+        }
+        remaining -= amount;
+        if timeout_ms.is_some_and(|limit| started.elapsed().as_millis() >= u128::from(limit)) {
+            return Err(umf_core::EngineError::new(
+                "DEADLINE",
+                Utf16::default(),
+                "Arrow IPC deadline elapsed",
+            ));
+        }
+        Ok(())
+    };
+    println!(
+        "{}",
+        umf_core_wire::execute_arrow_ipc_wire_with_control(&wire, &mut control)
     );
     Ok(())
 }

@@ -19,6 +19,7 @@ import {createJsonSchemaOperations, JSON_SCHEMA_PROFILE, UmfError as JsonSchemaU
 import {createDocumentComparisonOperations, DOCUMENT_COMPARISON_PROFILE} from './src/document-comparison.js';
 import {schemaPropertiesHostInput, cardinalityHostInput, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse} from './src/host-json.js';
 import {createSemanticTypeRegistry as createSemanticTypeRegistryWithWire} from './src/semantic-value.js';
+import {createArrowIpcOperations, ARROW_IPC_PROFILE} from './src/arrow-ipc.js';
 const CORE_KIND_NULLABILITY_RUNTIME = Symbol('core-kind-nullability-runtime');
 const CORE_KIND_NULLABILITY_PREPARED = Symbol('core-kind-nullability-prepared');
 export {isWireAdmissionError} from './src/wire.js';
@@ -48,6 +49,7 @@ export const RFC3339_EXACT_INSTANT_PROFILE = 'umf-rfc3339-exact-instant/1.0.0';
 export const RFC3339_EXACT_INSTANT_MAXIMUM_BYTES = 1_048_576;
 export const ICEBERG_SCHEMA_PROFILE = 'umf-r5-iceberg-schema/0.1.0';
 export const ARROW_SCHEMA_PROFILE = 'umf-r8-arrow-schema/0.1.0';
+export {ARROW_IPC_PROFILE};
 export const PROTOBUF_INSPECT_PROFILE = 'umf-r5-protobuf-inspect/0.1.0';
 export const PROTOBUF_DOCUMENT_PROFILE = 'umf-r8-protobuf-descriptor-document/0.1.0';
 export const PROTOBUF_SOURCE_IMPORT_PROFILE = 'umf-r8-protobuf-source-import/0.1.0';
@@ -1029,6 +1031,25 @@ export function createArrowSchemaEngine(module, options = {}) {
     inspect(document) { return call('inspect', {document}); },
     getNode(document, pointer) { return call('getNode', {document, pointer}); },
     proposeNodeEdit(document, pointer, replacementJson) { return call('proposeNodeEdit', {document, pointer, replacement: replacementJson}); },
+  });
+}
+
+/** Create the opt-in exact-source Arrow IPC capture engine over WASM. */
+export function createArrowIpcEngine(module, options = {}) {
+  if (typeof module?.executeArrowIpcWire !== 'function' || typeof module?.arrowIpcProfileVersion !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  if (module.arrowIpcProfileVersion() !== ARROW_IPC_PROFILE) throw new Error('RUST_WASM_BINDING_PROFILE_MISMATCH');
+  const {controls} = codegenOptions(options);
+  return createArrowIpcOperations((operation, fields) => {
+    const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+    const hostWork = admissionWork(controlBridge);
+    hostWork?.(1);
+    const responseText = module.executeArrowIpcWire(encodeRequestWire({op: `arrow.ipc.${operation}`, ...fields}, hostWork), controlBridge);
+    hostWork?.(responseText.length);
+    const envelope = JSON.parse(responseText);
+    const failure = resultError(envelope);
+    if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+    hostWork?.(envelope.wire.length);
+    return fromWire(JSON.parse(envelope.wire), hostWork);
   });
 }
 

@@ -7,6 +7,7 @@ import {resolve} from 'node:path';
 const root = resolve(import.meta.dir, '../../..');
 const pairs = [
   ['bindings/core/node/src/wire.js', 'bindings/core/wasm/src/wire.js'],
+  ['bindings/core/node/src/arrow-ipc.js', 'bindings/core/wasm/src/arrow-ipc.js'],
   ['bindings/core/node/src/javascript-numeric.js', 'bindings/core/wasm/src/javascript-numeric.js'],
   ['bindings/core/node/src/security-logic.js', 'bindings/core/wasm/src/security-logic.js'],
   ['bindings/core/node/src/security-functions.js', 'bindings/core/wasm/src/security-functions.js'],

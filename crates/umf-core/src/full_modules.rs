@@ -10,6 +10,7 @@ pub mod access_stream;
 pub mod access_temporal;
 pub mod access_values;
 pub mod arrow_schema;
+pub mod arrow_ipc_capture;
 pub mod artifact_references;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_document;

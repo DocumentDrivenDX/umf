@@ -457,6 +457,22 @@ pub fn arrow_schema_profile_version() -> String {
     umf_core_wire::ARROW_SCHEMA_PROFILE.to_owned()
 }
 
+#[wasm_bindgen(js_name = executeArrowIpcWire)]
+pub fn execute_arrow_ipc_wire(wire_json: &str, control_dispatcher: Option<Function>) -> String {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::execute_arrow_ipc_wire_with_control(wire_json, &mut hook)
+    } else {
+        umf_core_wire::execute_arrow_ipc_wire(wire_json)
+    }
+}
+
+#[wasm_bindgen(js_name = arrowIpcProfileVersion)]
+pub fn arrow_ipc_profile_version() -> String {
+    umf_core_wire::ARROW_IPC_PROFILE.to_owned()
+}
+
 #[wasm_bindgen(js_name = executeProtobufInspectWire)]
 pub fn execute_protobuf_inspect_wire(
     wire_json: &str,

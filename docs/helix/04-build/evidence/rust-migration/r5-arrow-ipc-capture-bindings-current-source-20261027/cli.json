@@ -1,0 +1,32 @@
+{
+  "format": "umf-r8-arrow-ipc-capture-cli-current-source/1",
+  "status": "pass",
+  "profile": "umf-r8-arrow-ipc/0.1.0",
+  "platform": "macOS arm64",
+  "rustc": "1.90.0",
+  "node": "26.12.1",
+  "buildCommand": "cargo build -p umf-cli --offline --quiet with isolated CARGO_TARGET_DIR",
+  "replayCommand": "node scripts/rust-migration/r5/replay-arrow-ipc-cli.mjs /private/tmp/umf-arrow-ipc-review-target/debug/umf",
+  "binarySha256": "383167c10138787bf361de2bc2fb886dcec49fd6dccfe6f16be8ddf3165e6095",
+  "cases": 23,
+  "mutations": 7,
+  "operations": 84,
+  "exactLimitBytes": 1000000,
+  "overLimitBytes": 1000001,
+  "sourceHashes": {
+    "crates/umf-core/src/arrow_ipc_capture.rs": "c7e5a2695abc8b45ac469c1b310edb5b1dbaa8b67810cf683b5fb9dfd1ad4b45",
+    "crates/umf-core-wire/src/lib.rs": "237e68cd67c068ba135b9f69f87f885f50074137bc5a1d16d20f00fc5de5f180",
+    "crates/umf-cli/src/main.rs": "1f91b5e224df62a0a25dd53de6ded2fdeeba9544ed99b288f505c68c8048661c",
+    "scripts/rust-migration/r5/replay-arrow-ipc-cli.mjs": "db1258381752e193847e48171433bdafdee95110d9ab95f7b983994abef15a26",
+    "spec/metamodel/generated/manifest.json": "1732c811ad67be77b29f2035c9552684aa983eed1cb9fca2ab5076f1faa5440f",
+    "spec/core/schema.json": "9084a262be4a86f767b29612f86eeb23fe0423fa836d4c671c81db39d1484276",
+    "spec/core/semantic-type-reference.schema.json": "ab47ebb14fd337de94355269bf13e6edc39b2284bc26e9b3faa8b3056c9d386a",
+    "spec/core/extension-package.schema.json": "b77eb1225840684086d1a64bb5b8668a510e0023558953977a49e66b29fe3f78",
+    "spec/metamodel/generated/core-constraints.json": "84a56500df318091c10d3db51059552230777477a968e0f09a25c8924a5bdc94",
+    "spec/metamodel/generated/domain-policy.json": "ccf495a359603b0bb1da169343abf44438accae19e29a1707f4918dcd21a4846",
+    "spec/extensions/arrow-ipc/package.json": "2853107a7c644ef416a1b53b00ae35b3c476d99d7eec5b38c8d4b8f472d22aae",
+    "spec/extensions/arrow-ipc/schema.json": "b5d0a953838d1f38f366f0677f80b51f7709d7a984c70eb63c15d43f4de8d3f6",
+    "docs/helix/04-build/evidence/rust-migration/r5-arrow-ipc-capture-predecessor-20261027/typescript-arrow-ipc-capture.json.gz": "2447d1c61246719e1fe9a36408bc2aa2cf50cc0a9c237b50c4d393bd217f38a6"
+  },
+  "noDefaultRouteClaim": true
+}

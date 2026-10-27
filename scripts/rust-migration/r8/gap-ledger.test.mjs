@@ -643,7 +643,7 @@ test('V4 relationship consumer exports are hybrid bindings without Rust consumer
     assert.equal(rows[2].defaultRouteRetirement.status, 'reference-only');
   }
   assert.equal(ledger.counts.sourceSelectedRustOverrides, 114);
-  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 81);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 84);
   assert.deepEqual(ledger.counts.executableDefaultRouteRetirementsByRoute, { 'package-root-node': 0, 'package-root-browser': 0 });
 
   for (const row of [
@@ -839,8 +839,8 @@ test('Schema Properties source selections keep exact CONTRACT-049 mappings separ
     assert.equal(reference.sourceSelectedImplementation, null);
     assert.equal(reference.implementationStatus, 'TypeScript reference implementation remains explicit');
   }
-  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 81);
-  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 841);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 84);
+  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 838);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
   const aggregate = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/aggregate.json', 'utf8'));
   const aggregateNames = Object.values(aggregate.families).flatMap(family => family.operations);
@@ -2780,8 +2780,8 @@ test('security truth and composition map only their four reviewed opt-in operati
 test('securityAnd/securityOr V4 bindings normalize exactly and carry source-only replay evidence', () => {
   const ledger = currentGeneratedLedger();
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
-  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 81);
-  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 841);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 84);
+  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 838);
   for (const name of ['securityAnd', 'securityOr']) {
     const rustSymbol = name === 'securityAnd' ? 'security_and' : 'security_or';
     for (const routeId of ['package-root-node', 'package-root-browser']) {
@@ -2806,6 +2806,29 @@ test('securityAnd/securityOr V4 bindings normalize exactly and carry source-only
   const changed = symbols.map(row => row.routeId === 'package-root-node' && row.exportName === 'securityAnd'
     ? { ...row, declarationKind: 'FunctionDeclaration' } : row);
   assert.throws(() => buildLedger({ ...args, inventory: { symbols: changed } }), /declaration multiplicity differs/);
+});
+
+test('Arrow IPC exact capture maps only three opt-in functions and retires no default route', () => {
+  const names = new Map([
+    ['captureArrowIpc', 'capture_arrow_ipc'],
+    ['exportArrowIpcCapture', 'export_arrow_ipc_capture'],
+    ['inspectArrowIpcCapture', 'inspect_arrow_ipc_capture'],
+  ]);
+  const symbols = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/inventory.json', 'utf8')).symbols
+    .filter(row => row.source === 'src/adapters/arrow/capture.ts' && names.has(row.exportName));
+  assert.equal(symbols.length, 9);
+  const ledger = buildLedger({ ...args, inventory: { symbols } });
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 3);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 3);
+  assert.equal(ledger.counts.bindingRoutesProven, 0);
+  for (const row of ledger.rows) {
+    assert.equal(row.acceptedRustOperation, `umf_core::arrow_ipc_capture::${names.get(row.exportName)}`);
+    assert.equal(row.bindingRouteStatus, 'unproven');
+    assert.equal(row.defaultRouteRetirement.status, row.routeId === 'package-reference' ? 'reference-only' : 'open');
+    assert.match(row.acceptedOperationEvidence.scopeRule, /exact-source Arrow IPC capture/);
+    assert.ok(row.acceptedOperationEvidence.evidenceClosure.some(item => item.path.endsWith('/r5-arrow-ipc-capture-bindings-current-source-20261027/chromium.json')));
+    assert.ok(row.acceptedOperationEvidence.evidenceClosure.some(item => item.path.endsWith('/r5-arrow-ipc-python-20261027/receipt.json')));
+  }
 });
 
 test('Record Values and Semantic Types V4 shapes normalize only exact declarations', () => {

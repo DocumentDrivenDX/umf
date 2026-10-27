@@ -1,0 +1,73 @@
+{
+  "schema": "umf.rust-migration.arrow-ipc-python-receipt.v1",
+  "profile": "umf-r8-arrow-ipc/0.1.0",
+  "scope": [
+    "opt-in Python capture/export/inspect wrapper",
+    "copied bytes API",
+    "one-million-byte admission boundary",
+    "source-byte fidelity for the 18 authored Arrow IPC fixtures"
+  ],
+  "build": {
+    "command": "CARGO_TARGET_DIR=/private/tmp/umf-arrow-ipc-binding-target CARGO_NET_OFFLINE=true python/.venv/bin/python -m hatchling build -t wheel -d /private/tmp/umf-arrow-ipc-binding-wheel",
+    "platform": "macOS arm64, macosx_11_0",
+    "python": "CPython 3.13.16",
+    "hatchling": "1.32.4",
+    "rustc": "rustc 1.90.0 (1159e78c4 2025-09-14)",
+    "cargo": "cargo 1.90.0 (840b83a10 2025-07-30)",
+    "wheel": {
+      "path": "/private/tmp/umf-arrow-ipc-binding-wheel/umf_core-0.11.0-cp311-abi3-macosx_11_0_arm64.whl",
+      "bytes": 9497751,
+      "sha256": "a6f42012eb54f43835d606bed872a7f5e2b5880cde183520adcb4e95296ef65a",
+      "nativeExtensionMember": "umf/_rust_core.abi3.so",
+      "nativeExtensionSha256": "53fbdf4cb7bf6ab31c8421dba5f35e57a467dce224f154dbe629e6bc62643ca3"
+    }
+  },
+  "installation": {
+    "environment": "/private/tmp/umf-arrow-ipc-binding-venv",
+    "wheelInstalledWithoutDependencies": true,
+    "importedPackage": "/private/tmp/umf-arrow-ipc-binding-venv/lib/python3.13/site-packages/umf/__init__.py",
+    "importedNativeExtension": "/private/tmp/umf-arrow-ipc-binding-venv/lib/python3.13/site-packages/umf/_rust_core.abi3.so",
+    "reportedProfile": "umf-r8-arrow-ipc/0.1.0"
+  },
+  "tests": {
+    "command": "PYTHONPYCACHEPREFIX=/private/tmp/umf-arrow-ipc-pycache /private/tmp/umf-arrow-ipc-binding-venv/bin/python -m pytest -q -p no:cacheprovider python/tests/test_rust_arrow_ipc.py",
+    "python": "CPython 3.13.16",
+    "pytest": "9.1.1",
+    "result": "6 passed in 68.63s",
+    "coverage": [
+      "empty and invalid source capture with incomplete inspection",
+      "byte-exact capture/export of all 18 authored PyArrow 21.0.0 fixtures",
+      "exactly 1000000 bytes capture and export byte-for-byte",
+      "1000001-byte input rejected before hexadecimal expansion",
+      "unknown payload content blocks original-byte export",
+      "cooperative meter, cancellation, and profile mismatch behavior"
+    ]
+  },
+  "sourceClosure": {
+    "sha256": "ca23fd168c3928cb3dd1de01c6bc44e9295da8222ff54246508f1bb68af7a554",
+    "files": [
+      {"path":"Cargo.lock","bytes":33260,"sha256":"c55364fa3058e7a90bb2833dda6288621b863bed13a629c9bbf2f706401d602c"},
+      {"path":"Cargo.toml","bytes":437,"sha256":"e9ac3286aff98bd4be64516ce7166258d06f8839e5316a09fa2caf454d7ef89e"},
+      {"path":"bindings/core/python/Cargo.toml","bytes":443,"sha256":"190f17abce90c387affa8a01a875c98d81ebfbfce2ae7b525a9624701bb7e165"},
+      {"path":"bindings/core/python/src/lib.rs","bytes":206693,"sha256":"c2ce0ef39ab23dfd69940c139b84e848ae81ee4ec0f20a8a58ea5faea06ed327"},
+      {"path":"crates/umf-core/Cargo.toml","bytes":840,"sha256":"95dd21a18ac1b3e0ed9f129c00ef35738176c2b7684873a20797c5e24782541a"},
+      {"path":"crates/umf-core/src/arrow_ipc_capture.rs","bytes":11190,"sha256":"c7e5a2695abc8b45ac469c1b310edb5b1dbaa8b67810cf683b5fb9dfd1ad4b45"},
+      {"path":"crates/umf-core-wire/Cargo.toml","bytes":543,"sha256":"b37090d28cc8aec419bca6eb908492bdadca17c2822619c04e25458cd21751dc"},
+      {"path":"crates/umf-core-wire/src/lib.rs","bytes":149931,"sha256":"237e68cd67c068ba135b9f69f87f885f50074137bc5a1d16d20f00fc5de5f180"},
+      {"path":"crates/umf-cli/src/main.rs","bytes":87167,"sha256":"1f91b5e224df62a0a25dd53de6ded2fdeeba9544ed99b288f505c68c8048661c"},
+      {"path":"python/pyproject.toml","bytes":3892,"sha256":"e8afea91be6bab76c1f4c20bd351ea3bfa05bffb7aab65cd9b4e17f0620e4523"},
+      {"path":"python/hatch_build.py","bytes":16083,"sha256":"0a84294f1a77668c32a8de26d8d90f3aec34076f0d9d958fa218ffd88b861088"},
+      {"path":"python/src/umf/rust_arrow_ipc.py","bytes":3326,"sha256":"25397a7733d2ab97e966b9f9efe02574b0a44c2f5a7716b6947431fef95ae849"},
+      {"path":"python/tests/test_rust_arrow_ipc.py","bytes":3292,"sha256":"e7a3f813b94dc950c869d31e1e7b7a1fa73df87fcbaeff4f78d5352ccd67aa2e"},
+      {"path":"spec/core/schema.json","bytes":45342,"sha256":"9084a262be4a86f767b29612f86eeb23fe0423fa836d4c671c81db39d1484276"},
+      {"path":"spec/core/extension-package.schema.json","bytes":45001,"sha256":"b77eb1225840684086d1a64bb5b8668a510e0023558953977a49e66b29fe3f78"},
+      {"path":"spec/extensions/arrow-ipc/package.json","bytes":1650,"sha256":"2853107a7c644ef416a1b53b00ae35b3c476d99d7eec5b38c8d4b8f472d22aae"},
+      {"path":"spec/extensions/arrow-ipc/schema.json","bytes":537,"sha256":"b5d0a953838d1f38f366f0677f80b51f7709d7a984c70eb63c15d43f4de8d3f6"}
+    ]
+  },
+  "limits": [
+    "Private macOS arm64 build and installed test cohort only.",
+    "The operation archives exact bytes and does not assert Arrow IPC semantic validity.",
+    "No default SDK route or release qualification is established."
+  ]
+}

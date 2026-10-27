@@ -360,6 +360,7 @@ export declare function createCoreKindNullabilityHostInputEngine(resources: UmfC
 };
 export declare const ICEBERG_SCHEMA_PROFILE: 'umf-r5-iceberg-schema/0.1.0';
 export declare const ARROW_SCHEMA_PROFILE: 'umf-r8-arrow-schema/0.1.0';
+export declare const ARROW_IPC_PROFILE: 'umf-r8-arrow-ipc/0.1.0';
 export declare const PROTOBUF_INSPECT_PROFILE: 'umf-r5-protobuf-inspect/0.1.0';
 export declare const PROTOBUF_DOCUMENT_PROFILE: 'umf-r8-protobuf-descriptor-document/0.1.0';
 export declare const AVRO_FIELDS_PROFILE: 'umf-r5-avro-fields/0.1.0';
@@ -468,6 +469,19 @@ export interface ArrowSchemaEngine {
 }
 /** Create the opt-in Arrow integration-schema JSON preservation engine; this does not activate a default route. */
 export declare function createArrowSchemaEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; setupControls?: UmfCoreControls; controls?: UmfCoreControls}): ArrowSchemaEngine;
+
+export interface ArrowIpcEngine {
+  readonly profile: typeof ARROW_IPC_PROFILE;
+  readonly capabilities: Readonly<{profile: typeof ARROW_IPC_PROFILE; maxBytes: 1_000_000; exactSource: true; complete: false}>;
+  /** Capture an exact copy of up to one million source bytes, including invalid or unsupported content. */
+  captureArrowIpc(bytes: Uint8Array, options: {id: string}): unknown;
+  /** Return an owned copy of the exact captured source bytes. */
+  exportArrowIpcCapture(document: unknown): Uint8Array;
+  /** Validate capture representation and report incomplete interpretation. */
+  inspectArrowIpcCapture(document: unknown): unknown;
+}
+/** Create the opt-in exact-source Arrow IPC capture engine; no default route is changed. */
+export declare function createArrowIpcEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): ArrowIpcEngine;
 
 export interface JsonSchemaResource {uri: string; source: string}
 export type JsonSchemaNativeJson = {kind: 'null'} | {kind: 'boolean'; value: boolean} | {kind: 'string'; value: string} | {kind: 'number'; value: string} | {kind: 'array'; items: JsonSchemaNativeJson[]} | {kind: 'object'; members: Record<string, JsonSchemaNativeJson>};

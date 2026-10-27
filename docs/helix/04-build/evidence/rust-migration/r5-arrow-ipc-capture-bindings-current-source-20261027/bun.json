@@ -1,0 +1,20 @@
+{
+  "format": "umf-r8-arrow-ipc-capture-node-current-source/1",
+  "status": "pass",
+  "runtime": "bun",
+  "versions": {
+    "node": "26.3.0",
+    "bun": "1.4.3",
+    "napi": "10"
+  },
+  "profile": "umf-r8-arrow-ipc/0.1.0",
+  "cases": 23,
+  "mutations": 7,
+  "calls": 88,
+  "perCallTimeoutMs": 120000,
+  "controlsMetered": true,
+  "metered": 37002187468,
+  "boundarySkipped": [],
+  "mismatches": [],
+  "noDefaultRouteClaim": true
+}
