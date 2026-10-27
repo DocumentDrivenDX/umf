@@ -640,7 +640,7 @@ def test_workflow_independently_installs_and_qualifies_both_native_artifacts():
     producer_matrix_start = producer_workflow.index("      matrix:\n")
     producer_matrix_end = producer_workflow.index(
         "\n    runs-on: ${{ matrix.runs-on }}\n", producer_matrix_start
-    )
+    ) + 1
     producer_matrix = producer_workflow[producer_matrix_start:producer_matrix_end]
     assert producer_matrix.count("          - cohort: ") == 1
     assert producer_matrix.count("          - cohort: linux-x86_64\n") == 1
@@ -655,7 +655,7 @@ def test_workflow_independently_installs_and_qualifies_both_native_artifacts():
     selected_matrix_start = selected_workflow.index("      matrix:\n")
     selected_matrix_end = selected_workflow.index(
         "\n    runs-on: ${{ matrix.runs-on }}\n", selected_matrix_start
-    )
+    ) + 1
     selected_matrix = selected_workflow[selected_matrix_start:selected_matrix_end]
     assert selected_matrix.count("          - cohort: ") == 2
     assert selected_matrix.count("          - cohort: linux-x86_64\n") == 2
@@ -679,7 +679,7 @@ def test_workflow_independently_installs_and_qualifies_both_native_artifacts():
     public_matrix_start = public_job.index("      matrix:\n")
     public_matrix_end = public_job.index(
         "\n    runs-on: ${{ matrix.runs-on }}\n", public_matrix_start
-    )
+    ) + 1
     public_matrix = public_job[public_matrix_start:public_matrix_end]
     assert public_matrix.count("          - cohort: ") == 2
     assert public_matrix.count("          - cohort: linux-x86_64\n") == 2
