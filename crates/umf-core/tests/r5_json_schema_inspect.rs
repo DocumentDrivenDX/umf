@@ -1235,11 +1235,7 @@ fn outside_recursive_profile_keeps_generic_limit_warning() {
         r#"{"$id":"."}"#,
         r#"{"$id":".."}"#,
         r#"{"pattern":"^[a-z]+$"}"#,
-        // This schema compiles under the general Draft 2020-12 compiler, but
-        // is outside the narrow predecessor-parity profile and must remain
-        // visibly incomplete rather than inherit complete:true.
-        r#"{"type":"object","additionalProperties":false}"#,
-        r#"{"type":"object","additionalProperties":{"type":"string"}}"#,
+        r#"{"type":"object","additionalProperties":{"pattern":"x"}}"#,
         r#"{"properties":{"child":{"pattern":"x"}}}"#,
         r#"{"$anchor":"part"}"#,
         r#"{"required":["__proto__"]}"#,
@@ -1322,12 +1318,40 @@ fn additional_properties_true_is_admitted_and_matches_independent_oracles() {
 }
 
 #[test]
-fn additional_properties_false_and_schema_values_remain_outside_profile() {
-    for source in [
-        r#"{"type":"object","additionalProperties":false}"#,
-        r#"{"type":"object","additionalProperties":{"type":"string"}}"#,
-        r#"{"properties":{"nested":{"type":"object","additionalProperties":false}}}"#,
-    ] {
+fn additional_properties_false_and_schema_values_are_recursively_complete() {
+    let cases = [
+        (
+            r#"{"type":"object","properties":{"known":{"type":"string"}},"additionalProperties":false}"#,
+            vec![
+                (r#"{"known":"ok"}"#, true),
+                (r#"{"known":"ok","extra":1}"#, false),
+            ],
+        ),
+        (
+            r#"{"type":"object","properties":{"known":{"type":"string"}},"additionalProperties":{"type":"integer","minimum":1}}"#,
+            vec![
+                (r#"{"known":"ok","extra":1}"#, true),
+                (r#"{"known":"ok","extra":0}"#, false),
+                (r#"{"known":"ok","extra":"bad"}"#, false),
+            ],
+        ),
+        (
+            r#"{"type":"object","properties":{"child":{"type":"object","properties":{"name":{"type":"string"}},"additionalProperties":{"type":"integer","minimum":1}}}}"#,
+            vec![
+                (r#"{"child":{"name":"ok","extra":1}}"#, true),
+                (r#"{"child":{"name":"ok","extra":"bad"}}"#, false),
+            ],
+        ),
+        (
+            r#"{"type":"object","properties":{"child":{"type":"object","additionalProperties":false}}}"#,
+            vec![
+                (r#"{"child":{"known":1}}"#, false),
+                (r#"{"child":{}}"#, true),
+            ],
+        ),
+    ];
+
+    for (source, instances) in cases {
         let diagnostics = json_schema_inspect::inspect_payload(
             &payload(source),
             &Utf16::from("/schema"),
@@ -1335,12 +1359,34 @@ fn additional_properties_false_and_schema_values_remain_outside_profile() {
         )
         .unwrap();
         assert!(
-            diagnostics.iter().any(|item| {
-                item.code == Utf16::from("JSON_SCHEMA_VALIDATOR_LIMIT")
-                    && item.severity == umf_core::Severity::Warning
-            }),
-            "source={source}"
+            diagnostics.is_empty(),
+            "source={source}; diagnostics={diagnostics:?}"
         );
+        let schema: serde_json::Value = serde_json::from_str(source).unwrap();
+        let rust_compiled_schema = CompiledSchema::compile_consumer(
+            &from_serde(&schema),
+            &SchemaResources::default(),
+            false,
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        let jsonschema_crate_oracle = jsonschema::draft202012::new(&schema).unwrap();
+        for (instance, expected) in instances {
+            let instance_json: serde_json::Value = serde_json::from_str(instance).unwrap();
+            let rust_valid = rust_compiled_schema
+                .validate(&from_serde(&instance_json), &mut Context::ordinary())
+                .unwrap()
+                .is_empty();
+            assert_eq!(
+                rust_valid, expected,
+                "Rust schema={source}; instance={instance}"
+            );
+            assert_eq!(
+                jsonschema_crate_oracle.is_valid(&instance_json),
+                expected,
+                "jsonschema crate schema={source}; instance={instance}"
+            );
+        }
     }
 }
 

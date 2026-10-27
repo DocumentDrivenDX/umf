@@ -378,13 +378,13 @@ fn inspect_payload_profile(
 /// (the exact 2020-12 URI), one-component ASCII relative `$id`, scalar
 /// `type` (`boolean`, `integer`, `number`, `object`, or `string`), `required`
 /// (unique safe member names), `properties`, `$defs`, `minimum`, `minLength`,
-/// `additionalProperties: true`, and recursively walked `prefixItems`. Property names are nonempty valid
-/// Unicode except `__proto__`, which the pinned JavaScript oracle does not
-/// reliably assert. Numeric limits are independently checked against the
-/// JavaScript-safe token profile before compilation. References and every
-/// other keyword remain outside the complete profile. Every resource is
-/// checked independently; the general metaschema compiler is not a parity
-/// certificate.
+/// boolean or schema-valued `additionalProperties`, and recursively walked
+/// `prefixItems`. Property names are nonempty valid Unicode except
+/// `__proto__`, which the pinned JavaScript oracle does not reliably assert.
+/// Numeric limits are independently checked against the JavaScript-safe token
+/// profile before compilation. References and every other keyword remain
+/// outside the complete profile. Every resource is checked independently; the
+/// general metaschema compiler is not a parity certificate.
 fn validator_profile_positions(positions: &[SchemaPosition]) -> bool {
     for position in positions {
         let NativeJsonNode::Object(members) = position.node.root() else {
@@ -451,9 +451,14 @@ fn validator_profile_positions(positions: &[SchemaPosition]) -> bool {
                     }
                 }
                 "additionalProperties" => {
-                    if !matches!(value, NativeJsonNode::Boolean(true)) {
+                    if !matches!(
+                        value,
+                        NativeJsonNode::Boolean(_) | NativeJsonNode::Object(_)
+                    ) {
                         return false;
                     }
+                    // Object values are enumerated by `schema_positions` and
+                    // checked against this same grammar as every other schema.
                 }
                 "prefixItems" => {
                     if !matches!(value, NativeJsonNode::Array(_)) {

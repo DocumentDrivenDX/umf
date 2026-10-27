@@ -43,7 +43,7 @@ operation decisions are:
 | Export | Rust ownership and existing evidence | Cutover blocker / decision |
 | --- | --- | --- |
 | `importJsonSchema` | Rust adapter and wire dispatch exist; the historical 41-case cohort exercises imports. | TypeScript reads option getters and `Object.entries` invokes resource accessors/proxy traps in the frozen trace. The binding instead performs safe data-property admission and host work preflight. The source API has no control parameter. Keep TypeScript default. |
-| `inspectJsonSchema` | Rust inspection and wire dispatch exist; bounded-profile vectors and the 41-case cohort exist. The Rust profile now admits boolean `additionalProperties: true` recursively when every other keyword stays inside the qualified grammar. | `false` and schema-valued `additionalProperties` remain outside the Rust profile. Other profile and host-boundary gaps remain. Keep TypeScript default. |
+| `inspectJsonSchema` | Rust inspection and wire dispatch exist; bounded-profile vectors and the 41-case cohort exist. The Rust profile admits boolean `additionalProperties` and schema-valued/false forms recursively when every other keyword stays inside the qualified grammar. | Other profile and host-boundary gaps remain. Keep TypeScript default. |
 | `exportJsonSchema` | Rust export exists and is covered by the bounded export cases. | `exportable()` re-inspects semantics; profile gaps can change refusal/diagnostics. Only profile-qualified schemas can be considered for opt-in use. Keep TypeScript default. |
 | `exportJsonSchemaResources` | Rust resource export exists; Node/WASM factories reconstruct URI maps with null prototypes and metered copies. | Same semantic/profile limitation as export, plus host result projection and resource-key order need a fresh installed replay. Keep TypeScript default. |
 | `exportJsonSchemaBundle` | Rust bundle dispatch exists; the predecessor bundle packet covers source copy and diagnostic order. | It embeds inspection diagnostics, so incomplete-profile results differ from TypeScript; source API has no caller controls. Keep TypeScript default. |
@@ -61,21 +61,22 @@ The packet's raw cases are direct calls to exported source functions; the
 existing wrapper suite and five-case host-control receipts are separate
 candidate evidence, not predecessor parity evidence.
 
-Profile examples are explicit: a schema with root and nested
-`additionalProperties:true` is `valid:true, complete:true, diagnostics:[]` in
-the current TypeScript `inspectJsonSchema` implementation. Rust now admits that
-boolean-true keyword in its existing recursively checked profile; it still
-rejects `additionalProperties:false` and schema-valued forms from that profile.
+The historical 41-case profile observation below established the earlier
+`additionalProperties:true` boundary. The scoped extension packet
+`r8-json-schema-additional-properties/README.md` supersedes its statement about
+false and schema-valued forms: these forms are now admitted only when their
+recursively walked schema remains inside the existing qualified grammar.
 The fixed instance vectors were checked with Ajv 8.20.0
 (`Ajv2020({allErrors:true, validateFormats:false})`) and the pinned Rust
 `jsonschema` 0.29.1 oracle: an otherwise valid object with extra properties
 passes, while a value with an invalid declared property fails. The corresponding
-Rust inspector returns no diagnostics for the nested true case and retains
-`JSON_SCHEMA_VALIDATOR_LIMIT` for false, schema-valued, and nested false cases.
-This is evidence only for the boolean-true keyword inside the preexisting
-profile (`$schema`, safe relative `$id`, scalar `type`, safe unique `required`,
-`properties`, `$defs`, `minimum`, `minLength`, and `prefixItems`); it does not
-qualify other Draft 2020-12 constructs or change the default TypeScript route.
+Rust inspector returns no diagnostics for the nested true case. The earlier
+receipt retained `JSON_SCHEMA_VALIDATOR_LIMIT` for false/schema-valued forms;
+the scoped extension's fresh Rust tests, Node addon and Chromium WASM receipts
+now cover those cases when the same preexisting grammar holds (`$schema`, safe
+relative `$id`, scalar `type`, safe unique `required`, `properties`, `$defs`,
+`minimum`, `minLength`, and `prefixItems`). This does not qualify other Draft
+2020-12 constructs or change the default TypeScript route.
 `$dynamicRef`, `unevaluatedProperties`, and unknown keywords retain source
 meaning and remain incomplete in TypeScript. The candidate's narrower
 recursive profile must not be expanded by assuming that all schemas accepted
@@ -141,11 +142,11 @@ In the current 41-case cohort, those three frozen cases now match exactly. The
 source change is the narrow `validator_profile_positions` check in
 `json_schema_inspect.rs`: schemas inside that explicitly limited syntax subset
 can report `complete: true` after successful compilation. A passing frozen
-fixture does not certify arbitrary Draft 2020-12 schemas. As a counterexample,
-`{"type":"object","additionalProperties":true}` compiles but remains
-`valid: true`, `complete: false`, with `JSON_SCHEMA_VALIDATOR_LIMIT`. The
-focused regression `additional_properties_stays_incomplete_outside_recursive_profile`
-passes in `r5_json_schema_inspect.rs`.
+fixture does not certify arbitrary Draft 2020-12 schemas. At the time of this
+41-case receipt, `{"type":"object","additionalProperties":true}` compiled
+but remained incomplete under the then-current profile gate. The current
+profile admits `true`, `false`, and schema values subject to recursive grammar
+checks; see the later scoped packet.
 
 The profile accepts slash and Unicode property names: `a/b`, `é`, and `😀`.
 Ajv 8.20.0 instance validation confirms they are ordinary property names and
@@ -154,9 +155,8 @@ profile/compiler test compares valid and invalid instances against its pinned
 native JSON Schema oracle; the expanded Ajv fixture is
 `scripts/rust-migration/r5/json-schema-validator-profile/verify-ajv.mjs`.
 The affected Rust target passes 16 tests. `__proto__` remains excluded from
-this qualified name subset, and `additionalProperties: true` remains an
-explicit incomplete-profile counterexample. These cases do not widen the claim
-to general Draft 2020-12 support.
+this qualified name subset. These cases do not widen the claim to general Draft
+2020-12 support.
 
 ## Source and artifact identity
 
