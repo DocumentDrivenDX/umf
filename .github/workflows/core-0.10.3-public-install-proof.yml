@@ -189,7 +189,7 @@ jobs:
           ref: ${{ steps.packet.outputs.release_tag }}
           path: release-source
           persist-credentials: false
-          fetch-depth: 0
+          fetch-depth: 8
           submodules: false
       - name: Check out the exact qualified producer source
         if: steps.packet.outcome == 'success'
@@ -199,7 +199,7 @@ jobs:
           ref: ${{ steps.packet.outputs.producer_source_commit }}
           path: producer-source
           persist-credentials: false
-          fetch-depth: 0
+          fetch-depth: 1
           submodules: false
       - uses: actions/setup-python@v5
         if: steps.packet.outcome == 'success'
