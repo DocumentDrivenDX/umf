@@ -42,11 +42,12 @@ describe("actual compilation boundary checker", () => {
       "src/model/internal/accounting-context.ts": "export interface AccountingContext { visit(category:string,path:string,count?:number):void; }",
     };
     expect(check("ts", files).exitCode).toBe(0);
-    for (const [target,source,barrel] of [
+    const privateReachThroughCases:ReadonlyArray<readonly [string,string,string]>=[
       ["src/model/internal/accounting-context.ts", 'import {AccountingContext} from "../../model/internal/accounting-context"; export const value=AccountingContext;', ""],
       ["src/model/internal/accounting-context.ts", 'import type {Other} from "../../model/internal/accounting-context"; export type Value=Other;', ""],
       ["src/model/internal/accounting-context.ts", 'import type {AccountingContext} from "../../model/internal/accounting-context"; export type Value=AccountingContext;', 'export type {AccountingContext} from "./model/internal/accounting-context";'],
-    ]) {
+    ];
+    for (const [target,source,barrel] of privateReachThroughCases) {
       const rejected = { ...files, "src/compilation/bundle/hash.ts": source, "src/index.ts": 'export {canonical} from "./compilation/bundle/hash";'+barrel };
       expect(check("ts", rejected).exitCode).toBe(1);
     }

@@ -42,7 +42,9 @@ async function accountedCompanionCustody(){
    ||custody.stageASourceCommit!=='a2cc9c2ff5510d0b6653d50102bd406e3b4556c6'||custody.artifactId!==12757082809
    ||custody.artifactSha256!=='122767b97a6da87342321e133a033693fd83df759f939f1bc41c56928c89fc37')throw Error('METAMODEL_COMPANION_ADOPTION_IDENTITY');
  const stageManifestPath=`${STAGE_A_BASE}/manifest.json`,stageOwnerPath=`${STAGE_A_BASE}/owner-result.json`,stageReviewPath=`${STAGE_A_BASE}/sol-output-source-review.md`,stagePinsPath=`${STAGE_A_BASE}/source-pins.sha256`;
- const [manifestBytes,ownerBytes,reviewBytes,pinsBytes]=await Promise.all([stageManifestPath,stageOwnerPath,stageReviewPath,stagePinsPath].map(regularBytes));
+ const [manifestBytes,ownerBytes,reviewBytes,pinsBytes]=await Promise.all([
+  regularBytes(stageManifestPath),regularBytes(stageOwnerPath),regularBytes(stageReviewPath),regularBytes(stagePinsPath),
+ ]);
  if(hash(manifestBytes)!==custody.provenanceManifestSha256||hash(ownerBytes)!==custody.ownerResultSha256
    ||hash(reviewBytes)!==custody.sourceOutputReviewSha256||hash(pinsBytes)!==custody.sourcePinsSha256
    ||hash(reviewBytes)!=='0f97c192a6e0fc7dfb4fbe3c05f25807053de7a7bc4b44261d9cb64abf8cab27')throw Error('METAMODEL_COMPANION_STAGE_A_CUSTODY');

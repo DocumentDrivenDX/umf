@@ -1,0 +1,79 @@
+scripts/metamodel/build.ts(46,10): error TS2345: Argument of type 'Uint8Array<ArrayBufferLike> | undefined' is not assignable to parameter of type 'string | Uint8Array<ArrayBufferLike>'.
+  Type 'undefined' is not assignable to type 'string | Uint8Array<ArrayBufferLike>'.
+scripts/metamodel/build.ts(46,66): error TS2345: Argument of type 'Uint8Array<ArrayBufferLike> | undefined' is not assignable to parameter of type 'string | Uint8Array<ArrayBufferLike>'.
+  Type 'undefined' is not assignable to type 'string | Uint8Array<ArrayBufferLike>'.
+scripts/metamodel/build.ts(47,11): error TS2345: Argument of type 'Uint8Array<ArrayBufferLike> | undefined' is not assignable to parameter of type 'string | Uint8Array<ArrayBufferLike>'.
+  Type 'undefined' is not assignable to type 'string | Uint8Array<ArrayBufferLike>'.
+scripts/metamodel/build.ts(47,65): error TS2345: Argument of type 'Uint8Array<ArrayBufferLike> | undefined' is not assignable to parameter of type 'string | Uint8Array<ArrayBufferLike>'.
+  Type 'undefined' is not assignable to type 'string | Uint8Array<ArrayBufferLike>'.
+scripts/metamodel/build.ts(48,11): error TS2345: Argument of type 'Uint8Array<ArrayBufferLike> | undefined' is not assignable to parameter of type 'string | Uint8Array<ArrayBufferLike>'.
+  Type 'undefined' is not assignable to type 'string | Uint8Array<ArrayBufferLike>'.
+scripts/qualify-schema-browser-release.ts(23,21): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(24,25): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(25,3): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(25,12): error TS18048: 'key' is possibly 'undefined'.
+scripts/qualify-schema-browser-release.ts(25,65): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+scripts/qualify-schema-browser-release.ts(25,72): error TS18048: 'key' is possibly 'undefined'.
+scripts/qualify-schema-browser-release.ts(52,2): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(54,2): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(58,2): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(59,2): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(62,3): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(63,3): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(64,3): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(65,3): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(68,3): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(74,3): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(75,24): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(84,2): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(85,2): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(86,28): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(87,16): error TS18047: 'match' is possibly 'null'.
+scripts/qualify-schema-browser-release.ts(88,2): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(89,2): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(91,2): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(96,2): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(98,2): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(109,2): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(113,2): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(120,2): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(139,105): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+scripts/qualify-schema-browser-release.ts(140,25): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+scripts/qualify-schema-browser-release.ts(156,23): error TS7006: Parameter 'error' implicitly has an 'any' type.
+scripts/qualify-schema-browser-release.ts(157,21): error TS7006: Parameter 'message' implicitly has an 'any' type.
+scripts/qualify-schema-browser-release.ts(158,21): error TS7006: Parameter 'request' implicitly has an 'any' type.
+scripts/qualify-schema-browser-release.ts(164,3): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(165,3): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(191,28): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(192,2): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(193,16): error TS18047: 'match' is possibly 'null'.
+scripts/qualify-schema-browser-release.ts(196,2): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(199,2): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(201,2): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(203,2): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(204,2): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(209,2): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/qualify-schema-browser-release.ts(212,2): error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+scripts/rust-core/browser-conformance.ts(190,37): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+scripts/rust-core/browser-conformance.ts(190,75): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+scripts/rust-core/browser-conformance.ts(204,43): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+scripts/rust-core/browser-conformance.ts(205,41): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+scripts/rust-core/browser-conformance.ts(206,49): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+scripts/rust-core/browser-conformance.ts(207,46): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+scripts/rust-core/browser-conformance.ts(242,37): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+scripts/rust-core/browser-conformance.ts(242,84): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+tests/compilation/boundaries.test.ts(51,26): error TS2345: Argument of type '{ "src/model/internal/accounting-context.ts": string; "src/compilation/bundle/hash.ts": string | undefined; "src/index.ts": string; }' is not assignable to parameter of type 'Record<string, string>'.
+  Property '"src/compilation/bundle/hash.ts"' is incompatible with index signature.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
