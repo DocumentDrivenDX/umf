@@ -1,0 +1,237 @@
+{
+  "format": "umf.r8.core-inspectors-current-installed/1",
+  "status": "pass",
+  "harnessSha256": "31c02a0dae312adbb145e6325b46c52af2dc671ff6392865098d0c3a248a3559",
+  "archive": {
+    "path": "/private/tmp/umf-current-4c3187be9/umf-sdk.tgz",
+    "sha256": "64e46f86bfb2ffbd97066d84d8a36cbd5a5cd48f45d6337a2400b4b4a79286ff",
+    "bytes": 43323241,
+    "manifestSha256": "dff445c3e5e5bc46edf1d46b5bed46a92199c0db6f66a6673feb93c2114105cf",
+    "verifiedMemberCount": 1793
+  },
+  "sourceClosure": {
+    "sha256": "7870eee151f2633c48f49194e20f2bc590cbfabc62b80ef7abffeefa095e91f9",
+    "capturedLiveSha256": "7870eee151f2633c48f49194e20f2bc590cbfabc62b80ef7abffeefa095e91f9",
+    "fileCount": 3461,
+    "transform": {
+      "status": "fixed-point",
+      "generatedInputs": []
+    }
+  },
+  "packageVersion": "0.5.6",
+  "packageRoutes": {
+    "node": "./dist/umf-node.js",
+    "browser": "./dist/umf-browser.js",
+    "import": "./dist/umf-browser.js",
+    "reference": "./dist/umf.js"
+  },
+  "predecessor": {
+    "path": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/docs/helix/04-build/evidence/rust-migration/r5-core-inspectors-default/frozen-predecessors.json",
+    "sha256": "9563378b9fb00b213f76d6c0d09ac0c8278c0fb829c719b566b019971a0f3a7a",
+    "packetHashes": {
+      "scalarType": "e32e8a2f04e02e7cdd408696ac3c02d2fc569171b0c91232451f754694c0820a",
+      "recordMembers": "36a8356faf1e91ad525b586f0a22bfaeb2dfa5c846cada76c04f2a178f0b7c8f",
+      "referenceLinks": "f7ec983b4a343161ffa4bbe57962ade268cb1cf211e6b12b9205369832e73757"
+    },
+    "caseCounts": {
+      "scalarType": 8,
+      "recordMembers": 9,
+      "referenceLinks": 9
+    }
+  },
+  "memberHashes": {
+    "manifest.json": "dff445c3e5e5bc46edf1d46b5bed46a92199c0db6f66a6673feb93c2114105cf",
+    "package.json": "1bd5f6cc6db6a5e9ef0e395a19aa6504e8a9a130a2fcbd3faaf4effbac7bb23a",
+    "dist/rust-default-manifest.json": "4b967080d7e7c37c88ca2b23230b5dbb5f2c9646fbc9ca45eca3a2b24bf3e4d0",
+    "dist/umf-node.js": "6a65707d0e4b178155680a5cd5af1de8835540c7231c1fd9ad1979626c593256",
+    "dist/umf-browser.js": "6501e1d6338604aa60cd506b4f8633db3c26c79c4182f141d400a3dcb0cad3b1",
+    "dist/umf.js": "d8de2c482421b2124777b431e95f20c20b1dca5da71e0274ea5e4cc3bbb2b78a",
+    "dist/umf_core_node.node": "49b0f1270475ccfb4e26142d569474d4a2a701f5a523a534f6960fbc6ee24f2d",
+    "dist/umf_core_wasm_bg.wasm": "c7cb8c0d70e9ce07818a1ff71bb045957d3f1e41f82abb1ef7c522f9902205a7",
+    "dist/src/access/rust-core-inspectors-default.d.ts": "9bf59c62033963f7c64e6e99e1947ec6ac7d2f321bc16bb3823a70ccb1a378a3",
+    "dist/src/index-node-v4.d.ts": "df3dd1f0285f2fb1a7363818f1821c7dfaf64c4dcb2aa17c396ebe871a4e1bf5",
+    "dist/src/index-browser-v4.d.ts": "15ed23b6bab5d116d8f42d1484a8775810cb31e210c2eb0e1f7ca0d7851935ba"
+  },
+  "runtime": {
+    "node": {
+      "runtime": "Node v26.12.1",
+      "operations": {
+        "scalarType": 8,
+        "recordMembers": 9,
+        "referenceLinks": 9
+      },
+      "referenceEntry": "file:///private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r8-core-inspectors-current-installed-78012-1793063424805/node_modules/@umf/core/dist/umf.js",
+      "hostShapes": {
+        "scalarType": {
+          "success": {
+            "case": "known_uuid",
+            "kind": "result",
+            "prototype": null
+          },
+          "failure": {
+            "case": "missing_identity",
+            "kind": "error",
+            "name": "UmfError",
+            "prototype": "UmfError",
+            "code": "CORE_SCALAR_TYPE_IDENTITY",
+            "path": "",
+            "message": "Expected explicit module and element identities"
+          }
+        },
+        "recordMembers": {
+          "success": {
+            "case": "known",
+            "kind": "result",
+            "prototype": null
+          },
+          "failure": {
+            "case": "missing_element",
+            "kind": "error",
+            "name": "UmfError",
+            "prototype": "UmfError",
+            "code": "CORE_RECORD_MEMBERS_MISSING",
+            "path": "",
+            "message": "Element identity is absent"
+          }
+        },
+        "referenceLinks": {
+          "success": {
+            "case": "known",
+            "kind": "result",
+            "prototype": null
+          },
+          "failure": {
+            "case": "missing_element",
+            "kind": "error",
+            "name": "UmfError",
+            "prototype": "UmfError",
+            "code": "CORE_REFERENCE_LINKS_MISSING",
+            "path": "",
+            "message": "Element identity is absent"
+          }
+        }
+      }
+    },
+    "bun": {
+      "runtime": "Bun 1.4.3",
+      "operations": {
+        "scalarType": 8,
+        "recordMembers": 9,
+        "referenceLinks": 9
+      },
+      "referenceEntry": "file:///private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r8-core-inspectors-current-installed-78012-1793063424805/node_modules/@umf/core/dist/umf.js",
+      "hostShapes": {
+        "scalarType": {
+          "success": {
+            "case": "known_uuid",
+            "kind": "result",
+            "prototype": null
+          },
+          "failure": {
+            "case": "missing_identity",
+            "kind": "error",
+            "name": "UmfError",
+            "prototype": "UmfError",
+            "code": "CORE_SCALAR_TYPE_IDENTITY",
+            "path": "",
+            "message": "Expected explicit module and element identities"
+          }
+        },
+        "recordMembers": {
+          "success": {
+            "case": "known",
+            "kind": "result",
+            "prototype": null
+          },
+          "failure": {
+            "case": "missing_element",
+            "kind": "error",
+            "name": "UmfError",
+            "prototype": "UmfError",
+            "code": "CORE_RECORD_MEMBERS_MISSING",
+            "path": "",
+            "message": "Element identity is absent"
+          }
+        },
+        "referenceLinks": {
+          "success": {
+            "case": "known",
+            "kind": "result",
+            "prototype": null
+          },
+          "failure": {
+            "case": "missing_element",
+            "kind": "error",
+            "name": "UmfError",
+            "prototype": "UmfError",
+            "code": "CORE_REFERENCE_LINKS_MISSING",
+            "path": "",
+            "message": "Element identity is absent"
+          }
+        }
+      }
+    }
+  },
+  "chromium": {
+    "version": "153.0.8010.12",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+    "operations": {
+      "scalarType": 8,
+      "recordMembers": 9,
+      "referenceLinks": 9
+    },
+    "referenceEntry": "@umf/core/reference",
+    "wasmRequested": true
+  },
+  "nativeFailureControls": {
+    "node-missing": {
+      "loader": {
+        "refused": true,
+        "name": "Error",
+        "code": "ERR_DLOPEN_FAILED"
+      },
+      "damagedRootRoute": {
+        "status": "import-refused",
+        "name": "Error",
+        "code": "MODULE_NOT_FOUND"
+      }
+    },
+    "node-corrupt": {
+      "loader": {
+        "refused": true,
+        "name": "Error",
+        "code": "ERR_DLOPEN_FAILED"
+      },
+      "damagedRootRoute": {
+        "status": "import-refused",
+        "name": "Error",
+        "code": "ERR_DLOPEN_FAILED"
+      }
+    },
+    "bun-missing": {
+      "loader": {
+        "refused": true,
+        "name": "Error",
+        "code": "ERR_DLOPEN_FAILED"
+      },
+      "damagedRootRoute": {
+        "status": "import-refused",
+        "name": "ResolveMessage",
+        "code": "MODULE_NOT_FOUND"
+      }
+    },
+    "bun-corrupt": {
+      "loader": {
+        "refused": true,
+        "name": "Error",
+        "code": "ERR_DLOPEN_FAILED"
+      },
+      "damagedRootRoute": {
+        "status": "import-refused",
+        "name": "Error",
+        "code": "ERR_DLOPEN_FAILED"
+      }
+    }
+  },
+  "qualification": "Installed private archive qualification for three core inspectors only. This does not qualify the full SDK, retirement, or release."
+}

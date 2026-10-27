@@ -19,6 +19,44 @@ ddx:
 
 # R8 installed core-inspector qualification
 
+## Current-source replay: archive `4c3187be9`
+
+The fresh installed replay used the sealed private SDK archive
+`/private/tmp/umf-current-4c3187be9/umf-sdk.tgz` (SHA-256
+`64e46f86bfb2ffbd97066d84d8a36cbd5a5cd48f45d6337a2400b4b4a79286ff`). Its
+captured-live and recorded source-closure hashes both equal
+`7870eee151f2633c48f49194e20f2bc590cbfabc62b80ef7abffeefa095e91f9`; the
+closure records 3,461 files and a fixed-point transform with no generated
+inputs. The archive manifest verified 1,793 packaged members. The package is
+version 0.5.6.
+
+The frozen predecessor container and its three packet hashes are the same
+hash-pinned data described below. The main replay passed all 26 cases across
+`inspectCoreScalarType` (8), `inspectCoreRecordMembers` (9), and
+`inspectCoreReferenceLinks` (9) through the installed default route and the
+explicit reference route in Node 26.12.1, Bun 1.4.3, and Chromium 153.0.8010.12.
+The browser requested the package WASM member and had no Node globals. Node and
+Bun also matched the predecessor's selected result/error observations and
+default/reference result and host-shape observations. Missing and corrupt
+native-addon controls refused the package root in both Node and Bun.
+
+The additional host-shape replays matched default and reference behavior for
+all three inspectors across Node, Bun, and Chromium: four accessor/hidden/
+symbol admission refusals had zero observer events, and forged-proxy errors
+matched including the `source.getPrototypeOf` event. These are bounded tested
+shapes, not exhaustive host-object or proxy coverage. The detailed receipts are
+`current-source-4c3187be9-main.json`,
+`current-source-4c3187be9-node-bun-host.json`, and
+`current-source-4c3187be9-browser-host.json`; the harness hashes and exact
+runtime observations are recorded there.
+
+This replay found no concrete behavioral blocker in these three inspector rows
+within the frozen 26-case and recorded host-shape sets. Current-source SDK
+source closure remains an independent qualification boundary; the run does not
+retire ledger gaps or qualify every input shape, platform, architecture, full
+SDK behavior, or release readiness. The earlier archive receipt below remains
+historical evidence for its own cohort.
+
 The isolated harness replays the exact frozen predecessor container for the
 three default-selected inspector exports from the private SDK archive
 `/private/tmp/umf-r8-csv-boolean-default/umf-sdk.tgz`. The archive SHA-256 is
