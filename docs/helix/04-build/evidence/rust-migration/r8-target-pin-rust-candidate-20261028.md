@@ -26,7 +26,7 @@ remains unchanged: one duplicate-name case records the old accepted behavior.
 The current policy reverses only that case. The historical packet SHA-256 is
 `bbaa2cb7fa0504a853e353a9adb3df5df0b5f699a91e0e90eaf6b5d05e54392f`;
 the current Python matcher source SHA-256 is
-`147a842d8d586b2e6cd4febd7232a821b01659ff669407c7121495b8f9e8c4c4`.
+`00f464e929843b0fc3b711cefdcd90f29ac7d4996d3af3a3d273879811646f70`.
 
 The shared Rust core matches the five identity strings exactly, requires
 equal platform-component counts and unique names on each side, then checks

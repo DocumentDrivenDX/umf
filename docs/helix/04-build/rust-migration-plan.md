@@ -9430,6 +9430,15 @@ the CPython 3.13.16 candidate suite passed 6/6 against a source-built native
 library. Public `TargetPin.matches` still uses Python, and installed wheel
 qualification and `ReadPlan.bind` host timing remain open.
 
+The [ReadPlan.bind seam review](evidence/rust-migration/r8-read-plan-bind-rust-seam-design-20261028.md)
+found and corrected an extra `identity.platform` observation introduced by
+the first duplicate-name fix. The current Python matcher rejects duplicates
+but preserves the historical two-read host order in the frozen six-case bind
+packet; all six outcomes and ordered traces pass. Moving complete bind
+orchestration to Rust requires lazy callbacks for Python validation, artifact,
+identity, match, selected artifact and Pydantic construction, with injected
+exception controls. No Rust bind route is claimed by this review.
+
 ### R8 source-coherent `securityNot` retirement replay — 2026-10-28
 
 The [Darwin arm64](evidence/rust-migration/r8-security-not-current-darwin-20261028-df7fbaa2/README.md)
@@ -9790,3 +9799,12 @@ passed the canonical package-root, route-tamper, R3 corpus, numeric,
 Cardinality, Facets, Keys, Bit128, Compact Dataset, and securityAndOr checks.
 This private cut predates the later TargetPin and Core Evolution source edits
 and cannot qualify their current cut, Linux, or a release.
+
+The separately approved [bounded Linux Python bootstrap](evidence/rust-migration/r8-linux-python-bootstrap-20261028/README.md)
+used exact CPython 3.11.17, 3.12.15 and 3.13.16 linux/amd64 images, Rust
+1.90.0, read-only source/cache mounts and network-disabled test containers.
+Each cohort passed core/codegen wheel and sdist builds, package/artifact
+checks, offline installed-pair smoke and 217 focused tests. Its source archive
+predates the final generated-resource recapture and opt-in PyO3 candidate;
+the coordinated pair verifier's fresh-venv dependency download was not run.
+These bounded results do not qualify the current whole branch or a release.

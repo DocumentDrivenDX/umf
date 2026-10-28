@@ -46,8 +46,6 @@ class TargetPin:
     platform: tuple[tuple[str, tuple[str, ...]], ...]
 
     def matches(self, identity: TargetIdentity) -> bool:
-        pinned_names = tuple(name for name, _ in self.platform)
-        observed_names = tuple(name for name, _ in identity.platform)
         return (
             (
                 identity.kind,
@@ -64,13 +62,18 @@ class TargetPin:
                 self.binding_sha256,
             )
             and len(identity.platform) == len(self.platform)
-            and len(set(pinned_names)) == len(pinned_names)
-            and len(set(observed_names)) == len(observed_names)
-            and all(
-                name in dict(self.platform) and version in dict(self.platform)[name]
-                for name, version in identity.platform
-            )
+            and self._matches_platform(identity.platform)
         )
+
+    def _matches_platform(self, observed: tuple[tuple[str, str], ...]) -> bool:
+        pinned_names = tuple(name for name, _ in self.platform)
+        observed_names = tuple(name for name, _ in observed)
+        if len(set(pinned_names)) != len(pinned_names) or len(
+            set(observed_names)
+        ) != len(observed_names):
+            return False
+        pins = dict(self.platform)
+        return all(name in pins and version in pins[name] for name, version in observed)
 
 
 @dataclass(frozen=True)
@@ -197,7 +200,10 @@ def _row(plan: ReadPlan, row: object) -> object:
     elif plan.related_field is not None:
         if plan.related_row_model is None:
             raise CatalogError("original related row model required")
-        result = validate_graph(plan.related_row_model, {name: getattr(row, name) for name in plan.related_row_model.model_fields})
+        result = validate_graph(
+            plan.related_row_model,
+            {name: getattr(row, name) for name in plan.related_row_model.model_fields},
+        )
     else:
         result = row
     if plan.related_field is not None:

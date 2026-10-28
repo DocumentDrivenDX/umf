@@ -38,7 +38,7 @@ argument-inventory error occurs before any host calls. The platform-failure case
 shows its exception propagates after one platform property read. These are
 observed Python predecessor boundaries, not proposed Rust behavior.
 
-The packet deliberately retains the current `TargetPin.matches` implementation
+The packet deliberately retains the captured `TargetPin.matches` implementation
 and its observed semantics, including the duplicate-name edge documented by the
 [direct matcher packet](../target-pin-python-predecessor-20261028/README.md).
 It does not choose duplicate-name policy, change the Python default route, or
@@ -50,5 +50,9 @@ Run from the repository root with the Python 3.13 project environment:
 PYTHONPATH=python/umf_access/src python/.venv/bin/python -m unittest python/umf_access/tests/test_read_plan_bind_predecessor.py
 ```
 
-The focused unittest passes and checks both source freshness and the exact
-frozen outcomes/traces.
+The focused unittest now treats the packet's source and harness digests as
+historical pins and checks the exact frozen outcomes and traces against the
+revised Python route. The duplicate-name policy changed after this capture;
+the current matcher rejects repeated names while preserving the two platform
+observations in these six cases. The packet is not rewritten or relabeled as a
+fresh capture of the revised source.
