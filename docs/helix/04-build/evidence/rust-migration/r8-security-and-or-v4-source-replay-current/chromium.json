@@ -11,38 +11,38 @@
     "reference": "private source-built TypeScript root"
   },
   "buildBinding": {
-    "manifest": "/private/tmp/umf-r8-copyjson-identity-fixed-20261027/compact-dataset-verify-build-manifest.json",
-    "sha256": "2cd9bdb5bb32e43cb76a11fa3074e321e1c24777ff139e139f1311d21172dcff",
-    "sourceClosureSha256": "7483d797dbf4a7cbb0dd538e02dca51ab4d7567bcf1939ad6cdb03b38ad87acf",
+    "manifest": "/private/tmp/umf-r8-domain-record-current-refrozen-20261027/compact-dataset-verify-build-manifest.json",
+    "sha256": "ef5ff50e418a7060a2df814a226f9f66f7d4d3387a7b6a9d9622b092d9aa7f43",
+    "sourceClosureSha256": "eb0a8cff53696e211dbec2b707751e1d872adc661906084986bad50914923618",
     "artifacts": {
       "nodeAddon": {
         "path": "umf_core_node.node",
-        "sha256": "9d8f741c7cb8392f312ee8df361182f78031ea6fb334ccab186ee06335089b5a"
+        "sha256": "67aedb6383860131ba62d695026bda35ca7793480bccb0c3bbdd2b3a4d85573f"
       },
       "wasm": {
         "path": "umf_core_wasm_bg.wasm",
-        "sha256": "c9ad376ff57a923ae7edd4490f8f12da28067200e37f375e95c008b508f617e3"
+        "sha256": "87a430a3e23abf4492fec1a1b1056bfdf58f95a6a7909c73f17ec6898d00a824"
       },
       "wasmGlue": {
         "path": "wasm/umf_core_wasm.js",
-        "sha256": "c12100fb775e452ddd3615e9c92e37733828dc902949f8588b994a088f90c820"
+        "sha256": "254a625b77a95e93c43552462e559273156d91ee33b863aa0e59cbe8449b6d73"
       },
       "referenceBundle": {
         "path": "umf.js",
-        "sha256": "448517a6e22f87916193165280f4e077a9d2b82233972a9a1e719dbc18a29ce8"
+        "sha256": "e89593086cc4208998e5de245d405f76361e607a98a1adf4915e148a1d68afa8"
       },
       "nodeBundle": {
         "path": "umf-node.js",
-        "sha256": "9a5a409f61e305f82c2c0bd17690be6911a12d658916c7f8d9982e3beaa4c687"
+        "sha256": "768cbaa6fe1b9d64ae717f09489f4553a23a1125414adc0cdfde47d565b86571"
       },
       "browserBundle": {
         "path": "umf-browser.js",
-        "sha256": "1a5c8366d9bcfc71ac38d21245f83fe3451dfaf49183cca32bfe178e717ed612"
+        "sha256": "c0e72eee9c1b28610d621f41f60e12ca2a3fb8c7997aabd7f63d5794431e965f"
       }
     }
   },
   "sourceClosure": {
-    "sha256": "0cc6e9fd4fe92bd6678be8aca924fed825026074c3228032abf03cd1fe48e225",
+    "sha256": "b1bb40745717259fc62fe8ba65c10edfd33935e50a9e21d9f03f67cb33b47605",
     "files": {
       "src/extensions/security/logic.ts": "df5857cf39f924552a8082f87d911b81725cce0cf1fda4375daeeb07dd48c8c8",
       "src/extensions/security/rust-logic-adapter.ts": "9a989aed6e56fd5ae9995c0c86efaa5f1df465138f191d3b3bc1cf0b7580c579",
@@ -59,7 +59,7 @@
       "bindings/core/node/src/wire.js": "5a59889a7484b69554b628aa45c58bad6f71bb4c47679ae63d72f2e8a8e0daea",
       "bindings/core/wasm/index.js": "e7074d38514a8b2658f202391ff81423dd3638144d431160607e1cab6a662843",
       "bindings/core/wasm/src/security-logic.js": "5d2f5e273b38a271b3ab7c771073da23db2c5b422065a095be79d374533468f0",
-      "bindings/core/wasm/src/lib.rs": "70e34cf840ff010be7802de56c289c6f37a691d840afcb9d50e9ef0b4cf5208e",
+      "bindings/core/wasm/src/lib.rs": "7cdd7269f0847f48acbf1490d13e5a158afe15a0f9711976cd97b9c2e93ebd6a",
       "crates/umf-core/src/security_logic.rs": "38bea5c75d7d01365817237a554176dfc24b759d25d12185591c13cb91062c19",
       "crates/umf-core-wire/src/security_logic_binding.rs": "d94fc1e66dca1d571fe24c76a8e3a5050b695bffa0dd8f29374020eb9fe05087",
       "crates/umf-tagged-wire/src/lib.rs": "3285026b35faeef611532d8705c980d27233afa5b2844720ef8268675e360a09",
@@ -69,9 +69,9 @@
     }
   },
   "build": {
-    "dist": "/private/tmp/umf-r8-copyjson-identity-fixed-20261027",
+    "dist": "/private/tmp/umf-r8-domain-record-current-refrozen-20261027",
     "wasmBindgen": "0.2.100",
-    "wasmSha256": "c9ad376ff57a923ae7edd4490f8f12da28067200e37f375e95c008b508f617e3"
+    "wasmSha256": "87a430a3e23abf4492fec1a1b1056bfdf58f95a6a7909c73f17ec6898d00a824"
   },
   "fixture": {
     "path": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/docs/helix/04-build/evidence/rust-migration/r8-security-and-or-v4-source-replay-current/predecessor.json",

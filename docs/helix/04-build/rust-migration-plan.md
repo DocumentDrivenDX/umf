@@ -53,7 +53,7 @@ CONTRACT-079 (unified access), and CONTRACT-081 (table lifecycle). Before portin
 contract, design, tests and execution record, including amendments. Older
 implementation-plan evidence remains scoped to the artifacts it actually tested.
 
-### Completion status — 2026-10-24
+### Completion status — 2026-10-28
 
 The Rust port is incomplete. R0–R3 have their recorded reviewed and merged
 checkpoints. R4 removed V8 from the authored Python production source boundary,
@@ -64,24 +64,23 @@ TypeScript engine. R6 consumer bridges, R7 default package build qualification
 and complete tooling retirement, and R8 final integrated qualification remain
 open. The source `package.json` selects the Rust V4 Node/browser entries for
 synchronous `generatePythonClient` and retains TypeScript under `./reference`.
-The prior fixed-point private SDK archive qualifies its captured generator
-cohort on macOS arm64 only; the current expanded source cohort is being rebuilt
-and replayed. Neither private archive qualifies the full production SDK, other
-hosts, or publication. The current R8 inventory covers ten package conditions
-and 1,120 declarations per Node, browser, and explicit TypeScript reference
-root. Each default root source-selects 24 Rust operations (generator,
-cardinality trio, facets quartet, compact Dataset validation, four Core Keys
-operations, and eleven Bit128/UUID operations), inherits 898 TypeScript
-executable declarations, and exports 198 JSON resources. Compact Dataset
-verification and `verifyCoreKeyOperation` remain TypeScript. All 922 unique
-executable declarations retain logical retirement gaps; zero binding routes
-are proven against the current combined source cohort. The inventory SHA-256
-is `fa373173f1a2601c589feddb35088479ff07fdb4e3a3895c65dd214f3437d0d4`;
+The prior fixed-point private SDK archives qualify only their captured subsets
+and hosts. The current R8 inventory covers ten package conditions and 1,120
+declarations per Node, browser, and explicit TypeScript reference root. Each
+default root source-selects 59 Rust declarations and exports 198 JSON
+resources. All 922 unique non-JSON executable declarations retain logical
+retirement gaps; 84 have accepted opt-in Rust mappings and 838 do not. Five
+binding routes have bounded current-source evidence, but no declaration is
+retired. The inventory SHA-256 is
+`ccc9920ad1def679b5f6e976275967a7a44013e185f281f84e73135ddcba0b86`;
 the condition-aware gap ledger SHA-256 is
-`0f4efd3b52989893c9a2ef8dd3a5b95aceb3d404693e534ae078003cfb7881a0`.
-The 43 bounded opt-in Rust operation mappings remain separate from default
-source selection and installed qualification. Neither census qualifies full
-production SDK parity or release.
+`bd2878a9c6d23189a2ab7f206743cd13dff065761bebe881372ca29dd318b6e7`.
+The current Compact, Security And/Or, and RRF source replays share manifest
+`ef5ff50e418a7060a2df814a226f9f66f7d4d3387a7b6a9d9622b092d9aa7f43`
+and source closure
+`eb0a8cff53696e211dbec2b707751e1d872adc661906084986bad50914923618`.
+Neither the source inventory nor the bounded replays qualify full production
+SDK parity or release.
 The ledger's `executable` label is a broad public-runtime category: independent
 AST review of the 1,120-name reference root found 750 function declarations,
 167 variable declarations, five class declarations and 198 JSON resource
@@ -91,15 +90,14 @@ unported algorithms solely from the current label. Keep all 922 non-JSON
 runtime declarations in the retirement denominator until an evidence-backed
 per-row semantic/host/data disposition is reviewed; do not subtract a category
 by naming heuristic.
-No complete-port PR, merge, tag or
-release has been cut from this worktree. The active goal remains all R4–R8
+Draft [PR #61](https://github.com/DocumentDrivenDX/umf/pull/61) remains open;
+no complete-port merge, tag or release has been cut from this worktree. The active goal remains all R4–R8
 gates, independent review, current-main integration and a tested release.
 
-After that inventory snapshot, the default Node/browser source entries selected
-two bounded CSV Boolean lexical operations and three bounded core inspectors.
-Their frozen Bun and real-Chromium source-route replays pass, but the inventory
-and ledger must be recaptured before using a new selected-operation count or
-making an integrated-source claim. The prior private SDK archive stopped at a
+After the earlier 2026-10-24 inventory snapshot, the default Node/browser
+source entries selected two bounded CSV Boolean lexical operations and three
+bounded core inspectors. Their frozen Bun and real-Chromium source-route
+replays pass and are included in the newer inventory above. A prior private SDK archive stopped at a
 harness count assertion that included a Key `getterCalls` metadata field; the
 harness now excludes it, and a fresh source-coherent archive and installed
 Node/Bun/Chromium replay are still required. Cardinality, facets and Core Keys
@@ -9024,3 +9022,73 @@ First freeze exact object and byte-order parity, unknown-field preservation,
 and browser behavior; then replace the two default-route executable bindings
 while retaining the explicit TypeScript reference route. This candidate has
 no accepted Rust mapping or retirement evidence yet.
+
+### R8 Record Values acceptance and next resource cut — 2026-10-27
+
+The public `validateCoreRecordValues` contract is now explicitly the current
+operation 2.0.0/core 0.10.0 profile in CONTRACT-049; the 1.0.0/core 0.8.0
+clause is historical. The current source warning scope, order, and
+incompleteness rules are recorded without claiming that the old profile is
+reachable through the public export. A separate `umf.r8.record-values-bounded-evidence/1`
+validator pins the reviewed `e9ace728d` Darwin/Linux archives, exact frozen
+24-case semantic and 19-case raw-host packets, runner bytes, six host receipts,
+Rust dispatch totals, and browser resource controls. Eleven focused positive
+and tamper tests pass. It returns `not-retirable`; the `/3` retirement path
+explicitly rejects Record Values until current-source acceptance and measured
+memory qualification exist. Both default-route rows remain open.
+
+The Rust Record Values finalization now validates its already-owned result
+without another deep copy. Borrowed validation preserves the `copy_json`
+limit, path, duplicate-key, number, and work-meter order. Its parity unit test,
+the focused Record Values integration test, and the public source tests pass.
+The Linux container `umf-core --lib` suite passed 479/479 after this change;
+the pinned e9 source files were restored in that evidence container afterward.
+The one-shot pre-edit 100,001-null refusal probe on the pinned e9 archive
+returned `LIMIT` at `/99999`; Node's observed process high-water increase was
+about 212 MiB and Bun's about 766 MiB after their warm baselines. Those
+numbers are preliminary observations, not an upper bound. A fresh package
+and measured peak-memory profile remain required before retirement.
+
+The next pure resource candidate now has an opt-in Rust-owned immutable
+`umf.domain-pack` 1.0.0 schema snapshot with Node, WASM, and CPython entry
+points. The Rust core tests, all three binding compile checks, native Node,
+CPython 3.11/3.13, and real Chromium WASM local probes pass exact canonical
+structure, isolation, and unknown-version refusal. See the
+[bounded candidate packet](evidence/rust-migration/r5-domain-pack-schema/README.md).
+The TypeScript schema generator and public defaults remain authoritative.
+Installed package, Linux, pure Rust CLI, and generator ownership gates remain
+open. Metamodel outputs were regenerated after the Rust edits and `--check`
+passes. No release gate is closed by these local probes.
+
+### R8 refrozen source and measured-process checkpoint — 2026-10-28
+
+The Compact verifier, Security And/Or and opt-in PostgreSQL RRF packets were
+replayed on a single fresh source-built native/WASM cohort (manifest SHA-256
+`ef5ff50e418a7060a2df814a226f9f66f7d4d3387a7b6a9d9622b092d9aa7f43`,
+source closure SHA-256
+`eb0a8cff53696e211dbec2b707751e1d872adc661906084986bad50914923618`).
+Node, Bun and Chromium passed all five Compact cases, 68 Security cases and
+five RRF scorer cases. The preceding top-level packets are retained under
+dated `historical/pre-domain-record-refreeze-20261027/` directories. This is
+source-built replay evidence; installed archive and complete semantic parity
+remain separate gates.
+
+The [Record Values process-memory packet](evidence/rust-migration/r8-record-values-memory-20261027/README.md)
+records five fresh processes per Node/Bun runtime and retention/refusal control
+on the pinned `e9ace728d` Darwin archive. One native dispatch per call, the
+700,000-unit opaque return, and the exact `LIMIT` refusal at `/99999` passed.
+The observed process high-water RSS increase was 53–58 MiB for Node retention,
+216–239 MiB for Node refusal, 63–297 MiB for Bun retention, and 463–839 MiB
+for Bun refusal. These are local observations without an accepted ceiling;
+they do not measure the newly optimized current-source build. The Record Values
+retirement gate remains closed until current-source installed, Linux/Chromium,
+contract acceptance, and resource qualification are reviewed.
+
+The unified-client boundary checker now scans every `src/access` source file
+with exact per-file import and type-only allowances, rejects unlisted files,
+new imports, dynamic imports, external import-equals, and named host hooks.
+Its 20 negative/positive tests and source check pass. This is a static source
+guard, not an execution sandbox. The current R8 ledger still reports 922
+logical default-route gaps and zero retired; bounded opt-in mappings and
+source-selected declarations do not remove a gap by themselves. Draft PR #61
+and the full R4–R8 release goal remain open.

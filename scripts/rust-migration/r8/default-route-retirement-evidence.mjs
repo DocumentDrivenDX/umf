@@ -363,6 +363,9 @@ export function validateBoundedDefaultRouteEvidence(manifest, rows, { root }) {
 }
 
 export function validateDefaultRouteRetirementEvidence(manifest, rows, { root }) {
+  if (manifest?.format === 'umf.r8.default-route-retirement-evidence/3' && manifest.operations?.some(op => op?.exportName === 'validateCoreRecordValues')) {
+    throw new Error('Record Values bounded evidence is not-retirable: the CONTRACT-049 current-profile amendment is pending independent acceptance review and fresh current-source fixed-point replay; measured memory bounds are not established');
+  }
   if (manifest?.format === 'umf.r8.default-route-retirement-evidence/2') {
     throw new Error('CONTRACT acceptance coverage required: /2 bounded default-route evidence cannot retire ledger rows');
   }

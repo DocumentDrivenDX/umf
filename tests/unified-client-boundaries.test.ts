@@ -181,6 +181,15 @@ test('dynamic imports and host hooks remain forbidden for allowlisted files', ()
 	expect(errors).toContain('rust-facets-default.ts: host or executable hook process');
 });
 
+test('external import-equals cannot bypass the per-file import policy', () => {
+	const errors = checkAccessSource(
+		'rust-candidate.ts',
+		'import fs = require("node:fs"); export const read = fs.readFileSync;\n',
+	);
+
+	expect(errors).toContain('rust-candidate.ts: external import equals node:fs');
+});
+
 test('new host access hooks remain forbidden in an allowlisted Rust facade', () => {
 	const errors = checkAccessSource(
 		'rust-facets-default.ts',

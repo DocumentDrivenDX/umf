@@ -7,7 +7,7 @@ use crate::{
     error::{Diagnostic, EngineError, Severity},
     host_json::{copy_host_json, HostHandle, HostJsonReflection},
     registry::Registry,
-    value::{copy_json, Utf16, Value},
+    value::{copy_json, validate_json, Utf16, Value},
 };
 use std::collections::{BTreeMap, BTreeSet};
 
@@ -581,8 +581,8 @@ fn with_full_record_source(mut body: Value, source: &Value) -> Value {
     body
 }
 fn finalize_record_result(result: Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
-    match copy_json(&result, ctx) {
-        Ok(value) => Ok(value),
+    match validate_json(&result, ctx) {
+        Ok(()) => Ok(result),
         Err(mut error)
             if error.code == "LIMIT"
                 && (error.message == k("JSON structural value limit exceeded")

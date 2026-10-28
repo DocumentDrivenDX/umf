@@ -211,6 +211,82 @@ pub fn copy_json(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineEr
     visit(value, ctx, &Utf16::default(), 0, &mut tree_values)
 }
 
+/// Validate an already-owned JSON tree using the same accounting and
+/// precedence as [`copy_json`], without allocating a duplicate tree.
+pub(crate) fn validate_json(value: &Value, ctx: &mut Context<'_>) -> Result<(), EngineError> {
+    fn visit(
+        value: &Value,
+        ctx: &mut Context<'_>,
+        path: &Utf16,
+        depth: usize,
+        tree_values: &mut usize,
+    ) -> Result<(), EngineError> {
+        ctx.charge_work(1, path.clone())?;
+        *tree_values = tree_values
+            .checked_add(1)
+            .ok_or_else(|| EngineError::new("LIMIT", path.clone(), "JSON value count overflow"))?;
+        ctx.check_tree_value_count(*tree_values, path.clone())?;
+        if depth > ctx.limits().max_depth {
+            return Err(EngineError::new(
+                "LIMIT",
+                path.clone(),
+                "JSON nesting depth exceeded",
+            ));
+        }
+        match value {
+            Value::Null | Value::Bool(_) => Ok(()),
+            Value::Number(number) => validate_number(*number, path.clone()),
+            Value::String(text) => ctx.charge_work(text.len(), path.clone()),
+            Value::Array(items) => {
+                if items.len() > ctx.limits().max_values.saturating_sub(*tree_values) {
+                    return Err(EngineError::new(
+                        "LIMIT",
+                        path.clone(),
+                        "JSON structural value limit exceeded",
+                    ));
+                }
+                ctx.charge_work(items.len(), path.clone())?;
+                for (index, item) in items.iter().enumerate() {
+                    visit(
+                        item,
+                        ctx,
+                        &append_path(path, &Utf16::from(index.to_string())),
+                        depth + 1,
+                        tree_values,
+                    )?;
+                }
+                Ok(())
+            }
+            Value::Object(members) => {
+                if members.len() > ctx.limits().max_values.saturating_sub(*tree_values) {
+                    return Err(EngineError::new(
+                        "LIMIT",
+                        path.clone(),
+                        "JSON structural value limit exceeded",
+                    ));
+                }
+                ctx.charge_work(members.len(), path.clone())?;
+                let mut seen = BTreeSet::new();
+                for (key, item) in members {
+                    ctx.charge_work(key.len(), path.clone())?;
+                    if !seen.insert(key.units().to_vec()) {
+                        return Err(EngineError::new(
+                            "DUPLICATE_KEY",
+                            path.clone(),
+                            "Duplicate object key",
+                        ));
+                    }
+                    visit(item, ctx, &append_path(path, key), depth + 1, tree_values)?;
+                }
+                Ok(())
+            }
+        }
+    }
+
+    let mut tree_values = 0;
+    visit(value, ctx, &Utf16::default(), 0, &mut tree_values)
+}
+
 fn append_path(path: &Utf16, key: &Utf16) -> Utf16 {
     let mut units = path.units().to_vec();
     units.push(b'/' as u16);
@@ -222,4 +298,49 @@ fn append_path(path: &Utf16, key: &Utf16) -> Utf16 {
         }
     }
     Utf16::new(units)
+}
+
+#[cfg(test)]
+mod borrowed_validation_tests {
+    use super::{copy_json, validate_json, Utf16, Value};
+    use crate::context::{Context, Limits, ResourceProfile};
+
+    fn context_with_limits(limits: Limits) -> Context<'static> {
+        Context::with_limits(ResourceProfile::Cooperative, limits).unwrap()
+    }
+
+    fn assert_copy_validation_parity(value: &Value, limits: Limits) {
+        let mut copy_context = context_with_limits(limits);
+        let mut validate_context = context_with_limits(limits);
+        let copied = copy_json(value, &mut copy_context).map(|_| ());
+        let validated = validate_json(value, &mut validate_context);
+        assert_eq!(validated, copied);
+        assert_eq!(validate_context.charged_work(), copy_context.charged_work());
+    }
+
+    #[test]
+    fn borrowed_validation_matches_copy_errors_and_metering() {
+        let nested = Value::Object(vec![(
+            Utf16::from("a/~"),
+            Value::Array(vec![Value::String(Utf16::from("text")), Value::Bool(true)]),
+        )]);
+        assert_copy_validation_parity(&nested, Limits::ordinary());
+
+        let mut value_limit = Limits::ordinary();
+        value_limit.max_values = 2;
+        assert_copy_validation_parity(&nested, value_limit);
+
+        let mut depth_limit = Limits::ordinary();
+        depth_limit.max_depth = 1;
+        assert_copy_validation_parity(&nested, depth_limit);
+
+        let duplicate = Value::Object(vec![
+            (Utf16::from("same"), Value::Null),
+            (Utf16::from("same"), Value::Bool(false)),
+        ]);
+        assert_copy_validation_parity(&duplicate, Limits::ordinary());
+
+        let invalid_number = Value::Array(vec![Value::Number(f64::NAN)]);
+        assert_copy_validation_parity(&invalid_number, Limits::ordinary());
+    }
 }

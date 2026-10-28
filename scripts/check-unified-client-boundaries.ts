@@ -59,6 +59,12 @@ export function checkAccessSource(file:string,text:string):string[]{
  const parseDiagnostics=(source as ts.SourceFile&{parseDiagnostics?:readonly ts.Diagnostic[]}).parseDiagnostics??[];
  for(const diagnostic of parseDiagnostics)errors.push(file+': TypeScript parse error '+diagnostic.code);
  function visit(node:ts.Node){
+  // TypeScript represents `import x = require('module')` without a `require`
+  // identifier, so the host-hook check below cannot catch this import form.
+  if(ts.isImportEqualsDeclaration(node)&&ts.isExternalModuleReference(node.moduleReference)){
+   const module=node.moduleReference.expression;
+   errors.push(file+': external import equals '+(module&&ts.isStringLiteral(module)?module.text:'<nonliteral>'));
+  }
   if(ts.isImportDeclaration(node)&&ts.isStringLiteral(node.moduleSpecifier)){
    const module=node.moduleSpecifier.text;
    if(!allowedForFile?.includes(module))errors.push(file+': unapproved import '+module);

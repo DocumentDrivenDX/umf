@@ -20,10 +20,24 @@ ddx:
 ---
 # Compact Dataset verifier V4 current-source replay
 
-The live TypeScript predecessor generator was rerun from the current source. All five regenerated payloads are byte-identical to the previously frozen outcomes. `index-current.json` was refreshed to the current schema hashes (SHA-256 `ce4bb1f351e8eb03d6c97fb39f70e2dfb917463a806d86720a94d3df3c561beb`); the five payloads are pinned by `SHA256SUMS`.
+The fresh source-built replay passed all five frozen verifier cases on Node
+v26.12.1, Bun 1.4.3, and real Chromium 153.0.8010.12. Node and Bun each
+recorded 14 Rust calls. Chromium loaded the pinned WASM and ran without Node
+globals. The receipts bind to the same immutable source-built manifest:
+`/private/tmp/umf-r8-domain-record-current-refrozen-20261027/compact-dataset-verify-build-manifest.json`,
+SHA-256 `ef5ff50e418a7060a2df814a226f9f66f7d4d3387a7b6a9d9622b092d9aa7f43`;
+source closure SHA-256
+`eb0a8cff53696e211dbec2b707751e1d872adc661906084986bad50914923618`.
+The manifest pins the Node addon, WASM binary/glue, and reference, Node, and
+browser bundles. The frozen five-case inputs and current index remain in this
+packet and are independently hashed in `SHA256SUMS`.
 
-Node v26.12.1, Bun 1.4.3, and real Chromium 153.0.8010.12 each passed all five verifier cases. Node and Bun each recorded 14 Rust calls. Chromium loaded the pinned WASM and ran without Node globals. All three receipts verified the same final source-built manifest at `/private/tmp/umf-r8-copyjson-identity-fixed-20261027/compact-dataset-verify-build-manifest.json` (SHA-256 `2cd9bdb5bb32e43cb76a11fa3074e321e1c24777ff139e139f1311d21172dcff`) and source closure SHA-256 `7483d797dbf4a7cbb0dd538e02dca51ab4d7567bcf1939ad6cdb03b38ad87acf`. It pins the Node addon, WASM binary/glue, and reference/Node/browser bundles.
+The prior top-level packet is preserved in Git revision `5999be676`;
+[`historical/pre-domain-record-refreeze-20261027/`](historical/pre-domain-record-refreeze-20261027/)
+retains its original checksum list and an exact-revision retrieval note.
+Earlier historical cohorts remain under `historical/`.
 
-The preceding top-level packet is preserved in committed source revision `851f648bb` (manifest `7acacd541cb89814ca04f20d3443ac3b166290fac9d4a8bd1173876e8f5d0d87`, source closure `58faa724a3ca71315ab8337a8bc060841ba6a882797a8bbb85a22025f29b270b`); earlier historical cohorts remain under `historical/`.
-
-This is bounded source-built evidence for five verifier cases and stated host controls. It does not qualify an installed SDK archive, a release, every Dataset semantic, or declaration retirement. See the sibling [Security And/Or current-source replay](../r8-security-and-or-v4-source-replay-current/README.md).
+This is bounded source-built evidence for five verifier cases and stated host
+controls. It does not qualify an installed SDK archive, a release, every
+Dataset semantic, or declaration retirement. See the sibling [Security And/Or
+current-source replay](../r8-security-and-or-v4-source-replay-current/README.md).

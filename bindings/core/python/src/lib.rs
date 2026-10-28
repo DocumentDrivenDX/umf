@@ -5452,6 +5452,7 @@ fn py_error_utf16(py: Python<'_>, error: PyErr) -> Utf16 {
 
 #[pymodule]
 fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
+    module.add_function(wrap_pyfunction!(domain_pack_schema, module)?)?;
     module.add_function(wrap_pyfunction!(access_rrf_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_access_rrf_wire, module)?)?;
     module.add_function(wrap_pyfunction!(execute_semantic_value_wire, module)?)?;
@@ -5742,4 +5743,14 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_class::<NativeRegistry>()?;
     module.add_class::<NativePythonSchema>()?;
     Ok(())
+}
+
+/// Return an isolated canonical domain-pack schema object for the requested version.
+#[pyfunction]
+fn domain_pack_schema(py: Python<'_>, version: String) -> PyResult<PyObject> {
+    let source = umf_core::domain_pack_schema::domain_pack_schema_json(&version)
+        .map_err(|error| PyValueError::new_err(error.code))?;
+    Ok(PyModule::import(py, "json")?
+        .call_method1("loads", (source,))?
+        .unbind())
 }

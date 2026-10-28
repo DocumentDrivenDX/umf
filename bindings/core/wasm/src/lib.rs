@@ -23,6 +23,14 @@ mod record_members_inspection;
 const HOST_READ_FRAME_EVENT: &str = "__umf_host_read_v3_frame__";
 const HOST_READ_ARRAY_ITEM_EVENT: &str = "__umf_host_read_v3_array_item__";
 
+/// Opt-in CONTRACT-052 schema resource. The caller parses the string to receive a fresh JS value.
+#[wasm_bindgen(js_name = "domainPackSchemaJson")]
+pub fn domain_pack_schema_json(version: &str) -> Result<String, JsValue> {
+    umf_core::domain_pack_schema::domain_pack_schema_json(version)
+        .map(str::to_owned)
+        .map_err(|error| JsValue::from_str(&error.code))
+}
+
 #[wasm_bindgen(js_name = accessRrfProfileVersion)]
 pub fn access_rrf_profile_version() -> String {
     umf_core_wire::access_rrf_binding::PROFILE.to_owned()

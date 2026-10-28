@@ -1429,3 +1429,26 @@ The regenerated ledger SHA-256 is
 opt-in mappings and 841 without an accepted mapping. These are bounded
 source replays; installed archive, full contract and release qualification
 remain open.
+
+## Domain-pack/Record Values refreeze — 2026-10-28
+
+The current inventory SHA-256 is
+`ccc9920ad1def679b5f6e976275967a7a44013e185f281f84e73135ddcba0b86`:
+3,375 route declarations across 509 source files and 1,126 unique names.
+The current condition-aware ledger SHA-256 is
+`bd2878a9c6d23189a2ab7f206743cd13dff065761bebe881372ca29dd318b6e7`.
+Each default Node/browser root has 1,120 declarations, including 59
+source-selected Rust declarations and 198 JSON resource exports. The ledger
+retains 922 logical executable default-route gaps, zero retired, 84 accepted
+opt-in Rust mappings, 838 without an accepted mapping, and five bounded
+current-source route proofs.
+
+The refreshed Compact, Security And/Or, and RRF packets share build manifest
+SHA-256 `ef5ff50e418a7060a2df814a226f9f66f7d4d3387a7b6a9d9622b092d9aa7f43`
+and source closure SHA-256
+`eb0a8cff53696e211dbec2b707751e1d872adc661906084986bad50914923618`.
+Direct Node 26.12.1, Bun 1.4.3 and Chromium 153.0.8010.12 replays passed
+their stated five Compact, 68 Security and five RRF cases. The packets are
+source-built subsets; they do not establish installed SDK, complete semantic,
+or release qualification. Earlier sections retain their historical hashes
+and scopes.

@@ -103,6 +103,22 @@ test('bounded /2 Cardinality evidence still cannot retire a default-route row', 
   );
 });
 
+test('the /3 retirement path explicitly rejects Record Values pending current contract and memory qualification', () => {
+  const candidate = {
+    format: 'umf.r8.default-route-retirement-evidence/3',
+    operations: [{ exportName: 'validateCoreRecordValues' }],
+  };
+  const logicalDeclarationKey = ['validateCoreRecordValues', 'validateCoreRecordValues', 'condition-selected-root-binding', '0'].join('\0');
+  const rows = ['package-root-node', 'package-root-browser'].map(routeId => ({
+    routeId, logicalDeclarationKey, exportName: 'validateCoreRecordValues', defaultRouteRetirement: { status: 'open', evidence: [] },
+  }));
+  assert.throws(
+    () => validateDefaultRouteRetirementEvidence(candidate, rows, { root: process.cwd() }),
+    /Record Values bounded evidence is not-retirable.*CONTRACT-049.*independent acceptance review.*measured memory bounds/,
+  );
+  assert.deepEqual(rows.map(row => row.defaultRouteRetirement.status), ['open', 'open']);
+});
+
 const securityNotOperation = {
   exportName: 'securityNot',
   rustOwner: 'umf_core::security_logic::security_not',

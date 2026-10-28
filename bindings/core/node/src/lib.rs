@@ -30,6 +30,14 @@ const HOST_READ_ARRAY_ITEM_EVENT: &str = "__umf_host_read_v3_array_item__";
 pub fn access_rrf_profile_version() -> String {
     umf_core_wire::access_rrf_binding::PROFILE.to_owned()
 }
+
+/// Opt-in CONTRACT-052 canonical schema resource; the JS wrapper parses a fresh value.
+#[napi(js_name = "domainPackSchemaJson")]
+pub fn domain_pack_schema_json(version: String) -> NapiResult<String> {
+    umf_core::domain_pack_schema::domain_pack_schema_json(&version)
+        .map(str::to_owned)
+        .map_err(|error| Error::from_reason(error.code))
+}
 #[napi(js_name = "executeAccessRrfWire")]
 pub fn execute_access_rrf_wire(
     env: Env,
