@@ -1,0 +1,7 @@
+# R8 broad installed SDK replay — 2026-10-28
+
+This packet preserves the generated receipt from `bun scripts/test-sdk-rust-default.ts .cache/sdk-distribution/umf-sdk.tgz` on local Darwin arm64. The archive SHA-256 is `56f2ed6c5e5647c94337b8ee36f8b62e662fd6423ca1c7ef9763739d8a211fe9`, built with zero source transforms from the 3,629-input closure `d7cae37e060e960d94b054872c342042d1a088d6dec2cbb7366b094d2395e96c`. The exact archive remains in local ignored build storage; the three focused route packets separately pin its complete member map and package metadata.
+
+Installed Node 26.12.1, Bun 1.4.3, and real Chromium 153.0.8010.12 passed the 31-case R3 generator replay, 27 JavaScript numeric cases plus six boundaries, 66 cardinality, 19 facets, 14 keys, 11 Bit128, and 19 Compact Dataset cases. The companion Security And/Or receipt records 68 cases, 30 valid Rust/WASM calls per host, zero Chromium external requests, and source/archive pins. Package-route tampering and missing/corrupt native/WASM asset controls refused. The installed receipt reports 1,803 assets, 1,810 archive members, and 1,120 public exports.
+
+This is one local installed host cohort, not a Linux or hosted qualification, a complete default-route port, or a release. The condition-aware ledger still records 922 open logical gaps and zero retirements. The source-bound receipts and `SHA256SUMS` are preserved here; the adjacent local absolute path and ephemeral server port in the raw receipt are execution metadata, not portable paths or endpoints.

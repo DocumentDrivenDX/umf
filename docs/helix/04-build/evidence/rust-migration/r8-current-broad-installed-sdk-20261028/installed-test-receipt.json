@@ -1,0 +1,118 @@
+{
+  "status": "passed",
+  "archive": "umf-sdk.tgz",
+  "archiveSha256": "56f2ed6c5e5647c94337b8ee36f8b62e662fd6423ca1c7ef9763739d8a211fe9",
+  "packageRootConditions": {
+    "types": "./dist/src/index.d.ts",
+    "browser": "./dist/umf-browser.js",
+    "node": "./dist/umf-node.js",
+    "import": "./dist/umf-browser.js",
+    "default": "./dist/umf-browser.js"
+  },
+  "referenceConditions": {
+    "types": "./dist/src/index.d.ts",
+    "import": "./dist/umf.js"
+  },
+  "routeTamperRefusals": 3,
+  "platform": {
+    "os": "darwin",
+    "arch": "aarch64",
+    "nodeArch": "arm64",
+    "nativeTarget": "aarch64-apple-darwin",
+    "napi": "N-API 8",
+    "runtimeCohort": [
+      "Node",
+      "Bun"
+    ]
+  },
+  "node": "v26.12.1",
+  "bun": "1.4.3",
+  "browser": "Chromium 153.0.8010.12",
+  "serverPort": 49428,
+  "files": 7,
+  "r3Cases": 31,
+  "javascriptNumericCases": 27,
+  "javascriptNumericBoundaryCases": 6,
+  "javascriptNumericDefaultRootInitializationMs": {
+    "node": 3527.9861250000004,
+    "bun": 3939.778875,
+    "browser": 2792.1999999284744
+  },
+  "javascriptNumericDefaultFirstCallMs": {
+    "node": 528.5219579999975,
+    "bun": 537.2569159999985,
+    "browser": 472.5
+  },
+  "cardinalityCases": 66,
+  "facetsCases": 19,
+  "keysCases": 14,
+  "bit128Functions": [
+    "parseBits128",
+    "parseUuid",
+    "bits128FromBytes",
+    "bits128ToBytes",
+    "uuidFromBits128",
+    "uuidToBits128",
+    "compareBits128",
+    "bits128ToWords",
+    "bits128FromWords",
+    "bits128ToInteger",
+    "bits128FromInteger"
+  ],
+  "bit128PacketSha256": "05fdc7e6fdd26e9065ac5daa52672d37ebe27a470f1e4cdf140e6563171712e6",
+  "bit128Cases": 11,
+  "bit128NodeBufferInput": "accepted-and-copied",
+  "bit128BunBufferInput": "accepted-and-copied",
+  "bit128BrowserBufferInput": "unavailable",
+  "bit128UmfErrorIdentity": {
+    "node": true,
+    "bun": true,
+    "browser": true
+  },
+  "compactValidateCases": 19,
+  "compactValidateFiles": [
+    "frozen-absent-state.json",
+    "frozen-archaeology.json",
+    "frozen-commerce.json",
+    "frozen-crossed-invalid-source-input.json",
+    "frozen-duplicate-key.json",
+    "frozen-duplicate-locator.json",
+    "frozen-ecology.json",
+    "frozen-exact-decimal-token.json",
+    "frozen-invalid-input-only.json",
+    "frozen-invalid-source-only.json",
+    "frozen-missing-links.json",
+    "frozen-near-threshold-accepted.json",
+    "frozen-near-threshold-first-refused.json",
+    "frozen-parallel-links.json",
+    "frozen-present-null.json",
+    "frozen-structural-limit.json",
+    "frozen-supply-chain.json",
+    "frozen-unknown-and-residual.json",
+    "frozen-work-limit.json"
+  ],
+  "exports": 1120,
+  "securityAndOrInstalled": {
+    "status": "passed",
+    "receiptPath": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/.cache/sdk-distribution/security-and-or-installed-receipt.json",
+    "fixtureSha256": "be97dfa59f8971e1c70e8e932ea8dac0188e0c3cd39b7ddf1b7206a06790f5d2",
+    "cases": 68,
+    "validRustCalls": {
+      "node": 30,
+      "bun": 30,
+      "chromium": 30
+    },
+    "browser": "153.0.8010.12"
+  },
+  "sourcePackageNodeAndBun": true,
+  "missingNativeRefused": true,
+  "corruptNativeRefused": true,
+  "corruptWasmRefused": true,
+  "missingWasmRefused": true,
+  "assetCount": 1803,
+  "archiveMemberCount": 1810,
+  "sourceTreeSha256": "d7cae37e060e960d94b054872c342042d1a088d6dec2cbb7366b094d2395e96c",
+  "sourceTransformStatus": "fixed-point",
+  "sourceTransformCount": 0,
+  "totalElapsedMs": 1067728
+}
