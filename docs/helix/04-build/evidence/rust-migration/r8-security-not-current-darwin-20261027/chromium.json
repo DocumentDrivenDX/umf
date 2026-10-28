@@ -1,0 +1,359 @@
+{
+  "format": "umf.r8.default-route-retirement-host-receipt/3",
+  "status": "pass",
+  "runtime": "chromium",
+  "hostVersion": "153.0.8010.12",
+  "cohortId": "darwin-arm64",
+  "hostPlatform": {
+    "os": "darwin",
+    "arch": "arm64"
+  },
+  "archiveSha256": "accf61b39c4213ab452fbfff4fe1a31b950934a36c321c74984df45088adcd6c",
+  "sourceClosureSha256": "a53fba2dcf8edb4907de646040e446f95c6af7c13b6f6abd165dcdde5a893c25",
+  "packetSha256": "10ac8874de655a4896dfd63b0de1dbd884a3049bba5118843beb35fd04bc46e6",
+  "defaultRoute": {
+    "routeId": "package-root-browser",
+    "entryMember": "dist/umf-browser.js",
+    "entrySha256": "e92cd4c9500d747be037f2919c43bab08e6d056a149fe1f1afe736e98d8b259a",
+    "artifactMembers": [
+      {
+        "path": "dist/umf_core_wasm_bg.wasm",
+        "sha256": "697bfba0d4947ec6523bcd8984a5b33b06f62504531eb0517054aeaf1ff09ccc"
+      }
+    ]
+  },
+  "referenceRoute": {
+    "routeId": "package-reference",
+    "entryMember": "dist/umf.js",
+    "entrySha256": "77090e7cf56b9d260f219985e822a385042c9e0922e5036029e6f67bb9dff869",
+    "artifactMembers": []
+  },
+  "cases": [
+    {
+      "id": "T",
+      "defaultOutcome": {
+        "kind": "return",
+        "value": "F",
+        "trace": []
+      },
+      "defaultTrace": [],
+      "defaultRustCalls": 1,
+      "referenceOutcome": {
+        "kind": "return",
+        "value": "F",
+        "trace": []
+      },
+      "referenceTrace": [],
+      "referenceRustCalls": 0
+    },
+    {
+      "id": "F",
+      "defaultOutcome": {
+        "kind": "return",
+        "value": "T",
+        "trace": []
+      },
+      "defaultTrace": [],
+      "defaultRustCalls": 1,
+      "referenceOutcome": {
+        "kind": "return",
+        "value": "T",
+        "trace": []
+      },
+      "referenceTrace": [],
+      "referenceRustCalls": 0
+    },
+    {
+      "id": "U",
+      "defaultOutcome": {
+        "kind": "return",
+        "value": "U",
+        "trace": []
+      },
+      "defaultTrace": [],
+      "defaultRustCalls": 1,
+      "referenceOutcome": {
+        "kind": "return",
+        "value": "U",
+        "trace": []
+      },
+      "referenceTrace": [],
+      "referenceRustCalls": 0
+    },
+    {
+      "id": "null",
+      "defaultOutcome": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "defaultTrace": [],
+      "defaultRustCalls": 0,
+      "referenceOutcome": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "referenceTrace": [],
+      "referenceRustCalls": 0
+    },
+    {
+      "id": "number",
+      "defaultOutcome": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "defaultTrace": [],
+      "defaultRustCalls": 0,
+      "referenceOutcome": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "referenceTrace": [],
+      "referenceRustCalls": 0
+    },
+    {
+      "id": "boolean",
+      "defaultOutcome": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "defaultTrace": [],
+      "defaultRustCalls": 0,
+      "referenceOutcome": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "referenceTrace": [],
+      "referenceRustCalls": 0
+    },
+    {
+      "id": "unknown-string",
+      "defaultOutcome": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "defaultTrace": [],
+      "defaultRustCalls": 0,
+      "referenceOutcome": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "referenceTrace": [],
+      "referenceRustCalls": 0
+    },
+    {
+      "id": "array",
+      "defaultOutcome": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "defaultTrace": [],
+      "defaultRustCalls": 0,
+      "referenceOutcome": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "referenceTrace": [],
+      "referenceRustCalls": 0
+    },
+    {
+      "id": "object",
+      "defaultOutcome": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "defaultTrace": [],
+      "defaultRustCalls": 0,
+      "referenceOutcome": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "referenceTrace": [],
+      "referenceRustCalls": 0
+    },
+    {
+      "id": "null-prototype",
+      "defaultOutcome": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "defaultTrace": [],
+      "defaultRustCalls": 0,
+      "referenceOutcome": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "referenceTrace": [],
+      "referenceRustCalls": 0
+    },
+    {
+      "id": "accessor",
+      "defaultOutcome": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "defaultTrace": [],
+      "defaultRustCalls": 0,
+      "referenceOutcome": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "referenceTrace": [],
+      "referenceRustCalls": 0
+    },
+    {
+      "id": "proxy-ownKeys",
+      "defaultOutcome": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "defaultTrace": [],
+      "defaultRustCalls": 0,
+      "referenceOutcome": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "referenceTrace": [],
+      "referenceRustCalls": 0
+    },
+    {
+      "id": "proxy-getPrototype",
+      "defaultOutcome": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "defaultTrace": [],
+      "defaultRustCalls": 0,
+      "referenceOutcome": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "referenceTrace": [],
+      "referenceRustCalls": 0
+    },
+    {
+      "id": "proxy-get",
+      "defaultOutcome": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "defaultTrace": [],
+      "defaultRustCalls": 0,
+      "referenceOutcome": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "referenceTrace": [],
+      "referenceRustCalls": 0
+    }
+  ]
+}

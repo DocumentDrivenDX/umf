@@ -1,7 +1,7 @@
 {
   "format": "umf.r8.compact-dataset-verify-build/1",
   "sourceClosure": {
-    "sha256": "58faa724a3ca71315ab8337a8bc060841ba6a882797a8bbb85a22025f29b270b",
+    "sha256": "7483d797dbf4a7cbb0dd538e02dca51ab4d7567bcf1939ad6cdb03b38ad87acf",
     "files": {
       ".cargo/config.toml": "84fd4fa17fd967cae6006ba1b0dc430904239dec921c1441dd657387ee802d6c",
       "bindings/core/node/build.rs": "fcbd1ff3f627a7553fa1704dc6f558998daff8bc256015c37aace62cc49ce584",
@@ -1784,7 +1784,7 @@
       "src/extensions/actions/manifest-types.ts": "b3467de1b7e82c74de45ceacc2e11b137d9f1453ab77c00f8ce9eb2f04695c2e",
       "src/extensions/actions/manifests.ts": "e734083c06f7f375cf512555c99762eade63768633568479a347c860f659a206",
       "src/extensions/actions/plan-artifacts.ts": "dba1e670712221ef92b02ad2c3b7fb7924b4dd542e69a3bc12cefda98f544840",
-      "src/extensions/actions/plan-identity.ts": "9a4a783a2b5a8bea2e69a992ab2fd0865390190fe0e262daee57d63e1ec28fb3",
+      "src/extensions/actions/plan-identity.ts": "4fe5a39e7d5b72ccaa04505ca595c58689af3be7bf2a95f418eb9c379fc87c2a",
       "src/extensions/actions/plan-structure.ts": "f9c4cc40dfdf240f74177b24719f18e24dda6a6b80cba329767c3cb8b7162d83",
       "src/extensions/actions/plan-types.ts": "889215057a455e66ab18db89d53940e7bed44c02d66852667f7975cc345b6549",
       "src/extensions/actions/plans.ts": "7d4bdefc02f40159afe5fea3161e94a296a0af99b0e8028661c9f7fdb5221782",
@@ -2002,7 +2002,7 @@
   "artifacts": {
     "nodeAddon": {
       "path": "umf_core_node.node",
-      "sha256": "1151647fb3b5a8068887b28a10d4322f3915e30f850a7f98f972f07fa2da4587"
+      "sha256": "9d8f741c7cb8392f312ee8df361182f78031ea6fb334ccab186ee06335089b5a"
     },
     "wasm": {
       "path": "umf_core_wasm_bg.wasm",
@@ -2014,15 +2014,15 @@
     },
     "referenceBundle": {
       "path": "umf.js",
-      "sha256": "231c8d74f44cc13de6c2f5774004a39e98cdf44d284fc818b90d851e62ebf715"
+      "sha256": "448517a6e22f87916193165280f4e077a9d2b82233972a9a1e719dbc18a29ce8"
     },
     "nodeBundle": {
       "path": "umf-node.js",
-      "sha256": "d3ffe89e7bd43b6779f925cecdede1d0ee93066291afb80a82c0a33eb97303eb"
+      "sha256": "9a5a409f61e305f82c2c0bd17690be6911a12d658916c7f8d9982e3beaa4c687"
     },
     "browserBundle": {
       "path": "umf-browser.js",
-      "sha256": "dde3c832fac184856925dd9b87ed73fe78bda4ada01529693b7bede337dcf4cc"
+      "sha256": "1a5c8366d9bcfc71ac38d21245f83fe3451dfaf49183cca32bfe178e717ed612"
     }
   },
   "toolchain": {
@@ -2031,5 +2031,5 @@
     "wasmBindgen": "wasm-bindgen 0.2.100",
     "bun": "1.4.3"
   },
-  "builtAt": "2026-10-28T00:54:20.487Z"
+  "builtAt": "2026-10-28T01:12:31.799Z"
 }

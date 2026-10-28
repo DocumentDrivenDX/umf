@@ -1,0 +1,25 @@
+{
+  "format": "umf.r8.default-route-retirement-cohort/1",
+  "status": "pass",
+  "cohortId": "linux-x86_64",
+  "platform": {
+    "os": "linux",
+    "arch": "x86_64",
+    "nodeArch": "x64",
+    "nativeTarget": "x86_64-unknown-linux-gnu"
+  },
+  "archiveSha256": "dc3ec269f99266862ea078e23d166c4b50e30cc5b1fd0ef3cf337982b31bd93a",
+  "sourceClosureSha256": "a53fba2dcf8edb4907de646040e446f95c6af7c13b6f6abd165dcdde5a893c25",
+  "sourceInputCount": 3595,
+  "packageManifestSha256": "1bd5f6cc6db6a5e9ef0e395a19aa6504e8a9a130a2fcbd3faaf4effbac7bb23a",
+  "liveSourceManifestSha256": "e684adc8f39829991346757a64bcc3c013b284d8a6cc368f239add5d79fa2203",
+  "memberManifestSha256": "5045a498e1a81d6b3eb670947752de89c5fecf0a910bff20c0e2edc79890a37f",
+  "archiveMemberCount": 1807,
+  "receipts": {
+    "securityNot": {
+      "node": "b449eb4f46eb33b2ed59471ad9b9840cb15bf1e370de0f505cc25e8bb2aa150a",
+      "bun": "fcafceca47b8f3aa81ac22a502c8a16e9d99944fb9446014a9601432d23548e6",
+      "chromium": "6e32dfd01915c02b782bb551d83477bdccd546a4e01c383a78ec036a68b11a68"
+    }
+  }
+}

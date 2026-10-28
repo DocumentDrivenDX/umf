@@ -8942,3 +8942,65 @@ packet bytes, then repeat on a clean same-source Linux x86_64 archive before
 reviewing any declaration retirement. Memory claims require a separate
 measured peak-memory gate: the prior 100,001-value opt-in probe reached about
 403 MB in Node and 547 MB in Bun.
+
+### R8 generated identity fixed-point correction — 2026-10-27
+
+The preceding `851f648bb` source-built replay cohort remains in that Git
+revision. A clean SDK build of it found one generated-input transform:
+`src/extensions/actions/plan-identity.ts` was stale after the metamodel
+regeneration. Both candidate platform builds were stopped before qualification.
+The generated identity was refreshed in `e9ace728d`; its own `--check` and the
+metamodel `--check` pass. This one-file source change invalidated the previous
+current-source RRF, Compact, and Security receipts, so all three packets were
+replayed against a new immutable build manifest, SHA-256
+`2cd9bdb5bb32e43cb76a11fa3074e321e1c24777ff139e139f1311d21172dcff`,
+and 1,994-file source closure
+`7483d797dbf4a7cbb0dd538e02dca51ab4d7567bcf1939ad6cdb03b38ad87acf`.
+Node, Bun, and Chromium pass RRF 5/5, Compact Dataset 5/5, and Security
+And/Or 68/68 with zero mismatches. Compact Node/Bun record 14 Rust calls each;
+Security records 30 valid Rust/WASM calls per host and zero refusal dispatch.
+The prior packet is preserved in commit `851f648bb`; redundant duplicate
+history directories were omitted. The symbol inventory remains SHA-256
+`7fe469d31fbe0afbdc3244631a45c541222e31f91a07514ac4b9a1cb39988cf1`;
+the corrected-head ledger SHA-256 is
+`8ec94b124f9fcb629539ec7c7bd122e489d8efe10d9323f87dd7dbc5beb53a8b`.
+The ledger still records 922 open logical executable default-route gaps and
+zero retired.
+
+The corrected `e9ace728d` Darwin arm64 SDK archive has zero transforms across
+3,595 source inputs, source closure
+`a53fba2dcf8edb4907de646040e446f95c6af7c13b6f6abd165dcdde5a893c25`,
+archive SHA-256
+`accf61b39c4213ab452fbfff4fe1a31b950934a36c321c74984df45088adcd6c`,
+and 1,807 verified members. Its installed Node 26.12.1, Bun 1.4.3, and
+Chromium 153.0.8010.12 `securityNot` replays each pass the exact 14 cases:
+one Rust call for T/F/U, zero for the 11 invalid inputs, no reference Rust
+calls, empty getter/Proxy traces, and no Node globals in Chromium. The full
+source and member maps and case-level receipts are preserved in
+`r8-security-not-current-darwin-20261027/`. The clean Docker-emulated Linux
+x86_64 SDK archive has the same 3,595-input fixed-point source closure and
+zero transforms, SHA-256
+`dc3ec269f99266862ea078e23d166c4b50e30cc5b1fd0ef3cf337982b31bd93a`,
+and 1,807 verified members. Its installed Node, Bun, and Chromium replays
+also pass all 14 cases with the same dispatch and host-effect constraints.
+The [Linux packet](evidence/rust-migration/r8-security-not-current-linux-20261027/README.md)
+contains the complete source/member maps and raw receipts.
+
+The current-source two-cohort `/3` validator accepted exactly the default
+Node and browser `securityNot` rows as `retired` for this pinned archive pair;
+its conditional ledger leaves 921 logical executable default-route gaps.
+The frozen packet, source closure, member maps, archive hashes, and all six
+host receipts were checked, and four tamper controls were rejected. The
+checked default ledger remains at 922 open/zero retired because its normal
+invocation supplies no archive evidence. The exact local validator input and
+result are preserved in the Linux packet. This bounded result does not
+qualify the wider Security API, hosted CI, or an SDK release.
+
+A separate, currently temporary installed Record Values harness exercised the
+24 frozen semantic vectors and 19 expanded raw-host-admission cases by package
+name against that Darwin archive. Node, Bun, and Chromium matched exact
+outcomes, getter traces, and default/reference Rust dispatch counts; Chromium
+also passed the 700,000-unit retention control and 100,001-value `LIMIT` at
+`/99999`, with no Node globals. This is a local prototype result pending a
+source-pinned, reproducible evidence packet and same-source Linux replay; it
+does not retire `validateCoreRecordValues`.
