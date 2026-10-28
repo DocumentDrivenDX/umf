@@ -6,33 +6,33 @@
   "status": "pass",
   "host": "chromium",
   "buildBinding": {
-    "manifest": "/private/tmp/umf-r8-domain-record-current-refrozen-20261027/compact-dataset-verify-build-manifest.json",
-    "sha256": "ef5ff50e418a7060a2df814a226f9f66f7d4d3387a7b6a9d9622b092d9aa7f43",
-    "sourceClosureSha256": "eb0a8cff53696e211dbec2b707751e1d872adc661906084986bad50914923618",
+    "manifest": "/private/tmp/umf-r8-domain-pack-fixedpoint-20261027/compact-dataset-verify-build-manifest.json",
+    "sha256": "cedcbf75d43607fbed7d1e6a4310775c41096ebf9ba89d31c33081d4cb679586",
+    "sourceClosureSha256": "f8c9450063b9f13274366f07255f0e22aa5c18e04aae96a1d3da6e001a1f85ec",
     "artifacts": {
       "nodeAddon": {
         "path": "umf_core_node.node",
-        "sha256": "67aedb6383860131ba62d695026bda35ca7793480bccb0c3bbdd2b3a4d85573f"
+        "sha256": "4a9f6c400e559eb2ed6e6d96474761ef916df1510c34a92c55ec2d29b7969bb9"
       },
       "wasm": {
         "path": "umf_core_wasm_bg.wasm",
-        "sha256": "87a430a3e23abf4492fec1a1b1056bfdf58f95a6a7909c73f17ec6898d00a824"
+        "sha256": "0c478c437380918e4f77771d7053e9b1729050dcdb07bb1fa92368d5e070d711"
       },
       "wasmGlue": {
         "path": "wasm/umf_core_wasm.js",
-        "sha256": "254a625b77a95e93c43552462e559273156d91ee33b863aa0e59cbe8449b6d73"
+        "sha256": "98e99497ebde3e9788814197f3b715998fe514b0af1cea43d307450cd94ccae8"
       },
       "referenceBundle": {
         "path": "umf.js",
-        "sha256": "e89593086cc4208998e5de245d405f76361e607a98a1adf4915e148a1d68afa8"
+        "sha256": "bb2b98321db1c75bfc03c6664789f5c5c5d970e5bc0cbb91778304bd0b739e58"
       },
       "nodeBundle": {
         "path": "umf-node.js",
-        "sha256": "768cbaa6fe1b9d64ae717f09489f4553a23a1125414adc0cdfde47d565b86571"
+        "sha256": "0b5fa6d8bc6cad460f5b949979bd6def2e0e3dab67c79c5fc2e03517694aa534"
       },
       "browserBundle": {
         "path": "umf-browser.js",
-        "sha256": "c0e72eee9c1b28610d621f41f60e12ca2a3fb8c7997aabd7f63d5794431e965f"
+        "sha256": "dc1289f7fec1d19c28f2217a517d5a9b9e00e91876c52d430e37d472d0c4a9d5"
       }
     }
   },
@@ -52,6 +52,6 @@
   "browser": "153.0.8010.12",
   "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
   "packetSha256": "3e4467f63ff324c35fe4b46824a75d830608a03bf3ee08f722e85ddc370243a1",
-  "wasmGlueSha256": "254a625b77a95e93c43552462e559273156d91ee33b863aa0e59cbe8449b6d73",
-  "wasmBinarySha256": "87a430a3e23abf4492fec1a1b1056bfdf58f95a6a7909c73f17ec6898d00a824"
+  "wasmGlueSha256": "98e99497ebde3e9788814197f3b715998fe514b0af1cea43d307450cd94ccae8",
+  "wasmBinarySha256": "0c478c437380918e4f77771d7053e9b1729050dcdb07bb1fa92368d5e070d711"
 }

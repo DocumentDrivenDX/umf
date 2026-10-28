@@ -1814,7 +1814,7 @@ test('OpenAPI result schemas pin their governing contracts and package data clos
   assert.match(archive, /\(root\s*\/\s*'dist'\)\.rglob\('\*'\)/);
 });
 
-test('domain-pack resources pin the schema builder, contract inputs and package closure', () => {
+test('domain-pack resources pin Rust schema computation, the TypeScript manifest wrapper and package closure', () => {
   const ledger = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/gap-ledger.json', 'utf8'));
   const expected = new Set([
     'spec/extensions/domain-pack/schema.json',
@@ -1827,14 +1827,21 @@ test('domain-pack resources pin the schema builder, contract inputs and package 
   for (const row of rows) {
     const authority = row.resourceOwnership.authority;
     assert.equal(authority.status, 'generated-authority-known', row.source);
-    assert.equal(authority.kind, 'generated-from-explicit-typescript-schema-builder', row.source);
+    assert.equal(authority.kind, 'generated-from-rust-domain-pack-schema-with-typescript-manifest-wrapper', row.source);
     assert.equal(authority.generatorKind, authority.kind, row.source);
     assert.deepEqual(authority.governingArtifacts, ['docs/helix/02-design/contracts/CONTRACT-052-domain-packs.md']);
-    assert.deepEqual(authority.generator.entrypoints, ['scripts/domain-pack-schema.ts']);
-    assert.deepEqual(authority.generatorInputs, ['src/domain-packs/schema.ts', 'src/domain-packs/source-schema.ts']);
+    assert.deepEqual(authority.generator.entrypoints, ['scripts/domain-pack-schema.ts', 'crates/umf-cli/src/main.rs']);
+    assert.equal(authority.generator.language, 'Rust schema computation plus TypeScript manifest wrapper');
+    assert.equal(authority.generator.runtime, 'Rust umf-cli via Bun-hosted TypeScript');
+    assert.deepEqual(authority.generatorInputs, ['src/generated/core-model.ts', 'crates/umf-core/src/domain_pack_schema.rs',
+      'crates/umf-core/src/domain_pack_source_schema.rs']);
     assert.match(row.resourceOwnership.source.sha256, /^[a-f0-9]{64}$/);
     for (const file of ['docs/helix/02-design/contracts/CONTRACT-052-domain-packs.md', 'scripts/domain-pack-schema.ts',
-      'src/domain-packs/schema.ts', 'src/domain-packs/source-schema.ts', 'src/index.ts', 'scripts/package-sdk-rust-default.ts']) {
+      'src/generated/core-model.ts', 'src/model/types.ts', 'Cargo.toml', 'Cargo.lock',
+      'crates/umf-cli/Cargo.toml', 'crates/umf-cli/src/main.rs', 'crates/umf-core/Cargo.toml',
+      'crates/umf-core/src/lib.rs', 'crates/umf-core/src/full_modules.rs',
+      'crates/umf-core/src/domain_pack_schema.rs', 'crates/umf-core/src/domain_pack_source_schema.rs',
+      'src/index.ts', 'scripts/build.ts', 'scripts/package-sdk-rust-default.ts']) {
       assert.ok(authority.sourceClosure.some(item => item.path === file && /^[a-f0-9]{64}$/.test(item.sha256)), `${row.source} closure omits ${file}`);
     }
     assert.ok(row.resourceOwnership.routes.some(route => route.id === 'sdk-archive'

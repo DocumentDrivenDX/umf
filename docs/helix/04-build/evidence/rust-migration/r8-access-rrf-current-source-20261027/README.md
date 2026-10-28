@@ -23,9 +23,9 @@ mismatches. Node and Bun loaded the shared native addon; Chromium loaded the
 fresh source build's WASM glue and binary.
 
 The [receipt summary](receipt.json) binds these runs to build manifest SHA-256
-`ef5ff50e418a7060a2df814a226f9f66f7d4d3387a7b6a9d9622b092d9aa7f43`, source
+`cedcbf75d43607fbed7d1e6a4310775c41096ebf9ba89d31c33081d4cb679586`, source
 closure SHA-256
-`eb0a8cff53696e211dbec2b707751e1d872adc661906084986bad50914923618`, and the
+`f8c9450063b9f13274366f07255f0e22aa5c18e04aae96a1d3da6e001a1f85ec`, and the
 frozen predecessor packet SHA-256
 `3e4467f63ff324c35fe4b46824a75d830608a03bf3ee08f722e85ddc370243a1`. The
 fail-closed builder verified all manifest-pinned source files, six build

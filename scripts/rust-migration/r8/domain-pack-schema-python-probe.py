@@ -16,8 +16,12 @@ schema_bytes = pathlib.Path("spec/extensions/domain-pack/schema.json").read_byte
 expected = json.loads(schema_bytes)
 first = _rust_core.domain_pack_schema("1.0.0")
 assert first == expected
+assert type(first["properties"]["id"]["minLength"]) is int
+assert (json.dumps(first, ensure_ascii=False, indent=2) + "\n").encode("utf-8") == schema_bytes
 first["properties"]["id"]["type"] = "integer"
-assert _rust_core.domain_pack_schema("1.0.0") == expected
+second = _rust_core.domain_pack_schema("1.0.0")
+assert second == expected
+assert second is not first
 try:
     _rust_core.domain_pack_schema("2.0.0")
 except ValueError as error:

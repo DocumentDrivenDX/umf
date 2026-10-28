@@ -26,10 +26,10 @@ the `readJsonValue` access facade.
 
 All receipts bind to the same immutable source-built manifest as the sibling
 [five-case Compact Dataset verifier replay](../r8-compact-dataset-verify-source/README.md):
-`/private/tmp/umf-r8-domain-record-current-refrozen-20261027/compact-dataset-verify-build-manifest.json`,
-SHA-256 `ef5ff50e418a7060a2df814a226f9f66f7d4d3387a7b6a9d9622b092d9aa7f43`;
+`/private/tmp/umf-r8-domain-pack-fixedpoint-20261027/compact-dataset-verify-build-manifest.json`,
+SHA-256 `cedcbf75d43607fbed7d1e6a4310775c41096ebf9ba89d31c33081d4cb679586`;
 source closure SHA-256
-`eb0a8cff53696e211dbec2b707751e1d872adc661906084986bad50914923618`. Each
+`f8c9450063b9f13274366f07255f0e22aa5c18e04aae96a1d3da6e001a1f85ec`. Each
 receipt verified the complete build closure and six artifacts before execution.
 The frozen fixture [`predecessor.json`](predecessor.json) remains pinned in
 `SHA256SUMS` and records live Security source, JSON admission, CONTRACT-062,

@@ -72,13 +72,13 @@ resources. All 922 unique non-JSON executable declarations retain logical
 retirement gaps; 84 have accepted opt-in Rust mappings and 838 do not. Five
 binding routes have bounded current-source evidence, but no declaration is
 retired. The inventory SHA-256 is
-`ccc9920ad1def679b5f6e976275967a7a44013e185f281f84e73135ddcba0b86`;
+`6a592a171d0e4f2f4983302ccc9d2a15bc881c9b6159d6ffa19d76cef1104c40`;
 the condition-aware gap ledger SHA-256 is
-`bd2878a9c6d23189a2ab7f206743cd13dff065761bebe881372ca29dd318b6e7`.
+`3bc69e8f032e32240b9fe31c59a96acb5c6df422039122004b8d97d8a1868810`.
 The current Compact, Security And/Or, and RRF source replays share manifest
-`ef5ff50e418a7060a2df814a226f9f66f7d4d3387a7b6a9d9622b092d9aa7f43`
+`cedcbf75d43607fbed7d1e6a4310775c41096ebf9ba89d31c33081d4cb679586`
 and source closure
-`eb0a8cff53696e211dbec2b707751e1d872adc661906084986bad50914923618`.
+`f8c9450063b9f13274366f07255f0e22aa5c18e04aae96a1d3da6e001a1f85ec`.
 Neither the source inventory nor the bounded replays qualify full production
 SDK parity or release.
 The ledger's `executable` label is a broad public-runtime category: independent
@@ -9092,3 +9092,46 @@ guard, not an execution sandbox. The current R8 ledger still reports 922
 logical default-route gaps and zero retired; bounded opt-in mappings and
 source-selected declarations do not remove a gap by themselves. Draft PR #61
 and the full R4–R8 release goal remain open.
+
+### R8 computed domain-pack schema generator and artifact path — 2026-10-28
+
+CONTRACT-052's `umf.domain-pack` and `umf.dataset-source` 1.0.0 schema
+builders now have ordered, pure Rust implementations. The Rust core tests
+compare their compact structure and canonical pretty JSON bytes with the two
+checked-in Draft 2020-12 schemas; the generated versioned accessor refuses
+other versions at `/version`. The opt-in Node and WASM string bindings render
+the computed value through the ordinary resource context, preserving exact
+canonical pretty bytes and a final LF. CPython converts the computed value to
+fresh Python containers after ordinary JSON admission, preserving integer
+values. Focused native Node 26.12.1, CPython 3.11.17, and real Chromium
+153.0.8010.12 probes pass canonical parity, isolation, and version refusal;
+the browser probe also confirms Node globals are absent. All three binding
+crates compile offline with pinned Rust 1.90.0. These are local opt-in checks,
+not installed-package or Linux qualification.
+
+`umf domain-pack schema --kind domain-pack|dataset-source --version 1.0.0
+[--pretty]` is the source-built, read-only Rust CLI interface. Focused CLI
+tests pass exact compact/pretty bytes and malformed-argument refusals.
+`scripts/domain-pack-schema.ts` now obtains both schemas from that pinned,
+offline CLI and only composes the two extension-package manifests with the
+generated current core version. Its real `--check` verifies all four existing
+artifacts byte-for-byte; three negative controls prove a failed Rust call
+prevents any write and missing or stale check output remains untouched. The
+R8 resource-authority mapping now names the Rust builders and CLI together
+with the TypeScript manifest wrapper; the checked-in ledger has been regenerated after the fixed-point replay below.
+
+The TypeScript reference schema builders remain available, and the public
+Node/browser V4 default exports still select them. The default-route gap remains open. The fresh shared current-source replay now binds the Compact, Security And/Or, and
+RRF packets to manifest SHA-256
+`cedcbf75d43607fbed7d1e6a4310775c41096ebf9ba89d31c33081d4cb679586` and source
+closure SHA-256
+`f8c9450063b9f13274366f07255f0e22aa5c18e04aae96a1d3da6e001a1f85ec`. Node
+26.12.1, Bun 1.4.3, and Chromium 153.0.8010.12 passed five Compact, 68 Security,
+and five RRF cases. Compact, Security, and RRF retain their bounded scope; these
+receipts do not qualify installed packages or release behavior. The refreshed
+inventory SHA-256 is
+`6a592a171d0e4f2f4983302ccc9d2a15bc881c9b6159d6ffa19d76cef1104c40`; the
+condition-aware ledger SHA-256 is
+`3bc69e8f032e32240b9fe31c59a96acb5c6df422039122004b8d97d8a1868810`, with 922
+open logical executable default-route gaps and zero retired. No route retirement
+or release is claimed.

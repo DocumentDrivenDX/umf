@@ -602,6 +602,11 @@ fn value_text(value: &Value) -> Option<Utf16> {
 }
 
 fn run(args: Vec<String>) -> Result<(), String> {
+    if args.first().map(String::as_str) == Some("domain-pack") {
+        let output = domain_pack_schema_output(&args[1..])?;
+        print!("{output}");
+        return Ok(());
+    }
     if args.first().map(String::as_str) == Some("cardinality") {
         return cardinality_run(&args[1..]);
     }
@@ -640,7 +645,7 @@ fn run(args: Vec<String>) -> Result<(), String> {
     }
     if args.first().map(String::as_str) != Some("metamodel") {
         return Err(
-            "usage: umf <metamodel|reference|cardinality|facets|csv-boolean-lexical|iceberg|arrow|protobuf|avro|json-schema> ...".into(),
+            "usage: umf <metamodel|domain-pack|reference|cardinality|facets|csv-boolean-lexical|iceberg|arrow|protobuf|avro|json-schema> ...".into(),
         );
     }
     let operation = args
@@ -785,6 +790,65 @@ fn run(args: Vec<String>) -> Result<(), String> {
         _ => return Err(format!("unknown metamodel operation: {operation}")),
     }
     Ok(())
+}
+
+fn domain_pack_schema_output(args: &[String]) -> Result<String, String> {
+    let usage = "usage: umf domain-pack schema --kind <domain-pack|dataset-source> --version 1.0.0 [--pretty]";
+    if args.first().map(String::as_str) != Some("schema") {
+        return Err(usage.into());
+    }
+
+    let mut kind: Option<&str> = None;
+    let mut version: Option<&str> = None;
+    let mut pretty = false;
+    let mut index = 1;
+    while index < args.len() {
+        match args[index].as_str() {
+            "--kind" if kind.is_none() => {
+                kind = Some(
+                    args.get(index + 1)
+                        .filter(|value| !value.starts_with("--"))
+                        .ok_or("--kind requires a value")?
+                        .as_str(),
+                );
+                index += 1;
+            }
+            "--version" if version.is_none() => {
+                version = Some(
+                    args.get(index + 1)
+                        .filter(|value| !value.starts_with("--"))
+                        .ok_or("--version requires a value")?
+                        .as_str(),
+                );
+                index += 1;
+            }
+            "--pretty" if !pretty => pretty = true,
+            _ => return Err(usage.into()),
+        }
+        index += 1;
+    }
+
+    let kind = kind.ok_or(usage)?;
+    let version = version.ok_or(usage)?;
+    if version != "1.0.0" {
+        return Err(format!("unsupported domain-pack schema version: {version}"));
+    }
+    let schema = match kind {
+        "domain-pack" => umf_core::domain_pack_schema::generate_domain_pack_schema(),
+        "dataset-source" => umf_core::domain_pack_schema::generate_dataset_source_schema(),
+        _ => return Err(format!("unsupported domain-pack schema kind: {kind}")),
+    };
+
+    if pretty {
+        umf_core::serialization::write_json_value(&schema, Format::Json, &mut Context::ordinary())
+            .and_then(|text| text.to_utf8().map_err(|_| output_encoding_error()))
+            .map_err(|error| error.to_string())
+    } else {
+        umf_core::serialization::stringify_compact(&schema)
+            .and_then(|text| text.to_utf8().map_err(|_| output_encoding_error()))
+            .map(|text| format!("{text}\n"))
+            .map_err(|error| error.to_string())
+    }
 }
 
 fn access_rrf_run(args: &[String]) -> Result<(), String> {
@@ -2282,6 +2346,124 @@ fn sha256(bytes: &[u8]) -> String {
 
 #[cfg(test)]
 mod tests {
+    use super::domain_pack_schema_output;
+
+    const DOMAIN_PACK_SCHEMA: &str =
+        include_str!("../../../spec/extensions/domain-pack/schema.json");
+    const DATASET_SOURCE_SCHEMA: &str =
+        include_str!("../../../spec/extensions/dataset-source/schema.json");
+
+    fn domain_schema(args: &[&str]) -> Result<String, String> {
+        domain_pack_schema_output(&args.iter().map(|arg| (*arg).to_owned()).collect::<Vec<_>>())
+    }
+
+    fn compact_json(source: &str) -> String {
+        let mut output = String::with_capacity(source.len());
+        let mut in_string = false;
+        let mut escaped = false;
+        for ch in source.chars() {
+            if in_string {
+                output.push(ch);
+                if escaped {
+                    escaped = false;
+                } else if ch == '\\' {
+                    escaped = true;
+                } else if ch == '"' {
+                    in_string = false;
+                }
+            } else if ch == '"' {
+                output.push(ch);
+                in_string = true;
+            } else if !ch.is_whitespace() {
+                output.push(ch);
+            }
+        }
+        output
+    }
+
+    #[test]
+    fn domain_pack_cli_emits_canonical_pretty_schema_json_for_both_kinds() {
+        assert_eq!(
+            domain_schema(&[
+                "schema",
+                "--kind",
+                "domain-pack",
+                "--version",
+                "1.0.0",
+                "--pretty"
+            ])
+            .unwrap(),
+            DOMAIN_PACK_SCHEMA
+        );
+        assert_eq!(
+            domain_schema(&[
+                "schema",
+                "--kind",
+                "dataset-source",
+                "--version",
+                "1.0.0",
+                "--pretty"
+            ])
+            .unwrap(),
+            DATASET_SOURCE_SCHEMA
+        );
+    }
+
+    #[test]
+    fn domain_pack_cli_emits_canonical_compact_schema_json_with_final_newline() {
+        assert_eq!(
+            domain_schema(&["schema", "--kind", "domain-pack", "--version", "1.0.0"]).unwrap(),
+            format!("{}\n", compact_json(DOMAIN_PACK_SCHEMA))
+        );
+        assert_eq!(
+            domain_schema(&["schema", "--version", "1.0.0", "--kind", "dataset-source"]).unwrap(),
+            format!("{}\n", compact_json(DATASET_SOURCE_SCHEMA))
+        );
+    }
+
+    #[test]
+    fn domain_pack_cli_refuses_unknown_versions_kinds_and_arguments() {
+        for args in [
+            vec!["schema"],
+            vec!["schema", "--kind", "domain-pack"],
+            vec!["schema", "--version", "1.0.0"],
+            vec!["schema", "--kind", "domain-pack", "--version", "2.0.0"],
+            vec!["schema", "--kind", "unknown", "--version", "1.0.0"],
+            vec![
+                "schema",
+                "--kind",
+                "domain-pack",
+                "--version",
+                "1.0.0",
+                "--version",
+                "1.0.0",
+            ],
+            vec![
+                "schema",
+                "--kind",
+                "domain-pack",
+                "--version",
+                "1.0.0",
+                "--pretty",
+                "--pretty",
+            ],
+            vec![
+                "schema",
+                "--kind",
+                "domain-pack",
+                "--version",
+                "1.0.0",
+                "--format",
+                "json",
+            ],
+            vec!["schema", "--kind", "--version", "1.0.0"],
+            vec!["schema", "--version", "--kind", "domain-pack"],
+            vec!["wrong", "--kind", "domain-pack", "--version", "1.0.0"],
+        ] {
+            assert!(domain_schema(&args).is_err(), "accepted {args:?}");
+        }
+    }
+
     use super::*;
     use std::io::Cursor;
     use umf_core::Capabilities;

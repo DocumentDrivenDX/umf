@@ -5745,12 +5745,50 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     Ok(())
 }
 
-/// Return an isolated canonical domain-pack schema object for the requested version.
+/// Return a fresh bounded Python object generated from the requested schema version.
 #[pyfunction]
 fn domain_pack_schema(py: Python<'_>, version: String) -> PyResult<PyObject> {
-    let source = umf_core::domain_pack_schema::domain_pack_schema_json(&version)
+    let schema = umf_core::domain_pack_schema::domain_pack_schema(&version)
         .map_err(|error| PyValueError::new_err(error.code))?;
-    Ok(PyModule::import(py, "json")?
-        .call_method1("loads", (source,))?
-        .unbind())
+    let mut context = Context::ordinary();
+    // Apply the ordinary tree/text/depth admission profile before allocating
+    // the fresh host object graph.
+    let schema = umf_core::copy_json(&schema, &mut context).map_err(py_error)?;
+    domain_pack_value_to_python(py, &schema, &mut context)
+}
+
+fn domain_pack_value_to_python(
+    py: Python<'_>,
+    value: &Value,
+    context: &mut Context<'_>,
+) -> PyResult<PyObject> {
+    context.charge_work(1, Utf16::default()).map_err(py_error)?;
+    Ok(match value {
+        Value::Null => py.None(),
+        Value::Bool(value) => value.into_pyobject(py)?.to_owned().into_any().unbind(),
+        Value::Number(value)
+            if value.fract() == 0.0 && value.abs() <= 9_007_199_254_740_991.0 =>
+        {
+            (*value as i64).into_pyobject(py)?.to_owned().into_any().unbind()
+        }
+        Value::Number(value) => value.into_pyobject(py)?.to_owned().into_any().unbind(),
+        Value::String(value) => py_text(py, value, context)?,
+        Value::Array(items) => {
+            let output = PyList::empty_bound(py);
+            for item in items {
+                output.append(domain_pack_value_to_python(py, item, context)?)?;
+            }
+            output.unbind().into()
+        }
+        Value::Object(members) => {
+            let output = PyDict::new_bound(py);
+            for (key, value) in members {
+                output.set_item(
+                    py_text(py, key, context)?,
+                    domain_pack_value_to_python(py, value, context)?,
+                )?;
+            }
+            output.unbind().into()
+        }
+    })
 }

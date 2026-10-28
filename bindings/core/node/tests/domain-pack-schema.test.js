@@ -1,6 +1,19 @@
 import {expect, test} from 'bun:test';
 import {createDomainPackSchemaOperation} from '../src/domain-pack-schema.js';
 
+test('opt-in domain-pack wrapper accepts the exact canonical pretty resource bytes', async () => {
+  const canonicalText = await Bun.file('spec/extensions/domain-pack/schema.json').text();
+  const canonical = JSON.parse(canonicalText);
+  const operation = createDomainPackSchemaOperation(version => {
+    if (version !== '1.0.0') throw new RangeError('DOMAIN_PACK_SCHEMA_VERSION');
+    return canonicalText;
+  });
+  const first = operation('1.0.0');
+  expect(first).toEqual(canonical);
+  expect(operation('1.0.0')).toEqual(canonical);
+  expect(operation('1.0.0')).not.toBe(first);
+});
+
 test('opt-in domain-pack wrapper returns isolated canonical schema objects and refuses unknown versions', async () => {
   const canonical = await Bun.file('spec/extensions/domain-pack/schema.json').json();
   const versions = [];

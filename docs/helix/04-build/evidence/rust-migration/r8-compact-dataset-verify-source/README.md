@@ -24,10 +24,10 @@ The fresh source-built replay passed all five frozen verifier cases on Node
 v26.12.1, Bun 1.4.3, and real Chromium 153.0.8010.12. Node and Bun each
 recorded 14 Rust calls. Chromium loaded the pinned WASM and ran without Node
 globals. The receipts bind to the same immutable source-built manifest:
-`/private/tmp/umf-r8-domain-record-current-refrozen-20261027/compact-dataset-verify-build-manifest.json`,
-SHA-256 `ef5ff50e418a7060a2df814a226f9f66f7d4d3387a7b6a9d9622b092d9aa7f43`;
+`/private/tmp/umf-r8-domain-pack-fixedpoint-20261027/compact-dataset-verify-build-manifest.json`,
+SHA-256 `cedcbf75d43607fbed7d1e6a4310775c41096ebf9ba89d31c33081d4cb679586`;
 source closure SHA-256
-`eb0a8cff53696e211dbec2b707751e1d872adc661906084986bad50914923618`.
+`f8c9450063b9f13274366f07255f0e22aa5c18e04aae96a1d3da6e001a1f85ec`.
 The manifest pins the Node addon, WASM binary/glue, and reference, Node, and
 browser bundles. The frozen five-case inputs and current index remain in this
 packet and are independently hashed in `SHA256SUMS`.

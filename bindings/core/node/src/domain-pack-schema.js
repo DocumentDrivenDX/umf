@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-/** Opt-in CONTRACT-052 operation over the embedded Rust canonical resource. */
+/** Opt-in CONTRACT-052 operation over the computed Rust schema. */
 export function createDomainPackSchemaOperation(domainPackSchemaJson) {
   if (typeof domainPackSchemaJson !== 'function') throw new TypeError('A Rust domain-pack schema provider is required');
   return function domainPackSchema(version) {

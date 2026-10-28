@@ -1762,13 +1762,22 @@ const explicitGeneratedResourceAuthorities = new Map([
     'spec/extensions/dataset-source/schema.json',
     'spec/extensions/dataset-source/package.json',
   ].map(file => [file, {
-    kind: 'generated-from-explicit-typescript-schema-builder',
+    kind: 'generated-from-rust-domain-pack-schema-with-typescript-manifest-wrapper',
     governingArtifacts: ['docs/helix/02-design/contracts/CONTRACT-052-domain-packs.md'],
     generator: 'scripts/domain-pack-schema.ts',
-    inputPaths: ['src/domain-packs/schema.ts', 'src/domain-packs/source-schema.ts'],
+    generatorRuntime: {
+      language: 'Rust schema computation plus TypeScript manifest wrapper',
+      runtime: 'Rust umf-cli via Bun-hosted TypeScript',
+      entrypoints: ['scripts/domain-pack-schema.ts', 'crates/umf-cli/src/main.rs'],
+    },
+    inputPaths: ['src/generated/core-model.ts', 'crates/umf-core/src/domain_pack_schema.rs',
+      'crates/umf-core/src/domain_pack_source_schema.rs'],
     closurePaths: ['docs/helix/02-design/contracts/CONTRACT-052-domain-packs.md',
-      'scripts/domain-pack-schema.ts', 'src/domain-packs/schema.ts',
-      'src/domain-packs/source-schema.ts', 'src/index.ts', 'scripts/build.ts',
+      'scripts/domain-pack-schema.ts', 'src/generated/core-model.ts', 'src/model/types.ts',
+      'Cargo.toml', 'Cargo.lock', 'crates/umf-cli/Cargo.toml', 'crates/umf-cli/src/main.rs',
+      'crates/umf-core/Cargo.toml', 'crates/umf-core/src/lib.rs', 'crates/umf-core/src/full_modules.rs',
+      'crates/umf-core/src/domain_pack_schema.rs', 'crates/umf-core/src/domain_pack_source_schema.rs',
+      'src/index.ts', 'scripts/build.ts',
       'scripts/package-sdk-rust-default.ts', 'scripts/package-sdk.py'],
   }]),
   ...[
@@ -1923,7 +1932,7 @@ function resourceOwnership(row, aliasCount, scans) {
   const generatorPaths = metamodelGenerated ? ['scripts/metamodel/build.ts', 'crates/umf-metamodel/src/lib.rs'] : explicitGeneratedAuthority ? [explicitGeneratedAuthority.generator] : generators;
   const authorityStatus = metamodelGenerated || explicitGeneratedAuthority ? 'generated-authority-known' : authoredAuthority ? 'authored-authority-known' : generators.length === 1 ? 'candidate-generated' : 'authority-unresolved';
   const generatorRuntime = explicitGeneratedAuthority
-    ? { language: generatorPaths.some(file => file.endsWith('.py')) ? 'Python' : 'TypeScript', runtime: generatorPaths.some(file => file.endsWith('.py')) ? 'Python 3' : 'Bun', entrypoints: generatorPaths }
+    ? explicitGeneratedAuthority.generatorRuntime ?? { language: generatorPaths.some(file => file.endsWith('.py')) ? 'Python' : 'TypeScript', runtime: generatorPaths.some(file => file.endsWith('.py')) ? 'Python 3' : 'Bun', entrypoints: generatorPaths }
     : metamodelGenerated
     ? { language: 'TypeScript host plus Rust compiler', runtime: 'Bun host; pinned native Rust metamodel compiler', entrypoints: generatorPaths }
     : generators.length

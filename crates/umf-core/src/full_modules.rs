@@ -53,6 +53,7 @@ pub mod core_semantic_types;
 pub mod csv_boolean_lexical;
 pub mod dataset_values;
 pub mod domain_pack_schema;
+pub mod domain_pack_source_schema;
 pub mod delta_actions;
 pub mod delta_log;
 pub mod delta_reconcile;

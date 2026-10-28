@@ -33,17 +33,20 @@ try {
   const result = await page.evaluate(async () => {
     const wasm = await import('/umf_core_wasm.js');
     await wasm.default('/umf_core_wasm_bg.wasm');
-    const expected = await fetch('/schema.json').then(response => response.json());
-    const first = JSON.parse(wasm.domainPackSchemaJson('1.0.0'));
+    const expectedText = await fetch('/schema.json').then(response => response.text());
+    const expected = JSON.parse(expectedText);
+    const rawSchema = wasm.domainPackSchemaJson('1.0.0');
+    const rawBytesEqual = rawSchema === expectedText;
+    const first = JSON.parse(rawSchema);
     const equal = JSON.stringify(first) === JSON.stringify(expected);
     first.properties.id.type = 'integer';
     const isolated = JSON.stringify(JSON.parse(wasm.domainPackSchemaJson('1.0.0'))) === JSON.stringify(expected);
     let refused = false;
     try { wasm.domainPackSchemaJson('2.0.0'); }
     catch (error) { refused = String(error).includes('DOMAIN_PACK_SCHEMA_VERSION'); }
-    return {equal, isolated, refused, nodeGlobalsAbsent: typeof process === 'undefined' && typeof require === 'undefined'};
+    return {equal, isolated, refused, rawBytesEqual, nodeGlobalsAbsent: typeof process === 'undefined' && typeof require === 'undefined'};
   });
-  assert.deepEqual(result, {equal: true, isolated: true, refused: true, nodeGlobalsAbsent: true});
+  assert.deepEqual(result, {equal: true, isolated: true, refused: true, rawBytesEqual: true, nodeGlobalsAbsent: true});
   console.log(JSON.stringify({status: 'pass', chromium: browser.version(), digests, result}));
 } finally {
   if (browser) await browser.close();
