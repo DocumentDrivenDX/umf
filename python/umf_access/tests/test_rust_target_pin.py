@@ -9,11 +9,13 @@ import json
 import os
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from umf import _rust
 from umf_access.adoption import TargetIdentity
 from umf_access.catalog import TargetPin
 from umf_access.rust_target_pin import (
+    TargetPinRustUnavailable,
     TargetPinRustUnsupported,
     matches,
 )
@@ -39,6 +41,37 @@ def load_candidate_library() -> None:
         raise RuntimeError("could not load candidate Rust extension")
     loader.exec_module(module)
     _rust._rust_core = module
+
+
+def python_matches(pin: object, identity: object) -> bool:
+    """Frozen current Python behavior, including CONTRACT-072 uniqueness."""
+    identity_fields = (
+        identity.kind,
+        identity.backend_id,
+        identity.backend_version,
+        identity.target_profile,
+        identity.binding_sha256,
+    )
+    pin_fields = (
+        pin.kind,
+        pin.backend_id,
+        pin.backend_version,
+        pin.target_profile,
+        pin.binding_sha256,
+    )
+    if identity_fields != pin_fields or len(identity.platform) != len(pin.platform):
+        return False
+    # Mirrors the pre-port method's single argument read before the helper
+    # traverses that captured value; keep live-object observations exact.
+    observed = identity.platform
+    pinned_names = tuple(name for name, _ in pin.platform)
+    observed_names = tuple(name for name, _ in observed)
+    if len(set(pinned_names)) != len(pinned_names) or len(set(observed_names)) != len(
+        observed_names
+    ):
+        return False
+    pins = dict(pin.platform)
+    return all(name in pins and version in pins[name] for name, version in observed)
 
 
 class RustTargetPinTests(unittest.TestCase):
@@ -72,7 +105,10 @@ class RustTargetPinTests(unittest.TestCase):
 
     def test_unique_components_match_python_public_method(self) -> None:
         identity = self.identity((("server", "18.1"), ("driver", "3.3")))
-        self.assertEqual(matches(self.pin, identity), self.pin.matches(identity))
+        self.assertEqual(
+            matches(self.pin, identity), python_matches(self.pin, identity)
+        )
+        self.assertEqual(self.pin.matches(identity), python_matches(self.pin, identity))
         self.assertTrue(matches(self.pin, identity))
 
     def test_duplicate_observed_names_refuse(self) -> None:
@@ -84,6 +120,30 @@ class RustTargetPinTests(unittest.TestCase):
                 identity = self.identity(platform)
                 self.assertFalse(matches(self.pin, identity))
                 self.assertFalse(self.pin.matches(identity))
+
+    def test_public_route_refuses_unavailable_or_mismatched_native_profile(
+        self,
+    ) -> None:
+        identity = self.identity((("driver", "3.2"), ("server", "18.1")))
+        for core in (
+            None,
+            type(
+                "WrongProfile",
+                (),
+                {
+                    "access_target_pin_profile_version": staticmethod(
+                        lambda: "umf-access-target-pin/9"
+                    ),
+                    "access_target_pin_matches_host": staticmethod(lambda *_: True),
+                },
+            )(),
+        ):
+            with (
+                self.subTest(core=core),
+                patch.object(_rust, "_rust_core", core),
+                self.assertRaises(TargetPinRustUnavailable),
+            ):
+                self.pin.matches(identity)
 
     def test_duplicate_pinned_names_refuse(self) -> None:
         pin = TargetPin(
@@ -135,8 +195,9 @@ class RustTargetPinTests(unittest.TestCase):
                     if case["name"] == PACKET_DUPLICATE_CASE
                     else predecessor_expected
                 )
-                self.assertEqual(self.pin.matches(identity), expected)
+                self.assertEqual(python_matches(self.pin, identity), expected)
                 self.assertEqual(matches(self.pin, identity), expected)
+                self.assertEqual(self.pin.matches(identity), expected)
 
     def test_host_candidate_matches_all_thirteen_packet_cases(self) -> None:
         self.require_host_matcher()
@@ -156,6 +217,7 @@ class RustTargetPinTests(unittest.TestCase):
                     False if case["name"] == PACKET_DUPLICATE_CASE else case["expected"]
                 )
                 self.assertEqual(host_matches(self.pin, identity), expected)
+                self.assertEqual(self.pin.matches(identity), expected)
 
     def test_native_binding_rejects_malformed_tuple_and_string_carriers(self) -> None:
         core = _rust._rust_core
@@ -185,33 +247,22 @@ class RustTargetPinTests(unittest.TestCase):
         self.require_host_matcher()
 
         class Live:
-            def __init__(self, trace, values, platform, *, fail=None):
-                self.trace, self.values, self._platform, self.fail = (
+            def __init__(self, trace, label, values, platform, *, fail=None):
+                self.trace, self.label, self.values, self._platform, self.fail = (
                     trace,
+                    label,
                     values,
                     platform,
                     fail,
                 )
 
             def __getattr__(self, name):
-                self.trace.append(name)
+                self.trace.append(f"{self.label}.{name}")
                 if self.fail == name:
                     raise RuntimeError(f"{name} observation failed")
                 if name == "platform":
                     return self._platform
                 return self.values[name]
-
-            def _matches_platform(self, observed):
-                pinned_names = tuple(name for name, _ in self.platform)
-                observed_names = tuple(name for name, _ in observed)
-                if len(set(pinned_names)) != len(pinned_names) or len(
-                    set(observed_names)
-                ) != len(observed_names):
-                    return False
-                pins = dict(self.platform)
-                return all(
-                    name in pins and version in pins[name] for name, version in observed
-                )
 
         fields = {
             "kind": "postgresql",
@@ -297,27 +348,29 @@ class RustTargetPinTests(unittest.TestCase):
         ) in cases:
             with self.subTest(case=name):
                 traces, results = [], []
-                for native in (False, True):
+                for matcher in (python_matches, host_matches, TargetPin.matches):
                     trace = []
-                    pin = Live(trace, fields, pin_platform, fail=pin_fail)
+                    pin = Live(trace, "pin", fields, pin_platform, fail=pin_fail)
                     identity = Live(
-                        trace, identity_fields, observed, fail=identity_fail
+                        trace,
+                        "identity",
+                        identity_fields,
+                        observed,
+                        fail=identity_fail,
                     )
                     try:
-                        result = (
-                            host_matches(pin, identity)
-                            if native
-                            else TargetPin.matches(pin, identity)
-                        )
+                        result = matcher(pin, identity)
                     except (
                         RuntimeError
                     ) as exc:  # injected host exceptions are part of this seam
                         result = (type(exc).__name__, str(exc))
                     traces.append(trace)
                     results.append(result)
-                self.assertEqual(results[0], expected)
-                self.assertEqual(results[1], expected)
-                self.assertEqual(traces[1], traces[0])
+                self.assertEqual(results, [expected, expected, expected])
+                self.assertEqual(traces[1:], [traces[0], traces[0]])
+                if name == "equal":
+                    self.assertEqual(traces[0].count("pin.platform"), 3)
+                    self.assertEqual(traces[0].count("identity.platform"), 2)
 
     def test_host_candidate_dynamic_field_and_container_parity(self) -> None:
         """Preserve equality and iteration behavior for host-provided objects."""
@@ -349,9 +402,12 @@ class RustTargetPinTests(unittest.TestCase):
             "a" * 64,
             (("driver", "3.2"),),
         )
-        self.assertTrue(TargetPin.matches(py_pin, py_identity))
+        self.assertTrue(python_matches(py_pin, py_identity))
         self.assertEqual(
-            host_matches(py_pin, py_identity), TargetPin.matches(py_pin, py_identity)
+            host_matches(py_pin, py_identity), python_matches(py_pin, py_identity)
+        )
+        self.assertEqual(
+            py_pin.matches(py_identity), python_matches(py_pin, py_identity)
         )
 
         tuple_pin = TargetPin(
@@ -370,10 +426,13 @@ class RustTargetPinTests(unittest.TestCase):
             "a" * 64,
             TupleSubclass((TupleSubclass(("driver", "3.2")),)),
         )
-        self.assertTrue(TargetPin.matches(tuple_pin, tuple_identity))
+        self.assertTrue(python_matches(tuple_pin, tuple_identity))
         self.assertEqual(
             host_matches(tuple_pin, tuple_identity),
-            TargetPin.matches(tuple_pin, tuple_identity),
+            python_matches(tuple_pin, tuple_identity),
+        )
+        self.assertEqual(
+            tuple_pin.matches(tuple_identity), python_matches(tuple_pin, tuple_identity)
         )
 
         list_pin = TargetPin(
@@ -392,10 +451,13 @@ class RustTargetPinTests(unittest.TestCase):
             "a" * 64,
             [("driver", "3.2")],  # type: ignore[arg-type]
         )
-        self.assertTrue(TargetPin.matches(list_pin, list_identity))
+        self.assertTrue(python_matches(list_pin, list_identity))
         self.assertEqual(
             host_matches(list_pin, list_identity),
-            TargetPin.matches(list_pin, list_identity),
+            python_matches(list_pin, list_identity),
+        )
+        self.assertEqual(
+            list_pin.matches(list_identity), python_matches(list_pin, list_identity)
         )
 
     def test_host_candidate_custom_equality_and_exception_controls(self) -> None:
@@ -421,21 +483,28 @@ class RustTargetPinTests(unittest.TestCase):
             )
 
         pin, identity = pair(Compared("pin"), Compared("identity"))
-        self.assertTrue(TargetPin.matches(pin, identity))
+        self.assertTrue(python_matches(pin, identity))
         python_trace = list(trace)
         trace.clear()
         self.assertEqual(host_matches(pin, identity), True)
         self.assertEqual(trace, python_trace)
         self.assertEqual(python_trace, [("identity", "eq")])
+        trace.clear()
+        self.assertEqual(pin.matches(identity), True)
+        self.assertEqual(trace, python_trace)
 
         pin, identity = pair(Compared("pin"), Compared("identity", raises=True))
         trace.clear()
         with self.assertRaisesRegex(LookupError, "comparison fault"):
-            TargetPin.matches(pin, identity)
+            python_matches(pin, identity)
         python_trace = list(trace)
         trace.clear()
         with self.assertRaisesRegex(LookupError, "comparison fault"):
             host_matches(pin, identity)
+        self.assertEqual(trace, python_trace)
+        trace.clear()
+        with self.assertRaisesRegex(LookupError, "comparison fault"):
+            pin.matches(identity)
         self.assertEqual(trace, python_trace)
 
     def test_host_candidate_iterable_faults_and_all_short_circuit(self) -> None:
@@ -465,7 +534,7 @@ class RustTargetPinTests(unittest.TestCase):
                     raise RuntimeError(f"{self.label} iteration fault")
 
         def evaluate(
-            native, *, pin_values, observed_values, pin_fault=None, observed_fault=None
+            matcher, *, pin_values, observed_values, pin_fault=None, observed_fault=None
         ):
             trace = []
             pin = TargetPin(
@@ -487,61 +556,77 @@ class RustTargetPinTests(unittest.TestCase):
                 ),
             )
             try:
-                result = (
-                    host_matches(pin, identity)
-                    if native
-                    else TargetPin.matches(pin, identity)
-                )
+                result = matcher(pin, identity)
             except (RuntimeError, TypeError, ValueError) as exc:
                 result = (type(exc).__name__, str(exc))
             return result, trace
 
         # Pin-name iteration is the first platform traversal and faults first.
         expected = evaluate(
-            False,
+            python_matches,
             pin_values=[("driver", ("3.2",))],
             observed_values=[("driver", "3.2")],
             pin_fault=(1, 0),
         )
         actual = evaluate(
-            True,
+            host_matches,
             pin_values=[("driver", ("3.2",))],
             observed_values=[("driver", "3.2")],
             pin_fault=(1, 0),
         )
         self.assertEqual(actual, expected)
         self.assertEqual(expected[0], ("RuntimeError", "pin iteration fault"))
+        public = evaluate(
+            TargetPin.matches,
+            pin_values=[("driver", ("3.2",))],
+            observed_values=[("driver", "3.2")],
+            pin_fault=(1, 0),
+        )
+        self.assertEqual(public, expected)
 
         # During all(...), the first unsupported component returns False, so
         # the next iterator item (which would fail) is never requested.
         expected = evaluate(
-            False,
+            python_matches,
             pin_values=[("driver", ("3.2",))],
             observed_values=[("other", "1"), ("later", "2")],
             observed_fault=(2, 1),
         )
         actual = evaluate(
-            True,
+            host_matches,
             pin_values=[("driver", ("3.2",))],
             observed_values=[("other", "1"), ("later", "2")],
             observed_fault=(2, 1),
         )
         self.assertEqual(actual, expected)
         self.assertIs(expected[0], False)
+        public = evaluate(
+            TargetPin.matches,
+            pin_values=[("driver", ("3.2",))],
+            observed_values=[("other", "1"), ("later", "2")],
+            observed_fault=(2, 1),
+        )
+        self.assertEqual(public, expected)
 
         for malformed in (("driver",), ("driver", "3.2", "extra")):
             expected = evaluate(
-                False,
+                python_matches,
                 pin_values=[malformed],
                 observed_values=[("driver", "3.2")],
             )
             actual = evaluate(
-                True,
+                host_matches,
                 pin_values=[malformed],
                 observed_values=[("driver", "3.2")],
             )
             self.assertEqual(actual, expected)
             self.assertEqual(expected[0][0], "ValueError")
+            public = evaluate(
+                TargetPin.matches,
+                pin_values=[malformed],
+                observed_values=[("driver", "3.2")],
+            )
+            self.assertEqual(public, expected)
 
 
 if __name__ == "__main__":

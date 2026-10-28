@@ -68,7 +68,7 @@ The prior fixed-point private SDK archives qualify only their captured subsets
 and hosts. The current condition-aware ledger records 3,381 route-specific
 declarations across 509 source files, 71 source-selected Rust declarations per
 V4 default root, 920 logical executable default-route gaps, zero retired,
-88 accepted opt-in Rust mappings, and 832 unmapped executable names. The inventory
+89 accepted opt-in Rust mappings, and 831 unmapped executable names. The inventory
 records 2,543 Rust-candidate declarations, 216 host declarations, and 210 V4
 entry declarations across both defaults. Four exact immutable
 generated-data aliases are classified separately across 12 route rows. Three root-only SEC/Protobuf Rust
@@ -79,9 +79,9 @@ installed-route scope; it has source drift against this checkout and needs a
 new current-source packet. Its receipt SHA-256 is
 `1c192d0246a85c8c12de39b37b40e119026b692dade2db249e5aace2c689b19a`. The
 current inventory SHA-256 is
-`7c3deb4d8fbf325c05b5af785c74b2fb3211d8851180d28a381d92ea158b8ed2` and the
+`6031c1622a657c20fdbff9226bc2524968a622577c0f68bf4115d126d84401cc` and the
 condition-aware ledger SHA-256 is
-`7484773db68504b74ee2b4e3026200b447c6447dc119667b5104ec64e3e3ae1a`. Linux,
+`d468cca284b9d709d397fe72832929ca48a88c9144b75681d28e4e6170e98692`. Linux,
 complete production SDK parity, the full port, and release remain unqualified.
 The ledger's `executable` label is a broad public-runtime category: independent
 AST review of the 1,120-name reference root found 750 function declarations,
@@ -9876,7 +9876,7 @@ source-built opt-in results, not installed SDK package qualification. The V4
 Node/browser sources now select these guarded Rust bindings and the generated
 facade retains TypeScript only under `./reference`. A fixed-point local source
 build passed the 48-case V4 default-route replay and eight raw-host refusals on
-Node/Bun; a fresh installed V4 route replay remains pending. The two logical
+Node/Bun. The two logical
 access-temporal exports remain open in the
 R8 retirement ledger.
 
@@ -9894,3 +9894,84 @@ refusals; archive WASM passes the same candidate replay in the Chromium engine
 of Edge 156.0.4314.50, including absent/corrupt binding controls. This archive
 predates the V4 source-selection edit, so it qualifies only the opt-in candidate,
 not the newer default route, Linux, or release.
+
+The [pinned V4 installed default-route replay](evidence/rust-migration/r8-access-temporal-default-installed-5cddac8/README.md)
+uses a fixed-point SDK archive from committed source `5cddac834` with zero
+source transforms. Installed Node 26.12.1, Bun 1.4.3, and Edge/Chromium
+156.0.4314.50 match all 48 frozen tagged cases on both the default Rust route
+and `./reference`, and each refuses eight raw-host values without proxy traps
+or getters. Missing/corrupt native and WASM asset controls fail closed. This
+establishes a bounded Darwin arm64 source-pinned default-route result for
+access temporal; it does not qualify Linux, the whole SDK, or release, and it
+does not retire the two logical gaps.
+
+The [current-core Bit128 Field candidate](evidence/rust-migration/r8-bit128-field-candidate-20261028/README.md)
+adds `declareCoreBit128Field` to pure Rust and an opt-in core-wire operation for
+core 0.10.0 only. Eleven frozen TypeScript cases cover both `uuid` and
+`bits128` success, source/version and exact-identity refusals, selected-field
+warning precedence, and unknown-content preservation. Focused pure-core and
+wire tests pass, including closed-request negative controls. Opt-in host bindings
+have the bounded result below; installed routes, default selection, and general
+JavaScript host equivalence remain unqualified, so the logical gap remains open.
+
+The [Bit128 Field host candidate](evidence/rust-migration/r8-bit128-field-host-20261028/README.md)
+adds opt-in Node/Bun and WASM/browser adapters over the Rust wire operation.
+The focused Bun predecessor suite passes four tests and 38 assertions; a
+source-built addon loads under Node 26.12.1. A real Chromium 153.0.8010.12
+replay confirms the WASM endpoint is called once, with the current core 0.10.0
+resource, preserved extension payload, and no Node globals. The binding error
+constructor does not share TypeScript `UmfError` identity, and these results
+do not establish installed parity or default-route selection.
+
+The [Python V8 closure audit](evidence/rust-migration/r8-python-v8-closure-20261028/README.md)
+finds that the present production `umf`, `umf_codegen`, and `umf_access`
+Python sources have no active MiniRacer or JavaScript runtime dependency. The
+historical R4 installed codegen cohort demonstrates the narrow V8-free path on
+one macOS arm64 CPython 3.11 host; it does not qualify current-source wheels or
+the release matrix. Python host orchestration and package ergonomics remain,
+while semantic ownership still needs symbol-level review. The audit selected
+`TargetPin.matches` and `ReadPlan.bind` as a Python semantic tranche, with
+duplicate platform names rejected under CONTRACT-072 and ordered host
+observations preserved under the existing frozen packets.
+
+The [public Python TargetPin cutover](evidence/rust-migration/r8-target-pin-default-python-20261028/README.md)
+now routes `TargetPin.matches` through the lazy Rust host binding and removes
+its duplicated Python matcher. The source-built Darwin arm64 CPython 3.13.16
+cohort passes 13 current-policy target-pin cases, dynamic host protocol and
+exception controls, unavailable/wrong-profile refusals, and all six frozen
+`ReadPlan.bind` outcome/trace cases (20 combined tests after the opt-in bind
+seam landed). This validates a bounded
+current-source public Python route, not installed-wheel or cross-platform
+qualification. Public `ReadPlan.bind` orchestration remains Python-owned.
+
+The [opt-in Rust ReadPlan bind seam](evidence/rust-migration/r8-read-plan-bind-rust-opt-in-20261028/README.md)
+now owns the ordered selection loop in Rust while Python supplies lazy
+artifact, identity, presence, pin, and parameter callbacks. The six frozen
+predecessor outcomes and traces pass on source-built CPython 3.13, with added
+causal controls for throwing presence access, selected-artifact and parameter
+failures, zero/multiple matches, and original exception-object propagation.
+The public `ReadPlan.bind` route is still Python, and argument/continuation
+validation plus final model construction remain host-owned. Installed-wheel
+qualification and full semantic ownership remain open.
+
+The combined 2026-10-28 source build reached a zero-transform fixed point
+with source-tree SHA-256
+`359f2c927404c84d42fbd7973277a92ff7465c1c68b2a49a31ceaff6839d5bea`
+after regenerating the metamodel and action-plan identity inputs. The
+condition-aware ledger suite passed 78/78, the access-boundary suite passed
+31/31 while scanning all 102 Python modules, and the focused Rust, Python,
+Bun, Node and Chromium checks above passed. Full Python access-suite collection
+requires external `commerce` and `weft` test fixtures absent from this
+checkout. These are source-built candidate results, not installed-wheel or
+whole-release qualification.
+
+The Python access boundary checker now assigns explicit owners to the target-pin
+and `ReadPlan.bind` Rust facades and enforces each facade's exact imports,
+including its single `_rust` bridge. The target-pin host bridge owns its profile
+and unavailable error locally, avoiding a runtime-to-host-to-runtime import
+cycle. New negative controls reject unlisted imports and direct `open`/`input`
+hooks while retaining the normal scan over both supported source layouts.
+`bun run check:access-boundaries` passes with 102 modules and zero violations;
+`bun run test:access-boundaries` passes 31 cases. These checks establish source
+boundary enforcement only; candidate runtime qualification remains as stated
+above.

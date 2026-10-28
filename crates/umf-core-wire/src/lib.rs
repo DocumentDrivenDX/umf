@@ -1825,6 +1825,31 @@ pub fn execute_schema_properties_request_with_control(
 
 pub const CORE_SCHEMA_PROPERTIES_BINDING_PROFILE: &str = "umf-core-schema-properties/0.1.0";
 
+/// Execute only explicit current-core Bit128 Field authoring. This additive
+/// entry point does not select a package or binding default route.
+pub fn execute_core_bit128_field_request_with_control(
+    wire_json: &str,
+    profile: ResourceProfile,
+    capabilities: &mut dyn Capabilities,
+    control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+) -> String {
+    let operation = {
+        let mut context = Context::ordinary().with_host_control(control);
+        match context.with_tagged_transport_limit(|ctx| decode(wire_json, ctx)) {
+            Ok(request) => field(&request, "op")
+                .and_then(as_utf16)
+                .and_then(|value| value.to_utf8().ok()),
+            Err(error) => return result_envelope(Err(error)),
+        }
+    };
+    if operation.as_deref() != Some("model/declareCoreBit128Field") {
+        return result_envelope(Err(fail("REQUEST", "Expected a Core Bit128 Field operation")));
+    }
+    execute_request_with_control(wire_json, profile, capabilities, control)
+}
+
+pub const CORE_BIT128_FIELD_BINDING_PROFILE: &str = "umf-core-bit128-field/0.1.0";
+
 /// Execute only the public CSV Boolean validation and receipt-verification
 /// operations. The prepare/finish implementation stages remain internal so an
 /// opt-in binding cannot widen its public operation set accidentally.
@@ -1933,6 +1958,20 @@ fn execute_request_inner(
         .and_then(as_utf16)
         .and_then(|v| v.to_utf8().ok())
         .ok_or_else(|| fail("REQUEST", "Request op is required"))?;
+    if op == "model/declareCoreBit128Field"
+        && (!has_exact_members(
+            &request,
+            &["op", "resources", "registry", "source", "identity", "scalarType"],
+        ) || !matches!(field(&request, "registry"), Some(Value::Array(items)) if items.is_empty())
+            || !field(&request, "resources").is_some_and(|resources| {
+                has_exact_members(
+                    resources,
+                    &["coreSchema", "referenceSchema", "packageSchema", "constraints", "domainPolicy"],
+                )
+            }))
+    {
+        return Err(fail("REQUEST", "Closed Bit128 Field request and exact five-resource set required"));
+    }
     if op == "model/scalarTypesForVersion"
         && (!has_exact_members(&request, &["op", "resources", "registry", "version"])
             || !matches!(field(&request, "registry"), Some(Value::Array(_)))
@@ -2180,6 +2219,7 @@ fn execute_request_inner(
             | "model/finishCoreCardinalityVerification"
             | "model/inspectCoreKind"
             | "model/inspectCoreScalarType"
+            | "model/declareCoreBit128Field"
             | "model/scalarTypesForVersion"
             | "model/inspectCoreRecordMembers"
             | "model/inspectCoreReferenceLinks"
@@ -2630,6 +2670,15 @@ fn model_operation(
                 ctx,
             )?
         }
+        "model/declareCoreBit128Field" => umf_core::core_bit128_field::declare_core_bit128_field(
+            value("source")?,
+            value("identity")?,
+            value("scalarType")?,
+            engine,
+            registry,
+            capabilities,
+            ctx,
+        )?,
         "model/inspectCoreFacets" => umf_core::facets::inspect_core_facets(
             value("source")?,
             value("identity")?,

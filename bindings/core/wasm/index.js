@@ -21,6 +21,7 @@ import {schemaPropertiesHostInput, cardinalityHostInput, validateCoreRecordValue
 import {createSemanticTypeRegistry as createSemanticTypeRegistryWithWire} from './src/semantic-value.js';
 import {createArrowIpcOperations, ARROW_IPC_PROFILE} from './src/arrow-ipc.js';
 import {createAccessRrfOperations, ACCESS_RRF_PROFILE} from './src/access-rrf.js';
+import {copyCoreJsonInput, createCoreBit128FieldOperation} from './src/core-bit128-field.js';
 const CORE_KIND_NULLABILITY_RUNTIME = Symbol('core-kind-nullability-runtime');
 const CORE_KIND_NULLABILITY_PREPARED = Symbol('core-kind-nullability-prepared');
 export {isWireAdmissionError} from './src/wire.js';
@@ -811,6 +812,45 @@ export function createCoreCardinalityHostInputEngine(module, resources, options 
   const resourceControls = rawResourceControls === undefined ? controls : codegenOptions({controls: rawResourceControls}).controls;
   if (hasControls(controls) || hasControls(resourceControls)) throw new UmfCoreError('HOST_JSON_CONTROLS_UNSUPPORTED', 'Host-input Core Cardinality operations do not accept operation or resource control callbacks');
   return createEngineInternal(module, resources, options, false, false, false, true);
+}
+
+/** Create the opt-in current-core 0.10.0 Bit128/UUID Field authoring route. */
+export function createCoreBit128FieldEngine(module, resources, options = {}) {
+  if (typeof module?.executeCoreBit128FieldRequestWire !== 'function') throw new UmfCoreError('RUST_WASM_BINDING_MISSING', 'WASM binding does not expose the closed Core Bit128 Field route');
+  const {profile, controls} = codegenOptions(options);
+  const setup = copyCoreJsonInput(resources, JsonSchemaUmfError);
+  const resourceNames = ['coreSchema', 'referenceSchema', 'packageSchema', 'constraints', 'domainPolicy'];
+  if (!setup || typeof setup !== 'object' || Array.isArray(setup) || Reflect.ownKeys(setup).length !== resourceNames.length || resourceNames.some(name => !Object.hasOwn(setup, name))) {
+    throw new UmfCoreError('REQUEST', 'Exact five-resource set required');
+  }
+  const fixedResources = Object.create(null);
+  for (const name of resourceNames) Object.defineProperty(fixedResources, name, {value: setup[name], enumerable: true, writable: true, configurable: true});
+  return createCoreBit128FieldOperation((source, identity, scalarType) => {
+    const bridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+    const work = admissionWork(bridge);
+    work?.(1);
+    // Preserve predecessor copy order and do not traverse a wrong scalar type.
+    const sourceCopy = copyCoreJsonInput(source, JsonSchemaUmfError);
+    const identityCopy = copyCoreJsonInput(identity, JsonSchemaUmfError);
+    const selectedType = scalarType === 'bits128' || scalarType === 'uuid' ? scalarType : null;
+    const requestWire = encodeRequestWire({op: 'model/declareCoreBit128Field', resources: fixedResources, registry: [], source: sourceCopy, identity: identityCopy, scalarType: selectedType}, work);
+    const dispatcher = () => encodeRequestWire({ok: false, message: 'Unexpected host capability request'});
+    const responseText = module.executeCoreBit128FieldRequestWire(requestWire, profile, dispatcher, bridge);
+    work?.(responseText.length);
+    const response = JSON.parse(responseText);
+    const failure = resultError(response);
+    if (failure) throw new JsonSchemaUmfError(failure.code, failure.message, failure.path);
+    work?.(response.wire.length);
+    return fromWire(JSON.parse(response.wire), work);
+  });
+}
+
+/** Initialize the opt-in browser current-core Bit128/UUID Field authoring route. */
+export async function initializeCoreBit128FieldWasm(resources, loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+  if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
+  const module = await loader();
+  if (typeof module.default === 'function') await module.default();
+  return createCoreBit128FieldEngine(module, resources, options);
 }
 
 /** Create the opt-in retained WASM Record Type declaration/verification engine. */

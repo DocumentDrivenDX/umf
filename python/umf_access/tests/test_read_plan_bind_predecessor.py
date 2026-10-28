@@ -9,7 +9,7 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 from pydantic import BaseModel
-from umf_access.catalog import ReadPlan, ReadVariant, TargetPin
+from umf_access.catalog import Argument, ReadPlan, ReadVariant, TargetPin
 from umf_access.rust_target_pin_host import matches as host_matches
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -65,23 +65,33 @@ class TrackingIdentity:
 
 
 class Entry:
-    def __init__(self, label, trace, *, fail=False):
+    def __init__(
+        self, label, trace, *, fail=False, fail_selected=False, fail_parameters=False
+    ):
         self.label, self.trace, self.fail = label, trace, fail
+        self.fail_selected, self.fail_parameters, self.artifact_calls = (
+            fail_selected,
+            fail_parameters,
+            0,
+        )
         self.parameters = SimpleNamespace(model_validate=self.model_validate)
 
     def artifact(self):
         self.trace.append(f"artifact:{self.label}")
-        if self.fail:
+        self.artifact_calls += 1
+        if self.fail or (self.fail_selected and self.artifact_calls == 2):
             raise RuntimeError(f"artifact {self.label} failed")
         return {"label": self.label}
 
     def model_validate(self, value, *, strict):
         self.trace.append(f"parameters.model_validate:{self.label}")
+        if self.fail_parameters:
+            raise RuntimeError(f"parameters {self.label} failed")
         assert strict is True
         return Params.model_validate(value, strict=True)
 
 
-def execute(case):
+def execute(case, *, route="public"):
     trace = []
     identity = TrackingIdentity(
         trace,
@@ -110,12 +120,30 @@ def execute(case):
             ReadVariant((), wrong, Entry("first", trace), ()),
             ReadVariant((), PIN, Entry("second", trace), ()),
         )
+    elif case in ("selected-artifact-error", "parameter-error"):
+        entry = Entry(
+            "only",
+            trace,
+            fail_selected=(case == "selected-artifact-error"),
+            fail_parameters=(case == "parameter-error"),
+        )
+        variants = (ReadVariant((), PIN, entry, ()),)
+    elif case == "multiple-matches":
+        variants = tuple(
+            ReadVariant((), PIN, Entry(label, trace), ())
+            for label in ("first", "second")
+        )
     else:
         variants = (ReadVariant((), PIN, Entry("only", trace), ()),)
     plan = ReadPlan("q", "all", (), variants)
     values = {"unexpected": 1} if case == "inventory-error" else {}
     try:
-        variant, params, after = plan.bind(Target(), values)
+        if route == "rust":
+            from umf_access.rust_read_plan_bind import bind
+
+            variant, params, after = bind(plan, Target(), values)
+        else:
+            variant, params, after = plan.bind(Target(), values)
         outcome = {
             "result": "success",
             "entry": variant.entry.label,
@@ -132,6 +160,13 @@ def execute_host_lazy(case):
         return execute(case)
 
 
+def execute_python_predecessor(case):
+    from test_rust_target_pin import python_matches
+
+    with patch.object(TargetPin, "matches", python_matches):
+        return execute(case)
+
+
 class ReadPlanBindPredecessorTests(unittest.TestCase):
     def test_historical_packet_and_current_results_and_effect_order_match(self):
         packet = json.loads(PACKET.read_text())
@@ -144,7 +179,7 @@ class ReadPlanBindPredecessorTests(unittest.TestCase):
         for case in packet["cases"]:
             with self.subTest(case=case["name"]):
                 self.assertEqual(
-                    execute(case["name"]),
+                    execute_python_predecessor(case["name"]),
                     {"outcome": case["outcome"], "trace": case["trace"]},
                 )
 
@@ -159,6 +194,165 @@ class ReadPlanBindPredecessorTests(unittest.TestCase):
                     execute_host_lazy(case["name"]),
                     {"outcome": case["outcome"], "trace": case["trace"]},
                 )
+
+    def test_public_default_route_preserves_all_six_bind_outcomes_and_traces(self):
+        from test_rust_target_pin import load_candidate_library
+
+        load_candidate_library()
+        packet = json.loads(PACKET.read_text())
+        for case in packet["cases"]:
+            with self.subTest(case=case["name"]):
+                self.assertEqual(
+                    execute(case["name"]),
+                    {"outcome": case["outcome"], "trace": case["trace"]},
+                )
+
+    def test_opt_in_rust_route_preserves_all_six_bind_outcomes_and_traces(self):
+        from test_rust_target_pin import load_candidate_library
+
+        load_candidate_library()
+        packet = json.loads(PACKET.read_text())
+        for case in packet["cases"]:
+            with self.subTest(case=case["name"]):
+                self.assertEqual(
+                    execute(case["name"], route="rust"),
+                    {"outcome": case["outcome"], "trace": case["trace"]},
+                )
+
+    def test_invalid_inventory_and_continuation_refuse_before_host_callbacks(self):
+        from umf_access.dsl import Continuation
+        from umf_access.pages import StaleContinuation
+        from umf_access.rust_read_plan_bind import bind
+
+        trace = []
+        entry = Entry("only", trace)
+        variant = ReadVariant((), PIN, entry, ())
+        plan = ReadPlan("q", "all", (), (variant,))
+
+        class Target:
+            def identity(self):
+                trace.append("target.identity")
+                return TrackingIdentity(trace)
+
+        with self.assertRaisesRegex(
+            Exception, "exact catalog argument inventory required"
+        ):
+            bind(plan, Target(), {"unexpected": 1})
+        self.assertEqual(trace, [])
+
+        cursor_plan = ReadPlan(
+            "q",
+            "page",
+            (Argument("cursor", object),),
+            (variant,),
+            cursor_argument="cursor",
+        )
+        cursor = Continuation(object(), (1,), "digest")
+        with self.assertRaises(StaleContinuation):
+            bind(cursor_plan, Target(), {"cursor": cursor})
+        self.assertEqual(trace, [])
+
+    def test_selected_artifact_and_parameter_failures_stop_at_their_callback(self):
+        from test_rust_target_pin import load_candidate_library
+
+        load_candidate_library()
+        expected = {
+            "selected-artifact-error": [
+                "artifact:only",
+                "target.identity",
+                "identity.platform",
+                "identity.platform",
+                "artifact:only",
+            ],
+            "parameter-error": [
+                "artifact:only",
+                "target.identity",
+                "identity.platform",
+                "identity.platform",
+                "artifact:only",
+                "parameters.model_validate:only",
+            ],
+            "multiple-matches": [
+                "artifact:first",
+                "artifact:second",
+                "target.identity",
+                "identity.platform",
+                "identity.platform",
+                "identity.platform",
+                "identity.platform",
+            ],
+        }
+        for case, trace in expected.items():
+            with self.subTest(case=case):
+                result = execute(case, route="rust")
+                self.assertEqual(result["trace"], trace)
+                if case == "multiple-matches":
+                    self.assertEqual(
+                        result["outcome"],
+                        {
+                            "error": "NotCompiledForTarget",
+                            "message": "no unique compiled variant for target identity and argument presence",
+                        },
+                    )
+                else:
+                    self.assertEqual(result["outcome"]["error"], "RuntimeError")
+
+    def test_rust_route_reraises_the_original_host_exception_object(self):
+        from test_rust_target_pin import load_candidate_library
+        from umf_access.rust_read_plan_bind import bind
+
+        load_candidate_library()
+        trace = []
+        sentinel = RuntimeError("identity sentinel")
+        plan = ReadPlan(
+            "q", "all", (), (ReadVariant((), PIN, Entry("only", trace), ()),)
+        )
+
+        class Target:
+            def identity(self):
+                trace.append("target.identity")
+                raise sentinel
+
+        with self.assertRaises(RuntimeError) as caught:
+            bind(plan, Target(), {})
+        self.assertIs(caught.exception, sentinel)
+        self.assertEqual(trace, ["artifact:only", "target.identity"])
+
+    def test_variant_presence_is_observed_after_preflight_and_identity(self):
+        from test_rust_target_pin import load_candidate_library
+        from umf_access.rust_read_plan_bind import bind
+
+        load_candidate_library()
+        trace = []
+        sentinel = RuntimeError("presence sentinel")
+
+        class Variant:
+            pin = PIN
+            parameters = ()
+
+            def __init__(self):
+                self.entry = Entry("only", trace)
+
+            @property
+            def presence(self):
+                trace.append("variant.presence")
+                raise sentinel
+
+        variant = Variant()
+        plan = ReadPlan("q", "all", (), (variant,))
+
+        class Target:
+            def identity(self):
+                trace.append("target.identity")
+                return TrackingIdentity(trace)
+
+        with self.assertRaises(RuntimeError) as caught:
+            bind(plan, Target(), {})
+        self.assertIs(caught.exception, sentinel)
+        self.assertEqual(
+            trace,
+            ["artifact:only", "target.identity", "variant.presence"],
+        )
 
 
 if __name__ == "__main__":

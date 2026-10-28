@@ -409,6 +409,38 @@ pub fn execute_request_wire(
     }
 }
 
+/// Opt-in closed current-core Bit128 Field authoring route. This deliberately
+/// accepts one wire operation and does not widen the default request router.
+#[napi(js_name = "executeCoreBit128FieldRequestWire")]
+pub fn execute_core_bit128_field_request_wire(
+    env: Env,
+    wire_json: String,
+    profile: String,
+    dispatcher: JsFunction,
+    control_dispatcher: Option<JsFunction>,
+) -> NapiResult<String> {
+    let profile = match profile.as_str() {
+        "cooperative" => ResourceProfile::Cooperative,
+        "hard-isolated" => ResourceProfile::HardIsolated,
+        _ => return Ok(umf_core_wire::error_envelope(EngineError::new(
+            "RESOURCE_PROFILE", Utf16::default(), "Unknown resource profile",
+        ))),
+    };
+    let mut capabilities = NodeCapabilities { env, dispatcher };
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = NodeControl { env, dispatcher };
+        let mut hook = |amount| control.check(amount);
+        Ok(umf_core_wire::execute_core_bit128_field_request_with_control(
+            &wire_json, profile, &mut capabilities, &mut hook,
+        ))
+    } else {
+        let mut no_control = |_amount| Ok(());
+        Ok(umf_core_wire::execute_core_bit128_field_request_with_control(
+            &wire_json, profile, &mut capabilities, &mut no_control,
+        ))
+    }
+}
+
 #[napi(js_name = "executeSemanticValueWire")]
 pub fn execute_semantic_value_wire(
     env: Env,

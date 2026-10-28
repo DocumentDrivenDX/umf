@@ -22,8 +22,70 @@ mod related_keys;
 
 create_exception!(_rust_core, SecProjectionError, PyException);
 const TARGET_PIN_PROFILE: &str = "umf-access-target-pin/0.1.0";
+const READ_PLAN_BIND_PROFILE: &str = "umf-access-read-plan-bind/0.1.0";
 const SEC_INPUT_LIMIT: usize = 4_000_000;
 const SEC_SOURCE_LIMIT: usize = 1_024;
+
+struct PyReadPlanBindHost<'a, 'py> {
+    callbacks: &'a Bound<'py, PyAny>,
+    presence: &'a Bound<'py, PyAny>,
+}
+
+impl<'a, 'py> umf_core::read_plan_bind::ReadPlanBindHost for PyReadPlanBindHost<'a, 'py> {
+    type Identity = Bound<'py, PyAny>;
+    type Error = PyErr;
+
+    fn preflight_artifact(&mut self, variant: usize) -> PyResult<()> {
+        self.callbacks.call_method1("preflight_artifact", (variant,))?;
+        Ok(())
+    }
+
+    fn target_identity(&mut self) -> PyResult<Self::Identity> {
+        self.callbacks.call_method0("target_identity")
+    }
+
+    fn presence_matches(&mut self, variant: usize) -> PyResult<bool> {
+        self.callbacks
+            .call_method1("presence_matches", (variant, self.presence))?
+            .is_truthy()
+    }
+
+    fn pin_matches(&mut self, identity: &Self::Identity, variant: usize) -> PyResult<bool> {
+        self.callbacks
+            .call_method1("pin_matches", (identity, variant))?
+            .extract()
+    }
+
+    fn selected_artifact(&mut self, variant: usize) -> PyResult<()> {
+        self.callbacks.call_method1("selected_artifact", (variant,))?;
+        Ok(())
+    }
+
+    fn build_parameters(&mut self, variant: usize) -> PyResult<()> {
+        self.callbacks.call_method1("build_parameters", (variant,))?;
+        Ok(())
+    }
+}
+
+#[pyfunction]
+fn access_read_plan_bind_profile_version() -> &'static str {
+    READ_PLAN_BIND_PROFILE
+}
+
+#[pyfunction]
+fn access_read_plan_bind_select(
+    variants: &Bound<'_, PyAny>,
+    presence: &Bound<'_, PyAny>,
+    callbacks: &Bound<'_, PyAny>,
+) -> PyResult<Option<usize>> {
+    let variants = exact_tuple(variants, "read plan variants")?;
+    let presence = exact_tuple(presence, "argument presence")?;
+    let mut host = PyReadPlanBindHost {
+        callbacks,
+        presence,
+    };
+    umf_core::read_plan_bind::bind(variants.len(), &mut host)
+}
 
 #[pyfunction]
 fn project_sec_submissions(input: &Bound<'_, PyAny>, source_id: &Bound<'_, PyAny>) -> PyResult<String> {
@@ -5753,6 +5815,8 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(access_target_pin_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(access_target_pin_matches, module)?)?;
     module.add_function(wrap_pyfunction!(access_target_pin_matches_host, module)?)?;
+    module.add_function(wrap_pyfunction!(access_read_plan_bind_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(access_read_plan_bind_select, module)?)?;
     module.add(
         "SecProjectionError",
         module.py().get_type::<SecProjectionError>(),

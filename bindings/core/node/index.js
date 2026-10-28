@@ -26,6 +26,7 @@ import {createArrowIpcOperations, ARROW_IPC_PROFILE} from './src/arrow-ipc.js';
 import {createAccessRrfOperations, ACCESS_RRF_PROFILE} from './src/access-rrf.js';
 import {createAccessTemporalOperations, ACCESS_TEMPORAL_PROFILE} from './src/access-temporal.js';
 import {requireSchemaGraphProviders} from './src/schema-graph.js';
+import {copyCoreJsonInput, createCoreBit128FieldOperation} from './src/core-bit128-field.js';
 
 export {isWireAdmissionError} from './src/wire.js';
 export {isBit128EngineError};
@@ -781,6 +782,46 @@ export function createCoreCardinalityHostInputEngine(resources, options = {}) {
   const resourceControls = rawResourceControls === undefined ? controls : codegenOptions({controls: rawResourceControls}).controls;
   if (hasControls(controls) || hasControls(resourceControls)) throw new UmfCoreError('HOST_JSON_CONTROLS_UNSUPPORTED', 'Host-input Core Cardinality operations do not accept operation or resource control callbacks');
   return createEngineInternal(resources, options, false, false, false, false, false, true);
+}
+
+/** Create the opt-in current-core 0.10.0 Bit128/UUID Field authoring route. */
+export function createCoreBit128FieldEngine(resources, options = {}) {
+  if (typeof addon.executeCoreBit128FieldRequestWire !== 'function') throw new UmfCoreError('RUST_NODE_BINDING_MISSING', 'Node binding does not expose the closed Core Bit128 Field route');
+  const {profile, controls} = codegenOptions(options);
+  const setup = copyCoreJsonInput(resources, JsonSchemaUmfError);
+  const resourceNames = ['coreSchema', 'referenceSchema', 'packageSchema', 'constraints', 'domainPolicy'];
+  if (!setup || typeof setup !== 'object' || Array.isArray(setup) ||
+      Reflect.ownKeys(setup).length !== resourceNames.length ||
+      resourceNames.some(name => !Object.hasOwn(setup, name))) {
+    throw new UmfCoreError('REQUEST', 'Exact five-resource set required');
+  }
+  const fixedResources = Object.create(null);
+  for (const name of resourceNames) Object.defineProperty(fixedResources, name, {
+    value: setup[name], enumerable: true, writable: true, configurable: true,
+  });
+  const operation = createCoreBit128FieldOperation((source, identity, scalarType) => {
+    const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+    const hostWork = admissionWork(controlBridge);
+    hostWork?.(1);
+    // Match the TypeScript predecessor's observable copy order. scalarType is
+    // a strict primitive choice; wrong objects are never traversed or coerced.
+    const sourceCopy = copyCoreJsonInput(source, JsonSchemaUmfError);
+    const identityCopy = copyCoreJsonInput(identity, JsonSchemaUmfError);
+    const selectedType = scalarType === 'bits128' || scalarType === 'uuid' ? scalarType : null;
+    const requestWire = encodeRequestWire({
+      op: 'model/declareCoreBit128Field', resources: fixedResources, registry: [],
+      source: sourceCopy, identity: identityCopy, scalarType: selectedType,
+    }, hostWork);
+    const dispatcher = () => encodeRequestWire({ok: false, message: 'Unexpected host capability request'});
+    const responseText = addon.executeCoreBit128FieldRequestWire(requestWire, profile, dispatcher, controlBridge);
+    hostWork?.(responseText.length);
+    const response = JSON.parse(responseText);
+    const failure = resultError(response);
+    if (failure) throw new JsonSchemaUmfError(failure.code, failure.message, failure.path);
+    hostWork?.(response.wire.length);
+    return fromWire(JSON.parse(response.wire), hostWork);
+  });
+  return operation;
 }
 
 /** Create the opt-in Rust-owned host-input route for logical Record values. */

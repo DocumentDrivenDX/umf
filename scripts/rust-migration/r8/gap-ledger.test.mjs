@@ -45,7 +45,7 @@ test('only the pinned BIT128_PROFILE primitive is classified as inert JSON scala
   assert.equal(ledger.counts.inertJsonScalarRows, 1);
   assert.equal(ledger.counts.routeInertJsonScalarRows, 3);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
-  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 832);
+  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 831);
 
   assert.equal(classifyBit128ProfileSource("export const BIT128_PROFILE = 'umf-128/1' as const;"), 'umf-128/1');
   for (const source of [
@@ -855,7 +855,7 @@ test('V4 relationship consumer exports are hybrid bindings without Rust consumer
     assert.equal(rows[2].defaultRouteRetirement.status, 'reference-only');
   }
   assert.equal(ledger.counts.sourceSelectedRustOverrides, 130 + 2 * 2 + 2 * 2 + 2 * 2);
-  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 88);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 89);
   assert.deepEqual(ledger.counts.executableDefaultRouteRetirementsByRoute, { 'package-root-node': 0, 'package-root-browser': 0 });
 
   for (const row of [
@@ -1051,8 +1051,8 @@ test('Schema Properties source selections keep exact CONTRACT-049 mappings separ
     assert.equal(reference.sourceSelectedImplementation, null);
     assert.equal(reference.implementationStatus, 'TypeScript reference implementation remains explicit');
   }
-  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 88);
-  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 832);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 89);
+  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 831);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
   const aggregate = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/aggregate.json', 'utf8'));
   const aggregateNames = Object.values(aggregate.families).flatMap(family => family.operations);
@@ -3091,8 +3091,8 @@ test('security truth and composition map only their four reviewed opt-in operati
 test('securityAnd/securityOr V4 bindings normalize exactly and carry source-only replay evidence', () => {
   const ledger = currentGeneratedLedger();
   assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
-  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 88);
-  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 832);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 89);
+  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 831);
   for (const name of ['securityAnd', 'securityOr']) {
     const rustSymbol = name === 'securityAnd' ? 'security_and' : 'security_or';
     for (const routeId of ['package-root-node', 'package-root-browser']) {

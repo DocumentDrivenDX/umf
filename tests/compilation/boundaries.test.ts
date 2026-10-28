@@ -116,6 +116,21 @@ describe("actual Python boundary checker", () => {
       rejects("py", { [prefix + facade]: "from umf import _rust\n" }, "DEPENDENCY");
     rejects("py", { [prefix + "catalog.py"]: "from umf import rust_access_catalog\n" }, "DEPENDENCY");
   });
+  test("target pin and read-plan Rust facades keep exact imports and reject host hooks", () => {
+    const prefix = "python/umf_access/src/umf_access/";
+    const facade = "rust_target_pin.py";
+    expect(check("py", { [prefix + facade]: "from umf import _rust\n" }).exitCode).toBe(0);
+    rejects("py", { [prefix + facade]: "import socket\n" }, "DEPENDENCY");
+    rejects("py", { [prefix + facade]: "open('/tmp/probe')\n" }, "HOST");
+    rejects("py", { [prefix + "rust_target_pin_host.py"]: "from umf import rust_values\n" }, "DEPENDENCY");
+    rejects("py", { [prefix + "rust_read_plan_bind.py"]: "import subprocess\n" }, "DEPENDENCY");
+    rejects("py", { [prefix + "rust_read_plan_bind.py"]: "input()\n" }, "HOST");
+    rejects("py", {
+      [prefix + "catalog.py"]: "from .rust_target_pin_host import matches\n",
+      [prefix + "rust_target_pin_host.py"]: "from .rust_target_pin import PROFILE\n",
+      [prefix + "rust_target_pin.py"]: "from .catalog import TargetPin\n",
+    }, "CYCLE");
+  });
   test("SQL containment separates pure admission from optional pinned parser and host I/O",()=>{
     const prefix="python/umf_access/src/umf_access/lifecycle/";
     expect(check("py",{[prefix+"sql_containment.py"]:"from dataclasses import dataclass\nimport hashlib\nimport json\nfrom typing import Protocol"}).exitCode).toBe(0);

@@ -46,34 +46,11 @@ class TargetPin:
     platform: tuple[tuple[str, tuple[str, ...]], ...]
 
     def matches(self, identity: TargetIdentity) -> bool:
-        return (
-            (
-                identity.kind,
-                identity.backend_id,
-                identity.backend_version,
-                identity.target_profile,
-                identity.binding_sha256,
-            )
-            == (
-                self.kind,
-                self.backend_id,
-                self.backend_version,
-                self.target_profile,
-                self.binding_sha256,
-            )
-            and len(identity.platform) == len(self.platform)
-            and self._matches_platform(identity.platform)
-        )
+        # Import lazily so constructing/reading inert catalog data does not load
+        # the native extension until target qualification is actually requested.
+        from .rust_target_pin_host import matches
 
-    def _matches_platform(self, observed: tuple[tuple[str, str], ...]) -> bool:
-        pinned_names = tuple(name for name, _ in self.platform)
-        observed_names = tuple(name for name, _ in observed)
-        if len(set(pinned_names)) != len(pinned_names) or len(
-            set(observed_names)
-        ) != len(observed_names):
-            return False
-        pins = dict(self.platform)
-        return all(name in pins and version in pins[name] for name, version in observed)
+        return matches(self, identity)
 
 
 @dataclass(frozen=True)

@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
-"""Opt-in Rust candidate for CONTRACT-072 target pin matching.
+"""Closed-value Rust candidate for CONTRACT-072 target pin matching.
 
-This module leaves ``TargetPin.matches`` on its existing Python route. It
-admits only exact immutable tuple/string carriers and delegates the closed
-identity comparison to the shared Rust core.
+The public ``TargetPin.matches`` route uses the host-lazy bridge so Python
+protocol observations and exceptions retain their existing order. This module
+also exposes the narrower exact-tuple/string candidate for direct controls.
 """
 
 from __future__ import annotations
@@ -12,13 +12,7 @@ from typing import Any
 
 from .adoption import TargetIdentity
 from .catalog import TargetPin
-
-PROFILE = "umf-access-target-pin/0.1.0"
-
-
-class TargetPinRustUnavailable(RuntimeError):
-    """The installed Rust extension does not expose this profile."""
-
+from .rust_target_pin_host import PROFILE, TargetPinRustUnavailable
 
 class TargetPinRustUnsupported(TypeError):
     """The supplied target identity uses a carrier outside this profile."""

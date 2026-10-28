@@ -361,6 +361,10 @@ export declare function createCoreCardinalityHostInputEngine(resources: UmfCoreR
   declareCoreCardinality(source: unknown, identity: unknown, request: unknown): unknown;
   verifyCoreCardinalityDeclaration(receipt: unknown, current: unknown): unknown;
 };
+/** Opt-in only; authors bits128/uuid meaning on one singular Field in current core 0.10.0. */
+export declare function createCoreBit128FieldEngine(resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): {
+  declareCoreBit128Field(source: unknown, identity: {module: string; element: string}, scalarType: 'bits128' | 'uuid'): unknown;
+};
 /** Create the opt-in Rust-owned umf.host-json/1 logical Record-value admission route. */
 export declare function createCoreRecordValuesHostInputEngine(resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): {validateCoreRecordValues(source: unknown, identity: unknown, values: unknown): unknown};
 export declare function createCoreKindNullabilityHostInputEngine(resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): {

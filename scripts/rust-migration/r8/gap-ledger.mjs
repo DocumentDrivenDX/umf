@@ -273,6 +273,13 @@ accept('src/adapters/access-temporal.ts', [
   'docs/helix/02-design/contracts/CONTRACT-075-access-temporal-profile.md',
   'docs/helix/04-build/evidence/rust-migration/r8-access-temporal/README.md',
 ], ['crates/umf-core/src/access_temporal.rs', 'bindings/core/node/tests/access-temporal-wrapper.test.js', 'bindings/core/wasm/tests/access-temporal.test.js']);
+accept('src/model/bit128-field.ts', [
+  ['declareCoreBit128Field', 'declare_core_bit128_field'],
+], 'umf_core::core_bit128_field', 'crates/umf-core/src/core_bit128_field.rs', [
+  'docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md',
+  'docs/helix/04-build/evidence/rust-migration/r8-bit128-field-candidate-20261028/README.md',
+  'docs/helix/04-build/evidence/rust-migration/r8-bit128-field-candidate-20261028/frozen-typescript.json',
+], ['crates/umf-core/tests/r8_bit128_field.rs', 'crates/umf-core-wire/tests/r8_bit128_field_wire.rs']);
 accept('src/adapters/arrow/capture.ts', [
   ['captureArrowIpc', 'capture_arrow_ipc'],
   ['exportArrowIpcCapture', 'export_arrow_ipc_capture'],
@@ -788,8 +795,10 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
         'docs/helix/02-design/contracts/CONTRACT-075-access-temporal-profile.md',
         'docs/helix/04-build/evidence/rust-migration/r8-access-temporal/README.md',
         'docs/helix/04-build/evidence/rust-migration/r8-access-temporal/reference-packet.json',
+        'docs/helix/04-build/evidence/rust-migration/r8-access-temporal-default-installed-5cddac8/README.md',
+        'docs/helix/04-build/evidence/rust-migration/r8-access-temporal-default-installed-5cddac8/archive-receipt.json',
       ]),
-      qualificationStatus: 'The exact V4 source selects the guarded Rust access-temporal wrapper. Local fixed-point source-built Node/Bun replay covers the 48 tagged and eight raw-host cases, but current installed Node/browser route replay is unavailable. The logical gap remains open and no declaration is retired.',
+      qualificationStatus: 'The exact V4 source selects the guarded Rust access-temporal wrapper. A fixed-point private SDK archive from commit 5cddac834 passes all 48 tagged packet cases and eight raw-host refusals on the installed Node 26.12.1, Bun 1.4.3 and Edge/Chromium 156.0.4314.50 default and reference routes; missing/corrupt native and WASM controls fail closed. This is bounded Darwin-arm64 source-pinned evidence, not Linux or release qualification. The logical gap remains open and no declaration is retired.',
     };
   }
   const secProjectionOwnerByExport = new Map([

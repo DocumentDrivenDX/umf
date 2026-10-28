@@ -503,6 +503,37 @@ pub fn execute_request_wire(
     }
 }
 
+/// Opt-in closed current-core Bit128 Field authoring route. This deliberately
+/// accepts one wire operation and does not widen the default request router.
+#[wasm_bindgen(js_name = executeCoreBit128FieldRequestWire)]
+pub fn execute_core_bit128_field_request_wire(
+    wire_json: &str,
+    profile: &str,
+    dispatcher: &Function,
+    control_dispatcher: Option<Function>,
+) -> String {
+    let profile = match profile {
+        "cooperative" => ResourceProfile::Cooperative,
+        "hard-isolated" => ResourceProfile::HardIsolated,
+        _ => return umf_core_wire::error_envelope(EngineError::new(
+            "RESOURCE_PROFILE", Utf16::default(), "Unknown resource profile",
+        )),
+    };
+    let mut capabilities = WasmCapabilities { dispatcher: dispatcher.clone() };
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::execute_core_bit128_field_request_with_control(
+            wire_json, profile, &mut capabilities, &mut hook,
+        )
+    } else {
+        let mut no_control = |_amount| Ok(());
+        umf_core_wire::execute_core_bit128_field_request_with_control(
+            wire_json, profile, &mut capabilities, &mut no_control,
+        )
+    }
+}
+
 #[wasm_bindgen(js_name = executeIcebergWire)]
 pub fn execute_iceberg_wire(wire_json: &str, control_dispatcher: Option<Function>) -> String {
     if let Some(dispatcher) = control_dispatcher {

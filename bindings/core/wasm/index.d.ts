@@ -331,6 +331,13 @@ export declare function createCoreCardinalityHostInputEngine(module: any, resour
   declareCoreCardinality(source: unknown, identity: unknown, request: unknown): unknown;
   verifyCoreCardinalityDeclaration(receipt: unknown, current: unknown): unknown;
 };
+/** Opt-in only; authors bits128/uuid meaning on one singular Field in current core 0.10.0. */
+export declare function createCoreBit128FieldEngine(module: any, resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): {
+  declareCoreBit128Field(source: unknown, identity: {module: string; element: string}, scalarType: 'bits128' | 'uuid'): unknown;
+};
+export declare function initializeCoreBit128FieldWasm(resources: UmfCoreResources, loader?: () => Promise<any>, host?: typeof globalThis, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): Promise<{
+  declareCoreBit128Field(source: unknown, identity: {module: string; element: string}, scalarType: 'bits128' | 'uuid'): unknown;
+}>;
 export declare function createCoreKeyTupleEngine(module: any, resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): Pick<UmfCoreModelEngine, 'encodeCoreKeyTuple' | 'verifyCoreKeyTuple' | 'readCoreKeyTupleBytes' | 'prepareCoreKeyTuples'>;
 export interface UmfCoreRecordTypeEngine {
   declareCoreRecordType(fieldAuthor: unknown, recordAuthor: unknown): unknown;

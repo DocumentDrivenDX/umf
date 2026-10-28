@@ -36,7 +36,11 @@ def check(root: Path) -> int:
     allowed = {"foundation": set(), "dsl": {"foundation"},
                "build": {"dsl", "runtime", "foundation"}, "runtime": {"dsl", "foundation"},
                "targets": {"runtime", "dsl", "foundation"}, "conformance": {"runtime", "foundation"},
-               "facade": {"dsl", "runtime", "foundation"}}
+               "facade": {"dsl", "runtime", "foundation"},
+               "pin_facade": {"runtime", "pin_host_facade"},
+               "pin_host_facade": set(),
+               "read_plan_bind_facade": {"runtime", "dsl", "foundation"}}
+    allowed["runtime"].add("pin_host_facade")
     helpers = {"types": "foundation", "values": "foundation", "codec_support": "foundation", "generated_core": "foundation",
                "related_keys": "runtime", "rust_related_keys": "runtime", "rust_catalog_custody": "runtime", "rust_catalog_render": "runtime", "verification": "targets", "managed_delta": "targets", "managed_actions": "targets", "managed_bulk": "targets", "managed_support": "targets", "delta_read": "targets", "postgres_search": "targets", "unity_search": "targets", "search_catalog": "runtime", "commands": "runtime", "manifest_commands": "runtime", "bulk": "runtime", "postgres_bulk": "targets", "native_program": "runtime", "native_actions": "targets", "catalog": "runtime", "reviewed": "runtime", "postgres_read": "targets", "capture": "dsl", "capture_types": "dsl", "rust_capture_observe": "dsl", "rust_catalog_render_v2": "runtime", "protocols": "runtime", "pages": "runtime", "adoption": "runtime", "engine_catalog": "runtime", "unified": "targets"}
     # Keep the administrative host, approval and optional parser adapters
@@ -48,6 +52,11 @@ def check(root: Path) -> int:
     # than ordinary target modules; do not grant it the targets owner wholesale.
     helpers["rust_search_rrf"] = "rrf_facade"
     allowed["rrf_facade"] = {"dsl", "targets"}
+    # Rust candidate facades are audited per-file below. Their ownership is
+    # explicit, and their import set does not expand with the general runtime.
+    helpers.update({"rust_target_pin": "pin_facade",
+                    "rust_target_pin_host": "pin_host_facade",
+                    "rust_read_plan_bind": "read_plan_bind_facade"})
     # Administration is a separate explicit owner; generator/driver imports do
     # not become available to the portable DSL, regular runtime or other targets.
     allowed["lifecycle"] = set()
@@ -83,12 +92,39 @@ def check(root: Path) -> int:
         parts = name.split(".")
         return helpers.get(parts[1], parts[1]) if len(parts) > 1 else "facade"
 
+    strict_facade_imports = {
+        "umf_access.rust_target_pin": {
+            ("__future__", "annotations"), ("typing", "Any"),
+            ("umf_access.adoption", "TargetIdentity"),
+            ("umf_access.catalog", "TargetPin"),
+            ("umf_access.rust_target_pin_host", "PROFILE"),
+            ("umf_access.rust_target_pin_host", "TargetPinRustUnavailable"),
+            ("umf", "_rust")},
+        "umf_access.rust_target_pin_host": {
+            ("__future__", "annotations"), ("typing", "Any"), ("umf", "_rust")},
+        "umf_access.rust_read_plan_bind": {
+            ("__future__", "annotations"), ("collections.abc", "Mapping"),
+            ("typing", "Any"), ("typing", "cast"), ("pydantic", "BaseModel"),
+            ("umf_access.catalog", "CatalogError"),
+            ("umf_access.catalog", "NotCompiledForTarget"),
+            ("umf_access.catalog", "ReadPlan"), ("umf_access.catalog", "ReadVariant"),
+            ("umf_access.pages", "ReadContinuation"),
+            ("umf_access.pages", "StaleContinuation"),
+            ("umf_access.protocols", "AsyncReadTarget"),
+            ("umf_access.protocols", "ReadTarget"),
+            ("umf_access.codec_support", "revalidate_model"),
+            ("umf_access.dsl", "Continuation"), ("umf_access.types", "MISSING"),
+            ("umf", "_rust")}
+    }
+
     def edge(name: str, target: str, member: str = "", line: int = 0) -> None:
         path = modules[name]
         source_owner = owner(name)
         # Keep the RRF scorer facade limited to the Rust wire bridge, its
         # Python non-RRF fallback, and the three result types it constructs.
         rrf_facade = name == "umf_access.rust_search_rrf"
+        if name in strict_facade_imports and (target, member) not in strict_facade_imports[name]:
+            fail(path, "DEPENDENCY", f"{target}{'.' + member if member else ''} outside exact facade imports")
         if rrf_facade:
             permitted_rrf = (
                 target in {"json", "math"} and not member
@@ -160,6 +196,7 @@ def check(root: Path) -> int:
             or name == 'umf_access.rust_related_keys' and member == 'rust_related_keys'
             or name in {'umf_access.rust_catalog_custody', 'umf_access.rust_catalog_render', 'umf_access.rust_catalog_render_v2'}
             and member == 'rust_access_catalog'))
+        strict_rust_core = target == "umf" and member == "_rust" and name in strict_facade_imports
         seed_compiler = (name == 'umf_access.lifecycle.seeds' and target == 'weft' and member == 'compile_table_seed_json'
                          or name == 'umf_access.lifecycle.backfills' and target == 'weft' and member == 'prepare_table_operation_module_json')
         private_capture_core = (target == "umf" and member == "_rust" and name in {
@@ -172,7 +209,7 @@ def check(root: Path) -> int:
         # the pure checker module must not import the parser or its dependencies.
         containment_parser = (name == 'umf_access.lifecycle.sql_containment_parser'
                               and target == 'pglast.parser' and member == 'parse_sql_json')
-        if package not in permitted and not spark_error and not typing_backport and not psycopg2_cursor and not table_read_compiler and not seed_compiler and not public_core_values and not containment_parser and not private_capture_core and not private_rrf_core:
+        if package not in permitted and not spark_error and not typing_backport and not psycopg2_cursor and not table_read_compiler and not seed_compiler and not public_core_values and not containment_parser and not private_capture_core and not private_rrf_core and not strict_rust_core:
             fail(path, "DEPENDENCY", f"{target} outside approved imports for {source_owner}")
         metadata_pin = (name == 'umf_access.lifecycle.sql_containment_parser'
                         and target == 'importlib.metadata' and member in {'version', 'PackageNotFoundError'})
@@ -199,6 +236,7 @@ def check(root: Path) -> int:
             for imported in ast.walk(function)
             if isinstance(imported, ast.ImportFrom)
         }
+        strict_rust_facade = name in strict_facade_imports
         for node in ast.walk(tree):
             if isinstance(node, ast.Import):
                 for alias in node.names:
@@ -221,6 +259,8 @@ def check(root: Path) -> int:
                 fail(path, "DYNAMIC", f"dynamic execution {node.id}")
             elif isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in {"open", "input"} and owner(name) in {"foundation", "dsl", "runtime", "conformance"}:
                 fail(path, "HOST", f"host I/O builtin {node.func.id}")
+            elif strict_rust_facade and isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in {"open", "input"}:
+                fail(path, "HOST", f"Rust facade cannot use host I/O builtin {node.func.id}")
             elif name == "umf_access.rust_search_rrf" and isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in {"open", "input"}:
                 fail(path, "HOST", f"RRF scorer cannot use host I/O builtin {node.func.id}")
 

@@ -5,7 +5,15 @@ from __future__ import annotations
 
 from typing import Any
 
-from .rust_target_pin import PROFILE, TargetPinRustUnavailable
+PROFILE = "umf-access-target-pin/0.1.0"
+
+
+class TargetPinRustUnavailable(RuntimeError):
+    """The installed Rust extension does not expose this profile."""
+
+    # Keep the established public exception identity for repr and pickling
+    # while defining it here to keep the lazy host bridge acyclic.
+    __module__ = "umf_access.rust_target_pin"
 
 
 def matches(pin: object, identity: object) -> bool:
