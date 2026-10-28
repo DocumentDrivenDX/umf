@@ -1,11 +1,8 @@
 name: Python support
 
+# Full qualification is explicit; routine PR checks live in pr-fast.yml.
 on:
-  push:
-    branches: [main]
-    tags:
-      - '**'
-  pull_request:
+  workflow_dispatch:
 
 # Supersede PR revisions without cancelling explicit qualification snapshots.
 concurrency:
