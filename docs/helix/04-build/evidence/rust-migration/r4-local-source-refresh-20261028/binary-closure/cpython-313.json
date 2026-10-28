@@ -1,0 +1,41 @@
+{
+  "binaries": [
+    {
+      "bundledLoadClosure": [],
+      "dependencies": [
+        {
+          "classification": "system",
+          "load": "/usr/lib/libiconv.2.dylib"
+        },
+        {
+          "classification": "system",
+          "load": "/usr/lib/libSystem.B.dylib"
+        }
+      ],
+      "effectiveRpaths": [],
+      "errors": [],
+      "format": "Mach-O",
+      "installIdsIgnoredAsDependencies": [
+        "/private/tmp/umf-r4-current-source-local-20261028/cargo-target-direct/aarch64-apple-darwin/release/deps/lib_rust_core.dylib"
+      ],
+      "path": "/private/tmp/umf-r4-current-source-local-20261028/venv313/lib/python3.13/site-packages/umf/_rust_core.abi3.so",
+      "rpaths": []
+    },
+    {
+      "bundledLoadClosure": [],
+      "dependencies": [
+        {
+          "classification": "system",
+          "load": "/usr/lib/libSystem.B.dylib"
+        }
+      ],
+      "effectiveRpaths": [],
+      "errors": [],
+      "format": "Mach-O",
+      "installIdsIgnoredAsDependencies": [],
+      "path": "/private/tmp/umf-r4-current-source-local-20261028/venv313/lib/python3.13/site-packages/umf/_bin/umf",
+      "rpaths": []
+    }
+  ],
+  "status": "passed"
+}

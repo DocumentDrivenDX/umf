@@ -1,6 +1,7 @@
 import {describe, expect, test} from 'bun:test';
 import {createJsonSchemaOperations as createNodeOperations, jsonSchemaFailureError, UmfError} from '../src/json-schema.js';
 import {createJsonSchemaOperations as createWasmOperations} from '../../wasm/src/json-schema.js';
+import {encodeWire} from '../src/wire.js';
 import {editJsonSchemaNode as sourceEditJsonSchemaNode, getJsonSchemaNode as sourceGetJsonSchemaNode} from '../../../../src/adapters/json-schema/index.ts';
 
 for (const [host, factory] of [['Node', createNodeOperations], ['WASM', createWasmOperations]]) {
@@ -196,6 +197,27 @@ for (const [host, factory] of [['Node', createNodeOperations], ['WASM', createWa
       expect(events).toEqual([]);
       expect(preflights).toBe(0);
       expect(dispatches).toBe(0);
+    });
+
+    test('records the method-bearing pointer mismatch that blocks default routing', () => {
+      const events = [];
+      const pointer = {startsWith(prefix) { events.push(`startsWith:${prefix}`); return true; }};
+      let referenceError;
+      try { sourceEditJsonSchemaNode({}, pointer, '{'); } catch (error) { referenceError = error; }
+      expect(referenceError).toBeInstanceOf(TypeError);
+      expect(referenceError.message).toMatch(/pointer\.slice/);
+      expect(events).toEqual(['startsWith:/']);
+
+      events.length = 0;
+      let preflights = 0;
+      const api = factory((_op, fields) => encodeWire(fields), () => { preflights++; return {}; });
+      let candidateError;
+      try { api.editJsonSchemaNode({}, pointer, '{'); } catch (error) { candidateError = error; }
+      expect(candidateError).toBeInstanceOf(TypeError);
+      expect(candidateError.message).toMatch(/Unsupported JavaScript value type: function/);
+      expect(candidateError.message).not.toBe(referenceError.message);
+      expect(events).toEqual(['startsWith:/']);
+      expect(preflights).toBe(1);
     });
   });
 }

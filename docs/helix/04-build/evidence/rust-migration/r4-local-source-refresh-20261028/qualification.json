@@ -1,0 +1,94 @@
+{
+  "artifacts": [
+    {
+      "bytes": 63632,
+      "name": "umf_codegen-0.2.0-py3-none-any.whl",
+      "sha256": "d510e2c188990c90876c87ab1be80639a058d10dbee1ebc87290da8afa3d1266"
+    },
+    {
+      "bytes": 51107,
+      "name": "umf_codegen-0.2.0.tar.gz",
+      "sha256": "e472afa00f49b2894c44188351856e5e5b21baa6ad213a39acc5eb9940b55ceb"
+    },
+    {
+      "bytes": 9678431,
+      "name": "umf_core-0.11.0-cp311-abi3-macosx_11_0_arm64.whl",
+      "sha256": "d42b4e63288ec690dc9ffe56f2ebfb42559b92598fb0a88724c0a4ae73b3fc14"
+    },
+    {
+      "bytes": 4019079,
+      "name": "umf_core-0.11.0.tar.gz",
+      "sha256": "ef10ef1a0bcfdc58a34c9b832991d22bd7698eda0a8dcde194ed84b963366fe5"
+    }
+  ],
+  "capturedAtUtc": "2026-10-28",
+  "coreArtifactVerification": {
+    "directWheelSha256": "d42b4e63288ec690dc9ffe56f2ebfb42559b92598fb0a88724c0a4ae73b3fc14",
+    "sdistNonNativePayloadMatches": true,
+    "sdistSha256": "ef10ef1a0bcfdc58a34c9b832991d22bd7698eda0a8dcde194ed84b963366fe5",
+    "sourcePayloadVerification": "passed"
+  },
+  "host": {
+    "build": "1.3.0",
+    "buildPython": "3.11.17",
+    "cargo": "1.90.0",
+    "hatchling": "1.27.0",
+    "machine": "arm64",
+    "os": "macOS-27.0.1-arm64-arm-64bit",
+    "runtimePythons": [
+      "3.11.17",
+      "3.13.16"
+    ],
+    "rust": "1.90.0",
+    "twine": "6.2.0"
+  },
+  "publishing": false,
+  "results": {
+    "binaryDependencyClosure": "passed for extension and CLI in both macOS environments; system libraries only",
+    "canonicalResourceRefresh": "passed; --write followed by --check in isolated source snapshot and shared worktree; generated manifest SHA-256 74b1fa2f57d22f238351db6e21d3250c05fc9b611c27fd2a41a3598c8f6a5fee",
+    "codegenSdistRebuild": {
+      "rebuiltWheelByteIdentity": true,
+      "sourceInputs": 24,
+      "status": "passed",
+      "wheelSha256": "d510e2c188990c90876c87ab1be80639a058d10dbee1ebc87290da8afa3d1266"
+    },
+    "codegenWheelAndSdist": "passed after canonical refresh",
+    "coordinatedPairVerifier": "passed on current shared source checkout with pinned build environment; publishing=false; exact artifacts and source workflow hashes in pair-verification.json. The first restricted attempt hit package-index DNS failure; retry under authorized narrow escalation passed.",
+    "coreWheelAndSdist": "passed; core artifact verifier source payload and sdist checks pass",
+    "focusedRepositoryChecks": "61 passed: coordinated release, Python release matrix, and binary closure tests; resource synchronizer --check passed",
+    "installedPairSmoke": "passed for both Python environments; generated seven files and verified CLI help",
+    "installedPairTests": {
+      "python311": "217 passed with PATH empty; replayed from shared checkout against installed exact artifacts",
+      "python313": "217 passed with PATH empty; replayed from shared checkout against installed exact artifacts"
+    },
+    "linux": "no exact-cohort qualification: cached x86_64 Docker image provides CPython 3.11.2 and lacks R4 build tools. Attempt to install exact cohort in container was rejected by automatic review because it was a network-capable run with source mounted read-write; exact 3.11.17/3.12.15/3.13.16 Linux evidence remains open.",
+    "preRefreshCodegenBuild": "failed as intended: canonical resource check found five stale core resources, manifest and _release.py pin",
+    "release": "no hosted six-cohort run and no publication",
+    "twineCheck": "passed for both wheels and sdists"
+  },
+  "schema": "umf.r4-local-source-refresh-evidence/1",
+  "source": {
+    "codegenResourceManifestSha256": "74b1fa2f57d22f238351db6e21d3250c05fc9b611c27fd2a41a3598c8f6a5fee",
+    "gitArchiveTarSha256": "c7250dc85d56a7a7e34c216fa77c681af0d08ae81ec4997e1edb242fc16a1d1f",
+    "gitCommit": "5e46b5a539d3c9b4985611e0745fcdbe711cee9a",
+    "preparedTree": "git archive of the commit plus output of the canonical resource synchronizer; the repository itself was not edited during this preparation",
+    "sharedWorktreeCanonicalResourceManifestSha256": "74b1fa2f57d22f238351db6e21d3250c05fc9b611c27fd2a41a3598c8f6a5fee",
+    "sharedWorktreeCommit": "5e46b5a539d3c9b4985611e0745fcdbe711cee9a",
+    "sharedWorktreePairVerifierWorkflowSha256": "21e39a086cd51945b5ba3a34d332021ccd8d95cd16714cfeff6eed6cd41f9a06",
+    "sourceClosureFiles": 517,
+    "sourceClosureSha256": "955776f8235a173281ba60091890bfcd94de80aa5a8751798f509ff9b60bbee8"
+  },
+  "status": "local-artifact-and-installed-tests-passed; hosted-release-qualification-open",
+  "testLogs": [
+    {
+      "bytes": 341,
+      "path": "test-logs/pytest-311.log",
+      "sha256": "8afe298adfd623bc6dffa86363d676faaa1f2541fdc7813805d8f60930156393"
+    },
+    {
+      "bytes": 341,
+      "path": "test-logs/pytest-313.log",
+      "sha256": "bc32dc37f67485802dd23d5dcd1e7126b80654d92ce62c09aed89fbae680e2f8"
+    }
+  ]
+}

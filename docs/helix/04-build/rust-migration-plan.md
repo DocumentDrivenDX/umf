@@ -79,7 +79,7 @@ new current-source packet. Its receipt SHA-256 is
 current inventory SHA-256 is
 `805e711ce3a5720624fa66803bf766444b4f67f97f4d02d747f739c675168cc4` and the
 condition-aware ledger SHA-256 is
-`201e0f691d4e1192d9744f30b67774187869fa9bf08cf15b18bc68bf369848c9`. Linux,
+`9781795e3fd361d57f155bdac3de3443d1954ba557d0215c04d787cb8539c606`. Linux,
 complete production SDK parity, the full port, and release remain unqualified.
 The ledger's `executable` label is a broad public-runtime category: independent
 AST review of the 1,120-name reference root found 750 function declarations,
@@ -9442,3 +9442,49 @@ pointer, document, and replacement faults with exact first-error and host
 effect order. The focused wrapper suite passes 27/27. The default V4 route
 remains TypeScript; the changed test source requires a new installed SDK
 source-coherent packet before this Rust candidate can advance.
+
+The [next current-source edit review](evidence/rust-migration/r8-json-schema-edit-current-reference/README.md)
+replayed all eleven frozen direct `editJsonSchemaNode` reference cases with no
+outcome mismatch. Its checked TypeScript AST source closure has 32 local files,
+79 import edges, and seven changed local inputs against the historical packet.
+The review also found a decisive host-boundary difference in the opt-in Node and
+WASM wrappers. For a method-bearing non-string pointer whose `startsWith('/')`
+returns true, the
+predecessor next reaches `pointer.slice(1)` and throws the native `TypeError`
+before document access or preflight. The candidate instead performs preflight
+and reaches wire admission, which rejects the function-valued method with an
+`AdmissionError`. A focused regression test records the differing error and
+host effect in both wrappers; its full suite passes 29/29. The historical
+22-case installed Node/Bun/Chromium packet has seven changed transitive schema
+and generated-code inputs, so it is not current-source installed evidence.
+Keep the default V4 edit route on TypeScript until the host boundary and a
+fresh source-coherent installed replay close; this checkpoint retires no row.
+
+The R8 ledger now accepts exact bounded Rust ownership for the two SEC 2.0.0
+projection exports on each V4 Node/browser root. Each mapping pins the
+CONTRACT-059 core and UTF-16 bindings plus the private Darwin arm64 installed
+receipt for Node 26.12.1, Bun 1.4.3, and Chromium 153. Their explicit
+`./reference` rows remain TypeScript and unmapped. The ledger's logical
+accepted-operation aggregate still reads 86 because it counts the reference
+representative for each export; the four default-root rows record the newly
+accepted mappings. Both logical names remain among 921 executable default
+route gaps, with zero declaration retirements. Linux, broader SEC parity,
+hosted CI, and release qualification remain open.
+
+### R4 canonical resource refresh and local pair verification — 2026-10-28
+
+The [local source-refresh packet](evidence/rust-migration/r4-local-source-refresh-20261028/README.md)
+records a reviewed `5e46b5a5` archive plus the repository's canonical
+`sync_codegen_resources.py --write` transform. Five embedded core resources,
+their manifest, and the `_release.py` pin had drifted from canonical `spec/`
+inputs; the synchronizer refreshed exactly those seven generated outputs in
+the shared worktree, and its `--check` passes. The prepared source closure has
+517 files. Both macOS arm64 wheel/sdist pairs built, passed `twine check`, and
+the codegen wheel rebuilt byte-identically from its sdist. The coordinated
+pair verifier passed with `publishing=false` and receipt SHA-256
+`4c063d7d7cbcbc17222c63fd96969b6612ed277a29fe3773cea59db090d38783`.
+Installed artifacts passed 217/217 focused tests on CPython 3.11.17 and
+3.13.16 with `PATH` empty; 61 release/matrix/binary-closure tests passed. The
+packet's checksums and the current resource sync check pass. This local
+Darwin evidence does not close the hosted six-cohort release matrix, Linux
+wheel behavior, R8 executable gaps, or package publication.

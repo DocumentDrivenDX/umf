@@ -9,7 +9,7 @@ import { gzipSync } from 'node:zlib';
 import { cp, mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { buildLedger, collectPythonPackageAssets, collectPythonSourceFiles, isDomainPackLoaderInspectionRootSelection, isDomainPackProfileInspectionRootSelection, isDomainPackSchemaRootSelection, summarizeDefaultRouteRetirement, validateCompactVerifierBuildBinding, validateDomainPackLoaderInspectorReceipt, validateSchemaGraphReceipt } from './gap-ledger.mjs';
+import { buildLedger, collectPythonPackageAssets, collectPythonSourceFiles, isDomainPackLoaderInspectionRootSelection, isDomainPackProfileInspectionRootSelection, isDomainPackSchemaRootSelection, operationMapping, summarizeDefaultRouteRetirement, validateCompactVerifierBuildBinding, validateDomainPackLoaderInspectorReceipt, validateSchemaGraphReceipt } from './gap-ledger.mjs';
 import { CASES as LOADER_INSPECTOR_CASES, validateClaims as validateLoaderInspectorClaims, validatePacketSync as validateLoaderInspectorPacketSync } from './loader-inspector-route-evidence.mjs';
 import { requiredR8RouteFamilies, validateR8InstalledRouteEvidence } from './installed-route-evidence.mjs';
 import { normalizeR8RouteHostReceipt } from './installed-route-receipt-adapter.mjs';
@@ -625,7 +625,7 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
   assert.equal(archivedGate.boundedOperations, 24);
 });
 
-test('the two SEC projections record exact unqualified V4 Rust source selection without accepted mappings', () => {
+test('the two SEC projections accept bounded V4 Rust ownership without qualifying or retiring the defaults', () => {
   const inventory = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/inventory.json', 'utf8'));
   const names = new Map([
     ['projectSecSubmissions', 'umf_core::domain_pack_sec::project_sec_submissions'],
@@ -636,21 +636,30 @@ test('the two SEC projections record exact unqualified V4 Rust source selection 
   assert.equal(symbols.length, 6);
   const ledger = buildLedger({ ...args, inventory: { symbols } });
   assert.equal(ledger.counts.sourceSelectedRustOverrides, 4);
-  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 0);
+  assert.equal(ledger.rows.find(item => item.routeId === 'package-root-node' && item.exportName === 'projectSecSubmissions').acceptedRustOperation, 'umf_core::domain_pack_sec::project_sec_submissions');
+  assert.equal(ledger.rows.filter(item => ['package-root-node', 'package-root-browser'].includes(item.routeId) && item.acceptedRustOperation).length, 4);
   for (const [name, owner] of names) {
     for (const routeId of ['package-root-node', 'package-root-browser']) {
       const row = ledger.rows.find(item => item.routeId === routeId && item.exportName === name);
       assert.equal(row.sourceSelectedImplementation.status, 'source-selected-current-route-unqualified');
       assert.equal(row.sourceSelectedImplementation.rustOwner, owner);
       assert.equal(row.sourceSelectedImplementation.wireOperation, `domain-pack-sec/${name}`);
-      assert.equal(row.acceptedRustOperation, null);
+      assert.equal(row.acceptedRustOperation, owner);
+      assert.ok(row.acceptedOperationEvidence.evidenceClosure.some(item => item.path === 'docs/helix/04-build/evidence/rust-migration/r8-sec-projection-default-installed/README.md'));
+      assert.ok(row.acceptedOperationEvidence.evidenceClosure.some(item => item.path === 'docs/helix/04-build/evidence/rust-migration/r8-sec-projection-default-installed/darwin-arm64-sdk-receipt.json'));
+      assert.match(row.acceptedOperationEvidence.scopeRule, /Darwin arm64.*Node 26\.12\.1.*Bun 1\.4\.3.*Chromium 153/);
+      assert.match(row.acceptedOperationEvidence.defaultRouteStatus, /retirement remain open/);
       assert.equal(row.defaultRouteRetirement.status, 'open');
       assert.equal(row.bindingRouteStatus, 'unproven');
       assert.ok(row.sourceSelectedImplementation.sourceClosure.some(item => item.path === 'crates/umf-core/src/domain_pack_sec.rs'));
       assert.ok(row.sourceSelectedImplementation.sourceClosure.some(item => item.path.endsWith(routeId === 'package-root-node' ? 'bindings/core/node/src/sec_projection.rs' : 'bindings/core/wasm/src/sec_projection.rs')));
+      assert.equal(operationMapping({ ...row, source: routeId === 'package-root-node' ? 'src/index-browser-v4.ts' : 'src/index-node-v4.ts' }), null, `${routeId}:${name} rejects the other root's source path`);
+      assert.equal(operationMapping({ ...row, declarationKind: 'VariableDeclaration' }), null, `${routeId}:${name} rejects a forged declaration shape`);
     }
     const reference = ledger.rows.find(item => item.routeId === 'package-reference' && item.exportName === name);
     assert.equal(reference.sourceSelectedImplementation, null);
+    assert.equal(reference.acceptedRustOperation, null, 'the explicit TypeScript reference is not mapped to the Rust default');
+    assert.equal(operationMapping(reference), null, 'the explicit TypeScript reference has no accepted root mapping');
     assert.equal(reference.defaultRouteRetirement.status, 'reference-only');
   }
 });

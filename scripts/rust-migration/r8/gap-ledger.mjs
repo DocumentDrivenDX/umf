@@ -107,6 +107,24 @@ accept('src/model/reference-links.ts', [['inspectCoreReferenceLinks', 'inspect_c
 accept('src/model/dataset-values.ts', [['validateCoreDatasetValues', 'validate_core_dataset_values'], ['verifyCoreDatasetValues', 'verify_core_dataset_values']], 'umf_core::dataset_values', 'crates/umf-core/src/dataset_values.rs', ['r5-dataset-values/README.md', 'r5-dataset-values/frozen-typescript.json', 'r5-dataset-values/frozen-verify-typescript.json'], 'crates/umf-core/tests/r5_dataset_values.rs');
 accept('src/model/dataset-values-compact.ts', [['validateCoreDatasetValuesCompact', 'validate_core_dataset_values_compact'], ['verifyCoreDatasetValuesCompact', 'verify_core_dataset_values_compact']], 'umf_core::dataset_values', 'crates/umf-core/src/dataset_values.rs', ['r5-dataset-values-compact/README.md', 'r5-dataset-values-compact/index.json'], 'crates/umf-core/tests/r5_dataset_values_compact.rs');
 accept('src/model/key-tuple.ts', [['encodeCoreKeyTuple', 'encode_core_key_tuple'], ['verifyCoreKeyTuple', 'verify_core_key_tuple'], ['readCoreKeyTupleBytes', 'read_core_key_tuple_bytes'], ['prepareCoreKeyTuples', 'prepare_core_key_tuples']], 'umf_core::core_key_tuple', 'crates/umf-core/src/core_key_tuple.rs', ['r5-core-key-tuple/README.md', 'r5-core-key-tuple/frozen-typescript.json'], 'crates/umf-core/tests/r5_core_key_tuple.rs');
+for (const source of ['src/index-node-v4.ts', 'src/index-browser-v4.ts']) {
+  accept(source, [
+    ['projectSecSubmissions', 'project_sec_submissions'],
+    ['projectSecCompanyFacts', 'project_sec_company_facts'],
+  ], 'umf_core::domain_pack_sec', [
+    'crates/umf-core/src/domain_pack_sec.rs',
+    'bindings/core/node/src/sec_projection.rs',
+    'bindings/core/wasm/src/sec_projection.rs',
+  ], [
+    'docs/helix/04-build/evidence/rust-migration/r8-sec-projection-default-installed/README.md',
+    'docs/helix/04-build/evidence/rust-migration/r8-sec-projection-default-installed/darwin-arm64-sdk-receipt.json',
+    'docs/helix/04-build/evidence/rust-migration/r8-sec-projection-candidate-installed/README.md',
+  ], [
+    'crates/umf-core/src/domain_pack_sec.rs',
+    'tests/rust-core/sec-projection-v4-default-route.test.mjs',
+    'scripts/rust-migration/r8/sec-projection-candidate-installed.mjs',
+  ]);
+}
 accept('src/model/keys.ts', [
   ['inspectCoreKeys', 'inspect_core_keys'],
   ['lookupCoreKey', 'lookup_core_key'],
@@ -455,6 +473,8 @@ function acceptedOperationEvidence(mapping, routeStatus = 'legacy-fixture') {
         ? 'The linked Node/WASM host packet replays 19 of 22 tagged inspectProtectionQueryProperties operations. Three range-identity/field cases are excluded, and raw accessor/Proxy observations are outside tagged JSON. This is bounded tagged host evidence only; it does not establish full operation parity, enforcement, authority, or default-route retirement.'
       : mapping.evidencePaths.some(file => file.includes('/r8-security-protection-parameters-binding/'))
         ? 'The linked Node/WASM packet replays eight of eleven tagged validateProtectionParameters cases for the bounded typed-literal and range-bucket Field subset. The noncanonical integer diagnostic-order case, internal pre-spent helper-budget case, and tagged-inexpressible accessor case are excluded from exact parity; host admission separately rejects accessors without invoking them. Results remain incomplete and non-authoritative; parameter naming/arity/type compatibility, policy interpretation, authorization, native enforcement, installed-route support and default-route retirement are excluded.'
+      : mapping.evidencePaths.some(file => file.includes('/r8-sec-projection-default-installed/'))
+        ? 'The installed Darwin arm64 packet supports only projectSecSubmissions and projectSecCompanyFacts on the pinned Node 26.12.1, Bun 1.4.3, and Chromium 153 cohort, including reference parity and the recorded admission/output-limit controls. Linux, other SEC functions, complete Python release qualification, and default-route retirement remain open.'
       : mapping.evidencePaths.some(file => file.includes('/r8-core-relationship-selection-binding/'))
         ? 'Source/evidence hashes pin identity only; the linked relationship-selection packet defines 16-case opt-in host parity, excluding Registry callbacks and JavaScript error class identity.'
       : 'Source/evidence hashes pin identity only; the linked R5 packet defines the bounded operation subset and its remaining gates.',
@@ -702,7 +722,7 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
         'tests/rust-core/sec-projection-v4-default-route.test.mjs',
         'docs/helix/02-design/contracts/CONTRACT-059-public-company-intelligence.md',
       ]),
-      qualificationStatus: 'The exact V4 entry binds this SEC projection through the Rust UTF-16 wire operation. Bounded current-source installed Node/Bun/Chromium replay passes in the SEC default-route packet; full release qualification, accepted mapping, and declaration retirement remain open.',
+      qualificationStatus: 'The exact V4 entry binds this SEC projection through the Rust UTF-16 wire operation. The bounded Darwin arm64 installed Node/Bun/Chromium packet supports this explicit owner mapping; Linux, full release qualification, and declaration retirement remain open.',
     };
   }
   const keyTupleOwnerByExport = new Map([
@@ -1469,7 +1489,13 @@ export function isDomainPackProfileInspectionRootSelection({ routeId, exportName
     && selection.directExports?.includes(exportName) === true;
 }
 
-function operationMapping(row) {
+export function operationMapping(row) {
+  if (['projectSecSubmissions', 'projectSecCompanyFacts'].includes(row.exportName)
+      && ['package-root-node', 'package-root-browser'].includes(row.routeId)) {
+    const expectedSource = row.routeId === 'package-root-node' ? 'src/index-node-v4.ts' : 'src/index-browser-v4.ts';
+    if (row.source !== expectedSource || row.declarationName !== row.exportName
+        || row.declarationKind !== 'BindingElement' || row.initializerShape !== 'not-applicable') return null;
+  }
   const direct = accepted.get(`${row.source}#${row.exportName}`);
   if (direct) return direct;
   if (['package-root-node', 'package-root-browser'].includes(row.routeId)
