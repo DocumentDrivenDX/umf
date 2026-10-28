@@ -24,6 +24,7 @@ import {declareCoreSchemaPropertiesHostInput, schemaPropertiesHostInput, cardina
 import {createSemanticTypeRegistry as createSemanticTypeRegistryEngine} from './src/semantic-value.js';
 import {createArrowIpcOperations, ARROW_IPC_PROFILE} from './src/arrow-ipc.js';
 import {createAccessRrfOperations, ACCESS_RRF_PROFILE} from './src/access-rrf.js';
+import {createAccessTemporalOperations, ACCESS_TEMPORAL_PROFILE} from './src/access-temporal.js';
 import {requireSchemaGraphProviders} from './src/schema-graph.js';
 
 export {isWireAdmissionError} from './src/wire.js';
@@ -172,6 +173,7 @@ export const ICEBERG_SCHEMA_PROFILE = 'umf-r5-iceberg-schema/0.1.0';
 export const ARROW_SCHEMA_PROFILE = 'umf-r8-arrow-schema/0.1.0';
 export {ARROW_IPC_PROFILE};
 export {ACCESS_RRF_PROFILE};
+export {ACCESS_TEMPORAL_PROFILE};
 export const PROTOBUF_INSPECT_PROFILE = 'umf-r5-protobuf-inspect/0.1.0';
 export const PROTOBUF_DOCUMENT_PROFILE = 'umf-r8-protobuf-descriptor-document/0.1.0';
 export const PROTOBUF_SOURCE_IMPORT_PROFILE = 'umf-r8-protobuf-source-import/0.1.0';
@@ -993,6 +995,23 @@ export function createAccessRrfEngine(options = {}) {
     const hostWork = admissionWork(controlBridge);
     hostWork?.(1);
     return {controlBridge, hostWork, charge: units => hostWork?.(units)};
+  });
+}
+
+/** Create the opt-in CONTRACT-075 temporal parser backed by the shared Rust core. */
+export function createAccessTemporalEngine() {
+  if (typeof addon.executeAccessTemporalWire !== 'function' || typeof addon.accessTemporalProfileVersion !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
+  if (addon.accessTemporalProfileVersion() !== ACCESS_TEMPORAL_PROFILE) throw new Error('RUST_NODE_BINDING_PROFILE_MISMATCH');
+  return createAccessTemporalOperations(request => {
+    const responseText = addon.executeAccessTemporalWire(encodeRequestWire(request));
+    const envelope = JSON.parse(responseText);
+    const failure = resultError(envelope);
+    if (failure) {
+      if (failure.code === 'TYPE_ERROR') throw new TypeError(failure.message);
+      if (failure.code === 'RANGE_ERROR') throw new RangeError(failure.message);
+      throw nativeCoreError(failure);
+    }
+    return fromWire(JSON.parse(envelope.wire));
   });
 }
 

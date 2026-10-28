@@ -499,6 +499,16 @@ export interface AccessRrfResult { ordered: {identity: number; score: number}[] 
 export interface AccessRrfEngine { readonly profile: typeof ACCESS_RRF_PROFILE; score(request: AccessRrfRequest): AccessRrfResult }
 /** Create the opt-in pure RRF scorer; no default search route is changed. */
 export declare function createAccessRrfEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): AccessRrfEngine;
+export declare const ACCESS_TEMPORAL_PROFILE: 'umf-access-temporal/0.1.0';
+export type AccessTemporalKind = 'date' | 'instant' | 'local';
+interface AccessTemporalBase { readonly profile: typeof ACCESS_TEMPORAL_PROFILE; readonly originalText: string; readonly canonicalText: string }
+export interface AccessDate extends AccessTemporalBase { readonly kind: 'date' }
+export interface AccessLocal extends AccessTemporalBase { readonly kind: 'local'; readonly microsecond: number }
+export interface AccessInstant extends AccessTemporalBase { readonly kind: 'instant'; readonly microsecond: number; readonly utcSeconds: string; readonly originalOffset: string }
+export type AccessTemporal = AccessDate | AccessLocal | AccessInstant;
+export interface AccessTemporalEngine { readonly profile: typeof ACCESS_TEMPORAL_PROFILE; parseAccessTemporal(kind: AccessTemporalKind, token: string): AccessTemporal }
+/** Create the opt-in CONTRACT-075 temporal parser; no default route is changed. */
+export declare function createAccessTemporalEngine(): AccessTemporalEngine;
 /** Create the opt-in exact-source Arrow IPC capture engine; no default route is changed. */
 export declare function createArrowIpcEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): ArrowIpcEngine;
 

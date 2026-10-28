@@ -173,6 +173,15 @@ export declare function createJsonNumberEngine(module: any, options?: {profile?:
 export declare function initializeJsonNumberWasm(loader?: () => Promise<any>, host?: typeof globalThis, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): Promise<UmfJsonNumberEngine>;
 export declare function initializeBit128Wasm(loader?: () => Promise<any>, host?: typeof globalThis, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): Promise<UmfBit128Engine>;
 export declare function initializeTemporalWasm(loader?: () => Promise<any>, host?: typeof globalThis): Promise<UmfTemporalEngine>;
+export declare const ACCESS_TEMPORAL_PROFILE: 'umf-access-temporal/0.1.0';
+export type AccessTemporalKind = 'date'|'instant'|'local';
+export interface AccessDate {readonly profile: typeof ACCESS_TEMPORAL_PROFILE; readonly kind: 'date'; readonly originalText: string; readonly canonicalText: string}
+export interface AccessLocal {readonly profile: typeof ACCESS_TEMPORAL_PROFILE; readonly kind: 'local'; readonly originalText: string; readonly canonicalText: string; readonly microsecond: number}
+export interface AccessInstant {readonly profile: typeof ACCESS_TEMPORAL_PROFILE; readonly kind: 'instant'; readonly originalText: string; readonly canonicalText: string; readonly microsecond: number; readonly utcSeconds: string; readonly originalOffset: string}
+export type AccessTemporal = AccessDate|AccessLocal|AccessInstant;
+export interface AccessTemporalEngine { parseAccessTemporal(kind: AccessTemporalKind, token: string): AccessTemporal }
+export declare function createAccessTemporalEngine(module: any): AccessTemporalEngine;
+export declare function initializeAccessTemporalWasm(loader?: () => Promise<any>, host?: typeof globalThis): Promise<AccessTemporalEngine>;
 export declare function initializeWasm(loader: (() => Promise<any>) | undefined, host: typeof globalThis | undefined, resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): Promise<UmfCoreDocumentEngine>;
 export declare function initializeWasm(loader?: () => Promise<any>, host?: typeof globalThis, resources?: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): Promise<UmfCoreEngine>;
 export declare function createEngine(module: any, resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): UmfCoreDocumentEngine;

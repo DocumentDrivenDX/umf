@@ -9859,3 +9859,15 @@ refusal code/message units for all 48. Eight raw-host predecessor cases remain
 outside the tagged transport. The two logical exports still need Node/Bun and
 browser/WASM package bindings, installed parity, and explicit default-route
 review; this packet does not change their R8 retirement status.
+
+The same [access-temporal packet](evidence/rust-migration/r8-access-temporal/README.md)
+now includes opt-in N-API and WASM bindings over the shared Rust wire
+operation. Source-built Node 26.12.1, Bun 1.4.3, and real Chromium
+153.0.8010.12 match all 48 tagged predecessor cases. Host wrappers check only
+primitive token/kind admission before the wire boundary; Rust owns supported
+kind, length, and parsing decisions. The eight raw-host TypeError cases and
+proxy/accessor silence pass in the host-specific tests; the browser replay also
+checks token-kind precedence and absence of Node globals. These are local
+source-built opt-in results, not installed SDK package or V4 default-route
+qualification. The two logical access-temporal exports remain open in the
+R8 retirement ledger.

@@ -80,6 +80,16 @@ pub fn inspect_domain_pack_profile_wire(input_json: &str) -> Result<String, JsVa
 pub fn access_rrf_profile_version() -> String {
     umf_core_wire::access_rrf_binding::PROFILE.to_owned()
 }
+
+#[wasm_bindgen(js_name = accessTemporalProfileVersion)]
+pub fn access_temporal_profile_version() -> String {
+    umf_core::access_temporal::ACCESS_TEMPORAL_PROFILE.to_owned()
+}
+
+#[wasm_bindgen(js_name = executeAccessTemporalWire)]
+pub fn execute_access_temporal_wire(wire_json: &str) -> String {
+    umf_core_wire::access_temporal_binding::execute_access_temporal_wire(wire_json)
+}
 #[wasm_bindgen(js_name = executeAccessRrfWire)]
 pub fn execute_access_rrf_wire(wire_json: &str, control_dispatcher: Option<Function>) -> String {
     if let Some(dispatcher) = control_dispatcher {

@@ -65,10 +65,55 @@ RUSTC=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/rustc \
   test -p umf-core-wire --test access_temporal_r8_candidate --offline
 ```
 
-The R8 packet tests the selected token parser only. It does not admit raw host
-objects, choose temporal meaning for a core scalar, validate a Python carrier,
-preserve arbitrary UMF document extensions, call a native adapter, or alter any
-default package route. The six R8 ledger rows remain unchanged and open pending
-route integration, installed Node/Bun and browser/WASM qualification, and
-review of the complete current source cohort. This evidence is an opt-in
-operation candidate, not route retirement or a release claim.
+## Opt-in Node/Bun addon candidate
+
+The Node addon now exposes the wire operation through a private JS adapter and
+an explicit `createAccessTemporalEngine()` factory. The factory checks the
+`umf-access-temporal/0.1.0` profile before use. The adapter uses JS `typeof`
+guards for primitive token and kind carriers, preserving public refusal order
+without coercion or property access. Rust owns supported string kinds, token
+limits, their precedence, and parsing. The adapter returns a frozen, plain
+object matching the TypeScript result shape. The Node package's default entry
+and V4 route are unchanged.
+
+On the captured Darwin-arm64 worktree, Rust 1.90.0 passed the two focused
+`access_temporal_r8_candidate` tests. The Node addon built from that source
+matched the frozen 48-case packet exactly on Node 26.12.1 and Bun 1.4.3. Three
+focused wrapper tests passed on Bun, including the eight host-only predecessor
+carriers (null, number, object, array, Date, boxed String, Proxy and accessor
+object), a non-string Proxy kind, and zero proxy traps or getter calls.
+Repository TypeScript typecheck passed. The addon was replayed from a temporary package copy because the
+worktree's ignored prebuilt addon is not writable in this environment.
+
+## Opt-in browser/WASM candidate
+
+The WASM module now exposes `accessTemporalProfileVersion` and
+`executeAccessTemporalWire`; the private browser-compatible facade checks that
+version, rejects non-primitive token/kind carriers before any property
+reflection, transports strings as UTF-16 tagged values, restores TypeError or
+RangeError from the Rust result, and freezes the decoded result. A fresh WASM
+build replayed all 48 tagged vectors through this facade in Bun 1.4.3. Focused
+facade tests cover all eight raw-host refusal shapes, token-type before
+kind/length precedence, proxy-kind refusal without reflection, zero proxy
+trap/getter calls, absent/mismatched bindings, frozen results, and lone-surrogate
+preservation through tagged transport. Sol independently reran the source-built
+WASM harness with macOS process permission after correcting its lone-surrogate
+expected message against the TypeScript predecessor. Real Chromium
+153.0.8010.12 passed all 48 tagged cases, eight raw-host refusals, kind/token
+precedence, zero Proxy/accessor observations, and the absence of Node globals.
+The Rust `wasm32-unknown-unknown` release module used for that replay has
+SHA-256 `097c6c59263554b371eeff9ddad33b77d4f8b5bf5f0f61981ccab33d5beb752d`.
+
+Reproduce with `bun scripts/rust-migration/r8/access-temporal/wasm-browser.mjs`
+and `bun test ./bindings/core/wasm/tests/access-temporal.test.js`.
+
+This establishes opt-in Node/Bun and real-Chromium source-built binding
+candidates for the 48 tagged vectors plus the eight raw-host refusals above.
+The temporary Node addon has SHA-256
+`5d1d32a8d7b53d727e1a0109b3b7e441bc0b3c75576047d2dd443c768c3a68a6`.
+These local artifacts are not a canonical installed SDK archive. This evidence does not choose temporal
+meaning for a core scalar, validate a Python carrier, preserve arbitrary UMF
+document extensions, activate a default package route, qualify the browser
+facade as an installed package, or qualify installed package routing. The six R8 ledger rows remain
+unchanged and open pending review of the complete current
+source cohort. This evidence is not route retirement or a release claim.

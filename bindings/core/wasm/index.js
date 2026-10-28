@@ -161,6 +161,36 @@ export async function initializeTemporalWasm(loader = () => import('./pkg/umf_co
   return createTemporalEngine(module);
 }
 
+export const ACCESS_TEMPORAL_PROFILE = 'umf-access-temporal/0.1.0';
+
+/** Create the explicit CONTRACT-075 parser over the Rust tagged-wire operation. */
+export function createAccessTemporalEngine(module) {
+  if (typeof module?.executeAccessTemporalWire !== 'function' || typeof module?.accessTemporalProfileVersion !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  if (module.accessTemporalProfileVersion() !== ACCESS_TEMPORAL_PROFILE) throw new Error('RUST_WASM_BINDING_PROFILE_MISMATCH');
+  return Object.freeze({parseAccessTemporal(kind, token) {
+    // Mirror the reference's observable precedence before any reflection or wire traversal.
+    if (typeof token !== 'string') throw new TypeError('Access temporal requires text');
+    if (typeof kind !== 'string') throw new RangeError('Access temporal kind');
+    const wire = encodeRequestWire({op: 'parseAccessTemporal', args: {kind, token}});
+    const envelope = JSON.parse(module.executeAccessTemporalWire(wire));
+    const failure = resultError(envelope);
+    if (failure) {
+      if (failure.code === 'TYPE_ERROR') throw new TypeError(failure.message);
+      if (failure.code === 'RANGE_ERROR') throw new RangeError(failure.message);
+      throw new Error(`RUST_WIRE_ERROR:${failure.code}`);
+    }
+    return Object.freeze(fromWire(JSON.parse(envelope.wire)));
+  }});
+}
+
+/** Initialize only the explicitly selected access-temporal WASM operation. */
+export async function initializeAccessTemporalWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis) {
+  if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
+  const module = await loader();
+  if (typeof module.default === 'function') await module.default();
+  return createAccessTemporalEngine(module);
+}
+
 /** Create the opt-in `umf-128/1` codec over a loaded Rust/WASM module. */
 export function createBit128Engine(module, options = {}) {
   if (typeof module?.executeBit128Wire !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
