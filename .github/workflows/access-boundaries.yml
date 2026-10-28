@@ -3,21 +3,15 @@ name: Typed access boundaries
 
 on:
   push:
-    branches-ignore:
-      - codex/migration-portable-qualification
-      - codex/migration-integrated-qualification
-      - codex/migration-metering-qualification
-      - codex/migration-main-metering-generation
-      - codex/migration-merged-generation
-      - codex/g04-python-unit-qualification
-      - codex/migration-g02-g03-native-qualification
-      - codex/core-0102-inventory-generation
-      - codex/mig-g02-typed-backfills
-      - codex/core-python314-generation
-      - codex/core-python314-public-install-proof
+    branches: [main]
     tags:
       - '**'
   pull_request:
+
+# Supersede PR revisions without cancelling explicit qualification snapshots.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
   contents: read
@@ -687,13 +681,13 @@ jobs:
           import json,sys,psycopg
           dsn,path=sys.argv[1:]
           with psycopg.connect(dsn,autocommit=True) as c:
-              server,number=c.execute("select pg_catalog.version(), current_setting('server_version_num')").fetchone()
-              assert "PostgreSQL 18.6" in server and number=="180006",(server,number)
+              server,server_version,number=c.execute("select pg_catalog.version(), current_setting('server_version'), current_setting('server_version_num')").fetchone()
+              assert "PostgreSQL 18.6" in server and isinstance(server_version,str) and server_version and number=="180006",(server,server_version,number)
               databases=c.execute("select datname from pg_catalog.pg_database where datname like 'rv_g02_%' or datname like 'g02f_%' or datname like 'g02nd_%' order by 1").fetchall()
               roles=c.execute("select rolname from pg_catalog.pg_roles where rolname like 'rv_g02_%' or rolname like 'g02f_%' or rolname like 'g02_%' order by 1").fetchall()
               schemas=c.execute("select nspname from pg_catalog.pg_namespace where nspname like 'ambient_%' order by 1").fetchall()
           assert not databases and not roles and not schemas,(databases,roles,schemas)
-          open(path,"w").write(json.dumps({"server":server,"serverVersionNum":number,"databases":databases,"roles":roles,"schemas":schemas},sort_keys=True,indent=2)+"\n")
+          open(path,"w").write(json.dumps({"server":server,"serverVersion":server_version,"serverVersionNum":number,"databases":databases,"roles":roles,"schemas":schemas},sort_keys=True,indent=2)+"\n")
           PY
 
           ORACLE="$D5_ROOT/evidence/replay/candidate-009/installed-text-oracle-d5-weft55-metadata-successor.py"
@@ -763,12 +757,12 @@ jobs:
           import json,sys,psycopg
           dsn,path=sys.argv[1:]
           with psycopg.connect(dsn,autocommit=True) as c:
-              server,number=c.execute("select pg_catalog.version(), current_setting('server_version_num')").fetchone()
+              server,server_version,number=c.execute("select pg_catalog.version(), current_setting('server_version'), current_setting('server_version_num')").fetchone()
               databases=c.execute("select datname from pg_catalog.pg_database where datname like 'rv_g02_%' or datname like 'g02f_%' or datname like 'g02nd_%' order by 1").fetchall()
               roles=c.execute("select rolname from pg_catalog.pg_roles where rolname like 'rv_g02_%' or rolname like 'g02f_%' or rolname like 'g02_%' order by 1").fetchall()
               schemas=c.execute("select nspname from pg_catalog.pg_namespace where nspname like 'ambient_%' order by 1").fetchall()
-          result={"server":server,"serverVersionNum":number,"databases":databases,"roles":roles,"schemas":schemas}
-          assert "PostgreSQL 18.6" in server and number=="180006" and not databases and not roles and not schemas,result
+          result={"server":server,"serverVersion":server_version,"serverVersionNum":number,"databases":databases,"roles":roles,"schemas":schemas}
+          assert "PostgreSQL 18.6" in server and isinstance(server_version,str) and server_version and number=="180006" and not databases and not roles and not schemas,result
           open(path,"w").write(json.dumps(result,sort_keys=True,indent=2)+"\n")
           PY
           python -I - "$EVIDENCE/execution-complete.json" "$EVIDENCE/command-records.jsonl" "$D5_ROOT/monotonic-start-ms" "$D5_ROOT/monotonic-deadline-ms" <<'PY'
@@ -853,6 +847,7 @@ jobs:
               ("actual native row/column/future-default observations missing or malformed:","oracle-row-observations-invalid"),
               ("oracle current owner manifest mismatch:","oracle-owner-manifest-mismatch"),
               ("oracle PostgreSQL identity mismatch:","oracle-postgresql-identity-mismatch"),
+              ("baseline PostgreSQL server_version missing or malformed","baseline-postgresql-version-invalid"),
               ("independent oracle case total is not 37","oracle-case-total-mismatch"),
               ("decimal ambient-operator SQLSTATE/rollback control missing","decimal-ambient-operator-control-missing"),
               ("decimal nonfinite used/unused branch control missing","decimal-nonfinite-branch-control-missing"),
@@ -987,6 +982,9 @@ jobs:
               actual_reports={p.name for p in (evidence/"reports").glob("*.json")}
               expected_report_names={"resource-baseline.json","resource-final.json","no-default.json",*["oracle-"+x+".json" for x in ("date","integer","decimal","text","eq-null","ne-null","not-eq-value","not-ne-null","coalesce-empty","enum","unique","foreign-key","varchar-loss","bound-excess","empty-table","all-populated")],*["fault-"+x+".json" for x in ("fenced-resume","backfill-commit-lost","existing-target-commit-lost")]}
               if actual_reports!=expected_report_names: errors.append("fixed report roster mismatch")
+              base=json.loads((evidence/"reports/resource-baseline.json").read_text())
+              baseline_server_version=base.get("serverVersion")
+              if not isinstance(baseline_server_version,str) or not baseline_server_version.strip(): errors.append("baseline PostgreSQL server_version missing or malformed")
               total_cases=0
               for command,count in expected_oracles.items():
                   name=command.removeprefix("oracle-")
@@ -997,7 +995,7 @@ jobs:
                   observations=report.get("cases",[])
                   if any(not isinstance(case.get("actualColumns"),list) or not case.get("actualColumns") or not isinstance(case.get("actualRows"),list) or "futureDefaultValue" not in case or any(not isinstance(row,list) or len(row)!=len(case.get("actualColumns",[])) for row in case.get("actualRows",[])) or (not case.get("invalid") and case.get("futureDefaultValue") is None) for case in observations): errors.append("actual native row/column/future-default observations missing or malformed:"+name)
                   if report.get("provenance",{}).get("artifactManifestSha256")!=hashlib.sha256((evidence/"owner-artifacts.json").read_bytes()).hexdigest(): errors.append("oracle current owner manifest mismatch:"+name)
-                  if "PostgreSQL 18.6" not in report.get("server",""): errors.append("oracle PostgreSQL identity mismatch:"+name)
+                  if not isinstance(baseline_server_version,str) or not baseline_server_version.strip() or report.get("server")!=baseline_server_version: errors.append("oracle PostgreSQL identity mismatch:"+name)
               if total_cases!=37: errors.append("independent oracle case total is not 37")
               decimal=json.loads((evidence/"reports/oracle-decimal.json").read_text())["cases"]
               ambient=[x.get("ambientOperatorGuard") for x in decimal if x.get("ambientOperatorGuard") is not None]
@@ -1018,7 +1016,7 @@ jobs:
                   obs=report.get("observations",{}); cleanup=obs.get("cleanup",{})
                   if len(report.get("checks",[]))!=count or not cleanup.get("droppedDatabase") or cleanup.get("databaseExists") is not False or cleanup.get("remainingRoles")!=[] or cleanup.get("droppedRoles")!=5: errors.append("fault recovery or cleanup incomplete:"+scenario)
                   if obs.get("manifestSha256")!=hashlib.sha256((evidence/"owner-artifacts.json").read_bytes()).hexdigest(): errors.append("fault current owner manifest mismatch:"+scenario)
-              base=json.loads((evidence/"reports/resource-baseline.json").read_text()); final=json.loads((evidence/"reports/resource-final.json").read_text())
+              final=json.loads((evidence/"reports/resource-final.json").read_text())
               if base!=final or base.get("serverVersionNum")!="180006" or base.get("databases") or base.get("roles") or base.get("schemas"): errors.append("uncertain database/role/schema cleanup or PostgreSQL identity")
               if errors: raise ValueError("; ".join(errors))
               shutil.rmtree(upload); upload.mkdir(parents=True)

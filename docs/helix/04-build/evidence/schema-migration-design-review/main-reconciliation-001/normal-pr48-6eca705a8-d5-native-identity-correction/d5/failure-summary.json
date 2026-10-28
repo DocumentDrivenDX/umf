@@ -1,0 +1,33 @@
+{
+  "sourceHead": "6eca705a8ca2d9f99517e2fc919cd211fe00f98d",
+  "actualProducerP": "7cf121baa40601ba0b92a14cd0f7e121783cb8e2",
+  "run": 40600969078,
+  "job": 122528687536,
+  "status": "FAIL_OR_UNKNOWN",
+  "artifact": 12786591429,
+  "artifactBytes": 337983,
+  "artifactSha256": "4314111f73675c50fd17b54c2f365b0e2907a883ab0ced64c503f1299d138d30",
+  "validationFailureCodes": [
+    "oracle-postgresql-identity-mismatch"
+  ],
+  "oracleServerValues": [
+    "18.6 (Debian 18.6-1.pgdg13+2)"
+  ],
+  "baseline": {
+    "databases": [],
+    "roles": [],
+    "schemas": [],
+    "server": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "serverVersionNum": "180006"
+  },
+  "final": {
+    "databases": [],
+    "roles": [],
+    "schemas": [],
+    "server": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "serverVersionNum": "180006"
+  },
+  "sourceCorrection": "Solapproved exactbaseline.serverVersion capture/binding; no case/caps changes or retrospectivePASS",
+  "review": "/private/tmp/migration-6eca-d5-postgresql-identity-sol-scope001.md",
+  "reviewSha256": "1302ca4efb2ddfae0b15b2d602b76eae5361f1916c169b10a488a75d97d28c5f"
+}

@@ -1,0 +1,203 @@
+{
+  "apiFiles": {
+    "artifacts.json": "1f21d4289bd8f0fb0e943c474cf3f0216ad6aacd45317effe4e38639812e81a7",
+    "jobs.json": "0de64b3357e176a3329b4b3e659a07fabc2abcc7c87254a1152c689b3ba977da",
+    "run.json": "cc1700f94c3a31bc7a0377afff719266f09640ca0e2e3a2c64363ab1a5850bea"
+  },
+  "artifact": {
+    "bytes": 219613,
+    "id": 12783999243,
+    "member": "umf-r3-qualification.json",
+    "memberBytes": 2158110,
+    "name": "rust-production-core-ubuntu-latest-python-3.11.17",
+    "sha256": "dac2f91cfd5432c850af63a7231f6037f8dab7c1f3c9e83f89546ce18d4f0e13"
+  },
+  "attempt": 1,
+  "event": "pull_request",
+  "jobId": 122528687018,
+  "pr": 48,
+  "provenanceCorrection": {
+    "artifactSourceCommitP": "7cf121baa40601ba0b92a14cd0f7e121783cb8e2",
+    "rawRunHeadSha": "6eca705a8ca2d9f99517e2fc919cd211fe00f98d",
+    "reason": "The first derived summary mislabeled the qualification sourceCommit P as the run API head. Original summary.json is preserved byte-for-byte; raw API JSON and artifact distinguish them.",
+    "sameTree": "d10995b85a061942c446a0bc70fa5454672eff71"
+  },
+  "qualificationProducerCommit": "7cf121baa40601ba0b92a14cd0f7e121783cb8e2",
+  "rawJobLog": {
+    "bytes": 1804169,
+    "path": "/private/tmp/migration-rust-40600969025/job.log",
+    "sha256": "3d2867fc7d7b5b88be5bcfb1b7ac6ada62d8fd5e8437689f71362f0b465eda28"
+  },
+  "report": {
+    "artifactPayloads": {
+      "cli": {
+        "bytes": 9971168,
+        "path": "target/release/umf",
+        "sha256": "acfa2dedc1ba72f989c903b048aabe38913b112de222cc27bf33304a94c66da4"
+      },
+      "nodeAddon": {
+        "bytes": 9425664,
+        "path": "bindings/core/node/umf_core_node.node",
+        "sha256": "d0002eaacaf7d3dc96f2d05840b88f74588a6ac7ab6d00bcef3f51f926e443bd"
+      },
+      "nodePackage": {
+        "addonBytes": 9425664,
+        "addonSha256": "d0002eaacaf7d3dc96f2d05840b88f74588a6ac7ab6d00bcef3f51f926e443bd",
+        "bytes": 3369005,
+        "sha256": "429530294d038e4d682bb0e36d35f14f5c4c282ae27fb613bc579eaab312e544"
+      },
+      "pythonRegexCorpus": {
+        "fixtureSha256": "91dd68657df6bc771dc3e3e639594d1403f59dbbfb2a29b8de86144124194e3e",
+        "hexFixtureSha256": "a811b8282da50f469381cdc4169b972da58aded7b9d148313cc64f7719aa9c40",
+        "hexOutcomesSha256": "95c77e23a8852bdc317e6e1e65d325e2179c9ac12b7b45cafe747730161e8e94",
+        "infoFixtureSha256": "efed8109ef53d65311b736d2171df5a649f767a4566f9492139a574732197b32",
+        "infoOutcomesSha256": "e7240c15c4f9827a4dd5ee73e4003dce72fa15083b00618739efd131efc30e57",
+        "outcomesSha256": "3e1926845dae0fbb48880e0d342e6b484771f7e2e9792ad2ae1163043bd8275d",
+        "python314AppendixBytes": 27769,
+        "python314AppendixSha256": "b1795db238445eeeafcbd7b370ae27a63ca914dc06ec33440fccd445a384de4a"
+      },
+      "pythonSdist": {
+        "bytes": 3291777,
+        "sha256": "9d5171113cb5bf50236c2ca96924274ef68c18f76f6f708f54be129218ebb5a9"
+      },
+      "pythonWheel": {
+        "bytes": 3611895,
+        "sha256": "5a9daa8ecada8c2504f90b94d3e8b858d9978622cde9d9793a0242028be0d288"
+      },
+      "sdistArchive": {
+        "excludedMembers": [],
+        "memberCount": 579,
+        "memberListSha256": "5dce7da57a003dfe74a98f4de51717167691663463c18e9c58a46ecb5c804f22",
+        "missingRequiredMembers": [],
+        "requiredMembers": [
+          "Cargo.toml",
+          "Cargo.lock",
+          "rust-toolchain.toml",
+          ".cargo/config.toml",
+          "LICENSE.md",
+          "LICENSE-MIT",
+          "LICENSE-APACHE",
+          "crates/umf-core/src/lib.rs",
+          "crates/umf-codegen/src/lib.rs",
+          "crates/umf-codegen/src/generation/python_runtime.py",
+          "crates/umf-codegen/src/generation/table_runtime.py",
+          "spec/extensions/tables/operation.schema.json",
+          "bindings/core/python/Cargo.toml",
+          "bindings/core/node/Cargo.toml",
+          "bindings/core/wasm/Cargo.toml"
+        ]
+      },
+      "sdistBuiltWheel": {
+        "bytes": 3611941,
+        "sha256": "942d0901d342413fa81c9799087bfb98aa76afda2eb81adcf510cd2b77a105ee"
+      },
+      "wasmDefault": {
+        "jsBytes": 11649,
+        "jsSha256": "6718a4e460b23f34204175afe214122702ea93c85ea3a586130e6bb1d05039a5",
+        "wasmBytes": 6892962,
+        "wasmSha256": "2b21cd41b7cafc907653b7403e07efe210b3ba3cd02d6583bf1084646e9d3de7"
+      },
+      "wasmRegexFeature": {
+        "jsBytes": 14210,
+        "jsSha256": "61c69c65e47c3d7c949533263b2ba18e65294b54a1dd46b37ff6aff70f5591f4",
+        "wasmBytes": 6934806,
+        "wasmSha256": "66a184dd1a1498bf2331f1805afee5f35571b1e0f452e2f31e8a98c42edf2c1a"
+      }
+    },
+    "bun139": {
+      "cases": 139
+    },
+    "capturedAt": "2026-10-28T01:25:02.193Z",
+    "chromiumDefault": {
+      "cases": 139,
+      "externalRequests": 0
+    },
+    "chromiumRegexFeature": {
+      "cases": 139,
+      "externalRequests": 0,
+      "python314AppendixComparisons": 412,
+      "pythonRegexCasesPerProfile": 6372,
+      "pythonRegexComparisons": 25488,
+      "pythonRegexHexCasesPerProfile": 2022,
+      "pythonRegexHexComparisons": 8088,
+      "pythonRegexInfoCasesPerProfile": 15120,
+      "pythonRegexInfoComparisons": 60480
+    },
+    "cli139": {
+      "cases": 139
+    },
+    "fixtureSha256": "bb008a98b8448050748e65f867e7863475ccad9501a5b9229ae9e6d336691544",
+    "node139": {
+      "cases": 139
+    },
+    "python": {
+      "frozen139": {
+        "cases": 139,
+        "invalid": 88,
+        "valid": 51
+      },
+      "schema": {
+        "admissionCases": 9282,
+        "mismatches": 0,
+        "numericCases": 2586,
+        "numericValidityResults": 2316,
+        "officialCases": 4995,
+        "officialEvaluated": 4995
+      },
+      "schemaEvaluationOrder": {
+        "cases": 2879,
+        "mismatches": 0
+      },
+      "serialization": {
+        "base": 124,
+        "cases": 1742,
+        "failed": 0,
+        "mismatches": [],
+        "nelCorrection": 2,
+        "oracleCount": 18,
+        "ordering": 20,
+        "passed": 1742,
+        "profile": "umf.r2.python-serialization-conformance/1",
+        "python": "3.11.17 (main, Oct 21 2026, 17:46:53) [Clang 23.1.3 ]",
+        "pythonMinor": 11,
+        "yamlBreakContext": 708,
+        "yamlCharacters": 196,
+        "yamlDirectiveTail": 0,
+        "yamlDirectives": 74,
+        "yamlProfileEdges": 162,
+        "yamlScalars": 284,
+        "yamlSourceContext": 174
+      },
+      "suiteCases": 397,
+      "versions": {
+        "hatchling": "1.32.4",
+        "implementation": "cpython",
+        "pydantic": "2.14.1",
+        "pytest": "9.2.0",
+        "python": "3.11.17 (main, Oct 21 2026, 17:46:53) [Clang 23.1.3 ]"
+      }
+    },
+    "qualifications": {
+      "browser": "real Chromium qualifies the default shipped WASM separately for 139 boundaries and the conformance-feature WASM for 94,056 shared Python regex outcomes plus 412 Python 3.14 profile outcomes and 139 core boundaries, with no external requests",
+      "cli": "native binary validated against the frozen 139 corpus with PATH empty",
+      "javascript": "npm-packed native addon installed outside checkout, tested under Node and Bun",
+      "python": "wheel install and wheel rebuilt from sdist, outside checkout; full public Python suite, frozen 139 and host controls, 9,282 schema admission decisions, official JSON Schema outcome controls, 2,586 Python numeric schema predecessor cases, 7,671 Python schema evaluation-order/reference/annotation/resource-scope/resource-identity/anchor/URI public method observations including the approved narrow legacy2019 additionalProperties correction, 263 error metadata/subject/path records, and 6 runtime TypeError observations with phase attribution",
+      "resourceProfile": "cooperative host controls exercised; HardIsolated remains refused before work"
+    },
+    "runtime": {
+      "bun": "1.4.3\n",
+      "node": "v26.12.0",
+      "python": "/home/runner/.local/share/uv/python/cpython-3.11.17-linux-x86_64-gnu/bin/python3.11",
+      "runner": "v26.3.0",
+      "rust": "cargo 1.90.0 (840b83a10 2025-07-30)"
+    },
+    "sourceClosureSha256": "860cbb07fc523e4fcf5f26e540aa7caeaef62b13319654517e84168efcec20a5",
+    "status": "pass"
+  },
+  "runApiHeadSha": "6eca705a8ca2d9f99517e2fc919cd211fe00f98d",
+  "runHtml": "https://github.com/DocumentDrivenDX/umf/actions/runs/40600969025",
+  "runId": 40600969025,
+  "sourceBranch": "codex/mig-g02-typed-backfills",
+  "sourceCommit": "7cf121baa40601ba0b92a14cd0f7e121783cb8e2",
+  "tree": "d10995b85a061942c446a0bc70fa5454672eff71"
+}

@@ -24,6 +24,11 @@ on:
       - 'scripts/test_verify_schema_browser_npm.py'
       - 'docs/helix/05-deploy/schema-browser/README.md'
 
+# Supersede PR revisions without cancelling explicit qualification snapshots.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 permissions:
   contents: read
 

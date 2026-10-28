@@ -2,21 +2,15 @@
 name: Rust production core
 on:
   push:
-    branches-ignore:
-      - codex/migration-portable-qualification
-      - codex/migration-integrated-qualification
-      - codex/migration-metering-qualification
-      - codex/migration-main-metering-generation
-      - codex/migration-merged-generation
-      - codex/g04-python-unit-qualification
-      - codex/migration-g02-g03-native-qualification
-      - codex/core-0102-inventory-generation
-      - codex/mig-g02-typed-backfills
-      - codex/core-python314-generation
-      - codex/core-python314-public-install-proof
+    branches: [main]
     tags:
       - '**'
   pull_request:
+# Supersede PR revisions without cancelling explicit qualification snapshots.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 permissions:
   contents: read
 jobs:
