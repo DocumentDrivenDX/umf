@@ -141,6 +141,20 @@ impl NativeJsonTree {
         serialization::read_native_yaml_tree(source, ctx)
     }
 
+    /// Parse the opt-in YAML profile options supported by the TypeScript
+    /// predecessor. This remains a bounded compatibility slice.
+    pub fn parse_yaml_with_options(
+        source: &[u16],
+        version: Option<&str>,
+        date_only: Option<&str>,
+        boolean_lexicon: Option<&str>,
+        ctx: &mut Context<'_>,
+    ) -> Result<Self, EngineError> {
+        serialization::read_native_yaml_tree_with_options(
+            source, version, date_only, boolean_lexicon, ctx,
+        )
+    }
+
     /// Produce an isolated copy under the caller's ordinary tree/work budget.
     pub fn clone_tree(&self, ctx: &mut Context<'_>) -> Result<Self, EngineError> {
         let mut values = 0usize;

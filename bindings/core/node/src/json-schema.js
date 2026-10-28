@@ -70,7 +70,17 @@ export function createJsonSchemaOperations(call, preflight) {
     getJsonSchemaNode(document, pointer) { const admission = preflight(); if (typeof pointer !== 'string') call('validateJsonSchemaDocumentForGet', {document}, admission); requireSourcePointerType(pointer); return call('getJsonSchemaNode', {document, pointer}, admission); },
     walkJsonSchema(document) { const admission = preflight(); return call('walkJsonSchema', {document}, admission); },
     parseNativeJson(source) { const admission = preflight(); return call('parseNativeJson', {source}, admission); },
-    parseNativeYaml(source) { const admission = preflight(); return call('parseNativeYaml', {source}, admission); },
+    parseNativeYaml(source, options) {
+      const admission = preflight();
+      const fields = {source};
+      const version = options?.version;
+      const dateOnly = options?.dateOnly;
+      const booleanLexicon = options?.booleanLexicon;
+      if (version !== undefined) fields.version = version;
+      if (dateOnly !== undefined) fields.dateOnly = dateOnly;
+      if (booleanLexicon !== undefined) fields.booleanLexicon = booleanLexicon;
+      return call('parseNativeYaml', fields, admission);
+    },
     editJsonSchemaNode(document, pointer, replacement) { requireSourceEditPointerType(pointer); const admission = preflight(); return call('editJsonSchemaNode', {document, pointer, replacement}, admission); },
   });
 }

@@ -824,7 +824,13 @@ fn execute_json_schema_wire_inner(
                 let source = field(&request, "source")
                     .and_then(as_utf16)
                     .ok_or_else(|| fail("REQUEST", "Native YAML source is required"))?;
-                umf_core::native_json::NativeJsonTree::parse_yaml(source.units(), &mut ctx)?
+                let option_text = |name: &str| field(&request, name).and_then(as_utf16).map(|value| value.to_utf8().unwrap_or_default());
+                let version = field(&request, "version").map(|value| as_utf16(value).and_then(|text| text.to_utf8().ok()).unwrap_or_default());
+                let date_only = option_text("dateOnly");
+                let boolean_lexicon = option_text("booleanLexicon");
+                umf_core::native_json::NativeJsonTree::parse_yaml_with_options(
+                    source.units(), version.as_deref(), date_only.as_deref(), boolean_lexicon.as_deref(), &mut ctx,
+                )?
                     .tagged_value_preserving_extras(&mut ctx)?
             }
             "editJsonSchemaNode" => {
@@ -3219,6 +3225,47 @@ mod tests {
             assert_eq!(envelope["code"], expected_code, "source {source:?}: {envelope}");
             let expected: Vec<u16> = expected_message.encode_utf16().collect();
             assert_eq!(envelope["messageUnits"], serde_json::json!(expected), "source {source:?}: {envelope}");
+        }
+    }
+
+    #[test]
+    fn opt_in_native_yaml_matches_frozen_option_profiles_and_precedence() {
+        let fixture: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../docs/helix/04-build/evidence/rust-migration/r8-native-yaml/options-predecessor.json"
+        )).unwrap();
+        for case in fixture["cases"].as_array().unwrap() {
+            let id = case["id"].as_str().unwrap();
+            let mut fields = vec![
+                ("profile", Value::string_utf8("umf-r5-json-schema/0.1.0")),
+                ("op", Value::string_utf8("parseNativeYaml")),
+                ("source", Value::String(Utf16::from(case["source"].as_str().unwrap()))),
+            ];
+            for (key, value) in case["options"].as_object().unwrap() {
+                let wire_value = match value {
+                    serde_json::Value::String(text) => Value::string_utf8(text),
+                    serde_json::Value::Null => Value::Null,
+                    serde_json::Value::Number(number) => Value::Number(number.as_f64().unwrap()),
+                    other => panic!("unsupported frozen option value: {other}"),
+                };
+                fields.push((key, wire_value));
+            }
+            let request = comparison_request(fields);
+            let envelope: serde_json::Value = serde_json::from_str(&execute_json_schema_wire(&request)).unwrap();
+            match case["outcome"].as_str().unwrap() {
+                "return" => {
+                    assert_eq!(envelope["status"], "ok", "case {id}: {envelope}");
+                    let result = decode(envelope["wire"].as_str().unwrap(), &mut Context::ordinary()).unwrap();
+                    let json = umf_core::serialization::stringify_compact(&result).unwrap().to_utf8().unwrap();
+                    assert_eq!(serde_json::from_str::<serde_json::Value>(&json).unwrap(), case["tree"], "case {id}");
+                }
+                "throw" => {
+                    assert_eq!(envelope["status"], "error", "case {id}: {envelope}");
+                    assert_eq!(envelope["code"], case["code"], "case {id}: {envelope}");
+                    let expected: Vec<u16> = case["message"].as_str().unwrap().encode_utf16().collect();
+                    assert_eq!(envelope["messageUnits"], serde_json::json!(expected), "case {id}: {envelope}");
+                }
+                other => panic!("unknown predecessor outcome {other}"),
+            }
         }
     }
 

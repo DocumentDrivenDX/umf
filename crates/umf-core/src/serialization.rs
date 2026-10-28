@@ -256,14 +256,30 @@ pub(crate) fn read_native_yaml_tree(
     source: &[u16],
     ctx: &mut Context<'_>,
 ) -> Result<crate::native_json::NativeJsonTree, EngineError> {
+    read_native_yaml_tree_with_options(source, None, None, None, ctx)
+}
+
+pub(crate) fn read_native_yaml_tree_with_options(
+    source: &[u16],
+    version: Option<&str>,
+    date_only: Option<&str>,
+    boolean_lexicon: Option<&str>,
+    ctx: &mut Context<'_>,
+) -> Result<crate::native_json::NativeJsonTree, EngineError> {
+    let yaml_11 = match version.unwrap_or("1.2") {
+        "1.1" => true,
+        "1.2" => false,
+        _ => return Err(fail("NATIVE_YAML_VERSION", "Expected YAML 1.1 or 1.2 scalar profile")),
+    };
     if source.len() > ctx.limits().max_text_units {
         return Err(fail("LIMIT", "Native YAML exceeds text limit"));
     }
     ctx.charge_text(source.len(), Utf16::default())?;
-    let (events, prefix) = prepare_yaml_events(source, ScanProfile::Yaml12, ctx, true, true)
+    let (events, prefix) = prepare_yaml_events(source, ScanProfile::Yaml12, ctx, true, true, yaml_11)
         .map_err(native_yaml_error_code)?;
     preflight_native_yaml_duplicates(&events, source, ctx).map_err(native_yaml_error_code)?;
-    let mut root = parse_yaml_events::<NativeYamlBuilder>(events, ctx, NativeYamlBuilder, Some(source))
+    let builder = NativeYamlBuilder { yaml_11, date_only_string: date_only == Some("string"), pyyaml_booleans: boolean_lexicon == Some("pyyaml") };
+    let mut root = parse_yaml_events::<NativeYamlBuilder>(events, ctx, builder, Some(source))
         .map_err(native_yaml_error_code)?;
     decode_native_private(&mut root, prefix)?;
     crate::native_json::finish_parsed_tree(root, ctx)
@@ -334,7 +350,11 @@ fn native_yaml_error_code(mut error: EngineError) -> EngineError {
     error
 }
 
-struct NativeYamlBuilder;
+struct NativeYamlBuilder {
+    yaml_11: bool,
+    date_only_string: bool,
+    pyyaml_booleans: bool,
+}
 
 impl YamlBuilder for NativeYamlBuilder {
     type Text = Utf16;
@@ -363,7 +383,23 @@ impl YamlBuilder for NativeYamlBuilder {
             "" | "~" | "null" | "Null" | "NULL" => return Ok(Node::Null),
             "true" | "True" | "TRUE" => return Ok(Node::Boolean(true)),
             "false" | "False" | "FALSE" => return Ok(Node::Boolean(false)),
+            "yes" | "Yes" | "YES" | "on" | "On" | "ON"
+                if self.yaml_11 => return Ok(Node::Boolean(true)),
+            "no" | "No" | "NO" | "off" | "Off" | "OFF"
+                if self.yaml_11 => return Ok(Node::Boolean(false)),
+            "y" | "Y" | "n" | "N" if self.yaml_11 && !self.pyyaml_booleans => {
+                return Ok(Node::Boolean(matches!(raw, "y" | "Y")));
+            }
             _ => {}
+        }
+        if self.yaml_11 && native_yaml_date_only(raw) {
+            if self.date_only_string {
+                return Ok(Node::String(Utf16::from(raw)));
+            }
+            return Err(fail("NATIVE_YAML_NODE", "Aliases and non-JSON YAML nodes are unsupported"));
+        }
+        if self.yaml_11 && native_yaml_timestamp(raw) {
+            return Err(fail("NATIVE_YAML_NODE", "Aliases and non-JSON YAML nodes are unsupported"));
         }
         if let Some(number) = native_yaml_integer(raw) {
             return Ok(Node::Number(number));
@@ -409,7 +445,7 @@ impl YamlBuilder for NativeYamlBuilder {
         ctx: &mut Context<'_>,
     ) -> Result<(), EngineError> {
         ctx.charge_work(raw.encode_utf16().count(), Utf16::default())?;
-        if tagged || (style == ScalarStyle::Plain && !native_yaml_string_scalar(raw)) {
+        if tagged || (style == ScalarStyle::Plain && !native_yaml_string_scalar_profile(raw, self.yaml_11, self.pyyaml_booleans)) {
             return Err(fail(
                 "NATIVE_YAML_KEY",
                 "JSON-compatible YAML requires untagged string keys",
@@ -447,6 +483,33 @@ fn native_yaml_string_scalar(raw: &str) -> bool {
         && native_yaml_integer(raw).is_none()
         && !native_yaml_float(raw)
         && !matches!(raw, ".inf" | ".Inf" | ".INF" | "-.inf" | "-.Inf" | "-.INF" | "+.inf" | "+.Inf" | "+.INF" | ".nan" | ".NaN" | ".NAN")
+}
+
+fn native_yaml_string_scalar_profile(raw: &str, yaml_11: bool, pyyaml_booleans: bool) -> bool {
+    if yaml_11 {
+        let yaml11_bool = matches!(raw, "yes" | "Yes" | "YES" | "no" | "No" | "NO" | "true" | "True" | "TRUE" | "false" | "False" | "FALSE" | "on" | "On" | "ON" | "off" | "Off" | "OFF")
+            || (!pyyaml_booleans && matches!(raw, "y" | "Y" | "n" | "N"));
+        if yaml11_bool { return false; }
+    }
+    native_yaml_string_scalar(raw)
+}
+
+fn native_yaml_date_only(raw: &str) -> bool {
+    let bytes = raw.as_bytes();
+    bytes.len() == 10
+        && bytes[4] == b'-'
+        && bytes[7] == b'-'
+        && bytes.iter().enumerate().all(|(index, byte)| {
+            index == 4 || index == 7 || byte.is_ascii_digit()
+        })
+}
+
+fn native_yaml_timestamp(raw: &str) -> bool {
+    raw.len() >= 19
+        && raw.is_char_boundary(10)
+        && native_yaml_date_only(&raw[..10])
+        && matches!(raw.as_bytes()[10], b'T' | b't' | b' ')
+        && raw[11..].contains(':')
 }
 
 fn native_yaml_integer(raw: &str) -> Option<String> {
@@ -2746,6 +2809,7 @@ fn parse_yaml_utf16(
         ctx,
         typescript_profile,
         false,
+        false,
     )?;
     let builder = CoreYamlBuilder { typescript_profile };
     let mut value = parse_yaml_events::<CoreYamlBuilder>(events, ctx, builder, Some(source))?;
@@ -2759,6 +2823,7 @@ fn prepare_yaml_events(
     ctx: &mut Context<'_>,
     typescript_profile: bool,
     native_yaml_diagnostics: bool,
+    allow_yaml_11: bool,
 ) -> Result<(Vec<LocatedEvent>, (char, char)), EngineError> {
     // YAML permits one stream BOM; keeping it out of both private views
     // leaves their spans aligned with the corresponding original source slice.
@@ -2804,7 +2869,7 @@ fn prepare_yaml_events(
     first_source_offsets.push(source.len() + source_base);
     rewrite_surrogate_escape_slashes(&mut first_chars, None, ctx)?;
     let first_text: String = first_chars.iter().collect();
-    reject_yaml_11_directive(&first_text, profile)?;
+    reject_yaml_11_directive(&first_text, profile, allow_yaml_11)?;
     let first = yaml_events_with_profile(
         &first_text,
         profile,
@@ -3142,7 +3207,7 @@ fn decode_private_utf16(text: &mut Utf16, prefix: (char, char)) -> Result<(), En
     *text = Utf16::new(units);
     Ok(())
 }
-fn reject_yaml_11_directive(text: &str, profile: ScanProfile) -> Result<(), EngineError> {
+fn reject_yaml_11_directive(text: &str, profile: ScanProfile, allow_yaml_11: bool) -> Result<(), EngineError> {
     // YAML directive separation is space or tab, and an initial BOM is legal.
     let text = text.strip_prefix('\u{feff}').unwrap_or(text);
     let mut start = 0usize;
@@ -3172,7 +3237,8 @@ fn reject_yaml_11_directive(text: &str, profile: ScanProfile) -> Result<(), Engi
                 .filter(|token| !token.is_empty());
             match tokens.next() {
                 Some("YAML") => match tokens.next() {
-                    Some("1.1") => return Err(fail("YAML_VERSION", "YAML 1.1 is not supported")),
+                    Some("1.1") if !allow_yaml_11 => return Err(fail("YAML_VERSION", "YAML 1.1 is not supported")),
+                    Some("1.1") => {}
                     Some("1.2") => {}
                     _ => return Err(fail("YAML_DIRECTIVE", "Unsupported YAML version")),
                 },
@@ -3611,6 +3677,7 @@ fn parse_python_yaml(
         units.units(),
         ScanProfile::PythonRuamel12,
         ctx,
+        false,
         false,
         false,
     )?;

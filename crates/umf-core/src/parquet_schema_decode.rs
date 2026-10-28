@@ -15,18 +15,39 @@ const MAX_NODES: usize = 50_000;
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct DecodedSchema {
     pub schema: Vec<SchemaElement>,
+    /// Complete ordered native SchemaElement fields decoded from the footer.
+    /// The narrow `schema` projection above is for the current classifier;
+    /// consumers that need native parameters or competing annotations must use
+    /// this retained representation.
+    pub native_schema_elements: Vec<NativeSchemaElement>,
     /// The metadata bytes after the FileMetaData struct, retained for audit.
     pub trailing_footer_bytes: usize,
 }
 
-#[derive(Clone, Debug)]
-enum WireValue {
-    Int(i64),
-    Binary(Vec<u8>),
-    List(u8, Vec<WireValue>),
-    Struct(Vec<(i16, WireValue)>),
-    Other,
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct NativeSchemaElement {
+    pub fields: Vec<(i16, NativeWireValue)>,
 }
+
+/// Owned Compact Protocol value. Integer widths, collection kinds, booleans,
+/// floating point bits and UUID bytes stay distinguishable for native readers.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub enum NativeWireValue {
+    Bool(bool),
+    Byte(i8),
+    I16(i16),
+    I32(i32),
+    I64(i64),
+    Double(u64),
+    Binary(Vec<u8>),
+    List(u8, Vec<NativeWireValue>),
+    Set(u8, Vec<NativeWireValue>),
+    Map(u8, u8, Vec<(NativeWireValue, NativeWireValue)>),
+    Struct(Vec<(i16, NativeWireValue)>),
+    Uuid([u8; 16]),
+}
+
+type WireValue = NativeWireValue;
 
 struct Decoder<'a, 'b, 'c> {
     bytes: &'a [u8],
@@ -103,25 +124,25 @@ impl Decoder<'_, '_, '_> {
                 if b != 1 && b != 2 {
                     return self.fail("Invalid Compact boolean");
                 }
-                let _is_true = b == 1;
-                Ok(WireValue::Other)
+                Ok(WireValue::Bool(b == 1))
             }
-            3 => Ok(WireValue::Int({
+            3 => Ok(WireValue::Byte({
                 let b = self.byte()?;
                 if b < 128 {
-                    b as i64
+                    b as i8
                 } else {
-                    i64::from(b) - 256
+                    (i16::from(b) - 256) as i8
                 }
             })),
-            4 => Ok(WireValue::Int(self.signed(16)?)),
-            5 => Ok(WireValue::Int(self.signed(32)?)),
-            6 => Ok(WireValue::Int(self.signed(64)?)),
+            4 => Ok(WireValue::I16(self.signed(16)? as i16)),
+            5 => Ok(WireValue::I32(self.signed(32)? as i32)),
+            6 => Ok(WireValue::I64(self.signed(64)?)),
             7 => {
-                for _ in 0..8 {
-                    self.byte()?;
+                let mut bytes = [0; 8];
+                for byte in &mut bytes {
+                    *byte = self.byte()?;
                 }
-                Ok(WireValue::Other)
+                Ok(WireValue::Double(u64::from_le_bytes(bytes)))
             }
             8 => {
                 let n = self.length()?;
@@ -145,7 +166,11 @@ impl Decoder<'_, '_, '_> {
                 for _ in 0..n {
                     items.push(self.parse_value(elem, depth + 1, false)?);
                 }
-                Ok(WireValue::List(elem, items))
+                Ok(if kind == 9 {
+                    WireValue::List(elem, items)
+                } else {
+                    WireValue::Set(elem, items)
+                })
             }
             11 => {
                 let n = self.length()?;
@@ -153,14 +178,16 @@ impl Decoder<'_, '_, '_> {
                     return self.fail("Map exceeds value limit");
                 }
                 if n == 0 {
-                    return Ok(WireValue::Other);
+                    return Ok(WireValue::Map(0, 0, Vec::new()));
                 }
                 let h = self.byte()?;
+                let mut entries = Vec::with_capacity(n);
                 for _ in 0..n {
-                    self.parse_value(h >> 4, depth + 1, false)?;
-                    self.parse_value(h & 15, depth + 1, false)?;
+                    let key = self.parse_value(h >> 4, depth + 1, false)?;
+                    let value = self.parse_value(h & 15, depth + 1, false)?;
+                    entries.push((key, value));
                 }
-                Ok(WireValue::Other)
+                Ok(WireValue::Map(h >> 4, h & 15, entries))
             }
             12 => {
                 let mut fields = Vec::new();
@@ -189,10 +216,11 @@ impl Decoder<'_, '_, '_> {
                 Ok(WireValue::Struct(fields))
             }
             13 => {
-                for _ in 0..16 {
-                    self.byte()?;
+                let mut uuid = [0; 16];
+                for byte in &mut uuid {
+                    *byte = self.byte()?;
                 }
-                Ok(WireValue::Other)
+                Ok(WireValue::Uuid(uuid))
             }
             _ => self.fail("Unknown Compact Protocol type"),
         }
@@ -220,7 +248,10 @@ fn unique<'a>(
 fn int(fields: &[(i16, WireValue)], id: i16) -> Result<Option<i64>, EngineError> {
     match unique(fields, id)? {
         None => Ok(None),
-        Some(WireValue::Int(v)) => Ok(Some(*v)),
+        Some(WireValue::Byte(v)) => Ok(Some(i64::from(*v))),
+        Some(WireValue::I16(v)) => Ok(Some(i64::from(*v))),
+        Some(WireValue::I32(v)) => Ok(Some(i64::from(*v))),
+        Some(WireValue::I64(v)) => Ok(Some(*v)),
         _ => Err(EngineError::new(
             "PARQUET_SCHEMA_DECODE",
             Utf16::default(),
@@ -246,9 +277,29 @@ fn binary(fields: &[(i16, WireValue)], id: i16) -> Result<Option<String>, Engine
     }
 }
 
-/// Decode only FileMetaData.schema and the SchemaElement fields understood by
-/// the LIST record-type adapter. The source slice must be a complete Parquet file.
+/// Decode FileMetaData.schema through the existing narrow LIST adapter. This
+/// compatibility entry point refuses fields it cannot represent, preventing
+/// callers from classifying a lossy projection.
 pub fn decode_schema(bytes: &[u8], ctx: &mut Context<'_>) -> Result<DecodedSchema, EngineError> {
+    decode_schema_mode(bytes, ctx, false)
+}
+
+/// Decode the full ordered SchemaElement wire values alongside the narrow
+/// LIST-adapter projection. Use this route when native parameters, unknown
+/// fields, or competing annotations must remain available to an explicit
+/// native-aware consumer. The ordinary classifier entry point remains strict.
+pub fn decode_schema_retaining(
+    bytes: &[u8],
+    ctx: &mut Context<'_>,
+) -> Result<DecodedSchema, EngineError> {
+    decode_schema_mode(bytes, ctx, true)
+}
+
+fn decode_schema_mode(
+    bytes: &[u8],
+    ctx: &mut Context<'_>,
+    retain_unprojected: bool,
+) -> Result<DecodedSchema, EngineError> {
     if bytes.len() < 12 {
         return Err(EngineError::new(
             "PARQUET_TRUNCATED",
@@ -309,14 +360,26 @@ pub fn decode_schema(bytes: &[u8], ctx: &mut Context<'_>) -> Result<DecodedSchem
         return decoder.fail("Schema list is empty or exceeds node limit");
     }
     let mut schema = Vec::with_capacity(items.len());
+    let mut native_schema_elements = Vec::with_capacity(items.len());
     for item in items {
         let WireValue::Struct(fields) = item else {
             return decoder.fail("Schema list contains a non-struct");
         };
-        // Unknown SchemaElement fields can carry newer native meaning. Refuse
-        // those instead of dropping them from the interpreted schema view.
-        if fields.iter().any(|(id, _)| !matches!(*id, 1..=10)) {
+        if !retain_unprojected && fields.iter().any(|(id, _)| !matches!(*id, 1..=10)) {
             return decoder.fail("Unknown SchemaElement fields are not interpreted");
+        }
+        // Retain the complete field sequence before making a narrow projection.
+        // This includes fields unknown to this Parquet IDL revision.
+        native_schema_elements.push(NativeSchemaElement {
+            fields: fields.clone(),
+        });
+        if !retain_unprojected {
+            for id in [2, 7, 8, 9] {
+                if unique(fields, id)?.is_some() {
+                    return decoder
+                        .fail("SchemaElement parameters outside the candidate view are present");
+                }
+            }
         }
         let name = binary(fields, 4)?.ok_or_else(|| {
             EngineError::new(
@@ -359,26 +422,26 @@ pub fn decode_schema(bytes: &[u8], ctx: &mut Context<'_>) -> Result<DecodedSchem
                 })
             })
             .transpose()?;
-        // These IDL fields are meaningful in a full native schema view but are
-        // not represented by the candidate's narrow SchemaElement carrier.
-        for id in [2, 7, 8, 9] {
-            if unique(fields, id)?.is_some() {
-                return decoder
-                    .fail("SchemaElement parameters outside the candidate view are present");
-            }
-        }
         let legacy = int(fields, 6)?;
         let modern = match unique(fields, 10)? {
             None => None,
             Some(WireValue::Struct(alts)) => {
                 if alts.len() != 1 {
-                    return decoder.fail("LogicalType must select exactly one alternative");
+                    if !retain_unprojected {
+                        return decoder.fail("LogicalType must select exactly one alternative");
+                    }
+                    Some("OTHER".to_owned())
+                } else {
+                    let (id, payload) = &alts[0];
+                    if *id == 3 && !matches!(payload,WireValue::Struct(inner) if inner.is_empty()) {
+                        if !retain_unprojected {
+                            return decoder.fail("LIST logical annotation payload is not empty");
+                        }
+                        Some("OTHER".to_owned())
+                    } else {
+                        Some(if *id == 3 { "LIST" } else { "OTHER" }.to_owned())
+                    }
                 }
-                let (id, payload) = &alts[0];
-                if *id == 3 && !matches!(payload,WireValue::Struct(inner) if inner.is_empty()) {
-                    return decoder.fail("LIST logical annotation payload is not empty");
-                }
-                Some(if *id == 3 { "LIST" } else { "OTHER" }.to_owned())
             }
             _ => return decoder.fail("LogicalType has wrong wire type"),
         };
@@ -391,10 +454,17 @@ pub fn decode_schema(bytes: &[u8], ctx: &mut Context<'_>) -> Result<DecodedSchem
             }
             .to_owned()
         });
-        if modern.is_some() && legacy_name.is_some() && modern != legacy_name {
-            return decoder.fail("Logical and converted annotations conflict");
-        }
-        let annotation = modern.or(legacy_name);
+        let annotation = match (&modern, &legacy_name) {
+            (Some(modern), Some(legacy)) if modern != legacy => {
+                if !retain_unprojected {
+                    return decoder.fail("Logical and converted annotations conflict");
+                }
+                Some("OTHER".to_owned())
+            }
+            (Some(modern), _) => Some(modern.clone()),
+            (None, Some(legacy)) => Some(legacy.clone()),
+            (None, None) => None,
+        };
         schema.push(SchemaElement {
             name: Utf16::from(name),
             repetition: repetition.map(Into::into),
@@ -420,6 +490,7 @@ pub fn decode_schema(bytes: &[u8], ctx: &mut Context<'_>) -> Result<DecodedSchem
     // and is reported separately. The schema view does not interpret it.
     Ok(DecodedSchema {
         schema,
+        native_schema_elements,
         trailing_footer_bytes,
     })
 }
@@ -428,6 +499,71 @@ pub fn decode_schema(bytes: &[u8], ctx: &mut Context<'_>) -> Result<DecodedSchem
 mod tests {
     use super::*;
     use std::{fs, path::PathBuf};
+
+    fn varint(out: &mut Vec<u8>, mut n: u64) {
+        while n >= 0x80 {
+            out.push((n as u8) | 0x80);
+            n >>= 7;
+        }
+        out.push(n as u8);
+    }
+    fn field_i32(out: &mut Vec<u8>, previous: &mut i16, id: i16, value: i32) {
+        let delta = id - *previous;
+        out.push(((delta as u8) << 4) | 5);
+        let zigzag = ((value << 1) ^ (value >> 31)) as u32;
+        varint(out, u64::from(zigzag));
+        *previous = id;
+    }
+    fn field_binary(out: &mut Vec<u8>, previous: &mut i16, id: i16, value: &[u8]) {
+        let delta = id - *previous;
+        out.push(((delta as u8) << 4) | 8);
+        varint(out, value.len() as u64);
+        out.extend_from_slice(value);
+        *previous = id;
+    }
+    fn minimal_file(extra: Option<&str>) -> Vec<u8> {
+        let mut root = Vec::new();
+        let mut prev = 0;
+        field_binary(&mut root, &mut prev, 4, b"schema");
+        field_i32(&mut root, &mut prev, 5, 1);
+        root.push(0);
+
+        let mut leaf = Vec::new();
+        let mut prev = 0;
+        field_i32(&mut leaf, &mut prev, 1, 1); // INT32
+        if extra == Some("type_length") {
+            field_i32(&mut leaf, &mut prev, 2, 4);
+        }
+        field_i32(&mut leaf, &mut prev, 3, 1); // OPTIONAL
+        field_binary(&mut leaf, &mut prev, 4, b"x");
+        if extra == Some("conflict") {
+            field_i32(&mut leaf, &mut prev, 6, 1); // converted MAP
+            leaf.push(((10 - prev) as u8) << 4 | 12);
+            leaf.extend_from_slice(&[0x3c, 0, 0]); // logical LIST
+            prev = 10;
+        } else if extra == Some("unknown") {
+            leaf.push(((11 - prev) as u8) << 4 | 1); // unknown bool=true
+            prev = 11;
+        }
+        let _ = prev;
+        leaf.push(0);
+
+        let mut metadata = Vec::new();
+        let mut prev = 0;
+        field_i32(&mut metadata, &mut prev, 1, 1);
+        metadata.push(((2 - prev) as u8) << 4 | 9);
+        metadata.push(0x2c); // two SchemaElement structs
+        metadata.extend_from_slice(&root);
+        metadata.extend_from_slice(&leaf);
+        metadata.push(0);
+
+        let mut file = b"PAR1".to_vec();
+        file.extend_from_slice(&metadata);
+        file.extend_from_slice(&(metadata.len() as u32).to_le_bytes());
+        file.extend_from_slice(b"PAR1");
+        file
+    }
+
     fn fixture(name: &str) -> Vec<u8> {
         let mut p = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
         p.push("../../fixtures/parquet/containers");
@@ -437,6 +573,13 @@ mod tests {
     #[test]
     fn decodes_pinned_list_schema_from_retained_file_bytes() {
         let d = decode_schema(&fixture("list-tuple"), &mut Context::ordinary()).unwrap();
+        assert_eq!(d.schema.len(), d.native_schema_elements.len());
+        assert!(
+            d.native_schema_elements[1]
+                .fields
+                .iter()
+                .any(|(id, value)| *id == 4 && matches!(value, WireValue::Binary(_)))
+        );
         assert_eq!(
             d.schema[1].annotation.as_ref().unwrap().to_utf8().unwrap(),
             "LIST"
@@ -468,6 +611,85 @@ mod tests {
                 .unwrap(),
             crate::parquet_record_type_candidate::CandidateResolution::StructMember(_)
         ));
+    }
+
+    #[test]
+    fn native_compact_values_preserve_wire_kinds_and_payloads() {
+        fn decode_one(kind: u8, bytes: &[u8], field: bool) -> WireValue {
+            let mut context = Context::ordinary();
+            let mut decoder = Decoder {
+                bytes,
+                at: 0,
+                nodes: 0,
+                ctx: &mut context,
+            };
+            decoder.parse_value(kind, 0, field).unwrap()
+        }
+        assert_eq!(decode_one(1, &[], true), WireValue::Bool(true));
+        assert_eq!(
+            decode_one(7, &1.25f64.to_bits().to_le_bytes(), false),
+            WireValue::Double(1.25f64.to_bits())
+        );
+        assert_eq!(
+            decode_one(
+                13,
+                &[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+                false
+            ),
+            WireValue::Uuid([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+        );
+        // One map entry: i32 key 1, binary value "x".
+        assert_eq!(
+            decode_one(11, &[1, 0x58, 2, 1, b'x'], false),
+            WireValue::Map(
+                5,
+                8,
+                vec![(WireValue::I32(1), WireValue::Binary(vec![b'x']))]
+            )
+        );
+    }
+
+    #[test]
+    fn strict_entry_point_refuses_unprojected_schema_meanings() {
+        for (case, message) in [
+            (
+                "unknown",
+                "Unknown SchemaElement fields are not interpreted",
+            ),
+            (
+                "type_length",
+                "SchemaElement parameters outside the candidate view are present",
+            ),
+            ("conflict", "Logical and converted annotations conflict"),
+        ] {
+            let error =
+                decode_schema(&minimal_file(Some(case)), &mut Context::ordinary()).unwrap_err();
+            assert_eq!(error.code, "PARQUET_SCHEMA_DECODE");
+            assert_eq!(error.message.to_utf8().unwrap(), message);
+        }
+    }
+
+    #[test]
+    fn retaining_entry_point_preserves_unprojected_schema_meanings() {
+        for (case, field_id) in [("unknown", 11), ("type_length", 2), ("conflict", 10)] {
+            let decoded =
+                decode_schema_retaining(&minimal_file(Some(case)), &mut Context::ordinary())
+                    .unwrap();
+            let fields = &decoded.native_schema_elements[1].fields;
+            assert!(fields.iter().any(|(id, _)| *id == field_id), "{case}");
+            if case == "conflict" {
+                assert_eq!(
+                    decoded.schema[1]
+                        .annotation
+                        .as_ref()
+                        .unwrap()
+                        .to_utf8()
+                        .unwrap(),
+                    "OTHER"
+                );
+                assert_eq!(decoded.schema[1].converted_type, Some(1));
+            }
+        }
     }
     #[test]
     fn decodes_all_three_predecessor_list_files_without_modifying_source() {

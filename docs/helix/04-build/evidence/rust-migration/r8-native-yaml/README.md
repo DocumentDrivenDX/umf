@@ -28,8 +28,9 @@ forms, while `yes`, `no`, `on`, and `off` remain strings. YAML 1.2 dates remain
 strings. The cases also cover numeric canonicalization, duplicate string keys,
 unused anchors, aliases, explicit tags, malformed input, document counts, and
 UTF-16 host input. Unused anchors are accepted; alias use and explicit value
-tags are rejected. YAML 1.1 and predecessor options are frozen in the packet
-but excluded from this Rust candidate.
+tags are rejected. A separate opt-in options slice covers YAML 1.1 boolean
+words, `dateOnly: "string"`, the `pyyaml` y/n boolean lexicon, and
+invalid-version precedence. It does not broaden the default YAML 1.2 claim.
 
 The direct predecessor packet contains 30 cases (15 returns, 15 throws) and
 has SHA-256 `d33e5b667ca89490f4e60612f78ad5713608e0c4b64668df1b32658b2f9066af`.
@@ -65,9 +66,18 @@ The adjacent `readJsonValue` path shares the scanner but retains its own
 diagnostic profile; the full Rust serialization module passed 25/25 tests
 after the scope correction.
 
-Other YAML constructs, YAML 1.1, arbitrary parser options, date
-coercion, complex keys, and comprehensive syntax-diagnostic aggregation are
-outside the supported claim.
+The eight direct TypeScript option outcomes are frozen in
+`options-predecessor.json` (SHA-256
+`4fc638136df1f1864a48e090b479a54549255c4142253f510af22d9e14e9f3b5`). The
+Rust wire test compares each complete tree or error code/message, including
+invalid-version precedence over malformed source for string, null, and number
+versions. The Node/WASM wrapper test
+also confirms that the YAML 1.1 option reaches the wire request. This bounded
+slice does not establish general YAML 1.1 support: numeric resolution beyond
+the default subset, timestamps other than explicit refusal, arbitrary parser
+options, complex keys, and comprehensive syntax-diagnostic aggregation remain
+outside the supported claim. The focused Rust wire test and default-profile
+YAML wire test pass with the pinned Rust 1.90 toolchain.
 
 Reproduction inputs and receipts are beside this file. Node was v26.12.1,
 Bun was 1.4.3, rustc was 1.90.0, and the WASM replay used headless Chromium
@@ -86,6 +96,8 @@ precedence is not fully equivalent.
 From the repository root, reproduce the frozen packet and focused Rust test
 with `bun docs/helix/04-build/evidence/rust-migration/r8-native-yaml/predecessor.mjs`
 and `cargo test --locked --offline -p umf-core-wire --lib opt_in_native_yaml_matches_frozen`.
+Reproduce the option packet with `bun docs/helix/04-build/evidence/rust-migration/r8-native-yaml/options-predecessor.mjs`;
+the focused options check is `cargo test --locked --offline -p umf-core-wire --lib opt_in_native_yaml_matches_frozen_option_profiles_and_precedence`.
 Reproduce the Node wrapper route checks with
 `bun test ./bindings/core/node/tests/json-schema-wrapper.test.js`. The Node
 and Chromium replay scripts require the built package directories described

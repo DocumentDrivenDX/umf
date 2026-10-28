@@ -514,8 +514,8 @@ export interface JsonSchemaEngine {
   getJsonSchemaNode(document: unknown, pointer: string): unknown;
   walkJsonSchema(document: unknown): {pointer: string; node: unknown}[];
   parseNativeJson(source: string): JsonSchemaNativeJson;
-  /** Parse the opt-in JSON-compatible YAML 1.2 core subset with exact numeric tokens. */
-  parseNativeYaml(source: string): JsonSchemaNativeJson;
+  /** Parse bounded JSON-compatible YAML profiles; YAML 1.1 options cover only the separately qualified subset. */
+  parseNativeYaml(source: string, options?: {version?: '1.1' | '1.2'; dateOnly?: 'string'; booleanLexicon?: 'pyyaml'}): JsonSchemaNativeJson;
   editJsonSchemaNode(document: unknown, pointer: string, replacement: string): unknown;
 }
 /** Create the opt-in CONTRACT-002 Rust binding. */

@@ -9641,3 +9641,35 @@ mutable `LIMITS` object stays executable. This is a one-name classification
 correction, not a Rust implementation or route retirement. The latest ledger
 reports **920 open logical executable default-route gaps, zero retired**,
 86 accepted opt-in Rust mappings, and 834 executable names without one.
+
+### R8 Parquet retention and bounded YAML options — 2026-10-28
+
+The Rust Parquet footer decoder now has separate strict and retaining entry
+points. Existing LIST and record-type classifiers continue to call the strict
+entry point, which refuses unknown `SchemaElement` fields, native parameters,
+and conflicting logical/converted annotations rather than consuming a lossy
+projection. The retaining entry point preserves ordered field IDs and typed
+Compact Protocol values, including bool, integer width, binary, double bits,
+list/set/map, nested structs, UUID, and unknown fields. Synthetic footer
+controls confirm all three refusal categories on the strict path and native
+retention on the new path. Sol reran the eight focused decoder tests and the
+33-test Parquet Rust module group. This is decoder groundwork only: complete
+field metadata, a Rust Parquet relationship classifier, predecessor parity,
+host receipts, and any default-route decision remain open.
+
+The [native YAML option packet](evidence/rust-migration/r8-native-yaml/README.md)
+freezes eight direct TypeScript predecessor cases for YAML 1.1 boolean words,
+date-only string handling, `pyyaml` single-letter boolean behavior, timestamp
+refusal, and invalid-version precedence for string, null, and number versions.
+The opt-in Rust wire operation and
+Node/WASM facades now carry `version`, `dateOnly`, and `booleanLexicon`; both
+facades forward only these supported keys, preserving the positional source.
+The three focused Rust wire YAML tests and 29 Node/WASM wrapper tests pass.
+This does not establish general YAML 1.1 parity or qualify installed hosts
+for this new source cut. The earlier 24-case Node/Chromium YAML 1.2 receipt is
+historical for its immutable `400590311` cut. No default route is retired.
+
+CONTRACT-049 already states that the public Record Values profile is operation
+2.0.0/core 0.10.0. The focused public test now pins the operation name and
+refusal of core 0.9.0 in addition to older historical versions; its four Bun
+tests pass with 31 assertions. The 1.0.0/core 0.8.0 clause remains historical.
