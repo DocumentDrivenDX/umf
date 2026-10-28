@@ -53,6 +53,31 @@ test('14 frozen TypeScript/core cases retain coarse outcome and public UmfError 
     }
   }
   expect(report.filter(row => row.messageExact).map(row => row.id)).toEqual(['limit-plus-one']);
+  // Freeze the currently observed diagnostic gaps so new malformed cases or
+  // parser changes cannot silently widen this opt-in difference.
+  expect(report.filter(row => !row.messageExact).map(row => row.id)).toEqual([
+    'zero-tag',
+    'truncated-tag-varint',
+    'bad-wire-type',
+    'truncated-fixed32',
+    'truncated-length',
+    'truncated-field-varint',
+    'malformed-10th-varint',
+    'true-trailing-tag',
+    'exact-limit-malformed-first-byte',
+  ]);
+  expect(Object.fromEntries(report.map(row => [row.id, row.rustMessage]))).toEqual({
+    'zero-tag': 'Invalid Protobuf field number',
+    'truncated-tag-varint': 'Truncated varint',
+    'bad-wire-type': 'Invalid wire type',
+    'truncated-fixed32': 'Truncated fixed32',
+    'truncated-length': 'Truncated length-delimited field',
+    'truncated-field-varint': 'Truncated varint',
+    'malformed-10th-varint': 'Malformed varint',
+    'true-trailing-tag': 'Invalid wire type',
+    'exact-limit-malformed-first-byte': 'Invalid Protobuf field number',
+    'limit-plus-one': 'Descriptor input exceeds limit',
+  });
 }, {timeout: 120_000});
 
 test('raw-byte host snapshots the exact offset window and ignores overridden byte accessors', () => {

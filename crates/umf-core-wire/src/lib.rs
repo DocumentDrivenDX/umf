@@ -3185,9 +3185,40 @@ mod tests {
                 "throw" => {
                     assert_eq!(envelope["status"], "error", "case {id}: {envelope}");
                     assert_eq!(envelope["code"], case["code"], "case {id}: {envelope}");
+                    let expected: Vec<u16> = case["message"].as_str().unwrap().encode_utf16().collect();
+                    assert_eq!(envelope["messageUnits"], serde_json::json!(expected), "case {id}: {envelope}");
                 }
                 other => panic!("unknown predecessor outcome {other}"),
             }
+        }
+    }
+
+    #[test]
+    fn opt_in_native_yaml_matches_frozen_alias_edge_diagnostics() {
+        let cases = [
+            (
+                "x: *missing",
+                "NATIVE_YAML_NODE",
+                "Aliases and non-JSON YAML nodes are unsupported",
+            ),
+            (
+                "x: !!str *missing",
+                "NATIVE_YAML_SYNTAX",
+                "An alias node must not specify any properties at line 1, column 10:\n\nx: !!str *missing\n         ^^^^^^^^\n",
+            ),
+        ];
+        for (source, expected_code, expected_message) in cases {
+            let request = comparison_request(vec![
+                ("profile", Value::string_utf8("umf-r5-json-schema/0.1.0")),
+                ("op", Value::string_utf8("parseNativeYaml")),
+                ("source", Value::String(Utf16::from(source))),
+            ]);
+            let envelope: serde_json::Value =
+                serde_json::from_str(&execute_json_schema_wire(&request)).unwrap();
+            assert_eq!(envelope["status"], "error", "source {source:?}: {envelope}");
+            assert_eq!(envelope["code"], expected_code, "source {source:?}: {envelope}");
+            let expected: Vec<u16> = expected_message.encode_utf16().collect();
+            assert_eq!(envelope["messageUnits"], serde_json::json!(expected), "source {source:?}: {envelope}");
         }
     }
 

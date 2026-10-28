@@ -41,7 +41,8 @@ Chromium additionally verified the WASM facade loads without `process` or
 `Buffer` globals. The edge probes ran under Node v26.3.0, separately from
 the main Node v26.12.1 receipt.
 
-Exact error wording is not yet at parity in two syntax cases:
+The initial Node and Chromium receipts found exact error wording differences
+in two syntax cases:
 
 - `duplicate-after-bad-syntax`: the predecessor reports both a duplicate-key
   diagnostic and the following syntax error; Rust reports the syntax error
@@ -49,8 +50,22 @@ Exact error wording is not yet at parity in two syntax cases:
 - `malformed-sequence`: both report the same source location and caret, but
   the predecessor's parser wording differs from Rust's. The error code matches.
 
-These differences are retained as explicit evidence and are not treated as a
-full pass. Other YAML constructs, YAML 1.1, arbitrary parser options, date
+At the subsequent Rust source checkpoint, the focused wire test now compares
+every error message in the 24-case default-profile corpus and passes 24/24
+trees, codes, and messages. A second Rust wire test also matches the frozen
+unknown-alias code/message and tagged-alias code/message/caret. The source
+change has not been rebuilt and replayed in an installed Node or Chromium
+package, so the older host receipts above still describe their pinned build
+and do not qualify the new diagnostics on either host. The two original
+differences and the two alias differences remain visible in those receipts
+instead of being rewritten as current-host passes.
+
+The diagnostic normalization is scoped to `read_native_yaml_tree`.
+The adjacent `readJsonValue` path shares the scanner but retains its own
+diagnostic profile; the full Rust serialization module passed 25/25 tests
+after the scope correction.
+
+Other YAML constructs, YAML 1.1, arbitrary parser options, date
 coercion, complex keys, and comprehensive syntax-diagnostic aggregation are
 outside the supported claim.
 
@@ -70,7 +85,7 @@ precedence is not fully equivalent.
 
 From the repository root, reproduce the frozen packet and focused Rust test
 with `bun docs/helix/04-build/evidence/rust-migration/r8-native-yaml/predecessor.mjs`
-and `cargo test --locked --offline -p umf-core-wire opt_in_native_yaml_matches_frozen_typescript_12_trees_and_error_codes`.
+and `cargo test --locked --offline -p umf-core-wire --lib opt_in_native_yaml_matches_frozen`.
 Reproduce the Node wrapper route checks with
 `bun test ./bindings/core/node/tests/json-schema-wrapper.test.js`. The Node
 and Chromium replay scripts require the built package directories described
@@ -81,7 +96,8 @@ package at `/private/tmp/umf-r8-native-yaml-wasm-package`. The edge probe can
 be repeated with
 `UMF_R8_NATIVE_YAML_NODE_PACKAGE_ROOT=/path/to/node-package bun docs/helix/04-build/evidence/rust-migration/r8-native-yaml/edge-probes.mjs`.
 
-The focused Rust test is
-`opt_in_native_yaml_matches_frozen_typescript_12_trees_and_error_codes` in
+The focused Rust tests are
+`opt_in_native_yaml_matches_frozen_typescript_12_trees_and_error_codes` and
+`opt_in_native_yaml_matches_frozen_alias_edge_diagnostics` in
 `crates/umf-core-wire/src/lib.rs`; the wrapper route test is
 `bindings/core/node/tests/json-schema-wrapper.test.js`.

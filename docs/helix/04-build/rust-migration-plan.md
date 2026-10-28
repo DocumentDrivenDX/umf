@@ -9555,6 +9555,18 @@ unobserved YAML forms, current-source installed package closure, and exact
 diagnostic parity remain open. Keep the package default on TypeScript and do
 not count this as a retired R8 route.
 
+The next Rust-only diagnostic correction retains duplicates emitted before a
+scanner error, matches the frozen malformed-sequence wording, and aligns the
+unknown/tagged alias code and caret for the tested forms. Sol reviewed the
+change and ran the pinned-toolchain wire tests: all 24 frozen default-profile
+cases now match complete trees, codes, and exact messages, and two alias edge
+diagnostics match. A full 25-test Rust serialization-module regression found
+and then verified the fix for a shared-parser wording leak into the separate
+`readJsonValue` route; the native diagnostic rules are now scoped to the
+native-tree operation. The prior Node/Chromium receipts remain tied to the earlier
+binary; a fresh current-source native/WASM build and installed host replays
+must precede any broader parity or route claim.
+
 ### R8 `securityNot` pinned Darwin replay and offline Linux gate — 2026-10-28
 
 The [new `13e3313e` source-cut packet](evidence/rust-migration/r8-security-not-retirement-current-13e3313e/README.md)
@@ -9569,3 +9581,34 @@ run, and neither default-route declaration is retired. The later YAML source
 edit also makes this an earlier pinned cohort rather than a current-worktree
 installed result. A complete new two-cohort source cut and hosted
 qualification remain required.
+
+### R8 resource and Parquet relationship ownership follow-up — 2026-10-28
+
+The [three generic selection resource authority review](evidence/rust-migration/r8-symbol-inventory/three-generic-selection-resource-authority-20261028.md)
+traces the historical writers and current hashes of
+`key-selection.schema.json`, `relationship-selection.schema.json`, and
+`schema-properties-selection.schema.json`. They remain public JSON exports,
+but their historical builders are absent and the current metamodel writer
+does not own them. Their names do not establish that current Rust selection
+or schema-property operations compute these schemas. Keep all three
+`authority-unresolved` pending an explicit supported-resource disposition
+or a restored exact writer; the other two unresolved JSON resources also
+remain open.
+
+The direct TypeScript Parquet relationship predecessor is now frozen in a
+reproducible three-outcome corpus under
+`tests/rust-core/fixtures/parquet-relationship-predecessor.json`, checked by
+`tests/rust-core/parquet-relationship-predecessor.test.mjs` (1/1). Report,
+strict, and unsupported-vocabulary cases preserve the original source,
+unknown metadata, observation order, and residuals. The current Rust Parquet
+decoder exposes a narrower SchemaElement projection, which cannot yet
+reconstruct the predecessor's complete `nativeField` payload or checked and
+blocked metadata diagnostics. Port full native-field preservation and field
+metadata first; only then add an opt-in Rust classifier with receipt
+verification/recovery. No default route or retirement follows.
+
+The Protobuf descriptor candidate test now pins the exact nine malformed
+declared-byte diagnostic differences against the predecessor (5 focused tests,
+93 assertions). Its return/error classes and codes remain qualified only to
+the existing 14-vector byte-array profile; exact messages and non-byte host
+admission remain open.

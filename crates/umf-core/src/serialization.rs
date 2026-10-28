@@ -260,7 +260,7 @@ pub(crate) fn read_native_yaml_tree(
         return Err(fail("LIMIT", "Native YAML exceeds text limit"));
     }
     ctx.charge_text(source.len(), Utf16::default())?;
-    let (events, prefix) = prepare_yaml_events(source, ScanProfile::Yaml12, ctx, true)
+    let (events, prefix) = prepare_yaml_events(source, ScanProfile::Yaml12, ctx, true, true)
         .map_err(native_yaml_error_code)?;
     preflight_native_yaml_duplicates(&events, source, ctx).map_err(native_yaml_error_code)?;
     let mut root = parse_yaml_events::<NativeYamlBuilder>(events, ctx, NativeYamlBuilder, Some(source))
@@ -2451,6 +2451,7 @@ fn yaml_events_with_profile(
     text: &str,
     profile: ScanProfile,
     typescript_profile: bool,
+    native_yaml_diagnostics: bool,
     diagnostic_source: Option<&[u16]>,
     source_offsets: Option<&[usize]>,
     ctx: &mut Context<'_>,
@@ -2503,17 +2504,86 @@ fn yaml_events_with_profile(
                     .copied()
                     .unwrap_or(char_offset)
                     .min(source.len());
-                return Err(typescript_yaml_parser_diagnostic(
+                // `yaml` reports an unresolved alias as a node-admission
+                // failure, even though the Rust scanner calls it syntax.
+                if native_yaml_diagnostics && error.info().starts_with("while parsing node, found unknown anchor") {
+                    return Err(fail("NATIVE_YAML_NODE", "Aliases and non-JSON YAML nodes are unsupported"));
+                }
+                let mut diagnostic = typescript_yaml_parser_diagnostic(
                     source,
                     offset,
                     error.info(),
                     ctx,
-                )?);
+                )?;
+                let is_tagged_alias = native_yaml_diagnostics && source.get(offset) == Some(&0x2a)
+                    && yaml_tag_precedes_alias(source, offset);
+                if is_tagged_alias {
+                    let alias_len = source[offset..]
+                        .iter()
+                        .take_while(|unit| !matches!(unit, 0x20 | 0x09 | 0x0a | 0x0d | 0x2c | 0x5d | 0x7d))
+                        .count();
+                    let mut message = diagnostic.message.units().to_vec();
+                    let old_headline = error.info().encode_utf16().collect::<Vec<_>>();
+                    let new_headline = "An alias node must not specify any properties".encode_utf16().collect::<Vec<_>>();
+                    if let Some(at) = message.windows(old_headline.len()).position(|window| window == old_headline) {
+                        message.splice(at..at + old_headline.len(), new_headline);
+                    }
+                    if alias_len > 1 {
+                        if let Some(caret) = message.iter().rposition(|unit| *unit == 0x5e) {
+                            message.splice(caret + 1..caret + 1, std::iter::repeat(0x5e).take(alias_len - 1));
+                        }
+                    }
+                    diagnostic.message = Utf16::new(message);
+                }
+                // Keep already observed duplicate keys when a later scanner
+                // error aborts event production; the predecessor aggregates
+                // both diagnostics in source order.
+                if native_yaml_diagnostics {
+                    match preflight_native_yaml_duplicates(&events.0, source, ctx) {
+                        Err(duplicate) if duplicate.code == "SYNTAX" => {
+                            let mut message = duplicate.message.into_units();
+                            message.extend("; ".encode_utf16());
+                            message.extend(diagnostic.message.into_units());
+                            diagnostic.message = Utf16::new(message);
+                        }
+                        _ => {}
+                    }
+                    // Match the native-tree predecessor's more specific
+                    // wording for this scanner paraphrase.
+                    diagnostic.message = replace_utf16_text(
+                        diagnostic.message,
+                        "Flow sequence must end with a ]",
+                        "Flow sequence in block collection must be sufficiently indented and end with a ]",
+                    );
+                }
+                return Err(diagnostic);
             }
         }
         return Err(fail("YAML_SYNTAX", &error.to_string()));
     }
     Ok(events.0)
+}
+
+fn yaml_tag_precedes_alias(source: &[u16], alias: usize) -> bool {
+    let line_start = source[..alias]
+        .iter()
+        .rposition(|unit| matches!(unit, 0x0a | 0x0d))
+        .map_or(0, |at| at + 1);
+    let mut at = alias;
+    while at > line_start && matches!(source[at - 1], 0x20 | 0x09) { at -= 1; }
+    let token_end = at;
+    while at > line_start && !matches!(source[at - 1], 0x20 | 0x09 | 0x3a | 0x5b | 0x7b | 0x2c) { at -= 1; }
+    token_end > at && source[at] == 0x21
+}
+
+fn replace_utf16_text(value: Utf16, from: &str, to: &str) -> Utf16 {
+    let mut units = value.into_units();
+    let from: Vec<u16> = from.encode_utf16().collect();
+    let to: Vec<u16> = to.encode_utf16().collect();
+    if let Some(at) = units.windows(from.len()).position(|window| window == from) {
+        units.splice(at..at + from.len(), to);
+    }
+    Utf16::new(units)
 }
 
 fn typescript_yaml_parser_diagnostic(
@@ -2675,6 +2745,7 @@ fn parse_yaml_utf16(
         ScanProfile::Yaml12,
         ctx,
         typescript_profile,
+        false,
     )?;
     let builder = CoreYamlBuilder { typescript_profile };
     let mut value = parse_yaml_events::<CoreYamlBuilder>(events, ctx, builder, Some(source))?;
@@ -2687,6 +2758,7 @@ fn prepare_yaml_events(
     profile: ScanProfile,
     ctx: &mut Context<'_>,
     typescript_profile: bool,
+    native_yaml_diagnostics: bool,
 ) -> Result<(Vec<LocatedEvent>, (char, char)), EngineError> {
     // YAML permits one stream BOM; keeping it out of both private views
     // leaves their spans aligned with the corresponding original source slice.
@@ -2737,6 +2809,7 @@ fn prepare_yaml_events(
         &first_text,
         profile,
         typescript_profile,
+        native_yaml_diagnostics,
         Some(original_source),
         Some(&first_source_offsets),
         ctx,
@@ -2826,6 +2899,7 @@ fn prepare_yaml_events(
         &final_text,
         profile,
         typescript_profile,
+        native_yaml_diagnostics,
         Some(original_source),
         Some(&source_offsets),
         ctx,
@@ -3537,6 +3611,7 @@ fn parse_python_yaml(
         units.units(),
         ScanProfile::PythonRuamel12,
         ctx,
+        false,
         false,
     )?;
     let mut value = parse_yaml_events::<PythonYamlBuilder>(events, ctx, PythonYamlBuilder, None)?;

@@ -48,7 +48,7 @@ from the generated schema `$id`. This fails if either the Rust list or pinned
 current-version behavior drifts from that generated authority.
 After the Rust source edits, the metamodel build refreshed the generated
 compiler fingerprint in the schema's `$comment`; its latest SHA-256 is
-`5296d7631d1b976bf45ac83f2b66e74ffb4726d044e16141a963bc60af435763`.
+`47847aefe4ad9f13cfa992f2710174c8026bffd7bc9dea05953afa4b03e4f827`.
 The frozen pre-implementation resource hash remains in `predecessor.json` as
 historical capture. The generated scalar enum and `$id` are unchanged, and the
 Rust drift test passes against the refreshed resource.
