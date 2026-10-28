@@ -46,6 +46,8 @@ class TargetPin:
     platform: tuple[tuple[str, tuple[str, ...]], ...]
 
     def matches(self, identity: TargetIdentity) -> bool:
+        pinned_names = tuple(name for name, _ in self.platform)
+        observed_names = tuple(name for name, _ in identity.platform)
         return (
             (
                 identity.kind,
@@ -62,6 +64,8 @@ class TargetPin:
                 self.binding_sha256,
             )
             and len(identity.platform) == len(self.platform)
+            and len(set(pinned_names)) == len(pinned_names)
+            and len(set(observed_names)) == len(observed_names)
             and all(
                 name in dict(self.platform) and version in dict(self.platform)[name]
                 for name, version in identity.platform

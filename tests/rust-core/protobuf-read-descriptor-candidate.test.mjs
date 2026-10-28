@@ -96,14 +96,30 @@ test('descriptor wire failures carry the native brand before public UmfError map
   expect(exposed.message).toBe(native.message);
 });
 
-test('out-of-signature values remain outside the candidate parity profile', () => {
-  for (const value of ['abc', [], new Uint16Array([1])]) {
+test('ArrayBuffer views retain predecessor byte-window admission', () => {
+  const backing = Uint8Array.from([0xaa, 0x82,0xb5,0x18,0x04,0x00,0x01,0x02,0xff,0xbb]);
+  const views = [
+    ['DataView', new DataView(new ArrayBuffer(0))],
+    ['Buffer', Buffer.from(backing.buffer, 1, 8)],
+  ];
+  for (const [id, view] of views) {
+    const expected = capture(predecessor, view);
+    expect(expected.ok).toBe(true);
+    const actual = capture(candidate, view);
+    expect(actual).toEqual(expected);
+  }
+  expect(capture(candidate, new DataView(backing.buffer, 1, 8)).ok).toBe(false);
+  const wide = new Uint16Array([0x0a, 0]);
+  expect(capture(predecessor, wide).message).toBe('RangeError: premature EOF');
+  const wideCandidate = capture(candidate, wide);
+  expect(wideCandidate.ok).toBe(false);
+  expect(wideCandidate.code).toBe('PROTOBUF_BINARY');
+});
+
+test('unsupported non-view hosts fail closed with captured predecessor diagnostics', () => {
+  for (const value of ['abc', [], new ArrayBuffer(0), {length: 0}, new Proxy(new Uint8Array([0]), {})]) {
     const expected = capture(predecessor, value);
     const actual = capture(candidate, value);
-    expect(actual.ok).toBe(false);
-    expect(actual.name).toBe(expected.name);
-    expect(actual.code).toBe(expected.code);
-    // Buf and the existing native byte guard report different diagnostic text.
-    expect(actual.message).not.toBe(expected.message);
+    expect(actual).toEqual(expected);
   }
 });

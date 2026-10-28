@@ -7,6 +7,7 @@ use pyo3::{
     prelude::*,
     types::{PyBool, PyBytes, PyDict, PyFloat, PyInt, PyIterator, PyList, PyString, PyTuple},
 };
+use umf_core::target_pin::{PlatformComponent, PlatformPin, TargetIdentity, TargetPin};
 use umf_core::{
     Capabilities, CapabilityError, Context, Diagnostic, Engine, EngineError, PythonDiagnosticText,
     Registry, ResourceSet, SemanticContext, Severity, Utf16, Value,
@@ -19,6 +20,7 @@ mod python_value;
 mod related_keys;
 
 create_exception!(_rust_core, SecProjectionError, PyException);
+const TARGET_PIN_PROFILE: &str = "umf-access-target-pin/0.1.0";
 const SEC_INPUT_LIMIT: usize = 4_000_000;
 const SEC_SOURCE_LIMIT: usize = 1_024;
 
@@ -75,6 +77,116 @@ fn sec_projection_error(name: &str, code: Option<&str>, path: Option<&str>, mess
         let _ = value.setattr("message", message);
     });
     error
+}
+
+fn exact_tuple<'a, 'py>(
+    value: &'a Bound<'py, PyAny>,
+    label: &str,
+) -> PyResult<&'a Bound<'py, PyTuple>> {
+    if !value.is_exact_instance_of::<PyTuple>() {
+        return Err(PyTypeError::new_err(format!("{label} must be an exact tuple")));
+    }
+    Ok(value.downcast::<PyTuple>()?)
+}
+
+fn exact_tuple_string(value: &Bound<'_, PyAny>, label: &str) -> PyResult<String> {
+    if !value.is_exact_instance_of::<PyString>() {
+        return Err(PyTypeError::new_err(format!(
+            "{label} must be an exact str"
+        )));
+    }
+    value.extract::<String>()
+}
+
+fn target_identity_fields(value: &Bound<'_, PyAny>) -> PyResult<[String; 5]> {
+    let tuple = exact_tuple(value, "identity fields")?;
+    if tuple.len() != 5 {
+        return Err(PyValueError::new_err(
+            "identity fields must contain five strings",
+        ));
+    }
+    Ok([
+        exact_tuple_string(&tuple.get_item(0)?, "identity kind")?,
+        exact_tuple_string(&tuple.get_item(1)?, "identity backend_id")?,
+        exact_tuple_string(&tuple.get_item(2)?, "identity backend_version")?,
+        exact_tuple_string(&tuple.get_item(3)?, "identity target_profile")?,
+        exact_tuple_string(&tuple.get_item(4)?, "identity binding_sha256")?,
+    ])
+}
+
+fn target_pin_platform(value: &Bound<'_, PyAny>) -> PyResult<Vec<PlatformPin>> {
+    let tuple = exact_tuple(value, "pin platform")?;
+    tuple
+        .iter()
+        .map(|item| {
+            let pair = exact_tuple(&item, "pin platform component")?;
+            if pair.len() != 2 {
+                return Err(PyValueError::new_err(
+                    "pin platform component must be (name, versions)",
+                ));
+            }
+            let name = exact_tuple_string(&pair.get_item(0)?, "platform name")?;
+            let versions_value = pair.get_item(1)?;
+            let versions = exact_tuple(&versions_value, "platform versions")?;
+            let versions = versions
+                .iter()
+                .map(|version| exact_tuple_string(&version, "platform version"))
+                .collect::<PyResult<Vec<_>>>()?;
+            Ok(PlatformPin { name, versions })
+        })
+        .collect()
+}
+
+fn observed_target_platform(value: &Bound<'_, PyAny>) -> PyResult<Vec<PlatformComponent>> {
+    let tuple = exact_tuple(value, "observed platform")?;
+    tuple
+        .iter()
+        .map(|item| {
+            let pair = exact_tuple(&item, "observed platform component")?;
+            if pair.len() != 2 {
+                return Err(PyValueError::new_err(
+                    "observed platform component must be (name, version)",
+                ));
+            }
+            Ok(PlatformComponent {
+                name: exact_tuple_string(&pair.get_item(0)?, "platform name")?,
+                version: exact_tuple_string(&pair.get_item(1)?, "platform version")?,
+            })
+        })
+        .collect()
+}
+
+#[pyfunction]
+fn access_target_pin_profile_version() -> &'static str {
+    TARGET_PIN_PROFILE
+}
+
+#[pyfunction]
+fn access_target_pin_matches(
+    pin_fields: &Bound<'_, PyAny>,
+    pin_platform: &Bound<'_, PyAny>,
+    identity_fields: &Bound<'_, PyAny>,
+    observed_platform: &Bound<'_, PyAny>,
+) -> PyResult<bool> {
+    let pin_fields = target_identity_fields(pin_fields)?;
+    let identity_fields = target_identity_fields(identity_fields)?;
+    let pin = TargetPin {
+        kind: pin_fields[0].clone(),
+        backend_id: pin_fields[1].clone(),
+        backend_version: pin_fields[2].clone(),
+        target_profile: pin_fields[3].clone(),
+        binding_sha256: pin_fields[4].clone(),
+        platform: target_pin_platform(pin_platform)?,
+    };
+    let identity = TargetIdentity {
+        kind: identity_fields[0].clone(),
+        backend_id: identity_fields[1].clone(),
+        backend_version: identity_fields[2].clone(),
+        target_profile: identity_fields[3].clone(),
+        binding_sha256: identity_fields[4].clone(),
+        platform: observed_target_platform(observed_platform)?,
+    };
+    Ok(pin.matches(&identity))
 }
 
 fn semantic_field<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
@@ -5514,6 +5626,8 @@ fn py_error_utf16(py: Python<'_>, error: PyErr) -> Utf16 {
 fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(project_sec_submissions, module)?)?;
     module.add_function(wrap_pyfunction!(project_sec_company_facts, module)?)?;
+    module.add_function(wrap_pyfunction!(access_target_pin_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(access_target_pin_matches, module)?)?;
     module.add("SecProjectionError", module.py().get_type::<SecProjectionError>())?;
     module.add_function(wrap_pyfunction!(domain_pack_schema, module)?)?;
     module.add_function(wrap_pyfunction!(access_rrf_profile_version, module)?)?;

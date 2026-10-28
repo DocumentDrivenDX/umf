@@ -24,9 +24,15 @@ ddx:
 **Type:** browser-compatible library. **Version:** experimental 1.0.0.
 **Profile:** `core-0.8-absent-string-additions/0.1`.
 
+The profile identifier is retained as a compatibility spelling; its `core-0.8`
+text does not identify the admitted source version. This operation accepts only
+documents declaring `umf:"0.10.0"`. The earlier 0.8.0 precondition was a
+contract error: the current TypeScript and Rust operations and their frozen
+predecessor evidence use core 0.10.0.
+
 ## Purpose and boundary
 
-Classify whether an explicit pair of logical core 0.8.0 documents preserves
+Classify whether an explicit pair of logical core 0.10.0 documents preserves
 existing definitions and permits a bounded addition with absent old values.
 Independent validity of the after document MUST NOT imply preservation.
 This operation does not migrate data, bind catalogs, assign storage IDs, approve
@@ -58,7 +64,7 @@ migration, extension registration, network acquisition or default insertion occu
 
 ## Preservation profile
 
-Both documents MUST retain the same document ID and declared `umf:"0.8.0"`.
+Both documents MUST retain the same document ID and declared `umf:"0.10.0"`.
 No revision-envelope members are permitted to change in this initial profile.
 Document/module metadata, module order, existing element order and definitions,
 Key declarations, relationship declarations, annotations and extensions MUST remain

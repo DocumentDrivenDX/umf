@@ -885,7 +885,7 @@ fn current_source_negative_control_matrix_is_closed() {
 
     let mut wrong_version = base.clone();
     if let Some(version) = get_mut(&mut wrong_version, "umf") {
-        *version = Value::string_utf8("0.9.0");
+        *version = Value::string_utf8("0.8.0");
     }
     assert_eq!(
         inspect_core_evolution(&engine, &wrong_version, &base, policy, &mut Context::ordinary())

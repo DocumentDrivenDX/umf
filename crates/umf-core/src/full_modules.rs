@@ -95,6 +95,7 @@ pub mod parquet_record_type_candidate;
 pub mod parquet_record_type_classifier;
 pub mod parquet_record_type_operation;
 pub mod parquet_record_type_recovery;
+pub mod parquet_relationship_observation;
 pub mod parquet_schema_decode;
 pub mod protobuf_descriptor;
 #[cfg(feature = "embedded-adapters")]
@@ -126,4 +127,5 @@ pub(crate) mod selection_diagnostics;
 pub mod semantic_type_accessors;
 pub mod serialization;
 pub mod structural_diff;
+pub mod target_pin;
 pub mod value;

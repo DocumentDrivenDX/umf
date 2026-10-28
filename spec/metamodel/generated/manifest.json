@@ -2,7 +2,7 @@
   "profile": "umf.metamodel.outputs/1",
   "provenance": {
     "modelSha256": "35b72a7f6aa86c98398192e5b67d5841d77127743c671c742dd871a7baee58ca",
-    "compilerSha256": "137889517ca503e9a192eb9dd81195c6445235e0750dc7cb0ad458caf8efebc0"
+    "compilerSha256": "a875edcfbf8be9c0c74754055f36348d707fd8e4242c295df72e531e7328429d"
   },
   "sources": {
     "spec/metamodel/umf.yaml": "35b72a7f6aa86c98398192e5b67d5841d77127743c671c742dd871a7baee58ca",
@@ -80,7 +80,7 @@
     "crates/umf-core/src/engine.rs": "1dbc5ab957e99a881c0aeaecbc25c5f66046f4acf2421989c174fa5bcb8d615e",
     "crates/umf-core/src/error.rs": "e40104752917c0dccc0accabc1337f5e36857f55ae20cc55ddf2900f24ea79af",
     "crates/umf-core/src/facets.rs": "582ab508b50241aac2fe2601f261334bfa25465bd3ced832ac56fe3501e80977",
-    "crates/umf-core/src/full_modules.rs": "a63858b363ceb5816ffae0ee6c3268ab9f730009cea94744ced0254af3e3e5f4",
+    "crates/umf-core/src/full_modules.rs": "05c225996082fff35d4b402b02581d8edf5240b3718c75e060278970a74dad54",
     "crates/umf-core/src/gregorian_date.rs": "0d187eba09e7d1ada6fae3ee17a75ae93767881af6fc09a120ae38844f85f4e8",
     "crates/umf-core/src/host_diagnostic.rs": "49879a95f83aa304f137e7a4c8b3f5efd4294b377dc2d5e7067b76b66be6aad5",
     "crates/umf-core/src/host_json.rs": "9eda687ca3bce0192e2df86f06e5e8543387b6934e6ffd78f49a03af9c2960aa",
@@ -104,6 +104,7 @@
     "crates/umf-core/src/parquet_record_type_classifier.rs": "bea8108c7f33a478bb4687f9137502d7763ae876a4c48f38a320b079a0578616",
     "crates/umf-core/src/parquet_record_type_operation.rs": "fd5f08c7dd6ea4a13db49c4de06395fd78de57d69204173c1e68c32aff2bd8bd",
     "crates/umf-core/src/parquet_record_type_recovery.rs": "d42c3c731ceb762415d7323928e68b3da15fd4d21591b458bda474b9ed96fd90",
+    "crates/umf-core/src/parquet_relationship_observation.rs": "8f48cc773462116e8baff19bcfc0506652183e9c2082385922fb4ea9867280a9",
     "crates/umf-core/src/parquet_schema_decode.rs": "41bac38d89241675fd6a6c729fee384d0db085cda6ba4ebbc78f4330d59ce52d",
     "crates/umf-core/src/protobuf_descriptor.rs": "ca6cb243cac42e1191bd39c2a7265d90dbaeaffa52eccb8a288e295c17c8b40c",
     "crates/umf-core/src/protobuf_descriptor_schema.rs": "8ae2ffb38da1f6cd5df460fbdd1dd462794bccc1f73db4e34588c88051266820",
@@ -140,6 +141,7 @@
     "crates/umf-core/src/semantic_type_accessors.rs": "896dd809d034f468094ce9b675e6ed3597f218c1e3376eda35bdebbe5961226b",
     "crates/umf-core/src/serialization.rs": "71677157b91b72481aa2508941d3e1a6f6f8810954734d0bb804ee99327b103a",
     "crates/umf-core/src/structural_diff.rs": "d2928282351c037a98781509e6e9d53b705f3b994cde2f2030a0f571fd0a1d57",
+    "crates/umf-core/src/target_pin.rs": "45309fb10bc0f696b9e0332dde38d1335bf91dc34fc14b5313ecf8f1d8c9d854",
     "crates/umf-core/src/value.rs": "b630a9581b24682cfc42c095bedec4ca4bfe74b07db956209dacbca472cb1f5d",
     "crates/umf-core/testdata/domain_pack_sec/admission-vectors.json": "cc63fe1acf42aedc98117cb64ef1738fc55ac536dafaba088582e370b70e4a0d",
     "crates/umf-core/testdata/domain_pack_sec/pinned-fixture-assertions.json": "16f89804a96c6aad7a53a407e402f42c2751e5d502b0458bb70e68f93eb8b257",
@@ -177,7 +179,7 @@
     "crates/umf-core/tests/r5_binding_index_projection.rs": "d469d108aed383d6a0cc78ef8f9449eab4f2675c2366d3edec29b830640b4095",
     "crates/umf-core/tests/r5_binding_inspection.rs": "f62bafad27df576f3a64f5b45d57d1b030c21986c14f575dfbb974fa27fe9bb5",
     "crates/umf-core/tests/r5_bit128.rs": "a18e030ae732631cac69a2e0e6ee6bfdd80b786692908815f39df12fea494b89",
-    "crates/umf-core/tests/r5_core_evolution.rs": "9275d3ae09db9c65bf2ecf996f8e04f803fbddbcdd61ba9d66975e6221ea8dec",
+    "crates/umf-core/tests/r5_core_evolution.rs": "c8aa55af3a6b2a48d63315512734d0506ca42c79bdcabe43e355e9685f263937",
     "crates/umf-core/tests/r5_core_facets.rs": "29f057608c3234a7f3802f4f770f60b1ae5b3d176f28c259102d84f55f41fa7e",
     "crates/umf-core/tests/r5_core_key_tuple.rs": "8489973b35da927d4d5e22b4ac145ca3ce7aee44a7894ba0565d306bf5cc8566",
     "crates/umf-core/tests/r5_core_keys.rs": "1fde2219e0f8d3bbc6d4b26785959a74b39b2b0f00d1f1ed82357e2a934321bf",
@@ -208,6 +210,7 @@
     "crates/umf-core/tests/r5_security_literal.rs": "2604628e1daf4cd36713323326411193699c3ab3b6324903c43632326ccd14ae",
     "crates/umf-core/tests/r5_selection.rs": "538921499342cfc2fad5ea40d647aedd7b42155fd219b825cf31f96e836cca86",
     "crates/umf-core/tests/r5_semantic_type_accessors.rs": "e98051d31bf0cebf6ea7d25c7fc95292b40697555f24390f5599f9c0f8afe900",
+    "crates/umf-core/tests/r5_target_pin.rs": "8a9e9b30bf187623051e8b595323239bd67e869636e306a5ce71abd799d6ab11",
     "crates/umf-core/tests/r8_delta_schema.rs": "973fd41b40f5dc98a00c638a7db5499eb3876402b66646d7ac4dd395df62549b",
     "crates/umf-core/tests/r8_delta_table.rs": "b35feb105f907e2bcfdc35ffcb9394e41ee882c08538787ee28e662376e39e9e",
     "crates/umf-core/tests/r8_json_number.rs": "4f312ff77740d827b10b7c2d85aaabf959a0683cdd2acfe871d59bfe10b0ac80",
@@ -395,7 +398,7 @@
     "bindings/core/node/tests/semantic-value-registry.test.js": "336ca30c52867625149e7a92e63f693735262ae0e4b491c7506c7ecb394324a4",
     "bindings/core/python/Cargo.toml": "190f17abce90c387affa8a01a875c98d81ebfbfce2ae7b525a9624701bb7e165",
     "bindings/core/python/build.rs": "b2b1e8e649acf8ffa52e323b8899147a542ec33c0f14619db3074c1f3df79cfc",
-    "bindings/core/python/src/lib.rs": "93ca4cba8bc283e273da35653a36a7076e12bb302897d2ca01e3444faf65d9d1",
+    "bindings/core/python/src/lib.rs": "2a97f8213e011d3ff125034be643bd8ba85e62b67bae6663827c7f755ce303cc",
     "bindings/core/python/src/python_value.rs": "6d82b89136f80c433d2b7e1d78074b9c958c5385f03fd13a953cdf81a8b56410",
     "bindings/core/python/src/related_keys.rs": "0a6325c82da9a64a711e035737d4bc4f11aa42337608bd2bcb81c69f4939e5f0",
     "bindings/core/wasm/Cargo.toml": "5633ccb692f4cc80b9fe55a1ab9ca2ceb99642c9132d986b8f850cc4a67633c3",
@@ -726,7 +729,7 @@
     "bindings/core/node/tests/semantic-value-registry.test.js": "336ca30c52867625149e7a92e63f693735262ae0e4b491c7506c7ecb394324a4",
     "bindings/core/python/Cargo.toml": "190f17abce90c387affa8a01a875c98d81ebfbfce2ae7b525a9624701bb7e165",
     "bindings/core/python/build.rs": "b2b1e8e649acf8ffa52e323b8899147a542ec33c0f14619db3074c1f3df79cfc",
-    "bindings/core/python/src/lib.rs": "93ca4cba8bc283e273da35653a36a7076e12bb302897d2ca01e3444faf65d9d1",
+    "bindings/core/python/src/lib.rs": "2a97f8213e011d3ff125034be643bd8ba85e62b67bae6663827c7f755ce303cc",
     "bindings/core/python/src/python_value.rs": "6d82b89136f80c433d2b7e1d78074b9c958c5385f03fd13a953cdf81a8b56410",
     "bindings/core/python/src/related_keys.rs": "0a6325c82da9a64a711e035737d4bc4f11aa42337608bd2bcb81c69f4939e5f0",
     "bindings/core/wasm/Cargo.toml": "5633ccb692f4cc80b9fe55a1ab9ca2ceb99642c9132d986b8f850cc4a67633c3",
@@ -966,15 +969,15 @@
   },
   "outputs": {
     "spec/core/schema.json": {
-      "sha256": "ef93c921d86b18d2099dc3012f6e296edfc77caea80cd889f8f3972c60228ca1",
+      "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154",
       "bytes": 45342
     },
     "spec/core/semantic-type-reference.schema.json": {
-      "sha256": "0c31d98bb2ae0a0119fdf3328651387380bf9f855079a4765670a1128aa7030b",
+      "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7",
       "bytes": 45463
     },
     "spec/core/extension-package.schema.json": {
-      "sha256": "77a9ca9ff4f38ea361656b27a72e1d107af8e2abbeeef184df5e6a138b61dd62",
+      "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21",
       "bytes": 45001
     },
     "spec/metamodel/package.json": {
@@ -982,23 +985,23 @@
       "bytes": 1376
     },
     "spec/metamodel/generated/core-constraints.json": {
-      "sha256": "a7b8f79c00a474aac59e0e9503277620716d72129937b5a419aac75c16b47985",
+      "sha256": "1c2fb812a5d91ffb312940ac3e131f73b87c17f3739ba807b5def44a03f9ad14",
       "bytes": 190252
     },
     "spec/metamodel/generated/domain-policy.json": {
-      "sha256": "1b31e46d7a5a21e48525bbbd2e5848d3ddf9d41c185b233ae3da1f1c5c018ca8",
+      "sha256": "ba1a1acad82ddb48b62f3bfb717dcd09f8b0f05d2fc31399121c12548d80d899",
       "bytes": 14827
     },
     "spec/metamodel/generated/python-shapes.json": {
-      "sha256": "5336a1cfda9cba1cb5d4c36af980f9636ad217169267cc008115a525505247bd",
+      "sha256": "e396ab6c81f6840aba79220b1021a9971ae3534f30eaf7d74d97898a2664a29f",
       "bytes": 98734
     },
     "python/umf_access/src/umf_access/generated_core.py": {
-      "sha256": "3ff9daf95fba0aa0dcb65dff2cc2334fec31e036ea15cbf5133f09e5ff9f0857",
+      "sha256": "50b3fdf4ead86b1e481465e88a01b8eb01e1fb1948470ca1d6725769b0ff16c1",
       "bytes": 360
     },
     "src/generated/core-model.ts": {
-      "sha256": "077e641df2261c899f3c764ee80c4bcb2cd835aba7c1f52851048ae349aa1c14",
+      "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd",
       "bytes": 6714
     },
     "spec/core/facet-operation-v3.schema.json": {
@@ -1026,7 +1029,7 @@
       "bytes": 1993
     },
     "src/generated/core-validators.ts": {
-      "sha256": "7f7baad5f86518e92bcad54f0a7dda0a8257c2449397e5f0f4b23aebd29469b0",
+      "sha256": "7fd05996408da234a7308dfbe6d94c578b06cdd31743c4e6228e5e1d01eca1dc",
       "bytes": 305070
     }
   }

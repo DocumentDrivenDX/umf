@@ -4686,8 +4686,9 @@ review](evidence/rust-migration/r5-core-evolution/README.md) required
 metering repeated object-member scans. Rust now charges the containing
 object's full member count before each scan, and Sol independently reran the
 eight focused core tests, including a 4,096-member host-meter refusal.
-Combined control-order work and a 0.10 predecessor versus draft CONTRACT-058
-0.8 precondition remain open. Its two remaining
+Combined control-order work remains open. CONTRACT-058 now specifies only
+core 0.10.0 input; the `core-0.8` profile token remains a compatibility
+spelling. Its two remaining
 schema exports are checker-resolved aliases to authored JSON resources, with
 caller-visible mutable module identity; returning fresh Rust values would
 change that interface. They need an explicit resource/route disposition rather
@@ -6152,8 +6153,7 @@ controls and expanded same-host preservation matrix passed four Bun tests with
 24 assertions against a fresh Node addon. The Rust Core Evolution suite passed
 10/10, including exact aggregate input preflight edges at 100,000 values and
 4,000,000 bytes; typecheck passed. Neither V4 root selects it. Before a default
-cutover, reconcile CONTRACT-058's 0.8.0 wording and duplicate ID with the
-current 0.10.0 source, prove retained-output and exact work limits plus the
+cutover, resolve the duplicate CONTRACT-058 ID, prove retained-output and exact work limits plus the
 crossed-control matrix, and refresh package-level Node/Bun/Chromium and
 installed-package provenance. These
 private results do not alter the last fixed-point 67/855/922 ledger counts.
@@ -6628,11 +6628,11 @@ text input, so no partial coercion shim was added. If arbitrary JavaScript
 wrong-type parity is required for default cutover, it needs an explicit host
 callback protocol and first-fault review across the eight-operation family.
 
-The next model-only candidate is Core Evolution's inspect/verify pair. Its
-historical `0.8.0` contract conflicts with the current `0.10.0` candidate and
-frozen packet. Keep that route opt-in/private while the governing version and
-duplicate CONTRACT-058 identities are resolved; do not relabel the current
-candidate as contract-conforming by inference.
+The next model-only candidate is Core Evolution's inspect/verify pair. The
+governing profile now admits only core 0.10.0, matching the current candidate
+and frozen packet; focused TypeScript and Rust negative controls refuse 0.8.0.
+Keep the route opt-in/private while duplicate CONTRACT-058 identities,
+retained-output bounds, and installed-host qualification remain open.
 
 ### R8 bounded protection bindings and retirement accounting — 2026-10-26
 
@@ -9415,6 +9415,21 @@ parameter-model observations around the matcher without changing the
 duplicate-name policy. No default Python route or R5 ownership claim changes
 at this checkpoint.
 
+The duplicate-name policy is now resolved in CONTRACT-072: pin and observed
+platform component names must each be unique. The Python matcher rejects
+duplicates before any Rust ownership change. Four current direct regressions
+and the unchanged historical predecessor packet pass together (five tests).
+The packet's formerly accepted duplicate case remains historical evidence.
+Full `ReadPlan.bind` host timing and the installed route remain open.
+
+The [opt-in Rust target-pin candidate](evidence/rust-migration/r8-target-pin-rust-candidate-20261028.md)
+now implements the closed matcher in `umf-core` and exposes it through a
+separate exact-carrier PyO3/Python wrapper. The Rust suite passed 2/2 against
+the unchanged 13-case predecessor packet under the approved duplicate policy;
+the CPython 3.13.16 candidate suite passed 6/6 against a source-built native
+library. Public `TargetPin.matches` still uses Python, and installed wheel
+qualification and `ReadPlan.bind` host timing remain open.
+
 ### R8 source-coherent `securityNot` retirement replay — 2026-10-28
 
 The [Darwin arm64](evidence/rust-migration/r8-security-not-current-darwin-20261028-df7fbaa2/README.md)
@@ -9737,3 +9752,41 @@ unique, duplicate, or blocked for malformed metadata without selecting a
 first or last duplicate. Ten focused decoder tests pass. Arrow IPC decoding,
 complete predecessor relationship classification and diagnostics, receipt
 verification/recovery, host evidence, and default routing remain open.
+
+### R8 next Parquet, descriptor, and SDK snapshot slice — 2026-10-28
+
+The opt-in Rust Parquet relationship observation substrate now decodes the
+frozen report footer through the retaining decoder, preserves the 11 non-root
+schema entries in predecessor order and index, and carries each ordered
+native Thrift field. Unknown SchemaElement or FileMetaData fields and any
+file key/value metadata explicitly block interpretation while retaining the
+original data.
+The report fixture itself carries `ARROW:schema`, so its observation is
+correctly blocked pending Arrow IPC interpretation; it is not a complete
+relationship classifier or receipt/recovery route. Five focused Rust tests
+pass, including the frozen report order and raw unknown-value controls.
+
+The opt-in Protobuf descriptor candidate now has a bounded host admission
+extension: `Uint8Array`-family windows (including Node Buffer) and empty
+DataView match the pinned TypeScript predecessor; unsupported non-view inputs
+match its captured diagnostics. Non-empty DataView and other typed-array
+views fail closed rather than being coerced into bytes. The six focused Bun
+candidate tests pass with 102 assertions and typecheck passes. Installed
+Node/Bun/browser replay for this new source cut, arbitrary host parity,
+default route selection, and retirement remain open.
+
+The private SDK source-snapshot builder now copies pinned files through byte
+streams, preserving bytes and modes without Darwin clonefile. Its focused
+copy test passes with four assertions and keeps no-overwrite behavior. An
+initial canonical build moved past the earlier staging failure and compiled
+the release WASM, then correctly refused the artifact because the live
+Parquet test source changed during compilation. A stable-source retry passed
+with zero transforms over the fixed-point source tree
+`ec2c6b92fcd75419613d95722a2d6e985b32f94bbc2d081285b32fd3c24f1c30`.
+The strict package verifier accepted the private 1,814-member Darwin arm64
+archive `abf9ac58a5d05bffedcd6869e0d435ecbe3f87f14d9b0949ee02ebb19931a946`.
+Its [installed Node/Bun/real-Chromium replay](evidence/rust-migration/r8-sdk-stream-snapshot-darwin-20261028/README.md)
+passed the canonical package-root, route-tamper, R3 corpus, numeric,
+Cardinality, Facets, Keys, Bit128, Compact Dataset, and securityAndOr checks.
+This private cut predates the later TargetPin and Core Evolution source edits
+and cannot qualify their current cut, Linux, or a release.

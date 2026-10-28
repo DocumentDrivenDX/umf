@@ -10,6 +10,7 @@ import type {BunPlugin} from 'bun';
 import {checkCoreDistribution} from './check-core-authority';
 import {rustCompileResources} from './metamodel/source-closure';
 import {assertSameSourceInventory} from './rust-migration/r8/source-inventory.mjs';
+import {copySourceSnapshotFile} from './rust-migration/r8/copy-source-snapshot';
 
 const workspaceRoot=process.cwd();
 let root=workspaceRoot;
@@ -120,6 +121,8 @@ try{
   join(root,'.cargo/config.toml'),
   join(root,'.github/workflows/rust-sdk-default-qualification.yml'),
   join(root,'scripts/package-sdk-rust-default.ts'),join(root,'scripts/test-sdk-rust-default.ts'),
+  join(root,'scripts/rust-migration/r8/copy-source-snapshot.ts'),
+  join(root,'scripts/rust-migration/r8/copy-source-snapshot.test.ts'),
   join(root,'scripts/rust-migration/r8/source-inventory.mjs'),join(root,'scripts/rust-migration/r8/source-inventory.d.mts'),join(root,'scripts/rust-migration/r8/source-inventory.test.mjs'),
   join(root,'scripts/rust-migration/r8/v4-default-facade.mjs'),join(root,'scripts/rust-migration/r8/v4-default-facade.test.js'),
   join(root,'scripts/rust-migration/r8/relationship-consumers-installed.mjs'),
@@ -242,7 +245,7 @@ try{
    const name=relative(workspaceRoot,source);
    const target=join(snapshotRoot,name);
    await mkdir(join(target,'..'),{recursive:true});
-   await cp(source,target);
+   await copySourceSnapshotFile(source,target);
    snapshotInputs.push(target);
   }
   const liveAfterCopy=await inputHashes(sourceInputs,workspaceRoot);

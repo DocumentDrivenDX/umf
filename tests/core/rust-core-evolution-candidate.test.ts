@@ -110,7 +110,7 @@ test('private Rust candidate matches same-host TypeScript on core preservation c
     const rust=capture(()=>api.inspectCoreEvolution(before,after,policy));
     expect(canonical(rust),name).toBe(canonical(typescript));
   }
-  const wrongVersion={...copy(),umf:'0.9.0'};
+  const wrongVersion={...copy(),umf:'0.8.0'};
   const typescript=capture(()=>inspectTypeScriptCoreEvolution(wrongVersion,base,policy));
   const rust=capture(()=>api.inspectCoreEvolution(wrongVersion,base,policy));
   expect(canonical(rust),'wrong-source-version').toBe(canonical(typescript));
