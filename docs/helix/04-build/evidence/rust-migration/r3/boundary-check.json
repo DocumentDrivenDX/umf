@@ -183,7 +183,7 @@
       {
         "cargoCommands": [
           [
-            "/home/runner/.cargo/bin/cargo",
+            "/opt/cargo/bin/cargo",
             "metadata",
             "--format-version",
             "1",
@@ -193,7 +193,7 @@
             "x86_64-unknown-linux-gnu"
           ],
           [
-            "/home/runner/.cargo/bin/cargo",
+            "/opt/cargo/bin/cargo",
             "--color",
             "never",
             "tree",
@@ -307,7 +307,7 @@
       {
         "cargoCommands": [
           [
-            "/home/runner/.cargo/bin/cargo",
+            "/opt/cargo/bin/cargo",
             "metadata",
             "--format-version",
             "1",
@@ -317,7 +317,7 @@
             "wasm32-unknown-unknown"
           ],
           [
-            "/home/runner/.cargo/bin/cargo",
+            "/opt/cargo/bin/cargo",
             "--color",
             "never",
             "tree",
@@ -474,7 +474,7 @@
       ],
       "featureTreeCommands": [
         [
-          "/home/runner/.cargo/bin/cargo",
+          "/opt/cargo/bin/cargo",
           "--color",
           "never",
           "tree",
@@ -490,7 +490,7 @@
           "ahash"
         ],
         [
-          "/home/runner/.cargo/bin/cargo",
+          "/opt/cargo/bin/cargo",
           "--color",
           "never",
           "tree",

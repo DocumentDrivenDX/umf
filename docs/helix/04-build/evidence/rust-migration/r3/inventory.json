@@ -168,6 +168,9 @@
       "tests/compilation/codegen-gzip.test.ts",
       "tests/compilation/table-deployment-boundaries.test.ts",
       "tests/compilation/table-lifecycle-boundaries.test.ts",
+      "tests/core/cardinality-ideals.test.ts",
+      "tests/core/field-ideals.test.ts",
+      "tests/core/nullability-ideals.test.ts",
       "tests/domain-packs/artifacts.test.ts",
       "tests/domain-packs/catalog.test.ts",
       "tests/domain-packs/download.test.ts",
@@ -273,7 +276,7 @@
     "typescriptApi": "5.9.3"
   },
   "counts": {
-    "activeScriptFiles": 433,
+    "activeScriptFiles": 436,
     "algorithmSymbols": 12635,
     "pythonModules": 126,
     "rustBuildInputs": 79,
@@ -42793,15 +42796,17 @@
       "sha256": "f114803625517fdbb7ddc188744f6249f82e7ad209792e22c003197c9dc2f039"
     },
     {
-      "activationEvidence": [],
-      "active": false,
+      "activationEvidence": [
+        ".github/workflows/pr-fast.yml"
+      ],
+      "active": true,
       "algorithmSymbols": [
         "roundTrip"
       ],
       "bytes": 4712,
-      "disposition": "unreferenced-test-source",
+      "disposition": "test-oracle-fixture-algorithm",
       "language": "ts",
-      "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
+      "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/core/cardinality-ideals.test.ts",
       "sha256": "bad0951f58008c6fdea268eb7c92d47394d40082c631d74da9f5002308f89b5c"
     },
@@ -42880,13 +42885,15 @@
       "sha256": "df3e0a71829ad99ecf02d921755df2ee2ebed30db2a0fd1b7963ab513b3257bd"
     },
     {
-      "activationEvidence": [],
-      "active": false,
+      "activationEvidence": [
+        ".github/workflows/pr-fast.yml"
+      ],
+      "active": true,
       "algorithmSymbols": [],
       "bytes": 3038,
-      "disposition": "unreferenced-test-source",
+      "disposition": "test-oracle-fixture-algorithm",
       "language": "ts",
-      "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
+      "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/core/field-ideals.test.ts",
       "sha256": "46c6fa06adefb1d9cc891d1fdb2967232b134851e30b3fcfffa7efbf3e73cfaf"
     },
@@ -42983,13 +42990,15 @@
       "sha256": "47618e62b0df9350e734db7a92aeb39f4510d2939707172a7767d1732f85def4"
     },
     {
-      "activationEvidence": [],
-      "active": false,
+      "activationEvidence": [
+        ".github/workflows/pr-fast.yml"
+      ],
+      "active": true,
       "algorithmSymbols": [],
       "bytes": 3133,
-      "disposition": "unreferenced-test-source",
+      "disposition": "test-oracle-fixture-algorithm",
       "language": "ts",
-      "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
+      "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/core/nullability-ideals.test.ts",
       "sha256": "5073a72cc88910d7257b5c6a20868d74aff299979307c5439df27e2d7e4bf83a"
     },
