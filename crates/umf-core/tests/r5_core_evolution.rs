@@ -473,6 +473,53 @@ fn retained_receipt_value_and_byte_limits_cover_exact_edges() {
 }
 
 #[test]
+fn verifier_aggregate_bound_includes_recomputed_retained_output() {
+    let (packet, engine) = cases();
+    let unchanged = get(get(&packet, "cases").unwrap(), "unchanged").unwrap();
+    let mut before = get(unchanged, "before").unwrap().clone();
+    let after = get(unchanged, "after").unwrap();
+    let policy = get(unchanged, "policy").unwrap();
+    if let Value::Object(fields) = &mut before {
+        fields.push((
+            Utf16::from("opaque"),
+            Value::string_utf8(&"x".repeat(1_400_000)),
+        ));
+    }
+
+    // Inspection retains one source copy in its receipt and accepts this
+    // source. Verification additionally retains the supplied receipt, the
+    // independently supplied source, and its recomputed receipt together.
+    let receipt = inspect_core_evolution(
+        &engine,
+        &before,
+        after,
+        policy,
+        &mut Context::ordinary(),
+    )
+    .unwrap();
+    let inputs_bytes = compact_json_bytes(&receipt)
+        + compact_json_bytes(&before)
+        + compact_json_bytes(after)
+        + compact_json_bytes(policy);
+    assert!(inputs_bytes < 4_000_000);
+    assert!(compact_json_bytes(&receipt) < 4_000_000);
+    assert!(inputs_bytes + compact_json_bytes(&receipt) > 4_000_000);
+    assert_eq!(
+        verify_core_evolution(
+            &receipt,
+            &before,
+            after,
+            policy,
+            &engine,
+            &mut Context::ordinary(),
+        )
+        .unwrap_err()
+        .code,
+        "LIMIT"
+    );
+}
+
+#[test]
 fn duplicate_keys_fail_closed_and_large_unknown_objects_are_metered() {
     let (packet, engine) = cases();
     let policy = Value::Object(vec![(

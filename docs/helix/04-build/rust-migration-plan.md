@@ -9820,3 +9820,42 @@ checks, offline installed-pair smoke and 217 focused tests. Its source archive
 predates the final generated-resource recapture and opt-in PyO3 candidate;
 the coordinated pair verifier's fresh-venv dependency download was not run.
 These bounded results do not qualify the current whole branch or a release.
+
+### R8 host semantics and retained-output continuation — 2026-10-28
+
+The [dynamic TargetPin controls](evidence/rust-migration/r8-target-pin-host-dynamic-controls-20261028/README.md)
+extend the private PyO3 candidate beyond exact string/tuple carriers. Rust
+controls the predecessor's attribute-read and comparison order while calling
+Python's equality, length, iteration, set/dict, membership, and truth protocols
+through PyO3. A source-built CPython 3.13.16 Darwin-arm64 extension passes
+13/13 focused TargetPin and `ReadPlan.bind` tests, including the frozen
+13-case pin packet, six bind traces, custom equality and exception order,
+iterable faults, and short-circuiting. Pathological mutating protocols, other
+Python versions/platforms, installed-wheel behavior, and default-route
+selection remain open; the Python method is not retired.
+
+The [Core Evolution verifier control](evidence/rust-migration/r8-core-evolution-retained-output/README.md)
+proves that the private Rust verifier charges its recomputed receipt in the
+aggregate 4,000,000-byte retained-output bound. Source inspection can return a
+receipt below the ceiling while verification refuses when independently
+supplied inputs plus the recomputed receipt cross it; the focused Rust suite
+passes 12/12. The current TypeScript predecessor permits an over-aggregate
+inspection case, and the crossed-control first-fault matrix and installed
+host qualification remain open. CONTRACT-083 remains core 0.10.0 only.
+
+The [Protobuf descriptor host controls](evidence/rust-migration/r8-protobuf-descriptor-host-admission/README.md)
+freeze six non-empty `DataView` and non-`Uint8Array` typed-array cases. The
+TypeScript predecessor indexes these hosts by element and emits its captured
+`PROTOBUF_BINARY` diagnostics; the opt-in Rust candidate explicitly refuses
+them with different profile diagnostics. The seven focused Bun tests pass with
+114 assertions. These cases are visible parity gaps, not admitted inputs or a
+default-route claim.
+
+The [access-temporal R8 packet](evidence/rust-migration/r8-access-temporal/README.md)
+replays 48 tagged TypeScript reference cases through the existing pure Rust
+parser and `umf.core-wire/1` binding. Bun matches the frozen current reference
+48/48, and the focused Rust test compares complete successful results and
+refusal code/message units for all 48. Eight raw-host predecessor cases remain
+outside the tagged transport. The two logical exports still need Node/Bun and
+browser/WASM package bindings, installed parity, and explicit default-route
+review; this packet does not change their R8 retirement status.

@@ -66,3 +66,8 @@ It does not establish parity for arbitrary attribute-bearing objects, all
 `ReadPlan.bind` or dispatch cases, a general Python host ABI, or other Python
 versions and platforms. The helper is not selected by the default runtime
 route; it does not retire the Python method or establish a release artifact.
+
+The later [dynamic host-control packet](../r8-target-pin-host-dynamic-controls-20261028/README.md)
+extends this source cut's PyO3 implementation to Python equality and iterable
+protocols. The source hashes and test counts above remain the bounded earlier
+checkpoint.

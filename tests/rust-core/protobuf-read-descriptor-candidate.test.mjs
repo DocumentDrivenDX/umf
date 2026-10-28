@@ -116,6 +116,39 @@ test('ArrayBuffer views retain predecessor byte-window admission', () => {
   expect(wideCandidate.code).toBe('PROTOBUF_BINARY');
 });
 
+test('DataView and non-Uint8 typed arrays stay negative controls with frozen predecessor diagnostics', () => {
+  const inputs = [
+    ['nonempty-DataView-zero-tag', new DataView(new Uint8Array([0]).buffer)],
+    ['nonempty-DataView-valid-byte-sequence', new DataView(new Uint8Array([0x0a, 0]).buffer)],
+    ['Uint16Array-tag-then-eof', new Uint16Array([0x0a])],
+    ['Uint16Array-illegal-tag', new Uint16Array([0])],
+    ['Int16Array-illegal-tag', new Int16Array([0])],
+    ['Float32Array-illegal-tag', new Float32Array([0])],
+  ];
+  const predecessorMessages = [
+    'Error: illegal tag: field no 0 wire type 0',
+    'Error: illegal tag: field no 0 wire type 0',
+    'RangeError: premature EOF',
+    'Error: illegal tag: field no 0 wire type 0',
+    'Error: illegal tag: field no 0 wire type 0',
+    'Error: illegal tag: field no 0 wire type 0',
+  ];
+  const candidateMessages = [
+    'TypeError: Non-empty DataView admission is outside the candidate profile',
+    'TypeError: Non-empty DataView admission is outside the candidate profile',
+    'TypeError: Non-Uint8 typed-array admission is outside the candidate profile',
+    'TypeError: Non-Uint8 typed-array admission is outside the candidate profile',
+    'TypeError: Non-Uint8 typed-array admission is outside the candidate profile',
+    'TypeError: Non-Uint8 typed-array admission is outside the candidate profile',
+  ];
+  for (let i = 0; i < inputs.length; i++) {
+    const [id, input] = inputs[i];
+    const expected = capture(predecessor, input);
+    expect(expected, id).toMatchObject({ok: false, name: 'UmfError', code: 'PROTOBUF_BINARY', path: '', message: predecessorMessages[i]});
+    expect(capture(candidate, input), id).toMatchObject({ok: false, name: 'UmfError', code: 'PROTOBUF_BINARY', path: '', message: candidateMessages[i]});
+  }
+});
+
 test('unsupported non-view hosts fail closed with captured predecessor diagnostics', () => {
   for (const value of ['abc', [], new ArrayBuffer(0), {length: 0}, new Proxy(new Uint8Array([0]), {})]) {
     const expected = capture(predecessor, value);

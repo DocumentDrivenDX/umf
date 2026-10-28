@@ -276,6 +276,15 @@ class RustTargetPinTests(unittest.TestCase):
                 "backend_version",
                 ("RuntimeError", "backend_version observation failed"),
             ),
+            (
+                "identity-field-wins-before-pin-field-fault",
+                fields,
+                (("driver", ("3.2",)),),
+                (("driver", "3.2"),),
+                "backend_version",
+                "kind",
+                ("RuntimeError", "backend_version observation failed"),
+            ),
         )
         for (
             name,
@@ -309,6 +318,230 @@ class RustTargetPinTests(unittest.TestCase):
                 self.assertEqual(results[0], expected)
                 self.assertEqual(results[1], expected)
                 self.assertEqual(traces[1], traces[0])
+
+    def test_host_candidate_dynamic_field_and_container_parity(self) -> None:
+        """Preserve equality and iteration behavior for host-provided objects."""
+        self.require_host_matcher()
+
+        class EqualValue:
+            def __init__(self, token):
+                self.token = token
+
+            def __eq__(self, other):
+                return getattr(other, "token", None) == self.token
+
+        class TupleSubclass(tuple):
+            pass
+
+        py_pin = TargetPin(
+            EqualValue("kind"),
+            "pg",
+            "18",
+            "profile-a",
+            "a" * 64,
+            (("driver", ("3.2",)),),
+        )
+        py_identity = TargetIdentity(
+            EqualValue("kind"),
+            "pg",
+            "18",
+            "profile-a",
+            "a" * 64,
+            (("driver", "3.2"),),
+        )
+        self.assertTrue(TargetPin.matches(py_pin, py_identity))
+        self.assertEqual(
+            host_matches(py_pin, py_identity), TargetPin.matches(py_pin, py_identity)
+        )
+
+        tuple_pin = TargetPin(
+            "postgresql",
+            "pg",
+            "18",
+            "profile-a",
+            "a" * 64,
+            TupleSubclass((TupleSubclass(("driver", ("3.2",))),)),
+        )
+        tuple_identity = TargetIdentity(
+            "postgresql",
+            "pg",
+            "18",
+            "profile-a",
+            "a" * 64,
+            TupleSubclass((TupleSubclass(("driver", "3.2")),)),
+        )
+        self.assertTrue(TargetPin.matches(tuple_pin, tuple_identity))
+        self.assertEqual(
+            host_matches(tuple_pin, tuple_identity),
+            TargetPin.matches(tuple_pin, tuple_identity),
+        )
+
+        list_pin = TargetPin(
+            "postgresql",
+            "pg",
+            "18",
+            "profile-a",
+            "a" * 64,
+            [("driver", ["3.2"])],  # type: ignore[arg-type]
+        )
+        list_identity = TargetIdentity(
+            "postgresql",
+            "pg",
+            "18",
+            "profile-a",
+            "a" * 64,
+            [("driver", "3.2")],  # type: ignore[arg-type]
+        )
+        self.assertTrue(TargetPin.matches(list_pin, list_identity))
+        self.assertEqual(
+            host_matches(list_pin, list_identity),
+            TargetPin.matches(list_pin, list_identity),
+        )
+
+    def test_host_candidate_custom_equality_and_exception_controls(self) -> None:
+        """Compare dynamic __eq__ effects and propagated faults on both routes."""
+        self.require_host_matcher()
+        trace = []
+
+        class Compared:
+            def __init__(self, side, *, raises=False):
+                self.side = side
+                self.raises = raises
+
+            def __eq__(self, other):
+                trace.append((self.side, "eq"))
+                if self.raises:
+                    raise LookupError("comparison fault")
+                return isinstance(other, Compared)
+
+        def pair(left, right):
+            return (
+                TargetPin(left, "pg", "18", "profile-a", "a" * 64, ()),
+                TargetIdentity(right, "pg", "18", "profile-a", "a" * 64, ()),
+            )
+
+        pin, identity = pair(Compared("pin"), Compared("identity"))
+        self.assertTrue(TargetPin.matches(pin, identity))
+        python_trace = list(trace)
+        trace.clear()
+        self.assertEqual(host_matches(pin, identity), True)
+        self.assertEqual(trace, python_trace)
+        self.assertEqual(python_trace, [("identity", "eq")])
+
+        pin, identity = pair(Compared("pin"), Compared("identity", raises=True))
+        trace.clear()
+        with self.assertRaisesRegex(LookupError, "comparison fault"):
+            TargetPin.matches(pin, identity)
+        python_trace = list(trace)
+        trace.clear()
+        with self.assertRaisesRegex(LookupError, "comparison fault"):
+            host_matches(pin, identity)
+        self.assertEqual(trace, python_trace)
+
+    def test_host_candidate_iterable_faults_and_all_short_circuit(self) -> None:
+        self.require_host_matcher()
+
+        class FaultingPlatform:
+            def __init__(self, trace, label, values, *, fail_after=None):
+                self.trace = trace
+                self.label = label
+                self.values = values
+                self.fail_after = fail_after
+                self.iterations = 0
+
+            def __len__(self):
+                self.trace.append((self.label, "len"))
+                return len(self.values)
+
+            def __iter__(self):
+                self.trace.append((self.label, "iter"))
+                self.iterations += 1
+                for index, value in enumerate(self.values):
+                    if self.fail_after == (self.iterations, index):
+                        raise RuntimeError(f"{self.label} iteration fault")
+                    self.trace.append((self.label, index))
+                    yield value
+                if self.fail_after == (self.iterations, len(self.values)):
+                    raise RuntimeError(f"{self.label} iteration fault")
+
+        def evaluate(
+            native, *, pin_values, observed_values, pin_fault=None, observed_fault=None
+        ):
+            trace = []
+            pin = TargetPin(
+                "postgresql",
+                "pg",
+                "18",
+                "profile-a",
+                "a" * 64,
+                FaultingPlatform(trace, "pin", pin_values, fail_after=pin_fault),
+            )
+            identity = TargetIdentity(
+                "postgresql",
+                "pg",
+                "18",
+                "profile-a",
+                "a" * 64,
+                FaultingPlatform(
+                    trace, "identity", observed_values, fail_after=observed_fault
+                ),
+            )
+            try:
+                result = (
+                    host_matches(pin, identity)
+                    if native
+                    else TargetPin.matches(pin, identity)
+                )
+            except (RuntimeError, TypeError, ValueError) as exc:
+                result = (type(exc).__name__, str(exc))
+            return result, trace
+
+        # Pin-name iteration is the first platform traversal and faults first.
+        expected = evaluate(
+            False,
+            pin_values=[("driver", ("3.2",))],
+            observed_values=[("driver", "3.2")],
+            pin_fault=(1, 0),
+        )
+        actual = evaluate(
+            True,
+            pin_values=[("driver", ("3.2",))],
+            observed_values=[("driver", "3.2")],
+            pin_fault=(1, 0),
+        )
+        self.assertEqual(actual, expected)
+        self.assertEqual(expected[0], ("RuntimeError", "pin iteration fault"))
+
+        # During all(...), the first unsupported component returns False, so
+        # the next iterator item (which would fail) is never requested.
+        expected = evaluate(
+            False,
+            pin_values=[("driver", ("3.2",))],
+            observed_values=[("other", "1"), ("later", "2")],
+            observed_fault=(2, 1),
+        )
+        actual = evaluate(
+            True,
+            pin_values=[("driver", ("3.2",))],
+            observed_values=[("other", "1"), ("later", "2")],
+            observed_fault=(2, 1),
+        )
+        self.assertEqual(actual, expected)
+        self.assertIs(expected[0], False)
+
+        for malformed in (("driver",), ("driver", "3.2", "extra")):
+            expected = evaluate(
+                False,
+                pin_values=[malformed],
+                observed_values=[("driver", "3.2")],
+            )
+            actual = evaluate(
+                True,
+                pin_values=[malformed],
+                observed_values=[("driver", "3.2")],
+            )
+            self.assertEqual(actual, expected)
+            self.assertEqual(expected[0][0], "ValueError")
 
 
 if __name__ == "__main__":

@@ -2,6 +2,7 @@ use std::{cell::RefCell, collections::HashMap, rc::Rc};
 
 use num_bigint::BigInt;
 use pyo3::{
+    basic::CompareOp,
     create_exception,
     exceptions::{PyException, PyTypeError, PyValueError},
     prelude::*,
@@ -212,15 +213,13 @@ fn access_target_pin_matches_host(
         pin_value.getattr("target_profile")?,
         pin_value.getattr("binding_sha256")?,
     ];
-    let identity_fields = identity_fields
-        .iter()
-        .map(|v| exact_tuple_string(v, "identity field"))
-        .collect::<PyResult<Vec<_>>>()?;
-    let pin_fields = pin_fields
-        .iter()
-        .map(|v| exact_tuple_string(v, "pin field"))
-        .collect::<PyResult<Vec<_>>>()?;
-    if identity_fields != pin_fields {
+    let py = pin_value.py();
+    let identity_tuple = PyTuple::new_bound(py, &identity_fields);
+    let pin_tuple = PyTuple::new_bound(py, &pin_fields);
+    if !identity_tuple
+        .rich_compare(&pin_tuple, CompareOp::Eq)?
+        .is_truthy()?
+    {
         return Ok(false);
     }
 
@@ -234,31 +233,63 @@ fn access_target_pin_matches_host(
 
     let observed_value = identity_value.getattr("platform")?;
     let pinned_names_value = pin_value.getattr("platform")?;
-    let pinned_names = platform_names(&pinned_names_value, "pin platform")?;
-    let observed_names = platform_names(&observed_value, "observed platform")?;
-    if has_duplicate_names(&pinned_names) || has_duplicate_names(&observed_names) {
+    let pinned_names = platform_names_host(&pinned_names_value)?;
+    let observed_names = platform_names_host(&observed_value)?;
+    if has_duplicates_host(py, &pinned_names)? || has_duplicates_host(py, &observed_names)? {
         return Ok(false);
     }
     let pinned_value = pin_value.getattr("platform")?;
-    let pin_platform = target_pin_platform(&pinned_value)?;
-    let observed_platform = observed_target_platform(&observed_value)?;
-    let pin = TargetPin {
-        kind: pin_fields[0].clone(),
-        backend_id: pin_fields[1].clone(),
-        backend_version: pin_fields[2].clone(),
-        target_profile: pin_fields[3].clone(),
-        binding_sha256: pin_fields[4].clone(),
-        platform: pin_platform,
-    };
-    let identity = TargetIdentity {
-        kind: identity_fields[0].clone(),
-        backend_id: identity_fields[1].clone(),
-        backend_version: identity_fields[2].clone(),
-        target_profile: identity_fields[3].clone(),
-        binding_sha256: identity_fields[4].clone(),
-        platform: observed_platform,
-    };
-    Ok(pin.matches(&identity))
+    let dictionary = py
+        .import_bound("builtins")?
+        .getattr("dict")?
+        .call1((pinned_value,))?;
+    for entry in observed_value.try_iter()? {
+        let (name, version) = unpack_host_pair(&entry?)?;
+        if !dictionary.contains(&name)? {
+            return Ok(false);
+        }
+        let versions = dictionary.get_item(&name)?;
+        if !versions.contains(&version)? {
+            return Ok(false);
+        }
+    }
+    Ok(true)
+}
+
+fn unpack_host_pair<'py>(
+    value: &Bound<'py, PyAny>,
+) -> PyResult<(Bound<'py, PyAny>, Bound<'py, PyAny>)> {
+    let mut iterator = value.try_iter()?;
+    let first = iterator
+        .next()
+        .transpose()?
+        .ok_or_else(|| PyValueError::new_err("not enough values to unpack (expected 2, got 0)"))?;
+    let second = iterator
+        .next()
+        .transpose()?
+        .ok_or_else(|| PyValueError::new_err("not enough values to unpack (expected 2, got 1)"))?;
+    if iterator.next().transpose()?.is_some() {
+        return Err(PyValueError::new_err(
+            "too many values to unpack (expected 2)",
+        ));
+    }
+    Ok((first, second))
+}
+
+fn platform_names_host<'py>(value: &Bound<'py, PyAny>) -> PyResult<Vec<Bound<'py, PyAny>>> {
+    value
+        .try_iter()?
+        .map(|entry| Ok(unpack_host_pair(&entry?)?.0))
+        .collect()
+}
+
+fn has_duplicates_host(py: Python<'_>, values: &[Bound<'_, PyAny>]) -> PyResult<bool> {
+    let tuple = PyTuple::new_bound(py, values);
+    let set = py
+        .import_bound("builtins")?
+        .getattr("set")?
+        .call1((tuple,))?;
+    Ok(set.len()? != values.len())
 }
 
 fn platform_names(value: &Bound<'_, PyAny>, label: &str) -> PyResult<Vec<String>> {
