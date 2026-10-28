@@ -3,7 +3,13 @@ on:
   pull_request:
     paths: ['scripts/*core_pypi_release.py', '.github/workflows/*pypi*.yml']
   push:
+    branches: [main]
     paths: ['scripts/*core_pypi_release.py', '.github/workflows/*pypi*.yml']
+# Supersede PR revisions without cancelling explicit qualification snapshots.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 permissions:
   contents: read
 jobs:
