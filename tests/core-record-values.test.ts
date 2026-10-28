@@ -8,6 +8,7 @@ const identity={module:'fixture',element:'item'},label={module:'fixture',element
 const labelValue={field:label,state:'present' as const,value:{string:'雪🙂'}};
 test('complete logical record check preserves original document validation',()=>{
  const original=JSON.stringify(source);const result=validateCoreRecordValues(source,identity,[labelValue]);
+ expect(result.operation).toBe('validate-core-record-values');
  expect(result.version).toBe('2.0.0');
  expect(result.validation).toEqual({valid:true,complete:true,diagnostics:[]});
  expect(result.documentValidation).toEqual(validateDocument(source));
@@ -32,6 +33,7 @@ test('unknown scope/availability and dataset keys remain explicit incomplete obl
 test('explicit version/shape/accessor boundaries refuse without getters or version rewrite',()=>{
  const retired={...source,umf:'0.7.0'} as any;expect(()=>validateCoreRecordValues(retired,identity,[labelValue])).toThrow();
  const historical={...source,umf:'0.8.0'} as any;expect(()=>validateCoreRecordValues(historical,identity,[labelValue])).toThrow();
+ const previous={...source,umf:'0.9.0'} as any;expect(()=>validateCoreRecordValues(previous,identity,[labelValue])).toThrow();
  expect(()=>validateCoreRecordValues(source,identity,[null] as any)).toThrow();
  let calls=0;const value=Object.defineProperty({...labelValue},'value',{get(){calls++;return {string:'x'};}});
  expect(()=>validateCoreRecordValues(source,identity,[value])).toThrow();expect(calls).toBe(0);
