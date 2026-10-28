@@ -1,6 +1,6 @@
 ---
 ddx:
-  id: CONTRACT-058
+  id: CONTRACT-083
   type: contract
   activity: design
   status: draft
@@ -19,7 +19,7 @@ ddx:
       kind: references
 ---
 
-# CONTRACT-058: Bounded core revision preservation
+# CONTRACT-083: Bounded core revision preservation
 
 **Type:** browser-compatible library. **Version:** experimental 1.0.0.
 **Profile:** `core-0.8-absent-string-additions/0.1`.

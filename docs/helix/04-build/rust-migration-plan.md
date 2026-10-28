@@ -4686,7 +4686,7 @@ review](evidence/rust-migration/r5-core-evolution/README.md) required
 metering repeated object-member scans. Rust now charges the containing
 object's full member count before each scan, and Sol independently reran the
 eight focused core tests, including a 4,096-member host-meter refusal.
-Combined control-order work remains open. CONTRACT-058 now specifies only
+Combined control-order work remains open. CONTRACT-083 now specifies only
 core 0.10.0 input; the `core-0.8` profile token remains a compatibility
 spelling. Its two remaining
 schema exports are checker-resolved aliases to authored JSON resources, with
@@ -6153,7 +6153,7 @@ controls and expanded same-host preservation matrix passed four Bun tests with
 24 assertions against a fresh Node addon. The Rust Core Evolution suite passed
 10/10, including exact aggregate input preflight edges at 100,000 values and
 4,000,000 bytes; typecheck passed. Neither V4 root selects it. Before a default
-cutover, resolve the duplicate CONTRACT-058 ID, prove retained-output and exact work limits plus the
+cutover, prove CONTRACT-083 retained-output and exact work limits plus the
 crossed-control matrix, and refresh package-level Node/Bun/Chromium and
 installed-package provenance. These
 private results do not alter the last fixed-point 67/855/922 ledger counts.
@@ -6631,8 +6631,8 @@ callback protocol and first-fault review across the eight-operation family.
 The next model-only candidate is Core Evolution's inspect/verify pair. The
 governing profile now admits only core 0.10.0, matching the current candidate
 and frozen packet; focused TypeScript and Rust negative controls refuse 0.8.0.
-Keep the route opt-in/private while duplicate CONTRACT-058 identities,
-retained-output bounds, and installed-host qualification remain open.
+Keep the route opt-in/private while retained-output bounds and installed-host
+qualification remain open.
 
 ### R8 bounded protection bindings and retirement accounting — 2026-10-26
 
@@ -9772,8 +9772,11 @@ file key/value metadata explicitly block interpretation while retaining the
 original data.
 The report fixture itself carries `ARROW:schema`, so its observation is
 correctly blocked pending Arrow IPC interpretation; it is not a complete
-relationship classifier or receipt/recovery route. Five focused Rust tests
-pass, including the frozen report order and raw unknown-value controls.
+relationship classifier or receipt/recovery route. The focused Rust suite
+passes 6/6, including the frozen report order and raw unknown-value controls. The
+[Arrow metadata negative controls](evidence/rust-migration/r8-parquet-arrow-negative-controls/README.md)
+add malformed, missing, and duplicate `ARROW:schema` values; all remain blocked
+and the raw values are retained.
 
 The opt-in Protobuf descriptor candidate now has a bounded host admission
 extension: `Uint8Array`-family windows (including Node Buffer) and empty
@@ -9799,6 +9802,15 @@ passed the canonical package-root, route-tamper, R3 corpus, numeric,
 Cardinality, Facets, Keys, Bit128, Compact Dataset, and securityAndOr checks.
 This private cut predates the later TargetPin and Core Evolution source edits
 and cannot qualify their current cut, Linux, or a release.
+
+The [host-lazy TargetPin candidate](evidence/rust-migration/r8-target-pin-host-lazy/README.md)
+adds a private, opt-in PyO3 method that preserves the tested live attribute-read
+order while delegating comparison to Rust. Its focused Python suite passes 8/8
+against a freshly built CPython 3.13.16 extension; with the two bind-predecessor
+tests, the combined cohort passes 10/10. It covers the 13-case frozen packet,
+seven live-object order/error cases, and six bind outcome/trace cases over exact
+tuple/string carriers. It does not select the default route, qualify arbitrary
+host-object parity, or establish a release.
 
 The separately approved [bounded Linux Python bootstrap](evidence/rust-migration/r8-linux-python-bootstrap-20261028/README.md)
 used exact CPython 3.11.17, 3.12.15 and 3.13.16 linux/amd64 images, Rust

@@ -25,7 +25,7 @@
     "spec/core/dataset-value-compact-operation.schema.json": "89f502aa0cea1a75fba2ff586c795c875a980b96af3e01d3117538e9fe12e74e",
     "spec/core/dataset-value-operation.schema.json": "217cc3c05e10cec1bb4e93cca1205c039f596e95080cba075823a9b8b351013d",
     "spec/core/element-selection.schema.json": "74b35be467972d71c4a3b80d056c2c691ca7cdc59fe90cb62e4f85bf2812a555",
-    "spec/core/extension-package.schema.json": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21",
+    "spec/core/extension-package.schema.json": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54",
     "spec/core/facet-operation-v3.schema.json": "74c1ca75e2bac44afd0010292b82741618e9cb031cc37159667fa4f4ff95fd9f",
     "spec/core/facet-operation-v5.schema.json": "de87a6c79500be2b99337f5a885698b24b9e4d47a997c6d3cd649c90ea853bca",
     "spec/core/facet-selection.schema.json": "0938c3c36076271fd7ac4e9b3afa8e2362e604dbbbe250819910bc482d53e9a7",
@@ -99,8 +99,8 @@
     "spec/core/relationship-sqlserver-projection.schema.json": "85e3731ed297279e144cc48061510f37fe67fb8963d0470197173d1feade9a1f",
     "spec/core/relationship-tablespec-projection.schema.json": "ec590e8f313d6490a835daba071cd1feb0098d5ae5acbab9197c3ff87a2963c8",
     "spec/core/schema-properties-selection.schema.json": "893cf29692b0ba9c21037a90e0361b8adc19a2c3007cee84f22092276004f641",
-    "spec/core/schema.json": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154",
-    "spec/core/semantic-type-reference.schema.json": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7",
+    "spec/core/schema.json": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c",
+    "spec/core/semantic-type-reference.schema.json": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824",
     "spec/core/semantic-types-operation.schema.json": "021935d916e82ea471500dffadf2830469c782b28382d71aeea195df724fe727",
     "spec/core/semantic-types-selection.schema.json": "529d97cfd8ff7b5e201967c7156dc8c9439d5984ac1ee755bdb60a2d505bdead",
     "spec/core/sqlserver-cardinality-classification.schema.json": "f5278fc86194afc79494e3d43ed9519f888bf8d12c30d57ec0de24dc668e3f2f",
@@ -432,7 +432,7 @@
     "src/extensions/security/write.ts": "c539c09f504e3d6c6ade86b71674081208945271ba4cc8122f4cc020bba9447d",
     "src/extensions/semantic-types/index.ts": "64482ca4d9d8abd65b19b342e1722eaff8497ce52ff44bf5dc3a7ca6f415c6e2",
     "src/extensions/tables/index.ts": "c6e0ce267d8dd4a77bedc7322556357a2a2293cbf395c14cdf85fc1843f3a4be",
-    "src/generated/core-model.ts": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd",
+    "src/generated/core-model.ts": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067",
     "src/index-browser-v4.ts": "b13e25392f5c0053e7014a4d9290ce169815e32932fe03afa7215319f017f531",
     "src/index-node-v4.ts": "51178c7e403c8a0a71b5034a9d1ee5bdec636c0edebd2dcf8e74ba9cdbbf11f2",
     "src/model/bit128-field.ts": "07ee2a1dcb14c491774f3902e3788454615af17a25166efd04e014001e9a6c27",
@@ -4281,7 +4281,7 @@
       "migrationDisposition": "unreviewed",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154",
+      "sourceSha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c",
       "ownerKind": "generated-data",
       "candidateOwner": "authored or generated JSON resource; metamodel and contract authority vary by file",
       "disposition": "retain versioned data; identify source authority and installed asset route separately"
@@ -4300,7 +4300,7 @@
       "migrationDisposition": "unreviewed",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154",
+      "sourceSha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c",
       "ownerKind": "generated-data",
       "candidateOwner": "authored or generated JSON resource; metamodel and contract authority vary by file",
       "disposition": "retain versioned data; identify source authority and installed asset route separately"
@@ -4338,7 +4338,7 @@
       "migrationDisposition": "unreviewed",
       "source": "spec/core/semantic-type-reference.schema.json",
       "line": 1,
-      "sourceSha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7",
+      "sourceSha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824",
       "ownerKind": "generated-data",
       "candidateOwner": "authored or generated JSON resource; metamodel and contract authority vary by file",
       "disposition": "retain versioned data; identify source authority and installed asset route separately"
@@ -4547,7 +4547,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/generated/core-model.ts",
       "line": 3,
-      "sourceSha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd",
+      "sourceSha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067",
       "ownerKind": "generated-data",
       "candidateOwner": "ADR-005 metamodel authority / generated inert data",
       "disposition": "retain generated data; rebuild from authored metamodel; executable helpers require separate owner"
@@ -7245,7 +7245,7 @@
       "migrationDisposition": "unreviewed",
       "source": "spec/core/extension-package.schema.json",
       "line": 1,
-      "sourceSha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21",
+      "sourceSha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54",
       "ownerKind": "generated-data",
       "candidateOwner": "authored or generated JSON resource; metamodel and contract authority vary by file",
       "disposition": "retain versioned data; identify source authority and installed asset route separately"
@@ -25561,7 +25561,7 @@
       "migrationDisposition": "unreviewed",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154",
+      "sourceSha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c",
       "ownerKind": "generated-data",
       "candidateOwner": "authored or generated JSON resource; metamodel and contract authority vary by file",
       "disposition": "retain versioned data; identify source authority and installed asset route separately"
@@ -25580,7 +25580,7 @@
       "migrationDisposition": "unreviewed",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154",
+      "sourceSha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c",
       "ownerKind": "generated-data",
       "candidateOwner": "authored or generated JSON resource; metamodel and contract authority vary by file",
       "disposition": "retain versioned data; identify source authority and installed asset route separately"
@@ -25618,7 +25618,7 @@
       "migrationDisposition": "unreviewed",
       "source": "spec/core/semantic-type-reference.schema.json",
       "line": 1,
-      "sourceSha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7",
+      "sourceSha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824",
       "ownerKind": "generated-data",
       "candidateOwner": "authored or generated JSON resource; metamodel and contract authority vary by file",
       "disposition": "retain versioned data; identify source authority and installed asset route separately"
@@ -25827,7 +25827,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/generated/core-model.ts",
       "line": 3,
-      "sourceSha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd",
+      "sourceSha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067",
       "ownerKind": "generated-data",
       "candidateOwner": "ADR-005 metamodel authority / generated inert data",
       "disposition": "retain generated data; rebuild from authored metamodel; executable helpers require separate owner"
@@ -28525,7 +28525,7 @@
       "migrationDisposition": "unreviewed",
       "source": "spec/core/extension-package.schema.json",
       "line": 1,
-      "sourceSha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21",
+      "sourceSha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54",
       "ownerKind": "generated-data",
       "candidateOwner": "authored or generated JSON resource; metamodel and contract authority vary by file",
       "disposition": "retain versioned data; identify source authority and installed asset route separately"
@@ -46898,7 +46898,7 @@
       "migrationDisposition": "unreviewed",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154",
+      "sourceSha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c",
       "ownerKind": "generated-data",
       "candidateOwner": "authored or generated JSON resource; metamodel and contract authority vary by file",
       "disposition": "retain versioned data; identify source authority and installed asset route separately"
@@ -46917,7 +46917,7 @@
       "migrationDisposition": "unreviewed",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154",
+      "sourceSha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c",
       "ownerKind": "generated-data",
       "candidateOwner": "authored or generated JSON resource; metamodel and contract authority vary by file",
       "disposition": "retain versioned data; identify source authority and installed asset route separately"
@@ -46955,7 +46955,7 @@
       "migrationDisposition": "unreviewed",
       "source": "spec/core/semantic-type-reference.schema.json",
       "line": 1,
-      "sourceSha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7",
+      "sourceSha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824",
       "ownerKind": "generated-data",
       "candidateOwner": "authored or generated JSON resource; metamodel and contract authority vary by file",
       "disposition": "retain versioned data; identify source authority and installed asset route separately"
@@ -47164,7 +47164,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/generated/core-model.ts",
       "line": 3,
-      "sourceSha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd",
+      "sourceSha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067",
       "ownerKind": "generated-data",
       "candidateOwner": "ADR-005 metamodel authority / generated inert data",
       "disposition": "retain generated data; rebuild from authored metamodel; executable helpers require separate owner"
@@ -49862,7 +49862,7 @@
       "migrationDisposition": "unreviewed",
       "source": "spec/core/extension-package.schema.json",
       "line": 1,
-      "sourceSha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21",
+      "sourceSha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54",
       "ownerKind": "generated-data",
       "candidateOwner": "authored or generated JSON resource; metamodel and contract authority vary by file",
       "disposition": "retain versioned data; identify source authority and installed asset route separately"

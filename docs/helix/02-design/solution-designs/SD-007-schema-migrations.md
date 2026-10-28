@@ -35,7 +35,7 @@ elsewhere; it does not imply every backend can perform every operation online.
 
 Governing boundaries are NFR-50, ADR-002, CONTRACT-040/049, the read-only
 CONTRACT-046 comparison, and CONTRACT-081 table lifecycle. Core version migration
-is separate from evolving a user's schema. CONTRACT-058 retains its historical
+is separate from evolving a user's schema. CONTRACT-083 retains its historical
 bounded profile; new work must not relabel it as general migration support.
 
 ## Requirements Mapping

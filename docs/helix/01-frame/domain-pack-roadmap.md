@@ -123,7 +123,7 @@ broader acceptance criteria.
 ## Public-company intelligence addition
 
 The owner requested a separate issuer-evidence pack under FEAT-027.
-CONTRACT-058 and TD-078/STP-078 reuse CONTRACT-052/053 fixed-mode profiles.
+CONTRACT-059 and TD-078/STP-078 reuse CONTRACT-052/053 fixed-mode profiles.
 The selected 25-company universe, item-metadata screen and scoped financial
 observations are independent of licensed S&P membership and legal firm data.
 [evidence/public-company-intelligence.md](../04-build/evidence/public-company-intelligence.md)

@@ -260,6 +260,76 @@ mod tests {
     }
 
     #[test]
+    fn arrow_metadata_negative_controls_remain_blocked_and_byte_exact() {
+        let entry = |value: Option<&[u8]>| {
+            let mut fields = vec![(1, W::Binary(b"ARROW:schema".to_vec()))];
+            if let Some(value) = value {
+                fields.push((2, W::Binary(value.to_vec())));
+            }
+            W::Struct(fields)
+        };
+        // These deliberately cover invalid base64, truncated/unknown IPC
+        // content, and an absent value. None may become a semantic Arrow
+        // interpretation until the complete IPC/FlatBuffers path exists.
+        for raw in [b"%%%not-base64%%%".as_slice(), b"\xff\x00", b"AAAA", b""] {
+            let decoded = DecodedSchema {
+                schema: vec![],
+                native_schema_elements: vec![],
+                native_file_metadata_fields: vec![(5, W::List(12, vec![entry(Some(raw))]))],
+                trailing_footer_bytes: 0,
+            };
+            let observed = observe_decoded(&decoded).unwrap();
+            assert_eq!(
+                observed.status,
+                RelationshipObservationStatus::Blocked(
+                    "ARROW:schema metadata is retained but not interpreted"
+                )
+            );
+            assert_eq!(observed.metadata[0].value.as_deref(), Some(raw));
+            assert_eq!(
+                decoded.native_file_metadata_fields[0].1,
+                W::List(12, vec![entry(Some(raw))])
+            );
+        }
+
+        let missing_value = DecodedSchema {
+            schema: vec![],
+            native_schema_elements: vec![],
+            native_file_metadata_fields: vec![(5, W::List(12, vec![entry(None)]))],
+            trailing_footer_bytes: 0,
+        };
+        let observed = observe_decoded(&missing_value).unwrap();
+        assert_eq!(
+            observed.status,
+            RelationshipObservationStatus::Blocked(
+                "ARROW:schema metadata is retained but not interpreted"
+            )
+        );
+        assert_eq!(observed.metadata[0].value, None);
+
+        let first = b"first-raw-value".to_vec();
+        let second = b"second-raw-value".to_vec();
+        let duplicates = DecodedSchema {
+            schema: vec![],
+            native_schema_elements: vec![],
+            native_file_metadata_fields: vec![(
+                5,
+                W::List(12, vec![entry(Some(&first)), entry(Some(&second))]),
+            )],
+            trailing_footer_bytes: 0,
+        };
+        let observed = observe_decoded(&duplicates).unwrap();
+        assert_eq!(
+            observed.status,
+            RelationshipObservationStatus::Blocked(
+                "Duplicate ARROW:schema metadata is not interpreted"
+            )
+        );
+        assert_eq!(observed.metadata[0].value.as_deref(), Some(first.as_slice()));
+        assert_eq!(observed.metadata[1].value.as_deref(), Some(second.as_slice()));
+    }
+
+    #[test]
     fn unknown_schema_field_blocks_named_interpretation_without_losing_raw_value() {
         let unknown = (77, W::Binary(vec![0xff, 0x00]));
         let decoded = DecodedSchema {

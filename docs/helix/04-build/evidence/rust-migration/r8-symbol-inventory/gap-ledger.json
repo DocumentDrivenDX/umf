@@ -3,7 +3,7 @@
   "scope": "Route-specific runtime export declarations for the default Node root, default browser root and explicit TypeScript reference route in the pinned condition-aware inventory. Logical default gaps are counted once, with per-route status; this is a gap census, not retirement approval.",
   "input": {
     "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/inventory.json",
-    "sha256": "0548e308224dc0dd6b46cd8ece8b4576ce0218dc69d40ca41e57e78da5e455b7"
+    "sha256": "2b58a2c7e5f00b3e5f59e702d73e582324ac13da9da362cad747c7233ec564b2"
   },
   "counts": {
     "packageRootRows": 3366,
@@ -88,8 +88,8 @@
     "scope": "Per-export source authority and runtime classification for five src/model/types.ts exports. Four exact frozen-data aliases are excluded from executable-gap accounting; this does not establish Rust routing, retirement or installed-release qualification.",
     "generatedProvenance": {
       "modelSha256": "35b72a7f6aa86c98398192e5b67d5841d77127743c671c742dd871a7baee58ca",
-      "compilerSha256": "a875edcfbf8be9c0c74754055f36348d707fd8e4242c295df72e531e7328429d",
-      "generatedCoreModelSha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd",
+      "compilerSha256": "c1c2f7f84759047e956b5d210ae7b3b425b105bea2c041786275e70cbd3d6eea",
+      "generatedCoreModelSha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067",
       "sourceClosure": [
         {
           "path": "crates/umf-metamodel/src/lib.rs",
@@ -113,7 +113,7 @@
         },
         {
           "path": "spec/metamodel/generated/manifest.json",
-          "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+          "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
         },
         {
           "path": "spec/metamodel/umf.yaml",
@@ -129,7 +129,7 @@
         },
         {
           "path": "src/generated/core-model.ts",
-          "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+          "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
         },
         {
           "path": "src/index-browser-v4.ts",
@@ -15821,7 +15821,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -15958,7 +15958,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -16032,7 +16032,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -16169,7 +16169,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -17222,7 +17222,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -17371,7 +17371,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -17445,7 +17445,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -17594,7 +17594,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -18165,7 +18165,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -18298,7 +18298,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -18376,7 +18376,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -18509,7 +18509,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -19167,7 +19167,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -19516,7 +19516,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -19590,7 +19590,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -19939,7 +19939,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -20220,7 +20220,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -20369,7 +20369,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -20443,7 +20443,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -20592,7 +20592,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -21022,7 +21022,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -21143,7 +21143,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -21221,7 +21221,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -21342,7 +21342,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -22115,7 +22115,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154",
+      "sourceSha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c",
       "ownerFamily": "resource:spec/core/schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from explicit TypeScript reference route",
@@ -22125,7 +22125,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/schema.json",
-          "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154",
+          "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c",
           "packageRootAliasCount": 2
         },
         "authority": {
@@ -22158,7 +22158,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -22177,7 +22177,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -22513,7 +22513,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+                "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
               },
               {
                 "path": "src/index-v4-default.ts",
@@ -22653,7 +22653,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -22987,7 +22987,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -23011,7 +23011,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -23034,15 +23034,15 @@
               },
               {
                 "path": "python/src/umf/action_runtime.py",
-                "sha256": "27f95a5e3425094400937b825f358a7e5e17b160e2c4ef58863a543bda801ba2"
+                "sha256": "1132cea8c30add158917c47d0b00355b2d34ab7f125bccca1cc518d6390645b4"
               },
               {
                 "path": "python/src/umf/action_runtime_resource_manifest.json",
-                "sha256": "e2d9e9b7a08244a2e544fad36c53c4eb0781e32cc55f1bfed89b995945d6213e"
+                "sha256": "d4acbadb71cdea97f27fd22b3788c5ac47b7f5d96d2fa596b1bfc89522536c59"
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -23065,11 +23065,11 @@
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_release.py",
-                "sha256": "87b33de689e31ed36ff8de7fdf1b670096554767660867ab6e4f6bc8744132c4"
+                "sha256": "37be451a14a9a81a92d47ae2963555dafafc7429839fe23844fbb08e1bc69e29"
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_resources/manifest.json",
-                "sha256": "7eec9fb1dfe9845ef3b843e12c0ab7a949c03f527dae5ae44a2c7afb82e9fa86"
+                "sha256": "a2975838588acf30146a00faa5fdd84b4fdfcb63a884beecf350814fa67a0889"
               },
               {
                 "path": "scripts/rust-migration/r4/sync_codegen_resources.py",
@@ -23077,7 +23077,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -23096,7 +23096,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -23127,7 +23127,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154",
+      "sourceSha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c",
       "ownerFamily": "resource:spec/core/schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from explicit TypeScript reference route",
@@ -23137,7 +23137,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/schema.json",
-          "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154",
+          "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c",
           "packageRootAliasCount": 2
         },
         "authority": {
@@ -23170,7 +23170,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -23189,7 +23189,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -23525,7 +23525,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+                "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
               },
               {
                 "path": "src/index-v4-default.ts",
@@ -23665,7 +23665,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -23999,7 +23999,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -24023,7 +24023,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -24046,15 +24046,15 @@
               },
               {
                 "path": "python/src/umf/action_runtime.py",
-                "sha256": "27f95a5e3425094400937b825f358a7e5e17b160e2c4ef58863a543bda801ba2"
+                "sha256": "1132cea8c30add158917c47d0b00355b2d34ab7f125bccca1cc518d6390645b4"
               },
               {
                 "path": "python/src/umf/action_runtime_resource_manifest.json",
-                "sha256": "e2d9e9b7a08244a2e544fad36c53c4eb0781e32cc55f1bfed89b995945d6213e"
+                "sha256": "d4acbadb71cdea97f27fd22b3788c5ac47b7f5d96d2fa596b1bfc89522536c59"
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -24077,11 +24077,11 @@
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_release.py",
-                "sha256": "87b33de689e31ed36ff8de7fdf1b670096554767660867ab6e4f6bc8744132c4"
+                "sha256": "37be451a14a9a81a92d47ae2963555dafafc7429839fe23844fbb08e1bc69e29"
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_resources/manifest.json",
-                "sha256": "7eec9fb1dfe9845ef3b843e12c0ab7a949c03f527dae5ae44a2c7afb82e9fa86"
+                "sha256": "a2975838588acf30146a00faa5fdd84b4fdfcb63a884beecf350814fa67a0889"
               },
               {
                 "path": "scripts/rust-migration/r4/sync_codegen_resources.py",
@@ -24089,7 +24089,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -24108,7 +24108,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -24273,7 +24273,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/semantic-type-reference.schema.json",
       "line": 1,
-      "sourceSha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7",
+      "sourceSha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824",
       "ownerFamily": "resource:spec/core/semantic-type-reference.schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from explicit TypeScript reference route",
@@ -24283,7 +24283,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/semantic-type-reference.schema.json",
-          "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7",
+          "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824",
           "packageRootAliasCount": 1
         },
         "authority": {
@@ -24316,7 +24316,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -24335,7 +24335,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7"
+                "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -24347,7 +24347,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+                "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
               },
               {
                 "path": "src/index-v4-default.ts",
@@ -24399,7 +24399,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7"
+                "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824"
               }
             ],
             "installedQualification": {
@@ -24717,7 +24717,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7"
+                "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824"
               }
             ],
             "installedQualification": {
@@ -24741,7 +24741,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7"
+                "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824"
               }
             ],
             "installedQualification": {
@@ -24764,15 +24764,15 @@
               },
               {
                 "path": "python/src/umf/action_runtime.py",
-                "sha256": "27f95a5e3425094400937b825f358a7e5e17b160e2c4ef58863a543bda801ba2"
+                "sha256": "1132cea8c30add158917c47d0b00355b2d34ab7f125bccca1cc518d6390645b4"
               },
               {
                 "path": "python/src/umf/action_runtime_resource_manifest.json",
-                "sha256": "e2d9e9b7a08244a2e544fad36c53c4eb0781e32cc55f1bfed89b995945d6213e"
+                "sha256": "d4acbadb71cdea97f27fd22b3788c5ac47b7f5d96d2fa596b1bfc89522536c59"
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7"
+                "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824"
               }
             ],
             "installedQualification": {
@@ -24795,11 +24795,11 @@
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_release.py",
-                "sha256": "87b33de689e31ed36ff8de7fdf1b670096554767660867ab6e4f6bc8744132c4"
+                "sha256": "37be451a14a9a81a92d47ae2963555dafafc7429839fe23844fbb08e1bc69e29"
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_resources/manifest.json",
-                "sha256": "7eec9fb1dfe9845ef3b843e12c0ab7a949c03f527dae5ae44a2c7afb82e9fa86"
+                "sha256": "a2975838588acf30146a00faa5fdd84b4fdfcb63a884beecf350814fa67a0889"
               },
               {
                 "path": "scripts/rust-migration/r4/sync_codegen_resources.py",
@@ -24807,7 +24807,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7"
+                "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824"
               }
             ],
             "installedQualification": {
@@ -24826,7 +24826,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -25644,7 +25644,7 @@
       "declarationKind": "VariableDeclaration",
       "source": "src/generated/core-model.ts",
       "line": 3,
-      "sourceSha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd",
+      "sourceSha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067",
       "ownerFamily": "generated-runtime",
       "rowKind": "executable",
       "defaultRoute": "explicit TypeScript reference declaration",
@@ -25857,7 +25857,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+              "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
             },
             {
               "path": "src/index.ts",
@@ -26069,7 +26069,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+              "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
             },
             {
               "path": "src/index.ts",
@@ -28874,7 +28874,7 @@
             },
             {
               "path": "spec/core/extension-package.schema.json",
-              "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21"
+              "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54"
             },
             {
               "path": "spec/core/native-json.schema.json",
@@ -28882,11 +28882,11 @@
             },
             {
               "path": "spec/core/schema.json",
-              "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+              "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
             },
             {
               "path": "spec/core/semantic-type-reference.schema.json",
-              "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7"
+              "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824"
             },
             {
               "path": "spec/extensions/delta/package.json",
@@ -28898,11 +28898,11 @@
             },
             {
               "path": "spec/metamodel/generated/core-constraints.json",
-              "sha256": "1c2fb812a5d91ffb312940ac3e131f73b87c17f3739ba807b5def44a03f9ad14"
+              "sha256": "974f0984b52bb4085a3940018529983c0a1438f769caa499bc0713a888d8924d"
             },
             {
               "path": "spec/metamodel/generated/domain-policy.json",
-              "sha256": "ba1a1acad82ddb48b62f3bfb717dcd09f8b0f05d2fc31399121c12548d80d899"
+              "sha256": "e622e1d3da0644ec526a597ca857c2b2fa9a9c8ccd4619d3a576e5b85e151f20"
             },
             {
               "path": "src/adapters/delta/index.ts",
@@ -28914,7 +28914,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+              "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
             },
             {
               "path": "src/index.ts",
@@ -29177,7 +29177,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+              "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
             },
             {
               "path": "src/index.ts",
@@ -30798,7 +30798,7 @@
             },
             {
               "path": "spec/core/extension-package.schema.json",
-              "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21"
+              "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54"
             },
             {
               "path": "spec/core/native-json.schema.json",
@@ -30806,11 +30806,11 @@
             },
             {
               "path": "spec/core/schema.json",
-              "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+              "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
             },
             {
               "path": "spec/core/semantic-type-reference.schema.json",
-              "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7"
+              "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824"
             },
             {
               "path": "spec/extensions/delta-table/package.json",
@@ -30822,11 +30822,11 @@
             },
             {
               "path": "spec/metamodel/generated/core-constraints.json",
-              "sha256": "1c2fb812a5d91ffb312940ac3e131f73b87c17f3739ba807b5def44a03f9ad14"
+              "sha256": "974f0984b52bb4085a3940018529983c0a1438f769caa499bc0713a888d8924d"
             },
             {
               "path": "spec/metamodel/generated/domain-policy.json",
-              "sha256": "ba1a1acad82ddb48b62f3bfb717dcd09f8b0f05d2fc31399121c12548d80d899"
+              "sha256": "e622e1d3da0644ec526a597ca857c2b2fa9a9c8ccd4619d3a576e5b85e151f20"
             },
             {
               "path": "src/adapters/delta/index.ts",
@@ -30838,7 +30838,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+              "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
             },
             {
               "path": "src/index.ts",
@@ -31178,7 +31178,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+              "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
             },
             {
               "path": "src/index.ts",
@@ -31390,7 +31390,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+              "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
             },
             {
               "path": "src/index.ts",
@@ -34203,7 +34203,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/extension-package.schema.json",
       "line": 1,
-      "sourceSha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21",
+      "sourceSha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54",
       "ownerFamily": "resource:spec/core/extension-package.schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from explicit TypeScript reference route",
@@ -34213,7 +34213,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/extension-package.schema.json",
-          "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21",
+          "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54",
           "packageRootAliasCount": 1
         },
         "authority": {
@@ -34246,7 +34246,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -34265,7 +34265,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21"
+                "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -34277,7 +34277,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+                "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
               },
               {
                 "path": "src/index-v4-default.ts",
@@ -34321,7 +34321,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21"
+                "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54"
               }
             ],
             "installedQualification": {
@@ -34607,7 +34607,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21"
+                "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54"
               }
             ],
             "installedQualification": {
@@ -34631,7 +34631,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21"
+                "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54"
               }
             ],
             "installedQualification": {
@@ -34654,15 +34654,15 @@
               },
               {
                 "path": "python/src/umf/action_runtime.py",
-                "sha256": "27f95a5e3425094400937b825f358a7e5e17b160e2c4ef58863a543bda801ba2"
+                "sha256": "1132cea8c30add158917c47d0b00355b2d34ab7f125bccca1cc518d6390645b4"
               },
               {
                 "path": "python/src/umf/action_runtime_resource_manifest.json",
-                "sha256": "e2d9e9b7a08244a2e544fad36c53c4eb0781e32cc55f1bfed89b995945d6213e"
+                "sha256": "d4acbadb71cdea97f27fd22b3788c5ac47b7f5d96d2fa596b1bfc89522536c59"
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21"
+                "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54"
               }
             ],
             "installedQualification": {
@@ -34685,11 +34685,11 @@
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_release.py",
-                "sha256": "87b33de689e31ed36ff8de7fdf1b670096554767660867ab6e4f6bc8744132c4"
+                "sha256": "37be451a14a9a81a92d47ae2963555dafafc7429839fe23844fbb08e1bc69e29"
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_resources/manifest.json",
-                "sha256": "7eec9fb1dfe9845ef3b843e12c0ab7a949c03f527dae5ae44a2c7afb82e9fa86"
+                "sha256": "a2975838588acf30146a00faa5fdd84b4fdfcb63a884beecf350814fa67a0889"
               },
               {
                 "path": "scripts/rust-migration/r4/sync_codegen_resources.py",
@@ -34697,7 +34697,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21"
+                "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54"
               }
             ],
             "installedQualification": {
@@ -34716,7 +34716,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -49069,7 +49069,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+              "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
             },
             {
               "path": "src/index.ts",
@@ -68913,7 +68913,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+              "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
             },
             {
               "path": "src/index.ts",
@@ -85924,7 +85924,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -86065,7 +86065,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -86139,7 +86139,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -86280,7 +86280,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -87353,7 +87353,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -87506,7 +87506,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -87580,7 +87580,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -87733,7 +87733,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -88316,7 +88316,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -88453,7 +88453,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -88531,7 +88531,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -88668,7 +88668,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -89338,7 +89338,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -89691,7 +89691,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -89765,7 +89765,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -90118,7 +90118,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -90403,7 +90403,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -90556,7 +90556,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -90630,7 +90630,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -90783,7 +90783,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -91221,7 +91221,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -91346,7 +91346,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -91424,7 +91424,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -91549,7 +91549,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -92338,7 +92338,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154",
+      "sourceSha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c",
       "ownerFamily": "resource:spec/core/schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from browser package root",
@@ -92348,7 +92348,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/schema.json",
-          "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154",
+          "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c",
           "packageRootAliasCount": 2
         },
         "authority": {
@@ -92381,7 +92381,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -92400,7 +92400,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -92736,7 +92736,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+                "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
               },
               {
                 "path": "src/index-browser-v4.ts",
@@ -92880,7 +92880,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -93214,7 +93214,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -93238,7 +93238,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -93261,15 +93261,15 @@
               },
               {
                 "path": "python/src/umf/action_runtime.py",
-                "sha256": "27f95a5e3425094400937b825f358a7e5e17b160e2c4ef58863a543bda801ba2"
+                "sha256": "1132cea8c30add158917c47d0b00355b2d34ab7f125bccca1cc518d6390645b4"
               },
               {
                 "path": "python/src/umf/action_runtime_resource_manifest.json",
-                "sha256": "e2d9e9b7a08244a2e544fad36c53c4eb0781e32cc55f1bfed89b995945d6213e"
+                "sha256": "d4acbadb71cdea97f27fd22b3788c5ac47b7f5d96d2fa596b1bfc89522536c59"
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -93292,11 +93292,11 @@
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_release.py",
-                "sha256": "87b33de689e31ed36ff8de7fdf1b670096554767660867ab6e4f6bc8744132c4"
+                "sha256": "37be451a14a9a81a92d47ae2963555dafafc7429839fe23844fbb08e1bc69e29"
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_resources/manifest.json",
-                "sha256": "7eec9fb1dfe9845ef3b843e12c0ab7a949c03f527dae5ae44a2c7afb82e9fa86"
+                "sha256": "a2975838588acf30146a00faa5fdd84b4fdfcb63a884beecf350814fa67a0889"
               },
               {
                 "path": "scripts/rust-migration/r4/sync_codegen_resources.py",
@@ -93304,7 +93304,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -93323,7 +93323,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -93354,7 +93354,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154",
+      "sourceSha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c",
       "ownerFamily": "resource:spec/core/schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from browser package root",
@@ -93364,7 +93364,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/schema.json",
-          "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154",
+          "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c",
           "packageRootAliasCount": 2
         },
         "authority": {
@@ -93397,7 +93397,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -93416,7 +93416,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -93752,7 +93752,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+                "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
               },
               {
                 "path": "src/index-browser-v4.ts",
@@ -93896,7 +93896,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -94230,7 +94230,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -94254,7 +94254,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -94277,15 +94277,15 @@
               },
               {
                 "path": "python/src/umf/action_runtime.py",
-                "sha256": "27f95a5e3425094400937b825f358a7e5e17b160e2c4ef58863a543bda801ba2"
+                "sha256": "1132cea8c30add158917c47d0b00355b2d34ab7f125bccca1cc518d6390645b4"
               },
               {
                 "path": "python/src/umf/action_runtime_resource_manifest.json",
-                "sha256": "e2d9e9b7a08244a2e544fad36c53c4eb0781e32cc55f1bfed89b995945d6213e"
+                "sha256": "d4acbadb71cdea97f27fd22b3788c5ac47b7f5d96d2fa596b1bfc89522536c59"
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -94308,11 +94308,11 @@
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_release.py",
-                "sha256": "87b33de689e31ed36ff8de7fdf1b670096554767660867ab6e4f6bc8744132c4"
+                "sha256": "37be451a14a9a81a92d47ae2963555dafafc7429839fe23844fbb08e1bc69e29"
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_resources/manifest.json",
-                "sha256": "7eec9fb1dfe9845ef3b843e12c0ab7a949c03f527dae5ae44a2c7afb82e9fa86"
+                "sha256": "a2975838588acf30146a00faa5fdd84b4fdfcb63a884beecf350814fa67a0889"
               },
               {
                 "path": "scripts/rust-migration/r4/sync_codegen_resources.py",
@@ -94320,7 +94320,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -94339,7 +94339,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -94508,7 +94508,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/semantic-type-reference.schema.json",
       "line": 1,
-      "sourceSha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7",
+      "sourceSha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824",
       "ownerFamily": "resource:spec/core/semantic-type-reference.schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from browser package root",
@@ -94518,7 +94518,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/semantic-type-reference.schema.json",
-          "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7",
+          "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824",
           "packageRootAliasCount": 1
         },
         "authority": {
@@ -94551,7 +94551,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -94570,7 +94570,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7"
+                "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -94582,7 +94582,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+                "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
               },
               {
                 "path": "src/index-browser-v4.ts",
@@ -94638,7 +94638,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7"
+                "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824"
               }
             ],
             "installedQualification": {
@@ -94956,7 +94956,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7"
+                "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824"
               }
             ],
             "installedQualification": {
@@ -94980,7 +94980,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7"
+                "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824"
               }
             ],
             "installedQualification": {
@@ -95003,15 +95003,15 @@
               },
               {
                 "path": "python/src/umf/action_runtime.py",
-                "sha256": "27f95a5e3425094400937b825f358a7e5e17b160e2c4ef58863a543bda801ba2"
+                "sha256": "1132cea8c30add158917c47d0b00355b2d34ab7f125bccca1cc518d6390645b4"
               },
               {
                 "path": "python/src/umf/action_runtime_resource_manifest.json",
-                "sha256": "e2d9e9b7a08244a2e544fad36c53c4eb0781e32cc55f1bfed89b995945d6213e"
+                "sha256": "d4acbadb71cdea97f27fd22b3788c5ac47b7f5d96d2fa596b1bfc89522536c59"
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7"
+                "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824"
               }
             ],
             "installedQualification": {
@@ -95034,11 +95034,11 @@
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_release.py",
-                "sha256": "87b33de689e31ed36ff8de7fdf1b670096554767660867ab6e4f6bc8744132c4"
+                "sha256": "37be451a14a9a81a92d47ae2963555dafafc7429839fe23844fbb08e1bc69e29"
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_resources/manifest.json",
-                "sha256": "7eec9fb1dfe9845ef3b843e12c0ab7a949c03f527dae5ae44a2c7afb82e9fa86"
+                "sha256": "a2975838588acf30146a00faa5fdd84b4fdfcb63a884beecf350814fa67a0889"
               },
               {
                 "path": "scripts/rust-migration/r4/sync_codegen_resources.py",
@@ -95046,7 +95046,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7"
+                "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824"
               }
             ],
             "installedQualification": {
@@ -95065,7 +95065,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -95895,7 +95895,7 @@
       "declarationKind": "VariableDeclaration",
       "source": "src/generated/core-model.ts",
       "line": 3,
-      "sourceSha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd",
+      "sourceSha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067",
       "ownerFamily": "generated-runtime",
       "rowKind": "executable",
       "defaultRoute": "browser package root declaration",
@@ -96108,7 +96108,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+              "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
             },
             {
               "path": "src/index.ts",
@@ -96324,7 +96324,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+              "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
             },
             {
               "path": "src/index.ts",
@@ -99629,7 +99629,7 @@
             },
             {
               "path": "spec/core/extension-package.schema.json",
-              "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21"
+              "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54"
             },
             {
               "path": "spec/core/native-json.schema.json",
@@ -99637,11 +99637,11 @@
             },
             {
               "path": "spec/core/schema.json",
-              "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+              "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
             },
             {
               "path": "spec/core/semantic-type-reference.schema.json",
-              "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7"
+              "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824"
             },
             {
               "path": "spec/extensions/delta/package.json",
@@ -99653,11 +99653,11 @@
             },
             {
               "path": "spec/metamodel/generated/core-constraints.json",
-              "sha256": "1c2fb812a5d91ffb312940ac3e131f73b87c17f3739ba807b5def44a03f9ad14"
+              "sha256": "974f0984b52bb4085a3940018529983c0a1438f769caa499bc0713a888d8924d"
             },
             {
               "path": "spec/metamodel/generated/domain-policy.json",
-              "sha256": "ba1a1acad82ddb48b62f3bfb717dcd09f8b0f05d2fc31399121c12548d80d899"
+              "sha256": "e622e1d3da0644ec526a597ca857c2b2fa9a9c8ccd4619d3a576e5b85e151f20"
             },
             {
               "path": "src/adapters/delta/index.ts",
@@ -99669,7 +99669,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+              "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
             },
             {
               "path": "src/index.ts",
@@ -99936,7 +99936,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+              "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
             },
             {
               "path": "src/index.ts",
@@ -101581,7 +101581,7 @@
             },
             {
               "path": "spec/core/extension-package.schema.json",
-              "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21"
+              "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54"
             },
             {
               "path": "spec/core/native-json.schema.json",
@@ -101589,11 +101589,11 @@
             },
             {
               "path": "spec/core/schema.json",
-              "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+              "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
             },
             {
               "path": "spec/core/semantic-type-reference.schema.json",
-              "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7"
+              "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824"
             },
             {
               "path": "spec/extensions/delta-table/package.json",
@@ -101605,11 +101605,11 @@
             },
             {
               "path": "spec/metamodel/generated/core-constraints.json",
-              "sha256": "1c2fb812a5d91ffb312940ac3e131f73b87c17f3739ba807b5def44a03f9ad14"
+              "sha256": "974f0984b52bb4085a3940018529983c0a1438f769caa499bc0713a888d8924d"
             },
             {
               "path": "spec/metamodel/generated/domain-policy.json",
-              "sha256": "ba1a1acad82ddb48b62f3bfb717dcd09f8b0f05d2fc31399121c12548d80d899"
+              "sha256": "e622e1d3da0644ec526a597ca857c2b2fa9a9c8ccd4619d3a576e5b85e151f20"
             },
             {
               "path": "src/adapters/delta/index.ts",
@@ -101621,7 +101621,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+              "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
             },
             {
               "path": "src/index.ts",
@@ -101965,7 +101965,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+              "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
             },
             {
               "path": "src/index.ts",
@@ -102181,7 +102181,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+              "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
             },
             {
               "path": "src/index.ts",
@@ -105038,7 +105038,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/extension-package.schema.json",
       "line": 1,
-      "sourceSha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21",
+      "sourceSha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54",
       "ownerFamily": "resource:spec/core/extension-package.schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from browser package root",
@@ -105048,7 +105048,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/extension-package.schema.json",
-          "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21",
+          "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54",
           "packageRootAliasCount": 1
         },
         "authority": {
@@ -105081,7 +105081,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -105100,7 +105100,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21"
+                "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -105112,7 +105112,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+                "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
               },
               {
                 "path": "src/index-browser-v4.ts",
@@ -105160,7 +105160,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21"
+                "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54"
               }
             ],
             "installedQualification": {
@@ -105446,7 +105446,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21"
+                "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54"
               }
             ],
             "installedQualification": {
@@ -105470,7 +105470,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21"
+                "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54"
               }
             ],
             "installedQualification": {
@@ -105493,15 +105493,15 @@
               },
               {
                 "path": "python/src/umf/action_runtime.py",
-                "sha256": "27f95a5e3425094400937b825f358a7e5e17b160e2c4ef58863a543bda801ba2"
+                "sha256": "1132cea8c30add158917c47d0b00355b2d34ab7f125bccca1cc518d6390645b4"
               },
               {
                 "path": "python/src/umf/action_runtime_resource_manifest.json",
-                "sha256": "e2d9e9b7a08244a2e544fad36c53c4eb0781e32cc55f1bfed89b995945d6213e"
+                "sha256": "d4acbadb71cdea97f27fd22b3788c5ac47b7f5d96d2fa596b1bfc89522536c59"
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21"
+                "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54"
               }
             ],
             "installedQualification": {
@@ -105524,11 +105524,11 @@
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_release.py",
-                "sha256": "87b33de689e31ed36ff8de7fdf1b670096554767660867ab6e4f6bc8744132c4"
+                "sha256": "37be451a14a9a81a92d47ae2963555dafafc7429839fe23844fbb08e1bc69e29"
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_resources/manifest.json",
-                "sha256": "7eec9fb1dfe9845ef3b843e12c0ab7a949c03f527dae5ae44a2c7afb82e9fa86"
+                "sha256": "a2975838588acf30146a00faa5fdd84b4fdfcb63a884beecf350814fa67a0889"
               },
               {
                 "path": "scripts/rust-migration/r4/sync_codegen_resources.py",
@@ -105536,7 +105536,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21"
+                "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54"
               }
             ],
             "installedQualification": {
@@ -105555,7 +105555,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -121635,7 +121635,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+              "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
             },
             {
               "path": "src/index.ts",
@@ -142736,7 +142736,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+              "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
             },
             {
               "path": "src/index.ts",
@@ -151796,7 +151796,7 @@
           },
           {
             "path": "spec/core/extension-package.schema.json",
-            "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21"
+            "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54"
           },
           {
             "path": "spec/core/facet-operation-v3.schema.json",
@@ -152112,11 +152112,11 @@
           },
           {
             "path": "spec/core/schema.json",
-            "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+            "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
           },
           {
             "path": "spec/core/semantic-type-reference.schema.json",
-            "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7"
+            "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824"
           },
           {
             "path": "spec/core/semantic-types-operation.schema.json",
@@ -155288,19 +155288,19 @@
           },
           {
             "path": "spec/metamodel/generated/core-constraints.json",
-            "sha256": "1c2fb812a5d91ffb312940ac3e131f73b87c17f3739ba807b5def44a03f9ad14"
+            "sha256": "974f0984b52bb4085a3940018529983c0a1438f769caa499bc0713a888d8924d"
           },
           {
             "path": "spec/metamodel/generated/domain-policy.json",
-            "sha256": "ba1a1acad82ddb48b62f3bfb717dcd09f8b0f05d2fc31399121c12548d80d899"
+            "sha256": "e622e1d3da0644ec526a597ca857c2b2fa9a9c8ccd4619d3a576e5b85e151f20"
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           },
           {
             "path": "spec/metamodel/generated/python-shapes.json",
-            "sha256": "e396ab6c81f6840aba79220b1021a9971ae3534f30eaf7d74d97898a2664a29f"
+            "sha256": "9f1a069e1d42e79290e6e40f808353d96a5f8b0acfbe113e10cd9e97eed4e237"
           },
           {
             "path": "spec/metamodel/package.json",
@@ -156644,7 +156644,7 @@
           },
           {
             "path": "src/extensions/actions/plan-identity.ts",
-            "sha256": "0b2918ab2933abec5c6efbd42aedea457e01abf4ed0934bce0ab85d0c80e607f"
+            "sha256": "d42ccf06988d25499193af6b27826a3310198ebf754e41975a58c4adc19d0d44"
           },
           {
             "path": "src/extensions/actions/plan-structure.ts",
@@ -156972,11 +156972,11 @@
           },
           {
             "path": "src/generated/core-model.ts",
-            "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+            "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
           },
           {
             "path": "src/generated/core-validators.ts",
-            "sha256": "7fd05996408da234a7308dfbe6d94c578b06cdd31743c4e6228e5e1d01eca1dc"
+            "sha256": "40c96afb160f961fbbbc90e44298ec372aedf80a32259857920961d1f54260d8"
           },
           {
             "path": "src/index-browser-v4.ts",
@@ -168981,7 +168981,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -169122,7 +169122,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -169196,7 +169196,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -169337,7 +169337,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -170410,7 +170410,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -170563,7 +170563,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -170637,7 +170637,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -170790,7 +170790,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -171373,7 +171373,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -171510,7 +171510,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -171588,7 +171588,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -171725,7 +171725,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -172395,7 +172395,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -172748,7 +172748,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -172822,7 +172822,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -173175,7 +173175,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -173460,7 +173460,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -173613,7 +173613,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -173687,7 +173687,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -173840,7 +173840,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -174278,7 +174278,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -174403,7 +174403,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -174481,7 +174481,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -174606,7 +174606,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -175395,7 +175395,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154",
+      "sourceSha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c",
       "ownerFamily": "resource:spec/core/schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from Node package root",
@@ -175405,7 +175405,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/schema.json",
-          "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154",
+          "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c",
           "packageRootAliasCount": 2
         },
         "authority": {
@@ -175438,7 +175438,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -175457,7 +175457,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -175793,7 +175793,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+                "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
               },
               {
                 "path": "src/index-node-v4.ts",
@@ -175937,7 +175937,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -176271,7 +176271,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -176295,7 +176295,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -176318,15 +176318,15 @@
               },
               {
                 "path": "python/src/umf/action_runtime.py",
-                "sha256": "27f95a5e3425094400937b825f358a7e5e17b160e2c4ef58863a543bda801ba2"
+                "sha256": "1132cea8c30add158917c47d0b00355b2d34ab7f125bccca1cc518d6390645b4"
               },
               {
                 "path": "python/src/umf/action_runtime_resource_manifest.json",
-                "sha256": "e2d9e9b7a08244a2e544fad36c53c4eb0781e32cc55f1bfed89b995945d6213e"
+                "sha256": "d4acbadb71cdea97f27fd22b3788c5ac47b7f5d96d2fa596b1bfc89522536c59"
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -176349,11 +176349,11 @@
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_release.py",
-                "sha256": "87b33de689e31ed36ff8de7fdf1b670096554767660867ab6e4f6bc8744132c4"
+                "sha256": "37be451a14a9a81a92d47ae2963555dafafc7429839fe23844fbb08e1bc69e29"
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_resources/manifest.json",
-                "sha256": "7eec9fb1dfe9845ef3b843e12c0ab7a949c03f527dae5ae44a2c7afb82e9fa86"
+                "sha256": "a2975838588acf30146a00faa5fdd84b4fdfcb63a884beecf350814fa67a0889"
               },
               {
                 "path": "scripts/rust-migration/r4/sync_codegen_resources.py",
@@ -176361,7 +176361,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -176380,7 +176380,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -176411,7 +176411,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154",
+      "sourceSha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c",
       "ownerFamily": "resource:spec/core/schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from Node package root",
@@ -176421,7 +176421,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/schema.json",
-          "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154",
+          "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c",
           "packageRootAliasCount": 2
         },
         "authority": {
@@ -176454,7 +176454,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -176473,7 +176473,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -176809,7 +176809,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+                "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
               },
               {
                 "path": "src/index-node-v4.ts",
@@ -176953,7 +176953,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -177287,7 +177287,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -177311,7 +177311,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -177334,15 +177334,15 @@
               },
               {
                 "path": "python/src/umf/action_runtime.py",
-                "sha256": "27f95a5e3425094400937b825f358a7e5e17b160e2c4ef58863a543bda801ba2"
+                "sha256": "1132cea8c30add158917c47d0b00355b2d34ab7f125bccca1cc518d6390645b4"
               },
               {
                 "path": "python/src/umf/action_runtime_resource_manifest.json",
-                "sha256": "e2d9e9b7a08244a2e544fad36c53c4eb0781e32cc55f1bfed89b995945d6213e"
+                "sha256": "d4acbadb71cdea97f27fd22b3788c5ac47b7f5d96d2fa596b1bfc89522536c59"
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -177365,11 +177365,11 @@
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_release.py",
-                "sha256": "87b33de689e31ed36ff8de7fdf1b670096554767660867ab6e4f6bc8744132c4"
+                "sha256": "37be451a14a9a81a92d47ae2963555dafafc7429839fe23844fbb08e1bc69e29"
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_resources/manifest.json",
-                "sha256": "7eec9fb1dfe9845ef3b843e12c0ab7a949c03f527dae5ae44a2c7afb82e9fa86"
+                "sha256": "a2975838588acf30146a00faa5fdd84b4fdfcb63a884beecf350814fa67a0889"
               },
               {
                 "path": "scripts/rust-migration/r4/sync_codegen_resources.py",
@@ -177377,7 +177377,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+                "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
               }
             ],
             "installedQualification": {
@@ -177396,7 +177396,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -177565,7 +177565,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/semantic-type-reference.schema.json",
       "line": 1,
-      "sourceSha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7",
+      "sourceSha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824",
       "ownerFamily": "resource:spec/core/semantic-type-reference.schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from Node package root",
@@ -177575,7 +177575,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/semantic-type-reference.schema.json",
-          "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7",
+          "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824",
           "packageRootAliasCount": 1
         },
         "authority": {
@@ -177608,7 +177608,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -177627,7 +177627,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7"
+                "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -177639,7 +177639,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+                "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
               },
               {
                 "path": "src/index-node-v4.ts",
@@ -177695,7 +177695,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7"
+                "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824"
               }
             ],
             "installedQualification": {
@@ -178013,7 +178013,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7"
+                "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824"
               }
             ],
             "installedQualification": {
@@ -178037,7 +178037,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7"
+                "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824"
               }
             ],
             "installedQualification": {
@@ -178060,15 +178060,15 @@
               },
               {
                 "path": "python/src/umf/action_runtime.py",
-                "sha256": "27f95a5e3425094400937b825f358a7e5e17b160e2c4ef58863a543bda801ba2"
+                "sha256": "1132cea8c30add158917c47d0b00355b2d34ab7f125bccca1cc518d6390645b4"
               },
               {
                 "path": "python/src/umf/action_runtime_resource_manifest.json",
-                "sha256": "e2d9e9b7a08244a2e544fad36c53c4eb0781e32cc55f1bfed89b995945d6213e"
+                "sha256": "d4acbadb71cdea97f27fd22b3788c5ac47b7f5d96d2fa596b1bfc89522536c59"
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7"
+                "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824"
               }
             ],
             "installedQualification": {
@@ -178091,11 +178091,11 @@
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_release.py",
-                "sha256": "87b33de689e31ed36ff8de7fdf1b670096554767660867ab6e4f6bc8744132c4"
+                "sha256": "37be451a14a9a81a92d47ae2963555dafafc7429839fe23844fbb08e1bc69e29"
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_resources/manifest.json",
-                "sha256": "7eec9fb1dfe9845ef3b843e12c0ab7a949c03f527dae5ae44a2c7afb82e9fa86"
+                "sha256": "a2975838588acf30146a00faa5fdd84b4fdfcb63a884beecf350814fa67a0889"
               },
               {
                 "path": "scripts/rust-migration/r4/sync_codegen_resources.py",
@@ -178103,7 +178103,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7"
+                "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824"
               }
             ],
             "installedQualification": {
@@ -178122,7 +178122,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -178952,7 +178952,7 @@
       "declarationKind": "VariableDeclaration",
       "source": "src/generated/core-model.ts",
       "line": 3,
-      "sourceSha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd",
+      "sourceSha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067",
       "ownerFamily": "generated-runtime",
       "rowKind": "executable",
       "defaultRoute": "Node package root declaration",
@@ -179165,7 +179165,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+              "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
             },
             {
               "path": "src/index.ts",
@@ -179381,7 +179381,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+              "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
             },
             {
               "path": "src/index.ts",
@@ -182686,7 +182686,7 @@
             },
             {
               "path": "spec/core/extension-package.schema.json",
-              "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21"
+              "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54"
             },
             {
               "path": "spec/core/native-json.schema.json",
@@ -182694,11 +182694,11 @@
             },
             {
               "path": "spec/core/schema.json",
-              "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+              "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
             },
             {
               "path": "spec/core/semantic-type-reference.schema.json",
-              "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7"
+              "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824"
             },
             {
               "path": "spec/extensions/delta/package.json",
@@ -182710,11 +182710,11 @@
             },
             {
               "path": "spec/metamodel/generated/core-constraints.json",
-              "sha256": "1c2fb812a5d91ffb312940ac3e131f73b87c17f3739ba807b5def44a03f9ad14"
+              "sha256": "974f0984b52bb4085a3940018529983c0a1438f769caa499bc0713a888d8924d"
             },
             {
               "path": "spec/metamodel/generated/domain-policy.json",
-              "sha256": "ba1a1acad82ddb48b62f3bfb717dcd09f8b0f05d2fc31399121c12548d80d899"
+              "sha256": "e622e1d3da0644ec526a597ca857c2b2fa9a9c8ccd4619d3a576e5b85e151f20"
             },
             {
               "path": "src/adapters/delta/index.ts",
@@ -182726,7 +182726,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+              "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
             },
             {
               "path": "src/index.ts",
@@ -182993,7 +182993,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+              "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
             },
             {
               "path": "src/index.ts",
@@ -184638,7 +184638,7 @@
             },
             {
               "path": "spec/core/extension-package.schema.json",
-              "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21"
+              "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54"
             },
             {
               "path": "spec/core/native-json.schema.json",
@@ -184646,11 +184646,11 @@
             },
             {
               "path": "spec/core/schema.json",
-              "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+              "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
             },
             {
               "path": "spec/core/semantic-type-reference.schema.json",
-              "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7"
+              "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824"
             },
             {
               "path": "spec/extensions/delta-table/package.json",
@@ -184662,11 +184662,11 @@
             },
             {
               "path": "spec/metamodel/generated/core-constraints.json",
-              "sha256": "1c2fb812a5d91ffb312940ac3e131f73b87c17f3739ba807b5def44a03f9ad14"
+              "sha256": "974f0984b52bb4085a3940018529983c0a1438f769caa499bc0713a888d8924d"
             },
             {
               "path": "spec/metamodel/generated/domain-policy.json",
-              "sha256": "ba1a1acad82ddb48b62f3bfb717dcd09f8b0f05d2fc31399121c12548d80d899"
+              "sha256": "e622e1d3da0644ec526a597ca857c2b2fa9a9c8ccd4619d3a576e5b85e151f20"
             },
             {
               "path": "src/adapters/delta/index.ts",
@@ -184678,7 +184678,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+              "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
             },
             {
               "path": "src/index.ts",
@@ -185022,7 +185022,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+              "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
             },
             {
               "path": "src/index.ts",
@@ -185238,7 +185238,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+              "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
             },
             {
               "path": "src/index.ts",
@@ -188095,7 +188095,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/extension-package.schema.json",
       "line": 1,
-      "sourceSha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21",
+      "sourceSha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54",
       "ownerFamily": "resource:spec/core/extension-package.schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from Node package root",
@@ -188105,7 +188105,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/extension-package.schema.json",
-          "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21",
+          "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54",
           "packageRootAliasCount": 1
         },
         "authority": {
@@ -188138,7 +188138,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+              "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
             }
           ]
         },
@@ -188157,7 +188157,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21"
+                "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -188169,7 +188169,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+                "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
               },
               {
                 "path": "src/index-node-v4.ts",
@@ -188217,7 +188217,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21"
+                "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54"
               }
             ],
             "installedQualification": {
@@ -188503,7 +188503,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21"
+                "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54"
               }
             ],
             "installedQualification": {
@@ -188527,7 +188527,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21"
+                "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54"
               }
             ],
             "installedQualification": {
@@ -188550,15 +188550,15 @@
               },
               {
                 "path": "python/src/umf/action_runtime.py",
-                "sha256": "27f95a5e3425094400937b825f358a7e5e17b160e2c4ef58863a543bda801ba2"
+                "sha256": "1132cea8c30add158917c47d0b00355b2d34ab7f125bccca1cc518d6390645b4"
               },
               {
                 "path": "python/src/umf/action_runtime_resource_manifest.json",
-                "sha256": "e2d9e9b7a08244a2e544fad36c53c4eb0781e32cc55f1bfed89b995945d6213e"
+                "sha256": "d4acbadb71cdea97f27fd22b3788c5ac47b7f5d96d2fa596b1bfc89522536c59"
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21"
+                "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54"
               }
             ],
             "installedQualification": {
@@ -188581,11 +188581,11 @@
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_release.py",
-                "sha256": "87b33de689e31ed36ff8de7fdf1b670096554767660867ab6e4f6bc8744132c4"
+                "sha256": "37be451a14a9a81a92d47ae2963555dafafc7429839fe23844fbb08e1bc69e29"
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_resources/manifest.json",
-                "sha256": "7eec9fb1dfe9845ef3b843e12c0ab7a949c03f527dae5ae44a2c7afb82e9fa86"
+                "sha256": "a2975838588acf30146a00faa5fdd84b4fdfcb63a884beecf350814fa67a0889"
               },
               {
                 "path": "scripts/rust-migration/r4/sync_codegen_resources.py",
@@ -188593,7 +188593,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21"
+                "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54"
               }
             ],
             "installedQualification": {
@@ -188612,7 +188612,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -204692,7 +204692,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+              "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
             },
             {
               "path": "src/index.ts",
@@ -225793,7 +225793,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+              "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
             },
             {
               "path": "src/index.ts",
@@ -234853,7 +234853,7 @@
           },
           {
             "path": "spec/core/extension-package.schema.json",
-            "sha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21"
+            "sha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54"
           },
           {
             "path": "spec/core/facet-operation-v3.schema.json",
@@ -235169,11 +235169,11 @@
           },
           {
             "path": "spec/core/schema.json",
-            "sha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154"
+            "sha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c"
           },
           {
             "path": "spec/core/semantic-type-reference.schema.json",
-            "sha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7"
+            "sha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824"
           },
           {
             "path": "spec/core/semantic-types-operation.schema.json",
@@ -238345,19 +238345,19 @@
           },
           {
             "path": "spec/metamodel/generated/core-constraints.json",
-            "sha256": "1c2fb812a5d91ffb312940ac3e131f73b87c17f3739ba807b5def44a03f9ad14"
+            "sha256": "974f0984b52bb4085a3940018529983c0a1438f769caa499bc0713a888d8924d"
           },
           {
             "path": "spec/metamodel/generated/domain-policy.json",
-            "sha256": "ba1a1acad82ddb48b62f3bfb717dcd09f8b0f05d2fc31399121c12548d80d899"
+            "sha256": "e622e1d3da0644ec526a597ca857c2b2fa9a9c8ccd4619d3a576e5b85e151f20"
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "43ca51148669315f983ad8661a1630dc7f88ffe34a7550418e58c19bd82910d0"
+            "sha256": "376eec3d9336985242b2f23034b92e251129f6f27bf458ae6dce8187033f5053"
           },
           {
             "path": "spec/metamodel/generated/python-shapes.json",
-            "sha256": "e396ab6c81f6840aba79220b1021a9971ae3534f30eaf7d74d97898a2664a29f"
+            "sha256": "9f1a069e1d42e79290e6e40f808353d96a5f8b0acfbe113e10cd9e97eed4e237"
           },
           {
             "path": "spec/metamodel/package.json",
@@ -239701,7 +239701,7 @@
           },
           {
             "path": "src/extensions/actions/plan-identity.ts",
-            "sha256": "0b2918ab2933abec5c6efbd42aedea457e01abf4ed0934bce0ab85d0c80e607f"
+            "sha256": "d42ccf06988d25499193af6b27826a3310198ebf754e41975a58c4adc19d0d44"
           },
           {
             "path": "src/extensions/actions/plan-structure.ts",
@@ -240029,11 +240029,11 @@
           },
           {
             "path": "src/generated/core-model.ts",
-            "sha256": "e3b60c8498f921088d2deaa1547818429780b8723c331272288e5268e41f37bd"
+            "sha256": "a8b93d93ff7c965443d1377d72e3cf446fd43ad3d14f16890313a3c11f2bb067"
           },
           {
             "path": "src/generated/core-validators.ts",
-            "sha256": "7fd05996408da234a7308dfbe6d94c578b06cdd31743c4e6228e5e1d01eca1dc"
+            "sha256": "40c96afb160f961fbbbc90e44298ec372aedf80a32259857920961d1f54260d8"
           },
           {
             "path": "src/index-browser-v4.ts",
@@ -258876,7 +258876,7 @@
           },
           {
             "source": "python/src/umf/action_runtime.py",
-            "sourceSha256": "27f95a5e3425094400937b825f358a7e5e17b160e2c4ef58863a543bda801ba2",
+            "sourceSha256": "1132cea8c30add158917c47d0b00355b2d34ab7f125bccca1cc518d6390645b4",
             "publicCallableNames": [
               "admit_generated_action_invocation",
               "admit_generated_record_values",
@@ -259272,7 +259272,7 @@
         "assets": [
           {
             "source": "python/src/umf/action_runtime_resource_manifest.json",
-            "sourceSha256": "e2d9e9b7a08244a2e544fad36c53c4eb0781e32cc55f1bfed89b995945d6213e",
+            "sourceSha256": "d4acbadb71cdea97f27fd22b3788c5ac47b7f5d96d2fa596b1bfc89522536c59",
             "kind": "inert-package-asset",
             "executableAtRuntime": false,
             "disposition": "inert release input; packaging, authority and byte route require release qualification"
@@ -259869,7 +259869,7 @@
           },
           {
             "source": "python/umf_access/src/umf_access/generated_core.py",
-            "sourceSha256": "50b3fdf4ead86b1e481465e88a01b8eb01e1fb1948470ca1d6725769b0ff16c1",
+            "sourceSha256": "38d18ad56c658e8df0ea586e6ca7ec9c95b35577c70896564eb5245896c56a33",
             "publicCallableNames": [],
             "disposition": "module-level public-by-convention surface; exact contract and Rust route remain unreviewed"
           },
@@ -260244,6 +260244,14 @@
             "sourceSha256": "28f113735fcee9ad47a16aab6fdf721abcbc4e4d3c8c0908195846fd444e3b4c",
             "publicCallableNames": [
               "finish_rrf_rust"
+            ],
+            "disposition": "module-level public-by-convention surface; exact contract and Rust route remain unreviewed"
+          },
+          {
+            "source": "python/umf_access/src/umf_access/rust_target_pin_host.py",
+            "sourceSha256": "596777a50ec84ae8e23415e3f98b4c585748a3e5d219ebb440aec81f623005df",
+            "publicCallableNames": [
+              "matches"
             ],
             "disposition": "module-level public-by-convention surface; exact contract and Rust route remain unreviewed"
           },
@@ -260625,7 +260633,7 @@
           },
           {
             "source": "python/umf_codegen/src/umf_codegen/_release.py",
-            "sourceSha256": "87b33de689e31ed36ff8de7fdf1b670096554767660867ab6e4f6bc8744132c4",
+            "sourceSha256": "37be451a14a9a81a92d47ae2963555dafafc7429839fe23844fbb08e1bc69e29",
             "publicCallableNames": [],
             "disposition": "module-level public-by-convention surface; exact contract and Rust route remain unreviewed"
           },
@@ -260656,42 +260664,42 @@
           },
           {
             "source": "python/umf_codegen/src/umf_codegen/_resources/core.constraints.json",
-            "sourceSha256": "1c2fb812a5d91ffb312940ac3e131f73b87c17f3739ba807b5def44a03f9ad14",
+            "sourceSha256": "974f0984b52bb4085a3940018529983c0a1438f769caa499bc0713a888d8924d",
             "kind": "inert-package-asset",
             "executableAtRuntime": false,
             "disposition": "inert release input; packaging, authority and byte route require release qualification"
           },
           {
             "source": "python/umf_codegen/src/umf_codegen/_resources/core.domain-policy.json",
-            "sourceSha256": "ba1a1acad82ddb48b62f3bfb717dcd09f8b0f05d2fc31399121c12548d80d899",
+            "sourceSha256": "e622e1d3da0644ec526a597ca857c2b2fa9a9c8ccd4619d3a576e5b85e151f20",
             "kind": "inert-package-asset",
             "executableAtRuntime": false,
             "disposition": "inert release input; packaging, authority and byte route require release qualification"
           },
           {
             "source": "python/umf_codegen/src/umf_codegen/_resources/core.package-schema.json",
-            "sourceSha256": "a9e3e3d10d2bc86aca9f31fcbc196ff50390492add1602ca7bc4e72cf1f51d21",
+            "sourceSha256": "266c873224b1f3720da2e2369234f2321c49f52108f3a96ccd98d0202607ea54",
             "kind": "inert-package-asset",
             "executableAtRuntime": false,
             "disposition": "inert release input; packaging, authority and byte route require release qualification"
           },
           {
             "source": "python/umf_codegen/src/umf_codegen/_resources/core.reference-schema.json",
-            "sourceSha256": "ca5fab68784fe1643b4935d5251ebccaa587a9f3e626142772197c268101a3d7",
+            "sourceSha256": "1cb48282291a08136faebeb21dd69c4d198ff9799dfb4da806b21a8a3f7f7824",
             "kind": "inert-package-asset",
             "executableAtRuntime": false,
             "disposition": "inert release input; packaging, authority and byte route require release qualification"
           },
           {
             "source": "python/umf_codegen/src/umf_codegen/_resources/core.schema.json",
-            "sourceSha256": "2339e4066cf46315cd37763627838f1cad2e589e2ef9fbbe706d6f32cb6d7154",
+            "sourceSha256": "eb1b26990ae90c3d33153212d6a36cbb05227cfa80ea6b176495ea90f0704b4c",
             "kind": "inert-package-asset",
             "executableAtRuntime": false,
             "disposition": "inert release input; packaging, authority and byte route require release qualification"
           },
           {
             "source": "python/umf_codegen/src/umf_codegen/_resources/manifest.json",
-            "sourceSha256": "7eec9fb1dfe9845ef3b843e12c0ab7a949c03f527dae5ae44a2c7afb82e9fa86",
+            "sourceSha256": "a2975838588acf30146a00faa5fdd84b4fdfcb63a884beecf350814fa67a0889",
             "kind": "inert-package-asset",
             "executableAtRuntime": false,
             "disposition": "inert release input; packaging, authority and byte route require release qualification"

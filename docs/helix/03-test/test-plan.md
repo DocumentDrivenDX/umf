@@ -3270,7 +3270,7 @@ do not establish clinical validity, native FHIR conformance or population realis
 
 ## Public-company intelligence fixed corpus
 
-US-078 and STP-078 own the AC matrix for FEAT-027/CONTRACT-058. Layer allocation:
+US-078 and STP-078 own the AC matrix for FEAT-027/CONTRACT-059. Layer allocation:
 Bun exercises exact source/context retention and independent screen controls;
 TableSpec archive plus DuckDB independently verify cell values, source/schema
 bytes and FK closure; actual Chromium exercises projections, pack/table/ontology

@@ -189,6 +189,99 @@ fn access_target_pin_matches(
     Ok(pin.matches(&identity))
 }
 
+// Opt-in seam for callers that need Python's live attribute-observation order.
+// Keep these reads explicit: TargetPin.matches builds both field tuples before
+// comparing, observes identity.platform and pin.platform for len(), then
+// observes identity.platform again before _matches_platform reads pin.platform.
+#[pyfunction]
+fn access_target_pin_matches_host(
+    pin_value: &Bound<'_, PyAny>,
+    identity_value: &Bound<'_, PyAny>,
+) -> PyResult<bool> {
+    let identity_fields = [
+        identity_value.getattr("kind")?,
+        identity_value.getattr("backend_id")?,
+        identity_value.getattr("backend_version")?,
+        identity_value.getattr("target_profile")?,
+        identity_value.getattr("binding_sha256")?,
+    ];
+    let pin_fields = [
+        pin_value.getattr("kind")?,
+        pin_value.getattr("backend_id")?,
+        pin_value.getattr("backend_version")?,
+        pin_value.getattr("target_profile")?,
+        pin_value.getattr("binding_sha256")?,
+    ];
+    let identity_fields = identity_fields
+        .iter()
+        .map(|v| exact_tuple_string(v, "identity field"))
+        .collect::<PyResult<Vec<_>>>()?;
+    let pin_fields = pin_fields
+        .iter()
+        .map(|v| exact_tuple_string(v, "pin field"))
+        .collect::<PyResult<Vec<_>>>()?;
+    if identity_fields != pin_fields {
+        return Ok(false);
+    }
+
+    let identity_len_value = identity_value.getattr("platform")?;
+    let identity_len = identity_len_value.len()?;
+    let pin_len_value = pin_value.getattr("platform")?;
+    let pin_len = pin_len_value.len()?;
+    if identity_len != pin_len {
+        return Ok(false);
+    }
+
+    let observed_value = identity_value.getattr("platform")?;
+    let pinned_names_value = pin_value.getattr("platform")?;
+    let pinned_names = platform_names(&pinned_names_value, "pin platform")?;
+    let observed_names = platform_names(&observed_value, "observed platform")?;
+    if has_duplicate_names(&pinned_names) || has_duplicate_names(&observed_names) {
+        return Ok(false);
+    }
+    let pinned_value = pin_value.getattr("platform")?;
+    let pin_platform = target_pin_platform(&pinned_value)?;
+    let observed_platform = observed_target_platform(&observed_value)?;
+    let pin = TargetPin {
+        kind: pin_fields[0].clone(),
+        backend_id: pin_fields[1].clone(),
+        backend_version: pin_fields[2].clone(),
+        target_profile: pin_fields[3].clone(),
+        binding_sha256: pin_fields[4].clone(),
+        platform: pin_platform,
+    };
+    let identity = TargetIdentity {
+        kind: identity_fields[0].clone(),
+        backend_id: identity_fields[1].clone(),
+        backend_version: identity_fields[2].clone(),
+        target_profile: identity_fields[3].clone(),
+        binding_sha256: identity_fields[4].clone(),
+        platform: observed_platform,
+    };
+    Ok(pin.matches(&identity))
+}
+
+fn platform_names(value: &Bound<'_, PyAny>, label: &str) -> PyResult<Vec<String>> {
+    let tuple = exact_tuple(value, label)?;
+    tuple
+        .iter()
+        .map(|item| {
+            let pair = exact_tuple(&item, "platform component")?;
+            if pair.len() != 2 {
+                return Err(PyValueError::new_err(
+                    "platform component must contain two values",
+                ));
+            }
+            exact_tuple_string(&pair.get_item(0)?, "platform name")
+        })
+        .collect()
+}
+
+fn has_duplicate_names(names: &[String]) -> bool {
+    let mut seen = std::collections::HashSet::new();
+    names.iter().any(|name| !seen.insert(name))
+}
+
 fn semantic_field<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
     let Value::Object(fields) = value else {
         return None;
@@ -5628,7 +5721,11 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(project_sec_company_facts, module)?)?;
     module.add_function(wrap_pyfunction!(access_target_pin_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(access_target_pin_matches, module)?)?;
-    module.add("SecProjectionError", module.py().get_type::<SecProjectionError>())?;
+    module.add_function(wrap_pyfunction!(access_target_pin_matches_host, module)?)?;
+    module.add(
+        "SecProjectionError",
+        module.py().get_type::<SecProjectionError>(),
+    )?;
     module.add_function(wrap_pyfunction!(domain_pack_schema, module)?)?;
     module.add_function(wrap_pyfunction!(access_rrf_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_access_rrf_wire, module)?)?;

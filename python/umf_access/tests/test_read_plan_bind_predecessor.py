@@ -6,9 +6,11 @@ import json
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
+from unittest.mock import patch
 
 from pydantic import BaseModel
 from umf_access.catalog import ReadPlan, ReadVariant, TargetPin
+from umf_access.rust_target_pin_host import matches as host_matches
 
 ROOT = Path(__file__).resolve().parents[3]
 PACKET = (
@@ -125,6 +127,11 @@ def execute(case):
     return {"outcome": outcome, "trace": trace}
 
 
+def execute_host_lazy(case):
+    with patch.object(TargetPin, "matches", host_matches):
+        return execute(case)
+
+
 class ReadPlanBindPredecessorTests(unittest.TestCase):
     def test_historical_packet_and_current_results_and_effect_order_match(self):
         packet = json.loads(PACKET.read_text())
@@ -138,6 +145,18 @@ class ReadPlanBindPredecessorTests(unittest.TestCase):
             with self.subTest(case=case["name"]):
                 self.assertEqual(
                     execute(case["name"]),
+                    {"outcome": case["outcome"], "trace": case["trace"]},
+                )
+
+    def test_host_lazy_candidate_matches_all_six_bind_outcomes_and_traces(self):
+        from test_rust_target_pin import load_candidate_library
+
+        load_candidate_library()
+        packet = json.loads(PACKET.read_text())
+        for case in packet["cases"]:
+            with self.subTest(case=case["name"]):
+                self.assertEqual(
+                    execute_host_lazy(case["name"]),
                     {"outcome": case["outcome"], "trace": case["trace"]},
                 )
 

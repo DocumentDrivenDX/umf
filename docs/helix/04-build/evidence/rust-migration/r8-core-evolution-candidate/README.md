@@ -9,7 +9,7 @@ ddx:
   links:
     - id: umf.plan.rust-migration
       kind: informed_by
-    - id: CONTRACT-058
+    - id: CONTRACT-083
       kind: implements
     - id: ADR-006
       kind: informed_by
@@ -41,13 +41,13 @@ built V4 default package or installed-package qualification.
 
 ## Default-route gate remains open
 
-No V4 export was replaced because CONTRACT-058's full acceptance and resource
-matrix is not yet proven. The existing R5 evidence records a source/contract
-version divergence: the contract names a 0.8.0 precondition while the frozen
-predecessor and current generated core schema use 0.10.0. The seven-case packet
-does not establish every listed negative control. The contract also has a
-duplicate `CONTRACT-058` identity used by the legal-appellate fixture; its
-disposition is open.
+No V4 export was replaced because CONTRACT-083's full acceptance and resource
+matrix is not yet proven. CONTRACT-083 admits core 0.10.0 and retains the
+historical profile-token spelling. The frozen predecessor is an earlier
+0.10.0 snapshot. The seven-case packet does not establish every listed negative
+control. The former duplicate `CONTRACT-058` identity is resolved by keeping
+that ID with the legal-appellate fixture and assigning Core Evolution
+CONTRACT-083.
 
 ## Follow-up source probes — 2026-10-26
 
@@ -90,6 +90,5 @@ refusal. These are scoped first-fault observations, not a complete matrix.
 The current TypeScript `ValueWork` counter likewise accepts 1,000,000 units
 and rejects the next unit. Existing package-level Node/Bun/Chromium receipts
 use an older source closure and are not current package evidence. The
-CONTRACT-058 duplicate identity and 0.8.0-governance/current-0.10.0-source
-mismatch remain unresolved, so the adapter remains private; neither V4
+CONTRACT-083's full acceptance and resource limits remain open, so the adapter remains private; neither V4
 default route nor the 922-gap ledger count changes.
