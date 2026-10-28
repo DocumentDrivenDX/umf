@@ -71,6 +71,7 @@ def _current_source_pins(repository: Path) -> dict[str, str]:
         "sdistClosureVerifierSha256": "tools/_python_sdist.py",
         "workflowSha256": ".github/workflows/python-coordinated-release.yml",
         "installedPairSmokeFixtureSha256": "fixtures/actions-binding/source.json",
+        "binaryClosureVerifierSha256": "scripts/rust-migration/r4/check_binary_closure.py",
     }
     result: dict[str, str] = {}
     for key, relative in paths.items():
@@ -135,6 +136,56 @@ def _verify_cohort(
         raise ValueError(f"Pair receipt is not Linux: {cohort}")
     if expected_system == "Darwin" and "macos" not in str(host.get("platform", "")).lower():
         raise ValueError(f"Pair receipt is not macOS: {cohort}")
+    provisioner = host.get("pythonProvisioner")
+    expected_provisioner = (
+        "uv 0.13.3 managed CPython (python-build-standalone)"
+        if expected_system == "Darwin"
+        else "actions/setup-python@v5"
+    )
+    if provisioner != expected_provisioner:
+        raise ValueError(f"Pair receipt Python provisioner differs from expected cohort: {cohort}")
+    _check_digest(host.get("pythonExecutableSha256"), f"{cohort} Python executable")
+    closure = pair.get("binaryClosure")
+    if type(closure) is not dict or closure.get("status") != "passed":
+        raise ValueError(f"R4 binary closure did not pass: {cohort}")
+    report = closure.get("report")
+    if type(report) is not dict or report.get("status") != "passed":
+        raise ValueError(f"R4 binary closure report is missing or failed: {cohort}")
+    report_bytes = (json.dumps(report, sort_keys=True, indent=2) + "\n").encode()
+    if hashlib.sha256(report_bytes).hexdigest() != _check_digest(
+        closure.get("reportSha256"), f"{cohort} binary closure report"
+    ):
+        raise ValueError(f"R4 binary closure report hash differs: {cohort}")
+    binaries = report.get("binaries")
+    expected_format = "ELF" if expected_system == "Linux" else "Mach-O"
+    if type(binaries) is not list or len(binaries) != 2:
+        raise ValueError(f"R4 binary closure must cover the extension and CLI: {cohort}")
+    observed_binary_names: list[str] = []
+
+    def validate_binary_tree(binary: Any) -> None:
+        if type(binary) is not dict or binary.get("format") != expected_format or binary.get("errors"):
+            raise ValueError(f"R4 binary closure has unexpected binaries or errors: {cohort}")
+        children = binary.get("bundledLoadClosure", [])
+        if type(children) is not list:
+            raise ValueError(f"R4 binary closure has a malformed nested load report: {cohort}")
+        for child in children:
+            validate_binary_tree(child)
+
+    for binary in binaries:
+        validate_binary_tree(binary)
+        if type(binary) is not dict:
+            raise ValueError(f"R4 binary closure has a malformed binary report: {cohort}")
+        path = Path(str(binary.get("path", "")))
+        if (
+            path.name == "_rust_core.abi3.so" and path.parent.name == "umf"
+        ) or (
+            path.name == "umf" and path.parent.name == "_bin" and path.parent.parent.name == "umf"
+        ):
+            observed_binary_names.append(path.name)
+            continue
+        raise ValueError(f"R4 binary closure is outside the installed UMF package: {cohort}")
+    if observed_binary_names.count("_rust_core.abi3.so") != 1 or observed_binary_names.count("umf") != 1:
+        raise ValueError(f"R4 binary closure must cover one extension and one CLI: {cohort}")
     if core.get("schema") != CORE_SCHEMA or core.get("source_payload_verification") != "passed":
         raise ValueError(f"Core receipt is not a passed payload receipt: {cohort}")
     if core.get("semantic_core_version") != "0.10.0":

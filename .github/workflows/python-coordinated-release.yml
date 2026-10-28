@@ -17,6 +17,7 @@ on:
       - 'tools/verify_python_artifacts.py'
       - 'tools/verify_python_release_pair.py'
       - 'tools/verify_python_release_matrix.py'
+      - 'scripts/rust-migration/r4/check_binary_closure.py'
       - 'python/tests/test_coordinated_python_release.py'
       - 'python/tests/test_python_release_matrix.py'
       - '.github/workflows/python-coordinated-release.yml'
@@ -46,6 +47,21 @@ jobs:
             python-architecture: x64
             python-version: '3.13.16'
             expected-platform: linux_x86_64
+          - cohort: macos-arm64-cpython-311
+            runs-on: macos-15
+            python-architecture: arm64
+            python-version: '3.11.17'
+            expected-platform: macos_arm64
+          - cohort: macos-arm64-cpython-312
+            runs-on: macos-15
+            python-architecture: arm64
+            python-version: '3.12.15'
+            expected-platform: macos_arm64
+          - cohort: macos-arm64-cpython-313
+            runs-on: macos-15
+            python-architecture: arm64
+            python-version: '3.13.16'
+            expected-platform: macos_arm64
     runs-on: ${{ matrix.runs-on }}
     steps:
       - name: Require a fresh workflow run for artifact custody
@@ -56,9 +72,30 @@ jobs:
         run: |
           printf 'CARGO_TARGET_DIR=%s/umf-coordinated-target\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
       - uses: actions/setup-python@v5
+        if: ${{ startsWith(matrix.cohort, 'linux-') }}
         with:
           python-version: ${{ matrix.python-version }}
           architecture: ${{ matrix.python-architecture }}
+      - uses: astral-sh/setup-uv@v6
+        if: ${{ startsWith(matrix.cohort, 'macos-') }}
+        with:
+          version: '0.13.3'
+      - name: Provision exact managed macOS CPython
+        if: ${{ startsWith(matrix.cohort, 'macos-') }}
+        env:
+          EXPECTED_PYTHON: ${{ matrix.python-version }}
+        run: |
+          uv python install --managed-python "$EXPECTED_PYTHON"
+          python_path="$(uv python find --managed-python "$EXPECTED_PYTHON")"
+          test -x "$python_path"
+          printf 'UMF_PYTHON=%s\n' "$python_path" >> "$GITHUB_ENV"
+          printf 'PYO3_PYTHON=%s\n' "$python_path" >> "$GITHUB_ENV"
+      - name: Select setup-python interpreter on Linux
+        if: ${{ startsWith(matrix.cohort, 'linux-') }}
+        run: |
+          python_path="$(command -v python)"
+          printf 'UMF_PYTHON=%s\n' "$python_path" >> "$GITHUB_ENV"
+          printf 'PYO3_PYTHON=%s\n' "$python_path" >> "$GITHUB_ENV"
       - uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: 1.90.0
@@ -67,17 +104,29 @@ jobs:
           EXPECTED_COHORT: ${{ matrix.cohort }}
           EXPECTED_PYTHON: ${{ matrix.python-version }}
         run: |
-          python - <<'PY'
+          "$UMF_PYTHON" - <<'PY'
           import os, platform, sys, sysconfig
           cohort = os.environ['EXPECTED_COHORT']
           machine = platform.machine().lower()
-          if cohort not in {'linux-x86_64-cpython-311', 'linux-x86_64-cpython-312', 'linux-x86_64-cpython-313'}:
-              raise SystemExit('Unexpected cohort; Linux qualification is fail-closed')
-          expected = 'x86_64'
+          expected_hosts = {
+              'linux-x86_64-cpython-311': ('Linux', 'x86_64'),
+              'linux-x86_64-cpython-312': ('Linux', 'x86_64'),
+              'linux-x86_64-cpython-313': ('Linux', 'x86_64'),
+              'macos-arm64-cpython-311': ('Darwin', 'arm64'),
+              'macos-arm64-cpython-312': ('Darwin', 'arm64'),
+              'macos-arm64-cpython-313': ('Darwin', 'arm64'),
+          }
+          if cohort not in expected_hosts:
+              raise SystemExit(f'Unexpected cohort: {cohort}')
+          expected_system, expected = expected_hosts[cohort]
+          if sys.implementation.name != 'cpython':
+              raise SystemExit(f'Expected CPython, found {sys.implementation.name}')
           if machine != expected:
               raise SystemExit(f'Expected {expected}, found {machine}')
-          if cohort.startswith('linux-x86_64-') and sys.platform != 'linux':
+          if expected_system == 'Linux' and sys.platform != 'linux':
               raise SystemExit('Unexpected Linux cohort')
+          if expected_system == 'Darwin' and sys.platform != 'darwin':
+              raise SystemExit('Unexpected macOS cohort')
           if platform.python_version() != os.environ['EXPECTED_PYTHON']:
               raise SystemExit(f"Expected Python {os.environ['EXPECTED_PYTHON']}; found {platform.python_version()}")
           print(f'python={sys.version} platform={sysconfig.get_platform()} machine={machine}')
@@ -85,12 +134,13 @@ jobs:
           rustc -Vv > "$RUNNER_TEMP/rustc-version.txt"
           cargo --version > "$RUNNER_TEMP/cargo-version.txt"
       - name: Install pinned build tools
-        run: python -m pip install 'build==1.3.0' 'hatchling==1.27.0' 'twine==6.2.0'
+        run: |
+          "$UMF_PYTHON" -m pip install 'build==1.3.0' 'hatchling==1.27.0' 'twine==6.2.0'
       - name: Build both distributions for this host
         run: |
-          python -m build --no-isolation --wheel --sdist python
-          python -m build --no-isolation --wheel --sdist python/umf_codegen
-          python -m twine check python/dist/* python/umf_codegen/dist/*
+          "$UMF_PYTHON" -m build --no-isolation --wheel --sdist python
+          "$UMF_PYTHON" -m build --no-isolation --wheel --sdist python/umf_codegen
+          "$UMF_PYTHON" -m twine check python/dist/* python/umf_codegen/dist/*
           mkdir -p "$RUNNER_TEMP/umf-coordinated-artifacts"
           cp python/dist/* python/umf_codegen/dist/* "$RUNNER_TEMP/umf-coordinated-artifacts/"
       - name: Verify core wheel payload and offline extracted-sdist rebuild
@@ -98,7 +148,7 @@ jobs:
           EXPECTED_PLATFORM: ${{ matrix.expected-platform }}
           CARGO_NET_OFFLINE: 'true'
         run: |
-          python tools/verify_python_artifacts.py \
+          "$UMF_PYTHON" tools/verify_python_artifacts.py \
             --wheel python/dist/*.whl \
             --sdist python/dist/*.tar.gz \
             --rebuilt-wheel-directory "$RUNNER_TEMP/umf-core-sdist-rebuilt" \
@@ -107,14 +157,14 @@ jobs:
             --receipt "$RUNNER_TEMP/umf-core-artifact-receipt.json"
       - name: Verify the installed coordinated pair and codegen sdist rebuild
         run: |
-          python tools/verify_python_release_pair.py \
+          "$UMF_PYTHON" tools/verify_python_release_pair.py \
             --repository . \
             --artifacts "$RUNNER_TEMP/umf-coordinated-artifacts" \
             --core-receipt "$RUNNER_TEMP/umf-core-artifact-receipt.json" \
             --receipt "$RUNNER_TEMP/umf-coordinated-release-receipt.json"
       - name: Run source tests against the installed pair
         run: |
-          python -m venv "$RUNNER_TEMP/umf-pair-tests"
+          "$UMF_PYTHON" -m venv "$RUNNER_TEMP/umf-pair-tests"
           "$RUNNER_TEMP/umf-pair-tests/bin/python" -m pip install 'pydantic==2.11.9' 'pytest==8.4.2'
           "$RUNNER_TEMP/umf-pair-tests/bin/python" -m pip install --no-index --no-deps \
             "$RUNNER_TEMP/umf-coordinated-artifacts"/umf_core-*.whl \
@@ -124,27 +174,52 @@ jobs:
             "$GITHUB_WORKSPACE/python/umf_codegen/tests" \
             "$GITHUB_WORKSPACE/python/tests/test_core.py" \
             "$GITHUB_WORKSPACE/python/tests/test_rust_core.py"
+      - name: Check installed R4 binary dependency closure
+        run: |
+          pair_python="$RUNNER_TEMP/umf-pair-tests/bin/python"
+          package_root="$("$pair_python" -I -c 'import pathlib, umf; print(pathlib.Path(umf.__file__).resolve().parent)')"
+          extension="$(find "$package_root" -maxdepth 1 -type f -name '_rust_core*.so' -print -quit)"
+          cli_binary="$package_root/_bin/umf"
+          test -n "$extension"
+          test -f "$cli_binary"
+          "$UMF_PYTHON" scripts/rust-migration/r4/check_binary_closure.py \
+            --package-root "$package_root" --cli-binary "$cli_binary" \
+            "$extension" "$cli_binary" > "$RUNNER_TEMP/umf-r4-binary-closure.json"
       - name: Attach toolchain provenance to the receipt
         run: |
-          python - "$RUNNER_TEMP/umf-core-artifact-receipt.json" \
+          "$UMF_PYTHON" - "$RUNNER_TEMP/umf-core-artifact-receipt.json" \
             "$RUNNER_TEMP/umf-coordinated-release-receipt.json" \
-            "$RUNNER_TEMP/rustc-version.txt" "$RUNNER_TEMP/cargo-version.txt" <<'PY'
+            "$RUNNER_TEMP/rustc-version.txt" "$RUNNER_TEMP/cargo-version.txt" \
+            "$RUNNER_TEMP/umf-r4-binary-closure.json" <<'PY'
           import hashlib, json, os, sys
           from pathlib import Path
-          core, pair, rustc, cargo = map(Path, sys.argv[1:])
+          core, pair, rustc, cargo, binary_closure = map(Path, sys.argv[1:])
           result = json.loads(pair.read_text())
+          closure = json.loads(binary_closure.read_text())
+          if closure.get('status') != 'passed' or len(closure.get('binaries', [])) != 2:
+              raise SystemExit('R4 binary closure report is incomplete or failed')
+          if any(item.get('errors') or item.get('format') not in {'ELF', 'Mach-O'} for item in closure['binaries']):
+              raise SystemExit('R4 binary closure report contains errors or an unknown format')
           result['cohort'] = os.environ['COHORT']
           result['sourceRevision'] = os.environ['SOURCE_REVISION']
           result['runId'] = os.environ['RUN_ID']
           result['rustcVersionSha256'] = hashlib.sha256(rustc.read_bytes()).hexdigest()
           result['cargoVersionSha256'] = hashlib.sha256(cargo.read_bytes()).hexdigest()
           result['corePayloadReceiptSha256'] = hashlib.sha256(core.read_bytes()).hexdigest()
+          result['binaryClosure'] = {
+              'status': 'passed',
+              'reportSha256': hashlib.sha256((json.dumps(closure, sort_keys=True, indent=2) + '\n').encode()).hexdigest(),
+              'report': closure,
+          }
+          result['host']['pythonExecutableSha256'] = hashlib.sha256(Path(sys.executable).resolve().read_bytes()).hexdigest()
+          result['host']['pythonProvisioner'] = os.environ['PYTHON_PROVISIONER']
           pair.write_text(json.dumps(result, sort_keys=True, separators=(',', ':')) + '\n')
           PY
         env:
           COHORT: ${{ matrix.cohort }}
           SOURCE_REVISION: ${{ github.sha }}
           RUN_ID: ${{ github.run_id }}
+          PYTHON_PROVISIONER: ${{ startsWith(matrix.cohort, 'macos-') && 'uv 0.13.3 managed CPython (python-build-standalone)' || 'actions/setup-python@v5' }}
       - uses: actions/upload-artifact@v4
         with:
           name: python-release-${{ matrix.cohort }}
@@ -177,13 +252,13 @@ jobs:
           pattern: python-release-*
           path: ${{ runner.temp }}/umf-release-cohorts
           merge-multiple: false
-      - name: Require all three Linux receipts from this source revision and workflow run
+      - name: Require all six receipts from this source revision and workflow run
         run: |
           python tools/verify_python_release_matrix.py \
             --artifacts "$RUNNER_TEMP/umf-release-cohorts" \
             --source-revision "$GITHUB_SHA" \
             --run-id "$GITHUB_RUN_ID" \
-            --cohort-set linux-only \
+            --cohort-set six-cohort \
             --receipt "$RUNNER_TEMP/umf-python-release-matrix.json"
       - name: Prepare Rust-pair artifact custody manifest
         run: |

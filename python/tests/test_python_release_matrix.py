@@ -78,14 +78,33 @@ def _cohort_artifact(root: Path, cohort: str, expected: tuple[str, str, str]) ->
         "sourceRevision": REVISION,
         "runId": RUN_ID,
         "workflowRun": RUN_ID,
-        "host": {"python": python_version, "machine": machine, "platform": "Linux-6.8" if system == "Linux" else "macOS-27.0.1"},
+        "host": {
+            "python": python_version,
+            "machine": machine,
+            "platform": "Linux-6.8" if system == "Linux" else "macOS-27.0.1",
+            "pythonProvisioner": "actions/setup-python@v5" if system == "Linux" else "uv 0.13.3 managed CPython (python-build-standalone)",
+            "pythonExecutableSha256": _hash(f"python {cohort}".encode()),
+        },
         "coreSdistVerificationReceiptSha256": _hash(core_path.read_bytes()),
         "corePayloadReceiptSha256": _hash(core_path.read_bytes()),
         "pair": {"core": {"version": "0.11.0", "wheel": core_wheel}, "codegen": {"version": "0.2.0", "wheel": CODEGEN_WHEEL}, "requires": "umf-core==0.11.0", "installedImportAndGeneration": "passed", "installedCliHelp": "passed"},
         "artifacts": {name: {"sha256": _hash(payload), "size": len(payload)} for name, payload in payloads.items()},
         "codegenSdistOfflineRebuild": {"matchesDirectWheel": True, "wheel": CODEGEN_WHEEL, "sha256": _hash(payloads[CODEGEN_WHEEL])},
         "source": matrix._current_source_pins(ROOT),
+        "binaryClosure": {
+            "status": "passed",
+            "report": {
+                "status": "passed",
+                "binaries": [
+                    {"format": "ELF" if system == "Linux" else "Mach-O", "path": "/venv/lib/python/site-packages/umf/_rust_core.abi3.so", "errors": []},
+                    {"format": "ELF" if system == "Linux" else "Mach-O", "path": "/venv/lib/python/site-packages/umf/_bin/umf", "errors": []},
+                ],
+            },
+        },
     }
+    pair["binaryClosure"]["reportSha256"] = _hash(
+        (json.dumps(pair["binaryClosure"]["report"], sort_keys=True, indent=2) + "\n").encode()
+    )
     _write_json(directory / "umf-coordinated-release-receipt.json", pair)
 
 
@@ -157,6 +176,47 @@ def test_six_cohort_aggregation_binds_one_run_and_common_source(tmp_path: Path) 
         CODEGEN_WHEEL,
         CODEGEN_SDIST,
     }
+
+
+@pytest.mark.parametrize("damage", ["status", "report-hash", "wrong-format", "external-error", "nested-error", "outside-package", "duplicate-cli"])
+def test_matrix_rejects_incomplete_binary_closure_receipt(tmp_path: Path, damage: str) -> None:
+    root = _matrix(tmp_path)
+    pair_path = root / "python-release-macos-arm64-cpython-312" / "umf-coordinated-release-receipt.json"
+    pair = json.loads(pair_path.read_text())
+    if damage == "status":
+        pair["binaryClosure"]["status"] = "failed"
+    elif damage == "report-hash":
+        pair["binaryClosure"]["reportSha256"] = "0" * 64
+    elif damage == "wrong-format":
+        pair["binaryClosure"]["report"]["binaries"][0]["format"] = "ELF"
+        pair["binaryClosure"]["reportSha256"] = _hash(
+            (json.dumps(pair["binaryClosure"]["report"], sort_keys=True, indent=2) + "\n").encode()
+        )
+    elif damage == "external-error":
+        pair["binaryClosure"]["report"]["binaries"][0]["errors"] = ["external dependency"]
+        pair["binaryClosure"]["reportSha256"] = _hash(
+            (json.dumps(pair["binaryClosure"]["report"], sort_keys=True, indent=2) + "\n").encode()
+        )
+    elif damage == "nested-error":
+        pair["binaryClosure"]["report"]["binaries"][0]["bundledLoadClosure"] = [
+            {"format": "Mach-O", "path": "/venv/site-packages/umf/libhelper.dylib", "errors": ["external dependency"]}
+        ]
+        pair["binaryClosure"]["reportSha256"] = _hash(
+            (json.dumps(pair["binaryClosure"]["report"], sort_keys=True, indent=2) + "\n").encode()
+        )
+    elif damage == "duplicate-cli":
+        pair["binaryClosure"]["report"]["binaries"][0]["path"] = "/venv/lib/python/site-packages/umf/_bin/umf"
+        pair["binaryClosure"]["reportSha256"] = _hash(
+            (json.dumps(pair["binaryClosure"]["report"], sort_keys=True, indent=2) + "\n").encode()
+        )
+    else:
+        pair["binaryClosure"]["report"]["binaries"][0]["path"] = "/tmp/_rust_core.abi3.so"
+        pair["binaryClosure"]["reportSha256"] = _hash(
+            (json.dumps(pair["binaryClosure"]["report"], sort_keys=True, indent=2) + "\n").encode()
+        )
+    _write_json(pair_path, pair)
+    with pytest.raises(ValueError, match="binary closure"):
+        matrix.verify_matrix(root, REVISION, RUN_ID)
 
 
 @pytest.mark.parametrize("mutation", ["missing", "extra", "duplicate-claim"])
