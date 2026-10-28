@@ -8818,7 +8818,127 @@ replay passes the exact 14-case CONTRACT-062 profile in Node 26.12.1, Bun
 1.4.3, and Chromium 153.0.8010.12. The three raw receipts, archive member
 map, package manifest, and hashes are preserved in
 `r8-security-not-retirement-darwin-20261027/`. This is one of the two required
-platform cohorts. The matching hosted Linux x86_64 archive and receipts,
+platform cohorts. The hosted Linux x86_64 archive and receipts,
 two-cohort validator result, and independent review remain open. The default
 route remains unretired; no complete-port or release claim follows from this
 capture.
+
+The final Darwin archive also passed the broader installed SDK replay in
+Node 26.12.1, Bun 1.4.3, and Chromium 153.0.8010.12. The raw receipt records
+31 R3 cases plus numeric, Cardinality, Facets, Keys, Bit128, Compact Dataset,
+Security And/Or, route-tamper and missing/corrupt native/WASM checks; it pins
+the same archive and source closure and verifies 1,807 archive members. Its
+elapsed time was 1,086,195 ms. The receipt is preserved beside the targeted
+`securityNot` evidence. A separate local macOS arm64/CPython 3.13.16 offline
+rebuild from the corrected `umf-core` sdist produced a verified
+`cp311-abi3-macosx_11_0_arm64` wheel with the native extension and bundled
+CLI; its artifact verifier passed source-payload checks. The exact sdist,
+wheel, and member hashes are recorded in
+`r8-python-sdist-arrow-ipc-20261027/`. Neither local result substitutes for
+the hosted Linux SDK cohort or the six coordinated Python release cohorts.
+The current PR head is `eca698152a3dde440dfebeaa306bb42cade94f82`; its
+hosted jobs are queued. A local Docker-emulated Linux x86_64 archive built
+from the same `eca69815` snapshot now shares source closure `5ff72dd3`, with
+zero transforms and SHA-256
+`df1414877895e260ad88222771dd9736aa5d8c1eb69dcc7939f2af11af11c82f`.
+Its installed Node 26.12.1, Bun 1.4.3, and Chromium 153.0.8010.12
+`securityNot` replays each passed all 14 exact cases and Rust dispatch counts;
+package tests passed 9/9 and the installed Core Cardinality replay passed.
+The raw receipts and manifests are preserved in
+`r8-security-not-retirement-linux-20261027/`. The pinned `eca69815` `/3`
+validator was independently rerun against the Darwin and local Linux archives
+and all six host receipts; it accepted exactly the Node and browser
+`securityNot` routes as `retired` for that historical source closure. The
+input and result are preserved with the Linux packet. This is local emulation
+evidence for the pinned snapshot, not hosted CI or the changed current source.
+Final-source archive qualification and its `/3` validation remain open; the
+current ledger default-route gap remains unretired.
+
+### R8 sparse-copy bridge and receipt reproducibility checkpoint — 2026-10-27
+
+The opt-in Rust `copyJson` host-input route now preserves the narrow dynamic
+Proxy case in which its descriptor snapshot contains array holes but the
+later live density observation accepts the array. Rust carries those hole
+indexes with RFC 6901 paths in a versioned result carrier; the Node/WASM
+adapters validate the full deletion plan before restoring holes in the
+decoded result. Stable sparse arrays still receive the predecessor refusal,
+and existing `copy_host_json` callers retain their prior result type. Focused
+`host_json` Rust tests passed 31/31. An independently rerun Bun/Node binding
+suite passed 16/16, including escaped nested paths, inherited array-index
+setters, malformed metadata atomicity, the 100,000-value boundary, and a
+4,000,001-unit string. The WASM Bun packet passed; real Chromium
+153.0.8010.12 passed 12 comparison cases plus the boundary with zero external
+requests. This is opt-in local evidence, not installed SDK or default-route
+qualification. The later text-frame transport addresses the measured
+long-string cost on this opt-in route. Direct TypeScript `copyJson` imports
+remain open.
+
+The [CSV Boolean Darwin packet](evidence/rust-migration/r8-csv-boolean-current-darwin-20261027/README.md)
+pins the earlier `eca69815` fixed-point SDK archive and all three installed
+hosts to the 44-case validation, 17-case verification, and two Record
+presence-control packets. It is one platform cohort only; the two CSV
+Boolean logical gaps remain open. The V4 `validateCoreRecordValues` and
+`validateCoreSemanticTypeValue` wrapper rows now map their exact declaration
+shapes to the existing accepted Rust owners and record source selection as
+unqualified. A focused ledger test passed; both default routes remain open
+with unproven installed binding status.
+
+The PostgreSQL RRF current-source replay now emits distinct Node/Bun host
+identities, runtime versions, packet hashes, and native addon hashes. A
+receipt builder verifies the frozen packet, complete source closure, six
+build artifacts, host identities, and Chromium WASM pins before writing new
+evidence; six focused positive and negative tests pass, including swapped
+hosts and stale source, artifact, and packet bytes. The raw harness still
+reports a five-case count and mismatches rather than per-case fingerprints.
+The final text-frame change sends `copyJson` string chunks as JSON text only
+on its opt-in host-input route; other host-json operations retain the tagged
+numeric frame. Node and WASM Rust adapters parse the text frame with the
+UTF-16-aware reader and enforce the 8,192-unit request and 52 KiB frame
+bounds. Focused Node/Bun tests passed 17/17, including the 100,000-value and
+4,000,001-unit boundaries; WASM Bun and real Chromium passed their focused
+packets. On the same Node addon, a 4,000,001-unit opt-in copy took 13.39–13.44
+seconds with numeric frames and 0.584–0.615 seconds with text frames. This is
+a local latency result, not a memory or installed-route claim.
+
+After metamodel regeneration and the Compact index refreeze, a combined build
+validated 1,994 current source files under closure
+`58faa724a3ca71315ab8337a8bc060841ba6a882797a8bbb85a22025f29b270b`
+and manifest SHA-256
+`7acacd541cb89814ca04f20d3443ac3b166290fac9d4a8bd1173876e8f5d0d87`.
+The five frozen Compact payloads remained byte-identical; only their index's
+generated schema provenance changed. Fresh Node, Bun, and Chromium replays
+against that one build passed RRF 5/5, Compact Dataset 5/5, and Security
+And/Or 68/68 with zero mismatches. RRF receipts pin the exact native addon,
+WASM binary, glue, frozen packet, host identity, and source closure; Compact
+and Security receipts pin the same build and source closure. Prior intermediate
+receipts are retained under `historical/pre-final-text-frame-refresh-20261027/`
+within the three canonical evidence directories. The inventory now has SHA-256
+`7fe469d31fbe0afbdc3244631a45c541222e31f91a07514ac4b9a1cb39988cf1`;
+the recaptured condition-aware ledger has SHA-256
+`87063695645a4d66ea075a0ae95aa66f0f976509e09dfaaa940fde3d2db8a75d`.
+It still reports 922 open logical executable default-route gaps and zero
+retired. Two additional exact V4 wrapper shapes are source-selected, raising
+the per-root Rust-selected declaration count to 59, but neither has installed
+route qualification. The strict per-file Python RRF facade import policy,
+its negative controls, the metamodel fixed-point check, typecheck, and access,
+unified-client, and Rust boundary checks pass. These source-built replays do
+not satisfy installed SDK or two-platform retirement gates.
+The old `eca69815` Darwin archive, and any local Linux archive built from
+that same snapshot, remain evidence for that revision only. A later
+two-platform retirement or release gate needs matching archives from the
+final source closure.
+
+The next Record Values retirement gate must use the current operation
+2.0.0/core 0.10.0 profile; CONTRACT-049's 1.0.0/core 0.8.0 clause remains
+historical. The installed `eca69815` SDK packet exercises only absent versus
+present-null controls and records zero Rust calls, so it does not qualify the
+V4 `validateCoreRecordValues` route. Build a checked installed-route harness
+from the frozen 24 semantic vectors, two resource controls, and 19 raw-host
+admission cases. Compare exact output/error JSON, path, trace, getter count,
+and per-case default/reference Rust dispatch on Node, Bun, and real Chromium;
+include the 100,001-value browser refusal and no-Node-global assertion. Pin
+the full source closure, installed package entries, native/WASM artifacts and
+packet bytes, then repeat on a clean same-source Linux x86_64 archive before
+reviewing any declaration retirement. Memory claims require a separate
+measured peak-memory gate: the prior 100,001-value opt-in probe reached about
+403 MB in Node and 547 MB in Bun.

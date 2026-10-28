@@ -5,6 +5,7 @@ import {resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {copyJson as reference} from '../../../../src/model/json.ts';
 import {createCopyJsonHostInputEngine} from '../copy-json-host-input.js';
+import {projectCopyJsonHostInput} from '../src/host-json.js';
 
 const packagePath = process.argv[2];
 if (!packagePath) throw new Error('Usage: bun bindings/core/wasm/tests/copy-json-host-input.mjs <wasm-bindgen-pkg-dir>');
@@ -32,6 +33,7 @@ const cases = [
   }],
   ['custom prototype', () => Object.create({hidden: true})],
   ['symbol', () => ({[Symbol('not-json')]: true})],
+  ['ordinary sparse array', () => Object.assign([], {1: 'present', length: 2})],
   ['cycle', () => {
     const value = {};
     value.self = value;
@@ -63,6 +65,31 @@ assert.deepEqual(engine.copyJson(proxy), reference(proxy));
 assert.deepEqual(trace, ['getPrototypeOf', 'ownKeys', 'ownKeys', 'descriptor:a', 'getPrototypeOf', 'ownKeys', 'ownKeys', 'descriptor:a']);
 assert.equal(trace.some((item) => item.startsWith('get:')), false);
 
+const changingArray = () => {
+  const target = [10, 20];
+  let ownKeysCalls = 0;
+  return new Proxy(target, {
+    ownKeys(value) {
+      ownKeysCalls++;
+      return ownKeysCalls <= 2 ? ['1', 'length'] : Reflect.ownKeys(value);
+    },
+  });
+};
+for (const make of [changingArray, () => ({'a/b~': changingArray()})]) {
+  const expected = reference(make());
+  const actual = engine.copyJson(make());
+  assert.deepEqual(actual, expected);
+  const result = Array.isArray(actual) ? actual : actual['a/b~'];
+  assert.equal(result.length, 2);
+  assert.equal(Object.hasOwn(result, 0), false);
+  assert.equal(Object.hasOwn(result, 1), true);
+}
+assert.throws(() => projectCopyJsonHostInput({
+  __umf_copy_json_host_input_v1: true,
+  value: [null, 4],
+  sparseArrays: [{path: '', holes: [0, 0]}],
+}), /Malformed Rust sparse-array hole/);
+
 const sentinel = {reason: 'host trap'};
 for (const value of [
   new Proxy({}, {getPrototypeOf() { throw sentinel; }}),
@@ -84,6 +111,11 @@ assert.equal(Object.getPrototypeOf(copied), null);
 assert.equal(Object.hasOwn(copied, '__proto__'), true);
 assert.equal(Object.hasOwn(copied, 'constructor'), true);
 assert.equal(Object.hasOwn(copied, '\ud800'), true);
+
+const isolated = '\ud800';
+const splitPair = 'x'.repeat(8191) + '😀' + '\udfff';
+assert.equal(engine.copyJson(isolated), reference(isolated));
+assert.equal(engine.copyJson(splitPair), reference(splitPair));
 
 const long = 'x'.repeat(4_000_001);
 assert.equal(engine.copyJson(long), reference(long));

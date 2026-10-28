@@ -1,75 +1,13 @@
 {
-  "format": "umf.r8.access-rrf-cli-current-source/0.1.0",
+  "format": "umf.r8.access-rrf-current-source-receipt/1",
   "status": "pass",
-  "capturedAt": "2026-10-27",
-  "platform": "macOS arm64",
-  "toolchain": {
-    "rustc": "rustc 1.90.0 (1159e78c4 2025-09-14)",
-    "cargo": "cargo 1.90.0 (840b83a10 2025-07-30)",
-    "node": "v26.12.1"
-  },
-  "build": {
-    "command": "CARGO_TARGET_DIR=/private/tmp/umf-r8-rrf-cli-final PATH=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:$PATH cargo build -p umf-cli --bin umf",
-    "result": "success",
-    "binary": "/private/tmp/umf-r8-rrf-cli-final/debug/umf",
-    "binarySha256": "181b72d4669994cdc27e3720e7b62ca49a72fcc6f4ad851c5c54c71ea6a08f3c",
-    "reportedVersion": {"profile": "umf-r8-access-rrf/0.1.0", "version": "0.1.0"}
-  },
-  "sourceClosure": {
-    "scope": "Direct CLI dispatch, RRF scorer, tagged-wire binding and replay inputs; Cargo.lock pins transitive crate versions. This is the operation source slice, not a hash of every transitive Rust module compiled into the executable.",
-    "sha256": "25cdd516a1992f36a2e6a4641d4be3202217d6d2d6195080ad318407dc550e54",
-    "files": [
-      {"path":"Cargo.toml","sha256":"e9ac3286aff98bd4be64516ce7166258d06f8839e5316a09fa2caf454d7ef89e"},
-      {"path":"Cargo.lock","sha256":"c55364fa3058e7a90bb2833dda6288621b863bed13a629c9bbf2f706401d602c"},
-      {"path":"crates/umf-cli/Cargo.toml","sha256":"b2022ceddd4fe636bd60bd442c296e1cefba980f442a9ea94612d30ff6a83d15"},
-      {"path":"crates/umf-cli/src/main.rs","sha256":"df1b146f7425ad214c9bda548497b863e7a96a90bd9de03aba9e36b6b64c5eef"},
-      {"path":"crates/umf-core/Cargo.toml","sha256":"95dd21a18ac1b3e0ed9f129c00ef35738176c2b7684873a20797c5e24782541a"},
-      {"path":"crates/umf-core/src/full_modules.rs","sha256":"85d8ba2407331fde67d3247446d180526738d6bc62a33c9e3c613bd02b4c55bf"},
-      {"path":"crates/umf-core/src/access_search_rrf.rs","sha256":"178dc09c638e3eb127889423a7eb4e56083d1a5a27cd105dac299557669e19ec"},
-      {"path":"crates/umf-core-wire/Cargo.toml","sha256":"b37090d28cc8aec419bca6eb908492bdadca17c2822619c04e25458cd21751dc"},
-      {"path":"crates/umf-core-wire/src/lib.rs","sha256":"7f71c52fc2cf55cf0255bca750bab38b143a579babf05ab2a821732d79ee6b53"},
-      {"path":"crates/umf-core-wire/src/access_rrf_binding.rs","sha256":"f80f744a7775a95b2e09b57a0d41010c70ec5e6f40a339f12629045308a1b2e4"},
-      {"path":"crates/umf-tagged-wire/Cargo.toml","sha256":"f30d3980e8caee3118be56687bad4a900bf90205794fde42201c47f5511a676d"},
-      {"path":"crates/umf-tagged-wire/src/lib.rs","sha256":"3285026b35faeef611532d8705c980d27233afa5b2844720ef8268675e360a09"},
-      {"path":"docs/helix/04-build/evidence/rust-migration/r8-postgres-search-rrf-20261027/predecessor.json","sha256":"3e4467f63ff324c35fe4b46824a75d830608a03bf3ee08f722e85ddc370243a1"},
-      {"path":"scripts/rust-migration/r8/replay-access-rrf-cli.mjs","sha256":"1d2d06f05dafc152ce40f88c2d684fdd8a0f39404664be985bebefb9457fb8e0"}
-    ]
-  },
-  "replay": {
-    "command": "node scripts/rust-migration/r8/replay-access-rrf-cli.mjs /private/tmp/umf-r8-rrf-cli-final/debug/umf",
-    "status": "pass",
-    "predecessorSha256": "3e4467f63ff324c35fe4b46824a75d830608a03bf3ee08f722e85ddc370243a1",
-    "cases": [
-      "rrf-overlap-rank-accumulation-and-topk",
-      "rrf-complete-key-tie-order",
-      "rrf-equal-key-items-use-python-equality",
-      "rrf-empty-legs",
-      "rrf-oversized-positive-constant-dsl-admits-python-overflows"
-    ],
-    "scoringOperations": 6,
-    "totalInvocations": 12,
-    "comparison": "Ordered dense identity and exact binary64 hexadecimal bits; tie order is supplied from Python-sorted frozen string key tuples.",
-    "overflow": {"code":"RRF_CONSTANT_OVERFLOW","message":"int too large to convert to float"},
-    "controls": [
-      {"name":"malformed-wire","code":"WIRE_FORMAT","message":"Expected JSON string"},
-      {"name":"wrong-profile","code":"REQUEST","message":"RRF profile is required"},
-      {"name":"wrong-operation","code":"REQUEST","message":"Unknown RRF operation"},
-      {"name":"resource-refusal","code":"RESOURCE_LIMIT","message":"Maximum work exceeded"},
-      {"name":"deadline-refusal","code":"DEADLINE_EXCEEDED","message":"Deadline exceeded"},
-      {"name":"identity-bound-refusal","code":"RRF_LIMIT","message":"RRF identity or topK bound exceeded"},
-      {"name":"three-identity-noninvolutive-key-order-control","identities":[1,2,0]}
-    ]
-  },
-  "focusedRustTests": {
-    "command": "CARGO_TARGET_DIR=/private/tmp/umf-r8-rrf-cli-final PATH=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:$PATH cargo test -p umf-core-wire access_rrf_binding::tests --lib",
-    "passed": 4,
-    "failed": 0
-  },
-  "hostOnlyPredecessorCases": [
-    "single-leg native score preservation and truncation",
-    "no-fusion arity refusal",
-    "divergent-row equality refusal and error precedence",
-    "target-defined fusion refusal"
+  "manifestSha256": "7acacd541cb89814ca04f20d3443ac3b166290fac9d4a8bd1173876e8f5d0d87",
+  "sourceClosureSha256": "58faa724a3ca71315ab8337a8bc060841ba6a882797a8bbb85a22025f29b270b",
+  "predecessorPacketSha256": "3e4467f63ff324c35fe4b46824a75d830608a03bf3ee08f722e85ddc370243a1",
+  "hosts": [
+    "node",
+    "bun",
+    "chromium"
   ],
-  "qualification": "Opt-in pure RRF CLI evidence on private local macOS arm64. It does not qualify PostgreSQL execution, installed Python or JavaScript package behavior, default routing, cross-platform release behavior, or the four listed host-only predecessor cases."
+  "scope": "Current-source Node/Bun/Chromium replay only; no installed SDK, PostgreSQL execution, default routing, release qualification, or archive claim."
 }

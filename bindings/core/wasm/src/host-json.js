@@ -34,14 +34,21 @@ const mapGet = Function.call.bind(Map.prototype.get);
 const mapSet = Function.call.bind(Map.prototype.set);
 const mapHas = Function.call.bind(Map.prototype.has);
 const mapClear = Function.call.bind(Map.prototype.clear);
+const mapForEach = Function.call.bind(Map.prototype.forEach);
 const weakGet = Function.call.bind(WeakMap.prototype.get);
 const weakSet = Function.call.bind(WeakMap.prototype.set);
 const NativeArray = Array;
 const NativeMap = Map;
+const NativeSet = Set;
+const setAdd = Function.call.bind(Set.prototype.add);
+const setHas = Function.call.bind(Set.prototype.has);
+const setForEach = Function.call.bind(Set.prototype.forEach);
 const NativeWeakMap = WeakMap;
 const NativeTypeError = TypeError;
 const NativeError = Error;
 const arraySlice = Function.call.bind(Array.prototype.slice);
+const stringSplit = Function.call.bind(String.prototype.split);
+const stringReplace = Function.call.bind(String.prototype.replace);
 const nativeParseInt = Number.parseInt;
 const safeInteger = Number.isSafeInteger.bind(Number);
 const stringSlice = Function.call.bind(String.prototype.slice);
@@ -117,7 +124,71 @@ function cardinalityHostInput(addon, resources, operation, inputs, ErrorType = E
 }
 
 function copyJsonHostInput(addon, value, ErrorType = Error) {
-  return executeHostInput(addon, undefined, 'executeCopyJsonHostJson', [value], ErrorType, undefined, [], undefined, true);
+  return executeHostInput(addon, undefined, 'executeCopyJsonHostJson', [value], ErrorType, undefined, [], undefined, true, false,
+    carrier => projectCopyJsonHostInput(fromRustWire(carrier)), false, false, true);
+}
+
+function projectCopyJsonHostInput(carrier) {
+  if (!carrier || typeof carrier !== 'object'
+      || !hasOwn(carrier, '__umf_copy_json_host_input_v1')
+      || carrier.__umf_copy_json_host_input_v1 !== true
+      || !hasOwn(carrier, 'value') || !hasOwn(carrier, 'sparseArrays')
+      || !isArray(carrier.sparseArrays)) throw new NativeTypeError('Malformed Rust copyJson host-input carrier');
+  const value = carrier.value;
+  const seenPaths = new NativeSet();
+  const deletionPlans = new NativeMap();
+  for (let sparseIndex = 0; sparseIndex < carrier.sparseArrays.length; sparseIndex++) {
+    const sparse = carrier.sparseArrays[sparseIndex];
+    if (!sparse || typeof sparse !== 'object' || typeof sparse.path !== 'string'
+        || !isArray(sparse.holes) || setHas(seenPaths, sparse.path)) throw new NativeTypeError('Malformed Rust sparse-array metadata');
+    setAdd(seenPaths, sparse.path);
+    const segments = parseSparseArrayPath(sparse.path);
+    let target = value;
+    for (let segmentIndex = 0; segmentIndex < segments.length; segmentIndex++) {
+      const segment = segments[segmentIndex];
+      if (target === null || typeof target !== 'object' || !hasOwn(target, segment)) throw new NativeTypeError('Malformed Rust sparse-array path');
+      target = target[segment];
+    }
+    if (!isArray(target)) throw new NativeTypeError('Malformed Rust sparse-array target');
+    let planned = mapGet(deletionPlans, target);
+    if (planned === undefined) { planned = new NativeSet(); mapSet(deletionPlans, target, planned); }
+    let previous = -1;
+    for (let holeIndex = 0; holeIndex < sparse.holes.length; holeIndex++) {
+      const index = sparse.holes[holeIndex];
+      if (!safeInteger(index) || index <= previous || index < 0 || index >= target.length
+          || target[index] !== null || setHas(planned, index)) {
+        throw new NativeTypeError('Malformed Rust sparse-array hole');
+      }
+      previous = index;
+      setAdd(planned, index);
+    }
+  }
+  mapForEach(deletionPlans, (planned, target) => setForEach(planned, index => { delete target[index]; }));
+  return value;
+}
+
+function parseSparseArrayPath(path) {
+  if (path === '') return [];
+  if (path[0] !== '/') throw new NativeTypeError('Malformed Rust sparse-array path');
+  const rawSegments = stringSplit(stringSlice(path, 1), '/');
+  const segments = new NativeArray(rawSegments.length);
+  let canonical = '';
+  for (let segmentIndex = 0; segmentIndex < rawSegments.length; segmentIndex++) {
+    const segment = rawSegments[segmentIndex];
+    let decoded = '';
+    for (let index = 0; index < segment.length; index++) {
+      if (segment[index] === '~') {
+        const escape = segment[index + 1];
+        if (escape !== '0' && escape !== '1') throw new NativeTypeError('Malformed Rust sparse-array path');
+        decoded += escape === '0' ? '~' : '/';
+        index++;
+      } else decoded += segment[index];
+    }
+    defineProperty(segments, segmentIndex, {value: decoded, writable: true, enumerable: true, configurable: true});
+    canonical += '/' + stringReplace(stringReplace(decoded, /~/g, '~0'), /\//g, '~1');
+  }
+  if (canonical !== path) throw new NativeTypeError('Malformed Rust sparse-array path');
+  return segments;
 }
 
 // Private route probe. It does not alter either V4 package root selection.
@@ -170,7 +241,7 @@ function coreProtobufSourceHostResponse(runtime, operation, value, ErrorType = E
   return executeHostInput(runtime, undefined, operation, [value], ErrorType, controlBridge, [], undefined, true, true);
 }
 
-function executeHostInput(addon, resources, operation, inputs, ErrorType, controlBridge, operationArgs = [], preparedResourcesWire, retainedRuntime = false, includeBinary = false, resultProjection = fromRustWire, opaqueReturn = false, allowPrimitiveReturn = false) {
+function executeHostInput(addon, resources, operation, inputs, ErrorType, controlBridge, operationArgs = [], preparedResourcesWire, retainedRuntime = false, includeBinary = false, resultProjection = fromRustWire, opaqueReturn = false, allowPrimitiveReturn = false, copyStringChunksAsJsonText = false) {
   const handles = new NativeMap();
   const objectHandles = new NativeWeakMap();
   const primitiveOpaqueHandles = new NativeMap();
@@ -292,6 +363,7 @@ function executeHostInput(addon, resources, operation, inputs, ErrorType, contro
       const request = parse(text);
       const value = mapGet(handles, request.handle);
       let reply;
+      let directJsonReply = false;
       switch (request.event) {
         case 'read-property': {
           const key = fromUnits(request.keyUnits);
@@ -495,7 +567,15 @@ function executeHostInput(addon, resources, operation, inputs, ErrorType, contro
           if (textValue === undefined || request.offset > textValue.length) throw new NativeTypeError('Unknown host string token or offset');
           const remaining = textValue.length - request.offset;
           const count = remaining < request.maxUnits ? remaining : request.maxUnits;
-          const units = new NativeArray(count);
+          if (copyStringChunksAsJsonText) {
+            reply = transportRecord();
+            reply.kind = 'utf16-text-chunk';
+            reply.offset = request.offset;
+            reply.text = stringSlice(textValue, request.offset, request.offset + count);
+            directJsonReply = true;
+            break;
+          }
+          const units = transportArray(count);
           for (let i = 0; i < count; i++) units[i] = charCodeAt(textValue, request.offset + i);
           reply = {kind: 'utf16-chunk', offset: request.offset, units};
           break;
@@ -509,7 +589,7 @@ function executeHostInput(addon, resources, operation, inputs, ErrorType, contro
         }
         default: throw new NativeTypeError('Unknown umf.host-json/1 event');
       }
-      return stringify(wire(reply));
+      return stringify(directJsonReply ? reply : wire(reply));
     } catch (error) {
       if (error instanceof HostProtocolError) return stringify(wire({kind: 'protocol-error'}));
       return recordThrown(error);
@@ -596,7 +676,7 @@ function fromRustWire(value) {
     }
     case 'array': {
       const result = new NativeArray(value.items.length);
-      for (let i = 0; i < result.length; i++) result[i] = fromRustWire(value.items[i]);
+      for (let i = 0; i < result.length; i++) defineProperty(result, i, {value: fromRustWire(value.items[i]), writable: true, enumerable: true, configurable: true});
       return result;
     }
     case 'object': {
@@ -623,7 +703,7 @@ function fromRustWireOrdinary(value) {
     case 'string': return fromUnits(value.units);
     case 'array': {
       const result = new NativeArray(value.items.length);
-      for (let i = 0; i < result.length; i++) result[i] = fromRustWireOrdinary(value.items[i]);
+      for (let i = 0; i < result.length; i++) defineProperty(result, i, {value: fromRustWireOrdinary(value.items[i]), writable: true, enumerable: true, configurable: true});
       return result;
     }
     case 'object': {
@@ -654,4 +734,4 @@ function fromUnits(units) {
   return result;
 }
 
-export {isHostJsonResponseError, declareCoreSchemaPropertiesHostInput, schemaPropertiesHostInput, cardinalityHostInput, copyJsonHostInput, coreElementSelectionHostInput, coreOpaqueReturnHostInput, kindRuntimeValidationHostInput, createCoreElementSelectionHostInputEngine, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse};
+export {isHostJsonResponseError, declareCoreSchemaPropertiesHostInput, schemaPropertiesHostInput, cardinalityHostInput, copyJsonHostInput, projectCopyJsonHostInput, coreElementSelectionHostInput, coreOpaqueReturnHostInput, kindRuntimeValidationHostInput, createCoreElementSelectionHostInputEngine, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse};

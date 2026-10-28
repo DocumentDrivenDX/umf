@@ -102,7 +102,22 @@ try {
     const engine = createCopyJsonHostInputEngine(countedWasm);
 
     function describe(run, value) {
-      try { return {ok: true, json: JSON.stringify(run(value))}; }
+      try {
+        const result = run(value);
+        const sparse = [];
+        const walk = (item, path) => {
+          if (Array.isArray(item)) {
+            const holes = [];
+            for (let index = 0; index < item.length; index++) if (!Object.hasOwn(item, index)) holes.push(index);
+            if (holes.length) sparse.push({path, holes});
+            for (let index = 0; index < item.length; index++) if (Object.hasOwn(item, index)) walk(item[index], `${path}/${index}`);
+          } else if (item && typeof item === 'object') {
+            for (const key of Object.keys(item)) walk(item[key], `${path}/${key.replace(/~/g, '~0').replace(/\//g, '~1')}`);
+          }
+        };
+        walk(result, '');
+        return {ok: true, json: JSON.stringify(result), sparse};
+      }
       catch (error) {
         return {
           ok: false,
@@ -117,13 +132,14 @@ try {
     function pair(name, make) {
       const trace = [];
       globalThis.trace = trace;
-      const input = make();
-      const referenceResult = describe(reference, input);
+      const referenceResult = describe(reference, make());
       const referenceTrace = [...trace];
       trace.length = 0;
-      const candidateResult = describe(value => engine.copyJson(value), input);
+      const candidateResult = describe(value => engine.copyJson(value), make());
       const candidateTrace = [...trace];
-      if (JSON.stringify(referenceResult) !== JSON.stringify(candidateResult)) throw new Error(`Result mismatch: ${name}`);
+      if (JSON.stringify(referenceResult) !== JSON.stringify(candidateResult)) {
+        throw new Error(`Result mismatch: ${name}: ${JSON.stringify({referenceResult, candidateResult})}`);
+      }
       if (JSON.stringify(referenceTrace) !== JSON.stringify(candidateTrace)) throw new Error(`Trace mismatch: ${name}`);
       if (name === 'proxy reflection order' && candidateTrace.some(item => item.startsWith('get:'))) {
         throw new Error('Proxy property getter was invoked');
@@ -133,6 +149,17 @@ try {
       }
       return {name, result: 'match', trace: candidateTrace};
     }
+
+    const dynamicArray = () => {
+      const target = [10, 20];
+      let ownKeysCalls = 0;
+      return new Proxy(target, {
+        ownKeys(value) {
+          ownKeysCalls++;
+          return ownKeysCalls <= 2 ? ['1', 'length'] : Reflect.ownKeys(value);
+        },
+      });
+    };
 
     const cases = [
       pair('accessor', () => {
@@ -158,9 +185,14 @@ try {
         globalThis.sentinel = sentinel;
         return new Proxy({}, {getPrototypeOf() { throw sentinel; }});
       }),
+      pair('dynamic sparse snapshot root', dynamicArray),
+      pair('dynamic sparse snapshot nested escaped path', () => ({'a/b~': dynamicArray()})),
       pair('depth 129', () => { let value = 0; for (let i = 0; i < 129; i++) value = [value]; return value; }),
       pair('unsafe integer', () => ({n: 9007199254740992})),
       pair('lone-surrogate key', () => Object.defineProperty(Object.create(null), '\ud800', {value: 1, enumerable: true})),
+      pair('isolated-surrogate string', () => '\ud800'),
+      pair('surrogate-pair split across text frames', () => 'x'.repeat(8191) + '😀' + '\udfff'),
+      pair('long string across many text frames', () => 'x'.repeat(131_073)),
     ];
     const memory = () => performance.memory ? {
       usedJSHeapSize: performance.memory.usedJSHeapSize,
@@ -195,11 +227,13 @@ try {
 
   assert.match(browser.version(), /^\d+\./, `Invalid Chromium version ${browser.version()}`);
   assert.equal(result.engineVersion, 'umf-core-r2');
-  assert.equal(result.wasmCopyCalls, 12);
+  assert.equal(result.wasmCopyCalls, 17);
   assert.deepEqual(result.cases.map(item => item.name), [
     'accessor', 'custom prototype', 'cycle', 'hidden property', 'symbol key',
-    'proxy reflection order', 'proxy thrown-object identity', 'depth 129',
-    'unsafe integer', 'lone-surrogate key',
+    'proxy reflection order', 'proxy thrown-object identity', 'dynamic sparse snapshot root',
+    'dynamic sparse snapshot nested escaped path', 'depth 129',
+    'unsafe integer', 'lone-surrogate key', 'isolated-surrogate string',
+    'surrogate-pair split across text frames', 'long string across many text frames',
   ]);
   assert.equal(result.cases.every(item => item.result === 'match'), true);
   assert.deepEqual(result.cases.find(item => item.name === 'proxy reflection order').trace,

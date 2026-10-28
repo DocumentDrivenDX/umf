@@ -1,0 +1,30 @@
+{
+  "format": "umf.r8.python-sdist-offline-wheel-local/1",
+  "status": "pass",
+  "host": {
+    "os": "darwin",
+    "arch": "arm64",
+    "python": "3.13.16",
+    "rustc": "1.90.0",
+    "hatchling": "1.32.4"
+  },
+  "sdist": {
+    "filename": "umf_core-0.11.0.tar.gz",
+    "sha256": "10775ff0b9106caf17b9846e759c4798baa24922ad413da0296618c7c62d3d97",
+    "arrowIpcPackagePath": "umf_core-0.11.0/spec/extensions/arrow-ipc/package.json",
+    "arrowIpcPackageSha256": "2853107a7c644ef416a1b53b00ae35b3c476d99d7eec5b38c8d4b8f472d22aae"
+  },
+  "offlineRebuiltWheel": {
+    "filename": "umf_core-0.11.0-cp311-abi3-macosx_11_0_arm64.whl",
+    "sha256": "c2e17b302c4bddcf0c913d1abffdaaeef5ba616078d06f23c3917acf33dff17c",
+    "containsNativeExtension": "umf/_rust_core.abi3.so",
+    "containsBundledCli": "umf/_bin/umf",
+    "isolatedImport": "pass",
+    "sourcePayloadVerification": "passed",
+    "verifierReceiptSha256": "b2dc4758603c7028d07576a09b98d2aeb4055b33875a3fec4cdc5e9e27d1b16f"
+  },
+  "limits": [
+    "Local macOS arm64 and CPython 3.13.16 only; does not qualify the hosted release matrix.",
+    "The wheel was built from an extracted sdist with Cargo offline and then unzipped into a separate import target for an isolated import smoke test; no complete installed test suite was run on this wheel."
+  ]
+}

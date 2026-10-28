@@ -295,6 +295,20 @@ pub trait HostJsonReflection {
     fn release_descriptor_snapshot(&mut self, token: u64);
 }
 
+/// A sparse array produced when a proxy's final density observation differs
+/// from the descriptor snapshot used to build the predecessor result.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct HostJsonSparseArray {
+    pub path: Utf16,
+    pub holes: Vec<usize>,
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub struct HostJsonCopy {
+    pub value: Value,
+    pub sparse_arrays: Vec<HostJsonSparseArray>,
+}
+
 /// Copy one opaque host value using the `src/model/json.ts` predecessor order.
 pub fn copy_host_json(
     root: HostHandle,
@@ -302,6 +316,16 @@ pub fn copy_host_json(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     copy_host_json_at_path(root, host, ctx, &Utf16::default(), 0)
+}
+
+/// Copy one host value and retain sparse holes that the predecessor's
+/// descriptor-snapshot algorithm can create after a changing proxy check.
+pub fn copy_host_json_with_sparse_holes(
+    root: HostHandle,
+    host: &mut dyn HostJsonReflection,
+    ctx: &mut Context<'_>,
+) -> Result<HostJsonCopy, EngineError> {
+    copy_host_json_at_path_sparse(root, host, ctx, &Utf16::default(), 0, true)
 }
 
 /// Copy an opaque host value at its final-result location. Callers provide the
@@ -314,8 +338,20 @@ pub(crate) fn copy_host_json_at_path(
     path: &Utf16,
     depth: usize,
 ) -> Result<Value, EngineError> {
+    copy_host_json_at_path_sparse(root, host, ctx, path, depth, false).map(|copy| copy.value)
+}
+
+fn copy_host_json_at_path_sparse(
+    root: HostHandle,
+    host: &mut dyn HostJsonReflection,
+    ctx: &mut Context<'_>,
+    path: &Utf16,
+    depth: usize,
+    preserve_holes: bool,
+) -> Result<HostJsonCopy, EngineError> {
     let mut active = BTreeSet::new();
     let mut values = 0usize;
+    let mut sparse_arrays = Vec::new();
     visit(
         root,
         host,
@@ -324,7 +360,10 @@ pub(crate) fn copy_host_json_at_path(
         depth,
         &mut values,
         &mut active,
+        &mut sparse_arrays,
+        preserve_holes,
     )
+    .map(|value| HostJsonCopy { value, sparse_arrays })
 }
 
 /// Ask the host to execute the predecessor's native Unicode-count operation
@@ -378,6 +417,8 @@ fn visit(
     depth: usize,
     values: &mut usize,
     active: &mut BTreeSet<HostHandle>,
+    sparse_arrays: &mut Vec<HostJsonSparseArray>,
+    preserve_holes: bool,
 ) -> Result<Value, EngineError> {
     charge_value(ctx, path, depth, values)?;
 
@@ -484,7 +525,7 @@ fn visit(
             }
             let child = descriptor.value.expect("checked above");
             let copied =
-                copy_descriptor_value(child, host, ctx, &property_path, depth + 1, values, active)?;
+                copy_descriptor_value(child, host, ctx, &property_path, depth + 1, values, active, sparse_arrays, preserve_holes)?;
             if !seen.insert(key.units().to_vec()) {
                 return Err(error("NON_JSON", path, "Duplicate object key"));
             }
@@ -514,17 +555,24 @@ fn visit(
         if sparse {
             return Err(error("NON_JSON", path, "Sparse arrays are not JSON values"));
         }
-        if array_items
-            .keys()
-            .enumerate()
-            .any(|(expected, actual)| expected != *actual)
-        {
-            return Err(error(
-                "HOST_JSON_UNREPRESENTABLE",
-                path,
-                "Host array snapshot produced holes that the Rust JSON value cannot represent",
-            ));
+        let length = array_items.keys().next_back().map_or(0, |last| last + 1);
+        let holes: Vec<_> = (0..length).filter(|index| !array_items.contains_key(index)).collect();
+        if !holes.is_empty() {
+            if !preserve_holes {
+                return Err(error(
+                    "HOST_JSON_UNREPRESENTABLE",
+                    path,
+                    "Host array snapshot produced holes that the Rust JSON value cannot represent",
+                ));
+            }
+            sparse_arrays.push(HostJsonSparseArray { path: path.clone(), holes });
         }
+        let mut dense = Vec::with_capacity(length);
+        for index in 0..length {
+            dense.push(array_items.remove(&index).unwrap_or(Value::Null));
+        }
+        active.remove(&handle);
+        return Ok(Value::Array(dense));
     }
     active.remove(&handle);
     if is_array {
@@ -542,10 +590,12 @@ fn copy_descriptor_value(
     depth: usize,
     values: &mut usize,
     active: &mut BTreeSet<HostHandle>,
+    sparse_arrays: &mut Vec<HostJsonSparseArray>,
+    preserve_holes: bool,
 ) -> Result<Value, EngineError> {
     match child {
         HostDescriptorValue::Object(handle) => {
-            visit(handle, host, ctx, path, depth, values, active)
+            visit(handle, host, ctx, path, depth, values, active, sparse_arrays, preserve_holes)
         }
         scalar => {
             charge_value(ctx, path, depth, values)?;
@@ -2301,6 +2351,18 @@ mod tests {
         assert_eq!(ordinary_host.seen, expected);
         assert_eq!(ordinary_host.released, vec![12]);
         ordinary_host.done();
+
+        let mut dynamic_script = script.clone();
+        dynamic_script.last_mut().unwrap().1 = HostJsonReply::Boolean(false);
+        let mut hole_host = ScriptedHost::new(dynamic_script.clone());
+        let mut ctx = Context::ordinary();
+        let copied = copy_host_json_with_sparse_holes(1, &mut hole_host, &mut ctx).unwrap();
+        assert_eq!(copied.value, Value::Array(vec![Value::Null, Value::Number(5.0)]));
+        assert_eq!(copied.sparse_arrays, vec![HostJsonSparseArray {
+            path: Utf16::default(),
+            holes: vec![0],
+        }]);
+        hole_host.done();
 
         script.last_mut().unwrap().1 = HostJsonReply::Boolean(false);
         let mut dynamic_host = ScriptedHost::new(std::mem::take(&mut script));

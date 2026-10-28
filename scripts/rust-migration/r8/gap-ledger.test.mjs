@@ -611,7 +611,7 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
   assert.equal(reference.length, expected.length);
   assert.ok(reference.every(row => row.sourceSelectedImplementation === null));
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
-  assert.equal(ledger.counts.sourceSelectedRustOverrides, 114);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 118);
   const archivedGate = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/gate-result.json', 'utf8'));
   assert.equal(archivedGate.status, 'pass');
   assert.equal(archivedGate.archive.sourceClosureSha256, '6f4f21c1dfbdde5959f6e5386419c0c2f90b3a8f0512d148b60825e93afce593');
@@ -729,7 +729,7 @@ test('V4 relationship consumer exports are hybrid bindings without Rust consumer
     assert.equal(rows[2].sourceSelectedImplementation, null);
     assert.equal(rows[2].defaultRouteRetirement.status, 'reference-only');
   }
-  assert.equal(ledger.counts.sourceSelectedRustOverrides, 114);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 118);
   assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 84);
   assert.deepEqual(ledger.counts.executableDefaultRouteRetirementsByRoute, { 'package-root-node': 0, 'package-root-browser': 0 });
 
@@ -2916,6 +2916,52 @@ test('Arrow IPC exact capture maps only three opt-in functions and retires no de
     assert.ok(row.acceptedOperationEvidence.evidenceClosure.some(item => item.path.endsWith('/r5-arrow-ipc-capture-bindings-current-source-20261027/chromium.json')));
     assert.ok(row.acceptedOperationEvidence.evidenceClosure.some(item => item.path.endsWith('/r5-arrow-ipc-python-20261027/receipt.json')));
   }
+});
+
+test('Record Values and Semantic Type Value V4 wrappers map only their exact Rust-bound shapes', () => {
+  const names = ['validateCoreRecordValues', 'validateCoreSemanticTypeValue'];
+  const symbols = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/inventory.json', 'utf8')).symbols
+    .filter(row => names.includes(row.exportName) && ['package-root-node', 'package-root-browser', 'package-reference'].includes(row.routeId));
+  assert.equal(symbols.length, 6);
+  const ledger = buildLedger({ ...args, inventory: { symbols } });
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 2);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 2);
+  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 0);
+  const expected = new Map([
+    ['validateCoreRecordValues', ['umf_core::record_values::validate_core_record_values', 'source-selected-current-route-unqualified']],
+    ['validateCoreSemanticTypeValue', ['umf_core::core_semantic_types::validate_core_semantic_type_value', 'source-selected-current-route-unqualified']],
+  ]);
+  for (const name of names) {
+    const [owner, selectionStatus] = expected.get(name);
+    for (const routeId of ['package-root-node', 'package-root-browser', 'package-reference']) {
+      const row = ledger.rows.find(item => item.routeId === routeId && item.exportName === name);
+      assert.equal(row.acceptedRustOperation, owner, `${routeId}:${name}`);
+      assert.equal(row.defaultRouteRetirement.status, routeId === 'package-reference' ? 'reference-only' : 'open');
+      if (routeId === 'package-reference') {
+        assert.equal(row.sourceSelectedImplementation, null);
+        assert.equal(row.bindingRouteStatus, 'unproven');
+      } else {
+        assert.equal(row.sourceSelectedImplementation.status, selectionStatus);
+        assert.equal(row.sourceSelectedImplementation.rustOwner, owner);
+        assert.equal(row.bindingRouteStatus, 'unproven');
+        assert.equal(row.bindingRoute, null);
+        assert.match(row.sourceSelectedImplementation.qualificationStatus, /no immutable current-source installed archive receipts/);
+      }
+    }
+  }
+
+  const wrongKind = symbols.map(row => row.routeId === 'package-root-node' && row.exportName === 'validateCoreRecordValues'
+    ? { ...row, declarationKind: 'FunctionDeclaration' } : row);
+  assert.throws(() => buildLedger({ ...args, inventory: { symbols: wrongKind } }), /declaration multiplicity differs/);
+  const wrongInitializer = symbols.map(row => row.routeId === 'package-root-browser' && row.exportName === 'validateCoreRecordValues'
+    ? { ...row, initializerShape: 'other-expression' } : row);
+  assert.throws(() => buildLedger({ ...args, inventory: { symbols: wrongInitializer } }), /declaration multiplicity differs/);
+  const wrongSemanticKind = symbols.map(row => row.routeId === 'package-root-node' && row.exportName === 'validateCoreSemanticTypeValue'
+    ? { ...row, declarationKind: 'VariableDeclaration' } : row);
+  assert.throws(() => buildLedger({ ...args, inventory: { symbols: wrongSemanticKind } }), /declaration multiplicity differs/);
+  const movedSource = symbols.map(row => row.routeId === 'package-root-browser' && row.exportName === 'validateCoreSemanticTypeValue'
+    ? { ...row, source: 'src/access/rust-semantic-types-default.ts' } : row);
+  assert.throws(() => buildLedger({ ...args, inventory: { symbols: movedSource } }), /declaration multiplicity differs/);
 });
 
 test('Record Values and Semantic Types V4 shapes normalize only exact declarations', () => {

@@ -64,6 +64,7 @@ try {
   assert.deepEqual(pageErrors, []);
   const receipt = {
     format: 'umf-r8-access-rrf-chromium-current-source/1',
+    host: 'chromium',
     browser: browser.version(),
     userAgent: await page.evaluate(() => navigator.userAgent),
     packetSha256: hash(packetBytes),

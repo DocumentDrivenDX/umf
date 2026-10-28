@@ -39,5 +39,18 @@ The raw [Node](node.json), [Bun](bun.json), and [Chromium](chromium.json)
 receipts preserve every case outcome, trace, observed Rust-call count, and
 route artifact hash. [Archive provenance](cohort.json) binds them to the
 fixed-point source manifest, package manifest, and verified member map.
+The broader [installed SDK replay](installed-sdk-replay.json) also passed on
+this archive: Node v26.12.1, Bun 1.4.3, and Chromium 153.0.8010.12, with
+`totalElapsedMs` 1,086,195. It covered 31 R3 cases; 27 JavaScript numeric and
+6 numeric-boundary cases; 66 cardinality, 19 facets, 14 keys, 11 bit128, and
+19 compact Dataset cases; and 68 Security And/Or cases with 30 Rust calls per
+runtime. The replay additionally recorded three route-tamper refusals and
+refusal of missing/corrupt native and WASM artifacts. These counts describe
+only the frozen installed replay suite on this Darwin arm64 archive, not full
+API or platform support. The raw replay receipt preserves its original
+`securityAndOrInstalled.receiptPath`, an ephemeral absolute path into the
+local ignored `.cache/sdk-distribution/` directory; it is retained verbatim
+and is not a portable artifact reference.
+
 This Darwin cohort alone does not satisfy the two-platform retirement gate or
 retire the logical route gap.

@@ -1,0 +1,136 @@
+{
+  "format": "umf.r8.default-route-retirement-evidence/3",
+  "status": "pass",
+  "liveSourceManifest": {
+    "path": "docs/helix/04-build/evidence/rust-migration/r8-security-not-retirement-darwin-20261027/archive-source-cohort.json",
+    "sha256": "dfa8e1f4fe821df8c250a0dc8213e88f3dbef149c6ce468c403d0ee9f1a82c11"
+  },
+  "cohorts": [
+    {
+      "id": "darwin-arm64",
+      "platform": {
+        "os": "darwin",
+        "arch": "aarch64",
+        "nodeArch": "arm64",
+        "nativeTarget": "aarch64-apple-darwin"
+      },
+      "archive": {
+        "path": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/.cache/sdk-distribution/umf-sdk.tgz",
+        "sha256": "13035f2cec34e1e55c86eb46f5a685cfbf344628575c321e5e36e1d9be52898b",
+        "sourceClosureSha256": "5ff72dd348c40122d8e79e10e13dd54f23a484f9b58896ea2038729ec2582e17",
+        "sourceInputCount": 3595,
+        "generatedTransformCount": 0,
+        "packageManifestSha256": "1bd5f6cc6db6a5e9ef0e395a19aa6504e8a9a130a2fcbd3faaf4effbac7bb23a"
+      },
+      "memberManifest": {
+        "path": "docs/helix/04-build/evidence/rust-migration/r8-security-not-retirement-darwin-20261027/archive-members.json",
+        "sha256": "c8aadb26a6d9854633c8c7f1fed4f5d2bae70d8470bbe5f03ab0389054bc9133"
+      },
+      "archivePackageManifest": {
+        "path": "docs/helix/04-build/evidence/rust-migration/r8-security-not-retirement-darwin-20261027/archive-package.json",
+        "sha256": "1bd5f6cc6db6a5e9ef0e395a19aa6504e8a9a130a2fcbd3faaf4effbac7bb23a"
+      }
+    },
+    {
+      "id": "linux-x86_64",
+      "platform": {
+        "os": "linux",
+        "arch": "x86_64",
+        "nodeArch": "x64",
+        "nativeTarget": "x86_64-unknown-linux-gnu"
+      },
+      "archive": {
+        "path": "/private/tmp/umf-linux-out/umf-sdk-linux-x64.tgz",
+        "sha256": "df1414877895e260ad88222771dd9736aa5d8c1eb69dcc7939f2af11af11c82f",
+        "sourceClosureSha256": "5ff72dd348c40122d8e79e10e13dd54f23a484f9b58896ea2038729ec2582e17",
+        "sourceInputCount": 3595,
+        "generatedTransformCount": 0,
+        "packageManifestSha256": "1bd5f6cc6db6a5e9ef0e395a19aa6504e8a9a130a2fcbd3faaf4effbac7bb23a"
+      },
+      "memberManifest": {
+        "path": "docs/helix/04-build/evidence/rust-migration/r8-security-not-retirement-linux-20261027/archive-members.json",
+        "sha256": "5c698bb5d1d19a5d8fb87e3c7ab7b30027dcdeccbbbeedd8d9fa36634557a7b9"
+      },
+      "archivePackageManifest": {
+        "path": "docs/helix/04-build/evidence/rust-migration/r8-security-not-retirement-linux-20261027/archive-package.json",
+        "sha256": "1bd5f6cc6db6a5e9ef0e395a19aa6504e8a9a130a2fcbd3faaf4effbac7bb23a"
+      }
+    }
+  ],
+  "operations": [
+    {
+      "exportName": "securityNot",
+      "logicalDeclarationKey": "securityNot\u0000securityNot\u0000condition-selected-root-binding\u00000",
+      "contract": {
+        "id": "CONTRACT-062",
+        "path": "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md",
+        "sha256": "84959ee6114e10fcfb233bbe14c65554fe4bbb1217fa3f482d1e8c11af2a1a52"
+      },
+      "rustOwner": "umf_core::security_logic::security_not",
+      "rows": [
+        {
+          "routeId": "package-root-browser",
+          "logicalDeclarationKey": "securityNot\u0000securityNot\u0000condition-selected-root-binding\u00000",
+          "exportName": "securityNot",
+          "source": "src/index-browser-v4.ts",
+          "sourceSha256": "747b19252f70a5435cee61bc66f10428aba1389d339bd68673c0620f058f815a",
+          "declarationKind": "VariableDeclaration"
+        },
+        {
+          "routeId": "package-root-node",
+          "logicalDeclarationKey": "securityNot\u0000securityNot\u0000condition-selected-root-binding\u00000",
+          "exportName": "securityNot",
+          "source": "src/index-node-v4.ts",
+          "sourceSha256": "de393397ee3d79667ef97a7b2ac25bf78ab572163f82bc8854919e445221d802",
+          "declarationKind": "VariableDeclaration"
+        }
+      ],
+      "packet": {
+        "path": "scripts/rust-migration/r8/security-not-retirement-packet.json",
+        "sha256": "10ac8874de655a4896dfd63b0de1dbd884a3049bba5118843beb35fd04bc46e6"
+      },
+      "receiptCohorts": [
+        {
+          "cohortId": "darwin-arm64",
+          "receipts": [
+            {
+              "runtime": "node",
+              "path": "docs/helix/04-build/evidence/rust-migration/r8-security-not-retirement-darwin-20261027/node.json",
+              "sha256": "e427aec64e0120710e9c21491b7e168c05023967a3447c5e6dec6775570e1cbe"
+            },
+            {
+              "runtime": "bun",
+              "path": "docs/helix/04-build/evidence/rust-migration/r8-security-not-retirement-darwin-20261027/bun.json",
+              "sha256": "4e38ab5b45e6a490cb9cf43d761cb025bb1cd5b565b01346ab642a9f1d98fdc7"
+            },
+            {
+              "runtime": "chromium",
+              "path": "docs/helix/04-build/evidence/rust-migration/r8-security-not-retirement-darwin-20261027/chromium.json",
+              "sha256": "aeef43fbe85a426e25d44663ad3ba8dee9ef2bda7f772f6d30842228d8c40217"
+            }
+          ]
+        },
+        {
+          "cohortId": "linux-x86_64",
+          "receipts": [
+            {
+              "runtime": "node",
+              "path": "docs/helix/04-build/evidence/rust-migration/r8-security-not-retirement-linux-20261027/node.json",
+              "sha256": "7cdce9628f0f664e9847bd76351e3d491bcafea4fdef41a9c1f21b55b469eeda"
+            },
+            {
+              "runtime": "bun",
+              "path": "docs/helix/04-build/evidence/rust-migration/r8-security-not-retirement-linux-20261027/bun.json",
+              "sha256": "5fac3a0e0f08c6525729a3b0011cb1eba4b286fb55fa6009a558e7cb9f0eba0a"
+            },
+            {
+              "runtime": "chromium",
+              "path": "docs/helix/04-build/evidence/rust-migration/r8-security-not-retirement-linux-20261027/chromium.json",
+              "sha256": "1880bc122319e794e8d5e87e9db4922eff2946f2c6d40a8b0c42e8d45dcdb10e"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

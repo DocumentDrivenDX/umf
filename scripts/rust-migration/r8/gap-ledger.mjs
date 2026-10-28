@@ -585,6 +585,43 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
       qualificationStatus: 'The current source routes select the Rust model engine. A prior 16-case Node, Bun and Chromium replay is historical: this ledger has no immutable three-host receipt and build-time source closure for that replay, so it does not qualify the current worktree. Full CONTRACT-078 acceptance, two-platform qualification and declaration retirement remain open.',
     };
   }
+  if (exportName === 'validateCoreRecordValues'
+      && declaration?.declarationName === exportName
+      && declaration.declarationKind === 'VariableDeclaration'
+      && declaration.initializerShape === 'call-expression') {
+    return {
+      status: 'source-selected-current-route-unqualified',
+      rustOwner: 'umf_core::record_values::validate_core_record_values',
+      wireOperation: 'model/validateCoreRecordValues',
+      bindingRoute: browser ? 'V4 browser root -> Record Values host-input facade -> WASM host-json binding -> Rust' : 'V4 Node root -> Record Values host-input facade -> Node host-json binding -> Rust',
+      sourceClosure: closure([
+        defaultEntry, 'src/access/rust-record-values-default.ts', 'src/model/record-values.ts',
+        browser ? 'bindings/core/wasm/src/host-json.js' : 'bindings/core/node/src/host-json.js',
+        browser ? 'bindings/core/wasm/src/host_json.rs' : 'bindings/core/node/src/host_json.rs',
+        'crates/umf-core/src/record_values.rs', 'crates/umf-core-wire/src/lib.rs',
+        'docs/helix/04-build/evidence/rust-migration/r5-record-values/frozen-typescript.json',
+      ]),
+      qualificationStatus: 'The current V4 source selects the Rust Record Values host-input engine. There are no immutable current-source installed archive receipts for Node, Bun, and Chromium with exact host admission, accessor, Proxy, trap, error, and returned-data comparisons. CONTRACT-001 parity, two-platform qualification, and declaration retirement remain open.',
+    };
+  }
+  if (exportName === 'validateCoreSemanticTypeValue'
+      && declaration?.declarationName === exportName
+      && declaration.declarationKind === 'BindingElement'
+      && declaration.initializerShape === 'not-applicable') {
+    return {
+      status: 'source-selected-current-route-unqualified',
+      rustOwner: 'umf_core::core_semantic_types::validate_core_semantic_type_value',
+      wireOperation: 'model/validateCoreSemanticTypeValue',
+      bindingRoute: browser ? 'V4 browser root -> semantic-type facade -> WASM semantic-value binding -> Rust' : 'V4 Node root -> semantic-type facade -> Node semantic-value binding -> Rust',
+      sourceClosure: closure([
+        defaultEntry, 'src/access/rust-semantic-types-default.ts', 'src/model/semantic-types.ts',
+        browser ? 'bindings/core/wasm/src/semantic-value.js' : 'bindings/core/node/src/semantic-value.js',
+        'crates/umf-core/src/core_semantic_types.rs', 'crates/umf-core-wire/src/lib.rs',
+        'docs/helix/04-build/evidence/rust-migration/r5-semantic-value/frozen-typescript.json',
+      ]),
+      qualificationStatus: 'The current V4 source selects the Rust semantic-value operation. There are no immutable current-source installed archive receipts for Node, Bun, and Chromium with registry identity, callback, admission, and error-envelope comparisons. CONTRACT-001 parity, two-platform qualification, and declaration retirement remain open.',
+    };
+  }
   const temporal = new Map([
     ['parseGregorianDate', ['umf_core::gregorian_date::parse_gregorian_date', 'crates/umf-core/src/gregorian_date.rs', 'crates/umf-core-wire/tests/gregorian_date_wire.rs']],
     ['truncateGregorianDate', ['umf_core::gregorian_date::truncate_gregorian_date', 'crates/umf-core/src/gregorian_date.rs', 'crates/umf-core-wire/tests/gregorian_date_wire.rs']],
@@ -1030,6 +1067,16 @@ function operationMapping(row) {
       return accepted.get(`${sourceByInspector[row.exportName]}#${row.exportName}`) ?? null;
     }
     if (['inspectCoreSemanticTypes', 'getCoreSemanticTypes', 'declareCoreSemanticTypes', 'verifyCoreSemanticTypeDeclaration'].includes(row.exportName)
+        && row.declarationName === row.exportName && row.declarationKind === 'BindingElement'
+        && row.initializerShape === 'not-applicable') {
+      return accepted.get(`src/model/semantic-types.ts#${row.exportName}`) ?? null;
+    }
+    if (row.exportName === 'validateCoreRecordValues'
+        && row.declarationName === row.exportName && row.declarationKind === 'VariableDeclaration'
+        && row.initializerShape === 'call-expression') {
+      return accepted.get(`src/model/record-values.ts#${row.exportName}`) ?? null;
+    }
+    if (row.exportName === 'validateCoreSemanticTypeValue'
         && row.declarationName === row.exportName && row.declarationKind === 'BindingElement'
         && row.initializerShape === 'not-applicable') {
       return accepted.get(`src/model/semantic-types.ts#${row.exportName}`) ?? null;

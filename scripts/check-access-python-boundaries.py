@@ -44,6 +44,10 @@ def check(root: Path) -> int:
     helpers.update({"host": "lifecycle", "approval": "lifecycle",
                     "sql_containment": "lifecycle", "sql_containment_parser": "lifecycle",
                     "sql_containment_cli": "lifecycle"})
+    # A single opt-in Rust scorer adapter has a tighter, exact import policy
+    # than ordinary target modules; do not grant it the targets owner wholesale.
+    helpers["rust_search_rrf"] = "rrf_facade"
+    allowed["rrf_facade"] = {"dsl", "targets"}
     # Administration is a separate explicit owner; generator/driver imports do
     # not become available to the portable DSL, regular runtime or other targets.
     allowed["lifecycle"] = set()
@@ -82,6 +86,20 @@ def check(root: Path) -> int:
     def edge(name: str, target: str, member: str = "", line: int = 0) -> None:
         path = modules[name]
         source_owner = owner(name)
+        # Keep the RRF scorer facade limited to the Rust wire bridge, its
+        # Python non-RRF fallback, and the three result types it constructs.
+        rrf_facade = name == "umf_access.rust_search_rrf"
+        if rrf_facade:
+            permitted_rrf = (
+                target in {"json", "math"} and not member
+                or target == "typing" and member == "Any"
+                or target == "__future__" and member == "annotations"
+                or target == "umf_access.dsl" and member in {"Score", "Scored", "SearchResult"}
+                or target == "umf_access.postgres_search" and member in {"SearchError", "_finish"}
+                or target == "umf" and member == "_rust"
+            )
+            if not permitted_rrf:
+                fail(path, "DEPENDENCY", f"{target} outside strict RRF facade imports")
         if name == 'umf_access.lifecycle.sql_containment' and not (
                 target in {'collections.abc', 'dataclasses', 'hashlib', 'json', 'typing', '__future__'}):
             fail(path, 'HOST', 'containment admission is pure; parser and I/O belong to explicit adapters')
@@ -105,7 +123,8 @@ def check(root: Path) -> int:
                     and target == "umf_access.capture"
                     and member in {"_canonical", "_invoke", "_parameters", "_validate_node"}
                 )
-                if (target.count(".") != 1 or member.startswith("_")) and not private_capture_candidate:
+                private_rrf_predecessor = rrf_facade and target == "umf_access.postgres_search" and member == "_finish"
+                if (target.count(".") != 1 or member.startswith("_")) and not private_capture_candidate and not private_rrf_predecessor:
                     fail(path, "PRIVATE", f"use public boundary of {target_owner}")
             return
         package = target.split(".")[0]
@@ -146,13 +165,14 @@ def check(root: Path) -> int:
         private_capture_core = (target == "umf" and member == "_rust" and name in {
             "umf_access.capture", "umf_access.rust_capture_observe", "umf_access.rust_catalog_render"
         })
+        private_rrf_core = target == "umf" and member == "_rust" and rrf_facade
         if name == "umf_access.unified.operation_values" and target == "umf" and member == "rust_values":
             public_core_values = True
         # The optional containment adapter has one narrow parser entry point;
         # the pure checker module must not import the parser or its dependencies.
         containment_parser = (name == 'umf_access.lifecycle.sql_containment_parser'
                               and target == 'pglast.parser' and member == 'parse_sql_json')
-        if package not in permitted and not spark_error and not typing_backport and not psycopg2_cursor and not table_read_compiler and not seed_compiler and not public_core_values and not containment_parser and not private_capture_core:
+        if package not in permitted and not spark_error and not typing_backport and not psycopg2_cursor and not table_read_compiler and not seed_compiler and not public_core_values and not containment_parser and not private_capture_core and not private_rrf_core:
             fail(path, "DEPENDENCY", f"{target} outside approved imports for {source_owner}")
         metadata_pin = (name == 'umf_access.lifecycle.sql_containment_parser'
                         and target == 'importlib.metadata' and member in {'version', 'PackageNotFoundError'})
@@ -201,6 +221,8 @@ def check(root: Path) -> int:
                 fail(path, "DYNAMIC", f"dynamic execution {node.id}")
             elif isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in {"open", "input"} and owner(name) in {"foundation", "dsl", "runtime", "conformance"}:
                 fail(path, "HOST", f"host I/O builtin {node.func.id}")
+            elif name == "umf_access.rust_search_rrf" and isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in {"open", "input"}:
+                fail(path, "HOST", f"RRF scorer cannot use host I/O builtin {node.func.id}")
 
     active: set[str] = set()
     done: set[str] = set()

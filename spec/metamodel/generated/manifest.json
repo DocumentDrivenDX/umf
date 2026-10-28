@@ -2,7 +2,7 @@
   "profile": "umf.metamodel.outputs/1",
   "provenance": {
     "modelSha256": "35b72a7f6aa86c98398192e5b67d5841d77127743c671c742dd871a7baee58ca",
-    "compilerSha256": "d50463f014ed40ee9de98e211330d5af7065dbe7ffb3eef4cb1f67c8d26808c6"
+    "compilerSha256": "01686927f07f9914b580dfb4c47bba0b04c75861a44369d56c988243966cbad3"
   },
   "sources": {
     "spec/metamodel/umf.yaml": "35b72a7f6aa86c98398192e5b67d5841d77127743c671c742dd871a7baee58ca",
@@ -77,7 +77,7 @@
     "crates/umf-core/src/full_modules.rs": "85d8ba2407331fde67d3247446d180526738d6bc62a33c9e3c613bd02b4c55bf",
     "crates/umf-core/src/gregorian_date.rs": "0d187eba09e7d1ada6fae3ee17a75ae93767881af6fc09a120ae38844f85f4e8",
     "crates/umf-core/src/host_diagnostic.rs": "49879a95f83aa304f137e7a4c8b3f5efd4294b377dc2d5e7067b76b66be6aad5",
-    "crates/umf-core/src/host_json.rs": "42da7a4ef258fea5b249088956f0bfe172095e0621e125807399698cd58f169b",
+    "crates/umf-core/src/host_json.rs": "9eda687ca3bce0192e2df86f06e5e8543387b6934e6ffd78f49a03af9c2960aa",
     "crates/umf-core/src/iceberg_schema.rs": "91a548f8155f0a2599d08dc9173cf326c71fb75715dee7e07e313d8bec58a5d8",
     "crates/umf-core/src/javascript_numeric.rs": "df41418d989e9795a265370d7f3fdf44b33caf57da3e27e3e36c8242fb8842bd",
     "crates/umf-core/src/json_number.rs": "2ab551fe8d16394b965f0ec6a0d08d51667c6b4f5fa8a7c2d39c9dc5ab858dd3",
@@ -310,8 +310,8 @@
     "bindings/core/node/src/dataset-values-compact.js": "15df4fb19f25a443e4c102bfa1a9fd606b853f0aa232f4c61ccbca7b2788b94b",
     "bindings/core/node/src/dataset-values.js": "dbcde410ba098a6fabb95d194aeb23840c7937a6c5fc4abca0aef3a91ce9f3cc",
     "bindings/core/node/src/document-comparison.js": "f1e68fde7c5b0db957e44b790abc3d3f74866f706ea96550a3591bca266fa4c4",
-    "bindings/core/node/src/host-json.js": "c21c41709e89cf624976cf23ea448d2c2eacf7a8a640db88e123b9d2c064b7dd",
-    "bindings/core/node/src/host_json.rs": "840274ad750eb64aa70a2b281660702037e09a865be5c9565024bd8e51faab65",
+    "bindings/core/node/src/host-json.js": "a0f31aa39919ccb2eabf958f0306e406b00734654a011a6f73fea6148956c9fa",
+    "bindings/core/node/src/host_json.rs": "be5897d53db5d5503ea13640677a510abd59bfa76a656432e9b361224f67a634",
     "bindings/core/node/src/javascript-numeric.js": "8355ddb54985270b396e78a2cd5cab25574cdf5d4c5384df5f34798d50e2654f",
     "bindings/core/node/src/javascript_numeric_runtime.rs": "5abfd402a75eb4c924babdd0fd84ab4c34c4344f38d90456481d7b433a42d7bc",
     "bindings/core/node/src/json-number.js": "27b4404a59d038c5b717de52b4213e3bd88c598ea052d852647a6c28a7fc5141",
@@ -337,7 +337,7 @@
     "bindings/core/node/src/temporal.js": "f09199ca4e6db6f3402cfddd9861076a23642af6ae3dd8182846ad727799b699",
     "bindings/core/node/src/wire.d.ts": "0ec29a86b2f1939fd7211e4d8aa2d43eac0050a1f3f0936d54dbec705849d405",
     "bindings/core/node/src/wire.js": "5a59889a7484b69554b628aa45c58bad6f71bb4c47679ae63d72f2e8a8e0daea",
-    "bindings/core/node/tests/access-rrf-predecessor-replay.mjs": "c7f15f3d5d9ad3f4d4cc94e74adb3b4ad8559376b479b6b17311548b27fdbee4",
+    "bindings/core/node/tests/access-rrf-predecessor-replay.mjs": "15a86ed1163c6c07a0422d64adda632c09c3c913a8ff4541d100db09767701eb",
     "bindings/core/node/tests/access-rrf-replay.js": "cbda0d86bd5539d4b3d2004f4ab52ec131a6c09ec569ea3fecb6e746845e63f7",
     "bindings/core/node/tests/access-rrf-wrapper.test.js": "febba38f52d49a556d5172d478b99f590081e8ec5d86e6e0c230d3bd8a3c1b9f",
     "bindings/core/node/tests/arrow-ipc-current-source.mjs": "32fc4f5402c2bc130d35c99b3f64920904dd74042b826458adddc5506acb20f9",
@@ -346,7 +346,7 @@
     "bindings/core/node/tests/avro-candidate.test.js": "d89e3e0dd92587250c056d8eda494e9d98aa29d82d235b63a898ca0cb4c2047e",
     "bindings/core/node/tests/avro-inspector.test.js": "f1900a178db6a2510ac827f584234ba2243ab58fc67b991563f5f66d6602f106",
     "bindings/core/node/tests/cardinality-host-json.test.js": "a2ab58a16773efbf04cde2fc12723da6e6393629057d7db51314f85095c6c9e6",
-    "bindings/core/node/tests/copy-json-host-input.test.js": "e305595ae9fe146223b5bef4265719a4a6af9ee8c58c704e12745ff347a84348",
+    "bindings/core/node/tests/copy-json-host-input.test.js": "d1b8e460045de420e3d7ca3651d4fa778815cc23bad21f942f7360800b4f086d",
     "bindings/core/node/tests/core-evolution-wrapper.test.js": "51493022954ca8e8feecbe21d3500656f60089ec3e0985c22d87c2276b2ab509",
     "bindings/core/node/tests/core-key-tuple-direct-runtime.test.js": "878aa780c3326a448d22c3e8c3eef2ac681625ac685a154828e212b2ed499b8d",
     "bindings/core/node/tests/core-key-tuple-factory.test.js": "51c4672ef6409b20c61094fdb04390bea05c7cf4e9f848a1012ff96353452987",
@@ -403,8 +403,8 @@
     "bindings/core/wasm/src/dataset-values-compact.js": "15df4fb19f25a443e4c102bfa1a9fd606b853f0aa232f4c61ccbca7b2788b94b",
     "bindings/core/wasm/src/dataset-values.js": "dbcde410ba098a6fabb95d194aeb23840c7937a6c5fc4abca0aef3a91ce9f3cc",
     "bindings/core/wasm/src/document-comparison.js": "f1e68fde7c5b0db957e44b790abc3d3f74866f706ea96550a3591bca266fa4c4",
-    "bindings/core/wasm/src/host-json.js": "c21c41709e89cf624976cf23ea448d2c2eacf7a8a640db88e123b9d2c064b7dd",
-    "bindings/core/wasm/src/host_json.rs": "28be1ca24a41f8f1acac7220c37fbfcf08d10aaf35836b987a1e434e48db8351",
+    "bindings/core/wasm/src/host-json.js": "a0f31aa39919ccb2eabf958f0306e406b00734654a011a6f73fea6148956c9fa",
+    "bindings/core/wasm/src/host_json.rs": "933f207afa2a85cfdd12fe18e86965a3f339d450db6f127112872806716490b5",
     "bindings/core/wasm/src/javascript-numeric.js": "8355ddb54985270b396e78a2cd5cab25574cdf5d4c5384df5f34798d50e2654f",
     "bindings/core/wasm/src/javascript_numeric_runtime.rs": "b8f18a9fe1c73651238b75f36574cc75361e898e240bf26353e88159a88fa385",
     "bindings/core/wasm/src/json-number.js": "27b4404a59d038c5b717de52b4213e3bd88c598ea052d852647a6c28a7fc5141",
@@ -425,12 +425,12 @@
     "bindings/core/wasm/src/shared-sources.json": "ae6c4cb3506e84e76abe4c32f3027d9531928cc0a795cbe00906402e9839132b",
     "bindings/core/wasm/src/wire.d.ts": "27a64b1051ec235ec9f5c6c93fd972ef5580627795829032705785a40a8d2e9d",
     "bindings/core/wasm/src/wire.js": "5a59889a7484b69554b628aa45c58bad6f71bb4c47679ae63d72f2e8a8e0daea",
-    "bindings/core/wasm/tests/access-rrf-current-source.chromium.mjs": "2afdeac3ba2d2373dce8b2f88e7bfcae0d6d9cc0adcd9513083ffec8c06f8cf1",
+    "bindings/core/wasm/tests/access-rrf-current-source.chromium.mjs": "3e7237303cba20cad9d5b2219190789b4413bdb0dc26e159524a85eb54ddde87",
     "bindings/core/wasm/tests/arrow-ipc-current-source.chromium.mjs": "e72add3d481e9eb26bfd891fafa437e5fda59c836c747e74b873af291e78d03b",
     "bindings/core/wasm/tests/arrow-schema-session.chromium.mjs": "e0f1b16d3d15c52dc6d12d64bd865af9a6fb8de7f3039c3ff3eb39b9f43c6e71",
     "bindings/core/wasm/tests/avro-wrapper.test.js": "c57c1bcec545c9b6b835cb639e0ef9c8e602a7dc744e00f24882b92649d4812e",
-    "bindings/core/wasm/tests/copy-json-host-input.chromium.mjs": "68cbf940c081ed0db6126ae6ed8f676bf3f4dfdf9dbe6800033a08b78a3a1c14",
-    "bindings/core/wasm/tests/copy-json-host-input.mjs": "f9df2ba6614e6a05875050a2397ae5f029b5e5039b996d3489d4162a2f9afeee",
+    "bindings/core/wasm/tests/copy-json-host-input.chromium.mjs": "75ee3c9a3d101768e243322109de7ebc2f238fef02f01414c19ce3e7d39d7aa7",
+    "bindings/core/wasm/tests/copy-json-host-input.mjs": "5ca1bb65fa4a0d539397cfb96997b9ebd9b05f2d6f3ec061e618a3233324d6e3",
     "bindings/core/wasm/tests/core-model-root-factory.test.js": "3f41da5081fc93c6dd1aca72e218e78690c5b3a480ecda0c9a6db4ef8ddb868b",
     "bindings/core/wasm/tests/core-record-type-browser.mjs": "bc441965ca17d6e1ea28d4791774e03b7403b72f19524dd4545e0833d0a16e8b",
     "bindings/core/wasm/tests/core-record-type-retained.test.js": "e38ee8adb2894b9502cb335e948c1e05a73bc6513b0f978395ce4703661102a2",
@@ -630,8 +630,8 @@
     "bindings/core/node/src/dataset-values-compact.js": "15df4fb19f25a443e4c102bfa1a9fd606b853f0aa232f4c61ccbca7b2788b94b",
     "bindings/core/node/src/dataset-values.js": "dbcde410ba098a6fabb95d194aeb23840c7937a6c5fc4abca0aef3a91ce9f3cc",
     "bindings/core/node/src/document-comparison.js": "f1e68fde7c5b0db957e44b790abc3d3f74866f706ea96550a3591bca266fa4c4",
-    "bindings/core/node/src/host-json.js": "c21c41709e89cf624976cf23ea448d2c2eacf7a8a640db88e123b9d2c064b7dd",
-    "bindings/core/node/src/host_json.rs": "840274ad750eb64aa70a2b281660702037e09a865be5c9565024bd8e51faab65",
+    "bindings/core/node/src/host-json.js": "a0f31aa39919ccb2eabf958f0306e406b00734654a011a6f73fea6148956c9fa",
+    "bindings/core/node/src/host_json.rs": "be5897d53db5d5503ea13640677a510abd59bfa76a656432e9b361224f67a634",
     "bindings/core/node/src/javascript-numeric.js": "8355ddb54985270b396e78a2cd5cab25574cdf5d4c5384df5f34798d50e2654f",
     "bindings/core/node/src/javascript_numeric_runtime.rs": "5abfd402a75eb4c924babdd0fd84ab4c34c4344f38d90456481d7b433a42d7bc",
     "bindings/core/node/src/json-number.js": "27b4404a59d038c5b717de52b4213e3bd88c598ea052d852647a6c28a7fc5141",
@@ -657,7 +657,7 @@
     "bindings/core/node/src/temporal.js": "f09199ca4e6db6f3402cfddd9861076a23642af6ae3dd8182846ad727799b699",
     "bindings/core/node/src/wire.d.ts": "0ec29a86b2f1939fd7211e4d8aa2d43eac0050a1f3f0936d54dbec705849d405",
     "bindings/core/node/src/wire.js": "5a59889a7484b69554b628aa45c58bad6f71bb4c47679ae63d72f2e8a8e0daea",
-    "bindings/core/node/tests/access-rrf-predecessor-replay.mjs": "c7f15f3d5d9ad3f4d4cc94e74adb3b4ad8559376b479b6b17311548b27fdbee4",
+    "bindings/core/node/tests/access-rrf-predecessor-replay.mjs": "15a86ed1163c6c07a0422d64adda632c09c3c913a8ff4541d100db09767701eb",
     "bindings/core/node/tests/access-rrf-replay.js": "cbda0d86bd5539d4b3d2004f4ab52ec131a6c09ec569ea3fecb6e746845e63f7",
     "bindings/core/node/tests/access-rrf-wrapper.test.js": "febba38f52d49a556d5172d478b99f590081e8ec5d86e6e0c230d3bd8a3c1b9f",
     "bindings/core/node/tests/arrow-ipc-current-source.mjs": "32fc4f5402c2bc130d35c99b3f64920904dd74042b826458adddc5506acb20f9",
@@ -666,7 +666,7 @@
     "bindings/core/node/tests/avro-candidate.test.js": "d89e3e0dd92587250c056d8eda494e9d98aa29d82d235b63a898ca0cb4c2047e",
     "bindings/core/node/tests/avro-inspector.test.js": "f1900a178db6a2510ac827f584234ba2243ab58fc67b991563f5f66d6602f106",
     "bindings/core/node/tests/cardinality-host-json.test.js": "a2ab58a16773efbf04cde2fc12723da6e6393629057d7db51314f85095c6c9e6",
-    "bindings/core/node/tests/copy-json-host-input.test.js": "e305595ae9fe146223b5bef4265719a4a6af9ee8c58c704e12745ff347a84348",
+    "bindings/core/node/tests/copy-json-host-input.test.js": "d1b8e460045de420e3d7ca3651d4fa778815cc23bad21f942f7360800b4f086d",
     "bindings/core/node/tests/core-evolution-wrapper.test.js": "51493022954ca8e8feecbe21d3500656f60089ec3e0985c22d87c2276b2ab509",
     "bindings/core/node/tests/core-key-tuple-direct-runtime.test.js": "878aa780c3326a448d22c3e8c3eef2ac681625ac685a154828e212b2ed499b8d",
     "bindings/core/node/tests/core-key-tuple-factory.test.js": "51c4672ef6409b20c61094fdb04390bea05c7cf4e9f848a1012ff96353452987",
@@ -723,8 +723,8 @@
     "bindings/core/wasm/src/dataset-values-compact.js": "15df4fb19f25a443e4c102bfa1a9fd606b853f0aa232f4c61ccbca7b2788b94b",
     "bindings/core/wasm/src/dataset-values.js": "dbcde410ba098a6fabb95d194aeb23840c7937a6c5fc4abca0aef3a91ce9f3cc",
     "bindings/core/wasm/src/document-comparison.js": "f1e68fde7c5b0db957e44b790abc3d3f74866f706ea96550a3591bca266fa4c4",
-    "bindings/core/wasm/src/host-json.js": "c21c41709e89cf624976cf23ea448d2c2eacf7a8a640db88e123b9d2c064b7dd",
-    "bindings/core/wasm/src/host_json.rs": "28be1ca24a41f8f1acac7220c37fbfcf08d10aaf35836b987a1e434e48db8351",
+    "bindings/core/wasm/src/host-json.js": "a0f31aa39919ccb2eabf958f0306e406b00734654a011a6f73fea6148956c9fa",
+    "bindings/core/wasm/src/host_json.rs": "933f207afa2a85cfdd12fe18e86965a3f339d450db6f127112872806716490b5",
     "bindings/core/wasm/src/javascript-numeric.js": "8355ddb54985270b396e78a2cd5cab25574cdf5d4c5384df5f34798d50e2654f",
     "bindings/core/wasm/src/javascript_numeric_runtime.rs": "b8f18a9fe1c73651238b75f36574cc75361e898e240bf26353e88159a88fa385",
     "bindings/core/wasm/src/json-number.js": "27b4404a59d038c5b717de52b4213e3bd88c598ea052d852647a6c28a7fc5141",
@@ -745,12 +745,12 @@
     "bindings/core/wasm/src/shared-sources.json": "ae6c4cb3506e84e76abe4c32f3027d9531928cc0a795cbe00906402e9839132b",
     "bindings/core/wasm/src/wire.d.ts": "27a64b1051ec235ec9f5c6c93fd972ef5580627795829032705785a40a8d2e9d",
     "bindings/core/wasm/src/wire.js": "5a59889a7484b69554b628aa45c58bad6f71bb4c47679ae63d72f2e8a8e0daea",
-    "bindings/core/wasm/tests/access-rrf-current-source.chromium.mjs": "2afdeac3ba2d2373dce8b2f88e7bfcae0d6d9cc0adcd9513083ffec8c06f8cf1",
+    "bindings/core/wasm/tests/access-rrf-current-source.chromium.mjs": "3e7237303cba20cad9d5b2219190789b4413bdb0dc26e159524a85eb54ddde87",
     "bindings/core/wasm/tests/arrow-ipc-current-source.chromium.mjs": "e72add3d481e9eb26bfd891fafa437e5fda59c836c747e74b873af291e78d03b",
     "bindings/core/wasm/tests/arrow-schema-session.chromium.mjs": "e0f1b16d3d15c52dc6d12d64bd865af9a6fb8de7f3039c3ff3eb39b9f43c6e71",
     "bindings/core/wasm/tests/avro-wrapper.test.js": "c57c1bcec545c9b6b835cb639e0ef9c8e602a7dc744e00f24882b92649d4812e",
-    "bindings/core/wasm/tests/copy-json-host-input.chromium.mjs": "68cbf940c081ed0db6126ae6ed8f676bf3f4dfdf9dbe6800033a08b78a3a1c14",
-    "bindings/core/wasm/tests/copy-json-host-input.mjs": "f9df2ba6614e6a05875050a2397ae5f029b5e5039b996d3489d4162a2f9afeee",
+    "bindings/core/wasm/tests/copy-json-host-input.chromium.mjs": "75ee3c9a3d101768e243322109de7ebc2f238fef02f01414c19ce3e7d39d7aa7",
+    "bindings/core/wasm/tests/copy-json-host-input.mjs": "5ca1bb65fa4a0d539397cfb96997b9ebd9b05f2d6f3ec061e618a3233324d6e3",
     "bindings/core/wasm/tests/core-model-root-factory.test.js": "3f41da5081fc93c6dd1aca72e218e78690c5b3a480ecda0c9a6db4ef8ddb868b",
     "bindings/core/wasm/tests/core-record-type-browser.mjs": "bc441965ca17d6e1ea28d4791774e03b7403b72f19524dd4545e0833d0a16e8b",
     "bindings/core/wasm/tests/core-record-type-retained.test.js": "e38ee8adb2894b9502cb335e948c1e05a73bc6513b0f978395ce4703661102a2",
@@ -934,15 +934,15 @@
   },
   "outputs": {
     "spec/core/schema.json": {
-      "sha256": "ad7fdcb80ade498aeff75144d20889cbb04a4a174e2c6aadf0172b739fd645da",
+      "sha256": "e145d87434883cf1c616061f0ae0be316baf5e9cbf171e2d0d57389997cf2441",
       "bytes": 45342
     },
     "spec/core/semantic-type-reference.schema.json": {
-      "sha256": "473ad3496d4b573362b8feabbebf41d1ecf1cd332926065556f082472889e259",
+      "sha256": "6210b93038815d56bbfa4c4b023d2eea44a8650bec363f15d618bef0174aa224",
       "bytes": 45463
     },
     "spec/core/extension-package.schema.json": {
-      "sha256": "e1b3498bf62659f9680b3dbeea7aae9f6cd152de4b526873237f8cd23c38e30b",
+      "sha256": "3e69d73bdb4041ae67353c2b626f36ffd62b2324a2f679342d44c4d00dabd343",
       "bytes": 45001
     },
     "spec/metamodel/package.json": {
@@ -950,23 +950,23 @@
       "bytes": 1376
     },
     "spec/metamodel/generated/core-constraints.json": {
-      "sha256": "264eb111858e0d12c785dc978fc194e681aa9f862772be62b684dc8597534486",
+      "sha256": "172c50fa53994d180930d3bab684adf32780b934766eb45d2a46655ce7b606d3",
       "bytes": 190252
     },
     "spec/metamodel/generated/domain-policy.json": {
-      "sha256": "e4c3aec24d5fcc960ace411bd71d7b135b8c8aabf6048c2ce70cdb799520525a",
+      "sha256": "3ef54e5814e551d7332accb9009c61e7852978673725617a25a613f2e04b7ce5",
       "bytes": 14827
     },
     "spec/metamodel/generated/python-shapes.json": {
-      "sha256": "8d30e508283a5a15e0fb992e5787bea550e89cf8bc23f6175751fce1ac68a357",
+      "sha256": "23d70204cfe9dbc4598116211fdfabb4c065871747880f705ad6f22b3c7ae532",
       "bytes": 98734
     },
     "python/umf_access/src/umf_access/generated_core.py": {
-      "sha256": "fe3661483f7fc1e6fc849a8dd3eaa46a33412dcf6078c7e79880efc64fc6fbde",
+      "sha256": "54feb6aa37ed91b1caee2d881f79ffaaf649a3d0a7aa03873ae93c84ebd11250",
       "bytes": 360
     },
     "src/generated/core-model.ts": {
-      "sha256": "d20f91fc1653e5fcef961c7d320e023d4a30ef5ab73b760b38f6c9023c291927",
+      "sha256": "cef41c9ddb2f181d4778cfa77bb5add28c2b4961dd0d1f3cf51b4f657dd03b30",
       "bytes": 6714
     },
     "spec/core/facet-operation-v3.schema.json": {
@@ -994,7 +994,7 @@
       "bytes": 1993
     },
     "src/generated/core-validators.ts": {
-      "sha256": "85525975af8942bf78f054d5177dae0c2d10c8ecdb27c8df3d55ebe8c057c960",
+      "sha256": "8c6c18773a3292d9768ef5588d31dc30f646619f4ee902df2dd6fcc00565cec2",
       "bytes": 305070
     }
   }

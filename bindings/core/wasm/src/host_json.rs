@@ -403,8 +403,24 @@ impl HostJsonReflection for WasmHostJson {
             .map_err(|_| bridge_error())?
             .as_string()
             .ok_or_else(bridge_error)?;
-        let value = umf_core_wire::decode(&wire, &mut umf_core_wire::transport_context())
-            .map_err(|_| protocol_error())?;
+        if matches!(event, HostJsonEvent::ReadUtf16Chunk { .. }) && wire.len() > 600 * 1024 {
+            return Err(protocol_error());
+        }
+        let is_text_chunk = matches!(event, HostJsonEvent::ReadUtf16Chunk { .. })
+            && wire.starts_with(r#"{"kind":"utf16-text-chunk""#);
+        if is_text_chunk && wire.len() > 52 * 1024 {
+            return Err(protocol_error());
+        }
+        let value = if is_text_chunk {
+            umf_core::serialization::read_json_value(
+                &wire.encode_utf16().collect::<Vec<_>>(),
+                umf_core::serialization::Format::Json,
+                &mut Context::ordinary(),
+            ).map_err(|_| protocol_error())?
+        } else {
+            umf_core_wire::decode(&wire, &mut umf_core_wire::transport_context())
+                .map_err(|_| protocol_error())?
+        };
         decode_reply(&event, value, &mut self.string_lengths)
     }
     fn release_descriptor_snapshot(&mut self, _token: u64) {}
@@ -420,9 +436,24 @@ pub fn execute_copy_json_host_json(value_handle: u32, dispatcher: &Function) -> 
             string_lengths: BTreeMap::new(),
         };
         let mut ctx = Context::ordinary();
-        let value =
-            umf_core::host_json::copy_host_json(value_handle as HostHandle, &mut host, &mut ctx)?;
-        umf_core_wire::encode(&value, &mut ctx)
+        let copied = umf_core::host_json::copy_host_json_with_sparse_holes(
+            value_handle as HostHandle,
+            &mut host,
+            &mut ctx,
+        )?;
+        let holes = copied.sparse_arrays.into_iter().map(|sparse| {
+            umf_core::Value::Object(vec![
+                (umf_core::Utf16::from("path"), umf_core::Value::String(sparse.path)),
+                (umf_core::Utf16::from("holes"), umf_core::Value::Array(
+                    sparse.holes.into_iter().map(|index| umf_core::Value::Number(index as f64)).collect()
+                )),
+            ])
+        }).collect();
+        let value_wire = umf_core_wire::encode(&copied.value, &mut ctx)?;
+        let holes_wire = umf_core_wire::encode(&umf_core::Value::Array(holes), &mut Context::ordinary())?;
+        Ok(format!(
+            r#"{{"kind":"object","members":[{{"key":[95,95,117,109,102,95,99,111,112,121,95,106,115,111,110,95,104,111,115,116,95,105,110,112,117,116,95,118,49],"value":{{"kind":"boolean","value":true}}}},{{"key":[118,97,108,117,101],"value":{value_wire}}},{{"key":[115,112,97,114,115,101,65,114,114,97,121,115],"value":{holes_wire}}}]}}"#
+        ))
     })();
     umf_core_wire::result_envelope(result)
 }
@@ -846,7 +877,7 @@ fn decode_reply(
             matches!(kind.as_str(), "descriptor" | "host-exception")
         }
         HostJsonEvent::ReadUtf16Chunk { .. } => {
-            matches!(kind.as_str(), "utf16-chunk" | "host-exception")
+            matches!(kind.as_str(), "utf16-chunk" | "utf16-text-chunk" | "host-exception")
         }
         HostJsonEvent::UnicodeCount { .. } => matches!(kind.as_str(), "count" | "host-exception"),
         HostJsonEvent::GetOpaqueProperty { semantic_catch, .. } => {
@@ -964,6 +995,19 @@ fn decode_reply(
                 is_data,
                 value,
             })
+        }
+        "utf16-text-chunk" => {
+            let offset = unsigned(&value, "offset").ok_or_else(protocol_error)? as usize;
+            let Value::String(text) = field(&value, "text").ok_or_else(protocol_error)? else {
+                return Err(protocol_error());
+            };
+            let HostJsonEvent::ReadUtf16Chunk { token, offset: requested, max_units } = event else { return Err(protocol_error()); };
+            let length = *lengths.get(token).ok_or_else(protocol_error)?;
+            let expected = (length.saturating_sub(*requested)).min(*max_units);
+            if offset != *requested || *max_units != 8192 || text.units().len() != expected {
+                return Err(protocol_error());
+            }
+            HostJsonReply::Utf16Chunk { offset, units: text.units().to_vec() }
         }
         "utf16-chunk" => {
             let offset = unsigned(&value, "offset").ok_or_else(protocol_error)? as usize;
@@ -1273,6 +1317,27 @@ mod opaque_reply_tests {
             members.push((Utf16::from("opaqueType"), Value::String(Utf16::from(opaque_type))));
         }
         Value::Object(members)
+    }
+
+    #[test]
+    fn utf16_text_chunk_reply_preserves_surrogates_and_checks_bounds() {
+        let event = HostJsonEvent::ReadUtf16Chunk { token: 7, offset: 0, max_units: 8192 };
+        let frame = Value::Object(vec![
+            (Utf16::from("kind"), Value::String(Utf16::from("utf16-text-chunk"))),
+            (Utf16::from("offset"), Value::Number(0.0)),
+            (Utf16::from("text"), Value::String(Utf16::new(vec![0xd800, 0xdc00]))),
+        ]);
+        let lengths = BTreeMap::from([(7, 2)]);
+        assert_eq!(
+            decode_reply(&event, frame.clone(), &mut lengths.clone()).unwrap(),
+            HostJsonReply::Utf16Chunk { offset: 0, units: vec![0xd800, 0xdc00] },
+        );
+        let mut wrong_offset = frame.clone();
+        if let Value::Object(fields) = &mut wrong_offset { fields[1].1 = Value::Number(1.0); }
+        assert!(decode_reply(&event, wrong_offset, &mut lengths.clone()).is_err());
+        let mut short_text = frame;
+        if let Value::Object(fields) = &mut short_text { fields[2].1 = Value::String(Utf16::new(vec![0xd800])); }
+        assert!(decode_reply(&event, short_text, &mut lengths.clone()).is_err());
     }
 
     #[test]
