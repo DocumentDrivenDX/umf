@@ -160,15 +160,18 @@ def execute_host_lazy(case):
         return execute(case)
 
 
-def execute_python_predecessor(case):
+def execute_frozen_python_matcher(case):
     from test_rust_target_pin import python_matches
 
     with patch.object(TargetPin, "matches", python_matches):
-        return execute(case)
+        return execute(case, route="rust")
 
 
 class ReadPlanBindPredecessorTests(unittest.TestCase):
-    def test_historical_packet_and_current_results_and_effect_order_match(self):
+    def test_historical_packet_matches_frozen_python_matcher_and_effect_order(self):
+        from test_rust_target_pin import load_candidate_library
+
+        load_candidate_library()
         packet = json.loads(PACKET.read_text())
         self.assertEqual(packet["format"], "umf-read-plan-bind-python-predecessor/1")
         self.assertEqual(packet["source_sha256"], HISTORICAL_SOURCE_SHA256)
@@ -179,7 +182,7 @@ class ReadPlanBindPredecessorTests(unittest.TestCase):
         for case in packet["cases"]:
             with self.subTest(case=case["name"]):
                 self.assertEqual(
-                    execute_python_predecessor(case["name"]),
+                    execute_frozen_python_matcher(case["name"]),
                     {"outcome": case["outcome"], "trace": case["trace"]},
                 )
 
@@ -197,15 +200,18 @@ class ReadPlanBindPredecessorTests(unittest.TestCase):
 
     def test_public_default_route_preserves_all_six_bind_outcomes_and_traces(self):
         from test_rust_target_pin import load_candidate_library
+        from umf_access.rust_read_plan_bind import bind
 
         load_candidate_library()
         packet = json.loads(PACKET.read_text())
-        for case in packet["cases"]:
-            with self.subTest(case=case["name"]):
-                self.assertEqual(
-                    execute(case["name"]),
-                    {"outcome": case["outcome"], "trace": case["trace"]},
-                )
+        with patch("umf_access.rust_read_plan_bind.bind", wraps=bind) as rust_bind:
+            for case in packet["cases"]:
+                with self.subTest(case=case["name"]):
+                    self.assertEqual(
+                        execute(case["name"]),
+                        {"outcome": case["outcome"], "trace": case["trace"]},
+                    )
+            self.assertEqual(rust_bind.call_count, len(packet["cases"]))
 
     def test_opt_in_rust_route_preserves_all_six_bind_outcomes_and_traces(self):
         from test_rust_target_pin import load_candidate_library
@@ -222,7 +228,6 @@ class ReadPlanBindPredecessorTests(unittest.TestCase):
     def test_invalid_inventory_and_continuation_refuse_before_host_callbacks(self):
         from umf_access.dsl import Continuation
         from umf_access.pages import StaleContinuation
-        from umf_access.rust_read_plan_bind import bind
 
         trace = []
         entry = Entry("only", trace)
@@ -237,7 +242,7 @@ class ReadPlanBindPredecessorTests(unittest.TestCase):
         with self.assertRaisesRegex(
             Exception, "exact catalog argument inventory required"
         ):
-            bind(plan, Target(), {"unexpected": 1})
+            plan.bind(Target(), {"unexpected": 1})
         self.assertEqual(trace, [])
 
         cursor_plan = ReadPlan(
@@ -249,7 +254,7 @@ class ReadPlanBindPredecessorTests(unittest.TestCase):
         )
         cursor = Continuation(object(), (1,), "digest")
         with self.assertRaises(StaleContinuation):
-            bind(cursor_plan, Target(), {"cursor": cursor})
+            cursor_plan.bind(Target(), {"cursor": cursor})
         self.assertEqual(trace, [])
 
     def test_selected_artifact_and_parameter_failures_stop_at_their_callback(self):
@@ -284,7 +289,7 @@ class ReadPlanBindPredecessorTests(unittest.TestCase):
         }
         for case, trace in expected.items():
             with self.subTest(case=case):
-                result = execute(case, route="rust")
+                result = execute(case)
                 self.assertEqual(result["trace"], trace)
                 if case == "multiple-matches":
                     self.assertEqual(
@@ -297,9 +302,8 @@ class ReadPlanBindPredecessorTests(unittest.TestCase):
                 else:
                     self.assertEqual(result["outcome"]["error"], "RuntimeError")
 
-    def test_rust_route_reraises_the_original_host_exception_object(self):
+    def test_public_route_reraises_the_original_host_exception_object(self):
         from test_rust_target_pin import load_candidate_library
-        from umf_access.rust_read_plan_bind import bind
 
         load_candidate_library()
         trace = []
@@ -314,13 +318,12 @@ class ReadPlanBindPredecessorTests(unittest.TestCase):
                 raise sentinel
 
         with self.assertRaises(RuntimeError) as caught:
-            bind(plan, Target(), {})
+            plan.bind(Target(), {})
         self.assertIs(caught.exception, sentinel)
         self.assertEqual(trace, ["artifact:only", "target.identity"])
 
     def test_variant_presence_is_observed_after_preflight_and_identity(self):
         from test_rust_target_pin import load_candidate_library
-        from umf_access.rust_read_plan_bind import bind
 
         load_candidate_library()
         trace = []
@@ -347,7 +350,7 @@ class ReadPlanBindPredecessorTests(unittest.TestCase):
                 return TrackingIdentity(trace)
 
         with self.assertRaises(RuntimeError) as caught:
-            bind(plan, Target(), {})
+            plan.bind(Target(), {})
         self.assertIs(caught.exception, sentinel)
         self.assertEqual(
             trace,

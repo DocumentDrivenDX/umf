@@ -66,10 +66,13 @@ open. The source `package.json` selects the Rust V4 Node/browser entries for
 synchronous `generatePythonClient` and retains TypeScript under `./reference`.
 The prior fixed-point private SDK archives qualify only their captured subsets
 and hosts. The current condition-aware ledger records 3,381 route-specific
-declarations across 509 source files, 71 source-selected Rust declarations per
+declarations across 509 source files, 76 source-selected Rust declarations per
 V4 default root, 920 logical executable default-route gaps, zero retired,
-89 accepted opt-in Rust mappings, and 831 unmapped executable names. The inventory
-records 2,543 Rust-candidate declarations, 216 host declarations, and 210 V4
+94 accepted Rust mappings, and 831 unmapped executable names. The 925
+executable logical rows include five Arrow reference-only declarations that
+are distinct from the direct V4 bindings; the default-route gap count remains
+920. The inventory
+records 2,533 Rust-candidate declarations, 226 host declarations, and 220 V4
 entry declarations across both defaults. Four exact immutable
 generated-data aliases are classified separately across 12 route rows. Three root-only SEC/Protobuf Rust
 candidate exports account for the difference from the reference route; they
@@ -79,9 +82,9 @@ installed-route scope; it has source drift against this checkout and needs a
 new current-source packet. Its receipt SHA-256 is
 `1c192d0246a85c8c12de39b37b40e119026b692dade2db249e5aace2c689b19a`. The
 current inventory SHA-256 is
-`6031c1622a657c20fdbff9226bc2524968a622577c0f68bf4115d126d84401cc` and the
+`acb6f8ae9b03c9a06ab55d533e4dcd1bea0d37dfb1b6ffe5d2d6f0651e674aee` and the
 condition-aware ledger SHA-256 is
-`d468cca284b9d709d397fe72832929ca48a88c9144b75681d28e4e6170e98692`. Linux,
+`350de88081c59f06f38f330687e1438273414a8df1a917891346a7afcb485ef1`. Linux,
 complete production SDK parity, the full port, and release remain unqualified.
 The ledger's `executable` label is a broad public-runtime category: independent
 AST review of the 1,120-name reference root found 750 function declarations,
@@ -9923,6 +9926,23 @@ resource, preserved extension payload, and no Node globals. The binding error
 constructor does not share TypeScript `UmfError` identity, and these results
 do not establish installed parity or default-route selection.
 
+The source follow-up now brands adapter-owned failures and maps only those
+failures to the exact TypeScript `UmfError` through a narrow adapter. Bun's
+causal predecessor suite passes five tests and 42 assertions; a Node 26.12.1
+source bundle and real Chromium 153.0.8010.12 replay both confirm
+`instanceof UmfError`, while an unrelated thrown object retains its identity.
+The host evidence remains opt-in. The installed replay below closes its
+private-package gate; broader V4 causal parity gates are still required before
+default route selection or retirement.
+
+The [installed Bit128 Field opt-in replay](evidence/rust-migration/r8-bit128-field-installed-20261028/README.md)
+now passes 11 frozen cases on installed Node 26.12.1, Bun 1.4.3, and Chromium
+153.0.8010.12. The exact private SDK archive is fixed-point across 3,668 source
+inputs; all hosts confirm public `UmfError` identity, proxy/source ordering,
+and fail-closed missing/corrupt native or WASM controls. This is an installed
+opt-in qualification only: the V4/default route and retirement gate remain
+open, and Linux and release are not qualified.
+
 The [Python V8 closure audit](evidence/rust-migration/r8-python-v8-closure-20261028/README.md)
 finds that the present production `umf`, `umf_codegen`, and `umf_access`
 Python sources have no active MiniRacer or JavaScript runtime dependency. The
@@ -9975,3 +9995,63 @@ hooks while retaining the normal scan over both supported source layouts.
 `bun run test:access-boundaries` passes 31 cases. These checks establish source
 boundary enforcement only; candidate runtime qualification remains as stated
 above.
+
+### R8 public Python `ReadPlan.bind` Rust route — 2026-10-28
+
+The earlier opt-in-only statement is superseded by the bounded public route in
+the [installed-wheel evidence](evidence/rust-migration/r8-read-plan-bind-default-python-20261028/README.md).
+`ReadPlan.bind` now delegates its ordered selection loop to Rust through lazy
+Python callbacks. Python retains exact argument inventory and validation,
+continuation validation/conversion, and strict Pydantic parameter construction.
+All six frozen outcomes and complete host traces pass, with causal failures for
+the pre-callback validation, artifact, identity, presence, pin, selected artifact
+and parameter boundaries. Exception identity is preserved.
+
+The `umf_access` wheel was rebuilt from an immutable, source-pinned snapshot and
+installed into an isolated target directory on Darwin arm64 CPython 3.13.16;
+the bind predecessor suite passed 8/8 against its separately source-built Rust
+extension. The source manifest SHA-256 is
+`11cd2fb935aa356c698df9090d0e7c40afeea6d838145037904b2bf1afd43ca1`, the wheel
+SHA-256 is `c1e15cea03f8edf21ac6e8bfdde868687904673eae6938d8a9d55de267595f09`,
+and the Darwin extension SHA-256 is
+`f8df42921cb68b4f46fa485dd41dab8fe028ce3ce611d32f32f5ce1c466bdd59`. The
+same snapshot built a Linux x86_64 PyO3 extension offline in the approved SDK
+container (SHA-256
+`d14a1f260fd5746bcdab5ae84b012e1bdf86e569bfc4f8b4e62f6abc15f8a170`), without
+mounting the repository during image construction.
+
+CPython 3.11.17/3.12.15 Darwin and Linux remain unqualified: available
+3.11/Linux environments expose Pydantic 2.11.9, which lacks the required
+`MISSING` sentinel; the offline cache has no Pydantic 2.13+ wheel for the
+3.12.15 venv. The eight ordered callback traces and these blockers are recorded
+in the linked evidence packet. The package install used `--no-deps`, so this is
+not a complete dependency-resolved installation or release qualification. The
+focused Rust suite passed 3/3; 30 combined Python cases, the 31-case Bun
+access-boundary suite and the 103-module boundary scan passed. Other Python
+versions and platforms remain open.
+
+### R8 Arrow schema V4 source-selected candidate — 2026-10-28
+
+The five CONTRACT-016 schema JSON operations (`importArrowSchema`,
+`inspectArrow`, `exportArrowSchema`, `getArrowNode`, and
+`proposeArrowNodeEdit`) are selected by the V4 Node and browser root sources
+through the Rust Arrow schema wire engine. The separate `./reference` route
+remains TypeScript. The source-aware gap ledger maps each root condition to its
+exact Rust owner, wire operation, host binding, focused tests, and evidence
+closure. All five logical gaps remain open with `bindingRouteStatus: unproven`
+pending an installed default-route receipt; source selection alone does not
+authorize retirement.
+
+The [candidate evidence](evidence/rust-migration/r8-arrow-schema-v4-candidate-20261028/README.md)
+records 52 frozen schemas / 260 operations across Node, Bun, and Chromium. In
+real Chromium, the combined-build `dist/umf-browser.js` root and its colocated
+WASM passed all 260 operations, as did the built explicit reference entry.
+Frozen Proxy trap identity is host-specific and skipped in packet replay, with
+separate live sentinel identity controls passing on each host. A later
+fixed-point archive (source closure `fcc5649f22be059ae2c13c017c824f4bfe0c5e6993a212be1c4df89b81c3ca99`,
+3,668 inputs, zero transforms) passed the same packet through built Node/Bun
+and Chromium roots. Archive-extracted `@umf/core` and `./reference` exports
+also passed on Node and Bun. This was not a dependency-resolved package
+installation; the installed default-route receipt and retirement gate remain
+open. The [candidate packet](evidence/rust-migration/r8-arrow-schema-v4-candidate-20261028/README.md)
+records the archive and asset hashes.

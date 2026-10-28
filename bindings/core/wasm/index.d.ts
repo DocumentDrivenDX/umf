@@ -41,6 +41,7 @@ export interface UmfCoreDocumentEngine extends UmfCoreEngine {
 export declare class UmfCoreError extends Error {readonly code: string; readonly path: string}
 export declare function isWireAdmissionError(error: unknown): boolean;
 export declare function isNativeUmfCoreError(error: unknown): boolean;
+export declare function isCoreBit128FieldBindingError(error: unknown): boolean;
 /** Run artifactReferences/inspect over umf.core-wire/1. The pack must be structurally validated before this call. */
 export declare function executeArtifactReferencesBindingWire(module: any, wireJson: string, controlDispatcher?: Function): string;
 export declare function isBit128EngineError(error: unknown): boolean;

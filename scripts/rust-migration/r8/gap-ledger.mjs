@@ -310,6 +310,30 @@ accept('src/adapters/arrow/capture.ts', [
   'bindings/core/wasm/tests/arrow-ipc-current-source.chromium.mjs',
   'python/tests/test_rust_arrow_ipc.py',
 ]);
+accept('src/adapters/arrow/index.ts', [
+  ['importArrowSchema', 'import_arrow_schema'],
+  ['inspectArrow', 'inspect_arrow'],
+  ['exportArrowSchema', 'export_arrow_schema'],
+  ['getArrowNode', 'get_arrow_node'],
+  ['proposeArrowNodeEdit', 'propose_arrow_node_edit'],
+], 'umf_core::arrow_schema', [
+  'crates/umf-core/src/arrow_schema.rs',
+  'crates/umf-core-wire/src/lib.rs',
+  'bindings/core/node/src/lib.rs',
+  'bindings/core/wasm/src/lib.rs',
+  'bindings/core/node/index.js',
+  'bindings/core/wasm/index.js',
+], [
+  'docs/helix/02-design/contracts/CONTRACT-016-arrow.md',
+  'docs/helix/04-build/evidence/rust-migration/r5-arrow-typescript-predecessor-20261027/README.md',
+  'docs/helix/04-build/evidence/rust-migration/r5-arrow-typescript-predecessor-20261027/typescript-arrow-schema-outcomes.json.gz',
+  'docs/helix/04-build/evidence/rust-migration/r5-arrow-schema-bindings-current-source-20261027/README.md',
+  'docs/helix/04-build/evidence/rust-migration/r8-arrow-schema-v4-candidate-20261028/README.md',
+], [
+  'crates/umf-core-wire/tests/r8_arrow_schema_wire.rs',
+  'scripts/rust-migration/r8/arrow-schema-v4-route-replay.mjs',
+  'scripts/rust-migration/r8/arrow-schema-v4-chromium-replay.mjs',
+]);
 accept('src/model/relationships.ts', [
   ['inspectCoreRelationships', 'inspect_core_relationships'],
   ['lookupCoreRelationship', 'lookup_core_relationship'],
@@ -768,6 +792,34 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
   ]);
   const domainPackProfileOwner = domainPackProfileOwnerByExport.get(exportName);
   const closure = paths => [...new Set(paths)].sort().map(file => ({ path: file, sha256: digest(read(file)) }));
+  if (arrowSchemaExports.has(exportName)
+      && isExactArrowSchemaV4RootSelection({ routeId, exportName, source, declaration })) {
+    const mapping = accepted.get(`src/adapters/arrow/index.ts#${exportName}`);
+    const node = !browser;
+    return {
+      status: 'source-selected-current-route-unqualified',
+      rustOwner: mapping.rustOwner,
+      wireOperation: `arrow.schema.${({ importArrowSchema: 'import', inspectArrow: 'inspect', exportArrowSchema: 'export', getArrowNode: 'getNode', proposeArrowNodeEdit: 'proposeNodeEdit' })[exportName]}`,
+      bindingRoute: node
+        ? 'V4 Node root -> Arrow schema host adapter -> Node-API Arrow schema engine -> Rust wire'
+        : 'V4 browser root -> Arrow schema host adapter -> WASM Arrow schema engine -> Rust wire',
+      sourceClosure: closure([
+        defaultEntry, 'src/adapters/arrow/index.ts', 'src/adapters/arrow/rust-default.ts',
+        node ? 'bindings/core/node/index.js' : 'bindings/core/wasm/index.js',
+        node ? 'bindings/core/node/src/lib.rs' : 'bindings/core/wasm/src/lib.rs',
+        'crates/umf-core/src/arrow_schema.rs', 'crates/umf-core-wire/src/lib.rs',
+        'crates/umf-core-wire/tests/r8_arrow_schema_wire.rs',
+        'docs/helix/02-design/contracts/CONTRACT-016-arrow.md',
+        'docs/helix/04-build/evidence/rust-migration/r5-arrow-typescript-predecessor-20261027/README.md',
+        'docs/helix/04-build/evidence/rust-migration/r5-arrow-typescript-predecessor-20261027/typescript-arrow-schema-outcomes.json.gz',
+        'docs/helix/04-build/evidence/rust-migration/r5-arrow-schema-bindings-current-source-20261027/README.md',
+        'docs/helix/04-build/evidence/rust-migration/r8-arrow-schema-v4-candidate-20261028/README.md',
+        'scripts/rust-migration/r8/arrow-schema-v4-route-replay.mjs',
+        'scripts/rust-migration/r8/arrow-schema-v4-chromium-replay.mjs',
+      ]),
+      qualificationStatus: 'The exact V4 Node/browser root source selects this Arrow schema operation through the Rust binding and preserves the explicit TypeScript reference route. Frozen Node/Bun and adapter-plus-WASM Chromium replays pass, but there is no installed default-route receipt for the packaged V4 browser root. The logical gap remains open, bindingRouteStatus remains unproven, and no declaration is retired.',
+    };
+  }
   if (['ACCESS_TEMPORAL_PROFILE', 'parseAccessTemporal'].includes(exportName)
       && isExactAccessTemporalV4RootSelection({ routeId, exportName, source, declaration })) {
     const node = !browser;
@@ -1638,7 +1690,69 @@ export function isExactAccessTemporalV4RootSelection({
     && wrapper.includes("typeof kind !== 'string'");
 }
 
+const arrowSchemaExports = new Map([
+  ['importArrowSchema', 'import_arrow_schema'],
+  ['inspectArrow', 'inspect_arrow'],
+  ['exportArrowSchema', 'export_arrow_schema'],
+  ['getArrowNode', 'get_arrow_node'],
+  ['proposeArrowNodeEdit', 'propose_arrow_node_edit'],
+]);
+
+export function isExactArrowSchemaV4RootSelection({
+  routeId, exportName, source, declaration = null,
+  packageRoute = declaration?.packageRoute,
+  packageCondition = declaration?.packageCondition,
+  routeMode = declaration?.routeMode,
+  defaultRoute = declaration?.defaultRoute,
+  declarationName = declaration?.declarationName,
+  declarationKind = declaration?.declarationKind,
+  declarationShape = declaration?.declarationShape,
+  initializerShape = declaration?.initializerShape,
+  sourceSha256 = declaration?.sourceSha256,
+  rootText: rootTextOverride = null,
+}) {
+  const browser = routeId === 'package-root-browser';
+  const defaultEntry = browser ? 'src/index-browser-v4.ts' : 'src/index-node-v4.ts';
+  if (!['package-root-node', 'package-root-browser'].includes(routeId)
+      || !arrowSchemaExports.has(exportName)
+      || packageRoute !== '.'
+      || packageCondition !== (routeId === 'package-root-node' ? 'node' : 'browser')
+      || routeMode !== 'default'
+      || defaultRoute !== true
+      || source !== defaultEntry
+      || declarationName !== exportName
+      || declarationKind !== 'BindingElement'
+      || declarationShape !== 'binding-element'
+      || initializerShape !== 'not-applicable') return false;
+  if (sourceSha256 !== digest(read(source))) return false;
+  const rootText = rootTextOverride ?? read(defaultEntry).toString('utf8');
+  if (!rootText.includes("from './adapters/arrow/rust-default'")) return false;
+  const names = [...arrowSchemaExports.keys()].join(',');
+  if (!rootText.includes(`const {${names}}=bindArrowSchemaRust(createArrowSchemaEngine(`)
+      || !rootText.includes(`export {${names}};`)) return false;
+  if (browser) {
+    return rootText.includes('createArrowSchemaEngine,')
+      && rootText.includes('isNativeUmfCoreError,')
+      && rootText.includes('createArrowSchemaEngine(wasmModule)')
+      && rootText.indexOf('await initializeBit128Wasm()') < rootText.indexOf('createArrowSchemaEngine(wasmModule)');
+  }
+  return rootText.includes('createArrowSchemaEngine,')
+    && rootText.includes('isNativeUmfCoreError,')
+    && rootText.includes('createArrowSchemaEngine()');
+}
+
 export function operationMapping(row) {
+  if (arrowSchemaExports.has(row.exportName)
+      && ['package-root-node', 'package-root-browser'].includes(row.routeId)) {
+    if (!isExactArrowSchemaV4RootSelection({
+      routeId: row.routeId, exportName: row.exportName, source: row.source,
+      declaration: row, declarationName: row.declarationName,
+      declarationKind: row.declarationKind, declarationShape: row.declarationShape,
+      initializerShape: row.initializerShape, sourceSha256: row.sourceSha256,
+    })) return null;
+    return accepted.get(`src/adapters/arrow/index.ts#${row.exportName}`) ?? null;
+  }
+  if (arrowSchemaExports.has(row.exportName) && row.routeId === 'package-reference') return null;
   if (['package-root-node', 'package-root-browser'].includes(row.routeId)
       && ['ACCESS_TEMPORAL_PROFILE', 'parseAccessTemporal'].includes(row.exportName)) {
     if (!isExactAccessTemporalV4RootSelection({
@@ -2722,7 +2836,11 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
     const signaturesWithoutCandidates = routeId => {
       const counts = new Map();
       for (const row of routeRows.get(routeId)) {
-        if (rootOnlyNames.includes(row.exportName)) continue;
+        // These five public declarations intentionally change from reference
+        // FunctionDeclarations to exact V4 binding elements. Their names are
+        // compared above; operationMapping separately proves the root source,
+        // condition, declaration shape, and Rust binding for each one.
+        if (rootOnlyNames.includes(row.exportName) || arrowSchemaExports.has(row.exportName)) continue;
         const signature = logicalDeclarationSignature(row);
         counts.set(signature, (counts.get(signature) ?? 0) + 1);
       }

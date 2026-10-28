@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
-"""Explicit opt-in Rust orchestration for the bounded ReadPlan.bind seam."""
+"""Rust orchestration for the bounded public ReadPlan.bind route."""
 
 from __future__ import annotations
 
@@ -8,9 +8,7 @@ from typing import Any, cast
 
 from pydantic import BaseModel
 
-from .catalog import CatalogError, NotCompiledForTarget, ReadPlan, ReadVariant
-from .pages import ReadContinuation, StaleContinuation
-from .protocols import AsyncReadTarget, ReadTarget
+from .catalog_errors import CatalogError, NotCompiledForTarget
 
 PROFILE = "umf-access-read-plan-bind/0.1.0"
 
@@ -37,17 +35,18 @@ def _core() -> Any:
 
 
 def bind(
-    plan: ReadPlan,
-    target: ReadTarget | AsyncReadTarget,
+    plan: Any,
+    target: Any,
     values: Mapping[str, object],
-) -> tuple[ReadVariant, BaseModel, ReadContinuation | None]:
+) -> tuple[Any, BaseModel, Any]:
     """Bind a plan through Rust-owned selection with lazy Python host callbacks.
 
     Argument checking, continuation validation and final Pydantic construction
-    remain Python-owned. This function is opt-in and is not the public default.
+    remain Python-owned.
     """
     from .codec_support import revalidate_model
     from .dsl import Continuation
+    from .pages import ReadContinuation, StaleContinuation
     from .types import MISSING
 
     arguments = plan.arguments

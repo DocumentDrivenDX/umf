@@ -1,6 +1,7 @@
 export declare class UmfCoreError extends Error { readonly code: string; readonly path: string }
 export declare function isWireAdmissionError(error: unknown): boolean;
 export declare function isNativeUmfCoreError(error: unknown): boolean;
+export declare function isCoreBit128FieldBindingError(error: unknown): boolean;
 export interface SemanticTypeReference { vocabulary: string; version: string; term: string; [key: string]: unknown }
 export interface SemanticTypeCheck { status: 'valid'|'invalid'|'unknown'; complete: boolean; issues: string[] }
 export type TrustedSemanticTypeValidator = (value: unknown, definition: Record<string, unknown>, context: {reportWork(units: number): void}) => SemanticTypeCheck;

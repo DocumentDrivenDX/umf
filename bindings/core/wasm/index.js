@@ -67,6 +67,17 @@ export function executeRecordTypeBindingWire(module, wireJson, controlDispatcher
   return module.executeRecordTypeWire(wireJson, controlDispatcher);
 }
 export {JsonSchemaUmfError as UmfError};
+const coreBit128FieldErrors = new WeakSet();
+const coreBit128WeakSetHas = Function.call.bind(WeakSet.prototype.has);
+const coreBit128WeakSetAdd = Function.call.bind(WeakSet.prototype.add);
+function CoreBit128FieldBindingError(code, message, path = '') {
+  const error = new JsonSchemaUmfError(code, message, path);
+  coreBit128WeakSetAdd(coreBit128FieldErrors, error);
+  return error;
+}
+export function isCoreBit128FieldBindingError(error) {
+  return error !== null && (typeof error === 'object' || typeof error === 'function') && coreBit128WeakSetHas(coreBit128FieldErrors, error);
+}
 
 /** Create the opt-in protection source identity and transform-reference resolver. */
 export function createSecurityProtectionSourceEngine(module) {
@@ -830,8 +841,8 @@ export function createCoreBit128FieldEngine(module, resources, options = {}) {
     const work = admissionWork(bridge);
     work?.(1);
     // Preserve predecessor copy order and do not traverse a wrong scalar type.
-    const sourceCopy = copyCoreJsonInput(source, JsonSchemaUmfError);
-    const identityCopy = copyCoreJsonInput(identity, JsonSchemaUmfError);
+    const sourceCopy = copyCoreJsonInput(source, CoreBit128FieldBindingError);
+    const identityCopy = copyCoreJsonInput(identity, CoreBit128FieldBindingError);
     const selectedType = scalarType === 'bits128' || scalarType === 'uuid' ? scalarType : null;
     const requestWire = encodeRequestWire({op: 'model/declareCoreBit128Field', resources: fixedResources, registry: [], source: sourceCopy, identity: identityCopy, scalarType: selectedType}, work);
     const dispatcher = () => encodeRequestWire({ok: false, message: 'Unexpected host capability request'});
@@ -839,7 +850,7 @@ export function createCoreBit128FieldEngine(module, resources, options = {}) {
     work?.(responseText.length);
     const response = JSON.parse(responseText);
     const failure = resultError(response);
-    if (failure) throw new JsonSchemaUmfError(failure.code, failure.message, failure.path);
+    if (failure) throw new CoreBit128FieldBindingError(failure.code, failure.message, failure.path);
     work?.(response.wire.length);
     return fromWire(JSON.parse(response.wire), work);
   });
@@ -1081,12 +1092,12 @@ export function createArrowSchemaEngine(module, options = {}) {
   } catch (error) {
     let failure;
     try { failure = resultError(JSON.parse(error?.message)); } catch {}
-    if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+    if (failure) throw nativeCoreError(failure);
     throw error;
   }
   let disposed = false;
   function assertActive() {
-    if (disposed) throw new UmfCoreError('RUST_ARROW_SCHEMA_HANDLE_DISPOSED', 'Arrow schema resources have been disposed');
+    if (disposed) throw nativeCoreError({code:'RUST_ARROW_SCHEMA_HANDLE_DISPOSED',message:'Arrow schema resources have been disposed',path:''});
   }
   const call = (operation, fields) => {
     assertActive();
@@ -1098,7 +1109,7 @@ export function createArrowSchemaEngine(module, options = {}) {
     hostWork?.(responseText.length);
     const envelope = JSON.parse(responseText);
     const failure = resultError(envelope);
-    if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+    if (failure) throw nativeCoreError(failure);
     hostWork?.(envelope.wire.length);
     return fromWire(JSON.parse(envelope.wire), hostWork);
   };

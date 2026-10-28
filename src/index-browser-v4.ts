@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createPythonClientRustCandidateV4} from './browser-v4';
 import {initializePythonClientRustDefaultV4} from './access/rust-default-v4';
-import {createCoreModelRootKeyTupleEngine,initializeCoreRecordValuesHostInputWasm,createDefaultSemanticTypeRegistry,createCoreCardinalityHostInputEngine,createCoreRecordTypeEngine,createSecurityLogicEngine,createJavascriptNumericEngine,initializeProtobufDescriptorDocumentWasm,initializeBit128Wasm,initializeTemporalWasm,createAccessTemporalEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,ACCESS_TEMPORAL_PROFILE as ACCESS_TEMPORAL_PROFILE_RUST} from '../bindings/core/wasm/index.js';
+import {createCoreModelRootKeyTupleEngine,initializeCoreRecordValuesHostInputWasm,createDefaultSemanticTypeRegistry,createCoreCardinalityHostInputEngine,createCoreRecordTypeEngine,createSecurityLogicEngine,createJavascriptNumericEngine,createArrowSchemaEngine,initializeProtobufDescriptorDocumentWasm,initializeBit128Wasm,initializeTemporalWasm,createAccessTemporalEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,ACCESS_TEMPORAL_PROFILE as ACCESS_TEMPORAL_PROFILE_RUST} from '../bindings/core/wasm/index.js';
 import {CORE_MODEL_RESOURCES} from './access/core-model-resources';
 import {bindCoreCardinalityRust} from './access/rust-cardinality-default';
 import {bindCoreDatasetValuesCompactRust} from './access/rust-dataset-values-compact-default';
@@ -33,6 +33,7 @@ import {createDomainPackLoaderInspectionOperation} from './domain-packs/loader-r
 import {createDomainPackProfileInspectionOperation} from './domain-packs/profile-rust';
 import {createSecProjectionRustOperations} from './domain-packs/sec-projection-rust';
 import {createReadDescriptorSetRustCandidate} from './adapters/protobuf/descriptor-rust-candidate';
+import {bindArrowSchemaRust} from './adapters/arrow/rust-default';
 import type {generateDatasetSourceSchema as DatasetSourceSchemaReference} from './domain-packs/source-schema';
 import type {generateDomainPackSchema as DomainPackSchemaReference} from './domain-packs/schema';
 import type {generateArtifactCollectionSchema as ArtifactCollectionSchemaReference} from './domain-packs/artifacts';
@@ -116,7 +117,9 @@ const {projectRelationshipToParquet,verifyRelationshipParquetProjection,recoverR
 const {projectRelationshipToExtra,verifyRelationshipExtra,recoverRelationshipExtraIdeal,recoverRelationshipExtraNative}=createRelationshipExtras(relationshipConsumers);
 const {projectRelationshipsToPostgresql,verifyRelationshipPostgresqlProjection,recoverRelationshipPostgresqlIdeal,recoverRelationshipPostgresqlNative}=createRelationshipPostgresql(relationshipConsumers);
 const {parseBits128,parseUuid,bits128FromBytes,bits128ToBytes,uuidFromBits128,uuidToBits128,compareBits128,bits128ToWords,bits128FromWords,bits128ToInteger,bits128FromInteger}=bindBit128Rust(await initializeBit128Wasm(),isBit128EngineError);
+const {importArrowSchema,inspectArrow,exportArrowSchema,getArrowNode,proposeArrowNodeEdit}=bindArrowSchemaRust(createArrowSchemaEngine(wasmModule),isNativeUmfCoreError);
 export * from './index-v4-default';
+export {importArrowSchema,inspectArrow,exportArrowSchema,getArrowNode,proposeArrowNodeEdit};
 export {scalarTypesForVersion};
 export {readCoreKeyTupleBytes,prepareCoreKeyTuples};
 export {inspectDomainPackLoaderOperation as inspectDomainPackLoader,inspectDomainPack,requireDomainPackProfile};

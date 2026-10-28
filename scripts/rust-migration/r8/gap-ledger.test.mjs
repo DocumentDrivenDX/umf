@@ -9,7 +9,7 @@ import { gzipSync } from 'node:zlib';
 import { cp, mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { buildLedger, classifyBit128ProfileSource, collectPythonPackageAssets, collectPythonSourceFiles, isDomainPackLoaderInspectionRootSelection, isDomainPackProfileInspectionRootSelection, isDomainPackSchemaRootSelection, isExactAccessTemporalV4RootSelection, operationMapping, summarizeDefaultRouteRetirement, validateCompactVerifierBuildBinding, validateDomainPackLoaderInspectorReceipt, validateSchemaGraphReceipt } from './gap-ledger.mjs';
+import { buildLedger, classifyBit128ProfileSource, collectPythonPackageAssets, collectPythonSourceFiles, isDomainPackLoaderInspectionRootSelection, isDomainPackProfileInspectionRootSelection, isDomainPackSchemaRootSelection, isExactAccessTemporalV4RootSelection, isExactArrowSchemaV4RootSelection, operationMapping, summarizeDefaultRouteRetirement, validateCompactVerifierBuildBinding, validateDomainPackLoaderInspectorReceipt, validateSchemaGraphReceipt } from './gap-ledger.mjs';
 import { CASES as LOADER_INSPECTOR_CASES, validateClaims as validateLoaderInspectorClaims, validatePacketSync as validateLoaderInspectorPacketSync } from './loader-inspector-route-evidence.mjs';
 import { requiredR8RouteFamilies, validateR8InstalledRouteEvidence } from './installed-route-evidence.mjs';
 import { normalizeR8RouteHostReceipt } from './installed-route-receipt-adapter.mjs';
@@ -618,8 +618,8 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
     const selection = entries.get(routeId);
     // The V4 facade adds six exact Rust-selected names, two key-tuple
     // operations, two SEC operations, three opt-in SEC/Protobuf candidates,
-    // scalarTypesForVersion, and the guarded temporal profile/parser pair.
-    assert.equal(selection.directExportCount, 89 + 6 + 2 + 2 + 3 + 1 + 2);
+    // scalarTypesForVersion, the guarded temporal pair, and five Arrow schema operations.
+    assert.equal(selection.directExportCount, 89 + 6 + 2 + 2 + 3 + 1 + 2 + 5);
     assert.ok(expected.every(name => selection.directExports.includes(name)), `${routeId} misses an override`);
     assert.ok(['inspectCoreSemanticTypes','getCoreSemanticTypes','declareCoreSemanticTypes','verifyCoreSemanticTypeDeclaration',
       'validateCoreRecordValues','SemanticTypeRegistry','validateSemanticTypeValue','validateCoreSemanticTypeValue']
@@ -649,9 +649,9 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
   assert.equal(reference.length, expected.length);
   assert.ok(reference.every(row => row.sourceSelectedImplementation === null));
   assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
-  assert.equal(ledger.counts.sourceSelectedRustOverrides, 130 + 2 * 2 + 2 * 2 + 2 * 2);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 130 + 2 * 2 + 2 * 2 + 2 * 2 + 2 * 5);
   for (const routeId of ['package-root-node', 'package-root-browser']) {
-    assert.equal(ledger.counts.executableDefaultRouteGapsByRoute[routeId].rustSelectedSourceDeclarations, 65 + 4 + 2);
+    assert.equal(ledger.counts.executableDefaultRouteGapsByRoute[routeId].rustSelectedSourceDeclarations, 65 + 4 + 2 + 5);
   }
   const archivedGate = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/gate-result.json', 'utf8'));
   assert.equal(archivedGate.status, 'pass');
@@ -726,6 +726,54 @@ test('the two SEC projections accept bounded V4 Rust ownership without qualifyin
     assert.equal(reference.acceptedRustOperation, null, 'the explicit TypeScript reference is not mapped to the Rust default');
     assert.equal(operationMapping(reference), null, 'the explicit TypeScript reference has no accepted root mapping');
     assert.equal(reference.defaultRouteRetirement.status, 'reference-only');
+  }
+});
+
+test('Arrow schema Rust mappings require exact Node/browser conditions and leave five gaps open', () => {
+  const inventory = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/inventory.json', 'utf8'));
+  const names = new Map([
+    ['importArrowSchema', 'import_arrow_schema'],
+    ['inspectArrow', 'inspect_arrow'],
+    ['exportArrowSchema', 'export_arrow_schema'],
+    ['getArrowNode', 'get_arrow_node'],
+    ['proposeArrowNodeEdit', 'propose_arrow_node_edit'],
+  ]);
+  const rows = inventory.symbols.filter(row => names.has(row.exportName)
+    && ['package-root-node', 'package-root-browser', 'package-reference'].includes(row.routeId));
+  assert.equal(rows.length, 15);
+  const ledger = buildLedger({ ...args, inventory });
+  assert.equal(ledger.rows.filter(item => names.has(item.exportName)
+    && ['package-root-node', 'package-root-browser'].includes(item.routeId)
+    && item.acceptedRustOperation).length, 10);
+  for (const [name, symbol] of names) {
+    const owner = `umf_core::arrow_schema::${symbol}`;
+    for (const routeId of ['package-root-node', 'package-root-browser']) {
+      const row = ledger.rows.find(item => item.routeId === routeId && item.exportName === name);
+      assert.equal(row.acceptedRustOperation, owner, `${routeId}:${name} Rust mapping`);
+      assert.equal(row.sourceSelectedImplementation.status, 'source-selected-current-route-unqualified');
+      assert.equal(row.sourceSelectedImplementation.rustOwner, owner);
+      assert.equal(row.sourceSelectedImplementation.wireOperation, `arrow.schema.${({ importArrowSchema: 'import', inspectArrow: 'inspect', exportArrowSchema: 'export', getArrowNode: 'getNode', proposeArrowNodeEdit: 'proposeNodeEdit' })[name]}`);
+      assert.equal(row.bindingRouteStatus, 'unproven');
+      assert.equal(row.defaultRouteRetirement.status, 'open');
+      assert.match(row.sourceSelectedImplementation.qualificationStatus, /no installed default-route receipt/);
+      assert.ok(row.sourceSelectedImplementation.sourceClosure.some(item => item.path === 'crates/umf-core/src/arrow_schema.rs'));
+      assert.ok(row.sourceSelectedImplementation.sourceClosure.some(item => item.path === 'crates/umf-core-wire/tests/r8_arrow_schema_wire.rs'));
+      assert.ok(row.sourceSelectedImplementation.sourceClosure.some(item => item.path === 'src/adapters/arrow/rust-default.ts'));
+      assert.ok(row.acceptedOperationEvidence.evidenceClosure.some(item => item.path.endsWith('/r8-arrow-schema-v4-candidate-20261028/README.md')));
+      assert.equal(operationMapping({ ...row, packageCondition: routeId === 'package-root-node' ? 'browser' : 'node' }), null, `${routeId}:${name} rejects the opposite package condition`);
+      assert.equal(operationMapping({ ...row, source: routeId === 'package-root-node' ? 'src/index-browser-v4.ts' : 'src/index-node-v4.ts' }), null, `${routeId}:${name} rejects a forged source`);
+      assert.equal(operationMapping({ ...row, declarationKind: 'FunctionDeclaration' }), null, `${routeId}:${name} rejects a forged declaration kind`);
+      assert.equal(operationMapping({ ...row, declarationShape: 'function-declaration' }), null, `${routeId}:${name} rejects a forged declaration shape`);
+      assert.equal(operationMapping({ ...row, initializerShape: 'call-expression' }), null, `${routeId}:${name} rejects an initializer`);
+      assert.equal(operationMapping({ ...row, declarationName: 'arrowSchemaAlias' }), null, `${routeId}:${name} rejects an alias drift`);
+      const rootText = readFileSync(routeId === 'package-root-node' ? 'src/index-node-v4.ts' : 'src/index-browser-v4.ts', 'utf8');
+      assert.equal(isExactArrowSchemaV4RootSelection({ ...row, rootText: rootText.replace('export {importArrowSchema,inspectArrow,exportArrowSchema,getArrowNode,proposeArrowNodeEdit};', 'export {importArrowSchema,inspectArrow,exportArrowSchema,getArrowNode};') }), false, `${routeId}:${name} rejects an incomplete export list`);
+    }
+    const reference = ledger.rows.find(item => item.routeId === 'package-reference' && item.exportName === name);
+    assert.equal(reference.acceptedRustOperation, null, 'reference source remains TypeScript');
+    assert.equal(reference.sourceSelectedImplementation, null);
+    assert.equal(reference.defaultRouteRetirement.status, 'reference-only');
+    assert.equal(operationMapping(reference), null);
   }
 });
 
@@ -854,8 +902,8 @@ test('V4 relationship consumer exports are hybrid bindings without Rust consumer
     assert.equal(rows[2].sourceSelectedImplementation, null);
     assert.equal(rows[2].defaultRouteRetirement.status, 'reference-only');
   }
-  assert.equal(ledger.counts.sourceSelectedRustOverrides, 130 + 2 * 2 + 2 * 2 + 2 * 2);
-  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 89);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 130 + 2 * 2 + 2 * 2 + 2 * 2 + 2 * 5);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 94);
   assert.deepEqual(ledger.counts.executableDefaultRouteRetirementsByRoute, { 'package-root-node': 0, 'package-root-browser': 0 });
 
   for (const row of [
@@ -1051,7 +1099,7 @@ test('Schema Properties source selections keep exact CONTRACT-049 mappings separ
     assert.equal(reference.sourceSelectedImplementation, null);
     assert.equal(reference.implementationStatus, 'TypeScript reference implementation remains explicit');
   }
-  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 89);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 94);
   assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 831);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
   const aggregate = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/aggregate.json', 'utf8'));
@@ -1333,7 +1381,7 @@ test('five model vocabulary exports record generated-data versus executable disp
   assert.equal(ledger.counts.immutableGeneratedDataRows, 4);
   assert.equal(ledger.counts.routeImmutableGeneratedDataRows, 12);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
-  assert.equal(ledger.counts.executableRows, 920);
+  assert.equal(ledger.counts.executableRows, 925);
   const rows = ledger.rows.filter(row => ['SCALAR_TYPES','ELEMENT_KINDS','NULLABILITIES','CARDINALITIES'].includes(row.exportName));
   assert.equal(rows.length, 12);
   assert.ok(rows.every(row => row.rowKind === 'immutable-generated-data' && row.source === 'src/model/types.ts'));
@@ -3091,7 +3139,7 @@ test('security truth and composition map only their four reviewed opt-in operati
 test('securityAnd/securityOr V4 bindings normalize exactly and carry source-only replay evidence', () => {
   const ledger = currentGeneratedLedger();
   assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
-  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 89);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 94);
   assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 831);
   for (const name of ['securityAnd', 'securityOr']) {
     const rustSymbol = name === 'securityAnd' ? 'security_and' : 'security_or';
@@ -3728,9 +3776,9 @@ test('domain-pack loader inspector selection requires its exact V4 wrapper shape
   assert.equal(reference.defaultRouteRetirement.status, 'reference-only');
   // The domain-profile pair and guarded temporal pair each add two selected
   // declarations per root.
-  assert.equal(ledger.counts.sourceSelectedRustOverrides, 130 + 2 * 2 + 2 * 2 + 2 * 2);
-  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-node'].rustSelectedSourceDeclarations, 65 + 4 + 2);
-  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-browser'].rustSelectedSourceDeclarations, 65 + 4 + 2);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 130 + 2 * 2 + 2 * 2 + 2 * 2 + 2 * 5);
+  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-node'].rustSelectedSourceDeclarations, 65 + 4 + 2 + 5);
+  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-browser'].rustSelectedSourceDeclarations, 65 + 4 + 2 + 5);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
 });
 

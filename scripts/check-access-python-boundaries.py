@@ -41,8 +41,10 @@ def check(root: Path) -> int:
                "pin_host_facade": set(),
                "read_plan_bind_facade": {"runtime", "dsl", "foundation"}}
     allowed["runtime"].add("pin_host_facade")
+    allowed["runtime"].add("read_plan_bind_facade")
     helpers = {"types": "foundation", "values": "foundation", "codec_support": "foundation", "generated_core": "foundation",
                "related_keys": "runtime", "rust_related_keys": "runtime", "rust_catalog_custody": "runtime", "rust_catalog_render": "runtime", "verification": "targets", "managed_delta": "targets", "managed_actions": "targets", "managed_bulk": "targets", "managed_support": "targets", "delta_read": "targets", "postgres_search": "targets", "unity_search": "targets", "search_catalog": "runtime", "commands": "runtime", "manifest_commands": "runtime", "bulk": "runtime", "postgres_bulk": "targets", "native_program": "runtime", "native_actions": "targets", "catalog": "runtime", "reviewed": "runtime", "postgres_read": "targets", "capture": "dsl", "capture_types": "dsl", "rust_capture_observe": "dsl", "rust_catalog_render_v2": "runtime", "protocols": "runtime", "pages": "runtime", "adoption": "runtime", "engine_catalog": "runtime", "unified": "targets"}
+    helpers["catalog_errors"] = "runtime"
     # Keep the administrative host, approval and optional parser adapters
     # explicit in the module map. They remain within the lifecycle owner.
     helpers.update({"host": "lifecycle", "approval": "lifecycle",
@@ -105,13 +107,10 @@ def check(root: Path) -> int:
         "umf_access.rust_read_plan_bind": {
             ("__future__", "annotations"), ("collections.abc", "Mapping"),
             ("typing", "Any"), ("typing", "cast"), ("pydantic", "BaseModel"),
-            ("umf_access.catalog", "CatalogError"),
-            ("umf_access.catalog", "NotCompiledForTarget"),
-            ("umf_access.catalog", "ReadPlan"), ("umf_access.catalog", "ReadVariant"),
+            ("umf_access.catalog_errors", "CatalogError"),
+            ("umf_access.catalog_errors", "NotCompiledForTarget"),
             ("umf_access.pages", "ReadContinuation"),
             ("umf_access.pages", "StaleContinuation"),
-            ("umf_access.protocols", "AsyncReadTarget"),
-            ("umf_access.protocols", "ReadTarget"),
             ("umf_access.codec_support", "revalidate_model"),
             ("umf_access.dsl", "Continuation"), ("umf_access.types", "MISSING"),
             ("umf", "_rust")}

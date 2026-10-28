@@ -5,6 +5,7 @@ import {readFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {declareCoreBit128Field as typescriptDeclare} from '../../../../src/model/bit128-field.ts';
 import {UmfError as TypescriptUmfError} from '../../../../src/model/types.ts';
+import {bindCoreBit128FieldRust} from '../../../../src/access/rust-core-bit128-field-default.ts';
 import {uuidDocument, FIELD} from '../../../../tests/helpers/uuid-fixtures.ts';
 
 const packagePath = process.env.UMF_R8_BIT128_FIELD_NODE_PACKAGE;
@@ -130,4 +131,20 @@ test('accessors refuse without invocation and proxy exceptions preserve identity
     assert.equal(thrown, sentinel);
     expect(identityEvents).toEqual([]);
   }
+});
+
+test('branded binding failures regain the public TypeScript UmfError identity', () => {
+  const publicRust = bindCoreBit128FieldRust(rust, binding.isCoreBit128FieldBindingError);
+  let error;
+  try { publicRust.declareCoreBit128Field(uuidDocument('binary'), FIELD, 'string'); } catch (cause) { error = cause; }
+  expect(error).toBeInstanceOf(TypescriptUmfError);
+  expect(error.code).toBe('BIT128_FIELD');
+  expect(error.message).toBe('Explicit128-bit domain required');
+
+  const sentinel = Object.freeze({sentinel: true});
+  const throwingEngine = {declareCoreBit128Field() { throw sentinel; }};
+  const passthrough = bindCoreBit128FieldRust(throwingEngine, binding.isCoreBit128FieldBindingError);
+  let thrown;
+  try { passthrough.declareCoreBit128Field({}, FIELD, 'uuid'); } catch (cause) { thrown = cause; }
+  expect(thrown).toBe(sentinel);
 });

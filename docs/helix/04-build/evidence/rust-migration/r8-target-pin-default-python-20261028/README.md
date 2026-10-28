@@ -76,7 +76,7 @@ Relevant source hashes at evidence capture:
 | File | SHA-256 |
 | --- | --- |
 | `python/umf_access/src/umf_access/catalog.py` | `cc3cf5b8484b20230d7ede51f74abfb52d2c5ab72c1fcb566b78eaebd557109e` |
-| `python/umf_access/src/umf_access/rust_target_pin.py` | `9dcf004b8c43446da5252f7a1ead95bdc607484632523cc9f59b0d304d0784d2` |
+| `python/umf_access/src/umf_access/rust_target_pin.py` | `7b6ae16e245fb0b401e64a812631f63868b3201a9e03afb7ce97342982808d63` |
 | `python/umf_access/src/umf_access/rust_target_pin_host.py` | `02cf27e16bc262ca1b6bd5f67486a917a1b51a364b4c1ed4f7aa52c754768ada` |
 | `bindings/core/python/src/lib.rs` | `39f8c373e9ad7d3e50cc3e96a35d09cefaf3258b1faeea54cd4eb1d36d6208ee` |
 | `Cargo.lock` | `c55364fa3058e7a90bb2833dda6288621b863bed13a629c9bbf2f706401d602c` |

@@ -14,6 +14,7 @@ from .adoption import TargetIdentity
 from .catalog import TargetPin
 from .rust_target_pin_host import PROFILE, TargetPinRustUnavailable
 
+
 class TargetPinRustUnsupported(TypeError):
     """The supplied target identity uses a carrier outside this profile."""
 

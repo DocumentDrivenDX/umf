@@ -5,7 +5,7 @@
   "type": "module",
   "main": "index.js",
   "types": "index.d.ts",
-  "files": ["index.js", "index.d.ts", "copy-json-host-input.js", "copy-json-host-input.d.ts", "src/*.js", "src/shared-sources.json", "pkg/*.js", "pkg/*.wasm"],
+  "files": ["index.js", "index.d.ts", "copy-json-host-input.js", "copy-json-host-input.d.ts", "src/*.js", "src/shared-sources.json", "pkg/*.js", "pkg/*.d.ts", "pkg/*.wasm"],
   "scripts": {
     "prepack": "bun ../../../scripts/rust-migration/r7/wasm-package-sources.ts"
   }

@@ -140,6 +140,11 @@ try{
   join(root,'scripts/rust-migration/r8/relationships-default-retirement-replay-browser.mjs'),
   join(root,'scripts/rust-migration/r8/relationships-default-retirement-receipts-check.mjs'),
   join(root,'scripts/rust-migration/r8/relationships-default-retirement-pins.py'),
+  join(root,'scripts/rust-migration/r8/bit128-field-installed.mjs'),
+  join(root,'scripts/rust-migration/r8/bit128-field-installed-host.ts'),
+  join(root,'scripts/rust-migration/r8/bit128-field-installed-browser.ts'),
+  join(root,'scripts/rust-migration/r8/arrow-schema-v4-route-replay.mjs'),
+  join(root,'scripts/rust-migration/r8/arrow-schema-v4-chromium-replay.mjs'),
   join(root,'scripts/rust-migration/r8/inspectors-default-retirement-packets.ts'),
   join(root,'scripts/rust-migration/r8/inspectors-default-retirement-replay-node.mjs'),
   join(root,'scripts/rust-migration/r8/inspectors-default-retirement-replay-browser.mjs'),
@@ -294,6 +299,8 @@ try{
  await run([process.execPath,'node_modules/typescript/bin/tsc','--emitDeclarationOnly','--outDir',dist]);
  await cp(join(root,'spec'),join(dist,'spec'),{recursive:true});
  await cp(join(root,'dist/postgresql'),join(dist,'postgresql'),{recursive:true});
+ await cp(join(wasmOut,'umf_core_wasm.js'),join(dist,'umf_core_wasm.js'));
+ await cp(join(wasmOut,'umf_core_wasm.d.ts'),join(dist,'umf_core_wasm.d.ts'));
  const legacyBuild=await Bun.build({entrypoints:['src/index.ts'],outdir:dist,naming:'umf.js',target:'browser',format:'esm',sourcemap:'external'});
  if(!legacyBuild.success)throw new Error(legacyBuild.logs.join('\n'));
  const loaderBuild=await Bun.build({entrypoints:['src/domain-packs/loader-contract.ts'],outdir:dist,naming:'loader-contract.js',target:'browser',format:'esm'});
