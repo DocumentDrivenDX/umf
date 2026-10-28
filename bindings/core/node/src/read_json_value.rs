@@ -3,10 +3,7 @@
 use napi::JsString;
 use napi_derive::napi;
 use umf_core::{
-    serialization::{
-        read_typescript_json_value, read_typescript_json_value_after_json_preflight,
-        stringify_compact, stringify_compact_metered,
-    },
+    serialization::{read_typescript_json_value, stringify_compact, stringify_compact_metered},
     Context, EngineError, Utf16, Value,
 };
 
@@ -16,7 +13,7 @@ use umf_core::{
 #[napi(js_name = "readJsonValueOrdinaryText")]
 pub fn read_json_value_ordinary_text(
     source: JsString,
-    format_is_json: bool,
+    _format_is_json: bool,
 ) -> napi::Result<String> {
     let mut context = Context::ordinary();
     let source_length = source.utf16_len()?;
@@ -44,11 +41,10 @@ pub fn read_json_value_ordinary_text(
     }
     let source_units = &units[..source_length];
 
-    let result = if format_is_json {
-        read_typescript_json_value_after_json_preflight(source_units, &mut context)
-    } else {
-        read_typescript_json_value(source_units, None, &mut context)
-    };
+    // The JS facade has already performed the observable live JSON.parse
+    // preflight. Parsing again here would reject inputs accepted by an override
+    // and would give duplicate-key errors from a different parser path.
+    let result = read_typescript_json_value(source_units, None, &mut context);
     encode_outcome(result, &mut context)
 }
 

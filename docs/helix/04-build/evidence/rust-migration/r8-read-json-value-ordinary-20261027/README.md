@@ -69,9 +69,10 @@ WASM, Chromium, installed SDK, source selection or release behavior. The
 implementation proposal's broader production gates remain open.
 
 The separate [dedicated-entry Rust replay](package-parity.md) tests 18
-primitive-string cases against this reference in Node and Bun. It matches 15
-and records three exact mismatches in each host. That replay is an opt-in
-binding spike, not a public package export or a default-route qualification.
+primitive-string cases against this reference in Node and Bun. The rebuilt
+release addon matches 17 cases in each host; inherited array-index setter call
+count remains different. This replay is an opt-in binding spike, not a public
+package export or a default-route qualification.
 
 ## Replay
 

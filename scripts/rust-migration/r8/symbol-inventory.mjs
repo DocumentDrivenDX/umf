@@ -70,7 +70,12 @@ for (const route of routes) {
 }
 rows.sort((a,b) => a.routeId.localeCompare(b.routeId) || a.exportName.localeCompare(b.exportName) || a.source.localeCompare(b.source) || a.line - b.line);
 const exportNames = id => [...new Set(rows.filter(row => row.routeId === id).map(row => row.exportName))].sort();
-const referenceExports = JSON.stringify(exportNames('package-reference'));
+const referenceExports = exportNames('package-reference');
+const rootOnlySecProtobufExports = [
+  'projectSecCompanyFactsRustCandidate',
+  'projectSecSubmissionsRustCandidate',
+  'readDescriptorSetRustCandidate',
+];
 const rootEntries = new Map([
   ['package-root-node', 'src/index-node-v4.ts'],
   ['package-root-browser', 'src/index-browser-v4.ts'],
@@ -85,10 +90,11 @@ if (JSON.stringify(nodeEntryExports) !== JSON.stringify(browserEntryExports)) {
   throw new Error(`V4 root entry declarations diverge: Node=${JSON.stringify(nodeEntryExports)}, browser=${JSON.stringify(browserEntryExports)}`);
 }
 for (const id of ['package-root-node', 'package-root-browser']) {
-  if (JSON.stringify(exportNames(id)) !== referenceExports) {
-    const actual = exportNames(id);
-    const expected = JSON.parse(referenceExports);
-    throw new Error(`${id} export names diverge from ./reference; review package API: only root=${JSON.stringify(actual.filter(name => !expected.includes(name)))}, only reference=${JSON.stringify(expected.filter(name => !actual.includes(name)))}`);
+  const actual = exportNames(id);
+  const onlyRoot = actual.filter(name => !referenceExports.includes(name));
+  const onlyReference = referenceExports.filter(name => !actual.includes(name));
+  if (JSON.stringify(onlyRoot) !== JSON.stringify([...rootOnlySecProtobufExports].sort()) || onlyReference.length) {
+    throw new Error(`${id} export names diverge from ./reference beyond the reviewed root SEC/Protobuf operations and candidates: only root=${JSON.stringify(onlyRoot)}, only reference=${JSON.stringify(onlyReference)}`);
   }
 }
 const pkg = JSON.parse(fs.readFileSync(abs('package.json'), 'utf8'));
@@ -101,6 +107,10 @@ for (const route of routes) {
   if (pkg.exports[route.label]?.[route.condition] !== route.target) {
     throw new Error(`Package condition target changed: ${route.label}#${route.condition}; review capture inputs`);
   }
+}
+if (pkg.exports['.']?.types !== './dist/src/index-browser-v4.d.ts'
+  || pkg.exports['./reference']?.types !== './dist/src/index.d.ts') {
+  throw new Error('Package type routes must describe V4 root exports and the TypeScript reference separately');
 }
 if (pkg.exports['.']?.import !== './dist/umf-browser.js' || pkg.exports['.']?.default !== './dist/umf-browser.js') {
   throw new Error('Package root import/default target changed; review capture inputs');

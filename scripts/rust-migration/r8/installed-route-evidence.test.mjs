@@ -51,12 +51,12 @@ async function fixture(){
    families[family].receipts.push(normalized);
   }
  }
- const manifest={format:'umf.r8.installed-route-evidence/1',status:'pass',archive:{sha256:archiveSha,sourceClosureSha256:closureSha,sourceInputCount,generatedTransformCount:0},preflight:{path:'evidence/preflight.json',sha256:hash(preflightBytes),memberHashesVerified:true},families,logicalRetirementGaps:922};
+ const manifest={format:'umf.r8.installed-route-evidence/1',status:'pass',archive:{sha256:archiveSha,sourceClosureSha256:closureSha,sourceInputCount,generatedTransformCount:0},preflight:{path:'evidence/preflight.json',sha256:hash(preflightBytes),memberHashesVerified:true},families,logicalRetirementGaps:925};
  return {root,manifest,packageManifestSha256,cleanup:()=>rm(root,{recursive:true,force:true})};
 }
 
 test('aggregate route evidence requires one fixed-point archive cohort and preserves open retirement gaps',async()=>{
- const f=await fixture();try{const result=validateR8InstalledRouteEvidence(f.manifest,{root:f.root});assert.equal(result.status,'pass');assert.equal(result.boundedOperations,24);assert.equal(result.logicalRetirementGaps,922);assert.deepEqual(result.pendingOperations,pendingR8RouteNames);assert.equal(result.archiveVerification.independentArchiveRead,false);}finally{await f.cleanup()}
+ const f=await fixture();try{const result=validateR8InstalledRouteEvidence(f.manifest,{root:f.root});assert.equal(result.status,'pass');assert.equal(result.boundedOperations,24);assert.equal(result.logicalRetirementGaps,925);assert.deepEqual(result.pendingOperations,pendingR8RouteNames);assert.equal(result.archiveVerification.independentArchiveRead,false);}finally{await f.cleanup()}
 });
 
 test('Core Keys raw host verification fails closed for altered counts, flags, and operation inventories',async()=>{

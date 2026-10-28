@@ -1192,8 +1192,6 @@ export { projectRecordToParquet } from './core-ideals/record-parquet-projection'
 export { projectRecordToPostgresql } from './core-ideals/record-postgresql-projection';
 export { projectRecordToSqlServer } from './core-ideals/record-sqlserver-projection';
 export { projectRecordToTableSpec } from './core-ideals/record-tablespec-projection';
-export { projectSecCompanyFacts } from './domain-packs/public-company';
-export { projectSecSubmissions } from './domain-packs/public-company';
 export { projectSmithyToJsonSchema } from './projections/smithy-json-schema';
 export { projectSparkToArrow } from './projections/spark-arrow';
 export { projectSqlServerToAvro } from './projections/sqlserver-avro';

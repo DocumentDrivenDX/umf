@@ -665,6 +665,39 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
     ['requireDomainPackProfile', 'umf_core::domain_pack_profile_inspection::inspect_domain_pack_profile_wire'],
   ]);
   const domainPackProfileOwner = domainPackProfileOwnerByExport.get(exportName);
+  const closure = paths => [...new Set(paths)].sort().map(file => ({ path: file, sha256: digest(read(file)) }));
+  const secProjectionOwnerByExport = new Map([
+    ['projectSecSubmissions', 'umf_core::domain_pack_sec::project_sec_submissions'],
+    ['projectSecCompanyFacts', 'umf_core::domain_pack_sec::project_sec_company_facts'],
+  ]);
+  const secProjectionOwner = secProjectionOwnerByExport.get(exportName);
+  if (secProjectionOwner !== undefined && source === defaultEntry
+      && declaration?.declarationKind === 'BindingElement'
+      && declaration?.declarationName === exportName) {
+    const rootText = read(defaultEntry);
+    if (!/import \{createSecProjectionRustOperations(?:,utf16LittleEndianBytes)?\} from '\.\/domain-packs\/sec-projection-rust';/.test(rootText)
+        || !rootText.includes('const secProjection=createSecProjectionRustOperations(')
+        || !rootText.includes('const {projectSecSubmissions,projectSecCompanyFacts}=secProjection;')
+        || !rootText.includes('export {projectSecSubmissions,projectSecCompanyFacts};')) return null;
+    const node = !browser;
+    const bindingSource = node ? 'bindings/core/node/src/sec_projection.rs' : 'bindings/core/wasm/src/sec_projection.rs';
+    const bindingJs = node ? 'bindings/core/node/index.js' : 'bindings/core/wasm/src/lib.rs';
+    return {
+      status: 'source-selected-current-route-unqualified',
+      rustOwner: secProjectionOwner,
+      wireOperation: `domain-pack-sec/${exportName}`,
+      bindingRoute: browser
+        ? 'V4 browser root -> SEC Rust projection adapter -> WASM UTF-16 wire binding -> Rust core'
+        : 'V4 Node root -> SEC Rust projection adapter -> Node-API UTF-16 wire binding -> Rust core',
+      sourceClosure: closure([
+        defaultEntry, 'src/domain-packs/sec-projection-rust.ts', 'src/domain-packs/public-company.ts',
+        bindingSource, bindingJs, 'crates/umf-core/src/domain_pack_sec.rs',
+        'tests/rust-core/sec-projection-v4-default-route.test.mjs',
+        'docs/helix/02-design/contracts/CONTRACT-059-public-company-intelligence.md',
+      ]),
+      qualificationStatus: 'The exact V4 entry binds this SEC projection through the Rust UTF-16 wire operation. Current-source installed Node/Bun/Chromium replay is pending; no accepted mapping or declaration retirement is claimed.',
+    };
+  }
   const keyTupleOwnerByExport = new Map([
     ['readCoreKeyTupleBytes', 'umf_core::core_key_tuple::read_core_key_tuple_bytes'],
     ['prepareCoreKeyTuples', 'umf_core::core_key_tuple::prepare_core_key_tuples'],
@@ -675,7 +708,6 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
       && !(schemaGraphSource !== undefined && source === schemaGraphSource.source)
       && !(keyTupleOwner !== undefined && source === 'src/model/key-tuple.ts')
       && !(domainPackProfileOwner !== undefined && source === defaultEntry)) return null;
-  const closure = paths => [...new Set(paths)].sort().map(file => ({ path: file, sha256: digest(read(file)) }));
   if (keyTupleOwner !== undefined && source === 'src/model/key-tuple.ts'
       && declaration?.declarationKind === 'FunctionDeclaration'
       && declaration?.declarationName === exportName) {
@@ -2481,10 +2513,38 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
       }
       return { routeId, counts };
     });
-    const reference = routeSignatures[0].counts;
-    for (const { routeId, counts } of routeSignatures.slice(1)) {
-      if (counts.size !== reference.size || [...reference].some(([signature, count]) => counts.get(signature) !== count)) {
-        throw new Error(`R8 condition-aware declaration multiplicity differs for ${routeId}; review route-specific overloads before counting logical gaps`);
+    const reviewedRootOnlyNames = new Set(['projectSecCompanyFactsRustCandidate', 'projectSecSubmissionsRustCandidate', 'readDescriptorSetRustCandidate']);
+    const routeRows = new Map(conditionRoutes.map(routeId => [routeId, rootRows.filter(row => row.routeId === routeId)]));
+    const nodeNames = new Set(routeRows.get('package-root-node').map(row => row.exportName));
+    const browserNames = new Set(routeRows.get('package-root-browser').map(row => row.exportName));
+    const referenceNames = new Set(routeRows.get('package-reference').map(row => row.exportName));
+    const difference = (left, right) => [...left].filter(name => !right.has(name)).sort();
+    if (difference(nodeNames, browserNames).length || difference(browserNames, nodeNames).length) {
+      throw new Error('R8 Node/browser export names differ; review package API before counting logical gaps');
+    }
+    const rootOnlyNames = difference(nodeNames, referenceNames);
+    const referenceOnlyNames = difference(referenceNames, nodeNames);
+    if ((rootOnlyNames.length || referenceOnlyNames.length)
+      && (!([[], [...reviewedRootOnlyNames].sort()].some(expected => JSON.stringify(rootOnlyNames) === JSON.stringify(expected))) || referenceOnlyNames.length)) {
+      throw new Error('R8 root/reference export names differ beyond the reviewed root SEC/Protobuf operations and candidates; declaration multiplicity differs');
+    }
+    const signaturesWithoutCandidates = routeId => {
+      const counts = new Map();
+      for (const row of routeRows.get(routeId)) {
+        if (rootOnlyNames.includes(row.exportName)) continue;
+        const signature = logicalDeclarationSignature(row);
+        counts.set(signature, (counts.get(signature) ?? 0) + 1);
+      }
+      return counts;
+    };
+    const referenceSignatures = signaturesWithoutCandidates('package-reference');
+    for (const routeId of ['package-root-node', 'package-root-browser']) {
+      const counts = signaturesWithoutCandidates(routeId);
+      if (counts.size !== referenceSignatures.size || [...referenceSignatures].some(([signature, count]) => counts.get(signature) !== count)) {
+        const delta = [...new Set([...counts.keys(), ...referenceSignatures.keys()])]
+          .filter(signature => (counts.get(signature) ?? 0) !== (referenceSignatures.get(signature) ?? 0))
+          .slice(0, 6).map(signature => `${signature.replaceAll('\0', '|')} [${counts.get(signature) ?? 0}/${referenceSignatures.get(signature) ?? 0}]`);
+        throw new Error(`R8 condition-aware declaration multiplicity differs for ${routeId}: ${delta.join('; ')}`);
       }
     }
   } else {
@@ -2844,7 +2904,25 @@ function logicalDeclarationSignature(row) {
         : row.routeId === 'package-reference'
           ? row.source === 'src/domain-packs/profile.ts' && row.declarationName === row.exportName && row.declarationKind === 'FunctionDeclaration' && row.initializerShape === 'not-applicable'
           : false);
-  const kind = (conditionBoundExport || numericConditionShape || securityNotConditionShape || securityAndOrConditionShape || rawTableBindingConditionShape || relationshipConsumerConditionShape || newDefaultConditionShape || domainPackLoaderInspectionConditionShape || domainPackProfileInspectionConditionShape)
+  const keyTupleDefaultConditionShape = ['readCoreKeyTupleBytes', 'prepareCoreKeyTuples'].includes(row.exportName)
+    && row.declarationName === row.exportName
+    && (row.routeId === 'package-root-node'
+      ? row.source === 'src/index-node-v4.ts' && row.declarationKind === 'BindingElement' && row.initializerShape === 'not-applicable'
+      : row.routeId === 'package-root-browser'
+        ? row.source === 'src/index-browser-v4.ts' && row.declarationKind === 'BindingElement' && row.initializerShape === 'not-applicable'
+        : row.routeId === 'package-reference'
+          ? row.source === 'src/model/key-tuple.ts' && row.declarationKind === 'FunctionDeclaration' && row.initializerShape === 'not-applicable'
+          : false);
+  const secProjectionConditionShape = ['projectSecSubmissions', 'projectSecCompanyFacts'].includes(row.exportName)
+    && row.declarationName === row.exportName
+    && (row.routeId === 'package-root-node'
+      ? row.source === 'src/index-node-v4.ts' && row.declarationKind === 'BindingElement' && row.initializerShape === 'not-applicable'
+      : row.routeId === 'package-root-browser'
+        ? row.source === 'src/index-browser-v4.ts' && row.declarationKind === 'BindingElement' && row.initializerShape === 'not-applicable'
+        : row.routeId === 'package-reference'
+          ? row.source === 'src/domain-packs/public-company.ts' && row.declarationKind === 'FunctionDeclaration' && row.initializerShape === 'not-applicable'
+          : false);
+  const kind = (conditionBoundExport || numericConditionShape || securityNotConditionShape || securityAndOrConditionShape || rawTableBindingConditionShape || relationshipConsumerConditionShape || newDefaultConditionShape || domainPackLoaderInspectionConditionShape || domainPackProfileInspectionConditionShape || keyTupleDefaultConditionShape || secProjectionConditionShape)
     && ['package-root-node', 'package-root-browser', 'package-reference'].includes(row.routeId)
     ? 'condition-selected-root-binding'
     : row.declarationKind;
@@ -3002,8 +3080,8 @@ export function buildLedger({ inventory, packageJson, packageBytes = Buffer.from
     counts,
     runtimeExportDispositionSupplement,
     routeStatus: {
-      'package-root-node': `default Node route; the current V4 entry directly defines ${routeCounts['package-root-node'].rustSelectedSourceDeclarations} Rust-owned exports and inherits ${routeCounts['package-root-node'].executableDeclarations - routeCounts['package-root-node'].rustSelectedSourceDeclarations} executable TypeScript declarations. Temporal V4 exports have prior private Node/Bun/Chromium replay with recorded source-cohort limits; Core relationship V4 exports have private fixed-point Bun/Node/Chromium 11-case replay. The five schema graph exports and domain-pack loader inspector have separate current-source packet gates; passing packets establish bounded private route evidence only. The two domain-pack profile exports select Rust through a shared wire operation and have a separate current-source packet gate. These cohorts do not establish release qualification. All 922 unique logical executable declarations remain retirement gaps; ./reference is separately TypeScript.`,
-      'package-root-browser': `default browser route; the current V4 entry directly defines ${routeCounts['package-root-browser'].rustSelectedSourceDeclarations} Rust-owned exports and inherits ${routeCounts['package-root-browser'].executableDeclarations - routeCounts['package-root-browser'].rustSelectedSourceDeclarations} executable TypeScript declarations. Temporal V4 exports have prior private Node/Bun/Chromium replay with recorded source-cohort limits; Core relationship V4 exports have private fixed-point Bun/Node/Chromium 11-case replay. The five schema graph exports and domain-pack loader inspector have separate current-source packet gates; passing packets establish bounded private route evidence only. The two domain-pack profile exports select Rust through a shared wire operation and have a separate current-source packet gate. These cohorts do not establish release qualification. All 922 unique logical executable declarations remain retirement gaps; ./reference is separately TypeScript.`,
+      'package-root-node': `default Node route; the current V4 entry directly defines ${routeCounts['package-root-node'].rustSelectedSourceDeclarations} Rust-owned exports and inherits ${routeCounts['package-root-node'].executableDeclarations - routeCounts['package-root-node'].rustSelectedSourceDeclarations} executable TypeScript declarations. Temporal V4 exports have prior private Node/Bun/Chromium replay with recorded source-cohort limits; Core relationship V4 exports have private fixed-point Bun/Node/Chromium 11-case replay. The five schema graph exports and domain-pack loader inspector have separate current-source packet gates; passing packets establish bounded private route evidence only. The two domain-pack profile exports select Rust through a shared wire operation and have a separate current-source packet gate. These cohorts do not establish release qualification. All 925 unique logical executable declarations remain retirement gaps; ./reference is separately TypeScript.`,
+      'package-root-browser': `default browser route; the current V4 entry directly defines ${routeCounts['package-root-browser'].rustSelectedSourceDeclarations} Rust-owned exports and inherits ${routeCounts['package-root-browser'].executableDeclarations - routeCounts['package-root-browser'].rustSelectedSourceDeclarations} executable TypeScript declarations. Temporal V4 exports have prior private Node/Bun/Chromium replay with recorded source-cohort limits; Core relationship V4 exports have private fixed-point Bun/Node/Chromium 11-case replay. The five schema graph exports and domain-pack loader inspector have separate current-source packet gates; passing packets establish bounded private route evidence only. The two domain-pack profile exports select Rust through a shared wire operation and have a separate current-source packet gate. These cohorts do not establish release qualification. All 925 unique logical executable declarations remain retirement gaps; ./reference is separately TypeScript.`,
       'package-reference': 'explicit TypeScript reference route; its declarations remain TypeScript',
     },
     nextPortClusters: [

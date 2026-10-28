@@ -7,31 +7,33 @@
   },
   "addon": {
     "path": "/private/tmp/umf_core_node.node",
-    "sha256": "f0f73c9de1d2121fbf47dfbdbb1c050fe24f15b55fc3e769f86ff78ec971be1c"
+    "sha256": "69a76d7133938a6d19f675f43f3c5f2ed2c9139cfffc441b99f891e6c6062275"
   },
   "sourceHashes": {
-    "bindings/core/node/src/read_json_value.rs": "e9b62271d474490e09c85736137cb8975cebcd6283217a871c4c2f6c39f1595f",
-    "bindings/core/node/src/lib.rs": "0c2876b03d1366c29343240e8a905a63e6063df45f7a81c74148a2ae1df095fd",
-    "bindings/core/node/index.js": "1de555d59ef8793f1b2c493d00c2d4625151cf08ce488604a9cd1f1dd3bcaa18",
-    "bindings/core/node/index.d.ts": "79b97ffbdcdf49ced99cc191644d4a8e6f72bc19d56e1fffa4c01f24785b57f1",
-    "crates/umf-core/src/serialization.rs": "6dcb0ec4fb47e0aa6d5cb545b0cd925b9a1b23838a3782f435386af5a497c392",
+    "bindings/core/node/src/read_json_value.rs": "8c597a3e910d9984762ef73d6450f02a0d914b83c2552e33cc832e3bba82059e",
+    "bindings/core/node/src/lib.rs": "fa62ae31620540178dc196387acba6fa46415ae501d0f3a2214ae74a772b0784",
+    "bindings/core/node/index.js": "bae86c466164f22ac1a115a7958ab6902cbda2c844dc5a7c6b595b8469ca7a00",
+    "bindings/core/node/index.d.ts": "c60e581d7571a2d2efa06419aba9d2c13f9aa957419938debb84d32a3af5a1ce",
+    "crates/umf-core/src/serialization.rs": "40fdedac8a1cfd2d850b045cb82b0fa56278a0b5d5595c2c7fe44b7783e482fa",
     "crates/umf-core/src/context.rs": "293a58a1efd6cd006014203363f5b856a0a017116f09567da4076454feb2ac2d",
-    "src/access/read-json-value-ordinary.ts": "e1af34e745dec592851ff8eb88964a4bc8417f1f3d5fa96aacf0e327d6ffffd4",
-    "src/index-node-v4.ts": "946caf87aa70c28384bf7c89f57b4714d9efda2de673197a54b47f153c430dd3",
+    "src/access/read-json-value-ordinary.ts": "8985e67774c2138e24239c7dddb9733319d2ce1ca38eebda24287634a95501a5",
+    "src/index-node-v4.ts": "3eece15c42e043e77e563b66f1ea01b1e1ee40b199f55e003f16f638b574a86f",
     "scripts/rust-migration/r8/read-json-value-ordinary-entry.ts": "51bc501d51b463766a7e09c823a735e921c4f42252f03432f60aecba9fd09431",
     "src/model/serialization.ts": "027360ffd8bf77905f7d14a3d4d933035fe11d9f52ae28d54691cc607cb43586",
-    "dist/umf.js": "165c94d2986dc183091b73678d5c27f9439cea13901eb111a95eaddd5fb3febe",
+    "dist/umf.js": "07c3580eb288d0e2496568cf9c9f73ca192890cfcc551cbbbd19540d8fb0536b",
     "tests/model/read-json-value-ordinary.test.ts": "08d8e47822c77084f048370c1a2f29933843be51eb719b1f3605572baed42e30",
-    "scripts/rust-migration/r8/read-json-value-ordinary-package-parity.mjs": "694fbe0f9a865a94b8fd8ee7fe72263d77bf329f6dc84bc01793719a103d4c85"
+    "scripts/rust-migration/r8/read-json-value-ordinary-package-parity.mjs": "dcdf6e5de0095bf2413248908279cb234ac5bcd69cccbd732f1ce2fdea8a6bad"
   },
   "count": 18,
-  "matched": 15,
-  "mismatchCount": 3,
+  "matched": 17,
+  "mismatchCount": 1,
   "matchedCases": [
     "yaml-string",
     "json-string",
     "json-primitive-results",
+    "json-duplicate-key",
     "json-invalid",
+    "json-live-parse-accepts-malformed-input",
     "yaml-duplicate-key",
     "yaml-null-prototype-ordered-own-descriptors",
     "json-lone-surrogate-value",
@@ -45,44 +47,6 @@
     "yaml-over-limit"
   ],
   "mismatches": [
-    {
-      "id": "json-duplicate-key",
-      "expected": {
-        "kind": "throw",
-        "name": "UmfError",
-        "code": "SYNTAX",
-        "path": "",
-        "message": "Map keys must be unique at line 1, column 8:\n\n{\"x\":1,\"x\":2}\n       ^\n",
-        "setter": 0
-      },
-      "actual": {
-        "kind": "throw",
-        "name": "UmfError",
-        "code": "DUPLICATE_KEY",
-        "path": "",
-        "message": "Duplicate object key",
-        "setter": 0
-      }
-    },
-    {
-      "id": "json-live-parse-accepts-malformed-input",
-      "expected": {
-        "kind": "throw",
-        "name": "UmfError",
-        "code": "SYNTAX",
-        "path": "",
-        "message": "Flow map must end with a } at line 1, column 2:\n\n{\n ^\n",
-        "setter": 0
-      },
-      "actual": {
-        "kind": "throw",
-        "name": "UmfError",
-        "code": "SYNTAX",
-        "path": "",
-        "message": "Invalid JSON syntax",
-        "setter": 0
-      }
-    },
     {
       "id": "array-own-index-under-inherited-setter",
       "expected": {

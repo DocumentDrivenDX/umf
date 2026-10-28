@@ -65,24 +65,28 @@ and complete tooling retirement, and R8 final integrated qualification remain
 open. The source `package.json` selects the Rust V4 Node/browser entries for
 synchronous `generatePythonClient` and retains TypeScript under `./reference`.
 The prior fixed-point private SDK archives qualify only their captured subsets
-and hosts. The current ledger records 65 source-selected declarations per
-default root, 922 logical default-route gaps, zero retired, 84 accepted opt-in
-Rust mappings, and 838 unmapped names. The five-schema default-route packet is
-verified for its bounded private Darwin arm64 Node/Bun/Chromium installed-route
-scope; its receipt SHA-256 is
+and hosts. The current condition-aware ledger records 1,123 declarations in
+each default root, 1,120 in `./reference`, 69 source-selected declarations per
+default root, 925 logical default-route gaps, zero retired, 86 accepted opt-in
+Rust mappings, and 839 unmapped names. Three root-only SEC/Protobuf Rust
+candidate exports account for the difference from the reference route; they
+remain opt-in and add no retirement. The historical five-schema default-route
+packet was verified for its captured private Darwin arm64 Node/Bun/Chromium
+installed-route scope; it has source drift against this checkout and needs a
+new current-source packet. Its receipt SHA-256 is
 `1c192d0246a85c8c12de39b37b40e119026b692dade2db249e5aace2c689b19a`. The
 current inventory SHA-256 is
-`eced450d39b6e2eade2354cc549300179fc9a763183dd56d2d1af138bb662424` and the
+`805e711ce3a5720624fa66803bf766444b4f67f97f4d02d747f739c675168cc4` and the
 condition-aware ledger SHA-256 is
-`14a9de59c1a5d37390f5eab7a8900945c2eecd74b8cf626ec773d46aa79d9ba5`. Linux,
+`daac11f42e547f95e64a9b8f9d99db25d1727df4027ee9cf3039b13b99e3056e`. Linux,
 complete production SDK parity, the full port, and release remain unqualified.
 The ledger's `executable` label is a broad public-runtime category: independent
 AST review of the 1,120-name reference root found 750 function declarations,
 167 variable declarations, five class declarations and 198 JSON resource
 exports. Constants, aliases and structured public values among those variables
 still require compatibility/authority review, but should not be mistaken for
-unported algorithms solely from the current label. Keep all 922 non-JSON
-runtime declarations in the retirement denominator until an evidence-backed
+unported algorithms solely from the current label. Keep all 925 default-root
+non-JSON runtime declarations in the retirement denominator until an evidence-backed
 per-row semantic/host/data disposition is reviewed; do not subtract a category
 by naming heuristic.
 Draft [PR #61](https://github.com/DocumentDrivenDX/umf/pull/61) remains open;
@@ -98,12 +102,12 @@ harness now excludes it, and a fresh source-coherent archive and installed
 Node/Bun/Chromium replay are still required. Cardinality, facets and Core Keys
 default binders still run TypeScript `copyJson` admission before Rust and thus
 remain executable-retirement work despite their source-selected operations.
-Core Key tuple default selection is held: the tagged byte route imposes a
-100,000-value ceiling below the 4,000,000-byte predecessor bound, and its
-prepared route revalidates instead of retaining Rust diagnostics. A direct
-native/WASM byte and prepared-object interface is under implementation and
-must pass exact parity before selection.
-The separate `verifyCoreKeyOperation` default route is also held: the generic
+The earlier Core Key Tuple hold identified a tagged-byte ceiling below the
+4,000,000-byte predecessor bound and a prepared route that revalidated rather
+than retaining Rust diagnostics. A direct native/WASM byte and prepared-object
+interface now source-selects both operations; its bounded installed Darwin
+packet is recorded below. Complete retirement remains open.
+The separate `verifyCoreKeyOperation` default route is still held: the generic
 wire admits both receipt and current before Rust can reject a malformed
 receipt, while its existing staged wrapper reruns full verification and the
 current binder uses TypeScript JSON admission. Its frozen receipt-before-current
@@ -9272,3 +9276,128 @@ the R3 generator corpus and named numeric, cardinality, facets, keys, Bit128,
 Compact Dataset, and Security And/Or subsets, plus route tampering and
 missing/corrupt native/WASM controls. This is a private Darwin arm64 cohort;
 hosted Linux and release gates remain open.
+
+### R8 schema graph and loader-inspector mapping/retirement gates — 2026-10-28
+
+The earlier five-schema packet covers `generateDomainPackSchema`,
+`generateDatasetSourceSchema`, `generateArtifactCollectionSchema`,
+`generateDomainPackLoaderSchema`, and `generateLoaderInventorySchema`; the
+loader-inspector packet covers `inspectDomainPackLoader` under CONTRACT-057.
+Their pinned receipts are
+`1c192d0246a85c8c12de39b37b40e119026b692dade2db249e5aace2c689b19a` and
+`5e5138d7d614b474bc41f9743cbf9c5d6ccb8051ae01b1a1fb57cd01cba3af4b`,
+respectively. These receipt identities preserve the earlier private Darwin
+arm64 route observations described above; they do not establish current-source
+qualification. Re-running both fixed-point validators against this checkout
+fails on source drift at `bindings/core/node/index.d.ts`, so fresh packets
+bound to the current closure are required before either route claim can be
+reused as current evidence.
+
+The five generators each have a Node and browser V4 root declaration plus the
+separately retained TypeScript implementation/reference declaration. The
+inspector has corresponding Node and browser `inspectDomainPackLoaderOperation`
+root bindings and the TypeScript reference implementation. These six
+operations are source-selected to Rust, but their inventory rows still have
+`acceptedRustOperation: null`; no explicit accepted mapping has been recorded.
+Acceptance therefore still requires reviewed row-to-operation ownership in the
+R8 accepted-mapping ledger and evidence bound to current source, native core,
+wire and host bindings, and the named versioned contract. The five-schema
+receipt observes two native calls per operation in Node and Bun and exact
+public-output/alias behavior in Chromium, while its direct WASM call count is
+unobserved. The inspector's earlier packet has eleven parity cases and eight
+observed native/WASM dispatches per host, with rejected-wrapper inputs
+dispatching zero times. Those are bounded operation observations, not
+complete adapter or release claims.
+
+Retiring any of the six default-route declarations has a stricter gate than
+accepting its bounded ownership mapping. The retirement validator requires an
+exact frozen operation packet tied to the current contract and Rust owner,
+current fixed-point source closure, verified Darwin arm64 and Linux x86_64
+archives/member maps, and Node, Bun, and Chromium default-versus-reference
+case receipts in both cohorts with the required per-case dispatch traces. It
+retires only the exact Node and browser rows while retaining the TypeScript
+`./reference` row. The existing schema packet has neither the per-case
+Chromium WASM dispatch trace nor the Linux cohort; the inspector packet lacks
+the Linux cohort and retirement-profile receipts. As a result all six
+operations remain unmapped in the accepted ledger and all twelve default-root
+rows remain open for retirement. The previous source-bound inventory and
+ledger counts above are historical snapshots; no new counts are asserted by
+this checkpoint.
+
+### R8 SEC default-route and current resource checkpoint — 2026-10-28
+
+The V4 Node and browser roots now select the Rust `projectSecSubmissions` and
+`projectSecCompanyFacts` functions as their ordinary exports. The generated
+shared V4 facade omits the predecessor exports; `./reference` retains them.
+The [installed SEC default-route packet](evidence/rust-migration/r8-sec-projection-default-installed/README.md)
+passes Node 26.12.1, Bun 1.4.3, and real Chromium 153 on a zero-transform
+private Darwin arm64 SDK archive. Its archive SHA-256 is
+`6cace7b4dcca7dd7684349754f2633597d5a9c6afe959c73047a9b89b260fe9f`,
+source closure SHA-256 is
+`1ba919b661ae36490b6f633dcafb9fe106c6c58d122a0881122e55fde7ff9031`,
+and receipt SHA-256 is
+`882acb9edf259d5829c1ae6628f363fa80b85a59c1f0975c646c5457170547c6`.
+The installed defaults match both Rust candidate aliases and the TypeScript
+reference on the frozen cohort; each host passes the exact 32 Mi UTF-16 output
+boundary, late-invalid-row precedence, and missing/corrupt asset refusal.
+Independent review found no material overclaim in the bounded packet. This
+does not qualify Linux, the full SEC API, complete Python release cohorts, or
+the R8 declaration-retirement gate. Both default-root declarations remain
+open in the ledger.
+
+The [broad installed SDK packet after SEC default selection](evidence/rust-migration/r8-sec-default-broad-installed-sdk-20261028/README.md)
+passes Node 26.12.1, Bun 1.4.3, and real Chromium 153 against that same
+archive and source closure. Its receipt SHA-256 is
+`6c60d95abce300d497f0743e69ad95081a4fc0bb3b62f948471010b0574be668`.
+It covers the frozen R3 generator corpus, the named numeric, cardinality,
+facets, keys, Bit128, Compact Dataset, and Security And/Or subsets, package
+route tampering, and missing/corrupt native and WASM asset refusal. This is a
+single local Darwin arm64 cohort; it does not close hosted Linux, full API
+parity, declaration retirement, or release qualification.
+
+The [current JSON resource authority review](evidence/rust-migration/r8-symbol-inventory/current-unresolved-json-resource-authority-20261028.md)
+leaves five resource files explicitly unresolved. The current metamodel build
+manifest does not identify their exact output paths as generated authorities;
+historical writer evidence does not establish authority for this source cut.
+Do not infer resource retirement from the broad runtime category or assign a
+writer until the current build dependency and provenance are traced.
+
+The [dedicated-entry `readJsonValue` replay](evidence/rust-migration/r8-read-json-value-ordinary-20261027/package-parity.md)
+now matches 17 of 18 primitive-string cases on both Node 26.12.1 and Bun
+1.4.3 with a freshly rebuilt release addon. Rust now uses the facade's
+observable live `JSON.parse` preflight rather than repeating a native JSON
+parse; this closes the duplicate-key diagnostic and lenient-override
+mismatches in that exact packet. The inherited array-index setter still has
+five predecessor calls versus zero in the Rust path. The packet is an opt-in
+native spike, with no browser, arbitrary-host-value, installed SDK, or
+default-route qualification. Keep `readJsonValue` on its TypeScript default
+and preserve the mismatch in the acceptance set. The
+[inherited-setter source oracle](evidence/rust-migration/r8-read-json-value-inherited-setter-source-oracle-20261027/README.md)
+attributes the five calls to distinct parser phases and a callback catch
+boundary. A causal Rust replacement needs phase-aware host callbacks at those
+writes with the same throw order; a post-parse call count cannot qualify the
+route.
+
+The coordinated Python release workflow now triggers on changes to its
+binary-closure negative-control suite and runs all 16 tests on the aggregate
+Linux verifier host. The suite passes locally under CPython 3.13.16; the
+pytest-based coordinator/matrix suite was unavailable in the offline local
+environment. The hosted six-cohort wheel/sdist run remains queued and no
+R4 release qualification follows from this workflow correction.
+
+The next independent Python-access ownership slice to freeze is
+`TargetPin.matches` in `python/umf_access/src/umf_access/catalog.py`, under
+CONTRACT-071/072. Its current Python implementation compares five exact
+identity fields, requires equal platform-component counts, and checks each
+observed `(name, version)` against the pin's qualified versions. Rust can own
+the closed identity/pin matcher while Python retains `target.identity()`,
+artifact calls, dispatch, and Pydantic construction. Existing catalog and
+target-verification tests were supporting coverage only. The new
+[13-case direct Python predecessor packet](evidence/rust-migration/target-pin-python-predecessor-20261028/README.md)
+freezes the current method, including an observed duplicate-name defect: two
+`driver` observations can satisfy a two-component pin even when `server` is
+absent. CONTRACT-072 says a target identity equals its pins; resolve whether
+to reject duplicate platform names in the Python boundary before porting this
+behavior to Rust. Freeze result/error order and `ReadPlan.bind` host-call timing
+separately. No default Python route or R5 ownership claim changes at this
+checkpoint.

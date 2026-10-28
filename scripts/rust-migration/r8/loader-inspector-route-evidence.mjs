@@ -63,7 +63,7 @@ export function validateClaims(receipt,{live,archiveMembers,packageManifest,sdkM
   ensure(chromium.chromium.wasmRequested===true&&chromium.chromium.externalRequests===0&&chromium.chromium.pageErrors===0&&chromium.chromium.nodeGlobalsAbsent===true&&chromium.chromium.requireAbsent===true,'Chromium environment or request controls failed');
   const cTotal=caseShape(chromium.chromium,'browser');ensure(cTotal===8,'WASM per-case dispatch total mismatch');
   ensure(canonical(chromium.chromium.cases.map(x=>({name:x.name,result:x.result,dispatches:x.wasmDispatches})))===canonical(node.cases.map(x=>({name:x.name,result:x.result,dispatches:x.dispatches}))), 'Chromium/Node case results differ');
-  ensure(receipt.qualification?.releaseQualified===false&&receipt.qualification?.logicalGapsRetired===0&&receipt.qualification?.logicalGapsOpen===922,'qualification scope overclaim');
+  ensure(receipt.qualification?.releaseQualified===false&&receipt.qualification?.logicalGapsRetired===0&&receipt.qualification?.logicalGapsOpen===925,'qualification scope overclaim');
   return {status:'pass'};
  }catch(error){return {status:'fail',reason:String(error?.message??error).slice(0,400)};}
 }

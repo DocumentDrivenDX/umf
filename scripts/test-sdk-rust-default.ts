@@ -326,7 +326,7 @@ function assert(condition:unknown,message:string):asserts condition{if(!conditio
 function assertPackageRoutes(pkg:{exports?:Record<string,Record<string,string>>}){
  const root=pkg.exports?.['.'];
  assert(root,'installed package root export is missing');
- assert(root.types==='./dist/src/index.d.ts'&&root.node==='./dist/umf-node.js'&&root.browser==='./dist/umf-browser.js'&&root.import==='./dist/umf-browser.js'&&root.default==='./dist/umf-browser.js','installed package root condition map does not select the qualified Rust entries');
+ assert(root.types==='./dist/src/index-browser-v4.d.ts'&&root.node==='./dist/umf-node.js'&&root.browser==='./dist/umf-browser.js'&&root.import==='./dist/umf-browser.js'&&root.default==='./dist/umf-browser.js','installed package root condition map does not select the qualified Rust entries');
  const reference=pkg.exports?.['./reference'];
  assert(reference,'installed TypeScript reference export is missing');
  assert(reference.types==='./dist/src/index.d.ts'&&reference.import==='./dist/umf.js','installed TypeScript reference route map mismatch');

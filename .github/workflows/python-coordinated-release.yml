@@ -18,6 +18,7 @@ on:
       - 'tools/verify_python_release_pair.py'
       - 'tools/verify_python_release_matrix.py'
       - 'scripts/rust-migration/r4/check_binary_closure.py'
+      - 'scripts/rust-migration/r4/test_binary_closure.py'
       - 'python/tests/test_coordinated_python_release.py'
       - 'python/tests/test_python_release_matrix.py'
       - '.github/workflows/python-coordinated-release.yml'
@@ -298,6 +299,8 @@ jobs:
             python/tests/test_coordinated_python_release.py \
             python/tests/test_python_release_matrix.py \
             python/tests/test_rust_pair_custody.py
+          PYTHONPATH=scripts/rust-migration/r4 python -m unittest discover \
+            -s scripts/rust-migration/r4 -p 'test_binary_closure.py'
       - uses: actions/download-artifact@v4
         with:
           pattern: python-release-*

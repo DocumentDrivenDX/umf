@@ -1,0 +1,297 @@
+{
+  "format": "umf-target-pin-python-predecessor/1",
+  "scope": "python/umf_access/src/umf_access/catalog.py TargetPin.matches only",
+  "source": "python/umf_access/src/umf_access/catalog.py",
+  "source_sha256": "188e816ccad9ed609c1382ea8090471a5ed1266f412742e69b7800d32ed455ec",
+  "case_count": 13,
+  "pass_count": 13,
+  "mismatch_count": 0,
+  "cases": [
+    {
+      "name": "exact-identity",
+      "identity": {
+        "kind": "postgresql",
+        "backend_id": "pg",
+        "backend_version": "18",
+        "target_profile": "profile-a",
+        "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "platform": [
+          [
+            "driver",
+            "3.2"
+          ],
+          [
+            "server",
+            "18.1"
+          ]
+        ]
+      },
+      "expected": true,
+      "note": "All five identity fields and both platform pairs match."
+    },
+    {
+      "name": "identity-field-kind-differs",
+      "identity": {
+        "kind": "lakebase",
+        "backend_id": "pg",
+        "backend_version": "18",
+        "target_profile": "profile-a",
+        "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "platform": [
+          [
+            "driver",
+            "3.2"
+          ],
+          [
+            "server",
+            "18.1"
+          ]
+        ]
+      },
+      "expected": false,
+      "note": "Only kind differs."
+    },
+    {
+      "name": "identity-field-backend_id-differs",
+      "identity": {
+        "kind": "postgresql",
+        "backend_id": "other",
+        "backend_version": "18",
+        "target_profile": "profile-a",
+        "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "platform": [
+          [
+            "driver",
+            "3.2"
+          ],
+          [
+            "server",
+            "18.1"
+          ]
+        ]
+      },
+      "expected": false,
+      "note": "Only backend_id differs."
+    },
+    {
+      "name": "identity-field-backend_version-differs",
+      "identity": {
+        "kind": "postgresql",
+        "backend_id": "pg",
+        "backend_version": "19",
+        "target_profile": "profile-a",
+        "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "platform": [
+          [
+            "driver",
+            "3.2"
+          ],
+          [
+            "server",
+            "18.1"
+          ]
+        ]
+      },
+      "expected": false,
+      "note": "Only backend_version differs."
+    },
+    {
+      "name": "identity-field-target_profile-differs",
+      "identity": {
+        "kind": "postgresql",
+        "backend_id": "pg",
+        "backend_version": "18",
+        "target_profile": "profile-b",
+        "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "platform": [
+          [
+            "driver",
+            "3.2"
+          ],
+          [
+            "server",
+            "18.1"
+          ]
+        ]
+      },
+      "expected": false,
+      "note": "Only target_profile differs."
+    },
+    {
+      "name": "identity-field-binding_sha256-differs",
+      "identity": {
+        "kind": "postgresql",
+        "backend_id": "pg",
+        "backend_version": "18",
+        "target_profile": "profile-a",
+        "binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "platform": [
+          [
+            "driver",
+            "3.2"
+          ],
+          [
+            "server",
+            "18.1"
+          ]
+        ]
+      },
+      "expected": false,
+      "note": "Only binding_sha256 differs."
+    },
+    {
+      "name": "platform-version-alternative-in-qualified-set",
+      "identity": {
+        "kind": "postgresql",
+        "backend_id": "pg",
+        "backend_version": "18",
+        "target_profile": "profile-a",
+        "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "platform": [
+          [
+            "driver",
+            "3.3"
+          ],
+          [
+            "server",
+            "18.1"
+          ]
+        ]
+      },
+      "expected": true,
+      "note": "Any listed version for a named component is accepted."
+    },
+    {
+      "name": "platform-version-outside-qualified-set",
+      "identity": {
+        "kind": "postgresql",
+        "backend_id": "pg",
+        "backend_version": "18",
+        "target_profile": "profile-a",
+        "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "platform": [
+          [
+            "driver",
+            "3.4"
+          ],
+          [
+            "server",
+            "18.1"
+          ]
+        ]
+      },
+      "expected": false,
+      "note": "An unlisted version is rejected."
+    },
+    {
+      "name": "platform-cardinality-one-missing",
+      "identity": {
+        "kind": "postgresql",
+        "backend_id": "pg",
+        "backend_version": "18",
+        "target_profile": "profile-a",
+        "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "platform": [
+          [
+            "driver",
+            "3.2"
+          ]
+        ]
+      },
+      "expected": false,
+      "note": "Different component counts are rejected."
+    },
+    {
+      "name": "platform-cardinality-one-extra",
+      "identity": {
+        "kind": "postgresql",
+        "backend_id": "pg",
+        "backend_version": "18",
+        "target_profile": "profile-a",
+        "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "platform": [
+          [
+            "driver",
+            "3.2"
+          ],
+          [
+            "server",
+            "18.1"
+          ],
+          [
+            "tls",
+            "1"
+          ]
+        ]
+      },
+      "expected": false,
+      "note": "Different component counts are rejected."
+    },
+    {
+      "name": "same-cardinality-name-absent-from-pin",
+      "identity": {
+        "kind": "postgresql",
+        "backend_id": "pg",
+        "backend_version": "18",
+        "target_profile": "profile-a",
+        "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "platform": [
+          [
+            "driver",
+            "3.2"
+          ],
+          [
+            "other",
+            "18.1"
+          ]
+        ]
+      },
+      "expected": false,
+      "note": "A name absent from the pin fails containment."
+    },
+    {
+      "name": "duplicate-observed-name-misses-other-pinned-name",
+      "identity": {
+        "kind": "postgresql",
+        "backend_id": "pg",
+        "backend_version": "18",
+        "target_profile": "profile-a",
+        "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "platform": [
+          [
+            "driver",
+            "3.2"
+          ],
+          [
+            "driver",
+            "3.3"
+          ]
+        ]
+      },
+      "expected": true,
+      "note": "Observed behavior: equal counts plus per-item containment accepts a duplicate name and does not require every pinned name to be observed."
+    },
+    {
+      "name": "duplicate-observed-name-bad-version",
+      "identity": {
+        "kind": "postgresql",
+        "backend_id": "pg",
+        "backend_version": "18",
+        "target_profile": "profile-a",
+        "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "platform": [
+          [
+            "driver",
+            "3.4"
+          ],
+          [
+            "driver",
+            "3.2"
+          ]
+        ]
+      },
+      "expected": false,
+      "note": "Every duplicate observed pair is still checked against the pinned version set."
+    }
+  ]
+}

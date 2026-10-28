@@ -157,6 +157,9 @@ def test_coordinated_workflow_is_nonpublishing_and_builds_both_release_pairs() -
     assert "PYO3_PYTHON=%s\\n" in workflow
     assert "platform.machine().lower()" in workflow
     assert "scripts/rust-migration/r4/check_binary_closure.py" in workflow
+    assert "scripts/rust-migration/r4/test_binary_closure.py" in workflow
+    assert "PYTHONPATH=scripts/rust-migration/r4 python -m unittest discover" in workflow
+    assert "-p 'test_binary_closure.py'" in workflow
     assert "--cohort-set six-cohort" in workflow
     assert "Require all six receipts" in workflow
     assert "platform.python_version() != os.environ['EXPECTED_PYTHON']" in workflow

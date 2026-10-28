@@ -31,16 +31,18 @@ property descriptor flags, and values recursively in memory. These direct
 checks supplement deep value comparison; large strings are not copied into
 the saved receipt when they match.
 
-Node 26.12.1 and Bun 1.4.3 each matched 15 of 18 cases. The same three cases
-mismatch on both runtimes:
+The rebuilt dedicated-entry addon (release profile, Rust 1.90.0, offline locked
+dependencies) matched 17 of 18 cases on Node 26.12.1 and Bun 1.4.3. The two
+previous mismatches, `json-duplicate-key` and
+`json-live-parse-accepts-malformed-input`, now match because the facade's live
+`JSON.parse` preflight is not repeated inside Rust. One mismatch remains:
 
 | Case | TypeScript reference | Opt-in Rust route |
 |---|---|---|
-| `json-duplicate-key` | `UmfError(SYNTAX, "Map keys must be unique at line 1, column 8:\n\n{\"x\":1,\"x\":2}\n       ^\n")` | `UmfError(DUPLICATE_KEY, "Duplicate object key")` |
 | `array-own-index-under-inherited-setter` | returns `[41,42]`, inherited index setter called 5 times | returns `[41,42]`, inherited index setter called 0 times |
-| `json-live-parse-accepts-malformed-input` | a monkeypatched live `JSON.parse` accepts `{`, then YAML parsing reports `Flow map must end with a } at line 1, column 2` | Rust's internal JSON preflight reports `Invalid JSON syntax` |
 
-These remain counted mismatches, not passing cases. The ordinary result-frame
+The inherited-setter difference remains a counted mismatch, not a passing case.
+The ordinary result-frame
 JSON parse and result reconstruction run in TypeScript outside Rust `Context`
 accounting. Explicit JSON preflight invokes live `JSON.parse` synchronously;
 that host work is opaque and unmetered. This evidence does not claim a hard
@@ -53,18 +55,21 @@ place the built addon beside the bundle so its `createRequire` resolves the
 same artifact tested by the replay:
 
 ```sh
-cargo build --locked --manifest-path bindings/core/node/Cargo.toml
+PATH=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:$PATH \
+  RUSTC=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/rustc \
+  CARGO_TARGET_DIR=/private/tmp/umf-json-read-target \
+  cargo build --locked --offline --release --manifest-path bindings/core/node/Cargo.toml
 bun build scripts/rust-migration/r8/read-json-value-ordinary-entry.ts --target=node --format=esm --outfile=/private/tmp/umf-ordinary-test-entry.mjs
-cp target/debug/libumf_core_node.dylib /private/tmp/umf_core_node.node
+cp /private/tmp/umf-json-read-target/release/libumf_core_node.dylib /private/tmp/umf_core_node.node
 UMF_RUST_ORDINARY_BUNDLE=/private/tmp/umf-ordinary-test-entry.mjs \
 UMF_RUST_ORDINARY_ADDON=/private/tmp/umf_core_node.node \
 node scripts/rust-migration/r8/read-json-value-ordinary-package-parity.mjs
 ```
 
 The normal replay exits nonzero while any parity mismatch exists. To verify
-that the three known mismatches remain present and all other cases match, pass
-`--expected-mismatches`; that mode exits zero only for exactly these three case
-IDs and exact 15/18 counts:
+that the inherited-setter mismatch remains and all other cases match, pass
+`--expected-mismatches`; that mode exits zero only for the inherited-setter case
+and an exact 17/18 count:
 
 ```sh
 UMF_RUST_ORDINARY_BUNDLE=/private/tmp/umf-ordinary-test-entry.mjs \
@@ -89,3 +94,12 @@ established by this replay.
 The captured build artifact hashes and results are in
 [`node-rust-parity.json`](node-rust-parity.json) and
 [`bun-rust-parity.json`](bun-rust-parity.json).
+
+The 2026-10-28 rebuilt release addon used Rust 1.90.0 and the locked offline
+dependency set. Its bundle SHA-256 is
+`6a3070233ae485bf04b150d2ece7ecee36e3a71fbbfa716ccef64864ae568674`, addon
+SHA-256 is `69a76d7133938a6d19f675f43f3c5f2ed2c9139cfffc441b99f891e6c6062275`,
+and Rust source SHA-256 is
+`8c597a3e910d9984762ef73d6450f02a0d914b83c2552e33cc832e3bba82059e`. Receipt
+SHA-256 values are Node `29ad6d2b7dca135d14e989846d040a0df5e16ec511bfa7e8c322c0326da6004d`
+and Bun `69702705aa26031613a5856ebedaa1963fdfca694027f26188f56aae068648d5`.

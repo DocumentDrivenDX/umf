@@ -100,8 +100,8 @@ export function validateR8InstalledRouteEvidence(manifest,{root:repoRoot=repo}={
   if(recomputedClosure!==archive.sourceClosureSha256)throw new Error('recomputed current live-source closure differs from aggregate archive');
   const operations=Object.values(requiredR8RouteFamilies).flat();
   if(operations.some(name=>pendingR8RouteNames.includes(name)))throw new Error('pending operation was incorrectly included in bounded route evidence');
-  if(manifest.logicalRetirementGaps!==922)throw new Error('aggregate must preserve all 922 logical retirement gaps');
-  return {status:'pass',qualificationScope:'Cross-checked pinned installed-route evidence with current-source recomputation; this gate does not independently reopen the SDK archive bytes.',archiveVerification:{mode:'pinned-preflight-attestation',independentArchiveRead:false,memberCount:memberProof.archiveMemberCount,memberHashManifestSha256:memberManifest.sha256},archive:{sha256:archive.sha256,sourceClosureSha256:archive.sourceClosureSha256,sourceInputCount:archive.sourceInputCount,generatedTransformCount:archive.generatedTransformCount},families:familyReceipts,boundedOperations:operations.length,operationNames:operations,logicalRetirementGaps:922,pendingOperations:pendingR8RouteNames};
+  if(manifest.logicalRetirementGaps!==925)throw new Error('aggregate must preserve all 925 logical retirement gaps');
+  return {status:'pass',qualificationScope:'Cross-checked pinned installed-route evidence with current-source recomputation; this gate does not independently reopen the SDK archive bytes.',archiveVerification:{mode:'pinned-preflight-attestation',independentArchiveRead:false,memberCount:memberProof.archiveMemberCount,memberHashManifestSha256:memberManifest.sha256},archive:{sha256:archive.sha256,sourceClosureSha256:archive.sourceClosureSha256,sourceInputCount:archive.sourceInputCount,generatedTransformCount:archive.generatedTransformCount},families:familyReceipts,boundedOperations:operations.length,operationNames:operations,logicalRetirementGaps:925,pendingOperations:pendingR8RouteNames};
 }
 
 function main(){
