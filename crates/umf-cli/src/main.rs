@@ -35,8 +35,23 @@ const MAX_CARDINALITY_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 const MAX_CSV_BOOLEAN_LEXICAL_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 const MAX_FACETS_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 const MAX_ACCESS_RRF_REQUEST_BYTES: usize = 4 * 1024 * 1024;
+const SEC_FRAME_MAGIC: &[u8; 8] = b"UMFSEC2\0";
+const SEC_MAX_INPUT_UNITS: usize = 4_000_000;
+const SEC_MAX_SOURCE_UNITS: usize = 1_024;
+const SEC_MAX_FRAME_BYTES: usize = 8 + 4 + SEC_MAX_INPUT_UNITS * 2 + 4 + SEC_MAX_SOURCE_UNITS * 2;
 
 fn main() {
+    let argv = env::args().skip(1).collect::<Vec<_>>();
+    if argv.first().map(String::as_str) == Some("sec") {
+        match sec_run(&argv[1..]) {
+            Ok(output) => println!("{output}"),
+            Err((status, output)) => {
+                eprintln!("{output}");
+                process::exit(status);
+            }
+        }
+        return;
+    }
     #[cfg(feature = "codegen")]
     if env::args().nth(1).as_deref() == Some("codegen") {
         #[cfg(feature = "allocator-test")]
@@ -107,6 +122,70 @@ fn main() {
         eprintln!("{error}");
         process::exit(2);
     }
+}
+
+fn sec_run(args: &[String]) -> Result<String, (i32, String)> {
+    if args.len() == 1 && args[0] == "--version" {
+        return Ok(r#"{"profile":"umf.sec-projection/2.0.0","version":"2.0.0"}"#.into());
+    }
+    if args.len() == 1 && args[0] == "--capabilities" {
+        return Ok(r#"{"profile":"umf.sec-projection/2.0.0","inputFormat":"UMFSEC2-UTF16LE/1","operations":["submissions","company-facts"]}"#.into());
+    }
+    let operation = match args {
+        [op, flag] if flag == "--stdin-utf16le" && (op == "submissions" || op == "company-facts") => op.as_str(),
+        _ => return Err((2, sec_error_json("Error", None, None, "usage: umf sec <submissions|company-facts> --stdin-utf16le"))),
+    };
+    let frame = match read_sec_frame() {
+        Ok(frame) => frame,
+        Err(message) => return Err((2, sec_error_json("Error", None, None, &message))),
+    };
+    if frame.len() < 16 || &frame[..8] != SEC_FRAME_MAGIC {
+        return Err((2, sec_error_json("Error", None, None, "Invalid SEC UTF-16LE frame header")));
+    }
+    let input_units = u32::from_le_bytes(frame[8..12].try_into().unwrap()) as usize;
+    if input_units > SEC_MAX_INPUT_UNITS {
+        return Err((2, sec_error_json("UmfError", Some("LIMIT"), Some(""), "Native JSON exceeds text limit")));
+    }
+    let input_bytes = match input_units.checked_mul(2).and_then(|size| 12usize.checked_add(size)) {
+        Some(end) if end + 4 <= frame.len() => end,
+        _ => return Err((2, sec_error_json("Error", None, None, "Truncated SEC UTF-16LE input"))),
+    };
+    let source_units = u32::from_le_bytes(frame[input_bytes..input_bytes + 4].try_into().unwrap()) as usize;
+    let source_bytes = source_units.checked_mul(2).and_then(|size| input_bytes.checked_add(4)?.checked_add(size));
+    let Some(source_end) = source_bytes else {
+        return Err((2, sec_error_json("Error", None, None, "Invalid SEC UTF-16LE frame length")));
+    };
+    if source_end != frame.len() {
+        return Err((2, sec_error_json("Error", None, None, "Invalid SEC UTF-16LE frame length")));
+    }
+    let input = sec_units(&frame[12..input_bytes]);
+    // Preserve core's parse/root-before-source-identity order without
+    // allocating the out-of-range source payload.
+    let source = if source_units <= SEC_MAX_SOURCE_UNITS {
+        sec_units(&frame[input_bytes + 4..source_end])
+    } else { Vec::new() };
+    let result = match operation {
+        "submissions" => umf_core::domain_pack_sec::project_sec_submissions(&input, &source),
+        "company-facts" => umf_core::domain_pack_sec::project_sec_company_facts(&input, &source),
+        _ => unreachable!(),
+    };
+    result.map_err(|error| (1, sec_error_json(&error.name, error.code.as_deref(), error.path.as_deref(), &error.message)))
+}
+
+fn read_sec_frame() -> Result<Vec<u8>, String> {
+    let mut bytes = Vec::new();
+    io::stdin().take((SEC_MAX_FRAME_BYTES + 1) as u64).read_to_end(&mut bytes).map_err(|e| format!("Could not read SEC frame: {e}"))?;
+    if bytes.len() > SEC_MAX_FRAME_BYTES { return Err("SEC frame exceeds the bounded transport capacity".into()); }
+    Ok(bytes)
+}
+
+fn sec_units(bytes: &[u8]) -> Vec<u16> {
+    bytes.chunks_exact(2).map(|pair| u16::from_le_bytes([pair[0], pair[1]])).collect()
+}
+
+fn sec_error_json(name: &str, code: Option<&str>, path: Option<&str>, message: &str) -> String {
+    fn quote(value: &str) -> String { format!("{}", serde_json::to_string(value).expect("string serialization")) }
+    format!("{{\"name\":{},\"code\":{},\"path\":{},\"message\":{}}}", quote(name), code.map(quote).unwrap_or_else(|| "null".into()), path.map(quote).unwrap_or_else(|| "null".into()), quote(message))
 }
 
 #[cfg(feature = "codegen")]

@@ -1,0 +1,1157 @@
+{
+  "format": "umf.r8.protobuf-descriptor-candidate-installed/1",
+  "status": "pass",
+  "qualification": "Opt-in readDescriptorSetRustCandidate installed archive replay only; this is not default-route parity, candidate retirement, or release qualification.",
+  "harnessSha256": "12a418b7ce701136cb9d2a2aa2691abbf3a46b29adfa6a3ba4820e4f7693ff0a",
+  "archive": {
+    "path": "/private/tmp/umf-sdk-sec-6b721305.tgz",
+    "sha256": "6b721305ae594438bb111e40e78e2f6797c9b98d5ddd5589812b4d231d94487a",
+    "bytes": 43886340,
+    "expectedSha256": "6b721305ae594438bb111e40e78e2f6797c9b98d5ddd5589812b4d231d94487a",
+    "packageVersion": "0.5.6",
+    "manifestSha256": "754c26a0c96b26d4b558891e6e8fe70ca728e881c78110fda9d330ef8bf8d32e",
+    "sdkManifestSha256": "7269ca32d8b0c06167e1a949dec4fec88abdfc152a3e14b8c2991d2018e47f0e",
+    "sourceClosureSha256": "db0193f6d34abbfefc9228fc90c2f013374dc26396c8796d1c3f074871a3f674",
+    "verifiedMembers": 1811
+  },
+  "vectors": {
+    "path": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/tests/rust-core/protobuf-read-descriptor-predecessor.json",
+    "sha256": "8b123ca2343ae272969c5ecefaf9dd7394e84f24209a99ad20969a29b5342647",
+    "sourcePath": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/src/adapters/protobuf/descriptor.ts",
+    "sourceSha256": "be1d0450873a9b4dd0ff0e914ea1a282fe535e5ebde6f317c5f035c5f875dc8a",
+    "count": 14
+  },
+  "runtimes": {
+    "node": "Node v26.12.1",
+    "bun": "Bun 1.4.3",
+    "chromium": {
+      "version": "153.0.8010.12",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+      "nodeGlobalsAbsent": true,
+      "wasmRequested": true
+    }
+  },
+  "comparison": {
+    "fieldPolicy": "success/failure class, public code/path, exact successful value; malformed message differences reported separately",
+    "comparisons": {
+      "nodeReference": true,
+      "bunReference": true,
+      "chromiumReference": true
+    },
+    "outcomes": {
+      "node": [
+        {
+          "id": "empty",
+          "inputLength": 0,
+          "candidate": {
+            "successClass": "success",
+            "value": {
+              "type": "google.protobuf.FileDescriptorSet",
+              "fields": {},
+              "unknown": []
+            }
+          },
+          "reference": {
+            "successClass": "success",
+            "value": {
+              "type": "google.protobuf.FileDescriptorSet",
+              "fields": {},
+              "unknown": []
+            }
+          }
+        },
+        {
+          "id": "zero-tag",
+          "inputLength": 1,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          }
+        },
+        {
+          "id": "truncated-tag-varint",
+          "inputLength": 1,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          }
+        },
+        {
+          "id": "bad-wire-type",
+          "inputLength": 1,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          }
+        },
+        {
+          "id": "truncated-fixed32",
+          "inputLength": 2,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          }
+        },
+        {
+          "id": "truncated-length",
+          "inputLength": 3,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          }
+        },
+        {
+          "id": "truncated-field-varint",
+          "inputLength": 2,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          }
+        },
+        {
+          "id": "malformed-10th-varint",
+          "inputLength": 10,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          }
+        },
+        {
+          "id": "overlong-unknown-varint",
+          "inputLength": 4,
+          "candidate": {
+            "successClass": "success",
+            "value": {
+              "type": "google.protobuf.FileDescriptorSet",
+              "fields": {},
+              "unknown": [
+                {
+                  "number": 100,
+                  "wireType": 0,
+                  "data": "8000"
+                }
+              ]
+            }
+          },
+          "reference": {
+            "successClass": "success",
+            "value": {
+              "type": "google.protobuf.FileDescriptorSet",
+              "fields": {},
+              "unknown": [
+                {
+                  "number": 100,
+                  "wireType": 0,
+                  "data": "8000"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "true-trailing-tag",
+          "inputLength": 3,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          }
+        },
+        {
+          "id": "offset-valid-file",
+          "inputLength": 2,
+          "candidate": {
+            "successClass": "success",
+            "value": {
+              "type": "google.protobuf.FileDescriptorSet",
+              "fields": {
+                "file": [
+                  {
+                    "type": "google.protobuf.FileDescriptorProto",
+                    "fields": {},
+                    "unknown": []
+                  }
+                ]
+              },
+              "unknown": []
+            }
+          },
+          "reference": {
+            "successClass": "success",
+            "value": {
+              "type": "google.protobuf.FileDescriptorSet",
+              "fields": {
+                "file": [
+                  {
+                    "type": "google.protobuf.FileDescriptorProto",
+                    "fields": {},
+                    "unknown": []
+                  }
+                ]
+              },
+              "unknown": []
+            }
+          }
+        },
+        {
+          "id": "exact-limit-malformed-first-byte",
+          "inputLength": 4000000,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          }
+        },
+        {
+          "id": "limit-plus-one",
+          "inputLength": 4000001,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "LIMIT",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "LIMIT",
+            "path": ""
+          }
+        },
+        {
+          "id": "unknown-wire-preservation",
+          "inputLength": 8,
+          "candidate": {
+            "successClass": "success",
+            "value": {
+              "type": "google.protobuf.FileDescriptorSet",
+              "fields": {},
+              "unknown": [
+                {
+                  "number": 50000,
+                  "wireType": 2,
+                  "data": "04000102ff"
+                }
+              ]
+            }
+          },
+          "reference": {
+            "successClass": "success",
+            "value": {
+              "type": "google.protobuf.FileDescriptorSet",
+              "fields": {},
+              "unknown": [
+                {
+                  "number": 50000,
+                  "wireType": 2,
+                  "data": "04000102ff"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "bun": [
+        {
+          "id": "empty",
+          "inputLength": 0,
+          "candidate": {
+            "successClass": "success",
+            "value": {
+              "type": "google.protobuf.FileDescriptorSet",
+              "fields": {},
+              "unknown": []
+            }
+          },
+          "reference": {
+            "successClass": "success",
+            "value": {
+              "type": "google.protobuf.FileDescriptorSet",
+              "fields": {},
+              "unknown": []
+            }
+          }
+        },
+        {
+          "id": "zero-tag",
+          "inputLength": 1,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          }
+        },
+        {
+          "id": "truncated-tag-varint",
+          "inputLength": 1,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          }
+        },
+        {
+          "id": "bad-wire-type",
+          "inputLength": 1,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          }
+        },
+        {
+          "id": "truncated-fixed32",
+          "inputLength": 2,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          }
+        },
+        {
+          "id": "truncated-length",
+          "inputLength": 3,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          }
+        },
+        {
+          "id": "truncated-field-varint",
+          "inputLength": 2,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          }
+        },
+        {
+          "id": "malformed-10th-varint",
+          "inputLength": 10,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          }
+        },
+        {
+          "id": "overlong-unknown-varint",
+          "inputLength": 4,
+          "candidate": {
+            "successClass": "success",
+            "value": {
+              "type": "google.protobuf.FileDescriptorSet",
+              "fields": {},
+              "unknown": [
+                {
+                  "number": 100,
+                  "wireType": 0,
+                  "data": "8000"
+                }
+              ]
+            }
+          },
+          "reference": {
+            "successClass": "success",
+            "value": {
+              "type": "google.protobuf.FileDescriptorSet",
+              "fields": {},
+              "unknown": [
+                {
+                  "number": 100,
+                  "wireType": 0,
+                  "data": "8000"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "true-trailing-tag",
+          "inputLength": 3,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          }
+        },
+        {
+          "id": "offset-valid-file",
+          "inputLength": 2,
+          "candidate": {
+            "successClass": "success",
+            "value": {
+              "type": "google.protobuf.FileDescriptorSet",
+              "fields": {
+                "file": [
+                  {
+                    "type": "google.protobuf.FileDescriptorProto",
+                    "fields": {},
+                    "unknown": []
+                  }
+                ]
+              },
+              "unknown": []
+            }
+          },
+          "reference": {
+            "successClass": "success",
+            "value": {
+              "type": "google.protobuf.FileDescriptorSet",
+              "fields": {
+                "file": [
+                  {
+                    "type": "google.protobuf.FileDescriptorProto",
+                    "fields": {},
+                    "unknown": []
+                  }
+                ]
+              },
+              "unknown": []
+            }
+          }
+        },
+        {
+          "id": "exact-limit-malformed-first-byte",
+          "inputLength": 4000000,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          }
+        },
+        {
+          "id": "limit-plus-one",
+          "inputLength": 4000001,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "LIMIT",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "LIMIT",
+            "path": ""
+          }
+        },
+        {
+          "id": "unknown-wire-preservation",
+          "inputLength": 8,
+          "candidate": {
+            "successClass": "success",
+            "value": {
+              "type": "google.protobuf.FileDescriptorSet",
+              "fields": {},
+              "unknown": [
+                {
+                  "number": 50000,
+                  "wireType": 2,
+                  "data": "04000102ff"
+                }
+              ]
+            }
+          },
+          "reference": {
+            "successClass": "success",
+            "value": {
+              "type": "google.protobuf.FileDescriptorSet",
+              "fields": {},
+              "unknown": [
+                {
+                  "number": 50000,
+                  "wireType": 2,
+                  "data": "04000102ff"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "chromium": [
+        {
+          "id": "empty",
+          "inputLength": 0,
+          "candidate": {
+            "successClass": "success",
+            "value": {
+              "type": "google.protobuf.FileDescriptorSet",
+              "fields": {},
+              "unknown": []
+            }
+          },
+          "reference": {
+            "successClass": "success",
+            "value": {
+              "type": "google.protobuf.FileDescriptorSet",
+              "fields": {},
+              "unknown": []
+            }
+          }
+        },
+        {
+          "id": "zero-tag",
+          "inputLength": 1,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          }
+        },
+        {
+          "id": "truncated-tag-varint",
+          "inputLength": 1,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          }
+        },
+        {
+          "id": "bad-wire-type",
+          "inputLength": 1,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          }
+        },
+        {
+          "id": "truncated-fixed32",
+          "inputLength": 2,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          }
+        },
+        {
+          "id": "truncated-length",
+          "inputLength": 3,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          }
+        },
+        {
+          "id": "truncated-field-varint",
+          "inputLength": 2,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          }
+        },
+        {
+          "id": "malformed-10th-varint",
+          "inputLength": 10,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          }
+        },
+        {
+          "id": "overlong-unknown-varint",
+          "inputLength": 4,
+          "candidate": {
+            "successClass": "success",
+            "value": {
+              "type": "google.protobuf.FileDescriptorSet",
+              "fields": {},
+              "unknown": [
+                {
+                  "number": 100,
+                  "wireType": 0,
+                  "data": "8000"
+                }
+              ]
+            }
+          },
+          "reference": {
+            "successClass": "success",
+            "value": {
+              "type": "google.protobuf.FileDescriptorSet",
+              "fields": {},
+              "unknown": [
+                {
+                  "number": 100,
+                  "wireType": 0,
+                  "data": "8000"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "true-trailing-tag",
+          "inputLength": 3,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          }
+        },
+        {
+          "id": "offset-valid-file",
+          "inputLength": 2,
+          "candidate": {
+            "successClass": "success",
+            "value": {
+              "type": "google.protobuf.FileDescriptorSet",
+              "fields": {
+                "file": [
+                  {
+                    "type": "google.protobuf.FileDescriptorProto",
+                    "fields": {},
+                    "unknown": []
+                  }
+                ]
+              },
+              "unknown": []
+            }
+          },
+          "reference": {
+            "successClass": "success",
+            "value": {
+              "type": "google.protobuf.FileDescriptorSet",
+              "fields": {
+                "file": [
+                  {
+                    "type": "google.protobuf.FileDescriptorProto",
+                    "fields": {},
+                    "unknown": []
+                  }
+                ]
+              },
+              "unknown": []
+            }
+          }
+        },
+        {
+          "id": "exact-limit-malformed-first-byte",
+          "inputLength": 4000000,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "PROTOBUF_BINARY",
+            "path": ""
+          }
+        },
+        {
+          "id": "limit-plus-one",
+          "inputLength": 4000001,
+          "candidate": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "LIMIT",
+            "path": ""
+          },
+          "reference": {
+            "successClass": "failure",
+            "failureClass": "UmfError",
+            "code": "LIMIT",
+            "path": ""
+          }
+        },
+        {
+          "id": "unknown-wire-preservation",
+          "inputLength": 8,
+          "candidate": {
+            "successClass": "success",
+            "value": {
+              "type": "google.protobuf.FileDescriptorSet",
+              "fields": {},
+              "unknown": [
+                {
+                  "number": 50000,
+                  "wireType": 2,
+                  "data": "04000102ff"
+                }
+              ]
+            }
+          },
+          "reference": {
+            "successClass": "success",
+            "value": {
+              "type": "google.protobuf.FileDescriptorSet",
+              "fields": {},
+              "unknown": [
+                {
+                  "number": 50000,
+                  "wireType": 2,
+                  "data": "04000102ff"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "preservation": {
+      "node": {
+        "exactValueAndUnknownWire": true,
+        "successfulVectors": [
+          "empty",
+          "overlong-unknown-varint",
+          "offset-valid-file",
+          "unknown-wire-preservation"
+        ],
+        "unknownWireValue": {
+          "number": 50000,
+          "wireType": 2,
+          "data": "04000102ff"
+        }
+      },
+      "bun": {
+        "exactValueAndUnknownWire": true,
+        "successfulVectors": [
+          "empty",
+          "overlong-unknown-varint",
+          "offset-valid-file",
+          "unknown-wire-preservation"
+        ],
+        "unknownWireValue": {
+          "number": 50000,
+          "wireType": 2,
+          "data": "04000102ff"
+        }
+      },
+      "chromium": {
+        "exactValueAndUnknownWire": true,
+        "successfulVectors": [
+          "empty",
+          "overlong-unknown-varint",
+          "offset-valid-file",
+          "unknown-wire-preservation"
+        ],
+        "unknownWireValue": {
+          "number": 50000,
+          "wireType": 2,
+          "data": "04000102ff"
+        }
+      }
+    },
+    "malformedDiagnosticDifferences": {
+      "node": [
+        {
+          "id": "zero-tag",
+          "code": "PROTOBUF_BINARY",
+          "candidateMessage": "Invalid Protobuf field number",
+          "referenceMessage": "Error: illegal tag: field no 0 wire type 0"
+        },
+        {
+          "id": "truncated-tag-varint",
+          "code": "PROTOBUF_BINARY",
+          "candidateMessage": "Truncated varint",
+          "referenceMessage": "RangeError: premature EOF"
+        },
+        {
+          "id": "bad-wire-type",
+          "code": "PROTOBUF_BINARY",
+          "candidateMessage": "Invalid wire type",
+          "referenceMessage": "Error: illegal tag: field no 1 wire type 7"
+        },
+        {
+          "id": "truncated-fixed32",
+          "code": "PROTOBUF_BINARY",
+          "candidateMessage": "Truncated fixed32",
+          "referenceMessage": "RangeError: premature EOF"
+        },
+        {
+          "id": "truncated-length",
+          "code": "PROTOBUF_BINARY",
+          "candidateMessage": "Truncated length-delimited field",
+          "referenceMessage": "Error: illegal tag: field no 0 wire type 1"
+        },
+        {
+          "id": "truncated-field-varint",
+          "code": "PROTOBUF_BINARY",
+          "candidateMessage": "Truncated varint",
+          "referenceMessage": "RangeError: premature EOF"
+        },
+        {
+          "id": "malformed-10th-varint",
+          "code": "PROTOBUF_BINARY",
+          "candidateMessage": "Malformed varint",
+          "referenceMessage": "Error: illegal tag: varint overflows uint32"
+        },
+        {
+          "id": "true-trailing-tag",
+          "code": "PROTOBUF_BINARY",
+          "candidateMessage": "Invalid wire type",
+          "referenceMessage": "Error: illegal tag: field no 1 wire type 7"
+        },
+        {
+          "id": "exact-limit-malformed-first-byte",
+          "code": "PROTOBUF_BINARY",
+          "candidateMessage": "Invalid Protobuf field number",
+          "referenceMessage": "Error: illegal tag: field no 0 wire type 0"
+        }
+      ],
+      "bun": [
+        {
+          "id": "zero-tag",
+          "code": "PROTOBUF_BINARY",
+          "candidateMessage": "Invalid Protobuf field number",
+          "referenceMessage": "Error: illegal tag: field no 0 wire type 0"
+        },
+        {
+          "id": "truncated-tag-varint",
+          "code": "PROTOBUF_BINARY",
+          "candidateMessage": "Truncated varint",
+          "referenceMessage": "RangeError: premature EOF"
+        },
+        {
+          "id": "bad-wire-type",
+          "code": "PROTOBUF_BINARY",
+          "candidateMessage": "Invalid wire type",
+          "referenceMessage": "Error: illegal tag: field no 1 wire type 7"
+        },
+        {
+          "id": "truncated-fixed32",
+          "code": "PROTOBUF_BINARY",
+          "candidateMessage": "Truncated fixed32",
+          "referenceMessage": "RangeError: premature EOF"
+        },
+        {
+          "id": "truncated-length",
+          "code": "PROTOBUF_BINARY",
+          "candidateMessage": "Truncated length-delimited field",
+          "referenceMessage": "Error: illegal tag: field no 0 wire type 1"
+        },
+        {
+          "id": "truncated-field-varint",
+          "code": "PROTOBUF_BINARY",
+          "candidateMessage": "Truncated varint",
+          "referenceMessage": "RangeError: premature EOF"
+        },
+        {
+          "id": "malformed-10th-varint",
+          "code": "PROTOBUF_BINARY",
+          "candidateMessage": "Malformed varint",
+          "referenceMessage": "Error: illegal tag: varint overflows uint32"
+        },
+        {
+          "id": "true-trailing-tag",
+          "code": "PROTOBUF_BINARY",
+          "candidateMessage": "Invalid wire type",
+          "referenceMessage": "Error: illegal tag: field no 1 wire type 7"
+        },
+        {
+          "id": "exact-limit-malformed-first-byte",
+          "code": "PROTOBUF_BINARY",
+          "candidateMessage": "Invalid Protobuf field number",
+          "referenceMessage": "Error: illegal tag: field no 0 wire type 0"
+        }
+      ],
+      "chromium": [
+        {
+          "id": "zero-tag",
+          "code": "PROTOBUF_BINARY",
+          "candidateMessage": "Invalid Protobuf field number",
+          "referenceMessage": "Error: illegal tag: field no 0 wire type 0"
+        },
+        {
+          "id": "truncated-tag-varint",
+          "code": "PROTOBUF_BINARY",
+          "candidateMessage": "Truncated varint",
+          "referenceMessage": "RangeError: premature EOF"
+        },
+        {
+          "id": "bad-wire-type",
+          "code": "PROTOBUF_BINARY",
+          "candidateMessage": "Invalid wire type",
+          "referenceMessage": "Error: illegal tag: field no 1 wire type 7"
+        },
+        {
+          "id": "truncated-fixed32",
+          "code": "PROTOBUF_BINARY",
+          "candidateMessage": "Truncated fixed32",
+          "referenceMessage": "RangeError: premature EOF"
+        },
+        {
+          "id": "truncated-length",
+          "code": "PROTOBUF_BINARY",
+          "candidateMessage": "Truncated length-delimited field",
+          "referenceMessage": "Error: illegal tag: field no 0 wire type 1"
+        },
+        {
+          "id": "truncated-field-varint",
+          "code": "PROTOBUF_BINARY",
+          "candidateMessage": "Truncated varint",
+          "referenceMessage": "RangeError: premature EOF"
+        },
+        {
+          "id": "malformed-10th-varint",
+          "code": "PROTOBUF_BINARY",
+          "candidateMessage": "Malformed varint",
+          "referenceMessage": "Error: illegal tag: varint overflows uint32"
+        },
+        {
+          "id": "true-trailing-tag",
+          "code": "PROTOBUF_BINARY",
+          "candidateMessage": "Invalid wire type",
+          "referenceMessage": "Error: illegal tag: field no 1 wire type 7"
+        },
+        {
+          "id": "exact-limit-malformed-first-byte",
+          "code": "PROTOBUF_BINARY",
+          "candidateMessage": "Invalid Protobuf field number",
+          "referenceMessage": "Error: illegal tag: field no 0 wire type 0"
+        }
+      ]
+    }
+  },
+  "controls": {
+    "memberManifest": {
+      "dist/umf_core_node.node": {
+        "missingRejected": true,
+        "corruptRejected": true
+      },
+      "dist/umf_core_wasm_bg.wasm": {
+        "missingRejected": true,
+        "corruptRejected": true
+      }
+    },
+    "nativeRuntime": {
+      "node-missing": {
+        "refused": true,
+        "name": "Error",
+        "code": "MODULE_NOT_FOUND",
+        "message": "Cannot find module './umf_core_node.node'\nRequire stack:\n- /private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r8-protobuf-installed-16454-1793180606848/package/dist/umf-node.js"
+      },
+      "node-corrupt": {
+        "refused": true,
+        "name": "Error",
+        "code": "ERR_DLOPEN_FAILED",
+        "message": "dlopen(/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r8-protobuf-installed-16454-1793180606848/package/dist/umf_core_node.node, 0x0001): tried: '/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r8-protobuf-installed-16454-1793180606848/package/dist/umf_core_node.node' (slice is not valid mach-o file), '/System/Volumes/Preboot/Cryptexes/OS/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r8-protobuf-installed-16454-1793180606848/package/dist/umf_core_node.node' (no such file), '/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r8-protobuf-installed-16454-1793180606848/package/dist/umf_core_node.node' (slice is not valid mach-o file)"
+      },
+      "bun-missing": {
+        "refused": true,
+        "name": "ResolveMessage",
+        "code": "MODULE_NOT_FOUND",
+        "message": "Cannot find module './umf_core_node.node'\nRequire stack:\n- /private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r8-protobuf-installed-16454-1793180606848/package/dist/umf-node.js"
+      },
+      "bun-corrupt": {
+        "refused": true,
+        "name": "Error",
+        "code": "ERR_DLOPEN_FAILED",
+        "message": "dlopen(/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r8-protobuf-installed-16454-1793180606848/package/dist/umf_core_node.node, 0x0001): tried: '/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r8-protobuf-installed-16454-1793180606848/package/dist/umf_core_node.node' (slice is not valid mach-o file), '/System/Volumes/Preboot/Cryptexes/OS/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r8-protobuf-installed-16454-1793180606848/package/dist/umf_core_node.node' (no such file), '/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r8-protobuf-installed-16454-1793180606848/package/dist/umf_core_node.node' (slice is not valid mach-o file)"
+      }
+    },
+    "wasmRuntime": {
+      "missing": {
+        "refused": true,
+        "name": "CompileError",
+        "message": "WebAssembly.instantiate(): BufferSource argument is empty",
+        "wasmRequested": true
+      },
+      "corrupt": {
+        "refused": true,
+        "name": "CompileError",
+        "message": "WebAssembly.instantiateStreaming(): expected magic word 00 61 73 6d, found 00 01 02 03 @+0",
+        "wasmRequested": true
+      }
+    }
+  },
+  "failures": []
+}

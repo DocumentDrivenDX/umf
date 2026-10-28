@@ -37,6 +37,12 @@ export function inspectDomainPackProfileWire(inputJson) {
   if (typeof inputJson !== 'string') throw new TypeError('Domain-pack profile input must be JSON text');
   return addon.inspectDomainPackProfileWire(inputJson);
 }
+export function projectSecSubmissionsUtf16Wire(input, sourceId) {
+  return addon.projectSecSubmissionsUtf16Wire(input, sourceId);
+}
+export function projectSecCompanyFactsUtf16Wire(input, sourceId) {
+  return addon.projectSecCompanyFactsUtf16Wire(input, sourceId);
+}
 const nativeUmfCoreErrors = new WeakSet();
 const weakSetHas = Function.call.bind(WeakSet.prototype.has);
 const weakSetAdd = Function.call.bind(WeakSet.prototype.add);
@@ -729,6 +735,12 @@ export function createCoreModelRootEngine(resources, options = {}) {
   return createEngineInternal(resources, options, true, true, false);
 }
 
+/** @internal Create the default-root model facade with retained Rust key-tuple operations. */
+export function createCoreModelRootKeyTupleEngine(resources, options = {}) {
+  const {encodeCoreKeyTuple, verifyCoreKeyTuple, ...model} = createEngineInternal(resources, options, true, true, true);
+  return Object.freeze(model);
+}
+
 /** Private opt-in retained model and Kind/Nullability dispatcher. */
 export function createCoreModelRootKindNullabilityEngine(resources, options = {}) {
   const staged = createCoreKindNullabilityHostInputEngine(resources, options);
@@ -1048,7 +1060,7 @@ export function createProtobufDescriptorDocumentEngine(options = {}) {
     hostWork?.(response.wireEnvelope.length + response.binary.length);
     const envelope = JSON.parse(response.wireEnvelope);
     const failure = resultError(envelope);
-    if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+    if (failure) throw nativeCoreError(failure);
     hostWork?.(envelope.wire.length);
     const value = fromWire(JSON.parse(envelope.wire), hostWork);
     return {value, binary: response.binary};

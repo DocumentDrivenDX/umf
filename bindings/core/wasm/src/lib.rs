@@ -19,6 +19,7 @@ mod json_schema_runtime;
 mod protobuf_document;
 mod protobuf_source;
 mod record_members_inspection;
+mod sec_projection;
 
 const HOST_READ_FRAME_EVENT: &str = "__umf_host_read_v3_frame__";
 const HOST_READ_ARRAY_ITEM_EVENT: &str = "__umf_host_read_v3_array_item__";

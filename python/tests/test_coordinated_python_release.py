@@ -139,6 +139,9 @@ def test_coordinated_workflow_is_nonpublishing_and_builds_both_release_pairs() -
     assert "tools/verify_python_release_pair.py" in workflow
     assert "tools/verify_python_release_matrix.py" in workflow
     assert "python/tests/test_coordinated_python_release.py" in workflow
+    assert "python/tests/installed_sec_projection.py" in workflow
+    assert '"schema": "umf.sec-projection-installed-candidate/1"' in workflow
+    assert "name: sec-projection-candidate-${{ matrix.cohort }}" in workflow
     assert "python/tests/test_python_release_matrix.py" in workflow
     assert "python -m pytest -q" in workflow
     assert "fixtures/actions-binding/source.json" in workflow

@@ -99,7 +99,7 @@ accept('src/model/reference-links.ts', [['inspectCoreReferenceLinks', 'inspect_c
 ]);
 accept('src/model/dataset-values.ts', [['validateCoreDatasetValues', 'validate_core_dataset_values'], ['verifyCoreDatasetValues', 'verify_core_dataset_values']], 'umf_core::dataset_values', 'crates/umf-core/src/dataset_values.rs', ['r5-dataset-values/README.md', 'r5-dataset-values/frozen-typescript.json', 'r5-dataset-values/frozen-verify-typescript.json'], 'crates/umf-core/tests/r5_dataset_values.rs');
 accept('src/model/dataset-values-compact.ts', [['validateCoreDatasetValuesCompact', 'validate_core_dataset_values_compact'], ['verifyCoreDatasetValuesCompact', 'verify_core_dataset_values_compact']], 'umf_core::dataset_values', 'crates/umf-core/src/dataset_values.rs', ['r5-dataset-values-compact/README.md', 'r5-dataset-values-compact/index.json'], 'crates/umf-core/tests/r5_dataset_values_compact.rs');
-accept('src/model/key-tuple.ts', [['encodeCoreKeyTuple', 'encode_core_key_tuple'], ['verifyCoreKeyTuple', 'verify_core_key_tuple']], 'umf_core::core_key_tuple', 'crates/umf-core/src/core_key_tuple.rs', ['r5-core-key-tuple/README.md', 'r5-core-key-tuple/frozen-typescript.json'], 'crates/umf-core/tests/r5_core_key_tuple.rs');
+accept('src/model/key-tuple.ts', [['encodeCoreKeyTuple', 'encode_core_key_tuple'], ['verifyCoreKeyTuple', 'verify_core_key_tuple'], ['readCoreKeyTupleBytes', 'read_core_key_tuple_bytes'], ['prepareCoreKeyTuples', 'prepare_core_key_tuples']], 'umf_core::core_key_tuple', 'crates/umf-core/src/core_key_tuple.rs', ['r5-core-key-tuple/README.md', 'r5-core-key-tuple/frozen-typescript.json'], 'crates/umf-core/tests/r5_core_key_tuple.rs');
 accept('src/model/keys.ts', [
   ['inspectCoreKeys', 'inspect_core_keys'],
   ['lookupCoreKey', 'lookup_core_key'],
@@ -665,11 +665,42 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
     ['requireDomainPackProfile', 'umf_core::domain_pack_profile_inspection::inspect_domain_pack_profile_wire'],
   ]);
   const domainPackProfileOwner = domainPackProfileOwnerByExport.get(exportName);
+  const keyTupleOwnerByExport = new Map([
+    ['readCoreKeyTupleBytes', 'umf_core::core_key_tuple::read_core_key_tuple_bytes'],
+    ['prepareCoreKeyTuples', 'umf_core::core_key_tuple::prepare_core_key_tuples'],
+  ]);
+  const keyTupleOwner = keyTupleOwnerByExport.get(exportName);
   if (source !== null && source !== defaultEntry
       && !(schemaPropertiesNames.includes(exportName) && source === 'src/model/schema-properties.ts')
       && !(schemaGraphSource !== undefined && source === schemaGraphSource.source)
+      && !(keyTupleOwner !== undefined && source === 'src/model/key-tuple.ts')
       && !(domainPackProfileOwner !== undefined && source === defaultEntry)) return null;
   const closure = paths => [...new Set(paths)].sort().map(file => ({ path: file, sha256: digest(read(file)) }));
+  if (keyTupleOwner !== undefined && source === 'src/model/key-tuple.ts'
+      && declaration?.declarationKind === 'FunctionDeclaration'
+      && declaration?.declarationName === exportName) {
+    const rootText = read(defaultEntry);
+    if (!rootText.includes('const model=createCoreModelRootKeyTupleEngine(')
+        || !rootText.includes('const coreKeyTuple=bindCoreKeyTupleDefault(model,isNativeUmfCoreError);')
+        || !rootText.includes('const {readCoreKeyTupleBytes,prepareCoreKeyTuples}=coreKeyTuple;')
+        || !rootText.includes('export {readCoreKeyTupleBytes,prepareCoreKeyTuples};')) return null;
+    return {
+      status: 'source-selected-current-route-unqualified',
+      rustOwner: keyTupleOwner,
+      wireOperation: `model/${exportName}`,
+      bindingRoute: browser
+        ? 'V4 browser root -> retained WASM key-tuple runtime -> Rust core wire'
+        : 'V4 Node root -> retained Node-API key-tuple runtime -> Rust core wire',
+      sourceClosure: closure([
+        defaultEntry, 'src/model/key-tuple.ts', 'src/access/rust-key-tuple-default.ts',
+        browser ? 'bindings/core/wasm/index.js' : 'bindings/core/node/index.js',
+        'crates/umf-core/src/core_key_tuple.rs',
+        'crates/umf-core-wire/src/core_key_tuple_binding.rs',
+        'docs/helix/04-build/evidence/rust-migration/r5-core-key-tuple/README.md',
+      ]),
+      qualificationStatus: 'The exact V4 root selects the retained Rust key-tuple runtime, but current-source installed Node/Bun/Chromium behavior and package-identity receipts are not yet recorded. No declaration retirement follows from source selection.',
+    };
+  }
   if (domainPackProfileOwner !== undefined
       && isDomainPackProfileInspectionRootSelection({ routeId, exportName, source, declaration, inventory: selectedInventory ?? json(inventoryPath), rootSource: read(defaultEntry) })) {
     const evidenceDir = 'docs/helix/04-build/evidence/rust-migration/r8-domain-pack-profile-default-route';

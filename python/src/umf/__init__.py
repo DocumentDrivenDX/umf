@@ -38,6 +38,11 @@ from .serialization import (
     write_json_value,
 )
 from .validation import inspect_extension_kinds, validate_document
+from .rust_sec_projection import (
+    SecProjectionError,
+    project_sec_company_facts,
+    project_sec_submissions,
+)
 
 __version__ = "0.11.0"
 __all__ = [
@@ -51,6 +56,7 @@ __all__ = [
     "Reference",
     "Registry",
     "SemanticTypeRegistry",
+    "SecProjectionError",
     "SemanticValidatorContextV1",
     "Validation",
     "Vocabulary",
@@ -64,6 +70,8 @@ __all__ = [
     "inspect_core_semantic_types",
     "inspect_extension_kinds",
     "read_document",
+    "project_sec_company_facts",
+    "project_sec_submissions",
     "read_json_value",
     "schema_validator",
     "semantic_type_reference_schema",

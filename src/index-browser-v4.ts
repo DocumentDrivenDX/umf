@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createPythonClientRustCandidateV4} from './browser-v4';
 import {initializePythonClientRustDefaultV4} from './access/rust-default-v4';
-import {initializeCoreModelRootWasm,initializeCoreRecordValuesHostInputWasm,createDefaultSemanticTypeRegistry,createCoreCardinalityHostInputEngine,createCoreRecordTypeEngine,createSecurityLogicEngine,createJavascriptNumericEngine,initializeBit128Wasm,initializeTemporalWasm,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError} from '../bindings/core/wasm/index.js';
+import {createCoreModelRootKeyTupleEngine,initializeCoreRecordValuesHostInputWasm,createDefaultSemanticTypeRegistry,createCoreCardinalityHostInputEngine,createCoreRecordTypeEngine,createSecurityLogicEngine,createJavascriptNumericEngine,initializeProtobufDescriptorDocumentWasm,initializeBit128Wasm,initializeTemporalWasm,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError} from '../bindings/core/wasm/index.js';
 import {CORE_MODEL_RESOURCES} from './access/core-model-resources';
 import {bindCoreCardinalityRust} from './access/rust-cardinality-default';
 import {bindCoreDatasetValuesCompactRust} from './access/rust-dataset-values-compact-default';
@@ -15,6 +15,7 @@ import {bindCoreSchemaPropertiesRust} from './access/rust-schema-properties-defa
 import {bindJavascriptNumericRust} from './access/rust-javascript-numeric-default';
 import {bindCoreRecordTypeRust} from './access/rust-record-type-default';
 import {bindCoreRecordValuesRust} from './access/rust-record-values-default';
+import {bindCoreKeyTupleDefault} from './access/rust-key-tuple-default';
 import {bindSemanticTypesRust} from './access/rust-semantic-types-default';
 import {bindCoreSemanticTypesRust} from './access/rust-core-semantic-types-default';
 import {createSecurityNotRustAdapter} from './extensions/security/rust-not-adapter';
@@ -29,6 +30,8 @@ import {createRelationshipPostgresql} from './core-ideals/relationship-postgresq
 import {createGeneratedSchemaGraphOperation} from './domain-packs/generated-schema-graph';
 import {createDomainPackLoaderInspectionOperation} from './domain-packs/loader-rust';
 import {createDomainPackProfileInspectionOperation} from './domain-packs/profile-rust';
+import {createSecProjectionRustOperations} from './domain-packs/sec-projection-rust';
+import {createReadDescriptorSetRustCandidate} from './adapters/protobuf/descriptor-rust-candidate';
 import type {generateDatasetSourceSchema as DatasetSourceSchemaReference} from './domain-packs/source-schema';
 import type {generateDomainPackSchema as DomainPackSchemaReference} from './domain-packs/schema';
 import type {generateArtifactCollectionSchema as ArtifactCollectionSchemaReference} from './domain-packs/artifacts';
@@ -45,6 +48,9 @@ const loaderSchemaWasmModule=wasmModule as typeof wasmModule & {
   inspectDomainPackLoaderWire:(inputJson:string)=>string;
   inspectDomainPackProfileWire:(inputJson:string)=>string;
 };
+const secWasmModule=wasmModule as typeof wasmModule & {projectSecSubmissionsUtf16Wire(input:Uint16Array,sourceId:Uint16Array):string;projectSecCompanyFactsUtf16Wire(input:Uint16Array,sourceId:Uint16Array):string};
+const secProjection=createSecProjectionRustOperations({submissions:(input,sourceId)=>secWasmModule.projectSecSubmissionsUtf16Wire(input,sourceId),companyFacts:(input,sourceId)=>secWasmModule.projectSecCompanyFactsUtf16Wire(input,sourceId)});
+const {projectSecSubmissions,projectSecCompanyFacts}=secProjection;
 const generateDomainPackSchemaOperation=createGeneratedSchemaGraphOperation(wasmModule.domainPackSchemaGraphJson) as typeof DomainPackSchemaReference;
 const generateDatasetSourceSchemaOperation=createGeneratedSchemaGraphOperation(wasmModule.datasetSourceSchemaGraphJson) as typeof DatasetSourceSchemaReference;
 const generateArtifactCollectionSchemaOperation=createGeneratedSchemaGraphOperation(wasmModule.artifactCollectionSchemaGraphJson) as typeof ArtifactCollectionSchemaReference;
@@ -63,7 +69,11 @@ Object.defineProperty(generateDatasetSourceSchema,'name',{value:'generateDataset
 Object.defineProperty(generateArtifactCollectionSchema,'name',{value:'generateArtifactCollectionSchema'});
 Object.defineProperty(generateDomainPackLoaderSchema,'name',{value:'generateDomainPackLoaderSchema'});
 Object.defineProperty(generateLoaderInventorySchema,'name',{value:'generateLoaderInventorySchema'});
-const model=await initializeCoreModelRootWasm(CORE_MODEL_RESOURCES,async()=>wasmModule);
+const model=createCoreModelRootKeyTupleEngine(wasmModule,CORE_MODEL_RESOURCES);
+const coreKeyTuple=bindCoreKeyTupleDefault(model,isNativeUmfCoreError);
+const {readCoreKeyTupleBytes,prepareCoreKeyTuples}=coreKeyTuple;
+const protobufDescriptorEngine=await initializeProtobufDescriptorDocumentWasm(async()=>wasmModule);
+const readDescriptorSetRustCandidate=createReadDescriptorSetRustCandidate(protobufDescriptorEngine,isNativeUmfCoreError);
 const {inspectCoreSemanticTypes,getCoreSemanticTypes,declareCoreSemanticTypes,verifyCoreSemanticTypeDeclaration}=bindCoreSemanticTypesRust(model,isNativeUmfCoreError);
 const recordValuesHost=await initializeCoreRecordValuesHostInputWasm(CORE_MODEL_RESOURCES,async()=>wasmModule);
 const validateCoreRecordValues=bindCoreRecordValuesRust(recordValuesHost);
@@ -98,8 +108,11 @@ const {projectRelationshipToExtra,verifyRelationshipExtra,recoverRelationshipExt
 const {projectRelationshipsToPostgresql,verifyRelationshipPostgresqlProjection,recoverRelationshipPostgresqlIdeal,recoverRelationshipPostgresqlNative}=createRelationshipPostgresql(relationshipConsumers);
 const {parseBits128,parseUuid,bits128FromBytes,bits128ToBytes,uuidFromBits128,uuidToBits128,compareBits128,bits128ToWords,bits128FromWords,bits128ToInteger,bits128FromInteger}=bindBit128Rust(await initializeBit128Wasm(),isBit128EngineError);
 export * from './index-v4-default';
+export {readCoreKeyTupleBytes,prepareCoreKeyTuples};
 export {inspectDomainPackLoaderOperation as inspectDomainPackLoader,inspectDomainPack,requireDomainPackProfile};
 export {generatePythonClient,generateDomainPackSchema,generateDatasetSourceSchema,exactDecimal,integerFromBigInt,integerToBigInt,admitJavascriptNumber,numericToNumberLossless,inspectCoreCardinality,declareCoreCardinality,verifyCoreCardinalityDeclaration,validateCoreDatasetValuesCompact,verifyCoreDatasetValuesCompact,inspectCoreFacets,declareCoreFacets,verifyCoreFacetDeclaration,historicalCoreFacetPatch,inspectCoreKeys,lookupCoreKey,declareCoreRecordMembers,declareCoreKey,verifyCoreKeyOperation,inspectCoreRelationships,lookupCoreRelationship,declareCoreRelationship,verifyCoreRelationshipOperation,inspectCoreScalarType,inspectCoreRecordMembers,inspectCoreReferenceLinks,inspectCoreSemanticTypes,getCoreSemanticTypes,declareCoreSemanticTypes,verifyCoreSemanticTypeDeclaration,inspectRawTableBinding,inspectCoreSchemaProperties,declareCoreSchemaProperties,validateCoreFieldValue,resolveCoreDefault,validateCoreRecordValues,SemanticTypeRegistry,validateSemanticTypeValue,validateCoreSemanticTypeValue,declareCoreRecordType,verifyCoreRecordTypeDeclaration,parseBits128,parseUuid,bits128FromBytes,bits128ToBytes,uuidFromBits128,uuidToBits128,compareBits128,bits128ToWords,bits128FromWords,bits128ToInteger,bits128FromInteger,validateCsvBooleanLexical,verifyCsvBooleanLexical,parseGregorianDate,truncateGregorianDate,parseRfc3339ExactInstant,sameRfc3339ExactInstant,securityNot,securityAnd,securityOr};
 export {generateArtifactCollectionSchema};
 export {generateDomainPackLoaderSchema,generateLoaderInventorySchema};
+export {projectSecSubmissions as projectSecSubmissionsRustCandidate,projectSecCompanyFacts as projectSecCompanyFactsRustCandidate};
+export {readDescriptorSetRustCandidate};
 export {projectRelationshipToAvro,verifyRelationshipAvroProjection,recoverRelationshipAvroIdeal,recoverRelationshipAvroNative,projectRelationshipToTableSpec,verifyRelationshipTableSpecProjection,recoverRelationshipTableSpecIdeal,recoverRelationshipTableSpecNativeSources,projectRelationshipToSqlServer,verifyRelationshipSqlServerProjection,recoverRelationshipSqlServerIdeal,recoverRelationshipSqlServerBinding,recoverRelationshipSqlServerNative,projectRelationshipToParquet,verifyRelationshipParquetProjection,recoverRelationshipParquetIdeal,recoverRelationshipParquetNative,projectRelationshipToExtra,verifyRelationshipExtra,recoverRelationshipExtraIdeal,recoverRelationshipExtraNative,projectRelationshipsToPostgresql,verifyRelationshipPostgresqlProjection,recoverRelationshipPostgresqlIdeal,recoverRelationshipPostgresqlNative};

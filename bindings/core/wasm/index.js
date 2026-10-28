@@ -756,6 +756,12 @@ export function createCoreModelRootEngine(module, resources, options = {}) {
   return createEngineInternal(module, resources, options, true, false, true);
 }
 
+/** @internal Create the default-root model facade with retained Rust key-tuple operations. */
+export function createCoreModelRootKeyTupleEngine(module, resources, options = {}) {
+  const {encodeCoreKeyTuple, verifyCoreKeyTuple, ...model} = createEngineInternal(module, resources, options, true, true, true);
+  return Object.freeze(model);
+}
+
 /** Private opt-in retained model and Kind/Nullability dispatcher. */
 export async function initializeCoreModelRootKindNullabilityWasm(resources, loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
   if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
@@ -1138,7 +1144,7 @@ export function createProtobufDescriptorDocumentEngine(module, options = {}) {
     hostWork?.(response.wireEnvelope.length + response.binary.length);
     const envelope = JSON.parse(response.wireEnvelope);
     const failure = resultError(envelope);
-    if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+    if (failure) throw nativeCoreError(failure);
     hostWork?.(envelope.wire.length);
     const value = fromWire(JSON.parse(envelope.wire), hostWork);
     return {value, binary: response.binary};

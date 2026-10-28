@@ -30,6 +30,8 @@ export declare function domainPackLoaderSchemaGraphJson(): string;
 export declare function inspectDomainPackLoaderWire(inputJson: string): string;
 /** Pure Rust CONTRACT-052/053 profile inspection over JSON text admitted by the host wrapper. */
 export declare function inspectDomainPackProfileWire(inputJson: string): string;
+export declare function projectSecSubmissionsUtf16Wire(input: Buffer, sourceId: Buffer): string;
+export declare function projectSecCompanyFactsUtf16Wire(input: Buffer, sourceId: Buffer): string;
 export declare function loaderInventorySchemaGraphJson(): string;
 export declare const JAVASCRIPT_NUMERIC_PROFILE: 'umf.javascript-numeric/1.0.0';
 export declare const BIT128_PROFILE: 'umf-128/1';
@@ -340,6 +342,7 @@ export declare function createCoreRecordMembersEngine(resources: UmfCoreResource
 };
 /** @internal Default-root facade while Key tuple exports remain on TypeScript. */
 export declare function createCoreModelRootEngine(resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): UmfCoreEngine & UmfCoreRootModelEngine;
+export declare function createCoreModelRootKeyTupleEngine(resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): UmfCoreRootModelEngine & Pick<UmfCoreModelEngine, 'readCoreKeyTupleBytes' | 'prepareCoreKeyTuples'>;
 /** Private opt-in shared retained Engine for model and Kind/Nullability operations. */
 export declare function createCoreModelRootKindNullabilityEngine(resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): UmfCoreEngine & UmfCoreRootModelEngine & {
   inspectCoreElementKind(source: unknown, identity: unknown): unknown;

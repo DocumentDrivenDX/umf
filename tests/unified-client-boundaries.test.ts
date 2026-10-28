@@ -218,6 +218,36 @@ test('runtime-global escape hatches remain forbidden in an allowlisted Rust faca
 	expect(errors).toContain('rust-facets-default.ts: host or executable hook Deno');
 });
 
+test('host roots cannot be used to reach hooks through properties', () => {
+	const errors = checkAccessSource(
+		'rust-facets-default.ts',
+		'window.fetch("https://example.invalid"); self.location.href; global.process.env; document.cookie; navigator.sendBeacon("/x", "y");\n',
+	);
+
+	for (const hook of ['window', 'self', 'global', 'document', 'navigator', 'location']) {
+		expect(errors).toContain(`rust-facets-default.ts: host or executable hook ${hook}`);
+	}
+});
+
+test('the Key Tuple facade has exact type-only declarations and error imports', () => {
+	const allowed = checkAccessSource(
+		'rust-key-tuple-default.ts',
+		"import type {CoreKeyTupleReceipt} from '../model/key-tuple';\nimport type {Json} from '../model/types';\nimport {UmfError} from '../model/errors';\n",
+	);
+	const deniedValue = checkAccessSource(
+		'rust-key-tuple-default.ts',
+		"import {prepareCoreKeyTuples} from '../model/key-tuple';\n",
+	);
+	const deniedImport = checkAccessSource(
+		'rust-key-tuple-default.ts',
+		"import {readFile} from 'node:fs';\n",
+	);
+
+	expect(allowed).toEqual([]);
+	expect(deniedValue).toContain('rust-key-tuple-default.ts: value import from type-only module ../model/key-tuple');
+	expect(deniedImport).toContain('rust-key-tuple-default.ts: unapproved import node:fs');
+});
+
 test('malformed TypeScript cannot pass the source boundary check through parser recovery', () => {
 	const errors = checkAccessSource('rust-facets-default.ts', 'import { value from \'../model/errors\';');
 

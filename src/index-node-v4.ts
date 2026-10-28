@@ -12,6 +12,7 @@ import {bindCoreSchemaPropertiesRust} from './access/rust-schema-properties-defa
 import {bindJavascriptNumericRust} from './access/rust-javascript-numeric-default';
 import {bindCoreRecordTypeRust} from './access/rust-record-type-default';
 import {bindCoreRecordValuesRust} from './access/rust-record-values-default';
+import {bindCoreKeyTupleDefault} from './access/rust-key-tuple-default';
 import {bindSemanticTypesRust} from './access/rust-semantic-types-default';
 import {bindCoreSemanticTypesRust} from './access/rust-core-semantic-types-default';
 import {createSecurityNotRustAdapter} from './extensions/security/rust-not-adapter';
@@ -26,6 +27,8 @@ import {createRelationshipPostgresql} from './core-ideals/relationship-postgresq
 import {createGeneratedSchemaGraphOperation} from './domain-packs/generated-schema-graph';
 import {createDomainPackLoaderInspectionOperation} from './domain-packs/loader-rust';
 import {createDomainPackProfileInspectionOperation} from './domain-packs/profile-rust';
+import {createSecProjectionRustOperations,utf16LittleEndianBytes} from './domain-packs/sec-projection-rust';
+import {createReadDescriptorSetRustCandidate} from './adapters/protobuf/descriptor-rust-candidate';
 import type {generateDatasetSourceSchema as DatasetSourceSchemaReference} from './domain-packs/source-schema';
 import type {generateDomainPackSchema as DomainPackSchemaReference} from './domain-packs/schema';
 import type {generateArtifactCollectionSchema as ArtifactCollectionSchemaReference} from './domain-packs/artifacts';
@@ -35,11 +38,17 @@ import type {generateLoaderInventorySchema as LoaderInventorySchemaReference} fr
 // Module import resolves only after the native engine is ready. The function
 // exported below remains synchronous and never falls back to TypeScript.
 assertPythonClientRustPlatformV4(process.platform,process.arch);
-const [{createCoreModelRootEngine,createCoreCardinalityHostInputEngine,createCoreRecordValuesHostInputEngine,createDefaultSemanticTypeRegistry,createCoreRecordTypeEngine,createBit128Engine,createTemporalEngine,createSecurityLogicEngine,createJavascriptNumericEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,domainPackSchemaGraphJson,datasetSourceSchemaGraphJson,artifactCollectionSchemaGraphJson,domainPackLoaderSchemaGraphJson,loaderInventorySchemaGraphJson,inspectDomainPackLoaderWire,inspectDomainPackProfileWire},{CORE_MODEL_RESOURCES},{createPythonClientRustCandidateV4}]=await Promise.all([
+const [{createCoreModelRootKeyTupleEngine,createCoreCardinalityHostInputEngine,createCoreRecordValuesHostInputEngine,createDefaultSemanticTypeRegistry,createCoreRecordTypeEngine,createBit128Engine,createTemporalEngine,createSecurityLogicEngine,createJavascriptNumericEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,createProtobufDescriptorDocumentEngine,domainPackSchemaGraphJson,datasetSourceSchemaGraphJson,artifactCollectionSchemaGraphJson,domainPackLoaderSchemaGraphJson,loaderInventorySchemaGraphJson,inspectDomainPackLoaderWire,inspectDomainPackProfileWire,projectSecSubmissionsUtf16Wire,projectSecCompanyFactsUtf16Wire},{CORE_MODEL_RESOURCES},{createPythonClientRustCandidateV4}]=await Promise.all([
  import('../bindings/core/node/index.js'),
  import('./access/core-model-resources'),
  import('./node-v4'),
 ]);
+const secProjection=createSecProjectionRustOperations({
+ submissions:(input,sourceId)=>projectSecSubmissionsUtf16Wire(Buffer.from(utf16LittleEndianBytes(input)),Buffer.from(utf16LittleEndianBytes(sourceId))),
+ companyFacts:(input,sourceId)=>projectSecCompanyFactsUtf16Wire(Buffer.from(utf16LittleEndianBytes(input)),Buffer.from(utf16LittleEndianBytes(sourceId))),
+});
+const {projectSecSubmissions,projectSecCompanyFacts}=secProjection;
+const readDescriptorSetRustCandidate=createReadDescriptorSetRustCandidate(createProtobufDescriptorDocumentEngine(),isNativeUmfCoreError);
 const generatePythonClient=await initializePythonClientRustDefaultV4(()=>createPythonClientRustCandidateV4());
 const generateDomainPackSchemaOperation=createGeneratedSchemaGraphOperation(domainPackSchemaGraphJson) as typeof DomainPackSchemaReference;
 const generateDatasetSourceSchemaOperation=createGeneratedSchemaGraphOperation(datasetSourceSchemaGraphJson) as typeof DatasetSourceSchemaReference;
@@ -59,7 +68,9 @@ Object.defineProperty(generateDatasetSourceSchema,'name',{value:'generateDataset
 Object.defineProperty(generateArtifactCollectionSchema,'name',{value:'generateArtifactCollectionSchema'});
 Object.defineProperty(generateDomainPackLoaderSchema,'name',{value:'generateDomainPackLoaderSchema'});
 Object.defineProperty(generateLoaderInventorySchema,'name',{value:'generateLoaderInventorySchema'});
-const model=createCoreModelRootEngine(CORE_MODEL_RESOURCES);
+const model=createCoreModelRootKeyTupleEngine(CORE_MODEL_RESOURCES);
+const coreKeyTuple=bindCoreKeyTupleDefault(model,isNativeUmfCoreError);
+const {readCoreKeyTupleBytes,prepareCoreKeyTuples}=coreKeyTuple;
 const {inspectCoreSemanticTypes,getCoreSemanticTypes,declareCoreSemanticTypes,verifyCoreSemanticTypeDeclaration}=bindCoreSemanticTypesRust(model,isNativeUmfCoreError);
 const validateCoreRecordValues=bindCoreRecordValuesRust(createCoreRecordValuesHostInputEngine(CORE_MODEL_RESOURCES));
 const {SemanticTypeRegistry,validateSemanticTypeValue,validateCoreSemanticTypeValue}=bindSemanticTypesRust(()=>createDefaultSemanticTypeRegistry(),CORE_MODEL_RESOURCES);
@@ -93,7 +104,10 @@ const {projectRelationshipToExtra,verifyRelationshipExtra,recoverRelationshipExt
 const {projectRelationshipsToPostgresql,verifyRelationshipPostgresqlProjection,recoverRelationshipPostgresqlIdeal,recoverRelationshipPostgresqlNative}=createRelationshipPostgresql(relationshipConsumers);
 const {parseBits128,parseUuid,bits128FromBytes,bits128ToBytes,uuidFromBits128,uuidToBits128,compareBits128,bits128ToWords,bits128FromWords,bits128ToInteger,bits128FromInteger}=bindBit128Rust(createBit128Engine(),isBit128EngineError);
 export * from './index-v4-default';
+export {readCoreKeyTupleBytes,prepareCoreKeyTuples};
 export {inspectDomainPackLoaderOperation as inspectDomainPackLoader,inspectDomainPack,requireDomainPackProfile};
 export {generatePythonClient,generateDomainPackSchema,generateDatasetSourceSchema,generateArtifactCollectionSchema,exactDecimal,integerFromBigInt,integerToBigInt,admitJavascriptNumber,numericToNumberLossless,inspectCoreCardinality,declareCoreCardinality,verifyCoreCardinalityDeclaration,validateCoreDatasetValuesCompact,verifyCoreDatasetValuesCompact,inspectCoreFacets,declareCoreFacets,verifyCoreFacetDeclaration,historicalCoreFacetPatch,inspectCoreKeys,lookupCoreKey,declareCoreRecordMembers,declareCoreKey,verifyCoreKeyOperation,inspectCoreRelationships,lookupCoreRelationship,declareCoreRelationship,verifyCoreRelationshipOperation,inspectCoreScalarType,inspectCoreRecordMembers,inspectCoreReferenceLinks,inspectCoreSemanticTypes,getCoreSemanticTypes,declareCoreSemanticTypes,verifyCoreSemanticTypeDeclaration,inspectRawTableBinding,inspectCoreSchemaProperties,declareCoreSchemaProperties,validateCoreFieldValue,resolveCoreDefault,validateCoreRecordValues,SemanticTypeRegistry,validateSemanticTypeValue,validateCoreSemanticTypeValue,declareCoreRecordType,verifyCoreRecordTypeDeclaration,parseBits128,parseUuid,bits128FromBytes,bits128ToBytes,uuidFromBits128,uuidToBits128,compareBits128,bits128ToWords,bits128FromWords,bits128ToInteger,bits128FromInteger,validateCsvBooleanLexical,verifyCsvBooleanLexical,parseGregorianDate,truncateGregorianDate,parseRfc3339ExactInstant,sameRfc3339ExactInstant,securityNot,securityAnd,securityOr};
 export {generateDomainPackLoaderSchema,generateLoaderInventorySchema};
+export {projectSecSubmissions as projectSecSubmissionsRustCandidate,projectSecCompanyFacts as projectSecCompanyFactsRustCandidate};
+export {readDescriptorSetRustCandidate};
 export {projectRelationshipToAvro,verifyRelationshipAvroProjection,recoverRelationshipAvroIdeal,recoverRelationshipAvroNative,projectRelationshipToTableSpec,verifyRelationshipTableSpecProjection,recoverRelationshipTableSpecIdeal,recoverRelationshipTableSpecNativeSources,projectRelationshipToSqlServer,verifyRelationshipSqlServerProjection,recoverRelationshipSqlServerIdeal,recoverRelationshipSqlServerBinding,recoverRelationshipSqlServerNative,projectRelationshipToParquet,verifyRelationshipParquetProjection,recoverRelationshipParquetIdeal,recoverRelationshipParquetNative,projectRelationshipToExtra,verifyRelationshipExtra,recoverRelationshipExtraIdeal,recoverRelationshipExtraNative,projectRelationshipsToPostgresql,verifyRelationshipPostgresqlProjection,recoverRelationshipPostgresqlIdeal,recoverRelationshipPostgresqlNative};

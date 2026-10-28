@@ -1,5 +1,5 @@
 import {expect, test} from 'bun:test';
-import {createCoreModelEngine, createCoreModelRootEngine, initializeCoreModelRootWasm} from '../index.js';
+import {createCoreModelEngine, createCoreModelRootEngine, createCoreModelRootKeyTupleEngine, initializeCoreModelRootWasm} from '../index.js';
 import coreSchema from '../../../../spec/core/schema.json' with {type: 'json'};
 import referenceSchema from '../../../../spec/core/semantic-type-reference.schema.json' with {type: 'json'};
 import packageSchema from '../../../../spec/core/extension-package.schema.json' with {type: 'json'};
@@ -13,6 +13,7 @@ function fakeWasmModule(constructions) {
     engineVersion: 'test',
     copyJsonWire() { throw new Error('copyJsonWire should not run during factory setup'); },
     executeRequestWire() { throw new Error('executeRequestWire should not run during factory setup'); },
+    executeCoreSchemaPropertiesHostJson() { throw new Error('host-input operation should not run during factory setup'); },
     CoreKeyTupleRuntime: class {
       constructor() { constructions.count++; }
     },
@@ -33,6 +34,17 @@ test('WASM root-only factory omits tuple runtime while public model factory rema
   for (const name of ['encodeCoreKeyTuple', 'verifyCoreKeyTuple', 'readCoreKeyTupleBytes', 'prepareCoreKeyTuples']) {
     expect(Object.hasOwn(publicModel, name)).toBe(true);
   }
+});
+
+test('WASM default-root tuple slice selects retained Rust methods without exposing encoder or verifier', () => {
+  const constructions = {count: 0};
+  const module = fakeWasmModule(constructions);
+  const rootModel = createCoreModelRootKeyTupleEngine(module, resources);
+  expect(constructions.count).toBe(1);
+  expect(Object.hasOwn(rootModel, 'encodeCoreKeyTuple')).toBe(false);
+  expect(Object.hasOwn(rootModel, 'verifyCoreKeyTuple')).toBe(false);
+  expect(Object.hasOwn(rootModel, 'readCoreKeyTupleBytes')).toBe(true);
+  expect(Object.hasOwn(rootModel, 'prepareCoreKeyTuples')).toBe(true);
 });
 
 test('WASM Core Key verification fails closed when the Rust staged runtime is missing', () => {

@@ -9234,4 +9234,41 @@ The current inventory SHA-256 is `fae3c85996956d8b8630f6cb4333704d674be40e522e21
 
 The [broad installed SDK receipt](evidence/rust-migration/r8-current-broad-installed-sdk-20261028/README.md) then passed Node 26.12.1, Bun 1.4.3, and real Chromium 153.0.8010.12 against that same archive. It covers the 31-case R3 generator corpus, the named numeric, cardinality, facets, keys, Bit128 and Compact Dataset subsets, Security And/Or 68 cases, package-route tampering, and missing/corrupt native and WASM controls. This is a local Darwin arm64 installed cohort; the hosted Linux SDK job remains open.
 
-Next, CONTRACT-059, TD-078, and STP-078 support a private SEC Rust projection 2.0.0 design spike with a 32 Mi UTF-16 output ceiling, validation-before-limit precedence, and cross-host cap evidence. This is a design spike only; it makes no SEC default-route or support claim.
+CONTRACT-059, TD-078, and STP-078 govern the SEC projection 2.0.0 tranche. Its Rust core implementation parses raw UTF-16 units, retains numeric tokens and unknown fragments, validates every row before applying a 32 Mi UTF-16 output ceiling, and materializes the ordered response in a second pass. Frozen predecessor and admission vectors, two independently pinned SEC source files, parser/root precedence, a late-invalid-row control, and end-to-end output lengths at cap minus one, cap, and cap plus one pass focused Rust tests. The production Python wrapper, explicit `UMFSEC2\0` UTF-16LE framed CLI route, and Node/Bun and browser WASM candidate bindings are implemented. The [installed Darwin evidence packet](evidence/rust-migration/r8-sec-projection-candidate-installed/README.md) pins a zero-transform SDK archive and passes candidate/reference parity within Node 26, Bun 1.4, and Chromium 153; all three pass the exact output-cap and late-invalid controls, plus missing/corrupt native and WASM controls. A locally built abi3 wheel installed on Darwin arm64 CPython 3.11.17, 3.12.15, and 3.13.16, with its packaged CLI, passes the same cap and refusal controls; 8,000-observation child processes measured 84,328,448, 85,032,960, and 86,409,216 bytes peak RSS, respectively. Browser process-tree RSS is sampled with the limits documented in the packet. The V4 SEC default exports still select the TypeScript reference route. The reviewed correction is covered by a rebuilt fixed-point SDK packet and local installed wheel; hosted six-cohort Python, Linux SDK, complete route qualification, and release gates remain open. This tranche does not change the 922-gap retirement count.
+
+The next parallel bounded pilot is `readDescriptorSet` from CONTRACT-003. The existing Rust codec and raw-byte Node/WASM bindings accept an exact `Uint8Array` window. A private 14-vector comparison found matching success/failure classes and error codes but different malformed-wire messages from the Buf predecessor; only the `LIMIT` message matched exactly. Outside the declared byte-array signature, the TypeScript predecessor also has distinct null, string, Array, and `Uint16Array` admission behavior. The tracked candidate may preserve the declared byte-array route with explicit contract-directed diagnostic qualification, but exact full-predecessor parity and default-route retirement remain open. The explicit `./reference` route remains available. The [installed Darwin candidate packet](evidence/rust-migration/r8-protobuf-descriptor-candidate-installed/README.md) now passes the 14 declared-byte vectors on Node, Bun, and Chromium from the same fixed-point SDK archive as the SEC candidate, with exact success values and unknown-wire preservation plus native/WASM asset refusal controls. It records malformed diagnostic-message differences and does not qualify other host inputs, the default route, Linux, or release.
+
+The next default-route Key Tuple cut selects `readCoreKeyTupleBytes` and
+`prepareCoreKeyTuples` through the retained Rust runtime on both V4 roots. A
+small public facade restores the predecessor's `UmfError` class for branded
+native errors and retains host-thrown errors. The [installed Darwin packet](evidence/rust-migration/r8-core-key-tuple-default-installed/README.md)
+passes Node, Bun, and Chromium on a fixed-point SDK archive, including frozen
+reference parity, receipt-before-current refusal, prepared copy/freeze,
+missing-asset controls, and an independently checked four-million-byte Rust
+read. The reference receipt regex cannot process that extreme receipt on
+these hosts, so the boundary evidence is qualified separately. The strict
+unified-client checker still scans every `src/access` file with exact per-file
+import grants and negative controls for new imports and host roots. The
+public Record Values contract remains operation 2.0.0/core 0.10.0; a focused
+test rejects the historical core 0.8.0 source, and its exported result type
+is narrowed to 2.0.0. The current ledger still has 922 logical default-route
+gaps and zero retired declarations. Linux and complete R8/release gates remain
+open.
+
+Independent SEC review found a source-ID precedence mismatch in the CLI and
+a missing length precheck before Node buffer copying. The current source
+corrects both: an overlong source ID reaches core as an invalid identity only
+after JSON parsing, without allocating the oversized ID. Focused CLI and
+native tests cover malformed input before the source-ID error. A rebuilt
+fixed-point SDK packet and macOS arm64 abi3 wheel now pass the corrected
+source-ID admission on Node, Bun, Chromium, and installed CPython 3.11.17,
+3.12.15, and 3.13.16 with the packaged CLI. Hosted Linux and full release
+qualification remain open.
+
+The [current broad installed SDK packet](evidence/rust-migration/r8-current-broad-installed-sdk-sec-key-tuple/README.md)
+passes Node 26.12.1, Bun 1.4.3, and real Chromium 153 from the same
+zero-transform archive as the refreshed SEC and Key Tuple packets. It covers
+the R3 generator corpus and named numeric, cardinality, facets, keys, Bit128,
+Compact Dataset, and Security And/Or subsets, plus route tampering and
+missing/corrupt native/WASM controls. This is a private Darwin arm64 cohort;
+hosted Linux and release gates remain open.

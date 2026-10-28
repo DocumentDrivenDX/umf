@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect, setDefaultTimeout, test} from 'bun:test';
-import {createCoreKeyTupleEngine, createCoreModelEngine, createCoreModelRootEngine} from '../index.js';
+import {createCoreKeyTupleEngine, createCoreModelEngine, createCoreModelRootEngine, createCoreModelRootKeyTupleEngine} from '../index.js';
 import {createRequire} from 'node:module';
 import coreSchema from '../../../../spec/core/schema.json' with {type: 'json'};
 import referenceSchema from '../../../../spec/core/semantic-type-reference.schema.json' with {type: 'json'};
@@ -53,6 +53,35 @@ test('public model factory retains eager tuple admission while root-only factory
   } finally {
     addon.CoreKeyTupleRuntime = OriginalRuntime;
   }
+});
+
+test('default-root tuple slice exposes only Rust byte reads and prepared sources', () => {
+  const engine = createCoreModelRootKeyTupleEngine(resources);
+  expect(Object.hasOwn(engine, 'encodeCoreKeyTuple')).toBe(false);
+  expect(Object.hasOwn(engine, 'verifyCoreKeyTuple')).toBe(false);
+  expect(Object.hasOwn(engine, 'readCoreKeyTupleBytes')).toBe(true);
+  expect(Object.hasOwn(engine, 'prepareCoreKeyTuples')).toBe(true);
+
+  const receipt = frozen.outcomes['empty-string-present'].value;
+  expect(engine.readCoreKeyTupleBytes(receipt, item.source)).toEqual(Uint8Array.from(Buffer.from(receipt.bytesHex, 'hex')));
+  let currentReads = 0;
+  const current = Object.defineProperty({}, 'umf', {enumerable: true, get() { currentReads++; throw new Error('must remain unread'); }});
+  expect(() => engine.readCoreKeyTupleBytes({}, current)).toThrow();
+  expect(currentReads).toBe(0);
+
+  const source = structuredClone(item.source);
+  const prepared = engine.prepareCoreKeyTuples(source);
+  source.modules[0].elements[0].name = 'mutated after preparation';
+  expect(Object.keys(prepared)).toEqual(['profile', 'source', 'encode', 'verify']);
+  expect(Object.isFrozen(prepared)).toBe(true);
+  expect(Object.isFrozen(prepared.source)).toBe(true);
+  expect(prepared.source).toEqual(item.source);
+  expect(prepared.encode(item.identity, item.values)).toEqual(receipt);
+  expect(prepared.verify(receipt)).toEqual(receipt);
+
+  const maximumReceipt = prepared.encode(item.identity, [{string: 'x'.repeat(3_999_989)}]);
+  expect(engine.readCoreKeyTupleBytes(maximumReceipt, item.source)).toHaveLength(4_000_000);
+  expect(() => prepared.encode(item.identity, [{string: 'x'.repeat(3_999_990)}])).toThrow();
 });
 
 test('retained Core Key runtime snapshots resources and gives each call a fresh work ledger', () => {

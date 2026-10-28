@@ -2,7 +2,8 @@ use std::{cell::RefCell, collections::HashMap, rc::Rc};
 
 use num_bigint::BigInt;
 use pyo3::{
-    exceptions::PyValueError,
+    create_exception,
+    exceptions::{PyException, PyTypeError, PyValueError},
     prelude::*,
     types::{PyBool, PyBytes, PyDict, PyFloat, PyInt, PyIterator, PyList, PyString, PyTuple},
 };
@@ -16,6 +17,65 @@ use umf_core::{
 
 mod python_value;
 mod related_keys;
+
+create_exception!(_rust_core, SecProjectionError, PyException);
+const SEC_INPUT_LIMIT: usize = 4_000_000;
+const SEC_SOURCE_LIMIT: usize = 1_024;
+
+#[pyfunction]
+fn project_sec_submissions(input: &Bound<'_, PyAny>, source_id: &Bound<'_, PyAny>) -> PyResult<String> {
+    sec_project(input, source_id, true)
+}
+
+#[pyfunction]
+fn project_sec_company_facts(input: &Bound<'_, PyAny>, source_id: &Bound<'_, PyAny>) -> PyResult<String> {
+    sec_project(input, source_id, false)
+}
+
+fn sec_project(input: &Bound<'_, PyAny>, source_id: &Bound<'_, PyAny>, submissions: bool) -> PyResult<String> {
+    if !input.is_exact_instance_of::<PyString>() {
+        return Err(PyTypeError::new_err("input must be JSON text"));
+    }
+    if input.len()? > SEC_INPUT_LIMIT {
+        return Err(sec_projection_error("UmfError", Some("LIMIT"), Some(""), "Native JSON exceeds text limit"));
+    }
+    let input_bytes = sec_encode_text(input)?;
+    if input_bytes.len() / 2 > SEC_INPUT_LIMIT {
+        return Err(sec_projection_error("UmfError", Some("LIMIT"), Some(""), "Native JSON exceeds text limit"));
+    }
+    let input_units = sec_bytes_to_units(&input_bytes);
+    let source_units = if source_id.is_exact_instance_of::<PyString>() && source_id.len()? <= SEC_SOURCE_LIMIT {
+        let bytes = sec_encode_text(source_id)?;
+        if bytes.len() / 2 <= SEC_SOURCE_LIMIT { sec_bytes_to_units(&bytes) } else { Vec::new() }
+    } else { Vec::new() };
+    let result = if submissions {
+        umf_core::domain_pack_sec::project_sec_submissions(&input_units, &source_units)
+    } else {
+        umf_core::domain_pack_sec::project_sec_company_facts(&input_units, &source_units)
+    };
+    result.map_err(|error| sec_projection_error(&error.name, error.code.as_deref(), error.path.as_deref(), &error.message))
+}
+
+fn sec_encode_text(value: &Bound<'_, PyAny>) -> PyResult<Vec<u8>> {
+    let encoded = value.call_method1("encode", ("utf-16-le", "surrogatepass"))?;
+    Ok(encoded.downcast::<PyBytes>()?.as_bytes().to_vec())
+}
+
+fn sec_bytes_to_units(bytes: &[u8]) -> Vec<u16> {
+    bytes.chunks_exact(2).map(|pair| u16::from_le_bytes([pair[0], pair[1]])).collect()
+}
+
+fn sec_projection_error(name: &str, code: Option<&str>, path: Option<&str>, message: &str) -> PyErr {
+    let error = SecProjectionError::new_err(message.to_owned());
+    Python::with_gil(|py| {
+        let value = error.value_bound(py);
+        let _ = value.setattr("name", name);
+        let _ = value.setattr("code", code);
+        let _ = value.setattr("path", path);
+        let _ = value.setattr("message", message);
+    });
+    error
+}
 
 fn semantic_field<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
     let Value::Object(fields) = value else {
@@ -5452,6 +5512,9 @@ fn py_error_utf16(py: Python<'_>, error: PyErr) -> Utf16 {
 
 #[pymodule]
 fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
+    module.add_function(wrap_pyfunction!(project_sec_submissions, module)?)?;
+    module.add_function(wrap_pyfunction!(project_sec_company_facts, module)?)?;
+    module.add("SecProjectionError", module.py().get_type::<SecProjectionError>())?;
     module.add_function(wrap_pyfunction!(domain_pack_schema, module)?)?;
     module.add_function(wrap_pyfunction!(access_rrf_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_access_rrf_wire, module)?)?;

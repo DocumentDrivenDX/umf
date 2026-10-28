@@ -1126,7 +1126,6 @@ export type { PostgresqlTypeIdentity } from './adapters/postgresql/cardinality-c
 export { prepareActionIdentities } from './extensions/actions/selector';
 export { prepareActionPlanModel } from './extensions/actions/plans';
 export { prepareCoreInspection } from './model/prepared-inspection';
-export { prepareCoreKeyTuples } from './model/key-tuple';
 export type { PreparedActionIdentities } from './extensions/actions/selector';
 export type { PreparedActionPlanModel } from './extensions/actions/plan-types';
 export type { PreparedCoreKeyTuples } from './model/key-tuple';
@@ -1278,7 +1277,6 @@ export type { RdfQuad } from './adapters/rdf/index';
 export { rdfRegistry } from './adapters/rdf/index';
 export type { RdfToJsonLdReport } from './adapters/jsonld/index';
 export { readBindingDocument } from './extensions/binding/index';
-export { readCoreKeyTupleBytes } from './model/key-tuple';
 export { readDashboardDocument } from './extensions/dashboard/index';
 export { readDddDocument } from './extensions/ddd/index';
 export { readDescriptorSet } from './adapters/protobuf/descriptor';

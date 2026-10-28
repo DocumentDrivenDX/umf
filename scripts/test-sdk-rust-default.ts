@@ -399,7 +399,9 @@ const loader=await import('@umf/core/loader-contract');
 const candidateV2=await import('@umf/core/rust-codegen-candidate/v2');
 if(typeof candidateV2.createPythonClientRustCandidateV2!=='function'||!loader)throw new Error('preserved package subpath export missing');
 const canonical=value=>JSON.stringify(value,(key,item)=>item&&typeof item==='object'&&!Array.isArray(item)?Object.fromEntries(Object.keys(item).sort().map(name=>[name,item[name]])):item);
-if(JSON.stringify(Object.keys(root).sort())!==JSON.stringify(Object.keys(legacy).sort()))throw new Error('root export set changed');
+const candidateOnly=['projectSecSubmissionsRustCandidate','projectSecCompanyFactsRustCandidate','readDescriptorSetRustCandidate'];
+if(candidateOnly.some(name=>typeof root[name]!=='function'||Object.hasOwn(legacy,name)))throw new Error('opt-in candidate export set changed');
+if(JSON.stringify(Object.keys(root).filter(name=>!candidateOnly.includes(name)).sort())!==JSON.stringify(Object.keys(legacy).sort()))throw new Error('root export set changed');
 if(!new URL(import.meta.resolve('@umf/core')).pathname.endsWith('/dist/umf-node.js'))throw new Error('installed Node condition did not resolve the Rust root entry');
 if(!new URL(import.meta.resolve('@umf/core/reference')).pathname.endsWith('/dist/umf.js'))throw new Error('installed TypeScript reference condition did not resolve its retained bundle');
 ${cardinalityReplaySnippet}
@@ -481,7 +483,9 @@ const browserCheck=`const rootImportStarted=performance.now();const root=await i
 import * as legacy from '@umf/core/reference';
 const referenceCore=legacy;
 const canonical=value=>JSON.stringify(value,(key,item)=>item&&typeof item==='object'&&!Array.isArray(item)?Object.fromEntries(Object.keys(item).sort().map(name=>[name,item[name]])):item);
-if(JSON.stringify(Object.keys(root).sort())!==JSON.stringify(Object.keys(legacy).sort()))throw new Error('browser root export set changed');
+const candidateOnly=['projectSecSubmissionsRustCandidate','projectSecCompanyFactsRustCandidate','readDescriptorSetRustCandidate'];
+if(candidateOnly.some(name=>typeof root[name]!=='function'||Object.hasOwn(legacy,name)))throw new Error('browser opt-in candidate export set changed');
+if(JSON.stringify(Object.keys(root).filter(name=>!candidateOnly.includes(name)).sort())!==JSON.stringify(Object.keys(legacy).sort()))throw new Error('browser root export set changed');
 ${cardinalityReplaySnippet}
 ${facetsReplaySnippet}
 ${keysReplaySnippet}

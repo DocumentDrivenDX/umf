@@ -26,6 +26,7 @@ const allowedImports:Record<string,readonly string[]>={
  'rust-host-reads-v3.ts':['./rust-candidate'],
  'rust-host-reads-v4.ts':['./rust-candidate','./rust-host-reads-v3'],
  'rust-keys-default.ts':['../model/keys','../model/key-tuple','../model/types','../model/json','../model/errors'],
+ 'rust-key-tuple-default.ts':['../model/key-tuple','../model/types','../model/errors'],
  'rust-javascript-numeric-default.ts':['../adapters/javascript-numeric','../model/json','../model/errors'],
  'rust-relationships-default.ts':['../model/relationships','../model/types','../model/json','../model/errors'],
  'rust-record-type-default.ts':['../model/field-kind','../model/record-type','../model/types','../model/json','../model/errors'],
@@ -49,8 +50,12 @@ const typeOnlyImports:Record<string,readonly string[]>={
  'rust-selection-default.ts':['../model/selection','../model/types','../registry/registry'],
  'rust-semantic-types-default.ts':['../model/semantic-types','../model/types','../extensions/semantic-types'],
  'rust-javascript-numeric-default.ts':['../adapters/javascript-numeric'],
+ 'rust-key-tuple-default.ts':['../model/key-tuple','../model/types'],
 };
-const forbidden=new Set(['Bun','process','require','fetch','eval','Function','Buffer','XMLHttpRequest','WebSocket','Deno','globalThis','importScripts','Worker','SharedWorker']);
+// Block host roots as well as the commonly used hooks themselves. Checking
+// only `fetch`/`process` identifiers leaves equivalent access through
+// `window.fetch`, `self.fetch`, or `global.process` undetected.
+const forbidden=new Set(['Bun','process','require','fetch','eval','Function','Buffer','XMLHttpRequest','WebSocket','Deno','globalThis','global','window','self','document','navigator','location','importScripts','Worker','SharedWorker']);
 export function checkAccessSource(file:string,text:string):string[]{
  const errors:string[]=[];
  const allowedForFile=allowedImports[file];

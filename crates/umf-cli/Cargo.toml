@@ -14,6 +14,7 @@ umf-core = { path = "../umf-core", default-features = false, features = ["full-c
 umf-metamodel = { path = "../umf-metamodel" }
 umf-core-wire = { path = "../umf-core-wire", default-features = false }
 sha2 = "=0.10.8"
+serde_json = "=1.0.140"
 
 [dependencies.umf-codegen]
 path = "../umf-codegen"
