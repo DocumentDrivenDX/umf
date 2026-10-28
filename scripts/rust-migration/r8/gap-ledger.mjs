@@ -695,7 +695,7 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
         'tests/rust-core/sec-projection-v4-default-route.test.mjs',
         'docs/helix/02-design/contracts/CONTRACT-059-public-company-intelligence.md',
       ]),
-      qualificationStatus: 'The exact V4 entry binds this SEC projection through the Rust UTF-16 wire operation. Current-source installed Node/Bun/Chromium replay is pending; no accepted mapping or declaration retirement is claimed.',
+      qualificationStatus: 'The exact V4 entry binds this SEC projection through the Rust UTF-16 wire operation. Bounded current-source installed Node/Bun/Chromium replay passes in the SEC default-route packet; full release qualification, accepted mapping, and declaration retirement remain open.',
     };
   }
   const keyTupleOwnerByExport = new Map([

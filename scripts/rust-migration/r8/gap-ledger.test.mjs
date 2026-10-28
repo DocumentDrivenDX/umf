@@ -1564,6 +1564,33 @@ test('semantic-types selection has exact contract authorship while composite sel
   }
 });
 
+test('five unresolved JSON resource authority packet is pinned to current bytes and manifest boundary', () => {
+  const packetPath = 'docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/current-unresolved-json-resource-authority-source-pin-20261028.md';
+  const packet = readFileSync(packetPath, 'utf8');
+  const resources = new Map([
+    ['spec/core/key-selection.schema.json', 'c3aef95bdb7b0134b8d52076e2d82394f656fde41f0da092af54aa052d1747f3'],
+    ['spec/core/relationship-selection.schema.json', 'd8bf01dcad908e19a26ee9f83c3b1da5e092d0f6055b283cb54d6997c32a1e9c'],
+    ['spec/core/schema-properties-selection.schema.json', '893cf29692b0ba9c21037a90e0361b8adc19a2c3007cee84f22092276004f641'],
+    ['spec/core/parquet-relationship-classification.schema.json', 'c89561ab5f492c1242b7d425bcba063b82c13296931f12566414c535360478ca'],
+    ['spec/projections/sqlserver-physical-binding.schema.json', 'a746543f0a16b325d6eb77f5708cf98a97706f8cc69094819b32f17a74f39562'],
+  ]);
+  const manifest = JSON.parse(readFileSync('spec/metamodel/generated/manifest.json', 'utf8'));
+  const ledger = currentGeneratedLedger();
+  for (const [resource, expectedHash] of resources) {
+    const actualHash = createHash('sha256').update(readFileSync(resource)).digest('hex');
+    assert.equal(actualHash, expectedHash, `${resource} changed since the authority packet`);
+    assert.ok(packet.includes(`| \`${resource}\` | \`${expectedHash}\` |`), `${resource} packet row is missing its pinned digest`);
+    assert.equal(manifest.sources[resource] ?? manifest.sources[`./${resource}`], undefined, `${resource} unexpectedly entered metamodel sources`);
+    assert.equal(manifest.workspaceInputs[resource] ?? manifest.workspaceInputs[`./${resource}`], undefined, `${resource} unexpectedly entered metamodel workspace inputs`);
+    assert.equal(manifest.outputs[resource] ?? manifest.outputs[`./${resource}`], undefined, `${resource} unexpectedly entered metamodel outputs`);
+    const row = ledger.rows.find(item => item.routeId === 'package-root-node' && item.source === resource);
+    assert.ok(row, `missing current ledger resource ${resource}`);
+    assert.equal(row.resourceOwnership.source.sha256, expectedHash, `${resource} ledger digest`);
+    assert.equal(row.resourceOwnership.authority.status, 'authority-unresolved', `${resource} remains unresolved without exact current-source proof`);
+  }
+  assert.match(packet, /No resource authority is promoted and no declaration retirement is\s+claimed/);
+});
+
 test('named DDD and SQL Server schemas and pinned Parquet IDL have exact authority without promoting its relationship schema', () => {
   const output = execFileSync('node', ['scripts/rust-migration/r8/gap-ledger.mjs', '--stdout'], {
     cwd: process.cwd(), maxBuffer: 64 * 1024 * 1024, encoding: 'utf8',

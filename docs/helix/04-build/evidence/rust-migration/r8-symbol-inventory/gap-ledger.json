@@ -130957,7 +130957,7 @@
             "sha256": "334d536cca67ec43c199cc2afa36147cc71529cf17cb4520c0b05cb6d9a9c778"
           }
         ],
-        "qualificationStatus": "The exact V4 entry binds this SEC projection through the Rust UTF-16 wire operation. Current-source installed Node/Bun/Chromium replay is pending; no accepted mapping or declaration retirement is claimed."
+        "qualificationStatus": "The exact V4 entry binds this SEC projection through the Rust UTF-16 wire operation. Bounded current-source installed Node/Bun/Chromium replay passes in the SEC default-route packet; full release qualification, accepted mapping, and declaration retirement remain open."
       },
       "logicalDeclarationKey": "projectSecCompanyFacts\u0000projectSecCompanyFacts\u0000condition-selected-root-binding\u00000",
       "exportName": "projectSecCompanyFacts",
@@ -131055,7 +131055,7 @@
             "sha256": "334d536cca67ec43c199cc2afa36147cc71529cf17cb4520c0b05cb6d9a9c778"
           }
         ],
-        "qualificationStatus": "The exact V4 entry binds this SEC projection through the Rust UTF-16 wire operation. Current-source installed Node/Bun/Chromium replay is pending; no accepted mapping or declaration retirement is claimed."
+        "qualificationStatus": "The exact V4 entry binds this SEC projection through the Rust UTF-16 wire operation. Bounded current-source installed Node/Bun/Chromium replay passes in the SEC default-route packet; full release qualification, accepted mapping, and declaration retirement remain open."
       },
       "logicalDeclarationKey": "projectSecSubmissions\u0000projectSecSubmissions\u0000condition-selected-root-binding\u00000",
       "exportName": "projectSecSubmissions",
@@ -213923,7 +213923,7 @@
             "sha256": "334d536cca67ec43c199cc2afa36147cc71529cf17cb4520c0b05cb6d9a9c778"
           }
         ],
-        "qualificationStatus": "The exact V4 entry binds this SEC projection through the Rust UTF-16 wire operation. Current-source installed Node/Bun/Chromium replay is pending; no accepted mapping or declaration retirement is claimed."
+        "qualificationStatus": "The exact V4 entry binds this SEC projection through the Rust UTF-16 wire operation. Bounded current-source installed Node/Bun/Chromium replay passes in the SEC default-route packet; full release qualification, accepted mapping, and declaration retirement remain open."
       },
       "logicalDeclarationKey": "projectSecCompanyFacts\u0000projectSecCompanyFacts\u0000condition-selected-root-binding\u00000",
       "exportName": "projectSecCompanyFacts",
@@ -214021,7 +214021,7 @@
             "sha256": "334d536cca67ec43c199cc2afa36147cc71529cf17cb4520c0b05cb6d9a9c778"
           }
         ],
-        "qualificationStatus": "The exact V4 entry binds this SEC projection through the Rust UTF-16 wire operation. Current-source installed Node/Bun/Chromium replay is pending; no accepted mapping or declaration retirement is claimed."
+        "qualificationStatus": "The exact V4 entry binds this SEC projection through the Rust UTF-16 wire operation. Bounded current-source installed Node/Bun/Chromium replay passes in the SEC default-route packet; full release qualification, accepted mapping, and declaration retirement remain open."
       },
       "logicalDeclarationKey": "projectSecSubmissions\u0000projectSecSubmissions\u0000condition-selected-root-binding\u00000",
       "exportName": "projectSecSubmissions",
@@ -252790,6 +252790,14 @@
         "disposition": "tooling closure; not part of package-root symbol rows"
       },
       {
+        "source": "scripts/rust-migration/capture_target_pin_predecessor.py",
+        "sourceSha256": "14c12f696b8313359be08097f02bd00a9022c9c41e625638cb9d72b1480910bb",
+        "packageScriptEntrypoints": [],
+        "activity": "package-entrypoint-reachability-unresolved",
+        "role": "support-tool",
+        "disposition": "tooling closure; not part of package-root symbol rows"
+      },
+      {
         "source": "scripts/rust-migration/check-boundaries.ts",
         "sourceSha256": "f33fdaae54a30a77b3772fc62de1fcce6e0b8233c83c47d2cfa2f1d91c5de073",
         "packageScriptEntrypoints": [
@@ -254795,7 +254803,7 @@
       },
       {
         "source": "scripts/rust-migration/r8/gap-ledger.mjs",
-        "sourceSha256": "5bf602417bb7117d76a44d4167801975b02356acb1374a42ccb33c3a8bf2a830",
+        "sourceSha256": "9a342e4098dc32bd867f77c12aee135509749068a2406c4446bdd0ad3a82bc67",
         "packageScriptEntrypoints": [],
         "activity": "package-entrypoint-reachability-unresolved",
         "role": "support-tool",
@@ -254803,7 +254811,7 @@
       },
       {
         "source": "scripts/rust-migration/r8/gap-ledger.test.mjs",
-        "sourceSha256": "73f3d7fe5d9ca79233f36e09112c2df570feb9fb9f362d314a59f2e5b430b076",
+        "sourceSha256": "15bed3cc242e4720d3626750f68ddc11bb3723a73b5e2ad77c9ec6a7ce8426fd",
         "packageScriptEntrypoints": [],
         "activity": "package-entrypoint-reachability-unresolved",
         "role": "support-tool",

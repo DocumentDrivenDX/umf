@@ -78,7 +78,7 @@ new current-source packet. Its receipt SHA-256 is
 current inventory SHA-256 is
 `805e711ce3a5720624fa66803bf766444b4f67f97f4d02d747f739c675168cc4` and the
 condition-aware ledger SHA-256 is
-`daac11f42e547f95e64a9b8f9d99db25d1727df4027ee9cf3039b13b99e3056e`. Linux,
+`05e9f288223b13333c7607e0490c94fc28cf973857f7b1d8ff9fe575db5863f7`. Linux,
 complete production SDK parity, the full port, and release remain unqualified.
 The ledger's `executable` label is a broad public-runtime category: independent
 AST review of the 1,120-name reference root found 750 function declarations,
@@ -9361,6 +9361,10 @@ manifest does not identify their exact output paths as generated authorities;
 historical writer evidence does not establish authority for this source cut.
 Do not infer resource retirement from the broad runtime category or assign a
 writer until the current build dependency and provenance are traced.
+The [current-source resource pin](evidence/rust-migration/r8-symbol-inventory/current-unresolved-json-resource-authority-source-pin-20261028.md)
+adds a deterministic guard for all five file hashes, their ledger rows, and
+their absence from the metamodel manifest. It leaves each authority unresolved
+and makes no retirement claim.
 
 The [dedicated-entry `readJsonValue` replay](evidence/rust-migration/r8-read-json-value-ordinary-20261027/package-parity.md)
 now matches 17 of 18 primitive-string cases on both Node 26.12.1 and Bun
@@ -9377,6 +9381,9 @@ attributes the five calls to distinct parser phases and a callback catch
 boundary. A causal Rust replacement needs phase-aware host callbacks at those
 writes with the same throw order; a post-parse call count cannot qualify the
 route.
+The [Rust parser-seam assessment](evidence/rust-migration/r8-read-json-value-inherited-setter-rust-seam-design-20261028.md)
+records the exact observed setter and throw boundaries and the evidence needed
+before a faithful callback design can be implemented.
 
 The coordinated Python release workflow now triggers on changes to its
 binary-closure negative-control suite and runs all 16 tests on the aggregate
