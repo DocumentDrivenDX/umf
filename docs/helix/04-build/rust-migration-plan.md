@@ -10055,3 +10055,120 @@ also passed on Node and Bun. This was not a dependency-resolved package
 installation; the installed default-route receipt and retirement gate remain
 open. The [candidate packet](evidence/rust-migration/r8-arrow-schema-v4-candidate-20261028/README.md)
 records the archive and asset hashes.
+
+### R8 Arrow IPC capture source route and bounded host packet — 2026-10-28
+
+The [Arrow IPC host-boundary packet](evidence/rust-migration/r8-arrow-ipc-host-boundary-20261028/README.md)
+freezes the current TypeScript order for byte admission, size refusal, hex
+capture and option access. Its scope is the three exact capture operations
+`captureArrowIpc`, `inspectArrowIpcCapture`, and `exportArrowIpcCapture`;
+native Arrow IPC interpretation remains outside this tranche. The V4 Node and
+browser roots now source-select their Rust wire implementation through a small
+host adapter, while `./reference` retains the TypeScript operations. The
+[source-route evidence](evidence/rust-migration/r8-arrow-ipc-v4-default-20261028/README.md)
+records 18 frozen fixtures and 54 operations in real Chromium 153, plus public
+error identity, caller exception identity, copy isolation, and missing/corrupt
+WASM refusal. The focused Node/Bun route suite passed three tests with 101
+assertions; four Rust wire tests passed. These are source-built observations,
+not an installed current-source package receipt or complete IPC semantics.
+All three logical default-route gaps remain open.
+
+### R8 Protobuf descriptor/document source route — 2026-10-28
+
+The [frozen TypeScript predecessor](evidence/rust-migration/r8-protobuf-descriptor-predecessor/README.md)
+pins seven pure CONTRACT-003 operations, 18 operation outcomes, a 14-case
+descriptor-reader packet, raw-host admission observations, unknown-wire
+preservation, output copies, and the `options.id` getter order. The Rust core
+and Node/WASM wrappers now preserve the observed malformed descriptor messages,
+public `UmfError` class and path, bounded raw-host subset, and ordering for
+these operations. Both V4 default roots source-select the Rust descriptor and
+document engine; the explicit `./reference` remains TypeScript. Fresh
+current-source Node 26 and Bun 1.4.3 bundles passed the 18 frozen operations
+and 14 reader cases on default and reference, with native dispatch seen only
+on default. A fresh V4 Chromium 153 build passed the same cases on both routes
+after both WASM imports were resolved to one freshly generated glue module;
+it checked one real WASM initialization, public error identity, option-getter
+ordering, output copies, unknown bytes, and absence of Node globals and
+external requests. The direct Chromium WASM binding passed its focused engine
+checks as well. The first fixed-point archive passed an offline
+dependency-resolved installed replay on Node, Bun, and Chromium for this
+bounded packet. Subsequent WASM and harness edits require a new source-cut
+receipt. Broader non-byte host inputs, source compiler callbacks,
+edited-source operations, and Edition 2024 are outside this seven-operation
+slice. No Protobuf declaration is retired.
+
+### R8 installed-route gate and next Avro predecessor — 2026-10-28
+
+Current-source installed-package harnesses are prepared for the five Arrow
+schema operations, seven Protobuf descriptor/document operations, and nine
+previously Rust-selected core operations. Each requires an explicit immutable
+archive digest and verifies the source input closure and package members before
+host replay. The earlier `d110587e` archive is correctly rejected against
+the edited workflow source, and cannot serve as this cut's installed receipt.
+The exact pinned npm dependency set has been bootstrapped to the local cache;
+an isolated offline install of 242 packages passed. A zero-transform private
+archive with 3,718 source inputs passed the bounded Protobuf installed replay
+on Node, Bun, and Chromium and the nine-operation archive-extracted Core
+candidate. The Arrow schema installed gate reached offline installation, then
+exposed an npm lockfile version assumption. Its corrected gate verifies the
+exact local archive path and SHA-512 integrity plus installed package identity.
+The Core candidate now retains its per-host receipts after scratch cleanup.
+Avro WASM bindings and these harness/evidence edits require a new fixed-point
+archive and installed replay before they qualify the current source cut.
+Retirement review remains pending. The R8 ledger maps the newly selected Arrow IPC and Protobuf names to
+exact Rust owners and wires but currently records 920 open logical executable
+default-route gaps and zero retirements. Historical installed receipts are
+source-pinned, not current-source proof for this branch.
+
+The [Avro inspector/edit predecessor](evidence/rust-migration/r8-avro-inspect-edit-predecessor/README.md)
+freezes the TypeScript behavior of `inspectAvro` and `proposeAvroNodeEdit` in
+eight bounded observations; reproduction and its four focused tests with 22
+assertions pass. The existing Rust native-tree inspector and candidate edit
+report differ from the TypeScript UMF-document operation and validation shape.
+The existing Rust inspector and candidate editor are now exposed through
+opt-in WASM bindings; the wrapper suite passes five tests and WASM-target
+compilation passes. A direct WASM smoke against the built dist passed inspect
+and edit, including an exact 64-bit integer token. Document-level TypeScript
+parity and installed-browser qualification remain open. This packet does not
+select either Avro operation for the default route.
+
+### R8 ledger-consistent installed cohort — 2026-10-28
+
+The final checked source cut has R8 gap-ledger SHA-256
+`3bdda421945ec5ec525676b155be19bd0622fa11cce10c914134f6124d37e079`.
+Its fixed-point SDK archive SHA-256 is
+`29a9e6c422f10c9fad2b8057540cc3d3d5014b2e9af9ae19459c83db07903f17`,
+with source-closure SHA-256
+`cd4253c3cea2ec39a5760975595d2d5062b59255c77cb78abd8b67085be91dff`
+over 3,718 inputs and zero source transforms. The archive captures the checked
+ledger and the evidence README bytes used by its route mapping.
+
+The [Arrow schema installed receipt](evidence/rust-migration/r8-arrow-schema-v4-candidate-20261028/darwin-arm64-installed-receipt.json)
+(SHA-256 `fed48b1459a3c808b0a471e55f29b3f471383a8ec5cd021324a4cab25fc14465`)
+passed offline dependency resolution and exact local archive/lock integrity.
+Node, Bun, and real Chromium replayed 260 corpus operations and 16 focused
+imports / 26 focused operations on the default and explicit `./reference`
+routes; missing/corrupt native and WASM assets refused as required. The
+[Protobuf descriptor/document installed receipt](evidence/rust-migration/r8-protobuf-descriptor-document-installed/darwin-arm64-sdk-receipt.json)
+(SHA-256 `42766880283b474bd469ab1974ab99f4ac577dbf2e3173dfb080bea1265af9d8`)
+passed offline installation, 18 frozen operation vectors and 14 bounded
+descriptor-reader cases on Node, Bun, and Chromium for default and reference
+routes. Both receipts identify the same archive and source closure.
+
+The [Core nine-export cohort](evidence/rust-migration/r8-core-nine-installed-current/darwin-arm64/cohort.json)
+(SHA-256 `1c4cbf1aa368736b70eff43577ff54f1b019e727736551db785c3821c2b2daa6`)
+passed 150 outcomes per route across Schema Properties, Core Inspectors, and
+CSV Boolean. It retained 15 hash-verified host receipts and verified 1,819
+archive members. This coordinator replays archive-extracted routes and does
+not install declared dependencies, so it cannot retire those nine exports.
+
+The complete R8 ledger suite passed 80/80, the ledger and symbol inventory
+`--check` gates passed on the final source cut, `bun run typecheck` passed,
+and the Rust/access boundary checks reported zero findings. These bounded
+receipts do not establish full public API parity or independent Linux release
+qualification. The ledger still has 920 logical executable default-route
+gaps, zero retired declarations, and zero promoted current-source installed
+binding routes. Arrow IPC installed qualification, Avro document-level parity,
+the broader adapters and extensions, and the coordinated release matrix
+remain open. The port is not complete and no release is authorized by this
+cohort.

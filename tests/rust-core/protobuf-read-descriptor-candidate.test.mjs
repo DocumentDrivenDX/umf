@@ -84,10 +84,11 @@ test('candidate preserves predecessor size-check and catch boundaries', () => {
   });
 });
 
-test('descriptor wire failures carry the native brand before public UmfError mapping', () => {
+test('descriptor wire failures keep public UmfError identity through the V4 adapter boundary', () => {
   let native;
   try { engine.readDescriptorSet(new Uint8Array([0])); } catch (error) { native = error; }
-  expect(rust.isNativeUmfCoreError(native)).toBe(true);
+  expect(native.name).toBe('UmfError');
+  expect(native.code).toBe('PROTOBUF_BINARY');
   let exposed;
   try { candidate(new Uint8Array([0])); } catch (error) { exposed = error; }
   expect(exposed).toBeInstanceOf(UmfError);

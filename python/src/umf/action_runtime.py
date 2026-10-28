@@ -15,7 +15,7 @@ from typing import Any
 from ._action_runtime_manifest import RESOURCES as _RESOURCE_ENTRIES
 from .rust_codegen import CodegenEngine, UmfCodegenError
 
-_MANIFEST_SHA256 = "dcdf83194aa16eb2a7de51e23bde5bcb2e7b945f2e9ef869565dd00efc22d8f7"
+_MANIFEST_SHA256 = "432c48503c726735a4faee4807c0b9449508290604c94c4c64e6ffe97369c2dd"
 _RESOURCE_FILES = {key: (filename, source) for key, filename, source in _RESOURCE_ENTRIES}
 _RESOURCE_ROOT = "action_runtime_resources"
 _MANIFEST_NAME = "action_runtime_resource_manifest.json"

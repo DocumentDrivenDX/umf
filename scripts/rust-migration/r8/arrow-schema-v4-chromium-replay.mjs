@@ -10,6 +10,8 @@ import {chromium} from 'playwright';
 
 const root=resolve(import.meta.dir,'../../..');
 const wasmPackage=resolve(process.argv[2]??`${root}/bindings/core/wasm/pkg`);
+const installedPackage=process.argv[3]==='--installed'?resolve(process.argv[4]??''):null;
+if(process.argv[3]==='--installed')assert(process.argv[4],'--installed requires the installed @umf/core package root');
 const packetPath=`${root}/docs/helix/04-build/evidence/rust-migration/r5-arrow-typescript-predecessor-20261027/typescript-arrow-schema-outcomes.json.gz`;
 const packetBytes=await readFile(packetPath),packet=JSON.parse(gunzipSync(packetBytes).toString('utf8'));
 const builds=await Promise.all([
@@ -20,19 +22,26 @@ const builds=await Promise.all([
 ]);
 for(const build of builds)assert.equal(build.success,true,JSON.stringify(build.logs));
 const [binding,oracle,adapter,reference]=await Promise.all(builds.map(build=>build.outputs[0].text()));
-const wasmJs=await readFile(`${wasmPackage}/umf_core_wasm.js`,'utf8');
-const wasm=await readFile(`${wasmPackage}/umf_core_wasm_bg.wasm`);
-const packagedBrowser=await readFile(`${root}/dist/umf-browser.js`,'utf8');
-const packagedReference=await readFile(`${root}/dist/umf.js`,'utf8');
-const packagedWasm=await readFile(`${root}/dist/umf_core_wasm_bg.wasm`);
+const wasmJs=await readFile(installedPackage?`${installedPackage}/dist/umf_core_wasm.js`:`${wasmPackage}/umf_core_wasm.js`,'utf8');
+const wasm=await readFile(installedPackage?`${installedPackage}/dist/umf_core_wasm_bg.wasm`:`${wasmPackage}/umf_core_wasm_bg.wasm`);
+const packagedBrowser=await readFile(installedPackage?`${installedPackage}/dist/umf-browser.js`:`${root}/dist/umf-browser.js`,'utf8');
+const packagedReference=await readFile(installedPackage?`${installedPackage}/dist/umf.js`:`${root}/dist/umf.js`,'utf8');
+const packagedWasm=await readFile(installedPackage?`${installedPackage}/dist/umf_core_wasm_bg.wasm`:`${root}/dist/umf_core_wasm_bg.wasm`);
+const variantRequests=[],variantResponses=[];
 const server=createServer((request,response)=>{
- const path=new URL(request.url??'/','http://127.0.0.1').pathname;
+ let path=new URL(request.url??'/','http://127.0.0.1').pathname;
+ const variant=path.startsWith('/missing/')?'missing':path.startsWith('/corrupt/')?'corrupt':null;
+ if(variant){variantRequests.push(path);path=path.slice(`/${variant}`.length);}
+ if(variant&&path==='/dist/umf_core_wasm_bg.wasm'){
+  if(variant==='missing'){variantResponses.push({variant,path,status:404});response.writeHead(404);response.end('synthetic missing WASM');return;}
+  variantResponses.push({variant,path,status:200,bytes:4});response.writeHead(200,{'content-type':'application/wasm'});response.end(Buffer.from([0,1,2,3]));return;
+ }
  if(path==='/'){response.writeHead(200,{'content-type':'text/html; charset=utf-8'});response.end('<!doctype html><meta charset="utf-8"><title>UMF Arrow V4</title>');return;}
  if(path==='/binding.js'){response.writeHead(200,{'content-type':'text/javascript'});response.end(binding);return;}
  if(path==='/oracle.js'){response.writeHead(200,{'content-type':'text/javascript'});response.end(oracle);return;}
  if(path==='/adapter.js'){response.writeHead(200,{'content-type':'text/javascript'});response.end(adapter);return;}
  if(path==='/reference.js'){response.writeHead(200,{'content-type':'text/javascript'});response.end(reference);return;}
- if(path==='/dist/umf-browser.js'){response.writeHead(200,{'content-type':'text/javascript'});response.end(packagedBrowser);return;}
+  if(path==='/dist/umf-browser.js'){response.writeHead(200,{'content-type':'text/javascript'});response.end(packagedBrowser);return;}
  if(path==='/dist/umf.js'){response.writeHead(200,{'content-type':'text/javascript'});response.end(packagedReference);return;}
  if(path==='/dist/umf_core_wasm_bg.wasm'){response.writeHead(200,{'content-type':'application/wasm'});response.end(packagedWasm);return;}
  if(path==='/bindings/core/wasm/pkg/umf_core_wasm.js'){response.writeHead(200,{'content-type':'text/javascript'});response.end(wasmJs);return;}
@@ -120,12 +129,23 @@ try{
   if(publicGetter.kind!=='throw'||publicGetter.error.code!=='JSON_SCHEMA_SYNTAX'||!publicGetter.error.publicUmfError||publicGetterCount!==1||JSON.stringify(publicGetterReads)!=='["id"]')throw new Error('packaged browser options getter order/read count mismatch');
   const publicSentinel={source:'packaged public document ownKeys'},publicDoc=publicBrowser.importArrowSchema('{"fields":[],"metadata":[]}',{id:'proxy'}),publicProxy=new Proxy(publicDoc,{ownKeys(){throw publicSentinel;}});
   if(capture(()=>publicBrowser.inspectArrow(publicProxy),publicBrowser.UmfError).thrown!==publicSentinel)throw new Error('packaged browser source Proxy identity mismatch');
+  const wasmRefusals=[];
+  for(const variant of ['missing','corrupt']){
+   let failure;
+   try{await import(`/${variant}/dist/umf-browser.js?wasm-refusal=${variant}-${Date.now()}`);}catch(error){failure=String(error?.message??error);}
+   if(!failure||!/wasm|compile|magic|fetch|instantiate/i.test(failure))throw new Error(`${variant} WASM package asset did not fail closed: ${failure??'import unexpectedly succeeded'}`);
+   wasmRefusals.push({variant,refused:true,error:failure});
+  }
   if(typeof process!=='undefined'||typeof Buffer!=='undefined')throw new Error('Node globals leaked into Chromium');
   if(!oracle.importArrowSchema)throw new Error('retained TypeScript reference is unavailable');
   if(capture(()=>oracle.importArrowSchema('{',{id:'id'})).error?.code!=='JSON_SCHEMA_SYNTAX')throw new Error('reference route changed');
   engine.dispose();
-  return {status:'pass',corpusCases:packet.corpus.length,corpusOperations,referenceOperations,packagedBrowserOperations,packagedReferenceOperations,focusedCases:packet.focused.length,focusedImports,focusedOperations,optionsGetterReads:getterReads,packagedBrowserOptionsGetterReads:publicGetterCount,sourceProxyIdentity:true,nodeGlobals:false};
+  return {status:'pass',corpusCases:packet.corpus.length,corpusOperations,referenceOperations,packagedBrowserOperations,packagedReferenceOperations,focusedCases:packet.focused.length,focusedImports,focusedOperations,optionsGetterReads:getterReads,packagedBrowserOptionsGetterReads:publicGetterCount,sourceProxyIdentity:true,nodeGlobals:false,wasmRefusals};
  },{packet});
  assert.deepEqual(pageErrors,[]);
- console.log(JSON.stringify({status:'pass',runtime:'Chromium',version:browser.version(),platform:`${process.platform}-${process.arch}`,adapterSha256:createHash('sha256').update(adapter).digest('hex'),wasmSha256:createHash('sha256').update(wasm).digest('hex'),packagedBrowserSha256:createHash('sha256').update(packagedBrowser).digest('hex'),packagedReferenceSha256:createHash('sha256').update(packagedReference).digest('hex'),packagedWasmSha256:createHash('sha256').update(packagedWasm).digest('hex'),packetSha256:createHash('sha256').update(packetBytes).digest('hex'),...result,pageErrors},null,2));
+ const requestedVariantAssets=['/missing/dist/umf_core_wasm_bg.wasm','/corrupt/dist/umf_core_wasm_bg.wasm'];
+ assert(requestedVariantAssets.every(path=>variantRequests.includes(path)),'browser refusal probes did not request both package WASM assets');
+ assert(variantResponses.some(item=>item.variant==='missing'&&item.status===404)&&variantResponses.some(item=>item.variant==='corrupt'&&item.status===200&&item.bytes===4),'synthetic WASM responses were not served as specified');
+ assert.equal(result.wasmRefusals.length,2);
+ console.log(JSON.stringify({status:'pass',runtime:'Chromium',version:browser.version(),platform:`${process.platform}-${process.arch}`,adapterSha256:createHash('sha256').update(adapter).digest('hex'),wasmSha256:createHash('sha256').update(wasm).digest('hex'),packagedBrowserSha256:createHash('sha256').update(packagedBrowser).digest('hex'),packagedReferenceSha256:createHash('sha256').update(packagedReference).digest('hex'),packagedWasmSha256:createHash('sha256').update(packagedWasm).digest('hex'),packetSha256:createHash('sha256').update(packetBytes).digest('hex'),variantRequests,variantResponses,...result,pageErrors},null,2));
 }finally{if(browser)await browser.close();server.close();}

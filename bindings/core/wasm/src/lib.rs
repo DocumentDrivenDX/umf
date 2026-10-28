@@ -12,6 +12,7 @@ use wasm_bindgen::prelude::*;
 mod core_key_tuple;
 mod core_key_verification;
 mod core_record_type_verification;
+mod avro;
 mod host_json;
 mod javascript_numeric_runtime;
 mod json_schema_import_session;

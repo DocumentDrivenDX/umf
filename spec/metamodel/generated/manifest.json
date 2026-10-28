@@ -2,7 +2,7 @@
   "profile": "umf.metamodel.outputs/1",
   "provenance": {
     "modelSha256": "35b72a7f6aa86c98398192e5b67d5841d77127743c671c742dd871a7baee58ca",
-    "compilerSha256": "256949af1d80b9d88335a82ec44d46ddb8f11b7c08d3528f69d5fdff24b0c8c7"
+    "compilerSha256": "fbe0944aaba50c902c1aaf6dfc4453dc48aafc3bc76c59056ed2599e54a1cd2d"
   },
   "sources": {
     "spec/metamodel/umf.yaml": "35b72a7f6aa86c98398192e5b67d5841d77127743c671c742dd871a7baee58ca",
@@ -107,9 +107,9 @@
     "crates/umf-core/src/parquet_record_type_recovery.rs": "d42c3c731ceb762415d7323928e68b3da15fd4d21591b458bda474b9ed96fd90",
     "crates/umf-core/src/parquet_relationship_observation.rs": "b954e8019dff218804a078a6460ce44a791c692b488e5502ab6fb8d88df4515d",
     "crates/umf-core/src/parquet_schema_decode.rs": "41bac38d89241675fd6a6c729fee384d0db085cda6ba4ebbc78f4330d59ce52d",
-    "crates/umf-core/src/protobuf_descriptor.rs": "ca6cb243cac42e1191bd39c2a7265d90dbaeaffa52eccb8a288e295c17c8b40c",
+    "crates/umf-core/src/protobuf_descriptor.rs": "41e5e2d35b31b4507427c8c7154268194543ad876af9f80fd33f84f553ea30c6",
     "crates/umf-core/src/protobuf_descriptor_schema.rs": "8ae2ffb38da1f6cd5df460fbdd1dd462794bccc1f73db4e34588c88051266820",
-    "crates/umf-core/src/protobuf_document.rs": "294a5f3304e631992fbd5450e7ea1418988ac523d2be90fa1b0a1564afb1cd62",
+    "crates/umf-core/src/protobuf_document.rs": "78317430f33817a5be4bff412531bafbcfb06b02b480c4bdfa16b158d3185cd9",
     "crates/umf-core/src/protobuf_inspect.rs": "66f00f4f2392b5b9c43b96b644def5a0d90e45b251c58776b153c32296601311",
     "crates/umf-core/src/protobuf_source.rs": "25bfe873e6b7d6821186d7216c8bae7b817377ab3f0fb06e0ad53d430a8f1a16",
     "crates/umf-core/src/python_re_names.dat": "83e6ec8d43bf356fa1a511508ebf45aef2f6a56efd9d834ba653f3b21b79456f",
@@ -308,11 +308,11 @@
     "bindings/core/node/copy-json-host-input.d.ts": "b1bae6b2f9da1be4596ba3a611443296ead79ec297ac578a94ae38ce2776765e",
     "bindings/core/node/copy-json-host-input.js": "76fb68e9ca37e285a01fb64e6c37bf773642f52306ce74f5dfe9e5e6aff5ab66",
     "bindings/core/node/index.d.ts": "43c86732d86ed99969f69fa6911d8bfa1d4091b99e374d59d088d5d59621091d",
-    "bindings/core/node/index.js": "fe9bc6c33a801d5da01561a30aab0e0b57e321b4844f50e6a2421c53ff968517",
+    "bindings/core/node/index.js": "e748b02a382302ef6ab098726269c611276591068515adeebb76ac4b95d7d34e",
     "bindings/core/node/package.json": "2fa701af7c6c10f880dd6042735a704a5fabf948d4c70d898f4468d6edcc68cf",
     "bindings/core/node/src/access-rrf.js": "9bc5a20dd98af70eb32d91339079c5b592c27f4d84afd722033e9a8aeaa9b416",
     "bindings/core/node/src/access-temporal.js": "7dd84af03f827751718595fe6259da6b2503b5b649894815c1e975b7272ca5cd",
-    "bindings/core/node/src/arrow-ipc.js": "237cedbc80cb1ccf52fa5d28e13ba258da4764822f4b4b1515b472cb696cb4bf",
+    "bindings/core/node/src/arrow-ipc.js": "5b27f07019589cfd984265656fb8241059344103565fd46a12138863c3a5d21c",
     "bindings/core/node/src/bit128.js": "39a9fc04e2576d38da2ea4d5e2054b0ccac63e32cbd2ff049cd5bfb14f14fb1a",
     "bindings/core/node/src/core-bit128-field.js": "7b3ee3503595fc9275069982bee7673c80dc70bb3a5758ba81f2c9379b7220b3",
     "bindings/core/node/src/core-evolution.js": "d72a448cc854c9483a6a3456f770a33a1d67d35aa04075ce674ee5ea61ff7967",
@@ -364,7 +364,7 @@
     "bindings/core/node/tests/access-temporal-replay.mjs": "65928444566b4ba29709ff4c8c32ca20ed2fd3d251ba598121e4976059eb2e89",
     "bindings/core/node/tests/access-temporal-wrapper.test.js": "b9e526bd8f22c85e9aefbdaf6ab8957153799770646a84a3d7080790eecac3aa",
     "bindings/core/node/tests/arrow-ipc-current-source.mjs": "32fc4f5402c2bc130d35c99b3f64920904dd74042b826458adddc5506acb20f9",
-    "bindings/core/node/tests/arrow-ipc-wrapper.test.js": "13ac24120e663e3d5cef0cb25d6a44a9a83cea26270e3a7b63c6b53a88acc33e",
+    "bindings/core/node/tests/arrow-ipc-wrapper.test.js": "c0978ea3c261ecfff60cebfe550145080a3e86a1e51e14268ea046250f18cb53",
     "bindings/core/node/tests/artifact-references.test.js": "897b0f9fc897ac038fb074e29129132d1e0934d0a91513794573941a7564d493",
     "bindings/core/node/tests/avro-candidate.test.js": "d89e3e0dd92587250c056d8eda494e9d98aa29d82d235b63a898ca0cb4c2047e",
     "bindings/core/node/tests/avro-inspector.test.js": "f1900a178db6a2510ac827f584234ba2243ab58fc67b991563f5f66d6602f106",
@@ -413,10 +413,10 @@
     "bindings/core/wasm/copy-json-host-input.d.ts": "c49f877c6dfc9a6b4baa7395193c3db1ee7d28a6276fff228dc50682928ed5f9",
     "bindings/core/wasm/copy-json-host-input.js": "1b0062faad7ff38cba2bcc32c04f4a832fce98d6386c39f1e6f4215443bc2750",
     "bindings/core/wasm/index.d.ts": "f1abaa354c32ec99fb64a84c657154add3727a942868cf474b4ea6c220747b19",
-    "bindings/core/wasm/index.js": "62a4ca08d729416ca83d29a4e247d79435ffc846bb0fcecb174ebcffc6a4cfc7",
+    "bindings/core/wasm/index.js": "c978ba66be4dd391e5ff777ee902b9e5bc0484bd3d7066bb4cb364145b2cc9e5",
     "bindings/core/wasm/package.json": "de616a752ff3154bd4dfe5004539d6dec1f1515c1e0abeda4e503eb93611e4e9",
     "bindings/core/wasm/src/access-rrf.js": "9bc5a20dd98af70eb32d91339079c5b592c27f4d84afd722033e9a8aeaa9b416",
-    "bindings/core/wasm/src/arrow-ipc.js": "237cedbc80cb1ccf52fa5d28e13ba258da4764822f4b4b1515b472cb696cb4bf",
+    "bindings/core/wasm/src/arrow-ipc.js": "5b27f07019589cfd984265656fb8241059344103565fd46a12138863c3a5d21c",
     "bindings/core/wasm/src/avro.js": "0cdea30d7fed941167cb5efd59d335aa29710f3a8a239b58f4275788074825b1",
     "bindings/core/wasm/src/avro.rs": "e273e152daf18d24b5f051674a327e85688a008fd8a47f9c05f1aaa4c4cbad09",
     "bindings/core/wasm/src/bit128.js": "39a9fc04e2576d38da2ea4d5e2054b0ccac63e32cbd2ff049cd5bfb14f14fb1a",
@@ -442,7 +442,7 @@
     "bindings/core/wasm/src/json-schema.js": "cc403722baa33823f5637f1e834203567db44124179281fe88271ecbea950a78",
     "bindings/core/wasm/src/json_schema_import_session.rs": "2f57bf5577b1dac03025e6d89b11fc80561ab743d13623f81078cf190a340454",
     "bindings/core/wasm/src/json_schema_runtime.rs": "0eca85f728a4838158940cc79870525a4109b1336be5815254d04e46e07d3261",
-    "bindings/core/wasm/src/lib.rs": "985e99cf84e731852bb23bbd8873a6bcf7f0ed0c7d396a2157e8bc1a874eaa37",
+    "bindings/core/wasm/src/lib.rs": "e455d6db9e0e145b623001f1425b26c1c4dc4113ec6c338da688fc598a432613",
     "bindings/core/wasm/src/protobuf_document.rs": "726befcd2c13fee606f2e03e820353b37634223e2da55e75d625114cedeae545",
     "bindings/core/wasm/src/protobuf_source.rs": "094ea3064b9642e609376d88c2961062f84bafde14a5a0d7d079acab538230e8",
     "bindings/core/wasm/src/record_members_inspection.rs": "a0644756994f7e0df63a690eb5a60a6dd740a991bdcb527aa05a91cf7c363581",
@@ -460,7 +460,7 @@
     "bindings/core/wasm/tests/access-temporal.test.js": "5f68155ef89d3f6d977e6ad320e2149f75cce27070a066216fc6325798b45c1d",
     "bindings/core/wasm/tests/arrow-ipc-current-source.chromium.mjs": "e72add3d481e9eb26bfd891fafa437e5fda59c836c747e74b873af291e78d03b",
     "bindings/core/wasm/tests/arrow-schema-session.chromium.mjs": "e0f1b16d3d15c52dc6d12d64bd865af9a6fb8de7f3039c3ff3eb39b9f43c6e71",
-    "bindings/core/wasm/tests/avro-wrapper.test.js": "c57c1bcec545c9b6b835cb639e0ef9c8e602a7dc744e00f24882b92649d4812e",
+    "bindings/core/wasm/tests/avro-wrapper.test.js": "fe2446c2f2407c056cfa1addaba0eeff24acccd059ace6d98fbecb1fac535551",
     "bindings/core/wasm/tests/copy-json-host-input.chromium.mjs": "4c29b53dcf21ce58f30465568c7a529ae732338006ed90faa6231c4e5c5bf371",
     "bindings/core/wasm/tests/copy-json-host-input.mjs": "df0b688a65ab254b756f927c19d8164708dda5f9f32edff087efb70f8f2e1770",
     "bindings/core/wasm/tests/core-bit128-field-browser.mjs": "0e0a827042c70b651f04a3177f226cca47af00f040f977562fdd418d4a4f9f2c",
@@ -649,11 +649,11 @@
     "bindings/core/node/copy-json-host-input.d.ts": "b1bae6b2f9da1be4596ba3a611443296ead79ec297ac578a94ae38ce2776765e",
     "bindings/core/node/copy-json-host-input.js": "76fb68e9ca37e285a01fb64e6c37bf773642f52306ce74f5dfe9e5e6aff5ab66",
     "bindings/core/node/index.d.ts": "43c86732d86ed99969f69fa6911d8bfa1d4091b99e374d59d088d5d59621091d",
-    "bindings/core/node/index.js": "fe9bc6c33a801d5da01561a30aab0e0b57e321b4844f50e6a2421c53ff968517",
+    "bindings/core/node/index.js": "e748b02a382302ef6ab098726269c611276591068515adeebb76ac4b95d7d34e",
     "bindings/core/node/package.json": "2fa701af7c6c10f880dd6042735a704a5fabf948d4c70d898f4468d6edcc68cf",
     "bindings/core/node/src/access-rrf.js": "9bc5a20dd98af70eb32d91339079c5b592c27f4d84afd722033e9a8aeaa9b416",
     "bindings/core/node/src/access-temporal.js": "7dd84af03f827751718595fe6259da6b2503b5b649894815c1e975b7272ca5cd",
-    "bindings/core/node/src/arrow-ipc.js": "237cedbc80cb1ccf52fa5d28e13ba258da4764822f4b4b1515b472cb696cb4bf",
+    "bindings/core/node/src/arrow-ipc.js": "5b27f07019589cfd984265656fb8241059344103565fd46a12138863c3a5d21c",
     "bindings/core/node/src/bit128.js": "39a9fc04e2576d38da2ea4d5e2054b0ccac63e32cbd2ff049cd5bfb14f14fb1a",
     "bindings/core/node/src/core-bit128-field.js": "7b3ee3503595fc9275069982bee7673c80dc70bb3a5758ba81f2c9379b7220b3",
     "bindings/core/node/src/core-evolution.js": "d72a448cc854c9483a6a3456f770a33a1d67d35aa04075ce674ee5ea61ff7967",
@@ -705,7 +705,7 @@
     "bindings/core/node/tests/access-temporal-replay.mjs": "65928444566b4ba29709ff4c8c32ca20ed2fd3d251ba598121e4976059eb2e89",
     "bindings/core/node/tests/access-temporal-wrapper.test.js": "b9e526bd8f22c85e9aefbdaf6ab8957153799770646a84a3d7080790eecac3aa",
     "bindings/core/node/tests/arrow-ipc-current-source.mjs": "32fc4f5402c2bc130d35c99b3f64920904dd74042b826458adddc5506acb20f9",
-    "bindings/core/node/tests/arrow-ipc-wrapper.test.js": "13ac24120e663e3d5cef0cb25d6a44a9a83cea26270e3a7b63c6b53a88acc33e",
+    "bindings/core/node/tests/arrow-ipc-wrapper.test.js": "c0978ea3c261ecfff60cebfe550145080a3e86a1e51e14268ea046250f18cb53",
     "bindings/core/node/tests/artifact-references.test.js": "897b0f9fc897ac038fb074e29129132d1e0934d0a91513794573941a7564d493",
     "bindings/core/node/tests/avro-candidate.test.js": "d89e3e0dd92587250c056d8eda494e9d98aa29d82d235b63a898ca0cb4c2047e",
     "bindings/core/node/tests/avro-inspector.test.js": "f1900a178db6a2510ac827f584234ba2243ab58fc67b991563f5f66d6602f106",
@@ -754,10 +754,10 @@
     "bindings/core/wasm/copy-json-host-input.d.ts": "c49f877c6dfc9a6b4baa7395193c3db1ee7d28a6276fff228dc50682928ed5f9",
     "bindings/core/wasm/copy-json-host-input.js": "1b0062faad7ff38cba2bcc32c04f4a832fce98d6386c39f1e6f4215443bc2750",
     "bindings/core/wasm/index.d.ts": "f1abaa354c32ec99fb64a84c657154add3727a942868cf474b4ea6c220747b19",
-    "bindings/core/wasm/index.js": "62a4ca08d729416ca83d29a4e247d79435ffc846bb0fcecb174ebcffc6a4cfc7",
+    "bindings/core/wasm/index.js": "c978ba66be4dd391e5ff777ee902b9e5bc0484bd3d7066bb4cb364145b2cc9e5",
     "bindings/core/wasm/package.json": "de616a752ff3154bd4dfe5004539d6dec1f1515c1e0abeda4e503eb93611e4e9",
     "bindings/core/wasm/src/access-rrf.js": "9bc5a20dd98af70eb32d91339079c5b592c27f4d84afd722033e9a8aeaa9b416",
-    "bindings/core/wasm/src/arrow-ipc.js": "237cedbc80cb1ccf52fa5d28e13ba258da4764822f4b4b1515b472cb696cb4bf",
+    "bindings/core/wasm/src/arrow-ipc.js": "5b27f07019589cfd984265656fb8241059344103565fd46a12138863c3a5d21c",
     "bindings/core/wasm/src/avro.js": "0cdea30d7fed941167cb5efd59d335aa29710f3a8a239b58f4275788074825b1",
     "bindings/core/wasm/src/avro.rs": "e273e152daf18d24b5f051674a327e85688a008fd8a47f9c05f1aaa4c4cbad09",
     "bindings/core/wasm/src/bit128.js": "39a9fc04e2576d38da2ea4d5e2054b0ccac63e32cbd2ff049cd5bfb14f14fb1a",
@@ -783,7 +783,7 @@
     "bindings/core/wasm/src/json-schema.js": "cc403722baa33823f5637f1e834203567db44124179281fe88271ecbea950a78",
     "bindings/core/wasm/src/json_schema_import_session.rs": "2f57bf5577b1dac03025e6d89b11fc80561ab743d13623f81078cf190a340454",
     "bindings/core/wasm/src/json_schema_runtime.rs": "0eca85f728a4838158940cc79870525a4109b1336be5815254d04e46e07d3261",
-    "bindings/core/wasm/src/lib.rs": "985e99cf84e731852bb23bbd8873a6bcf7f0ed0c7d396a2157e8bc1a874eaa37",
+    "bindings/core/wasm/src/lib.rs": "e455d6db9e0e145b623001f1425b26c1c4dc4113ec6c338da688fc598a432613",
     "bindings/core/wasm/src/protobuf_document.rs": "726befcd2c13fee606f2e03e820353b37634223e2da55e75d625114cedeae545",
     "bindings/core/wasm/src/protobuf_source.rs": "094ea3064b9642e609376d88c2961062f84bafde14a5a0d7d079acab538230e8",
     "bindings/core/wasm/src/record_members_inspection.rs": "a0644756994f7e0df63a690eb5a60a6dd740a991bdcb527aa05a91cf7c363581",
@@ -801,7 +801,7 @@
     "bindings/core/wasm/tests/access-temporal.test.js": "5f68155ef89d3f6d977e6ad320e2149f75cce27070a066216fc6325798b45c1d",
     "bindings/core/wasm/tests/arrow-ipc-current-source.chromium.mjs": "e72add3d481e9eb26bfd891fafa437e5fda59c836c747e74b873af291e78d03b",
     "bindings/core/wasm/tests/arrow-schema-session.chromium.mjs": "e0f1b16d3d15c52dc6d12d64bd865af9a6fb8de7f3039c3ff3eb39b9f43c6e71",
-    "bindings/core/wasm/tests/avro-wrapper.test.js": "c57c1bcec545c9b6b835cb639e0ef9c8e602a7dc744e00f24882b92649d4812e",
+    "bindings/core/wasm/tests/avro-wrapper.test.js": "fe2446c2f2407c056cfa1addaba0eeff24acccd059ace6d98fbecb1fac535551",
     "bindings/core/wasm/tests/copy-json-host-input.chromium.mjs": "4c29b53dcf21ce58f30465568c7a529ae732338006ed90faa6231c4e5c5bf371",
     "bindings/core/wasm/tests/copy-json-host-input.mjs": "df0b688a65ab254b756f927c19d8164708dda5f9f32edff087efb70f8f2e1770",
     "bindings/core/wasm/tests/core-bit128-field-browser.mjs": "0e0a827042c70b651f04a3177f226cca47af00f040f977562fdd418d4a4f9f2c",
@@ -992,15 +992,15 @@
   },
   "outputs": {
     "spec/core/schema.json": {
-      "sha256": "b59e29e29ae29533df0c4e28893071012180756679d63233ca3e934735846270",
+      "sha256": "7b92fe976dcf903d59c70e94fd8cb72a68079b434682bbbca0dbb5b16d0a26b1",
       "bytes": 45342
     },
     "spec/core/semantic-type-reference.schema.json": {
-      "sha256": "e08bd7d2ec67b8cd6070c6e09db0e54b7d11a290f99e774071c0c4ab3161c3d6",
+      "sha256": "69b2c51b2daa8acd338e7d7de3c56ebde2c086a5e8c143d12b0baa22d16c1530",
       "bytes": 45463
     },
     "spec/core/extension-package.schema.json": {
-      "sha256": "f2b28f5f572ebe6fe57182cdbb3f59b7a93feb56856e233aa830f151a73ef33a",
+      "sha256": "0bb57a8a6594c9c486062c9d7972dd43178c9cdc93466e6caccf1c1c9c9d532f",
       "bytes": 45001
     },
     "spec/metamodel/package.json": {
@@ -1008,23 +1008,23 @@
       "bytes": 1376
     },
     "spec/metamodel/generated/core-constraints.json": {
-      "sha256": "e7320e8df544ee978cddb54c0320cb44196969af1d00c691751c7532cc0c4d80",
+      "sha256": "b8dda6542299956e1ffbc41f3c0a4d6cb22660d37da3b14ee0034f8704baafc9",
       "bytes": 190252
     },
     "spec/metamodel/generated/domain-policy.json": {
-      "sha256": "e94f3bc7d0dfe5c1003cb9841b1cf18638e45d68af02cea82ed96415c69e8bb8",
+      "sha256": "025b49ad4a4c82d4dce7dee9bfeff6b16af4df941b2202df16067d5adafd4436",
       "bytes": 14827
     },
     "spec/metamodel/generated/python-shapes.json": {
-      "sha256": "184e69be9cb41c466474527e2e5633b1dfba767a3bb33c00f44f36d07c2a0b53",
+      "sha256": "f3037e30f7a4001d7aba78d740d7615be8155ceec97fcc3f0cd7ec3c5830c634",
       "bytes": 98734
     },
     "python/umf_access/src/umf_access/generated_core.py": {
-      "sha256": "62e9f1a11d1a7eb5a9708c6dd6d9ce5cc32f40d6f27d51dae162849373a93bd7",
+      "sha256": "fcdc285ab49a5acea8452f1712f5199a85740ec50f76eb915ad0f5fa206f8d99",
       "bytes": 360
     },
     "src/generated/core-model.ts": {
-      "sha256": "888466f30718e94f95bf8de1a1b70cc5a53b5d7e5136bc3c1f43c900f1f0aa5c",
+      "sha256": "2a091b107145c61a36a0e36ca537a1df15accf421c1a16eb7df08b1771f5eeb5",
       "bytes": 6714
     },
     "spec/core/facet-operation-v3.schema.json": {
@@ -1052,7 +1052,7 @@
       "bytes": 1993
     },
     "src/generated/core-validators.ts": {
-      "sha256": "e90f90d72999ad25390be8ffccb3a465d3f1722d22ea1d420d74c762f8a11505",
+      "sha256": "32761ff0e7bc7b877d3846f5e50429e6780f114ef91ed6731fd6f902b4774c60",
       "bytes": 305070
     }
   }

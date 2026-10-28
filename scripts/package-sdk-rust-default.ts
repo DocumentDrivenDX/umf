@@ -121,6 +121,8 @@ try{
   join(root,'.cargo/config.toml'),
   join(root,'.github/workflows/rust-sdk-default-qualification.yml'),
   join(root,'scripts/package-sdk-rust-default.ts'),join(root,'scripts/test-sdk-rust-default.ts'),
+  join(root,'scripts/check-unified-client-boundaries.ts'),
+  join(root,'tests/unified-client-boundaries.test.ts'),
   join(root,'scripts/rust-migration/r8/copy-source-snapshot.ts'),
   join(root,'scripts/rust-migration/r8/copy-source-snapshot.test.ts'),
   join(root,'scripts/rust-migration/r8/source-inventory.mjs'),join(root,'scripts/rust-migration/r8/source-inventory.d.mts'),join(root,'scripts/rust-migration/r8/source-inventory.test.mjs'),
@@ -159,6 +161,9 @@ try{
   ...['inspectCoreCardinality','declareCoreCardinality','verifyCoreCardinalityDeclaration']
     .map(name=>join(root,`scripts/rust-migration/r8/cardinality-retirement-packets/${name}.packet.json`)),
   join(root,'scripts/rust-migration/r8/gap-ledger.mjs'),join(root,'scripts/rust-migration/r8/gap-ledger.test.mjs'),
+  join(root,'docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/README.md'),
+  join(root,'docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/inventory.json'),
+  join(root,'docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/gap-ledger.json'),
   ...['common','host','host-child','chromium'].map(name=>join(root,`scripts/rust-migration/r8/schema-graph-route-${name}.mjs`)),
   ...['schema-graph-route-build-packet.mjs','schema-graph-route-evidence.mjs','schema-graph-route-evidence.test.mjs']
     .map(name=>join(root,`scripts/rust-migration/r8/${name}`)),
@@ -166,6 +171,64 @@ try{
     .map(name=>join(root,`scripts/rust-migration/r8/${name}`)),
   ...['domain-pack-profile-cases.json','domain-pack-profile-cases.mjs','domain-pack-profile-host-child.mjs','domain-pack-profile-host.mjs','domain-pack-profile-chromium.mjs','domain-pack-profile-route-evidence.mjs','domain-pack-profile-route-build-packet.mjs','domain-pack-profile-route-evidence.test.mjs']
     .map(name=>join(root,`scripts/rust-migration/r8/${name}`)),
+  // R8 Arrow IPC/schema qualification is source-pinned independently of the
+  // dynamic src/bindings trees: these scripts, focused tests and frozen
+  // predecessor/evidence packets are the qualification inputs.
+  ...['arrow-ipc-v4-chromium-smoke.mjs','freeze-arrow-ipc-host-boundary.mjs','arrow-schema-installed-package.mjs','arrow-schema-installed-package-support.mjs']
+    .map(name=>join(root,`scripts/rust-migration/r8/${name}`)),
+  join(root,'tests/rust-core/arrow-ipc-v4-default.test.mjs'),
+  join(root,'tests/rust-core/arrow-schema-bindings.test.mjs'),
+  join(root,'tests/rust-migration/r8-arrow-schema-installed-package.test.mjs'),
+  join(root,'docs/helix/02-design/contracts/CONTRACT-016-arrow.md'),
+  ...[
+    'r8-arrow-ipc-host-boundary-20261028/README.md',
+    'r8-arrow-ipc-host-boundary-20261028/typescript-arrow-ipc-host-boundary.json.gz',
+    'r8-arrow-ipc-v4-default-20261028/README.md',
+    'r8-arrow-schema-v4-candidate-20261028/README.md',
+  ].map(name=>join(root,`docs/helix/04-build/evidence/rust-migration/${name}`)),
+  // The Protobuf descriptor/document Rust candidate has separate frozen
+  // predecessor, qualification, installed-package, and replay inputs.
+  ...[
+    'capture-protobuf-descriptor-predecessor.ts',
+    'protobuf-descriptor-candidate-installed.mjs',
+    'protobuf-descriptor-document-browser-probe.mjs',
+    'protobuf-descriptor-document-host-probe.mjs',
+    'protobuf-descriptor-document-installed.mjs',
+    'protobuf-descriptor-document-qualification-core.mjs',
+    'protobuf-descriptor-document-replay.mjs',
+  ].map(name=>join(root,`scripts/rust-migration/r8/${name}`)),
+  ...[
+    'protobuf-document-bindings.test.mjs',
+    'protobuf-document-browser.mjs',
+    'protobuf-read-descriptor-candidate.test.mjs',
+    'protobuf-read-descriptor-predecessor.json',
+    'protobuf-rust-default.test.mjs',
+    'protobuf-v4-default.test.mjs',
+    'protobuf-v4-browser.test.mjs',
+  ].map(name=>join(root,`tests/rust-core/${name}`)),
+  join(root,'tests/rust-migration/r8-protobuf-descriptor-document-qualification-core.test.mjs'),
+  join(root,'tests/rust-migration/r8-protobuf-descriptor-predecessor.test.mjs'),
+  join(root,'docs/helix/02-design/contracts/CONTRACT-003-protobuf.md'),
+  ...[
+    'r8-core-nine-installed-current/README.md',
+    'r8-protobuf-descriptor-candidate-installed/README.md',
+    'r8-protobuf-descriptor-candidate-installed/darwin-arm64-sdk-receipt.json',
+    'r8-protobuf-descriptor-document/README.md',
+    'r8-protobuf-descriptor-document/sol-review.md',
+    'r8-protobuf-descriptor-document-installed/README.md',
+    'r8-protobuf-descriptor-predecessor/README.md',
+    'r8-protobuf-descriptor-predecessor/predecessor.json',
+    'r8-protobuf-descriptor-predecessor/source-cohort.json',
+  ].map(name=>join(root,`docs/helix/04-build/evidence/rust-migration/${name}`)),
+  // Keep the current core-nine default-retirement harness and installed
+  // receipt tied to the archive even though its implementation is in src.
+  join(root,'scripts/rust-migration/r8/core-nine-default-retirement.mjs'),
+  // The next Avro slice currently freezes only its TypeScript predecessor.
+  // It is captured with this source cut without claiming a Rust default route.
+  join(root,'scripts/rust-migration/r8/capture-avro-inspect-edit-predecessor.ts'),
+  join(root,'tests/rust-migration/r8-avro-inspect-edit-predecessor.test.mjs'),
+  join(root,'docs/helix/04-build/evidence/rust-migration/r8-avro-inspect-edit-predecessor/README.md'),
+  join(root,'docs/helix/04-build/evidence/rust-migration/r8-avro-inspect-edit-predecessor/predecessor.json'),
   join(root,'scripts/core-relationship-cases.ts'),join(root,'scripts/core-relationship-operation-cases.ts'),
   join(root,'docs/helix/02-design/contracts/CONTRACT-041-relationship.md'),
   join(root,'docs/helix/02-design/contracts/CONTRACT-053-domain-pack-profiles.md'),

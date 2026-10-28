@@ -9,7 +9,7 @@ import { gzipSync } from 'node:zlib';
 import { cp, mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { buildLedger, classifyBit128ProfileSource, collectPythonPackageAssets, collectPythonSourceFiles, isDomainPackLoaderInspectionRootSelection, isDomainPackProfileInspectionRootSelection, isDomainPackSchemaRootSelection, isExactAccessTemporalV4RootSelection, isExactArrowSchemaV4RootSelection, operationMapping, summarizeDefaultRouteRetirement, validateCompactVerifierBuildBinding, validateDomainPackLoaderInspectorReceipt, validateSchemaGraphReceipt } from './gap-ledger.mjs';
+import { buildLedger, classifyBit128ProfileSource, collectPythonPackageAssets, collectPythonSourceFiles, isDomainPackLoaderInspectionRootSelection, isDomainPackProfileInspectionRootSelection, isDomainPackSchemaRootSelection, isExactAccessTemporalV4RootSelection, isExactArrowIpcV4RootSelection, isExactArrowSchemaV4RootSelection, isExactProtobufDescriptorV4RootSelection, operationMapping, summarizeDefaultRouteRetirement, validateCompactVerifierBuildBinding, validateDomainPackLoaderInspectorReceipt, validateSchemaGraphReceipt } from './gap-ledger.mjs';
 import { CASES as LOADER_INSPECTOR_CASES, validateClaims as validateLoaderInspectorClaims, validatePacketSync as validateLoaderInspectorPacketSync } from './loader-inspector-route-evidence.mjs';
 import { requiredR8RouteFamilies, validateR8InstalledRouteEvidence } from './installed-route-evidence.mjs';
 import { normalizeR8RouteHostReceipt } from './installed-route-receipt-adapter.mjs';
@@ -45,7 +45,7 @@ test('only the pinned BIT128_PROFILE primitive is classified as inert JSON scala
   assert.equal(ledger.counts.inertJsonScalarRows, 1);
   assert.equal(ledger.counts.routeInertJsonScalarRows, 3);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
-  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 831);
+  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 834);
 
   assert.equal(classifyBit128ProfileSource("export const BIT128_PROFILE = 'umf-128/1' as const;"), 'umf-128/1');
   for (const source of [
@@ -618,8 +618,9 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
     const selection = entries.get(routeId);
     // The V4 facade adds six exact Rust-selected names, two key-tuple
     // operations, two SEC operations, three opt-in SEC/Protobuf candidates,
-    // scalarTypesForVersion, the guarded temporal pair, and five Arrow schema operations.
-    assert.equal(selection.directExportCount, 89 + 6 + 2 + 2 + 3 + 1 + 2 + 5);
+    // scalarTypesForVersion, the guarded temporal pair, five Arrow schema
+    // operations, three Arrow IPC operations and seven Protobuf operations.
+    assert.equal(selection.directExportCount, 89 + 6 + 2 + 2 + 3 + 1 + 2 + 5 + 3 + 7);
     assert.ok(expected.every(name => selection.directExports.includes(name)), `${routeId} misses an override`);
     assert.ok(['inspectCoreSemanticTypes','getCoreSemanticTypes','declareCoreSemanticTypes','verifyCoreSemanticTypeDeclaration',
       'validateCoreRecordValues','SemanticTypeRegistry','validateSemanticTypeValue','validateCoreSemanticTypeValue']
@@ -649,9 +650,9 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
   assert.equal(reference.length, expected.length);
   assert.ok(reference.every(row => row.sourceSelectedImplementation === null));
   assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
-  assert.equal(ledger.counts.sourceSelectedRustOverrides, 130 + 2 * 2 + 2 * 2 + 2 * 2 + 2 * 5);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 130 + 2 * 2 + 2 * 2 + 2 * 2 + 2 * 5 + 2 * 10);
   for (const routeId of ['package-root-node', 'package-root-browser']) {
-    assert.equal(ledger.counts.executableDefaultRouteGapsByRoute[routeId].rustSelectedSourceDeclarations, 65 + 4 + 2 + 5);
+    assert.equal(ledger.counts.executableDefaultRouteGapsByRoute[routeId].rustSelectedSourceDeclarations, 65 + 4 + 2 + 5 + 10);
   }
   const archivedGate = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/gate-result.json', 'utf8'));
   assert.equal(archivedGate.status, 'pass');
@@ -775,6 +776,58 @@ test('Arrow schema Rust mappings require exact Node/browser conditions and leave
     assert.equal(reference.defaultRouteRetirement.status, 'reference-only');
     assert.equal(operationMapping(reference), null);
   }
+});
+
+test('Arrow IPC and Protobuf descriptor/document source selections stay exact and retire no gaps', () => {
+  const inventory = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/inventory.json', 'utf8'));
+  const ledger = currentGeneratedLedger();
+  const expected = new Map([
+    ['captureArrowIpc', ['umf_core::arrow_ipc_capture::capture_arrow_ipc', 'arrow.ipc.capture']],
+    ['exportArrowIpcCapture', ['umf_core::arrow_ipc_capture::export_arrow_ipc_capture', 'arrow.ipc.export']],
+    ['inspectArrowIpcCapture', ['umf_core::arrow_ipc_capture::inspect_arrow_ipc_capture', 'arrow.ipc.inspect']],
+    ['readDescriptorSet', ['umf_core::protobuf_descriptor::read_descriptor_set', 'protobuf.descriptor.read']],
+    ['writeDescriptorSet', ['umf_core::protobuf_descriptor::write_descriptor_set', 'protobuf.descriptor.write']],
+    ['importProtobufDescriptorSet', ['umf_core::protobuf_document::import_descriptor_set', 'protobuf.document.import']],
+    ['getProtobufDescriptorSet', ['umf_core::protobuf_document::get_descriptor_set', 'protobuf.document.get']],
+    ['exportProtobufDescriptorSet', ['umf_core::protobuf_document::export_descriptor_set', 'protobuf.document.export']],
+    ['inspectProtobuf', ['umf_core::protobuf_document::inspect', 'protobuf.document.inspect']],
+    ['exportProtobufBundle', ['umf_core::protobuf_document::export_bundle', 'protobuf.document.bundle']],
+  ]);
+  for (const [name, [owner, wire]] of expected) {
+    for (const routeId of ['package-root-node', 'package-root-browser']) {
+      const row = ledger.rows.find(item => item.routeId === routeId && item.exportName === name);
+      assert.equal(row.acceptedRustOperation, owner, `${routeId}:${name} owner`);
+      assert.equal(row.sourceSelectedImplementation.status, 'source-selected-current-route-unqualified');
+      assert.equal(row.sourceSelectedImplementation.rustOwner, owner);
+      assert.equal(row.sourceSelectedImplementation.wireOperation, wire);
+      assert.equal(row.bindingRouteStatus, 'unproven');
+      assert.equal(row.defaultRouteRetirement.status, 'open');
+      const sourceRow = inventory.symbols.find(item => item.routeId === routeId && item.exportName === name);
+      assert.ok(sourceRow, `${routeId}:${name} inventory row`);
+      assert.equal(operationMapping(sourceRow).rustOwner, owner);
+    }
+    const reference = ledger.rows.find(item => item.routeId === 'package-reference' && item.exportName === name);
+    assert.equal(reference.acceptedRustOperation, null, `${name} reference remains TypeScript`);
+    assert.equal(reference.sourceSelectedImplementation, null);
+    assert.equal(reference.defaultRouteRetirement.status, 'reference-only');
+  }
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
+  assert.equal(ledger.counts.executableDefaultRouteRetirementsByRoute['package-root-node'], 0);
+  assert.equal(ledger.counts.executableDefaultRouteRetirementsByRoute['package-root-browser'], 0);
+
+  const arrow = inventory.symbols.find(row => row.routeId === 'package-root-node' && row.exportName === 'captureArrowIpc');
+  const arrowRoot = readFileSync('src/index-node-v4.ts', 'utf8');
+  const arrowArgs = { ...arrow, declaration: arrow, rootText: arrowRoot };
+  assert.equal(isExactArrowIpcV4RootSelection(arrowArgs), true);
+  assert.equal(isExactArrowIpcV4RootSelection({ ...arrowArgs, rootText: arrowRoot.replace('export {captureArrowIpc,exportArrowIpcCapture,inspectArrowIpcCapture};', 'export {captureArrowIpc,exportArrowIpcCapture};') }), false, 'partial Arrow IPC source selection is rejected');
+  assert.equal(isExactArrowIpcV4RootSelection({ ...arrowArgs, rootText: arrowRoot.replace('const {captureArrowIpc,exportArrowIpcCapture,inspectArrowIpcCapture}=bindArrowIpcRust(createArrowIpcEngine(),isNativeUmfCoreError,error=>error instanceof BindingUmfError);', '') }), false, 'missing Arrow IPC binding is rejected');
+
+  const protobuf = inventory.symbols.find(row => row.routeId === 'package-root-browser' && row.exportName === 'readDescriptorSet');
+  const protobufRoot = readFileSync('src/index-browser-v4.ts', 'utf8');
+  const protobufArgs = { ...protobuf, declaration: protobuf, rootText: protobufRoot };
+  assert.equal(isExactProtobufDescriptorV4RootSelection(protobufArgs), true);
+  assert.equal(isExactProtobufDescriptorV4RootSelection({ ...protobufArgs, rootText: protobufRoot.replace('export {readDescriptorSet,writeDescriptorSet,importProtobufDescriptorSet,exportProtobufDescriptorSet,getProtobufDescriptorSet,inspectProtobuf,exportProtobufBundle};', 'export {readDescriptorSet,writeDescriptorSet,importProtobufDescriptorSet,exportProtobufDescriptorSet,getProtobufDescriptorSet,inspectProtobuf};') }), false, 'partial Protobuf source selection is rejected');
+  assert.equal(isExactProtobufDescriptorV4RootSelection({ ...protobufArgs, rootText: protobufRoot.replace('const protobufDescriptorDocument=createProtobufDescriptorDocumentRustDefault(options=>{', '') }), false, 'missing Protobuf binding is rejected');
 });
 
 test('the three opt-in SEC and Protobuf Rust candidates stay root-only in the route inventory', () => {
@@ -902,8 +955,8 @@ test('V4 relationship consumer exports are hybrid bindings without Rust consumer
     assert.equal(rows[2].sourceSelectedImplementation, null);
     assert.equal(rows[2].defaultRouteRetirement.status, 'reference-only');
   }
-  assert.equal(ledger.counts.sourceSelectedRustOverrides, 130 + 2 * 2 + 2 * 2 + 2 * 2 + 2 * 5);
-  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 94);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 130 + 2 * 2 + 2 * 2 + 2 * 2 + 2 * 5 + 2 * 10);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 101);
   assert.deepEqual(ledger.counts.executableDefaultRouteRetirementsByRoute, { 'package-root-node': 0, 'package-root-browser': 0 });
 
   for (const row of [
@@ -1099,8 +1152,8 @@ test('Schema Properties source selections keep exact CONTRACT-049 mappings separ
     assert.equal(reference.sourceSelectedImplementation, null);
     assert.equal(reference.implementationStatus, 'TypeScript reference implementation remains explicit');
   }
-  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 94);
-  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 831);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 101);
+  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 834);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
   const aggregate = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/aggregate.json', 'utf8'));
   const aggregateNames = Object.values(aggregate.families).flatMap(family => family.operations);
@@ -1381,7 +1434,7 @@ test('five model vocabulary exports record generated-data versus executable disp
   assert.equal(ledger.counts.immutableGeneratedDataRows, 4);
   assert.equal(ledger.counts.routeImmutableGeneratedDataRows, 12);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
-  assert.equal(ledger.counts.executableRows, 925);
+  assert.equal(ledger.counts.executableRows, 935);
   const rows = ledger.rows.filter(row => ['SCALAR_TYPES','ELEMENT_KINDS','NULLABILITIES','CARDINALITIES'].includes(row.exportName));
   assert.equal(rows.length, 12);
   assert.ok(rows.every(row => row.rowKind === 'immutable-generated-data' && row.source === 'src/model/types.ts'));
@@ -2643,7 +2696,7 @@ test('condition-aware routes count logical gaps once and classify each default s
   assert.throws(() => buildLedger({ ...args, inventory: { symbols: symbols.filter(row => row.routeId !== 'package-reference') } }), /missing required routes: package-reference/);
 });
 
-test('five current R8 default selections retain exact source, wire, binder and bounded evidence pins', () => {
+test('five historical R8 route receipts stay source-pinned rather than current-source proof', () => {
   const names = ['validateCsvBooleanLexical', 'verifyCsvBooleanLexical', 'inspectCoreScalarType', 'inspectCoreRecordMembers', 'inspectCoreReferenceLinks'];
   const symbols = ['package-root-node', 'package-root-browser', 'package-reference'].flatMap(routeId => names.map((exportName, index) => ({
     routeId, exportName, declarationName: exportName,
@@ -2654,21 +2707,21 @@ test('five current R8 default selections retain exact source, wire, binder and b
   const ledger = buildLedger({...args, inventory: {symbols}});
   assert.equal(ledger.counts.executableDefaultRouteGaps, 5);
   assert.equal(ledger.counts.sourceSelectedRustOverrides, 10);
-  assert.equal(ledger.counts.bindingRoutesProven, 5);
+  assert.equal(ledger.counts.bindingRoutesProven, 0);
   for (const routeId of ['package-root-node', 'package-root-browser']) {
     assert.equal(ledger.counts.executableDefaultRouteGapsByRoute[routeId].rustSelectedSourceDeclarations, 5);
     for (const name of names) {
       const row = ledger.rows.find(item => item.routeId === routeId && item.exportName === name);
       const selected = row.sourceSelectedImplementation;
-      assert.equal(selected.status, 'source-selected-installed-private-current-cohort');
-      assert.equal(row.bindingRouteStatus, 'installed-private-current-cohort');
-      assert.equal(row.bindingRoute, selected.bindingRoute);
+      assert.equal(selected.status, 'source-selected-installed-private-source-pinned');
+      assert.equal(row.bindingRouteStatus, 'installed-private-source-pinned-not-current');
+      assert.equal(row.bindingRoute, null, 'historical receipts do not imply a current binding route');
       assert.equal(row.acceptedRustOperation, null);
       assert.ok(selected.sourceClosure.some(item => item.path === (routeId === 'package-root-node' ? 'src/index-node-v4.ts' : 'src/index-browser-v4.ts')));
       assert.ok(selected.sourceClosure.some(item => item.path === (selected.bindingMethod.includes('CsvBoolean') ? `bindings/core/${routeId.endsWith('browser') ? 'wasm' : 'node'}/src/csv-boolean-lexical.js` : `bindings/core/${routeId.endsWith('browser') ? 'wasm' : 'node'}/src/core-model.js`)));
       assert.ok(selected.sourceClosure.every(item => /^[a-f0-9]{64}$/.test(item.sha256)));
       assert.ok(selected.evidenceClosure.length >= 3);
-      assert.match(selected.qualificationStatus, /current 3,431-file fixed-point private SDK archive/i);
+      assert.match(selected.qualificationStatus, /historical 3,431-file fixed-point private SDK archive/i);
       assert.match(selected.qualificationStatus, /retirement/);
     }
   }
@@ -3139,8 +3192,8 @@ test('security truth and composition map only their four reviewed opt-in operati
 test('securityAnd/securityOr V4 bindings normalize exactly and carry source-only replay evidence', () => {
   const ledger = currentGeneratedLedger();
   assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
-  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 94);
-  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 831);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 101);
+  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 834);
   for (const name of ['securityAnd', 'securityOr']) {
     const rustSymbol = name === 'securityAnd' ? 'security_and' : 'security_or';
     for (const routeId of ['package-root-node', 'package-root-browser']) {
@@ -3167,26 +3220,28 @@ test('securityAnd/securityOr V4 bindings normalize exactly and carry source-only
   assert.throws(() => buildLedger({ ...args, inventory: { symbols: changed } }), /(declaration multiplicity differs|Node\/browser export names differ)/);
 });
 
-test('Arrow IPC exact capture maps only three opt-in functions and retires no default route', () => {
+test('Arrow IPC exact capture maps its reference and V4 declarations without retiring routes', () => {
   const names = new Map([
     ['captureArrowIpc', 'capture_arrow_ipc'],
     ['exportArrowIpcCapture', 'export_arrow_ipc_capture'],
     ['inspectArrowIpcCapture', 'inspect_arrow_ipc_capture'],
   ]);
   const symbols = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/inventory.json', 'utf8')).symbols
-    .filter(row => row.source === 'src/adapters/arrow/capture.ts' && names.has(row.exportName));
+    .filter(row => ['package-root-node', 'package-root-browser', 'package-reference'].includes(row.routeId) && names.has(row.exportName));
   assert.equal(symbols.length, 9);
   const ledger = buildLedger({ ...args, inventory: { symbols } });
   assert.equal(ledger.counts.executableDefaultRouteGaps, 3);
   assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 3);
   assert.equal(ledger.counts.bindingRoutesProven, 0);
   for (const row of ledger.rows) {
-    assert.equal(row.acceptedRustOperation, `umf_core::arrow_ipc_capture::${names.get(row.exportName)}`);
+    assert.equal(row.acceptedRustOperation, row.routeId === 'package-reference' ? null : `umf_core::arrow_ipc_capture::${names.get(row.exportName)}`);
     assert.equal(row.bindingRouteStatus, 'unproven');
     assert.equal(row.defaultRouteRetirement.status, row.routeId === 'package-reference' ? 'reference-only' : 'open');
-    assert.match(row.acceptedOperationEvidence.scopeRule, /exact-source Arrow IPC capture/);
-    assert.ok(row.acceptedOperationEvidence.evidenceClosure.some(item => item.path.endsWith('/r5-arrow-ipc-capture-bindings-current-source-20261027/chromium.json')));
-    assert.ok(row.acceptedOperationEvidence.evidenceClosure.some(item => item.path.endsWith('/r5-arrow-ipc-python-20261027/receipt.json')));
+    if (row.routeId !== 'package-reference') {
+      assert.match(row.acceptedOperationEvidence.scopeRule, /exact-source Arrow IPC capture/);
+      assert.ok(row.acceptedOperationEvidence.evidenceClosure.some(item => item.path.endsWith('/r5-arrow-ipc-capture-bindings-current-source-20261027/chromium.json')));
+      assert.ok(row.acceptedOperationEvidence.evidenceClosure.some(item => item.path.endsWith('/r5-arrow-ipc-python-20261027/receipt.json')));
+    }
   }
 });
 
@@ -3776,9 +3831,9 @@ test('domain-pack loader inspector selection requires its exact V4 wrapper shape
   assert.equal(reference.defaultRouteRetirement.status, 'reference-only');
   // The domain-profile pair and guarded temporal pair each add two selected
   // declarations per root.
-  assert.equal(ledger.counts.sourceSelectedRustOverrides, 130 + 2 * 2 + 2 * 2 + 2 * 2 + 2 * 5);
-  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-node'].rustSelectedSourceDeclarations, 65 + 4 + 2 + 5);
-  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-browser'].rustSelectedSourceDeclarations, 65 + 4 + 2 + 5);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 130 + 2 * 2 + 2 * 2 + 2 * 2 + 2 * 5 + 2 * 10);
+  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-node'].rustSelectedSourceDeclarations, 65 + 4 + 2 + 5 + 10);
+  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-browser'].rustSelectedSourceDeclarations, 65 + 4 + 2 + 5 + 10);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
 });
 

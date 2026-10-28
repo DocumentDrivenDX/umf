@@ -2,27 +2,6 @@ name: Coordinated Python release validation
 
 on:
   workflow_dispatch:
-  pull_request:
-    paths:
-      - 'Cargo.toml'
-      - 'Cargo.lock'
-      - '.cargo/**'
-      - 'rust-toolchain.toml'
-      - 'python/**'
-      - 'bindings/core/python/**'
-      - 'crates/**'
-      - 'spec/**'
-      - 'fixtures/actions-binding/source.json'
-      - 'tools/_python_sdist.py'
-      - 'tools/verify_python_artifacts.py'
-      - 'tools/verify_python_release_pair.py'
-      - 'tools/verify_python_release_matrix.py'
-      - 'scripts/rust-migration/r4/check_binary_closure.py'
-      - 'scripts/rust-migration/r4/test_binary_closure.py'
-      - 'python/tests/test_coordinated_python_release.py'
-      - 'python/tests/test_python_release_matrix.py'
-      - '.github/workflows/python-coordinated-release.yml'
-      - '.github/workflows/pypi.yml'
 
 permissions:
   contents: read

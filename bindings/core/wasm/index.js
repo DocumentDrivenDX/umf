@@ -21,6 +21,7 @@ import {schemaPropertiesHostInput, cardinalityHostInput, validateCoreRecordValue
 import {createSemanticTypeRegistry as createSemanticTypeRegistryWithWire} from './src/semantic-value.js';
 import {createArrowIpcOperations, ARROW_IPC_PROFILE} from './src/arrow-ipc.js';
 import {createAccessRrfOperations, ACCESS_RRF_PROFILE} from './src/access-rrf.js';
+import {createAvroInspector as createAvroInspectorWire, createAvroCandidateEditor as createAvroCandidateEditorWire, AVRO_INSPECT_PROFILE, AVRO_CANDIDATE_PROFILE} from './src/avro.js';
 import {copyCoreJsonInput, createCoreBit128FieldOperation} from './src/core-bit128-field.js';
 const CORE_KIND_NULLABILITY_RUNTIME = Symbol('core-kind-nullability-runtime');
 const CORE_KIND_NULLABILITY_PREPARED = Symbol('core-kind-nullability-prepared');
@@ -57,6 +58,7 @@ export const PROTOBUF_INSPECT_PROFILE = 'umf-r5-protobuf-inspect/0.1.0';
 export const PROTOBUF_DOCUMENT_PROFILE = 'umf-r8-protobuf-descriptor-document/0.1.0';
 export const PROTOBUF_SOURCE_IMPORT_PROFILE = 'umf-r8-protobuf-source-import/0.1.0';
 export const AVRO_FIELDS_PROFILE = 'umf-r5-avro-fields/0.1.0';
+export {AVRO_INSPECT_PROFILE, AVRO_CANDIDATE_PROFILE};
 export const RECORD_TYPE_BINDING_PROFILE = 'umf.record-type-binding/1.0.0';
 export {JSON_SCHEMA_PROFILE};
 export {DOCUMENT_COMPARISON_PROFILE};
@@ -1192,15 +1194,28 @@ const typedArrayTag = Object.getOwnPropertyDescriptor(typedArrayPrototype, Symbo
 const typedArrayLength = Object.getOwnPropertyDescriptor(typedArrayPrototype, 'length').get;
 const typedArrayBuffer = Object.getOwnPropertyDescriptor(typedArrayPrototype, 'buffer').get;
 const typedArrayByteOffset = Object.getOwnPropertyDescriptor(typedArrayPrototype, 'byteOffset').get;
-function snapshotDescriptorByteLength(input) {
+function snapshotDescriptorByteLength(input, ErrorType = JsonSchemaUmfError) {
+  const hostLength = input.length;
+  if (hostLength > 4_000_000) throw new ErrorType('LIMIT', 'Descriptor input exceeds limit');
   let tag;
   try { tag = Reflect.apply(typedArrayTag, input, []); } catch { tag = undefined; }
-  if (tag !== 'Uint8Array') throw new TypeError('Protobuf descriptor bytes must be a Uint8Array');
-  return Reflect.apply(typedArrayLength, input, []);
+  if (tag === 'Uint8Array') return Reflect.apply(typedArrayLength, input, []);
+  if (ArrayBuffer.isView(input) && Object.prototype.toString.call(input) === '[object DataView]') {
+    if (input.byteLength === 0) return 0;
+    throw new ErrorType('PROTOBUF_BINARY', 'Error: illegal tag: field no 0 wire type 0');
+  }
+  if (ArrayBuffer.isView(input) && ['Uint16Array', 'Int16Array', 'Float32Array'].includes(tag) && typeof hostLength === 'number') {
+    if (hostLength === 0) return 0;
+    throw new ErrorType('PROTOBUF_BINARY', Number(input[0]) === 10 ? 'RangeError: premature EOF' : 'Error: illegal tag: field no 0 wire type 0');
+  }
+  throw new ErrorType('PROTOBUF_BINARY', 'TypeError: Expected ArrayBuffer for the first argument.');
 }
-function snapshotDescriptorBytes(input) {
-  const length = snapshotDescriptorByteLength(input);
-  if (length > 4_000_000) throw new UmfCoreError('LIMIT', 'Descriptor input exceeds limit');
+function snapshotDescriptorBytes(input, ErrorType = JsonSchemaUmfError) {
+  const length = snapshotDescriptorByteLength(input, ErrorType);
+  let tag;
+  try { tag = Reflect.apply(typedArrayTag, input, []); } catch { tag = undefined; }
+  if (tag !== 'Uint8Array') return new Uint8Array(length);
+  if (length > 4_000_000) throw new ErrorType('LIMIT', 'Descriptor input exceeds limit');
   const buffer = Reflect.apply(typedArrayBuffer, input, []);
   const byteOffset = Reflect.apply(typedArrayByteOffset, input, []);
   const view = new Uint8Array(buffer, byteOffset, length);
@@ -1212,20 +1227,24 @@ export function createProtobufDescriptorDocumentEngine(module, options = {}) {
   if (typeof module?.executeProtobufDocumentWire !== 'function' || typeof module?.protobufDocumentProfileVersion !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
   if (module.protobufDocumentProfileVersion() !== PROTOBUF_DOCUMENT_PROFILE) throw new Error('RUST_WASM_BINDING_PROFILE_MISMATCH');
   const {controls} = codegenOptions(options);
+  const ErrorType = typeof options.ErrorType === 'function' ? options.ErrorType : JsonSchemaUmfError;
   function invoke(op, fields = {}, inputBinary = new Uint8Array()) {
     const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
     const hostWork = admissionWork(controlBridge);
     hostWork?.(1);
     const admittedFields = typeof fields === 'function' ? fields() : fields;
     const requestWire = encodeRequestWire({op, ...admittedFields}, hostWork);
-    const inputLength = snapshotDescriptorByteLength(inputBinary);
+    const inputLength = snapshotDescriptorByteLength(inputBinary, ErrorType);
     hostWork?.(inputLength);
-    const ownedBinary = snapshotDescriptorBytes(inputBinary);
+    const ownedBinary = snapshotDescriptorBytes(inputBinary, ErrorType);
     const response = module.executeProtobufDocumentWire(requestWire, ownedBinary, controlBridge);
     hostWork?.(response.wireEnvelope.length + response.binary.length);
     const envelope = JSON.parse(response.wireEnvelope);
     const failure = resultError(envelope);
-    if (failure) throw nativeCoreError(failure);
+    if (failure) {
+      if (['RESOURCE_LIMIT', 'CANCELLED', 'METER_FAILURE', 'CANCELLATION_CHECK_FAILURE', 'CLOCK_CAPABILITY_REQUIRED', 'DEADLINE'].includes(failure.code)) throw nativeCoreError(failure);
+      throw new ErrorType(failure.code, failure.message, failure.path);
+    }
     hostWork?.(envelope.wire.length);
     const value = fromWire(JSON.parse(envelope.wire), hostWork);
     return {value, binary: response.binary};
@@ -1234,7 +1253,7 @@ export function createProtobufDescriptorDocumentEngine(module, options = {}) {
     readDescriptorSet(binary) { return invoke('protobuf.descriptor.read', {}, binary).value; },
     writeDescriptorSet(descriptorSet) { return invoke('protobuf.descriptor.write', {descriptorSet}).binary; },
     importProtobufDescriptorSet(binary, options) {
-      return invoke('protobuf.document.import', () => ({id: descriptor(options, 'id', true)}), binary).value;
+      return invoke('protobuf.document.import', () => ({id: options.id}), binary).value;
     },
     getProtobufDescriptorSet(document) { return invoke('protobuf.document.get', {document}).value; },
     exportProtobufDescriptorSet(document) { return invoke('protobuf.document.export', {document}).binary; },
@@ -1504,6 +1523,34 @@ export function createAvroFieldsEngine(module, options = {}) {
     hostWork?.(envelope.wire.length);
     return fromWire(JSON.parse(envelope.wire), hostWork);
   }});
+}
+
+/** Create the opt-in bounded Avro structural inspector over WASM. */
+export function createAvroInspector(module, options = {}) {
+  const {controls} = codegenOptions(options);
+  return createAvroInspectorWire(module, {controls, ErrorType: UmfCoreError});
+}
+
+/** Create the opt-in Avro document candidate editor over WASM. */
+export function createAvroCandidateEditor(module, options = {}) {
+  const {controls} = codegenOptions(options);
+  return createAvroCandidateEditorWire(module, {controls, ErrorType: UmfCoreError});
+}
+
+/** Initialize the opt-in Avro structural inspector in a browser. */
+export async function initializeAvroInspectorWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+  if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
+  const module = await loader();
+  if (typeof module.default === 'function') await module.default();
+  return createAvroInspector(module, options);
+}
+
+/** Initialize the opt-in Avro candidate editor in a browser. */
+export async function initializeAvroCandidateEditorWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+  if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
+  const module = await loader();
+  if (typeof module.default === 'function') await module.default();
+  return createAvroCandidateEditor(module, options);
 }
 
 /** Initialize the opt-in Avro field-metadata projection in a browser. */

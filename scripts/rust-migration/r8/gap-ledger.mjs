@@ -310,6 +310,43 @@ accept('src/adapters/arrow/capture.ts', [
   'bindings/core/wasm/tests/arrow-ipc-current-source.chromium.mjs',
   'python/tests/test_rust_arrow_ipc.py',
 ]);
+accept('src/adapters/protobuf/descriptor.ts', [
+  ['readDescriptorSet', 'protobuf_descriptor::read_descriptor_set'],
+  ['writeDescriptorSet', 'protobuf_descriptor::write_descriptor_set'],
+], 'umf_core', [
+  'crates/umf-core/src/protobuf_descriptor.rs',
+  'crates/umf-core-wire/src/protobuf_document.rs',
+  'bindings/core/node/src/protobuf_document.rs',
+  'bindings/core/wasm/src/protobuf_document.rs',
+], [
+  'docs/helix/02-design/contracts/CONTRACT-003-protobuf.md',
+  'docs/helix/04-build/evidence/rust-migration/r5-protobuf-descriptor-codec/README.md',
+  'docs/helix/04-build/evidence/rust-migration/r8-protobuf-descriptor-document/README.md',
+], [
+  'crates/umf-core-wire/tests/protobuf_document_wire.rs',
+  'tests/rust-core/protobuf-document-bindings.test.mjs',
+  'tests/rust-core/protobuf-document-browser.mjs',
+]);
+accept('src/adapters/protobuf/index.ts', [
+  ['importProtobufDescriptorSet', 'protobuf_document::import_descriptor_set'],
+  ['getProtobufDescriptorSet', 'protobuf_document::get_descriptor_set'],
+  ['exportProtobufDescriptorSet', 'protobuf_document::export_descriptor_set'],
+  ['inspectProtobuf', 'protobuf_document::inspect'],
+  ['exportProtobufBundle', 'protobuf_document::export_bundle'],
+], 'umf_core', [
+  'crates/umf-core/src/protobuf_document.rs',
+  'crates/umf-core-wire/src/protobuf_document.rs',
+  'bindings/core/node/src/protobuf_document.rs',
+  'bindings/core/wasm/src/protobuf_document.rs',
+], [
+  'docs/helix/02-design/contracts/CONTRACT-003-protobuf.md',
+  'docs/helix/04-build/evidence/rust-migration/r5-protobuf-document/README.md',
+  'docs/helix/04-build/evidence/rust-migration/r8-protobuf-descriptor-document/README.md',
+], [
+  'crates/umf-core-wire/tests/protobuf_document_wire.rs',
+  'tests/rust-core/protobuf-document-bindings.test.mjs',
+  'tests/rust-core/protobuf-document-browser.mjs',
+]);
 accept('src/adapters/arrow/index.ts', [
   ['importArrowSchema', 'import_arrow_schema'],
   ['inspectArrow', 'inspect_arrow'],
@@ -792,6 +829,72 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
   ]);
   const domainPackProfileOwner = domainPackProfileOwnerByExport.get(exportName);
   const closure = paths => [...new Set(paths)].sort().map(file => ({ path: file, sha256: digest(read(file)) }));
+  if (arrowIpcExports.has(exportName)
+      && isExactArrowIpcV4RootSelection({ routeId, exportName, source, declaration })) {
+    const operation = arrowIpcExports.get(exportName);
+    const node = !browser;
+    return {
+      status: 'source-selected-current-route-unqualified',
+      rustOwner: `umf_core::arrow_ipc_capture::${operation.rust}`,
+      wireOperation: operation.wire,
+      bindingRoute: node
+        ? 'V4 Node root -> Arrow IPC host adapter -> Node-API executeArrowIpcWire -> umf-core-wire -> Rust core'
+        : 'V4 browser root -> Arrow IPC host adapter -> WASM executeArrowIpcWire -> umf-core-wire -> Rust core',
+      sourceClosure: closure([
+        defaultEntry, 'src/adapters/arrow/rust-ipc-default.ts',
+        node ? 'bindings/core/node/index.js' : 'bindings/core/wasm/index.js',
+        node ? 'bindings/core/node/src/lib.rs' : 'bindings/core/wasm/src/lib.rs',
+        node ? 'bindings/core/node/src/arrow-ipc.js' : 'bindings/core/wasm/src/arrow-ipc.js',
+        'crates/umf-core/src/arrow_ipc_capture.rs', 'crates/umf-core-wire/src/lib.rs',
+        'crates/umf-core-wire/tests/r5_arrow_ipc_capture_wire.rs',
+        'docs/helix/02-design/contracts/CONTRACT-016-arrow.md',
+        'docs/helix/04-build/evidence/rust-migration/r5-arrow-ipc-capture-predecessor-20261027/README.md',
+        'docs/helix/04-build/evidence/rust-migration/r5-arrow-ipc-capture-bindings-current-source-20261027/README.md',
+        'docs/helix/04-build/evidence/rust-migration/r8-arrow-ipc-host-boundary-20261028/README.md',
+        'docs/helix/04-build/evidence/rust-migration/r8-arrow-ipc-host-boundary-20261028/typescript-arrow-ipc-host-boundary.json.gz',
+        'docs/helix/04-build/evidence/rust-migration/r8-arrow-ipc-v4-default-20261028/README.md',
+        'tests/rust-core/arrow-ipc-v4-default.test.mjs',
+        'scripts/rust-migration/r8/arrow-ipc-v4-chromium-smoke.mjs',
+        'scripts/rust-migration/r8/freeze-arrow-ipc-host-boundary.mjs',
+      ]),
+      qualificationStatus: 'Both V4 roots select the Rust IPC capture operations and preserve the explicit TypeScript reference route. Current-source Node and real Chromium behavior checks pass; no installed current-source package receipt exists, so bindingRouteStatus remains unproven and all default-route retirements remain open.',
+    };
+  }
+  if (protobufDescriptorExports.has(exportName)
+      && isExactProtobufDescriptorV4RootSelection({ routeId, exportName, source, declaration })) {
+    const operation = protobufDescriptorExports.get(exportName);
+    const node = !browser;
+    return {
+      status: 'source-selected-current-route-unqualified',
+      rustOwner: operation.rust,
+      wireOperation: operation.wire,
+      bindingRoute: node
+        ? 'V4 Node root -> Protobuf Rust facade -> Node-API binary/document packet -> Rust core-wire'
+        : 'V4 browser root -> Protobuf Rust facade -> WASM binary/document packet -> Rust core-wire',
+      sourceClosure: closure([
+        defaultEntry, 'src/adapters/protobuf/rust-default.ts',
+        node ? 'bindings/core/node/index.js' : 'bindings/core/wasm/index.js',
+        node ? 'bindings/core/node/src/lib.rs' : 'bindings/core/wasm/src/lib.rs',
+        node ? 'bindings/core/node/src/protobuf_document.rs' : 'bindings/core/wasm/src/protobuf_document.rs',
+        'crates/umf-core/src/protobuf_descriptor.rs', 'crates/umf-core/src/protobuf_document.rs',
+        'crates/umf-core-wire/src/protobuf_document.rs',
+        'crates/umf-core-wire/tests/protobuf_document_wire.rs',
+        'docs/helix/02-design/contracts/CONTRACT-003-protobuf.md',
+        'docs/helix/04-build/evidence/rust-migration/r5-protobuf-descriptor-codec/README.md',
+        'docs/helix/04-build/evidence/rust-migration/r5-protobuf-document/README.md',
+        'docs/helix/04-build/evidence/rust-migration/r8-protobuf-descriptor-predecessor/README.md',
+        'docs/helix/04-build/evidence/rust-migration/r8-protobuf-descriptor-predecessor/predecessor.json',
+        'docs/helix/04-build/evidence/rust-migration/r8-protobuf-descriptor-document/README.md',
+        'tests/rust-core/protobuf-document-bindings.test.mjs',
+        'tests/rust-core/protobuf-document-browser.mjs',
+        'tests/rust-core/protobuf-v4-default.test.mjs',
+        'tests/rust-core/protobuf-v4-browser.test.mjs',
+        'scripts/rust-migration/r8/protobuf-descriptor-document-browser-probe.mjs',
+        'scripts/rust-migration/r8/protobuf-descriptor-document-replay.mjs',
+      ]),
+      qualificationStatus: 'Both V4 roots select all seven bounded Rust descriptor/document operations and preserve the explicit TypeScript reference route. The current wrapper maps native errors to the public UmfError class and focused Node/Bun plus real Chromium candidate checks cover the operations; no installed current-source package receipt exists, broader raw-host parity remains open, bindingRouteStatus remains unproven, and retirements remain open.',
+    };
+  }
   if (arrowSchemaExports.has(exportName)
       && isExactArrowSchemaV4RootSelection({ routeId, exportName, source, declaration })) {
     const mapping = accepted.get(`src/adapters/arrow/index.ts#${exportName}`);
@@ -1424,7 +1527,11 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
         : ['scripts/rust-migration/r5/core-inspectors-default-parity.ts', 'scripts/rust-migration/r5/core-inspectors-default-browser.mjs']),
     ];
     return {
-      status: ['validateCsvBooleanLexical', 'verifyCsvBooleanLexical', 'inspectCoreScalarType', 'inspectCoreRecordMembers', 'inspectCoreReferenceLinks'].includes(exportName) ? 'source-selected-installed-private-current-cohort' : 'source-selected-only',
+      status: qualifiedRouteOperations?.has(exportName)
+        ? 'source-selected-installed-private-current-cohort'
+        : ['validateCsvBooleanLexical', 'verifyCsvBooleanLexical', 'inspectCoreScalarType', 'inspectCoreRecordMembers', 'inspectCoreReferenceLinks'].includes(exportName)
+          ? 'source-selected-installed-private-source-pinned'
+          : 'source-selected-only',
       supportProfile: selection.profile,
       rustOwner: selection.rustOwner,
       wireOperation: selection.wireOperation,
@@ -1432,9 +1539,11 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
       bindingRoute: browser ? 'default browser v4 entrypoint -> WASM wrapper -> Rust wire dispatcher' : 'default Node v4 entrypoint -> Node-API wrapper -> Rust wire dispatcher',
       sourceClosure: closure(routeClosure),
       evidenceClosure: closure(selection.evidencePaths),
-      qualificationStatus: exportName === 'validateCsvBooleanLexical' || exportName === 'verifyCsvBooleanLexical'
-        ? 'The current 3,431-file fixed-point private SDK archive passed 14 frozen CSV Boolean cases and an 18-case adversarial host comparison with zero mismatches in installed Node, Bun and Chromium defaults. This proves those bounded binding routes for that archive; broader host parity, full release qualification and declaration retirement remain open.'
-        : 'The current 3,431-file fixed-point private SDK archive passed all 26 frozen inspector cases in installed Node, Bun and Chromium defaults, with damaged-addon refusal. Selected installed Node/Bun accessor, hidden-member and symbol host errors differ from the TypeScript reference. This proves bounded binding routes, not complete host parity, full release qualification or declaration retirement.',
+      qualificationStatus: qualifiedRouteOperations?.has(exportName)
+        ? 'A validated aggregate R8 fixed-point archive receipt covers this bounded route in the supplied current source cohort; broader host parity, release qualification and declaration retirement remain open.'
+        : exportName === 'validateCsvBooleanLexical' || exportName === 'verifyCsvBooleanLexical'
+          ? 'A historical 3,431-file fixed-point private SDK archive passed 14 frozen CSV Boolean cases and an 18-case adversarial host comparison with zero mismatches in installed Node, Bun and Chromium defaults. The archive predates the current source cohort and does not prove current-source binding parity, broader host parity, release qualification or declaration retirement.'
+          : 'A historical 3,431-file fixed-point private SDK archive passed all 26 frozen inspector cases in installed Node, Bun and Chromium defaults, with damaged-addon refusal. The archive predates the current source cohort; selected installed Node/Bun accessor, hidden-member and symbol host errors also differ from the TypeScript reference. It does not prove current-source binding parity, complete host parity, release qualification or declaration retirement.',
     };
   }
   const bit128Symbols = new Map([
@@ -1698,6 +1807,64 @@ const arrowSchemaExports = new Map([
   ['proposeArrowNodeEdit', 'propose_arrow_node_edit'],
 ]);
 
+const arrowIpcExports = new Map([
+  ['captureArrowIpc', { source: 'src/adapters/arrow/capture.ts', rust: 'capture_arrow_ipc', wire: 'arrow.ipc.capture' }],
+  ['exportArrowIpcCapture', { source: 'src/adapters/arrow/capture.ts', rust: 'export_arrow_ipc_capture', wire: 'arrow.ipc.export' }],
+  ['inspectArrowIpcCapture', { source: 'src/adapters/arrow/capture.ts', rust: 'inspect_arrow_ipc_capture', wire: 'arrow.ipc.inspect' }],
+]);
+const protobufDescriptorExports = new Map([
+  ['readDescriptorSet', { source: 'src/adapters/protobuf/descriptor.ts', rust: 'umf_core::protobuf_descriptor::read_descriptor_set', wire: 'protobuf.descriptor.read' }],
+  ['writeDescriptorSet', { source: 'src/adapters/protobuf/descriptor.ts', rust: 'umf_core::protobuf_descriptor::write_descriptor_set', wire: 'protobuf.descriptor.write' }],
+  ['importProtobufDescriptorSet', { source: 'src/adapters/protobuf/index.ts', rust: 'umf_core::protobuf_document::import_descriptor_set', wire: 'protobuf.document.import' }],
+  ['getProtobufDescriptorSet', { source: 'src/adapters/protobuf/index.ts', rust: 'umf_core::protobuf_document::get_descriptor_set', wire: 'protobuf.document.get' }],
+  ['exportProtobufDescriptorSet', { source: 'src/adapters/protobuf/index.ts', rust: 'umf_core::protobuf_document::export_descriptor_set', wire: 'protobuf.document.export' }],
+  ['inspectProtobuf', { source: 'src/adapters/protobuf/index.ts', rust: 'umf_core::protobuf_document::inspect', wire: 'protobuf.document.inspect' }],
+  ['exportProtobufBundle', { source: 'src/adapters/protobuf/index.ts', rust: 'umf_core::protobuf_document::export_bundle', wire: 'protobuf.document.bundle' }],
+]);
+
+function exactV4BindingSelection({ routeId, exportName, source, declaration, names, rootText, factoryLine, bindingLine, exportLine }) {
+  const browser = routeId === 'package-root-browser';
+  const defaultEntry = browser ? 'src/index-browser-v4.ts' : 'src/index-node-v4.ts';
+  const completeExports = [...names].join(',');
+  if (!['package-root-node', 'package-root-browser'].includes(routeId)
+      || !names.has(exportName)
+      || source !== defaultEntry
+      || declaration?.packageRoute !== '.'
+      || declaration?.packageCondition !== (browser ? 'browser' : 'node')
+      || declaration?.routeMode !== 'default'
+      || declaration?.defaultRoute !== true
+      || declaration?.declarationName !== exportName
+      || declaration?.declarationKind !== 'BindingElement'
+      || declaration?.declarationShape !== 'binding-element'
+      || declaration?.initializerShape !== 'not-applicable'
+      || declaration?.sourceSha256 !== digest(read(defaultEntry))) return false;
+  const text = rootText ?? read(defaultEntry).toString('utf8');
+  return text.includes(factoryLine)
+    && (!bindingLine || text.includes(bindingLine))
+    && text.includes(exportLine.replace('{NAMES}', completeExports));
+}
+
+export function isExactArrowIpcV4RootSelection(args) {
+  const browser = args.routeId === 'package-root-browser';
+  return exactV4BindingSelection({
+    ...args,
+    names: new Set(arrowIpcExports.keys()),
+    factoryLine: `const {captureArrowIpc,exportArrowIpcCapture,inspectArrowIpcCapture}=bindArrowIpcRust(createArrowIpcEngine(${browser ? 'wasmModule' : ''})`,
+    exportLine: 'export {captureArrowIpc,exportArrowIpcCapture,inspectArrowIpcCapture};',
+  });
+}
+
+export function isExactProtobufDescriptorV4RootSelection(args) {
+  return exactV4BindingSelection({
+    ...args,
+    names: new Set(protobufDescriptorExports.keys()),
+    factoryLine: 'const protobufDescriptorDocument=createProtobufDescriptorDocumentRustDefault(',
+    bindingLine: 'const {readDescriptorSet,writeDescriptorSet,importProtobufDescriptorSet,exportProtobufDescriptorSet,getProtobufDescriptorSet,inspectProtobuf,exportProtobufBundle}=protobufDescriptorDocument;',
+    exportLine: 'export {readDescriptorSet,writeDescriptorSet,importProtobufDescriptorSet,exportProtobufDescriptorSet,getProtobufDescriptorSet,inspectProtobuf,exportProtobufBundle};',
+  });
+}
+
+
 export function isExactArrowSchemaV4RootSelection({
   routeId, exportName, source, declaration = null,
   packageRoute = declaration?.packageRoute,
@@ -1742,6 +1909,23 @@ export function isExactArrowSchemaV4RootSelection({
 }
 
 export function operationMapping(row) {
+  if (arrowIpcExports.has(row.exportName)
+      && ['package-root-node', 'package-root-browser'].includes(row.routeId)) {
+    if (!isExactArrowIpcV4RootSelection({
+      routeId: row.routeId, exportName: row.exportName, source: row.source, declaration: row,
+    })) return null;
+    return accepted.get(`src/adapters/arrow/capture.ts#${row.exportName}`) ?? null;
+  }
+  if (arrowIpcExports.has(row.exportName) && row.routeId === 'package-reference') return null;
+  if (protobufDescriptorExports.has(row.exportName)
+      && ['package-root-node', 'package-root-browser'].includes(row.routeId)) {
+    if (!isExactProtobufDescriptorV4RootSelection({
+      routeId: row.routeId, exportName: row.exportName, source: row.source, declaration: row,
+    })) return null;
+    const mapping = protobufDescriptorExports.get(row.exportName);
+    return accepted.get(`${mapping.source}#${row.exportName}`) ?? null;
+  }
+  if (protobufDescriptorExports.has(row.exportName) && row.routeId === 'package-reference') return null;
   if (arrowSchemaExports.has(row.exportName)
       && ['package-root-node', 'package-root-browser'].includes(row.routeId)) {
     if (!isExactArrowSchemaV4RootSelection({
@@ -2840,7 +3024,8 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
         // FunctionDeclarations to exact V4 binding elements. Their names are
         // compared above; operationMapping separately proves the root source,
         // condition, declaration shape, and Rust binding for each one.
-        if (rootOnlyNames.includes(row.exportName) || arrowSchemaExports.has(row.exportName)) continue;
+        if (rootOnlyNames.includes(row.exportName) || arrowSchemaExports.has(row.exportName)
+            || arrowIpcExports.has(row.exportName) || protobufDescriptorExports.has(row.exportName)) continue;
         const signature = logicalDeclarationSignature(row);
         counts.set(signature, (counts.get(signature) ?? 0) + 1);
       }
@@ -2904,6 +3089,8 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
     const selectedBit128 = mapping && ['package-root-node', 'package-root-browser'].includes(row.routeId)
       && ['parseBits128', 'parseUuid', 'bits128FromBytes', 'bits128ToBytes', 'uuidFromBits128', 'uuidToBits128', 'compareBits128', 'bits128ToWords', 'bits128FromWords', 'bits128ToInteger', 'bits128FromInteger'].includes(row.exportName);
     const selectedSchemaGraph = selectedBySource && ['generateDomainPackSchema', 'generateDatasetSourceSchema', 'generateArtifactCollectionSchema', 'generateDomainPackLoaderSchema', 'generateLoaderInventorySchema'].includes(row.exportName);
+    const selectedArrowIpc = selectedBySource && arrowIpcExports.has(row.exportName);
+    const selectedProtobufDescriptor = selectedBySource && protobufDescriptorExports.has(row.exportName);
     const selectedDomainPackLoaderInspection = sourceSelection !== null
       && row.exportName === 'inspectDomainPackLoader';
     const selectedDomainPackProfileInspection = sourceSelection !== null
@@ -2938,6 +3125,8 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
           : selectedDomainPackLoaderInspection ? `Rust domain-pack loader inspector selected by exact V4 variable binding and thin wrapper; ${sourceSelection?.qualificationStatus ?? 'private route evidence status is unavailable'}; retirement remains open`
           : selectedDomainPackProfileInspection ? `Rust domain-pack profile operation selected by exact V4 binding; ${sourceSelection?.qualificationStatus ?? 'private route evidence status is unavailable'}; retirement remains open`
           : ['validateCsvBooleanLexical', 'verifyCsvBooleanLexical'].includes(row.exportName) && selectedBySource ? 'Rust CSV Boolean lexical operation selected by source route; current private installed archive passed 14 frozen and 18 adversarial cases; retirement open'
+          : selectedArrowIpc ? 'Rust Arrow IPC capture operation selected by V4 source route; source-level Node and Chromium checks pass; installed current-source route receipt is unproven and retirement remains open'
+          : selectedProtobufDescriptor ? 'Rust Protobuf descriptor/document operation selected by V4 source route; bounded candidate checks pass; installed current-source route receipt is unproven and retirement remains open'
           : selectedSchemaGraph ? `Rust schema graph provider selected by exact TypeScript predecessor and direct V4 root declaration; ${sourceSelection?.qualificationStatus ?? 'private route evidence status is unavailable'}; reference and retirement remain open`
           : inert ? 'TypeScript package-root data export remains default' : 'inherited TypeScript implementation remains default',
       },
@@ -2965,6 +3154,8 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
           : selectedDomainPackLoaderInspection ? `Rust domain-pack loader inspector selected by exact V4 variable binding and thin wrapper; ${sourceSelection?.qualificationStatus ?? 'private route evidence status is unavailable'}; retirement remains open`
           : selectedDomainPackProfileInspection ? `Rust domain-pack profile operation selected by exact V4 binding; ${sourceSelection?.qualificationStatus ?? 'private route evidence status is unavailable'}; retirement remains open`
           : ['validateCsvBooleanLexical', 'verifyCsvBooleanLexical'].includes(row.exportName) && selectedBySource ? 'Rust CSV Boolean lexical operation selected by source route; current private installed archive passed 14 frozen and 18 adversarial cases; retirement open'
+          : selectedArrowIpc ? 'Rust Arrow IPC capture operation selected by V4 source route; source-level Node and Chromium checks pass; installed current-source route receipt is unproven and retirement remains open'
+          : selectedProtobufDescriptor ? 'Rust Protobuf descriptor/document operation selected by V4 source route; bounded candidate checks pass; installed current-source route receipt is unproven and retirement remains open'
           : selectedSchemaGraph ? `Rust schema graph provider selected by exact TypeScript predecessor and direct V4 root declaration; ${sourceSelection?.qualificationStatus ?? 'private route evidence status is unavailable'}; reference and retirement remain open`
           : inert ? 'TypeScript package-root data export remains default' : 'inherited TypeScript implementation remains default',
       },
@@ -3018,6 +3209,10 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
             ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust domain-pack profile operation selected by an exact V4 root binding; ${sourceSelection?.qualificationStatus ?? 'private route evidence status is unavailable'}; the retirement gap remains open`
           : ['validateCsvBooleanLexical', 'verifyCsvBooleanLexical'].includes(row.exportName) && selectedBySource
             ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust CSV Boolean lexical operation selected by source route; current private archive passed 14 frozen and 18 adversarial installed cases; broader host parity and retirement remain open`
+          : selectedArrowIpc
+            ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Arrow IPC operation is source-selected through Rust wire; installed current-source binding route is unproven and the logical retirement gap remains open`
+          : selectedProtobufDescriptor
+            ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Protobuf descriptor/document operation is source-selected through Rust wire; installed current-source binding route is unproven and the logical retirement gap remains open`
           : selectedBit128
             ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust Bit128/UUID operation source-selected only; installed Node/Bun/Chromium qualification pending; zero declarations retired`
           : selectedJavascriptNumeric

@@ -488,7 +488,17 @@ fn read_varint_raw(bytes: &[u8], at: &mut usize) -> Result<(u64, Vec<u8>), Engin
 fn read_tag(bytes: &[u8], at: usize) -> Result<(u64, usize), EngineError> {
     let (tag, used) = read_varint(bytes, at).map_err(|error| {
         if error.message.to_utf8().ok().as_deref() == Some("Malformed varint") {
-            binary_error("Error: illegal tag: varint overflows uint32")
+            // protobuf-es distinguishes a ten-byte uint32 overflow from a
+            // continuation that still has more input after the tenth byte.
+            // Its latter diagnostic is the frozen TypeScript predecessor's
+            // `Error: invalid varint`.
+            if bytes.len().saturating_sub(at) > 10
+                && bytes[at..at + 10].iter().all(|byte| byte & 0x80 != 0)
+            {
+                binary_error("Error: invalid varint")
+            } else {
+                binary_error("Error: illegal tag: varint overflows uint32")
+            }
         } else {
             error
         }
@@ -1100,12 +1110,13 @@ fn get<'a>(object: &'a [(Utf16, Value)], key: &str) -> Option<&'a Value> {
         .map(|(_, v)| v)
 }
 fn reject_extra(object: &[(Utf16, Value)], allowed: &[&str]) -> Result<(), EngineError> {
-    if object.iter().any(|(key, _)| {
+    if let Some((key, _)) = object.iter().find(|(key, _)| {
         key.to_utf8()
             .map_or(true, |s| !allowed.contains(&s.as_str()))
     }) {
-        Err(err(
+        Err(EngineError::new(
             "PROTOBUF_REPRESENTATION",
+            key.clone(),
             "Unknown representation field cannot be discarded",
         ))
     } else {

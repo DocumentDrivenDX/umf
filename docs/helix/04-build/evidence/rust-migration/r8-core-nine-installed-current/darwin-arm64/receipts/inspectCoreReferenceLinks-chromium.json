@@ -1,0 +1,211 @@
+{
+  "format": "umf.r8.default-route-retirement-host-receipt/2",
+  "status": "pass",
+  "runtime": "chromium",
+  "hostVersion": "153.0.8010.12",
+  "cohortId": "darwin-arm64",
+  "hostPlatform": {
+    "os": "darwin",
+    "arch": "arm64"
+  },
+  "archiveSha256": "29a9e6c422f10c9fad2b8057540cc3d3d5014b2e9af9ae19459c83db07903f17",
+  "sourceClosureSha256": "cd4253c3cea2ec39a5760975595d2d5062b59255c77cb78abd8b67085be91dff",
+  "packetSha256": "b53c9d0c228fe700bec8c5ac9d74196217590affb00621b9d733aa445b198181",
+  "defaultRoute": {
+    "routeId": "package-root-browser",
+    "entryMember": "dist/umf-browser.js",
+    "entrySha256": "b841bb0e4fafd32052d414dba794f515ab6af4738b503c3f4d82ce5c3c16b77f",
+    "artifactMembers": [
+      {
+        "path": "dist/umf_core_wasm_bg.wasm",
+        "sha256": "232d371d251b5134d9d328b19ec3fefa69917739a9b397463b631e2ca37f659e"
+      }
+    ]
+  },
+  "referenceRoute": {
+    "routeId": "package-reference",
+    "entryMember": "dist/umf.js",
+    "entrySha256": "dea33ccaadebb38e38f56a7b4f06c8cedac19d669fece621a3e316df26bdf6c9",
+    "artifactMembers": []
+  },
+  "cases": [
+    {
+      "id": "inspectCoreReferenceLinks.known",
+      "defaultOutcome": {
+        "status": "returned",
+        "value": {
+          "identity": {
+            "element": "field",
+            "module": "m"
+          },
+          "meaning": {
+            "links": [
+              {
+                "index": 0,
+                "path": "/modules/0/elements/1/references/0",
+                "reference": {
+                  "element": "target",
+                  "module": "m",
+                  "role": "record-type"
+                },
+                "target": {
+                  "identity": {
+                    "element": "target",
+                    "module": "m"
+                  },
+                  "kind": "record",
+                  "path": "/modules/0/elements/2"
+                },
+                "typeAssertion": "unverified",
+                "uninterpretedPaths": []
+              }
+            ],
+            "state": "present"
+          },
+          "operation": "inspect-core-reference-links",
+          "path": "/modules/0/elements/1/references",
+          "provenance": "unverified",
+          "source": {
+            "id": "reference-links-fixture",
+            "modules": [
+              {
+                "elements": [
+                  {
+                    "extensions": {},
+                    "id": "owner",
+                    "kind": "record",
+                    "members": []
+                  },
+                  {
+                    "extensions": {},
+                    "id": "field",
+                    "kind": "field",
+                    "references": [
+                      {
+                        "element": "target",
+                        "module": "m",
+                        "role": "record-type"
+                      }
+                    ],
+                    "scalarType": "string"
+                  },
+                  {
+                    "extensions": {},
+                    "id": "target",
+                    "kind": "record",
+                    "members": []
+                  }
+                ],
+                "id": "m",
+                "namespace": "m"
+              }
+            ],
+            "umf": "0.10.0",
+            "vocabularies": {}
+          },
+          "version": "0.3.0"
+        }
+      },
+      "defaultTrace": [],
+      "defaultRustCalls": 1,
+      "referenceOutcome": {
+        "status": "returned",
+        "value": {
+          "identity": {
+            "element": "field",
+            "module": "m"
+          },
+          "meaning": {
+            "links": [
+              {
+                "index": 0,
+                "path": "/modules/0/elements/1/references/0",
+                "reference": {
+                  "element": "target",
+                  "module": "m",
+                  "role": "record-type"
+                },
+                "target": {
+                  "identity": {
+                    "element": "target",
+                    "module": "m"
+                  },
+                  "kind": "record",
+                  "path": "/modules/0/elements/2"
+                },
+                "typeAssertion": "unverified",
+                "uninterpretedPaths": []
+              }
+            ],
+            "state": "present"
+          },
+          "operation": "inspect-core-reference-links",
+          "path": "/modules/0/elements/1/references",
+          "provenance": "unverified",
+          "source": {
+            "id": "reference-links-fixture",
+            "modules": [
+              {
+                "elements": [
+                  {
+                    "extensions": {},
+                    "id": "owner",
+                    "kind": "record",
+                    "members": []
+                  },
+                  {
+                    "extensions": {},
+                    "id": "field",
+                    "kind": "field",
+                    "references": [
+                      {
+                        "element": "target",
+                        "module": "m",
+                        "role": "record-type"
+                      }
+                    ],
+                    "scalarType": "string"
+                  },
+                  {
+                    "extensions": {},
+                    "id": "target",
+                    "kind": "record",
+                    "members": []
+                  }
+                ],
+                "id": "m",
+                "namespace": "m"
+              }
+            ],
+            "umf": "0.10.0",
+            "vocabularies": {}
+          },
+          "version": "0.3.0"
+        }
+      },
+      "referenceTrace": [],
+      "referenceRustCalls": 0
+    },
+    {
+      "id": "inspectCoreReferenceLinks.accessor_source",
+      "defaultOutcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "NON_JSON",
+        "path": "/probe",
+        "message": "Hidden fields and accessors cannot be serialized faithfully"
+      },
+      "defaultTrace": [],
+      "defaultRustCalls": 0,
+      "referenceOutcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "NON_JSON",
+        "path": "/probe",
+        "message": "Hidden fields and accessors cannot be serialized faithfully"
+      },
+      "referenceTrace": [],
+      "referenceRustCalls": 0
+    }
+  ]
+}

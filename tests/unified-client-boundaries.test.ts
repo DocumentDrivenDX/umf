@@ -100,6 +100,25 @@ test('the Core Semantic Types Rust facade grants exact type-only predecessor imp
 	expect(deniedTypes).toContain('rust-core-semantic-types-default.ts: value import from type-only module ../model/types');
 });
 
+test('the Core Bit128 Field facade allows only its audited error adapter import', () => {
+	const allowed = checkAccessSource(
+		'rust-core-bit128-field-default.ts',
+		"import {UmfError} from '../model/errors';\n",
+	);
+	const deniedImport = checkAccessSource(
+		'rust-core-bit128-field-default.ts',
+		"import {readFile} from 'node:fs';\n",
+	);
+	const deniedHook = checkAccessSource(
+		'rust-core-bit128-field-default.ts',
+		'const response = fetch("https://example.test");\n',
+	);
+
+	expect(allowed).toEqual([]);
+	expect(deniedImport).toContain('rust-core-bit128-field-default.ts: unapproved import node:fs');
+	expect(deniedHook).toContain('rust-core-bit128-field-default.ts: host or executable hook fetch');
+});
+
 test('the Core Semantic Types Rust facade preserves predecessor public signatures', () => {
 	type Equal<A, B> = (<T>() => T extends A ? 1 : 2) extends (<T>() => T extends B ? 1 : 2) ? true : false;
 	type Assert<T extends true> = T;

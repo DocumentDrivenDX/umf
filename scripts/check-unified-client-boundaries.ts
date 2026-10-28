@@ -17,6 +17,7 @@ const allowedImports:Record<string,readonly string[]>={
  'rust-candidate.ts':[],
  'rust-cardinality-default.ts':['../model/cardinality','../model/types','../model/errors'],
  'rust-core-inspectors-default.ts':['../model/scalar-type','../model/record-members','../model/reference-links','../model/types','../model/errors'],
+ 'rust-core-bit128-field-default.ts':['../model/errors'],
  'rust-core-semantic-types-default.ts':['../model/errors','../model/semantic-types','../model/types'],
  'rust-core-evolution-candidate.ts':['../model/types','../model/evolution','../model/errors'],
  'rust-csv-boolean-default.ts':['../model/csv-boolean-lexical','../model/types','../model/errors'],

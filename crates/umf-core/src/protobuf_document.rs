@@ -72,10 +72,7 @@ pub fn import_descriptor_set(
     ]);
     let core = core_validation(&document, context)?;
     if !core.valid {
-        return Err(error(
-            "PROTOBUF_DOCUMENT",
-            "Imported descriptor document is not a valid UMF document",
-        ));
+        return Err(invalid_document_error(core.diagnostics)?);
     }
     let result = protobuf_inspect::inspect_protobuf_document(&document, context)?;
     if !result.valid {
@@ -205,10 +202,7 @@ fn payload<'a>(
 ) -> Result<(&'a Value, Utf16), EngineError> {
     let core = core_validation(document, context)?;
     if !core.valid {
-        return Err(error(
-            "PROTOBUF_DOCUMENT",
-            "Document is not a valid UMF document",
-        ));
+        return Err(invalid_document_error(core.diagnostics)?);
     }
     let root = object(document)
         .ok_or_else(|| error("PROTOBUF_DOCUMENT", "Expected UMF document object"))?;
@@ -337,4 +331,30 @@ fn get<'a>(fields: &'a [(Utf16, Value)], key: &str) -> Option<&'a Value> {
 }
 fn error(code: &str, message: &str) -> EngineError {
     EngineError::new(code, Utf16::default(), message)
+}
+fn invalid_document_error(diagnostics: Vec<Diagnostic>) -> Result<EngineError, EngineError> {
+    let value = Value::Array(
+        diagnostics
+            .into_iter()
+            .map(|item| {
+                obj(vec![
+                    ("code", Value::String(item.code)),
+                    ("path", Value::String(item.path)),
+                    ("message", Value::String(item.message)),
+                    (
+                        "severity",
+                        Value::string_utf8(if item.severity == Severity::Warning {
+                            "warning"
+                        } else {
+                            "error"
+                        }),
+                    ),
+                ])
+            })
+            .collect(),
+    );
+    let message = serialization::stringify_compact(&value)?
+        .to_utf8()
+        .map_err(|_| error("PROTOBUF_DOCUMENT", "Document diagnostics are not UTF-8"))?;
+    Ok(error("PROTOBUF_DOCUMENT", &message))
 }

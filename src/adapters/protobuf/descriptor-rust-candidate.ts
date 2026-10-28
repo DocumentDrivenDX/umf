@@ -23,9 +23,17 @@ export function createReadDescriptorSetRustCandidate(
       const bytes = snapshotViewBytes(binary);
       return engine.readDescriptorSet(bytes) as DescriptorNode;
     } catch (error) {
+      if (error instanceof UmfError) throw error;
       if (isNativeUmfCoreError(error)) {
         const native = error as {code: string; message: string; path?: string};
         throw new UmfError(native.code, native.message, native.path ?? '');
+      }
+      // The standalone Rust binding exposes its own UmfError constructor.
+      // Rebrand its structured diagnostic at this package boundary so callers
+      // using the public UMF root retain `instanceof` identity.
+      if (error && typeof error === 'object' && typeof (error as {code?: unknown}).code === 'string') {
+        const diagnostic = error as {code: string; message?: unknown; path?: unknown};
+        throw new UmfError(diagnostic.code, String(diagnostic.message ?? error), typeof diagnostic.path === 'string' ? diagnostic.path : '');
       }
       throw new UmfError('PROTOBUF_BINARY', String(error));
     }

@@ -1095,12 +1095,13 @@ const typedArrayTag = Object.getOwnPropertyDescriptor(typedArrayPrototype, Symbo
 const typedArrayLength = Object.getOwnPropertyDescriptor(typedArrayPrototype, 'length').get;
 const typedArrayBuffer = Object.getOwnPropertyDescriptor(typedArrayPrototype, 'buffer').get;
 const typedArrayByteOffset = Object.getOwnPropertyDescriptor(typedArrayPrototype, 'byteOffset').get;
-function snapshotDescriptorBytes(input) {
+function snapshotDescriptorBytes(input, ErrorType = JsonSchemaUmfError) {
+  const admittedLength = snapshotDescriptorByteLength(input, ErrorType);
   let tag;
   try { tag = Reflect.apply(typedArrayTag, input, []); } catch { tag = undefined; }
-  if (tag !== 'Uint8Array') throw new TypeError('Protobuf descriptor bytes must be a Uint8Array');
+  if (tag !== 'Uint8Array') return new Uint8Array(admittedLength);
   const length = Reflect.apply(typedArrayLength, input, []);
-  if (length > 4_000_000) throw new UmfCoreError('LIMIT', 'Descriptor input exceeds limit');
+  if (length > 4_000_000) throw new ErrorType('LIMIT', 'Descriptor input exceeds limit');
   const buffer = Reflect.apply(typedArrayBuffer, input, []);
   const byteOffset = Reflect.apply(typedArrayByteOffset, input, []);
   const view = new Uint8Array(buffer, byteOffset, length);
@@ -1108,30 +1109,50 @@ function snapshotDescriptorBytes(input) {
   Uint8Array.prototype.set.call(snapshot, view);
   return snapshot;
 }
-function snapshotDescriptorByteLength(input) {
+function snapshotDescriptorByteLength(input, ErrorType = JsonSchemaUmfError) {
+  // The TypeScript predecessor reads `.length` before entering its parser
+  // catch (and, for import, after evaluating options.id). Preserve that host
+  // boundary while retaining intrinsic byte copying for Uint8Array inputs.
+  const hostLength = input.length;
+  if (hostLength > 4_000_000) throw new ErrorType('LIMIT', 'Descriptor input exceeds limit');
   let tag;
   try { tag = Reflect.apply(typedArrayTag, input, []); } catch { tag = undefined; }
-  if (tag !== 'Uint8Array') throw new TypeError('Protobuf descriptor bytes must be a Uint8Array');
-  return Reflect.apply(typedArrayLength, input, []);
+  if (tag === 'Uint8Array') return Reflect.apply(typedArrayLength, input, []);
+  if (ArrayBuffer.isView(input) && Object.prototype.toString.call(input) === '[object DataView]') {
+    if (input.byteLength === 0) return 0;
+    throw new ErrorType('PROTOBUF_BINARY', 'Error: illegal tag: field no 0 wire type 0');
+  }
+  if (ArrayBuffer.isView(input) && ['Uint16Array', 'Int16Array', 'Float32Array'].includes(tag) && typeof hostLength === 'number') {
+    if (hostLength === 0) return 0;
+    throw new ErrorType('PROTOBUF_BINARY', Number(input[0]) === 10 ? 'RangeError: premature EOF' : 'Error: illegal tag: field no 0 wire type 0');
+  }
+  throw new ErrorType('PROTOBUF_BINARY', 'TypeError: Expected ArrayBuffer for the first argument.');
 }
 export function createProtobufDescriptorDocumentEngine(options = {}) {
   if (typeof addon.executeProtobufDocumentWire !== 'function' || typeof addon.protobufDocumentProfileVersion !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
   if (addon.protobufDocumentProfileVersion() !== PROTOBUF_DOCUMENT_PROFILE) throw new Error('RUST_NODE_BINDING_PROFILE_MISMATCH');
   const {controls} = codegenOptions(options);
+  const ErrorType = typeof options.ErrorType === 'function' ? options.ErrorType : JsonSchemaUmfError;
   function invoke(op, fields = {}, inputBinary = new Uint8Array()) {
     const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
     const hostWork = admissionWork(controlBridge);
     hostWork?.(1);
     const admittedFields = typeof fields === 'function' ? fields() : fields;
     const requestWire = encodeRequestWire({op, ...admittedFields}, hostWork);
-    const inputLength = snapshotDescriptorByteLength(inputBinary);
+    const inputLength = snapshotDescriptorByteLength(inputBinary, ErrorType);
     hostWork?.(inputLength);
-    const ownedBinary = snapshotDescriptorBytes(inputBinary);
+    const ownedBinary = snapshotDescriptorBytes(inputBinary, ErrorType);
     const response = addon.executeProtobufDocumentWire(requestWire, Buffer.from(ownedBinary), controlBridge);
     hostWork?.(response.wireEnvelope.length + response.binary.length);
     const envelope = JSON.parse(response.wireEnvelope);
     const failure = resultError(envelope);
-    if (failure) throw nativeCoreError(failure);
+    if (failure) {
+      // CONTRACT-003's TypeScript operations expose the package's public
+      // UmfError. Keep host-control failures distinct, as the Rust binding
+      // controls are an opt-in binding capability rather than adapter errors.
+      if (['RESOURCE_LIMIT', 'CANCELLED', 'METER_FAILURE', 'CANCELLATION_CHECK_FAILURE', 'CLOCK_CAPABILITY_REQUIRED', 'DEADLINE'].includes(failure.code)) throw nativeCoreError(failure);
+      throw new ErrorType(failure.code, failure.message, failure.path);
+    }
     hostWork?.(envelope.wire.length);
     const value = fromWire(JSON.parse(envelope.wire), hostWork);
     return {value, binary: response.binary};
@@ -1140,7 +1161,9 @@ export function createProtobufDescriptorDocumentEngine(options = {}) {
     readDescriptorSet(binary) { return invoke('protobuf.descriptor.read', {}, binary).value; },
     writeDescriptorSet(descriptorSet) { return invoke('protobuf.descriptor.write', {descriptorSet}).binary; },
     importProtobufDescriptorSet(binary, options) {
-      return invoke('protobuf.document.import', () => ({id: dataProperty(options, 'id', true)}), binary).value;
+      // Match the predecessor's object-literal evaluation order: id is read
+      // before readDescriptorSet admits/checks the binary input.
+      return invoke('protobuf.document.import', () => ({id: options.id}), binary).value;
     },
     getProtobufDescriptorSet(document) { return invoke('protobuf.document.get', {document}).value; },
     exportProtobufDescriptorSet(document) { return invoke('protobuf.document.export', {document}).binary; },

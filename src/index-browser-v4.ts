@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createPythonClientRustCandidateV4} from './browser-v4';
 import {initializePythonClientRustDefaultV4} from './access/rust-default-v4';
-import {createCoreModelRootKeyTupleEngine,initializeCoreRecordValuesHostInputWasm,createDefaultSemanticTypeRegistry,createCoreCardinalityHostInputEngine,createCoreRecordTypeEngine,createSecurityLogicEngine,createJavascriptNumericEngine,createArrowSchemaEngine,initializeProtobufDescriptorDocumentWasm,initializeBit128Wasm,initializeTemporalWasm,createAccessTemporalEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,ACCESS_TEMPORAL_PROFILE as ACCESS_TEMPORAL_PROFILE_RUST} from '../bindings/core/wasm/index.js';
+import {createCoreModelRootKeyTupleEngine,initializeCoreRecordValuesHostInputWasm,createDefaultSemanticTypeRegistry,createCoreCardinalityHostInputEngine,createCoreRecordTypeEngine,createSecurityLogicEngine,createJavascriptNumericEngine,createArrowSchemaEngine,createArrowIpcEngine,UmfError as BindingUmfError,initializeProtobufDescriptorDocumentWasm,initializeBit128Wasm,initializeTemporalWasm,createAccessTemporalEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,ACCESS_TEMPORAL_PROFILE as ACCESS_TEMPORAL_PROFILE_RUST} from '../bindings/core/wasm/index.js';
 import {CORE_MODEL_RESOURCES} from './access/core-model-resources';
 import {bindCoreCardinalityRust} from './access/rust-cardinality-default';
 import {bindCoreDatasetValuesCompactRust} from './access/rust-dataset-values-compact-default';
@@ -33,14 +33,17 @@ import {createDomainPackLoaderInspectionOperation} from './domain-packs/loader-r
 import {createDomainPackProfileInspectionOperation} from './domain-packs/profile-rust';
 import {createSecProjectionRustOperations} from './domain-packs/sec-projection-rust';
 import {createReadDescriptorSetRustCandidate} from './adapters/protobuf/descriptor-rust-candidate';
+import {createProtobufDescriptorDocumentRustDefault} from './adapters/protobuf/rust-default';
+import type {ProtobufDescriptorDocumentRustEngine} from './adapters/protobuf/rust-default';
 import {bindArrowSchemaRust} from './adapters/arrow/rust-default';
+import {bindArrowIpcRust} from './adapters/arrow/rust-ipc-default';
 import type {generateDatasetSourceSchema as DatasetSourceSchemaReference} from './domain-packs/source-schema';
 import type {generateDomainPackSchema as DomainPackSchemaReference} from './domain-packs/schema';
 import type {generateArtifactCollectionSchema as ArtifactCollectionSchemaReference} from './domain-packs/artifacts';
 import type {generateDomainPackLoaderSchema as DomainPackLoaderSchemaReference} from './domain-packs/loader';
 import type {generateLoaderInventorySchema as LoaderInventorySchemaReference} from './domain-packs/loader-inventory';
 import type {AccessTemporal,AccessTemporalKind} from '../bindings/core/wasm/index.js';
-import {CURRENT_CORE_VERSION,SCALAR_TYPES} from './model/types';
+import {CURRENT_CORE_VERSION,SCALAR_TYPES,UmfError} from './model/types';
 
 // Module import resolves only after the browser WASM engine is ready. The
 // function exported below remains synchronous and never falls back to TypeScript.
@@ -82,7 +85,12 @@ const model=createCoreModelRootKeyTupleEngine(wasmModule,CORE_MODEL_RESOURCES);
 const scalarTypesForVersion=bindScalarTypesForVersionRust(model as typeof model & {scalarTypesForVersion(version:string):readonly string[]},CURRENT_CORE_VERSION,SCALAR_TYPES);
 const coreKeyTuple=bindCoreKeyTupleDefault(model,isNativeUmfCoreError);
 const {readCoreKeyTupleBytes,prepareCoreKeyTuples}=coreKeyTuple;
-const protobufDescriptorEngine=await initializeProtobufDescriptorDocumentWasm(async()=>wasmModule);
+const protobufDescriptorEngine=await initializeProtobufDescriptorDocumentWasm(async()=>wasmModule,globalThis,{ErrorType:UmfError} as never) as unknown as ProtobufDescriptorDocumentRustEngine;
+const protobufDescriptorDocument=createProtobufDescriptorDocumentRustDefault(options=>{
+  if(options.ErrorType!==UmfError)throw new TypeError('Public Protobuf error constructor mismatch');
+  return protobufDescriptorEngine;
+});
+const {readDescriptorSet,writeDescriptorSet,importProtobufDescriptorSet,exportProtobufDescriptorSet,getProtobufDescriptorSet,inspectProtobuf,exportProtobufBundle}=protobufDescriptorDocument;
 const readDescriptorSetRustCandidate=createReadDescriptorSetRustCandidate(protobufDescriptorEngine,isNativeUmfCoreError);
 const {inspectCoreSemanticTypes,getCoreSemanticTypes,declareCoreSemanticTypes,verifyCoreSemanticTypeDeclaration}=bindCoreSemanticTypesRust(model,isNativeUmfCoreError);
 const recordValuesHost=await initializeCoreRecordValuesHostInputWasm(CORE_MODEL_RESOURCES,async()=>wasmModule);
@@ -118,8 +126,10 @@ const {projectRelationshipToExtra,verifyRelationshipExtra,recoverRelationshipExt
 const {projectRelationshipsToPostgresql,verifyRelationshipPostgresqlProjection,recoverRelationshipPostgresqlIdeal,recoverRelationshipPostgresqlNative}=createRelationshipPostgresql(relationshipConsumers);
 const {parseBits128,parseUuid,bits128FromBytes,bits128ToBytes,uuidFromBits128,uuidToBits128,compareBits128,bits128ToWords,bits128FromWords,bits128ToInteger,bits128FromInteger}=bindBit128Rust(await initializeBit128Wasm(),isBit128EngineError);
 const {importArrowSchema,inspectArrow,exportArrowSchema,getArrowNode,proposeArrowNodeEdit}=bindArrowSchemaRust(createArrowSchemaEngine(wasmModule),isNativeUmfCoreError);
+const {captureArrowIpc,exportArrowIpcCapture,inspectArrowIpcCapture}=bindArrowIpcRust(createArrowIpcEngine(wasmModule),isNativeUmfCoreError,error=>error instanceof BindingUmfError);
 export * from './index-v4-default';
 export {importArrowSchema,inspectArrow,exportArrowSchema,getArrowNode,proposeArrowNodeEdit};
+export {captureArrowIpc,exportArrowIpcCapture,inspectArrowIpcCapture};
 export {scalarTypesForVersion};
 export {readCoreKeyTupleBytes,prepareCoreKeyTuples};
 export {inspectDomainPackLoaderOperation as inspectDomainPackLoader,inspectDomainPack,requireDomainPackProfile};
@@ -129,4 +139,5 @@ export {generateDomainPackLoaderSchema,generateLoaderInventorySchema};
 export {projectSecSubmissions,projectSecCompanyFacts};
 export {projectSecSubmissions as projectSecSubmissionsRustCandidate,projectSecCompanyFacts as projectSecCompanyFactsRustCandidate};
 export {readDescriptorSetRustCandidate};
+export {readDescriptorSet,writeDescriptorSet,importProtobufDescriptorSet,exportProtobufDescriptorSet,getProtobufDescriptorSet,inspectProtobuf,exportProtobufBundle};
 export {projectRelationshipToAvro,verifyRelationshipAvroProjection,recoverRelationshipAvroIdeal,recoverRelationshipAvroNative,projectRelationshipToTableSpec,verifyRelationshipTableSpecProjection,recoverRelationshipTableSpecIdeal,recoverRelationshipTableSpecNativeSources,projectRelationshipToSqlServer,verifyRelationshipSqlServerProjection,recoverRelationshipSqlServerIdeal,recoverRelationshipSqlServerBinding,recoverRelationshipSqlServerNative,projectRelationshipToParquet,verifyRelationshipParquetProjection,recoverRelationshipParquetIdeal,recoverRelationshipParquetNative,projectRelationshipToExtra,verifyRelationshipExtra,recoverRelationshipExtraIdeal,recoverRelationshipExtraNative,projectRelationshipsToPostgresql,verifyRelationshipPostgresqlProjection,recoverRelationshipPostgresqlIdeal,recoverRelationshipPostgresqlNative};

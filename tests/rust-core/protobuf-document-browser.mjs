@@ -32,7 +32,7 @@ try {
   const page = await browser.newPage();
   await page.goto(`http://127.0.0.1:${server.address().port}/`);
   const receipt = await page.evaluate(async () => {
-    const {initializeProtobufDescriptorDocumentWasm, PROTOBUF_DOCUMENT_PROFILE} = await import('/index.js');
+    const {initializeProtobufDescriptorDocumentWasm, createProtobufDescriptorDocumentEngine, PROTOBUF_DOCUMENT_PROFILE} = await import('/index.js');
     const engine = await initializeProtobufDescriptorDocumentWasm();
     const authored = new Uint8Array(await fetch('/authored.pb').then(r => r.arrayBuffer()));
     const unknown = new Uint8Array([0x82, 0xb5, 0x18, 0x04, 0x00, 0x01, 0x02, 0xff]);
@@ -55,8 +55,26 @@ try {
     let limitCode = '';
     try { engine.readDescriptorSet(new HostileBytes(4_000_001)); } catch (error) { limitCode = error.code; }
     if (limitCode !== 'LIMIT') throw Error(`large input result ${limitCode}`);
+    const malformed = new Uint8Array(11).fill(0x80);
+    let malformedFailure;
+    try { engine.readDescriptorSet(malformed); } catch (error) { malformedFailure = error; }
+    if (malformedFailure?.name !== 'UmfError' || malformedFailure?.code !== 'PROTOBUF_BINARY' || malformedFailure?.message !== 'Error: invalid varint') throw Error(`malformed descriptor diagnostic mismatch: ${malformedFailure?.name}/${malformedFailure?.code}/${malformedFailure?.message}`);
+    const wasmModule = await import('/pkg/umf_core_wasm.js');
+    class PublicUmfError extends Error { constructor(code, message, path = '') { super(message); this.name = 'UmfError'; this.code = code; this.path = path; } }
+    const publicEngine = createProtobufDescriptorDocumentEngine(wasmModule, {ErrorType: PublicUmfError});
+    let injectedFailure;
+    try { publicEngine.readDescriptorSet(malformed); } catch (error) { injectedFailure = error; }
+    if (!(injectedFailure instanceof PublicUmfError)) throw Error('injected public UmfError constructor identity was lost');
+    let idGetterFailure;
+    const hostileOptions = {};
+    Object.defineProperty(hostileOptions, 'id', {enumerable: true, get() { throw Error('id getter observed'); }});
+    try { engine.importProtobufDescriptorSet(new Uint8Array(4_000_001), hostileOptions); } catch (error) { idGetterFailure = error; }
+    if (idGetterFailure?.message !== 'id getter observed') throw Error('import id getter did not precede byte admission');
+    let rawHostFailure;
+    try { engine.readDescriptorSet(new Uint16Array([10])); } catch (error) { rawHostFailure = error; }
+    if (rawHostFailure?.name !== 'UmfError' || rawHostFailure?.code !== 'PROTOBUF_BINARY' || rawHostFailure?.message !== 'RangeError: premature EOF') throw Error('frozen Uint16Array admission observation mismatch');
     if (typeof process !== 'undefined' || typeof Buffer !== 'undefined') throw Error('Node globals leaked');
-    return {profile: PROTOBUF_DOCUMENT_PROFILE, unknownRawRoundTrip: true, documentOperations: true, hostileOffsetView: true, snapshotIsolation: true, overLimit: limitCode, browserGlobals: true};
+    return {profile: PROTOBUF_DOCUMENT_PROFILE, unknownRawRoundTrip: true, documentOperations: true, hostileOffsetView: true, snapshotIsolation: true, overLimit: limitCode, publicErrorAndDiagnostic: true, publicErrorInjection: true, optionGetterOrder: true, rawHostAdmission: true, browserGlobals: true};
   });
   console.log(JSON.stringify({status: 'pass', browser: 'Chromium', browserVersion: browser.version(), ...receipt}));
 } finally { await browser?.close(); server.close(); }
