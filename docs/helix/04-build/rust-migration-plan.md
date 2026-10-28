@@ -9406,5 +9406,8 @@ freezes the current method, including an observed duplicate-name defect: two
 absent. CONTRACT-072 says a target identity equals its pins; resolve whether
 to reject duplicate platform names in the Python boundary before porting this
 behavior to Rust. Freeze result/error order and `ReadPlan.bind` host-call timing
-separately. No default Python route or R5 ownership claim changes at this
-checkpoint.
+separately. The [six-case direct Python `ReadPlan.bind` packet](evidence/rust-migration/read-plan-bind-python-predecessor-20261028/README.md)
+now freezes selection, errors, and ordered artifact, identity, platform, and
+parameter-model observations around the matcher without changing the
+duplicate-name policy. No default Python route or R5 ownership claim changes
+at this checkpoint.

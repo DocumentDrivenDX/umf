@@ -1,0 +1,86 @@
+{
+  "format": "umf-read-plan-bind-python-predecessor/1",
+  "scope": "Direct ReadPlan.bind result/error and host-observation ordering around TargetPin.matches; no matcher policy change or Rust parity claim.",
+  "source": "python/umf_access/src/umf_access/catalog.py",
+  "source_sha256": "188e816ccad9ed609c1382ea8090471a5ed1266f412742e69b7800d32ed455ec",
+  "harness": "python/umf_access/tests/test_read_plan_bind_predecessor.py",
+  "harness_sha256": "4a5fd88e2b83342616adacd11ddb85afb8ff40251fb51866192277e014e35f6b",
+  "cases": [
+    {
+      "name": "two-variants",
+      "outcome": {
+        "result": "success",
+        "entry": "second",
+        "parameters": {},
+        "after": null
+      },
+      "trace": [
+        "artifact:first",
+        "artifact:second",
+        "target.identity",
+        "identity.platform",
+        "identity.platform",
+        "artifact:second",
+        "parameters.model_validate:second"
+      ]
+    },
+    {
+      "name": "no-match",
+      "outcome": {
+        "error": "NotCompiledForTarget",
+        "message": "no unique compiled variant for target identity and argument presence"
+      },
+      "trace": [
+        "artifact:only",
+        "target.identity",
+        "identity.platform",
+        "identity.platform"
+      ]
+    },
+    {
+      "name": "identity-error",
+      "outcome": {
+        "error": "RuntimeError",
+        "message": "identity failed"
+      },
+      "trace": [
+        "artifact:only",
+        "target.identity"
+      ]
+    },
+    {
+      "name": "artifact-error",
+      "outcome": {
+        "error": "RuntimeError",
+        "message": "artifact second failed"
+      },
+      "trace": [
+        "artifact:first",
+        "artifact:second"
+      ]
+    },
+    {
+      "name": "inventory-error",
+      "outcome": {
+        "error": "CatalogError",
+        "message": "exact catalog argument inventory required"
+      },
+      "trace": []
+    },
+    {
+      "name": "platform-error",
+      "outcome": {
+        "error": "RuntimeError",
+        "message": "platform observation failed"
+      },
+      "trace": [
+        "artifact:only",
+        "target.identity",
+        "identity.platform"
+      ]
+    }
+  ],
+  "case_count": 6,
+  "pass_count": 6,
+  "mismatch_count": 0
+}
