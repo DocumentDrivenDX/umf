@@ -70,6 +70,7 @@ export function createJsonSchemaOperations(call, preflight) {
     getJsonSchemaNode(document, pointer) { const admission = preflight(); if (typeof pointer !== 'string') call('validateJsonSchemaDocumentForGet', {document}, admission); requireSourcePointerType(pointer); return call('getJsonSchemaNode', {document, pointer}, admission); },
     walkJsonSchema(document) { const admission = preflight(); return call('walkJsonSchema', {document}, admission); },
     parseNativeJson(source) { const admission = preflight(); return call('parseNativeJson', {source}, admission); },
+    parseNativeYaml(source) { const admission = preflight(); return call('parseNativeYaml', {source}, admission); },
     editJsonSchemaNode(document, pointer, replacement) { requireSourceEditPointerType(pointer); const admission = preflight(); return call('editJsonSchemaNode', {document, pointer, replacement}, admission); },
   });
 }

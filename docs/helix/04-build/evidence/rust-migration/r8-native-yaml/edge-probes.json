@@ -1,0 +1,217 @@
+{
+  "profile": "umf-r8-native-yaml-edge-probes/0.1.0",
+  "nodeVersion": "v26.3.0",
+  "cases": [
+    {
+      "id": "large-exponent",
+      "source": "x: 1e999",
+      "predecessor": {
+        "outcome": "return",
+        "tree": {
+          "kind": "object",
+          "members": {
+            "x": {
+              "kind": "number",
+              "value": "1e999"
+            }
+          }
+        }
+      },
+      "rustNode": {
+        "outcome": "return",
+        "tree": {
+          "kind": "object",
+          "members": {
+            "x": {
+              "kind": "number",
+              "value": "1e999"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "signed-positive-radix",
+      "source": "x: +0x10",
+      "predecessor": {
+        "outcome": "return",
+        "tree": {
+          "kind": "object",
+          "members": {
+            "x": {
+              "kind": "string",
+              "value": "+0x10"
+            }
+          }
+        }
+      },
+      "rustNode": {
+        "outcome": "return",
+        "tree": {
+          "kind": "object",
+          "members": {
+            "x": {
+              "kind": "string",
+              "value": "+0x10"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "signed-negative-radix",
+      "source": "x: -0x10",
+      "predecessor": {
+        "outcome": "return",
+        "tree": {
+          "kind": "object",
+          "members": {
+            "x": {
+              "kind": "string",
+              "value": "-0x10"
+            }
+          }
+        }
+      },
+      "rustNode": {
+        "outcome": "return",
+        "tree": {
+          "kind": "object",
+          "members": {
+            "x": {
+              "kind": "string",
+              "value": "-0x10"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "leading-zero-decimal",
+      "source": "x: 01",
+      "predecessor": {
+        "outcome": "return",
+        "tree": {
+          "kind": "object",
+          "members": {
+            "x": {
+              "kind": "number",
+              "value": "1"
+            }
+          }
+        }
+      },
+      "rustNode": {
+        "outcome": "return",
+        "tree": {
+          "kind": "object",
+          "members": {
+            "x": {
+              "kind": "number",
+              "value": "1"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "non-finite-float",
+      "source": "x: .inf",
+      "predecessor": {
+        "outcome": "throw",
+        "code": "NATIVE_YAML_NUMBER",
+        "message": "Unsupported exact numeric spelling"
+      },
+      "rustNode": {
+        "outcome": "throw",
+        "code": "NATIVE_YAML_NUMBER",
+        "message": "Unsupported exact numeric spelling"
+      }
+    },
+    {
+      "id": "negative-zero-exponent",
+      "source": "x: -0e0",
+      "predecessor": {
+        "outcome": "return",
+        "tree": {
+          "kind": "object",
+          "members": {
+            "x": {
+              "kind": "number",
+              "value": "-0e0"
+            }
+          }
+        }
+      },
+      "rustNode": {
+        "outcome": "return",
+        "tree": {
+          "kind": "object",
+          "members": {
+            "x": {
+              "kind": "number",
+              "value": "-0e0"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "explicit-scalar-tag",
+      "source": "x: !!str 1",
+      "predecessor": {
+        "outcome": "throw",
+        "code": "NATIVE_YAML_TAG",
+        "message": "Explicit YAML tags are outside the JSON-compatible profile"
+      },
+      "rustNode": {
+        "outcome": "throw",
+        "code": "NATIVE_YAML_TAG",
+        "message": "Explicit YAML tags are outside the JSON-compatible profile"
+      }
+    },
+    {
+      "id": "unknown-alias",
+      "source": "x: *missing",
+      "predecessor": {
+        "outcome": "throw",
+        "code": "NATIVE_YAML_NODE",
+        "message": "Aliases and non-JSON YAML nodes are unsupported"
+      },
+      "rustNode": {
+        "outcome": "throw",
+        "code": "NATIVE_YAML_SYNTAX",
+        "message": "while parsing node, found unknown anchor at line 1, column 4:\n\nx: *missing\n   ^\n"
+      }
+    },
+    {
+      "id": "tagged-alias",
+      "source": "x: !!str *missing",
+      "predecessor": {
+        "outcome": "throw",
+        "code": "NATIVE_YAML_SYNTAX",
+        "message": "An alias node must not specify any properties at line 1, column 10:\n\nx: !!str *missing\n         ^^^^^^^^\n"
+      },
+      "rustNode": {
+        "outcome": "throw",
+        "code": "NATIVE_YAML_SYNTAX",
+        "message": "while parsing a block mapping, did not find expected key at line 1, column 10:\n\nx: !!str *missing\n         ^\n"
+      }
+    },
+    {
+      "id": "defined-alias",
+      "source": "x: &a 1\ny: *a",
+      "predecessor": {
+        "outcome": "throw",
+        "code": "NATIVE_YAML_NODE",
+        "message": "Aliases and non-JSON YAML nodes are unsupported"
+      },
+      "rustNode": {
+        "outcome": "throw",
+        "code": "NATIVE_YAML_NODE",
+        "message": "Aliases and non-JSON YAML nodes are unsupported"
+      }
+    }
+  ],
+  "packetSha256": "d33e5b667ca89490f4e60612f78ad5713608e0c4b64668df1b32658b2f9066af"
+}

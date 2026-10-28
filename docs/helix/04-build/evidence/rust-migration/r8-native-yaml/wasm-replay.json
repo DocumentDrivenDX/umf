@@ -1,0 +1,28 @@
+{
+  "profile": "umf-r8-native-yaml-wasm-chromium/0.1.0",
+  "status": "pass",
+  "browserVersion": "153.0.8010.12",
+  "packageRoot": "/private/tmp/umf-r8-native-yaml-wasm-package",
+  "packetSha256": "d33e5b667ca89490f4e60612f78ad5713608e0c4b64668df1b32658b2f9066af",
+  "cases": 24,
+  "returned": 12,
+  "threw": 12,
+  "exactMessageMismatches": 2,
+  "messageMismatches": [
+    {
+      "id": "duplicate-after-bad-syntax",
+      "expected": "Map keys must be unique at line 2, column 1:\n\nx: 1\nx: 2\n^\n; Flow sequence in block collection must be sufficiently indented and end with a ] at line 3, column 5:\n\ny: [\n    ^\n",
+      "actual": "Flow sequence must end with a ] at line 3, column 5:\n\ny: [\n    ^\n"
+    },
+    {
+      "id": "malformed-sequence",
+      "expected": "Flow sequence in block collection must be sufficiently indented and end with a ] at line 1, column 7:\n\nx: [1,\n      ^\n",
+      "actual": "Flow sequence must end with a ] at line 1, column 7:\n\nx: [1,\n      ^\n"
+    }
+  ],
+  "loneSurrogateUtf16Unit": true,
+  "chromium": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+  "browserGlobalsClean": true,
+  "wasmJsSha256": "76157608e9d87455416d3ad4396c9b0632f799b2da2345132d8cdb0751f9ee2c",
+  "wasmSha256": "41d25545c8fb678681dd41408e8ec988dce00174847e1c759669d464dda0573e"
+}

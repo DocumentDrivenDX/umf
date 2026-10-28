@@ -820,6 +820,13 @@ fn execute_json_schema_wire_inner(
                 umf_core::native_json::NativeJsonTree::parse_json(source.units(), &mut ctx)?
                     .tagged_value_preserving_extras(&mut ctx)?
             }
+            "parseNativeYaml" => {
+                let source = field(&request, "source")
+                    .and_then(as_utf16)
+                    .ok_or_else(|| fail("REQUEST", "Native YAML source is required"))?;
+                umf_core::native_json::NativeJsonTree::parse_yaml(source.units(), &mut ctx)?
+                    .tagged_value_preserving_extras(&mut ctx)?
+            }
             "editJsonSchemaNode" => {
                 let pointer = field(&request, "pointer")
                     .and_then(as_utf16)
@@ -3138,6 +3145,51 @@ fn fail(code: &str, message: impl Into<String>) -> EngineError {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn opt_in_native_yaml_matches_frozen_typescript_12_trees_and_error_codes() {
+        let fixture: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../docs/helix/04-build/evidence/rust-migration/r8-native-yaml/predecessor.json"
+        ))
+        .unwrap();
+        for case in fixture["cases"].as_array().unwrap() {
+            let id = case["id"].as_str().unwrap();
+            if case.get("options").is_some() {
+                // YAML 1.1 and custom profile options are recorded by the
+                // predecessor packet but not admitted by this 1.2 operation.
+                continue;
+            }
+            let source = case["source"].as_str().unwrap();
+            let request = comparison_request(vec![
+                ("profile", Value::string_utf8("umf-r5-json-schema/0.1.0")),
+                ("op", Value::string_utf8("parseNativeYaml")),
+                ("source", Value::String(Utf16::from(source))),
+            ]);
+            let envelope: serde_json::Value =
+                serde_json::from_str(&execute_json_schema_wire(&request)).unwrap();
+            match case["outcome"].as_str().unwrap() {
+                "return" => {
+                    assert_eq!(envelope["status"], "ok", "case {id}: {envelope}");
+                    let wire = envelope["wire"].as_str().unwrap();
+                    let result = decode(wire, &mut Context::ordinary()).unwrap();
+                    let json = umf_core::serialization::stringify_compact(&result)
+                        .unwrap()
+                        .to_utf8()
+                        .unwrap();
+                    assert_eq!(
+                        serde_json::from_str::<serde_json::Value>(&json).unwrap(),
+                        case["tree"],
+                        "case {id}"
+                    );
+                }
+                "throw" => {
+                    assert_eq!(envelope["status"], "error", "case {id}: {envelope}");
+                    assert_eq!(envelope["code"], case["code"], "case {id}: {envelope}");
+                }
+                other => panic!("unknown predecessor outcome {other}"),
+            }
+        }
+    }
 
     fn comparison_request(fields: Vec<(&str, Value)>) -> String {
         let request = Value::Object(

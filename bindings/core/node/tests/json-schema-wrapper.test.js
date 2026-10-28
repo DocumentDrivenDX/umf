@@ -83,9 +83,11 @@ for (const [host, factory] of [['Node', createNodeOperations], ['WASM', createWa
       const calls = [];
       const api = factory((op, fields) => { calls.push([op, fields]); return {kind: 'string', value: 'parsed'}; }, () => ({}));
       api.parseNativeJson('{"x":1}');
+      api.parseNativeYaml('x: 1');
       api.editJsonSchemaNode({id: 'doc'}, '/properties/x', 'false');
       expect(calls).toEqual([
         ['parseNativeJson', {source: '{"x":1}'}],
+        ['parseNativeYaml', {source: 'x: 1'}],
         ['editJsonSchemaNode', {document: {id: 'doc'}, pointer: '/properties/x', replacement: 'false'}],
       ]);
     });

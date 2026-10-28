@@ -134,6 +134,13 @@ impl NativeJsonTree {
         serialization::read_native_json_tree(source, ctx)
     }
 
+    /// Parse the JSON-compatible YAML 1.2 core subset used by the opt-in
+    /// TypeScript `parseNativeYaml` predecessor. YAML 1.1 option profiles are
+    /// intentionally not selected by this operation.
+    pub fn parse_yaml(source: &[u16], ctx: &mut Context<'_>) -> Result<Self, EngineError> {
+        serialization::read_native_yaml_tree(source, ctx)
+    }
+
     /// Produce an isolated copy under the caller's ordinary tree/work budget.
     pub fn clone_tree(&self, ctx: &mut Context<'_>) -> Result<Self, EngineError> {
         let mut values = 0usize;

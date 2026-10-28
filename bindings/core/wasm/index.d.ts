@@ -436,6 +436,8 @@ export interface JsonSchemaEngine {
   getJsonSchemaNode(document: unknown, pointer: string): unknown;
   walkJsonSchema(document: unknown): {pointer: string; node: unknown}[];
   parseNativeJson(source: string): JsonSchemaNativeJson;
+  /** Parse the opt-in JSON-compatible YAML 1.2 core subset with exact numeric tokens. */
+  parseNativeYaml(source: string): JsonSchemaNativeJson;
   editJsonSchemaNode(document: unknown, pointer: string, replacement: string): unknown;
 }
 /** Create the opt-in standalone Iceberg schema JSON engine using embedded pinned resources. */

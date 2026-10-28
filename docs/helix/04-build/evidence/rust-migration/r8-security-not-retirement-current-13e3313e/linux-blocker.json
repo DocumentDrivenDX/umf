@@ -1,0 +1,21 @@
+{
+  "format": "umf.r8.security-not-linux-offline-blocker/1",
+  "status": "blocked",
+  "sourceCommit": "13e3313e18aeeb1c13ad6543b8004777a67fc6c8",
+  "sourceArchiveSha256": "eb67a8fe84f6a25b04f3da849baa904efbb741dbe766525558af0980b876ad96",
+  "cohortId": "linux-x64",
+  "image": "umf-r8-sdk-linux-x64:latest",
+  "imageId": "fca0948c034d",
+  "platform": "linux/amd64",
+  "network": "none",
+  "availableTools": {"rustc": "1.90.0", "node": "v26.12.1", "bun": "1.4.2", "wasmBindgen": "0.2.100"},
+  "failureStage": "TypeScript declaration generation in scripts/package-sdk-rust-default.ts",
+  "missingPackage": "@typescript/typescript-linux-x64@7.0.2",
+  "observedError": "Unable to resolve @typescript/typescript-linux-x64. Either your platform is unsupported, or you are missing the package on disk.",
+  "offlineCacheFinding": "npm cache had registry metadata only; required Linux package tarball was absent. Mounted node_modules supplied only the Darwin platform package.",
+  "networkBootstrapAttempted": false,
+  "linuxSdkArchiveProduced": false,
+  "linuxRuntimeReceiptsProduced": 0,
+  "retirementValidatorRun": false,
+  "claim": "No Linux acceptance and no retirement claim"
+}

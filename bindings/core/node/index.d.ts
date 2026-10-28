@@ -514,9 +514,11 @@ export interface JsonSchemaEngine {
   getJsonSchemaNode(document: unknown, pointer: string): unknown;
   walkJsonSchema(document: unknown): {pointer: string; node: unknown}[];
   parseNativeJson(source: string): JsonSchemaNativeJson;
+  /** Parse the opt-in JSON-compatible YAML 1.2 core subset with exact numeric tokens. */
+  parseNativeYaml(source: string): JsonSchemaNativeJson;
   editJsonSchemaNode(document: unknown, pointer: string, replacement: string): unknown;
 }
-/** Create the opt-in seven-operation CONTRACT-002 Rust binding. */
+/** Create the opt-in CONTRACT-002 Rust binding. */
 export declare function createJsonSchemaEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): JsonSchemaEngine;
 export declare function createPreparedJsonSchemaEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): JsonSchemaEngine;
 

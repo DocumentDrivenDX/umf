@@ -46,9 +46,9 @@ integration test compares that Rust list, including order, with the generated
 `spec/core/schema.json` enum at `$defs.knownScalarType`, and derives the version
 from the generated schema `$id`. This fails if either the Rust list or pinned
 current-version behavior drifts from that generated authority.
-After the Rust source edit, the metamodel build refreshed the generated
-compiler fingerprint in the schema's `$comment`; its SHA-256 is now
-`4f629ecffe4191a98a6cd34cbb453b4e399af1d2723a21db8974476f8e344637`.
+After the Rust source edits, the metamodel build refreshed the generated
+compiler fingerprint in the schema's `$comment`; its latest SHA-256 is
+`5296d7631d1b976bf45ac83f2b66e74ffb4726d044e16141a963bc60af435763`.
 The frozen pre-implementation resource hash remains in `predecessor.json` as
 historical capture. The generated scalar enum and `$id` are unchanged, and the
 Rust drift test passes against the refreshed resource.

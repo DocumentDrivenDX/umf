@@ -79,7 +79,7 @@ new current-source packet. Its receipt SHA-256 is
 current inventory SHA-256 is
 `805e711ce3a5720624fa66803bf766444b4f67f97f4d02d747f739c675168cc4` and the
 condition-aware ledger SHA-256 is
-`df6187650d89298f6b2adb261bc57f5110dc744848d2efbe6f9850bb44cc3ff8`. Linux,
+`6c4aab5880099fa96f7bf40ee876f844d1f664e8275f26aaf7a04edce121c39a`. Linux,
 complete production SDK parity, the full port, and release remain unqualified.
 The ledger's `executable` label is a broad public-runtime category: independent
 AST review of the 1,120-name reference root found 750 function declarations,
@@ -9535,3 +9535,37 @@ network and create a persistent image after an earlier network-capable Docker
 rejection. The hosted six-cohort workflow is enabled but still queued. An
 already-provisioned offline image with exact tools, or explicit review of a
 network bootstrap, is needed for independent local Linux qualification.
+
+### R8 native YAML 1.2 opt-in parser — 2026-10-28
+
+The [frozen native YAML packet](evidence/rust-migration/r8-native-yaml/README.md)
+records 30 direct TypeScript predecessor cases, including 24 without custom
+options. Rust now has an opt-in `parseNativeYaml` path through the native tree,
+shared JSON Schema wire dispatcher, and Node/WASM binding factories. Rust wire,
+Node 26.12.1, and Chromium 153 pass all 24 default-profile tree and error-code
+comparisons; both host bindings preserve the tested lone UTF-16 surrogate.
+Six additional numeric probes match their returned trees or error; the
+explicit scalar tag and defined alias also match. An unknown alias has a
+different error code, and a tagged alias
+has a different syntax message and caret. Two of the 24 main cases also have
+different exact syntax messages: duplicate-plus-malformed input loses the
+predecessor's aggregate duplicate diagnostic, and malformed sequence wording
+differs. YAML 1.1 options, arbitrary host inputs, limits and metering,
+unobserved YAML forms, current-source installed package closure, and exact
+diagnostic parity remain open. Keep the package default on TypeScript and do
+not count this as a retired R8 route.
+
+### R8 `securityNot` pinned Darwin replay and offline Linux gate — 2026-10-28
+
+The [new `13e3313e` source-cut packet](evidence/rust-migration/r8-security-not-retirement-current-13e3313e/README.md)
+has a fixed-point Darwin arm64 SDK archive and 14/14 installed
+`securityNot` default/reference cases on Node 26.12.1, Bun 1.4.3, and real
+Chromium 153.0.8010.12. All three receipts pin one archive, source closure,
+and frozen packet. The offline Linux x86_64 build reached TypeScript
+declaration emission but lacked the exact cached
+`@typescript/typescript-linux-x64@7.0.2` package; no Linux SDK archive or
+receipts were produced. The `/3` retirement validator consequently did not
+run, and neither default-route declaration is retired. The later YAML source
+edit also makes this an earlier pinned cohort rather than a current-worktree
+installed result. A complete new two-cohort source cut and hosted
+qualification remain required.

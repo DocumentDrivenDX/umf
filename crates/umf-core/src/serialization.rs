@@ -249,6 +249,301 @@ pub(crate) fn read_native_json_tree(
     crate::native_json::finish_parsed_tree(raw, ctx)
 }
 
+/// Parse the bounded YAML 1.2 core scalar profile into an exact native tree.
+/// This operation intentionally does not inherit `read_json_value`'s
+/// floating-point number admission rules.
+pub(crate) fn read_native_yaml_tree(
+    source: &[u16],
+    ctx: &mut Context<'_>,
+) -> Result<crate::native_json::NativeJsonTree, EngineError> {
+    if source.len() > ctx.limits().max_text_units {
+        return Err(fail("LIMIT", "Native YAML exceeds text limit"));
+    }
+    ctx.charge_text(source.len(), Utf16::default())?;
+    let (events, prefix) = prepare_yaml_events(source, ScanProfile::Yaml12, ctx, true)
+        .map_err(native_yaml_error_code)?;
+    preflight_native_yaml_duplicates(&events, source, ctx).map_err(native_yaml_error_code)?;
+    let mut root = parse_yaml_events::<NativeYamlBuilder>(events, ctx, NativeYamlBuilder, Some(source))
+        .map_err(native_yaml_error_code)?;
+    decode_native_private(&mut root, prefix)?;
+    crate::native_json::finish_parsed_tree(root, ctx)
+}
+
+enum NativeYamlPreflightFrame {
+    Sequence,
+    Mapping {
+        expect_key: bool,
+        string_keys: std::collections::BTreeSet<Vec<u16>>,
+    },
+}
+
+/// Match the predecessor's document-level `uniqueKeys` diagnostics before
+/// value admission can reject an earlier alias, tag, or non-string key.
+fn preflight_native_yaml_duplicates(
+    events: &[LocatedEvent],
+    source: &[u16],
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    let mut stack = Vec::<NativeYamlPreflightFrame>::new();
+    for located in events {
+        match &located.event {
+            Event::MappingStart(_, _) => stack.push(NativeYamlPreflightFrame::Mapping {
+                expect_key: true,
+                string_keys: std::collections::BTreeSet::new(),
+            }),
+            Event::SequenceStart(_, _) => stack.push(NativeYamlPreflightFrame::Sequence),
+            Event::Scalar(raw, style, _, tag) => {
+                if let Some(NativeYamlPreflightFrame::Mapping { expect_key, string_keys }) = stack.last_mut() {
+                    if *expect_key {
+                        let raw = raw.as_ref();
+                        let tagged_string = tag.as_ref().is_some_and(|value| value.is_yaml_core_schema() && value.suffix == "str");
+                        if *style != ScalarStyle::Plain || tagged_string || (tag.is_none() && native_yaml_string_scalar(raw)) {
+                            ctx.charge_work(raw.encode_utf16().count(), Utf16::default())?;
+                            let key: Vec<u16> = raw.encode_utf16().collect();
+                            if !string_keys.insert(key) {
+                                return Err(yaml_source_diagnostic(source, located.source_start, "Map keys must be unique", ctx)?);
+                            }
+                        }
+                        *expect_key = false;
+                    } else {
+                        *expect_key = true;
+                    }
+                }
+            }
+            Event::Alias(_) => {
+                if let Some(NativeYamlPreflightFrame::Mapping { expect_key, .. }) = stack.last_mut() {
+                    if !*expect_key { *expect_key = true; }
+                }
+            }
+            Event::MappingEnd | Event::SequenceEnd => {
+                stack.pop();
+                if let Some(NativeYamlPreflightFrame::Mapping { expect_key, .. }) = stack.last_mut() {
+                    if !*expect_key { *expect_key = true; }
+                }
+            }
+            Event::StreamStart | Event::StreamEnd | Event::DocumentStart(_) | Event::DocumentEnd | Event::Nothing => {}
+        }
+    }
+    Ok(())
+}
+
+fn native_yaml_error_code(mut error: EngineError) -> EngineError {
+    if error.code == "SYNTAX" {
+        error.code = "NATIVE_YAML_SYNTAX".to_owned();
+    }
+    error
+}
+
+struct NativeYamlBuilder;
+
+impl YamlBuilder for NativeYamlBuilder {
+    type Text = Utf16;
+    type Value = crate::native_json::NativeJsonNode;
+
+    fn scalar(
+        &self,
+        raw: &str,
+        style: ScalarStyle,
+        tagged: bool,
+        _path: &Utf16,
+        ctx: &mut Context<'_>,
+    ) -> Result<Self::Value, EngineError> {
+        use crate::native_json::NativeJsonNode as Node;
+        if tagged {
+            return Err(fail(
+                "NATIVE_YAML_TAG",
+                "Explicit YAML tags are outside the JSON-compatible profile",
+            ));
+        }
+        if style != ScalarStyle::Plain {
+            return Ok(Node::String(Utf16::from(raw)));
+        }
+        ctx.charge_work(raw.encode_utf16().count(), Utf16::default())?;
+        match raw {
+            "" | "~" | "null" | "Null" | "NULL" => return Ok(Node::Null),
+            "true" | "True" | "TRUE" => return Ok(Node::Boolean(true)),
+            "false" | "False" | "FALSE" => return Ok(Node::Boolean(false)),
+            _ => {}
+        }
+        if let Some(number) = native_yaml_integer(raw) {
+            return Ok(Node::Number(number));
+        }
+        if native_yaml_float(raw) {
+            let number = normalize_native_yaml_float(raw).ok_or_else(|| {
+                fail("NATIVE_YAML_NUMBER", "Unsupported exact numeric spelling")
+            })?;
+            return Ok(Node::Number(number));
+        }
+        if matches!(raw, ".inf" | ".Inf" | ".INF" | "-.inf" | "-.Inf" | "-.INF" | "+.inf" | "+.Inf" | "+.INF" | ".nan" | ".NaN" | ".NAN") {
+            return Err(fail(
+                "NATIVE_YAML_NUMBER",
+                "Unsupported exact numeric spelling",
+            ));
+        }
+        Ok(Node::String(Utf16::from(raw)))
+    }
+
+    fn error_path(&self, _stack: &[YamlFrame<Utf16, Self::Value>]) -> Utf16 {
+        Utf16::default()
+    }
+    fn alias_error(&self, _path: &Utf16) -> EngineError {
+        fail("NATIVE_YAML_NODE", "Aliases and non-JSON YAML nodes are unsupported")
+    }
+    fn tag_error(&self, _path: &Utf16) -> EngineError {
+        fail("NATIVE_YAML_TAG", "Explicit YAML tags are outside the JSON-compatible profile")
+    }
+    fn depth_error(&self, _path: &Utf16) -> EngineError {
+        fail("LIMIT", "Native YAML structural limit exceeded")
+    }
+    fn value_limit_error(&self, _path: &Utf16) -> EngineError {
+        fail("LIMIT", "Native YAML structural limit exceeded")
+    }
+    fn typescript_profile(&self) -> bool {
+        true
+    }
+    fn validate_key_scalar(
+        &self,
+        raw: &str,
+        style: ScalarStyle,
+        tagged: bool,
+        ctx: &mut Context<'_>,
+    ) -> Result<(), EngineError> {
+        ctx.charge_work(raw.encode_utf16().count(), Utf16::default())?;
+        if tagged || (style == ScalarStyle::Plain && !native_yaml_string_scalar(raw)) {
+            return Err(fail(
+                "NATIVE_YAML_KEY",
+                "JSON-compatible YAML requires untagged string keys",
+            ));
+        }
+        Ok(())
+    }
+    fn into_key(&self, value: Self::Value) -> Result<Self::Text, EngineError> {
+        let Self::Value::String(key) = value else {
+            return Err(fail(
+                "NATIVE_YAML_KEY",
+                "JSON-compatible YAML requires untagged string keys",
+            ));
+        };
+        Ok(key)
+    }
+    fn key_len(&self, text: &Self::Text) -> usize {
+        text.len()
+    }
+    fn array(&self, items: Vec<Self::Value>) -> Self::Value {
+        Self::Value::Array(items)
+    }
+    fn object(&self, items: Vec<(Self::Text, Self::Value)>) -> Self::Value {
+        let mut items: Vec<_> = items.into_iter().map(|(key, value)| (key, value)).collect();
+        crate::native_json::order_members(&mut items);
+        Self::Value::Object(items)
+    }
+    fn null(&self) -> Self::Value {
+        Self::Value::Null
+    }
+}
+
+fn native_yaml_string_scalar(raw: &str) -> bool {
+    !matches!(raw, "" | "~" | "null" | "Null" | "NULL" | "true" | "True" | "TRUE" | "false" | "False" | "FALSE")
+        && native_yaml_integer(raw).is_none()
+        && !native_yaml_float(raw)
+        && !matches!(raw, ".inf" | ".Inf" | ".INF" | "-.inf" | "-.Inf" | "-.INF" | "+.inf" | "+.Inf" | "+.INF" | ".nan" | ".NaN" | ".NAN")
+}
+
+fn native_yaml_integer(raw: &str) -> Option<String> {
+    if let Some(digits) = raw.strip_prefix("0x") {
+        return yaml_radix_integer(digits, 16);
+    }
+    if let Some(digits) = raw.strip_prefix("0o") {
+        return yaml_radix_integer(digits, 8);
+    }
+    let digits = raw.strip_prefix('+').or_else(|| raw.strip_prefix('-')).unwrap_or(raw);
+    if digits.is_empty() || !digits.bytes().all(|byte| byte.is_ascii_digit()) {
+        return None;
+    }
+    if raw == "-0" {
+        return Some("-0".to_owned());
+    }
+    let negative = raw.starts_with('-');
+    let integer = BigInt::parse_bytes(digits.as_bytes(), 10)?;
+    Some(if negative { format!("-{integer}") } else { integer.to_string() })
+}
+
+fn yaml_radix_integer(digits: &str, radix: u32) -> Option<String> {
+    if digits.is_empty() || !digits.bytes().all(|byte| (byte as char).to_digit(radix).is_some()) {
+        return None;
+    }
+    BigInt::parse_bytes(digits.as_bytes(), radix).map(|value| value.to_string())
+}
+
+fn native_yaml_float(raw: &str) -> bool {
+    let body = raw.strip_prefix('+').or_else(|| raw.strip_prefix('-')).unwrap_or(raw);
+    if body.is_empty() { return false; }
+    if let Some((mantissa, exponent)) = body.split_once(['e', 'E']) {
+        return !exponent.is_empty()
+            && exponent.strip_prefix('+').or_else(|| exponent.strip_prefix('-')).unwrap_or(exponent).bytes().all(|b| b.is_ascii_digit())
+            && !exponent.strip_prefix('+').or_else(|| exponent.strip_prefix('-')).unwrap_or(exponent).is_empty()
+            && native_yaml_float_mantissa(mantissa, true);
+    }
+    native_yaml_float_mantissa(body, false)
+}
+
+fn native_yaml_float_mantissa(body: &str, exponent: bool) -> bool {
+    if exponent && !body.is_empty() && body.bytes().all(|b| b.is_ascii_digit()) {
+        return true;
+    }
+    if let Some(digits) = body.strip_prefix('.') {
+        return !digits.is_empty() && digits.bytes().all(|b| b.is_ascii_digit());
+    }
+    let Some((whole, fraction)) = body.split_once('.') else { return false; };
+    if whole.is_empty() || !whole.bytes().all(|b| b.is_ascii_digit()) { return false; }
+    if exponent { fraction.is_empty() || fraction.bytes().all(|b| b.is_ascii_digit()) }
+    else { fraction.bytes().all(|b| b.is_ascii_digit()) }
+}
+
+fn normalize_native_yaml_float(raw: &str) -> Option<String> {
+    let mut value = raw.to_owned();
+    if value.starts_with('+') { value.remove(0); }
+    if value.starts_with(".") { value.insert(0, '0'); }
+    if value.starts_with("-.") { value.insert(1, '0'); }
+    if let Some(index) = value.find('.') {
+        if index + 1 == value.len() || matches!(value.as_bytes().get(index + 1), Some(b'e' | b'E')) {
+            value.insert(index + 1, '0');
+        }
+    }
+    let sign_len = usize::from(value.starts_with('-'));
+    let bytes = value.as_bytes();
+    let end = bytes[sign_len..]
+        .iter()
+        .position(|byte| matches!(*byte, b'.' | b'e' | b'E'))
+        .map_or(bytes.len(), |offset| sign_len + offset);
+    let mut first = sign_len;
+    while first + 1 < end && bytes[first] == b'0' && bytes[first + 1].is_ascii_digit() {
+        first += 1;
+    }
+    if first > sign_len {
+        value.replace_range(sign_len..first, "");
+    }
+    if !native_yaml_float(&value) { return None; }
+    Some(value)
+}
+
+fn decode_native_private(
+    value: &mut crate::native_json::NativeJsonNode,
+    prefix: (char, char),
+) -> Result<(), EngineError> {
+    use crate::native_json::NativeJsonNode;
+    match value {
+        NativeJsonNode::String(text) => decode_private_utf16(text, prefix)?,
+        NativeJsonNode::Array(items) => for item in items { decode_native_private(item, prefix)?; },
+        NativeJsonNode::Object(items) => for (key, child) in items {
+            decode_private_utf16(key, prefix)?;
+            decode_native_private(child, prefix)?;
+        },
+        NativeJsonNode::Null | NativeJsonNode::Boolean(_) | NativeJsonNode::Number(_) => {}
+    }
+    Ok(())
+}
+
 #[derive(Clone, Copy)]
 enum NativeArrayState {
     ValueOrEnd,
