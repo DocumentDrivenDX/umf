@@ -133,8 +133,8 @@ def test_coordinated_workflow_is_nonpublishing_and_builds_both_release_pairs() -
     repository = Path(__file__).resolve().parents[2]
     workflow = (repository / ".github/workflows/python-coordinated-release.yml").read_text()
     verifier_source = _TOOL.read_text()
-    assert "python -m build --no-isolation --wheel --sdist python" in workflow
-    assert "python -m build --no-isolation --wheel --sdist python/umf_codegen" in workflow
+    assert '"$UMF_PYTHON" -m build --no-isolation --wheel --sdist python' in workflow
+    assert '"$UMF_PYTHON" -m build --no-isolation --wheel --sdist python/umf_codegen' in workflow
     assert "tools/verify_python_artifacts.py" in workflow
     assert "tools/verify_python_release_pair.py" in workflow
     assert "tools/verify_python_release_matrix.py" in workflow
@@ -144,9 +144,18 @@ def test_coordinated_workflow_is_nonpublishing_and_builds_both_release_pairs() -
     assert "fixtures/actions-binding/source.json" in workflow
     assert "fixtures/actions-binding/source.json" in verifier_source
     assert "CARGO_NET_OFFLINE: 'true'" in workflow
-    assert "cohort.startswith('linux-x86_64-')" in workflow
-    assert "--cohort-set linux-only" in workflow
-    assert "Require all three Linux receipts" in workflow
+    assert "macos-arm64-cpython-311" in workflow
+    assert "macos-arm64-cpython-312" in workflow
+    assert "macos-arm64-cpython-313" in workflow
+    assert "runs-on: macos-15" in workflow
+    assert "astral-sh/setup-uv@v6" in workflow
+    assert "version: '0.13.3'" in workflow
+    assert "uv python install --managed-python" in workflow
+    assert "PYO3_PYTHON=%s\\n" in workflow
+    assert "platform.machine().lower()" in workflow
+    assert "scripts/rust-migration/r4/check_binary_closure.py" in workflow
+    assert "--cohort-set six-cohort" in workflow
+    assert "Require all six receipts" in workflow
     assert "platform.python_version() != os.environ['EXPECTED_PYTHON']" in workflow
     assert "actions/upload-artifact@v4" in workflow
     assert "pypa/gh-action-pypi-publish" not in workflow

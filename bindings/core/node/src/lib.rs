@@ -51,6 +51,38 @@ pub fn dataset_source_schema_graph_json() -> NapiResult<String> {
         .map_err(|error| Error::from_reason(error.code))
 }
 
+#[napi(js_name = "artifactCollectionSchemaGraphJson")]
+pub fn artifact_collection_schema_graph_json() -> NapiResult<String> {
+    umf_core::domain_pack_schema::artifact_collection_schema_graph_json()
+        .map_err(|error| Error::from_reason(error.code))
+}
+
+#[napi(js_name = "domainPackLoaderSchemaGraphJson")]
+pub fn domain_pack_loader_schema_graph_json() -> NapiResult<String> {
+    umf_core::domain_pack_loader_schemas::domain_pack_loader_schema_graph_json()
+        .map_err(|error| Error::from_reason(error.code))
+}
+
+#[napi(js_name = "loaderInventorySchemaGraphJson")]
+pub fn loader_inventory_schema_graph_json() -> NapiResult<String> {
+    umf_core::domain_pack_loader_schemas::loader_inventory_schema_graph_json()
+        .map_err(|error| Error::from_reason(error.code))
+}
+
+/// Pure CONTRACT-057 loader inspection; accepts the JSON copied by the JS host wrapper.
+#[napi(js_name = "inspectDomainPackLoaderWire")]
+pub fn inspect_domain_pack_loader_wire(input_json: String) -> NapiResult<String> {
+    umf_core::domain_pack_loader_inspection::inspect_domain_pack_loader_wire(&input_json)
+        .map_err(|_| Error::from_reason("Malformed loader inspection JSON"))
+}
+
+/// Pure CONTRACT-052/053 pack-profile inspection after host JSON admission.
+#[napi(js_name = "inspectDomainPackProfileWire")]
+pub fn inspect_domain_pack_profile_wire(input_json: String) -> NapiResult<String> {
+    umf_core::domain_pack_profile_inspection::inspect_domain_pack_profile_wire(&input_json)
+        .map_err(|_| Error::from_reason("Malformed domain-pack profile inspection JSON"))
+}
+
 #[napi(js_name = "executeAccessRrfWire")]
 pub fn execute_access_rrf_wire(
     env: Env,

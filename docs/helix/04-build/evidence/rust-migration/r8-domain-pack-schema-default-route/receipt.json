@@ -1,98 +1,95 @@
 {
-  "format": "umf.r8.domain-pack-public-route/1",
+  "format": "umf.r8.schema-graph-route-evidence/1",
   "status": "pass",
-  "sourceTreeSha256": "5434635cf74a948bec17601bd3b150703073dfa87bd94193e66cdfbe452911c9",
-  "manifest": {
-    "path": ".tmp/r8-domain-pack/dist-final-ledger/rust-default-manifest.json",
-    "sha256": "158359c4cf8f8c28ecdafec3eb4195e587617d7c4a3307aa75a5369fc34793e6",
-    "sourceTreeSha256": "5434635cf74a948bec17601bd3b150703073dfa87bd94193e66cdfbe452911c9",
-    "capturedLiveSourceTreeSha256": "5434635cf74a948bec17601bd3b150703073dfa87bd94193e66cdfbe452911c9",
-    "sourceTransformStatus": "fixed-point",
-    "sourceTransformCount": 0,
-    "assetCount": 1801
-  },
   "operations": [
     "generateDomainPackSchema",
-    "generateDatasetSourceSchema"
+    "generateDatasetSourceSchema",
+    "generateArtifactCollectionSchema",
+    "generateDomainPackLoaderSchema",
+    "generateLoaderInventorySchema"
   ],
-  "routes": {
-    "node": {
-      "status": "pass",
-      "providerCalls": {
-        "domainPackSchemaGraphJson": 2,
-        "datasetSourceSchemaGraphJson": 2
-      },
-      "schemaParity": "exact complete resource JSON",
-      "freshInstances": true,
-      "names": [
-        "generateDomainPackSchema",
-        "generateDatasetSourceSchema"
-      ],
-      "arity": [0, 0]
+  "routeScope": "Private fixed-point Node/Bun installed package and Chromium browser bundle cohort; not release qualification or declaration retirement.",
+  "sourceClosure": {
+    "sha256": "d7cae37e060e960d94b054872c342042d1a088d6dec2cbb7366b094d2395e96c",
+    "capturedLiveSha256": "d7cae37e060e960d94b054872c342042d1a088d6dec2cbb7366b094d2395e96c",
+    "fileCount": 3629,
+    "transform": {
+      "status": "fixed-point",
+      "generatedInputs": []
     },
-    "bun": {
-      "status": "pass",
-      "providerCalls": {
-        "domainPackSchemaGraphJson": 2,
-        "datasetSourceSchemaGraphJson": 2
-      },
-      "schemaParity": "exact complete resource JSON",
-      "freshInstances": true,
-      "names": [
-        "generateDomainPackSchema",
-        "generateDatasetSourceSchema"
-      ],
-      "arity": [0, 0],
-      "aliasEvidence": {
-        "test": "tests/domain-packs/generated-schema-graph.test.ts",
-        "passed": 4,
-        "failed": 0,
-        "assertions": 26,
-        "domainPackAliasGroups": 8,
-        "datasetSourceAliasGroups": 1,
-        "oracle": "live TypeScript predecessor object identity classes"
-      }
-    },
-    "browser": {
-      "status": "pass",
-      "chromium": "153.0.8010.12",
-      "schemaParity": "exact complete resource JSON",
-      "names": [
-        "generateDomainPackSchema",
-        "generateDatasetSourceSchema"
-      ],
-      "referenceNames": [
-        "generateDomainPackSchema",
-        "generateDatasetSourceSchema"
-      ],
-      "arity": [0, 0],
-      "referenceArity": [0, 0],
-      "nodeGlobalsAbsent": true,
-      "routeTrace": "The built bundle binds each public operation to its corresponding WASM schema-graph provider; both exports executed against the exact built bundle and WASM. Provider counters were not instrumented in Chromium."
+    "liveSourceManifest": {
+      "path": "liveSource.json",
+      "sha256": "1a42c6d3b74d3041494ff8186c6718b68d3e63d3b18ff6a70a489dbeb5de346a"
     }
   },
-  "installedArchive": {
-    "status": "pass",
-    "path": ".tmp/r8-domain-pack/umf-sdk-domain-pack-ledger-final.tgz",
-    "sha256": "e8f4be0486d26af1cc2f437de7045d9dbfbaa5c8dcc2a4123603d83c52b68c1a",
-    "packageManifestSha256": "47bf8a5511affe051bf6546f8bc3f294d13a9cc4c055a0c76e8517d77699ab10",
-    "bytes": 43701965,
-    "nodeProviderCalls": {
-      "domainPackSchemaGraphJson": 2,
-      "datasetSourceSchemaGraphJson": 2
+  "archive": {
+    "path": ".cache/sdk-distribution/umf-sdk.tgz",
+    "archiveSha256": "56f2ed6c5e5647c94337b8ee36f8b62e662fd6423ca1c7ef9763739d8a211fe9",
+    "packageManifestSha256": "0d1d9eaca158d2909056f2a348bd2693f28f196b1c0343e021f85301aa2fe795",
+    "archiveMemberCount": 1810,
+    "memberManifest": {
+      "path": "archiveMembers.json",
+      "sha256": "c23a873a5db4c9ec873c73cb2e0f528f63d73ffb430ea081a3cd103d15708a6a"
     },
-    "nodeNames": [
-      "generateDomainPackSchema",
-      "generateDatasetSourceSchema"
-    ],
-    "nodeArity": [0, 0],
-    "chromium": "153.0.8010.12",
-    "chromiumSchemaParity": "exact complete resource JSON",
-    "chromiumNodeGlobalsAbsent": true
+    "packageManifestFile": {
+      "path": "archive-package-manifest.json",
+      "sha256": "0d1d9eaca158d2909056f2a348bd2693f28f196b1c0343e021f85301aa2fe795"
+    },
+    "sdkManifestFile": {
+      "path": "archive-sdk-manifest.json",
+      "sha256": "6d2a00aa934f5b6701b03e380e6abeb0b22d8497a68f7b41fa86c362519e70ed"
+    },
+    "packageJsonFile": {
+      "path": "archive-package.json",
+      "sha256": "1bd5f6cc6db6a5e9ef0e395a19aa6504e8a9a130a2fcbd3faaf4effbac7bb23a"
+    }
   },
-  "limitations": [
-    "The private archive is not publishable release qualification.",
-    "The TypeScript reference remains available; neither logical declaration is retired.",
-    "Chromium route selection is proven by the V4 source binding and exact public bundle execution; no WASM provider call counter was instrumented."
-  ]
+  "harnesses": {
+    "schema-graph-route-common.mjs": {
+      "path": "schema-graph-route-common.mjs",
+      "sha256": "7fd10255eeeaf922f84aa4f7c25fd7f0d4df1a3a7c4b4c61cf36d0b81758a802"
+    },
+    "schema-graph-route-host.mjs": {
+      "path": "schema-graph-route-host.mjs",
+      "sha256": "c8902aef85f619a2e047839488197977ea2e7ee92aa3f16ec0eb85a81332541e"
+    },
+    "schema-graph-route-host-child.mjs": {
+      "path": "schema-graph-route-host-child.mjs",
+      "sha256": "4eaa7b24223343765c8fbbbdd029cafd2bccdc8b89e0ab862c089e83f58b6959"
+    },
+    "schema-graph-route-chromium.mjs": {
+      "path": "schema-graph-route-chromium.mjs",
+      "sha256": "e1c4f318be0194fe872641c7b475378109fd27de945bce703bc6d15c0ebe2cfb"
+    },
+    "schema-graph-route-build-packet.mjs": {
+      "path": "schema-graph-route-build-packet.mjs",
+      "sha256": "6a6e90a7873cc119e0fbc29e17a394faa0afcd57875f5fb6d5cbcec14c8b12d1"
+    },
+    "schema-graph-route-evidence.mjs": {
+      "path": "schema-graph-route-evidence.mjs",
+      "sha256": "a4b7b4e10da18ce3881417615aeded219368a192b3826331350af37a89a17d62"
+    },
+    "schema-graph-route-evidence.test.mjs": {
+      "path": "schema-graph-route-evidence.test.mjs",
+      "sha256": "5a52f36dcb44b61d5b847482ca1510c54bc9715adb1af08540515e0296ac619c"
+    }
+  },
+  "routes": {
+    "node": {
+      "path": "node.json",
+      "sha256": "82acb9ad12a58769127c4cbd456ad9fdb913f8ea2130ca74da367f3e6f028350"
+    },
+    "bun": {
+      "path": "bun.json",
+      "sha256": "638f565c3821eb7f3aa506116d2db9548739752af2d9bc497a6433430d55222d"
+    },
+    "hostOutcome": {
+      "path": "host-outcome.json",
+      "sha256": "28be30514c4bbf1b920dae7bb75eee93da3a566bf1f7827fc23f5cdd7df3ecdc"
+    },
+    "chromium": {
+      "path": "chromium.json",
+      "sha256": "47cb4081b67dd2436e53367671b2008c5edffc879bb2c904360a296426e4a864"
+    }
+  }
 }

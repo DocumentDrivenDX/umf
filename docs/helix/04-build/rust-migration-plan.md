@@ -65,22 +65,17 @@ and complete tooling retirement, and R8 final integrated qualification remain
 open. The source `package.json` selects the Rust V4 Node/browser entries for
 synchronous `generatePythonClient` and retains TypeScript under `./reference`.
 The prior fixed-point private SDK archives qualify only their captured subsets
-and hosts. The current R8 inventory covers ten package conditions and 1,120
-declarations per Node, browser, and explicit TypeScript reference root. Each
-default root source-selects 59 Rust declarations and exports 198 JSON
-resources. All 922 unique non-JSON executable declarations retain logical
-retirement gaps; 84 have accepted opt-in Rust mappings and 838 do not. Five
-binding routes have bounded current-source evidence, but no declaration is
-retired. The inventory SHA-256 is
-`6a592a171d0e4f2f4983302ccc9d2a15bc881c9b6159d6ffa19d76cef1104c40`;
-the condition-aware gap ledger SHA-256 is
-`3bc69e8f032e32240b9fe31c59a96acb5c6df422039122004b8d97d8a1868810`.
-The current Compact, Security And/Or, and RRF source replays share manifest
-`cedcbf75d43607fbed7d1e6a4310775c41096ebf9ba89d31c33081d4cb679586`
-and source closure
-`f8c9450063b9f13274366f07255f0e22aa5c18e04aae96a1d3da6e001a1f85ec`.
-Neither the source inventory nor the bounded replays qualify full production
-SDK parity or release.
+and hosts. The current ledger records 65 source-selected declarations per
+default root, 922 logical default-route gaps, zero retired, 84 accepted opt-in
+Rust mappings, and 838 unmapped names. The five-schema default-route packet is
+verified for its bounded private Darwin arm64 Node/Bun/Chromium installed-route
+scope; its receipt SHA-256 is
+`1c192d0246a85c8c12de39b37b40e119026b692dade2db249e5aace2c689b19a`. The
+current inventory SHA-256 is
+`eced450d39b6e2eade2354cc549300179fc9a763183dd56d2d1af138bb662424` and the
+condition-aware ledger SHA-256 is
+`14a9de59c1a5d37390f5eab7a8900945c2eecd74b8cf626ec773d46aa79d9ba5`. Linux,
+complete production SDK parity, the full port, and release remain unqualified.
 The ledger's `executable` label is a broad public-runtime category: independent
 AST review of the 1,120-name reference root found 750 function declarations,
 167 variable declarations, five class declarations and 198 JSON resource
@@ -9150,3 +9145,91 @@ opt-in Rust operation mappings, 838 unmapped names, and 61 source-selected
 declarations per V4 root. The schema and replay packets do not establish
 complete Dataset/Security semantics, declaration retirement, or release
 qualification.
+
+### R8 five-schema default-route checkpoint — 2026-10-28
+
+The Node and browser V4 default roots now select Rust graph providers for the
+five public schema generators: `generateDomainPackSchema`,
+`generateDatasetSourceSchema`, `generateArtifactCollectionSchema`,
+`generateDomainPackLoaderSchema`, and `generateLoaderInventorySchema`. The
+TypeScript reference route remains explicit. Node and Bun each observed two
+direct provider calls per generator. Real Chromium passed exact public schema
+parity and predecessor alias-identity checks with the adjacent WASM build; the
+probe observed no Node globals or external requests. Direct WASM provider call
+counters were not observed, so the browser result establishes public behavior,
+not the internal provider invocation count.
+
+The fixed-point private SDK source closure is
+`f767e90fe77adec74f85358c7d7d0b775a84d35fd5dd445b002da5a51026f231`, covering
+3,610 files and 1,802 assets; its canonical archive SHA-256 is
+`76413795b9f4fa551f5cd401f9d22440511bdfedc65a6055390df87819a0d9c1`. The
+verified [bounded route packet](evidence/rust-migration/r8-domain-pack-schema-default-route/README.md)
+has receipt SHA-256
+`1c192d0246a85c8c12de39b37b40e119026b692dade2db249e5aace2c689b19a`. Its
+private installed-archive observations establish this Darwin arm64
+Node/Bun/Chromium cohort only; Linux and release qualification remain open.
+The current ledger records 65 source-selected declarations per default root,
+922 logical default-route gaps, 84 accepted opt-in Rust mappings, 838 unmapped
+names, and zero retired gaps. The current inventory SHA-256 is
+`eced450d39b6e2eade2354cc549300179fc9a763183dd56d2d1af138bb662424`; the
+condition-aware ledger SHA-256 is
+`14a9de59c1a5d37390f5eab7a8900945c2eecd74b8cf626ec773d46aa79d9ba5`. R4–R8,
+Linux qualification, full-port, and release gates remain incomplete.
+
+The installed SDK replay for this fixed-point archive then passed Node
+26.12.1, Bun 1.4.3, and Chromium 153.0.8010.12 in one run. It exercised
+31 R3 cases, 66 cardinality, 19 facets, 14 keys, 11 bit128, 19 Compact
+Dataset, and 68 Security And/Or cases, plus missing/corrupt native and WASM
+asset controls. The local receipt SHA-256 is
+`c618475bd0ba6cb6c715f70117b8babb8011f8bb862c5239b3abcaf7dcf5a7ae`.
+Subsequent source changes require a new archive and replay before this can
+count as current-source qualification; this remains a Darwin arm64 cohort.
+
+The next bounded candidate, public `inspectDomainPackLoader`, is now selected
+by the Node and browser V4 default roots, governed by CONTRACT-057. Rust owns
+metadata admission and completeness diagnostics. Canonical structural
+validation precedes duplicate-artifact and required-closure checks; unknown
+annotations are retained. The host wrapper preserves malformed and non-JSON
+input behavior and does not resolve paths, execute companions, or fetch
+resources. Focused Rust, Node binding, host-wrapper, typecheck, and WASM-target
+checks passed; independent review found and resolved UTF-16 surrogate,
+deep-annotation, and catalog-profile admission differences. The exact-source
+ledger guard records selection but marks this operation unqualified pending a
+tracked fixed-point installed Node/Bun/Chromium parity packet. It has no
+accepted ownership mapping or gap retirement.
+
+### R4 hosted Python cohort gate restoration — 2026-10-28
+
+The nonpublishing coordinated-Python workflow now requests all six
+Linux x86_64 and macOS arm64 cohorts at the governed CPython 3.11.17,
+3.12.15, and 3.13.16 patches. The macOS jobs use uv 0.13.3 managed CPython
+because `setup-python` does not currently publish Darwin arm64 distributions
+for the first two exact patches; the runner, interpreter implementation,
+architecture, and patch are checked before building. Both hosts set
+`PYO3_PYTHON` to the selected interpreter. Each installed wheel pair now runs
+the R4 ELF/Mach-O dependency-closure checker over its native extension and
+CLI, and the same-run aggregate verifier requires the pinned checker source,
+complete per-cohort reports, and all six receipts. A synthetic six-cohort
+aggregate and 51 targeted verifier/workflow tests pass locally. This is a
+reviewed workflow candidate only: no hosted six-cohort run has passed, so R4
+release qualification remains open. A later local current-source package
+receipt now covers a 510-file closure and two macOS Python versions; it does
+not replace the hosted six-cohort gate.
+
+The coordinated-pair receipt now also pins the exact R4 binary-closure
+verifier source, which the six-cohort aggregate compares with its checked-out
+source. The expanded local pair/matrix/custody/binary-closure suite passed 67
+tests and five subtests under CPython 3.13.16. The local package receipt
+`r4-current-source-local-package-20261028` now passes for its 510-file closure
+and two macOS Python versions. Hosted six-cohort wheel/sdist qualification
+remains open.
+
+### R8 current fixed-point route cohort — 2026-10-28
+
+The current canonical SDK archive is `56f2ed6c5e5647c94337b8ee36f8b62e662fd6423ca1c7ef9763739d8a211fe9`, built with zero source transforms from source closure `d7cae37e060e960d94b054872c342042d1a088d6dec2cbb7366b094d2395e96c` (3,629 inputs). The schema-graph, loader-inspector, and profile route packets were rebuilt and validated against that same archive and source closure. These establish a private Darwin arm64 installed cohort, not release qualification.
+
+The five schema graph exports passed Node/Bun parity and real Chromium public-output checks; Node and Bun observed two native provider calls per operation. Chromium fetched WASM with no external requests or page errors, while direct WASM provider counters remain unobserved. `inspectDomainPackLoader` passed 11 cases, with eight native dispatches in each of Node, Bun, and Chromium WASM; wrapper-rejected values produced zero dispatches, and Chromium had no external requests or page errors. `inspectDomainPack` and `requireDomainPackProfile` passed 31 cases and 42 native/WASM dispatches per host, including admission-refusal controls, with Node/Bun parity and isolated Chromium execution. All packets pin source closure, archive member hashes, metadata, and negative controls; the profile validator passed in both async and sync modes.
+
+The current inventory SHA-256 is `fae3c85996956d8b8630f6cb4333704d674be40e522e2151421bc43f4bc65798`; the ledger SHA-256 is `64cdc2182a1393b308eb340487263fcff68fff382691203a0fc096c63e267b21`. It records 922 logical default-route gaps, zero retirements, 134 Rust-selected source declaration rows (67 per default root), and 13 bounded current-source route names. Inspector and profile rows retain `acceptedRustOperation: null`; no route packet retires declarations. Linux, full-port, and release gates remain open.
+
+Next, CONTRACT-059, TD-078, and STP-078 support a private SEC Rust projection 2.0.0 design spike with a 32 Mi UTF-16 output ceiling, validation-before-limit precedence, and cross-host cap evidence. This is a design spike only; it makes no SEC default-route or support claim.

@@ -1,8 +1,11 @@
 import {expect, test} from 'bun:test';
 import {generateDatasetSourceSchema as referenceDatasetSource} from '../../src/domain-packs/source-schema';
 import {generateDomainPackSchema as referenceDomainPack} from '../../src/domain-packs/schema';
-import {generateDatasetSourceSchema as defaultDatasetSource, generateDomainPackSchema as defaultDomainPack} from '../../src/index-node-v4';
-import {datasetSourceSchemaGraphJson, domainPackSchemaGraphJson} from '../../bindings/core/node/index.js';
+import {generateArtifactCollectionSchema as referenceArtifactCollection} from '../../src/domain-packs/artifacts';
+import {generateDomainPackLoaderSchema as referenceDomainPackLoader} from '../../src/domain-packs/loader';
+import {generateLoaderInventorySchema as referenceLoaderInventory} from '../../src/domain-packs/loader-inventory';
+import {generateArtifactCollectionSchema as defaultArtifactCollection, generateDatasetSourceSchema as defaultDatasetSource, generateDomainPackSchema as defaultDomainPack, generateDomainPackLoaderSchema as defaultDomainPackLoader, generateLoaderInventorySchema as defaultLoaderInventory} from '../../src/index-node-v4';
+import {artifactCollectionSchemaGraphJson, datasetSourceSchemaGraphJson, domainPackSchemaGraphJson, domainPackLoaderSchemaGraphJson, loaderInventorySchemaGraphJson} from '../../bindings/core/node/index.js';
 import {createGeneratedSchemaGraphOperation} from '../../src/domain-packs/generated-schema-graph';
 
 function pointerPath(parent: string, segment: string | number): string {
@@ -47,16 +50,25 @@ test('Rust-owned schema graph metadata exhaustively matches the TS predecessor a
   expect(defaultDomainPack.length).toBe(0);
   expect(defaultDatasetSource.name).toBe('generateDatasetSourceSchema');
   expect(defaultDatasetSource.length).toBe(0);
+  expect(defaultArtifactCollection.name).toBe('generateArtifactCollectionSchema');
+  expect(defaultArtifactCollection.length).toBe(0);
+  expect(defaultDomainPackLoader.name).toBe('generateDomainPackLoaderSchema');
+  expect(defaultDomainPackLoader.length).toBe(0);
+  expect(defaultLoaderInventory.name).toBe('generateLoaderInventorySchema');
+  expect(defaultLoaderInventory.length).toBe(0);
   const cases = [
-    {reference: referenceDomainPack(), actual: defaultDomainPack(), wire: domainPackSchemaGraphJson()},
-    {reference: referenceDatasetSource(), actual: defaultDatasetSource(), wire: datasetSourceSchemaGraphJson()},
+    {reference: referenceDomainPack(), actual: defaultDomainPack(), wire: domainPackSchemaGraphJson(), create: defaultDomainPack},
+    {reference: referenceDatasetSource(), actual: defaultDatasetSource(), wire: datasetSourceSchemaGraphJson(), create: defaultDatasetSource},
+    {reference: referenceArtifactCollection(), actual: defaultArtifactCollection(), wire: artifactCollectionSchemaGraphJson(), create: defaultArtifactCollection},
+    {reference: referenceDomainPackLoader(), actual: defaultDomainPackLoader(), wire: domainPackLoaderSchemaGraphJson(), create: defaultDomainPackLoader},
+    {reference: referenceLoaderInventory(), actual: defaultLoaderInventory(), wire: loaderInventorySchemaGraphJson(), create: defaultLoaderInventory},
   ];
   for (const item of cases) {
     const expectedAliases = aliasClasses(item.reference);
     expect(item.actual).toEqual(item.reference);
     expect(wireAliasClasses(item.wire)).toEqual(expectedAliases);
     expect(aliasClasses(item.actual)).toEqual(expectedAliases);
-    const next = cases[0] === item ? defaultDomainPack() : defaultDatasetSource();
+    const next = item.create();
     expect(next).not.toBe(item.actual);
   }
 });
@@ -73,6 +85,30 @@ test('default schema aliases preserve mutation propagation and isolate later cal
   source.properties.reference.type = 'integer';
   expect(source.properties.provenance.properties.source_ids.items.type).toBe('integer');
   expect((defaultDatasetSource() as any).properties.reference.type).toBe('string');
+
+  const artifact = defaultArtifactCollection() as any;
+  expect(artifact.properties.title).toBe(artifact.properties.semantic_kinds.items);
+  expect(artifact.properties.source_ids).toBe(artifact.properties.media_types);
+  expect(artifact.properties.identity).toBe(artifact.properties.grouping);
+  artifact.properties.title.minLength = 7;
+  expect(artifact.properties.grouping.properties.description.minLength).toBe(7);
+  expect((defaultArtifactCollection() as any).properties.title.minLength).toBe(1);
+
+  const loader = defaultDomainPackLoader() as any;
+  expect(aliasClasses(loader)).toEqual([]);
+  loader.properties.qualification.minLength = 7;
+  expect(loader.properties.artifacts.items.properties.reference.minLength).toBeUndefined();
+  expect((defaultDomainPackLoader() as any).properties.qualification.minLength).toBe(1);
+
+  const inventory = defaultLoaderInventory() as any;
+  expect(inventory.properties.id).toBe(inventory.properties.allowed_hosts.items);
+  expect(inventory.properties.id).toBe(inventory.properties.entries.items.properties.id);
+  expect(inventory.properties.id).toBe(inventory.properties.entries.items.properties.url);
+  inventory.properties.id.maxLength = 17;
+  expect(inventory.properties.allowed_hosts.items.maxLength).toBe(17);
+  expect(inventory.properties.entries.items.properties.id.maxLength).toBe(17);
+  expect(inventory.properties.entries.items.properties.url.maxLength).toBe(17);
+  expect((defaultLoaderInventory() as any).properties.id.maxLength).toBe(4096);
 });
 
 test('schema graph providers fail closed when missing or malformed', () => {

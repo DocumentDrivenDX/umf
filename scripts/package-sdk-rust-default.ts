@@ -151,6 +151,13 @@ try{
   ...['inspectCoreCardinality','declareCoreCardinality','verifyCoreCardinalityDeclaration']
     .map(name=>join(root,`scripts/rust-migration/r8/cardinality-retirement-packets/${name}.packet.json`)),
   join(root,'scripts/rust-migration/r8/gap-ledger.mjs'),join(root,'scripts/rust-migration/r8/gap-ledger.test.mjs'),
+  ...['common','host','host-child','chromium'].map(name=>join(root,`scripts/rust-migration/r8/schema-graph-route-${name}.mjs`)),
+  ...['schema-graph-route-build-packet.mjs','schema-graph-route-evidence.mjs','schema-graph-route-evidence.test.mjs']
+    .map(name=>join(root,`scripts/rust-migration/r8/${name}`)),
+  ...['loader-inspector-host.mjs','loader-inspector-host-child.mjs','loader-inspector-chromium.mjs','loader-inspector-route-build-packet.mjs','loader-inspector-route-evidence.mjs']
+    .map(name=>join(root,`scripts/rust-migration/r8/${name}`)),
+  ...['domain-pack-profile-cases.json','domain-pack-profile-cases.mjs','domain-pack-profile-host-child.mjs','domain-pack-profile-host.mjs','domain-pack-profile-chromium.mjs','domain-pack-profile-route-evidence.mjs','domain-pack-profile-route-build-packet.mjs','domain-pack-profile-route-evidence.test.mjs']
+    .map(name=>join(root,`scripts/rust-migration/r8/${name}`)),
   join(root,'scripts/core-relationship-cases.ts'),join(root,'scripts/core-relationship-operation-cases.ts'),
   join(root,'docs/helix/02-design/contracts/CONTRACT-041-relationship.md'),
   join(root,'docs/helix/02-design/contracts/CONTRACT-053-domain-pack-profiles.md'),

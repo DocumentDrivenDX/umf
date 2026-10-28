@@ -1,0 +1,5 @@
+# R8 installed route: inspectDomainPackLoader
+
+This private packet records the installed Darwin arm64 archive route for CONTRACT-057 inspectDomainPackLoader. The packet builder read the exact archive, verified its complete 1810-member map and package metadata, and pinned a zero-transform 3629-input source closure. Node v26.12.1 and Bun 1.4.3 each matched the explicit TypeScript reference across 11 cases with eight direct native calls; wrapper-rejected accessor, toJSON, and cyclic inputs dispatched zero times. Chromium 153.0.8010.12 matched the same outcomes with eight directly observed WASM calls, requested the adjacent WASM, and recorded zero external requests and page errors.
+
+The archive itself may remain in ignored build storage: validation needs no local archive bytes because the packet retains the archive SHA-256, complete member map, and pinned package manifests. This qualifies only the named private installed route and exact pinned cohort. The ledger remains at 922 open logical gaps and zero retirements. No ownership mapping or release qualification is claimed.

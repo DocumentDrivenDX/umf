@@ -1,0 +1,209 @@
+{
+  "status": "pass",
+  "artifact": {
+    "input": ".cache/sdk-distribution/umf-sdk.tgz",
+    "artifactSha256": "56f2ed6c5e5647c94337b8ee36f8b62e662fd6423ca1c7ef9763739d8a211fe9",
+    "manifestSha256": "6d2a00aa934f5b6701b03e380e6abeb0b22d8497a68f7b41fa86c362519e70ed",
+    "packageJsonSha256": "1bd5f6cc6db6a5e9ef0e395a19aa6504e8a9a130a2fcbd3faaf4effbac7bb23a",
+    "packageManifestSha256": "0d1d9eaca158d2909056f2a348bd2693f28f196b1c0343e021f85301aa2fe795",
+    "sourceClosureSha256": "d7cae37e060e960d94b054872c342042d1a088d6dec2cbb7366b094d2395e96c"
+  },
+  "chromium": {
+    "version": "153.0.8010.12",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+    "operations": {
+      "generateDomainPackSchema": {
+        "provider": "domainPackSchemaGraphJson",
+        "wasmExport": null,
+        "providerCalls": null,
+        "exactJsonParity": true,
+        "aliasGroupPointers": [
+          [
+            "/properties/artifact_collections/items/anyOf/1/properties/loader_inventory_source_id",
+            "/properties/artifact_collections/items/properties/derived_schema_ids/items",
+            "/properties/artifact_collections/items/properties/grouping/properties/description",
+            "/properties/artifact_collections/items/properties/grouping/properties/fields/items",
+            "/properties/artifact_collections/items/properties/identity/properties/description",
+            "/properties/artifact_collections/items/properties/identity/properties/fields/items",
+            "/properties/artifact_collections/items/properties/loader_inventory_source_id",
+            "/properties/artifact_collections/items/properties/media_types/items",
+            "/properties/artifact_collections/items/properties/metadata_schema_ids/items",
+            "/properties/artifact_collections/items/properties/ontology_schema_ids/items",
+            "/properties/artifact_collections/items/properties/semantic_kinds/items",
+            "/properties/artifact_collections/items/properties/source_ids/items",
+            "/properties/artifact_collections/items/properties/title"
+          ],
+          [
+            "/properties/artifact_collections/items/properties/derived_schema_ids",
+            "/properties/artifact_collections/items/properties/grouping/properties/fields",
+            "/properties/artifact_collections/items/properties/identity/properties/fields",
+            "/properties/artifact_collections/items/properties/media_types",
+            "/properties/artifact_collections/items/properties/metadata_schema_ids",
+            "/properties/artifact_collections/items/properties/ontology_schema_ids",
+            "/properties/artifact_collections/items/properties/source_ids"
+          ],
+          [
+            "/properties/artifact_collections/items/properties/grouping",
+            "/properties/artifact_collections/items/properties/identity"
+          ],
+          [
+            "/properties/artifact_collections/items/properties/grouping/properties",
+            "/properties/artifact_collections/items/properties/identity/properties"
+          ],
+          [
+            "/properties/artifact_collections/items/properties/grouping/required",
+            "/properties/artifact_collections/items/properties/identity/required"
+          ],
+          [
+            "/properties/composition/properties/components/items/properties/label",
+            "/properties/family/properties/id",
+            "/properties/family/properties/label",
+            "/properties/generator/properties/id",
+            "/properties/id",
+            "/properties/scale_presets/additionalProperties/properties/children/additionalProperties/properties/parent",
+            "/properties/schemas/items/properties/format",
+            "/properties/schemas/items/properties/id",
+            "/properties/schemas/items/properties/reference",
+            "/properties/source_bindings/items/properties/schema_id",
+            "/properties/source_bindings/items/properties/source_id"
+          ],
+          [
+            "/properties/composition/properties/components/items/properties/version",
+            "/properties/family/properties/version",
+            "/properties/generator/properties/version",
+            "/properties/version"
+          ],
+          [
+            "/properties/sources/additionalProperties/properties/format",
+            "/properties/sources/additionalProperties/properties/generator/properties/id",
+            "/properties/sources/additionalProperties/properties/license/properties/id",
+            "/properties/sources/additionalProperties/properties/license/properties/reference",
+            "/properties/sources/additionalProperties/properties/provenance/properties/publisher",
+            "/properties/sources/additionalProperties/properties/provenance/properties/retrieved_at",
+            "/properties/sources/additionalProperties/properties/provenance/properties/source_ids/items",
+            "/properties/sources/additionalProperties/properties/provenance/properties/transformations/items",
+            "/properties/sources/additionalProperties/properties/reference",
+            "/properties/sources/additionalProperties/properties/revision"
+          ]
+        ],
+        "freshInstance": true,
+        "mutationPropagation": true,
+        "aliasGroups": 8,
+        "name": "generateDomainPackSchema",
+        "arity": 0
+      },
+      "generateDatasetSourceSchema": {
+        "provider": "datasetSourceSchemaGraphJson",
+        "wasmExport": null,
+        "providerCalls": null,
+        "exactJsonParity": true,
+        "aliasGroupPointers": [
+          [
+            "/properties/format",
+            "/properties/generator/properties/id",
+            "/properties/license/properties/id",
+            "/properties/license/properties/reference",
+            "/properties/provenance/properties/publisher",
+            "/properties/provenance/properties/retrieved_at",
+            "/properties/provenance/properties/source_ids/items",
+            "/properties/provenance/properties/transformations/items",
+            "/properties/reference",
+            "/properties/revision"
+          ]
+        ],
+        "freshInstance": true,
+        "mutationPropagation": true,
+        "aliasGroups": 1,
+        "name": "generateDatasetSourceSchema",
+        "arity": 0
+      },
+      "generateArtifactCollectionSchema": {
+        "provider": "artifactCollectionSchemaGraphJson",
+        "wasmExport": null,
+        "providerCalls": null,
+        "exactJsonParity": true,
+        "aliasGroupPointers": [
+          [
+            "/anyOf/1/properties/loader_inventory_source_id",
+            "/properties/derived_schema_ids/items",
+            "/properties/grouping/properties/description",
+            "/properties/grouping/properties/fields/items",
+            "/properties/identity/properties/description",
+            "/properties/identity/properties/fields/items",
+            "/properties/loader_inventory_source_id",
+            "/properties/media_types/items",
+            "/properties/metadata_schema_ids/items",
+            "/properties/ontology_schema_ids/items",
+            "/properties/semantic_kinds/items",
+            "/properties/source_ids/items",
+            "/properties/title"
+          ],
+          [
+            "/properties/derived_schema_ids",
+            "/properties/grouping/properties/fields",
+            "/properties/identity/properties/fields",
+            "/properties/media_types",
+            "/properties/metadata_schema_ids",
+            "/properties/ontology_schema_ids",
+            "/properties/source_ids"
+          ],
+          [
+            "/properties/grouping",
+            "/properties/identity"
+          ],
+          [
+            "/properties/grouping/properties",
+            "/properties/identity/properties"
+          ],
+          [
+            "/properties/grouping/required",
+            "/properties/identity/required"
+          ]
+        ],
+        "freshInstance": true,
+        "mutationPropagation": true,
+        "aliasGroups": 5,
+        "name": "generateArtifactCollectionSchema",
+        "arity": 0
+      },
+      "generateDomainPackLoaderSchema": {
+        "provider": "domainPackLoaderSchemaGraphJson",
+        "wasmExport": null,
+        "providerCalls": null,
+        "exactJsonParity": true,
+        "aliasGroupPointers": [],
+        "freshInstance": true,
+        "mutationPropagation": true,
+        "aliasGroups": 0,
+        "name": "generateDomainPackLoaderSchema",
+        "arity": 0
+      },
+      "generateLoaderInventorySchema": {
+        "provider": "loaderInventorySchemaGraphJson",
+        "wasmExport": null,
+        "providerCalls": null,
+        "exactJsonParity": true,
+        "aliasGroupPointers": [
+          [
+            "/properties/allowed_hosts/items",
+            "/properties/entries/items/properties/id",
+            "/properties/entries/items/properties/url",
+            "/properties/id"
+          ]
+        ],
+        "freshInstance": true,
+        "mutationPropagation": true,
+        "aliasGroups": 1,
+        "name": "generateLoaderInventorySchema",
+        "arity": 0
+      }
+    },
+    "wasmRequested": true,
+    "wasmCounters": "unobserved",
+    "routeTrace": "V4 source binding and exact public bundle execution were exercised; direct WASM provider counters were unavailable.",
+    "nodeGlobalsAbsent": true,
+    "requireAbsent": true,
+    "externalRequests": 0,
+    "pageErrors": 0
+  }
+}

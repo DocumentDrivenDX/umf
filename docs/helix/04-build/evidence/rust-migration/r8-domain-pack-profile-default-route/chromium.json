@@ -1,0 +1,644 @@
+{
+  "status": "pass",
+  "artifact": {
+    "manifestSha256": "6d2a00aa934f5b6701b03e380e6abeb0b22d8497a68f7b41fa86c362519e70ed",
+    "packageJsonSha256": "1bd5f6cc6db6a5e9ef0e395a19aa6504e8a9a130a2fcbd3faaf4effbac7bb23a",
+    "packageManifestSha256": "0d1d9eaca158d2909056f2a348bd2693f28f196b1c0343e021f85301aa2fe795",
+    "sourceClosureSha256": "d7cae37e060e960d94b054872c342042d1a088d6dec2cbb7366b094d2395e96c"
+  },
+  "chromium": {
+    "version": "153.0.8010.12",
+    "status": "pass",
+    "functionNames": [
+      "inspectDomainPack",
+      "requireDomainPackProfile"
+    ],
+    "wasmExport": "inspectDomainPackProfileWire",
+    "wasmExportSeen": true,
+    "wasmDispatches": 42,
+    "expectedWasmDispatches": 42,
+    "accessorInvoked": 0,
+    "toJsonInvoked": 0,
+    "cases": [
+      {
+        "id": "minimal-valid-incomplete",
+        "inspection": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": []
+        },
+        "requirement": {
+          "kind": "returned",
+          "value": {
+            "valid": true,
+            "complete": false,
+            "diagnostics": []
+          }
+        },
+        "wasmDispatches": 2
+      },
+      {
+        "id": "fixed-valid-complete",
+        "inspection": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "requirement": {
+          "kind": "returned",
+          "value": {
+            "valid": true,
+            "complete": true,
+            "diagnostics": []
+          }
+        },
+        "wasmDispatches": 2
+      },
+      {
+        "id": "unknown-annotations-retained",
+        "inspection": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "requirement": {
+          "kind": "returned",
+          "value": {
+            "valid": true,
+            "complete": true,
+            "diagnostics": []
+          }
+        },
+        "wasmDispatches": 2
+      },
+      {
+        "id": "simultaneous-diagnostics-order",
+        "inspection": {
+          "valid": false,
+          "complete": false,
+          "diagnostics": [
+            "Duplicate artifact collection identity",
+            "Unresolved artifact source: missing-source",
+            "Unresolved artifact inventory source",
+            "Unresolved artifact schema: missing-schema",
+            "Artifact schema format mismatch: table",
+            "Duplicate schema identity",
+            "Unresolved source binding",
+            "Duplicate component identity",
+            "Self composition is not supported",
+            "Duplicate loader artifact",
+            "Incomplete loader artifact closure",
+            "Unresolved preservation derivation schema",
+            "Unsupported execution profile fields",
+            "Unsupported execution profile version",
+            "Unsupported execution profile mode",
+            "Missing execution qualification",
+            "Missing schema targets",
+            "Unresolved source inclusion"
+          ]
+        },
+        "requirement": {
+          "kind": "threw",
+          "name": "UmfError",
+          "code": "DOMAIN_PACK_PROFILE",
+          "path": "",
+          "message": "Duplicate artifact collection identity; Unresolved artifact source: missing-source; Unresolved artifact inventory source; Unresolved artifact schema: missing-schema; Artifact schema format mismatch: table; Duplicate schema identity; Unresolved source binding; Duplicate component identity; Self composition is not supported; Duplicate loader artifact; Incomplete loader artifact closure; Unresolved preservation derivation schema; Unsupported execution profile fields; Unsupported execution profile version; Unsupported execution profile mode; Missing execution qualification; Missing schema targets; Unresolved source inclusion",
+          "string": "UmfError: Duplicate artifact collection identity; Unresolved artifact source: missing-source; Unresolved artifact inventory source; Unresolved artifact schema: missing-schema; Artifact schema format mismatch: table; Duplicate schema identity; Unresolved source binding; Duplicate component identity; Self composition is not supported; Duplicate loader artifact; Incomplete loader artifact closure; Unresolved preservation derivation schema; Unsupported execution profile fields; Unsupported execution profile version; Unsupported execution profile mode; Missing execution qualification; Missing schema targets; Unresolved source inclusion"
+        },
+        "wasmDispatches": 2
+      },
+      {
+        "id": "malformed-execution-profile-short-circuit",
+        "inspection": {
+          "valid": false,
+          "complete": false,
+          "diagnostics": [
+            "Malformed execution profile"
+          ]
+        },
+        "requirement": {
+          "kind": "threw",
+          "name": "UmfError",
+          "code": "DOMAIN_PACK_PROFILE",
+          "path": "",
+          "message": "Malformed execution profile",
+          "string": "UmfError: Malformed execution profile"
+        },
+        "wasmDispatches": 2
+      },
+      {
+        "id": "getter-not-invoked",
+        "inspection": {
+          "valid": false,
+          "complete": false,
+          "diagnostics": [
+            "UmfError: Hidden fields and accessors cannot be serialized faithfully"
+          ]
+        },
+        "requirement": {
+          "kind": "threw",
+          "name": "UmfError",
+          "code": "DOMAIN_PACK_PROFILE",
+          "path": "",
+          "message": "UmfError: Hidden fields and accessors cannot be serialized faithfully",
+          "string": "UmfError: UmfError: Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "wasmDispatches": 0,
+        "hostStateAfter": {
+          "getterCalls": 0,
+          "toJSONCalls": 0
+        }
+      },
+      {
+        "id": "tojson-not-invoked",
+        "inspection": {
+          "valid": false,
+          "complete": false,
+          "diagnostics": [
+            "UmfError: Value is not JSON-compatible"
+          ]
+        },
+        "requirement": {
+          "kind": "threw",
+          "name": "UmfError",
+          "code": "DOMAIN_PACK_PROFILE",
+          "path": "",
+          "message": "UmfError: Value is not JSON-compatible",
+          "string": "UmfError: UmfError: Value is not JSON-compatible"
+        },
+        "wasmDispatches": 0,
+        "hostStateAfter": {
+          "getterCalls": 0,
+          "toJSONCalls": 0
+        }
+      },
+      {
+        "id": "custom-prototype-refused",
+        "inspection": {
+          "valid": false,
+          "complete": false,
+          "diagnostics": [
+            "UmfError: Custom object prototype"
+          ]
+        },
+        "requirement": {
+          "kind": "threw",
+          "name": "UmfError",
+          "code": "DOMAIN_PACK_PROFILE",
+          "path": "",
+          "message": "UmfError: Custom object prototype",
+          "string": "UmfError: UmfError: Custom object prototype"
+        },
+        "wasmDispatches": 0,
+        "hostStateAfter": {
+          "getterCalls": 0,
+          "toJSONCalls": 0
+        }
+      },
+      {
+        "id": "symbol-key-refused",
+        "inspection": {
+          "valid": false,
+          "complete": false,
+          "diagnostics": [
+            "UmfError: Symbol keys are not JSON-compatible"
+          ]
+        },
+        "requirement": {
+          "kind": "threw",
+          "name": "UmfError",
+          "code": "DOMAIN_PACK_PROFILE",
+          "path": "",
+          "message": "UmfError: Symbol keys are not JSON-compatible",
+          "string": "UmfError: UmfError: Symbol keys are not JSON-compatible"
+        },
+        "wasmDispatches": 0,
+        "hostStateAfter": {
+          "getterCalls": 0,
+          "toJSONCalls": 0
+        }
+      },
+      {
+        "id": "sparse-array-refused",
+        "inspection": {
+          "valid": false,
+          "complete": false,
+          "diagnostics": [
+            "UmfError: Sparse arrays are not JSON values"
+          ]
+        },
+        "requirement": {
+          "kind": "threw",
+          "name": "UmfError",
+          "code": "DOMAIN_PACK_PROFILE",
+          "path": "",
+          "message": "UmfError: Sparse arrays are not JSON values",
+          "string": "UmfError: UmfError: Sparse arrays are not JSON values"
+        },
+        "wasmDispatches": 0,
+        "hostStateAfter": {
+          "getterCalls": 0,
+          "toJSONCalls": 0
+        }
+      },
+      {
+        "id": "cycle-refused",
+        "inspection": {
+          "valid": false,
+          "complete": false,
+          "diagnostics": [
+            "UmfError: Cyclic value"
+          ]
+        },
+        "requirement": {
+          "kind": "threw",
+          "name": "UmfError",
+          "code": "DOMAIN_PACK_PROFILE",
+          "path": "",
+          "message": "UmfError: Cyclic value",
+          "string": "UmfError: UmfError: Cyclic value"
+        },
+        "wasmDispatches": 0,
+        "hostStateAfter": {
+          "getterCalls": 0,
+          "toJSONCalls": 0
+        }
+      },
+      {
+        "id": "nonfinite-number-refused",
+        "inspection": {
+          "valid": false,
+          "complete": false,
+          "diagnostics": [
+            "UmfError: Number outside the core interoperable numeric profile"
+          ]
+        },
+        "requirement": {
+          "kind": "threw",
+          "name": "UmfError",
+          "code": "DOMAIN_PACK_PROFILE",
+          "path": "",
+          "message": "UmfError: Number outside the core interoperable numeric profile",
+          "string": "UmfError: UmfError: Number outside the core interoperable numeric profile"
+        },
+        "wasmDispatches": 0,
+        "hostStateAfter": {
+          "getterCalls": 0,
+          "toJSONCalls": 0
+        }
+      },
+      {
+        "id": "negative-zero-refused",
+        "inspection": {
+          "valid": false,
+          "complete": false,
+          "diagnostics": [
+            "UmfError: Number outside the core interoperable numeric profile"
+          ]
+        },
+        "requirement": {
+          "kind": "threw",
+          "name": "UmfError",
+          "code": "DOMAIN_PACK_PROFILE",
+          "path": "",
+          "message": "UmfError: Number outside the core interoperable numeric profile",
+          "string": "UmfError: UmfError: Number outside the core interoperable numeric profile"
+        },
+        "wasmDispatches": 0,
+        "hostStateAfter": {
+          "getterCalls": 0,
+          "toJSONCalls": 0
+        }
+      },
+      {
+        "id": "unsafe-integer-refused",
+        "inspection": {
+          "valid": false,
+          "complete": false,
+          "diagnostics": [
+            "UmfError: Number outside the core interoperable numeric profile"
+          ]
+        },
+        "requirement": {
+          "kind": "threw",
+          "name": "UmfError",
+          "code": "DOMAIN_PACK_PROFILE",
+          "path": "",
+          "message": "UmfError: Number outside the core interoperable numeric profile",
+          "string": "UmfError: UmfError: Number outside the core interoperable numeric profile"
+        },
+        "wasmDispatches": 0,
+        "hostStateAfter": {
+          "getterCalls": 0,
+          "toJSONCalls": 0
+        }
+      },
+      {
+        "id": "depth-limit-refused",
+        "inspection": {
+          "valid": false,
+          "complete": false,
+          "diagnostics": [
+            "UmfError: JSON structural limit exceeded"
+          ]
+        },
+        "requirement": {
+          "kind": "threw",
+          "name": "UmfError",
+          "code": "DOMAIN_PACK_PROFILE",
+          "path": "",
+          "message": "UmfError: JSON structural limit exceeded",
+          "string": "UmfError: UmfError: JSON structural limit exceeded"
+        },
+        "wasmDispatches": 0,
+        "hostStateAfter": {
+          "getterCalls": 0,
+          "toJSONCalls": 0
+        }
+      },
+      {
+        "id": "catalog-pack:legal",
+        "inspection": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "requirement": {
+          "kind": "returned",
+          "value": {
+            "valid": true,
+            "complete": true,
+            "diagnostics": []
+          }
+        },
+        "wasmDispatches": 2
+      },
+      {
+        "id": "catalog-pack:medical",
+        "inspection": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "requirement": {
+          "kind": "returned",
+          "value": {
+            "valid": true,
+            "complete": true,
+            "diagnostics": []
+          }
+        },
+        "wasmDispatches": 2
+      },
+      {
+        "id": "catalog-pack:commerce",
+        "inspection": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "requirement": {
+          "kind": "returned",
+          "value": {
+            "valid": true,
+            "complete": true,
+            "diagnostics": []
+          }
+        },
+        "wasmDispatches": 2
+      },
+      {
+        "id": "catalog-pack:supply-chain",
+        "inspection": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "requirement": {
+          "kind": "returned",
+          "value": {
+            "valid": true,
+            "complete": true,
+            "diagnostics": []
+          }
+        },
+        "wasmDispatches": 2
+      },
+      {
+        "id": "catalog-pack:cybersecurity",
+        "inspection": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "requirement": {
+          "kind": "returned",
+          "value": {
+            "valid": true,
+            "complete": true,
+            "diagnostics": []
+          }
+        },
+        "wasmDispatches": 2
+      },
+      {
+        "id": "catalog-pack:manufacturing",
+        "inspection": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "requirement": {
+          "kind": "returned",
+          "value": {
+            "valid": true,
+            "complete": true,
+            "diagnostics": []
+          }
+        },
+        "wasmDispatches": 2
+      },
+      {
+        "id": "catalog-pack:payments",
+        "inspection": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "requirement": {
+          "kind": "returned",
+          "value": {
+            "valid": true,
+            "complete": true,
+            "diagnostics": []
+          }
+        },
+        "wasmDispatches": 2
+      },
+      {
+        "id": "catalog-pack:education",
+        "inspection": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "requirement": {
+          "kind": "returned",
+          "value": {
+            "valid": true,
+            "complete": true,
+            "diagnostics": []
+          }
+        },
+        "wasmDispatches": 2
+      },
+      {
+        "id": "catalog-pack:transit",
+        "inspection": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "requirement": {
+          "kind": "returned",
+          "value": {
+            "valid": true,
+            "complete": true,
+            "diagnostics": []
+          }
+        },
+        "wasmDispatches": 2
+      },
+      {
+        "id": "catalog-pack:real-estate",
+        "inspection": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "requirement": {
+          "kind": "returned",
+          "value": {
+            "valid": true,
+            "complete": true,
+            "diagnostics": []
+          }
+        },
+        "wasmDispatches": 2
+      },
+      {
+        "id": "catalog-pack:energy",
+        "inspection": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "requirement": {
+          "kind": "returned",
+          "value": {
+            "valid": true,
+            "complete": true,
+            "diagnostics": []
+          }
+        },
+        "wasmDispatches": 2
+      },
+      {
+        "id": "catalog-pack:hr",
+        "inspection": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "requirement": {
+          "kind": "returned",
+          "value": {
+            "valid": true,
+            "complete": true,
+            "diagnostics": []
+          }
+        },
+        "wasmDispatches": 2
+      },
+      {
+        "id": "catalog-pack:martech",
+        "inspection": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "requirement": {
+          "kind": "returned",
+          "value": {
+            "valid": true,
+            "complete": true,
+            "diagnostics": []
+          }
+        },
+        "wasmDispatches": 2
+      },
+      {
+        "id": "catalog-pack:construction",
+        "inspection": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "requirement": {
+          "kind": "returned",
+          "value": {
+            "valid": true,
+            "complete": true,
+            "diagnostics": []
+          }
+        },
+        "wasmDispatches": 2
+      },
+      {
+        "id": "catalog-pack:ecology",
+        "inspection": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "requirement": {
+          "kind": "returned",
+          "value": {
+            "valid": true,
+            "complete": true,
+            "diagnostics": []
+          }
+        },
+        "wasmDispatches": 2
+      },
+      {
+        "id": "catalog-pack:archaeology",
+        "inspection": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "requirement": {
+          "kind": "returned",
+          "value": {
+            "valid": true,
+            "complete": true,
+            "diagnostics": []
+          }
+        },
+        "wasmDispatches": 2
+      }
+    ],
+    "nodeGlobalsAbsent": true,
+    "wasmRequested": true,
+    "externalRequests": 0,
+    "pageErrors": 0,
+    "requests": [
+      "/",
+      "/profile-probe.js",
+      "/umf-browser.js",
+      "/umf_core_wasm_bg.wasm",
+      "/umf.js"
+    ]
+  }
+}

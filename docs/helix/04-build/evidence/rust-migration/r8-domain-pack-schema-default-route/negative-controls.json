@@ -1,0 +1,49 @@
+{
+  "format": "umf.r8.schema-graph-negative-controls/1",
+  "status": "pass",
+  "baseline": {
+    "status": "pass"
+  },
+  "controls": [
+    {
+      "name": "source closure mutation",
+      "rejected": true,
+      "reason": "source closure is not a current fixed point"
+    },
+    {
+      "name": "archive member omission",
+      "rejected": true,
+      "reason": "archive member inventory incomplete"
+    },
+    {
+      "name": "Node dispatch undercount",
+      "rejected": true,
+      "reason": "Node generateDomainPackSchema must directly observe two native provider calls"
+    },
+    {
+      "name": "Bun dispatch undercount",
+      "rejected": true,
+      "reason": "Node generateDomainPackSchema must directly observe two native provider calls"
+    },
+    {
+      "name": "shared Node/Bun parity missing",
+      "rejected": true,
+      "reason": "shared Node/Bun host replay did not assert exact receipt parity"
+    },
+    {
+      "name": "Chromium counter overclaim",
+      "rejected": true,
+      "reason": "Chromium outcome must record WASM provider counters as unobserved"
+    },
+    {
+      "name": "browser isolation failure",
+      "rejected": true,
+      "reason": "Chromium browser isolation/adjacent WASM request missing"
+    },
+    {
+      "name": "checksum tamper",
+      "rejected": true,
+      "reason": "packet checksum mismatch: README.md"
+    }
+  ]
+}

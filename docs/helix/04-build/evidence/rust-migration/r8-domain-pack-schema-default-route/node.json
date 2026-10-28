@@ -1,0 +1,204 @@
+{
+  "status": "pass",
+  "runtime": "v26.12.1",
+  "artifact": {
+    "input": ".cache/sdk-distribution/umf-sdk.tgz",
+    "artifactSha256": "56f2ed6c5e5647c94337b8ee36f8b62e662fd6423ca1c7ef9763739d8a211fe9",
+    "manifestSha256": "6d2a00aa934f5b6701b03e380e6abeb0b22d8497a68f7b41fa86c362519e70ed",
+    "packageJsonSha256": "1bd5f6cc6db6a5e9ef0e395a19aa6504e8a9a130a2fcbd3faaf4effbac7bb23a",
+    "packageManifestSha256": "0d1d9eaca158d2909056f2a348bd2693f28f196b1c0343e021f85301aa2fe795",
+    "sourceClosureSha256": "d7cae37e060e960d94b054872c342042d1a088d6dec2cbb7366b094d2395e96c"
+  },
+  "operations": {
+    "generateDomainPackSchema": {
+      "provider": "domainPackSchemaGraphJson",
+      "providerCalls": 2,
+      "providerOutputSha256": "4b5b7e1fcd2717df4ac9a25a8c126c899ad0206bade2cd067f047da516c4507b",
+      "aliasGroups": 8,
+      "aliasGroupPointers": [
+        [
+          "/properties/artifact_collections/items/anyOf/1/properties/loader_inventory_source_id",
+          "/properties/artifact_collections/items/properties/derived_schema_ids/items",
+          "/properties/artifact_collections/items/properties/grouping/properties/description",
+          "/properties/artifact_collections/items/properties/grouping/properties/fields/items",
+          "/properties/artifact_collections/items/properties/identity/properties/description",
+          "/properties/artifact_collections/items/properties/identity/properties/fields/items",
+          "/properties/artifact_collections/items/properties/loader_inventory_source_id",
+          "/properties/artifact_collections/items/properties/media_types/items",
+          "/properties/artifact_collections/items/properties/metadata_schema_ids/items",
+          "/properties/artifact_collections/items/properties/ontology_schema_ids/items",
+          "/properties/artifact_collections/items/properties/semantic_kinds/items",
+          "/properties/artifact_collections/items/properties/source_ids/items",
+          "/properties/artifact_collections/items/properties/title"
+        ],
+        [
+          "/properties/artifact_collections/items/properties/derived_schema_ids",
+          "/properties/artifact_collections/items/properties/grouping/properties/fields",
+          "/properties/artifact_collections/items/properties/identity/properties/fields",
+          "/properties/artifact_collections/items/properties/media_types",
+          "/properties/artifact_collections/items/properties/metadata_schema_ids",
+          "/properties/artifact_collections/items/properties/ontology_schema_ids",
+          "/properties/artifact_collections/items/properties/source_ids"
+        ],
+        [
+          "/properties/artifact_collections/items/properties/grouping",
+          "/properties/artifact_collections/items/properties/identity"
+        ],
+        [
+          "/properties/artifact_collections/items/properties/grouping/properties",
+          "/properties/artifact_collections/items/properties/identity/properties"
+        ],
+        [
+          "/properties/artifact_collections/items/properties/grouping/required",
+          "/properties/artifact_collections/items/properties/identity/required"
+        ],
+        [
+          "/properties/composition/properties/components/items/properties/label",
+          "/properties/family/properties/id",
+          "/properties/family/properties/label",
+          "/properties/generator/properties/id",
+          "/properties/id",
+          "/properties/scale_presets/additionalProperties/properties/children/additionalProperties/properties/parent",
+          "/properties/schemas/items/properties/format",
+          "/properties/schemas/items/properties/id",
+          "/properties/schemas/items/properties/reference",
+          "/properties/source_bindings/items/properties/schema_id",
+          "/properties/source_bindings/items/properties/source_id"
+        ],
+        [
+          "/properties/composition/properties/components/items/properties/version",
+          "/properties/family/properties/version",
+          "/properties/generator/properties/version",
+          "/properties/version"
+        ],
+        [
+          "/properties/sources/additionalProperties/properties/format",
+          "/properties/sources/additionalProperties/properties/generator/properties/id",
+          "/properties/sources/additionalProperties/properties/license/properties/id",
+          "/properties/sources/additionalProperties/properties/license/properties/reference",
+          "/properties/sources/additionalProperties/properties/provenance/properties/publisher",
+          "/properties/sources/additionalProperties/properties/provenance/properties/retrieved_at",
+          "/properties/sources/additionalProperties/properties/provenance/properties/source_ids/items",
+          "/properties/sources/additionalProperties/properties/provenance/properties/transformations/items",
+          "/properties/sources/additionalProperties/properties/reference",
+          "/properties/sources/additionalProperties/properties/revision"
+        ]
+      ],
+      "exactJsonParity": true,
+      "freshInstance": true,
+      "mutationPropagation": true,
+      "groups": 8,
+      "name": "generateDomainPackSchema",
+      "arity": 0
+    },
+    "generateDatasetSourceSchema": {
+      "provider": "datasetSourceSchemaGraphJson",
+      "providerCalls": 2,
+      "providerOutputSha256": "39f78b4d425f682043407cbbf1d2641f039aba35ee395bfcf5f2abec6c2ff09c",
+      "aliasGroups": 1,
+      "aliasGroupPointers": [
+        [
+          "/properties/format",
+          "/properties/generator/properties/id",
+          "/properties/license/properties/id",
+          "/properties/license/properties/reference",
+          "/properties/provenance/properties/publisher",
+          "/properties/provenance/properties/retrieved_at",
+          "/properties/provenance/properties/source_ids/items",
+          "/properties/provenance/properties/transformations/items",
+          "/properties/reference",
+          "/properties/revision"
+        ]
+      ],
+      "exactJsonParity": true,
+      "freshInstance": true,
+      "mutationPropagation": true,
+      "groups": 1,
+      "name": "generateDatasetSourceSchema",
+      "arity": 0
+    },
+    "generateArtifactCollectionSchema": {
+      "provider": "artifactCollectionSchemaGraphJson",
+      "providerCalls": 2,
+      "providerOutputSha256": "ed5ce88db128b83daf1304684abded88a12da4eaa6663140d6b2c5043855d386",
+      "aliasGroups": 5,
+      "aliasGroupPointers": [
+        [
+          "/anyOf/1/properties/loader_inventory_source_id",
+          "/properties/derived_schema_ids/items",
+          "/properties/grouping/properties/description",
+          "/properties/grouping/properties/fields/items",
+          "/properties/identity/properties/description",
+          "/properties/identity/properties/fields/items",
+          "/properties/loader_inventory_source_id",
+          "/properties/media_types/items",
+          "/properties/metadata_schema_ids/items",
+          "/properties/ontology_schema_ids/items",
+          "/properties/semantic_kinds/items",
+          "/properties/source_ids/items",
+          "/properties/title"
+        ],
+        [
+          "/properties/derived_schema_ids",
+          "/properties/grouping/properties/fields",
+          "/properties/identity/properties/fields",
+          "/properties/media_types",
+          "/properties/metadata_schema_ids",
+          "/properties/ontology_schema_ids",
+          "/properties/source_ids"
+        ],
+        [
+          "/properties/grouping",
+          "/properties/identity"
+        ],
+        [
+          "/properties/grouping/properties",
+          "/properties/identity/properties"
+        ],
+        [
+          "/properties/grouping/required",
+          "/properties/identity/required"
+        ]
+      ],
+      "exactJsonParity": true,
+      "freshInstance": true,
+      "mutationPropagation": true,
+      "groups": 5,
+      "name": "generateArtifactCollectionSchema",
+      "arity": 0
+    },
+    "generateDomainPackLoaderSchema": {
+      "provider": "domainPackLoaderSchemaGraphJson",
+      "providerCalls": 2,
+      "providerOutputSha256": "24a54b1d52614f8047324452bf4ee2894ada3bba40e7f0e6f6a676cca0bdec4a",
+      "aliasGroups": 0,
+      "aliasGroupPointers": [],
+      "exactJsonParity": true,
+      "freshInstance": true,
+      "mutationPropagation": true,
+      "groups": 0,
+      "name": "generateDomainPackLoaderSchema",
+      "arity": 0
+    },
+    "generateLoaderInventorySchema": {
+      "provider": "loaderInventorySchemaGraphJson",
+      "providerCalls": 2,
+      "providerOutputSha256": "149a410885df2ea99650dfe1c8e3ac991f0a6392d8446f6cef370852cf5ccd66",
+      "aliasGroups": 1,
+      "aliasGroupPointers": [
+        [
+          "/properties/allowed_hosts/items",
+          "/properties/entries/items/properties/id",
+          "/properties/entries/items/properties/url",
+          "/properties/id"
+        ]
+      ],
+      "exactJsonParity": true,
+      "freshInstance": true,
+      "mutationPropagation": true,
+      "groups": 1,
+      "name": "generateLoaderInventorySchema",
+      "arity": 0
+    }
+  }
+}

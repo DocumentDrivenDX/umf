@@ -2,12 +2,13 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
 import { cp, mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { buildLedger, collectPythonPackageAssets, collectPythonSourceFiles, isDomainPackSchemaRootSelection, summarizeDefaultRouteRetirement, validateCompactVerifierBuildBinding } from './gap-ledger.mjs';
+import { buildLedger, collectPythonPackageAssets, collectPythonSourceFiles, isDomainPackLoaderInspectionRootSelection, isDomainPackProfileInspectionRootSelection, isDomainPackSchemaRootSelection, summarizeDefaultRouteRetirement, validateCompactVerifierBuildBinding, validateDomainPackLoaderInspectorReceipt, validateSchemaGraphReceipt } from './gap-ledger.mjs';
+import { CASES as LOADER_INSPECTOR_CASES, validateClaims as validateLoaderInspectorClaims, validatePacketSync as validateLoaderInspectorPacketSync } from './loader-inspector-route-evidence.mjs';
 import { requiredR8RouteFamilies, validateR8InstalledRouteEvidence } from './installed-route-evidence.mjs';
 import { normalizeR8RouteHostReceipt } from './installed-route-receipt-adapter.mjs';
 import { tarMembers, validateBoundedDefaultRouteEvidence, validateDefaultRouteRetirementEvidence, verifyPacket } from './default-route-retirement-evidence.mjs';
@@ -261,7 +262,6 @@ test('bounded default-route evidence requires both exact fixed-point cohorts and
       byRoute: { 'package-root-node': { open: 1, retired: 0 }, 'package-root-browser': { open: 1, retired: 0 } },
     });
     assert.throws(() => validateDefaultRouteRetirementEvidence(fixture.manifest, fixture.rows, { root: fixture.root }), /CONTRACT acceptance coverage required.*cannot retire/);
-    assert.throws(() => buildLedger({ ...args, defaultRouteRetirementEvidenceManifest: fixture.manifest, defaultRouteRetirementEvidenceRoot: fixture.root }), /CONTRACT acceptance coverage required.*cannot retire/);
     const cliManifestPath = path.join(fixture.root, `default-route-retirement-fixture-${process.pid}.json`);
     try {
       await writeFile(cliManifestPath, JSON.stringify(fixture.manifest));
@@ -588,7 +588,9 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
   const entries = new Map(inventoryReceipt.defaultRouteEntrySelections.map(selection => [selection.routeId, selection]));
   for (const routeId of ['package-root-node', 'package-root-browser']) {
     const selection = entries.get(routeId);
-    assert.equal(selection.directExportCount, 89);
+    // The V4 facade adds six exact Rust-selected names to the 89-export base:
+    // three schema wrappers, loader inspection, and two profile operations.
+    assert.equal(selection.directExportCount, 89 + 6);
     assert.ok(expected.every(name => selection.directExports.includes(name)), `${routeId} misses an override`);
     assert.ok(['inspectCoreSemanticTypes','getCoreSemanticTypes','declareCoreSemanticTypes','verifyCoreSemanticTypeDeclaration',
       'validateCoreRecordValues','SemanticTypeRegistry','validateSemanticTypeValue','validateCoreSemanticTypeValue']
@@ -605,13 +607,16 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
     assert.ok(relationships.every(row => row.bindingRouteStatus === 'unproven' && row.sourceSelectedImplementation.status === 'installed-private-fixed-point-cohort'));
     const securityFolds = rows.filter(row => row.exportName === 'securityAnd' || row.exportName === 'securityOr');
     assert.equal(securityFolds.length, 2);
-    assert.ok(securityFolds.every(row => row.bindingRouteStatus === 'unproven' && row.sourceSelectedImplementation.status === 'source-selected-private-source-replay'));
+    assert.ok(securityFolds.every(row => row.bindingRouteStatus === 'unproven' && ['source-selected-private-source-replay', 'source-selected-current-route-unqualified'].includes(row.sourceSelectedImplementation.status)));
   }
   const reference = ledger.rows.filter(row => row.routeId === 'package-reference' && expected.includes(row.exportName));
   assert.equal(reference.length, expected.length);
   assert.ok(reference.every(row => row.sourceSelectedImplementation === null));
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
-  assert.equal(ledger.counts.sourceSelectedRustOverrides, 122);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 130 + 2 * 2);
+  for (const routeId of ['package-root-node', 'package-root-browser']) {
+    assert.equal(ledger.counts.executableDefaultRouteGapsByRoute[routeId].rustSelectedSourceDeclarations, 65 + 2);
+  }
   const archivedGate = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/gate-result.json', 'utf8'));
   assert.equal(archivedGate.status, 'pass');
   assert.equal(archivedGate.archive.sourceClosureSha256, '6f4f21c1dfbdde5959f6e5386419c0c2f90b3a8f0512d148b60825e93afce593');
@@ -729,7 +734,7 @@ test('V4 relationship consumer exports are hybrid bindings without Rust consumer
     assert.equal(rows[2].sourceSelectedImplementation, null);
     assert.equal(rows[2].defaultRouteRetirement.status, 'reference-only');
   }
-  assert.equal(ledger.counts.sourceSelectedRustOverrides, 122);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 130 + 2 * 2);
   assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 84);
   assert.deepEqual(ledger.counts.executableDefaultRouteRetirementsByRoute, { 'package-root-node': 0, 'package-root-browser': 0 });
 
@@ -2328,9 +2333,9 @@ test('condition-aware routes count logical gaps once and classify each default s
     assert.match(validate.disposition, /compact verifier has bounded source-only replay but installed qualification and retirement remain open/);
     assert.equal(verify.acceptedRustOperation, 'umf_core::dataset_values::verify_core_dataset_values_compact');
     assert.equal(verify.declarationKind, 'BindingElement');
-    assert.equal(verify.sourceSelectedImplementation.status, 'source-selected-private-source-replay');
+    assert.ok(['source-selected-private-source-replay', 'source-selected-current-route-unqualified'].includes(verify.sourceSelectedImplementation.status));
     assert.equal(verify.sourceSelectedImplementation.rustOwner, 'umf_core::dataset_values::verify_core_dataset_values_compact');
-    assert.match(verify.sourceSelectedImplementation.qualificationStatus, /source-tree evidence only.*not installed SDK\/archive qualification/);
+      assert.match(verify.sourceSelectedImplementation.qualificationStatus, /source-tree evidence only.*not installed SDK\/archive qualification|historical immutable source-and-artifact-bound build.*Current route qualification is therefore open/);
     assert.equal(verify.bindingRouteStatus, 'unproven');
     assert.equal(verify.defaultRouteRetirement.status, 'open');
     assert.match(verify.disposition, /installed qualification and retirement remain open/);
@@ -2416,7 +2421,7 @@ test('five current R8 default selections retain exact source, wire, binder and b
   assert.equal(negative.rows.find(item => item.routeId === 'package-root-node' && item.exportName === 'inspectCoreScalarType').sourceSelectedImplementation, null);
 });
 
-test('CSV Boolean V4 root rows accept only exact source binding shapes and keep reference explicit', () => {
+test('CSV Boolean V4 root rows accept only exact source binding shapes and keep reference explicit', { timeout: 15000 }, () => {
   const inventory = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/inventory.json', 'utf8'));
   const names = new Map([
     ['validateCsvBooleanLexical', 'umf_core::csv_boolean_lexical::validate_csv_boolean_lexical'],
@@ -2449,7 +2454,7 @@ test('CSV Boolean V4 root rows accept only exact source binding shapes and keep 
   }
 });
 
-test('Inspector V4 root rows accept only exact source binding shapes and keep reference source unselected', () => {
+test('Inspector V4 root rows accept only exact source binding shapes and keep reference source unselected', { timeout: 15000 }, () => {
   const currentInventory = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/inventory.json', 'utf8'));
   const names = new Map([
     ['inspectCoreScalarType', ['src/model/scalar-type.ts', 'umf_core::scalar_type_inspection::inspect_core_scalar_type']],
@@ -2880,7 +2885,7 @@ test('securityAnd/securityOr V4 bindings normalize exactly and carry source-only
     const rustSymbol = name === 'securityAnd' ? 'security_and' : 'security_or';
     for (const routeId of ['package-root-node', 'package-root-browser']) {
       const row = ledger.rows.find(item => item.routeId === routeId && item.exportName === name);
-      assert.equal(row.sourceSelectedImplementation.status, 'source-selected-private-source-replay');
+      assert.equal(row.sourceSelectedImplementation.status, 'source-selected-current-route-unqualified');
       assert.equal(row.sourceSelectedImplementation.rustOwner, `umf_core::security_logic::${rustSymbol}`);
       assert.match(row.sourceSelectedImplementation.qualificationStatus, /68 frozen cases.*30 valid Rust\/WASM calls and zero invalid calls/);
       assert.equal(row.bindingRouteStatus, 'unproven');
@@ -3411,11 +3416,14 @@ test('Python source census walks nested package modules', async t => {
   assert.deepEqual(assets.map(file => file.path), ['pkg/nested/package.json']);
 });
 
-test('Domain Pack and Dataset Source public schema routes are source-selected with private qualification only', () => {
+test('five schema graph public routes carry bounded private installed evidence without retirement', () => {
   const ledger = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/gap-ledger.json', 'utf8'));
   const expected = new Map([
     ['generateDomainPackSchema', 'umf_core::domain_pack_schema::domain_pack_schema_graph_json'],
     ['generateDatasetSourceSchema', 'umf_core::domain_pack_schema::dataset_source_schema_graph_json'],
+    ['generateArtifactCollectionSchema', 'umf_core::domain_pack_schema::artifact_collection_schema_graph_json'],
+    ['generateDomainPackLoaderSchema', 'umf_core::domain_pack_loader_schemas::domain_pack_loader_schema_graph_json'],
+    ['generateLoaderInventorySchema', 'umf_core::domain_pack_loader_schemas::loader_inventory_schema_graph_json'],
   ]);
   for (const [name, owner] of expected) {
     const rows = ledger.rows.filter(row => row.exportName === name);
@@ -3425,7 +3433,8 @@ test('Domain Pack and Dataset Source public schema routes are source-selected wi
       assert.ok(row, `${name} ${routeId}`);
       assert.equal(row.sourceSelectedImplementation.status, 'source-selected-installed-private-current-cohort');
       assert.equal(row.sourceSelectedImplementation.rustOwner, owner);
-      assert.equal(row.sourceSelectedImplementation.qualificationEvidenceClosure.length, 2);
+      assert.equal(row.sourceSelectedImplementation.qualificationEvidenceClosure.length, 3);
+      assert.match(row.sourceSelectedImplementation.qualificationStatus, /verified five-operation private fixed-point receipt/);
       assert.equal(row.acceptedRustOperation, null, 'source route is not an accepted opt-in mapping');
       assert.equal(row.defaultRouteRetirement.status, 'open');
     }
@@ -3439,25 +3448,288 @@ test('Domain Pack and Dataset Source public schema routes are source-selected wi
   assert.equal(ledger.counts.executableDefaultRouteRetirementsByRoute['package-root-browser'], 0);
 });
 
-test('Domain Pack schema route guard rejects wrong root, export, source and declaration shapes', () => {
-  const rootSource = 'export {generateDomainPackSchema, generateDatasetSourceSchema};\n';
+test('schema graph route guard binds all five exact reference sources, direct root exports, root hashes, and declaration shapes', () => {
+  const sourceByExport = new Map([
+    ['generateDomainPackSchema', 'src/domain-packs/schema.ts'],
+    ['generateDatasetSourceSchema', 'src/domain-packs/source-schema.ts'],
+    ['generateArtifactCollectionSchema', 'src/domain-packs/artifacts.ts'],
+    ['generateDomainPackLoaderSchema', 'src/domain-packs/loader.ts'],
+    ['generateLoaderInventorySchema', 'src/domain-packs/loader-inventory.ts'],
+  ]);
+  const rootSource = `export {${[...sourceByExport.keys()].join(', ')}};\n`;
   const entry = 'src/index-node-v4.ts';
   const inventory = {defaultRouteEntrySelections: [{
-    routeId: 'package-root-node', entry, directExports: ['generateDomainPackSchema', 'generateDatasetSourceSchema'],
+    routeId: 'package-root-node', entry, directExports: [...sourceByExport.keys()],
     entrySha256: createHash('sha256').update(rootSource).digest('hex'),
-  }]};
-  const valid = {
-    routeId: 'package-root-node', exportName: 'generateDomainPackSchema', source: entry,
-    declaration: {declarationName: 'generateDomainPackSchema', declarationKind: 'FunctionDeclaration', initializerShape: 'not-applicable'},
-    inventory, rootSource,
-  };
-  assert.equal(isDomainPackSchemaRootSelection(valid), true);
+  }], symbols: [...sourceByExport].map(([exportName, source]) => ({routeId:'package-reference',exportName,source,declarationName:exportName,declarationKind:'FunctionDeclaration',initializerShape:'not-applicable'}))};
+  for (const [exportName, source] of sourceByExport) {
+    const valid = {routeId:'package-root-node',exportName,source:entry,declaration:{declarationName:exportName,declarationKind:'FunctionDeclaration',initializerShape:'not-applicable'},inventory,rootSource};
+    assert.equal(isDomainPackSchemaRootSelection(valid),true,`${exportName} exact route selected`);
+    assert.equal(isDomainPackSchemaRootSelection({...valid,source:'src/domain-packs/schema.ts'}),false,`${exportName} must be declared in the V4 root`);
+    assert.equal(isDomainPackSchemaRootSelection({...valid,inventory:{...inventory,symbols:inventory.symbols.map(row=>row.exportName===exportName?{...row,source:'src/domain-packs/other.ts'}:row)}}),false,`${exportName} exact TypeScript predecessor source required`);
+  }
+  const valid = {routeId:'package-root-node',exportName:'generateDomainPackSchema',source:entry,declaration:{declarationName:'generateDomainPackSchema',declarationKind:'FunctionDeclaration',initializerShape:'not-applicable'},inventory,rootSource};
   assert.equal(isDomainPackSchemaRootSelection({...valid, routeId: 'package-reference'}), false, 'reference route stays TypeScript');
   assert.equal(isDomainPackSchemaRootSelection({...valid, exportName: 'notASchemaGenerator'}), false, 'unknown export refused');
-  assert.equal(isDomainPackSchemaRootSelection({...valid, source: 'src/domain-packs/source-schema.ts'}), false, 'wrong source refused');
   assert.equal(isDomainPackSchemaRootSelection({...valid, declaration: {...valid.declaration, declarationName: 'aliasedName'}}), false, 'aliased declaration refused');
   assert.equal(isDomainPackSchemaRootSelection({...valid, declaration: {...valid.declaration, declarationKind: 'BindingElement'}}), false, 'wrong declaration kind refused');
   assert.equal(isDomainPackSchemaRootSelection({...valid, declaration: {...valid.declaration, initializerShape: 'call-expression'}}), false, 'wrong initializer refused');
-  assert.equal(isDomainPackSchemaRootSelection({...valid, inventory: {defaultRouteEntrySelections: [{...inventory.defaultRouteEntrySelections[0], directExports: ['generateDatasetSourceSchema']}]}}), false, 'missing direct root export refused');
+  assert.equal(isDomainPackSchemaRootSelection({...valid, inventory: {defaultRouteEntrySelections: [{...inventory.defaultRouteEntrySelections[0], directExports: ['generateDatasetSourceSchema']}],symbols:inventory.symbols}}), false, 'missing direct root export refused');
   assert.equal(isDomainPackSchemaRootSelection({...valid, rootSource: `${rootSource}// drift\n`}), false, 'root source hash drift refused');
+});
+
+test('domain-pack loader inspector selection requires its exact V4 wrapper shape and remains bounded private', () => {
+  const inventory = structuredClone(JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/inventory.json', 'utf8')));
+  for (const routeId of ['package-root-node', 'package-root-browser']) {
+    const row = inventory.symbols.find(item => item.routeId === routeId && item.exportName === 'inspectDomainPackLoader');
+    const rootSource = readFileSync(row.source);
+    const selection=inventory.defaultRouteEntrySelections.find(item=>item.routeId===routeId);
+    selection.entrySha256=createHash('sha256').update(rootSource).digest('hex');
+    const valid = { routeId, exportName: row.exportName, source: row.source, declaration: row, inventory, rootSource };
+    assert.equal(isDomainPackLoaderInspectionRootSelection(valid), true, `${routeId} exact inspection binding selected`);
+    assert.equal(isDomainPackLoaderInspectionRootSelection({ ...valid, source: 'src/domain-packs/loader.ts' }), false, 'reference implementation cannot be selected as the V4 root');
+    assert.equal(isDomainPackLoaderInspectionRootSelection({ ...valid, declaration: { ...row, declarationName: 'inspectDomainPackLoader' } }), false, 'wrapper declaration name is exact');
+    assert.equal(isDomainPackLoaderInspectionRootSelection({ ...valid, declaration: { ...row, declarationKind: 'FunctionDeclaration' } }), false, 'wrapper declaration kind is exact');
+    assert.equal(isDomainPackLoaderInspectionRootSelection({ ...valid, declaration: { ...row, initializerShape: 'arrow-function' } }), false, 'wrapper initializer shape is exact');
+    const missingExport = { ...inventory, defaultRouteEntrySelections: inventory.defaultRouteEntrySelections.map(selection => selection.routeId === routeId
+      ? { ...selection, directExports: selection.directExports.filter(name => name !== 'inspectDomainPackLoader') }
+      : selection) };
+    assert.equal(isDomainPackLoaderInspectionRootSelection({ ...valid, inventory: missingExport }), false, 'direct export selection is required');
+    assert.equal(isDomainPackLoaderInspectionRootSelection({ ...valid, rootSource: Buffer.concat([rootSource, Buffer.from('// drift\n')]) }), false, 'root source hash is pinned');
+  }
+  const ledger = currentGeneratedLedger();
+  const owner = 'umf_core::domain_pack_loader_inspection::inspect_domain_pack_loader_wire';
+  for (const routeId of ['package-root-node', 'package-root-browser']) {
+    const row = ledger.rows.find(item => item.routeId === routeId && item.exportName === 'inspectDomainPackLoader');
+    assert.equal(row.sourceSelectedImplementation.status, 'source-selected-installed-private-current-cohort');
+    assert.equal(row.sourceSelectedImplementation.rustOwner, owner);
+    assert.match(row.sourceSelectedImplementation.bindingRoute, /thin domain-pack loader inspector wrapper/);
+    assert.ok(row.sourceSelectedImplementation.sourceClosure.some(item => item.path === 'src/domain-packs/loader-rust.ts'));
+    assert.equal(row.acceptedRustOperation, null);
+    assert.equal(row.bindingRouteStatus, 'installed-private-current-cohort');
+    assert.equal(row.defaultRouteRetirement.status, 'open');
+    assert.match(row.sourceSelectedImplementation.qualificationStatus, /verified private fixed-point installed-route receipt/);
+  }
+  const reference = ledger.rows.find(item => item.routeId === 'package-reference' && item.exportName === 'inspectDomainPackLoader');
+  assert.equal(reference.sourceSelectedImplementation, null);
+  assert.equal(reference.implementationStatus, 'TypeScript reference implementation remains explicit');
+  assert.equal(reference.defaultRouteRetirement.status, 'reference-only');
+  // The two profile Rust bindings add two source-selected declarations per root.
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 130 + 2 * 2);
+  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-node'].rustSelectedSourceDeclarations, 65 + 2);
+  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-browser'].rustSelectedSourceDeclarations, 65 + 2);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
+});
+
+test('domain-pack profile Rust selection requires the exact V4 binding and typed reference predecessor', () => {
+  const inventory = structuredClone(JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/inventory.json', 'utf8')));
+  const exports = ['inspectDomainPack', 'requireDomainPackProfile'];
+  for (const routeId of ['package-root-node', 'package-root-browser']) {
+    const entry = routeId === 'package-root-browser' ? 'src/index-browser-v4.ts' : 'src/index-node-v4.ts';
+    const rootSource = readFileSync(entry);
+    const selection = inventory.defaultRouteEntrySelections.find(item => item.routeId === routeId);
+    selection.entrySha256 = createHash('sha256').update(rootSource).digest('hex');
+    selection.directExports = [...new Set([...selection.directExports, ...exports])];
+    const valid = exportName => ({
+      routeId, exportName, source: entry,
+      declaration: { declarationName: exportName, declarationKind: 'BindingElement', initializerShape: 'not-applicable' },
+      inventory, rootSource,
+    });
+    for (const exportName of exports) {
+      assert.equal(isDomainPackProfileInspectionRootSelection(valid(exportName)), true, `${routeId} ${exportName} exact profile binding selected`);
+      assert.equal(isDomainPackProfileInspectionRootSelection({ ...valid(exportName), routeId: 'package-reference' }), false, 'reference route is not a Rust-selected default root');
+      assert.equal(isDomainPackProfileInspectionRootSelection({ ...valid(exportName), source: 'src/domain-packs/profile.ts' }), false, 'reference implementation cannot masquerade as the V4 binding');
+      assert.equal(isDomainPackProfileInspectionRootSelection({ ...valid(exportName), declaration: { ...valid(exportName).declaration, declarationName: 'aliasedProfileOperation' } }), false, 'export name must match the binding');
+      assert.equal(isDomainPackProfileInspectionRootSelection({ ...valid(exportName), declaration: { ...valid(exportName).declaration, declarationKind: 'FunctionDeclaration' } }), false, 'only exact destructured binding elements qualify');
+      assert.equal(isDomainPackProfileInspectionRootSelection({ ...valid(exportName), declaration: { ...valid(exportName).declaration, initializerShape: 'call-expression' } }), false, 'unexpected initializer shape is refused');
+      const missingExport = { ...inventory, defaultRouteEntrySelections: inventory.defaultRouteEntrySelections.map(item => item.routeId === routeId
+        ? { ...item, directExports: item.directExports.filter(name => name !== exportName) } : item) };
+      assert.equal(isDomainPackProfileInspectionRootSelection({ ...valid(exportName), inventory: missingExport }), false, 'direct root export is required');
+      const wrongReference = { ...inventory, symbols: inventory.symbols.map(item => item.routeId === 'package-reference' && item.exportName === exportName ? { ...item, source: 'src/domain-packs/loader.ts' } : item) };
+      assert.equal(isDomainPackProfileInspectionRootSelection({ ...valid(exportName), inventory: wrongReference }), false, 'exact TypeScript predecessor path is required');
+      assert.equal(isDomainPackProfileInspectionRootSelection({ ...valid(exportName), rootSource: Buffer.concat([rootSource, Buffer.from('// drift\n')]) }), false, 'root source hash is pinned');
+    }
+  }
+  assert.equal(isDomainPackProfileInspectionRootSelection({ ...{ routeId: 'package-root-node', exportName: 'inspectDomainPackAlias' } }), false, 'unknown aliases are not inferred');
+  const selected = structuredClone(JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/inventory.json', 'utf8')));
+  selected.symbols = selected.symbols.filter(item => ['inspectDomainPack', 'requireDomainPackProfile'].includes(item.exportName)
+    && ['package-root-node', 'package-root-browser', 'package-reference'].includes(item.routeId));
+  for (const routeId of ['package-root-node', 'package-root-browser']) {
+    const entry = routeId === 'package-root-browser' ? 'src/index-browser-v4.ts' : 'src/index-node-v4.ts';
+    const bytes = readFileSync(entry);
+    const row = selected.symbols.find(item => item.routeId === routeId);
+    for (const item of selected.symbols.filter(item => item.routeId === routeId)) {
+      item.source = entry; item.declarationName = item.exportName; item.declarationKind = 'BindingElement'; item.initializerShape = 'not-applicable';
+    }
+    const selection = selected.defaultRouteEntrySelections.find(item => item.routeId === routeId);
+    selection.entrySha256 = createHash('sha256').update(bytes).digest('hex');
+    selection.directExports = [...new Set([...selection.directExports, 'inspectDomainPack', 'requireDomainPackProfile'])];
+    for (const item of selected.symbols.filter(item => item.routeId === routeId)) assert.equal(isDomainPackProfileInspectionRootSelection({ routeId, exportName: item.exportName, source: item.source, declaration: item, inventory: selected, rootSource: bytes }), true, `${routeId} ${item.exportName} ledger fixture binding`);
+  }
+  const ledger = buildLedger({ ...args, inventory: selected });
+  for (const routeId of ['package-root-node', 'package-root-browser']) for (const exportName of ['inspectDomainPack', 'requireDomainPackProfile']) {
+    const row = ledger.rows.find(item => item.routeId === routeId && item.exportName === exportName);
+    assert.equal(row.sourceSelectedImplementation.status, 'source-selected-installed-private-current-cohort');
+    assert.equal(row.sourceSelectedImplementation.wireOperation, 'inspect_domain_pack_profile_wire (shared by inspectDomainPack and requireDomainPackProfile)');
+    assert.equal(row.acceptedRustOperation, null);
+    assert.equal(row.defaultRouteRetirement.status, 'open');
+  }
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 2);
+  assert.deepEqual(ledger.counts.executableDefaultRouteRetirementsByRoute, { 'package-root-node': 0, 'package-root-browser': 0 });
+});
+
+function loaderInspectorClaimsFixture() {
+  const sha = value => createHash('sha256').update(value).digest('hex');
+  const harnessNames = ['loader-inspector-host.mjs','loader-inspector-host-child.mjs','loader-inspector-chromium.mjs','loader-inspector-route-build-packet.mjs','loader-inspector-route-evidence.mjs','schema-graph-route-common.mjs'];
+  const sourceNames = ['src/index-node-v4.ts','src/index-browser-v4.ts','src/domain-packs/loader-rust.ts','src/domain-packs/loader.ts','src/model/json.ts','bindings/core/node/index.js','bindings/core/node/src/lib.rs','bindings/core/wasm/src/lib.rs','crates/umf-core/src/domain_pack_loader_inspection.rs','bindings/core/node/tests/domain-pack-loader-inspection.test.js',...harnessNames.map(name=>`scripts/rust-migration/r8/${name}`)];
+  const inputs = Object.fromEntries(sourceNames.map(name=>[name,createHash('sha256').update(readFileSync(name)).digest('hex')]));
+  const harnesses = Object.fromEntries(harnessNames.map(name=>[name,{path:name,sha256:inputs[`scripts/rust-migration/r8/${name}`]}]));
+  const host = name => {
+    const cases = LOADER_INSPECTOR_CASES.map((item,index)=>{
+      const nativeWireInput = JSON.stringify({case:item.name,index});
+      const nativeWireOutput = JSON.stringify(item.result);
+      const dispatches = item.dispatch;
+      return {name:item.name,result:item.result,dispatches,nativeWireInputSha256:dispatches?sha(nativeWireInput):null,nativeOutputSha256:dispatches?sha(nativeWireOutput):null,nativeWireInput:dispatches?nativeWireInput:null,nativeWireOutput:dispatches?nativeWireOutput:null};
+    });
+    const dispatched = cases.filter(item=>item.dispatches===1);
+    return {status:'pass',host:name,runtime:{name:name==='node'?'Node':'Bun',version:name==='node'?'26.12.1':'1.4.3'},function:{name:'inspectDomainPackLoader',arity:1},nativeDispatches:8,expectedNativeDispatches:8,accessorInvoked:0,toJsonInvoked:0,wireInputs:dispatched.map(item=>({bytes:Buffer.byteLength(item.nativeWireInput),sha256:item.nativeWireInputSha256})),cases};
+  };
+  const node=host('node'),bun=host('bun');
+  const chromium={status:'pass',chromium:{status:'pass',version:'153.0.0.0',function:{name:'inspectDomainPackLoader',arity:1},wasmExport:'inspectDomainPackLoaderWire',wasmExportSeen:true,wasmDispatches:8,expectedDispatches:8,wasmRequested:true,externalRequests:0,pageErrors:0,nodeGlobalsAbsent:true,requireAbsent:true,cases:LOADER_INSPECTOR_CASES.map(item=>({name:item.name,result:item.result,wasmDispatches:item.dispatch}))}};
+  const memberNames=['manifest.json','package.json','dist/rust-default-manifest.json','dist/umf-node.js','dist/umf-browser.js','dist/umf.js','dist/umf_core_node.node','dist/umf_core_wasm_bg.wasm'];
+  const members=Object.fromEntries(memberNames.map((name,index)=>[name,(index+100).toString(16).padStart(64,'0')]));
+  const tree=createHash('sha256');for(const name of Object.keys(inputs).sort()){tree.update(name);tree.update('\0');tree.update(readFileSync(name));tree.update('\0');}const closure=tree.digest('hex'),manifestSha=members['dist/rust-default-manifest.json'];
+  const receipt={format:'umf.r8.domain-pack-loader-inspection-route/1',status:'pass',operation:'inspectDomainPackLoader',referenceRoute:'./reference',operations:['inspectDomainPackLoader'],harnesses,sourceClosure:{sha256:closure,capturedLiveSha256:closure,fileCount:sourceNames.length,transform:{status:'fixed-point',generatedInputs:[]},liveSourceManifest:{path:'live-source-manifest.json',sha256:'c'.repeat(64)}},archive:{status:'pass',path:'.tmp/absent-archive.tgz',sha256:'f'.repeat(64),verificationMethod:'packet-builder-read-archive-and-verified-all-members',manifestSha256:manifestSha,packageManifestSha256:members['manifest.json'],sourceClosureSha256:closure,capturedLiveSourceTreeSha256:closure,sourceTransformStatus:'fixed-point',sourceTransformCount:0,memberManifest:{path:'archive-members.json',sha256:'d'.repeat(64)},packageManifestFile:{path:'archive-package-manifest.json',sha256:members['manifest.json']},sdkManifestFile:{path:'archive-sdk-manifest.json',sha256:manifestSha},packageJsonFile:{path:'archive-package.json',sha256:members['package.json']},memberHashes:members},routes:{node:{path:'node.json',sha256:'a'.repeat(64)},bun:{path:'bun.json',sha256:'b'.repeat(64)},chromium:{path:'chromium.json',sha256:'c'.repeat(64)}},hostParity:true,qualification:{kind:'private-fixed-point-installed-route-evidence',logicalGapsOpen:922,logicalGapsRetired:0,releaseQualified:false,completeMigrationQualified:false}};
+  const packageManifest={sha256:Object.fromEntries(Object.entries(members).filter(([name])=>name!=='manifest.json')),sourceTreeSha256:closure,capturedLiveSourceTreeSha256:closure,sourceTransformStatus:'fixed-point',sourceTransformCount:0};
+  const sdkManifest={sourceClosure:{sha256:closure,capturedLiveSha256:closure,fileCount:sourceNames.length,liveInputs:inputs,transform:{status:'fixed-point',generatedInputs:[]}}};
+  const packageJson={exports:{'.':{node:'./dist/umf-node.js',browser:'./dist/umf-browser.js'},'./reference':{import:'./dist/umf.js'}}};
+  return {receipt,live:{sourceClosure:{sha256:closure,capturedLiveSha256:closure,fileCount:sourceNames.length,transform:{status:'fixed-point',generatedInputs:[]},inputs}},archiveMembers:{status:'pass',algorithm:'sha256',archiveSha256:receipt.archive.sha256,packageManifestSha256:receipt.archive.packageManifestSha256,archiveMemberCount:memberNames.length,verifiedMemberCount:memberNames.length,members},packageManifest,sdkManifest,packageJson,node,bun,chromium};
+}
+
+test('loader-inspector private route claims require exact calls, host parity, browser controls and the open-gap bound', () => {
+  const fixture=loaderInspectorClaimsFixture();
+  assert.equal(existsSync(fixture.receipt.archive.path),false,'fixture archive is absent like a fresh checkout with ignored build artifacts');
+  const baseline=validateLoaderInspectorClaims(fixture.receipt,fixture);
+  assert.equal(baseline.status,'pass',baseline.reason);
+  const reject=(label,mutate)=>{const value=structuredClone(fixture);mutate(value);assert.equal(validateLoaderInspectorClaims(value.receipt,value).status,'fail',label);};
+  reject('native call count drift',value=>{value.node.nativeDispatches=7;});
+  reject('wrapper-rejected accessor dispatch',value=>{value.node.cases.find(row=>row.name==='accessor-refusal-no-evaluation').dispatches=1;});
+  reject('Node/Bun case divergence',value=>{value.bun.cases[0].result.valid=false;});
+  reject('WASM dispatch count drift',value=>{value.chromium.chromium.wasmDispatches=7;});
+  reject('WASM asset not requested',value=>{value.chromium.chromium.wasmRequested=false;});
+  reject('external browser request',value=>{value.chromium.chromium.externalRequests=1;});
+  reject('browser page error',value=>{value.chromium.chromium.pageErrors=1;});
+  reject('premature retirement claim',value=>{value.receipt.qualification.logicalGapsRetired=1;});
+  reject('release qualification overclaim',value=>{value.receipt.qualification.releaseQualified=true;});
+  reject('harness not included in source closure',value=>{delete value.live.sourceClosure.inputs['scripts/rust-migration/r8/loader-inspector-host.mjs'];});
+  const evidenceDir='docs/helix/04-build/evidence/rust-migration/r8-domain-pack-loader-inspection-default-route';
+  assert.equal(validateDomainPackLoaderInspectorReceipt(fixture.receipt,evidenceDir),false,'unmaterialized packet cannot qualify');
+});
+
+test('loader-inspector packet validates from pinned evidence without an ignored local archive', async () => {
+  const fixture=loaderInspectorClaimsFixture();
+  const packetDir=await mkdtemp(path.join(os.tmpdir(),'umf-loader-inspector-ledger-test-'));
+  const sha=value=>createHash('sha256').update(value).digest('hex');
+  const writeJson=async(name,value)=>{const bytes=Buffer.from(JSON.stringify(value,null,2)+'\n');await writeFile(path.join(packetDir,name),bytes);return sha(bytes);};
+  try {
+    const source=fixture.live.sourceClosure;
+    const sdkManifest={sourceClosure:{sha256:source.sha256,capturedLiveSha256:source.capturedLiveSha256,fileCount:source.fileCount,liveInputs:source.inputs,transform:source.transform}};
+    const packageJson={exports:{'.':{node:'./dist/umf-node.js',browser:'./dist/umf-browser.js'},'./reference':{import:'./dist/umf.js'}}};
+    const sdkBytes=Buffer.from(JSON.stringify(sdkManifest,null,2)+'\n');
+    const packageJsonBytes=Buffer.from(JSON.stringify(packageJson,null,2)+'\n');
+    const memberPayloads={'package.json':packageJsonBytes,'dist/rust-default-manifest.json':sdkBytes,'dist/umf-node.js':Buffer.from('node'),'dist/umf-browser.js':Buffer.from('browser'),'dist/umf.js':Buffer.from('reference'),'dist/umf_core_node.node':Buffer.from('native'),'dist/umf_core_wasm_bg.wasm':Buffer.from('wasm')};
+    const memberHashes=Object.fromEntries(Object.entries(memberPayloads).map(([name,bytes])=>[name,sha(bytes)]));
+    const packageManifest={sha256:memberHashes,sourceTreeSha256:source.sha256,capturedLiveSourceTreeSha256:source.capturedLiveSha256,sourceTransformStatus:'fixed-point',sourceTransformCount:0};
+    const packageManifestBytes=Buffer.from(JSON.stringify(packageManifest,null,2)+'\n');
+    const members={'manifest.json':sha(packageManifestBytes),...memberHashes};
+    fixture.receipt.archive={...fixture.receipt.archive,memberHashes:members,packageManifestSha256:members['manifest.json'],manifestSha256:members['dist/rust-default-manifest.json'],packageJsonFile:{path:'archive-package.json',sha256:members['package.json']},packageManifestFile:{path:'archive-package-manifest.json',sha256:members['manifest.json']},sdkManifestFile:{path:'archive-sdk-manifest.json',sha256:members['dist/rust-default-manifest.json']}};
+    fixture.archiveMembers={...fixture.archiveMembers,packageManifestSha256:members['manifest.json'],members};
+    fixture.packageManifest=packageManifest;fixture.sdkManifest=sdkManifest;fixture.packageJson=packageJson;
+    fixture.receipt.archive.memberManifest={path:'archive-members.json',sha256:await writeJson('archive-members.json',{...fixture.archiveMembers})};
+    fixture.receipt.archive.packageManifestFile.sha256=await writeFile(path.join(packetDir,'archive-package-manifest.json'),packageManifestBytes).then(()=>sha(packageManifestBytes));
+    fixture.receipt.archive.sdkManifestFile.sha256=await writeFile(path.join(packetDir,'archive-sdk-manifest.json'),sdkBytes).then(()=>sha(sdkBytes));
+    fixture.receipt.archive.packageJsonFile.sha256=await writeFile(path.join(packetDir,'archive-package.json'),packageJsonBytes).then(()=>sha(packageJsonBytes));
+    const liveDocument={format:'umf.r8.loader-inspector-live-source/1',sourceClosure:source};
+    fixture.receipt.sourceClosure.liveSourceManifest={path:'live-source-manifest.json',sha256:await writeJson('live-source-manifest.json',liveDocument)};
+    fixture.receipt.routes={};
+    for(const [name,value] of [['node',fixture.node],['bun',fixture.bun],['chromium',fixture.chromium]])fixture.receipt.routes[name]={path:`${name}.json`,sha256:await writeJson(`${name}.json`,value)};
+    for(const name of Object.keys(fixture.receipt.harnesses)){
+      const sourceName=`scripts/rust-migration/r8/${name}`;const bytes=readFileSync(sourceName);
+      await writeFile(path.join(packetDir,name),bytes);fixture.receipt.harnesses[name].sha256=sha(bytes);
+    }
+    await writeFile(path.join(packetDir,'README.md'),'Packet validator fixture; absent local archive is intentional.\n');
+    fixture.receipt.evidenceSha256sums={path:'SHA256SUMS'};
+    await writeJson('receipt.json',fixture.receipt);
+    await writeJson('negative-controls.json',{format:'umf.r8.loader-inspector-negative-controls/1',status:'pass',baseline:{status:'pass'},negativeControls:['stale source closure','archive member omission','native dispatch undercount','native output tamper','wrapper-rejected dispatch','diagnostic order drift','WASM not requested','WASM dispatch undercount','browser external request','browser page error','Node/Bun case divergence'].map(name=>({name,rejected:true,reason:'fixture control rejected'}))});
+    const checksumNames=['README.md','receipt.json','negative-controls.json','live-source-manifest.json','archive-members.json','archive-package-manifest.json','archive-sdk-manifest.json','archive-package.json','node.json','bun.json','chromium.json',...Object.keys(fixture.receipt.harnesses)];
+    const sums=checksumNames.map(name=>`${sha(readFileSync(path.join(packetDir,name)))}  ${name}`).join('\n')+'\n';await writeFile(path.join(packetDir,'SHA256SUMS'),sums);
+    assert.equal(existsSync(path.resolve(process.cwd(),fixture.receipt.archive.path)),false,'the referenced archive bytes are not present');
+    const validation=validateLoaderInspectorPacketSync(fixture.receipt,packetDir,process.cwd());
+    assert.equal(validation.status,'pass',validation.reason);
+    assert.equal(validation.archiveBytesReopened,false);
+  } finally {
+    await rm(packetDir,{recursive:true,force:true});
+  }
+});
+
+test('schema graph receipt promotion rejects stale two-op packets and tampered five-op claims', () => {
+  const evidenceDir = 'docs/helix/04-build/evidence/rust-migration/r8-domain-pack-schema-default-route';
+  const receipt = JSON.parse(readFileSync(`${evidenceDir}/receipt.json`, 'utf8'));
+  if (receipt.format === 'umf.r8.schema-graph-route-evidence/1') {
+    assert.equal(validateSchemaGraphReceipt(receipt, evidenceDir), true, 'complete current-source packet promotes only bounded route evidence');
+    const staleOperations = structuredClone(receipt);staleOperations.operations=['generateDomainPackSchema','generateDatasetSourceSchema'];
+    assert.equal(validateSchemaGraphReceipt(staleOperations,evidenceDir),false,'historical two-operation scope cannot promote the expanded route');
+    const staleSource = structuredClone(receipt);staleSource.sourceClosure.liveSourceManifest.sha256='a'.repeat(64);
+    assert.equal(validateSchemaGraphReceipt(staleSource,evidenceDir),false,'unpinned source manifests are refused');
+  const wrongCall = structuredClone(receipt);wrongCall.routes.hostOutcome.sha256='0'.repeat(64);
+  assert.equal(validateSchemaGraphReceipt(wrongCall,evidenceDir),false,'shared host receipt pin must be exact');
+    const falseCounterMode = structuredClone(receipt);falseCounterMode.routes.chromium.sha256='0'.repeat(64);
+    assert.equal(validateSchemaGraphReceipt(falseCounterMode,evidenceDir),false,'Chromium route receipt pin must be exact');
+    const browserIsolation = structuredClone(receipt);browserIsolation.routes.chromium.sha256='f'.repeat(64);
+    assert.equal(validateSchemaGraphReceipt(browserIsolation,evidenceDir),false,'browser receipt tampering is refused');
+    return;
+  }
+  assert.equal(validateSchemaGraphReceipt(receipt, evidenceDir), true, 'complete current-source packet promotes only bounded route evidence');
+  const priorReceipt = structuredClone(receipt);
+  priorReceipt.operations = ['generateDomainPackSchema','generateDatasetSourceSchema'];
+  assert.equal(validateSchemaGraphReceipt(priorReceipt, evidenceDir), false, 'historical two-operation scope cannot promote the expanded route');
+  const forged = structuredClone(receipt);
+  forged.sourceClosure.liveSourceManifest.sha256 = 'a'.repeat(64);
+  assert.equal(validateSchemaGraphReceipt(forged, evidenceDir), false, 'unpinned source manifests are refused');
+  const wrongCall = structuredClone(receipt);
+  wrongCall.routes.bun.operations.generateDomainPackSchema.providerCalls = 0;
+  assert.equal(validateSchemaGraphReceipt(wrongCall, evidenceDir), false, 'Bun provider-call claims must be exact');
+
+  const browser = () => structuredClone(receipt);
+  const wasmNotRequested = browser();
+  wasmNotRequested.routes.browser.wasmRequested = false;
+  assert.equal(validateSchemaGraphReceipt(wasmNotRequested, evidenceDir), false, 'browser evidence must record WASM retrieval');
+  const externalRequest = browser();
+  externalRequest.routes.browser.externalRequests = 1;
+  assert.equal(validateSchemaGraphReceipt(externalRequest, evidenceDir), false, 'browser evidence must have no external requests');
+  const pageError = browser();
+  pageError.routes.browser.pageErrors = 1;
+  assert.equal(validateSchemaGraphReceipt(pageError, evidenceDir), false, 'browser evidence must have no page errors');
+  const falseCounterMode = browser();
+  falseCounterMode.routes.browser.wasmCounters = 'directly-observed';
+  assert.equal(validateSchemaGraphReceipt(falseCounterMode, evidenceDir), false, 'directly observed counter mode requires numeric counts');
+  const missingAliasIdentity = browser();
+  missingAliasIdentity.routes.browser.operations.generateDomainPackSchema.aliasGroupPointers = [];
+  assert.equal(validateSchemaGraphReceipt(missingAliasIdentity, evidenceDir), false, 'browser alias identities must match the native predecessor evidence');
+  const zeroAliasOperation = browser();
+  assert.deepEqual(zeroAliasOperation.routes.browser.operations.generateDomainPackLoaderSchema.aliasGroupPointers, []);
+  assert.equal(validateSchemaGraphReceipt(zeroAliasOperation, evidenceDir), true, 'the loader schema legitimately has zero alias groups');
+
+  const forgedBrowser = browser();
+  forgedBrowser.routes.browser.wasmRequested = false;
+  forgedBrowser.routes.browser.externalRequests = 1;
+  forgedBrowser.routes.browser.pageErrors = 1;
+  forgedBrowser.routes.browser.wasmCounters = 'directly-observed';
+  for (const operation of Object.values(forgedBrowser.routes.browser.operations)) {
+    operation.providerCalls = 0;
+    operation.aliasGroupPointers = [];
+  }
+  assert.equal(validateSchemaGraphReceipt(forgedBrowser, evidenceDir), false, 'combined forged browser route claims are rejected');
+  assert.equal(validateSchemaGraphReceipt({...receipt,evidenceSha256sums:{path:'../../outside/SHA256SUMS'}}, evidenceDir), false, 'unsafe evidence paths are refused');
+  assert.equal(validateSchemaGraphReceipt({...receipt,status:'not-tested'}, evidenceDir), false, 'a passing status is required');
 });

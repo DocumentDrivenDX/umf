@@ -1,23 +1,3 @@
-# R8 Domain Pack schema default route
+# R8 five-schema default-route packet
 
-This packet qualifies the R8 default-root route for `generateDomainPackSchema`
-and `generateDatasetSourceSchema`. The Node and browser V4 roots select Rust
-schema-graph providers, then restore the TypeScript predecessor's JSON Pointer
-identity classes in JavaScript. The TypeScript reference entry remains
-available.
-
-The fixed-point source cohort and private installed archive are pinned in
-[`receipt.json`](receipt.json). Node, Bun, and installed Node calls each
-observed two invocations of each Rust graph provider and matched the complete
-schema values. The focused Bun test compared all Rust graph alias groups and
-public object identity classes against live TypeScript predecessor generators
-(eight groups for Domain Pack and one for Dataset Source), verified mutation
-propagation/isolation, and exercised malformed graph refusal and special-key
-relinking. Real Chromium 153 exercised the exact built and installed browser
-bundles and adjacent WASM, compared both complete schemas, checked names and
-zero arity against the bundled reference exports, and confirmed Node globals
-were absent.
-
-This is private route evidence. The functions remain present in the
-TypeScript reference and no declaration is retired. It does not qualify a
-publishable release or claim behavior outside these two schema generators.
+This packet captures a private fixed-point SDK archive and the five schema graph generators: generateDomainPackSchema, generateDatasetSourceSchema, generateArtifactCollectionSchema, generateDomainPackLoaderSchema, generateLoaderInventorySchema. The shared Node v26.12.1/Bun 1.4.3 replay asserted exact receipt parity and two direct native provider calls per export; the packet retains that shared outcome and does not claim independent per-host operation maps. Chromium exercised the browser bundle and adjacent WASM in real Chromium 153.0.8010.12; its direct WASM provider counters are **unobserved** and are not inferred from wrapper execution. The packet records a complete archive-member SHA-256 map and rehashes every source input against current live files. This is scoped private evidence, not release qualification and not retirement evidence.

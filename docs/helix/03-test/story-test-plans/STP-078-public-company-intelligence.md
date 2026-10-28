@@ -62,3 +62,9 @@ inventory, injected acquisition, failed refresh pointer preservation and actual
 standalone offline replay. CONTRACT-057 owns the loader; CONTRACT-059 owns the
 domain profile. No live acquisition or operator contact is inferred from the
 synthetic test contact. Shared pre-release pins are recorded in build evidence.
+
+## Rust projection 2.0.0 cutover allocation
+
+CONTRACT-059's Rust successor requires a source-bound predecessor corpus for both SEC exports. The corpus covers exact numeric tokens, unknown row fragments, canonical integer-like member enumeration, isolated UTF-16 surrogates, malformed and duplicate members, input limits, wrong host types, CIK/source IDs, unsafe primary documents, parallel-array lengths, and missing/null/zero observations. Compare public return values and the ordered error name, code, path and message across Node, Bun, Python, the CLI and real Chromium/WASM. An installed artifact, not a source import, supplies each route under test.
+
+Exercise complete response sizes of 33,554,431, 33,554,432 and 33,554,433 UTF-16 code units. An over-cap prefix followed by a malformed final observation must report the predecessor row error; an otherwise valid over-cap input must report the explicit `LIMIT` refusal without partial rows. Measure host peak memory with an amplified but admitted source. Capture each runtime's exact artifact and source closure, and leave default-route selection open until the scoped packet and independent fixture checks pass.

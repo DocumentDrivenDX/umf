@@ -1,12 +1,12 @@
 //! CONTRACT-052 domain-pack schema resources and pure schema composition.
 
+pub use crate::domain_pack_source_schema::generate_dataset_source_schema;
 use crate::{
     context::Context,
     error::EngineError,
     serialization::{write_json_value, Format},
     value::{Utf16, Value},
 };
-pub use crate::domain_pack_source_schema::generate_dataset_source_schema;
 
 /// A generated schema tree plus Rust-owned JSON Pointer identity classes.
 /// JSON cannot encode object identity, so default JavaScript bindings apply
@@ -24,7 +24,12 @@ fn pointer_group(paths: &[&str]) -> Vec<String> {
 fn prefix_alias_groups(prefix: &str, groups: Vec<Vec<String>>) -> Vec<Vec<String>> {
     groups
         .into_iter()
-        .map(|group| group.into_iter().map(|path| format!("{prefix}{path}")).collect())
+        .map(|group| {
+            group
+                .into_iter()
+                .map(|path| format!("{prefix}{path}"))
+                .collect()
+        })
         .collect()
 }
 
@@ -55,9 +60,9 @@ fn artifact_collection_alias_groups() -> Vec<Vec<String>> {
         "grouping/properties/fields",
     ];
     let mut text_group = text_paths
-            .iter()
-            .map(|path| format!("{prefix}{path}"))
-            .collect::<Vec<_>>();
+        .iter()
+        .map(|path| format!("{prefix}{path}"))
+        .collect::<Vec<_>>();
     text_group.push("/anyOf/1/properties/loader_inventory_source_id".to_owned());
     vec![
         text_group,
@@ -83,6 +88,15 @@ pub fn generate_dataset_source_schema_graph() -> GeneratedSchemaGraph {
     GeneratedSchemaGraph {
         schema: generate_dataset_source_schema(),
         alias_groups: crate::domain_pack_source_schema::dataset_source_schema_alias_groups(),
+    }
+}
+
+/// Return the standalone CONTRACT-061 schema with the TypeScript predecessor's
+/// within-result object identity classes.
+pub fn generate_artifact_collection_schema_graph() -> GeneratedSchemaGraph {
+    GeneratedSchemaGraph {
+        schema: artifact_collection_schema(),
+        alias_groups: artifact_collection_alias_groups(),
     }
 }
 
@@ -227,10 +241,7 @@ fn artifact_collection_schema() -> Value {
                     ("required", strings(&["loader_inventory_source_id"])),
                     (
                         "properties",
-                        object(&[(
-                            "loader_inventory_source_id",
-                            nonempty_text(),
-                        )]),
+                        object(&[("loader_inventory_source_id", nonempty_text())]),
                     ),
                 ]),
             ]),
@@ -265,10 +276,7 @@ fn preservation_schema() -> Value {
                     "events",
                     object(&[("const", text("PREMIS-3.0-semantic-mapping"))]),
                 ),
-                (
-                    "provenance",
-                    object(&[("const", text("PROV-O-JSON-LD"))]),
-                ),
+                ("provenance", object(&[("const", text("PROV-O-JSON-LD"))])),
                 (
                     "originals",
                     object(&[("const", text("authoritative-immutable-bytes"))]),
@@ -286,19 +294,13 @@ fn preservation_schema() -> Value {
                             "items",
                             object(&[
                                 ("type", text("object")),
-                                (
-                                    "required",
-                                    strings(&["schema_id", "source_identity"]),
-                                ),
+                                ("required", strings(&["schema_id", "source_identity"])),
                                 (
                                     "properties",
                                     object(&[
                                         ("schema_id", nonempty.clone()),
                                         ("source_identity", nonempty),
-                                        (
-                                            "qualification",
-                                            nonempty_text(),
-                                        ),
+                                        ("qualification", nonempty_text()),
                                     ]),
                                 ),
                                 ("additionalProperties", Value::Bool(true)),
@@ -393,10 +395,7 @@ pub fn generate_domain_pack_schema() -> Value {
                                 ("type", text("object")),
                                 (
                                     "additionalProperties",
-                                    object(&[
-                                        ("type", text("integer")),
-                                        ("minimum", number(0)),
-                                    ]),
+                                    object(&[("type", text("integer")), ("minimum", number(0))]),
                                 ),
                             ]),
                         ),
@@ -404,10 +403,7 @@ pub fn generate_domain_pack_schema() -> Value {
                             "children",
                             object(&[
                                 ("type", text("object")),
-                                (
-                                    "additionalProperties",
-                                    child_scale,
-                                ),
+                                ("additionalProperties", child_scale),
                             ]),
                         ),
                     ]),
@@ -430,10 +426,7 @@ pub fn generate_domain_pack_schema() -> Value {
                         ("source_id", text_schema.clone()),
                         (
                             "role",
-                            object(&[(
-                                "enum",
-                                strings(&["rows", "reference", "terminology"]),
-                            )]),
+                            object(&[("enum", strings(&["rows", "reference", "terminology"]))]),
                         ),
                     ]),
                 ),
@@ -443,10 +436,7 @@ pub fn generate_domain_pack_schema() -> Value {
     ]);
     let composition_component = object(&[
         ("type", text("object")),
-        (
-            "required",
-            strings(&["id", "version", "label", "checksum"]),
-        ),
+        ("required", strings(&["id", "version", "label", "checksum"])),
         (
             "properties",
             object(&[
@@ -492,10 +482,7 @@ pub fn generate_domain_pack_schema() -> Value {
         ),
         ("$id", text("urn:umf:domain-pack:1.0.0")),
         ("type", text("object")),
-        (
-            "required",
-            strings(&["id", "version", "domain_types"]),
-        ),
+        ("required", strings(&["id", "version", "domain_types"])),
         (
             "anyOf",
             array(vec![
@@ -548,10 +535,7 @@ pub fn generate_domain_pack_schema() -> Value {
                         ("required", strings(&["id", "version"])),
                         (
                             "properties",
-                            object(&[
-                                ("id", text_schema.clone()),
-                                ("version", version()),
-                            ]),
+                            object(&[("id", text_schema.clone()), ("version", version())]),
                         ),
                         ("additionalProperties", Value::Bool(true)),
                     ]),
@@ -577,19 +561,13 @@ pub fn generate_domain_pack_schema() -> Value {
                     object(&[
                         ("type", text("object")),
                         ("minProperties", number(1)),
-                        (
-                            "additionalProperties",
-                            generate_dataset_source_schema(),
-                        ),
+                        ("additionalProperties", generate_dataset_source_schema()),
                     ]),
                 ),
                 ("source_bindings", source_bindings),
                 (
                     "schemas",
-                    object(&[
-                        ("type", text("array")),
-                        ("items", schema_reference),
-                    ]),
+                    object(&[("type", text("array")), ("items", schema_reference)]),
                 ),
             ]),
         ),
@@ -643,7 +621,9 @@ fn alias_groups_value(groups: &[Vec<String>]) -> Value {
     )
 }
 
-fn generated_schema_graph_json(graph: GeneratedSchemaGraph) -> Result<String, EngineError> {
+pub(crate) fn generated_schema_graph_json(
+    graph: GeneratedSchemaGraph,
+) -> Result<String, EngineError> {
     let envelope = object(&[
         ("schema", graph.schema),
         ("aliasGroups", alias_groups_value(&graph.alias_groups)),
@@ -667,6 +647,10 @@ pub fn domain_pack_schema_graph_json() -> Result<String, EngineError> {
 
 pub fn dataset_source_schema_graph_json() -> Result<String, EngineError> {
     generated_schema_graph_json(generate_dataset_source_schema_graph())
+}
+
+pub fn artifact_collection_schema_graph_json() -> Result<String, EngineError> {
+    generated_schema_graph_json(generate_artifact_collection_schema_graph())
 }
 
 /// Generate the isolated schema value for a supported domain-pack schema version.
@@ -759,7 +743,8 @@ mod tests {
                     }
                 }
                 '}' | ']' => {
-                    if chars.get(index.wrapping_sub(1)) != Some(&if ch == '}' { '{' } else { '[' }) {
+                    if chars.get(index.wrapping_sub(1)) != Some(&if ch == '}' { '{' } else { '[' })
+                    {
                         depth -= 1;
                         result.push('\n');
                         result.push_str(&"  ".repeat(depth));
@@ -784,13 +769,19 @@ mod tests {
         let parsed: serde_json::Value = serde_json::from_str(&compact).unwrap();
         let mut seen = std::collections::HashSet::new();
         for group in groups {
-            assert!(group.len() >= 2, "alias class must contain at least two paths");
+            assert!(
+                group.len() >= 2,
+                "alias class must contain at least two paths"
+            );
             let first = group.first().unwrap();
             let expected = parsed
                 .pointer(first)
                 .unwrap_or_else(|| panic!("missing alias path {first}"));
             for path in group {
-                assert!(seen.insert(path), "alias path appears in multiple groups: {path}");
+                assert!(
+                    seen.insert(path),
+                    "alias path appears in multiple groups: {path}"
+                );
                 let actual = parsed
                     .pointer(path)
                     .unwrap_or_else(|| panic!("missing alias path {path}"));
@@ -806,8 +797,7 @@ mod tests {
         let canonical = DOMAIN_PACK_SCHEMA_1_0_0;
         let canonical_compact = compact_preserving_source_whitespace(canonical);
         assert_eq!(generated_compact, canonical_compact);
-        let generated_parsed: serde_json::Value =
-            serde_json::from_str(&generated_compact).unwrap();
+        let generated_parsed: serde_json::Value = serde_json::from_str(&generated_compact).unwrap();
         let canonical_parsed: serde_json::Value = serde_json::from_str(canonical).unwrap();
         assert_eq!(generated_parsed, canonical_parsed);
         assert_eq!(pretty_two_space(&generated_compact), canonical);
@@ -815,8 +805,12 @@ mod tests {
 
     #[test]
     fn v1_resource_is_standalone_draft_2020_12_schema() {
-        let resource: serde_json::Value = serde_json::from_str(&domain_pack_schema_json("1.0.0").unwrap()).unwrap();
-        assert_eq!(resource["$schema"], "https://json-schema.org/draft/2020-12/schema");
+        let resource: serde_json::Value =
+            serde_json::from_str(&domain_pack_schema_json("1.0.0").unwrap()).unwrap();
+        assert_eq!(
+            resource["$schema"],
+            "https://json-schema.org/draft/2020-12/schema"
+        );
         assert_eq!(resource["$id"], "urn:umf:domain-pack:1.0.0");
         assert_eq!(resource["required"][0], "id");
         assert_eq!(resource["required"][1], "version");
@@ -839,6 +833,13 @@ mod tests {
 
     #[test]
     fn schema_graph_alias_paths_resolve_and_match_their_generated_values() {
+        let artifact_collection = generate_artifact_collection_schema_graph();
+        assert_alias_groups(
+            &artifact_collection.schema,
+            &artifact_collection.alias_groups,
+        );
+        assert_eq!(artifact_collection.alias_groups.len(), 5);
+
         let dataset_source = generate_dataset_source_schema_graph();
         assert_alias_groups(&dataset_source.schema, &dataset_source.alias_groups);
         assert_eq!(dataset_source.alias_groups.len(), 1);
@@ -847,23 +848,43 @@ mod tests {
         assert_alias_groups(&domain_pack.schema, &domain_pack.alias_groups);
         assert_eq!(domain_pack.alias_groups.len(), 8);
         assert!(domain_pack.alias_groups[2].contains(
-            &"/properties/artifact_collections/items/anyOf/1/properties/loader_inventory_source_id".to_owned()
+            &"/properties/artifact_collections/items/anyOf/1/properties/loader_inventory_source_id"
+                .to_owned()
         ));
     }
 
     #[test]
     fn schema_graph_wire_contains_the_exact_schema_and_alias_sidecar() {
+        let artifact_graph: serde_json::Value =
+            serde_json::from_str(&artifact_collection_schema_graph_json().unwrap()).unwrap();
         let source_graph: serde_json::Value =
             serde_json::from_str(&dataset_source_schema_graph_json().unwrap()).unwrap();
         let pack_graph: serde_json::Value =
             serde_json::from_str(&domain_pack_schema_graph_json().unwrap()).unwrap();
-        assert_eq!(source_graph["schema"], serde_json::from_str::<serde_json::Value>(
-            include_str!("../../../spec/extensions/dataset-source/schema.json")
-        ).unwrap());
-        assert_eq!(pack_graph["schema"], serde_json::from_str::<serde_json::Value>(
-            include_str!("../../../spec/extensions/domain-pack/schema.json")
-        ).unwrap());
+        assert_eq!(
+            source_graph["schema"],
+            serde_json::from_str::<serde_json::Value>(include_str!(
+                "../../../spec/extensions/dataset-source/schema.json"
+            ))
+            .unwrap()
+        );
+        let pack_schema: serde_json::Value = serde_json::from_str::<serde_json::Value>(
+            include_str!("../../../spec/extensions/domain-pack/schema.json"),
+        )
+        .unwrap();
+        assert_eq!(
+            artifact_graph["schema"],
+            pack_schema["properties"]["artifact_collections"]["items"]
+        );
+        assert_eq!(
+            pack_graph["schema"],
+            serde_json::from_str::<serde_json::Value>(include_str!(
+                "../../../spec/extensions/domain-pack/schema.json"
+            ))
+            .unwrap()
+        );
         assert_eq!(source_graph["aliasGroups"].as_array().unwrap().len(), 1);
+        assert_eq!(artifact_graph["aliasGroups"].as_array().unwrap().len(), 5);
         assert_eq!(pack_graph["aliasGroups"].as_array().unwrap().len(), 8);
     }
 }

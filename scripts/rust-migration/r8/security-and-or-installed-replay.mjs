@@ -93,7 +93,7 @@ const expectedPacketPath=join(repoRoot,'docs/helix/04-build/evidence/rust-migrat
 assert.equal(packetPath,expectedPacketPath,'security replay must use the pinned predecessor packet');
 const packetBytes=await readFile(packetPath);
 const packetSha256=createHash('sha256').update(packetBytes).digest('hex');
-const expectedPacketSha256='d5dddb6766cadd5f9e3c45ef40f7d9fc8d5d486d59d3163b236477ef6966308d';
+const expectedPacketSha256='be97dfa59f8971e1c70e8e932ea8dac0188e0c3cd39b7ddf1b7206a06790f5d2';
 assert.equal(packetSha256,expectedPacketSha256,'frozen 68-case predecessor packet changed');
 const packet=JSON.parse(packetBytes);
 assert.equal(packet.format,'umf-r8-security-and-or-predecessor/1');

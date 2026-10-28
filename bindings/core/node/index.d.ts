@@ -24,6 +24,13 @@ export declare const engineVersion: string;
 /** Rust-computed schema graph JSON with alias groups for Node V4 defaults. */
 export declare function domainPackSchemaGraphJson(): string;
 export declare function datasetSourceSchemaGraphJson(): string;
+export declare function artifactCollectionSchemaGraphJson(): string;
+export declare function domainPackLoaderSchemaGraphJson(): string;
+/** Pure Rust CONTRACT-057 metadata inspection over JSON text admitted by the host wrapper. */
+export declare function inspectDomainPackLoaderWire(inputJson: string): string;
+/** Pure Rust CONTRACT-052/053 profile inspection over JSON text admitted by the host wrapper. */
+export declare function inspectDomainPackProfileWire(inputJson: string): string;
+export declare function loaderInventorySchemaGraphJson(): string;
 export declare const JAVASCRIPT_NUMERIC_PROFILE: 'umf.javascript-numeric/1.0.0';
 export declare const BIT128_PROFILE: 'umf-128/1';
 export declare const JSON_NUMBER_PROFILE: 'umf-json-number/0.1';

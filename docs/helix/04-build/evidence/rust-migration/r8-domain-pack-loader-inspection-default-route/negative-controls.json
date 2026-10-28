@@ -1,0 +1,64 @@
+{
+  "format": "umf.r8.loader-inspector-negative-controls/1",
+  "status": "pass",
+  "baseline": {
+    "status": "pass"
+  },
+  "negativeControls": [
+    {
+      "name": "stale source closure",
+      "rejected": true,
+      "reason": "source closure identity mismatch"
+    },
+    {
+      "name": "archive member omission",
+      "rejected": true,
+      "reason": "receipt/member maps differ"
+    },
+    {
+      "name": "native dispatch undercount",
+      "rejected": true,
+      "reason": "native dispatch total mismatch"
+    },
+    {
+      "name": "native output tamper",
+      "rejected": true,
+      "reason": "Node native wire/result digest mismatch"
+    },
+    {
+      "name": "wrapper-rejected dispatch",
+      "rejected": true,
+      "reason": "node accessor-refusal-no-evaluation dispatch mismatch"
+    },
+    {
+      "name": "diagnostic order drift",
+      "rejected": true,
+      "reason": "bun duplicate-and-incomplete-closure outcome mismatch"
+    },
+    {
+      "name": "WASM not requested",
+      "rejected": true,
+      "reason": "Chromium environment or request controls failed"
+    },
+    {
+      "name": "WASM dispatch undercount",
+      "rejected": true,
+      "reason": "WASM dispatch evidence mismatch"
+    },
+    {
+      "name": "browser external request",
+      "rejected": true,
+      "reason": "Chromium environment or request controls failed"
+    },
+    {
+      "name": "browser page error",
+      "rejected": true,
+      "reason": "Chromium environment or request controls failed"
+    },
+    {
+      "name": "Node/Bun case divergence",
+      "rejected": true,
+      "reason": "bun valid outcome mismatch"
+    }
+  ]
+}

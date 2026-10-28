@@ -29,6 +29,14 @@ import {requireSchemaGraphProviders} from './src/schema-graph.js';
 export {isWireAdmissionError} from './src/wire.js';
 export {isBit128EngineError};
 export {isHostJsonResponseError} from './src/host-json.js';
+export function inspectDomainPackLoaderWire(inputJson) {
+  if (typeof inputJson !== 'string') throw new TypeError('Loader inspection input must be JSON text');
+  return addon.inspectDomainPackLoaderWire(inputJson);
+}
+export function inspectDomainPackProfileWire(inputJson) {
+  if (typeof inputJson !== 'string') throw new TypeError('Domain-pack profile input must be JSON text');
+  return addon.inspectDomainPackProfileWire(inputJson);
+}
 const nativeUmfCoreErrors = new WeakSet();
 const weakSetHas = Function.call.bind(WeakSet.prototype.has);
 const weakSetAdd = Function.call.bind(WeakSet.prototype.add);
@@ -77,6 +85,18 @@ export function domainPackSchemaGraphJson() {
 
 export function datasetSourceSchemaGraphJson() {
   return schemaGraphProviders.datasetSourceSchemaGraphJson();
+}
+
+export function artifactCollectionSchemaGraphJson() {
+  return schemaGraphProviders.artifactCollectionSchemaGraphJson();
+}
+
+export function domainPackLoaderSchemaGraphJson() {
+  return schemaGraphProviders.domainPackLoaderSchemaGraphJson();
+}
+
+export function loaderInventorySchemaGraphJson() {
+  return schemaGraphProviders.loaderInventorySchemaGraphJson();
 }
 
 /** Invoke the opt-in Rust reference pass over tagged wire. The caller must have structurally validated pack first. */

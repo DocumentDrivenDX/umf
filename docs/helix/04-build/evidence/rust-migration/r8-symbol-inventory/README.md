@@ -59,9 +59,9 @@ ddx:
 
 # R8 TypeScript public runtime export map
 
-**Current source recapture (2026-10-28, domain-pack schema route):** The inventory records 3,375 route-specific declarations across 509 source files, 1,126 unique export names, and 1,120 declarations per Node, browser, and `./reference` root. Each default root has 922 executable declarations and 198 JSON resource aliases. Inventory SHA-256: `213ca1b06ede7adb9f9eb0c92b1244f8bd23eff25d00168bc792cc79ef448383`. Condition-aware ledger SHA-256: `ac47b3d0bdb2bda33d276101d262e822f340b3c2df736c969aed10990adf31d7`. It records **922 open logical executable default-route gaps and zero retired**, with 84 accepted opt-in Rust mappings, 838 unmapped names, and 61 source-selected Rust declarations in each V4 root. The source-selected override count is 122 across both roots; seven unique logical names have a bounded current-source route observation. Source selection and private installed observations do not retire declarations or establish release qualification.
+**Current source recapture (2026-10-28, five-schema and loader-inspector selection):** The inventory records 3,375 route-specific declarations across 509 source files, 1,126 unique export names, and 1,120 declarations per Node, browser, and `./reference` root. Each default root has 922 executable declarations and 198 JSON resource aliases. Inventory SHA-256: `eced450d39b6e2eade2354cc549300179fc9a763183dd56d2d1af138bb662424`. Condition-aware ledger SHA-256: `14a9de59c1a5d37390f5eab7a8900945c2eecd74b8cf626ec773d46aa79d9ba5`. It records **922 open logical executable default-route gaps and zero retired**, with 84 accepted opt-in Rust mappings, 838 unmapped names, and 65 source-selected Rust declarations in each V4 default root (130 total). Ten bounded binding routes have evidence; source selection and bounded private evidence do not retire declarations or establish release qualification.
 
-The Compact Dataset verifier, Security And/Or, and Access RRF source packets pass five, 68, and five bounded cases on Node, Bun, and Chromium against manifest SHA-256 `45116162b154da756e3abee5bd59fca9da345b761fd20c91e72891196f328209` and 2,001-file source closure SHA-256 `9eb6c681a5cabf35d94394b2def87a159c15777b58877dc0070003fb16e71130`. The separate [Domain Pack schema default-route packet](../r8-domain-pack-schema-default-route/README.md) records exact schema parity, identity-class replay, and private installed archive observations for two public exports, against its own fixed-point source build and private archive. These scoped receipts leave `./reference` on TypeScript and all 922 logical executable gaps open; they do not establish complete Dataset/Security semantics or release qualification.
+The [five-schema default-route packet](../r8-domain-pack-schema-default-route/README.md) covers the public exports `generateDomainPackSchema`, `generateDatasetSourceSchema`, `generateArtifactCollectionSchema`, `generateDomainPackLoaderSchema`, and `generateLoaderInventorySchema`. Its receipt SHA-256 is `1c192d0246a85c8c12de39b37b40e119026b692dade2db249e5aace2c689b19a`; its fixed-point source closure SHA-256 is `f767e90fe77adec74f85358c7d7d0b775a84d35fd5dd445b002da5a51026f231`. This is bounded private Darwin arm64 Node/Bun/Chromium installed-route evidence only; direct WASM provider counters were unavailable. The separately source-selected `inspectDomainPackLoader` has no installed route packet. `./reference` remains TypeScript, all 922 logical executable gaps remain open, and Linux and release qualification remain outstanding.
 
 The [current-source Linux `securityNot` packet](../r8-security-not-current-linux-20261027/README.md) combines fixed-point Darwin arm64 and Docker-emulated Linux x86_64 installed SDK archives with Node, Bun, and Chromium receipts. The exact `/3` validator accepts the Node and browser `securityNot` declarations as retired for that evidence-bearing cohort, leaving 921 conditional logical gaps; `./reference` remains explicit TypeScript. This checked default ledger still has 922 open gaps and zero retired because it carries no archive evidence argument. Hosted CI and release qualification remain open.
 
@@ -1451,3 +1451,25 @@ Node 26.12.1, Bun 1.4.3, and Chromium 153.0.8010.12 passed their five Compact,
 68 Security, and five RRF cases. These source-built packets do not establish
 installed SDK behavior, complete semantic parity, or release qualification.
 Earlier sections retain their historical hashes and scopes.
+
+## Five-schema fixed-point route and loader inspector selection — 2026-10-28
+
+The current inventory SHA-256 is
+`eced450d39b6e2eade2354cc549300179fc9a763183dd56d2d1af138bb662424`:
+3,375 route declarations across 509 source files and 1,126 unique names. The
+condition-aware ledger SHA-256 is
+`14a9de59c1a5d37390f5eab7a8900945c2eecd74b8cf626ec773d46aa79d9ba5`.
+Each default Node/browser root has 1,120 declarations, including 65
+source-selected Rust declarations and 198 inert JSON resource exports. The
+ledger retains 922 logical executable default-route gaps, zero retired, 84
+accepted opt-in Rust mappings, and 838 without an accepted mapping.
+
+The five schema-generator routes have a checked private installed archive
+[packet](../r8-domain-pack-schema-default-route/README.md) from a zero-transform
+3,610-input source closure. Node and Bun observed two direct provider calls
+per generator and matched the TypeScript reference's exact JSON, alias
+classes, and fresh-instance behavior; real Chromium matched public behavior
+with adjacent WASM and no Node globals. The separate `inspectDomainPackLoader`
+route is source-selected but remains unqualified pending installed Node/Bun/
+Chromium evidence. Neither selection nor this bounded packet retires a gap or
+qualifies a release.

@@ -27,19 +27,42 @@ import {createRelationshipParquetProjection} from './core-ideals/relationship-pa
 import {createRelationshipExtras} from './core-ideals/relationship-extras-factory';
 import {createRelationshipPostgresql} from './core-ideals/relationship-postgresql-factory';
 import {createGeneratedSchemaGraphOperation} from './domain-packs/generated-schema-graph';
+import {createDomainPackLoaderInspectionOperation} from './domain-packs/loader-rust';
+import {createDomainPackProfileInspectionOperation} from './domain-packs/profile-rust';
 import type {generateDatasetSourceSchema as DatasetSourceSchemaReference} from './domain-packs/source-schema';
 import type {generateDomainPackSchema as DomainPackSchemaReference} from './domain-packs/schema';
+import type {generateArtifactCollectionSchema as ArtifactCollectionSchemaReference} from './domain-packs/artifacts';
+import type {generateDomainPackLoaderSchema as DomainPackLoaderSchemaReference} from './domain-packs/loader';
+import type {generateLoaderInventorySchema as LoaderInventorySchemaReference} from './domain-packs/loader-inventory';
 
 // Module import resolves only after the browser WASM engine is ready. The
 // function exported below remains synchronous and never falls back to TypeScript.
 const generatePythonClient=await initializePythonClientRustDefaultV4(()=>createPythonClientRustCandidateV4());
 const wasmModule=await import('../bindings/core/wasm/pkg/umf_core_wasm.js');
+const loaderSchemaWasmModule=wasmModule as typeof wasmModule & {
+  domainPackLoaderSchemaGraphJson:()=>string;
+  loaderInventorySchemaGraphJson:()=>string;
+  inspectDomainPackLoaderWire:(inputJson:string)=>string;
+  inspectDomainPackProfileWire:(inputJson:string)=>string;
+};
 const generateDomainPackSchemaOperation=createGeneratedSchemaGraphOperation(wasmModule.domainPackSchemaGraphJson) as typeof DomainPackSchemaReference;
 const generateDatasetSourceSchemaOperation=createGeneratedSchemaGraphOperation(wasmModule.datasetSourceSchemaGraphJson) as typeof DatasetSourceSchemaReference;
+const generateArtifactCollectionSchemaOperation=createGeneratedSchemaGraphOperation(wasmModule.artifactCollectionSchemaGraphJson) as typeof ArtifactCollectionSchemaReference;
+const generateDomainPackLoaderSchemaOperation=createGeneratedSchemaGraphOperation(loaderSchemaWasmModule.domainPackLoaderSchemaGraphJson) as typeof DomainPackLoaderSchemaReference;
+const generateLoaderInventorySchemaOperation=createGeneratedSchemaGraphOperation(loaderSchemaWasmModule.loaderInventorySchemaGraphJson) as typeof LoaderInventorySchemaReference;
+const inspectDomainPackLoaderOperation=createDomainPackLoaderInspectionOperation(loaderSchemaWasmModule.inspectDomainPackLoaderWire);
+const domainPackProfileOperations=createDomainPackProfileInspectionOperation(loaderSchemaWasmModule.inspectDomainPackProfileWire);
+const {inspectDomainPack,requireDomainPackProfile}=domainPackProfileOperations;
 function generateDomainPackSchema(){return generateDomainPackSchemaOperation();}
 function generateDatasetSourceSchema(){return generateDatasetSourceSchemaOperation();}
+function generateArtifactCollectionSchema(){return generateArtifactCollectionSchemaOperation();}
+function generateDomainPackLoaderSchema(){return generateDomainPackLoaderSchemaOperation();}
+function generateLoaderInventorySchema(){return generateLoaderInventorySchemaOperation();}
 Object.defineProperty(generateDomainPackSchema,'name',{value:'generateDomainPackSchema'});
 Object.defineProperty(generateDatasetSourceSchema,'name',{value:'generateDatasetSourceSchema'});
+Object.defineProperty(generateArtifactCollectionSchema,'name',{value:'generateArtifactCollectionSchema'});
+Object.defineProperty(generateDomainPackLoaderSchema,'name',{value:'generateDomainPackLoaderSchema'});
+Object.defineProperty(generateLoaderInventorySchema,'name',{value:'generateLoaderInventorySchema'});
 const model=await initializeCoreModelRootWasm(CORE_MODEL_RESOURCES,async()=>wasmModule);
 const {inspectCoreSemanticTypes,getCoreSemanticTypes,declareCoreSemanticTypes,verifyCoreSemanticTypeDeclaration}=bindCoreSemanticTypesRust(model,isNativeUmfCoreError);
 const recordValuesHost=await initializeCoreRecordValuesHostInputWasm(CORE_MODEL_RESOURCES,async()=>wasmModule);
@@ -75,5 +98,8 @@ const {projectRelationshipToExtra,verifyRelationshipExtra,recoverRelationshipExt
 const {projectRelationshipsToPostgresql,verifyRelationshipPostgresqlProjection,recoverRelationshipPostgresqlIdeal,recoverRelationshipPostgresqlNative}=createRelationshipPostgresql(relationshipConsumers);
 const {parseBits128,parseUuid,bits128FromBytes,bits128ToBytes,uuidFromBits128,uuidToBits128,compareBits128,bits128ToWords,bits128FromWords,bits128ToInteger,bits128FromInteger}=bindBit128Rust(await initializeBit128Wasm(),isBit128EngineError);
 export * from './index-v4-default';
+export {inspectDomainPackLoaderOperation as inspectDomainPackLoader,inspectDomainPack,requireDomainPackProfile};
 export {generatePythonClient,generateDomainPackSchema,generateDatasetSourceSchema,exactDecimal,integerFromBigInt,integerToBigInt,admitJavascriptNumber,numericToNumberLossless,inspectCoreCardinality,declareCoreCardinality,verifyCoreCardinalityDeclaration,validateCoreDatasetValuesCompact,verifyCoreDatasetValuesCompact,inspectCoreFacets,declareCoreFacets,verifyCoreFacetDeclaration,historicalCoreFacetPatch,inspectCoreKeys,lookupCoreKey,declareCoreRecordMembers,declareCoreKey,verifyCoreKeyOperation,inspectCoreRelationships,lookupCoreRelationship,declareCoreRelationship,verifyCoreRelationshipOperation,inspectCoreScalarType,inspectCoreRecordMembers,inspectCoreReferenceLinks,inspectCoreSemanticTypes,getCoreSemanticTypes,declareCoreSemanticTypes,verifyCoreSemanticTypeDeclaration,inspectRawTableBinding,inspectCoreSchemaProperties,declareCoreSchemaProperties,validateCoreFieldValue,resolveCoreDefault,validateCoreRecordValues,SemanticTypeRegistry,validateSemanticTypeValue,validateCoreSemanticTypeValue,declareCoreRecordType,verifyCoreRecordTypeDeclaration,parseBits128,parseUuid,bits128FromBytes,bits128ToBytes,uuidFromBits128,uuidToBits128,compareBits128,bits128ToWords,bits128FromWords,bits128ToInteger,bits128FromInteger,validateCsvBooleanLexical,verifyCsvBooleanLexical,parseGregorianDate,truncateGregorianDate,parseRfc3339ExactInstant,sameRfc3339ExactInstant,securityNot,securityAnd,securityOr};
+export {generateArtifactCollectionSchema};
+export {generateDomainPackLoaderSchema,generateLoaderInventorySchema};
 export {projectRelationshipToAvro,verifyRelationshipAvroProjection,recoverRelationshipAvroIdeal,recoverRelationshipAvroNative,projectRelationshipToTableSpec,verifyRelationshipTableSpecProjection,recoverRelationshipTableSpecIdeal,recoverRelationshipTableSpecNativeSources,projectRelationshipToSqlServer,verifyRelationshipSqlServerProjection,recoverRelationshipSqlServerIdeal,recoverRelationshipSqlServerBinding,recoverRelationshipSqlServerNative,projectRelationshipToParquet,verifyRelationshipParquetProjection,recoverRelationshipParquetIdeal,recoverRelationshipParquetNative,projectRelationshipToExtra,verifyRelationshipExtra,recoverRelationshipExtraIdeal,recoverRelationshipExtraNative,projectRelationshipsToPostgresql,verifyRelationshipPostgresqlProjection,recoverRelationshipPostgresqlIdeal,recoverRelationshipPostgresqlNative};

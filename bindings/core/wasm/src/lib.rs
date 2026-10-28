@@ -43,6 +43,38 @@ pub fn dataset_source_schema_graph_json() -> Result<String, JsValue> {
         .map_err(|error| JsValue::from_str(&error.code))
 }
 
+#[wasm_bindgen(js_name = artifactCollectionSchemaGraphJson)]
+pub fn artifact_collection_schema_graph_json() -> Result<String, JsValue> {
+    umf_core::domain_pack_schema::artifact_collection_schema_graph_json()
+        .map_err(|error| JsValue::from_str(&error.code))
+}
+
+#[wasm_bindgen(js_name = domainPackLoaderSchemaGraphJson)]
+pub fn domain_pack_loader_schema_graph_json() -> Result<String, JsValue> {
+    umf_core::domain_pack_loader_schemas::domain_pack_loader_schema_graph_json()
+        .map_err(|error| JsValue::from_str(&error.code))
+}
+
+#[wasm_bindgen(js_name = loaderInventorySchemaGraphJson)]
+pub fn loader_inventory_schema_graph_json() -> Result<String, JsValue> {
+    umf_core::domain_pack_loader_schemas::loader_inventory_schema_graph_json()
+        .map_err(|error| JsValue::from_str(&error.code))
+}
+
+/// Pure CONTRACT-057 loader inspection; accepts the JSON copied by the JS host wrapper.
+#[wasm_bindgen(js_name = inspectDomainPackLoaderWire)]
+pub fn inspect_domain_pack_loader_wire(input_json: &str) -> Result<String, JsValue> {
+    umf_core::domain_pack_loader_inspection::inspect_domain_pack_loader_wire(input_json)
+        .map_err(|_| JsValue::from_str("Malformed loader inspection JSON"))
+}
+
+/// Pure CONTRACT-052/053 pack-profile inspection after host JSON admission.
+#[wasm_bindgen(js_name = inspectDomainPackProfileWire)]
+pub fn inspect_domain_pack_profile_wire(input_json: &str) -> Result<String, JsValue> {
+    umf_core::domain_pack_profile_inspection::inspect_domain_pack_profile_wire(input_json)
+        .map_err(|_| JsValue::from_str("Malformed domain-pack profile inspection JSON"))
+}
+
 #[wasm_bindgen(js_name = accessRrfProfileVersion)]
 pub fn access_rrf_profile_version() -> String {
     umf_core_wire::access_rrf_binding::PROFILE.to_owned()
