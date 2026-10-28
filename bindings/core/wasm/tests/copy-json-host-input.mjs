@@ -65,6 +65,54 @@ assert.deepEqual(engine.copyJson(proxy), reference(proxy));
 assert.deepEqual(trace, ['getPrototypeOf', 'ownKeys', 'ownKeys', 'descriptor:a', 'getPrototypeOf', 'ownKeys', 'ownKeys', 'descriptor:a']);
 assert.equal(trace.some((item) => item.startsWith('get:')), false);
 
+function crossedEffectCase(copy) {
+  const trace = [];
+  const child = new Proxy({value: 1}, {
+    getPrototypeOf(target) { trace.push('child:getPrototypeOf'); return Reflect.getPrototypeOf(target); },
+    ownKeys(target) { trace.push('child:ownKeys'); return Reflect.ownKeys(target); },
+    getOwnPropertyDescriptor(target, key) {
+      trace.push(`child:descriptor:${String(key)}`);
+      return Reflect.getOwnPropertyDescriptor(target, key);
+    },
+  });
+  const parent = new Proxy({first: 1, second: child}, {
+    getPrototypeOf(target) { trace.push('parent:getPrototypeOf'); return Reflect.getPrototypeOf(target); },
+    ownKeys(target) { trace.push('parent:ownKeys'); return Reflect.ownKeys(target); },
+    getOwnPropertyDescriptor(target, key) {
+      trace.push(`parent:descriptor:${String(key)}`);
+      return Reflect.getOwnPropertyDescriptor(target, key);
+    },
+  });
+  const result = copy(parent);
+  return {result, trace};
+}
+const crossedReference = crossedEffectCase(reference);
+const crossedCandidate = crossedEffectCase(value => engine.copyJson(value));
+assert.deepEqual(crossedCandidate, crossedReference);
+assert.deepEqual(crossedCandidate.trace, [
+  'parent:getPrototypeOf', 'parent:ownKeys', 'parent:ownKeys',
+  'parent:descriptor:first', 'parent:descriptor:second',
+  'child:getPrototypeOf', 'child:ownKeys', 'child:ownKeys', 'child:descriptor:value',
+]);
+
+const firstEffectSentinel = {reason: 'later child trap'};
+const makeCompetingFaults = trace => {
+  const child = new Proxy({}, {getPrototypeOf() { trace.push('child:getPrototypeOf'); throw firstEffectSentinel; }});
+  const parent = {};
+  Object.defineProperty(parent, 'first', {enumerable: true, get() { trace.push('getter'); throw new Error('getter ran'); }});
+  Object.defineProperty(parent, 'second', {enumerable: true, value: child});
+  return parent;
+};
+const referenceTrace = [];
+const referenceError = failure(() => reference(makeCompetingFaults(referenceTrace)));
+const candidateTrace = [];
+const candidateError = failure(() => engine.copyJson(makeCompetingFaults(candidateTrace)));
+assert.deepEqual(comparable(candidateError), comparable(referenceError));
+assert.notEqual(candidateError, firstEffectSentinel);
+assert.deepEqual(candidateTrace, referenceTrace);
+assert.equal(candidateTrace.includes('getter'), false);
+assert.equal(candidateTrace.includes('child:getPrototypeOf'), false);
+
 const changingArray = () => {
   const target = [10, 20];
   let ownKeysCalls = 0;
@@ -123,4 +171,4 @@ const boundary = Array(99_999).fill(null);
 assert.equal(engine.copyJson(boundary).length, 99_999);
 const overflow = Array(100_000).fill(null);
 assert.deepEqual(comparable(failure(() => engine.copyJson(overflow))), comparable(failure(() => reference(overflow))));
-console.log(JSON.stringify({status: 'pass', cases: cases.map(([name]) => name), proxyTrace: trace.slice(0, 4), exactValueBoundary: 100_000, longStringUnits: long.length}));
+console.log(JSON.stringify({status: 'pass', cases: cases.map(([name]) => name), crossedEffectTrace: crossedCandidate.trace, crossedFirstFaultTrace: candidateTrace, proxyTrace: trace.slice(0, 4), exactValueBoundary: 100_000, longStringUnits: long.length}));

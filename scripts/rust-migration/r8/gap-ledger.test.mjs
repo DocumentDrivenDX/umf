@@ -9,7 +9,7 @@ import { gzipSync } from 'node:zlib';
 import { cp, mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { buildLedger, collectPythonPackageAssets, collectPythonSourceFiles, isDomainPackLoaderInspectionRootSelection, isDomainPackProfileInspectionRootSelection, isDomainPackSchemaRootSelection, operationMapping, summarizeDefaultRouteRetirement, validateCompactVerifierBuildBinding, validateDomainPackLoaderInspectorReceipt, validateSchemaGraphReceipt } from './gap-ledger.mjs';
+import { buildLedger, classifyBit128ProfileSource, collectPythonPackageAssets, collectPythonSourceFiles, isDomainPackLoaderInspectionRootSelection, isDomainPackProfileInspectionRootSelection, isDomainPackSchemaRootSelection, operationMapping, summarizeDefaultRouteRetirement, validateCompactVerifierBuildBinding, validateDomainPackLoaderInspectorReceipt, validateSchemaGraphReceipt } from './gap-ledger.mjs';
 import { CASES as LOADER_INSPECTOR_CASES, validateClaims as validateLoaderInspectorClaims, validatePacketSync as validateLoaderInspectorPacketSync } from './loader-inspector-route-evidence.mjs';
 import { requiredR8RouteFamilies, validateR8InstalledRouteEvidence } from './installed-route-evidence.mjs';
 import { normalizeR8RouteHostReceipt } from './installed-route-receipt-adapter.mjs';
@@ -31,6 +31,31 @@ const currentGeneratedLedger = () => JSON.parse(execFileSync('node', [
 ], {
   cwd: process.cwd(), maxBuffer: 64 * 1024 * 1024, encoding: 'utf8',
 }));
+
+test('only the pinned BIT128_PROFILE primitive is classified as inert JSON scalar data', () => {
+  const ledger = currentGeneratedLedger();
+  const profileRows = ledger.rows.filter(row => row.exportName === 'BIT128_PROFILE');
+  assert.deepEqual(profileRows.map(row => row.routeId).sort(), ['package-reference', 'package-root-browser', 'package-root-node']);
+  assert.ok(profileRows.every(row => row.rowKind === 'inert-json-scalar'
+    && row.inertJsonScalarValue === 'umf-128/1'
+    && row.defaultRouteRetirement.status === 'not-applicable'));
+  const limitsRows = ledger.rows.filter(row => row.exportName === 'LIMITS');
+  assert.equal(limitsRows.length, 3);
+  assert.ok(limitsRows.every(row => row.rowKind === 'executable' && row.defaultRouteRetirement.status !== 'not-applicable'));
+  assert.equal(ledger.counts.inertJsonScalarRows, 1);
+  assert.equal(ledger.counts.routeInertJsonScalarRows, 3);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
+  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 834);
+
+  assert.equal(classifyBit128ProfileSource("export const BIT128_PROFILE = 'umf-128/1' as const;"), 'umf-128/1');
+  for (const source of [
+    "export let BIT128_PROFILE = 'umf-128/1';",
+    "export const BIT128_PROFILE = makeProfile();",
+    "export const BIT128_PROFILE = 'umf-128/' + '1';",
+    "export const BIT128_PROFILE = { value: 'umf-128/1' } as const;",
+    "export const BIT128_PROFILE = ['umf-128/1'] as const;",
+  ]) assert.equal(classifyBit128ProfileSource(source), null, source);
+});
 
 test('compact verifier source evidence binds every host to one immutable build and exact artifacts', () => {
   const dir = 'docs/helix/04-build/evidence/rust-migration/r8-compact-dataset-verify-source';
@@ -614,7 +639,7 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
   const reference = ledger.rows.filter(row => row.routeId === 'package-reference' && expected.includes(row.exportName));
   assert.equal(reference.length, expected.length);
   assert.ok(reference.every(row => row.sourceSelectedImplementation === null));
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 921);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
   assert.equal(ledger.counts.sourceSelectedRustOverrides, 130 + 2 * 2 + 2 * 2);
   for (const routeId of ['package-root-node', 'package-root-browser']) {
     assert.equal(ledger.counts.executableDefaultRouteGapsByRoute[routeId].rustSelectedSourceDeclarations, 65 + 4);
@@ -828,17 +853,17 @@ test('relationship condition-shape normalization rejects alias, source, kind and
 test('retiring three paired logical names lowers the current default gap count by three only', () => {
   const open = currentGeneratedLedger();
   const names = ['inspectCoreScalarType', 'inspectCoreRecordMembers', 'inspectCoreReferenceLinks'];
-  assert.equal(open.counts.executableDefaultRouteGaps, 921);
+  assert.equal(open.counts.executableDefaultRouteGaps, 920);
   const pairedRows = open.rows.map(row => names.includes(row.exportName) && ['package-root-node', 'package-root-browser'].includes(row.routeId)
     ? { ...row, defaultRouteRetirement: { status: 'retired', evidence: [{ path: `synthetic/${row.routeId}/${row.exportName}.json`, sha256: '9'.repeat(64) }] } }
     : row);
   const summary = summarizeDefaultRouteRetirement(pairedRows);
-  assert.equal(summary.logicalGaps, 918);
-  assert.deepEqual(summary.byRoute['package-root-node'], { open: 918, retired: 3 });
-  assert.deepEqual(summary.byRoute['package-root-browser'], { open: 918, retired: 3 });
-  assert.equal(open.counts.executableDefaultRouteGapsByRoute['package-reference'].retainedReferenceExecutableRows, 918);
+  assert.equal(summary.logicalGaps, 917);
+  assert.deepEqual(summary.byRoute['package-root-node'], { open: 917, retired: 3 });
+  assert.deepEqual(summary.byRoute['package-root-browser'], { open: 917, retired: 3 });
+  assert.equal(open.counts.executableDefaultRouteGapsByRoute['package-reference'].retainedReferenceExecutableRows, 917);
   assert.equal(open.rows.filter(row => row.routeId === 'package-reference' && names.includes(row.exportName) && row.defaultRouteRetirement.status === 'reference-only').length, 3);
-  assert.equal(open.rows.filter(row => row.routeId === 'package-reference' && row.rowKind === 'executable').length, 918);
+  assert.equal(open.rows.filter(row => row.routeId === 'package-reference' && row.rowKind === 'executable').length, 917);
 });
 
 test('five JavaScript numeric root bindings retain exact Rust ownership without retiring gaps', () => {
@@ -875,7 +900,7 @@ test('five JavaScript numeric root bindings retain exact Rust ownership without 
       assert.throws(() => buildLedger({ ...args, inventory: { symbols: changed } }), /(declaration multiplicity differs|Node\/browser export names differ)/);
     }
   }
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 921);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
 });
 
 test('securityNot normalizes only the exact V4 binding and TypeScript reference declaration shapes', () => {
@@ -987,8 +1012,8 @@ test('Schema Properties source selections keep exact CONTRACT-049 mappings separ
     assert.equal(reference.implementationStatus, 'TypeScript reference implementation remains explicit');
   }
   assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 86);
-  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 835);
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 921);
+  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 834);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
   const aggregate = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/aggregate.json', 'utf8'));
   const aggregateNames = Object.values(aggregate.families).flatMap(family => family.operations);
   assert.equal(Object.keys(aggregate.families).length, 5);
@@ -1096,7 +1121,7 @@ test('TableSpec Cardinality projection schema pins its direct Field base and pac
   assert.ok(row.resourceOwnership.routes.some(route => route.id === 'sdk-archive'
     && route.artifactPath === 'package/dist/spec/core/cardinality-tablespec-projection.schema.json'));
   assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 56);
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 921);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
 });
 
 test('SQL Server Field and Cardinality projection schemas pin exact writer chains', () => {
@@ -1150,7 +1175,7 @@ test('SQL Server Field and Cardinality projection schemas pin exact writer chain
   const field = ledger.rows.find(item => item.source === 'spec/core/field-sqlserver-projection.schema.json');
   assert.equal(field.resourceOwnership.authority.status, 'generated-authority-known');
   assert.deepEqual(field.resourceOwnership.authority.generatorInputs, ['spec/core/field-postgresql-projection.schema.json']);
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 921);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
   assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 56);
 });
 
@@ -1265,8 +1290,8 @@ test('five model vocabulary exports record generated-data versus executable disp
     JSON.parse(readFileSync('spec/metamodel/generated/manifest.json')).outputs['src/generated/core-model.ts'].sha256);
   assert.equal(ledger.counts.immutableGeneratedDataRows, 4);
   assert.equal(ledger.counts.routeImmutableGeneratedDataRows, 12);
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 921);
-  assert.equal(ledger.counts.executableRows, 921);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
+  assert.equal(ledger.counts.executableRows, 920);
   const rows = ledger.rows.filter(row => ['SCALAR_TYPES','ELEMENT_KINDS','NULLABILITIES','CARDINALITIES'].includes(row.exportName));
   assert.equal(rows.length, 12);
   assert.ok(rows.every(row => row.rowKind === 'immutable-generated-data' && row.source === 'src/model/types.ts'));
@@ -1365,7 +1390,7 @@ test('Parquet metadata schema outputs pin their exact multi-output writer and di
       && route.artifactPath === `package/dist/${resource}`));
   }
   assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 56);
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 921);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
 });
 
 test('Parquet metadata multi-output --check rejects each stale output without rewriting either', async () => {
@@ -3023,9 +3048,9 @@ test('security truth and composition map only their four reviewed opt-in operati
 
 test('securityAnd/securityOr V4 bindings normalize exactly and carry source-only replay evidence', () => {
   const ledger = currentGeneratedLedger();
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 921);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
   assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 86);
-  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 835);
+  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 834);
   for (const name of ['securityAnd', 'securityOr']) {
     const rustSymbol = name === 'securityAnd' ? 'security_and' : 'security_or';
     for (const routeId of ['package-root-node', 'package-root-browser']) {
@@ -3588,7 +3613,7 @@ test('five schema graph public routes retain source selection while prior instal
     assert.equal(reference.sourceSelectedImplementation, null);
     assert.equal(reference.defaultRouteRetirement.status, 'reference-only');
   }
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 921);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
   assert.equal(ledger.counts.executableDefaultRouteRetirementsByRoute['package-root-node'], 0);
   assert.equal(ledger.counts.executableDefaultRouteRetirementsByRoute['package-root-browser'], 0);
 });
@@ -3663,7 +3688,7 @@ test('domain-pack loader inspector selection requires its exact V4 wrapper shape
   assert.equal(ledger.counts.sourceSelectedRustOverrides, 130 + 2 * 2 + 2 * 2);
   assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-node'].rustSelectedSourceDeclarations, 65 + 4);
   assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-browser'].rustSelectedSourceDeclarations, 65 + 4);
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 921);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
 });
 
 test('domain-pack profile Rust selection requires the exact V4 binding and typed reference predecessor', () => {

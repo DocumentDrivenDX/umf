@@ -4,6 +4,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import ts from 'typescript-api';
 import { validateR8InstalledRouteEvidence } from './installed-route-evidence.mjs';
 import { validateDefaultRouteRetirementEvidence } from './default-route-retirement-evidence.mjs';
 import { validatePacketSync as validateLoaderInspectorPacketSync } from './loader-inspector-route-evidence.mjs';
@@ -23,6 +24,58 @@ const json = file => JSON.parse(read(file));
 const immutableGeneratedDataAliases = new Map([
   'SCALAR_TYPES', 'ELEMENT_KINDS', 'NULLABILITIES', 'CARDINALITIES',
 ].map(name => [name, { source: 'src/model/types.ts', sourceSha256: '6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c' }]));
+
+const bit128ProfilePin = {
+  source: 'src/model/bit128.ts',
+  sourceSha256: 'c4db81a14022db2413ee991e8705d3bee688d0ed1e7c880e6170520a2694d543',
+  value: 'umf-128/1',
+};
+
+export function classifyBit128ProfileSource(sourceText) {
+  const sourceFile = ts.createSourceFile(bit128ProfilePin.source, sourceText, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const matches = [];
+  for (const statement of sourceFile.statements) {
+    if (!ts.isVariableStatement(statement)) continue;
+    for (const declaration of statement.declarationList.declarations) {
+      if (ts.isIdentifier(declaration.name) && declaration.name.text === 'BIT128_PROFILE') matches.push({ statement, declaration });
+    }
+  }
+  if (matches.length !== 1) return null;
+  const [{ statement, declaration }] = matches;
+  const modifiers = ts.canHaveModifiers(statement) ? ts.getModifiers(statement) ?? [] : [];
+  const initializer = declaration.initializer;
+  if (!modifiers.some(item => item.kind === ts.SyntaxKind.ExportKeyword)
+    || !(statement.declarationList.flags & ts.NodeFlags.Const)
+    || !initializer || !ts.isAsExpression(initializer)
+    || !ts.isStringLiteral(initializer.expression)
+    || initializer.expression.text !== bit128ProfilePin.value
+    || !ts.isTypeReferenceNode(initializer.type)
+    || !ts.isIdentifier(initializer.type.typeName)
+    || initializer.type.typeName.text !== 'const') return null;
+  return initializer.expression.text;
+}
+
+function assertBit128ProfileRouteInventory(rootRows) {
+  const profileRows = rootRows.filter(row => row.exportName === 'BIT128_PROFILE');
+  if (profileRows.length === 0) return;
+  const expectedRoutes = ['package-reference', 'package-root-browser', 'package-root-node'];
+  if (profileRows.length !== expectedRoutes.length
+    || JSON.stringify(profileRows.map(row => row.routeId).sort()) !== JSON.stringify(expectedRoutes)) {
+    throw new Error('BIT128_PROFILE must have exactly the Node, browser, and reference route rows');
+  }
+  const sourceBytes = read(bit128ProfilePin.source);
+  if (digest(sourceBytes) !== bit128ProfilePin.sourceSha256
+    || classifyBit128ProfileSource(sourceBytes.toString('utf8')) !== bit128ProfilePin.value) {
+    throw new Error('BIT128_PROFILE source is not the pinned immutable JSON string literal');
+  }
+  for (const row of profileRows) {
+    if (row.exportName !== 'BIT128_PROFILE' || row.declarationName !== 'BIT128_PROFILE'
+      || row.declarationKind !== 'VariableDeclaration' || row.source !== bit128ProfilePin.source
+      || row.sourceSha256 !== bit128ProfilePin.sourceSha256) {
+      throw new Error(`BIT128_PROFILE route declaration identity drift: ${row.routeId}`);
+    }
+  }
+}
 
 // These are explicit source/API-to-Rust mappings supported by reviewed opt-in
 // core evidence. No name similarity or candidate-family heuristic adds rows.
@@ -2607,8 +2660,10 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
     occurrenceByRoute.set(routeSignature, ordinal + 1);
     logicalKeyByRow.set(row, `${declarationSignature}\0${ordinal}`);
   }
+  assertBit128ProfileRouteInventory(rootRows);
   return rootRows.map((row, index) => {
     const inert = row.source.startsWith('spec/') && row.source.endsWith('.json');
+    const inertJsonScalar = row.exportName === 'BIT128_PROFILE' && row.source === bit128ProfilePin.source;
     const immutableDataPin = immutableGeneratedDataAliases.get(row.exportName);
     if (immutableDataPin && (row.source !== immutableDataPin.source || row.declarationKind !== 'VariableDeclaration' || row.sourceSha256 !== immutableDataPin.sourceSha256)) {
       throw new Error(`source-pinned generated-data alias drift: ${row.source}#${row.exportName}`);
@@ -2762,7 +2817,8 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
       line: row.line,
       sourceSha256: row.sourceSha256,
       ownerFamily: ownerFamily(row.source),
-      rowKind: inert ? 'generated-inert-json' : immutableGeneratedData ? 'immutable-generated-data' : 'executable',
+      rowKind: inert ? 'generated-inert-json' : immutableGeneratedData ? 'immutable-generated-data' : inertJsonScalar ? 'inert-json-scalar' : 'executable',
+      ...(inertJsonScalar ? { inertJsonScalarValue: bit128ProfilePin.value } : {}),
       defaultRoute: routeDetails.defaultRoute,
       acceptedRustOperation: mapping ? mapping.rustOwner : null,
       acceptedOperationEvidence: mapping ? acceptedOperationEvidence(mapping, routeDetails.routeStatus) : null,
@@ -2773,12 +2829,14 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
         || (row.exportName === 'securityNot' && sourceSelection?.status === 'source-selected-installed-private-source-pinned')
         ? sourceSelection.bindingRoute : null,
       bindingRouteStatus: sourceSelection?.status === 'source-selected-installed-private-current-cohort' ? 'installed-private-current-cohort' : sourceSelection?.status === 'source-selected-installed-private-source-pinned' ? 'installed-private-source-pinned-not-current' : sourceSelection?.status === 'source-selected-installed-private-provisional' ? 'installed-private-provisional-not-current' : 'unproven',
-      defaultRouteRetirement: inert
+      defaultRouteRetirement: inert || inertJsonScalar
         ? { status: 'not-applicable', evidence: [] }
         : row.routeId === 'package-reference'
         ? { status: 'reference-only', evidence: [] }
         : { status: 'open', evidence: [] },
-      disposition,
+      disposition: inertJsonScalar
+        ? 'source-pinned immutable JSON string scalar; profile discriminator consumers remain separately inventoried and executable'
+        : disposition,
     };
   });
 }
@@ -3062,6 +3120,7 @@ export function buildLedger({ inventory, packageJson, packageBytes = Buffer.from
       declarations: routeRows.length,
       executableDeclarations: routeRows.filter(row => row.rowKind === 'executable').length,
       inertJsonDeclarations: routeRows.filter(row => row.rowKind === 'generated-inert-json').length,
+      inertJsonScalarDeclarations: routeRows.filter(row => row.rowKind === 'inert-json-scalar').length,
       immutableGeneratedDataDeclarations: routeRows.filter(row => row.rowKind === 'immutable-generated-data').length,
       rustSelectedSourceDeclarations: routeRows.filter(row => row.sourceSelectedImplementation !== null).length,
       executableDefaultRouteGaps: routeId === 'package-reference' ? null : routeRows.filter(row => row.rowKind === 'executable' && row.defaultRouteRetirement.status !== 'retired').length,
@@ -3071,9 +3130,10 @@ export function buildLedger({ inventory, packageJson, packageBytes = Buffer.from
   }));
   const byFamily = new Map();
   for (const row of rows) {
-    const entry = byFamily.get(row.ownerFamily) ?? { ownerFamily: row.ownerFamily, total: 0, executable: 0, inertJson: 0, immutableGeneratedData: 0, mappedOptInRust: 0, unportedExecutable: 0, rows: [] };
+    const entry = byFamily.get(row.ownerFamily) ?? { ownerFamily: row.ownerFamily, total: 0, executable: 0, inertJson: 0, inertJsonScalar: 0, immutableGeneratedData: 0, mappedOptInRust: 0, unportedExecutable: 0, rows: [] };
     entry.total++;
     if (row.rowKind === 'generated-inert-json') entry.inertJson++;
+    else if (row.rowKind === 'inert-json-scalar') entry.inertJsonScalar++;
     else if (row.rowKind === 'immutable-generated-data') entry.immutableGeneratedData++;
     else { entry.executable++; if (row.acceptedRustOperation) entry.mappedOptInRust++; else entry.unportedExecutable++; }
     entry.rows.push(row.id);
@@ -3091,6 +3151,8 @@ export function buildLedger({ inventory, packageJson, packageBytes = Buffer.from
     routeExecutableRows: rows.filter(row => row.rowKind === 'executable').length,
     inertJsonRows: logical.filter(row => row.rowKind === 'generated-inert-json').length,
     routeInertJsonRows: rows.filter(row => row.rowKind === 'generated-inert-json').length,
+    inertJsonScalarRows: logical.filter(row => row.rowKind === 'inert-json-scalar').length,
+    routeInertJsonScalarRows: rows.filter(row => row.rowKind === 'inert-json-scalar').length,
     immutableGeneratedDataRows: logical.filter(row => row.rowKind === 'immutable-generated-data').length,
     routeImmutableGeneratedDataRows: rows.filter(row => row.rowKind === 'immutable-generated-data').length,
     executableWithAcceptedOptInRustOperation: logical.filter(row => row.rowKind === 'executable' && row.acceptedRustOperation).length,
@@ -3142,6 +3204,7 @@ export function buildLedger({ inventory, packageJson, packageBytes = Buffer.from
       'No row is marked retired. Exact package-installed routes and duplicate implementation retirement remain open.',
       'Candidate family labels in the source inventory are not treated as operation mappings.',
       'JSON resource exports are inert data rows, not executable algorithm rows; their authored/generated authority and installed distribution route remain per-resource questions.',
+      'Only the exact source-pinned BIT128_PROFILE JSON string literal is classified as inert scalar data; its TypeScript/Rust consumers remain separate executable declarations.',
       'Resource authority statuses distinguish proven metamodel writers, explicitly contract-authored Smithy schemas, candidate writer literals, and unresolved authoring provenance. Source hashes do not qualify installed bytes.',
       'No thin host boundary is justified by filename or export name. A wrapper can be classified as retained host glue only after a separate capability/behavior review.',
       'Node, browser and reference route rows are route-specific; logical executable-gap and unique-resource counts avoid multiplying the same declarations and spec files by route.',

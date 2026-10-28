@@ -141,6 +141,16 @@ try {
         throw new Error(`Result mismatch: ${name}: ${JSON.stringify({referenceResult, candidateResult})}`);
       }
       if (JSON.stringify(referenceTrace) !== JSON.stringify(candidateTrace)) throw new Error(`Trace mismatch: ${name}`);
+      if (name === 'crossed-effect descriptor snapshot before child traversal'
+          && JSON.stringify(candidateTrace) !== JSON.stringify([
+            'parent:getPrototypeOf', 'parent:ownKeys', 'parent:ownKeys',
+            'parent:descriptor:first', 'parent:descriptor:second',
+            'child:getPrototypeOf', 'child:ownKeys', 'child:ownKeys', 'child:descriptor:value',
+          ])) throw new Error(`Unexpected descriptor/child ordering: ${JSON.stringify(candidateTrace)}`);
+      if (name === 'crossed-effect first parent refusal'
+          && (candidateTrace.includes('getter') || candidateTrace.includes('child:getPrototypeOf'))) {
+        throw new Error(`Later host effects ran after first refusal: ${JSON.stringify(candidateTrace)}`);
+      }
       if (name === 'proxy reflection order' && candidateTrace.some(item => item.startsWith('get:'))) {
         throw new Error('Proxy property getter was invoked');
       }
@@ -180,6 +190,33 @@ try {
         },
         get(target, key, receiver) { globalThis.trace.push(`get:${String(key)}`); return Reflect.get(target, key, receiver); },
       })),
+      pair('crossed-effect descriptor snapshot before child traversal', () => {
+        const child = new Proxy({value: 1}, {
+          getPrototypeOf(target) { globalThis.trace.push('child:getPrototypeOf'); return Reflect.getPrototypeOf(target); },
+          ownKeys(target) { globalThis.trace.push('child:ownKeys'); return Reflect.ownKeys(target); },
+          getOwnPropertyDescriptor(target, key) {
+            globalThis.trace.push(`child:descriptor:${String(key)}`);
+            return Reflect.getOwnPropertyDescriptor(target, key);
+          },
+        });
+        return new Proxy({first: 1, second: child}, {
+          getPrototypeOf(target) { globalThis.trace.push('parent:getPrototypeOf'); return Reflect.getPrototypeOf(target); },
+          ownKeys(target) { globalThis.trace.push('parent:ownKeys'); return Reflect.ownKeys(target); },
+          getOwnPropertyDescriptor(target, key) {
+            globalThis.trace.push(`parent:descriptor:${String(key)}`);
+            return Reflect.getOwnPropertyDescriptor(target, key);
+          },
+        });
+      }),
+      pair('crossed-effect first parent refusal', () => {
+        const sentinel = {reason: 'later child trap'};
+        globalThis.sentinel = sentinel;
+        const child = new Proxy({}, {getPrototypeOf() { globalThis.trace.push('child:getPrototypeOf'); throw sentinel; }});
+        const parent = {};
+        Object.defineProperty(parent, 'first', {enumerable: true, get() { globalThis.trace.push('getter'); throw new Error('getter ran'); }});
+        Object.defineProperty(parent, 'second', {enumerable: true, value: child});
+        return parent;
+      }),
       pair('proxy thrown-object identity', () => {
         const sentinel = {cause: 'trap'};
         globalThis.sentinel = sentinel;
@@ -227,10 +264,11 @@ try {
 
   assert.match(browser.version(), /^\d+\./, `Invalid Chromium version ${browser.version()}`);
   assert.equal(result.engineVersion, 'umf-core-r2');
-  assert.equal(result.wasmCopyCalls, 17);
+  assert.equal(result.wasmCopyCalls, 19);
   assert.deepEqual(result.cases.map(item => item.name), [
     'accessor', 'custom prototype', 'cycle', 'hidden property', 'symbol key',
-    'proxy reflection order', 'proxy thrown-object identity', 'dynamic sparse snapshot root',
+    'proxy reflection order', 'crossed-effect descriptor snapshot before child traversal',
+    'crossed-effect first parent refusal', 'proxy thrown-object identity', 'dynamic sparse snapshot root',
     'dynamic sparse snapshot nested escaped path', 'depth 129',
     'unsafe integer', 'lone-surrogate key', 'isolated-surrogate string',
     'surrogate-pair split across text frames', 'long string across many text frames',

@@ -9612,3 +9612,32 @@ declared-byte diagnostic differences against the predecessor (5 focused tests,
 93 assertions). Its return/error classes and codes remain qualified only to
 the existing 14-vector byte-array profile; exact messages and non-byte host
 admission remain open.
+
+### R8 immutable-source YAML host replay and copyJson first-effect guard — 2026-10-28
+
+The [YAML current-host packet](evidence/rust-migration/r8-native-yaml-current-host-400590311/README.md)
+rebuilt optimized Node and WASM bindings from an immutable `git archive` of
+`400590311`. Node 26.12.1 and real Chromium 153.0.8010.12 each match all 24
+frozen default-profile `parseNativeYaml` trees, error codes, and exact
+messages, with zero mismatches; both preserve the tested lone UTF-16
+surrogate, and the browser has no Node globals. The receipt pins the source
+tree, binding artifacts, scripts, and predecessor packet. This is private
+opt-in package-path evidence for the YAML 1.2 subset, not a default-route,
+Linux, arbitrary-YAML, or release qualification.
+
+The opt-in `copyJson` host-input regression now freezes a crossed-effect
+boundary: the parent descriptor snapshot completes before child traversal,
+and an enumerable parent accessor refuses before any later child Proxy trap.
+Direct TypeScript and Rust-backed Node, Bun/WASM, and real Chromium traces
+match. The Node suite passes 18/18; Bun/WASM and Chromium harnesses pass with
+19 Chromium WASM calls and zero external requests. Existing broader
+`copyJson` route gates remain open; the V4 default route is unchanged.
+
+The condition-aware ledger now classifies only the exact source-pinned
+`BIT128_PROFILE = 'umf-128/1' as const` export as inert JSON scalar data on
+Node, browser, and reference routes. An AST, source-hash, route, and value
+guard rejects mutable, computed, array, and object initializers; the public
+mutable `LIMITS` object stays executable. This is a one-name classification
+correction, not a Rust implementation or route retirement. The latest ledger
+reports **920 open logical executable default-route gaps, zero retired**,
+86 accepted opt-in Rust mappings, and 834 executable names without one.

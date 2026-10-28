@@ -82,6 +82,57 @@ describe('Rust-owned host copyJson opt-in', () => {
     expect(traces.some((item) => item.startsWith('get:'))).toBe(false);
   });
 
+  test('matches descriptor snapshot and first-fault ordering before child traversal', () => {
+    const run = (copy) => {
+      const trace = [];
+      const child = new Proxy({value: 1}, {
+        getPrototypeOf(target) { trace.push('child:getPrototypeOf'); return Reflect.getPrototypeOf(target); },
+        ownKeys(target) { trace.push('child:ownKeys'); return Reflect.ownKeys(target); },
+        getOwnPropertyDescriptor(target, key) {
+          trace.push(`child:descriptor:${String(key)}`);
+          return Reflect.getOwnPropertyDescriptor(target, key);
+        },
+      });
+      const parent = new Proxy({first: 1, second: child}, {
+        getPrototypeOf(target) { trace.push('parent:getPrototypeOf'); return Reflect.getPrototypeOf(target); },
+        ownKeys(target) { trace.push('parent:ownKeys'); return Reflect.ownKeys(target); },
+        getOwnPropertyDescriptor(target, key) {
+          trace.push(`parent:descriptor:${String(key)}`);
+          return Reflect.getOwnPropertyDescriptor(target, key);
+        },
+      });
+      const result = copy(parent);
+      return {result, trace};
+    };
+    const expected = run(reference);
+    const actual = run((value) => engine.copyJson(value));
+    expect(actual.result).toEqual(expected.result);
+    expect(actual.trace).toEqual(expected.trace);
+    expect(actual.trace).toEqual([
+      'parent:getPrototypeOf', 'parent:ownKeys', 'parent:ownKeys',
+      'parent:descriptor:first', 'parent:descriptor:second',
+      'child:getPrototypeOf', 'child:ownKeys', 'child:ownKeys', 'child:descriptor:value',
+    ]);
+
+    const sentinel = {reason: 'later child trap'};
+    const makeCompetingFaults = (trace) => {
+      const child = new Proxy({}, {getPrototypeOf() { trace.push('child:getPrototypeOf'); throw sentinel; }});
+      const parent = {};
+      Object.defineProperty(parent, 'first', {enumerable: true, get() { trace.push('getter'); throw new Error('getter ran'); }});
+      Object.defineProperty(parent, 'second', {enumerable: true, value: child});
+      return parent;
+    };
+    const referenceTrace = [];
+    const referenceError = failure(() => reference(makeCompetingFaults(referenceTrace)));
+    const candidateTrace = [];
+    const candidateError = failure(() => engine.copyJson(makeCompetingFaults(candidateTrace)));
+    expect(comparable(candidateError)).toEqual(comparable(referenceError));
+    expect(candidateError).not.toBe(sentinel);
+    expect(candidateTrace).toEqual(referenceTrace);
+    expect(candidateTrace).not.toContain('getter');
+    expect(candidateTrace).not.toContain('child:getPrototypeOf');
+  });
+
   test('preserves dynamic sparse snapshot holes at root and through escaped nested paths', () => {
     const changingArray = () => {
       const target = [10, 20];
