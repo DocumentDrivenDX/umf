@@ -1,0 +1,40 @@
+{
+  "status": "SOURCE_ACCEPTED_EXECUTION_HELD",
+  "nativeOperatorPr": "https://github.com/DocumentDrivenDX/umf/pull/65",
+  "nativeOperatorSourceCommit": "1b06ff377cf66fd4cf9667c4d6f3f9bc671825a1",
+  "nativeOperatorDriverSha256": "597075086d0e626599243534464ecc067314f6afd8c272bf450f660bd1610abf",
+  "producerP": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+  "files": [
+    {
+      "path": "run-native-d5-public-h.py",
+      "sizeBytes": 154411,
+      "sha256": "4207372eaee9ac3dd8975c268c2ed748d014bf8fc65a4d9c1793ef30941c4495"
+    },
+    {
+      "path": "public-h-native-d5.patch",
+      "sizeBytes": 47133,
+      "sha256": "cd81ec5919a2a6699eae90e620a5b22f169e2dddc32289cefa923167e90b5e31"
+    },
+    {
+      "path": "implementation-review-note.md",
+      "sizeBytes": 2368,
+      "sha256": "aca8381bb35d938d1f4953523323fed58c502cfdbfbcafe0f342d3e0bc3f33d1"
+    },
+    {
+      "path": "sol-source-review001.md",
+      "sizeBytes": 2984,
+      "sha256": "262b2ae777d050b97ec673ace64e0411985934913974d74e86ea6b480a5660d1"
+    },
+    {
+      "path": "sol-plan-review001.md",
+      "sizeBytes": 2974,
+      "sha256": "269950b363077e6fd9f350bd4ead559ff2754f095a39995d2d8ca14e44083547"
+    }
+  ],
+  "holds": [
+    "Actual D5 result and real workflow/run identity",
+    "Explicit carrier export authorization after auto-review rejection",
+    "Explicit exception to earlier no-Actions instruction",
+    "Normal release merge, immutable publication and fresh public proof"
+  ]
+}

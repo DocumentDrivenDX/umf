@@ -1,0 +1,610 @@
+--- /private/tmp/sdk-057-local-public-h/run-local-public-h.py	2026-10-28 17:09:53
++++ run-native-d5-public-h.py	2026-10-28 18:16:15
+@@ -1,9 +1,11 @@
+ #!/usr/bin/env python3
+-"""Bounded local-only adapter for the held SDK 0.5.7 public-H proof.
++"""Bounded local adapter for the SDK 0.5.7 public-H proof.
+ 
+ This reads a separately prepared local input manifest and refuses any HELD
+ identity before invoking the producer source, Bun, or the Python consumer.
+-It never manufactures GitHub Actions run IDs or a hosted qualification result.
++It never manufactures GitHub Actions run IDs or claims that public-H itself
++ran on a hosted runner. A separately hash-bound native D5 receipt may qualify
++only the D5 component while public-H retains its actual local identity.
+ """
+ from __future__ import annotations
+ 
+@@ -43,6 +45,32 @@
+     'evidenceReserveSeconds': 60, 'aggregateLogBytes': 1048576,
+     'metadataArtifactBytes': 16777216,
+ }
++NATIVE_OPERATOR_PROFILE = 'umf.g02-d5-native-linux-operator/1'
++NATIVE_ACQUISITION_PROFILE = 'umf.g02-d5-native-input-acquisition/1'
++NATIVE_OPERATOR_EXPECTED_PROFILE = 'umf.g02-d5-native-operator-expected/1'
++NATIVE_OPERATOR_PATHS = (
++    '.github/workflows/native-d5-linux.yml',
++    'scripts/qualification/native-d5/native_d5_driver.py',
++    'scripts/qualification/native-d5/acquire_inputs.py',
++)
++NATIVE_OPERATOR_HARNESS_SHA256 = {
++    '.github/workflows/native-d5-linux.yml': '6d2417761eda00b55f45cd40e1dd6cf29f557d681ed69327c7816dddba8cf328',
++    'scripts/qualification/native-d5/native_d5_driver.py': '597075086d0e626599243534464ecc067314f6afd8c272bf450f660bd1610abf',
++    'scripts/qualification/native-d5/acquire_inputs.py': '1ad4c651388aa0497ecdd81769f4762bf60e0211a0deb475a52aea579e14e213',
++}
++NATIVE_P_COMMIT = 'e4299aff8e87e9d211f9d86df2f2013ab9c95945'
++NATIVE_P_TREE = '8b98c0d895983ba2b7637dd3aea567dab0943883'
++NATIVE_P_WORKFLOW_SHA256 = 'f0963d2df1e371112ba6e57999dbf69290796d711eb97ed46637d4ebc63918a1'
++NATIVE_COHORT_LOCK_SHA256 = '4337ab0597dcec245402abe73bcf8ea1d09bc72a4cb2907473c9e53d0327e611'
++NATIVE_CARRIER = {
++    'sizeBytes': 99_370_959,
++    'sha256': 'aa02faa3696577de82f77d147c8ccdde2c0397556fd97bd365dff661f6b504e7',
++    'manifestSha256': '721d2205a6baeaa1edc9b11eb270eaa43954fb8a706ba78a17b67ce80e7c5946',
++}
++NATIVE_PYTHON_ARCHIVE = {
++    'sizeBytes': 92_586_271,
++    'sha256': 'ae713815fe406a06f1691856f697a0b1e58b3e986f44e62f0cd0bca2424f1aac',
++}
+ SDK_HARNESS_FILES = (
+     'inside-sdk-producer.py', 'capture-bounded-log.py',
+     'run-local-sdk.sh', 'write-launch-failure.py',
+@@ -173,12 +201,306 @@
+     if sha_file(path) != digest:
+         fail(f'{label} bytes differ from their explicit input digest')
+     return path, json_file(path)
++
++
++def validate_native_operator(packet: dict, d5: dict, d5_receipt: dict,
++                             d5_root: pathlib.Path) -> dict:
++    """Validate the outer native-run receipt without relabeling its local child."""
++    expected = packet['nativeOperatorExpected']
++    operator_path, operator = referenced_json(
++        d5_root, d5['nativeOperatorRunPath'], d5['nativeOperatorRunSha256'],
++        'native D5 operator receipt')
++    operator_fields = {
++        'profile','status','hostedWorkflowIdentity','producerSource','sourceValidation',
++        'postRunSourceValidation','runner','postgres','pythonRuntimeInstall',
++        'releasePayload',
++        'inputAcquisitionReceipt','inputAcquisitionReceiptSha256','inputArchives',
++        'cohortLockSha256','pythonArchiveSha256','childAdapter','stepResults',
++        'outerLogBytes','outerLogTruncated','durationSeconds','errorCode'}
++    if set(operator) != operator_fields or operator.get('profile') != NATIVE_OPERATOR_PROFILE or operator.get('status') != 'NATIVE_LINUX_D5_PASS':
++        fail('Native D5 outer receipt is not the exact successful operator profile')
++    if operator.get('errorCode') is not None or operator.get('outerLogTruncated') is not False:
++        fail('Native D5 outer run has an error or truncated logs')
++    if type(operator.get('outerLogBytes')) is not int or not 0 <= operator['outerLogBytes'] <= LIMITS['aggregateLogBytes']:
++        fail('Native D5 outer logs exceed the existing 1 MiB log bound')
++    if (type(operator.get('durationSeconds')) not in (int,float) or type(operator.get('durationSeconds')) is bool
++            or not math.isfinite(operator['durationSeconds']) or operator['durationSeconds'] < 0):
++        fail('Native D5 outer duration is missing or malformed')
++
++    identity = operator.get('hostedWorkflowIdentity')
++    identity_keys = {'GITHUB_REPOSITORY','GITHUB_EVENT_NAME','GITHUB_REF','GITHUB_SHA',
++                     'GITHUB_RUN_ID','GITHUB_RUN_ATTEMPT','GITHUB_WORKFLOW_REF','GITHUB_WORKFLOW_SHA'}
++    if type(identity) is not dict or set(identity) != identity_keys:
++        fail('Native D5 receipt lacks the exact captured GitHub workflow identity')
++    q_commit = require_sha(expected.get('workflowQCommit'), 'expected workflow Q commit')
++    q_tree = require_git_object(expected.get('workflowQTree'), 'expected workflow Q tree')
++    if q_commit == packet['source']['producerCommit']:
++        fail('Native workflow Q must remain distinct from producer P')
++    if (identity.get('GITHUB_REPOSITORY') != REPOSITORY or identity.get('GITHUB_EVENT_NAME') != 'workflow_dispatch'
++            or identity.get('GITHUB_SHA') != q_commit
++            or re.fullmatch(r'refs/(heads|tags)/[A-Za-z0-9._/-]+', str(identity.get('GITHUB_REF'))) is None
++            or not str(identity.get('GITHUB_RUN_ID','')).isdigit()
++            or not str(identity.get('GITHUB_RUN_ATTEMPT','')).isdigit()
++            or str(identity.get('GITHUB_RUN_ATTEMPT')) != str(d5['attempt'])
++            or re.fullmatch(r'[0-9a-f]{40}', str(identity.get('GITHUB_WORKFLOW_SHA'))) is None):
++        fail('Native D5 captured event Q/ref/run identity is invalid or differs from reviewed Q')
++    workflow_ref = identity.get('GITHUB_WORKFLOW_REF')
++    expected_workflow_ref = f"{REPOSITORY}/{NATIVE_OPERATOR_PATHS[0]}@{identity['GITHUB_REF']}"
++    if workflow_ref != expected_workflow_ref:
++        fail('Native D5 workflow ref does not identify the actual dispatch ref and reviewed workflow path')
++
++    validation = operator.get('sourceValidation')
++    validation_keys = {'workflowRepository','eventName','eventRef','eventShaQ','workflowRef','workflowSha',
++                       'workflowQTree','operatorHarnessFiles','runId','runAttempt','producerSourceP',
++                       'producerTree','producerWorkflowPath','producerWorkflowSha256','cohortLockSha256'}
++    expected_harness = expected.get('operatorHarnessFiles')
++    if type(validation) is not dict or set(validation) != validation_keys:
++        fail('Native D5 Q/P source-validation roster is incomplete')
++    for key, identity_key in (('workflowRepository','GITHUB_REPOSITORY'),('eventName','GITHUB_EVENT_NAME'),
++                              ('eventRef','GITHUB_REF'),('eventShaQ','GITHUB_SHA'),
++                              ('workflowRef','GITHUB_WORKFLOW_REF'),('workflowSha','GITHUB_WORKFLOW_SHA'),
++                              ('runId','GITHUB_RUN_ID'),('runAttempt','GITHUB_RUN_ATTEMPT')):
++        if validation.get(key) != identity.get(identity_key):
++            fail(f'Native D5 source-validation Q identity differs from captured {identity_key}')
++    if (validation.get('workflowQTree') != q_tree or validation.get('producerSourceP') != packet['source']['producerCommit']
++            or validation.get('producerTree') != packet['source']['producerTree']
++            or validation.get('producerSourceP') != NATIVE_P_COMMIT
++            or validation.get('producerTree') != NATIVE_P_TREE
++            or validation.get('producerWorkflowPath') != '.github/workflows/access-boundaries.yml'
++            or validation.get('producerWorkflowSha256') != NATIVE_P_WORKFLOW_SHA256
++            or validation.get('cohortLockSha256') != NATIVE_COHORT_LOCK_SHA256):
++        fail('Native D5 source validation does not bind the exact producer P, workflow and cohort')
++    if d5.get('workflowSha256') != validation.get('producerWorkflowSha256'):
++        fail('Native operator and D5 child do not bind the same producer workflow bytes')
++    d5_lock = beneath(d5_root, d5['cohortLockPath'], 'native D5 exact cohort lock')
++    if sha_file(d5_lock) != NATIVE_COHORT_LOCK_SHA256:
++        fail('Native D5 uploaded cohort lock differs from the exact reviewed lock')
++    if type(expected_harness) is not dict or set(expected_harness) != set(NATIVE_OPERATOR_PATHS):
++        fail('Native operator expected harness roster is incomplete')
++    if validation.get('operatorHarnessFiles') != expected_harness:
++        fail('Native D5 Q workflow, driver or acquirer bytes differ from reviewed expected hashes')
++    for digest in expected_harness.values():
++        require_digest(digest, 'reviewed native operator harness SHA-256')
++
++    post = operator.get('postRunSourceValidation')
++    if type(post) is not dict or set(post) != {'commit','tree','status'} or post != {
++            'commit': NATIVE_P_COMMIT, 'tree': NATIVE_P_TREE, 'status': ''}:
++        fail('Native producer P changed or became dirty during D5 execution')
++    producer = operator.get('producerSource')
++    if type(producer) is not dict or set(producer) != {'commit','tree','workflowPath','workflowSha256'} or producer != {
++            'commit': NATIVE_P_COMMIT, 'tree': NATIVE_P_TREE,
++            'workflowPath': '.github/workflows/access-boundaries.yml',
++            'workflowSha256': NATIVE_P_WORKFLOW_SHA256}:
++        fail('Native operator receipt producer identity differs from immutable P')
++
++    runner = operator.get('runner')
++    runner_keys = {'system','release','machine','processor','osRelease','logicalCpuCount','memoryBytes',
++                   'hostname','runnerImageOS','runnerImageVersion','workflowRunId','workflowRunAttempt'}
++    if type(runner) is not dict or set(runner) != runner_keys:
++        fail('Native Linux runner identity is incomplete')
++    os_release = runner.get('osRelease')
++    if (runner.get('system') != 'Linux' or runner.get('machine') not in ('x86_64','amd64')
++            or type(os_release) is not dict or os_release.get('ID') != 'ubuntu' or os_release.get('VERSION_ID') != '24.04'
++            or type(runner.get('logicalCpuCount')) is not int or runner['logicalCpuCount'] < 1
++            or type(runner.get('memoryBytes')) is not dict or type(runner['memoryBytes'].get('MemTotal')) is not int or runner['memoryBytes']['MemTotal'] <= 0
++            or str(runner.get('workflowRunId')) != identity['GITHUB_RUN_ID']
++            or str(runner.get('workflowRunAttempt')) != identity['GITHUB_RUN_ATTEMPT']):
++        fail('Native D5 runner is not the required observed Ubuntu 24.04 Linux/amd64 host')
++
++    postgres = operator.get('postgres')
++    postgres_keys = {'image','containerName','networkName','cleanupVerified','engineVersion','enginePlatform',
++                     'imagePlatform','imageId','repoDigests','serverVersion','serverVersionNum','serverFullVersion',
++                     'hostPort','cpuLimit','memoryLimitBytes','pidsLimit','networkCleanupVerified'}
++    expected_pg = 'docker.io/library/postgres@sha256:f4b419e350fd98d4a8429603295208976dea4c8fb8326d818d346d3e29f1db6f'
++    expected_pg_aliases = {
++        'docker.io/library/postgres@sha256:f4b419e350fd98d4a8429603295208976dea4c8fb8326d818d346d3e29f1db6f',
++        'library/postgres@sha256:f4b419e350fd98d4a8429603295208976dea4c8fb8326d818d346d3e29f1db6f',
++        'postgres@sha256:f4b419e350fd98d4a8429603295208976dea4c8fb8326d818d346d3e29f1db6f',
++    }
++    if type(postgres) is not dict or set(postgres) != postgres_keys:
++        fail('Native D5 PostgreSQL identity roster is incomplete')
++    repo_digests = postgres.get('repoDigests')
++    if (postgres.get('image') != expected_pg or postgres.get('enginePlatform') != 'linux/x86_64'
++            or postgres.get('imagePlatform') != 'linux/amd64'
++            or type(repo_digests) is not list or not repo_digests
++            or any(not isinstance(value,str) for value in repo_digests)
++            or not set(repo_digests) & expected_pg_aliases or not set(repo_digests) <= expected_pg_aliases
++            or re.fullmatch(r'sha256:[0-9a-f]{64}', str(postgres.get('imageId'))) is None
++            or postgres.get('serverVersion') != '18.6 (Debian 18.6-1.pgdg13+2)' or postgres.get('serverVersionNum') != 180006
++            or not str(postgres.get('serverFullVersion','')).startswith('PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2)')
++            or postgres.get('cpuLimit') != 2 or postgres.get('memoryLimitBytes') != 2*1024**3
++            or postgres.get('pidsLimit') != 2048
++            or postgres.get('cleanupVerified') is not True or postgres.get('networkCleanupVerified') is not True):
++        fail('Native D5 PostgreSQL image, version, platform or cleanup identity is incomplete')
++
++    python_install = operator.get('pythonRuntimeInstall')
++    python_install_keys = {'toolcacheRoot','completeMarker','runtimeArchiveSha256','observedVersion',
++                           'pipUpgradeRan','setupScriptExecuted','provisioning','archiveComparison'}
++    if (type(python_install) is not dict or set(python_install) != python_install_keys
++            or python_install.get('runtimeArchiveSha256') != NATIVE_PYTHON_ARCHIVE['sha256']
++            or python_install.get('observedVersion') != 'Python 3.11.17'
++            or python_install.get('pipUpgradeRan') is not False or python_install.get('setupScriptExecuted') is not False
++            or python_install.get('provisioning') not in ('existing-prefix-byte-verified','exact-archive-installed-at-canonical-prefix')):
++        fail('Native pinned Python install receipt is incomplete or changed')
++    if (python_install.get('toolcacheRoot') != '/opt/hostedtoolcache/Python/3.11.17/x64'
++            or python_install.get('completeMarker') != '/opt/hostedtoolcache/Python/3.11.17/x64.complete'):
++        fail('Native pinned Python install paths are not the exact canonical runner paths')
++    comparison = python_install.get('archiveComparison')
++    comparison_keys = {'archiveRegularFilesCompared','sourceArchiveSha256','sitePackagesExtraFiles',
++                       'sitePackagesExtraDirectories','sitePackagesExtraSymlinks','sitePackagesExtraBytes',
++                       'sitePackagesExtraInventorySha256','completeMarkerBytes'}
++    if (type(comparison) is not dict or set(comparison) != comparison_keys
++            or comparison.get('archiveRegularFilesCompared') != 9970
++            or comparison.get('sourceArchiveSha256') != NATIVE_PYTHON_ARCHIVE['sha256']
++            or comparison.get('completeMarkerBytes') != 0
++            or any(type(comparison.get(key)) is not int or comparison[key] < 0
++                   for key in ('sitePackagesExtraFiles','sitePackagesExtraDirectories',
++                               'sitePackagesExtraSymlinks','sitePackagesExtraBytes'))
++            or sum(comparison.get(key,0) for key in ('sitePackagesExtraFiles','sitePackagesExtraDirectories',
++                                                      'sitePackagesExtraSymlinks')) > 10_000):
++        fail('Native Python runtime archive comparison is incomplete or differs from the verified archive')
++    require_digest(comparison.get('sitePackagesExtraInventorySha256'), 'Python site-packages inventory SHA-256')
++    if operator.get('pythonArchiveSha256') != NATIVE_PYTHON_ARCHIVE['sha256'] or operator.get('cohortLockSha256') != NATIVE_COHORT_LOCK_SHA256:
++        fail('Native D5 archive or cohort identity differs from the fixed acquisition')
++
++    archives = operator.get('inputArchives')
++    archive_keys = {'carrier','pythonRuntime'}
++    if type(archives) is not dict or set(archives) != archive_keys:
++        fail('Native D5 physical input-archive roster is incomplete')
++    for key, fixed in (('carrier',NATIVE_CARRIER),('pythonRuntime',NATIVE_PYTHON_ARCHIVE)):
++        row = archives.get(key)
++        if (type(row) is not dict or set(row) != {'releaseId','releaseTag','assetId','path','sizeBytes','sha256'}
++                or row.get('sizeBytes') != fixed['sizeBytes'] or row.get('sha256') != fixed['sha256']
++                or type(row.get('releaseId')) is not int or row['releaseId'] <= 0
++                or type(row.get('assetId')) is not int or row['assetId'] <= 0
++                or not isinstance(row.get('releaseTag'),str) or not row['releaseTag']
++                or not isinstance(row.get('path'),str) or not pathlib.PurePosixPath(row['path']).is_absolute()):
++            fail(f'Native D5 physical {key} archive differs from its exact approved bytes')
++
++    acquisition_path, acquisition = referenced_json(
++        d5_root, 'input-acquisition.json', operator.get('inputAcquisitionReceiptSha256'),
++        'native input-acquisition receipt')
++    if type(operator.get('inputAcquisitionReceipt')) is not str or not pathlib.PurePosixPath(operator['inputAcquisitionReceipt']).is_absolute():
++        fail('Native D5 original acquisition receipt path is missing')
++    acquisition_keys = {'profile','status','carrier','pythonRuntime','credentialUse'}
++    if (set(acquisition) != acquisition_keys or acquisition.get('profile') != NATIVE_ACQUISITION_PROFILE
++            or acquisition.get('status') != 'verified'
++            or acquisition.get('credentialUse') != 'read-only API metadata and asset download; credential value not recorded'):
++        fail('Native acquisition receipt is not the exact verified acquisition profile')
++    carrier = acquisition.get('carrier'); python_archive = acquisition.get('pythonRuntime')
++    carrier_keys = {'releaseId','releaseTag','assetId','assetName','sizeBytes','sha256','manifestSha256',
++                    'payloadFiles','regularFiles','expandedBytes','cohortLockSha256'}
++    python_keys = {'releaseId','releaseTag','assetId','assetName','sizeBytes','sha256','regularFiles',
++                   'expandedRegularBytes','symlinks','executableRelativePath'}
++    if (type(carrier) is not dict or set(carrier) != carrier_keys
++            or carrier.get('assetName') != 'd5-input-carrier.tar.gz'
++            or carrier.get('sizeBytes') != NATIVE_CARRIER['sizeBytes'] or carrier.get('sha256') != NATIVE_CARRIER['sha256']
++            or carrier.get('manifestSha256') != NATIVE_CARRIER['manifestSha256']
++            or carrier.get('payloadFiles') != 68 or carrier.get('regularFiles') != 69
++            or carrier.get('expandedBytes') != 104_609_012
++            or carrier.get('cohortLockSha256') != NATIVE_COHORT_LOCK_SHA256
++            or not isinstance(carrier.get('releaseTag'),str) or not carrier['releaseTag']
++            or type(carrier.get('releaseId')) is not int or carrier['releaseId'] <= 0
++            or type(carrier.get('assetId')) is not int or carrier['assetId'] <= 0):
++        fail('Native D5 carrier acquisition bytes or extracted manifest identity are not exact')
++    if (type(python_archive) is not dict or set(python_archive) != python_keys
++            or python_archive.get('assetName') != 'python-3.11.17-linux-24.04-x64.tar.gz'
++            or python_archive.get('sizeBytes') != NATIVE_PYTHON_ARCHIVE['sizeBytes']
++            or python_archive.get('sha256') != NATIVE_PYTHON_ARCHIVE['sha256']
++            or python_archive.get('regularFiles') != 9970 or python_archive.get('expandedRegularBytes') != 305635289
++            or python_archive.get('symlinks') != 9 or python_archive.get('executableRelativePath') != 'bin/python3.11'
++            or not isinstance(python_archive.get('releaseTag'),str) or not python_archive['releaseTag']
++            or type(python_archive.get('releaseId')) is not int or python_archive['releaseId'] <= 0
++            or type(python_archive.get('assetId')) is not int or python_archive['assetId'] <= 0):
++        fail('Native D5 Python archive acquisition or extraction identity is not exact')
++    for archive_key, acquisition_row in (('carrier',carrier),('pythonRuntime',python_archive)):
++        operator_archive = archives[archive_key]
++        if any(operator_archive.get(field) != acquisition_row.get(field)
++               for field in ('releaseId','releaseTag','assetId','sizeBytes','sha256')):
++            fail(f'Native {archive_key} archive identity differs from its exact acquisition receipt')
+ 
++    release_payload = operator.get('releasePayload')
++    release_payload_keys = {'path','sizeBytes','files'}
++    if (type(release_payload) is not dict or set(release_payload) != release_payload_keys
++            or release_payload.get('path') != 'd5-release-payload'
++            or type(release_payload.get('sizeBytes')) is not int
++            or not 0 <= release_payload['sizeBytes'] <= 2_097_152):
++        fail('Native D5 release-payload physical export is missing or exceeds its 2 MiB bound')
++    expected_payload_files = {'release-payload-receipt.json'}
++    expected_payload_files.update(packet['release']['assets'][key]['filename'] for key in ('access','codegen'))
++    if len(expected_payload_files) != 3:
++        fail('Native D5 child receipt does not name exactly two release wheels')
++    payload_rows = release_payload.get('files')
++    if type(payload_rows) is not list or len(payload_rows) != 3:
++        fail('Native D5 release-payload file roster is not exactly three files')
++    payload_files = {}
++    for row in payload_rows:
++        if type(row) is not dict or set(row) != {'path','sizeBytes','sha256'}:
++            fail('Native D5 release-payload file record has an unexpected schema')
++        relative = row.get('path')
++        prefix = 'd5-release-payload/'
++        if not isinstance(relative, str) or not relative.startswith(prefix) or relative[len(prefix):] not in expected_payload_files:
++            fail('Native D5 release-payload file path is outside its exact flat roster')
++        filename = relative[len(prefix):]
++        if filename in payload_files or type(row.get('sizeBytes')) is not int or row['sizeBytes'] < 0:
++            fail('Native D5 release-payload file record is duplicated or malformed')
++        require_digest(row.get('sha256'), f'native release-payload {filename} SHA-256')
++        physical = beneath(d5_root, relative, f'native exported release-payload {filename}')
++        if physical.stat().st_size != row['sizeBytes'] or sha_file(physical) != row['sha256']:
++            fail(f'Native exported release-payload bytes differ for {filename}')
++        payload_files[filename] = row
++    if set(payload_files) != expected_payload_files or sum(row['sizeBytes'] for row in payload_files.values()) != release_payload['sizeBytes']:
++        fail('Native exported release-payload roster or total size differs from its exact contents')
++    if payload_files['release-payload-receipt.json']['sha256'] != d5.get('releasePayloadReceiptSha256'):
++        fail('Native exported release-payload receipt differs from the child D5 receipt identity')
++    for key in ('access','codegen'):
++        filename = packet['release']['assets'][key]['filename']
++        asset = packet['release']['assets'][key]
++        if (payload_files[filename]['sizeBytes'] != asset['sizeBytes']
++                or payload_files[filename]['sha256'] != asset['sha256']):
++            fail(f'Native exported {key} wheel differs from its frozen public asset identity')
+ 
++    child = operator.get('childAdapter')
++    child_keys = {'executionKind','localExecutionId','localSourceCommit','localWorkflowLabel','status','receipt'}
++    if (type(child) is not dict or set(child) != child_keys or child.get('executionKind') != 'local_linux_diagnostic'
++            or child.get('localExecutionId') != d5['executionId'] or child.get('localSourceCommit') != packet['source']['producerCommit']
++            or child.get('status') != 'LOCAL_DIAGNOSTIC_PASS_G02_D5_37_CASES_AND_RECOVERY'
++            or child.get('receipt') != d5_receipt):
++        fail('Native operator receipt does not bind the exact passing child D5 receipt')
++    expected_child_label = f"native-d5-local-adapter@{q_commit}"
++    if child.get('localWorkflowLabel') != expected_child_label:
++        fail('Native D5 child workflow label differs from the actual workflow Q')
++    steps = operator.get('stepResults')
++    expected_steps = ['d5-initialize-local-adapter','d5-replay-local-adapter','d5-finalize-local-adapter']
++    if (type(steps) is not list or [row.get('name') for row in steps if type(row) is dict] != expected_steps
++            or len(steps) != 3 or any(row.get('exitCode') != 0 or row.get('timedOut') is not False
++                                        or row.get('captureTruncated') is not False for row in steps)):
++        fail('Native D5 outer adapter step roster is incomplete or unsuccessful')
++    return {'operatorReceiptPath':str(operator_path.relative_to(d5_root)),
++            'operatorReceiptSha256':sha_file(operator_path),
++            'workflowQ':{'commit':q_commit,'tree':q_tree,'ref':identity['GITHUB_REF'],
++                         'runId':identity['GITHUB_RUN_ID'],'runAttempt':identity['GITHUB_RUN_ATTEMPT'],
++                         'workflowRef':identity['GITHUB_WORKFLOW_REF'],'workflowSha':identity['GITHUB_WORKFLOW_SHA']},
++            'producerP':{'commit':NATIVE_P_COMMIT,'tree':NATIVE_P_TREE,
++                         'childExecutionId':child['localExecutionId'],'childAttempt':d5['attempt']},
++            'runner':{'system':runner['system'],'machine':runner['machine'],'osRelease':os_release,
++                      'logicalCpuCount':runner['logicalCpuCount'],'memoryBytes':runner['memoryBytes']['MemTotal']},
++            'postgres':{'image':postgres['image'],'platform':postgres['imagePlatform'],
++                        'serverVersion':postgres['serverVersion'],'serverVersionNum':postgres['serverVersionNum'],
++                        'cleanupVerified':postgres['cleanupVerified'],
++                        'networkCleanupVerified':postgres['networkCleanupVerified']},
++            'inputAcquisitionReceiptSha256':sha_file(acquisition_path),
++            'carrierSha256':carrier['sha256'],'pythonArchiveSha256':python_archive['sha256'],
++            'releasePayload':{'sizeBytes':release_payload['sizeBytes'],
++                              'files':{name:{'sizeBytes':row['sizeBytes'],'sha256':row['sha256']}
++                                       for name,row in sorted(payload_files.items())}}}
++
++
+ def validate_inputs(packet: dict, adapter_path: pathlib.Path) -> dict:
+     if packet.get('profile') != PROFILE or packet.get('status') != 'READY':
+         fail('Local proof inputs are HELD; no proof command will start')
+-    if set(packet) != {'profile','status','executionKind','repository','execution','source','release','evidence','fixedQualification','limits'}:
++    base_packet_fields = {'profile','status','executionKind','repository','execution','source','release','evidence','fixedQualification','limits'}
++    if set(packet) not in (base_packet_fields, base_packet_fields | {'nativeOperatorExpected'}):
+         fail('Local input manifest does not match the closed profile')
+     no_held(packet)
+     if packet.get('executionKind') != 'local_linux_diagnostic':
+@@ -245,6 +567,19 @@
+     source = packet.get('source')
+     release = packet.get('release')
+     evidence = packet.get('evidence')
++    native_operator_expected = packet.get('nativeOperatorExpected')
++    native_route = native_operator_expected is not None
++    if native_route:
++        expected_fields = {'profile','workflowQCommit','workflowQTree','operatorHarnessFiles'}
++        if type(native_operator_expected) is not dict or set(native_operator_expected) != expected_fields or native_operator_expected.get('profile') != NATIVE_OPERATOR_EXPECTED_PROFILE:
++            fail('Native operator expected-identity input has an unexpected field roster')
++        require_sha(native_operator_expected.get('workflowQCommit'), 'native workflow Q commit')
++        require_git_object(native_operator_expected.get('workflowQTree'), 'native workflow Q tree')
++        harness = native_operator_expected.get('operatorHarnessFiles')
++        if type(harness) is not dict or set(harness) != set(NATIVE_OPERATOR_PATHS) or harness != NATIVE_OPERATOR_HARNESS_SHA256:
++            fail('Native operator expected source roster is incomplete')
++        for name, digest in harness.items():
++            require_digest(digest, f'native operator expected source {name}')
+     if type(source) is not dict or set(source) != {'producerRoot','producerCommit','producerTree'} or type(release) is not dict or type(evidence) is not dict:
+         fail('Source, public release, or local evidence roster is missing')
+     require_sha(source.get('producerCommit'), 'producer P')
+@@ -281,6 +616,9 @@
+         if key == 'unionContinuation':
+             if re.fullmatch(r'umf-local-full18-union-continuation-[0-9]{8}T[0-9]{6}Z-[0-9a-f-]{36}-attempt1', str(row.get('executionId',''))) is None:
+                 fail('Full18 continuation evidence must carry its exact local execution identity form')
++        elif key == 'd5' and native_route:
++            if re.fullmatch(r'gha-local-d5:[0-9]+:[0-9]+', str(row.get('executionId',''))) is None:
++                fail('Native D5 child evidence must carry its exact GHA-run-bound local adapter identity')
+         elif not re.fullmatch(r'local-[a-f0-9-]{16,64}', str(row.get('executionId', ''))):
+             fail(f'{key} evidence must carry a local execution identity')
+         require_sha(row.get('sourceCommit'), f'{key} source commit')
+@@ -299,7 +637,7 @@
+                         'archiveSizeBytes','manifestPath','manifestSha256','manifestSizeBytes'},
+         'd5': {'executionId','attempt','sourceCommit','sourceTree','root','receiptPath',
+                'receiptSha256','qualificationInputsPath','qualificationInputsSha256',
+-               'runContextPath','runContextSha256','ownerManifestPath','ownerManifestSha256',
++               'ownerManifestPath','ownerManifestSha256',
+                'workflowSha256','cohortLockPath','mirrorManifestPath',
+                'releasePayloadRoot','releasePayloadReceiptPath','releasePayloadReceiptSha256'},
+         'aggregate': {'executionId','attempt','sourceCommit','sourceTree','harnessSha256','harnessPath',
+@@ -309,6 +647,10 @@
+                               'receiptSha256','harnessRoot','harnessSha256','bootstrapWheelPath',
+                               'bootstrapWheelSha256','bootstrapMetadataPath','bootstrapMetadataSha256'},
+     }
++    if native_route:
++        expected_evidence_fields['d5'] |= {'nativeOperatorRunPath','nativeOperatorRunSha256'}
++    else:
++        expected_evidence_fields['d5'] |= {'runContextPath','runContextSha256'}
+     for key, expected in expected_evidence_fields.items():
+         if set(evidence[key]) != expected:
+             fail(f'{key} local evidence identity has an unexpected field roster')
+@@ -319,10 +661,12 @@
+             fail(f'{key} local attempt is missing or invalid')
+         require_git_object(evidence[key].get('sourceTree'), f'{key} source tree')
+     d5 = evidence['d5']
+-    for field in ('root','receiptPath','receiptSha256','qualificationInputsPath','qualificationInputsSha256',
+-                  'runContextPath','runContextSha256','ownerManifestPath','ownerManifestSha256',
++    d5_required_fields = ['root','receiptPath','receiptSha256','qualificationInputsPath','qualificationInputsSha256',
++                  'ownerManifestPath','ownerManifestSha256',
+                   'workflowSha256','cohortLockPath','mirrorManifestPath','releasePayloadRoot',
+-                  'releasePayloadReceiptPath','releasePayloadReceiptSha256'):
++                  'releasePayloadReceiptPath','releasePayloadReceiptSha256']
++    d5_required_fields += ['nativeOperatorRunPath','nativeOperatorRunSha256'] if native_route else ['runContextPath','runContextSha256']
++    for field in d5_required_fields:
+         if not isinstance(d5.get(field),str) or not d5[field]: fail(f'D5 local evidence path is missing: {field}')
+     aggregate = evidence['aggregate']
+     for field in ('root','assemblyReceiptPath','assemblyReceiptSha256','proofReceiptPath','proofReceiptSha256',
+@@ -347,12 +691,14 @@
+         require_digest(evidence[key].get(field), f'{key} harness SHA-256')
+     for key, fields in {
+         'sdkProducer': ('receiptSha256','archiveSha256','manifestSha256'),
+-        'd5': ('receiptSha256','qualificationInputsSha256','runContextSha256','ownerManifestSha256','releasePayloadReceiptSha256'),
++        'd5': ('receiptSha256','qualificationInputsSha256','ownerManifestSha256','releasePayloadReceiptSha256'),
+         'aggregate': ('assemblyReceiptSha256','proofReceiptSha256'),
+         'unionContinuation': ('receiptSha256','harnessSha256','bootstrapWheelSha256','bootstrapMetadataSha256'),
+     }.items():
+         for field in fields:
+             require_digest(evidence[key].get(field), f'{key} {field}')
++    require_digest(d5['nativeOperatorRunSha256'] if native_route else d5['runContextSha256'],
++                   'native operator receipt SHA-256' if native_route else 'D5 run-context SHA-256')
+     return packet
+ 
+ 
+@@ -1140,7 +1486,13 @@
+     d5 = ev['d5']; d5_root = abs_path(d5['root'], 'D5 evidence root').resolve(strict=True)
+     d5_receipt_path, d5_receipt = referenced_json(d5_root, d5['receiptPath'], d5['receiptSha256'], 'D5 receipt')
+     d5_inputs_path, d5_inputs = referenced_json(d5_root, d5['qualificationInputsPath'], d5['qualificationInputsSha256'], 'D5 qualification inputs')
+-    d5_context_path, d5_context = referenced_json(d5_root, d5['runContextPath'], d5['runContextSha256'], 'D5 local runtime context')
++    native_d5 = None
++    if 'nativeOperatorExpected' in packet:
++        d5_context_path = None
++        d5_context = None
++        native_d5 = validate_native_operator(packet, d5, d5_receipt, d5_root)
++    else:
++        d5_context_path, d5_context = referenced_json(d5_root, d5['runContextPath'], d5['runContextSha256'], 'D5 local runtime context')
+     owner_path = beneath(d5_root, d5['ownerManifestPath'], 'D5 owner manifest')
+     owner = json_file(owner_path)
+     cohort_lock_path = beneath(d5_root, d5['cohortLockPath'], 'D5 exact current cohort lock')
+@@ -1150,12 +1502,15 @@
+     payload_root = beneath(d5_root, d5['releasePayloadRoot'], 'D5 release-payload root')
+     payload_receipt_path = beneath(payload_root, d5['releasePayloadReceiptPath'], 'release-payload receipt')
+     payload = json_file(payload_receipt_path)
++    expected_adapter_workflow = (f"native-d5-local-adapter@{native_d5['workflowQ']['commit']}"
++                                 if native_d5 is not None
++                                 else f"local-access-boundaries-{d5['workflowSha256']}")
+     if (d5_receipt.get('status') != 'LOCAL_DIAGNOSTIC_PASS_G02_D5_37_CASES_AND_RECOVERY'
+             or d5_receipt.get('executionKind') != 'local_linux_diagnostic'
+             or d5_receipt.get('localExecutionId') != d5['executionId']
+             or str(d5_receipt.get('localAttempt')) != str(d5['attempt'])
+             or d5_receipt.get('sourceCommit') != packet['source']['producerCommit']
+-            or d5_receipt.get('adapterWorkflow') != f"local-access-boundaries-{d5['workflowSha256']}"
++            or d5_receipt.get('adapterWorkflow') != expected_adapter_workflow
+             or d5_receipt.get('cases') != 37 or d5_receipt.get('oracleGroups') != 16
+             or d5_receipt.get('faultScenarios') != 3 or d5_receipt.get('noDefaultChecks') != 19
+             or d5_receipt.get('commandCount') != 30
+@@ -1183,30 +1538,31 @@
+                    for row in cohort_lock['wheels'] if type(row) is dict}
+     if len(lock_wheels) != 18 or owner.get('artifacts') != lock_wheels:
+         fail('D5 frozen owner wheel hashes/sizes differ from the exact copied 18-wheel lock')
+-    if (d5_context.get('profile') != 'umf.local-docker-g02-d5-context/1'
+-            or d5_context.get('executionKind') != 'local_linux_diagnostic'
+-            or d5_context.get('hostedQualificationClaim') is not False
+-            or d5_context.get('executionId') != d5['executionId']
+-            or d5_context.get('attempt') != d5['attempt']
+-            or d5_context.get('sourceCommit') != packet['source']['producerCommit']
+-            or d5_context.get('sourceTree') != packet['source']['producerTree']
+-            or d5_context.get('workflowSha256') != d5_inputs.get('workflowSha256')
+-            or d5_context.get('runtimeImageReference') != RUNTIME_IMAGE_DIGEST
+-            or re.fullmatch(r'sha256:[0-9a-f]{64}', str(d5_context.get('runtimeImageConfigId',''))) is None
+-            or d5_context.get('postgresImageReference') != 'sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336'
+-            or re.fullmatch(r'sha256:[0-9a-f]{64}', str(d5_context.get('postgresImageConfigId',''))) is None
+-            or re.fullmatch(r'[0-9a-f]{64}', str(d5_context.get('postgresContainerId',''))) is None
+-            or d5_context.get('runtimeEngine') != 'OrbStack'
+-            or d5_context.get('host') != {'os':'Darwin','architecture':'aarch64'}
+-            or d5_context.get('guest') != {'os':'Linux','distribution':'Ubuntu','version':'24.04.5','architecture':'x86_64','emulated':True}
+-            or d5_context.get('clientExit') != 0
+-            or d5_context.get('postgresPlatform') != 'linux/arm64'
+-            or '18.6' not in '\n'.join(d5_context.get('postgresIdentityText', []))
+-            or '180006' not in d5_context.get('postgresIdentityText', [])[-1:]
+-            or d5_context.get('cleanup', {}).get('clientRemoved') is not True
+-            or d5_context.get('cleanup', {}).get('postgresRemoved') is not True
+-            or d5_context.get('cleanup', {}).get('networkRemoved') is not True):
+-        fail('D5 local Docker context does not prove the isolated runtime, PostgreSQL 18.6 and cleanup')
++    if native_d5 is None:
++        if (d5_context.get('profile') != 'umf.local-docker-g02-d5-context/1'
++                or d5_context.get('executionKind') != 'local_linux_diagnostic'
++                or d5_context.get('hostedQualificationClaim') is not False
++                or d5_context.get('executionId') != d5['executionId']
++                or d5_context.get('attempt') != d5['attempt']
++                or d5_context.get('sourceCommit') != packet['source']['producerCommit']
++                or d5_context.get('sourceTree') != packet['source']['producerTree']
++                or d5_context.get('workflowSha256') != d5_inputs.get('workflowSha256')
++                or d5_context.get('runtimeImageReference') != RUNTIME_IMAGE_DIGEST
++                or re.fullmatch(r'sha256:[0-9a-f]{64}', str(d5_context.get('runtimeImageConfigId',''))) is None
++                or d5_context.get('postgresImageReference') != 'sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336'
++                or re.fullmatch(r'sha256:[0-9a-f]{64}', str(d5_context.get('postgresImageConfigId',''))) is None
++                or re.fullmatch(r'[0-9a-f]{64}', str(d5_context.get('postgresContainerId',''))) is None
++                or d5_context.get('runtimeEngine') != 'OrbStack'
++                or d5_context.get('host') != {'os':'Darwin','architecture':'aarch64'}
++                or d5_context.get('guest') != {'os':'Linux','distribution':'Ubuntu','version':'24.04.5','architecture':'x86_64','emulated':True}
++                or d5_context.get('clientExit') != 0
++                or d5_context.get('postgresPlatform') != 'linux/arm64'
++                or '18.6' not in '\n'.join(d5_context.get('postgresIdentityText', []))
++                or '180006' not in d5_context.get('postgresIdentityText', [])[-1:]
++                or d5_context.get('cleanup', {}).get('clientRemoved') is not True
++                or d5_context.get('cleanup', {}).get('postgresRemoved') is not True
++                or d5_context.get('cleanup', {}).get('networkRemoved') is not True):
++            fail('D5 local Docker context does not prove the isolated runtime, PostgreSQL 18.6 and cleanup')
+     require_digest(d5['workflowSha256'], 'D5 source workflow SHA-256')
+     if (owner.get('sourceCommit') != packet['source']['producerCommit']
+             or owner.get('localExecutionId') != d5['executionId']
+@@ -1471,7 +1827,7 @@
+         packet, aggregate_root, index_path, index)
+     operator = install_operator_bootstrap(packet, work, bootstrap_wheel, index_path, lock_path)
+     # The original offline probe performs the complete eighteen-wheel and install checks.
+-    return {'publicRelease': public, 'sdkManifestSha256': sha_file(sdk_manifest), 'sdkTarballSha256': sha_file(sdk_archive),
++    result = {'publicRelease': public, 'sdkManifestSha256': sha_file(sdk_manifest), 'sdkTarballSha256': sha_file(sdk_archive),
+             'operatorBootstrap': {
+                 'receiptSha256':sha_file(beneath(continuation_root,ev['unionContinuation']['receiptPath'],'full18 continuation receipt')),
+                 'continuationExecutionId':continuation_receipt['executionId'],
+@@ -1483,7 +1839,7 @@
+                 'sdkProducer': {'executionId':sdk_receipt['executionId'],'attempt':sdk_receipt['attempt'],
+                                 'receiptSha256':sha_file(sdk_receipt_path)},
+                 'd5': {'executionId':d5_receipt['localExecutionId'],'attempt':int(d5_receipt['localAttempt']),
+-                       'receiptSha256':sha_file(d5_receipt_path),'runContextSha256':sha_file(d5_context_path),
++                       'receiptSha256':sha_file(d5_receipt_path),
+                        'cohortLockSha256':sha_file(cohort_lock_path),'ownerManifestSha256':owner_sha},
+                 'aggregate': {'executionId':assembly_receipt['executionId'],'attempt':assembly_receipt['attempt'],
+                               'assemblyReceiptSha256':sha_file(assembly_path),'proofReceiptSha256':sha_file(proof_path)},
+@@ -1497,6 +1853,12 @@
+             'selectedLinux311LockSha256': sha_file(lock_path), 'accessCodegenExactUnionCorrespondence': True,
+             'coreDistributionVersion': fixed['coreDistributionVersion'], 'coreSemanticVersion': fixed['coreSemanticVersion'],
+             'weftVersion': fixed['weftVersion'], 'weftWireProfile': fixed['weftWireProfile']}
++    if native_d5 is None:
++        result['localEvidence']['d5']['runContextSha256'] = sha_file(d5_context_path)
++    else:
++        result['nativeD5'] = native_d5
++        result['localEvidence']['d5']['nativeOperatorReceiptSha256'] = native_d5['operatorReceiptSha256']
++    return result
+ 
+ 
+ def verify_final(work: pathlib.Path, packet: dict) -> dict:
+@@ -1526,6 +1888,42 @@
+             or correspondence.get('operatorBootstrap',{}).get('continuationExecutionId') != expected_continuation['executionId']
+             or correspondence.get('operatorBootstrap',{}).get('continuationAttempt') != expected_continuation['attempt']):
+         fail('Final public-H result does not retain exact current full18 operator-bootstrap provenance')
++    native_d5_summary = None
++    if 'nativeOperatorExpected' in packet:
++        native_d5_summary = correspondence.get('nativeD5')
++        required_native_keys = {'operatorReceiptPath','operatorReceiptSha256','workflowQ','producerP','runner',
++                                'postgres','inputAcquisitionReceiptSha256','carrierSha256','pythonArchiveSha256',
++                                'releasePayload'}
++        q_fields = {'commit','tree','ref','runId','runAttempt','workflowRef','workflowSha'}
++        p_fields = {'commit','tree','childExecutionId','childAttempt'}
++        runner_fields = {'system','machine','osRelease','logicalCpuCount','memoryBytes'}
++        postgres_fields = {'image','platform','serverVersion','serverVersionNum','cleanupVerified','networkCleanupVerified'}
++        if (type(native_d5_summary) is not dict or set(native_d5_summary) != required_native_keys
++                or type(native_d5_summary.get('workflowQ')) is not dict or set(native_d5_summary['workflowQ']) != q_fields
++                or type(native_d5_summary.get('producerP')) is not dict or set(native_d5_summary['producerP']) != p_fields
++                or type(native_d5_summary.get('runner')) is not dict or set(native_d5_summary['runner']) != runner_fields
++                or type(native_d5_summary.get('postgres')) is not dict or set(native_d5_summary['postgres']) != postgres_fields
++                or type(native_d5_summary.get('releasePayload')) is not dict
++                or set(native_d5_summary['releasePayload']) != {'sizeBytes','files'}
++                or type(native_d5_summary['releasePayload'].get('sizeBytes')) is not int
++                or not 0 <= native_d5_summary['releasePayload']['sizeBytes'] <= 2_097_152
++                or type(native_d5_summary['releasePayload'].get('files')) is not dict
++                or len(native_d5_summary['releasePayload']['files']) != 3
++                or native_d5_summary['workflowQ'].get('commit') != packet['nativeOperatorExpected']['workflowQCommit']
++                or native_d5_summary['workflowQ'].get('tree') != packet['nativeOperatorExpected']['workflowQTree']
++                or native_d5_summary['producerP'].get('commit') != packet['source']['producerCommit']
++                or native_d5_summary['producerP'].get('tree') != packet['source']['producerTree']):
++            fail('Public-H final correspondence does not retain separate verified native Q and producer P identities')
++        expected_payload_names = {'release-payload-receipt.json'} | {
++            packet['release']['assets'][key]['filename'] for key in ('access','codegen')}
++        payload_summary = native_d5_summary['releasePayload']
++        if set(payload_summary['files']) != expected_payload_names:
++            fail('Public-H final correspondence does not retain the exact native release-payload file roster')
++        for filename, row in payload_summary['files'].items():
++            if (type(row) is not dict or set(row) != {'sizeBytes','sha256'}
++                    or type(row.get('sizeBytes')) is not int or row['sizeBytes'] < 0):
++                fail('Public-H final correspondence contains malformed native release-payload custody')
++            require_digest(row.get('sha256'), f'final native release-payload {filename} SHA-256')
+     versions = py.get('installedVersions', {})
+     required = {'umf-access':fixed['accessVersion'],'umf-codegen':fixed['codegenVersion'],'umf-core':fixed['coreDistributionVersion'],fixed['weftWheelDistribution']:fixed['weftVersion']}
+     core = py.get('coreNative', {})
+@@ -1541,6 +1939,8 @@
+                                    'continuationExecutionId':expected_continuation['executionId'],
+                                    'continuationAttempt':expected_continuation['attempt'],
+                                    'continuationReceiptSha256':expected_continuation['receiptSha256']}}
++    if native_d5_summary is not None:
++        output['nativeD5'] = native_d5_summary
+     accepted=report_dir/'accepted-probe-fields.json'
+     if accepted.exists() or accepted.is_symlink():
+         fail('Accepted probe summary already exists before final verification')
