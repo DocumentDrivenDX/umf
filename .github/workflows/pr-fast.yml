@@ -1,0 +1,63 @@
+name: Fast PR checks
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/**'
+      - 'src/**'
+      - 'python/**'
+      - 'crates/**'
+      - 'bindings/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'spec/**'
+      - 'package.json'
+      - 'bun.lock'
+      - 'Cargo.toml'
+      - 'Cargo.lock'
+      - 'tsconfig*.json'
+permissions:
+  contents: read
+concurrency:
+  group: fast-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  portable-unit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          # Keep historical evidence and native corpora out of this portable job.
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /src/
+            /spec/
+            /tests/core/
+            /python/
+            /scripts/
+            /patches/
+            /package.json
+            /bun.lock
+            /tsconfig*.json
+            /.npmrc
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install locked JavaScript dependencies
+        run: bun install --frozen-lockfile
+      - name: Portable core unit tests
+        run: >-
+          bun test
+          tests/core/cardinality-ideals.test.ts
+          tests/core/nullability-ideals.test.ts
+          tests/core/field-ideals.test.ts
+      - name: Browser-targeted core module bundle
+        run: >-
+          bun build src/model/document.ts src/validation/document.ts
+          --target=browser --outdir "$RUNNER_TEMP/umf-pr-fast"
+      - name: Python syntax checks
+        run: python -m compileall -q python scripts
