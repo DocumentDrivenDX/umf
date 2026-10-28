@@ -302,6 +302,9 @@ def qualify(repository: Path, artifacts: Path, core_receipt: Path) -> dict[str, 
                 "installedPairSmokeFixtureSha256": _sha256(
                     repository / "fixtures/actions-binding/source.json"
                 ),
+                "binaryClosureVerifierSha256": _sha256(
+                    repository / "scripts/rust-migration/r4/check_binary_closure.py"
+                ),
             },
             "host": {
                 "python": platform.python_version(),
