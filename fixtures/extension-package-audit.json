@@ -1,7 +1,7 @@
 {
   "scope": "Manifest validation, joint registry registration, standalone schema equality and local evidence existence only; no native conformance or inventory completeness claim",
-  "packages": 71,
-  "passed": 71,
+  "packages": 72,
+  "passed": 72,
   "results": [
     {
       "path": "spec/extensions/access/package.json",
@@ -887,6 +887,19 @@
         "subset": "Supplied .tsp sources with pinned compiler/standard library and eleven explicitly selected official library versions; library-owned configuration retained; separate pinned JSON Schema emission API; no arbitrary project JavaScript or lossless projection claim"
       },
       "evidenceCount": 23,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/visual/package.json",
+      "id": "umf.visual",
+      "version": "1.0.0",
+      "native": {
+        "system": "UMF-authored visual vocabulary",
+        "version": "1.0.0",
+        "subset": "Versioned declarations in UMF JSON/YAML; no renderer, layout engine or Mermaid compatibility claimed"
+      },
+      "evidenceCount": 1,
       "passed": true,
       "failures": []
     }
