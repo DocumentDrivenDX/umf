@@ -11,6 +11,8 @@ use crate::{
 
 const INSPECTION_SCHEMA: &str =
     include_str!("../../../spec/core/scalar-type-inspection-v0.3.schema.json");
+/// Current generated core vocabulary order. The generated core schema is the
+/// authority; the Rust integration test checks this mirror for drift.
 const SCALARS: [&str; 11] = [
     "boolean",
     "integer",
@@ -24,6 +26,15 @@ const SCALARS: [&str; 11] = [
     "bits128",
     "uuid",
 ];
+
+/// Return the generated core scalar vocabulary only for the exact current
+/// core version, matching `scalarTypesForVersion`'s lookup semantics.
+pub fn scalar_types_for_version(version: &Utf16) -> Vec<Utf16> {
+    if version != &Utf16::from("0.10.0") {
+        return Vec::new();
+    }
+    SCALARS.iter().map(|value| Utf16::from(*value)).collect()
+}
 
 fn k(s: &str) -> Utf16 {
     Utf16::from(s)

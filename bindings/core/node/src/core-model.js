@@ -14,6 +14,7 @@ export function createCoreModelOperations(invoke, {ErrorType = Error} = {}) {
     }
   };
   return Object.freeze({
+    scalarTypesForVersion(version) { return invoke('model/scalarTypesForVersion', {version}); },
     selectCoreElements(source, query, extensions = []) { return invoke('model/selectCoreElements', {source, query}, extensions); },
     validateCoreFieldValue(source, field, value) {
       try { return invoke('model/validateCoreFieldValue', {source, field, value}); }

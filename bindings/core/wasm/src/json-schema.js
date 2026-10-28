@@ -28,6 +28,16 @@ function orderedDiagnostics(items) {
 function requireSourcePointerType(pointer) {
   if (typeof pointer !== 'string') pointer.startsWith('/');
 }
+function requireSourceEditPointerType(pointer) {
+  if (typeof pointer !== 'string') {
+    if (!pointer.startsWith('/') || /~(?![01])/u.test(pointer)) throw new UmfError('JSON_SCHEMA_POINTER', 'Invalid JSON Pointer');
+    // Match nativePointer's edit-path host operations before admission. A
+    // method-bearing object reaches pointer.slice in the predecessor and
+    // throws its native TypeError before replacement parsing or dispatch.
+    const parts = pointer.slice(1).split('/');
+    parts.map(part => part.replace(/~1/g, '/').replace(/~0/g, '~'));
+  }
+}
 export function createJsonSchemaOperations(call, preflight) {
   const own = (value, key, required = true) => {
     if (!value || (Object.getPrototypeOf(value) !== Object.prototype && Object.getPrototypeOf(value) !== null)) throw new TypeError('JSON Schema options must be plain objects');
@@ -60,6 +70,6 @@ export function createJsonSchemaOperations(call, preflight) {
     getJsonSchemaNode(document, pointer) { const admission = preflight(); if (typeof pointer !== 'string') call('validateJsonSchemaDocumentForGet', {document}, admission); requireSourcePointerType(pointer); return call('getJsonSchemaNode', {document, pointer}, admission); },
     walkJsonSchema(document) { const admission = preflight(); return call('walkJsonSchema', {document}, admission); },
     parseNativeJson(source) { const admission = preflight(); return call('parseNativeJson', {source}, admission); },
-    editJsonSchemaNode(document, pointer, replacement) { requireSourcePointerType(pointer); const admission = preflight(); return call('editJsonSchemaNode', {document, pointer, replacement}, admission); },
+    editJsonSchemaNode(document, pointer, replacement) { requireSourceEditPointerType(pointer); const admission = preflight(); return call('editJsonSchemaNode', {document, pointer, replacement}, admission); },
   });
 }

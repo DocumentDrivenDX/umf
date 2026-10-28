@@ -79,7 +79,7 @@ new current-source packet. Its receipt SHA-256 is
 current inventory SHA-256 is
 `805e711ce3a5720624fa66803bf766444b4f67f97f4d02d747f739c675168cc4` and the
 condition-aware ledger SHA-256 is
-`9781795e3fd361d57f155bdac3de3443d1954ba557d0215c04d787cb8539c606`. Linux,
+`df6187650d89298f6b2adb261bc57f5110dc744848d2efbe6f9850bb44cc3ff8`. Linux,
 complete production SDK parity, the full port, and release remain unqualified.
 The ledger's `executable` label is a broad public-runtime category: independent
 AST review of the 1,120-name reference root found 750 function declarations,
@@ -9460,6 +9460,17 @@ and generated-code inputs, so it is not current-source installed evidence.
 Keep the default V4 edit route on TypeScript until the host boundary and a
 fresh source-coherent installed replay close; this checkpoint retires no row.
 
+The subsequent opt-in wrapper correction now executes the predecessor's
+non-string edit-pointer method sequence before preflight in both Node and WASM.
+The method-bearing `startsWith` sentinel consequently reaches the same native
+`pointer.slice` `TypeError` with no document, preflight, replacement, or Rust
+dispatch effects. Sol reviewed the narrow wrapper change and reran its full
+suite (29/29). This closes that specific first-error counterexample, not the
+general non-string host-input boundary: an object with all pointer methods can
+still pass the predecessor's pointer phase while Rust wire admission refuses
+it. The current-source installed packet and complete host parity remain open;
+the V4 default stays TypeScript and no ledger retirement follows.
+
 The R8 ledger now accepts exact bounded Rust ownership for the two SEC 2.0.0
 projection exports on each V4 Node/browser root. Each mapping pins the
 CONTRACT-059 core and UTF-16 bindings plus the private Darwin arm64 installed
@@ -9488,3 +9499,39 @@ Installed artifacts passed 217/217 focused tests on CPython 3.11.17 and
 packet's checksums and the current resource sync check pass. This local
 Darwin evidence does not close the hosted six-cohort release matrix, Linux
 wheel behavior, R8 executable gaps, or package publication.
+The later `scalarTypesForVersion` Rust source edit changed the metamodel
+compiler fingerprint; the canonical outputs and Python embedded resource pin
+were regenerated and pass their `--check` modes. The 217/217 Darwin pair
+receipt remains evidence for its pinned earlier source cut, not qualification
+of these newly regenerated artifacts. Rebuild and requalify the pair at the
+next candidate release cut.
+
+### R8 generated scalar vocabulary opt-in ownership — 2026-10-28
+
+The [bounded `scalarTypesForVersion` packet](evidence/rust-migration/r8-scalar-types-for-version/README.md)
+freezes five direct TypeScript predecessor version cases before implementation.
+Rust now implements exact UTF-16 comparison for current core `0.10.0` and
+returns the eleven scalar labels in generated order through the shared
+`model/scalarTypesForVersion` wire operation. Node and WASM Core Model factories
+offer opt-in routing. A Rust test compares the local list and version against
+the generated `spec/core/schema.json` authority, so a vocabulary or version
+change fails closed instead of silently drifting. Sol reviewed the narrow
+request shape and reran Rust core and wire tests (2/2 each), the direct Bun
+predecessor test (1/1), and Node/WASM factory routing tests (2/2). The normal
+TypeScript package roots remain selected. Installed Node/Bun/browser parity,
+host-input behavior beyond strings, current-source package receipts, and
+default-route retirement remain open.
+
+### R4 exact Linux pair preparation boundary — 2026-10-28
+
+The [pinned Linux preparation record](evidence/rust-migration/r4-linux-pair-7c1bc684-cpython311-20261028/README.md)
+captures an immutable `7c1bc684` source archive and confirms a cached Linux
+x86_64 CPython 3.11.17 runtime. Its image lacks a compiler and the
+workflow-pinned build/test packages; the cached Rust/GCC image has Python
+3.11.2, and the cached maturin image is arm64. No Linux wheel pair was built,
+installed, or tested. A disposable network bootstrap was rejected by automatic
+approval review before execution because it would install packages over the
+network and create a persistent image after an earlier network-capable Docker
+rejection. The hosted six-cohort workflow is enabled but still queued. An
+already-provisioned offline image with exact tools, or explicit review of a
+network bootstrap, is needed for independent local Linux qualification.

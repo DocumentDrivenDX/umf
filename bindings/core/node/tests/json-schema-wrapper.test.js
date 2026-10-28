@@ -141,19 +141,14 @@ for (const [host, factory] of [['Node', createNodeOperations], ['WASM', createWa
       expect(events).toEqual(['document.ownKeys']);
     });
 
-    test('preserves a non-string pointer startsWith method call before dispatch', () => {
-      for (const operation of ['getJsonSchemaNode', 'editJsonSchemaNode']) {
-        const trace = [];
-        let dispatches = 0;
-        const pointer = {startsWith(prefix) { trace.push(prefix); return true; }};
-        const api = factory(() => { dispatches++; return 'dispatched'; }, () => ({}));
-        const result = operation === 'getJsonSchemaNode'
-          ? api.getJsonSchemaNode({}, pointer)
-          : api.editJsonSchemaNode({}, pointer, 'false');
-        expect(result).toBe('dispatched');
-        expect(trace).toEqual(['/']);
-        expect(dispatches).toBe(operation === 'getJsonSchemaNode' ? 2 : 1);
-      }
+    test('get preserves a non-string pointer startsWith method call before dispatch', () => {
+      const trace = [];
+      let dispatches = 0;
+      const pointer = {startsWith(prefix) { trace.push(prefix); return true; }};
+      const api = factory(() => { dispatches++; return 'dispatched'; }, () => ({}));
+      expect(api.getJsonSchemaNode({}, pointer)).toBe('dispatched');
+      expect(trace).toEqual(['/']);
+      expect(dispatches).toBe(2);
     });
 
     test('edit keeps pointer failure ahead of invalid document and replacement effects', () => {
@@ -199,25 +194,27 @@ for (const [host, factory] of [['Node', createNodeOperations], ['WASM', createWa
       expect(dispatches).toBe(0);
     });
 
-    test('records the method-bearing pointer mismatch that blocks default routing', () => {
+    test('matches method-bearing pointer TypeError before preflight and wire admission', () => {
       const events = [];
       const pointer = {startsWith(prefix) { events.push(`startsWith:${prefix}`); return true; }};
+      const document = new Proxy({}, {ownKeys() { events.push('document.ownKeys'); return []; }});
       let referenceError;
-      try { sourceEditJsonSchemaNode({}, pointer, '{'); } catch (error) { referenceError = error; }
+      try { sourceEditJsonSchemaNode(document, pointer, '{'); } catch (error) { referenceError = error; }
       expect(referenceError).toBeInstanceOf(TypeError);
       expect(referenceError.message).toMatch(/pointer\.slice/);
       expect(events).toEqual(['startsWith:/']);
 
       events.length = 0;
       let preflights = 0;
-      const api = factory((_op, fields) => encodeWire(fields), () => { preflights++; return {}; });
+      let dispatches = 0;
+      const api = factory((_op, fields) => { dispatches++; return encodeWire(fields); }, () => { preflights++; return {}; });
       let candidateError;
-      try { api.editJsonSchemaNode({}, pointer, '{'); } catch (error) { candidateError = error; }
+      try { api.editJsonSchemaNode(document, pointer, '{'); } catch (error) { candidateError = error; }
       expect(candidateError).toBeInstanceOf(TypeError);
-      expect(candidateError.message).toMatch(/Unsupported JavaScript value type: function/);
-      expect(candidateError.message).not.toBe(referenceError.message);
+      expect(candidateError.message).toBe(referenceError.message);
       expect(events).toEqual(['startsWith:/']);
-      expect(preflights).toBe(1);
+      expect(preflights).toBe(0);
+      expect(dispatches).toBe(0);
     });
   });
 }

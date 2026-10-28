@@ -1920,6 +1920,27 @@ fn execute_request_inner(
         .and_then(as_utf16)
         .and_then(|v| v.to_utf8().ok())
         .ok_or_else(|| fail("REQUEST", "Request op is required"))?;
+    if op == "model/scalarTypesForVersion"
+        && (!has_exact_members(&request, &["op", "resources", "registry", "version"])
+            || !matches!(field(&request, "registry"), Some(Value::Array(_)))
+            || !field(&request, "resources").is_some_and(|resources| {
+                has_exact_members(
+                    resources,
+                    &[
+                        "coreSchema",
+                        "referenceSchema",
+                        "packageSchema",
+                        "constraints",
+                        "domainPolicy",
+                    ],
+                )
+            }))
+    {
+        return Err(fail(
+            "REQUEST",
+            "Closed scalar-types request and exact five-resource set required",
+        ));
+    }
     if op == "model/inspectCoreRecordMembers"
         && (!has_exact_members(
             &request,
@@ -2146,6 +2167,7 @@ fn execute_request_inner(
             | "model/finishCoreCardinalityVerification"
             | "model/inspectCoreKind"
             | "model/inspectCoreScalarType"
+            | "model/scalarTypesForVersion"
             | "model/inspectCoreRecordMembers"
             | "model/inspectCoreReferenceLinks"
             | "model/declareCoreKind"
@@ -2897,6 +2919,16 @@ fn model_operation(
                 capabilities,
                 ctx,
             )?
+        }
+        "model/scalarTypesForVersion" => {
+            let version = as_utf16(value("version")?)
+                .ok_or_else(|| fail("REQUEST", "version must be a string"))?;
+            Value::Array(
+                umf_core::scalar_type_inspection::scalar_types_for_version(version)
+                    .into_iter()
+                    .map(Value::String)
+                    .collect(),
+            )
         }
         "model/inspectCoreRecordMembers" => {
             umf_core::record_members_inspection::inspect_core_record_members(
