@@ -1,0 +1,60 @@
+{
+  "profile": "umf.final-linux-workflow-policy-reconciliation/1",
+  "previousSource": "26767551076693020ac8f2cfb84c3015fc9f5d71",
+  "policyMerge": "ec3050566424e10cd30291e737218d789a2fea99",
+  "scope": "Seven heavy workflow event policy changes only; all job bodies unchanged. New lightweight Linux PR workflow adopted exactly from main. Explicit full release gates stay required; no macOS CI.",
+  "jobs": [
+    {
+      "path": ".github/workflows/access-boundaries.yml",
+      "before": "db0aac1d922c9e9aec5665ad58bd911a977591505454ebd5dd7cba1d778c95dd",
+      "after": "57420ab03dc6bea4fe882b84f66fa7bad836212cf7dec32d756459978f10a1e1",
+      "jobsUnchanged": true
+    },
+    {
+      "path": ".github/workflows/actions.yml",
+      "before": "b1f108779285eb2d69ef1ad91ee342655fce0ac4f9b7e0655cd8b63efe986640",
+      "after": "de26bb6da158fcc988aef42efe39efa560d07b01c11fec0f5bc41410f57f35d7",
+      "jobsUnchanged": true
+    },
+    {
+      "path": ".github/workflows/python-action-runtime.yml",
+      "before": "db6441e0112b453017eafd7794838b3d1bdc5f1718e00f5f727b4b117eded6b8",
+      "after": "89bbd88a3b36d39217a34f61907626ffa01c67c315e1ef33d80904e61c03c496",
+      "jobsUnchanged": true
+    },
+    {
+      "path": ".github/workflows/python.yml",
+      "before": "713b1a09e1d145a0b9d2050300cf58602618fbfe925555f26db713ec16266fc7",
+      "after": "478b22a8e3b8bb4d80c14b862c4aed57aaeabafa330dc1a4382a8d3db539289b",
+      "jobsUnchanged": true
+    },
+    {
+      "path": ".github/workflows/rust-core.yml",
+      "before": "c629a9568caeecc54124ce8308ef1dfbf55a0535d1ed73b5fe0d7e4100b65aae",
+      "after": "aae8563f022f503ad898ad559774e5274819a9a9e56988de952dbbe3d8039d5e",
+      "jobsUnchanged": true
+    },
+    {
+      "path": ".github/workflows/rust-spike.yml",
+      "before": "f1aba2726d084ad6c227a274d620572a44358db9d3dea38e29dfba2198f64b86",
+      "after": "45f6a6102d1c4299d3df1a18a625f3df9150e082a35962db0f05783d2b3e89a7",
+      "jobsUnchanged": true
+    },
+    {
+      "path": ".github/workflows/sql-containment.yml",
+      "before": "b8b67b10ca9670c059316be85ef1202f0b7741da3578cea13598971c767a6add",
+      "after": "bf31126345814ed4334e4fc18bc2d7b827a771f1e921f5104d3deae90549ea25",
+      "jobsUnchanged": true
+    }
+  ],
+  "changedExistingPins": [
+    ".github/workflows/python.yml",
+    ".github/workflows/sql-containment.yml",
+    ".github/workflows/actions.yml",
+    ".github/workflows/rust-core.yml",
+    ".github/workflows/rust-spike.yml",
+    ".github/workflows/access-boundaries.yml"
+  ],
+  "sourceCodeChanged": false,
+  "actionsDispatched": false
+}

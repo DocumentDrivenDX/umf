@@ -1,12 +1,9 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 name: Typed access boundaries
 
+# Full qualification is explicit; routine PR checks live in pr-fast.yml.
 on:
-  push:
-    branches: [main]
-    tags:
-      - '**'
-  pull_request:
+  workflow_dispatch:
 
 # Supersede PR revisions without cancelling explicit qualification snapshots.
 concurrency:
@@ -326,7 +323,7 @@ jobs:
           done
 
       - name: Initialize the reviewer-owned G02-D5 replay receipt
-        if: github.event_name == 'pull_request' && github.head_ref == 'codex/mig-g02-typed-backfills'
+        if: (github.event_name == 'pull_request' && github.head_ref == 'codex/mig-g02-typed-backfills') || github.event_name == 'workflow_dispatch'
         timeout-minutes: 1
         env:
           D5_ROOT: ${{ runner.temp }}/g02-d5-${{ github.run_id }}-${{ github.run_attempt }}
@@ -348,7 +345,7 @@ jobs:
           PY
 
       - name: Replay the frozen independent G02-D5 matrix on the current 18-wheel cohort
-        if: github.event_name == 'pull_request' && github.head_ref == 'codex/mig-g02-typed-backfills'
+        if: (github.event_name == 'pull_request' && github.head_ref == 'codex/mig-g02-typed-backfills') || github.event_name == 'workflow_dispatch'
         timeout-minutes: 30
         env:
           D5_ROOT: ${{ runner.temp }}/g02-d5-${{ github.run_id }}-${{ github.run_attempt }}
@@ -482,7 +479,14 @@ jobs:
           head=subprocess.run(["git","rev-parse","HEAD"],check=True,text=True,stdout=subprocess.PIPE).stdout.strip()
           tree=subprocess.run(["git","rev-parse","HEAD^{tree}"],check=True,text=True,stdout=subprocess.PIPE).stdout.strip()
           status=subprocess.run(["git","status","--porcelain"],check=True,text=True,stdout=subprocess.PIPE).stdout
-          assert os.environ["GITHUB_EVENT_NAME"]=="pull_request" and os.environ["GITHUB_HEAD_REF"]=="codex/mig-g02-typed-backfills"
+          event=os.environ["GITHUB_EVENT_NAME"]
+          if event=="pull_request":
+              assert os.environ["GITHUB_HEAD_REF"]=="codex/mig-g02-typed-backfills"
+          else:
+              assert event=="workflow_dispatch" and not os.environ["GITHUB_HEAD_REF"]
+              ref=os.environ["GITHUB_REF"]
+              resolved=subprocess.run(["git","rev-parse","--verify",ref+"^{commit}"],check=True,text=True,stdout=subprocess.PIPE).stdout.strip()
+              assert resolved==head,(ref,resolved,head)
           assert head==os.environ["GITHUB_SHA"] and not status,(head,os.environ["GITHUB_SHA"],status)
           tools={}
           for name in ("python","timeout","git"):
@@ -778,7 +782,7 @@ jobs:
           BOUNDED_D5_WORK
 
       - name: Finalize the fixed D5 report roster and bounded evidence
-        if: always() && github.event_name == 'pull_request' && github.head_ref == 'codex/mig-g02-typed-backfills'
+        if: always() && ((github.event_name == 'pull_request' && github.head_ref == 'codex/mig-g02-typed-backfills') || github.event_name == 'workflow_dispatch')
         timeout-minutes: 1
         env:
           D5_ROOT: ${{ runner.temp }}/g02-d5-${{ github.run_id }}-${{ github.run_attempt }}
@@ -1105,7 +1109,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         name: Upload the independent G02-D5 replay receipt
-        if: always() && github.event_name == 'pull_request' && github.head_ref == 'codex/mig-g02-typed-backfills'
+        if: always() && ((github.event_name == 'pull_request' && github.head_ref == 'codex/mig-g02-typed-backfills') || github.event_name == 'workflow_dispatch')
         timeout-minutes: 1
         env:
           D5_ROOT: ${{ runner.temp }}/g02-d5-${{ github.run_id }}-${{ github.run_attempt }}
@@ -1115,7 +1119,7 @@ jobs:
           if-no-files-found: error
 
       - uses: actions/upload-artifact@v4
-        if: success() && github.event_name == 'pull_request' && github.head_ref == 'codex/mig-g02-typed-backfills'
+        if: success() && ((github.event_name == 'pull_request' && github.head_ref == 'codex/mig-g02-typed-backfills') || github.event_name == 'workflow_dispatch')
         with:
           name: sdk-057-release-wheels-${{ github.sha }}
           path: ${{ runner.temp }}/g02-d5-${{ github.run_id }}-${{ github.run_attempt }}/release-payload/**

@@ -1,0 +1,39 @@
+--- a/.github/workflows/access-boundaries.yml
++++ b/.github/workflows/access-boundaries.yml
+@@
+       - name: Initialize the reviewer-owned G02-D5 replay receipt
+-        if: github.event_name == 'pull_request' && github.head_ref == 'codex/mig-g02-typed-backfills'
++        if: (github.event_name == 'pull_request' && github.head_ref == 'codex/mig-g02-typed-backfills') || github.event_name == 'workflow_dispatch'
+@@
+       - name: Replay the frozen independent G02-D5 matrix on the current 18-wheel cohort
+-        if: github.event_name == 'pull_request' && github.head_ref == 'codex/mig-g02-typed-backfills'
++        if: (github.event_name == 'pull_request' && github.head_ref == 'codex/mig-g02-typed-backfills') || github.event_name == 'workflow_dispatch'
+@@
+-          assert os.environ["GITHUB_EVENT_NAME"]=="pull_request" and os.environ["GITHUB_HEAD_REF"]=="codex/mig-g02-typed-backfills"
++          event=os.environ["GITHUB_EVENT_NAME"]
++          if event=="pull_request":
++              assert os.environ["GITHUB_HEAD_REF"]=="codex/mig-g02-typed-backfills"
++          else:
++              assert event=="workflow_dispatch" and not os.environ["GITHUB_HEAD_REF"]
++              ref=os.environ["GITHUB_REF"]
++              resolved=subprocess.run(["git","rev-parse","--verify",ref+"^{commit}"],check=True,text=True,stdout=subprocess.PIPE).stdout.strip()
++              assert resolved==head,(ref,resolved,head)
+           assert head==os.environ["GITHUB_SHA"] and not status,(head,os.environ["GITHUB_SHA"],status)
+@@
+       - name: Finalize the fixed D5 report roster and bounded evidence
+-        if: always() && github.event_name == 'pull_request' && github.head_ref == 'codex/mig-g02-typed-backfills'
++        if: always() && ((github.event_name == 'pull_request' && github.head_ref == 'codex/mig-g02-typed-backfills') || github.event_name == 'workflow_dispatch')
+@@
+       - uses: actions/upload-artifact@v4
+         name: Upload the independent G02-D5 replay receipt
+-        if: always() && github.event_name == 'pull_request' && github.head_ref == 'codex/mig-g02-typed-backfills'
++        if: always() && ((github.event_name == 'pull_request' && github.head_ref == 'codex/mig-g02-typed-backfills') || github.event_name == 'workflow_dispatch')
+@@
+       - uses: actions/upload-artifact@v4
+-        if: success() && github.event_name == 'pull_request' && github.head_ref == 'codex/mig-g02-typed-backfills'
++        if: success() && ((github.event_name == 'pull_request' && github.head_ref == 'codex/mig-g02-typed-backfills') || github.event_name == 'workflow_dispatch')
+--- a/qualification-inputs/expected-pins.sha256
++++ b/qualification-inputs/expected-pins.sha256
+@@
+-57420ab03dc6bea4fe882b84f66fa7bad836212cf7dec32d756459978f10a1e1  .github/workflows/access-boundaries.yml
++f0963d2df1e371112ba6e57999dbf69290796d711eb97ed46637d4ebc63918a1  .github/workflows/access-boundaries.yml
