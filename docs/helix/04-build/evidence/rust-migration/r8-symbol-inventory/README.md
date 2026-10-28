@@ -65,6 +65,8 @@ Current-source Compact Dataset verification covers five frozen-predecessor cases
 
 The [current-source Linux `securityNot` packet](../r8-security-not-current-linux-20261027/README.md) combines fixed-point Darwin arm64 and Docker-emulated Linux x86_64 installed SDK archives with Node, Bun, and Chromium receipts. The exact `/3` validator accepts the Node and browser `securityNot` declarations as retired for that evidence-bearing cohort, leaving 921 conditional logical gaps; `./reference` remains explicit TypeScript. This checked default ledger still has 922 open gaps and zero retired because it carries no archive evidence argument. Hosted CI and release qualification remain open.
 
+The same archives also have [Darwin](../r8-record-values-current-darwin-20261027/README.md) and [Linux](../r8-record-values-current-linux-20261027/README.md) installed `validateCoreRecordValues` packets. Node, Bun, and Chromium pass the 24 frozen semantic and 19 raw-host cases through both routes, with pinned Rust dispatch and browser resource controls. This bounded parity evidence does not yet meet a Record Values `/3` retirement profile or a measured memory bound; both default-route declarations remain open.
+
 The separate [historical installed SDK packet](../r8-full-sdk-9b89b757/README.md)
 passed a private macOS arm64 archive on Node 26.12.1, Bun 1.4.3 and real
 Chromium 153.0.8010.12 with a zero-transform 3,549-input source closure

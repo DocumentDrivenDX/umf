@@ -8996,11 +8996,31 @@ invocation supplies no archive evidence. The exact local validator input and
 result are preserved in the Linux packet. This bounded result does not
 qualify the wider Security API, hosted CI, or an SDK release.
 
-A separate, currently temporary installed Record Values harness exercised the
-24 frozen semantic vectors and 19 expanded raw-host-admission cases by package
-name against that Darwin archive. Node, Bun, and Chromium matched exact
-outcomes, getter traces, and default/reference Rust dispatch counts; Chromium
-also passed the 700,000-unit retention control and 100,001-value `LIMIT` at
-`/99999`, with no Node globals. This is a local prototype result pending a
-source-pinned, reproducible evidence packet and same-source Linux replay; it
-does not retire `validateCoreRecordValues`.
+The installed Record Values probe is now a reproducible, two-platform packet.
+The [Darwin](evidence/rust-migration/r8-record-values-current-darwin-20261027/README.md)
+and [Docker-emulated Linux](evidence/rust-migration/r8-record-values-current-linux-20261027/README.md)
+archives share the exact 3,595-input fixed-point source closure above. Their
+installed Node 26.12.1, Bun 1.4.3, and Chromium 153.0.8010.12 harnesses use
+the same frozen 24 semantic vectors, 19 raw-host admission cases, and pinned
+runner bytes. Each host matches exact default/reference outcomes and getter
+traces, with 24 semantic plus 20 raw default Rust dispatches and zero reference
+dispatches. The browser also retains 700,000 units of opaque content and
+rejects 100,001 values with `UmfError LIMIT` at `/99999` on both routes; it
+loads the packaged WASM and has no Node globals. Sol independently reran both
+packet verifiers and checksum lists; Linux and Darwin Node/Bun semantic and
+raw-host receipt payloads are byte-equivalent, and Chromium result payloads
+differ only in the platform user agent. These are local, bounded results. The
+Record Values `/3` retirement acceptance profile, memory-bound evidence,
+hosted CI, and release qualification remain open; `validateCoreRecordValues`
+is not retired.
+
+For the next self-contained default-route cut, `declareCoreBit128Field` is
+blocked by an upstream contract discrepancy: CONTRACT-076's public profile
+specifies core 0.9.0, while the current TypeScript implementation accepts only
+core 0.10.0. Reconcile that governed API before porting or claiming parity.
+`generateDomainPackSchema` is a candidate pure Rust generator under
+CONTRACT-052, with the checked-in Draft 2020-12 schema as canonical authority.
+First freeze exact object and byte-order parity, unknown-field preservation,
+and browser behavior; then replace the two default-route executable bindings
+while retaining the explicit TypeScript reference route. This candidate has
+no accepted Rust mapping or retirement evidence yet.

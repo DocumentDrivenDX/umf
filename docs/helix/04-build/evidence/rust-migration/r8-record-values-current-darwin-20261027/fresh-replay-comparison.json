@@ -1,0 +1,50 @@
+{
+  "status": "pass",
+  "command": "UMF_R5_WORKTREE=\"$PWD\" UMF_R5_ARCHIVE=/private/tmp/umf-security-not-current-darwin-20261027/archive/umf-sdk.tgz sh docs/helix/04-build/evidence/rust-migration/r8-record-values-current-darwin-20261027/run-installed-replay.sh",
+  "archiveSha256": "accf61b39c4213ab452fbfff4fe1a31b950934a36c321c74984df45088adcd6c",
+  "sourceClosureSha256": "a53fba2dcf8edb4907de646040e446f95c6af7c13b6f6abd165dcdde5a893c25",
+  "freshResultsExactlyMatchCapturedReceipts": true,
+  "hosts": [
+    {
+      "runtime": "node",
+      "freshReplayStatus": "pass",
+      "freshRuntimeVersion": "v26.12.1",
+      "capturedReceiptSha256": "590ea744f490fe06c5f854a285322acb473cfed7f0143888ed8a729d6f85f64b",
+      "freshOutputExactlyMatchesCapturedReceipt": true,
+      "semanticCases": 24,
+      "rawHostCases": 19,
+      "defaultDispatches": 20,
+      "referenceDispatches": 0
+    },
+    {
+      "runtime": "bun",
+      "freshReplayStatus": "pass",
+      "freshRuntimeVersion": "Bun 1.4.3",
+      "capturedReceiptSha256": "84712ea8a03754cc48ce252abb07348ac4b20c3fe70cc578d753198f88a07eb4",
+      "freshOutputExactlyMatchesCapturedReceipt": true,
+      "semanticCases": 24,
+      "rawHostCases": 19,
+      "defaultDispatches": 20,
+      "referenceDispatches": 0
+    },
+    {
+      "runtime": "chromium",
+      "freshReplayStatus": "pass",
+      "freshRuntimeVersion": "153.0.8010.12",
+      "capturedReceiptSha256": "45a5de8fcc3a6f53e7b296de97a9e15d9ec8e8ea425b7cea13be558aa0793c66",
+      "freshOutputExactlyMatchesCapturedReceipt": true,
+      "semanticCases": 24,
+      "rawHostCases": 19,
+      "defaultDispatches": 20,
+      "referenceDispatches": 0
+    }
+  ],
+  "chromiumControls": {
+    "wasmBridgeCalls": 46,
+    "nodeGlobalsAbsent": true,
+    "retainedOpaqueUnits": 700000,
+    "limitInputLength": 100001,
+    "limitCode": "LIMIT",
+    "limitPath": "/99999"
+  }
+}
