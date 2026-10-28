@@ -1,0 +1,39 @@
+{
+  "format": "umf-r8-scalar-types-for-version-source-pins/1",
+  "algorithm": "SHA-256",
+  "capturedAfter": "Fresh current-source native and WASM builds, focused Rust tests, and Node/Bun/Chromium replays; no source edits followed the capture.",
+  "previousEvidence": {
+    "path": "docs/helix/04-build/evidence/rust-migration/r8-scalar-types-for-version/predecessor.json",
+    "sha256": "b719bd21b019c33fec805ef847e7076f1da107fa7df5cb3fd29da1b57b0296d9"
+  },
+  "files": {
+    "Cargo.lock": "c55364fa3058e7a90bb2833dda6288621b863bed13a629c9bbf2f706401d602c",
+    "Cargo.toml": "e9ac3286aff98bd4be64516ce7166258d06f8839e5316a09fa2caf454d7ef89e",
+    "rust-toolchain.toml": "9af7a084f6c81634ad8ed71a2a095dc77bc1723406e0f95dccf19f4af5d984e6",
+    ".cargo/config.toml": "84fd4fa17fd967cae6006ba1b0dc430904239dec921c1441dd657387ee802d6c",
+    "crates/umf-core/src/scalar_type_inspection.rs": "9078192e60c3031a793beb6151002ed3a3f1a990a8d98b667b128026621ba57e",
+    "crates/umf-core-wire/src/lib.rs": "681487b680db57add5667b35159bb88a7b1c588566ade968e33717612c44e228",
+    "bindings/core/node/src/lib.rs": "fa62ae31620540178dc196387acba6fa46415ae501d0f3a2214ae74a772b0784",
+    "bindings/core/node/src/core-model.js": "25acf1947c7671089d0e2ca4a3d7672918597044fcd5b1b5c20284671196ba25",
+    "bindings/core/node/index.js": "bae86c466164f22ac1a115a7958ab6902cbda2c844dc5a7c6b595b8469ca7a00",
+    "bindings/core/wasm/src/lib.rs": "655387b5509ba405102febf8281402b5a0985ff3ba7a51bad4a5efa61162c1a2",
+    "bindings/core/wasm/src/core-model.js": "3d9bc6b01cfc015dbd81797b18e83f40ed3ba0e3937cd2c3b1c6692437ebbef5",
+    "bindings/core/wasm/index.js": "7235fca4ec1719f08bb8fe2586c57c5895fccf53ebe0d3cdaff2b42ee1a01666",
+    "src/access/core-model-resources.ts": "096f69a855762dd8c7c54a3cd3b080e0dadad00050e0d84ecf2cf4eac2ee4e40",
+    "src/access/rust-scalar-types-for-version-default.ts": "6608b325c13405c6d6e3346452a0eff1457d640c097100ef35a3620b7a846cd1",
+    "src/model/types.ts": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c",
+    "src/index-node-v4.ts": "51178c7e403c8a0a71b5034a9d1ee5bdec636c0edebd2dcf8e74ba9cdbbf11f2",
+    "src/index-browser-v4.ts": "b13e25392f5c0053e7014a4d9290ce169815e32932fe03afa7215319f017f531",
+    "src/index-v4-default.ts": "3c97f4b8a9ca368cbf6904e11d1ee88e65fe9eb8407facb440e2f8bff7c1e711",
+    "spec/core/schema.json": "ef93c921d86b18d2099dc3012f6e296edfc77caea80cd889f8f3972c60228ca1",
+    "spec/core/semantic-type-reference.schema.json": "0c31d98bb2ae0a0119fdf3328651387380bf9f855079a4765670a1128aa7030b",
+    "spec/core/extension-package.schema.json": "77a9ca9ff4f38ea361656b27a72e1d107af8e2abbeeef184df5e6a138b61dd62",
+    "spec/metamodel/generated/core-constraints.json": "a7b8f79c00a474aac59e0e9503277620716d72129937b5a419aac75c16b47985",
+    "spec/metamodel/generated/domain-policy.json": "1b31e46d7a5a21e48525bbbd2e5848d3ddf9d41c185b233ae3da1f1c5c018ca8",
+    "tests/core-scalar-types-for-version.test.ts": "3bcd7bf73cce2c336665a407440a3fb34812ccf3dd4be097edd54adf55b92d1b",
+    "tests/rust-migration/r8-scalar-types-for-version-default-route.test.ts": "f12368792e5426ec855650eb1f9afb98ffd47497535c6b8c2a6672535d37409b",
+    "crates/umf-core/tests/r8_scalar_types_for_version.rs": "af46d86129e8d92a26f210767ad58e0ca900d047cd42da83e4ddf0a4a611cabc",
+    "crates/umf-core-wire/tests/r8_scalar_types_for_version.rs": "771ca972787d6fa2e283740691a0792b99db95ec7441cbe05c5b28d8be83cd6f",
+    "bindings/core/node/tests/core-model-scalar-types-for-version.test.js": "042eba03330300377c07e183025e2f3f60670604ee0fd31e3789234b89762479"
+  }
+}

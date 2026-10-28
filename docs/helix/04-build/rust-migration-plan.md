@@ -9713,11 +9713,22 @@ file. The new scalar adapter has an exact empty import allowlist; an explicit
 negative control rejects both a predecessor value import and a host hook.
 The boundary command and all 23 tests pass. Any future access file needs its
 own reviewed import entry, preserving the strict per-file policy.
+
 The regenerated metamodel, Python and action embedded resources, R8 symbol
 inventory, and condition-aware ledger pass their fixed-point checks. The
 full R8 ledger suite passes 77/77 after updating its scalar V4 export-shape
 assertions; the ledger remains at 920 open logical executable gaps and zero
 retired.
+
+The [scalar V4 host packet](evidence/rust-migration/r8-scalar-types-for-version-default-route/README.md)
+rebuilds native and WASM bindings from the reviewed source, then exercises
+private V4 Node, Bun, and real Chromium bundles against the explicit
+TypeScript reference. Node and Bun match 12 cases each; Chromium matches
+11 browser-relevant cases, with shared current-array identity and fresh
+empty unsupported/invalid results. Twenty-eight source hashes were independently
+rechecked. The canonical SDK builder failed temporary package staging with
+local `EPERM`, so installed-package, Linux, release, and retirement gates
+remain open.
 
 The retaining Parquet decoder now also preserves ordered FileMetaData
 fields, including field 5 key/value metadata. A bounded opt-in inspector
