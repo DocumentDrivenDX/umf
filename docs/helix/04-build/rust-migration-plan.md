@@ -65,10 +65,12 @@ and complete tooling retirement, and R8 final integrated qualification remain
 open. The source `package.json` selects the Rust V4 Node/browser entries for
 synchronous `generatePythonClient` and retains TypeScript under `./reference`.
 The prior fixed-point private SDK archives qualify only their captured subsets
-and hosts. The current condition-aware ledger records 1,123 declarations in
-each default root, 1,120 in `./reference`, 69 source-selected declarations per
-default root, 921 logical executable default-route gaps, zero retired, 86 accepted opt-in
-Rust mappings, and 835 unmapped executable names. Four exact immutable
+and hosts. The current condition-aware ledger records 3,381 route-specific
+declarations across 509 source files, 71 source-selected Rust declarations per
+V4 default root, 920 logical executable default-route gaps, zero retired,
+88 accepted opt-in Rust mappings, and 832 unmapped executable names. The inventory
+records 2,543 Rust-candidate declarations, 216 host declarations, and 210 V4
+entry declarations across both defaults. Four exact immutable
 generated-data aliases are classified separately across 12 route rows. Three root-only SEC/Protobuf Rust
 candidate exports account for the difference from the reference route; they
 remain opt-in and add no retirement. The historical five-schema default-route
@@ -77,9 +79,9 @@ installed-route scope; it has source drift against this checkout and needs a
 new current-source packet. Its receipt SHA-256 is
 `1c192d0246a85c8c12de39b37b40e119026b692dade2db249e5aace2c689b19a`. The
 current inventory SHA-256 is
-`805e711ce3a5720624fa66803bf766444b4f67f97f4d02d747f739c675168cc4` and the
+`7c3deb4d8fbf325c05b5af785c74b2fb3211d8851180d28a381d92ea158b8ed2` and the
 condition-aware ledger SHA-256 is
-`6c4aab5880099fa96f7bf40ee876f844d1f664e8275f26aaf7a04edce121c39a`. Linux,
+`7484773db68504b74ee2b4e3026200b447c6447dc119667b5104ec64e3e3ae1a`. Linux,
 complete production SDK parity, the full port, and release remain unqualified.
 The ledger's `executable` label is a broad public-runtime category: independent
 AST review of the 1,120-name reference root found 750 function declarations,
@@ -88,7 +90,7 @@ exports. The [exact four-export vocabulary classification](evidence/rust-migrati
 removes only frozen generated-data aliases from the executable denominator;
 the version-gated function and behavior-bearing classes remain executable.
 Other constants, aliases and structured public values still need individual
-compatibility and authority review. Keep all 921 remaining executable names
+compatibility and authority review. Keep all 920 remaining executable names
 in the retirement denominator until an evidence-backed per-row semantic,
 host and data disposition is reviewed; do not subtract a category by naming
 heuristic.
@@ -9014,10 +9016,12 @@ Record Values `/3` retirement acceptance profile, memory-bound evidence,
 hosted CI, and release qualification remain open; `validateCoreRecordValues`
 is not retired.
 
-For the next self-contained default-route cut, `declareCoreBit128Field` is
-blocked by an upstream contract discrepancy: CONTRACT-076's public profile
-specifies core 0.9.0, while the current TypeScript implementation accepts only
-core 0.10.0. Reconcile that governed API before porting or claiming parity.
+For the next self-contained default-route cut, `declareCoreBit128Field`
+accepts current core 0.10.0 only; core 0.9.0 is historical context, not an
+accepted source version for this helper. CONTRACT-076 now states this
+production boundary, and a focused test accepts 0.10.0 and refuses 0.9.0.
+Callers must explicitly migrate before authoring. Freeze current result,
+refusal-order, and unknown-content evidence before selecting a Rust route.
 `generateDomainPackSchema` is a candidate pure Rust generator under
 CONTRACT-052, with the checked-in Draft 2020-12 schema as canonical authority.
 First freeze exact object and byte-order parity, unknown-field preservation,
@@ -9856,9 +9860,9 @@ replays 48 tagged TypeScript reference cases through the existing pure Rust
 parser and `umf.core-wire/1` binding. Bun matches the frozen current reference
 48/48, and the focused Rust test compares complete successful results and
 refusal code/message units for all 48. Eight raw-host predecessor cases remain
-outside the tagged transport. The two logical exports still need Node/Bun and
-browser/WASM package bindings, installed parity, and explicit default-route
-review; this packet does not change their R8 retirement status.
+outside the tagged transport. At that packet stage, the two logical exports
+still needed Node/Bun and browser/WASM package bindings, installed parity, and
+explicit default-route review; the packet did not change R8 retirement status.
 
 The same [access-temporal packet](evidence/rust-migration/r8-access-temporal/README.md)
 now includes opt-in N-API and WASM bindings over the shared Rust wire
@@ -9868,6 +9872,25 @@ primitive token/kind admission before the wire boundary; Rust owns supported
 kind, length, and parsing decisions. The eight raw-host TypeError cases and
 proxy/accessor silence pass in the host-specific tests; the browser replay also
 checks token-kind precedence and absence of Node globals. These are local
-source-built opt-in results, not installed SDK package or V4 default-route
-qualification. The two logical access-temporal exports remain open in the
+source-built opt-in results, not installed SDK package qualification. The V4
+Node/browser sources now select these guarded Rust bindings and the generated
+facade retains TypeScript only under `./reference`. A fixed-point local source
+build passed the 48-case V4 default-route replay and eight raw-host refusals on
+Node/Bun; a fresh installed V4 route replay remains pending. The two logical
+access-temporal exports remain open in the
 R8 retirement ledger.
+
+The [current three-schema provenance replay](evidence/rust-migration/r8-symbol-inventory/selection-schema-current-provenance-blocker-20261028.md)
+reconstructs the historical key-selection, relationship-selection, and
+schema-properties-selection writers, but their outputs differ from the present
+resources. The writers are absent from current source and the metamodel does
+not declare these outputs. They remain among the five unresolved JSON
+authorities; historical replay alone does not establish current writer custody.
+
+The [pinned access-temporal installed candidate](evidence/rust-migration/r8-access-temporal-installed-80614a5/README.md)
+uses a fixed-point, zero-transform SDK archive from commit `80614a587`.
+Installed Node 26.12.1 and Bun 1.4.3 pass all 48 tagged vectors plus raw-host
+refusals; archive WASM passes the same candidate replay in the Chromium engine
+of Edge 156.0.4314.50, including absent/corrupt binding controls. This archive
+predates the V4 source-selection edit, so it qualifies only the opt-in candidate,
+not the newer default route, Linux, or release.

@@ -260,6 +260,19 @@ accept('src/adapters/rfc3339-exact-instant.ts', [
   'docs/helix/04-build/evidence/rust-migration/r5-temporal-default-route/README.md',
   'docs/helix/04-build/evidence/rust-migration/r5-temporal-default-route/sol-review.md',
 ], ['crates/umf-core-wire/tests/rfc3339_exact_instant_wire.rs', 'scripts/rust-migration/r5/temporal-default-route-node.ts', 'scripts/rust-migration/r5/temporal-default-route-browser.ts']);
+accept('src/adapters/access-temporal.ts', [
+  ['parseAccessTemporal', 'parse_access_temporal'],
+], 'umf_core::access_temporal', 'crates/umf-core/src/access_temporal.rs', [
+  'docs/helix/02-design/contracts/CONTRACT-075-access-temporal-profile.md',
+  'docs/helix/04-build/evidence/rust-migration/r8-access-temporal/README.md',
+  'docs/helix/04-build/evidence/rust-migration/r8-access-temporal/reference-packet.json',
+], ['crates/umf-core-wire/tests/access_temporal_r8_candidate.rs', 'bindings/core/node/tests/access-temporal-wrapper.test.js', 'bindings/core/wasm/tests/access-temporal.test.js']);
+accept('src/adapters/access-temporal.ts', [
+  ['ACCESS_TEMPORAL_PROFILE', 'ACCESS_TEMPORAL_PROFILE'],
+], 'umf_core::access_temporal', 'crates/umf-core/src/access_temporal.rs', [
+  'docs/helix/02-design/contracts/CONTRACT-075-access-temporal-profile.md',
+  'docs/helix/04-build/evidence/rust-migration/r8-access-temporal/README.md',
+], ['crates/umf-core/src/access_temporal.rs', 'bindings/core/node/tests/access-temporal-wrapper.test.js', 'bindings/core/wasm/tests/access-temporal.test.js']);
 accept('src/adapters/arrow/capture.ts', [
   ['captureArrowIpc', 'capture_arrow_ipc'],
   ['exportArrowIpcCapture', 'export_arrow_ipc_capture'],
@@ -530,6 +543,8 @@ function acceptedOperationEvidence(mapping, routeStatus = 'legacy-fixture') {
         ? 'The installed Darwin arm64 packet supports only projectSecSubmissions and projectSecCompanyFacts on the pinned Node 26.12.1, Bun 1.4.3, and Chromium 153 cohort, including reference parity and the recorded admission/output-limit controls. Linux, other SEC functions, complete Python release qualification, and default-route retirement remain open.'
       : mapping.evidencePaths.some(file => file.includes('/r8-core-relationship-selection-binding/'))
         ? 'Source/evidence hashes pin identity only; the linked relationship-selection packet defines 16-case opt-in host parity, excluding Registry callbacks and JavaScript error class identity.'
+      : mapping.evidencePaths.some(file => file.includes('/r8-access-temporal/'))
+        ? 'The linked R8 packet pins 48 tagged Rust wire outcomes to the TypeScript reference and records opt-in Node/Bun plus source-built WASM/Chromium binding evidence and eight raw-host refusals. Current V4 default-route installed replay is unavailable and remains unqualified; no default-route retirement follows.'
       : 'Source/evidence hashes pin identity only; the linked R5 packet defines the bounded operation subset and its remaining gates.',
     defaultRouteStatus: routeStatus === 'explicit-reference'
       ? 'Explicit ./reference TypeScript route; mapping does not affect default Node/browser routes or retire declarations'
@@ -746,6 +761,37 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
   ]);
   const domainPackProfileOwner = domainPackProfileOwnerByExport.get(exportName);
   const closure = paths => [...new Set(paths)].sort().map(file => ({ path: file, sha256: digest(read(file)) }));
+  if (['ACCESS_TEMPORAL_PROFILE', 'parseAccessTemporal'].includes(exportName)
+      && isExactAccessTemporalV4RootSelection({ routeId, exportName, source, declaration })) {
+    const node = !browser;
+    const bindingRoute = node
+      ? 'V4 Node root -> guarded access-temporal wrapper -> Node-API wire binding -> Rust core'
+      : 'V4 browser root -> guarded access-temporal wrapper -> WASM wire binding -> Rust core';
+    return {
+      status: 'source-selected-current-route-unqualified',
+      rustOwner: exportName === 'parseAccessTemporal'
+        ? 'umf_core::access_temporal::parse_access_temporal'
+        : 'umf_core::access_temporal::ACCESS_TEMPORAL_PROFILE',
+      wireOperation: exportName === 'parseAccessTemporal'
+        ? 'access-temporal/parseAccessTemporal'
+        : 'accessTemporalProfileVersion()',
+      bindingRoute,
+      sourceClosure: closure([
+        defaultEntry, 'src/adapters/access-temporal.ts',
+        node ? 'bindings/core/node/src/access-temporal.js' : 'bindings/core/wasm/index.js',
+        node ? 'bindings/core/node/index.js' : 'bindings/core/wasm/src/lib.rs',
+        node ? 'bindings/core/node/src/lib.rs' : 'bindings/core/wasm/index.d.ts',
+        'crates/umf-core/src/access_temporal.rs',
+        'crates/umf-core-wire/src/access_temporal_binding.rs',
+        'tests/rust-core/access-temporal-v4-default-route.test.mjs',
+        'tests/rust-core/access-temporal-v4-runtime.mjs',
+        'docs/helix/02-design/contracts/CONTRACT-075-access-temporal-profile.md',
+        'docs/helix/04-build/evidence/rust-migration/r8-access-temporal/README.md',
+        'docs/helix/04-build/evidence/rust-migration/r8-access-temporal/reference-packet.json',
+      ]),
+      qualificationStatus: 'The exact V4 source selects the guarded Rust access-temporal wrapper. Local fixed-point source-built Node/Bun replay covers the 48 tagged and eight raw-host cases, but current installed Node/browser route replay is unavailable. The logical gap remains open and no declaration is retired.',
+    };
+  }
   const secProjectionOwnerByExport = new Map([
     ['projectSecSubmissions', 'umf_core::domain_pack_sec::project_sec_submissions'],
     ['projectSecCompanyFacts', 'umf_core::domain_pack_sec::project_sec_company_facts'],
@@ -1542,7 +1588,57 @@ export function isDomainPackProfileInspectionRootSelection({ routeId, exportName
     && selection.directExports?.includes(exportName) === true;
 }
 
+export function isExactAccessTemporalV4RootSelection({
+  routeId, exportName, source, declaration = null,
+  declarationName = declaration?.declarationName,
+  declarationKind = declaration?.declarationKind,
+  initializerShape = declaration?.initializerShape,
+  rootText: rootTextOverride = null,
+}) {
+  if (!['package-root-node', 'package-root-browser'].includes(routeId)
+      || !['ACCESS_TEMPORAL_PROFILE', 'parseAccessTemporal'].includes(exportName)) return false;
+  const browser = routeId === 'package-root-browser';
+  const defaultEntry = browser ? 'src/index-browser-v4.ts' : 'src/index-node-v4.ts';
+  const shape = exportName === 'parseAccessTemporal'
+    ? declarationName === exportName && declarationKind === 'FunctionDeclaration' && initializerShape === 'not-applicable'
+    : declarationName === exportName && declarationKind === 'VariableDeclaration' && initializerShape === 'identifier';
+  if (source !== defaultEntry || !shape) return false;
+  const rootText = rootTextOverride ?? read(defaultEntry).toString('utf8');
+  if (rootText.includes("from './adapters/access-temporal'")
+      || !rootText.includes('export const ACCESS_TEMPORAL_PROFILE=ACCESS_TEMPORAL_PROFILE_RUST;')
+      || !rootText.includes('export function parseAccessTemporal(kind:AccessTemporalKind,token:string):AccessTemporal {')
+      || !rootText.includes('return accessTemporal.parseAccessTemporal(kind,token);')) return false;
+  if (browser) {
+    if (!rootText.includes('createAccessTemporalEngine,')
+        || !rootText.includes('ACCESS_TEMPORAL_PROFILE as ACCESS_TEMPORAL_PROFILE_RUST')
+        || !rootText.includes('const accessTemporal=createAccessTemporalEngine(wasmModule);')) return false;
+    const wasm = read('bindings/core/wasm/index.js').toString('utf8');
+    return wasm.includes('typeof module?.executeAccessTemporalWire')
+      && wasm.includes("module.accessTemporalProfileVersion() !== ACCESS_TEMPORAL_PROFILE")
+      && wasm.includes("typeof token !== 'string'")
+      && wasm.includes("typeof kind !== 'string'");
+  }
+  if (!rootText.includes('createAccessTemporalEngine,')
+      || !rootText.includes('ACCESS_TEMPORAL_PROFILE:ACCESS_TEMPORAL_PROFILE_RUST')
+      || !rootText.includes('const accessTemporal=createAccessTemporalEngine();')) return false;
+  const node = read('bindings/core/node/index.js').toString('utf8');
+  const wrapper = read('bindings/core/node/src/access-temporal.js').toString('utf8');
+  return node.includes("typeof addon.executeAccessTemporalWire !== 'function'")
+    && node.includes("addon.accessTemporalProfileVersion() !== ACCESS_TEMPORAL_PROFILE")
+    && wrapper.includes("typeof token !== 'string'")
+    && wrapper.includes("typeof kind !== 'string'");
+}
+
 export function operationMapping(row) {
+  if (['package-root-node', 'package-root-browser'].includes(row.routeId)
+      && ['ACCESS_TEMPORAL_PROFILE', 'parseAccessTemporal'].includes(row.exportName)) {
+    if (!isExactAccessTemporalV4RootSelection({
+      routeId: row.routeId, exportName: row.exportName, source: row.source,
+      declaration: row, declarationName: row.declarationName,
+      declarationKind: row.declarationKind, initializerShape: row.initializerShape,
+    })) return null;
+    return accepted.get(`src/adapters/access-temporal.ts#${row.exportName}`) ?? null;
+  }
   if (['projectSecSubmissions', 'projectSecCompanyFacts'].includes(row.exportName)
       && ['package-root-node', 'package-root-browser'].includes(row.routeId)) {
     const expectedSource = row.routeId === 'package-root-node' ? 'src/index-node-v4.ts' : 'src/index-browser-v4.ts';

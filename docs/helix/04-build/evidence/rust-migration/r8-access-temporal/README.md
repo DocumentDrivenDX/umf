@@ -117,3 +117,33 @@ document extensions, activate a default package route, qualify the browser
 facade as an installed package, or qualify installed package routing. The six R8 ledger rows remain
 unchanged and open pending review of the complete current
 source cohort. This evidence is not route retirement or a release claim.
+
+## V4 source route selection
+
+Node V4 now creates the guarded Rust access-temporal engine from the already
+loaded native binding, and browser V4 creates it from the WASM module already
+loaded during V4 initialization. Their synchronous `parseAccessTemporal` and
+`ACCESS_TEMPORAL_PROFILE` exports use the binding's version check and retain
+the wrapper's primitive-carrier guards, tagged-wire behavior and frozen result.
+The generated `src/index-v4-default.ts` facade is expected to omit these two
+local overrides; `src/index.ts` continues to export the TypeScript reference
+implementation for `./reference`.
+
+The focused source-route test passes 3/3, including a negative control that
+checks the reference entry remains TypeScript. The generated facade is current
+and repository TypeScript checking passes. A local fixed-point `bun run build`
+with zero generated-input transforms produced matching native/WASM assets.
+Its V4 Node bundle then matched all 48 frozen tagged cases and eight raw-host
+refusals on Node 26.12.1 and Bun 1.4.3, with zero proxy traps or accessor
+getters. The replay script is
+`tests/rust-core/access-temporal-v4-runtime.mjs`. This is local source-built
+V4 evidence; installed Node/browser package dispatch and current-source
+installed route replay remain unqualified here. No retirement or release
+claim follows from this source change.
+
+Before the local rebuild, the ignored Node addon lacked
+`executeAccessTemporalWire` and `accessTemporalProfileVersion`; the guard
+failed closed with `RUST_NODE_BINDING_MISSING`. The old ignored WASM package
+also lacked both exports. The fixed-point local build supplied the matching
+Node addon for the source-built V4 replay above. Installed V4 Node/browser
+route replay remains a separate qualification.

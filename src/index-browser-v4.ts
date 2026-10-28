@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createPythonClientRustCandidateV4} from './browser-v4';
 import {initializePythonClientRustDefaultV4} from './access/rust-default-v4';
-import {createCoreModelRootKeyTupleEngine,initializeCoreRecordValuesHostInputWasm,createDefaultSemanticTypeRegistry,createCoreCardinalityHostInputEngine,createCoreRecordTypeEngine,createSecurityLogicEngine,createJavascriptNumericEngine,initializeProtobufDescriptorDocumentWasm,initializeBit128Wasm,initializeTemporalWasm,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError} from '../bindings/core/wasm/index.js';
+import {createCoreModelRootKeyTupleEngine,initializeCoreRecordValuesHostInputWasm,createDefaultSemanticTypeRegistry,createCoreCardinalityHostInputEngine,createCoreRecordTypeEngine,createSecurityLogicEngine,createJavascriptNumericEngine,initializeProtobufDescriptorDocumentWasm,initializeBit128Wasm,initializeTemporalWasm,createAccessTemporalEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,ACCESS_TEMPORAL_PROFILE as ACCESS_TEMPORAL_PROFILE_RUST} from '../bindings/core/wasm/index.js';
 import {CORE_MODEL_RESOURCES} from './access/core-model-resources';
 import {bindCoreCardinalityRust} from './access/rust-cardinality-default';
 import {bindCoreDatasetValuesCompactRust} from './access/rust-dataset-values-compact-default';
@@ -38,12 +38,18 @@ import type {generateDomainPackSchema as DomainPackSchemaReference} from './doma
 import type {generateArtifactCollectionSchema as ArtifactCollectionSchemaReference} from './domain-packs/artifacts';
 import type {generateDomainPackLoaderSchema as DomainPackLoaderSchemaReference} from './domain-packs/loader';
 import type {generateLoaderInventorySchema as LoaderInventorySchemaReference} from './domain-packs/loader-inventory';
+import type {AccessTemporal,AccessTemporalKind} from '../bindings/core/wasm/index.js';
 import {CURRENT_CORE_VERSION,SCALAR_TYPES} from './model/types';
 
 // Module import resolves only after the browser WASM engine is ready. The
 // function exported below remains synchronous and never falls back to TypeScript.
 const generatePythonClient=await initializePythonClientRustDefaultV4(()=>createPythonClientRustCandidateV4());
 const wasmModule=await import('../bindings/core/wasm/pkg/umf_core_wasm.js');
+const accessTemporal=createAccessTemporalEngine(wasmModule);
+export const ACCESS_TEMPORAL_PROFILE=ACCESS_TEMPORAL_PROFILE_RUST;
+export function parseAccessTemporal(kind:AccessTemporalKind,token:string):AccessTemporal {
+  return accessTemporal.parseAccessTemporal(kind,token);
+}
 const loaderSchemaWasmModule=wasmModule as typeof wasmModule & {
   domainPackLoaderSchemaGraphJson:()=>string;
   loaderInventorySchemaGraphJson:()=>string;
