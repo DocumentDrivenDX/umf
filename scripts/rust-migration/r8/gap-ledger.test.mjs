@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
+import { createServer } from 'node:http';
+import { pathToFileURL } from 'node:url';
 import { gzipSync } from 'node:zlib';
 import { cp, mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
@@ -612,7 +614,7 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
   const reference = ledger.rows.filter(row => row.routeId === 'package-reference' && expected.includes(row.exportName));
   assert.equal(reference.length, expected.length);
   assert.ok(reference.every(row => row.sourceSelectedImplementation === null));
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 925);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 921);
   assert.equal(ledger.counts.sourceSelectedRustOverrides, 130 + 2 * 2 + 2 * 2);
   for (const routeId of ['package-root-node', 'package-root-browser']) {
     assert.equal(ledger.counts.executableDefaultRouteGapsByRoute[routeId].rustSelectedSourceDeclarations, 65 + 4);
@@ -817,17 +819,17 @@ test('relationship condition-shape normalization rejects alias, source, kind and
 test('retiring three paired logical names lowers the current default gap count by three only', () => {
   const open = currentGeneratedLedger();
   const names = ['inspectCoreScalarType', 'inspectCoreRecordMembers', 'inspectCoreReferenceLinks'];
-  assert.equal(open.counts.executableDefaultRouteGaps, 925);
+  assert.equal(open.counts.executableDefaultRouteGaps, 921);
   const pairedRows = open.rows.map(row => names.includes(row.exportName) && ['package-root-node', 'package-root-browser'].includes(row.routeId)
     ? { ...row, defaultRouteRetirement: { status: 'retired', evidence: [{ path: `synthetic/${row.routeId}/${row.exportName}.json`, sha256: '9'.repeat(64) }] } }
     : row);
   const summary = summarizeDefaultRouteRetirement(pairedRows);
-  assert.equal(summary.logicalGaps, 922);
-  assert.deepEqual(summary.byRoute['package-root-node'], { open: 922, retired: 3 });
-  assert.deepEqual(summary.byRoute['package-root-browser'], { open: 922, retired: 3 });
-  assert.equal(open.counts.executableDefaultRouteGapsByRoute['package-reference'].retainedReferenceExecutableRows, 922);
+  assert.equal(summary.logicalGaps, 918);
+  assert.deepEqual(summary.byRoute['package-root-node'], { open: 918, retired: 3 });
+  assert.deepEqual(summary.byRoute['package-root-browser'], { open: 918, retired: 3 });
+  assert.equal(open.counts.executableDefaultRouteGapsByRoute['package-reference'].retainedReferenceExecutableRows, 918);
   assert.equal(open.rows.filter(row => row.routeId === 'package-reference' && names.includes(row.exportName) && row.defaultRouteRetirement.status === 'reference-only').length, 3);
-  assert.equal(open.rows.filter(row => row.routeId === 'package-reference' && row.rowKind === 'executable').length, 922);
+  assert.equal(open.rows.filter(row => row.routeId === 'package-reference' && row.rowKind === 'executable').length, 918);
 });
 
 test('five JavaScript numeric root bindings retain exact Rust ownership without retiring gaps', () => {
@@ -864,7 +866,7 @@ test('five JavaScript numeric root bindings retain exact Rust ownership without 
       assert.throws(() => buildLedger({ ...args, inventory: { symbols: changed } }), /(declaration multiplicity differs|Node\/browser export names differ)/);
     }
   }
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 925);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 921);
 });
 
 test('securityNot normalizes only the exact V4 binding and TypeScript reference declaration shapes', () => {
@@ -976,8 +978,8 @@ test('Schema Properties source selections keep exact CONTRACT-049 mappings separ
     assert.equal(reference.implementationStatus, 'TypeScript reference implementation remains explicit');
   }
   assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 86);
-  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 839);
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 925);
+  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 835);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 921);
   const aggregate = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/aggregate.json', 'utf8'));
   const aggregateNames = Object.values(aggregate.families).flatMap(family => family.operations);
   assert.equal(Object.keys(aggregate.families).length, 5);
@@ -1085,7 +1087,7 @@ test('TableSpec Cardinality projection schema pins its direct Field base and pac
   assert.ok(row.resourceOwnership.routes.some(route => route.id === 'sdk-archive'
     && route.artifactPath === 'package/dist/spec/core/cardinality-tablespec-projection.schema.json'));
   assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 56);
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 925);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 921);
 });
 
 test('SQL Server Field and Cardinality projection schemas pin exact writer chains', () => {
@@ -1139,7 +1141,7 @@ test('SQL Server Field and Cardinality projection schemas pin exact writer chain
   const field = ledger.rows.find(item => item.source === 'spec/core/field-sqlserver-projection.schema.json');
   assert.equal(field.resourceOwnership.authority.status, 'generated-authority-known');
   assert.deepEqual(field.resourceOwnership.authority.generatorInputs, ['spec/core/field-postgresql-projection.schema.json']);
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 925);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 921);
   assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 56);
 });
 
@@ -1252,8 +1254,71 @@ test('five model vocabulary exports record generated-data versus executable disp
   assert.equal(supplement.generatedProvenance.modelSha256, JSON.parse(readFileSync('spec/metamodel/generated/manifest.json')).provenance.modelSha256);
   assert.equal(supplement.generatedProvenance.generatedCoreModelSha256,
     JSON.parse(readFileSync('spec/metamodel/generated/manifest.json')).outputs['src/generated/core-model.ts'].sha256);
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 925);
-  assert.equal(ledger.counts.executableRows, 925);
+  assert.equal(ledger.counts.immutableGeneratedDataRows, 4);
+  assert.equal(ledger.counts.routeImmutableGeneratedDataRows, 12);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 921);
+  assert.equal(ledger.counts.executableRows, 921);
+  const rows = ledger.rows.filter(row => ['SCALAR_TYPES','ELEMENT_KINDS','NULLABILITIES','CARDINALITIES'].includes(row.exportName));
+  assert.equal(rows.length, 12);
+  assert.ok(rows.every(row => row.rowKind === 'immutable-generated-data' && row.source === 'src/model/types.ts'));
+  const controls = ['UmfError','Registry','SecurityAuthorityGuard','SecurityReadRegistration','scalarTypesForVersion'];
+  for (const name of controls) {
+    const controlRows = ledger.rows.filter(row => row.exportName === name);
+    assert.equal(controlRows.length, 3, `${name} route census`);
+    assert.ok(controlRows.every(row => row.rowKind === 'executable'), `${name} remains executable`);
+    if (name !== 'scalarTypesForVersion') assert.ok(controlRows.every(row => row.declarationKind === 'ClassDeclaration'), `${name} stays a behavior-bearing class`);
+  }
+});
+
+test('four source-pinned vocabulary aliases are immutable data across Node, Bun, browser and reference routes', async () => {
+  const names = ['SCALAR_TYPES', 'ELEMENT_KINDS', 'NULLABILITIES', 'CARDINALITIES'];
+  const expectedValues = [['boolean','integer','decimal','float','string','binary','date','time','timestamp','bits128','uuid'],
+    ['field','record','group'], ['required','absent-allowed','unspecified'], ['one','array','map','unspecified']];
+  const dir = await mkdtemp(path.join(os.tmpdir(), 'umf-r8-data-aliases-'));
+  let server;
+  let browser;
+  try {
+    const nodeBundle = path.join(dir, 'node.mjs');
+    const referenceBundle = path.join(dir, 'reference.mjs');
+    const browserBundle = path.join(dir, 'browser.js');
+    execFileSync('bun', ['build', 'src/index-node-v4.ts', '--target=node', '--outfile', nodeBundle], { cwd: process.cwd(), stdio: 'pipe' });
+    execFileSync('bun', ['build', 'src/index.ts', '--target=node', '--outfile', referenceBundle], { cwd: process.cwd(), stdio: 'pipe' });
+    execFileSync('bun', ['build', 'src/model/types.ts', '--target=browser', '--outfile', browserBundle], { cwd: process.cwd(), stdio: 'pipe' });
+    await cp('dist/umf_core_node.node', path.join(dir, 'umf_core_node.node'));
+    await cp('dist/umf_core_wasm_bg.wasm', path.join(dir, 'umf_core_wasm_bg.wasm'));
+    const observation = entry => `const m=await import(${JSON.stringify(pathToFileURL(entry).href)}); const names=${JSON.stringify(names)}; const values=names.map(n=>m[n]); const frozen=values.map(Object.isFrozen); const refused=values.map(v=>{try{v.push('__mutation__');return false}catch{return true}}); console.log(JSON.stringify({values,frozen,refused}));`;
+    const node = JSON.parse(execFileSync('node', ['--input-type=module', '-e', observation(nodeBundle)], { cwd: process.cwd(), encoding: 'utf8' }));
+    const reference = JSON.parse(execFileSync('node', ['--input-type=module', '-e', observation(referenceBundle)], { cwd: process.cwd(), encoding: 'utf8' }));
+    const bun = JSON.parse(execFileSync('bun', ['-e', `import * as m from './src/index-node-v4.ts'; const names=${JSON.stringify(names)}; const values=names.map(n=>m[n]); console.log(JSON.stringify({values,frozen:values.map(Object.isFrozen),refused:values.map(v=>{try{v.push('__mutation__');return false}catch{return true}})}));`], { cwd: process.cwd(), encoding: 'utf8' }));
+    const { chromium } = await import('playwright');
+    server = createServer((request, response) => {
+      if (request.url === '/') {
+        response.setHeader('content-type', 'text/html');
+        response.end(`<script type="module">import * as m from '/browser.js'; const names=${JSON.stringify(names)}; const values=names.map(n=>m[n]); window.observation={values,frozen:values.map(Object.isFrozen),refused:values.map(v=>{try{v.push('__mutation__');return false}catch{return true}})};</script>`);
+      } else {
+        const basename = path.basename(request.url ?? '');
+        const file = path.join(dir, basename);
+        if (!existsSync(file)) { response.statusCode = 404; response.end(); return; }
+        response.setHeader('content-type', basename.endsWith('.wasm') ? 'application/wasm' : 'text/javascript');
+        response.end(readFileSync(file));
+      }
+    });
+    await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+    browser = await chromium.launch({ headless: true, ...(process.env.UMF_CHROMIUM_PATH ? { executablePath: process.env.UMF_CHROMIUM_PATH } : {}) });
+    const page = await browser.newPage();
+    await page.goto(`http://127.0.0.1:${server.address().port}/`);
+    await page.waitForFunction(() => Boolean(window.observation));
+    const chromiumResult = await page.evaluate(() => window.observation);
+    for (const [host, result] of Object.entries({ node, bun, chromium: chromiumResult, reference })) {
+      assert.deepEqual(result.values, expectedValues, `${host} values`);
+      assert.deepEqual(result.frozen, [true, true, true, true], `${host} frozen values`);
+      assert.deepEqual(result.refused, [true, true, true, true], `${host} rejects mutation`);
+    }
+  } finally {
+    await browser?.close();
+    if (server?.listening) await new Promise(resolve => server.close(resolve));
+    await rm(dir, { recursive: true, force: true });
+  }
 });
 
 test('Parquet metadata schema outputs pin their exact multi-output writer and direct input closure', () => {
@@ -1291,7 +1356,7 @@ test('Parquet metadata schema outputs pin their exact multi-output writer and di
       && route.artifactPath === `package/dist/${resource}`));
   }
   assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 56);
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 925);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 921);
 });
 
 test('Parquet metadata multi-output --check rejects each stale output without rewriting either', async () => {
@@ -2949,9 +3014,9 @@ test('security truth and composition map only their four reviewed opt-in operati
 
 test('securityAnd/securityOr V4 bindings normalize exactly and carry source-only replay evidence', () => {
   const ledger = currentGeneratedLedger();
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 925);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 921);
   assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 86);
-  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 839);
+  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 835);
   for (const name of ['securityAnd', 'securityOr']) {
     const rustSymbol = name === 'securityAnd' ? 'security_and' : 'security_or';
     for (const routeId of ['package-root-node', 'package-root-browser']) {
@@ -3514,7 +3579,7 @@ test('five schema graph public routes retain source selection while prior instal
     assert.equal(reference.sourceSelectedImplementation, null);
     assert.equal(reference.defaultRouteRetirement.status, 'reference-only');
   }
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 925);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 921);
   assert.equal(ledger.counts.executableDefaultRouteRetirementsByRoute['package-root-node'], 0);
   assert.equal(ledger.counts.executableDefaultRouteRetirementsByRoute['package-root-browser'], 0);
 });
@@ -3589,7 +3654,7 @@ test('domain-pack loader inspector selection requires its exact V4 wrapper shape
   assert.equal(ledger.counts.sourceSelectedRustOverrides, 130 + 2 * 2 + 2 * 2);
   assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-node'].rustSelectedSourceDeclarations, 65 + 4);
   assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-browser'].rustSelectedSourceDeclarations, 65 + 4);
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 925);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 921);
 });
 
 test('domain-pack profile Rust selection requires the exact V4 binding and typed reference predecessor', () => {

@@ -67,8 +67,9 @@ synchronous `generatePythonClient` and retains TypeScript under `./reference`.
 The prior fixed-point private SDK archives qualify only their captured subsets
 and hosts. The current condition-aware ledger records 1,123 declarations in
 each default root, 1,120 in `./reference`, 69 source-selected declarations per
-default root, 925 logical default-route gaps, zero retired, 86 accepted opt-in
-Rust mappings, and 839 unmapped names. Three root-only SEC/Protobuf Rust
+default root, 921 logical executable default-route gaps, zero retired, 86 accepted opt-in
+Rust mappings, and 835 unmapped executable names. Four exact immutable
+generated-data aliases are classified separately across 12 route rows. Three root-only SEC/Protobuf Rust
 candidate exports account for the difference from the reference route; they
 remain opt-in and add no retirement. The historical five-schema default-route
 packet was verified for its captured private Darwin arm64 Node/Bun/Chromium
@@ -78,17 +79,19 @@ new current-source packet. Its receipt SHA-256 is
 current inventory SHA-256 is
 `805e711ce3a5720624fa66803bf766444b4f67f97f4d02d747f739c675168cc4` and the
 condition-aware ledger SHA-256 is
-`05e9f288223b13333c7607e0490c94fc28cf973857f7b1d8ff9fe575db5863f7`. Linux,
+`201e0f691d4e1192d9744f30b67774187869fa9bf08cf15b18bc68bf369848c9`. Linux,
 complete production SDK parity, the full port, and release remain unqualified.
 The ledger's `executable` label is a broad public-runtime category: independent
 AST review of the 1,120-name reference root found 750 function declarations,
 167 variable declarations, five class declarations and 198 JSON resource
-exports. Constants, aliases and structured public values among those variables
-still require compatibility/authority review, but should not be mistaken for
-unported algorithms solely from the current label. Keep all 925 default-root
-non-JSON runtime declarations in the retirement denominator until an evidence-backed
-per-row semantic/host/data disposition is reviewed; do not subtract a category
-by naming heuristic.
+exports. The [exact four-export vocabulary classification](evidence/rust-migration/r8-symbol-inventory/immutable-generated-vocabulary-20261028/README.md)
+removes only frozen generated-data aliases from the executable denominator;
+the version-gated function and behavior-bearing classes remain executable.
+Other constants, aliases and structured public values still need individual
+compatibility and authority review. Keep all 921 remaining executable names
+in the retirement denominator until an evidence-backed per-row semantic,
+host and data disposition is reviewed; do not subtract a category by naming
+heuristic.
 Draft [PR #61](https://github.com/DocumentDrivenDX/umf/pull/61) remains open;
 no complete-port merge, tag or release has been cut from this worktree. The active goal remains all R4–R8
 gates, independent review, current-main integration and a tested release.
@@ -9426,7 +9429,16 @@ respectively. Installed Node 26.12.1, Bun 1.4.3, and Chromium 153 each pass
 all 14 CONTRACT-062 cases on both platforms, including exact Rust dispatch
 and TypeScript reference-route controls. The `/3` validator accepts only the
 Node and browser `securityNot` rows as retired for these pinned cohorts,
-leaving 924 evidence-scoped logical gaps; its four tamper controls fail as
-required. The checked default ledger still has 925 open gaps and zero retired
-because no archive evidence is supplied. Hosted CI, broader security parity,
-and release qualification remain open.
+leaving 924 evidence-scoped logical gaps at the pinned `df7fbaa2` source cut;
+its four tamper controls fail as required. At that cut the checked default
+ledger had 925 open gaps and zero retired because no archive evidence was
+supplied. The subsequent four-data-alias classification makes the current
+checked count 921 open executable gaps and zero retired; it does not extend
+the earlier two-cohort retirement packet to the changed source closure.
+Hosted CI, broader security parity, and release qualification remain open.
+
+The scoped Node and WASM `editJsonSchemaNode` wrapper tests now cover crossed
+pointer, document, and replacement faults with exact first-error and host
+effect order. The focused wrapper suite passes 27/27. The default V4 route
+remains TypeScript; the changed test source requires a new installed SDK
+source-coherent packet before this Rust candidate can advance.

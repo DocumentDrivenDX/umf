@@ -1,7 +1,7 @@
 import {describe, expect, test} from 'bun:test';
 import {createJsonSchemaOperations as createNodeOperations, jsonSchemaFailureError, UmfError} from '../src/json-schema.js';
 import {createJsonSchemaOperations as createWasmOperations} from '../../wasm/src/json-schema.js';
-import {getJsonSchemaNode as sourceGetJsonSchemaNode} from '../../../../src/adapters/json-schema/index.ts';
+import {editJsonSchemaNode as sourceEditJsonSchemaNode, getJsonSchemaNode as sourceGetJsonSchemaNode} from '../../../../src/adapters/json-schema/index.ts';
 
 for (const [host, factory] of [['Node', createNodeOperations], ['WASM', createWasmOperations]]) {
   describe(`${host} JSON Schema wrapper shapes`, () => {
@@ -153,6 +153,49 @@ for (const [host, factory] of [['Node', createNodeOperations], ['WASM', createWa
         expect(trace).toEqual(['/']);
         expect(dispatches).toBe(operation === 'getJsonSchemaNode' ? 2 : 1);
       }
+    });
+
+    test('edit keeps pointer failure ahead of invalid document and replacement effects', () => {
+      const events = [];
+      const sentinel = new TypeError('pointer.startsWith sentinel');
+      const document = new Proxy({}, {ownKeys() { events.push('document.ownKeys'); return []; }});
+      const pointer = Object.defineProperty({}, 'startsWith', {get() { events.push('pointer.startsWith'); throw sentinel; }});
+      let expected;
+      try { sourceEditJsonSchemaNode(document, pointer, '{'); } catch (error) { expected = error; }
+      expect(expected).toBe(sentinel);
+      expect(events).toEqual(['pointer.startsWith']);
+
+      events.length = 0;
+      let dispatches = 0;
+      let preflights = 0;
+      const api = factory(() => { dispatches++; throw new Error('edit dispatch must not run'); }, () => { preflights++; return {}; });
+      let actual;
+      try { api.editJsonSchemaNode(document, pointer, '{'); } catch (error) { actual = error; }
+      expect(actual).toBe(sentinel);
+      expect(events).toEqual(['pointer.startsWith']);
+      expect(preflights).toBe(0);
+      expect(dispatches).toBe(0);
+    });
+
+    test('edit returns the source-equivalent pointer TypeError before touching crossed invalid inputs', () => {
+      const events = [];
+      const document = new Proxy({}, {ownKeys() { events.push('document.ownKeys'); return []; }});
+      const pointer = 7;
+      let expected;
+      try { sourceEditJsonSchemaNode(document, pointer, '{'); } catch (error) { expected = error; }
+      expect(expected).toBeInstanceOf(TypeError);
+      expect(events).toEqual([]);
+
+      let dispatches = 0;
+      let preflights = 0;
+      const api = factory(() => { dispatches++; return true; }, () => { preflights++; return {}; });
+      let actual;
+      try { api.editJsonSchemaNode(document, pointer, '{'); } catch (error) { actual = error; }
+      expect(actual).toBeInstanceOf(TypeError);
+      expect(actual.message).toBe(expected.message);
+      expect(events).toEqual([]);
+      expect(preflights).toBe(0);
+      expect(dispatches).toBe(0);
     });
   });
 }

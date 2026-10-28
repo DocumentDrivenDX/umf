@@ -17,6 +17,13 @@ const digest = value => crypto.createHash('sha256').update(value).digest('hex');
 const read = file => fs.readFileSync(path.join(root, file));
 const json = file => JSON.parse(read(file));
 
+// These four exports are exact aliases of frozen generated vocabulary data.
+// Keep the allow-list tied to declaration identity and source bytes: syntax
+// kind alone must never classify an exported variable or class as inert.
+const immutableGeneratedDataAliases = new Map([
+  'SCALAR_TYPES', 'ELEMENT_KINDS', 'NULLABILITIES', 'CARDINALITIES',
+].map(name => [name, { source: 'src/model/types.ts', sourceSha256: '6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c' }]));
+
 // These are explicit source/API-to-Rust mappings supported by reviewed opt-in
 // core evidence. No name similarity or candidate-family heuristic adds rows.
 const accepted = new Map();
@@ -2576,6 +2583,11 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
   }
   return rootRows.map((row, index) => {
     const inert = row.source.startsWith('spec/') && row.source.endsWith('.json');
+    const immutableDataPin = immutableGeneratedDataAliases.get(row.exportName);
+    if (immutableDataPin && (row.source !== immutableDataPin.source || row.declarationKind !== 'VariableDeclaration' || row.sourceSha256 !== immutableDataPin.sourceSha256)) {
+      throw new Error(`source-pinned generated-data alias drift: ${row.source}#${row.exportName}`);
+    }
+    const immutableGeneratedData = immutableDataPin !== undefined;
     const hybridRawTableBindingHelper = isExactRawTableBindingV4Helper(row);
     const hybridRelationshipConsumer = isExactRelationshipConsumerV4Binding(row);
     const mapping = operationMapping(row);
@@ -2724,7 +2736,7 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
       line: row.line,
       sourceSha256: row.sourceSha256,
       ownerFamily: ownerFamily(row.source),
-      rowKind: inert ? 'generated-inert-json' : 'executable',
+      rowKind: inert ? 'generated-inert-json' : immutableGeneratedData ? 'immutable-generated-data' : 'executable',
       defaultRoute: routeDetails.defaultRoute,
       acceptedRustOperation: mapping ? mapping.rustOwner : null,
       acceptedOperationEvidence: mapping ? acceptedOperationEvidence(mapping, routeDetails.routeStatus) : null,
@@ -3024,6 +3036,7 @@ export function buildLedger({ inventory, packageJson, packageBytes = Buffer.from
       declarations: routeRows.length,
       executableDeclarations: routeRows.filter(row => row.rowKind === 'executable').length,
       inertJsonDeclarations: routeRows.filter(row => row.rowKind === 'generated-inert-json').length,
+      immutableGeneratedDataDeclarations: routeRows.filter(row => row.rowKind === 'immutable-generated-data').length,
       rustSelectedSourceDeclarations: routeRows.filter(row => row.sourceSelectedImplementation !== null).length,
       executableDefaultRouteGaps: routeId === 'package-reference' ? null : routeRows.filter(row => row.rowKind === 'executable' && row.defaultRouteRetirement.status !== 'retired').length,
       retiredExecutableDeclarations: routeId === 'package-reference' ? 0 : routeRows.filter(row => row.rowKind === 'executable' && row.defaultRouteRetirement.status === 'retired').length,
@@ -3032,9 +3045,10 @@ export function buildLedger({ inventory, packageJson, packageBytes = Buffer.from
   }));
   const byFamily = new Map();
   for (const row of rows) {
-    const entry = byFamily.get(row.ownerFamily) ?? { ownerFamily: row.ownerFamily, total: 0, executable: 0, inertJson: 0, mappedOptInRust: 0, unportedExecutable: 0, rows: [] };
+    const entry = byFamily.get(row.ownerFamily) ?? { ownerFamily: row.ownerFamily, total: 0, executable: 0, inertJson: 0, immutableGeneratedData: 0, mappedOptInRust: 0, unportedExecutable: 0, rows: [] };
     entry.total++;
     if (row.rowKind === 'generated-inert-json') entry.inertJson++;
+    else if (row.rowKind === 'immutable-generated-data') entry.immutableGeneratedData++;
     else { entry.executable++; if (row.acceptedRustOperation) entry.mappedOptInRust++; else entry.unportedExecutable++; }
     entry.rows.push(row.id);
     byFamily.set(row.ownerFamily, entry);
@@ -3051,6 +3065,8 @@ export function buildLedger({ inventory, packageJson, packageBytes = Buffer.from
     routeExecutableRows: rows.filter(row => row.rowKind === 'executable').length,
     inertJsonRows: logical.filter(row => row.rowKind === 'generated-inert-json').length,
     routeInertJsonRows: rows.filter(row => row.rowKind === 'generated-inert-json').length,
+    immutableGeneratedDataRows: logical.filter(row => row.rowKind === 'immutable-generated-data').length,
+    routeImmutableGeneratedDataRows: rows.filter(row => row.rowKind === 'immutable-generated-data').length,
     executableWithAcceptedOptInRustOperation: logical.filter(row => row.rowKind === 'executable' && row.acceptedRustOperation).length,
     executableWithoutAcceptedRustMapping: logical.filter(row => row.rowKind === 'executable' && !row.acceptedRustOperation).length,
     executableDefaultRouteGaps: retirementSummary.logicalGaps,
@@ -3080,8 +3096,8 @@ export function buildLedger({ inventory, packageJson, packageBytes = Buffer.from
     counts,
     runtimeExportDispositionSupplement,
     routeStatus: {
-      'package-root-node': `default Node route; the current V4 entry directly defines ${routeCounts['package-root-node'].rustSelectedSourceDeclarations} Rust-owned exports and inherits ${routeCounts['package-root-node'].executableDeclarations - routeCounts['package-root-node'].rustSelectedSourceDeclarations} executable TypeScript declarations. Temporal V4 exports have prior private Node/Bun/Chromium replay with recorded source-cohort limits; Core relationship V4 exports have private fixed-point Bun/Node/Chromium 11-case replay. The five schema graph exports and domain-pack loader inspector have separate current-source packet gates; passing packets establish bounded private route evidence only. The two domain-pack profile exports select Rust through a shared wire operation and have a separate current-source packet gate. These cohorts do not establish release qualification. All 925 unique logical executable declarations remain retirement gaps; ./reference is separately TypeScript.`,
-      'package-root-browser': `default browser route; the current V4 entry directly defines ${routeCounts['package-root-browser'].rustSelectedSourceDeclarations} Rust-owned exports and inherits ${routeCounts['package-root-browser'].executableDeclarations - routeCounts['package-root-browser'].rustSelectedSourceDeclarations} executable TypeScript declarations. Temporal V4 exports have prior private Node/Bun/Chromium replay with recorded source-cohort limits; Core relationship V4 exports have private fixed-point Bun/Node/Chromium 11-case replay. The five schema graph exports and domain-pack loader inspector have separate current-source packet gates; passing packets establish bounded private route evidence only. The two domain-pack profile exports select Rust through a shared wire operation and have a separate current-source packet gate. These cohorts do not establish release qualification. All 925 unique logical executable declarations remain retirement gaps; ./reference is separately TypeScript.`,
+      'package-root-node': `default Node route; the current V4 entry directly defines ${routeCounts['package-root-node'].rustSelectedSourceDeclarations} Rust-owned exports and inherits ${routeCounts['package-root-node'].executableDeclarations - routeCounts['package-root-node'].rustSelectedSourceDeclarations} executable TypeScript declarations. Temporal V4 exports have prior private Node/Bun/Chromium replay with recorded source-cohort limits; Core relationship V4 exports have private fixed-point Bun/Node/Chromium 11-case replay. The five schema graph exports and domain-pack loader inspector have separate current-source packet gates; passing packets establish bounded private route evidence only. The two domain-pack profile exports select Rust through a shared wire operation and have a separate current-source packet gate. These cohorts do not establish release qualification. All ${retirementSummary.logicalGaps} unique logical executable declarations remain retirement gaps; ./reference is separately TypeScript.`,
+      'package-root-browser': `default browser route; the current V4 entry directly defines ${routeCounts['package-root-browser'].rustSelectedSourceDeclarations} Rust-owned exports and inherits ${routeCounts['package-root-browser'].executableDeclarations - routeCounts['package-root-browser'].rustSelectedSourceDeclarations} executable TypeScript declarations. Temporal V4 exports have prior private Node/Bun/Chromium replay with recorded source-cohort limits; Core relationship V4 exports have private fixed-point Bun/Node/Chromium 11-case replay. The five schema graph exports and domain-pack loader inspector have separate current-source packet gates; passing packets establish bounded private route evidence only. The two domain-pack profile exports select Rust through a shared wire operation and have a separate current-source packet gate. These cohorts do not establish release qualification. All ${retirementSummary.logicalGaps} unique logical executable declarations remain retirement gaps; ./reference is separately TypeScript.`,
       'package-reference': 'explicit TypeScript reference route; its declarations remain TypeScript',
     },
     nextPortClusters: [
@@ -3174,7 +3190,7 @@ function buildRuntimeExportDispositionSupplement() {
   const manifest = json('spec/metamodel/generated/manifest.json');
   return {
     format: 'umf.r8.runtime-export-disposition-supplement/1',
-    scope: 'Per-export source authority and runtime classification for five src/model/types.ts exports. Supplemental classification does not alter executable row kinds, Rust route mappings, logical retirement gaps or installed-release qualification.',
+    scope: 'Per-export source authority and runtime classification for five src/model/types.ts exports. Four exact frozen-data aliases are excluded from executable-gap accounting; this does not establish Rust routing, retirement or installed-release qualification.',
     generatedProvenance: {
       modelSha256: manifest.provenance.modelSha256,
       compilerSha256: manifest.provenance.compilerSha256,
@@ -3183,7 +3199,7 @@ function buildRuntimeExportDispositionSupplement() {
     },
     exports,
     limits: [
-      'The four vocabulary exports are frozen data values generated from the metamodel; they are not Rust runtime bindings or proof that consumers can be retired.',
+      'The four vocabulary exports are frozen data values generated from the metamodel and excluded from executable-gap accounting; they are not Rust runtime bindings or proof that consumers can be retired.',
       'scalarTypesForVersion is executable TypeScript behavior with current-version gating, even though it consumes generated vocabulary data.',
       'All five remain TypeScript on Node, browser, and ./reference source routes; exact installed bytes and default-route retirement are unproven.',
     ],

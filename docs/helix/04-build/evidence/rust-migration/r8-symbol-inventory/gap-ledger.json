@@ -9,13 +9,15 @@
     "packageRootRows": 3366,
     "routeDeclarationRows": 3366,
     "uniqueExportNames": 1123,
-    "executableRows": 925,
-    "routeExecutableRows": 2772,
+    "executableRows": 921,
+    "routeExecutableRows": 2760,
     "inertJsonRows": 198,
     "routeInertJsonRows": 594,
+    "immutableGeneratedDataRows": 4,
+    "routeImmutableGeneratedDataRows": 12,
     "executableWithAcceptedOptInRustOperation": 86,
-    "executableWithoutAcceptedRustMapping": 839,
-    "executableDefaultRouteGaps": 925,
+    "executableWithoutAcceptedRustMapping": 835,
+    "executableDefaultRouteGaps": 921,
     "executableDefaultRouteGapDefinition": "Unique logical executable export names for which at least one default Node/browser route remains open. A logical name is retired only when both default-root rows have an explicit retired disposition with evidence. ./reference is reported separately and may remain TypeScript.",
     "executableDefaultRouteRetirementsByRoute": {
       "package-root-node": 0,
@@ -24,30 +26,33 @@
     "executableDefaultRouteGapsByRoute": {
       "package-root-node": {
         "declarations": 1123,
-        "executableDeclarations": 925,
+        "executableDeclarations": 921,
         "inertJsonDeclarations": 198,
+        "immutableGeneratedDataDeclarations": 4,
         "rustSelectedSourceDeclarations": 69,
-        "executableDefaultRouteGaps": 925,
+        "executableDefaultRouteGaps": 921,
         "retiredExecutableDeclarations": 0,
         "retainedReferenceExecutableRows": 0
       },
       "package-root-browser": {
         "declarations": 1123,
-        "executableDeclarations": 925,
+        "executableDeclarations": 921,
         "inertJsonDeclarations": 198,
+        "immutableGeneratedDataDeclarations": 4,
         "rustSelectedSourceDeclarations": 69,
-        "executableDefaultRouteGaps": 925,
+        "executableDefaultRouteGaps": 921,
         "retiredExecutableDeclarations": 0,
         "retainedReferenceExecutableRows": 0
       },
       "package-reference": {
         "declarations": 1120,
-        "executableDeclarations": 922,
+        "executableDeclarations": 918,
         "inertJsonDeclarations": 198,
+        "immutableGeneratedDataDeclarations": 4,
         "rustSelectedSourceDeclarations": 0,
         "executableDefaultRouteGaps": null,
         "retiredExecutableDeclarations": 0,
-        "retainedReferenceExecutableRows": 922
+        "retainedReferenceExecutableRows": 918
       }
     },
     "sourceSelectedRustOverrides": 138,
@@ -75,7 +80,7 @@
   },
   "runtimeExportDispositionSupplement": {
     "format": "umf.r8.runtime-export-disposition-supplement/1",
-    "scope": "Per-export source authority and runtime classification for five src/model/types.ts exports. Supplemental classification does not alter executable row kinds, Rust route mappings, logical retirement gaps or installed-release qualification.",
+    "scope": "Per-export source authority and runtime classification for five src/model/types.ts exports. Four exact frozen-data aliases are excluded from executable-gap accounting; this does not establish Rust routing, retirement or installed-release qualification.",
     "generatedProvenance": {
       "modelSha256": "35b72a7f6aa86c98398192e5b67d5841d77127743c671c742dd871a7baee58ca",
       "compilerSha256": "d182e859eb24e66eb541e9ec281205e79fd1735ba6df025d6632880662680123",
@@ -103,7 +108,7 @@
         },
         {
           "path": "spec/metamodel/generated/manifest.json",
-          "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+          "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
         },
         {
           "path": "spec/metamodel/umf.yaml",
@@ -314,14 +319,14 @@
       }
     ],
     "limits": [
-      "The four vocabulary exports are frozen data values generated from the metamodel; they are not Rust runtime bindings or proof that consumers can be retired.",
+      "The four vocabulary exports are frozen data values generated from the metamodel and excluded from executable-gap accounting; they are not Rust runtime bindings or proof that consumers can be retired.",
       "scalarTypesForVersion is executable TypeScript behavior with current-version gating, even though it consumes generated vocabulary data.",
       "All five remain TypeScript on Node, browser, and ./reference source routes; exact installed bytes and default-route retirement are unproven."
     ]
   },
   "routeStatus": {
-    "package-root-node": "default Node route; the current V4 entry directly defines 69 Rust-owned exports and inherits 856 executable TypeScript declarations. Temporal V4 exports have prior private Node/Bun/Chromium replay with recorded source-cohort limits; Core relationship V4 exports have private fixed-point Bun/Node/Chromium 11-case replay. The five schema graph exports and domain-pack loader inspector have separate current-source packet gates; passing packets establish bounded private route evidence only. The two domain-pack profile exports select Rust through a shared wire operation and have a separate current-source packet gate. These cohorts do not establish release qualification. All 925 unique logical executable declarations remain retirement gaps; ./reference is separately TypeScript.",
-    "package-root-browser": "default browser route; the current V4 entry directly defines 69 Rust-owned exports and inherits 856 executable TypeScript declarations. Temporal V4 exports have prior private Node/Bun/Chromium replay with recorded source-cohort limits; Core relationship V4 exports have private fixed-point Bun/Node/Chromium 11-case replay. The five schema graph exports and domain-pack loader inspector have separate current-source packet gates; passing packets establish bounded private route evidence only. The two domain-pack profile exports select Rust through a shared wire operation and have a separate current-source packet gate. These cohorts do not establish release qualification. All 925 unique logical executable declarations remain retirement gaps; ./reference is separately TypeScript.",
+    "package-root-node": "default Node route; the current V4 entry directly defines 69 Rust-owned exports and inherits 852 executable TypeScript declarations. Temporal V4 exports have prior private Node/Bun/Chromium replay with recorded source-cohort limits; Core relationship V4 exports have private fixed-point Bun/Node/Chromium 11-case replay. The five schema graph exports and domain-pack loader inspector have separate current-source packet gates; passing packets establish bounded private route evidence only. The two domain-pack profile exports select Rust through a shared wire operation and have a separate current-source packet gate. These cohorts do not establish release qualification. All 921 unique logical executable declarations remain retirement gaps; ./reference is separately TypeScript.",
+    "package-root-browser": "default browser route; the current V4 entry directly defines 69 Rust-owned exports and inherits 852 executable TypeScript declarations. Temporal V4 exports have prior private Node/Bun/Chromium replay with recorded source-cohort limits; Core relationship V4 exports have private fixed-point Bun/Node/Chromium 11-case replay. The five schema graph exports and domain-pack loader inspector have separate current-source packet gates; passing packets establish bounded private route evidence only. The two domain-pack profile exports select Rust through a shared wire operation and have a separate current-source packet gate. These cohorts do not establish release qualification. All 921 unique logical executable declarations remain retirement gaps; ./reference is separately TypeScript.",
     "package-reference": "explicit TypeScript reference route; its declarations remain TypeScript"
   },
   "nextPortClusters": [
@@ -368,6 +373,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -384,6 +390,7 @@
       "total": 87,
       "executable": 87,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 9,
       "unportedExecutable": 78,
       "rows": [
@@ -481,6 +488,7 @@
       "total": 33,
       "executable": 33,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 33,
       "rows": [
@@ -524,6 +532,7 @@
       "total": 78,
       "executable": 78,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 78,
       "rows": [
@@ -612,6 +621,7 @@
       "total": 111,
       "executable": 111,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 111,
       "rows": [
@@ -733,6 +743,7 @@
       "total": 24,
       "executable": 24,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 24,
       "rows": [
@@ -767,6 +778,7 @@
       "total": 27,
       "executable": 27,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 27,
       "rows": [
@@ -804,6 +816,7 @@
       "total": 5,
       "executable": 5,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 2,
       "unportedExecutable": 3,
       "rows": [
@@ -819,6 +832,7 @@
       "total": 63,
       "executable": 63,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 63,
       "rows": [
@@ -892,6 +906,7 @@
       "total": 5,
       "executable": 5,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 5,
       "unportedExecutable": 0,
       "rows": [
@@ -907,6 +922,7 @@
       "total": 36,
       "executable": 36,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 36,
       "rows": [
@@ -953,6 +969,7 @@
       "total": 45,
       "executable": 45,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 45,
       "rows": [
@@ -1008,6 +1025,7 @@
       "total": 42,
       "executable": 42,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 42,
       "rows": [
@@ -1060,6 +1078,7 @@
       "total": 33,
       "executable": 33,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 33,
       "rows": [
@@ -1103,6 +1122,7 @@
       "total": 45,
       "executable": 45,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 45,
       "rows": [
@@ -1158,6 +1178,7 @@
       "total": 42,
       "executable": 42,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 42,
       "rows": [
@@ -1210,6 +1231,7 @@
       "total": 84,
       "executable": 84,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 84,
       "rows": [
@@ -1304,6 +1326,7 @@
       "total": 84,
       "executable": 84,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 84,
       "rows": [
@@ -1398,6 +1421,7 @@
       "total": 39,
       "executable": 39,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 39,
       "rows": [
@@ -1447,6 +1471,7 @@
       "total": 45,
       "executable": 45,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 45,
       "rows": [
@@ -1502,6 +1527,7 @@
       "total": 8,
       "executable": 8,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 2,
       "unportedExecutable": 6,
       "rows": [
@@ -1520,6 +1546,7 @@
       "total": 39,
       "executable": 39,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 39,
       "rows": [
@@ -1569,6 +1596,7 @@
       "total": 51,
       "executable": 51,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 51,
       "rows": [
@@ -1630,6 +1658,7 @@
       "total": 27,
       "executable": 27,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 27,
       "rows": [
@@ -1667,6 +1696,7 @@
       "total": 30,
       "executable": 30,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 30,
       "rows": [
@@ -1707,6 +1737,7 @@
       "total": 33,
       "executable": 33,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 33,
       "rows": [
@@ -1750,6 +1781,7 @@
       "total": 33,
       "executable": 33,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 33,
       "rows": [
@@ -1793,6 +1825,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -1809,6 +1842,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -1825,6 +1859,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -1841,6 +1876,7 @@
       "total": 15,
       "executable": 15,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 15,
       "rows": [
@@ -1866,6 +1902,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -1882,6 +1919,7 @@
       "total": 15,
       "executable": 15,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 15,
       "rows": [
@@ -1907,6 +1945,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -1923,6 +1962,7 @@
       "total": 15,
       "executable": 15,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 15,
       "rows": [
@@ -1948,6 +1988,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -1964,6 +2005,7 @@
       "total": 15,
       "executable": 15,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 15,
       "rows": [
@@ -1989,6 +2031,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2005,6 +2048,7 @@
       "total": 15,
       "executable": 15,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 15,
       "rows": [
@@ -2030,6 +2074,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2046,6 +2091,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2062,6 +2108,7 @@
       "total": 15,
       "executable": 15,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 15,
       "rows": [
@@ -2087,6 +2134,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2103,6 +2151,7 @@
       "total": 15,
       "executable": 15,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 15,
       "rows": [
@@ -2128,6 +2177,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2144,6 +2194,7 @@
       "total": 15,
       "executable": 15,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 15,
       "rows": [
@@ -2169,6 +2220,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2185,6 +2237,7 @@
       "total": 15,
       "executable": 15,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 15,
       "rows": [
@@ -2210,6 +2263,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2226,6 +2280,7 @@
       "total": 15,
       "executable": 15,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 15,
       "rows": [
@@ -2251,6 +2306,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2267,6 +2323,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2283,6 +2340,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2299,6 +2357,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2315,6 +2374,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2331,6 +2391,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2347,6 +2408,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2363,6 +2425,7 @@
       "total": 15,
       "executable": 15,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 15,
       "rows": [
@@ -2388,6 +2451,7 @@
       "total": 9,
       "executable": 9,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 9,
       "rows": [
@@ -2407,6 +2471,7 @@
       "total": 15,
       "executable": 15,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 15,
       "rows": [
@@ -2432,6 +2497,7 @@
       "total": 9,
       "executable": 9,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 9,
       "rows": [
@@ -2451,6 +2517,7 @@
       "total": 15,
       "executable": 15,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 15,
       "rows": [
@@ -2476,6 +2543,7 @@
       "total": 9,
       "executable": 9,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 9,
       "rows": [
@@ -2495,6 +2563,7 @@
       "total": 15,
       "executable": 15,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 15,
       "rows": [
@@ -2520,6 +2589,7 @@
       "total": 9,
       "executable": 9,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 9,
       "rows": [
@@ -2539,6 +2609,7 @@
       "total": 15,
       "executable": 15,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 15,
       "rows": [
@@ -2564,6 +2635,7 @@
       "total": 9,
       "executable": 9,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 9,
       "rows": [
@@ -2583,6 +2655,7 @@
       "total": 15,
       "executable": 15,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 15,
       "rows": [
@@ -2608,6 +2681,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2624,6 +2698,7 @@
       "total": 15,
       "executable": 15,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 15,
       "rows": [
@@ -2649,6 +2724,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2665,6 +2741,7 @@
       "total": 15,
       "executable": 15,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 15,
       "rows": [
@@ -2690,6 +2767,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2706,6 +2784,7 @@
       "total": 15,
       "executable": 15,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 15,
       "rows": [
@@ -2731,6 +2810,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2747,6 +2827,7 @@
       "total": 15,
       "executable": 15,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 15,
       "rows": [
@@ -2772,6 +2853,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2788,6 +2870,7 @@
       "total": 9,
       "executable": 9,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 9,
       "rows": [
@@ -2807,6 +2890,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2823,6 +2907,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2839,6 +2924,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2855,6 +2941,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2871,6 +2958,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2887,6 +2975,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2903,6 +2992,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2919,6 +3009,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2935,6 +3026,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2951,6 +3043,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2967,6 +3060,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2983,6 +3077,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -2999,6 +3094,7 @@
       "total": 15,
       "executable": 15,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 15,
       "rows": [
@@ -3024,6 +3120,7 @@
       "total": 4,
       "executable": 4,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 4,
       "rows": [
@@ -3038,6 +3135,7 @@
       "total": 4,
       "executable": 4,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 4,
       "rows": [
@@ -3052,6 +3150,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -3068,6 +3167,7 @@
       "total": 15,
       "executable": 15,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 15,
       "rows": [
@@ -3093,6 +3193,7 @@
       "total": 4,
       "executable": 4,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 4,
       "rows": [
@@ -3107,6 +3208,7 @@
       "total": 4,
       "executable": 4,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 4,
       "rows": [
@@ -3121,6 +3223,7 @@
       "total": 15,
       "executable": 15,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 15,
       "rows": [
@@ -3146,6 +3249,7 @@
       "total": 15,
       "executable": 15,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 15,
       "rows": [
@@ -3171,6 +3275,7 @@
       "total": 5,
       "executable": 5,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 5,
       "rows": [
@@ -3186,6 +3291,7 @@
       "total": 15,
       "executable": 15,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 15,
       "rows": [
@@ -3211,6 +3317,7 @@
       "total": 4,
       "executable": 4,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 4,
       "rows": [
@@ -3225,6 +3332,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -3241,6 +3349,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -3257,6 +3366,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -3273,6 +3383,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -3289,6 +3400,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -3305,6 +3417,7 @@
       "total": 1,
       "executable": 1,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 1,
       "rows": [
@@ -3316,6 +3429,7 @@
       "total": 1,
       "executable": 1,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 1,
       "rows": [
@@ -3327,6 +3441,7 @@
       "total": 2,
       "executable": 2,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 2,
       "rows": [
@@ -3339,6 +3454,7 @@
       "total": 12,
       "executable": 12,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 12,
       "rows": [
@@ -3361,6 +3477,7 @@
       "total": 2,
       "executable": 2,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 2,
       "rows": [
@@ -3373,6 +3490,7 @@
       "total": 2,
       "executable": 2,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 2,
       "rows": [
@@ -3385,6 +3503,7 @@
       "total": 1,
       "executable": 1,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 1,
       "rows": [
@@ -3396,6 +3515,7 @@
       "total": 1,
       "executable": 1,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 1,
       "rows": [
@@ -3407,6 +3527,7 @@
       "total": 63,
       "executable": 63,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 63,
       "rows": [
@@ -3480,6 +3601,7 @@
       "total": 61,
       "executable": 61,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 61,
       "rows": [
@@ -3551,6 +3673,7 @@
       "total": 24,
       "executable": 24,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 24,
       "rows": [
@@ -3585,6 +3708,7 @@
       "total": 24,
       "executable": 24,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 24,
       "rows": [
@@ -3619,6 +3743,7 @@
       "total": 123,
       "executable": 123,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 21,
       "unportedExecutable": 102,
       "rows": [
@@ -3752,6 +3877,7 @@
       "total": 17,
       "executable": 17,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 6,
       "unportedExecutable": 11,
       "rows": [
@@ -3779,6 +3905,7 @@
       "total": 12,
       "executable": 12,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 12,
       "rows": [
@@ -3801,6 +3928,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 3,
       "rows": [
@@ -3814,6 +3942,7 @@
       "total": 11,
       "executable": 11,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 8,
       "unportedExecutable": 3,
       "rows": [
@@ -3835,6 +3964,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 3,
       "rows": [
@@ -3848,6 +3978,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 3,
       "unportedExecutable": 0,
       "rows": [
@@ -3861,6 +3992,7 @@
       "total": 2,
       "executable": 2,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 2,
       "unportedExecutable": 0,
       "rows": [
@@ -3873,6 +4005,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 6,
       "unportedExecutable": 0,
       "rows": [
@@ -3889,6 +4022,7 @@
       "total": 2,
       "executable": 2,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 2,
       "unportedExecutable": 0,
       "rows": [
@@ -3901,6 +4035,7 @@
       "total": 9,
       "executable": 9,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 9,
       "rows": [
@@ -3920,6 +4055,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -3936,6 +4072,7 @@
       "total": 12,
       "executable": 12,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 12,
       "rows": [
@@ -3958,6 +4095,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 3,
       "rows": [
@@ -3971,6 +4109,7 @@
       "total": 4,
       "executable": 4,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 4,
       "unportedExecutable": 0,
       "rows": [
@@ -3985,6 +4124,7 @@
       "total": 9,
       "executable": 9,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 9,
       "unportedExecutable": 0,
       "rows": [
@@ -4004,6 +4144,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -4020,6 +4161,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 3,
       "unportedExecutable": 0,
       "rows": [
@@ -4033,6 +4175,7 @@
       "total": 8,
       "executable": 8,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 8,
       "unportedExecutable": 0,
       "rows": [
@@ -4051,6 +4194,7 @@
       "total": 5,
       "executable": 5,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 5,
       "unportedExecutable": 0,
       "rows": [
@@ -4066,6 +4210,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 3,
       "unportedExecutable": 3,
       "rows": [
@@ -4082,6 +4227,7 @@
       "total": 9,
       "executable": 9,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 9,
       "unportedExecutable": 0,
       "rows": [
@@ -4101,6 +4247,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 3,
       "rows": [
@@ -4114,6 +4261,7 @@
       "total": 1,
       "executable": 1,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 1,
       "unportedExecutable": 0,
       "rows": [
@@ -4125,6 +4273,7 @@
       "total": 2,
       "executable": 2,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 2,
       "unportedExecutable": 0,
       "rows": [
@@ -4137,6 +4286,7 @@
       "total": 1,
       "executable": 1,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 1,
       "unportedExecutable": 0,
       "rows": [
@@ -4148,6 +4298,7 @@
       "total": 1,
       "executable": 1,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 1,
       "unportedExecutable": 0,
       "rows": [
@@ -4159,6 +4310,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 3,
       "unportedExecutable": 0,
       "rows": [
@@ -4172,6 +4324,7 @@
       "total": 4,
       "executable": 4,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 4,
       "unportedExecutable": 0,
       "rows": [
@@ -4186,6 +4339,7 @@
       "total": 1,
       "executable": 1,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 1,
       "unportedExecutable": 0,
       "rows": [
@@ -4197,6 +4351,7 @@
       "total": 4,
       "executable": 4,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 4,
       "unportedExecutable": 0,
       "rows": [
@@ -4211,6 +4366,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 3,
       "rows": [
@@ -4224,6 +4380,7 @@
       "total": 5,
       "executable": 5,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 5,
       "unportedExecutable": 0,
       "rows": [
@@ -4239,6 +4396,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 6,
       "unportedExecutable": 0,
       "rows": [
@@ -4253,10 +4411,11 @@
     {
       "ownerFamily": "model:types",
       "total": 15,
-      "executable": 15,
+      "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 12,
       "mappedOptInRust": 0,
-      "unportedExecutable": 15,
+      "unportedExecutable": 3,
       "rows": [
         "package-reference-0069",
         "package-reference-0254",
@@ -4280,6 +4439,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 3,
       "unportedExecutable": 0,
       "rows": [
@@ -4293,6 +4453,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 3,
       "rows": [
@@ -4306,6 +4467,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 3,
       "rows": [
@@ -4319,6 +4481,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 3,
       "rows": [
@@ -4332,6 +4495,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 3,
       "rows": [
@@ -4345,6 +4509,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 3,
       "rows": [
@@ -4358,6 +4523,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 3,
       "rows": [
@@ -4371,6 +4537,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 3,
       "rows": [
@@ -4384,6 +4551,7 @@
       "total": 30,
       "executable": 30,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 30,
       "rows": [
@@ -4424,6 +4592,7 @@
       "total": 9,
       "executable": 9,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 9,
       "rows": [
@@ -4443,6 +4612,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -4459,6 +4629,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -4475,6 +4646,7 @@
       "total": 15,
       "executable": 15,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 15,
       "rows": [
@@ -4500,6 +4672,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -4516,6 +4689,7 @@
       "total": 21,
       "executable": 21,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 21,
       "rows": [
@@ -4547,6 +4721,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 3,
       "rows": [
@@ -4560,6 +4735,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 3,
       "rows": [
@@ -4573,6 +4749,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 3,
       "rows": [
@@ -4586,6 +4763,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 3,
       "rows": [
@@ -4599,6 +4777,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 3,
       "rows": [
@@ -4612,6 +4791,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 3,
       "rows": [
@@ -4625,6 +4805,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -4641,6 +4822,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 3,
       "rows": [
@@ -4654,6 +4836,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 3,
       "rows": [
@@ -4667,6 +4850,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 3,
       "rows": [
@@ -4680,6 +4864,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 3,
       "rows": [
@@ -4693,6 +4878,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 3,
       "rows": [
@@ -4706,6 +4892,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 3,
       "rows": [
@@ -4719,6 +4906,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 3,
       "rows": [
@@ -4732,6 +4920,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 3,
       "rows": [
@@ -4745,6 +4934,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -4758,6 +4948,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -4771,6 +4962,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -4784,6 +4976,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -4797,6 +4990,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -4810,6 +5004,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -4823,6 +5018,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -4836,6 +5032,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -4849,6 +5046,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -4862,6 +5060,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -4875,6 +5074,7 @@
       "total": 6,
       "executable": 0,
       "inertJson": 6,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -4891,6 +5091,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -4904,6 +5105,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -4917,6 +5119,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -4930,6 +5133,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -4943,6 +5147,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -4956,6 +5161,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -4969,6 +5175,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -4982,6 +5189,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -4995,6 +5203,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5008,6 +5217,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5021,6 +5231,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5034,6 +5245,7 @@
       "total": 6,
       "executable": 0,
       "inertJson": 6,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5050,6 +5262,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5063,6 +5276,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5076,6 +5290,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5089,6 +5304,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5102,6 +5318,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5115,6 +5332,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5128,6 +5346,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5141,6 +5360,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5154,6 +5374,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5167,6 +5388,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5180,6 +5402,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5193,6 +5416,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5206,6 +5430,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5219,6 +5444,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5232,6 +5458,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5245,6 +5472,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5258,6 +5486,7 @@
       "total": 6,
       "executable": 0,
       "inertJson": 6,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5274,6 +5503,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5287,6 +5517,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5300,6 +5531,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5313,6 +5545,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5326,6 +5559,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5339,6 +5573,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5352,6 +5587,7 @@
       "total": 6,
       "executable": 0,
       "inertJson": 6,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5368,6 +5604,7 @@
       "total": 6,
       "executable": 0,
       "inertJson": 6,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5384,6 +5621,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5397,6 +5635,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5410,6 +5649,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5423,6 +5663,7 @@
       "total": 6,
       "executable": 0,
       "inertJson": 6,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5439,6 +5680,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5452,6 +5694,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5465,6 +5708,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5478,6 +5722,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5491,6 +5736,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5504,6 +5750,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5517,6 +5764,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5530,6 +5778,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5543,6 +5792,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5556,6 +5806,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5569,6 +5820,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5582,6 +5834,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5595,6 +5848,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5608,6 +5862,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5621,6 +5876,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5634,6 +5890,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5647,6 +5904,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5660,6 +5918,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5673,6 +5932,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5686,6 +5946,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5699,6 +5960,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5712,6 +5974,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5725,6 +5988,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5738,6 +6002,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5751,6 +6016,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5764,6 +6030,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5777,6 +6044,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5790,6 +6058,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5803,6 +6072,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5816,6 +6086,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5829,6 +6100,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5842,6 +6114,7 @@
       "total": 6,
       "executable": 0,
       "inertJson": 6,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5858,6 +6131,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5871,6 +6145,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5884,6 +6159,7 @@
       "total": 6,
       "executable": 0,
       "inertJson": 6,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5900,6 +6176,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5913,6 +6190,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5926,6 +6204,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5939,6 +6218,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5952,6 +6232,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5965,6 +6246,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5978,6 +6260,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -5991,6 +6274,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6004,6 +6288,7 @@
       "total": 6,
       "executable": 0,
       "inertJson": 6,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6020,6 +6305,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6033,6 +6319,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6046,6 +6333,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6059,6 +6347,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6072,6 +6361,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6085,6 +6375,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6098,6 +6389,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6111,6 +6403,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6124,6 +6417,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6137,6 +6431,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6150,6 +6445,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6163,6 +6459,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6176,6 +6473,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6189,6 +6487,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6202,6 +6501,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6215,6 +6515,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6228,6 +6529,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6241,6 +6543,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6254,6 +6557,7 @@
       "total": 9,
       "executable": 0,
       "inertJson": 9,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6273,6 +6577,7 @@
       "total": 9,
       "executable": 0,
       "inertJson": 9,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6292,6 +6597,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6305,6 +6611,7 @@
       "total": 6,
       "executable": 0,
       "inertJson": 6,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6321,6 +6628,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6334,6 +6642,7 @@
       "total": 18,
       "executable": 0,
       "inertJson": 18,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6362,6 +6671,7 @@
       "total": 6,
       "executable": 0,
       "inertJson": 6,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6378,6 +6688,7 @@
       "total": 6,
       "executable": 0,
       "inertJson": 6,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6394,6 +6705,7 @@
       "total": 15,
       "executable": 0,
       "inertJson": 15,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6419,6 +6731,7 @@
       "total": 51,
       "executable": 0,
       "inertJson": 51,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6480,6 +6793,7 @@
       "total": 6,
       "executable": 0,
       "inertJson": 6,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6496,6 +6810,7 @@
       "total": 9,
       "executable": 0,
       "inertJson": 9,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6515,6 +6830,7 @@
       "total": 18,
       "executable": 0,
       "inertJson": 18,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6543,6 +6859,7 @@
       "total": 6,
       "executable": 0,
       "inertJson": 6,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6559,6 +6876,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6572,6 +6890,7 @@
       "total": 12,
       "executable": 0,
       "inertJson": 12,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6594,6 +6913,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6607,6 +6927,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6620,6 +6941,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6633,6 +6955,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6646,6 +6969,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6659,6 +6983,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6672,6 +6997,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6685,6 +7011,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6698,6 +7025,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6711,6 +7039,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6724,6 +7053,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6737,6 +7067,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6750,6 +7081,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6763,6 +7095,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6776,6 +7109,7 @@
       "total": 3,
       "executable": 0,
       "inertJson": 3,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 0,
       "rows": [
@@ -6789,6 +7123,7 @@
       "total": 1,
       "executable": 1,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 1,
       "rows": [
@@ -6800,6 +7135,7 @@
       "total": 102,
       "executable": 102,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 58,
       "unportedExecutable": 44,
       "rows": [
@@ -6912,6 +7248,7 @@
       "total": 102,
       "executable": 102,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 58,
       "unportedExecutable": 44,
       "rows": [
@@ -7024,6 +7361,7 @@
       "total": 3,
       "executable": 3,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 3,
       "rows": [
@@ -7037,6 +7375,7 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 6,
       "rows": [
@@ -7053,6 +7392,7 @@
       "total": 12,
       "executable": 12,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 12,
       "rows": [
@@ -7075,6 +7415,7 @@
       "total": 9,
       "executable": 9,
       "inertJson": 0,
+      "immutableGeneratedData": 0,
       "mappedOptInRust": 0,
       "unportedExecutable": 9,
       "rows": [
@@ -12040,7 +12381,7 @@
       "line": 15,
       "sourceSha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c",
       "ownerFamily": "model:types",
-      "rowKind": "executable",
+      "rowKind": "immutable-generated-data",
       "defaultRoute": "explicit TypeScript reference declaration",
       "acceptedRustOperation": null,
       "acceptedOperationEvidence": null,
@@ -15138,7 +15479,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -15275,7 +15616,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -15349,7 +15690,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -15486,7 +15827,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -16539,7 +16880,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -16688,7 +17029,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -16762,7 +17103,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -16911,7 +17252,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -17482,7 +17823,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -17615,7 +17956,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -17693,7 +18034,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -17826,7 +18167,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -18484,7 +18825,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -18833,7 +19174,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -18907,7 +19248,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -19256,7 +19597,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -19537,7 +19878,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -19686,7 +20027,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -19760,7 +20101,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -19909,7 +20250,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -20339,7 +20680,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -20460,7 +20801,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -20538,7 +20879,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -20659,7 +21000,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -21475,7 +21816,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -22413,7 +22754,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -22487,7 +22828,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -23425,7 +23766,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -23633,7 +23974,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -24143,7 +24484,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -31206,7 +31547,7 @@
       "line": 11,
       "sourceSha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c",
       "ownerFamily": "model:types",
-      "rowKind": "executable",
+      "rowKind": "immutable-generated-data",
       "defaultRoute": "explicit TypeScript reference declaration",
       "acceptedRustOperation": null,
       "acceptedOperationEvidence": null,
@@ -33563,7 +33904,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -34033,7 +34374,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -45131,7 +45472,7 @@
       "line": 13,
       "sourceSha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c",
       "ownerFamily": "model:types",
-      "rowKind": "executable",
+      "rowKind": "immutable-generated-data",
       "defaultRoute": "explicit TypeScript reference declaration",
       "acceptedRustOperation": null,
       "acceptedOperationEvidence": null,
@@ -52250,7 +52591,7 @@
         "focusedTestClosure": [
           {
             "path": "bindings/core/node/tests/json-schema-wrapper.test.js",
-            "sha256": "12d0534f2c57a9e81d763662d814787ffa20b121b56e0db51a2e0deb0e9da2e4"
+            "sha256": "8a55eb456d9c3eecd691718f2e9927a3be3372358467443cb3f84ada6b9e0d12"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_json_schema_wire.rs",
@@ -65709,7 +66050,7 @@
       "line": 8,
       "sourceSha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c",
       "ownerFamily": "model:types",
-      "rowKind": "executable",
+      "rowKind": "immutable-generated-data",
       "defaultRoute": "explicit TypeScript reference declaration",
       "acceptedRustOperation": null,
       "acceptedOperationEvidence": null,
@@ -82037,7 +82378,7 @@
       "line": 15,
       "sourceSha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c",
       "ownerFamily": "model:types",
-      "rowKind": "executable",
+      "rowKind": "immutable-generated-data",
       "defaultRoute": "browser package root declaration",
       "acceptedRustOperation": null,
       "acceptedOperationEvidence": null,
@@ -85240,7 +85581,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -85381,7 +85722,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -85455,7 +85796,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -85596,7 +85937,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -86669,7 +87010,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -86822,7 +87163,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -86896,7 +87237,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -87049,7 +87390,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -87632,7 +87973,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -87769,7 +88110,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -87847,7 +88188,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -87984,7 +88325,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -88654,7 +88995,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -89007,7 +89348,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -89081,7 +89422,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -89434,7 +89775,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -89719,7 +90060,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -89872,7 +90213,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -89946,7 +90287,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -90099,7 +90440,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -90537,7 +90878,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -90662,7 +91003,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -90740,7 +91081,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -90865,7 +91206,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -91697,7 +92038,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -92639,7 +92980,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -92713,7 +93054,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -93655,7 +93996,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -93867,7 +94208,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -94381,7 +94722,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -102000,7 +102341,7 @@
       "line": 11,
       "sourceSha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c",
       "ownerFamily": "model:types",
-      "rowKind": "executable",
+      "rowKind": "immutable-generated-data",
       "defaultRoute": "browser package root declaration",
       "acceptedRustOperation": null,
       "acceptedOperationEvidence": null,
@@ -104397,7 +104738,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -104871,7 +105212,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -117592,7 +117933,7 @@
       "line": 13,
       "sourceSha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c",
       "ownerFamily": "model:types",
-      "rowKind": "executable",
+      "rowKind": "immutable-generated-data",
       "defaultRoute": "browser package root declaration",
       "acceptedRustOperation": null,
       "acceptedOperationEvidence": null,
@@ -125028,7 +125369,7 @@
         "focusedTestClosure": [
           {
             "path": "bindings/core/node/tests/json-schema-wrapper.test.js",
-            "sha256": "12d0534f2c57a9e81d763662d814787ffa20b121b56e0db51a2e0deb0e9da2e4"
+            "sha256": "8a55eb456d9c3eecd691718f2e9927a3be3372358467443cb3f84ada6b9e0d12"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_json_schema_wire.rs",
@@ -139071,7 +139412,7 @@
       "line": 8,
       "sourceSha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c",
       "ownerFamily": "model:types",
-      "rowKind": "executable",
+      "rowKind": "immutable-generated-data",
       "defaultRoute": "browser package root declaration",
       "acceptedRustOperation": null,
       "acceptedOperationEvidence": null,
@@ -149046,7 +149387,7 @@
           },
           {
             "path": "bindings/core/node/tests/json-schema-wrapper.test.js",
-            "sha256": "12d0534f2c57a9e81d763662d814787ffa20b121b56e0db51a2e0deb0e9da2e4"
+            "sha256": "8a55eb456d9c3eecd691718f2e9927a3be3372358467443cb3f84ada6b9e0d12"
           },
           {
             "path": "bindings/core/node/tests/json-value-serialization-profile.test.js",
@@ -154522,7 +154863,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           },
           {
             "path": "spec/metamodel/generated/python-shapes.json",
@@ -155870,7 +156211,7 @@
           },
           {
             "path": "src/extensions/actions/plan-identity.ts",
-            "sha256": "bbeedc4d92fa5ceed2c90851312ca957cdb4b3889e18b3c8505d14e2956fee34"
+            "sha256": "930f786a879ccaaca3f2af9a4577ccbc8101c94347a11b91c5c066c8016aac2a"
           },
           {
             "path": "src/extensions/actions/plan-structure.ts",
@@ -165003,7 +165344,7 @@
       "line": 15,
       "sourceSha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c",
       "ownerFamily": "model:types",
-      "rowKind": "executable",
+      "rowKind": "immutable-generated-data",
       "defaultRoute": "Node package root declaration",
       "acceptedRustOperation": null,
       "acceptedOperationEvidence": null,
@@ -168206,7 +168547,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -168347,7 +168688,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -168421,7 +168762,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -168562,7 +168903,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -169635,7 +169976,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -169788,7 +170129,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -169862,7 +170203,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -170015,7 +170356,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -170598,7 +170939,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -170735,7 +171076,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -170813,7 +171154,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -170950,7 +171291,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -171620,7 +171961,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -171973,7 +172314,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -172047,7 +172388,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -172400,7 +172741,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -172685,7 +173026,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -172838,7 +173179,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -172912,7 +173253,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -173065,7 +173406,7 @@
         "evidenceClosure": [
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -173503,7 +173844,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -173628,7 +173969,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -173706,7 +174047,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -173831,7 +174172,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -174663,7 +175004,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -175605,7 +175946,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -175679,7 +176020,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -176621,7 +176962,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -176833,7 +177174,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -177347,7 +177688,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -184966,7 +185307,7 @@
       "line": 11,
       "sourceSha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c",
       "ownerFamily": "model:types",
-      "rowKind": "executable",
+      "rowKind": "immutable-generated-data",
       "defaultRoute": "Node package root declaration",
       "acceptedRustOperation": null,
       "acceptedOperationEvidence": null,
@@ -187363,7 +187704,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+              "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
             }
           ]
         },
@@ -187837,7 +188178,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -200558,7 +200899,7 @@
       "line": 13,
       "sourceSha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c",
       "ownerFamily": "model:types",
-      "rowKind": "executable",
+      "rowKind": "immutable-generated-data",
       "defaultRoute": "Node package root declaration",
       "acceptedRustOperation": null,
       "acceptedOperationEvidence": null,
@@ -207994,7 +208335,7 @@
         "focusedTestClosure": [
           {
             "path": "bindings/core/node/tests/json-schema-wrapper.test.js",
-            "sha256": "12d0534f2c57a9e81d763662d814787ffa20b121b56e0db51a2e0deb0e9da2e4"
+            "sha256": "8a55eb456d9c3eecd691718f2e9927a3be3372358467443cb3f84ada6b9e0d12"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_json_schema_wire.rs",
@@ -222037,7 +222378,7 @@
       "line": 8,
       "sourceSha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c",
       "ownerFamily": "model:types",
-      "rowKind": "executable",
+      "rowKind": "immutable-generated-data",
       "defaultRoute": "Node package root declaration",
       "acceptedRustOperation": null,
       "acceptedOperationEvidence": null,
@@ -232012,7 +232353,7 @@
           },
           {
             "path": "bindings/core/node/tests/json-schema-wrapper.test.js",
-            "sha256": "12d0534f2c57a9e81d763662d814787ffa20b121b56e0db51a2e0deb0e9da2e4"
+            "sha256": "8a55eb456d9c3eecd691718f2e9927a3be3372358467443cb3f84ada6b9e0d12"
           },
           {
             "path": "bindings/core/node/tests/json-value-serialization-profile.test.js",
@@ -237488,7 +237829,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "2f18bd92c744ef76db7f37efb0bd880fd30301e5a724be94e8c9e2cf205c5a13"
+            "sha256": "e13d008bc1fcd1441676dab5057bf485e8c887957d569067a1dab46b45988063"
           },
           {
             "path": "spec/metamodel/generated/python-shapes.json",
@@ -238836,7 +239177,7 @@
           },
           {
             "path": "src/extensions/actions/plan-identity.ts",
-            "sha256": "bbeedc4d92fa5ceed2c90851312ca957cdb4b3889e18b3c8505d14e2956fee34"
+            "sha256": "930f786a879ccaaca3f2af9a4577ccbc8101c94347a11b91c5c066c8016aac2a"
           },
           {
             "path": "src/extensions/actions/plan-structure.ts",
@@ -254803,7 +255144,7 @@
       },
       {
         "source": "scripts/rust-migration/r8/gap-ledger.mjs",
-        "sourceSha256": "9a342e4098dc32bd867f77c12aee135509749068a2406c4446bdd0ad3a82bc67",
+        "sourceSha256": "9e17eca9fa102394107bddde52e6b172f8ac4cde517033cc63ab44800f21f054",
         "packageScriptEntrypoints": [],
         "activity": "package-entrypoint-reachability-unresolved",
         "role": "support-tool",
@@ -254811,7 +255152,7 @@
       },
       {
         "source": "scripts/rust-migration/r8/gap-ledger.test.mjs",
-        "sourceSha256": "15bed3cc242e4720d3626750f68ddc11bb3723a73b5e2ad77c9ec6a7ce8426fd",
+        "sourceSha256": "c8c828e435ba6de66925611b01c8ffa54bda0e9b96d81df16826cd66312281a3",
         "packageScriptEntrypoints": [],
         "activity": "package-entrypoint-reachability-unresolved",
         "role": "support-tool",
