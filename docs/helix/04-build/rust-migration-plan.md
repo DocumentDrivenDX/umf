@@ -9411,3 +9411,22 @@ now freezes selection, errors, and ordered artifact, identity, platform, and
 parameter-model observations around the matcher without changing the
 duplicate-name policy. No default Python route or R5 ownership claim changes
 at this checkpoint.
+
+### R8 source-coherent `securityNot` retirement replay — 2026-10-28
+
+The [Darwin arm64](evidence/rust-migration/r8-security-not-current-darwin-20261028-df7fbaa2/README.md)
+and [Docker-emulated Linux x86_64](evidence/rust-migration/r8-security-not-current-linux-20261028-df7fbaa2/README.md)
+SDK archives were built from the same immutable `df7fbaa2` source snapshot.
+Both have fixed-point source closure
+`6ac79efee9c97b0534378f058b330a0d2f073b0fd6c37ed643219078848969d3`
+over 3,639 inputs with zero transforms. Their archive SHA-256 values are
+`2c33a74ff8c1a77d689eb32a6b6676f01bfc356bc39f98efbefb5f9efc035494`
+and `76edb6c40500498067dd0c1b478001f1c07165e3df51c55941463d608674ef8e`,
+respectively. Installed Node 26.12.1, Bun 1.4.3, and Chromium 153 each pass
+all 14 CONTRACT-062 cases on both platforms, including exact Rust dispatch
+and TypeScript reference-route controls. The `/3` validator accepts only the
+Node and browser `securityNot` rows as retired for these pinned cohorts,
+leaving 924 evidence-scoped logical gaps; its four tamper controls fail as
+required. The checked default ledger still has 925 open gaps and zero retired
+because no archive evidence is supplied. Hosted CI, broader security parity,
+and release qualification remain open.

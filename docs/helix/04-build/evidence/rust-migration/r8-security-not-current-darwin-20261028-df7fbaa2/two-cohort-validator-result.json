@@ -1,0 +1,203 @@
+{
+  "format": "umf.r8.default-route-retirement-validation-result/1",
+  "status": "pass",
+  "validatorCommand": "node scripts/rust-migration/r8/gap-ledger.mjs --stdout --default-route-retirement-evidence docs/helix/04-build/evidence/rust-migration/r8-security-not-current-darwin-20261028-df7fbaa2/two-cohort-validator-input.json",
+  "validatedSourceCommit": "df7fbaa2ae3727f4b0d9e704cc5dedab154c9700",
+  "counts": {
+    "packageRootRows": 3366,
+    "routeDeclarationRows": 3366,
+    "uniqueExportNames": 1123,
+    "executableRows": 925,
+    "routeExecutableRows": 2772,
+    "inertJsonRows": 198,
+    "routeInertJsonRows": 594,
+    "executableWithAcceptedOptInRustOperation": 86,
+    "executableWithoutAcceptedRustMapping": 839,
+    "executableDefaultRouteGaps": 924,
+    "executableDefaultRouteGapDefinition": "Unique logical executable export names for which at least one default Node/browser route remains open. A logical name is retired only when both default-root rows have an explicit retired disposition with evidence. ./reference is reported separately and may remain TypeScript.",
+    "executableDefaultRouteRetirementsByRoute": {
+      "package-root-node": 1,
+      "package-root-browser": 1
+    },
+    "executableDefaultRouteGapsByRoute": {
+      "package-root-node": {
+        "declarations": 1123,
+        "executableDeclarations": 925,
+        "inertJsonDeclarations": 198,
+        "rustSelectedSourceDeclarations": 69,
+        "executableDefaultRouteGaps": 924,
+        "retiredExecutableDeclarations": 1,
+        "retainedReferenceExecutableRows": 0
+      },
+      "package-root-browser": {
+        "declarations": 1123,
+        "executableDeclarations": 925,
+        "inertJsonDeclarations": 198,
+        "rustSelectedSourceDeclarations": 69,
+        "executableDefaultRouteGaps": 924,
+        "retiredExecutableDeclarations": 1,
+        "retainedReferenceExecutableRows": 0
+      },
+      "package-reference": {
+        "declarations": 1120,
+        "executableDeclarations": 922,
+        "inertJsonDeclarations": 198,
+        "rustSelectedSourceDeclarations": 0,
+        "executableDefaultRouteGaps": null,
+        "retiredExecutableDeclarations": 0,
+        "retainedReferenceExecutableRows": 922
+      }
+    },
+    "sourceSelectedRustOverrides": 138,
+    "bindingRoutesProven": 5,
+    "sourceSelectedRustOverridesDefinition": "Count of Node/browser declaration rows whose export is selected by the exact V4 root entry and has an exact Rust ownership mapping in this ledger. Imported implementation sources are recorded explicitly where applicable. The current entry declaration census is reported by route; source selection does not remove any logical retirement gap. Private route receipts are bounded cohort observations, not release qualification.",
+    "bindingRoutesProvenDefinition": "Count of unique logical executable names with a route proven by the gated current-source R8 fixed-point cohort. Historical/source-pinned receipts remain visible in per-route evidence but do not contribute to this count or prove current-source parity. This is not complete host parity, declaration retirement or release qualification.",
+    "ownerFamilies": 336,
+    "adapterOwnershipRows": 26,
+    "adapterOwnershipByStatus": {
+      "accepted-opt-in-subset": 4,
+      "candidate-core": 12,
+      "partial-host-boundary": 2,
+      "unported": 3,
+      "data-or-constant": 5
+    },
+    "resourceExportAliases": 198,
+    "routeResourceExportAliases": 594,
+    "uniqueResourceFiles": 189,
+    "resourceAuthorityByStatus": {
+      "generated-authority-known": 56,
+      "authored-authority-known": 49,
+      "candidate-generated": 88,
+      "authority-unresolved": 5
+    }
+  },
+  "securityNotRows": [
+    {
+      "routeId": "package-reference",
+      "status": "reference-only"
+    },
+    {
+      "routeId": "package-root-browser",
+      "status": "retired"
+    },
+    {
+      "routeId": "package-root-node",
+      "status": "retired"
+    }
+  ],
+  "defaultLedgerWithoutEvidenceCounts": {
+    "packageRootRows": 3366,
+    "routeDeclarationRows": 3366,
+    "uniqueExportNames": 1123,
+    "executableRows": 925,
+    "routeExecutableRows": 2772,
+    "inertJsonRows": 198,
+    "routeInertJsonRows": 594,
+    "executableWithAcceptedOptInRustOperation": 86,
+    "executableWithoutAcceptedRustMapping": 839,
+    "executableDefaultRouteGaps": 925,
+    "executableDefaultRouteGapDefinition": "Unique logical executable export names for which at least one default Node/browser route remains open. A logical name is retired only when both default-root rows have an explicit retired disposition with evidence. ./reference is reported separately and may remain TypeScript.",
+    "executableDefaultRouteRetirementsByRoute": {
+      "package-root-node": 0,
+      "package-root-browser": 0
+    },
+    "executableDefaultRouteGapsByRoute": {
+      "package-root-node": {
+        "declarations": 1123,
+        "executableDeclarations": 925,
+        "inertJsonDeclarations": 198,
+        "rustSelectedSourceDeclarations": 69,
+        "executableDefaultRouteGaps": 925,
+        "retiredExecutableDeclarations": 0,
+        "retainedReferenceExecutableRows": 0
+      },
+      "package-root-browser": {
+        "declarations": 1123,
+        "executableDeclarations": 925,
+        "inertJsonDeclarations": 198,
+        "rustSelectedSourceDeclarations": 69,
+        "executableDefaultRouteGaps": 925,
+        "retiredExecutableDeclarations": 0,
+        "retainedReferenceExecutableRows": 0
+      },
+      "package-reference": {
+        "declarations": 1120,
+        "executableDeclarations": 922,
+        "inertJsonDeclarations": 198,
+        "rustSelectedSourceDeclarations": 0,
+        "executableDefaultRouteGaps": null,
+        "retiredExecutableDeclarations": 0,
+        "retainedReferenceExecutableRows": 922
+      }
+    },
+    "sourceSelectedRustOverrides": 138,
+    "bindingRoutesProven": 5,
+    "sourceSelectedRustOverridesDefinition": "Count of Node/browser declaration rows whose export is selected by the exact V4 root entry and has an exact Rust ownership mapping in this ledger. Imported implementation sources are recorded explicitly where applicable. The current entry declaration census is reported by route; source selection does not remove any logical retirement gap. Private route receipts are bounded cohort observations, not release qualification.",
+    "bindingRoutesProvenDefinition": "Count of unique logical executable names with a route proven by the gated current-source R8 fixed-point cohort. Historical/source-pinned receipts remain visible in per-route evidence but do not contribute to this count or prove current-source parity. This is not complete host parity, declaration retirement or release qualification.",
+    "ownerFamilies": 336,
+    "adapterOwnershipRows": 26,
+    "adapterOwnershipByStatus": {
+      "accepted-opt-in-subset": 4,
+      "candidate-core": 12,
+      "partial-host-boundary": 2,
+      "unported": 3,
+      "data-or-constant": 5
+    },
+    "resourceExportAliases": 198,
+    "routeResourceExportAliases": 594,
+    "uniqueResourceFiles": 189,
+    "resourceAuthorityByStatus": {
+      "generated-authority-known": 56,
+      "authored-authority-known": 49,
+      "candidate-generated": 88,
+      "authority-unresolved": 5
+    }
+  },
+  "evidenceManifestSha256": "91bbb13e1c20e15022a74e57f60db0e377c662002196ade520890a75e2544988",
+  "negativeControls": [
+    {
+      "control": "stale archive hash",
+      "result": "rejected",
+      "validatorError": "archive member manifest identity or verified-member counts are incomplete"
+    },
+    {
+      "control": "missing Chromium receipt",
+      "result": "rejected",
+      "validatorError": "securityNot/darwin-arm64 needs Node, Bun and Chromium receipts"
+    },
+    {
+      "control": "stale source closure",
+      "result": "rejected",
+      "validatorError": "live-source manifest is not a matching fixed-point closure"
+    },
+    {
+      "control": "stale frozen packet hash",
+      "result": "rejected",
+      "validatorError": "securityNot frozen packet hash mismatch"
+    }
+  ],
+  "archiveCohorts": [
+    {
+      "id": "darwin-arm64",
+      "archiveSha256": "2c33a74ff8c1a77d689eb32a6b6676f01bfc356bc39f98efbefb5f9efc035494",
+      "sourceClosureSha256": "6ac79efee9c97b0534378f058b330a0d2f073b0fd6c37ed643219078848969d3",
+      "sourceInputCount": 3639,
+      "generatedTransformCount": 0
+    },
+    {
+      "id": "linux-x86_64",
+      "archiveSha256": "76edb6c40500498067dd0c1b478001f1c07165e3df51c55941463d608674ef8e",
+      "sourceClosureSha256": "6ac79efee9c97b0534378f058b330a0d2f073b0fd6c37ed643219078848969d3",
+      "sourceInputCount": 3639,
+      "generatedTransformCount": 0
+    }
+  ],
+  "defaultLedgerWithoutEvidence": {
+    "executableDefaultRouteGaps": 925,
+    "retirementsByRoute": {
+      "package-root-node": 0,
+      "package-root-browser": 0
+    },
+    "sha256": "05e9f288223b13333c7607e0490c94fc28cf973857f7b1d8ff9fe575db5863f7"
+  }
+}

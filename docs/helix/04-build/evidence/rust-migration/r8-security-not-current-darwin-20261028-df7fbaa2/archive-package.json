@@ -1,0 +1,76 @@
+{
+  "name": "@umf/core",
+  "version": "0.5.6",
+  "private": true,
+  "type": "module",
+  "license": "MIT OR Apache-2.0",
+  "files": [
+    "dist/"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/src/index-browser-v4.d.ts",
+      "browser": "./dist/umf-browser.js",
+      "node": "./dist/umf-node.js",
+      "import": "./dist/umf-browser.js",
+      "default": "./dist/umf-browser.js"
+    },
+    "./reference": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/umf.js"
+    },
+    "./rust-codegen-candidate/v2": {
+      "types": "./dist/src/node.d.ts",
+      "browser": "./dist/umf-rust-codegen-candidate-v2-browser.js",
+      "node": "./dist/umf-rust-codegen-candidate-v2-node.js",
+      "import": "./dist/umf-rust-codegen-candidate-v2-browser.js"
+    },
+    "./rust-codegen-candidate/v3": {
+      "types": "./dist/src/node-v3.d.ts",
+      "browser": "./dist/umf-rust-codegen-candidate-v3-browser.js",
+      "node": "./dist/umf-rust-codegen-candidate-v3-node.js",
+      "import": "./dist/umf-rust-codegen-candidate-v3-browser.js"
+    },
+    "./rust-codegen-candidate/v4": {
+      "types": "./dist/src/node-v4.d.ts",
+      "browser": "./dist/umf-rust-codegen-candidate-v4-browser.js",
+      "node": "./dist/umf-rust-codegen-candidate-v4-node.js",
+      "import": "./dist/umf-rust-codegen-candidate-v4-browser.js"
+    },
+    "./loader-contract": {
+      "types": "./dist/src/domain-packs/loader-contract.d.ts",
+      "import": "./dist/loader-contract.js"
+    }
+  },
+  "dependencies": {
+    "@bufbuild/protobuf": "2.15.0",
+    "@libpg-query/parser": "17.6.10",
+    "@typespec/compiler": "1.16.0",
+    "@typespec/emitter-framework": "0.21.0",
+    "@typespec/events": "0.86.0",
+    "@typespec/graphql": "0.3.0",
+    "@typespec/http": "1.16.0",
+    "@typespec/json-schema": "1.16.0",
+    "@typespec/mutator-framework": "0.17.1",
+    "@typespec/openapi": "1.16.0",
+    "@typespec/openapi3": "1.16.0",
+    "@typespec/protobuf": "0.86.0",
+    "@typespec/rest": "0.86.0",
+    "@typespec/sse": "0.86.0",
+    "@typespec/streams": "0.86.0",
+    "@typespec/versioning": "0.86.0",
+    "ajv": "8.20.0",
+    "ajv-draft-04": "1.0.0",
+    "apache-arrow": "21.2.0",
+    "avsc": "5.7.9",
+    "buffer": "6.0.3",
+    "flatbuffers": "25.9.23",
+    "graphql": "17.0.2",
+    "jsonld": "9.0.0",
+    "n3": "2.7.12",
+    "rdf-literal": "2.0.0",
+    "rdf-validate-shacl": "0.6.5",
+    "util": "0.12.5",
+    "yaml": "2.9.1"
+  }
+}
