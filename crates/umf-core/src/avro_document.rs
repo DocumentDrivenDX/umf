@@ -37,6 +37,16 @@ pub struct AvroBundle {
     pub source: Value,
 }
 
+/// Separate generic UMF admission from the bounded native Avro structure
+/// report. Native inspection is absent when generic admission fails.
+#[derive(Clone, Debug, PartialEq)]
+pub struct AvroDocumentInspection {
+    pub admission: Validation,
+    /// Native diagnostic paths are relative to the Avro root/dependency tree.
+    pub native_inspection: Option<Validation>,
+    pub payload_path: Option<Utf16>,
+}
+
 struct Payload {
     root: NativeJsonTree,
     dependencies: Vec<(Utf16, NativeJsonTree)>,
@@ -69,6 +79,39 @@ pub(crate) fn admit_document(
     Ok(AvroDocumentAdmission {
         validation,
         payload_path,
+    })
+}
+
+/// Inspect an Avro-bearing UMF document in two explicit phases. Generic UMF
+/// admission always runs first; Avro structure inspection runs only for an
+/// admitted document. The source value is never modified.
+pub fn inspect_avro_document(
+    document: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<AvroDocumentInspection, EngineError> {
+    let admission = admit_document(document, ctx)?;
+    let Some(payload_path) = admission.payload_path.clone() else {
+        return Ok(AvroDocumentInspection {
+            admission: admission.validation,
+            native_inspection: None,
+            payload_path: None,
+        });
+    };
+    let payload = payload_from_admitted_document(document, ctx)?;
+    ctx.charge_work(payload.dependencies.len().saturating_add(1), Utf16::default())?;
+    for (id, _) in &payload.dependencies {
+        ctx.charge_work(id.len().saturating_add(1), Utf16::default())?;
+    }
+    let dependencies = payload
+        .dependencies
+        .iter()
+        .map(|(id, tree)| InspectionDependency { id, tree })
+        .collect::<Vec<_>>();
+    let native_inspection = inspect_schema(&payload.root, &dependencies, ctx)?;
+    Ok(AvroDocumentInspection {
+        admission: admission.validation,
+        native_inspection: Some(native_inspection),
+        payload_path: Some(payload_path),
     })
 }
 
@@ -772,6 +815,13 @@ fn remove_member(
 
 fn payload_from_document(document: &Value, ctx: &mut Context<'_>) -> Result<Payload, EngineError> {
     validate_document(document, ctx)?;
+    payload_from_admitted_document(document, ctx)
+}
+
+fn payload_from_admitted_document(
+    document: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Payload, EngineError> {
     let doc = object_fields(document, "AVRO_DOCUMENT", "Document must be an object")?;
     if string(field(doc, "umf")?)? != Utf16::from(CORE_VERSION) {
         return Err(err("AVRO_DOCUMENT", "Unsupported core document version"));

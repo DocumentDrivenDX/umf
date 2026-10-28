@@ -1475,3 +1475,18 @@ with adjacent WASM and no Node globals. The separate `inspectDomainPackLoader`
 route is source-selected but remains unqualified pending installed Node/Bun/
 Chromium evidence. Neither selection nor this bounded packet retires a gap or
 qualifies a release.
+
+## Avro document-inspection opt-in export recapture — 2026-10-28
+
+The current symbol inventory SHA-256 is
+`280c2d654781b06dadfba604b92644a6b22104211b5fb6a312da33c36ce8c709`:
+3,381 route-specific declarations across 509 source files and 1,129 unique
+names. The authority-bound ledger SHA-256 is
+`bf0b7bba2b11cdea75183d9e05d4a308a89d0c4b2ebe0c300aa38571fcbc105b`.
+Both generators pass `--check` after the required metamodel manifest refresh.
+The opt-in `createAvroDocumentInspector` export adds candidate declarations,
+not a selected default SDK operation. The ledger still has 920 logical
+executable default-route gaps, zero retirements, 101 accepted opt-in mappings,
+and zero promoted current-source installed binding routes. The [candidate
+evidence](../r8-avro-document-inspect-candidate-20261028/README.md) records
+its narrower source and temporary-native tests.

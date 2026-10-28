@@ -21,6 +21,8 @@ const MAX_ARROW_SCHEMA_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 const MAX_ARROW_IPC_REQUEST_BYTES: usize = 12 * 1024 * 1024;
 const MAX_PROTOBUF_INSPECT_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 #[cfg(feature = "embedded-adapters")]
+const MAX_AVRO_DOCUMENT_INSPECT_REQUEST_BYTES: usize = 32 * 1024 * 1024;
+#[cfg(feature = "embedded-adapters")]
 const MAX_PROTOBUF_DESCRIPTOR_INPUT_BYTES: usize = 4_000_000;
 #[cfg(feature = "embedded-adapters")]
 const PROTOBUF_DESCRIPTOR_READ_CLI_PROFILE: &str = "umf.protobuf-descriptor-read-cli/0.1.0";
@@ -132,60 +134,133 @@ fn sec_run(args: &[String]) -> Result<String, (i32, String)> {
         return Ok(r#"{"profile":"umf.sec-projection/2.0.0","inputFormat":"UMFSEC2-UTF16LE/1","operations":["submissions","company-facts"]}"#.into());
     }
     let operation = match args {
-        [op, flag] if flag == "--stdin-utf16le" && (op == "submissions" || op == "company-facts") => op.as_str(),
-        _ => return Err((2, sec_error_json("Error", None, None, "usage: umf sec <submissions|company-facts> --stdin-utf16le"))),
+        [op, flag]
+            if flag == "--stdin-utf16le" && (op == "submissions" || op == "company-facts") =>
+        {
+            op.as_str()
+        }
+        _ => {
+            return Err((
+                2,
+                sec_error_json(
+                    "Error",
+                    None,
+                    None,
+                    "usage: umf sec <submissions|company-facts> --stdin-utf16le",
+                ),
+            ))
+        }
     };
     let frame = match read_sec_frame() {
         Ok(frame) => frame,
         Err(message) => return Err((2, sec_error_json("Error", None, None, &message))),
     };
     if frame.len() < 16 || &frame[..8] != SEC_FRAME_MAGIC {
-        return Err((2, sec_error_json("Error", None, None, "Invalid SEC UTF-16LE frame header")));
+        return Err((
+            2,
+            sec_error_json("Error", None, None, "Invalid SEC UTF-16LE frame header"),
+        ));
     }
     let input_units = u32::from_le_bytes(frame[8..12].try_into().unwrap()) as usize;
     if input_units > SEC_MAX_INPUT_UNITS {
-        return Err((2, sec_error_json("UmfError", Some("LIMIT"), Some(""), "Native JSON exceeds text limit")));
+        return Err((
+            2,
+            sec_error_json(
+                "UmfError",
+                Some("LIMIT"),
+                Some(""),
+                "Native JSON exceeds text limit",
+            ),
+        ));
     }
-    let input_bytes = match input_units.checked_mul(2).and_then(|size| 12usize.checked_add(size)) {
+    let input_bytes = match input_units
+        .checked_mul(2)
+        .and_then(|size| 12usize.checked_add(size))
+    {
         Some(end) if end + 4 <= frame.len() => end,
-        _ => return Err((2, sec_error_json("Error", None, None, "Truncated SEC UTF-16LE input"))),
+        _ => {
+            return Err((
+                2,
+                sec_error_json("Error", None, None, "Truncated SEC UTF-16LE input"),
+            ))
+        }
     };
-    let source_units = u32::from_le_bytes(frame[input_bytes..input_bytes + 4].try_into().unwrap()) as usize;
-    let source_bytes = source_units.checked_mul(2).and_then(|size| input_bytes.checked_add(4)?.checked_add(size));
+    let source_units =
+        u32::from_le_bytes(frame[input_bytes..input_bytes + 4].try_into().unwrap()) as usize;
+    let source_bytes = source_units
+        .checked_mul(2)
+        .and_then(|size| input_bytes.checked_add(4)?.checked_add(size));
     let Some(source_end) = source_bytes else {
-        return Err((2, sec_error_json("Error", None, None, "Invalid SEC UTF-16LE frame length")));
+        return Err((
+            2,
+            sec_error_json("Error", None, None, "Invalid SEC UTF-16LE frame length"),
+        ));
     };
     if source_end != frame.len() {
-        return Err((2, sec_error_json("Error", None, None, "Invalid SEC UTF-16LE frame length")));
+        return Err((
+            2,
+            sec_error_json("Error", None, None, "Invalid SEC UTF-16LE frame length"),
+        ));
     }
     let input = sec_units(&frame[12..input_bytes]);
     // Preserve core's parse/root-before-source-identity order without
     // allocating the out-of-range source payload.
     let source = if source_units <= SEC_MAX_SOURCE_UNITS {
         sec_units(&frame[input_bytes + 4..source_end])
-    } else { Vec::new() };
+    } else {
+        Vec::new()
+    };
     let result = match operation {
         "submissions" => umf_core::domain_pack_sec::project_sec_submissions(&input, &source),
         "company-facts" => umf_core::domain_pack_sec::project_sec_company_facts(&input, &source),
         _ => unreachable!(),
     };
-    result.map_err(|error| (1, sec_error_json(&error.name, error.code.as_deref(), error.path.as_deref(), &error.message)))
+    result.map_err(|error| {
+        (
+            1,
+            sec_error_json(
+                &error.name,
+                error.code.as_deref(),
+                error.path.as_deref(),
+                &error.message,
+            ),
+        )
+    })
 }
 
 fn read_sec_frame() -> Result<Vec<u8>, String> {
     let mut bytes = Vec::new();
-    io::stdin().take((SEC_MAX_FRAME_BYTES + 1) as u64).read_to_end(&mut bytes).map_err(|e| format!("Could not read SEC frame: {e}"))?;
-    if bytes.len() > SEC_MAX_FRAME_BYTES { return Err("SEC frame exceeds the bounded transport capacity".into()); }
+    io::stdin()
+        .take((SEC_MAX_FRAME_BYTES + 1) as u64)
+        .read_to_end(&mut bytes)
+        .map_err(|e| format!("Could not read SEC frame: {e}"))?;
+    if bytes.len() > SEC_MAX_FRAME_BYTES {
+        return Err("SEC frame exceeds the bounded transport capacity".into());
+    }
     Ok(bytes)
 }
 
 fn sec_units(bytes: &[u8]) -> Vec<u16> {
-    bytes.chunks_exact(2).map(|pair| u16::from_le_bytes([pair[0], pair[1]])).collect()
+    bytes
+        .chunks_exact(2)
+        .map(|pair| u16::from_le_bytes([pair[0], pair[1]]))
+        .collect()
 }
 
 fn sec_error_json(name: &str, code: Option<&str>, path: Option<&str>, message: &str) -> String {
-    fn quote(value: &str) -> String { format!("{}", serde_json::to_string(value).expect("string serialization")) }
-    format!("{{\"name\":{},\"code\":{},\"path\":{},\"message\":{}}}", quote(name), code.map(quote).unwrap_or_else(|| "null".into()), path.map(quote).unwrap_or_else(|| "null".into()), quote(message))
+    fn quote(value: &str) -> String {
+        format!(
+            "{}",
+            serde_json::to_string(value).expect("string serialization")
+        )
+    }
+    format!(
+        "{{\"name\":{},\"code\":{},\"path\":{},\"message\":{}}}",
+        quote(name),
+        code.map(quote).unwrap_or_else(|| "null".into()),
+        path.map(quote).unwrap_or_else(|| "null".into()),
+        quote(message)
+    )
 }
 
 #[cfg(feature = "codegen")]
@@ -2005,6 +2080,16 @@ fn protobuf_descriptor_write_run(args: &[String]) -> Result<(), String> {
 }
 
 fn avro_run(args: &[String]) -> Result<(), String> {
+    if args.first().map(String::as_str) == Some("document-inspect") {
+        #[cfg(feature = "embedded-adapters")]
+        {
+            return avro_document_inspect_run(&args[1..]);
+        }
+        #[cfg(not(feature = "embedded-adapters"))]
+        {
+            return Err("Avro document-inspect requires the embedded-adapters CLI feature".into());
+        }
+    }
     if args.first().map(String::as_str) == Some("candidate-edit") {
         #[cfg(feature = "embedded-adapters")]
         {
@@ -2028,7 +2113,7 @@ fn avro_run(args: &[String]) -> Result<(), String> {
         return Ok(());
     }
     if args.first().map(String::as_str) != Some("inspect") {
-        return Err("usage: umf avro <inspect|candidate-edit> ...".into());
+        return Err("usage: umf avro <inspect|document-inspect|candidate-edit> ...".into());
     }
     let mut stdin_wire = false;
     let mut max_work = None;
@@ -2091,6 +2176,90 @@ fn avro_run(args: &[String]) -> Result<(), String> {
     println!(
         "{}",
         umf_core_wire::execute_avro_inspect_wire_with_control(&wire, &mut control)
+    );
+    Ok(())
+}
+
+#[cfg(feature = "embedded-adapters")]
+fn avro_document_inspect_run(args: &[String]) -> Result<(), String> {
+    if args == ["--version"] {
+        println!(
+            "{{\"profile\":\"{}\",\"version\":\"{}\"}}",
+            umf_core_wire::AVRO_DOCUMENT_INSPECT_PROFILE,
+            env!("CARGO_PKG_VERSION")
+        );
+        return Ok(());
+    }
+    if args == ["--capabilities"] {
+        println!("{{\"profile\":\"{}\",\"operations\":[\"avro.document.inspect\"],\"semanticCompleteness\":false,\"resourceProfile\":\"cooperative\"}}", umf_core_wire::AVRO_DOCUMENT_INSPECT_PROFILE);
+        return Ok(());
+    }
+    if args.iter().any(|arg| arg == "--help") {
+        return Err(
+            "usage: umf avro document-inspect --stdin-wire [--max-work N] [--timeout-ms N]".into(),
+        );
+    }
+    let mut stdin_wire = false;
+    let mut max_work = None;
+    let mut timeout_ms = None;
+    let mut index = 0;
+    while index < args.len() {
+        match args[index].as_str() {
+            "--stdin-wire" if !stdin_wire => stdin_wire = true,
+            "--max-work" if max_work.is_none() => {
+                index += 1;
+                max_work = Some(
+                    args.get(index)
+                        .ok_or("--max-work requires a value")?
+                        .parse::<u64>()
+                        .map_err(|_| "--max-work requires a nonnegative integer")?,
+                );
+            }
+            "--timeout-ms" if timeout_ms.is_none() => {
+                index += 1;
+                timeout_ms = Some(
+                    args.get(index)
+                        .ok_or("--timeout-ms requires a value")?
+                        .parse::<u64>()
+                        .map_err(|_| "--timeout-ms requires a nonnegative integer")?,
+                );
+            }
+            _ => return Err("invalid Avro document-inspect option".into()),
+        }
+        index += 1;
+    }
+    if !stdin_wire {
+        return Err("--stdin-wire is required".into());
+    }
+    let started = std::time::Instant::now();
+    let wire = String::from_utf8(read_limited(
+        io::stdin(),
+        MAX_AVRO_DOCUMENT_INSPECT_REQUEST_BYTES,
+    )?)
+    .map_err(|_| "Avro document-inspect wire request is not valid UTF-8".to_owned())?;
+    let mut remaining = max_work.unwrap_or(u64::MAX);
+    let mut control = |amount: usize| {
+        let amount = amount as u64;
+        if amount > remaining {
+            return Err(umf_core::EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Avro document-inspect work budget exhausted",
+            ));
+        }
+        remaining -= amount;
+        if timeout_ms.is_some_and(|limit| started.elapsed().as_millis() >= u128::from(limit)) {
+            return Err(umf_core::EngineError::new(
+                "DEADLINE",
+                Utf16::default(),
+                "Avro document-inspect deadline elapsed",
+            ));
+        }
+        Ok(())
+    };
+    println!(
+        "{}",
+        umf_core_wire::execute_avro_document_inspect_wire_with_control(&wire, &mut control)
     );
     Ok(())
 }

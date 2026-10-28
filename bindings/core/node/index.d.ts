@@ -383,6 +383,7 @@ export declare const PROTOBUF_INSPECT_PROFILE: 'umf-r5-protobuf-inspect/0.1.0';
 export declare const PROTOBUF_DOCUMENT_PROFILE: 'umf-r8-protobuf-descriptor-document/0.1.0';
 export declare const AVRO_FIELDS_PROFILE: 'umf-r5-avro-fields/0.1.0';
 export declare const AVRO_INSPECT_PROFILE: 'umf-r5-avro-inspect/0.1.0';
+export declare const AVRO_DOCUMENT_INSPECT_PROFILE: 'umf-r5-avro-document-inspect/0.1.0';
 export declare const AVRO_CANDIDATE_PROFILE: 'umf-r5-avro-candidate/0.1.0';
 export declare const JSON_SCHEMA_PROFILE: 'umf-r5-json-schema/0.1.0';
 export declare const DOCUMENT_COMPARISON_PROFILE: 'umf.schema-comparison/1';
@@ -428,6 +429,15 @@ export interface AvroInspectResult {valid: boolean; complete: false; diagnostics
 export interface AvroInspector {inspect(root: unknown, dependencies?: {id: string; root: unknown}[]): AvroInspectResult}
 /** Create the opt-in incomplete Avro structural inspector. */
 export declare function createAvroInspector(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): AvroInspector;
+export interface AvroDocumentInspectResult {
+  profile: typeof AVRO_DOCUMENT_INSPECT_PROFILE;
+  admission: {valid: boolean; complete: boolean; diagnostics: AvroInspectDiagnostic[]};
+  nativeInspection: {status: 'not-run'} | {status: 'inspected'; valid: boolean; complete: false; diagnostics: AvroInspectDiagnostic[]};
+  payloadPath?: string;
+}
+export interface AvroDocumentInspector {inspect(document: unknown): AvroDocumentInspectResult}
+/** Create the opt-in bounded Rust inspector for a whole UMF Avro document. */
+export declare function createAvroDocumentInspector(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): AvroDocumentInspector;
 export declare function createAvroFieldsEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): AvroFieldsEngine;
 export declare const RECORD_TYPE_BINDING_PROFILE: 'umf.record-type-binding/1.0.0';
 export declare function executeRecordTypeBindingWire(wireJson: string, controlDispatcher?: (amount: number) => string | undefined): string;

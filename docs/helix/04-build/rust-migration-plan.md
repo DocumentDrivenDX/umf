@@ -10235,3 +10235,41 @@ retirements, 101 accepted opt-in Rust mappings, and zero promoted
 current-source installed binding routes**. The broad adapters/extensions,
 hosted cross-platform release matrix, complete independent review, merge,
 and release remain required for the full-port goal.
+
+### R8 opt-in Avro document inspection candidate — 2026-10-28
+
+CONTRACT-007 now describes the previously shipped opt-in candidate-edit
+transports accurately and specifies a separate
+`umf-r5-avro-document-inspect/0.1.0` profile. The Rust core performs generic
+registered UMF/Avro representation admission once, retains its ordered
+diagnostics, and runs bounded native structure inspection only for a unique
+admitted payload. `avro.document.inspect` is available through core-wire,
+the feature-gated pure Rust CLI command, and opt-in Node, Python, and WASM
+bindings. It never mutates or reconstructs the caller's document. The
+[source candidate packet](evidence/rust-migration/r8-avro-document-inspect-candidate-20261028/README.md)
+records focused core/wire, CLI, rebuilt native binding, WASM, and predecessor
+comparison checks. Independent Sol review found no remaining actionable
+correctness issue after a CLI test borrow error was fixed.
+
+This is not TypeScript `inspectAvro` parity: the TypeScript operation uses
+avsc 5.7.9 and has different findings for unresolved names and unsafe host
+numbers; the Rust inspector always reports its bounded semantic scope. The
+frozen predecessor comparison proves exact source and unknown-content
+retention for its selected candidate, not default-route equivalence. Installed
+Node/Bun/Chromium package replay of the new document operation, general
+input admission, and broad Avro semantics remain next. No Avro default route
+is selected or retired.
+
+The refreshed R8 symbol inventory is SHA-256
+`280c2d654781b06dadfba604b92644a6b22104211b5fb6a312da33c36ce8c709`;
+the authority-bound gap ledger is SHA-256
+`bf0b7bba2b11cdea75183d9e05d4a308a89d0c4b2ebe0c300aa38571fcbc105b`.
+Both generated snapshots pass `--check`. After the metamodel manifest was
+regenerated, `bun run typecheck`, its `--check`, the Rust boundary scan (808
+modules, zero findings and zero V8 debt), access and unified-client boundary
+checks passed. The ledger suite passed 79/80 inside the restricted sandbox;
+its one localhost Chromium case then passed under the approved loopback test
+environment, completing all 80 cases. The ledger still has **920 open logical
+executable default-route gaps, zero retirements, 101 accepted opt-in mappings,
+and zero promoted current-source installed binding routes**. This source
+candidate does not satisfy the full-port merge or release gate.

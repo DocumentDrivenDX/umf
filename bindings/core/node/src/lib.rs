@@ -422,22 +422,36 @@ pub fn execute_core_bit128_field_request_wire(
     let profile = match profile.as_str() {
         "cooperative" => ResourceProfile::Cooperative,
         "hard-isolated" => ResourceProfile::HardIsolated,
-        _ => return Ok(umf_core_wire::error_envelope(EngineError::new(
-            "RESOURCE_PROFILE", Utf16::default(), "Unknown resource profile",
-        ))),
+        _ => {
+            return Ok(umf_core_wire::error_envelope(EngineError::new(
+                "RESOURCE_PROFILE",
+                Utf16::default(),
+                "Unknown resource profile",
+            )))
+        }
     };
     let mut capabilities = NodeCapabilities { env, dispatcher };
     if let Some(dispatcher) = control_dispatcher {
         let mut control = NodeControl { env, dispatcher };
         let mut hook = |amount| control.check(amount);
-        Ok(umf_core_wire::execute_core_bit128_field_request_with_control(
-            &wire_json, profile, &mut capabilities, &mut hook,
-        ))
+        Ok(
+            umf_core_wire::execute_core_bit128_field_request_with_control(
+                &wire_json,
+                profile,
+                &mut capabilities,
+                &mut hook,
+            ),
+        )
     } else {
         let mut no_control = |_amount| Ok(());
-        Ok(umf_core_wire::execute_core_bit128_field_request_with_control(
-            &wire_json, profile, &mut capabilities, &mut no_control,
-        ))
+        Ok(
+            umf_core_wire::execute_core_bit128_field_request_with_control(
+                &wire_json,
+                profile,
+                &mut capabilities,
+                &mut no_control,
+            ),
+        )
     }
 }
 
@@ -683,6 +697,28 @@ pub fn execute_avro_inspect_wire(
 #[napi(js_name = "avroInspectProfileVersion")]
 pub fn avro_inspect_profile_version() -> &'static str {
     umf_core_wire::AVRO_INSPECT_PROFILE
+}
+
+#[napi(js_name = "executeAvroDocumentInspectWire")]
+pub fn execute_avro_document_inspect_wire(
+    env: Env,
+    wire_json: String,
+    control_dispatcher: Option<JsFunction>,
+) -> NapiResult<String> {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = NodeControl { env, dispatcher };
+        let mut hook = |amount| control.check(amount);
+        Ok(umf_core_wire::execute_avro_document_inspect_wire_with_control(&wire_json, &mut hook))
+    } else {
+        Ok(umf_core_wire::execute_avro_document_inspect_wire(
+            &wire_json,
+        ))
+    }
+}
+
+#[napi(js_name = "avroDocumentInspectProfileVersion")]
+pub fn avro_document_inspect_profile_version() -> &'static str {
+    umf_core_wire::AVRO_DOCUMENT_INSPECT_PROFILE
 }
 
 #[napi(js_name = "executeAvroCandidateWire")]

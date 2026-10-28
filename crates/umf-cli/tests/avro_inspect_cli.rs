@@ -29,6 +29,16 @@ fn request() -> String {
     )
     .unwrap()
 }
+fn document_inspect_request() -> String {
+    umf_core_wire::encode(
+        &object(vec![
+            ("op", Value::string_utf8("avro.document.inspect")),
+            ("document", object(vec![("umf", tagged_string("0.10.0"))])),
+        ]),
+        &mut Context::ordinary(),
+    )
+    .unwrap()
+}
 fn run(wire: &str, options: &[&str]) -> serde_json::Value {
     let mut child = Command::new(env!("CARGO_BIN_EXE_umf"))
         .args(["avro", "inspect", "--stdin-wire"])
@@ -88,4 +98,67 @@ fn cli_reports_opt_in_incomplete_capability_and_enforces_controls() {
         "RESOURCE_LIMIT"
     );
     assert_eq!(run(&request(), &["--timeout-ms", "0"])["code"], "DEADLINE");
+}
+
+#[test]
+#[cfg(feature = "embedded-adapters")]
+fn cli_exposes_opt_in_document_inspection_with_embedded_adapters() {
+    let capabilities = Command::new(env!("CARGO_BIN_EXE_umf"))
+        .args(["avro", "document-inspect", "--capabilities"])
+        .env("PATH", "")
+        .output()
+        .unwrap();
+    assert!(capabilities.status.success());
+    let capabilities: serde_json::Value = serde_json::from_slice(&capabilities.stdout).unwrap();
+    assert_eq!(
+        capabilities["profile"],
+        umf_core_wire::AVRO_DOCUMENT_INSPECT_PROFILE
+    );
+    assert_eq!(
+        capabilities["operations"],
+        serde_json::json!(["avro.document.inspect"])
+    );
+
+    let mut child = Command::new(env!("CARGO_BIN_EXE_umf"))
+        .args(["avro", "document-inspect", "--stdin-wire"])
+        .env("PATH", "")
+        .stdin(Stdio::piped())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn()
+        .unwrap();
+    child
+        .stdin
+        .take()
+        .unwrap()
+        .write_all(document_inspect_request().as_bytes())
+        .unwrap();
+    let output = child.wait_with_output().unwrap();
+    assert!(
+        output.status.success(),
+        "{}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    let envelope: serde_json::Value = serde_json::from_slice(&output.stdout).unwrap();
+    assert_eq!(envelope["status"], "ok");
+    let report =
+        umf_core_wire::decode(envelope["wire"].as_str().unwrap(), &mut Context::ordinary())
+            .unwrap();
+    let Value::Object(fields) = report else {
+        panic!("document inspection report should be an object")
+    };
+    let native = &fields
+        .iter()
+        .find(|(key, _)| key == &Utf16::from("nativeInspection"))
+        .unwrap()
+        .1;
+    let Value::Object(native_fields) = native else {
+        panic!("native inspection status object expected")
+    };
+    assert!(native_fields.iter().any(|(key, value)| {
+        key == &Utf16::from("status") && value == &Value::string_utf8("not-run")
+    }));
+    assert!(!fields
+        .iter()
+        .any(|(key, _)| key == &Utf16::from("payloadPath")));
 }

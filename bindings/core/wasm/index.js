@@ -21,7 +21,7 @@ import {schemaPropertiesHostInput, cardinalityHostInput, validateCoreRecordValue
 import {createSemanticTypeRegistry as createSemanticTypeRegistryWithWire} from './src/semantic-value.js';
 import {createArrowIpcOperations, ARROW_IPC_PROFILE} from './src/arrow-ipc.js';
 import {createAccessRrfOperations, ACCESS_RRF_PROFILE} from './src/access-rrf.js';
-import {createAvroInspector as createAvroInspectorWire, createAvroCandidateEditor as createAvroCandidateEditorWire, AVRO_INSPECT_PROFILE, AVRO_CANDIDATE_PROFILE} from './src/avro.js';
+import {createAvroInspector as createAvroInspectorWire, createAvroDocumentInspector as createAvroDocumentInspectorWire, createAvroCandidateEditor as createAvroCandidateEditorWire, AVRO_INSPECT_PROFILE, AVRO_DOCUMENT_INSPECT_PROFILE, AVRO_CANDIDATE_PROFILE} from './src/avro.js';
 import {copyCoreJsonInput, createCoreBit128FieldOperation} from './src/core-bit128-field.js';
 const CORE_KIND_NULLABILITY_RUNTIME = Symbol('core-kind-nullability-runtime');
 const CORE_KIND_NULLABILITY_PREPARED = Symbol('core-kind-nullability-prepared');
@@ -59,6 +59,7 @@ export const PROTOBUF_DOCUMENT_PROFILE = 'umf-r8-protobuf-descriptor-document/0.
 export const PROTOBUF_SOURCE_IMPORT_PROFILE = 'umf-r8-protobuf-source-import/0.1.0';
 export const AVRO_FIELDS_PROFILE = 'umf-r5-avro-fields/0.1.0';
 export {AVRO_INSPECT_PROFILE, AVRO_CANDIDATE_PROFILE};
+export {AVRO_DOCUMENT_INSPECT_PROFILE};
 export const RECORD_TYPE_BINDING_PROFILE = 'umf.record-type-binding/1.0.0';
 export {JSON_SCHEMA_PROFILE};
 export {DOCUMENT_COMPARISON_PROFILE};
@@ -1529,6 +1530,20 @@ export function createAvroFieldsEngine(module, options = {}) {
 export function createAvroInspector(module, options = {}) {
   const {controls} = codegenOptions(options);
   return createAvroInspectorWire(module, {controls, ErrorType: UmfCoreError});
+}
+
+/** Create the opt-in bounded Avro whole-document inspector over WASM. */
+export function createAvroDocumentInspector(module, options = {}) {
+  const {controls} = codegenOptions(options);
+  return createAvroDocumentInspectorWire(module, {controls, ErrorType: UmfCoreError});
+}
+
+/** Initialize the opt-in Avro whole-document inspector in a browser. */
+export async function initializeAvroDocumentInspectorWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+  if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
+  const module = await loader();
+  if (typeof module.default === 'function') await module.default();
+  return createAvroDocumentInspector(module, options);
 }
 
 /** Create the opt-in Avro document candidate editor over WASM. */

@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Private `umf.core-wire/1` transport shared by native language bindings.
-pub mod access_temporal_binding;
 pub mod access_rrf_binding;
+pub mod access_temporal_binding;
 pub mod arrow_ipc_capture_binding {
     //! Explicit tagged-wire owner for exact IPC byte capture operations.
     use umf_core::{
         arrow_ipc_capture::{
-            ArrowIpcResources, capture_arrow_ipc, export_arrow_ipc_capture,
-            inspect_arrow_ipc_capture,
+            capture_arrow_ipc, export_arrow_ipc_capture, inspect_arrow_ipc_capture,
+            ArrowIpcResources,
         },
         Context, EngineError, Utf16, Value,
     };
@@ -54,7 +54,10 @@ pub mod arrow_ipc_capture_binding {
         bytes
             .iter()
             .flat_map(|byte| {
-                [HEX[(byte >> 4) as usize] as char, HEX[(byte & 15) as usize] as char]
+                [
+                    HEX[(byte >> 4) as usize] as char,
+                    HEX[(byte & 15) as usize] as char,
+                ]
             })
             .collect()
     }
@@ -85,17 +88,15 @@ pub mod arrow_ipc_capture_binding {
                     capture_arrow_ipc(&bytes, &id, &resources, &mut ctx)?
                 }
                 "arrow.ipc.export" => {
-                    let document = field(&request, "document")
-                        .ok_or_else(|| err("document is required"))?;
+                    let document =
+                        field(&request, "document").ok_or_else(|| err("document is required"))?;
                     Value::string_utf8(hex(&export_arrow_ipc_capture(
-                        document,
-                        &resources,
-                        &mut ctx,
+                        document, &resources, &mut ctx,
                     )?))
                 }
                 "arrow.ipc.inspect" => {
-                    let document = field(&request, "document")
-                        .ok_or_else(|| err("document is required"))?;
+                    let document =
+                        field(&request, "document").ok_or_else(|| err("document is required"))?;
                     inspect_arrow_ipc_capture(document, &resources, &mut ctx)?
                 }
                 _ => return Err(err("Unknown Arrow IPC capture operation")),
@@ -106,7 +107,10 @@ pub mod arrow_ipc_capture_binding {
     }
 }
 pub const ARROW_IPC_PROFILE: &str = "umf-r8-arrow-ipc/0.1.0";
-pub use arrow_ipc_capture_binding::{execute_wire as execute_arrow_ipc_wire, execute_wire_with_control as execute_arrow_ipc_wire_with_control};
+pub use arrow_ipc_capture_binding::{
+    execute_wire as execute_arrow_ipc_wire,
+    execute_wire_with_control as execute_arrow_ipc_wire_with_control,
+};
 pub mod artifact_references_binding;
 #[cfg(feature = "codegen")]
 mod codegen;
@@ -117,10 +121,10 @@ pub mod delta_log_binding;
 pub mod delta_schema_table;
 pub mod delta_spark_hash;
 pub mod host_response_frames;
-#[cfg(feature = "embedded-adapters")]
-pub mod json_schema_import_session_binding;
 pub mod javascript_numeric_runtime;
 pub mod json_number_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod json_schema_import_session_binding;
 pub mod parquet_record_type_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod protobuf_document;
@@ -135,8 +139,8 @@ pub mod security_domains_binding;
 pub mod security_functions_binding;
 pub mod security_logic_binding;
 pub mod security_parameters_binding;
-pub mod security_queries_binding;
 pub mod security_protection_source_binding;
+pub mod security_queries_binding;
 pub mod semantic_value;
 #[cfg(feature = "codegen")]
 pub use umf_codegen::generation::PythonClientHostReadV3;
@@ -214,8 +218,8 @@ impl CodegenResourcesHandle {
 
 use umf_core::serialization::Format;
 use umf_core::{
-    Capabilities, Context, Diagnostic, Engine, EngineError, Registry, ResourceProfile, ResourceSet,
-    Severity, Utf16, Value, copy_json,
+    copy_json, Capabilities, Context, Diagnostic, Engine, EngineError, Registry, ResourceProfile,
+    ResourceSet, Severity, Utf16, Value,
 };
 pub use umf_tagged_wire::{decode, encode, transport_context};
 use umf_tagged_wire::{encode_owned, units_wire_size, wire_size, write_units, write_wire};
@@ -824,14 +828,26 @@ fn execute_json_schema_wire_inner(
                 let source = field(&request, "source")
                     .and_then(as_utf16)
                     .ok_or_else(|| fail("REQUEST", "Native YAML source is required"))?;
-                let option_text = |name: &str| field(&request, name).and_then(as_utf16).map(|value| value.to_utf8().unwrap_or_default());
-                let version = field(&request, "version").map(|value| as_utf16(value).and_then(|text| text.to_utf8().ok()).unwrap_or_default());
+                let option_text = |name: &str| {
+                    field(&request, name)
+                        .and_then(as_utf16)
+                        .map(|value| value.to_utf8().unwrap_or_default())
+                };
+                let version = field(&request, "version").map(|value| {
+                    as_utf16(value)
+                        .and_then(|text| text.to_utf8().ok())
+                        .unwrap_or_default()
+                });
                 let date_only = option_text("dateOnly");
                 let boolean_lexicon = option_text("booleanLexicon");
                 umf_core::native_json::NativeJsonTree::parse_yaml_with_options(
-                    source.units(), version.as_deref(), date_only.as_deref(), boolean_lexicon.as_deref(), &mut ctx,
+                    source.units(),
+                    version.as_deref(),
+                    date_only.as_deref(),
+                    boolean_lexicon.as_deref(),
+                    &mut ctx,
                 )?
-                    .tagged_value_preserving_extras(&mut ctx)?
+                .tagged_value_preserving_extras(&mut ctx)?
             }
             "editJsonSchemaNode" => {
                 let pointer = field(&request, "pointer")
@@ -880,8 +896,8 @@ pub fn execute_iceberg_wire_with_control(
 ) -> String {
     let result = (|| {
         use umf_core::iceberg_schema::{
-            IcebergSchemaResources, export_iceberg_schema, get_iceberg_node, import_iceberg_schema,
-            inspect_iceberg, propose_iceberg_node_edit,
+            export_iceberg_schema, get_iceberg_node, import_iceberg_schema, inspect_iceberg,
+            propose_iceberg_node_edit, IcebergSchemaResources,
         };
 
         let mut ctx = Context::ordinary().with_host_control(control);
@@ -963,7 +979,10 @@ impl ArrowSchemaResourcesHandle {
         let mut ctx = Context::ordinary().with_host_control(control);
         let request = decode(setup_wire, &mut ctx)?;
         if text_field(&request, "op").as_deref() != Some("arrow.schema.createResources") {
-            return Err(fail("REQUEST", "arrow.schema.createResources operation is required"));
+            return Err(fail(
+                "REQUEST",
+                "arrow.schema.createResources operation is required",
+            ));
         }
         let resources = umf_core::arrow_schema::ArrowSchemaResources::new(&mut ctx)?;
         Ok(Self { resources })
@@ -1005,7 +1024,14 @@ pub fn execute_arrow_schema_wire_with_control(
             .and_then(as_utf16)
             .and_then(|value| value.to_utf8().ok())
             .ok_or_else(|| fail("REQUEST", "Arrow schema operation is required"))?;
-        if !matches!(op.as_str(), "arrow.schema.import" | "arrow.schema.export" | "arrow.schema.inspect" | "arrow.schema.getNode" | "arrow.schema.proposeNodeEdit") {
+        if !matches!(
+            op.as_str(),
+            "arrow.schema.import"
+                | "arrow.schema.export"
+                | "arrow.schema.inspect"
+                | "arrow.schema.getNode"
+                | "arrow.schema.proposeNodeEdit"
+        ) {
             return Err(fail("REQUEST", "Unknown Arrow schema operation"));
         }
         let resources = umf_core::arrow_schema::ArrowSchemaResources::new(&mut ctx)?;
@@ -1029,7 +1055,14 @@ fn execute_arrow_schema_request(
         .and_then(as_utf16)
         .and_then(|value| value.to_utf8().ok())
         .ok_or_else(|| fail("REQUEST", "Arrow schema operation is required"))?;
-    if !matches!(op.as_str(), "arrow.schema.import" | "arrow.schema.export" | "arrow.schema.inspect" | "arrow.schema.getNode" | "arrow.schema.proposeNodeEdit") {
+    if !matches!(
+        op.as_str(),
+        "arrow.schema.import"
+            | "arrow.schema.export"
+            | "arrow.schema.inspect"
+            | "arrow.schema.getNode"
+            | "arrow.schema.proposeNodeEdit"
+    ) {
         return Err(fail("REQUEST", "Unknown Arrow schema operation"));
     }
     let text = |name: &str| {
@@ -1037,15 +1070,40 @@ fn execute_arrow_schema_request(
             .and_then(as_utf16)
             .ok_or_else(|| fail("REQUEST", &format!("Arrow {name} string is required")))
     };
-    let document = || field(&request, "document").ok_or_else(|| fail("REQUEST", "Arrow document is required"));
+    let document =
+        || field(&request, "document").ok_or_else(|| fail("REQUEST", "Arrow document is required"));
     match op.as_str() {
-        "arrow.schema.import" => import_arrow_schema(text("source")?.units(), text("id")?, resources, ctx),
-        "arrow.schema.export" => Ok(Value::String(export_arrow_schema(document()?, resources, ctx)?)),
-        "arrow.schema.inspect" => Ok(arrow_validation_value(inspect_arrow(document()?, resources, ctx)?)),
-        "arrow.schema.getNode" => Ok(get_arrow_node(document()?, text("pointer")?, resources, ctx)?.tagged_value_preserving_extras(ctx)?),
+        "arrow.schema.import" => {
+            import_arrow_schema(text("source")?.units(), text("id")?, resources, ctx)
+        }
+        "arrow.schema.export" => Ok(Value::String(export_arrow_schema(
+            document()?,
+            resources,
+            ctx,
+        )?)),
+        "arrow.schema.inspect" => Ok(arrow_validation_value(inspect_arrow(
+            document()?,
+            resources,
+            ctx,
+        )?)),
+        "arrow.schema.getNode" => {
+            Ok(
+                get_arrow_node(document()?, text("pointer")?, resources, ctx)?
+                    .tagged_value_preserving_extras(ctx)?,
+            )
+        }
         "arrow.schema.proposeNodeEdit" => {
-            let (candidate, validation) = propose_arrow_node_edit(document()?, text("pointer")?, text("replacement")?.units(), resources, ctx)?;
-            Ok(object(vec![("document", candidate), ("validation", arrow_validation_value(validation))]))
+            let (candidate, validation) = propose_arrow_node_edit(
+                document()?,
+                text("pointer")?,
+                text("replacement")?.units(),
+                resources,
+                ctx,
+            )?;
+            Ok(object(vec![
+                ("document", candidate),
+                ("validation", arrow_validation_value(validation)),
+            ]))
         }
         _ => unreachable!("Arrow schema operation was checked above"),
     }
@@ -1072,23 +1130,22 @@ fn arrow_validation_value(validation: umf_core::Validation) -> Value {
                         } else {
                             "error"
                         });
-                        let fields = if index == 0
-                            && item.code == Utf16::from("ARROW_NATIVE_UNVERIFIED")
-                        {
-                            vec![
-                                (Utf16::from("code"), code),
-                                (Utf16::from("path"), path),
-                                (Utf16::from("severity"), severity),
-                                (Utf16::from("message"), message),
-                            ]
-                        } else {
-                            vec![
-                                (Utf16::from("code"), code),
-                                (Utf16::from("path"), path),
-                                (Utf16::from("message"), message),
-                                (Utf16::from("severity"), severity),
-                            ]
-                        };
+                        let fields =
+                            if index == 0 && item.code == Utf16::from("ARROW_NATIVE_UNVERIFIED") {
+                                vec![
+                                    (Utf16::from("code"), code),
+                                    (Utf16::from("path"), path),
+                                    (Utf16::from("severity"), severity),
+                                    (Utf16::from("message"), message),
+                                ]
+                            } else {
+                                vec![
+                                    (Utf16::from("code"), code),
+                                    (Utf16::from("path"), path),
+                                    (Utf16::from("message"), message),
+                                    (Utf16::from("severity"), severity),
+                                ]
+                            };
                         Value::Object(fields)
                     })
                     .collect(),
@@ -1108,6 +1165,9 @@ pub const AVRO_FIELDS_PROFILE: &str = "umf-r5-avro-fields/0.1.0";
 /// only its explicit structural subset and never certifies Avro validity.
 pub const AVRO_INSPECT_PROFILE: &str = "umf-r5-avro-inspect/0.1.0";
 
+/// Versioned opt-in UMF document admission plus native Avro inspection.
+pub const AVRO_DOCUMENT_INSPECT_PROFILE: &str = "umf-r5-avro-document-inspect/0.1.0";
+
 /// Versioned opt-in Avro candidate-edit operation. This does not activate the
 /// default Avro adapter or claim native Avro validity.
 #[cfg(feature = "embedded-adapters")]
@@ -1124,7 +1184,7 @@ pub fn execute_avro_fields_wire_with_control(
 ) -> String {
     let result = (|| {
         use umf_core::{
-            avro_fields::{AvroDependency, derive_avro_fields},
+            avro_fields::{derive_avro_fields, AvroDependency},
             native_json::NativeJsonTree,
         };
         let mut ctx = Context::ordinary().with_host_control(control);
@@ -1218,7 +1278,7 @@ pub fn execute_avro_record_type_candidate_wire_with_control(
     let result = (|| {
         use umf_core::{
             avro_fields::AvroDependency,
-            avro_record_type_candidate::{Resolution, resolve_candidate},
+            avro_record_type_candidate::{resolve_candidate, Resolution},
             native_json::NativeJsonTree,
         };
         let mut ctx = Context::ordinary().with_host_control(control);
@@ -1338,7 +1398,7 @@ pub fn execute_avro_inspect_wire_with_control(
 ) -> String {
     let result = (|| {
         use umf_core::{
-            avro_semantics::{Dependency, inspect_schema},
+            avro_semantics::{inspect_schema, Dependency},
             native_json::NativeJsonTree,
         };
         let mut ctx = Context::ordinary().with_host_control(control);
@@ -1383,6 +1443,54 @@ pub fn execute_avro_inspect_wire_with_control(
             .collect::<Vec<_>>();
         let validation = inspect_schema(&root, &dependencies, &mut ctx)?;
         encode(&validation_value(validation), &mut ctx)
+    })();
+    result_envelope(result)
+}
+
+/// Inspect a tagged UMF document, reporting generic admission separately from
+/// native Avro structure inspection. This operation never mutates the source.
+#[cfg(feature = "embedded-adapters")]
+pub fn execute_avro_document_inspect_wire(wire_json: &str) -> String {
+    let mut no_control = |_amount: usize| Ok(());
+    execute_avro_document_inspect_wire_with_control(wire_json, &mut no_control)
+}
+
+#[cfg(feature = "embedded-adapters")]
+pub fn execute_avro_document_inspect_wire_with_control(
+    wire_json: &str,
+    control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+) -> String {
+    let result = (|| {
+        let mut ctx = Context::ordinary().with_host_control(control);
+        let request = decode(wire_json, &mut ctx)?;
+        if text_field(&request, "op").as_deref() != Some("avro.document.inspect") {
+            return Err(fail(
+                "REQUEST",
+                "Unknown Avro document inspection operation",
+            ));
+        }
+        let document = field(&request, "document")
+            .ok_or_else(|| fail("REQUEST", "UMF document is required"))?;
+        let inspection = umf_core::avro_document::inspect_avro_document(document, &mut ctx)?;
+        let native = match inspection.native_inspection {
+            Some(report) => {
+                let Value::Object(mut fields) = validation_value(report) else {
+                    unreachable!("validation_value returns an object")
+                };
+                fields.insert(0, (Utf16::from("status"), Value::string_utf8("inspected")));
+                Value::Object(fields)
+            }
+            None => object(vec![("status", Value::string_utf8("not-run"))]),
+        };
+        let mut output = vec![
+            ("profile", Value::string_utf8(AVRO_DOCUMENT_INSPECT_PROFILE)),
+            ("admission", validation_value(inspection.admission)),
+            ("nativeInspection", native),
+        ];
+        if let Some(path) = inspection.payload_path {
+            output.push(("payloadPath", Value::String(path)));
+        }
+        encode(&object(output), &mut ctx)
     })();
     result_envelope(result)
 }
@@ -1843,7 +1951,10 @@ pub fn execute_core_bit128_field_request_with_control(
         }
     };
     if operation.as_deref() != Some("model/declareCoreBit128Field") {
-        return result_envelope(Err(fail("REQUEST", "Expected a Core Bit128 Field operation")));
+        return result_envelope(Err(fail(
+            "REQUEST",
+            "Expected a Core Bit128 Field operation",
+        )));
     }
     execute_request_with_control(wire_json, profile, capabilities, control)
 }
@@ -1961,16 +2072,32 @@ fn execute_request_inner(
     if op == "model/declareCoreBit128Field"
         && (!has_exact_members(
             &request,
-            &["op", "resources", "registry", "source", "identity", "scalarType"],
+            &[
+                "op",
+                "resources",
+                "registry",
+                "source",
+                "identity",
+                "scalarType",
+            ],
         ) || !matches!(field(&request, "registry"), Some(Value::Array(items)) if items.is_empty())
             || !field(&request, "resources").is_some_and(|resources| {
                 has_exact_members(
                     resources,
-                    &["coreSchema", "referenceSchema", "packageSchema", "constraints", "domainPolicy"],
+                    &[
+                        "coreSchema",
+                        "referenceSchema",
+                        "packageSchema",
+                        "constraints",
+                        "domainPolicy",
+                    ],
                 )
             }))
     {
-        return Err(fail("REQUEST", "Closed Bit128 Field request and exact five-resource set required"));
+        return Err(fail(
+            "REQUEST",
+            "Closed Bit128 Field request and exact five-resource set required",
+        ));
     }
     if op == "model/scalarTypesForVersion"
         && (!has_exact_members(&request, &["op", "resources", "registry", "version"])
@@ -2074,7 +2201,13 @@ fn execute_request_inner(
     if let (Some(engine), Some(resources)) = (retained_engine, supplied_resources.as_ref()) {
         if !has_exact_members(
             resources,
-            &["coreSchema", "referenceSchema", "packageSchema", "constraints", "domainPolicy"],
+            &[
+                "coreSchema",
+                "referenceSchema",
+                "packageSchema",
+                "constraints",
+                "domainPolicy",
+            ],
         ) || !engine.matches_resource_values_with_context(
             field(resources, "coreSchema").unwrap_or(&Value::Null),
             field(resources, "referenceSchema").unwrap_or(&Value::Null),
@@ -2083,7 +2216,10 @@ fn execute_request_inner(
             field(resources, "domainPolicy").unwrap_or(&Value::Null),
             &mut operation_context,
         )? {
-            return Err(fail("REQUEST", "Retained model resources do not match the admitted runtime"));
+            return Err(fail(
+                "REQUEST",
+                "Retained model resources do not match the admitted runtime",
+            ));
         }
     }
     let mut resources = supplied_resources.unwrap_or_else(|| Value::Object(Vec::new()));
@@ -2116,7 +2252,9 @@ fn execute_request_inner(
                 catalog,
             )?);
         }
-        let engine = retained_engine.or(owned_engine.as_ref()).expect("engine selected");
+        let engine = retained_engine
+            .or(owned_engine.as_ref())
+            .expect("engine selected");
         let mut registry = engine.registry(catalog)?;
         if let Some(Value::Array(extensions)) = registry_value {
             let schema_resources = engine.schema_resources_with_context(catalog)?;
@@ -2208,7 +2346,9 @@ fn execute_request_inner(
         }
         Ok::<_, EngineError>(registry)
     })?;
-    let engine = retained_engine.or(owned_engine.as_ref()).expect("engine selected");
+    let engine = retained_engine
+        .or(owned_engine.as_ref())
+        .expect("engine selected");
     let value = {
         match op.as_str() {
             "model/inspectCoreCardinality"
@@ -3240,8 +3380,13 @@ mod tests {
                 "throw" => {
                     assert_eq!(envelope["status"], "error", "case {id}: {envelope}");
                     assert_eq!(envelope["code"], case["code"], "case {id}: {envelope}");
-                    let expected: Vec<u16> = case["message"].as_str().unwrap().encode_utf16().collect();
-                    assert_eq!(envelope["messageUnits"], serde_json::json!(expected), "case {id}: {envelope}");
+                    let expected: Vec<u16> =
+                        case["message"].as_str().unwrap().encode_utf16().collect();
+                    assert_eq!(
+                        envelope["messageUnits"],
+                        serde_json::json!(expected),
+                        "case {id}: {envelope}"
+                    );
                 }
                 other => panic!("unknown predecessor outcome {other}"),
             }
@@ -3271,9 +3416,16 @@ mod tests {
             let envelope: serde_json::Value =
                 serde_json::from_str(&execute_json_schema_wire(&request)).unwrap();
             assert_eq!(envelope["status"], "error", "source {source:?}: {envelope}");
-            assert_eq!(envelope["code"], expected_code, "source {source:?}: {envelope}");
+            assert_eq!(
+                envelope["code"], expected_code,
+                "source {source:?}: {envelope}"
+            );
             let expected: Vec<u16> = expected_message.encode_utf16().collect();
-            assert_eq!(envelope["messageUnits"], serde_json::json!(expected), "source {source:?}: {envelope}");
+            assert_eq!(
+                envelope["messageUnits"],
+                serde_json::json!(expected),
+                "source {source:?}: {envelope}"
+            );
         }
     }
 
@@ -3287,7 +3439,10 @@ mod tests {
             let mut fields = vec![
                 ("profile", Value::string_utf8("umf-r5-json-schema/0.1.0")),
                 ("op", Value::string_utf8("parseNativeYaml")),
-                ("source", Value::String(Utf16::from(case["source"].as_str().unwrap()))),
+                (
+                    "source",
+                    Value::String(Utf16::from(case["source"].as_str().unwrap())),
+                ),
             ];
             for (key, value) in case["options"].as_object().unwrap() {
                 let wire_value = match value {
@@ -3299,19 +3454,34 @@ mod tests {
                 fields.push((key, wire_value));
             }
             let request = comparison_request(fields);
-            let envelope: serde_json::Value = serde_json::from_str(&execute_json_schema_wire(&request)).unwrap();
+            let envelope: serde_json::Value =
+                serde_json::from_str(&execute_json_schema_wire(&request)).unwrap();
             match case["outcome"].as_str().unwrap() {
                 "return" => {
                     assert_eq!(envelope["status"], "ok", "case {id}: {envelope}");
-                    let result = decode(envelope["wire"].as_str().unwrap(), &mut Context::ordinary()).unwrap();
-                    let json = umf_core::serialization::stringify_compact(&result).unwrap().to_utf8().unwrap();
-                    assert_eq!(serde_json::from_str::<serde_json::Value>(&json).unwrap(), case["tree"], "case {id}");
+                    let result =
+                        decode(envelope["wire"].as_str().unwrap(), &mut Context::ordinary())
+                            .unwrap();
+                    let json = umf_core::serialization::stringify_compact(&result)
+                        .unwrap()
+                        .to_utf8()
+                        .unwrap();
+                    assert_eq!(
+                        serde_json::from_str::<serde_json::Value>(&json).unwrap(),
+                        case["tree"],
+                        "case {id}"
+                    );
                 }
                 "throw" => {
                     assert_eq!(envelope["status"], "error", "case {id}: {envelope}");
                     assert_eq!(envelope["code"], case["code"], "case {id}: {envelope}");
-                    let expected: Vec<u16> = case["message"].as_str().unwrap().encode_utf16().collect();
-                    assert_eq!(envelope["messageUnits"], serde_json::json!(expected), "case {id}: {envelope}");
+                    let expected: Vec<u16> =
+                        case["message"].as_str().unwrap().encode_utf16().collect();
+                    assert_eq!(
+                        envelope["messageUnits"],
+                        serde_json::json!(expected),
+                        "case {id}: {envelope}"
+                    );
                 }
                 other => panic!("unknown predecessor outcome {other}"),
             }
@@ -3400,11 +3570,9 @@ mod tests {
         assert_eq!(envelope["code"], "REQUEST");
         assert_eq!(
             envelope["messageUnits"],
-            serde_json::json!(
-                "umf.schema-comparison/1 profile is required"
-                    .encode_utf16()
-                    .collect::<Vec<_>>()
-            )
+            serde_json::json!("umf.schema-comparison/1 profile is required"
+                .encode_utf16()
+                .collect::<Vec<_>>())
         );
 
         let profile = Value::string_utf8(DOCUMENT_COMPARISON_PROFILE);
@@ -3413,11 +3581,9 @@ mod tests {
             serde_json::from_str(&execute_document_comparison_wire(&missing_both)).unwrap();
         assert_eq!(
             envelope["messageUnits"],
-            serde_json::json!(
-                "Before value is required"
-                    .encode_utf16()
-                    .collect::<Vec<_>>()
-            )
+            serde_json::json!("Before value is required"
+                .encode_utf16()
+                .collect::<Vec<_>>())
         );
         let missing_after = comparison_request(vec![("profile", profile), ("before", Value::Null)]);
         let envelope: serde_json::Value =
@@ -3524,34 +3690,82 @@ mod tests {
     fn retained_engine_dispatch_rejects_resource_substitution() {
         let mut catalog = Context::catalog();
         let resources = object(vec![
-            ("coreSchema", parse_wire_source(include_str!("../../../spec/core/schema.json"), &mut catalog)),
-            ("referenceSchema", parse_wire_source(include_str!("../../../spec/core/semantic-type-reference.schema.json"), &mut catalog)),
-            ("packageSchema", parse_wire_source(include_str!("../../../spec/core/extension-package.schema.json"), &mut catalog)),
-            ("constraints", parse_wire_source(include_str!("../../../spec/metamodel/generated/core-constraints.json"), &mut catalog)),
-            ("domainPolicy", parse_wire_source(include_str!("../../../spec/metamodel/generated/domain-policy.json"), &mut catalog)),
+            (
+                "coreSchema",
+                parse_wire_source(include_str!("../../../spec/core/schema.json"), &mut catalog),
+            ),
+            (
+                "referenceSchema",
+                parse_wire_source(
+                    include_str!("../../../spec/core/semantic-type-reference.schema.json"),
+                    &mut catalog,
+                ),
+            ),
+            (
+                "packageSchema",
+                parse_wire_source(
+                    include_str!("../../../spec/core/extension-package.schema.json"),
+                    &mut catalog,
+                ),
+            ),
+            (
+                "constraints",
+                parse_wire_source(
+                    include_str!("../../../spec/metamodel/generated/core-constraints.json"),
+                    &mut catalog,
+                ),
+            ),
+            (
+                "domainPolicy",
+                parse_wire_source(
+                    include_str!("../../../spec/metamodel/generated/domain-policy.json"),
+                    &mut catalog,
+                ),
+            ),
         ]);
         let mut admitted = resources.clone();
-        let engine = catalog.with_catalog_value_limit(|ctx| Engine::new(ResourceSet::new(
-            take_field(&mut admitted, "coreSchema").unwrap(),
-            take_field(&mut admitted, "referenceSchema").unwrap(),
-            take_field(&mut admitted, "packageSchema").unwrap(),
-            take_field(&mut admitted, "constraints").unwrap(),
-            take_field(&mut admitted, "domainPolicy").unwrap(),
-        ), ctx)).unwrap();
+        let engine = catalog
+            .with_catalog_value_limit(|ctx| {
+                Engine::new(
+                    ResourceSet::new(
+                        take_field(&mut admitted, "coreSchema").unwrap(),
+                        take_field(&mut admitted, "referenceSchema").unwrap(),
+                        take_field(&mut admitted, "packageSchema").unwrap(),
+                        take_field(&mut admitted, "constraints").unwrap(),
+                        take_field(&mut admitted, "domainPolicy").unwrap(),
+                    ),
+                    ctx,
+                )
+            })
+            .unwrap();
         let mut substituted = resources;
         if let Value::Object(members) = &mut substituted {
-            members.iter_mut().find(|(key, _)| key == &Utf16::from("coreSchema")).unwrap().1 = Value::Bool(false);
+            members
+                .iter_mut()
+                .find(|(key, _)| key == &Utf16::from("coreSchema"))
+                .unwrap()
+                .1 = Value::Bool(false);
         }
         let request = comparison_request(vec![
             ("op", Value::String(Utf16::from("model/inspectCoreKind"))),
             ("resources", substituted),
             ("registry", Value::Array(vec![])),
             ("source", object(vec![("modules", Value::Array(vec![]))])),
-            ("identity", object(vec![("module", Value::String(Utf16::from("m"))), ("element", Value::String(Utf16::from("e")))])),
+            (
+                "identity",
+                object(vec![
+                    ("module", Value::String(Utf16::from("m"))),
+                    ("element", Value::String(Utf16::from("e"))),
+                ]),
+            ),
         ]);
         let mut capabilities = NumericNoCapabilities;
         let response = execute_request_with_engine_and_control(
-            &request, ResourceProfile::Cooperative, &mut capabilities, &mut |_| Ok(()), Some(&engine),
+            &request,
+            ResourceProfile::Cooperative,
+            &mut capabilities,
+            &mut |_| Ok(()),
+            Some(&engine),
         );
         let envelope: serde_json::Value = serde_json::from_str(&response).unwrap();
         assert_eq!(envelope["status"], "error");
@@ -3562,72 +3776,155 @@ mod tests {
     fn retained_engine_dispatch_accepts_bound_requests_without_a_resource_witness() {
         let mut catalog = Context::catalog();
         let resources = object(vec![
-            ("coreSchema", parse_wire_source(include_str!("../../../spec/core/schema.json"), &mut catalog)),
-            ("referenceSchema", parse_wire_source(include_str!("../../../spec/core/semantic-type-reference.schema.json"), &mut catalog)),
-            ("packageSchema", parse_wire_source(include_str!("../../../spec/core/extension-package.schema.json"), &mut catalog)),
-            ("constraints", parse_wire_source(include_str!("../../../spec/metamodel/generated/core-constraints.json"), &mut catalog)),
-            ("domainPolicy", parse_wire_source(include_str!("../../../spec/metamodel/generated/domain-policy.json"), &mut catalog)),
+            (
+                "coreSchema",
+                parse_wire_source(include_str!("../../../spec/core/schema.json"), &mut catalog),
+            ),
+            (
+                "referenceSchema",
+                parse_wire_source(
+                    include_str!("../../../spec/core/semantic-type-reference.schema.json"),
+                    &mut catalog,
+                ),
+            ),
+            (
+                "packageSchema",
+                parse_wire_source(
+                    include_str!("../../../spec/core/extension-package.schema.json"),
+                    &mut catalog,
+                ),
+            ),
+            (
+                "constraints",
+                parse_wire_source(
+                    include_str!("../../../spec/metamodel/generated/core-constraints.json"),
+                    &mut catalog,
+                ),
+            ),
+            (
+                "domainPolicy",
+                parse_wire_source(
+                    include_str!("../../../spec/metamodel/generated/domain-policy.json"),
+                    &mut catalog,
+                ),
+            ),
         ]);
         let mut admitted = resources.clone();
-        let engine = catalog.with_catalog_value_limit(|ctx| Engine::new(ResourceSet::new(
-            take_field(&mut admitted, "coreSchema").unwrap(),
-            take_field(&mut admitted, "referenceSchema").unwrap(),
-            take_field(&mut admitted, "packageSchema").unwrap(),
-            take_field(&mut admitted, "constraints").unwrap(),
-            take_field(&mut admitted, "domainPolicy").unwrap(),
-        ), ctx)).unwrap();
+        let engine = catalog
+            .with_catalog_value_limit(|ctx| {
+                Engine::new(
+                    ResourceSet::new(
+                        take_field(&mut admitted, "coreSchema").unwrap(),
+                        take_field(&mut admitted, "referenceSchema").unwrap(),
+                        take_field(&mut admitted, "packageSchema").unwrap(),
+                        take_field(&mut admitted, "constraints").unwrap(),
+                        take_field(&mut admitted, "domainPolicy").unwrap(),
+                    ),
+                    ctx,
+                )
+            })
+            .unwrap();
         let request = comparison_request(vec![
             ("op", Value::String(Utf16::from("model/inspectCoreKind"))),
             ("registry", Value::Array(vec![])),
             ("source", object(vec![("modules", Value::Array(vec![]))])),
-            ("identity", object(vec![("module", Value::String(Utf16::from("m"))), ("element", Value::String(Utf16::from("e")))])),
+            (
+                "identity",
+                object(vec![
+                    ("module", Value::String(Utf16::from("m"))),
+                    ("element", Value::String(Utf16::from("e"))),
+                ]),
+            ),
         ]);
         let mut capabilities = NumericNoCapabilities;
         let response = execute_request_with_engine_and_control(
-            &request, ResourceProfile::Cooperative, &mut capabilities, &mut |_| Ok(()), Some(&engine),
+            &request,
+            ResourceProfile::Cooperative,
+            &mut capabilities,
+            &mut |_| Ok(()),
+            Some(&engine),
         );
         let envelope: serde_json::Value = serde_json::from_str(&response).unwrap();
-        assert_ne!(envelope["code"], "REQUEST", "bound runtime should not require a repeated resource witness");
+        assert_ne!(
+            envelope["code"], "REQUEST",
+            "bound runtime should not require a repeated resource witness"
+        );
 
         let witnessed_request = comparison_request(vec![
             ("op", Value::String(Utf16::from("model/inspectCoreKind"))),
             ("resources", resources),
             ("registry", Value::Array(vec![])),
             ("source", object(vec![("modules", Value::Array(vec![]))])),
-            ("identity", object(vec![("module", Value::String(Utf16::from("m"))), ("element", Value::String(Utf16::from("e")))])),
+            (
+                "identity",
+                object(vec![
+                    ("module", Value::String(Utf16::from("m"))),
+                    ("element", Value::String(Utf16::from("e"))),
+                ]),
+            ),
         ]);
         let mut charged = 0usize;
-        let mut meter = |amount| { charged = charged.saturating_add(amount); Ok(()) };
+        let mut meter = |amount| {
+            charged = charged.saturating_add(amount);
+            Ok(())
+        };
         let mut capabilities = NumericNoCapabilities;
         let _ = execute_request_with_engine_and_control(
-            &witnessed_request, ResourceProfile::Cooperative, &mut capabilities, &mut meter, Some(&engine),
+            &witnessed_request,
+            ResourceProfile::Cooperative,
+            &mut capabilities,
+            &mut meter,
+            Some(&engine),
         );
         let threshold = charged.saturating_sub(1);
         let mut charged_again = 0usize;
         let mut refusing_meter = |amount| {
             charged_again = charged_again.saturating_add(amount);
             if charged_again > threshold {
-                Err(EngineError::new("TEST_BUDGET", Utf16::default(), "combined work budget exceeded"))
-            } else { Ok(()) }
+                Err(EngineError::new(
+                    "TEST_BUDGET",
+                    Utf16::default(),
+                    "combined work budget exceeded",
+                ))
+            } else {
+                Ok(())
+            }
         };
         let mut capabilities = NumericNoCapabilities;
         let response = execute_request_with_engine_and_control(
-            &witnessed_request, ResourceProfile::Cooperative, &mut capabilities, &mut refusing_meter, Some(&engine),
+            &witnessed_request,
+            ResourceProfile::Cooperative,
+            &mut capabilities,
+            &mut refusing_meter,
+            Some(&engine),
         );
         let envelope: serde_json::Value = serde_json::from_str(&response).unwrap();
-        assert_eq!(envelope["code"], "TEST_BUDGET", "decode, witness comparison, and model operation share the host work cap");
+        assert_eq!(
+            envelope["code"], "TEST_BUDGET",
+            "decode, witness comparison, and model operation share the host work cap"
+        );
 
         let closed_request = comparison_request(vec![
-            ("op", Value::String(Utf16::from("model/declareCoreRecordType"))),
+            (
+                "op",
+                Value::String(Utf16::from("model/declareCoreRecordType")),
+            ),
             ("fieldAuthor", Value::Null),
             ("recordAuthor", Value::Null),
         ]);
         let mut capabilities = NumericNoCapabilities;
         let response = execute_request_with_engine_and_control(
-            &closed_request, ResourceProfile::Cooperative, &mut capabilities, &mut |_| Ok(()), Some(&engine),
+            &closed_request,
+            ResourceProfile::Cooperative,
+            &mut capabilities,
+            &mut |_| Ok(()),
+            Some(&engine),
         );
         let envelope: serde_json::Value = serde_json::from_str(&response).unwrap();
-        assert_eq!(envelope["code"], "REQUEST", "closed Record Type request still requires its explicit witness shape");
+        assert_eq!(
+            envelope["code"], "REQUEST",
+            "closed Record Type request still requires its explicit witness shape"
+        );
     }
 
     #[test]

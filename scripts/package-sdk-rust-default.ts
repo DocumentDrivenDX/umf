@@ -232,6 +232,8 @@ try{
   // It is captured with this source cut without claiming a Rust default route.
   join(root,'scripts/rust-migration/r8/capture-avro-inspect-edit-predecessor.ts'),
   join(root,'tests/rust-migration/r8-avro-inspect-edit-predecessor.test.mjs'),
+  join(root,'tests/rust-migration/r8-avro-inspect-edit-differential.test.mjs'),
+  join(root,'docs/helix/02-design/contracts/CONTRACT-007-avro.md'),
   join(root,'docs/helix/04-build/evidence/rust-migration/r8-avro-inspect-edit-predecessor/README.md'),
   join(root,'docs/helix/04-build/evidence/rust-migration/r8-avro-inspect-edit-predecessor/predecessor.json'),
   join(root,'scripts/core-relationship-cases.ts'),join(root,'scripts/core-relationship-operation-cases.ts'),

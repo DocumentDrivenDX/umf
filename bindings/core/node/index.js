@@ -180,6 +180,7 @@ export const PROTOBUF_DOCUMENT_PROFILE = 'umf-r8-protobuf-descriptor-document/0.
 export const PROTOBUF_SOURCE_IMPORT_PROFILE = 'umf-r8-protobuf-source-import/0.1.0';
 export const AVRO_FIELDS_PROFILE = 'umf-r5-avro-fields/0.1.0';
 export const AVRO_INSPECT_PROFILE = 'umf-r5-avro-inspect/0.1.0';
+export const AVRO_DOCUMENT_INSPECT_PROFILE = 'umf-r5-avro-document-inspect/0.1.0';
 export const AVRO_CANDIDATE_PROFILE = 'umf-r5-avro-candidate/0.1.0';
 export const RECORD_TYPE_BINDING_PROFILE = 'umf.record-type-binding/1.0.0';
 export {JSON_SCHEMA_PROFILE};
@@ -1274,6 +1275,28 @@ export function createAvroInspector(options = {}) {
       return fromWire(JSON.parse(envelope.wire), hostWork);
     },
   });
+}
+
+/** Create the opt-in Rust Avro document inspector. This does not activate the default adapter. */
+export function createAvroDocumentInspector(options = {}) {
+  if (typeof addon.executeAvroDocumentInspectWire !== 'function' || typeof addon.avroDocumentInspectProfileVersion !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
+  if (addon.avroDocumentInspectProfileVersion() !== AVRO_DOCUMENT_INSPECT_PROFILE) throw new Error('RUST_NODE_BINDING_PROFILE_MISMATCH');
+  const {controls} = codegenOptions(options);
+  return Object.freeze({inspect(document) {
+    const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+    const hostWork = admissionWork(controlBridge);
+    hostWork?.(1);
+    const request = {op: 'avro.document.inspect', document};
+    const responseText = addon.executeAvroDocumentInspectWire(encodeRequestWire(request, hostWork), controlBridge);
+    hostWork?.(responseText.length);
+    const envelope = JSON.parse(responseText);
+    const failure = resultError(envelope);
+    if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+    hostWork?.(envelope.wire.length);
+    const report = fromWire(JSON.parse(envelope.wire), hostWork);
+    if (!report || report.profile !== AVRO_DOCUMENT_INSPECT_PROFILE || !report.admission || typeof report.admission.valid !== 'boolean' || typeof report.admission.complete !== 'boolean' || !Array.isArray(report.admission.diagnostics) || !report.nativeInspection || !['not-run', 'inspected'].includes(report.nativeInspection.status) || (report.nativeInspection.status === 'inspected' && (typeof report.nativeInspection.valid !== 'boolean' || report.nativeInspection.complete !== false || !Array.isArray(report.nativeInspection.diagnostics)))) throw new UmfCoreError('WIRE_FORMAT', 'Malformed Avro document inspection report');
+    return report;
+  }});
 }
 
 /** Create the opt-in Avro document candidate editor; this does not activate the default adapter. */

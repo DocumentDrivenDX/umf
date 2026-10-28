@@ -36,7 +36,8 @@ impl<'a, 'py> umf_core::read_plan_bind::ReadPlanBindHost for PyReadPlanBindHost<
     type Error = PyErr;
 
     fn preflight_artifact(&mut self, variant: usize) -> PyResult<()> {
-        self.callbacks.call_method1("preflight_artifact", (variant,))?;
+        self.callbacks
+            .call_method1("preflight_artifact", (variant,))?;
         Ok(())
     }
 
@@ -57,12 +58,14 @@ impl<'a, 'py> umf_core::read_plan_bind::ReadPlanBindHost for PyReadPlanBindHost<
     }
 
     fn selected_artifact(&mut self, variant: usize) -> PyResult<()> {
-        self.callbacks.call_method1("selected_artifact", (variant,))?;
+        self.callbacks
+            .call_method1("selected_artifact", (variant,))?;
         Ok(())
     }
 
     fn build_parameters(&mut self, variant: usize) -> PyResult<()> {
-        self.callbacks.call_method1("build_parameters", (variant,))?;
+        self.callbacks
+            .call_method1("build_parameters", (variant,))?;
         Ok(())
     }
 }
@@ -88,37 +91,71 @@ fn access_read_plan_bind_select(
 }
 
 #[pyfunction]
-fn project_sec_submissions(input: &Bound<'_, PyAny>, source_id: &Bound<'_, PyAny>) -> PyResult<String> {
+fn project_sec_submissions(
+    input: &Bound<'_, PyAny>,
+    source_id: &Bound<'_, PyAny>,
+) -> PyResult<String> {
     sec_project(input, source_id, true)
 }
 
 #[pyfunction]
-fn project_sec_company_facts(input: &Bound<'_, PyAny>, source_id: &Bound<'_, PyAny>) -> PyResult<String> {
+fn project_sec_company_facts(
+    input: &Bound<'_, PyAny>,
+    source_id: &Bound<'_, PyAny>,
+) -> PyResult<String> {
     sec_project(input, source_id, false)
 }
 
-fn sec_project(input: &Bound<'_, PyAny>, source_id: &Bound<'_, PyAny>, submissions: bool) -> PyResult<String> {
+fn sec_project(
+    input: &Bound<'_, PyAny>,
+    source_id: &Bound<'_, PyAny>,
+    submissions: bool,
+) -> PyResult<String> {
     if !input.is_exact_instance_of::<PyString>() {
         return Err(PyTypeError::new_err("input must be JSON text"));
     }
     if input.len()? > SEC_INPUT_LIMIT {
-        return Err(sec_projection_error("UmfError", Some("LIMIT"), Some(""), "Native JSON exceeds text limit"));
+        return Err(sec_projection_error(
+            "UmfError",
+            Some("LIMIT"),
+            Some(""),
+            "Native JSON exceeds text limit",
+        ));
     }
     let input_bytes = sec_encode_text(input)?;
     if input_bytes.len() / 2 > SEC_INPUT_LIMIT {
-        return Err(sec_projection_error("UmfError", Some("LIMIT"), Some(""), "Native JSON exceeds text limit"));
+        return Err(sec_projection_error(
+            "UmfError",
+            Some("LIMIT"),
+            Some(""),
+            "Native JSON exceeds text limit",
+        ));
     }
     let input_units = sec_bytes_to_units(&input_bytes);
-    let source_units = if source_id.is_exact_instance_of::<PyString>() && source_id.len()? <= SEC_SOURCE_LIMIT {
-        let bytes = sec_encode_text(source_id)?;
-        if bytes.len() / 2 <= SEC_SOURCE_LIMIT { sec_bytes_to_units(&bytes) } else { Vec::new() }
-    } else { Vec::new() };
+    let source_units =
+        if source_id.is_exact_instance_of::<PyString>() && source_id.len()? <= SEC_SOURCE_LIMIT {
+            let bytes = sec_encode_text(source_id)?;
+            if bytes.len() / 2 <= SEC_SOURCE_LIMIT {
+                sec_bytes_to_units(&bytes)
+            } else {
+                Vec::new()
+            }
+        } else {
+            Vec::new()
+        };
     let result = if submissions {
         umf_core::domain_pack_sec::project_sec_submissions(&input_units, &source_units)
     } else {
         umf_core::domain_pack_sec::project_sec_company_facts(&input_units, &source_units)
     };
-    result.map_err(|error| sec_projection_error(&error.name, error.code.as_deref(), error.path.as_deref(), &error.message))
+    result.map_err(|error| {
+        sec_projection_error(
+            &error.name,
+            error.code.as_deref(),
+            error.path.as_deref(),
+            &error.message,
+        )
+    })
 }
 
 fn sec_encode_text(value: &Bound<'_, PyAny>) -> PyResult<Vec<u8>> {
@@ -127,10 +164,18 @@ fn sec_encode_text(value: &Bound<'_, PyAny>) -> PyResult<Vec<u8>> {
 }
 
 fn sec_bytes_to_units(bytes: &[u8]) -> Vec<u16> {
-    bytes.chunks_exact(2).map(|pair| u16::from_le_bytes([pair[0], pair[1]])).collect()
+    bytes
+        .chunks_exact(2)
+        .map(|pair| u16::from_le_bytes([pair[0], pair[1]]))
+        .collect()
 }
 
-fn sec_projection_error(name: &str, code: Option<&str>, path: Option<&str>, message: &str) -> PyErr {
+fn sec_projection_error(
+    name: &str,
+    code: Option<&str>,
+    path: Option<&str>,
+    message: &str,
+) -> PyErr {
     let error = SecProjectionError::new_err(message.to_owned());
     Python::with_gil(|py| {
         let value = error.value_bound(py);
@@ -147,7 +192,9 @@ fn exact_tuple<'a, 'py>(
     label: &str,
 ) -> PyResult<&'a Bound<'py, PyTuple>> {
     if !value.is_exact_instance_of::<PyTuple>() {
-        return Err(PyTypeError::new_err(format!("{label} must be an exact tuple")));
+        return Err(PyTypeError::new_err(format!(
+            "{label} must be an exact tuple"
+        )));
     }
     Ok(value.downcast::<PyTuple>()?)
 }
@@ -868,6 +915,45 @@ fn protobuf_inspect_profile_version() -> &'static str {
 #[pyfunction]
 fn avro_inspect_profile_version() -> &'static str {
     umf_core_wire::AVRO_INSPECT_PROFILE
+}
+
+#[pyfunction]
+fn avro_document_inspect_profile_version() -> &'static str {
+    umf_core_wire::AVRO_DOCUMENT_INSPECT_PROFILE
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, control=None))]
+fn execute_avro_document_inspect_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let Some(control) = control else {
+        return Ok(umf_core_wire::execute_avro_document_inspect_wire(wire_json));
+    };
+    let mut hook = |amount: usize| {
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        let mut error = EngineError::new(code, Utf16::from(path), Utf16::from(message));
+        error.python_message_origin = None;
+        Err(error)
+    };
+    Ok(umf_core_wire::execute_avro_document_inspect_wire_with_control(wire_json, &mut hook))
 }
 
 #[pyfunction]
@@ -5815,7 +5901,10 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(access_target_pin_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(access_target_pin_matches, module)?)?;
     module.add_function(wrap_pyfunction!(access_target_pin_matches_host, module)?)?;
-    module.add_function(wrap_pyfunction!(access_read_plan_bind_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        access_read_plan_bind_profile_version,
+        module
+    )?)?;
     module.add_function(wrap_pyfunction!(access_read_plan_bind_select, module)?)?;
     module.add(
         "SecProjectionError",
@@ -5947,6 +6036,14 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(protobuf_inspect_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(avro_inspect_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_avro_inspect_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        avro_document_inspect_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        execute_avro_document_inspect_wire,
+        module
+    )?)?;
     module.add_function(wrap_pyfunction!(avro_candidate_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_avro_candidate_wire, module)?)?;
     module.add_function(wrap_pyfunction!(execute_protobuf_inspect_wire, module)?)?;
@@ -6135,10 +6232,12 @@ fn domain_pack_value_to_python(
     Ok(match value {
         Value::Null => py.None(),
         Value::Bool(value) => value.into_pyobject(py)?.to_owned().into_any().unbind(),
-        Value::Number(value)
-            if value.fract() == 0.0 && value.abs() <= 9_007_199_254_740_991.0 =>
-        {
-            (*value as i64).into_pyobject(py)?.to_owned().into_any().unbind()
+        Value::Number(value) if value.fract() == 0.0 && value.abs() <= 9_007_199_254_740_991.0 => {
+            (*value as i64)
+                .into_pyobject(py)?
+                .to_owned()
+                .into_any()
+                .unbind()
         }
         Value::Number(value) => value.into_pyobject(py)?.to_owned().into_any().unbind(),
         Value::String(value) => py_text(py, value, context)?,

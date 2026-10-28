@@ -1,7 +1,7 @@
 import {expect, test} from 'bun:test';
-import {createAvroCandidateEditor, createAvroInspector, AVRO_CANDIDATE_PROFILE, AVRO_INSPECT_PROFILE} from '../src/avro.js';
-import {toWire} from '../src/wire.js';
-import {AVRO_CANDIDATE_PROFILE as PUBLIC_AVRO_CANDIDATE_PROFILE, AVRO_INSPECT_PROFILE as PUBLIC_AVRO_INSPECT_PROFILE, createAvroCandidateEditor as createPublicAvroCandidateEditor, createAvroInspector as createPublicAvroInspector, executeRecordTypeBindingWire, initializeAvroCandidateEditorWasm, initializeAvroInspectorWasm, RECORD_TYPE_BINDING_PROFILE} from '../index.js';
+import {createAvroCandidateEditor, createAvroInspector, createAvroDocumentInspector, AVRO_CANDIDATE_PROFILE, AVRO_INSPECT_PROFILE, AVRO_DOCUMENT_INSPECT_PROFILE} from '../src/avro.js';
+import {toWire, fromWire} from '../src/wire.js';
+import {AVRO_CANDIDATE_PROFILE as PUBLIC_AVRO_CANDIDATE_PROFILE, AVRO_INSPECT_PROFILE as PUBLIC_AVRO_INSPECT_PROFILE, AVRO_DOCUMENT_INSPECT_PROFILE as PUBLIC_AVRO_DOCUMENT_INSPECT_PROFILE, createAvroCandidateEditor as createPublicAvroCandidateEditor, createAvroInspector as createPublicAvroInspector, createAvroDocumentInspector as createPublicAvroDocumentInspector, executeRecordTypeBindingWire, initializeAvroCandidateEditorWasm, initializeAvroInspectorWasm, RECORD_TYPE_BINDING_PROFILE} from '../index.js';
 
 function reply(value) {
   return JSON.stringify({profile: 'umf.core-wire/1', status: 'ok', wire: JSON.stringify(toWire(value))});
@@ -21,6 +21,25 @@ test('Avro WASM wrappers pin operation IDs and preserve the incomplete inspector
   expect(result.diagnostics[0].code).toBe('AVRO_PROFILE_LIMIT');
   expect(requests[0].kind).toBe('object');
   expect(field(requests[0], 'op').units.map((unit) => String.fromCharCode(unit)).join('')).toBe('avro.schema.inspect');
+});
+
+test('Avro whole-document WASM wrapper pins profile, operation and result shape', () => {
+  const report = {profile: AVRO_DOCUMENT_INSPECT_PROFILE,
+    admission: {valid: false, complete: true, diagnostics: []}, nativeInspection: {status: 'not-run'}};
+  const calls = [];
+  const module = {
+    avroDocumentInspectProfileVersion: () => AVRO_DOCUMENT_INSPECT_PROFILE,
+    executeAvroDocumentInspectWire(wire) {
+      calls.push(fromWire(JSON.parse(wire)));
+      return reply(report);
+    },
+  };
+  expect(createAvroDocumentInspector(module).inspect({id: 'd'})).toEqual(report);
+  expect(calls[0].op).toBe('avro.document.inspect');
+  expect(calls[0].document).toEqual({id: 'd'});
+  expect(() => createAvroDocumentInspector({...module, avroDocumentInspectProfileVersion: () => 'wrong'})).toThrow('RUST_WASM_BINDING_PROFILE_MISMATCH');
+  expect(PUBLIC_AVRO_DOCUMENT_INSPECT_PROFILE).toBe(AVRO_DOCUMENT_INSPECT_PROFILE);
+  expect(createPublicAvroDocumentInspector(module).inspect({id: 'd'})).toEqual(report);
 });
 
 test('candidate wrapper retains the proposal profile and refuses malformed reports', () => {

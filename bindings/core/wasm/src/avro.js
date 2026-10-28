@@ -1,6 +1,7 @@
 import {encodeRequestWire, fromWire, resultError} from './wire.js';
 
 export const AVRO_INSPECT_PROFILE = 'umf-r5-avro-inspect/0.1.0';
+export const AVRO_DOCUMENT_INSPECT_PROFILE = 'umf-r5-avro-document-inspect/0.1.0';
 export const AVRO_CANDIDATE_PROFILE = 'umf-r5-avro-candidate/0.1.0';
 
 /** Build an opt-in Avro inspector over a Rust/WASM wire module. */
@@ -26,6 +27,28 @@ export function createAvroInspector(module, {controls = {}, ErrorType} = {}) {
     if (failure) throw new CoreError(failure.code, failure.message, failure.path);
     work?.(envelope.wire.length);
     return fromWire(JSON.parse(envelope.wire), work);
+  }});
+}
+
+/** Build the opt-in Rust document inspector over a WASM wire module. */
+export function createAvroDocumentInspector(module, {controls = {}, ErrorType} = {}) {
+  if (typeof module?.executeAvroDocumentInspectWire !== 'function' || typeof module?.avroDocumentInspectProfileVersion !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  if (module.avroDocumentInspectProfileVersion() !== AVRO_DOCUMENT_INSPECT_PROFILE) throw new Error('RUST_WASM_BINDING_PROFILE_MISMATCH');
+  const CoreError = ErrorType ?? defaultError();
+  return Object.freeze({inspect(document) {
+    const bridge = makeControlBridge(controls);
+    const work = bridge ? amount => { const refusal = bridge(amount); if (refusal) throw controlError(refusal, CoreError); } : undefined;
+    work?.(1);
+    const request = {op: 'avro.document.inspect', document};
+    const responseText = module.executeAvroDocumentInspectWire(encodeRequestWire(request, work), bridge);
+    work?.(responseText.length);
+    const envelope = JSON.parse(responseText);
+    const failure = resultError(envelope);
+    if (failure) throw new CoreError(failure.code, failure.message, failure.path);
+    work?.(envelope.wire.length);
+    const report = fromWire(JSON.parse(envelope.wire), work);
+    if (!report || report.profile !== AVRO_DOCUMENT_INSPECT_PROFILE || !report.admission || typeof report.admission.valid !== 'boolean' || typeof report.admission.complete !== 'boolean' || !Array.isArray(report.admission.diagnostics) || !report.nativeInspection || !['not-run', 'inspected'].includes(report.nativeInspection.status) || (report.nativeInspection.status === 'inspected' && (typeof report.nativeInspection.valid !== 'boolean' || report.nativeInspection.complete !== false || !Array.isArray(report.nativeInspection.diagnostics)))) throw new CoreError('WIRE_FORMAT', 'Malformed Avro document inspection report');
+    return report;
   }});
 }
 
