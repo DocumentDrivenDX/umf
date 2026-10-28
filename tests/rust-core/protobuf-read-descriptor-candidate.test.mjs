@@ -32,7 +32,7 @@ function capture(fn, input) {
   catch (error) { return {ok: false, name: error.name, code: error.code ?? null, path: error.path ?? null, message: error.message}; }
 }
 
-test('14 frozen TypeScript/core cases retain coarse outcome and public UmfError envelope', () => {
+test('14 frozen TypeScript/core cases retain exact outcomes and public UmfError diagnostics', () => {
   expect(cases).toHaveLength(14);
   expect(Object.keys(predecessorFixture.cases)).toHaveLength(14);
   const source = readFileSync(new URL('../../src/adapters/protobuf/descriptor.ts', import.meta.url));
@@ -48,36 +48,12 @@ test('14 frozen TypeScript/core cases retain coarse outcome and public UmfError 
       expect(actual.name).toBe('UmfError');
       expect(actual.code).toBe(expected.code);
       expect(actual.path).toBe(expected.path);
-      if (expected.code === 'LIMIT') expect(actual.message).toBe(expected.message);
+      expect(actual.message).toBe(expected.message);
       report.push({id, code: actual.code, predecessorMessage: expected.message, rustMessage: actual.message, messageExact: actual.message === expected.message});
     }
   }
-  expect(report.filter(row => row.messageExact).map(row => row.id)).toEqual(['limit-plus-one']);
-  // Freeze the currently observed diagnostic gaps so new malformed cases or
-  // parser changes cannot silently widen this opt-in difference.
-  expect(report.filter(row => !row.messageExact).map(row => row.id)).toEqual([
-    'zero-tag',
-    'truncated-tag-varint',
-    'bad-wire-type',
-    'truncated-fixed32',
-    'truncated-length',
-    'truncated-field-varint',
-    'malformed-10th-varint',
-    'true-trailing-tag',
-    'exact-limit-malformed-first-byte',
-  ]);
-  expect(Object.fromEntries(report.map(row => [row.id, row.rustMessage]))).toEqual({
-    'zero-tag': 'Invalid Protobuf field number',
-    'truncated-tag-varint': 'Truncated varint',
-    'bad-wire-type': 'Invalid wire type',
-    'truncated-fixed32': 'Truncated fixed32',
-    'truncated-length': 'Truncated length-delimited field',
-    'truncated-field-varint': 'Truncated varint',
-    'malformed-10th-varint': 'Malformed varint',
-    'true-trailing-tag': 'Invalid wire type',
-    'exact-limit-malformed-first-byte': 'Invalid Protobuf field number',
-    'limit-plus-one': 'Descriptor input exceeds limit',
-  });
+  expect(report).toHaveLength(10);
+  expect(report.every(row => row.messageExact)).toBe(true);
 }, {timeout: 120_000});
 
 test('raw-byte host snapshots the exact offset window and ignores overridden byte accessors', () => {

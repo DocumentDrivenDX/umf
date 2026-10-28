@@ -1441,7 +1441,6 @@ export type { RowScopeResult } from './table-authoring/row-scope';
 export type { RowScopeViaBinding } from './table-authoring/row-scope';
 export { SCALAR_TYPES } from './model/types';
 export type { ScalarType } from './model/types';
-export { scalarTypesForVersion } from './model/types';
 export type { SchemaPosition } from './adapters/json-schema/index';
 export type { Scope } from './model/types';
 export { SECURITY_EXTENSION } from './extensions/security/policy';

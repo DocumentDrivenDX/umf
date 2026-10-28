@@ -20,6 +20,11 @@ pub struct DecodedSchema {
     /// consumers that need native parameters or competing annotations must use
     /// this retained representation.
     pub native_schema_elements: Vec<NativeSchemaElement>,
+    /// Complete ordered FileMetaData fields, including key/value metadata and
+    /// fields unknown to this Parquet IDL revision. Values retain their
+    /// Compact Protocol types so an opt-in consumer can inspect them without
+    /// flattening native semantics into the narrow schema projection.
+    pub native_file_metadata_fields: Vec<(i16, NativeWireValue)>,
     /// The metadata bytes after the FileMetaData struct, retained for audit.
     pub trailing_footer_bytes: usize,
 }
@@ -27,6 +32,121 @@ pub struct DecodedSchema {
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct NativeSchemaElement {
     pub fields: Vec<(i16, NativeWireValue)>,
+}
+
+/// Ordered view of FileMetaData.key_value_metadata. The original typed fields
+/// remain available in `DecodedSchema::native_file_metadata_fields`; this
+/// view only makes the standard key/value pair explicit for opt-in readers.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct NativeKeyValueMetadata {
+    pub index: usize,
+    pub key: Option<Vec<u8>>,
+    pub value: Option<Vec<u8>>,
+    pub fields: Vec<(i16, NativeWireValue)>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub enum ArrowSchemaMetadata {
+    Absent,
+    Unique {
+        index: usize,
+        value: Option<Vec<u8>>,
+    },
+    Duplicate {
+        indices: Vec<usize>,
+    },
+    Blocked {
+        diagnostic: &'static str,
+    },
+}
+
+/// Extract the standard key/value envelope without decoding or normalizing
+/// values. Duplicate keys and malformed entries remain observable; in
+/// particular, ARROW:schema is never silently selected by first/last wins.
+pub fn inspect_file_key_value_metadata(
+    decoded: &DecodedSchema,
+) -> (Vec<NativeKeyValueMetadata>, ArrowSchemaMetadata) {
+    let file_metadata = decoded
+        .native_file_metadata_fields
+        .iter()
+        .filter(|(id, _)| *id == 5)
+        .collect::<Vec<_>>();
+    if file_metadata.len() > 1 {
+        return (
+            Vec::new(),
+            ArrowSchemaMetadata::Blocked {
+                diagnostic: "FileMetaData.key_value_metadata is duplicated",
+            },
+        );
+    }
+    let Some((_, NativeWireValue::List(12, entries))) = file_metadata.first().copied() else {
+        return (
+            Vec::new(),
+            if !file_metadata.is_empty() {
+                ArrowSchemaMetadata::Blocked {
+                    diagnostic: "FileMetaData.key_value_metadata has the wrong wire type",
+                }
+            } else {
+                ArrowSchemaMetadata::Absent
+            },
+        );
+    };
+    let mut metadata = Vec::with_capacity(entries.len());
+    let mut arrow_indices = Vec::new();
+    for (index, entry) in entries.iter().enumerate() {
+        let NativeWireValue::Struct(fields) = entry else {
+            return (
+                metadata,
+                ArrowSchemaMetadata::Blocked {
+                    diagnostic: "KeyValue metadata entry is not a struct",
+                },
+            );
+        };
+        let key = match unique(fields, 1) {
+            Ok(Some(NativeWireValue::Binary(value))) => Some(value.clone()),
+            Ok(None) => None,
+            _ => {
+                return (
+                    metadata,
+                    ArrowSchemaMetadata::Blocked {
+                        diagnostic: "KeyValue.key is absent, duplicated, or not binary",
+                    },
+                );
+            }
+        };
+        let value = match unique(fields, 2) {
+            Ok(Some(NativeWireValue::Binary(value))) => Some(value.clone()),
+            Ok(None) => None,
+            _ => {
+                return (
+                    metadata,
+                    ArrowSchemaMetadata::Blocked {
+                        diagnostic: "KeyValue.value is duplicated or not binary",
+                    },
+                );
+            }
+        };
+        if key.as_deref() == Some(b"ARROW:schema") {
+            arrow_indices.push(index);
+        }
+        metadata.push(NativeKeyValueMetadata {
+            index,
+            key,
+            value,
+            fields: fields.clone(),
+        });
+    }
+    let arrow = match arrow_indices.as_slice() {
+        [] => ArrowSchemaMetadata::Absent,
+        [index] => ArrowSchemaMetadata::Unique {
+            index: *index,
+            value: metadata[*index].value.clone(),
+        },
+        _ => ArrowSchemaMetadata::Duplicate {
+            indices: arrow_indices,
+        },
+    };
+    (metadata, arrow)
 }
 
 /// Owned Compact Protocol value. Integer widths, collection kinds, booleans,
@@ -491,6 +611,7 @@ fn decode_schema_mode(
     Ok(DecodedSchema {
         schema,
         native_schema_elements,
+        native_file_metadata_fields: metadata,
         trailing_footer_bytes,
     })
 }
@@ -555,6 +676,14 @@ mod tests {
         metadata.push(0x2c); // two SchemaElement structs
         metadata.extend_from_slice(&root);
         metadata.extend_from_slice(&leaf);
+        metadata.push(((5 - 2) as u8) << 4 | 9); // key_value_metadata list
+        metadata.push(0x1c); // one struct
+        let mut pair = Vec::new();
+        let mut pair_prev = 0;
+        field_binary(&mut pair, &mut pair_prev, 1, b"k");
+        field_binary(&mut pair, &mut pair_prev, 2, b"v");
+        pair.push(0);
+        metadata.extend_from_slice(&pair);
         metadata.push(0);
 
         let mut file = b"PAR1".to_vec();
@@ -690,6 +819,81 @@ mod tests {
                 assert_eq!(decoded.schema[1].converted_type, Some(1));
             }
         }
+    }
+
+    #[test]
+    fn retaining_entry_point_preserves_ordered_file_metadata_fields() {
+        let decoded =
+            decode_schema_retaining(&minimal_file(None), &mut Context::ordinary()).unwrap();
+        let metadata = &decoded.native_file_metadata_fields;
+        let key_value = metadata.iter().find(|(id, _)| *id == 5).unwrap();
+        let expected = WireValue::List(
+            12,
+            vec![WireValue::Struct(vec![
+                (1, WireValue::Binary(b"k".to_vec())),
+                (2, WireValue::Binary(b"v".to_vec())),
+            ])],
+        );
+        assert_eq!(key_value.1, expected);
+        // The narrow adapter intentionally does not expose file-level metadata.
+        assert_eq!(decoded.schema.len(), decoded.native_schema_elements.len());
+        let (entries, arrow) = inspect_file_key_value_metadata(&decoded);
+        assert_eq!(entries.len(), 1);
+        assert_eq!(entries[0].index, 0);
+        assert_eq!(entries[0].key.as_deref(), Some(b"k".as_slice()));
+        assert_eq!(entries[0].value.as_deref(), Some(b"v".as_slice()));
+        assert_eq!(arrow, ArrowSchemaMetadata::Absent);
+    }
+
+    #[test]
+    fn arrow_schema_receipt_is_ordered_and_never_first_wins() {
+        let pair = |key: &[u8], value: Option<&[u8]>| {
+            let mut fields = vec![(1, WireValue::Binary(key.to_vec()))];
+            if let Some(value) = value {
+                fields.push((2, WireValue::Binary(value.to_vec())));
+            }
+            WireValue::Struct(fields)
+        };
+        let decoded = |entries: Vec<WireValue>| DecodedSchema {
+            schema: Vec::new(),
+            native_schema_elements: Vec::new(),
+            native_file_metadata_fields: vec![(5, WireValue::List(12, entries))],
+            trailing_footer_bytes: 0,
+        };
+        let (entries, arrow) = inspect_file_key_value_metadata(&decoded(vec![pair(
+            b"ARROW:schema",
+            Some(b"opaque-base64"),
+        )]));
+        assert_eq!(
+            entries[0].value.as_deref(),
+            Some(b"opaque-base64".as_slice())
+        );
+        assert_eq!(
+            arrow,
+            ArrowSchemaMetadata::Unique {
+                index: 0,
+                value: Some(b"opaque-base64".to_vec()),
+            }
+        );
+
+        let (_, arrow) = inspect_file_key_value_metadata(&decoded(vec![
+            pair(b"ARROW:schema", Some(b"first")),
+            pair(b"ARROW:schema", Some(b"second")),
+        ]));
+        assert_eq!(
+            arrow,
+            ArrowSchemaMetadata::Duplicate {
+                indices: vec![0, 1]
+            }
+        );
+
+        let (_, arrow) = inspect_file_key_value_metadata(&decoded(vec![WireValue::I32(1)]));
+        assert_eq!(
+            arrow,
+            ArrowSchemaMetadata::Blocked {
+                diagnostic: "KeyValue metadata entry is not a struct",
+            }
+        );
     }
     #[test]
     fn decodes_all_three_predecessor_list_files_without_modifying_source() {

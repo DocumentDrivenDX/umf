@@ -171,6 +171,15 @@ test('a newly added access source requires its own allowlist entry', () => {
 	expect(errors).toContain('new-rust-facade.ts: missing per-file import allowlist');
 });
 
+test('the scalar Rust adapter cannot import the TypeScript predecessor or host hooks', () => {
+	const file = 'rust-scalar-types-for-version-default.ts';
+	expect(checkAccessSource(file, 'export const value = 1;')).toEqual([]);
+	const errors = checkAccessSource(file,
+		"import {scalarTypesForVersion} from '../model/types';\nconst env = process.env;\n");
+	expect(errors).toContain(file + ': unapproved import ../model/types');
+	expect(errors).toContain(file + ': host or executable hook process');
+});
+
 test('dynamic imports and host hooks remain forbidden for allowlisted files', () => {
 	const errors = checkAccessSource(
 		'rust-facets-default.ts',

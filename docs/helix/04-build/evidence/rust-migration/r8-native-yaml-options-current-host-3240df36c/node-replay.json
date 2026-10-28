@@ -1,0 +1,417 @@
+{
+  "profile": "umf-r8-native-yaml-options-node/0.1.0",
+  "nodeVersion": "v26.12.1",
+  "outcomes": [
+    {
+      "id": "default-boolean-true",
+      "outcome": "return",
+      "tree": {
+        "kind": "object",
+        "members": {
+          "value": {
+            "kind": "boolean",
+            "value": true
+          }
+        }
+      },
+      "matches": true
+    },
+    {
+      "id": "default-boolean-case",
+      "outcome": "return",
+      "tree": {
+        "kind": "object",
+        "members": {
+          "value": {
+            "kind": "boolean",
+            "value": true
+          },
+          "other": {
+            "kind": "boolean",
+            "value": true
+          }
+        }
+      },
+      "matches": true
+    },
+    {
+      "id": "default-boolean-false",
+      "outcome": "return",
+      "tree": {
+        "kind": "object",
+        "members": {
+          "value": {
+            "kind": "boolean",
+            "value": false
+          },
+          "other": {
+            "kind": "boolean",
+            "value": false
+          },
+          "last": {
+            "kind": "boolean",
+            "value": false
+          }
+        }
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml12-legacy-boolean-words",
+      "outcome": "return",
+      "tree": {
+        "kind": "object",
+        "members": {
+          "yes": {
+            "kind": "string",
+            "value": "yes"
+          },
+          "on": {
+            "kind": "string",
+            "value": "on"
+          },
+          "no": {
+            "kind": "string",
+            "value": "no"
+          },
+          "off": {
+            "kind": "string",
+            "value": "off"
+          }
+        }
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml12-null-words",
+      "outcome": "throw",
+      "code": "NATIVE_YAML_KEY",
+      "message": "JSON-compatible YAML requires untagged string keys",
+      "matches": true
+    },
+    {
+      "id": "date-default-string",
+      "outcome": "return",
+      "tree": {
+        "kind": "object",
+        "members": {
+          "value": {
+            "kind": "string",
+            "value": "2024-02-29"
+          }
+        }
+      },
+      "matches": true
+    },
+    {
+      "id": "exact-numbers",
+      "outcome": "return",
+      "tree": {
+        "kind": "object",
+        "members": {
+          "plus": {
+            "kind": "number",
+            "value": "1"
+          },
+          "negative-zero": {
+            "kind": "number",
+            "value": "-0"
+          },
+          "fraction": {
+            "kind": "number",
+            "value": "0.5"
+          },
+          "trailing-dot": {
+            "kind": "number",
+            "value": "1.0"
+          },
+          "exponent": {
+            "kind": "number",
+            "value": "1e3"
+          },
+          "large": {
+            "kind": "number",
+            "value": "9007199254740992"
+          }
+        }
+      },
+      "matches": true
+    },
+    {
+      "id": "radix-and-unsupported",
+      "outcome": "return",
+      "tree": {
+        "kind": "object",
+        "members": {
+          "hex": {
+            "kind": "number",
+            "value": "16"
+          },
+          "octal": {
+            "kind": "number",
+            "value": "8"
+          },
+          "binary": {
+            "kind": "string",
+            "value": "0b10"
+          },
+          "signed-hex": {
+            "kind": "string",
+            "value": "+0x10"
+          },
+          "underscored": {
+            "kind": "string",
+            "value": "1_000"
+          }
+        }
+      },
+      "matches": true
+    },
+    {
+      "id": "unsafe-integer-preserved",
+      "outcome": "return",
+      "tree": {
+        "kind": "object",
+        "members": {
+          "value": {
+            "kind": "number",
+            "value": "999999999999999999999999999999999999999999"
+          }
+        }
+      },
+      "matches": true
+    },
+    {
+      "id": "duplicate-key",
+      "outcome": "throw",
+      "code": "NATIVE_YAML_SYNTAX",
+      "message": "Map keys must be unique at line 2, column 1:\n\nx: 1\nx: 2\n^\n",
+      "matches": true
+    },
+    {
+      "id": "duplicate-after-bad-syntax",
+      "outcome": "throw",
+      "code": "NATIVE_YAML_SYNTAX",
+      "message": "Map keys must be unique at line 2, column 1:\n\nx: 1\nx: 2\n^\n; Flow sequence in block collection must be sufficiently indented and end with a ] at line 3, column 5:\n\ny: [\n    ^\n",
+      "matches": true
+    },
+    {
+      "id": "duplicate-after-tag",
+      "outcome": "throw",
+      "code": "NATIVE_YAML_SYNTAX",
+      "message": "Map keys must be unique at line 2, column 1:\n\nx: !!str value\nx: next\n^\n",
+      "matches": true
+    },
+    {
+      "id": "duplicate-after-alias",
+      "outcome": "throw",
+      "code": "NATIVE_YAML_SYNTAX",
+      "message": "Map keys must be unique at line 3, column 1:\n\ny: *a\nx: next\n^\n",
+      "matches": true
+    },
+    {
+      "id": "alias",
+      "outcome": "throw",
+      "code": "NATIVE_YAML_NODE",
+      "message": "Aliases and non-JSON YAML nodes are unsupported",
+      "matches": true
+    },
+    {
+      "id": "unused-anchor",
+      "outcome": "return",
+      "tree": {
+        "kind": "object",
+        "members": {
+          "x": {
+            "kind": "string",
+            "value": "hi"
+          }
+        }
+      },
+      "matches": true
+    },
+    {
+      "id": "explicit-value-tag",
+      "outcome": "throw",
+      "code": "NATIVE_YAML_TAG",
+      "message": "Explicit YAML tags are outside the JSON-compatible profile",
+      "matches": true
+    },
+    {
+      "id": "explicit-key-tag",
+      "outcome": "throw",
+      "code": "NATIVE_YAML_KEY",
+      "message": "JSON-compatible YAML requires untagged string keys",
+      "matches": true
+    },
+    {
+      "id": "numeric-key",
+      "outcome": "throw",
+      "code": "NATIVE_YAML_KEY",
+      "message": "JSON-compatible YAML requires untagged string keys",
+      "matches": true
+    },
+    {
+      "id": "timestamp-like-key",
+      "outcome": "return",
+      "tree": {
+        "kind": "object",
+        "members": {
+          "2024-02-29": {
+            "kind": "string",
+            "value": "value"
+          }
+        }
+      },
+      "matches": true
+    },
+    {
+      "id": "malformed-sequence",
+      "outcome": "throw",
+      "code": "NATIVE_YAML_SYNTAX",
+      "message": "Flow sequence in block collection must be sufficiently indented and end with a ] at line 1, column 7:\n\nx: [1,\n      ^\n",
+      "matches": true
+    },
+    {
+      "id": "multiple-documents",
+      "outcome": "throw",
+      "code": "NATIVE_YAML_SYNTAX",
+      "message": "Source contains multiple documents; please use YAML.parseAllDocuments() at line 2, column 1:\n\nx: 1\n---\n^\n",
+      "matches": true
+    },
+    {
+      "id": "astral-string",
+      "outcome": "return",
+      "tree": {
+        "kind": "object",
+        "members": {
+          "value": {
+            "kind": "string",
+            "value": "😀"
+          }
+        }
+      },
+      "matches": true
+    },
+    {
+      "id": "integer-index-key-order",
+      "outcome": "throw",
+      "code": "NATIVE_YAML_KEY",
+      "message": "JSON-compatible YAML requires untagged string keys",
+      "matches": true
+    },
+    {
+      "id": "empty-stream",
+      "outcome": "return",
+      "tree": {
+        "kind": "null"
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml11-boolean-lexicon",
+      "outcome": "return",
+      "tree": {
+        "kind": "object",
+        "members": {
+          "a": {
+            "kind": "boolean",
+            "value": true
+          },
+          "b": {
+            "kind": "boolean",
+            "value": true
+          },
+          "c": {
+            "kind": "boolean",
+            "value": false
+          },
+          "d": {
+            "kind": "boolean",
+            "value": false
+          }
+        }
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml11-date-unsupported",
+      "outcome": "throw",
+      "code": "NATIVE_YAML_NODE",
+      "message": "Aliases and non-JSON YAML nodes are unsupported",
+      "matches": true
+    },
+    {
+      "id": "yaml11-date-as-string",
+      "outcome": "return",
+      "tree": {
+        "kind": "object",
+        "members": {
+          "value": {
+            "kind": "string",
+            "value": "2024-02-29"
+          }
+        }
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml11-time-as-string",
+      "outcome": "throw",
+      "code": "NATIVE_YAML_NODE",
+      "message": "Aliases and non-JSON YAML nodes are unsupported",
+      "matches": true
+    },
+    {
+      "id": "yaml11-pyyaml-boolean-lexicon",
+      "outcome": "return",
+      "tree": {
+        "kind": "object",
+        "members": {
+          "a": {
+            "kind": "string",
+            "value": "y"
+          },
+          "b": {
+            "kind": "string",
+            "value": "n"
+          },
+          "c": {
+            "kind": "boolean",
+            "value": true
+          },
+          "d": {
+            "kind": "boolean",
+            "value": true
+          }
+        }
+      },
+      "matches": true
+    },
+    {
+      "id": "invalid-version-precedes-syntax",
+      "outcome": "throw",
+      "code": "NATIVE_YAML_VERSION",
+      "message": "Expected YAML 1.1 or 1.2 scalar profile",
+      "matches": true
+    },
+    {
+      "id": "null-version-precedes-syntax",
+      "outcome": "throw",
+      "code": "NATIVE_YAML_VERSION",
+      "message": "Expected YAML 1.1 or 1.2 scalar profile",
+      "matches": true
+    },
+    {
+      "id": "numeric-version-precedes-syntax",
+      "outcome": "throw",
+      "code": "NATIVE_YAML_VERSION",
+      "message": "Expected YAML 1.1 or 1.2 scalar profile",
+      "matches": true
+    }
+  ],
+  "cases": 32,
+  "matches": 32,
+  "mismatches": [],
+  "loneSurrogateUtf16Unit": true
+}

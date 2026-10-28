@@ -32,6 +32,7 @@ const allowedImports:Record<string,readonly string[]>={
  'rust-record-type-default.ts':['../model/field-kind','../model/record-type','../model/types','../model/json','../model/errors'],
  'rust-record-values-default.ts':['../model/record-values'],
  'rust-schema-properties-default.ts':['../model/schema-properties','../model/schema-literals','../model/types'],
+ 'rust-scalar-types-for-version-default.ts':[],
  'rust-semantic-types-default.ts':['../model/errors','../model/semantic-types','../model/types','../extensions/semantic-types'],
  'rust-selection-default.ts':['../model/selection','../model/types','../registry/registry'],
  'rust-runtime.ts':['../model/errors','./rust-candidate','./rust-host-reads-v3','./rust-host-reads-v4'],

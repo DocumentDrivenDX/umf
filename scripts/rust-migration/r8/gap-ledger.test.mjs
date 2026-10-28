@@ -616,8 +616,9 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
   for (const routeId of ['package-root-node', 'package-root-browser']) {
     const selection = entries.get(routeId);
     // The V4 facade adds six exact Rust-selected names, two key-tuple
-    // operations, two SEC operations, and three opt-in SEC/Protobuf candidates.
-    assert.equal(selection.directExportCount, 89 + 6 + 2 + 2 + 3);
+    // operations, two SEC operations, three opt-in SEC/Protobuf candidates,
+    // and the still-unqualified scalarTypesForVersion root selection.
+    assert.equal(selection.directExportCount, 89 + 6 + 2 + 2 + 3 + 1);
     assert.ok(expected.every(name => selection.directExports.includes(name)), `${routeId} misses an override`);
     assert.ok(['inspectCoreSemanticTypes','getCoreSemanticTypes','declareCoreSemanticTypes','verifyCoreSemanticTypeDeclaration',
       'validateCoreRecordValues','SemanticTypeRegistry','validateSemanticTypeValue','validateCoreSemanticTypeValue']
@@ -1276,7 +1277,9 @@ test('five model vocabulary exports record generated-data versus executable disp
     for (const route of item.packageRoutes) {
       const rows = ledger.rows.filter(row => row.routeId === route.id && row.exportName === name);
       assert.equal(rows.length, 1, `${route.id}/${name}`);
-      assert.equal(rows[0].source, 'src/model/types.ts');
+      assert.equal(rows[0].source, name === 'scalarTypesForVersion' && route.id !== 'package-reference'
+        ? (route.id === 'package-root-node' ? 'src/index-node-v4.ts' : 'src/index-browser-v4.ts')
+        : 'src/model/types.ts');
       assert.equal(rows[0].acceptedRustOperation, null);
       assert.equal(rows[0].sourceSelectedImplementation, null);
       assert.equal(rows[0].bindingRoute, null);

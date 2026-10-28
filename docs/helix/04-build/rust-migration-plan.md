@@ -9673,3 +9673,56 @@ CONTRACT-049 already states that the public Record Values profile is operation
 2.0.0/core 0.10.0. The focused public test now pins the operation name and
 refusal of core 0.9.0 in addition to older historical versions; its four Bun
 tests pass with 31 assertions. The 1.0.0/core 0.8.0 clause remains historical.
+
+### R8 YAML host options, descriptor diagnostics, and scalar route continuation — 2026-10-28
+
+The [immutable `3240df36c` YAML host packet](evidence/rust-migration/r8-native-yaml-options-current-host-3240df36c/README.md)
+rebuilds optimized Node and browser WASM packages from the committed source
+tree. Node 26.12.1, Bun 1.4.3, and real Chromium 153.0.8010.12 each match
+the frozen TypeScript predecessor on all 24 YAML 1.2 default cases and eight
+bounded option cases, including exact trees, error codes, messages, and a lone
+UTF-16 surrogate. Independent Node and Chromium replays reproduced the
+recorded receipt hashes; independent Bun replay reproduced all 32 outcomes.
+This is private Darwin-arm64 opt-in package evidence for the stated subset.
+The source cut is historical after the subsequent Rust edits. General YAML
+1.1, arbitrary options/inputs, installed SDK default routing, Linux, and
+release acceptance remain open.
+
+The Protobuf `readDescriptorSet` candidate now matches the predecessor's
+exact messages for all 14 frozen declared-byte cases through the rebuilt
+local Node addon. The nine previously recorded diagnostic mismatches are
+corrected at source; focused Rust descriptor tests pass 12/12 and the Node
+candidate tests pass 5/5 with 101 assertions. This does not admit the
+predecessor's non-byte host inputs or select the public default route. The
+earlier installed candidate receipt remains accurate for its older source
+cut and must be refreshed for the corrected diagnostics.
+
+`scalarTypesForVersion` is now selected through the Rust Core Model engine
+in the V4 Node/browser source. A narrow adapter checks the Rust result against
+the frozen current `SCALAR_TYPES` vocabulary and preserves the predecessor's
+shared current-array identity, fresh empty arrays for other versions, and
+non-string invalid-input behavior. The explicit `./reference` export remains
+the TypeScript predecessor. Five focused Bun source tests pass with 45
+assertions, typecheck and the V4 generated-facade check pass. Installed
+Node/Bun/browser route parity, current source closure, and any R8 retirement
+remain to be qualified; the checked ledger still reports 920 open logical
+executable default-route gaps and zero retired declarations.
+
+The unified-client boundary continues to scan every `src/access` TypeScript
+file. The new scalar adapter has an exact empty import allowlist; an explicit
+negative control rejects both a predecessor value import and a host hook.
+The boundary command and all 23 tests pass. Any future access file needs its
+own reviewed import entry, preserving the strict per-file policy.
+The regenerated metamodel, Python and action embedded resources, R8 symbol
+inventory, and condition-aware ledger pass their fixed-point checks. The
+full R8 ledger suite passes 77/77 after updating its scalar V4 export-shape
+assertions; the ledger remains at 920 open logical executable gaps and zero
+retired.
+
+The retaining Parquet decoder now also preserves ordered FileMetaData
+fields, including field 5 key/value metadata. A bounded opt-in inspector
+exposes raw key/value entries and classifies `ARROW:schema` as absent,
+unique, duplicate, or blocked for malformed metadata without selecting a
+first or last duplicate. Ten focused decoder tests pass. Arrow IPC decoding,
+complete predecessor relationship classification and diagnostics, receipt
+verification/recovery, host evidence, and default routing remain open.

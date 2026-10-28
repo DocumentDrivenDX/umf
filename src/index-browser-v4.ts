@@ -18,6 +18,7 @@ import {bindCoreRecordValuesRust} from './access/rust-record-values-default';
 import {bindCoreKeyTupleDefault} from './access/rust-key-tuple-default';
 import {bindSemanticTypesRust} from './access/rust-semantic-types-default';
 import {bindCoreSemanticTypesRust} from './access/rust-core-semantic-types-default';
+import {bindScalarTypesForVersionRust} from './access/rust-scalar-types-for-version-default';
 import {createSecurityNotRustAdapter} from './extensions/security/rust-not-adapter';
 import {createSecurityLogicRustAdapter} from './extensions/security/rust-logic-adapter';
 import {createRawTableBindingInspector} from './extensions/binding/raw-profiles-inspector';
@@ -37,6 +38,7 @@ import type {generateDomainPackSchema as DomainPackSchemaReference} from './doma
 import type {generateArtifactCollectionSchema as ArtifactCollectionSchemaReference} from './domain-packs/artifacts';
 import type {generateDomainPackLoaderSchema as DomainPackLoaderSchemaReference} from './domain-packs/loader';
 import type {generateLoaderInventorySchema as LoaderInventorySchemaReference} from './domain-packs/loader-inventory';
+import {CURRENT_CORE_VERSION,SCALAR_TYPES} from './model/types';
 
 // Module import resolves only after the browser WASM engine is ready. The
 // function exported below remains synchronous and never falls back to TypeScript.
@@ -70,6 +72,7 @@ Object.defineProperty(generateArtifactCollectionSchema,'name',{value:'generateAr
 Object.defineProperty(generateDomainPackLoaderSchema,'name',{value:'generateDomainPackLoaderSchema'});
 Object.defineProperty(generateLoaderInventorySchema,'name',{value:'generateLoaderInventorySchema'});
 const model=createCoreModelRootKeyTupleEngine(wasmModule,CORE_MODEL_RESOURCES);
+const scalarTypesForVersion=bindScalarTypesForVersionRust(model as typeof model & {scalarTypesForVersion(version:string):readonly string[]},CURRENT_CORE_VERSION,SCALAR_TYPES);
 const coreKeyTuple=bindCoreKeyTupleDefault(model,isNativeUmfCoreError);
 const {readCoreKeyTupleBytes,prepareCoreKeyTuples}=coreKeyTuple;
 const protobufDescriptorEngine=await initializeProtobufDescriptorDocumentWasm(async()=>wasmModule);
@@ -108,6 +111,7 @@ const {projectRelationshipToExtra,verifyRelationshipExtra,recoverRelationshipExt
 const {projectRelationshipsToPostgresql,verifyRelationshipPostgresqlProjection,recoverRelationshipPostgresqlIdeal,recoverRelationshipPostgresqlNative}=createRelationshipPostgresql(relationshipConsumers);
 const {parseBits128,parseUuid,bits128FromBytes,bits128ToBytes,uuidFromBits128,uuidToBits128,compareBits128,bits128ToWords,bits128FromWords,bits128ToInteger,bits128FromInteger}=bindBit128Rust(await initializeBit128Wasm(),isBit128EngineError);
 export * from './index-v4-default';
+export {scalarTypesForVersion};
 export {readCoreKeyTupleBytes,prepareCoreKeyTuples};
 export {inspectDomainPackLoaderOperation as inspectDomainPackLoader,inspectDomainPack,requireDomainPackProfile};
 export {generatePythonClient,generateDomainPackSchema,generateDatasetSourceSchema,exactDecimal,integerFromBigInt,integerToBigInt,admitJavascriptNumber,numericToNumberLossless,inspectCoreCardinality,declareCoreCardinality,verifyCoreCardinalityDeclaration,validateCoreDatasetValuesCompact,verifyCoreDatasetValuesCompact,inspectCoreFacets,declareCoreFacets,verifyCoreFacetDeclaration,historicalCoreFacetPatch,inspectCoreKeys,lookupCoreKey,declareCoreRecordMembers,declareCoreKey,verifyCoreKeyOperation,inspectCoreRelationships,lookupCoreRelationship,declareCoreRelationship,verifyCoreRelationshipOperation,inspectCoreScalarType,inspectCoreRecordMembers,inspectCoreReferenceLinks,inspectCoreSemanticTypes,getCoreSemanticTypes,declareCoreSemanticTypes,verifyCoreSemanticTypeDeclaration,inspectRawTableBinding,inspectCoreSchemaProperties,declareCoreSchemaProperties,validateCoreFieldValue,resolveCoreDefault,validateCoreRecordValues,SemanticTypeRegistry,validateSemanticTypeValue,validateCoreSemanticTypeValue,declareCoreRecordType,verifyCoreRecordTypeDeclaration,parseBits128,parseUuid,bits128FromBytes,bits128ToBytes,uuidFromBits128,uuidToBits128,compareBits128,bits128ToWords,bits128FromWords,bits128ToInteger,bits128FromInteger,validateCsvBooleanLexical,verifyCsvBooleanLexical,parseGregorianDate,truncateGregorianDate,parseRfc3339ExactInstant,sameRfc3339ExactInstant,securityNot,securityAnd,securityOr};

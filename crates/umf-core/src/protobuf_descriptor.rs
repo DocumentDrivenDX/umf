@@ -119,15 +119,11 @@ fn decode_message(
     while at < bytes.len() {
         context.charge_work(1, Utf16::default())?;
         let tag_start = at;
-        let (tag, tag_len) = read_varint(bytes, at)?;
+        let (tag, tag_len) = read_tag(bytes, at)?;
         at += tag_len;
         let raw_number = tag >> 3;
-        let number =
-            u32::try_from(raw_number).map_err(|_| binary_error("Invalid Protobuf field number"))?;
+        let number = raw_number as u32;
         let wire = (tag & 7) as u8;
-        if number == 0 || number > 536_870_911 {
-            return Err(binary_error("Invalid Protobuf field number"));
-        }
         if wire == 4 {
             return Err(binary_error("Unexpected end-group tag"));
         }
@@ -347,7 +343,7 @@ fn decode_scalar(
 ) -> Result<(Value, Option<Vec<u8>>), EngineError> {
     match kind {
         WireKind::Message(name) => {
-            let (start, end, next) = length_payload(bytes, *at)?;
+            let (start, end, next, truncated) = length_payload_partial(bytes, *at)?;
             let value = decode_message(
                 &bytes[start..end],
                 name,
@@ -356,6 +352,9 @@ fn decode_scalar(
                 repeated_or_unknown_values,
             )?
             .0;
+            if truncated {
+                return Err(binary_error("RangeError: premature EOF"));
+            }
             *at = next;
             Ok((value, None))
         }
@@ -474,7 +473,7 @@ fn read_varint_raw(bytes: &[u8], at: &mut usize) -> Result<(u64, Vec<u8>), Engin
     for i in 0..10 {
         let byte = *bytes
             .get(*at)
-            .ok_or_else(|| binary_error("Truncated varint"))?;
+            .ok_or_else(|| binary_error("RangeError: premature EOF"))?;
         *at += 1;
         if i == 9 && (byte & 0xfe) != 0 {
             return Err(binary_error("Malformed varint"));
@@ -486,13 +485,33 @@ fn read_varint_raw(bytes: &[u8], at: &mut usize) -> Result<(u64, Vec<u8>), Engin
     }
     Err(binary_error("Malformed varint"))
 }
+fn read_tag(bytes: &[u8], at: usize) -> Result<(u64, usize), EngineError> {
+    let (tag, used) = read_varint(bytes, at).map_err(|error| {
+        if error.message.to_utf8().ok().as_deref() == Some("Malformed varint") {
+            binary_error("Error: illegal tag: varint overflows uint32")
+        } else {
+            error
+        }
+    })?;
+    if tag > u32::MAX as u64 {
+        return Err(binary_error("Error: illegal tag: varint overflows uint32"));
+    }
+    let number = tag >> 3;
+    let wire = tag & 7;
+    if number == 0 || wire > 5 {
+        return Err(binary_error(&format!(
+            "Error: illegal tag: field no {number} wire type {wire}"
+        )));
+    }
+    Ok((tag, used))
+}
 fn read_fixed32(bytes: &[u8], at: &mut usize) -> Result<u32, EngineError> {
     let end = at
         .checked_add(4)
         .ok_or_else(|| binary_error("Length overflow"))?;
     let chunk = bytes
         .get(*at..end)
-        .ok_or_else(|| binary_error("Truncated fixed32"))?;
+        .ok_or_else(|| binary_error("RangeError: premature EOF"))?;
     *at = end;
     Ok(u32::from_le_bytes(chunk.try_into().unwrap()))
 }
@@ -502,7 +521,7 @@ fn read_fixed64(bytes: &[u8], at: &mut usize) -> Result<u64, EngineError> {
         .ok_or_else(|| binary_error("Length overflow"))?;
     let chunk = bytes
         .get(*at..end)
-        .ok_or_else(|| binary_error("Truncated fixed64"))?;
+        .ok_or_else(|| binary_error("RangeError: premature EOF"))?;
     *at = end;
     Ok(u64::from_le_bytes(chunk.try_into().unwrap()))
 }
@@ -518,6 +537,21 @@ fn length_payload(bytes: &[u8], at: usize) -> Result<(usize, usize, usize), Engi
         return Err(binary_error("Truncated length-delimited field"));
     }
     Ok((start, end, end))
+}
+
+fn length_payload_partial(
+    bytes: &[u8],
+    at: usize,
+) -> Result<(usize, usize, usize, bool), EngineError> {
+    let (size, used) = read_varint(bytes, at)?;
+    let start = at
+        .checked_add(used)
+        .ok_or_else(|| binary_error("Length overflow"))?;
+    let requested_end = start
+        .checked_add(usize::try_from(size).map_err(|_| binary_error("Length overflow"))?)
+        .ok_or_else(|| binary_error("Length overflow"))?;
+    let end = requested_end.min(bytes.len());
+    Ok((start, end, requested_end, requested_end > bytes.len()))
 }
 
 fn skip_value(
@@ -536,7 +570,7 @@ fn skip_value(
         1 => at
             .checked_add(8)
             .filter(|end| *end <= bytes.len())
-            .ok_or_else(|| binary_error("Truncated fixed64")),
+            .ok_or_else(|| binary_error("RangeError: premature EOF")),
         2 => {
             let (_, _, end) = length_payload(bytes, at)?;
             Ok(end)
@@ -568,7 +602,7 @@ fn skip_value(
         5 => at
             .checked_add(4)
             .filter(|end| *end <= bytes.len())
-            .ok_or_else(|| binary_error("Truncated fixed32")),
+            .ok_or_else(|| binary_error("RangeError: premature EOF")),
         _ => Err(binary_error("Invalid wire type")),
     }
 }
@@ -1267,6 +1301,59 @@ mod tests {
             Utf16::default(),
         )
         .unwrap()
+    }
+    #[test]
+    fn frozen_malformed_byte_diagnostics_match_descriptor_predecessor() {
+        let malformed: [(&str, &[u8], &str); 9] = [
+            (
+                "zero-tag",
+                &[0],
+                "Error: illegal tag: field no 0 wire type 0",
+            ),
+            ("truncated-tag-varint", &[0x80], "RangeError: premature EOF"),
+            (
+                "bad-wire-type",
+                &[0x0f],
+                "Error: illegal tag: field no 1 wire type 7",
+            ),
+            ("truncated-fixed32", &[0x0d, 1], "RangeError: premature EOF"),
+            (
+                "truncated-length",
+                &[0x0a, 0x05, 1],
+                "Error: illegal tag: field no 0 wire type 1",
+            ),
+            (
+                "truncated-field-varint",
+                &[0x10, 0x80],
+                "RangeError: premature EOF",
+            ),
+            (
+                "malformed-10th-varint",
+                &[0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x02],
+                "Error: illegal tag: varint overflows uint32",
+            ),
+            (
+                "true-trailing-tag",
+                &[0x0a, 0x00, 0x0f],
+                "Error: illegal tag: field no 1 wire type 7",
+            ),
+            (
+                "exact-limit-malformed-first-byte",
+                &[0],
+                "Error: illegal tag: field no 0 wire type 0",
+            ),
+        ];
+        for (name, bytes, expected) in malformed {
+            let input = if name == "exact-limit-malformed-first-byte" {
+                vec![0; MAX_BINARY_BYTES]
+            } else {
+                bytes.to_vec()
+            };
+            let error = read_descriptor_set(&input, &mut Context::ordinary()).unwrap_err();
+            assert_eq!(error.code, "PROTOBUF_BINARY", "{name}");
+            assert_eq!(error.path, Utf16::default(), "{name}");
+            assert_eq!(error.message.to_utf8().unwrap(), expected, "{name}");
+        }
     }
     #[test]
     fn empty_set_round_trips() {
