@@ -10172,3 +10172,66 @@ binding routes. Arrow IPC installed qualification, Avro document-level parity,
 the broader adapters and extensions, and the coordinated release matrix
 remain open. The port is not complete and no release is authorized by this
 cohort.
+
+### R8 dependency-resolved installed cut and bounded Linux wheel evidence — 2026-10-28
+
+This section supersedes the preceding `final checked source cut` claim for
+current-source installed evidence. The checked R8 gap ledger is SHA-256
+`92fd632242d98e7d59c4213a204811cfe9008de8d32b91dfd39421c0c23c3e5f`.
+The rebuilt private `@umf/core` 0.5.6 archive is SHA-256
+`af745902a6817a6812caa545d1c6e6c3befaa41e1c56781f570010d3131bdc4e`,
+with fixed-point live source closure SHA-256
+`31e8f424b6501f5872b576b29f89d92c4eac0424f64159360d5d3fd2c89542e3`
+over 3,727 inputs, zero transforms, and 1,820 archive members. The archive is
+retained privately at `/private/tmp/umf-r8-reviewed-cut/umf-sdk.tgz`; it is not
+published. `origin/main` was fetched during this cut and remained at
+`ec3050566424e10cd30291e737218d789a2fea99` (zero commits behind).
+
+Four dependency-resolved, offline installed SDK gates now identify that same
+archive and closure. The [Arrow IPC receipt](evidence/rust-migration/r8-arrow-ipc-installed-20261028/README.md)
+covers the three source-selected capture/inspect/export calls on Node, Bun,
+and real Chromium, including default and `./reference` routes, frozen
+mutations, the resource ceiling, and missing/corrupt native and WASM refusal.
+The [Arrow schema receipt](evidence/rust-migration/r8-arrow-schema-current-20261028/README.md)
+covers its five schema JSON operations and 52-schema/260-operation predecessor
+corpus on those hosts. The [Protobuf descriptor/document receipt](evidence/rust-migration/r8-protobuf-descriptor-document-current-20261028/README.md)
+covers 18 frozen operation vectors and 14 bounded descriptor-reader cases on
+those hosts; general non-byte inputs, malformed-wire wording, and runtime
+WASM refusal remain outside that packet. The [Core nine-export cohort](evidence/rust-migration/r8-core-nine-dependency-resolved-20261028/README.md)
+retains 19 hash-verified host receipts for Schema Properties, Core Inspectors,
+and CSV Boolean, with 227 integrity-pinned npm dependencies and five
+invocation-executed tamper controls. Its previous
+archive-extracted replay is historical. None of these receipts retires a
+default-route declaration or qualifies the complete API.
+
+The separately approved [bounded Linux Python wheel packet](evidence/rust-migration/r8-python-linux-bootstrap-20261028/README.md)
+records official CPython 3.11.17, 3.12.15, and 3.13.16 Linux arm64 images,
+each building a direct abi3 PyO3 wheel and passing seven focused installed
+tests (21/21). Image construction had no repository mount; source was mounted
+read-only for the wheel builds and tests. Apt/pip dependencies and an immutable
+source digest were not fully pinned, the broader 3.11 suite timed out, and
+Linux x86_64 and the hosted release matrix remain open. This packet is not a
+release-wheel claim.
+
+The next Avro inspection slice is governed by CONTRACT-007 (CONTRACT-011
+governs OpenAPI). An internal Rust admission helper now preserves the complete
+generic UMF validation report and an unambiguous registered Avro payload
+path; three focused Rust tests pass. The TypeScript `inspectAvro` predecessor
+still differs at document-level diagnostics, unresolved names, unknown
+metadata, unsafe numeric interpretation, and host-object admission. The Rust
+opt-in edit report also deliberately separates admission from native
+inspection instead of reproducing the predecessor's single `validation`
+field. The eight-case frozen predecessor packet needs a contract-directed
+Rust/TypeScript replay through installed Node, Bun, and Chromium before any
+default Avro selection. No document-level Avro parity is claimed.
+
+Independent Sol review found and resolved external-input drift and unexecuted
+negative-control claims in the installed gates; targeted re-review found no
+remaining actionable issue. `bun run typecheck`, metamodel and action
+generated-output checks, the Rust boundary check (zero V8 debt), the 80/80 R8 ledger suite, and focused Arrow
+IPC installed-gate and Core source-closure negative controls passed. The
+ledger still records **920 logical executable default-route gaps, zero
+retirements, 101 accepted opt-in Rust mappings, and zero promoted
+current-source installed binding routes**. The broad adapters/extensions,
+hosted cross-platform release matrix, complete independent review, merge,
+and release remain required for the full-port goal.

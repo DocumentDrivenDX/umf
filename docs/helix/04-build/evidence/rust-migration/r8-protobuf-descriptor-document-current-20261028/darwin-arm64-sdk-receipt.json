@@ -1,0 +1,119 @@
+{
+  "format": "umf.r8.protobuf-descriptor-document-installed/1",
+  "status": "pass",
+  "qualification": "Source-pinned installed fixed-point archive evidence for seven pure Protobuf descriptor/document operations and 14 bounded descriptor-reader cases on Node/Bun/Chromium. This does not authorize default-route retirement.",
+  "archive": {
+    "path": "/private/tmp/umf-r8-reviewed-cut/umf-sdk.tgz",
+    "sha256": "af745902a6817a6812caa545d1c6e6c3befaa41e1c56781f570010d3131bdc4e",
+    "sourceClosureSha256": "31e8f424b6501f5872b576b29f89d92c4eac0424f64159360d5d3fd2c89542e3",
+    "sourceInputCount": 3727,
+    "transformStatus": "fixed-point",
+    "transformCount": 0,
+    "packageManifestSha256": "7d2e1f180825649fbe3ca1996f27c6a4f4887ce02b6a101fa6c32f18c76a134f"
+  },
+  "routes": {
+    "node": "./dist/umf-node.js",
+    "browser": "./dist/umf-browser.js",
+    "reference": "./dist/umf.js"
+  },
+  "artifacts": {
+    "dist/umf-node.js": "3c57fbd862a5046c22706d28c55e675850f6797786d7b2ffdf920b56e2c64be0",
+    "dist/umf-browser.js": "126dd1317799285f5e5bbf96badc131d6c18415e9dda41c64a28c6508ed72e89",
+    "dist/umf_core_node.node": "e502fdb99e59e0436ed1656883b2203a1f88f5db6c14ca1789982c0e31b6753b",
+    "dist/umf_core_wasm_bg.wasm": "96d67e4e121c2d5e389a1ac35c628b13b7862d26cd528a3c7206a015567ee4f6",
+    "dist/umf.js": "60da66ee72828b606cbeeabf5c97c79c017fd3d0ffa57359b3313f16c741530d"
+  },
+  "predecessors": {
+    "protobufDescriptorDocument": {
+      "path": "docs/helix/04-build/evidence/rust-migration/r8-protobuf-descriptor-predecessor/predecessor.json",
+      "sha256": "226eb9fb46781b45e82789e5efaf80a2d22c298c5fa0893a81d7a91cd5852f41",
+      "operations": [
+        "readDescriptorSet",
+        "writeDescriptorSet",
+        "importProtobufDescriptorSet",
+        "exportProtobufDescriptorSet",
+        "getProtobufDescriptorSet",
+        "inspectProtobuf",
+        "exportProtobufBundle"
+      ]
+    },
+    "descriptorReader": {
+      "path": "tests/rust-core/protobuf-read-descriptor-predecessor.json",
+      "sha256": "8b123ca2343ae272969c5ecefaf9dd7394e84f24209a99ad20969a29b5342647",
+      "caseCount": 14
+    }
+  },
+  "hosts": {
+    "node": {
+      "runtime": "Node v26.12.1",
+      "default": {
+        "operationVectors": 18,
+        "unknownWireHex": "82b51804000102ff",
+        "descriptorReaderCases": 14,
+        "optionGetterIdentity": true,
+        "copiedOutputs": true,
+        "nativeCalls": 39
+      },
+      "reference": {
+        "operationVectors": 18,
+        "unknownWireHex": "82b51804000102ff",
+        "descriptorReaderCases": 14,
+        "optionGetterIdentity": true,
+        "copiedOutputs": true,
+        "nativeCalls": 0
+      }
+    },
+    "bun": {
+      "runtime": "Bun 1.4.3",
+      "default": {
+        "operationVectors": 18,
+        "unknownWireHex": "82b51804000102ff",
+        "descriptorReaderCases": 14,
+        "optionGetterIdentity": true,
+        "copiedOutputs": true,
+        "nativeCalls": 39
+      },
+      "reference": {
+        "operationVectors": 18,
+        "unknownWireHex": "82b51804000102ff",
+        "descriptorReaderCases": 14,
+        "optionGetterIdentity": true,
+        "copiedOutputs": true,
+        "nativeCalls": 0
+      }
+    },
+    "chromium": {
+      "version": "153.0.8010.12",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+      "default": {
+        "operationVectors": 18,
+        "unknownWireHex": "82b51804000102ff",
+        "descriptorReaderCases": 14,
+        "optionGetterIdentity": true,
+        "publicErrorIdentity": true,
+        "copiedOutputs": true
+      },
+      "reference": {
+        "operationVectors": 18,
+        "unknownWireHex": "82b51804000102ff",
+        "descriptorReaderCases": 14,
+        "optionGetterIdentity": true,
+        "publicErrorIdentity": true,
+        "copiedOutputs": true
+      },
+      "wasmInstantiateCount": 1,
+      "wasmAssetLoaded": true,
+      "nodeGlobalsAbsent": true,
+      "externalRequests": 0,
+      "pageErrors": 0
+    }
+  },
+  "offlineInstall": {
+    "status": "pass",
+    "mode": "npm install --offline --ignore-scripts"
+  },
+  "retirement": {
+    "status": "not-authorized",
+    "reason": "qualification does not establish complete parity, all host routes, or approved retirement evidence"
+  }
+}

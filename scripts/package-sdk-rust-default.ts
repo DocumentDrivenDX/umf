@@ -174,11 +174,13 @@ try{
   // R8 Arrow IPC/schema qualification is source-pinned independently of the
   // dynamic src/bindings trees: these scripts, focused tests and frozen
   // predecessor/evidence packets are the qualification inputs.
-  ...['arrow-ipc-v4-chromium-smoke.mjs','freeze-arrow-ipc-host-boundary.mjs','arrow-schema-installed-package.mjs','arrow-schema-installed-package-support.mjs']
+  ...['arrow-ipc-v4-chromium-smoke.mjs','freeze-arrow-ipc-host-boundary.mjs','arrow-schema-installed-package.mjs','arrow-schema-installed-package-support.mjs',
+    'arrow-ipc-installed-package.mjs','arrow-ipc-installed-support.mjs','arrow-ipc-installed-replay.mjs','arrow-ipc-installed-chromium.mjs']
     .map(name=>join(root,`scripts/rust-migration/r8/${name}`)),
   join(root,'tests/rust-core/arrow-ipc-v4-default.test.mjs'),
   join(root,'tests/rust-core/arrow-schema-bindings.test.mjs'),
   join(root,'tests/rust-migration/r8-arrow-schema-installed-package.test.mjs'),
+  join(root,'tests/rust-migration/r8-arrow-ipc-installed-gate.test.mjs'),
   join(root,'docs/helix/02-design/contracts/CONTRACT-016-arrow.md'),
   ...[
     'r8-arrow-ipc-host-boundary-20261028/README.md',
@@ -223,6 +225,9 @@ try{
   // Keep the current core-nine default-retirement harness and installed
   // receipt tied to the archive even though its implementation is in src.
   join(root,'scripts/rust-migration/r8/core-nine-default-retirement.mjs'),
+  ...['core-nine-installed-consumer.mjs','core-nine-installed-support.mjs',
+    'core-nine-installed-support.test.mjs','schema-properties-installed.mjs']
+    .map(name=>join(root,`scripts/rust-migration/r8/${name}`)),
   // The next Avro slice currently freezes only its TypeScript predecessor.
   // It is captured with this source cut without claiming a Rust default route.
   join(root,'scripts/rust-migration/r8/capture-avro-inspect-edit-predecessor.ts'),

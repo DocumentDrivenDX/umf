@@ -6,15 +6,15 @@
 //! object-container operations.
 
 use crate::{
-    avro_fields::{AvroDependency, AvroFieldMetadata, derive_avro_fields},
-    avro_semantics::{Dependency as InspectionDependency, inspect_schema},
+    avro_fields::{derive_avro_fields, AvroDependency, AvroFieldMetadata},
+    avro_semantics::{inspect_schema, Dependency as InspectionDependency},
     context::Context,
     engine::{Capabilities, Engine, ResourceSet, SemanticContext},
     error::{Diagnostic, EngineError, Severity, Validation},
     native_json::NativeJsonTree,
     registry::Registry,
     serialization::{self, Format},
-    value::{Utf16, Value, copy_json},
+    value::{copy_json, Utf16, Value},
 };
 
 pub const AVRO_EXTENSION: &str = "umf.avro";
@@ -41,6 +41,35 @@ struct Payload {
     root: NativeJsonTree,
     dependencies: Vec<(Utf16, NativeJsonTree)>,
     unknown_envelope: bool,
+}
+
+/// Internal result of generic UMF admission for an Avro document. The
+/// validation report is retained verbatim so callers can preserve diagnostic
+/// order and source paths; a payload path is present only when admission
+/// succeeds and the registered Avro payload can be located.
+#[derive(Clone, Debug)]
+pub(crate) struct AvroDocumentAdmission {
+    pub(crate) validation: Validation,
+    pub(crate) payload_path: Option<Utf16>,
+}
+
+/// Run the registered generic UMF validator without collapsing its report to
+/// the first error. This is an internal prerequisite for a future document
+/// inspector; it does not interpret Avro schema semantics.
+pub(crate) fn admit_document(
+    document: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<AvroDocumentAdmission, EngineError> {
+    let validation = validate_document_report(document, ctx)?;
+    let payload_path = if validation.valid {
+        locate_payload_path(document, ctx)?
+    } else {
+        None
+    };
+    Ok(AvroDocumentAdmission {
+        validation,
+        payload_path,
+    })
 }
 
 /// Import schema JSON and ordered, caller-supplied named-schema dependencies.
@@ -956,6 +985,26 @@ impl Capabilities for NoAvroExtensionCallbacks {
 /// Validate the complete current-core document envelope and its registered
 /// Avro payload shape. Avro semantic interpretation is intentionally deferred.
 fn validate_document(document: &Value, ctx: &mut Context<'_>) -> Result<(), EngineError> {
+    let result = validate_document_report(document, ctx)?;
+    if result.valid {
+        return Ok(());
+    }
+    let first = result.diagnostics.first();
+    Err(EngineError::new(
+        "AVRO_DOCUMENT",
+        first
+            .map(|diagnostic| diagnostic.path.clone())
+            .unwrap_or_default(),
+        first
+            .map(|diagnostic| diagnostic.message.clone())
+            .unwrap_or_else(|| Utf16::from("Invalid UMF Avro document")),
+    ))
+}
+
+fn validate_document_report(
+    document: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Validation, EngineError> {
     fn resource(text: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
         let source = text.encode_utf16().collect::<Vec<_>>();
         ctx.charge_text(source.len(), Utf16::default())?;
@@ -998,19 +1047,53 @@ fn validate_document(document: &Value, ctx: &mut Context<'_>) -> Result<(), Engi
     )?;
     let result =
         engine.validate_document(document, &registry, &mut NoAvroExtensionCallbacks, ctx)?;
-    if result.valid {
-        return Ok(());
+    Ok(result)
+}
+
+fn locate_payload_path(
+    document: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Option<Utf16>, EngineError> {
+    let Value::Object(doc) = document else {
+        return Ok(None);
+    };
+    let Some(Value::Array(modules)) = optional_field(doc, "modules") else {
+        return Ok(None);
+    };
+    let mut found = None;
+    for (mi, module) in modules.iter().enumerate() {
+        ctx.charge_work(1, Utf16::default())?;
+        let Value::Object(module) = module else {
+            continue;
+        };
+        if optional_field(module, "id") != Some(&Value::string_utf8("schema")) {
+            continue;
+        }
+        let Some(Value::Array(elements)) = optional_field(module, "elements") else {
+            continue;
+        };
+        for (ei, element) in elements.iter().enumerate() {
+            ctx.charge_work(1, Utf16::default())?;
+            let Value::Object(element) = element else {
+                continue;
+            };
+            if optional_field(element, "id") != Some(&Value::string_utf8("schema")) {
+                continue;
+            }
+            let Some(Value::Object(extensions)) = optional_field(element, "extensions") else {
+                continue;
+            };
+            if optional_field(extensions, AVRO_EXTENSION).is_some() {
+                if found.is_some() {
+                    return Ok(None);
+                }
+                found = Some(Utf16::from(format!(
+                    "/modules/{mi}/elements/{ei}/extensions/{AVRO_EXTENSION}"
+                )));
+            }
+        }
     }
-    let first = result.diagnostics.first();
-    Err(EngineError::new(
-        "AVRO_DOCUMENT",
-        first
-            .map(|diagnostic| diagnostic.path.clone())
-            .unwrap_or_default(),
-        first
-            .map(|diagnostic| diagnostic.message.clone())
-            .unwrap_or_else(|| Utf16::from("Invalid UMF Avro document")),
-    ))
+    Ok(found)
 }
 
 fn ensure_native_exportable(payload: &Payload) -> Result<(), EngineError> {
@@ -1154,11 +1237,127 @@ fn err(code: &'static str, message: &'static str) -> EngineError {
 
 #[cfg(test)]
 mod resource_tests {
-    use super::{NativeJsonTree, render_line};
+    use super::{admit_document, import_schema, render_line, NativeJsonTree};
     use crate::{
-        Context,
         context::{Limits, ResourceProfile},
+        value::{Utf16, Value},
+        Context,
     };
+
+    fn member_mut<'a>(value: &'a mut Value, key: &str) -> &'a mut Value {
+        let Value::Object(fields) = value else {
+            panic!("object expected")
+        };
+        &mut fields
+            .iter_mut()
+            .find(|(name, _)| name == &Utf16::from(key))
+            .unwrap()
+            .1
+    }
+
+    #[test]
+    fn admission_retains_generic_structure_diagnostics_in_order() {
+        let mut ctx = Context::ordinary();
+        let malformed = Value::Object(vec![]);
+        let report = admit_document(&malformed, &mut ctx).unwrap();
+        assert!(!report.validation.valid);
+        assert!(report.payload_path.is_none());
+        let paths = report
+            .validation
+            .diagnostics
+            .iter()
+            .map(|d| d.path.to_utf8().unwrap())
+            .collect::<Vec<_>>();
+        let codes = report
+            .validation
+            .diagnostics
+            .iter()
+            .map(|d| d.code.to_utf8().unwrap())
+            .collect::<Vec<_>>();
+        assert_eq!(paths, vec!["", "", "", ""]);
+        assert_eq!(
+            codes,
+            vec![
+                "SEMANTIC_TYPE_STRUCTURE",
+                "SEMANTIC_TYPE_STRUCTURE",
+                "SEMANTIC_TYPE_STRUCTURE",
+                "SEMANTIC_TYPE_STRUCTURE"
+            ]
+        );
+    }
+
+    #[test]
+    fn admission_retains_unknown_extension_warning_and_native_payload_path() {
+        let schema = r#"{"type":"record","name":"R","fields":[]}"#
+            .encode_utf16()
+            .collect::<Vec<_>>();
+        let mut document = import_schema(
+            &Utf16::from("admission"),
+            &schema,
+            &[],
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        let vocabularies = member_mut(&mut document, "vocabularies");
+        let Value::Object(vocabularies) = vocabularies else {
+            panic!("object expected")
+        };
+        vocabularies.push((
+            Utf16::from("example.future"),
+            Value::Object(vec![(Utf16::from("version"), Value::string_utf8("9.9.9"))]),
+        ));
+        let report = admit_document(&document, &mut Context::ordinary()).unwrap();
+        assert!(
+            report.validation.valid,
+            "{:?}",
+            report.validation.diagnostics
+        );
+        assert_eq!(
+            report.payload_path.as_ref().unwrap().to_utf8().unwrap(),
+            "/modules/0/elements/0/extensions/umf.avro"
+        );
+        assert_eq!(
+            report
+                .validation
+                .diagnostics
+                .iter()
+                .map(|d| d.code.to_utf8().unwrap())
+                .collect::<Vec<_>>(),
+            vec!["UNKNOWN_EXTENSION", "SEMANTICS_UNCHECKED"]
+        );
+        assert_eq!(
+            report.validation.diagnostics[0].path.to_utf8().unwrap(),
+            "/vocabularies/example.future"
+        );
+        assert_eq!(
+            report.validation.diagnostics[1].code.to_utf8().unwrap(),
+            "SEMANTICS_UNCHECKED"
+        );
+    }
+
+    #[test]
+    fn admission_does_not_select_a_path_for_ambiguous_schema_identities() {
+        let schema = r#"{"type":"string"}"#.encode_utf16().collect::<Vec<_>>();
+        let mut document = import_schema(
+            &Utf16::from("ambiguous"),
+            &schema,
+            &[],
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        let modules = member_mut(&mut document, "modules");
+        let Value::Array(modules) = modules else {
+            panic!("array expected")
+        };
+        let duplicate = modules[0].clone();
+        modules.push(duplicate);
+        let report = admit_document(&document, &mut Context::ordinary()).unwrap();
+        assert!(
+            !report.validation.valid,
+            "duplicate module identity must be rejected"
+        );
+        assert!(report.payload_path.is_none());
+    }
 
     #[test]
     fn root_and_dependency_lines_respect_the_newline_text_ceiling() {

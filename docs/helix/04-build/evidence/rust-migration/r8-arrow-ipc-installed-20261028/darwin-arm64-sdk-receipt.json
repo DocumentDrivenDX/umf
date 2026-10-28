@@ -1,0 +1,98 @@
+{
+  "format": "umf.r8.arrow-ipc-installed-package/1",
+  "status": "passed",
+  "scope": "offline current-source @umf/core Arrow IPC V4 captureArrowIpc, inspectArrowIpcCapture, exportArrowIpcCapture; Node/Bun default and ./reference plus Chromium packaged browser; no other operations or release claim",
+  "archive": {
+    "path": "/private/tmp/umf-r8-reviewed-cut/umf-sdk.tgz",
+    "sha256": "af745902a6817a6812caa545d1c6e6c3befaa41e1c56781f570010d3131bdc4e",
+    "manifestSha256": "7d2e1f180825649fbe3ca1996f27c6a4f4887ce02b6a101fa6c32f18c76a134f",
+    "verifiedMemberCount": 1820,
+    "sourceClosureSha256": "31e8f424b6501f5872b576b29f89d92c4eac0424f64159360d5d3fd2c89542e3",
+    "sourceInputCount": 3727,
+    "externalInputCount": 1,
+    "identity": {
+      "name": "@umf/core",
+      "version": "0.5.6",
+      "integrity": "sha512-AXtV7vUZEhMYKtcq1cdRmkP8fObLILlbRE6P17kEU6Tm9IQXJX/kzFxTAoSijUo/siTs+tvxKjBfyNY80D1OfA=="
+    }
+  },
+  "installation": {
+    "lockfileVersion": 3,
+    "lockPackageCount": 229,
+    "packageDependencies": 29
+  },
+  "routes": {
+    "node_default": {
+      "status": "pass",
+      "entry": "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r8-arrow-ipc-installed-nRVcqI/consumer/node_modules/@umf/core/dist/umf-node.js",
+      "packetSha256": "2447d1c61246719e1fe9a36408bc2aa2cf50cc0a9c237b50c4d393bd217f38a6",
+      "cases": 23,
+      "operations": 84,
+      "scope": "captureArrowIpc, inspectArrowIpcCapture, exportArrowIpcCapture only"
+    },
+    "node_reference": {
+      "status": "pass",
+      "entry": "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r8-arrow-ipc-installed-nRVcqI/consumer/node_modules/@umf/core/dist/umf.js",
+      "packetSha256": "2447d1c61246719e1fe9a36408bc2aa2cf50cc0a9c237b50c4d393bd217f38a6",
+      "cases": 23,
+      "operations": 84,
+      "scope": "captureArrowIpc, inspectArrowIpcCapture, exportArrowIpcCapture only"
+    },
+    "bun_default": {
+      "status": "pass",
+      "entry": "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r8-arrow-ipc-installed-nRVcqI/consumer/node_modules/@umf/core/dist/umf-node.js",
+      "packetSha256": "2447d1c61246719e1fe9a36408bc2aa2cf50cc0a9c237b50c4d393bd217f38a6",
+      "cases": 23,
+      "operations": 84,
+      "scope": "captureArrowIpc, inspectArrowIpcCapture, exportArrowIpcCapture only"
+    },
+    "bun_reference": {
+      "status": "pass",
+      "entry": "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r8-arrow-ipc-installed-nRVcqI/consumer/node_modules/@umf/core/dist/umf.js",
+      "packetSha256": "2447d1c61246719e1fe9a36408bc2aa2cf50cc0a9c237b50c4d393bd217f38a6",
+      "cases": 23,
+      "operations": 84,
+      "scope": "captureArrowIpc, inspectArrowIpcCapture, exportArrowIpcCapture only"
+    }
+  },
+  "chromium": {
+    "status": "pass",
+    "runtime": "Chromium",
+    "version": "153.0.8010.12",
+    "operations": 69,
+    "cases": 23,
+    "refusal": [
+      "missing",
+      "corrupt"
+    ],
+    "nodeGlobalsAbsent": true,
+    "pageErrors": 0,
+    "externalRequests": 0
+  },
+  "nativeRefusal": [
+    {
+      "runtime": "node",
+      "mode": "missing",
+      "refused": true,
+      "referenceAvailable": true
+    },
+    {
+      "runtime": "bun",
+      "mode": "missing",
+      "refused": true,
+      "referenceAvailable": true
+    },
+    {
+      "runtime": "node",
+      "mode": "corrupt",
+      "refused": true,
+      "referenceAvailable": true
+    },
+    {
+      "runtime": "bun",
+      "mode": "corrupt",
+      "refused": true,
+      "referenceAvailable": true
+    }
+  ]
+}

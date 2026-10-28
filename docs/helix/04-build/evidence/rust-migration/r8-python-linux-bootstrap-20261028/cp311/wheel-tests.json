@@ -1,0 +1,57 @@
+{
+  "status": "passed",
+  "image": "umf-rust-python-linux:cp311-3.11.17",
+  "python": "3.11.17",
+  "platform": "linux",
+  "machine": "aarch64",
+  "rustc": "rustc 1.90.0 (1159e78c4 2025-09-14)",
+  "cargo": "cargo 1.90.0 (840b83a10 2025-07-30)",
+  "maturin": "maturin 1.9.6",
+  "pytest": "pytest 8.4.2",
+  "pydantic": "2.11.10",
+  "wheel": {
+    "name": "umf_core_python-0.1.0-cp311-abi3-manylinux_2_34_aarch64.whl",
+    "sha256": "c632cfc4577609d306b042963a45283890ea32fdbfcd22ec61cdf05b8edd9f30",
+    "bytes": 5048417
+  },
+  "installedNativeModule": "/tmp/umf-rust-wheel-install-6erqkblj/_rust_core/_rust_core.abi3.so",
+  "testCount": 7,
+  "testsRun": 7,
+  "tests": [
+    {
+      "test": "/src/python/tests/test_rust_core.py::test_copy_json_preserves_order_raw_surrogates_and_positive_numeric_bits",
+      "exitCode": 0,
+      "output": ".                                                                        [100%]\n1 passed in 0.06s\n"
+    },
+    {
+      "test": "/src/python/tests/test_rust_core.py::test_python_consumer_snapshot_preserves_python_string_and_number_origins",
+      "exitCode": 0,
+      "output": ".                                                                        [100%]\n1 passed in 0.06s\n"
+    },
+    {
+      "test": "/src/python/tests/test_rust_arrow_ipc.py::test_capture_export_and_inspection_preserve_exact_bytes",
+      "exitCode": 0,
+      "output": ".                                                                        [100%]\n1 passed in 1.69s\n"
+    },
+    {
+      "test": "/src/python/tests/test_rust_arrow_schema.py::test_profile_and_all_five_schema_operations_preserve_source_and_copies",
+      "exitCode": 0,
+      "output": ".                                                                        [100%]\n1 passed in 5.59s\n"
+    },
+    {
+      "test": "/src/python/tests/test_rust_avro_inspect.py::test_inspector_resolves_ordered_dependency_and_remains_incomplete",
+      "exitCode": 0,
+      "output": ".                                                                        [100%]\n1 passed in 0.04s\n"
+    },
+    {
+      "test": "/src/python/tests/test_rust_cardinality.py::test_opt_in_python_binding_runs_all_three_cardinality_operations",
+      "exitCode": 0,
+      "output": ".                                                                        [100%]\n1 passed in 1.88s\n"
+    },
+    {
+      "test": "/src/python/tests/test_rust_semantic_document_operations.py::test_core_semantic_reference_operations_match_frozen_predecessor",
+      "exitCode": 0,
+      "output": ".                                                                        [100%]\n1 passed in 0.47s\n"
+    }
+  ]
+}

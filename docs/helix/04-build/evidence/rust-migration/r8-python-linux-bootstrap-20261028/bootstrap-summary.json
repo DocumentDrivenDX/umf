@@ -1,0 +1,125 @@
+{
+  "profile": "umf.rust-python-linux-wheel-bootstrap/1",
+  "status": "bounded-matrix-passed",
+  "scope": "Direct abi3 PyO3 wheel builds from current checkout and focused installed-wheel Python tests on official CPython Linux arm64 images. This is private qualification evidence; it makes no release or broad platform support claim.",
+  "imageBuild": {
+    "context": "/private/tmp/umf-rust-python-image-context",
+    "dockerfile": "/private/tmp/umf-rust-python-image-context/Dockerfile",
+    "sourceMountedDuringImageBuild": false,
+    "toolchain": {
+      "rustc": "1.90.0",
+      "cargo": "1.90.0",
+      "maturin": "1.9.6",
+      "pytest": "8.4.2",
+      "pydantic": "2.11.10"
+    },
+    "baseTagsExact": true
+  },
+  "sourceTestControls": {
+    "sourcePath": "/Users/erik/.codex/worktrees/rust-binding-spike/umf",
+    "sourceMount": "Docker bind mount read-only at /src",
+    "cargoTargetDirectory": "/tmp/cargo-target",
+    "testCachesAndBytecode": "disabled",
+    "outputs": "/private/tmp/umf-rust-python-results",
+    "repositoryMutations": false,
+    "distOrCacheTouched": false
+  },
+  "buildCommand": "maturin build --locked --release --manifest-path /src/bindings/core/python/Cargo.toml --interpreter /usr/local/bin/python --out /evidence/<runtime>/wheels",
+  "testCommand": "python -u /evidence/run-wheel-tests.py /evidence/<runtime>/wheels/umf_core_python-0.1.0-cp311-abi3-manylinux_2_34_aarch64.whl umf-rust-python-linux:<runtime-tag> /evidence/<runtime>",
+  "runtimes": [
+    {
+      "python": "3.11.17",
+      "officialBase": {
+        "tag": "python:3.11.17-slim-bookworm",
+        "manifestDigest": "sha256:f06d01d4ba3f8ad5af45a3ec87df19c1d317d8e8961edc0fabda61811af6f7cf"
+      },
+      "testImage": {
+        "tag": "umf-rust-python-linux:cp311-3.11.17",
+        "imageId": "sha256:0e2e27b9815e105dad3e9094f81ebc2578af10acbe0514388ae923eecd6d5599",
+        "platform": "linux/arm64"
+      },
+      "wheel": {
+        "name": "umf_core_python-0.1.0-cp311-abi3-manylinux_2_34_aarch64.whl",
+        "sha256": "c632cfc4577609d306b042963a45283890ea32fdbfcd22ec61cdf05b8edd9f30",
+        "bytes": 5048417,
+        "path": "/private/tmp/umf-rust-python-results/cp311/wheels/umf_core_python-0.1.0-cp311-abi3-manylinux_2_34_aarch64.whl",
+        "platformTag": "manylinux_2_34_aarch64"
+      },
+      "testsPassed": 7,
+      "testsTotal": 7,
+      "testNames": [
+        "test_copy_json_preserves_order_raw_surrogates_and_positive_numeric_bits",
+        "test_python_consumer_snapshot_preserves_python_string_and_number_origins",
+        "test_capture_export_and_inspection_preserve_exact_bytes",
+        "test_profile_and_all_five_schema_operations_preserve_source_and_copies",
+        "test_inspector_resolves_ordered_dependency_and_remains_incomplete",
+        "test_opt_in_python_binding_runs_all_three_cardinality_operations",
+        "test_core_semantic_reference_operations_match_frozen_predecessor"
+      ],
+      "evidence": "/private/tmp/umf-rust-python-results/cp311/wheel-tests.json"
+    },
+    {
+      "python": "3.12.15",
+      "officialBase": {
+        "tag": "python:3.12.15-slim-bookworm",
+        "manifestDigest": "sha256:6a0e06f5ba0b373d051aabd3fffb9b873f27f9a2a3a14bcbe37dee6f0e3bbc70"
+      },
+      "testImage": {
+        "tag": "umf-rust-python-linux:cp312-3.12.15",
+        "imageId": "sha256:52567d93ba53943c13cf7ce53f8ab0538e16c17eb72ff38215b3652dee7f6829",
+        "platform": "linux/arm64"
+      },
+      "wheel": {
+        "name": "umf_core_python-0.1.0-cp311-abi3-manylinux_2_34_aarch64.whl",
+        "sha256": "06a14dd09350f8793a527e9c966bfce31ceefe162d6da42f982978a7f9e2355e",
+        "bytes": 5048417,
+        "path": "/private/tmp/umf-rust-python-results/cp312/wheels/umf_core_python-0.1.0-cp311-abi3-manylinux_2_34_aarch64.whl",
+        "platformTag": "manylinux_2_34_aarch64"
+      },
+      "testsPassed": 7,
+      "testsTotal": 7,
+      "testNames": [
+        "test_copy_json_preserves_order_raw_surrogates_and_positive_numeric_bits",
+        "test_python_consumer_snapshot_preserves_python_string_and_number_origins",
+        "test_capture_export_and_inspection_preserve_exact_bytes",
+        "test_profile_and_all_five_schema_operations_preserve_source_and_copies",
+        "test_inspector_resolves_ordered_dependency_and_remains_incomplete",
+        "test_opt_in_python_binding_runs_all_three_cardinality_operations",
+        "test_core_semantic_reference_operations_match_frozen_predecessor"
+      ],
+      "evidence": "/private/tmp/umf-rust-python-results/cp312/wheel-tests.json"
+    },
+    {
+      "python": "3.13.16",
+      "officialBase": {
+        "tag": "python:3.13.16-slim-bookworm",
+        "manifestDigest": "sha256:73aa5faee130c60da030e105ec971ccf57473fbd22ce73bd6fc9ba99a40b838d"
+      },
+      "testImage": {
+        "tag": "umf-rust-python-linux:cp313-3.13.16",
+        "imageId": "sha256:f01aaf93b67b4f63e2f55bcdac0814a3568616fb12c5a611e4eb01dfce6bc388",
+        "platform": "linux/arm64"
+      },
+      "wheel": {
+        "name": "umf_core_python-0.1.0-cp311-abi3-manylinux_2_34_aarch64.whl",
+        "sha256": "2b4112caf8d577a18a7951077a7abfed9e68d1033de4ff940830d4091d7455be",
+        "bytes": 5048417,
+        "path": "/private/tmp/umf-rust-python-results/cp313/wheels/umf_core_python-0.1.0-cp311-abi3-manylinux_2_34_aarch64.whl",
+        "platformTag": "manylinux_2_34_aarch64"
+      },
+      "testsPassed": 7,
+      "testsTotal": 7,
+      "testNames": [
+        "test_copy_json_preserves_order_raw_surrogates_and_positive_numeric_bits",
+        "test_python_consumer_snapshot_preserves_python_string_and_number_origins",
+        "test_capture_export_and_inspection_preserve_exact_bytes",
+        "test_profile_and_all_five_schema_operations_preserve_source_and_copies",
+        "test_inspector_resolves_ordered_dependency_and_remains_incomplete",
+        "test_opt_in_python_binding_runs_all_three_cardinality_operations",
+        "test_core_semantic_reference_operations_match_frozen_predecessor"
+      ],
+      "evidence": "/private/tmp/umf-rust-python-results/cp313/wheel-tests.json"
+    }
+  ],
+  "limitation": "A broad all-file CPython 3.11 run exceeded the bounded six-minute window and was stopped; no broad-suite result is claimed. Focused Arrow IPC fixture replay was excluded after it did not complete in the bounded run. The focused Arrow capture/export test passed in all three interpreters."
+}

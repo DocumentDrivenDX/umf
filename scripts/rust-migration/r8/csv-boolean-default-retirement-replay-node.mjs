@@ -7,7 +7,7 @@ import {readFile, writeFile} from 'node:fs/promises';
 import {join, resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
 
-const root = process.cwd();
+const root = resolve(process.env.UMF_R8_REPO_ROOT ?? new URL('../../../', import.meta.url).pathname);
 const archive = resolve(process.env.UMF_R8_CSV_ARCHIVE_ROOT ?? '');
 const out = resolve(process.env.UMF_R8_CSV_RECEIPT_DIR ?? '');
 const archiveSha256 = process.env.UMF_R8_CSV_ARCHIVE_SHA256;
@@ -28,8 +28,9 @@ let rustCalls = 0;
 addon.executeRequestWire = function(...args) { rustCalls++; return original.apply(this, args); };
 const defaultEntry = join(archive, 'dist/umf-node.js');
 const referenceEntry = join(archive, 'dist/umf.js');
-const defaults = await import(pathToFileURL(defaultEntry).href);
-const reference = await import(pathToFileURL(referenceEntry).href);
+const installed = process.env.UMF_R8_INSTALLED_PACKAGE_SPECIFIER === '1';
+const defaults = installed ? await import('@umf/core') : await import(pathToFileURL(defaultEntry).href);
+const reference = installed ? await import('@umf/core/reference') : await import(pathToFileURL(referenceEntry).href);
 const exportsByName = {validateCsvBooleanLexical: defaults.validateCsvBooleanLexical, verifyCsvBooleanLexical: defaults.verifyCsvBooleanLexical, validateCoreRecordValues: defaults.validateCoreRecordValues};
 const referenceByName = {validateCsvBooleanLexical: reference.validateCsvBooleanLexical, verifyCsvBooleanLexical: reference.verifyCsvBooleanLexical, validateCoreRecordValues: reference.validateCoreRecordValues};
 const argsFor = (item, trace) => {
