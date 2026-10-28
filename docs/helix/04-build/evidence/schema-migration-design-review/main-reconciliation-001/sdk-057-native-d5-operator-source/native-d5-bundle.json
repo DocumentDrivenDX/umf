@@ -1,0 +1,91 @@
+{
+  "profile": "umf.g02-d5-native-linux-operator-bundle/1",
+  "status": "HELD_NOT_REGISTERED_NOT_DISPATCHED_NOT_UPLOADED",
+  "sourceP": {
+    "commit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+    "tree": "8b98c0d895983ba2b7637dd3aea567dab0943883",
+    "workflowPath": ".github/workflows/access-boundaries.yml",
+    "workflowSha256": "f0963d2df1e371112ba6e57999dbf69290796d711eb97ed46637d4ebc63918a1",
+    "cohortLockSha256": "4337ab0597dcec245402abe73bcf8ea1d09bc72a4cb2907473c9e53d0327e611"
+  },
+  "workflowQ": {
+    "commit": null,
+    "tree": null,
+    "workflowPath": ".github/workflows/native-d5-linux.yml",
+    "registration": "held until the reviewed workflow is committed on the default branch",
+    "carrierReleaseId": null,
+    "carrierReleaseTag": null,
+    "carrierAssetId": null,
+    "pythonReleaseId": "401059204",
+    "pythonReleaseTag": "3.11.17-36876195594",
+    "pythonAssetId": "603458734"
+  },
+  "files": [
+    {
+      "proposalPath": "native-d5-linux.yml",
+      "installPath": ".github/workflows/native-d5-linux.yml",
+      "sizeBytes": 6578,
+      "sha256": "6d2417761eda00b55f45cd40e1dd6cf29f557d681ed69327c7816dddba8cf328"
+    },
+    {
+      "proposalPath": "native_d5_driver.py",
+      "installPath": "scripts/qualification/native-d5/native_d5_driver.py",
+      "sizeBytes": 47629,
+      "sha256": "597075086d0e626599243534464ecc067314f6afd8c272bf450f660bd1610abf"
+    },
+    {
+      "proposalPath": "acquire_inputs.py",
+      "installPath": "scripts/qualification/native-d5/acquire_inputs.py",
+      "sizeBytes": 16994,
+      "sha256": "1ad4c651388aa0497ecdd81769f4762bf60e0211a0deb475a52aea579e14e213"
+    }
+  ],
+  "carrier": {
+    "filename": "d5-input-carrier.tar.gz",
+    "sizeBytes": 99370959,
+    "sha256": "aa02faa3696577de82f77d147c8ccdde2c0397556fd97bd365dff661f6b504e7",
+    "manifestSha256": "721d2205a6baeaa1edc9b11eb270eaa43954fb8a706ba78a17b67ce80e7c5946",
+    "payloadFiles": 68,
+    "regularFilesIncludingManifest": 69
+  },
+  "pythonRuntime": {
+    "filename": "python-3.11.17-linux-24.04-x64.tar.gz",
+    "releaseRepository": "actions/python-versions",
+    "releaseId": "401059204",
+    "releaseTag": "3.11.17-36876195594",
+    "assetId": "603458734",
+    "sizeBytes": 92586271,
+    "sha256": "ae713815fe406a06f1691856f697a0b1e58b3e986f44e62f0cd0bca2424f1aac",
+    "regularFiles": 9970,
+    "expandedRegularBytes": 305635289,
+    "symlinks": 9
+  },
+  "postgres": {
+    "image": "docker.io/library/postgres@sha256:f4b419e350fd98d4a8429603295208976dea4c8fb8326d818d346d3e29f1db6f",
+    "platform": "linux/amd64",
+    "serverVersion": "18.6 (Debian 18.6-1.pgdg13+2)",
+    "serverVersionNum": "180006",
+    "requiredFullVersionPrefix": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2)"
+  },
+  "obligations": {
+    "commands": 30,
+    "oracleCases": 37,
+    "oracleGroups": 16,
+    "noDefaultChecks": 19,
+    "faultScenarios": 3,
+    "aggregateSeconds": 1800,
+    "childSeconds": 180,
+    "reserveSeconds": 60,
+    "terminationGraceSeconds": 10,
+    "logBytes": 1048576,
+    "evidenceBytes": 16777216,
+    "releasePayloadBytes": 2097152
+  },
+  "execution": {
+    "workflowRegistrationAndManualDispatch": false,
+    "carrierUpload": false,
+    "actionsRunCreated": false,
+    "dockerOrCandidateCommandsRun": false,
+    "passClaim": false
+  }
+}

@@ -1,0 +1,17 @@
+# Native D5 final source closure — ACCEPT
+
+Accepted authoritative executabletuple in/private/tmp/migration-d5-native-qualifier-proposal-001/executable:
+- native-d5-linux.yml6,578B SHA6d2417761eda00b55f45cd40e1dd6cf29f557d681ed69327c7816dddba8cf328.
+- native_d5_driver.py47,629B SHA597075086d0e626599243534464ecc067314f6afd8c272bf450f660bd1610abf.
+- acquire_inputs.py16,994B SHA1ad4c651388aa0497ecdd81769f4762bf60e0211a0deb475a52aea579e14e213.
+- bundle3,279B SHA6f05a3616b62ed7886e939ba4de8e09eb08576175c59992e5cbc67843969bc34; allthreephysicalsourcehashesmatchroster. Olderreviewpacket/priorhashesarehistorical, notauthoritativefinaltuple.
+
+Narrowfindingsfromreview001closed. CanonicalofficialPythonhardprefix/RPATH retained; absentonlycopy, existingneveroverwrite. Everyarchive-derivedruntimefile/hash/mode/link verifiedwithspecifiedsetupremoval/aliases; boundedrunneroperator sitepackagesextras inventory/digest recordedseparately. Archive-derivedpip/setuptoolsnotreplaced, targetfreshvenv18unchanged. OfficialPythonrelease401059204/tag3.11.17-36876195594/asset603458734 and92,586,271B archiveae713815…physicalhashbind. Versioncheckexact, no setup.sh/pipupgrade/relocation. MismatchfailsbeforeD5; actualexistingrunnercompatibilitynotpreaccepted.
+
+PGrepresentationexact18.6(Debian18.6-1.pgdg13+2)/180006/fullprefix retained. RepoDigestfixverifiedactual: nonemptylistofonlydocker.io/library/postgres,library/postgres,postgres aliases, eachwithEXACTf4b419e350fd98d4a8429603295208976dea4c8fb8326d818d346d3e29f1db6fdigest. Full lowercaseimageSHA256required; actualaliaseslistretained. Nativeplatform/digest/version/cleanupnotrelaxed.
+
+Requiredreleasepayloadexportnowpresent: directexactAccesswheel/Codegenwheel/release-payload-receipt.json, regularsafehashcheckedcopies<=2MiB, childreceiptSHA-bound. Combinedupload+payload+outermetadata/receipt+reservedworkflowstreams<=16MiB. FailuredoesnotpromotePASS; noHpayloadgate removed.
+
+Unchangedreviewedcore: one manualstandardubuntu24.04job/nopaidrunner/matrix/automatictrigger,45minuteouterallocationonly; immutablecleanreadonlyproducerP e429/tree8b98/workflowf096 distinctactualQ/run/workflow/operatorfilehashes, pre/postPchecks, noforgedGITHUB*. Independentlyverifiedcarrier99,370,959B aa02faa…/68payloadhashes/unchangedthreeadapterbytes; exact18lock/owner/provenance. Original30commands/37cases/16groups/19controls/3faults/180children/1800aggregate/1730work/60reserve/10grace/1MiBchildlogs/16MiBevidence preserved. FreshownednativePG18.6loopbacknetwork/resources, finalizer+physicalcustody+cleanuprequired. OperatorPASSnotinferredfrompartialchildresults. PriorlocalD5failures/diagnosticnogainretained.
+
+No furtherconcretesourceblockerfound. RootmayprepareisolatedCI-onlyPRwiththesebytes,keepingcandidatePdistinctdriverQ. SourceacceptanceisNOTexecution/registration/upload/dispatchauthorization. Human'snoActionsinstructionandcarrieruploadauto-reviewrejectionremainbinding; no bypass. Actualnativehost/images/downloads/runtime/D5results stillrequireevidenceandreview. Goal/release/publicHheld. Reviewerusedtext/archive/hashonly; no candidateimports/AST/YAML/tests/runtime/Docker/Git/Actions.

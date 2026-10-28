@@ -1,0 +1,168 @@
+name: G02 D5 isolated native Linux qualification
+
+on:
+  workflow_dispatch:
+    inputs:
+      carrier_release_id:
+        description: Exact temporary draft release ID containing the reviewed carrier
+        type: string
+        required: true
+      carrier_release_tag:
+        description: Exact tag for that temporary draft release
+        type: string
+        required: true
+      carrier_asset_id:
+        description: Exact uploaded carrier asset ID
+        type: string
+        required: true
+      python_release_id:
+        description: Exact actions/python-versions release ID for the locked CPython archive
+        type: string
+        required: true
+      python_release_tag:
+        description: Exact actions/python-versions release tag
+        type: string
+        required: true
+      python_asset_id:
+        description: Exact uploaded CPython 3.11.17 Linux 24.04 x64 asset ID
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: g02-d5-native-linux-${{ github.run_id }}-${{ github.run_attempt }}
+  cancel-in-progress: false
+
+jobs:
+  g02-d5-native-linux:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    defaults:
+      run:
+        shell: bash
+    env:
+      EVIDENCE_ROOT: ${{ runner.temp }}/native-d5-evidence
+      ACQUISITION_RECEIPT: ${{ runner.temp }}/d5-input-acquisition.json
+      INPUT_ROOT: ${{ runner.temp }}/d5-inputs
+      CANDIDATE_ROOT: ${{ github.workspace }}/candidate-p
+      WORKFLOW_Q_ROOT: ${{ github.workspace }}/workflow-q
+      DRIVER: workflow-q/scripts/qualification/native-d5/native_d5_driver.py
+      ACQUIRER: workflow-q/scripts/qualification/native-d5/acquire_inputs.py
+    steps:
+      - name: Initialize failure-safe evidence directory
+        run: mkdir -m 700 -p "$EVIDENCE_ROOT/outer-logs"
+
+      - name: Check out actual workflow identity Q
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+          path: workflow-q
+          sparse-checkout: |
+            .github/workflows/native-d5-linux.yml
+            scripts/qualification/native-d5/**
+          sparse-checkout-cone-mode: false
+      - name: Check actual workflow identity Q checkout
+        run: test "$(git -C "$WORKFLOW_Q_ROOT" rev-parse HEAD)" = "$GITHUB_SHA"
+
+      - name: Check out exact producer source P
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: DocumentDrivenDX/umf
+          ref: e4299aff8e87e9d211f9d86df2f2013ab9c95945
+          path: candidate-p
+          persist-credentials: false
+          fetch-depth: 1
+          sparse-checkout: |
+            .github/workflows/access-boundaries.yml
+            docs/helix/04-build/evidence/mig-g02/independent-review/**
+            python/umf_codegen/src/umf_codegen/_assets/manifest.json
+          sparse-checkout-cone-mode: false
+
+      - name: Make the exact producer checkout read-only
+        run: find "$CANDIDATE_ROOT" -path "$CANDIDATE_ROOT/.git" -prune -o -exec chmod a-w {} +
+
+      - name: Acquire and verify immutable carrier and Python assets
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CARRIER_RELEASE_ID: ${{ inputs.carrier_release_id }}
+          CARRIER_RELEASE_TAG: ${{ inputs.carrier_release_tag }}
+          CARRIER_ASSET_ID: ${{ inputs.carrier_asset_id }}
+          PYTHON_RELEASE_ID: ${{ inputs.python_release_id }}
+          PYTHON_RELEASE_TAG: ${{ inputs.python_release_tag }}
+          PYTHON_ASSET_ID: ${{ inputs.python_asset_id }}
+        run: |
+          set +e
+          python3 "$ACQUIRER" \
+            --repository "$GITHUB_REPOSITORY" \
+            --carrier-release-id "$CARRIER_RELEASE_ID" \
+            --carrier-release-tag "$CARRIER_RELEASE_TAG" \
+            --carrier-asset-id "$CARRIER_ASSET_ID" \
+            --python-release-id "$PYTHON_RELEASE_ID" \
+            --python-release-tag "$PYTHON_RELEASE_TAG" \
+            --python-asset-id "$PYTHON_ASSET_ID" \
+            --destination "$INPUT_ROOT" \
+            --receipt "$ACQUISITION_RECEIPT" \
+            > "$RUNNER_TEMP/acquisition.stdout" \
+            2> "$RUNNER_TEMP/acquisition.stderr"
+          status=$?
+          set -e
+          for stream in stdout stderr; do
+            source="$RUNNER_TEMP/acquisition.$stream"
+            size=$(wc -c < "$source")
+            if (( size > 65536 )); then
+              head -c 65536 "$source" > "$EVIDENCE_ROOT/outer-logs/acquisition.$stream"
+              echo "OUTER_CAPTURE_TRUNCATED" >> "$EVIDENCE_ROOT/outer-logs/acquisition.$stream"
+              status=1
+            else
+              cp "$source" "$EVIDENCE_ROOT/outer-logs/acquisition.$stream"
+            fi
+          done
+          if (( status != 0 )); then
+            printf '%s\n' '{"status":"FAIL_OR_UNKNOWN","stage":"input-acquisition"}' > "$EVIDENCE_ROOT/acquisition-failure.json"
+            exit "$status"
+          fi
+
+      - name: Run one bounded D5 native Linux qualification
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: |
+          set +e
+          python3 "$DRIVER" \
+            --candidate "$CANDIDATE_ROOT" \
+            --workflow-q "$WORKFLOW_Q_ROOT" \
+            --input-root "$INPUT_ROOT" \
+            --output-root "$EVIDENCE_ROOT" \
+            --runner-temp "$RUNNER_TEMP" \
+            --acquisition-receipt "$ACQUISITION_RECEIPT" \
+            > "$RUNNER_TEMP/native-driver.stdout" \
+            2> "$RUNNER_TEMP/native-driver.stderr"
+          status=$?
+          set -e
+          for stream in stdout stderr; do
+            source="$RUNNER_TEMP/native-driver.$stream"
+            size=$(wc -c < "$source")
+            if (( size > 65536 )); then
+              head -c 65536 "$source" > "$EVIDENCE_ROOT/outer-logs/native-driver.$stream"
+              echo "OUTER_CAPTURE_TRUNCATED" >> "$EVIDENCE_ROOT/outer-logs/native-driver.$stream"
+              status=1
+            else
+              cp "$source" "$EVIDENCE_ROOT/outer-logs/native-driver.$stream"
+            fi
+          done
+          exit "$status"
+
+      - name: Upload bounded evidence, including failure evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: g02-d5-native-linux-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/native-d5-evidence
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0
