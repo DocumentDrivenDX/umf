@@ -1,0 +1,24 @@
+{
+  "profile": "umf.sdk-057-local-public-h-continuation-binding-review/1",
+  "result": "continuation-only-validator-passed",
+  "scope": "Executed only the public-H reader's pure validate_union_continuation function against actual continuation-003 and original aggregate metadata. This is not D5, not the complete public-H proof, not Core publication evidence, and not a P/M/H qualification claim.",
+  "readerPath": "/private/tmp/sdk-057-local-public-h/run-local-public-h.py",
+  "readerSha256": "a04eafa0bfe5fdefbfb126ff64f2f249d4daf6a64e3bfbe9bdf6ab27cec14c98",
+  "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+  "sourceTree": "8b98c0d895983ba2b7637dd3aea567dab0943883",
+  "continuationReceipt": {
+    "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-003/output/continuation-receipt.json",
+    "sha256": "dcf11127fc5a3c5971218974fc46689f6df080518cac17170c0e6220bec88399",
+    "executionId": "umf-local-full18-union-continuation-20261028T210818Z-1e6e0d6f-5cde-48cb-8c16-e4b15d5552ab-attempt1",
+    "attempt": 1
+  },
+  "harnessSha256": "07904d34b782a07bad53cd29797eaca70e0f3c6cb20adc51b1084004b4084ea3",
+  "reportHashes": {
+    "linux-x86_64-py311": "6006c8ec82a2f7bd716356138fc673b8654047a3944edfe36ca422909a0d3c13",
+    "linux-x86_64-py314": "02b7d59b32e63ce265602dc3a1b265a99f2c22cb08fadb9ec29df72214a4effe"
+  },
+  "physicalLogRosterCount": 10,
+  "physicalLogValidation": "all 8 inner-command logs matched their command-record byte counts and hashes; both distinct host-stage logs matched stage rows and host-log refs",
+  "bootstrapWheelSha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+  "bootstrapMetadataSha256": "4f190d2f0b312b3086058cee64ab4333bf3ce67fb78b4c2bdb43899049b29f4d"
+}

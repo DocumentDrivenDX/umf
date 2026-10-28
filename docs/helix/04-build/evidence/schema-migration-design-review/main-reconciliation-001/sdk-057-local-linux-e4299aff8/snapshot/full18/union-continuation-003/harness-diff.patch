@@ -1,0 +1,70 @@
+--- /private/tmp/migration-full18-e4299aff8-union-continuation-002/harness/run-union-continuation.sh	2026-10-28 16:35:58
++++ /private/tmp/migration-full18-e4299aff8-union-continuation-003/harness/run-union-continuation.sh	2026-10-28 17:06:11
+@@ -10,7 +10,7 @@
+ WHEEL_BYTES=129956
+ ORIGINAL_ROOT='/private/tmp/migration-full18-e4299aff8-002'
+ PREVIOUS_CONTINUATION='/private/tmp/migration-full18-e4299aff8-union-continuation-001'
+-OUT_ROOT="${UMF_FULL18_CONTINUATION_OUTPUT:-/private/tmp/migration-full18-e4299aff8-union-continuation-002/output}"
++OUT_ROOT="${UMF_FULL18_CONTINUATION_OUTPUT:-/private/tmp/migration-full18-e4299aff8-union-continuation-003/output}"
+ SCRIPT_DIR="$(cd -- "$(dirname -- "$0")" && pwd -P)"
+ HARNESS_ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd -P)"
+ LOG_CAP=$((1024*1024))
+@@ -96,9 +96,25 @@
+     --mount "type=bind,src=$HARNESS_ROOT/bootstrap,dst=/bootstrap,readonly"
+     --mount "type=bind,src=$SCRIPT_DIR,dst=/runner,readonly"
+     --mount "type=bind,src=$OUT_ROOT,dst=/out" "$image" bash /runner/run-cell.sh "$cell")
+-  run_stage "$stage" 3600 "$container" "$OUT_ROOT/logs/$stage.log" "${common[@]}"
++  run_stage "$stage" 3600 "$container" "$OUT_ROOT/logs/host-$stage.log" "${common[@]}"
+ }
+ run_cell linux-x86_64-py311 "$PY311_IMAGE"
++python3 - "$OUT_ROOT" <<'PYVERIFY'
++import csv, hashlib, json, pathlib, sys
++out=pathlib.Path(sys.argv[1])
++stages=list(csv.DictReader((out/'stage-results.tsv').open(), delimiter='\t'))
++assert len(stages)==1 and stages[0]['stage']=='linux-x86_64-py311-union-replay'
++stage=stages[0]; host=out/stage['logPath']; inner=out/'logs/linux-x86_64-py311-union-replay.log'
++assert host.resolve()!=inner.resolve()
++assert int(stage['logBytes'])==host.stat().st_size
++assert stage['logSha256']==hashlib.sha256(host.read_bytes()).hexdigest()
++commands=[json.loads(line) for line in (out/'commands-linux-x86_64-py311.jsonl').read_text().splitlines() if line]
++command=next(row for row in commands if row['name']=='union-replay')
++assert command['log']=='/out/logs/linux-x86_64-py311-union-replay.log'
++assert int(command['logBytes'])==inner.stat().st_size
++assert command['logSha256']==hashlib.sha256(inner.read_bytes()).hexdigest()
++print('py311 physical host-stage and inner command log records verified before py314 starts')
++PYVERIFY
+ run_cell linux-x86_64-py314 "$PY314_IMAGE"
+ cp "$HARNESS_ROOT/bootstrap/pypi-26.3.json" "$OUT_ROOT/pypi-26.3.json"
+ python3 "$SCRIPT_DIR/finalize.py" "$OUT_ROOT" "$EXECUTION_ID" "$HARNESS_SHA256" "$RUN_START_UTC" "$SOURCE_COMMIT" "$SOURCE_TREE" "$PY311_ACTUAL_IMAGE_ID" "$PY314_ACTUAL_IMAGE_ID" "$AGGREGATE_SHA256" "$CORPUS_SHA256" "$PRODUCER_RECEIPT_SHA256" "$LOG_CAP" "$METADATA_CAP" "$LOG_BYTES"
+--- /private/tmp/migration-full18-e4299aff8-union-continuation-002/harness/finalize.py	2026-10-28 16:36:08
++++ /private/tmp/migration-full18-e4299aff8-union-continuation-003/harness/finalize.py	2026-10-28 17:05:37
+@@ -71,6 +71,20 @@
+     raise SystemExit('Exact two-cell stage roster missing')
+ if any(int(row['exitCode'])!=0 or int(row['maxSeconds'])!=3600 for row in stage_rows):
+     raise SystemExit('Original local full18 watchdog was missing or a replay stage failed')
++for row in stage_rows:
++    stage_log=out/row['logPath']
++    if stage_log.name != f"host-{row['stage']}.log":
++        raise SystemExit(f"{row['stage']}: host capture does not use the distinct host-stage filename")
++    if int(row['logBytes']) != stage_log.stat().st_size or row['logSha256'] != sha(stage_log):
++        raise SystemExit(f"{row['stage']}: physical host-stage log differs from recorded hash/size")
++    cell=row['stage'].removesuffix('-union-replay')
++    command_log=out/'logs'/f'{cell}-union-replay.log'
++    if command_log.resolve()==stage_log.resolve():
++        raise SystemExit(f"{row['stage']}: host-stage and inner command logs collide")
++    command_rows=[json.loads(line) for line in (out/f'commands-{cell}.jsonl').read_text().splitlines() if line]
++    command=next(x for x in command_rows if x['name']=='union-replay')
++    if command['log'] != f'/out/logs/{cell}-union-replay.log' or int(command['logBytes']) != command_log.stat().st_size or command['logSha256'] != sha(command_log):
++        raise SystemExit(f"{row['stage']}: physical inner command log differs from recorded hash/size")
+ if host_log_bytes>log_cap: raise SystemExit('Added 1 MiB host log cap exceeded')
+ 
+ aggregate=json.loads((original/'aggregate/aggregate.json').read_text())
+@@ -96,7 +110,7 @@
+  'limits':{'originalFull18LocalContract':{'stageWatchdogSeconds':3600,'dockerStopGraceSeconds':30,'cpus':8,'memoryBytes':25769803776,'pidsLimit':8192,'pullPolicy':'never','platform':'linux/amd64','network':'none','sourceAndAggregateMounts':'read-only','scope':'preserved from /private/tmp/migration-local-python-route/run-full18-linux.sh; no original full18 log/evidence byte cap is claimed'},'addedOperatorCaps':{'hostCapturedLogBytesTotal':log_cap,'perCellCapturedCommandLogsBytes':1024*1024,'evidenceMetadataBytes':metadata_cap,'origin':'defensive caps added for this continuation, not claims about the original full18 contract'}},
+  'stageResults':stage_rows,'phaseTimes':rows_tsv(out/'phase-times.tsv'),'hostLogBytes':host_log_bytes,'metadataBytesBeforeReceipt':metadata_bytes,'metadataCapBytes':metadata_cap,
+  'reports':reports,
+- 'priorEvidence':{'originalPy311UnionFailure':{'status':'failed and preserved, not relabeled','log':ref(original/'logs/linux-x86_64-py311-union-replay.log'),'failure':'pip-vendored packaging raised UndefinedEnvironmentName extra before mirror installation; original py314 union was not run'},'continuation001':{'functionalOutcome':'both reports passed','limitsDisposition':'unqualified because it did not enforce original 3600s host watchdog','receipt':ref(previous/'continuation-receipt.json')}},
++ 'priorEvidence':{'originalPy311UnionFailure':{'status':'failed and preserved, not relabeled','log':ref(original/'logs/linux-x86_64-py311-union-replay.log'),'failure':'pip-vendored packaging raised UndefinedEnvironmentName extra before mirror installation; original py314 union was not run'},'continuation001':{'functionalOutcome':'both reports passed','limitsDisposition':'unqualified because it did not enforce original 3600s host watchdog','receipt':ref(previous/'continuation-receipt.json')},'continuation002':{'functionalOutcome':'both reports passed','limitsDisposition':'unqualified due to collision between host-stage and inner union-replay log paths; receipt retained unchanged','receipt':ref(pathlib.Path('/private/tmp/migration-full18-e4299aff8-union-continuation-002/output/continuation-receipt.json')),'collisionEvidence':{'py311':{'innerExpectedSha256':'b412ed6d42050f159cbec2bd6c26d07311ae0b91972268a533c36971b64e389c','physicalHostStageSha256':'adbbc8c5294d8b0ed0b0bcccacfda1e480c501425f7da52d4a9899d03a09d456'},'py314':{'innerExpectedSha256':'8ae915b4e99635335f6738283b0e4f3c995a6c7aa5be998a4ffb4ff0c518efc5','physicalHostStageSha256':'0130eb4aaf6d8d0f84c610c1ada30dd52def6434bcc47ace7e8b44572e71645b'}}}},
+  'generatedAtUtc':datetime.datetime.now(datetime.timezone.utc).isoformat()
+ }
+ encoded=json.dumps(receipt,sort_keys=True,indent=2).encode()+b'\n'

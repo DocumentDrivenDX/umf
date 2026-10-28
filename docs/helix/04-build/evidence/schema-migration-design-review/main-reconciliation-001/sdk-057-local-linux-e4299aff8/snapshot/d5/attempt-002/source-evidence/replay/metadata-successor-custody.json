@@ -1,0 +1,74 @@
+{
+  "originalArchive": {
+    "path": "candidate-009-independent-evidence.tar.gz",
+    "sha256": "092b2db842101fe9aac485e05c8d79775b048602b671189a9c83e91467a64d86"
+  },
+  "originalFixtureSha256": {
+    "candidate-009/fault-fixture.json": "09173dd6294e84e5e6a6416e675a17110b831339b450de8cb597b9bfa2a798cc",
+    "candidate-009/no-default-fixture.json": "ba3c914d6590ed86640c22c6f4dbd1447168efca833b03c47f9270e2dc8c3af5",
+    "candidate-009/owner-artifacts.json": "697e45839dbd25a0d58d5a2ec3ff0275d21ddad2716639264656dc5b22555122"
+  },
+  "originalNoDefault": {
+    "archiveMember": "candidate-009/no-default-runner.py",
+    "sha256": "a756e43e7f91d7d55eeb34d639790636bf4af92b6de0fec191d956d0ff568a07"
+  },
+  "originalOracle": {
+    "archiveMember": "candidate-009/installed-text-oracle.py",
+    "sha256": "5dfddd7f1bd7f6e254e927292246ceddf5debfe172995ad267d4bbbfd32c2ea4"
+  },
+  "profile": "umf.d5-metadata-name-successor/1",
+  "purpose": "Two exact D5 metadata-distribution spelling successors; preserve the original archive, oracle, no-default runner, row-observation successor, fixtures, and all prior evidence.",
+  "replayBoundary": "Source custody only; the original D5 gate must later execute both successors against the reviewed full cohort. No qualification result is asserted.",
+  "rowObservationParent": {
+    "custodyFile": "custody.json",
+    "custodySha256": "0865f14764f68dfc6e2818a54e336e2034720c696f797a6066816fdf5414957e",
+    "directory": "d5-row-observation-successor",
+    "fixtureSha256": "c29ee30dd76e6e4fbbf6ceea64cb22d77764c2a349081819d0d7ac1c1dc59af1",
+    "gzipSha256": "1f2e5d676a8480838d973962e23a5cb3687c6798beecb038d5a31e324d40875e",
+    "originalOracleSha256": "5dfddd7f1bd7f6e254e927292246ceddf5debfe172995ad267d4bbbfd32c2ea4",
+    "patchFile": "original-to-successor.patch",
+    "patchSha256": "660733be45ea13036d1aa8b29bb858803c606bcd15ac0963933d1483b38bead6",
+    "sourceFile": "installed-text-oracle-d5-row-observation-successor.py.gz",
+    "sourceSha256": "89ba88c6187bee2f350e4448266f6aa470a42862fc146f97e1b43edccdd41639"
+  },
+  "selection": {
+    "distribution": "umf-weft",
+    "metadataOnly": true,
+    "unchanged": [
+      "weft",
+      "weft_sql imports",
+      "weft-sql/0.2.0 wire dialect",
+      "all cases, checks, fault scenarios, row observations, native assertions, and bounds"
+    ],
+    "version": "0.4.55"
+  },
+  "status": "source-only-successor",
+  "successors": {
+    "noDefault": {
+      "gzipSha256": "870a220eb95ec41c232bc578ca9cf0d0a94296d40efd92aa8696a167d1d6a6cc",
+      "onlyChange": "report package key and selected metadata lookup: weft-sql -> umf-weft",
+      "parent": {
+        "archiveMember": "candidate-009/no-default-runner.py",
+        "sha256": "a756e43e7f91d7d55eeb34d639790636bf4af92b6de0fec191d956d0ff568a07"
+      },
+      "patchFile": "no-default-parent-to-successor.patch",
+      "patchSha256": "042262de18502a6f44534a21d75d402f8e81211a1c5886cca68ad538af2fa9d8",
+      "sourceFile": "no-default-runner-d5-weft55-metadata-successor.py.gz",
+      "sourceSha256": "b25c3e319f4173366214156bdd2dd255f1c08ba8bddf6a21f647ddc6b4aef955"
+    },
+    "rowObservationOracle": {
+      "fixtureSha256": "c29ee30dd76e6e4fbbf6ceea64cb22d77764c2a349081819d0d7ac1c1dc59af1",
+      "gzipSha256": "edb4bbf6a709ea4971a8e234b1e8ef6b648de2252eb7b134adc4f2a803bb2407",
+      "onlyChange": "selected distribution metadata roster: weft-sql -> umf-weft",
+      "originalRunnerSha256": "5dfddd7f1bd7f6e254e927292246ceddf5debfe172995ad267d4bbbfd32c2ea4",
+      "parent": {
+        "file": "d5-row-observation-successor/installed-text-oracle-d5-row-observation-successor.py.gz",
+        "sha256": "89ba88c6187bee2f350e4448266f6aa470a42862fc146f97e1b43edccdd41639"
+      },
+      "patchFile": "row-observation-parent-to-successor.patch",
+      "patchSha256": "fdacd514f6dfba0be8df9474fd5ed1bd19f5dca265674c60644ab400a26221ab",
+      "sourceFile": "installed-text-oracle-d5-weft55-metadata-successor.py.gz",
+      "sourceSha256": "e197d3630079c597964aa81b875ef6e7cd53f1c2fab42018bdb5a8684bf53600"
+    }
+  }
+}

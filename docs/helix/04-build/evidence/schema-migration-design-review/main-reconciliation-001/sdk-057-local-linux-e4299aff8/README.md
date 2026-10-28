@@ -1,0 +1,13 @@
+# SDK 0.5.7 local Linux qualification checkpoint
+
+This repository adopts the sealed qualification snapshot for producer `e4299aff8e87e9d211f9d86df2f2013ab9c95945`, tree `8b98c0d895983ba2b7637dd3aea567dab0943883`. The metadata adoption is distinct from that producer and from an eventual release merge. SDK 0.5.7 remains unreleased.
+
+The 139-case SDK installed proof and the full 18-package Linux Python 3.11.17/3.14.9 acquisition, assembly and bounded union continuation 003 are accepted for their recorded local profiles. D5 attempt 002 remains `FAIL_OR_UNKNOWN`: all 37 ordinary cases, 19 no-default controls and fenced-resume passed, but its last two fault obligations and final audit did not close. The V8 and storage comparisons showed no material speed gain and do not justify another emulated full retry. A native x86_64 Linux execution resource is still needed.
+
+The public-install reader has a source-only acceptance; its inputs and execution remain held pending actual D5 success, normal merge and immutable publication. A native D5 route must record its own actual execution identity. The [prospective three-asset ledger](snapshot/release-payload-held.json) describes unpublished bytes only. No release merge, SDK tag or public verification result is established here.
+
+The Linux amd64 containers ran under emulation on an OrbStack Linux aarch64 engine on a Darwin host. Built Mac dependency artifacts retain historical macOS 15.7.9 arm64/Python 3.11 evidence; there is no fresh Mac migration runtime or Python 3.14 qualification. The static `macosx_11_0` tag does not establish macOS 11 runtime verification. No macOS CI ran.
+
+[Adoption status](adoption-result.json) and [independent staging review](review-staging002.md) and [adoption closure review](review-adoption-closure001.md) describe this checkpoint. The [raw snapshot](snapshot/README.md), [integrity manifest](snapshot/staging-integrity-002.json) and custody indexes preserve capture-time records byte-for-byte. Their original “staged/not adopted” wording is historical; this outer index records the subsequent repository adoption. Raw absolute paths remain source references, with archive mappings in the snapshot indexes.
+
+UMF owns declarations and plans, Weft owns admission and SQL lowering, and the host owns approval, fencing, effects and recovery. G03–G11 retain their separate scopes. Praxis is outside this work.

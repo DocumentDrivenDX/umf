@@ -1,0 +1,132 @@
+{
+  "aggregateTimeoutSeconds": 1500,
+  "artifacts": {
+    "sdkArchive": {
+      "path": "sdk-distribution/umf-sdk.tgz",
+      "sha256": "cd851d3338b1b2af79197cbafaeefdd03a8aac3e02373a893ddd5d07a930ab26",
+      "sizeBytes": 30834843
+    },
+    "sdkManifest": {
+      "path": "sdk-distribution/manifest.json",
+      "sha256": "70e52b8e0425e1e3256f60d126196083b093fa0192c9ff85ba9ba2699c9be87a",
+      "sizeBytes": 229540
+    }
+  },
+  "attempt": 1,
+  "command": {
+    "exitCode": 0,
+    "name": "sdk-test-install"
+  },
+  "commands": [
+    {
+      "argv": [
+        "bun",
+        "install",
+        "--frozen-lockfile"
+      ],
+      "durationSeconds": 2.405,
+      "exitCode": 0,
+      "log": {
+        "path": "bun-install-frozen.log",
+        "sha256": "c1833cd3f149952a838cef714bd9ef243813c90f5d2ad2002188205a6b37198c",
+        "sizeBytes": 1052
+      },
+      "name": "bun-install-frozen",
+      "timeoutSeconds": 300
+    },
+    {
+      "argv": [
+        "cargo",
+        "fetch",
+        "--locked"
+      ],
+      "durationSeconds": 2.719,
+      "exitCode": 0,
+      "log": {
+        "path": "cargo-fetch-locked.log",
+        "sha256": "bd9c3d4706b9ee65f827dc4ebbccce9db1dce358c4bd5603dfeaa23295bc1749",
+        "sizeBytes": 4163
+      },
+      "name": "cargo-fetch-locked",
+      "timeoutSeconds": 600
+    },
+    {
+      "argv": [
+        "bun",
+        "run",
+        "build:sdk"
+      ],
+      "durationSeconds": 64.724,
+      "exitCode": 0,
+      "log": {
+        "path": "sdk-build.log",
+        "sha256": "cd368a0e7793e4940664a5d68702c68bb7e38cf3cc771d65a866a99a0b62fd60",
+        "sizeBytes": 475
+      },
+      "name": "sdk-build",
+      "timeoutSeconds": 600
+    },
+    {
+      "argv": [
+        "bun",
+        "scripts/test-sdk-install.ts"
+      ],
+      "durationSeconds": 18.428,
+      "exitCode": 0,
+      "log": {
+        "path": "sdk-test-install.log",
+        "sha256": "a1a1580440b578fe98ff942ff1dd1c4d319d72007740f33992d3c8525dc5725d",
+        "sizeBytes": 529
+      },
+      "name": "sdk-test-install",
+      "timeoutSeconds": 180
+    }
+  ],
+  "consumer": {
+    "bundledActions": true,
+    "conformanceCases": 139,
+    "loaderEntrypoint": true,
+    "opaqueMeaningRemainsUnchecked": true,
+    "singleInstall": true,
+    "unifiedGenerator": true
+  },
+  "durationSeconds": 121.872,
+  "executionId": "local-sdk-20261028T202157Z-38d3c32d-05e2-4803-97e1-dd396aebcba1-attempt1",
+  "failureCode": null,
+  "harness": {
+    "sha256": "3a8679d7e326059d1fd44662c7a9232ae13f41b7a59e13cf0835a2a25628a899"
+  },
+  "profile": "umf.sdk.distribution/1",
+  "provisioning": {
+    "baseImageId": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+    "sdkBuildTools": {
+      "ar": "GNU ar (GNU Binutils for Ubuntu) 2.42\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) any later version.\nThis program has absolutely no warranty.",
+      "cc": "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.",
+      "installedPackages": "binutils=2.42-4ubuntu2.10\nbuild-essential=12.10ubuntu1\ng++=4:13.2.0-7ubuntu1\ngcc=4:13.2.0-7ubuntu1\nlibc6-dev:amd64=2.39-0ubuntu8.9\nmake=4.3-4.1build2\npkg-config:amd64=1.8.1-2build1",
+      "ld": "GNU ld (GNU Binutils for Ubuntu) 2.42\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) a later version.\nThis program has absolutely no warranty.",
+      "pkgConfig": "1.8.1"
+    }
+  },
+  "resourceLimits": {
+    "cpus": 4,
+    "memoryBytes": 8589934592,
+    "network": "bridge",
+    "pids": 4096,
+    "pullPolicy": "never"
+  },
+  "runtime": {
+    "architecture": "x86_64",
+    "bun": "1.4.3",
+    "cargo": "cargo 1.90.0 (840b83a10 2025-07-30)",
+    "imageId": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+    "node": "v26.12.1",
+    "python": "3.11.17",
+    "release": "7.2.9-orbstack-00391-g2b298d05fbd4",
+    "rustc": "rustc 1.90.0 (1159e78c4 2025-09-14)",
+    "system": "Linux"
+  },
+  "schema": "umf.local-linux-sdk-producer/1",
+  "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+  "sourceTree": "8b98c0d895983ba2b7637dd3aea567dab0943883",
+  "status": "passed"
+}

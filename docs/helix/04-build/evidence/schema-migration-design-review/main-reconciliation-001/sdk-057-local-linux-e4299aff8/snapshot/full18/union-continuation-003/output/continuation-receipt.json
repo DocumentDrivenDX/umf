@@ -1,0 +1,369 @@
+{
+  "attempt": 1,
+  "bootstrap": {
+    "cells": {
+      "linux-x86_64-py311": {
+        "bytes": 1351,
+        "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-003/output/provenance/linux-x86_64-py311.json",
+        "sha256": "58dd2c64f1ff632c1669dd0a654009e64770ddb58e9216fdf599d27499d1fa98"
+      },
+      "linux-x86_64-py311-sourceIdentity": {
+        "bytes": 274,
+        "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-003/output/cell-linux-x86_64-py311-identity.json",
+        "sha256": "564a2ffe3e1b508d0d256c17973438a7416ca87c82a15eb40e2148780b0b4fec"
+      },
+      "linux-x86_64-py314": {
+        "bytes": 1345,
+        "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-003/output/provenance/linux-x86_64-py314.json",
+        "sha256": "b06fc5ff8ed527ca8e0fa75f8d599981f7c8c3104ead1f9537583c3c2f9300f7"
+      },
+      "linux-x86_64-py314-sourceIdentity": {
+        "bytes": 273,
+        "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-003/output/cell-linux-x86_64-py314-identity.json",
+        "sha256": "def2b4e444af6ea92eb69125b97a480b47450fdce761f81c26f0ef1c2a28ac09"
+      }
+    },
+    "name": "packaging",
+    "publisherAsset": {
+      "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+      "size": 129956,
+      "url": "https://files.pythonhosted.org/packages/63/34/ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527/packaging-26.3-py3-none-any.whl",
+      "yanked": false
+    },
+    "publisherJson": {
+      "bytes": 5748,
+      "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-003/bootstrap/pypi-26.3.json",
+      "sha256": "4f190d2f0b312b3086058cee64ab4333bf3ce67fb78b4c2bdb43899049b29f4d"
+    },
+    "role": "operator/verifier-only; absent from target 18-wheel lock and installed mirror",
+    "version": "26.3",
+    "wheel": {
+      "bytes": 129956,
+      "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-003/bootstrap/packaging-26.3-py3-none-any.whl",
+      "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c"
+    }
+  },
+  "commands": {
+    "cellLogs": {
+      "linux-x86_64-py311": {
+        "capBytes": 1048576,
+        "commandRoster": [
+          {
+            "captureExit": 0,
+            "commandExit": 0,
+            "finishedEpochNs": 1793221700525820017,
+            "log": "/out/logs/linux-x86_64-py311-packaging-bootstrap-install.log",
+            "logBytes": 355,
+            "logSha256": "269c9437ce2c51e122255e78b10cfecdb0280eb4984cd631c3aaf27173c72872",
+            "name": "packaging-bootstrap-install",
+            "startedEpochNs": 1793221699695362761
+          },
+          {
+            "captureExit": 0,
+            "commandExit": 0,
+            "finishedEpochNs": 1793221700967429269,
+            "log": "/out/logs/linux-x86_64-py311-packaging-bootstrap-proof.log",
+            "logBytes": 1235,
+            "logSha256": "1464ceaac4072925d842c1ea377e4f673be660d668092213048ab696550dc5cf",
+            "name": "packaging-bootstrap-proof",
+            "startedEpochNs": 1793221700682845370
+          },
+          {
+            "captureExit": 0,
+            "commandExit": 0,
+            "finishedEpochNs": 1793221701301504877,
+            "log": "/out/logs/linux-x86_64-py311-selector-control.log",
+            "logBytes": 98,
+            "logSha256": "a9737d36e97e253c4c5c8c2c01ccfbe550909d17b13e2615aff5689762cb559b",
+            "name": "selector-control",
+            "startedEpochNs": 1793221701112155101
+          },
+          {
+            "captureExit": 0,
+            "commandExit": 0,
+            "finishedEpochNs": 1793221731511957376,
+            "log": "/out/logs/linux-x86_64-py311-union-replay.log",
+            "logBytes": 711,
+            "logSha256": "b412ed6d42050f159cbec2bd6c26d07311ae0b91972268a533c36971b64e389c",
+            "name": "union-replay",
+            "startedEpochNs": 1793221701487781241
+          }
+        ],
+        "totalBytes": 2399
+      },
+      "linux-x86_64-py314": {
+        "capBytes": 1048576,
+        "commandRoster": [
+          {
+            "captureExit": 0,
+            "commandExit": 0,
+            "finishedEpochNs": 1793221735131594038,
+            "log": "/out/logs/linux-x86_64-py314-packaging-bootstrap-install.log",
+            "logBytes": 497,
+            "logSha256": "6ad343663112f3286cdcbcb2f99ac15446a098476e0d73bb3198e0aed6220e27",
+            "name": "packaging-bootstrap-install",
+            "startedEpochNs": 1793221734030124418
+          },
+          {
+            "captureExit": 0,
+            "commandExit": 0,
+            "finishedEpochNs": 1793221735895295465,
+            "log": "/out/logs/linux-x86_64-py314-packaging-bootstrap-proof.log",
+            "logBytes": 1229,
+            "logSha256": "67ad666d6b2d3189fa6b18d9846487e021010a399a67f5d6e20e0adc6f6e1163",
+            "name": "packaging-bootstrap-proof",
+            "startedEpochNs": 1793221735469628693
+          },
+          {
+            "captureExit": 0,
+            "commandExit": 0,
+            "finishedEpochNs": 1793221736446973348,
+            "log": "/out/logs/linux-x86_64-py314-selector-control.log",
+            "logBytes": 98,
+            "logSha256": "8c48a33d2c359464395f74f0b2034ed8bf3608b2775d4035d227ae6fba0e0ce0",
+            "name": "selector-control",
+            "startedEpochNs": 1793221736227274715
+          },
+          {
+            "captureExit": 0,
+            "commandExit": 0,
+            "finishedEpochNs": 1793221763209264917,
+            "log": "/out/logs/linux-x86_64-py314-union-replay.log",
+            "logBytes": 710,
+            "logSha256": "8ae915b4e99635335f6738283b0e4f3c995a6c7aa5be998a4ffb4ff0c518efc5",
+            "name": "union-replay",
+            "startedEpochNs": 1793221736661825717
+          }
+        ],
+        "totalBytes": 2534
+      }
+    },
+    "cells": {
+      "linux-x86_64-py311": {
+        "bytes": 1240,
+        "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-003/output/commands-linux-x86_64-py311.jsonl",
+        "sha256": "8d1f09dac7a59037099b0b44e5f34c1abfac21938c09d89d52f0ffae8d9e8146"
+      },
+      "linux-x86_64-py314": {
+        "bytes": 1240,
+        "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-003/output/commands-linux-x86_64-py314.jsonl",
+        "sha256": "775e56ccc1a536604b1d68aef5e04c196cecf2d9afa259476a7ddce76206ca0d"
+      }
+    },
+    "controlOutcome": "passed in both cells: active requested extras refuse; inactive optional extra-marked requirement stays inactive",
+    "hostStageLogs": {
+      "host-linux-x86_64-py311-union-replay.log": {
+        "bytes": 668,
+        "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-003/output/logs/host-linux-x86_64-py311-union-replay.log",
+        "sha256": "0e6fdb813069d21b9a36883158183c262a40ea2f2a17e8f1e933a8d666504156"
+      },
+      "host-linux-x86_64-py314-union-replay.log": {
+        "bytes": 668,
+        "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-003/output/logs/host-linux-x86_64-py314-union-replay.log",
+        "sha256": "ec203513b947938ac0442907f6e1c7f23636d4f5dc63e73af8c3281de69048af"
+      },
+      "linux-x86_64-py311-packaging-bootstrap-install.log": {
+        "bytes": 355,
+        "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-003/output/logs/linux-x86_64-py311-packaging-bootstrap-install.log",
+        "sha256": "269c9437ce2c51e122255e78b10cfecdb0280eb4984cd631c3aaf27173c72872"
+      },
+      "linux-x86_64-py311-packaging-bootstrap-proof.log": {
+        "bytes": 1235,
+        "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-003/output/logs/linux-x86_64-py311-packaging-bootstrap-proof.log",
+        "sha256": "1464ceaac4072925d842c1ea377e4f673be660d668092213048ab696550dc5cf"
+      },
+      "linux-x86_64-py311-selector-control.log": {
+        "bytes": 98,
+        "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-003/output/logs/linux-x86_64-py311-selector-control.log",
+        "sha256": "a9737d36e97e253c4c5c8c2c01ccfbe550909d17b13e2615aff5689762cb559b"
+      },
+      "linux-x86_64-py311-union-replay.log": {
+        "bytes": 711,
+        "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-003/output/logs/linux-x86_64-py311-union-replay.log",
+        "sha256": "b412ed6d42050f159cbec2bd6c26d07311ae0b91972268a533c36971b64e389c"
+      },
+      "linux-x86_64-py314-packaging-bootstrap-install.log": {
+        "bytes": 497,
+        "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-003/output/logs/linux-x86_64-py314-packaging-bootstrap-install.log",
+        "sha256": "6ad343663112f3286cdcbcb2f99ac15446a098476e0d73bb3198e0aed6220e27"
+      },
+      "linux-x86_64-py314-packaging-bootstrap-proof.log": {
+        "bytes": 1229,
+        "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-003/output/logs/linux-x86_64-py314-packaging-bootstrap-proof.log",
+        "sha256": "67ad666d6b2d3189fa6b18d9846487e021010a399a67f5d6e20e0adc6f6e1163"
+      },
+      "linux-x86_64-py314-selector-control.log": {
+        "bytes": 98,
+        "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-003/output/logs/linux-x86_64-py314-selector-control.log",
+        "sha256": "8c48a33d2c359464395f74f0b2034ed8bf3608b2775d4035d227ae6fba0e0ce0"
+      },
+      "linux-x86_64-py314-union-replay.log": {
+        "bytes": 710,
+        "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-003/output/logs/linux-x86_64-py314-union-replay.log",
+        "sha256": "8ae915b4e99635335f6738283b0e4f3c995a6c7aa5be998a4ffb4ff0c518efc5"
+      }
+    },
+    "probe": "python -I tests/codegen/offline_mirror_probe.py --aggregate-index /aggregate/aggregate.json --selected-cell {cell} --expected-source-commit e4299aff8e87e9d211f9d86df2f2013ab9c95945 --mirror /aggregate/mirror --generator-corpus /aggregate/generator-corpus.json --report /out/reports/{cell}.json",
+    "selectorControl": "tests/codegen/test_cohort_selector.py::InventoryTests::test_active_requirement_extras_refuse_but_inactive_optional_edge_stays_inactive"
+  },
+  "executionId": "umf-local-full18-union-continuation-20261028T210818Z-1e6e0d6f-5cde-48cb-8c16-e4b15d5552ab-attempt1",
+  "generatedAtUtc": "2026-10-28T21:09:24.528041+00:00",
+  "hostLogBytes": 1336,
+  "limits": {
+    "addedOperatorCaps": {
+      "evidenceMetadataBytes": 16777216,
+      "hostCapturedLogBytesTotal": 1048576,
+      "origin": "defensive caps added for this continuation, not claims about the original full18 contract",
+      "perCellCapturedCommandLogsBytes": 1048576
+    },
+    "originalFull18LocalContract": {
+      "cpus": 8,
+      "dockerStopGraceSeconds": 30,
+      "memoryBytes": 25769803776,
+      "network": "none",
+      "pidsLimit": 8192,
+      "platform": "linux/amd64",
+      "pullPolicy": "never",
+      "scope": "preserved from /private/tmp/migration-local-python-route/run-full18-linux.sh; no original full18 log/evidence byte cap is claimed",
+      "sourceAndAggregateMounts": "read-only",
+      "stageWatchdogSeconds": 3600
+    }
+  },
+  "metadataBytesBeforeReceipt": 26038,
+  "metadataCapBytes": 16777216,
+  "originalAggregate": {
+    "aggregateIndex": {
+      "bytes": 24210,
+      "path": "/private/tmp/migration-full18-e4299aff8-002/aggregate/aggregate.json",
+      "sha256": "fac25d7d5041983f1e3d464efbdda70e84df19f9fd7b70882990e4a05e69a634"
+    },
+    "generatorCorpus": {
+      "bytes": 3500077,
+      "path": "/private/tmp/migration-full18-e4299aff8-002/aggregate/generator-corpus.json",
+      "sha256": "80b8059d48490761bc98255d58409d96f46b399d78b79d0dd9aa43d30d7e6187"
+    },
+    "mount": "read-only",
+    "producerAttempt": 1,
+    "producerExecutionId": "umf-local-full18-20261028T201057Z-54247-attempt1",
+    "producerReceipt": {
+      "bytes": 16276,
+      "path": "/private/tmp/migration-full18-e4299aff8-002/local-aggregate-producer-receipt.json",
+      "sha256": "4375e0c4a0faf89f78056086225cd25352e8c7299966395006bdba809da2b064"
+    },
+    "profile": "umf.embedder-wheel-linux-runtime-macos-inputs/1",
+    "reassembled": false,
+    "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945"
+  },
+  "phaseTimes": [
+    {
+      "stage": "linux-x86_64-py311-union-replay",
+      "state": "start",
+      "utc": "2026-10-28T21:08:18Z"
+    },
+    {
+      "stage": "linux-x86_64-py311-union-replay",
+      "state": "finish",
+      "utc": "2026-10-28T21:08:52Z"
+    },
+    {
+      "stage": "linux-x86_64-py314-union-replay",
+      "state": "start",
+      "utc": "2026-10-28T21:08:52Z"
+    },
+    {
+      "stage": "linux-x86_64-py314-union-replay",
+      "state": "finish",
+      "utc": "2026-10-28T21:09:24Z"
+    }
+  ],
+  "priorEvidence": {
+    "continuation001": {
+      "functionalOutcome": "both reports passed",
+      "limitsDisposition": "unqualified because it did not enforce original 3600s host watchdog",
+      "receipt": {
+        "bytes": 13857,
+        "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-001/continuation-receipt.json",
+        "sha256": "854c3db89d060ef182be8c8c97d81a1e0baf33adcf97807fb17965256ca4aee5"
+      }
+    },
+    "continuation002": {
+      "collisionEvidence": {
+        "py311": {
+          "innerExpectedSha256": "b412ed6d42050f159cbec2bd6c26d07311ae0b91972268a533c36971b64e389c",
+          "physicalHostStageSha256": "adbbc8c5294d8b0ed0b0bcccacfda1e480c501425f7da52d4a9899d03a09d456"
+        },
+        "py314": {
+          "innerExpectedSha256": "8ae915b4e99635335f6738283b0e4f3c995a6c7aa5be998a4ffb4ff0c518efc5",
+          "physicalHostStageSha256": "0130eb4aaf6d8d0f84c610c1ada30dd52def6434bcc47ace7e8b44572e71645b"
+        }
+      },
+      "functionalOutcome": "both reports passed",
+      "limitsDisposition": "unqualified due to collision between host-stage and inner union-replay log paths; receipt retained unchanged",
+      "receipt": {
+        "bytes": 15027,
+        "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-002/output/continuation-receipt.json",
+        "sha256": "79ed4494d37f5b0a263dc196def76cb3583512d725b784847f65cb2b037dca0f"
+      }
+    },
+    "originalPy311UnionFailure": {
+      "failure": "pip-vendored packaging raised UndefinedEnvironmentName extra before mirror installation; original py314 union was not run",
+      "log": {
+        "bytes": 1281,
+        "path": "/private/tmp/migration-full18-e4299aff8-002/logs/linux-x86_64-py311-union-replay.log",
+        "sha256": "f75449d3d87d49de190c2197bc06e0a82ed1f2f489ee64f11649ceb013206880"
+      },
+      "status": "failed and preserved, not relabeled"
+    }
+  },
+  "reports": {
+    "linux-x86_64-py311": {
+      "bytes": 3450,
+      "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-003/output/reports/linux-x86_64-py311.json",
+      "sha256": "6006c8ec82a2f7bd716356138fc673b8654047a3944edfe36ca422909a0d3c13"
+    },
+    "linux-x86_64-py314": {
+      "bytes": 3449,
+      "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-003/output/reports/linux-x86_64-py314.json",
+      "sha256": "02b7d59b32e63ce265602dc3a1b265a99f2c22cb08fadb9ec29df72214a4effe"
+    }
+  },
+  "runtime": {
+    "engine": "OrbStack Docker 29.8.2 linux/aarch64",
+    "images": {
+      "linux-x86_64-py311": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+      "linux-x86_64-py314": "sha256:2474bc9010faea57300e5e8c33a6be6fce4d37dada3bf8af7d8230069f4c0a30"
+    },
+    "platform": "linux/amd64",
+    "runnerKernel": "Linux 7.2.9-orbstack-00391-g2b298d05fbd4 x86_64 GNU/Linux"
+  },
+  "schema": "umf.local-full18-union-continuation/2",
+  "source": {
+    "commit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+    "harnessSha256": "07904d34b782a07bad53cd29797eaca70e0f3c6cb20adc51b1084004b4084ea3",
+    "mount": "read-only",
+    "status": "clean in both cells",
+    "tree": "8b98c0d895983ba2b7637dd3aea567dab0943883",
+    "volume": "umf-migration-source-267675510"
+  },
+  "stageResults": [
+    {
+      "elapsedSeconds": "34",
+      "exitCode": "0",
+      "logBytes": "668",
+      "logPath": "logs/host-linux-x86_64-py311-union-replay.log",
+      "logSha256": "0e6fdb813069d21b9a36883158183c262a40ea2f2a17e8f1e933a8d666504156",
+      "maxSeconds": "3600",
+      "stage": "linux-x86_64-py311-union-replay"
+    },
+    {
+      "elapsedSeconds": "32",
+      "exitCode": "0",
+      "logBytes": "668",
+      "logPath": "logs/host-linux-x86_64-py314-union-replay.log",
+      "logSha256": "ec203513b947938ac0442907f6e1c7f23636d4f5dc63e73af8c3281de69048af",
+      "maxSeconds": "3600",
+      "stage": "linux-x86_64-py314-union-replay"
+    }
+  ],
+  "status": "passed"
+}

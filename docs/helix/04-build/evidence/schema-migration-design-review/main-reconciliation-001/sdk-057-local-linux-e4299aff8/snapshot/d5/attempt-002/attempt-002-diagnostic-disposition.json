@@ -1,0 +1,56 @@
+{
+  "profile": "umf.local-docker-g02-d5-diagnostic-disposition/1",
+  "status": "FAIL_OR_UNKNOWN",
+  "executionId": "local-97eb1184aa8b47b1a1304829546470b0",
+  "attempt": 2,
+  "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+  "sourceTree": "8b98c0d895983ba2b7637dd3aea567dab0943883",
+  "workflowSha256": "f0963d2df1e371112ba6e57999dbf69290796d711eb97ed46637d4ebc63918a1",
+  "runInsideScript": "/private/tmp/migration-d5-e4299aff8-002/d5-host/run-inside.sh",
+  "retainedFailureReceipt": {
+    "path": "/private/tmp/migration-d5-e4299aff8-002/d5-host/d5/upload/d5-receipt.json",
+    "sha256": "29d990e026af304e2507151b9d27eb9c3724ad3b086e26230188e652bd783af5",
+    "status": "FAIL_OR_UNKNOWN",
+    "validationFailureCodes": ["required-evidence-missing", "required-evidence-file-missing"],
+    "finalizerFailureCode": "required-evidence-missing",
+    "errorClass": "ValueError",
+    "clientExit": 1,
+    "cleanup": {"clientRemoved": true, "networkRemoved": true, "postgresRemoved": true}
+  },
+  "lastCompletedCommand": {
+    "name": "fault-fenced-resume",
+    "rawExit": 0,
+    "durationMs": 67580
+  },
+  "uncompletedCommand": {
+    "name": "fault-backfill-commit-lost",
+    "selectedLimitSeconds": 48,
+    "activeMarkerPath": "/private/tmp/migration-d5-e4299aff8-002/d5-host/d5/evidence/active-command.json",
+    "activeMarkerSha256": "2cf9c39fbd14fa8c43e503910c1c999acb176e51d911b9d52c5229585bdb547e",
+    "evidenceLogPath": "/private/tmp/migration-d5-e4299aff8-002/d5-host/d5/evidence/logs/fault-backfill-commit-lost.log",
+    "evidenceLogBytes": 0,
+    "emptyEvidenceLogSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "uploadLogPath": "/private/tmp/migration-d5-e4299aff8-002/d5-host/d5/upload/logs/fault-backfill-commit-lost.log",
+    "uploadLogBytes": 0,
+    "commandRecordAbsent": true
+  },
+  "deadlineEvidence": {
+    "aggregateSeconds": 1800,
+    "reserveSeconds": 60,
+    "killGraceSeconds": 10,
+    "workSeconds": 1730,
+    "monotonicStartMs": 924431100,
+    "monotonicDeadlineMs": 926231100,
+    "lastCommandStartMs": 926112270,
+    "elapsedBeforeCommandMs": 1681170,
+    "remainingAtCommandStartMs": 118830,
+    "commandBudgetDerivationSeconds": "floor((118.830s - 60s reserve - 10s kill grace)) = 48s"
+  },
+  "outerExecutionOutput": {
+    "status": "NOT_RETAINED_IN_AVAILABLE_TASK_FILES",
+    "path": null,
+    "stderrAvailable": false,
+    "interpretation": "The actual fault-backfill-commit-lost command outcome is unknown. The ValueError is retained only as finalizer failure classification for missing required evidence, not as a command exception."
+  },
+  "attemptDisposition": "No retry or success claim. Preserve this failure as FAIL_OR_UNKNOWN pending any separately retained outer execution output."
+}

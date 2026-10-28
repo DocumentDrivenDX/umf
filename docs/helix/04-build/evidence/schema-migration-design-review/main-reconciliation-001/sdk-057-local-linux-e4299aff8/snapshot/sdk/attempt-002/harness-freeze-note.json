@@ -1,0 +1,31 @@
+{
+  "attempt": 1,
+  "consumerCommandReached": false,
+  "executionId": "local-sdk-20261028T201256Z-44500163-6bad-4580-9b88-289e34830b66-attempt1",
+  "failureEvidence": {
+    "failure": "linker cc not found while building cargo dependencies after cargo fetch; consumer step was not reached",
+    "receiptPath": "/private/tmp/migration-sdk-e4299aff8-002/sdk-producer-receipt.json",
+    "sdkBuildLogPath": "/private/tmp/migration-sdk-e4299aff8-002/sdk-build.log"
+  },
+  "frozenCopyMatchesLoadedInsideRunner": true,
+  "frozenFilesSha256": {
+    "capture-bounded-log.py": "f3520d808d9d748be68a0bfced22e7970844c5916af65dbe7fdf519b7a8ffda5",
+    "inside-sdk-producer.py": "6d3b62ad5577edceb9682d0bb7d76f7c5a3ca2092d3ab24b195e787357d40f10",
+    "run-local-sdk.sh": "cd0de83e6a804c390e8bf26a62f2b80b0115f9bddea35dc26a9658a597c18161",
+    "write-launch-failure.py": "aca6c635ab7da2eb09b54014927f2fc31253c1c8c420e7240c927fd452db7c57"
+  },
+  "launchHarnessDigestFromActualReceipt": "5d4973f94aa4a1905431311c8118b54e65c4c6021bb0249a8000c221f46cfe4d",
+  "loadedInsideRunnerExpectedSha256": "6d3b62ad5577edceb9682d0bb7d76f7c5a3ca2092d3ab24b195e787357d40f10",
+  "postHocFrozenCopy": "/private/tmp/migration-local-sdk-producer-attempt002-frozen",
+  "postLaunchMutation": {
+    "change": "restored top-level command.exitCode to report only the actual sdk-test-install step; absent when prerequisite/build failed",
+    "file": "/private/tmp/migration-local-sdk-producer/inside-sdk-producer.py",
+    "mtimeUtc": "2026-10-28T20:16:57Z",
+    "originalRunCompletedBy": "receipt duration 41.242 seconds after executionId start 2026-10-28T20:12:56Z"
+  },
+  "schema": "umf.local-linux-sdk-harness-freeze-note/1",
+  "sdkFailureCode": "sdk-build-failed-or-log-cap",
+  "sdkStatus": "failed",
+  "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+  "sourceTree": "8b98c0d895983ba2b7637dd3aea567dab0943883"
+}

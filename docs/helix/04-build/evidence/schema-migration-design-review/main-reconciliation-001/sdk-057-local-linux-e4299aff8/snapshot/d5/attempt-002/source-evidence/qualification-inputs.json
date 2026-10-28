@@ -1,0 +1,37 @@
+{
+  "adapterWorkflow": "local-access-boundaries-f0963d2df1e371112ba6e57999dbf69290796d711eb97ed46637d4ebc63918a1",
+  "bounds": {
+    "aggregateSeconds": 1800,
+    "childSeconds": 180,
+    "evidenceBytes": 16777216,
+    "evidenceReserveSeconds": 60,
+    "killGraceSeconds": 10,
+    "logBytes": 1048576,
+    "workSeconds": 1730
+  },
+  "executionKind": "local_linux_diagnostic",
+  "localAttempt": "1",
+  "localExecutionId": "local-97eb1184aa8b47b1a1304829546470b0",
+  "localSourceBranch": "",
+  "localSourceRef": "local:detached:e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+  "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+  "sourceTree": "8b98c0d895983ba2b7637dd3aea567dab0943883",
+  "tools": {
+    "git": {
+      "path": "/usr/bin/git",
+      "sha256": "eb54b535467e0975c1284d4c4d08eea779aeb248a5d34b02e2ee171382e22201",
+      "version": "git version 2.43.0"
+    },
+    "python": {
+      "path": "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11",
+      "sha256": "d601e62487858384d3000725c3b2e16e86ff11a6ad0b0810b76281e45426ea62",
+      "version": "Python 3.11.17"
+    },
+    "timeout": {
+      "path": "/usr/bin/timeout",
+      "sha256": "12690a043dfd555a6c14ccc1564f5649c18f1762c0d6ff66729948130898ec52",
+      "version": "timeout (GNU coreutils) 9.4\nCopyright (C) 2023 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n\nWritten by P\u00e1draig Brady."
+    }
+  },
+  "workflowSha256": "f0963d2df1e371112ba6e57999dbf69290796d711eb97ed46637d4ebc63918a1"
+}
