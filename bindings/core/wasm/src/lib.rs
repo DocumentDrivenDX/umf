@@ -30,6 +30,19 @@ pub fn domain_pack_schema_json(version: &str) -> Result<String, JsValue> {
         .map_err(|error| JsValue::from_str(&error.code))
 }
 
+/// Default-route schema graph with Rust-owned intra-result alias metadata.
+#[wasm_bindgen(js_name = domainPackSchemaGraphJson)]
+pub fn domain_pack_schema_graph_json() -> Result<String, JsValue> {
+    umf_core::domain_pack_schema::domain_pack_schema_graph_json()
+        .map_err(|error| JsValue::from_str(&error.code))
+}
+
+#[wasm_bindgen(js_name = datasetSourceSchemaGraphJson)]
+pub fn dataset_source_schema_graph_json() -> Result<String, JsValue> {
+    umf_core::domain_pack_schema::dataset_source_schema_graph_json()
+        .map_err(|error| JsValue::from_str(&error.code))
+}
+
 #[wasm_bindgen(js_name = accessRrfProfileVersion)]
 pub fn access_rrf_profile_version() -> String {
     umf_core_wire::access_rrf_binding::PROFILE.to_owned()

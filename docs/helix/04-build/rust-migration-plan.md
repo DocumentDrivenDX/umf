@@ -9120,18 +9120,33 @@ prevents any write and missing or stale check output remains untouched. The
 R8 resource-authority mapping now names the Rust builders and CLI together
 with the TypeScript manifest wrapper; the checked-in ledger has been regenerated after the fixed-point replay below.
 
-The TypeScript reference schema builders remain available, and the public
-Node/browser V4 default exports still select them. The default-route gap remains open. The fresh shared current-source replay now binds the Compact, Security And/Or, and
+The TypeScript reference schema builders remain available through
+`./reference`. The Node and browser V4 default roots now select Rust schema-graph
+providers for both public generators, then restore the predecessor's JSON
+Pointer identity classes. The [R8 route packet](evidence/rust-migration/r8-domain-pack-schema-default-route/README.md)
+records complete schema parity, exact live-reference alias-class comparison,
+Rust provider call counts in Node and Bun, matching public names and zero arity,
+and real Chromium execution with no Node globals. Its private fixed-point
+source build used manifest SHA-256
+`158359c4cf8f8c28ecdafec3eb4195e587617d7c4a3307aa75a5369fc34793e6` and source
+tree SHA-256
+`5434635cf74a948bec17601bd3b150703073dfa87bd94193e66cdfbe452911c9`; the
+locally unpacked private archive SHA-256 is
+`e8f4be0486d26af1cc2f437de7045d9dbfbaa5c8dcc2a4123603d83c52b68c1a`. These are
+bounded private observations, not release-grade installed qualification.
+
+The fresh shared current-source replay binds the Compact, Security And/Or, and
 RRF packets to manifest SHA-256
-`cedcbf75d43607fbed7d1e6a4310775c41096ebf9ba89d31c33081d4cb679586` and source
+`45116162b154da756e3abee5bd59fca9da345b761fd20c91e72891196f328209` and source
 closure SHA-256
-`f8c9450063b9f13274366f07255f0e22aa5c18e04aae96a1d3da6e001a1f85ec`. Node
+`9eb6c681a5cabf35d94394b2def87a159c15777b58877dc0070003fb16e71130`. Node
 26.12.1, Bun 1.4.3, and Chromium 153.0.8010.12 passed five Compact, 68 Security,
-and five RRF cases. Compact, Security, and RRF retain their bounded scope; these
-receipts do not qualify installed packages or release behavior. The refreshed
-inventory SHA-256 is
-`6a592a171d0e4f2f4983302ccc9d2a15bc881c9b6159d6ffa19d76cef1104c40`; the
+and five RRF cases. The refreshed inventory SHA-256 is
+`213ca1b06ede7adb9f9eb0c92b1244f8bd23eff25d00168bc792cc79ef448383`; the
 condition-aware ledger SHA-256 is
-`3bc69e8f032e32240b9fe31c59a96acb5c6df422039122004b8d97d8a1868810`, with 922
-open logical executable default-route gaps and zero retired. No route retirement
-or release is claimed.
+`ac47b3d0bdb2bda33d276101d262e822f340b3c2df736c969aed10990adf31d7`. It records
+922 open logical executable default-route gaps and zero retired, 84 accepted
+opt-in Rust operation mappings, 838 unmapped names, and 61 source-selected
+declarations per V4 root. The schema and replay packets do not establish
+complete Dataset/Security semantics, declaration retirement, or release
+qualification.

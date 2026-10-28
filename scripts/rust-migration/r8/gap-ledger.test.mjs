@@ -7,7 +7,7 @@ import { gzipSync } from 'node:zlib';
 import { cp, mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { buildLedger, collectPythonPackageAssets, collectPythonSourceFiles, summarizeDefaultRouteRetirement, validateCompactVerifierBuildBinding } from './gap-ledger.mjs';
+import { buildLedger, collectPythonPackageAssets, collectPythonSourceFiles, isDomainPackSchemaRootSelection, summarizeDefaultRouteRetirement, validateCompactVerifierBuildBinding } from './gap-ledger.mjs';
 import { requiredR8RouteFamilies, validateR8InstalledRouteEvidence } from './installed-route-evidence.mjs';
 import { normalizeR8RouteHostReceipt } from './installed-route-receipt-adapter.mjs';
 import { tarMembers, validateBoundedDefaultRouteEvidence, validateDefaultRouteRetirementEvidence, verifyPacket } from './default-route-retirement-evidence.mjs';
@@ -588,7 +588,7 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
   const entries = new Map(inventoryReceipt.defaultRouteEntrySelections.map(selection => [selection.routeId, selection]));
   for (const routeId of ['package-root-node', 'package-root-browser']) {
     const selection = entries.get(routeId);
-    assert.equal(selection.directExportCount, 87);
+    assert.equal(selection.directExportCount, 89);
     assert.ok(expected.every(name => selection.directExports.includes(name)), `${routeId} misses an override`);
     assert.ok(['inspectCoreSemanticTypes','getCoreSemanticTypes','declareCoreSemanticTypes','verifyCoreSemanticTypeDeclaration',
       'validateCoreRecordValues','SemanticTypeRegistry','validateSemanticTypeValue','validateCoreSemanticTypeValue']
@@ -611,7 +611,7 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
   assert.equal(reference.length, expected.length);
   assert.ok(reference.every(row => row.sourceSelectedImplementation === null));
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
-  assert.equal(ledger.counts.sourceSelectedRustOverrides, 118);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 122);
   const archivedGate = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/gate-result.json', 'utf8'));
   assert.equal(archivedGate.status, 'pass');
   assert.equal(archivedGate.archive.sourceClosureSha256, '6f4f21c1dfbdde5959f6e5386419c0c2f90b3a8f0512d148b60825e93afce593');
@@ -729,7 +729,7 @@ test('V4 relationship consumer exports are hybrid bindings without Rust consumer
     assert.equal(rows[2].sourceSelectedImplementation, null);
     assert.equal(rows[2].defaultRouteRetirement.status, 'reference-only');
   }
-  assert.equal(ledger.counts.sourceSelectedRustOverrides, 118);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 122);
   assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 84);
   assert.deepEqual(ledger.counts.executableDefaultRouteRetirementsByRoute, { 'package-root-node': 0, 'package-root-browser': 0 });
 
@@ -3409,4 +3409,55 @@ test('Python source census walks nested package modules', async t => {
   assert.equal(files[1].bytes.toString('utf8'), await readFile(path.join(directory, 'nested', 'api.py'), 'utf8'));
   const assets = collectPythonPackageAssets(directory, 'pkg', new Set(['pkg/nested/package.json']));
   assert.deepEqual(assets.map(file => file.path), ['pkg/nested/package.json']);
+});
+
+test('Domain Pack and Dataset Source public schema routes are source-selected with private qualification only', () => {
+  const ledger = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/gap-ledger.json', 'utf8'));
+  const expected = new Map([
+    ['generateDomainPackSchema', 'umf_core::domain_pack_schema::domain_pack_schema_graph_json'],
+    ['generateDatasetSourceSchema', 'umf_core::domain_pack_schema::dataset_source_schema_graph_json'],
+  ]);
+  for (const [name, owner] of expected) {
+    const rows = ledger.rows.filter(row => row.exportName === name);
+    assert.equal(rows.length, 3, `${name} has Node, browser, and reference rows`);
+    for (const routeId of ['package-root-node', 'package-root-browser']) {
+      const row = rows.find(candidate => candidate.routeId === routeId);
+      assert.ok(row, `${name} ${routeId}`);
+      assert.equal(row.sourceSelectedImplementation.status, 'source-selected-installed-private-current-cohort');
+      assert.equal(row.sourceSelectedImplementation.rustOwner, owner);
+      assert.equal(row.sourceSelectedImplementation.qualificationEvidenceClosure.length, 2);
+      assert.equal(row.acceptedRustOperation, null, 'source route is not an accepted opt-in mapping');
+      assert.equal(row.defaultRouteRetirement.status, 'open');
+    }
+    const reference = rows.find(candidate => candidate.routeId === 'package-reference');
+    assert.ok(reference);
+    assert.equal(reference.sourceSelectedImplementation, null);
+    assert.equal(reference.defaultRouteRetirement.status, 'reference-only');
+  }
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
+  assert.equal(ledger.counts.executableDefaultRouteRetirementsByRoute['package-root-node'], 0);
+  assert.equal(ledger.counts.executableDefaultRouteRetirementsByRoute['package-root-browser'], 0);
+});
+
+test('Domain Pack schema route guard rejects wrong root, export, source and declaration shapes', () => {
+  const rootSource = 'export {generateDomainPackSchema, generateDatasetSourceSchema};\n';
+  const entry = 'src/index-node-v4.ts';
+  const inventory = {defaultRouteEntrySelections: [{
+    routeId: 'package-root-node', entry, directExports: ['generateDomainPackSchema', 'generateDatasetSourceSchema'],
+    entrySha256: createHash('sha256').update(rootSource).digest('hex'),
+  }]};
+  const valid = {
+    routeId: 'package-root-node', exportName: 'generateDomainPackSchema', source: entry,
+    declaration: {declarationName: 'generateDomainPackSchema', declarationKind: 'FunctionDeclaration', initializerShape: 'not-applicable'},
+    inventory, rootSource,
+  };
+  assert.equal(isDomainPackSchemaRootSelection(valid), true);
+  assert.equal(isDomainPackSchemaRootSelection({...valid, routeId: 'package-reference'}), false, 'reference route stays TypeScript');
+  assert.equal(isDomainPackSchemaRootSelection({...valid, exportName: 'notASchemaGenerator'}), false, 'unknown export refused');
+  assert.equal(isDomainPackSchemaRootSelection({...valid, source: 'src/domain-packs/source-schema.ts'}), false, 'wrong source refused');
+  assert.equal(isDomainPackSchemaRootSelection({...valid, declaration: {...valid.declaration, declarationName: 'aliasedName'}}), false, 'aliased declaration refused');
+  assert.equal(isDomainPackSchemaRootSelection({...valid, declaration: {...valid.declaration, declarationKind: 'BindingElement'}}), false, 'wrong declaration kind refused');
+  assert.equal(isDomainPackSchemaRootSelection({...valid, declaration: {...valid.declaration, initializerShape: 'call-expression'}}), false, 'wrong initializer refused');
+  assert.equal(isDomainPackSchemaRootSelection({...valid, inventory: {defaultRouteEntrySelections: [{...inventory.defaultRouteEntrySelections[0], directExports: ['generateDatasetSourceSchema']}]}}), false, 'missing direct root export refused');
+  assert.equal(isDomainPackSchemaRootSelection({...valid, rootSource: `${rootSource}// drift\n`}), false, 'root source hash drift refused');
 });

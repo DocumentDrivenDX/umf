@@ -49,7 +49,9 @@ test('V4 facade preserves the complete checker-resolved API and all 1,120 runtim
 test('generated facade is deterministic, excludes local overrides, and has no broad runtime origins', () => {
   const program = programForEntries();
   const generated = generateFacade(program);
-  assert.equal(generated.localOverrides.length, 87);
+  assert.equal(generated.localOverrides.length, 89);
+  assert.ok(generated.localOverrides.includes('generateDomainPackSchema'));
+  assert.ok(generated.localOverrides.includes('generateDatasetSourceSchema'));
   assert.equal(fs.readFileSync(abs('src/index-v4-default.ts'), 'utf8'), generated.text);
   assert.ok(!generated.text.includes("from './index'") && !generated.text.includes("from './index-node-v4'") && !generated.text.includes("from './index-browser-v4'"));
 
@@ -114,6 +116,19 @@ test('Node and browser runtime bundles exclude all shadowed TypeScript bodies', 
     ['src/index-node-v4.ts', 'node', 'bindings/core/node/index.js'],
     ['src/index-browser-v4.ts', 'browser', 'bindings/core/wasm/index.js'],
   ]) {
+    const rootSource = programForEntries().getSourceFile(abs(entry));
+    const schemaImports = rootSource.statements.filter(statement =>
+      ts.isImportDeclaration(statement) &&
+      ['./domain-packs/schema', './domain-packs/source-schema'].includes(statement.moduleSpecifier.text),
+    );
+    assert.equal(schemaImports.length, 2, `${entry} must use the TypeScript schema functions only as type references`);
+    assert.ok(schemaImports.every(statement => statement.importClause?.isTypeOnly), `${entry} has a runtime TypeScript schema import`);
+    const namedSchemaGenerators = rootSource.statements.filter(statement =>
+      ts.isExpressionStatement(statement) && ts.isCallExpression(statement.expression) &&
+      statement.expression.expression.getText(rootSource) === 'Object.defineProperty' &&
+      ['generateDomainPackSchema', 'generateDatasetSourceSchema'].includes(statement.expression.arguments[0]?.getText(rootSource)),
+    );
+    assert.equal(namedSchemaGenerators.length, 2, `${entry} must explicitly stabilize bundled schema generator names`);
     const result = await Bun.build({
       entrypoints: [entry], outdir: `/private/tmp/umf-v4-facade-${target}-test`, target,
       format: 'esm', metafile: true,

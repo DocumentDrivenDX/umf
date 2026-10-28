@@ -487,9 +487,59 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
   const browser = routeId === 'package-root-browser';
   const defaultEntry = browser ? 'src/index-browser-v4.ts' : 'src/index-node-v4.ts';
   const schemaPropertiesNames = ['declareCoreSchemaProperties', 'inspectCoreSchemaProperties', 'validateCoreFieldValue', 'resolveCoreDefault'];
+  const schemaGraphSourceByExport = new Map([
+    ['generateDomainPackSchema', 'src/domain-packs/schema.ts'],
+    ['generateDatasetSourceSchema', 'src/domain-packs/source-schema.ts'],
+  ]);
+  const schemaGraphSource = schemaGraphSourceByExport.get(exportName);
   if (source !== null && source !== defaultEntry
-      && !(schemaPropertiesNames.includes(exportName) && source === 'src/model/schema-properties.ts')) return null;
+      && !(schemaPropertiesNames.includes(exportName) && source === 'src/model/schema-properties.ts')
+      && !(schemaGraphSource !== undefined && source === schemaGraphSource)) return null;
   const closure = paths => [...new Set(paths)].sort().map(file => ({ path: file, sha256: digest(read(file)) }));
+  if (schemaGraphSource !== undefined
+      && isDomainPackSchemaRootSelection({ routeId, exportName, source, declaration, inventory: json(inventoryPath), rootSource: read(defaultEntry) })) {
+    const rustFunction = exportName === 'generateDomainPackSchema'
+      ? 'domain_pack_schema_graph_json'
+      : 'dataset_source_schema_graph_json';
+    const rustModule = 'umf_core::domain_pack_schema';
+    const evidenceDir = 'docs/helix/04-build/evidence/rust-migration/r8-domain-pack-schema-default-route';
+    const evidencePaths = ['README.md', 'receipt.json'].map(file => `${evidenceDir}/${file}`);
+    const receipt = json(`${evidenceDir}/receipt.json`);
+    if (receipt.format !== 'umf.r8.domain-pack-public-route/1'
+        || receipt.status !== 'pass'
+        || receipt.manifest?.sourceTreeSha256 !== receipt.sourceTreeSha256
+        || receipt.manifest?.capturedLiveSourceTreeSha256 !== receipt.sourceTreeSha256
+        || receipt.manifest?.sourceTransformStatus !== 'fixed-point'
+        || receipt.manifest?.sourceTransformCount !== 0
+        || receipt.operations?.length !== 2
+        || !receipt.operations.includes('generateDomainPackSchema')
+        || !receipt.operations.includes('generateDatasetSourceSchema')
+        || receipt.routes?.[browser ? 'browser' : 'node']?.status !== 'pass'
+        || receipt.installedArchive?.status !== 'pass'
+        || !/^[a-f0-9]{64}$/.test(receipt.manifest?.sha256 ?? '')
+        || !/^[a-f0-9]{64}$/.test(receipt.installedArchive?.sha256 ?? '')
+        || !/^[a-f0-9]{64}$/.test(receipt.installedArchive?.packageManifestSha256 ?? '')) {
+      throw new Error('Domain Pack / Dataset Source default-route evidence is stale or incomplete');
+    }
+    return {
+      status: 'source-selected-installed-private-current-cohort',
+      rustOwner: `${rustModule}::${rustFunction}`,
+      wireOperation: `${rustFunction} (schema graph provider)`,
+      bindingRoute: browser
+        ? 'V4 browser root -> WASM schema-graph provider -> Rust JSON graph -> JavaScript alias relinker'
+        : 'V4 Node root -> Node-API schema-graph provider -> Rust JSON graph -> JavaScript alias relinker',
+      sourceClosure: closure([
+        defaultEntry, schemaGraphSource, 'src/domain-packs/generated-schema-graph.ts',
+        'bindings/core/node/index.js', 'bindings/core/node/src/schema-graph.js',
+        'bindings/core/node/src/lib.rs', 'bindings/core/wasm/src/lib.rs',
+        'crates/umf-core/src/domain_pack_schema.rs',
+        'crates/umf-core/src/domain_pack_source_schema.rs',
+        'tests/domain-packs/generated-schema-graph.test.ts',
+      ]),
+      qualificationEvidenceClosure: closure(evidencePaths),
+      qualificationStatus: 'A private fixed-point source build and locally unpacked private archive passed the recorded exact schema, Rust graph provider invocation, alias identity, export name and arity observations. Chromium executed the built and installed browser bundles with adjacent WASM; provider calls were not counter-instrumented there. Archive and manifest bytes are not retained by the tracked packet for independent release-grade revalidation. The TypeScript reference remains available, this is not release qualification, and no declaration is retired.',
+    };
+  }
   if (exportName === 'verifyCoreDatasetValuesCompact'
       && declaration?.declarationName === exportName
       && declaration.declarationKind === 'BindingElement'
@@ -1044,6 +1094,25 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
     capturedSourceTreeSha256: '0bf95b9c99c7fd328cf5d9f2cc5a04d1a4d637832a45446c6a0bc4893081cc55',
     qualificationStatus: 'R7 local private captured cohort: installed Node/Bun and real Chromium replay plus 139-case installed Bun smoke. Current worktree differs (including core source), so this is not combined-tree, publishable or retirement qualification.',
   };
+}
+
+export function isDomainPackSchemaRootSelection({ routeId, exportName, source, declaration, inventory, rootSource }) {
+  const expectedSources = new Map([
+    ['generateDomainPackSchema', 'src/domain-packs/schema.ts'],
+    ['generateDatasetSourceSchema', 'src/domain-packs/source-schema.ts'],
+  ]);
+  const expectedSource = expectedSources.get(exportName);
+  if (!expectedSource || !['package-root-node', 'package-root-browser'].includes(routeId)) return false;
+  const entry = routeId === 'package-root-browser' ? 'src/index-browser-v4.ts' : 'src/index-node-v4.ts';
+  if (source !== entry && source !== expectedSource) return false;
+  if (declaration?.declarationName !== exportName
+      || declaration.declarationKind !== 'FunctionDeclaration'
+      || declaration.initializerShape !== 'not-applicable') return false;
+  const selection = inventory?.defaultRouteEntrySelections?.find(item => item.routeId === routeId);
+  const rootBytes = Buffer.isBuffer(rootSource) ? rootSource : Buffer.from(String(rootSource ?? ''));
+  return selection?.entry === entry
+    && selection.entrySha256 === digest(rootBytes)
+    && selection.directExports?.includes(exportName) === true;
 }
 
 function operationMapping(row) {
@@ -2559,7 +2628,7 @@ export function buildLedger({ inventory, packageJson, packageBytes = Buffer.from
     executableDefaultRouteGapsByRoute: routeCounts,
     sourceSelectedRustOverrides: Object.values(routeCounts).reduce((sum, route) => sum + route.rustSelectedSourceDeclarations, 0),
     bindingRoutesProven: new Set(rows.filter(row => row.rowKind === 'executable' && row.bindingRouteStatus === 'installed-private-current-cohort').map(row => row.logicalDeclarationKey)).size,
-    sourceSelectedRustOverridesDefinition: 'Count of Node/browser declaration rows whose source resolves to the V4 root entry and has an exact Rust ownership mapping in this ledger. The current entry declaration census is reported by route; source selection does not remove any logical retirement gap. Temporal and relationship route receipts are private bounded cohorts, not release qualification.',
+    sourceSelectedRustOverridesDefinition: 'Count of Node/browser declaration rows whose export is selected by the exact V4 root entry and has an exact Rust ownership mapping in this ledger. Imported implementation sources are recorded explicitly where applicable. The current entry declaration census is reported by route; source selection does not remove any logical retirement gap. Private route receipts are bounded cohort observations, not release qualification.',
     bindingRoutesProvenDefinition: installedRouteEvidence
       ? `Count of unique logical executable names with a route proven by the gated ${installedRouteEvidence.boundedOperations}-operation R8 same-archive fixed-point receipt set; this is not complete host parity, declaration retirement or release qualification.`
       : 'Count of unique logical executable names with a route proven by the gated current-source R8 fixed-point cohort. Historical/source-pinned receipts remain visible in per-route evidence but do not contribute to this count or prove current-source parity. This is not complete host parity, declaration retirement or release qualification.',

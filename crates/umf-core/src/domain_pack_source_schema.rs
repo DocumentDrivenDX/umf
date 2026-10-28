@@ -28,6 +28,29 @@ fn nonempty_string() -> Value {
     object(&[("type", text("string")), ("minLength", Value::Number(1.0))])
 }
 
+/// JSON Pointer equivalence class for the shared nonempty-string schema used
+/// by the TypeScript generator. The schema JSON stays a tree; bindings use
+/// this sidecar to reconstruct the predecessor's mutable object graph.
+pub fn dataset_source_schema_alias_groups() -> Vec<Vec<String>> {
+    vec![
+        [
+            "/properties/generator/properties/id",
+            "/properties/reference",
+            "/properties/format",
+            "/properties/revision",
+            "/properties/license/properties/id",
+            "/properties/license/properties/reference",
+            "/properties/provenance/properties/publisher",
+            "/properties/provenance/properties/retrieved_at",
+            "/properties/provenance/properties/source_ids/items",
+            "/properties/provenance/properties/transformations/items",
+        ]
+        .into_iter()
+        .map(str::to_owned)
+        .collect(),
+    ]
+}
+
 /// Compose the ordered dataset-source Draft 2020-12 schema from CONTRACT-052.
 ///
 /// Object members retain the same insertion order as the TypeScript generator,

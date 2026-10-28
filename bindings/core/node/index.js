@@ -24,6 +24,7 @@ import {declareCoreSchemaPropertiesHostInput, schemaPropertiesHostInput, cardina
 import {createSemanticTypeRegistry as createSemanticTypeRegistryEngine} from './src/semantic-value.js';
 import {createArrowIpcOperations, ARROW_IPC_PROFILE} from './src/arrow-ipc.js';
 import {createAccessRrfOperations, ACCESS_RRF_PROFILE} from './src/access-rrf.js';
+import {requireSchemaGraphProviders} from './src/schema-graph.js';
 
 export {isWireAdmissionError} from './src/wire.js';
 export {isBit128EngineError};
@@ -36,6 +37,7 @@ function nativeCoreError(failure) { const error = new UmfCoreError(failure.code,
 
 const require = createRequire(import.meta.url);
 const addon = require('./umf_core_node.node');
+const schemaGraphProviders = requireSchemaGraphProviders(addon);
 const CORE_KIND_NULLABILITY_RUNTIME = Symbol('core-kind-nullability-runtime');
 const CORE_KIND_NULLABILITY_PREPARED = Symbol('core-kind-nullability-prepared');
 
@@ -67,6 +69,15 @@ export function copyJson(value, limits) {
 }
 
 export const engineVersion = addon.engineVersion();
+
+/** Rust-computed CONTRACT-052 schema graph for the Node V4 default route. */
+export function domainPackSchemaGraphJson() {
+  return schemaGraphProviders.domainPackSchemaGraphJson();
+}
+
+export function datasetSourceSchemaGraphJson() {
+  return schemaGraphProviders.datasetSourceSchemaGraphJson();
+}
 
 /** Invoke the opt-in Rust reference pass over tagged wire. The caller must have structurally validated pack first. */
 export function executeArtifactReferencesBindingWire(wireJson, controlDispatcher) {

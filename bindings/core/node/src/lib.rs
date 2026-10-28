@@ -37,6 +37,20 @@ pub fn domain_pack_schema_json(version: String) -> NapiResult<String> {
     umf_core::domain_pack_schema::domain_pack_schema_json(&version)
         .map_err(|error| Error::from_reason(error.code))
 }
+
+/// Default-route schema graph with Rust-owned intra-result alias metadata.
+#[napi(js_name = "domainPackSchemaGraphJson")]
+pub fn domain_pack_schema_graph_json() -> NapiResult<String> {
+    umf_core::domain_pack_schema::domain_pack_schema_graph_json()
+        .map_err(|error| Error::from_reason(error.code))
+}
+
+#[napi(js_name = "datasetSourceSchemaGraphJson")]
+pub fn dataset_source_schema_graph_json() -> NapiResult<String> {
+    umf_core::domain_pack_schema::dataset_source_schema_graph_json()
+        .map_err(|error| Error::from_reason(error.code))
+}
+
 #[napi(js_name = "executeAccessRrfWire")]
 pub fn execute_access_rrf_wire(
     env: Env,

@@ -21,6 +21,9 @@ export declare function copyJson(value: unknown, limits?: {maxDepth?: number; ma
 /** Run artifactReferences/inspect over umf.core-wire/1. The pack must be structurally validated before this call. */
 export declare function executeArtifactReferencesBindingWire(wireJson: string, controlDispatcher?: (work: number) => string): string;
 export declare const engineVersion: string;
+/** Rust-computed schema graph JSON with alias groups for Node V4 defaults. */
+export declare function domainPackSchemaGraphJson(): string;
+export declare function datasetSourceSchemaGraphJson(): string;
 export declare const JAVASCRIPT_NUMERIC_PROFILE: 'umf.javascript-numeric/1.0.0';
 export declare const BIT128_PROFILE: 'umf-128/1';
 export declare const JSON_NUMBER_PROFILE: 'umf-json-number/0.1';

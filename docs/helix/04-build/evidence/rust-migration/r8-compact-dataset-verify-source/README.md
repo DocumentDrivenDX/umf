@@ -24,18 +24,15 @@ The fresh source-built replay passed all five frozen verifier cases on Node
 v26.12.1, Bun 1.4.3, and real Chromium 153.0.8010.12. Node and Bun each
 recorded 14 Rust calls. Chromium loaded the pinned WASM and ran without Node
 globals. The receipts bind to the same immutable source-built manifest:
-`/private/tmp/umf-r8-domain-pack-fixedpoint-20261027/compact-dataset-verify-build-manifest.json`,
-SHA-256 `cedcbf75d43607fbed7d1e6a4310775c41096ebf9ba89d31c33081d4cb679586`;
+`/private/tmp/umf-r8-domain-pack-fixedpoint-replay-final/compact-dataset-verify-build-manifest.json`,
+SHA-256 `45116162b154da756e3abee5bd59fca9da345b761fd20c91e72891196f328209`;
 source closure SHA-256
-`f8c9450063b9f13274366f07255f0e22aa5c18e04aae96a1d3da6e001a1f85ec`.
+`9eb6c681a5cabf35d94394b2def87a159c15777b58877dc0070003fb16e71130`.
 The manifest pins the Node addon, WASM binary/glue, and reference, Node, and
 browser bundles. The frozen five-case inputs and current index remain in this
 packet and are independently hashed in `SHA256SUMS`.
 
-The prior top-level packet is preserved in Git revision `5999be676`;
-[`historical/pre-domain-record-refreeze-20261027/`](historical/pre-domain-record-refreeze-20261027/)
-retains its original checksum list and an exact-revision retrieval note.
-Earlier historical cohorts remain under `historical/`.
+The superseded active packet is preserved in [pre-domain-pack-route-replay-20261028/](historical/pre-domain-pack-route-replay-20261028/), with its original receipts, index, case payloads, and checksum list. Earlier historical cohorts remain under `historical/`.
 
 This is bounded source-built evidence for five verifier cases and stated host
 controls. It does not qualify an installed SDK archive, a release, every

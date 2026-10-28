@@ -26,19 +26,16 @@ the `readJsonValue` access facade.
 
 All receipts bind to the same immutable source-built manifest as the sibling
 [five-case Compact Dataset verifier replay](../r8-compact-dataset-verify-source/README.md):
-`/private/tmp/umf-r8-domain-pack-fixedpoint-20261027/compact-dataset-verify-build-manifest.json`,
-SHA-256 `cedcbf75d43607fbed7d1e6a4310775c41096ebf9ba89d31c33081d4cb679586`;
+`/private/tmp/umf-r8-domain-pack-fixedpoint-replay-final/compact-dataset-verify-build-manifest.json`,
+SHA-256 `45116162b154da756e3abee5bd59fca9da345b761fd20c91e72891196f328209`;
 source closure SHA-256
-`f8c9450063b9f13274366f07255f0e22aa5c18e04aae96a1d3da6e001a1f85ec`. Each
+`9eb6c681a5cabf35d94394b2def87a159c15777b58877dc0070003fb16e71130`. Each
 receipt verified the complete build closure and six artifacts before execution.
 The frozen fixture [`predecessor.json`](predecessor.json) remains pinned in
 `SHA256SUMS` and records live Security source, JSON admission, CONTRACT-062,
 and frozen truth source hashes.
 
-The prior top-level packet is preserved in Git revision `5999be676`;
-[`historical/pre-domain-record-refreeze-20261027/`](historical/pre-domain-record-refreeze-20261027/)
-retains its original checksum list and an exact-revision retrieval note.
-The dated prior packet retains the superseded `node.json` receipt, which was generated through Bun and mislabeled as Node; its host/runtime metadata has been corrected in the current receipt. Earlier historical cohorts remain under `historical/`.
+The superseded active packet is preserved in [pre-domain-pack-route-replay-20261028/](historical/pre-domain-pack-route-replay-20261028/), with its original receipts, predecessor fixture, and checksum list. Earlier historical cohorts remain under `historical/`.
 
 This remains bounded source-built replay evidence, not installed SDK archive or
 release qualification. It does not establish complete Security semantics

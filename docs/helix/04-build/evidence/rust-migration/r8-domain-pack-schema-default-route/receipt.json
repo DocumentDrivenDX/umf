@@ -1,0 +1,98 @@
+{
+  "format": "umf.r8.domain-pack-public-route/1",
+  "status": "pass",
+  "sourceTreeSha256": "5434635cf74a948bec17601bd3b150703073dfa87bd94193e66cdfbe452911c9",
+  "manifest": {
+    "path": ".tmp/r8-domain-pack/dist-final-ledger/rust-default-manifest.json",
+    "sha256": "158359c4cf8f8c28ecdafec3eb4195e587617d7c4a3307aa75a5369fc34793e6",
+    "sourceTreeSha256": "5434635cf74a948bec17601bd3b150703073dfa87bd94193e66cdfbe452911c9",
+    "capturedLiveSourceTreeSha256": "5434635cf74a948bec17601bd3b150703073dfa87bd94193e66cdfbe452911c9",
+    "sourceTransformStatus": "fixed-point",
+    "sourceTransformCount": 0,
+    "assetCount": 1801
+  },
+  "operations": [
+    "generateDomainPackSchema",
+    "generateDatasetSourceSchema"
+  ],
+  "routes": {
+    "node": {
+      "status": "pass",
+      "providerCalls": {
+        "domainPackSchemaGraphJson": 2,
+        "datasetSourceSchemaGraphJson": 2
+      },
+      "schemaParity": "exact complete resource JSON",
+      "freshInstances": true,
+      "names": [
+        "generateDomainPackSchema",
+        "generateDatasetSourceSchema"
+      ],
+      "arity": [0, 0]
+    },
+    "bun": {
+      "status": "pass",
+      "providerCalls": {
+        "domainPackSchemaGraphJson": 2,
+        "datasetSourceSchemaGraphJson": 2
+      },
+      "schemaParity": "exact complete resource JSON",
+      "freshInstances": true,
+      "names": [
+        "generateDomainPackSchema",
+        "generateDatasetSourceSchema"
+      ],
+      "arity": [0, 0],
+      "aliasEvidence": {
+        "test": "tests/domain-packs/generated-schema-graph.test.ts",
+        "passed": 4,
+        "failed": 0,
+        "assertions": 26,
+        "domainPackAliasGroups": 8,
+        "datasetSourceAliasGroups": 1,
+        "oracle": "live TypeScript predecessor object identity classes"
+      }
+    },
+    "browser": {
+      "status": "pass",
+      "chromium": "153.0.8010.12",
+      "schemaParity": "exact complete resource JSON",
+      "names": [
+        "generateDomainPackSchema",
+        "generateDatasetSourceSchema"
+      ],
+      "referenceNames": [
+        "generateDomainPackSchema",
+        "generateDatasetSourceSchema"
+      ],
+      "arity": [0, 0],
+      "referenceArity": [0, 0],
+      "nodeGlobalsAbsent": true,
+      "routeTrace": "The built bundle binds each public operation to its corresponding WASM schema-graph provider; both exports executed against the exact built bundle and WASM. Provider counters were not instrumented in Chromium."
+    }
+  },
+  "installedArchive": {
+    "status": "pass",
+    "path": ".tmp/r8-domain-pack/umf-sdk-domain-pack-ledger-final.tgz",
+    "sha256": "e8f4be0486d26af1cc2f437de7045d9dbfbaa5c8dcc2a4123603d83c52b68c1a",
+    "packageManifestSha256": "47bf8a5511affe051bf6546f8bc3f294d13a9cc4c055a0c76e8517d77699ab10",
+    "bytes": 43701965,
+    "nodeProviderCalls": {
+      "domainPackSchemaGraphJson": 2,
+      "datasetSourceSchemaGraphJson": 2
+    },
+    "nodeNames": [
+      "generateDomainPackSchema",
+      "generateDatasetSourceSchema"
+    ],
+    "nodeArity": [0, 0],
+    "chromium": "153.0.8010.12",
+    "chromiumSchemaParity": "exact complete resource JSON",
+    "chromiumNodeGlobalsAbsent": true
+  },
+  "limitations": [
+    "The private archive is not publishable release qualification.",
+    "The TypeScript reference remains available; neither logical declaration is retired.",
+    "Chromium route selection is proven by the V4 source binding and exact public bundle execution; no WASM provider call counter was instrumented."
+  ]
+}
