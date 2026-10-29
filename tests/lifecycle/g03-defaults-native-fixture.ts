@@ -22,7 +22,7 @@ function operationDeclarations(includeOmitted=true){
 }
 
 /** Append the G03 target before bootstrap; all other original source meaning is retained. */
-export function g03Source(defaultValue?:unknown,options:{required?:boolean;commands?:boolean;logicalDefault?:unknown}={}){
+export function g03Source(defaultValue?:unknown,options:{required?:boolean;commands?:boolean;logicalDefault?:unknown;ordinaryQuery?:boolean}={}){
  const doc=structuredClone(fixture) as any,module=doc.modules[0]!,table=module.extensions['umf.tables'].tables[0]!;
  const measure={id:'measure',kind:'field',scalarType:'integer',cardinality:'one',nullability:options.required?'required':'absent-allowed',extensions:{}};
  if(options.logicalDefault!==undefined)(measure as any).default=options.logicalDefault;
@@ -31,7 +31,12 @@ export function g03Source(defaultValue?:unknown,options:{required?:boolean;comma
  const column:any={field:ref('measure'),name:'measure',nativeType:{kind:'int4'}};
  if(defaultValue!==undefined)column.default=defaultValue;
  table.columns.push(column);
- module.extensions['umf.tables'].commands=operationDeclarations(options.commands!==false);
+ const commands=operationDeclarations(options.commands!==false);
+ if(options.ordinaryQuery)commands.push({version:'umf.table-operation/0.1',id:'query_measure',
+  parameters:[{id:'id',field:ref('id')}],consistency:'statement',replay:'none',
+  body:{kind:'query',language:'weft.pg-select/0.1',sql:'SELECT measure FROM notes WHERE id = :id',
+   outputs:[{name:'measure',field:ref('measure')}],maxRows:1}} as any);
+ module.extensions['umf.tables'].commands=commands;
  return doc;
 }
 
@@ -66,7 +71,7 @@ export function buildG03DefaultsNativeFixture(){
   version:'umf.praxis.g03-defaults-native-fixture/1',status:'SOURCE_ONLY_ALL_NATIVE_CASES_UNRUN',configuration:g03Configuration,
   campaignExpectedManifestProfile:'umf.g03-native-campaign-expected-data/0.1',campaignRoster,
   initialSource:source(g03Source()),
-  variants:{absent:source(g03Source()),set5:source(g03Source(literalInteger('5'))),set9:source(g03Source(literalInteger('9'))),drop:source(g03Source()),literalNull:source(g03Source({kind:'literal',value:null})),matchingLogical5:source(g03Source(literalInteger('5'),{logicalDefault:{on:'missing',value:{integerToken:'5'}}})),requiredSet5:source(g03Source(literalInteger('5'),{required:true,commands:false})),requiredSet5RetainedOmission:source(g03Source(literalInteger('5'),{required:true})),requiredSet9:source(g03Source(literalInteger('9'),{required:true,commands:false})),requiredDrop:source(g03Source(undefined,{required:true,commands:false})),requiredDropRetainedOmission:source(g03Source(undefined,{required:true})),dateAbsent:source(typedDomainSource('date',{kind:'date'})),date:source(typedDomainSource('date',{kind:'date'},{kind:'literal',value:{date:'2000-02-29'}})),textAbsent:source(typedDomainSource('string',{kind:'text'})),text:source(typedDomainSource('string',{kind:'text'},{kind:'literal',value:{string:'G03 \u{1f9ed} text'}})),decimalAbsent:source(typedDomainSource('decimal',{kind:'numeric',precision:8,scale:2})),decimal:source(typedDomainSource('decimal',{kind:'numeric',precision:8,scale:2},{kind:'literal',value:{decimalToken:'1.0'}})),decimalExponent:source(typedDomainSource('decimal',{kind:'numeric',precision:8,scale:2},{kind:'literal',value:{decimalToken:'1e0'}})),uuidAbsent:source(typedDomainSource('uuid',{kind:'uuid'})),uuid:source(typedDomainSource('uuid',{kind:'uuid'},{kind:'randomUuid'})),currentTimestampAbsent:source(typedDomainSource('timestamp',{kind:'timestamptz'})),currentTimestamp:source(typedDomainSource('timestamp',{kind:'timestamptz'},{kind:'currentTimestamp'}))},
+  variants:{absent:source(g03Source()),set5:source(g03Source(literalInteger('5'))),set9:source(g03Source(literalInteger('9'))),drop:source(g03Source()),literalNull:source(g03Source({kind:'literal',value:null})),matchingLogical5:source(g03Source(literalInteger('5'),{logicalDefault:{on:'missing',value:{integerToken:'5'}}})),ordinaryNativeOnly5:source(g03Source(literalInteger('5'),{ordinaryQuery:true})),ordinaryNativeOnly9:source(g03Source(literalInteger('9'),{ordinaryQuery:true})),ordinaryLogicalMatching5:source(g03Source(literalInteger('5'),{logicalDefault:{on:'missing',value:{integerToken:'5'}},ordinaryQuery:true})),requiredSet5:source(g03Source(literalInteger('5'),{required:true,commands:false})),requiredSet5RetainedOmission:source(g03Source(literalInteger('5'),{required:true})),requiredSet9:source(g03Source(literalInteger('9'),{required:true,commands:false})),requiredDrop:source(g03Source(undefined,{required:true,commands:false})),requiredDropRetainedOmission:source(g03Source(undefined,{required:true})),dateAbsent:source(typedDomainSource('date',{kind:'date'})),date:source(typedDomainSource('date',{kind:'date'},{kind:'literal',value:{date:'2000-02-29'}})),textAbsent:source(typedDomainSource('string',{kind:'text'})),text:source(typedDomainSource('string',{kind:'text'},{kind:'literal',value:{string:'G03 \u{1f9ed} text'}})),decimalAbsent:source(typedDomainSource('decimal',{kind:'numeric',precision:8,scale:2})),decimal:source(typedDomainSource('decimal',{kind:'numeric',precision:8,scale:2},{kind:'literal',value:{decimalToken:'1.0'}})),decimalExponent:source(typedDomainSource('decimal',{kind:'numeric',precision:8,scale:2},{kind:'literal',value:{decimalToken:'1e0'}})),uuidAbsent:source(typedDomainSource('uuid',{kind:'uuid'})),uuid:source(typedDomainSource('uuid',{kind:'uuid'},{kind:'randomUuid'})),currentTimestampAbsent:source(typedDomainSource('timestamp',{kind:'timestamptz'})),currentTimestamp:source(typedDomainSource('timestamp',{kind:'timestamptz'},{kind:'currentTimestamp'}))},
   compileOnlyControls:[
    {id:'invalid-gregorian-date',source:source(typedDomainSource('date',{kind:'date'},{kind:'literal',value:{date:'1900-02-29'}})),expected:'blocked'},
    {id:'wrong-date-carrier',source:source(typedDomainSource('date',{kind:'date'},{kind:'literal',value:{timestamp:'2000-02-29T00:00:00Z'}})),expected:'blocked'},
@@ -89,7 +94,7 @@ export function buildG03DefaultsNativeFixture(){
    'G03-N09':'WRITER_BARRIER_SOURCE_IMPLEMENTED_NATIVE_UNRUN',
    'G03-N10':'DATE_TEXT_DECIMAL_SOURCE_IMPLEMENTED_NATIVE_UNRUN',
    'G03-N11':'UUID_AND_TRANSACTION_TIMESTAMP_SOURCE_IMPLEMENTED_NATIVE_UNRUN',
-   'G03-N12':'UNQUALIFIED_COMPATIBLE_WEFT_02_COHORT_REQUIRED',
+   'G03-N12':'ORDINARY_SELECTED_MODULE_SYNC_ASYNC_SOURCE_IMPLEMENTED_NATIVE_UNRUN',
    'G03-N13':'FULL_PRE_EFFECT_TAMPERING_MATRIX_SOURCE_IMPLEMENTED_NATIVE_UNRUN',
    'G03-N14':'SERIAL_CLEANUP_CAMPAIGN_SOURCE_IMPLEMENTED_NATIVE_UNRUN_FULL_CASE_OPEN',
   },

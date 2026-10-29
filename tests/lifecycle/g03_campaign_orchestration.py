@@ -26,6 +26,20 @@ _CLEAN = ("PASS", "PASS_NO_NATIVE_RESOURCES_CREATED")
 _UNKNOWN = ("FAIL_CLEANUP_UNCERTAIN", "FAIL_OR_UNKNOWN")
 
 
+def dispatch_campaign_scenario(
+    *,
+    case_id: str,
+    scenario: str,
+    campaign_id: str,
+    direct: Callable[[], dict[str, Any]],
+    scenario_executor: Callable[[str, str, str], dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    """Use an optional test-harness child executor at the native scenario boundary."""
+    if scenario_executor is None:
+        return direct()
+    return scenario_executor(case_id, scenario, campaign_id)
+
+
 def run_g03_fixed_roster(
     *,
     dispatch: Callable[[str, str], dict[str, Any]],
@@ -39,6 +53,7 @@ def run_g03_fixed_roster(
     all_cleanups_ok = True
     all_required_cases_pass = True
     ordinary_unqualified = False
+    ordinary_passed = False
     abort_campaign = False
     abort_reason: str | None = None
 
@@ -78,13 +93,27 @@ def run_g03_fixed_roster(
                     for item, expected_entry in zip(results, CAMPAIGN_ROSTER[:-1])
                 )
             )
+            try:
+                final_target_observation = observe_target()
+                final_target_error = None
+            except Exception as error:
+                final_target_observation = None
+                final_target_error = type(error).__name__
+            captured_resource_bindings = [
+                scenario.get("campaignBinding")
+                for case in results
+                for scenario in case.get("scenarioResults", [])
+                if type(scenario) is dict and type(scenario.get("campaignBinding")) is dict
+            ]
             results.append({
                 "caseId": case_id,
-                "status": "PARTIAL_CLEANUP_PASS_FULL_CASE_OPEN" if all_cleanups_ok else "FAIL_CLEANUP_UNCERTAIN",
+                "status": "PARTIAL_CLEANUP_PASS_FULL_CASE_OPEN" if all_cleanups_ok and final_target_error is None else "FAIL_CLEANUP_UNCERTAIN",
                 "executedRosterComplete": executed_roster_complete,
                 "perCaseCleanupStatuses": cleanup_states,
                 "missingOrFailedCleanupCases": missing_cleanup,
-                "capturedResourceBindings": [item.get("campaignBinding") for item in results],
+                "finalTargetObservation": final_target_observation,
+                "finalTargetObservationError": final_target_error,
+                "capturedResourceBindings": captured_resource_bindings,
                 "nativeQualificationClaim": False,
                 "campaignBinding": binding,
             })
@@ -95,10 +124,16 @@ def run_g03_fixed_roster(
             try:
                 case = dispatch(case_id, scenario)
                 case["scenario"] = scenario
+                owned_resources = {"database": case.get("database"), "schema": case.get("schema"),
+                                   "roles": case.get("roleNames", [])}
+                if scenario == "ordinary":
+                    ordinary = case.get("ordinaryN12", {})
+                    owned_resources["additionalSchemas"] = ordinary.get("schemasCovered", [])[1:]
+                    owned_resources["logicalRoleNames"] = case.get("logicalRoleNames", [])
+                    owned_resources["allOwnedRoleNames"] = case.get("allOwnedRoleNames", [])
                 case["campaignBinding"] = {**binding, "scenario": scenario,
                     "caseConfigurationSha256": case.get("configurationSha256", binding["configurationSha256"]),
-                    "ownedResourceNames": {"database": case.get("database"), "schema": case.get("schema"),
-                                           "roles": case.get("roleNames", [])},
+                    "ownedResourceNames": owned_resources,
                     "expectedCaseBinding": expected_case_bindings.get(scenario)}
                 cleanup_status = case.get("cleanup", {}).get("status")
                 unresolved_status = case.get("status") in _UNKNOWN
@@ -112,8 +147,11 @@ def run_g03_fixed_roster(
                     all_required_cases_pass = False
                 if scenario.startswith("domain-") and not str(case.get("status", "")).startswith("PASS_SELECTED_NATIVE_SUBCASE"):
                     all_required_cases_pass = False
-                if scenario == "ordinary" and case.get("status") == "UNQUALIFIED":
-                    ordinary_unqualified = True
+                if scenario == "ordinary":
+                    ordinary_passed = case.get("status") == "PASS" and cleanup_status in _CLEAN
+                    ordinary_unqualified = not ordinary_passed
+                    if not ordinary_passed:
+                        all_required_cases_pass = False
                 if not abort_campaign:
                     if observe_target() != expected_target:
                         all_required_cases_pass = False
@@ -161,18 +199,28 @@ def run_g03_fixed_roster(
             "campaignBinding": binding}
         if abort_campaign:
             case_report["serialFenceReason"] = abort_reason
-        if any(item.get("status") in (*_UNKNOWN, "FAIL") for item in scenario_results):
+        if any(item.get("status") in (*_UNKNOWN, "FAIL", "FAIL_OR_UNKNOWN", "FAIL_CLEANUP_UNCERTAIN") for item in scenario_results):
             case_report["status"] = "FAIL_OR_UNKNOWN"
         elif any(item.get("status") == "UNQUALIFIED" for item in scenario_results):
             case_report["status"] = "UNQUALIFIED"
+        elif case_id == "G03-N12" and ordinary_passed:
+            case_report["status"] = "PASS"
         else:
             case_report["status"] = "PARTIAL_SUBCASES_PASS_FULL_CASE_OPEN"
         results.append(case_report)
 
+    from g03_campaign_predicates import evaluate_campaign
+    predicate_report = evaluate_campaign(results, expected_case_bindings=expected_case_bindings,
+        expected_target=expected_target,
+        final_target_observation=(results[-1].get("finalTargetObservation") if results else None))
+    for case, predicate in zip(results, predicate_report["casePredicates"]):
+        case["evidencePredicate"] = predicate
+    all_required_cases_pass = predicate_report["predicatePassed"]
     summary = {"cleanupStatus": "PASS_PARTIAL" if all_cleanups_ok else "FAIL_OR_UNKNOWN",
-               "ordinaryN12Status": "UNQUALIFIED" if ordinary_unqualified else "NOT_RUN",
+               "ordinaryN12Status": "PASS" if ordinary_passed else ("UNQUALIFIED" if ordinary_unqualified else "NOT_RUN"),
                "nativeQualificationClaim": False,
                "allRequiredCasesPass": all_required_cases_pass,
+               "casePredicates": predicate_report["casePredicates"],
                "fullyPassed": (len(results) == len(CAMPAIGN_ROSTER) and all_cleanups_ok and all_required_cases_pass
-                   and not ordinary_unqualified and all(item.get("status") == "PASS" for item in results[:-1]))}
+                   and ordinary_passed and not ordinary_unqualified)}
     return results, summary
