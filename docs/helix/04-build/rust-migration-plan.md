@@ -10700,3 +10700,25 @@ work-admission and exact work-charge regressions, plus a corrected freeze count
 and accurate uncompleted browser scope. Current changes still require execution
 and independent review. Neither candidate changes the accepted owner count,
 default routing, retirement, installed qualification or full-port release gates.
+
+
+### Parquet edit source review and Python transport — 2026-10-29
+
+Pending edit candidate `01d334a30` is retained at local ref
+`codex/rust-parquet-edits-candidate`. Source review corrected row-group, column
+and column-path access through tagged Thrift list nodes, preserved caller member
+order in append results, retained diagnostic paths as UTF-16, and separated
+positive-integer admission from host-width indexing. Added author controls cover
+value-first metadata entries, empty keys/values, surrogate paths and large
+indexes with valid and empty names. The historical 102-case TypeScript freeze
+has not been regenerated, and these repairs have not been executed.
+
+Python now transports both edits through the same Rust wire dispatcher. Pending
+native tests compare complete frozen append/rename results with recursive member
+order checks and verify original capture and unchanged byte-prefix retention.
+These are authored tests, not passing or installed-artifact evidence. The source
+parity harness computes reference edits only after its case filter, enabling
+bounded focused runs without evaluating all unselected reference operations.
+Full JavaScript object coercion for invalid index arguments, fresh native/WASM/
+Chromium qualification, independent review and integration remain open. The
+candidate changes no accepted owner, default route or release qualification.
