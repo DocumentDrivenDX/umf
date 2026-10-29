@@ -159,6 +159,8 @@ try{
   join(root,'scripts/rust-migration/r8/core-facets-dependency-installed.mjs'),
   join(root,'scripts/rust-migration/r8/core-facets-dependency-installed-replay.mjs'),
   join(root,'scripts/rust-migration/r8/core-facets-installed-asset-controls.mjs'),
+  join(root,'scripts/rust-migration/r8/core-facets-dispatch-observer.mjs'),
+  join(root,'scripts/rust-migration/r8/core-facets-dispatch-observer.test.mjs'),
   join(root,'scripts/rust-migration/r8/core-facets-resource-suite.mjs'),
   join(root,'scripts/rust-migration/r8/core-facets-resource-source-preflight.mjs'),
   join(root,'scripts/rust-migration/r8/core-facets-dependency-installed.test.mjs'),

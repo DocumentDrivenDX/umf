@@ -10,6 +10,7 @@ import {fileURLToPath} from 'node:url';
 import {spawnSync} from 'node:child_process';
 import {chromium} from 'playwright';
 import {decodeCoreRequestOperation} from './core-nine-installed-support.mjs';
+import {installCoreFacetsDispatchObserver} from './core-facets-dispatch-observer.mjs';
 
 const repo=resolve(fileURLToPath(new URL('../../../',import.meta.url)));
 const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
@@ -18,8 +19,8 @@ const fixturePath=join(repo,'docs/helix/04-build/evidence/rust-migration/r5-core
 const nativeProbe=`
 import assert from 'node:assert/strict';import {readFile} from 'node:fs/promises';import {createRequire} from 'node:module';let phase='import';
 try {
- globalThis.__calls=[];if(process.env.UMF_ASSET_CONTROL_STATE==='intact'){const addon=createRequire(import.meta.url)('./node_modules/@umf/core/dist/umf_core_node.node'),execute=addon.executeRequestWire;addon.executeRequestWire=function(...args){globalThis.__calls.push(globalThis.__decodeCoreRequestOperation(args[0]));return execute.apply(this,args)}}
- globalThis.__decodeCoreRequestOperation=${decodeCoreRequestOperation.toString()};const api=await import('@umf/core');phase='operation';const p=JSON.parse(await readFile('./control.json','utf8'));
+ globalThis.__calls=[];globalThis.__decodeCoreRequestOperation=${decodeCoreRequestOperation.toString()};if(process.env.UMF_ASSET_CONTROL_STATE==='intact'){const addon=createRequire(import.meta.url)('./node_modules/@umf/core/dist/umf_core_node.node'),installObserver=${installCoreFacetsDispatchObserver.toString()};installObserver(addon,globalThis.__decodeCoreRequestOperation,op=>globalThis.__calls.push(op))}
+ const api=await import('@umf/core');phase='operation';const p=JSON.parse(await readFile('./control.json','utf8'));
  const result=api.inspectCoreFacets(p.source,p.identity);assert.equal(result.meaning.state,'known');assert.equal(result.meaning.facets.integerWidth.bits,16);assert.equal(result.meaning.facets.integerWidth.signed,false);
  if(process.env.UMF_ASSET_CONTROL_STATE==='intact')assert(globalThis.__calls.includes('model/inspectCoreFacets'),'public operation dispatched to native addon');process.stdout.write(JSON.stringify({status:'returned',result,nativeOperations:globalThis.__calls})+'\\n');process.exit(0);
 } catch(error) {

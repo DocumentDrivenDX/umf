@@ -10542,3 +10542,25 @@ The review and exact source hashes are recorded in
 `evidence/rust-migration/r8-current-oracle-review-20261029/`. The reviewer did
 not rerun tests. Queued workers did not resume, so the primary Sol prepared
 this correction directly and a separate Sol reviewed it.
+
+### Retained dispatch observation and local packaging follow-up — 2026-10-29
+
+The d62 Darwin/Linux SDK builds passed fixed-point construction, but both
+installed Facets replays failed their Rust-dispatch assertion. The probe
+observed only the legacy top-level entrypoint while the current shared runtime
+uses `executeModelRequestWire`. The independently Sol-reviewed observer now
+intercepts both native entrypoints and both unique browser bundle signatures.
+Eight focused controls and a real Node/Chromium direct-bundle diagnostic pass,
+with zero reference-route dispatch. [Review and diagnostic evidence](evidence/rust-migration/r8-retained-dispatch-observer/README.md)
+records the exact scope. Fresh archives must be rebuilt and qualified; the old
+archives remain failed evidence and no retirement is claimed.
+
+The real local Python pair producer passed 200 Rust CLI/codegen tests and
+created a source archive, then its wheel build exposed an omitted compile-time
+resource, `spec/extensions/parquet/idl.json`. The packaging fix must update both
+the producer closure and its independent expected membership, and pass an
+actual source-archive rebuild before the full interpreter matrix resumes.
+Independent Sol review of the private Parquet page/body slice found a wasm32
+Snappy literal-length overflow and a malformed-header diagnostic mismatch;
+that slice remains unaccepted while Luna corrects and tests these defects.
+Main was fetched again and remains an ancestor of the migration branch.
