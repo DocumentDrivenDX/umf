@@ -27,7 +27,7 @@
 .schema-page footer{max-width:none;padding:12px 24px}
 .schema-page .ontology-layout{display:block;padding:0 0 20px}
 .schema-page .ontology-types{display:flex;align-items:center;gap:18px;flex-wrap:wrap;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 0;margin-bottom:16px}
-.schema-page .ontology-types>label{width:240px;font-size:12px}
+.schema-page .ontology-types>.definition-finder{width:240px;font-size:12px}
 .schema-page .ontology-types input{margin:2px 0 0;padding:6px 9px}
 .schema-page .ontology-groups{display:flex;gap:18px}
 .schema-page .ontology-types details{position:relative;border:0;padding:0}
@@ -69,7 +69,7 @@
  .schema-page .schema-toolbar h1{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
  .schema-page .schema-views a{font-size:12px;padding:5px 7px}
  .schema-page .ontology-types{margin-bottom:12px;padding:6px 0;align-items:center}
- .schema-page .ontology-types>label{width:100%}
+ .schema-page .ontology-types>.definition-finder{width:100%}
  .schema-page .ontology-types>div{max-height:none;overflow:visible;display:flex;grid-template-columns:none}
  .schema-page .ontology-about{margin-left:auto}
  .schema-page .ontology-content{gap:12px;overflow:visible}
@@ -108,3 +108,11 @@
 .schema-page .ontology-viewport a:hover path,.schema-page .ontology-viewport a:focus path{opacity:1;stroke-width:3}
 .schema-page .ontology-viewport .map-count{font-size:12px;fill:var(--muted)}
 .schema-page .ontology-viewport .graph-standalone{font-size:13px;fill:var(--muted);letter-spacing:.4px}
+
+/* Suggestions appear directly below the finder, independent of browse disclosures. */
+.schema-page .ontology-types>.definition-finder{position:relative;display:block;overflow:visible;max-height:none}
+.definition-suggestions{position:absolute;top:100%;left:0;z-index:5;width:min(380px,calc(100vw - 32px));max-height:50vh;overflow:auto;background:var(--white);border:1px solid var(--line);border-radius:4px;box-shadow:0 8px 22px #203c351c;padding:6px}
+.definition-suggestions [role=option]{overflow-wrap:anywhere;border-radius:3px}
+.definition-suggestions [role=option]:hover,.definition-suggestions [aria-selected=true]{background:var(--panel);color:var(--ink)}
+.definition-suggestions small{display:block;font-size:11px;color:var(--muted)}
+.definition-suggestions p{font-size:13px;margin:8px}

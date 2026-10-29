@@ -52,6 +52,43 @@ try{
  assert(sameStrings(projected.records.map(record=>record.id),expectedRecordIds),'Self-model projection omitted or added authored Record identities');
  assert(expectedRecordIds.length===24,'Expected the complete authored 24-Record source model');
  assert(expectedRecordIds.filter(id=>JSON.parse(id)[1].startsWith('extensionKind')).length===9,'Expected all nine authored extension-kind Record identities');
+ // Definition search must expose suggestions without opening browse disclosures.
+ for(const width of [1280,390]){
+  await page.setViewportSize({width,height:900});await ontology();
+  const finder=page.getByRole('combobox',{name:'Find a definition'}),suggestions=page.getByRole('listbox',{name:'Matching definitions'});
+  assert(await finder.getAttribute('aria-expanded')==='false','Finder initially expanded');
+  await finder.fill('  mOdUlE  ');
+  await suggestions.waitFor();
+  assert(await suggestions.getByRole('option').count()>0,'Typing did not show suggestions');
+  assert(await suggestions.getByRole('option').first().locator('span').innerText()==='Module','Exact name not ranked first');
+  assert(await page.locator('.ontology-groups details[open]').count()===0,'Search requires browse disclosure');
+  assert(await finder.evaluate(input=>input===document.activeElement),'Typing lost input focus');
+  await page.screenshot({path:join(evidence,'definition-autocomplete-'+width+'.png')});
+  await finder.press('ArrowDown');
+  const first=await finder.getAttribute('aria-activedescendant');
+  assert(!!first&&await page.locator('#'+first).getAttribute('aria-selected')==='true','ArrowDown did not select an option');
+  await finder.press('ArrowDown');assert(await finder.getAttribute('aria-activedescendant')!==first,'ArrowDown did not move');
+  await finder.press('ArrowUp');assert(await finder.getAttribute('aria-activedescendant')===first,'ArrowUp did not return');
+  assert(await suggestions.evaluate(node=>{const b=node.getBoundingClientRect();return b.left>=0&&b.right<=innerWidth;}),'Suggestions overflow viewport');
+  await finder.press('Enter');await page.locator('#ontology-detail h3').filter({hasText:/^Module$/}).waitFor();
+  await page.waitForFunction(()=>document.activeElement?.id==='ontology-detail');
+  assert(new URLSearchParams(new URL(page.url()).hash.slice(1)).get('node')===JSON.stringify(['umf','module']),'Autocomplete selected wrong identity');
+  const nextFinder=page.getByRole('combobox',{name:'Find a definition'});
+  await nextFinder.fill('scalarType');await page.getByRole('option').first().click();
+  await page.locator('#ontology-detail h3').filter({hasText:/^scalarType$/}).waitFor();
+  await page.goBack();await page.locator('#ontology-detail h3').filter({hasText:/^Module$/}).waitFor();
+  const currentFinder=page.getByRole('combobox',{name:'Find a definition'});
+  await currentFinder.fill('module');await currentFinder.press('Escape');assert(await currentFinder.getAttribute('aria-expanded')==='false','Escape did not dismiss');
+  assert(await currentFinder.inputValue()==='module','Escape discarded query');
+  await currentFinder.press('ArrowUp');assert(await currentFinder.getAttribute('aria-expanded')==='true','ArrowUp did not reopen');
+  await currentFinder.press('Tab');assert(await currentFinder.getAttribute('aria-expanded')==='false','Tab did not dismiss');
+  await currentFinder.fill('module');await page.locator('header').click({position:{x:2,y:2}});assert(await currentFinder.getAttribute('aria-expanded')==='false','Blur did not dismiss');
+  await currentFinder.fill('no-such-definition-xyz');assert(await page.getByRole('status').filter({hasText:'No matching definitions.'}).isVisible(),'No-result message hidden');
+  await currentFinder.press('Enter');assert(await page.locator('#ontology-detail h3').innerText()==='Module','No-result Enter navigated');
+  await currentFinder.fill('');assert(await currentFinder.getAttribute('aria-expanded')==='false','Clearing did not close');
+  await currentFinder.fill('   ');assert(await currentFinder.getAttribute('aria-expanded')==='false','Whitespace opened suggestions');
+  checks.push(`Definition autocomplete at ${width}px: immediate ranked results, keyboard/pointer navigation, focus, Back, dismissal and empty states`);
+ }
  // The default is the whole model, fitted into a substantial graph viewport.
  for(const [width,height] of [[1440,900],[1280,800],[798,900],[390,844]] as const){
   await page.setViewportSize({width,height});await ontology();
