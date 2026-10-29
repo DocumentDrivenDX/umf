@@ -398,6 +398,14 @@ Sol accepted the exact change and actual receipts. The initial missing Linux
 dependency and stale-expectation failures remain retained. No native or macOS
 qualification follows from this check.
 
+The [local offline cache checkpoint](evidence/schema-migration-design-review/g03-local-offline-cache-001/README.md)
+records the separately acquired locked registry input and independent acceptance:
+115 crate checksums, 115 sparse-index witnesses, exact archive inventory, bounded
+captures and owned cleanup. Earlier failed acquisitions and source bookkeeping
+findings remain retained. The cache qualifies only an input to the pending offline
+table and Truss lanes. Exactly five user-approved automatic Weft workflows are
+disabled; the remaining workflow settings are unchanged.
+
 Next: complete inherited installed/CLI/native/WASM/browser checks,
 independent review, normal merge, immutable successor publication and fresh public
 proof. GitHub Actions and macOS CI remain off. No G03 completion, new macOS
