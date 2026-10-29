@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import shutil
@@ -18,7 +19,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--corpus", required=True, type=Path)
 parser.add_argument("--report", required=True, type=Path)
 args = parser.parse_args()
-corpus = json.loads(args.corpus.read_text())
+corpus_bytes = args.corpus.read_bytes()
+corpus = json.loads(corpus_bytes)
 discovery_checked = 0
 refused = 0
 discovery_refused = 0
@@ -103,6 +105,7 @@ with patch.object(subprocess, "Popen", side_effect=AssertionError("external proc
 
 report = {
     "profile": corpus["profile"],
+    "corpusSha256": hashlib.sha256(corpus_bytes).hexdigest(),
     "discoveryParityCases": discovery_checked,
     "compilationParityCases": compilation_parity,
     "verificationParityCases": verification_parity,

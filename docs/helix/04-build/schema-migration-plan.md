@@ -411,6 +411,17 @@ independent review, normal merge, immutable successor publication and fresh publ
 proof. GitHub Actions and macOS CI remain off. No G03 completion, new macOS
 feature support, managed adoption or Praxis change follows from these checkpoints.
 
+Source-only candidate preparation now sets the UMF SDK package metadata to
+0.5.8 and adds a narrow installed-public-entry browser parity adapter for the
+same G03 discovery/plan corpus used by the embedded Python probe. Neither the
+new SDK archive nor that browser adapter has been built or executed. This does
+not reserve a public version, tag or release; final producer/merge identities,
+asset hashes, downstream table/Truss gates, independent reviews and fresh public
+proof remain pending. The existing SDK 0.5.7 tag and three assets remain
+unchanged. The source-only adapter is [g03-sdk-browser.ts](../../../scripts/g03-sdk-browser.ts);
+see the [0.5.8 candidate notes](../05-deploy/sdk-release-notes-0.5.8.md) for
+its limits and exact selected cohort.
+
 #### Historical pre-reconciliation G02 integration checkpoint — Core 0.10.1
 
 This is a preserved pre-reconciliation checkpoint for the earlier Core 0.10.1
