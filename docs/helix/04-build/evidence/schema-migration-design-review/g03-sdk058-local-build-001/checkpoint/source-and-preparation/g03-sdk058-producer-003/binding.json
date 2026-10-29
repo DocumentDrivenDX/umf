@@ -1,0 +1,111 @@
+{
+  "budgets": {
+    "aggregateSeconds": 1500,
+    "guestWorkSeconds": 1380,
+    "hostFinalizationReserveSeconds": 120,
+    "inclusivePublicMetadataBytes": 16777216,
+    "logBytes": 1048576,
+    "phaseSeconds": {
+      "bun-install-frozen": 300,
+      "cargo-fetch-locked": 600,
+      "sdk-build": 600,
+      "sdk-test-install": 180
+    },
+    "selectedFileBytes": 67108864,
+    "selectedFileCount": 8192,
+    "selectedSoftwareBytes": 268435456,
+    "terminationGraceSeconds": 10
+  },
+  "executionAllowed": false,
+  "held001": {
+    "directory": "/private/tmp/g03-umf-sdk058-local-producer-001",
+    "manifestSha256": "94dcbd3c289046fb70e56e94f43feeab344ea2dc2cbe27a2e12caae9c193e8a2"
+  },
+  "predecessors": {
+    "partial002Directories": [
+      "/private/tmp/g03-umf-sdk058-local-producer-002",
+      "/private/tmp/g03-sdk058-producer-002"
+    ],
+    "preserved": true
+  },
+  "producerCommit": "855f6c48649496fc60b3303798795d38f",
+  "producerTree": "53f2bfffbc0c5780e79d76d8fd3d202239d088b2",
+  "retention": {
+    "archive": "sdk-distribution/umf-sdk.tgz",
+    "archiveManifest": "sdk-distribution/manifest.json",
+    "custodyArchivePath": "/tmp/umf-source/.cache/sdk-distribution/umf-sdk.tgz",
+    "exclude": "unused consumer dependency tree including node_modules/.bin",
+    "futureReadOnlyMounts": [
+      {
+        "container": "/tmp/umf-source/.cache/sdk-distribution",
+        "host": "/out/sdk-distribution"
+      },
+      {
+        "container": "/out/sdk-install",
+        "host": "/out/sdk-install"
+      }
+    ],
+    "installedConsumer": "sdk-install/node_modules/@umf/core plus sdk-install/g03-sdk-install-custody.json"
+  },
+  "runtime": {
+    "baseImageId": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+    "bun": "1.4.3",
+    "cargo": "1.90.0",
+    "imageId": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+    "node": "26.12.1",
+    "platform": "linux/amd64",
+    "python": "3.11.17",
+    "rustc": "1.90.0"
+  },
+  "schema": "umf.local-sdk058-producer-binding/1",
+  "sourceFiles": [
+    {
+      "path": "README.md",
+      "sha256": "3b3a8a3430bc98e0b77e3f9887ebc5addd5a5c513b76da8b1bace8ec8d234aa4",
+      "sizeBytes": 2784
+    },
+    {
+      "path": "capture-bounded-log.py",
+      "sha256": "f3520d808d9d748be68a0bfced22e7970844c5916af65dbe7fdf519b7a8ffda5",
+      "sizeBytes": 1057
+    },
+    {
+      "path": "close-sdk-output.py",
+      "sha256": "96a3c06924515e82cce5af0cbe60b5eb90e8a476d367bf3e728de6432353f410",
+      "sizeBytes": 13351
+    },
+    {
+      "path": "inside-sdk-producer.py",
+      "sha256": "019aab9e19a237875435f890a858bb82d33b7915350208e45870bb17cb3b4974",
+      "sizeBytes": 26319
+    },
+    {
+      "path": "manifest.json",
+      "sha256": "c0db8e546ae01ce6e5918352c026572fb376a03dd5b625dbf14d8dd0716d5909",
+      "sizeBytes": 2216
+    },
+    {
+      "path": "run-local-sdk-supervisor.py",
+      "sha256": "395f724501bfca7ee057211933734371febe43d491e6172f9664a89f7ba3fc70",
+      "sizeBytes": 6552
+    },
+    {
+      "path": "run-local-sdk.sh",
+      "sha256": "11a9a42ed2c7272c9bc05db0c6e484db55a4da018eaff140e6cf48015d5a3c00",
+      "sizeBytes": 304
+    },
+    {
+      "path": "write-launch-failure.py",
+      "sha256": "6bd517bc474c081dfb1fc179cba14703d6a3c339427e4fa75b6f94eaf83073fb",
+      "sizeBytes": 1081
+    }
+  ],
+  "sourceManifestSha256": "c0db8e546ae01ce6e5918352c026572fb376a03dd5b625dbf14d8dd0716d5909",
+  "sourceVolume": {
+    "bundleSha256": "72112c9d319eedda9774ff114f737366f61f20afb105c3527ebb7933fba264ef",
+    "name": "umf-sdk058-source-855f6c486-001",
+    "prepReceipt": "/private/tmp/g03-sdk058-source-volume-prep-003/result.json",
+    "prepReceiptSha256": "dbeeffaf77a8e484deb65c4dfc9fca3ef6054cc673b40061d156d6570fe620d2"
+  },
+  "status": "SOURCE_FROZEN_AWAITING_SOL_REVIEW"
+}

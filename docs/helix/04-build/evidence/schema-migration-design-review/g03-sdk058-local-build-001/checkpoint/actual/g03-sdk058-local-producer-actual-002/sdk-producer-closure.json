@@ -1,0 +1,89 @@
+{
+  "dockerExitCode": 0,
+  "executionId": "local-sdk-20261029T144751Z-41744d3d-cc06-453b-9f76-5e8b5d3c6b56-attempt1",
+  "failureCode": null,
+  "guestStatus": "passed",
+  "ownedContainerCleanup": {
+    "verifiedAbsent": true
+  },
+  "publicEvidenceBytesBeforeClosure": 920949,
+  "publicEvidenceFiles": [
+    {
+      "device": 16777231,
+      "inode": 277951423,
+      "mode": 420,
+      "path": "bun-install-frozen.log",
+      "sha256": "f1b77f0827067da71ed082b30ce6f7b0c44262d31ec9bc7a15bb6d0b0d433c57",
+      "sizeBytes": 1056,
+      "type": "regular"
+    },
+    {
+      "device": 16777231,
+      "inode": 277951428,
+      "mode": 420,
+      "path": "cargo-fetch-locked.log",
+      "sha256": "ba73797013945591849574f0a608f683047a39cf9b646be84abe2ba669ea969e",
+      "sizeBytes": 4163,
+      "type": "regular"
+    },
+    {
+      "device": 16777231,
+      "inode": 277951434,
+      "mode": 420,
+      "path": "sdk-build.log",
+      "sha256": "cd368a0e7793e4940664a5d68702c68bb7e38cf3cc771d65a866a99a0b62fd60",
+      "sizeBytes": 475,
+      "type": "regular"
+    },
+    {
+      "device": 16777231,
+      "inode": 277951590,
+      "mode": 420,
+      "path": "sdk-test-install.log",
+      "sha256": "40d45b86e7a97fd5b668fc84dcdc3dd959dd9d39094de0a883bd3732f3f1e92c",
+      "sizeBytes": 530,
+      "type": "regular"
+    },
+    {
+      "device": 16777231,
+      "inode": 277951589,
+      "mode": 420,
+      "path": "sdk-distribution/manifest.json",
+      "sha256": "0683f83ffef546c7c48d0b267528fafe83c16006a2cef5fdb299260ebb444309",
+      "sizeBytes": 229540,
+      "type": "regular"
+    },
+    {
+      "device": 16777231,
+      "inode": 277973840,
+      "mode": 420,
+      "path": "sdk-producer-receipt.json",
+      "sha256": "1ddd2b37623ec1daaffbb592200adafc9f8bb27522c65f1b5584f0a9aec945c4",
+      "sizeBytes": 685185,
+      "type": "regular"
+    }
+  ],
+  "schema": "umf.local-linux-sdk-producer-closure/1",
+  "selectedSoftware": {
+    "installedSdkPackage": {
+      "directoryCount": 260,
+      "fileCount": 1800,
+      "path": "sdk-install",
+      "sizeBytes": 84803292,
+      "status": "verified-against-guest-inventory",
+      "treeSha256": "7227738ae23966239b67d3e9df72f848c101761719ef4b39477fe86de6ef519c"
+    },
+    "sdkArchive": {
+      "device": 16777231,
+      "inode": 277951588,
+      "mode": 420,
+      "path": "sdk-distribution/umf-sdk.tgz",
+      "sha256": "2aaf24741aee1c135fade5b7631db90d710e6211977fb9ca7fcc080ea7fdf58d",
+      "sizeBytes": 30834843,
+      "type": "regular"
+    }
+  },
+  "sourceCommit": "855f6c48649496fc60b3303798790d0ddb55d38f",
+  "sourceTree": "53f2bfffbc0c5780e79d76d8fd3d202239d088b2",
+  "status": "passed"
+}

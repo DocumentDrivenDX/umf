@@ -1,0 +1,11 @@
+# SDK build checkpoint proposal001 copy/claim audit
+
+ACCEPTED for root's evidence-only adoption at docs/helix/04-build/evidence/schema-migration-design-review/g03-sdk058-local-build-001. No product execution or repository write by Sol; source/data/hash/copy reads only.
+
+Physical custody SHA256e3d4b5ca9ef881c0397dddaeea183567ac21169a1424a22f1fcc1866a2eee599 matches root. Independent complete roster/size/hash check closes75 payload files/1,268,177 bytes, plus separate14,709-byte custody file. All73 copied payloads other than newly authored README/exclusions physically byte-match their original/private/tmp sources, including rejected003/accepted004005, preparation failures/success, actual001 failure/002 pass, logs/receipts/reviews/admissions and tool inputs. No extra/missing payload files or file symlinks were observed.
+
+README claims match accepted scoped producer evidence: exact P/tree, four original commands and139 installed consumer once,195.062s guest duration, archive/tree custody independently checked.8GiB transient source class remains separate from public/raw/selected limits. Exclusions correctly identify external SDK archive, installed package payload, ARM Bun software/zip, source-transfer bundle and portable JS tree; full installed/dependency inventory metadata is retained rather than claiming those software bytes are copied. Source003 stale announced preimages are explicitly unavailable, unretained and not reconstructed; physically reviewed003 rejection is distinct from004/005 and actual attempts.
+
+Tool startup/export evidence is explicitly qualified as inputs, not product/browser parity. Candidate0.5.8 is not represented as publication/release; paired Python/browser G03, public-download proof, Actions/Mac product runtime, native production/Praxis remain unclaimed. Named network-enabled build and later network-denied qualification are distinguished. The directory is a metadata checkpoint, not a self-contained runnable SDK payload or completed G03 packet.
+
+Adopt exact reviewed bytes and custody, then bind this review through the surrounding existing governed execution evidence. If README changes from private-proposal wording to adopted-checkpoint wording, regenerate custody before final physical closure. No new product tests, binary copying, preimage reconstruction or process expansion is needed.
