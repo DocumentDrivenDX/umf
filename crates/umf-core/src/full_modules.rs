@@ -97,6 +97,8 @@ pub mod parquet_wire_encode;
 pub mod parquet_pages;
 pub mod parquet_levels;
 pub mod parquet_physical;
+pub mod parquet_rows;
+pub mod parquet_values;
 pub mod parquet_record_classifier;
 pub mod parquet_record_recovery;
 pub mod parquet_record_type_candidate;
