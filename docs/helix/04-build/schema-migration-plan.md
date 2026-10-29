@@ -412,22 +412,7 @@ now have independent actual acceptance for their selected Linux native/WASM/brow
 boundaries. Earlier failed attempts remain separate evidence. Weft 0.4.56 release metadata merged normally through [PR #46](https://github.com/DocumentDrivenDX/weft/pull/46);
 that merge does not establish real-packet assembly or publication.
 
-The [SDK 0.5.8 local build checkpoint](evidence/schema-migration-design-review/g03-sdk058-local-build-001/README.md) and
-[paired parity checkpoint](evidence/schema-migration-design-review/g03-sdk058-local-parity-001/README.md)
-record the accepted standard Linux producer and its 139-case installed-consumer
-check. The paired G03 embedded-Python and installed-public-entry Chromium parity
-actual passed in retained run 019 (112.565 seconds) and its independent actual
-review accepted the selected local profile. The browser adapter uses the same G03 discovery/plan
-corpus as the embedded Python probe. Next: real release assembly and review, the remaining normal SDK merge,
-immutable successor publication, and fresh public proof. The Weft release metadata has since merged normally through PR #46; this
-local merge does not establish SDK packet assembly or publication. No public 0.5.8
-release is claimed; the existing SDK 0.5.7 tag and three assets remain unchanged.
-The adapter is [g03-sdk-browser.ts](../../../scripts/g03-sdk-browser.ts); see the
-[0.5.8 candidate notes](../05-deploy/sdk-release-notes-0.5.8.md) for the selected cohort.
-GitHub Actions and macOS CI remain off. macOS evidence remains build/static-only;
-no macOS runtime/native/browser support is established. No G03 completion, managed
-adoption or Praxis change follows from these checkpoints.
-
+The [SDK 0.5.8 local build checkpoint](evidence/schema-migration-design-review/g03-sdk058-local-build-001/README.md) and [paired parity checkpoint](evidence/schema-migration-design-review/g03-sdk058-local-parity-001/README.md) record the independently accepted standard Linux build, its 139-case installed consumer, and the fresh final18 Python and installed-SDK Chromium run019 (112.565 seconds). The separately reviewed Weft ordinary-operation module 0.2 source admission covers matching non-null missing-only logical/native defaults for six scalar carrier families; ordinary UMF declarations remain 0.1, and G03 migration operation versions are distinct. The selected native subset combines original attempt007 observations, whose receipt remains `FAIL_OR_UNKNOWN`, with reanalysis006's accepted 14 predicates and eight pure mutation controls; reanalysis ran no database. Table012 and Truss011 retain separate accepted boundaries. Public SDK release identity, tag/API readbacks, public asset IDs, and fresh public-download proof are not established by these local checkpoints. The Weft M7 source-metadata change records source correspondence; it does not establish wheel assembly or publication. The existing SDK 0.5.7 tag and assets remain unchanged. [UMF SDK 0.5.8 notes](../05-deploy/sdk-release-notes-0.5.8.md) describe the selected user-facing capability and evidence. GitHub Actions and macOS CI remain off; macOS evidence is build/static-only, with no macOS runtime/native/browser qualification. These checkpoints do not establish full G03 completion, managed adoption, or Praxis changes.
 #### Historical pre-reconciliation G02 integration checkpoint — Core 0.10.1
 
 This is a preserved pre-reconciliation checkpoint for the earlier Core 0.10.1
