@@ -1,0 +1,468 @@
+   Compiling umf-core v0.1.0 (/private/tmp/umf-avro-cardinality/crates/umf-core)
+warning: function `remove_member` is never used
+   --> crates/umf-core/src/avro_document.rs:803:4
+    |
+803 | fn remove_member(
+    |    ^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: function `is_timestamp` is never used
+   --> crates/umf-core/src/avro_fields.rs:679:4
+    |
+679 | fn is_timestamp(value: &str) -> bool {
+    |    ^^^^^^^^^^^^
+
+warning: variant `NativeSpreadFailureUnresolved` is never constructed
+   --> crates/umf-core/src/host_json.rs:707:5
+    |
+702 | pub(crate) enum HostSemanticIterableOutcome {
+    |                 --------------------------- variant in this enum
+...
+707 |     NativeSpreadFailureUnresolved,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `HostSemanticIterableOutcome` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: function `materialize_semantic_iterable_values` is never used
+    --> crates/umf-core/src/host_json.rs:1112:15
+     |
+1112 | pub(crate) fn materialize_semantic_iterable_values(
+     |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: struct `HostEmitDiagnosticFields` is never constructed
+  --> crates/umf-core/src/host_diagnostic.rs:19:19
+   |
+19 | pub(crate) struct HostEmitDiagnosticFields {
+   |                   ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: enum `SelectionDiagnosticSeverity` is never used
+  --> crates/umf-core/src/host_diagnostic.rs:27:17
+   |
+27 | pub(crate) enum SelectionDiagnosticSeverity {
+   |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: struct `OrderedSelectionDiagnostic` is never constructed
+  --> crates/umf-core/src/host_diagnostic.rs:33:19
+   |
+33 | pub(crate) struct OrderedSelectionDiagnostic {
+   |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `diagnostics_have_error` is never used
+  --> crates/umf-core/src/host_diagnostic.rs:40:15
+   |
+40 | pub(crate) fn diagnostics_have_error(
+   |               ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `malformed_diagnostic` is never used
+   --> crates/umf-core/src/host_diagnostic.rs:100:4
+    |
+100 | fn malformed_diagnostic() -> EngineError {
+    |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `get_property` is never used
+   --> crates/umf-core/src/host_diagnostic.rs:134:4
+    |
+134 | fn get_property(
+    |    ^^^^^^^^^^^^
+
+warning: function `as_severity_string` is never used
+   --> crates/umf-core/src/host_diagnostic.rs:157:4
+    |
+157 | fn as_severity_string(
+    |    ^^^^^^^^^^^^^^^^^^
+
+warning: function `require_string` is never used
+   --> crates/umf-core/src/host_diagnostic.rs:171:4
+    |
+171 | fn require_string(value: HostOpaqueValue) -> Result<(), EngineError> {
+    |    ^^^^^^^^^^^^^^
+
+warning: function `validate_host_emit_diagnostic` is never used
+   --> crates/umf-core/src/host_diagnostic.rs:183:15
+    |
+183 | pub(crate) fn validate_host_emit_diagnostic(
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `format_decimal` is never used
+   --> crates/umf-core/src/literal.rs:920:4
+    |
+920 | fn format_decimal(value: &BigInt, ctx: &mut Context<'_>) -> Result<String, LiteralFault> {
+    |    ^^^^^^^^^^^^^^
+
+warning: variants `Fixed64`, `Fixed32`, `Group`, `UInt32`, `SInt32`, and `SInt64` are never constructed
+  --> crates/umf-core/src/protobuf_descriptor.rs:19:5
+   |
+13 | enum WireKind {
+   |      -------- variants in this enum
+...
+19 |     Fixed64,
+   |     ^^^^^^^
+20 |     Fixed32,
+   |     ^^^^^^^
+...
+23 |     Group,
+   |     ^^^^^
+...
+26 |     UInt32,
+   |     ^^^^^^
+...
+30 |     SInt32,
+   |     ^^^^^^
+31 |     SInt64,
+   |     ^^^^^^
+   |
+   = note: `WireKind` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: field `default_value` is never read
+  --> crates/umf-core/src/protobuf_descriptor.rs:44:5
+   |
+39 | struct FieldSpec {
+   |        --------- field in this struct
+...
+44 |     default_value: Option<&'static str>,
+   |     ^^^^^^^^^^^^^
+   |
+   = note: `FieldSpec` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: constant `DESCRIPTOR_PROTO_SHA256` is never used
+ --> crates/umf-core/src/protobuf_descriptor_schema.rs:7:18
+  |
+7 | pub(super) const DESCRIPTOR_PROTO_SHA256: &str = "c96db5406336ebcc82523c1dfb122721986a1f43c4aaed45a4a4ad6996efacc2";
+  |                  ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `BUF_PACKAGE_CLOSURE_SHA256` is never used
+ --> crates/umf-core/src/protobuf_descriptor_schema.rs:8:18
+  |
+8 | pub(super) const BUF_PACKAGE_CLOSURE_SHA256: &str = "f8af62dda87923b9d6cf785bcd18843fd38aaa87ddac1922990a5b37a7f5b943";
+  |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: variant `Unsupported` is never constructed
+  --> crates/umf-core/src/registry.rs:70:5
+   |
+65 | pub(crate) enum HostRegistrationStage {
+   |                 --------------------- variant in this enum
+...
+70 |     Unsupported,
+   |     ^^^^^^^^^^^
+   |
+   = note: `HostRegistrationStage` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: function `opaque_lookup_error` is never used
+   --> crates/umf-core/src/registry.rs:159:4
+    |
+159 | fn opaque_lookup_error() -> EngineError {
+    |    ^^^^^^^^^^^^^^^^^^^
+
+warning: function `require_borrowed` is never used
+   --> crates/umf-core/src/registry.rs:167:15
+    |
+167 | pub(crate) fn require_borrowed<'a>(
+    |               ^^^^^^^^^^^^^^^^
+
+warning: function `security_path` is never used
+  --> crates/umf-core/src/security_logic.rs:52:4
+   |
+52 | fn security_path(base: &str, segment: &str) -> String {
+   |    ^^^^^^^^^^^^^
+
+warning: function `check_security_expression_shape_and_bounds` is never used
+   --> crates/umf-core/src/security_logic.rs:720:15
+    |
+720 | pub(crate) fn check_security_expression_shape_and_bounds(
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `select_core_elements_admitted_with_host_refusal` is never used
+   --> crates/umf-core/src/selection.rs:636:15
+    |
+636 | pub(crate) fn select_core_elements_admitted_with_host_refusal(
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: method `is_valid` is never used
+   --> crates/umf-core/src/selection_diagnostics.rs:178:19
+    |
+ 45 | impl SelectionDiagnosticMaterialization {
+    | --------------------------------------- method in this implementation
+...
+178 |     pub(crate) fn is_valid(
+    |                   ^^^^^^^^
+
+warning: `umf-core` (lib) generated 25 warnings
+   Compiling umf-codegen v0.1.0 (/private/tmp/umf-avro-cardinality/crates/umf-codegen)
+warning: function `index` is never used
+   --> crates/umf-codegen/src/access/mod.rs:104:4
+    |
+104 | fn index<'a>(value: &'a Value, i: usize) -> &'a Value {
+    |    ^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: function `ref_matches` is never used
+   --> crates/umf-codegen/src/access/mod.rs:109:4
+    |
+109 | fn ref_matches(value: &Value, module: &str, element: &str) -> bool {
+    |    ^^^^^^^^^^^
+
+warning: function `string_array` is never used
+   --> crates/umf-codegen/src/access/mod.rs:127:4
+    |
+127 | fn string_array(value: &Value) -> Option<Vec<String>> {
+    |    ^^^^^^^^^^^^
+
+warning: function `is_version` is never used
+   --> crates/umf-codegen/src/access/mod.rs:141:4
+    |
+141 | fn is_version(value: &str) -> bool {
+    |    ^^^^^^^^^^
+
+warning: function `reference` is never used
+  --> crates/umf-codegen/src/access/inspection.rs:95:4
+   |
+95 | fn reference(v: &Value) -> Option<(Utf16, Utf16)> {
+   |    ^^^^^^^^^
+
+warning: function `ref_eq` is never used
+   --> crates/umf-codegen/src/access/inspection.rs:116:4
+    |
+116 | fn ref_eq(v: &Value, module: &Utf16, element: &Utf16) -> bool {
+    |    ^^^^^^
+
+warning: function `pointer_escape` is never used
+   --> crates/umf-codegen/src/access/inspection.rs:119:4
+    |
+119 | fn pointer_escape(value: &Utf16) -> Utf16 {
+    |    ^^^^^^^^^^^^^^
+
+warning: function `path` is never used
+   --> crates/umf-codegen/src/access/inspection.rs:181:4
+    |
+181 | fn path(base: &str, segment: &Utf16) -> Utf16 {
+    |    ^^^^
+
+warning: function `find_module` is never used
+   --> crates/umf-codegen/src/access/inspection.rs:273:4
+    |
+273 | fn find_module<'a>(doc: &'a Value, id: &Utf16) -> Option<(usize, &'a Value)> {
+    |    ^^^^^^^^^^^
+
+warning: function `find_element` is never used
+   --> crates/umf-codegen/src/access/inspection.rs:279:4
+    |
+279 | fn find_element<'a>(
+    |    ^^^^^^^^^^^^
+
+warning: function `value_ref` is never used
+   --> crates/umf-codegen/src/access/inspection.rs:429:4
+    |
+429 | fn value_ref(v: &Value) -> Option<(Utf16, Utf16)> {
+    |    ^^^^^^^^^
+
+warning: function `binding_pair` is never used
+   --> crates/umf-codegen/src/access/inspection.rs:435:4
+    |
+435 | fn binding_pair(v: &Value) -> Option<(Utf16, Utf16)> {
+    |    ^^^^^^^^^^^^
+
+warning: function `keys_for_record` is never used
+   --> crates/umf-codegen/src/access/inspection.rs:464:4
+    |
+464 | fn keys_for_record<'a>(doc: &'a Value, module: &Utf16, element: &Utf16) -> &'a [Value] {
+    |    ^^^^^^^^^^^^^^^
+
+warning: function `item_ref` is never used
+   --> crates/umf-codegen/src/access/inspection.rs:470:4
+    |
+470 | fn item_ref(doc: &Value, module: &Utf16, element: &Utf16) -> Option<(Utf16, Utf16)> {
+    |    ^^^^^^^^
+
+warning: function `resolve_dependency_field` is never used
+   --> crates/umf-codegen/src/access/inspection.rs:596:15
+    |
+596 | pub(super) fn resolve_dependency_field(
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `pointer_escape` is never used
+   --> crates/umf-codegen/src/actions/mod.rs:107:4
+    |
+107 | fn pointer_escape(value: &str) -> String {
+    |    ^^^^^^^^^^^^^^
+
+warning: associated functions `from_inspection` and `blocked_diagnostics` are never used
+   --> crates/umf-codegen/src/deployment/mod.rs:357:8
+    |
+330 | impl Refusal {
+    | ------------ associated functions in this implementation
+...
+357 |     fn from_inspection(inspection: &Value) -> Self {
+    |        ^^^^^^^^^^^^^^^
+...
+360 |     fn blocked_diagnostics(diagnostics: Vec<umf_core::Diagnostic>) -> Self {
+    |        ^^^^^^^^^^^^^^^^^^^
+
+warning: function `blocked_diagnostics` is never used
+   --> crates/umf-codegen/src/deployment/mod.rs:382:4
+    |
+382 | fn blocked_diagnostics(diagnostics: Vec<umf_core::Diagnostic>) -> Value {
+    |    ^^^^^^^^^^^^^^^^^^^
+
+warning: multiple fields are never read
+   --> crates/umf-codegen/src/generation/client.rs:486:5
+    |
+483 | struct RelationInfo {
+    |        ------------ fields in this struct
+...
+486 |     owner_module: String,
+    |     ^^^^^^^^^^^^
+487 |     owner_element: String,
+    |     ^^^^^^^^^^^^^
+488 |     target_module: String,
+    |     ^^^^^^^^^^^^^
+489 |     target_element: String,
+    |     ^^^^^^^^^^^^^^
+...
+494 |     key: String,
+    |     ^^^
+495 |     pointer: String,
+    |     ^^^^^^^
+496 |     logical_name: Option<Value>,
+    |     ^^^^^^^^^^^^
+497 |     to_one: bool,
+    |     ^^^^^^
+498 |     optional: bool,
+    |     ^^^^^^^^
+    |
+    = note: `RelationInfo` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: field `declaration` is never read
+   --> crates/umf-codegen/src/generation/client.rs:505:5
+    |
+503 | struct TableCommand {
+    |        ------------ field in this struct
+504 |     info: Value,
+505 |     declaration: Value,
+    |     ^^^^^^^^^^^
+    |
+    = note: `TableCommand` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: function `number_text` is never used
+   --> crates/umf-codegen/src/generation/client.rs:947:4
+    |
+947 | fn number_text(value: &Value) -> String {
+    |    ^^^^^^^^^^^
+
+warning: function `utf16_cmp` is never used
+   --> crates/umf-codegen/src/generation/python.rs:136:15
+    |
+136 | pub(crate) fn utf16_cmp(a: &Utf16, b: &Utf16) -> std::cmp::Ordering {
+    |               ^^^^^^^^^
+
+warning: function `sha256_hex` is never used
+   --> crates/umf-codegen/src/generation/python.rs:140:15
+    |
+140 | pub(crate) fn sha256_hex(bytes: &[u8]) -> String {
+    |               ^^^^^^^^^^
+
+warning: function `source_bytes` is never used
+   --> crates/umf-codegen/src/generation/python.rs:146:15
+    |
+146 | pub(crate) fn source_bytes(text: &Utf16) -> Result<Vec<u8>, EngineError> {
+    |               ^^^^^^^^^^^^
+
+warning: function `text` is never used
+  --> crates/umf-codegen/src/generation/value.rs:10:15
+   |
+10 | pub(crate) fn text(value: &Value) -> Option<String> {
+   |               ^^^^
+
+warning: function `text_at` is never used
+  --> crates/umf-codegen/src/generation/value.rs:17:15
+   |
+17 | pub(crate) fn text_at(value: &Value, key: &str) -> Option<String> {
+   |               ^^^^^^^
+
+warning: function `boolean` is never used
+  --> crates/umf-codegen/src/generation/value.rs:29:15
+   |
+29 | pub(crate) fn boolean(value: &Value) -> Option<bool> {
+   |               ^^^^^^^
+
+warning: function `number` is never used
+  --> crates/umf-codegen/src/generation/value.rs:36:15
+   |
+36 | pub(crate) fn number(value: &Value) -> Option<f64> {
+   |               ^^^^^^
+
+warning: function `string` is never used
+  --> crates/umf-codegen/src/generation/value.rs:43:15
+   |
+43 | pub(crate) fn string(value: impl AsRef<str>) -> Value {
+   |               ^^^^^^
+
+warning: function `bool` is never used
+  --> crates/umf-codegen/src/generation/value.rs:47:15
+   |
+47 | pub(crate) fn bool(value: bool) -> Value {
+   |               ^^^^
+
+warning: function `member_path` is never used
+  --> crates/umf-codegen/src/generation/value.rs:68:15
+   |
+68 | pub(crate) fn member_path(index: usize, member: &str) -> Utf16 {
+   |               ^^^^^^^^^^^
+
+warning: function `err` is never used
+  --> crates/umf-codegen/src/generation/value.rs:72:15
+   |
+72 | pub(crate) fn err(code: &str, path: impl Into<Utf16>, message: &str) -> EngineError {
+   |               ^^^
+
+warning: function `precharge` is never used
+  --> crates/umf-codegen/src/generation/value.rs:78:15
+   |
+78 | pub(crate) fn precharge(
+   |               ^^^^^^^^^
+
+warning: function `copy_field` is never used
+   --> crates/umf-codegen/src/migration/mod.rs:253:4
+    |
+253 | fn copy_field(value: &Value, key: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+    |    ^^^^^^^^^^
+
+warning: function `item_by_id` is never used
+   --> crates/umf-codegen/src/migration/mod.rs:385:4
+    |
+385 | fn item_by_id<'a>(items: &'a [Value], id: &Value) -> Option<&'a Value> {
+    |    ^^^^^^^^^^
+
+warning: function `validation_selected` is never used
+   --> crates/umf-codegen/src/migration/mod.rs:806:4
+    |
+806 | fn validation_selected(options: Option<&Value>, table: &str, constraint: &str, kind: &str) -> bool {
+    |    ^^^^^^^^^^^^^^^^^^^
+
+warning: `umf-codegen` (lib) generated 36 warnings
+   Compiling umf-tagged-wire v0.1.0 (/private/tmp/umf-avro-cardinality/crates/umf-tagged-wire)
+   Compiling umf-core-wire v0.1.0 (/private/tmp/umf-avro-cardinality/crates/umf-core-wire)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 38s
+     Running tests/avro_cardinality_corpus.rs (/private/tmp/umf-avro-cardinality-target/debug/deps/avro_cardinality_corpus-56af1ee1bdbb2cb6)
+
+running 1 test
+test complete_frozen_cardinality_corpus_uses_production_dispatch_once_per_process ... FAILED
+
+failures:
+
+---- complete_frozen_cardinality_corpus_uses_production_dispatch_once_per_process stdout ----
+
+thread 'complete_frozen_cardinality_corpus_uses_production_dispatch_once_per_process' panicked at crates/umf-core-wire/tests/avro_cardinality_corpus.rs:88:9:
+assertion `left == right` failed: empty-array/present-non-null-schema/strict
+  left: Object([(Utf16("operation"), String(Utf16("classify-avro-cardinality"))), (Utf16("version"), String(Utf16("1.0.0"))), (Utf16("status"), String(Utf16("classified"))), (Utf16("source"), Object([(Utf16("umf"), String(Utf16("0.10.0"))), (Utf16("id"), String(Utf16("availability"))), (Utf16("vocabularies"), Object([(Utf16("umf.avro"), Object([(Utf16("version"), String(Utf16("0.1.0")))]))])), (Utf16("modules"), Array([Object([(Utf16("id"), String(Utf16("schema"))), (Utf16("namespace"), String(Utf16(""))), (Utf16("elements"), Array([Object([(Utf16("id"), String(Utf16("schema"))), (Utf16("extensions"), Object([(Utf16("umf.avro"), Object([(Utf16("version"), String(Utf16("1.12.0"))), (Utf16("root"), Object([(Utf16("kind"), String(Utf16("object"))), (Utf16("members"), Object([(Utf16("type"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("record")))])), (Utf16("name"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("Example")))])), (Utf16("namespace"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("cardinality")))])), (Utf16("fields"), Object([(Utf16("kind"), String(Utf16("array"))), (Utf16("items"), Array([Object([(Utf16("kind"), String(Utf16("object"))), (Utf16("members"), Object([(Utf16("name"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("value")))])), (Utf16("type"), Object([(Utf16("kind"), String(Utf16("object"))), (Utf16("members"), Object([(Utf16("type"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("array")))])), (Utf16("items"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("long")))]))]))]))]))])]))])), (Utf16("futureMeaning"), Object([(Utf16("kind"), String(Utf16("object"))), (Utf16("members"), Object([(Utf16("token"), Object([(Utf16("kind"), String(Utf16("number"))), (Utf16("value"), String(Utf16("9007199254740993")))]))]))]))]))])), (Utf16("dependencies"), Array([]))]))]))])]))]), Object([(Utf16("id"), String(Utf16("avro.fields"))), (Utf16("namespace"), String(Utf16(""))), (Utf16("elements"), Array([Object([(Utf16("id"), String(Utf16("[null,\"/fields/0\"]"))), (Utf16("name"), String(Utf16("value"))), (Utf16("extensions"), Object([])), (Utf16("kind"), String(Utf16("field")))])]))])]))])), (Utf16("request"), Object([(Utf16("column"), String(Utf16("[null,\"/fields/0\"]"))), (Utf16("nativeSource"), String(Utf16("{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"cardinality\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"array\",\n        \"items\": \"long\"\n      }\n    }\n  ],\n  \"futureMeaning\": {\n    \"token\": 9007199254740993\n  }\n}\n"))), (Utf16("dependencies"), Array([])), (Utf16("identity"), Object([(Utf16("module"), String(Utf16("logical"))), (Utf16("element"), String(Utf16("value")))])), (Utf16("profile"), String(Utf16("present-non-null-schema"))), (Utf16("mode"), String(Utf16("strict")))])), (Utf16("binding"), Object([(Utf16("id"), String(Utf16("umf.avro.cardinality"))), (Utf16("version"), String(Utf16("1.0.0"))), (Utf16("nativeVersion"), String(Utf16("1.12.0"))), (Utf16("subset"), String(Utf16("Declared shape of present non-null values; native union branches, availability, logical refinements and codec behavior remain separate")))])), (Utf16("mapping"), Object([(Utf16("origin"), String(Utf16("classified"))), (Utf16("cardinality"), String(Utf16("array"))), (Utf16("outcome"), String(Utf16("exact"))), (Utf16("basis"), String(Utf16("Declared shape of present non-null values; native union branches, availability, logical refinements and codec behavior remain separate"))), (Utf16("nodes"), Array([Object([(Utf16("identity"), Object([(Utf16("module"), String(Utf16("logical"))), (Utf16("element"), String(Utf16("value")))])), (Utf16("location"), Object([(Utf16("path"), String(Utf16("/fields/0/type")))])), (Utf16("nativeFragment"), Object([(Utf16("kind"), String(Utf16("object"))), (Utf16("members"), Object([(Utf16("type"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("array")))])), (Utf16("items"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("long")))]))]))])), (Utf16("cardinality"), String(Utf16("array"))), (Utf16("interpretation"), String(Utf16("declared"))), (Utf16("nativeAllowsNull"), Bool(false)), (Utf16("definitions"), Array([]))]), Object([(Utf16("identity"), Object([(Utf16("module"), String(Utf16("logical"))), (Utf16("element"), String(Utf16("[\"value\",null,\"/fields/0/type/items\"]")))])), (Utf16("location"), Object([(Utf16("path"), String(Utf16("/fields/0/type/items")))])), (Utf16("nativeFragment"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("long")))])), (Utf16("cardinality"), String(Utf16("one"))), (Utf16("interpretation"), String(Utf16("declared"))), (Utf16("nativeAllowsNull"), Bool(false)), (Utf16("definitions"), Array([]))])]))])), (Utf16("target"), Object([(Utf16("umf"), String(Utf16("0.10.0"))), (Utf16("id"), String(Utf16("availability"))), (Utf16("vocabularies"), Object([(Utf16("umf.avro"), Object([(Utf16("version"), String(Utf16("0.1.0")))])), (Utf16("umf.avro.cardinality"), Object([(Utf16("version"), String(Utf16("1.0.0")))]))])), (Utf16("modules"), Array([Object([(Utf16("id"), String(Utf16("schema"))), (Utf16("namespace"), String(Utf16(""))), (Utf16("elements"), Array([Object([(Utf16("id"), String(Utf16("schema"))), (Utf16("extensions"), Object([(Utf16("umf.avro"), Object([(Utf16("version"), String(Utf16("1.12.0"))), (Utf16("root"), Object([(Utf16("kind"), String(Utf16("object"))), (Utf16("members"), Object([(Utf16("type"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("record")))])), (Utf16("name"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("Example")))])), (Utf16("namespace"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("cardinality")))])), (Utf16("fields"), Object([(Utf16("kind"), String(Utf16("array"))), (Utf16("items"), Array([Object([(Utf16("kind"), String(Utf16("object"))), (Utf16("members"), Object([(Utf16("name"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("value")))])), (Utf16("type"), Object([(Utf16("kind"), String(Utf16("object"))), (Utf16("members"), Object([(Utf16("type"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("array")))])), (Utf16("items"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("long")))]))]))]))]))])]))])), (Utf16("futureMeaning"), Object([(Utf16("kind"), String(Utf16("object"))), (Utf16("members"), Object([(Utf16("token"), Object([(Utf16("kind"), String(Utf16("number"))), (Utf16("value"), String(Utf16("9007199254740993")))]))]))]))]))])), (Utf16("dependencies"), Array([]))]))]))])]))]), Object([(Utf16("id"), String(Utf16("avro.fields"))), (Utf16("namespace"), String(Utf16(""))), (Utf16("elements"), Array([Object([(Utf16("id"), String(Utf16("[null,\"/fields/0\"]"))), (Utf16("name"), String(Utf16("value"))), (Utf16("extensions"), Object([])), (Utf16("kind"), String(Utf16("field")))])]))]), Object([(Utf16("id"), String(Utf16("logical"))), (Utf16("namespace"), String(Utf16(""))), (Utf16("elements"), Array([Object([(Utf16("id"), String(Utf16("value"))), (Utf16("kind"), String(Utf16("field"))), (Utf16("name"), String(Utf16("value"))), (Utf16("cardinality"), String(Utf16("array"))), (Utf16("extensions"), Object([(Utf16("umf.avro.cardinality"), Object([(Utf16("origin"), String(Utf16("classified"))), (Utf16("nativeColumn"), String(Utf16("[null,\"/fields/0\"]"))), (Utf16("binding"), Object([(Utf16("id"), String(Utf16("umf.avro.cardinality"))), (Utf16("version"), String(Utf16("1.0.0")))])), (Utf16("profile"), String(Utf16("present-non-null-schema"))), (Utf16("basis"), String(Utf16("Declared shape of present non-null values; native union branches, availability, logical refinements and codec behavior remain separate"))), (Utf16("location"), Object([(Utf16("path"), String(Utf16("/fields/0/type")))])), (Utf16("nativeFragment"), Object([(Utf16("kind"), String(Utf16("object"))), (Utf16("members"), Object([(Utf16("type"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("array")))])), (Utf16("items"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("long")))]))]))])), (Utf16("interpretation"), String(Utf16("declared"))), (Utf16("nativeAllowsNull"), Bool(false)), (Utf16("definitions"), Array([]))]))])), (Utf16("itemType"), Object([(Utf16("module"), String(Utf16("logical"))), (Utf16("element"), String(Utf16("[\"value\",null,\"/fields/0/type/items\"]")))]))]), Object([(Utf16("id"), String(Utf16("[\"value\",null,\"/fields/0/type/items\"]"))), (Utf16("kind"), String(Utf16("field"))), (Utf16("cardinality"), String(Utf16("one"))), (Utf16("extensions"), Object([(Utf16("umf.avro.cardinality"), Object([(Utf16("origin"), String(Utf16("classified"))), (Utf16("nativeColumn"), String(Utf16("[null,\"/fields/0\"]"))), (Utf16("binding"), Object([(Utf16("id"), String(Utf16("umf.avro.cardinality"))), (Utf16("version"), String(Utf16("1.0.0")))])), (Utf16("profile"), String(Utf16("present-non-null-schema"))), (Utf16("basis"), String(Utf16("Declared shape of present non-null values; native union branches, availability, logical refinements and codec behavior remain separate"))), (Utf16("location"), Object([(Utf16("path"), String(Utf16("/fields/0/type/items")))])), (Utf16("nativeFragment"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("long")))])), (Utf16("interpretation"), String(Utf16("declared"))), (Utf16("nativeAllowsNull"), Bool(false)), (Utf16("definitions"), Array([]))]))])), (Utf16("scalarType"), String(Utf16("integer")))])]))])]))])), (Utf16("residuals"), Array([])), (Utf16("diagnostics"), Array([]))])
+ right: Object([(Utf16("operation"), String(Utf16("classify-avro-cardinality"))), (Utf16("version"), String(Utf16("1.0.0"))), (Utf16("status"), String(Utf16("classified"))), (Utf16("source"), Object([(Utf16("umf"), String(Utf16("0.10.0"))), (Utf16("id"), String(Utf16("availability"))), (Utf16("vocabularies"), Object([(Utf16("umf.avro"), Object([(Utf16("version"), String(Utf16("0.1.0")))]))])), (Utf16("modules"), Array([Object([(Utf16("id"), String(Utf16("schema"))), (Utf16("namespace"), String(Utf16(""))), (Utf16("elements"), Array([Object([(Utf16("id"), String(Utf16("schema"))), (Utf16("extensions"), Object([(Utf16("umf.avro"), Object([(Utf16("version"), String(Utf16("1.12.0"))), (Utf16("root"), Object([(Utf16("kind"), String(Utf16("object"))), (Utf16("members"), Object([(Utf16("type"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("record")))])), (Utf16("name"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("Example")))])), (Utf16("namespace"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("cardinality")))])), (Utf16("fields"), Object([(Utf16("kind"), String(Utf16("array"))), (Utf16("items"), Array([Object([(Utf16("kind"), String(Utf16("object"))), (Utf16("members"), Object([(Utf16("name"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("value")))])), (Utf16("type"), Object([(Utf16("kind"), String(Utf16("object"))), (Utf16("members"), Object([(Utf16("type"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("array")))])), (Utf16("items"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("long")))]))]))]))]))])]))])), (Utf16("futureMeaning"), Object([(Utf16("kind"), String(Utf16("object"))), (Utf16("members"), Object([(Utf16("token"), Object([(Utf16("kind"), String(Utf16("number"))), (Utf16("value"), String(Utf16("9007199254740993")))]))]))]))]))])), (Utf16("dependencies"), Array([]))]))]))])]))]), Object([(Utf16("id"), String(Utf16("avro.fields"))), (Utf16("namespace"), String(Utf16(""))), (Utf16("elements"), Array([Object([(Utf16("id"), String(Utf16("[null,\"/fields/0\"]"))), (Utf16("name"), String(Utf16("value"))), (Utf16("extensions"), Object([])), (Utf16("kind"), String(Utf16("field")))])]))])]))])), (Utf16("request"), Object([(Utf16("column"), String(Utf16("[null,\"/fields/0\"]"))), (Utf16("nativeSource"), String(Utf16("{\n  \"type\": \"record\",\n  \"name\": \"Example\",\n  \"namespace\": \"cardinality\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": {\n        \"type\": \"array\",\n        \"items\": \"long\"\n      }\n    }\n  ],\n  \"futureMeaning\": {\n    \"token\": 9007199254740993\n  }\n}\n"))), (Utf16("dependencies"), Array([])), (Utf16("identity"), Object([(Utf16("module"), String(Utf16("logical"))), (Utf16("element"), String(Utf16("value")))])), (Utf16("profile"), String(Utf16("present-non-null-schema"))), (Utf16("mode"), String(Utf16("strict")))])), (Utf16("binding"), Object([(Utf16("id"), String(Utf16("umf.avro.cardinality"))), (Utf16("version"), String(Utf16("1.0.0"))), (Utf16("nativeVersion"), String(Utf16("1.12.0"))), (Utf16("subset"), String(Utf16("Declared shape of present non-null values; native union branches, availability, logical refinements and codec behavior remain separate")))])), (Utf16("mapping"), Object([(Utf16("origin"), String(Utf16("classified"))), (Utf16("cardinality"), String(Utf16("array"))), (Utf16("outcome"), String(Utf16("exact"))), (Utf16("basis"), String(Utf16("Declared shape of present non-null values; native union branches, availability, logical refinements and codec behavior remain separate"))), (Utf16("nodes"), Array([Object([(Utf16("identity"), Object([(Utf16("module"), String(Utf16("logical"))), (Utf16("element"), String(Utf16("value")))])), (Utf16("location"), Object([(Utf16("path"), String(Utf16("/fields/0/type")))])), (Utf16("nativeFragment"), Object([(Utf16("kind"), String(Utf16("object"))), (Utf16("members"), Object([(Utf16("type"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("array")))])), (Utf16("items"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("long")))]))]))])), (Utf16("cardinality"), String(Utf16("array"))), (Utf16("interpretation"), String(Utf16("declared"))), (Utf16("nativeAllowsNull"), Bool(false)), (Utf16("definitions"), Array([]))]), Object([(Utf16("identity"), Object([(Utf16("module"), String(Utf16("logical"))), (Utf16("element"), String(Utf16("[\"value\",null,\"/fields/0/type/items\"]")))])), (Utf16("location"), Object([(Utf16("path"), String(Utf16("/fields/0/type/items")))])), (Utf16("nativeFragment"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("long")))])), (Utf16("cardinality"), String(Utf16("one"))), (Utf16("interpretation"), String(Utf16("declared"))), (Utf16("nativeAllowsNull"), Bool(false)), (Utf16("definitions"), Array([]))])]))])), (Utf16("residuals"), Array([])), (Utf16("diagnostics"), Array([])), (Utf16("target"), Object([(Utf16("umf"), String(Utf16("0.10.0"))), (Utf16("id"), String(Utf16("availability"))), (Utf16("vocabularies"), Object([(Utf16("umf.avro"), Object([(Utf16("version"), String(Utf16("0.1.0")))])), (Utf16("umf.avro.cardinality"), Object([(Utf16("version"), String(Utf16("1.0.0")))]))])), (Utf16("modules"), Array([Object([(Utf16("id"), String(Utf16("schema"))), (Utf16("namespace"), String(Utf16(""))), (Utf16("elements"), Array([Object([(Utf16("id"), String(Utf16("schema"))), (Utf16("extensions"), Object([(Utf16("umf.avro"), Object([(Utf16("version"), String(Utf16("1.12.0"))), (Utf16("root"), Object([(Utf16("kind"), String(Utf16("object"))), (Utf16("members"), Object([(Utf16("type"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("record")))])), (Utf16("name"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("Example")))])), (Utf16("namespace"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("cardinality")))])), (Utf16("fields"), Object([(Utf16("kind"), String(Utf16("array"))), (Utf16("items"), Array([Object([(Utf16("kind"), String(Utf16("object"))), (Utf16("members"), Object([(Utf16("name"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("value")))])), (Utf16("type"), Object([(Utf16("kind"), String(Utf16("object"))), (Utf16("members"), Object([(Utf16("type"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("array")))])), (Utf16("items"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("long")))]))]))]))]))])]))])), (Utf16("futureMeaning"), Object([(Utf16("kind"), String(Utf16("object"))), (Utf16("members"), Object([(Utf16("token"), Object([(Utf16("kind"), String(Utf16("number"))), (Utf16("value"), String(Utf16("9007199254740993")))]))]))]))]))])), (Utf16("dependencies"), Array([]))]))]))])]))]), Object([(Utf16("id"), String(Utf16("avro.fields"))), (Utf16("namespace"), String(Utf16(""))), (Utf16("elements"), Array([Object([(Utf16("id"), String(Utf16("[null,\"/fields/0\"]"))), (Utf16("name"), String(Utf16("value"))), (Utf16("extensions"), Object([])), (Utf16("kind"), String(Utf16("field")))])]))]), Object([(Utf16("id"), String(Utf16("logical"))), (Utf16("namespace"), String(Utf16(""))), (Utf16("elements"), Array([Object([(Utf16("id"), String(Utf16("value"))), (Utf16("kind"), String(Utf16("field"))), (Utf16("name"), String(Utf16("value"))), (Utf16("cardinality"), String(Utf16("array"))), (Utf16("extensions"), Object([(Utf16("umf.avro.cardinality"), Object([(Utf16("origin"), String(Utf16("classified"))), (Utf16("nativeColumn"), String(Utf16("[null,\"/fields/0\"]"))), (Utf16("binding"), Object([(Utf16("id"), String(Utf16("umf.avro.cardinality"))), (Utf16("version"), String(Utf16("1.0.0")))])), (Utf16("profile"), String(Utf16("present-non-null-schema"))), (Utf16("basis"), String(Utf16("Declared shape of present non-null values; native union branches, availability, logical refinements and codec behavior remain separate"))), (Utf16("location"), Object([(Utf16("path"), String(Utf16("/fields/0/type")))])), (Utf16("nativeFragment"), Object([(Utf16("kind"), String(Utf16("object"))), (Utf16("members"), Object([(Utf16("type"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("array")))])), (Utf16("items"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("long")))]))]))])), (Utf16("interpretation"), String(Utf16("declared"))), (Utf16("nativeAllowsNull"), Bool(false)), (Utf16("definitions"), Array([]))]))])), (Utf16("itemType"), Object([(Utf16("module"), String(Utf16("logical"))), (Utf16("element"), String(Utf16("[\"value\",null,\"/fields/0/type/items\"]")))]))]), Object([(Utf16("id"), String(Utf16("[\"value\",null,\"/fields/0/type/items\"]"))), (Utf16("kind"), String(Utf16("field"))), (Utf16("cardinality"), String(Utf16("one"))), (Utf16("extensions"), Object([(Utf16("umf.avro.cardinality"), Object([(Utf16("origin"), String(Utf16("classified"))), (Utf16("nativeColumn"), String(Utf16("[null,\"/fields/0\"]"))), (Utf16("binding"), Object([(Utf16("id"), String(Utf16("umf.avro.cardinality"))), (Utf16("version"), String(Utf16("1.0.0")))])), (Utf16("profile"), String(Utf16("present-non-null-schema"))), (Utf16("basis"), String(Utf16("Declared shape of present non-null values; native union branches, availability, logical refinements and codec behavior remain separate"))), (Utf16("location"), Object([(Utf16("path"), String(Utf16("/fields/0/type/items")))])), (Utf16("nativeFragment"), Object([(Utf16("kind"), String(Utf16("string"))), (Utf16("value"), String(Utf16("long")))])), (Utf16("interpretation"), String(Utf16("declared"))), (Utf16("nativeAllowsNull"), Bool(false)), (Utf16("definitions"), Array([]))]))])), (Utf16("scalarType"), String(Utf16("integer")))])]))])]))]))])
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    complete_frozen_cardinality_corpus_uses_production_dispatch_once_per_process
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.45s
+
+error: test failed, to rerun pass `-p umf-core-wire --test avro_cardinality_corpus`

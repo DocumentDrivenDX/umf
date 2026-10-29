@@ -1,0 +1,60 @@
+{
+  "format": "umf-rust-focused-evidence/1",
+  "privateSourceCommit": "2e1d73179",
+  "integratedSourceCommit": "7e2ab9c6b",
+  "scope": "Avro resource reuse, member order, and single-process production wire replay; not installed/default-route/release qualification",
+  "sourceClosure": [
+    {
+      "path": "crates/umf-core/src/avro_cardinality.rs",
+      "sha256": "7597e018e5c529fbe49ebafe3731e0641e4da93cce608d36ec0d8ebef8c0b3f8"
+    },
+    {
+      "path": "crates/umf-core/src/avro_document.rs",
+      "sha256": "c4f6ee8c7fe2d4c7bae19c63f5c437d18a1e2db673f3f86391a6109c5d3d54e1"
+    },
+    {
+      "path": "crates/umf-core-wire/tests/avro_cardinality_corpus.rs",
+      "sha256": "2d56537ab8700c688301dbce096debbcce9440890a4b69f7903e7f6696e1e62b"
+    }
+  ],
+  "results": [
+    {
+      "check": "frozen production-dispatch corpus",
+      "outcomes": 139,
+      "passed": true,
+      "runSeconds": 27.65,
+      "log": "corpus.log"
+    },
+    {
+      "check": "Cardinality focused unit tests",
+      "tests": 8,
+      "passed": true,
+      "runSeconds": 3.0,
+      "log": "cardinality-unit.log"
+    },
+    {
+      "check": "Avro document/resource tests",
+      "tests": 5,
+      "passed": true,
+      "runSeconds": 2.69,
+      "log": "document-unit.log"
+    }
+  ],
+  "negativeControl": {
+    "log": "member-order-red.log",
+    "finding": "target preceded residuals/diagnostics at root; corrected insertion order"
+  },
+  "review": {
+    "model": "gpt-6-sol",
+    "agent": "avro_reuse_review",
+    "method": "independent read-only source review; no tests",
+    "findings": "No actionable P1/P2 in cache/tree reuse or subsequent output-order correction"
+  },
+  "supersededRun": {
+    "status": "interrupted",
+    "seconds": 300,
+    "filter": "avro_",
+    "reason": "overbroad filter included slow unrelated classifiers",
+    "passed": false
+  }
+}

@@ -10689,10 +10689,13 @@ Source review found a further uncovered Avro compatibility case: avsc's ordinary
 object indexes reject inherited names in enum symbols and global union branch
 names. Successor `204f79e6a` implements that rejection, adds Rust controls for
 rejected and accepted forms, and authors a small direct-avsc reference probe.
-Those changes are unexecuted and unreviewed. An explicit request is pending for
-one additional serial attempt of at most 180 seconds for the direct parser
-oracle and focused Rust tests. This request does not authorize itself or restart
-any held worker.
+The renewed completion instruction supersedes the prior pending 180-second
+request. The focused successor passes all 48 direct avsc index-name checks and
+seven Rust tests. Resource reuse and strict ordered replay now pass 139 frozen
+production-dispatch outcomes plus eight Cardinality and five document tests;
+[reviewed source evidence](evidence/rust-migration/r9-avro-resource-reuse/README.md)
+records exact scope and pins. The old interrupted broad filter remains a failure
+to complete, not a passing result.
 
 The Parquet levels candidate is retained at `dd0d3cb68` on local ref
 `codex/rust-parquet-levels-candidate`. It includes wasm32 packed-run overflow,
@@ -10722,3 +10725,29 @@ bounded focused runs without evaluating all unselected reference operations.
 Full JavaScript object coercion for invalid index arguments, fresh native/WASM/
 Chromium qualification, independent review and integration remain open. The
 candidate changes no accepted owner, default route or release qualification.
+
+
+### Completion execution correction — 2026-10-29
+
+The operator renewed full implementation, integration and release authorization.
+The two-hour provisional repair/integration machine allowance retains previous
+usage and failed/interrupted history; it does not reduce the full-port objective.
+Expensive checks run through one shared local admission lock with one build/test
+worker. Held obsolete coordinators remain stopped. GitHub Actions are excluded.
+
+Current main at `efb404271` is merged. Reviewed Avro classification/resource
+changes and the Parquet levels, edit, physical, row and value candidates are
+integrated for qualification. Five level tests and the physical operation's
+success/refusal fixtures pass. A malformed BYTE_ARRAY low-level test input was
+corrected before the next composed check. Row/value tests now compare original
+ordered core Values, preserving field order and opaque parameter content.
+
+Implementation proceeds on actual missing kernels and default bindings in
+parallel, with source-only Luna workers and independent Sol review. A semantic
+accessor default facade review found host-admission class/order drift; a staged
+Rust host-input repair is in progress before qualification. Existing Rust
+ownership is distinct from public default selection and installed retirement.
+The ledger remains conservative until regenerated from reviewed current source.
+Focused family checks run during implementation; the broad local suite and real
+Darwin/Linux/interpreter install matrix run on a stable integrated source cut.
+Merge, final release construction and direct publication remain required.
