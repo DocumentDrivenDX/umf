@@ -1,0 +1,51 @@
+{
+  "acceptedOperatorSource": {
+    "acceptance": "Sol source acceptance; no runtime acceptance",
+    "path": "proposal-v003/run_public_h_docker.py",
+    "sha256": "59519b2635251bfa3c5f5fdaf4c502c67a93383fba8fde75199ea663ae2c2a54",
+    "sourceReviewPath": "reviews/sol-review002.md",
+    "sourceReviewSha256": "d91cb537ffed9dcd615f0cc8956e24c429da138cf40524be0ef68a7691516778"
+  },
+  "externalHeldInputs": [
+    {
+      "path": "/private/tmp/sdk-057-local3600-public-h-v2/local3600-public-h-inputs.held.json",
+      "sha256": "0b4732e008715b292390c6382ea5c80594462be5eed3262ac476a14e78493ffd",
+      "status": "HELD; not copied into this staging bundle"
+    }
+  ],
+  "iterations": [
+    {
+      "proposal": "proposal-v001",
+      "role": "initial held source; findings in reviews/sol-review001.md",
+      "runner": "proposal-v001/run_public_h_docker.py"
+    },
+    {
+      "diff": "proposal-v002/runner-v001-v002.diff",
+      "proposal": "proposal-v002",
+      "role": "first correction batch; preserved source and diff",
+      "runner": "proposal-v002/run_public_h_docker.py"
+    },
+    {
+      "diffs": [
+        "proposal-v003/runner-v001-v002.diff",
+        "proposal-v003/runner-v002-v003.diff"
+      ],
+      "proposal": "proposal-v003",
+      "role": "final source correction; accepted source-only",
+      "runner": "proposal-v003/run_public_h_docker.py"
+    }
+  ],
+  "noExecution": "No Docker/image inspect/container run, public-H command, Git, or Actions operation was performed for this staging.",
+  "profile": "umf.public-h-operator-source-map/1",
+  "reviews": [
+    {
+      "path": "reviews/sol-review001.md",
+      "role": "six original source blockers and scope constraints"
+    },
+    {
+      "path": "reviews/sol-review002.md",
+      "role": "v003 accepted source closure and final custody review"
+    }
+  ],
+  "status": "source-only accepted v003; no H runtime execution"
+}

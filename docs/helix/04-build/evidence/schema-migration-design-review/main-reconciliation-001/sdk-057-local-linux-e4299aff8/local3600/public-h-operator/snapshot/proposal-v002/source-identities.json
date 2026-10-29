@@ -1,0 +1,43 @@
+{
+  "diffFromV001": {
+    "path": "/private/tmp/sdk-057-local3600-public-h-operator-proposal002/runner-v001-v002.diff",
+    "sha256": "e53c1a5757c114728e97a6f669d41dc24148ae6500bec412ba188c16f058581c",
+    "sizeBytes": 38654
+  },
+  "heldInputPacket": {
+    "path": "/private/tmp/sdk-057-local3600-public-h-v2/local3600-public-h-inputs.held.json",
+    "sha256": "0b4732e008715b292390c6382ea5c80594462be5eed3262ac476a14e78493ffd",
+    "sizeBytes": 7593,
+    "status": "HELD"
+  },
+  "proposal": "umf.sdk-057-public-h-docker-operator/2",
+  "reader": {
+    "independentOperatorPin": "5feed5ed5516b73838650b7c42e9121839e970cee130e49f1f7f479069f9938f",
+    "path": "/private/tmp/sdk-057-local3600-public-h-v2/run-local3600-public-h.py",
+    "review": "source-only accepted; no runtime run",
+    "sha256": "5feed5ed5516b73838650b7c42e9121839e970cee130e49f1f7f479069f9938f",
+    "sizeBytes": 165392
+  },
+  "runtimeImage": {
+    "id": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+    "inspectionPerformed": false,
+    "platform": "linux/amd64"
+  },
+  "sourceChecks": [
+    "Python AST parse passed",
+    "no test suite or runtime command executed",
+    "no Docker image inspection or container command executed",
+    "no Git or CI operation performed"
+  ],
+  "status": "PREPARED_NOT_EXECUTED_SOURCE_REVIEW_PENDING",
+  "v001Preserved": {
+    "path": "/private/tmp/sdk-057-local3600-public-h-operator-proposal001/run_public_h_docker.py",
+    "sha256": "bb915412a3586fb93fabda96267882bb58727447c3a6ffc54bd75c33ada79206",
+    "sizeBytes": 16108
+  },
+  "v002Runner": {
+    "path": "/private/tmp/sdk-057-local3600-public-h-operator-proposal002/run_public_h_docker.py",
+    "sha256": "25de86982f89e1a162a05449c2c01a28d6c79221c2bcd52429959379603e19fd",
+    "sizeBytes": 24790
+  }
+}

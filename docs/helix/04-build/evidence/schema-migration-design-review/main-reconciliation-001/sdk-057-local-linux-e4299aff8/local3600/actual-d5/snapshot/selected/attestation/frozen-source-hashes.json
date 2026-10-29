@@ -1,0 +1,173 @@
+{
+  "candidateExecuted": false,
+  "childAttempt": 1,
+  "newProposal": "/private/tmp/migration-d5-local-emulated-3600-proposal-001",
+  "operatorHashRoster": {
+    "adapt_local_identity.py": "cc543c4fcf602b663f69854136f67c957e5292dd6ad004465c877a2f73d68ffe",
+    "capture_docker.py": "4d17ef3db829b558add19d415172dd1f28ea4fc42b28f6a6efd5541cbff88c73",
+    "close_selected_evidence.py": "efaa2617471fd8dbb0875b5e7d82307ac47f4a2d3b7e8490673a496c1c4d8f79",
+    "local-adapter-manifest.json": "df67e09e6e326f02dd9fd3648a4640cba93a2f2673427ae70634737b8b942ce8",
+    "prepare.py": "fc313455b13db7bf443a5694f1a81f80bc9247837f68a1c8a4310755e70c929c",
+    "prepared-route.json": "a8bef2b7f42873db778c9d1d678d688d33c16da193b83eb7ec12de589f7981b0",
+    "resource-profile.json": "7ef1260d0bd61e7eef80c753091ef605979a376c3d2ab8e158fdecb6830d98fe",
+    "run-d5-docker.sh": "10bcc249b09907e938f049613e09f1d20bfab5f16892a474dd7e0148a674de6b",
+    "steps/finalize.local.sh": "80a80d88053249cd9d00982200ecd35cfb8e82767b43528fe6d02ce724f21564",
+    "steps/finalize.sh": "8fda407e759bb4e67f8f8e0d5047af76ac22bd76882c2693cf92d67ecd1e6582",
+    "steps/initialize.local.sh": "87d95f05fa68eaa49cb4541aab7e64c918d7ca096853fefb6fc29e378ffc98c6",
+    "steps/initialize.sh": "50582cf9adff0cc5c2fa0197f96bbb387da411f89939fda7382322a96ba7394b",
+    "steps/replay.local.sh": "03f778295575b364e5a78af45df4506a5eaf20e4248ae13af141beb45e540110",
+    "steps/replay.sh": "33827347f78023e0a99c6a9b94c5ac053d503cc1226e0f6c3bb2b747fa78b4d2"
+  },
+  "originalProposalFiles": {
+    "README.md": {
+      "bytes": 2653,
+      "sha256": "94ef23e1452255f4173d9caeac232cb1c2736b4820ed8ac801cda8287f7503eb"
+    },
+    "adapt_local_identity.py": {
+      "bytes": 8793,
+      "sha256": "cc543c4fcf602b663f69854136f67c957e5292dd6ad004465c877a2f73d68ffe"
+    },
+    "local-adapter-manifest.json": {
+      "bytes": 1243,
+      "sha256": "a5ed8ee5a598688761540960ce3ed21a258dc630368e9a81135100d894848905"
+    },
+    "prepare.py": {
+      "bytes": 13777,
+      "sha256": "fc313455b13db7bf443a5694f1a81f80bc9247837f68a1c8a4310755e70c929c"
+    },
+    "prepared-route.json": {
+      "bytes": 5045,
+      "sha256": "3696c0818a724f487347ceb42c00c291b41a9185eae7b4561e4d7e0589cffa9c"
+    },
+    "run-d5-docker.sh": {
+      "bytes": 14283,
+      "sha256": "b02fa22ecacf84b9b45f369151a40b6797d22ec4603c063c65d9452d6340b1cd"
+    },
+    "steps/finalize.local.sh": {
+      "bytes": 33590,
+      "sha256": "af48510b3e5e297a03a90e4b1b0f31bbba4852609226dc8170ff9ff9920ee04a"
+    },
+    "steps/finalize.sh": {
+      "bytes": 33129,
+      "sha256": "8fda407e759bb4e67f8f8e0d5047af76ac22bd76882c2693cf92d67ecd1e6582"
+    },
+    "steps/initialize.local.sh": {
+      "bytes": 1041,
+      "sha256": "1aa3122eef9040d321947a33c64d63d97969ea8838c44e60540167c04488cfd0"
+    },
+    "steps/initialize.sh": {
+      "bytes": 839,
+      "sha256": "50582cf9adff0cc5c2fa0197f96bbb387da411f89939fda7382322a96ba7394b"
+    },
+    "steps/replay.local.sh": {
+      "bytes": 32151,
+      "sha256": "9c0ea55948e1a210ac3100d330c08349d5801e4d15cdfd50397782bdc5ef7cc7"
+    },
+    "steps/replay.sh": {
+      "bytes": 31988,
+      "sha256": "33827347f78023e0a99c6a9b94c5ac053d503cc1226e0f6c3bb2b747fa78b4d2"
+    }
+  },
+  "outerAttempt": 1,
+  "proposedAttestationFiles": {
+    "DECISION.md": {
+      "bytes": 4102,
+      "sha256": "23c5690d9ba9df58a17eccac10e9f40830edce4eacf069ecd02726ddb6b34c4e"
+    },
+    "README.md": {
+      "bytes": 3608,
+      "sha256": "5467b983a6034d6e611c423b0cee6bcfa4a332499d737001543f016d8b143fde"
+    },
+    "unified.diff": {
+      "bytes": 62092,
+      "sha256": "0e8740f25eb9c18c5b154a7cd1a18b1c27687f0b44392e3b3acd68322d2ec3ee"
+    }
+  },
+  "proposedOperatorFiles": {
+    "adapt_local_identity.py": {
+      "bytes": 8793,
+      "sha256": "cc543c4fcf602b663f69854136f67c957e5292dd6ad004465c877a2f73d68ffe"
+    },
+    "capture_docker.py": {
+      "bytes": 4237,
+      "sha256": "4d17ef3db829b558add19d415172dd1f28ea4fc42b28f6a6efd5541cbff88c73"
+    },
+    "close_selected_evidence.py": {
+      "bytes": 17046,
+      "sha256": "efaa2617471fd8dbb0875b5e7d82307ac47f4a2d3b7e8490673a496c1c4d8f79"
+    },
+    "local-adapter-manifest.json": {
+      "bytes": 1546,
+      "sha256": "df67e09e6e326f02dd9fd3648a4640cba93a2f2673427ae70634737b8b942ce8"
+    },
+    "prepare.py": {
+      "bytes": 13777,
+      "sha256": "fc313455b13db7bf443a5694f1a81f80bc9247837f68a1c8a4310755e70c929c"
+    },
+    "prepared-route.json": {
+      "bytes": 5115,
+      "sha256": "a8bef2b7f42873db778c9d1d678d688d33c16da193b83eb7ec12de589f7981b0"
+    },
+    "resource-profile.json": {
+      "bytes": 730,
+      "sha256": "7ef1260d0bd61e7eef80c753091ef605979a376c3d2ab8e158fdecb6830d98fe"
+    },
+    "run-d5-docker.sh": {
+      "bytes": 20715,
+      "sha256": "10bcc249b09907e938f049613e09f1d20bfab5f16892a474dd7e0148a674de6b"
+    },
+    "steps/finalize.local.sh": {
+      "bytes": 34270,
+      "sha256": "80a80d88053249cd9d00982200ecd35cfb8e82767b43528fe6d02ce724f21564"
+    },
+    "steps/finalize.sh": {
+      "bytes": 33129,
+      "sha256": "8fda407e759bb4e67f8f8e0d5047af76ac22bd76882c2693cf92d67ecd1e6582"
+    },
+    "steps/initialize.local.sh": {
+      "bytes": 1321,
+      "sha256": "87d95f05fa68eaa49cb4541aab7e64c918d7ca096853fefb6fc29e378ffc98c6"
+    },
+    "steps/initialize.sh": {
+      "bytes": 839,
+      "sha256": "50582cf9adff0cc5c2fa0197f96bbb387da411f89939fda7382322a96ba7394b"
+    },
+    "steps/replay.local.sh": {
+      "bytes": 32361,
+      "sha256": "03f778295575b364e5a78af45df4506a5eaf20e4248ae13af141beb45e540110"
+    },
+    "steps/replay.sh": {
+      "bytes": 31988,
+      "sha256": "33827347f78023e0a99c6a9b94c5ac053d503cc1226e0f6c3bb2b747fa78b4d2"
+    }
+  },
+  "resourceProfile": {
+    "aggregateSeconds": 3600,
+    "evidenceReserveSeconds": 60,
+    "killGraceSeconds": 10,
+    "name": "LOCAL_EMULATED_3600",
+    "productApiBudgetChanged": false,
+    "sha256": "7ef1260d0bd61e7eef80c753091ef605979a376c3d2ab8e158fdecb6830d98fe",
+    "workSeconds": 3530
+  },
+  "sourceProposal": "/private/tmp/migration-d5-local-linux",
+  "sourceWorkflow": {
+    "commit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+    "sha256": "f0963d2df1e371112ba6e57999dbf69290796d711eb97ed46637d4ebc63918a1",
+    "tree": "8b98c0d895983ba2b7637dd3aea567dab0943883"
+  },
+  "unchangedOriginalWorkflowSteps": {
+    "finalize.sh": {
+      "bytes": 33129,
+      "sha256": "8fda407e759bb4e67f8f8e0d5047af76ac22bd76882c2693cf92d67ecd1e6582"
+    },
+    "initialize.sh": {
+      "bytes": 839,
+      "sha256": "50582cf9adff0cc5c2fa0197f96bbb387da411f89939fda7382322a96ba7394b"
+    },
+    "replay.sh": {
+      "bytes": 31988,
+      "sha256": "33827347f78023e0a99c6a9b94c5ac053d503cc1226e0f6c3bb2b747fa78b4d2"
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "diffFromV003": {
+    "path": "/private/tmp/sdk-057-local3600-public-h-operator-proposal004/runner-v003-v004.diff",
+    "sha256": "6709ff3d93c2748fdaee03c4c6850c31e3b1dc567a9f2656c057049840b0d803",
+    "sizeBytes": 807
+  },
+  "heldInputPacket": {
+    "path": "/private/tmp/sdk-057-local3600-public-h-v3/local3600-public-h-inputs.004.held.json",
+    "readerPinField": "execution.localAdapterSha256",
+    "readerPinValue": "a8b496f65010551c5fc4bac368bebc95c1b1406cfc125c12aa733eaa726a7b15",
+    "sha256": "2e70370da3718651b10abe9bfc269b8f8f3db40e387a1d03e9e0d0e00b4eebbe",
+    "sizeBytes": 8608,
+    "status": "HELD"
+  },
+  "proposal": "umf.sdk-057-public-h-docker-operator/4",
+  "reader": {
+    "independentOperatorPin": "a8b496f65010551c5fc4bac368bebc95c1b1406cfc125c12aa733eaa726a7b15",
+    "path": "/private/tmp/sdk-057-local3600-public-h-v3/run-local3600-public-h.py",
+    "review": "source-only accepted",
+    "reviewPath": "/private/tmp/sdk-057-local3600-public-h-v3-sol-source-review001.md",
+    "reviewSha256": "bd613c086125fc10203fa8852a9baaa330e0e30523d1ada78f4007a26c3d4c04",
+    "sha256": "a8b496f65010551c5fc4bac368bebc95c1b1406cfc125c12aa733eaa726a7b15",
+    "sizeBytes": 175547
+  },
+  "runtimeImage": {
+    "id": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+    "inspectionPerformed": false,
+    "platform": "linux/amd64"
+  },
+  "sourceChecks": [
+    "Python AST parse only",
+    "no tests or runtime execution",
+    "no Docker image inspection or container command",
+    "no Git or CI operation"
+  ],
+  "status": "PREPARED_NOT_EXECUTED_OPERATOR_SOURCE_REVIEW_PENDING",
+  "v003OperatorReview": {
+    "path": "/private/tmp/sdk-057-local3600-public-h-operator-sol-review002.md",
+    "scope": "operator v003 and v2 reader only",
+    "sha256": "d91cb537ffed9dcd615f0cc8956e24c429da138cf40524be0ef68a7691516778"
+  },
+  "v003RunnerPreserved": {
+    "path": "/private/tmp/sdk-057-local3600-public-h-operator-proposal003/run_public_h_docker.py",
+    "sha256": "59519b2635251bfa3c5f5fdaf4c502c67a93383fba8fde75199ea663ae2c2a54"
+  },
+  "v004Runner": {
+    "path": "/private/tmp/sdk-057-local3600-public-h-operator-proposal004/run_public_h_docker.py",
+    "sha256": "5b5696ef0921f1420923446adafcd97653d1897093e29c400d49c38e91941102",
+    "sizeBytes": 27305
+  }
+}

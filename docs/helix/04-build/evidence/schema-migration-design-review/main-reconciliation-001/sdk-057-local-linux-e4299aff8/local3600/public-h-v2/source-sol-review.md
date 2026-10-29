@@ -1,0 +1,13 @@
+# Public-H v2 assembly plus bounded continuation — focused source review
+
+ACCEPT SOURCE ONLY, final v2 SHA-256 5feed5ed5516b73838650b7c42e9121839e970cee130e49f1f7f479069f9938f. Reviewed the initial mode split and final narrow guard correction against accepted local3600 reader0d866891a0ba9717531922bb06e6ccf4cab072c1221d44d4fc8547c85c763fe5.
+
+The explicit assembly-plus-bounded-continuation003 mode uses a closed mode-specific packet roster without fabricated legacy proof fields. It binds the actual assembly receipt4375e0c4a0faf89f78056086225cd25352e8c7299966395006bdba809da2b064 and copied original harnessceea335b702b2128919051669597a8a1b9163e4fe628a585d111876116a5f08d, preserving their actual execution identity. The legacy same-attempt proof route retains its required schema, attempt/source/tree/harness/runtime and physical log/report checks.
+
+Common assembly source/argv/log/receipt custody, runtime platform, aggregate index and exact data-only Mac manifests, complete18/30 wheel closure, native/public byte correspondence and payload gates remain. The new mode bypasses only nonexistent legacy proof-specific fields; actual continuation003 is still mandatory and independently binds the physical original assembly receipt/index/corpus and its own execution identity. Final returned correspondence records the correct mode and continuation receipt digest instead of inventing a same-attempt proof digest.
+
+Whole-function text comparisons confirm validate_union_continuation, validate_d5_profile_evidence and validate_d5_selected_evidence are unchanged. Thus original003 five-file harness/bootstrap/source/images/two report/ten-log/bounds/custody checks and the separately accepted D5 resource-profile checks remain. Original seven H command and LIMITS blocks are byte-identical: H1800 aggregate/180 child/60 reserve/10 grace/1MiB logs/16MiB metadata. SDK139, fresh Linux311 full18 probe, exact three public assets and P/M/tag ancestry remain required. Mac314 is unqualified; no hosted/native-host assertion is introduced.
+
+The initial new absolute harness-path branch resolved before checking is_symlink, making that check ineffective. This is closed: the raw path receives lstat regular/non-symlink and <=1MiB checks before hashing, with physical identity/size/mtime rechecked afterward. The actual copied20660-byte file already matches its frozen hash; do not change its bytes.
+
+Held packet0b4732e008715b292390c6382ea5c80594462be5eed3262ac476a14e78493ffd correctly selects the new mode and remains HELD. This source acceptance does not establish D5, public H, M/tag/assets, merge or release. No imports, AST/YAML parsing, candidate execution, tests, Docker, Git mutation or Actions performed.

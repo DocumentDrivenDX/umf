@@ -277,6 +277,32 @@ version after checking concurrent publishers; historical 0.4.49 artifacts cannot
 be relabeled. Public platform support follows shipped and verified artifacts,
 not a historical platform count.
 
+#### Local Linux G02 qualification checkpoint — 2026-10-29
+
+The user directed local execution after GitHub Actions credits were exhausted.
+D6's workflow execution is replaced by explicitly qualified local checks; no
+Actions dispatch or macOS CI is authorized by this checkpoint. Workflow
+definitions remain unchanged, with the three automatic entry points paused.
+The [local evidence index](evidence/schema-migration-design-review/main-reconciliation-001/sdk-057-local-linux-e4299aff8/local3600/README.md)
+records the policy, separate fast functional checks and physical evidence.
+
+At frozen producer P `e4299aff8e87e9d211f9d86df2f2013ab9c95945`,
+tree `8b98c0d895983ba2b7637dd3aea567dab0943883`, the SDK 139-case
+installed proof and full18 Linux CPython 3.11.17/3.14.9 offline cohort retain
+their accepted scope. The independently reviewed `LOCAL_EMULATED_3600` D5
+attempt passed all 30 ordered commands, 37 cases, 19 no-default controls, three
+recovery scenarios, final audit and owned-resource cleanup. Its 2,006.341-second
+run qualifies that separate operator profile; the original 1,800-second failure
+remains unchanged. Child and product/API budgets did not change. Linux/amd64
+client emulation on Darwin/arm64 and ARM64 PostgreSQL 18.6 do not establish
+native x86_64-host or hosted CI qualification. Historical built macOS artifacts
+retain their documented verification limits; macOS Python 3.14 is unqualified.
+
+The public-proof reader integration has independent source acceptance and
+metadata preflight; no public install has run. D7 remains open: normal merge,
+immutable SDK release and fresh public-download/install proof require their own actual
+identities and review. No G03–G11, managed-consumer or Praxis acceptance follows.
+
 #### Historical pre-reconciliation G02 integration checkpoint — Core 0.10.1
 
 This is a preserved pre-reconciliation checkpoint for the earlier Core 0.10.1
