@@ -1,0 +1,111 @@
+{
+  "profile": "umf.g03.local-linux-admission-probe-inputs/1",
+  "status": "PREPARED_FOR_SOURCE_REVIEW",
+  "repository": {
+    "path": "/Users/erik/.codex/worktrees/eb69/umf",
+    "head": "a6eb216a95a49715f75a058502d9915a8eb1f8ff",
+    "branch": "codex/g02-public-proof-evidence",
+    "treeStatus": "clean",
+    "note": "HEAD matches origin/main. Probe's package source P is e4299aff... and is not whole-tree-equal to later documentation/microsite M."
+  },
+  "sourceP": {
+    "commit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+    "tree": "8b98c0d895983ba2b7637dd3aea567dab0943883",
+    "volume": "umf-migration-source-267675510",
+    "mount": "read-only",
+    "sourcePins": {
+      "tests/lifecycle/g03-defaults-native-fixture.ts": "8547d5f51aa0af84fc693bb2283ec35fc1aaa255ca3d79ee6a187227a9e7bf6d",
+      "tests/binding/fixtures/table-lifecycle-note.json": "0f8a2f5d38d32514ec38fc3bbe393c5b88d45c251c2ae05ac23bea261b0e94ee",
+      "python/umf_access/src/umf_access/unified/session_policy.py": "1582fea2148e739beff1378716436ad0ad7bd7839ad154c8e71b185e052e21ee",
+      "python/umf_access/src/umf_access/unified/table_reads.py": "618d17c6a839f31e77aaa7043a41e8099f77b94c486cb96ca28cf9f9819c7f44",
+      "python/umf_access/tests/test_fixed_query_preparation.py": "77dde4035b7506abfcb97ecb2dbf013b463fdb735b06851353febf048e3b8f21",
+      "python/umf_access/tests/test_table_outcomes.py": "99cba3eb97ddd67f0ce06ec94ca67f845dc68995c4a81a7293d4c421770cfc47"
+    }
+  },
+  "runtime": {
+    "platform": "linux/amd64",
+    "imageId": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+    "os": "Ubuntu 24.04.5",
+    "glibc": "2.39",
+    "python": "3.11.17",
+    "emulation": "local Linux container; host/engine provenance must be reported as observed, not claimed as GitHub-hosted/native metal"
+  },
+  "cohort": {
+    "root": "/private/tmp/migration-full18-e4299aff8-002/aggregate",
+    "profile": "umf.embedder-wheel-linux-runtime-macos-inputs/1",
+    "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+    "selectedChildLock": "/private/tmp/migration-full18-e4299aff8-002/cells/linux-x86_64-py311/cohort.lock.json",
+    "selectedChildLockSha256": "4337ab0597dcec245402abe73bcf8ea1d09bc72a4cb2907473c9e53d0327e611",
+    "aggregateIndex": "/private/tmp/migration-full18-e4299aff8-002/aggregate/aggregate.json",
+    "aggregateIndexSha256": "fac25d7d5041983f1e3d464efbdda70e84df19f9fd7b70882990e4a05e69a634",
+    "unionLock": "/private/tmp/migration-full18-e4299aff8-002/aggregate/union.lock.json",
+    "unionLockSha256": "d72b1fe64f403fc52aaca586c6b73147feaea99c6a291767385e3caa351015ab",
+    "mirrorManifest": "/private/tmp/migration-full18-e4299aff8-002/aggregate/mirror/manifest.json",
+    "mirrorManifestSha256": "75e64af5b1f3b3d6f5c6cbbf7bbde2174aa955f22afb11f8d6b82ded051ae3db",
+    "wheelCount": 18,
+    "sourceBuiltRows": {
+      "umf-access": {
+        "version": "0.1.0.dev8",
+        "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+        "wheel": "umf_access-0.1.0.dev8-py3-none-any.whl",
+        "sha256": "1a21c1ddd59f6b23e9f0b33228280564af0e96bb4d13699b89616d5143e4fd23"
+      },
+      "umf-codegen": {
+        "version": "0.1.0a5",
+        "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+        "wheel": "umf_codegen-0.1.0a5-py3-none-any.whl",
+        "sha256": "36a6f7e0ab92feb9cb20ed8842cc3c1f073cdd3ff2c4edff137c1fcbc3ace158"
+      }
+    },
+    "immutableRows": {
+      "umf-core": {
+        "version": "0.10.3",
+        "semanticVersion": "0.10.0",
+        "wheel": "umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl",
+        "sha256": "cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75",
+        "releaseTag": "python-v0.10.3",
+        "releaseCommitM": "7d334dec45948953718bfacd3ed6dd199cadba79",
+        "producerCommitP": "34a337b2d398b5ae33954cc250f6237bc1661c21"
+      },
+      "umf-weft": {
+        "version": "0.4.55",
+        "wheel": "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "sha256": "b34ca17fa37412afa7b8e8bd86aac8ee67a3c895a9b253221e1d582b39073a85",
+        "releaseTag": "v0.4.55",
+        "producerCommit": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+        "releaseApiReadback": "/private/tmp/g03-weft-0455-public-release-current.json",
+        "releaseApiReadbackSha256": "1d43cd237f2ed716fdca4c4db916c0db51a259db855a0bd44b72da4d77247ed8",
+        "releaseId": 424900540,
+        "publishedAt": "2026-10-27T00:09:24Z"
+      }
+    },
+    "requirementsFile": "/private/tmp/migration-full18-e4299aff8-002/aggregate/mirror/requirements.lock",
+    "requirementsFileSha256": "bca40a3db5f840f1059443fdd02c66f47a894b51ecdcb9bd33ffa93d4911ce49"
+  },
+  "fixtures": {
+    "fixtureProducer": "tests/lifecycle/g03-defaults-native-fixture.ts",
+    "fixtureSchema": "umf.praxis.g03-defaults-native-fixture/1",
+    "selectedVariants": [
+      "absent",
+      "matchingLogical5",
+      "set5"
+    ],
+    "generatedFixtureSha256": "HELD_UNTIL_GENERATED_AFTER_REVIEW"
+  },
+  "limitations": [
+    "compiler/admission only through actual native Weft compiler; no DB effects, authentication, N12/full-campaign or publication claim",
+    "actual Weft 0.4.55 rejection is preserved as evidence; no version bump/fallback/widening is implied",
+    "Core, Weft, Access, Codegen producer identities remain distinct"
+  ],
+  "probe": {
+    "path": "/private/tmp/g03-local-linux-admission-probe-002/probe.py",
+    "sha256": "032e0546ad4d7846845da0a77a52a2efcab28be7318b1b35204532068ba4f8ef",
+    "status": "SOURCE_ONLY_NOT_EXECUTED",
+    "scope": "Access _prepared_for to installed Weft prepare/bind; no _source_for, auth, lease, SQL or DB"
+  },
+  "revision": {
+    "supersedes": "/private/tmp/g03-local-linux-admission-probe-001",
+    "reason": "specific negative-boundary proof, actual wrapper observation, text binder invocation with required idempotency key, corrected immutable wheel digest",
+    "reviewStatus": "PENDING_SOL_SOURCE_REVIEW"
+  }
+}

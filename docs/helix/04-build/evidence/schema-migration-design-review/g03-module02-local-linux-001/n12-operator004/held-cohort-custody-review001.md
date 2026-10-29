@@ -1,0 +1,7 @@
+# Held candidate18 cohort custody review
+
+Accept source/data custody for candidate probe recipe preparation only. Independently verified every41 inventoried physical file against size/SHA, the original selected lock4337ab0597dcec245402abe73bcf8ea1d09bc72a4cb2907473c9e53d0327e611 unchanged, and exact equality of all17 non-Weft package rows, wheel rows and physical wheel bytes. New lock29c69360e6bcbea329f1ddab05725f727316a729954f123cf11c102486a5c94b, requirementsc28065235c7863051de1498c6144dfc1813264f5011dcaff865c2791515b75e4, indexc4d99294936f1631949cb7252d98c8e91b9ba106bf329e251dc9c8ef41e5287d, mirror9e304930ca19abc38091a90e324806649d1f75b1ca799b37448327c5c0b052b9 and custody3eb574de40334922055b239dd33288c328618bcc70c9b91c86f97d9f4b4989eb retain distinct held profiles.
+
+Only Weft is replaced by reviewed wheel51d607f851c72cffbc0dc45a969237f23d90b59185826b9eda56a791e799533e, with actual source/build/review/native member provenance and real candidate version. Recipe explicitly limits intended probe to Linuxx86_64/Python3.11/glibc>=2.34 and marks no runtime/platform aggregate qualification. The original published55 cohort is preserved; old Mac artifacts are not admitted as successor evidence. Preparation script9212903f2a35617d73aaf4e74ebe239a50c06c8f5c5f7f7fe1a09f932511e5e4 inspected; no candidate execution by reviewer.
+
+A frozen revised five-case operator still requires source review and actual successful installed/member/profile controls. No runtime compatibility or N12/fullG03 qualification follows from copy/hash equality.

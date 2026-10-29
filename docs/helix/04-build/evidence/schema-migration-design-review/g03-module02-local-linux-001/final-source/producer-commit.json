@@ -1,0 +1,33 @@
+{
+  "status": "SOL_SOURCE_ACCEPTED_LOCAL_PRODUCER_COMMITTED",
+  "version": "0.4.56",
+  "publicReservation": false,
+  "noPush": true,
+  "upstreamHead": "e7e88b077c256c852a83d7951e3bc5fd1ec234aa",
+  "coordinateChecks": "GitHub tag/release and PyPI version all404 immediately before local edit; coordination no competing reservation reported, no acknowledgement",
+  "files": [
+    {
+      "path": "Cargo.lock",
+      "prototypeSha256": "6854eb928c4812b6cb8d47277383c75d6638250ecad36e1d2a3ff142b40a1480",
+      "finalSha256": "0a7dbe0788f4c8ac0f5752b5e9600e83fa0de74ff0dcd8a2039370ee752c95c4",
+      "onlyChange": "single exact version token 0.4.55+g03.a96e4f29262e to 0.4.56"
+    },
+    {
+      "path": "crates/weft-python/Cargo.toml",
+      "prototypeSha256": "5d085c4ec6bdd6019663b2b879a0e2c18ec30ef52dd31086d83a34560ab5d39d",
+      "finalSha256": "d81e9f5c7889824dcd716d6c98896bf2f46567d15ed49780afcff6ad1a7da768",
+      "onlyChange": "single exact version token 0.4.55+g03.a96e4f29262e to 0.4.56"
+    },
+    {
+      "path": "crates/weft-python/pyproject.toml",
+      "prototypeSha256": "db09157757e6ad089155414ed7d8647617deb24832a1d266471af573b62fb563",
+      "finalSha256": "a7639ebe3cec4c9f1c5141945d613a56eb333bfa99a97dacc2281e5820960cea",
+      "onlyChange": "single exact version token 0.4.55+g03.a96e4f29262e to 0.4.56"
+    }
+  ],
+  "semanticPatchSha256": "3f890d60802ef3cedbf212a98f1142dbb202c39e81ea181b13fd0d8960f8dd1c",
+  "fullPatchSha256": "b5402ca3e8628f00c84bca40bfea547a15e1dd83cc5664009e845bae093a2cef",
+  "producerCommit": "973d864c8d26b2bc173a411eac8368da5efc1ab3",
+  "producerTree": "8b20d1f01bea72ea08ed01fcaac97266ed3cb4ff",
+  "review": "/private/tmp/g03-final-version-freeze-sol-source-review001.md"
+}

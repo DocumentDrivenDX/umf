@@ -1,0 +1,78 @@
+{
+  "baseCommit": "a6eb216a95a49715f75a058502d9915a8eb1f8ff",
+  "baseTree": "4475f25b7b445fda9c4f2e97208dfa632a8905df",
+  "files": [
+    {
+      "path": "tests/lifecycle/g03-defaults-native.py",
+      "sha256": "e915517f2e2ae30299f60028fc2f6d233699a1e1fd0a91469cc3fe33511bc57a",
+      "sizeBytes": 113145,
+      "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/g03-defaults-native.py"
+    },
+    {
+      "path": "tests/lifecycle/g03_ordinary_native.py",
+      "sha256": "5e64050386952466c80f8fcbd4ce37a2793308efcd05977a998d627a68fff051",
+      "sizeBytes": 54397,
+      "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/g03_ordinary_native.py"
+    },
+    {
+      "path": "tests/lifecycle/g03_campaign_predicates.py",
+      "sha256": "b1dcf7ef0de0e633b497ad13588424012c36b280273f4235c3e85e116eefb84c",
+      "sizeBytes": 42670,
+      "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/g03_campaign_predicates.py"
+    },
+    {
+      "path": "tests/lifecycle/g03_campaign_orchestration.py",
+      "sha256": "4f554e000888cd21e94b7c9ba19868d6fac94805e5fbe6ef34b88deabd46490a",
+      "sizeBytes": 11892,
+      "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/g03_campaign_orchestration.py"
+    },
+    {
+      "path": "tests/lifecycle/g03-defaults-native-fixture.ts",
+      "sha256": "9f0325ae69e6e8326abc62412404adac1f133c0eef6f40b0cc365b3f4ad7d62f",
+      "sizeBytes": 10237,
+      "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/g03-defaults-native-fixture.ts"
+    },
+    {
+      "path": "tests/lifecycle/test_g03_campaign_predicates.py",
+      "sha256": "76b1718ea350bd811f7d94e27854edb0156615b12694605a88a835b24f299f0e",
+      "sizeBytes": 18582,
+      "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/test_g03_campaign_predicates.py"
+    },
+    {
+      "path": "tests/lifecycle/test_g03_campaign_orchestration.py",
+      "sha256": "9a8044d19f1deec433d022471f380effe56da06498f9ec844cb49ef0cd9a93ec",
+      "sizeBytes": 4036,
+      "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/test_g03_campaign_orchestration.py"
+    },
+    {
+      "path": "tests/binding/fixtures/table-lifecycle-note.json",
+      "sha256": "0f8a2f5d38d32514ec38fc3bbe393c5b88d45c251c2ae05ac23bea261b0e94ee",
+      "sizeBytes": 3765,
+      "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/binding/fixtures/table-lifecycle-note.json"
+    }
+  ],
+  "previousReviews": [
+    {
+      "path": "/private/tmp/g03-campaign-predicates-sol-source-review001.md",
+      "sha256": "f57dde078a55249a41c4353b8db81f0d249abb532662c7f7d700d9faf102176c"
+    },
+    {
+      "path": "/private/tmp/g03-n12-native-default-expression-sol-source-review001.md",
+      "sha256": "6312403f96ba4c7360f416663a22a0c57a5358874d9fc078b3cf18c331787731"
+    }
+  ],
+  "previousSeal": {
+    "disposition": "Native003 retained failure at logical root-role scope; original unchanged",
+    "manifestSha256": "89e7f44526bb8f6b3dfa326339252ee0ff8365c084862c3f870ae01fa1746740",
+    "path": "/private/tmp/g03-n12-source-seal-003"
+  },
+  "profile": "umf.g03-reviewed-harness-source-subset/2",
+  "review": {
+    "path": "/private/tmp/g03-n12-eight-role-sol-source-review001.md",
+    "sha256": "287ad342136a56d61b2600d78123316f3f9430799140f91d550339f00ade567a"
+  },
+  "revision": "004 distinct logical owner/person/batch roots, shared actual Alice/Bob, exact8 role identities/memberships/cleanup and family-specific admission configuration; no product or fixture change",
+  "scope": "Changed harness files; product APIs imported from exact held18 installed distribution cohort. Package producer P is a separate identity. No whole-tree source or native qualification claim.",
+  "status": "SOURCE_ACCEPTED_NOT_EXECUTED",
+  "wholeTreeEqualToBase": false
+}

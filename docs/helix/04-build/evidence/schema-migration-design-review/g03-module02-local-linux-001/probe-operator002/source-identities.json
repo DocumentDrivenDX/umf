@@ -1,0 +1,126 @@
+{
+  "candidateSource": {
+    "commit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+    "containerPath": "/volume-producer",
+    "mount": "read-only",
+    "tree": "8b98c0d895983ba2b7637dd3aea567dab0943883",
+    "volume": "umf-migration-source-267675510"
+  },
+  "cohort": {
+    "aggregateIndexSha256": "fac25d7d5041983f1e3d464efbdda70e84df19f9fd7b70882990e4a05e69a634",
+    "mirrorManifestSha256": "75e64af5b1f3b3d6f5c6cbbf7bbde2174aa955f22afb11f8d6b82ded051ae3db",
+    "mount": "read-only at /cohort/aggregate",
+    "requiredDefaultWheels": 18,
+    "requirementsLockSha256": "bca40a3db5f840f1059443fdd02c66f47a894b51ecdcb9bd33ffa93d4911ce49",
+    "root": "/private/tmp/migration-full18-e4299aff8-002/aggregate",
+    "selectedChildLockPath": "/private/tmp/migration-full18-e4299aff8-002/cells/linux-x86_64-py311/cohort.lock.json",
+    "selectedChildLockSha256": "4337ab0597dcec245402abe73bcf8ea1d09bc72a4cb2907473c9e53d0327e611"
+  },
+  "deltaFromAccepted001": {
+    "allCandidateInputsAndCommandsUnchanged": true,
+    "changes": [
+      "/tmp and /venv tmpfs add exec to permit dlopen of locked native wheels; original noexec flags were confirmed from the container mount table",
+      "failure cleanup first checks exact container-name absence and avoids redundant inspect after a closed successful removal"
+    ],
+    "sourceReview001": "/private/tmp/g03-local-linux-admission-operator-sol-source-review001.md",
+    "sourceReview001Sha256": "13c3e11cc8381380c45bab05e896ed70dc5cd0ac6ad642c88fe0f5dd0457fe29"
+  },
+  "externalFrozenInputs": {
+    "boundedCaptureHelper": {
+      "path": "/private/tmp/sdk-057-local3600-public-h-operator-proposal011/run_public_h_docker.py",
+      "sha256": "8e383bece7d44484421302f8be32fdb1ba1ed96cd895749093a58171648cf1cd"
+    },
+    "probe": {
+      "path": "/private/tmp/g03-local-linux-admission-probe-002/probe.py",
+      "sha256": "032e0546ad4d7846845da0a77a52a2efcab28be7318b1b35204532068ba4f8ef",
+      "sizeBytes": 13730
+    },
+    "probeSourceReview": {
+      "path": "/private/tmp/g03-local-linux-admission-probe-sol-source-review002.md",
+      "sha256": "bf84218989422df2447aa069b0953001f20e999d77e59bd5dfcb56c349610657"
+    },
+    "sourcePins": {
+      "path": "/private/tmp/g03-local-linux-admission-probe-002/source-pins.json",
+      "sha256": "82db10f7a95989cc7b68d468710ba97e7d606881c8cb2d01accaba6005211dc6",
+      "sizeBytes": 5973
+    }
+  },
+  "guestProfile": "umf.g03-local-linux-admission-guest/2",
+  "operatorProfile": "umf.g03-local-linux-admission-docker-operator/2",
+  "operatorSources": {
+    "PLAN.md": {
+      "path": "PLAN.md",
+      "sha256": "bd21d6007003f26b4a995670ba7ee8c2734af120f0a2d5d33db45bc24bb7bf64",
+      "sizeBytes": 6136
+    },
+    "README.md": {
+      "path": "README.md",
+      "sha256": "23837a4b9c7118baeab1746772581751ba969500b2c24ef3c0be4594b46f15d4",
+      "sizeBytes": 2613
+    },
+    "guest_runner.py": {
+      "path": "guest_runner.py",
+      "sha256": "bead308ade27751d8490df4fc73dcea93e7ce59eadd54d3b6958bc025ba8e969",
+      "sizeBytes": 15384
+    },
+    "run_operator.py": {
+      "path": "run_operator.py",
+      "sha256": "23a85472f25d66b18328e7b4b248484ddde54fa8b42e961174aa2fcbb093119e",
+      "sizeBytes": 16140
+    },
+    "verify_weft_wheel.py": {
+      "path": "verify_weft_wheel.py",
+      "sha256": "cd3f8026acf1457604076b2937d01e40e3edeb19191121d915a61c7f91ec601b",
+      "sizeBytes": 3689
+    }
+  },
+  "priorAttemptEvidence": {
+    "casesExecuted": 0,
+    "cleanup": {
+      "nameAbsent": true,
+      "removed": true,
+      "reportedError": "redundant inspect of already removed container after probe exit 1",
+      "rmExitCode": 0
+    },
+    "executionId": "e2dbd083504c4d6e9d722cac595975e1",
+    "guestResultSha256": "4e3b5937fecc838173ca62e03e856f43edbf8637b3c12496c3c942970203b4a9",
+    "installAndWheelMemberVerificationPassed": true,
+    "nativeImportErrorLogSha256": "06075ba5f5c50afeb2ad0de7de98db60b90912245977a6fbb8e081002e23f5e9",
+    "operatorResultSha256": "c5c563833bd288f25c2e155348a60d4584113ed88aa9c097d293dcd3a40ca8d3",
+    "path": "/private/tmp/g03-local-linux-admission-operator-001/runs/e2dbd083504c4d6e9d722cac595975e1",
+    "status": "FAIL_OR_UNKNOWN"
+  },
+  "probe": {
+    "path": "/private/tmp/g03-local-linux-admission-probe-002/probe.py",
+    "revision": "002",
+    "sha256": "032e0546ad4d7846845da0a77a52a2efcab28be7318b1b35204532068ba4f8ef",
+    "sourceReview": {
+      "path": "/private/tmp/g03-local-linux-admission-probe-sol-source-review002.md",
+      "sha256": "bf84218989422df2447aa069b0953001f20e999d77e59bd5dfcb56c349610657"
+    },
+    "status": "SOURCE_ACCEPTED_BY_SOL"
+  },
+  "probePinsSha256": "82db10f7a95989cc7b68d468710ba97e7d606881c8cb2d01accaba6005211dc6",
+  "profile": "umf.g03-local-linux-admission-operator-inputs/2",
+  "runtime": {
+    "bun": "1.4.3; observed exact output required before fixture generation",
+    "imageId": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+    "network": "Docker network none; unshare --net for pip and probe",
+    "platform": "linux/amd64",
+    "python": "3.11.17; observed exact output required before candidate commands"
+  },
+  "scope": "source compiler and Access-to-Weft wrapper admission only; no PostgreSQL, SQL, native N12, hosted workflow or release qualification",
+  "status": "PREPARED_NOT_EXECUTED_REVISION_002",
+  "supersedes": {
+    "executionId": "e2dbd083504c4d6e9d722cac595975e1",
+    "path": "/private/tmp/g03-local-linux-admission-operator-001",
+    "reason": "guest probe process failed to load native extension because /venv tmpfs lacked exec; all source identity, locked install and Weft wheel-member checks before it passed",
+    "status": "FAIL_OR_UNKNOWN"
+  },
+  "weftInstalledFiles": {
+    "verification": "every regular weft/ wrapper/native member in selected wheel compared by size+SHA to actual installed site-packages bytes after locked install",
+    "wheelPath": "/cohort/aggregate/mirror/files/umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+    "wheelSha256": "b34ca17fa37412afa7b8e8bd86aac8ee67a3c895a9b253221e1d582b39073a85",
+    "wheelSizeBytes": 14347375
+  }
+}

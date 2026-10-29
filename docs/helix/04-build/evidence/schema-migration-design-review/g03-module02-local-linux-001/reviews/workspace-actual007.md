@@ -1,0 +1,7 @@
+# Workspace conformance007 actual review
+
+Accept LOCAL_LINUX_WORKSPACE_CONFORMANCE_PROFILES_PASS for the two exact inherited source profiles. Result83382b81fdd112ebaca4de668b1bfd226862c027932d3c0c42d1621c318b0b26. Independently verified six physical setup/candidate/qualified logs and successful no-timeout/no-truncation captures, exactsourceprepost equality and source/tool/image/profile pins. Candidate workspace has62successful summaries1117pass/0fail/0ignored; qualified workspace separately62summaries1118pass/0fail/0ignored. Totals overlap and are not unique-test sums. Full originalconformanceworkflow/othercommands are not inferred passed.
+
+Outer769.814s below adoptedlocal3600aggregate, bothstages below1800, cleanup1.093s/noerrors, combinedlogs below1MiB. Same Rust1.90/Maturin1.9.6/image1f983/actualPython3.11.17, OPT1/debugassertions/overflowchecks and lockedoffline commands retained. WorkflowPython3.12 is not relabeled; localprofile is distinct. No wheelbuild/nativeDB/browser/Mac execution occurred in this run.
+
+This discharges inherited candidate+qualifiedworkspace regression profiles for actualsource only;005core+PG/006trussruntime remain independent receipts, not concatenatedfreshgate. InstalledN12/full14, browserparity, genuineplatform/release artifacts, immutablepublicproof remain open. Preserve earlier failures. Reviewer performed data-onlyreview, no candidateexecution/import/tests/Docker/Git/Actions.

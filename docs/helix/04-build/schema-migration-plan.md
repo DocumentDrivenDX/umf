@@ -313,6 +313,73 @@ record the actual identities. Independent actual-evidence review accepted this
 selected G02 public proof; the normal metadata follow-up merge records D7 closure. No G03–G11, managed-consumer,
 additional-backend or Praxis acceptance follows; the broader goal stays active.
 
+### G03 local Linux continuation — 2026-10-29
+
+The [module-admission evidence packet](evidence/schema-migration-design-review/g03-module02-local-linux-001/README.md)
+records the next concrete blocker: public Weft 0.4.55 rejects module envelope
+0.2 in both expected positive controls. Its legacy absent-default control passes,
+legacy logical-default source refuses, and a mismatched default receives its
+located deployment refusal. These are compiler-only observations with no database
+lease or effect; they do not qualify N12 or the migration campaign.
+
+Sol accepted the separate Weft shared Rust source change for local testing.
+Ordinary UMF declarations stay at 0.1; explicit trusted host policy selects the
+module envelope. The source preserves legacy/direct admission and native omission
+semantics. A uniquely held local package version distinguishes candidate bytes
+from immutable public 0.4.55; no future public version is reserved. The first build
+attempt failed before testing because rustup tried to update a read-only home;
+the corrected reviewed driver selects the already installed Rust 1.90.0 toolchain.
+Its local Linux test command reported 865 passing tests and one failed new
+declared-query control, so the wheel build did not run. Cleanup and source closure
+passed. Attempt003 retained a second test-only failure confusing the prepared
+program and bind APIs. After the reviewed correction, attempt004 passed all 27
+table-operation integration tests and built the held full-feature Linux wheel.
+Independent review accepted its scoped artifact and cleanup. The wheel's actual
+manylinux2_34 tag is narrower than public 0.4.55's manylinux2_17 tag; no broader platform
+support follows. A reviewed held 18-wheel cohort changes only Weft and preserves the
+other 17 distributions and wheel bytes. The held installed five-case probe then passed, preserving exact legacy program
+bytes, precise refusals and zero leases. This closes compiler admission only;
+the subsequent complete locked core/PostgreSQL command passed 892 tests with
+independent source/log/cleanup review. That command does not cover the separate
+workspace/runtime feature profiles, browser or native migration gates. The
+separate runtime profile subsequently passed 69 tests. Both inherited workspace
+profiles passed: 1,117 candidate and 1,118 qualified tests (overlapping counts,
+not unique totals), with independent source, bounded-log and cleanup review.
+GitHub Actions and macOS CI are not execution routes for this work.
+
+Standalone N12 then passed all 71 required checks against the held Linux wheel.
+Actual sync/async ordinary operations, both source families, profile/source/cursor
+and occupied-slot isolation, caller rollback and lost-COMMIT recovery are recorded.
+A reviewed generation 1-to-2 default change preserves all historical rows and
+actual integer storage while retaining the raw native default expressions.
+Separate logical authority roots preserve the existing external-authority guard;
+all eight owned roles and native/outer resources were removed. Attempts 001–003
+remain failed historical evidence. This does not transfer qualification to a
+final successor wheel or close the complete serial 14-case native campaign.
+
+Final successor source is frozen locally at Weft
+`973d864c8d26b2bc173a411eac8368da5efc1ab3`, version 0.4.56. Genuine
+manylinux2_17 x86_64 and aarch64 builds/static audits are accepted. The original
+x86_64 receipt retains its failed tag-oracle result; a separate audit-only
+continuation accepts the same wheel without rebuilding. ARM remains build/static
+only. Reconstructed final 18-wheel cohort metadata and fresh Linux Python 3.11
+installation/compiler admission are accepted; the whole cohort still requires
+glibc 2.34. These results do not transfer prototype native qualification.
+
+The first final 14-case/19-scenario campaign stopped before guest startup on a
+read-only nested packet mount; no scenario ran and cleanup passed. A narrow
+mount relocation is reviewed for implementation. The first macOS build attempt
+also stopped before compilation on stale reported header paths; its reviewed
+repair measures the actual CLT bundle while retaining raw anomalies. Details
+and original failures are retained in the
+[local evidence packet](evidence/schema-migration-design-review/g03-module02-local-linux-001/README.md).
+
+Next: complete the final bounded native campaign, inherited installed/CLI/native/
+WASM/browser and source/package checks, macOS build/static-only artifact,
+independent review, normal merge, immutable successor publication and fresh public
+proof. GitHub Actions and macOS CI remain off. No G03 completion, new macOS
+feature support, managed adoption or Praxis change follows from these checkpoints.
+
 #### Historical pre-reconciliation G02 integration checkpoint — Core 0.10.1
 
 This is a preserved pre-reconciliation checkpoint for the earlier Core 0.10.1

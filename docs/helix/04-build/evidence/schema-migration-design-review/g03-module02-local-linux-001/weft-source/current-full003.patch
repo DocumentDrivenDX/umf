@@ -1,0 +1,862 @@
+diff --git a/Cargo.lock b/Cargo.lock
+index 95eec4a2..0bba8864 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -1080,7 +1080,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "weft-python"
+-version = "0.4.55"
++version = "0.4.55+g03.a96e4f29262e"
+ dependencies = [
+  "pyo3",
+  "weft-runtime",
+diff --git a/crates/weft-core/src/model.rs b/crates/weft-core/src/model.rs
+index f0e7d6f9..e86fd541 100644
+--- a/crates/weft-core/src/model.rs
++++ b/crates/weft-core/src/model.rs
+@@ -54,6 +54,7 @@ pub struct Catalog {
+     pub(crate) identity_name_fallback: bool,
+     raw_read_opaque_extensions: bool,
+     native_operation_domains: bool,
++    logical_defaults020: bool,
+     pub(crate) exact_scalars: bool,
+     pub(crate) exact_dates: bool,
+     pub(crate) bounded_current_strings: bool,
+@@ -75,15 +76,18 @@ fn fail(code: &str, message: &str) -> Diagnostic {
+ /// preserve their value domain. External semantic type references are retained
+ /// in source but remain outside the raw scalar profile.
+ pub(crate) fn selected010(pin: &ModelPin, element: &Value) -> Result<()> {
+-    selected010_inner(pin, element, false, false, None)
++    selected010_inner(pin, element, false, false, false, None)
+ }
+ pub(crate) fn selected010_raw_read(pin: &ModelPin, element: &Value, document: &Value) -> Result<()> {
+-    selected010_inner(pin, element, true, false, Some(document))
++    selected010_inner(pin, element, true, false, false, Some(document))
+ }
+ pub(crate) fn selected010_table_operation(pin: &ModelPin, element: &Value, document: &Value) -> Result<()> {
+-    selected010_inner(pin, element, true, true, Some(document))
++    selected010_inner(pin, element, true, true, false, Some(document))
+ }
+-fn selected010_inner(pin: &ModelPin, element: &Value, allow_raw_read_metadata: bool, native_domains: bool, document: Option<&Value>) -> Result<()> {
++pub(crate) fn selected010_table_operation020(pin: &ModelPin, element: &Value, document: &Value) -> Result<()> {
++    selected010_inner(pin, element, true, true, true, Some(document))
++}
++fn selected010_inner(pin: &ModelPin, element: &Value, allow_raw_read_metadata: bool, native_domains: bool, logical_defaults020: bool, document: Option<&Value>) -> Result<()> {
+     if pin.umf_version != "0.10.0" { return Ok(()); }
+     const KNOWN: &[&str] = &["id", "name", "title", "description", "kind", "scalarType",
+         "nullability", "cardinality", "itemType", "recordType", "facets", "members",
+@@ -102,7 +106,18 @@ fn selected010_inner(pin: &ModelPin, element: &Value, allow_raw_read_metadata: b
+             })
+         })
+     });
+-    if element.as_object().is_none_or(|m|m.keys().any(|k|!KNOWN.contains(&k.as_str())&&!(native_domains&&element["kind"]=="field"&&k=="allowedValues")))
++    let default020_is_closed = element.get("default").is_none_or(|default| {
++        logical_defaults020
++            && element["kind"] == "field"
++            && default.as_object().is_some_and(|members| {
++                members.len() == 2
++                    && members.contains_key("on")
++                    && members.contains_key("value")
++                    && default["on"] == "missing"
++                    && !default["value"].is_null()
++            })
++    });
++    if element.as_object().is_none_or(|m|m.keys().any(|k|!KNOWN.contains(&k.as_str())&&!(native_domains&&element["kind"]=="field"&&k=="allowedValues")&&!(logical_defaults020&&element["kind"]=="field"&&k=="default"&&default020_is_closed)))
+         || element.get("semanticTypes").is_some()
+         || !extensions_supported
+     { return Err(fail("WFT-TYPE", "Selected UMF 0.10 element has semantics outside the raw scalar profile")); }
+@@ -134,7 +149,11 @@ impl Catalog {
+                 .find(|(input, _)| input.pin == *pin)
+                 .map(|(_, document)| document)
+                 .ok_or_else(|| fail("WFT-PIN", "Selected element has no exact owning document"))?;
+-            if self.native_operation_domains { selected010_table_operation(pin, element, document) }
++            if self.native_operation_domains && self.logical_defaults020 {
++                selected010_table_operation020(pin, element, document)
++            } else if self.native_operation_domains {
++                selected010_table_operation(pin, element, document)
++            }
+             else { selected010_raw_read(pin, element, document) }
+         }
+         else { selected010(pin, element) }
+@@ -181,6 +200,11 @@ impl Catalog {
+         catalog.native_operation_domains=true;
+         Ok(catalog)
+     }
++    pub(crate) fn prepare_table_operation020(inputs: Vec<ModuleInput>) -> Result<Self> {
++        let mut catalog=Self::prepare_table_operation010(inputs)?;
++        catalog.logical_defaults020=true;
++        Ok(catalog)
++    }
+     pub(crate) fn prepare_security_bounded_strings(inputs: Vec<ModuleInput>) -> Result<Self> {
+         let mut catalog = Self::prepare_security(inputs)?;
+         catalog.bounded_current_strings = true;
+@@ -302,7 +326,7 @@ impl Catalog {
+             }
+             index
+         }).collect();
+-        Ok(Self { inputs, documents, element_locations, record_names, exact_numbers:false, field_projection_decimal38:false, sdk_scalar_presence:false, exact_scalars:false, exact_dates:false, bounded_current_strings:false, security_inputs:required_version == Some("0.10.0"), identity_name_fallback:false, raw_read_opaque_extensions:false, native_operation_domains:false })
++        Ok(Self { inputs, documents, element_locations, record_names, exact_numbers:false, field_projection_decimal38:false, sdk_scalar_presence:false, exact_scalars:false, exact_dates:false, bounded_current_strings:false, security_inputs:required_version == Some("0.10.0"), identity_name_fallback:false, raw_read_opaque_extensions:false, native_operation_domains:false, logical_defaults020:false })
+     }
+     pub(crate) fn local_element_by_ids(&self, document: usize, module: &str, element: &str) -> Option<&Value> {
+         let (module_index, elements) = self.element_locations.get(document)?.get(module)?;
+@@ -511,6 +535,48 @@ impl Catalog {
+     }
+ }
+ 
++#[cfg(test)]
++mod selected_module020_tests {
++    use super::*;
++    use serde_json::json;
++
++    fn pin() -> ModelPin {
++        ModelPin {
++            document_id: "demo".into(),
++            revision: "1".into(),
++            umf_version: "0.10.0".into(),
++            sha256: "0".repeat(64),
++        }
++    }
++
++    fn field(default: Value) -> Value {
++        json!({
++            "kind":"field", "scalarType":"integer", "cardinality":"one",
++            "nullability":"required", "extensions":{}, "facets":{},
++            "default":default
++        })
++    }
++
++    #[test]
++    fn module020_is_the_only_selected_path_that_admits_closed_non_null_defaults() {
++        let pin = pin();
++        let document = json!({});
++        let accepted = field(json!({"on":"missing","value":{"integerToken":"5"}}));
++        assert!(selected010_table_operation020(&pin, &accepted, &document).is_ok());
++        assert!(selected010_table_operation(&pin, &accepted, &document).is_err());
++        assert!(selected010(&pin, &accepted).is_err());
++
++        for invalid in [
++            json!({"on":"missing","value":null}),
++            json!({"on":"null","value":{"integerToken":"5"}}),
++            json!({"on":"missing","value":{"integerToken":"5"},"extra":true}),
++        ] {
++            let field = field(invalid);
++            assert!(selected010_table_operation020(&pin, &field, &document).is_err());
++        }
++    }
++}
++
+ pub(crate) fn scalar_type(field: &Value, name: &Name, mathematical_integer: bool, mathematical_decimal: bool, bounded_strings: bool) -> Result<LogicalType> {
+     scalar_type_projected(field,name,mathematical_integer,mathematical_decimal,bounded_strings,false)
+ }
+diff --git a/crates/weft-core/src/raw_read.rs b/crates/weft-core/src/raw_read.rs
+index 9b9313dc..b71e9540 100644
+--- a/crates/weft-core/src/raw_read.rs
++++ b/crates/weft-core/src/raw_read.rs
+@@ -218,6 +218,18 @@ pub(crate) fn prepare_operation_document(
+ ) -> Result<AdmittedModel> {
+     prepare_native_document(binding, doc, operation, false, false, NativeDocumentMode::Runtime)
+ }
++/// Admit a table-operation module selected under the explicit 0.2 envelope.
++/// This profile-specific path is not used by raw reads, direct queries, seeds,
++/// administrative operations or the legacy module envelope.
++pub(crate) fn prepare_operation_document020(
++    binding: &Binding,
++    doc: Json,
++    operation: Option<&str>,
++) -> Result<AdmittedModel> {
++    prepare_native_document_with_module020(
++        binding, doc, operation, false, false, NativeDocumentMode::Runtime, true,
++    )
++}
+ /// Admit original operation meaning for a Weft-owned administrative compiler.
+ /// This keeps the normal operation source/field/type checks while deliberately
+ /// bypassing runtime lifecycle admission; the caller must establish a separate
+@@ -236,6 +248,17 @@ fn prepare_native_document(
+     seed: bool,
+     temporal_read: bool,
+     mode: NativeDocumentMode,
++) -> Result<AdmittedModel> {
++    prepare_native_document_with_module020(binding, doc, operation, seed, temporal_read, mode, false)
++}
++fn prepare_native_document_with_module020(
++    binding: &Binding,
++    doc: Json,
++    operation: Option<&str>,
++    seed: bool,
++    temporal_read: bool,
++    mode: NativeDocumentMode,
++    logical_defaults020: bool,
+ ) -> Result<AdmittedModel> {
+     if binding.tables.iter().flat_map(|t| &t.columns).any(|c| {
+         matches!(
+@@ -269,7 +292,11 @@ fn prepare_native_document(
+         return Err("raw-read supports UMF core 0.10.0 sources only");
+     }
+     let catalog = if operation.is_some() || seed {
+-        crate::model::Catalog::prepare_table_operation010(vec![input])
++        if logical_defaults020 && operation.is_some() {
++            crate::model::Catalog::prepare_table_operation020(vec![input])
++        } else {
++            crate::model::Catalog::prepare_table_operation010(vec![input])
++        }
+     } else if matches!(mode, NativeDocumentMode::FiniteUnityCurrentSummary | NativeDocumentMode::FiniteUnityCurrentSum | NativeDocumentMode::FiniteUnityCurrentAvg) {
+         crate::model::Catalog::prepare_raw_read010_finite_current_aggregate(vec![input])
+     } else {
+@@ -334,7 +361,13 @@ fn prepare_native_document(
+                 return Err("column absent/ambiguous in UMF");
+             };
+             let (field, member) = matches.unwrap()[0];
+-            (if operation.is_some() || seed { crate::model::selected010_table_operation(&record.pin, field, &doc) } else { crate::model::selected010_raw_read(&record.pin, field, &doc) }).map_err(|_| "selected UMF 0.10 field has unsupported meaning")?;
++            (if logical_defaults020 && operation.is_some() {
++                crate::model::selected010_table_operation020(&record.pin, field, &doc)
++            } else if operation.is_some() || seed {
++                crate::model::selected010_table_operation(&record.pin, field, &doc)
++            } else {
++                crate::model::selected010_raw_read(&record.pin, field, &doc)
++            }).map_err(|_| "selected UMF 0.10 field has unsupported meaning")?;
+             let family = match c.carrier {
+                 Carrier::Integer => "integer",
+                 Carrier::Decimal => "decimal",
+diff --git a/crates/weft-core/src/table_operation.rs b/crates/weft-core/src/table_operation.rs
+index da324b91..00a3220f 100644
+--- a/crates/weft-core/src/table_operation.rs
++++ b/crates/weft-core/src/table_operation.rs
+@@ -70,10 +70,16 @@ pub struct OperationField {
+ struct OperationSource {
+     target: String,
+     module: String,
++    module_profile: OperationModuleProfile,
+     binding: Arc<Binding>,
+     model: Arc<crate::raw_read::AdmittedModel>,
+     metadata: Arc<ModuleMetadata>,
+ }
++#[derive(Debug, Clone, Copy, PartialEq, Eq)]
++enum OperationModuleProfile {
++    Legacy01,
++    LogicalDefaults02,
++}
+ #[derive(Debug)]
+ struct ResolvedTable {
+     table: Arc<Table>,
+@@ -144,6 +150,7 @@ impl PreparedOperationModule {
+             self.source.module.clone(),
+             Arc::clone(&self.source.binding),
+             Arc::clone(&self.source.model),
++            self.source.module_profile == OperationModuleProfile::LogicalDefaults02,
+         )
+     }
+ }
+@@ -373,10 +380,12 @@ pub fn prepare_module_json(raw: &str) -> Result<PreparedOperationModule> {
+         crate::json::checked_json(raw).map_err(|_| "operation module JSON invalid or duplicate")?,
+     )
+     .map_err(|_| "operation module request shape differs")?;
+-    if request.version != "weft.table-operation-module/0.1" {
+-        return Err("operation module version differs");
+-    }
+-    let source = prepare_source(request.target, request.module, request.binding)?;
++    let module_profile = match request.version.as_str() {
++        "weft.table-operation-module/0.1" => OperationModuleProfile::Legacy01,
++        "weft.table-operation-module/0.2" => OperationModuleProfile::LogicalDefaults02,
++        _ => return Err("operation module version differs"),
++    };
++    let source = prepare_source(request.target, request.module, request.binding, module_profile)?;
+     Ok(PreparedOperationModule { source })
+ }
+ 
+@@ -384,6 +393,7 @@ fn prepare_source(
+     target: String,
+     module_id: String,
+     binding: Binding,
++    module_profile: OperationModuleProfile,
+ ) -> Result<Arc<OperationSource>> {
+     if !matches!(target.as_str(), "postgresql18" | "lakebase18")
+         || binding
+@@ -414,25 +424,112 @@ fn prepare_source(
+         .ok_or("operation module has no supported command")?
+         .to_owned();
+     let binding = Arc::new(binding);
+-    let model = Arc::new(crate::raw_read::prepare_operation_document(
+-        &binding,
+-        source_json,
+-        Some(&first_operation),
+-    )?);
+-    let metadata = Arc::new(prepare_module_metadata(&binding, &model, module_index)?);
++    let model = Arc::new(match module_profile {
++        OperationModuleProfile::Legacy01 => crate::raw_read::prepare_operation_document(
++            &binding, source_json, Some(&first_operation),
++        )?,
++        OperationModuleProfile::LogicalDefaults02 =>
++            crate::raw_read::prepare_operation_document020(
++                &binding, source_json, Some(&first_operation),
++            )?,
++    });
++    let metadata = Arc::new(prepare_module_metadata(&binding, &model, module_index, module_profile)?);
+     Ok(Arc::new(OperationSource {
+         target,
+         module: module_id,
++        module_profile,
+         binding,
+         model,
+         metadata,
+     }))
+ }
+ 
++fn canonical_128_literal(field: &Value, value: &Value, carrier: &Carrier) -> Result<String> {
++    let (logical_type, wrapper, width) = match carrier {
++        Carrier::Uuid => ("uuid", "uuid", 36),
++        Carrier::Bits128 => ("bits128", "bits128Hex", 32),
++        _ => return Err("operation default carrier unsupported"),
++    };
++    if field["scalarType"] != logical_type || value.is_null()
++        || value.as_object().is_none_or(|members| members.len() != 1)
++    {
++        return Err("operation default literal differs from original Field");
++    }
++    let token = value[wrapper].as_str().ok_or("operation default literal wrapper differs")?;
++    let bytes = token.as_bytes();
++    let valid = if carrier == &Carrier::Uuid {
++        bytes.len() == width && bytes.iter().enumerate().all(|(index, byte)| {
++            if [8, 13, 18, 23].contains(&index) { *byte == b'-' } else { byte.is_ascii_hexdigit() }
++        })
++    } else {
++        bytes.len() == width && bytes.iter().all(u8::is_ascii_hexdigit)
++    };
++    if !valid { return Err("operation default literal token differs"); }
++    if field["facets"].as_object().is_some_and(|facets| !facets.is_empty())
++        || field["allowedValues"].as_array().is_some_and(|values| !values.is_empty())
++        || field["semanticTypes"].as_array().is_some_and(|types| !types.is_empty())
++    {
++        return Err("operation exact carrier qualifiers unsupported");
++    }
++    Ok(token.to_ascii_lowercase())
++}
++
++fn validate_logical_default020(
++    field: &Value,
++    column: &Value,
++    resolved: &OperationField,
++) -> Result<()> {
++    let logical = field.get("default").ok_or("operation logical default absent")?;
++    if logical.as_object().is_none_or(|members| {
++        members.len() != 2 || !members.contains_key("on") || !members.contains_key("value")
++    }) || logical["on"] != "missing" || logical["value"].is_null()
++    {
++        return Err("operation logical default profile differs");
++    }
++    let native = column.get("default").ok_or("operation native literal default absent")?;
++    if native.as_object().is_none_or(|members| {
++        members.len() != 2 || !members.contains_key("kind") || !members.contains_key("value")
++    }) || native["kind"] != "literal" || native["value"].is_null()
++    {
++        return Err("operation native literal default profile differs");
++    }
++    if matches!(resolved.carrier, Carrier::Date | Carrier::Timestamp | Carrier::LocalTimestamp) {
++        return Err("logical temporal defaults unsupported");
++    }
++
++    let logical_value = &logical["value"];
++    let native_value = &native["value"];
++    // Validate each spelling against the existing source Field and physical
++    // capacity before comparing its established typed identity.
++    native_seed_value(resolved, logical_value)?;
++    native_seed_value(resolved, native_value)?;
++    match &resolved.carrier {
++        Carrier::Uuid | Carrier::Bits128 => {
++            if canonical_128_literal(field, logical_value, &resolved.carrier)?
++                != canonical_128_literal(field, native_value, &resolved.carrier)?
++            {
++                return Err("logical and native literal defaults differ");
++            }
++        }
++        Carrier::Boolean | Carrier::String | Carrier::Integer | Carrier::Decimal => {
++            let logical_identity = crate::security_literals::normalized_literal(field, logical_value)
++                .map_err(|_| "operation logical default violates original Field")?;
++            let native_identity = crate::security_literals::normalized_literal(field, native_value)
++                .map_err(|_| "operation native default violates original Field")?;
++            if logical_identity.is_none() || logical_identity != native_identity {
++                return Err("logical and native literal defaults differ");
++            }
++        }
++        Carrier::Date | Carrier::Timestamp | Carrier::LocalTimestamp => unreachable!(),
++    }
++    Ok(())
++}
++
+ fn prepare_module_metadata(
+     binding: &Binding,
+     model: &crate::raw_read::AdmittedModel,
+     module_index: usize,
++    module_profile: OperationModuleProfile,
+ ) -> Result<ModuleMetadata> {
+     let module = &model.document["modules"][module_index];
+     let payload = &module["extensions"]["umf.tables"];
+@@ -570,6 +667,11 @@ fn prepare_module_metadata(
+                 native_type,
+                 prepared_literal,
+             });
++            if module_profile == OperationModuleProfile::LogicalDefaults02
++                && field.get("default").is_some()
++            {
++                validate_logical_default020(field, column, &resolved)?;
++            }
+             fields.insert(reference.clone(), Arc::clone(&resolved));
+             if parameter_fields
+                 .insert(reference.clone(), Arc::clone(&resolved))
+@@ -654,7 +756,12 @@ pub fn admit_json(raw: &str) -> Result<AdmittedOperation> {
+     ) {
+         return Err("operation request version differs");
+     }
+-    let source = prepare_source(request.target, request.module, request.binding)?;
++    let source = prepare_source(
++        request.target,
++        request.module,
++        request.binding,
++        OperationModuleProfile::Legacy01,
++    )?;
+     let module = PreparedOperationModule { source };
+     let admitted = module
+         .prepare_operation(&request.operation)?
+@@ -904,3 +1011,76 @@ pub(crate) fn native_seed_value(field: &OperationField, value: &Value) -> Result
+     values::literal(field, value)?;
+     values::native_value(field, value)
+ }
++
++#[cfg(test)]
++mod module_profile020_tests {
++    use super::*;
++
++    fn operation_field(carrier: Carrier, field: Value, native_type: Value) -> OperationField {
++        OperationField {
++            reference: json!({"module":"demo","element":"value"}),
++            native: "value".into(),
++            carrier,
++            nullable: field["nullability"] == "absent-allowed",
++            declaration: field,
++            native_type,
++            prepared_literal: None,
++        }
++    }
++
++    fn column(default: Value) -> Value {
++        json!({"default":{"kind":"literal","value":default}})
++    }
++
++    #[test]
++    fn selected_module020_matches_all_non_temporal_native_literal_families() {
++        let cases = [
++            (Carrier::Boolean, json!({"kind":"field","scalarType":"boolean","cardinality":"one","nullability":"required","extensions":{},"facets":{},"default":{"on":"missing","value":{"boolean":true}}}), json!({"kind":"boolean"}), json!({"boolean":true}), json!({"boolean":true})),
++            (Carrier::String, json!({"kind":"field","scalarType":"string","cardinality":"one","nullability":"required","extensions":{},"facets":{},"default":{"on":"missing","value":{"string":"Ada"}}}), json!({"kind":"text"}), json!({"string":"Ada"}), json!({"string":"Ada"})),
++            (Carrier::Integer, json!({"kind":"field","scalarType":"integer","cardinality":"one","nullability":"required","extensions":{},"facets":{},"default":{"on":"missing","value":{"integerToken":"5"}}}), json!({"kind":"int4"}), json!({"integerToken":"5"}), json!({"integerToken":"5"})),
++            (Carrier::Decimal, json!({"kind":"field","scalarType":"decimal","cardinality":"one","nullability":"required","extensions":{},"facets":{"precision":8,"scale":2},"default":{"on":"missing","value":{"decimalToken":"5.00"}}}), json!({"kind":"numeric","precision":8,"scale":2}), json!({"decimalToken":"5.00"}), json!({"decimalToken":"5.0"})),
++            (Carrier::Uuid, json!({"kind":"field","scalarType":"uuid","cardinality":"one","nullability":"required","extensions":{},"facets":{},"default":{"on":"missing","value":{"uuid":"ABCDEF01-2345-6789-abcd-ef0123456789"}}}), json!({"kind":"uuid"}), json!({"uuid":"ABCDEF01-2345-6789-abcd-ef0123456789"}), json!({"uuid":"abcdef01-2345-6789-ABCD-EF0123456789"})),
++            (Carrier::Bits128, json!({"kind":"field","scalarType":"bits128","cardinality":"one","nullability":"required","extensions":{},"facets":{},"default":{"on":"missing","value":{"bits128Hex":"ABCDEF0123456789abcdef0123456789"}}}), json!({"kind":"bytea"}), json!({"bits128Hex":"ABCDEF0123456789abcdef0123456789"}), json!({"bits128Hex":"abcdef0123456789ABCDEF0123456789"})),
++        ];
++        for (carrier, field, native_type, logical, native) in cases {
++            let operation_field = operation_field(carrier, field, native_type);
++            validate_logical_default020(&operation_field.declaration, &column(native.clone()), &operation_field)
++                .expect("typed-equivalent Core literals should match");
++            assert_eq!(native_seed_value(&operation_field, &logical).unwrap(), native_seed_value(&operation_field, &native).unwrap());
++        }
++    }
++
++    #[test]
++    fn selected_module020_refuses_mismatches_null_temporal_and_bad_shapes() {
++        let field = json!({"kind":"field","scalarType":"string","cardinality":"one","nullability":"absent-allowed","extensions":{},"facets":{},"default":{"on":"missing","value":{"string":"Ada"}}});
++        let resolved = operation_field(Carrier::String, field.clone(), json!({"kind":"varchar","length":16}));
++        assert_eq!(validate_logical_default020(&field, &column(json!({"string":"Eve"})), &resolved), Err("logical and native literal defaults differ"));
++
++        let null_field = json!({"kind":"field","scalarType":"string","cardinality":"one","nullability":"absent-allowed","extensions":{},"facets":{},"default":{"on":"missing","value":null}});
++        let null_resolved = operation_field(Carrier::String, null_field.clone(), json!({"kind":"varchar","length":16}));
++        assert!(validate_logical_default020(&null_field, &column(Value::Null), &null_resolved).is_err());
++
++        let extra_member = json!({"kind":"field","scalarType":"string","cardinality":"one","nullability":"required","extensions":{},"facets":{},"default":{"on":"missing","value":{"string":"Ada"},"extra":true}});
++        let extra_resolved = operation_field(Carrier::String, extra_member.clone(), json!({"kind":"text"}));
++        assert!(validate_logical_default020(&extra_member, &column(json!({"string":"Ada"})), &extra_resolved).is_err());
++
++        let wrong_trigger = json!({"kind":"field","scalarType":"string","cardinality":"one","nullability":"required","extensions":{},"facets":{},"default":{"on":"null","value":{"string":"Ada"}}});
++        let wrong_trigger_resolved = operation_field(Carrier::String, wrong_trigger.clone(), json!({"kind":"text"}));
++        assert!(validate_logical_default020(&wrong_trigger, &column(json!({"string":"Ada"})), &wrong_trigger_resolved).is_err());
++
++        let temporal = json!({"kind":"field","scalarType":"date","cardinality":"one","nullability":"required","extensions":{},"facets":{},"default":{"on":"missing","value":{"date":"2026-01-02"}}});
++        let temporal_resolved = operation_field(Carrier::Date, temporal.clone(), json!({"kind":"date"}));
++        assert_eq!(validate_logical_default020(&temporal, &column(json!({"date":"2026-01-02"})), &temporal_resolved), Err("logical temporal defaults unsupported"));
++    }
++
++    #[test]
++    fn selected_module020_checks_native_capacity_before_equality() {
++        let field = json!({"kind":"field","scalarType":"integer","cardinality":"one","nullability":"required","extensions":{},"facets":{},"default":{"on":"missing","value":{"integerToken":"2147483648"}}});
++        let resolved = operation_field(Carrier::Integer, field.clone(), json!({"kind":"int4"}));
++        assert!(validate_logical_default020(&field, &column(json!({"integerToken":"2147483648"})), &resolved).is_err());
++
++        let text = json!({"kind":"field","scalarType":"string","cardinality":"one","nullability":"required","extensions":{},"facets":{},"default":{"on":"missing","value":{"string":"four"}}});
++        let varchar = operation_field(Carrier::String, text.clone(), json!({"kind":"varchar","length":3}));
++        assert!(validate_logical_default020(&text, &column(json!({"string":"four"})), &varchar).is_err());
++    }
++}
+diff --git a/crates/weft-core/src/table_query.rs b/crates/weft-core/src/table_query.rs
+index d446b1f1..d09add91 100644
+--- a/crates/weft-core/src/table_query.rs
++++ b/crates/weft-core/src/table_query.rs
+@@ -44,6 +44,9 @@ pub struct PrepareModuleRequest {
+ pub struct AdmittedQueryModule {
+     target: String,
+     module: String,
++    // Retain the trusted prepared-module admission profile with its owned
++    // source. Standalone query-module preparation always uses the legacy path.
++    _logical_defaults020: bool,
+     binding: Arc<Binding>,
+     model: Arc<crate::raw_read::AdmittedModel>,
+     indexes: Arc<ModuleIndexes>,
+@@ -84,15 +87,15 @@ pub fn prepare_module_json(raw: &str) -> Result<AdmittedQueryModule> {
+         .and_then(|c| c["id"].as_str()).ok_or("query source module has no fixed query operation")?.to_owned();
+     // Parse/validate the source model once. Selected query ASTs are compiled lazily.
+     let model = Arc::new(crate::raw_read::prepare_operation_document(&request.binding, source, Some(&first_query))?);
+-    prepare_module_shared(request.target, request.module, Arc::new(request.binding), model)
++    prepare_module_shared(request.target, request.module, Arc::new(request.binding), model, false)
+ }
+ 
+-pub(crate) fn prepare_module_shared(target: String, module: String, binding: Arc<Binding>, model: Arc<crate::raw_read::AdmittedModel>) -> Result<AdmittedQueryModule> {
++pub(crate) fn prepare_module_shared(target: String, module: String, binding: Arc<Binding>, model: Arc<crate::raw_read::AdmittedModel>, logical_defaults020: bool) -> Result<AdmittedQueryModule> {
+     if !matches!(target.as_str(), "postgresql18" | "lakebase18") { return Err("query module target differs"); }
+     let module_value = model.document["modules"].as_array().and_then(|modules|modules.iter().find(|m|m["id"]==module)).ok_or("query source module absent")?;
+     if !module_value["extensions"]["umf.tables"]["commands"].as_array().is_some_and(|commands|commands.iter().any(|command|command["body"]["kind"]=="query")) { return Err("query source module has no fixed query operation"); }
+     let indexes=Arc::new(ModuleIndexes::new(&model,&binding,&module)?);
+-    Ok(AdmittedQueryModule { target, module, binding, model, indexes })
++    Ok(AdmittedQueryModule { target, module, _logical_defaults020: logical_defaults020, binding, model, indexes })
+ }
+ 
+ struct ModuleIndexes {
+diff --git a/crates/weft-postgresql/tests/table_operation.rs b/crates/weft-postgresql/tests/table_operation.rs
+index 948fb830..20cdf58c 100644
+--- a/crates/weft-postgresql/tests/table_operation.rs
++++ b/crates/weft-postgresql/tests/table_operation.rs
+@@ -42,6 +42,40 @@ fn repin(r: &mut Value, source: Value) {
+     r["binding"]["modelJson"] = json!(text);
+     r["binding"]["modelSha256"] = json!(weft_core::json::sha256(text.as_bytes()));
+ }
++fn add_default_measure(
++    document: &mut Value,
++    binding: &mut Value,
++    scalar_type: &str,
++    carrier: &str,
++    native_type: Value,
++    logical_default: Value,
++    native_default: Value,
++) {
++    let module = &mut document["modules"][0];
++    let facets = if scalar_type == "decimal" {
++        json!({"precision":8,"scale":2})
++    } else {
++        json!({})
++    };
++    module["elements"].as_array_mut().unwrap().push(json!({
++        "id":"measure", "kind":"field", "scalarType":scalar_type,
++        "cardinality":"one", "nullability":"required", "extensions":{},
++        "facets":facets, "default":{"on":"missing","value":logical_default}
++    }));
++    module["elements"][2]["members"].as_array_mut().unwrap().push(
++        json!({"module":"demo","element":"measure"})
++    );
++    module["extensions"]["umf.tables"]["tables"][0]["columns"]
++        .as_array_mut().unwrap().push(json!({
++            "field":{"module":"demo","element":"measure"},
++            "name":"measure", "nativeType":native_type,
++            "default":{"kind":"literal","value":native_default}
++        }));
++    binding["tables"][0]["columns"].as_array_mut().unwrap().push(json!({
++        "logical":"measure", "native":"measure", "carrier":carrier,
++        "nullable":false
++    }));
++}
+ fn compile(r: Value) -> Value {
+     serde_json::from_str(&weft_postgresql::table_operation::compile_json(
+         &r.to_string(),
+@@ -123,6 +157,210 @@ fn prepared_operation_module_reuses_source_and_returns_compact_call_programs() {
+     assert_eq!(compiled["callKind"], "single");
+     assert_eq!(compiled["declarationDigest"].as_str().unwrap().len(), 64);
+ }
++
++#[test]
++fn explicit_module020_admits_only_matching_defaults_and_does_not_fill_omitted_inputs() {
++    let first = request("create");
++    let mut document = source();
++    let mut binding = first["binding"].clone();
++    add_default_measure(
++        &mut document, &mut binding, "string", "string", json!({"kind":"text"}),
++        json!({"string":"alice"}), json!({"string":"alice"}),
++    );
++    document["modules"][0]["extensions"]["umf.tables"]["commands"]
++        .as_array_mut().unwrap().push(json!({
++            "version":"umf.table-operation/0.1", "id":"owner_query",
++            "parameters":[], "consistency":"statement", "replay":"none",
++            "body":{
++                "kind":"query", "language":"weft.pg-select/0.1",
++                "sql":"SELECT COALESCE(id, '') AS id FROM notes",
++                "outputs":[{"name":"id","field":{"module":"demo","element":"id"}}],
++                "maxRows":10
++            }
++        }));
++    let text = serde_json::to_string(&document).unwrap();
++    binding["modelJson"] = json!(text);
++    binding["modelSha256"] = json!(weft_core::json::sha256(text.as_bytes()));
++
++    let module_request = |version: &str, binding: Value| json!({
++        "version":version,
++        "target":"postgresql18",
++        "module":"demo",
++        "binding":binding,
++    });
++    assert!(weft_postgresql::table_operation::PreparedOperationModule::prepare(
++        &module_request("weft.table-operation-module/0.1", binding.clone()).to_string()
++    ).is_err());
++
++    let module = weft_postgresql::table_operation::PreparedOperationModule::prepare(
++        &module_request("weft.table-operation-module/0.2", binding.clone()).to_string()
++    ).expect("explicit module 0.2 should admit an exact matching source default");
++    let create = module.prepare_operation("create").unwrap();
++    let omitted: Value = serde_json::from_str(&create.bind_json(
++        r#"{"idempotencyKey":"test-key","call":{"kind":"single","inputs":{"id":{"string":"n2"}}}}"#
++    )).unwrap();
++    assert_eq!(omitted["status"], "blocked");
++    let complete: Value = serde_json::from_str(&create.bind_json(
++        r#"{"idempotencyKey":"test-key","call":{"kind":"single","inputs":{"id":{"string":"n2"},"owner":{"string":"alice"}}}}"#
++    )).unwrap();
++    assert_eq!(complete["status"], "compiled", "{complete}");
++    assert_eq!(complete["nativeInputs"][0], json!({"id":"n2","owner":"alice"}));
++    assert!(!complete["sql"].as_str().unwrap().contains("measure"));
++    let owner_query = module
++        .prepare_query("owner_query")
++        .expect("module 0.2 should prepare the valid required-output query");
++    let owner_query_program: Value = serde_json::from_str(&owner_query.program_json()).unwrap();
++    assert_eq!(owner_query_program["status"], "compiled", "{owner_query_program}");
++    let owner_query_bind: Value = serde_json::from_str(
++        &owner_query.bind_json(r#"{"inputs":{}}"#),
++    )
++    .unwrap();
++    assert_eq!(owner_query_bind, json!({"nativeInputs":[{}]}));
++    let standalone_query_module = json!({
++        "version":"weft.table-query-module/0.1",
++        "target":"postgresql18",
++        "module":"demo",
++        "binding":binding.clone(),
++    });
++    assert!(weft_postgresql::table_query::PreparedQueryModule::prepare(
++        &standalone_query_module.to_string()
++    ).is_err());
++    assert!(weft_postgresql::table_operation::PreparedOperationModule::prepare(
++        &module_request("weft.table-operation-module/0.3", binding.clone()).to_string()
++    ).is_err());
++    let mut unknown_envelope = module_request("weft.table-operation-module/0.2", binding.clone());
++    unknown_envelope["unexpected"] = json!(true);
++    assert!(weft_postgresql::table_operation::PreparedOperationModule::prepare(
++        &unknown_envelope.to_string()
++    ).is_err());
++
++    let mut direct = first.clone();
++    direct["binding"] = binding.clone();
++    assert_eq!(compile(direct)["status"], "blocked");
++
++    let mut native_only = document.clone();
++    native_only["modules"][0]["elements"][3].as_object_mut().unwrap().remove("default");
++    let native_only_text = serde_json::to_string(&native_only).unwrap();
++    let mut native_only_binding = binding.clone();
++    native_only_binding["modelJson"] = json!(native_only_text);
++    native_only_binding["modelSha256"] =
++        json!(weft_core::json::sha256(native_only_text.as_bytes()));
++    let native_only_module = json!({
++        "version":"weft.table-operation-module/0.1",
++        "target":"postgresql18",
++        "module":"demo",
++        "binding":native_only_binding,
++    });
++    assert!(weft_postgresql::table_operation::PreparedOperationModule::prepare(
++        &native_only_module.to_string()
++    ).is_ok());
++    let native_only_legacy = weft_postgresql::table_operation::PreparedOperationModule::prepare(
++        &native_only_module.to_string()
++    ).unwrap().prepare_operation("create").unwrap();
++    let native_only_v02 = weft_postgresql::table_operation::PreparedOperationModule::prepare(
++        &module_request("weft.table-operation-module/0.2", native_only_binding.clone()).to_string()
++    ).unwrap().prepare_operation("create").unwrap();
++    let call = r#"{"idempotencyKey":"test-key","call":{"kind":"single","inputs":{"id":{"string":"n2"},"owner":{"string":"alice"}}}}"#;
++    let baseline_text = native_only_legacy.bind_json(call);
++    let selected_text = native_only_v02.bind_json(call);
++    let baseline: Value = serde_json::from_str(&baseline_text).unwrap();
++    let selected: Value = serde_json::from_str(&selected_text).unwrap();
++    assert_eq!(baseline["status"], "compiled", "{baseline}");
++    assert_eq!(selected["status"], "compiled", "{selected}");
++    assert_eq!(baseline_text, selected_text);
++
++    let native_only_query_module = json!({
++        "version":"weft.table-operation-module/0.1",
++        "target":"postgresql18",
++        "module":"demo",
++        "binding":native_only_binding.clone(),
++    });
++    let native_only_query = weft_postgresql::table_operation::PreparedOperationModule::prepare(
++        &native_only_query_module.to_string()
++    )
++    .expect("native-only module 0.1 query baseline should prepare")
++    .prepare_query("owner_query")
++    .expect("native-only module 0.1 query should prepare");
++    let native_only_query_program: Value = serde_json::from_str(&native_only_query.program_json()).unwrap();
++    assert_eq!(native_only_query_program["status"], "compiled", "{native_only_query_program}");
++    let native_only_query_bind: Value = serde_json::from_str(
++        &native_only_query.bind_json(r#"{"inputs":{}}"#),
++    )
++    .unwrap();
++    assert_eq!(native_only_query_bind, json!({"nativeInputs":[{}]}));
++
++    let mut mismatch = document.clone();
++    mismatch["modules"][0]["extensions"]["umf.tables"]["tables"][0]["columns"][2]["default"]["value"] =
++        json!({"string":"eve"});
++    let mut bad_binding = binding.clone();
++    let mismatch_text = serde_json::to_string(&mismatch).unwrap();
++    bad_binding["modelJson"] = json!(mismatch_text);
++    bad_binding["modelSha256"] = json!(weft_core::json::sha256(mismatch_text.as_bytes()));
++    let mismatch_module = json!({
++        "version":"weft.table-operation-module/0.2",
++        "target":"postgresql18",
++        "module":"demo",
++        "binding":bad_binding,
++    });
++    assert!(weft_postgresql::table_operation::PreparedOperationModule::prepare(
++        &mismatch_module.to_string()
++    ).is_err());
++
++    let mut mismatched_native_binding = binding.clone();
++    let mismatched_text = serde_json::to_string(&mismatch).unwrap();
++    mismatched_native_binding["modelJson"] = json!(mismatched_text);
++    mismatched_native_binding["modelSha256"] =
++        json!(weft_core::json::sha256(mismatched_text.as_bytes()));
++    assert!(compile(json!({
++        "version":"weft.table-operation/0.1",
++        "target":"postgresql18",
++        "module":"demo",
++        "operation":"create",
++        "binding":mismatched_native_binding,
++        "call":{"kind":"single","inputs":{"id":{"string":"n2"},"owner":{"string":"alice"}}},
++        "idempotencyKey":"test-key"
++    }))["status"].as_str().unwrap() == "blocked");
++}
++
++#[test]
++fn explicit_module020_admits_matching_defaults_through_all_six_native_families() {
++    let cases = [
++        ("boolean", "boolean", json!({"kind":"boolean"}), json!({"boolean":true}), json!({"boolean":true})),
++        ("string", "string", json!({"kind":"text"}), json!({"string":"Ada"}), json!({"string":"Ada"})),
++        ("integer", "integer", json!({"kind":"int4"}), json!({"integerToken":"5"}), json!({"integerToken":"5"})),
++        ("decimal", "decimal", json!({"kind":"numeric","precision":8,"scale":2}), json!({"decimalToken":"5.00"}), json!({"decimalToken":"5.0"})),
++        ("uuid", "uuid", json!({"kind":"uuid"}), json!({"uuid":"ABCDEF01-2345-6789-ABCD-EF0123456789"}), json!({"uuid":"abcdef01-2345-6789-abcd-ef0123456789"})),
++        ("bits128", "bits128", json!({"kind":"bytea"}), json!({"bits128Hex":"ABCDEF0123456789ABCDEF0123456789"}), json!({"bits128Hex":"abcdef0123456789abcdef0123456789"})),
++    ];
++    for (scalar_type, carrier, native_type, logical, native) in cases {
++        let first = request("create");
++        let mut document = source();
++        let mut binding = first["binding"].clone();
++        add_default_measure(
++            &mut document, &mut binding, scalar_type, carrier, native_type,
++            logical, native,
++        );
++        let text = serde_json::to_string(&document).unwrap();
++        binding["modelJson"] = json!(text);
++        binding["modelSha256"] = json!(weft_core::json::sha256(text.as_bytes()));
++        let module_request = json!({
++            "version":"weft.table-operation-module/0.2",
++            "target":"postgresql18",
++            "module":"demo",
++            "binding":binding,
++        });
++        let module = weft_postgresql::table_operation::PreparedOperationModule::prepare(
++            &module_request.to_string()
++        ).unwrap_or_else(|error| panic!("{scalar_type} module preparation: {error}"));
++        let create = module.prepare_operation("create").unwrap();
++        let call = r#"{"idempotencyKey":"test-key","call":{"kind":"single","inputs":{"id":{"string":"n2"},"owner":{"string":"alice"}}}}"#;
++        let output: Value = serde_json::from_str(&create.bind_json(call)).unwrap();
++        assert_eq!(output["status"], "compiled", "{scalar_type}: {output}");
++        assert_eq!(output["nativeInputs"][0], json!({"id":"n2","owner":"alice"}));
++        assert!(!output["sql"].as_str().unwrap().contains("measure"));
++    }
++}
++
+ #[test]
+ fn source_original_sql_is_not_a_request_surface_and_legacy_guards_stay_closed() {
+     let mut r = request("read_many");
+diff --git a/crates/weft-python/Cargo.toml b/crates/weft-python/Cargo.toml
+index 27236678..695c7fc9 100644
+--- a/crates/weft-python/Cargo.toml
++++ b/crates/weft-python/Cargo.toml
+@@ -1,6 +1,6 @@
+ [package]
+ name="weft-python"
+-version = "0.4.55"
++version = "0.4.55+g03.a96e4f29262e"
+ edition.workspace=true
+ publish.workspace=true
+ license.workspace=true
+diff --git a/crates/weft-python/pyproject.toml b/crates/weft-python/pyproject.toml
+index 05438bd4..6144da6e 100644
+--- a/crates/weft-python/pyproject.toml
++++ b/crates/weft-python/pyproject.toml
+@@ -5,7 +5,7 @@ build-backend="maturin"
+ license = "MIT OR Apache-2.0"
+ license-files = ["LICENSE.md", "LICENSE-MIT", "LICENSE-APACHE", "THIRD-PARTY-LICENSES.txt"]
+ name="umf-weft"
+-version = "0.4.55"
++version = "0.4.55+g03.a96e4f29262e"
+ description="Native UMF-powered SQL compiler with explicit backend profiles"
+ readme="README.md"
+ requires-python=">=3.9"
+diff --git a/docs/helix/02-design/contracts/CONTRACT-003-compile-and-host-boundary.md b/docs/helix/02-design/contracts/CONTRACT-003-compile-and-host-boundary.md
+index dc197925..abedf878 100644
+--- a/docs/helix/02-design/contracts/CONTRACT-003-compile-and-host-boundary.md
++++ b/docs/helix/02-design/contracts/CONTRACT-003-compile-and-host-boundary.md
+@@ -234,6 +234,47 @@ Two module documents in one logical query are allowed only if the chosen backend
+ maps both. Preserve unrelated extension content and compare exact reports through
+ native Python/browser; neither wrapper may implement its own resolver or emitter.
+ 
++## Explicit ordinary table-operation module profile 0.2
++
++The prepared native table-operation module envelope accepts the existing
++`weft.table-operation-module/0.1` profile and the explicitly selected
++`weft.table-operation-module/0.2` successor. The 0.1 profile retains its exact
++source admission, outputs and refusal behavior. The 0.2 profile is selected only
++by the trusted caller's module-preparation envelope; model contents, operation
++requests, installed dependency versions and failed compiler calls never select a
++profile or trigger fallback. The ordinary UMF module declaration vocabulary,
++`umf.tables` payload and ordinary operation AST do not change.
++
++Profile 0.2 admits the existing ordinary operation source plus a narrowly
++qualified logical Field default when all of the following hold: `Field.default`
++has exactly `{on:"missing",value:CoreLiteral}`; the non-null value
++validates under the original Core scalar domain and its applicable facets; the
++Field is mapped by the exact retained `umf.tables` Table/Column and native
++binding; and that Column declares a literal native default with the same Core
++scalar meaning. Logical NULL defaults refuse under the existing UMF matching
++rule; native-only NULL defaults retain their prior behavior.
++Comparison uses the existing typed literal equality and native-capacity checks,
++not JSON spelling or display names. Only the six established nontemporal
++operation carrier families are eligible: boolean/boolean, string/text or
++varchar, integer/int2 or int4 or int8, decimal/numeric, UUID/uuid and
++bits128/bytea. Logical date/timestamp defaults and local timestamps are not
++admitted. Existing native-only defaults, including temporal defaults, retain
++their prior behavior. Unknown Field qualifiers, a missing/extra default
++member, any trigger other than `missing`, nonliteral or mismatched native
++defaults, unsupported carriers and invalid literals refuse before an operation
++program is produced.
++
++The admission check retains the complete pinned UMF source unchanged. It does
++not fill an omitted operation input, synthesize a value, rewrite a stored row,
++or change native omission, explicit-NULL or explicit-value semantics. Existing
++raw-read/query, seed and administrative paths remain on their existing profile
++and admission rules unless separately versioned. Direct operation requests keep
++their independent `weft.table-operation/0.1` or `/0.2` declaration profile; that
++version is not the table-operation-module selector. This bounded admission
++surface is the Weft implementation boundary for the selected G03 ordinary
++source subset; it grants no host authority, migration phase or native execution
++qualification.
++
+ ## B-004 executable boundary in progress
+ 
+ The pure Rust `compile::Compiler` owns an explicitly registered backend registry

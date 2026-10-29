@@ -1,0 +1,2478 @@
+{
+  "campaignId": "dfbbff9a-e9b8-4f8a-b2f7-d252a87a11bf",
+  "cleanup": {
+    "containers": {
+      "g03-n12-child-5999b33b14fa46bbb610444e102bb302": {
+        "absentAfterRemoval": true,
+        "ownedBeforeRemoval": true
+      },
+      "g03-n12-pg-5999b33b14fa46bbb610444e102bb302": {
+        "absentAfterRemoval": true,
+        "ownedBeforeRemoval": true
+      },
+      "g03-n12-prepare-5999b33b14fa46bbb610444e102bb302": {
+        "absentAfterRemoval": true,
+        "ownedBeforeRemoval": true
+      },
+      "g03-n12-setup-5999b33b14fa46bbb610444e102bb302": {
+        "absentAfterRemoval": true,
+        "ownedBeforeRemoval": true
+      }
+    },
+    "daemonReachable": true,
+    "networkAbsent": true,
+    "postgresDataVolumeAbsent": true,
+    "venvVolumeAbsent": true,
+    "verified": true,
+    "volumes": {
+      "g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302": {
+        "absentAfterRemoval": true,
+        "ownedBeforeRemoval": true,
+        "ownershipLabel": "5999b33b14fa46bbb610444e102bb302"
+      },
+      "g03-n12-venv-5999b33b14fa46bbb610444e102bb302": {
+        "absentAfterRemoval": true,
+        "ownedBeforeRemoval": true,
+        "ownershipLabel": "5999b33b14fa46bbb610444e102bb302"
+      }
+    }
+  },
+  "clientImage": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+  "clientImageObserved": {
+    "imageId": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+    "platform": "linux/amd64"
+  },
+  "commandScope": "focused standalone G03-N12 ordinary scenario only; not runner main or full 14-case campaign",
+  "commands": [
+    {
+      "argv": [
+        "docker",
+        "image",
+        "inspect",
+        "--format",
+        "{{.Id}}",
+        "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556"
+      ],
+      "elapsedSeconds": 0.101,
+      "exitCode": 0,
+      "name": "inspect-client-image",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/000-inspect-client-image.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/000-inspect-client-image.stdout.log",
+        "rawBytes": 72,
+        "rawSha256": "31ac67bf938313b2f8b84815958ce1b565d5667c3db48c9ba03d6edda647d58e",
+        "sha256": "31ac67bf938313b2f8b84815958ce1b565d5667c3db48c9ba03d6edda647d58e",
+        "sizeBytes": 72,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "image",
+        "inspect",
+        "--format",
+        "{{.Os}}/{{.Architecture}}",
+        "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556"
+      ],
+      "elapsedSeconds": 0.033,
+      "exitCode": 0,
+      "name": "inspect-client-platform",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/001-inspect-client-platform.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/001-inspect-client-platform.stdout.log",
+        "rawBytes": 12,
+        "rawSha256": "30a2860611f42f808b7012f033e39aaedf708c7ea934b69e9dd0b3fdcd756996",
+        "sha256": "30a2860611f42f808b7012f033e39aaedf708c7ea934b69e9dd0b3fdcd756996",
+        "sizeBytes": 12,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "image",
+        "inspect",
+        "--format",
+        "{{.Id}}",
+        "sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336"
+      ],
+      "elapsedSeconds": 0.04,
+      "exitCode": 0,
+      "name": "inspect-postgres-image",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/002-inspect-postgres-image.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/002-inspect-postgres-image.stdout.log",
+        "rawBytes": 72,
+        "rawSha256": "dd53ff50756719a8451fc732f3609ce21d685702adfec6f62556c34d5d95e49d",
+        "sha256": "dd53ff50756719a8451fc732f3609ce21d685702adfec6f62556c34d5d95e49d",
+        "sizeBytes": 72,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "image",
+        "inspect",
+        "--format",
+        "{{.Os}}/{{.Architecture}}",
+        "sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336"
+      ],
+      "elapsedSeconds": 0.032,
+      "exitCode": 0,
+      "name": "inspect-postgres-platform",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/003-inspect-postgres-platform.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/003-inspect-postgres-platform.stdout.log",
+        "rawBytes": 12,
+        "rawSha256": "8e0770e07c23940b641360866fee9a4fe9202fadae5086d5162337bab0307e89",
+        "sha256": "8e0770e07c23940b641360866fee9a4fe9202fadae5086d5162337bab0307e89",
+        "sizeBytes": 12,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "image",
+        "inspect",
+        "--format",
+        "{{json .Config.Volumes}}",
+        "sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336"
+      ],
+      "elapsedSeconds": 0.035,
+      "exitCode": 0,
+      "name": "inspect-postgres-image-config-volumes",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/004-inspect-postgres-image-config-volumes.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/004-inspect-postgres-image-config-volumes.stdout.log",
+        "rawBytes": 27,
+        "rawSha256": "825cff6bac47ec243e14ae4006e1f63d625b5a1e841f7e2138d5683b4ffd7fd4",
+        "sha256": "825cff6bac47ec243e14ae4006e1f63d625b5a1e841f7e2138d5683b4ffd7fd4",
+        "sizeBytes": 27,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "version",
+        "--format",
+        "{{.Server.Version}}"
+      ],
+      "elapsedSeconds": 0.032,
+      "exitCode": 0,
+      "name": "inspect-engine-version",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/005-inspect-engine-version.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/005-inspect-engine-version.stdout.log",
+        "rawBytes": 7,
+        "rawSha256": "c007c7e1712540ee77c9ce8e454890d905ff0193ec24907cb08ffd9d00b25d98",
+        "sha256": "c007c7e1712540ee77c9ce8e454890d905ff0193ec24907cb08ffd9d00b25d98",
+        "sizeBytes": 7,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "info",
+        "--format",
+        "{{.OSType}}/{{.Architecture}}"
+      ],
+      "elapsedSeconds": 0.054,
+      "exitCode": 0,
+      "name": "inspect-engine-platform",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/006-inspect-engine-platform.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/006-inspect-engine-platform.stdout.log",
+        "rawBytes": 14,
+        "rawSha256": "afc95e0482eccb7b8a13df7f544866870b9863a31055ddf48f938817d8e2e7ff",
+        "sha256": "afc95e0482eccb7b8a13df7f544866870b9863a31055ddf48f938817d8e2e7ff",
+        "sizeBytes": 14,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "ls",
+        "--filter",
+        "name=g03-n12-venv-5999b33b14fa46bbb610444e102bb302",
+        "--format",
+        "{{.Name}}|{{.Label \"codex.g03.execution-id\"}}"
+      ],
+      "elapsedSeconds": 0.056,
+      "exitCode": 0,
+      "name": "list-existing-volume-g03-n12-venv-5999b33b14fa46bbb610444e102bb302",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/007-list-existing-volume-g03-n12-venv-5999b33b14fa46bbb610444e102bb302.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/007-list-existing-volume-g03-n12-venv-5999b33b14fa46bbb610444e102bb302.stdout.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "ls",
+        "--filter",
+        "name=g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302",
+        "--format",
+        "{{.Name}}|{{.Label \"codex.g03.execution-id\"}}"
+      ],
+      "elapsedSeconds": 0.206,
+      "exitCode": 0,
+      "name": "list-existing-volume-g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/008-list-existing-volume-g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/008-list-existing-volume-g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302.stdout.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "create",
+        "--label",
+        "codex.g03.execution-id=5999b33b14fa46bbb610444e102bb302",
+        "g03-n12-venv-5999b33b14fa46bbb610444e102bb302"
+      ],
+      "elapsedSeconds": 0.177,
+      "exitCode": 0,
+      "name": "create-venv-volume",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/009-create-venv-volume.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/009-create-venv-volume.stdout.log",
+        "rawBytes": 46,
+        "rawSha256": "5a0f3e5d159d7ce33635a62e957be8cbfd3d3bd48ccaf711f7b4fbe9cc17f3eb",
+        "sha256": "5a0f3e5d159d7ce33635a62e957be8cbfd3d3bd48ccaf711f7b4fbe9cc17f3eb",
+        "sizeBytes": 46,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "inspect",
+        "--format",
+        "{{.Name}}|{{.Driver}}|{{index .Labels \"codex.g03.execution-id\"}}",
+        "g03-n12-venv-5999b33b14fa46bbb610444e102bb302"
+      ],
+      "elapsedSeconds": 0.028,
+      "exitCode": 0,
+      "name": "inspect-venv-volume",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/010-inspect-venv-volume.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/010-inspect-venv-volume.stdout.log",
+        "rawBytes": 85,
+        "rawSha256": "1160cef194ef148dc1a9a56d96440e318eda195ad15272a9400973824612f2bc",
+        "sha256": "1160cef194ef148dc1a9a56d96440e318eda195ad15272a9400973824612f2bc",
+        "sizeBytes": 85,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "run",
+        "--pull=never",
+        "--platform=linux/amd64",
+        "--name",
+        "g03-n12-setup-5999b33b14fa46bbb610444e102bb302",
+        "--label",
+        "codex.g03.execution-id=5999b33b14fa46bbb610444e102bb302",
+        "--read-only",
+        "--cpus=4",
+        "--memory=8g",
+        "--pids-limit=8192",
+        "--cap-add=SYS_ADMIN",
+        "--security-opt=seccomp=unconfined",
+        "--tmpfs=/tmp:rw,nosuid,nodev,exec,size=2g",
+        "--mount",
+        "type=bind,source=/private/tmp/g03-n12-source-seal-002,target=/harness,readonly",
+        "--mount",
+        "type=bind,source=/private/tmp/g03-held-cohort-001/aggregate,target=/cohort/aggregate,readonly",
+        "--mount",
+        "type=bind,source=/private/tmp/g03-held-cohort-001/cells/linux-x86_64-py311/cohort.lock.json,target=/cohort/selected-child-lock.json,readonly",
+        "--mount",
+        "type=bind,source=/private/tmp/g03-held-cohort-001/custody.json,target=/cohort/custody.json,readonly",
+        "--mount",
+        "type=volume,source=g03-n12-venv-5999b33b14fa46bbb610444e102bb302,target=/venv",
+        "--mount",
+        "type=bind,source=/private/tmp/g03-n12-standalone-operator-002,target=/operator,readonly",
+        "--workdir=/harness",
+        "--mount",
+        "type=bind,source=/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/setup,target=/out",
+        "--network=none",
+        "-e",
+        "N12_CAMPAIGN_ID=dfbbff9a-e9b8-4f8a-b2f7-d252a87a11bf",
+        "-e",
+        "N12_SETUP_BUDGET_SECONDS=240",
+        "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+        "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11",
+        "-I",
+        "/operator/guest_steps.py"
+      ],
+      "elapsedSeconds": 9.951,
+      "exitCode": 0,
+      "name": "g03-n12-setup-5999b33b14fa46bbb610444e102bb302",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/011-g03-n12-setup-5999b33b14fa46bbb610444e102bb302.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/011-g03-n12-setup-5999b33b14fa46bbb610444e102bb302.stdout.log",
+        "rawBytes": 224,
+        "rawSha256": "9674cc8007d6e6854a78c5f27104a0f5f59fce47c58dff9cb3c72bc2e0fdeeb9",
+        "sha256": "9674cc8007d6e6854a78c5f27104a0f5f59fce47c58dff9cb3c72bc2e0fdeeb9",
+        "sizeBytes": 224,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 240
+    },
+    {
+      "argv": [
+        "docker",
+        "inspect",
+        "--format",
+        "{{.Id}}|{{index .Config.Labels \"codex.g03.execution-id\"}}|{{.State.ExitCode}}",
+        "g03-n12-setup-5999b33b14fa46bbb610444e102bb302"
+      ],
+      "elapsedSeconds": 0.049,
+      "exitCode": 0,
+      "name": "g03-n12-setup-5999b33b14fa46bbb610444e102bb302-inspect",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/012-g03-n12-setup-5999b33b14fa46bbb610444e102bb302-inspect.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/012-g03-n12-setup-5999b33b14fa46bbb610444e102bb302-inspect.stdout.log",
+        "rawBytes": 100,
+        "rawSha256": "51d5e752d34e9d9246694bfd1f44fba6ce3b0f9048d185e5384159ea941cdd8d",
+        "sha256": "51d5e752d34e9d9246694bfd1f44fba6ce3b0f9048d185e5384159ea941cdd8d",
+        "sizeBytes": 100,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "network",
+        "create",
+        "--internal",
+        "--driver",
+        "bridge",
+        "--label",
+        "codex.g03.execution-id=5999b33b14fa46bbb610444e102bb302",
+        "g03-n12-net-5999b33b14fa46bbb610444e102bb302"
+      ],
+      "elapsedSeconds": 0.056,
+      "exitCode": 0,
+      "name": "create-internal-network",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/013-create-internal-network.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/013-create-internal-network.stdout.log",
+        "rawBytes": 65,
+        "rawSha256": "635172c47f49b4414ab698d80f483ba7830a31440a328d4b9ca3ba5c5ff29b0e",
+        "sha256": "635172c47f49b4414ab698d80f483ba7830a31440a328d4b9ca3ba5c5ff29b0e",
+        "sizeBytes": 65,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "network",
+        "inspect",
+        "--format",
+        "{{.Id}}|{{.Name}}|{{.Driver}}|{{.Internal}}|{{index .Labels \"codex.g03.execution-id\"}}",
+        "g03-n12-net-5999b33b14fa46bbb610444e102bb302"
+      ],
+      "elapsedSeconds": 0.028,
+      "exitCode": 0,
+      "name": "inspect-internal-network",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/014-inspect-internal-network.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/014-inspect-internal-network.stdout.log",
+        "rawBytes": 155,
+        "rawSha256": "fba8faad843972f3489649d9aab8a157fd9a62b17b4a2b43622e50867e4e4aec",
+        "sha256": "fba8faad843972f3489649d9aab8a157fd9a62b17b4a2b43622e50867e4e4aec",
+        "sizeBytes": 155,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "create",
+        "--label",
+        "codex.g03.execution-id=5999b33b14fa46bbb610444e102bb302",
+        "g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302"
+      ],
+      "elapsedSeconds": 0.065,
+      "exitCode": 0,
+      "name": "create-postgres-data-volume",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/015-create-postgres-data-volume.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/015-create-postgres-data-volume.stdout.log",
+        "rawBytes": 48,
+        "rawSha256": "f9a6e4fd2ef082c5f4cde5c4aa09875a07ed7bc48e818c3f08559e1a8cbb2c28",
+        "sha256": "f9a6e4fd2ef082c5f4cde5c4aa09875a07ed7bc48e818c3f08559e1a8cbb2c28",
+        "sizeBytes": 48,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "inspect",
+        "--format",
+        "{{.Name}}|{{.Driver}}|{{index .Labels \"codex.g03.execution-id\"}}",
+        "g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302"
+      ],
+      "elapsedSeconds": 0.026,
+      "exitCode": 0,
+      "name": "inspect-postgres-data-volume",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/016-inspect-postgres-data-volume.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/016-inspect-postgres-data-volume.stdout.log",
+        "rawBytes": 87,
+        "rawSha256": "b0a76d3effd734bb816d7dab13b6efdbc615c024b998419c3db93a3b62320b66",
+        "sha256": "b0a76d3effd734bb816d7dab13b6efdbc615c024b998419c3db93a3b62320b66",
+        "sizeBytes": 87,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "run",
+        "-d",
+        "--pull=never",
+        "--platform=linux/arm64",
+        "--name",
+        "g03-n12-pg-5999b33b14fa46bbb610444e102bb302",
+        "--label",
+        "codex.g03.execution-id=5999b33b14fa46bbb610444e102bb302",
+        "--network",
+        "g03-n12-net-5999b33b14fa46bbb610444e102bb302",
+        "--mount",
+        "type=volume,source=g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302,target=/var/lib/postgresql",
+        "--network-alias",
+        "postgres",
+        "--cpus=2",
+        "--memory=2g",
+        "--pids-limit=1024",
+        "-e",
+        "POSTGRES_HOST_AUTH_METHOD=trust",
+        "sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336"
+      ],
+      "elapsedSeconds": 0.255,
+      "exitCode": 0,
+      "name": "start-postgres",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/017-start-postgres.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/017-start-postgres.stdout.log",
+        "rawBytes": 65,
+        "rawSha256": "08f320c09a7810e769dda36f199ac9864eb0f731cb585552eb7f4348f3b489ad",
+        "sha256": "08f320c09a7810e769dda36f199ac9864eb0f731cb585552eb7f4348f3b489ad",
+        "sizeBytes": 65,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 30
+    },
+    {
+      "argv": [
+        "docker",
+        "inspect",
+        "--format",
+        "{{.Id}}|{{index .Config.Labels \"codex.g03.execution-id\"}}|{{.Image}}",
+        "g03-n12-pg-5999b33b14fa46bbb610444e102bb302"
+      ],
+      "elapsedSeconds": 0.033,
+      "exitCode": 0,
+      "name": "inspect-postgres-container",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/018-inspect-postgres-container.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/018-inspect-postgres-container.stdout.log",
+        "rawBytes": 170,
+        "rawSha256": "0e79e6eb3f783b9076bc772130a0ab1ec39630a29e204b8ab48d8c0d2948a238",
+        "sha256": "0e79e6eb3f783b9076bc772130a0ab1ec39630a29e204b8ab48d8c0d2948a238",
+        "sizeBytes": 170,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "inspect",
+        "--format",
+        "{{range .Mounts}}{{.Type}}|{{.Driver}}|{{.RW}}|{{.Name}}|{{.Destination}};{{end}}",
+        "g03-n12-pg-5999b33b14fa46bbb610444e102bb302"
+      ],
+      "elapsedSeconds": 0.027,
+      "exitCode": 0,
+      "name": "inspect-postgres-data-mount",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/019-inspect-postgres-data-mount.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/019-inspect-postgres-data-mount.stdout.log",
+        "rawBytes": 87,
+        "rawSha256": "722876dfde3bf038abf30d0ff92d499fae9c68e27ab6652ebe4e0b6df5888c74",
+        "sha256": "722876dfde3bf038abf30d0ff92d499fae9c68e27ab6652ebe4e0b6df5888c74",
+        "sizeBytes": 87,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "exec",
+        "g03-n12-pg-5999b33b14fa46bbb610444e102bb302",
+        "pg_isready",
+        "-U",
+        "postgres",
+        "-d",
+        "postgres"
+      ],
+      "elapsedSeconds": 0.081,
+      "exitCode": 2,
+      "name": "postgres-readiness-check",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/020-postgres-readiness-check.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/020-postgres-readiness-check.stdout.log",
+        "rawBytes": 39,
+        "rawSha256": "7c926b87e40b26ec6ffb4c78f403571ac977ece539b51f52b4a58a6943d143ea",
+        "sha256": "7c926b87e40b26ec6ffb4c78f403571ac977ece539b51f52b4a58a6943d143ea",
+        "sizeBytes": 39,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 3
+    },
+    {
+      "argv": [
+        "docker",
+        "exec",
+        "g03-n12-pg-5999b33b14fa46bbb610444e102bb302",
+        "pg_isready",
+        "-U",
+        "postgres",
+        "-d",
+        "postgres"
+      ],
+      "elapsedSeconds": 0.05,
+      "exitCode": 2,
+      "name": "postgres-readiness-check",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/021-postgres-readiness-check.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/021-postgres-readiness-check.stdout.log",
+        "rawBytes": 39,
+        "rawSha256": "7c926b87e40b26ec6ffb4c78f403571ac977ece539b51f52b4a58a6943d143ea",
+        "sha256": "7c926b87e40b26ec6ffb4c78f403571ac977ece539b51f52b4a58a6943d143ea",
+        "sizeBytes": 39,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 3
+    },
+    {
+      "argv": [
+        "docker",
+        "exec",
+        "g03-n12-pg-5999b33b14fa46bbb610444e102bb302",
+        "pg_isready",
+        "-U",
+        "postgres",
+        "-d",
+        "postgres"
+      ],
+      "elapsedSeconds": 0.052,
+      "exitCode": 0,
+      "name": "postgres-readiness-check",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/022-postgres-readiness-check.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/022-postgres-readiness-check.stdout.log",
+        "rawBytes": 49,
+        "rawSha256": "6e168fc3b5a0662104b5e5da92e87b870e8b7c65fec827d267115b5123d18614",
+        "sha256": "6e168fc3b5a0662104b5e5da92e87b870e8b7c65fec827d267115b5123d18614",
+        "sizeBytes": 49,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 3
+    },
+    {
+      "argv": [
+        "docker",
+        "exec",
+        "g03-n12-pg-5999b33b14fa46bbb610444e102bb302",
+        "psql",
+        "-U",
+        "postgres",
+        "-d",
+        "postgres",
+        "-At",
+        "-c",
+        "select pg_catalog.version() || E'\\n' || current_setting('server_version') || E'\\n' || current_setting('server_version_num')"
+      ],
+      "elapsedSeconds": 0.054,
+      "exitCode": 0,
+      "name": "postgres-version",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/023-postgres-version.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/023-postgres-version.stdout.log",
+        "rawBytes": 158,
+        "rawSha256": "4e0b3e128d6cbd1fc9b76465e749ebf536e57e9baf17ca9b470b716ef79089aa",
+        "sha256": "4e0b3e128d6cbd1fc9b76465e749ebf536e57e9baf17ca9b470b716ef79089aa",
+        "sizeBytes": 158,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 10
+    },
+    {
+      "argv": [
+        "docker",
+        "run",
+        "--pull=never",
+        "--platform=linux/amd64",
+        "--name",
+        "g03-n12-prepare-5999b33b14fa46bbb610444e102bb302",
+        "--label",
+        "codex.g03.execution-id=5999b33b14fa46bbb610444e102bb302",
+        "--read-only",
+        "--cpus=4",
+        "--memory=8g",
+        "--pids-limit=8192",
+        "--cap-add=SYS_ADMIN",
+        "--security-opt=seccomp=unconfined",
+        "--tmpfs=/tmp:rw,nosuid,nodev,exec,size=2g",
+        "--mount",
+        "type=bind,source=/private/tmp/g03-n12-source-seal-002,target=/harness,readonly",
+        "--mount",
+        "type=bind,source=/private/tmp/g03-held-cohort-001/aggregate,target=/cohort/aggregate,readonly",
+        "--mount",
+        "type=bind,source=/private/tmp/g03-held-cohort-001/cells/linux-x86_64-py311/cohort.lock.json,target=/cohort/selected-child-lock.json,readonly",
+        "--mount",
+        "type=bind,source=/private/tmp/g03-held-cohort-001/custody.json,target=/cohort/custody.json,readonly",
+        "--mount",
+        "type=volume,source=g03-n12-venv-5999b33b14fa46bbb610444e102bb302,target=/venv",
+        "--mount",
+        "type=bind,source=/private/tmp/g03-n12-standalone-operator-002,target=/operator,readonly",
+        "--workdir=/harness",
+        "--mount",
+        "type=bind,source=/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/setup,target=/setup,readonly",
+        "--mount",
+        "type=bind,source=/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/prepare,target=/out",
+        "--network",
+        "g03-n12-net-5999b33b14fa46bbb610444e102bb302",
+        "--network-alias",
+        "n12-client",
+        "-e",
+        "N12_CAMPAIGN_ID=dfbbff9a-e9b8-4f8a-b2f7-d252a87a11bf",
+        "-e",
+        "N12_SETUP_BUDGET_SECONDS=240",
+        "-e",
+        "N12_DSN=host=postgres port=5432 dbname=postgres user=postgres connect_timeout=5",
+        "-e",
+        "N12_POSTGRES_IMAGE_ID=sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336",
+        "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+        "/venv/bin/python",
+        "-I",
+        "/operator/n12_guest.py",
+        "prepare-target",
+        "--campaign-id",
+        "dfbbff9a-e9b8-4f8a-b2f7-d252a87a11bf"
+      ],
+      "elapsedSeconds": 1.047,
+      "exitCode": 0,
+      "name": "g03-n12-prepare-5999b33b14fa46bbb610444e102bb302",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/024-g03-n12-prepare-5999b33b14fa46bbb610444e102bb302.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/024-g03-n12-prepare-5999b33b14fa46bbb610444e102bb302.stdout.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 20
+    },
+    {
+      "argv": [
+        "docker",
+        "inspect",
+        "--format",
+        "{{.Id}}|{{index .Config.Labels \"codex.g03.execution-id\"}}|{{.State.ExitCode}}",
+        "g03-n12-prepare-5999b33b14fa46bbb610444e102bb302"
+      ],
+      "elapsedSeconds": 0.027,
+      "exitCode": 0,
+      "name": "g03-n12-prepare-5999b33b14fa46bbb610444e102bb302-inspect",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/025-g03-n12-prepare-5999b33b14fa46bbb610444e102bb302-inspect.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/025-g03-n12-prepare-5999b33b14fa46bbb610444e102bb302-inspect.stdout.log",
+        "rawBytes": 100,
+        "rawSha256": "caa28ca40086c3099d825585b4bd77c757623abd83e90e1a8ea4989b72b42a96",
+        "sha256": "caa28ca40086c3099d825585b4bd77c757623abd83e90e1a8ea4989b72b42a96",
+        "sizeBytes": 100,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "run",
+        "--pull=never",
+        "--platform=linux/amd64",
+        "--name",
+        "g03-n12-child-5999b33b14fa46bbb610444e102bb302",
+        "--label",
+        "codex.g03.execution-id=5999b33b14fa46bbb610444e102bb302",
+        "--read-only",
+        "--cpus=4",
+        "--memory=8g",
+        "--pids-limit=8192",
+        "--cap-add=SYS_ADMIN",
+        "--security-opt=seccomp=unconfined",
+        "--tmpfs=/tmp:rw,nosuid,nodev,exec,size=2g",
+        "--mount",
+        "type=bind,source=/private/tmp/g03-n12-source-seal-002,target=/harness,readonly",
+        "--mount",
+        "type=bind,source=/private/tmp/g03-held-cohort-001/aggregate,target=/cohort/aggregate,readonly",
+        "--mount",
+        "type=bind,source=/private/tmp/g03-held-cohort-001/cells/linux-x86_64-py311/cohort.lock.json,target=/cohort/selected-child-lock.json,readonly",
+        "--mount",
+        "type=bind,source=/private/tmp/g03-held-cohort-001/custody.json,target=/cohort/custody.json,readonly",
+        "--mount",
+        "type=volume,source=g03-n12-venv-5999b33b14fa46bbb610444e102bb302,target=/venv",
+        "--mount",
+        "type=bind,source=/private/tmp/g03-n12-standalone-operator-002,target=/operator,readonly",
+        "--workdir=/harness",
+        "--mount",
+        "type=bind,source=/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/setup,target=/setup,readonly",
+        "--mount",
+        "type=bind,source=/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/prepare,target=/prepare,readonly",
+        "--mount",
+        "type=bind,source=/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/child,target=/out",
+        "--network",
+        "g03-n12-net-5999b33b14fa46bbb610444e102bb302",
+        "--network-alias",
+        "n12-client",
+        "-e",
+        "N12_CAMPAIGN_ID=dfbbff9a-e9b8-4f8a-b2f7-d252a87a11bf",
+        "-e",
+        "N12_SETUP_BUDGET_SECONDS=240",
+        "-e",
+        "N12_DSN=host=postgres port=5432 dbname=postgres user=postgres connect_timeout=5",
+        "-e",
+        "N12_POSTGRES_IMAGE_ID=sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336",
+        "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+        "/venv/bin/python",
+        "-I",
+        "/operator/n12_guest.py",
+        "execute",
+        "--campaign-id",
+        "dfbbff9a-e9b8-4f8a-b2f7-d252a87a11bf"
+      ],
+      "elapsedSeconds": 34.262,
+      "exitCode": 2,
+      "name": "g03-n12-child-5999b33b14fa46bbb610444e102bb302",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/026-g03-n12-child-5999b33b14fa46bbb610444e102bb302.stderr.log",
+        "rawBytes": 53,
+        "rawSha256": "c7ac1d27835e83cbfae62ba648a9201a4a4c1c51f5f2ce1d63d4f0da2858d2ea",
+        "sha256": "c7ac1d27835e83cbfae62ba648a9201a4a4c1c51f5f2ce1d63d4f0da2858d2ea",
+        "sizeBytes": 53,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/026-g03-n12-child-5999b33b14fa46bbb610444e102bb302.stdout.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 180
+    },
+    {
+      "argv": [
+        "docker",
+        "inspect",
+        "--format",
+        "{{.Id}}|{{index .Config.Labels \"codex.g03.execution-id\"}}|{{.State.ExitCode}}",
+        "g03-n12-child-5999b33b14fa46bbb610444e102bb302"
+      ],
+      "elapsedSeconds": 0.05,
+      "exitCode": 0,
+      "name": "g03-n12-child-5999b33b14fa46bbb610444e102bb302-inspect",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/027-g03-n12-child-5999b33b14fa46bbb610444e102bb302-inspect.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/027-g03-n12-child-5999b33b14fa46bbb610444e102bb302-inspect.stdout.log",
+        "rawBytes": 100,
+        "rawSha256": "bf5993fe3a856b01dc1f2e10d58b2d1ba6f3c1c51f079b61bf9503ecaad6deba",
+        "sha256": "bf5993fe3a856b01dc1f2e10d58b2d1ba6f3c1c51f079b61bf9503ecaad6deba",
+        "sizeBytes": 100,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "info"
+      ],
+      "elapsedSeconds": 0.058,
+      "exitCode": 0,
+      "name": "cleanup-daemon-check",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/028-cleanup-daemon-check.stderr.log",
+        "rawBytes": 48,
+        "rawSha256": "263b54c86d8d260d30bf1008cf594b09d97afeccf1d8f85a15f5aa3b9eecf105",
+        "sha256": "263b54c86d8d260d30bf1008cf594b09d97afeccf1d8f85a15f5aa3b9eecf105",
+        "sizeBytes": 48,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/028-cleanup-daemon-check.stdout.log",
+        "rawBytes": 3059,
+        "rawSha256": "041096b80a8fae87fe4a138306ef93693b1ffc1d72c5f9a83b3ddd2eb73ba420",
+        "sha256": "041096b80a8fae87fe4a138306ef93693b1ffc1d72c5f9a83b3ddd2eb73ba420",
+        "sizeBytes": 3059,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 5
+    },
+    {
+      "argv": [
+        "docker",
+        "container",
+        "ls",
+        "-a",
+        "--filter",
+        "name=g03-n12-",
+        "--format",
+        "{{.Names}}|{{.ID}}|{{.Label \"codex.g03.execution-id\"}}|{{.State}}"
+      ],
+      "elapsedSeconds": 0.025,
+      "exitCode": 0,
+      "name": "cleanup-list-run-containers-before",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/029-cleanup-list-run-containers-before.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/029-cleanup-list-run-containers-before.stdout.log",
+        "rawBytes": 400,
+        "rawSha256": "f356034a29a8c7f7e6d959a83e2371a9cabe0d5654db455890fadf996b95b6a6",
+        "sha256": "f356034a29a8c7f7e6d959a83e2371a9cabe0d5654db455890fadf996b95b6a6",
+        "sizeBytes": 400,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "rm",
+        "g03-n12-child-5999b33b14fa46bbb610444e102bb302"
+      ],
+      "elapsedSeconds": 0.084,
+      "exitCode": 0,
+      "name": "cleanup-remove-g03-n12-child-5999b33b14fa46bbb610444e102bb302",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/030-cleanup-remove-g03-n12-child-5999b33b14fa46bbb610444e102bb302.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/030-cleanup-remove-g03-n12-child-5999b33b14fa46bbb610444e102bb302.stdout.log",
+        "rawBytes": 47,
+        "rawSha256": "15a3f17a331198f3f3c02867fdfe7c15168a697aef4637bb4cd43bfb8a058078",
+        "sha256": "15a3f17a331198f3f3c02867fdfe7c15168a697aef4637bb4cd43bfb8a058078",
+        "sizeBytes": 47,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "rm",
+        "g03-n12-prepare-5999b33b14fa46bbb610444e102bb302"
+      ],
+      "elapsedSeconds": 0.07,
+      "exitCode": 0,
+      "name": "cleanup-remove-g03-n12-prepare-5999b33b14fa46bbb610444e102bb302",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/031-cleanup-remove-g03-n12-prepare-5999b33b14fa46bbb610444e102bb302.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/031-cleanup-remove-g03-n12-prepare-5999b33b14fa46bbb610444e102bb302.stdout.log",
+        "rawBytes": 49,
+        "rawSha256": "4418d5d7644b780e7dc20cf3caf4ce5286c91cb59d036904b2b7ada3466c9442",
+        "sha256": "4418d5d7644b780e7dc20cf3caf4ce5286c91cb59d036904b2b7ada3466c9442",
+        "sizeBytes": 49,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "stop",
+        "--time",
+        "10",
+        "g03-n12-pg-5999b33b14fa46bbb610444e102bb302"
+      ],
+      "elapsedSeconds": 0.234,
+      "exitCode": 0,
+      "name": "cleanup-stop-g03-n12-pg-5999b33b14fa46bbb610444e102bb302",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/032-cleanup-stop-g03-n12-pg-5999b33b14fa46bbb610444e102bb302.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/032-cleanup-stop-g03-n12-pg-5999b33b14fa46bbb610444e102bb302.stdout.log",
+        "rawBytes": 99,
+        "rawSha256": "59f5d290b4c2774af692655af8fe2db1b72a1717191e7a7dd60f8e3d9372813f",
+        "sha256": "59f5d290b4c2774af692655af8fe2db1b72a1717191e7a7dd60f8e3d9372813f",
+        "sizeBytes": 99,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "rm",
+        "g03-n12-pg-5999b33b14fa46bbb610444e102bb302"
+      ],
+      "elapsedSeconds": 0.081,
+      "exitCode": 0,
+      "name": "cleanup-remove-g03-n12-pg-5999b33b14fa46bbb610444e102bb302",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/033-cleanup-remove-g03-n12-pg-5999b33b14fa46bbb610444e102bb302.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/033-cleanup-remove-g03-n12-pg-5999b33b14fa46bbb610444e102bb302.stdout.log",
+        "rawBytes": 44,
+        "rawSha256": "957238216dab121b497c94ab08ef4c9094edbb62f8daadfa40f8fb363676d600",
+        "sha256": "957238216dab121b497c94ab08ef4c9094edbb62f8daadfa40f8fb363676d600",
+        "sizeBytes": 44,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "rm",
+        "g03-n12-setup-5999b33b14fa46bbb610444e102bb302"
+      ],
+      "elapsedSeconds": 0.084,
+      "exitCode": 0,
+      "name": "cleanup-remove-g03-n12-setup-5999b33b14fa46bbb610444e102bb302",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/034-cleanup-remove-g03-n12-setup-5999b33b14fa46bbb610444e102bb302.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/034-cleanup-remove-g03-n12-setup-5999b33b14fa46bbb610444e102bb302.stdout.log",
+        "rawBytes": 47,
+        "rawSha256": "a2f46f6ab878c2e7c4ee744715540869f4e7e642f04245221fb925bc19b2b3f3",
+        "sha256": "a2f46f6ab878c2e7c4ee744715540869f4e7e642f04245221fb925bc19b2b3f3",
+        "sizeBytes": 47,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "container",
+        "ls",
+        "-a",
+        "--filter",
+        "name=g03-n12-",
+        "--format",
+        "{{.Names}}|{{.ID}}|{{.Label \"codex.g03.execution-id\"}}|{{.State}}"
+      ],
+      "elapsedSeconds": 0.023,
+      "exitCode": 0,
+      "name": "cleanup-list-run-containers-after",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/035-cleanup-list-run-containers-after.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/035-cleanup-list-run-containers-after.stdout.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "network",
+        "ls",
+        "--filter",
+        "name=g03-n12-net-5999b33b14fa46bbb610444e102bb302",
+        "--format",
+        "{{.Name}}|{{.ID}}|{{.Label \"codex.g03.execution-id\"}}"
+      ],
+      "elapsedSeconds": 0.025,
+      "exitCode": 0,
+      "name": "cleanup-list-run-network-before",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/036-cleanup-list-run-network-before.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/036-cleanup-list-run-network-before.stdout.log",
+        "rawBytes": 91,
+        "rawSha256": "80576a7aaf22e56b243134c6ef2b2a12932dd3ee2ca09a81a8bf39dc821235de",
+        "sha256": "80576a7aaf22e56b243134c6ef2b2a12932dd3ee2ca09a81a8bf39dc821235de",
+        "sizeBytes": 91,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "network",
+        "rm",
+        "g03-n12-net-5999b33b14fa46bbb610444e102bb302"
+      ],
+      "elapsedSeconds": 0.092,
+      "exitCode": 0,
+      "name": "cleanup-remove-owned-network",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/037-cleanup-remove-owned-network.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/037-cleanup-remove-owned-network.stdout.log",
+        "rawBytes": 45,
+        "rawSha256": "e9300fd721de0e66ab056f37058365dc728f977f221059d1b50baba056b4b509",
+        "sha256": "e9300fd721de0e66ab056f37058365dc728f977f221059d1b50baba056b4b509",
+        "sizeBytes": 45,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "network",
+        "ls",
+        "--filter",
+        "name=g03-n12-net-5999b33b14fa46bbb610444e102bb302",
+        "--format",
+        "{{.Name}}|{{.ID}}|{{.Label \"codex.g03.execution-id\"}}"
+      ],
+      "elapsedSeconds": 0.022,
+      "exitCode": 0,
+      "name": "cleanup-list-run-network-after",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/038-cleanup-list-run-network-after.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/038-cleanup-list-run-network-after.stdout.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "ls",
+        "--filter",
+        "name=g03-n12-venv-5999b33b14fa46bbb610444e102bb302",
+        "--format",
+        "{{.Name}}|{{.Label \"codex.g03.execution-id\"}}"
+      ],
+      "elapsedSeconds": 0.059,
+      "exitCode": 0,
+      "name": "cleanup-list-volume-before-g03-n12-venv-5999b33b14fa46bbb610444e102bb302",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/039-cleanup-list-volume-before-g03-n12-venv-5999b33b14fa46bbb610444e102bb302.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/039-cleanup-list-volume-before-g03-n12-venv-5999b33b14fa46bbb610444e102bb302.stdout.log",
+        "rawBytes": 79,
+        "rawSha256": "84392ab700dad787afc2b5fe8e1120b71c69b08e96e0243ca8b801d500ec2f60",
+        "sha256": "84392ab700dad787afc2b5fe8e1120b71c69b08e96e0243ca8b801d500ec2f60",
+        "sizeBytes": 79,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "rm",
+        "g03-n12-venv-5999b33b14fa46bbb610444e102bb302"
+      ],
+      "elapsedSeconds": 0.047,
+      "exitCode": 0,
+      "name": "cleanup-remove-owned-volume-g03-n12-venv-5999b33b14fa46bbb610444e102bb302",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/040-cleanup-remove-owned-volume-g03-n12-venv-5999b33b14fa46bbb610444e102bb302.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/040-cleanup-remove-owned-volume-g03-n12-venv-5999b33b14fa46bbb610444e102bb302.stdout.log",
+        "rawBytes": 46,
+        "rawSha256": "5a0f3e5d159d7ce33635a62e957be8cbfd3d3bd48ccaf711f7b4fbe9cc17f3eb",
+        "sha256": "5a0f3e5d159d7ce33635a62e957be8cbfd3d3bd48ccaf711f7b4fbe9cc17f3eb",
+        "sizeBytes": 46,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "ls",
+        "--filter",
+        "name=g03-n12-venv-5999b33b14fa46bbb610444e102bb302",
+        "--format",
+        "{{.Name}}|{{.Label \"codex.g03.execution-id\"}}"
+      ],
+      "elapsedSeconds": 0.053,
+      "exitCode": 0,
+      "name": "cleanup-list-volume-after-g03-n12-venv-5999b33b14fa46bbb610444e102bb302",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/041-cleanup-list-volume-after-g03-n12-venv-5999b33b14fa46bbb610444e102bb302.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/041-cleanup-list-volume-after-g03-n12-venv-5999b33b14fa46bbb610444e102bb302.stdout.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "ls",
+        "--filter",
+        "name=g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302",
+        "--format",
+        "{{.Name}}|{{.Label \"codex.g03.execution-id\"}}"
+      ],
+      "elapsedSeconds": 0.182,
+      "exitCode": 0,
+      "name": "cleanup-list-volume-before-g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/042-cleanup-list-volume-before-g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/042-cleanup-list-volume-before-g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302.stdout.log",
+        "rawBytes": 81,
+        "rawSha256": "26e7845cdb15767f559444ce1970157bbd82656fabc1b98afbecb42ef60b44fb",
+        "sha256": "26e7845cdb15767f559444ce1970157bbd82656fabc1b98afbecb42ef60b44fb",
+        "sizeBytes": 81,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "rm",
+        "g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302"
+      ],
+      "elapsedSeconds": 0.034,
+      "exitCode": 0,
+      "name": "cleanup-remove-owned-volume-g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/043-cleanup-remove-owned-volume-g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/043-cleanup-remove-owned-volume-g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302.stdout.log",
+        "rawBytes": 48,
+        "rawSha256": "f9a6e4fd2ef082c5f4cde5c4aa09875a07ed7bc48e818c3f08559e1a8cbb2c28",
+        "sha256": "f9a6e4fd2ef082c5f4cde5c4aa09875a07ed7bc48e818c3f08559e1a8cbb2c28",
+        "sizeBytes": 48,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "ls",
+        "--filter",
+        "name=g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302",
+        "--format",
+        "{{.Name}}|{{.Label \"codex.g03.execution-id\"}}"
+      ],
+      "elapsedSeconds": 0.188,
+      "exitCode": 0,
+      "name": "cleanup-list-volume-after-g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302",
+      "stderr": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/044-cleanup-list-volume-after-g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/outer/044-cleanup-list-volume-after-g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302.stdout.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0,
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 15
+    }
+  ],
+  "dockerEngine": {
+    "platform": "linux/aarch64",
+    "version": "29.8.2"
+  },
+  "elapsedSeconds": 50.314,
+  "evidenceBytesBeforeOperatorRecord": 498503,
+  "evidenceBytesIncludingOperatorRecord": 599031,
+  "executionId": "5999b33b14fa46bbb610444e102bb302",
+  "executionKind": "local_linux_diagnostic",
+  "failure": {
+    "message": "g03-n12-child-5999b33b14fa46bbb610444e102bb302 container command failed with exit 2",
+    "type": "RuntimeError"
+  },
+  "held18CustodySha256": "3eb574de40334922055b239dd33288c328618bcc70c9b91c86f97d9f4b4989eb",
+  "heldCohortPath": "/private/tmp/g03-held-cohort-001",
+  "heldCohortPins": {
+    "aggregateIndexSha256": "c4d99294936f1631949cb7252d98c8e91b9ba106bf329e251dc9c8ef41e5287d",
+    "mirrorManifestSha256": "9e304930ca19abc38091a90e324806649d1f75b1ca799b37448327c5c0b052b9",
+    "requirementsLockSha256": "c28065235c7863051de1498c6144dfc1813264f5011dcaff865c2791515b75e4",
+    "selectedLockSha256": "29c69360e6bcbea329f1ddab05725f727316a729954f123cf11c102486a5c94b"
+  },
+  "heldCohortPostRun": {
+    "aggregateIndexSha256": "c4d99294936f1631949cb7252d98c8e91b9ba106bf329e251dc9c8ef41e5287d",
+    "allVerified": true,
+    "custodySha256": "3eb574de40334922055b239dd33288c328618bcc70c9b91c86f97d9f4b4989eb",
+    "mirrorManifestSha256": "9e304930ca19abc38091a90e324806649d1f75b1ca799b37448327c5c0b052b9",
+    "requirementsLockSha256": "c28065235c7863051de1498c6144dfc1813264f5011dcaff865c2791515b75e4",
+    "selectedLockSha256": "29c69360e6bcbea329f1ddab05725f727316a729954f123cf11c102486a5c94b",
+    "weftWheelSha256": "51d607f851c72cffbc0dc45a969237f23d90b59185826b9eda56a791e799533e"
+  },
+  "hostedQualificationClaim": false,
+  "limits": {
+    "aggregateSeconds": 600,
+    "childSeconds": 180,
+    "evidenceBytes": 16777216,
+    "postgresReadySeconds": 60,
+    "rawLogsBytes": 1048576,
+    "setupSeconds": 240,
+    "targetManifestSeconds": 20,
+    "terminalReserveSeconds": 60,
+    "terminationGraceSeconds": 10,
+    "workSeconds": 540
+  },
+  "nativeQualificationClaim": false,
+  "operatorResultBytes": 100528,
+  "outerRawLogBytes": 6069,
+  "outputFiles": [
+    {
+      "path": "child/n12-run-result.json",
+      "sha256": "b6c890b84f5cb7027c447d9592686d7f38bc1b4582ec9ce022fbee0ef37ea0de",
+      "sizeBytes": 152256
+    },
+    {
+      "path": "child/raw-run-chain-report.json",
+      "sha256": "09b2d464c6e16493b45b8b8aa235453068c6d59e4b96d970fd563077151a3e47",
+      "sizeBytes": 9128
+    },
+    {
+      "path": "outer/000-inspect-client-image.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/000-inspect-client-image.stdout.log",
+      "sha256": "31ac67bf938313b2f8b84815958ce1b565d5667c3db48c9ba03d6edda647d58e",
+      "sizeBytes": 72
+    },
+    {
+      "path": "outer/001-inspect-client-platform.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/001-inspect-client-platform.stdout.log",
+      "sha256": "30a2860611f42f808b7012f033e39aaedf708c7ea934b69e9dd0b3fdcd756996",
+      "sizeBytes": 12
+    },
+    {
+      "path": "outer/002-inspect-postgres-image.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/002-inspect-postgres-image.stdout.log",
+      "sha256": "dd53ff50756719a8451fc732f3609ce21d685702adfec6f62556c34d5d95e49d",
+      "sizeBytes": 72
+    },
+    {
+      "path": "outer/003-inspect-postgres-platform.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/003-inspect-postgres-platform.stdout.log",
+      "sha256": "8e0770e07c23940b641360866fee9a4fe9202fadae5086d5162337bab0307e89",
+      "sizeBytes": 12
+    },
+    {
+      "path": "outer/004-inspect-postgres-image-config-volumes.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/004-inspect-postgres-image-config-volumes.stdout.log",
+      "sha256": "825cff6bac47ec243e14ae4006e1f63d625b5a1e841f7e2138d5683b4ffd7fd4",
+      "sizeBytes": 27
+    },
+    {
+      "path": "outer/005-inspect-engine-version.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/005-inspect-engine-version.stdout.log",
+      "sha256": "c007c7e1712540ee77c9ce8e454890d905ff0193ec24907cb08ffd9d00b25d98",
+      "sizeBytes": 7
+    },
+    {
+      "path": "outer/006-inspect-engine-platform.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/006-inspect-engine-platform.stdout.log",
+      "sha256": "afc95e0482eccb7b8a13df7f544866870b9863a31055ddf48f938817d8e2e7ff",
+      "sizeBytes": 14
+    },
+    {
+      "path": "outer/007-list-existing-volume-g03-n12-venv-5999b33b14fa46bbb610444e102bb302.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/007-list-existing-volume-g03-n12-venv-5999b33b14fa46bbb610444e102bb302.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/008-list-existing-volume-g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/008-list-existing-volume-g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/009-create-venv-volume.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/009-create-venv-volume.stdout.log",
+      "sha256": "5a0f3e5d159d7ce33635a62e957be8cbfd3d3bd48ccaf711f7b4fbe9cc17f3eb",
+      "sizeBytes": 46
+    },
+    {
+      "path": "outer/010-inspect-venv-volume.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/010-inspect-venv-volume.stdout.log",
+      "sha256": "1160cef194ef148dc1a9a56d96440e318eda195ad15272a9400973824612f2bc",
+      "sizeBytes": 85
+    },
+    {
+      "path": "outer/011-g03-n12-setup-5999b33b14fa46bbb610444e102bb302.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/011-g03-n12-setup-5999b33b14fa46bbb610444e102bb302.stdout.log",
+      "sha256": "9674cc8007d6e6854a78c5f27104a0f5f59fce47c58dff9cb3c72bc2e0fdeeb9",
+      "sizeBytes": 224
+    },
+    {
+      "path": "outer/012-g03-n12-setup-5999b33b14fa46bbb610444e102bb302-inspect.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/012-g03-n12-setup-5999b33b14fa46bbb610444e102bb302-inspect.stdout.log",
+      "sha256": "51d5e752d34e9d9246694bfd1f44fba6ce3b0f9048d185e5384159ea941cdd8d",
+      "sizeBytes": 100
+    },
+    {
+      "path": "outer/013-create-internal-network.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/013-create-internal-network.stdout.log",
+      "sha256": "635172c47f49b4414ab698d80f483ba7830a31440a328d4b9ca3ba5c5ff29b0e",
+      "sizeBytes": 65
+    },
+    {
+      "path": "outer/014-inspect-internal-network.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/014-inspect-internal-network.stdout.log",
+      "sha256": "fba8faad843972f3489649d9aab8a157fd9a62b17b4a2b43622e50867e4e4aec",
+      "sizeBytes": 155
+    },
+    {
+      "path": "outer/015-create-postgres-data-volume.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/015-create-postgres-data-volume.stdout.log",
+      "sha256": "f9a6e4fd2ef082c5f4cde5c4aa09875a07ed7bc48e818c3f08559e1a8cbb2c28",
+      "sizeBytes": 48
+    },
+    {
+      "path": "outer/016-inspect-postgres-data-volume.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/016-inspect-postgres-data-volume.stdout.log",
+      "sha256": "b0a76d3effd734bb816d7dab13b6efdbc615c024b998419c3db93a3b62320b66",
+      "sizeBytes": 87
+    },
+    {
+      "path": "outer/017-start-postgres.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/017-start-postgres.stdout.log",
+      "sha256": "08f320c09a7810e769dda36f199ac9864eb0f731cb585552eb7f4348f3b489ad",
+      "sizeBytes": 65
+    },
+    {
+      "path": "outer/018-inspect-postgres-container.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/018-inspect-postgres-container.stdout.log",
+      "sha256": "0e79e6eb3f783b9076bc772130a0ab1ec39630a29e204b8ab48d8c0d2948a238",
+      "sizeBytes": 170
+    },
+    {
+      "path": "outer/019-inspect-postgres-data-mount.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/019-inspect-postgres-data-mount.stdout.log",
+      "sha256": "722876dfde3bf038abf30d0ff92d499fae9c68e27ab6652ebe4e0b6df5888c74",
+      "sizeBytes": 87
+    },
+    {
+      "path": "outer/020-postgres-readiness-check.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/020-postgres-readiness-check.stdout.log",
+      "sha256": "7c926b87e40b26ec6ffb4c78f403571ac977ece539b51f52b4a58a6943d143ea",
+      "sizeBytes": 39
+    },
+    {
+      "path": "outer/021-postgres-readiness-check.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/021-postgres-readiness-check.stdout.log",
+      "sha256": "7c926b87e40b26ec6ffb4c78f403571ac977ece539b51f52b4a58a6943d143ea",
+      "sizeBytes": 39
+    },
+    {
+      "path": "outer/022-postgres-readiness-check.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/022-postgres-readiness-check.stdout.log",
+      "sha256": "6e168fc3b5a0662104b5e5da92e87b870e8b7c65fec827d267115b5123d18614",
+      "sizeBytes": 49
+    },
+    {
+      "path": "outer/023-postgres-version.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/023-postgres-version.stdout.log",
+      "sha256": "4e0b3e128d6cbd1fc9b76465e749ebf536e57e9baf17ca9b470b716ef79089aa",
+      "sizeBytes": 158
+    },
+    {
+      "path": "outer/024-g03-n12-prepare-5999b33b14fa46bbb610444e102bb302.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/024-g03-n12-prepare-5999b33b14fa46bbb610444e102bb302.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/025-g03-n12-prepare-5999b33b14fa46bbb610444e102bb302-inspect.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/025-g03-n12-prepare-5999b33b14fa46bbb610444e102bb302-inspect.stdout.log",
+      "sha256": "caa28ca40086c3099d825585b4bd77c757623abd83e90e1a8ea4989b72b42a96",
+      "sizeBytes": 100
+    },
+    {
+      "path": "outer/026-g03-n12-child-5999b33b14fa46bbb610444e102bb302.stderr.log",
+      "sha256": "c7ac1d27835e83cbfae62ba648a9201a4a4c1c51f5f2ce1d63d4f0da2858d2ea",
+      "sizeBytes": 53
+    },
+    {
+      "path": "outer/026-g03-n12-child-5999b33b14fa46bbb610444e102bb302.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/027-g03-n12-child-5999b33b14fa46bbb610444e102bb302-inspect.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/027-g03-n12-child-5999b33b14fa46bbb610444e102bb302-inspect.stdout.log",
+      "sha256": "bf5993fe3a856b01dc1f2e10d58b2d1ba6f3c1c51f079b61bf9503ecaad6deba",
+      "sizeBytes": 100
+    },
+    {
+      "path": "outer/028-cleanup-daemon-check.stderr.log",
+      "sha256": "263b54c86d8d260d30bf1008cf594b09d97afeccf1d8f85a15f5aa3b9eecf105",
+      "sizeBytes": 48
+    },
+    {
+      "path": "outer/028-cleanup-daemon-check.stdout.log",
+      "sha256": "041096b80a8fae87fe4a138306ef93693b1ffc1d72c5f9a83b3ddd2eb73ba420",
+      "sizeBytes": 3059
+    },
+    {
+      "path": "outer/029-cleanup-list-run-containers-before.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/029-cleanup-list-run-containers-before.stdout.log",
+      "sha256": "f356034a29a8c7f7e6d959a83e2371a9cabe0d5654db455890fadf996b95b6a6",
+      "sizeBytes": 400
+    },
+    {
+      "path": "outer/030-cleanup-remove-g03-n12-child-5999b33b14fa46bbb610444e102bb302.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/030-cleanup-remove-g03-n12-child-5999b33b14fa46bbb610444e102bb302.stdout.log",
+      "sha256": "15a3f17a331198f3f3c02867fdfe7c15168a697aef4637bb4cd43bfb8a058078",
+      "sizeBytes": 47
+    },
+    {
+      "path": "outer/031-cleanup-remove-g03-n12-prepare-5999b33b14fa46bbb610444e102bb302.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/031-cleanup-remove-g03-n12-prepare-5999b33b14fa46bbb610444e102bb302.stdout.log",
+      "sha256": "4418d5d7644b780e7dc20cf3caf4ce5286c91cb59d036904b2b7ada3466c9442",
+      "sizeBytes": 49
+    },
+    {
+      "path": "outer/032-cleanup-stop-g03-n12-pg-5999b33b14fa46bbb610444e102bb302.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/032-cleanup-stop-g03-n12-pg-5999b33b14fa46bbb610444e102bb302.stdout.log",
+      "sha256": "59f5d290b4c2774af692655af8fe2db1b72a1717191e7a7dd60f8e3d9372813f",
+      "sizeBytes": 99
+    },
+    {
+      "path": "outer/033-cleanup-remove-g03-n12-pg-5999b33b14fa46bbb610444e102bb302.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/033-cleanup-remove-g03-n12-pg-5999b33b14fa46bbb610444e102bb302.stdout.log",
+      "sha256": "957238216dab121b497c94ab08ef4c9094edbb62f8daadfa40f8fb363676d600",
+      "sizeBytes": 44
+    },
+    {
+      "path": "outer/034-cleanup-remove-g03-n12-setup-5999b33b14fa46bbb610444e102bb302.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/034-cleanup-remove-g03-n12-setup-5999b33b14fa46bbb610444e102bb302.stdout.log",
+      "sha256": "a2f46f6ab878c2e7c4ee744715540869f4e7e642f04245221fb925bc19b2b3f3",
+      "sizeBytes": 47
+    },
+    {
+      "path": "outer/035-cleanup-list-run-containers-after.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/035-cleanup-list-run-containers-after.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/036-cleanup-list-run-network-before.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/036-cleanup-list-run-network-before.stdout.log",
+      "sha256": "80576a7aaf22e56b243134c6ef2b2a12932dd3ee2ca09a81a8bf39dc821235de",
+      "sizeBytes": 91
+    },
+    {
+      "path": "outer/037-cleanup-remove-owned-network.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/037-cleanup-remove-owned-network.stdout.log",
+      "sha256": "e9300fd721de0e66ab056f37058365dc728f977f221059d1b50baba056b4b509",
+      "sizeBytes": 45
+    },
+    {
+      "path": "outer/038-cleanup-list-run-network-after.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/038-cleanup-list-run-network-after.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/039-cleanup-list-volume-before-g03-n12-venv-5999b33b14fa46bbb610444e102bb302.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/039-cleanup-list-volume-before-g03-n12-venv-5999b33b14fa46bbb610444e102bb302.stdout.log",
+      "sha256": "84392ab700dad787afc2b5fe8e1120b71c69b08e96e0243ca8b801d500ec2f60",
+      "sizeBytes": 79
+    },
+    {
+      "path": "outer/040-cleanup-remove-owned-volume-g03-n12-venv-5999b33b14fa46bbb610444e102bb302.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/040-cleanup-remove-owned-volume-g03-n12-venv-5999b33b14fa46bbb610444e102bb302.stdout.log",
+      "sha256": "5a0f3e5d159d7ce33635a62e957be8cbfd3d3bd48ccaf711f7b4fbe9cc17f3eb",
+      "sizeBytes": 46
+    },
+    {
+      "path": "outer/041-cleanup-list-volume-after-g03-n12-venv-5999b33b14fa46bbb610444e102bb302.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/041-cleanup-list-volume-after-g03-n12-venv-5999b33b14fa46bbb610444e102bb302.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/042-cleanup-list-volume-before-g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/042-cleanup-list-volume-before-g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302.stdout.log",
+      "sha256": "26e7845cdb15767f559444ce1970157bbd82656fabc1b98afbecb42ef60b44fb",
+      "sizeBytes": 81
+    },
+    {
+      "path": "outer/043-cleanup-remove-owned-volume-g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/043-cleanup-remove-owned-volume-g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302.stdout.log",
+      "sha256": "f9a6e4fd2ef082c5f4cde5c4aa09875a07ed7bc48e818c3f08559e1a8cbb2c28",
+      "sizeBytes": 48
+    },
+    {
+      "path": "outer/044-cleanup-list-volume-after-g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/044-cleanup-list-volume-after-g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "prepare/expected-run.json",
+      "sha256": "ba1b4b9b792f09a12036197f3190a9bfaa39df9eafad4186826416e45134f57f",
+      "sizeBytes": 76832
+    },
+    {
+      "path": "setup/command-records.json",
+      "sha256": "1c3d7ad9b65691d328184e63935f33cbac6eb7826526187eb8bb5d55fbacde94",
+      "sizeBytes": 8011
+    },
+    {
+      "path": "setup/g03-defaults-native-fixture.json",
+      "sha256": "18a46993cb86923e03f6e1e698cb95bb9dbb428ae7d38ecd801e89f39b77f0b5",
+      "sizeBytes": 163017
+    },
+    {
+      "path": "setup/logs/bun-fixture.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "setup/logs/bun-fixture.stdout.log",
+      "sha256": "e5e63d45571dd29f0d4ad5ade111af34fb2ef518ce76e825c4a7610ccd437b62",
+      "sizeBytes": 1130
+    },
+    {
+      "path": "setup/logs/bun-runtime-identity.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "setup/logs/bun-runtime-identity.stdout.log",
+      "sha256": "bd31e8d9cf8d14a1e9e3fdf3b9f6a524819aed0d1b14627523c6765767c7d8f1",
+      "sizeBytes": 6
+    },
+    {
+      "path": "setup/logs/create-fresh-venv.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "setup/logs/create-fresh-venv.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "setup/logs/install-exact-held18.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "setup/logs/install-exact-held18.stdout.log",
+      "sha256": "7dc58e59b45c8f00cc203216c14af93d24b9448f181063f8cde880a8ab84db6a",
+      "sizeBytes": 3475
+    },
+    {
+      "path": "setup/logs/installed-source-preflight.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "setup/logs/installed-source-preflight.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "setup/logs/orchestration-mutation-tests.stderr.log",
+      "sha256": "38bf320bde0206302c1e57a1b42621b895232f0c74ebfec8c7b81ec6681fa5a0",
+      "sizeBytes": 103
+    },
+    {
+      "path": "setup/logs/orchestration-mutation-tests.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "setup/logs/pip-check.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "setup/logs/pip-check.stdout.log",
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+      "sizeBytes": 30
+    },
+    {
+      "path": "setup/logs/predicate-mutation-tests.stderr.log",
+      "sha256": "065c7d15facfd20f14fb9182747be315f3349fa1d5e1a0e966047509f4bfa9b1",
+      "sizeBytes": 104
+    },
+    {
+      "path": "setup/logs/predicate-mutation-tests.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "setup/logs/runtime-identity.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "setup/logs/runtime-identity.stdout.log",
+      "sha256": "7c95f7d768d2fe5b26143cfd16388399a5a0d3f1dfb379dc5eed29d4a5d456ff",
+      "sizeBytes": 51
+    },
+    {
+      "path": "setup/logs/weft-wheel-member-proof.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "setup/logs/weft-wheel-member-proof.stdout.log",
+      "sha256": "5561a8898117a2fa0d33cda95c9b7233e98ed498f420070bc2552948ae935434",
+      "sizeBytes": 596
+    },
+    {
+      "path": "setup/setup-result.json",
+      "sha256": "e8086c3d9d217f84f57755c37c99791da1c918c58a2f62c033ba8a7f57e356da",
+      "sizeBytes": 249
+    },
+    {
+      "path": "setup/source-admission.json",
+      "sha256": "188f1d20af10827b89ad334590663b656d04a016dc89e195d60708d2a4bdf311",
+      "sizeBytes": 77446
+    }
+  ],
+  "postgresImage": "sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336",
+  "postgresImageConfigVolumes": {
+    "expected": {
+      "/var/lib/postgresql": {}
+    },
+    "observed": {
+      "/var/lib/postgresql": {}
+    },
+    "rawJson": "{\"/var/lib/postgresql\":{}}"
+  },
+  "postgresImageObserved": {
+    "imageId": "sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336",
+    "platform": "linux/arm64"
+  },
+  "postgresRuntime": {
+    "cpuLimit": 2,
+    "fullVersion": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "imageId": "sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336",
+    "memoryLimitBytes": 2147483648,
+    "network": "g03-n12-net-5999b33b14fa46bbb610444e102bb302",
+    "pidsLimit": 1024,
+    "platform": "linux/arm64",
+    "publishedPorts": false,
+    "serverVersionNum": "180006",
+    "shortVersion": "18.6 (Debian 18.6-1.pgdg13+2)"
+  },
+  "preparePhaseFrozenFiles": [
+    {
+      "path": "expected-run.json",
+      "sha256": "ba1b4b9b792f09a12036197f3190a9bfaa39df9eafad4186826416e45134f57f",
+      "sizeBytes": 76832
+    }
+  ],
+  "profile": "umf.g03-n12-local-linux-operator/1",
+  "resources": {
+    "g03-n12-child-5999b33b14fa46bbb610444e102bb302": {
+      "executionIdLabel": "5999b33b14fa46bbb610444e102bb302",
+      "exitCode": 2,
+      "id": "27c7ff9a891a8c0c83e730b27d91bce4811292ad5ce60f2daede0bd38c2a0b79"
+    },
+    "g03-n12-net-5999b33b14fa46bbb610444e102bb302": {
+      "driver": "bridge",
+      "executionIdLabel": "5999b33b14fa46bbb610444e102bb302",
+      "id": "f1f909bb4c894a19f5da16e50efc6c518771fccbf5fb0b850b24fde9c4662637",
+      "internal": true
+    },
+    "g03-n12-pg-5999b33b14fa46bbb610444e102bb302": {
+      "cpuLimit": 2,
+      "dataMount": "volume|local|true|g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302|/var/lib/postgresql;",
+      "dataMountCount": 1,
+      "dataVolume": "g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302",
+      "executionIdLabel": "5999b33b14fa46bbb610444e102bb302",
+      "id": "2be9562a2b1d70d099cc912af8730e741b62d677a4091ebabc045eadaf62d2be",
+      "imageId": "sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336",
+      "memoryLimitBytes": 2147483648,
+      "network": "g03-n12-net-5999b33b14fa46bbb610444e102bb302",
+      "pidsLimit": 1024
+    },
+    "g03-n12-pgdata-5999b33b14fa46bbb610444e102bb302": {
+      "driver": "local",
+      "executionIdLabel": "5999b33b14fa46bbb610444e102bb302",
+      "mountDestination": "/var/lib/postgresql"
+    },
+    "g03-n12-prepare-5999b33b14fa46bbb610444e102bb302": {
+      "executionIdLabel": "5999b33b14fa46bbb610444e102bb302",
+      "exitCode": 0,
+      "id": "341d957885acb27dd320488063aad1a622c6230474e799e9b9cd8a3157fb526f"
+    },
+    "g03-n12-setup-5999b33b14fa46bbb610444e102bb302": {
+      "executionIdLabel": "5999b33b14fa46bbb610444e102bb302",
+      "exitCode": 0,
+      "id": "ae3e7c8336b2d45552c2e39104e66c7e54026e3c86d89ea430e4689414236a17"
+    },
+    "g03-n12-venv-5999b33b14fa46bbb610444e102bb302": {
+      "driver": "local",
+      "executionIdLabel": "5999b33b14fa46bbb610444e102bb302"
+    }
+  },
+  "setupPhaseFrozenFiles": [
+    {
+      "path": "command-records.json",
+      "sha256": "1c3d7ad9b65691d328184e63935f33cbac6eb7826526187eb8bb5d55fbacde94",
+      "sizeBytes": 8011
+    },
+    {
+      "path": "g03-defaults-native-fixture.json",
+      "sha256": "18a46993cb86923e03f6e1e698cb95bb9dbb428ae7d38ecd801e89f39b77f0b5",
+      "sizeBytes": 163017
+    },
+    {
+      "path": "logs/bun-fixture.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/bun-fixture.stdout.log",
+      "sha256": "e5e63d45571dd29f0d4ad5ade111af34fb2ef518ce76e825c4a7610ccd437b62",
+      "sizeBytes": 1130
+    },
+    {
+      "path": "logs/bun-runtime-identity.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/bun-runtime-identity.stdout.log",
+      "sha256": "bd31e8d9cf8d14a1e9e3fdf3b9f6a524819aed0d1b14627523c6765767c7d8f1",
+      "sizeBytes": 6
+    },
+    {
+      "path": "logs/create-fresh-venv.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/create-fresh-venv.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/install-exact-held18.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/install-exact-held18.stdout.log",
+      "sha256": "7dc58e59b45c8f00cc203216c14af93d24b9448f181063f8cde880a8ab84db6a",
+      "sizeBytes": 3475
+    },
+    {
+      "path": "logs/installed-source-preflight.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/installed-source-preflight.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/orchestration-mutation-tests.stderr.log",
+      "sha256": "38bf320bde0206302c1e57a1b42621b895232f0c74ebfec8c7b81ec6681fa5a0",
+      "sizeBytes": 103
+    },
+    {
+      "path": "logs/orchestration-mutation-tests.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/pip-check.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/pip-check.stdout.log",
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+      "sizeBytes": 30
+    },
+    {
+      "path": "logs/predicate-mutation-tests.stderr.log",
+      "sha256": "065c7d15facfd20f14fb9182747be315f3349fa1d5e1a0e966047509f4bfa9b1",
+      "sizeBytes": 104
+    },
+    {
+      "path": "logs/predicate-mutation-tests.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/runtime-identity.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/runtime-identity.stdout.log",
+      "sha256": "7c95f7d768d2fe5b26143cfd16388399a5a0d3f1dfb379dc5eed29d4a5d456ff",
+      "sizeBytes": 51
+    },
+    {
+      "path": "logs/weft-wheel-member-proof.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/weft-wheel-member-proof.stdout.log",
+      "sha256": "5561a8898117a2fa0d33cda95c9b7233e98ed498f420070bc2552948ae935434",
+      "sizeBytes": 596
+    },
+    {
+      "path": "setup-result.json",
+      "sha256": "e8086c3d9d217f84f57755c37c99791da1c918c58a2f62c033ba8a7f57e356da",
+      "sizeBytes": 249
+    },
+    {
+      "path": "source-admission.json",
+      "sha256": "188f1d20af10827b89ad334590663b656d04a016dc89e195d60708d2a4bdf311",
+      "sizeBytes": 77446
+    }
+  ],
+  "sourceAdmissionBeforeTargetCreation": true,
+  "sourceAdmissionReceiptPath": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/setup/source-admission.json",
+  "sourceManifest": {
+    "baseCommit": "a6eb216a95a49715f75a058502d9915a8eb1f8ff",
+    "baseTree": "4475f25b7b445fda9c4f2e97208dfa632a8905df",
+    "files": [
+      {
+        "path": "tests/lifecycle/g03-defaults-native.py",
+        "sha256": "b0a9f780fa504c47808cc6cdb5c30eace8c44e5dbcacaacdd3dff12fedc9b8a8",
+        "sizeBytes": 110793,
+        "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/g03-defaults-native.py"
+      },
+      {
+        "path": "tests/lifecycle/g03_ordinary_native.py",
+        "sha256": "f62c555d63544c38ece9dfda2b0316771b2bbf0dd3006eb6560cccc136188493",
+        "sizeBytes": 50291,
+        "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/g03_ordinary_native.py"
+      },
+      {
+        "path": "tests/lifecycle/g03_campaign_predicates.py",
+        "sha256": "59be7a0339bfb91760902268feb48a44fbb6ffa4bbc4ee104b5b8e841dea87a0",
+        "sizeBytes": 37092,
+        "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/g03_campaign_predicates.py"
+      },
+      {
+        "path": "tests/lifecycle/g03_campaign_orchestration.py",
+        "sha256": "cdb1ea153c85a331d1c899f41dc64179abe4fe7e9ddac37d1660848576cc619b",
+        "sizeBytes": 11708,
+        "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/g03_campaign_orchestration.py"
+      },
+      {
+        "path": "tests/lifecycle/g03-defaults-native-fixture.ts",
+        "sha256": "9f0325ae69e6e8326abc62412404adac1f133c0eef6f40b0cc365b3f4ad7d62f",
+        "sizeBytes": 10237,
+        "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/g03-defaults-native-fixture.ts"
+      },
+      {
+        "path": "tests/lifecycle/test_g03_campaign_predicates.py",
+        "sha256": "a11c4ec6657188070b391455939f2caa98ba6d2141ecf4b108afa86389d68046",
+        "sizeBytes": 14873,
+        "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/test_g03_campaign_predicates.py"
+      },
+      {
+        "path": "tests/lifecycle/test_g03_campaign_orchestration.py",
+        "sha256": "9a8044d19f1deec433d022471f380effe56da06498f9ec844cb49ef0cd9a93ec",
+        "sizeBytes": 4036,
+        "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/test_g03_campaign_orchestration.py"
+      },
+      {
+        "path": "tests/binding/fixtures/table-lifecycle-note.json",
+        "sha256": "0f8a2f5d38d32514ec38fc3bbe393c5b88d45c251c2ae05ac23bea261b0e94ee",
+        "sizeBytes": 3765,
+        "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/binding/fixtures/table-lifecycle-note.json"
+      }
+    ],
+    "profile": "umf.g03-reviewed-harness-source-subset/2",
+    "status": "SOURCE_ACCEPTED_NOT_EXECUTED",
+    "wholeTreeEqualToBase": false
+  },
+  "sourcePostRun": {
+    "manifestSha256": "ba5d41cb362f96024364392ed2cc0e172646b2b3d3687a6ee1888eca4d76b681",
+    "payloadVerified": true
+  },
+  "sourceSealPath": "/private/tmp/g03-n12-source-seal-002",
+  "sourceSealSha256": "ba5d41cb362f96024364392ed2cc0e172646b2b3d3687a6ee1888eca4d76b681",
+  "status": "FAIL_OR_UNKNOWN",
+  "weftCandidateWheelSha256": "51d607f851c72cffbc0dc45a969237f23d90b59185826b9eda56a791e799533e",
+  "weftCandidateWheelSizeBytes": 14373430
+}

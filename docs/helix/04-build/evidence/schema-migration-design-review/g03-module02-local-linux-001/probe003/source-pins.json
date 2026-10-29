@@ -1,0 +1,120 @@
+{
+  "profile": "umf.g03.local-linux-admission-probe-inputs/2",
+  "status": "PREPARED_FOR_SOL_SOURCE_REVIEW",
+  "repository": {
+    "path": "/Users/erik/.codex/worktrees/eb69/umf",
+    "head": "a6eb216a95a49715f75a058502d9915a8eb1f8ff",
+    "branch": "codex/g02-public-proof-evidence",
+    "treeStatus": "dirty-docs-only",
+    "note": "The host documentation checkout has unrelated documentation changes and is not mounted for candidate execution. Execution P remains the exact independently checked clean commit/tree from the existing read-only Docker producer volume."
+  },
+  "sourceP": {
+    "commit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+    "tree": "8b98c0d895983ba2b7637dd3aea567dab0943883",
+    "volume": "umf-migration-source-267675510",
+    "mount": "read-only",
+    "sourcePins": {
+      "tests/lifecycle/g03-defaults-native-fixture.ts": "8547d5f51aa0af84fc693bb2283ec35fc1aaa255ca3d79ee6a187227a9e7bf6d",
+      "tests/binding/fixtures/table-lifecycle-note.json": "0f8a2f5d38d32514ec38fc3bbe393c5b88d45c251c2ae05ac23bea261b0e94ee",
+      "python/umf_access/src/umf_access/unified/session_policy.py": "1582fea2148e739beff1378716436ad0ad7bd7839ad154c8e71b185e052e21ee",
+      "python/umf_access/src/umf_access/unified/table_reads.py": "618d17c6a839f31e77aaa7043a41e8099f77b94c486cb96ca28cf9f9819c7f44",
+      "python/umf_access/tests/test_fixed_query_preparation.py": "77dde4035b7506abfcb97ecb2dbf013b463fdb735b06851353febf048e3b8f21",
+      "python/umf_access/tests/test_table_outcomes.py": "99cba3eb97ddd67f0ce06ec94ca67f845dc68995c4a81a7293d4c421770cfc47"
+    },
+    "executionStatus": "expected clean and enforced by guest Git status check; no execution has occurred in this packet"
+  },
+  "runtime": {
+    "platform": "linux/amd64",
+    "imageId": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+    "os": "Ubuntu 24.04.5",
+    "glibc": "2.39",
+    "python": "3.11.17",
+    "emulation": "local Linux container; host/engine provenance must be reported as observed, not claimed as GitHub-hosted/native metal"
+  },
+  "cohort": {
+    "root": "/private/tmp/g03-held-cohort-001/aggregate",
+    "profile": "umf.embedder-wheel-linux-runtime-macos-inputs/1",
+    "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+    "selectedChildLock": "/private/tmp/g03-held-cohort-001/cells/linux-x86_64-py311/cohort.lock.json",
+    "selectedChildLockSha256": "29c69360e6bcbea329f1ddab05725f727316a729954f123cf11c102486a5c94b",
+    "aggregateIndex": "/private/tmp/g03-held-cohort-001/aggregate/aggregate.json",
+    "aggregateIndexSha256": "c4d99294936f1631949cb7252d98c8e91b9ba106bf329e251dc9c8ef41e5287d",
+    "mirrorManifest": "/private/tmp/g03-held-cohort-001/aggregate/mirror/manifest.json",
+    "mirrorManifestSha256": "9e304930ca19abc38091a90e324806649d1f75b1ca799b37448327c5c0b052b9",
+    "wheelCount": 18,
+    "sourceBuiltRows": {
+      "umf-access": {
+        "version": "0.1.0.dev8",
+        "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+        "wheel": "umf_access-0.1.0.dev8-py3-none-any.whl",
+        "sha256": "1a21c1ddd59f6b23e9f0b33228280564af0e96bb4d13699b89616d5143e4fd23"
+      },
+      "umf-codegen": {
+        "version": "0.1.0a5",
+        "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+        "wheel": "umf_codegen-0.1.0a5-py3-none-any.whl",
+        "sha256": "36a6f7e0ab92feb9cb20ed8842cc3c1f073cdd3ff2c4edff137c1fcbc3ace158"
+      }
+    },
+    "immutableRows": {
+      "umf-core": {
+        "version": "0.10.3",
+        "semanticVersion": "0.10.0",
+        "wheel": "umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl",
+        "sha256": "cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75",
+        "releaseTag": "python-v0.10.3",
+        "releaseCommitM": "7d334dec45948953718bfacd3ed6dd199cadba79",
+        "producerCommitP": "34a337b2d398b5ae33954cc250f6237bc1661c21"
+      }
+    },
+    "requirementsFile": "/private/tmp/g03-held-cohort-001/aggregate/mirror/requirements.lock",
+    "requirementsFileSha256": "c28065235c7863051de1498c6144dfc1813264f5011dcaff865c2791515b75e4",
+    "heldCandidateRows": {
+      "umf-weft": {
+        "version": "0.4.55+g03.a96e4f29262e",
+        "wheel": "umf_weft-0.4.55+g03.a96e4f29262e-cp39-abi3-manylinux_2_34_x86_64.whl",
+        "sha256": "51d607f851c72cffbc0dc45a969237f23d90b59185826b9eda56a791e799533e",
+        "sizeBytes": 14373430,
+        "status": "HELD_UNPUBLISHED_LOCAL_LINUX_CANDIDATE",
+        "producerCommit": "candidate built from held source patch 3f890d60802ef3cedbf212a98f1142dbb202c39e81ea181b13fd0d8960f8dd1c; see held aggregate manifest source record",
+        "nativeMember": "weft/weft.abi3.so",
+        "nativeSha256": "efc152e58bbc3771a70f5a1d2f962ebc5d1a05f4dab023516a079ce3db5fc3bf",
+        "platformLimit": "manylinux_2_34_x86_64; local Python 3.11 probe pending; no Mac, hosted runner, publication, or other-runtime qualification"
+      }
+    }
+  },
+  "fixtures": {
+    "fixtureProducer": "tests/lifecycle/g03-defaults-native-fixture.ts",
+    "fixtureSchema": "umf.praxis.g03-defaults-native-fixture/1",
+    "selectedVariants": [
+      "absent",
+      "matchingLogical5",
+      "set5"
+    ],
+    "generatedFixtureSha256": "HELD_UNTIL_GENERATED_AFTER_REVIEW"
+  },
+  "limitations": [
+    "compiler/admission only through the actual held native Weft candidate; no DB effects, authentication, N12/full-campaign or publication claim",
+    "the exact held candidate wheel is not an immutable public release; acceptance is scoped to this local Linux/Python 3.11 probe only",
+    "Core remains an immutable public release input; Weft candidate, Core, Access and Codegen producer identities remain distinct",
+    "source P execution is validated as the exact clean read-only producer-volume commit/tree; local documentation checkout state is not candidate source"
+  ],
+  "probe": {
+    "path": "/private/tmp/g03-local-linux-admission-probe-003/probe.py",
+    "sha256": "b8f672f3ceefac3a9c085424edf50d9173534b7a0803689b7d211b0d41482630",
+    "status": "SOURCE_ONLY_NOT_EXECUTED",
+    "scope": "Access _prepared_for to installed held Weft candidate prepare/bind; no _source_for, auth, lease, SQL or DB"
+  },
+  "revision": {
+    "supersedes": "/private/tmp/g03-local-linux-admission-probe-002",
+    "reason": "same five compiler-boundary cases and refusal limits; pins held local Weft wheel and held 18-wheel cohort, with an exact baseline compiled-program hash required for PASS",
+    "reviewStatus": "PENDING_SOL_SOURCE_REVIEW"
+  },
+  "expectedBaselineProgramSha256": "c8be43e133c5869b2ac01c520e92177d620b558c326cc8d6aa6b087454ecaf5e",
+  "expectedPackageVersions": {
+    "umf-access": "0.1.0.dev8",
+    "umf-codegen": "0.1.0a5",
+    "umf-weft": "0.4.55+g03.a96e4f29262e",
+    "umf-core": "0.10.3"
+  }
+}
