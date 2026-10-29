@@ -1,0 +1,151 @@
+{
+  "executionPerformed": false,
+  "fileCount": 28,
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "f39344df92f9d0eaef116a3f4bab0da0ca133a4118cebe275ed8700cbd40195f",
+      "sizeBytes": 5400
+    },
+    {
+      "path": "inputs/Cargo.lock",
+      "sha256": "0a7dbe0788f4c8ac0f5752b5e9600e83fa0de74ff0dcd8a2039370ee752c95c4",
+      "sizeBytes": 28742
+    },
+    {
+      "path": "inputs/browser-deps/manifest.json",
+      "sha256": "9f99c0ee83fd0e34ff5f48a83e27f46fd39e3140230629237e0849ea5e07a770",
+      "sizeBytes": 42623
+    },
+    {
+      "path": "inputs/bun.lock",
+      "sha256": "28b740f61429640ea5c005837d37b5bf7abf67b414c8139659cccc0daee6071a",
+      "sizeBytes": 2207
+    },
+    {
+      "path": "inputs/cargo-cache/HELD.json",
+      "sha256": "2e448e4c64154ce311a3286b895cdc0ad421a2727b1741069a0ebc7dbe5b1dc4",
+      "sizeBytes": 594
+    },
+    {
+      "path": "inputs/compile/browser-check.mjs",
+      "sha256": "de3214f6d37180baf13021f0e5a21fada3fbd2724ed412505adcb22cca83fe71",
+      "sizeBytes": 11500
+    },
+    {
+      "path": "inputs/evidence/browser-tool-preflight.json",
+      "sha256": "34cf401c6ae050197622ea093a5ffb6a56f53d9ee430e3773a622e3ea5664dc4",
+      "sizeBytes": 1617
+    },
+    {
+      "path": "inputs/evidence/builder-tool-feasibility.json",
+      "sha256": "bd047351ae8b6d736931a718e4799669859f072b28e8cfa1dcee9d4deee20983",
+      "sizeBytes": 2836
+    },
+    {
+      "path": "inputs/evidence/builder-tool-versions-failed-optional-probe.json",
+      "sha256": "dd56714625a6fbc82ef5c7a56608c7ddcc7faaaad47ef170920476dfe07ca242",
+      "sizeBytes": 1829
+    },
+    {
+      "path": "inputs/evidence/final-cohort-construction-result.json",
+      "sha256": "7d173eb827ae903a3dd2abc2ba2213fd5ced07e829fdae263525e6447d506466",
+      "sizeBytes": 6051
+    },
+    {
+      "path": "inputs/evidence/final-cohort-data-review.md",
+      "sha256": "8f9c46085a237b566c4142dbcb062b94dadd04194734da8dff01b22e0a9fe217",
+      "sizeBytes": 4971
+    },
+    {
+      "path": "inputs/evidence/inherited-boundary-plan.md",
+      "sha256": "d3eb0216ee6c1ae22c90f84b00b51484974a134a42a9a70df64ef9a020334278",
+      "sizeBytes": 7296
+    },
+    {
+      "path": "inputs/evidence/locked-cargo-cache-acquisition-plan.md",
+      "sha256": "a6d7e4c9003a0d5e6c5de898fe7db7f50d4994275f462d9a0c875d0c849b9737",
+      "sizeBytes": 4112
+    },
+    {
+      "path": "inputs/evidence/p56-git-stage-roster.txt",
+      "sha256": "bc3018c0d674cd2fc80794f9f36c523565c91558f70649cd3fe415f8e88b701b",
+      "sizeBytes": 780359
+    },
+    {
+      "path": "inputs/evidence/table-operator-findings-reference.md",
+      "sha256": "c6f78e3e6cc1d16a566713ed3cdbc369ee241d1d15edd2d51065ce290e43f00c",
+      "sizeBytes": 11765
+    },
+    {
+      "path": "inputs/evidence/wasm-bindgen-acquisition.json",
+      "sha256": "cfa0c93966cdfeaaed12918a786585c870ec5106136318dcaa31233cbfeee044",
+      "sizeBytes": 2371
+    },
+    {
+      "path": "inputs/evidence/wasm-bindgen-version-preflight.json",
+      "sha256": "f44c2ce21069c072f8c276cd30ddaa605e3b3be071acb1c8c1b2fb3866c6d00b",
+      "sizeBytes": 1080
+    },
+    {
+      "path": "inputs/package.json",
+      "sha256": "dd22198e0de80eaab805fae19db057668fcf3c180a84c142d74318c541ad6455",
+      "sizeBytes": 548
+    },
+    {
+      "path": "inputs/truss-entity-selection/cases.json",
+      "sha256": "cdddb2454b033c5753177cdedb447efbf45f5131c42beb17aeb6d319eac71537",
+      "sizeBytes": 184480
+    },
+    {
+      "path": "inputs/truss-entity-selection/check.py",
+      "sha256": "4d764c17e2a24d15d959047db39246a6c6ec991f957726d4c61f498789aad7cf",
+      "sizeBytes": 2522
+    },
+    {
+      "path": "inputs/truss-facts.workflow.yml",
+      "sha256": "4305777176d5ed20596692422e9749bf991fcb0e1db4f37da926eacbdba9fd15",
+      "sizeBytes": 3247
+    },
+    {
+      "path": "inputs/truss-facts/cases.json",
+      "sha256": "34f4694030aa822172200002275ee3e1b36ee7a248df960e60bb731648fb0d83",
+      "sizeBytes": 24724
+    },
+    {
+      "path": "inputs/truss-facts/check.py",
+      "sha256": "ea728bb16583fed81756946bc26326958a7d883877aa80ad99f5708bb44363ce",
+      "sizeBytes": 1148
+    },
+    {
+      "path": "inputs/truss-packet.json",
+      "sha256": "c6797af91eefa241797e748f59c6095725806221daa2aefe50bb85e6b91caf45",
+      "sizeBytes": 9689
+    },
+    {
+      "path": "inputs/verify_weft_wheel.py",
+      "sha256": "78c294fd7a947a97f29b133b8dd6bb0977c47f29b5a891e6b3e5456f393c5929",
+      "sizeBytes": 4115
+    },
+    {
+      "path": "run_operator.py",
+      "sha256": "58d846c906f43bc8b67540c5e52a327ba4d83ce93ee3e79f7259abbafc2b752d",
+      "sizeBytes": 83742
+    },
+    {
+      "path": "runtime/cargo_cache_extract.py",
+      "sha256": "6d4b4586fc91cb64f9fb96f29f16877eb7ecb8ba383b13b923e73d0e881d4994",
+      "sizeBytes": 15336
+    },
+    {
+      "path": "runtime/guest.py",
+      "sha256": "49798f06e17f92f3f9e00eb85b87ab0d0f78b26789714779e3e4ae6be6b302d5",
+      "sizeBytes": 28469
+    }
+  ],
+  "gitMutation": false,
+  "profile": "umf.g03-truss-source-freeze/1",
+  "status": "FROZEN_SOURCE_ONLY_NOT_EXECUTED",
+  "testsPerformed": false,
+  "totalBytes": 1273373
+}

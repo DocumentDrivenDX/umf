@@ -1,0 +1,5 @@
+# Inherited truss runtime006 actual review
+
+Accept LOCAL_LINUX_TRUSS_RUNTIME_TESTS_PASS, exact existing truss-facts eight-feature weft-runtime command with CARGO_PROFILE_TEST_OPT_LEVEL=1. Result744ab7c64706b5a0733a724926a25aa6287dea8d0ccfc00d4b9340c5b8e02a00. Independently checked four physical setup/test log sizes/hashes, successful raw captures without timeout/truncation, pre/post source equality and actual10test summaries totaling69pass/0fail/0ignored. Exact reviewed source/tool/image/offline/runtime profile retained. Outer217.812s under3600, test stage below1800, logs below1MiB, cleanup1.102s/noerrors; no candidate wheel built.
+
+This discharges only the inherited truss runtime feature profile for actual current source. Successful005core+PG is separate. Candidate/qualifiedworkspace matrices, installed/browser/nativeN12/full14/platform/publication gates remain open. No externalDB/backend service, Mac execution or Actions claimed. Earlier failures remain retained. Reviewer performed data-only review, no candidate execution/import/tests/Docker/Git mutation.

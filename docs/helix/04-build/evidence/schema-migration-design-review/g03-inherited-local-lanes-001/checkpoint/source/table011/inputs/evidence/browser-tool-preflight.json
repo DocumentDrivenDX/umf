@@ -1,0 +1,41 @@
+{
+  "browserExecutable": "/ms-playwright/chromium-1243/chrome-linux-arm64/chrome",
+  "browserSha256": "839efe5fd8b6a773dd81b2e10afdc15f3c0a17316fb82b5908c0533306c4ed9e",
+  "browserVersion": "Google Chrome for Testing 153.0.8010.12",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--pull=never",
+    "--network",
+    "none",
+    "--read-only",
+    "--cpus",
+    "1",
+    "--memory",
+    "1g",
+    "--pids-limit",
+    "128",
+    "--entrypoint",
+    "/bin/sh",
+    "eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27",
+    "-c",
+    "node --version; /ms-playwright/chromium-1243/chrome-linux-arm64/chrome --version; sha256sum /ms-playwright/chromium-1243/chrome-linux-arm64/chrome"
+  ],
+  "elapsedSeconds": 0.867075291,
+  "executionKind": "local_linux_tool_metadata_only",
+  "exitCode": 0,
+  "imageId": "sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27",
+  "limitations": [
+    "Metadata-only observation; independent version/hash commands share a shell whose exit code is final command; all three expected stdout lines observed.",
+    "Initial sandbox Docker socket refusal preserved in conversation; metadata command succeeded after sandbox escalation."
+  ],
+  "nodeVersion": "24.20.0",
+  "observedAt": "2026-10-29",
+  "platform": "linux/arm64",
+  "productExecuted": false,
+  "profile": "g03.local-linux-browser-tool-observation/1",
+  "qualificationClaim": false,
+  "stderr": "",
+  "stdout": "v24.20.0\nGoogle Chrome for Testing 153.0.8010.12 \n839efe5fd8b6a773dd81b2e10afdc15f3c0a17316fb82b5908c0533306c4ed9e  /ms-playwright/chromium-1243/chrome-linux-arm64/chrome\n"
+}

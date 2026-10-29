@@ -1,0 +1,123 @@
+{
+  "executionPerformed": false,
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "5d242faf0921b4927c7c1c465f1e1a169ef7eab70959923322042db2be320289",
+      "sizeBytes": 1088
+    },
+    {
+      "path": "admission/diagnostic005-browser-facts-inspect.stdout.log",
+      "sha256": "c5f6aab64855f04329d30dfe0824b167b4d5250a447c6b083470022b6b4107ee",
+      "sizeBytes": 1806
+    },
+    {
+      "path": "admission/diagnostic005-evidence.json",
+      "sha256": "1dcd89b3004178549074177718fa90cddbbfec7721ee770a99a3712803356dca",
+      "sizeBytes": 1282
+    },
+    {
+      "path": "admission/diagnostic005-facts-receipts.json",
+      "sha256": "cea472779b90551c37ae043fa1fa2592854c6f73b07bf9f7841b1c5970638506",
+      "sizeBytes": 3226
+    },
+    {
+      "path": "admission/diagnostic005-facts-summary.json",
+      "sha256": "d3e4c1cb2893658191d0729c7c7a611bcd3e9bdf198abc728e9368c31a7ff8e8",
+      "sizeBytes": 1495
+    },
+    {
+      "path": "admission/diagnostic005-operator-result.json",
+      "sha256": "90b0705f1366639ba19f7ffae3a92b60748c471d0aa916f5d445d823bd0f5725",
+      "sizeBytes": 20467
+    },
+    {
+      "path": "diagnostic-plan.md",
+      "sha256": "5a9f3fbf63cb7be665edceede26073095bfa9f57989fb2e73dfbba264a70da68",
+      "sizeBytes": 2457
+    },
+    {
+      "path": "inputs/browser-workspace/tests/compile/browser-check.mjs",
+      "sha256": "de3214f6d37180baf13021f0e5a21fada3fbd2724ed412505adcb22cca83fe71",
+      "sizeBytes": 11500
+    },
+    {
+      "path": "inputs/browser-workspace/tests/truss-entity-selection/cases.json",
+      "sha256": "cdddb2454b033c5753177cdedb447efbf45f5131c42beb17aeb6d319eac71537",
+      "sizeBytes": 184480
+    },
+    {
+      "path": "inputs/browser-workspace/tests/truss-facts/cases.json",
+      "sha256": "34f4694030aa822172200002275ee3e1b36ee7a248df960e60bb731648fb0d83",
+      "sizeBytes": 24724
+    },
+    {
+      "path": "inputs/diagnostic-packet.json",
+      "sha256": "69e39a7e896661541e976e40a925bf1fa9e1a674ec147c9b3fd8ad440fb1ff0e",
+      "sizeBytes": 9346
+    },
+    {
+      "path": "inputs/evidence/browser-deps-manifest.json",
+      "sha256": "9f99c0ee83fd0e34ff5f48a83e27f46fd39e3140230629237e0849ea5e07a770",
+      "sizeBytes": 42623
+    },
+    {
+      "path": "inputs/evidence/diagnostic-plan002.md",
+      "sha256": "2e4fbad9fb3f62702b26167645c0c902f29b1a3d57aeb4b98ae944524fbb715a",
+      "sizeBytes": 6932
+    },
+    {
+      "path": "inputs/evidence/entity.json",
+      "sha256": "ff8803dda03a4ef376e44984c1a010ead8065b817a002d6178dba8b0343256bf",
+      "sizeBytes": 994279
+    },
+    {
+      "path": "inputs/evidence/facts.json",
+      "sha256": "c45b385d21c64d4abec74849a7cad50229a6eaa054b2a14a192b13c2566b8982",
+      "sizeBytes": 186460
+    },
+    {
+      "path": "inputs/evidence/p56-git-stage-roster.txt",
+      "sha256": "bc3018c0d674cd2fc80794f9f36c523565c91558f70649cd3fe415f8e88b701b",
+      "sizeBytes": 780359
+    },
+    {
+      "path": "inputs/evidence/source-inventory.json",
+      "sha256": "3c1d1f1d99766a444234ec40078e3d79804ffd601c3cbfd41b809b1e469cede7",
+      "sizeBytes": 958557
+    },
+    {
+      "path": "inputs/evidence/truss009-browser-facts.stderr.log",
+      "sha256": "0fe05f59ad74d186c5e7926903de7a559a6558925ec6ef6bcd282c23620a6c0c",
+      "sizeBytes": 6599
+    },
+    {
+      "path": "inputs/evidence/truss009-browser-facts.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "inputs/evidence/truss009-operator-result.json",
+      "sha256": "af524fd45a8f01998dc02a540ec6d84e81bf51c4fc745cb1417513a791fef40e",
+      "sizeBytes": 173838
+    },
+    {
+      "path": "inputs/evidence/truss009-packet.json",
+      "sha256": "c6797af91eefa241797e748f59c6095725806221daa2aefe50bb85e6b91caf45",
+      "sizeBytes": 9689
+    },
+    {
+      "path": "inputs/evidence/truss009-source-review.md",
+      "sha256": "c26236cc7f02d3bf99d62e20bdfddb9e5f9493cd746e885c68a69396f24353ec",
+      "sizeBytes": 3419
+    },
+    {
+      "path": "run_operator.py",
+      "sha256": "8660669931fedb86ca71814b8a7e0acac7c75c562c58c83104b86a233900f924",
+      "sizeBytes": 49349
+    }
+  ],
+  "profile": "umf.g03-truss-browser-fsize-diagnostic-source/1",
+  "sourceOnly": true,
+  "totalBytes": 3473975
+}

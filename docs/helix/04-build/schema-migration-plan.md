@@ -313,6 +313,119 @@ record the actual identities. Independent actual-evidence review accepted this
 selected G02 public proof; the normal metadata follow-up merge records D7 closure. No G03–G11, managed-consumer,
 additional-backend or Praxis acceptance follows; the broader goal stays active.
 
+### G03 local Linux continuation — 2026-10-29
+
+The [module-admission evidence packet](evidence/schema-migration-design-review/g03-module02-local-linux-001/README.md)
+records the next concrete blocker: public Weft 0.4.55 rejects module envelope
+0.2 in both expected positive controls. Its legacy absent-default control passes,
+legacy logical-default source refuses, and a mismatched default receives its
+located deployment refusal. These are compiler-only observations with no database
+lease or effect; they do not qualify N12 or the migration campaign.
+
+Sol accepted the separate Weft shared Rust source change for local testing.
+Ordinary UMF declarations stay at 0.1; explicit trusted host policy selects the
+module envelope. The source preserves legacy/direct admission and native omission
+semantics. A uniquely held local package version distinguishes candidate bytes
+from immutable public 0.4.55; no future public version is reserved. The first build
+attempt failed before testing because rustup tried to update a read-only home;
+the corrected reviewed driver selects the already installed Rust 1.90.0 toolchain.
+Its local Linux test command reported 865 passing tests and one failed new
+declared-query control, so the wheel build did not run. Cleanup and source closure
+passed. Attempt003 retained a second test-only failure confusing the prepared
+program and bind APIs. After the reviewed correction, attempt004 passed all 27
+table-operation integration tests and built the held full-feature Linux wheel.
+Independent review accepted its scoped artifact and cleanup. The wheel's actual
+manylinux2_34 tag is narrower than public 0.4.55's manylinux2_17 tag; no broader platform
+support follows. A reviewed held 18-wheel cohort changes only Weft and preserves the
+other 17 distributions and wheel bytes. The held installed five-case probe then passed, preserving exact legacy program
+bytes, precise refusals and zero leases. This closes compiler admission only;
+the subsequent complete locked core/PostgreSQL command passed 892 tests with
+independent source/log/cleanup review. That command does not cover the separate
+workspace/runtime feature profiles, browser or native migration gates. The
+separate runtime profile subsequently passed 69 tests. Both inherited workspace
+profiles passed: 1,117 candidate and 1,118 qualified tests (overlapping counts,
+not unique totals), with independent source, bounded-log and cleanup review.
+GitHub Actions and macOS CI are not execution routes for this work.
+
+Standalone N12 then passed all 71 required checks against the held Linux wheel.
+Actual sync/async ordinary operations, both source families, profile/source/cursor
+and occupied-slot isolation, caller rollback and lost-COMMIT recovery are recorded.
+A reviewed generation 1-to-2 default change preserves all historical rows and
+actual integer storage while retaining the raw native default expressions.
+Separate logical authority roots preserve the existing external-authority guard;
+all eight owned roles and native/outer resources were removed. Attempts 001–003
+remain failed historical evidence. This does not transfer qualification to a
+final successor wheel or close the complete serial 14-case native campaign.
+
+Final successor source is frozen locally at Weft
+`973d864c8d26b2bc173a411eac8368da5efc1ab3`, version 0.4.56. Genuine
+manylinux2_17 x86_64 and aarch64 builds/static audits are accepted. The original
+x86_64 receipt retains its failed tag-oracle result; a separate audit-only
+continuation accepts the same wheel without rebuilding. ARM remains build/static
+only. Reconstructed final 18-wheel cohort metadata and fresh Linux Python 3.11
+installation/compiler admission are accepted; the whole cohort still requires
+glibc 2.34. These results do not transfer prototype native qualification.
+
+The first final 14-case/19-scenario campaign stopped before guest startup on a
+read-only nested packet mount; no scenario ran and cleanup passed. A narrow
+mount relocation is reviewed for implementation. The first macOS build attempt
+also stopped before compilation on stale reported header paths; its reviewed
+repair measures the actual CLT bundle while retaining raw anomalies. Details
+and original failures are retained in the
+[local evidence packet](evidence/schema-migration-design-review/g03-module02-local-linux-001/README.md).
+
+All 20 local Linux source/package commands now have independent actual acceptance,
+with exact source/dependency pre/post closure and owned cleanup. The final native
+attempt007 executed all 19 scenarios and cleaned up, but its original campaign
+verdict remains FAIL_OR_UNKNOWN because of identified predicate interpretation
+mismatches. The separate corrected reanalysis006 now passes all 14 predicates
+across those 19 retained scenarios with independent actual acceptance, exact
+capture/source/cohort closure and fresh recorded resource-absence witnesses.
+It supplies no new database observations and preserves the original failure.
+Mac
+build002 produced a genuine new wheel, then failed its MH_BUNDLE-only static
+oracle against the actual Rust MH_DYLIB. The separate audit004 now has independent
+actual acceptance for the same newly built wheel, strictly build/static-only;
+the original failure remains unchanged. Eight Linux pure predicate mutation
+controls also pass; they are separate from native execution evidence. These
+distinctions and raw receipts are retained in the
+[final local checkpoint](evidence/schema-migration-design-review/g03-final-056-local-qualification-001/README.md).
+
+The [focused fixture regression check](evidence/schema-migration-design-review/g03-umf-fixture-regression-001/README.md)
+also passes TypeScript 7.0.2 typechecking and all 23 G03 tests in offline Linux.
+Two stale N12 status expectations were synchronized with the integrated fixture;
+Sol accepted the exact change and actual receipts. The initial missing Linux
+dependency and stale-expectation failures remain retained. No native or macOS
+qualification follows from this check.
+
+The [local offline cache checkpoint](evidence/schema-migration-design-review/g03-local-offline-cache-001/README.md)
+records the separately acquired locked registry input and independent acceptance:
+115 crate checksums, 115 sparse-index witnesses, exact archive inventory, bounded
+captures and owned cleanup. Earlier failed acquisitions and source bookkeeping
+findings remain retained. The cache qualifies only an input to the pending offline
+table and Truss lanes. Exactly five user-approved automatic Weft workflows are
+disabled; the remaining workflow settings are unchanged.
+
+The inherited [Table012 lane](evidence/schema-migration-design-review/g03-inherited-local-lanes-001/README.md)
+and separate [Truss011 lane](evidence/schema-migration-design-review/g03-truss011-local-boundary-001/README.md)
+now have independent actual acceptance for their selected Linux native/WASM/browser
+boundaries. Earlier failed attempts remain separate evidence. Weft 0.4.56 release metadata merged normally through [PR #46](https://github.com/DocumentDrivenDX/weft/pull/46);
+that merge does not establish real-packet assembly or publication.
+
+The [SDK 0.5.8 local build checkpoint](evidence/schema-migration-design-review/g03-sdk058-local-build-001/README.md) and [paired parity checkpoint](evidence/schema-migration-design-review/g03-sdk058-local-parity-001/README.md) record the independently accepted standard Linux build, its 139-case installed consumer, and the fresh final18 Python and installed-SDK Chromium run019 (112.565 seconds). The separately reviewed Weft ordinary-operation module 0.2 source admission covers matching non-null missing-only logical/native defaults for six scalar carrier families; ordinary UMF declarations remain 0.1, and G03 migration operation versions are distinct. The selected native subset combines original attempt007 observations, whose receipt remains `FAIL_OR_UNKNOWN`, with reanalysis006's accepted 14 predicates and eight pure mutation controls; reanalysis ran no database. Table012 and Truss011 retain separate accepted boundaries. Public SDK release identity, tag/API readbacks, public asset IDs, and fresh public-download proof are not established by these local checkpoints. The earlier M7 source-metadata statement is historical: M7 correspondence alone did not establish wheel assembly or publication. The existing SDK 0.5.7 tag and assets remain unchanged. [UMF SDK 0.5.8 notes](../05-deploy/sdk-release-notes-0.5.8.md) describe the selected user-facing capability and evidence. GitHub Actions and macOS CI remain off; macOS evidence is build/static-only, with no macOS runtime/native/browser qualification. These checkpoints do not establish full G03 completion, managed adoption, or Praxis changes.
+
+The subsequent M8 metadata change merged through [Weft PR #49](https://github.com/DocumentDrivenDX/weft/pull/49), and Weft 0.4.56 was published as immutable GitHub release [v0.4.56](https://github.com/DocumentDrivenDX/weft/releases/tag/v0.4.56) and [PyPI 0.4.56](https://pypi.org/project/umf-weft/0.4.56/). The [public-release evidence packet](evidence/schema-migration-design-review/g03-weft056-public-release-001/README.md) adopts the accepted publication, unauthenticated metadata and exact-byte readback receipts for the nine GitHub assets and exactly three PyPI wheels. It binds the release to the reviewed M8 source metadata and original three-wheel closure; public asset download bodies and raw publisher HTTP streams were not persisted. This closes the Weft 0.4.56 distribution and byte-verification path only within its recorded scope: the selected CPython 3.11 Linux runtime cell, macOS build/static evidence without runtime tests, and no hosted Actions or managed-consumer acceptance. The SDK 0.5.8 remains unreleased, the broader G03 migration slice remains open, and G04–G11 remain open.
+
+
+### Current-main integration and consumer releases — 2026-10-29
+
+The direct human direction is to preserve current main and PR #68, integrate forward through the normal review and merge path, and resolve actual consumer incompatibilities with appropriate consumer releases. Root reports that no maintenance branch was created. The local integrated candidate Q `64c54466bc61e15780049e5787bfe74b2ca11981` (tree `99a8f9a053aab7b553d51eae6955d778b8791b0e`) incorporates producer commit P `855f6c48649496fc60b3303798790d0ddb55d38f` on observed main `2ad9c23e5435178be9d2d4637c17ffad463f596f`; Q is not the normal merged release commit M or a release. The observed main package was 0.5.7; Q retains P’s intended unpublished 0.5.8 package metadata. Its retained P-to-Q roster has 1,739 paths. A source-only audit of 2,152 selected repository inputs found matching P/Q modes and blobs with no changed-path intersection. That audit does not requalify external dependency installations, tool binaries, caches or environment values, and it is not a new build or runtime result. See the [current-main consumer handoff and retained observations](evidence/schema-migration-design-review/current-main-consumer-release-001/README.md).
+
+The coordinator tracks separate Access, TableSpec, Truss and Ashlar owner handoffs. Owners freeze actual source and public distribution identities, retain metadata and wheel references, identify concrete compatibility changes, choose versions through their existing release processes, and run only affected installation and behavior checks. Coordinator-reported metadata says `umf-tablespec` 0.0.14 declares `umf-core==0.10.0` (reported wheel-digest prefix `a3879e…`), while `umf-truss` 0.0.51 declares `umf_access==0.1.0.dev5` (reported wheel SHA-256 `eb59141c48e94bb93ab7053e9e8725012eee1749e4432e9c71804d23abbdff57`); its query extra requires `weft-sql==0.4.51`, a distinct distribution from the G03 `umf-weft==0.4.56`; shared `weft` imports do not identify a distribution. Those public metadata references remain to be retained and independently checked. Accepted Table012 and Truss011 evidence qualifies selected Weft 0.4.56 boundary workloads, not the TableSpec or Truss distributions or their releases.
+
+The exact `umf-access` 0.1.0.dev8 wheel (580,062 bytes, SHA-256 `1a21c1ddd59f6b23e9f0b33228280564af0e96bb4d13699b89616d5143e4fd23`) is already an immutable SDK 0.5.7 GitHub asset (ID `687343442`), but its unauthenticated PyPI project/version lookup returned 404. The wheel requires Python `<3.15,>=3.11`, Pydantic `>=2.13,<3`, and typing-extensions `>=4.16,<5`. SDK 0.5.8's final18 lane does not qualify the Truss distribution; Access publication and separate Truss consumer qualification remain owner gates. The Ashlar owner also has a queued correction for a local macOS Weft digest that differs from the published wheel digest. Weft 0.4.56 remains accepted only within its existing evidence scope.
+
+A normal current-main merge, source M and public SDK release identities remain pending. SDK 0.5.8 is unreleased; its future tag, asset IDs, readbacks and public-download proof are unknown. This consumer handoff adds no Praxis scope. G03 delivery and G04–G11 remain open.
 #### Historical pre-reconciliation G02 integration checkpoint — Core 0.10.1
 
 This is a preserved pre-reconciliation checkpoint for the earlier Core 0.10.1

@@ -1,0 +1,60 @@
+{
+  "aggregateTimeoutSeconds": 1500,
+  "artifacts": {
+    "installedConsumer": null,
+    "sdkArchive": null,
+    "sdkManifest": null
+  },
+  "attempt": 1,
+  "command": {
+    "exitCode": null,
+    "name": "sdk-test-install"
+  },
+  "commands": [],
+  "consumer": null,
+  "durationSeconds": 8.805,
+  "executionId": "local-sdk-20261029T144022Z-b1f35e8a-f818-4e97-a70c-5791968b347b-attempt1",
+  "failureCode": "producer-staging-or-receipt-error",
+  "guestWorkDeadlineSeconds": 1380,
+  "harness": {
+    "sha256": "bc2ccab0bd5a783a786554ea84c0c7a4eb75b7a47a6a603d41ad6195d8665357"
+  },
+  "hostFinalizationReserveSeconds": 120,
+  "profile": "umf.sdk.distribution/1",
+  "provisioning": {
+    "baseImageId": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+    "sdkBuildTools": {
+      "ar": "GNU ar (GNU Binutils for Ubuntu) 2.42\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) any later version.\nThis program has absolutely no warranty.",
+      "cc": "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.",
+      "installedPackages": "binutils=2.42-4ubuntu2.10\nbuild-essential=12.10ubuntu1\ng++=4:13.2.0-7ubuntu1\ngcc=4:13.2.0-7ubuntu1\nlibc6-dev:amd64=2.39-0ubuntu8.9\nmake=4.3-4.1build2\npkg-config:amd64=1.8.1-2build1",
+      "ld": "GNU ld (GNU Binutils for Ubuntu) 2.42\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) a later version.\nThis program has absolutely no warranty.",
+      "pkgConfig": "1.8.1"
+    }
+  },
+  "publicEvidenceBytesBeforeReceipt": 0,
+  "publicEvidenceFiles": [],
+  "resourceLimits": {
+    "cpus": 4,
+    "memoryBytes": 8589934592,
+    "network": "bridge",
+    "pids": 4096,
+    "pullPolicy": "never"
+  },
+  "runtime": {
+    "architecture": "x86_64",
+    "bun": "1.4.3",
+    "cargo": "cargo 1.90.0 (840b83a10 2025-07-30)",
+    "imageId": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+    "node": "v26.12.1",
+    "python": "3.11.17",
+    "release": "7.2.9-orbstack-00391-g2b298d05fbd4",
+    "rustc": "rustc 1.90.0 (1159e78c4 2025-09-14)",
+    "system": "Linux"
+  },
+  "schema": "umf.local-linux-sdk-producer/1",
+  "sourceArchive": null,
+  "sourceCommit": "855f6c48649496fc60b3303798790d0ddb55d38f",
+  "sourceTree": "53f2bfffbc0c5780e79d76d8fd3d202239d088b2",
+  "status": "failed",
+  "terminationGraceSeconds": 10
+}

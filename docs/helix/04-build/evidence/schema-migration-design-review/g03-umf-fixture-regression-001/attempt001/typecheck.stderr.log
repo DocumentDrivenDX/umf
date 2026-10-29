@@ -1,0 +1,14 @@
+$ bun node_modules/typescript/bin/tsc --noEmit && bun node_modules/typescript/bin/tsc -p tsconfig.tools.json
+48 |                 const packageJsonPath = fileURLToPath(packageJson);
+49 |                 exeDir = path.join(path.dirname(packageJsonPath), "lib");
+50 |             }
+51 |         }
+52 |         catch (e) {
+53 |             throw new Error("Unable to resolve " + platformPackageName + ". Either your platform is unsupported, or you are missing the package on disk.");
+                           ^
+error: Unable to resolve @typescript/typescript-linux-x64. Either your platform is unsupported, or you are missing the package on disk.
+      at getExePath (/workspace/node_modules/typescript/lib/getExePath.js:53:23)
+      at /workspace/node_modules/typescript/lib/tsc.js:6:13
+
+Bun v1.4.3 (Linux x64)
+error: script "typecheck" exited with code 1

@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/probe/probe.py", line 13, in <module>
+    from umf_access.lifecycle.seeds import _binding
+  File "/venv/lib/python3.11/site-packages/umf_access/__init__.py", line 4, in <module>
+    from .capture import (
+  File "/venv/lib/python3.11/site-packages/umf_access/capture.py", line 16, in <module>
+    from pydantic import BaseModel
+  File "/venv/lib/python3.11/site-packages/pydantic/__init__.py", line 5, in <module>
+    from ._migration import getattr_migration
+  File "/venv/lib/python3.11/site-packages/pydantic/_migration.py", line 5, in <module>
+    from pydantic.warnings import PydanticDeprecatedSince20
+  File "/venv/lib/python3.11/site-packages/pydantic/warnings.py", line 5, in <module>
+    from .version import version_short
+  File "/venv/lib/python3.11/site-packages/pydantic/version.py", line 7, in <module>
+    from pydantic_core import __version__ as __pydantic_core_version__
+  File "/venv/lib/python3.11/site-packages/pydantic_core/__init__.py", line 8, in <module>
+    from ._pydantic_core import (
+ImportError: /venv/lib/python3.11/site-packages/pydantic_core/_pydantic_core.cpython-311-x86_64-linux-gnu.so: failed to map segment from shared object

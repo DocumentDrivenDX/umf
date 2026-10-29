@@ -1,0 +1,45 @@
+{
+  "externalInputs": [
+    {
+      "path": "/private/tmp/sdk-057-local3600-public-h-operator-proposal011/run_public_h_docker.py",
+      "sha256": "8e383bece7d44484421302f8be32fdb1ba1ed96cd895749093a58171648cf1cd"
+    },
+    {
+      "baseTree": "91717885cefaea1ff8d78ee188c5dc4ca2700df7",
+      "candidateMetadataPatchSha256": "25ccab8a9c2a3576ac09783a9c06dabfa503e1dbd9b7b67495e751424552564f",
+      "fullPatchSha256": "fdb6966643002d637bb048197893c280dee7e913f7f98eae59c5253045e57d3e",
+      "head": "e7e88b077c256c852a83d7951e3bc5fd1ec234aa",
+      "path": "/private/tmp/weft-g03-ordinary-module",
+      "semanticPatchSha256": "a96e4f29262edb6d459b56c607f1d22527a622255bedeafd9e26274884531936"
+    }
+  ],
+  "files": [
+    {
+      "path": "run.py",
+      "sha256": "7831607d4914c2b905ff41ec949314eb960da22a87fe81e2639a014415753850",
+      "sizeBytes": 24523
+    },
+    {
+      "path": "fetch_maturin.py",
+      "sha256": "bd936fffbe758e265666230d2b554d463dbb17593fdf005ae04d4a4d328485a2",
+      "sizeBytes": 1882
+    },
+    {
+      "path": "maturin-requirements.txt",
+      "sha256": "456c2c84a0d72376a5235ac8da66568cd95e86fed4b4170a92dea3eabc90fb8f",
+      "sizeBytes": 94
+    },
+    {
+      "path": "maturin-1.9.6-pypi.json",
+      "sha256": "ff36b1d43664c264059608e2c475db66efe93264c894a80f6b0181b2f85bdf4e",
+      "sizeBytes": 29756
+    },
+    {
+      "path": "README.md",
+      "sha256": "f6cf9458f562dca3fd49dbc2f82f52f945d3d512fc234f998126104f245c3481",
+      "sizeBytes": 2385
+    }
+  ],
+  "profile": "umf.g03-local-linux-source-test-build.operator/1",
+  "status": "FROZEN_SOURCE_ONLY_NOT_EXECUTED"
+}

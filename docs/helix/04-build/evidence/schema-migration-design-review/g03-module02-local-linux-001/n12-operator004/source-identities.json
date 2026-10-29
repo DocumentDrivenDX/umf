@@ -1,0 +1,214 @@
+{
+  "harnessSourceSeal": {
+    "baseCommit": "a6eb216a95a49715f75a058502d9915a8eb1f8ff",
+    "baseTree": "4475f25b7b445fda9c4f2e97208dfa632a8905df",
+    "files": [
+      {
+        "path": "tests/lifecycle/g03-defaults-native.py",
+        "sha256": "e915517f2e2ae30299f60028fc2f6d233699a1e1fd0a91469cc3fe33511bc57a",
+        "sizeBytes": 113145,
+        "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/g03-defaults-native.py"
+      },
+      {
+        "path": "tests/lifecycle/g03_ordinary_native.py",
+        "sha256": "5e64050386952466c80f8fcbd4ce37a2793308efcd05977a998d627a68fff051",
+        "sizeBytes": 54397,
+        "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/g03_ordinary_native.py"
+      },
+      {
+        "path": "tests/lifecycle/g03_campaign_predicates.py",
+        "sha256": "b1dcf7ef0de0e633b497ad13588424012c36b280273f4235c3e85e116eefb84c",
+        "sizeBytes": 42670,
+        "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/g03_campaign_predicates.py"
+      },
+      {
+        "path": "tests/lifecycle/g03_campaign_orchestration.py",
+        "sha256": "4f554e000888cd21e94b7c9ba19868d6fac94805e5fbe6ef34b88deabd46490a",
+        "sizeBytes": 11892,
+        "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/g03_campaign_orchestration.py"
+      },
+      {
+        "path": "tests/lifecycle/g03-defaults-native-fixture.ts",
+        "sha256": "9f0325ae69e6e8326abc62412404adac1f133c0eef6f40b0cc365b3f4ad7d62f",
+        "sizeBytes": 10237,
+        "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/g03-defaults-native-fixture.ts"
+      },
+      {
+        "path": "tests/lifecycle/test_g03_campaign_predicates.py",
+        "sha256": "76b1718ea350bd811f7d94e27854edb0156615b12694605a88a835b24f299f0e",
+        "sizeBytes": 18582,
+        "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/test_g03_campaign_predicates.py"
+      },
+      {
+        "path": "tests/lifecycle/test_g03_campaign_orchestration.py",
+        "sha256": "9a8044d19f1deec433d022471f380effe56da06498f9ec844cb49ef0cd9a93ec",
+        "sizeBytes": 4036,
+        "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/test_g03_campaign_orchestration.py"
+      },
+      {
+        "path": "tests/binding/fixtures/table-lifecycle-note.json",
+        "sha256": "0f8a2f5d38d32514ec38fc3bbe393c5b88d45c251c2ae05ac23bea261b0e94ee",
+        "sizeBytes": 3765,
+        "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/binding/fixtures/table-lifecycle-note.json"
+      }
+    ],
+    "path": "/private/tmp/g03-n12-source-seal-004/manifest.json",
+    "payloadBytes": 258724,
+    "payloadFileCount": 8,
+    "profile": "umf.g03-reviewed-harness-source-subset/2",
+    "revision": "004 distinct logical owner/person/batch roots, shared actual Alice/Bob, exact8 role identities/memberships/cleanup and family-specific admission configuration; no product or fixture change",
+    "sha256": "b4638f49cb01602f932316d271f8575e862d769cbed202b4ac4d9a35230ea27d",
+    "status": "SOURCE_ACCEPTED_NOT_EXECUTED",
+    "wholeTreeEqualToBase": false
+  },
+  "heldCohort": {
+    "aggregateIndexSha256": "c4d99294936f1631949cb7252d98c8e91b9ba106bf329e251dc9c8ef41e5287d",
+    "custodySha256": "3eb574de40334922055b239dd33288c328618bcc70c9b91c86f97d9f4b4989eb",
+    "mirrorManifestSha256": "9e304930ca19abc38091a90e324806649d1f75b1ca799b37448327c5c0b052b9",
+    "requirementsLockSha256": "c28065235c7863051de1498c6144dfc1813264f5011dcaff865c2791515b75e4",
+    "root": "/private/tmp/g03-held-cohort-001",
+    "selectedLockSha256": "29c69360e6bcbea329f1ddab05725f727316a729954f123cf11c102486a5c94b",
+    "weftWheel": {
+      "filename": "umf_weft-0.4.55+g03.a96e4f29262e-cp39-abi3-manylinux_2_34_x86_64.whl",
+      "sha256": "51d607f851c72cffbc0dc45a969237f23d90b59185826b9eda56a791e799533e",
+      "sizeBytes": 14373430
+    }
+  },
+  "images": {
+    "client": {
+      "platform": "linux/amd64",
+      "reference": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556"
+    },
+    "postgres": {
+      "platform": "linux/arm64",
+      "reference": "sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336"
+    }
+  },
+  "limits": {
+    "aggregateSeconds": 600,
+    "allPhysicalLogsBytes": 1048576,
+    "childSeconds": 180,
+    "client": {
+      "cpus": 4,
+      "memoryBytes": 8589934592,
+      "pids": 8192
+    },
+    "evidenceBytesIncludingOperatorResult": 16777216,
+    "perStreamRetainedBytes": 65536,
+    "postgres": {
+      "cpus": 2,
+      "memoryBytes": 2147483648,
+      "pids": 1024
+    },
+    "postgresReadySeconds": 60,
+    "setupSeconds": 240,
+    "targetManifestSeconds": 20,
+    "terminalReserveSeconds": 60,
+    "terminationGraceSeconds": 10,
+    "workSeconds": 540
+  },
+  "operatorFiles": [
+    {
+      "path": "run_operator.py",
+      "sha256": "b970f0cf54252e4efcc9c898bc8dcc2c0e0c905e5c26a57c8ed1993d273c2ec6",
+      "sizeBytes": 39105
+    },
+    {
+      "path": "guest_steps.py",
+      "sha256": "d795635defaac2dacc0926c3d744a0f2758a7ab66b8406a6459cda6b8bc4fe39",
+      "sizeBytes": 7572
+    },
+    {
+      "path": "n12_guest.py",
+      "sha256": "dd8af15e77e8927f41624dd92367785751216943043cf45684916acdbe710511",
+      "sizeBytes": 16417
+    },
+    {
+      "path": "verify_weft_wheel.py",
+      "sha256": "adc464ca7b80e104e94802789a87d270cc497d03a2cb3651fed638f7e698c2ea",
+      "sizeBytes": 3685
+    },
+    {
+      "path": "PLAN.md",
+      "sha256": "e2070c0defe142c3d350dd9fe87cde730e4e7868a431404d812925cd461444b2",
+      "sizeBytes": 8971
+    },
+    {
+      "path": "README.md",
+      "sha256": "b9993678f8b6ce3e7fbb57698a2d1245d18b5db9e1cad0a7518cd09c367d9eeb",
+      "sizeBytes": 1807
+    }
+  ],
+  "postgresImageConfigVolumesAuthority": {
+    "basis": "Root-provided read-only Docker image metadata observation; runner independently captures `docker image inspect --format {{json .Config.Volumes}}` and requires exact map before creating resources. The separate image inventory pins this image identity.",
+    "expectedConfigVolumes": {
+      "/var/lib/postgresql": {}
+    },
+    "image": "sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336",
+    "imageInventory": {
+      "path": "/private/tmp/g03-local-docker-image-inventory-001.txt",
+      "sha256": "d81ed734571cb15d4a224c1aae6f5b5bacc531c9824302e7f8e40bb2650281dd"
+    }
+  },
+  "postgresVersionAuthority": {
+    "note": "Prior accepted same pinned PostgreSQL image runtime triple; no new target process was run for this operator source packet.",
+    "path": "/private/tmp/migration-d5-local3600-actual-staging001/selected/output/d5-host/d5/upload/reports/resource-baseline.json",
+    "sha256": "e88845b4782e9eeb3a09a314894b1f9e305024c2076a568fd6dd27a7a67379af"
+  },
+  "profile": "umf.g03-n12-standalone-operator-inputs/1",
+  "sourceReviews": [
+    {
+      "path": "/private/tmp/g03-n12-source-seal-sol-review002.md",
+      "sha256": "a724f0b54206b807b271cb2bccdf14f5db2cf1aac3c36b47146acaebe49b555a"
+    },
+    {
+      "path": "/private/tmp/g03-campaign-predicates-sol-source-review001.md",
+      "sha256": "f57dde078a55249a41c4353b8db81f0d249abb532662c7f7d700d9faf102176c"
+    },
+    {
+      "path": "/private/tmp/g03-held-cohort-sol-custody-review001.md",
+      "sha256": "092e996255e4d063eb8a2baab66ed2d429546bb0eb7620b544d88d97138637cf"
+    },
+    {
+      "path": "/private/tmp/g03-candidate-probe-n12-sol-execution-plan001.md",
+      "sha256": "e0cd4ada6f206c3aef863eea2b5fc2aa81a5f5b784beb09b32001b7e5b76c7dc"
+    },
+    {
+      "path": "/private/tmp/g03-n12-standalone002-sol-actual-review001.md",
+      "sha256": "74948d9e44cb72696d2d17e61ae4fa53ae5e7dd3f1e89e399d3cbdc45db0b6e8"
+    },
+    {
+      "path": "/private/tmp/g03-n12-native-default-expression-sol-source-review001.md",
+      "sha256": "6312403f96ba4c7360f416663a22a0c57a5358874d9fc078b3cf18c331787731"
+    },
+    {
+      "path": "/private/tmp/g03-n12-eight-role-sol-source-review001.md",
+      "sha256": "287ad342136a56d61b2600d78123316f3f9430799140f91d550339f00ade567a"
+    }
+  ],
+  "status": "PREPARED_NOT_EXECUTED",
+  "supersedes": {
+    "earlierPreservedAttempt": {
+      "classification": "FAIL_OR_UNKNOWN before setup/source admission/controls/PostgreSQL; Docker volume inspect .Label template failure; cleanup verified",
+      "path": "/private/tmp/g03-n12-standalone-operator-001-output/4a8d1f806c624254ab3a9b201de8217b/operator-result.json",
+      "sha256": "edc5585bc06544f6dfbb86b5db145825c9855eea103dc61baf62d946587ea7c2",
+      "sizeBytes": 33871
+    },
+    "native003Failure": {
+      "classification": "FAIL_OR_UNKNOWN after 59 native checks and real 5-to-9 generation/occupied-slot controls; logical-family schema admission refused with external-authority-present because source reused native configured roots; cleanup verified; no logical operations qualified",
+      "cleanupVerified": true,
+      "elapsedSeconds": 69.928,
+      "path": "/private/tmp/g03-n12-standalone-operator-003-output/f869ddf12c734ff2bbdc69639cb51db9/operator-result.json",
+      "sha256": "0457ecd41922aaf08fe10b855ab2a82dec96ff0a473ec1799bce6127e95c80fc",
+      "sizeBytes": 100529
+    },
+    "preservedActualAttempt": {
+      "classification": "FAIL_OR_UNKNOWN after 56 semantic checks; generation assertion did not match raw typed catalog default; no generation apply; cleanup verified",
+      "path": "/private/tmp/g03-n12-standalone-operator-002-output/5999b33b14fa46bbb610444e102bb302/operator-result.json",
+      "sha256": "c89ce926432050918575bcbf1a8cdeb50545ef6fc8d6cfaa2d8045cf2a2069bb",
+      "sizeBytes": 100528
+    },
+    "priorOperatorPath": "/private/tmp/g03-n12-standalone-operator-003",
+    "priorOperatorSourceSha256": "79edb01c38a4731ac11b706988d8d65a4985fc2e0434cb7acc625486a2fb2820"
+  }
+}

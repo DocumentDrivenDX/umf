@@ -1,0 +1,75 @@
+{
+  "scope": "root read-only exact main68 delta and package provenance; no merge or product execution",
+  "producer": "855f6c48649496fc60b3303798790d0ddb55d38f",
+  "currentMain": "2ad9c23e5435178be9d2d4637c17ffad463f596f",
+  "files": [
+    {
+      "path": "/private/tmp/g03-current-main-consumer-delta-001/main68.diff",
+      "sizeBytes": 17867,
+      "sha256": "af1cdfcbb450e5433f646c920586850afb90bf0e667e6078c9b32566cea7ecf2",
+      "argv": [
+        "git",
+        "diff",
+        "--binary",
+        "a6eb216a95a49715f75a058502d9915a8eb1f8ff",
+        "2ad9c23e5435178be9d2d4637c17ffad463f596f"
+      ]
+    },
+    {
+      "path": "/private/tmp/g03-current-main-consumer-delta-001/main68.names.nul",
+      "sizeBytes": 204,
+      "sha256": "81bb54e52f2e2e6299969f3c5e568871d9ca37cfeab39b7f4e1d597cbfc5c0b3",
+      "argv": [
+        "git",
+        "diff",
+        "--name-only",
+        "-z",
+        "a6eb216a95a49715f75a058502d9915a8eb1f8ff",
+        "2ad9c23e5435178be9d2d4637c17ffad463f596f"
+      ]
+    },
+    {
+      "path": "/private/tmp/g03-current-main-consumer-delta-001/branch-vs-main-merge-base.txt",
+      "sizeBytes": 41,
+      "sha256": "e00a79993c2fb1916305fa8bfc80e43382ea5abfda0ca1634bada8a4ea426a55",
+      "argv": [
+        "git",
+        "merge-base",
+        "HEAD",
+        "2ad9c23e5435178be9d2d4637c17ffad463f596f"
+      ]
+    },
+    {
+      "path": "/private/tmp/g03-current-main-consumer-delta-001/sdk-package-at-P.json",
+      "sizeBytes": 5380,
+      "sha256": "323d619288cd35e7e86c932c0d26bfbfb2f8b4a5e5cc3f39bcaa415dd3c3aeaa",
+      "argv": [
+        "git",
+        "show",
+        "855f6c48649496fc60b3303798790d0ddb55d38f:package.json"
+      ]
+    },
+    {
+      "path": "/private/tmp/g03-current-main-consumer-delta-001/sdk-package-at-main.json",
+      "sizeBytes": 5380,
+      "sha256": "c7b69fba001805dc9cd4e26e84a9b786be379c1413d020c34600c063d287101b",
+      "argv": [
+        "git",
+        "show",
+        "2ad9c23e5435178be9d2d4637c17ffad463f596f:package.json"
+      ]
+    },
+    {
+      "path": "/private/tmp/g03-current-main-consumer-delta-001/main68-commit.json",
+      "sizeBytes": 274,
+      "sha256": "d822b21168dc71eb435dcce2dace0012020314a487cffe5e16216884ec0f5354",
+      "argv": [
+        "git",
+        "show",
+        "--format=fuller",
+        "--no-patch",
+        "2ad9c23e5435178be9d2d4637c17ffad463f596f"
+      ]
+    }
+  ]
+}

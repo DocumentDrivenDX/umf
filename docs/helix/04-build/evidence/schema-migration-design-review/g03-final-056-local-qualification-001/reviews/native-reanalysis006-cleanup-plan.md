@@ -1,0 +1,13 @@
+# Native reanalysis006 cleanup schema repair plan
+
+Source-only plan accepted; successor006 source remains to be reviewed before execution. Actual005 launch failed at an invented case-level errors field. Original native007 and all 19 raw scenarios remain immutable FAIL_OR_UNKNOWN overall.
+
+The sealed source g03_campaign_orchestration.py constructs each N01–N13 cleanup summary with exactly status and subcaseStatuses. Require status PASS, exact ordered subcaseStatuses equal the actual scenario cleanup statuses, and one summary entry per scenario; do not require or invent summary errors=[]. Preserve the fixed14/ordered19 roster checks.
+
+For each of the 18 resource-creating scenarios require raw cleanup status PASS, errors exactly [], createdDatabase exactly true, and createdRoles exactly the independently frozen expected resource role roster (ordinary uses all eight). Require retained cleanupVerification exact affirmative absence/continuity fields: ownedDatabaseAbsent true, ownedDatabaseRemaining null, ownedRolesAbsent true, remainingRoleIdentities [], targetIdentityUnchanged true, schemaAndTableAbsentByOwnedDatabaseRemoval true. These are actual fresh catalog observations in sealed runner lines1594–1614, not inferred from successful drop or container cleanup. Keep resource names/config/target bindings and raw-envelope/case correspondence checks. All18 actual reports contain these witnesses.
+
+Admission-refusal is the sole no-resource branch: actual cleanup is PASS_NO_NATIVE_RESOURCES_CREATED; retain exact targetBefore/targetAfter equality to expected target and existing pre-resource admission predicates. Do not require absent native cleanup fields or fabricate resource creation. Keep target continuity PASS for every scenario.
+
+Actual N14 already satisfies existing driver: executedRosterComplete true, missingOrFailedCleanupCases [], thirteen PASS perCaseCleanupStatuses, finalTargetObservation equal expected target, finalTargetObservationError null. Correlate its statuses with the thirteen checked summaries. No N14 status-label promotion or synthetic fresh observation.
+
+Inspected remaining downstream driver checks after the failing function: raw-envelope/case correspondence, campaign bindings, pure-predicate invocation, output scope and original before/after evidence/source/packet rechecks. No further concrete schema discrepancy was found. This is source/data inspection only; no driver, product, DB, Docker or tests executed. Successor must preserve limits, raw evidence, pure predicates and original failure receipts. No additional native campaign is required to repair this metadata contract mismatch.

@@ -1,0 +1,299 @@
+[
+    {
+        "Id": "ac4f1e8a582fd1ebea46824d244bb18269cc29eccf3f9f997ea54252cd18bb2d",
+        "Created": "2026-10-29T10:50:37.267634316Z",
+        "Path": "/bin/bash",
+        "Args": [
+            "-c",
+            "exec sleep infinity"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 350885,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-10-29T10:50:37.390979157Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+        "ResolvConfPath": "/var/lib/docker/containers/ac4f1e8a582fd1ebea46824d244bb18269cc29eccf3f9f997ea54252cd18bb2d/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/ac4f1e8a582fd1ebea46824d244bb18269cc29eccf3f9f997ea54252cd18bb2d/hostname",
+        "HostsPath": "/var/lib/docker/containers/ac4f1e8a582fd1ebea46824d244bb18269cc29eccf3f9f997ea54252cd18bb2d/hosts",
+        "LogPath": "/var/lib/docker/containers/ac4f1e8a582fd1ebea46824d244bb18269cc29eccf3f9f997ea54252cd18bb2d/ac4f1e8a582fd1ebea46824d244bb18269cc29eccf3f9f997ea54252cd18bb2d-json.log",
+        "Name": "/g03-source-guards-5cfb93d1-07c",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {
+                    "max-file": "5",
+                    "max-size": "20m"
+                }
+            },
+            "NetworkMode": "none",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": [
+                "ALL"
+            ],
+            "CgroupnsMode": "private",
+            "Dns": null,
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": true,
+            "SecurityOpt": null,
+            "Tmpfs": {
+                "/tmp": "rw,exec,nosuid,nodev,size=512m"
+            },
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 16834887680,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 8589934592,
+            "NanoCpus": 4000000000,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": [],
+            "BlkioDeviceWriteBps": [],
+            "BlkioDeviceReadIOps": [],
+            "BlkioDeviceWriteIOps": [],
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 17179869184,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": 8192,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "Mounts": [
+                {
+                    "Type": "bind",
+                    "Source": "/private/tmp/g03-local-source-package-guards-operator-003/runs/5cfb93d1-07c/source",
+                    "Target": "/workspace"
+                },
+                {
+                    "Type": "bind",
+                    "Source": "/Users/erik/Projects/weft/node_modules",
+                    "Target": "/workspace/node_modules",
+                    "ReadOnly": true
+                },
+                {
+                    "Type": "bind",
+                    "Source": "/private/tmp/g03-local-source-package-guards-operator-003",
+                    "Target": "/operator",
+                    "ReadOnly": true
+                },
+                {
+                    "Type": "volume",
+                    "Source": "g03-source-cargo-5cfb93d1-07c",
+                    "Target": "/cargo-home"
+                },
+                {
+                    "Type": "volume",
+                    "Source": "g03-source-target-5cfb93d1-07c",
+                    "Target": "/target"
+                },
+                {
+                    "Type": "bind",
+                    "Source": "/private/tmp/g03-local-source-package-guards-operator-003/runs/5cfb93d1-07c",
+                    "Target": "/out"
+                }
+            ],
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [
+            {
+                "Type": "volume",
+                "Name": "g03-source-cargo-5cfb93d1-07c",
+                "Source": "/var/lib/docker/volumes/g03-source-cargo-5cfb93d1-07c/_data",
+                "Destination": "/cargo-home",
+                "Driver": "local",
+                "Mode": "z",
+                "RW": true,
+                "Propagation": ""
+            },
+            {
+                "Type": "bind",
+                "Source": "/private/tmp/g03-local-source-package-guards-operator-003",
+                "Destination": "/operator",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/private/tmp/g03-local-source-package-guards-operator-003/runs/5cfb93d1-07c",
+                "Destination": "/out",
+                "Mode": "",
+                "RW": true,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "volume",
+                "Name": "g03-source-target-5cfb93d1-07c",
+                "Source": "/var/lib/docker/volumes/g03-source-target-5cfb93d1-07c/_data",
+                "Destination": "/target",
+                "Driver": "local",
+                "Mode": "z",
+                "RW": true,
+                "Propagation": ""
+            },
+            {
+                "Type": "bind",
+                "Source": "/private/tmp/g03-local-source-package-guards-operator-003/runs/5cfb93d1-07c/source",
+                "Destination": "/workspace",
+                "Mode": "",
+                "RW": true,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/Users/erik/Projects/weft/node_modules",
+                "Destination": "/workspace/node_modules",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "ac4f1e8a582f",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "RUNNER_TOOL_CACHE=/opt/hostedtoolcache",
+                "CARGO_HOME=/opt/cargo",
+                "RUSTUP_HOME=/opt/rustup",
+                "LD_LIBRARY_PATH=/opt/hostedtoolcache/Python/3.11.17/x64/lib"
+            ],
+            "Cmd": [
+                "-c",
+                "exec sleep infinity"
+            ],
+            "Image": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+            "Volumes": null,
+            "WorkingDir": "/workspace",
+            "Entrypoint": [
+                "/bin/bash"
+            ],
+            "Labels": {
+                "codex.g03.owner": "5cfb93d1-07c8-40fc-82c0-494d890ec6e1",
+                "codex.g03.purpose": "bounded-source-guards",
+                "org.opencontainers.image.version": "24.04"
+            }
+        },
+        "NetworkSettings": {
+            "SandboxID": "846334c5da379bdd720ce53299541087e41d8202ace8f5d6d9bc9e8b8add6e39",
+            "SandboxKey": "/var/run/docker/netns/846334c5da37",
+            "Ports": {},
+            "Networks": {
+                "none": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "838f0db208743edba38ff429c6124e228733188e2a1bd911c3552c8e15891489",
+                    "EndpointID": "d0d8ecc68a330d9b71dbe15d4e94358e404676391c50df5c8d4a68daa1aa7a31",
+                    "Gateway": "",
+                    "IPAddress": "",
+                    "MacAddress": "",
+                    "IPPrefixLen": 0,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": null
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:6577adce6a37007d6d331b567a7adf3d44c4b48f31175f0cb40db654355501eb",
+            "size": 2214,
+            "platform": {
+                "architecture": "amd64",
+                "os": "linux"
+            }
+        }
+    }
+]

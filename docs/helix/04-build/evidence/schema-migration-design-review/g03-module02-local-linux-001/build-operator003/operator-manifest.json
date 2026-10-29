@@ -1,0 +1,52 @@
+{
+  "externalInputs": [
+    {
+      "path": "/private/tmp/sdk-057-local3600-public-h-operator-proposal011/run_public_h_docker.py",
+      "sha256": "8e383bece7d44484421302f8be32fdb1ba1ed96cd895749093a58171648cf1cd"
+    },
+    {
+      "baseTree": "91717885cefaea1ff8d78ee188c5dc4ca2700df7",
+      "candidateMetadataPatchSha256": "25ccab8a9c2a3576ac09783a9c06dabfa503e1dbd9b7b67495e751424552564f",
+      "fullPatchSha256": "b44ef7eb3fe3a70fcd1957e648013115106e82f12f1f8b984dc28128e501de74",
+      "head": "e7e88b077c256c852a83d7951e3bc5fd1ec234aa",
+      "path": "/private/tmp/weft-g03-ordinary-module",
+      "semanticPatchSha256": "636d5db4a4f0672aab01db42e39f0c533f4030a12406fb1ea0585f1be3425da5"
+    }
+  ],
+  "files": [
+    {
+      "path": "run.py",
+      "sha256": "bc8ac1bb63ba760ee96786ae886426209b85f1fd78197f75ae4c3f0963287dce",
+      "sizeBytes": 24816
+    },
+    {
+      "path": "fetch_maturin.py",
+      "sha256": "bd936fffbe758e265666230d2b554d463dbb17593fdf005ae04d4a4d328485a2",
+      "sizeBytes": 1882
+    },
+    {
+      "path": "maturin-requirements.txt",
+      "sha256": "456c2c84a0d72376a5235ac8da66568cd95e86fed4b4170a92dea3eabc90fb8f",
+      "sizeBytes": 94
+    },
+    {
+      "path": "maturin-1.9.6-pypi.json",
+      "sha256": "ff36b1d43664c264059608e2c475db66efe93264c894a80f6b0181b2f85bdf4e",
+      "sizeBytes": 29756
+    },
+    {
+      "path": "README.md",
+      "sha256": "1e724c9954c12724c6f784209201cad7b413ff5abb4a5992e454b812628ccb08",
+      "sizeBytes": 2279
+    }
+  ],
+  "profile": "umf.g03-local-linux-source-test-build.operator/1",
+  "status": "FROZEN_SOURCE_ONLY_NOT_EXECUTED",
+  "previousAttempt": {
+    "operator": "/private/tmp/g03-weft-local-linux-operator-002",
+    "result": "/private/tmp/g03-weft-local-linux-run-002/result.json",
+    "disposition": "FAIL_SINGLE_INVALID_REQUIRED_OUTPUT_QUERY_FIXTURE"
+  },
+  "scope": "entire table_operation integration target then full-feature held build; full Rust release gate remains open",
+  "candidateLabelMeaning": "Initial prototype label; actual revised source hashes are independent and authoritative"
+}

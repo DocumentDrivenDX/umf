@@ -1,0 +1,34 @@
+{
+  "bundle": {
+    "bytes": 4531838,
+    "path": "/private/tmp/g03-sdk058-producer-855f6c486.bundle",
+    "sha256": "72112c9d319eedda9774ff114f737366f61f20afb105c3527ebb7933fba264ef"
+  },
+  "commandExit": 0,
+  "files": [
+    {
+      "bytes": 1080,
+      "path": "guest.py",
+      "sha256": "55f0c6895e1afd9cf68ef97f968a55a87f0c88659bf942a4e03f501c83eb704f"
+    },
+    {
+      "bytes": 0,
+      "path": "stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 4761,
+      "path": "stdout.log",
+      "sha256": "d5edc16a0a856bafdcdd510f3ded82270fd088eab3f5c1261bcbbf3a0e767d7b"
+    }
+  ],
+  "priorFailedPreparations": [
+    "/private/tmp/g03-sdk058-source-volume-prep-001",
+    "/private/tmp/g03-sdk058-source-volume-prep-002"
+  ],
+  "scope": "Offline source-only Git clone/fetch/clean HEAD and tree verification; no product/runtime qualification. Owned source volume retained for upcoming reviewed producer, temporary prep container --rm. Git temporary safe-directory config permits read-only upstream local clone.",
+  "sourceCommit": "855f6c48649496fc60b3303798790d0ddb55d38f",
+  "sourceTree": "53f2bfffbc0c5780e79d76d8fd3d202239d088b2",
+  "status": "SOURCE_VOLUME_READY",
+  "volume": "umf-sdk058-source-855f6c486-001"
+}

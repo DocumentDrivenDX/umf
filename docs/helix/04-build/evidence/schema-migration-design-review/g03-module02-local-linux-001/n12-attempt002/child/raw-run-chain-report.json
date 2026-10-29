@@ -1,0 +1,284 @@
+{
+  "cleanup": {
+    "createdDatabase": true,
+    "createdRoles": [
+      "g03o_2f9a61675b",
+      "g03p_2f9a61675b",
+      "g03b_2f9a61675b",
+      "g03a_2f9a61675b",
+      "g03z_2f9a61675b"
+    ],
+    "errors": [],
+    "status": "PASS"
+  },
+  "cleanupVerification": {
+    "ownedDatabaseAbsent": true,
+    "ownedDatabaseRemaining": null,
+    "ownedRolesAbsent": true,
+    "remainingRoleIdentities": [],
+    "schemaAndTableAbsentByOwnedDatabaseRemoval": true,
+    "targetIdentityUnchanged": true
+  },
+  "configurationSha256": "154c3a6947339676177cf81a7b4a363437027e60f8f343d1422bd7f3681be7e7",
+  "createdDatabaseIdentity": {
+    "name": "g03_2f9a61675b",
+    "oid": "16391",
+    "ownerOid": "10"
+  },
+  "createdRoleIdentities": [
+    {
+      "bypassRls": false,
+      "createDatabase": false,
+      "createRole": false,
+      "login": false,
+      "name": "g03o_2f9a61675b",
+      "oid": "16384",
+      "replication": false,
+      "superuser": false
+    },
+    {
+      "bypassRls": false,
+      "createDatabase": false,
+      "createRole": false,
+      "login": false,
+      "name": "g03p_2f9a61675b",
+      "oid": "16385",
+      "replication": false,
+      "superuser": false
+    },
+    {
+      "bypassRls": false,
+      "createDatabase": false,
+      "createRole": false,
+      "login": false,
+      "name": "g03b_2f9a61675b",
+      "oid": "16386",
+      "replication": false,
+      "superuser": false
+    },
+    {
+      "bypassRls": false,
+      "createDatabase": false,
+      "createRole": false,
+      "login": false,
+      "name": "g03a_2f9a61675b",
+      "oid": "16387",
+      "replication": false,
+      "superuser": false
+    },
+    {
+      "bypassRls": false,
+      "createDatabase": false,
+      "createRole": false,
+      "login": false,
+      "name": "g03z_2f9a61675b",
+      "oid": "16388",
+      "replication": false,
+      "superuser": false
+    }
+  ],
+  "createdSchemaIdentity": {
+    "name": "g03s_2f9a61675b",
+    "oid": "16392",
+    "ownerOid": "16384"
+  },
+  "createdTableIdentity": {
+    "name": "notes",
+    "oid": "16393",
+    "ownerOid": "16384",
+    "schemaOid": "16392"
+  },
+  "database": "g03_2f9a61675b",
+  "historicalRows": [
+    [
+      "a",
+      "Alice",
+      null
+    ],
+    [
+      "b",
+      "Bob",
+      2
+    ],
+    [
+      "c",
+      "Alice",
+      9
+    ]
+  ],
+  "initialObservation": {
+    "columnDefault": "'5'::numeric",
+    "observer": {
+      "currentUser": "postgres",
+      "sessionUser": "postgres",
+      "superuser": true
+    },
+    "relationFileNode": 16393,
+    "rows": [
+      [
+        "a",
+        "g03a_2f9a61675b",
+        null,
+        "16393",
+        "766",
+        "(0,1)"
+      ],
+      [
+        "b",
+        "g03z_2f9a61675b",
+        2,
+        "16393",
+        "767",
+        "(0,2)"
+      ],
+      [
+        "c",
+        "g03a_2f9a61675b",
+        9,
+        "16393",
+        "768",
+        "(0,3)"
+      ]
+    ],
+    "rowsDigest": "5b7da8f1ff50acbe9d9f0ab67206d2132d5c60342f9a6d652da3d78c6183c9ec"
+  },
+  "initialRowCount": 3,
+  "openedOwnedConnection": {
+    "backendPid": 101,
+    "currentUser": "postgres",
+    "database": "g03_2f9a61675b",
+    "postmasterStart": "2026-10-29 08:20:17.598006+00",
+    "serverVersion": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "sessionUser": "postgres",
+    "systemIdentifier": "7702001711139172400"
+  },
+  "ordinaryN12": {
+    "caseId": "G03-N12",
+    "checkCount": 56,
+    "checks": [
+      "native-family-historical-baseline",
+      "sync-01-native-read-page",
+      "sync-01-same-profile-cursor",
+      "sync-01-declared-query-preserves-null",
+      "sync-01-omitted-write-observed-default-before-update",
+      "sync-01-explicit-null-and-value",
+      "sync-01-targeted-update",
+      "sync-01-same-profile-replay-and-observe",
+      "sync-01-independent-row-observation",
+      "sync-02-native-read-page",
+      "sync-02-same-profile-cursor",
+      "sync-02-declared-query-preserves-null",
+      "sync-02-omitted-write-observed-default-before-update",
+      "sync-02-explicit-null-and-value",
+      "sync-02-targeted-update",
+      "sync-02-same-profile-replay-and-observe",
+      "sync-02-independent-row-observation",
+      "async-01-native-read-page",
+      "async-01-same-profile-cursor",
+      "async-01-declared-query",
+      "async-01-omitted-write-observed-default-before-update",
+      "async-01-omitted-null-value-update-observed",
+      "async-02-native-read-page",
+      "async-02-same-profile-cursor",
+      "async-02-declared-query",
+      "async-02-omitted-write-observed-default-before-update",
+      "async-02-omitted-null-value-update-observed",
+      "same-profile-source-owner-legacy-to-selected",
+      "source-owner-legacy-to-selected",
+      "cursor-legacy-to-selected",
+      "same-profile-source-owner-selected-to-legacy",
+      "source-owner-selected-to-legacy",
+      "cursor-selected-to-legacy",
+      "same-profile-async-source-owner-async-legacy-to-selected",
+      "async-source-owner-async-legacy-to-selected",
+      "async-cursor-async-legacy-to-selected",
+      "same-profile-async-source-owner-async-selected-to-legacy",
+      "async-source-owner-async-selected-to-legacy",
+      "async-cursor-async-selected-to-legacy",
+      "occupied-slot-independent-slot-derivation-cross-a",
+      "occupied-slot-cross-profile-observe-refusal-cross-a",
+      "occupied-slot-incompatible-cross-a",
+      "occupied-slot-one-effect-and-same-profile-recovery-cross-a",
+      "occupied-slot-independent-slot-derivation-cross-b",
+      "occupied-slot-cross-profile-observe-refusal-cross-b",
+      "occupied-slot-incompatible-cross-b",
+      "occupied-slot-one-effect-and-same-profile-recovery-cross-b",
+      "same-profile-changed-input-observe-refusal",
+      "same-profile-secret-rotation-observe-refusal",
+      "same-profile-verifier-input-variation-preserves-one-slot-and-effect",
+      "caller-rollback-removes-effect-and-outcome",
+      "sync-lost-commit-response-classified-unknown",
+      "sync-lost-commit-observed-with-one-effect",
+      "async-lost-commit-response-classified-unknown",
+      "async-lost-commit-observed-with-one-effect",
+      "async-caller-rollback-removes-effect-and-outcome"
+    ],
+    "error": "ordinary generation did not start from the observed default 5",
+    "errorType": "AssertionError",
+    "helperSha256": "f62c555d63544c38ece9dfda2b0316771b2bbf0dd3006eb6560cccc136188493",
+    "nativeQualificationClaim": false,
+    "scenario": "ordinary",
+    "status": "FAIL_OR_UNKNOWN"
+  },
+  "ordinarySourceAdmissionPreflight": {
+    "businessEffects": 0,
+    "databaseLeases": 0,
+    "profile": "umf.g03-n12-source-admission-preflight/1",
+    "receipts": [
+      {
+        "bundleDigest": "25a3e561417e697710eb8bf0ebda1ed9dcacc8b0e1d151ad3d89e126cc1ef67a",
+        "disposition": "admitted-all-ordinary-operations-and-query",
+        "family": "native-only",
+        "profile": "weft.table-operation-module/0.1",
+        "sourceDigest": "69f4444c62cf805f9c0caf2234022ba7ce6e8fe7b13382520e334c340b6fd05b"
+      },
+      {
+        "bundleDigest": "25a3e561417e697710eb8bf0ebda1ed9dcacc8b0e1d151ad3d89e126cc1ef67a",
+        "disposition": "admitted-all-ordinary-operations-and-query",
+        "family": "native-only",
+        "profile": "weft.table-operation-module/0.2",
+        "sourceDigest": "69f4444c62cf805f9c0caf2234022ba7ce6e8fe7b13382520e334c340b6fd05b"
+      },
+      {
+        "bundleDigest": "0a961f529ab041793944a6b7ee1af4d03701f312f10f249aca3dbbba28cc2106",
+        "disposition": "expected-source-admission-refusal",
+        "error": "table absent/ambiguous in UMF",
+        "family": "logical-matching",
+        "profile": "weft.table-operation-module/0.1",
+        "sourceDigest": "f7d30e1f314c6217cebe966f22c68390e92673f9484bb87e7c6145286c680ed0"
+      },
+      {
+        "bundleDigest": "0a961f529ab041793944a6b7ee1af4d03701f312f10f249aca3dbbba28cc2106",
+        "disposition": "admitted-all-ordinary-operations-and-query",
+        "family": "logical-matching",
+        "profile": "weft.table-operation-module/0.2",
+        "sourceDigest": "f7d30e1f314c6217cebe966f22c68390e92673f9484bb87e7c6145286c680ed0"
+      }
+    ],
+    "status": "PASS_SOURCE_ADMISSION_BEFORE_TARGET_RESOURCES"
+  },
+  "roleNames": [
+    "g03o_2f9a61675b",
+    "g03p_2f9a61675b",
+    "g03b_2f9a61675b",
+    "g03a_2f9a61675b",
+    "g03z_2f9a61675b"
+  ],
+  "scenario": "ordinary",
+  "schema": "g03s_2f9a61675b",
+  "serverVersion": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "status": "FAIL_OR_UNKNOWN",
+  "steps": [],
+  "targetIdentity": {
+    "currentUser": "postgres",
+    "maintenanceDatabase": "postgres",
+    "observerOid": "10",
+    "observerSuperuser": true,
+    "postmasterStart": "2026-10-29 08:20:17.598006+00",
+    "serverAddress": "192.168.165.2/32",
+    "serverPort": 5432,
+    "serverVersion": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "sessionUser": "postgres",
+    "systemIdentifier": "7702001711139172400"
+  }
+}

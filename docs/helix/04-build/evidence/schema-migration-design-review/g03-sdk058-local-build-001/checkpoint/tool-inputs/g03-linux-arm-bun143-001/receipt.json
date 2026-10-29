@@ -1,0 +1,31 @@
+{
+  "apiDigestMatched": true,
+  "binary": {
+    "bytes": 88465160,
+    "elfMachine": 183,
+    "mode": "0755",
+    "path": "/private/tmp/g03-linux-arm-bun143-001/bun",
+    "sha256": "029ece746ac9f970c76d8f48bdd1b1d0c52f3636b74d19f546f5e7c1165c0abe"
+  },
+  "downloadFiles": [
+    {
+      "assetId": 626788529,
+      "bytes": 41786424,
+      "name": "bun-linux-aarch64.zip",
+      "sha256": "efa9813da5ed72423bf847f916e8d2c47c0d776add972354026a75e10da9aa21",
+      "url": "https://github.com/oven-sh/bun/releases/download/bun-v1.4.3/bun-linux-aarch64.zip"
+    },
+    {
+      "assetId": 627094097,
+      "bytes": 3431,
+      "name": "SHASUMS256.txt",
+      "sha256": "861ce0f19aa4f8a94bef81045c7fcad38dbb2343f2c6e2d6bdc8561be5dba637",
+      "url": "https://github.com/oven-sh/bun/releases/download/bun-v1.4.3/SHASUMS256.txt"
+    }
+  ],
+  "profile": "umf.g03-linux-arm-bun-acquisition/1",
+  "publisherChecksumMatched": true,
+  "releaseId": 408543611,
+  "releaseTag": "bun-v1.4.3",
+  "scope": "Acquisition and static ELF only; compatibility/runtime not executed; no Mac product/CI"
+}

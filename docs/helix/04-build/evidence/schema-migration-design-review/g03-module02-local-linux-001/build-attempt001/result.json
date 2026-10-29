@@ -1,0 +1,140 @@
+{
+  "candidateVersion": "0.4.55+g03.a96e4f29262e",
+  "candidateWheel": null,
+  "cleanup": {
+    "durationSeconds": 1.305,
+    "errors": []
+  },
+  "commands": [
+    {
+      "argv": [
+        "docker",
+        "exec",
+        "g03-weft-build-7a437bc6-bef",
+        "sh",
+        "-lc",
+        "set -eu; mkdir -p /target/tooling /cargo-home/registry; printf \"RUNTIME_IDENTITY\\n\"; set -eu; rustc --version; cargo --version; python3 --version; command -v python3; cc --version | head -1; case \"$(rustc --version)\" in \"rustc 1.90.\"*) ;; *) exit 41 ;; esac; case \"$(cargo --version)\" in \"cargo 1.90.\"*) ;; *) exit 42 ;; esac; test \"$(python3 --version)\" = \"Python 3.11.17\"; test -d /opt/cargo/registry; cp -a /opt/cargo/registry/. /cargo-home/registry/; cargo fetch --locked --manifest-path /workspace/Cargo.toml; python3 /operator/fetch_maturin.py /target/tooling /out/provisioning.json; python3 -m venv /target/tooling-venv; /target/tooling-venv/bin/python -m pip install --disable-pip-version-check --no-index --no-deps --only-binary=:all: --require-hashes --find-links=/target/tooling -r /operator/maturin-requirements.txt; test -x /target/tooling-venv/bin/maturin; test \"$(/target/tooling-venv/bin/maturin --version)\" = \"maturin 1.9.6\""
+      ],
+      "capture": {
+        "captureErrors": [],
+        "captureFailed": false,
+        "drainExpired": false,
+        "paths": [
+          "/private/tmp/g03-weft-local-linux-run-001/logs/setup.stdout.log",
+          "/private/tmp/g03-weft-local-linux-run-001/logs/setup.stderr.log"
+        ],
+        "rawSha256": [
+          "417ee3761ebbff10b208533fdc075693159fa0a2911f853ccf0bc8de8f221998",
+          "5767279cba01b65fd3b8ad9b4272bd0c7dac6780f936efd19a9e0bb0b503a383"
+        ],
+        "retainedBytes": [
+          17,
+          175
+        ],
+        "timedOut": false,
+        "totalRetainedBytes": 192,
+        "truncated": [
+          false,
+          false
+        ]
+      },
+      "durationSeconds": 0.468,
+      "effectiveDeadlineSeconds": 600,
+      "exitCode": 1,
+      "name": "setup",
+      "physicalClosure": {
+        "errors": [],
+        "files": [
+          {
+            "path": "/private/tmp/g03-weft-local-linux-run-001/logs/setup.stdout.log",
+            "sha256": "417ee3761ebbff10b208533fdc075693159fa0a2911f853ccf0bc8de8f221998",
+            "sizeBytes": 17
+          },
+          {
+            "path": "/private/tmp/g03-weft-local-linux-run-001/logs/setup.stderr.log",
+            "sha256": "5767279cba01b65fd3b8ad9b4272bd0c7dac6780f936efd19a9e0bb0b503a383",
+            "sizeBytes": 175
+          }
+        ],
+        "verified": true
+      },
+      "stageLimitSeconds": 600
+    }
+  ],
+  "executionId": "7a437bc6-befd-4921-ad39-7ae7e78269ef",
+  "failure": "RuntimeError: setup failed or did not close",
+  "image": {
+    "architecture": "amd64",
+    "id": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+    "os": "linux",
+    "reference": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10"
+  },
+  "limits": {
+    "aggregateSeconds": 3600,
+    "candidateWheelBytes": 33554432,
+    "candidateWheelExpandedBytes": 134217728,
+    "cleanupSeconds": 60,
+    "cpu": "4",
+    "logBytes": 1048576,
+    "memory": "8g",
+    "metadataBytes": 16777216,
+    "network": "bridge only during locked setup; detached before test/build",
+    "pids": 8192,
+    "sourceMount": "read-only",
+    "stageSeconds": {
+      "candidate-build": 1800,
+      "setup": 600,
+      "tests": 1800
+    },
+    "terminalReserveSeconds": 60,
+    "terminationGraceSeconds": 10
+  },
+  "maturinProvisioning": null,
+  "operator": {
+    "captureHelper": "/private/tmp/sdk-057-local3600-public-h-operator-proposal011/run_public_h_docker.py",
+    "captureHelperSha256": "8e383bece7d44484421302f8be32fdb1ba1ed96cd895749093a58171648cf1cd",
+    "runnerSha256": "7831607d4914c2b905ff41ec949314eb960da22a87fe81e2639a014415753850"
+  },
+  "outerDurationSeconds": 2.56,
+  "outerLogRetainedBytes": 192,
+  "postRunSource": {
+    "baseFilePins": {
+      "Cargo.lock": "14697814e6cd5c04cef4cb8e03ab041bc0062404963da81d3107110cbc4cf019",
+      "crates/weft-python/Cargo.toml": "cc53e8989ce529c0f05bdc27380f1ae0573fea14389c68fb69b718a8edd871e3",
+      "crates/weft-python/pyproject.toml": "c6e642eddcba38d30e01f8babbf70b5b885317aacad412d262a1665a91064eeb"
+    },
+    "baseTree": "91717885cefaea1ff8d78ee188c5dc4ca2700df7",
+    "candidateMetadataPatchSha256": "25ccab8a9c2a3576ac09783a9c06dabfa503e1dbd9b7b67495e751424552564f",
+    "candidateVersion": "0.4.55+g03.a96e4f29262e",
+    "fullPatchSha256": "fdb6966643002d637bb048197893c280dee7e913f7f98eae59c5253045e57d3e",
+    "head": "e7e88b077c256c852a83d7951e3bc5fd1ec234aa",
+    "semanticPatchSha256": "a96e4f29262edb6d459b56c607f1d22527a622255bedeafd9e26274884531936",
+    "status": " M Cargo.lock\n M crates/weft-core/src/model.rs\n M crates/weft-core/src/raw_read.rs\n M crates/weft-core/src/table_operation.rs\n M crates/weft-core/src/table_query.rs\n M crates/weft-postgresql/tests/table_operation.rs\n M crates/weft-python/Cargo.toml\n M crates/weft-python/pyproject.toml\n M docs/helix/02-design/contracts/CONTRACT-003-compile-and-host-boundary.md",
+    "versionFiles": {
+      "Cargo.lock": "0.4.55+g03.a96e4f29262e",
+      "crates/weft-python/Cargo.toml": "0.4.55+g03.a96e4f29262e",
+      "crates/weft-python/pyproject.toml": "0.4.55+g03.a96e4f29262e"
+    }
+  },
+  "profile": "umf.g03-local-linux-source-test-build/1",
+  "source": {
+    "baseFilePins": {
+      "Cargo.lock": "14697814e6cd5c04cef4cb8e03ab041bc0062404963da81d3107110cbc4cf019",
+      "crates/weft-python/Cargo.toml": "cc53e8989ce529c0f05bdc27380f1ae0573fea14389c68fb69b718a8edd871e3",
+      "crates/weft-python/pyproject.toml": "c6e642eddcba38d30e01f8babbf70b5b885317aacad412d262a1665a91064eeb"
+    },
+    "baseTree": "91717885cefaea1ff8d78ee188c5dc4ca2700df7",
+    "candidateMetadataPatchSha256": "25ccab8a9c2a3576ac09783a9c06dabfa503e1dbd9b7b67495e751424552564f",
+    "candidateVersion": "0.4.55+g03.a96e4f29262e",
+    "fullPatchSha256": "fdb6966643002d637bb048197893c280dee7e913f7f98eae59c5253045e57d3e",
+    "head": "e7e88b077c256c852a83d7951e3bc5fd1ec234aa",
+    "semanticPatchSha256": "a96e4f29262edb6d459b56c607f1d22527a622255bedeafd9e26274884531936",
+    "status": " M Cargo.lock\n M crates/weft-core/src/model.rs\n M crates/weft-core/src/raw_read.rs\n M crates/weft-core/src/table_operation.rs\n M crates/weft-core/src/table_query.rs\n M crates/weft-postgresql/tests/table_operation.rs\n M crates/weft-python/Cargo.toml\n M crates/weft-python/pyproject.toml\n M docs/helix/02-design/contracts/CONTRACT-003-compile-and-host-boundary.md",
+    "versionFiles": {
+      "Cargo.lock": "0.4.55+g03.a96e4f29262e",
+      "crates/weft-python/Cargo.toml": "0.4.55+g03.a96e4f29262e",
+      "crates/weft-python/pyproject.toml": "0.4.55+g03.a96e4f29262e"
+    }
+  },
+  "status": "FAIL_OR_UNKNOWN"
+}

@@ -1,0 +1,184 @@
+{
+  "aggregateSeconds": 2700,
+  "browser": {
+    "chromiumExecutable": "/ms-playwright/chromium-1243/chrome-linux-arm64/chrome",
+    "chromiumSha256": "839efe5fd8b6a773dd81b2e10afdc15f3c0a17316fb82b5908c0533306c4ed9e",
+    "chromiumVersion": "Google Chrome for Testing 153.0.8010.12",
+    "imageId": "sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27",
+    "nodeVersion": "v24.20.0",
+    "platform": "linux/arm64",
+    "playwrightCoreTreeSha256": "d1c9e8b6e3bb37b49f5ba10a847f32bcde4d64df58b30434ab0ed66ee20e60aa",
+    "playwrightTreeSha256": "3a9482a4f587a730abd98fc0c620c3a6eff5d2f9a88f1a91e16dee8ec3ab6230",
+    "playwrightVersion": "1.62.1"
+  },
+  "cargoCache": {
+    "acquisitionGuestReportSha256": "96ea6bd560eeb54d14bc39462ca926966f6c7da206507acb72b209098b0daaf4",
+    "acquisitionOperatorManifestSha256": "5c3028d23925734ff3d55f7c75796a371c0bd080c63b76ac843d15214dfda8a0",
+    "acquisitionOperatorResultSha256": "470a81cb0f0bfbc03210287217a8e0a0171204fa4fdd644a8d9024fe1968fdff",
+    "acquisitionOperatorRoot": "/private/tmp/g03-linux-locked-cargo-cache-operator-007",
+    "acquisitionPacketSha256": "9a3523d7e86cc83c378bcc5764abb1ff7dbee6fc30dbbff619d4cd24c0d6ff05",
+    "acquisitionRunId": "071cd516906047cf9947a550514af957",
+    "acquisitionSolReviewPath": "/private/tmp/g03-linux-locked-cargo-cache007-sol-actual-review001.md",
+    "acquisitionSolReviewSha256": "369d38a3a50ad0434345ece381e706deadd3bcc150d99fddbc0d1c17ae843e2d",
+    "archiveBytes": 44830720,
+    "archiveMaxBytes": 67108864,
+    "archiveRelativePath": "guest/software/cargo-registry.tar",
+    "archiveSha256": "b678cc11533ea60fcc2d0792092d835ba279de5ddc065f3bcc700581d0865fea",
+    "cacheContentBytes": 44245301,
+    "executionAllowed": true,
+    "inventoryChunkBytes": 148230,
+    "inventoryIndexSha256": "01488af1b54d4164cbbcd8fa7de255a8756e886ce13cdea54b8d05610004716b",
+    "inventoryRowCount": 833,
+    "inventoryRowsSha256": "c072486446d6081c82eade71500ee7cf6299699f6ab150f555c422da7b8d60a9",
+    "lockedCrateCount": 115,
+    "mountDestination": "/cargo-cache-input",
+    "profile": "umf.g03-locked-cargo-cache-consumer/1",
+    "sourceImageId": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+    "sparseIndexWitnessCount": 115,
+    "status": "SOL_ACCEPTED_VERIFIED_CACHE_AVAILABLE"
+  },
+  "cohort": {
+    "custodySha256": "95e9493f06adefb323193f9d8fbe5577ebfa335140a9841f549d2caf098df8ed",
+    "indexSha256": "78026c05d3824613f0e2a3bf30cf24bd32af24de1d560f0b7fa555a1e75f8d60",
+    "lockSha256": "cfe589472a5340446e5b1ddf5e39dbf00e6b6d83370fbe066122f52139fe2274",
+    "mirrorManifestSha256": "809a418b9f6f97e403e3fbcc7066d23657347d1323efb6baf2d4d3bb3f17bd36",
+    "requirementsSha256": "4847944f3cafa5fcc9813890f85a4db24a064ed49b479c890e3f4363cb97de51",
+    "root": "/cohort",
+    "wheel": {
+      "path": "aggregate/mirror/files/umf_weft-0.4.56-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sha256": "32f4c38d9a614dd4c3a367f8b24d5cd4ba41ec80c2a4a2e3423e2082a294dbdd",
+      "sizeBytes": 14358901,
+      "version": "0.4.56"
+    }
+  },
+  "limits": {
+    "inheritedLogLimitMeaning": "1 MiB per public file/log; local 1 MiB aggregate is a stricter operator choice",
+    "localAggregateLogBytes": 1048576,
+    "nativeCommandTotalSeconds": 300,
+    "nativeTerminationGraceSeconds": 10,
+    "publicEvidenceBytes": 8388608,
+    "selectedSoftwareArtifactBytes": 268435456
+  },
+  "profile": "umf.g03-table-operations-inputs/9",
+  "provenance": {
+    "browserPreflightPath": "/private/tmp/g03-final-table-operations-operator-007/inputs/evidence/browser-tool-preflight.json",
+    "browserPreflightSha256": "34cf401c6ae050197622ea093a5ffb6a56f53d9ee430e3773a622e3ea5664dc4",
+    "cargoPath": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin/cargo",
+    "cargoRegistryImageId": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+    "cargoRegistryPath": "/cargo/registry",
+    "cohortConstructionResultPath": "/private/tmp/g03-final-table-operations-operator-007/inputs/evidence/final-cohort-construction-result.json",
+    "cohortConstructionResultSha256": "7d173eb827ae903a3dd2abc2ba2213fd5ced07e829fdae263525e6447d506466",
+    "cohortDataReviewPath": "/private/tmp/g03-final-table-operations-operator-007/inputs/evidence/final-cohort-data-review.md",
+    "cohortDataReviewSha256": "8f9c46085a237b566c4142dbcb062b94dadd04194734da8dff01b22e0a9fe217",
+    "cohortRoot": "/private/tmp/g03-final-cohort-056-linux311-001",
+    "cohortStatus": "HELD_UNPUBLISHED_NOT_RUNTIME_QUALIFIED",
+    "installedRustTargets": [
+      "wasm32-unknown-unknown",
+      "x86_64-unknown-linux-gnu"
+    ],
+    "installedSnapshot": {
+      "bootstrapAllowlist": [
+        "pip",
+        "setuptools"
+      ],
+      "lockedDistributionCount": 18,
+      "profile": "umf.g03-fresh-installed-distribution-snapshot/1",
+      "requirementsSha256": "4847944f3cafa5fcc9813890f85a4db24a064ed49b479c890e3f4363cb97de51",
+      "wheelSha256": "32f4c38d9a614dd4c3a367f8b24d5cd4ba41ec80c2a4a2e3423e2082a294dbdd",
+      "wheelSizeBytes": 14358901
+    },
+    "portableDependencyManifestPath": "/private/tmp/g03-final-table-operations-operator-007/inputs/browser-deps/manifest.json",
+    "portableDependencyManifestSha256": "9f99c0ee83fd0e34ff5f48a83e27f46fd39e3140230629237e0849ea5e07a770",
+    "postgresFullVersion": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "postgresShortVersion": "18.6 (Debian 18.6-1.pgdg13+2)",
+    "priorPreparationEvidence": {
+      "executionId": "13fd35e735e542d6b5f1ee92b50c8796",
+      "guestResultPath": "/private/tmp/g03-final-installed-prep-operator-001/runs/13fd35e735e542d6b5f1ee92b50c8796/guest/guest-result.json",
+      "guestResultSha256": "87650bce2ae314404f763671aef164bb8a2d22cd9a3eff8a572ca442ff6dc4cc",
+      "operatorResultPath": "/private/tmp/g03-final-installed-prep-operator-001/runs/13fd35e735e542d6b5f1ee92b50c8796/operator-result.json",
+      "operatorResultSha256": "5202e1b1567e7cfd7950b7e8205eace9d63f88bd67a3633743faef52be85be27",
+      "scope": "installed final18 cohort snapshot, wheel-member proof, compiler admission; not table-operation runtime qualification",
+      "status": "PASS_INSTALLED_SNAPSHOT_AND_COMPILER_ADMISSION_ONLY"
+    },
+    "pythonQualification": "explicit narrower replacement for requested Python 3.12",
+    "runtimeToolEvidence": {
+      "feasibilityPath": "/private/tmp/g03-final-table-operations-operator-007/inputs/evidence/builder-tool-feasibility.json",
+      "feasibilitySha256": "bd047351ae8b6d736931a718e4799669859f072b28e8cfa1dcee9d4deee20983",
+      "versionsObservationQualification": "FAIL due optional Node quoting probe and image wasm-bindgen 0.2.100; retain actual preceding rust/Bun/Node stdout only; never use that wasm-bindgen binary",
+      "versionsPath": "/private/tmp/g03-final-table-operations-operator-007/inputs/evidence/builder-tool-versions-failed-optional-probe.json",
+      "versionsSha256": "dd56714625a6fbc82ef5c7a56608c7ddcc7faaaad47ef170920476dfe07ca242"
+    },
+    "rustcPath": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin/rustc",
+    "rustupToolchain": "1.90.0-x86_64-unknown-linux-gnu",
+    "scope": {
+      "includesTrussFactsOrEntitySelection": false,
+      "includesTrussWasmProfile": false,
+      "lane": "table-operations",
+      "reusedRustAndWheelEvidence": "no duplicate green Rust suite or wheel rebuild",
+      "wasmFeatureProfile": [
+        "raw-postgresql-reads"
+      ]
+    },
+    "sourceCustody": {
+      "columns": [
+        "path",
+        "sizeBytes",
+        "sha256",
+        "mode"
+      ],
+      "encoding": "compact-json-array-v1",
+      "fileCount": 5901,
+      "maximumFileBytes": 67108864,
+      "producerCommit": "973d864c8d26b2bc173a411eac8368da5efc1ab3",
+      "producerStatusAtCapture": "",
+      "producerTree": "8b20d1f01bea72ea08ed01fcaac97266ed3cb4ff",
+      "profile": "umf.g03-table-operations-source-roster/3",
+      "sourceBytesCap": 1073741824,
+      "sourceReportBytesCap": 1048576,
+      "stageCustodyPath": "/input-source-custody.json",
+      "stageCustodySha256": "e936a962be023654bd045cafa1f02d664e06e4c6bd6f686e4441f8558e027621",
+      "stageRosterBytes": 780359,
+      "stageRosterPath": "/input-git-stage-roster.txt",
+      "stageRosterProfile": "g03.git-stage-roster-custody/1",
+      "stageRosterSha256": "bc3018c0d674cd2fc80794f9f36c523565c91558f70649cd3fe415f8e88b701b",
+      "terminalLf": false,
+      "totalBytes": 860543639
+    },
+    "sourceRoot": "/private/tmp/weft-g03-ordinary-module",
+    "wasmAcquisitionSha256": "cfa0c93966cdfeaaed12918a786585c870ec5106136318dcaa31233cbfeee044",
+    "wasmPreflightPath": "/private/tmp/g03-final-table-operations-operator-007/inputs/evidence/wasm-bindgen-version-preflight.json",
+    "wasmPreflightSha256": "f44c2ce21069c072f8c276cd30ddaa605e3b3be071acb1c8c1b2fb3866c6d00b",
+    "workflowBytes": 22674,
+    "workflowPath": "/private/tmp/weft-g03-ordinary-module/.github/workflows/table-operations.yml"
+  },
+  "runtime": {
+    "builderImageId": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+    "bun": "1.4.3",
+    "cargo": "cargo 1.90.0 (840b83a10 2025-07-30)",
+    "node": "v26.12.1",
+    "platform": "linux/amd64",
+    "python": "Python 3.11.17",
+    "rustc": "rustc 1.90.0 (1159e78c4 2025-09-14)"
+  },
+  "source": {
+    "commit": "973d864c8d26b2bc173a411eac8368da5efc1ab3",
+    "tree": "8b20d1f01bea72ea08ed01fcaac97266ed3cb4ff",
+    "workflowSha256": "62a1c09eab8568c12d91f3047ecf41edbba81bbcfe9c103a53846d2bb3ebe610"
+  },
+  "stageOffsetsSeconds": {
+    "bindings": 1380,
+    "browser": 2280,
+    "build": 900,
+    "evidence": 2400,
+    "native": 1680,
+    "setup": 180,
+    "upload": 2520
+  },
+  "status": "FROZEN_LOCAL_INPUTS",
+  "wasmBindgen": {
+    "path": "/wasm-tools/wasm-bindgen",
+    "sha256": "9deaf07387ad50e9166d69c46247a5a7c4bdf315bc45e95a5990ce85ef5a9741",
+    "sizeBytes": 7401992,
+    "version": "wasm-bindgen 0.2.105"
+  }
+}

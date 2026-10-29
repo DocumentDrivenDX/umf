@@ -1,0 +1,182 @@
+{
+  "derivedFromHeldCohort": {
+    "custodySha256": "3eb574de40334922055b239dd33288c328618bcc70c9b91c86f97d9f4b4989eb",
+    "path": "/private/tmp/g03-held-cohort-001",
+    "selectedLockSha256": "29c69360e6bcbea329f1ddab05725f727316a729954f123cf11c102486a5c94b"
+  },
+  "mirrorManifestSha256": "809a418b9f6f97e403e3fbcc7066d23657347d1323efb6baf2d4d3bb3f17bd36",
+  "profile": "umf.g03-final-linux-py311-cohort-index/1",
+  "replacement": {
+    "actualReview": "/private/tmp/g03-final-baseline-x64-build002-audit003-sol-actual-review001.md",
+    "actualReviewSha256": "c0b11e668096c3e95bbe581ddc2d1cb6749766eb636a30bed9ea71223921362e",
+    "artifactAcceptanceReview": "/private/tmp/g03-final-baseline-x64-build002-audit003-sol-actual-review001.md",
+    "artifactAcceptanceReviewSha256": "c0b11e668096c3e95bbe581ddc2d1cb6749766eb636a30bed9ea71223921362e",
+    "auditOnlyReplay": "/private/tmp/g03-final-baseline-amd64-audit-003/result.json",
+    "auditOnlyReplayProfile": "umf.g03-local-baseline-static-audit-only/1",
+    "auditOnlyReplaySha256": "2868c5c7bc298ccfeb96a9a8099ed22c1738f9bedf0a263acec7c6156352de5f",
+    "auditOnlyReplayStatus": "LOCAL_BASELINE_AUDIT_ONLY_PASS",
+    "auditReport": "/private/tmp/g03-final-baseline-amd64-audit-003/reports/static-audit.json",
+    "auditReportBytes": 2359,
+    "auditReportSha256": "544d8617776cea6bb98179a82564e78f85f0793d279ae1d2910cd43af296bdf2",
+    "baseCommit": "e7e88b077c256c852a83d7951e3bc5fd1ec234aa",
+    "buildResult": "/private/tmp/g03-final-baseline-amd64-002/result.json",
+    "buildResultSha256": "33bfe7e733b42fac5667bf8529afccb7c48dda255105ef9eea5152218a0def2b",
+    "builderProfile": "umf.g03-final-local-baseline-build-static/1",
+    "builderStatus": "FAIL_OR_UNKNOWN",
+    "fullPatchSha256": "b5402ca3e8628f00c84bca40bfea547a15e1dd83cc5664009e845bae093a2cef",
+    "initialBuildResultSha256": "33bfe7e733b42fac5667bf8529afccb7c48dda255105ef9eea5152218a0def2b",
+    "kind": "local-reviewed-final-wheel",
+    "licenseNoticePaths": [
+      "umf_weft-0.4.56.dist-info/licenses/LICENSE-APACHE",
+      "umf_weft-0.4.56.dist-info/licenses/LICENSE-MIT",
+      "umf_weft-0.4.56.dist-info/licenses/LICENSE.md",
+      "umf_weft-0.4.56.dist-info/licenses/THIRD-PARTY-LICENSES.txt"
+    ],
+    "licenseNoticeSha256": {
+      "umf_weft-0.4.56.dist-info/licenses/LICENSE-APACHE": "a7f097f28b47176d49dddc086575d24d94149493f5b8e9bb829a0eee3eba74ee",
+      "umf_weft-0.4.56.dist-info/licenses/LICENSE-MIT": "f1409ffd0dff471f9f5078c8f2cc2c070147daae3197812234b5919c1f820702",
+      "umf_weft-0.4.56.dist-info/licenses/LICENSE.md": "76dfb87aed22180562cee6180096117e659e66d130285c56a67d5f09a788e0e5",
+      "umf_weft-0.4.56.dist-info/licenses/THIRD-PARTY-LICENSES.txt": "f86af39ab061e9b9474f8f3b151f69a42211d72fa9ac2930daecbda458c17f97"
+    },
+    "nativeMember": "weft/weft.abi3.so",
+    "nativeSha256": "e8a0c19e8a3a974a97b141b12adf532a52a2c92d03d558c087f002c6d317a1d9",
+    "path": "/private/tmp/g03-final-baseline-amd64-002/candidate/umf_weft-0.4.56-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+    "platformLimit": "manylinux2014 x86_64 CPython abi3 wheel bytes; local build artifact only; full14 runtime pending",
+    "semanticPatchSha256": "3f890d60802ef3cedbf212a98f1142dbb202c39e81ea181b13fd0d8960f8dd1c",
+    "sha256": "32f4c38d9a614dd4c3a367f8b24d5cd4ba41ec80c2a4a2e3423e2082a294dbdd",
+    "sizeBytes": 14358901,
+    "sourceCommit": "973d864c8d26b2bc173a411eac8368da5efc1ab3",
+    "sourceTree": "8b20d1f01bea72ea08ed01fcaac97266ed3cb4ff",
+    "status": "HELD_UNPUBLISHED_LOCAL_LINUX_CANDIDATE",
+    "version": "0.4.56",
+    "wheelTags": [
+      "cp39-abi3-manylinux2014_x86_64",
+      "cp39-abi3-manylinux_2_17_x86_64"
+    ]
+  },
+  "requirementsSha256": "4847944f3cafa5fcc9813890f85a4db24a064ed49b479c890e3f4363cb97de51",
+  "scope": "final Weft 0.4.56 in one Linux311 locked cohort; full14 runtime pending",
+  "selectedLockSha256": "cfe589472a5340446e5b1ddf5e39dbf00e6b6d83370fbe066122f52139fe2274",
+  "status": "HELD_UNPUBLISHED",
+  "unchangedPackages": [
+    {
+      "distribution": "annotated-types",
+      "filename": "annotated_types-0.8.0-py3-none-any.whl",
+      "sha256": "f072f4d804ea359e4eaf198b1af7a8b0943881a87f31bb764f8bf219bb9419e0",
+      "sizeBytes": 13427,
+      "version": "0.8.0"
+    },
+    {
+      "distribution": "attrs",
+      "filename": "attrs-26.1.0-py3-none-any.whl",
+      "sha256": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309",
+      "sizeBytes": 67548,
+      "version": "26.1.0"
+    },
+    {
+      "distribution": "jsonschema",
+      "filename": "jsonschema-4.26.0-py3-none-any.whl",
+      "sha256": "d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce",
+      "sizeBytes": 90630,
+      "version": "4.26.0"
+    },
+    {
+      "distribution": "jsonschema-specifications",
+      "filename": "jsonschema_specifications-2025.9.1-py3-none-any.whl",
+      "sha256": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe",
+      "sizeBytes": 18437,
+      "version": "2025.9.1"
+    },
+    {
+      "distribution": "mini-racer",
+      "filename": "mini_racer-0.14.1-py3-none-manylinux_2_27_x86_64.whl",
+      "sha256": "cdf3a088e1363f16a695288f882abf76b3705b8e1df21418208b87ed010037a4",
+      "sizeBytes": 22178205,
+      "version": "0.14.1"
+    },
+    {
+      "distribution": "psycopg",
+      "filename": "psycopg-3.2.13-py3-none-any.whl",
+      "sha256": "a481374514f2da627157f767a9336705ebefe93ea7a0522a6cbacba165da179a",
+      "sizeBytes": 206797,
+      "version": "3.2.13"
+    },
+    {
+      "distribution": "psycopg-binary",
+      "filename": "psycopg_binary-3.2.13-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "sha256": "27150515de5f709e4142429db6fd36a1d01f0b8b17d915b5f7bb095364465398",
+      "sizeBytes": 4421537,
+      "version": "3.2.13"
+    },
+    {
+      "distribution": "pydantic",
+      "filename": "pydantic-2.14.1-py3-none-any.whl",
+      "sha256": "9195d967ec791692a04438115466764fb8b9a27b31f14a760437694f40d6b454",
+      "sizeBytes": 488106,
+      "version": "2.14.1"
+    },
+    {
+      "distribution": "pydantic-core",
+      "filename": "pydantic_core-2.50.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sha256": "8812592c85d0edf423f10eadcef42716d71e8219085ad9e85b775057b7306133",
+      "sizeBytes": 2157623,
+      "version": "2.50.1"
+    },
+    {
+      "distribution": "referencing",
+      "filename": "referencing-0.37.0-py3-none-any.whl",
+      "sha256": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231",
+      "sizeBytes": 26766,
+      "version": "0.37.0"
+    },
+    {
+      "distribution": "rpds-py",
+      "filename": "rpds_py-2026.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sha256": "136a1c3fe4402b7008bc81cb62ee538481795b61a7e83df88dff3b3f02b726ff",
+      "sizeBytes": 375426,
+      "version": "2026.9.1"
+    },
+    {
+      "distribution": "ruamel-yaml",
+      "filename": "ruamel_yaml-0.19.1-py3-none-any.whl",
+      "sha256": "27592957fedf6e0b62f281e96effd28043345e0e66001f97683aa9a40c667c93",
+      "sizeBytes": 118102,
+      "version": "0.19.1"
+    },
+    {
+      "distribution": "typing-extensions",
+      "filename": "typing_extensions-4.16.0-py3-none-any.whl",
+      "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+      "sizeBytes": 45571,
+      "version": "4.16.0"
+    },
+    {
+      "distribution": "typing-inspection",
+      "filename": "typing_inspection-0.4.4-py3-none-any.whl",
+      "sha256": "65b8397ba37ccbce054456aaccddfc91e6e3083c92824df348d96ca832f3f147",
+      "sizeBytes": 14750,
+      "version": "0.4.4"
+    },
+    {
+      "distribution": "umf-access",
+      "filename": "umf_access-0.1.0.dev8-py3-none-any.whl",
+      "sha256": "1a21c1ddd59f6b23e9f0b33228280564af0e96bb4d13699b89616d5143e4fd23",
+      "sizeBytes": 580062,
+      "version": "0.1.0.dev8"
+    },
+    {
+      "distribution": "umf-codegen",
+      "filename": "umf_codegen-0.1.0a5-py3-none-any.whl",
+      "sha256": "36a6f7e0ab92feb9cb20ed8842cc3c1f073cdd3ff2c4edff137c1fcbc3ace158",
+      "sizeBytes": 261296,
+      "version": "0.1.0a5"
+    },
+    {
+      "distribution": "umf-core",
+      "filename": "umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl",
+      "sha256": "cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75",
+      "sizeBytes": 3612043,
+      "version": "0.10.3"
+    }
+  ]
+}

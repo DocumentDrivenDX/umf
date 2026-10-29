@@ -1,0 +1,65 @@
+{
+  "exitCode": 0,
+  "files": [
+    {
+      "path": "probe.py",
+      "sha256": "94959758ac9bb3ae2651f7cff5e3b50903c788bddf6c82f1aaccf101f7af0189",
+      "sizeBytes": 1159
+    },
+    {
+      "path": "stdout.log",
+      "sha256": "421056e6c0b0f80d44de3fef32c732cdae4864f310e3c7ce4cb6b9a0a5a2ccf2",
+      "sizeBytes": 617
+    },
+    {
+      "path": "stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    }
+  ],
+  "imageId": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+  "limits": {
+    "commandSeconds": 30,
+    "cpus": 1,
+    "killGraceSeconds": 5,
+    "memoryBytes": 268435456,
+    "pids": 32
+  },
+  "network": "none",
+  "ownedContainerAbsenceWitness": "root docker ps -a exact-name query exit0/empty after --rm command",
+  "ownedContainerAbsent": true,
+  "ownedContainerName": "g03-cargo-size-probe-001",
+  "platform": "linux/amd64",
+  "profile": "g03.base-cache-size-semantics-probe/1",
+  "readOnly": true,
+  "result": {
+    "elapsedSeconds": 0.073,
+    "roots": [
+      {
+        "directories": 2,
+        "duStderr": "",
+        "duStdout": "17410143\t/opt/cargo/registry/cache\n",
+        "files": 161,
+        "hardlinkedFiles": 0,
+        "naiveApparentBytes": 17417537,
+        "name": "cache",
+        "regularFileBytes": 17410143,
+        "uniqueInodeApparentBytes": 17417537
+      },
+      {
+        "directories": 216,
+        "duStderr": "",
+        "duStdout": "13154725\t/opt/cargo/registry/index\n",
+        "files": 214,
+        "hardlinkedFiles": 0,
+        "naiveApparentBytes": 13160387,
+        "name": "index",
+        "regularFileBytes": 13154725,
+        "uniqueInodeApparentBytes": 13160387
+      }
+    ],
+    "scope": "read-only base-image cache filesystem metadata; no Cargo/compiler/product/network"
+  },
+  "scope": "Filesystem metadata and du only; no Cargo/product/compiler/test/network/Mac execution",
+  "status": "PASS_METADATA_ONLY"
+}

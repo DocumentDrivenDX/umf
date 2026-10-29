@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/private/tmp/g03-native-predicate-reanalysis-operator-005/reanalyze.py", line 703, in <module>
+    if __name__=='__main__': raise SystemExit(main())
+                                              ^^^^^^
+  File "/private/tmp/g03-native-predicate-reanalysis-operator-005/reanalyze.py", line 587, in main
+    seal_rows=verify_source_seal(deadline)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/g03-native-predicate-reanalysis-operator-005/reanalyze.py", line 359, in verify_source_seal
+    _, actual=bounded_read(pathlib.Path(item['path']),1024*1024,deadline)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/g03-native-predicate-reanalysis-operator-005/reanalyze.py", line 58, in bounded_read
+    if not path.is_absolute() or path.resolve(strict=True) != path:
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/pathlib.py", line 993, in resolve
+    s = os.path.realpath(self, strict=strict)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen posixpath>", line 413, in realpath
+  File "<frozen posixpath>", line 457, in _joinrealpath
+FileNotFoundError: [Errno 2] No such file or directory: '/private/tmp/g03-campaign-predicates-sol-source-review001.md'

@@ -1,0 +1,24 @@
+$ python3 scripts/checks/check-module-boundaries.py && bun scripts/module-boundaries.ts && bun test scripts/module-boundaries.test.ts
+
+scripts/module-boundaries.test.ts:
+(pass) allowed actual graph passes [13.64ms]
+(pass) forbidden optional edge fails [6.14ms]
+(pass) unowned package fails [0.14ms]
+(pass) missing package fails [0.10ms]
+(pass) cycle fails even when edges individually allowed [0.10ms]
+(pass) new public type fails [0.22ms]
+(pass) new source fails [0.02ms]
+(pass) removed public type fails [0.02ms]
+(pass) actual file scanner refuses same-line, reexport, extern and static additions [44.08ms]
+(pass) unsupported public form refuses [0.74ms]
+(pass) actual Cargo metadata detects same-name external source substitution [224.54ms]
+(pass) directory symlink cannot hide source from actual scanner [1.94ms]
+(pass) const unsafe functions retain actual API identity [2.41ms]
+(pass) new JavaScript dependency groups cannot bypass ownership [20.07ms]
+(pass) raw and commented Rust path attributes cannot redirect owned modules [21.38ms]
+(pass) keyword-named public field remains owned [0.27ms]
+
+ 16 pass
+ 0 fail
+ 30 expect() calls
+Ran 16 tests across 1 file. [939.00ms]

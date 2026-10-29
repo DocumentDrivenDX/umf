@@ -1,0 +1,267 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11",
+        "-I",
+        "-c",
+        "import sys; assert sys.version_info[:3] == (3,11,17), sys.version; assert sys.executable == '/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11', sys.executable; print(sys.version)"
+      ],
+      "drainExpired": false,
+      "elapsedSeconds": 0.075,
+      "exitCode": 0,
+      "name": "runtime-identity",
+      "stderr": {
+        "path": "/out/logs/runtime-identity.stderr.log",
+        "rawBytes": 0,
+        "retainedBytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "path": "/out/logs/runtime-identity.stdout.log",
+        "rawBytes": 51,
+        "retainedBytes": 51,
+        "sha256": "7c95f7d768d2fe5b26143cfd16388399a5a0d3f1dfb379dc5eed29d4a5d456ff"
+      },
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/bin/bash",
+        "-euo",
+        "pipefail",
+        "-c",
+        "test \"$(bun --version)\" = 1.4.3; bun --version"
+      ],
+      "drainExpired": false,
+      "elapsedSeconds": 0.086,
+      "exitCode": 0,
+      "name": "bun-runtime-identity",
+      "stderr": {
+        "path": "/out/logs/bun-runtime-identity.stderr.log",
+        "rawBytes": 0,
+        "retainedBytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "path": "/out/logs/bun-runtime-identity.stdout.log",
+        "rawBytes": 6,
+        "retainedBytes": 6,
+        "sha256": "bd31e8d9cf8d14a1e9e3fdf3b9f6a524819aed0d1b14627523c6765767c7d8f1"
+      },
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "bun",
+        "/harness/tests/lifecycle/g03-defaults-native-fixture.ts",
+        "/out/g03-defaults-native-fixture.json"
+      ],
+      "drainExpired": false,
+      "elapsedSeconds": 0.574,
+      "exitCode": 0,
+      "name": "bun-fixture",
+      "stderr": {
+        "path": "/out/logs/bun-fixture.stderr.log",
+        "rawBytes": 0,
+        "retainedBytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "path": "/out/logs/bun-fixture.stdout.log",
+        "rawBytes": 1130,
+        "retainedBytes": 1130,
+        "sha256": "e5e63d45571dd29f0d4ad5ade111af34fb2ef518ce76e825c4a7610ccd437b62"
+      },
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11",
+        "-m",
+        "venv",
+        "/venv"
+      ],
+      "drainExpired": false,
+      "elapsedSeconds": 3.074,
+      "exitCode": 0,
+      "name": "create-fresh-venv",
+      "stderr": {
+        "path": "/out/logs/create-fresh-venv.stderr.log",
+        "rawBytes": 0,
+        "retainedBytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "path": "/out/logs/create-fresh-venv.stdout.log",
+        "rawBytes": 0,
+        "retainedBytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/venv/bin/python",
+        "-I",
+        "-m",
+        "pip",
+        "--isolated",
+        "install",
+        "--disable-pip-version-check",
+        "--no-cache-dir",
+        "--no-compile",
+        "--only-binary=:all:",
+        "--require-hashes",
+        "--index-url",
+        "file:///cohort/aggregate/mirror/simple",
+        "-r",
+        "/cohort/aggregate/mirror/requirements.lock"
+      ],
+      "drainExpired": false,
+      "elapsedSeconds": 1.635,
+      "exitCode": 0,
+      "name": "install-exact-held18",
+      "stderr": {
+        "path": "/out/logs/install-exact-held18.stderr.log",
+        "rawBytes": 0,
+        "retainedBytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "path": "/out/logs/install-exact-held18.stdout.log",
+        "rawBytes": 3475,
+        "retainedBytes": 3475,
+        "sha256": "7dc58e59b45c8f00cc203216c14af93d24b9448f181063f8cde880a8ab84db6a"
+      },
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/venv/bin/python",
+        "-I",
+        "-m",
+        "pip",
+        "--isolated",
+        "check"
+      ],
+      "drainExpired": false,
+      "elapsedSeconds": 0.445,
+      "exitCode": 0,
+      "name": "pip-check",
+      "stderr": {
+        "path": "/out/logs/pip-check.stderr.log",
+        "rawBytes": 0,
+        "retainedBytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "path": "/out/logs/pip-check.stdout.log",
+        "rawBytes": 30,
+        "retainedBytes": 30,
+        "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+      },
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/venv/bin/python",
+        "-I",
+        "/operator/verify_weft_wheel.py"
+      ],
+      "drainExpired": false,
+      "elapsedSeconds": 0.474,
+      "exitCode": 0,
+      "name": "weft-wheel-member-proof",
+      "stderr": {
+        "path": "/out/logs/weft-wheel-member-proof.stderr.log",
+        "rawBytes": 0,
+        "retainedBytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "path": "/out/logs/weft-wheel-member-proof.stdout.log",
+        "rawBytes": 596,
+        "retainedBytes": 596,
+        "sha256": "5561a8898117a2fa0d33cda95c9b7233e98ed498f420070bc2552948ae935434"
+      },
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/venv/bin/python",
+        "-I",
+        "/harness/tests/lifecycle/test_g03_campaign_predicates.py"
+      ],
+      "drainExpired": false,
+      "elapsedSeconds": 0.155,
+      "exitCode": 0,
+      "name": "predicate-mutation-tests",
+      "stderr": {
+        "path": "/out/logs/predicate-mutation-tests.stderr.log",
+        "rawBytes": 104,
+        "retainedBytes": 104,
+        "sha256": "065c7d15facfd20f14fb9182747be315f3349fa1d5e1a0e966047509f4bfa9b1"
+      },
+      "stdout": {
+        "path": "/out/logs/predicate-mutation-tests.stdout.log",
+        "rawBytes": 0,
+        "retainedBytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/venv/bin/python",
+        "-I",
+        "/harness/tests/lifecycle/test_g03_campaign_orchestration.py"
+      ],
+      "drainExpired": false,
+      "elapsedSeconds": 0.138,
+      "exitCode": 0,
+      "name": "orchestration-mutation-tests",
+      "stderr": {
+        "path": "/out/logs/orchestration-mutation-tests.stderr.log",
+        "rawBytes": 103,
+        "retainedBytes": 103,
+        "sha256": "38bf320bde0206302c1e57a1b42621b895232f0c74ebfec8c7b81ec6681fa5a0"
+      },
+      "stdout": {
+        "path": "/out/logs/orchestration-mutation-tests.stdout.log",
+        "rawBytes": 0,
+        "retainedBytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/venv/bin/python",
+        "-I",
+        "/operator/n12_guest.py",
+        "preflight",
+        "--campaign-id",
+        "dfbbff9a-e9b8-4f8a-b2f7-d252a87a11bf"
+      ],
+      "drainExpired": false,
+      "elapsedSeconds": 2.777,
+      "exitCode": 0,
+      "name": "installed-source-preflight",
+      "stderr": {
+        "path": "/out/logs/installed-source-preflight.stderr.log",
+        "rawBytes": 0,
+        "retainedBytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "path": "/out/logs/installed-source-preflight.stdout.log",
+        "rawBytes": 0,
+        "retainedBytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "timedOut": false
+    }
+  ],
+  "profile": "umf.g03-n12-setup-commands/1"
+}

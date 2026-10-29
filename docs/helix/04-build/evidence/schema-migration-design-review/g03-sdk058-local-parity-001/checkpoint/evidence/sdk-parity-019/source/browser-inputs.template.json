@@ -1,0 +1,25 @@
+{
+  "profile": "umf.g03-sdk058-browser-inputs/1",
+  "status": "HELD_ACTUAL_SDK_RECEIPT_AND_ARCHIVE",
+  "producer": {
+    "commit": "855f6c48649496fc60b3303798790d0ddb55d38f",
+    "tree": "53f2bfffbc0c5780e79d76d8fd3d202239d088b2",
+    "volume": "umf-sdk058-source-855f6c486-001"
+  },
+  "sdk": {
+    "archivePath": "/tmp/umf-source/.cache/sdk-distribution/umf-sdk.tgz",
+    "archiveSha256": "HELD_UNTIL_ACTUAL_PRODUCER_REVIEW",
+    "archiveSizeBytes": "HELD_UNTIL_ACTUAL_PRODUCER_REVIEW",
+    "installPath": "/out/sdk-install",
+    "installCustodySha256": "HELD_UNTIL_ACTUAL_PRODUCER_REVIEW",
+    "existing139ConsumerChecks": "HELD_UNTIL_ACTUAL_PRODUCER_REVIEW"
+  },
+  "sourceFiles": [
+    {"path": "scripts/g03-migration-corpus.ts", "sha256": "75504eb38e562d1c9e3823e05e84aa1ec3488d2e2f4535ce38f2e2b00a860e5e"},
+    {"path": "tests/codegen/g03_migration_probe.py", "sha256": "5d9720354ec6e294b9be72360bcc6d54fcdc11161887a655424152691e032e83"},
+    {"path": "scripts/codegen-corpus.ts", "sha256": "2975460c129104b014e8c82e9a0a37214d9605614014b25c1cecf98af19ec029"},
+    {"path": "tests/codegen/offline_mirror_probe.py", "sha256": "b8cc2330539640168d97491aeb118922a796b4a30d20fcc66cb3ec0d19aabee7"},
+    {"path": "scripts/g03-sdk-browser.ts", "sha256": "136e43410f5d58e7259cc0edc23ff1e20e59ef0e16ccf5789031e5868ce32805"}
+  ],
+  "pythonRun": "HELD_UNTIL_FINAL18_PYTHON_OPERATOR_REVIEW_AND_EXECUTION"
+}

@@ -1,0 +1,582 @@
+{
+  "assembly": {
+    "assetInventorySha256": "a9d248684ab4714db6bb708bfc9685f15f5fa9fdddbd1fdfad99e7950a0f768d",
+    "files": [
+      {
+        "path": "/private/tmp/g03-weft-local-assembly-linux-008/output/assets/SHA256SUMS",
+        "sha256": "9517c200f2059bf1280a8958fed05ec91fe21afbb7c059f208abc061516a8e0f",
+        "sizeBytes": 841
+      },
+      {
+        "path": "/private/tmp/g03-weft-local-assembly-linux-008/output/assets/asset-inventory.json",
+        "sha256": "a9d248684ab4714db6bb708bfc9685f15f5fa9fdddbd1fdfad99e7950a0f768d",
+        "sizeBytes": 1464
+      },
+      {
+        "path": "/private/tmp/g03-weft-local-assembly-linux-008/output/assets/qualification-0.4.56.json",
+        "sha256": "674e06b8dd754b872a06fb06c3e7ea6fc890a2d00629e0a1917865991b92e84f",
+        "sizeBytes": 199224
+      },
+      {
+        "path": "/private/tmp/g03-weft-local-assembly-linux-008/output/assets/qualification-evidence-0.4.56.zip",
+        "sha256": "21e3251a0c125ae35bd02f405df9c4304060c9c852fef4c3db9307b98bc6096e",
+        "sizeBytes": 3059955
+      },
+      {
+        "path": "/private/tmp/g03-weft-local-assembly-linux-008/output/assets/release-pins-0.4.56.json",
+        "sha256": "61cdd7bb9163910e6d3807c40e3aec2ce38ebb0de2d4ea65322be1f5af5fc302",
+        "sizeBytes": 1012
+      },
+      {
+        "path": "/private/tmp/g03-weft-local-assembly-linux-008/output/assets/umf_weft-0.4.56-cp39-abi3-macosx_11_0_arm64.whl",
+        "sha256": "68f9297b4b55df483b86d3041040991c4dadfb9b4d63afcff1420c43f93ae41d",
+        "sizeBytes": 11190603
+      },
+      {
+        "path": "/private/tmp/g03-weft-local-assembly-linux-008/output/assets/umf_weft-0.4.56-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+        "sha256": "2de2156e283c34e45154f5d9fbc83a3eb1dd43fad497d787509d66cc96cfbe5a",
+        "sizeBytes": 13144681
+      },
+      {
+        "path": "/private/tmp/g03-weft-local-assembly-linux-008/output/assets/umf_weft-0.4.56-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "sha256": "32f4c38d9a614dd4c3a367f8b24d5cd4ba41ec80c2a4a2e3423e2082a294dbdd",
+        "sizeBytes": 14358901
+      },
+      {
+        "path": "/private/tmp/g03-weft-local-assembly-linux-008/output/assets/v0.4.56.md",
+        "sha256": "f76502c3754b27af4527dfd8446f7a895b89b740548ec1d7087a5fdcb4b7dcb8",
+        "sizeBytes": 3171
+      }
+    ],
+    "path": "/private/tmp/g03-weft-local-assembly-linux-008/output/assets",
+    "sha256SumsSha256": "9517c200f2059bf1280a8958fed05ec91fe21afbb7c059f208abc061516a8e0f"
+  },
+  "capture": {
+    "rawBytesByStream": {
+      "stderr": 0,
+      "stdout": 223
+    },
+    "rawCapExceeded": false,
+    "redactedLogSha256ByStream": {
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "e160ffacae91ef72b39561151a5fdf6b3e242af223fc71629b7cb4edc11ab54d"
+    },
+    "redactedRetainedBytesByStream": {
+      "stderr": 0,
+      "stdout": 223
+    },
+    "stdinComplete": true,
+    "streamsClosed": true,
+    "timedOut": false
+  },
+  "cleanup": {
+    "containerAbsent": true
+  },
+  "combinedRawBytes": 50975,
+  "container": {
+    "capDrop": [
+      "ALL"
+    ],
+    "containerEnvironmentKeys": [
+      "CARGO_HOME",
+      "COLUMNS",
+      "LD_LIBRARY_PATH",
+      "PATH",
+      "PYTHONDONTWRITEBYTECODE",
+      "RUNNER_TOOL_CACHE",
+      "RUSTUP_HOME"
+    ],
+    "cpuPeriod": 100000,
+    "cpuQuota": 200000,
+    "explicitContainerEnvironment": {
+      "COLUMNS": "1000",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "id": "bdbb2404c5fbe6094bd1e515785c790c41a7f934d259a3ceaa1e4bb5d3b5a1a0",
+    "imageId": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+    "imageReference": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+    "labels": {
+      "codex.g03.execution-id": "b7c09eb5c2d248beb1c1416df50d82ea",
+      "codex.g03.phase": "publish-github",
+      "codex.g03.profile": "weft.g03-publication-owner/1",
+      "org.opencontainers.image.version": "24.04"
+    },
+    "memoryBytes": 1073741824,
+    "mounts": [
+      {
+        "readOnly": true,
+        "source": "/private/tmp/weft-g03-m8-http-reader",
+        "target": "/src"
+      },
+      {
+        "readOnly": true,
+        "source": "/private/tmp/g03-weft-local-assembly-linux-008/output/assets",
+        "target": "/assembly"
+      },
+      {
+        "readOnly": true,
+        "source": "/private/tmp/g03-weft-assembly008-sol-final-review001.json",
+        "target": "/review.json"
+      },
+      {
+        "readOnly": true,
+        "source": "/private/tmp/g03-weft-publication-owner-proposal-005",
+        "target": "/owner"
+      },
+      {
+        "readOnly": false,
+        "source": "/private/tmp/weft-0.4.56-publish-github-003",
+        "target": "/out"
+      },
+      {
+        "readOnly": true,
+        "source": "/private/tmp/g03-final-table-operations-operator-012/runs/a67a2c4a2acb4fdb9d99c509aa19c0a1",
+        "target": "/private/tmp/g03-final-table-operations-operator-012/runs/a67a2c4a2acb4fdb9d99c509aa19c0a1"
+      },
+      {
+        "readOnly": true,
+        "source": "/private/tmp/g03-final-truss-operator-011-runs/ed8f1786-a3be-407c-b303-280ef3dffb46",
+        "target": "/private/tmp/g03-final-truss-operator-011-runs/ed8f1786-a3be-407c-b303-280ef3dffb46"
+      }
+    ],
+    "networkMode": "bridge",
+    "pidsLimit": 128,
+    "platform": "linux/amd64",
+    "readOnlyRootfs": true,
+    "securityOpt": [
+      "no-new-privileges"
+    ],
+    "tmpfs": "/tmp:rw,nosuid,nodev,size=256m"
+  },
+  "containerExitCode": 0,
+  "credentialPayloadRecorded": false,
+  "credentialsRecorded": false,
+  "dockerControlCaptures": [
+    {
+      "command": "image",
+      "exitCode": 0,
+      "stderrBytes": 0,
+      "stdoutBytes": 2786
+    },
+    {
+      "command": "create",
+      "exitCode": 0,
+      "stderrBytes": 0,
+      "stdoutBytes": 65
+    },
+    {
+      "command": "inspect",
+      "exitCode": 0,
+      "stderrBytes": 0,
+      "stdoutBytes": 11294
+    },
+    {
+      "command": "ps",
+      "exitCode": 0,
+      "stderrBytes": 0,
+      "stdoutBytes": 65
+    },
+    {
+      "command": "ps",
+      "exitCode": 0,
+      "stderrBytes": 0,
+      "stdoutBytes": 65
+    },
+    {
+      "command": "inspect",
+      "exitCode": 0,
+      "stderrBytes": 0,
+      "stdoutBytes": 11841
+    },
+    {
+      "command": "stop",
+      "exitCode": 0,
+      "stderrBytes": 0,
+      "stdoutBytes": 120
+    },
+    {
+      "command": "inspect",
+      "exitCode": 0,
+      "stderrBytes": 0,
+      "stdoutBytes": 11841
+    },
+    {
+      "command": "rm",
+      "exitCode": 0,
+      "stderrBytes": 0,
+      "stdoutBytes": 65
+    },
+    {
+      "command": "ps",
+      "exitCode": 0,
+      "stderrBytes": 0,
+      "stdoutBytes": 0
+    }
+  ],
+  "elapsedSeconds": 63.512,
+  "externalReviewPrePost": {
+    "file": {
+      "path": "/private/tmp/g03-weft-assembly008-sol-final-review001.json",
+      "sha256": "3c700b2988f8eefa990ce8b4ec72e04d6735eebdfb73eaf0ee96e4ddb68685dd",
+      "sizeBytes": 301
+    },
+    "unchanged": true
+  },
+  "image": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+  "limits": {
+    "assemblyBytes": 73400320,
+    "childSeconds": 180,
+    "cleanupRawReserveBytes": 196608,
+    "killDrainSeconds": 1,
+    "metadataBytes": 16777216,
+    "ownerSeconds": 1800,
+    "rawLogBytes": 1048576,
+    "selectedSoftwareClassBytes": 268435456,
+    "selectedSoftwareFileBytes": 67108864,
+    "stopGraceSeconds": 10,
+    "terminalReserveSeconds": 60,
+    "twineBytes": 33554432,
+    "twineFiles": 2048,
+    "workRawBytes": 851968
+  },
+  "metadataCommit": "2f62e1148d1b2030558550e4f6f2ffe518bac62d",
+  "metadataTree": "6d7fe34812456754a910b22bea462aa48696ce03",
+  "operatorInputsPrePost": {
+    "files": [
+      {
+        "path": "/private/tmp/g03-weft-publication-owner-proposal-005/run_publication_owner.py",
+        "sha256": "5e67ce57e49c457e76b4e80f62008c004ff7c36d7353766a60f324ec468ca9a6",
+        "sizeBytes": 62467
+      },
+      {
+        "path": "/private/tmp/g03-weft-publication-owner-proposal-005/guest_bootstrap.py",
+        "sha256": "409753f32be10a5a512bfe749545e1d4c764222b02f1f0c0dc00bd6085a34d59",
+        "sizeBytes": 8567
+      },
+      {
+        "path": "/private/tmp/g03-weft-publication-owner-proposal-005/run_offline_preflight.py",
+        "sha256": "2868e58ac2c6d464b013d5d9fa96da2974426283a9caed5f2c164d250155c277",
+        "sizeBytes": 20352
+      },
+      {
+        "path": "/private/tmp/g03-weft-publication-owner-proposal-005/offline_preflight_guest.py",
+        "sha256": "64211d8bf459185c795cb82ad08c63d838be6325ef76791328063224b644a2a8",
+        "sizeBytes": 3153
+      },
+      {
+        "path": "/private/tmp/g03-weft-publication-owner-proposal-005/manifest.json",
+        "sha256": "4e930364537502a7049ed6f3f6e2f5caa4e047690766063882f5acec65d2a698",
+        "sizeBytes": 20589
+      }
+    ],
+    "unchanged": true
+  },
+  "outputClosure": {
+    "files": [
+      {
+        "path": "/private/tmp/weft-0.4.56-publish-github-003/docker.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      {
+        "path": "/private/tmp/weft-0.4.56-publish-github-003/docker.stdout.log",
+        "sha256": "e160ffacae91ef72b39561151a5fdf6b3e242af223fc71629b7cb4edc11ab54d",
+        "sizeBytes": 223
+      },
+      {
+        "path": "/private/tmp/weft-0.4.56-publish-github-003/publisher-result.json",
+        "sha256": "f0e69233a29e7b29e17f0c8d47c34164107f282f1f7a7215540e509ce614a595",
+        "sizeBytes": 2440
+      }
+    ],
+    "ownerResultSelfExcluded": true,
+    "unexpectedMemberCount": 0
+  },
+  "phase": "publish-github",
+  "platform": "linux/amd64",
+  "profile": "weft.g03-publication-owner/1",
+  "publisherArgvRedacted": [
+    "publish-github",
+    "--assembly-sha256",
+    "9517c200f2059bf1280a8958fed05ec91fe21afbb7c059f208abc061516a8e0f",
+    "--review",
+    "/review.json",
+    "--review-sha256",
+    "3c700b2988f8eefa990ce8b4ec72e04d6735eebdfb73eaf0ee96e4ddb68685dd",
+    "--repository",
+    "DocumentDrivenDX/weft",
+    "--metadata-commit",
+    "2f62e1148d1b2030558550e4f6f2ffe518bac62d",
+    "--output",
+    "/assembly",
+    "--receipt",
+    "/tmp/publisher-receipt.json"
+  ],
+  "publisherOutputCounts": {
+    "childCaptureBytes": 0,
+    "stdoutStderrBytes": 12610
+  },
+  "publisherRawOutputComplete": true,
+  "publisherReceipt": {
+    "assemblySha256": "9517c200f2059bf1280a8958fed05ec91fe21afbb7c059f208abc061516a8e0f",
+    "assets": [
+      {
+        "bytes": 841,
+        "name": "SHA256SUMS",
+        "reconciled": false,
+        "sha256": "9517c200f2059bf1280a8958fed05ec91fe21afbb7c059f208abc061516a8e0f"
+      },
+      {
+        "bytes": 1464,
+        "name": "asset-inventory.json",
+        "reconciled": false,
+        "sha256": "a9d248684ab4714db6bb708bfc9685f15f5fa9fdddbd1fdfad99e7950a0f768d"
+      },
+      {
+        "bytes": 199224,
+        "name": "qualification-0.4.56.json",
+        "reconciled": false,
+        "sha256": "674e06b8dd754b872a06fb06c3e7ea6fc890a2d00629e0a1917865991b92e84f"
+      },
+      {
+        "bytes": 3059955,
+        "name": "qualification-evidence-0.4.56.zip",
+        "reconciled": false,
+        "sha256": "21e3251a0c125ae35bd02f405df9c4304060c9c852fef4c3db9307b98bc6096e"
+      },
+      {
+        "bytes": 1012,
+        "name": "release-pins-0.4.56.json",
+        "reconciled": false,
+        "sha256": "61cdd7bb9163910e6d3807c40e3aec2ce38ebb0de2d4ea65322be1f5af5fc302"
+      },
+      {
+        "bytes": 11190603,
+        "name": "umf_weft-0.4.56-cp39-abi3-macosx_11_0_arm64.whl",
+        "reconciled": false,
+        "sha256": "68f9297b4b55df483b86d3041040991c4dadfb9b4d63afcff1420c43f93ae41d"
+      },
+      {
+        "bytes": 13144681,
+        "name": "umf_weft-0.4.56-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+        "reconciled": false,
+        "sha256": "2de2156e283c34e45154f5d9fbc83a3eb1dd43fad497d787509d66cc96cfbe5a"
+      },
+      {
+        "bytes": 14358901,
+        "name": "umf_weft-0.4.56-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "reconciled": false,
+        "sha256": "32f4c38d9a614dd4c3a367f8b24d5cd4ba41ec80c2a4a2e3423e2082a294dbdd"
+      },
+      {
+        "bytes": 3171,
+        "name": "v0.4.56.md",
+        "reconciled": false,
+        "sha256": "f76502c3754b27af4527dfd8446f7a895b89b740548ec1d7087a5fdcb4b7dcb8"
+      }
+    ],
+    "authenticationUsed": null,
+    "captureHashesIncluded": false,
+    "credentialValueRecorded": false,
+    "files": null,
+    "immutable": true,
+    "metadataCommit": "2f62e1148d1b2030558550e4f6f2ffe518bac62d",
+    "phase": "publish-github",
+    "profile": "weft-local-github-transaction/1",
+    "publisherChildRawBytes": 0,
+    "publisherOutputComplete": true,
+    "publisherOutputRawBytes": 12610,
+    "releaseId": 428447954,
+    "repository": "DocumentDrivenDX/weft",
+    "reviewSha256": "3c700b2988f8eefa990ce8b4ec72e04d6735eebdfb73eaf0ee96e4ddb68685dd",
+    "sha256": "f0e69233a29e7b29e17f0c8d47c34164107f282f1f7a7215540e509ce614a595",
+    "sizeBytes": 2440,
+    "status": "PUBLISHED_IMMUTABLE",
+    "tag": "v0.4.56",
+    "unexpectedSecretContentRedacted": false,
+    "uploaderToolManifestSha256": null,
+    "version": null
+  },
+  "repository": "DocumentDrivenDX/weft",
+  "review": {
+    "path": "/private/tmp/g03-weft-assembly008-sol-final-review001.json",
+    "profile": "weft-local-final-assembly-review/1",
+    "sha256": "3c700b2988f8eefa990ce8b4ec72e04d6735eebdfb73eaf0ee96e4ddb68685dd",
+    "sizeBytes": 301,
+    "status": "ACCEPTED"
+  },
+  "selectedSoftwarePrePost": {
+    "fileCount": 10,
+    "files": [
+      {
+        "kind": "table012-selected-artifact",
+        "receiptSha256": "c425a68cd8eda41ae42c2b134e1859925e4f8f89aa1edb45ba49c44514477a73",
+        "sha256": "761a00e0f17ea857bb6dc2332183546d17c970d33adb9588ea3197f1cce10335",
+        "sizeBytes": 7007,
+        "sourcePath": "native-wasm/artifacts/table-web/weft_wasm.d.ts",
+        "sourceRoot": "/private/tmp/g03-final-table-operations-operator-012/runs/a67a2c4a2acb4fdb9d99c509aa19c0a1"
+      },
+      {
+        "kind": "table012-selected-artifact",
+        "receiptSha256": "c425a68cd8eda41ae42c2b134e1859925e4f8f89aa1edb45ba49c44514477a73",
+        "sha256": "c3c3b25d6a7f996bdc82e2dfb6defc3f9250e1977f24c9454bdd209164a63be2",
+        "sizeBytes": 27452,
+        "sourcePath": "native-wasm/artifacts/table-web/weft_wasm.js",
+        "sourceRoot": "/private/tmp/g03-final-table-operations-operator-012/runs/a67a2c4a2acb4fdb9d99c509aa19c0a1"
+      },
+      {
+        "kind": "table012-selected-artifact",
+        "receiptSha256": "c425a68cd8eda41ae42c2b134e1859925e4f8f89aa1edb45ba49c44514477a73",
+        "sha256": "6266e03d4d0075384943ad4c5e19f58772cb202520f0c5041d917b01765f4294",
+        "sizeBytes": 51874180,
+        "sourcePath": "native-wasm/artifacts/table-web/weft_wasm_bg.wasm",
+        "sourceRoot": "/private/tmp/g03-final-table-operations-operator-012/runs/a67a2c4a2acb4fdb9d99c509aa19c0a1"
+      },
+      {
+        "kind": "table012-selected-artifact",
+        "receiptSha256": "c425a68cd8eda41ae42c2b134e1859925e4f8f89aa1edb45ba49c44514477a73",
+        "sha256": "454be90b5e3e862dcd1779f6c3c2104cc706ca21b56b6cc5cd170d47d1ba958a",
+        "sizeBytes": 3404,
+        "sourcePath": "native-wasm/artifacts/table-web/weft_wasm_bg.wasm.d.ts",
+        "sourceRoot": "/private/tmp/g03-final-table-operations-operator-012/runs/a67a2c4a2acb4fdb9d99c509aa19c0a1"
+      },
+      {
+        "kind": "table012-selected-artifact",
+        "receiptSha256": "c425a68cd8eda41ae42c2b134e1859925e4f8f89aa1edb45ba49c44514477a73",
+        "sha256": "6dfc3ed5da783d8e17094cb30dc9746d5fdd41c1216bd4ad574fa9fa123af71c",
+        "sizeBytes": 2537368,
+        "sourcePath": "prepare/artifacts/operation-browser-cases.json",
+        "sourceRoot": "/private/tmp/g03-final-table-operations-operator-012/runs/a67a2c4a2acb4fdb9d99c509aa19c0a1"
+      },
+      {
+        "kind": "truss011-selected-runtime-software",
+        "receiptSha256": "69832734f3bc7b9668616708a8286a662bf51460e5bb46293749d14bd6f2c3f0",
+        "sha256": "ad9198fb79ec8dc80eeac9d37d126993374d7135628bf11ee303b0e60669884b",
+        "sizeBytes": 2935,
+        "sourcePath": "owned/out/artifacts/browser-wrapper/index.js",
+        "sourceRoot": "/private/tmp/g03-final-truss-operator-011-runs/ed8f1786-a3be-407c-b303-280ef3dffb46"
+      },
+      {
+        "kind": "truss011-selected-runtime-software",
+        "receiptSha256": "69832734f3bc7b9668616708a8286a662bf51460e5bb46293749d14bd6f2c3f0",
+        "sha256": "ec10303c3ce50ae1a39ef36352f9445618f27ee326bfa21a1182f4c2f092e491",
+        "sizeBytes": 3350,
+        "sourcePath": "owned/out/artifacts/truss-web/weft_wasm.d.ts",
+        "sourceRoot": "/private/tmp/g03-final-truss-operator-011-runs/ed8f1786-a3be-407c-b303-280ef3dffb46"
+      },
+      {
+        "kind": "truss011-selected-runtime-software",
+        "receiptSha256": "69832734f3bc7b9668616708a8286a662bf51460e5bb46293749d14bd6f2c3f0",
+        "sha256": "fce153e7f95ee82821e492a9e8732063e690b7640e2fbf22ec8324f8b3bca579",
+        "sizeBytes": 13916,
+        "sourcePath": "owned/out/artifacts/truss-web/weft_wasm.js",
+        "sourceRoot": "/private/tmp/g03-final-truss-operator-011-runs/ed8f1786-a3be-407c-b303-280ef3dffb46"
+      },
+      {
+        "kind": "truss011-selected-runtime-software",
+        "receiptSha256": "69832734f3bc7b9668616708a8286a662bf51460e5bb46293749d14bd6f2c3f0",
+        "sha256": "86e5facad64ec12a2f1176dad9155b0a33ed63446dceebbe8e30369d64fb48b4",
+        "sizeBytes": 28345027,
+        "sourcePath": "owned/out/artifacts/truss-web/weft_wasm_bg.wasm",
+        "sourceRoot": "/private/tmp/g03-final-truss-operator-011-runs/ed8f1786-a3be-407c-b303-280ef3dffb46"
+      },
+      {
+        "kind": "truss011-selected-runtime-software",
+        "receiptSha256": "69832734f3bc7b9668616708a8286a662bf51460e5bb46293749d14bd6f2c3f0",
+        "sha256": "79682ff29166ed93f5fa95a37d95dff8dfd23d89770f88700728ef97e33410f2",
+        "sizeBytes": 1296,
+        "sourcePath": "owned/out/artifacts/truss-web/weft_wasm_bg.wasm.d.ts",
+        "sourceRoot": "/private/tmp/g03-final-truss-operator-011-runs/ed8f1786-a3be-407c-b303-280ef3dffb46"
+      }
+    ],
+    "totalBytes": 82815935,
+    "unchanged": true
+  },
+  "sourcePrePost": {
+    "files": [
+      {
+        "path": "/private/tmp/weft-g03-m8-http-reader/docs/helix/05-deploy/README.md",
+        "sha256": "4a2217b08e76dcab236c4bc5c1adb50bb583e5145b5e22ef949917119892549d",
+        "sizeBytes": 6331
+      },
+      {
+        "path": "/private/tmp/weft-g03-m8-http-reader/docs/helix/05-deploy/local-release-runbook-0.4.56.md",
+        "sha256": "3f6f9f5c4e3042350dc70df5def86ced0c948412b528af6eff44f6be293c5610",
+        "sizeBytes": 8377
+      },
+      {
+        "path": "/private/tmp/weft-g03-m8-http-reader/docs/helix/05-deploy/releases/v0.4.56.md",
+        "sha256": "f76502c3754b27af4527dfd8446f7a895b89b740548ec1d7087a5fdcb4b7dcb8",
+        "sizeBytes": 3171
+      },
+      {
+        "path": "/private/tmp/weft-g03-m8-http-reader/scripts/release/publish_local_release.py",
+        "sha256": "476e9ce147c151c27cc55e9f49243832c4e0fbc9aa2c6ead6b55caea7f9d2647",
+        "sizeBytes": 76036
+      },
+      {
+        "path": "/private/tmp/weft-g03-m8-http-reader/scripts/release/test_publish_local_release.py",
+        "sha256": "767cb92aa14a4d124c76f1a2219e9948d1072155b8caaa5492b6e4e3803a29d9",
+        "sizeBytes": 37116
+      },
+      {
+        "path": "/private/tmp/weft-g03-m8-http-reader/scripts/release/test_verify_local_release_profile.py",
+        "sha256": "6f33cef1f4a0b04d8a4fdba5ef1276c3c78e87a42736b8d4f2108c9e56812938",
+        "sizeBytes": 233978
+      },
+      {
+        "path": "/private/tmp/weft-g03-m8-http-reader/scripts/release/verify_local_release_profile.py",
+        "sha256": "bb06ac9070bd2630def240a299d611a5f9b53dd509461671524d3491ebe37626",
+        "sizeBytes": 218650
+      },
+      {
+        "path": "/private/tmp/weft-g03-m8-http-reader/scripts/release/publish_pypi_release.py",
+        "sha256": "ac65922afaf3a9d97debe69591eb6d0d253594ac377b0ef2ec1aa6fc891bba31",
+        "sizeBytes": 25405
+      }
+    ],
+    "unchanged": true
+  },
+  "sourceProvenancePrePost": {
+    "files": [
+      {
+        "path": "/private/tmp/g03-weft-m8-source-correspondence-001/correspondence.json",
+        "sha256": "65978f77f3f7524cb4c3b737a75ddf07759bfb3d0e5dbc382be2a3c1152c6b63",
+        "sizeBytes": 3964
+      },
+      {
+        "path": "/private/tmp/g03-weft-m8-source-correspondence-001/ancestry.json",
+        "sha256": "d7dc5e794f7b72b288c3312751b95354626f04b7936bc0069d428a024bb4be18",
+        "sizeBytes": 1545
+      },
+      {
+        "path": "/private/tmp/g03-weft-m8-source-sol-review001.md",
+        "sha256": "945c049bb53424bf395f05d7426209187f58beae81237fdae165d03ca7427e64",
+        "sizeBytes": 5222
+      },
+      {
+        "path": "/private/tmp/g03-twine700-runtime-actual003-m8-publisher-compatibility-sol-review001.md",
+        "sha256": "c01fd54c8dded4648f9273c8afb1532dadde7c1151adb9d08d5df76bb527d5c0",
+        "sizeBytes": 3188
+      },
+      {
+        "path": "/private/tmp/g03-weft-publication-owner-image-label-observation-001.json",
+        "sha256": "5b992f9a4d247d12195dc1bfa08c720eb59231abd0ae270ac3ee84bee95831ac",
+        "sizeBytes": 712
+      }
+    ],
+    "unchanged": true
+  },
+  "status": "PASS_PHASE_COMPLETED",
+  "tag": "v0.4.56",
+  "toolPrePost": {
+    "fileBytes": 30797598,
+    "fileCount": 1423,
+    "manifestBytes": 287504,
+    "manifestPath": "/private/tmp/g03-twine700-runtime-actual-003-runtime/tool-manifest.json",
+    "manifestSha256": "94490c9f214654c4612bad0c9ab3c14cf21127718c09cf445065a297f42befa8",
+    "pythonExecutable": "/tool-runtime/venv/bin/python",
+    "unchanged": true,
+    "version": "7.0.0"
+  }
+}

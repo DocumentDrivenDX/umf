@@ -1,0 +1,7 @@
+# Truss011 finite source closure
+
+ACCEPTED FOR ONE FRESH FULL LOCAL TRUSS LANE through separate root admission. Source/data/hash reads and AST parsing only; no operator, Docker, browser, Git, product, tests or network executed by Sol.
+
+Physical manifest4160d99ca6ddf31779c63753a5f90ac2f7ec18d40b224c76695e35048fec23bf, unchanged packetf6fa739775c7e3c0576033b9a47c56444e7f339d7528aae270092050945c4661 and operatoredcb32e0faa37701fd1681f4f032e80484100a05ca577dee2d28d27b06647093. All38 manifest rows physically match size/hash; operator AST parses.010→011 changes only fresh ROOT/output paths and the finite failed-child/failed-inspect raw-budget synchronization requested by TRUSS010-F1. That blocker closes: child.remaining now governs added failure inspection, and failed inspect restores remaining from ACTIVE_CAP_LEFT.
+
+Carry forward accepted010 source scope and plan: unchanged27 inherited009 rows/own builder20 commands/installed18/native/build outputs/source/browser5+33/raw-control assertions; only browser fsize256MiB runtime class plus matching fixed metadata/effective Docker guards. No independent deadline/cap increase, runtime security relaxation, diagnostic output stitching, source input refresh or unrelated work. Require011's own complete actual result, physical caps/input closure and owned absence. Original1800 aggregate/60 reserve/10 grace/600 browsers remain. Diagnostic006 is admission context only, not a substitute for any011 actual stage. No Actions/Mac/Praxis/release claim is admitted by this source acceptance.

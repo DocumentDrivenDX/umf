@@ -1,0 +1,265 @@
+{
+  "dependencyToolInputAdmission": {
+    "directoryCount": 1943,
+    "inputs": {
+      "dependencyCensusSha256": {
+        "path": "/private/tmp/g03-sdk058-parity-009-preflight/runtime-import-census.json",
+        "sha256": "c4e3e79e5a0a51fb9b21261f458ede1a14042042aae1c8c2faf29c15f1d7eaae",
+        "sizeBytes": 82617
+      },
+      "dependencyInputReviewSha256": {
+        "path": "/private/tmp/g03-sdk058-dependency-preflight009-sol-actual-review001.md",
+        "sha256": "f57c269f677a110317b6a020e37999795d99bdf6a989175242fe07614125456b",
+        "sizeBytes": 2528
+      },
+      "dependencyInventoryFileSha256": {
+        "path": "/private/tmp/g03-sdk058-parity-009-preflight/out/dependency-view-inventory.json",
+        "sha256": "6139a704c42bd208139fe480da430f10b9076f386c7280fc29b6fa1c52633b34",
+        "sizeBytes": 4740104
+      },
+      "dependencyMetadataReceiptSha256": {
+        "path": "/private/tmp/g03-sdk058-parity-009-preflight/out/metadata-result.json",
+        "sha256": "d2f546ec5da6bbb8a8994daaa13b8406d1dc0bdf36fef4ef7f2c017fbcba2fdf",
+        "sizeBytes": 5349
+      },
+      "dependencyOwnerReceiptSha256": {
+        "path": "/private/tmp/g03-sdk058-parity-009-preflight/out/preflight-owner-result.json",
+        "sha256": "8e48925d4bf4d33436e8bf548401e78c13e255a0b76c82b092bca5b0174a2f0e",
+        "sizeBytes": 3976
+      },
+      "dependencyPreflightSourceSha256": {
+        "path": "/private/tmp/g03-sdk058-parity-009-preflight/preflight.py",
+        "sha256": "764c86f2f8a942bcff2445a29a13836a3edd17468da446ea40ba91285964f7a9",
+        "sizeBytes": 33734
+      }
+    },
+    "internalSymlinkCount": 17,
+    "lockSha256": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4",
+    "logicalInventorySha256": "5dee664cf9d3e2d6e6325666ab75f26d290b05a6be09423b0a1cd04f6fc5d141",
+    "metadataBytes": 3697819,
+    "originPackageSha256": "c7b69fba001805dc9cd4e26e84a9b786be379c1413d020c34600c063d287101b",
+    "originPackageVersion": "0.5.7",
+    "regularBytes": 215399057,
+    "regularFiles": 19501,
+    "sourcePackageSha256": "323d619288cd35e7e86c932c0d26bfbfb2f8b4a5e5cc3f39bcaa415dd3c3aeaa",
+    "sourcePackageVersion": "0.5.8",
+    "status": "ADMITTED_READONLY_TOOL_INPUT"
+  },
+  "elapsedSecondsBeforeReceipt": 48.314,
+  "elapsedSecondsBeforeRecovery": 48.163,
+  "executionId": "5688c3e8d87f44f1ac2514d4d9f1a2f8",
+  "failure": "RuntimeError: Python owner route failed/capture truncated",
+  "inclusiveBytesIncludingOwnerReceipt": 4547033,
+  "inclusiveFiles": [
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/combined-runs/5688c3e8d87f44f1ac2514d4d9f1a2f8/python-operator.stdout.log",
+      "sha256": "1106b6eb47890fe2bfc1fb2dae96a5a2e69dd0d4794cc5d3e9126b1b9de01dac",
+      "sizeBytes": 171
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/codegen-corpus.json",
+      "sha256": "80b8059d48490761bc98255d58409d96f46b399d78b79d0dd9aa43d30d7e6187",
+      "sizeBytes": 3500077
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/g03-corpus.json",
+      "sha256": "88a402998e44b89f24f36c7c54fb5d96d3cd131f6b371663bd44ce306f65ad25",
+      "sizeBytes": 985708
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/g03-python-report.json",
+      "sha256": "e20e41133602a9e7d2cff8be7cd654176948cc7733968a492082cc66cd60ce13",
+      "sizeBytes": 505
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/guest-result.json",
+      "sha256": "1da1d1bbd166c4281a6dd1a70be63bf9c92f6cfd8b46169308c99913ed608aa9",
+      "sizeBytes": 22180
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/installed-record-snapshot.json",
+      "sha256": "d1fd95763df0139f20dc7aa6a6ba8d667c7af14c006a151b37889fb1b59cf457",
+      "sizeBytes": 6190
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/logs/embedded-python-g03-parity.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/logs/embedded-python-g03-parity.stdout.log",
+      "sha256": "e3e0e67c011b5bd3cc7b5cdad282cde6c4f1d49f3823e3c3c6bfeb6ec6101f0d",
+      "sizeBytes": 477
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/logs/fresh18-offline-install-and-pip-check.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/logs/fresh18-offline-install-and-pip-check.stdout.log",
+      "sha256": "373d901c45866902129688d50412b6a5d49e805fc31288cce2ceba857f28691a",
+      "sizeBytes": 3492
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/logs/generate-generic-codegen-corpus.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/logs/generate-generic-codegen-corpus.stdout.log",
+      "sha256": "408234e2b1ca5a6afca35f03bcf848045b0c8a25b50ad9fc022c02c4a938706b",
+      "sizeBytes": 1487
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/logs/generate-shared-g03-corpus.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/logs/generate-shared-g03-corpus.stdout.log",
+      "sha256": "2aaccf509078082f35a2ea7605a05e34043122875ad78ad612ebadf0c591c9ed",
+      "sizeBytes": 40
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/logs/generic-offline-mirror-probe.stderr.log",
+      "sha256": "66fe62e34dc1ab5637bd005b0554b76206e41cb75d20c3233c266cdb0383ee2d",
+      "sizeBytes": 1191
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/logs/generic-offline-mirror-probe.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/logs/installed-distribution-snapshot.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/logs/installed-distribution-snapshot.stdout.log",
+      "sha256": "24fd4b38c5f81b4dc3e1c75dfa6deb7631fd0c73306d6c1ebd791eca037d6fad",
+      "sizeBytes": 99
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/logs/installed-record-snapshot.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/logs/installed-record-snapshot.stdout.log",
+      "sha256": "f4c47eed16f370bcaa9412659767bdb5ae3c63f75a188846b12480be2b0e0b41",
+      "sizeBytes": 195
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/logs/runtime-bun.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/logs/runtime-bun.stdout.log",
+      "sha256": "bd31e8d9cf8d14a1e9e3fdf3b9f6a524819aed0d1b14627523c6765767c7d8f1",
+      "sizeBytes": 6
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/logs/runtime-python.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/logs/runtime-python.stdout.log",
+      "sha256": "8b68cd72f2f18670f0d3632664f02b64462f0b5dd5257833bd9bed815aa47892",
+      "sizeBytes": 1036
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/logs/source-clean.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/logs/source-clean.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/logs/source-commit.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/logs/source-commit.stdout.log",
+      "sha256": "8c7253caf27c0197780d8123f34e756fd184ae150c12e20aaa0e8a194562bfb0",
+      "sizeBytes": 41
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/logs/source-tree.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/guest/logs/source-tree.stdout.log",
+      "sha256": "cac79246733c82e90a05711887cce88d9cbb94e75134791f1cae8fc398b841f6",
+      "sizeBytes": 41
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/operator-result.json",
+      "sha256": "838df38590f1ee126c380d43a10ee2158982aaf6d055269889b644784b86d884",
+      "sizeBytes": 12042
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/outer/docker.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005/outer/docker.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-016/combined-runs/5688c3e8d87f44f1ac2514d4d9f1a2f8/owner-result.json",
+      "selfHashOmitted": true,
+      "sha256": null,
+      "sizeBytes": 12055
+    }
+  ],
+  "limits": {
+    "aggregateSeconds": 1800,
+    "evidenceBytes": 16777216,
+    "installedRecordMetadataTextBytes": 8388608,
+    "installedRecordSoftwareFileBytes": 134217728,
+    "installedRecordSoftwareTotalBytes": 268435456,
+    "rawLogBytes": 1048576,
+    "stopGraceSeconds": 10,
+    "terminalReserveSeconds": 60
+  },
+  "ownerCleanup": {
+    "containerAbsenceVerified": true,
+    "daemonReachable": true,
+    "ownedContainersRemoved": [
+      [
+        "g03-sdk058-py-d2845e7c18184d1d",
+        "d2845e7c18184d1d93012bc779299005",
+        true
+      ]
+    ],
+    "ownedVolumesRemoved": [],
+    "verified": true,
+    "volumeAbsenceVerified": true
+  },
+  "profile": "umf.g03-sdk058-combined-owner/1",
+  "pythonRun": "/private/tmp/g03-sdk058-parity-016/runs/d2845e7c18184d1d93012bc779299005",
+  "stages": [
+    {
+      "capture": {
+        "exitCode": 1,
+        "rawBytes": 171,
+        "retainedBytes": 171,
+        "sha256": "1106b6eb47890fe2bfc1fb2dae96a5a2e69dd0d4794cc5d3e9126b1b9de01dac",
+        "truncated": false
+      },
+      "name": "python-final18"
+    }
+  ],
+  "status": "FAIL_OR_UNKNOWN"
+}

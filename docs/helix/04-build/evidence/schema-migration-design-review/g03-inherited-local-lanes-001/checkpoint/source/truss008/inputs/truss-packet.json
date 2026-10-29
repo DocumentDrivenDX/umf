@@ -1,0 +1,177 @@
+{
+  "browser": {
+    "chromium": "/ms-playwright/chromium-1243/chrome-linux-arm64/chrome",
+    "chromiumSha256": "839efe5fd8b6a773dd81b2e10afdc15f3c0a17316fb82b5908c0533306c4ed9e",
+    "chromiumVersion": "Google Chrome for Testing 153.0.8010.12",
+    "image": "sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27",
+    "node": "v24.20.0",
+    "platform": "linux/arm64",
+    "playwright": "1.62.1",
+    "playwrightCoreTreeSha256": "d1c9e8b6e3bb37b49f5ba10a847f32bcde4d64df58b30434ab0ed66ee20e60aa",
+    "playwrightTreeSha256": "3a9482a4f587a730abd98fc0c620c3a6eff5d2f9a88f1a91e16dee8ec3ab6230"
+  },
+  "cargoCache": {
+    "acquisitionGuestReportSha256": "96ea6bd560eeb54d14bc39462ca926966f6c7da206507acb72b209098b0daaf4",
+    "acquisitionOperatorManifestSha256": "5c3028d23925734ff3d55f7c75796a371c0bd080c63b76ac843d15214dfda8a0",
+    "acquisitionOperatorResultSha256": "470a81cb0f0bfbc03210287217a8e0a0171204fa4fdd644a8d9024fe1968fdff",
+    "acquisitionOperatorRoot": "/private/tmp/g03-linux-locked-cargo-cache-operator-007",
+    "acquisitionPacketSha256": "9a3523d7e86cc83c378bcc5764abb1ff7dbee6fc30dbbff619d4cd24c0d6ff05",
+    "acquisitionRunId": "071cd516906047cf9947a550514af957",
+    "acquisitionSolReviewPath": "/private/tmp/g03-linux-locked-cargo-cache007-sol-actual-review001.md",
+    "acquisitionSolReviewSha256": "369d38a3a50ad0434345ece381e706deadd3bcc150d99fddbc0d1c17ae843e2d",
+    "archiveBytes": 44830720,
+    "archiveMaxBytes": 67108864,
+    "archiveRelativePath": "guest/software/cargo-registry.tar",
+    "archiveSha256": "b678cc11533ea60fcc2d0792092d835ba279de5ddc065f3bcc700581d0865fea",
+    "cacheContentBytes": 44245301,
+    "executionAllowed": true,
+    "inventoryChunkBytes": 148230,
+    "inventoryIndexSha256": "01488af1b54d4164cbbcd8fa7de255a8756e886ce13cdea54b8d05610004716b",
+    "inventoryRowCount": 833,
+    "inventoryRowsSha256": "c072486446d6081c82eade71500ee7cf6299699f6ab150f555c422da7b8d60a9",
+    "lockedCrateCount": 115,
+    "mountDestination": "/cargo-cache-input",
+    "profile": "umf.g03-locked-cargo-cache-consumer/1",
+    "sourceImageId": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+    "sparseIndexWitnessCount": 115,
+    "status": "SOL_ACCEPTED_VERIFIED_CACHE_AVAILABLE"
+  },
+  "cohort": {
+    "custodySha256": "95e9493f06adefb323193f9d8fbe5577ebfa335140a9841f549d2caf098df8ed",
+    "indexSha256": "78026c05d3824613f0e2a3bf30cf24bd32af24de1d560f0b7fa555a1e75f8d60",
+    "lockSha256": "cfe589472a5340446e5b1ddf5e39dbf00e6b6d83370fbe066122f52139fe2274",
+    "mirrorManifestSha256": "809a418b9f6f97e403e3fbcc7066d23657347d1323efb6baf2d4d3bb3f17bd36",
+    "requirementsSha256": "4847944f3cafa5fcc9813890f85a4db24a064ed49b479c890e3f4363cb97de51",
+    "root": "/cohort",
+    "status": "HELD_UNPUBLISHED_NOT_RUNTIME_QUALIFIED",
+    "wheel": {
+      "path": "aggregate/mirror/files/umf_weft-0.4.56-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sha256": "32f4c38d9a614dd4c3a367f8b24d5cd4ba41ec80c2a4a2e3423e2082a294dbdd",
+      "sizeBytes": 14358901,
+      "version": "0.4.56"
+    }
+  },
+  "inputs": {
+    "browserCheckSha256": "de3214f6d37180baf13021f0e5a21fada3fbd2724ed412505adcb22cca83fe71",
+    "browserPreflightSha256": "34cf401c6ae050197622ea093a5ffb6a56f53d9ee430e3773a622e3ea5664dc4",
+    "builderFeasibilitySha256": "bd047351ae8b6d736931a718e4799669859f072b28e8cfa1dcee9d4deee20983",
+    "builderOptionalFailureSha256": "dd56714625a6fbc82ef5c7a56608c7ddcc7faaaad47ef170920476dfe07ca242",
+    "bunLockSha256": "28b740f61429640ea5c005837d37b5bf7abf67b414c8139659cccc0daee6071a",
+    "cargoCacheMarkerSha256": "2e448e4c64154ce311a3286b895cdc0ad421a2727b1741069a0ebc7dbe5b1dc4",
+    "cargoCachePlanSha256": "a6d7e4c9003a0d5e6c5de898fe7db7f50d4994275f462d9a0c875d0c849b9737",
+    "cargoLockSha256": "0a7dbe0788f4c8ac0f5752b5e9600e83fa0de74ff0dcd8a2039370ee752c95c4",
+    "cohortConstructionSha256": "7d173eb827ae903a3dd2abc2ba2213fd5ced07e829fdae263525e6447d506466",
+    "cohortDataReviewSha256": "8f9c46085a237b566c4142dbcb062b94dadd04194734da8dff01b22e0a9fe217",
+    "entityCasesSha256": "cdddb2454b033c5753177cdedb447efbf45f5131c42beb17aeb6d319eac71537",
+    "entityCheckSha256": "4d764c17e2a24d15d959047db39246a6c6ec991f957726d4c61f498789aad7cf",
+    "factsCasesSha256": "34f4694030aa822172200002275ee3e1b36ee7a248df960e60bb731648fb0d83",
+    "factsCheckSha256": "ea728bb16583fed81756946bc26326958a7d883877aa80ad99f5708bb44363ce",
+    "inheritedPlanSha256": "d3eb0216ee6c1ae22c90f84b00b51484974a134a42a9a70df64ef9a020334278",
+    "packageJsonSha256": "dd22198e0de80eaab805fae19db057668fcf3c180a84c142d74318c541ad6455",
+    "portableDepsManifestSha256": "9f99c0ee83fd0e34ff5f48a83e27f46fd39e3140230629237e0849ea5e07a770",
+    "pythonQualification": "local builder image provides Python 3.11.17; workflow requests Python 3.11",
+    "stageRosterSha256": "bc3018c0d674cd2fc80794f9f36c523565c91558f70649cd3fe415f8e88b701b",
+    "tableFindingsSha256": "c6f78e3e6cc1d16a566713ed3cdbc369ee241d1d15edd2d51065ce290e43f00c",
+    "wasmAcquisitionSha256": "cfa0c93966cdfeaaed12918a786585c870ec5106136318dcaa31233cbfeee044",
+    "wasmPreflightSha256": "f44c2ce21069c072f8c276cd30ddaa605e3b3be071acb1c8c1b2fb3866c6d00b",
+    "wheelVerifierSha256": "78c294fd7a947a97f29b133b8dd6bb0977c47f29b5a891e6b3e5456f393c5929",
+    "workflowSha256": "4305777176d5ed20596692422e9749bf991fcb0e1db4f37da926eacbdba9fd15"
+  },
+  "limits": {
+    "commandCapsSeconds": {
+      "browserPerCorpus": 600,
+      "offlineInstall": 600,
+      "otherCommandMax": 180,
+      "wasmBuild": 600
+    },
+    "expandedTrackedSourceBytes": 860543639,
+    "expandedTrackedSourceFiles": 5901,
+    "laneSeconds": 1800,
+    "localAggregateRawLogBytes": 1048576,
+    "localMetadataEvidenceBytes": 16777216,
+    "localPerCommandStreamBytes": 524288,
+    "localSelectedSoftwareArtifactBytes": 268435456,
+    "noMacRuntime": true,
+    "noNetwork": true,
+    "sourceArchiveBytes": 865597440,
+    "terminalReserveSeconds": 60,
+    "terminationGraceSeconds": 10
+  },
+  "profile": "umf.g03-truss-facts-entity-selection/1",
+  "provenance": {
+    "browserQualification": "Linux ARM64 cached Chromium local replacement, exact version and executable pinned; not hosted CI equivalence",
+    "bunQualification": "Bun 1.4.3 builder actual is a documented narrower local replacement for workflow-pinned 1.4.2",
+    "clockMapping": "Host and Linux guest monotonic epochs are separate. Host passes finite remaining durations at builder launch; guest anchors once to its own time.monotonic. The original host 1800-second lane and 60-second terminal reserve remain authoritative; guest absolute monotonic values are never compared with host values.",
+    "cohortConstructionResultSha256": "7d173eb827ae903a3dd2abc2ba2213fd5ced07e829fdae263525e6447d506466",
+    "cohortDataReviewSha256": "8f9c46085a237b566c4142dbcb062b94dadd04194734da8dff01b22e0a9fe217",
+    "cohortPriorStatus": "HELD_UNPUBLISHED_NOT_RUNTIME_QUALIFIED",
+    "playwrightQualification": "read-only audited portable JavaScript trees; no Mac native binary is executed",
+    "pythonQualification": "Python 3.11.17 is the captured local builder image patch version; original workflow requests Python 3.11"
+  },
+  "scope": {
+    "duplicateRustSuites": false,
+    "installedFinal18": true,
+    "linuxChromium": true,
+    "nativeMac": false,
+    "postgresNativeOracle": false,
+    "trussEntitySelection": true,
+    "trussFacts": true,
+    "wasmProfile": [
+      "truss-postgresql-pg18"
+    ],
+    "wheelRebuild": false
+  },
+  "source": {
+    "archive": "/private/tmp/g03-local-source-package-guards-operator-003/inputs/source-p56.tar",
+    "archiveBytes": 865597440,
+    "archiveMembers": 6794,
+    "archiveSha256": "8291da1e97ceb5ebd9cd29f0dab1ce233b14cd20651b1e840f7e3e59802ce77f",
+    "commit": "973d864c8d26b2bc173a411eac8368da5efc1ab3",
+    "stageRosterBytes": 780359,
+    "stageRosterEntries": 5901,
+    "stageRosterHasFinalLf": false,
+    "stageRosterPath": "inputs/evidence/p56-git-stage-roster.txt",
+    "stageRosterSha256": "bc3018c0d674cd2fc80794f9f36c523565c91558f70649cd3fe415f8e88b701b",
+    "topLevelEntries": 26,
+    "tree": "8b20d1f01bea72ea08ed01fcaac97266ed3cb4ff",
+    "workflow": "inputs/truss-facts.workflow.yml",
+    "workflowSha256": "4305777176d5ed20596692422e9749bf991fcb0e1db4f37da926eacbdba9fd15"
+  },
+  "status": "FROZEN_SOURCE_CACHE_AVAILABLE_NOT_EXECUTED",
+  "tools": {
+    "builderImage": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+    "bun": "1.4.3",
+    "cargo": "cargo 1.90.0 (840b83a10 2025-07-30)",
+    "cargoRegistry": "/opt/cargo/registry",
+    "node": "v26.12.1",
+    "python": "Python 3.11.17",
+    "rustc": "rustc 1.90.0 (1159e78c4 2025-09-14)",
+    "rustupToolchain": "1.90.0-x86_64-unknown-linux-gnu",
+    "wasmBindgen": {
+      "path": "/wasm-tools/wasm-bindgen",
+      "sha256": "9deaf07387ad50e9166d69c46247a5a7c4bdf315bc45e95a5990ce85ef5a9741",
+      "version": "wasm-bindgen 0.2.105"
+    }
+  },
+  "workflow": {
+    "bun": "1.4.2",
+    "checks": [
+      "truss-facts/check.py --reports reports.json",
+      "cargo build --locked -p weft-wasm --features truss-postgresql-pg18 --target wasm32-unknown-unknown",
+      "wasm-bindgen --target web",
+      "bun build packages/weft-browser/src/index.ts --target browser",
+      "truss-facts browser-check",
+      "truss-entity-selection/check.py --reports entity-reports.json",
+      "truss-entity-selection browser-check"
+    ],
+    "playwright": "1.62.1",
+    "python": "3.11",
+    "rust": "1.90.0",
+    "timeoutSeconds": 1800,
+    "wasmBindgen": "0.2.105",
+    "wasmFeature": [
+      "truss-postgresql-pg18"
+    ],
+    "wasmTarget": "wasm32-unknown-unknown"
+  }
+}

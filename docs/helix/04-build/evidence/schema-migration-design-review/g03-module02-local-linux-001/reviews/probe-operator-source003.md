@@ -1,0 +1,7 @@
+# Held installed admission probe/operator003 source review
+
+Accept bounded root execution. Probe b8f672f3ceefac3a9c085424edf50d9173534b7a0803689b7d211b0d41482630; pins0def26ca06ff03c7fcf902f8e843f270e4987628c5cdd76c646bfc4fe8817185; runnerf3da54a7d6bd619c9d47a7078f2a4fce04b4d36b811a3e974b5d7b6e7250656f; guest5534760c8fbbdf835659b91eb1fda1dd02469ea4dd25b36436bf93eb9e3f5387; verifieradc464ca7b80e104e94802789a87d270cc497d03a2cb3651fed638f7e698c2ea. Physical source-manifest rows verified.
+
+Exact accepted002-to003 changes select the reviewed distinct held18 Linux311 cohort/candidate wheel/version/native correspondence and source pins, add required legacy absent-envelope programSHA c8be43e133c5869b2ac01c520e92177d620b558c326cc8d6aa6b087454ecaf5e equality, and truthful profile/path metadata. Actual captured wrapper/module preparation and five-case refusal/error boundaries, binder and mismatch location, zero leases/noDB scope remain. Existing exact clean P/image/runtime/fixture generation, offline fresh hashed18 installation/pipcheck, wheel-to-installed exact member verification, tmpfsexec provisioning,180s children/600s aggregate/reserve/capture/evidence/owned-cleanup guards unchanged. All held cohort lock/index/mirror/requirements pins correspond to reviewed physical files. No public55/currentMac/ABI breadth or fullG03 qualification follows. Previous unsupported55/provisioning failures remain retained.
+
+No candidate execution/import/Docker/Git mutation by reviewer. Actual result still requires independent review.

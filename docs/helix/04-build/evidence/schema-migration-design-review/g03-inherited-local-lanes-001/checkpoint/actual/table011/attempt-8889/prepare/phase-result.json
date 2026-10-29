@@ -1,0 +1,842 @@
+{
+  "candidateStatus": "FAIL_OR_UNKNOWN",
+  "commands": [
+    {
+      "argv": [
+        "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11",
+        "--version"
+      ],
+      "cwd": "/workspace",
+      "elapsedSeconds": 0.122986,
+      "endMonotonic": 980905.052565891,
+      "environment": {
+        "CARGO_HOME": "/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_TARGET_DIR": "/target",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "failure": null,
+      "limitSeconds": 20,
+      "name": "tool-identity-python",
+      "startMonotonic": 980904.929579968,
+      "streams": [
+        {
+          "bytes": 15,
+          "path": "logs/tool-identity-python.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 15,
+          "rawSha256": "686560bcd94a5a3fe8187b7c4fc49beaff41c87eccb79908cd3da863ec30e52e",
+          "sha256": "686560bcd94a5a3fe8187b7c4fc49beaff41c87eccb79908cd3da863ec30e52e",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "logs/tool-identity-python.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "terminationGraceIncludedInOriginalCap": 10,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin/rustc",
+        "--version"
+      ],
+      "cwd": "/workspace",
+      "elapsedSeconds": 0.289822,
+      "endMonotonic": 980905.344129546,
+      "environment": {
+        "CARGO_HOME": "/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_TARGET_DIR": "/target",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "failure": null,
+      "limitSeconds": 20,
+      "name": "tool-identity-rustc",
+      "startMonotonic": 980905.054307486,
+      "streams": [
+        {
+          "bytes": 36,
+          "path": "logs/tool-identity-rustc.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 36,
+          "rawSha256": "3397f54a03033c1b027496d83acc64e8f3ceeb4017e0575150f78726edce8a1a",
+          "sha256": "3397f54a03033c1b027496d83acc64e8f3ceeb4017e0575150f78726edce8a1a",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "logs/tool-identity-rustc.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "terminationGraceIncludedInOriginalCap": 10,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin/cargo",
+        "--version"
+      ],
+      "cwd": "/workspace",
+      "elapsedSeconds": 0.151146,
+      "endMonotonic": 980905.495419037,
+      "environment": {
+        "CARGO_HOME": "/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_TARGET_DIR": "/target",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "failure": null,
+      "limitSeconds": 20,
+      "name": "tool-identity-cargo",
+      "startMonotonic": 980905.344273131,
+      "streams": [
+        {
+          "bytes": 36,
+          "path": "logs/tool-identity-cargo.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 36,
+          "rawSha256": "5f9bdc5e0a6960db4a3cc66e9b3ae15bad5b9b506e8b7c49739c88dc5355c3f1",
+          "sha256": "5f9bdc5e0a6960db4a3cc66e9b3ae15bad5b9b506e8b7c49739c88dc5355c3f1",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "logs/tool-identity-cargo.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "terminationGraceIncludedInOriginalCap": 10,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/usr/local/bun/bin/bun",
+        "--version"
+      ],
+      "cwd": "/workspace",
+      "elapsedSeconds": 0.211299,
+      "endMonotonic": 980905.706859354,
+      "environment": {
+        "CARGO_HOME": "/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_TARGET_DIR": "/target",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "failure": null,
+      "limitSeconds": 20,
+      "name": "tool-identity-bun",
+      "startMonotonic": 980905.495560538,
+      "streams": [
+        {
+          "bytes": 6,
+          "path": "logs/tool-identity-bun.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 6,
+          "rawSha256": "bd31e8d9cf8d14a1e9e3fdf3b9f6a524819aed0d1b14627523c6765767c7d8f1",
+          "sha256": "bd31e8d9cf8d14a1e9e3fdf3b9f6a524819aed0d1b14627523c6765767c7d8f1",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "logs/tool-identity-bun.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "terminationGraceIncludedInOriginalCap": 10,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/usr/local/bin/node",
+        "--version"
+      ],
+      "cwd": "/workspace",
+      "elapsedSeconds": 0.158089,
+      "endMonotonic": 980905.86505685,
+      "environment": {
+        "CARGO_HOME": "/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_TARGET_DIR": "/target",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "failure": null,
+      "limitSeconds": 20,
+      "name": "tool-identity-node",
+      "startMonotonic": 980905.70696748,
+      "streams": [
+        {
+          "bytes": 9,
+          "path": "logs/tool-identity-node.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 9,
+          "rawSha256": "b26441604894a1a4e4cac96bfb464737575d9b6a2e8b9d3e996283005bd67b37",
+          "sha256": "b26441604894a1a4e4cac96bfb464737575d9b6a2e8b9d3e996283005bd67b37",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "logs/tool-identity-node.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "terminationGraceIncludedInOriginalCap": 10,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/wasm-tools/wasm-bindgen",
+        "--version"
+      ],
+      "cwd": "/workspace",
+      "elapsedSeconds": 0.117184,
+      "endMonotonic": 980905.982381359,
+      "environment": {
+        "CARGO_HOME": "/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_TARGET_DIR": "/target",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "failure": null,
+      "limitSeconds": 20,
+      "name": "tool-identity-wasm-bindgen",
+      "startMonotonic": 980905.865197684,
+      "streams": [
+        {
+          "bytes": 21,
+          "path": "logs/tool-identity-wasm-bindgen.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 21,
+          "rawSha256": "77e9a14fc88e7434ec823340ac27538312be174451c3548fd84ec08f1beb8276",
+          "sha256": "77e9a14fc88e7434ec823340ac27538312be174451c3548fd84ec08f1beb8276",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "logs/tool-identity-wasm-bindgen.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "terminationGraceIncludedInOriginalCap": 10,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin/rustc",
+        "-vV"
+      ],
+      "cwd": "/workspace",
+      "elapsedSeconds": 0.083508,
+      "endMonotonic": 980906.066250389,
+      "environment": {
+        "CARGO_HOME": "/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_TARGET_DIR": "/target",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "failure": null,
+      "limitSeconds": 20,
+      "name": "tool-identity-rust-verbose",
+      "startMonotonic": 980905.98274257,
+      "streams": [
+        {
+          "bytes": 196,
+          "path": "logs/tool-identity-rust-verbose.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 196,
+          "rawSha256": "938db28b83089ab88301ca425f99fa1d8b61ee66e0371babe1db6373ae9810a3",
+          "sha256": "938db28b83089ab88301ca425f99fa1d8b61ee66e0371babe1db6373ae9810a3",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "logs/tool-identity-rust-verbose.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "terminationGraceIncludedInOriginalCap": 10,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "rustup",
+        "target",
+        "list",
+        "--installed",
+        "--toolchain",
+        "1.90.0-x86_64-unknown-linux-gnu"
+      ],
+      "cwd": "/workspace",
+      "elapsedSeconds": 0.204199,
+      "endMonotonic": 980906.270520449,
+      "environment": {
+        "CARGO_HOME": "/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_TARGET_DIR": "/target",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "failure": null,
+      "limitSeconds": 20,
+      "name": "tool-identity-rust-targets",
+      "startMonotonic": 980906.066321515,
+      "streams": [
+        {
+          "bytes": 48,
+          "path": "logs/tool-identity-rust-targets.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 48,
+          "rawSha256": "dfefef0a475862622c9cc10adb82ac6004b6b8cd61c2296712a384a16eb6d624",
+          "sha256": "dfefef0a475862622c9cc10adb82ac6004b6b8cd61c2296712a384a16eb6d624",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "logs/tool-identity-rust-targets.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "terminationGraceIncludedInOriginalCap": 10,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/bin/bash",
+        "-euo",
+        "pipefail",
+        "-c",
+        "mkdir -p /cargo/registry && cp -a /opt/cargo/registry/cache /opt/cargo/registry/index /cargo/registry/"
+      ],
+      "cwd": "/workspace",
+      "elapsedSeconds": 0.196408,
+      "endMonotonic": 980911.364651202,
+      "environment": {
+        "CARGO_HOME": "/opt/cargo"
+      },
+      "exitCode": 0,
+      "failure": null,
+      "limitSeconds": 160.567,
+      "name": "cargo-cache-copy",
+      "startMonotonic": 980911.168243529,
+      "streams": [
+        {
+          "bytes": 0,
+          "path": "logs/cargo-cache-copy.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "logs/cargo-cache-copy.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "terminationGraceIncludedInOriginalCap": 10,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11",
+        "-B",
+        "-m",
+        "venv",
+        "/venv"
+      ],
+      "cwd": "/workspace",
+      "elapsedSeconds": 2.527253,
+      "endMonotonic": 980913.965307902,
+      "environment": {
+        "CARGO_HOME": "/opt/cargo"
+      },
+      "exitCode": 0,
+      "failure": null,
+      "limitSeconds": 50,
+      "name": "create-venv",
+      "startMonotonic": 980911.438054619,
+      "streams": [
+        {
+          "bytes": 0,
+          "path": "logs/create-venv.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "logs/create-venv.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "terminationGraceIncludedInOriginalCap": 10,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/venv/bin/python",
+        "-B",
+        "-I",
+        "-m",
+        "pip",
+        "--isolated",
+        "install",
+        "--disable-pip-version-check",
+        "--no-cache-dir",
+        "--no-compile",
+        "--only-binary=:all:",
+        "--require-hashes",
+        "--index-url",
+        "file:///cohort/aggregate/mirror/simple",
+        "-r",
+        "/cohort/aggregate/mirror/requirements.lock"
+      ],
+      "cwd": "/workspace",
+      "elapsedSeconds": 1.382599,
+      "endMonotonic": 980915.348037793,
+      "environment": {
+        "CARGO_HOME": "/opt/cargo"
+      },
+      "exitCode": 0,
+      "failure": null,
+      "limitSeconds": 710,
+      "name": "offline-install",
+      "startMonotonic": 980913.965438653,
+      "streams": [
+        {
+          "bytes": 3462,
+          "path": "logs/offline-install.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 3462,
+          "rawSha256": "3ca6eb11af235ba9954ec5c6e02697163d4a6c37e2617853fea9ac99c0e9f903",
+          "sha256": "3ca6eb11af235ba9954ec5c6e02697163d4a6c37e2617853fea9ac99c0e9f903",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "logs/offline-install.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "terminationGraceIncludedInOriginalCap": 10,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/venv/bin/python",
+        "-B",
+        "-I",
+        "-m",
+        "pip",
+        "--isolated",
+        "check"
+      ],
+      "cwd": "/workspace",
+      "elapsedSeconds": 0.442808,
+      "endMonotonic": 980915.79103669,
+      "environment": {
+        "CARGO_HOME": "/opt/cargo"
+      },
+      "exitCode": 0,
+      "failure": null,
+      "limitSeconds": 50,
+      "name": "pip-check",
+      "startMonotonic": 980915.348228795,
+      "streams": [
+        {
+          "bytes": 30,
+          "path": "logs/pip-check.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 30,
+          "rawSha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+          "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "logs/pip-check.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "terminationGraceIncludedInOriginalCap": 10,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/venv/bin/python",
+        "-B",
+        "-I",
+        "/operator/verify_weft_wheel.py",
+        "--wheel",
+        "/cohort/aggregate/mirror/files/umf_weft-0.4.56-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "--wheel-sha256",
+        "32f4c38d9a614dd4c3a367f8b24d5cd4ba41ec80c2a4a2e3423e2082a294dbdd",
+        "--wheel-size",
+        "14358901"
+      ],
+      "cwd": "/workspace",
+      "elapsedSeconds": 0.506264,
+      "endMonotonic": 980916.297496562,
+      "environment": {
+        "CARGO_HOME": "/opt/cargo"
+      },
+      "exitCode": 0,
+      "failure": null,
+      "limitSeconds": 50,
+      "name": "wheel-members",
+      "startMonotonic": 980915.791232483,
+      "streams": [
+        {
+          "bytes": 600,
+          "path": "logs/wheel-members.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 600,
+          "rawSha256": "a3b9290de34a1eeae6ccf6642d5802bdb399d018991def37571d8feae8d777f9",
+          "sha256": "a3b9290de34a1eeae6ccf6642d5802bdb399d018991def37571d8feae8d777f9",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "logs/wheel-members.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "terminationGraceIncludedInOriginalCap": 10,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/venv/bin/python",
+        "-B",
+        "-I",
+        "/operator/distribution_snapshot.py",
+        "--requirements",
+        "/cohort/aggregate/mirror/requirements.lock",
+        "--site-packages",
+        "/venv/lib/python3.11/site-packages",
+        "--output",
+        "/out/reports/installed-distribution-snapshot.json",
+        "--wheel-sha256",
+        "32f4c38d9a614dd4c3a367f8b24d5cd4ba41ec80c2a4a2e3423e2082a294dbdd",
+        "--wheel-size",
+        "14358901"
+      ],
+      "cwd": "/workspace",
+      "elapsedSeconds": 0.230843,
+      "endMonotonic": 980916.528542138,
+      "environment": {
+        "CARGO_HOME": "/opt/cargo"
+      },
+      "exitCode": 0,
+      "failure": null,
+      "limitSeconds": 20,
+      "name": "distribution-versions",
+      "startMonotonic": 980916.297699022,
+      "streams": [
+        {
+          "bytes": 227,
+          "path": "logs/distribution-versions.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 227,
+          "rawSha256": "fc0fe495d281573578db0ba78037e6ccd3ca637496846b8b530c71a3152189ef",
+          "sha256": "fc0fe495d281573578db0ba78037e6ccd3ca637496846b8b530c71a3152189ef",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "logs/distribution-versions.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "terminationGraceIncludedInOriginalCap": 10,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "cargo",
+        "build",
+        "--locked",
+        "--offline",
+        "-p",
+        "weft-postgresql",
+        "--example",
+        "compile_table_operation"
+      ],
+      "cwd": "/workspace",
+      "elapsedSeconds": 0.393988,
+      "endMonotonic": 980916.92325404,
+      "environment": {
+        "CARGO_HOME": "/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_TARGET_DIR": "/target",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 101,
+      "failure": null,
+      "limitSeconds": 470,
+      "name": "native-compiler",
+      "startMonotonic": 980916.529266227,
+      "streams": [
+        {
+          "bytes": 0,
+          "path": "logs/native-compiler.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        },
+        {
+          "bytes": 341,
+          "path": "logs/native-compiler.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 341,
+          "rawSha256": "3a3db8d5d0cae10470dc0cd95a716354594bfe7703ff96b3614e0046b0073c64",
+          "sha256": "3a3db8d5d0cae10470dc0cd95a716354594bfe7703ff96b3614e0046b0073c64",
+          "truncated": false
+        }
+      ],
+      "terminationGraceIncludedInOriginalCap": 10,
+      "timedOut": false
+    }
+  ],
+  "elapsedSeconds": 12.005,
+  "evidenceClosureVerified": true,
+  "failure": "RuntimeError: native-compiler failed or its bounded capture did not close",
+  "logBytes": 5027,
+  "phase": "prepare",
+  "profile": "umf.g03-table-operations-phase/1",
+  "publicBytes": 965157,
+  "publicFiles": [
+    {
+      "path": "logs/cargo-cache-copy.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/cargo-cache-copy.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/create-venv.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/create-venv.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/distribution-versions.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/distribution-versions.stdout.log",
+      "sha256": "fc0fe495d281573578db0ba78037e6ccd3ca637496846b8b530c71a3152189ef",
+      "sizeBytes": 227
+    },
+    {
+      "path": "logs/native-compiler.stderr.log",
+      "sha256": "3a3db8d5d0cae10470dc0cd95a716354594bfe7703ff96b3614e0046b0073c64",
+      "sizeBytes": 341
+    },
+    {
+      "path": "logs/native-compiler.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/offline-install.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/offline-install.stdout.log",
+      "sha256": "3ca6eb11af235ba9954ec5c6e02697163d4a6c37e2617853fea9ac99c0e9f903",
+      "sizeBytes": 3462
+    },
+    {
+      "path": "logs/pip-check.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/pip-check.stdout.log",
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+      "sizeBytes": 30
+    },
+    {
+      "path": "logs/tool-identity-bun.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/tool-identity-bun.stdout.log",
+      "sha256": "bd31e8d9cf8d14a1e9e3fdf3b9f6a524819aed0d1b14627523c6765767c7d8f1",
+      "sizeBytes": 6
+    },
+    {
+      "path": "logs/tool-identity-cargo.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/tool-identity-cargo.stdout.log",
+      "sha256": "5f9bdc5e0a6960db4a3cc66e9b3ae15bad5b9b506e8b7c49739c88dc5355c3f1",
+      "sizeBytes": 36
+    },
+    {
+      "path": "logs/tool-identity-node.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/tool-identity-node.stdout.log",
+      "sha256": "b26441604894a1a4e4cac96bfb464737575d9b6a2e8b9d3e996283005bd67b37",
+      "sizeBytes": 9
+    },
+    {
+      "path": "logs/tool-identity-python.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/tool-identity-python.stdout.log",
+      "sha256": "686560bcd94a5a3fe8187b7c4fc49beaff41c87eccb79908cd3da863ec30e52e",
+      "sizeBytes": 15
+    },
+    {
+      "path": "logs/tool-identity-rust-targets.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/tool-identity-rust-targets.stdout.log",
+      "sha256": "dfefef0a475862622c9cc10adb82ac6004b6b8cd61c2296712a384a16eb6d624",
+      "sizeBytes": 48
+    },
+    {
+      "path": "logs/tool-identity-rust-verbose.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/tool-identity-rust-verbose.stdout.log",
+      "sha256": "938db28b83089ab88301ca425f99fa1d8b61ee66e0371babe1db6373ae9810a3",
+      "sizeBytes": 196
+    },
+    {
+      "path": "logs/tool-identity-rustc.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/tool-identity-rustc.stdout.log",
+      "sha256": "3397f54a03033c1b027496d83acc64e8f3ceeb4017e0575150f78726edce8a1a",
+      "sizeBytes": 36
+    },
+    {
+      "path": "logs/tool-identity-wasm-bindgen.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/tool-identity-wasm-bindgen.stdout.log",
+      "sha256": "77e9a14fc88e7434ec823340ac27538312be174451c3548fd84ec08f1beb8276",
+      "sizeBytes": 21
+    },
+    {
+      "path": "logs/wheel-members.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/wheel-members.stdout.log",
+      "sha256": "a3b9290de34a1eeae6ccf6642d5802bdb399d018991def37571d8feae8d777f9",
+      "sizeBytes": 600
+    },
+    {
+      "path": "reports/installed-distribution-snapshot.json",
+      "sha256": "8557c7e2767d269a5e0c19e32d48d157f7cc109c20f6705a6ba083f615e63e16",
+      "sizeBytes": 1262
+    },
+    {
+      "path": "reports/source-inputs.rows.json",
+      "sha256": "fefc1d2b479429c51024559ca734c26c45264afbce835ef4bb529f4511b8952e",
+      "sizeBytes": 958868
+    }
+  ],
+  "status": "FAIL_OR_UNKNOWN"
+}

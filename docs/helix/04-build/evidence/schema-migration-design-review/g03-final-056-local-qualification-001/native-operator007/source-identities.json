@@ -1,0 +1,75 @@
+{
+  "acceptedExecutorSeam": {
+    "harnessPostimages": {
+      "tests/lifecycle/g03-defaults-native.py": "73a732711ae150ff55a1f4fa1b656ae0762779e18cd94b82d4a2227930aaefb9",
+      "tests/lifecycle/g03_campaign_orchestration.py": "8f841a3398fd909f0061bff0f0d7256fb6632e5fbd0cf459edf16fa140742a1a",
+      "tests/lifecycle/test_g03_campaign_orchestration.py": "3950bf512e8dc5e18dc30925692d18e2b9012007ec450c6d02d1879ac797a573"
+    },
+    "planPath": "/private/tmp/g03-full14-bounded-adapter-sol-plan001.md",
+    "planSha256": "b9e5c3218c5f5fdb0e046fcf0f7df4185411d9b39b5644093766fe66c3ed3750",
+    "sourceReviewPath": "/private/tmp/g03-full14-executor-seam-sol-source-review001.md",
+    "sourceReviewSha256": "c83808985ff3ed20e3504cca008f7f0342dc290821a62fec5eca54864426356e"
+  },
+  "candidateWheel": "PARAMETERIZED_FROM_SEPARATELY_REVIEWED_FROZEN_INPUT_PACKET",
+  "cohort": "PARAMETERIZED_FROM_SEPARATELY_REVIEWED_FROZEN_INPUT_PACKET",
+  "execution": "NOT_RUN",
+  "files": [
+    {
+      "path": "run_operator.py",
+      "sha256": "6ef01e1f1bb3d2bd673d95a8d20e6962d3265ff9487720ec8f3ddf25cdb64ed0",
+      "sizeBytes": 45530
+    },
+    {
+      "path": "full14_guest.py",
+      "sha256": "5ff49f2ea3908864041fcd9360ec850a1ff930b83eb98708b05b4ccdb3dcb0ac",
+      "sizeBytes": 40357
+    },
+    {
+      "path": "scenario_child.py",
+      "sha256": "23ad82a850a15dd80d3ff16bee67c0e8446f51816ef26198f3c6f58275e007f4",
+      "sizeBytes": 3630
+    },
+    {
+      "path": "verify_installed_weft.py",
+      "sha256": "8384ad64906de49170d30ed019679ac3e3bc101eb49a7e0f52329f2c4d07c67a",
+      "sizeBytes": 6372
+    },
+    {
+      "path": "snapshot_runner.py",
+      "sha256": "79cbde9f4c7a55c36342e2aa9940561be2c504f51c78bf679c4a52395c529c3a",
+      "sizeBytes": 1978
+    },
+    {
+      "path": "PLAN.md",
+      "sha256": "26593b93501dfef9a8c5889ca08f2dd4729a5dc67e20367e26f8ce10db595135",
+      "sizeBytes": 8679
+    },
+    {
+      "path": "README.md",
+      "sha256": "3033bcbf260e1718a35b201728688f6b15a66ea106a679af322715c5dca3ac43",
+      "sizeBytes": 3043
+    },
+    {
+      "path": "packet-mount-repair.md",
+      "sha256": "0d0509619b359b225469ca7036b765b9572ba5fdfd6ecd523b8d62b79b8c4dcd",
+      "sizeBytes": 1232
+    }
+  ],
+  "operatorRoot": "/private/tmp/g03-full14-bounded-operator-007",
+  "outputRoot": "/private/tmp/g03-full14-bounded-operator-007-output",
+  "profile": "umf.g03-full14-operator-source-identities/1",
+  "setupInterpreterRepair": {
+    "campaignRunnerImportUnchanged": true,
+    "predecessorActualDisposition": "setup locked install, pip check and candidate wheel physical match completed; base-Python runner import failed for missing psycopg; no PostgreSQL/native scenario; cleanup passed",
+    "predecessorActualStatus": "FAIL_OR_UNKNOWN",
+    "predecessorOperatorRoot": "/private/tmp/g03-full14-bounded-operator-006",
+    "setupParentImportRemoved": true,
+    "snapshotHelperInvocationInterpreter": "/venv/bin/python -I",
+    "snapshotHelperPath": "snapshot_runner.py",
+    "snapshotHelperSha256": "79cbde9f4c7a55c36342e2aa9940561be2c504f51c78bf679c4a52395c529c3a",
+    "snapshotHelperSourcePath": "/private/tmp/g03-final-installed-prep-operator-001/runtime/snapshot_runner.py",
+    "sourcePlanPath": "/private/tmp/g03-full14-setup-venv-snapshot-sol-repair-plan001.md",
+    "sourcePlanSha256": "9bda3d756f9e3799115d450ffeddbe08a45f8f439aa731bace33c2a9e68bbfdd"
+  },
+  "status": "SOURCE_DRAFT_READY_FOR_REVIEW_NOT_EXECUTED"
+}

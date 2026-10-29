@@ -1,0 +1,62 @@
+{
+  "acceptedBuildPlan": {
+    "path": "/private/tmp/g03-macos-build-only-operator-sol-plan001.md",
+    "sha256": "cafc0eb9b3ed1346210e2e1b85e437df8fb85beb7bd70e5e454f992de5b5ac53"
+  },
+  "files": [
+    {
+      "bytes": 3463,
+      "path": "README.md",
+      "sha256": "e0b5b4a825f69a548d712e0387a7b689b2f17693c7ac30461899291a41f03ed6"
+    },
+    {
+      "bytes": 36995,
+      "path": "run_build_static.py",
+      "sha256": "12518861a8ebf24e9cace3256f3c24e5d2d3d6e5ac6888dbc4143d583443c202"
+    },
+    {
+      "bytes": 12602,
+      "path": "static_audit.py",
+      "sha256": "fbfbf1c0214e98d26987cc625084a1429ab578d9f48f546a5d4a4002803dbe0b"
+    }
+  ],
+  "limits": {
+    "aggregateSeconds": 3600,
+    "buildSeconds": 1800,
+    "cargoJobs": 4,
+    "cleanupSeconds": 60,
+    "logsBytes": 1048576,
+    "metadataBytes": 16777216,
+    "selectedCargoCacheBytes": 2147483648,
+    "setupSeconds": 600,
+    "staticAuditSeconds": 120,
+    "terminalReserveSeconds": 60,
+    "terminationGraceSeconds": 10,
+    "wheelCompressedBytes": 33554432,
+    "wheelExpandedBytes": 134217728
+  },
+  "measurementRepairPlan": {
+    "path": "/private/tmp/g03-macos-preflight001-sol-actual-and-repair-plan002.md",
+    "sha256": "fba4b31855acb8ab74a864ef4e5b84d080a52987d5e4a95ffe493c1d045b0ff4"
+  },
+  "output": "/private/tmp/g03-weft-macos-arm64-build-002",
+  "predecessor": {
+    "disposition": "preserved; preflight failure at Python.h identity from absent reported include; no build/cache preparation established",
+    "failedAttemptReceiptSha256": "c43ee98dc9e358d0ec4b8be4f5b743661a7b49aa1609b3a849b668cc7dc453bf",
+    "operator": "/private/tmp/g03-macos-build-only-operator-001",
+    "readmeSha256": "b8d2a3d554aab247f84812b3a36d6b3406ef76e68e271279d73ccc07ff71d893",
+    "runnerBytes": 33205,
+    "runnerSha256": "74b7c0ae1f5dee6d8fb03fa34c477a6d7416c59775e0ca3f7598d85828af1c92",
+    "sourceIdentitiesSha256": "a185e8407bafd42008f6abee13fcd7eccc067c2624b3445264cffdbcb7e47212",
+    "staticAuditSha256": "fbfbf1c0214e98d26987cc625084a1429ab578d9f48f546a5d4a4002803dbe0b"
+  },
+  "producer": {
+    "commit": "973d864c8d26b2bc173a411eac8368da5efc1ab3",
+    "tree": "8b20d1f01bea72ea08ed01fcaac97266ed3cb4ff",
+    "version": "0.4.56"
+  },
+  "profile": "weft-local-macos-build-only-operator-source/2",
+  "scope": "local Darwin arm64 compile and static wheel/Mach-O inspection only; no installation/import/product tests/browser/native functional qualification/CI/Git/publication",
+  "staticAuditHelperPreservedByteIdentically": true,
+  "status": "CORRECTED_SOURCE_REVIEW_PENDING_NOT_RUN"
+}

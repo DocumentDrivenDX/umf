@@ -1,0 +1,25 @@
+{
+  "cleanup": {
+    "containerAbsent": true,
+    "containerRemoved": false,
+    "daemonReachable": true,
+    "verified": true
+  },
+  "elapsedSeconds": 112.131,
+  "executionId": "8f55b113211f4a83baed4ffa5a1e3be2",
+  "failure": "RuntimeError: Playwright package file roster/hash closure mismatch",
+  "image": "sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27",
+  "limits": {
+    "aggregateSeconds": 1800,
+    "browserChildSeconds": 600,
+    "evidenceBytes": 16777216,
+    "logsBytes": 1048576,
+    "reserveSeconds": 60,
+    "stopGraceSeconds": 10
+  },
+  "platform": "linux/arm64",
+  "profile": "umf.g03-sdk058-browser-operator/1",
+  "runEvidenceBytesBeforeReceipt": 0,
+  "runFilesBeforeReceipt": [],
+  "status": "FAIL_OR_UNKNOWN"
+}

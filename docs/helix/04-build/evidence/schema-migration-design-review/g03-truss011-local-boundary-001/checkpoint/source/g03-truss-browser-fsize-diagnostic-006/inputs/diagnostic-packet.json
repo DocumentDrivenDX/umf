@@ -1,0 +1,241 @@
+{
+  "browser": {
+    "chromiumPath": "/ms-playwright/chromium-1243/chrome-linux-arm64/chrome",
+    "chromiumSha256": "839efe5fd8b6a773dd81b2e10afdc15f3c0a17316fb82b5908c0533306c4ed9e",
+    "chromiumVersion": "Google Chrome for Testing 153.0.8010.12",
+    "image": "sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27",
+    "nodeVersion": "v24.20.0",
+    "platform": "linux/arm64",
+    "playwrightManifestPath": "inputs/evidence/browser-deps-manifest.json",
+    "playwrightRoots": {
+      "playwright": "/Users/erik/Projects/weft/node_modules/playwright",
+      "playwright-core": "/Users/erik/Projects/weft/node_modules/playwright-core"
+    },
+    "playwrightVersion": "1.62.1"
+  },
+  "executionPerformed": false,
+  "inputFiles": [
+    {
+      "mode": 420,
+      "path": "inputs/browser-workspace/tests/compile/browser-check.mjs",
+      "sha256": "de3214f6d37180baf13021f0e5a21fada3fbd2724ed412505adcb22cca83fe71",
+      "sizeBytes": 11500
+    },
+    {
+      "mode": 420,
+      "path": "inputs/browser-workspace/tests/truss-entity-selection/cases.json",
+      "sha256": "cdddb2454b033c5753177cdedb447efbf45f5131c42beb17aeb6d319eac71537",
+      "sizeBytes": 184480
+    },
+    {
+      "mode": 420,
+      "path": "inputs/browser-workspace/tests/truss-facts/cases.json",
+      "sha256": "34f4694030aa822172200002275ee3e1b36ee7a248df960e60bb731648fb0d83",
+      "sizeBytes": 24724
+    },
+    {
+      "mode": 420,
+      "path": "inputs/evidence/browser-deps-manifest.json",
+      "sha256": "9f99c0ee83fd0e34ff5f48a83e27f46fd39e3140230629237e0849ea5e07a770",
+      "sizeBytes": 42623
+    },
+    {
+      "mode": 292,
+      "path": "inputs/evidence/diagnostic-plan002.md",
+      "sha256": "2e4fbad9fb3f62702b26167645c0c902f29b1a3d57aeb4b98ae944524fbb715a",
+      "sizeBytes": 6932
+    },
+    {
+      "mode": 420,
+      "path": "inputs/evidence/entity.json",
+      "sha256": "ff8803dda03a4ef376e44984c1a010ead8065b817a002d6178dba8b0343256bf",
+      "sizeBytes": 994279
+    },
+    {
+      "mode": 420,
+      "path": "inputs/evidence/facts.json",
+      "sha256": "c45b385d21c64d4abec74849a7cad50229a6eaa054b2a14a192b13c2566b8982",
+      "sizeBytes": 186460
+    },
+    {
+      "mode": 420,
+      "path": "inputs/evidence/p56-git-stage-roster.txt",
+      "sha256": "bc3018c0d674cd2fc80794f9f36c523565c91558f70649cd3fe415f8e88b701b",
+      "sizeBytes": 780359
+    },
+    {
+      "mode": 420,
+      "path": "inputs/evidence/source-inventory.json",
+      "sha256": "3c1d1f1d99766a444234ec40078e3d79804ffd601c3cbfd41b809b1e469cede7",
+      "sizeBytes": 958557
+    },
+    {
+      "mode": 420,
+      "path": "inputs/evidence/truss009-browser-facts.stderr.log",
+      "sha256": "0fe05f59ad74d186c5e7926903de7a559a6558925ec6ef6bcd282c23620a6c0c",
+      "sizeBytes": 6599
+    },
+    {
+      "mode": 420,
+      "path": "inputs/evidence/truss009-browser-facts.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "mode": 420,
+      "path": "inputs/evidence/truss009-operator-result.json",
+      "sha256": "af524fd45a8f01998dc02a540ec6d84e81bf51c4fc745cb1417513a791fef40e",
+      "sizeBytes": 173838
+    },
+    {
+      "mode": 420,
+      "path": "inputs/evidence/truss009-packet.json",
+      "sha256": "c6797af91eefa241797e748f59c6095725806221daa2aefe50bb85e6b91caf45",
+      "sizeBytes": 9689
+    },
+    {
+      "mode": 292,
+      "path": "inputs/evidence/truss009-source-review.md",
+      "sha256": "c26236cc7f02d3bf99d62e20bdfddb9e5f9493cd746e885c68a69396f24353ec",
+      "sizeBytes": 3419
+    }
+  ],
+  "limits": {
+    "aggregateSeconds": 1800,
+    "browserPerCorpusSeconds": 600,
+    "browserTmpfs": "rw,nosuid,nodev,exec,size=256m",
+    "capDrop": [
+      "ALL"
+    ],
+    "cpuCount": 4,
+    "fsizeAppliesTo": "browser process selected runtime software class only; does not change evidence/software aggregate caps",
+    "memoryBytes": 8589934592,
+    "metadataEvidenceBytes": 16777216,
+    "network": "none",
+    "newBrowserFsizeBytes": 268435456,
+    "oldBrowserFsizeBytes": 16777216,
+    "pids": 8192,
+    "rawAggregateBytes": 1048576,
+    "rawPerStreamBytes": 524288,
+    "rootFilesystemReadOnly": true,
+    "securityOpt": [
+      "no-new-privileges"
+    ],
+    "selectedSoftwareBytes": 268435456,
+    "sharedMemoryBytes": 1073741824,
+    "terminalReserveSeconds": 60,
+    "terminationGraceSeconds": 10
+  },
+  "nativeReports": [
+    {
+      "corpusPath": "inputs/browser-workspace/tests/truss-facts/cases.json",
+      "name": "facts",
+      "path": "/private/tmp/g03-truss-browser-fsize-diagnostic-002/inputs/evidence/facts.json",
+      "sha256": "c45b385d21c64d4abec74849a7cad50229a6eaa054b2a14a192b13c2566b8982",
+      "sizeBytes": 186460
+    },
+    {
+      "corpusPath": "inputs/browser-workspace/tests/truss-entity-selection/cases.json",
+      "name": "entity",
+      "path": "/private/tmp/g03-truss-browser-fsize-diagnostic-002/inputs/evidence/entity.json",
+      "sha256": "ff8803dda03a4ef376e44984c1a010ead8065b817a002d6178dba8b0343256bf",
+      "sizeBytes": 994279
+    }
+  ],
+  "original009": {
+    "browserFactsStderr": {
+      "path": "inputs/evidence/truss009-browser-facts.stderr.log",
+      "sha256": "0fe05f59ad74d186c5e7926903de7a559a6558925ec6ef6bcd282c23620a6c0c",
+      "sizeBytes": 6599
+    },
+    "browserFactsStdout": {
+      "path": "inputs/evidence/truss009-browser-facts.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    "elapsedSeconds": 152.048,
+    "executionId": "938487b5-7353-4879-aa26-ee034e629718",
+    "path": "inputs/evidence/truss009-operator-result.json",
+    "sha256": "af524fd45a8f01998dc02a540ec6d84e81bf51c4fc745cb1417513a791fef40e",
+    "sizeBytes": 173838,
+    "status": "FAIL_OR_UNKNOWN"
+  },
+  "profile": "umf.g03-truss-browser-fsize-diagnostic/1",
+  "selectedSoftware": [
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/artifacts/truss-web/weft_wasm.js",
+      "relativePath": "artifacts/truss-web/weft_wasm.js",
+      "sha256": "fce153e7f95ee82821e492a9e8732063e690b7640e2fbf22ec8324f8b3bca579",
+      "sizeBytes": 13916
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/artifacts/truss-web/weft_wasm.d.ts",
+      "relativePath": "artifacts/truss-web/weft_wasm.d.ts",
+      "sha256": "ec10303c3ce50ae1a39ef36352f9445618f27ee326bfa21a1182f4c2f092e491",
+      "sizeBytes": 3350
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/artifacts/truss-web/weft_wasm_bg.wasm",
+      "relativePath": "artifacts/truss-web/weft_wasm_bg.wasm",
+      "sha256": "86e5facad64ec12a2f1176dad9155b0a33ed63446dceebbe8e30369d64fb48b4",
+      "sizeBytes": 28345027
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/artifacts/truss-web/weft_wasm_bg.wasm.d.ts",
+      "relativePath": "artifacts/truss-web/weft_wasm_bg.wasm.d.ts",
+      "sha256": "79682ff29166ed93f5fa95a37d95dff8dfd23d89770f88700728ef97e33410f2",
+      "sizeBytes": 1296
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/artifacts/browser-wrapper/index.js",
+      "relativePath": "artifacts/browser-wrapper/index.js",
+      "sha256": "ad9198fb79ec8dc80eeac9d37d126993374d7135628bf11ee303b0e60669884b",
+      "sizeBytes": 2935
+    }
+  ],
+  "sourceArchive": {
+    "commit": "973d864c8d26b2bc173a411eac8368da5efc1ab3",
+    "fileCount": 5901,
+    "members": 6794,
+    "path": "/private/tmp/g03-local-source-package-guards-operator-003/inputs/source-p56.tar",
+    "sha256": "8291da1e97ceb5ebd9cd29f0dab1ce233b14cd20651b1e840f7e3e59802ce77f",
+    "sizeBytes": 865597440,
+    "totalTrackedBytes": 860543639,
+    "tree": "8b20d1f01bea72ea08ed01fcaac97266ed3cb4ff"
+  },
+  "sourceInventory": {
+    "fileCount": 5901,
+    "path": "inputs/evidence/source-inventory.json",
+    "profile": "umf.g03-p56-physical-inventory/1",
+    "sha256": "3c1d1f1d99766a444234ec40078e3d79804ffd601c3cbfd41b809b1e469cede7",
+    "sizeBytes": 958557,
+    "stageRosterBytes": 780359,
+    "stageRosterPath": "inputs/evidence/p56-git-stage-roster.txt",
+    "stageRosterSha256": "bc3018c0d674cd2fc80794f9f36c523565c91558f70649cd3fe415f8e88b701b",
+    "totalBytes": 860543639
+  },
+  "sourceProjection": [
+    {
+      "mode": 420,
+      "path": "inputs/browser-workspace/tests/compile/browser-check.mjs",
+      "sha256": "de3214f6d37180baf13021f0e5a21fada3fbd2724ed412505adcb22cca83fe71",
+      "sizeBytes": 11500,
+      "sourcePath": "tests/compile/browser-check.mjs"
+    },
+    {
+      "mode": 420,
+      "path": "inputs/browser-workspace/tests/truss-facts/cases.json",
+      "sha256": "34f4694030aa822172200002275ee3e1b36ee7a248df960e60bb731648fb0d83",
+      "sizeBytes": 24724,
+      "sourcePath": "tests/truss-facts/cases.json"
+    },
+    {
+      "mode": 420,
+      "path": "inputs/browser-workspace/tests/truss-entity-selection/cases.json",
+      "sha256": "cdddb2454b033c5753177cdedb447efbf45f5131c42beb17aeb6d319eac71537",
+      "sizeBytes": 184480,
+      "sourcePath": "tests/truss-entity-selection/cases.json"
+    }
+  ],
+  "status": "FROZEN_LOCAL_DIAGNOSTIC_INPUTS"
+}

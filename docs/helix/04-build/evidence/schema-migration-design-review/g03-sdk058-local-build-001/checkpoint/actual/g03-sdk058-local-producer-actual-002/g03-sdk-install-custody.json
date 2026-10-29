@@ -1,0 +1,44 @@
+{
+  "profile": "umf.sdk-installed-archive-custody/1",
+  "archivePath": "/tmp/umf-source/.cache/sdk-distribution/umf-sdk.tgz",
+  "archiveSha256": "2aaf24741aee1c135fade5b7631db90d710e6211977fb9ca7fcc080ea7fdf58d",
+  "installCommand": [
+    "/usr/local/bun/bin/bun",
+    "install",
+    "--ignore-scripts",
+    "/tmp/umf-source/.cache/sdk-distribution/umf-sdk.tgz"
+  ],
+  "installedPackageRoot": "/out/sdk-install/node_modules/@umf/core",
+  "exactArchiveMembers": {
+    "package/dist/umf.js": {
+      "sha256": "071544fcc83c5abcf1e280890e1516613f679a58cf245b31a7bf16f0b6dd24fd",
+      "size": 13864963
+    },
+    "package/manifest.json": {
+      "sha256": "0683f83ffef546c7c48d0b267528fafe83c16006a2cef5fdb299260ebb444309",
+      "size": 229540
+    },
+    "package/package.json": {
+      "sha256": "4533bf7e5ed7bb0aba4e3bdf395818423281ae464b96a73fe492c57291e81500",
+      "size": 1286
+    }
+  },
+  "installedMembers": {
+    "package/package.json": {
+      "size": 1286,
+      "sha256": "4533bf7e5ed7bb0aba4e3bdf395818423281ae464b96a73fe492c57291e81500"
+    },
+    "package/manifest.json": {
+      "size": 229540,
+      "sha256": "0683f83ffef546c7c48d0b267528fafe83c16006a2cef5fdb299260ebb444309"
+    },
+    "package/dist/umf.js": {
+      "size": 13864963,
+      "sha256": "071544fcc83c5abcf1e280890e1516613f679a58cf245b31a7bf16f0b6dd24fd"
+    }
+  },
+  "publicEntryManifestSha256": "071544fcc83c5abcf1e280890e1516613f679a58cf245b31a7bf16f0b6dd24fd",
+  "installerSourceSha256": "f7c34122585507c0b31c2846e532cca666e119641ab970e47083082504516b78",
+  "distributionFiles": 1799,
+  "existing139ConsumerChecks": "passed"
+}

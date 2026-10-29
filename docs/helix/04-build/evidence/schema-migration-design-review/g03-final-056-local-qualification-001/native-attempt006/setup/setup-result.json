@@ -1,0 +1,252 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11",
+        "-I",
+        "-c",
+        "import sys; assert sys.version_info[:3] == (3,11,17), sys.version; assert sys.executable == '/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11', sys.executable; print(sys.version)"
+      ],
+      "captureStatus": "PASS_CAPTURE_CLOSED",
+      "drainExpired": false,
+      "elapsedSeconds": 0.075,
+      "exitCode": 0,
+      "logCapExceeded": false,
+      "name": "python-runtime",
+      "stderr": {
+        "path": "/out/logs/00-python-runtime.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "retainedBytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/out/logs/00-python-runtime.stdout.log",
+        "rawBytes": 51,
+        "rawSha256": "7c95f7d768d2fe5b26143cfd16388399a5a0d3f1dfb379dc5eed29d4a5d456ff",
+        "retainedBytes": 51,
+        "sha256": "7c95f7d768d2fe5b26143cfd16388399a5a0d3f1dfb379dc5eed29d4a5d456ff",
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 20
+    },
+    {
+      "argv": [
+        "/bin/bash",
+        "-euo",
+        "pipefail",
+        "-c",
+        "test \"$(bun --version)\" = 1.4.3; bun --version"
+      ],
+      "captureStatus": "PASS_CAPTURE_CLOSED",
+      "drainExpired": false,
+      "elapsedSeconds": 0.063,
+      "exitCode": 0,
+      "logCapExceeded": false,
+      "name": "bun-runtime",
+      "stderr": {
+        "path": "/out/logs/01-bun-runtime.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "retainedBytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/out/logs/01-bun-runtime.stdout.log",
+        "rawBytes": 6,
+        "rawSha256": "bd31e8d9cf8d14a1e9e3fdf3b9f6a524819aed0d1b14627523c6765767c7d8f1",
+        "retainedBytes": 6,
+        "sha256": "bd31e8d9cf8d14a1e9e3fdf3b9f6a524819aed0d1b14627523c6765767c7d8f1",
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 20
+    },
+    {
+      "argv": [
+        "bun",
+        "/harness/tests/lifecycle/g03-defaults-native-fixture.ts",
+        "/out/g03-defaults-native-fixture.json"
+      ],
+      "captureStatus": "PASS_CAPTURE_CLOSED",
+      "drainExpired": false,
+      "elapsedSeconds": 0.252,
+      "exitCode": 0,
+      "logCapExceeded": false,
+      "name": "fixture-generation",
+      "stderr": {
+        "path": "/out/logs/02-fixture-generation.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "retainedBytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/out/logs/02-fixture-generation.stdout.log",
+        "rawBytes": 1130,
+        "rawSha256": "e5e63d45571dd29f0d4ad5ade111af34fb2ef518ce76e825c4a7610ccd437b62",
+        "retainedBytes": 1130,
+        "sha256": "e5e63d45571dd29f0d4ad5ade111af34fb2ef518ce76e825c4a7610ccd437b62",
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 180
+    },
+    {
+      "argv": [
+        "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11",
+        "-m",
+        "venv",
+        "/venv"
+      ],
+      "captureStatus": "PASS_CAPTURE_CLOSED",
+      "drainExpired": false,
+      "elapsedSeconds": 2.479,
+      "exitCode": 0,
+      "logCapExceeded": false,
+      "name": "create-venv",
+      "stderr": {
+        "path": "/out/logs/03-create-venv.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "retainedBytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/out/logs/03-create-venv.stdout.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "retainedBytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 60
+    },
+    {
+      "argv": [
+        "/venv/bin/python",
+        "-I",
+        "-m",
+        "pip",
+        "--isolated",
+        "install",
+        "--disable-pip-version-check",
+        "--no-cache-dir",
+        "--no-compile",
+        "--only-binary=:all:",
+        "--require-hashes",
+        "--index-url",
+        "file:///cohort/aggregate/mirror/simple",
+        "-r",
+        "/cohort/aggregate/mirror/requirements.lock"
+      ],
+      "captureStatus": "PASS_CAPTURE_CLOSED",
+      "drainExpired": false,
+      "elapsedSeconds": 1.49,
+      "exitCode": 0,
+      "logCapExceeded": false,
+      "name": "install-exact-cohort",
+      "stderr": {
+        "path": "/out/logs/04-install-exact-cohort.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "retainedBytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/out/logs/04-install-exact-cohort.stdout.log",
+        "rawBytes": 3462,
+        "rawSha256": "3ca6eb11af235ba9954ec5c6e02697163d4a6c37e2617853fea9ac99c0e9f903",
+        "retainedBytes": 3462,
+        "sha256": "3ca6eb11af235ba9954ec5c6e02697163d4a6c37e2617853fea9ac99c0e9f903",
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 180
+    },
+    {
+      "argv": [
+        "/venv/bin/python",
+        "-I",
+        "-m",
+        "pip",
+        "--isolated",
+        "check"
+      ],
+      "captureStatus": "PASS_CAPTURE_CLOSED",
+      "drainExpired": false,
+      "elapsedSeconds": 0.363,
+      "exitCode": 0,
+      "logCapExceeded": false,
+      "name": "pip-check",
+      "stderr": {
+        "path": "/out/logs/05-pip-check.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "retainedBytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/out/logs/05-pip-check.stdout.log",
+        "rawBytes": 30,
+        "rawSha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+        "retainedBytes": 30,
+        "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 60
+    },
+    {
+      "argv": [
+        "/venv/bin/python",
+        "-I",
+        "/operator/verify_installed_weft.py",
+        "--wheel",
+        "/cohort/aggregate/mirror/files/umf_weft-0.4.56-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "--sha256",
+        "32f4c38d9a614dd4c3a367f8b24d5cd4ba41ec80c2a4a2e3423e2082a294dbdd",
+        "--size-bytes",
+        "14358901"
+      ],
+      "captureStatus": "PASS_CAPTURE_CLOSED",
+      "drainExpired": false,
+      "elapsedSeconds": 0.428,
+      "exitCode": 0,
+      "logCapExceeded": false,
+      "name": "candidate-wheel-physical-match",
+      "stderr": {
+        "path": "/out/logs/06-candidate-wheel-physical-match.stderr.log",
+        "rawBytes": 0,
+        "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "retainedBytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "truncated": false
+      },
+      "stdout": {
+        "path": "/out/logs/06-candidate-wheel-physical-match.stdout.log",
+        "rawBytes": 448,
+        "rawSha256": "a01a0efadbe3ccab2cca4132f63988af7543d6da1e95bb850364fe0c2177f823",
+        "retainedBytes": 448,
+        "sha256": "a01a0efadbe3ccab2cca4132f63988af7543d6da1e95bb850364fe0c2177f823",
+        "truncated": false
+      },
+      "timedOut": false,
+      "timeoutSeconds": 60
+    }
+  ],
+  "error": "No module named 'psycopg'",
+  "errorType": "ModuleNotFoundError",
+  "profile": "umf.g03-full14-setup/1",
+  "rawLogBytes": 5127,
+  "sourceSealSha256": "23a16e87f53df619ad06ffcfe9e234efe0394287b5437070a13209e06c945ccf",
+  "status": "FAIL_OR_UNKNOWN"
+}

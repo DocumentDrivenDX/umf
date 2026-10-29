@@ -1,0 +1,59 @@
+{
+  "argv": [
+    "docker",
+    "run",
+    "--rm",
+    "--pull=never",
+    "--platform=linux/amd64",
+    "--name",
+    "g03-cache-controls-a50d4ddff2764a578dc4af182439f538",
+    "--network=none",
+    "--read-only",
+    "--cap-drop=ALL",
+    "--cpus=1",
+    "--memory=512m",
+    "--pids-limit=64",
+    "--tmpfs=/tmp:rw,nosuid,nodev,size=64m",
+    "--mount",
+    "type=bind,source=/private/tmp/g03-linux-locked-cargo-cache-operator-007,target=/controls,readonly",
+    "-e",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "--entrypoint=/usr/bin/timeout",
+    "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "60s",
+    "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11",
+    "/controls/source_regression_controls.py"
+  ],
+  "elapsedSeconds": 0.69,
+  "exitCode": 0,
+  "imageId": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+  "logs": [
+    {
+      "path": "stdout.log",
+      "sha256": "59e8f0adc6cc99c35b289dbbcc2f5e94048e8c6a7951a4adc6ef4dcef9b30347",
+      "sizeBytes": 232
+    },
+    {
+      "path": "stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    }
+  ],
+  "ownedContainerAbsent": true,
+  "scope": "Three synthetic pure-helper regression families only; no acquisition main, Cargo, Git, network, product or macOS execution",
+  "sourceAfter": {
+    "integrity-manifest.json": "5c3028d23925734ff3d55f7c75796a371c0bd080c63b76ac843d15214dfda8a0",
+    "run_acquisition.py": "c9ef4a931453eee1f59f847d03563c4b58b0eefcd23b0e42a180d8a267df8cb3",
+    "runtime/acquisition_guest.py": "02ac4f7e339d0657354c833412d65ad976b47068a56142f609c4d0ef103c350f",
+    "source_regression_controls.py": "d9f3089b05a8a35f3d2972b6848b7be14eb0ffa2571272b9ba317ba6634888f6"
+  },
+  "sourceBefore": {
+    "integrity-manifest.json": "5c3028d23925734ff3d55f7c75796a371c0bd080c63b76ac843d15214dfda8a0",
+    "run_acquisition.py": "c9ef4a931453eee1f59f847d03563c4b58b0eefcd23b0e42a180d8a267df8cb3",
+    "runtime/acquisition_guest.py": "02ac4f7e339d0657354c833412d65ad976b47068a56142f609c4d0ef103c350f",
+    "source_regression_controls.py": "d9f3089b05a8a35f3d2972b6848b7be14eb0ffa2571272b9ba317ba6634888f6"
+  },
+  "status": "PASS"
+}
