@@ -1,0 +1,526 @@
+{
+  "capture": {
+    "umf": "0.10.0",
+    "id": "unknown",
+    "vocabularies": {
+      "umf.parquet": {
+        "version": "0.1.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "parquet",
+        "namespace": "",
+        "elements": [
+          {
+            "id": "source",
+            "extensions": {
+              "umf.parquet": {
+                "profile": "parquet-file-source",
+                "encoding": "hex",
+                "bytes": "504152311502191c15a413380161001600190c08c60101ff08c6010180001a00000050415231"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "framing": {
+    "source": {
+      "umf": "0.10.0",
+      "id": "unknown",
+      "vocabularies": {
+        "umf.parquet": {
+          "version": "0.1.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "parquet",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "source",
+              "extensions": {
+                "umf.parquet": {
+                  "profile": "parquet-file-source",
+                  "encoding": "hex",
+                  "bytes": "504152311502191c15a413380161001600190c08c60101ff08c6010180001a00000050415231"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "status": "located",
+    "complete": false,
+    "byteLength": 38,
+    "diagnostics": [
+      {
+        "code": "PARQUET_UNINTERPRETED",
+        "path": "",
+        "severity": "warning",
+        "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+      }
+    ],
+    "footerRegion": {
+      "offset": 4,
+      "length": 26,
+      "mode": "plaintext-or-signed"
+    }
+  },
+  "footer": {
+    "source": {
+      "umf": "0.10.0",
+      "id": "unknown",
+      "vocabularies": {
+        "umf.parquet": {
+          "version": "0.1.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "parquet",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "source",
+              "extensions": {
+                "umf.parquet": {
+                  "profile": "parquet-file-source",
+                  "encoding": "hex",
+                  "bytes": "504152311502191c15a413380161001600190c08c60101ff08c6010180001a00000050415231"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "status": "decoded",
+    "complete": false,
+    "diagnostics": [
+      {
+        "code": "PARQUET_UNINTERPRETED",
+        "path": "",
+        "severity": "warning",
+        "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+      },
+      {
+        "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+        "path": "",
+        "severity": "warning",
+        "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+      }
+    ],
+    "value": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "value": {
+            "kind": "i32",
+            "value": "1"
+          }
+        },
+        {
+          "id": 2,
+          "value": {
+            "kind": "list",
+            "elementType": "struct",
+            "items": [
+              {
+                "kind": "struct",
+                "fields": [
+                  {
+                    "id": 1,
+                    "value": {
+                      "kind": "i32",
+                      "value": "1234"
+                    }
+                  },
+                  {
+                    "id": 4,
+                    "value": {
+                      "kind": "binary",
+                      "hex": "61"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 3,
+          "value": {
+            "kind": "i64",
+            "value": "0"
+          }
+        },
+        {
+          "id": 4,
+          "value": {
+            "kind": "list",
+            "elementType": "struct",
+            "items": []
+          }
+        },
+        {
+          "id": 99,
+          "value": {
+            "kind": "binary",
+            "hex": "ff"
+          }
+        },
+        {
+          "id": 99,
+          "value": {
+            "kind": "binary",
+            "hex": "80"
+          }
+        }
+      ]
+    },
+    "consumedBytes": 26,
+    "trailingBytes": 0
+  },
+  "metadata": {
+    "source": {
+      "umf": "0.10.0",
+      "id": "unknown",
+      "vocabularies": {
+        "umf.parquet": {
+          "version": "0.1.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "parquet",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "source",
+              "extensions": {
+                "umf.parquet": {
+                  "profile": "parquet-file-source",
+                  "encoding": "hex",
+                  "bytes": "504152311502191c15a413380161001600190c08c60101ff08c6010180001a00000050415231"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "status": "mapped",
+    "complete": false,
+    "diagnostics": [
+      {
+        "code": "PARQUET_UNINTERPRETED",
+        "path": "",
+        "severity": "warning",
+        "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+      },
+      {
+        "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+        "path": "",
+        "severity": "warning",
+        "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+      },
+      {
+        "code": "PARQUET_ENUM_UNKNOWN",
+        "path": "/schema/0/type",
+        "severity": "warning",
+        "message": "Unknown Type code retained: 1234"
+      },
+      {
+        "code": "PARQUET_FIELD_UNKNOWN",
+        "path": "",
+        "severity": "warning",
+        "message": "Unknown field 99 retained in $unknown"
+      },
+      {
+        "code": "PARQUET_FIELD_UNKNOWN",
+        "path": "",
+        "severity": "warning",
+        "message": "Unknown field 99 retained in $unknown"
+      },
+      {
+        "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+        "path": "",
+        "severity": "warning",
+        "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+      }
+    ],
+    "wire": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "value": {
+            "kind": "i32",
+            "value": "1"
+          }
+        },
+        {
+          "id": 2,
+          "value": {
+            "kind": "list",
+            "elementType": "struct",
+            "items": [
+              {
+                "kind": "struct",
+                "fields": [
+                  {
+                    "id": 1,
+                    "value": {
+                      "kind": "i32",
+                      "value": "1234"
+                    }
+                  },
+                  {
+                    "id": 4,
+                    "value": {
+                      "kind": "binary",
+                      "hex": "61"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 3,
+          "value": {
+            "kind": "i64",
+            "value": "0"
+          }
+        },
+        {
+          "id": 4,
+          "value": {
+            "kind": "list",
+            "elementType": "struct",
+            "items": []
+          }
+        },
+        {
+          "id": 99,
+          "value": {
+            "kind": "binary",
+            "hex": "ff"
+          }
+        },
+        {
+          "id": 99,
+          "value": {
+            "kind": "binary",
+            "hex": "80"
+          }
+        }
+      ]
+    },
+    "metadata": {
+      "version": "1",
+      "schema": [
+        {
+          "type": "1234",
+          "name": "a"
+        }
+      ],
+      "num_rows": "0",
+      "row_groups": [],
+      "$unknown": [
+        {
+          "id": 99,
+          "value": {
+            "kind": "binary",
+            "hex": "ff"
+          }
+        },
+        {
+          "id": 99,
+          "value": {
+            "kind": "binary",
+            "hex": "80"
+          }
+        }
+      ]
+    }
+  },
+  "schema": {
+    "source": {
+      "umf": "0.10.0",
+      "id": "unknown",
+      "vocabularies": {
+        "umf.parquet": {
+          "version": "0.1.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "parquet",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "source",
+              "extensions": {
+                "umf.parquet": {
+                  "profile": "parquet-file-source",
+                  "encoding": "hex",
+                  "bytes": "504152311502191c15a413380161001600190c08c60101ff08c6010180001a00000050415231"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "status": "blocked",
+    "complete": false,
+    "diagnostics": [
+      {
+        "code": "PARQUET_UNINTERPRETED",
+        "path": "",
+        "severity": "warning",
+        "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+      },
+      {
+        "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+        "path": "",
+        "severity": "warning",
+        "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+      },
+      {
+        "code": "PARQUET_ENUM_UNKNOWN",
+        "path": "/schema/0/type",
+        "severity": "warning",
+        "message": "Unknown Type code retained: 1234"
+      },
+      {
+        "code": "PARQUET_FIELD_UNKNOWN",
+        "path": "",
+        "severity": "warning",
+        "message": "Unknown field 99 retained in $unknown"
+      },
+      {
+        "code": "PARQUET_FIELD_UNKNOWN",
+        "path": "",
+        "severity": "warning",
+        "message": "Unknown field 99 retained in $unknown"
+      },
+      {
+        "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+        "path": "",
+        "severity": "warning",
+        "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+      },
+      {
+        "code": "PARQUET_SCHEMA_STRUCTURE",
+        "path": "/schema/0",
+        "severity": "error",
+        "message": "Root must be a group"
+      }
+    ],
+    "wire": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "value": {
+            "kind": "i32",
+            "value": "1"
+          }
+        },
+        {
+          "id": 2,
+          "value": {
+            "kind": "list",
+            "elementType": "struct",
+            "items": [
+              {
+                "kind": "struct",
+                "fields": [
+                  {
+                    "id": 1,
+                    "value": {
+                      "kind": "i32",
+                      "value": "1234"
+                    }
+                  },
+                  {
+                    "id": 4,
+                    "value": {
+                      "kind": "binary",
+                      "hex": "61"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": 3,
+          "value": {
+            "kind": "i64",
+            "value": "0"
+          }
+        },
+        {
+          "id": 4,
+          "value": {
+            "kind": "list",
+            "elementType": "struct",
+            "items": []
+          }
+        },
+        {
+          "id": 99,
+          "value": {
+            "kind": "binary",
+            "hex": "ff"
+          }
+        },
+        {
+          "id": 99,
+          "value": {
+            "kind": "binary",
+            "hex": "80"
+          }
+        }
+      ]
+    },
+    "metadata": {
+      "version": "1",
+      "schema": [
+        {
+          "type": "1234",
+          "name": "a"
+        }
+      ],
+      "num_rows": "0",
+      "row_groups": [],
+      "$unknown": [
+        {
+          "id": 99,
+          "value": {
+            "kind": "binary",
+            "hex": "ff"
+          }
+        },
+        {
+          "id": 99,
+          "value": {
+            "kind": "binary",
+            "hex": "80"
+          }
+        }
+      ]
+    }
+  }
+}

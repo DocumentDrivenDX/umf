@@ -108,6 +108,9 @@ pub fn export_parquet_capture(
     if !validation.valid {
         return Err(error("PARQUET_CAPTURE", "Invalid Parquet capture envelope"));
     }
+    if find_module(document, "parquet.fields").is_some() {
+        check_parquet_field_metadata(document, engine, registry, capabilities, ctx)?;
+    }
     source_bytes(&copied, ctx).map_err(|e| {
         if e.code == "PARQUET_UNKNOWN_CONTENT" {
             error(
@@ -120,6 +123,240 @@ pub fn export_parquet_capture(
     })
 }
 
+fn find_module<'a>(document: &'a Value, id: &str) -> Option<&'a Value> {
+    let Value::Array(modules) = value_member(document, "modules")? else {
+        return None;
+    };
+    modules
+        .iter()
+        .find(|module| text_member(module, "id").as_deref() == Some(id))
+}
+
+fn unknown_content(value: &Value) -> bool {
+    match value {
+        Value::Array(values) => values.iter().any(unknown_content),
+        Value::Object(fields) => fields.iter().any(|(name, value)| {
+            (name == &Utf16::from("$unknown")
+                && matches!(value, Value::Array(values) if !values.is_empty()))
+                || unknown_content(value)
+        }),
+        _ => false,
+    }
+}
+
+fn field_scalar_type(element: &Value) -> Option<&'static str> {
+    if unknown_content(element) {
+        return None;
+    }
+    let physical = text_member(element, "type")?;
+    let physical_scalar = match physical.as_str() {
+        "0" => "boolean",
+        "1" | "2" => "integer",
+        "4" | "5" => "float",
+        "6" | "7" => "binary",
+        _ => return None,
+    };
+    let converted = text_member(element, "converted_type");
+    let logical = value_member(element, "logicalType");
+    if logical.is_none() && converted.is_none() {
+        return Some(physical_scalar);
+    }
+
+    let mut name = None;
+    let mut parameters = None;
+    if let Some(logical) = logical {
+        if let Value::Object(fields) = logical {
+            if let Some((key, value)) = fields.iter().find(|(key, _)| key != &Utf16::from("$unknown")) {
+                name = key.to_utf8().ok();
+                parameters = Some(value);
+            }
+        }
+    } else if let Some(code) = converted.as_deref().and_then(|s| s.parse::<usize>().ok()) {
+        const LEGACY: &[&str] = &[
+            "STRING", "MAP", "MAP_KEY_VALUE", "LIST", "ENUM", "DECIMAL", "DATE",
+            "TIME_MILLIS", "TIME_MICROS", "TIMESTAMP_MILLIS", "TIMESTAMP_MICROS",
+            "UINT_8", "UINT_16", "UINT_32", "UINT_64", "INT_8", "INT_16", "INT_32",
+            "INT_64", "JSON", "BSON", "INTERVAL",
+        ];
+        name = LEGACY.get(code).map(|s| (*s).to_owned());
+    }
+    let mut name = name?;
+    let params = parameters;
+    let mut unit = None;
+    if name == "TIME_MILLIS" || name == "TIME_MICROS" || name == "TIMESTAMP_MILLIS" || name == "TIMESTAMP_MICROS" {
+        let is_time = name.starts_with("TIME_");
+        let micros = name.ends_with("MICROS");
+        name = if is_time { "TIME".into() } else { "TIMESTAMP".into() };
+        unit = Some(if micros { "MICROS" } else { "MILLIS" }.to_owned());
+    }
+    if name.starts_with("UINT_") || name.starts_with("INT_") {
+        let width = name.rsplit('_').next()?;
+        if !matches!(width, "8" | "16" | "32" | "64")
+            || (width == "64" && physical != "2")
+            || (width != "64" && physical != "1")
+        {
+            return None;
+        }
+        return Some("integer");
+    }
+    match name.as_str() {
+        "STRING" | "ENUM" if physical == "6" => Some("string"),
+        "DATE" if physical == "1" => Some("date"),
+        "INTEGER" => {
+            let params = params?;
+            let width = text_member(params, "bitWidth")?;
+            let signed = value_member(params, "isSigned")?;
+            if !matches!(signed, Value::Bool(_))
+                || !matches!(width.as_str(), "8" | "16" | "32" | "64")
+                || (width == "64" && physical != "2")
+                || (width != "64" && physical != "1")
+            {
+                None
+            } else {
+                Some("integer")
+            }
+        }
+        "FLOAT16" if physical == "7" && text_member(element, "type_length").as_deref() == Some("2") => Some("float"),
+        "DECIMAL" => {
+            if !matches!(physical.as_str(), "1" | "2" | "6" | "7") {
+                return None;
+            }
+            let precision = if let Some(params) = params {
+                text_member(params, "precision")
+            } else {
+                text_member(element, "precision")
+            }?.parse::<i128>().ok()?;
+            let scale = if let Some(params) = params {
+                text_member(params, "scale")
+            } else {
+                text_member(element, "scale").or_else(|| Some("0".into()))
+            }?.parse::<i128>().ok()?;
+            if precision <= 0 || scale < 0 || scale > precision {
+                return None;
+            }
+            if physical == "1" && precision > 9 || physical == "2" && precision > 18 {
+                return None;
+            }
+            if physical == "7" {
+                let length = text_member(element, "type_length")?.parse::<u128>().ok()?;
+                if length > 4096 {
+                    return None;
+                }
+                let max_precision = (length * 8 - 1) * 30_103 / 100_000;
+                if precision as u128 > max_precision {
+                    return None;
+                }
+            }
+            Some("decimal")
+        }
+        "TIME" | "TIMESTAMP" => {
+            let unit = unit.or_else(|| {
+                let unit = value_member(params?, "unit")?;
+                let Value::Object(fields) = unit else {
+                    return None;
+                };
+                fields
+                    .iter()
+                    .find(|(key, _)| key != &Utf16::from("$unknown"))
+                    .and_then(|(key, _)| key.to_utf8().ok())
+                    .filter(|v| matches!(v.as_str(), "MILLIS" | "MICROS" | "NANOS"))
+            });
+            let unit = unit.as_deref()?;
+            if (name == "TIME" && unit == "MILLIS" && physical == "1")
+                || (physical == "2" && !(name == "TIME" && unit == "MILLIS"))
+            {
+                Some(if name == "TIME" { "time" } else { "timestamp" })
+            } else {
+                None
+            }
+        }
+        _ => None,
+    }
+}
+
+fn check_parquet_field_metadata(
+    document: &Value,
+    engine: &Engine,
+    registry: &Registry,
+    capabilities: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    let field_module = find_module(document, "parquet.fields").expect("module checked by caller");
+    let mismatch = || {
+        error(
+            "PARQUET_FIELD_METADATA",
+            "Native schema and core field metadata disagree",
+        )
+    };
+    let mut raw = object([
+        ("umf", value_member(document, "umf").cloned().unwrap_or(Value::Null)),
+        ("id", value_member(document, "id").cloned().unwrap_or(Value::Null)),
+        (
+            "vocabularies",
+            object([(
+                "umf.parquet",
+                value_member(value_member(document, "vocabularies").unwrap_or(&Value::Null), "umf.parquet")
+                    .cloned()
+                    .unwrap_or(Value::Null),
+            )]),
+        ),
+        ("modules", array([])),
+    ]);
+    let parquet_module = find_module(document, "parquet").ok_or_else(mismatch)?;
+    let source_element = match value_member(parquet_module, "elements") {
+        Some(Value::Array(elements)) => elements
+            .iter()
+            .find(|element| text_member(element, "id").as_deref() == Some("source")),
+        _ => None,
+    }
+    .ok_or_else(mismatch)?;
+    let payload = value_member(
+        value_member(source_element, "extensions").unwrap_or(&Value::Null),
+        "umf.parquet",
+    )
+    .cloned()
+    .ok_or_else(mismatch)?;
+    let source = object([("id", string("source")), ("extensions", object([("umf.parquet", payload)]))]);
+    let parquet = object([
+        ("id", string("parquet")),
+        ("namespace", string("")),
+        ("elements", array([source])),
+    ]);
+    if let Value::Object(fields) = &mut raw {
+        if let Some((_, modules)) = fields.iter_mut().find(|(key, _)| key == &Utf16::from("modules")) {
+            *modules = array([parquet]);
+        }
+    }
+    let inspection = inspect_parquet_schema(&raw, engine, registry, capabilities, ctx)?;
+    if text_member(&inspection, "status").as_deref() != Some("checked") {
+        return Err(mismatch());
+    }
+    let schema = value_member(value_member(&inspection, "metadata").ok_or_else(mismatch)?, "schema")
+        .and_then(|v| match v {
+            Value::Array(values) => Some(values),
+            _ => None,
+        })
+        .ok_or_else(mismatch)?;
+    let Some(Value::Array(elements)) = value_member(field_module, "elements") else {
+        return Err(mismatch());
+    };
+    if text_member(field_module, "namespace").as_deref() != Some("") || elements.len() != schema.len().saturating_sub(1) {
+        return Err(mismatch());
+    }
+    for (offset, (element, native)) in elements.iter().zip(schema.iter().skip(1)).enumerate() {
+        let expected_id = format!("schema:{}", offset + 1);
+        let expected_id = string(expected_id);
+        let expected_scalar = field_scalar_type(native).map(string);
+        if value_member(element, "id") != Some(&expected_id)
+            || value_member(element, "name") != value_member(native, "name")
+            || value_member(element, "scalarType") != expected_scalar.as_ref()
+        {
+            return Err(mismatch());
+        }
+    }
+    Ok(())
+}
+
 fn diagnostic(code: &str, path: &str, severity: &str, message: &str) -> Value {
     object([
         ("code", string(code)),
@@ -130,6 +367,21 @@ fn diagnostic(code: &str, path: &str, severity: &str, message: &str) -> Value {
 }
 fn diagnostics(values: impl IntoIterator<Item = Value>) -> Value {
     array(values)
+}
+fn value_member<'a>(value: &'a Value, key: &str) -> Option<&'a Value> {
+    match value {
+        Value::Object(fields) => fields
+            .iter()
+            .find(|(name, _)| name == &Utf16::from(key))
+            .map(|(_, value)| value),
+        _ => None,
+    }
+}
+fn text_member(value: &Value, key: &str) -> Option<String> {
+    match value_member(value, key)? {
+        Value::String(value) => value.to_utf8().ok(),
+        _ => None,
+    }
 }
 
 #[cfg(test)]
@@ -518,14 +770,40 @@ pub fn decode_parquet_footer(
     capabilities: &mut dyn Capabilities,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
-    let source = copy_json(document, ctx)?;
-    let bytes = export_parquet_capture(&source, engine, registry, capabilities, ctx)?;
+    let framing = inspect_parquet_framing(document, engine, registry, capabilities, ctx)?;
+    let source = value_member(&framing, "source")
+        .ok_or_else(|| error("PARQUET_CAPTURE", "Framing result omitted its source"))?
+        .clone();
     let mut out = vec![
         ("source", source),
         ("status", string("blocked")),
         ("complete", Value::Bool(false)),
     ];
-    let mut ds = Vec::new();
+    let mut ds = value_member(&framing, "diagnostics")
+        .and_then(|value| match value {
+            Value::Array(values) => Some(values.clone()),
+            _ => None,
+        })
+        .unwrap_or_default();
+    let Some(region) = value_member(&framing, "footerRegion") else {
+        out.push(("diagnostics", diagnostics(ds)));
+        return Ok(Value::Object(
+            out.into_iter().map(|(k, v)| (Utf16::from(k), v)).collect(),
+        ));
+    };
+    if text_member(region, "mode").as_deref() == Some("encrypted") {
+        ds.push(diagnostic(
+            "PARQUET_FOOTER_ENCRYPTED",
+            "",
+            "error",
+            "Encrypted footer requires a separate decryption implementation",
+        ));
+        out.push(("diagnostics", diagnostics(ds)));
+        return Ok(Value::Object(
+            out.into_iter().map(|(k, v)| (Utf16::from(k), v)).collect(),
+        ));
+    }
+    let bytes = export_parquet_capture(document, engine, registry, capabilities, ctx)?;
     match parquet_schema_decode::decode_compact_footer(&bytes, ctx) {
         Ok(DecodedFooter {
             value,
@@ -542,8 +820,9 @@ pub fn decode_parquet_footer(
             }
             ds.push(diagnostic("PARQUET_FOOTER_SEMANTICS_UNVERIFIED", "", "warning", "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"));
         }
+        Err(e) if e.is_control_failure() => return Err(e),
         Err(e) => ds.push(diagnostic(
-            &e.code,
+            "PARQUET_FOOTER_DECODE",
             "",
             "error",
             &e.message.to_utf8().unwrap_or_default(),
@@ -614,11 +893,11 @@ pub fn inspect_parquet_framing(
 fn metadata_parts(
     bytes: &[u8],
     ctx: &mut Context<'_>,
-) -> (Option<DecodedFooter>, Option<Json>, Vec<Value>, String) {
-    let decoded = match parquet_schema_decode::decode_compact_footer(bytes, ctx) {
-        Ok(value) => value,
+) -> Result<(Option<DecodedFooter>, Option<Json>, Vec<Value>, String), EngineError> {
+    let region = match parquet_schema_decode::locate_footer(bytes) {
+        Ok(region) => region,
         Err(e) => {
-            return (
+            return Ok((
                 None,
                 None,
                 vec![diagnostic(
@@ -628,10 +907,42 @@ fn metadata_parts(
                     &e.message.to_utf8().unwrap_or_default(),
                 )],
                 "blocked".into(),
-            )
+            ));
         }
     };
-    let mut ds = Vec::new();
+    let mut ds = vec![diagnostic(
+        "PARQUET_UNINTERPRETED",
+        "",
+        "warning",
+        "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+    )];
+    if region.encrypted {
+        ds.push(diagnostic(
+            "PARQUET_FOOTER_ENCRYPTED",
+            "",
+            "error",
+            "Encrypted footer requires a separate decryption implementation",
+        ));
+        return Ok((None, None, ds, "blocked".into()));
+    }
+    let decoded = match parquet_schema_decode::decode_compact_footer(bytes, ctx) {
+        Ok(value) => value,
+        Err(e) if e.is_control_failure() => return Err(e),
+        Err(e) => {
+            ds.push(diagnostic(
+                "PARQUET_FOOTER_DECODE",
+                "",
+                "error",
+                &e.message.to_utf8().unwrap_or_default(),
+            ));
+            return Ok((
+                None,
+                None,
+                ds,
+                "blocked".into(),
+            ));
+        }
+    };
     if decoded.trailing_bytes != 0 {
         ds.push(diagnostic("PARQUET_FOOTER_TRAILING", "", "warning", "Bytes remain after the first struct; source retains them without interpreting signatures or other content"));
     }
@@ -639,7 +950,7 @@ fn metadata_parts(
     let tree = match compact_as_json(&decoded.value) {
         Ok(value) => value,
         Err(message) => {
-            return (
+            return Ok((
                 Some(decoded),
                 None,
                 {
@@ -647,13 +958,13 @@ fn metadata_parts(
                     ds
                 },
                 "blocked".into(),
-            )
+            ));
         }
     };
     let idl: Json = match serde_json::from_str(IDL) {
         Ok(value) => value,
         Err(_) => {
-            return (
+            return Ok((
                 Some(decoded),
                 None,
                 {
@@ -666,13 +977,13 @@ fn metadata_parts(
                     ds
                 },
                 "blocked".into(),
-            )
+            ));
         }
     };
     let defs = match idl.get("definitions").and_then(Json::as_object) {
         Some(value) => value,
         None => {
-            return (
+            return Ok((
                 Some(decoded),
                 None,
                 {
@@ -685,7 +996,7 @@ fn metadata_parts(
                     ds
                 },
                 "blocked".into(),
-            )
+            ));
         }
     };
     let mapped = map_idl_value(
@@ -698,21 +1009,21 @@ fn metadata_parts(
     match mapped {
         Ok(metadata) => {
             ds.push(diagnostic("PARQUET_METADATA_SEMANTICS_UNVERIFIED", "", "warning", "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"));
-            (
+            Ok((
                 Some(decoded),
                 Some(serde_json::json!({"wire":tree,"metadata":metadata})),
                 ds,
                 "mapped".into(),
-            )
+            ))
         }
         Err(message) => {
             ds.push(diagnostic("PARQUET_METADATA_SHAPE", "", "error", &message));
-            (
+            Ok((
                 Some(decoded),
                 Some(serde_json::json!({"wire":tree})),
                 ds,
                 "blocked".into(),
-            )
+            ))
         }
     }
 }
@@ -729,7 +1040,7 @@ pub fn inspect_parquet_metadata(
 ) -> Result<Value, EngineError> {
     let source = copy_json(document, ctx)?;
     let bytes = export_parquet_capture(&source, engine, registry, capabilities, ctx)?;
-    let (_, mapped, ds, status) = metadata_parts(&bytes, ctx);
+    let (_, mapped, ds, status) = metadata_parts(&bytes, ctx)?;
     let mut out = vec![
         ("source", source),
         ("status", string(status)),
@@ -919,7 +1230,7 @@ pub fn inspect_parquet_schema(
 ) -> Result<Value, EngineError> {
     let source = copy_json(document, ctx)?;
     let bytes = export_parquet_capture(&source, engine, registry, capabilities, ctx)?;
-    let (_, mapped, mut ds, status) = metadata_parts(&bytes, ctx);
+    let (_, mapped, mut ds, status) = metadata_parts(&bytes, ctx)?;
     let mut out = vec![
         ("source", source),
         ("status", string("blocked")),
@@ -1509,6 +1820,371 @@ mod tests {
     }
 
     #[test]
+    fn six_public_capture_inspection_results_match_typescript_golden_envelope() {
+        let expected: Json = serde_json::from_str(include_str!(
+            "../../../fixtures/parquet/rust-migration/list-tuple-capture-inspection.expected.json"
+        ))
+        .unwrap();
+        let bytes = fixture("fixtures/parquet/containers/list-tuple.parquet");
+        let engine = engine();
+        let registry = Registry::new();
+        let mut capabilities = NoCapabilities;
+        let capture = document(&bytes, "golden", &engine, &registry, &mut capabilities);
+        let export = export_parquet_capture(
+            &capture,
+            &engine,
+            &registry,
+            &mut capabilities,
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        let mut hex = String::with_capacity(export.len() * 2);
+        const HEX: &[u8; 16] = b"0123456789abcdef";
+        for byte in export {
+            hex.push(HEX[(byte >> 4) as usize] as char);
+            hex.push(HEX[(byte & 15) as usize] as char);
+        }
+        let actual = object([
+            ("capture", capture.clone()),
+            ("exportHex", string(hex)),
+            (
+                "framing",
+                inspect_parquet_framing(
+                    &capture,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut Context::ordinary(),
+                )
+                .unwrap(),
+            ),
+            (
+                "footer",
+                decode_parquet_footer(
+                    &capture,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut Context::ordinary(),
+                )
+                .unwrap(),
+            ),
+            (
+                "metadata",
+                inspect_parquet_metadata(
+                    &capture,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut Context::ordinary(),
+                )
+                .unwrap(),
+            ),
+            (
+                "schema",
+                inspect_parquet_schema(
+                    &capture,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut Context::ordinary(),
+                )
+                .unwrap(),
+            ),
+        ]);
+        fn normalize_numbers(value: Json) -> Json {
+            match value {
+                Json::Number(number) => Number::from_f64(number.as_f64().unwrap()).map_or(Json::Null, Json::Number),
+                Json::Array(values) => Json::Array(values.into_iter().map(normalize_numbers).collect()),
+                Json::Object(values) => Json::Object(
+                    values
+                        .into_iter()
+                        .map(|(key, value)| (key, normalize_numbers(value)))
+                        .collect(),
+                ),
+                other => other,
+            }
+        }
+        assert_eq!(
+            normalize_numbers(to_json(&actual).unwrap()),
+            normalize_numbers(expected)
+        );
+    }
+
+    #[test]
+    fn unknown_footer_public_results_match_typescript_diagnostic_golden() {
+        let expected: Json = serde_json::from_str(include_str!(
+            "../../../fixtures/parquet/rust-migration/unknown-footer-inspection.expected.json"
+        ))
+        .unwrap();
+        let body = [
+            0x15, 2, 0x19, 0x1c, 0x15, 0xa4, 0x13, 0x38, 1, b'a', 0, 0x16, 0, 0x19, 0x0c,
+        ];
+        let mut footer = body.to_vec();
+        footer.extend_from_slice(&[0x08, 0xc6, 1, 1, 255, 0x08, 0xc6, 1, 1, 128, 0]);
+        let mut bytes = b"PAR1".to_vec();
+        bytes.extend_from_slice(&footer);
+        bytes.extend_from_slice(&(footer.len() as u32).to_le_bytes());
+        bytes.extend_from_slice(b"PAR1");
+
+        let engine = engine();
+        let registry = Registry::new();
+        let mut capabilities = NoCapabilities;
+        let capture = document(&bytes, "unknown", &engine, &registry, &mut capabilities);
+        let actual = object([
+            ("capture", capture.clone()),
+            (
+                "framing",
+                inspect_parquet_framing(
+                    &capture,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut Context::ordinary(),
+                )
+                .unwrap(),
+            ),
+            (
+                "footer",
+                decode_parquet_footer(
+                    &capture,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut Context::ordinary(),
+                )
+                .unwrap(),
+            ),
+            (
+                "metadata",
+                inspect_parquet_metadata(
+                    &capture,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut Context::ordinary(),
+                )
+                .unwrap(),
+            ),
+            (
+                "schema",
+                inspect_parquet_schema(
+                    &capture,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut Context::ordinary(),
+                )
+                .unwrap(),
+            ),
+        ]);
+        fn normalize_numbers(value: Json) -> Json {
+            match value {
+                Json::Number(number) => Number::from_f64(number.as_f64().unwrap())
+                    .map_or(Json::Null, Json::Number),
+                Json::Array(values) => {
+                    Json::Array(values.into_iter().map(normalize_numbers).collect())
+                }
+                Json::Object(values) => Json::Object(
+                    values
+                        .into_iter()
+                        .map(|(key, value)| (key, normalize_numbers(value)))
+                        .collect(),
+                ),
+                other => other,
+            }
+        }
+        assert_eq!(
+            normalize_numbers(to_json(&actual).unwrap()),
+            normalize_numbers(expected)
+        );
+    }
+
+    #[test]
+    fn native_field_metadata_must_match_before_export_or_derived_inspection() {
+        let engine = engine();
+        let registry = Registry::new();
+        let mut capabilities = NoCapabilities;
+        let bytes = fixture("fixtures/parquet/rename/none.parquet");
+        let mut doc = document(&bytes, "field-metadata", &engine, &registry, &mut capabilities);
+        let inspected = inspect_parquet_schema(
+            &doc,
+            &engine,
+            &registry,
+            &mut capabilities,
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        let schema = match value_member(value_member(&inspected, "metadata").unwrap(), "schema")
+            .unwrap()
+        {
+            Value::Array(schema) => schema,
+            _ => panic!("schema metadata must be an array"),
+        };
+        let elements = schema
+            .iter()
+            .enumerate()
+            .skip(1)
+            .map(|(index, native)| {
+                let mut fields = vec![
+                    (Utf16::from("id"), string(format!("schema:{index}"))),
+                    (
+                        Utf16::from("name"),
+                        value_member(native, "name").unwrap().clone(),
+                    ),
+                ];
+                if let Some(scalar_type) = field_scalar_type(native) {
+                    fields.push((Utf16::from("scalarType"), string(scalar_type)));
+                }
+                fields.push((
+                    Utf16::from("extensions"),
+                    object(std::iter::empty::<(&str, Value)>()),
+                ));
+                Value::Object(fields)
+            })
+            .collect::<Vec<_>>();
+        let fields_module = object([
+            ("id", string("parquet.fields")),
+            ("namespace", string("")),
+            ("elements", array(elements)),
+        ]);
+        {
+            let Value::Object(document_fields) = &mut doc else {
+                panic!("captured document must be an object");
+            };
+            let (_, modules) = document_fields
+                .iter_mut()
+                .find(|(key, _)| key == &Utf16::from("modules"))
+                .unwrap();
+            let Value::Array(modules) = modules else {
+                panic!("modules must be an array");
+            };
+            modules.push(fields_module);
+        }
+        assert_eq!(
+            export_parquet_capture(
+                &doc,
+                &engine,
+                &registry,
+                &mut capabilities,
+                &mut Context::ordinary(),
+            )
+            .unwrap(),
+            bytes
+        );
+        let baseline = to_json(&doc).unwrap();
+        for mutation in ["name", "scalarType", "id", "count", "namespace"] {
+            let mut json = baseline.clone();
+            let fields_module = json["modules"]
+                .as_array_mut()
+                .unwrap()
+                .last_mut()
+                .unwrap();
+            match mutation {
+                "name" => fields_module["elements"][0]["name"] = serde_json::json!("contradictory-name"),
+                "scalarType" => {
+                    let expected = fields_module["elements"][0]["scalarType"].as_str();
+                    fields_module["elements"][0]["scalarType"] =
+                        serde_json::json!(if expected == Some("string") { "integer" } else { "string" });
+                }
+                "id" => fields_module["elements"][0]["id"] = serde_json::json!("schema:999"),
+                "count" => {
+                    fields_module["elements"].as_array_mut().unwrap().pop();
+                }
+                "namespace" => fields_module["namespace"] = serde_json::json!("other"),
+                _ => unreachable!(),
+            }
+            let contradictory = from_json(json);
+            let error = export_parquet_capture(
+                &contradictory,
+                &engine,
+                &registry,
+                &mut capabilities,
+                &mut Context::ordinary(),
+            )
+            .unwrap_err();
+            assert_eq!(error.code, "PARQUET_FIELD_METADATA", "mutation: {mutation}");
+            for inspect in [
+                inspect_parquet_framing(
+                    &contradictory,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut Context::ordinary(),
+                ),
+                decode_parquet_footer(
+                    &contradictory,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut Context::ordinary(),
+                ),
+                inspect_parquet_metadata(
+                    &contradictory,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut Context::ordinary(),
+                ),
+                inspect_parquet_schema(
+                    &contradictory,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut Context::ordinary(),
+                ),
+            ] {
+                assert_eq!(inspect.unwrap_err().code, "PARQUET_FIELD_METADATA", "mutation: {mutation}");
+            }
+        }
+    }
+
+    #[test]
+    fn accepted_field_metadata_matches_typescript_projection_for_logical_fixtures() {
+        let expected: Json = serde_json::from_str(include_str!(
+            "../../../fixtures/parquet/field-metadata.json"
+        ))
+        .unwrap();
+        let engine = engine();
+        let registry = Registry::new();
+        let mut capabilities = NoCapabilities;
+        for result in expected["results"].as_array().unwrap() {
+            let id = result["id"].as_str().unwrap();
+            let path = result["path"].as_str().unwrap();
+            let bytes = fixture(path);
+            let doc = document(&bytes, id, &engine, &registry, &mut capabilities);
+            let elements = result["view"]["fields"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|field| field["element"].clone())
+                .collect::<Vec<_>>();
+            let mut json = to_json(&doc).unwrap();
+            json["modules"]
+                .as_array_mut()
+                .unwrap()
+                .push(serde_json::json!({
+                    "id":"parquet.fields",
+                    "namespace":"",
+                    "elements":elements,
+                }));
+            let with_fields = from_json(json);
+            assert_eq!(
+                export_parquet_capture(
+                    &with_fields,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut Context::ordinary(),
+                )
+                .unwrap_or_else(|error| panic!("{id}: {}", error.code)),
+                bytes,
+                "{id}"
+            );
+        }
+    }
+
+    #[test]
     fn footer_decoder_refuses_encryption_and_never_returns_a_partial_tree() {
         let mut encrypted = b"PARE".to_vec();
         encrypted.extend_from_slice(&[0, 0, 0, 0]);
@@ -1524,5 +2200,67 @@ mod tests {
                     .is_err()
             );
         }
+    }
+
+    #[test]
+    fn mid_parse_meter_cancellation_propagates_through_public_and_metadata_paths() {
+        let engine = engine();
+        let registry = Registry::new();
+        let mut capabilities = NoCapabilities;
+        let bytes = fixture("fixtures/parquet/containers/list-tuple.parquet");
+        let doc = document(&bytes, "cancel-footer", &engine, &registry, &mut capabilities);
+        let footer_length = parquet_schema_decode::locate_footer(&bytes).unwrap().length;
+
+        let mut calls = Vec::new();
+        let mut meter = |amount: usize| {
+            calls.push(amount);
+            Ok(())
+        };
+        {
+            let mut ctx = Context::ordinary().with_host_control(&mut meter);
+            decode_parquet_footer(&doc, &engine, &registry, &mut capabilities, &mut ctx).unwrap();
+        }
+        let parse_admission = calls
+            .iter()
+            .rposition(|amount| *amount == footer_length)
+            .expect("footer parser charges the bounded region");
+        assert_eq!(calls.get(parse_admission + 1), Some(&1));
+
+        let mut call = 0usize;
+        let mut meter = |_: usize| {
+            let at = call;
+            call += 1;
+            if at == parse_admission + 1 {
+                Err(EngineError::new(
+                    "CANCELLED",
+                    Utf16::default(),
+                    "meter stopped during footer parse",
+                ))
+            } else {
+                Ok(())
+            }
+        };
+        let mut ctx = Context::ordinary().with_host_control(&mut meter);
+        let error = decode_parquet_footer(&doc, &engine, &registry, &mut capabilities, &mut ctx)
+            .unwrap_err();
+        assert!(error.is_control_failure());
+
+        let mut armed = false;
+        let mut meter = |amount: usize| {
+            if armed {
+                return Err(EngineError::new(
+                    "CANCELLED",
+                    Utf16::default(),
+                    "meter stopped during metadata footer parse",
+                ));
+            }
+            if amount == footer_length {
+                armed = true;
+            }
+            Ok(())
+        };
+        let mut ctx = Context::ordinary().with_host_control(&mut meter);
+        let error = metadata_parts(&bytes, &mut ctx).unwrap_err();
+        assert!(error.is_control_failure());
     }
 }

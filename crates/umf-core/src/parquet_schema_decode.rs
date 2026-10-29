@@ -263,15 +263,20 @@ pub fn decode_compact_footer(
         nodes: 0,
         ctx,
     };
-    let value = decoder.parse_value(12, 0, false).map_err(|e| {
-        EngineError::new(
-            "PARQUET_FOOTER_DECODE",
-            e.path,
-            e.message
-                .to_utf8()
-                .unwrap_or_else(|_| "Invalid Compact Protocol value".into()),
-        )
-    })?;
+    let value = match decoder.parse_value(12, 0, false) {
+        Ok(value) => value,
+        Err(error) if error.is_control_failure() => return Err(error),
+        Err(error) => {
+            return Err(EngineError::new(
+                "PARQUET_FOOTER_DECODE",
+                error.path,
+                error
+                    .message
+                    .to_utf8()
+                    .unwrap_or_else(|_| "Invalid Compact Protocol value".into()),
+            ));
+        }
+    };
     Ok(DecodedFooter {
         region,
         value,
@@ -844,6 +849,30 @@ mod tests {
                 .unwrap(),
             crate::parquet_record_type_candidate::CandidateResolution::StructMember(_)
         ));
+    }
+
+    #[test]
+    fn compact_footer_parser_preserves_mid_parse_control_failure() {
+        let bytes = fixture("list-tuple");
+        let footer_length = locate_footer(&bytes).unwrap().length;
+        let mut armed = false;
+        let mut meter = |amount: usize| {
+            if armed {
+                return Err(EngineError::new(
+                    "CANCELLED",
+                    Utf16::default(),
+                    "meter stopped during footer parse",
+                ));
+            }
+            if amount == footer_length {
+                armed = true;
+            }
+            Ok(())
+        };
+        let mut context = Context::ordinary().with_host_control(&mut meter);
+        let error = decode_compact_footer(&bytes, &mut context).unwrap_err();
+        assert!(error.is_control_failure());
+        assert_ne!(error.code, "PARQUET_FOOTER_DECODE");
     }
 
     #[test]
