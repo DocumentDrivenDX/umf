@@ -90,6 +90,7 @@ pub mod nullability;
 pub mod operation_values;
 pub mod outcome_values;
 pub mod parquet_document_capture;
+pub mod parquet_capture_inspection;
 pub mod parquet_record_classifier;
 pub mod parquet_record_recovery;
 pub mod parquet_record_type_candidate;

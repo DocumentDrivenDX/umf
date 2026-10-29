@@ -126,6 +126,12 @@ pub mod json_number_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod json_schema_import_session_binding;
 pub mod parquet_record_type_binding;
+pub mod parquet_capture_binding;
+pub const PARQUET_CAPTURE_PROFILE: &str = parquet_capture_binding::PROFILE;
+pub use parquet_capture_binding::{
+    execute_wire as execute_parquet_capture_wire,
+    execute_wire_with_control as execute_parquet_capture_wire_with_control,
+};
 #[cfg(feature = "embedded-adapters")]
 pub mod protobuf_document;
 #[cfg(feature = "embedded-adapters")]

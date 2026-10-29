@@ -77,7 +77,10 @@ pub fn capture_parquet_document(
     })
 }
 
-fn source_bytes(document: &Value, ctx: &mut Context<'_>) -> Result<Vec<u8>, EngineError> {
+pub(crate) fn source_bytes(
+    document: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<u8>, EngineError> {
     let version = get(
         get(document, "vocabularies").ok_or_else(|| missing("vocabularies"))?,
         PARQUET_EXTENSION,

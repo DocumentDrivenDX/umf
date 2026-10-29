@@ -34,6 +34,24 @@ pub struct NativeSchemaElement {
     pub fields: Vec<(i16, NativeWireValue)>,
 }
 
+/// Byte range selected by the file trailer. A located range may still contain
+/// a signature or crypto metadata; it is not automatically FileMetaData.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct FooterRegion {
+    pub offset: usize,
+    pub length: usize,
+    pub encrypted: bool,
+}
+
+/// A bounded Compact Protocol tree for the located footer bytes.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct DecodedFooter {
+    pub region: FooterRegion,
+    pub value: NativeWireValue,
+    pub consumed_bytes: usize,
+    pub trailing_bytes: usize,
+}
+
 /// Ordered view of FileMetaData.key_value_metadata. The original typed fields
 /// remain available in `DecodedSchema::native_file_metadata_fields`; this
 /// view only makes the standard key/value pair explicit for opt-in readers.
@@ -174,6 +192,92 @@ struct Decoder<'a, 'b, 'c> {
     at: usize,
     nodes: usize,
     ctx: &'b mut Context<'c>,
+}
+
+/// Locate the footer byte range without interpreting it. This mirrors the
+/// public framing operation's deliberately incomplete claim.
+pub fn locate_footer(bytes: &[u8]) -> Result<FooterRegion, EngineError> {
+    if bytes.len() < 12 {
+        return Err(EngineError::new(
+            "PARQUET_TRUNCATED",
+            Utf16::default(),
+            "File is shorter than the framing minimum",
+        ));
+    }
+    if bytes.len() > 1_000_000 {
+        return Err(EngineError::new(
+            "PARQUET_LIMIT",
+            Utf16::default(),
+            "Parquet source exceeds the 1000000-byte capture limit",
+        ));
+    }
+    let start = &bytes[..4];
+    let end = &bytes[bytes.len() - 4..];
+    if !matches!(start, b"PAR1" | b"PARE") || end != start {
+        return Err(EngineError::new(
+            "PARQUET_MAGIC",
+            Utf16::default(),
+            "Expected matching PAR1 or PARE header and trailer",
+        ));
+    }
+    let length =
+        u32::from_le_bytes(bytes[bytes.len() - 8..bytes.len() - 4].try_into().unwrap()) as usize;
+    let offset = bytes
+        .len()
+        .checked_sub(8)
+        .and_then(|v| v.checked_sub(length));
+    let Some(offset) = offset.filter(|v| *v >= 4 && length > 0) else {
+        return Err(EngineError::new(
+            "PARQUET_FOOTER_BOUNDS",
+            Utf16::default(),
+            "Footer region is empty or overlaps the file header",
+        ));
+    };
+    Ok(FooterRegion {
+        offset,
+        length,
+        encrypted: start == b"PARE",
+    })
+}
+
+/// Decode one bounded Compact Protocol struct prefix from a plaintext footer.
+/// Trailing bytes are counted and retained by the caller's original source.
+pub fn decode_compact_footer(
+    bytes: &[u8],
+    ctx: &mut Context<'_>,
+) -> Result<DecodedFooter, EngineError> {
+    let region = locate_footer(bytes)?;
+    if region.encrypted {
+        return Err(EngineError::new(
+            "PARQUET_FOOTER_ENCRYPTED",
+            Utf16::default(),
+            "Encrypted footer requires a separate decryption implementation",
+        ));
+    }
+    let end = bytes.len() - 8;
+    let footer = &bytes[region.offset..end];
+    ctx.charge_work(footer.len(), Utf16::default())?;
+    let mut decoder = Decoder {
+        bytes: footer,
+        at: 0,
+        nodes: 0,
+        ctx,
+    };
+    let value = decoder.parse_value(12, 0, false).map_err(|e| {
+        EngineError::new(
+            "PARQUET_FOOTER_DECODE",
+            e.path,
+            e.message
+                .to_utf8()
+                .unwrap_or_else(|_| "Invalid Compact Protocol value".into()),
+        )
+    })?;
+    Ok(DecodedFooter {
+        region,
+        value,
+        consumed_bytes: decoder.at,
+        trailing_bytes: footer.len().saturating_sub(decoder.at),
+    })
 }
 
 impl Decoder<'_, '_, '_> {
