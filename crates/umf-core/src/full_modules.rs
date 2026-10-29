@@ -91,6 +91,7 @@ pub mod operation_values;
 pub mod outcome_values;
 pub mod parquet_document_capture;
 pub mod parquet_capture_inspection;
+pub mod parquet_edits;
 pub mod parquet_wire_encode;
 pub mod parquet_pages;
 pub mod parquet_levels;

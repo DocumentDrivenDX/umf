@@ -12,6 +12,7 @@ use umf_core::{
     },
     parquet_levels::decode_parquet_levels,
     parquet_pages::{decode_parquet_page_bodies, inspect_parquet_pages},
+    parquet_edits::{append_key_value_metadata, rename_field},
     registry::Registry,
     serialization::{self, Format},
 };
@@ -205,10 +206,16 @@ pub fn execute_wire_with_control(
             | "parquet.getFieldMetadata"
             | "parquet.inspectPages"
             | "parquet.decodePageBodies"
-            | "parquet.decodeLevels" => {
+            | "parquet.decodeLevels"
+            | "parquet.appendKeyValueMetadata"
+            | "parquet.renameField" => {
                 let document = field(&request, "document")
                     .ok_or_else(|| request_error("document is required"))?;
                 match operation.as_str() {
+                    "parquet.appendKeyValueMetadata" => append_key_value_metadata(
+                        document,field(&request,"entries").ok_or_else(||request_error("entries is required"))?,&resources.engine,&resources.registry,&mut capabilities,&mut ctx)?,
+                    "parquet.renameField" => rename_field(
+                        document,field(&request,"index").ok_or_else(||request_error("index is required"))?,field(&request,"name").ok_or_else(||request_error("name is required"))?,&resources.engine,&resources.registry,&mut capabilities,&mut ctx)?,
                     "parquet.inspectFraming" => inspect_parquet_framing(
                         document,
                         &resources.engine,

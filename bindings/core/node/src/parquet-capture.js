@@ -53,5 +53,7 @@ export function createParquetCaptureOperations(call) {
     inspectParquetLogicalTypes(document) { return call('inspectLogicalTypes', {document}); },
     inspectParquetContainers(document) { return call('inspectContainers', {document}); },
     getParquetFieldMetadata(document) { return call('getFieldMetadata', {document}); },
+    appendParquetKeyValueMetadata(document, entries) { return call('appendKeyValueMetadata', {document, entries}); },
+    renameParquetField(document, index, name) { return call('renameField', {document, index, name}); },
   });
 }

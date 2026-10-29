@@ -526,6 +526,8 @@ export interface ParquetCaptureEngine {
   inspectParquetLogicalTypes(document: unknown): unknown;
   inspectParquetContainers(document: unknown): unknown;
   getParquetFieldMetadata(document: unknown): unknown;
+  appendParquetKeyValueMetadata(document: unknown, entries: unknown[]): unknown;
+  renameParquetField(document: unknown, index: number, name: string): unknown;
 }
 export declare const ACCESS_RRF_PROFILE: 'umf-r8-access-rrf/0.1.0';
 export interface AccessRrfRequest { constant: string; topK: number; keyCount: number; /** Identity indexes ordered by ascending complete key for tie breaking. */ keyOrder: number[]; legs: number[][] }
