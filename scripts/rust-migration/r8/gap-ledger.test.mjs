@@ -45,7 +45,7 @@ test('only the pinned BIT128_PROFILE primitive is classified as inert JSON scala
   assert.equal(ledger.counts.inertJsonScalarRows, 1);
   assert.equal(ledger.counts.routeInertJsonScalarRows, 3);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 930);
-  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 834);
+  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 831);
 
   assert.equal(classifyBit128ProfileSource("export const BIT128_PROFILE = 'umf-128/1' as const;"), 'umf-128/1');
   for (const source of [
@@ -956,7 +956,7 @@ test('V4 relationship consumer exports are hybrid bindings without Rust consumer
     assert.equal(rows[2].defaultRouteRetirement.status, 'reference-only');
   }
   assert.equal(ledger.counts.sourceSelectedRustOverrides, 130 + 2 * 2 + 2 * 2 + 2 * 2 + 2 * 5 + 2 * 10 + 2 * 6);
-  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 111);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 114);
   assert.deepEqual(ledger.counts.executableDefaultRouteRetirementsByRoute, { 'package-root-node': 0, 'package-root-browser': 0 });
 
   for (const row of [
@@ -1152,8 +1152,8 @@ test('Schema Properties source selections keep exact CONTRACT-049 mappings separ
     assert.equal(reference.sourceSelectedImplementation, null);
     assert.equal(reference.implementationStatus, 'TypeScript reference implementation remains explicit');
   }
-  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 111);
-  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 834);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 114);
+  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 831);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 930);
   const aggregate = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/aggregate.json', 'utf8'));
   const aggregateNames = Object.values(aggregate.families).flatMap(family => family.operations);
@@ -2944,15 +2944,18 @@ test('adapter ownership supplement maps exact operations without retirement or p
     ['inspectParquetContainers', 'src/adapters/parquet/containers.ts'],
     ['getParquetFieldMetadata', 'src/adapters/parquet/field-metadata.ts'],
     ['importParquetSchema', 'src/adapters/parquet/field-metadata.ts'],
+    ['inspectParquetPages', 'src/adapters/parquet/pages.ts'],
+    ['decodeParquetPageBodies', 'src/adapters/parquet/bodies.ts'],
+    ['encodeParquetWire', 'src/adapters/parquet/encode.ts'],
   ].map(([exportName, source], index) => ({
     routeId: 'package-root', exportName, declarationName: exportName,
     declarationKind: 'FunctionDeclaration', source, line: index + 1, sourceSha256: 'f'.repeat(64),
   }));
   const ledger = buildLedger({ ...args, inventory: { symbols: adapterRows } });
   const byName = new Map(ledger.rows.map(row => [row.exportName, row.operationOwnership]));
-  assert.equal(ledger.rows.length, 36);
+  assert.equal(ledger.rows.length, 39);
   assert.deepEqual(ledger.counts.adapterOwnershipByStatus, {
-    'accepted-opt-in-subset': 14,
+    'accepted-opt-in-subset': 17,
     'candidate-core': 12,
     'partial-host-boundary': 2,
     unported: 3,
@@ -2991,6 +2994,9 @@ test('adapter ownership supplement maps exact operations without retirement or p
     ['inspectParquetContainers', null, 'parquet.inspectContainers'],
     ['getParquetFieldMetadata', null, 'parquet.getFieldMetadata'],
     ['importParquetSchema', null, 'parquet.importSchema'],
+    ['inspectParquetPages', null, 'parquet.inspectPages'],
+    ['decodeParquetPageBodies', null, 'parquet.decodePageBodies'],
+    ['encodeParquetWire', null, 'parquet.encodeWire'],
   ]) {
     const detail = byName.get(name);
     const ledgerRow = ledger.rows.find(row => row.exportName === name);
@@ -3001,7 +3007,7 @@ test('adapter ownership supplement maps exact operations without retirement or p
     assert.ok(detail.evidencePaths.includes('docs/helix/02-design/contracts/CONTRACT-019-parquet.md'));
     assert.ok(detail.knownMismatches.some(item => /No default package-root route/.test(item)));
     assert.equal(ledgerRow.acceptedRustOperation, detail.rustOwner, `${name} accepted Rust operation`);
-    assert.match(ledgerRow.acceptedOperationEvidence.scopeRule, /ten opt-in capture\/inspection operations/);
+    assert.match(ledgerRow.acceptedOperationEvidence.scopeRule, /opt-in/);
   }
   for (const row of ledger.rows) {
     assert.equal(row.operationOwnership.defaultRouteStatus, 'TypeScript package-root export remains default; zero rows retired');
@@ -3042,12 +3048,26 @@ test('JSON value serialization maps only the opt-in source-proved Rust profile',
   }
 });
 
+test('Parquet encoder owner mapping rejects reference and mismatched declaration identities', () => {
+  const row = {routeId:'package-root-node', exportName:'encodeParquetWire',
+    declarationName:'encodeParquetWire', declarationKind:'FunctionDeclaration',
+    source:'src/adapters/parquet/encode.ts'};
+  assert.equal(operationMapping(row).rustOwner, 'umf_core::parquet_wire_encode::encode_parquet_wire');
+  assert.equal(operationMapping({...row,routeId:'package-root-browser'}).rustOwner, operationMapping(row).rustOwner);
+  assert.equal(operationMapping({...row,routeId:'package-reference'}), null);
+  assert.equal(operationMapping({...row,source:'src/adapters/parquet/other.ts'}), null);
+  assert.equal(operationMapping({...row,declarationName:'otherEncoder'}), null);
+  assert.equal(operationMapping({...row,declarationKind:'VariableDeclaration'}), null);
+});
+
 test('logical Rust mapping counts are independent of condition-row order', () => {
   const names = [
     'captureParquet', 'exportParquetCapture', 'inspectParquetFraming',
     'decodeParquetFooter', 'inspectParquetMetadata', 'inspectParquetSchema',
     'inspectParquetLogicalTypes', 'inspectParquetContainers',
     'getParquetFieldMetadata', 'importParquetSchema',
+    'inspectParquetPages', 'decodeParquetPageBodies',
+    'encodeParquetWire',
   ];
   const selected = currentGeneratedLedger().rows.filter(row => names.includes(row.exportName));
   assert.equal(selected.length, names.length * 3);
@@ -3060,7 +3080,7 @@ test('logical Rust mapping counts are independent of condition-row order', () =>
   const defaultFirst = make(symbols.filter(row => row.routeId !== 'package-reference')
     .concat(symbols.filter(row => row.routeId === 'package-reference')));
   for (const ledger of [referenceFirst, defaultFirst]) {
-    assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 10);
+    assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 13);
     assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 0);
   }
   assert.deepEqual(referenceFirst.counts, defaultFirst.counts);
@@ -3249,8 +3269,8 @@ test('security truth and composition map only their four reviewed opt-in operati
 test('securityAnd/securityOr V4 bindings normalize exactly and carry source-only replay evidence', () => {
   const ledger = currentGeneratedLedger();
   assert.equal(ledger.counts.executableDefaultRouteGaps, 930);
-  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 111);
-  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 834);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 114);
+  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 831);
   for (const name of ['securityAnd', 'securityOr']) {
     const rustSymbol = name === 'securityAnd' ? 'security_and' : 'security_or';
     for (const routeId of ['package-root-node', 'package-root-browser']) {

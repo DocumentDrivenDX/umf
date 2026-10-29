@@ -192,6 +192,7 @@ struct Decoder<'a, 'b, 'c> {
     at: usize,
     nodes: usize,
     ctx: &'b mut Context<'c>,
+    ts_prefix: bool,
 }
 
 /// Locate the footer byte range without interpreting it. This mirrors the
@@ -246,6 +247,23 @@ pub fn decode_compact_footer(
     bytes: &[u8],
     ctx: &mut Context<'_>,
 ) -> Result<DecodedFooter, EngineError> {
+    decode_compact_footer_mode(bytes, ctx, false)
+}
+
+/// Public wire-view decoding follows the TypeScript Compact prefix diagnostics.
+/// Schema and metadata callers retain the legacy native decoder profile.
+pub fn decode_compact_footer_wire_view(
+    bytes: &[u8],
+    ctx: &mut Context<'_>,
+) -> Result<DecodedFooter, EngineError> {
+    decode_compact_footer_mode(bytes, ctx, true)
+}
+
+fn decode_compact_footer_mode(
+    bytes: &[u8],
+    ctx: &mut Context<'_>,
+    ts_prefix: bool,
+) -> Result<DecodedFooter, EngineError> {
     let region = locate_footer(bytes)?;
     if region.encrypted {
         return Err(EngineError::new(
@@ -262,6 +280,7 @@ pub fn decode_compact_footer(
         at: 0,
         nodes: 0,
         ctx,
+        ts_prefix,
     };
     let value = match decoder.parse_value(12, 0, false) {
         Ok(value) => value,
@@ -285,13 +304,63 @@ pub fn decode_compact_footer(
     })
 }
 
+/// Decode one bounded Compact struct prefix, including a page header.
+pub fn decode_compact_struct_prefix(
+    bytes: &[u8],
+    ctx: &mut Context<'_>,
+) -> Result<(NativeWireValue, usize), EngineError> {
+    let mut decoder = Decoder {
+        bytes,
+        at: 0,
+        nodes: 0,
+        ctx,
+        ts_prefix: true,
+    };
+    let value = decoder.parse_value(12, 0, false)?;
+    Ok((value, decoder.at))
+}
+
 impl Decoder<'_, '_, '_> {
+    fn allocation_failure() -> EngineError {
+        EngineError::new("RESOURCE_LIMIT", Utf16::default(), "Allocation failed")
+            .with_control_failure()
+    }
     fn fail<T>(&self, message: &'static str) -> Result<T, EngineError> {
         Err(EngineError::new(
             "PARQUET_SCHEMA_DECODE",
             Utf16::default(),
             message,
         ))
+    }
+    fn prefix_message(&self, legacy: &'static str, prefix: &'static str) -> &'static str {
+        if self.ts_prefix {
+            prefix
+        } else {
+            legacy
+        }
+    }
+    fn wire_kind(&self, kind: u8) -> Result<(), EngineError> {
+        if (1..=13).contains(&kind) {
+            return Ok(());
+        }
+        if self.ts_prefix {
+            Err(EngineError::new(
+                "PARQUET_SCHEMA_DECODE",
+                Utf16::default(),
+                format!("Unknown Compact Protocol wire type {kind}"),
+            ))
+        } else {
+            self.fail("Unknown Compact Protocol type")
+        }
+    }
+    fn take_fixed<const N: usize>(&mut self) -> Result<[u8; N], EngineError> {
+        if self.bytes.len().saturating_sub(self.at) < N {
+            return self.fail("Binary value exceeds footer region");
+        }
+        let mut out = [0; N];
+        out.copy_from_slice(&self.bytes[self.at..self.at + N]);
+        self.at += N;
+        Ok(out)
     }
     fn byte(&mut self) -> Result<u8, EngineError> {
         let Some(b) = self.bytes.get(self.at).copied() else {
@@ -307,23 +376,32 @@ impl Decoder<'_, '_, '_> {
             let b = self.byte()?;
             let remaining = bits.saturating_sub(i * 7);
             if remaining < 7 && u64::from(b & 0x7f) >= (1u64 << remaining) {
-                return self.fail("Compact varint exceeds declared width");
+                return self.fail(self.prefix_message(
+                    "Compact varint exceeds declared width",
+                    "Varint exceeds declared width",
+                ));
             }
             value |= u64::from(b & 0x7f).checked_shl(i * 7).ok_or_else(|| {
                 EngineError::new(
                     "PARQUET_SCHEMA_DECODE",
                     Utf16::default(),
-                    "Compact varint overflow",
+                    self.prefix_message("Compact varint overflow", "Varint exceeds declared width"),
                 )
             })?;
             if b & 0x80 == 0 {
                 if bits < 64 && value >= (1u64 << bits) {
-                    return self.fail("Compact varint exceeds declared width");
+                    return self.fail(self.prefix_message(
+                        "Compact varint exceeds declared width",
+                        "Varint exceeds declared width",
+                    ));
                 }
                 return Ok(value);
             }
         }
-        self.fail("Compact varint exceeds declared width")
+        self.fail(self.prefix_message(
+            "Compact varint exceeds declared width",
+            "Varint exceeds declared width",
+        ))
     }
     fn signed(&mut self, bits: u32) -> Result<i64, EngineError> {
         let n = self.varint(bits)?;
@@ -332,7 +410,10 @@ impl Decoder<'_, '_, '_> {
     fn length(&mut self) -> Result<usize, EngineError> {
         let n = self.varint(32)?;
         if n > i32::MAX as u64 {
-            return self.fail("Compact collection length exceeds signed int32");
+            return self.fail(self.prefix_message(
+                "Compact collection length exceeds signed int32",
+                "Length exceeds signed int32",
+            ));
         }
         Ok(n as usize)
     }
@@ -347,11 +428,16 @@ impl Decoder<'_, '_, '_> {
         }
         self.nodes += 1;
         self.ctx.charge_work(1, Utf16::default())?;
+        if self.ts_prefix {
+            self.wire_kind(kind)?;
+        }
         match kind {
             1 | 2 => {
                 let b = if field { kind } else { self.byte()? };
                 if b != 1 && b != 2 {
-                    return self.fail("Invalid Compact boolean");
+                    return self.fail(
+                        self.prefix_message("Invalid Compact boolean", "Invalid boolean encoding"),
+                    );
                 }
                 Ok(WireValue::Bool(b == 1))
             }
@@ -367,6 +453,11 @@ impl Decoder<'_, '_, '_> {
             5 => Ok(WireValue::I32(self.signed(32)? as i32)),
             6 => Ok(WireValue::I64(self.signed(64)?)),
             7 => {
+                if self.ts_prefix {
+                    return Ok(WireValue::Double(u64::from_le_bytes(
+                        self.take_fixed::<8>()?,
+                    )));
+                }
                 let mut bytes = [0; 8];
                 for byte in &mut bytes {
                     *byte = self.byte()?;
@@ -379,7 +470,10 @@ impl Decoder<'_, '_, '_> {
                     return self.fail("Binary value exceeds footer region");
                 }
                 self.ctx.charge_work(n, Utf16::default())?;
-                let b = self.bytes[self.at..self.at + n].to_vec();
+                let mut b = Vec::new();
+                b.try_reserve_exact(n)
+                    .map_err(|_| Self::allocation_failure())?;
+                b.extend_from_slice(&self.bytes[self.at..self.at + n]);
                 self.at += n;
                 Ok(WireValue::Binary(b))
             }
@@ -388,10 +482,16 @@ impl Decoder<'_, '_, '_> {
                 let elem = h & 0x0f;
                 let short = usize::from(h >> 4);
                 let n = if short == 15 { self.length()? } else { short };
+                if self.ts_prefix {
+                    self.wire_kind(elem)?;
+                }
                 if n > MAX_NODES.saturating_sub(self.nodes) {
                     return self.fail("Collection exceeds value limit");
                 }
-                let mut items = Vec::with_capacity(n);
+                let mut items = Vec::new();
+                items
+                    .try_reserve(n)
+                    .map_err(|_| Self::allocation_failure())?;
                 for _ in 0..n {
                     items.push(self.parse_value(elem, depth + 1, false)?);
                 }
@@ -410,7 +510,14 @@ impl Decoder<'_, '_, '_> {
                     return Ok(WireValue::Map(0, 0, Vec::new()));
                 }
                 let h = self.byte()?;
-                let mut entries = Vec::with_capacity(n);
+                if self.ts_prefix {
+                    self.wire_kind(h >> 4)?;
+                    self.wire_kind(h & 15)?;
+                }
+                let mut entries = Vec::new();
+                entries
+                    .try_reserve(n)
+                    .map_err(|_| Self::allocation_failure())?;
                 for _ in 0..n {
                     let key = self.parse_value(h >> 4, depth + 1, false)?;
                     let value = self.parse_value(h & 15, depth + 1, false)?;
@@ -434,17 +541,26 @@ impl Decoder<'_, '_, '_> {
                         previous + d
                     };
                     if !(-32768..=32767).contains(&id) {
-                        return self.fail("Compact field id exceeds int16");
+                        return self.fail(self.prefix_message(
+                            "Compact field id exceeds int16",
+                            "Field ID exceeds signed int16",
+                        ));
                     }
                     previous = id;
                     if fields.len() >= MAX_NODES {
                         return self.fail("Struct field limit exceeded");
                     }
+                    fields
+                        .try_reserve(1)
+                        .map_err(|_| Self::allocation_failure())?;
                     fields.push((id as i16, self.parse_value(t, depth + 1, true)?));
                 }
                 Ok(WireValue::Struct(fields))
             }
             13 => {
+                if self.ts_prefix {
+                    return Ok(WireValue::Uuid(self.take_fixed::<16>()?));
+                }
                 let mut uuid = [0; 16];
                 for byte in &mut uuid {
                     *byte = self.byte()?;
@@ -577,6 +693,7 @@ fn decode_schema_mode(
         at: 0,
         nodes: 0,
         ctx,
+        ts_prefix: false,
     };
     let value = decoder.parse_value(12, 0, false)?;
     let WireValue::Struct(metadata) = value else {
@@ -812,12 +929,10 @@ mod tests {
     fn decodes_pinned_list_schema_from_retained_file_bytes() {
         let d = decode_schema(&fixture("list-tuple"), &mut Context::ordinary()).unwrap();
         assert_eq!(d.schema.len(), d.native_schema_elements.len());
-        assert!(
-            d.native_schema_elements[1]
-                .fields
-                .iter()
-                .any(|(id, value)| *id == 4 && matches!(value, WireValue::Binary(_)))
-        );
+        assert!(d.native_schema_elements[1]
+            .fields
+            .iter()
+            .any(|(id, value)| *id == 4 && matches!(value, WireValue::Binary(_))));
         assert_eq!(
             d.schema[1].annotation.as_ref().unwrap().to_utf8().unwrap(),
             "LIST"
@@ -884,6 +999,7 @@ mod tests {
                 at: 0,
                 nodes: 0,
                 ctx: &mut context,
+                ts_prefix: false,
             };
             decoder.parse_value(kind, 0, field).unwrap()
         }
@@ -1072,9 +1188,67 @@ mod tests {
                 at: 0,
                 nodes: 0,
                 ctx: &mut context,
+                ts_prefix: false,
             };
             assert!(decoder.varint(bits).is_err());
         }
+    }
+    #[test]
+    fn compact_allocation_failure_has_trusted_control_origin() {
+        let error = Decoder::allocation_failure();
+        assert_eq!(error.code, "RESOURCE_LIMIT");
+        assert!(error.is_control_failure());
+    }
+
+    #[test]
+    fn page_prefix_matches_compact_error_order_and_keeps_legacy_profile() {
+        let cases: &[(&[u8], &str)] = &[
+            (&[31], "Unknown Compact Protocol wire type 15"),
+            (&[25, 17, 0], "Invalid boolean encoding"),
+            (&[24, 127], "Binary value exceeds footer region"),
+            (&[24, 255, 255, 255, 255, 15], "Length exceeds signed int32"),
+            (&[25, 15], "Unknown Compact Protocol wire type 15"),
+            (&[27, 1, 245], "Unknown Compact Protocol wire type 15"),
+            (
+                &[5, 254, 255, 3, 0, 245, 0],
+                "Field ID exceeds signed int16",
+            ),
+            (&[23, 0], "Binary value exceeds footer region"),
+            (&[29, 0], "Binary value exceeds footer region"),
+            (&[27, 1, 1], "Unknown Compact Protocol wire type 0"),
+            (&[27, 1, 16], "Unknown Compact Protocol wire type 0"),
+            (&[25, 0], "Unknown Compact Protocol wire type 0"),
+            (&[25, 0x1f], "Unknown Compact Protocol wire type 15"),
+            (
+                &[24, 128, 128, 128, 128, 16],
+                "Varint exceeds declared width",
+            ),
+            (&[5, 128, 128, 4], "Varint exceeds declared width"),
+            (&[25], "Truncated Compact Protocol value"),
+            (&[27, 1], "Truncated Compact Protocol value"),
+            (&[23], "Binary value exceeds footer region"),
+        ];
+        for (bytes, expected) in cases {
+            let actual = decode_compact_struct_prefix(bytes, &mut Context::ordinary()).unwrap_err();
+            assert_eq!(actual.message.to_utf8().unwrap(), *expected, "{bytes:?}");
+        }
+        let mut context = Context::ordinary();
+        let mut legacy = Decoder {
+            bytes: &[31],
+            at: 0,
+            nodes: 0,
+            ctx: &mut context,
+            ts_prefix: false,
+        };
+        assert_eq!(
+            legacy
+                .parse_value(12, 0, false)
+                .unwrap_err()
+                .message
+                .to_utf8()
+                .unwrap(),
+            "Unknown Compact Protocol type"
+        );
     }
     #[test]
     fn rejects_footer_length_address_overflow() {

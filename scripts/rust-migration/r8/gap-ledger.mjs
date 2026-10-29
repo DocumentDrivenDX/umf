@@ -624,6 +624,68 @@ for (const [name, owner, _wire, source] of parquetOps) accept(
 const parquetAcceptedExports = new Map(
   parquetOps.map(([name, _owner, wire, source]) => [name, { wire, source }]),
 );
+const parquetPageEvidence = [
+  'docs/helix/02-design/contracts/CONTRACT-019-parquet.md',
+  'docs/helix/04-build/evidence/rust-migration/r8-parquet-pages-bodies/README.md',
+  'tests/rust-core/fixtures/parquet-pages-bodies-ts-freeze.json',
+  'crates/umf-core/src/parquet_pages.rs',
+  'crates/umf-core/src/parquet_schema_decode.rs',
+  'crates/umf-core-wire/src/parquet_capture_binding.rs',
+  'bindings/core/node/tests/parquet-pages-body-current-source.mjs',
+  'python/tests/test_rust_parquet_capture.py',
+];
+for (const [name, owner, wire, source] of [
+  ['inspectParquetPages', 'inspect_parquet_pages', 'parquet.inspectPages', 'src/adapters/parquet/pages.ts'],
+  ['decodeParquetPageBodies', 'decode_parquet_page_bodies', 'parquet.decodePageBodies', 'src/adapters/parquet/bodies.ts'],
+]) {
+  own([name], {
+    status: 'accepted-opt-in-subset',
+    supportProfile: 'umf-r8-parquet-capture-inspection/0.1.0; bounded page headers and UNCOMPRESSED/SNAPPY physical bodies; opt-in',
+    rustOwner: `umf_core::parquet_pages::${owner}`,
+    sourcePaths: ['crates/umf-core/src/parquet_pages.rs', source],
+    wireOperation: wire,
+    bindingRoutes: ['CLI', 'Node native addon', 'WASM browser', 'Python binding'],
+    evidencePaths: parquetPageEvidence,
+    predecessor: 'CONTRACT-019 AC13/14 and complete frozen TypeScript page/body public envelopes',
+    nativeGate: '34 frozen page/body inputs, 14 malformed footer outcomes, 25 Snappy vectors and trusted resource controls; exact source-built host execution is recorded in evidence',
+    hostGate: 'Explicit opt-in bounded tagged-wire profile; installed package and raw host admission are unqualified',
+    knownMismatches: ['Other Parquet operations remain unmapped', 'No default package-root route was switched or retired', 'Other codecs and typed values are unsupported'],
+  });
+  accept(source, [[name, owner]], 'umf_core::parquet_pages',
+    'crates/umf-core/src/parquet_pages.rs', parquetPageEvidence,
+    ['crates/umf-core/src/parquet_capture_inspection.rs', 'crates/umf-core/src/parquet_pages.rs',
+      'bindings/core/node/tests/parquet-pages-body-current-source.mjs',
+      'python/tests/test_rust_parquet_capture.py']);
+  parquetAcceptedExports.set(name,{wire,source});
+}
+const parquetEncoderEvidence = [
+  'docs/helix/02-design/contracts/CONTRACT-019-parquet.md',
+  'docs/helix/04-build/evidence/rust-migration/r8-parquet-wire-encode/README.md',
+  'docs/helix/04-build/evidence/rust-migration/r8-parquet-wire-encode/sol-review.md',
+  'tests/rust-core/fixtures/parquet-wire-encode-ts-freeze.json',
+];
+own(['encodeParquetWire'], {
+  status: 'accepted-opt-in-subset',
+  supportProfile: 'umf-r8-parquet-capture-inspection/0.1.0; typed JSON-compatible Compact wire encoding; opt-in',
+  rustOwner: 'umf_core::parquet_wire_encode::encode_parquet_wire',
+  sourcePaths: ['src/adapters/parquet/encode.ts', 'crates/umf-core/src/parquet_wire_encode.rs',
+    'crates/umf-core-wire/src/parquet_capture_binding.rs', 'crates/umf-cli/src/main.rs',
+    'bindings/core/node/src/parquet-capture.js', 'bindings/core/wasm/src/parquet-capture.js'],
+  wireOperation: 'parquet.encodeWire',
+  bindingRoutes: ['CLI', 'Node native addon', 'WASM browser', 'Python binding'],
+  evidencePaths: parquetEncoderEvidence,
+  predecessor: 'CONTRACT-019 US-019-AC10 and 44 frozen TypeScript byte/error outcomes',
+  nativeGate: 'Core structural/byte/node limits, raw UTF-16 refusals and empty-PATH CLI comparisons; source-built binding observations are recorded in evidence',
+  hostGate: 'Typed JSON-compatible trees admitted by the existing transport; raw host objects, missing nested properties that throw TypeError, installed artifacts and default routing remain unqualified',
+  knownMismatches: ['No default package-root route was switched or retired',
+    'Transport admission is distinct from the unchecked TypeScript host reads',
+    'Source-built observations do not qualify installed SDKs or broader Parquet semantics'],
+});
+accept('src/adapters/parquet/encode.ts', [['encodeParquetWire', 'encode_parquet_wire']],
+  'umf_core::parquet_wire_encode', 'crates/umf-core/src/parquet_wire_encode.rs', parquetEncoderEvidence,
+  ['tests/rust-core/parquet-wire-encode-parity.ts', 'bindings/core/node/tests/parquet-wire-encode-current-source.mjs',
+    'bindings/core/wasm/tests/parquet-wire-encode-browser.mjs', 'bindings/core/python/tests/parquet_wire_encode_current_source.py']);
+parquetAcceptedExports.set('encodeParquetWire', {wire:'parquet.encodeWire', source:'src/adapters/parquet/encode.ts'});
 own(['JSON_SCHEMA_DIALECT'], { status: 'data-or-constant', supportProfile: null, rustOwner: 'umf_core::json_schema_adapter::DIALECT_2020_12', sourcePaths: ['crates/umf-core/src/json_schema_adapter.rs'], wireOperation: null, bindingRoutes: [], evidencePaths: ['docs/helix/02-design/contracts/CONTRACT-002-json-schema.md'], predecessor: 'CONTRACT-002 dialect identifier; no executable operation packet', nativeGate: 'Constant equality requires direct source check, not host parity replay', hostGate: 'TypeScript root constant remains default', knownMismatches: [] });
 own(['JSON_SCHEMA_EXTENSION'], { status: 'data-or-constant', supportProfile: null, rustOwner: 'umf_core::json_schema_adapter::EXTENSION', sourcePaths: ['crates/umf-core/src/json_schema_adapter.rs'], wireOperation: null, bindingRoutes: [], evidencePaths: ['docs/helix/02-design/contracts/CONTRACT-002-json-schema.md'], predecessor: 'CONTRACT-002 extension identifier; no executable operation packet', nativeGate: 'Constant equality requires direct source check, not host parity replay', hostGate: 'TypeScript root constant remains default', knownMismatches: [] });
 own(['PROTOBUF_EXTENSION'], { status: 'data-or-constant', supportProfile: null, rustOwner: 'umf_core::protobuf_document::EXT', sourcePaths: ['crates/umf-core/src/protobuf_document.rs'], wireOperation: null, bindingRoutes: [], evidencePaths: ['docs/helix/02-design/contracts/CONTRACT-003-protobuf.md'], predecessor: 'CONTRACT-003 extension identifier; no executable operation packet', nativeGate: 'Constant equality requires direct source check, not host parity replay', hostGate: 'TypeScript root constant remains default', knownMismatches: [] });
@@ -648,7 +710,11 @@ function acceptedOperationEvidence(mapping, routeStatus = 'legacy-fixture') {
     rustSourceClosure: closure(mapping.rustSourcePaths),
     evidenceClosure: closure(mapping.evidencePaths),
     focusedTestClosure: closure(mapping.focusedTestPaths),
-    scopeRule: mapping.evidencePaths.some(file => file.includes('/r8-parquet-metadata-operations/'))
+    scopeRule: mapping.evidencePaths.some(file => file.includes('/r8-parquet-wire-encode/'))
+      ? 'The linked CONTRACT-019 packet proves only opt-in Compact encoding of admitted typed JSON-compatible wire trees: 44 frozen byte/error outcomes, core limits and source-built host checks. Raw host semantics, installed artifacts, default routing, retirement and wider Parquet support remain unqualified.'
+      : mapping.evidencePaths.some(file => file.includes('/r8-parquet-pages-bodies/'))
+      ? 'The linked CONTRACT-019 packet proves only opt-in bounded page/header and UNCOMPRESSED/SNAPPY body inspection: 34 page/body cases, 14 footer cases and source-built native/WASM/Chromium evidence. Python observations retain their separately pinned source scope. Installed artifacts, raw host admission, default routing, retirement and typed value/row semantics remain unqualified.'
+      : mapping.evidencePaths.some(file => file.includes('/r8-parquet-metadata-operations/'))
       ? 'The linked CONTRACT-019 packet proves only ten opt-in capture/inspection operations under umf-r8-parquet-capture-inspection/0.1.0 for bounded tagged-wire bytes. Frozen complete-envelope cases cover the four metadata operations; local current-source bindings exercise three fixtures across the ten operation entry points. Other Parquet exports, installed-package parity, raw host admission, Arrow schema projection, and default-route retirement remain open.'
       : mapping.evidencePaths.some(file => file.includes('/r5-arrow-ipc-capture-bindings-current-source-20261027/'))
       ? 'The linked CONTRACT-016 packet proves only exact-source Arrow IPC capture, export and incomplete inspection for 23 bounded byte cases and seven mutations on fresh local Rust CLI, installed Python wheel, Node/Bun NAPI and Chromium WASM. Raw JavaScript wrong-type and cross-realm admission remain unqualified. It excludes native IPC semantics, observation callbacks, cross-platform release qualification, and default-route retirement.'

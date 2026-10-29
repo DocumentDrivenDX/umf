@@ -5,10 +5,11 @@ use umf_core::{
     engine::{Capabilities, Engine, ResourceSet},
     error::{Diagnostic, EngineError},
     parquet_capture_inspection::{
-        capture_parquet, decode_parquet_footer, export_parquet_capture, inspect_parquet_framing,
-        get_parquet_field_metadata, import_parquet_schema, inspect_parquet_containers,
+        capture_parquet, decode_parquet_footer, export_parquet_capture, get_parquet_field_metadata,
+        import_parquet_schema, inspect_parquet_containers, inspect_parquet_framing,
         inspect_parquet_logical_types, inspect_parquet_metadata, inspect_parquet_schema,
     },
+    parquet_pages::{decode_parquet_page_bodies, inspect_parquet_pages},
     registry::Registry,
     serialization::{self, Format},
     Context, Utf16, Value,
@@ -203,7 +204,9 @@ pub fn execute_wire_with_control(
             | "parquet.inspectSchema"
             | "parquet.inspectLogicalTypes"
             | "parquet.inspectContainers"
-            | "parquet.getFieldMetadata" => {
+            | "parquet.getFieldMetadata"
+            | "parquet.inspectPages"
+            | "parquet.decodePageBodies" => {
                 let document = field(&request, "document")
                     .ok_or_else(|| request_error("document is required"))?;
                 match operation.as_str() {
@@ -243,6 +246,20 @@ pub fn execute_wire_with_control(
                         &mut ctx,
                     )?,
                     "parquet.getFieldMetadata" => get_parquet_field_metadata(
+                        document,
+                        &resources.engine,
+                        &resources.registry,
+                        &mut capabilities,
+                        &mut ctx,
+                    )?,
+                    "parquet.inspectPages" => inspect_parquet_pages(
+                        document,
+                        &resources.engine,
+                        &resources.registry,
+                        &mut capabilities,
+                        &mut ctx,
+                    )?,
+                    "parquet.decodePageBodies" => decode_parquet_page_bodies(
                         document,
                         &resources.engine,
                         &resources.registry,

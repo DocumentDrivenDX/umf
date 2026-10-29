@@ -9,6 +9,13 @@ use umf_core::{
 };
 use wasm_bindgen::prelude::*;
 
+#[cfg(feature = "parquet-test-hooks")]
+#[wasm_bindgen]
+pub fn test_parquet_snappy_vector(input: Vec<u8>, expected: usize) -> Result<Vec<u8>, JsValue> {
+    umf_core::parquet_pages::decode_snappy_test_vector(&input, expected)
+        .map_err(|error| JsValue::from_str(&error.message.to_utf8().unwrap_or_default()))
+}
+
 mod core_key_tuple;
 mod core_key_verification;
 mod core_record_type_verification;

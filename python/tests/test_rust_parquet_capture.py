@@ -47,3 +47,33 @@ def test_parquet_capture_is_opt_in_bounded_and_cooperatively_metered():
     with pytest.raises(_rust.UmfCoreError) as caught:
         parquet.decode_footer(document, is_cancelled=lambda: True)
     assert caught.value.code == "CANCELLED"
+
+
+def test_parquet_pages_and_bodies_match_frozen_public_envelopes():
+    import hashlib
+    import json
+    root = Path(__file__).resolve().parents[2]
+    frozen = json.loads((root / "tests/rust-core/fixtures/parquet-pages-bodies-ts-freeze.json").read_text())
+    for case in frozen["cases"]:
+        data = (root / case["path"]).read_bytes()
+        if "mutation" in case:
+            assert hashlib.sha256(data).hexdigest() == case["baseSha256"]
+            altered = bytearray(data)
+            mutation = case["mutation"]
+            offset = mutation["offset"]
+            if "bytes" in mutation:
+                altered[offset:offset + len(mutation["bytes"])] = mutation["bytes"]
+            else:
+                altered[offset] ^= mutation["xor"]
+            data = bytes(altered)
+        assert hashlib.sha256(data).hexdigest() == case["sha256"]
+        source = parquet.capture(data, case["id"])
+        assert parquet.inspect_pages(source) == {"source": source, **case["page"]}
+        assert parquet.decode_page_bodies(source) == {"source": source, **case["body"]}
+    data = (root / "fixtures/parquet/pages/negative/valid-v1.parquet").read_bytes()
+    source = parquet.capture(data, "\ud800-page")
+    source["vocabularies"]["future.vendor"] = {"version": "0.1.0", "\udfffuture": "v\ud800alue"}
+    for result in (parquet.inspect_pages(source), parquet.decode_page_bodies(source)):
+        assert result["source"]["id"] == "\ud800-page"
+        assert result["source"]["vocabularies"]["future.vendor"]["\udfffuture"] == "v\ud800alue"
+        assert parquet.export(result["source"]) == data

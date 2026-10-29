@@ -99,6 +99,14 @@ def inspect_schema(document: Any, **controls):
     return _call("inspectSchema", {"document": document}, **controls)
 
 
+def inspect_pages(document: Any, **controls):
+    return _call("inspectPages", {"document": document}, **controls)
+
+
+def decode_page_bodies(document: Any, **controls):
+    return _call("decodePageBodies", {"document": document}, **controls)
+
+
 def inspect_logical_types(document: Any, **controls):
     return _call("inspectLogicalTypes", {"document": document}, **controls)
 

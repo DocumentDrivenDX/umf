@@ -17,6 +17,7 @@ full-core = []
 # required by umf-metamodel. Normal users retain the historical full module
 # graph, including when default features are disabled.
 metamodel-compiler = []
+parquet-test-hooks = []
 
 [dependencies]
 num-bigint = "=0.4.8"

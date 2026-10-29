@@ -47,6 +47,8 @@ export function createParquetCaptureOperations(call) {
     decodeParquetFooter(document) { return call('decodeFooter', {document}); },
     inspectParquetMetadata(document) { return call('inspectMetadata', {document}); },
     inspectParquetSchema(document) { return call('inspectSchema', {document}); },
+    inspectParquetPages(document) { return call('inspectPages', {document}); },
+    decodeParquetPageBodies(document) { return call('decodePageBodies', {document}); },
     inspectParquetLogicalTypes(document) { return call('inspectLogicalTypes', {document}); },
     inspectParquetContainers(document) { return call('inspectContainers', {document}); },
     getParquetFieldMetadata(document) { return call('getFieldMetadata', {document}); },

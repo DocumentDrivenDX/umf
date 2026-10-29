@@ -1,0 +1,7 @@
+**Approved for the requested composed Parquet integration and mapping scope.** I found no actionable lost route, method, or runtime divergence against the approved sources.
+
+The core page, footer, and schema files are byte-identical to approved `b508fd95`; the encoder kernel and frozen packet are byte-identical to approved `6d216e36`. The composed CLI advertises all 13 operations, both modules are present in `full_modules`, and the Node/WASM factories retain `encodeWire` alongside the page methods. `parquet-test-hooks` is default off.
+
+The generated ledger reports **114 mapped, 831 unmapped, 930 default gaps, 92 selected declarations per root, and zero retirements**. I checked 160 closure hashes for the three new mappings with no mismatch. The focused owner-test log reports 3 passes. The 34 page/body outcomes remain `complete: false`; the 34-case Python release receipt is explicitly pinned to predecessor `3edb00e`, not the current footer source.
+
+Parent composition hashes: wire binding `83a5063c64cfeac9`, CLI `fe312558ebc171bc`, `full_modules` `4db9a8f73337c983`, Node/WASM factory `0ef66ea8246bd56a`, ledger script `24911483790e1523`, and ledger tests `58f9549b6944230f`. This is a read-only scoped review; I did not rerun broad builds.

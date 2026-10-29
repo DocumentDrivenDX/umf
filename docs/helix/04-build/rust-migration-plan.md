@@ -67,27 +67,22 @@ and complete tooling retirement, and R8 final integrated qualification remain
 open. The source `package.json` selects the Rust V4 Node/browser entries for
 synchronous `generatePythonClient` and retains TypeScript under `./reference`.
 The prior fixed-point private SDK archives qualify only their captured subsets
-and hosts. The current condition-aware ledger records 3,381 route-specific
-declarations across 509 source files, 76 source-selected Rust declarations per
-V4 default root, 920 logical executable default-route gaps, zero retired,
-94 accepted Rust mappings, and 831 unmapped executable names. The 925
-executable logical rows include five Arrow reference-only declarations that
-are distinct from the direct V4 bindings; the default-route gap count remains
-920. The inventory
-records 2,533 Rust-candidate declarations, 226 host declarations, and 220 V4
-entry declarations across both defaults. Four exact immutable
-generated-data aliases are classified separately across 12 route rows. Three root-only SEC/Protobuf Rust
-candidate exports account for the difference from the reference route; they
-remain opt-in and add no retirement. The historical five-schema default-route
-packet was verified for its captured private Darwin arm64 Node/Bun/Chromium
-installed-route scope; it has source drift against this checkout and needs a
-new current-source packet. Its receipt SHA-256 is
-`1c192d0246a85c8c12de39b37b40e119026b692dade2db249e5aace2c689b19a`. The
-current inventory SHA-256 is
-`acb6f8ae9b03c9a06ab55d533e4dcd1bea0d37dfb1b6ffe5d2d6f0651e674aee` and the
-condition-aware ledger SHA-256 is
-`350de88081c59f06f38f330687e1438273414a8df1a917891346a7afcb485ef1`. Linux,
-complete production SDK parity, the full port, and release remain unqualified.
+and hosts. The current condition-aware ledger records 3,396 root-route declarations,
+945 logical runtime names, 92 source-selected Rust declarations per V4 default
+root, 930 logical default-route gaps, zero retired, 114 accepted Rust mappings
+and 831 names without an accepted mapping. The broader inventory contains
+3,411 route-specific declarations across 510 source files. These are
+source-ownership counts, not an implementation percentage: some unmapped names
+have partial Rust implementations and constants still need individual review.
+The 13 Parquet operations include the composed page/body/footer and encoder
+source; they remain explicit opt-ins and add no retirement. The historical
+five-schema default-route packet qualifies only its captured private Darwin
+arm64 Node/Bun/Chromium installed-route scope; its receipt SHA-256 remains
+`1c192d0246a85c8c12de39b37b40e119026b692dade2db249e5aace2c689b19a`.
+The live [inventory](evidence/rust-migration/r8-symbol-inventory/inventory.json)
+and [ledger](evidence/rust-migration/r8-symbol-inventory/gap-ledger.json)
+carry current source pins. Linux, complete production SDK parity, the full port
+and release remain unqualified.
 The ledger's `executable` label is a broad public-runtime category: independent
 AST review of the 1,120-name reference root found 750 function declarations,
 167 variable declarations, five class declarations and 198 JSON resource
@@ -95,7 +90,7 @@ exports. The [exact four-export vocabulary classification](evidence/rust-migrati
 removes only frozen generated-data aliases from the executable denominator;
 the version-gated function and behavior-bearing classes remain executable.
 Other constants, aliases and structured public values still need individual
-compatibility and authority review. Keep all 920 remaining executable names
+compatibility and authority review. Keep all 930 remaining executable names
 in the retirement denominator until an evidence-backed per-row semantic,
 host and data disposition is reviewed; do not subtract a category by naming
 heuristic.
@@ -10526,6 +10521,16 @@ retirement gaps remain open. The integrated checks pass 13 Parquet core tests
 (including 48 whole metadata envelopes and isolated UTF-16 retention), three
 actual CLI tests, four wrapper tests, and all 82 inventory-ledger controls.
 
+The private `codex/parquet-pages-body` continuation based on
+`d62d36b0f4ac6c3bd1e616aa78311c65e53e29fc` adds CONTRACT-019 AC13/14
+under the existing explicit opt-in profile. Its Rust page/header and physical
+UNCOMPRESSED/SNAPPY body kernels have 25 pinned TypeScript public-envelope
+cases, including a Snappy-prefix mutation, plus native Snappy vectors. The
+[bounded execution record](evidence/rust-migration/r8-parquet-pages-bodies/README.md)
+separates source-built CLI, Node, WASM/Chromium and Python observations from
+installed package and default-route qualification. This private candidate is
+for independent Sol review; it is not an integration or retirement claim.
+
 The broad local Rust core run passed 564 of 567 tests; its three failures were
 historical Dataset constraint-work snapshots after the reviewed authored rule
 program change. A fresh TypeScript evaluation matches Rust's 23,250 instruction
@@ -10588,3 +10593,32 @@ implementing its three classification, verification, and recovery operations.
 The `encodeParquetWire` production port from private commit `6d216e36d` is now integrated after independent Sol code review. Its exact Rust semantic owner is `crates/umf-core/src/parquet_wire_encode.rs:encode_parquet_wire`, reached through `crates/umf-core-wire/src/parquet_capture_binding.rs` operation `parquet.encodeWire`. The existing opt-in Parquet profile exposes that operation through CLI, Node/Bun, WASM and Python. This is one exact source-to-owner candidate for `src/adapters/parquet/encode.ts:encodeParquetWire`, with no default-route switch, installed archive qualification or retirement accounting change.
 
 The [source-bound acceptance record](evidence/rust-migration/r8-parquet-wire-encode/README.md) records 44 complete TypeScript-frozen byte/error comparisons, core limit and UTF-16 tests, empty-`PATH` CLI replay, actual Node/Bun/WASM/Python execution and Chromium browser evidence. Review corrected its stated transport admission limits to the actual request limits: depth 256 and `Number.MAX_SAFE_INTEGER` values, separately from the encoder's depth 64 and 50,000 wire nodes. Canonical regeneration, composed-source tests and owner-accounting review remain before acceptance of the combined Parquet slice.
+
+### Combined Parquet page, body, footer and encoder source — 2026-10-29
+
+Independent Sol reviews approve the page/body/footer source at `b508fd95` and
+its composition with encoder `6d216e36d`. The public footer now uses the same
+TypeScript-compatible prefix decoder as page headers; legacy native schema
+decoding retains its profile. Unknown zero-length collection types are rejected
+at the correct stage, malformed inputs preserve diagnostics and result key
+order, and trusted allocation failures propagate by provenance. No resource-code
+whitelist substitutes for that provenance.
+
+The source packet covers 34 page/body and 14 footer envelopes, 62 Parquet Rust
+tests, four actual CLI tests, unchanged metadata fixtures, and real Node/WASM/
+Chromium replays. A separately pinned `3edb00e` release Python extension passes
+all 34 page/body cases with the existing production macOS linker workaround;
+it does not qualify the later footer changes or installed distributions.
+[Execution and review evidence](evidence/rust-migration/r8-parquet-pages-bodies/README.md)
+preserves those source boundaries.
+
+Canonical generation has been refreshed for the combined source. The exact
+owner ledger records 114 mapped and 831 unmapped declarations, with 930 default
+retirement gaps and 92 source-selected declarations per default root. The 13
+Parquet operations remain explicit opt-ins; no default route, installed cohort,
+retirement or release follows from these source results. The composed 579 Rust core tests, 83 inventory/ledger controls, 134 Python
+distribution tests, both TypeScript configurations and all boundary checks pass.
+Canonical and resource fixed-point checks pass. The broad wire replay and
+composed CLI run remain in progress and are not claimed as passing yet. The remaining ten
+Parquet runtime functions are listed in the evidence; the Avro Cardinality port
+continues separately in its private checkout.

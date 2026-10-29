@@ -15,11 +15,11 @@ use crate::{
     value::{copy_json, Utf16, Value},
 };
 use num_bigint::BigUint;
-use serde_json::{Map, Value as Json};
 use serde_json::Number;
+use serde_json::{Map, Value as Json};
 
 const MAX_BYTES: usize = 1_000_000;
-const IDL: &str = include_str!("../../../spec/extensions/parquet/idl.json");
+pub(crate) const IDL: &str = include_str!("../../../spec/extensions/parquet/idl.json");
 
 fn error(code: &'static str, message: impl AsRef<str>) -> EngineError {
     EngineError::new(code, Utf16::default(), message.as_ref())
@@ -149,14 +149,18 @@ fn check_parquet_field_metadata(
         )
     };
     let view = get_parquet_field_metadata(document, engine, registry, capabilities, ctx)?;
-    let fields = value_member(&view, "fields").and_then(|value| match value {
-        Value::Array(values) => Some(values),
-        _ => None,
-    }).ok_or_else(mismatch)?;
-    let elements = value_member(module, "elements").and_then(|value| match value {
-        Value::Array(values) => Some(values),
-        _ => None,
-    }).ok_or_else(mismatch)?;
+    let fields = value_member(&view, "fields")
+        .and_then(|value| match value {
+            Value::Array(values) => Some(values),
+            _ => None,
+        })
+        .ok_or_else(mismatch)?;
+    let elements = value_member(module, "elements")
+        .and_then(|value| match value {
+            Value::Array(values) => Some(values),
+            _ => None,
+        })
+        .ok_or_else(mismatch)?;
     if text_member(&view, "status").as_deref() != Some("checked")
         || text_member(module, "namespace").as_deref() != Some("")
         || fields.len() != elements.len()
@@ -176,25 +180,75 @@ fn check_parquet_field_metadata(
 
 #[cfg(test)]
 fn field_scalar_type(element: &Json) -> Option<&'static str> {
-    if has_unknown_json(element) { return None; }
+    if has_unknown_json(element) {
+        return None;
+    }
     let physical = element.get("type")?.as_str()?;
-    let logical = element.get("logicalType").and_then(Json::as_object).and_then(|v| v.keys().find(|k| k.as_str() != "$unknown")).map(String::as_str);
-    let legacy = element.get("converted_type").and_then(Json::as_str).and_then(|v| v.parse::<usize>().ok()).and_then(|v| ["STRING","MAP","MAP_KEY_VALUE","LIST","ENUM","DECIMAL","DATE","TIME_MILLIS","TIME_MICROS","TIMESTAMP_MILLIS","TIMESTAMP_MICROS","UINT_8","UINT_16","UINT_32","UINT_64","INT_8","INT_16","INT_32","INT_64","JSON","BSON","INTERVAL"].get(v).copied());
+    let logical = element
+        .get("logicalType")
+        .and_then(Json::as_object)
+        .and_then(|v| v.keys().find(|k| k.as_str() != "$unknown"))
+        .map(String::as_str);
+    let legacy = element
+        .get("converted_type")
+        .and_then(Json::as_str)
+        .and_then(|v| v.parse::<usize>().ok())
+        .and_then(|v| {
+            [
+                "STRING",
+                "MAP",
+                "MAP_KEY_VALUE",
+                "LIST",
+                "ENUM",
+                "DECIMAL",
+                "DATE",
+                "TIME_MILLIS",
+                "TIME_MICROS",
+                "TIMESTAMP_MILLIS",
+                "TIMESTAMP_MICROS",
+                "UINT_8",
+                "UINT_16",
+                "UINT_32",
+                "UINT_64",
+                "INT_8",
+                "INT_16",
+                "INT_32",
+                "INT_64",
+                "JSON",
+                "BSON",
+                "INTERVAL",
+            ]
+            .get(v)
+            .copied()
+        });
     let name = logical.or(legacy);
     match name {
         Some("STRING" | "ENUM") if physical == "6" => Some("string"),
-        Some("DECIMAL") if ["1","2","6","7"].contains(&physical) => Some("decimal"),
+        Some("DECIMAL") if ["1", "2", "6", "7"].contains(&physical) => Some("decimal"),
         Some("DATE") if physical == "1" => Some("date"),
-        Some("TIME" | "TIME_MILLIS" | "TIME_MICROS") if ["1","2"].contains(&physical) => Some("time"),
-        Some("TIMESTAMP" | "TIMESTAMP_MILLIS" | "TIMESTAMP_MICROS") if physical == "2" => Some("timestamp"),
-        Some("INTEGER" | "UINT_8" | "UINT_16" | "UINT_32" | "UINT_64" | "INT_8" | "INT_16" | "INT_32" | "INT_64") if ["1","2"].contains(&physical) => Some("integer"),
+        Some("TIME" | "TIME_MILLIS" | "TIME_MICROS") if ["1", "2"].contains(&physical) => {
+            Some("time")
+        }
+        Some("TIMESTAMP" | "TIMESTAMP_MILLIS" | "TIMESTAMP_MICROS") if physical == "2" => {
+            Some("timestamp")
+        }
+        Some(
+            "INTEGER" | "UINT_8" | "UINT_16" | "UINT_32" | "UINT_64" | "INT_8" | "INT_16"
+            | "INT_32" | "INT_64",
+        ) if ["1", "2"].contains(&physical) => Some("integer"),
         Some("FLOAT16") if physical == "7" => Some("float"),
         Some(_) => None,
-        None => match physical { "0" => Some("boolean"), "1"|"2" => Some("integer"), "4"|"5" => Some("float"), "6"|"7" => Some("binary"), _ => None },
+        None => match physical {
+            "0" => Some("boolean"),
+            "1" | "2" => Some("integer"),
+            "4" | "5" => Some("float"),
+            "6" | "7" => Some("binary"),
+            _ => None,
+        },
     }
 }
 
-fn diagnostic(code: &str, path: &str, severity: &str, message: &str) -> Value {
+pub(crate) fn diagnostic(code: &str, path: &str, severity: &str, message: &str) -> Value {
     object([
         ("code", string(code)),
         ("path", string(path)),
@@ -221,19 +275,19 @@ fn text_member(value: &Value, key: &str) -> Option<String> {
     }
 }
 
-fn to_json(value: &Value) -> Result<Json, EngineError> {
+pub(crate) fn to_json(value: &Value) -> Result<Json, EngineError> {
     Ok(match value {
         Value::Null => Json::Null,
         Value::Bool(value) => Json::Bool(*value),
-        Value::Number(value) => Json::Number(if value.fract() == 0.0
-            && *value >= i64::MIN as f64
-            && *value <= i64::MAX as f64
-        {
-            Number::from(*value as i64)
-        } else {
-            Number::from_f64(*value)
-                .ok_or_else(|| error("PARQUET_METADATA_SHAPE", "Non-finite value in metadata"))?
-        }),
+        Value::Number(value) => Json::Number(
+            if value.fract() == 0.0 && *value >= i64::MIN as f64 && *value <= i64::MAX as f64 {
+                Number::from(*value as i64)
+            } else {
+                Number::from_f64(*value).ok_or_else(|| {
+                    error("PARQUET_METADATA_SHAPE", "Non-finite value in metadata")
+                })?
+            },
+        ),
         Value::String(value) => Json::String(
             value
                 .to_utf8()
@@ -284,7 +338,7 @@ fn preserve_raw_fields(result: Value, original: &Value, keys: &[&str]) -> Value 
     Value::Object(fields)
 }
 
-fn from_json(value: Json) -> Value {
+pub(crate) fn from_json(value: Json) -> Value {
     match value {
         Json::Null => Value::Null,
         Json::Bool(value) => Value::Bool(value),
@@ -368,7 +422,7 @@ fn compact_as_json(value: &NativeWireValue) -> Result<Json, String> {
     })
 }
 
-fn map_idl_value(
+pub(crate) fn map_idl_value(
     value: &NativeWireValue,
     ty: &Json,
     defs: &Map<String, Json>,
@@ -675,22 +729,31 @@ pub fn decode_parquet_footer(
         ));
     }
     let bytes = export_parquet_capture(document, engine, registry, capabilities, ctx)?;
-    match parquet_schema_decode::decode_compact_footer(&bytes, ctx) {
+    match parquet_schema_decode::decode_compact_footer_wire_view(&bytes, ctx) {
         Ok(DecodedFooter {
             value,
             consumed_bytes,
             trailing_bytes,
             ..
-        }) => {
-            out[1].1 = string("decoded");
-            out.push(("value", wire_value(&value)?));
-            out.push(("consumedBytes", int(consumed_bytes)));
-            out.push(("trailingBytes", int(trailing_bytes)));
-            if trailing_bytes != 0 {
-                ds.push(diagnostic("PARQUET_FOOTER_TRAILING", "", "warning", "Bytes remain after the first struct; source retains them without interpreting signatures or other content"));
+        }) => match wire_value(&value) {
+            Ok(tree) => {
+                out[1].1 = string("decoded");
+                out.push(("value", tree));
+                out.push(("consumedBytes", int(consumed_bytes)));
+                out.push(("trailingBytes", int(trailing_bytes)));
+                if trailing_bytes != 0 {
+                    ds.push(diagnostic("PARQUET_FOOTER_TRAILING", "", "warning", "Bytes remain after the first struct; source retains them without interpreting signatures or other content"));
+                }
+                ds.push(diagnostic("PARQUET_FOOTER_SEMANTICS_UNVERIFIED", "", "warning", "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"));
             }
-            ds.push(diagnostic("PARQUET_FOOTER_SEMANTICS_UNVERIFIED", "", "warning", "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"));
-        }
+            Err(e) if e.is_control_failure() => return Err(e),
+            Err(e) => ds.push(diagnostic(
+                "PARQUET_FOOTER_DECODE",
+                "",
+                "error",
+                &e.message.to_utf8().unwrap_or_default(),
+            )),
+        },
         Err(e) if e.is_control_failure() => return Err(e),
         Err(e) => ds.push(diagnostic(
             "PARQUET_FOOTER_DECODE",
@@ -699,7 +762,7 @@ pub fn decode_parquet_footer(
             &e.message.to_utf8().unwrap_or_default(),
         )),
     }
-    out.push(("diagnostics", diagnostics(ds)));
+    out.insert(3, ("diagnostics", diagnostics(ds)));
     Ok(Value::Object(
         out.into_iter().map(|(k, v)| (Utf16::from(k), v)).collect(),
     ))
@@ -806,12 +869,7 @@ fn metadata_parts(
                 "error",
                 &e.message.to_utf8().unwrap_or_default(),
             ));
-            return Ok((
-                None,
-                None,
-                ds,
-                "blocked".into(),
-            ));
+            return Ok((None, None, ds, "blocked".into()));
         }
     };
     if decoded.trailing_bytes != 0 {
@@ -1262,7 +1320,7 @@ pub fn inspect_parquet_schema(
     ))
 }
 
-fn has_unknown_json(value: &Json) -> bool {
+pub(crate) fn has_unknown_json(value: &Json) -> bool {
     match value {
         Json::Array(values) => values.iter().any(has_unknown_json),
         Json::Object(fields) => fields.iter().any(|(key, value)| {
@@ -1297,13 +1355,7 @@ pub fn inspect_parquet_logical_types(
     capabilities: &mut dyn Capabilities,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
-    let schema_result = inspect_parquet_schema(
-        document,
-        engine,
-        registry,
-        capabilities,
-        ctx,
-    )?;
+    let schema_result = inspect_parquet_schema(document, engine, registry, capabilities, ctx)?;
     let mut result = to_json_selected(
         &schema_result,
         &[
@@ -1330,10 +1382,28 @@ pub fn inspect_parquet_logical_types(
         .unwrap_or_default();
     ctx.charge_work(schema.len(), Utf16::default())?;
     let legacy = [
-        "STRING", "MAP", "MAP_KEY_VALUE", "LIST", "ENUM", "DECIMAL", "DATE",
-        "TIME_MILLIS", "TIME_MICROS", "TIMESTAMP_MILLIS", "TIMESTAMP_MICROS",
-        "UINT_8", "UINT_16", "UINT_32", "UINT_64", "INT_8", "INT_16", "INT_32",
-        "INT_64", "JSON", "BSON", "INTERVAL",
+        "STRING",
+        "MAP",
+        "MAP_KEY_VALUE",
+        "LIST",
+        "ENUM",
+        "DECIMAL",
+        "DATE",
+        "TIME_MILLIS",
+        "TIME_MICROS",
+        "TIMESTAMP_MILLIS",
+        "TIMESTAMP_MICROS",
+        "UINT_8",
+        "UINT_16",
+        "UINT_32",
+        "UINT_64",
+        "INT_8",
+        "INT_16",
+        "INT_32",
+        "INT_64",
+        "JSON",
+        "BSON",
+        "INTERVAL",
     ];
     let mut annotations = Vec::new();
     let mut diagnostics = result
@@ -1349,22 +1419,24 @@ pub fn inspect_parquet_logical_types(
             continue;
         }
         let path = format!("/schema/{index}");
-        let origin = if logical.is_some() { "logical" } else { "converted" };
+        let origin = if logical.is_some() {
+            "logical"
+        } else {
+            "converted"
+        };
         let modern = logical
             .and_then(Json::as_object)
             .and_then(|fields| fields.iter().find(|(key, _)| key.as_str() != "$unknown"));
-        let mut name = modern
-            .map(|(key, _)| key.clone())
-            .or_else(|| {
-                if origin == "converted" {
-                    converted
-                        .and_then(|code| code.parse::<usize>().ok())
-                        .and_then(|code| legacy.get(code))
-                        .map(|value| (*value).to_owned())
-                } else {
-                    None
-                }
-            });
+        let mut name = modern.map(|(key, _)| key.clone()).or_else(|| {
+            if origin == "converted" {
+                converted
+                    .and_then(|code| code.parse::<usize>().ok())
+                    .and_then(|code| legacy.get(code))
+                    .map(|value| (*value).to_owned())
+            } else {
+                None
+            }
+        });
         let mut parameters = modern
             .map(|(_, value)| value.clone())
             .unwrap_or_else(|| serde_json::json!({}));
@@ -1401,7 +1473,11 @@ pub fn inspect_parquet_logical_types(
         if origin == "converted" {
             if logical_name.starts_with("UINT_") || logical_name.starts_with("INT_") {
                 let signed = logical_name.starts_with("INT_");
-                let width = logical_name.rsplit('_').next().unwrap_or_default().to_owned();
+                let width = logical_name
+                    .rsplit('_')
+                    .next()
+                    .unwrap_or_default()
+                    .to_owned();
                 logical_name = "INTEGER".to_owned();
                 parameters = serde_json::json!({"bitWidth": width, "isSigned": signed});
             } else if logical_name == "DECIMAL" {
@@ -1417,11 +1493,13 @@ pub fn inspect_parquet_logical_types(
                         .unwrap_or_else(|| Json::String("0".into())),
                 );
                 parameters = Json::Object(value);
-            } else if logical_name.starts_with("TIME_")
-                || logical_name.starts_with("TIMESTAMP_")
-            {
+            } else if logical_name.starts_with("TIME_") || logical_name.starts_with("TIMESTAMP_") {
                 let is_time = logical_name.starts_with("TIME_");
-                let unit = logical_name.rsplit('_').next().unwrap_or_default().to_owned();
+                let unit = logical_name
+                    .rsplit('_')
+                    .next()
+                    .unwrap_or_default()
+                    .to_owned();
                 logical_name = if is_time { "TIME" } else { "TIMESTAMP" }.into();
                 parameters = serde_json::json!({
                     "isAdjustedToUTC": true,
@@ -1436,89 +1514,279 @@ pub fn inspect_parquet_logical_types(
             *validation = "invalid";
             issue("PARQUET_LOGICAL_CONFLICT", &path, message, true);
         };
-        let uninterpreted = |message: &str,
-                             validation: &mut &str,
-                             issue: &mut dyn FnMut(&str, &str, &str, bool)| {
-            if *validation != "invalid" {
-                *validation = "uninterpreted";
-            }
-            issue("PARQUET_LOGICAL_UNVERIFIED", &path, message, false);
-        };
+        let uninterpreted =
+            |message: &str,
+             validation: &mut &str,
+             issue: &mut dyn FnMut(&str, &str, &str, bool)| {
+                if *validation != "invalid" {
+                    *validation = "uninterpreted";
+                }
+                issue("PARQUET_LOGICAL_UNVERIFIED", &path, message, false);
+            };
         let incompatible = |types: &[&str]| !type_code.is_some_and(|code| types.contains(&code));
         match logical_name.as_str() {
             "STRING" | "ENUM" | "JSON" | "BSON" | "GEOMETRY" | "GEOGRAPHY" => {
                 if incompatible(&["6"]) {
-                    invalid(&format!("{logical_name} is incompatible with this physical type"), &mut validation, &mut issue);
+                    invalid(
+                        &format!("{logical_name} is incompatible with this physical type"),
+                        &mut validation,
+                        &mut issue,
+                    );
                 }
                 converted_annotation = match logical_name.as_str() {
-                    "STRING" => Some("0".into()), "ENUM" => Some("4".into()),
-                    "JSON" => Some("19".into()), "BSON" => Some("20".into()), _ => None,
+                    "STRING" => Some("0".into()),
+                    "ENUM" => Some("4".into()),
+                    "JSON" => Some("19".into()),
+                    "BSON" => Some("20".into()),
+                    _ => None,
                 };
                 if logical_name == "GEOMETRY" || logical_name == "GEOGRAPHY" {
                     uninterpreted("Physical carrier checked; CRS, interpolation and WKB semantics remain unverified", &mut validation, &mut issue);
                 }
             }
             "UUID" | "FLOAT16" | "INTERVAL" => {
-                let length = match logical_name.as_str() { "UUID" => "16", "FLOAT16" => "2", _ => "12" };
-                if incompatible(&["7"]) { invalid(&format!("{logical_name} is incompatible with this physical type"), &mut validation, &mut issue); }
-                if type_length != Some(length) { invalid(&format!("{logical_name} requires byte length {length}"), &mut validation, &mut issue); }
-                if logical_name == "INTERVAL" { converted_annotation = Some("21".into()); }
+                let length = match logical_name.as_str() {
+                    "UUID" => "16",
+                    "FLOAT16" => "2",
+                    _ => "12",
+                };
+                if incompatible(&["7"]) {
+                    invalid(
+                        &format!("{logical_name} is incompatible with this physical type"),
+                        &mut validation,
+                        &mut issue,
+                    );
+                }
+                if type_length != Some(length) {
+                    invalid(
+                        &format!("{logical_name} requires byte length {length}"),
+                        &mut validation,
+                        &mut issue,
+                    );
+                }
+                if logical_name == "INTERVAL" {
+                    converted_annotation = Some("21".into());
+                }
             }
             "DATE" => {
-                if incompatible(&["1"]) { invalid("DATE is incompatible with this physical type", &mut validation, &mut issue); }
+                if incompatible(&["1"]) {
+                    invalid(
+                        "DATE is incompatible with this physical type",
+                        &mut validation,
+                        &mut issue,
+                    );
+                }
                 converted_annotation = Some("6".into());
             }
             "INTEGER" => {
-                let width = parameters.get("bitWidth").and_then(Json::as_str).unwrap_or("");
+                let width = parameters
+                    .get("bitWidth")
+                    .and_then(Json::as_str)
+                    .unwrap_or("");
                 let signed = parameters.get("isSigned").and_then(Json::as_bool);
-                if !["8", "16", "32", "64"].contains(&width) { invalid("Integer bitWidth must be 8, 16, 32 or 64", &mut validation, &mut issue); }
-                else {
-                    if incompatible(&[if width == "64" { "2" } else { "1" }]) { invalid("INTEGER is incompatible with this physical type", &mut validation, &mut issue); }
-                    if let Some(signed) = signed { let offset = if signed { 15 } else { 11 }; let index = ["8", "16", "32", "64"].iter().position(|v| *v == width).unwrap_or(0); converted_annotation = Some((offset + index).to_string()); }
+                if !["8", "16", "32", "64"].contains(&width) {
+                    invalid(
+                        "Integer bitWidth must be 8, 16, 32 or 64",
+                        &mut validation,
+                        &mut issue,
+                    );
+                } else {
+                    if incompatible(&[if width == "64" { "2" } else { "1" }]) {
+                        invalid(
+                            "INTEGER is incompatible with this physical type",
+                            &mut validation,
+                            &mut issue,
+                        );
+                    }
+                    if let Some(signed) = signed {
+                        let offset = if signed { 15 } else { 11 };
+                        let index = ["8", "16", "32", "64"]
+                            .iter()
+                            .position(|v| *v == width)
+                            .unwrap_or(0);
+                        converted_annotation = Some((offset + index).to_string());
+                    }
                 }
             }
             "DECIMAL" => {
-                if incompatible(&["1", "2", "6", "7"]) { invalid("DECIMAL is incompatible with this physical type", &mut validation, &mut issue); }
-                let precision = parameters.get("precision").and_then(Json::as_str).unwrap_or("0").parse::<i128>().unwrap_or(0);
-                let scale = parameters.get("scale").and_then(Json::as_str).unwrap_or("0").parse::<i128>().unwrap_or(0);
-                if precision <= 0 || scale < 0 || scale > precision { invalid("Decimal precision must be positive and scale between zero and precision", &mut validation, &mut issue); }
-                if type_code == Some("1") && precision > 9 || type_code == Some("2") && precision > 18 { invalid("Decimal precision exceeds integer physical capacity", &mut validation, &mut issue); }
-                if type_code == Some("2") && precision > 0 && precision < 10 { issue("PARQUET_DECIMAL_SMALL_INT64", &path, "Decimal precision below 10 uses an int64 carrier", false); }
+                if incompatible(&["1", "2", "6", "7"]) {
+                    invalid(
+                        "DECIMAL is incompatible with this physical type",
+                        &mut validation,
+                        &mut issue,
+                    );
+                }
+                let precision = parameters
+                    .get("precision")
+                    .and_then(Json::as_str)
+                    .unwrap_or("0")
+                    .parse::<i128>()
+                    .unwrap_or(0);
+                let scale = parameters
+                    .get("scale")
+                    .and_then(Json::as_str)
+                    .unwrap_or("0")
+                    .parse::<i128>()
+                    .unwrap_or(0);
+                if precision <= 0 || scale < 0 || scale > precision {
+                    invalid(
+                        "Decimal precision must be positive and scale between zero and precision",
+                        &mut validation,
+                        &mut issue,
+                    );
+                }
+                if type_code == Some("1") && precision > 9
+                    || type_code == Some("2") && precision > 18
+                {
+                    invalid(
+                        "Decimal precision exceeds integer physical capacity",
+                        &mut validation,
+                        &mut issue,
+                    );
+                }
+                if type_code == Some("2") && precision > 0 && precision < 10 {
+                    issue(
+                        "PARQUET_DECIMAL_SMALL_INT64",
+                        &path,
+                        "Decimal precision below 10 uses an int64 carrier",
+                        false,
+                    );
+                }
                 if type_code == Some("7") {
                     let length = type_length.and_then(|v| v.parse::<u32>().ok()).unwrap_or(0);
-                    if length > 4096 { uninterpreted("Fixed-decimal capacity check exceeds the 4096-byte exact-arithmetic limit", &mut validation, &mut issue); }
-                    else if length > 0 { let maximum = ((BigUint::from(1u8) << (length as usize * 8 - 1)) - 1u8).to_string().len().saturating_sub(1); if precision > maximum as i128 { invalid("Decimal precision exceeds fixed-byte physical capacity", &mut validation, &mut issue); } }
+                    if length > 4096 {
+                        uninterpreted("Fixed-decimal capacity check exceeds the 4096-byte exact-arithmetic limit", &mut validation, &mut issue);
+                    } else if length > 0 {
+                        let maximum = ((BigUint::from(1u8) << (length as usize * 8 - 1)) - 1u8)
+                            .to_string()
+                            .len()
+                            .saturating_sub(1);
+                        if precision > maximum as i128 {
+                            invalid(
+                                "Decimal precision exceeds fixed-byte physical capacity",
+                                &mut validation,
+                                &mut issue,
+                            );
+                        }
+                    }
                 }
                 converted_annotation = Some("5".into());
-                if origin == "logical" { for key in ["precision", "scale"] { if let (Some(native), Some(authoritative)) = (element.get(key), parameters.get(key)) { if native != authoritative { issue("PARQUET_LEGACY_ANNOTATION_CONFLICT", &format!("{path}/{key}"), "Legacy decimal parameter differs from authoritative logical annotation", false); } } } }
+                if origin == "logical" {
+                    for key in ["precision", "scale"] {
+                        if let (Some(native), Some(authoritative)) =
+                            (element.get(key), parameters.get(key))
+                        {
+                            if native != authoritative {
+                                issue("PARQUET_LEGACY_ANNOTATION_CONFLICT", &format!("{path}/{key}"), "Legacy decimal parameter differs from authoritative logical annotation", false);
+                            }
+                        }
+                    }
+                }
             }
             "TIME" | "TIMESTAMP" => {
                 let unit_object = parameters.get("unit").and_then(Json::as_object);
-                let unit = unit_object.and_then(|v| v.keys().find(|key| key.as_str() != "$unknown")).map(String::as_str);
+                let unit = unit_object
+                    .and_then(|v| v.keys().find(|key| key.as_str() != "$unknown"))
+                    .map(String::as_str);
                 if unit.is_none() {
-                    if unit_object.and_then(|v| v.get("$unknown")).is_some() { uninterpreted("Future temporal unit remains uninterpreted", &mut validation, &mut issue); }
-                    else { invalid("Temporal unit must select one alternative", &mut validation, &mut issue); }
+                    if unit_object.and_then(|v| v.get("$unknown")).is_some() {
+                        uninterpreted(
+                            "Future temporal unit remains uninterpreted",
+                            &mut validation,
+                            &mut issue,
+                        );
+                    } else {
+                        invalid(
+                            "Temporal unit must select one alternative",
+                            &mut validation,
+                            &mut issue,
+                        );
+                    }
                 } else if let Some(unit) = unit {
-                    if !["MILLIS", "MICROS", "NANOS"].contains(&unit) { uninterpreted("Future temporal unit remains uninterpreted", &mut validation, &mut issue); }
-                    else { let required = if logical_name == "TIME" && unit == "MILLIS" { "1" } else { "2" }; if incompatible(&[required]) { invalid(&format!("{logical_name} is incompatible with this physical type"), &mut validation, &mut issue); }
-                        converted_annotation = if unit == "NANOS" { None } else { Some(((if logical_name == "TIME" { 7 } else { 9 }) + usize::from(unit == "MICROS")).to_string()) };
+                    if !["MILLIS", "MICROS", "NANOS"].contains(&unit) {
+                        uninterpreted(
+                            "Future temporal unit remains uninterpreted",
+                            &mut validation,
+                            &mut issue,
+                        );
+                    } else {
+                        let required = if logical_name == "TIME" && unit == "MILLIS" {
+                            "1"
+                        } else {
+                            "2"
+                        };
+                        if incompatible(&[required]) {
+                            invalid(
+                                &format!("{logical_name} is incompatible with this physical type"),
+                                &mut validation,
+                                &mut issue,
+                            );
+                        }
+                        converted_annotation = if unit == "NANOS" {
+                            None
+                        } else {
+                            Some(
+                                ((if logical_name == "TIME" { 7 } else { 9 })
+                                    + usize::from(unit == "MICROS"))
+                                .to_string(),
+                            )
+                        };
                     }
                 }
             }
             "LIST" | "MAP" | "MAP_KEY_VALUE" | "VARIANT" | "FILE" => {
-                if type_code.is_some() { invalid(&format!("{logical_name} requires a group"), &mut validation, &mut issue); }
-                uninterpreted("Nested layout and value rules remain unverified", &mut validation, &mut issue);
-                converted_annotation = match logical_name.as_str() { "LIST" => Some("3".into()), "MAP" => Some("1".into()), "MAP_KEY_VALUE" => Some("2".into()), _ => None };
+                if type_code.is_some() {
+                    invalid(
+                        &format!("{logical_name} requires a group"),
+                        &mut validation,
+                        &mut issue,
+                    );
+                }
+                uninterpreted(
+                    "Nested layout and value rules remain unverified",
+                    &mut validation,
+                    &mut issue,
+                );
+                converted_annotation = match logical_name.as_str() {
+                    "LIST" => Some("3".into()),
+                    "MAP" => Some("1".into()),
+                    "MAP_KEY_VALUE" => Some("2".into()),
+                    _ => None,
+                };
             }
-            "UNKNOWN" => uninterpreted("Always-null annotation retained; stored nullness has not been verified", &mut validation, &mut issue),
-            _ => uninterpreted("Logical annotation has no implemented rule set", &mut validation, &mut issue),
+            "UNKNOWN" => uninterpreted(
+                "Always-null annotation retained; stored nullness has not been verified",
+                &mut validation,
+                &mut issue,
+            ),
+            _ => uninterpreted(
+                "Logical annotation has no implemented rule set",
+                &mut validation,
+                &mut issue,
+            ),
         }
-        if has_unknown_json(&parameters) { uninterpreted("Additional logical parameters remain uninterpreted", &mut validation, &mut issue); }
+        if has_unknown_json(&parameters) {
+            uninterpreted(
+                "Additional logical parameters remain uninterpreted",
+                &mut validation,
+                &mut issue,
+            );
+        }
         if origin == "logical" {
             if let Some(expected) = converted_annotation {
                 match element.get("converted_type") {
-                    None => issue("PARQUET_LEGACY_ANNOTATION_ABSENT", &path, "Corresponding legacy annotation is absent; source remains unchanged", false),
-                    Some(actual) if actual.as_str() != Some(expected.as_str()) => issue("PARQUET_LEGACY_ANNOTATION_CONFLICT", &path, "Legacy annotation conflicts with authoritative logical annotation", false),
+                    None => issue(
+                        "PARQUET_LEGACY_ANNOTATION_ABSENT",
+                        &path,
+                        "Corresponding legacy annotation is absent; source remains unchanged",
+                        false,
+                    ),
+                    Some(actual) if actual.as_str() != Some(expected.as_str()) => issue(
+                        "PARQUET_LEGACY_ANNOTATION_CONFLICT",
+                        &path,
+                        "Legacy annotation conflicts with authoritative logical annotation",
+                        false,
+                    ),
                     _ => {}
                 }
             }
@@ -1529,7 +1797,9 @@ pub fn inspect_parquet_logical_types(
     if let Json::Object(fields) = &mut result {
         fields.insert("annotations".into(), Json::Array(annotations));
         fields.insert("diagnostics".into(), Json::Array(diagnostics));
-        if blocked { fields.insert("status".into(), Json::String("blocked".into())); }
+        if blocked {
+            fields.insert("status".into(), Json::String("blocked".into()));
+        }
     }
     Ok(preserve_raw_fields(
         from_json(result),
@@ -1548,13 +1818,8 @@ pub fn inspect_parquet_containers(
     capabilities: &mut dyn Capabilities,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
-    let logical_result = inspect_parquet_logical_types(
-        document,
-        engine,
-        registry,
-        capabilities,
-        ctx,
-    )?;
+    let logical_result =
+        inspect_parquet_logical_types(document, engine, registry, capabilities, ctx)?;
     let mut result = to_json_selected(
         &logical_result,
         &[
@@ -1587,7 +1852,10 @@ pub fn inspect_parquet_containers(
         .into_iter()
         .flatten()
         .filter_map(|value| {
-            Some((value.get("index")?.as_u64()? as usize, value.get("name")?.as_str()?.into()))
+            Some((
+                value.get("index")?.as_u64()? as usize,
+                value.get("name")?.as_str()?.into(),
+            ))
         })
         .collect();
     let mut containers = Vec::<Json>::new();
@@ -1606,59 +1874,159 @@ pub fn inspect_parquet_containers(
         blocked: &mut bool,
         invalid_annotations: &mut std::collections::BTreeSet<usize>,
     ) {
-        let Some(index) = node.get("index").and_then(Json::as_u64).map(|v| v as usize) else { return };
-        let Some(element) = schema.get(index) else { return };
+        let Some(index) = node.get("index").and_then(Json::as_u64).map(|v| v as usize) else {
+            return;
+        };
+        let Some(element) = schema.get(index) else {
+            return;
+        };
         let name = annotations.get(&index).map(String::as_str);
         if matches!(name, Some("LIST" | "MAP" | "MAP_KEY_VALUE")) {
-            let parent_name = parent.and_then(|value| annotations.get(&value)).map(String::as_str);
-            let entry_marker = name == Some("MAP_KEY_VALUE") && matches!(parent_name, Some("MAP" | "MAP_KEY_VALUE"));
+            let parent_name = parent
+                .and_then(|value| annotations.get(&value))
+                .map(String::as_str);
+            let entry_marker = name == Some("MAP_KEY_VALUE")
+                && matches!(parent_name, Some("MAP" | "MAP_KEY_VALUE"));
             if !entry_marker {
-                let children = node.get("children").and_then(Json::as_array).cloned().unwrap_or_default();
+                let children = node
+                    .get("children")
+                    .and_then(Json::as_array)
+                    .cloned()
+                    .unwrap_or_default();
                 let mut valid = true;
                 macro_rules! fail {
                     ($message:expr) => {{
                         valid = false;
                         *blocked = true;
                         invalid_annotations.insert(index);
-                        push_diagnostic_json(diagnostics, "PARQUET_CONTAINER_STRUCTURE", &format!("/schema/{index}"), "error", $message);
+                        push_diagnostic_json(
+                            diagnostics,
+                            "PARQUET_CONTAINER_STRUCTURE",
+                            &format!("/schema/{index}"),
+                            "error",
+                            $message,
+                        );
                     }};
                 }
                 let node_type = element.get("type");
-                if index == 0 || node_type.is_some() { fail!("Container must annotate a non-root group"); }
+                if index == 0 || node_type.is_some() {
+                    fail!("Container must annotate a non-root group");
+                }
                 let repeated = children.first();
-                let repeated_index = repeated.and_then(|v| v.get("index")).and_then(Json::as_u64).map(|v| v as usize);
-                if children.len() != 1 || repeated_index.and_then(|i| schema.get(i)).and_then(|v| v.get("repetition_type")).and_then(Json::as_str) != Some("2") { fail!("Container requires exactly one repeated child"); }
+                let repeated_index = repeated
+                    .and_then(|v| v.get("index"))
+                    .and_then(Json::as_u64)
+                    .map(|v| v as usize);
+                if children.len() != 1
+                    || repeated_index
+                        .and_then(|i| schema.get(i))
+                        .and_then(|v| v.get("repetition_type"))
+                        .and_then(Json::as_str)
+                        != Some("2")
+                {
+                    fail!("Container requires exactly one repeated child");
+                }
                 if valid {
                     if let (Some(repeated), Some(repeated_index)) = (repeated, repeated_index) {
                         let repeated_element = schema.get(repeated_index).unwrap_or(&Json::Null);
-                        let repeated_children = repeated.get("children").and_then(Json::as_array).cloned().unwrap_or_default();
+                        let repeated_children = repeated
+                            .get("children")
+                            .and_then(Json::as_array)
+                            .cloned()
+                            .unwrap_or_default();
                         if name == Some("LIST") {
                             let single = repeated_children.first();
-                            let single_index = single.and_then(|v| v.get("index")).and_then(Json::as_u64).map(|v| v as usize);
-                            let single_repetition = single_index.and_then(|i| schema.get(i)).and_then(|v| v.get("repetition_type")).and_then(Json::as_str);
-                            let repeated_name = repeated_element.get("name").and_then(Json::as_str).unwrap_or("");
-                            let outer_name = element.get("name").and_then(Json::as_str).unwrap_or("");
-                            let two_level = repeated_element.get("type").is_some() || repeated_children.len() > 1 || single_repetition == Some("2") || repeated_name == "array" || repeated_name == format!("{outer_name}_tuple");
-                            if repeated_element.get("type").is_none() && repeated_children.is_empty() { fail!("Repeated list group must have an element"); }
+                            let single_index = single
+                                .and_then(|v| v.get("index"))
+                                .and_then(Json::as_u64)
+                                .map(|v| v as usize);
+                            let single_repetition = single_index
+                                .and_then(|i| schema.get(i))
+                                .and_then(|v| v.get("repetition_type"))
+                                .and_then(Json::as_str);
+                            let repeated_name = repeated_element
+                                .get("name")
+                                .and_then(Json::as_str)
+                                .unwrap_or("");
+                            let outer_name =
+                                element.get("name").and_then(Json::as_str).unwrap_or("");
+                            let two_level = repeated_element.get("type").is_some()
+                                || repeated_children.len() > 1
+                                || single_repetition == Some("2")
+                                || repeated_name == "array"
+                                || repeated_name == format!("{outer_name}_tuple");
+                            if repeated_element.get("type").is_none()
+                                && repeated_children.is_empty()
+                            {
+                                fail!("Repeated list group must have an element");
+                            }
                             if element.get("repetition_type").and_then(Json::as_str) == Some("2") {
-                                let outer = containers.iter().any(|container| container.get("kind").and_then(Json::as_str) == Some("list") && container.get("elementIndex").and_then(Json::as_u64) == Some(index as u64) && container.get("layout").and_then(Json::as_str) == Some("two-level"));
-                                if !outer { fail!("Repeated LIST must be an element of another two-level LIST"); }
+                                let outer = containers.iter().any(|container| {
+                                    container.get("kind").and_then(Json::as_str) == Some("list")
+                                        && container.get("elementIndex").and_then(Json::as_u64)
+                                            == Some(index as u64)
+                                        && container.get("layout").and_then(Json::as_str)
+                                            == Some("two-level")
+                                });
+                                if !outer {
+                                    fail!("Repeated LIST must be an element of another two-level LIST");
+                                }
                             }
                             if valid {
-                                let element_index = if two_level { repeated_index } else { single_index.unwrap_or(repeated_index) };
-                                let element_nullable = !two_level && single_index.and_then(|i| schema.get(i)).and_then(|v| v.get("repetition_type")).and_then(Json::as_str) == Some("1");
+                                let element_index = if two_level {
+                                    repeated_index
+                                } else {
+                                    single_index.unwrap_or(repeated_index)
+                                };
+                                let element_nullable = !two_level
+                                    && single_index
+                                        .and_then(|i| schema.get(i))
+                                        .and_then(|v| v.get("repetition_type"))
+                                        .and_then(Json::as_str)
+                                        == Some("1");
                                 containers.push(serde_json::json!({"index":index,"kind":"list","nullable":element.get("repetition_type").and_then(Json::as_str)==Some("1"),"repeatedIndex":repeated_index,"elementIndex":element_index,"elementNullable":element_nullable,"layout":if two_level {"two-level"} else {"three-level"}}));
                             }
                         } else {
-                            if element.get("repetition_type").and_then(Json::as_str) == Some("2") { fail!("MAP cannot have repeated outer repetition"); }
-                            let key = repeated_children.first().and_then(|v| v.get("index")).and_then(Json::as_u64).map(|v| v as usize);
-                            let value = repeated_children.get(1).and_then(|v| v.get("index")).and_then(Json::as_u64).map(|v| v as usize);
-                            if repeated_element.get("type").is_some() || repeated_children.is_empty() || repeated_children.len() > 2 { fail!("Map entry must be a group with a key and optional value"); }
-                            if key.and_then(|i| schema.get(i)).and_then(|v| v.get("repetition_type")).and_then(Json::as_str).is_some_and(|v| v != "0") { fail!("Map key must be required"); }
-                            if value.and_then(|i| schema.get(i)).and_then(|v| v.get("repetition_type")).and_then(Json::as_str) == Some("2") { fail!("Map value cannot be repeated"); }
+                            if element.get("repetition_type").and_then(Json::as_str) == Some("2") {
+                                fail!("MAP cannot have repeated outer repetition");
+                            }
+                            let key = repeated_children
+                                .first()
+                                .and_then(|v| v.get("index"))
+                                .and_then(Json::as_u64)
+                                .map(|v| v as usize);
+                            let value = repeated_children
+                                .get(1)
+                                .and_then(|v| v.get("index"))
+                                .and_then(Json::as_u64)
+                                .map(|v| v as usize);
+                            if repeated_element.get("type").is_some()
+                                || repeated_children.is_empty()
+                                || repeated_children.len() > 2
+                            {
+                                fail!("Map entry must be a group with a key and optional value");
+                            }
+                            if key
+                                .and_then(|i| schema.get(i))
+                                .and_then(|v| v.get("repetition_type"))
+                                .and_then(Json::as_str)
+                                .is_some_and(|v| v != "0")
+                            {
+                                fail!("Map key must be required");
+                            }
+                            if value
+                                .and_then(|i| schema.get(i))
+                                .and_then(|v| v.get("repetition_type"))
+                                .and_then(Json::as_str)
+                                == Some("2")
+                            {
+                                fail!("Map value cannot be repeated");
+                            }
                             if valid {
                                 let mut container = serde_json::json!({"index":index,"kind":"map","nullable":element.get("repetition_type").and_then(Json::as_str)==Some("1"),"repeatedIndex":repeated_index,"keyIndex":key.unwrap_or(repeated_index),"valueNullable":value.and_then(|i| schema.get(i)).and_then(|v| v.get("repetition_type")).and_then(Json::as_str).is_none_or(|v| v=="1"),"duplicateKeys":"last-value"});
-                                if let Some(value) = value { container["valueIndex"] = serde_json::json!(value); }
+                                if let Some(value) = value {
+                                    container["valueIndex"] = serde_json::json!(value);
+                                }
                                 containers.push(container);
                             }
                         }
@@ -1667,15 +2035,39 @@ pub fn inspect_parquet_containers(
             }
         }
         if let Some(children) = node.get("children").and_then(Json::as_array) {
-            for child in children { walk(child, Some(index), schema, annotations, containers, diagnostics, blocked, invalid_annotations); }
+            for child in children {
+                walk(
+                    child,
+                    Some(index),
+                    schema,
+                    annotations,
+                    containers,
+                    diagnostics,
+                    blocked,
+                    invalid_annotations,
+                );
+            }
         }
     }
     let mut blocked = false;
     let mut invalid_annotations = std::collections::BTreeSet::new();
-    walk(&tree, None, &schema, &annotations, &mut containers, &mut diagnostics, &mut blocked, &mut invalid_annotations);
+    walk(
+        &tree,
+        None,
+        &schema,
+        &annotations,
+        &mut containers,
+        &mut diagnostics,
+        &mut blocked,
+        &mut invalid_annotations,
+    );
     if let Some(items) = result.get_mut("annotations").and_then(Json::as_array_mut) {
         for annotation in items {
-            if annotation.get("index").and_then(Json::as_u64).is_some_and(|index| invalid_annotations.contains(&(index as usize))) {
+            if annotation
+                .get("index")
+                .and_then(Json::as_u64)
+                .is_some_and(|index| invalid_annotations.contains(&(index as usize)))
+            {
                 annotation["validation"] = Json::String("invalid".into());
             }
         }
@@ -1684,7 +2076,9 @@ pub fn inspect_parquet_containers(
     if let Json::Object(fields) = &mut result {
         fields.insert("containers".into(), Json::Array(containers));
         fields.insert("diagnostics".into(), Json::Array(diagnostics));
-        if blocked { fields.insert("status".into(), Json::String("blocked".into())); }
+        if blocked {
+            fields.insert("status".into(), Json::String("blocked".into()));
+        }
     }
     Ok(preserve_raw_fields(
         from_json(result),
@@ -1697,17 +2091,51 @@ fn parquet_source_document(document: &Value) -> Result<Value, EngineError> {
     let parquet_module = find_module(document, "parquet")
         .ok_or_else(|| error("PARQUET_CAPTURE", "Missing Parquet source"))?;
     let source_element = value_member(parquet_module, "elements")
-        .and_then(|v| match v { Value::Array(items) => items.iter().find(|item| text_member(item, "id").as_deref() == Some("source")), _ => None })
+        .and_then(|v| match v {
+            Value::Array(items) => items
+                .iter()
+                .find(|item| text_member(item, "id").as_deref() == Some("source")),
+            _ => None,
+        })
         .ok_or_else(|| error("PARQUET_CAPTURE", "Missing Parquet source"))?;
-    let payload = value_member(value_member(source_element, "extensions").unwrap_or(&Value::Null), "umf.parquet")
-        .cloned().ok_or_else(|| error("PARQUET_CAPTURE", "Missing Parquet source"))?;
-    let vocab = value_member(value_member(document, "vocabularies").unwrap_or(&Value::Null), "umf.parquet")
-        .cloned().ok_or_else(|| error("PARQUET_CAPTURE", "Missing Parquet source"))?;
+    let payload = value_member(
+        value_member(source_element, "extensions").unwrap_or(&Value::Null),
+        "umf.parquet",
+    )
+    .cloned()
+    .ok_or_else(|| error("PARQUET_CAPTURE", "Missing Parquet source"))?;
+    let vocab = value_member(
+        value_member(document, "vocabularies").unwrap_or(&Value::Null),
+        "umf.parquet",
+    )
+    .cloned()
+    .ok_or_else(|| error("PARQUET_CAPTURE", "Missing Parquet source"))?;
     Ok(object([
-        ("umf", value_member(document, "umf").cloned().unwrap_or(Value::Null)),
-        ("id", value_member(document, "id").cloned().unwrap_or(Value::Null)),
+        (
+            "umf",
+            value_member(document, "umf")
+                .cloned()
+                .unwrap_or(Value::Null),
+        ),
+        (
+            "id",
+            value_member(document, "id").cloned().unwrap_or(Value::Null),
+        ),
         ("vocabularies", object([("umf.parquet", vocab)])),
-        ("modules", array([object([("id", string("parquet")), ("namespace", string("")), ("elements", array([object([("id", string("source")), ("extensions", object([("umf.parquet", payload)]))])]))])])),
+        (
+            "modules",
+            array([object([
+                ("id", string("parquet")),
+                ("namespace", string("")),
+                (
+                    "elements",
+                    array([object([
+                        ("id", string("source")),
+                        ("extensions", object([("umf.parquet", payload)])),
+                    ])]),
+                ),
+            ])]),
+        ),
     ]))
 }
 
@@ -1721,8 +2149,7 @@ pub fn get_parquet_field_metadata(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let raw = parquet_source_document(document)?;
-    let logical_result =
-        inspect_parquet_logical_types(&raw, engine, registry, capabilities, ctx)?;
+    let logical_result = inspect_parquet_logical_types(&raw, engine, registry, capabilities, ctx)?;
     let inspected = to_json_selected(
         &logical_result,
         &[
@@ -1734,14 +2161,42 @@ pub fn get_parquet_field_metadata(
             "annotations",
         ],
     )?;
-    let diagnostics = inspected.get("diagnostics").and_then(Json::as_array).cloned().unwrap_or_default();
+    let diagnostics = inspected
+        .get("diagnostics")
+        .and_then(Json::as_array)
+        .cloned()
+        .unwrap_or_default();
     let mut fields = Vec::new();
     if inspected.get("status").and_then(Json::as_str) == Some("checked") {
-        let schema = inspected.get("metadata").and_then(|v| v.get("schema")).and_then(Json::as_array).cloned().unwrap_or_default();
-        let annotations: std::collections::BTreeMap<usize, (String, String)> = inspected.get("annotations").and_then(Json::as_array).into_iter().flatten().filter_map(|v| Some((v.get("index")?.as_u64()? as usize, (v.get("name")?.as_str()?.into(), v.get("validation")?.as_str()?.into())))).collect();
+        let schema = inspected
+            .get("metadata")
+            .and_then(|v| v.get("schema"))
+            .and_then(Json::as_array)
+            .cloned()
+            .unwrap_or_default();
+        let annotations: std::collections::BTreeMap<usize, (String, String)> = inspected
+            .get("annotations")
+            .and_then(Json::as_array)
+            .into_iter()
+            .flatten()
+            .filter_map(|v| {
+                Some((
+                    v.get("index")?.as_u64()? as usize,
+                    (
+                        v.get("name")?.as_str()?.into(),
+                        v.get("validation")?.as_str()?.into(),
+                    ),
+                ))
+            })
+            .collect();
         ctx.charge_work(schema.len(), Utf16::default())?;
         let tree = inspected.get("tree").cloned().unwrap_or(Json::Null);
-        fn walk(node: &Json, schema: &[Json], annotations: &std::collections::BTreeMap<usize, (String, String)>, fields: &mut Vec<Json>) {
+        fn walk(
+            node: &Json,
+            schema: &[Json],
+            annotations: &std::collections::BTreeMap<usize, (String, String)>,
+            fields: &mut Vec<Json>,
+        ) {
             let index = node.get("index").and_then(Json::as_u64).unwrap_or(0) as usize;
             if index != 0 {
                 if let Some(native) = schema.get(index) {
@@ -1749,19 +2204,42 @@ pub fn get_parquet_field_metadata(
                     if native.get("type").is_some() {
                         if let Some((name, validation)) = annotations.get(&index) {
                             if validation == "checked" {
-                                scalar = match name.as_str() { "STRING" | "ENUM" => Some("string"), "DECIMAL" => Some("decimal"), "DATE" => Some("date"), "TIME" => Some("time"), "TIMESTAMP" => Some("timestamp"), "INTEGER" => Some("integer"), "FLOAT16" => Some("float"), _ => None };
+                                scalar = match name.as_str() {
+                                    "STRING" | "ENUM" => Some("string"),
+                                    "DECIMAL" => Some("decimal"),
+                                    "DATE" => Some("date"),
+                                    "TIME" => Some("time"),
+                                    "TIMESTAMP" => Some("timestamp"),
+                                    "INTEGER" => Some("integer"),
+                                    "FLOAT16" => Some("float"),
+                                    _ => None,
+                                };
                             }
                         } else {
-                            scalar = match native.get("type").and_then(Json::as_str) { Some("0") => Some("boolean"), Some("1"|"2") => Some("integer"), Some("4"|"5") => Some("float"), Some("6"|"7") => Some("binary"), _ => None };
+                            scalar = match native.get("type").and_then(Json::as_str) {
+                                Some("0") => Some("boolean"),
+                                Some("1" | "2") => Some("integer"),
+                                Some("4" | "5") => Some("float"),
+                                Some("6" | "7") => Some("binary"),
+                                _ => None,
+                            };
                         }
-                        if has_unknown_json(native) { scalar = None; }
+                        if has_unknown_json(native) {
+                            scalar = None;
+                        }
                     }
                     let mut element = serde_json::json!({"id":format!("schema:{index}"),"name":native.get("name"),"extensions":{}});
-                    if let Some(scalar) = scalar { element["scalarType"] = Json::String(scalar.into()); }
+                    if let Some(scalar) = scalar {
+                        element["scalarType"] = Json::String(scalar.into());
+                    }
                     fields.push(serde_json::json!({"index":index,"path":node.get("path"),"definitionLevel":node.get("definitionLevel"),"repetitionLevel":node.get("repetitionLevel"),"element":element,"nativeField":native}));
                 }
             }
-            if let Some(children) = node.get("children").and_then(Json::as_array) { for child in children { walk(child, schema, annotations, fields); } }
+            if let Some(children) = node.get("children").and_then(Json::as_array) {
+                for child in children {
+                    walk(child, schema, annotations, fields);
+                }
+            }
         }
         walk(&tree, &schema, &annotations, &mut fields);
     }
@@ -1781,24 +2259,42 @@ pub fn import_parquet_schema(
 ) -> Result<Value, EngineError> {
     let mut document = capture_parquet(bytes, id, engine, registry, capabilities, ctx)?;
     let captured = document.clone();
-    let view = to_json(&get_parquet_field_metadata(&captured, engine, registry, capabilities, ctx)?)?;
+    let view = to_json(&get_parquet_field_metadata(
+        &captured,
+        engine,
+        registry,
+        capabilities,
+        ctx,
+    )?)?;
     if view.get("status").and_then(Json::as_str) != Some("checked") {
-        return Err(error("PARQUET_FIELD_METADATA", "Schema cannot be interpreted; captureParquet can preserve the source"));
+        return Err(error(
+            "PARQUET_FIELD_METADATA",
+            "Schema cannot be interpreted; captureParquet can preserve the source",
+        ));
     }
-    let elements = view.get("fields").and_then(Json::as_array).into_iter().flatten().filter_map(|field| field.get("element").cloned()).collect::<Vec<_>>();
+    let elements = view
+        .get("fields")
+        .and_then(Json::as_array)
+        .into_iter()
+        .flatten()
+        .filter_map(|field| field.get("element").cloned())
+        .collect::<Vec<_>>();
     let module = object([
         ("id", string("parquet.fields")),
         ("namespace", string("")),
-        (
-            "elements",
-            array(elements.into_iter().map(from_json)),
-        ),
+        ("elements", array(elements.into_iter().map(from_json))),
     ]);
-    if let Value::Array(modules) = value_member(&document, "modules").cloned().unwrap_or(Value::Null) {
+    if let Value::Array(modules) = value_member(&document, "modules")
+        .cloned()
+        .unwrap_or(Value::Null)
+    {
         let mut updated = modules;
         updated.push(module);
         if let Value::Object(fields) = &mut document {
-            if let Some((_, value)) = fields.iter_mut().find(|(key, _)| key == &Utf16::from("modules")) {
+            if let Some((_, value)) = fields
+                .iter_mut()
+                .find(|(key, _)| key == &Utf16::from("modules"))
+            {
                 *value = Value::Array(updated);
             }
         }
@@ -1954,9 +2450,14 @@ mod tests {
                 if let Some(error) = expected.get("error") {
                     let actual = actual.expect_err("TypeScript vector expects an error");
                     assert_eq!(actual.code, error["code"].as_str().unwrap(), "{id}: {key}");
-                    assert_eq!(actual.message.to_utf8().unwrap(), error["message"].as_str().unwrap(), "{id}: {key}");
+                    assert_eq!(
+                        actual.message.to_utf8().unwrap(),
+                        error["message"].as_str().unwrap(),
+                        "{id}: {key}"
+                    );
                 } else {
-                    let actual = to_json(&actual.expect("TypeScript vector expects a result")).unwrap();
+                    let actual =
+                        to_json(&actual.expect("TypeScript vector expects a result")).unwrap();
                     assert_eq!(actual, *expected, "{id}: {key}");
                 }
             };
@@ -2001,6 +2502,75 @@ mod tests {
                 ),
                 "importParquetSchema",
             );
+        }
+    }
+
+    #[test]
+    fn page_and_body_inspection_match_frozen_typescript_public_envelopes() {
+        use sha2::{Digest, Sha256};
+        let vectors: Json = serde_json::from_str(include_str!(
+            "../../../tests/rust-core/fixtures/parquet-pages-bodies-ts-freeze.json"
+        ))
+        .unwrap();
+        let engine = engine();
+        let registry = Registry::new();
+        let mut capabilities = NoCapabilities;
+        for case in vectors["cases"].as_array().unwrap() {
+            let id = case["id"].as_str().unwrap();
+            let mut bytes = fixture(case["path"].as_str().unwrap());
+            if let Some(mutation) = case.get("mutation") {
+                assert_eq!(
+                    hex(&Sha256::digest(&bytes)),
+                    case["baseSha256"].as_str().unwrap()
+                );
+                let offset = mutation["offset"].as_u64().unwrap() as usize;
+                if let Some(replacement) = mutation["bytes"].as_array() {
+                    for (index, byte) in replacement.iter().enumerate() {
+                        bytes[offset + index] = byte.as_u64().unwrap() as u8;
+                    }
+                } else {
+                    bytes[offset] ^= mutation["xor"].as_u64().unwrap() as u8;
+                }
+            }
+            assert_eq!(
+                hex(&Sha256::digest(&bytes)),
+                case["sha256"].as_str().unwrap(),
+                "{id} fixture identity"
+            );
+            let source = document(&bytes, id, &engine, &registry, &mut capabilities);
+            for (kind, actual) in [
+                (
+                    "page",
+                    crate::parquet_pages::inspect_parquet_pages(
+                        &source,
+                        &engine,
+                        &registry,
+                        &mut capabilities,
+                        &mut Context::ordinary(),
+                    ),
+                ),
+                (
+                    "body",
+                    crate::parquet_pages::decode_parquet_page_bodies(
+                        &source,
+                        &engine,
+                        &registry,
+                        &mut capabilities,
+                        &mut Context::ordinary(),
+                    ),
+                ),
+            ] {
+                let mut expected = case[kind].clone();
+                expected
+                    .as_object_mut()
+                    .unwrap()
+                    .insert("source".into(), to_json(&source).unwrap());
+                assert_eq!(
+                    to_json(&actual.unwrap()).unwrap(),
+                    expected,
+                    "{id} {kind} full envelope"
+                );
+            }
         }
     }
 
@@ -2142,6 +2712,108 @@ mod tests {
             .unwrap_err()
             .code,
             "PARQUET_LIMIT"
+        );
+    }
+
+    #[test]
+    fn public_footer_matches_frozen_typescript_malformed_envelopes() {
+        use sha2::{Digest, Sha256};
+        let vectors: Json = serde_json::from_str(include_str!(
+            "../../../tests/rust-core/fixtures/parquet-footer-malformed-ts-freeze.json"
+        ))
+        .unwrap();
+        let engine = engine();
+        let registry = Registry::new();
+        let mut capabilities = NoCapabilities;
+        for case in vectors["cases"].as_array().unwrap() {
+            let id = case["id"].as_str().unwrap();
+            let bytes = case["bytes"]
+                .as_str()
+                .unwrap()
+                .as_bytes()
+                .chunks_exact(2)
+                .map(|pair| u8::from_str_radix(std::str::from_utf8(pair).unwrap(), 16).unwrap())
+                .collect::<Vec<_>>();
+            assert_eq!(
+                hex(&Sha256::digest(&bytes)),
+                case["sha256"].as_str().unwrap(),
+                "{id} input identity"
+            );
+            let source = document(&bytes, id, &engine, &registry, &mut capabilities);
+            let actual = decode_parquet_footer(
+                &source,
+                &engine,
+                &registry,
+                &mut capabilities,
+                &mut Context::ordinary(),
+            )
+            .unwrap();
+            let mut expected = case["typescript"]["value"].clone();
+            expected
+                .as_object_mut()
+                .unwrap()
+                .insert("source".into(), to_json(&source).unwrap());
+            assert_eq!(to_json(&actual).unwrap(), expected, "{id} full envelope");
+            let Value::Object(fields) = &actual else {
+                panic!("footer result must be an object")
+            };
+            let keys: Vec<_> = fields
+                .iter()
+                .map(|(key, _)| key.to_utf8().unwrap())
+                .collect();
+            let expected_keys = if id == "zeroFooter" {
+                vec!["source", "status", "complete", "diagnostics"]
+            } else if case["typescript"]["value"]["status"] == "blocked" {
+                vec!["source", "status", "complete", "diagnostics"]
+            } else {
+                vec![
+                    "source",
+                    "status",
+                    "complete",
+                    "diagnostics",
+                    "value",
+                    "consumedBytes",
+                    "trailingBytes",
+                ]
+            };
+            assert_eq!(keys, expected_keys, "{id} insertion order");
+        }
+    }
+
+    #[test]
+    fn public_footer_preserves_unknown_utf16_source_content() {
+        let engine = engine();
+        let registry = Registry::new();
+        let mut capabilities = NoCapabilities;
+        let id = Utf16::new(vec![0xd800, 0x006b]);
+        let unknown_key = Utf16::new(vec![0x0066, 0xdfff]);
+        let unknown_value = Utf16::new(vec![0x0076, 0xd800]);
+        let bytes = [b"PAR1".as_slice(), &[0u8], &1u32.to_le_bytes(), b"PAR1"].concat();
+        let mut source = capture_parquet(
+            &bytes,
+            &id,
+            &engine,
+            &registry,
+            &mut capabilities,
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        if let Value::Object(fields) = &mut source {
+            fields.push((unknown_key, Value::String(unknown_value)));
+        }
+        let result = decode_parquet_footer(
+            &source,
+            &engine,
+            &registry,
+            &mut capabilities,
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        assert_eq!(member(&result, "source"), Some(&source));
+        assert_eq!(string_member(&source, "id"), Some(&id));
+        assert_eq!(
+            string_member(&result, "status").unwrap().to_utf8().unwrap(),
+            "decoded"
         );
     }
 
@@ -2330,7 +3002,10 @@ mod tests {
             &mut Context::ordinary(),
         )
         .unwrap();
-        assert_eq!(member(&imported, "id"), Some(&Value::String(lone_id.clone())));
+        assert_eq!(
+            member(&imported, "id"),
+            Some(&Value::String(lone_id.clone()))
+        );
 
         // An unknown vocabulary member is legal extension content. Its key
         // and value deliberately contain isolated UTF-16 code units.
@@ -2388,7 +3063,10 @@ mod tests {
         )
         .unwrap();
         assert_eq!(member(&fields, "status"), Some(&string("checked")));
-        assert_eq!(member(&document, "id"), Some(&Value::String(lone_id.clone())));
+        assert_eq!(
+            member(&document, "id"),
+            Some(&Value::String(lone_id.clone()))
+        );
         let Value::Object(vocab_fields) = member(&document, "vocabularies").unwrap() else {
             unreachable!()
         };
@@ -2490,8 +3168,12 @@ mod tests {
         ]);
         fn normalize_numbers(value: Json) -> Json {
             match value {
-                Json::Number(number) => Number::from_f64(number.as_f64().unwrap()).map_or(Json::Null, Json::Number),
-                Json::Array(values) => Json::Array(values.into_iter().map(normalize_numbers).collect()),
+                Json::Number(number) => {
+                    Number::from_f64(number.as_f64().unwrap()).map_or(Json::Null, Json::Number)
+                }
+                Json::Array(values) => {
+                    Json::Array(values.into_iter().map(normalize_numbers).collect())
+                }
                 Json::Object(values) => Json::Object(
                     values
                         .into_iter()
@@ -2576,8 +3258,9 @@ mod tests {
         ]);
         fn normalize_numbers(value: Json) -> Json {
             match value {
-                Json::Number(number) => Number::from_f64(number.as_f64().unwrap())
-                    .map_or(Json::Null, Json::Number),
+                Json::Number(number) => {
+                    Number::from_f64(number.as_f64().unwrap()).map_or(Json::Null, Json::Number)
+                }
                 Json::Array(values) => {
                     Json::Array(values.into_iter().map(normalize_numbers).collect())
                 }
@@ -2602,7 +3285,13 @@ mod tests {
         let registry = Registry::new();
         let mut capabilities = NoCapabilities;
         let bytes = fixture("fixtures/parquet/rename/none.parquet");
-        let mut doc = document(&bytes, "field-metadata", &engine, &registry, &mut capabilities);
+        let mut doc = document(
+            &bytes,
+            "field-metadata",
+            &engine,
+            &registry,
+            &mut capabilities,
+        );
         let inspected = inspect_parquet_schema(
             &doc,
             &engine,
@@ -2611,12 +3300,11 @@ mod tests {
             &mut Context::ordinary(),
         )
         .unwrap();
-        let schema = match value_member(value_member(&inspected, "metadata").unwrap(), "schema")
-            .unwrap()
-        {
-            Value::Array(schema) => schema,
-            _ => panic!("schema metadata must be an array"),
-        };
+        let schema =
+            match value_member(value_member(&inspected, "metadata").unwrap(), "schema").unwrap() {
+                Value::Array(schema) => schema,
+                _ => panic!("schema metadata must be an array"),
+            };
         let elements = schema
             .iter()
             .enumerate()
@@ -2671,17 +3359,19 @@ mod tests {
         let baseline = to_json(&doc).unwrap();
         for mutation in ["name", "scalarType", "id", "count", "namespace"] {
             let mut json = baseline.clone();
-            let fields_module = json["modules"]
-                .as_array_mut()
-                .unwrap()
-                .last_mut()
-                .unwrap();
+            let fields_module = json["modules"].as_array_mut().unwrap().last_mut().unwrap();
             match mutation {
-                "name" => fields_module["elements"][0]["name"] = serde_json::json!("contradictory-name"),
+                "name" => {
+                    fields_module["elements"][0]["name"] = serde_json::json!("contradictory-name")
+                }
                 "scalarType" => {
                     let expected = fields_module["elements"][0]["scalarType"].as_str();
                     fields_module["elements"][0]["scalarType"] =
-                        serde_json::json!(if expected == Some("string") { "integer" } else { "string" });
+                        serde_json::json!(if expected == Some("string") {
+                            "integer"
+                        } else {
+                            "string"
+                        });
                 }
                 "id" => fields_module["elements"][0]["id"] = serde_json::json!("schema:999"),
                 "count" => {
@@ -2730,7 +3420,11 @@ mod tests {
                     &mut Context::ordinary(),
                 ),
             ] {
-                assert_eq!(inspect.unwrap_err().code, "PARQUET_FIELD_METADATA", "mutation: {mutation}");
+                assert_eq!(
+                    inspect.unwrap_err().code,
+                    "PARQUET_FIELD_METADATA",
+                    "mutation: {mutation}"
+                );
             }
         }
     }
@@ -2793,17 +3487,23 @@ mod tests {
             "fixtures/parquet/logical/decimal32-over.parquet",
             "fixtures/parquet/logical/date-wrong.parquet",
         ] {
-            let fixture_id = path.rsplit('/').next().unwrap().trim_end_matches(".parquet");
+            let fixture_id = path
+                .rsplit('/')
+                .next()
+                .unwrap()
+                .trim_end_matches(".parquet");
             let source_expected = logical_golden["results"]
                 .as_array()
                 .unwrap()
                 .iter()
                 .find(|result| result["id"] == fixture_id)
                 .unwrap();
-            assert_eq!(source_expected["status"], "blocked", "fixture: {fixture_id}");
             assert_eq!(
-                source_expected["annotations"][0]["validation"],
-                "invalid",
+                source_expected["status"], "blocked",
+                "fixture: {fixture_id}"
+            );
+            assert_eq!(
+                source_expected["annotations"][0]["validation"], "invalid",
                 "fixture: {fixture_id}"
             );
             let bytes = fixture(path);
@@ -2816,7 +3516,9 @@ mod tests {
                 &mut Context::ordinary(),
             )
             .unwrap();
-            let schema = match value_member(value_member(&inspected, "metadata").unwrap(), "schema").unwrap() {
+            let schema = match value_member(value_member(&inspected, "metadata").unwrap(), "schema")
+                .unwrap()
+            {
                 Value::Array(schema) => schema,
                 _ => panic!("schema metadata must be an array"),
             };
@@ -2827,7 +3529,10 @@ mod tests {
                 .map(|(index, native)| {
                     let mut fields = vec![
                         (Utf16::from("id"), string(format!("schema:{index}"))),
-                        (Utf16::from("name"), value_member(native, "name").unwrap().clone()),
+                        (
+                            Utf16::from("name"),
+                            value_member(native, "name").unwrap().clone(),
+                        ),
                     ];
                     if let Some(scalar_type) = field_scalar_type(&to_json(native).unwrap()) {
                         fields.push((Utf16::from("scalarType"), string(scalar_type)));
@@ -2840,11 +3545,14 @@ mod tests {
                 })
                 .collect::<Vec<_>>();
             let mut json = to_json(&doc).unwrap();
-            json["modules"].as_array_mut().unwrap().push(serde_json::json!({
-                "id":"parquet.fields",
-                "namespace":"",
-                "elements":to_json(&Value::Array(elements)).unwrap(),
-            }));
+            json["modules"]
+                .as_array_mut()
+                .unwrap()
+                .push(serde_json::json!({
+                    "id":"parquet.fields",
+                    "namespace":"",
+                    "elements":to_json(&Value::Array(elements)).unwrap(),
+                }));
             let doc = from_json(json);
             let error = export_parquet_capture(
                 &doc,
@@ -2885,7 +3593,11 @@ mod tests {
                     &mut Context::ordinary(),
                 ),
             ] {
-                assert_eq!(result.unwrap_err().code, "PARQUET_FIELD_METADATA", "fixture: {path}");
+                assert_eq!(
+                    result.unwrap_err().code,
+                    "PARQUET_FIELD_METADATA",
+                    "fixture: {path}"
+                );
             }
         }
     }
@@ -2914,7 +3626,13 @@ mod tests {
         let registry = Registry::new();
         let mut capabilities = NoCapabilities;
         let bytes = fixture("fixtures/parquet/containers/list-tuple.parquet");
-        let doc = document(&bytes, "cancel-footer", &engine, &registry, &mut capabilities);
+        let doc = document(
+            &bytes,
+            "cancel-footer",
+            &engine,
+            &registry,
+            &mut capabilities,
+        );
         let footer_length = parquet_schema_decode::locate_footer(&bytes).unwrap().length;
 
         let mut calls = Vec::new();

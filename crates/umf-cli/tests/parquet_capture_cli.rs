@@ -45,6 +45,66 @@ fn decode(envelope: &serde_json::Value) -> Value {
     umf_core_wire::decode(envelope["wire"].as_str().unwrap(), &mut Context::ordinary()).unwrap()
 }
 
+fn status(value: &Value) -> Option<String> {
+    let Value::Object(fields) = value else {
+        return None;
+    };
+    fields
+        .iter()
+        .find(|(k, _)| k == &Utf16::from("status"))
+        .and_then(|(_, v)| {
+            if let Value::String(s) = v {
+                s.to_utf8().ok()
+            } else {
+                None
+            }
+        })
+}
+
+#[test]
+fn parquet_cli_inspects_pages_and_decodes_bodies_in_the_actual_binary() {
+    let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
+    for (name, page_status, body_status) in [
+        ("valid-v1", "checked", "decoded"),
+        ("valid-v2", "checked", "decoded"),
+        ("negative-uncompressed", "blocked", "blocked"),
+        ("payload-corruption-not-inspected", "checked", "blocked"),
+    ] {
+        let bytes =
+            std::fs::read(root.join(format!("fixtures/parquet/pages/negative/{name}.parquet")))
+                .unwrap();
+        let hex = bytes.iter().map(|b| format!("{b:02x}")).collect::<String>();
+        let source = decode(&run(
+            &request(
+                "parquet.capture",
+                vec![
+                    ("bytes", Value::string_utf8(hex)),
+                    ("id", Value::string_utf8(name)),
+                ],
+            ),
+            &[],
+        ));
+        if name == "valid-v1" {
+            for op in ["parquet.inspectPages", "parquet.decodePageBodies"] {
+                assert_eq!(
+                    run(
+                        &request(op, vec![("document", source.clone())]),
+                        &["--max-work", "0"]
+                    )["code"],
+                    "RESOURCE_LIMIT"
+                );
+            }
+        }
+        for (op, expected) in [
+            ("parquet.inspectPages", page_status),
+            ("parquet.decodePageBodies", body_status),
+        ] {
+            let result = decode(&run(&request(op, vec![("document", source.clone())]), &[]));
+            assert_eq!(status(&result).as_deref(), Some(expected), "{name} {op}");
+        }
+    }
+}
+
 #[test]
 fn parquet_cli_captures_and_exports_exact_bytes_through_public_wire() {
     let source = "50415231ff00102050415231";
@@ -96,7 +156,10 @@ fn parquet_cli_reports_profile_and_enforces_host_controls() {
         .output()
         .unwrap();
     let capabilities: serde_json::Value = serde_json::from_slice(&capabilities.stdout).unwrap();
-    assert_eq!(capabilities["profile"], umf_core_wire::PARQUET_CAPTURE_PROFILE);
+    assert_eq!(
+        capabilities["profile"],
+        umf_core_wire::PARQUET_CAPTURE_PROFILE
+    );
     assert_eq!(capabilities["maxSourceBytes"], 1_000_000);
     assert!(capabilities["operations"]
         .as_array()

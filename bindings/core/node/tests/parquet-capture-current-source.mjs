@@ -7,9 +7,19 @@ import {resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
 
 const repo = resolve(import.meta.dirname, '../../../..');
-const packageRoot = process.env.UMF_PARQUET_CAPTURE_NODE_PACKAGE ?? resolve(repo, 'bindings/core/node');
-const binding = await import(pathToFileURL(resolve(packageRoot, 'index.js')).href);
-const engine = binding.createParquetCaptureEngine();
+const host = process.env.UMF_PARQUET_PAGES_HOST ?? 'node';
+let engine;
+if (host === 'wasm') {
+  const packageRoot = resolve(process.env.UMF_PARQUET_CAPTURE_WASM_PACKAGE ?? resolve(repo, 'bindings/core/wasm/pkg'));
+  const wasm = await import(pathToFileURL(resolve(packageRoot, 'umf_core_wasm.js')).href);
+  await wasm.default({module_or_path: await readFile(resolve(packageRoot, 'umf_core_wasm_bg.wasm'))});
+  const binding = await import(pathToFileURL(resolve(repo, 'bindings/core/wasm/index.js')).href);
+  engine = binding.createParquetCaptureEngine(wasm);
+} else {
+  const packageRoot = process.env.UMF_PARQUET_CAPTURE_NODE_PACKAGE ?? resolve(repo, 'bindings/core/node');
+  const binding = await import(pathToFileURL(resolve(packageRoot, 'index.js')).href);
+  engine = binding.createParquetCaptureEngine();
+}
 assert.equal(engine.profile, 'umf-r8-parquet-capture-inspection/0.1.0');
 assert.equal(engine.capabilities.complete, false);
 const source = new Uint8Array(await readFile(resolve(repo, 'fixtures/parquet/rename/none.parquet')));
@@ -61,4 +71,4 @@ for (const vector of frozen.cases.filter(({id}) => publicWireCases.has(id))) {
     }, `${vector.id} importParquetSchema refusal`);
   }
 }
-console.log(JSON.stringify({status: 'passed', profile: engine.profile, operations: 10, frozenCases: publicWireCases.size}));
+console.log(JSON.stringify({status: 'passed', host, profile: engine.profile, operations: 10, frozenCases: publicWireCases.size}));
