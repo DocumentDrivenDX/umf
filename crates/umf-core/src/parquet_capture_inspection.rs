@@ -14,6 +14,7 @@ use crate::{
     registry::Registry,
     value::{copy_json, Utf16, Value},
 };
+use num_bigint::BigUint;
 use serde_json::{Map, Value as Json};
 #[cfg(test)]
 use serde_json::Number;
@@ -274,6 +275,192 @@ fn field_scalar_type(element: &Value) -> Option<&'static str> {
     }
 }
 
+/// Return whether an annotation is invalid under the pinned logical-schema
+/// rules. Unrecognized annotations and parameters remain uninterpreted and do
+/// not block field metadata; a known annotation with a contradictory carrier
+/// or invalid parameters does.
+fn invalid_logical_annotation(element: &Value) -> bool {
+    let physical = text_member(element, "type");
+    let converted = text_member(element, "converted_type");
+    let logical = value_member(element, "logicalType");
+    if logical.is_none() && converted.is_none() {
+        return false;
+    }
+    let mut parameters = None;
+    let mut name = if let Some(Value::Object(fields)) = logical {
+        fields
+            .iter()
+            .find(|(key, _)| key != &Utf16::from("$unknown"))
+            .and_then(|(key, value)| {
+                parameters = Some(value);
+                key.to_utf8().ok()
+            })
+    } else {
+        None
+    };
+    if name.is_none() && logical.is_none() {
+        let legacy = [
+            "STRING", "MAP", "MAP_KEY_VALUE", "LIST", "ENUM", "DECIMAL", "DATE",
+            "TIME_MILLIS", "TIME_MICROS", "TIMESTAMP_MILLIS", "TIMESTAMP_MICROS",
+            "UINT_8", "UINT_16", "UINT_32", "UINT_64", "INT_8", "INT_16", "INT_32",
+            "INT_64", "JSON", "BSON", "INTERVAL",
+        ];
+        name = converted
+            .as_deref()
+            .and_then(|value| value.parse::<usize>().ok())
+            .and_then(|index| legacy.get(index))
+            .map(|name| (*name).to_owned());
+    }
+    let Some(mut name) = name else {
+        return false;
+    };
+    let converted_unit = if name.starts_with("TIME_") || name.starts_with("TIMESTAMP_") {
+        Some(if name.ends_with("_MICROS") { "MICROS" } else { "MILLIS" })
+    } else {
+        None
+    };
+    // Converted annotations are normalized to the corresponding logical
+    // shape before compatibility checks, matching logical.ts.
+    if name.starts_with("UINT_") || name.starts_with("INT_") {
+        let width = name.rsplit('_').next().unwrap_or_default();
+        if !matches!(width, "8" | "16" | "32" | "64")
+            || (width == "64" && physical.as_deref() != Some("2"))
+            || (width != "64" && physical.as_deref() != Some("1"))
+        {
+            return true;
+        }
+        return false;
+    }
+    let converted_legacy = logical.is_none();
+    if converted_legacy
+        && (name.starts_with("TIME_") || name.starts_with("TIMESTAMP_"))
+    {
+        name = if name.starts_with("TIME_") {
+            "TIME".into()
+        } else {
+            "TIMESTAMP".into()
+        };
+    }
+    let parameter = parameters;
+    let annotation = if converted_legacy && name == "DECIMAL" {
+        None
+    } else {
+        parameter
+    };
+    let require_type = |expected: &[&str]| {
+        physical
+            .as_deref()
+            .is_some_and(|physical| expected.contains(&physical))
+    };
+    match name.as_str() {
+        "STRING" | "ENUM" | "JSON" | "BSON" | "GEOMETRY" | "GEOGRAPHY" => {
+            !require_type(&["6"])
+        }
+        "UUID" | "FLOAT16" | "INTERVAL" => {
+            let length = match name.as_str() {
+                "UUID" => "16",
+                "FLOAT16" => "2",
+                _ => "12",
+            };
+            !require_type(&["7"]) || text_member(element, "type_length").as_deref() != Some(length)
+        }
+        "DATE" => !require_type(&["1"]),
+        "INTEGER" => {
+            let Some(parameters) = annotation else {
+                return true;
+            };
+            let width = text_member(parameters, "bitWidth");
+            let signed = value_member(parameters, "isSigned");
+            if !matches!(signed, Some(Value::Bool(_))) {
+                return true;
+            }
+            let Some(width) = width else { return true };
+            !matches!(width.as_str(), "8" | "16" | "32" | "64")
+                || (width == "64" && !require_type(&["2"]))
+                || (width != "64" && !require_type(&["1"]))
+        }
+        "DECIMAL" => {
+            if !require_type(&["1", "2", "6", "7"]) {
+                return true;
+            }
+            let precision = if converted_legacy {
+                text_member(element, "precision")
+            } else {
+                annotation.and_then(|params| text_member(params, "precision"))
+            };
+            let scale = if converted_legacy {
+                text_member(element, "scale").or_else(|| Some("0".into()))
+            } else {
+                annotation.and_then(|params| text_member(params, "scale"))
+            };
+            let (Some(precision), Some(scale)) = (precision, scale) else {
+                return true;
+            };
+            let (Ok(precision), Ok(scale)) = (precision.parse::<i128>(), scale.parse::<i128>()) else {
+                return true;
+            };
+            if precision <= 0
+                || scale < 0
+                || scale > precision
+                || (physical.as_deref() == Some("1") && precision > 9)
+                || (physical.as_deref() == Some("2") && precision > 18)
+            {
+                return true;
+            }
+            if physical.as_deref() == Some("7") {
+                let Some(length) = text_member(element, "type_length").and_then(|v| v.parse::<u128>().ok()) else {
+                    return true;
+                };
+                if length <= 4096 {
+                    let maximum = ((BigUint::from(1u8) << (length as usize * 8 - 1)) - 1u8)
+                        .to_string()
+                        .len()
+                        .saturating_sub(1);
+                    let max_precision = maximum as u128;
+                    if precision as u128 > max_precision {
+                        return true;
+                    }
+                }
+            }
+            false
+        }
+        "TIME" | "TIMESTAMP" => {
+            let unit = if let Some(unit) = converted_unit {
+                Some(unit.to_owned())
+            } else {
+                annotation
+                    .and_then(|params| value_member(params, "unit"))
+                    .and_then(|value| match value {
+                        Value::Object(fields) => fields
+                            .iter()
+                            .find(|(key, _)| key != &Utf16::from("$unknown"))
+                            .and_then(|(key, _)| key.to_utf8().ok()),
+                        _ => None,
+                    })
+            };
+            let Some(unit) = unit else {
+                // A future/unknown union arm is retained as uninterpreted.
+                let has_unknown = annotation
+                    .and_then(|params| value_member(params, "unit"))
+                    .is_some_and(|unit| value_member(unit, "$unknown").is_some());
+                return !has_unknown;
+            };
+            if !matches!(unit.as_str(), "MILLIS" | "MICROS" | "NANOS") {
+                return false;
+            }
+            if name == "TIME" && unit == "MILLIS" {
+                !require_type(&["1"])
+            } else {
+                !require_type(&["2"])
+            }
+        }
+        "LIST" | "MAP" | "MAP_KEY_VALUE" | "VARIANT" | "FILE" => physical.is_some(),
+        // Known but still uninterpreted annotations do not invalidate the
+        // schema. The TS logical inspector follows this same default branch.
+        _ => false,
+    }
+}
+
 fn check_parquet_field_metadata(
     document: &Value,
     engine: &Engine,
@@ -337,6 +524,9 @@ fn check_parquet_field_metadata(
             _ => None,
         })
         .ok_or_else(mismatch)?;
+    if schema.iter().any(invalid_logical_annotation) {
+        return Err(mismatch());
+    }
     let Some(Value::Array(elements)) = value_member(field_module, "elements") else {
         return Err(mismatch());
     };
@@ -2181,6 +2371,116 @@ mod tests {
                 bytes,
                 "{id}"
             );
+        }
+    }
+
+    #[test]
+    fn invalid_logical_annotations_refuse_field_metadata_exports_and_inspections() {
+        let engine = engine();
+        let registry = Registry::new();
+        let mut capabilities = NoCapabilities;
+        let logical_golden: Json = serde_json::from_str(include_str!(
+            "../../../fixtures/parquet/logical/results.json"
+        ))
+        .unwrap();
+        for path in [
+            "fixtures/parquet/logical/decimal32-over.parquet",
+            "fixtures/parquet/logical/date-wrong.parquet",
+        ] {
+            let fixture_id = path.rsplit('/').next().unwrap().trim_end_matches(".parquet");
+            let source_expected = logical_golden["results"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|result| result["id"] == fixture_id)
+                .unwrap();
+            assert_eq!(source_expected["status"], "blocked", "fixture: {fixture_id}");
+            assert_eq!(
+                source_expected["annotations"][0]["validation"],
+                "invalid",
+                "fixture: {fixture_id}"
+            );
+            let bytes = fixture(path);
+            let doc = document(&bytes, path, &engine, &registry, &mut capabilities);
+            let inspected = inspect_parquet_schema(
+                &doc,
+                &engine,
+                &registry,
+                &mut capabilities,
+                &mut Context::ordinary(),
+            )
+            .unwrap();
+            let schema = match value_member(value_member(&inspected, "metadata").unwrap(), "schema").unwrap() {
+                Value::Array(schema) => schema,
+                _ => panic!("schema metadata must be an array"),
+            };
+            let elements = schema
+                .iter()
+                .enumerate()
+                .skip(1)
+                .map(|(index, native)| {
+                    let mut fields = vec![
+                        (Utf16::from("id"), string(format!("schema:{index}"))),
+                        (Utf16::from("name"), value_member(native, "name").unwrap().clone()),
+                    ];
+                    if let Some(scalar_type) = field_scalar_type(native) {
+                        fields.push((Utf16::from("scalarType"), string(scalar_type)));
+                    }
+                    fields.push((
+                        Utf16::from("extensions"),
+                        object(std::iter::empty::<(&str, Value)>()),
+                    ));
+                    Value::Object(fields)
+                })
+                .collect::<Vec<_>>();
+            let mut json = to_json(&doc).unwrap();
+            json["modules"].as_array_mut().unwrap().push(serde_json::json!({
+                "id":"parquet.fields",
+                "namespace":"",
+                "elements":to_json(&Value::Array(elements)).unwrap(),
+            }));
+            let doc = from_json(json);
+            let error = export_parquet_capture(
+                &doc,
+                &engine,
+                &registry,
+                &mut capabilities,
+                &mut Context::ordinary(),
+            )
+            .unwrap_err();
+            assert_eq!(error.code, "PARQUET_FIELD_METADATA", "fixture: {path}");
+            for result in [
+                inspect_parquet_framing(
+                    &doc,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut Context::ordinary(),
+                ),
+                decode_parquet_footer(
+                    &doc,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut Context::ordinary(),
+                ),
+                inspect_parquet_metadata(
+                    &doc,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut Context::ordinary(),
+                ),
+                inspect_parquet_schema(
+                    &doc,
+                    &engine,
+                    &registry,
+                    &mut capabilities,
+                    &mut Context::ordinary(),
+                ),
+            ] {
+                assert_eq!(result.unwrap_err().code, "PARQUET_FIELD_METADATA", "fixture: {path}");
+            }
         }
     }
 
