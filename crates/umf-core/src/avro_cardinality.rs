@@ -174,7 +174,28 @@ struct Runtime {
     result: CompiledSchema,
     request: CompiledSchema,
 }
-fn runtime(ctx: &mut Context<'_>) -> Result<Runtime, EngineError> {
+fn runtime(ctx: &mut Context<'_>) -> Result<std::sync::Arc<Runtime>, EngineError> {
+    use std::sync::{Arc, OnceLock};
+    static RESOURCES: OnceLock<Arc<Runtime>> = OnceLock::new();
+    // Only immutable, embedded resources are shared. Input validation and all
+    // invocation counters remain owned by the caller's Context.
+    ctx.charge_work(1, u(""))?;
+    let ordinary = ctx.profile() == crate::context::ResourceProfile::Cooperative
+        && ctx.limits() == crate::context::Limits::ordinary();
+    if ordinary {
+        if let Some(resources) = RESOURCES.get() {
+            return Ok(Arc::clone(resources));
+        }
+    }
+    // Build under the caller's controls, without holding an initialization
+    // lock. A host callback may reenter; failed/cancelled builds are not cached.
+    let resources = Arc::new(build_runtime(ctx)?);
+    if ordinary {
+        let _ = RESOURCES.set(Arc::clone(&resources));
+    }
+    Ok(resources)
+}
+fn build_runtime(ctx: &mut Context<'_>) -> Result<Runtime, EngineError> {
     let engine = Engine::new(
         ResourceSet::new(
             parse_resource(CORE_SCHEMA, ctx)?,
@@ -983,7 +1004,10 @@ pub fn classify_avro_cardinality(
         }
         dep_trees.push((id.clone(), tree));
     }
-    let native_root = avro_document::get_node(&source, &u(""), None, ctx)?;
+    // export_bundle already checked the retained payload and its complete
+    // compact rendering against this parsed request tree. Reuse that exact
+    // tree instead of repeating full document/payload admission.
+    let native_root = native_tree;
     let references = dep_trees
         .iter()
         .map(|(id, root)| AvroDependency { id, root })
@@ -1251,7 +1275,7 @@ pub fn classify_avro_cardinality(
             ]),
         ),
     ];
-    if status == "classified" {
+    let target = if status == "classified" {
         let mut target = copy(
             &output.iter().find(|(k, _)| k == &u("source")).unwrap().1,
             ctx,
@@ -1284,8 +1308,10 @@ pub fn classify_avro_cardinality(
         {
             return Err(err("AVRO_CARDINALITY_NATIVE", "Native bundle changed"));
         }
-        output.push((u("target"), target));
-    }
+        Some(target)
+    } else {
+        None
+    };
     let diagnostics = residuals
         .iter()
         .map(|v| {
@@ -1306,6 +1332,9 @@ pub fn classify_avro_cardinality(
         .collect();
     output.push((u("residuals"), Value::Array(residuals)));
     output.push((u("diagnostics"), Value::Array(diagnostics)));
+    if let Some(target) = target {
+        output.push((u("target"), target));
+    }
     let output = Value::Object(output);
     result_check(&output, &r, ctx)?;
     Ok(output)
@@ -1442,6 +1471,28 @@ mod tests {
         )
         .unwrap();
         assert_eq!(get(&residuals[0], "reason"), Some(&Value::String(reason)));
+    }
+
+    #[test]
+    fn ordinary_resources_reuse_preserves_controls_and_custom_limits() {
+        use crate::context::{Limits, ResourceProfile};
+        let first = runtime(&mut Context::ordinary()).unwrap();
+        let second = runtime(&mut Context::ordinary()).unwrap();
+        assert!(std::sync::Arc::ptr_eq(&first, &second));
+        let mut stop = |_| Err(EngineError::new("TEST_CONTROL", u(""), "host stopped"));
+        let mut controlled = Context::ordinary().with_host_control(&mut stop);
+        let failure = runtime(&mut controlled).err().unwrap();
+        assert_eq!(failure.code, "TEST_CONTROL");
+        assert!(failure.is_control_failure());
+        let mut limited = Context::with_limits(
+            ResourceProfile::Cooperative,
+            Limits {
+                max_text_units: 8,
+                ..Limits::ordinary()
+            },
+        )
+        .unwrap();
+        assert_eq!(runtime(&mut limited).err().unwrap().code, "LIMIT");
     }
 
     #[test]

@@ -98,7 +98,10 @@ pub fn inspect_avro_document(
         });
     };
     let payload = payload_from_admitted_document(document, ctx)?;
-    ctx.charge_work(payload.dependencies.len().saturating_add(1), Utf16::default())?;
+    ctx.charge_work(
+        payload.dependencies.len().saturating_add(1),
+        Utf16::default(),
+    )?;
     for (id, _) in &payload.dependencies {
         ctx.charge_work(id.len().saturating_add(1), Utf16::default())?;
     }
@@ -1051,10 +1054,49 @@ fn validate_document(document: &Value, ctx: &mut Context<'_>) -> Result<(), Engi
     ))
 }
 
+struct AvroValidationResources {
+    engine: Engine,
+    registry: Registry,
+}
+
+fn validation_resources(
+    ctx: &mut Context<'_>,
+) -> Result<std::sync::Arc<AvroValidationResources>, EngineError> {
+    use std::sync::{Arc, OnceLock};
+    static RESOURCES: OnceLock<Arc<AvroValidationResources>> = OnceLock::new();
+    ctx.charge_work(1, Utf16::default())?;
+    let ordinary = ctx.profile() == crate::context::ResourceProfile::Cooperative
+        && ctx.limits() == crate::context::Limits::ordinary();
+    if ordinary {
+        if let Some(resources) = RESOURCES.get() {
+            return Ok(Arc::clone(resources));
+        }
+    }
+    // Callbacks may reenter. Never hold a cache-initialization lock while
+    // admitting resources, and never cache an interrupted construction.
+    let resources = Arc::new(build_validation_resources(ctx)?);
+    if ordinary {
+        let _ = RESOURCES.set(Arc::clone(&resources));
+    }
+    Ok(resources)
+}
+
 fn validate_document_report(
     document: &Value,
     ctx: &mut Context<'_>,
 ) -> Result<Validation, EngineError> {
+    let resources = validation_resources(ctx)?;
+    resources.engine.validate_document(
+        document,
+        &resources.registry,
+        &mut NoAvroExtensionCallbacks,
+        ctx,
+    )
+}
+
+fn build_validation_resources(
+    ctx: &mut Context<'_>,
+) -> Result<AvroValidationResources, EngineError> {
     fn resource(text: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
         let source = text.encode_utf16().collect::<Vec<_>>();
         ctx.charge_text(source.len(), Utf16::default())?;
@@ -1095,9 +1137,7 @@ fn validate_document_report(
         &schema_resources,
         ctx,
     )?;
-    let result =
-        engine.validate_document(document, &registry, &mut NoAvroExtensionCallbacks, ctx)?;
-    Ok(result)
+    Ok(AvroValidationResources { engine, registry })
 }
 
 fn locate_payload_path(
@@ -1287,6 +1327,42 @@ fn err(code: &'static str, message: &'static str) -> EngineError {
 
 #[cfg(test)]
 mod resource_tests {
+    #[test]
+    fn ordinary_resource_reuse_still_admits_each_document_and_host_control() {
+        use super::*;
+        use crate::context::{Limits, ResourceProfile};
+        let first = validation_resources(&mut Context::ordinary()).unwrap();
+        let second = validation_resources(&mut Context::ordinary()).unwrap();
+        assert!(std::sync::Arc::ptr_eq(&first, &second));
+        assert!(
+            !validate_document_report(&Value::Null, &mut Context::ordinary())
+                .unwrap()
+                .valid
+        );
+        let mut stop = |_| {
+            Err(EngineError::new(
+                "TEST_CONTROL",
+                Utf16::default(),
+                "host stopped",
+            ))
+        };
+        let mut controlled = Context::ordinary().with_host_control(&mut stop);
+        let failure = validation_resources(&mut controlled).err().unwrap();
+        assert_eq!(failure.code, "TEST_CONTROL");
+        assert!(failure.is_control_failure());
+        let mut limited = Context::with_limits(
+            ResourceProfile::Cooperative,
+            Limits {
+                max_text_units: 8,
+                ..Limits::ordinary()
+            },
+        )
+        .unwrap();
+        assert_eq!(
+            validation_resources(&mut limited).err().unwrap().code,
+            "LIMIT"
+        );
+    }
     use super::{admit_document, import_schema, render_line, NativeJsonTree};
     use crate::{
         context::{Limits, ResourceProfile},
