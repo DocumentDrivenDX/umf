@@ -1,0 +1,9 @@
+# G03 Full14 predicate reanalysis operator 006
+
+This source-only successor corrects the cleanup validator to match the sealed orchestration contract and immutable actual007 records. Each N01–N13 case summary has exactly `status` and ordered `subcaseStatuses`; its statuses must equal the ordered scenario cleanup statuses, with one summary item for each fixed-roster scenario. The verifier does not invent a case-level `errors` field.
+
+All 18 resource-creating scenarios require `cleanup.status == PASS`, `createdDatabase is true`, empty cleanup errors, and `createdRoles` equal the independently frozen expected role roster (all eight roles for ordinary N12). Each must also carry the exact six fresh cleanup-verification fields proving database and role absence, no remaining identities, unchanged target, and schema/table removal via owned database deletion. Database, schema, native role, and all-owned-role names are checked against the expected-data bindings.
+
+Admission refusal is a distinct no-resource branch: it requires `PASS_NO_NATIVE_RESOURCES_CREATED`, the exact refusal marker, equal before/after target observations bound to the expected target, and no synthetic resource cleanup fields. N14's thirteen status entries must exactly match the thirteen validated case summaries, alongside its fixed roster and final target checks.
+
+The previous setup log and canonical snapshot checks, source predicates, mutation tests, limits, original actual007 FAIL status, and 001 source-preimage custody disclosure remain unchanged. The 005 operator, packet, manifest, all three launch attempts and receipts, and accepted Sol closure are retained in this derivative. This batch used source/AST and immutable-data inspection only; it executed no tests, predicate, imports, reanalysis, DB, Docker, Git, or network. Independent Sol review of the exact 006 bytes is required before another Linux launch.

@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/private/tmp/g03-native-predicate-reanalysis-operator-004/reanalyze.py", line 703, in <module>
+    if __name__=='__main__': raise SystemExit(main())
+                                              ^^^^^^
+  File "/private/tmp/g03-native-predicate-reanalysis-operator-004/reanalyze.py", line 576, in main
+    fail('frozen reanalysis input packet provenance differs')
+  File "/private/tmp/g03-native-predicate-reanalysis-operator-004/reanalyze.py", line 54, in fail
+    raise RuntimeError(message)
+RuntimeError: frozen reanalysis input packet provenance differs

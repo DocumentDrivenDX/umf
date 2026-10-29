@@ -1,0 +1,59 @@
+{
+  "argv": [
+    "docker",
+    "run",
+    "--rm",
+    "--pull=never",
+    "--platform=linux/amd64",
+    "--name",
+    "g03-predicate-controls-e7873d42bb2741f183b0ed0801af252c",
+    "--label",
+    "codex.g03.execution-id=e7873d42bb2741f183b0ed0801af252c",
+    "--network=none",
+    "--read-only",
+    "--cap-drop=ALL",
+    "--cpus=1",
+    "--memory=1g",
+    "--pids-limit=128",
+    "--tmpfs=/tmp:rw,nosuid,nodev,size=64m",
+    "--mount",
+    "type=bind,source=/private/tmp/g03-native-predicate-pure-tests-001/source,target=/src,readonly",
+    "--workdir=/src",
+    "--entrypoint=/usr/bin/timeout",
+    "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+    "--signal=TERM",
+    "--kill-after=10s",
+    "120s",
+    "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11",
+    "-I",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "/src",
+    "-p",
+    "test_g03_campaign_predicates.py",
+    "-v"
+  ],
+  "elapsedSeconds": 0.859,
+  "exitCode": 0,
+  "logs": [
+    {
+      "bytes": 0,
+      "path": "stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1532,
+      "path": "stderr.log",
+      "sha256": "f54a4a4e6e0655663d0947c47c5a103073080ce2da1cb7ad7f045524c626531c"
+    }
+  ],
+  "ownedContainerAbsent": true,
+  "profile": "g03.pure-predicate-mutation-controls/1",
+  "scope": "Pure predicate mutation controls only; no installed product imports or database execution",
+  "sourceBytesUnchanged": true,
+  "sourceManifestSha256": "76a06d1edf96be03fd848a7e34ac3bb183cd6b1c8dc052f437f0ff1a4258110d",
+  "status": "PURE_PREDICATE_CONTROLS_PASS"
+}

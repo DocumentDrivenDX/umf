@@ -1,6 +1,66 @@
 {
   "files": [
     {
+      "bytes": 129082,
+      "path": "custody-history/checkpoint360.json",
+      "sha256": "2ca44061d7727de911eac3bc5e000f5a994692eac63a6ac521ff193b194ab78e",
+      "sourcePath": "docs/helix/04-build/evidence/schema-migration-design-review/g03-final-056-local-qualification-001/custody.json"
+    },
+    {
+      "bytes": 134505,
+      "path": "custody-history/checkpoint380.json",
+      "sha256": "f085d3c2c8054f1f98c0a4b0b5ebca3cb689b5af442bf9f6698da9d8165b51fc",
+      "sourcePath": "docs/helix/04-build/evidence/schema-migration-design-review/g03-final-056-local-qualification-001/custody.json"
+    },
+    {
+      "bytes": 3820,
+      "path": "macos-audit-operator004/README.md",
+      "sha256": "a8bda4040b890ce96ce88b0d1650131ff7f2d16316a189f3e7ee1595bba74e3c",
+      "sourcePath": "/private/tmp/g03-macos-static-audit-only-operator-004/README.md"
+    },
+    {
+      "bytes": 22917,
+      "path": "macos-audit-operator004/run_static_audit.py",
+      "sha256": "7657c0a79f34a67ddcdbe359ab1910a56642b1b95ee06af18881b77afbf3e4ce",
+      "sourcePath": "/private/tmp/g03-macos-static-audit-only-operator-004/run_static_audit.py"
+    },
+    {
+      "bytes": 3642,
+      "path": "macos-audit-operator004/source-identities.json",
+      "sha256": "f3e5566f074d74edb898abe3b6e06d62422587fd8710678890f6034da5a3b768",
+      "sourcePath": "/private/tmp/g03-macos-static-audit-only-operator-004/source-identities.json"
+    },
+    {
+      "bytes": 15878,
+      "path": "macos-audit-operator004/static_audit.py",
+      "sha256": "ff38aded4a48b285a7c0c6f1bc02def7b24fcd7890dd896a440ea38ebf833fb6",
+      "sourcePath": "/private/tmp/g03-macos-static-audit-only-operator-004/static_audit.py"
+    },
+    {
+      "bytes": 0,
+      "path": "macos-audit004/logs/static-audit.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourcePath": "/private/tmp/g03-weft-macos-arm64-audit-004/logs/static-audit.stderr.log"
+    },
+    {
+      "bytes": 395,
+      "path": "macos-audit004/logs/static-audit.stdout.log",
+      "sha256": "365ad407bc9534c8f9504829f2bb223f016ed7807cfccaefe570dadaca36e8bd",
+      "sourcePath": "/private/tmp/g03-weft-macos-arm64-audit-004/logs/static-audit.stdout.log"
+    },
+    {
+      "bytes": 8051,
+      "path": "macos-audit004/result.json",
+      "sha256": "526cc38f854370f6bc34e044e9dc262b137bc1b4e95252c897578b5369c08fbf",
+      "sourcePath": "/private/tmp/g03-weft-macos-arm64-audit-004/result.json"
+    },
+    {
+      "bytes": 9604,
+      "path": "macos-audit004/static-audit.json",
+      "sha256": "2a79490c17a4856823a9eb9ea8db5cb8cf342f4c961705e8e3fe5f22f9b96424",
+      "sourcePath": "/private/tmp/g03-weft-macos-arm64-audit-004/static-audit.json"
+    },
+    {
       "bytes": 19053,
       "path": "macos-build002/logs/candidate-build.stderr.log",
       "sha256": "ea4c5c9968152284500c5951f0d88d5eef0608f9f36f7549a5cc147de2a3aa85",
@@ -1765,6 +1825,480 @@
       "sourcePath": "/private/tmp/g03-full14-bounded-operator-007/verify_installed_weft.py"
     },
     {
+      "bytes": 1652,
+      "path": "native-pure-controls001/result.json",
+      "sha256": "ab5daea73d7b34c44caa3efa04915ddab595b1e34580cb2603a6c28e7ac1b3c5",
+      "sourcePath": "/private/tmp/g03-native-predicate-pure-tests-001/result.json"
+    },
+    {
+      "bytes": 2771,
+      "path": "native-pure-controls001/run.py",
+      "sha256": "a68fea5a29dedcf043c338ba143009c90bb5ce2b6694a0414cb605ee47c497d2",
+      "sourcePath": "/private/tmp/g03-native-predicate-pure-tests-001/run.py"
+    },
+    {
+      "bytes": 911,
+      "path": "native-pure-controls001/source-manifest.json",
+      "sha256": "76a06d1edf96be03fd848a7e34ac3bb183cd6b1c8dc052f437f0ff1a4258110d",
+      "sourcePath": "/private/tmp/g03-native-predicate-pure-tests-001/source-manifest.json"
+    },
+    {
+      "bytes": 12341,
+      "path": "native-pure-controls001/source/g03_campaign_orchestration.py",
+      "sha256": "8f841a3398fd909f0061bff0f0d7256fb6632e5fbd0cf459edf16fa140742a1a",
+      "sourcePath": "/private/tmp/g03-native-predicate-pure-tests-001/source/g03_campaign_orchestration.py"
+    },
+    {
+      "bytes": 52138,
+      "path": "native-pure-controls001/source/g03_campaign_predicates.py",
+      "sha256": "1aad9cb8cb08483ea09112141a2e934f264bcd149651d9be9f6a56e9f04a23fd",
+      "sourcePath": "/private/tmp/g03-native-predicate-pure-tests-001/source/g03_campaign_predicates.py"
+    },
+    {
+      "bytes": 29525,
+      "path": "native-pure-controls001/source/test_g03_campaign_predicates.py",
+      "sha256": "ce2c39e12bfba7bb03ca315775c3ef0b8e090dad1023fedd2e661bcbb7971cf0",
+      "sourcePath": "/private/tmp/g03-native-predicate-pure-tests-001/source/test_g03_campaign_predicates.py"
+    },
+    {
+      "bytes": 1532,
+      "path": "native-pure-controls001/stderr.log",
+      "sha256": "f54a4a4e6e0655663d0947c47c5a103073080ce2da1cb7ad7f045524c626531c",
+      "sourcePath": "/private/tmp/g03-native-predicate-pure-tests-001/stderr.log"
+    },
+    {
+      "bytes": 0,
+      "path": "native-pure-controls001/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourcePath": "/private/tmp/g03-native-predicate-pure-tests-001/stdout.log"
+    },
+    {
+      "bytes": 3175,
+      "path": "native-reanalysis-launches/g03-native-predicate-reanalysis-004-linux-launch-001/result.json",
+      "sha256": "3acbae2c5849ca76db4eb4c70f75b4e660c68eaf3fdd18296908cff2f2a17999",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-004-linux-launch-001/result.json"
+    },
+    {
+      "bytes": 3279,
+      "path": "native-reanalysis-launches/g03-native-predicate-reanalysis-004-linux-launch-001/run.py",
+      "sha256": "466adf2d84f7d0df2234461d73bf3b9bc9d41aeacbbf6f96f4c42b2a78ac36f9",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-004-linux-launch-001/run.py"
+    },
+    {
+      "bytes": 600,
+      "path": "native-reanalysis-launches/g03-native-predicate-reanalysis-004-linux-launch-001/stderr.log",
+      "sha256": "801708bac02be6387c802947214a3aefc70e7a3d53ee7a489e2efe26f0c7f278",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-004-linux-launch-001/stderr.log"
+    },
+    {
+      "bytes": 0,
+      "path": "native-reanalysis-launches/g03-native-predicate-reanalysis-004-linux-launch-001/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-004-linux-launch-001/stdout.log"
+    },
+    {
+      "bytes": 3207,
+      "path": "native-reanalysis-launches/g03-native-predicate-reanalysis-005-linux-launch-001/result.json",
+      "sha256": "4c4c311dc64e8e6a02c85dd0ed75e9270db43a31c1f935d8a94225e10619e448",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-005-linux-launch-001/result.json"
+    },
+    {
+      "bytes": 3279,
+      "path": "native-reanalysis-launches/g03-native-predicate-reanalysis-005-linux-launch-001/run.py",
+      "sha256": "aa9b1ce854e4b7dd01539102180642dc916f0a9e60152b94b35dddc130162681",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-005-linux-launch-001/run.py"
+    },
+    {
+      "bytes": 108,
+      "path": "native-reanalysis-launches/g03-native-predicate-reanalysis-005-linux-launch-001/stderr.log",
+      "sha256": "abaa7caef3da273f10574802ef3f191c652698c49890db53b8a5f987a202c91a",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-005-linux-launch-001/stderr.log"
+    },
+    {
+      "bytes": 0,
+      "path": "native-reanalysis-launches/g03-native-predicate-reanalysis-005-linux-launch-001/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-005-linux-launch-001/stdout.log"
+    },
+    {
+      "bytes": 3177,
+      "path": "native-reanalysis-launches/g03-native-predicate-reanalysis-005-linux-launch-002/result.json",
+      "sha256": "f2bf0ac56d3e82539e407f227a1cf25f44d556a8ee9f8800d2e91b1142b62b40",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-005-linux-launch-002/result.json"
+    },
+    {
+      "bytes": 3279,
+      "path": "native-reanalysis-launches/g03-native-predicate-reanalysis-005-linux-launch-002/run.py",
+      "sha256": "b8bec2047c2e23047dc5462dce3c5863bfedda9561d32066d487f9de32f5ad31",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-005-linux-launch-002/run.py"
+    },
+    {
+      "bytes": 1339,
+      "path": "native-reanalysis-launches/g03-native-predicate-reanalysis-005-linux-launch-002/stderr.log",
+      "sha256": "b02120365acf2ca576904734dfbe28a98f565342fa1ace357cf139295a2e499d",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-005-linux-launch-002/stderr.log"
+    },
+    {
+      "bytes": 0,
+      "path": "native-reanalysis-launches/g03-native-predicate-reanalysis-005-linux-launch-002/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-005-linux-launch-002/stdout.log"
+    },
+    {
+      "bytes": 3717,
+      "path": "native-reanalysis-launches/g03-native-predicate-reanalysis-005-linux-launch-003/result.json",
+      "sha256": "9452cc23095f1507b44f29b2fde7b3bdad93be9c71d3ced943e5771208631b7c",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-005-linux-launch-003/result.json"
+    },
+    {
+      "bytes": 3488,
+      "path": "native-reanalysis-launches/g03-native-predicate-reanalysis-005-linux-launch-003/run.py",
+      "sha256": "64d5eae98fd281c8d4acdc4f92c0e41e1791e3441ad298b0ce25f46b5a0b121f",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-005-linux-launch-003/run.py"
+    },
+    {
+      "bytes": 801,
+      "path": "native-reanalysis-launches/g03-native-predicate-reanalysis-005-linux-launch-003/stderr.log",
+      "sha256": "387d7c3a144d5cbb638b87632e9404049b20f6d87a696d432016192896cb2045",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-005-linux-launch-003/stderr.log"
+    },
+    {
+      "bytes": 0,
+      "path": "native-reanalysis-launches/g03-native-predicate-reanalysis-005-linux-launch-003/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-005-linux-launch-003/stdout.log"
+    },
+    {
+      "bytes": 3739,
+      "path": "native-reanalysis-launches/g03-native-predicate-reanalysis-006-linux-launch-001/result.json",
+      "sha256": "7e68d976209d70d68207b4c8898697fa88efb3e25514e54d59d2b454167f05a6",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-006-linux-launch-001/result.json"
+    },
+    {
+      "bytes": 3488,
+      "path": "native-reanalysis-launches/g03-native-predicate-reanalysis-006-linux-launch-001/run.py",
+      "sha256": "a481793df6d40b93bbb79e0d429f21bef85f347c70e843e9f5e36826fe74055a",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-006-linux-launch-001/run.py"
+    },
+    {
+      "bytes": 0,
+      "path": "native-reanalysis-launches/g03-native-predicate-reanalysis-006-linux-launch-001/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-006-linux-launch-001/stderr.log"
+    },
+    {
+      "bytes": 306,
+      "path": "native-reanalysis-launches/g03-native-predicate-reanalysis-006-linux-launch-001/stdout.log",
+      "sha256": "ebe591e6673920b732e987e76fe1426b50707cf060edc4f88fd1a510afd353a1",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-006-linux-launch-001/stdout.log"
+    },
+    {
+      "bytes": 1904,
+      "path": "native-reanalysis-operator006/README.md",
+      "sha256": "be7c8b98b4df740e8e8615c6b66c1b9723d7a7c4fea272cab2fcefbfdf766c48",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/README.md"
+    },
+    {
+      "bytes": 3228,
+      "path": "native-reanalysis-operator006/g03-native-predicate-reanalysis-operator-002/README.md",
+      "sha256": "438f369d06d6717e32a4f81ba6a2f529d159e4b698aaf918bd4612419ca371c0",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/g03-native-predicate-reanalysis-operator-002/README.md"
+    },
+    {
+      "bytes": 5501,
+      "path": "native-reanalysis-operator006/g03-native-predicate-reanalysis-operator-002/inputs/packet.json",
+      "sha256": "d294c1cd3db8b819ae9f687d0683c1b3af317abe816d2e2b166c79115cb3b965",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/g03-native-predicate-reanalysis-operator-002/inputs/packet.json"
+    },
+    {
+      "bytes": 1062,
+      "path": "native-reanalysis-operator006/g03-native-predicate-reanalysis-operator-002/inputs/parent-001/SOURCE_PREIMAGE_NOT_RETAINED.md",
+      "sha256": "88df75838cb7f7c28f02114c303ebb941b9fbd7b2dc4ce962c579087a09f45a9",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/g03-native-predicate-reanalysis-operator-002/inputs/parent-001/SOURCE_PREIMAGE_NOT_RETAINED.md"
+    },
+    {
+      "bytes": 5698,
+      "path": "native-reanalysis-operator006/g03-native-predicate-reanalysis-operator-002/integrity-manifest.json",
+      "sha256": "7ed8c746e9176d77f5ec454077130ea752db44cceb9fcb0c0b6d0171e887db22",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/g03-native-predicate-reanalysis-operator-002/integrity-manifest.json"
+    },
+    {
+      "bytes": 38029,
+      "path": "native-reanalysis-operator006/g03-native-predicate-reanalysis-operator-002/reanalyze.py",
+      "sha256": "582817830ee80d9dd2c5754bcb8ed362514abe28c74b1832611a1a65d379b772",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/g03-native-predicate-reanalysis-operator-002/reanalyze.py"
+    },
+    {
+      "bytes": 52138,
+      "path": "native-reanalysis-operator006/g03-native-predicate-reanalysis-operator-002/source/g03_campaign_predicates.py",
+      "sha256": "1aad9cb8cb08483ea09112141a2e934f264bcd149651d9be9f6a56e9f04a23fd",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/g03-native-predicate-reanalysis-operator-002/source/g03_campaign_predicates.py"
+    },
+    {
+      "bytes": 29525,
+      "path": "native-reanalysis-operator006/g03-native-predicate-reanalysis-operator-002/source/test_g03_campaign_predicates.py",
+      "sha256": "ce2c39e12bfba7bb03ca315775c3ef0b8e090dad1023fedd2e661bcbb7971cf0",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/g03-native-predicate-reanalysis-operator-002/source/test_g03_campaign_predicates.py"
+    },
+    {
+      "bytes": 2645,
+      "path": "native-reanalysis-operator006/inputs/cleanup-plan006.md",
+      "sha256": "d0bf39926ecf2f9a39eb876d777cfbd2f7dee00a991af3ecdfcae3699b048e97",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/cleanup-plan006.md"
+    },
+    {
+      "bytes": 1030,
+      "path": "native-reanalysis-operator006/inputs/launch004/provenance-failure.md",
+      "sha256": "bd2bd2eede6ebc2cbc2749bf7b46f78114203bb3ee9eb4a5aa28c55b3953a0f7",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/launch004/provenance-failure.md"
+    },
+    {
+      "bytes": 3175,
+      "path": "native-reanalysis-operator006/inputs/launch004/result.json",
+      "sha256": "3acbae2c5849ca76db4eb4c70f75b4e660c68eaf3fdd18296908cff2f2a17999",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/launch004/result.json"
+    },
+    {
+      "bytes": 3279,
+      "path": "native-reanalysis-operator006/inputs/launch004/run.py",
+      "sha256": "466adf2d84f7d0df2234461d73bf3b9bc9d41aeacbbf6f96f4c42b2a78ac36f9",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/launch004/run.py"
+    },
+    {
+      "bytes": 1037,
+      "path": "native-reanalysis-operator006/inputs/launch004/sol-source-closure.json",
+      "sha256": "de2f5df44a637e746e19a0dac6c9d983fa2d009e49371995b7677f0f00e44584",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/launch004/sol-source-closure.json"
+    },
+    {
+      "bytes": 1832,
+      "path": "native-reanalysis-operator006/inputs/launch004/sol-source-closure.md",
+      "sha256": "20610934b0223900f25495adbbe2056476d69211a07b97359132a34408d784ff",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/launch004/sol-source-closure.md"
+    },
+    {
+      "bytes": 600,
+      "path": "native-reanalysis-operator006/inputs/launch004/stderr.log",
+      "sha256": "801708bac02be6387c802947214a3aefc70e7a3d53ee7a489e2efe26f0c7f278",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/launch004/stderr.log"
+    },
+    {
+      "bytes": 3207,
+      "path": "native-reanalysis-operator006/inputs/launch005/001/result.json",
+      "sha256": "4c4c311dc64e8e6a02c85dd0ed75e9270db43a31c1f935d8a94225e10619e448",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/launch005/001/result.json"
+    },
+    {
+      "bytes": 3279,
+      "path": "native-reanalysis-operator006/inputs/launch005/001/run.py",
+      "sha256": "aa9b1ce854e4b7dd01539102180642dc916f0a9e60152b94b35dddc130162681",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/launch005/001/run.py"
+    },
+    {
+      "bytes": 108,
+      "path": "native-reanalysis-operator006/inputs/launch005/001/stderr.log",
+      "sha256": "abaa7caef3da273f10574802ef3f191c652698c49890db53b8a5f987a202c91a",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/launch005/001/stderr.log"
+    },
+    {
+      "bytes": 0,
+      "path": "native-reanalysis-operator006/inputs/launch005/001/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/launch005/001/stdout.log"
+    },
+    {
+      "bytes": 3177,
+      "path": "native-reanalysis-operator006/inputs/launch005/002/result.json",
+      "sha256": "f2bf0ac56d3e82539e407f227a1cf25f44d556a8ee9f8800d2e91b1142b62b40",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/launch005/002/result.json"
+    },
+    {
+      "bytes": 3279,
+      "path": "native-reanalysis-operator006/inputs/launch005/002/run.py",
+      "sha256": "b8bec2047c2e23047dc5462dce3c5863bfedda9561d32066d487f9de32f5ad31",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/launch005/002/run.py"
+    },
+    {
+      "bytes": 1339,
+      "path": "native-reanalysis-operator006/inputs/launch005/002/stderr.log",
+      "sha256": "b02120365acf2ca576904734dfbe28a98f565342fa1ace357cf139295a2e499d",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/launch005/002/stderr.log"
+    },
+    {
+      "bytes": 0,
+      "path": "native-reanalysis-operator006/inputs/launch005/002/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/launch005/002/stdout.log"
+    },
+    {
+      "bytes": 3717,
+      "path": "native-reanalysis-operator006/inputs/launch005/003/result.json",
+      "sha256": "9452cc23095f1507b44f29b2fde7b3bdad93be9c71d3ced943e5771208631b7c",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/launch005/003/result.json"
+    },
+    {
+      "bytes": 3488,
+      "path": "native-reanalysis-operator006/inputs/launch005/003/run.py",
+      "sha256": "64d5eae98fd281c8d4acdc4f92c0e41e1791e3441ad298b0ce25f46b5a0b121f",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/launch005/003/run.py"
+    },
+    {
+      "bytes": 801,
+      "path": "native-reanalysis-operator006/inputs/launch005/003/stderr.log",
+      "sha256": "387d7c3a144d5cbb638b87632e9404049b20f6d87a696d432016192896cb2045",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/launch005/003/stderr.log"
+    },
+    {
+      "bytes": 0,
+      "path": "native-reanalysis-operator006/inputs/launch005/003/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/launch005/003/stdout.log"
+    },
+    {
+      "bytes": 9407,
+      "path": "native-reanalysis-operator006/inputs/packet.json",
+      "sha256": "984e0b47fc8231d03ba1564ef97cdb3f9e7092768e1b0da29864a6e4ddce75c5",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/packet.json"
+    },
+    {
+      "bytes": 1062,
+      "path": "native-reanalysis-operator006/inputs/parent-001/SOURCE_PREIMAGE_NOT_RETAINED.md",
+      "sha256": "88df75838cb7f7c28f02114c303ebb941b9fbd7b2dc4ce962c579087a09f45a9",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/parent-001/SOURCE_PREIMAGE_NOT_RETAINED.md"
+    },
+    {
+      "bytes": 5698,
+      "path": "native-reanalysis-operator006/inputs/parent-002/integrity-manifest.json",
+      "sha256": "7ed8c746e9176d77f5ec454077130ea752db44cceb9fcb0c0b6d0171e887db22",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/parent-002/integrity-manifest.json"
+    },
+    {
+      "bytes": 52138,
+      "path": "native-reanalysis-operator006/inputs/parent-002/managed-source/g03_campaign_predicates.py",
+      "sha256": "1aad9cb8cb08483ea09112141a2e934f264bcd149651d9be9f6a56e9f04a23fd",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/parent-002/managed-source/g03_campaign_predicates.py"
+    },
+    {
+      "bytes": 29525,
+      "path": "native-reanalysis-operator006/inputs/parent-002/managed-source/test_g03_campaign_predicates.py",
+      "sha256": "ce2c39e12bfba7bb03ca315775c3ef0b8e090dad1023fedd2e661bcbb7971cf0",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/parent-002/managed-source/test_g03_campaign_predicates.py"
+    },
+    {
+      "bytes": 52138,
+      "path": "native-reanalysis-operator006/inputs/parent-002/operator-source/g03_campaign_predicates.py",
+      "sha256": "1aad9cb8cb08483ea09112141a2e934f264bcd149651d9be9f6a56e9f04a23fd",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/parent-002/operator-source/g03_campaign_predicates.py"
+    },
+    {
+      "bytes": 29525,
+      "path": "native-reanalysis-operator006/inputs/parent-002/operator-source/test_g03_campaign_predicates.py",
+      "sha256": "ce2c39e12bfba7bb03ca315775c3ef0b8e090dad1023fedd2e661bcbb7971cf0",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/parent-002/operator-source/test_g03_campaign_predicates.py"
+    },
+    {
+      "bytes": 5501,
+      "path": "native-reanalysis-operator006/inputs/parent-002/packet.json",
+      "sha256": "d294c1cd3db8b819ae9f687d0683c1b3af317abe816d2e2b166c79115cb3b965",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/parent-002/packet.json"
+    },
+    {
+      "bytes": 7508,
+      "path": "native-reanalysis-operator006/inputs/parent-003/integrity-manifest.json",
+      "sha256": "85725bfae6c6d05b53dd9f28f9366dc5b7804e3e8295354a49c8bfc5ac0c22dc",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/parent-003/integrity-manifest.json"
+    },
+    {
+      "bytes": 7430,
+      "path": "native-reanalysis-operator006/inputs/parent-003/packet.json",
+      "sha256": "52981794b3fc57d97045ed5bdc8bd74329bd4e47d7417008e6887e17ef249c63",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/parent-003/packet.json"
+    },
+    {
+      "bytes": 47411,
+      "path": "native-reanalysis-operator006/inputs/parent-003/reanalyze.py",
+      "sha256": "393c82e5f133a0a885df21859422ea06f7b1f54f0e3bb603f043a8654705b068",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/parent-003/reanalyze.py"
+    },
+    {
+      "bytes": 8729,
+      "path": "native-reanalysis-operator006/inputs/parent-004/integrity-manifest.json",
+      "sha256": "f71ea22f22d5559c42c5e9ee76aaf5278420b0aaf75aec417c4126f79068a9d1",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/parent-004/integrity-manifest.json"
+    },
+    {
+      "bytes": 8082,
+      "path": "native-reanalysis-operator006/inputs/parent-004/packet.json",
+      "sha256": "100e42452352fbfb532889321f683356cca05eefa9fd95a10b6febb7274b3cce",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/parent-004/packet.json"
+    },
+    {
+      "bytes": 48854,
+      "path": "native-reanalysis-operator006/inputs/parent-004/reanalyze.py",
+      "sha256": "1098a6b2e603ffaf6f94574921989f4011da51603afa1e68ce48aa6732a0cb68",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/parent-004/reanalyze.py"
+    },
+    {
+      "bytes": 9442,
+      "path": "native-reanalysis-operator006/inputs/parent-005/integrity-manifest.json",
+      "sha256": "bf4c4c950668d2887a180b7397c517302a1f5e5ca0d84dfb9aee7d4696def4d8",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/parent-005/integrity-manifest.json"
+    },
+    {
+      "bytes": 8225,
+      "path": "native-reanalysis-operator006/inputs/parent-005/packet.json",
+      "sha256": "df091e3590a8fb2eaf27735fec27b7c5c33f6c433a24620b724d9d4d111f0698",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/parent-005/packet.json"
+    },
+    {
+      "bytes": 48854,
+      "path": "native-reanalysis-operator006/inputs/parent-005/reanalyze.py",
+      "sha256": "34d29aaa84c94406132239cf765f9551c23af6c12955f4fc575b0f574dcaff34",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/parent-005/reanalyze.py"
+    },
+    {
+      "bytes": 2729,
+      "path": "native-reanalysis-operator006/inputs/source-review-findings002.md",
+      "sha256": "c43083942e1f52317d98589fe95cbe152ba85357f0a022cb4d603c752c509349",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/source-review-findings002.md"
+    },
+    {
+      "bytes": 1623,
+      "path": "native-reanalysis-operator006/inputs/source-review-findings003.md",
+      "sha256": "a601f02981a4f6b4b0302e58903023b52ad4b0c5f69e42bd9b2d5da137970daa",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/inputs/source-review-findings003.md"
+    },
+    {
+      "bytes": 17831,
+      "path": "native-reanalysis-operator006/integrity-manifest.json",
+      "sha256": "0ca35e4263268802c479c80b9bc5b86f9e868541f8d66bc3cfd1f3e3baae5f13",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/integrity-manifest.json"
+    },
+    {
+      "bytes": 55469,
+      "path": "native-reanalysis-operator006/reanalyze.py",
+      "sha256": "aa9a09270465962656cc36f54cfeffcd18f67222eb7779289f5a9b054e9802f6",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/reanalyze.py"
+    },
+    {
+      "bytes": 52138,
+      "path": "native-reanalysis-operator006/source/g03_campaign_predicates.py",
+      "sha256": "1aad9cb8cb08483ea09112141a2e934f264bcd149651d9be9f6a56e9f04a23fd",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/source/g03_campaign_predicates.py"
+    },
+    {
+      "bytes": 29525,
+      "path": "native-reanalysis-operator006/source/test_g03_campaign_predicates.py",
+      "sha256": "ce2c39e12bfba7bb03ca315775c3ef0b8e090dad1023fedd2e661bcbb7971cf0",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/source/test_g03_campaign_predicates.py"
+    },
+    {
+      "bytes": 56668,
+      "path": "native-reanalysis006/predicate-reanalysis.json",
+      "sha256": "3303432a175a4e213bde87f0fbb2feeeb821346b94aecf649fdc3236b01423c2",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis-operator-006/runs/e081d97b27ed4b19b7196c4f701ed8f4/predicate-reanalysis.json"
+    },
+    {
       "bytes": 4120,
       "path": "native-source-seal005/manifest.json",
       "sha256": "23a16e87f53df619ad06ffcfe9e234efe0394287b5437070a13209e06c945ccf",
@@ -1837,10 +2371,28 @@
       "sourcePath": "/private/tmp/g03-macos-audit003-sol-source-review001.md"
     },
     {
+      "bytes": 4009,
+      "path": "reviews/macos-audit004-source.md",
+      "sha256": "226d46fa944cd657e0cb0a383f93f578b4517a1e6bd00371c68a6d3dacd9f208",
+      "sourcePath": "/private/tmp/g03-macos-audit004-sol-source-closure001.md"
+    },
+    {
       "bytes": 8712,
       "path": "reviews/macos-build002-actual-and-audit-plan001.md",
       "sha256": "cad229b19abb5b61423aa37065d2de751e9e3ba417dbab484baa00e70629af24",
       "sourcePath": "/private/tmp/g03-macos-build002-static-oracle-sol-actual-plan001.md"
+    },
+    {
+      "bytes": 6410,
+      "path": "reviews/macos-build002-audit004-actual.md",
+      "sha256": "7b38622a5d48e8c3f626ae0ca9fba8e2cc10f6666a51650e30b25d689cdbe7ee",
+      "sourcePath": "/private/tmp/g03-macos-build002-audit004-sol-actual-review001.md"
+    },
+    {
+      "bytes": 1449,
+      "path": "reviews/macos-build002-audit004-data.json",
+      "sha256": "fe720768de4141ab4514513921348926b6cd924a91e0733bcc9a2c791e284100",
+      "sourcePath": "/private/tmp/g03-macos-build002-audit004-sol-data-review001.json"
     },
     {
       "bytes": 3791,
@@ -1865,6 +2417,30 @@
       "path": "reviews/native-reanalysis-source001-findings.md",
       "sha256": "f3913b2e848ea93a02712c9a884bdbceacfd0d136903c27a30c95fb8b0decc95",
       "sourcePath": "/private/tmp/g03-native-predicate-reanalysis001-sol-source-review001.md"
+    },
+    {
+      "bytes": 3907,
+      "path": "reviews/native-reanalysis006-actual.md",
+      "sha256": "aa45f6375445fbd4a78fe6b726b38675d7dfcd7c13b3a992073b52ccb526117a",
+      "sourcePath": "/private/tmp/g03-native-reanalysis006-sol-actual-review001.md"
+    },
+    {
+      "bytes": 2645,
+      "path": "reviews/native-reanalysis006-cleanup-plan.md",
+      "sha256": "d0bf39926ecf2f9a39eb876d777cfbd2f7dee00a991af3ecdfcae3699b048e97",
+      "sourcePath": "/private/tmp/g03-native-reanalysis006-cleanup-sol-plan001.md"
+    },
+    {
+      "bytes": 1248,
+      "path": "reviews/native-reanalysis006-source.json",
+      "sha256": "ecbaa99b0513a508b1be35d15795b85f59ed84ffa55a9476a86414587f326c54",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis006-sol-source-closure001.json"
+    },
+    {
+      "bytes": 2045,
+      "path": "reviews/native-reanalysis006-source.md",
+      "sha256": "e935b07a3b7ebce95f944d293fdd2c9c66ea380279a28e941e6cc8eb6f9abf02",
+      "sourcePath": "/private/tmp/g03-native-predicate-reanalysis006-sol-source-closure001.md"
     },
     {
       "bytes": 6967,
@@ -2162,5 +2738,5 @@
     }
   ],
   "profile": "umf.g03-final-local-qualification-custody/1",
-  "scope": "Source/package actual acceptance; original final native campaign and Mac build/static failures; no release or overall native/Mac qualification claim"
+  "scope": "Actual local Linux source/package acceptance, selected native14/19 via original007 plus reviewed reanalysis006, and Mac build/static-only acceptance; no inherited WASM/browser, overall release or managed qualification"
 }

@@ -378,14 +378,20 @@ All 20 local Linux source/package commands now have independent actual acceptanc
 with exact source/dependency pre/post closure and owned cleanup. The final native
 attempt007 executed all 19 scenarios and cleaned up, but its original campaign
 verdict remains FAIL_OR_UNKNOWN because of identified predicate interpretation
-mismatches; a separately reviewed metadata-only correction is in progress. Mac
+mismatches. The separate corrected reanalysis006 now passes all 14 predicates
+across those 19 retained scenarios with independent actual acceptance, exact
+capture/source/cohort closure and fresh recorded resource-absence witnesses.
+It supplies no new database observations and preserves the original failure.
+Mac
 build002 produced a genuine new wheel, then failed its MH_BUNDLE-only static
-oracle against the actual Rust MH_DYLIB. Its audit-only continuation is in source
-review. These distinctions and raw receipts are retained in the
+oracle against the actual Rust MH_DYLIB. The separate audit004 now has independent
+actual acceptance for the same newly built wheel, strictly build/static-only;
+the original failure remains unchanged. Eight Linux pure predicate mutation
+controls also pass; they are separate from native execution evidence. These
+distinctions and raw receipts are retained in the
 [final local checkpoint](evidence/schema-migration-design-review/g03-final-056-local-qualification-001/README.md).
 
-Next: complete the final bounded native campaign, inherited installed/CLI/native/
-WASM/browser and source/package checks, macOS build/static-only artifact,
+Next: complete inherited installed/CLI/native/WASM/browser checks,
 independent review, normal merge, immutable successor publication and fresh public
 proof. GitHub Actions and macOS CI remain off. No G03 completion, new macOS
 feature support, managed adoption or Praxis change follows from these checkpoints.
