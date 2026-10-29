@@ -1,0 +1,28 @@
+{
+  "argv": [
+    "docker",
+    "run",
+    "--rm",
+    "--pull=never",
+    "--name",
+    "g03-cache-size-e383e4d149374b22ac4b3484d8caafd0",
+    "--platform=linux/amd64",
+    "--network=none",
+    "--read-only",
+    "--cap-drop=ALL",
+    "--memory=256m",
+    "--pids-limit=32",
+    "--entrypoint=/usr/bin/du",
+    "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+    "-sb",
+    "/opt/cargo/registry/cache",
+    "/opt/cargo/registry/index"
+  ],
+  "elapsedSeconds": 0.565,
+  "exitCode": 0,
+  "ownedContainerAbsent": true,
+  "profile": "g03.local-linux-tool-cache-metadata/1",
+  "scope": "Filesystem tool-cache size only; no product/compiler/test/network/CI execution",
+  "stderr": "",
+  "stdout": "17410143\t/opt/cargo/registry/cache\n13154725\t/opt/cargo/registry/index\n"
+}

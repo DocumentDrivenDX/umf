@@ -1,0 +1,2727 @@
+{
+  "browserImage": "sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27",
+  "builderImage": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+  "cleanup": {
+    "containers": {
+      "g03-table-prepare-8889e3fec54a40fabf65bab425a7d688": {
+        "absent": true,
+        "removeExit": 0
+      }
+    },
+    "daemonReachable": true,
+    "networkAbsent": true,
+    "networkRemoved": false,
+    "verified": true,
+    "volumes": {
+      "g03-table-cargo-8889e3fec54a40fabf65bab425a7d688": {
+        "absent": true,
+        "removeExit": 0
+      },
+      "g03-table-pgdata-8889e3fec54a40fabf65bab425a7d688": {
+        "absent": true,
+        "removeExit": 0
+      },
+      "g03-table-target-8889e3fec54a40fabf65bab425a7d688": {
+        "absent": true,
+        "removeExit": 0
+      },
+      "g03-table-venv-8889e3fec54a40fabf65bab425a7d688": {
+        "absent": true,
+        "removeExit": 0
+      }
+    }
+  },
+  "elapsedSeconds": 15.271,
+  "executionId": "8889e3fec54a40fabf65bab425a7d688",
+  "executionKind": "local_linux_diagnostic",
+  "failure": "RuntimeError: bounded container command failed or capture did not close: g03-table-prepare-8889e3fec54a40fabf65bab425a7d688",
+  "limits": {
+    "addedArtifactCapIsLocalOperatorDefense": true,
+    "inheritedStageOffsetsSeconds": {
+      "bindings": 1380,
+      "browser": 2280,
+      "build": 900,
+      "evidence": 2400,
+      "native": 1680,
+      "setup": 180,
+      "upload": 2520
+    },
+    "inheritedTotalSeconds": 2700,
+    "operatorResultBytesCap": 1048576,
+    "publicEvidenceBytes": 8388608,
+    "publicLogBytes": 1048576,
+    "selectedArtifactBytes": 268435456,
+    "terminalReserveSeconds": 60,
+    "terminationGraceSeconds": 10
+  },
+  "metadataCommands": [
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/private/tmp/weft-g03-ordinary-module",
+        "rev-parse",
+        "HEAD"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.01078,
+      "endMonotonic": 1020261.511800583,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0000.stdout.log",
+          "sha256": "4c6cae353c228c0c07834d3e6a954da11f295df93840f6b671ae18f41dd3e961",
+          "sizeBytes": 41
+        },
+        {
+          "path": "outer/metadata-0000.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 41,
+      "startMonotonic": 1020261.501020916,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "973d864c8d26b2bc173a411eac8368da5efc1ab3\n",
+      "stdoutBytes": 41,
+      "stdoutRetainedBytes": 41,
+      "stdoutSha256": "4c6cae353c228c0c07834d3e6a954da11f295df93840f6b671ae18f41dd3e961",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 12.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020273.501020916
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/private/tmp/weft-g03-ordinary-module",
+        "rev-parse",
+        "HEAD^{tree}"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.010834,
+      "endMonotonic": 1020261.525517625,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0001.stdout.log",
+          "sha256": "00f16d26b0179602cf672b50759a874beae1da19c7981c5f6eb1326921d50972",
+          "sizeBytes": 41
+        },
+        {
+          "path": "outer/metadata-0001.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 41,
+      "startMonotonic": 1020261.514684125,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "8b20d1f01bea72ea08ed01fcaac97266ed3cb4ff\n",
+      "stdoutBytes": 41,
+      "stdoutRetainedBytes": 41,
+      "stdoutSha256": "00f16d26b0179602cf672b50759a874beae1da19c7981c5f6eb1326921d50972",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 12.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020273.514684125
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/private/tmp/weft-g03-ordinary-module",
+        "status",
+        "--porcelain"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.04213,
+      "endMonotonic": 1020261.570485791,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0002.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        },
+        {
+          "path": "outer/metadata-0002.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 0,
+      "startMonotonic": 1020261.528356166,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "",
+      "stdoutBytes": 0,
+      "stdoutRetainedBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 12.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020273.528356166
+    },
+    {
+      "argv": [
+        "docker",
+        "image",
+        "inspect",
+        "--format",
+        "{{.Id}}|{{.Os}}/{{.Architecture}}",
+        "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.084763,
+      "endMonotonic": 1020261.656139125,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0003.stdout.log",
+          "sha256": "15da17c01d73753ac5f83904478e7471c56c7be2a49a00e500c70e3148282723",
+          "sizeBytes": 84
+        },
+        {
+          "path": "outer/metadata-0003.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 84,
+      "startMonotonic": 1020261.571375708,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10|linux/amd64\n",
+      "stdoutBytes": 84,
+      "stdoutRetainedBytes": 84,
+      "stdoutSha256": "15da17c01d73753ac5f83904478e7471c56c7be2a49a00e500c70e3148282723",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020281.571375708
+    },
+    {
+      "argv": [
+        "docker",
+        "image",
+        "inspect",
+        "--format",
+        "{{.Id}}|{{.Os}}/{{.Architecture}}|{{json .Config.Volumes}}",
+        "sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.13452,
+      "endMonotonic": 1020261.794090958,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0004.stdout.log",
+          "sha256": "bfb597e8c5d125ef6242f28374c293915ae76ac69c8fe700e3e46732edfe3d85",
+          "sizeBytes": 111
+        },
+        {
+          "path": "outer/metadata-0004.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 111,
+      "startMonotonic": 1020261.659570625,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336|linux/arm64|{\"/var/lib/postgresql\":{}}\n",
+      "stdoutBytes": 111,
+      "stdoutRetainedBytes": 111,
+      "stdoutSha256": "bfb597e8c5d125ef6242f28374c293915ae76ac69c8fe700e3e46732edfe3d85",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020281.659570625
+    },
+    {
+      "argv": [
+        "docker",
+        "image",
+        "inspect",
+        "--format",
+        "{{.Id}}|{{.Os}}/{{.Architecture}}",
+        "sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.145882,
+      "endMonotonic": 1020261.9449855,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0005.stdout.log",
+          "sha256": "5a543dc5bc7e049b6e71543357800b56ad1246cee2ab082d2a75e899b5af5b9c",
+          "sizeBytes": 84
+        },
+        {
+          "path": "outer/metadata-0005.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 84,
+      "startMonotonic": 1020261.799103041,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27|linux/arm64\n",
+      "stdoutBytes": 84,
+      "stdoutRetainedBytes": 84,
+      "stdoutSha256": "5a543dc5bc7e049b6e71543357800b56ad1246cee2ab082d2a75e899b5af5b9c",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020281.799103041
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "ls",
+        "--filter",
+        "name=^g03-table-venv-8889e3fec54a40fabf65bab425a7d688$",
+        "--format",
+        "{{.Name}}"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.085308,
+      "endMonotonic": 1020262.033811583,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0006.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        },
+        {
+          "path": "outer/metadata-0006.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 0,
+      "startMonotonic": 1020261.948503916,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "",
+      "stdoutBytes": 0,
+      "stdoutRetainedBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020281.948503916
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "create",
+        "--driver",
+        "local",
+        "--label",
+        "codex.g03.execution-id=8889e3fec54a40fabf65bab425a7d688",
+        "--label",
+        "codex.g03.kind=table-venv",
+        "g03-table-venv-8889e3fec54a40fabf65bab425a7d688"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.063561,
+      "endMonotonic": 1020262.099748416,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0007.stdout.log",
+          "sha256": "3de12b0a8ea1af50ce3e7787f166e2cc3582ad6c7e9f7b77d64815006b96d124",
+          "sizeBytes": 48
+        },
+        {
+          "path": "outer/metadata-0007.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 48,
+      "startMonotonic": 1020262.036187666,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "g03-table-venv-8889e3fec54a40fabf65bab425a7d688\n",
+      "stdoutBytes": 48,
+      "stdoutRetainedBytes": 48,
+      "stdoutSha256": "3de12b0a8ea1af50ce3e7787f166e2cc3582ad6c7e9f7b77d64815006b96d124",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020282.036187666
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "inspect",
+        "--format",
+        "{{.Name}}|{{.Driver}}|{{index .Labels \"codex.g03.execution-id\"}}|{{index .Labels \"codex.g03.kind\"}}",
+        "g03-table-venv-8889e3fec54a40fabf65bab425a7d688"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.026758,
+      "endMonotonic": 1020262.131784916,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0008.stdout.log",
+          "sha256": "2e31671a99d05f7b045354b179d118e231109d63a3059fa6fd9a117ed2a19aa2",
+          "sizeBytes": 98
+        },
+        {
+          "path": "outer/metadata-0008.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 98,
+      "startMonotonic": 1020262.105027333,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "g03-table-venv-8889e3fec54a40fabf65bab425a7d688|local|8889e3fec54a40fabf65bab425a7d688|table-venv\n",
+      "stdoutBytes": 98,
+      "stdoutRetainedBytes": 98,
+      "stdoutSha256": "2e31671a99d05f7b045354b179d118e231109d63a3059fa6fd9a117ed2a19aa2",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020282.105027333
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "ls",
+        "--filter",
+        "name=^g03-table-target-8889e3fec54a40fabf65bab425a7d688$",
+        "--format",
+        "{{.Name}}"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.058292,
+      "endMonotonic": 1020262.193239958,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0009.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        },
+        {
+          "path": "outer/metadata-0009.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 0,
+      "startMonotonic": 1020262.134947708,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "",
+      "stdoutBytes": 0,
+      "stdoutRetainedBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020282.134947708
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "create",
+        "--driver",
+        "local",
+        "--label",
+        "codex.g03.execution-id=8889e3fec54a40fabf65bab425a7d688",
+        "--label",
+        "codex.g03.kind=table-cargo-target",
+        "g03-table-target-8889e3fec54a40fabf65bab425a7d688"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.025151,
+      "endMonotonic": 1020262.219304041,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0010.stdout.log",
+          "sha256": "d6fb7f9bddccae96d897cfc8801e2788e4ca71a48fe7782763aaa32566c163d1",
+          "sizeBytes": 50
+        },
+        {
+          "path": "outer/metadata-0010.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 50,
+      "startMonotonic": 1020262.194152791,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "g03-table-target-8889e3fec54a40fabf65bab425a7d688\n",
+      "stdoutBytes": 50,
+      "stdoutRetainedBytes": 50,
+      "stdoutSha256": "d6fb7f9bddccae96d897cfc8801e2788e4ca71a48fe7782763aaa32566c163d1",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020282.194152791
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "inspect",
+        "--format",
+        "{{.Name}}|{{.Driver}}|{{index .Labels \"codex.g03.execution-id\"}}|{{index .Labels \"codex.g03.kind\"}}",
+        "g03-table-target-8889e3fec54a40fabf65bab425a7d688"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.021407,
+      "endMonotonic": 1020262.243328,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0011.stdout.log",
+          "sha256": "d2f7dcede9202c4d51aad54808fa1c07377f348438a0de87b892fffbb076ad7f",
+          "sizeBytes": 108
+        },
+        {
+          "path": "outer/metadata-0011.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 108,
+      "startMonotonic": 1020262.221921166,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "g03-table-target-8889e3fec54a40fabf65bab425a7d688|local|8889e3fec54a40fabf65bab425a7d688|table-cargo-target\n",
+      "stdoutBytes": 108,
+      "stdoutRetainedBytes": 108,
+      "stdoutSha256": "d2f7dcede9202c4d51aad54808fa1c07377f348438a0de87b892fffbb076ad7f",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020282.221921166
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "ls",
+        "--filter",
+        "name=^g03-table-pgdata-8889e3fec54a40fabf65bab425a7d688$",
+        "--format",
+        "{{.Name}}"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.059738,
+      "endMonotonic": 1020262.305837958,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0012.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        },
+        {
+          "path": "outer/metadata-0012.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 0,
+      "startMonotonic": 1020262.2461,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "",
+      "stdoutBytes": 0,
+      "stdoutRetainedBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020282.2461
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "create",
+        "--driver",
+        "local",
+        "--label",
+        "codex.g03.execution-id=8889e3fec54a40fabf65bab425a7d688",
+        "--label",
+        "codex.g03.kind=table-postgres-data",
+        "g03-table-pgdata-8889e3fec54a40fabf65bab425a7d688"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.022818,
+      "endMonotonic": 1020262.329645583,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0013.stdout.log",
+          "sha256": "2e7c4f2d5bed63928dd4cc22bc78cb2472c594f7a0a6bf4a21a9fb6d4a525f98",
+          "sizeBytes": 50
+        },
+        {
+          "path": "outer/metadata-0013.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 50,
+      "startMonotonic": 1020262.306828,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "g03-table-pgdata-8889e3fec54a40fabf65bab425a7d688\n",
+      "stdoutBytes": 50,
+      "stdoutRetainedBytes": 50,
+      "stdoutSha256": "2e7c4f2d5bed63928dd4cc22bc78cb2472c594f7a0a6bf4a21a9fb6d4a525f98",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020282.306828
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "inspect",
+        "--format",
+        "{{.Name}}|{{.Driver}}|{{index .Labels \"codex.g03.execution-id\"}}|{{index .Labels \"codex.g03.kind\"}}",
+        "g03-table-pgdata-8889e3fec54a40fabf65bab425a7d688"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.120622,
+      "endMonotonic": 1020262.453257583,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0014.stdout.log",
+          "sha256": "c6138e7b5da899f4984e1cf8dd5f4fe63be05ef46dc439119e80e2bfebfd9ac2",
+          "sizeBytes": 109
+        },
+        {
+          "path": "outer/metadata-0014.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 109,
+      "startMonotonic": 1020262.332635541,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "g03-table-pgdata-8889e3fec54a40fabf65bab425a7d688|local|8889e3fec54a40fabf65bab425a7d688|table-postgres-data\n",
+      "stdoutBytes": 109,
+      "stdoutRetainedBytes": 109,
+      "stdoutSha256": "c6138e7b5da899f4984e1cf8dd5f4fe63be05ef46dc439119e80e2bfebfd9ac2",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020282.332635541
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "ls",
+        "--filter",
+        "name=^g03-table-cargo-8889e3fec54a40fabf65bab425a7d688$",
+        "--format",
+        "{{.Name}}"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.056074,
+      "endMonotonic": 1020262.513513958,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0015.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        },
+        {
+          "path": "outer/metadata-0015.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 0,
+      "startMonotonic": 1020262.457439833,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "",
+      "stdoutBytes": 0,
+      "stdoutRetainedBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020282.457439833
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "create",
+        "--driver",
+        "local",
+        "--label",
+        "codex.g03.execution-id=8889e3fec54a40fabf65bab425a7d688",
+        "--label",
+        "codex.g03.kind=table-cargo-home",
+        "g03-table-cargo-8889e3fec54a40fabf65bab425a7d688"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.024012,
+      "endMonotonic": 1020262.538753833,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0016.stdout.log",
+          "sha256": "1ebf27876d85b09270f1d9d853c707458600b036268362561dac155643fb706e",
+          "sizeBytes": 49
+        },
+        {
+          "path": "outer/metadata-0016.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 49,
+      "startMonotonic": 1020262.514741625,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "g03-table-cargo-8889e3fec54a40fabf65bab425a7d688\n",
+      "stdoutBytes": 49,
+      "stdoutRetainedBytes": 49,
+      "stdoutSha256": "1ebf27876d85b09270f1d9d853c707458600b036268362561dac155643fb706e",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020282.514741625
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "inspect",
+        "--format",
+        "{{.Name}}|{{.Driver}}|{{index .Labels \"codex.g03.execution-id\"}}|{{index .Labels \"codex.g03.kind\"}}",
+        "g03-table-cargo-8889e3fec54a40fabf65bab425a7d688"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.019071,
+      "endMonotonic": 1020262.560529916,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0017.stdout.log",
+          "sha256": "dff7aed8bfe2b141b4787b8e69c2ed2753a60edf0b9515b4cf9c5aaa54eff170",
+          "sizeBytes": 105
+        },
+        {
+          "path": "outer/metadata-0017.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 105,
+      "startMonotonic": 1020262.541459125,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "g03-table-cargo-8889e3fec54a40fabf65bab425a7d688|local|8889e3fec54a40fabf65bab425a7d688|table-cargo-home\n",
+      "stdoutBytes": 105,
+      "stdoutRetainedBytes": 105,
+      "stdoutSha256": "dff7aed8bfe2b141b4787b8e69c2ed2753a60edf0b9515b4cf9c5aaa54eff170",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020282.541459125
+    },
+    {
+      "argv": [
+        "docker",
+        "ps",
+        "-a",
+        "--filter",
+        "name=^/g03-table-prepare-8889e3fec54a40fabf65bab425a7d688$",
+        "--format",
+        "{{.Names}}"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.020284,
+      "endMonotonic": 1020262.583547666,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0018.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        },
+        {
+          "path": "outer/metadata-0018.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 0,
+      "startMonotonic": 1020262.563263958,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "",
+      "stdoutBytes": 0,
+      "stdoutRetainedBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020282.563263958
+    },
+    {
+      "argv": [
+        "docker",
+        "info",
+        "--format",
+        "{{.OSType}}/{{.Architecture}}"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.081853,
+      "endMonotonic": 1020275.127239208,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0019.stdout.log",
+          "sha256": "afc95e0482eccb7b8a13df7f544866870b9863a31055ddf48f938817d8e2e7ff",
+          "sizeBytes": 14
+        },
+        {
+          "path": "outer/metadata-0019.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 14,
+      "startMonotonic": 1020275.045386333,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "linux/aarch64\n",
+      "stdoutBytes": 14,
+      "stdoutRetainedBytes": 14,
+      "stdoutSha256": "afc95e0482eccb7b8a13df7f544866870b9863a31055ddf48f938817d8e2e7ff",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 15.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020290.045386333
+    },
+    {
+      "argv": [
+        "docker",
+        "ps",
+        "-a",
+        "--filter",
+        "name=^/g03-table-prepare-8889e3fec54a40fabf65bab425a7d688$",
+        "--format",
+        "{{.Names}}"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.020109,
+      "endMonotonic": 1020275.150100958,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0020.stdout.log",
+          "sha256": "54266edf69399fd1db02bbb211e3f5c04eb5715feb8db35707cc949f56f3a3fc",
+          "sizeBytes": 51
+        },
+        {
+          "path": "outer/metadata-0020.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 51,
+      "startMonotonic": 1020275.129991875,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "g03-table-prepare-8889e3fec54a40fabf65bab425a7d688\n",
+      "stdoutBytes": 51,
+      "stdoutRetainedBytes": 51,
+      "stdoutSha256": "54266edf69399fd1db02bbb211e3f5c04eb5715feb8db35707cc949f56f3a3fc",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020295.129991875
+    },
+    {
+      "argv": [
+        "docker",
+        "inspect",
+        "--format",
+        "{{.Id}}|{{index .Config.Labels \"codex.g03.execution-id\"}}|{{.Image}}|{{.State.ExitCode}}|{{index .Config.Labels \"codex.g03.kind\"}}",
+        "g03-table-prepare-8889e3fec54a40fabf65bab425a7d688"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.019978,
+      "endMonotonic": 1020275.174376958,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0021.stdout.log",
+          "sha256": "d0e525a0abbd77b412a702897487f7c53e84012c3208865ae57b20d42c32f0f0",
+          "sizeBytes": 189
+        },
+        {
+          "path": "outer/metadata-0021.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 189,
+      "startMonotonic": 1020275.154399416,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "8efa319bfb340b15363febab08839bde5aac940567f1b7b9c2a65cda7d9b853a|8889e3fec54a40fabf65bab425a7d688|sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10|1|table-operations\n",
+      "stdoutBytes": 189,
+      "stdoutRetainedBytes": 189,
+      "stdoutSha256": "d0e525a0abbd77b412a702897487f7c53e84012c3208865ae57b20d42c32f0f0",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020295.154399416
+    },
+    {
+      "argv": [
+        "docker",
+        "rm",
+        "--force",
+        "g03-table-prepare-8889e3fec54a40fabf65bab425a7d688"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.247525,
+      "endMonotonic": 1020275.425489375,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0022.stdout.log",
+          "sha256": "54266edf69399fd1db02bbb211e3f5c04eb5715feb8db35707cc949f56f3a3fc",
+          "sizeBytes": 51
+        },
+        {
+          "path": "outer/metadata-0022.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 51,
+      "startMonotonic": 1020275.17796425,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "g03-table-prepare-8889e3fec54a40fabf65bab425a7d688\n",
+      "stdoutBytes": 51,
+      "stdoutRetainedBytes": 51,
+      "stdoutSha256": "54266edf69399fd1db02bbb211e3f5c04eb5715feb8db35707cc949f56f3a3fc",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020295.17796425
+    },
+    {
+      "argv": [
+        "docker",
+        "ps",
+        "-a",
+        "--filter",
+        "name=^/g03-table-prepare-8889e3fec54a40fabf65bab425a7d688$",
+        "--format",
+        "{{.Names}}"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.047011,
+      "endMonotonic": 1020275.478319708,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0023.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        },
+        {
+          "path": "outer/metadata-0023.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 0,
+      "startMonotonic": 1020275.431308791,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "",
+      "stdoutBytes": 0,
+      "stdoutRetainedBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020295.431308791
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "ls",
+        "--filter",
+        "name=^g03-table-pgdata-8889e3fec54a40fabf65bab425a7d688$",
+        "--format",
+        "{{.Name}}"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.170913,
+      "endMonotonic": 1020275.650744541,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0024.stdout.log",
+          "sha256": "2e7c4f2d5bed63928dd4cc22bc78cb2472c594f7a0a6bf4a21a9fb6d4a525f98",
+          "sizeBytes": 50
+        },
+        {
+          "path": "outer/metadata-0024.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 50,
+      "startMonotonic": 1020275.479831666,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "g03-table-pgdata-8889e3fec54a40fabf65bab425a7d688\n",
+      "stdoutBytes": 50,
+      "stdoutRetainedBytes": 50,
+      "stdoutSha256": "2e7c4f2d5bed63928dd4cc22bc78cb2472c594f7a0a6bf4a21a9fb6d4a525f98",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020295.479831666
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "inspect",
+        "--format",
+        "{{.Name}}|{{.Driver}}|{{index .Labels \"codex.g03.execution-id\"}}|{{index .Labels \"codex.g03.kind\"}}",
+        "g03-table-pgdata-8889e3fec54a40fabf65bab425a7d688"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.047137,
+      "endMonotonic": 1020275.7039025,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0025.stdout.log",
+          "sha256": "c6138e7b5da899f4984e1cf8dd5f4fe63be05ef46dc439119e80e2bfebfd9ac2",
+          "sizeBytes": 109
+        },
+        {
+          "path": "outer/metadata-0025.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 109,
+      "startMonotonic": 1020275.656765666,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "g03-table-pgdata-8889e3fec54a40fabf65bab425a7d688|local|8889e3fec54a40fabf65bab425a7d688|table-postgres-data\n",
+      "stdoutBytes": 109,
+      "stdoutRetainedBytes": 109,
+      "stdoutSha256": "c6138e7b5da899f4984e1cf8dd5f4fe63be05ef46dc439119e80e2bfebfd9ac2",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020295.656765666
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "rm",
+        "g03-table-pgdata-8889e3fec54a40fabf65bab425a7d688"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.036742,
+      "endMonotonic": 1020275.744154416,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0026.stdout.log",
+          "sha256": "2e7c4f2d5bed63928dd4cc22bc78cb2472c594f7a0a6bf4a21a9fb6d4a525f98",
+          "sizeBytes": 50
+        },
+        {
+          "path": "outer/metadata-0026.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 50,
+      "startMonotonic": 1020275.707412541,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "g03-table-pgdata-8889e3fec54a40fabf65bab425a7d688\n",
+      "stdoutBytes": 50,
+      "stdoutRetainedBytes": 50,
+      "stdoutSha256": "2e7c4f2d5bed63928dd4cc22bc78cb2472c594f7a0a6bf4a21a9fb6d4a525f98",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020295.707412541
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "ls",
+        "--filter",
+        "name=^g03-table-pgdata-8889e3fec54a40fabf65bab425a7d688$",
+        "--format",
+        "{{.Name}}"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.073046,
+      "endMonotonic": 1020275.820269708,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0027.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        },
+        {
+          "path": "outer/metadata-0027.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 0,
+      "startMonotonic": 1020275.747223416,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "",
+      "stdoutBytes": 0,
+      "stdoutRetainedBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020295.747223416
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "ls",
+        "--filter",
+        "name=^g03-table-venv-8889e3fec54a40fabf65bab425a7d688$",
+        "--format",
+        "{{.Name}}"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.060045,
+      "endMonotonic": 1020275.881588291,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0028.stdout.log",
+          "sha256": "3de12b0a8ea1af50ce3e7787f166e2cc3582ad6c7e9f7b77d64815006b96d124",
+          "sizeBytes": 48
+        },
+        {
+          "path": "outer/metadata-0028.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 48,
+      "startMonotonic": 1020275.821543708,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "g03-table-venv-8889e3fec54a40fabf65bab425a7d688\n",
+      "stdoutBytes": 48,
+      "stdoutRetainedBytes": 48,
+      "stdoutSha256": "3de12b0a8ea1af50ce3e7787f166e2cc3582ad6c7e9f7b77d64815006b96d124",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020295.821543708
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "inspect",
+        "--format",
+        "{{.Name}}|{{.Driver}}|{{index .Labels \"codex.g03.execution-id\"}}|{{index .Labels \"codex.g03.kind\"}}",
+        "g03-table-venv-8889e3fec54a40fabf65bab425a7d688"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.020284,
+      "endMonotonic": 1020275.903988416,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0029.stdout.log",
+          "sha256": "2e31671a99d05f7b045354b179d118e231109d63a3059fa6fd9a117ed2a19aa2",
+          "sizeBytes": 98
+        },
+        {
+          "path": "outer/metadata-0029.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 98,
+      "startMonotonic": 1020275.883704458,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "g03-table-venv-8889e3fec54a40fabf65bab425a7d688|local|8889e3fec54a40fabf65bab425a7d688|table-venv\n",
+      "stdoutBytes": 98,
+      "stdoutRetainedBytes": 98,
+      "stdoutSha256": "2e31671a99d05f7b045354b179d118e231109d63a3059fa6fd9a117ed2a19aa2",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020295.883704458
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "rm",
+        "g03-table-venv-8889e3fec54a40fabf65bab425a7d688"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.038974,
+      "endMonotonic": 1020275.945309291,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0030.stdout.log",
+          "sha256": "3de12b0a8ea1af50ce3e7787f166e2cc3582ad6c7e9f7b77d64815006b96d124",
+          "sizeBytes": 48
+        },
+        {
+          "path": "outer/metadata-0030.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 48,
+      "startMonotonic": 1020275.90633575,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "g03-table-venv-8889e3fec54a40fabf65bab425a7d688\n",
+      "stdoutBytes": 48,
+      "stdoutRetainedBytes": 48,
+      "stdoutSha256": "3de12b0a8ea1af50ce3e7787f166e2cc3582ad6c7e9f7b77d64815006b96d124",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020295.90633575
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "ls",
+        "--filter",
+        "name=^g03-table-venv-8889e3fec54a40fabf65bab425a7d688$",
+        "--format",
+        "{{.Name}}"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.06319,
+      "endMonotonic": 1020276.010193916,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0031.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        },
+        {
+          "path": "outer/metadata-0031.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 0,
+      "startMonotonic": 1020275.947004125,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "",
+      "stdoutBytes": 0,
+      "stdoutRetainedBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020295.947004125
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "ls",
+        "--filter",
+        "name=^g03-table-target-8889e3fec54a40fabf65bab425a7d688$",
+        "--format",
+        "{{.Name}}"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.167779,
+      "endMonotonic": 1020276.178905166,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0032.stdout.log",
+          "sha256": "d6fb7f9bddccae96d897cfc8801e2788e4ca71a48fe7782763aaa32566c163d1",
+          "sizeBytes": 50
+        },
+        {
+          "path": "outer/metadata-0032.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 50,
+      "startMonotonic": 1020276.011126208,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "g03-table-target-8889e3fec54a40fabf65bab425a7d688\n",
+      "stdoutBytes": 50,
+      "stdoutRetainedBytes": 50,
+      "stdoutSha256": "d6fb7f9bddccae96d897cfc8801e2788e4ca71a48fe7782763aaa32566c163d1",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020296.011126208
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "inspect",
+        "--format",
+        "{{.Name}}|{{.Driver}}|{{index .Labels \"codex.g03.execution-id\"}}|{{index .Labels \"codex.g03.kind\"}}",
+        "g03-table-target-8889e3fec54a40fabf65bab425a7d688"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.01963,
+      "endMonotonic": 1020276.203396583,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0033.stdout.log",
+          "sha256": "d2f7dcede9202c4d51aad54808fa1c07377f348438a0de87b892fffbb076ad7f",
+          "sizeBytes": 108
+        },
+        {
+          "path": "outer/metadata-0033.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 108,
+      "startMonotonic": 1020276.183766458,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "g03-table-target-8889e3fec54a40fabf65bab425a7d688|local|8889e3fec54a40fabf65bab425a7d688|table-cargo-target\n",
+      "stdoutBytes": 108,
+      "stdoutRetainedBytes": 108,
+      "stdoutSha256": "d2f7dcede9202c4d51aad54808fa1c07377f348438a0de87b892fffbb076ad7f",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020296.183766458
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "rm",
+        "g03-table-target-8889e3fec54a40fabf65bab425a7d688"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.025089,
+      "endMonotonic": 1020276.230718958,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0034.stdout.log",
+          "sha256": "d6fb7f9bddccae96d897cfc8801e2788e4ca71a48fe7782763aaa32566c163d1",
+          "sizeBytes": 50
+        },
+        {
+          "path": "outer/metadata-0034.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 50,
+      "startMonotonic": 1020276.205630375,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "g03-table-target-8889e3fec54a40fabf65bab425a7d688\n",
+      "stdoutBytes": 50,
+      "stdoutRetainedBytes": 50,
+      "stdoutSha256": "d6fb7f9bddccae96d897cfc8801e2788e4ca71a48fe7782763aaa32566c163d1",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020296.205630375
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "ls",
+        "--filter",
+        "name=^g03-table-target-8889e3fec54a40fabf65bab425a7d688$",
+        "--format",
+        "{{.Name}}"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.070246,
+      "endMonotonic": 1020276.3034435,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0035.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        },
+        {
+          "path": "outer/metadata-0035.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 0,
+      "startMonotonic": 1020276.233197666,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "",
+      "stdoutBytes": 0,
+      "stdoutRetainedBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020296.233197666
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "ls",
+        "--filter",
+        "name=^g03-table-cargo-8889e3fec54a40fabf65bab425a7d688$",
+        "--format",
+        "{{.Name}}"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.15747,
+      "endMonotonic": 1020276.462089083,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0036.stdout.log",
+          "sha256": "1ebf27876d85b09270f1d9d853c707458600b036268362561dac155643fb706e",
+          "sizeBytes": 49
+        },
+        {
+          "path": "outer/metadata-0036.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 49,
+      "startMonotonic": 1020276.304618916,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "g03-table-cargo-8889e3fec54a40fabf65bab425a7d688\n",
+      "stdoutBytes": 49,
+      "stdoutRetainedBytes": 49,
+      "stdoutSha256": "1ebf27876d85b09270f1d9d853c707458600b036268362561dac155643fb706e",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020296.304618916
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "inspect",
+        "--format",
+        "{{.Name}}|{{.Driver}}|{{index .Labels \"codex.g03.execution-id\"}}|{{index .Labels \"codex.g03.kind\"}}",
+        "g03-table-cargo-8889e3fec54a40fabf65bab425a7d688"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.028245,
+      "endMonotonic": 1020276.492848375,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0037.stdout.log",
+          "sha256": "dff7aed8bfe2b141b4787b8e69c2ed2753a60edf0b9515b4cf9c5aaa54eff170",
+          "sizeBytes": 105
+        },
+        {
+          "path": "outer/metadata-0037.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 105,
+      "startMonotonic": 1020276.464603125,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "g03-table-cargo-8889e3fec54a40fabf65bab425a7d688|local|8889e3fec54a40fabf65bab425a7d688|table-cargo-home\n",
+      "stdoutBytes": 105,
+      "stdoutRetainedBytes": 105,
+      "stdoutSha256": "dff7aed8bfe2b141b4787b8e69c2ed2753a60edf0b9515b4cf9c5aaa54eff170",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020296.464603125
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "rm",
+        "g03-table-cargo-8889e3fec54a40fabf65bab425a7d688"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.028766,
+      "endMonotonic": 1020276.524096291,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0038.stdout.log",
+          "sha256": "1ebf27876d85b09270f1d9d853c707458600b036268362561dac155643fb706e",
+          "sizeBytes": 49
+        },
+        {
+          "path": "outer/metadata-0038.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 49,
+      "startMonotonic": 1020276.495330541,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "g03-table-cargo-8889e3fec54a40fabf65bab425a7d688\n",
+      "stdoutBytes": 49,
+      "stdoutRetainedBytes": 49,
+      "stdoutSha256": "1ebf27876d85b09270f1d9d853c707458600b036268362561dac155643fb706e",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020296.495330541
+    },
+    {
+      "argv": [
+        "docker",
+        "volume",
+        "ls",
+        "--filter",
+        "name=^g03-table-cargo-8889e3fec54a40fabf65bab425a7d688$",
+        "--format",
+        "{{.Name}}"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.070536,
+      "endMonotonic": 1020276.596688291,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0039.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        },
+        {
+          "path": "outer/metadata-0039.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 0,
+      "startMonotonic": 1020276.526151958,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "",
+      "stdoutBytes": 0,
+      "stdoutRetainedBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020296.526151958
+    },
+    {
+      "argv": [
+        "docker",
+        "network",
+        "ls",
+        "--filter",
+        "name=^g03-table-net-8889e3fec54a40fabf65bab425a7d688$",
+        "--format",
+        "{{.Name}}"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.02253,
+      "endMonotonic": 1020276.620527,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0040.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        },
+        {
+          "path": "outer/metadata-0040.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 0,
+      "startMonotonic": 1020276.597996666,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "",
+      "stdoutBytes": 0,
+      "stdoutRetainedBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020296.597996666
+    },
+    {
+      "argv": [
+        "docker",
+        "network",
+        "ls",
+        "--filter",
+        "name=^g03-table-net-8889e3fec54a40fabf65bab425a7d688$",
+        "--format",
+        "{{.Name}}"
+      ],
+      "captureComplete": true,
+      "captureErrors": [],
+      "captureLimitBytes": 65536,
+      "cwd": "/Users/erik/.codex/worktrees/eb69/umf",
+      "elapsedSeconds": 0.017374,
+      "endMonotonic": 1020276.639074708,
+      "exitCode": 0,
+      "physicalCaptureFiles": [
+        {
+          "path": "outer/metadata-0041.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        },
+        {
+          "path": "outer/metadata-0041.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "retainedBytes": 0,
+      "startMonotonic": 1020276.621701,
+      "stderr": "",
+      "stderrBytes": 0,
+      "stderrRetainedBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "",
+      "stdoutBytes": 0,
+      "stdoutRetainedBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "terminationGraceSeconds": 3,
+      "timeCapSeconds": 20.0,
+      "timedOut": false,
+      "truncated": false,
+      "wallDeadlineMonotonic": 1020296.621701
+    }
+  ],
+  "operatorResultBytes": 89159,
+  "physicalCaptureClosure": {
+    "g03-table-prepare-8889e3fec54a40fabf65bab425a7d688": {
+      "errors": [],
+      "files": [
+        {
+          "path": "/private/tmp/g03-final-table-operations-operator-006/runs/8889e3fec54a40fabf65bab425a7d688/outer/g03-table-prepare-8889e3fec54a40fabf65bab425a7d688.stdout.log",
+          "sha256": "82efc0b12b89c597ac137bf3bab5e15975c80d31c4c869dea9120b29ca220cb3",
+          "sizeBytes": 50
+        },
+        {
+          "path": "/private/tmp/g03-final-table-operations-operator-006/runs/8889e3fec54a40fabf65bab425a7d688/outer/g03-table-prepare-8889e3fec54a40fabf65bab425a7d688.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "verified": true
+    }
+  },
+  "postgresImage": "sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336",
+  "profile": "umf.g03-table-operations-local-operator/2",
+  "publicBytes": 994785,
+  "publicFiles": [
+    {
+      "path": "outer/g03-table-prepare-8889e3fec54a40fabf65bab425a7d688.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/g03-table-prepare-8889e3fec54a40fabf65bab425a7d688.stdout.log",
+      "sha256": "82efc0b12b89c597ac137bf3bab5e15975c80d31c4c869dea9120b29ca220cb3",
+      "sizeBytes": 50
+    },
+    {
+      "path": "outer/metadata-0000.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0000.stdout.log",
+      "sha256": "4c6cae353c228c0c07834d3e6a954da11f295df93840f6b671ae18f41dd3e961",
+      "sizeBytes": 41
+    },
+    {
+      "path": "outer/metadata-0001.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0001.stdout.log",
+      "sha256": "00f16d26b0179602cf672b50759a874beae1da19c7981c5f6eb1326921d50972",
+      "sizeBytes": 41
+    },
+    {
+      "path": "outer/metadata-0002.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0002.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0003.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0003.stdout.log",
+      "sha256": "15da17c01d73753ac5f83904478e7471c56c7be2a49a00e500c70e3148282723",
+      "sizeBytes": 84
+    },
+    {
+      "path": "outer/metadata-0004.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0004.stdout.log",
+      "sha256": "bfb597e8c5d125ef6242f28374c293915ae76ac69c8fe700e3e46732edfe3d85",
+      "sizeBytes": 111
+    },
+    {
+      "path": "outer/metadata-0005.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0005.stdout.log",
+      "sha256": "5a543dc5bc7e049b6e71543357800b56ad1246cee2ab082d2a75e899b5af5b9c",
+      "sizeBytes": 84
+    },
+    {
+      "path": "outer/metadata-0006.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0006.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0007.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0007.stdout.log",
+      "sha256": "3de12b0a8ea1af50ce3e7787f166e2cc3582ad6c7e9f7b77d64815006b96d124",
+      "sizeBytes": 48
+    },
+    {
+      "path": "outer/metadata-0008.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0008.stdout.log",
+      "sha256": "2e31671a99d05f7b045354b179d118e231109d63a3059fa6fd9a117ed2a19aa2",
+      "sizeBytes": 98
+    },
+    {
+      "path": "outer/metadata-0009.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0009.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0010.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0010.stdout.log",
+      "sha256": "d6fb7f9bddccae96d897cfc8801e2788e4ca71a48fe7782763aaa32566c163d1",
+      "sizeBytes": 50
+    },
+    {
+      "path": "outer/metadata-0011.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0011.stdout.log",
+      "sha256": "d2f7dcede9202c4d51aad54808fa1c07377f348438a0de87b892fffbb076ad7f",
+      "sizeBytes": 108
+    },
+    {
+      "path": "outer/metadata-0012.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0012.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0013.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0013.stdout.log",
+      "sha256": "2e7c4f2d5bed63928dd4cc22bc78cb2472c594f7a0a6bf4a21a9fb6d4a525f98",
+      "sizeBytes": 50
+    },
+    {
+      "path": "outer/metadata-0014.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0014.stdout.log",
+      "sha256": "c6138e7b5da899f4984e1cf8dd5f4fe63be05ef46dc439119e80e2bfebfd9ac2",
+      "sizeBytes": 109
+    },
+    {
+      "path": "outer/metadata-0015.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0015.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0016.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0016.stdout.log",
+      "sha256": "1ebf27876d85b09270f1d9d853c707458600b036268362561dac155643fb706e",
+      "sizeBytes": 49
+    },
+    {
+      "path": "outer/metadata-0017.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0017.stdout.log",
+      "sha256": "dff7aed8bfe2b141b4787b8e69c2ed2753a60edf0b9515b4cf9c5aaa54eff170",
+      "sizeBytes": 105
+    },
+    {
+      "path": "outer/metadata-0018.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0018.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0019.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0019.stdout.log",
+      "sha256": "afc95e0482eccb7b8a13df7f544866870b9863a31055ddf48f938817d8e2e7ff",
+      "sizeBytes": 14
+    },
+    {
+      "path": "outer/metadata-0020.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0020.stdout.log",
+      "sha256": "54266edf69399fd1db02bbb211e3f5c04eb5715feb8db35707cc949f56f3a3fc",
+      "sizeBytes": 51
+    },
+    {
+      "path": "outer/metadata-0021.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0021.stdout.log",
+      "sha256": "d0e525a0abbd77b412a702897487f7c53e84012c3208865ae57b20d42c32f0f0",
+      "sizeBytes": 189
+    },
+    {
+      "path": "outer/metadata-0022.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0022.stdout.log",
+      "sha256": "54266edf69399fd1db02bbb211e3f5c04eb5715feb8db35707cc949f56f3a3fc",
+      "sizeBytes": 51
+    },
+    {
+      "path": "outer/metadata-0023.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0023.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0024.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0024.stdout.log",
+      "sha256": "2e7c4f2d5bed63928dd4cc22bc78cb2472c594f7a0a6bf4a21a9fb6d4a525f98",
+      "sizeBytes": 50
+    },
+    {
+      "path": "outer/metadata-0025.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0025.stdout.log",
+      "sha256": "c6138e7b5da899f4984e1cf8dd5f4fe63be05ef46dc439119e80e2bfebfd9ac2",
+      "sizeBytes": 109
+    },
+    {
+      "path": "outer/metadata-0026.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0026.stdout.log",
+      "sha256": "2e7c4f2d5bed63928dd4cc22bc78cb2472c594f7a0a6bf4a21a9fb6d4a525f98",
+      "sizeBytes": 50
+    },
+    {
+      "path": "outer/metadata-0027.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0027.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0028.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0028.stdout.log",
+      "sha256": "3de12b0a8ea1af50ce3e7787f166e2cc3582ad6c7e9f7b77d64815006b96d124",
+      "sizeBytes": 48
+    },
+    {
+      "path": "outer/metadata-0029.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0029.stdout.log",
+      "sha256": "2e31671a99d05f7b045354b179d118e231109d63a3059fa6fd9a117ed2a19aa2",
+      "sizeBytes": 98
+    },
+    {
+      "path": "outer/metadata-0030.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0030.stdout.log",
+      "sha256": "3de12b0a8ea1af50ce3e7787f166e2cc3582ad6c7e9f7b77d64815006b96d124",
+      "sizeBytes": 48
+    },
+    {
+      "path": "outer/metadata-0031.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0031.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0032.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0032.stdout.log",
+      "sha256": "d6fb7f9bddccae96d897cfc8801e2788e4ca71a48fe7782763aaa32566c163d1",
+      "sizeBytes": 50
+    },
+    {
+      "path": "outer/metadata-0033.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0033.stdout.log",
+      "sha256": "d2f7dcede9202c4d51aad54808fa1c07377f348438a0de87b892fffbb076ad7f",
+      "sizeBytes": 108
+    },
+    {
+      "path": "outer/metadata-0034.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0034.stdout.log",
+      "sha256": "d6fb7f9bddccae96d897cfc8801e2788e4ca71a48fe7782763aaa32566c163d1",
+      "sizeBytes": 50
+    },
+    {
+      "path": "outer/metadata-0035.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0035.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0036.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0036.stdout.log",
+      "sha256": "1ebf27876d85b09270f1d9d853c707458600b036268362561dac155643fb706e",
+      "sizeBytes": 49
+    },
+    {
+      "path": "outer/metadata-0037.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0037.stdout.log",
+      "sha256": "dff7aed8bfe2b141b4787b8e69c2ed2753a60edf0b9515b4cf9c5aaa54eff170",
+      "sizeBytes": 105
+    },
+    {
+      "path": "outer/metadata-0038.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0038.stdout.log",
+      "sha256": "1ebf27876d85b09270f1d9d853c707458600b036268362561dac155643fb706e",
+      "sizeBytes": 49
+    },
+    {
+      "path": "outer/metadata-0039.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0039.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0040.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0040.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0041.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/metadata-0041.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "prepare/phase-result.json",
+      "sha256": "c1619ea8807196226c9078562445ebe24d79e8ec231879e9268daf6aa0b15fe3",
+      "sizeBytes": 27481
+    },
+    {
+      "path": "prepare/logs/cargo-cache-copy.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "prepare/logs/cargo-cache-copy.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "prepare/logs/create-venv.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "prepare/logs/create-venv.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "prepare/logs/distribution-versions.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "prepare/logs/distribution-versions.stdout.log",
+      "sha256": "fc0fe495d281573578db0ba78037e6ccd3ca637496846b8b530c71a3152189ef",
+      "sizeBytes": 227
+    },
+    {
+      "path": "prepare/logs/native-compiler.stderr.log",
+      "sha256": "3a3db8d5d0cae10470dc0cd95a716354594bfe7703ff96b3614e0046b0073c64",
+      "sizeBytes": 341
+    },
+    {
+      "path": "prepare/logs/native-compiler.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "prepare/logs/offline-install.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "prepare/logs/offline-install.stdout.log",
+      "sha256": "3ca6eb11af235ba9954ec5c6e02697163d4a6c37e2617853fea9ac99c0e9f903",
+      "sizeBytes": 3462
+    },
+    {
+      "path": "prepare/logs/pip-check.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "prepare/logs/pip-check.stdout.log",
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+      "sizeBytes": 30
+    },
+    {
+      "path": "prepare/logs/tool-identity-bun.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "prepare/logs/tool-identity-bun.stdout.log",
+      "sha256": "bd31e8d9cf8d14a1e9e3fdf3b9f6a524819aed0d1b14627523c6765767c7d8f1",
+      "sizeBytes": 6
+    },
+    {
+      "path": "prepare/logs/tool-identity-cargo.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "prepare/logs/tool-identity-cargo.stdout.log",
+      "sha256": "5f9bdc5e0a6960db4a3cc66e9b3ae15bad5b9b506e8b7c49739c88dc5355c3f1",
+      "sizeBytes": 36
+    },
+    {
+      "path": "prepare/logs/tool-identity-node.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "prepare/logs/tool-identity-node.stdout.log",
+      "sha256": "b26441604894a1a4e4cac96bfb464737575d9b6a2e8b9d3e996283005bd67b37",
+      "sizeBytes": 9
+    },
+    {
+      "path": "prepare/logs/tool-identity-python.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "prepare/logs/tool-identity-python.stdout.log",
+      "sha256": "686560bcd94a5a3fe8187b7c4fc49beaff41c87eccb79908cd3da863ec30e52e",
+      "sizeBytes": 15
+    },
+    {
+      "path": "prepare/logs/tool-identity-rust-targets.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "prepare/logs/tool-identity-rust-targets.stdout.log",
+      "sha256": "dfefef0a475862622c9cc10adb82ac6004b6b8cd61c2296712a384a16eb6d624",
+      "sizeBytes": 48
+    },
+    {
+      "path": "prepare/logs/tool-identity-rust-verbose.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "prepare/logs/tool-identity-rust-verbose.stdout.log",
+      "sha256": "938db28b83089ab88301ca425f99fa1d8b61ee66e0371babe1db6373ae9810a3",
+      "sizeBytes": 196
+    },
+    {
+      "path": "prepare/logs/tool-identity-rustc.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "prepare/logs/tool-identity-rustc.stdout.log",
+      "sha256": "3397f54a03033c1b027496d83acc64e8f3ceeb4017e0575150f78726edce8a1a",
+      "sizeBytes": 36
+    },
+    {
+      "path": "prepare/logs/tool-identity-wasm-bindgen.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "prepare/logs/tool-identity-wasm-bindgen.stdout.log",
+      "sha256": "77e9a14fc88e7434ec823340ac27538312be174451c3548fd84ec08f1beb8276",
+      "sizeBytes": 21
+    },
+    {
+      "path": "prepare/logs/wheel-members.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "prepare/logs/wheel-members.stdout.log",
+      "sha256": "a3b9290de34a1eeae6ccf6642d5802bdb399d018991def37571d8feae8d777f9",
+      "sizeBytes": 600
+    },
+    {
+      "path": "prepare/reports/installed-distribution-snapshot.json",
+      "sha256": "8557c7e2767d269a5e0c19e32d48d157f7cc109c20f6705a6ba083f615e63e16",
+      "sizeBytes": 1262
+    },
+    {
+      "path": "prepare/reports/source-inputs.rows.json",
+      "sha256": "fefc1d2b479429c51024559ca734c26c45264afbce835ef4bb529f4511b8952e",
+      "sizeBytes": 958868
+    }
+  ],
+  "scope": {
+    "duplicateRustSuiteOrWheelBuild": false,
+    "lane": "table-operations",
+    "trussFactsAndEntitySelection": false,
+    "trussWasmProfile": false,
+    "wasmFeatureProfile": [
+      "raw-postgresql-reads"
+    ]
+  },
+  "selectedArtifactBytes": 0,
+  "selectedArtifacts": [],
+  "source": {
+    "commit": "973d864c8d26b2bc173a411eac8368da5efc1ab3",
+    "tree": "8b20d1f01bea72ea08ed01fcaac97266ed3cb4ff"
+  },
+  "status": "FAIL_OR_UNKNOWN"
+}

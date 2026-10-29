@@ -1,0 +1,67 @@
+{
+  "profile": "umf.g03-linux-wasm-browser-tools-inventory/1",
+  "observations": [
+    {
+      "label": "rust",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--pull=never",
+        "--name",
+        "g03-wasm-tools-13a5418ea95941fcbe15b57375069ebb",
+        "--label",
+        "codex.g03.purpose=wasm-tool-metadata",
+        "--platform=linux/amd64",
+        "--network=none",
+        "--read-only",
+        "--cap-drop=ALL",
+        "--cpus=1",
+        "--memory=1g",
+        "--pids-limit=128",
+        "--tmpfs=/tmp:rw,nosuid,nodev,size=64m",
+        "--entrypoint=/bin/bash",
+        "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+        "-c",
+        "for cmd in \"rustup toolchain list -v\" \"rustup target list --installed --toolchain 1.90.0-x86_64-unknown-linux-gnu\" \"command -v wasm-bindgen\" \"command -v bun\" \"command -v node\"; do printf \"TOOL %s\\n\" \"$cmd\"; /bin/bash -c \"$cmd\"; printf \"EXIT %s\\n\" \"$?\"; done"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.87,
+      "stdout": "TOOL rustup toolchain list -v\n1.90.0-x86_64-unknown-linux-gnu (active, default) /opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu\nEXIT 0\nTOOL rustup target list --installed --toolchain 1.90.0-x86_64-unknown-linux-gnu\nwasm32-unknown-unknown\nx86_64-unknown-linux-gnu\nEXIT 0\nTOOL command -v wasm-bindgen\n/opt/cargo/bin/wasm-bindgen\nEXIT 0\nTOOL command -v bun\n/usr/local/bun/bin/bun\nEXIT 0\nTOOL command -v node\n/usr/local/bin/node\nEXIT 0\n",
+      "stderr": "",
+      "ownedContainerAbsent": true,
+      "noSourceOrProduct": true
+    },
+    {
+      "label": "browser",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--pull=never",
+        "--name",
+        "g03-wasm-tools-65098cb9dc89451980a16e873891b292",
+        "--label",
+        "codex.g03.purpose=wasm-tool-metadata",
+        "--platform=linux/arm64",
+        "--network=none",
+        "--read-only",
+        "--cap-drop=ALL",
+        "--cpus=1",
+        "--memory=1g",
+        "--pids-limit=128",
+        "--tmpfs=/tmp:rw,nosuid,nodev,size=64m",
+        "--entrypoint=/bin/bash",
+        "sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27",
+        "-c",
+        "for cmd in \"uname -m\" \"node --version\" \"command -v bun\" \"ls /ms-playwright\"; do printf \"TOOL %s\\n\" \"$cmd\"; /bin/bash -c \"$cmd\"; printf \"EXIT %s\\n\" \"$?\"; done"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.539,
+      "stdout": "TOOL uname -m\naarch64\nEXIT 0\nTOOL node --version\nv24.20.0\nEXIT 0\nTOOL command -v bun\nEXIT 1\nTOOL ls /ms-playwright\nchromium-1243\nchromium_headless_shell-1243\nffmpeg-1011\nfirefox-1543\nwebkit-2359\nEXIT 0\n",
+      "stderr": "",
+      "ownedContainerAbsent": true,
+      "noSourceOrProduct": true
+    }
+  ]
+}
