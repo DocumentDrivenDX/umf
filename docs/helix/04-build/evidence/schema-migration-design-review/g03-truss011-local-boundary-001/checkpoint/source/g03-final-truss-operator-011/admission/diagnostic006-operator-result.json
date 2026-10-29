@@ -1,0 +1,1348 @@
+{
+  "browserInputCustody": {
+    "entity": {
+      "corpusBytes": 184480,
+      "corpusSha256": "cdddb2454b033c5753177cdedb447efbf45f5131c42beb17aeb6d319eac71537",
+      "ids": [
+        "no-facts-no-automatic-relationships",
+        "ordered-time-and-version",
+        "version-only",
+        "all-facts-explicit",
+        "explicit-bounded-relationship",
+        "fact-page",
+        "facts-free-page",
+        "unknown-fact",
+        "duplicate-fact",
+        "old-profile-refuses-selection",
+        "missing-selection",
+        "facts-require-entity",
+        "caller-limit-refused-by-page",
+        "explicit-complete-relationships",
+        "fact-page-continuation",
+        "indexed-string-literal",
+        "indexed-string-parameter-with-residual",
+        "indexed-boolean-parameter",
+        "ordered-string-first",
+        "ordered-string-next",
+        "ordered-string-filtered-sparse",
+        "unknown-authorized-column",
+        "unavailable-source",
+        "malformed-sql",
+        "wellformed-excluded-order",
+        "wellformed-excluded-with-parameter",
+        "exact-binary-parameter-v028",
+        "exact-timestamp-parameter-v028",
+        "exact-date-parameter-v028",
+        "original-extension-bearing-model",
+        "selected-unknown-extension-explicit-refusal",
+        "arras-view-0.1.0-opaque-selected-payload",
+        "arras-view-unsupported-version-refuses"
+      ],
+      "nativeBytes": 994279,
+      "nativeSha256": "ff8803dda03a4ef376e44984c1a010ead8065b817a002d6178dba8b0343256bf",
+      "receiptsSha256": "2a0e1479a78eaacbb2f10da4559be734209af74ad52b805b659aa8a97cc81f03",
+      "summarySha256": "26d95a63b26483b47c5c8916429439039967cf0c2bb4229c99b949c1ffd3de06"
+    },
+    "facts": {
+      "corpusBytes": 24724,
+      "corpusSha256": "34f4694030aa822172200002275ee3e1b36ee7a248df960e60bb731648fb0d83",
+      "ids": [
+        "complete-facts",
+        "complete-facts-filtered",
+        "plain-field",
+        "count",
+        "wrong-binding-pin"
+      ],
+      "nativeBytes": 186460,
+      "nativeSha256": "c45b385d21c64d4abec74849a7cad50229a6eaa054b2a14a192b13c2566b8982",
+      "receiptsSha256": "cea472779b90551c37ae043fa1fa2592854c6f73b07bf9f7841b1c5970638506",
+      "summarySha256": "d3e4c1cb2893658191d0729c7c7a611bcd3e9bdf198abc728e9368c31a7ff8e8"
+    }
+  },
+  "commands": [
+    {
+      "name": "image-browser",
+      "record": {
+        "argv": [
+          "docker",
+          "image",
+          "inspect",
+          "--format",
+          "{{.Id}}|{{.Os}}/{{.Architecture}}",
+          "sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1029889.179704208,
+        "drainExpired": false,
+        "elapsedSeconds": 0.17,
+        "exitCode": 0,
+        "name": "image-browser",
+        "requestedTimeoutSeconds": 30,
+        "signal": null,
+        "startedMonotonic": 1029859.179704208,
+        "streams": [
+          {
+            "bytes": 84,
+            "path": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/outer/image-browser.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 84,
+            "rawSha256": "5a543dc5bc7e049b6e71543357800b56ad1246cee2ab082d2a75e899b5af5b9c",
+            "sha256": "5a543dc5bc7e049b6e71543357800b56ad1246cee2ab082d2a75e899b5af5b9c",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/outer/image-browser.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 30.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "browser-facts",
+      "record": {
+        "argv": [
+          "docker",
+          "run",
+          "--pull=never",
+          "--name",
+          "g03-truss-fsize-facts-d1ef2094-bd2b-4dab-beec-a187751d615b",
+          "--label",
+          "codex.g03.execution-id=d1ef2094-bd2b-4dab-beec-a187751d615b",
+          "--label",
+          "codex.g03.kind=truss-browser-fsize-diagnostic",
+          "--network=none",
+          "--platform=linux/arm64",
+          "--read-only",
+          "--cap-drop=ALL",
+          "--security-opt=no-new-privileges",
+          "--cpus=4",
+          "--memory=8g",
+          "--pids-limit=8192",
+          "--shm-size=1g",
+          "--ulimit",
+          "fsize=268435456:268435456",
+          "--tmpfs",
+          "/tmp:rw,nosuid,nodev,exec,size=256m",
+          "--workdir",
+          "/workspace",
+          "--mount",
+          "type=bind,source=/private/tmp/weft-g03-ordinary-module,target=/workspace,readonly",
+          "--mount",
+          "type=bind,source=/private/tmp/g03-truss-browser-fsize-diagnostic-002/inputs/evidence/facts.json,target=/reports/native.json,readonly",
+          "--mount",
+          "type=bind,source=/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/owned/out/browser-facts,target=/browser-out",
+          "--mount",
+          "type=bind,source=/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/artifacts/truss-web,target=/truss-web,readonly",
+          "--mount",
+          "type=bind,source=/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/artifacts/browser-wrapper,target=/wrapper,readonly",
+          "--mount",
+          "type=bind,source=/Users/erik/Projects/weft/node_modules/playwright,target=/deps/node_modules/playwright,readonly",
+          "--mount",
+          "type=bind,source=/Users/erik/Projects/weft/node_modules/playwright-core,target=/deps/node_modules/playwright-core,readonly",
+          "--env",
+          "WEFT_PROBE_JS=/truss-web/weft_wasm.js",
+          "--env",
+          "WEFT_PROBE_WASM=/truss-web/weft_wasm_bg.wasm",
+          "--env",
+          "WEFT_BROWSER_WRAPPER=/wrapper/index.js",
+          "--env",
+          "WEFT_FRONTEND_CORPUS=/workspace/tests/truss-facts/cases.json",
+          "--env",
+          "WEFT_FRONTEND_REPORTS=/reports/native.json",
+          "--env",
+          "WEFT_PROBE_API=compile_truss_runtime_json",
+          "--env",
+          "WEFT_FRONTEND_BROWSER_SUMMARY=/browser-out/summary.json",
+          "--env",
+          "WEFT_BROWSER_RECEIPTS=/browser-out/receipts.json",
+          "--env",
+          "WEFT_PLAYWRIGHT_MODULE=/deps/node_modules/playwright/index.mjs",
+          "--env",
+          "WEFT_CHROMIUM_EXECUTABLE=/ms-playwright/chromium-1243/chrome-linux-arm64/chrome",
+          "--env",
+          "HOME=/tmp/home",
+          "--env",
+          "DEBUG=pw:browser",
+          "sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27",
+          "sh",
+          "-eu",
+          "-c",
+          "set -eu; node --version; \"$WEFT_CHROMIUM_EXECUTABLE\" --version; sha256sum \"$WEFT_CHROMIUM_EXECUTABLE\"; cat /proc/self/limits; df -Pk /tmp; awk '$1==\"Max\" && $2==\"file\" && $3==\"size\" { if ($4 != \"268435456\" || $5 != \"268435456\") exit 21; found=1 } END { if (!found) exit 22 }' /proc/self/limits; exec node tests/compile/browser-check.mjs"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1030459.350921333,
+        "drainExpired": false,
+        "elapsedSeconds": 1.544,
+        "exitCode": 0,
+        "name": "browser-facts",
+        "requestedTimeoutSeconds": 600,
+        "signal": null,
+        "startedMonotonic": 1029859.350921333,
+        "streams": [
+          {
+            "bytes": 3109,
+            "path": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/outer/browser-facts.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 3109,
+            "rawSha256": "20f26b2bd71a0e7c8068ccc00b2ef7dab2b7c748508d50d9610bb8717b0c108c",
+            "sha256": "20f26b2bd71a0e7c8068ccc00b2ef7dab2b7c748508d50d9610bb8717b0c108c",
+            "truncated": false
+          },
+          {
+            "bytes": 7692,
+            "path": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/outer/browser-facts.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 7692,
+            "rawSha256": "0baa6e26e22c2e2e3019827916b060a60cbd86f4f2b12f04c4d05fa986c0acc6",
+            "sha256": "0baa6e26e22c2e2e3019827916b060a60cbd86f4f2b12f04c4d05fa986c0acc6",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 600.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "inspect-browser-f7de3e7db57d",
+      "record": {
+        "argv": [
+          "docker",
+          "inspect",
+          "--format",
+          "{{.Id}}|{{.Image}}|{{.HostConfig.NetworkMode}}|{{.HostConfig.ReadonlyRootfs}}|{{.HostConfig.PidsLimit}}|{{.HostConfig.NanoCpus}}|{{.HostConfig.Memory}}|{{.State.Status}}|{{.State.ExitCode}}|{{json .Mounts}}|{{json .HostConfig.Tmpfs}}|{{json .HostConfig.Ulimits}}|{{json .Config.Labels}}|{{json .HostConfig.SecurityOpt}}|{{json .HostConfig.CapDrop}}|{{.HostConfig.ShmSize}}",
+          "g03-truss-fsize-facts-d1ef2094-bd2b-4dab-beec-a187751d615b"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1029880.8947695,
+        "drainExpired": false,
+        "elapsedSeconds": 0.023,
+        "exitCode": 0,
+        "name": "inspect-browser-f7de3e7db57d",
+        "requestedTimeoutSeconds": 20,
+        "signal": null,
+        "startedMonotonic": 1029860.8947695,
+        "streams": [
+          {
+            "bytes": 1806,
+            "path": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/outer/inspect-browser-f7de3e7db57d.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 1806,
+            "rawSha256": "93ba4e516fd0f206dabaffcb9e4e45d823293e3aed55ee9351beff5ffe8c257f",
+            "sha256": "93ba4e516fd0f206dabaffcb9e4e45d823293e3aed55ee9351beff5ffe8c257f",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/outer/inspect-browser-f7de3e7db57d.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 20.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "browser-inspect-facts",
+      "record": {
+        "capDrop": [
+          "ALL"
+        ],
+        "containerId": "252afc2e1f495b671b5f082182bc83cb4e24e9249d2360a440eeff9b4d104764",
+        "containerName": "g03-truss-fsize-facts-d1ef2094-bd2b-4dab-beec-a187751d615b",
+        "cpus": 4,
+        "exitCode": 0,
+        "imageId": "sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27",
+        "labels": {
+          "codex.g03.execution-id": "d1ef2094-bd2b-4dab-beec-a187751d615b",
+          "codex.g03.kind": "truss-browser-fsize-diagnostic",
+          "org.opencontainers.image.version": "24.04"
+        },
+        "memoryBytes": 8589934592,
+        "mounts": [
+          {
+            "Destination": "/browser-out",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": true,
+            "Source": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/owned/out/browser-facts",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/truss-web",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/artifacts/truss-web",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/workspace",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/private/tmp/weft-g03-ordinary-module",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/wrapper",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/artifacts/browser-wrapper",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/reports/native.json",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/private/tmp/g03-truss-browser-fsize-diagnostic-002/inputs/evidence/facts.json",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/deps/node_modules/playwright",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/Users/erik/Projects/weft/node_modules/playwright",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/deps/node_modules/playwright-core",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/Users/erik/Projects/weft/node_modules/playwright-core",
+            "Type": "bind"
+          }
+        ],
+        "network": "none",
+        "pids": 8192,
+        "readonlyRootfs": true,
+        "securityOpt": [
+          "no-new-privileges"
+        ],
+        "shmBytes": 1073741824,
+        "tmpfs": {
+          "/tmp": "rw,nosuid,nodev,exec,size=256m"
+        },
+        "ulimits": [
+          {
+            "Hard": 268435456,
+            "Name": "fsize",
+            "Soft": 268435456
+          }
+        ]
+      }
+    },
+    {
+      "name": "browser-entity",
+      "record": {
+        "argv": [
+          "docker",
+          "run",
+          "--pull=never",
+          "--name",
+          "g03-truss-fsize-entity-d1ef2094-bd2b-4dab-beec-a187751d615b",
+          "--label",
+          "codex.g03.execution-id=d1ef2094-bd2b-4dab-beec-a187751d615b",
+          "--label",
+          "codex.g03.kind=truss-browser-fsize-diagnostic",
+          "--network=none",
+          "--platform=linux/arm64",
+          "--read-only",
+          "--cap-drop=ALL",
+          "--security-opt=no-new-privileges",
+          "--cpus=4",
+          "--memory=8g",
+          "--pids-limit=8192",
+          "--shm-size=1g",
+          "--ulimit",
+          "fsize=268435456:268435456",
+          "--tmpfs",
+          "/tmp:rw,nosuid,nodev,exec,size=256m",
+          "--workdir",
+          "/workspace",
+          "--mount",
+          "type=bind,source=/private/tmp/weft-g03-ordinary-module,target=/workspace,readonly",
+          "--mount",
+          "type=bind,source=/private/tmp/g03-truss-browser-fsize-diagnostic-002/inputs/evidence/entity.json,target=/reports/native.json,readonly",
+          "--mount",
+          "type=bind,source=/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/owned/out/browser-entity,target=/browser-out",
+          "--mount",
+          "type=bind,source=/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/artifacts/truss-web,target=/truss-web,readonly",
+          "--mount",
+          "type=bind,source=/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/artifacts/browser-wrapper,target=/wrapper,readonly",
+          "--mount",
+          "type=bind,source=/Users/erik/Projects/weft/node_modules/playwright,target=/deps/node_modules/playwright,readonly",
+          "--mount",
+          "type=bind,source=/Users/erik/Projects/weft/node_modules/playwright-core,target=/deps/node_modules/playwright-core,readonly",
+          "--env",
+          "WEFT_PROBE_JS=/truss-web/weft_wasm.js",
+          "--env",
+          "WEFT_PROBE_WASM=/truss-web/weft_wasm_bg.wasm",
+          "--env",
+          "WEFT_BROWSER_WRAPPER=/wrapper/index.js",
+          "--env",
+          "WEFT_FRONTEND_CORPUS=/workspace/tests/truss-entity-selection/cases.json",
+          "--env",
+          "WEFT_FRONTEND_REPORTS=/reports/native.json",
+          "--env",
+          "WEFT_PROBE_API=compile_truss_runtime_entity_selection",
+          "--env",
+          "WEFT_FRONTEND_BROWSER_SUMMARY=/browser-out/summary.json",
+          "--env",
+          "WEFT_BROWSER_RECEIPTS=/browser-out/receipts.json",
+          "--env",
+          "WEFT_PLAYWRIGHT_MODULE=/deps/node_modules/playwright/index.mjs",
+          "--env",
+          "WEFT_CHROMIUM_EXECUTABLE=/ms-playwright/chromium-1243/chrome-linux-arm64/chrome",
+          "--env",
+          "HOME=/tmp/home",
+          "--env",
+          "DEBUG=pw:browser",
+          "sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27",
+          "sh",
+          "-eu",
+          "-c",
+          "set -eu; node --version; \"$WEFT_CHROMIUM_EXECUTABLE\" --version; sha256sum \"$WEFT_CHROMIUM_EXECUTABLE\"; cat /proc/self/limits; df -Pk /tmp; awk '$1==\"Max\" && $2==\"file\" && $3==\"size\" { if ($4 != \"268435456\" || $5 != \"268435456\") exit 21; found=1 } END { if (!found) exit 22 }' /proc/self/limits; exec node tests/compile/browser-check.mjs"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1030460.920921791,
+        "drainExpired": false,
+        "elapsedSeconds": 1.607,
+        "exitCode": 0,
+        "name": "browser-entity",
+        "requestedTimeoutSeconds": 600,
+        "signal": null,
+        "startedMonotonic": 1029860.920921791,
+        "streams": [
+          {
+            "bytes": 3110,
+            "path": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/outer/browser-entity.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 3110,
+            "rawSha256": "a656301a1a94a03f4aeb16869ec17b42e61d55e9103eb4d1d073e08ac8693c87",
+            "sha256": "a656301a1a94a03f4aeb16869ec17b42e61d55e9103eb4d1d073e08ac8693c87",
+            "truncated": false
+          },
+          {
+            "bytes": 7692,
+            "path": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/outer/browser-entity.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 7692,
+            "rawSha256": "820726b589d90dc4b540ac14774dc9fceecee53a0073fa9b5400c4a8a066832e",
+            "sha256": "820726b589d90dc4b540ac14774dc9fceecee53a0073fa9b5400c4a8a066832e",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 600.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "inspect-browser-806a6dcd6471",
+      "record": {
+        "argv": [
+          "docker",
+          "inspect",
+          "--format",
+          "{{.Id}}|{{.Image}}|{{.HostConfig.NetworkMode}}|{{.HostConfig.ReadonlyRootfs}}|{{.HostConfig.PidsLimit}}|{{.HostConfig.NanoCpus}}|{{.HostConfig.Memory}}|{{.State.Status}}|{{.State.ExitCode}}|{{json .Mounts}}|{{json .HostConfig.Tmpfs}}|{{json .HostConfig.Ulimits}}|{{json .Config.Labels}}|{{json .HostConfig.SecurityOpt}}|{{json .HostConfig.CapDrop}}|{{.HostConfig.ShmSize}}",
+          "g03-truss-fsize-entity-d1ef2094-bd2b-4dab-beec-a187751d615b"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1029882.527665958,
+        "drainExpired": false,
+        "elapsedSeconds": 0.109,
+        "exitCode": 0,
+        "name": "inspect-browser-806a6dcd6471",
+        "requestedTimeoutSeconds": 20,
+        "signal": null,
+        "startedMonotonic": 1029862.527665958,
+        "streams": [
+          {
+            "bytes": 1808,
+            "path": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/outer/inspect-browser-806a6dcd6471.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 1808,
+            "rawSha256": "9fb25ad9c0e582fdbad52132664b85363e27f924fbc536896d1f9224514dcc61",
+            "sha256": "9fb25ad9c0e582fdbad52132664b85363e27f924fbc536896d1f9224514dcc61",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/outer/inspect-browser-806a6dcd6471.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 20.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "browser-inspect-entity",
+      "record": {
+        "capDrop": [
+          "ALL"
+        ],
+        "containerId": "8711332a610e1973b4c5124cc0084d8247b249b76f98b913f234f0d1d7f62526",
+        "containerName": "g03-truss-fsize-entity-d1ef2094-bd2b-4dab-beec-a187751d615b",
+        "cpus": 4,
+        "exitCode": 0,
+        "imageId": "sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27",
+        "labels": {
+          "codex.g03.execution-id": "d1ef2094-bd2b-4dab-beec-a187751d615b",
+          "codex.g03.kind": "truss-browser-fsize-diagnostic",
+          "org.opencontainers.image.version": "24.04"
+        },
+        "memoryBytes": 8589934592,
+        "mounts": [
+          {
+            "Destination": "/browser-out",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": true,
+            "Source": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/owned/out/browser-entity",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/truss-web",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/artifacts/truss-web",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/workspace",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/private/tmp/weft-g03-ordinary-module",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/wrapper",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/artifacts/browser-wrapper",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/reports/native.json",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/private/tmp/g03-truss-browser-fsize-diagnostic-002/inputs/evidence/entity.json",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/deps/node_modules/playwright",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/Users/erik/Projects/weft/node_modules/playwright",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/deps/node_modules/playwright-core",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/Users/erik/Projects/weft/node_modules/playwright-core",
+            "Type": "bind"
+          }
+        ],
+        "network": "none",
+        "pids": 8192,
+        "readonlyRootfs": true,
+        "securityOpt": [
+          "no-new-privileges"
+        ],
+        "shmBytes": 1073741824,
+        "tmpfs": {
+          "/tmp": "rw,nosuid,nodev,exec,size=256m"
+        },
+        "ulimits": [
+          {
+            "Hard": 268435456,
+            "Name": "fsize",
+            "Soft": 268435456
+          }
+        ]
+      }
+    },
+    {
+      "name": "cleanup-owner-806a6dcd6471",
+      "record": {
+        "argv": [
+          "docker",
+          "inspect",
+          "--format",
+          "{{json .Config.Labels}}",
+          "g03-truss-fsize-entity-d1ef2094-bd2b-4dab-beec-a187751d615b"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1029887.477575958,
+        "drainExpired": false,
+        "elapsedSeconds": 0.022,
+        "exitCode": 0,
+        "name": "cleanup-owner-806a6dcd6471",
+        "requestedTimeoutSeconds": 15,
+        "signal": null,
+        "startedMonotonic": 1029872.477575958,
+        "streams": [
+          {
+            "bytes": 159,
+            "path": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/outer/cleanup-owner-806a6dcd6471.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 159,
+            "rawSha256": "6a1862e221dc34c46120a1f15cdd306e92f57d1dd964d82764a2d5b4619a6f7a",
+            "sha256": "6a1862e221dc34c46120a1f15cdd306e92f57d1dd964d82764a2d5b4619a6f7a",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/outer/cleanup-owner-806a6dcd6471.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 15.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "cleanup-806a6dcd6471",
+      "record": {
+        "argv": [
+          "docker",
+          "rm",
+          "-f",
+          "g03-truss-fsize-entity-d1ef2094-bd2b-4dab-beec-a187751d615b"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1029892.499552458,
+        "drainExpired": false,
+        "elapsedSeconds": 0.088,
+        "exitCode": 0,
+        "name": "cleanup-806a6dcd6471",
+        "requestedTimeoutSeconds": 20,
+        "signal": null,
+        "startedMonotonic": 1029872.499552458,
+        "streams": [
+          {
+            "bytes": 60,
+            "path": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/outer/cleanup-806a6dcd6471.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 60,
+            "rawSha256": "6aaff0a68564722212c8f5e2db56e4fd3a6dd3d609652835954c8dc372101f47",
+            "sha256": "6aaff0a68564722212c8f5e2db56e4fd3a6dd3d609652835954c8dc372101f47",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/outer/cleanup-806a6dcd6471.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 20.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "cleanup-g03-truss-fsize-entity-d1ef2094-bd2b-4dab-beec-a187751d615b",
+      "record": {
+        "argv": [
+          "docker",
+          "rm",
+          "-f",
+          "g03-truss-fsize-entity-d1ef2094-bd2b-4dab-beec-a187751d615b"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1029892.499552458,
+        "drainExpired": false,
+        "elapsedSeconds": 0.088,
+        "exitCode": 0,
+        "name": "cleanup-806a6dcd6471",
+        "requestedTimeoutSeconds": 20,
+        "signal": null,
+        "startedMonotonic": 1029872.499552458,
+        "streams": [
+          {
+            "bytes": 60,
+            "path": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/outer/cleanup-806a6dcd6471.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 60,
+            "rawSha256": "6aaff0a68564722212c8f5e2db56e4fd3a6dd3d609652835954c8dc372101f47",
+            "sha256": "6aaff0a68564722212c8f5e2db56e4fd3a6dd3d609652835954c8dc372101f47",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/outer/cleanup-806a6dcd6471.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 20.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "cleanup-owner-f7de3e7db57d",
+      "record": {
+        "argv": [
+          "docker",
+          "inspect",
+          "--format",
+          "{{json .Config.Labels}}",
+          "g03-truss-fsize-facts-d1ef2094-bd2b-4dab-beec-a187751d615b"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1029887.588018166,
+        "drainExpired": false,
+        "elapsedSeconds": 0.022,
+        "exitCode": 0,
+        "name": "cleanup-owner-f7de3e7db57d",
+        "requestedTimeoutSeconds": 15,
+        "signal": null,
+        "startedMonotonic": 1029872.588018166,
+        "streams": [
+          {
+            "bytes": 159,
+            "path": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/outer/cleanup-owner-f7de3e7db57d.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 159,
+            "rawSha256": "6a1862e221dc34c46120a1f15cdd306e92f57d1dd964d82764a2d5b4619a6f7a",
+            "sha256": "6a1862e221dc34c46120a1f15cdd306e92f57d1dd964d82764a2d5b4619a6f7a",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/outer/cleanup-owner-f7de3e7db57d.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 15.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "cleanup-f7de3e7db57d",
+      "record": {
+        "argv": [
+          "docker",
+          "rm",
+          "-f",
+          "g03-truss-fsize-facts-d1ef2094-bd2b-4dab-beec-a187751d615b"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1029892.609630166,
+        "drainExpired": false,
+        "elapsedSeconds": 0.059,
+        "exitCode": 0,
+        "name": "cleanup-f7de3e7db57d",
+        "requestedTimeoutSeconds": 20,
+        "signal": null,
+        "startedMonotonic": 1029872.609630166,
+        "streams": [
+          {
+            "bytes": 59,
+            "path": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/outer/cleanup-f7de3e7db57d.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 59,
+            "rawSha256": "e7e02e1726cbff8c7cf6a5716c56b81ba373f60020e3aed5e60b815f5522e157",
+            "sha256": "e7e02e1726cbff8c7cf6a5716c56b81ba373f60020e3aed5e60b815f5522e157",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/outer/cleanup-f7de3e7db57d.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 20.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "cleanup-g03-truss-fsize-facts-d1ef2094-bd2b-4dab-beec-a187751d615b",
+      "record": {
+        "argv": [
+          "docker",
+          "rm",
+          "-f",
+          "g03-truss-fsize-facts-d1ef2094-bd2b-4dab-beec-a187751d615b"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1029892.609630166,
+        "drainExpired": false,
+        "elapsedSeconds": 0.059,
+        "exitCode": 0,
+        "name": "cleanup-f7de3e7db57d",
+        "requestedTimeoutSeconds": 20,
+        "signal": null,
+        "startedMonotonic": 1029872.609630166,
+        "streams": [
+          {
+            "bytes": 59,
+            "path": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/outer/cleanup-f7de3e7db57d.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 59,
+            "rawSha256": "e7e02e1726cbff8c7cf6a5716c56b81ba373f60020e3aed5e60b815f5522e157",
+            "sha256": "e7e02e1726cbff8c7cf6a5716c56b81ba373f60020e3aed5e60b815f5522e157",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/outer/cleanup-f7de3e7db57d.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 20.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "owned-container-absence",
+      "record": {
+        "argv": [
+          "docker",
+          "ps",
+          "-a",
+          "--filter",
+          "label=codex.g03.execution-id=d1ef2094-bd2b-4dab-beec-a187751d615b",
+          "--filter",
+          "label=codex.g03.kind=truss-browser-fsize-diagnostic",
+          "--format",
+          "{{.Names}}"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1029887.668877416,
+        "drainExpired": false,
+        "elapsedSeconds": 0.024,
+        "exitCode": 0,
+        "name": "owned-container-absence",
+        "requestedTimeoutSeconds": 15,
+        "signal": null,
+        "startedMonotonic": 1029872.668877416,
+        "streams": [
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/outer/owned-container-absence.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/outer/owned-container-absence.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 15.0,
+        "truncated": false
+      }
+    }
+  ],
+  "diagnostic005Admission": {
+    "entityExecuted": false,
+    "factsCases": 5,
+    "factsSummarySha256": "d3e4c1cb2893658191d0729c7c7a611bcd3e9bdf198abc728e9368c31a7ff8e8",
+    "inspectSha256": "c5f6aab64855f04329d30dfe0824b167b4d5250a447c6b083470022b6b4107ee",
+    "observedSecurityOpt": [
+      "no-new-privileges"
+    ],
+    "priorReceiptSha256": "90b0705f1366639ba19f7ffae3a92b60748c471d0aa916f5d445d823bd0f5725",
+    "status": "FAIL_OR_UNKNOWN"
+  },
+  "effectiveContainerProfiles": {
+    "entity": {
+      "capDrop": [
+        "ALL"
+      ],
+      "containerId": "8711332a610e1973b4c5124cc0084d8247b249b76f98b913f234f0d1d7f62526",
+      "containerName": "g03-truss-fsize-entity-d1ef2094-bd2b-4dab-beec-a187751d615b",
+      "cpus": 4,
+      "exitCode": 0,
+      "imageId": "sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27",
+      "labels": {
+        "codex.g03.execution-id": "d1ef2094-bd2b-4dab-beec-a187751d615b",
+        "codex.g03.kind": "truss-browser-fsize-diagnostic",
+        "org.opencontainers.image.version": "24.04"
+      },
+      "memoryBytes": 8589934592,
+      "mounts": [
+        {
+          "Destination": "/browser-out",
+          "Mode": "",
+          "Propagation": "rprivate",
+          "RW": true,
+          "Source": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/owned/out/browser-entity",
+          "Type": "bind"
+        },
+        {
+          "Destination": "/truss-web",
+          "Mode": "",
+          "Propagation": "rprivate",
+          "RW": false,
+          "Source": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/artifacts/truss-web",
+          "Type": "bind"
+        },
+        {
+          "Destination": "/workspace",
+          "Mode": "",
+          "Propagation": "rprivate",
+          "RW": false,
+          "Source": "/private/tmp/weft-g03-ordinary-module",
+          "Type": "bind"
+        },
+        {
+          "Destination": "/wrapper",
+          "Mode": "",
+          "Propagation": "rprivate",
+          "RW": false,
+          "Source": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/artifacts/browser-wrapper",
+          "Type": "bind"
+        },
+        {
+          "Destination": "/reports/native.json",
+          "Mode": "",
+          "Propagation": "rprivate",
+          "RW": false,
+          "Source": "/private/tmp/g03-truss-browser-fsize-diagnostic-002/inputs/evidence/entity.json",
+          "Type": "bind"
+        },
+        {
+          "Destination": "/deps/node_modules/playwright",
+          "Mode": "",
+          "Propagation": "rprivate",
+          "RW": false,
+          "Source": "/Users/erik/Projects/weft/node_modules/playwright",
+          "Type": "bind"
+        },
+        {
+          "Destination": "/deps/node_modules/playwright-core",
+          "Mode": "",
+          "Propagation": "rprivate",
+          "RW": false,
+          "Source": "/Users/erik/Projects/weft/node_modules/playwright-core",
+          "Type": "bind"
+        }
+      ],
+      "network": "none",
+      "pids": 8192,
+      "readonlyRootfs": true,
+      "securityOpt": [
+        "no-new-privileges"
+      ],
+      "shmBytes": 1073741824,
+      "tmpfs": {
+        "/tmp": "rw,nosuid,nodev,exec,size=256m"
+      },
+      "ulimits": [
+        {
+          "Hard": 268435456,
+          "Name": "fsize",
+          "Soft": 268435456
+        }
+      ]
+    },
+    "facts": {
+      "capDrop": [
+        "ALL"
+      ],
+      "containerId": "252afc2e1f495b671b5f082182bc83cb4e24e9249d2360a440eeff9b4d104764",
+      "containerName": "g03-truss-fsize-facts-d1ef2094-bd2b-4dab-beec-a187751d615b",
+      "cpus": 4,
+      "exitCode": 0,
+      "imageId": "sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27",
+      "labels": {
+        "codex.g03.execution-id": "d1ef2094-bd2b-4dab-beec-a187751d615b",
+        "codex.g03.kind": "truss-browser-fsize-diagnostic",
+        "org.opencontainers.image.version": "24.04"
+      },
+      "memoryBytes": 8589934592,
+      "mounts": [
+        {
+          "Destination": "/browser-out",
+          "Mode": "",
+          "Propagation": "rprivate",
+          "RW": true,
+          "Source": "/private/tmp/g03-truss-browser-fsize-diagnostic-006/runs/d1ef2094-bd2b-4dab-beec-a187751d615b/owned/out/browser-facts",
+          "Type": "bind"
+        },
+        {
+          "Destination": "/truss-web",
+          "Mode": "",
+          "Propagation": "rprivate",
+          "RW": false,
+          "Source": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/artifacts/truss-web",
+          "Type": "bind"
+        },
+        {
+          "Destination": "/workspace",
+          "Mode": "",
+          "Propagation": "rprivate",
+          "RW": false,
+          "Source": "/private/tmp/weft-g03-ordinary-module",
+          "Type": "bind"
+        },
+        {
+          "Destination": "/wrapper",
+          "Mode": "",
+          "Propagation": "rprivate",
+          "RW": false,
+          "Source": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/artifacts/browser-wrapper",
+          "Type": "bind"
+        },
+        {
+          "Destination": "/reports/native.json",
+          "Mode": "",
+          "Propagation": "rprivate",
+          "RW": false,
+          "Source": "/private/tmp/g03-truss-browser-fsize-diagnostic-002/inputs/evidence/facts.json",
+          "Type": "bind"
+        },
+        {
+          "Destination": "/deps/node_modules/playwright",
+          "Mode": "",
+          "Propagation": "rprivate",
+          "RW": false,
+          "Source": "/Users/erik/Projects/weft/node_modules/playwright",
+          "Type": "bind"
+        },
+        {
+          "Destination": "/deps/node_modules/playwright-core",
+          "Mode": "",
+          "Propagation": "rprivate",
+          "RW": false,
+          "Source": "/Users/erik/Projects/weft/node_modules/playwright-core",
+          "Type": "bind"
+        }
+      ],
+      "network": "none",
+      "pids": 8192,
+      "readonlyRootfs": true,
+      "securityOpt": [
+        "no-new-privileges"
+      ],
+      "shmBytes": 1073741824,
+      "tmpfs": {
+        "/tmp": "rw,nosuid,nodev,exec,size=256m"
+      },
+      "ulimits": [
+        {
+          "Hard": 268435456,
+          "Name": "fsize",
+          "Soft": 268435456
+        }
+      ]
+    }
+  },
+  "elapsedSeconds": 15.412,
+  "executionPerformed": true,
+  "failures": [],
+  "finishedMonotonic": 1029872.693193083,
+  "frozenInputs": {
+    "fileCount": 23,
+    "sha256": "1db98a05fdebb0d4f63fbea52a83b9698f398f09a3055e0d3321846d00e0ad96",
+    "totalBytes": 3473975
+  },
+  "frozenInputsAfter": {
+    "fileCount": 23,
+    "sha256": "1db98a05fdebb0d4f63fbea52a83b9698f398f09a3055e0d3321846d00e0ad96",
+    "totalBytes": 3473975
+  },
+  "nativeReportsAfter": [
+    {
+      "name": "facts",
+      "sha256": "c45b385d21c64d4abec74849a7cad50229a6eaa054b2a14a192b13c2566b8982",
+      "sizeBytes": 186460
+    },
+    {
+      "name": "entity",
+      "sha256": "ff8803dda03a4ef376e44984c1a010ead8065b817a002d6178dba8b0343256bf",
+      "sizeBytes": 994279
+    }
+  ],
+  "portableJsAfter": {
+    "playwright": {
+      "fileCount": 62,
+      "rosterSha256": "3a9482a4f587a730abd98fc0c620c3a6eff5d2f9a88f1a91e16dee8ec3ab6230",
+      "totalBytes": 5074152
+    },
+    "playwright-core": {
+      "fileCount": 111,
+      "rosterSha256": "d1c9e8b6e3bb37b49f5ba10a847f32bcde4d64df58b30434ab0ed66ee20e60aa",
+      "totalBytes": 13442086
+    }
+  },
+  "portableJsBefore": {
+    "playwright": {
+      "fileCount": 62,
+      "rosterSha256": "3a9482a4f587a730abd98fc0c620c3a6eff5d2f9a88f1a91e16dee8ec3ab6230",
+      "totalBytes": 5074152
+    },
+    "playwright-core": {
+      "fileCount": 111,
+      "rosterSha256": "d1c9e8b6e3bb37b49f5ba10a847f32bcde4d64df58b30434ab0ed66ee20e60aa",
+      "totalBytes": 13442086
+    }
+  },
+  "postChecks": {
+    "P56-source-inventory": {
+      "status": "verified",
+      "value": {
+        "fileCount": 5901,
+        "inventorySha256": "b410647a6bdded7fbfce9c72aee66575dc67da8305df7fea3dcb8206cffac19d",
+        "stageRosterSha256": "bc3018c0d674cd2fc80794f9f36c523565c91558f70649cd3fe415f8e88b701b",
+        "totalBytes": 860543639
+      }
+    },
+    "Truss009-receipt": {
+      "status": "verified",
+      "value": {
+        "sha256": "af524fd45a8f01998dc02a540ec6d84e81bf51c4fc745cb1417513a791fef40e",
+        "sizeBytes": 173838
+      }
+    },
+    "full-source-manifest": {
+      "status": "verified",
+      "value": {
+        "fileCount": 23,
+        "sha256": "1db98a05fdebb0d4f63fbea52a83b9698f398f09a3055e0d3321846d00e0ad96",
+        "totalBytes": 3473975
+      }
+    },
+    "native-reports": {
+      "status": "verified",
+      "value": [
+        {
+          "name": "facts",
+          "sha256": "c45b385d21c64d4abec74849a7cad50229a6eaa054b2a14a192b13c2566b8982",
+          "sizeBytes": 186460
+        },
+        {
+          "name": "entity",
+          "sha256": "ff8803dda03a4ef376e44984c1a010ead8065b817a002d6178dba8b0343256bf",
+          "sizeBytes": 994279
+        }
+      ]
+    },
+    "portable-JS-dependencies": {
+      "status": "verified",
+      "value": {
+        "playwright": {
+          "fileCount": 62,
+          "rosterSha256": "3a9482a4f587a730abd98fc0c620c3a6eff5d2f9a88f1a91e16dee8ec3ab6230",
+          "totalBytes": 5074152
+        },
+        "playwright-core": {
+          "fileCount": 111,
+          "rosterSha256": "d1c9e8b6e3bb37b49f5ba10a847f32bcde4d64df58b30434ab0ed66ee20e60aa",
+          "totalBytes": 13442086
+        }
+      }
+    },
+    "selected-software": {
+      "status": "verified",
+      "value": [
+        {
+          "path": "artifacts/truss-web/weft_wasm.js",
+          "sha256": "fce153e7f95ee82821e492a9e8732063e690b7640e2fbf22ec8324f8b3bca579",
+          "sizeBytes": 13916
+        },
+        {
+          "path": "artifacts/truss-web/weft_wasm.d.ts",
+          "sha256": "ec10303c3ce50ae1a39ef36352f9445618f27ee326bfa21a1182f4c2f092e491",
+          "sizeBytes": 3350
+        },
+        {
+          "path": "artifacts/truss-web/weft_wasm_bg.wasm",
+          "sha256": "86e5facad64ec12a2f1176dad9155b0a33ed63446dceebbe8e30369d64fb48b4",
+          "sizeBytes": 28345027
+        },
+        {
+          "path": "artifacts/truss-web/weft_wasm_bg.wasm.d.ts",
+          "sha256": "79682ff29166ed93f5fa95a37d95dff8dfd23d89770f88700728ef97e33410f2",
+          "sizeBytes": 1296
+        },
+        {
+          "path": "artifacts/browser-wrapper/index.js",
+          "sha256": "ad9198fb79ec8dc80eeac9d37d126993374d7135628bf11ee303b0e60669884b",
+          "sizeBytes": 2935
+        }
+      ]
+    }
+  },
+  "profile": "umf.g03-truss-browser-fsize-diagnostic/1",
+  "rawCaptureBudgetRemaining": 498550,
+  "runtimeMetadata": {
+    "entity": {
+      "chromiumSha256": "839efe5fd8b6a773dd81b2e10afdc15f3c0a17316fb82b5908c0533306c4ed9e",
+      "chromiumVersion": "Google Chrome for Testing 153.0.8010.12",
+      "dfTmpLine": "tmpfs 262144 0 262144 0% /tmp",
+      "maxFileSizeHardBytes": 268435456,
+      "maxFileSizeSoftBytes": 268435456,
+      "nodeVersion": "v24.20.0",
+      "source": "captured Node/Chromium identity, /proc/self/limits and df -Pk /tmp"
+    },
+    "facts": {
+      "chromiumSha256": "839efe5fd8b6a773dd81b2e10afdc15f3c0a17316fb82b5908c0533306c4ed9e",
+      "chromiumVersion": "Google Chrome for Testing 153.0.8010.12",
+      "dfTmpLine": "tmpfs 262144 0 262144 0% /tmp",
+      "maxFileSizeHardBytes": 268435456,
+      "maxFileSizeSoftBytes": 268435456,
+      "nodeVersion": "v24.20.0",
+      "source": "captured Node/Chromium identity, /proc/self/limits and df -Pk /tmp"
+    }
+  },
+  "scope": "retained Truss009 browser-only facts/entity diagnostic; no rebuild/install",
+  "selectedSoftwareAfter": [
+    {
+      "path": "artifacts/truss-web/weft_wasm.js",
+      "sha256": "fce153e7f95ee82821e492a9e8732063e690b7640e2fbf22ec8324f8b3bca579",
+      "sizeBytes": 13916
+    },
+    {
+      "path": "artifacts/truss-web/weft_wasm.d.ts",
+      "sha256": "ec10303c3ce50ae1a39ef36352f9445618f27ee326bfa21a1182f4c2f092e491",
+      "sizeBytes": 3350
+    },
+    {
+      "path": "artifacts/truss-web/weft_wasm_bg.wasm",
+      "sha256": "86e5facad64ec12a2f1176dad9155b0a33ed63446dceebbe8e30369d64fb48b4",
+      "sizeBytes": 28345027
+    },
+    {
+      "path": "artifacts/truss-web/weft_wasm_bg.wasm.d.ts",
+      "sha256": "79682ff29166ed93f5fa95a37d95dff8dfd23d89770f88700728ef97e33410f2",
+      "sizeBytes": 1296
+    },
+    {
+      "path": "artifacts/browser-wrapper/index.js",
+      "sha256": "ad9198fb79ec8dc80eeac9d37d126993374d7135628bf11ee303b0e60669884b",
+      "sizeBytes": 2935
+    }
+  ],
+  "sourceInventoryAfter": {
+    "fileCount": 5901,
+    "inventorySha256": "b410647a6bdded7fbfce9c72aee66575dc67da8305df7fea3dcb8206cffac19d",
+    "stageRosterSha256": "bc3018c0d674cd2fc80794f9f36c523565c91558f70649cd3fe415f8e88b701b",
+    "totalBytes": 860543639
+  },
+  "sourceInventoryBefore": {
+    "fileCount": 5901,
+    "inventorySha256": "b410647a6bdded7fbfce9c72aee66575dc67da8305df7fea3dcb8206cffac19d",
+    "stageRosterSha256": "bc3018c0d674cd2fc80794f9f36c523565c91558f70649cd3fe415f8e88b701b",
+    "totalBytes": 860543639
+  },
+  "startedMonotonic": 1029857.280873166,
+  "status": "PASS_BROWSER_PROFILE_DIAGNOSTIC_ONLY"
+}

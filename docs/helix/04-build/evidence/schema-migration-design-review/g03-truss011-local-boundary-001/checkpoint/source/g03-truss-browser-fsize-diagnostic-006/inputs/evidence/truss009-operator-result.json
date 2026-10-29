@@ -1,0 +1,4553 @@
+{
+  "clockDomains": {
+    "guestAnchorMonotonic": 988550.279251664,
+    "guestClockDomain": "Linux guest time.monotonic",
+    "guestHandoffPreparedHostMonotonic": 1027907.911975541,
+    "guestTerminalDeadlineMonotonic": 990309.4712064139,
+    "guestTerminalRemainingSecondsAtHandoff": 1759.1919547499856,
+    "guestWorkDeadlineMonotonic": 990289.4712064139,
+    "guestWorkRemainingSecondsAtHandoff": 1739.1919547499856,
+    "hostClockDomain": "darwin host time.monotonic",
+    "hostClockIsAuthoritative": true,
+    "hostLaneStartMonotonic": 1027907.103930291,
+    "hostTerminalDeadlineMonotonic": 1029707.103930291,
+    "hostWorkDeadlineMonotonic": 1029647.103930291,
+    "mapping": "remaining durations anchored once in guest; original host work and terminal deadlines remain authoritative"
+  },
+  "commands": [
+    {
+      "name": "image-builder",
+      "record": {
+        "argv": [
+          "docker",
+          "image",
+          "inspect",
+          "--format",
+          "{{.Id}}|{{.Os}}/{{.Architecture}}",
+          "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1027937.617763583,
+        "drainExpired": false,
+        "elapsedSeconds": 0.254,
+        "exitCode": 0,
+        "name": "image-builder",
+        "requestedTimeoutSeconds": 30,
+        "startedMonotonic": 1027907.617763583,
+        "streams": [
+          {
+            "bytes": 84,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/image-builder.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 84,
+            "rawSha256": "15da17c01d73753ac5f83904478e7471c56c7be2a49a00e500c70e3148282723",
+            "sha256": "15da17c01d73753ac5f83904478e7471c56c7be2a49a00e500c70e3148282723",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/image-builder.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 30.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "image-browser",
+      "record": {
+        "argv": [
+          "docker",
+          "image",
+          "inspect",
+          "--format",
+          "{{.Id}}|{{.Os}}/{{.Architecture}}",
+          "sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1027937.871874458,
+        "drainExpired": false,
+        "elapsedSeconds": 0.035,
+        "exitCode": 0,
+        "name": "image-browser",
+        "requestedTimeoutSeconds": 30,
+        "startedMonotonic": 1027907.871874458,
+        "streams": [
+          {
+            "bytes": 84,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/image-browser.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 84,
+            "rawSha256": "5a543dc5bc7e049b6e71543357800b56ad1246cee2ab082d2a75e899b5af5b9c",
+            "sha256": "5a543dc5bc7e049b6e71543357800b56ad1246cee2ab082d2a75e899b5af5b9c",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/image-browser.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 30.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "builder",
+      "record": {
+        "argv": [
+          "docker",
+          "run",
+          "--pull=never",
+          "--tmpfs",
+          "/tmp:rw,nosuid,nodev,size=512m",
+          "--name",
+          "g03-truss-builder-938487b5-7353-4879-aa26-ee034e629718",
+          "--label",
+          "codex.g03.execution-id=938487b5-7353-4879-aa26-ee034e629718",
+          "--label",
+          "codex.g03.kind=truss-facts-entity-selection",
+          "--network=none",
+          "--platform=linux/amd64",
+          "--read-only",
+          "--cap-drop=ALL",
+          "--security-opt=no-new-privileges",
+          "--cpus=4",
+          "--memory=8g",
+          "--pids-limit=8192",
+          "--mount",
+          "type=bind,source=/private/tmp/g03-local-source-package-guards-operator-003/inputs/source-p56.tar,target=/inputs/source-p56.tar,readonly",
+          "--mount",
+          "type=bind,source=/private/tmp/g03-final-cohort-056-linux311-001,target=/cohort,readonly",
+          "--mount",
+          "type=bind,source=/private/tmp/g03-final-truss-operator-009/runtime/guest.py,target=/operator/guest.py,readonly",
+          "--mount",
+          "type=bind,source=/private/tmp/g03-final-truss-operator-009/runtime/cargo_cache_extract.py,target=/operator/cargo_cache_extract.py,readonly",
+          "--mount",
+          "type=bind,source=/private/tmp/g03-final-truss-operator-009/inputs,target=/operator-inputs,readonly",
+          "--mount",
+          "type=bind,source=/private/tmp/g03-linux-locked-cargo-cache-operator-007/runs/071cd516906047cf9947a550514af957/guest,target=/cargo-cache-input,readonly",
+          "--mount",
+          "type=bind,source=/private/tmp/g03-linux-wasm-tool-02105-001/files/wasm-bindgen-0.2.105-x86_64-unknown-linux-musl/wasm-bindgen,target=/wasm-tools/wasm-bindgen,readonly",
+          "--mount",
+          "type=bind,source=/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned,target=/owned",
+          "--mount",
+          "type=bind,source=/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out,target=/out",
+          "--mount",
+          "type=bind,source=/private/tmp/g03-final-truss-operator-009/inputs/browser-deps,target=/browser-deps,readonly",
+          "--env",
+          "PYTHONDONTWRITEBYTECODE=1",
+          "--env",
+          "CARGO_HOME=/owned/cargo",
+          "--env",
+          "CARGO_TARGET_DIR=/owned/target",
+          "--env",
+          "G03_TRUSS_PACKET_SHA256=c6797af91eefa241797e748f59c6095725806221daa2aefe50bb85e6b91caf45",
+          "--env",
+          "RUSTUP_TOOLCHAIN=1.90.0-x86_64-unknown-linux-gnu",
+          "--env",
+          "G03_GUEST_WORK_REMAINING_SECONDS=1739.1919547499856",
+          "--env",
+          "G03_GUEST_TERMINAL_REMAINING_SECONDS=1759.1919547499856",
+          "--env",
+          "G03_HOST_CLOCK_DOMAIN=darwin host time.monotonic",
+          "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+          "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11",
+          "-B",
+          "-I",
+          "/operator/guest.py"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1029707.103930291,
+        "drainExpired": false,
+        "elapsedSeconds": 145.023,
+        "exitCode": 0,
+        "name": "builder",
+        "requestedTimeoutSeconds": 1799.1919266660698,
+        "startedMonotonic": 1027907.912004375,
+        "streams": [
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/builder.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/builder.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 1799.192,
+        "truncated": false
+      }
+    },
+    {
+      "name": "inspect-builder-1aca1faf9f6f",
+      "record": {
+        "argv": [
+          "docker",
+          "inspect",
+          "--format",
+          "{{.Id}}|{{.Image}}|{{.HostConfig.NetworkMode}}|{{.HostConfig.ReadonlyRootfs}}|{{.HostConfig.PidsLimit}}|{{.HostConfig.NanoCpus}}|{{.HostConfig.Memory}}|{{.State.Status}}|{{.State.ExitCode}}|{{json .Mounts}}|{{json .HostConfig.Tmpfs}}",
+          "g03-truss-builder-938487b5-7353-4879-aa26-ee034e629718"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1028072.935126291,
+        "drainExpired": false,
+        "elapsedSeconds": 0.092,
+        "exitCode": 0,
+        "name": "inspect-builder-1aca1faf9f6f",
+        "requestedTimeoutSeconds": 20,
+        "startedMonotonic": 1028052.935126291,
+        "streams": [
+          {
+            "bytes": 2042,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/inspect-builder-1aca1faf9f6f.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 2042,
+            "rawSha256": "1ed20f83db0d52fb443c292f060ed8212f0dc166e3a417e35751608175f6f571",
+            "sha256": "1ed20f83db0d52fb443c292f060ed8212f0dc166e3a417e35751608175f6f571",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/inspect-builder-1aca1faf9f6f.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 20.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "builder-container-identity",
+      "record": {
+        "containerId": "cf7aec32b77818e660f49cff1003aa72fb4c7c0b1280ffc71770ce40e5d4c342",
+        "containerName": "g03-truss-builder-938487b5-7353-4879-aa26-ee034e629718",
+        "exitCode": 0,
+        "imageId": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+        "memoryBytes": 8589934592,
+        "mounts": [
+          {
+            "Destination": "/browser-deps",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/private/tmp/g03-final-truss-operator-009/inputs/browser-deps",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/cargo-cache-input",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/private/tmp/g03-linux-locked-cargo-cache-operator-007/runs/071cd516906047cf9947a550514af957/guest",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/cohort",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/private/tmp/g03-final-cohort-056-linux311-001",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/operator-inputs",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/private/tmp/g03-final-truss-operator-009/inputs",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/out",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": true,
+            "Source": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/owned",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": true,
+            "Source": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/inputs/source-p56.tar",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/private/tmp/g03-local-source-package-guards-operator-003/inputs/source-p56.tar",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/operator/cargo_cache_extract.py",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/private/tmp/g03-final-truss-operator-009/runtime/cargo_cache_extract.py",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/operator/guest.py",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/private/tmp/g03-final-truss-operator-009/runtime/guest.py",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/wasm-tools/wasm-bindgen",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/private/tmp/g03-linux-wasm-tool-02105-001/files/wasm-bindgen-0.2.105-x86_64-unknown-linux-musl/wasm-bindgen",
+            "Type": "bind"
+          }
+        ],
+        "nanoCpus": 4000000000,
+        "network": "none",
+        "pids": 8192,
+        "readonlyRootfs": true,
+        "status": "exited",
+        "tmpfs": {
+          "/tmp": "rw,nosuid,nodev,size=512m"
+        }
+      }
+    },
+    {
+      "name": "browser-identity-before",
+      "record": {
+        "argv": [
+          "docker",
+          "run",
+          "--pull=never",
+          "--name",
+          "g03-truss-browser-identity-before-938487b5-7353-4879-aa26-ee034e629718",
+          "--label",
+          "codex.g03.execution-id=938487b5-7353-4879-aa26-ee034e629718",
+          "--label",
+          "codex.g03.kind=truss-browser-identity",
+          "--network=none",
+          "--platform=linux/arm64",
+          "--read-only",
+          "--cap-drop=ALL",
+          "--security-opt=no-new-privileges",
+          "--tmpfs",
+          "/tmp:rw,nosuid,nodev,size=64m",
+          "--cpus=1",
+          "--memory=1g",
+          "--pids-limit=128",
+          "sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27",
+          "/bin/sh",
+          "-eu",
+          "-c",
+          "node --version; /ms-playwright/chromium-1243/chrome-linux-arm64/chrome --version; sha256sum /ms-playwright/chromium-1243/chrome-linux-arm64/chrome"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1028083.052195833,
+        "drainExpired": false,
+        "elapsedSeconds": 0.506,
+        "exitCode": 0,
+        "name": "browser-identity-before",
+        "requestedTimeoutSeconds": 30,
+        "startedMonotonic": 1028053.052195833,
+        "streams": [
+          {
+            "bytes": 171,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/browser-identity-before.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 171,
+            "rawSha256": "4184352970fb72f492b4c60150a7ba03884c8ddacaedafaa21eecb6cc4928c1b",
+            "sha256": "4184352970fb72f492b4c60150a7ba03884c8ddacaedafaa21eecb6cc4928c1b",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/browser-identity-before.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 30.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "inspect-identity-c433b3057f7d",
+      "record": {
+        "argv": [
+          "docker",
+          "inspect",
+          "--format",
+          "{{.Id}}|{{.Image}}|{{.HostConfig.NetworkMode}}|{{.HostConfig.ReadonlyRootfs}}|{{.HostConfig.PidsLimit}}|{{.HostConfig.NanoCpus}}|{{.HostConfig.Memory}}|{{.State.Status}}|{{.State.ExitCode}}|{{json .Mounts}}|{{json .HostConfig.Tmpfs}}",
+          "g03-truss-browser-identity-before-938487b5-7353-4879-aa26-ee034e629718"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1028073.558251416,
+        "drainExpired": false,
+        "elapsedSeconds": 0.134,
+        "exitCode": 0,
+        "name": "inspect-identity-c433b3057f7d",
+        "requestedTimeoutSeconds": 20,
+        "startedMonotonic": 1028053.558251416,
+        "streams": [
+          {
+            "bytes": 221,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/inspect-identity-c433b3057f7d.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 221,
+            "rawSha256": "22a89bb46bc27a8e599121fc13f7acf1f700c8e8ba3344137bcb333158382aca",
+            "sha256": "22a89bb46bc27a8e599121fc13f7acf1f700c8e8ba3344137bcb333158382aca",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/inspect-identity-c433b3057f7d.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 20.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "browser-container-identity-before",
+      "record": {
+        "containerId": "5df30f8a9925cbe5a241fe1ca450667324992fb2292fb0fa48ce85b4ed0e6c92",
+        "containerName": "g03-truss-browser-identity-before-938487b5-7353-4879-aa26-ee034e629718",
+        "exitCode": 0,
+        "imageId": "sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27",
+        "memoryBytes": 1073741824,
+        "mounts": [],
+        "nanoCpus": 1000000000,
+        "network": "none",
+        "pids": 128,
+        "readonlyRootfs": true,
+        "status": "exited",
+        "tmpfs": {
+          "/tmp": "rw,nosuid,nodev,size=64m"
+        }
+      }
+    },
+    {
+      "name": "browser-facts",
+      "record": {
+        "argv": [
+          "docker",
+          "run",
+          "--pull=never",
+          "--name",
+          "g03-truss-browser-facts-938487b5-7353-4879-aa26-ee034e629718",
+          "--label",
+          "codex.g03.execution-id=938487b5-7353-4879-aa26-ee034e629718",
+          "--label",
+          "codex.g03.kind=truss-browser",
+          "--network=none",
+          "--platform=linux/arm64",
+          "--read-only",
+          "--cap-drop=ALL",
+          "--security-opt=no-new-privileges",
+          "--cpus=4",
+          "--memory=8g",
+          "--pids-limit=8192",
+          "--shm-size=1g",
+          "--ulimit",
+          "fsize=16777216:16777216",
+          "--tmpfs",
+          "/tmp:rw,nosuid,nodev,exec,size=256m",
+          "--workdir",
+          "/workspace",
+          "--mount",
+          "type=bind,source=/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/source/p56,target=/workspace,readonly",
+          "--mount",
+          "type=bind,source=/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/reports/facts.json,target=/reports/native.json,readonly",
+          "--mount",
+          "type=bind,source=/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/browser-facts,target=/browser-out",
+          "--mount",
+          "type=bind,source=/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/artifacts/truss-web,target=/truss-web,readonly",
+          "--mount",
+          "type=bind,source=/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/artifacts/browser-wrapper,target=/wrapper,readonly",
+          "--mount",
+          "type=bind,source=/Users/erik/Projects/weft/node_modules/playwright,target=/deps/node_modules/playwright,readonly",
+          "--mount",
+          "type=bind,source=/Users/erik/Projects/weft/node_modules/playwright-core,target=/deps/node_modules/playwright-core,readonly",
+          "--env",
+          "WEFT_PROBE_JS=/truss-web/weft_wasm.js",
+          "--env",
+          "WEFT_PROBE_WASM=/truss-web/weft_wasm_bg.wasm",
+          "--env",
+          "WEFT_BROWSER_WRAPPER=/wrapper/index.js",
+          "--env",
+          "WEFT_FRONTEND_CORPUS=/workspace/tests/truss-facts/cases.json",
+          "--env",
+          "WEFT_FRONTEND_REPORTS=/reports/native.json",
+          "--env",
+          "WEFT_PROBE_API=compile_truss_runtime_json",
+          "--env",
+          "WEFT_FRONTEND_BROWSER_SUMMARY=/browser-out/summary.json",
+          "--env",
+          "WEFT_BROWSER_RECEIPTS=/browser-out/receipts.json",
+          "--env",
+          "WEFT_PLAYWRIGHT_MODULE=/deps/node_modules/playwright/index.mjs",
+          "--env",
+          "WEFT_CHROMIUM_EXECUTABLE=/ms-playwright/chromium-1243/chrome-linux-arm64/chrome",
+          "--env",
+          "HOME=/tmp/home",
+          "sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27",
+          "node",
+          "tests/compile/browser-check.mjs"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1028653.6968035,
+        "drainExpired": false,
+        "elapsedSeconds": 0.843,
+        "exitCode": 1,
+        "name": "browser-facts",
+        "requestedTimeoutSeconds": 600,
+        "startedMonotonic": 1028053.6968035,
+        "streams": [
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/browser-facts.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          },
+          {
+            "bytes": 6599,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/browser-facts.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 6599,
+            "rawSha256": "0fe05f59ad74d186c5e7926903de7a559a6558925ec6ef6bcd282c23620a6c0c",
+            "sha256": "0fe05f59ad74d186c5e7926903de7a559a6558925ec6ef6bcd282c23620a6c0c",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 600.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "cleanup-list-0",
+      "record": {
+        "argv": [
+          "docker",
+          "ps",
+          "-a",
+          "--filter",
+          "name=^/g03-truss-builder-938487b5-7353-4879-aa26-ee034e629718$",
+          "--format",
+          "{{.Names}}"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1028069.540807791,
+        "drainExpired": false,
+        "elapsedSeconds": 0.041,
+        "exitCode": 0,
+        "name": "cleanup-list-0",
+        "requestedTimeoutSeconds": 15,
+        "startedMonotonic": 1028054.540810583,
+        "streams": [
+          {
+            "bytes": 55,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-list-0.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 55,
+            "rawSha256": "1e391003accc8f2ed537223f8f498744def5f43b0ff4709e7aee690380da12b2",
+            "sha256": "1e391003accc8f2ed537223f8f498744def5f43b0ff4709e7aee690380da12b2",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-list-0.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 15.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "cleanup-inspect-0",
+      "record": {
+        "argv": [
+          "docker",
+          "inspect",
+          "--format",
+          "{{.Id}}|{{.Image}}|{{index .Config.Labels \"codex.g03.execution-id\"}}|{{index .Config.Labels \"codex.g03.kind\"}}",
+          "g03-truss-builder-938487b5-7353-4879-aa26-ee034e629718"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1028069.58218075,
+        "drainExpired": false,
+        "elapsedSeconds": 0.027,
+        "exitCode": 0,
+        "name": "cleanup-inspect-0",
+        "requestedTimeoutSeconds": 15,
+        "startedMonotonic": 1028054.582182375,
+        "streams": [
+          {
+            "bytes": 203,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-inspect-0.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 203,
+            "rawSha256": "56395c00c03809fe8ad81a2f4a1e9dcea3e638f5dac899bb3f16107624b12c22",
+            "sha256": "56395c00c03809fe8ad81a2f4a1e9dcea3e638f5dac899bb3f16107624b12c22",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-inspect-0.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 15.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "cleanup-stop-0",
+      "record": {
+        "argv": [
+          "docker",
+          "stop",
+          "--time",
+          "10",
+          "g03-truss-builder-938487b5-7353-4879-aa26-ee034e629718"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1028069.609578666,
+        "drainExpired": false,
+        "elapsedSeconds": 0.026,
+        "exitCode": 0,
+        "name": "cleanup-stop-0",
+        "requestedTimeoutSeconds": 15,
+        "startedMonotonic": 1028054.6095815,
+        "streams": [
+          {
+            "bytes": 110,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-stop-0.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 110,
+            "rawSha256": "0dc510375b59dcd90037d06ce5d26385966449c180d4a636aea6a3fb0b066bd5",
+            "sha256": "0dc510375b59dcd90037d06ce5d26385966449c180d4a636aea6a3fb0b066bd5",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-stop-0.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 15.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "cleanup-rm-0",
+      "record": {
+        "argv": [
+          "docker",
+          "rm",
+          "--force",
+          "g03-truss-builder-938487b5-7353-4879-aa26-ee034e629718"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1028069.635340416,
+        "drainExpired": false,
+        "elapsedSeconds": 0.076,
+        "exitCode": 0,
+        "name": "cleanup-rm-0",
+        "requestedTimeoutSeconds": 15,
+        "startedMonotonic": 1028054.635343375,
+        "streams": [
+          {
+            "bytes": 55,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-rm-0.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 55,
+            "rawSha256": "1e391003accc8f2ed537223f8f498744def5f43b0ff4709e7aee690380da12b2",
+            "sha256": "1e391003accc8f2ed537223f8f498744def5f43b0ff4709e7aee690380da12b2",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-rm-0.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 15.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "cleanup-final-0",
+      "record": {
+        "argv": [
+          "docker",
+          "ps",
+          "-a",
+          "--filter",
+          "name=^/g03-truss-builder-938487b5-7353-4879-aa26-ee034e629718$",
+          "--format",
+          "{{.Names}}"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1028069.711415,
+        "drainExpired": false,
+        "elapsedSeconds": 0.022,
+        "exitCode": 0,
+        "name": "cleanup-final-0",
+        "requestedTimeoutSeconds": 15,
+        "startedMonotonic": 1028054.711417041,
+        "streams": [
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-final-0.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-final-0.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 15.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "cleanup-list-1",
+      "record": {
+        "argv": [
+          "docker",
+          "ps",
+          "-a",
+          "--filter",
+          "name=^/g03-truss-browser-identity-before-938487b5-7353-4879-aa26-ee034e629718$",
+          "--format",
+          "{{.Names}}"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1028069.733580291,
+        "drainExpired": false,
+        "elapsedSeconds": 0.026,
+        "exitCode": 0,
+        "name": "cleanup-list-1",
+        "requestedTimeoutSeconds": 15,
+        "startedMonotonic": 1028054.7335815,
+        "streams": [
+          {
+            "bytes": 71,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-list-1.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 71,
+            "rawSha256": "3311c7bb8f523a95612546e59bd21688f092b3f97b653b94335cb7114fb50db8",
+            "sha256": "3311c7bb8f523a95612546e59bd21688f092b3f97b653b94335cb7114fb50db8",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-list-1.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 15.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "cleanup-inspect-1",
+      "record": {
+        "argv": [
+          "docker",
+          "inspect",
+          "--format",
+          "{{.Id}}|{{.Image}}|{{index .Config.Labels \"codex.g03.execution-id\"}}|{{index .Config.Labels \"codex.g03.kind\"}}",
+          "g03-truss-browser-identity-before-938487b5-7353-4879-aa26-ee034e629718"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1028069.759816208,
+        "drainExpired": false,
+        "elapsedSeconds": 0.028,
+        "exitCode": 0,
+        "name": "cleanup-inspect-1",
+        "requestedTimeoutSeconds": 15,
+        "startedMonotonic": 1028054.759817416,
+        "streams": [
+          {
+            "bytes": 197,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-inspect-1.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 197,
+            "rawSha256": "ec9c3321aa91e93a3c4dea1203b4b839e00eec71ec26fe1aa588c23eb35953f4",
+            "sha256": "ec9c3321aa91e93a3c4dea1203b4b839e00eec71ec26fe1aa588c23eb35953f4",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-inspect-1.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 15.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "cleanup-stop-1",
+      "record": {
+        "argv": [
+          "docker",
+          "stop",
+          "--time",
+          "10",
+          "g03-truss-browser-identity-before-938487b5-7353-4879-aa26-ee034e629718"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1028069.787736416,
+        "drainExpired": false,
+        "elapsedSeconds": 0.022,
+        "exitCode": 0,
+        "name": "cleanup-stop-1",
+        "requestedTimeoutSeconds": 15,
+        "startedMonotonic": 1028054.787738833,
+        "streams": [
+          {
+            "bytes": 126,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-stop-1.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 126,
+            "rawSha256": "fd1f4244a6db18985e58442ba4b7d7628133896a11b3348f3a27cd42db1e08c8",
+            "sha256": "fd1f4244a6db18985e58442ba4b7d7628133896a11b3348f3a27cd42db1e08c8",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-stop-1.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 15.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "cleanup-rm-1",
+      "record": {
+        "argv": [
+          "docker",
+          "rm",
+          "--force",
+          "g03-truss-browser-identity-before-938487b5-7353-4879-aa26-ee034e629718"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1028069.810241458,
+        "drainExpired": false,
+        "elapsedSeconds": 0.064,
+        "exitCode": 0,
+        "name": "cleanup-rm-1",
+        "requestedTimeoutSeconds": 15,
+        "startedMonotonic": 1028054.810243583,
+        "streams": [
+          {
+            "bytes": 71,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-rm-1.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 71,
+            "rawSha256": "3311c7bb8f523a95612546e59bd21688f092b3f97b653b94335cb7114fb50db8",
+            "sha256": "3311c7bb8f523a95612546e59bd21688f092b3f97b653b94335cb7114fb50db8",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-rm-1.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 15.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "cleanup-final-1",
+      "record": {
+        "argv": [
+          "docker",
+          "ps",
+          "-a",
+          "--filter",
+          "name=^/g03-truss-browser-identity-before-938487b5-7353-4879-aa26-ee034e629718$",
+          "--format",
+          "{{.Names}}"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1028069.874498375,
+        "drainExpired": false,
+        "elapsedSeconds": 0.021,
+        "exitCode": 0,
+        "name": "cleanup-final-1",
+        "requestedTimeoutSeconds": 15,
+        "startedMonotonic": 1028054.87449975,
+        "streams": [
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-final-1.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-final-1.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 15.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "cleanup-list-2",
+      "record": {
+        "argv": [
+          "docker",
+          "ps",
+          "-a",
+          "--filter",
+          "name=^/g03-truss-browser-facts-938487b5-7353-4879-aa26-ee034e629718$",
+          "--format",
+          "{{.Names}}"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1028069.895914833,
+        "drainExpired": false,
+        "elapsedSeconds": 0.024,
+        "exitCode": 0,
+        "name": "cleanup-list-2",
+        "requestedTimeoutSeconds": 15,
+        "startedMonotonic": 1028054.895915583,
+        "streams": [
+          {
+            "bytes": 61,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-list-2.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 61,
+            "rawSha256": "316f01e731edb171faf184d4d0cfc00fda45d80aa7e1e9de4fcb53018874779c",
+            "sha256": "316f01e731edb171faf184d4d0cfc00fda45d80aa7e1e9de4fcb53018874779c",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-list-2.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 15.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "cleanup-inspect-2",
+      "record": {
+        "argv": [
+          "docker",
+          "inspect",
+          "--format",
+          "{{.Id}}|{{.Image}}|{{index .Config.Labels \"codex.g03.execution-id\"}}|{{index .Config.Labels \"codex.g03.kind\"}}",
+          "g03-truss-browser-facts-938487b5-7353-4879-aa26-ee034e629718"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1028069.920005333,
+        "drainExpired": false,
+        "elapsedSeconds": 0.024,
+        "exitCode": 0,
+        "name": "cleanup-inspect-2",
+        "requestedTimeoutSeconds": 15,
+        "startedMonotonic": 1028054.920006291,
+        "streams": [
+          {
+            "bytes": 188,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-inspect-2.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 188,
+            "rawSha256": "bc3170b1ed4eb2ab78cee23b04a4a912bc5592b5ad46e2a950e64f88b18c39f5",
+            "sha256": "bc3170b1ed4eb2ab78cee23b04a4a912bc5592b5ad46e2a950e64f88b18c39f5",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-inspect-2.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 15.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "cleanup-stop-2",
+      "record": {
+        "argv": [
+          "docker",
+          "stop",
+          "--time",
+          "10",
+          "g03-truss-browser-facts-938487b5-7353-4879-aa26-ee034e629718"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1028069.943819625,
+        "drainExpired": false,
+        "elapsedSeconds": 0.023,
+        "exitCode": 0,
+        "name": "cleanup-stop-2",
+        "requestedTimeoutSeconds": 15,
+        "startedMonotonic": 1028054.9438215,
+        "streams": [
+          {
+            "bytes": 116,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-stop-2.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 116,
+            "rawSha256": "6e01a2615e2145ac41d2355806cbada9168f4759237969efbb8850515d92521c",
+            "sha256": "6e01a2615e2145ac41d2355806cbada9168f4759237969efbb8850515d92521c",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-stop-2.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 15.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "cleanup-rm-2",
+      "record": {
+        "argv": [
+          "docker",
+          "rm",
+          "--force",
+          "g03-truss-browser-facts-938487b5-7353-4879-aa26-ee034e629718"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1028069.967289708,
+        "drainExpired": false,
+        "elapsedSeconds": 0.166,
+        "exitCode": 0,
+        "name": "cleanup-rm-2",
+        "requestedTimeoutSeconds": 15,
+        "startedMonotonic": 1028054.967291541,
+        "streams": [
+          {
+            "bytes": 61,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-rm-2.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 61,
+            "rawSha256": "316f01e731edb171faf184d4d0cfc00fda45d80aa7e1e9de4fcb53018874779c",
+            "sha256": "316f01e731edb171faf184d4d0cfc00fda45d80aa7e1e9de4fcb53018874779c",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-rm-2.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 15.0,
+        "truncated": false
+      }
+    },
+    {
+      "name": "cleanup-final-2",
+      "record": {
+        "argv": [
+          "docker",
+          "ps",
+          "-a",
+          "--filter",
+          "name=^/g03-truss-browser-facts-938487b5-7353-4879-aa26-ee034e629718$",
+          "--format",
+          "{{.Names}}"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 1028070.133652666,
+        "drainExpired": false,
+        "elapsedSeconds": 0.033,
+        "exitCode": 0,
+        "name": "cleanup-final-2",
+        "requestedTimeoutSeconds": 15,
+        "startedMonotonic": 1028055.133654458,
+        "streams": [
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-final-2.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-final-2.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 15.0,
+        "truncated": false
+      }
+    }
+  ],
+  "deadlineMonotonic": 1029707.103930291,
+  "elapsedSeconds": 152.048,
+  "executionId": "938487b5-7353-4879-aa26-ee034e629718",
+  "failures": [
+    "BoundedChildFailure: bounded child failed or capture incomplete: browser-facts"
+  ],
+  "guestFailureCommands": [
+    {
+      "argv": [
+        "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11",
+        "--version"
+      ],
+      "captureErrors": [],
+      "deadlineMonotonic": 988609.653063721,
+      "drainExpired": false,
+      "elapsedSeconds": 0.119,
+      "environment": {
+        "CARGO_BUILD_JOBS": "4",
+        "CARGO_HOME": "/owned/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+        "CARGO_TARGET_DIR": "/owned/target",
+        "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "name": "python-version",
+      "startedMonotonic": 988579.653063721,
+      "streams": [
+        {
+          "bytes": 15,
+          "path": "/out/logs/python-version.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 15,
+          "rawSha256": "686560bcd94a5a3fe8187b7c4fc49beaff41c87eccb79908cd3da863ec30e52e",
+          "sha256": "686560bcd94a5a3fe8187b7c4fc49beaff41c87eccb79908cd3da863ec30e52e",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "/out/logs/python-version.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "timedOut": false,
+      "timeoutSeconds": 30.0,
+      "truncated": false
+    },
+    {
+      "argv": [
+        "rustc",
+        "--version"
+      ],
+      "captureErrors": [],
+      "deadlineMonotonic": 988609.781154041,
+      "drainExpired": false,
+      "elapsedSeconds": 0.073,
+      "environment": {
+        "CARGO_BUILD_JOBS": "4",
+        "CARGO_HOME": "/owned/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+        "CARGO_TARGET_DIR": "/owned/target",
+        "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "name": "rustc-version",
+      "startedMonotonic": 988579.781154041,
+      "streams": [
+        {
+          "bytes": 36,
+          "path": "/out/logs/rustc-version.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 36,
+          "rawSha256": "3397f54a03033c1b027496d83acc64e8f3ceeb4017e0575150f78726edce8a1a",
+          "sha256": "3397f54a03033c1b027496d83acc64e8f3ceeb4017e0575150f78726edce8a1a",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "/out/logs/rustc-version.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "timedOut": false,
+      "timeoutSeconds": 30.0,
+      "truncated": false
+    },
+    {
+      "argv": [
+        "cargo",
+        "--version"
+      ],
+      "captureErrors": [],
+      "deadlineMonotonic": 988609.86255513,
+      "drainExpired": false,
+      "elapsedSeconds": 0.148,
+      "environment": {
+        "CARGO_BUILD_JOBS": "4",
+        "CARGO_HOME": "/owned/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+        "CARGO_TARGET_DIR": "/owned/target",
+        "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "name": "cargo-version",
+      "startedMonotonic": 988579.86255513,
+      "streams": [
+        {
+          "bytes": 36,
+          "path": "/out/logs/cargo-version.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 36,
+          "rawSha256": "5f9bdc5e0a6960db4a3cc66e9b3ae15bad5b9b506e8b7c49739c88dc5355c3f1",
+          "sha256": "5f9bdc5e0a6960db4a3cc66e9b3ae15bad5b9b506e8b7c49739c88dc5355c3f1",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "/out/logs/cargo-version.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "timedOut": false,
+      "timeoutSeconds": 30.0,
+      "truncated": false
+    },
+    {
+      "argv": [
+        "bun",
+        "--version"
+      ],
+      "captureErrors": [],
+      "deadlineMonotonic": 988610.024986597,
+      "drainExpired": false,
+      "elapsedSeconds": 0.12,
+      "environment": {
+        "CARGO_BUILD_JOBS": "4",
+        "CARGO_HOME": "/owned/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+        "CARGO_TARGET_DIR": "/owned/target",
+        "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "name": "bun-version",
+      "startedMonotonic": 988580.024986597,
+      "streams": [
+        {
+          "bytes": 6,
+          "path": "/out/logs/bun-version.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 6,
+          "rawSha256": "bd31e8d9cf8d14a1e9e3fdf3b9f6a524819aed0d1b14627523c6765767c7d8f1",
+          "sha256": "bd31e8d9cf8d14a1e9e3fdf3b9f6a524819aed0d1b14627523c6765767c7d8f1",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "/out/logs/bun-version.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "timedOut": false,
+      "timeoutSeconds": 30.0,
+      "truncated": false
+    },
+    {
+      "argv": [
+        "node",
+        "--version"
+      ],
+      "captureErrors": [],
+      "deadlineMonotonic": 988610.157697698,
+      "drainExpired": false,
+      "elapsedSeconds": 0.151,
+      "environment": {
+        "CARGO_BUILD_JOBS": "4",
+        "CARGO_HOME": "/owned/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+        "CARGO_TARGET_DIR": "/owned/target",
+        "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "name": "node-version",
+      "startedMonotonic": 988580.157697698,
+      "streams": [
+        {
+          "bytes": 9,
+          "path": "/out/logs/node-version.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 9,
+          "rawSha256": "b26441604894a1a4e4cac96bfb464737575d9b6a2e8b9d3e996283005bd67b37",
+          "sha256": "b26441604894a1a4e4cac96bfb464737575d9b6a2e8b9d3e996283005bd67b37",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "/out/logs/node-version.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "timedOut": false,
+      "timeoutSeconds": 30.0,
+      "truncated": false
+    },
+    {
+      "argv": [
+        "/wasm-tools/wasm-bindgen",
+        "--version"
+      ],
+      "captureErrors": [],
+      "deadlineMonotonic": 988610.321231047,
+      "drainExpired": false,
+      "elapsedSeconds": 0.119,
+      "environment": {
+        "CARGO_BUILD_JOBS": "4",
+        "CARGO_HOME": "/owned/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+        "CARGO_TARGET_DIR": "/owned/target",
+        "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "name": "wasm-bindgen-version",
+      "startedMonotonic": 988580.321231047,
+      "streams": [
+        {
+          "bytes": 21,
+          "path": "/out/logs/wasm-bindgen-version.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 21,
+          "rawSha256": "77e9a14fc88e7434ec823340ac27538312be174451c3548fd84ec08f1beb8276",
+          "sha256": "77e9a14fc88e7434ec823340ac27538312be174451c3548fd84ec08f1beb8276",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "/out/logs/wasm-bindgen-version.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "timedOut": false,
+      "timeoutSeconds": 30.0,
+      "truncated": false
+    },
+    {
+      "argv": [
+        "rustc",
+        "-vV"
+      ],
+      "captureErrors": [],
+      "deadlineMonotonic": 988610.450651459,
+      "drainExpired": false,
+      "elapsedSeconds": 0.161,
+      "environment": {
+        "CARGO_BUILD_JOBS": "4",
+        "CARGO_HOME": "/owned/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+        "CARGO_TARGET_DIR": "/owned/target",
+        "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "name": "rust-verbose",
+      "startedMonotonic": 988580.450651459,
+      "streams": [
+        {
+          "bytes": 196,
+          "path": "/out/logs/rust-verbose.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 196,
+          "rawSha256": "938db28b83089ab88301ca425f99fa1d8b61ee66e0371babe1db6373ae9810a3",
+          "sha256": "938db28b83089ab88301ca425f99fa1d8b61ee66e0371babe1db6373ae9810a3",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "/out/logs/rust-verbose.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "timedOut": false,
+      "timeoutSeconds": 30.0,
+      "truncated": false
+    },
+    {
+      "argv": [
+        "rustup",
+        "target",
+        "list",
+        "--installed",
+        "--toolchain",
+        "1.90.0-x86_64-unknown-linux-gnu"
+      ],
+      "captureErrors": [],
+      "deadlineMonotonic": 988610.62508084,
+      "drainExpired": false,
+      "elapsedSeconds": 0.185,
+      "environment": {
+        "CARGO_BUILD_JOBS": "4",
+        "CARGO_HOME": "/owned/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+        "CARGO_TARGET_DIR": "/owned/target",
+        "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "name": "rust-targets",
+      "startedMonotonic": 988580.62508084,
+      "streams": [
+        {
+          "bytes": 48,
+          "path": "/out/logs/rust-targets.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 48,
+          "rawSha256": "dfefef0a475862622c9cc10adb82ac6004b6b8cd61c2296712a384a16eb6d624",
+          "sha256": "dfefef0a475862622c9cc10adb82ac6004b6b8cd61c2296712a384a16eb6d624",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "/out/logs/rust-targets.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "timedOut": false,
+      "timeoutSeconds": 30.0,
+      "truncated": false
+    },
+    {
+      "argv": [
+        "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11",
+        "-B",
+        "-I",
+        "/operator/cargo_cache_extract.py",
+        "--evidence",
+        "/cargo-cache-input/evidence",
+        "--archive",
+        "/cargo-cache-input/software/cargo-registry.tar",
+        "--destination",
+        "/owned/cargo/registry",
+        "--archive-sha256",
+        "b678cc11533ea60fcc2d0792092d835ba279de5ddc065f3bcc700581d0865fea",
+        "--archive-bytes",
+        "44830720",
+        "--acquisition-packet-sha256",
+        "9a3523d7e86cc83c378bcc5764abb1ff7dbee6fc30dbbff619d4cd24c0d6ff05",
+        "--index-sha256",
+        "01488af1b54d4164cbbcd8fa7de255a8756e886ce13cdea54b8d05610004716b",
+        "--rows-sha256",
+        "c072486446d6081c82eade71500ee7cf6299699f6ab150f555c422da7b8d60a9",
+        "--chunk-bytes",
+        "148230",
+        "--row-count",
+        "833",
+        "--receipt",
+        "/out/reports/cargo-cache.json"
+      ],
+      "captureErrors": [],
+      "deadlineMonotonic": 988760.823478008,
+      "drainExpired": false,
+      "elapsedSeconds": 1.445,
+      "environment": {
+        "CARGO_BUILD_JOBS": "4",
+        "CARGO_HOME": "/owned/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+        "CARGO_TARGET_DIR": "/owned/target",
+        "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "name": "cargo-cache-extract",
+      "startedMonotonic": 988580.823478008,
+      "streams": [
+        {
+          "bytes": 161,
+          "path": "/out/logs/cargo-cache-extract.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 161,
+          "rawSha256": "9d4de7902f4996b96dcae87b4fd7374bee2cd6efdf123657f0c5372edf4fcdcd",
+          "sha256": "9d4de7902f4996b96dcae87b4fd7374bee2cd6efdf123657f0c5372edf4fcdcd",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "/out/logs/cargo-cache-extract.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "timedOut": false,
+      "timeoutSeconds": 180.0,
+      "truncated": false
+    },
+    {
+      "argv": [
+        "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11",
+        "-B",
+        "-m",
+        "venv",
+        "--copies",
+        "/owned/venv"
+      ],
+      "captureErrors": [],
+      "deadlineMonotonic": 988642.273623842,
+      "drainExpired": false,
+      "elapsedSeconds": 3.409,
+      "environment": {
+        "CARGO_BUILD_JOBS": "4",
+        "CARGO_HOME": "/owned/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+        "CARGO_TARGET_DIR": "/owned/target",
+        "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "name": "create-venv",
+      "startedMonotonic": 988582.273623842,
+      "streams": [
+        {
+          "bytes": 0,
+          "path": "/out/logs/create-venv.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "/out/logs/create-venv.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "timedOut": false,
+      "timeoutSeconds": 60.0,
+      "truncated": false
+    },
+    {
+      "argv": [
+        "/owned/venv/bin/python",
+        "-B",
+        "-I",
+        "-m",
+        "pip",
+        "--isolated",
+        "install",
+        "--disable-pip-version-check",
+        "--no-cache-dir",
+        "--no-compile",
+        "--only-binary=:all:",
+        "--require-hashes",
+        "--index-url",
+        "file:///cohort/aggregate/mirror/simple",
+        "-r",
+        "/cohort/aggregate/mirror/requirements.lock"
+      ],
+      "captureErrors": [],
+      "deadlineMonotonic": 989185.687510506,
+      "drainExpired": false,
+      "elapsedSeconds": 3.038,
+      "environment": {
+        "CARGO_BUILD_JOBS": "4",
+        "CARGO_HOME": "/owned/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+        "CARGO_TARGET_DIR": "/owned/target",
+        "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "name": "offline-install",
+      "startedMonotonic": 988585.687510506,
+      "streams": [
+        {
+          "bytes": 3462,
+          "path": "/out/logs/offline-install.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 3462,
+          "rawSha256": "3ca6eb11af235ba9954ec5c6e02697163d4a6c37e2617853fea9ac99c0e9f903",
+          "sha256": "3ca6eb11af235ba9954ec5c6e02697163d4a6c37e2617853fea9ac99c0e9f903",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "/out/logs/offline-install.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "timedOut": false,
+      "timeoutSeconds": 600.0,
+      "truncated": false
+    },
+    {
+      "argv": [
+        "/owned/venv/bin/python",
+        "-B",
+        "-I",
+        "-m",
+        "pip",
+        "--isolated",
+        "check"
+      ],
+      "captureErrors": [],
+      "deadlineMonotonic": 988648.731620017,
+      "drainExpired": false,
+      "elapsedSeconds": 0.571,
+      "environment": {
+        "CARGO_BUILD_JOBS": "4",
+        "CARGO_HOME": "/owned/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+        "CARGO_TARGET_DIR": "/owned/target",
+        "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "name": "pip-check",
+      "startedMonotonic": 988588.731620017,
+      "streams": [
+        {
+          "bytes": 30,
+          "path": "/out/logs/pip-check.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 30,
+          "rawSha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+          "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "/out/logs/pip-check.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "timedOut": false,
+      "timeoutSeconds": 60.0,
+      "truncated": false
+    },
+    {
+      "argv": [
+        "/owned/venv/bin/python",
+        "-B",
+        "-I",
+        "/operator-inputs/verify_weft_wheel.py",
+        "--wheel",
+        "/cohort/aggregate/mirror/files/umf_weft-0.4.56-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "--wheel-sha256",
+        "32f4c38d9a614dd4c3a367f8b24d5cd4ba41ec80c2a4a2e3423e2082a294dbdd",
+        "--wheel-size",
+        "14358901"
+      ],
+      "captureErrors": [],
+      "deadlineMonotonic": 988649.311646751,
+      "drainExpired": false,
+      "elapsedSeconds": 0.525,
+      "environment": {
+        "CARGO_BUILD_JOBS": "4",
+        "CARGO_HOME": "/owned/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+        "CARGO_TARGET_DIR": "/owned/target",
+        "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "name": "wheel-members",
+      "startedMonotonic": 988589.311646751,
+      "streams": [
+        {
+          "bytes": 606,
+          "path": "/out/logs/wheel-members.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 606,
+          "rawSha256": "de79641cfed7b0fba0b15fad2e9c534faa65997b6e0200a1e30e6979e6bfcdcf",
+          "sha256": "de79641cfed7b0fba0b15fad2e9c534faa65997b6e0200a1e30e6979e6bfcdcf",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "/out/logs/wheel-members.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "timedOut": false,
+      "timeoutSeconds": 60.0,
+      "truncated": false
+    },
+    {
+      "argv": [
+        "/owned/venv/bin/python",
+        "-B",
+        "-I",
+        "-m",
+        "pip",
+        "--isolated",
+        "list",
+        "--format=json"
+      ],
+      "captureErrors": [],
+      "deadlineMonotonic": 988619.848878655,
+      "drainExpired": false,
+      "elapsedSeconds": 0.534,
+      "environment": {
+        "CARGO_BUILD_JOBS": "4",
+        "CARGO_HOME": "/owned/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+        "CARGO_TARGET_DIR": "/owned/target",
+        "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "name": "distribution-snapshot",
+      "startedMonotonic": 988589.848878655,
+      "streams": [
+        {
+          "bytes": 926,
+          "path": "/out/logs/distribution-snapshot.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 926,
+          "rawSha256": "c35538669bb284331fd708153fb7ecd922ffdc2d260e8f8329752265688aab37",
+          "sha256": "c35538669bb284331fd708153fb7ecd922ffdc2d260e8f8329752265688aab37",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "/out/logs/distribution-snapshot.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "timedOut": false,
+      "timeoutSeconds": 30.0,
+      "truncated": false
+    },
+    {
+      "argv": [
+        "/owned/venv/bin/python",
+        "-B",
+        "-I",
+        "tests/truss-facts/check.py",
+        "--reports",
+        "/out/reports/facts.json"
+      ],
+      "captureErrors": [],
+      "deadlineMonotonic": 988770.401623747,
+      "drainExpired": false,
+      "elapsedSeconds": 0.262,
+      "environment": {
+        "CARGO_BUILD_JOBS": "4",
+        "CARGO_HOME": "/owned/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+        "CARGO_TARGET_DIR": "/owned/target",
+        "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "name": "facts-python",
+      "startedMonotonic": 988590.401623747,
+      "streams": [
+        {
+          "bytes": 54,
+          "path": "/out/logs/facts-python.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 54,
+          "rawSha256": "a8e760313dffc6823e87da5002bb12b5717b16fc26b7b28877fc34bc818b1ae0",
+          "sha256": "a8e760313dffc6823e87da5002bb12b5717b16fc26b7b28877fc34bc818b1ae0",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "/out/logs/facts-python.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "timedOut": false,
+      "timeoutSeconds": 180.0,
+      "truncated": false
+    },
+    {
+      "argv": [
+        "/owned/venv/bin/python",
+        "-B",
+        "-I",
+        "tests/truss-entity-selection/check.py",
+        "--reports",
+        "/out/reports/entity.json"
+      ],
+      "captureErrors": [],
+      "deadlineMonotonic": 988770.671144851,
+      "drainExpired": false,
+      "elapsedSeconds": 0.31,
+      "environment": {
+        "CARGO_BUILD_JOBS": "4",
+        "CARGO_HOME": "/owned/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+        "CARGO_TARGET_DIR": "/owned/target",
+        "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "name": "entity-python",
+      "startedMonotonic": 988590.671144851,
+      "streams": [
+        {
+          "bytes": 55,
+          "path": "/out/logs/entity-python.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 55,
+          "rawSha256": "5398918007b41e9d1197cde2136d065131d7597f4bc9a5be7909f693a6f88002",
+          "sha256": "5398918007b41e9d1197cde2136d065131d7597f4bc9a5be7909f693a6f88002",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "/out/logs/entity-python.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "timedOut": false,
+      "timeoutSeconds": 180.0,
+      "truncated": false
+    },
+    {
+      "argv": [
+        "cargo",
+        "build",
+        "--locked",
+        "--offline",
+        "-p",
+        "weft-wasm",
+        "--features",
+        "truss-postgresql-pg18",
+        "--target",
+        "wasm32-unknown-unknown"
+      ],
+      "captureErrors": [],
+      "deadlineMonotonic": 989190.990109745,
+      "drainExpired": false,
+      "elapsedSeconds": 95.969,
+      "environment": {
+        "CARGO_BUILD_JOBS": "4",
+        "CARGO_HOME": "/owned/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+        "CARGO_TARGET_DIR": "/owned/target",
+        "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "name": "truss-wasm-build",
+      "startedMonotonic": 988590.990109745,
+      "streams": [
+        {
+          "bytes": 0,
+          "path": "/out/logs/truss-wasm-build.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        },
+        {
+          "bytes": 11335,
+          "path": "/out/logs/truss-wasm-build.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 11335,
+          "rawSha256": "4018641c0ec80bb0fcd1ec767f8ce3f425f2cc5bb06f03e96ce768c65e2d44d0",
+          "sha256": "4018641c0ec80bb0fcd1ec767f8ce3f425f2cc5bb06f03e96ce768c65e2d44d0",
+          "truncated": false
+        }
+      ],
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "timedOut": false,
+      "timeoutSeconds": 600.0,
+      "truncated": false
+    },
+    {
+      "argv": [
+        "/wasm-tools/wasm-bindgen",
+        "--target",
+        "web",
+        "--out-dir",
+        "/out/artifacts/truss-web",
+        "/owned/target/wasm32-unknown-unknown/debug/weft_wasm.wasm"
+      ],
+      "captureErrors": [],
+      "deadlineMonotonic": 988866.973394409,
+      "drainExpired": false,
+      "elapsedSeconds": 2.665,
+      "environment": {
+        "CARGO_BUILD_JOBS": "4",
+        "CARGO_HOME": "/owned/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+        "CARGO_TARGET_DIR": "/owned/target",
+        "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "name": "truss-wasm-bindgen",
+      "startedMonotonic": 988686.973394409,
+      "streams": [
+        {
+          "bytes": 0,
+          "path": "/out/logs/truss-wasm-bindgen.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "/out/logs/truss-wasm-bindgen.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "timedOut": false,
+      "timeoutSeconds": 180.0,
+      "truncated": false
+    },
+    {
+      "argv": [
+        "bun",
+        "build",
+        "packages/weft-browser/src/index.ts",
+        "--target",
+        "browser",
+        "--outdir",
+        "/out/artifacts/browser-wrapper"
+      ],
+      "captureErrors": [],
+      "deadlineMonotonic": 988809.646039437,
+      "drainExpired": false,
+      "elapsedSeconds": 0.221,
+      "environment": {
+        "CARGO_BUILD_JOBS": "4",
+        "CARGO_HOME": "/owned/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+        "CARGO_TARGET_DIR": "/owned/target",
+        "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "name": "browser-wrapper",
+      "startedMonotonic": 988689.646039437,
+      "streams": [
+        {
+          "bytes": 62,
+          "path": "/out/logs/browser-wrapper.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 62,
+          "rawSha256": "a9f2585530f810e9b3375a632d24a6139ebf51eea76815702cedc4d0bb03d884",
+          "sha256": "a9f2585530f810e9b3375a632d24a6139ebf51eea76815702cedc4d0bb03d884",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "/out/logs/browser-wrapper.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "timedOut": false,
+      "timeoutSeconds": 120.0,
+      "truncated": false
+    },
+    {
+      "argv": [
+        "/owned/venv/bin/python",
+        "-B",
+        "-I",
+        "-m",
+        "pip",
+        "--isolated",
+        "list",
+        "--format=json"
+      ],
+      "captureErrors": [],
+      "deadlineMonotonic": 988719.873166136,
+      "drainExpired": false,
+      "elapsedSeconds": 0.633,
+      "environment": {
+        "CARGO_BUILD_JOBS": "4",
+        "CARGO_HOME": "/owned/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+        "CARGO_TARGET_DIR": "/owned/target",
+        "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "name": "distribution-snapshot-post",
+      "startedMonotonic": 988689.873166136,
+      "streams": [
+        {
+          "bytes": 926,
+          "path": "/out/logs/distribution-snapshot-post.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 926,
+          "rawSha256": "c35538669bb284331fd708153fb7ecd922ffdc2d260e8f8329752265688aab37",
+          "sha256": "c35538669bb284331fd708153fb7ecd922ffdc2d260e8f8329752265688aab37",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "/out/logs/distribution-snapshot-post.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "streamsEOF": [
+        true,
+        true
+      ],
+      "timedOut": false,
+      "timeoutSeconds": 30.0,
+      "truncated": false
+    }
+  ],
+  "guestPhase": {
+    "cargoCacheArchiveBytes": 44830720,
+    "cargoCacheArchiveSha256": "b678cc11533ea60fcc2d0792092d835ba279de5ddc065f3bcc700581d0865fea",
+    "cargoCacheBytes": 44245301,
+    "cargoCacheEntryCount": 833,
+    "cargoCacheFileCount": 556,
+    "cargoCacheInstallReceiptBytes": 588,
+    "cargoCacheInstallReceiptSha256": "9a2170c7c8e63221c986df190137f2d0ed8f4c31366d7da3c886a27ee29aa47e",
+    "cargoCacheInventoryChunkBytes": 148230,
+    "cargoCacheInventoryIndexSha256": "01488af1b54d4164cbbcd8fa7de255a8756e886ce13cdea54b8d05610004716b",
+    "cargoCacheRosterSha256": "c072486446d6081c82eade71500ee7cf6299699f6ab150f555c422da7b8d60a9",
+    "clock": {
+      "guestAnchorMonotonic": 988550.279251664,
+      "guestClockDomain": "Linux guest time.monotonic",
+      "guestTerminalDeadlineMonotonic": 990309.4712064139,
+      "guestWorkDeadlineMonotonic": 990289.4712064139,
+      "hostClockDomain": "darwin host time.monotonic",
+      "hostTerminalRemainingSecondsAtHandoff": 1759.1919547499856,
+      "hostWorkRemainingSecondsAtHandoff": 1739.1919547499856,
+      "mapping": "remaining durations passed from the original host lane; one guest-local monotonic anchor; parent host deadlines remain authoritative"
+    },
+    "commandCount": 20,
+    "commandLogBytes": 29407,
+    "commandLogSha256": "a45ba9b40181a7e47533b201a002c6933738ea23895766ff305ff5ae69c992e2",
+    "commands": [
+      {
+        "argv": [
+          "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11",
+          "--version"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 988609.653063721,
+        "drainExpired": false,
+        "elapsedSeconds": 0.119,
+        "environment": {
+          "CARGO_BUILD_JOBS": "4",
+          "CARGO_HOME": "/owned/cargo",
+          "CARGO_NET_OFFLINE": "true",
+          "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+          "CARGO_TARGET_DIR": "/owned/target",
+          "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+        },
+        "exitCode": 0,
+        "name": "python-version",
+        "startedMonotonic": 988579.653063721,
+        "streams": [
+          {
+            "bytes": 15,
+            "path": "/out/logs/python-version.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 15,
+            "rawSha256": "686560bcd94a5a3fe8187b7c4fc49beaff41c87eccb79908cd3da863ec30e52e",
+            "sha256": "686560bcd94a5a3fe8187b7c4fc49beaff41c87eccb79908cd3da863ec30e52e",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/out/logs/python-version.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 30.0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "rustc",
+          "--version"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 988609.781154041,
+        "drainExpired": false,
+        "elapsedSeconds": 0.073,
+        "environment": {
+          "CARGO_BUILD_JOBS": "4",
+          "CARGO_HOME": "/owned/cargo",
+          "CARGO_NET_OFFLINE": "true",
+          "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+          "CARGO_TARGET_DIR": "/owned/target",
+          "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+        },
+        "exitCode": 0,
+        "name": "rustc-version",
+        "startedMonotonic": 988579.781154041,
+        "streams": [
+          {
+            "bytes": 36,
+            "path": "/out/logs/rustc-version.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 36,
+            "rawSha256": "3397f54a03033c1b027496d83acc64e8f3ceeb4017e0575150f78726edce8a1a",
+            "sha256": "3397f54a03033c1b027496d83acc64e8f3ceeb4017e0575150f78726edce8a1a",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/out/logs/rustc-version.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 30.0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "cargo",
+          "--version"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 988609.86255513,
+        "drainExpired": false,
+        "elapsedSeconds": 0.148,
+        "environment": {
+          "CARGO_BUILD_JOBS": "4",
+          "CARGO_HOME": "/owned/cargo",
+          "CARGO_NET_OFFLINE": "true",
+          "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+          "CARGO_TARGET_DIR": "/owned/target",
+          "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+        },
+        "exitCode": 0,
+        "name": "cargo-version",
+        "startedMonotonic": 988579.86255513,
+        "streams": [
+          {
+            "bytes": 36,
+            "path": "/out/logs/cargo-version.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 36,
+            "rawSha256": "5f9bdc5e0a6960db4a3cc66e9b3ae15bad5b9b506e8b7c49739c88dc5355c3f1",
+            "sha256": "5f9bdc5e0a6960db4a3cc66e9b3ae15bad5b9b506e8b7c49739c88dc5355c3f1",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/out/logs/cargo-version.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 30.0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "bun",
+          "--version"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 988610.024986597,
+        "drainExpired": false,
+        "elapsedSeconds": 0.12,
+        "environment": {
+          "CARGO_BUILD_JOBS": "4",
+          "CARGO_HOME": "/owned/cargo",
+          "CARGO_NET_OFFLINE": "true",
+          "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+          "CARGO_TARGET_DIR": "/owned/target",
+          "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+        },
+        "exitCode": 0,
+        "name": "bun-version",
+        "startedMonotonic": 988580.024986597,
+        "streams": [
+          {
+            "bytes": 6,
+            "path": "/out/logs/bun-version.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 6,
+            "rawSha256": "bd31e8d9cf8d14a1e9e3fdf3b9f6a524819aed0d1b14627523c6765767c7d8f1",
+            "sha256": "bd31e8d9cf8d14a1e9e3fdf3b9f6a524819aed0d1b14627523c6765767c7d8f1",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/out/logs/bun-version.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 30.0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "node",
+          "--version"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 988610.157697698,
+        "drainExpired": false,
+        "elapsedSeconds": 0.151,
+        "environment": {
+          "CARGO_BUILD_JOBS": "4",
+          "CARGO_HOME": "/owned/cargo",
+          "CARGO_NET_OFFLINE": "true",
+          "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+          "CARGO_TARGET_DIR": "/owned/target",
+          "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+        },
+        "exitCode": 0,
+        "name": "node-version",
+        "startedMonotonic": 988580.157697698,
+        "streams": [
+          {
+            "bytes": 9,
+            "path": "/out/logs/node-version.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 9,
+            "rawSha256": "b26441604894a1a4e4cac96bfb464737575d9b6a2e8b9d3e996283005bd67b37",
+            "sha256": "b26441604894a1a4e4cac96bfb464737575d9b6a2e8b9d3e996283005bd67b37",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/out/logs/node-version.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 30.0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "/wasm-tools/wasm-bindgen",
+          "--version"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 988610.321231047,
+        "drainExpired": false,
+        "elapsedSeconds": 0.119,
+        "environment": {
+          "CARGO_BUILD_JOBS": "4",
+          "CARGO_HOME": "/owned/cargo",
+          "CARGO_NET_OFFLINE": "true",
+          "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+          "CARGO_TARGET_DIR": "/owned/target",
+          "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+        },
+        "exitCode": 0,
+        "name": "wasm-bindgen-version",
+        "startedMonotonic": 988580.321231047,
+        "streams": [
+          {
+            "bytes": 21,
+            "path": "/out/logs/wasm-bindgen-version.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 21,
+            "rawSha256": "77e9a14fc88e7434ec823340ac27538312be174451c3548fd84ec08f1beb8276",
+            "sha256": "77e9a14fc88e7434ec823340ac27538312be174451c3548fd84ec08f1beb8276",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/out/logs/wasm-bindgen-version.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 30.0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "rustc",
+          "-vV"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 988610.450651459,
+        "drainExpired": false,
+        "elapsedSeconds": 0.161,
+        "environment": {
+          "CARGO_BUILD_JOBS": "4",
+          "CARGO_HOME": "/owned/cargo",
+          "CARGO_NET_OFFLINE": "true",
+          "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+          "CARGO_TARGET_DIR": "/owned/target",
+          "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+        },
+        "exitCode": 0,
+        "name": "rust-verbose",
+        "startedMonotonic": 988580.450651459,
+        "streams": [
+          {
+            "bytes": 196,
+            "path": "/out/logs/rust-verbose.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 196,
+            "rawSha256": "938db28b83089ab88301ca425f99fa1d8b61ee66e0371babe1db6373ae9810a3",
+            "sha256": "938db28b83089ab88301ca425f99fa1d8b61ee66e0371babe1db6373ae9810a3",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/out/logs/rust-verbose.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 30.0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "rustup",
+          "target",
+          "list",
+          "--installed",
+          "--toolchain",
+          "1.90.0-x86_64-unknown-linux-gnu"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 988610.62508084,
+        "drainExpired": false,
+        "elapsedSeconds": 0.185,
+        "environment": {
+          "CARGO_BUILD_JOBS": "4",
+          "CARGO_HOME": "/owned/cargo",
+          "CARGO_NET_OFFLINE": "true",
+          "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+          "CARGO_TARGET_DIR": "/owned/target",
+          "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+        },
+        "exitCode": 0,
+        "name": "rust-targets",
+        "startedMonotonic": 988580.62508084,
+        "streams": [
+          {
+            "bytes": 48,
+            "path": "/out/logs/rust-targets.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 48,
+            "rawSha256": "dfefef0a475862622c9cc10adb82ac6004b6b8cd61c2296712a384a16eb6d624",
+            "sha256": "dfefef0a475862622c9cc10adb82ac6004b6b8cd61c2296712a384a16eb6d624",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/out/logs/rust-targets.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 30.0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11",
+          "-B",
+          "-I",
+          "/operator/cargo_cache_extract.py",
+          "--evidence",
+          "/cargo-cache-input/evidence",
+          "--archive",
+          "/cargo-cache-input/software/cargo-registry.tar",
+          "--destination",
+          "/owned/cargo/registry",
+          "--archive-sha256",
+          "b678cc11533ea60fcc2d0792092d835ba279de5ddc065f3bcc700581d0865fea",
+          "--archive-bytes",
+          "44830720",
+          "--acquisition-packet-sha256",
+          "9a3523d7e86cc83c378bcc5764abb1ff7dbee6fc30dbbff619d4cd24c0d6ff05",
+          "--index-sha256",
+          "01488af1b54d4164cbbcd8fa7de255a8756e886ce13cdea54b8d05610004716b",
+          "--rows-sha256",
+          "c072486446d6081c82eade71500ee7cf6299699f6ab150f555c422da7b8d60a9",
+          "--chunk-bytes",
+          "148230",
+          "--row-count",
+          "833",
+          "--receipt",
+          "/out/reports/cargo-cache.json"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 988760.823478008,
+        "drainExpired": false,
+        "elapsedSeconds": 1.445,
+        "environment": {
+          "CARGO_BUILD_JOBS": "4",
+          "CARGO_HOME": "/owned/cargo",
+          "CARGO_NET_OFFLINE": "true",
+          "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+          "CARGO_TARGET_DIR": "/owned/target",
+          "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+        },
+        "exitCode": 0,
+        "name": "cargo-cache-extract",
+        "startedMonotonic": 988580.823478008,
+        "streams": [
+          {
+            "bytes": 161,
+            "path": "/out/logs/cargo-cache-extract.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 161,
+            "rawSha256": "9d4de7902f4996b96dcae87b4fd7374bee2cd6efdf123657f0c5372edf4fcdcd",
+            "sha256": "9d4de7902f4996b96dcae87b4fd7374bee2cd6efdf123657f0c5372edf4fcdcd",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/out/logs/cargo-cache-extract.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 180.0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11",
+          "-B",
+          "-m",
+          "venv",
+          "--copies",
+          "/owned/venv"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 988642.273623842,
+        "drainExpired": false,
+        "elapsedSeconds": 3.409,
+        "environment": {
+          "CARGO_BUILD_JOBS": "4",
+          "CARGO_HOME": "/owned/cargo",
+          "CARGO_NET_OFFLINE": "true",
+          "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+          "CARGO_TARGET_DIR": "/owned/target",
+          "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+        },
+        "exitCode": 0,
+        "name": "create-venv",
+        "startedMonotonic": 988582.273623842,
+        "streams": [
+          {
+            "bytes": 0,
+            "path": "/out/logs/create-venv.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/out/logs/create-venv.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 60.0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "/owned/venv/bin/python",
+          "-B",
+          "-I",
+          "-m",
+          "pip",
+          "--isolated",
+          "install",
+          "--disable-pip-version-check",
+          "--no-cache-dir",
+          "--no-compile",
+          "--only-binary=:all:",
+          "--require-hashes",
+          "--index-url",
+          "file:///cohort/aggregate/mirror/simple",
+          "-r",
+          "/cohort/aggregate/mirror/requirements.lock"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 989185.687510506,
+        "drainExpired": false,
+        "elapsedSeconds": 3.038,
+        "environment": {
+          "CARGO_BUILD_JOBS": "4",
+          "CARGO_HOME": "/owned/cargo",
+          "CARGO_NET_OFFLINE": "true",
+          "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+          "CARGO_TARGET_DIR": "/owned/target",
+          "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+        },
+        "exitCode": 0,
+        "name": "offline-install",
+        "startedMonotonic": 988585.687510506,
+        "streams": [
+          {
+            "bytes": 3462,
+            "path": "/out/logs/offline-install.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 3462,
+            "rawSha256": "3ca6eb11af235ba9954ec5c6e02697163d4a6c37e2617853fea9ac99c0e9f903",
+            "sha256": "3ca6eb11af235ba9954ec5c6e02697163d4a6c37e2617853fea9ac99c0e9f903",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/out/logs/offline-install.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 600.0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "/owned/venv/bin/python",
+          "-B",
+          "-I",
+          "-m",
+          "pip",
+          "--isolated",
+          "check"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 988648.731620017,
+        "drainExpired": false,
+        "elapsedSeconds": 0.571,
+        "environment": {
+          "CARGO_BUILD_JOBS": "4",
+          "CARGO_HOME": "/owned/cargo",
+          "CARGO_NET_OFFLINE": "true",
+          "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+          "CARGO_TARGET_DIR": "/owned/target",
+          "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+        },
+        "exitCode": 0,
+        "name": "pip-check",
+        "startedMonotonic": 988588.731620017,
+        "streams": [
+          {
+            "bytes": 30,
+            "path": "/out/logs/pip-check.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 30,
+            "rawSha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+            "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/out/logs/pip-check.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 60.0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "/owned/venv/bin/python",
+          "-B",
+          "-I",
+          "/operator-inputs/verify_weft_wheel.py",
+          "--wheel",
+          "/cohort/aggregate/mirror/files/umf_weft-0.4.56-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+          "--wheel-sha256",
+          "32f4c38d9a614dd4c3a367f8b24d5cd4ba41ec80c2a4a2e3423e2082a294dbdd",
+          "--wheel-size",
+          "14358901"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 988649.311646751,
+        "drainExpired": false,
+        "elapsedSeconds": 0.525,
+        "environment": {
+          "CARGO_BUILD_JOBS": "4",
+          "CARGO_HOME": "/owned/cargo",
+          "CARGO_NET_OFFLINE": "true",
+          "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+          "CARGO_TARGET_DIR": "/owned/target",
+          "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+        },
+        "exitCode": 0,
+        "name": "wheel-members",
+        "startedMonotonic": 988589.311646751,
+        "streams": [
+          {
+            "bytes": 606,
+            "path": "/out/logs/wheel-members.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 606,
+            "rawSha256": "de79641cfed7b0fba0b15fad2e9c534faa65997b6e0200a1e30e6979e6bfcdcf",
+            "sha256": "de79641cfed7b0fba0b15fad2e9c534faa65997b6e0200a1e30e6979e6bfcdcf",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/out/logs/wheel-members.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 60.0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "/owned/venv/bin/python",
+          "-B",
+          "-I",
+          "-m",
+          "pip",
+          "--isolated",
+          "list",
+          "--format=json"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 988619.848878655,
+        "drainExpired": false,
+        "elapsedSeconds": 0.534,
+        "environment": {
+          "CARGO_BUILD_JOBS": "4",
+          "CARGO_HOME": "/owned/cargo",
+          "CARGO_NET_OFFLINE": "true",
+          "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+          "CARGO_TARGET_DIR": "/owned/target",
+          "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+        },
+        "exitCode": 0,
+        "name": "distribution-snapshot",
+        "startedMonotonic": 988589.848878655,
+        "streams": [
+          {
+            "bytes": 926,
+            "path": "/out/logs/distribution-snapshot.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 926,
+            "rawSha256": "c35538669bb284331fd708153fb7ecd922ffdc2d260e8f8329752265688aab37",
+            "sha256": "c35538669bb284331fd708153fb7ecd922ffdc2d260e8f8329752265688aab37",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/out/logs/distribution-snapshot.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 30.0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "/owned/venv/bin/python",
+          "-B",
+          "-I",
+          "tests/truss-facts/check.py",
+          "--reports",
+          "/out/reports/facts.json"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 988770.401623747,
+        "drainExpired": false,
+        "elapsedSeconds": 0.262,
+        "environment": {
+          "CARGO_BUILD_JOBS": "4",
+          "CARGO_HOME": "/owned/cargo",
+          "CARGO_NET_OFFLINE": "true",
+          "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+          "CARGO_TARGET_DIR": "/owned/target",
+          "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+        },
+        "exitCode": 0,
+        "name": "facts-python",
+        "startedMonotonic": 988590.401623747,
+        "streams": [
+          {
+            "bytes": 54,
+            "path": "/out/logs/facts-python.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 54,
+            "rawSha256": "a8e760313dffc6823e87da5002bb12b5717b16fc26b7b28877fc34bc818b1ae0",
+            "sha256": "a8e760313dffc6823e87da5002bb12b5717b16fc26b7b28877fc34bc818b1ae0",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/out/logs/facts-python.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 180.0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "/owned/venv/bin/python",
+          "-B",
+          "-I",
+          "tests/truss-entity-selection/check.py",
+          "--reports",
+          "/out/reports/entity.json"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 988770.671144851,
+        "drainExpired": false,
+        "elapsedSeconds": 0.31,
+        "environment": {
+          "CARGO_BUILD_JOBS": "4",
+          "CARGO_HOME": "/owned/cargo",
+          "CARGO_NET_OFFLINE": "true",
+          "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+          "CARGO_TARGET_DIR": "/owned/target",
+          "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+        },
+        "exitCode": 0,
+        "name": "entity-python",
+        "startedMonotonic": 988590.671144851,
+        "streams": [
+          {
+            "bytes": 55,
+            "path": "/out/logs/entity-python.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 55,
+            "rawSha256": "5398918007b41e9d1197cde2136d065131d7597f4bc9a5be7909f693a6f88002",
+            "sha256": "5398918007b41e9d1197cde2136d065131d7597f4bc9a5be7909f693a6f88002",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/out/logs/entity-python.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 180.0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "cargo",
+          "build",
+          "--locked",
+          "--offline",
+          "-p",
+          "weft-wasm",
+          "--features",
+          "truss-postgresql-pg18",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 989190.990109745,
+        "drainExpired": false,
+        "elapsedSeconds": 95.969,
+        "environment": {
+          "CARGO_BUILD_JOBS": "4",
+          "CARGO_HOME": "/owned/cargo",
+          "CARGO_NET_OFFLINE": "true",
+          "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+          "CARGO_TARGET_DIR": "/owned/target",
+          "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+        },
+        "exitCode": 0,
+        "name": "truss-wasm-build",
+        "startedMonotonic": 988590.990109745,
+        "streams": [
+          {
+            "bytes": 0,
+            "path": "/out/logs/truss-wasm-build.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          },
+          {
+            "bytes": 11335,
+            "path": "/out/logs/truss-wasm-build.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 11335,
+            "rawSha256": "4018641c0ec80bb0fcd1ec767f8ce3f425f2cc5bb06f03e96ce768c65e2d44d0",
+            "sha256": "4018641c0ec80bb0fcd1ec767f8ce3f425f2cc5bb06f03e96ce768c65e2d44d0",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 600.0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "/wasm-tools/wasm-bindgen",
+          "--target",
+          "web",
+          "--out-dir",
+          "/out/artifacts/truss-web",
+          "/owned/target/wasm32-unknown-unknown/debug/weft_wasm.wasm"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 988866.973394409,
+        "drainExpired": false,
+        "elapsedSeconds": 2.665,
+        "environment": {
+          "CARGO_BUILD_JOBS": "4",
+          "CARGO_HOME": "/owned/cargo",
+          "CARGO_NET_OFFLINE": "true",
+          "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+          "CARGO_TARGET_DIR": "/owned/target",
+          "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+        },
+        "exitCode": 0,
+        "name": "truss-wasm-bindgen",
+        "startedMonotonic": 988686.973394409,
+        "streams": [
+          {
+            "bytes": 0,
+            "path": "/out/logs/truss-wasm-bindgen.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/out/logs/truss-wasm-bindgen.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 180.0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "bun",
+          "build",
+          "packages/weft-browser/src/index.ts",
+          "--target",
+          "browser",
+          "--outdir",
+          "/out/artifacts/browser-wrapper"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 988809.646039437,
+        "drainExpired": false,
+        "elapsedSeconds": 0.221,
+        "environment": {
+          "CARGO_BUILD_JOBS": "4",
+          "CARGO_HOME": "/owned/cargo",
+          "CARGO_NET_OFFLINE": "true",
+          "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+          "CARGO_TARGET_DIR": "/owned/target",
+          "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+        },
+        "exitCode": 0,
+        "name": "browser-wrapper",
+        "startedMonotonic": 988689.646039437,
+        "streams": [
+          {
+            "bytes": 62,
+            "path": "/out/logs/browser-wrapper.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 62,
+            "rawSha256": "a9f2585530f810e9b3375a632d24a6139ebf51eea76815702cedc4d0bb03d884",
+            "sha256": "a9f2585530f810e9b3375a632d24a6139ebf51eea76815702cedc4d0bb03d884",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/out/logs/browser-wrapper.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 120.0,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "/owned/venv/bin/python",
+          "-B",
+          "-I",
+          "-m",
+          "pip",
+          "--isolated",
+          "list",
+          "--format=json"
+        ],
+        "captureErrors": [],
+        "deadlineMonotonic": 988719.873166136,
+        "drainExpired": false,
+        "elapsedSeconds": 0.633,
+        "environment": {
+          "CARGO_BUILD_JOBS": "4",
+          "CARGO_HOME": "/owned/cargo",
+          "CARGO_NET_OFFLINE": "true",
+          "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+          "CARGO_TARGET_DIR": "/owned/target",
+          "PATH": "/opt/rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin:/usr/local/bun/bin:/usr/local/bin:/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+        },
+        "exitCode": 0,
+        "name": "distribution-snapshot-post",
+        "startedMonotonic": 988689.873166136,
+        "streams": [
+          {
+            "bytes": 926,
+            "path": "/out/logs/distribution-snapshot-post.stdout.log",
+            "physicalClosed": true,
+            "rawBytes": 926,
+            "rawSha256": "c35538669bb284331fd708153fb7ecd922ffdc2d260e8f8329752265688aab37",
+            "sha256": "c35538669bb284331fd708153fb7ecd922ffdc2d260e8f8329752265688aab37",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "/out/logs/distribution-snapshot-post.stderr.log",
+            "physicalClosed": true,
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ],
+        "streamsEOF": [
+          true,
+          true
+        ],
+        "timedOut": false,
+        "timeoutSeconds": 30.0,
+        "truncated": false
+      }
+    ],
+    "gitStageRoster": {
+      "basis": "captured git-stage index mode + Git blob SHA-1; no guest Git metadata or Git command",
+      "bytes": 780359,
+      "entries": 5901,
+      "matchingPhysicalFiles": 5901,
+      "sha256": "bc3018c0d674cd2fc80794f9f36c523565c91558f70649cd3fe415f8e88b701b"
+    },
+    "installedDistributionSnapshotSha256": "b30e94dd71929969a6c6a81fb2b57490128ee114b45b1edd05ea0fc5655a8947",
+    "postSnapshotEqual": true,
+    "sourceBytes": 860543639,
+    "sourceFileCount": 5901,
+    "sourceRosterSha256": "b410647a6bdded7fbfce9c72aee66575dc67da8305df7fea3dcb8206cffac19d",
+    "status": "PASS",
+    "wasmFeatureProfile": [
+      "truss-postgresql-pg18"
+    ]
+  },
+  "lockedCargoCacheInputAfter": {
+    "archiveBytes": 44830720,
+    "archiveSha256": "b678cc11533ea60fcc2d0792092d835ba279de5ddc065f3bcc700581d0865fea",
+    "cacheContentBytes": 44245301,
+    "guestReportSha256": "96ea6bd560eeb54d14bc39462ca926966f6c7da206507acb72b209098b0daaf4",
+    "inventoryChunkBytes": 148230,
+    "inventoryIndexSha256": "01488af1b54d4164cbbcd8fa7de255a8756e886ce13cdea54b8d05610004716b",
+    "inventoryRowCount": 833,
+    "inventoryRowsSha256": "c072486446d6081c82eade71500ee7cf6299699f6ab150f555c422da7b8d60a9",
+    "operatorResultSha256": "470a81cb0f0bfbc03210287217a8e0a0171204fa4fdd644a8d9024fe1968fdff",
+    "runId": "071cd516906047cf9947a550514af957"
+  },
+  "lockedCargoCacheInputBefore": {
+    "archiveBytes": 44830720,
+    "archiveSha256": "b678cc11533ea60fcc2d0792092d835ba279de5ddc065f3bcc700581d0865fea",
+    "cacheContentBytes": 44245301,
+    "guestReportSha256": "96ea6bd560eeb54d14bc39462ca926966f6c7da206507acb72b209098b0daaf4",
+    "inventoryChunkBytes": 148230,
+    "inventoryIndexSha256": "01488af1b54d4164cbbcd8fa7de255a8756e886ce13cdea54b8d05610004716b",
+    "inventoryRowCount": 833,
+    "inventoryRowsSha256": "c072486446d6081c82eade71500ee7cf6299699f6ab150f555c422da7b8d60a9",
+    "operatorResultSha256": "470a81cb0f0bfbc03210287217a8e0a0171204fa4fdd644a8d9024fe1968fdff",
+    "runId": "071cd516906047cf9947a550514af957"
+  },
+  "outputBytes": 30596398,
+  "outputFiles": [
+    {
+      "path": "operator-result.seed.json",
+      "sha256": "0a7a5aa96253b8c66e47c13a43313f44e7b1d716227b545b7ab4cd4e8ce75735",
+      "sizeBytes": 640
+    },
+    {
+      "path": "outer/browser-facts.stderr.log",
+      "sha256": "0fe05f59ad74d186c5e7926903de7a559a6558925ec6ef6bcd282c23620a6c0c",
+      "sizeBytes": 6599
+    },
+    {
+      "path": "outer/browser-facts.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/browser-identity-before.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/browser-identity-before.stdout.log",
+      "sha256": "4184352970fb72f492b4c60150a7ba03884c8ddacaedafaa21eecb6cc4928c1b",
+      "sizeBytes": 171
+    },
+    {
+      "path": "outer/builder.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/builder.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/cleanup-final-0.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/cleanup-final-0.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/cleanup-final-1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/cleanup-final-1.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/cleanup-final-2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/cleanup-final-2.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/cleanup-inspect-0.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/cleanup-inspect-0.stdout.log",
+      "sha256": "56395c00c03809fe8ad81a2f4a1e9dcea3e638f5dac899bb3f16107624b12c22",
+      "sizeBytes": 203
+    },
+    {
+      "path": "outer/cleanup-inspect-1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/cleanup-inspect-1.stdout.log",
+      "sha256": "ec9c3321aa91e93a3c4dea1203b4b839e00eec71ec26fe1aa588c23eb35953f4",
+      "sizeBytes": 197
+    },
+    {
+      "path": "outer/cleanup-inspect-2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/cleanup-inspect-2.stdout.log",
+      "sha256": "bc3170b1ed4eb2ab78cee23b04a4a912bc5592b5ad46e2a950e64f88b18c39f5",
+      "sizeBytes": 188
+    },
+    {
+      "path": "outer/cleanup-list-0.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/cleanup-list-0.stdout.log",
+      "sha256": "1e391003accc8f2ed537223f8f498744def5f43b0ff4709e7aee690380da12b2",
+      "sizeBytes": 55
+    },
+    {
+      "path": "outer/cleanup-list-1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/cleanup-list-1.stdout.log",
+      "sha256": "3311c7bb8f523a95612546e59bd21688f092b3f97b653b94335cb7114fb50db8",
+      "sizeBytes": 71
+    },
+    {
+      "path": "outer/cleanup-list-2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/cleanup-list-2.stdout.log",
+      "sha256": "316f01e731edb171faf184d4d0cfc00fda45d80aa7e1e9de4fcb53018874779c",
+      "sizeBytes": 61
+    },
+    {
+      "path": "outer/cleanup-rm-0.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/cleanup-rm-0.stdout.log",
+      "sha256": "1e391003accc8f2ed537223f8f498744def5f43b0ff4709e7aee690380da12b2",
+      "sizeBytes": 55
+    },
+    {
+      "path": "outer/cleanup-rm-1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/cleanup-rm-1.stdout.log",
+      "sha256": "3311c7bb8f523a95612546e59bd21688f092b3f97b653b94335cb7114fb50db8",
+      "sizeBytes": 71
+    },
+    {
+      "path": "outer/cleanup-rm-2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/cleanup-rm-2.stdout.log",
+      "sha256": "316f01e731edb171faf184d4d0cfc00fda45d80aa7e1e9de4fcb53018874779c",
+      "sizeBytes": 61
+    },
+    {
+      "path": "outer/cleanup-stop-0.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/cleanup-stop-0.stdout.log",
+      "sha256": "0dc510375b59dcd90037d06ce5d26385966449c180d4a636aea6a3fb0b066bd5",
+      "sizeBytes": 110
+    },
+    {
+      "path": "outer/cleanup-stop-1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/cleanup-stop-1.stdout.log",
+      "sha256": "fd1f4244a6db18985e58442ba4b7d7628133896a11b3348f3a27cd42db1e08c8",
+      "sizeBytes": 126
+    },
+    {
+      "path": "outer/cleanup-stop-2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/cleanup-stop-2.stdout.log",
+      "sha256": "6e01a2615e2145ac41d2355806cbada9168f4759237969efbb8850515d92521c",
+      "sizeBytes": 116
+    },
+    {
+      "path": "outer/image-browser.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/image-browser.stdout.log",
+      "sha256": "5a543dc5bc7e049b6e71543357800b56ad1246cee2ab082d2a75e899b5af5b9c",
+      "sizeBytes": 84
+    },
+    {
+      "path": "outer/image-builder.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/image-builder.stdout.log",
+      "sha256": "15da17c01d73753ac5f83904478e7471c56c7be2a49a00e500c70e3148282723",
+      "sizeBytes": 84
+    },
+    {
+      "path": "outer/inspect-builder-1aca1faf9f6f.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/inspect-builder-1aca1faf9f6f.stdout.log",
+      "sha256": "1ed20f83db0d52fb443c292f060ed8212f0dc166e3a417e35751608175f6f571",
+      "sizeBytes": 2042
+    },
+    {
+      "path": "outer/inspect-identity-c433b3057f7d.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/inspect-identity-c433b3057f7d.stdout.log",
+      "sha256": "22a89bb46bc27a8e599121fc13f7acf1f700c8e8ba3344137bcb333158382aca",
+      "sizeBytes": 221
+    },
+    {
+      "path": "owned/out/commands.jsonl",
+      "sha256": "a45ba9b40181a7e47533b201a002c6933738ea23895766ff305ff5ae69c992e2",
+      "sizeBytes": 29407
+    },
+    {
+      "path": "owned/out/guest-phase-seed.json",
+      "sha256": "8f7ab71213c3a565b0d977e9255696b30efd1c1a853bab2f2b5a7f920a47420c",
+      "sizeBytes": 83
+    },
+    {
+      "path": "owned/out/artifacts/browser-wrapper/index.js",
+      "sha256": "ad9198fb79ec8dc80eeac9d37d126993374d7135628bf11ee303b0e60669884b",
+      "sizeBytes": 2935
+    },
+    {
+      "path": "owned/out/artifacts/truss-web/weft_wasm.d.ts",
+      "sha256": "ec10303c3ce50ae1a39ef36352f9445618f27ee326bfa21a1182f4c2f092e491",
+      "sizeBytes": 3350
+    },
+    {
+      "path": "owned/out/artifacts/truss-web/weft_wasm.js",
+      "sha256": "fce153e7f95ee82821e492a9e8732063e690b7640e2fbf22ec8324f8b3bca579",
+      "sizeBytes": 13916
+    },
+    {
+      "path": "owned/out/artifacts/truss-web/weft_wasm_bg.wasm",
+      "sha256": "86e5facad64ec12a2f1176dad9155b0a33ed63446dceebbe8e30369d64fb48b4",
+      "sizeBytes": 28345027
+    },
+    {
+      "path": "owned/out/artifacts/truss-web/weft_wasm_bg.wasm.d.ts",
+      "sha256": "79682ff29166ed93f5fa95a37d95dff8dfd23d89770f88700728ef97e33410f2",
+      "sizeBytes": 1296
+    },
+    {
+      "path": "owned/out/logs/browser-wrapper.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "owned/out/logs/browser-wrapper.stdout.log",
+      "sha256": "a9f2585530f810e9b3375a632d24a6139ebf51eea76815702cedc4d0bb03d884",
+      "sizeBytes": 62
+    },
+    {
+      "path": "owned/out/logs/bun-version.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "owned/out/logs/bun-version.stdout.log",
+      "sha256": "bd31e8d9cf8d14a1e9e3fdf3b9f6a524819aed0d1b14627523c6765767c7d8f1",
+      "sizeBytes": 6
+    },
+    {
+      "path": "owned/out/logs/cargo-cache-extract.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "owned/out/logs/cargo-cache-extract.stdout.log",
+      "sha256": "9d4de7902f4996b96dcae87b4fd7374bee2cd6efdf123657f0c5372edf4fcdcd",
+      "sizeBytes": 161
+    },
+    {
+      "path": "owned/out/logs/cargo-version.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "owned/out/logs/cargo-version.stdout.log",
+      "sha256": "5f9bdc5e0a6960db4a3cc66e9b3ae15bad5b9b506e8b7c49739c88dc5355c3f1",
+      "sizeBytes": 36
+    },
+    {
+      "path": "owned/out/logs/create-venv.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "owned/out/logs/create-venv.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "owned/out/logs/distribution-snapshot-post.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "owned/out/logs/distribution-snapshot-post.stdout.log",
+      "sha256": "c35538669bb284331fd708153fb7ecd922ffdc2d260e8f8329752265688aab37",
+      "sizeBytes": 926
+    },
+    {
+      "path": "owned/out/logs/distribution-snapshot.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "owned/out/logs/distribution-snapshot.stdout.log",
+      "sha256": "c35538669bb284331fd708153fb7ecd922ffdc2d260e8f8329752265688aab37",
+      "sizeBytes": 926
+    },
+    {
+      "path": "owned/out/logs/entity-python.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "owned/out/logs/entity-python.stdout.log",
+      "sha256": "5398918007b41e9d1197cde2136d065131d7597f4bc9a5be7909f693a6f88002",
+      "sizeBytes": 55
+    },
+    {
+      "path": "owned/out/logs/facts-python.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "owned/out/logs/facts-python.stdout.log",
+      "sha256": "a8e760313dffc6823e87da5002bb12b5717b16fc26b7b28877fc34bc818b1ae0",
+      "sizeBytes": 54
+    },
+    {
+      "path": "owned/out/logs/node-version.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "owned/out/logs/node-version.stdout.log",
+      "sha256": "b26441604894a1a4e4cac96bfb464737575d9b6a2e8b9d3e996283005bd67b37",
+      "sizeBytes": 9
+    },
+    {
+      "path": "owned/out/logs/offline-install.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "owned/out/logs/offline-install.stdout.log",
+      "sha256": "3ca6eb11af235ba9954ec5c6e02697163d4a6c37e2617853fea9ac99c0e9f903",
+      "sizeBytes": 3462
+    },
+    {
+      "path": "owned/out/logs/pip-check.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "owned/out/logs/pip-check.stdout.log",
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+      "sizeBytes": 30
+    },
+    {
+      "path": "owned/out/logs/python-version.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "owned/out/logs/python-version.stdout.log",
+      "sha256": "686560bcd94a5a3fe8187b7c4fc49beaff41c87eccb79908cd3da863ec30e52e",
+      "sizeBytes": 15
+    },
+    {
+      "path": "owned/out/logs/rust-targets.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "owned/out/logs/rust-targets.stdout.log",
+      "sha256": "dfefef0a475862622c9cc10adb82ac6004b6b8cd61c2296712a384a16eb6d624",
+      "sizeBytes": 48
+    },
+    {
+      "path": "owned/out/logs/rust-verbose.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "owned/out/logs/rust-verbose.stdout.log",
+      "sha256": "938db28b83089ab88301ca425f99fa1d8b61ee66e0371babe1db6373ae9810a3",
+      "sizeBytes": 196
+    },
+    {
+      "path": "owned/out/logs/rustc-version.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "owned/out/logs/rustc-version.stdout.log",
+      "sha256": "3397f54a03033c1b027496d83acc64e8f3ceeb4017e0575150f78726edce8a1a",
+      "sizeBytes": 36
+    },
+    {
+      "path": "owned/out/logs/truss-wasm-bindgen.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "owned/out/logs/truss-wasm-bindgen.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "owned/out/logs/truss-wasm-build.stderr.log",
+      "sha256": "4018641c0ec80bb0fcd1ec767f8ce3f425f2cc5bb06f03e96ce768c65e2d44d0",
+      "sizeBytes": 11335
+    },
+    {
+      "path": "owned/out/logs/truss-wasm-build.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "owned/out/logs/wasm-bindgen-version.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "owned/out/logs/wasm-bindgen-version.stdout.log",
+      "sha256": "77e9a14fc88e7434ec823340ac27538312be174451c3548fd84ec08f1beb8276",
+      "sizeBytes": 21
+    },
+    {
+      "path": "owned/out/logs/wheel-members.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "owned/out/logs/wheel-members.stdout.log",
+      "sha256": "de79641cfed7b0fba0b15fad2e9c534faa65997b6e0200a1e30e6979e6bfcdcf",
+      "sizeBytes": 606
+    },
+    {
+      "path": "owned/out/reports/cargo-cache.json",
+      "sha256": "9a2170c7c8e63221c986df190137f2d0ed8f4c31366d7da3c886a27ee29aa47e",
+      "sizeBytes": 588
+    },
+    {
+      "path": "owned/out/reports/entity.json",
+      "sha256": "ff8803dda03a4ef376e44984c1a010ead8065b817a002d6178dba8b0343256bf",
+      "sizeBytes": 994279
+    },
+    {
+      "path": "owned/out/reports/facts.json",
+      "sha256": "c45b385d21c64d4abec74849a7cad50229a6eaa054b2a14a192b13c2566b8982",
+      "sizeBytes": 186460
+    },
+    {
+      "path": "owned/out/reports/guest-phase-result.json",
+      "sha256": "387c828d9811f6d8cdeb1db628551c75b3c25cb3c87ffdd5b8f07024e63a8f9b",
+      "sizeBytes": 29745
+    },
+    {
+      "path": "owned/out/reports/installed-distributions.json",
+      "sha256": "a324a7b5ca5f8f39651340e76340270546abb2767bb9f0596069591f17b9471c",
+      "sizeBytes": 1010
+    },
+    {
+      "path": "owned/out/reports/installed-wheel-correspondence.json",
+      "sha256": "de79641cfed7b0fba0b15fad2e9c534faa65997b6e0200a1e30e6979e6bfcdcf",
+      "sizeBytes": 606
+    },
+    {
+      "path": "owned/out/reports/source-inventory.json",
+      "sha256": "3c1d1f1d99766a444234ec40078e3d79804ffd601c3cbfd41b809b1e469cede7",
+      "sizeBytes": 958557
+    }
+  ],
+  "ownedContainersAbsent": true,
+  "ownedScratchAbsent": true,
+  "physicalEvidenceBindings": [
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/browser-facts.stderr.log",
+      "sha256": "0fe05f59ad74d186c5e7926903de7a559a6558925ec6ef6bcd282c23620a6c0c",
+      "sizeBytes": 6599
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/browser-facts.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/browser-identity-before.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/browser-identity-before.stdout.log",
+      "sha256": "4184352970fb72f492b4c60150a7ba03884c8ddacaedafaa21eecb6cc4928c1b",
+      "sizeBytes": 171
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/builder.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/builder.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-final-0.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-final-0.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-final-1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-final-1.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-final-2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-final-2.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-inspect-0.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-inspect-0.stdout.log",
+      "sha256": "56395c00c03809fe8ad81a2f4a1e9dcea3e638f5dac899bb3f16107624b12c22",
+      "sizeBytes": 203
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-inspect-1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-inspect-1.stdout.log",
+      "sha256": "ec9c3321aa91e93a3c4dea1203b4b839e00eec71ec26fe1aa588c23eb35953f4",
+      "sizeBytes": 197
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-inspect-2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-inspect-2.stdout.log",
+      "sha256": "bc3170b1ed4eb2ab78cee23b04a4a912bc5592b5ad46e2a950e64f88b18c39f5",
+      "sizeBytes": 188
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-list-0.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-list-0.stdout.log",
+      "sha256": "1e391003accc8f2ed537223f8f498744def5f43b0ff4709e7aee690380da12b2",
+      "sizeBytes": 55
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-list-1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-list-1.stdout.log",
+      "sha256": "3311c7bb8f523a95612546e59bd21688f092b3f97b653b94335cb7114fb50db8",
+      "sizeBytes": 71
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-list-2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-list-2.stdout.log",
+      "sha256": "316f01e731edb171faf184d4d0cfc00fda45d80aa7e1e9de4fcb53018874779c",
+      "sizeBytes": 61
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-rm-0.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-rm-0.stdout.log",
+      "sha256": "1e391003accc8f2ed537223f8f498744def5f43b0ff4709e7aee690380da12b2",
+      "sizeBytes": 55
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-rm-1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-rm-1.stdout.log",
+      "sha256": "3311c7bb8f523a95612546e59bd21688f092b3f97b653b94335cb7114fb50db8",
+      "sizeBytes": 71
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-rm-2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-rm-2.stdout.log",
+      "sha256": "316f01e731edb171faf184d4d0cfc00fda45d80aa7e1e9de4fcb53018874779c",
+      "sizeBytes": 61
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-stop-0.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-stop-0.stdout.log",
+      "sha256": "0dc510375b59dcd90037d06ce5d26385966449c180d4a636aea6a3fb0b066bd5",
+      "sizeBytes": 110
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-stop-1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-stop-1.stdout.log",
+      "sha256": "fd1f4244a6db18985e58442ba4b7d7628133896a11b3348f3a27cd42db1e08c8",
+      "sizeBytes": 126
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-stop-2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/cleanup-stop-2.stdout.log",
+      "sha256": "6e01a2615e2145ac41d2355806cbada9168f4759237969efbb8850515d92521c",
+      "sizeBytes": 116
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/image-browser.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/image-browser.stdout.log",
+      "sha256": "5a543dc5bc7e049b6e71543357800b56ad1246cee2ab082d2a75e899b5af5b9c",
+      "sizeBytes": 84
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/image-builder.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/image-builder.stdout.log",
+      "sha256": "15da17c01d73753ac5f83904478e7471c56c7be2a49a00e500c70e3148282723",
+      "sizeBytes": 84
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/inspect-builder-1aca1faf9f6f.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/inspect-builder-1aca1faf9f6f.stdout.log",
+      "sha256": "1ed20f83db0d52fb443c292f060ed8212f0dc166e3a417e35751608175f6f571",
+      "sizeBytes": 2042
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/inspect-identity-c433b3057f7d.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/outer/inspect-identity-c433b3057f7d.stdout.log",
+      "sha256": "22a89bb46bc27a8e599121fc13f7acf1f700c8e8ba3344137bcb333158382aca",
+      "sizeBytes": 221
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/commands.jsonl",
+      "sha256": "a45ba9b40181a7e47533b201a002c6933738ea23895766ff305ff5ae69c992e2",
+      "sizeBytes": 29407
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/browser-wrapper.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/browser-wrapper.stdout.log",
+      "sha256": "a9f2585530f810e9b3375a632d24a6139ebf51eea76815702cedc4d0bb03d884",
+      "sizeBytes": 62
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/bun-version.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/bun-version.stdout.log",
+      "sha256": "bd31e8d9cf8d14a1e9e3fdf3b9f6a524819aed0d1b14627523c6765767c7d8f1",
+      "sizeBytes": 6
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/cargo-cache-extract.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/cargo-cache-extract.stdout.log",
+      "sha256": "9d4de7902f4996b96dcae87b4fd7374bee2cd6efdf123657f0c5372edf4fcdcd",
+      "sizeBytes": 161
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/cargo-version.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/cargo-version.stdout.log",
+      "sha256": "5f9bdc5e0a6960db4a3cc66e9b3ae15bad5b9b506e8b7c49739c88dc5355c3f1",
+      "sizeBytes": 36
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/create-venv.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/create-venv.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/distribution-snapshot-post.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/distribution-snapshot-post.stdout.log",
+      "sha256": "c35538669bb284331fd708153fb7ecd922ffdc2d260e8f8329752265688aab37",
+      "sizeBytes": 926
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/distribution-snapshot.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/distribution-snapshot.stdout.log",
+      "sha256": "c35538669bb284331fd708153fb7ecd922ffdc2d260e8f8329752265688aab37",
+      "sizeBytes": 926
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/entity-python.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/entity-python.stdout.log",
+      "sha256": "5398918007b41e9d1197cde2136d065131d7597f4bc9a5be7909f693a6f88002",
+      "sizeBytes": 55
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/facts-python.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/facts-python.stdout.log",
+      "sha256": "a8e760313dffc6823e87da5002bb12b5717b16fc26b7b28877fc34bc818b1ae0",
+      "sizeBytes": 54
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/node-version.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/node-version.stdout.log",
+      "sha256": "b26441604894a1a4e4cac96bfb464737575d9b6a2e8b9d3e996283005bd67b37",
+      "sizeBytes": 9
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/offline-install.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/offline-install.stdout.log",
+      "sha256": "3ca6eb11af235ba9954ec5c6e02697163d4a6c37e2617853fea9ac99c0e9f903",
+      "sizeBytes": 3462
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/pip-check.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/pip-check.stdout.log",
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+      "sizeBytes": 30
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/python-version.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/python-version.stdout.log",
+      "sha256": "686560bcd94a5a3fe8187b7c4fc49beaff41c87eccb79908cd3da863ec30e52e",
+      "sizeBytes": 15
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/rust-targets.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/rust-targets.stdout.log",
+      "sha256": "dfefef0a475862622c9cc10adb82ac6004b6b8cd61c2296712a384a16eb6d624",
+      "sizeBytes": 48
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/rust-verbose.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/rust-verbose.stdout.log",
+      "sha256": "938db28b83089ab88301ca425f99fa1d8b61ee66e0371babe1db6373ae9810a3",
+      "sizeBytes": 196
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/rustc-version.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/rustc-version.stdout.log",
+      "sha256": "3397f54a03033c1b027496d83acc64e8f3ceeb4017e0575150f78726edce8a1a",
+      "sizeBytes": 36
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/truss-wasm-bindgen.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/truss-wasm-bindgen.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/truss-wasm-build.stderr.log",
+      "sha256": "4018641c0ec80bb0fcd1ec767f8ce3f425f2cc5bb06f03e96ce768c65e2d44d0",
+      "sizeBytes": 11335
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/truss-wasm-build.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/wasm-bindgen-version.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/wasm-bindgen-version.stdout.log",
+      "sha256": "77e9a14fc88e7434ec823340ac27538312be174451c3548fd84ec08f1beb8276",
+      "sizeBytes": 21
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/wheel-members.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/logs/wheel-members.stdout.log",
+      "sha256": "de79641cfed7b0fba0b15fad2e9c534faa65997b6e0200a1e30e6979e6bfcdcf",
+      "sizeBytes": 606
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/reports/cargo-cache.json",
+      "sha256": "9a2170c7c8e63221c986df190137f2d0ed8f4c31366d7da3c886a27ee29aa47e",
+      "sizeBytes": 588
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/reports/facts.json",
+      "sha256": "c45b385d21c64d4abec74849a7cad50229a6eaa054b2a14a192b13c2566b8982",
+      "sizeBytes": 186460
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/reports/guest-phase-result.json",
+      "sha256": "387c828d9811f6d8cdeb1db628551c75b3c25cb3c87ffdd5b8f07024e63a8f9b",
+      "sizeBytes": 29745
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/reports/installed-distributions.json",
+      "sha256": "a324a7b5ca5f8f39651340e76340270546abb2767bb9f0596069591f17b9471c",
+      "sizeBytes": 1010
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/reports/installed-wheel-correspondence.json",
+      "sha256": "de79641cfed7b0fba0b15fad2e9c534faa65997b6e0200a1e30e6979e6bfcdcf",
+      "sizeBytes": 606
+    },
+    {
+      "path": "/private/tmp/g03-final-truss-operator-009-runs/938487b5-7353-4879-aa26-ee034e629718/owned/out/reports/source-inventory.json",
+      "sha256": "3c1d1f1d99766a444234ec40078e3d79804ffd601c3cbfd41b809b1e469cede7",
+      "sizeBytes": 958557
+    }
+  ],
+  "profile": "umf.g03-truss-local-lane/1",
+  "scope": "installed final18 + Truss facts/entity selection + truss-postgresql-pg18 WASM + Linux ARM64 Chromium",
+  "selectedSoftwareArtifactsBeforeBrowser": {
+    "files": [
+      {
+        "path": "browser-wrapper/index.js",
+        "sha256": "ad9198fb79ec8dc80eeac9d37d126993374d7135628bf11ee303b0e60669884b",
+        "sizeBytes": 2935
+      },
+      {
+        "path": "truss-web/weft_wasm.d.ts",
+        "sha256": "ec10303c3ce50ae1a39ef36352f9445618f27ee326bfa21a1182f4c2f092e491",
+        "sizeBytes": 3350
+      },
+      {
+        "path": "truss-web/weft_wasm.js",
+        "sha256": "fce153e7f95ee82821e492a9e8732063e690b7640e2fbf22ec8324f8b3bca579",
+        "sizeBytes": 13916
+      },
+      {
+        "path": "truss-web/weft_wasm_bg.wasm",
+        "sha256": "86e5facad64ec12a2f1176dad9155b0a33ed63446dceebbe8e30369d64fb48b4",
+        "sizeBytes": 28345027
+      },
+      {
+        "path": "truss-web/weft_wasm_bg.wasm.d.ts",
+        "sha256": "79682ff29166ed93f5fa95a37d95dff8dfd23d89770f88700728ef97e33410f2",
+        "sizeBytes": 1296
+      }
+    ],
+    "totalBytes": 28366524
+  },
+  "sourceArchiveAfter": {
+    "sha256": "8291da1e97ceb5ebd9cd29f0dab1ce233b14cd20651b1e840f7e3e59802ce77f",
+    "sizeBytes": 865597440
+  },
+  "sourceArchiveBefore": {
+    "sha256": "8291da1e97ceb5ebd9cd29f0dab1ce233b14cd20651b1e840f7e3e59802ce77f",
+    "sizeBytes": 865597440
+  },
+  "sourcePost": {
+    "fileCount": 5901,
+    "gitStageRoster": {
+      "basis": "captured git-stage index mode + Git blob SHA-1; no guest Git metadata or Git command",
+      "bytes": 780359,
+      "entries": 5901,
+      "matchingPhysicalFiles": 5901,
+      "sha256": "bc3018c0d674cd2fc80794f9f36c523565c91558f70649cd3fe415f8e88b701b"
+    },
+    "rosterSha256": "b410647a6bdded7fbfce9c72aee66575dc67da8305df7fea3dcb8206cffac19d",
+    "totalBytes": 860543639
+  },
+  "startedMonotonic": 1027907.103930291,
+  "status": "FAIL_OR_UNKNOWN"
+}

@@ -1,0 +1,9 @@
+# Truss006 serialization source closure
+
+ACCEPTED FOR ONE FRESH BOUNDED BROWSER-ONLY DIAGNOSTIC through root's separate exact admission. Source/data/hash reads and AST parsing only; no operator, browser, Docker, Git, product, test or network executed by Sol.
+
+Physical operator49349 bytes/SHA2568660669931fedb86ca71814b8a7e0acac7c75c562c58c83104b86a233900f924; manifest4268 bytes/SHA2561db98a05fdebb0d4f63fbea52a83b9698f398f09a3055e0d3321846d00e0ad96; packet9346 bytes/SHA25669e39a7e896661541e976e40a925bf1fa9e1a674ec147c9b3fd8ad440fb1ff0e. All23 manifest file rows physically match size/hash; AST parses. Root's final frozen closure agrees.
+
+The sole effective runtime expectation correction is exact SecurityOpt singleton['no-new-privileges'], matching preserved actual005 Docker inspect and the unchanged --security-opt=no-new-privileges argv. Missing/disabled/additional alternatives do not pass. Source ROOT and expected full roster update to006/23rows; added finite005 evidence admission checks bind the preserved failed actual receipt, inspect and five-case facts observations without inventing entity/whole-lane success. The actual packet/browser/parity inputs and runtime policy remain unchanged. Existing005 review controls continue to govern time/capture/evidence/physical closure/owned cleanup.
+
+Root may admit one fresh006 run with exact source/manifest/packet and this review digest, after serial heavy work permits. Require both facts and entity full checks plus effective runtime/container profile, pre/post custody, physical terminal receipt/inventory16MiB inclusive closure and owned absence before accepting browser-profile-only PASS.005 remains FAIL_OR_UNKNOWN; its facts result is not stitched into006. A successful006 establishes retained-software browser profile evidence under256MiB fsize, not the cause of009 failure or a full fresh Truss lane, G03 release, Actions/Mac/Praxis admission. No build/install/Rust suite is part of this diagnostic.
