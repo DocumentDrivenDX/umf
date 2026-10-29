@@ -10664,3 +10664,39 @@ before the fix; all 15 focused shape/resource/dispatch checks pass afterward.
 [Repair evidence](evidence/rust-migration/r8-facets-embedded-parity-helper/README.md)
 records archive hashes and failed/interrupted outcomes. Independent Sol review
 and fresh archive qualification are still required; no retirement is claimed.
+
+
+### Bounded Avro correction results and pending successors — 2026-10-29
+
+The retained Avro candidate `0f9bf6998` passes six focused Rust tests, six
+release-CLI review regressions, all 80 frozen classifications, all 50 additional
+typed-wire controls, and 21 actual Node addon outcomes plus host-control failure
+propagation. The 51 authored extra controls include one JavaScript `undefined`
+input that is deliberately separate from the 50 typed-wire cases. These
+comparators check complete enumerable values and array order; they do not
+assert object member order. [Captured observations](evidence/rust-migration/r9-avro-cardinality-correction/observations.json)
+pin source, helper scripts, binaries and logs. Raw evidence is retained at
+`204f79e6a` on local ref `codex/rust-avro-cardinality-candidate`.
+
+Bun remains incomplete; Python and Chromium were not reached. The shared
+bounded job's exec handle ended with code 1 and its process group was observed
+absent, but its finalizer had not updated accounting. Exact termination cause
+and elapsed time remain unknown. The full reservation is retained with both
+attempts consumed; no allowance or attempt reset is made. Other workers remain
+held. Current-source installed qualification and independent review remain open.
+
+Source review found a further uncovered Avro compatibility case: avsc's ordinary
+object indexes reject inherited names in enum symbols and global union branch
+names. Successor `204f79e6a` implements that rejection, adds Rust controls for
+rejected and accepted forms, and authors a small direct-avsc reference probe.
+Those changes are unexecuted and unreviewed. An explicit request is pending for
+one additional serial attempt of at most 180 seconds for the direct parser
+oracle and focused Rust tests. This request does not authorize itself or restart
+any held worker.
+
+The Parquet levels candidate is retained at `dd0d3cb68` on local ref
+`codex/rust-parquet-levels-candidate`. It includes wasm32 packed-run overflow,
+work-admission and exact work-charge regressions, plus a corrected freeze count
+and accurate uncompleted browser scope. Current changes still require execution
+and independent review. Neither candidate changes the accepted owner count,
+default routing, retirement, installed qualification or full-port release gates.
