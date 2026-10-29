@@ -1,0 +1,64 @@
+
+tests/lifecycle/g03-defaults.test.ts:
+(pass) G03 changes one existing target default and preserves immutable target identity [1860.25ms]
+(pass) G03 marker binds full physical and logical target meaning [288.73ms]
+(pass) G03 supports SET and DROP and records an absent-to-literal-NULL change [511.60ms]
+(pass) G03 plan compilation uses portable JSON copying without structuredClone [393.67ms]
+(pass) G03 discovery selector is exact and legacy discovery stays unchanged [142.48ms]
+(pass) G03 opt-in discovery refuses non-JSON sources while unselected legacy YAML behavior remains unchanged [143.21ms]
+(pass) G03 keeps logical-only default changes out of its selector and refuses unrelated source effects [303.42ms]
+(pass) G03 numeric spellings bind separately while the typed DDL is canonical [359.48ms]
+(pass) G03 typed clock and UUID defaults are accepted only on matching native domains [601.88ms]
+(pass) G03 admits exact unrefined Gregorian date literals and preserves typed qualifiers [951.86ms]
+(pass) G03 temporal literal support does not relax non-temporal refinements or logical defaults [137.25ms]
+(pass) G03 refuses retained unknown native and logical qualifiers before source verification [7.67ms]
+(pass) G03 raw-source preflight rejects malformed retained bundles with located diagnostics [1.43ms]
+(pass) G03 native numeric preflight bounds exact integer widths and numeric precision before coefficient allocation [8.14ms]
+(pass) G03 bounds raw numeric native-type qualifiers before numeric preflight [3.31ms]
+(pass) G03 preflight does not invoke accessors before the JSON-safety refusal [136.08ms]
+(pass) G03 preserves the historical .2 missing-predecessor refusal and handles null inputs [102.41ms]
+(pass) G03 preflight preserves the predecessor-specific YAML refusal path [57.58ms]
+(pass) G03 preflight refuses an oversized predecessor literal even when the new source drops it [62.27ms]
+(pass) G03 reports logical-default errors at the actual module element pointer [0.96ms]
+405 |   'invalid-gregorian-date','wrong-date-carrier','wrong-date-native-domain',
+406 |   'temporal-logical-default','numeric-capacity-overflow',
+407 |  ]);
+408 |  const logical5=compile(fixture.variants.matchingLogical5);
+409 |  expect(JSON.parse(logical5.source.utf8).modules[0].elements.find((item:any)=>item.id==='measure').default).toEqual({on:'missing',value:{integerToken:'5'}});
+410 |  expect(fixture.caseStatus).toEqual({
+                                  ^
+error: expect(received).toEqual(expected)
+
+  {
+    "G03-N01": "TRANSITIONS_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N02": "EMPTY_TABLE_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N03": "REQUIRED_SET_REPLACE_DROP_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N04": "RETAINED_OMISSION_SOURCE_REFUSAL_AND_READONLY_NATIVE_ABSENCE_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N05": "NULL_AND_DECIMAL_SPELLING_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N06": "KNOWN_ABORT_RETRY_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N07": "COMMIT_AND_PREPUBLICATION_RECOVERY_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N08": "UNKNOWN_UNCOMMITTED_FENCE_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N09": "WRITER_BARRIER_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N10": "DATE_TEXT_DECIMAL_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N11": "UUID_AND_TRANSACTION_TIMESTAMP_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+-   "G03-N12": "UNQUALIFIED_COMPATIBLE_WEFT_02_COHORT_REQUIRED",
++   "G03-N12": "ORDINARY_SELECTED_MODULE_SYNC_ASYNC_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N13": "FULL_PRE_EFFECT_TAMPERING_MATRIX_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N14": "SERIAL_CLEANUP_CAMPAIGN_SOURCE_IMPLEMENTED_NATIVE_UNRUN_FULL_CASE_OPEN",
+  }
+
+- Expected  - 1
++ Received  + 1
+
+      at <anonymous> (/workspace/tests/lifecycle/g03-defaults.test.ts:410:29)
+(fail) G03 native fixture retains complete sources and admits one exact default phase [1144.88ms]
+(pass) G03 required target keeps explicit-only commands and rejects retained omission [100.81ms]
+(pass) G03 N04 compares retained-omission sources before any native lifecycle effect [97.13ms]
+
+1 tests failed:
+(fail) G03 native fixture retains complete sources and admits one exact default phase [1144.88ms]
+
+ 22 pass
+ 1 fail
+ 198 expect() calls
+Ran 23 tests across 1 file. [8.87s]

@@ -1,0 +1,30 @@
+
+tests/lifecycle/g03-defaults.test.ts:
+(pass) G03 changes one existing target default and preserves immutable target identity [1576.66ms]
+(pass) G03 marker binds full physical and logical target meaning [254.60ms]
+(pass) G03 supports SET and DROP and records an absent-to-literal-NULL change [408.21ms]
+(pass) G03 plan compilation uses portable JSON copying without structuredClone [227.72ms]
+(pass) G03 discovery selector is exact and legacy discovery stays unchanged [121.69ms]
+(pass) G03 opt-in discovery refuses non-JSON sources while unselected legacy YAML behavior remains unchanged [114.93ms]
+(pass) G03 keeps logical-only default changes out of its selector and refuses unrelated source effects [299.52ms]
+(pass) G03 numeric spellings bind separately while the typed DDL is canonical [299.38ms]
+(pass) G03 typed clock and UUID defaults are accepted only on matching native domains [396.46ms]
+(pass) G03 admits exact unrefined Gregorian date literals and preserves typed qualifiers [584.49ms]
+(pass) G03 temporal literal support does not relax non-temporal refinements or logical defaults [117.26ms]
+(pass) G03 refuses retained unknown native and logical qualifiers before source verification [6.76ms]
+(pass) G03 raw-source preflight rejects malformed retained bundles with located diagnostics [1.08ms]
+(pass) G03 native numeric preflight bounds exact integer widths and numeric precision before coefficient allocation [5.56ms]
+(pass) G03 bounds raw numeric native-type qualifiers before numeric preflight [2.40ms]
+(pass) G03 preflight does not invoke accessors before the JSON-safety refusal [82.24ms]
+(pass) G03 preserves the historical .2 missing-predecessor refusal and handles null inputs [74.00ms]
+(pass) G03 preflight preserves the predecessor-specific YAML refusal path [35.34ms]
+(pass) G03 preflight refuses an oversized predecessor literal even when the new source drops it [46.29ms]
+(pass) G03 reports logical-default errors at the actual module element pointer [0.67ms]
+(pass) G03 native fixture retains complete sources and admits one exact default phase [1030.20ms]
+(pass) G03 required target keeps explicit-only commands and rejects retained omission [141.07ms]
+(pass) G03 N04 compares retained-omission sources before any native lifecycle effect [98.82ms]
+
+ 23 pass
+ 0 fail
+ 204 expect() calls
+Ran 23 tests across 1 file. [7.19s]

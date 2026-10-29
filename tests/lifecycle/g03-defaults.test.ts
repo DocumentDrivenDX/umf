@@ -419,11 +419,11 @@ test('G03 native fixture retains complete sources and admits one exact default p
   'G03-N09':'WRITER_BARRIER_SOURCE_IMPLEMENTED_NATIVE_UNRUN',
   'G03-N10':'DATE_TEXT_DECIMAL_SOURCE_IMPLEMENTED_NATIVE_UNRUN',
   'G03-N11':'UUID_AND_TRANSACTION_TIMESTAMP_SOURCE_IMPLEMENTED_NATIVE_UNRUN',
-  'G03-N12':'UNQUALIFIED_COMPATIBLE_WEFT_02_COHORT_REQUIRED',
+  'G03-N12':'ORDINARY_SELECTED_MODULE_SYNC_ASYNC_SOURCE_IMPLEMENTED_NATIVE_UNRUN',
   'G03-N13':'FULL_PRE_EFFECT_TAMPERING_MATRIX_SOURCE_IMPLEMENTED_NATIVE_UNRUN',
   'G03-N14':'SERIAL_CLEANUP_CAMPAIGN_SOURCE_IMPLEMENTED_NATIVE_UNRUN_FULL_CASE_OPEN',
  });
- expect(fixture.caseStatus['G03-N12']).toBe('UNQUALIFIED_COMPATIBLE_WEFT_02_COHORT_REQUIRED');
+ expect(fixture.caseStatus['G03-N12']).toBe('ORDINARY_SELECTED_MODULE_SYNC_ASYNC_SOURCE_IMPLEMENTED_NATIVE_UNRUN');
  expect(fixture.campaignExpectedManifestProfile).toBe('umf.g03-native-campaign-expected-data/0.1');
  expect(fixture.campaignRoster.map((item:any)=>item.caseId)).toEqual(Array.from({length:14},(_,index)=>`G03-N${String(index+1).padStart(2,'0')}`));
  expect(fixture.campaignRoster[10]?.scenarios).toEqual(['domain-uuid','domain-currentTimestamp']);

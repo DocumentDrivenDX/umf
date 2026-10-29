@@ -391,6 +391,13 @@ controls also pass; they are separate from native execution evidence. These
 distinctions and raw receipts are retained in the
 [final local checkpoint](evidence/schema-migration-design-review/g03-final-056-local-qualification-001/README.md).
 
+The [focused fixture regression check](evidence/schema-migration-design-review/g03-umf-fixture-regression-001/README.md)
+also passes TypeScript 7.0.2 typechecking and all 23 G03 tests in offline Linux.
+Two stale N12 status expectations were synchronized with the integrated fixture;
+Sol accepted the exact change and actual receipts. The initial missing Linux
+dependency and stale-expectation failures remain retained. No native or macOS
+qualification follows from this check.
+
 Next: complete inherited installed/CLI/native/WASM/browser checks,
 independent review, normal merge, immutable successor publication and fresh public
 proof. GitHub Actions and macOS CI remain off. No G03 completion, new macOS
