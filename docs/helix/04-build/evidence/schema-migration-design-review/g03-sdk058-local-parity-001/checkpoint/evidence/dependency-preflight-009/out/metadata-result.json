@@ -1,0 +1,128 @@
+{
+  "bounds": {
+    "deadlineSeconds": 180,
+    "fileBytes": 67108864,
+    "metadataBytes": 16777216,
+    "rawLogBytes": 1048576,
+    "regularBytes": 268435456
+  },
+  "dependencyOrigin": {
+    "lockSha256": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4",
+    "mountTarget": "/dependency-origin",
+    "packageDiffFields": [
+      "version"
+    ],
+    "packageSha256": "c7b69fba001805dc9cd4e26e84a9b786be379c1413d020c34600c063d287101b",
+    "packageVersion": "0.5.7",
+    "volume": "umf-migration-source-267675510"
+  },
+  "dependencyView": {
+    "directoryCount": 1943,
+    "internalSymlinkCount": 17,
+    "inventoryPath": "dependency-view-inventory.json",
+    "inventorySha256": "5dee664cf9d3e2d6e6325666ab75f26d290b05a6be09423b0a1cd04f6fc5d141",
+    "metadataBytes": 3697819,
+    "mountTarget": "/volume-producer/node_modules",
+    "regularBytes": 215399057,
+    "regularFileCount": 19501,
+    "subpath": "node_modules",
+    "volume": "umf-migration-source-267675510"
+  },
+  "elapsedSeconds": 2.889,
+  "historicalHostPackageContext": {
+    "lockSha256": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4",
+    "packageSha256": "323d619288cd35e7e86c932c0d26bfbfb2f8b4a5e5cc3f39bcaa415dd3c3aeaa",
+    "path": "/Users/erik/.codex/worktrees/eb69/umf",
+    "role": "historical context only; not dependency-volume origin"
+  },
+  "profile": "umf.g03-sdk058-dependency-view-preflight/1",
+  "runtimeImportClosure": {
+    "barePackages": [
+      "ajv",
+      "yaml"
+    ],
+    "censusSha256": "c4e3e79e5a0a51fb9b21261f458ede1a14042042aae1c8c2faf29c15f1d7eaae",
+    "entrypoints": [
+      "scripts/g03-migration-corpus.ts",
+      "scripts/codegen-corpus.ts"
+    ],
+    "packageClosure": {
+      "ajv/package.json": {
+        "dependencies": {
+          "fast-deep-equal": "^3.1.3",
+          "fast-uri": "^3.0.1",
+          "json-schema-traverse": "^1.0.0",
+          "require-from-string": "^2.0.2"
+        },
+        "lockDescriptor": "ajv",
+        "lockIntegrity": "sha512-Thbli+OlOj+iMPYFBVBfJ3OmCAnaSyNn4M1vz9T6Gka5Jt9ba/HIR56joy65tY6kx/FCF5VXNB819Y7/GUrBGA==",
+        "manifestPath": "ajv/package.json",
+        "manifestSha256": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
+        "name": "ajv",
+        "requestedBy": "source-import",
+        "version": "8.20.0"
+      },
+      "fast-deep-equal/package.json": {
+        "dependencies": {},
+        "lockDescriptor": "fast-deep-equal",
+        "lockIntegrity": "sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==",
+        "manifestPath": "fast-deep-equal/package.json",
+        "manifestSha256": "a5c63940db0260739be9e2ac67f3aac268df4db5770420ee4e34e493152f97d2",
+        "name": "fast-deep-equal",
+        "requestedBy": "transitive:ajv",
+        "version": "3.1.3"
+      },
+      "fast-uri/package.json": {
+        "dependencies": {},
+        "lockDescriptor": "fast-uri",
+        "lockIntegrity": "sha512-GZMtZUTNRpOVIECoXwLNZS5xUGE+mVNbTB8h/7Rwh2TFWcBQiPzTgyZi05BF9UMZKkLJv8XBRJTlU7zg8+ZfMg==",
+        "manifestPath": "fast-uri/package.json",
+        "manifestSha256": "30cad05aad3d3596513706451dbfc7e0422f9c1d00f2903ecc34580327d54bc7",
+        "name": "fast-uri",
+        "requestedBy": "transitive:ajv",
+        "version": "3.1.8"
+      },
+      "json-schema-traverse/package.json": {
+        "dependencies": {},
+        "lockDescriptor": "json-schema-traverse",
+        "lockIntegrity": "sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==",
+        "manifestPath": "json-schema-traverse/package.json",
+        "manifestSha256": "156fb24af02845c190701360d06dfda35ef04282e34a734289ea9535ad9819ae",
+        "name": "json-schema-traverse",
+        "requestedBy": "transitive:ajv",
+        "version": "1.0.0"
+      },
+      "require-from-string/package.json": {
+        "dependencies": {},
+        "lockDescriptor": "require-from-string",
+        "lockIntegrity": "sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==",
+        "manifestPath": "require-from-string/package.json",
+        "manifestSha256": "c0002f7d4c7d7e2a885cf0f97226344902417c3a0980f2beca41962d2bc1f6d8",
+        "name": "require-from-string",
+        "requestedBy": "transitive:ajv",
+        "version": "2.0.2"
+      },
+      "yaml/package.json": {
+        "dependencies": {},
+        "lockDescriptor": "yaml",
+        "lockIntegrity": "sha512-3NxN8+78OdzbT7C/WjGsyfPAtJaN3FNDsWxv7Y7mcDsT/oOmgW8BpyQQFFBnvZE3j9Y2Sdz1ULFLezL7Eb2yFw==",
+        "manifestPath": "yaml/package.json",
+        "manifestSha256": "1c6441703d8204a23ded0d37ddf57c3b69d821dc392f20852d1f605bb9b8861c",
+        "name": "yaml",
+        "requestedBy": "source-import",
+        "version": "2.9.1"
+      }
+    },
+    "sourceFileCount": 97
+  },
+  "scope": "metadata-only existing Linux dependency view; no package/runtime/product commands",
+  "source": {
+    "commit": "855f6c48649496fc60b3303798790d0ddb55d38f",
+    "lockSha256": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4",
+    "packageSha256": "323d619288cd35e7e86c932c0d26bfbfb2f8b4a5e5cc3f39bcaa415dd3c3aeaa",
+    "packageVersion": "0.5.8",
+    "tree": "53f2bfffbc0c5780e79d76d8fd3d202239d088b2",
+    "volume": "umf-sdk058-source-855f6c486-001"
+  },
+  "status": "METADATA_PREFLIGHT_PASS"
+}

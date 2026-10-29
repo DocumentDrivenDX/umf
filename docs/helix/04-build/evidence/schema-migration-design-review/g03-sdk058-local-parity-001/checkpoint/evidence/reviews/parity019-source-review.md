@@ -1,0 +1,11 @@
+# Parity019 finite browser-roster source review
+
+ACCEPTED SOURCE ONLY for fresh root admission and one complete bounded combined actual. Reviewer used source/data/hash/AST only; no helper/tests/Docker/Git/network/package/product code execution. No combined parity or release acceptance yet.
+
+Frozen manifest6f39ea51671410471d5e9e19c9dac516ea39b383b9beaaddd7d90e3e793f65f2; bindingfc12b4aaaf351e3bb3ab5a2c1c6d6fc2a22b2527aacf2a7db9c4fbddfcce2225; detached sumsaf7d622f5ac588c6ee624bbbcce5bff8613fdf6d309e9036420a96aad2b92764 independently match. All13source and90external size/SHA rows checked, Python AST parsed. Complete018-to019 source diff verified against /private/tmp/g03-sdk058-parity019-sol-browser-roster-plan001.md: sole functional browser change sorts complete expected path/bytes/SHA rows by path before unchanged full-list equality; remaining root rebasing and README history wording only.
+
+Full immutable exportreceipt/version/fileCount176/18547881B/two package metadata/prepost inventory/hash guards unchanged. Sort retains all rows, so duplicate/missing/extra/changed content still fails equality against unique physical tree; no set conversion/dedup. Prior independent176physical file comparison proves the original discrepancy was order only. No receipt or package altered, no lineage-only input churn or new probe/tool/SDK rebuild. Original018failure and separate PythonPASS remain distinct historical observations; no stitching allowed.
+
+All accepted018 isolatedpackaging integration/source13/no-cache/-B/90external families/63required admission keys, original immutable packet/probes/terminal controls, source/tool/dependency/SDK custody and cleanup remain unchanged. Original1800shared/60reserve/10grace/180normalchild/600browser/1MiBraw/16MiBevidence and software/snapshot bounds retained. Existing pure terminal controls unchanged; no additional campaign needed for this source ordering correction.
+
+Root must create exact new admission/source review hash and execute fresh Python then installedSDKChromium under same combined owner; actual complete raw reports, generic negatives/source/custody/budgets/cleanup independently reviewed before qualification. This source acceptance does not reuse018Python results or claim browser execution/publication/Macruntime/Actions support.

@@ -23,11 +23,13 @@ ddx:
 
 ## Release Scope
 
-SDK 0.5.8 is a candidate coordinate for the proposed G03 successor. No release
-date, producer commit, merge, tag, GitHub release ID, archive digest, or public
-download is established yet. This draft records intended scope and current
-qualification limits; it is not a release announcement. The existing immutable
-SDK 0.5.7 release remains unchanged.
+SDK 0.5.8 is a locally qualified candidate for the proposed G03 successor. The
+standard Linux producer and 139-case installed-consumer check passed; the paired
+G03 embedded-Python and installed-SDK Chromium parity actual also passed in the
+retained 019 run (112.565 seconds). Independent actual-run review accepted the selected local parity profile. Real
+release assembly, immutable public publication, and fresh public proof remain pending.
+This is not a release announcement. No public 0.5.8 tag, release, or download is
+claimed. The existing immutable SDK 0.5.7 release remains unchanged.
 
 The candidate dependency tuple is Access 0.1.0.dev8, Codegen 0.1.0a5,
 `umf-core` distribution 0.10.3 (semantic Core 0.10.0), and Weft 0.4.56. The
@@ -63,8 +65,8 @@ currently covers the selected Linux CPython 3.11 cohort.
 
 | Area | What changed | Who is affected |
 | --- | --- | --- |
-| SDK release metadata | Candidate package version is 0.5.8; the SDK archive and consumer proof have not yet been generated. | SDK release reviewers |
-| Installed SDK browser parity | Added a source adapter that binds exact candidate TAR members to the retained installation and resolved browser inputs before comparing the public entrypoint with the shared G03 corpus. It has not been executed. | Qualification reviewers |
+| SDK release metadata | Candidate package version is 0.5.8; the standard Linux SDK archive and 139-case installed-consumer proof are retained and independently accepted locally. No public asset is claimed. | SDK release reviewers |
+| Installed SDK browser parity | The paired G03 embedded-Python and installed-SDK Chromium run passed in 112.565 seconds and its actual run was independently accepted for the selected local profile. | Qualification reviewers |
 
 ### Fixes
 
@@ -98,14 +100,14 @@ qualification are reviewed and published.
 
 | Issue | Who is affected | Workaround or next step |
 | --- | --- | --- |
-| Candidate SDK build and 139-case installed-consumer proof are pending. | SDK consumers and reviewers | Root must run the bounded standard SDK producer route after source review. |
-| G03 installed-SDK Chromium parity adapter is source-only and unexecuted. | Qualification reviewers | Execute only after independent source review using the exact installed candidate archive and pinned local Chromium. |
-| Final table and Truss inherited lanes, release review, merge, immutable publication and fresh public proof remain gates. | All prospective G03 users | Keep publication and support claims held until each exact gate has accepted evidence. |
+| Local SDK build, 139-case installed-consumer check, and paired parity run have passed; parity019 actual-run review is accepted for the selected local profile; full assembly and publication remain pending. | SDK consumers and reviewers | Keep public release and support claims held pending complete assembly, release review, immutable publication, and fresh public proof. |
+| Final packet assembly, release review, immutable publication, and fresh public proof remain gates. | All prospective G03 users | Do not announce or install 0.5.8 from public channels until each exact gate has accepted evidence. |
 | ARM64 and macOS Weft evidence is build/static-only; macOS runtime/native/browser support is not established. | ARM64/macOS users | Do not infer functional compatibility from wheel tags or static inspection. |
 
 ## References
 
 - [Schema migration plan and G03 continuation](../04-build/schema-migration-plan.md)
 - [G03 final 0.4.56 local qualification checkpoint](../04-build/evidence/schema-migration-design-review/g03-final-056-local-qualification-001/README.md)
+- [SDK 0.5.8 paired local parity checkpoint](../04-build/evidence/schema-migration-design-review/g03-sdk058-local-parity-001/README.md)
 - [Installed SDK G03 browser parity adapter](../../../scripts/g03-sdk-browser.ts)
 - [Prior immutable SDK 0.5.7 notes](sdk-release-notes-0.5.7.md)

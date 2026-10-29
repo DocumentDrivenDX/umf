@@ -1,0 +1,705 @@
+{
+  "bytecodeSuppressed": true,
+  "checkedRequirementCount": 72,
+  "checkedRequirements": [
+    {
+      "active": true,
+      "from": "jsonschema",
+      "requirement": "attrs>=22.2.0"
+    },
+    {
+      "active": false,
+      "from": "jsonschema",
+      "requirement": "fqdn; extra == 'format'"
+    },
+    {
+      "active": false,
+      "from": "jsonschema",
+      "requirement": "fqdn; extra == 'format-nongpl'"
+    },
+    {
+      "active": false,
+      "from": "jsonschema",
+      "requirement": "idna; extra == 'format'"
+    },
+    {
+      "active": false,
+      "from": "jsonschema",
+      "requirement": "idna; extra == 'format-nongpl'"
+    },
+    {
+      "active": false,
+      "from": "jsonschema",
+      "requirement": "isoduration; extra == 'format'"
+    },
+    {
+      "active": false,
+      "from": "jsonschema",
+      "requirement": "isoduration; extra == 'format-nongpl'"
+    },
+    {
+      "active": false,
+      "from": "jsonschema",
+      "requirement": "jsonpointer>1.13; extra == 'format'"
+    },
+    {
+      "active": false,
+      "from": "jsonschema",
+      "requirement": "jsonpointer>1.13; extra == 'format-nongpl'"
+    },
+    {
+      "active": true,
+      "from": "jsonschema",
+      "requirement": "jsonschema-specifications>=2023.03.6"
+    },
+    {
+      "active": true,
+      "from": "jsonschema",
+      "requirement": "referencing>=0.28.4"
+    },
+    {
+      "active": false,
+      "from": "jsonschema",
+      "requirement": "rfc3339-validator; extra == 'format'"
+    },
+    {
+      "active": false,
+      "from": "jsonschema",
+      "requirement": "rfc3339-validator; extra == 'format-nongpl'"
+    },
+    {
+      "active": false,
+      "from": "jsonschema",
+      "requirement": "rfc3986-validator>0.1.0; extra == 'format-nongpl'"
+    },
+    {
+      "active": false,
+      "from": "jsonschema",
+      "requirement": "rfc3987-syntax>=1.1.0; extra == 'format-nongpl'"
+    },
+    {
+      "active": false,
+      "from": "jsonschema",
+      "requirement": "rfc3987; extra == 'format'"
+    },
+    {
+      "active": true,
+      "from": "jsonschema",
+      "requirement": "rpds-py>=0.25.0"
+    },
+    {
+      "active": false,
+      "from": "jsonschema",
+      "requirement": "uri-template; extra == 'format'"
+    },
+    {
+      "active": false,
+      "from": "jsonschema",
+      "requirement": "uri-template; extra == 'format-nongpl'"
+    },
+    {
+      "active": false,
+      "from": "jsonschema",
+      "requirement": "webcolors>=1.11; extra == 'format'"
+    },
+    {
+      "active": false,
+      "from": "jsonschema",
+      "requirement": "webcolors>=24.6.0; extra == 'format-nongpl'"
+    },
+    {
+      "active": true,
+      "from": "jsonschema-specifications",
+      "requirement": "referencing>=0.31.0"
+    },
+    {
+      "active": false,
+      "from": "psycopg",
+      "requirement": "Sphinx>=5.0; extra == \"docs\""
+    },
+    {
+      "active": false,
+      "from": "psycopg",
+      "requirement": "anyio>=4.0; extra == \"test\""
+    },
+    {
+      "active": false,
+      "from": "psycopg",
+      "requirement": "ast-comments>=1.1.2; extra == \"dev\""
+    },
+    {
+      "active": false,
+      "from": "psycopg",
+      "requirement": "backports.zoneinfo>=0.2.0; python_version < \"3.9\""
+    },
+    {
+      "active": false,
+      "from": "psycopg",
+      "requirement": "black>=24.1.0; extra == \"dev\""
+    },
+    {
+      "active": false,
+      "from": "psycopg",
+      "requirement": "codespell>=2.2; extra == \"dev\""
+    },
+    {
+      "active": false,
+      "from": "psycopg",
+      "requirement": "dnspython>=2.1; extra == \"dev\""
+    },
+    {
+      "active": false,
+      "from": "psycopg",
+      "requirement": "flake8>=4.0; extra == \"dev\""
+    },
+    {
+      "active": false,
+      "from": "psycopg",
+      "requirement": "furo==2022.6.21; extra == \"docs\""
+    },
+    {
+      "active": false,
+      "from": "psycopg",
+      "requirement": "isort-psycopg; extra == \"dev\""
+    },
+    {
+      "active": false,
+      "from": "psycopg",
+      "requirement": "isort[colors]>=6.0; extra == \"dev\""
+    },
+    {
+      "active": false,
+      "from": "psycopg",
+      "requirement": "mypy>=1.14; extra == \"dev\""
+    },
+    {
+      "active": false,
+      "from": "psycopg",
+      "requirement": "mypy>=1.14; extra == \"test\""
+    },
+    {
+      "active": false,
+      "from": "psycopg",
+      "requirement": "pproxy>=2.7; extra == \"test\""
+    },
+    {
+      "active": false,
+      "from": "psycopg",
+      "requirement": "pre-commit>=4.0.1; extra == \"dev\""
+    },
+    {
+      "active": false,
+      "from": "psycopg",
+      "requirement": "psycopg-binary==3.2.13; implementation_name != \"pypy\" and extra == \"binary\""
+    },
+    {
+      "active": false,
+      "from": "psycopg",
+      "requirement": "psycopg-c==3.2.13; implementation_name != \"pypy\" and extra == \"c\""
+    },
+    {
+      "active": false,
+      "from": "psycopg",
+      "requirement": "psycopg-pool; extra == \"pool\""
+    },
+    {
+      "active": false,
+      "from": "psycopg",
+      "requirement": "pytest-cov>=3.0; extra == \"test\""
+    },
+    {
+      "active": false,
+      "from": "psycopg",
+      "requirement": "pytest-randomly>=3.5; extra == \"test\""
+    },
+    {
+      "active": false,
+      "from": "psycopg",
+      "requirement": "pytest>=6.2.5; extra == \"test\""
+    },
+    {
+      "active": false,
+      "from": "psycopg",
+      "requirement": "sphinx-autobuild>=2021.3.14; extra == \"docs\""
+    },
+    {
+      "active": false,
+      "from": "psycopg",
+      "requirement": "sphinx-autodoc-typehints>=1.12; extra == \"docs\""
+    },
+    {
+      "active": false,
+      "from": "psycopg",
+      "requirement": "types-setuptools>=57.4; extra == \"dev\""
+    },
+    {
+      "active": false,
+      "from": "psycopg",
+      "requirement": "types-shapely>=2.0; extra == \"dev\""
+    },
+    {
+      "active": true,
+      "from": "psycopg",
+      "requirement": "typing-extensions>=4.6; python_version < \"3.13\""
+    },
+    {
+      "active": false,
+      "from": "psycopg",
+      "requirement": "tzdata; sys_platform == \"win32\""
+    },
+    {
+      "active": false,
+      "from": "psycopg",
+      "requirement": "wheel>=0.37; extra == \"dev\""
+    },
+    {
+      "active": true,
+      "from": "pydantic",
+      "requirement": "annotated-types>=0.6.0"
+    },
+    {
+      "active": false,
+      "from": "pydantic",
+      "requirement": "email-validator>=2.0.0; extra == 'email'"
+    },
+    {
+      "active": true,
+      "from": "pydantic",
+      "requirement": "pydantic-core==2.50.1"
+    },
+    {
+      "active": true,
+      "from": "pydantic",
+      "requirement": "typing-extensions>=4.16.0"
+    },
+    {
+      "active": true,
+      "from": "pydantic",
+      "requirement": "typing-inspection>=0.4.4"
+    },
+    {
+      "active": false,
+      "from": "pydantic",
+      "requirement": "tzdata; (platform_system == 'Windows') and extra == 'timezone'"
+    },
+    {
+      "active": true,
+      "from": "pydantic-core",
+      "requirement": "typing-extensions>=4.16.0"
+    },
+    {
+      "active": true,
+      "from": "referencing",
+      "requirement": "attrs>=22.2.0"
+    },
+    {
+      "active": true,
+      "from": "referencing",
+      "requirement": "rpds-py>=0.7.0"
+    },
+    {
+      "active": true,
+      "from": "referencing",
+      "requirement": "typing-extensions>=4.4.0; python_version < '3.13'"
+    },
+    {
+      "active": false,
+      "from": "ruamel-yaml",
+      "requirement": "mercurial>5.7; extra == \"docs\""
+    },
+    {
+      "active": false,
+      "from": "ruamel-yaml",
+      "requirement": "ruamel.yaml.clib; platform_python_implementation == \"CPython\" and extra == \"oldlibyaml\""
+    },
+    {
+      "active": false,
+      "from": "ruamel-yaml",
+      "requirement": "ruamel.yaml.clibz>=0.3.7; platform_python_implementation == \"CPython\" and extra == \"libyaml\""
+    },
+    {
+      "active": false,
+      "from": "ruamel-yaml",
+      "requirement": "ruamel.yaml.jinja2>=0.2; extra == \"jinja2\""
+    },
+    {
+      "active": false,
+      "from": "ruamel-yaml",
+      "requirement": "ryd; extra == \"docs\""
+    },
+    {
+      "active": true,
+      "from": "typing-inspection",
+      "requirement": "typing-extensions>=4.15.0"
+    },
+    {
+      "active": false,
+      "from": "umf-access",
+      "requirement": "cryptography==50.0.2; extra == 'owner-authority'"
+    },
+    {
+      "active": false,
+      "from": "umf-access",
+      "requirement": "pglast==7.20; extra == 'sql-containment'"
+    },
+    {
+      "active": true,
+      "from": "umf-access",
+      "requirement": "pydantic<3,>=2.13"
+    },
+    {
+      "active": true,
+      "from": "umf-access",
+      "requirement": "typing-extensions<5,>=4.16"
+    },
+    {
+      "active": true,
+      "from": "umf-codegen",
+      "requirement": "mini-racer==0.14.1"
+    },
+    {
+      "active": true,
+      "from": "umf-core",
+      "requirement": "pydantic<3,>=2.11"
+    }
+  ],
+  "derivedInputStatus": "DERIVED_INPUT_SOURCE_ONLY_FROZEN",
+  "derivedLockCoreSemanticVersion": "0.10.0",
+  "extraMarkerNoExtrasResult": false,
+  "image": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+  "implementation": "cpython",
+  "machine": "x86_64",
+  "markerEnvironment": {
+    "implementation_name": "cpython",
+    "implementation_version": "3.11.17",
+    "os_name": "posix",
+    "platform_machine": "x86_64",
+    "platform_python_implementation": "CPython",
+    "platform_release": "7.2.9-orbstack-00391-g2b298d05fbd4",
+    "platform_system": "Linux",
+    "platform_version": "#1 SMP PREEMPT Mon Oct 12 05:39:36 UTC 2026",
+    "python_full_version": "3.11.17",
+    "python_version": "3.11",
+    "sys_platform": "linux"
+  },
+  "markerEnvironmentSha256": "6b183f2a362ea5ce7c222a7f8051972dda2c03bbeea7c592838b2bd7e7d42b0c",
+  "originalHeldCohortStatus": "HELD_UNPUBLISHED_NOT_RUNTIME_QUALIFIED",
+  "originalSelectedLockSha256": "cfe589472a5340446e5b1ddf5e39dbf00e6b6d83370fbe066122f52139fe2274",
+  "packagingBytes": 238549,
+  "packagingFileCount": 25,
+  "packagingFiles": [
+    {
+      "path": "packaging-25.0.dist-info/INSTALLER",
+      "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508",
+      "sizeBytes": 4
+    },
+    {
+      "path": "packaging-25.0.dist-info/METADATA",
+      "sha256": "5b611a609c38fefc3d616bf45d20aec98fb7d53f245daca9e2c30fc85c7ac282",
+      "sizeBytes": 3281
+    },
+    {
+      "path": "packaging-25.0.dist-info/RECORD",
+      "sha256": "00af447f8a76e5b48544f8d94154ff02855983444e92d5f40542b95019be0424",
+      "sizeBytes": 2061
+    },
+    {
+      "path": "packaging-25.0.dist-info/REQUESTED",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "packaging-25.0.dist-info/WHEEL",
+      "sha256": "1b68144734c4b66791f27add5d425f3620775585718a03d0f9b110ba3a4d88db",
+      "sizeBytes": 82
+    },
+    {
+      "path": "packaging-25.0.dist-info/licenses/LICENSE",
+      "sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48",
+      "sizeBytes": 197
+    },
+    {
+      "path": "packaging-25.0.dist-info/licenses/LICENSE.APACHE",
+      "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+      "sizeBytes": 10174
+    },
+    {
+      "path": "packaging-25.0.dist-info/licenses/LICENSE.BSD",
+      "sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5",
+      "sizeBytes": 1344
+    },
+    {
+      "path": "packaging/__init__.py",
+      "sha256": "ff470388f55fd92f9b35f566660bb1c739ab2185a5c804b1a6aa61e2ab095947",
+      "sizeBytes": 494
+    },
+    {
+      "path": "packaging/_elffile.py",
+      "sha256": "524adb0ed5bb69eab7aaaa007d4d7aa23c87675c6c4ef1a47bf5aa31328029dd",
+      "sizeBytes": 3286
+    },
+    {
+      "path": "packaging/_manylinux.py",
+      "sha256": "b78cbff9d4ce71faf7ea02d8fb3b623a9c7124518eda2902d751e07f2b06c623",
+      "sizeBytes": 9596
+    },
+    {
+      "path": "packaging/_musllinux.py",
+      "sha256": "a7d66a35888e22d19e7bc29c64578717f61c76157018774aeabfbc9608b1bc64",
+      "sizeBytes": 2694
+    },
+    {
+      "path": "packaging/_parser.py",
+      "sha256": "8187e78f4a511df955738447662b75dca353c8df62895714d915021a2db60703",
+      "sizeBytes": 10221
+    },
+    {
+      "path": "packaging/_structures.py",
+      "sha256": "ab77953666d62461bf4b40e2b7f4b7028f2a42acffe4f6135c500a0597b9cabe",
+      "sizeBytes": 1431
+    },
+    {
+      "path": "packaging/_tokenizer.py",
+      "sha256": "398cedeea2b1ca538027eab45f22b5a80c9cc8f4582df30f74640a4579195b22",
+      "sizeBytes": 5310
+    },
+    {
+      "path": "packaging/licenses/__init__.py",
+      "sha256": "56c2b8a36ec225759f4e2f2bdb26c99ac06809d8699c15ae36bb2468254a3fb5",
+      "sizeBytes": 5715
+    },
+    {
+      "path": "packaging/licenses/_spdx.py",
+      "sha256": "a009b5ced3c5c25b2608a7bb94002cbff38839f4b57160eef5b34191ebbeda7b",
+      "sizeBytes": 48398
+    },
+    {
+      "path": "packaging/markers.py",
+      "sha256": "3f4c1edbb8e6d71533806309c418ed50508859e0714ec31e253389e9c8599806",
+      "sizeBytes": 12049
+    },
+    {
+      "path": "packaging/metadata.py",
+      "sha256": "f08644aea4109cd9b9ddd659b98ab8146538fdda728a731e1f540504858891f1",
+      "sizeBytes": 34739
+    },
+    {
+      "path": "packaging/py.typed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "packaging/requirements.py",
+      "sha256": "818c9148075bac8c8a0d8ebaba02035108d132fc641f600b8a84e65f7b672faa",
+      "sizeBytes": 2947
+    },
+    {
+      "path": "packaging/specifiers.py",
+      "sha256": "82d3eee434dcf85f5b68bab71531842ba74f847182bb0c197ad698d0f495da0b",
+      "sizeBytes": 40055
+    },
+    {
+      "path": "packaging/tags.py",
+      "sha256": "e35b3ded6f596adaead8477b45cdea7810da1def2928abd8ab69868f06a17d79",
+      "sizeBytes": 22745
+    },
+    {
+      "path": "packaging/utils.py",
+      "sha256": "d05dc787d385b9182b8538066549792b6d85bf560fdad665d73ff680eea42620",
+      "sizeBytes": 5050
+    },
+    {
+      "path": "packaging/version.py",
+      "sha256": "a257f2ba4fc33db7e5364278c0159eb57435edcef8c770c1e74d5d7a052fec36",
+      "sizeBytes": 16676
+    }
+  ],
+  "packagingInstalledRecordSha256": "00af447f8a76e5b48544f8d94154ff02855983444e92d5f40542b95019be0424",
+  "packagingInventorySha256": "5f7b4d4b87ed51ef2006d6ae801851c275dae4354385457bac21f139be70a71f",
+  "packagingModulePaths": {
+    "packaging": "/tmp/g03-packaging250-qualification-tool/lib/python3.11/site-packages/packaging/__init__.py",
+    "packaging.markers": "/tmp/g03-packaging250-qualification-tool/lib/python3.11/site-packages/packaging/markers.py",
+    "packaging.requirements": "/tmp/g03-packaging250-qualification-tool/lib/python3.11/site-packages/packaging/requirements.py",
+    "packaging.utils": "/tmp/g03-packaging250-qualification-tool/lib/python3.11/site-packages/packaging/utils.py",
+    "packaging.version": "/tmp/g03-packaging250-qualification-tool/lib/python3.11/site-packages/packaging/version.py"
+  },
+  "packagingWheelInventorySha256": "d7dfbdb4b3eac9468a54be79c3ae556e689b0c4c67b4e153c9aa78bea9594478",
+  "packagingWheelMemberCount": 23,
+  "packagingWheelMembers": [
+    {
+      "path": "packaging-25.0.dist-info/METADATA",
+      "sha256": "5b611a609c38fefc3d616bf45d20aec98fb7d53f245daca9e2c30fc85c7ac282",
+      "sizeBytes": 3281
+    },
+    {
+      "path": "packaging-25.0.dist-info/RECORD",
+      "sha256": "1656dc008242e7e90acedf1f114a516230657a33eb075d30f6d294fb761b9c32",
+      "sizeBytes": 1860
+    },
+    {
+      "path": "packaging-25.0.dist-info/WHEEL",
+      "sha256": "1b68144734c4b66791f27add5d425f3620775585718a03d0f9b110ba3a4d88db",
+      "sizeBytes": 82
+    },
+    {
+      "path": "packaging-25.0.dist-info/licenses/LICENSE",
+      "sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48",
+      "sizeBytes": 197
+    },
+    {
+      "path": "packaging-25.0.dist-info/licenses/LICENSE.APACHE",
+      "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+      "sizeBytes": 10174
+    },
+    {
+      "path": "packaging-25.0.dist-info/licenses/LICENSE.BSD",
+      "sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5",
+      "sizeBytes": 1344
+    },
+    {
+      "path": "packaging/__init__.py",
+      "sha256": "ff470388f55fd92f9b35f566660bb1c739ab2185a5c804b1a6aa61e2ab095947",
+      "sizeBytes": 494
+    },
+    {
+      "path": "packaging/_elffile.py",
+      "sha256": "524adb0ed5bb69eab7aaaa007d4d7aa23c87675c6c4ef1a47bf5aa31328029dd",
+      "sizeBytes": 3286
+    },
+    {
+      "path": "packaging/_manylinux.py",
+      "sha256": "b78cbff9d4ce71faf7ea02d8fb3b623a9c7124518eda2902d751e07f2b06c623",
+      "sizeBytes": 9596
+    },
+    {
+      "path": "packaging/_musllinux.py",
+      "sha256": "a7d66a35888e22d19e7bc29c64578717f61c76157018774aeabfbc9608b1bc64",
+      "sizeBytes": 2694
+    },
+    {
+      "path": "packaging/_parser.py",
+      "sha256": "8187e78f4a511df955738447662b75dca353c8df62895714d915021a2db60703",
+      "sizeBytes": 10221
+    },
+    {
+      "path": "packaging/_structures.py",
+      "sha256": "ab77953666d62461bf4b40e2b7f4b7028f2a42acffe4f6135c500a0597b9cabe",
+      "sizeBytes": 1431
+    },
+    {
+      "path": "packaging/_tokenizer.py",
+      "sha256": "398cedeea2b1ca538027eab45f22b5a80c9cc8f4582df30f74640a4579195b22",
+      "sizeBytes": 5310
+    },
+    {
+      "path": "packaging/licenses/__init__.py",
+      "sha256": "56c2b8a36ec225759f4e2f2bdb26c99ac06809d8699c15ae36bb2468254a3fb5",
+      "sizeBytes": 5715
+    },
+    {
+      "path": "packaging/licenses/_spdx.py",
+      "sha256": "a009b5ced3c5c25b2608a7bb94002cbff38839f4b57160eef5b34191ebbeda7b",
+      "sizeBytes": 48398
+    },
+    {
+      "path": "packaging/markers.py",
+      "sha256": "3f4c1edbb8e6d71533806309c418ed50508859e0714ec31e253389e9c8599806",
+      "sizeBytes": 12049
+    },
+    {
+      "path": "packaging/metadata.py",
+      "sha256": "f08644aea4109cd9b9ddd659b98ab8146538fdda728a731e1f540504858891f1",
+      "sizeBytes": 34739
+    },
+    {
+      "path": "packaging/py.typed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "packaging/requirements.py",
+      "sha256": "818c9148075bac8c8a0d8ebaba02035108d132fc641f600b8a84e65f7b672faa",
+      "sizeBytes": 2947
+    },
+    {
+      "path": "packaging/specifiers.py",
+      "sha256": "82d3eee434dcf85f5b68bab71531842ba74f847182bb0c197ad698d0f495da0b",
+      "sizeBytes": 40055
+    },
+    {
+      "path": "packaging/tags.py",
+      "sha256": "e35b3ded6f596adaead8477b45cdea7810da1def2928abd8ab69868f06a17d79",
+      "sizeBytes": 22745
+    },
+    {
+      "path": "packaging/utils.py",
+      "sha256": "d05dc787d385b9182b8538066549792b6d85bf560fdad665d73ff680eea42620",
+      "sizeBytes": 5050
+    },
+    {
+      "path": "packaging/version.py",
+      "sha256": "a257f2ba4fc33db7e5364278c0159eb57435edcef8c770c1e74d5d7a052fec36",
+      "sizeBytes": 16676
+    }
+  ],
+  "pointerBits": 64,
+  "preservedOriginalLockFields": [
+    "cohort",
+    "coreSemanticVersion",
+    "dependencyResolution",
+    "packageRoots",
+    "packages",
+    "templateSha256",
+    "wheels"
+  ],
+  "productDistributionsInstalled": false,
+  "productModulesImported": false,
+  "profile": "umf.g03-packaging250-tool-control/1",
+  "pypiMetadataSha256": "6ab300d7b0735a50109912decebb1731ed292f1ed88a3ce5e4bb7876b182cac0",
+  "python": "3.11.17",
+  "runtimeObservationReviewSha256": "093d4db960850cee28649577998b56a4227084ac940799b16d3bedd1f583c465",
+  "scope": "Separate packaging qualification-tool environment; unchanged selector and exact18 wheel METADATA only; no product installation/import/probes",
+  "selectedDistributionCount": 18,
+  "selectedNormalizedDistributions": [
+    "annotated-types",
+    "attrs",
+    "jsonschema",
+    "jsonschema-specifications",
+    "mini-racer",
+    "psycopg",
+    "psycopg-binary",
+    "pydantic",
+    "pydantic-core",
+    "referencing",
+    "rpds-py",
+    "ruamel-yaml",
+    "typing-extensions",
+    "typing-inspection",
+    "umf-access",
+    "umf-codegen",
+    "umf-core",
+    "umf-weft"
+  ],
+  "sourceIdentity": {
+    "clean": true,
+    "commit": "855f6c48649496fc60b3303798790d0ddb55d38f",
+    "tree": "53f2bfffbc0c5780e79d76d8fd3d202239d088b2"
+  },
+  "sourceMirrorSha256": "11d57f3b166728ffa75a6a2a7d19a740220f1a7f5ba3a2d45b302888c1daeb7f",
+  "sourceSelectorSha256": "a300e173f000c949c5d3ab3f385b083279a58294c91276847af74b72ef391bb7",
+  "status": "PASS_METADATA_ONLY",
+  "syntheticExtraFieldAdded": false,
+  "systemSitePackages": false,
+  "toolAcquisitionSha256": "1ca6f04d163a8f3a6400909c20539d28d6ec91a90859c707227f4302ec8f087c",
+  "toolDistributionVersions": {
+    "packaging": "25.0",
+    "pip": "24.0",
+    "setuptools": "79.0.1"
+  },
+  "toolLockSha256": "95f37e0bb254461fa3f8fa6fe6ca54656b0ed18343ab47ee97faea1487e0db7d",
+  "toolProvenanceSha256": "45ff448d9b69137999f342837694a9047b9275b27a12bfeed22e8aabc8e431aa",
+  "toolStaticReviewSha256": "7c303cfd8e6a86602786721c7b0f986bfcbc0747374bd7952ee69cc851af9d22",
+  "toolVenv": "/tmp/g03-packaging250-qualification-tool",
+  "wheelSha256": "29572ef2b1f17581046b3a2227d5c611fb25ec70ca1ba8554b24b0e69331a484",
+  "wheelSizeBytes": 66469
+}

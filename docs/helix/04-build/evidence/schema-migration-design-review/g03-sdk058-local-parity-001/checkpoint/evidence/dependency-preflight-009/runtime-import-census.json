@@ -1,0 +1,2687 @@
+{
+  "bareImports": [
+    {
+      "package": "ajv",
+      "sourcePath": "src/generated/core-validators.ts",
+      "specifier": "ajv"
+    },
+    {
+      "package": "ajv",
+      "sourcePath": "src/registry/registry.ts",
+      "specifier": "ajv"
+    },
+    {
+      "package": "ajv",
+      "sourcePath": "src/validation/schema.ts",
+      "specifier": "ajv/dist/2020"
+    },
+    {
+      "package": "yaml",
+      "sourcePath": "scripts/codegen-corpus.ts",
+      "specifier": "yaml"
+    },
+    {
+      "package": "yaml",
+      "sourcePath": "src/model/serialization.ts",
+      "specifier": "yaml"
+    }
+  ],
+  "localEdges": [
+    {
+      "from": "scripts/codegen-corpus.ts",
+      "specifier": "../src/access",
+      "to": "src/access/index.ts"
+    },
+    {
+      "from": "scripts/codegen-corpus.ts",
+      "specifier": "../tests/lifecycle/legal-fixture",
+      "to": "tests/lifecycle/legal-fixture.ts"
+    },
+    {
+      "from": "scripts/codegen-corpus.ts",
+      "specifier": "../tests/unified/table-domain-fixture",
+      "to": "tests/unified/table-domain-fixture.ts"
+    },
+    {
+      "from": "scripts/codegen-corpus.ts",
+      "specifier": "../tests/unified/table-operation-fixture",
+      "to": "tests/unified/table-operation-fixture.ts"
+    },
+    {
+      "from": "scripts/codegen-corpus.ts",
+      "specifier": "../tests/unified/table-related-fixture",
+      "to": "tests/unified/table-related-fixture.ts"
+    },
+    {
+      "from": "scripts/codegen-corpus.ts",
+      "specifier": "../tests/unified/table-snapshot-fixture",
+      "to": "tests/unified/table-snapshot-fixture.ts"
+    },
+    {
+      "from": "scripts/codegen-corpus.ts",
+      "specifier": "../tests/unified/table-temporal-fixture",
+      "to": "tests/unified/table-temporal-fixture.ts"
+    },
+    {
+      "from": "scripts/codegen/entry.ts",
+      "specifier": "../../src/access",
+      "to": "src/access/index.ts"
+    },
+    {
+      "from": "scripts/codegen/entry.ts",
+      "specifier": "../../src/extensions/tables",
+      "to": "src/extensions/tables/index.ts"
+    },
+    {
+      "from": "scripts/codegen/entry.ts",
+      "specifier": "../../src/model/json",
+      "to": "src/model/json.ts"
+    },
+    {
+      "from": "scripts/codegen/entry.ts",
+      "specifier": "../../src/table-authoring/row-scope",
+      "to": "src/table-authoring/row-scope.ts"
+    },
+    {
+      "from": "scripts/codegen/entry.ts",
+      "specifier": "../../src/table-deployment",
+      "to": "src/table-deployment/index.ts"
+    },
+    {
+      "from": "scripts/codegen/entry.ts",
+      "specifier": "../../src/table-migration",
+      "to": "src/table-migration/index.ts"
+    },
+    {
+      "from": "scripts/codegen/entry.ts",
+      "specifier": "./polyfills",
+      "to": "scripts/codegen/polyfills.ts"
+    },
+    {
+      "from": "scripts/g03-migration-corpus.ts",
+      "specifier": "../scripts/codegen/entry",
+      "to": "scripts/codegen/entry.ts"
+    },
+    {
+      "from": "scripts/g03-migration-corpus.ts",
+      "specifier": "../src/compilation/bundle/hash",
+      "to": "src/compilation/bundle/hash.ts"
+    },
+    {
+      "from": "scripts/g03-migration-corpus.ts",
+      "specifier": "../src/table-deployment",
+      "to": "src/table-deployment/index.ts"
+    },
+    {
+      "from": "scripts/g03-migration-corpus.ts",
+      "specifier": "../src/table-migration",
+      "to": "src/table-migration/index.ts"
+    },
+    {
+      "from": "scripts/g03-migration-corpus.ts",
+      "specifier": "../tests/binding/fixtures/table-lifecycle-note.json",
+      "to": "tests/binding/fixtures/table-lifecycle-note.json"
+    },
+    {
+      "from": "src/access/index.ts",
+      "specifier": "../compilation/bundle/index",
+      "to": "src/compilation/bundle/index.ts"
+    },
+    {
+      "from": "src/access/index.ts",
+      "specifier": "../extensions/actions/analysis",
+      "to": "src/extensions/actions/analysis.ts"
+    },
+    {
+      "from": "src/access/index.ts",
+      "specifier": "../extensions/actions/structure",
+      "to": "src/extensions/actions/structure.ts"
+    },
+    {
+      "from": "src/access/index.ts",
+      "specifier": "../extensions/actions/types",
+      "to": "src/extensions/actions/types.ts"
+    },
+    {
+      "from": "src/access/index.ts",
+      "specifier": "../model/document",
+      "to": "src/model/document.ts"
+    },
+    {
+      "from": "src/access/index.ts",
+      "specifier": "../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/access/index.ts",
+      "specifier": "./constants",
+      "to": "src/access/constants.ts"
+    },
+    {
+      "from": "src/access/index.ts",
+      "specifier": "./python-runtime",
+      "to": "src/access/python-runtime.ts"
+    },
+    {
+      "from": "src/access/index.ts",
+      "specifier": "./table-client",
+      "to": "src/access/table-client.ts"
+    },
+    {
+      "from": "src/access/index.ts",
+      "specifier": "./table-runtime",
+      "to": "src/access/table-runtime.ts"
+    },
+    {
+      "from": "src/access/index.ts",
+      "specifier": "./types",
+      "to": "src/access/types.ts"
+    },
+    {
+      "from": "src/access/python-runtime.ts",
+      "specifier": "./constants",
+      "to": "src/access/constants.ts"
+    },
+    {
+      "from": "src/access/table-client.ts",
+      "specifier": "../extensions/tables",
+      "to": "src/extensions/tables/index.ts"
+    },
+    {
+      "from": "src/access/table-client.ts",
+      "specifier": "../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/access/table-client.ts",
+      "specifier": "./types",
+      "to": "src/access/types.ts"
+    },
+    {
+      "from": "src/compilation/bundle/hash.ts",
+      "specifier": "../../model/internal/accounting-context",
+      "to": "src/model/internal/accounting-context.ts"
+    },
+    {
+      "from": "src/compilation/bundle/index.ts",
+      "specifier": "../ir/index",
+      "to": "src/compilation/ir/index.ts"
+    },
+    {
+      "from": "src/compilation/bundle/index.ts",
+      "specifier": "./hash",
+      "to": "src/compilation/bundle/hash.ts"
+    },
+    {
+      "from": "src/compilation/ir/index.ts",
+      "specifier": "../../generated/core-model",
+      "to": "src/generated/core-model.ts"
+    },
+    {
+      "from": "src/extensions/actions/analysis.ts",
+      "specifier": "../../model/schema-literals",
+      "to": "src/model/schema-literals.ts"
+    },
+    {
+      "from": "src/extensions/actions/analysis.ts",
+      "specifier": "../../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/extensions/actions/analysis.ts",
+      "specifier": "../../validation/document",
+      "to": "src/validation/document.ts"
+    },
+    {
+      "from": "src/extensions/actions/analysis.ts",
+      "specifier": "../../validation/keys",
+      "to": "src/validation/keys.ts"
+    },
+    {
+      "from": "src/extensions/actions/analysis.ts",
+      "specifier": "./expression",
+      "to": "src/extensions/actions/expression.ts"
+    },
+    {
+      "from": "src/extensions/actions/analysis.ts",
+      "specifier": "./local-profiles",
+      "to": "src/extensions/actions/local-profiles.ts"
+    },
+    {
+      "from": "src/extensions/actions/analysis.ts",
+      "specifier": "./references",
+      "to": "src/extensions/actions/references.ts"
+    },
+    {
+      "from": "src/extensions/actions/analysis.ts",
+      "specifier": "./selector",
+      "to": "src/extensions/actions/selector.ts"
+    },
+    {
+      "from": "src/extensions/actions/analysis.ts",
+      "specifier": "./types",
+      "to": "src/extensions/actions/types.ts"
+    },
+    {
+      "from": "src/extensions/actions/expression.ts",
+      "specifier": "../../generated/core-model",
+      "to": "src/generated/core-model.ts"
+    },
+    {
+      "from": "src/extensions/actions/expression.ts",
+      "specifier": "../../model/json",
+      "to": "src/model/json.ts"
+    },
+    {
+      "from": "src/extensions/actions/expression.ts",
+      "specifier": "../../model/schema-literals",
+      "to": "src/model/schema-literals.ts"
+    },
+    {
+      "from": "src/extensions/actions/expression.ts",
+      "specifier": "../../model/serialization",
+      "to": "src/model/serialization.ts"
+    },
+    {
+      "from": "src/extensions/actions/expression.ts",
+      "specifier": "../../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/extensions/actions/expression.ts",
+      "specifier": "../../validation/document",
+      "to": "src/validation/document.ts"
+    },
+    {
+      "from": "src/extensions/actions/expression.ts",
+      "specifier": "./known-model",
+      "to": "src/extensions/actions/known-model.ts"
+    },
+    {
+      "from": "src/extensions/actions/expression.ts",
+      "specifier": "./references",
+      "to": "src/extensions/actions/references.ts"
+    },
+    {
+      "from": "src/extensions/actions/expression.ts",
+      "specifier": "./structure",
+      "to": "src/extensions/actions/structure.ts"
+    },
+    {
+      "from": "src/extensions/actions/expression.ts",
+      "specifier": "./types",
+      "to": "src/extensions/actions/types.ts"
+    },
+    {
+      "from": "src/extensions/actions/known-model.ts",
+      "specifier": "../../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/extensions/actions/known-model.ts",
+      "specifier": "../../validation/document",
+      "to": "src/validation/document.ts"
+    },
+    {
+      "from": "src/extensions/actions/known-model.ts",
+      "specifier": "./types",
+      "to": "src/extensions/actions/types.ts"
+    },
+    {
+      "from": "src/extensions/actions/local-profiles.ts",
+      "specifier": "./types",
+      "to": "src/extensions/actions/types.ts"
+    },
+    {
+      "from": "src/extensions/actions/references.ts",
+      "specifier": "./types",
+      "to": "src/extensions/actions/types.ts"
+    },
+    {
+      "from": "src/extensions/actions/selector.ts",
+      "specifier": "../../generated/core-model",
+      "to": "src/generated/core-model.ts"
+    },
+    {
+      "from": "src/extensions/actions/selector.ts",
+      "specifier": "../../model/json",
+      "to": "src/model/json.ts"
+    },
+    {
+      "from": "src/extensions/actions/selector.ts",
+      "specifier": "../../model/key-tuple",
+      "to": "src/model/key-tuple.ts"
+    },
+    {
+      "from": "src/extensions/actions/selector.ts",
+      "specifier": "../../model/schema-literals",
+      "to": "src/model/schema-literals.ts"
+    },
+    {
+      "from": "src/extensions/actions/selector.ts",
+      "specifier": "../../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/extensions/actions/selector.ts",
+      "specifier": "../../validation/document",
+      "to": "src/validation/document.ts"
+    },
+    {
+      "from": "src/extensions/actions/selector.ts",
+      "specifier": "../../validation/keys",
+      "to": "src/validation/keys.ts"
+    },
+    {
+      "from": "src/extensions/actions/selector.ts",
+      "specifier": "./expression",
+      "to": "src/extensions/actions/expression.ts"
+    },
+    {
+      "from": "src/extensions/actions/selector.ts",
+      "specifier": "./known-model",
+      "to": "src/extensions/actions/known-model.ts"
+    },
+    {
+      "from": "src/extensions/actions/selector.ts",
+      "specifier": "./structure",
+      "to": "src/extensions/actions/structure.ts"
+    },
+    {
+      "from": "src/extensions/actions/selector.ts",
+      "specifier": "./types",
+      "to": "src/extensions/actions/types.ts"
+    },
+    {
+      "from": "src/extensions/actions/structure.ts",
+      "specifier": "../../../spec/extensions/actions/package.json",
+      "to": "spec/extensions/actions/package.json"
+    },
+    {
+      "from": "src/extensions/actions/structure.ts",
+      "specifier": "../../../spec/extensions/actions/schema.json",
+      "to": "spec/extensions/actions/schema.json"
+    },
+    {
+      "from": "src/extensions/actions/structure.ts",
+      "specifier": "../../model/json",
+      "to": "src/model/json.ts"
+    },
+    {
+      "from": "src/extensions/actions/structure.ts",
+      "specifier": "../../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/extensions/actions/structure.ts",
+      "specifier": "../../validation/schema",
+      "to": "src/validation/schema.ts"
+    },
+    {
+      "from": "src/extensions/actions/structure.ts",
+      "specifier": "./types",
+      "to": "src/extensions/actions/types.ts"
+    },
+    {
+      "from": "src/extensions/actions/types.ts",
+      "specifier": "../../generated/core-model",
+      "to": "src/generated/core-model.ts"
+    },
+    {
+      "from": "src/extensions/actions/types.ts",
+      "specifier": "../../model/schema-literals",
+      "to": "src/model/schema-literals.ts"
+    },
+    {
+      "from": "src/extensions/actions/types.ts",
+      "specifier": "../../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/extensions/tables/columns.ts",
+      "specifier": "../../model/schema-literals",
+      "to": "src/model/schema-literals.ts"
+    },
+    {
+      "from": "src/extensions/tables/columns.ts",
+      "specifier": "../../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/extensions/tables/columns.ts",
+      "specifier": "./context",
+      "to": "src/extensions/tables/context.ts"
+    },
+    {
+      "from": "src/extensions/tables/columns.ts",
+      "specifier": "./expressions",
+      "to": "src/extensions/tables/expressions.ts"
+    },
+    {
+      "from": "src/extensions/tables/columns.ts",
+      "specifier": "./types",
+      "to": "src/extensions/tables/types.ts"
+    },
+    {
+      "from": "src/extensions/tables/context.ts",
+      "specifier": "../../model/internal/accounting-context",
+      "to": "src/model/internal/accounting-context.ts"
+    },
+    {
+      "from": "src/extensions/tables/context.ts",
+      "specifier": "../../model/schema-literals",
+      "to": "src/model/schema-literals.ts"
+    },
+    {
+      "from": "src/extensions/tables/context.ts",
+      "specifier": "../../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/extensions/tables/context.ts",
+      "specifier": "./temporal",
+      "to": "src/extensions/tables/temporal.ts"
+    },
+    {
+      "from": "src/extensions/tables/context.ts",
+      "specifier": "./types",
+      "to": "src/extensions/tables/types.ts"
+    },
+    {
+      "from": "src/extensions/tables/expressions.ts",
+      "specifier": "../../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/extensions/tables/expressions.ts",
+      "specifier": "./context",
+      "to": "src/extensions/tables/context.ts"
+    },
+    {
+      "from": "src/extensions/tables/expressions.ts",
+      "specifier": "./types",
+      "to": "src/extensions/tables/types.ts"
+    },
+    {
+      "from": "src/extensions/tables/index.ts",
+      "specifier": "../../../spec/extensions/tables/package.json",
+      "to": "spec/extensions/tables/package.json"
+    },
+    {
+      "from": "src/extensions/tables/index.ts",
+      "specifier": "../../model/internal/accounting-context",
+      "to": "src/model/internal/accounting-context.ts"
+    },
+    {
+      "from": "src/extensions/tables/index.ts",
+      "specifier": "../../model/json",
+      "to": "src/model/json.ts"
+    },
+    {
+      "from": "src/extensions/tables/index.ts",
+      "specifier": "../../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/extensions/tables/index.ts",
+      "specifier": "../../registry/registry",
+      "to": "src/registry/registry.ts"
+    },
+    {
+      "from": "src/extensions/tables/index.ts",
+      "specifier": "../../validation/document",
+      "to": "src/validation/document.ts"
+    },
+    {
+      "from": "src/extensions/tables/index.ts",
+      "specifier": "./columns",
+      "to": "src/extensions/tables/columns.ts"
+    },
+    {
+      "from": "src/extensions/tables/index.ts",
+      "specifier": "./context",
+      "to": "src/extensions/tables/context.ts"
+    },
+    {
+      "from": "src/extensions/tables/index.ts",
+      "specifier": "./operations",
+      "to": "src/extensions/tables/operations.ts"
+    },
+    {
+      "from": "src/extensions/tables/index.ts",
+      "specifier": "./policies",
+      "to": "src/extensions/tables/policies.ts"
+    },
+    {
+      "from": "src/extensions/tables/index.ts",
+      "specifier": "./seeds",
+      "to": "src/extensions/tables/seeds.ts"
+    },
+    {
+      "from": "src/extensions/tables/index.ts",
+      "specifier": "./types",
+      "to": "src/extensions/tables/types.ts"
+    },
+    {
+      "from": "src/extensions/tables/operations.ts",
+      "specifier": "../../../spec/extensions/tables/operation-0.2.schema.json",
+      "to": "spec/extensions/tables/operation-0.2.schema.json"
+    },
+    {
+      "from": "src/extensions/tables/operations.ts",
+      "specifier": "../../../spec/extensions/tables/operation.schema.json",
+      "to": "spec/extensions/tables/operation.schema.json"
+    },
+    {
+      "from": "src/extensions/tables/operations.ts",
+      "specifier": "../../../spec/extensions/tables/schema.json",
+      "to": "spec/extensions/tables/schema.json"
+    },
+    {
+      "from": "src/extensions/tables/operations.ts",
+      "specifier": "../../model/schema-literals",
+      "to": "src/model/schema-literals.ts"
+    },
+    {
+      "from": "src/extensions/tables/operations.ts",
+      "specifier": "../../validation/schema",
+      "to": "src/validation/schema.ts"
+    },
+    {
+      "from": "src/extensions/tables/operations.ts",
+      "specifier": "./columns",
+      "to": "src/extensions/tables/columns.ts"
+    },
+    {
+      "from": "src/extensions/tables/operations.ts",
+      "specifier": "./context",
+      "to": "src/extensions/tables/context.ts"
+    },
+    {
+      "from": "src/extensions/tables/operations.ts",
+      "specifier": "./row-expressions",
+      "to": "src/extensions/tables/row-expressions.ts"
+    },
+    {
+      "from": "src/extensions/tables/operations.ts",
+      "specifier": "./types",
+      "to": "src/extensions/tables/types.ts"
+    },
+    {
+      "from": "src/extensions/tables/policies.ts",
+      "specifier": "./context",
+      "to": "src/extensions/tables/context.ts"
+    },
+    {
+      "from": "src/extensions/tables/policies.ts",
+      "specifier": "./types",
+      "to": "src/extensions/tables/types.ts"
+    },
+    {
+      "from": "src/extensions/tables/row-expressions.ts",
+      "specifier": "../../model/schema-literals",
+      "to": "src/model/schema-literals.ts"
+    },
+    {
+      "from": "src/extensions/tables/row-expressions.ts",
+      "specifier": "../../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/extensions/tables/row-expressions.ts",
+      "specifier": "./context",
+      "to": "src/extensions/tables/context.ts"
+    },
+    {
+      "from": "src/extensions/tables/row-expressions.ts",
+      "specifier": "./types",
+      "to": "src/extensions/tables/types.ts"
+    },
+    {
+      "from": "src/extensions/tables/seeds.ts",
+      "specifier": "./columns",
+      "to": "src/extensions/tables/columns.ts"
+    },
+    {
+      "from": "src/extensions/tables/seeds.ts",
+      "specifier": "./context",
+      "to": "src/extensions/tables/context.ts"
+    },
+    {
+      "from": "src/extensions/tables/seeds.ts",
+      "specifier": "./types",
+      "to": "src/extensions/tables/types.ts"
+    },
+    {
+      "from": "src/extensions/tables/temporal.ts",
+      "specifier": "../../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/extensions/tables/types.ts",
+      "specifier": "../../model/schema-literals",
+      "to": "src/model/schema-literals.ts"
+    },
+    {
+      "from": "src/generated/core-model.ts",
+      "specifier": "../../spec/core/extension-package.schema.json",
+      "to": "spec/core/extension-package.schema.json"
+    },
+    {
+      "from": "src/generated/core-model.ts",
+      "specifier": "../../spec/core/schema.json",
+      "to": "spec/core/schema.json"
+    },
+    {
+      "from": "src/generated/core-model.ts",
+      "specifier": "../../spec/core/semantic-type-reference.schema.json",
+      "to": "spec/core/semantic-type-reference.schema.json"
+    },
+    {
+      "from": "src/generated/core-model.ts",
+      "specifier": "../../spec/metamodel/generated/core-constraints.json",
+      "to": "spec/metamodel/generated/core-constraints.json"
+    },
+    {
+      "from": "src/generated/core-model.ts",
+      "specifier": "../../spec/metamodel/generated/domain-policy.json",
+      "to": "spec/metamodel/generated/domain-policy.json"
+    },
+    {
+      "from": "src/model/bit128.ts",
+      "specifier": "./types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/model/document-accounting.ts",
+      "specifier": "../registry/registry",
+      "to": "src/registry/registry.ts"
+    },
+    {
+      "from": "src/model/document-accounting.ts",
+      "specifier": "../validation/document",
+      "to": "src/validation/document.ts"
+    },
+    {
+      "from": "src/model/document-accounting.ts",
+      "specifier": "./internal/accounting-context",
+      "to": "src/model/internal/accounting-context.ts"
+    },
+    {
+      "from": "src/model/document-accounting.ts",
+      "specifier": "./internal/scan-json-frame",
+      "to": "src/model/internal/scan-json-frame.ts"
+    },
+    {
+      "from": "src/model/document-accounting.ts",
+      "specifier": "./types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/model/document.ts",
+      "specifier": "../registry/registry",
+      "to": "src/registry/registry.ts"
+    },
+    {
+      "from": "src/model/document.ts",
+      "specifier": "../validation/document",
+      "to": "src/validation/document.ts"
+    },
+    {
+      "from": "src/model/document.ts",
+      "specifier": "./json",
+      "to": "src/model/json.ts"
+    },
+    {
+      "from": "src/model/document.ts",
+      "specifier": "./serialization",
+      "to": "src/model/serialization.ts"
+    },
+    {
+      "from": "src/model/document.ts",
+      "specifier": "./types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/model/internal/json-number.ts",
+      "specifier": "../errors",
+      "to": "src/model/errors.ts"
+    },
+    {
+      "from": "src/model/internal/scan-json-frame.ts",
+      "specifier": "../errors",
+      "to": "src/model/errors.ts"
+    },
+    {
+      "from": "src/model/internal/scan-json-frame.ts",
+      "specifier": "./json-number",
+      "to": "src/model/internal/json-number.ts"
+    },
+    {
+      "from": "src/model/json.ts",
+      "specifier": "./errors",
+      "to": "src/model/errors.ts"
+    },
+    {
+      "from": "src/model/json.ts",
+      "specifier": "./types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/model/key-tuple.ts",
+      "specifier": "../../spec/core/key-tuple-operation-v4.schema.json",
+      "to": "spec/core/key-tuple-operation-v4.schema.json"
+    },
+    {
+      "from": "src/model/key-tuple.ts",
+      "specifier": "../../spec/core/schema.json",
+      "to": "spec/core/schema.json"
+    },
+    {
+      "from": "src/model/key-tuple.ts",
+      "specifier": "../generated/core-model",
+      "to": "src/generated/core-model.ts"
+    },
+    {
+      "from": "src/model/key-tuple.ts",
+      "specifier": "../validation/document",
+      "to": "src/validation/document.ts"
+    },
+    {
+      "from": "src/model/key-tuple.ts",
+      "specifier": "../validation/internal-schema",
+      "to": "src/validation/internal-schema.ts"
+    },
+    {
+      "from": "src/model/key-tuple.ts",
+      "specifier": "../validation/keys",
+      "to": "src/validation/keys.ts"
+    },
+    {
+      "from": "src/model/key-tuple.ts",
+      "specifier": "../validation/schema",
+      "to": "src/validation/schema.ts"
+    },
+    {
+      "from": "src/model/key-tuple.ts",
+      "specifier": "./bit128",
+      "to": "src/model/bit128.ts"
+    },
+    {
+      "from": "src/model/key-tuple.ts",
+      "specifier": "./json",
+      "to": "src/model/json.ts"
+    },
+    {
+      "from": "src/model/key-tuple.ts",
+      "specifier": "./schema-literals",
+      "to": "src/model/schema-literals.ts"
+    },
+    {
+      "from": "src/model/key-tuple.ts",
+      "specifier": "./types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/model/key-tuple.ts",
+      "specifier": "./uuid",
+      "to": "src/model/uuid.ts"
+    },
+    {
+      "from": "src/model/schema-literals.ts",
+      "specifier": "../generated/core-model",
+      "to": "src/generated/core-model.ts"
+    },
+    {
+      "from": "src/model/schema-literals.ts",
+      "specifier": "../validation/current-policy",
+      "to": "src/validation/current-policy.ts"
+    },
+    {
+      "from": "src/model/schema-literals.ts",
+      "specifier": "../validation/json-equality",
+      "to": "src/validation/json-equality.ts"
+    },
+    {
+      "from": "src/model/schema-literals.ts",
+      "specifier": "../validation/literal-kernel",
+      "to": "src/validation/literal-kernel.ts"
+    },
+    {
+      "from": "src/model/schema-literals.ts",
+      "specifier": "./types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/model/serialization.ts",
+      "specifier": "./errors",
+      "to": "src/model/errors.ts"
+    },
+    {
+      "from": "src/model/serialization.ts",
+      "specifier": "./internal/json-number",
+      "to": "src/model/internal/json-number.ts"
+    },
+    {
+      "from": "src/model/serialization.ts",
+      "specifier": "./internal/scan-json-frame",
+      "to": "src/model/internal/scan-json-frame.ts"
+    },
+    {
+      "from": "src/model/serialization.ts",
+      "specifier": "./json",
+      "to": "src/model/json.ts"
+    },
+    {
+      "from": "src/model/serialization.ts",
+      "specifier": "./types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/model/types.ts",
+      "specifier": "../generated/core-model",
+      "to": "src/generated/core-model.ts"
+    },
+    {
+      "from": "src/model/types.ts",
+      "specifier": "./errors",
+      "to": "src/model/errors.ts"
+    },
+    {
+      "from": "src/model/uuid.ts",
+      "specifier": "./bit128",
+      "to": "src/model/bit128.ts"
+    },
+    {
+      "from": "src/model/uuid.ts",
+      "specifier": "./types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/registry/kind-runtime.ts",
+      "specifier": "../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/registry/registry.ts",
+      "specifier": "../generated/core-model",
+      "to": "src/generated/core-model.ts"
+    },
+    {
+      "from": "src/registry/registry.ts",
+      "specifier": "../model/json",
+      "to": "src/model/json.ts"
+    },
+    {
+      "from": "src/registry/registry.ts",
+      "specifier": "../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/registry/registry.ts",
+      "specifier": "../validation/schema",
+      "to": "src/validation/schema.ts"
+    },
+    {
+      "from": "src/registry/registry.ts",
+      "specifier": "./kind-runtime",
+      "to": "src/registry/kind-runtime.ts"
+    },
+    {
+      "from": "src/table-authoring/row-scope.ts",
+      "specifier": "../extensions/tables",
+      "to": "src/extensions/tables/index.ts"
+    },
+    {
+      "from": "src/table-authoring/row-scope.ts",
+      "specifier": "../model/json",
+      "to": "src/model/json.ts"
+    },
+    {
+      "from": "src/table-authoring/row-scope.ts",
+      "specifier": "../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/table-deployment/configuration.ts",
+      "specifier": "../model/json",
+      "to": "src/model/json.ts"
+    },
+    {
+      "from": "src/table-deployment/configuration.ts",
+      "specifier": "../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/table-deployment/configuration.ts",
+      "specifier": "./types",
+      "to": "src/table-deployment/types.ts"
+    },
+    {
+      "from": "src/table-deployment/ddl.ts",
+      "specifier": "../compilation/bundle/hash",
+      "to": "src/compilation/bundle/hash.ts"
+    },
+    {
+      "from": "src/table-deployment/ddl.ts",
+      "specifier": "../extensions/tables",
+      "to": "src/extensions/tables/index.ts"
+    },
+    {
+      "from": "src/table-deployment/ddl.ts",
+      "specifier": "./configuration",
+      "to": "src/table-deployment/configuration.ts"
+    },
+    {
+      "from": "src/table-deployment/ddl.ts",
+      "specifier": "./domains",
+      "to": "src/table-deployment/domains.ts"
+    },
+    {
+      "from": "src/table-deployment/ddl.ts",
+      "specifier": "./grants",
+      "to": "src/table-deployment/grants.ts"
+    },
+    {
+      "from": "src/table-deployment/ddl.ts",
+      "specifier": "./policies",
+      "to": "src/table-deployment/policies.ts"
+    },
+    {
+      "from": "src/table-deployment/ddl.ts",
+      "specifier": "./sql",
+      "to": "src/table-deployment/sql.ts"
+    },
+    {
+      "from": "src/table-deployment/ddl.ts",
+      "specifier": "./types",
+      "to": "src/table-deployment/types.ts"
+    },
+    {
+      "from": "src/table-deployment/domains.ts",
+      "specifier": "../extensions/tables",
+      "to": "src/extensions/tables/index.ts"
+    },
+    {
+      "from": "src/table-deployment/domains.ts",
+      "specifier": "../model/internal/accounting-context",
+      "to": "src/model/internal/accounting-context.ts"
+    },
+    {
+      "from": "src/table-deployment/domains.ts",
+      "specifier": "../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/table-deployment/domains.ts",
+      "specifier": "./configuration",
+      "to": "src/table-deployment/configuration.ts"
+    },
+    {
+      "from": "src/table-deployment/domains.ts",
+      "specifier": "./sql",
+      "to": "src/table-deployment/sql.ts"
+    },
+    {
+      "from": "src/table-deployment/grants.ts",
+      "specifier": "../extensions/tables/types",
+      "to": "src/extensions/tables/types.ts"
+    },
+    {
+      "from": "src/table-deployment/grants.ts",
+      "specifier": "../model/internal/accounting-context",
+      "to": "src/model/internal/accounting-context.ts"
+    },
+    {
+      "from": "src/table-deployment/grants.ts",
+      "specifier": "./sql",
+      "to": "src/table-deployment/sql.ts"
+    },
+    {
+      "from": "src/table-deployment/index.ts",
+      "specifier": "../compilation/bundle/hash",
+      "to": "src/compilation/bundle/hash.ts"
+    },
+    {
+      "from": "src/table-deployment/index.ts",
+      "specifier": "../extensions/tables",
+      "to": "src/extensions/tables/index.ts"
+    },
+    {
+      "from": "src/table-deployment/index.ts",
+      "specifier": "../model/document",
+      "to": "src/model/document.ts"
+    },
+    {
+      "from": "src/table-deployment/index.ts",
+      "specifier": "../model/document-accounting",
+      "to": "src/model/document-accounting.ts"
+    },
+    {
+      "from": "src/table-deployment/index.ts",
+      "specifier": "../model/internal/accounting-context",
+      "to": "src/model/internal/accounting-context.ts"
+    },
+    {
+      "from": "src/table-deployment/index.ts",
+      "specifier": "../model/json",
+      "to": "src/model/json.ts"
+    },
+    {
+      "from": "src/table-deployment/index.ts",
+      "specifier": "../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/table-deployment/index.ts",
+      "specifier": "./configuration",
+      "to": "src/table-deployment/configuration.ts"
+    },
+    {
+      "from": "src/table-deployment/index.ts",
+      "specifier": "./ddl",
+      "to": "src/table-deployment/ddl.ts"
+    },
+    {
+      "from": "src/table-deployment/index.ts",
+      "specifier": "./sql",
+      "to": "src/table-deployment/sql.ts"
+    },
+    {
+      "from": "src/table-deployment/index.ts",
+      "specifier": "./types",
+      "to": "src/table-deployment/types.ts"
+    },
+    {
+      "from": "src/table-deployment/policies.ts",
+      "specifier": "../extensions/tables",
+      "to": "src/extensions/tables/index.ts"
+    },
+    {
+      "from": "src/table-deployment/policies.ts",
+      "specifier": "./configuration",
+      "to": "src/table-deployment/configuration.ts"
+    },
+    {
+      "from": "src/table-deployment/policies.ts",
+      "specifier": "./sql",
+      "to": "src/table-deployment/sql.ts"
+    },
+    {
+      "from": "src/table-deployment/policies.ts",
+      "specifier": "./types",
+      "to": "src/table-deployment/types.ts"
+    },
+    {
+      "from": "src/table-deployment/sql.ts",
+      "specifier": "../extensions/tables",
+      "to": "src/extensions/tables/index.ts"
+    },
+    {
+      "from": "src/table-deployment/sql.ts",
+      "specifier": "../model/internal/accounting-context",
+      "to": "src/model/internal/accounting-context.ts"
+    },
+    {
+      "from": "src/table-deployment/sql.ts",
+      "specifier": "../model/schema-literals",
+      "to": "src/model/schema-literals.ts"
+    },
+    {
+      "from": "src/table-deployment/sql.ts",
+      "specifier": "./configuration",
+      "to": "src/table-deployment/configuration.ts"
+    },
+    {
+      "from": "src/table-deployment/sql.ts",
+      "specifier": "./temporal",
+      "to": "src/table-deployment/temporal.ts"
+    },
+    {
+      "from": "src/table-deployment/sql.ts",
+      "specifier": "./types",
+      "to": "src/table-deployment/types.ts"
+    },
+    {
+      "from": "src/table-deployment/temporal.ts",
+      "specifier": "../extensions/tables/temporal",
+      "to": "src/extensions/tables/temporal.ts"
+    },
+    {
+      "from": "src/table-deployment/temporal.ts",
+      "specifier": "../model/internal/accounting-context",
+      "to": "src/model/internal/accounting-context.ts"
+    },
+    {
+      "from": "src/table-deployment/types.ts",
+      "specifier": "../extensions/tables",
+      "to": "src/extensions/tables/index.ts"
+    },
+    {
+      "from": "src/table-deployment/types.ts",
+      "specifier": "../model/internal/accounting-context",
+      "to": "src/model/internal/accounting-context.ts"
+    },
+    {
+      "from": "src/table-deployment/types.ts",
+      "specifier": "../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/table-migration/g02-field-effects.ts",
+      "specifier": "../extensions/tables",
+      "to": "src/extensions/tables/index.ts"
+    },
+    {
+      "from": "src/table-migration/g02-field-effects.ts",
+      "specifier": "../table-deployment/grants",
+      "to": "src/table-deployment/grants.ts"
+    },
+    {
+      "from": "src/table-migration/g02-field-effects.ts",
+      "specifier": "../table-deployment/sql",
+      "to": "src/table-deployment/sql.ts"
+    },
+    {
+      "from": "src/table-migration/g03-defaults.ts",
+      "specifier": "../compilation/bundle/hash",
+      "to": "src/compilation/bundle/hash.ts"
+    },
+    {
+      "from": "src/table-migration/g03-defaults.ts",
+      "specifier": "../extensions/tables",
+      "to": "src/extensions/tables/index.ts"
+    },
+    {
+      "from": "src/table-migration/g03-defaults.ts",
+      "specifier": "../extensions/tables/temporal",
+      "to": "src/extensions/tables/temporal.ts"
+    },
+    {
+      "from": "src/table-migration/g03-defaults.ts",
+      "specifier": "../model/document",
+      "to": "src/model/document.ts"
+    },
+    {
+      "from": "src/table-migration/g03-defaults.ts",
+      "specifier": "../model/json",
+      "to": "src/model/json.ts"
+    },
+    {
+      "from": "src/table-migration/g03-defaults.ts",
+      "specifier": "../model/schema-literals",
+      "to": "src/model/schema-literals.ts"
+    },
+    {
+      "from": "src/table-migration/g03-defaults.ts",
+      "specifier": "../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/table-migration/g03-defaults.ts",
+      "specifier": "../table-deployment",
+      "to": "src/table-deployment/index.ts"
+    },
+    {
+      "from": "src/table-migration/g03-defaults.ts",
+      "specifier": "../table-deployment/sql",
+      "to": "src/table-deployment/sql.ts"
+    },
+    {
+      "from": "src/table-migration/g03-defaults.ts",
+      "specifier": "./reviewed",
+      "to": "src/table-migration/reviewed.ts"
+    },
+    {
+      "from": "src/table-migration/g04-conversion.ts",
+      "specifier": "../compilation/bundle/hash",
+      "to": "src/compilation/bundle/hash.ts"
+    },
+    {
+      "from": "src/table-migration/g04-conversion.ts",
+      "specifier": "../model/document",
+      "to": "src/model/document.ts"
+    },
+    {
+      "from": "src/table-migration/g04-conversion.ts",
+      "specifier": "../model/json",
+      "to": "src/model/json.ts"
+    },
+    {
+      "from": "src/table-migration/g04-conversion.ts",
+      "specifier": "../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/table-migration/g04-conversion.ts",
+      "specifier": "../table-deployment",
+      "to": "src/table-deployment/index.ts"
+    },
+    {
+      "from": "src/table-migration/g04-conversion.ts",
+      "specifier": "./index",
+      "to": "src/table-migration/index.ts"
+    },
+    {
+      "from": "src/table-migration/g04-conversion.ts",
+      "specifier": "./options",
+      "to": "src/table-migration/options.ts"
+    },
+    {
+      "from": "src/table-migration/g04-conversion.ts",
+      "specifier": "./reviewed",
+      "to": "src/table-migration/reviewed.ts"
+    },
+    {
+      "from": "src/table-migration/g11-source.ts",
+      "specifier": "../compilation/bundle/hash",
+      "to": "src/compilation/bundle/hash.ts"
+    },
+    {
+      "from": "src/table-migration/g11-source.ts",
+      "specifier": "../model/document",
+      "to": "src/model/document.ts"
+    },
+    {
+      "from": "src/table-migration/g11-source.ts",
+      "specifier": "../model/json",
+      "to": "src/model/json.ts"
+    },
+    {
+      "from": "src/table-migration/g11-source.ts",
+      "specifier": "../table-deployment",
+      "to": "src/table-deployment/index.ts"
+    },
+    {
+      "from": "src/table-migration/g11-source.ts",
+      "specifier": "./reviewed",
+      "to": "src/table-migration/reviewed.ts"
+    },
+    {
+      "from": "src/table-migration/index.ts",
+      "specifier": "../compilation/bundle/hash",
+      "to": "src/compilation/bundle/hash.ts"
+    },
+    {
+      "from": "src/table-migration/index.ts",
+      "specifier": "../extensions/tables",
+      "to": "src/extensions/tables/index.ts"
+    },
+    {
+      "from": "src/table-migration/index.ts",
+      "specifier": "../model/document",
+      "to": "src/model/document.ts"
+    },
+    {
+      "from": "src/table-migration/index.ts",
+      "specifier": "../model/json",
+      "to": "src/model/json.ts"
+    },
+    {
+      "from": "src/table-migration/index.ts",
+      "specifier": "../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/table-migration/index.ts",
+      "specifier": "../table-deployment",
+      "to": "src/table-deployment/index.ts"
+    },
+    {
+      "from": "src/table-migration/index.ts",
+      "specifier": "../table-deployment/grants",
+      "to": "src/table-deployment/grants.ts"
+    },
+    {
+      "from": "src/table-migration/index.ts",
+      "specifier": "../table-deployment/policies",
+      "to": "src/table-deployment/policies.ts"
+    },
+    {
+      "from": "src/table-migration/index.ts",
+      "specifier": "../table-deployment/sql",
+      "to": "src/table-deployment/sql.ts"
+    },
+    {
+      "from": "src/table-migration/index.ts",
+      "specifier": "../table-deployment/types",
+      "to": "src/table-deployment/types.ts"
+    },
+    {
+      "from": "src/table-migration/index.ts",
+      "specifier": "./g02-field-effects",
+      "to": "src/table-migration/g02-field-effects.ts"
+    },
+    {
+      "from": "src/table-migration/index.ts",
+      "specifier": "./g03-defaults",
+      "to": "src/table-migration/g03-defaults.ts"
+    },
+    {
+      "from": "src/table-migration/index.ts",
+      "specifier": "./g04-conversion",
+      "to": "src/table-migration/g04-conversion.ts"
+    },
+    {
+      "from": "src/table-migration/index.ts",
+      "specifier": "./internal-operations",
+      "to": "src/table-migration/internal-operations.ts"
+    },
+    {
+      "from": "src/table-migration/index.ts",
+      "specifier": "./inventory",
+      "to": "src/table-migration/inventory.ts"
+    },
+    {
+      "from": "src/table-migration/index.ts",
+      "specifier": "./inventory-options",
+      "to": "src/table-migration/inventory-options.ts"
+    },
+    {
+      "from": "src/table-migration/index.ts",
+      "specifier": "./inventory-review",
+      "to": "src/table-migration/inventory-review.ts"
+    },
+    {
+      "from": "src/table-migration/index.ts",
+      "specifier": "./options",
+      "to": "src/table-migration/options.ts"
+    },
+    {
+      "from": "src/table-migration/index.ts",
+      "specifier": "./phases",
+      "to": "src/table-migration/phases.ts"
+    },
+    {
+      "from": "src/table-migration/index.ts",
+      "specifier": "./phases-options",
+      "to": "src/table-migration/phases-options.ts"
+    },
+    {
+      "from": "src/table-migration/index.ts",
+      "specifier": "./reviewed",
+      "to": "src/table-migration/reviewed.ts"
+    },
+    {
+      "from": "src/table-migration/internal-operations.ts",
+      "specifier": "../table-deployment/grants",
+      "to": "src/table-deployment/grants.ts"
+    },
+    {
+      "from": "src/table-migration/internal.ts",
+      "specifier": "../compilation/bundle/hash",
+      "to": "src/compilation/bundle/hash.ts"
+    },
+    {
+      "from": "src/table-migration/internal.ts",
+      "specifier": "../model/document",
+      "to": "src/model/document.ts"
+    },
+    {
+      "from": "src/table-migration/internal.ts",
+      "specifier": "../model/document-accounting",
+      "to": "src/model/document-accounting.ts"
+    },
+    {
+      "from": "src/table-migration/internal.ts",
+      "specifier": "../model/internal/accounting-context",
+      "to": "src/model/internal/accounting-context.ts"
+    },
+    {
+      "from": "src/table-migration/internal.ts",
+      "specifier": "../model/json",
+      "to": "src/model/json.ts"
+    },
+    {
+      "from": "src/table-migration/internal.ts",
+      "specifier": "../table-deployment",
+      "to": "src/table-deployment/index.ts"
+    },
+    {
+      "from": "src/table-migration/internal.ts",
+      "specifier": "./g02-field-effects",
+      "to": "src/table-migration/g02-field-effects.ts"
+    },
+    {
+      "from": "src/table-migration/internal.ts",
+      "specifier": "./index",
+      "to": "src/table-migration/index.ts"
+    },
+    {
+      "from": "src/table-migration/internal.ts",
+      "specifier": "./internal-operations",
+      "to": "src/table-migration/internal-operations.ts"
+    },
+    {
+      "from": "src/table-migration/internal.ts",
+      "specifier": "./inventory-verified-deployment",
+      "to": "src/table-migration/inventory-verified-deployment.ts"
+    },
+    {
+      "from": "src/table-migration/internal.ts",
+      "specifier": "./options",
+      "to": "src/table-migration/options.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-component-copy.ts",
+      "specifier": "../model/errors",
+      "to": "src/model/errors.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-component-copy.ts",
+      "specifier": "../model/internal/accounting-context",
+      "to": "src/model/internal/accounting-context.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-g02-source.ts",
+      "specifier": "../compilation/bundle/hash",
+      "to": "src/compilation/bundle/hash.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-g02-source.ts",
+      "specifier": "../extensions/tables/types",
+      "to": "src/extensions/tables/types.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-g02-source.ts",
+      "specifier": "../table-deployment",
+      "to": "src/table-deployment/index.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-g02-source.ts",
+      "specifier": "./inventory-operation-references",
+      "to": "src/table-migration/inventory-operation-references.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-g02-source.ts",
+      "specifier": "./inventory-options",
+      "to": "src/table-migration/inventory-options.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-g05-selection.ts",
+      "specifier": "../compilation/bundle/hash",
+      "to": "src/compilation/bundle/hash.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-g05-selection.ts",
+      "specifier": "../model/internal/accounting-context",
+      "to": "src/model/internal/accounting-context.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-g05-selection.ts",
+      "specifier": "../model/json",
+      "to": "src/model/json.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-g05-selection.ts",
+      "specifier": "../table-deployment",
+      "to": "src/table-deployment/index.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-g05-selection.ts",
+      "specifier": "./inventory-options",
+      "to": "src/table-migration/inventory-options.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-graph.ts",
+      "specifier": "../compilation/bundle/hash",
+      "to": "src/compilation/bundle/hash.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-graph.ts",
+      "specifier": "../model/internal/accounting-context",
+      "to": "src/model/internal/accounting-context.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-history.ts",
+      "specifier": "../compilation/bundle/hash",
+      "to": "src/compilation/bundle/hash.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-history.ts",
+      "specifier": "../model/internal/accounting-context",
+      "to": "src/model/internal/accounting-context.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-history.ts",
+      "specifier": "../table-deployment",
+      "to": "src/table-deployment/index.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-history.ts",
+      "specifier": "./index",
+      "to": "src/table-migration/index.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-history.ts",
+      "specifier": "./inventory-options",
+      "to": "src/table-migration/inventory-options.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-history.ts",
+      "specifier": "./inventory-r2-context",
+      "to": "src/table-migration/inventory-r2-context.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-history.ts",
+      "specifier": "./inventory-verified-deployment",
+      "to": "src/table-migration/inventory-verified-deployment.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-operation-references.ts",
+      "specifier": "../compilation/bundle/hash",
+      "to": "src/compilation/bundle/hash.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-operation-references.ts",
+      "specifier": "../extensions/tables/types",
+      "to": "src/extensions/tables/types.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-options.ts",
+      "specifier": "../compilation/bundle/hash",
+      "to": "src/compilation/bundle/hash.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-options.ts",
+      "specifier": "../model/internal/accounting-context",
+      "to": "src/model/internal/accounting-context.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-options.ts",
+      "specifier": "../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-options.ts",
+      "specifier": "../table-deployment",
+      "to": "src/table-deployment/index.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-options.ts",
+      "specifier": "./index",
+      "to": "src/table-migration/index.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-options.ts",
+      "specifier": "./inventory",
+      "to": "src/table-migration/inventory.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-options.ts",
+      "specifier": "./inventory-g05-selection",
+      "to": "src/table-migration/inventory-g05-selection.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-options.ts",
+      "specifier": "./inventory-r2-context",
+      "to": "src/table-migration/inventory-r2-context.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-options.ts",
+      "specifier": "./inventory-verified-deployment",
+      "to": "src/table-migration/inventory-verified-deployment.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-projection.ts",
+      "specifier": "../compilation/bundle/hash",
+      "to": "src/compilation/bundle/hash.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-projection.ts",
+      "specifier": "../extensions/tables/types",
+      "to": "src/extensions/tables/types.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-projection.ts",
+      "specifier": "../model/internal/accounting-context",
+      "to": "src/model/internal/accounting-context.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-projection.ts",
+      "specifier": "../model/json",
+      "to": "src/model/json.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-projection.ts",
+      "specifier": "../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-projection.ts",
+      "specifier": "../table-deployment",
+      "to": "src/table-deployment/index.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-projection.ts",
+      "specifier": "../table-deployment/grants",
+      "to": "src/table-deployment/grants.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-projection.ts",
+      "specifier": "../table-deployment/types",
+      "to": "src/table-deployment/types.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-projection.ts",
+      "specifier": "./inventory-g05-selection",
+      "to": "src/table-migration/inventory-g05-selection.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-projection.ts",
+      "specifier": "./inventory-operation-references",
+      "to": "src/table-migration/inventory-operation-references.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-projection.ts",
+      "specifier": "./inventory-verified-deployment",
+      "to": "src/table-migration/inventory-verified-deployment.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-r2-context.ts",
+      "specifier": "../compilation/bundle/hash",
+      "to": "src/compilation/bundle/hash.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-r2-context.ts",
+      "specifier": "../extensions/tables/row-expressions",
+      "to": "src/extensions/tables/row-expressions.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-r2-context.ts",
+      "specifier": "../extensions/tables/types",
+      "to": "src/extensions/tables/types.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-r2-context.ts",
+      "specifier": "../model/internal/accounting-context",
+      "to": "src/model/internal/accounting-context.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-r2-context.ts",
+      "specifier": "../table-deployment",
+      "to": "src/table-deployment/index.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-r2-context.ts",
+      "specifier": "./inventory-component-copy",
+      "to": "src/table-migration/inventory-component-copy.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-r2-context.ts",
+      "specifier": "./inventory-g05-selection",
+      "to": "src/table-migration/inventory-g05-selection.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-r2-context.ts",
+      "specifier": "./inventory-projection",
+      "to": "src/table-migration/inventory-projection.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-review.ts",
+      "specifier": "../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-review.ts",
+      "specifier": "./inventory",
+      "to": "src/table-migration/inventory.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-review.ts",
+      "specifier": "./inventory-options",
+      "to": "src/table-migration/inventory-options.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-verified-deployment.ts",
+      "specifier": "../compilation/bundle/hash",
+      "to": "src/compilation/bundle/hash.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-verified-deployment.ts",
+      "specifier": "../model/internal/accounting-context",
+      "to": "src/model/internal/accounting-context.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-verified-deployment.ts",
+      "specifier": "../table-deployment",
+      "to": "src/table-deployment/index.ts"
+    },
+    {
+      "from": "src/table-migration/inventory-verified-deployment.ts",
+      "specifier": "./inventory-component-copy",
+      "to": "src/table-migration/inventory-component-copy.ts"
+    },
+    {
+      "from": "src/table-migration/inventory.ts",
+      "specifier": "../compilation/bundle/hash",
+      "to": "src/compilation/bundle/hash.ts"
+    },
+    {
+      "from": "src/table-migration/inventory.ts",
+      "specifier": "../extensions/tables/types",
+      "to": "src/extensions/tables/types.ts"
+    },
+    {
+      "from": "src/table-migration/inventory.ts",
+      "specifier": "../model/document",
+      "to": "src/model/document.ts"
+    },
+    {
+      "from": "src/table-migration/inventory.ts",
+      "specifier": "../model/errors",
+      "to": "src/model/errors.ts"
+    },
+    {
+      "from": "src/table-migration/inventory.ts",
+      "specifier": "../model/internal/accounting-context",
+      "to": "src/model/internal/accounting-context.ts"
+    },
+    {
+      "from": "src/table-migration/inventory.ts",
+      "specifier": "../model/json",
+      "to": "src/model/json.ts"
+    },
+    {
+      "from": "src/table-migration/inventory.ts",
+      "specifier": "../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/table-migration/inventory.ts",
+      "specifier": "../table-deployment",
+      "to": "src/table-deployment/index.ts"
+    },
+    {
+      "from": "src/table-migration/inventory.ts",
+      "specifier": "../table-deployment/grants",
+      "to": "src/table-deployment/grants.ts"
+    },
+    {
+      "from": "src/table-migration/inventory.ts",
+      "specifier": "../table-deployment/sql",
+      "to": "src/table-deployment/sql.ts"
+    },
+    {
+      "from": "src/table-migration/inventory.ts",
+      "specifier": "../table-deployment/types",
+      "to": "src/table-deployment/types.ts"
+    },
+    {
+      "from": "src/table-migration/inventory.ts",
+      "specifier": "./g02-field-effects",
+      "to": "src/table-migration/g02-field-effects.ts"
+    },
+    {
+      "from": "src/table-migration/inventory.ts",
+      "specifier": "./internal",
+      "to": "src/table-migration/internal.ts"
+    },
+    {
+      "from": "src/table-migration/inventory.ts",
+      "specifier": "./inventory-component-copy",
+      "to": "src/table-migration/inventory-component-copy.ts"
+    },
+    {
+      "from": "src/table-migration/inventory.ts",
+      "specifier": "./inventory-g02-source",
+      "to": "src/table-migration/inventory-g02-source.ts"
+    },
+    {
+      "from": "src/table-migration/inventory.ts",
+      "specifier": "./inventory-g05-selection",
+      "to": "src/table-migration/inventory-g05-selection.ts"
+    },
+    {
+      "from": "src/table-migration/inventory.ts",
+      "specifier": "./inventory-graph",
+      "to": "src/table-migration/inventory-graph.ts"
+    },
+    {
+      "from": "src/table-migration/inventory.ts",
+      "specifier": "./inventory-history",
+      "to": "src/table-migration/inventory-history.ts"
+    },
+    {
+      "from": "src/table-migration/inventory.ts",
+      "specifier": "./inventory-options",
+      "to": "src/table-migration/inventory-options.ts"
+    },
+    {
+      "from": "src/table-migration/inventory.ts",
+      "specifier": "./inventory-projection",
+      "to": "src/table-migration/inventory-projection.ts"
+    },
+    {
+      "from": "src/table-migration/inventory.ts",
+      "specifier": "./inventory-r2-context",
+      "to": "src/table-migration/inventory-r2-context.ts"
+    },
+    {
+      "from": "src/table-migration/inventory.ts",
+      "specifier": "./inventory-review",
+      "to": "src/table-migration/inventory-review.ts"
+    },
+    {
+      "from": "src/table-migration/inventory.ts",
+      "specifier": "./inventory-verified-deployment",
+      "to": "src/table-migration/inventory-verified-deployment.ts"
+    },
+    {
+      "from": "src/table-migration/inventory.ts",
+      "specifier": "./options",
+      "to": "src/table-migration/options.ts"
+    },
+    {
+      "from": "src/table-migration/inventory.ts",
+      "specifier": "./reviewed",
+      "to": "src/table-migration/reviewed.ts"
+    },
+    {
+      "from": "src/table-migration/options.ts",
+      "specifier": "../compilation/bundle/hash",
+      "to": "src/compilation/bundle/hash.ts"
+    },
+    {
+      "from": "src/table-migration/options.ts",
+      "specifier": "../extensions/tables",
+      "to": "src/extensions/tables/index.ts"
+    },
+    {
+      "from": "src/table-migration/options.ts",
+      "specifier": "../extensions/tables/row-expressions",
+      "to": "src/extensions/tables/row-expressions.ts"
+    },
+    {
+      "from": "src/table-migration/options.ts",
+      "specifier": "../model/document",
+      "to": "src/model/document.ts"
+    },
+    {
+      "from": "src/table-migration/options.ts",
+      "specifier": "../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/table-migration/options.ts",
+      "specifier": "../table-deployment",
+      "to": "src/table-deployment/index.ts"
+    },
+    {
+      "from": "src/table-migration/options.ts",
+      "specifier": "./g03-defaults",
+      "to": "src/table-migration/g03-defaults.ts"
+    },
+    {
+      "from": "src/table-migration/options.ts",
+      "specifier": "./g04-conversion",
+      "to": "src/table-migration/g04-conversion.ts"
+    },
+    {
+      "from": "src/table-migration/options.ts",
+      "specifier": "./g11-source",
+      "to": "src/table-migration/g11-source.ts"
+    },
+    {
+      "from": "src/table-migration/options.ts",
+      "specifier": "./reviewed",
+      "to": "src/table-migration/reviewed.ts"
+    },
+    {
+      "from": "src/table-migration/phases-options.ts",
+      "specifier": "../extensions/tables",
+      "to": "src/extensions/tables/index.ts"
+    },
+    {
+      "from": "src/table-migration/phases.ts",
+      "specifier": "../table-deployment",
+      "to": "src/table-deployment/index.ts"
+    },
+    {
+      "from": "src/table-migration/phases.ts",
+      "specifier": "./phases-options",
+      "to": "src/table-migration/phases-options.ts"
+    },
+    {
+      "from": "src/table-migration/reviewed.ts",
+      "specifier": "../compilation/bundle/hash",
+      "to": "src/compilation/bundle/hash.ts"
+    },
+    {
+      "from": "src/table-migration/reviewed.ts",
+      "specifier": "../model/document",
+      "to": "src/model/document.ts"
+    },
+    {
+      "from": "src/table-migration/reviewed.ts",
+      "specifier": "../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/table-migration/reviewed.ts",
+      "specifier": "../table-deployment",
+      "to": "src/table-deployment/index.ts"
+    },
+    {
+      "from": "src/table-migration/reviewed.ts",
+      "specifier": "./g03-defaults",
+      "to": "src/table-migration/g03-defaults.ts"
+    },
+    {
+      "from": "src/validation/constraint-kernel.ts",
+      "specifier": "../model/json",
+      "to": "src/model/json.ts"
+    },
+    {
+      "from": "src/validation/constraint-kernel.ts",
+      "specifier": "../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/validation/constraint-kernel.ts",
+      "specifier": "../registry/registry",
+      "to": "src/registry/registry.ts"
+    },
+    {
+      "from": "src/validation/constraint-kernel.ts",
+      "specifier": "./constraint-language",
+      "to": "src/validation/constraint-language.ts"
+    },
+    {
+      "from": "src/validation/constraint-kernel.ts",
+      "specifier": "./current-policy",
+      "to": "src/validation/current-policy.ts"
+    },
+    {
+      "from": "src/validation/constraint-kernel.ts",
+      "specifier": "./json-equality",
+      "to": "src/validation/json-equality.ts"
+    },
+    {
+      "from": "src/validation/constraint-kernel.ts",
+      "specifier": "./literal-kernel",
+      "to": "src/validation/literal-kernel.ts"
+    },
+    {
+      "from": "src/validation/constraint-kernel.ts",
+      "specifier": "./literal-policy",
+      "to": "src/validation/literal-policy.ts"
+    },
+    {
+      "from": "src/validation/constraint-language.ts",
+      "specifier": "../model/errors",
+      "to": "src/model/errors.ts"
+    },
+    {
+      "from": "src/validation/constraint-language.ts",
+      "specifier": "../model/json",
+      "to": "src/model/json.ts"
+    },
+    {
+      "from": "src/validation/current-policy.ts",
+      "specifier": "../generated/core-model",
+      "to": "src/generated/core-model.ts"
+    },
+    {
+      "from": "src/validation/current-policy.ts",
+      "specifier": "./internal-schema",
+      "to": "src/validation/internal-schema.ts"
+    },
+    {
+      "from": "src/validation/current-policy.ts",
+      "specifier": "./literal-kernel",
+      "to": "src/validation/literal-kernel.ts"
+    },
+    {
+      "from": "src/validation/document.ts",
+      "specifier": "../generated/core-validators",
+      "to": "src/generated/core-validators.ts"
+    },
+    {
+      "from": "src/validation/document.ts",
+      "specifier": "../model/json",
+      "to": "src/model/json.ts"
+    },
+    {
+      "from": "src/validation/document.ts",
+      "specifier": "../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/validation/document.ts",
+      "specifier": "../registry/registry",
+      "to": "src/registry/registry.ts"
+    },
+    {
+      "from": "src/validation/document.ts",
+      "specifier": "./constraint-kernel",
+      "to": "src/validation/constraint-kernel.ts"
+    },
+    {
+      "from": "src/validation/document.ts",
+      "specifier": "./current-policy",
+      "to": "src/validation/current-policy.ts"
+    },
+    {
+      "from": "src/validation/keys.ts",
+      "specifier": "../generated/core-model",
+      "to": "src/generated/core-model.ts"
+    },
+    {
+      "from": "src/validation/literal-kernel.ts",
+      "specifier": "../model/bit128",
+      "to": "src/model/bit128.ts"
+    },
+    {
+      "from": "src/validation/literal-kernel.ts",
+      "specifier": "../model/json",
+      "to": "src/model/json.ts"
+    },
+    {
+      "from": "src/validation/literal-kernel.ts",
+      "specifier": "../model/types",
+      "to": "src/model/types.ts"
+    },
+    {
+      "from": "src/validation/literal-kernel.ts",
+      "specifier": "../model/uuid",
+      "to": "src/model/uuid.ts"
+    },
+    {
+      "from": "src/validation/literal-kernel.ts",
+      "specifier": "./literal-policy",
+      "to": "src/validation/literal-policy.ts"
+    },
+    {
+      "from": "src/validation/literal-policy.ts",
+      "specifier": "../model/errors",
+      "to": "src/model/errors.ts"
+    },
+    {
+      "from": "src/validation/literal-policy.ts",
+      "specifier": "../model/json",
+      "to": "src/model/json.ts"
+    },
+    {
+      "from": "src/validation/schema.ts",
+      "specifier": "../generated/core-model",
+      "to": "src/generated/core-model.ts"
+    },
+    {
+      "from": "src/validation/schema.ts",
+      "specifier": "../generated/core-validators",
+      "to": "src/generated/core-validators.ts"
+    },
+    {
+      "from": "src/validation/schema.ts",
+      "specifier": "./internal-schema",
+      "to": "src/validation/internal-schema.ts"
+    },
+    {
+      "from": "src/validation/schema.ts",
+      "specifier": "./json-equality",
+      "to": "src/validation/json-equality.ts"
+    },
+    {
+      "from": "tests/lifecycle/legal-fixture.ts",
+      "specifier": "../../spec/domain-packs/legal/umf/clients.json",
+      "to": "spec/domain-packs/legal/umf/clients.json"
+    },
+    {
+      "from": "tests/lifecycle/legal-fixture.ts",
+      "specifier": "../../spec/domain-packs/legal/umf/matter_teams.json",
+      "to": "spec/domain-packs/legal/umf/matter_teams.json"
+    },
+    {
+      "from": "tests/lifecycle/legal-fixture.ts",
+      "specifier": "../../spec/domain-packs/legal/umf/matters.json",
+      "to": "spec/domain-packs/legal/umf/matters.json"
+    },
+    {
+      "from": "tests/lifecycle/legal-fixture.ts",
+      "specifier": "../../spec/domain-packs/legal/umf/timekeepers.json",
+      "to": "spec/domain-packs/legal/umf/timekeepers.json"
+    },
+    {
+      "from": "tests/lifecycle/legal-fixture.ts",
+      "specifier": "../../src/extensions/tables",
+      "to": "src/extensions/tables/index.ts"
+    },
+    {
+      "from": "tests/lifecycle/legal-fixture.ts",
+      "specifier": "../../src/table-authoring/row-scope",
+      "to": "src/table-authoring/row-scope.ts"
+    },
+    {
+      "from": "tests/lifecycle/legal-fixture.ts",
+      "specifier": "../../src/table-deployment",
+      "to": "src/table-deployment/index.ts"
+    },
+    {
+      "from": "tests/unified/table-domain-fixture.ts",
+      "specifier": "./table-temporal-fixture",
+      "to": "tests/unified/table-temporal-fixture.ts"
+    },
+    {
+      "from": "tests/unified/table-operation-fixture.ts",
+      "specifier": "../../src/extensions/tables",
+      "to": "src/extensions/tables/index.ts"
+    },
+    {
+      "from": "tests/unified/table-operation-fixture.ts",
+      "specifier": "../binding/fixtures/table-lifecycle-note.json",
+      "to": "tests/binding/fixtures/table-lifecycle-note.json"
+    },
+    {
+      "from": "tests/unified/table-related-fixture.ts",
+      "specifier": "./table-operation-fixture",
+      "to": "tests/unified/table-operation-fixture.ts"
+    },
+    {
+      "from": "tests/unified/table-snapshot-fixture.ts",
+      "specifier": "./table-operation-fixture",
+      "to": "tests/unified/table-operation-fixture.ts"
+    },
+    {
+      "from": "tests/unified/table-temporal-fixture.ts",
+      "specifier": "./table-operation-fixture",
+      "to": "tests/unified/table-operation-fixture.ts"
+    }
+  ],
+  "packageNames": [
+    "ajv",
+    "yaml"
+  ],
+  "profile": "umf.g03-sdk058-static-runtime-import-census/1",
+  "roots": [
+    "scripts/g03-migration-corpus.ts",
+    "scripts/codegen-corpus.ts"
+  ],
+  "sourceFiles": [
+    {
+      "path": "scripts/codegen-corpus.ts",
+      "sha256": "2975460c129104b014e8c82e9a0a37214d9605614014b25c1cecf98af19ec029",
+      "sizeBytes": 5252
+    },
+    {
+      "path": "scripts/codegen/entry.ts",
+      "sha256": "6754efc85be8017e8292dcf8b1384fcfa6af21ee5258a2d102e569ab907583a9",
+      "sizeBytes": 5088
+    },
+    {
+      "path": "scripts/codegen/polyfills.ts",
+      "sha256": "e9642eccd7fc55342d6269f9a21fa270750b9da22c2458ca5f91f723a27dbe9c",
+      "sizeBytes": 775
+    },
+    {
+      "path": "scripts/g03-migration-corpus.ts",
+      "sha256": "75504eb38e562d1c9e3823e05e84aa1ec3488d2e2f4535ce38f2e2b00a860e5e",
+      "sizeBytes": 9471
+    },
+    {
+      "path": "src/access/constants.ts",
+      "sha256": "948f07c20c03bb889b71ffd631f756b135a190ffdf16c66bb1088df54f3cc2ff",
+      "sizeBytes": 711
+    },
+    {
+      "path": "src/access/index.ts",
+      "sha256": "77256da4a67a6437607dabc78109080e75018dbef5df40d052ad966d761b4d0c",
+      "sizeBytes": 25282
+    },
+    {
+      "path": "src/access/python-runtime.ts",
+      "sha256": "e7634778fabcfd95752638f7ba874b133fc4857b38aa7d38fe614ce2dd57feeb",
+      "sizeBytes": 33308
+    },
+    {
+      "path": "src/access/table-client.ts",
+      "sha256": "8f18554d157e6671ca0c91832b576fc0b9edc295a101290c1058af4334fa6792",
+      "sizeBytes": 7865
+    },
+    {
+      "path": "src/access/table-runtime.ts",
+      "sha256": "83b70f541875fd0394f60534a146d5e3682ca5b22191c8cb5cef6e0d6dd54662",
+      "sizeBytes": 11230
+    },
+    {
+      "path": "src/access/types.ts",
+      "sha256": "9e2ba7a2378d373e746b3865515528118f8cbda9e7ae526f79dd5283e3da745a",
+      "sizeBytes": 455
+    },
+    {
+      "path": "src/compilation/bundle/hash.ts",
+      "sha256": "e602ec04ed32cec9c43bd5e540da1ad647aff23ccc8398354a88170f13846f84",
+      "sizeBytes": 13774
+    },
+    {
+      "path": "src/compilation/bundle/index.ts",
+      "sha256": "f4ee94b9e7fa6564cde401a8ea158b0cdd5a41e982cf363ca4c74f8e702dfd11",
+      "sizeBytes": 3601
+    },
+    {
+      "path": "src/compilation/ir/index.ts",
+      "sha256": "42a9be3d69b1fc08a0750692d9615249af0f91b7623fb88a027888b7690d27b6",
+      "sizeBytes": 3953
+    },
+    {
+      "path": "src/extensions/actions/analysis.ts",
+      "sha256": "0821a8332d0ab7a3e396150abfd8494b1b2f7f9adb2f18e21ebc6d6fc3deae3d",
+      "sizeBytes": 23343
+    },
+    {
+      "path": "src/extensions/actions/expression.ts",
+      "sha256": "d167218001f4d8fcd593b538e7b5eedda4b7fcb28505ac82f5a663470706c5e6",
+      "sizeBytes": 14338
+    },
+    {
+      "path": "src/extensions/actions/known-model.ts",
+      "sha256": "a519261cc484cb4dacfe180d70f6c0f6f7faf0bead96843eb0326a3c1aa598e6",
+      "sizeBytes": 2495
+    },
+    {
+      "path": "src/extensions/actions/local-profiles.ts",
+      "sha256": "28651bf9d1fadbba511b73d05092492b40294c52c7b673898c66212b8dba0481",
+      "sizeBytes": 1264
+    },
+    {
+      "path": "src/extensions/actions/references.ts",
+      "sha256": "c378685ed08d7223ab5b9a68efbcd1bdc0646ef0edd5298f3169eeff95f96681",
+      "sizeBytes": 2083
+    },
+    {
+      "path": "src/extensions/actions/selector.ts",
+      "sha256": "4b36c1e92c813a78225759dd7278e8237c0af7c32343d6738364bff633159240",
+      "sizeBytes": 12692
+    },
+    {
+      "path": "src/extensions/actions/structure.ts",
+      "sha256": "1adfbdcdb341bd2a84ed92c84d7d34e5314e9ce0c517aafe2e3aee1046c04280",
+      "sizeBytes": 1990
+    },
+    {
+      "path": "src/extensions/actions/types.ts",
+      "sha256": "5f8b2e31a21dc81657b99e7c210950b57c4f72cebef33d72efd462419a7b3e32",
+      "sizeBytes": 4545
+    },
+    {
+      "path": "src/extensions/tables/columns.ts",
+      "sha256": "a27a0350b2ac968448c10bd67ec3536d80d425b86b026446b7c8f9d1d3cf6ec5",
+      "sizeBytes": 8981
+    },
+    {
+      "path": "src/extensions/tables/context.ts",
+      "sha256": "b87b2c64cbf357018c26bf7c27513a72b9f62ba2ffa8d675cb999a0853dc8e80",
+      "sizeBytes": 5583
+    },
+    {
+      "path": "src/extensions/tables/expressions.ts",
+      "sha256": "aaeac099934a1ecc116493c5bbade878484465f5bea2c0c74a629428750a0f5e",
+      "sizeBytes": 2448
+    },
+    {
+      "path": "src/extensions/tables/index.ts",
+      "sha256": "1599188b1d6c9e84d945d76ccdbb6150e50ec652124fb0905ba78d1010024182",
+      "sizeBytes": 6580
+    },
+    {
+      "path": "src/extensions/tables/operations.ts",
+      "sha256": "ea7f9b86fd041aba8c1d7ff817f4d826cab1db755e0f4d8faad5b195f2beb8ec",
+      "sizeBytes": 17637
+    },
+    {
+      "path": "src/extensions/tables/policies.ts",
+      "sha256": "44386811915ac26416613208ab5dbd0e20bfc0bcc44df3432291b06d10956920",
+      "sizeBytes": 5052
+    },
+    {
+      "path": "src/extensions/tables/row-expressions.ts",
+      "sha256": "a6451b025f7c99281f7ec5eaee7247aab6e11edaadb02f0d4f639898ae74a7b8",
+      "sizeBytes": 22221
+    },
+    {
+      "path": "src/extensions/tables/seeds.ts",
+      "sha256": "9c5bc1d6cd95dadcc762e75f560324406b6d3a13fb1ad0536f25696db33d2735",
+      "sizeBytes": 1725
+    },
+    {
+      "path": "src/extensions/tables/temporal.ts",
+      "sha256": "9186bdaa56cd1f640af4f99de0ba9b36f2f0268d25c1b3ce1bcbf7c825e7f767",
+      "sizeBytes": 2133
+    },
+    {
+      "path": "src/extensions/tables/types.ts",
+      "sha256": "1643f16aea78b23580fc21fdd7d54902a25ab5b129dcc882744f7ee75f81fe1a",
+      "sizeBytes": 5996
+    },
+    {
+      "path": "src/generated/core-model.ts",
+      "sha256": "55485912b78640ef970244ffd8d4cbd6f186e035efccd77259aadff6120b7106",
+      "sizeBytes": 6714
+    },
+    {
+      "path": "src/generated/core-validators.ts",
+      "sha256": "563602e0f21f6d6b0efd1ae069dbda28926e085585b4bf0430347b65ff2bd0ff",
+      "sizeBytes": 305070
+    },
+    {
+      "path": "src/model/bit128.ts",
+      "sha256": "c4db81a14022db2413ee991e8705d3bee688d0ed1e7c880e6170520a2694d543",
+      "sizeBytes": 6072
+    },
+    {
+      "path": "src/model/document-accounting.ts",
+      "sha256": "8cc64e60d4bcd8c8ce97eedf7b80fc1f7623b64b1467ccefe95ae52de0add757",
+      "sizeBytes": 2095
+    },
+    {
+      "path": "src/model/document.ts",
+      "sha256": "6ea8f43e4bcd3b5d7259329e6768dd563e066d7169a23bee75e88f054f348ddb",
+      "sizeBytes": 1935
+    },
+    {
+      "path": "src/model/errors.ts",
+      "sha256": "65bc53689f6aa0546be249ff4bd42616b446966cfc5f9d525faf9a428031dbd6",
+      "sizeBytes": 334
+    },
+    {
+      "path": "src/model/internal/accounting-context.ts",
+      "sha256": "eb1f40ef76827d4b80fb4bde78dd9106fa9d831a6cf35be6089ed501cf02cc0e",
+      "sizeBytes": 436
+    },
+    {
+      "path": "src/model/internal/json-number.ts",
+      "sha256": "30b51ae2f1aaecb87611ccdae6c1f3eaae04c02764b224407f6acb07ea9c5a06",
+      "sizeBytes": 1342
+    },
+    {
+      "path": "src/model/internal/scan-json-frame.ts",
+      "sha256": "cf81dcd1e8ae9efd63ac86bfff69dbc98e95c2776808f12633a10d07584588ce",
+      "sizeBytes": 3976
+    },
+    {
+      "path": "src/model/json.ts",
+      "sha256": "14f3cd8bf1af081111a318db240201c04d86f6dab42157b23d6c6bdf75bd982a",
+      "sizeBytes": 3855
+    },
+    {
+      "path": "src/model/key-tuple.ts",
+      "sha256": "3351dce5112b1d3a8178af6d19f92597cb6b558f7327f32f33ecf10f73959f46",
+      "sizeBytes": 15870
+    },
+    {
+      "path": "src/model/schema-literals.ts",
+      "sha256": "0e7ce8c901b834679d5ed49c7465b08eee916c132e37adbbf3f037c34b548b88",
+      "sizeBytes": 2011
+    },
+    {
+      "path": "src/model/serialization.ts",
+      "sha256": "027360ffd8bf77905f7d14a3d4d933035fe11d9f52ae28d54691cc607cb43586",
+      "sizeBytes": 3898
+    },
+    {
+      "path": "src/model/types.ts",
+      "sha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c",
+      "sizeBytes": 1352
+    },
+    {
+      "path": "src/model/uuid.ts",
+      "sha256": "43b2ea37b050a835e7723c9ea9b32f886fca63f5bb94eb5f8b17b242cf4444f7",
+      "sizeBytes": 2130
+    },
+    {
+      "path": "src/registry/kind-runtime.ts",
+      "sha256": "9cfb57d1cf2331107e8cf756538d3bd698d2c03cad77aa8d2d43d046b2b89745",
+      "sizeBytes": 708
+    },
+    {
+      "path": "src/registry/registry.ts",
+      "sha256": "3fa010311edc23c5dc74826eb7a74a8a19a9a4c41da3031bc66e6f741d1164c1",
+      "sizeBytes": 4053
+    },
+    {
+      "path": "src/table-authoring/row-scope.ts",
+      "sha256": "d18ed69a608c5bffb3200a5e1a58725bc6c8e2daaedfbb4de79d72eec1fefee6",
+      "sizeBytes": 9773
+    },
+    {
+      "path": "src/table-deployment/configuration.ts",
+      "sha256": "adc510b21141db111aa57cb2ca4e1d2d98424a93c37e4ade946a5a74e1ca5482",
+      "sizeBytes": 2660
+    },
+    {
+      "path": "src/table-deployment/ddl.ts",
+      "sha256": "e387ec8f2a5fd73971f2a947db0d14b0ee5478dc71ec7be28cd0b664ad859712",
+      "sizeBytes": 18601
+    },
+    {
+      "path": "src/table-deployment/domains.ts",
+      "sha256": "f87fa0922c7b2489d2d8236df5e86ba3ed455ff54f4ed85751b587da91328337",
+      "sizeBytes": 4086
+    },
+    {
+      "path": "src/table-deployment/grants.ts",
+      "sha256": "f7ea3fcffd34bd5a3961a184f31f9456c6deae7f64ebe46863518e4d93b5e315",
+      "sizeBytes": 7924
+    },
+    {
+      "path": "src/table-deployment/index.ts",
+      "sha256": "7b20337b6779be1035b24341043397bc50102fef0a6a64b5170a0a8a9d751b6a",
+      "sizeBytes": 13865
+    },
+    {
+      "path": "src/table-deployment/policies.ts",
+      "sha256": "8d07a1f6bab093ae5b12a3d0b2ac2ddb0346b8dce0580b7a5b1955f6b8b6a731",
+      "sizeBytes": 7268
+    },
+    {
+      "path": "src/table-deployment/sql.ts",
+      "sha256": "e946325dcc22946e983762bcefa8fd727c50ef508e8a671956460df7a7576d31",
+      "sizeBytes": 9485
+    },
+    {
+      "path": "src/table-deployment/temporal.ts",
+      "sha256": "5c4e3c21294edf5a1a5be21d02532b9075db9c3516a18512a4cfccb2d55390f3",
+      "sizeBytes": 1085
+    },
+    {
+      "path": "src/table-deployment/types.ts",
+      "sha256": "7fe644992264fa73365296a362bba4bd75138ee5b3d617f6bbe4df3e6ec0a02b",
+      "sizeBytes": 3771
+    },
+    {
+      "path": "src/table-migration/g02-field-effects.ts",
+      "sha256": "ad793b73848c2d73f66957c5cf69d4e9f6cb38e3271d8d286c59dd007cdbff26",
+      "sizeBytes": 3975
+    },
+    {
+      "path": "src/table-migration/g03-defaults.ts",
+      "sha256": "8a33d5fc291e365cde112d24113f95cff20db6c20fb3a048188ddaaaf005ccb6",
+      "sizeBytes": 32800
+    },
+    {
+      "path": "src/table-migration/g04-conversion.ts",
+      "sha256": "582da39849bb8f77c0cbe70994c5d060d3597b0175bad7bec1f89e8bc18d4eeb",
+      "sizeBytes": 30297
+    },
+    {
+      "path": "src/table-migration/g11-source.ts",
+      "sha256": "def0779159a639a5e27278eef1251250ef8d53bf0ac35bf3604e466f229c0fc0",
+      "sizeBytes": 21300
+    },
+    {
+      "path": "src/table-migration/index.ts",
+      "sha256": "4daeab691d08ca1cca2c321f98c7c7925e9483e68b50b50881cbc69c082ded99",
+      "sizeBytes": 115547
+    },
+    {
+      "path": "src/table-migration/internal-operations.ts",
+      "sha256": "18b1c5faf1e94673e9f09c64d6be8016c1e075d826eafe00451a323212fe89cb",
+      "sizeBytes": 2592
+    },
+    {
+      "path": "src/table-migration/internal.ts",
+      "sha256": "91daa74b3e9bb14d352fdbaee8262222769a748d360a41921326d3331be9ed71",
+      "sizeBytes": 15659
+    },
+    {
+      "path": "src/table-migration/inventory-component-copy.ts",
+      "sha256": "3463eb4b968e4dbb026cbe05da5edac7891092493cdee56e4fa1ab59e995d8a2",
+      "sizeBytes": 5987
+    },
+    {
+      "path": "src/table-migration/inventory-g02-source.ts",
+      "sha256": "e7f32b77e0028c3b9c75006d74cd3a61216d6a125163427916c93cafe4db87a8",
+      "sizeBytes": 17068
+    },
+    {
+      "path": "src/table-migration/inventory-g05-selection.ts",
+      "sha256": "cb42698c088c5966acb550a65fed96b574c6a28ed54eeff6f33bf633baa8d3d1",
+      "sizeBytes": 21824
+    },
+    {
+      "path": "src/table-migration/inventory-graph.ts",
+      "sha256": "353332a8cf09f7eea76efc18d4f49d1dfe0c83e853791f5cbac5009698a065f5",
+      "sizeBytes": 73253
+    },
+    {
+      "path": "src/table-migration/inventory-history.ts",
+      "sha256": "ec5a73ddfeae2fbf05d6b96ad712f93848ff86b22f0f9befe174e779df8aba30",
+      "sizeBytes": 28076
+    },
+    {
+      "path": "src/table-migration/inventory-operation-references.ts",
+      "sha256": "4831ecedb29bcf2d8db49149067f983726635759e59abfcd38b1c38ad2fc04c4",
+      "sizeBytes": 10479
+    },
+    {
+      "path": "src/table-migration/inventory-options.ts",
+      "sha256": "a809fd9efd32b618f7c75a0efc93190fc4f0e966ef99998d234f7adda47c7b8f",
+      "sizeBytes": 26259
+    },
+    {
+      "path": "src/table-migration/inventory-projection.ts",
+      "sha256": "aa666a3c38ee3f9409dfcccff5d3d0d3f7303c12854b95f5fd4b7a305b2ae18f",
+      "sizeBytes": 51813
+    },
+    {
+      "path": "src/table-migration/inventory-r2-context.ts",
+      "sha256": "475848cb92a45a79188eaec1f67046ae860c9a67b9beee3a0c7073abe36988ab",
+      "sizeBytes": 57519
+    },
+    {
+      "path": "src/table-migration/inventory-review.ts",
+      "sha256": "e9d1006a07fd27d8034d5374d8583c1ea34868f81974b65d0336a3815bbc481b",
+      "sizeBytes": 2496
+    },
+    {
+      "path": "src/table-migration/inventory-verified-deployment.ts",
+      "sha256": "034c72c9a7e861a551807cf45e97d74919bb4fb94522e63b06b6574c771f8e2c",
+      "sizeBytes": 10229
+    },
+    {
+      "path": "src/table-migration/inventory.ts",
+      "sha256": "518c77dce8db179246dcb637617bbbee9a2fb69ad99e7bddb6821387ae65b006",
+      "sizeBytes": 145550
+    },
+    {
+      "path": "src/table-migration/options.ts",
+      "sha256": "90762c75fd26a240cd7cb020a000018db0b35d47978ada590a2bb2ba5d90bc8e",
+      "sizeBytes": 24872
+    },
+    {
+      "path": "src/table-migration/phases-options.ts",
+      "sha256": "84839c49132de1d8f639df3ed8b9730d5b2c5d2596fb0dcbe398f2e86c133915",
+      "sizeBytes": 1917
+    },
+    {
+      "path": "src/table-migration/phases.ts",
+      "sha256": "29a3f3c7492a3270158ce21708a76dc591feca238b4652edaca1a106d7136b14",
+      "sizeBytes": 11018
+    },
+    {
+      "path": "src/table-migration/reviewed.ts",
+      "sha256": "b4f58ba623a299a12144f7087e93f4b807df9324c3270de0eabce2d4ec352c20",
+      "sizeBytes": 20258
+    },
+    {
+      "path": "src/validation/constraint-kernel.ts",
+      "sha256": "968bde65e6e7e8da7ec92849498dbfbe9a71f931c9538094a18c85be5b4a4362",
+      "sizeBytes": 8263
+    },
+    {
+      "path": "src/validation/constraint-language.ts",
+      "sha256": "decf47ca801a2c03d0c01b92ef3418813c79992c042be879ba0c1d2561678597",
+      "sizeBytes": 5339
+    },
+    {
+      "path": "src/validation/current-policy.ts",
+      "sha256": "010d8dcc062363592713d68fcd54000775420cae779a074474bcca19b862cd33",
+      "sizeBytes": 555
+    },
+    {
+      "path": "src/validation/document.ts",
+      "sha256": "b1d9bc132fefd0f523e72c2d272301cfd69c385340f26bdc6e2c69f30d1aecd4",
+      "sizeBytes": 2365
+    },
+    {
+      "path": "src/validation/internal-schema.ts",
+      "sha256": "df2f752489b4cf90c083c1411f88e2ff2952c8269f50810308cab65b0106d237",
+      "sizeBytes": 457
+    },
+    {
+      "path": "src/validation/json-equality.ts",
+      "sha256": "a9ecbd0d4d513223889eaf83d053bc0d48e8020f8a73cae3fe32a8bc06d1e20f",
+      "sizeBytes": 556
+    },
+    {
+      "path": "src/validation/keys.ts",
+      "sha256": "2be7a8ce3740a4306cef4e8e34d999eb381e21c9bc5fcc11326c88bd8db55485",
+      "sizeBytes": 160
+    },
+    {
+      "path": "src/validation/literal-kernel.ts",
+      "sha256": "0fffe57279a745891f4cbbd33eb1296a34bfcb083bd8e05a3ff7a7b8048db071",
+      "sizeBytes": 12197
+    },
+    {
+      "path": "src/validation/literal-policy.ts",
+      "sha256": "a59e2a18b735f647f23a198e70af0f9c3ca57eeeccec77d012487a9b9b803e08",
+      "sizeBytes": 5734
+    },
+    {
+      "path": "src/validation/schema.ts",
+      "sha256": "d16695d45d9611208074ae0b13dbd9ed8497e7651878f7ec71076aef697691a3",
+      "sizeBytes": 3141
+    },
+    {
+      "path": "tests/lifecycle/legal-fixture.ts",
+      "sha256": "bbff90ab325b23dfcb48220547ce01c22404c2a94f90245d54749feea7631a41",
+      "sizeBytes": 13381
+    },
+    {
+      "path": "tests/unified/table-domain-fixture.ts",
+      "sha256": "d02bc7599c0571389a5386bbcbe22dea04b9ff28aecdad91a88107e69f183ad0",
+      "sizeBytes": 2329
+    },
+    {
+      "path": "tests/unified/table-operation-fixture.ts",
+      "sha256": "81cfab25e02f16d99fd653b76b5fdd359b175071b9be74936e92c1fa4991aab4",
+      "sizeBytes": 2267
+    },
+    {
+      "path": "tests/unified/table-related-fixture.ts",
+      "sha256": "d6fae258e1c6cbb48ef2812ae6d9926e0e2fdb3614fd99dcba7b080863ebd171",
+      "sizeBytes": 3213
+    },
+    {
+      "path": "tests/unified/table-snapshot-fixture.ts",
+      "sha256": "812bb0a8c1712f435cfce90aafeecf897437fadafd01547ef2e82cf99344fc96",
+      "sizeBytes": 4581
+    },
+    {
+      "path": "tests/unified/table-temporal-fixture.ts",
+      "sha256": "6ebca8ad49e5a98c52f2ab4c3e185a9c31eaf5ba6a1da7ca1c3f77eeab0bf0d8",
+      "sizeBytes": 1963
+    }
+  ]
+}

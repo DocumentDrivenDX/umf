@@ -406,21 +406,27 @@ findings remain retained. The cache qualifies only an input to the pending offli
 table and Truss lanes. Exactly five user-approved automatic Weft workflows are
 disabled; the remaining workflow settings are unchanged.
 
-Next: complete inherited installed/CLI/native/WASM/browser checks,
-independent review, normal merge, immutable successor publication and fresh public
-proof. GitHub Actions and macOS CI remain off. No G03 completion, new macOS
-feature support, managed adoption or Praxis change follows from these checkpoints.
+The inherited [Table012 lane](evidence/schema-migration-design-review/g03-inherited-local-lanes-001/README.md)
+and separate [Truss011 lane](evidence/schema-migration-design-review/g03-truss011-local-boundary-001/README.md)
+now have independent actual acceptance for their selected Linux native/WASM/browser
+boundaries. Earlier failed attempts remain separate evidence. Weft 0.4.56 release metadata merged normally through [PR #46](https://github.com/DocumentDrivenDX/weft/pull/46);
+that merge does not establish real-packet assembly or publication.
 
-Source-only candidate preparation now sets the UMF SDK package metadata to
-0.5.8 and adds a narrow installed-public-entry browser parity adapter for the
-same G03 discovery/plan corpus used by the embedded Python probe. Neither the
-new SDK archive nor that browser adapter has been built or executed. This does
-not reserve a public version, tag or release; final producer/merge identities,
-asset hashes, downstream table/Truss gates, independent reviews and fresh public
-proof remain pending. The existing SDK 0.5.7 tag and three assets remain
-unchanged. The source-only adapter is [g03-sdk-browser.ts](../../../scripts/g03-sdk-browser.ts);
-see the [0.5.8 candidate notes](../05-deploy/sdk-release-notes-0.5.8.md) for
-its limits and exact selected cohort.
+The [SDK 0.5.8 local build checkpoint](evidence/schema-migration-design-review/g03-sdk058-local-build-001/README.md) and
+[paired parity checkpoint](evidence/schema-migration-design-review/g03-sdk058-local-parity-001/README.md)
+record the accepted standard Linux producer and its 139-case installed-consumer
+check. The paired G03 embedded-Python and installed-public-entry Chromium parity
+actual passed in retained run 019 (112.565 seconds) and its independent actual
+review accepted the selected local profile. The browser adapter uses the same G03 discovery/plan
+corpus as the embedded Python probe. Next: real release assembly and review, the remaining normal SDK merge,
+immutable successor publication, and fresh public proof. The Weft release metadata has since merged normally through PR #46; this
+local merge does not establish SDK packet assembly or publication. No public 0.5.8
+release is claimed; the existing SDK 0.5.7 tag and three assets remain unchanged.
+The adapter is [g03-sdk-browser.ts](../../../scripts/g03-sdk-browser.ts); see the
+[0.5.8 candidate notes](../05-deploy/sdk-release-notes-0.5.8.md) for the selected cohort.
+GitHub Actions and macOS CI remain off. macOS evidence remains build/static-only;
+no macOS runtime/native/browser support is established. No G03 completion, managed
+adoption or Praxis change follows from these checkpoints.
 
 #### Historical pre-reconciliation G02 integration checkpoint — Core 0.10.1
 

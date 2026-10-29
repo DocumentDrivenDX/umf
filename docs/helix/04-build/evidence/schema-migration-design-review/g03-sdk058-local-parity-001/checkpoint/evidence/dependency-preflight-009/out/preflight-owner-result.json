@@ -1,0 +1,123 @@
+{
+  "configuredMountObservation": [
+    {
+      "ReadOnly": true,
+      "Source": "umf-sdk058-source-855f6c486-001",
+      "Target": "/volume-producer",
+      "Type": "volume"
+    },
+    {
+      "ReadOnly": true,
+      "Source": "umf-migration-source-267675510",
+      "Target": "/volume-producer/node_modules",
+      "Type": "volume",
+      "VolumeOptions": {
+        "Subpath": "node_modules"
+      }
+    },
+    {
+      "ReadOnly": true,
+      "Source": "umf-migration-source-267675510",
+      "Target": "/dependency-origin",
+      "Type": "volume"
+    },
+    {
+      "ReadOnly": true,
+      "Source": "/private/tmp/g03-sdk058-parity-009-preflight",
+      "Target": "/operator",
+      "Type": "bind"
+    },
+    {
+      "Source": "/private/tmp/g03-sdk058-parity-009-preflight/out",
+      "Target": "/out",
+      "Type": "bind"
+    }
+  ],
+  "container": "g03-sdk058-deps-85e2f9fa061444d8",
+  "containerAbsent": true,
+  "containerConfig": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556|none|true|2048|2000000000|4294967296",
+  "containerLabels": {
+    "codex.g03.execution-id": "85e2f9fa061444d8920469cfd9861bb3",
+    "codex.g03.kind": "sdk058-dependency-metadata-preflight",
+    "org.opencontainers.image.version": "24.04"
+  },
+  "containerRemoveExitCode": 0,
+  "daemon": "linux/aarch64",
+  "dependencyVolume": "umf-migration-source-267675510",
+  "dockerRunExitCode": 0,
+  "elapsedSeconds": 5.03,
+  "executionId": "85e2f9fa061444d8920469cfd9861bb3",
+  "failure": null,
+  "image": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+  "inventoryBytes": 4740104,
+  "inventoryFileSha256": "6139a704c42bd208139fe480da430f10b9076f386c7280fc29b6fa1c52633b34",
+  "inventorySha256": "5dee664cf9d3e2d6e6325666ab75f26d290b05a6be09423b0a1cd04f6fc5d141",
+  "limits": {
+    "aggregateSeconds": 180,
+    "fileBytes": 67108864,
+    "metadataBytes": 16777216,
+    "rawLogBytes": 1048576,
+    "regularBytes": 268435456
+  },
+  "metadataBytes": 5349,
+  "metadataReceiptSha256": "d2f546ec5da6bbb8a8994daaa13b8406d1dc0bdf36fef4ef7f2c017fbcba2fdf",
+  "platform": "linux/amd64",
+  "primaryFailure": null,
+  "profile": "umf.g03-sdk058-dependency-view-preflight/1",
+  "rawLogBytes": 205,
+  "retainedLogBytes": 205,
+  "rootAdmissionSha256": "eda4c2d86821b4eda04592bd9f972fe3c73a5e04535bbaecc3eebc5a1fb377f4",
+  "runtimeImportCensusSha256": "c4e3e79e5a0a51fb9b21261f458ede1a14042042aae1c8c2faf29c15f1d7eaae",
+  "runtimeMountObservation": [
+    {
+      "Destination": "/dependency-origin",
+      "Driver": "local",
+      "Mode": "z",
+      "Name": "umf-migration-source-267675510",
+      "Propagation": "",
+      "RW": false,
+      "Source": "/var/lib/docker/volumes/umf-migration-source-267675510/_data",
+      "Type": "volume"
+    },
+    {
+      "Destination": "/operator",
+      "Mode": "",
+      "Propagation": "rprivate",
+      "RW": false,
+      "Source": "/private/tmp/g03-sdk058-parity-009-preflight",
+      "Type": "bind"
+    },
+    {
+      "Destination": "/out",
+      "Mode": "",
+      "Propagation": "rprivate",
+      "RW": true,
+      "Source": "/private/tmp/g03-sdk058-parity-009-preflight/out",
+      "Type": "bind"
+    },
+    {
+      "Destination": "/volume-producer",
+      "Driver": "local",
+      "Mode": "z",
+      "Name": "umf-sdk058-source-855f6c486-001",
+      "Propagation": "",
+      "RW": false,
+      "Source": "/var/lib/docker/volumes/umf-sdk058-source-855f6c486-001/_data",
+      "Type": "volume"
+    },
+    {
+      "Destination": "/volume-producer/node_modules",
+      "Driver": "local",
+      "Mode": "z",
+      "Name": "umf-migration-source-267675510",
+      "Propagation": "",
+      "RW": false,
+      "Source": "/var/lib/docker/volumes/umf-migration-source-267675510/_data",
+      "Type": "volume"
+    }
+  ],
+  "secondaryFailures": [],
+  "sourceReviewSha256": "1eb5686f2a95bdc23e73c4ec698b721b75f08f37a836b68b49a5502102242e50",
+  "sourceVolume": "umf-sdk058-source-855f6c486-001",
+  "status": "METADATA_PREFLIGHT_PASS"
+}

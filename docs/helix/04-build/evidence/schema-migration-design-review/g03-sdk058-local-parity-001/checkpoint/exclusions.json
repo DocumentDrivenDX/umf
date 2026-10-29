@@ -1,0 +1,17 @@
+{
+  "knownExactExclusions": [
+    {
+      "source": "/private/tmp/g03-packaging250-tool-input-001/packaging-25.0-py3-none-any.whl",
+      "sizeBytes": 66469,
+      "sha256": "29572ef2b1f17581046b3a2227d5c611fb25ec70ca1ba8554b24b0e69331a484",
+      "reason": "software wheel excluded; official acquisition metadata/source/lock/static audit retained"
+    }
+  ],
+  "excludedClasses": [
+    "SDK archive and all wheel/tarball/software payloads",
+    "installed SDK tree and package/tool virtual environments",
+    "Bun executable and other runtime tools",
+    "node_modules trees and dependency binary payloads",
+    "external pinned cohort wheels and browser/tool binaries referenced by source manifests"
+  ]
+}
