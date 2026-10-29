@@ -10618,7 +10618,8 @@ retirement gaps and 92 source-selected declarations per default root. The 13
 Parquet operations remain explicit opt-ins; no default route, installed cohort,
 retirement or release follows from these source results. The composed 579 Rust core tests, 83 inventory/ledger controls, 134 Python
 distribution tests, both TypeScript configurations and all boundary checks pass.
-Canonical and resource fixed-point checks pass. The broad wire replay and
-composed CLI run remain in progress and are not claimed as passing yet. The remaining ten
+Canonical and resource fixed-point checks pass. The broad wire replay passes all 75 tests and the actual composed CLI
+passes all four Parquet tests. The captured logs are pinned by the combined
+evidence record. The remaining ten
 Parquet runtime functions are listed in the evidence; the Avro Cardinality port
 continues separately in its private checkout.

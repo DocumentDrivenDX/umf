@@ -60,8 +60,9 @@ metamodel/resource generation has been refreshed for that combined source;
 the fixed-point checks pass. The composed Rust core suite passes all 579 tests,
 the exact inventory/ledger controls pass 83 tests, and the Python distribution
 resource suite passes 134 tests. Both TypeScript configurations and the source,
-compilation and Python boundary checks pass. The broad wire suite and final
-composed CLI replay are still running and are not claimed as completed here.
+compilation and Python boundary checks pass. The broad wire suite passes all 75 tests, including the 139-vector production
+dispatch replay; the actual composed CLI passes all four Parquet tests.
+[Composed local checks](composed-local-checks.json) pins each captured log.
 
 The [release Python predecessor observation](predecessor-release-python-observation.json)
 and [test log](predecessor-release-python.log) record all 34 page/body cases on

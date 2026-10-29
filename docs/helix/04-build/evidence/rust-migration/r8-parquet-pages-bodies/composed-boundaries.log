@@ -1,0 +1,16 @@
+Wrote /var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-rust-census-u5ukygh1/stage.json: 716 source modules; 471 active scripts; 244 JS locked packages
+Live successor census validated: 716 modules; 207 rows need review; metamodel fixed point still requires `bun scripts/metamodel/build.ts --check`
+{"status": "pass", "checkedSourceModules": 866, "cargoStatus": "resolved", "productionCoreStatus": "pass", "v8DebtCount": 0, "negativeControls": {"allowedPureRustDependency": "pass", "forbiddenHostDependency": "pass", "formerV8BridgeImportRejected": "pass", "unscopedV8ImportRejected": "pass", "privateCrossPackageImportRejected": "pass", "allowedRelativeImportAccepted": "pass", "temporaryManifestAllowedDependency": "pass", "temporaryManifestForbiddenDependency": "pass", "bindingSourceEngineImportRejected": "pass"}, "findingCount": 0}
+................
+----------------------------------------------------------------------
+Ran 16 tests in 0.624s
+
+OK
+...................
+----------------------------------------------------------------------
+Ran 19 tests in 0.125s
+
+OK
+compilation boundaries: 9 files, 0 violations
+scan roots: python/umf_access, python/umf_access/src/umf_access
+access Python boundaries: 124 modules, 0 violations
