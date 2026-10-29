@@ -1,0 +1,18 @@
+{
+  "name": "weft-specs",
+  "private": true,
+  "type": "module",
+  "packageManager": "bun@1.4.2",
+  "scripts": {
+    "specs:check": "bun scripts/check-specs.ts",
+    "browser:build": "tsc -p packages/weft-browser/tsconfig.json",
+    "modules:check": "python3 scripts/checks/check-module-boundaries.py && bun scripts/module-boundaries.ts && bun test scripts/module-boundaries.test.ts"
+  },
+  "devDependencies": {
+    "ajv": "8.17.1",
+    "playwright": "1.62.1",
+    "typescript": "5.9.3",
+    "yaml": "2.8.1"
+  },
+  "license": "MIT OR Apache-2.0"
+}

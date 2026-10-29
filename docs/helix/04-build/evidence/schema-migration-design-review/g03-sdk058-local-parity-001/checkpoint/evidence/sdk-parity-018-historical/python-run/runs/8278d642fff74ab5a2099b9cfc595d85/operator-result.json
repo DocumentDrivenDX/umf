@@ -1,0 +1,1439 @@
+{
+  "cleanup": {
+    "containerAbsent": true,
+    "containerRemoved": true,
+    "daemonReachable": true,
+    "verified": true,
+    "volumeAbsent": true,
+    "volumeRemoved": true
+  },
+  "configuredMounts": [
+    {
+      "ReadOnly": true,
+      "Source": "umf-sdk058-source-855f6c486-001",
+      "Target": "/volume-producer",
+      "Type": "volume"
+    },
+    {
+      "ReadOnly": true,
+      "Source": "umf-migration-source-267675510",
+      "Target": "/volume-producer/node_modules",
+      "Type": "volume",
+      "VolumeOptions": {
+        "Subpath": "node_modules"
+      }
+    },
+    {
+      "ReadOnly": true,
+      "Source": "umf-migration-source-267675510",
+      "Target": "/dependency-origin",
+      "Type": "volume"
+    },
+    {
+      "ReadOnly": true,
+      "Source": "/private/tmp/g03-sdk058-parity-009-preflight/out",
+      "Target": "/dependency-input",
+      "Type": "bind"
+    },
+    {
+      "ReadOnly": true,
+      "Source": "/private/tmp/g03-sdk058-parity-009-preflight/preflight.py",
+      "Target": "/dependency-preflight.py",
+      "Type": "bind"
+    },
+    {
+      "ReadOnly": true,
+      "Source": "/private/tmp/g03-sdk058-parity-009-preflight/runtime-import-census.json",
+      "Target": "/dependency-census.json",
+      "Type": "bind"
+    },
+    {
+      "ReadOnly": true,
+      "Source": "/private/tmp/g03-sdk058-dependency-preflight009-sol-actual-review001.md",
+      "Target": "/dependency-review.md",
+      "Type": "bind"
+    },
+    {
+      "ReadOnly": true,
+      "Source": "/private/tmp/g03-final-cohort-056-linux311-001",
+      "Target": "/cohort",
+      "Type": "bind"
+    },
+    {
+      "ReadOnly": true,
+      "Source": "/private/tmp/g03-sdk058-parity015-input",
+      "Target": "/tmp/g03-generic-input",
+      "Type": "bind"
+    },
+    {
+      "ReadOnly": true,
+      "Source": "/private/tmp/g03-sdk058-parity015-input",
+      "Target": "/generic-input",
+      "Type": "bind"
+    },
+    {
+      "ReadOnly": true,
+      "Source": "/private/tmp/g03-packaging250-tool-input-001",
+      "Target": "/tool-input",
+      "Type": "bind"
+    },
+    {
+      "ReadOnly": true,
+      "Source": "/private/tmp/g03-sdk058-packaging-tool-control-source-004",
+      "Target": "/control",
+      "Type": "bind"
+    },
+    {
+      "ReadOnly": true,
+      "Source": "umf-sdk058-source-855f6c486-001",
+      "Target": "/source",
+      "Type": "volume"
+    },
+    {
+      "ReadOnly": true,
+      "Source": "/private/tmp/g03-sdk058-linux-image-runtime-metadata-002/result.json",
+      "Target": "/runtime-observation.json",
+      "Type": "bind"
+    },
+    {
+      "ReadOnly": true,
+      "Source": "/private/tmp/g03-sdk058-global-packaging-metadata-003/result.json",
+      "Target": "/global-failure.json",
+      "Type": "bind"
+    },
+    {
+      "ReadOnly": true,
+      "Source": "/private/tmp/g03-packaging250-tool-input001-sol-review001.md",
+      "Target": "/tool-review.md",
+      "Type": "bind"
+    },
+    {
+      "ReadOnly": true,
+      "Source": "/private/tmp/g03-sdk058-linux-image-runtime-metadata002-sol-review001.md",
+      "Target": "/runtime-review.md",
+      "Type": "bind"
+    },
+    {
+      "ReadOnly": true,
+      "Source": "/private/tmp/g03-sdk058-packaging-tool-control-actual-002/tool-result.json",
+      "Target": "/accepted-tool-result.json",
+      "Type": "bind"
+    },
+    {
+      "ReadOnly": true,
+      "Source": "/private/tmp/g03-sdk058-parity-018/python-inputs.json",
+      "Target": "/input-packet.json",
+      "Type": "bind"
+    },
+    {
+      "ReadOnly": true,
+      "Source": "/private/tmp/g03-sdk058-parity018-sol-source-review001.md",
+      "Target": "/source-review",
+      "Type": "bind"
+    },
+    {
+      "ReadOnly": true,
+      "Source": "/private/tmp/g03-sdk058-parity-018/runtime",
+      "Target": "/operator",
+      "Type": "bind"
+    },
+    {
+      "Source": "g03-sdk058-pyvenv-8278d642fff74ab5",
+      "Target": "/venv",
+      "Type": "volume"
+    },
+    {
+      "Source": "/private/tmp/g03-sdk058-parity-018/runs/8278d642fff74ab5a2099b9cfc595d85/guest",
+      "Target": "/out",
+      "Type": "bind"
+    }
+  ],
+  "containerConfig": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556|none|true|8192|4000000000|8589934592",
+  "containerMounts": [
+    {
+      "destination": "/accepted-tool-result.json",
+      "name": null,
+      "rw": false,
+      "source": "/private/tmp/g03-sdk058-packaging-tool-control-actual-002/tool-result.json",
+      "type": "bind"
+    },
+    {
+      "destination": "/cohort",
+      "name": null,
+      "rw": false,
+      "source": "/private/tmp/g03-final-cohort-056-linux311-001",
+      "type": "bind"
+    },
+    {
+      "destination": "/control",
+      "name": null,
+      "rw": false,
+      "source": "/private/tmp/g03-sdk058-packaging-tool-control-source-004",
+      "type": "bind"
+    },
+    {
+      "destination": "/dependency-census.json",
+      "name": null,
+      "rw": false,
+      "source": "/private/tmp/g03-sdk058-parity-009-preflight/runtime-import-census.json",
+      "type": "bind"
+    },
+    {
+      "destination": "/dependency-input",
+      "name": null,
+      "rw": false,
+      "source": "/private/tmp/g03-sdk058-parity-009-preflight/out",
+      "type": "bind"
+    },
+    {
+      "destination": "/dependency-origin",
+      "name": "umf-migration-source-267675510",
+      "rw": false,
+      "source": "/var/lib/docker/volumes/umf-migration-source-267675510/_data",
+      "type": "volume"
+    },
+    {
+      "destination": "/dependency-preflight.py",
+      "name": null,
+      "rw": false,
+      "source": "/private/tmp/g03-sdk058-parity-009-preflight/preflight.py",
+      "type": "bind"
+    },
+    {
+      "destination": "/dependency-review.md",
+      "name": null,
+      "rw": false,
+      "source": "/private/tmp/g03-sdk058-dependency-preflight009-sol-actual-review001.md",
+      "type": "bind"
+    },
+    {
+      "destination": "/generic-input",
+      "name": null,
+      "rw": false,
+      "source": "/private/tmp/g03-sdk058-parity015-input",
+      "type": "bind"
+    },
+    {
+      "destination": "/global-failure.json",
+      "name": null,
+      "rw": false,
+      "source": "/private/tmp/g03-sdk058-global-packaging-metadata-003/result.json",
+      "type": "bind"
+    },
+    {
+      "destination": "/input-packet.json",
+      "name": null,
+      "rw": false,
+      "source": "/private/tmp/g03-sdk058-parity-018/python-inputs.json",
+      "type": "bind"
+    },
+    {
+      "destination": "/operator",
+      "name": null,
+      "rw": false,
+      "source": "/private/tmp/g03-sdk058-parity-018/runtime",
+      "type": "bind"
+    },
+    {
+      "destination": "/out",
+      "name": null,
+      "rw": true,
+      "source": "/private/tmp/g03-sdk058-parity-018/runs/8278d642fff74ab5a2099b9cfc595d85/guest",
+      "type": "bind"
+    },
+    {
+      "destination": "/runtime-observation.json",
+      "name": null,
+      "rw": false,
+      "source": "/private/tmp/g03-sdk058-linux-image-runtime-metadata-002/result.json",
+      "type": "bind"
+    },
+    {
+      "destination": "/runtime-review.md",
+      "name": null,
+      "rw": false,
+      "source": "/private/tmp/g03-sdk058-linux-image-runtime-metadata002-sol-review001.md",
+      "type": "bind"
+    },
+    {
+      "destination": "/source",
+      "name": "umf-sdk058-source-855f6c486-001",
+      "rw": false,
+      "source": "/var/lib/docker/volumes/umf-sdk058-source-855f6c486-001/_data",
+      "type": "volume"
+    },
+    {
+      "destination": "/source-review",
+      "name": null,
+      "rw": false,
+      "source": "/private/tmp/g03-sdk058-parity018-sol-source-review001.md",
+      "type": "bind"
+    },
+    {
+      "destination": "/tool-input",
+      "name": null,
+      "rw": false,
+      "source": "/private/tmp/g03-packaging250-tool-input-001",
+      "type": "bind"
+    },
+    {
+      "destination": "/tool-review.md",
+      "name": null,
+      "rw": false,
+      "source": "/private/tmp/g03-packaging250-tool-input001-sol-review001.md",
+      "type": "bind"
+    },
+    {
+      "destination": "/venv",
+      "name": "g03-sdk058-pyvenv-8278d642fff74ab5",
+      "rw": true,
+      "source": "/var/lib/docker/volumes/g03-sdk058-pyvenv-8278d642fff74ab5/_data",
+      "type": "volume"
+    },
+    {
+      "destination": "/volume-producer",
+      "name": "umf-sdk058-source-855f6c486-001",
+      "rw": false,
+      "source": "/var/lib/docker/volumes/umf-sdk058-source-855f6c486-001/_data",
+      "type": "volume"
+    },
+    {
+      "destination": "/tmp/g03-generic-input",
+      "name": null,
+      "rw": false,
+      "source": "/private/tmp/g03-sdk058-parity015-input",
+      "type": "bind"
+    },
+    {
+      "destination": "/volume-producer/node_modules",
+      "name": "umf-migration-source-267675510",
+      "rw": false,
+      "source": "/var/lib/docker/volumes/umf-migration-source-267675510/_data",
+      "type": "volume"
+    }
+  ],
+  "elapsedSeconds": 105.805,
+  "executionId": "8278d642fff74ab5a2099b9cfc595d85",
+  "guestResult": {
+    "cohort": {
+      "custodySha256": "95e9493f06adefb323193f9d8fbe5577ebfa335140a9841f549d2caf098df8ed",
+      "indexSha256": "78026c05d3824613f0e2a3bf30cf24bd32af24de1d560f0b7fa555a1e75f8d60",
+      "mirrorManifestSha256": "809a418b9f6f97e403e3fbcc7066d23657347d1323efb6baf2d4d3bb3f17bd36",
+      "requirementsSha256": "4847944f3cafa5fcc9813890f85a4db24a064ed49b479c890e3f4363cb97de51",
+      "selectedLockSha256": "cfe589472a5340446e5b1ddf5e39dbf00e6b6d83370fbe066122f52139fe2274"
+    },
+    "commands": [
+      {
+        "argv": [
+          "git",
+          "-c",
+          "safe.directory=/volume-producer",
+          "-C",
+          "/volume-producer",
+          "rev-parse",
+          "HEAD"
+        ],
+        "elapsedSeconds": 0.216,
+        "exitCode": 0,
+        "failure": null,
+        "name": "source-commit",
+        "streams": [
+          {
+            "bytes": 41,
+            "path": "logs/source-commit.stdout.log",
+            "rawBytes": 41,
+            "rawSha256": "8c7253caf27c0197780d8123f34e756fd184ae150c12e20aaa0e8a194562bfb0",
+            "sha256": "8c7253caf27c0197780d8123f34e756fd184ae150c12e20aaa0e8a194562bfb0",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "logs/source-commit.stderr.log",
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ]
+      },
+      {
+        "argv": [
+          "git",
+          "-c",
+          "safe.directory=/volume-producer",
+          "-C",
+          "/volume-producer",
+          "rev-parse",
+          "HEAD^{tree}"
+        ],
+        "elapsedSeconds": 0.518,
+        "exitCode": 0,
+        "failure": null,
+        "name": "source-tree",
+        "streams": [
+          {
+            "bytes": 41,
+            "path": "logs/source-tree.stdout.log",
+            "rawBytes": 41,
+            "rawSha256": "cac79246733c82e90a05711887cce88d9cbb94e75134791f1cae8fc398b841f6",
+            "sha256": "cac79246733c82e90a05711887cce88d9cbb94e75134791f1cae8fc398b841f6",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "logs/source-tree.stderr.log",
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ]
+      },
+      {
+        "argv": [
+          "git",
+          "-c",
+          "safe.directory=/volume-producer",
+          "-C",
+          "/volume-producer",
+          "status",
+          "--porcelain=v1",
+          "--untracked-files=all"
+        ],
+        "elapsedSeconds": 0.753,
+        "exitCode": 0,
+        "failure": null,
+        "name": "source-clean",
+        "streams": [
+          {
+            "bytes": 0,
+            "path": "logs/source-clean.stdout.log",
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "logs/source-clean.stderr.log",
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ]
+      },
+      {
+        "argv": [
+          "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11",
+          "-B",
+          "-c",
+          "import json,platform,struct,sys,sysconfig; from pip._vendor.packaging.markers import default_environment; print(json.dumps({'version':sys.version.split()[0],'system':platform.system(),'machine':platform.machine(),'pointerBits':struct.calcsize('P')*8,'abi':sysconfig.get_platform(),'libc':platform.libc_ver(),'osRelease':platform.freedesktop_os_release(),'markerEnvironment':default_environment()},sort_keys=True))"
+        ],
+        "elapsedSeconds": 1.104,
+        "exitCode": 0,
+        "failure": null,
+        "name": "runtime-python",
+        "streams": [
+          {
+            "bytes": 1036,
+            "path": "logs/runtime-python.stdout.log",
+            "rawBytes": 1036,
+            "rawSha256": "8b68cd72f2f18670f0d3632664f02b64462f0b5dd5257833bd9bed815aa47892",
+            "sha256": "8b68cd72f2f18670f0d3632664f02b64462f0b5dd5257833bd9bed815aa47892",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "logs/runtime-python.stderr.log",
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ]
+      },
+      {
+        "argv": [
+          "bun",
+          "--version"
+        ],
+        "elapsedSeconds": 1.324,
+        "exitCode": 0,
+        "failure": null,
+        "name": "runtime-bun",
+        "streams": [
+          {
+            "bytes": 6,
+            "path": "logs/runtime-bun.stdout.log",
+            "rawBytes": 6,
+            "rawSha256": "bd31e8d9cf8d14a1e9e3fdf3b9f6a524819aed0d1b14627523c6765767c7d8f1",
+            "sha256": "bd31e8d9cf8d14a1e9e3fdf3b9f6a524819aed0d1b14627523c6765767c7d8f1",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "logs/runtime-bun.stderr.log",
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ]
+      },
+      {
+        "argv": [
+          "bun",
+          "scripts/g03-migration-corpus.ts",
+          "/out/g03-corpus.json"
+        ],
+        "elapsedSeconds": 10.524,
+        "exitCode": 0,
+        "failure": null,
+        "name": "generate-shared-g03-corpus",
+        "streams": [
+          {
+            "bytes": 40,
+            "path": "logs/generate-shared-g03-corpus.stdout.log",
+            "rawBytes": 40,
+            "rawSha256": "2aaccf509078082f35a2ea7605a05e34043122875ad78ad612ebadf0c591c9ed",
+            "sha256": "2aaccf509078082f35a2ea7605a05e34043122875ad78ad612ebadf0c591c9ed",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "logs/generate-shared-g03-corpus.stderr.log",
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ]
+      },
+      {
+        "argv": [
+          "bun",
+          "scripts/codegen-corpus.ts",
+          "/out/codegen-corpus.json"
+        ],
+        "elapsedSeconds": 17.208,
+        "exitCode": 0,
+        "failure": null,
+        "name": "generate-generic-codegen-corpus",
+        "streams": [
+          {
+            "bytes": 1487,
+            "path": "logs/generate-generic-codegen-corpus.stdout.log",
+            "rawBytes": 1487,
+            "rawSha256": "408234e2b1ca5a6afca35f03bcf848045b0c8a25b50ad9fc022c02c4a938706b",
+            "sha256": "408234e2b1ca5a6afca35f03bcf848045b0c8a25b50ad9fc022c02c4a938706b",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "logs/generate-generic-codegen-corpus.stderr.log",
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ]
+      },
+      {
+        "argv": [
+          "bash",
+          "-euo",
+          "pipefail",
+          "-c",
+          "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11 -B -m venv /venv && unshare --net /venv/bin/python -B -I -m pip --isolated install --disable-pip-version-check --no-cache-dir --no-compile --only-binary=:all: --require-hashes --index-url file:///cohort/aggregate/mirror/simple -r /cohort/aggregate/mirror/requirements.lock && unshare --net /venv/bin/python -B -I -m pip --isolated check"
+        ],
+        "elapsedSeconds": 24.059,
+        "exitCode": 0,
+        "failure": null,
+        "name": "fresh18-offline-install-and-pip-check",
+        "streams": [
+          {
+            "bytes": 3492,
+            "path": "logs/fresh18-offline-install-and-pip-check.stdout.log",
+            "rawBytes": 3492,
+            "rawSha256": "373d901c45866902129688d50412b6a5d49e805fc31288cce2ceba857f28691a",
+            "sha256": "373d901c45866902129688d50412b6a5d49e805fc31288cce2ceba857f28691a",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "logs/fresh18-offline-install-and-pip-check.stderr.log",
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ]
+      },
+      {
+        "argv": [
+          "unshare",
+          "--net",
+          "/venv/bin/python",
+          "-B",
+          "-I",
+          "-c",
+          "import importlib.metadata as m,json; names=['umf-core','umf-weft','umf-access','umf-codegen']; print(json.dumps({n:m.version(n) for n in names},sort_keys=True))"
+        ],
+        "elapsedSeconds": 24.417,
+        "exitCode": 0,
+        "failure": null,
+        "name": "installed-distribution-snapshot",
+        "streams": [
+          {
+            "bytes": 99,
+            "path": "logs/installed-distribution-snapshot.stdout.log",
+            "rawBytes": 99,
+            "rawSha256": "24fd4b38c5f81b4dc3e1c75dfa6deb7631fd0c73306d6c1ebd791eca037d6fad",
+            "sha256": "24fd4b38c5f81b4dc3e1c75dfa6deb7631fd0c73306d6c1ebd791eca037d6fad",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "logs/installed-distribution-snapshot.stderr.log",
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ]
+      },
+      {
+        "argv": [
+          "/venv/bin/python",
+          "-B",
+          "-I",
+          "/operator/record_snapshot.py",
+          "--lock",
+          "/cohort/cells/linux-x86_64-py311/cohort.lock.json",
+          "--output",
+          "/out/installed-record-snapshot.json"
+        ],
+        "elapsedSeconds": 25.81,
+        "exitCode": 0,
+        "failure": null,
+        "name": "installed-record-snapshot",
+        "streams": [
+          {
+            "bytes": 195,
+            "path": "logs/installed-record-snapshot.stdout.log",
+            "rawBytes": 195,
+            "rawSha256": "f4c47eed16f370bcaa9412659767bdb5ae3c63f75a188846b12480be2b0e0b41",
+            "sha256": "f4c47eed16f370bcaa9412659767bdb5ae3c63f75a188846b12480be2b0e0b41",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "logs/installed-record-snapshot.stderr.log",
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ]
+      },
+      {
+        "argv": [
+          "/venv/bin/python",
+          "-B",
+          "-I",
+          "/volume-producer/tests/codegen/g03_migration_probe.py",
+          "--corpus",
+          "/out/g03-corpus.json",
+          "--report",
+          "/out/g03-python-report.json"
+        ],
+        "elapsedSeconds": 54.306,
+        "exitCode": 0,
+        "failure": null,
+        "name": "embedded-python-g03-parity",
+        "streams": [
+          {
+            "bytes": 477,
+            "path": "logs/embedded-python-g03-parity.stdout.log",
+            "rawBytes": 477,
+            "rawSha256": "e3e0e67c011b5bd3cc7b5cdad282cde6c4f1d49f3823e3c3c6bfeb6ec6101f0d",
+            "sha256": "e3e0e67c011b5bd3cc7b5cdad282cde6c4f1d49f3823e3c3c6bfeb6ec6101f0d",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "logs/embedded-python-g03-parity.stderr.log",
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ]
+      },
+      {
+        "argv": [
+          "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11",
+          "-B",
+          "-I",
+          "/control/bootstrap.py"
+        ],
+        "elapsedSeconds": 58.913,
+        "exitCode": 0,
+        "failure": null,
+        "name": "qualification-tool-metadata-control",
+        "streams": [
+          {
+            "bytes": 721,
+            "path": "logs/qualification-tool-metadata-control.stdout.log",
+            "rawBytes": 721,
+            "rawSha256": "e3bccedc06a051d20e958b0f02adec1be61428e3c852a2748686aa5b9e22d7a3",
+            "sha256": "e3bccedc06a051d20e958b0f02adec1be61428e3c852a2748686aa5b9e22d7a3",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "logs/qualification-tool-metadata-control.stderr.log",
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ]
+      },
+      {
+        "argv": [
+          "/tmp/g03-packaging250-qualification-tool/bin/python",
+          "-B",
+          "-I",
+          "/volume-producer/tests/codegen/offline_mirror_probe.py",
+          "--wheelhouse",
+          "/cohort/aggregate/mirror/files",
+          "--lock",
+          "/tmp/g03-generic-input/derived-single-cell-lock.json",
+          "--mirror",
+          "/tmp/g03-mirror-replay",
+          "--generator-corpus",
+          "/out/codegen-corpus.json",
+          "--report",
+          "/out/offline-mirror-report.json"
+        ],
+        "elapsedSeconds": 82.963,
+        "exitCode": 0,
+        "failure": null,
+        "name": "generic-offline-mirror-probe",
+        "streams": [
+          {
+            "bytes": 711,
+            "path": "logs/generic-offline-mirror-probe.stdout.log",
+            "rawBytes": 711,
+            "rawSha256": "b412ed6d42050f159cbec2bd6c26d07311ae0b91972268a533c36971b64e389c",
+            "sha256": "b412ed6d42050f159cbec2bd6c26d07311ae0b91972268a533c36971b64e389c",
+            "truncated": false
+          },
+          {
+            "bytes": 0,
+            "path": "logs/generic-offline-mirror-probe.stderr.log",
+            "rawBytes": 0,
+            "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "truncated": false
+          }
+        ]
+      }
+    ],
+    "dependencyToolInput": {
+      "post": {
+        "directoryCount": 1943,
+        "internalSymlinkCount": 17,
+        "inventorySha256": "5dee664cf9d3e2d6e6325666ab75f26d290b05a6be09423b0a1cd04f6fc5d141",
+        "metadataBytes": 3697819,
+        "originLockSha256": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4",
+        "originPackageSha256": "c7b69fba001805dc9cd4e26e84a9b786be379c1413d020c34600c063d287101b",
+        "originVersion": "0.5.7",
+        "packageClosureSha256": "04c1d05df7ca672689769b5aff6966c3d97e134142b37132f1dcc1d99c8ed669",
+        "regularBytes": 215399057,
+        "regularFileCount": 19501,
+        "runtimeImportCensusSha256": "c4e3e79e5a0a51fb9b21261f458ede1a14042042aae1c8c2faf29c15f1d7eaae",
+        "sourceLockSha256": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4",
+        "sourcePackageSha256": "323d619288cd35e7e86c932c0d26bfbfb2f8b4a5e5cc3f39bcaa415dd3c3aeaa",
+        "sourceVersion": "0.5.8"
+      },
+      "pre": {
+        "directoryCount": 1943,
+        "internalSymlinkCount": 17,
+        "inventorySha256": "5dee664cf9d3e2d6e6325666ab75f26d290b05a6be09423b0a1cd04f6fc5d141",
+        "metadataBytes": 3697819,
+        "originLockSha256": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4",
+        "originPackageSha256": "c7b69fba001805dc9cd4e26e84a9b786be379c1413d020c34600c063d287101b",
+        "originVersion": "0.5.7",
+        "packageClosureSha256": "04c1d05df7ca672689769b5aff6966c3d97e134142b37132f1dcc1d99c8ed669",
+        "regularBytes": 215399057,
+        "regularFileCount": 19501,
+        "runtimeImportCensusSha256": "c4e3e79e5a0a51fb9b21261f458ede1a14042042aae1c8c2faf29c15f1d7eaae",
+        "sourceLockSha256": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4",
+        "sourcePackageSha256": "323d619288cd35e7e86c932c0d26bfbfb2f8b4a5e5cc3f39bcaa415dd3c3aeaa",
+        "sourceVersion": "0.5.8"
+      },
+      "prePostIdentical": true,
+      "status": "PASS_PRE_POST_FULL_ROSTER_EQUAL"
+    },
+    "elapsedSeconds": 84.186,
+    "failure": null,
+    "g03CorpusSha256": "88a402998e44b89f24f36c7c54fb5d96d3cd131f6b371663bd44ce306f65ad25",
+    "g03Counts": {
+      "acceptedPlans": 6,
+      "blockedPlans": 1,
+      "compilationParityCases": 7,
+      "discoveryParityCases": 11,
+      "discoveryRefusalCases": 4,
+      "pythonExplicitNoneOmissionCases": 1,
+      "rawWireNullRefusalCases": 1,
+      "rehashedTamperRefusalCases": 3,
+      "verificationParityCases": 6
+    },
+    "genericProbeInput": {
+      "lockSha256": "95f37e0bb254461fa3f8fa6fe6ca54656b0ed18343ab47ee97faea1487e0db7d",
+      "lockSizeBytes": 52601,
+      "provenanceSha256": "45ff448d9b69137999f342837694a9047b9275b27a12bfeed22e8aabc8e431aa",
+      "provenanceSizeBytes": 7303,
+      "sourceLockSha256": "cfe589472a5340446e5b1ddf5e39dbf00e6b6d83370fbe066122f52139fe2274"
+    },
+    "genericProbeLockSha256": "95f37e0bb254461fa3f8fa6fe6ca54656b0ed18343ab47ee97faea1487e0db7d",
+    "genericProbeProfile": "umf-offline-mirror-installed/1",
+    "genericProbeSourceLockSha256": "cfe589472a5340446e5b1ddf5e39dbf00e6b6d83370fbe066122f52139fe2274",
+    "genericProbeStatus": "passed",
+    "installedRecordSnapshotSha256": "d1fd95763df0139f20dc7aa6a6ba8d667c7af14c006a151b37889fb1b59cf457",
+    "installedVersions": {
+      "umf-access": "0.1.0.dev8",
+      "umf-codegen": "0.1.0a5",
+      "umf-core": "0.10.3",
+      "umf-weft": "0.4.56"
+    },
+    "logBytesRemaining": 249702,
+    "outputBytes": 4525112,
+    "outputFiles": [
+      {
+        "path": "codegen-corpus.json",
+        "sha256": "80b8059d48490761bc98255d58409d96f46b399d78b79d0dd9aa43d30d7e6187",
+        "sizeBytes": 3500077
+      },
+      {
+        "path": "g03-corpus.json",
+        "sha256": "88a402998e44b89f24f36c7c54fb5d96d3cd131f6b371663bd44ce306f65ad25",
+        "sizeBytes": 985708
+      },
+      {
+        "path": "g03-python-report.json",
+        "sha256": "e20e41133602a9e7d2cff8be7cd654176948cc7733968a492082cc66cd60ce13",
+        "sizeBytes": 505
+      },
+      {
+        "path": "installed-record-snapshot.json",
+        "sha256": "d1fd95763df0139f20dc7aa6a6ba8d667c7af14c006a151b37889fb1b59cf457",
+        "sizeBytes": 6190
+      },
+      {
+        "path": "logs/embedded-python-g03-parity.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      {
+        "path": "logs/embedded-python-g03-parity.stdout.log",
+        "sha256": "e3e0e67c011b5bd3cc7b5cdad282cde6c4f1d49f3823e3c3c6bfeb6ec6101f0d",
+        "sizeBytes": 477
+      },
+      {
+        "path": "logs/fresh18-offline-install-and-pip-check.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      {
+        "path": "logs/fresh18-offline-install-and-pip-check.stdout.log",
+        "sha256": "373d901c45866902129688d50412b6a5d49e805fc31288cce2ceba857f28691a",
+        "sizeBytes": 3492
+      },
+      {
+        "path": "logs/generate-generic-codegen-corpus.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      {
+        "path": "logs/generate-generic-codegen-corpus.stdout.log",
+        "sha256": "408234e2b1ca5a6afca35f03bcf848045b0c8a25b50ad9fc022c02c4a938706b",
+        "sizeBytes": 1487
+      },
+      {
+        "path": "logs/generate-shared-g03-corpus.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      {
+        "path": "logs/generate-shared-g03-corpus.stdout.log",
+        "sha256": "2aaccf509078082f35a2ea7605a05e34043122875ad78ad612ebadf0c591c9ed",
+        "sizeBytes": 40
+      },
+      {
+        "path": "logs/generic-offline-mirror-probe.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      {
+        "path": "logs/generic-offline-mirror-probe.stdout.log",
+        "sha256": "b412ed6d42050f159cbec2bd6c26d07311ae0b91972268a533c36971b64e389c",
+        "sizeBytes": 711
+      },
+      {
+        "path": "logs/installed-distribution-snapshot.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      {
+        "path": "logs/installed-distribution-snapshot.stdout.log",
+        "sha256": "24fd4b38c5f81b4dc3e1c75dfa6deb7631fd0c73306d6c1ebd791eca037d6fad",
+        "sizeBytes": 99
+      },
+      {
+        "path": "logs/installed-record-snapshot.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      {
+        "path": "logs/installed-record-snapshot.stdout.log",
+        "sha256": "f4c47eed16f370bcaa9412659767bdb5ae3c63f75a188846b12480be2b0e0b41",
+        "sizeBytes": 195
+      },
+      {
+        "path": "logs/qualification-tool-metadata-control.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      {
+        "path": "logs/qualification-tool-metadata-control.stdout.log",
+        "sha256": "e3bccedc06a051d20e958b0f02adec1be61428e3c852a2748686aa5b9e22d7a3",
+        "sizeBytes": 721
+      },
+      {
+        "path": "logs/runtime-bun.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      {
+        "path": "logs/runtime-bun.stdout.log",
+        "sha256": "bd31e8d9cf8d14a1e9e3fdf3b9f6a524819aed0d1b14627523c6765767c7d8f1",
+        "sizeBytes": 6
+      },
+      {
+        "path": "logs/runtime-python.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      {
+        "path": "logs/runtime-python.stdout.log",
+        "sha256": "8b68cd72f2f18670f0d3632664f02b64462f0b5dd5257833bd9bed815aa47892",
+        "sizeBytes": 1036
+      },
+      {
+        "path": "logs/source-clean.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      {
+        "path": "logs/source-clean.stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      {
+        "path": "logs/source-commit.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      {
+        "path": "logs/source-commit.stdout.log",
+        "sha256": "8c7253caf27c0197780d8123f34e756fd184ae150c12e20aaa0e8a194562bfb0",
+        "sizeBytes": 41
+      },
+      {
+        "path": "logs/source-tree.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      {
+        "path": "logs/source-tree.stdout.log",
+        "sha256": "cac79246733c82e90a05711887cce88d9cbb94e75134791f1cae8fc398b841f6",
+        "sizeBytes": 41
+      },
+      {
+        "path": "offline-mirror-report.json",
+        "sha256": "add84d1bcc85aa0bb81caacebc01dab75fc583280f0dc5d82430e8d1b3ddf0e7",
+        "sizeBytes": 3124
+      },
+      {
+        "path": "tool-result.json",
+        "sha256": "a92bec19496ed09d4a0a4fa5567e0915392fbbd6a2bf1f3f8687776160d412f3",
+        "sizeBytes": 21162
+      }
+    ],
+    "platformObservation": {
+      "pythonGuest": {
+        "abi": "linux-x86_64",
+        "machine": "x86_64",
+        "pointerBits": 64,
+        "system": "Linux",
+        "version": "3.11.17"
+      },
+      "runtimeMetadata": {
+        "abi": "linux-x86_64",
+        "libc": [
+          "glibc",
+          "2.39"
+        ],
+        "machine": "x86_64",
+        "markerEnvironment": {
+          "implementation_name": "cpython",
+          "implementation_version": "3.11.17",
+          "os_name": "posix",
+          "platform_machine": "x86_64",
+          "platform_python_implementation": "CPython",
+          "platform_release": "7.2.9-orbstack-00391-g2b298d05fbd4",
+          "platform_system": "Linux",
+          "platform_version": "#1 SMP PREEMPT Mon Oct 12 05:39:36 UTC 2026",
+          "python_full_version": "3.11.17",
+          "python_version": "3.11",
+          "sys_platform": "linux"
+        },
+        "osRelease": {
+          "BUG_REPORT_URL": "https://bugs.launchpad.net/ubuntu/",
+          "HOME_URL": "https://www.ubuntu.com/",
+          "ID": "ubuntu",
+          "ID_LIKE": "debian",
+          "LOGO": "ubuntu-logo",
+          "NAME": "Ubuntu",
+          "PRETTY_NAME": "Ubuntu 24.04.5 LTS",
+          "PRIVACY_POLICY_URL": "https://www.ubuntu.com/legal/terms-and-policies/privacy-policy",
+          "SUPPORT_URL": "https://help.ubuntu.com/",
+          "UBUNTU_CODENAME": "noble",
+          "VERSION": "24.04.5 LTS (Noble Numbat)",
+          "VERSION_CODENAME": "noble",
+          "VERSION_ID": "24.04"
+        },
+        "pointerBits": 64,
+        "system": "Linux",
+        "version": "3.11.17"
+      }
+    },
+    "producer": {
+      "commit": "855f6c48649496fc60b3303798790d0ddb55d38f",
+      "tree": "53f2bfffbc0c5780e79d76d8fd3d202239d088b2",
+      "volume": "umf-sdk058-source-855f6c486-001"
+    },
+    "profile": "umf.g03-sdk058-python-parity/1",
+    "pythonReportSha256": "e20e41133602a9e7d2cff8be7cd654176948cc7733968a492082cc66cd60ce13",
+    "qualificationTool": {
+      "checkedRequirementCount": 72,
+      "markerEnvironmentSha256": "6b183f2a362ea5ce7c222a7f8051972dda2c03bbeea7c592838b2bd7e7d42b0c",
+      "packagingBytes": 238549,
+      "packagingFileCount": 25,
+      "packagingInventorySha256": "5f7b4d4b87ed51ef2006d6ae801851c275dae4354385457bac21f139be70a71f",
+      "productDependenciesUnchanged": true,
+      "reportSha256": "a92bec19496ed09d4a0a4fa5567e0915392fbbd6a2bf1f3f8687776160d412f3",
+      "reportSizeBytes": 21162,
+      "selectedDistributionCount": 18,
+      "separateFromProductVenv": true,
+      "separateToolVenv": "/tmp/g03-packaging250-qualification-tool",
+      "status": "PASS_ACCEPTED_PACKAGING_TOOL_CONTROL",
+      "toolDistributionVersions": {
+        "packaging": "25.0",
+        "pip": "24.0",
+        "setuptools": "79.0.1"
+      },
+      "wheelSha256": "29572ef2b1f17581046b3a2227d5c611fb25ec70ca1ba8554b24b0e69331a484",
+      "wheelSizeBytes": 66469
+    },
+    "rawLogBytes": 8346,
+    "retainedLogBytes": 8346,
+    "status": "PASS_LOCAL_FINAL18_G03_PYTHON_PARITY"
+  },
+  "image": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+  "limits": {
+    "aggregateSeconds": 1200,
+    "childSeconds": 180,
+    "evidenceBytes": 16777216,
+    "logsBytes": 1048576,
+    "reserveSeconds": 60,
+    "stopGraceSeconds": 10
+  },
+  "logBytes": 8346,
+  "outerCapture": {
+    "captureErrors": [],
+    "captureFailed": false,
+    "drainExpired": false,
+    "paths": [
+      "/private/tmp/g03-sdk058-parity-018/runs/8278d642fff74ab5a2099b9cfc595d85/outer/docker.stdout.log",
+      "/private/tmp/g03-sdk058-parity-018/runs/8278d642fff74ab5a2099b9cfc595d85/outer/docker.stderr.log"
+    ],
+    "rawSha256": [
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    ],
+    "retainedBytes": [
+      0,
+      0
+    ],
+    "timedOut": false,
+    "totalRetainedBytes": 0,
+    "truncated": [
+      false,
+      false
+    ]
+  },
+  "outerClosure": {
+    "errors": [],
+    "files": [
+      {
+        "path": "/private/tmp/g03-sdk058-parity-018/runs/8278d642fff74ab5a2099b9cfc595d85/outer/docker.stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      {
+        "path": "/private/tmp/g03-sdk058-parity-018/runs/8278d642fff74ab5a2099b9cfc595d85/outer/docker.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      }
+    ],
+    "verified": true
+  },
+  "platform": "linux/amd64",
+  "platformObservation": {
+    "dockerDaemon": "linux/aarch64",
+    "pythonGuest": {
+      "abi": "linux-x86_64",
+      "machine": "x86_64",
+      "pointerBits": 64,
+      "system": "Linux",
+      "version": "3.11.17"
+    },
+    "runPlatform": "linux/amd64",
+    "selectedImage": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+    "selectedImagePlatform": "linux/amd64"
+  },
+  "profile": "umf.g03-sdk058-python-operator/1",
+  "qualificationTool": {
+    "checkedRequirementCount": 72,
+    "markerEnvironmentSha256": "6b183f2a362ea5ce7c222a7f8051972dda2c03bbeea7c592838b2bd7e7d42b0c",
+    "packagingBytes": 238549,
+    "packagingFileCount": 25,
+    "packagingInventorySha256": "5f7b4d4b87ed51ef2006d6ae801851c275dae4354385457bac21f139be70a71f",
+    "productDependenciesUnchanged": true,
+    "reportSha256": "a92bec19496ed09d4a0a4fa5567e0915392fbbd6a2bf1f3f8687776160d412f3",
+    "reportSizeBytes": 21162,
+    "selectedDistributionCount": 18,
+    "separateFromProductVenv": true,
+    "separateToolVenv": "/tmp/g03-packaging250-qualification-tool",
+    "status": "PASS_ACCEPTED_PACKAGING_TOOL_CONTROL",
+    "toolDistributionVersions": {
+      "packaging": "25.0",
+      "pip": "24.0",
+      "setuptools": "79.0.1"
+    },
+    "wheelSha256": "29572ef2b1f17581046b3a2227d5c611fb25ec70ca1ba8554b24b0e69331a484",
+    "wheelSizeBytes": 66469
+  },
+  "qualificationToolInputs": {
+    "qualificationToolAcquisitionSha256": {
+      "path": "/private/tmp/g03-packaging250-tool-input-001/acquisition.json",
+      "sha256": "1ca6f04d163a8f3a6400909c20539d28d6ec91a90859c707227f4302ec8f087c",
+      "sizeBytes": 1175
+    },
+    "qualificationToolAcquisitionSourceSha256": {
+      "path": "/private/tmp/g03-packaging250-tool-input-001/acquire.py",
+      "sha256": "b841f4c39f590daa98618488fed864e88de8e75538e96d004d91612f77011d95",
+      "sizeBytes": 4259
+    },
+    "qualificationToolControlActualReviewSha256": {
+      "path": "/private/tmp/g03-sdk058-packaging-tool-control-actual002-sol-review001.md",
+      "sha256": "6bc3d8659f1d177002928cab169c934d60ebc123578f856f178f7f37f8cbe20c",
+      "sizeBytes": 3499
+    },
+    "qualificationToolControlBindingSha256": {
+      "path": "/private/tmp/g03-sdk058-packaging-tool-control-source-004/binding.json",
+      "sha256": "2642d6edc7369580c261a23f51c08c4a0743497d10bc13bb62ec82041cdef8e4",
+      "sizeBytes": 547
+    },
+    "qualificationToolControlBootstrapSha256": {
+      "path": "/private/tmp/g03-sdk058-packaging-tool-control-source-004/bootstrap.py",
+      "sha256": "e4fabd60844b9ba83f572eddf28e42fd2456124c60aab0e625b3d93f15b173b8",
+      "sizeBytes": 3323
+    },
+    "qualificationToolControlManifestSha256": {
+      "path": "/private/tmp/g03-sdk058-packaging-tool-control-source-004/source-manifest.json",
+      "sha256": "c8daa93ea36944e79068544b21b5e0cf812ef8c71fe42d62048f6c2c1edb00e4",
+      "sizeBytes": 10516
+    },
+    "qualificationToolControlOwnerSha256": {
+      "path": "/private/tmp/g03-sdk058-packaging-tool-control-actual-002/owner-result.json",
+      "sha256": "5fab392c70928bd1bec2266a38752bab2cfa6a3ec292a889552a02e48ad60aae",
+      "sizeBytes": 29150
+    },
+    "qualificationToolControlProbeSha256": {
+      "path": "/private/tmp/g03-sdk058-packaging-tool-control-source-004/probe.py",
+      "sha256": "be174b2ad29fad8f55a29bdf46b33ea51223a466d3df49dee7ceb39ebabbd1b4",
+      "sizeBytes": 25084
+    },
+    "qualificationToolControlReadmeSha256": {
+      "path": "/private/tmp/g03-sdk058-packaging-tool-control-source-004/README.md",
+      "sha256": "e6d257966cdd83906d8e3ced6261d753cb503a715f3b5662cfb9605241544cc9",
+      "sizeBytes": 2148
+    },
+    "qualificationToolControlReportSha256": {
+      "path": "/private/tmp/g03-sdk058-packaging-tool-control-actual-002/tool-result.json",
+      "sha256": "a92bec19496ed09d4a0a4fa5567e0915392fbbd6a2bf1f3f8687776160d412f3",
+      "sizeBytes": 21162
+    },
+    "qualificationToolControlRunSha256": {
+      "path": "/private/tmp/g03-sdk058-packaging-tool-control-source-004/run.py",
+      "sha256": "5bc3436e522c1ec8e8c34fccb2a9665923a40d327a63528893e4eeddcb6f2d89",
+      "sizeBytes": 24896
+    },
+    "qualificationToolControlSourceReviewSha256": {
+      "path": "/private/tmp/g03-sdk058-packaging-tool-control004-sol-source-review001.md",
+      "sha256": "b22c2f556f77841ef841912a10a66f79d8c30c0ac12c214fa5cda2c1e57284c8",
+      "sizeBytes": 2485
+    },
+    "qualificationToolControlSumsSha256": {
+      "path": "/private/tmp/g03-sdk058-packaging-tool-control-source-004/SHA256SUMS",
+      "sha256": "0ef8ed0a9c949259fec866dfc29660bb9080bc8910dc5b752c79c98bd48d87f3",
+      "sizeBytes": 469
+    },
+    "qualificationToolGlobalFailureSha256": {
+      "path": "/private/tmp/g03-sdk058-global-packaging-metadata-003/result.json",
+      "sha256": "f87ab2332b90554dd5e7e0f4f2ac500aeed292bad756dc8f59c81d1f638ec33e",
+      "sizeBytes": 17129
+    },
+    "qualificationToolInputReviewSha256": {
+      "path": "/private/tmp/g03-packaging250-tool-input001-sol-review001.md",
+      "sha256": "7c303cfd8e6a86602786721c7b0f986bfcbc0747374bd7952ee69cc851af9d22",
+      "sizeBytes": 2592
+    },
+    "qualificationToolIntegrationPlanSha256": {
+      "path": "/private/tmp/g03-sdk058-parity017-sol-accepted-tool-integration-plan003.md",
+      "sha256": "2a462c5ca6d359fc7f8adc5e1f773ad74bbccb37dd285a275abb492851faa409",
+      "sizeBytes": 4646
+    },
+    "qualificationToolLockSha256": {
+      "path": "/private/tmp/g03-packaging250-tool-input-001/requirements.lock",
+      "sha256": "a00f933e87f072bf26e880dce84cde64e6644fa273def55f54f47d3846212212",
+      "sizeBytes": 95
+    },
+    "qualificationToolPlanSha256": {
+      "path": "/private/tmp/g03-sdk058-parity017-sol-isolated-tool-plan002.md",
+      "sha256": "35e804121d700233e8297aa980d0511d287f4c2b79e74e145273253cb57db430",
+      "sizeBytes": 5879
+    },
+    "qualificationToolPypiMetadataSha256": {
+      "path": "/private/tmp/g03-packaging250-tool-input-001/pypi-metadata.json",
+      "sha256": "6ab300d7b0735a50109912decebb1731ed292f1ed88a3ce5e4bb7876b182cac0",
+      "sizeBytes": 5501
+    },
+    "qualificationToolRuntimeObservationSha256": {
+      "path": "/private/tmp/g03-sdk058-linux-image-runtime-metadata-002/result.json",
+      "sha256": "02921a60371a975349ac6b243c5b611d1739384b9b59c540dba7152a2af048c2",
+      "sizeBytes": 3179
+    },
+    "qualificationToolRuntimeReviewSha256": {
+      "path": "/private/tmp/g03-sdk058-linux-image-runtime-metadata002-sol-review001.md",
+      "sha256": "093d4db960850cee28649577998b56a4227084ac940799b16d3bedd1f583c465",
+      "sizeBytes": 1445
+    },
+    "qualificationToolStaticAuditSha256": {
+      "path": "/private/tmp/g03-packaging250-tool-input-001/static-audit.json",
+      "sha256": "c301482e08553ed3dd69ee88135fcf0318e0a615ef25a6000d41c753e776f30b",
+      "sizeBytes": 4569
+    },
+    "qualificationToolWheelSha256": {
+      "path": "/private/tmp/g03-packaging250-tool-input-001/packaging-25.0-py3-none-any.whl",
+      "sha256": "29572ef2b1f17581046b3a2227d5c611fb25ec70ca1ba8554b24b0e69331a484",
+      "sizeBytes": 66469
+    }
+  },
+  "runEvidenceBytesBeforeReceipt": 4551617,
+  "runFilesBeforeReceipt": [
+    {
+      "path": "guest/codegen-corpus.json",
+      "sha256": "80b8059d48490761bc98255d58409d96f46b399d78b79d0dd9aa43d30d7e6187",
+      "sizeBytes": 3500077
+    },
+    {
+      "path": "guest/g03-corpus.json",
+      "sha256": "88a402998e44b89f24f36c7c54fb5d96d3cd131f6b371663bd44ce306f65ad25",
+      "sizeBytes": 985708
+    },
+    {
+      "path": "guest/g03-python-report.json",
+      "sha256": "e20e41133602a9e7d2cff8be7cd654176948cc7733968a492082cc66cd60ce13",
+      "sizeBytes": 505
+    },
+    {
+      "path": "guest/guest-result.json",
+      "sha256": "6074d2ec4ac165dca8cfeff78b8ada3256aedc599a6e2d4226e7f9f577defaf9",
+      "sizeBytes": 26505
+    },
+    {
+      "path": "guest/installed-record-snapshot.json",
+      "sha256": "d1fd95763df0139f20dc7aa6a6ba8d667c7af14c006a151b37889fb1b59cf457",
+      "sizeBytes": 6190
+    },
+    {
+      "path": "guest/logs/embedded-python-g03-parity.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "guest/logs/embedded-python-g03-parity.stdout.log",
+      "sha256": "e3e0e67c011b5bd3cc7b5cdad282cde6c4f1d49f3823e3c3c6bfeb6ec6101f0d",
+      "sizeBytes": 477
+    },
+    {
+      "path": "guest/logs/fresh18-offline-install-and-pip-check.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "guest/logs/fresh18-offline-install-and-pip-check.stdout.log",
+      "sha256": "373d901c45866902129688d50412b6a5d49e805fc31288cce2ceba857f28691a",
+      "sizeBytes": 3492
+    },
+    {
+      "path": "guest/logs/generate-generic-codegen-corpus.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "guest/logs/generate-generic-codegen-corpus.stdout.log",
+      "sha256": "408234e2b1ca5a6afca35f03bcf848045b0c8a25b50ad9fc022c02c4a938706b",
+      "sizeBytes": 1487
+    },
+    {
+      "path": "guest/logs/generate-shared-g03-corpus.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "guest/logs/generate-shared-g03-corpus.stdout.log",
+      "sha256": "2aaccf509078082f35a2ea7605a05e34043122875ad78ad612ebadf0c591c9ed",
+      "sizeBytes": 40
+    },
+    {
+      "path": "guest/logs/generic-offline-mirror-probe.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "guest/logs/generic-offline-mirror-probe.stdout.log",
+      "sha256": "b412ed6d42050f159cbec2bd6c26d07311ae0b91972268a533c36971b64e389c",
+      "sizeBytes": 711
+    },
+    {
+      "path": "guest/logs/installed-distribution-snapshot.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "guest/logs/installed-distribution-snapshot.stdout.log",
+      "sha256": "24fd4b38c5f81b4dc3e1c75dfa6deb7631fd0c73306d6c1ebd791eca037d6fad",
+      "sizeBytes": 99
+    },
+    {
+      "path": "guest/logs/installed-record-snapshot.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "guest/logs/installed-record-snapshot.stdout.log",
+      "sha256": "f4c47eed16f370bcaa9412659767bdb5ae3c63f75a188846b12480be2b0e0b41",
+      "sizeBytes": 195
+    },
+    {
+      "path": "guest/logs/qualification-tool-metadata-control.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "guest/logs/qualification-tool-metadata-control.stdout.log",
+      "sha256": "e3bccedc06a051d20e958b0f02adec1be61428e3c852a2748686aa5b9e22d7a3",
+      "sizeBytes": 721
+    },
+    {
+      "path": "guest/logs/runtime-bun.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "guest/logs/runtime-bun.stdout.log",
+      "sha256": "bd31e8d9cf8d14a1e9e3fdf3b9f6a524819aed0d1b14627523c6765767c7d8f1",
+      "sizeBytes": 6
+    },
+    {
+      "path": "guest/logs/runtime-python.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "guest/logs/runtime-python.stdout.log",
+      "sha256": "8b68cd72f2f18670f0d3632664f02b64462f0b5dd5257833bd9bed815aa47892",
+      "sizeBytes": 1036
+    },
+    {
+      "path": "guest/logs/source-clean.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "guest/logs/source-clean.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "guest/logs/source-commit.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "guest/logs/source-commit.stdout.log",
+      "sha256": "8c7253caf27c0197780d8123f34e756fd184ae150c12e20aaa0e8a194562bfb0",
+      "sizeBytes": 41
+    },
+    {
+      "path": "guest/logs/source-tree.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "guest/logs/source-tree.stdout.log",
+      "sha256": "cac79246733c82e90a05711887cce88d9cbb94e75134791f1cae8fc398b841f6",
+      "sizeBytes": 41
+    },
+    {
+      "path": "guest/offline-mirror-report.json",
+      "sha256": "add84d1bcc85aa0bb81caacebc01dab75fc583280f0dc5d82430e8d1b3ddf0e7",
+      "sizeBytes": 3124
+    },
+    {
+      "path": "guest/tool-result.json",
+      "sha256": "a92bec19496ed09d4a0a4fa5567e0915392fbbd6a2bf1f3f8687776160d412f3",
+      "sizeBytes": 21162
+    },
+    {
+      "path": "outer/docker.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "outer/docker.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    }
+  ],
+  "sourceVolume": "umf-sdk058-source-855f6c486-001",
+  "status": "PASS_LOCAL_FINAL18_G03_PYTHON_PARITY"
+}

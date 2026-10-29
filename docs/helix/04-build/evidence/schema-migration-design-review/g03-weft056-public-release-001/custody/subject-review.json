@@ -1,0 +1,23 @@
+{
+  "profile": "g03.weft-public-release-byte-custody-review/1",
+  "publicProofSha256": "1043d8ea683f88d4601e668c83f3b76e39cd890333dda32e24ac998a75abf2cd",
+  "reviewClaim": "ACCEPTED_DATA_ADAPTER_OF_PREVIOUSLY_ACCEPTED_PUBLIC_BYTES; no fresh product/runtime qualification",
+  "status": "ACCEPTED",
+  "subject": {
+    "path": "/private/tmp/g03-weft056-public-byte-custody-subject-001/subject.json",
+    "sha256": "1043d8ea683f88d4601e668c83f3b76e39cd890333dda32e24ac998a75abf2cd",
+    "sizeBytes": 4624
+  },
+  "verificationLimits": {
+    "hostedActionsRun": false,
+    "linuxRuntimeCell": "selected CPython 3.11 Linux cohort only",
+    "macOS": "build/static only; no install/import/runtime/browser/native tests",
+    "managedConsumerAcceptance": false,
+    "publicAssetDownloadsPersistedByPhase": false,
+    "rawPublisherHttpStreamsRetained": false,
+    "scope": "G03 Weft distribution; SDK0.5.8 and broader MIG-G04\u2013G11 remain open"
+  },
+  "verifiedGithubAssetCount": 9,
+  "verifiedSubjectMemberFileRefCount": 13,
+  "verifiedWheelCount": 3
+}

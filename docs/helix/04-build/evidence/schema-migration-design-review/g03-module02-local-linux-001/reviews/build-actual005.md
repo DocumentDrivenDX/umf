@@ -1,0 +1,7 @@
+# Complete core/PostgreSQL local test005 actual review
+
+Accept actual LOCAL_LINUX_CORE_POSTGRESQL_TESTS_PASS, scoped strictly to `cargo test --locked --offline -p weft-core -p weft-postgresql`. Result SHA-256 d7433bf919bfcf28cac951f2e2c5ffa835229a068619139038e9013e86ebf9b9. Independently verified four physical setup/test logs against exact size/hash; raw captures exit0 without timeout/truncation/capture errors. Parsed33 successful test-result summaries totaling892passed/0failed/0ignored, including actual repaired27-test integration target. No later/broader profile inferred.
+
+Exact pre/post source records equal: basee7e88b077c256c852a83d7951e3bc5fd1ec234aa, actual semantic3f890d60802ef3cedbf212a98f1142dbb202c39e81ea181b13fd0d8960f8dd1c/full9ecea333630123baaee91dfec3b6520d90e5d73a5cdc5b407310d511fe4200a4, held metadataunchanged. ImmutableLinuxamd64 builder1f983 and reviewed Rust/tooling/network/capture/resource profile retained. Outer1092.621s below3600; test stage below1800; cleanup1.055s with noerrors. Actual logs below1MiB and source closure passed. No wheel build ran; reviewed004wheel unchanged and separately bound.
+
+This discharges the formerly incomplete core+PostgreSQL command for this exact source/profile only. It does not qualify workspace feature profiles/weft-runtime, WASM/realbrowser, DB native N12/fullcampaign, platform/release artifacts or public release. Prior001–003 failures remain historical. Reviewer performed no candidate execution/import/test/Docker/Git mutation.

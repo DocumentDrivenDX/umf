@@ -1,0 +1,9 @@
+Cloning into '/newsource'...
+fatal: detected dubious ownership in repository at '/oldsource/.git'
+To add an exception for this directory, call:
+
+	git config --global --add safe.directory /oldsource/.git
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.

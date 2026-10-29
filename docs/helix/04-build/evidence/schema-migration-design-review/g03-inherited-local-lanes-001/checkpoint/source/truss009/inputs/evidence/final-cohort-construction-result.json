@@ -1,0 +1,112 @@
+{
+  "aggregateIndexSha256": "78026c05d3824613f0e2a3bf30cf24bd32af24de1d560f0b7fa555a1e75f8d60",
+  "candidateWheel": {
+    "actualReview": "/private/tmp/g03-final-baseline-x64-build002-audit003-sol-actual-review001.md",
+    "actualReviewSha256": "c0b11e668096c3e95bbe581ddc2d1cb6749766eb636a30bed9ea71223921362e",
+    "artifactAcceptanceReview": "/private/tmp/g03-final-baseline-x64-build002-audit003-sol-actual-review001.md",
+    "artifactAcceptanceReviewSha256": "c0b11e668096c3e95bbe581ddc2d1cb6749766eb636a30bed9ea71223921362e",
+    "auditOnlyReplay": "/private/tmp/g03-final-baseline-amd64-audit-003/result.json",
+    "auditOnlyReplayProfile": "umf.g03-local-baseline-static-audit-only/1",
+    "auditOnlyReplaySha256": "2868c5c7bc298ccfeb96a9a8099ed22c1738f9bedf0a263acec7c6156352de5f",
+    "auditOnlyReplayStatus": "LOCAL_BASELINE_AUDIT_ONLY_PASS",
+    "auditReport": "/private/tmp/g03-final-baseline-amd64-audit-003/reports/static-audit.json",
+    "auditReportBytes": 2359,
+    "auditReportSha256": "544d8617776cea6bb98179a82564e78f85f0793d279ae1d2910cd43af296bdf2",
+    "baseCommit": "e7e88b077c256c852a83d7951e3bc5fd1ec234aa",
+    "buildResult": "/private/tmp/g03-final-baseline-amd64-002/result.json",
+    "buildResultSha256": "33bfe7e733b42fac5667bf8529afccb7c48dda255105ef9eea5152218a0def2b",
+    "builderProfile": "umf.g03-final-local-baseline-build-static/1",
+    "builderStatus": "FAIL_OR_UNKNOWN",
+    "fullPatchSha256": "b5402ca3e8628f00c84bca40bfea547a15e1dd83cc5664009e845bae093a2cef",
+    "initialBuildResultSha256": "33bfe7e733b42fac5667bf8529afccb7c48dda255105ef9eea5152218a0def2b",
+    "kind": "local-reviewed-final-wheel",
+    "licenseNoticePaths": [
+      "umf_weft-0.4.56.dist-info/licenses/LICENSE-APACHE",
+      "umf_weft-0.4.56.dist-info/licenses/LICENSE-MIT",
+      "umf_weft-0.4.56.dist-info/licenses/LICENSE.md",
+      "umf_weft-0.4.56.dist-info/licenses/THIRD-PARTY-LICENSES.txt"
+    ],
+    "licenseNoticeSha256": {
+      "umf_weft-0.4.56.dist-info/licenses/LICENSE-APACHE": "a7f097f28b47176d49dddc086575d24d94149493f5b8e9bb829a0eee3eba74ee",
+      "umf_weft-0.4.56.dist-info/licenses/LICENSE-MIT": "f1409ffd0dff471f9f5078c8f2cc2c070147daae3197812234b5919c1f820702",
+      "umf_weft-0.4.56.dist-info/licenses/LICENSE.md": "76dfb87aed22180562cee6180096117e659e66d130285c56a67d5f09a788e0e5",
+      "umf_weft-0.4.56.dist-info/licenses/THIRD-PARTY-LICENSES.txt": "f86af39ab061e9b9474f8f3b151f69a42211d72fa9ac2930daecbda458c17f97"
+    },
+    "nativeMember": "weft/weft.abi3.so",
+    "nativeSha256": "e8a0c19e8a3a974a97b141b12adf532a52a2c92d03d558c087f002c6d317a1d9",
+    "path": "/private/tmp/g03-final-baseline-amd64-002/candidate/umf_weft-0.4.56-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+    "platformLimit": "manylinux2014 x86_64 CPython abi3 wheel bytes; local build artifact only; full14 runtime pending",
+    "semanticPatchSha256": "3f890d60802ef3cedbf212a98f1142dbb202c39e81ea181b13fd0d8960f8dd1c",
+    "sha256": "32f4c38d9a614dd4c3a367f8b24d5cd4ba41ec80c2a4a2e3423e2082a294dbdd",
+    "sizeBytes": 14358901,
+    "sourceCommit": "973d864c8d26b2bc173a411eac8368da5efc1ab3",
+    "sourceTree": "8b20d1f01bea72ea08ed01fcaac97266ed3cb4ff",
+    "status": "HELD_UNPUBLISHED_LOCAL_LINUX_CANDIDATE",
+    "version": "0.4.56",
+    "wheelTags": [
+      "cp39-abi3-manylinux2014_x86_64",
+      "cp39-abi3-manylinux_2_17_x86_64"
+    ]
+  },
+  "custodySha256": "95e9493f06adefb323193f9d8fbe5577ebfa335140a9841f549d2caf098df8ed",
+  "licenseNoticeSha256": {
+    "umf_weft-0.4.56.dist-info/licenses/LICENSE-APACHE": "a7f097f28b47176d49dddc086575d24d94149493f5b8e9bb829a0eee3eba74ee",
+    "umf_weft-0.4.56.dist-info/licenses/LICENSE-MIT": "f1409ffd0dff471f9f5078c8f2cc2c070147daae3197812234b5919c1f820702",
+    "umf_weft-0.4.56.dist-info/licenses/LICENSE.md": "76dfb87aed22180562cee6180096117e659e66d130285c56a67d5f09a788e0e5",
+    "umf_weft-0.4.56.dist-info/licenses/THIRD-PARTY-LICENSES.txt": "f86af39ab061e9b9474f8f3b151f69a42211d72fa9ac2930daecbda458c17f97"
+  },
+  "memberInventory": [
+    {
+      "path": "umf_weft-0.4.56.dist-info/METADATA",
+      "sha256": "06a28d78d59bcf903aea857d959ea4d2517375f2dcf7621df1aaf96f023df59e",
+      "sizeBytes": 1550
+    },
+    {
+      "path": "umf_weft-0.4.56.dist-info/RECORD",
+      "sha256": "7b9ab2bdc85e541916ae4e1986eebf4f69778890dde5da7eb21c08ef3fba19fe",
+      "sizeBytes": 794
+    },
+    {
+      "path": "umf_weft-0.4.56.dist-info/WHEEL",
+      "sha256": "650fc52924634b55de11360dae766b313617936edd02dd748437dbf702739693",
+      "sizeBytes": 127
+    },
+    {
+      "path": "umf_weft-0.4.56.dist-info/licenses/LICENSE-APACHE",
+      "sha256": "a7f097f28b47176d49dddc086575d24d94149493f5b8e9bb829a0eee3eba74ee",
+      "sizeBytes": 11359
+    },
+    {
+      "path": "umf_weft-0.4.56.dist-info/licenses/LICENSE-MIT",
+      "sha256": "f1409ffd0dff471f9f5078c8f2cc2c070147daae3197812234b5919c1f820702",
+      "sizeBytes": 1086
+    },
+    {
+      "path": "umf_weft-0.4.56.dist-info/licenses/LICENSE.md",
+      "sha256": "76dfb87aed22180562cee6180096117e659e66d130285c56a67d5f09a788e0e5",
+      "sizeBytes": 13013
+    },
+    {
+      "path": "umf_weft-0.4.56.dist-info/licenses/THIRD-PARTY-LICENSES.txt",
+      "sha256": "f86af39ab061e9b9474f8f3b151f69a42211d72fa9ac2930daecbda458c17f97",
+      "sizeBytes": 1028562
+    },
+    {
+      "path": "weft/__init__.py",
+      "sha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d",
+      "sizeBytes": 99
+    },
+    {
+      "path": "weft/weft.abi3.so",
+      "sha256": "e8a0c19e8a3a974a97b141b12adf532a52a2c92d03d558c087f002c6d317a1d9",
+      "sizeBytes": 44271496
+    }
+  ],
+  "mirrorManifestSha256": "809a418b9f6f97e403e3fbcc7066d23657347d1323efb6baf2d4d3bb3f17bd36",
+  "requirementsSha256": "4847944f3cafa5fcc9813890f85a4db24a064ed49b479c890e3f4363cb97de51",
+  "root": "/private/tmp/g03-final-cohort-056-linux311-001",
+  "selectedLockSha256": "cfe589472a5340446e5b1ddf5e39dbf00e6b6d83370fbe066122f52139fe2274",
+  "status": "HELD_UNPUBLISHED_NOT_RUNTIME_QUALIFIED",
+  "unchangedNonWeftRows": 17,
+  "wheelRows": 18
+}

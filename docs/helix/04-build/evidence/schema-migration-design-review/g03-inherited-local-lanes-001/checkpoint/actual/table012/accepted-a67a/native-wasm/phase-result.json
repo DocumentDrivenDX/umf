@@ -1,0 +1,259 @@
+{
+  "browserCases": {
+    "sha256": "6dfc3ed5da783d8e17094cb30dc9746d5fdd41c1216bd4ad574fa9fa123af71c",
+    "sizeBytes": 2537368
+  },
+  "candidateStatus": "NATIVE_WASM_PASS",
+  "commands": [
+    {
+      "argv": [
+        "/venv/bin/python",
+        "-B",
+        "-I",
+        "/workspace/tests/raw-postgresql/table-operation-native.py",
+        "--dsn-env",
+        "WEFT_NATIVE_DSN",
+        "--report",
+        "/out/reports/native.json"
+      ],
+      "cwd": "/workspace",
+      "elapsedSeconds": 9.209717,
+      "endMonotonic": 987200.16118748,
+      "environment": {
+        "CARGO_HOME": "/opt/cargo",
+        "WEFT_NATIVE_DSN": "host=table-pg dbname=postgres user=postgres connect_timeout=5",
+        "WEFT_NATIVE_TIMEOUT_SECONDS": "290"
+      },
+      "exitCode": 0,
+      "failure": null,
+      "limitSeconds": 290,
+      "name": "native-oracle",
+      "startMonotonic": 987190.951470724,
+      "streams": [
+        {
+          "bytes": 78,
+          "path": "logs/native-oracle.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 78,
+          "rawSha256": "d27e377adaf85b242085df9f76cccb3e798eed2f04ab489048bdc4dc452774a5",
+          "sha256": "d27e377adaf85b242085df9f76cccb3e798eed2f04ab489048bdc4dc452774a5",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "logs/native-oracle.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "terminationGraceIncludedInOriginalCap": 10,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "cargo",
+        "build",
+        "--locked",
+        "--offline",
+        "-p",
+        "weft-wasm",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--features",
+        "raw-postgresql-reads"
+      ],
+      "cwd": "/workspace",
+      "elapsedSeconds": 84.418186,
+      "endMonotonic": 987284.58877004,
+      "environment": {
+        "CARGO_HOME": "/cargo",
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_TARGET_DIR": "/target",
+        "RUSTUP_TOOLCHAIN": "1.90.0-x86_64-unknown-linux-gnu"
+      },
+      "exitCode": 0,
+      "failure": null,
+      "limitSeconds": 590,
+      "name": "wasm-build",
+      "startMonotonic": 987200.170584125,
+      "streams": [
+        {
+          "bytes": 0,
+          "path": "logs/wasm-build.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        },
+        {
+          "bytes": 19872,
+          "path": "logs/wasm-build.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 19872,
+          "rawSha256": "17ee53f01f4d54cb2bc09f46aed48724a79648fe75553e8c37642cf2a568976d",
+          "sha256": "17ee53f01f4d54cb2bc09f46aed48724a79648fe75553e8c37642cf2a568976d",
+          "truncated": false
+        }
+      ],
+      "terminationGraceIncludedInOriginalCap": 10,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/wasm-tools/wasm-bindgen",
+        "--target",
+        "web",
+        "--out-dir",
+        "/out/artifacts/table-web",
+        "/target/wasm32-unknown-unknown/debug/weft_wasm.wasm"
+      ],
+      "cwd": "/workspace",
+      "elapsedSeconds": 4.911128,
+      "endMonotonic": 987289.501012332,
+      "environment": {
+        "CARGO_HOME": "/opt/cargo"
+      },
+      "exitCode": 0,
+      "failure": null,
+      "limitSeconds": 590,
+      "name": "wasm-bindgen",
+      "startMonotonic": 987284.589884297,
+      "streams": [
+        {
+          "bytes": 0,
+          "path": "logs/wasm-bindgen.stdout.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        },
+        {
+          "bytes": 0,
+          "path": "logs/wasm-bindgen.stderr.log",
+          "physicalClosed": true,
+          "rawBytes": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "truncated": false
+        }
+      ],
+      "terminationGraceIncludedInOriginalCap": 10,
+      "timedOut": false
+    }
+  ],
+  "elapsedSeconds": 104.017,
+  "evidenceClosureVerified": true,
+  "failure": null,
+  "logBytes": 19950,
+  "native": {
+    "sha256": "ac1c26103bcdad1849ab53ec91dcc8f37dce1764a4d9cbfe2b6da9bb5216b7f8",
+    "sizeBytes": 4733
+  },
+  "nativeAssertions": 50,
+  "nativeCli": {
+    "path": "/target/debug/examples/compile_table_operation",
+    "sha256": "94f5d75cbce7b8c7f49106c3c75a213f9089617e07b2b91fd5116b5df48c17a7",
+    "sizeBytes": 214869624,
+    "sourceCommit": "973d864c8d26b2bc173a411eac8368da5efc1ab3",
+    "sourceTree": "8b20d1f01bea72ea08ed01fcaac97266ed3cb4ff"
+  },
+  "nativeCliObservations": [
+    {
+      "fileType": 32768,
+      "mode": 493,
+      "path": "/target/debug/examples/compile_table_operation",
+      "sizeBytes": 214869624,
+      "stage": "native-wasm-pre-build"
+    },
+    {
+      "fileType": 32768,
+      "mode": 493,
+      "path": "/target/debug/examples/compile_table_operation",
+      "sizeBytes": 214869624,
+      "stage": "native-wasm-post-build"
+    }
+  ],
+  "nativeLeases": {
+    "acquired": 37,
+    "released": 37
+  },
+  "phase": "native-wasm",
+  "profile": "umf.g03-table-operations-phase/1",
+  "publicBytes": 983551,
+  "publicFiles": [
+    {
+      "path": "logs/native-oracle.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/native-oracle.stdout.log",
+      "sha256": "d27e377adaf85b242085df9f76cccb3e798eed2f04ab489048bdc4dc452774a5",
+      "sizeBytes": 78
+    },
+    {
+      "path": "logs/wasm-bindgen.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/wasm-bindgen.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/wasm-build.stderr.log",
+      "sha256": "17ee53f01f4d54cb2bc09f46aed48724a79648fe75553e8c37642cf2a568976d",
+      "sizeBytes": 19872
+    },
+    {
+      "path": "logs/wasm-build.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "reports/native.json",
+      "sha256": "ac1c26103bcdad1849ab53ec91dcc8f37dce1764a4d9cbfe2b6da9bb5216b7f8",
+      "sizeBytes": 4733
+    },
+    {
+      "path": "reports/source-inputs.rows.json",
+      "sha256": "fefc1d2b479429c51024559ca734c26c45264afbce835ef4bb529f4511b8952e",
+      "sizeBytes": 958868
+    }
+  ],
+  "status": "NATIVE_WASM_PASS",
+  "tableWasm": {
+    "featureProfile": [
+      "raw-postgresql-reads"
+    ],
+    "files": [
+      {
+        "path": "weft_wasm.d.ts",
+        "sha256": "761a00e0f17ea857bb6dc2332183546d17c970d33adb9588ea3197f1cce10335",
+        "sizeBytes": 7007
+      },
+      {
+        "path": "weft_wasm.js",
+        "sha256": "c3c3b25d6a7f996bdc82e2dfb6defc3f9250e1977f24c9454bdd209164a63be2",
+        "sizeBytes": 27452
+      },
+      {
+        "path": "weft_wasm_bg.wasm",
+        "sha256": "6266e03d4d0075384943ad4c5e19f58772cb202520f0c5041d917b01765f4294",
+        "sizeBytes": 51874180
+      },
+      {
+        "path": "weft_wasm_bg.wasm.d.ts",
+        "sha256": "454be90b5e3e862dcd1779f6c3c2104cc706ca21b56b6cc5cd170d47d1ba958a",
+        "sizeBytes": 3404
+      }
+    ],
+    "sizeBytes": 51912043
+  }
+}

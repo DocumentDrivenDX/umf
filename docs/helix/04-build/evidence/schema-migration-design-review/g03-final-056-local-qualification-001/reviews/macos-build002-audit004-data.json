@@ -1,0 +1,36 @@
+{
+  "disposition": "ACCEPT_LOCAL_MACOS_BUILD002_PLUS_SEPARATE_STATIC_AUDIT004_ONLY",
+  "result": {
+    "bytes": 8051,
+    "sha256": "526cc38f854370f6bc34e044e9dc262b137bc1b4e95252c897578b5369c08fbf"
+  },
+  "report": {
+    "bytes": 9604,
+    "path": "/private/tmp/g03-weft-macos-arm64-audit-004/static-audit.json",
+    "sha256": "2a79490c17a4856823a9eb9ea8db5cb8cf342f4c961705e8e3fe5f22f9b96424"
+  },
+  "wheel": {
+    "bytes": 11190603,
+    "filename": "umf_weft-0.4.56-cp39-abi3-macosx_11_0_arm64.whl",
+    "path": "/private/tmp/g03-weft-macos-arm64-build-002/dist/umf_weft-0.4.56-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "68f9297b4b55df483b86d3041040991c4dadfb9b4d63afcff1420c43f93ae41d"
+  },
+  "nativeSha256": "7f746042c88dde86b0a096b831a4243d40e2448255c1146cf515787b22c30225",
+  "source": {
+    "count": 1459,
+    "totalBytes": 134880002,
+    "rosterSha256": "6a671799d5be7a511cc6b5f7c9282d8745fbc80f4a5d796538b6643e8492f2a2"
+  },
+  "sourceCommit": "973d864c8d26b2bc173a411eac8368da5efc1ab3",
+  "sourceTree": "8b20d1f01bea72ea08ed01fcaac97266ed3cb4ff",
+  "physicalAuditFiles": 4,
+  "auditEvidenceInclusiveBytes": 18050,
+  "auditRawBytes": 395,
+  "auditChildSeconds": 0.525,
+  "originalBuildResultSha256": "2aaa9dbe418cae86db3cac1f3c688a60d8b75746e31ec02badb1456941b663f0",
+  "originalBuildStatus": "FAIL_OR_UNKNOWN",
+  "originalBuildSeconds": 133.713,
+  "originalAuditExitCode": 1,
+  "runtimeQualification": "NOT_RUN",
+  "hosted": false
+}

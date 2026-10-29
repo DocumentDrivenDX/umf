@@ -1,0 +1,73 @@
+{
+  "campaignId": "661e79df-3dcb-40e3-87ed-29afcc472124",
+  "caseId": "G03-N04",
+  "fixtureSha256": "18a46993cb86923e03f6e1e698cb95bb9dbb428ae7d38ecd801e89f39b77f0b5",
+  "profile": "umf.g03-full14-scenario-child/1",
+  "rawScenario": {
+    "acceptedBaselineSourceSha256": "2e6f179d7606322f07a4d63187345520ec9383a36dd6767fbaf39540469ff5b4",
+    "configurationSha256": "b8787c00d87cf92976a2721a7c0bbe62f37513c50725d194f0a8cb08b52afe22",
+    "database": "g03_87a5847566",
+    "diagnostics": [
+      {
+        "code": "TABLES_OPERATION_REQUIRED",
+        "message": "Create input omits a required column without a declared default",
+        "path": "/modules/0/extensions/umf.tables/commands/1/body/values",
+        "severity": "error"
+      }
+    ],
+    "nativeEffects": "none; compilation refusal only",
+    "refusedSourceSha256": "59d2508f262968e09557fa04b7b92cb8df1a67d3a12fb94f596caf237ab9ccf4",
+    "roleNames": [
+      "g03o_87a5847566",
+      "g03p_87a5847566",
+      "g03b_87a5847566",
+      "g03a_87a5847566",
+      "g03z_87a5847566"
+    ],
+    "scenario": "admission-refusal",
+    "schema": "g03s_87a5847566",
+    "status": "PASS_SOURCE_REFUSAL_AND_NATIVE_NO_EFFECTS",
+    "targetAfter": {
+      "observer": {
+        "currentUser": "postgres",
+        "oid": "10",
+        "sessionUser": "postgres",
+        "superuser": true
+      },
+      "ownedDatabase": null,
+      "ownedRoles": [],
+      "ownedSchema": null,
+      "ownedSchemaObjects": [],
+      "target": {
+        "database": "postgres",
+        "postmasterStart": "2026-10-29 10:29:10.901963+00",
+        "serverAddress": "192.168.165.2/32",
+        "serverPort": 5432,
+        "serverVersion": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+        "systemIdentifier": "7702034927359164464"
+      }
+    },
+    "targetBefore": {
+      "observer": {
+        "currentUser": "postgres",
+        "oid": "10",
+        "sessionUser": "postgres",
+        "superuser": true
+      },
+      "ownedDatabase": null,
+      "ownedRoles": [],
+      "ownedSchema": null,
+      "ownedSchemaObjects": [],
+      "target": {
+        "database": "postgres",
+        "postmasterStart": "2026-10-29 10:29:10.901963+00",
+        "serverAddress": "192.168.165.2/32",
+        "serverPort": 5432,
+        "serverVersion": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+        "systemIdentifier": "7702034927359164464"
+      }
+    }
+  },
+  "runnerSha256": "73a732711ae150ff55a1f4fa1b656ae0762779e18cd94b82d4a2227930aaefb9",
+  "scenario": "admission-refusal"
+}

@@ -1,0 +1,316 @@
+{
+  "campaignId": "661e79df-3dcb-40e3-87ed-29afcc472124",
+  "caseId": "G03-N08",
+  "fixtureSha256": "18a46993cb86923e03f6e1e698cb95bb9dbb428ae7d38ecd801e89f39b77f0b5",
+  "profile": "umf.g03-full14-scenario-child/1",
+  "rawScenario": {
+    "allOwnedRoleNames": [
+      "g03o_b5e32a10f3",
+      "g03p_b5e32a10f3",
+      "g03b_b5e32a10f3",
+      "g03a_b5e32a10f3",
+      "g03z_b5e32a10f3"
+    ],
+    "cleanup": {
+      "createdDatabase": true,
+      "createdRoles": [
+        "g03o_b5e32a10f3",
+        "g03p_b5e32a10f3",
+        "g03b_b5e32a10f3",
+        "g03a_b5e32a10f3",
+        "g03z_b5e32a10f3"
+      ],
+      "errors": [],
+      "status": "PASS"
+    },
+    "cleanupVerification": {
+      "ownedDatabaseAbsent": true,
+      "ownedDatabaseRemaining": null,
+      "ownedRolesAbsent": true,
+      "remainingRoleIdentities": [],
+      "schemaAndTableAbsentByOwnedDatabaseRemoval": true,
+      "targetIdentityUnchanged": true
+    },
+    "configurationSha256": "88e52acb7b39a0252c3ff221d443652aa997446939546d5c5df3f35840bb2616",
+    "createdDatabaseIdentity": {
+      "name": "g03_b5e32a10f3",
+      "oid": "36500",
+      "ownerOid": "10"
+    },
+    "createdRoleIdentities": [
+      {
+        "bypassRls": false,
+        "createDatabase": false,
+        "createRole": false,
+        "login": false,
+        "name": "g03o_b5e32a10f3",
+        "oid": "36493",
+        "replication": false,
+        "superuser": false
+      },
+      {
+        "bypassRls": false,
+        "createDatabase": false,
+        "createRole": false,
+        "login": false,
+        "name": "g03p_b5e32a10f3",
+        "oid": "36494",
+        "replication": false,
+        "superuser": false
+      },
+      {
+        "bypassRls": false,
+        "createDatabase": false,
+        "createRole": false,
+        "login": false,
+        "name": "g03b_b5e32a10f3",
+        "oid": "36495",
+        "replication": false,
+        "superuser": false
+      },
+      {
+        "bypassRls": false,
+        "createDatabase": false,
+        "createRole": false,
+        "login": false,
+        "name": "g03a_b5e32a10f3",
+        "oid": "36496",
+        "replication": false,
+        "superuser": false
+      },
+      {
+        "bypassRls": false,
+        "createDatabase": false,
+        "createRole": false,
+        "login": false,
+        "name": "g03z_b5e32a10f3",
+        "oid": "36497",
+        "replication": false,
+        "superuser": false
+      }
+    ],
+    "createdSchemaIdentity": {
+      "name": "g03s_b5e32a10f3",
+      "oid": "36501",
+      "ownerOid": "36493"
+    },
+    "createdTableIdentity": {
+      "name": "notes",
+      "oid": "36502",
+      "ownerOid": "36493",
+      "schemaOid": "36501"
+    },
+    "database": "g03_b5e32a10f3",
+    "defaultStatementDispatches": 1,
+    "futureWriteProbes": "run for selected integer/required/domain scenario; other selectors remain separate",
+    "historicalRows": [
+      [
+        "a",
+        "Alice",
+        null
+      ],
+      [
+        "b",
+        "Bob",
+        2
+      ],
+      [
+        "c",
+        "Alice",
+        9
+      ]
+    ],
+    "initialObservation": {
+      "columnDefault": null,
+      "columnNativeType": {
+        "formatted": "integer",
+        "oid": 23,
+        "typeName": "int4"
+      },
+      "observer": {
+        "currentUser": "postgres",
+        "sessionUser": "postgres",
+        "superuser": true
+      },
+      "relationFileNode": 36502,
+      "rows": [
+        [
+          "a",
+          "g03a_b5e32a10f3",
+          null,
+          "36502",
+          "1557",
+          "(0,1)"
+        ],
+        [
+          "b",
+          "g03z_b5e32a10f3",
+          2,
+          "36502",
+          "1558",
+          "(0,2)"
+        ],
+        [
+          "c",
+          "g03a_b5e32a10f3",
+          9,
+          "36502",
+          "1559",
+          "(0,3)"
+        ]
+      ],
+      "rowsDigest": "e041666a19c4b9cef6c34f7509494b6ae0318ec6701976debfc1533d21c3a3cc"
+    },
+    "initialRowCount": 3,
+    "logicalRoleNames": [],
+    "openedOwnedConnection": {
+      "backendPid": 190,
+      "currentUser": "postgres",
+      "database": "g03_b5e32a10f3",
+      "postmasterStart": "2026-10-29 10:29:10.901963+00",
+      "serverVersion": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+      "sessionUser": "postgres",
+      "systemIdentifier": "7702034927359164464"
+    },
+    "progressReads": [
+      {
+        "completedSteps": [],
+        "phaseDigest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "phaseIndex": 0,
+        "state": "ready"
+      }
+    ],
+    "roleNames": [
+      "g03o_b5e32a10f3",
+      "g03p_b5e32a10f3",
+      "g03b_b5e32a10f3",
+      "g03a_b5e32a10f3",
+      "g03z_b5e32a10f3"
+    ],
+    "scenario": "unknown-no-commit",
+    "schema": "g03s_b5e32a10f3",
+    "serverVersion": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "status": "PASS_EXPECTED_FENCED_SUBCASE_FULL_CASE_OPEN",
+    "steps": [],
+    "targetIdentity": {
+      "currentUser": "postgres",
+      "maintenanceDatabase": "postgres",
+      "observerOid": "10",
+      "observerSuperuser": true,
+      "postmasterStart": "2026-10-29 10:29:10.901963+00",
+      "serverAddress": "192.168.165.2/32",
+      "serverPort": 5432,
+      "serverVersion": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+      "sessionUser": "postgres",
+      "systemIdentifier": "7702034927359164464"
+    },
+    "unknownInjected": "before-real-required-phase-commit",
+    "unknownNoCommit": {
+      "after": {
+        "columnDefault": null,
+        "columnNativeType": {
+          "formatted": "integer",
+          "oid": 23,
+          "typeName": "int4"
+        },
+        "observer": {
+          "currentUser": "postgres",
+          "sessionUser": "postgres",
+          "superuser": true
+        },
+        "relationFileNode": 36502,
+        "rows": [
+          [
+            "a",
+            "g03a_b5e32a10f3",
+            null,
+            "36502",
+            "1557",
+            "(0,1)"
+          ],
+          [
+            "b",
+            "g03z_b5e32a10f3",
+            2,
+            "36502",
+            "1558",
+            "(0,2)"
+          ],
+          [
+            "c",
+            "g03a_b5e32a10f3",
+            9,
+            "36502",
+            "1559",
+            "(0,3)"
+          ]
+        ],
+        "rowsDigest": "e041666a19c4b9cef6c34f7509494b6ae0318ec6701976debfc1533d21c3a3cc"
+      },
+      "approvalReceiptId": "8abae2e3-d9bc-4031-845f-34c22bb4d127",
+      "before": {
+        "columnDefault": null,
+        "columnNativeType": {
+          "formatted": "integer",
+          "oid": 23,
+          "typeName": "int4"
+        },
+        "observer": {
+          "currentUser": "postgres",
+          "sessionUser": "postgres",
+          "superuser": true
+        },
+        "relationFileNode": 36502,
+        "rows": [
+          [
+            "a",
+            "g03a_b5e32a10f3",
+            null,
+            "36502",
+            "1557",
+            "(0,1)"
+          ],
+          [
+            "b",
+            "g03z_b5e32a10f3",
+            2,
+            "36502",
+            "1558",
+            "(0,2)"
+          ],
+          [
+            "c",
+            "g03a_b5e32a10f3",
+            9,
+            "36502",
+            "1559",
+            "(0,3)"
+          ]
+        ],
+        "rowsDigest": "e041666a19c4b9cef6c34f7509494b6ae0318ec6701976debfc1533d21c3a3cc"
+      },
+      "dispatchDelta": 1,
+      "expectedHead": "4d155a85e19f7cad46c8455a74fbae34cfb0ed9aa51270e0cc9fd871da2cf3f5",
+      "fence": {
+        "batchCanReadApproval": false,
+        "batchCanReadHead": false,
+        "batchCanReadProgress": false,
+        "batchVisibleRows": 3,
+        "personCanReadApproval": false,
+        "personCanReadHead": false,
+        "personCanReadProgress": false,
+        "personVisibleRows": 2,
+        "progress": [
+          0,
+          "ready",
+          "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "[]"
+        ]
+      },
+      "planDigest": "8f1c756858484b1938d44a06868ed35cce383a843fdecf0e7cc752106866b916",
+      "result": "FENCED_NO_AUTHENTICATED_PROGRESS"
+    }
+  },
+  "runnerSha256": "73a732711ae150ff55a1f4fa1b656ae0762779e18cd94b82d4a2227930aaefb9",
+  "scenario": "unknown-no-commit"
+}

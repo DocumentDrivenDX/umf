@@ -1,0 +1,51 @@
+[
+  {
+    "argv": [
+      "docker",
+      "run",
+      "--rm",
+      "--pull=never",
+      "--platform=linux/amd64",
+      "--name",
+      "g03-umf-typecheck-dafc83e08b9a4c299ebc2d8a01c98e4b",
+      "--network=none",
+      "--read-only",
+      "--cap-drop=ALL",
+      "--cpus=1",
+      "--memory=2g",
+      "--pids-limit=512",
+      "--tmpfs=/tmp:rw,nosuid,nodev,size=512m",
+      "--mount",
+      "type=bind,source=/Users/erik/.codex/worktrees/eb69/umf,target=/workspace,readonly",
+      "--mount",
+      "type=volume,source=umf-migration-source-267675510,target=/workspace/node_modules,readonly,volume-subpath=node_modules",
+      "--workdir=/workspace",
+      "-e",
+      "BUN_RUNTIME_TRANSPILER_CACHE_PATH=/tmp/bun-cache",
+      "--entrypoint=/usr/bin/timeout",
+      "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+      "--signal=TERM",
+      "--kill-after=10s",
+      "300s",
+      "bun",
+      "run",
+      "typecheck"
+    ],
+    "elapsedSeconds": 26.941,
+    "exitCode": 0,
+    "logs": [
+      {
+        "bytes": 0,
+        "path": "typecheck.stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 109,
+        "path": "typecheck.stderr.log",
+        "sha256": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd"
+      }
+    ],
+    "name": "typecheck",
+    "ownedContainerAbsent": true
+  }
+]

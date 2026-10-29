@@ -1,0 +1,36 @@
+{
+  "command": [
+    "git",
+    "ls-tree",
+    "-r",
+    "-l",
+    "-z",
+    "855f6c48649496fc60b3303798790d0ddb55d38f"
+  ],
+  "commit": "855f6c48649496fc60b3303798790d0ddb55d38f",
+  "fileCount": 66664,
+  "largestFiles": [
+    {
+      "bytes": 68475965,
+      "mode": "100644",
+      "path": "docs/helix/04-build/evidence/security/current-compiler-boundary-20261012/sources.zip"
+    },
+    {
+      "bytes": 56510723,
+      "mode": "100644",
+      "path": "docs/helix/04-build/evidence/security/held-native-disclosure-child-20261016/independent-review-artifacts.zip"
+    },
+    {
+      "bytes": 44718837,
+      "mode": "100644",
+      "path": "docs/helix/04-build/evidence/security/condition-short-circuit-20261016/review-artifacts.zip"
+    }
+  ],
+  "nonRegularCount": 0,
+  "profile": "umf.g03-source-staging-size-metadata/1",
+  "rosterBytes": 10661032,
+  "rosterSha256": "e0b198ea713c32344272c4d7b46a3626c39b7860b7a32602d580fd0df57fb6c1",
+  "scope": "Source metadata only; no new archive/product/test. Actualproducer001 failedbeforeanyfourstagecommand.",
+  "totalBlobBytes": 4859161120,
+  "tree": "53f2bfffbc0c5780e79d76d8fd3d202239d088b2"
+}

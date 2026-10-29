@@ -1,0 +1,17 @@
+{
+  "clockDomains": {
+    "hostClockDomain": "darwin host time.monotonic",
+    "hostClockIsAuthoritative": true,
+    "hostLaneStartMonotonic": 1025831.256690375,
+    "hostTerminalDeadlineMonotonic": 1027631.256690375,
+    "hostWorkDeadlineMonotonic": 1027571.256690375
+  },
+  "commands": [],
+  "deadlineMonotonic": 1027631.256690375,
+  "executionId": "8fdd6ecf-e9fd-4620-ae13-1d513cd1ccc9",
+  "failures": [],
+  "profile": "umf.g03-truss-local-lane/1",
+  "scope": "installed final18 + Truss facts/entity selection + truss-postgresql-pg18 WASM + Linux ARM64 Chromium",
+  "startedMonotonic": 1025831.256690375,
+  "status": "FAIL_OR_UNKNOWN"
+}

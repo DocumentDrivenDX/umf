@@ -1,0 +1,82 @@
+{
+  "baseCommit": "a6eb216a95a49715f75a058502d9915a8eb1f8ff",
+  "baseTree": "4475f25b7b445fda9c4f2e97208dfa632a8905df",
+  "files": [
+    {
+      "path": "tests/lifecycle/g03-defaults-native.py",
+      "sha256": "73a732711ae150ff55a1f4fa1b656ae0762779e18cd94b82d4a2227930aaefb9",
+      "sizeBytes": 113874,
+      "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/g03-defaults-native.py"
+    },
+    {
+      "path": "tests/lifecycle/g03_ordinary_native.py",
+      "sha256": "5e64050386952466c80f8fcbd4ce37a2793308efcd05977a998d627a68fff051",
+      "sizeBytes": 54397,
+      "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/g03_ordinary_native.py"
+    },
+    {
+      "path": "tests/lifecycle/g03_campaign_predicates.py",
+      "sha256": "b1dcf7ef0de0e633b497ad13588424012c36b280273f4235c3e85e116eefb84c",
+      "sizeBytes": 42670,
+      "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/g03_campaign_predicates.py"
+    },
+    {
+      "path": "tests/lifecycle/g03_campaign_orchestration.py",
+      "sha256": "8f841a3398fd909f0061bff0f0d7256fb6632e5fbd0cf459edf16fa140742a1a",
+      "sizeBytes": 12341,
+      "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/g03_campaign_orchestration.py"
+    },
+    {
+      "path": "tests/lifecycle/g03-defaults-native-fixture.ts",
+      "sha256": "9f0325ae69e6e8326abc62412404adac1f133c0eef6f40b0cc365b3f4ad7d62f",
+      "sizeBytes": 10237,
+      "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/g03-defaults-native-fixture.ts"
+    },
+    {
+      "path": "tests/lifecycle/test_g03_campaign_predicates.py",
+      "sha256": "76b1718ea350bd811f7d94e27854edb0156615b12694605a88a835b24f299f0e",
+      "sizeBytes": 18582,
+      "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/test_g03_campaign_predicates.py"
+    },
+    {
+      "path": "tests/lifecycle/test_g03_campaign_orchestration.py",
+      "sha256": "3950bf512e8dc5e18dc30925692d18e2b9012007ec450c6d02d1879ac797a573",
+      "sizeBytes": 5714,
+      "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/test_g03_campaign_orchestration.py"
+    },
+    {
+      "path": "tests/binding/fixtures/table-lifecycle-note.json",
+      "sha256": "0f8a2f5d38d32514ec38fc3bbe393c5b88d45c251c2ae05ac23bea261b0e94ee",
+      "sizeBytes": 3765,
+      "sourcePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/binding/fixtures/table-lifecycle-note.json"
+    }
+  ],
+  "previousReviews": [
+    {
+      "path": "/private/tmp/g03-campaign-predicates-sol-source-review001.md",
+      "sha256": "f57dde078a55249a41c4353b8db81f0d249abb532662c7f7d700d9faf102176c"
+    },
+    {
+      "path": "/private/tmp/g03-n12-native-default-expression-sol-source-review001.md",
+      "sha256": "6312403f96ba4c7360f416663a22a0c57a5358874d9fc078b3cf18c331787731"
+    },
+    {
+      "path": "/private/tmp/g03-n12-eight-role-sol-source-review001.md",
+      "sha256": "287ad342136a56d61b2600d78123316f3f9430799140f91d550339f00ade567a"
+    }
+  ],
+  "previousSeal": {
+    "disposition": "StandaloneN12actual004accepted71checks on heldprototype; unchanged preservehistory",
+    "manifestSha256": "b4638f49cb01602f932316d271f8575e862d769cbed202b4ac4d9a35230ea27d",
+    "path": "/private/tmp/g03-n12-source-seal-004"
+  },
+  "profile": "umf.g03-reviewed-harness-source-subset/2",
+  "review": {
+    "path": "/private/tmp/g03-full14-executor-seam-sol-source-review001.md",
+    "sha256": "c83808985ff3ed20e3504cca008f7f0342dc290821a62fec5eca54864426356e"
+  },
+  "revision": "005 optional private scenario_executor dispatch seam and pure control tests; default direct path unchanged; actual per-child limits belong to separately reviewed Full14 operator005",
+  "scope": "Eight reviewed harness files only. Product APIs imported from final installed 18-wheel cohort; Weft P56 is separate immutable source identity. No whole-tree or native qualification transfer.",
+  "status": "SOURCE_ACCEPTED_NOT_EXECUTED",
+  "wholeTreeEqualToBase": false
+}

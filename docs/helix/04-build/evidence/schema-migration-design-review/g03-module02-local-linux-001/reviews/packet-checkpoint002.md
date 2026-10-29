@@ -1,0 +1,5 @@
+# G03 durable packet checkpoint review002
+
+Accept metadata adoption of current122-row custody packet. Custody SHA-256 a6c22f18c306c843ba4031036e0c308ec99c8e5a4b780769a80440eb90854ef0. Independently checked all122 payload hashes/sizes (1178682B) and available original-copy equality. No symlinks, NUL/binary payload or recognized private-key/GitHub/AWS credential pattern found. README and schema-migration-plan diff retain public55 incompatibility, earlier provisioning and test failures, exact scoped00427-test/held-wheel success, manylinux2_34 limitation, unchanged17 cohort scope and open broad Rust/installed/N12/fullcampaign/browser/release/public gates. Plan frontmatter and earlier G02/historical content are unchanged by the appended checkpoint. No wheel/environment/cache included; retained operators are clearly historical evidence copies rather than relocatable executable package.
+
+Acceptance is this evidence/claims checkpoint only. Running005 outcome and future candidate/N12 evidence must remain separate actual additions; no runtime or broader qualification inferred. Reviewer performed no candidate tests/runtime/Git mutation.

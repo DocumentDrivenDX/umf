@@ -1,0 +1,5 @@
+# 004 Linux launcher provenance failure
+
+The preserved 004 launcher result stopped in the frozen-input provenance gate at `reanalyze.py:576`, before any original-evidence reanalysis or predicate operation. Static comparison of packet fields to the exact validator predicates identified the sole mismatch: `parentPacketPath` in the 004 packet still named `/private/tmp/g03-native-predicate-reanalysis-operator-003/inputs/parent-002/packet.json`; the code resolves `PARENT_PACKET` relative to the active operator root and therefore expected the byte-identical 002 packet copied at `/private/tmp/g03-native-predicate-reanalysis-operator-004/inputs/parent-002/packet.json`.
+
+No command output indicates product import or database execution. The original outer/campaign statuses and artifacts are unchanged. The 004 operator, packet, manifest, launcher, and Sol closure are retained alongside this note. Derivative 005 corrects the stale absolute packet-path provenance to its own copied packet. This batch did not rerun the launcher.

@@ -1,0 +1,68 @@
+[
+    {
+        "Id": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+        "RepoTags": [
+            "umf-local-sdk-linux-amd64-build-essential:attempt003"
+        ],
+        "RepoDigests": [
+            "umf-local-sdk-linux-amd64-build-essential@sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-10-28T16:20:47.577975789-04:00",
+        "Config": {
+            "Env": [
+                "PATH=/usr/local/bun/bin:/opt/cargo/bin:/opt/hostedtoolcache/Python/3.11.17/x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "RUNNER_TOOL_CACHE=/opt/hostedtoolcache",
+                "CARGO_HOME=/opt/cargo",
+                "RUSTUP_HOME=/opt/rustup",
+                "LD_LIBRARY_PATH=/opt/hostedtoolcache/Python/3.11.17/x64/lib"
+            ],
+            "Cmd": [
+                "/bin/bash"
+            ],
+            "WorkingDir": "/workspace",
+            "Labels": {
+                "org.opencontainers.image.version": "24.04"
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 2639603838,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:bec87777bc2fb2edcdf9af11df1531469e7df911309c1413082b18fcb8610278",
+                "sha256:957cea4c7c134103f643913f90a062e0015d827c81443eca4e65862cd9be1c70",
+                "sha256:40af36a53932787f73baa61961fbf045768cf985377aa834a404119cb9fab0d6",
+                "sha256:fdc7c2c4a9651495342cf32a3eb417628c6243926752ce4cf6c1b8f4726151ad",
+                "sha256:92958a04ee1c3f03bc612199caf3eb1fb4daaf601a5b168395240c6ae33f713b",
+                "sha256:7988858c75cbf49bea3139fe9c96620b9128654d1a708e2a8d49a1c4d178e5d6",
+                "sha256:f960913a72c30528598d5aef89f00d368f8de2e84d86d45acda778daf633a87c",
+                "sha256:9f7111b62613900be4aba6d9dcd64325c410dd908ac45828dc0d99617413b6e4",
+                "sha256:b3afa928d9d185d76dbc16f1f44d92fdab15782889099b124122271ac0c554a8",
+                "sha256:265884779a955df8f8f2c88362e205481c637417d8cf2f7fcf33f98cd1cae1b8"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-10-28T20:20:53.169701913Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+            "size": 856
+        },
+        "Identity": {
+            "Pull": [
+                {
+                    "Repository": "docker.io/library/umf-local-sdk-linux-amd64-build-essential"
+                }
+            ],
+            "Build": [
+                {
+                    "Ref": "tl1pi1sk2p8zc8ia5exbcr05r",
+                    "CreatedAt": "2026-10-28T16:20:53.174988938-04:00"
+                }
+            ]
+        }
+    }
+]

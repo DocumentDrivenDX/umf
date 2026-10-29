@@ -1,0 +1,11 @@
+
+tests/distribution-index/schema.test.ts:
+(pass) closed inert index schema compiles and preserves original input [13.93ms]
+(pass) no self-admission, executable locator, omitted member or unknown metadata [1.10ms]
+(pass) empty/duplicate whole entries and unsafe descriptor or identity forms refuse [5.30ms]
+(pass) schema cannot establish unique IDs, target correspondence or index trust [0.06ms]
+
+ 4 pass
+ 0 fail
+ 23 expect() calls
+Ran 4 tests across 1 file. [1.63s]

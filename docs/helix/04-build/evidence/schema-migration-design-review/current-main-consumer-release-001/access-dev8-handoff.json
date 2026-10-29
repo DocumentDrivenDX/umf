@@ -1,0 +1,40 @@
+{
+  "profile": "g03.access-dev8-consumer-artifact-handoff/1",
+  "status": "EXACT_SAME_WHEEL_AS_PUBLISHED_SDK057_QUALIFIED_WITH_NEW_COHORT",
+  "wheel": {
+    "path": "/private/tmp/g03-final-cohort-056-linux311-001/aggregate/mirror/files/umf_access-0.1.0.dev8-py3-none-any.whl",
+    "sizeBytes": 580062,
+    "sha256": "1a21c1ddd59f6b23e9f0b33228280564af0e96bb4d13699b89616d5143e4fd23"
+  },
+  "distribution": "umf_access",
+  "version": "0.1.0.dev8",
+  "requiresPython": "<3.15,>=3.11",
+  "requiresDist": [
+    "pydantic<3,>=2.13",
+    "typing-extensions<5,>=4.16",
+    "cryptography==50.0.2; extra == 'owner-authority'",
+    "pglast==7.20; extra == 'sql-containment'"
+  ],
+  "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+  "sourceChangedForSDK058": false,
+  "sdk057PublicAsset": {
+    "id": 687343442,
+    "name": "umf_access-0.1.0.dev8-py3-none-any.whl",
+    "size": 580062,
+    "digest": "sha256:1a21c1ddd59f6b23e9f0b33228280564af0e96bb4d13699b89616d5143e4fd23",
+    "browser_download_url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.7/umf_access-0.1.0.dev8-py3-none-any.whl"
+  },
+  "sdk058PublicRelease": "ABSENT; not released; no future IDs",
+  "sdk058ArchiveCandidate": {
+    "producerCommit": "855f6c48649496fc60b3303798790d0ddb55d38f",
+    "sha256": "2aaf24741aee1c135fade5b7631db90d710e6211977fb9ca7fcc080ea7fdf58d"
+  },
+  "newCohortQualification": {
+    "runtime": "local Linux CPython3.11 selected final18; not macOS runtime/managed acceptance",
+    "combined019Owner": "/private/tmp/g03-sdk058-parity-019/combined-runs/c5900e87a2e04f7a8a8ad4ebd78608c9/owner-result.json",
+    "independentReview": "/private/tmp/g03-sdk058-parity019-sol-actual-review001.md",
+    "scope": "final18 generic/migration/codegen/core probes plus actual SDK Chromium; Weft missing-only logical-default six carriers module0.2 distinct ordinary UMFAST0.1. This is not Truss consumer-package qualification.",
+    "noNewTrussAcceptanceClaim": true
+  },
+  "priorPublicMetadata": "/private/tmp/g03-sdk058-coordinate-readonly-012/sdk057Release.stdout.json"
+}

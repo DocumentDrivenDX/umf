@@ -1,0 +1,441 @@
+{
+  "cohortInputs": {
+    "aggregateIndexSha256": "c4d99294936f1631949cb7252d98c8e91b9ba106bf329e251dc9c8ef41e5287d",
+    "mirrorManifestSha256": "9e304930ca19abc38091a90e324806649d1f75b1ca799b37448327c5c0b052b9",
+    "requirementsSha256": "c28065235c7863051de1498c6144dfc1813264f5011dcaff865c2791515b75e4",
+    "selectedLockSha256": "29c69360e6bcbea329f1ddab05725f727316a729954f123cf11c102486a5c94b"
+  },
+  "commandResults": [
+    {
+      "argv": [
+        "git",
+        "-c",
+        "safe.directory=/volume-producer",
+        "-C",
+        "/volume-producer",
+        "rev-parse",
+        "HEAD"
+      ],
+      "elapsedSeconds": 0.036,
+      "exitCode": 0,
+      "failure": null,
+      "name": "source-commit",
+      "startedMonotonicOffsetSeconds": 0.012,
+      "streams": [
+        {
+          "path": "logs/source-commit.stdout.log",
+          "physicalClosure": true,
+          "physicalSha256": "c0bca30fe0999570bd008ab0114eeddab9abcf960eba2baa128ba7152b793c9e",
+          "rawBytesObserved": 41,
+          "rawSha256": "c0bca30fe0999570bd008ab0114eeddab9abcf960eba2baa128ba7152b793c9e",
+          "retainedBytes": 41,
+          "truncated": false
+        },
+        {
+          "path": "logs/source-commit.stderr.log",
+          "physicalClosure": true,
+          "physicalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "rawBytesObserved": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedBytes": 0,
+          "truncated": false
+        }
+      ],
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "git",
+        "-c",
+        "safe.directory=/volume-producer",
+        "-C",
+        "/volume-producer",
+        "rev-parse",
+        "HEAD^{tree}"
+      ],
+      "elapsedSeconds": 0.046,
+      "exitCode": 0,
+      "failure": null,
+      "name": "source-tree",
+      "startedMonotonicOffsetSeconds": 0.053,
+      "streams": [
+        {
+          "path": "logs/source-tree.stdout.log",
+          "physicalClosure": true,
+          "physicalSha256": "7ab491cbf36b5d176587c8226bad71cdc6c9b7c2fa63e21c6d80e2c39bda512f",
+          "rawBytesObserved": 41,
+          "rawSha256": "7ab491cbf36b5d176587c8226bad71cdc6c9b7c2fa63e21c6d80e2c39bda512f",
+          "retainedBytes": 41,
+          "truncated": false
+        },
+        {
+          "path": "logs/source-tree.stderr.log",
+          "physicalClosure": true,
+          "physicalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "rawBytesObserved": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedBytes": 0,
+          "truncated": false
+        }
+      ],
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "git",
+        "-c",
+        "safe.directory=/volume-producer",
+        "-C",
+        "/volume-producer",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "elapsedSeconds": 0.248,
+      "exitCode": 0,
+      "failure": null,
+      "name": "source-clean-status",
+      "startedMonotonicOffsetSeconds": 0.104,
+      "streams": [
+        {
+          "path": "logs/source-clean-status.stdout.log",
+          "physicalClosure": true,
+          "physicalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "rawBytesObserved": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedBytes": 0,
+          "truncated": false
+        },
+        {
+          "path": "logs/source-clean-status.stderr.log",
+          "physicalClosure": true,
+          "physicalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "rawBytesObserved": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedBytes": 0,
+          "truncated": false
+        }
+      ],
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11",
+        "--version"
+      ],
+      "elapsedSeconds": 0.018,
+      "exitCode": 0,
+      "failure": null,
+      "name": "python-base-version",
+      "startedMonotonicOffsetSeconds": 0.355,
+      "streams": [
+        {
+          "path": "logs/python-base-version.stdout.log",
+          "physicalClosure": true,
+          "physicalSha256": "686560bcd94a5a3fe8187b7c4fc49beaff41c87eccb79908cd3da863ec30e52e",
+          "rawBytesObserved": 15,
+          "rawSha256": "686560bcd94a5a3fe8187b7c4fc49beaff41c87eccb79908cd3da863ec30e52e",
+          "retainedBytes": 15,
+          "truncated": false
+        },
+        {
+          "path": "logs/python-base-version.stderr.log",
+          "physicalClosure": true,
+          "physicalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "rawBytesObserved": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedBytes": 0,
+          "truncated": false
+        }
+      ],
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "bun",
+        "--version"
+      ],
+      "elapsedSeconds": 0.062,
+      "exitCode": 0,
+      "failure": null,
+      "name": "bun-version",
+      "startedMonotonicOffsetSeconds": 0.377,
+      "streams": [
+        {
+          "path": "logs/bun-version.stdout.log",
+          "physicalClosure": true,
+          "physicalSha256": "bd31e8d9cf8d14a1e9e3fdf3b9f6a524819aed0d1b14627523c6765767c7d8f1",
+          "rawBytesObserved": 6,
+          "rawSha256": "bd31e8d9cf8d14a1e9e3fdf3b9f6a524819aed0d1b14627523c6765767c7d8f1",
+          "retainedBytes": 6,
+          "truncated": false
+        },
+        {
+          "path": "logs/bun-version.stderr.log",
+          "physicalClosure": true,
+          "physicalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "rawBytesObserved": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedBytes": 0,
+          "truncated": false
+        }
+      ],
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "bun",
+        "tests/lifecycle/g03-defaults-native-fixture.ts",
+        "/out/g03-defaults-native-fixture.json"
+      ],
+      "elapsedSeconds": 0.364,
+      "exitCode": 0,
+      "failure": null,
+      "name": "fixture-generation",
+      "startedMonotonicOffsetSeconds": 0.443,
+      "streams": [
+        {
+          "path": "logs/fixture-generation.stdout.log",
+          "physicalClosure": true,
+          "physicalSha256": "8d7219769376eb97d21d0ad7d9d3037b992ee1bffaeab97f99613b3973efa41d",
+          "rawBytesObserved": 1109,
+          "rawSha256": "8d7219769376eb97d21d0ad7d9d3037b992ee1bffaeab97f99613b3973efa41d",
+          "retainedBytes": 1109,
+          "truncated": false
+        },
+        {
+          "path": "logs/fixture-generation.stderr.log",
+          "physicalClosure": true,
+          "physicalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "rawBytesObserved": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedBytes": 0,
+          "truncated": false
+        }
+      ],
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "bash",
+        "-euo",
+        "pipefail",
+        "-c",
+        "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11 -m venv /venv && unshare --net /venv/bin/python -I -m pip --isolated install --disable-pip-version-check --no-cache-dir --no-compile --only-binary=:all: --require-hashes --index-url file:///cohort/aggregate/mirror/simple -r /cohort/aggregate/mirror/requirements.lock && unshare --net /venv/bin/python -I -m pip --isolated check && /venv/bin/python -I /verify_weft_wheel.py"
+      ],
+      "elapsedSeconds": 5.37,
+      "exitCode": 0,
+      "failure": null,
+      "name": "offline-install-and-check",
+      "startedMonotonicOffsetSeconds": 0.812,
+      "streams": [
+        {
+          "path": "logs/offline-install-and-check.stdout.log",
+          "physicalClosure": true,
+          "physicalSha256": "bc9b022978486d0285424e3b10f47bc68fed0e0f3604ced7bb9fa4ad2c730447",
+          "rawBytesObserved": 4101,
+          "rawSha256": "bc9b022978486d0285424e3b10f47bc68fed0e0f3604ced7bb9fa4ad2c730447",
+          "retainedBytes": 4101,
+          "truncated": false
+        },
+        {
+          "path": "logs/offline-install-and-check.stderr.log",
+          "physicalClosure": true,
+          "physicalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "rawBytesObserved": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedBytes": 0,
+          "truncated": false
+        }
+      ],
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "unshare",
+        "--net",
+        "/venv/bin/python",
+        "-I",
+        "/probe/probe.py",
+        "--fixture",
+        "/out/g03-defaults-native-fixture.json",
+        "--report",
+        "/out/g03-admission-report.json"
+      ],
+      "elapsedSeconds": 4.301,
+      "exitCode": 0,
+      "failure": null,
+      "name": "admission-probe",
+      "startedMonotonicOffsetSeconds": 6.188,
+      "streams": [
+        {
+          "path": "logs/admission-probe.stdout.log",
+          "physicalClosure": true,
+          "physicalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "rawBytesObserved": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedBytes": 0,
+          "truncated": false
+        },
+        {
+          "path": "logs/admission-probe.stderr.log",
+          "physicalClosure": true,
+          "physicalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "rawBytesObserved": 0,
+          "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retainedBytes": 0,
+          "truncated": false
+        }
+      ],
+      "timedOut": false
+    }
+  ],
+  "elapsedSeconds": 10.491,
+  "failure": null,
+  "imageId": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+  "outputBytes": 156446,
+  "outputFiles": [
+    {
+      "path": "g03-admission-report.json",
+      "sha256": "4e7597668a581d023b3d8088a2af13fdce2408c035263e949ce63c6ec74f951e",
+      "sizeBytes": 4962
+    },
+    {
+      "path": "g03-defaults-native-fixture.json",
+      "sha256": "de8736519bcb9aa1bb3c59c62734d6f31035378e192e317295fdd766e513108f",
+      "sizeBytes": 146171
+    },
+    {
+      "path": "logs/admission-probe.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/admission-probe.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/bun-version.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/bun-version.stdout.log",
+      "sha256": "bd31e8d9cf8d14a1e9e3fdf3b9f6a524819aed0d1b14627523c6765767c7d8f1",
+      "sizeBytes": 6
+    },
+    {
+      "path": "logs/fixture-generation.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/fixture-generation.stdout.log",
+      "sha256": "8d7219769376eb97d21d0ad7d9d3037b992ee1bffaeab97f99613b3973efa41d",
+      "sizeBytes": 1109
+    },
+    {
+      "path": "logs/offline-install-and-check.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/offline-install-and-check.stdout.log",
+      "sha256": "bc9b022978486d0285424e3b10f47bc68fed0e0f3604ced7bb9fa4ad2c730447",
+      "sizeBytes": 4101
+    },
+    {
+      "path": "logs/python-base-version.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/python-base-version.stdout.log",
+      "sha256": "686560bcd94a5a3fe8187b7c4fc49beaff41c87eccb79908cd3da863ec30e52e",
+      "sizeBytes": 15
+    },
+    {
+      "path": "logs/source-clean-status.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/source-clean-status.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/source-commit.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/source-commit.stdout.log",
+      "sha256": "c0bca30fe0999570bd008ab0114eeddab9abcf960eba2baa128ba7152b793c9e",
+      "sizeBytes": 41
+    },
+    {
+      "path": "logs/source-tree.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/source-tree.stdout.log",
+      "sha256": "7ab491cbf36b5d176587c8226bad71cdc6c9b7c2fa63e21c6d80e2c39bda512f",
+      "sizeBytes": 41
+    }
+  ],
+  "pinsSha256": "0def26ca06ff03c7fcf902f8e843f270e4987628c5cdd76c646bfc4fe8817185",
+  "probeSha256": "b8f672f3ceefac3a9c085424edf50d9173534b7a0803689b7d211b0d41482630",
+  "probeStatus": "PASS",
+  "profile": "umf.g03-local-linux-admission-guest/3",
+  "runtimeVersions": {
+    "bun": "1.4.3",
+    "python": "Python 3.11.17"
+  },
+  "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+  "sourceFiles": {
+    "python/umf_access/src/umf_access/unified/session_policy.py": {
+      "sha256": "1582fea2148e739beff1378716436ad0ad7bd7839ad154c8e71b185e052e21ee"
+    },
+    "python/umf_access/src/umf_access/unified/table_reads.py": {
+      "sha256": "618d17c6a839f31e77aaa7043a41e8099f77b94c486cb96ca28cf9f9819c7f44"
+    },
+    "python/umf_access/tests/test_fixed_query_preparation.py": {
+      "sha256": "77dde4035b7506abfcb97ecb2dbf013b463fdb735b06851353febf048e3b8f21"
+    },
+    "python/umf_access/tests/test_table_outcomes.py": {
+      "sha256": "99cba3eb97ddd67f0ce06ec94ca67f845dc68995c4a81a7293d4c421770cfc47"
+    },
+    "tests/binding/fixtures/table-lifecycle-note.json": {
+      "sha256": "0f8a2f5d38d32514ec38fc3bbe393c5b88d45c251c2ae05ac23bea261b0e94ee"
+    },
+    "tests/lifecycle/g03-defaults-native-fixture.ts": {
+      "sha256": "8547d5f51aa0af84fc693bb2283ec35fc1aaa255ca3d79ee6a187227a9e7bf6d"
+    }
+  },
+  "sourceStatus": "clean",
+  "sourceTree": "8b98c0d895983ba2b7637dd3aea567dab0943883",
+  "status": "PASS_COMPILER_ADMISSION_ONLY",
+  "weftWheelCorrespondence": {
+    "installedPackagePath": "/venv/lib/python3.11/site-packages/weft",
+    "memberCount": 2,
+    "memberRosterExact": true,
+    "members": [
+      {
+        "sha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d",
+        "sizeBytes": 99,
+        "wheelPath": "weft/__init__.py"
+      },
+      {
+        "sha256": "efc152e58bbc3771a70f5a1d2f962ebc5d1a05f4dab023516a079ce3db5fc3bf",
+        "sizeBytes": 44307096,
+        "wheelPath": "weft/weft.abi3.so"
+      }
+    ],
+    "wheelPath": "/cohort/aggregate/mirror/files/umf_weft-0.4.55+g03.a96e4f29262e-cp39-abi3-manylinux_2_34_x86_64.whl",
+    "wheelSha256": "51d607f851c72cffbc0dc45a969237f23d90b59185826b9eda56a791e799533e",
+    "wheelSizeBytes": 14373430
+  }
+}

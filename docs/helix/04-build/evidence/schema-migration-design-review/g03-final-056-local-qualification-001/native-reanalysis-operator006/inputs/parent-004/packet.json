@@ -1,0 +1,215 @@
+{
+  "allCaptureRawLogBytes": 9008,
+  "campaignExpectedDataSha256": "d8d66928cc3090312c93a13761084f21a1dd8dc66b807650c9e5e39f23dc8460",
+  "campaignId": "661e79df-3dcb-40e3-87ed-29afcc472124",
+  "campaignScenarioRawLogBytes": 954,
+  "executionId": "45389ee1fa7a40238d403ff0048626a1",
+  "fixedRoster": [
+    {
+      "caseId": "G03-N01",
+      "scenarios": [
+        "transitions"
+      ]
+    },
+    {
+      "caseId": "G03-N02",
+      "scenarios": [
+        "empty"
+      ]
+    },
+    {
+      "caseId": "G03-N03",
+      "scenarios": [
+        "required"
+      ]
+    },
+    {
+      "caseId": "G03-N04",
+      "scenarios": [
+        "admission-refusal"
+      ]
+    },
+    {
+      "caseId": "G03-N05",
+      "scenarios": [
+        "semantic-null",
+        "semantic-decimal"
+      ]
+    },
+    {
+      "caseId": "G03-N06",
+      "scenarios": [
+        "rollback"
+      ]
+    },
+    {
+      "caseId": "G03-N07",
+      "scenarios": [
+        "commit-observation",
+        "finalize-observation",
+        "finalize-before-publication"
+      ]
+    },
+    {
+      "caseId": "G03-N08",
+      "scenarios": [
+        "unknown-no-commit"
+      ]
+    },
+    {
+      "caseId": "G03-N09",
+      "scenarios": [
+        "writer-barrier"
+      ]
+    },
+    {
+      "caseId": "G03-N10",
+      "scenarios": [
+        "domain-date",
+        "domain-text",
+        "domain-decimal"
+      ]
+    },
+    {
+      "caseId": "G03-N11",
+      "scenarios": [
+        "domain-uuid",
+        "domain-currentTimestamp"
+      ]
+    },
+    {
+      "caseId": "G03-N12",
+      "scenarios": [
+        "ordinary"
+      ]
+    },
+    {
+      "caseId": "G03-N13",
+      "scenarios": [
+        "tampering"
+      ]
+    },
+    {
+      "caseId": "G03-N14",
+      "scenarios": [
+        "campaign-cleanup"
+      ]
+    }
+  ],
+  "frozenActualPacket": {
+    "campaignId": "661e79df-3dcb-40e3-87ed-29afcc472124",
+    "postgresRuntime": {
+      "fullVersion": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+      "serverVersionNum": "180006",
+      "shortVersion": "18.6 (Debian 18.6-1.pgdg13+2)"
+    },
+    "profile": "umf.g03-full14-operator-inputs/1",
+    "source": {
+      "manifestSha256": "23a16e87f53df619ad06ffcfe9e234efe0394287b5437070a13209e06c945ccf",
+      "profile": "umf.g03-reviewed-harness-source-subset/2",
+      "root": "/private/tmp/g03-full14-source-seal-005"
+    },
+    "status": "FROZEN_FINAL_INPUTS"
+  },
+  "full14RawLogBytes": 6389,
+  "inputPacketSha256": "c91b7b4d688a51c95c09cdd51ed5084899aba8adaa83c9b7f6b48a3c48d7478b",
+  "managedMutationTestsPath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/test_g03_campaign_predicates.py",
+  "managedPredicatePath": "/Users/erik/.codex/worktrees/g03-ordinary-native/umf/tests/lifecycle/g03_campaign_predicates.py",
+  "mutationTestsPath": "/private/tmp/g03-native-predicate-reanalysis-operator-004/source/test_g03_campaign_predicates.py",
+  "mutationTestsSha256": "ce2c39e12bfba7bb03ca315775c3ef0b8e090dad1023fedd2e661bcbb7971cf0",
+  "operatorPath": "/private/tmp/g03-native-predicate-reanalysis-operator-004/reanalyze.py",
+  "operatorSha256": "1098a6b2e603ffaf6f94574921989f4011da51603afa1e68ce48aa6732a0cb68",
+  "originalCampaignRawLogBytes": 6389,
+  "originalCampaignResultSha256": "6a2549595c43528c52cd4a2d3287841a91504d1349ecc517a7c29b7639ea96a8",
+  "originalCampaignStatus": "FAIL_OR_UNKNOWN",
+  "originalExitCode": 2,
+  "originalOperatorResultSha256": "97ced9208aff574f2b9f86f156748ff9ff554865fa8283c4214547e532fae8c7",
+  "originalOuterOnlyCombinedRawLogBytes": 2619,
+  "originalOutputRoot": "/private/tmp/g03-full14-bounded-operator-007-output/45389ee1fa7a40238d403ff0048626a1",
+  "originalStatus": "FAIL_OR_UNKNOWN",
+  "outerCleanupElapsedSeconds": 856.044,
+  "outerCleanupStatus": "PASS",
+  "outerOnlyCombinedRawLogBytes": 2619,
+  "parent002SourceCopySha256": {
+    "mutationTests": "ce2c39e12bfba7bb03ca315775c3ef0b8e090dad1023fedd2e661bcbb7971cf0",
+    "predicate": "1aad9cb8cb08483ea09112141a2e934f264bcd149651d9be9f6a56e9f04a23fd"
+  },
+  "parent003OperatorSha256": "393c82e5f133a0a885df21859422ea06f7b1f54f0e3bb603f043a8654705b068",
+  "parent003PacketPath": "/private/tmp/g03-native-predicate-reanalysis-operator-004/inputs/parent-003/packet.json",
+  "parent003PacketSha256": "52981794b3fc57d97045ed5bdc8bd74329bd4e47d7417008e6887e17ef249c63",
+  "parentPacketPath": "/private/tmp/g03-native-predicate-reanalysis-operator-003/inputs/parent-002/packet.json",
+  "parentPacketSha256": "d294c1cd3db8b819ae9f687d0683c1b3af317abe816d2e2b166c79115cb3b965",
+  "pathProfile": {
+    "fixedOrdinalScenarios": 19,
+    "logTemplate": "/out/logs/{ordinal-1:02d}-{command}.{stream}.log",
+    "rawReportTemplate": "/out/scenarios/{ordinal:02d}-{caseId-lower}-{scenario}/raw-scenario.json",
+    "root": "/out"
+  },
+  "physicalEvidenceFileCount": 181,
+  "physicalLogBytes": 9008,
+  "planScope": "pure metadata-only reanalysis; no new database campaign",
+  "predicatePath": "/private/tmp/g03-native-predicate-reanalysis-operator-004/source/g03_campaign_predicates.py",
+  "predicateSha256": "1aad9cb8cb08483ea09112141a2e934f264bcd149651d9be9f6a56e9f04a23fd",
+  "profile": "umf.g03-native-predicate-reanalysis-inputs/4",
+  "qualificationLimits": {
+    "allRawLogBytes": 1048576,
+    "inclusiveEvidenceBytes": 16777216,
+    "inclusiveTerminalOuterReceipt": true,
+    "outerElapsedSeconds": 1800,
+    "readerSafetyBytes": 134217728,
+    "scenarioCaptureGraceSeconds": 10,
+    "scenarioTimeoutSeconds": 180
+  },
+  "rawScenarioEnvelopeCount": 19,
+  "reviewedPlanSha256": "e78ab1587b1e2097d08c68d06ca2cbaf1caee3af8a4ef80a040544c8d1964591",
+  "scenarioDispatchCount": 19,
+  "setupCaptureAssertions": [
+    "outer setupReceipt path/status/hash/size binds physical setup result",
+    "source005 manifest and setup source/cohort mapping match frozen packet",
+    "fixture and installed-cohort snapshot bind packet and physical inventory",
+    "8 commands x stdout/stderr closed, bounded, complete and physically hashed",
+    "full14 rawLogBytes equals campaign plus setup captures",
+    "outer combinedRawLogBytes remains original outer-only value 2619",
+    "all physical logs equal all capture bytes 9008"
+  ],
+  "setupCaptureClosure": {
+    "allCaptureRawLogBytes": 9008,
+    "campaignRawLogBytes": 954,
+    "commandCount": 8,
+    "outerOnlyCombinedRawLogBytes": 2619,
+    "physicalLogBytes": 9008,
+    "profile": "umf.g03-full14-setup/1",
+    "setupGuestLogRoot": "/out/logs/",
+    "setupPhysicalLogRoot": "setup/logs/",
+    "setupRawLogBytes": 5435,
+    "status": "PASS_SETUP"
+  },
+  "setupCaptureCommandCount": 8,
+  "setupLogPathProfile": {
+    "guestRoot": "/out/logs/",
+    "mapping": "fixed-eight-command-index-name-stream-only",
+    "physicalRoot": "setup/logs/"
+  },
+  "setupRawLogBytes": 5435,
+  "snapshotCanonicalization": {
+    "canonicalBytes": "snapshot_raw[:-1]",
+    "canonicalJson": "sorted keys, compact separators, UTF-8, ensure_ascii false",
+    "canonicalSha256": "5e002268af9fa6105e88fd7fd5e10f252e914ba284a6985afef42124892b4d6a",
+    "canonicalSizeBytes": 53399,
+    "lineFeedByte": 10,
+    "requiredTrailingLfCount": 1
+  },
+  "sourcePreimageCustody": {
+    "mutationTests001Sha256": "5a6f917656c5cf77d29ae352a56e8b24cb18fe6482c0082a9960b2d66c9bc8d7",
+    "notePath": "/private/tmp/g03-native-predicate-reanalysis-operator-002/inputs/parent-001/SOURCE_PREIMAGE_NOT_RETAINED.md",
+    "predicate001Sha256": "e837d8664d5ae6a6ae8d4bd8b8456d257bdc9c6295fdba5d81d102d334f972d3",
+    "status": "SOURCE_PREIMAGE_NOT_RETAINED"
+  },
+  "sourceReviewFindingsPath": "/private/tmp/g03-native-predicate-reanalysis-operator-004/inputs/source-review-findings003.md",
+  "sourceReviewFindingsSha256": "a601f02981a4f6b4b0302e58903023b52ad4b0c5f69e42bd9b2d5da137970daa",
+  "sourceSealFileCount": 8,
+  "sourceSealManifestSha256": "23a16e87f53df619ad06ffcfe9e234efe0394287b5437070a13209e06c945ccf",
+  "sourceSealProfile": "umf.g03-reviewed-harness-source-subset/2",
+  "sourceSealStatus": "SOURCE_ACCEPTED_NOT_EXECUTED",
+  "status": "FROZEN_FOR_INDEPENDENT_SOL_REVIEW_NOT_EXECUTABLE"
+}

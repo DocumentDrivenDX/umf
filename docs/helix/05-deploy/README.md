@@ -2,6 +2,11 @@
 
 Document release readiness, deployment checks, monitoring, and operations.
 
+The [UMF SDK 0.5.8 candidate notes](sdk-release-notes-0.5.8.md) record the
+source-only preparation state for the proposed G03 successor. This is not a
+published release; final qualification, review, merge, tag selection and public
+proof remain pending.
+
 ## Microsite
 
 The site source is in [microsite/dist](microsite/dist/index.html). Its live

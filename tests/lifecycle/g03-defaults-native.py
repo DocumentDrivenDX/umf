@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+from collections.abc import Callable
 import hashlib
 import json
 import math
@@ -35,7 +36,14 @@ from umf_codegen import (
     discover_table_migration_changes,
     verify_table_migration,
 )
-from g03_campaign_orchestration import CAMPAIGN_ROSTER, run_g03_fixed_roster
+from g03_campaign_orchestration import (
+    CAMPAIGN_ROSTER,
+    dispatch_campaign_scenario,
+    run_g03_fixed_roster,
+)
+
+G03_ORDINARY_HELPER_SHA256 = "5e64050386952466c80f8fcbd4ce37a2793308efcd05977a998d627a68fff051"
+G03_CAMPAIGN_PREDICATES_SHA256 = "1aad9cb8cb08483ea09112141a2e934f264bcd149651d9be9f6a56e9f04a23fd"
 
 
 def parse_args() -> argparse.Namespace:
@@ -173,7 +181,7 @@ def campaign_case_bindings(campaign_id: str, fixture: dict[str, object]) -> dict
     used_tags: set[str] = set()
     for entry in CAMPAIGN_ROSTER:
         for scenario in entry["scenarios"]:
-            if scenario in ("ordinary", "campaign-cleanup"):
+            if scenario == "campaign-cleanup":
                 continue
             tag = _campaign_tag(campaign_id, scenario)
             if tag in used_tags:
@@ -183,8 +191,20 @@ def campaign_case_bindings(campaign_id: str, fixture: dict[str, object]) -> dict
             roles = ["g03o_"+tag, "g03p_"+tag, "g03b_"+tag, "g03a_"+tag, "g03z_"+tag]
             configuration = dict(fixture["configuration"])
             configuration.update(schema=schema, ownerRole=roles[0], personRole=roles[1], batchRole=roles[2])
-            bindings[scenario] = {"database": database, "schema": schema, "roleNames": roles,
-                                 "configurationSha256": hashlib.sha256(canonical(configuration)).hexdigest()}
+            bound = {"database": database, "schema": schema, "roleNames": roles,
+                     "configurationSha256": hashlib.sha256(canonical(configuration)).hexdigest()}
+            if scenario == "ordinary":
+                logical_schema = schema+"_logical"
+                logical_roles = ["g03lo_"+tag, "g03lp_"+tag, "g03lb_"+tag]
+                all_roles = roles + logical_roles
+                logical_configuration = dict(configuration, schema=logical_schema,
+                    ownerRole=logical_roles[0], personRole=logical_roles[1], batchRole=logical_roles[2])
+                bound["logicalSchema"] = logical_schema
+                bound["logicalRoleNames"] = logical_roles
+                bound["allOwnedRoleNames"] = all_roles
+                bound["logicalConfigurationSha256"] = hashlib.sha256(
+                    canonical(logical_configuration)).hexdigest()
+            bindings[scenario] = bound
     return bindings
 
 
@@ -456,12 +476,25 @@ def observe(connection_string: str, schema: str) -> dict[str, object]:
             "WHERE table_schema=%s AND table_name='notes' AND column_name='measure'",
             (schema,),
         ).fetchone()
+        native_type = observer.execute(
+            "SELECT a.atttypid::pg_catalog.int4,t.typname::pg_catalog.text,"
+            "pg_catalog.format_type(a.atttypid,a.atttypmod) "
+            "FROM pg_catalog.pg_attribute AS a "
+            "JOIN pg_catalog.pg_class AS c ON c.oid=a.attrelid "
+            "JOIN pg_catalog.pg_namespace AS n ON n.oid=c.relnamespace "
+            "JOIN pg_catalog.pg_type AS t ON t.oid=a.atttypid "
+            "WHERE n.nspname=%s AND c.relname='notes' AND a.attname='measure' "
+            "AND a.attnum>0 AND NOT a.attisdropped",
+            (schema,),
+        ).fetchone()
         return {
             "observer": {"sessionUser": identity[0], "currentUser": identity[1], "superuser": identity[2]},
             "rows": native_json_value([list(row) for row in rows]),
             "rowsDigest": hashlib.sha256(canonical_native([list(row) for row in rows])).hexdigest(),
             "relationFileNode": file_identity,
             "columnDefault": None if default is None else default[0],
+            "columnNativeType": None if native_type is None else {
+                "oid": native_type[0], "typeName": native_type[1], "formatted": native_type[2]},
         }
 
 
@@ -626,9 +659,18 @@ def run_admission_refusal(args: argparse.Namespace, fixture: dict[str, object],
     return report
 
 
-def run_campaign(args: argparse.Namespace, fixture: dict[str, object], fixture_bytes: bytes) -> tuple[dict[str, object], int]:
+def run_campaign(args: argparse.Namespace, fixture: dict[str, object], fixture_bytes: bytes, *,
+                 scenario_executor: Callable[[str, str, str], dict[str, object]] | None = None
+                 ) -> tuple[dict[str, object], int]:
     manifest, manifest_digest, target = validate_campaign_manifest(args, fixture_bytes, fixture)
+    predicates_path = Path(__file__).with_name("g03_campaign_predicates.py")
+    if (predicates_path.is_symlink() or not predicates_path.is_file()
+            or predicates_path.stat().st_size > 128 * 1024
+            or hashlib.sha256(predicates_path.read_bytes()).hexdigest() != G03_CAMPAIGN_PREDICATES_SHA256):
+        raise RuntimeError("G03 campaign evidence predicates differ from the runner-pinned source")
+    from g03_campaign_predicates import evaluate_campaign as _evaluate_campaign
     expected_case_bindings = campaign_case_bindings(manifest["campaignId"], fixture)
+    compile_only_refusals = compile_only_domain_controls(fixture)
     binding = {"campaignId": manifest["campaignId"], "manifestSha256": manifest_digest,
                "runnerSha256": manifest["runnerSha256"], "fixtureSha256": manifest["fixtureSha256"],
                "configurationSha256": manifest["configurationSha256"],
@@ -638,20 +680,34 @@ def run_campaign(args: argparse.Namespace, fixture: dict[str, object], fixture_b
                "targetIdentity": target}
 
     def dispatch(case_id: str, scenario: str) -> dict[str, object]:
-        if scenario == "admission-refusal":
-            case = run_admission_refusal(args, fixture, manifest["campaignId"])
+        def direct() -> dict[str, object]:
+            if scenario == "admission-refusal":
+                case = run_admission_refusal(args, fixture, manifest["campaignId"])
+                case["cleanup"] = {"status": "PASS_NO_NATIVE_RESOURCES_CREATED"}
+                return case
+            return run_chain(args, fixture, scenario, manifest["campaignId"])
+
+        case = dispatch_campaign_scenario(case_id=case_id, scenario=scenario,
+            campaign_id=manifest["campaignId"], direct=direct, scenario_executor=scenario_executor)
+        if type(case) is not dict:
+            raise RuntimeError("native scenario executor did not return a raw scenario dictionary")
+        if scenario == "admission-refusal" and "cleanup" not in case:
             case["cleanup"] = {"status": "PASS_NO_NATIVE_RESOURCES_CREATED"}
-        elif scenario == "ordinary":
-            case = {"scenario": scenario, "status": "UNQUALIFIED",
-                    "reason": "compatible ordinary selected-module Weft .2 cohort and adapter remain unqualified",
-                    "cleanup": {"status": "PASS_NO_NATIVE_RESOURCES_CREATED"}}
-        else:
-            case = run_chain(args, fixture, scenario, manifest["campaignId"])
+        if scenario.startswith("domain-"):
+            case["compileOnlyRefusals"] = compile_only_refusals
         expected_resources = expected_case_bindings.get(scenario)
         if expected_resources is not None:
             actual_resources = {"database": case.get("database"), "schema": case.get("schema"),
                                 "roleNames": case.get("roleNames"),
                                 "configurationSha256": case.get("configurationSha256")}
+            if scenario == "ordinary":
+                ordinary = case.get("ordinaryN12", {})
+                schemas = ordinary.get("schemasCovered", [])
+                actual_resources.update(
+                    logicalRoleNames=case.get("logicalRoleNames"),
+                    allOwnedRoleNames=case.get("allOwnedRoleNames"),
+                    logicalSchema=schemas[1] if len(schemas) == 2 else None,
+                    logicalConfigurationSha256=ordinary.get("logicalConfigurationSha256"))
             if canonical(actual_resources) != canonical(expected_resources):
                 raise RuntimeError("scenario resource identity differs from its exact expected campaign binding")
         return case
@@ -670,6 +726,7 @@ def run_campaign(args: argparse.Namespace, fixture: dict[str, object], fixture_b
               "targetIdentity": target, "fixedRoster": CAMPAIGN_ROSTER, "caseReports": case_reports,
               "cleanupStatus": summary["cleanupStatus"],
               "ordinaryN12Status": summary["ordinaryN12Status"],
+              "casePredicates": summary["casePredicates"],
               "nativeQualificationClaim": False}
     fully_passed = summary["fullyPassed"]
     report["status"] = "PASS" if fully_passed else (
@@ -778,10 +835,14 @@ def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: st
     database = "g03_" + tag
     schema = "g03s_" + tag
     owner, person, batch, alice, bob = ("g03o_"+tag, "g03p_"+tag, "g03b_"+tag, "g03a_"+tag, "g03z_"+tag)
+    logical_roles = ["g03lo_"+tag, "g03lp_"+tag, "g03lb_"+tag] if scenario == "ordinary" else []
     configuration.update(schema=schema, ownerRole=owner, personRole=person, batchRole=batch)
     roles = (owner, person, batch, alice, bob)
+    all_owned_roles = (*roles, *logical_roles)
     report: dict[str, object] = {"scenario": scenario, "status": "RUNNING", "database": database,
                                  "schema": schema, "roleNames": list(roles),
+                                 "logicalRoleNames": logical_roles,
+                                 "allOwnedRoleNames": list(all_owned_roles),
                                  "configurationSha256": hashlib.sha256(canonical(configuration)).hexdigest(),
                                  "steps": []}
     runtime: dict[str, object] = {}
@@ -792,6 +853,28 @@ def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: st
     database_owner_oid: str | None = None
     schema_oid: str | None = None
     table_oid: str | None = None
+    ordinary_helper = None
+    helper_digest = None
+    if scenario == "ordinary":
+        helper_path = Path(__file__).with_name("g03_ordinary_native.py")
+        if (helper_path.is_symlink() or not helper_path.is_file()
+                or helper_path.stat().st_size > 128 * 1024):
+            raise RuntimeError("ordinary adapter helper is not a bounded regular source file")
+        helper_digest = hashlib.sha256(helper_path.read_bytes()).hexdigest()
+        if helper_digest != G03_ORDINARY_HELPER_SHA256:
+            raise RuntimeError("ordinary adapter helper differs from the runner-pinned source")
+        from g03_ordinary_native import preflight_ordinary_source_admission
+        logical_configuration = dict(configuration, schema=schema + "_logical",
+            ownerRole=logical_roles[0], personRole=logical_roles[1], batchRole=logical_roles[2])
+        try:
+            report["ordinarySourceAdmissionPreflight"] = preflight_ordinary_source_admission(
+                fixture, configuration, logical_configuration)
+        except Exception as error:
+            report.update(status="FAIL_OR_UNKNOWN",
+                          failureCheckpoint="ordinary-source-admission-preflight",
+                          preflightErrorType=type(error).__name__,
+                          preflightError=str(error)[:512], targetResourcesCreated=False)
+            return report
     with psycopg.connect(args.dsn, autocommit=True, connect_timeout=5) as admin:
         admin.execute("SET statement_timeout='30s'")
         admin.execute("SET lock_timeout='5s'")
@@ -815,10 +898,10 @@ def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: st
             collision = admin.execute(
                 "SELECT EXISTS(SELECT 1 FROM pg_catalog.pg_database WHERE datname=%s),"
                 "EXISTS(SELECT 1 FROM pg_catalog.pg_roles WHERE rolname=ANY(%s))",
-                (database, list(roles))).fetchone()
+                (database, list(all_owned_roles))).fetchone()
             if collision != (False, False):
                 raise RuntimeError("generated campaign database or role identity already exists")
-            for role in roles:
+            for role in all_owned_roles:
                 admin.execute(sql.SQL(
                     "CREATE ROLE {} NOLOGIN NOSUPERUSER NOBYPASSRLS NOCREATEDB NOCREATEROLE NOREPLICATION"
                 ).format(sql.Identifier(role)))
@@ -934,6 +1017,11 @@ def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: st
                         connection.execute("RESET ROLE")
                     if str(shadow_value) != "00000000-0000-4000-8000-000000000001":
                         raise RuntimeError("Alice could not resolve the exact UUID shadow sentinel")
+                    report["uuidShadowControl"] = {
+                        "sentinel": str(shadow_value), "acl": list(shadow_acl),
+                        "expectedAcl": list(expected_shadow_acl),
+                        "searchPath": [shadow_schema, "pg_catalog"],
+                    }
                 connection.execute(sql.SQL("CREATE SCHEMA {} AUTHORIZATION {}").format(
                     sql.Identifier(schema), sql.Identifier(owner)))
                 created_schema = connection.execute(
@@ -948,7 +1036,8 @@ def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: st
                                                      "ownerOid": created_schema[2]}
                 connection.execute(sql.SQL("SET ROLE {}").format(sql.Identifier(owner)))
                 connection.execute("SET search_path=pg_catalog")
-                initial_key = ("requiredSet5" if scenario == "required" else
+                initial_key = ("ordinaryNativeOnly5" if scenario == "ordinary" else
+                               "requiredSet5" if scenario == "required" else
                                domain+"Absent" if domain else
                                ("decimal" if semantic == "decimal" else "absent"))
                 failure_checkpoint = "compile-initial-native-bundle"
@@ -1012,6 +1101,88 @@ def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: st
                 if [row[:3] for row in initial_observation["rows"]] != sorted(expected_values, key=lambda row: row[0]):
                     raise AssertionError("independent observer did not see the complete manual historical row oracle")
                 report["initialObservation"] = initial_observation
+                if scenario == "ordinary":
+                    from g03_ordinary_native import run_ordinary_n12
+                    def advance_ordinary_generation():
+                        """Exercise the normal G03 source-marker, host-approval and apply path."""
+                        next_bundle = compile_bundle(
+                            fixture["variants"]["ordinaryNativeOnly9"], configuration)
+                        changes = [item for item in discover_table_migration_changes(
+                            initial_bundle, next_bundle,
+                            options={"version": "umf.table-migration-discovery/0.2"})
+                            if item.get("kind") == "change-default"]
+                        if len(changes) != 1:
+                            raise AssertionError("ordinary generation must discover exactly one source default change")
+                        candidate = changes[0]
+                        marker = {key: candidate[key] for key in
+                                  ("id", "kind", "path", "oldDigest", "newDigest")}
+                        options = {"version": "umf.table-migration-options/0.5", "backfills": [],
+                                   "concurrentIndexes": [], "reviewedChanges": [marker], "validations": []}
+                        planned = compile_table_migration(
+                            migration_id=f"g03-{tag}-n12-generation-001",
+                            predecessor={"id": initial_plan["id"], "digest": initial_plan["digest"]},
+                            previous_bundle=initial_bundle, next_bundle=next_bundle, options=options)
+                        if planned.get("status") != "compiled":
+                            raise AssertionError({"stage": "compile-ordinary-generation",
+                                                  "diagnostics": planned.get("diagnostics")})
+                        plan = planned["plan"]
+                        verify_default_plan(plan, candidate)
+                        file_digest = hashlib.sha256(canonical(plan)).hexdigest()
+                        evidence_digest = hashlib.sha256(
+                            ("g03-n12-approved-native-default-generation:" + tag).encode()).hexdigest()
+                        connection.execute(sql.SQL("SET ROLE {}").format(sql.Identifier(owner)))
+                        connection.execute("SET search_path=pg_catalog")
+                        try:
+                            host = PsycopgMigrationHost(connection, person_roles=(alice, bob),
+                                target_profile="postgresql18/0.1", installation_id="g03-" + tag)
+                            request = MigrationRequest(plan, installed["headDigest"], file_digest)
+                            approval = host.record_approval(request, decision="approved",
+                                qualification_profile="postgresql18/0.1", evidence_digest=evidence_digest)
+                            before = observe(target_dsn, schema)
+                            if (before["columnDefault"] != "'5'::numeric"
+                                    or before["columnNativeType"] != {
+                                        "oid": 23, "typeName": "int4", "formatted": "integer"}):
+                                raise AssertionError("ordinary generation did not start from the observed default 5")
+                            applied = apply_migration_on_host(host, plan,
+                                expected_head=installed["headDigest"], file_digest=file_digest,
+                                qualification_profile="postgresql18/0.1",
+                                evidence_digest=evidence_digest, approval_id=approval.receipt_id)
+                            after = observe(target_dsn, schema)
+                            if (after["columnDefault"] != "'9'::numeric"
+                                    or after["columnNativeType"] != {
+                                        "oid": 23, "typeName": "int4", "formatted": "integer"}):
+                                raise AssertionError("approved ordinary generation did not install the observed default 9")
+                        finally:
+                            connection.execute("RESET ROLE")
+                            connection.execute("SET search_path=pg_catalog")
+                        return (next_bundle, applied["installationReference"], {
+                                    "status": "applied",
+                                    "migrationId": plan["id"],
+                                    "planDigest": plan["digest"],
+                                    "fileDigest": file_digest,
+                                    "approvalId": approval.receipt_id,
+                                    "oldHeadDigest": installed["headDigest"],
+                                    "newHeadDigest": applied["headDigest"],
+                                    "sourceDigest": next_bundle["sourceDigest"],
+                                    "bundleDigest": next_bundle["bundleDigest"],
+                                    "beforeDefault": before["columnDefault"],
+                                    "afterDefault": after["columnDefault"],
+                                    "beforeNativeType": before["columnNativeType"],
+                                    "afterNativeType": after["columnNativeType"],
+                                    "beforeRows": before["rows"], "afterRows": after["rows"],
+                                    "oldGeneration": installed["installationReference"]["generation"],
+                                    "newGeneration": applied["installationReference"]["generation"],
+                                })
+                    failure_checkpoint = "ordinary-selected-module-adapter-qualification"
+                    report["ordinaryN12"] = run_ordinary_n12(
+                        dsn=target_dsn, fixture=fixture, configuration=configuration,
+                        bundle=initial_bundle, reference=installed["installationReference"],
+                        schema=schema, owner=owner, alice=alice, bob=bob, batch=batch,
+                        logical_roles=tuple(logical_roles),
+                        connection=connection, tag=tag,
+                        generation_callback=advance_ordinary_generation)
+                    report["ordinaryN12"]["helperSha256"] = helper_digest
+                    report["status"] = report["ordinaryN12"]["status"]
                 if scenario == "required":
                     initial_probes: list[dict[str, object]] = []
                     for suffix, include_measure, value in (("omitted", False, None), ("null", True, None),
@@ -1050,7 +1221,7 @@ def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: st
                 connection.execute("SET search_path=pg_catalog")
                 current_bundle = initial_bundle
                 current_head = installed["headDigest"]
-                stages = (("set5", "set"), ("set9", "set"), ("drop", "drop"))
+                stages = () if scenario == "ordinary" else (("set5", "set"), ("set9", "set"), ("drop", "drop"))
                 if scenario in ("rollback", "commit-observation", "finalize-observation", "finalize-before-publication",
                                 "unknown-no-commit", "writer-barrier", "tampering"):
                     stages = (("set5", "set"),)
@@ -1135,6 +1306,7 @@ def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: st
                         refused = observe(target_dsn, schema)
                         if refused["columnDefault"] != before["columnDefault"] or refused["rows"] != before["rows"]:
                             raise AssertionError("pre-effect tampering controls changed the native target")
+                        report["tamperingObservation"] = {"before": before, "afterRefusals": refused}
                         expected_refusals = {"wrong-approval", "wrong-head", "wrong-file", "wrong-source",
                                              "wrong-default-target", "wrong-default-value", "wrong-phase", "wrong-marker"}
                         if set(refusals) != expected_refusals or len(refusals) != len(expected_refusals):
@@ -1146,6 +1318,7 @@ def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: st
                     }, runtime)
                     failure_checkpoint = "apply-selected-native-transition"
                     dispatches_before = report.get("defaultStatementDispatches", 0)
+                    verified_phase = None
                     try:
                         invocation = apply_migration_on_host(fault_host, plan, expected_head=current_head,
                             file_digest=file_digest, qualification_profile="postgresql18/0.1",
@@ -1164,7 +1337,13 @@ def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: st
                                 or fence["personVisibleRows"] != 2 or fence["batchVisibleRows"] != 3
                                 or fence["progress"] is None or fence["progress"][1] == "complete"):
                             raise AssertionError("unknown pre-commit outcome was not fenced after one rolled-back dispatch") from error
-                        report["unknownNoCommit"] = {"result": "FENCED_NO_AUTHENTICATED_PROGRESS", "after": after_unknown, "fence": fence}
+                        report["unknownNoCommit"] = {
+                            "result": "FENCED_NO_AUTHENTICATED_PROGRESS", "before": before,
+                            "after": after_unknown, "fence": fence,
+                            "planDigest": plan["digest"], "approvalReceiptId": approval.receipt_id,
+                            "expectedHead": current_head,
+                            "dispatchDelta": report.get("defaultStatementDispatches", 0) - dispatches_before,
+                        }
                         report["status"] = "PASS_EXPECTED_FENCED_SUBCASE_FULL_CASE_OPEN"
                         continue
                     except RuntimeError as error:
@@ -1178,7 +1357,12 @@ def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: st
                                     or fence["personVisibleRows"] != 2 or fence["batchVisibleRows"] != 3
                                     or fence["progress"] is None or fence["progress"][1] == "complete"):
                                 raise AssertionError("known abort did not roll back the DDL and phase progress") from error
-                            report.setdefault("knownAbort", []).append({"after": aborted, "fence": fence})
+                            report.setdefault("knownAbort", []).append({
+                                "after": aborted, "fence": fence, "planDigest": plan["digest"],
+                                "fileDigest": file_digest, "approvalReceiptId": approval.receipt_id,
+                                "expectedHead": current_head,
+                                "dispatchDelta": report.get("defaultStatementDispatches", 0) - dispatches_before,
+                            })
                             # Retry the exact original plan, file digest and approval after the known rollback.
                             invocation = apply_migration_on_host(fault_host, plan, expected_head=current_head,
                                 file_digest=file_digest, qualification_profile="postgresql18/0.1",
@@ -1186,7 +1370,7 @@ def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: st
                         elif scenario == "finalize-before-publication" and str(error) == "g03-final-publication-not-attempted":
                             fence = observe_fence(target_dsn, schema, alice, batch, plan["id"])
                             try:
-                                verify_completed_progress(report, plan)
+                                verified_phase = verify_completed_progress(report, plan)
                                 committed = True
                             except AssertionError:
                                 committed = False
@@ -1211,12 +1395,12 @@ def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: st
                     if before["relationFileNode"] != after["relationFileNode"]:
                         raise AssertionError("default-only phase changed the heap relation file")
                     if scenario == "commit-observation":
-                        verify_completed_progress(report, plan)
+                        verified_phase = verify_completed_progress(report, plan)
                         if report.get("defaultStatementDispatches", 0) - dispatches_before != 1:
                             raise AssertionError("lost response was not settled from one exact committed phase receipt")
-                    if scenario not in ("rollback", "unknown-no-commit"):
-                        verify_completed_progress(report, plan)
-                    if scenario in ("finalize-observation", "finalize-before-publication"):
+                    if scenario != "unknown-no-commit" and verified_phase is None:
+                        verified_phase = verify_completed_progress(report, plan)
+                    if scenario in ("commit-observation", "finalize-observation", "finalize-before-publication"):
                         if scenario == "finalize-observation" and not report.get("lostFinalizeResponseInjected"):
                             raise AssertionError("finalization acknowledgement loss was not injected after commit")
                         if scenario == "finalize-before-publication" and not report.get("finalizeRefusalInjected"):
@@ -1230,9 +1414,23 @@ def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: st
                                 or report.get("defaultStatementDispatches", 0) - dispatches_before != 1):
                             raise AssertionError("same original request replay changed the committed head or redispatched DDL")
                         report["sameOriginalReplay"] = replay
-                    step_report = {"migrationId": plan["id"], "planDigest": plan["digest"],
+                    step_dispatches = report.get("defaultStatementDispatches", 0) - dispatches_before
+                    step_report = {"variant": variant, "nativeDdlDispatches": step_dispatches,
+                        "migrationId": plan["id"], "planDigest": plan["digest"],
+                        "fileDigest": file_digest, "expectedHead": current_head,
                         "candidate": marker, "approvalReceiptId": approval.receipt_id,
                         "before": before, "after": after, "hostResult": invocation}
+                    completed_progress = [item for item in report.get("progressReads", [])
+                                          if type(item) is dict and item.get("state") == "complete"]
+                    step_report["completedPhase"] = ({key: completed_progress[-1].get(key)
+                        for key in ("phaseIndex", "phaseDigest", "completedSteps")}
+                        if completed_progress else None)
+                    step_report["verifiedPhaseReceipt"] = ({
+                        "verification": "verify_completed_progress",
+                        **{key: verified_phase.get(key) for key in ("phaseIndex", "phaseDigest", "completedSteps")}}
+                        if verified_phase is not None else None)
+                    phase_steps = plan["phases"][0].get("steps")
+                    step_report["expectedPhaseSteps"] = phase_steps
                     report["steps"].append(step_report)
                     future_probes = []
                     expected_omitted = {"set5": 5, "set9": 9, "drop": None, "literalNull": None,
@@ -1302,7 +1500,7 @@ def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: st
                         if (not isinstance(writer_result, dict) or writer_result.get("explicitRow") != (13,)
                                 or writer_result.get("omittedRow") != (5,)):
                             raise AssertionError({"stage": "post-commit-writer", "result": writer_result})
-                        report["writer"]["afterCommitRolledBackProbe"] = writer_result
+                        report.setdefault("writer", {})["afterCommitRolledBackProbe"] = writer_result
                         runtime.pop("writerThread", None)
                         runtime.pop("writerDoneEvent", None)
                         runtime.pop("writerResult", None)
@@ -1314,7 +1512,8 @@ def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: st
                         raise AssertionError("a selected default plan must execute exactly one native DDL statement")
                     report["status"] = "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN"
                 report["historicalRows"] = initial_rows
-                report["futureWriteProbes"] = "run for selected integer/required/domain scenario; other selectors remain separate"
+                if scenario != "ordinary":
+                    report["futureWriteProbes"] = "run for selected integer/required/domain scenario; other selectors remain separate"
         except Exception as error:
             report["status"] = "FAIL"
             report["error"] = {
@@ -1339,7 +1538,7 @@ def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: st
                     if writer_thread.is_alive() or writer_done is None or not writer_done.is_set():
                         cleanup_errors.append("owned-writer-thread-not-reaped-before-database-cleanup")
                     else:
-                        report["writer"] = {"afterCommitRolledBackProbe": writer_result}
+                        report.setdefault("writer", {})["afterCommitRolledBackProbe"] = writer_result
                         runtime.pop("writerThread", None)
                         runtime.pop("writerDoneEvent", None)
                         runtime.pop("writerResult", None)
@@ -1398,7 +1597,7 @@ def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: st
                     (database,)).fetchone()
                 remaining_roles = admin.execute(
                     "SELECT oid::pg_catalog.text,rolname FROM pg_catalog.pg_roles WHERE rolname=ANY(%s) ORDER BY rolname",
-                    (list(roles),)).fetchall()
+                    (list(all_owned_roles),)).fetchall()
                 cleanup_target = observe_campaign_target(admin)
                 target_unchanged = cleanup_target == report["targetIdentity"]
                 report["cleanupVerification"] = {
@@ -1421,6 +1620,9 @@ def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: st
             if cleanup_errors:
                 report["status"] = "FAIL_CLEANUP_UNCERTAIN"
                 report["cleanup"]["status"] = "FAIL"
+            elif (scenario == "ordinary"
+                  and report.get("ordinaryN12", {}).get("status") == "PASS"):
+                report["status"] = "PASS"
     return report
 
 
@@ -1461,7 +1663,7 @@ def main() -> int:
             result = 2
     elif args.scenario in ("transitions", "empty", "required", "rollback", "commit-observation", "finalize-observation",
                          "finalize-before-publication",
-                         "unknown-no-commit", "writer-barrier", "tampering"):
+                         "unknown-no-commit", "writer-barrier", "tampering", "ordinary"):
         case = run_chain(args, fixture, args.scenario)
         report["result"] = case
         report["status"] = case["status"]
@@ -1469,10 +1671,13 @@ def main() -> int:
                    "rollback": "G03-N06", "commit-observation": "G03-N07", "finalize-observation": "G03-N07",
                    "finalize-before-publication": "G03-N07",
                    "unknown-no-commit": "G03-N08", "writer-barrier": "G03-N09",
-                   "tampering": "G03-N13"}[args.scenario]
+                   "tampering": "G03-N13", "ordinary": "G03-N12"}[args.scenario]
         selected_pass = case["status"].startswith(("PASS_SELECTED_NATIVE_SUBCASE",
-                                                    "PASS_EXPECTED_FENCED_SUBCASE"))
-        mark((case_id, "G03-N14"), "PARTIAL_SUBCASE_PASS_FULL_CASE_OPEN" if selected_pass else "FAIL")
+                                                    "PASS_EXPECTED_FENCED_SUBCASE", "PASS"))
+        if args.scenario == "ordinary":
+            mark(("G03-N12",), "PASS" if selected_pass else "FAIL_OR_UNKNOWN")
+        else:
+            mark((case_id, "G03-N14"), "PARTIAL_SUBCASE_PASS_FULL_CASE_OPEN" if selected_pass else "FAIL")
         result = 0 if selected_pass else 2
     elif args.scenario == "domains":
         report["compileOnlyRefusals"] = compile_only_domain_controls(fixture)
@@ -1507,11 +1712,6 @@ def main() -> int:
         report["status"] = "PASS_SELECTED_NATIVE_SUBCASES_FULL_CASE_OPEN" if selected_pass else "FAIL"
         mark(("G03-N05", "G03-N14"), "PARTIAL_SUBCASE_PASS_FULL_CASE_OPEN" if selected_pass else "FAIL")
         result = 0 if selected_pass else 2
-    elif args.scenario == "ordinary":
-        report["status"] = "UNQUALIFIED"
-        report["reason"] = ("ordinary selected-module .2 execution requires a compatible installed Weft cohort and "
-                             "independent signed campaign binding; raw SQL is not substituted")
-        result = 2
     elif args.scenario == "campaign":
         try:
             campaign, result = run_campaign(args, fixture, fixture_bytes)

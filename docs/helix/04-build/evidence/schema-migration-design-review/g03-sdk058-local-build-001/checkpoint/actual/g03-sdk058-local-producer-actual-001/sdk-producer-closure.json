@@ -1,0 +1,29 @@
+{
+  "dockerExitCode": 1,
+  "executionId": "local-sdk-20261029T144022Z-b1f35e8a-f818-4e97-a70c-5791968b347b-attempt1",
+  "failureCode": "producer-or-closure-failed",
+  "guestStatus": "failed",
+  "ownedContainerCleanup": {
+    "verifiedAbsent": true
+  },
+  "publicEvidenceBytesBeforeClosure": 2762,
+  "publicEvidenceFiles": [
+    {
+      "device": 16777231,
+      "inode": 277948706,
+      "mode": 420,
+      "path": "sdk-producer-receipt.json",
+      "sha256": "46d145192f730605457eb7f1d0b024d59968b6425fde7735f35835f9acdfb89d",
+      "sizeBytes": 2762,
+      "type": "regular"
+    }
+  ],
+  "schema": "umf.local-linux-sdk-producer-closure/1",
+  "selectedSoftware": {
+    "installedSdkPackage": null,
+    "sdkArchive": null
+  },
+  "sourceCommit": "855f6c48649496fc60b3303798790d0ddb55d38f",
+  "sourceTree": "53f2bfffbc0c5780e79d76d8fd3d202239d088b2",
+  "status": "failed"
+}

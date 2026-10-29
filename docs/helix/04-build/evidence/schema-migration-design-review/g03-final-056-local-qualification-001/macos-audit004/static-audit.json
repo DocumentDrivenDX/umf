@@ -1,0 +1,402 @@
+{
+  "expandedBytes": 33467189,
+  "licenseExpression": "MIT OR Apache-2.0",
+  "macho": {
+    "cpuSubtype": 0,
+    "cpuType": 16777228,
+    "dylibIds": [
+      {
+        "command": 13,
+        "name": "@rpath/weft.abi3.so"
+      }
+    ],
+    "exports": {
+      "initializerAddress": 388144,
+      "names": [
+        "_PyInit_weft"
+      ],
+      "nodeCount": 2
+    },
+    "fileType": 6,
+    "loadCommands": [
+      {
+        "bytes": 712,
+        "cmd": 25
+      },
+      {
+        "bytes": 232,
+        "cmd": 25
+      },
+      {
+        "bytes": 632,
+        "cmd": 25
+      },
+      {
+        "bytes": 72,
+        "cmd": 25
+      },
+      {
+        "bytes": 48,
+        "cmd": 13
+      },
+      {
+        "bytes": 48,
+        "cmd": 2147483682
+      },
+      {
+        "bytes": 24,
+        "cmd": 2
+      },
+      {
+        "bytes": 80,
+        "cmd": 11
+      },
+      {
+        "bytes": 24,
+        "cmd": 27
+      },
+      {
+        "bytes": 32,
+        "cmd": 50
+      },
+      {
+        "bytes": 16,
+        "cmd": 42
+      },
+      {
+        "bytes": 56,
+        "cmd": 12
+      },
+      {
+        "bytes": 56,
+        "cmd": 12
+      },
+      {
+        "bytes": 16,
+        "cmd": 38
+      },
+      {
+        "bytes": 16,
+        "cmd": 41
+      },
+      {
+        "bytes": 16,
+        "cmd": 29
+      }
+    ],
+    "loadDependencies": [
+      {
+        "command": 12,
+        "name": "/usr/lib/libiconv.2.dylib"
+      },
+      {
+        "command": 12,
+        "name": "/usr/lib/libSystem.B.dylib"
+      }
+    ],
+    "minimumOS": [
+      11,
+      0,
+      0
+    ],
+    "rpaths": [],
+    "sdk": [
+      27,
+      0,
+      0
+    ],
+    "sections": [
+      {
+        "address": 2160,
+        "fileOffset": 2160,
+        "flags": 2147484672,
+        "initProtection": 5,
+        "ordinal": 1,
+        "section": "__text",
+        "segment": "__TEXT",
+        "size": 19548256,
+        "type": 0,
+        "zeroFill": false
+      },
+      {
+        "address": 19550416,
+        "fileOffset": 19550416,
+        "flags": 2147484680,
+        "initProtection": 5,
+        "ordinal": 2,
+        "section": "__stubs",
+        "segment": "__TEXT",
+        "size": 1620,
+        "type": 8,
+        "zeroFill": false
+      },
+      {
+        "address": 19552036,
+        "fileOffset": 19552036,
+        "flags": 2147484672,
+        "initProtection": 5,
+        "ordinal": 3,
+        "section": "__stub_helper",
+        "segment": "__TEXT",
+        "size": 1644,
+        "type": 0,
+        "zeroFill": false
+      },
+      {
+        "address": 19553680,
+        "fileOffset": 19553680,
+        "flags": 0,
+        "initProtection": 5,
+        "ordinal": 4,
+        "section": "__gcc_except_tab",
+        "segment": "__TEXT",
+        "size": 1106416,
+        "type": 0,
+        "zeroFill": false
+      },
+      {
+        "address": 20660096,
+        "fileOffset": 20660096,
+        "flags": 0,
+        "initProtection": 5,
+        "ordinal": 5,
+        "section": "__const",
+        "segment": "__TEXT",
+        "size": 1514756,
+        "type": 0,
+        "zeroFill": false
+      },
+      {
+        "address": 22174852,
+        "fileOffset": 22174852,
+        "flags": 2,
+        "initProtection": 5,
+        "ordinal": 6,
+        "section": "__cstring",
+        "segment": "__TEXT",
+        "size": 93780,
+        "type": 2,
+        "zeroFill": false
+      },
+      {
+        "address": 22268632,
+        "fileOffset": 22268632,
+        "flags": 0,
+        "initProtection": 5,
+        "ordinal": 7,
+        "section": "__unwind_info",
+        "segment": "__TEXT",
+        "size": 413872,
+        "type": 0,
+        "zeroFill": false
+      },
+      {
+        "address": 22682504,
+        "fileOffset": 22682504,
+        "flags": 1744830475,
+        "initProtection": 5,
+        "ordinal": 8,
+        "section": "__eh_frame",
+        "segment": "__TEXT",
+        "size": 2693568,
+        "type": 11,
+        "zeroFill": false
+      },
+      {
+        "address": 25378816,
+        "fileOffset": 25378816,
+        "flags": 0,
+        "initProtection": 3,
+        "ordinal": 9,
+        "section": "__const",
+        "segment": "__DATA_CONST",
+        "size": 761064,
+        "type": 0,
+        "zeroFill": false
+      },
+      {
+        "address": 26139880,
+        "fileOffset": 26139880,
+        "flags": 6,
+        "initProtection": 3,
+        "ordinal": 10,
+        "section": "__got",
+        "segment": "__DATA_CONST",
+        "size": 152,
+        "type": 6,
+        "zeroFill": false
+      },
+      {
+        "address": 26148864,
+        "fileOffset": 26148864,
+        "flags": 7,
+        "initProtection": 3,
+        "ordinal": 11,
+        "section": "__la_symbol_ptr",
+        "segment": "__DATA",
+        "size": 1080,
+        "type": 7,
+        "zeroFill": false
+      },
+      {
+        "address": 26149944,
+        "fileOffset": 26149944,
+        "flags": 0,
+        "initProtection": 3,
+        "ordinal": 12,
+        "section": "__data",
+        "segment": "__DATA",
+        "size": 21728,
+        "type": 0,
+        "zeroFill": false
+      },
+      {
+        "address": 26171672,
+        "fileOffset": 26171672,
+        "flags": 19,
+        "initProtection": 3,
+        "ordinal": 13,
+        "section": "__thread_vars",
+        "segment": "__DATA",
+        "size": 696,
+        "type": 19,
+        "zeroFill": false
+      },
+      {
+        "address": 26172368,
+        "fileOffset": 26172368,
+        "flags": 17,
+        "initProtection": 3,
+        "ordinal": 14,
+        "section": "__thread_data",
+        "segment": "__DATA",
+        "size": 120,
+        "type": 17,
+        "zeroFill": false
+      },
+      {
+        "address": 26172488,
+        "fileOffset": 0,
+        "flags": 18,
+        "initProtection": 3,
+        "ordinal": 15,
+        "section": "__thread_bss",
+        "segment": "__DATA",
+        "size": 1224,
+        "type": 18,
+        "zeroFill": true
+      },
+      {
+        "address": 26173712,
+        "fileOffset": 0,
+        "flags": 1,
+        "initProtection": 3,
+        "ordinal": 16,
+        "section": "__bss",
+        "segment": "__DATA",
+        "size": 160,
+        "type": 1,
+        "zeroFill": true
+      },
+      {
+        "address": 26173872,
+        "fileOffset": 0,
+        "flags": 1,
+        "initProtection": 3,
+        "ordinal": 17,
+        "section": "__common",
+        "segment": "__DATA",
+        "size": 184,
+        "type": 1,
+        "zeroFill": true
+      }
+    ],
+    "symbolTable": {
+      "initializer": {
+        "external": true,
+        "section": 1,
+        "type": 15,
+        "value": 388144
+      },
+      "symbolCount": 71976
+    }
+  },
+  "memberCount": 9,
+  "members": {
+    "umf_weft-0.4.56.dist-info/METADATA": {
+      "bytes": 1550,
+      "sha256": "06a28d78d59bcf903aea857d959ea4d2517375f2dcf7621df1aaf96f023df59e"
+    },
+    "umf_weft-0.4.56.dist-info/RECORD": {
+      "bytes": 794,
+      "sha256": "d3283cf80420bd48051de9a88782417791baf7fe7d48f3d5cf4f0c44509d59f7"
+    },
+    "umf_weft-0.4.56.dist-info/WHEEL": {
+      "bytes": 102,
+      "sha256": "be9a82d2d467ffc6d31e276fb6b3dbae71503d99eb86e2b3b230dd78ac02779f"
+    },
+    "umf_weft-0.4.56.dist-info/licenses/LICENSE-APACHE": {
+      "bytes": 11359,
+      "sha256": "a7f097f28b47176d49dddc086575d24d94149493f5b8e9bb829a0eee3eba74ee"
+    },
+    "umf_weft-0.4.56.dist-info/licenses/LICENSE-MIT": {
+      "bytes": 1086,
+      "sha256": "f1409ffd0dff471f9f5078c8f2cc2c070147daae3197812234b5919c1f820702"
+    },
+    "umf_weft-0.4.56.dist-info/licenses/LICENSE.md": {
+      "bytes": 13013,
+      "sha256": "76dfb87aed22180562cee6180096117e659e66d130285c56a67d5f09a788e0e5"
+    },
+    "umf_weft-0.4.56.dist-info/licenses/THIRD-PARTY-LICENSES.txt": {
+      "bytes": 1028562,
+      "sha256": "f86af39ab061e9b9474f8f3b151f69a42211d72fa9ac2930daecbda458c17f97"
+    },
+    "weft/__init__.py": {
+      "bytes": 99,
+      "sha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+    },
+    "weft/weft.abi3.so": {
+      "bytes": 32410624,
+      "sha256": "7f746042c88dde86b0a096b831a4243d40e2448255c1146cf515787b22c30225"
+    }
+  },
+  "nativeBytes": 32410624,
+  "nativeMember": "weft/weft.abi3.so",
+  "nativeSha256": "7f746042c88dde86b0a096b831a4243d40e2448255c1146cf515787b22c30225",
+  "producerLicenseSources": {
+    "LICENSE-APACHE": {
+      "bytes": 11359,
+      "sha256": "a7f097f28b47176d49dddc086575d24d94149493f5b8e9bb829a0eee3eba74ee"
+    },
+    "LICENSE-MIT": {
+      "bytes": 1086,
+      "sha256": "f1409ffd0dff471f9f5078c8f2cc2c070147daae3197812234b5919c1f820702"
+    },
+    "LICENSE.md": {
+      "bytes": 13013,
+      "sha256": "76dfb87aed22180562cee6180096117e659e66d130285c56a67d5f09a788e0e5"
+    },
+    "THIRD-PARTY-LICENSES.txt": {
+      "bytes": 1028562,
+      "sha256": "f86af39ab061e9b9474f8f3b151f69a42211d72fa9ac2930daecbda458c17f97"
+    }
+  },
+  "profile": "weft-local-macos-static-audit-only/1",
+  "recordExact": true,
+  "scope": "static archive/Mach-O data inspection only; not installed, imported, or executed",
+  "status": "STATIC_WHEEL_PASS",
+  "tags": [
+    "cp39-abi3-macosx_11_0_arm64"
+  ],
+  "wheel": {
+    "bytes": 11190603,
+    "filename": "umf_weft-0.4.56-cp39-abi3-macosx_11_0_arm64.whl",
+    "path": "/private/tmp/g03-weft-macos-arm64-build-002/dist/umf_weft-0.4.56-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "68f9297b4b55df483b86d3041040991c4dadfb9b4d63afcff1420c43f93ae41d"
+  },
+  "wrapper": {
+    "acceptedLinuxSameSourceSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d",
+    "member": "weft/__init__.py",
+    "sha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+  }
+}

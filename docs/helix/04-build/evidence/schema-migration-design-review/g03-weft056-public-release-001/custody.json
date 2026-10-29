@@ -1,0 +1,168 @@
+{
+  "copiedFileCount": 22,
+  "excludes": [
+    "README.md",
+    "custody.json",
+    "raw public asset download bodies (not persisted by accepted phases)",
+    "raw publisher HTTP streams (not retained by accepted phases)"
+  ],
+  "files": [
+    {
+      "path": "github/owner-result.json",
+      "role": "accepted authenticated GitHub publication owner receipt",
+      "sha256": "81de788abf1e38f1d005bd1f71a79ff18d1cb70dcc440ec3e7c84926845c37cc",
+      "sizeBytes": 21764,
+      "sourcePath": "/private/tmp/weft-0.4.56-publish-github-003/owner-result.json"
+    },
+    {
+      "path": "github/publisher-result.json",
+      "role": "sanitized GitHub publisher transaction receipt",
+      "sha256": "f0e69233a29e7b29e17f0c8d47c34164107f282f1f7a7215540e509ce614a595",
+      "sizeBytes": 2440,
+      "sourcePath": "/private/tmp/weft-0.4.56-publish-github-003/publisher-result.json"
+    },
+    {
+      "path": "github/independent-review.md",
+      "role": "independent accepted GitHub publication review",
+      "sha256": "6c7fc743c0718a361ce4e25b2e68ce11af4309248c954865e9118267acde7601",
+      "sizeBytes": 6256,
+      "sourcePath": "/private/tmp/g03-weft-publish-github003-sol-actual-review001.md"
+    },
+    {
+      "path": "pypi/owner-result.json",
+      "role": "accepted PyPI publication owner receipt",
+      "sha256": "127a4741b3862c847fcca363cb480548b7502bd4c9ededaaa43c7ba66361cc1f",
+      "sizeBytes": 20171,
+      "sourcePath": "/private/tmp/weft-0.4.56-publish-pypi-001/owner-result.json"
+    },
+    {
+      "path": "pypi/publisher-result.json",
+      "role": "sanitized PyPI publisher transaction receipt",
+      "sha256": "40c2e6e2304538271321c1d26be6a259e09f8046b0ad561c1c220bc324c86b82",
+      "sizeBytes": 588,
+      "sourcePath": "/private/tmp/weft-0.4.56-publish-pypi-001/publisher-result.json"
+    },
+    {
+      "path": "pypi/independent-review.md",
+      "role": "independent accepted PyPI publication review",
+      "sha256": "0f324ac683fcbc7cd01effe955a4580fff492ea8eebbc7385abbcbf3d94e053a",
+      "sizeBytes": 7476,
+      "sourcePath": "/private/tmp/g03-weft-publish-pypi001-sol-actual-review001.md"
+    },
+    {
+      "path": "readback/owner-result.json",
+      "role": "accepted unauthenticated public GitHub readback owner receipt",
+      "sha256": "4bd036579591bdcc2f5da319638af71780327baf2f9f1b6657e82375bdd2abf5",
+      "sizeBytes": 22596,
+      "sourcePath": "/private/tmp/weft-0.4.56-readback-001/owner-result.json"
+    },
+    {
+      "path": "readback/publisher-result.json",
+      "role": "sanitized unauthenticated readback receipt",
+      "sha256": "c245e369c78a94e233d679756f65804a96a838742c5631f46eca9cca63e4adec",
+      "sizeBytes": 3306,
+      "sourcePath": "/private/tmp/weft-0.4.56-readback-001/publisher-result.json"
+    },
+    {
+      "path": "readback/independent-review.md",
+      "role": "independent accepted GitHub readback and PyPI admission review",
+      "sha256": "61b416f304122737850dcbd452d55a26c3e97b47352c588647f637e6299a83dc",
+      "sizeBytes": 7433,
+      "sourcePath": "/private/tmp/g03-weft-readback001-sol-actual-pypi-admission-review001.md"
+    },
+    {
+      "path": "public-api/github-facts.json",
+      "role": "unauthenticated GitHub API observation wrapper",
+      "sha256": "4941dd19f8d877b89a68aa11d76f4b1f929e6743ce30980623b025fb0747eaa3",
+      "sizeBytes": 1131,
+      "sourcePath": "/private/tmp/g03-weft056-public-api-facts-001/result.json"
+    },
+    {
+      "path": "public-api/github-release.json",
+      "role": "unauthenticated GitHub release API response",
+      "sha256": "a7f2ec2dd3447e31dde91336eb3732ea66825aebfcfd0027a08f42dfb420756f",
+      "sizeBytes": 18013,
+      "sourcePath": "/private/tmp/g03-weft056-public-api-facts-001/release.json"
+    },
+    {
+      "path": "public-api/github-tag.json",
+      "role": "unauthenticated Git tag API response",
+      "sha256": "c540f25d724419545f3a60be41d7d2a96f185a7ffe9e8c3ff19a7764c1345f41",
+      "sizeBytes": 386,
+      "sourcePath": "/private/tmp/g03-weft056-public-api-facts-001/tag.json"
+    },
+    {
+      "path": "public-api/pypi-facts.json",
+      "role": "unauthenticated PyPI API observation wrapper",
+      "sha256": "46d8062b0e8e1b315a55bf6fe5a8dc70b5808e665dcba19d01062a8fb8ca2d30",
+      "sizeBytes": 1183,
+      "sourcePath": "/private/tmp/g03-weft056-pypi-public-api-facts-001/result.json"
+    },
+    {
+      "path": "public-api/pypi.json",
+      "role": "unauthenticated PyPI project/version JSON",
+      "sha256": "2a833fe5d9c727821aba9fafe080ca9070456d085a41333c28714deacd73bc6f",
+      "sizeBytes": 4878,
+      "sourcePath": "/private/tmp/g03-weft056-pypi-public-api-facts-001/pypi.json"
+    },
+    {
+      "path": "custody/subject.json",
+      "role": "accepted public-byte custody subject",
+      "sha256": "1043d8ea683f88d4601e668c83f3b76e39cd890333dda32e24ac998a75abf2cd",
+      "sizeBytes": 4624,
+      "sourcePath": "/private/tmp/g03-weft056-public-byte-custody-subject-001/subject.json"
+    },
+    {
+      "path": "custody/subject-review.json",
+      "role": "independent acceptance record for subject; publicProofSha256 binds subject bytes",
+      "sha256": "1ad5bed8bc1561c0f3a1d22e94abcdad08b78ab8d1a9ba717ad98c02d1cd1419",
+      "sizeBytes": 1046,
+      "sourcePath": "/private/tmp/g03-weft056-public-byte-custody-subject001-sol-review001.json"
+    },
+    {
+      "path": "custody/subject-review.md",
+      "role": "human-readable independent subject review",
+      "sha256": "8e96a4126f06be1e5f4a7c16719e8bad5076436ff1f7191f5f3f8ffeca6d26d9",
+      "sizeBytes": 6214,
+      "sourcePath": "/private/tmp/g03-weft056-public-byte-custody-subject001-sol-review001.md"
+    },
+    {
+      "path": "metadata/m8-closure.json",
+      "role": "closed M8 release-metadata change wrapper",
+      "sha256": "eab38368a99542f81692a2822416fa1f902d20d95fc4b9e506e8bcd512d71207",
+      "sizeBytes": 2519,
+      "sourcePath": "/private/tmp/g03-weft-public-adoption-metadata-closure-002.json"
+    },
+    {
+      "path": "metadata/source-correspondence.json",
+      "role": "raw M8 producer-to-metadata source correspondence",
+      "sha256": "65978f77f3f7524cb4c3b737a75ddf07759bfb3d0e5dbc382be2a3c1152c6b63",
+      "sizeBytes": 3964,
+      "sourcePath": "/private/tmp/g03-weft-m8-source-correspondence-001/correspondence.json"
+    },
+    {
+      "path": "metadata/source-review.md",
+      "role": "independent acceptance of actual M8 source correspondence",
+      "sha256": "945c049bb53424bf395f05d7426209187f58beae81237fdae165d03ca7427e64",
+      "sizeBytes": 5222,
+      "sourcePath": "/private/tmp/g03-weft-m8-source-sol-review001.md"
+    },
+    {
+      "path": "build/accepted-wheel-closure.json",
+      "role": "accepted exact three-wheel build identity closure (publication not claimed by that closure)",
+      "sha256": "928902056c2f049bfb5d87db33b41aaabf74fa0bf9ed54b93230869b969321fe",
+      "sizeBytes": 5283,
+      "sourcePath": "/private/tmp/g03-weft-accepted-built-wheel-closure-001.json"
+    },
+    {
+      "path": "build/wheel-closure-review.md",
+      "role": "independent acceptance of built-wheel identity closure",
+      "sha256": "c54153b67c71873d5bcfa1190351292c39506b680c907f12a5bfdfa4df567126",
+      "sizeBytes": 2223,
+      "sourcePath": "/private/tmp/g03-weft-accepted-built-wheel-closure001-sol-review001.md"
+    }
+  ],
+  "profile": "g03.weft056-public-release-evidence-custody/1",
+  "status": "COPIED_FROM_ACCEPTED_RELEASE_PUBLICATION_READBACK_AND_SOURCE_RECEIPTS",
+  "totalCopiedBytes": 148716
+}

@@ -1,0 +1,159 @@
+{
+  "cleanupErrors": [],
+  "commands": [
+    {
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--pull=never",
+        "--name",
+        "g03-static-audit-df30422151f545819b768eaa7af9968f",
+        "--label",
+        "codex.g03.owner=df30422151f545819b768eaa7af9968f",
+        "--platform=linux/amd64",
+        "--network=none",
+        "--read-only",
+        "--cap-drop=ALL",
+        "--cpus=2",
+        "--memory=2g",
+        "--pids-limit=256",
+        "--tmpfs=/tmp:rw,nosuid,nodev,size=64m",
+        "--tmpfs=/target:rw,nosuid,nodev,size=256m",
+        "--mount",
+        "type=bind,src=/private/tmp/g03-final-baseline-amd64-002/candidate,dst=/wheel,readonly",
+        "--mount",
+        "type=bind,src=/private/tmp/g03-final-baseline-operator-003,dst=/operator,readonly",
+        "--mount",
+        "type=bind,src=/private/tmp/g03-final-baseline-amd64-audit-003/reports,dst=/out",
+        "--entrypoint=/opt/python/cp39-cp39/bin/python",
+        "sha256:ec2a7c0873fd1b5e8ce173909e2355384495ac4b5dfe62de0a7fa7053eb82561",
+        "/operator/static_audit.py",
+        "amd64",
+        "/wheel"
+      ],
+      "capture": {
+        "captureErrors": [],
+        "captureFailed": false,
+        "drainExpired": false,
+        "paths": [
+          "/private/tmp/g03-final-baseline-amd64-audit-003/logs/static-audit.stdout.log",
+          "/private/tmp/g03-final-baseline-amd64-audit-003/logs/static-audit.stderr.log"
+        ],
+        "rawSha256": [
+          "6066b120a789ed1707be5b9ecbddcf82b74c1cc7f134ddcf47494bd3eef902a5",
+          "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        ],
+        "retainedBytes": [
+          2055,
+          0
+        ],
+        "timedOut": false,
+        "totalRetainedBytes": 2055,
+        "truncated": [
+          false,
+          false
+        ]
+      },
+      "exitCode": 0,
+      "physicalClosure": {
+        "errors": [],
+        "files": [
+          {
+            "path": "/private/tmp/g03-final-baseline-amd64-audit-003/logs/static-audit.stdout.log",
+            "sha256": "6066b120a789ed1707be5b9ecbddcf82b74c1cc7f134ddcf47494bd3eef902a5",
+            "sizeBytes": 2055
+          },
+          {
+            "path": "/private/tmp/g03-final-baseline-amd64-audit-003/logs/static-audit.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sizeBytes": 0
+          }
+        ],
+        "verified": true
+      }
+    }
+  ],
+  "elapsedSeconds": 2.702,
+  "error": null,
+  "files": [
+    {
+      "bytes": 0,
+      "path": "logs/static-audit.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2055,
+      "path": "logs/static-audit.stdout.log",
+      "sha256": "6066b120a789ed1707be5b9ecbddcf82b74c1cc7f134ddcf47494bd3eef902a5"
+    },
+    {
+      "bytes": 760,
+      "path": "reports/auditwheel-show.txt",
+      "sha256": "97996ca256425b35b0b215df8a94d5b09636e47b47d230752f0a40551a97c6cc"
+    },
+    {
+      "bytes": 1789,
+      "path": "reports/elf-dynamic.txt",
+      "sha256": "c2f2a227fcf649320cee002fe2a0955674dafc3cfc51d86aa5f36b421c157631"
+    },
+    {
+      "bytes": 961,
+      "path": "reports/elf-header.txt",
+      "sha256": "597c48a8ef54ae9ac192a2e6bebbffceacc12e98a5fe945d6fc7570f033fe27f"
+    },
+    {
+      "bytes": 4008,
+      "path": "reports/elf-versions.txt",
+      "sha256": "25dae3d36bf6241dff5dfdac359b14015c6d450f30c66e61b8a7ae8373ab7da8"
+    },
+    {
+      "bytes": 2359,
+      "path": "reports/static-audit.json",
+      "sha256": "544d8617776cea6bb98179a82564e78f85f0793d279ae1d2910cd43af296bdf2"
+    }
+  ],
+  "limits": {
+    "auditSeconds": 120,
+    "evidenceBytes": 16777216,
+    "graceSeconds": 10,
+    "perStreamBytes": 65536,
+    "terminalReserveSeconds": 60,
+    "totalSeconds": 180
+  },
+  "originalInputs": {
+    "buildCommandExitCode": 0,
+    "buildResultPath": "/private/tmp/g03-final-baseline-amd64-002/result.json",
+    "buildResultSha256": "33bfe7e733b42fac5667bf8529afccb7c48dda255105ef9eea5152218a0def2b",
+    "originalBuildOverallStatus": "FAIL_OR_UNKNOWN_STATIC_TAG_EXPECTATION",
+    "producerCommit": "973d864c8d26b2bc173a411eac8368da5efc1ab3",
+    "producerTree": "8b20d1f01bea72ea08ed01fcaac97266ed3cb4ff",
+    "staticAuditHelperSha256": "1680116a8702a5458a2d97b4301d4c5e299603453b036ea41a2aab621fe6e196",
+    "wheelPath": "/private/tmp/g03-final-baseline-amd64-002/candidate/umf_weft-0.4.56-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+    "wheelSha256": "32f4c38d9a614dd4c3a367f8b24d5cd4ba41ec80c2a4a2e3423e2082a294dbdd"
+  },
+  "profile": "umf.g03-local-baseline-static-audit-only/1",
+  "scope": "static audit of actual original built wheel; no rebuild, product import, installation or native execution",
+  "source": {
+    "completeTrackedFileCount": 5901,
+    "fileRosterSha256": "6a671799d5be7a511cc6b5f7c9282d8745fbc80f4a5d796538b6643e8492f2a2",
+    "gitStageRosterSha256": "bc3018c0d674cd2fc80794f9f36c523565c91558f70649cd3fe415f8e88b701b",
+    "head": "973d864c8d26b2bc173a411eac8368da5efc1ab3",
+    "physicalBuildInputCount": 1459,
+    "physicalInputRoots": [
+      "crates/",
+      "spec/",
+      "vendor/",
+      ".cargo/",
+      "tests/",
+      "docs/helix/02-design/contracts/",
+      "docs/helix/03-test/fixtures/",
+      "spikes/b001/fixtures/",
+      "all root files"
+    ],
+    "status": "",
+    "tree": "8b20d1f01bea72ea08ed01fcaac97266ed3cb4ff",
+    "version": "0.4.56"
+  },
+  "status": "LOCAL_BASELINE_AUDIT_ONLY_PASS"
+}

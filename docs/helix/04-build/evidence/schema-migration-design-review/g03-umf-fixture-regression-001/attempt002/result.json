@@ -1,0 +1,135 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--pull=never",
+        "--platform=linux/amd64",
+        "--name",
+        "g03-umf-typecheck-5ea7b770a8c4418dad0a5a3e7aa5f7b0",
+        "--network=none",
+        "--read-only",
+        "--cap-drop=ALL",
+        "--cpus=4",
+        "--memory=8g",
+        "--pids-limit=512",
+        "--tmpfs=/tmp:rw,nosuid,nodev,size=512m",
+        "--mount",
+        "type=bind,source=/Users/erik/.codex/worktrees/eb69/umf,target=/workspace,readonly",
+        "--mount",
+        "type=volume,source=umf-migration-source-267675510,target=/workspace/node_modules,readonly,volume-subpath=node_modules",
+        "--workdir=/workspace",
+        "-e",
+        "BUN_RUNTIME_TRANSPILER_CACHE_PATH=/tmp/bun-cache",
+        "--entrypoint=/usr/bin/timeout",
+        "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+        "--signal=TERM",
+        "--kill-after=10s",
+        "300s",
+        "bun",
+        "run",
+        "typecheck"
+      ],
+      "elapsedSeconds": 7.952,
+      "exitCode": 0,
+      "logs": [
+        {
+          "bytes": 0,
+          "path": "typecheck.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 109,
+          "path": "typecheck.stderr.log",
+          "sha256": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd"
+        }
+      ],
+      "name": "typecheck",
+      "ownedContainerAbsent": true
+    },
+    {
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--pull=never",
+        "--platform=linux/amd64",
+        "--name",
+        "g03-umf-g03-defaults-e4cb032f3611420ea966d83a62366b93",
+        "--network=none",
+        "--read-only",
+        "--cap-drop=ALL",
+        "--cpus=4",
+        "--memory=8g",
+        "--pids-limit=512",
+        "--tmpfs=/tmp:rw,nosuid,nodev,size=512m",
+        "--mount",
+        "type=bind,source=/Users/erik/.codex/worktrees/eb69/umf,target=/workspace,readonly",
+        "--mount",
+        "type=volume,source=umf-migration-source-267675510,target=/workspace/node_modules,readonly,volume-subpath=node_modules",
+        "--workdir=/workspace",
+        "-e",
+        "BUN_RUNTIME_TRANSPILER_CACHE_PATH=/tmp/bun-cache",
+        "--entrypoint=/usr/bin/timeout",
+        "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+        "--signal=TERM",
+        "--kill-after=10s",
+        "300s",
+        "bun",
+        "test",
+        "tests/lifecycle/g03-defaults.test.ts"
+      ],
+      "elapsedSeconds": 7.678,
+      "exitCode": 0,
+      "logs": [
+        {
+          "bytes": 28,
+          "path": "g03-defaults.stdout.log",
+          "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89"
+        },
+        {
+          "bytes": 2353,
+          "path": "g03-defaults.stderr.log",
+          "sha256": "949a1453730b085e4882f8235aa8e8d0d9c9b1c3a7a6ba2237ee77dd2b28abb9"
+        }
+      ],
+      "name": "g03-defaults",
+      "ownedContainerAbsent": true
+    }
+  ],
+  "dependencySource": "existing Linux volume umf-migration-source-267675510/node_modules; package and bun.lock SHA256 equal current root; typescript7.0.2 Linux x64 native package present",
+  "elapsedSeconds": 15.64,
+  "imageId": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+  "profile": "g03.umf-changed-fixture-local-linux-checks/1",
+  "scope": "TypeScript typecheck and directly importing G03 Bun tests for changed native fixture; local Linux only, no browser/native DB/Mac/CI/release qualification",
+  "sourceAfter": {
+    "bun.lock": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4",
+    "package.json": "c7b69fba001805dc9cd4e26e84a9b786be379c1413d020c34600c063d287101b",
+    "tests/lifecycle/g03-defaults-native-fixture.ts": "9f0325ae69e6e8326abc62412404adac1f133c0eef6f40b0cc365b3f4ad7d62f",
+    "tests/lifecycle/g03-defaults-native.py": "0c12a0adb3f6bd1b0bdffd6d151dee43cf3cbceb46881558da8bc3fe56ab65e4",
+    "tests/lifecycle/g03-defaults.test.ts": "0add17a3067d0fec00b7f3b7c905676f8560b982e65b09f3790e94107d271a61",
+    "tests/lifecycle/g03_campaign_orchestration.py": "8f841a3398fd909f0061bff0f0d7256fb6632e5fbd0cf459edf16fa140742a1a",
+    "tests/lifecycle/g03_campaign_predicates.py": "1aad9cb8cb08483ea09112141a2e934f264bcd149651d9be9f6a56e9f04a23fd",
+    "tests/lifecycle/g03_ordinary_native.py": "5e64050386952466c80f8fcbd4ce37a2793308efcd05977a998d627a68fff051",
+    "tests/lifecycle/test_g03_campaign_orchestration.py": "3950bf512e8dc5e18dc30925692d18e2b9012007ec450c6d02d1879ac797a573",
+    "tests/lifecycle/test_g03_campaign_predicates.py": "ce2c39e12bfba7bb03ca315775c3ef0b8e090dad1023fedd2e661bcbb7971cf0"
+  },
+  "sourceBefore": {
+    "bun.lock": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4",
+    "package.json": "c7b69fba001805dc9cd4e26e84a9b786be379c1413d020c34600c063d287101b",
+    "tests/lifecycle/g03-defaults-native-fixture.ts": "9f0325ae69e6e8326abc62412404adac1f133c0eef6f40b0cc365b3f4ad7d62f",
+    "tests/lifecycle/g03-defaults-native.py": "0c12a0adb3f6bd1b0bdffd6d151dee43cf3cbceb46881558da8bc3fe56ab65e4",
+    "tests/lifecycle/g03-defaults.test.ts": "0add17a3067d0fec00b7f3b7c905676f8560b982e65b09f3790e94107d271a61",
+    "tests/lifecycle/g03_campaign_orchestration.py": "8f841a3398fd909f0061bff0f0d7256fb6632e5fbd0cf459edf16fa140742a1a",
+    "tests/lifecycle/g03_campaign_predicates.py": "1aad9cb8cb08483ea09112141a2e934f264bcd149651d9be9f6a56e9f04a23fd",
+    "tests/lifecycle/g03_ordinary_native.py": "5e64050386952466c80f8fcbd4ce37a2793308efcd05977a998d627a68fff051",
+    "tests/lifecycle/test_g03_campaign_orchestration.py": "3950bf512e8dc5e18dc30925692d18e2b9012007ec450c6d02d1879ac797a573",
+    "tests/lifecycle/test_g03_campaign_predicates.py": "ce2c39e12bfba7bb03ca315775c3ef0b8e090dad1023fedd2e661bcbb7971cf0"
+  },
+  "sourceBytesUnchanged": true,
+  "sourceCommit": "191bdb7f1",
+  "status": "PASS",
+  "workingTreeDelta": "two stale N12 expectation literals corrected"
+}

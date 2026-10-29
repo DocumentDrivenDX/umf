@@ -1,0 +1,38 @@
+diff --git a/Cargo.lock b/Cargo.lock
+index 95eec4a2..0bba8864 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -1080,7 +1080,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "weft-python"
+-version = "0.4.55"
++version = "0.4.55+g03.a96e4f29262e"
+ dependencies = [
+  "pyo3",
+  "weft-runtime",
+diff --git a/crates/weft-python/Cargo.toml b/crates/weft-python/Cargo.toml
+index 27236678..695c7fc9 100644
+--- a/crates/weft-python/Cargo.toml
++++ b/crates/weft-python/Cargo.toml
+@@ -1,6 +1,6 @@
+ [package]
+ name="weft-python"
+-version = "0.4.55"
++version = "0.4.55+g03.a96e4f29262e"
+ edition.workspace=true
+ publish.workspace=true
+ license.workspace=true
+diff --git a/crates/weft-python/pyproject.toml b/crates/weft-python/pyproject.toml
+index 05438bd4..6144da6e 100644
+--- a/crates/weft-python/pyproject.toml
++++ b/crates/weft-python/pyproject.toml
+@@ -5,7 +5,7 @@ build-backend="maturin"
+ license = "MIT OR Apache-2.0"
+ license-files = ["LICENSE.md", "LICENSE-MIT", "LICENSE-APACHE", "THIRD-PARTY-LICENSES.txt"]
+ name="umf-weft"
+-version = "0.4.55"
++version = "0.4.55+g03.a96e4f29262e"
+ description="Native UMF-powered SQL compiler with explicit backend profiles"
+ readme="README.md"
+ requires-python=">=3.9"

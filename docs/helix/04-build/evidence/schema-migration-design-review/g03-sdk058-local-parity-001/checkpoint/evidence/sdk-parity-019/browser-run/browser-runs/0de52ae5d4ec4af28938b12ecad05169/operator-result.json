@@ -1,0 +1,211 @@
+{
+  "browser": {
+    "browser": "153.0.8010.12",
+    "checks": {
+      "acceptedPlans": 6,
+      "blockedPlans": 1,
+      "compilationParityCases": 7,
+      "discoveryParityCases": 11,
+      "discoveryRefusalCases": 4,
+      "nativeLifecycleReleaseQualified": false,
+      "pythonNoneOmissionCases": 1,
+      "rawWireNullRefusalCases": 1,
+      "rehashedTamperRefusalCases": 3,
+      "verificationParityCases": 6
+    },
+    "externalRequests": [],
+    "profile": "umf.sdk-g03-browser-parity/0.1",
+    "rawWireBoundary": "The embedded raw-wire selector check is not an @umf/core public SDK export; its result is independently required from the paired embedded Python report.",
+    "sdkInputs": {
+      "archiveSha256": "2aaf24741aee1c135fade5b7631db90d710e6211977fb9ca7fcc080ea7fdf58d",
+      "bundleInputSha256ByRealpath": {
+        "/out/sdk-install/node_modules/@umf/core/dist/umf.js": "071544fcc83c5abcf1e280890e1516613f679a58cf245b31a7bf16f0b6dd24fd",
+        "/tmp/umf-g03-sdk-browser-ZHEL95/g03-installed-sdk-entry.ts": "be6a80738bb6b4d573c2d6810f3bf33409e8c96e2d7b2c096547bd3b20573f9d"
+      },
+      "bundleSha256": "2f07b80863adfd853dbd53eebf420c20af807aa22f35ef60f9c9db996dbd3746",
+      "corpusPath": "/inputs/g03-corpus.json",
+      "corpusSha256": "88a402998e44b89f24f36c7c54fb5d96d3cd131f6b371663bd44ce306f65ad25",
+      "externalImports": [],
+      "installReceiptSha256": "a1ba0b4346da1304562b3c2bd48d3fcd35c35fef779e38e959980b877c5cdea4",
+      "installedPackagePath": "/out/sdk-install/node_modules/@umf/core",
+      "packageJsonSha256": "4533bf7e5ed7bb0aba4e3bdf395818423281ae464b96a73fe492c57291e81500",
+      "packageManifestSha256": "0683f83ffef546c7c48d0b267528fafe83c16006a2cef5fdb299260ebb444309",
+      "publicEntrySha256": "071544fcc83c5abcf1e280890e1516613f679a58cf245b31a7bf16f0b6dd24fd",
+      "pythonReportPath": "/inputs/g03-python-report.json",
+      "pythonReportSha256": "e20e41133602a9e7d2cff8be7cd654176948cc7733968a492082cc66cd60ce13",
+      "sdkArchivePath": "/tmp/umf-source/.cache/sdk-distribution/umf-sdk.tgz",
+      "sourceHashes": {
+        "package.json": "323d619288cd35e7e86c932c0d26bfbfb2f8b4a5e5cc3f39bcaa415dd3c3aeaa",
+        "python/pyproject.toml": "b498b238d1c084f91efdc1375b4495fcea4c85ebb29154ada27c2e2977314fad",
+        "scripts/g03-migration-corpus.ts": "75504eb38e562d1c9e3823e05e84aa1ec3488d2e2f4535ce38f2e2b00a860e5e",
+        "scripts/g03-sdk-browser.ts": "136e43410f5d58e7259cc0edc23ff1e20e59ef0e16ccf5789031e5868ce32805",
+        "scripts/package-sdk.py": "fba473d59010e402c17b4b0e6a99e504a9d4aee52d76cf3eac6fd721c1ea87a4",
+        "scripts/package-sdk.ts": "87005ad8320eccddcdff62621f39a39a03a83a9e180a17e87c436a574790d250",
+        "scripts/test-sdk-install.ts": "f7c34122585507c0b31c2846e532cca666e119641ab970e47083082504516b78",
+        "src/generated/core-model.ts": "55485912b78640ef970244ffd8d4cbd6f186e035efccd77259aadff6120b7106",
+        "src/table-migration/index.ts": "4daeab691d08ca1cca2c321f98c7c7925e9483e68b50b50881cbc69c082ded99",
+        "tests/binding/fixtures/table-lifecycle-note.json": "0f8a2f5d38d32514ec38fc3bbe393c5b88d45c251c2ae05ac23bea261b0e94ee",
+        "tests/codegen/g03_migration_probe.py": "5d9720354ec6e294b9be72360bcc6d54fcdc11161887a655424152691e032e83"
+      }
+    },
+    "sdkVersion": "0.5.8"
+  },
+  "browserOutputBytes": 3186,
+  "browserOutputFiles": [
+    {
+      "bytes": 3186,
+      "path": "g03-sdk-browser-report.json",
+      "sha256": "d82459ee3e5340d523c80459c27a6e5a78593db67faa316c0ee12a166e7961ab"
+    }
+  ],
+  "browserReportSha256": "d82459ee3e5340d523c80459c27a6e5a78593db67faa316c0ee12a166e7961ab",
+  "cleanup": {
+    "containerAbsent": true,
+    "containerRemoved": true,
+    "daemonReachable": true,
+    "verified": true
+  },
+  "containerConfig": "sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27|none|true|8192|4000000000|8589934592",
+  "containerMounts": [
+    {
+      "destination": "/result",
+      "name": null,
+      "rw": true,
+      "source": "/private/tmp/g03-sdk058-parity-019/browser-runs/0de52ae5d4ec4af28938b12ecad05169/out",
+      "type": "bind"
+    },
+    {
+      "destination": "/source-review.md",
+      "name": null,
+      "rw": false,
+      "source": "/private/tmp/g03-sdk058-parity019-sol-source-review001.md",
+      "type": "bind"
+    },
+    {
+      "destination": "/volume-producer",
+      "name": "umf-sdk058-source-855f6c486-001",
+      "rw": false,
+      "source": "/var/lib/docker/volumes/umf-sdk058-source-855f6c486-001/_data",
+      "type": "volume"
+    },
+    {
+      "destination": "/inputs/g03-corpus.json",
+      "name": null,
+      "rw": false,
+      "source": "/private/tmp/g03-sdk058-parity-019/runs/ff409cb5dac54ec6bc65df7f28915ccc/guest/g03-corpus.json",
+      "type": "bind"
+    },
+    {
+      "destination": "/inputs/g03-python-report.json",
+      "name": null,
+      "rw": false,
+      "source": "/private/tmp/g03-sdk058-parity-019/runs/ff409cb5dac54ec6bc65df7f28915ccc/guest/g03-python-report.json",
+      "type": "bind"
+    },
+    {
+      "destination": "/out/sdk-install",
+      "name": null,
+      "rw": false,
+      "source": "/private/tmp/g03-sdk058-local-producer-actual-002/sdk-install",
+      "type": "bind"
+    },
+    {
+      "destination": "/tools/bun",
+      "name": null,
+      "rw": false,
+      "source": "/private/tmp/g03-linux-arm-bun143-001/bun",
+      "type": "bind"
+    },
+    {
+      "destination": "/volume-producer/node_modules",
+      "name": null,
+      "rw": false,
+      "source": "/private/tmp/g03-sdk-playwright163-linux-export-001/packages",
+      "type": "bind"
+    },
+    {
+      "destination": "/tmp/umf-source/.cache/sdk-distribution",
+      "name": null,
+      "rw": false,
+      "source": "/private/tmp/g03-sdk058-local-producer-actual-002/sdk-distribution",
+      "type": "bind"
+    }
+  ],
+  "elapsedSeconds": 102.837,
+  "executionId": "0de52ae5d4ec4af28938b12ecad05169",
+  "image": "sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27",
+  "limits": {
+    "aggregateSeconds": 1800,
+    "browserChildSeconds": 600,
+    "evidenceBytes": 16777216,
+    "logsBytes": 1048576,
+    "reserveSeconds": 60,
+    "stopGraceSeconds": 10
+  },
+  "outerCapture": {
+    "captureErrors": [],
+    "captureFailed": false,
+    "drainExpired": false,
+    "paths": [
+      "/private/tmp/g03-sdk058-parity-019/browser-runs/0de52ae5d4ec4af28938b12ecad05169/outer/browser.stdout.log",
+      "/private/tmp/g03-sdk058-parity-019/browser-runs/0de52ae5d4ec4af28938b12ecad05169/outer/browser.stderr.log"
+    ],
+    "rawSha256": [
+      "f36986061075013f8776c36634cb185aa2d78645143ae6fb6e884e16492fc900",
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    ],
+    "retainedBytes": [
+      271,
+      0
+    ],
+    "timedOut": false,
+    "totalRetainedBytes": 271,
+    "truncated": [
+      false,
+      false
+    ]
+  },
+  "outerClosure": {
+    "errors": [],
+    "files": [
+      {
+        "path": "/private/tmp/g03-sdk058-parity-019/browser-runs/0de52ae5d4ec4af28938b12ecad05169/outer/browser.stdout.log",
+        "sha256": "f36986061075013f8776c36634cb185aa2d78645143ae6fb6e884e16492fc900",
+        "sizeBytes": 271
+      },
+      {
+        "path": "/private/tmp/g03-sdk058-parity-019/browser-runs/0de52ae5d4ec4af28938b12ecad05169/outer/browser.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      }
+    ],
+    "verified": true
+  },
+  "platform": "linux/arm64",
+  "playwrightReceiptSha256": "e6d4741f8c96bea601637b427fb27171996a4c739b155d89bdeb0963b9e8b822",
+  "playwrightRosterSha256": "7b090c27909d03fe90e1d23e7e1cb5a0431bf3b27f3020389c50742c8d0fbd5f",
+  "profile": "umf.g03-sdk058-browser-operator/1",
+  "pythonCorpusSha256": "88a402998e44b89f24f36c7c54fb5d96d3cd131f6b371663bd44ce306f65ad25",
+  "runEvidenceBytesBeforeReceipt": 3457,
+  "runFilesBeforeReceipt": [
+    {
+      "bytes": 3186,
+      "path": "out/g03-sdk-browser-report.json",
+      "sha256": "d82459ee3e5340d523c80459c27a6e5a78593db67faa316c0ee12a166e7961ab"
+    },
+    {
+      "bytes": 0,
+      "path": "outer/browser.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 271,
+      "path": "outer/browser.stdout.log",
+      "sha256": "f36986061075013f8776c36634cb185aa2d78645143ae6fb6e884e16492fc900"
+    }
+  ],
+  "sdkArchiveSha256": "2aaf24741aee1c135fade5b7631db90d710e6211977fb9ca7fcc080ea7fdf58d",
+  "sdkInputsSha256": "563f493db45135f661330ab5686131dfb4385159b25d31a69cba37f72248dd41",
+  "sdkInstallCustodySha256": "a1ba0b4346da1304562b3c2bd48d3fcd35c35fef779e38e959980b877c5cdea4",
+  "status": "PASS_LOCAL_G03_INSTALLED_SDK_CHROMIUM_PARITY"
+}

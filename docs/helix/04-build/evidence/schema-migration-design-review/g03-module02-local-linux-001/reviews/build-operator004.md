@@ -1,0 +1,5 @@
+# G03 local operator004 focused source seal
+
+Accept source-only root execution. Runner df9155af84dfc7b198b400059fa179b1a5b9b7a366ac3ff71af5f9ff20733b43; manifest12cd8e25f572ebe2a4473da8eb753161bc6b112fd93446ca2a779476727ffc3e; all five physical payload rows verified. Exact runner003-to004 delta is output/operator metadata paths and revised semantic fingerprint3f890d60802ef3cedbf212a98f1142dbb202c39e81ea181b13fd0d8960f8dd1c. Actual full patch9ecea333630123baaee91dfec3b6520d90e5d73a5cdc5b407310d511fe4200a4 is separately recorded. README and previous-attempt disposition truthfully preserve003's program-versus-bind assertion failure. Repaired query test6bbeef2973974b424d47bc512b69f25eccec99068a3b373f93a9e9171608a950 already accepted.
+
+Entire table_operation target, conditional full-feature held wheel build, prototype label interpretation, exact tools/image, offline test/build, limits/capture/source/owned-cleanup guards are unchanged. No broader-suite success inferred. No candidate execution or Git mutation by reviewer.

@@ -1,0 +1,111 @@
+{
+  "executionPerformed": false,
+  "fileCount": 20,
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "31a754772d5ecefaa412b7b0545584e693c5ef11aa81aacce31ec8a3ff0f9f52",
+      "sizeBytes": 3550
+    },
+    {
+      "path": "SOURCE-FREEZE-NOTE.md",
+      "sha256": "e6e4fbb0bd1a6fe5c2c14070b80ee2473c770cc147a90bfb0cd68ed92268693b",
+      "sizeBytes": 1107
+    },
+    {
+      "path": "artifact-class-plan001.md",
+      "sha256": "1eba3463cf9b86db57be9c9f65f8256fade6326768a776a64c4176574831fd48",
+      "sizeBytes": 1626
+    },
+    {
+      "path": "inputs/browser-deps/manifest.json",
+      "sha256": "9f99c0ee83fd0e34ff5f48a83e27f46fd39e3140230629237e0849ea5e07a770",
+      "sizeBytes": 42623
+    },
+    {
+      "path": "inputs/evidence/browser-tool-preflight.json",
+      "sha256": "34cf401c6ae050197622ea093a5ffb6a56f53d9ee430e3773a622e3ea5664dc4",
+      "sizeBytes": 1617
+    },
+    {
+      "path": "inputs/evidence/builder-tool-feasibility.json",
+      "sha256": "bd047351ae8b6d736931a718e4799669859f072b28e8cfa1dcee9d4deee20983",
+      "sizeBytes": 2836
+    },
+    {
+      "path": "inputs/evidence/builder-tool-versions-failed-optional-probe.json",
+      "sha256": "dd56714625a6fbc82ef5c7a56608c7ddcc7faaaad47ef170920476dfe07ca242",
+      "sizeBytes": 1829
+    },
+    {
+      "path": "inputs/evidence/final-cohort-construction-result.json",
+      "sha256": "7d173eb827ae903a3dd2abc2ba2213fd5ced07e829fdae263525e6447d506466",
+      "sizeBytes": 6051
+    },
+    {
+      "path": "inputs/evidence/final-cohort-data-review.md",
+      "sha256": "8f9c46085a237b566c4142dbcb062b94dadd04194734da8dff01b22e0a9fe217",
+      "sizeBytes": 4971
+    },
+    {
+      "path": "inputs/evidence/wasm-bindgen-version-preflight.json",
+      "sha256": "f44c2ce21069c072f8c276cd30ddaa605e3b3be071acb1c8c1b2fb3866c6d00b",
+      "sizeBytes": 1080
+    },
+    {
+      "path": "inputs/source-custody/custody.json",
+      "sha256": "e936a962be023654bd045cafa1f02d664e06e4c6bd6f686e4441f8558e027621",
+      "sizeBytes": 619
+    },
+    {
+      "path": "inputs/source-custody/git-stage-roster.txt",
+      "sha256": "bc3018c0d674cd2fc80794f9f36c523565c91558f70649cd3fe415f8e88b701b",
+      "sizeBytes": 780359
+    },
+    {
+      "path": "inputs/table-operations-packet.json",
+      "sha256": "e84551416d59e485c7fd4f2ca6cf955efa031e97b570b8c422830aaa915d69ad",
+      "sizeBytes": 10021
+    },
+    {
+      "path": "plan001.md",
+      "sha256": "d3eb0216ee6c1ae22c90f84b00b51484974a134a42a9a70df64ef9a020334278",
+      "sizeBytes": 7296
+    },
+    {
+      "path": "run_operator.py",
+      "sha256": "d673038b3e6e539a811baea162e2e2084d267941256a8fd4fc00bcc0633a92bf",
+      "sizeBytes": 87703
+    },
+    {
+      "path": "runtime/bounded_capture.py",
+      "sha256": "acc1a03387d2eeeac3b06b6d6cdb3c5a477073f6aa4eeea53c55c7996c38b1b0",
+      "sizeBytes": 7740
+    },
+    {
+      "path": "runtime/cargo_cache_extract.py",
+      "sha256": "6d4b4586fc91cb64f9fb96f29f16877eb7ecb8ba383b13b923e73d0e881d4994",
+      "sizeBytes": 15336
+    },
+    {
+      "path": "runtime/distribution_snapshot.py",
+      "sha256": "861924852fe09e36e9fc0233e2d7aea2a31b8a45f38d13bb2ad8ff27dc51857e",
+      "sizeBytes": 6290
+    },
+    {
+      "path": "runtime/table_guest.py",
+      "sha256": "be19e18ebd94198cdee0615f20b525eda3696f59a750dc41fb0af1be3ab08d9a",
+      "sizeBytes": 40749
+    },
+    {
+      "path": "runtime/verify_weft_wheel.py",
+      "sha256": "78c294fd7a947a97f29b133b8dd6bb0977c47f29b5a891e6b3e5456f393c5929",
+      "sizeBytes": 4115
+    }
+  ],
+  "gitMutation": false,
+  "profile": "umf.g03-table-operations-source-freeze/1",
+  "status": "FROZEN_SOURCE_ONLY_NOT_EXECUTED",
+  "testsPerformed": false,
+  "totalBytes": 1027518
+}

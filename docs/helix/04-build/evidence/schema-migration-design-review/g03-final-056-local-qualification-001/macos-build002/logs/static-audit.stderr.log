@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/private/tmp/g03-macos-build-only-operator-002/static_audit.py", line 194, in <module>
+    if __name__=='__main__':main()
+  File "/private/tmp/g03-macos-build-only-operator-002/static_audit.py", line 172, in main
+    native=parse_macho(contents[NATIVE],set(members))
+  File "/private/tmp/g03-macos-build-only-operator-002/static_audit.py", line 54, in parse_macho
+    if filetype!=8:raise ValueError('native extension is not MH_BUNDLE')
+ValueError: native extension is not MH_BUNDLE

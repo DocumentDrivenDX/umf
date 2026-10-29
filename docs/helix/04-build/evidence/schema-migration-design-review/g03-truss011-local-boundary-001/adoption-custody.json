@@ -1,0 +1,1261 @@
+{
+  "fileCount": 251,
+  "files": [
+    {
+      "bytes": 887,
+      "path": "README.md",
+      "sha256": "fe69c30c163dad5713b4a9c8c22b71365269bc8d2fa37fb186488383ebb5b650"
+    },
+    {
+      "bytes": 1809,
+      "path": "checkpoint/README.md",
+      "sha256": "28a6d2455ba78bdf2793d158c12507a3a18a404916b900cfa29e8d815f8460c2"
+    },
+    {
+      "bytes": 12404,
+      "path": "checkpoint/actual/full-truss011/browser-entity/receipts.json",
+      "sha256": "2a0e1479a78eaacbb2f10da4559be734209af74ad52b805b659aa8a97cc81f03"
+    },
+    {
+      "bytes": 1496,
+      "path": "checkpoint/actual/full-truss011/browser-entity/summary.json",
+      "sha256": "26d95a63b26483b47c5c8916429439039967cf0c2bb4229c99b949c1ffd3de06"
+    },
+    {
+      "bytes": 3226,
+      "path": "checkpoint/actual/full-truss011/browser-facts/receipts.json",
+      "sha256": "cea472779b90551c37ae043fa1fa2592854c6f73b07bf9f7841b1c5970638506"
+    },
+    {
+      "bytes": 1495,
+      "path": "checkpoint/actual/full-truss011/browser-facts/summary.json",
+      "sha256": "d3e4c1cb2893658191d0729c7c7a611bcd3e9bdf198abc728e9368c31a7ff8e8"
+    },
+    {
+      "bytes": 205139,
+      "path": "checkpoint/actual/full-truss011/operator-result.json",
+      "sha256": "69832734f3bc7b9668616708a8286a662bf51460e5bb46293749d14bd6f2c3f0"
+    },
+    {
+      "bytes": 640,
+      "path": "checkpoint/actual/full-truss011/operator-result.seed.json",
+      "sha256": "29edcccbdae6aac271b3fe9437da17e5172fa3c73c6a5702398105c1db5e2530"
+    },
+    {
+      "bytes": 7692,
+      "path": "checkpoint/actual/full-truss011/outer/browser-entity.stderr.log",
+      "sha256": "fd1383e39434ce5c64b9d5794e838963b1b2feb2191bf28336b2a500c57fbda2"
+    },
+    {
+      "bytes": 3110,
+      "path": "checkpoint/actual/full-truss011/outer/browser-entity.stdout.log",
+      "sha256": "a656301a1a94a03f4aeb16869ec17b42e61d55e9103eb4d1d073e08ac8693c87"
+    },
+    {
+      "bytes": 7692,
+      "path": "checkpoint/actual/full-truss011/outer/browser-facts.stderr.log",
+      "sha256": "64270a2cb41ba4b60c3f1ec72e3c3552153ca41e0e9057d2ba5ce9960072389f"
+    },
+    {
+      "bytes": 3109,
+      "path": "checkpoint/actual/full-truss011/outer/browser-facts.stdout.log",
+      "sha256": "20f26b2bd71a0e7c8068ccc00b2ef7dab2b7c748508d50d9610bb8717b0c108c"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/browser-identity-after.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 171,
+      "path": "checkpoint/actual/full-truss011/outer/browser-identity-after.stdout.log",
+      "sha256": "4184352970fb72f492b4c60150a7ba03884c8ddacaedafaa21eecb6cc4928c1b"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/browser-identity-before.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 171,
+      "path": "checkpoint/actual/full-truss011/outer/browser-identity-before.stdout.log",
+      "sha256": "4184352970fb72f492b4c60150a7ba03884c8ddacaedafaa21eecb6cc4928c1b"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/builder.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/builder.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-final-0.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-final-0.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-final-1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-final-1.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-final-2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-final-2.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-final-3.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-final-3.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-final-4.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-final-4.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-inspect-0.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 203,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-inspect-0.stdout.log",
+      "sha256": "159783d46d958e3eafc75f0ff98de2e2863a0489b11d11bf13a64c72a50e98d3"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-inspect-1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 197,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-inspect-1.stdout.log",
+      "sha256": "e2bff7fe935062706269e39c77af22e2cd0a8e58cb325fb68a76fe0fb7201919"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-inspect-2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 188,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-inspect-2.stdout.log",
+      "sha256": "4a4979a7c68ebb2b19550f5e74fdb0b947e01e3a66de47b1cba0fe5fb2547025"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-inspect-3.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 188,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-inspect-3.stdout.log",
+      "sha256": "5de567d00993bcddc835901481e9942d71bfb81aef34e4ffaebfd40a1fe9ca00"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-inspect-4.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 197,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-inspect-4.stdout.log",
+      "sha256": "18abceececfe7bb5483bd0858409d417bd2c11a8f47009600dfdb311d822f91f"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-list-0.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 55,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-list-0.stdout.log",
+      "sha256": "85ff285200838f0afa6324e9b564fb5c273b5dc96f9649845646c0a56f220308"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-list-1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 71,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-list-1.stdout.log",
+      "sha256": "00a31a7145ab06a3018db2e46f366f964bc250afabf11579e50212e8d1e6fc67"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-list-2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 61,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-list-2.stdout.log",
+      "sha256": "97b20f7bc14f9ac2099a363402fe4f05b512ba24106d834261901bf9fe907de4"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-list-3.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 62,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-list-3.stdout.log",
+      "sha256": "e5f101340d2fff744ff5d4b82aa89b45f07c5cf6b1ff8681cdf2be64af51f87a"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-list-4.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 70,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-list-4.stdout.log",
+      "sha256": "bf703b36f4fdccadb8c8571b158ad911a383a03457a9ece5af82b7f072cd6fbe"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-rm-0.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 55,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-rm-0.stdout.log",
+      "sha256": "85ff285200838f0afa6324e9b564fb5c273b5dc96f9649845646c0a56f220308"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-rm-1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 71,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-rm-1.stdout.log",
+      "sha256": "00a31a7145ab06a3018db2e46f366f964bc250afabf11579e50212e8d1e6fc67"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-rm-2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 61,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-rm-2.stdout.log",
+      "sha256": "97b20f7bc14f9ac2099a363402fe4f05b512ba24106d834261901bf9fe907de4"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-rm-3.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 62,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-rm-3.stdout.log",
+      "sha256": "e5f101340d2fff744ff5d4b82aa89b45f07c5cf6b1ff8681cdf2be64af51f87a"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-rm-4.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 70,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-rm-4.stdout.log",
+      "sha256": "bf703b36f4fdccadb8c8571b158ad911a383a03457a9ece5af82b7f072cd6fbe"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-stop-0.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 110,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-stop-0.stdout.log",
+      "sha256": "3d2413804e19cbff54813e7f69b2b598841592f4ce70088164fe522d62147280"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-stop-1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 126,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-stop-1.stdout.log",
+      "sha256": "b8dfaa0648aab1013ddbc5ca36deacdb2c72802ede82eecf96d50e1ebe52875f"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-stop-2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 116,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-stop-2.stdout.log",
+      "sha256": "7b3b4ad20751b9f560407367358b8108228bb7381ef224a9d941888d5c726897"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-stop-3.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 117,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-stop-3.stdout.log",
+      "sha256": "5e07a479fedffb5f907d20fa077ffa3ff0a0899cdb1cfc1e3bbd812f622de16c"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-stop-4.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 125,
+      "path": "checkpoint/actual/full-truss011/outer/cleanup-stop-4.stdout.log",
+      "sha256": "1bf78fe8e1d4ff0ddbd7562d61890f88c1e8d273e861f65735c4588ba19f137a"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/image-browser.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 84,
+      "path": "checkpoint/actual/full-truss011/outer/image-browser.stdout.log",
+      "sha256": "5a543dc5bc7e049b6e71543357800b56ad1246cee2ab082d2a75e899b5af5b9c"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/image-builder.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 84,
+      "path": "checkpoint/actual/full-truss011/outer/image-builder.stdout.log",
+      "sha256": "15da17c01d73753ac5f83904478e7471c56c7be2a49a00e500c70e3148282723"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/inspect-browser-33df05e65ad4.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1868,
+      "path": "checkpoint/actual/full-truss011/outer/inspect-browser-33df05e65ad4.stdout.log",
+      "sha256": "1f4efbd5d397aa66145ad2a5e6dad7e169e55ffbdf9100d3ff6cc739e4d0eb78"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/inspect-browser-5a4e6b4944b5.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1866,
+      "path": "checkpoint/actual/full-truss011/outer/inspect-browser-5a4e6b4944b5.stdout.log",
+      "sha256": "a0e882850d4d38b69d8dd28fbeb498c875e20f33bdd7e0e230d1d447dea0e98f"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/inspect-builder-81d0d9dc6ceb.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2042,
+      "path": "checkpoint/actual/full-truss011/outer/inspect-builder-81d0d9dc6ceb.stdout.log",
+      "sha256": "d436629b0780a7ac0f8d94ae81f627b8c1c5791877072868f434c63c3d679316"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/inspect-identity-547a575bfd73.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 221,
+      "path": "checkpoint/actual/full-truss011/outer/inspect-identity-547a575bfd73.stdout.log",
+      "sha256": "565f3468f9fa8c94411c9630e94e744b03b1bbb296cd33facb29dc3f23ad5a17"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/outer/inspect-identity-5910d8bf94e1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 221,
+      "path": "checkpoint/actual/full-truss011/outer/inspect-identity-5910d8bf94e1.stdout.log",
+      "sha256": "c6f86fce37718d89d0ad5b8f9fb4691ed13b27fb6d7836ce7894a46b9ffa5a40"
+    },
+    {
+      "bytes": 29404,
+      "path": "checkpoint/actual/full-truss011/owned/out/commands.jsonl",
+      "sha256": "5c1638b88f13b1dd9a505a6f019ef600e0d21cc32151942d7ed152265fe72d89"
+    },
+    {
+      "bytes": 83,
+      "path": "checkpoint/actual/full-truss011/owned/out/guest-phase-seed.json",
+      "sha256": "8f7ab71213c3a565b0d977e9255696b30efd1c1a853bab2f2b5a7f920a47420c"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/browser-wrapper.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 63,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/browser-wrapper.stdout.log",
+      "sha256": "6a55c1665ec812956136d0ef9979efad13cafa3d187f5db7a0b0d171a7fcf2c3"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/bun-version.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 6,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/bun-version.stdout.log",
+      "sha256": "bd31e8d9cf8d14a1e9e3fdf3b9f6a524819aed0d1b14627523c6765767c7d8f1"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/cargo-cache-extract.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 161,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/cargo-cache-extract.stdout.log",
+      "sha256": "9d4de7902f4996b96dcae87b4fd7374bee2cd6efdf123657f0c5372edf4fcdcd"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/cargo-version.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 36,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/cargo-version.stdout.log",
+      "sha256": "5f9bdc5e0a6960db4a3cc66e9b3ae15bad5b9b506e8b7c49739c88dc5355c3f1"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/create-venv.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/create-venv.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/distribution-snapshot-post.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 926,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/distribution-snapshot-post.stdout.log",
+      "sha256": "c35538669bb284331fd708153fb7ecd922ffdc2d260e8f8329752265688aab37"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/distribution-snapshot.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 926,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/distribution-snapshot.stdout.log",
+      "sha256": "c35538669bb284331fd708153fb7ecd922ffdc2d260e8f8329752265688aab37"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/entity-python.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 55,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/entity-python.stdout.log",
+      "sha256": "5398918007b41e9d1197cde2136d065131d7597f4bc9a5be7909f693a6f88002"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/facts-python.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 54,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/facts-python.stdout.log",
+      "sha256": "a8e760313dffc6823e87da5002bb12b5717b16fc26b7b28877fc34bc818b1ae0"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/node-version.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 9,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/node-version.stdout.log",
+      "sha256": "b26441604894a1a4e4cac96bfb464737575d9b6a2e8b9d3e996283005bd67b37"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/offline-install.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 3462,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/offline-install.stdout.log",
+      "sha256": "3ca6eb11af235ba9954ec5c6e02697163d4a6c37e2617853fea9ac99c0e9f903"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/pip-check.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 30,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/pip-check.stdout.log",
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/python-version.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 15,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/python-version.stdout.log",
+      "sha256": "686560bcd94a5a3fe8187b7c4fc49beaff41c87eccb79908cd3da863ec30e52e"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/rust-targets.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 48,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/rust-targets.stdout.log",
+      "sha256": "dfefef0a475862622c9cc10adb82ac6004b6b8cd61c2296712a384a16eb6d624"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/rust-verbose.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 196,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/rust-verbose.stdout.log",
+      "sha256": "938db28b83089ab88301ca425f99fa1d8b61ee66e0371babe1db6373ae9810a3"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/rustc-version.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 36,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/rustc-version.stdout.log",
+      "sha256": "3397f54a03033c1b027496d83acc64e8f3ceeb4017e0575150f78726edce8a1a"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/truss-wasm-bindgen.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/truss-wasm-bindgen.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 11335,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/truss-wasm-build.stderr.log",
+      "sha256": "69072f6164082561b75bec693ca7dc29d76aa978be5bc8bc06ec1ab437e0eaec"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/truss-wasm-build.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/wasm-bindgen-version.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 21,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/wasm-bindgen-version.stdout.log",
+      "sha256": "77e9a14fc88e7434ec823340ac27538312be174451c3548fd84ec08f1beb8276"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/wheel-members.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 606,
+      "path": "checkpoint/actual/full-truss011/owned/out/logs/wheel-members.stdout.log",
+      "sha256": "de79641cfed7b0fba0b15fad2e9c534faa65997b6e0200a1e30e6979e6bfcdcf"
+    },
+    {
+      "bytes": 588,
+      "path": "checkpoint/actual/full-truss011/owned/out/reports/cargo-cache.json",
+      "sha256": "9a2170c7c8e63221c986df190137f2d0ed8f4c31366d7da3c886a27ee29aa47e"
+    },
+    {
+      "bytes": 994279,
+      "path": "checkpoint/actual/full-truss011/owned/out/reports/entity.json",
+      "sha256": "ff8803dda03a4ef376e44984c1a010ead8065b817a002d6178dba8b0343256bf"
+    },
+    {
+      "bytes": 186460,
+      "path": "checkpoint/actual/full-truss011/owned/out/reports/facts.json",
+      "sha256": "c45b385d21c64d4abec74849a7cad50229a6eaa054b2a14a192b13c2566b8982"
+    },
+    {
+      "bytes": 29738,
+      "path": "checkpoint/actual/full-truss011/owned/out/reports/guest-phase-result.json",
+      "sha256": "98617a42b20d7e3873cc1a4907d2e9c52a2c850314ce7bd07fde2d512ef0d4d2"
+    },
+    {
+      "bytes": 1010,
+      "path": "checkpoint/actual/full-truss011/owned/out/reports/installed-distributions.json",
+      "sha256": "a324a7b5ca5f8f39651340e76340270546abb2767bb9f0596069591f17b9471c"
+    },
+    {
+      "bytes": 606,
+      "path": "checkpoint/actual/full-truss011/owned/out/reports/installed-wheel-correspondence.json",
+      "sha256": "de79641cfed7b0fba0b15fad2e9c534faa65997b6e0200a1e30e6979e6bfcdcf"
+    },
+    {
+      "bytes": 958557,
+      "path": "checkpoint/actual/full-truss011/owned/out/reports/source-inventory.json",
+      "sha256": "3c1d1f1d99766a444234ec40078e3d79804ffd601c3cbfd41b809b1e469cede7"
+    },
+    {
+      "bytes": 20467,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-005/operator-result.json",
+      "sha256": "90b0705f1366639ba19f7ffae3a92b60748c471d0aa916f5d445d823bd0f5725"
+    },
+    {
+      "bytes": 7692,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-005/outer/browser-facts.stderr.log",
+      "sha256": "9b6196e2c3c29b2e8d2f8bb5a8e7e50acbfc41a811f2f9dce9c22345ba532645"
+    },
+    {
+      "bytes": 3109,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-005/outer/browser-facts.stdout.log",
+      "sha256": "20f26b2bd71a0e7c8068ccc00b2ef7dab2b7c748508d50d9610bb8717b0c108c"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-005/outer/cleanup-809820fd9f58.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 59,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-005/outer/cleanup-809820fd9f58.stdout.log",
+      "sha256": "f4a4ce0296d3a0f68a6c576d8a8e88cdedba37b75f2d1a5c7835920689e77b53"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-005/outer/cleanup-owner-809820fd9f58.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 159,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-005/outer/cleanup-owner-809820fd9f58.stdout.log",
+      "sha256": "12f1336675a8bc924582deab88f88b24f7edd294196af296510c31a36c0bd5c2"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-005/outer/image-browser.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 84,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-005/outer/image-browser.stdout.log",
+      "sha256": "5a543dc5bc7e049b6e71543357800b56ad1246cee2ab082d2a75e899b5af5b9c"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-005/outer/inspect-browser-809820fd9f58.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1806,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-005/outer/inspect-browser-809820fd9f58.stdout.log",
+      "sha256": "c5f6aab64855f04329d30dfe0824b167b4d5250a447c6b083470022b6b4107ee"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-005/outer/owned-container-absence.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-005/outer/owned-container-absence.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 3226,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-005/owned/out/browser-facts/receipts.json",
+      "sha256": "cea472779b90551c37ae043fa1fa2592854c6f73b07bf9f7841b1c5970638506"
+    },
+    {
+      "bytes": 1495,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-005/owned/out/browser-facts/summary.json",
+      "sha256": "d3e4c1cb2893658191d0729c7c7a611bcd3e9bdf198abc728e9368c31a7ff8e8"
+    },
+    {
+      "bytes": 2867,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-005/terminal-inventory.json",
+      "sha256": "12f427fbb4969fad51d9ffe5310861eedd9d7a83fc9069ce9609a6702abecfd3"
+    },
+    {
+      "bytes": 50144,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-006/operator-result.json",
+      "sha256": "fbb10e5825e65272ffe144bd13bad94eaed14aaf34b9c124a4dd14a715469c6f"
+    },
+    {
+      "bytes": 7692,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-006/outer/browser-entity.stderr.log",
+      "sha256": "820726b589d90dc4b540ac14774dc9fceecee53a0073fa9b5400c4a8a066832e"
+    },
+    {
+      "bytes": 3110,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-006/outer/browser-entity.stdout.log",
+      "sha256": "a656301a1a94a03f4aeb16869ec17b42e61d55e9103eb4d1d073e08ac8693c87"
+    },
+    {
+      "bytes": 7692,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-006/outer/browser-facts.stderr.log",
+      "sha256": "0baa6e26e22c2e2e3019827916b060a60cbd86f4f2b12f04c4d05fa986c0acc6"
+    },
+    {
+      "bytes": 3109,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-006/outer/browser-facts.stdout.log",
+      "sha256": "20f26b2bd71a0e7c8068ccc00b2ef7dab2b7c748508d50d9610bb8717b0c108c"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-006/outer/cleanup-806a6dcd6471.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 60,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-006/outer/cleanup-806a6dcd6471.stdout.log",
+      "sha256": "6aaff0a68564722212c8f5e2db56e4fd3a6dd3d609652835954c8dc372101f47"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-006/outer/cleanup-f7de3e7db57d.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 59,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-006/outer/cleanup-f7de3e7db57d.stdout.log",
+      "sha256": "e7e02e1726cbff8c7cf6a5716c56b81ba373f60020e3aed5e60b815f5522e157"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-006/outer/cleanup-owner-806a6dcd6471.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 159,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-006/outer/cleanup-owner-806a6dcd6471.stdout.log",
+      "sha256": "6a1862e221dc34c46120a1f15cdd306e92f57d1dd964d82764a2d5b4619a6f7a"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-006/outer/cleanup-owner-f7de3e7db57d.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 159,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-006/outer/cleanup-owner-f7de3e7db57d.stdout.log",
+      "sha256": "6a1862e221dc34c46120a1f15cdd306e92f57d1dd964d82764a2d5b4619a6f7a"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-006/outer/image-browser.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 84,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-006/outer/image-browser.stdout.log",
+      "sha256": "5a543dc5bc7e049b6e71543357800b56ad1246cee2ab082d2a75e899b5af5b9c"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-006/outer/inspect-browser-806a6dcd6471.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1808,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-006/outer/inspect-browser-806a6dcd6471.stdout.log",
+      "sha256": "9fb25ad9c0e582fdbad52132664b85363e27f924fbc536896d1f9224514dcc61"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-006/outer/inspect-browser-f7de3e7db57d.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1806,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-006/outer/inspect-browser-f7de3e7db57d.stdout.log",
+      "sha256": "93ba4e516fd0f206dabaffcb9e4e45d823293e3aed55ee9351beff5ffe8c257f"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-006/outer/owned-container-absence.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-006/outer/owned-container-absence.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 12404,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-006/owned/out/browser-entity/receipts.json",
+      "sha256": "2a0e1479a78eaacbb2f10da4559be734209af74ad52b805b659aa8a97cc81f03"
+    },
+    {
+      "bytes": 1496,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-006/owned/out/browser-entity/summary.json",
+      "sha256": "26d95a63b26483b47c5c8916429439039967cf0c2bb4229c99b949c1ffd3de06"
+    },
+    {
+      "bytes": 3226,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-006/owned/out/browser-facts/receipts.json",
+      "sha256": "cea472779b90551c37ae043fa1fa2592854c6f73b07bf9f7841b1c5970638506"
+    },
+    {
+      "bytes": 1495,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-006/owned/out/browser-facts/summary.json",
+      "sha256": "d3e4c1cb2893658191d0729c7c7a611bcd3e9bdf198abc728e9368c31a7ff8e8"
+    },
+    {
+      "bytes": 4633,
+      "path": "checkpoint/actual/g03-truss-browser-fsize-diagnostic-006/terminal-inventory.json",
+      "sha256": "5e28f33b640f9c451af3d20ce3a5c11b906950dec9c54a6c327dbe5e66b58588"
+    },
+    {
+      "bytes": 49309,
+      "path": "checkpoint/custody.json",
+      "sha256": "7c2d6246feb5093b2a68a1806f02a3b9cbb795f4761d99f4f8acd6b76e02af40"
+    },
+    {
+      "bytes": 1898,
+      "path": "checkpoint/exclusions.json",
+      "sha256": "92143f18d8ec169ce7cc0291dc79cacbb4709a1f440d61a9647a0e2c529cbc76"
+    },
+    {
+      "bytes": 6932,
+      "path": "checkpoint/g03-truss-browser-fsize-diagnostic-sol-plan001.md",
+      "sha256": "2e4fbad9fb3f62702b26167645c0c902f29b1a3d57aeb4b98ae944524fbb715a"
+    },
+    {
+      "bytes": 2881,
+      "path": "checkpoint/g03-truss-browser-fsize-diagnostic005-sol-source-review001.md",
+      "sha256": "70ecf462880cd72b17d71383878c924406009bc7f5c4c5f734fe13149925ac25"
+    },
+    {
+      "bytes": 2508,
+      "path": "checkpoint/g03-truss-browser-fsize-diagnostic006-sol-actual-review001.md",
+      "sha256": "8a259262215285b40724f485d2f4cd1fd2b6de81a3ab3875866e38bbffc00107"
+    },
+    {
+      "bytes": 2457,
+      "path": "checkpoint/g03-truss-browser-fsize-diagnostic006-sol-plan001.md",
+      "sha256": "5a9f3fbf63cb7be665edceede26073095bfa9f57989fb2e73dfbba264a70da68"
+    },
+    {
+      "bytes": 1969,
+      "path": "checkpoint/g03-truss-browser-fsize-diagnostic006-sol-source-review001.md",
+      "sha256": "315a95050a395c4ea1bcd59434d28e0bc55a46dab72f81422c682c9de79eeb87"
+    },
+    {
+      "bytes": 811,
+      "path": "checkpoint/g03-truss-diagnostic005-root-admission001.json",
+      "sha256": "4f95d9535a608731839e42b7ec176d154c799c58704b5bf355c281bafe893ac3"
+    },
+    {
+      "bytes": 935,
+      "path": "checkpoint/g03-truss-diagnostic006-root-admission001.json",
+      "sha256": "17bd67c30bab5b3d1f38b68599a4224c70711c20f4d8430cced439e568bc2f37"
+    },
+    {
+      "bytes": 763,
+      "path": "checkpoint/g03-truss-full011-root-admission001.json",
+      "sha256": "6b1c28189de7baf22431b886b69c065c850332e529daac47a127c565f27f00c5"
+    },
+    {
+      "bytes": 2918,
+      "path": "checkpoint/g03-truss010-sol-plan001.md",
+      "sha256": "46c1c99e3ad0527a92b98c3b52f42aba44b48a946465c27fe94ff5c3f665f145"
+    },
+    {
+      "bytes": 2656,
+      "path": "checkpoint/g03-truss010-sol-source-review001.md",
+      "sha256": "6b9f0e1f226e4d6492bb6971bd01b6ea8bacc4c7283f57740919fd93770bfc88"
+    },
+    {
+      "bytes": 4147,
+      "path": "checkpoint/g03-truss011-sol-actual-review001.md",
+      "sha256": "6ec4a1261534ab7faf1904c31bd05a196e24dff7d90c6c57436cee77d5a122b7"
+    },
+    {
+      "bytes": 1542,
+      "path": "checkpoint/g03-truss011-sol-source-review001.md",
+      "sha256": "69c4203356e30edb2a19e155f89e7d08375108cfdfd7283a1d1d0ca27af940fa"
+    },
+    {
+      "bytes": 2504,
+      "path": "checkpoint/source/g03-final-truss-operator-011/README.md",
+      "sha256": "c18de67ce00bb968e0955ab928eca8489bec26af3d68cabac58c56ebe7ab9f4d"
+    },
+    {
+      "bytes": 993,
+      "path": "checkpoint/source/g03-final-truss-operator-011/SOURCE-FREEZE-NOTE.md",
+      "sha256": "01a640f965d67fa1f92d6384c87ff25cec634208878848ef40a92920372a76c5"
+    },
+    {
+      "bytes": 173838,
+      "path": "checkpoint/source/g03-final-truss-operator-011/admission/009-failed-operator-result.json",
+      "sha256": "af524fd45a8f01998dc02a540ec6d84e81bf51c4fc745cb1417513a791fef40e"
+    },
+    {
+      "bytes": 9689,
+      "path": "checkpoint/source/g03-final-truss-operator-011/admission/009-input-packet.json",
+      "sha256": "c6797af91eefa241797e748f59c6095725806221daa2aefe50bb85e6b91caf45"
+    },
+    {
+      "bytes": 5580,
+      "path": "checkpoint/source/g03-final-truss-operator-011/admission/009-integrity-manifest.json",
+      "sha256": "fcd0f117714981031cdb41a673908feb7b4f8c2313e90cce8868d2fcd6b1ef21"
+    },
+    {
+      "bytes": 2508,
+      "path": "checkpoint/source/g03-final-truss-operator-011/admission/diagnostic006-actual-review.md",
+      "sha256": "8a259262215285b40724f485d2f4cd1fd2b6de81a3ab3875866e38bbffc00107"
+    },
+    {
+      "bytes": 50144,
+      "path": "checkpoint/source/g03-final-truss-operator-011/admission/diagnostic006-operator-result.json",
+      "sha256": "fbb10e5825e65272ffe144bd13bad94eaed14aaf34b9c124a4dd14a715469c6f"
+    },
+    {
+      "bytes": 4633,
+      "path": "checkpoint/source/g03-final-truss-operator-011/admission/diagnostic006-terminal-inventory.json",
+      "sha256": "5e28f33b640f9c451af3d20ce3a5c11b906950dec9c54a6c327dbe5e66b58588"
+    },
+    {
+      "bytes": 1163,
+      "path": "checkpoint/source/g03-final-truss-operator-011/browser-tmpfs-plan001.md",
+      "sha256": "b2a56babdc88ad78abf54f740f18754c975fd24f2768fa69dd0824d733bc7d75"
+    },
+    {
+      "bytes": 2918,
+      "path": "checkpoint/source/g03-final-truss-operator-011/full-lane-plan001.md",
+      "sha256": "46c1c99e3ad0527a92b98c3b52f42aba44b48a946465c27fe94ff5c3f665f145"
+    },
+    {
+      "bytes": 28742,
+      "path": "checkpoint/source/g03-final-truss-operator-011/inputs/Cargo.lock",
+      "sha256": "0a7dbe0788f4c8ac0f5752b5e9600e83fa0de74ff0dcd8a2039370ee752c95c4"
+    },
+    {
+      "bytes": 42623,
+      "path": "checkpoint/source/g03-final-truss-operator-011/inputs/browser-deps/manifest.json",
+      "sha256": "9f99c0ee83fd0e34ff5f48a83e27f46fd39e3140230629237e0849ea5e07a770"
+    },
+    {
+      "bytes": 2207,
+      "path": "checkpoint/source/g03-final-truss-operator-011/inputs/bun.lock",
+      "sha256": "28b740f61429640ea5c005837d37b5bf7abf67b414c8139659cccc0daee6071a"
+    },
+    {
+      "bytes": 594,
+      "path": "checkpoint/source/g03-final-truss-operator-011/inputs/cargo-cache/HELD.json",
+      "sha256": "2e448e4c64154ce311a3286b895cdc0ad421a2727b1741069a0ebc7dbe5b1dc4"
+    },
+    {
+      "bytes": 11500,
+      "path": "checkpoint/source/g03-final-truss-operator-011/inputs/compile/browser-check.mjs",
+      "sha256": "de3214f6d37180baf13021f0e5a21fada3fbd2724ed412505adcb22cca83fe71"
+    },
+    {
+      "bytes": 1617,
+      "path": "checkpoint/source/g03-final-truss-operator-011/inputs/evidence/browser-tool-preflight.json",
+      "sha256": "34cf401c6ae050197622ea093a5ffb6a56f53d9ee430e3773a622e3ea5664dc4"
+    },
+    {
+      "bytes": 2836,
+      "path": "checkpoint/source/g03-final-truss-operator-011/inputs/evidence/builder-tool-feasibility.json",
+      "sha256": "bd047351ae8b6d736931a718e4799669859f072b28e8cfa1dcee9d4deee20983"
+    },
+    {
+      "bytes": 1829,
+      "path": "checkpoint/source/g03-final-truss-operator-011/inputs/evidence/builder-tool-versions-failed-optional-probe.json",
+      "sha256": "dd56714625a6fbc82ef5c7a56608c7ddcc7faaaad47ef170920476dfe07ca242"
+    },
+    {
+      "bytes": 6051,
+      "path": "checkpoint/source/g03-final-truss-operator-011/inputs/evidence/final-cohort-construction-result.json",
+      "sha256": "7d173eb827ae903a3dd2abc2ba2213fd5ced07e829fdae263525e6447d506466"
+    },
+    {
+      "bytes": 4971,
+      "path": "checkpoint/source/g03-final-truss-operator-011/inputs/evidence/final-cohort-data-review.md",
+      "sha256": "8f9c46085a237b566c4142dbcb062b94dadd04194734da8dff01b22e0a9fe217"
+    },
+    {
+      "bytes": 7296,
+      "path": "checkpoint/source/g03-final-truss-operator-011/inputs/evidence/inherited-boundary-plan.md",
+      "sha256": "d3eb0216ee6c1ae22c90f84b00b51484974a134a42a9a70df64ef9a020334278"
+    },
+    {
+      "bytes": 4112,
+      "path": "checkpoint/source/g03-final-truss-operator-011/inputs/evidence/locked-cargo-cache-acquisition-plan.md",
+      "sha256": "a6d7e4c9003a0d5e6c5de898fe7db7f50d4994275f462d9a0c875d0c849b9737"
+    },
+    {
+      "bytes": 780359,
+      "path": "checkpoint/source/g03-final-truss-operator-011/inputs/evidence/p56-git-stage-roster.txt",
+      "sha256": "bc3018c0d674cd2fc80794f9f36c523565c91558f70649cd3fe415f8e88b701b"
+    },
+    {
+      "bytes": 11765,
+      "path": "checkpoint/source/g03-final-truss-operator-011/inputs/evidence/table-operator-findings-reference.md",
+      "sha256": "c6f78e3e6cc1d16a566713ed3cdbc369ee241d1d15edd2d51065ce290e43f00c"
+    },
+    {
+      "bytes": 2371,
+      "path": "checkpoint/source/g03-final-truss-operator-011/inputs/evidence/wasm-bindgen-acquisition.json",
+      "sha256": "cfa0c93966cdfeaaed12918a786585c870ec5106136318dcaa31233cbfeee044"
+    },
+    {
+      "bytes": 1080,
+      "path": "checkpoint/source/g03-final-truss-operator-011/inputs/evidence/wasm-bindgen-version-preflight.json",
+      "sha256": "f44c2ce21069c072f8c276cd30ddaa605e3b3be071acb1c8c1b2fb3866c6d00b"
+    },
+    {
+      "bytes": 548,
+      "path": "checkpoint/source/g03-final-truss-operator-011/inputs/package.json",
+      "sha256": "dd22198e0de80eaab805fae19db057668fcf3c180a84c142d74318c541ad6455"
+    },
+    {
+      "bytes": 184480,
+      "path": "checkpoint/source/g03-final-truss-operator-011/inputs/truss-entity-selection/cases.json",
+      "sha256": "cdddb2454b033c5753177cdedb447efbf45f5131c42beb17aeb6d319eac71537"
+    },
+    {
+      "bytes": 2522,
+      "path": "checkpoint/source/g03-final-truss-operator-011/inputs/truss-entity-selection/check.py",
+      "sha256": "4d764c17e2a24d15d959047db39246a6c6ec991f957726d4c61f498789aad7cf"
+    },
+    {
+      "bytes": 24724,
+      "path": "checkpoint/source/g03-final-truss-operator-011/inputs/truss-facts/cases.json",
+      "sha256": "34f4694030aa822172200002275ee3e1b36ee7a248df960e60bb731648fb0d83"
+    },
+    {
+      "bytes": 1148,
+      "path": "checkpoint/source/g03-final-truss-operator-011/inputs/truss-facts/check.py",
+      "sha256": "ea728bb16583fed81756946bc26326958a7d883877aa80ad99f5708bb44363ce"
+    },
+    {
+      "bytes": 3247,
+      "path": "checkpoint/source/g03-final-truss-operator-011/inputs/truss-facts.workflow.yml",
+      "sha256": "4305777176d5ed20596692422e9749bf991fcb0e1db4f37da926eacbdba9fd15"
+    },
+    {
+      "bytes": 11147,
+      "path": "checkpoint/source/g03-final-truss-operator-011/inputs/truss-packet.json",
+      "sha256": "f6fa739775c7e3c0576033b9a47c56444e7f339d7528aae270092050945c4661"
+    },
+    {
+      "bytes": 4115,
+      "path": "checkpoint/source/g03-final-truss-operator-011/inputs/verify_weft_wheel.py",
+      "sha256": "78c294fd7a947a97f29b133b8dd6bb0977c47f29b5a891e6b3e5456f393c5929"
+    },
+    {
+      "bytes": 6817,
+      "path": "checkpoint/source/g03-final-truss-operator-011/integrity-manifest.json",
+      "sha256": "4160d99ca6ddf31779c63753a5f90ac2f7ec18d40b224c76695e35048fec23bf"
+    },
+    {
+      "bytes": 1374,
+      "path": "checkpoint/source/g03-final-truss-operator-011/mount-plan001.md",
+      "sha256": "073e66d0536f40bbc1fd1436bb3ca3f80081ab4186c326bfe4793ec8e28c9210"
+    },
+    {
+      "bytes": 93571,
+      "path": "checkpoint/source/g03-final-truss-operator-011/run_operator.py",
+      "sha256": "edcb32e0faa37701fd1681f4f032e80484100a05ca577dee2d28d27b06647093"
+    },
+    {
+      "bytes": 15336,
+      "path": "checkpoint/source/g03-final-truss-operator-011/runtime/cargo_cache_extract.py",
+      "sha256": "6d4b4586fc91cb64f9fb96f29f16877eb7ecb8ba383b13b923e73d0e881d4994"
+    },
+    {
+      "bytes": 28469,
+      "path": "checkpoint/source/g03-final-truss-operator-011/runtime/guest.py",
+      "sha256": "49798f06e17f92f3f9e00eb85b87ab0d0f78b26789714779e3e4ae6be6b302d5"
+    },
+    {
+      "bytes": 1088,
+      "path": "checkpoint/source/g03-truss-browser-fsize-diagnostic-006/README.md",
+      "sha256": "5d242faf0921b4927c7c1c465f1e1a169ef7eab70959923322042db2be320289"
+    },
+    {
+      "bytes": 1806,
+      "path": "checkpoint/source/g03-truss-browser-fsize-diagnostic-006/admission/diagnostic005-browser-facts-inspect.stdout.log",
+      "sha256": "c5f6aab64855f04329d30dfe0824b167b4d5250a447c6b083470022b6b4107ee"
+    },
+    {
+      "bytes": 1282,
+      "path": "checkpoint/source/g03-truss-browser-fsize-diagnostic-006/admission/diagnostic005-evidence.json",
+      "sha256": "1dcd89b3004178549074177718fa90cddbbfec7721ee770a99a3712803356dca"
+    },
+    {
+      "bytes": 3226,
+      "path": "checkpoint/source/g03-truss-browser-fsize-diagnostic-006/admission/diagnostic005-facts-receipts.json",
+      "sha256": "cea472779b90551c37ae043fa1fa2592854c6f73b07bf9f7841b1c5970638506"
+    },
+    {
+      "bytes": 1495,
+      "path": "checkpoint/source/g03-truss-browser-fsize-diagnostic-006/admission/diagnostic005-facts-summary.json",
+      "sha256": "d3e4c1cb2893658191d0729c7c7a611bcd3e9bdf198abc728e9368c31a7ff8e8"
+    },
+    {
+      "bytes": 20467,
+      "path": "checkpoint/source/g03-truss-browser-fsize-diagnostic-006/admission/diagnostic005-operator-result.json",
+      "sha256": "90b0705f1366639ba19f7ffae3a92b60748c471d0aa916f5d445d823bd0f5725"
+    },
+    {
+      "bytes": 2457,
+      "path": "checkpoint/source/g03-truss-browser-fsize-diagnostic-006/diagnostic-plan.md",
+      "sha256": "5a9f3fbf63cb7be665edceede26073095bfa9f57989fb2e73dfbba264a70da68"
+    },
+    {
+      "bytes": 11500,
+      "path": "checkpoint/source/g03-truss-browser-fsize-diagnostic-006/inputs/browser-workspace/tests/compile/browser-check.mjs",
+      "sha256": "de3214f6d37180baf13021f0e5a21fada3fbd2724ed412505adcb22cca83fe71"
+    },
+    {
+      "bytes": 184480,
+      "path": "checkpoint/source/g03-truss-browser-fsize-diagnostic-006/inputs/browser-workspace/tests/truss-entity-selection/cases.json",
+      "sha256": "cdddb2454b033c5753177cdedb447efbf45f5131c42beb17aeb6d319eac71537"
+    },
+    {
+      "bytes": 24724,
+      "path": "checkpoint/source/g03-truss-browser-fsize-diagnostic-006/inputs/browser-workspace/tests/truss-facts/cases.json",
+      "sha256": "34f4694030aa822172200002275ee3e1b36ee7a248df960e60bb731648fb0d83"
+    },
+    {
+      "bytes": 9346,
+      "path": "checkpoint/source/g03-truss-browser-fsize-diagnostic-006/inputs/diagnostic-packet.json",
+      "sha256": "69e39a7e896661541e976e40a925bf1fa9e1a674ec147c9b3fd8ad440fb1ff0e"
+    },
+    {
+      "bytes": 42623,
+      "path": "checkpoint/source/g03-truss-browser-fsize-diagnostic-006/inputs/evidence/browser-deps-manifest.json",
+      "sha256": "9f99c0ee83fd0e34ff5f48a83e27f46fd39e3140230629237e0849ea5e07a770"
+    },
+    {
+      "bytes": 6932,
+      "path": "checkpoint/source/g03-truss-browser-fsize-diagnostic-006/inputs/evidence/diagnostic-plan002.md",
+      "sha256": "2e4fbad9fb3f62702b26167645c0c902f29b1a3d57aeb4b98ae944524fbb715a"
+    },
+    {
+      "bytes": 994279,
+      "path": "checkpoint/source/g03-truss-browser-fsize-diagnostic-006/inputs/evidence/entity.json",
+      "sha256": "ff8803dda03a4ef376e44984c1a010ead8065b817a002d6178dba8b0343256bf"
+    },
+    {
+      "bytes": 186460,
+      "path": "checkpoint/source/g03-truss-browser-fsize-diagnostic-006/inputs/evidence/facts.json",
+      "sha256": "c45b385d21c64d4abec74849a7cad50229a6eaa054b2a14a192b13c2566b8982"
+    },
+    {
+      "bytes": 780359,
+      "path": "checkpoint/source/g03-truss-browser-fsize-diagnostic-006/inputs/evidence/p56-git-stage-roster.txt",
+      "sha256": "bc3018c0d674cd2fc80794f9f36c523565c91558f70649cd3fe415f8e88b701b"
+    },
+    {
+      "bytes": 958557,
+      "path": "checkpoint/source/g03-truss-browser-fsize-diagnostic-006/inputs/evidence/source-inventory.json",
+      "sha256": "3c1d1f1d99766a444234ec40078e3d79804ffd601c3cbfd41b809b1e469cede7"
+    },
+    {
+      "bytes": 6599,
+      "path": "checkpoint/source/g03-truss-browser-fsize-diagnostic-006/inputs/evidence/truss009-browser-facts.stderr.log",
+      "sha256": "0fe05f59ad74d186c5e7926903de7a559a6558925ec6ef6bcd282c23620a6c0c"
+    },
+    {
+      "bytes": 0,
+      "path": "checkpoint/source/g03-truss-browser-fsize-diagnostic-006/inputs/evidence/truss009-browser-facts.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 173838,
+      "path": "checkpoint/source/g03-truss-browser-fsize-diagnostic-006/inputs/evidence/truss009-operator-result.json",
+      "sha256": "af524fd45a8f01998dc02a540ec6d84e81bf51c4fc745cb1417513a791fef40e"
+    },
+    {
+      "bytes": 9689,
+      "path": "checkpoint/source/g03-truss-browser-fsize-diagnostic-006/inputs/evidence/truss009-packet.json",
+      "sha256": "c6797af91eefa241797e748f59c6095725806221daa2aefe50bb85e6b91caf45"
+    },
+    {
+      "bytes": 3419,
+      "path": "checkpoint/source/g03-truss-browser-fsize-diagnostic-006/inputs/evidence/truss009-source-review.md",
+      "sha256": "c26236cc7f02d3bf99d62e20bdfddb9e5f9493cd746e885c68a69396f24353ec"
+    },
+    {
+      "bytes": 49349,
+      "path": "checkpoint/source/g03-truss-browser-fsize-diagnostic-006/run_operator.py",
+      "sha256": "8660669931fedb86ca71814b8a7e0acac7c75c562c58c83104b86a233900f924"
+    },
+    {
+      "bytes": 4268,
+      "path": "checkpoint/source/g03-truss-browser-fsize-diagnostic-006/source-manifest.json",
+      "sha256": "1db98a05fdebb0d4f63fbea52a83b9698f398f09a3055e0d3321846d00e0ad96"
+    },
+    {
+      "bytes": 2008,
+      "path": "copy-review.md",
+      "sha256": "3bc8dab74160924c2e832acac1c29677ab4ec1f5e5b548cdf1a09a56dbbf94d5"
+    }
+  ],
+  "totalBytes": 7719840
+}

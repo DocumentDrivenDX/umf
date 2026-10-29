@@ -1,0 +1,68 @@
+{
+  "absenceWitness": "root exact-name docker ps -a query exit0/empty after --rm",
+  "exitCode": 0,
+  "files": [
+    {
+      "path": "probe.py",
+      "sha256": "9e6e4993fc76db14dd7b022d4fab3d47536812066ec877f22f05b127a418c77b",
+      "sizeBytes": 634
+    },
+    {
+      "path": "stdout.log",
+      "sha256": "e5a34b17a0eced564279292fb77b43717a4136c9b364660de3c5646eb6dbaa82",
+      "sizeBytes": 654
+    },
+    {
+      "path": "stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    }
+  ],
+  "imageId": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+  "limits": {
+    "commandSeconds": 30,
+    "cpus": 1,
+    "killGraceSeconds": 5,
+    "memoryBytes": 268435456,
+    "pids": 32
+  },
+  "network": "none",
+  "ownedContainerAbsent": true,
+  "ownedContainerName": "g03-registry-tag-probe-001",
+  "platform": "linux/amd64",
+  "profile": "g03.base-registry-metadata-probe/1",
+  "readOnly": true,
+  "result": {
+    "rows": [
+      {
+        "kind": "file",
+        "mode": 420,
+        "name": "CACHEDIR.TAG",
+        "sha256": "6d9d1d216e0f83abc5e5662ca62c92b4f23009466b54fa27321a69acdb778bb2",
+        "sizeBytes": 177,
+        "utf8": "Signature: 8a477f597d28d172789f06886806bc55\n# This file is a cache directory tag created by cargo.\n# For information about cache directory tags see https://bford.info/cachedir/\n"
+      },
+      {
+        "kind": "directory",
+        "mode": 493,
+        "name": "cache",
+        "sizeBytes": 64
+      },
+      {
+        "kind": "directory",
+        "mode": 493,
+        "name": "index",
+        "sizeBytes": 64
+      },
+      {
+        "kind": "directory",
+        "mode": 493,
+        "name": "src",
+        "sizeBytes": 64
+      }
+    ],
+    "scope": "read-only base-image Cargo registry metadata; no Cargo/compiler/product/network"
+  },
+  "scope": "Filesystem metadata only, no Cargo/product/test/network/Mac execution",
+  "status": "PASS_METADATA_ONLY"
+}

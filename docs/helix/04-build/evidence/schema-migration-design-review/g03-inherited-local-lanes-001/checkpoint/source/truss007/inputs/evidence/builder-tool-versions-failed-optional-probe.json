@@ -1,0 +1,31 @@
+{
+  "profile": "umf.g03-linux-wasm-tool-versions/1",
+  "argv": [
+    "docker",
+    "run",
+    "--rm",
+    "--pull=never",
+    "--name",
+    "g03-wasm-versions-f902b9659ec44f4e89b693b6b86c8f31",
+    "--label",
+    "codex.g03.purpose=wasm-tool-metadata",
+    "--platform=linux/amd64",
+    "--network=none",
+    "--read-only",
+    "--cap-drop=ALL",
+    "--cpus=1",
+    "--memory=1g",
+    "--pids-limit=128",
+    "--tmpfs=/tmp:rw,nosuid,nodev,size=64m",
+    "--entrypoint=/bin/bash",
+    "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+    "-c",
+    "set -eu; RUSTUP_TOOLCHAIN=1.90.0-x86_64-unknown-linux-gnu rustc --version; /opt/cargo/bin/wasm-bindgen --version; /usr/local/bun/bin/bun --version; /usr/local/bin/node --version; printf \"NODE_TOOL_PATHS\\n\"; /usr/local/bin/node -p \"JSON.stringify(require(\"module\").globalPaths)\""
+  ],
+  "exitCode": 1,
+  "elapsedSeconds": 1.215,
+  "stdout": "rustc 1.90.0 (1159e78c4 2025-09-14)\nwasm-bindgen 0.2.100\n1.4.3\nv26.12.1\nNODE_TOOL_PATHS\n",
+  "stderr": "node:internal/errors:547\n      throw error;\n      ^\n\nTypeError [ERR_INVALID_ARG_TYPE]: The \"id\" argument must be of type string. Received an instance of Module\n    at Module.require (node:internal/modules/cjs/loader:1706:3)\n    at require (node:internal/modules/helpers:318:16)\n    at [eval]:1:16\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:485:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:483:60)\n    at evalFunction (node:internal/process/execution:317:30)\n    at evalTypeScript (node:internal/process/execution:329:3)\n    at node:internal/main/eval_string:71:3 {\n  code: 'ERR_INVALID_ARG_TYPE'\n}\n\nNode.js v26.12.1\n",
+  "ownedContainerAbsent": true,
+  "noSourceOrProduct": true
+}

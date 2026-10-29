@@ -1,0 +1,167 @@
+diff --git a/docs/helix/05-deploy/microsite/reference/definition-finder.ts b/docs/helix/05-deploy/microsite/reference/definition-finder.ts
+new file mode 100644
+index 000000000..042204c4f
+--- /dev/null
++++ b/docs/helix/05-deploy/microsite/reference/definition-finder.ts
+@@ -0,0 +1,47 @@
++// SPDX-License-Identifier: MIT OR Apache-2.0
++type Definition = {id:string;name?:string;description?:string;kind:string};
++
++/** Local definition navigation. The input retains focus while an option is active. */
++export function definitionFinder(items:Definition[],href:(id:string)=>string,onKeyboardNavigate:()=>void){
++ const root=document.createElement('div');root.className='definition-finder';
++ const label=document.createElement('label');label.textContent='Find a definition';
++ const input=document.createElement('input');input.type='search';input.placeholder='Record, Field, Key…';input.autocomplete='off';
++ input.setAttribute('role','combobox');input.setAttribute('aria-autocomplete','list');input.setAttribute('aria-expanded','false');input.setAttribute('aria-controls','definition-suggestions');
++ const popup=document.createElement('div');popup.className='definition-suggestions';popup.hidden=true;
++ const list=document.createElement('div');list.id='definition-suggestions';list.setAttribute('role','listbox');list.setAttribute('aria-label','Matching definitions');
++ const status=document.createElement('p');status.setAttribute('role','status');
++ label.append(input);popup.append(list,status);root.append(label,popup);
++ let options:HTMLAnchorElement[]=[],active=-1;
++ const close=()=>{popup.hidden=true;input.setAttribute('aria-expanded','false');input.removeAttribute('aria-activedescendant');active=-1;options.forEach(a=>a.setAttribute('aria-selected','false'));};
++ const activate=(index:number)=>{
++  active=index;options.forEach((a,i)=>a.setAttribute('aria-selected',String(i===active)));
++  const option=options[active];if(option){input.setAttribute('aria-activedescendant',option.id);option.scrollIntoView({block:'nearest'});}else input.removeAttribute('aria-activedescendant');
++ };
++ const refresh=()=>{
++  const query=input.value.trim().toLocaleLowerCase();close();list.replaceChildren();options=[];
++  if(!query){status.textContent='';return;}
++  const score=(item:Definition)=>{const name=(item.name??item.id).toLocaleLowerCase(),id=item.id.toLocaleLowerCase();return name===query||id===query?0:name.startsWith(query)||id.startsWith(query)?1:2;};
++  const matches=items.filter(item=>`${item.name??''} ${item.id} ${item.description??''}`.toLocaleLowerCase().includes(query)).sort((a,b)=>score(a)-score(b));
++  for(const item of matches){
++   const option=document.createElement('a');option.href=href(item.id);option.id='definition-option-'+options.length;option.tabIndex=-1;option.setAttribute('role','option');option.setAttribute('aria-selected','false');
++   const name=document.createElement('span');name.textContent=item.name??item.id;
++   const context=document.createElement('small');context.textContent=(item.kind==='record'?'Record':'Field')+' · '+item.id;
++   option.append(name,context);option.onpointerdown=event=>{if(event.button===0)event.preventDefault();};option.onclick=close;
++   options.push(option);list.append(option);
++  }
++  status.textContent=matches.length?`${matches.length} matching definitions. Use Up and Down arrows, then Enter to open.`:'No matching definitions.';
++  status.className=matches.length?'visually-hidden':'';popup.hidden=false;input.setAttribute('aria-expanded','true');
++ };
++ input.oninput=refresh;input.onfocus=refresh;input.onclick=()=>{if(popup.hidden)refresh();};
++ input.onblur=close;
++ input.onkeydown=event=>{
++  if(event.isComposing)return;
++  if(event.key==='Escape'){if(!popup.hidden){event.preventDefault();event.stopPropagation();close();}return;}
++  if(event.key==='Tab'){close();return;}
++  if(event.key==='ArrowDown'||event.key==='ArrowUp'){
++   event.preventDefault();if(popup.hidden)refresh();if(!options.length)return;
++   activate(active<0?(event.key==='ArrowDown'?0:options.length-1):(active+(event.key==='ArrowDown'?1:-1)+options.length)%options.length);
++  }else if(event.key==='Enter'&&!popup.hidden&&options.length){event.preventDefault();options[active<0?0:active]!.click();onKeyboardNavigate();}
++ };
++ return root;
++}
+diff --git a/docs/helix/05-deploy/microsite/reference/ontology.ts b/docs/helix/05-deploy/microsite/reference/ontology.ts
+index 1a83b9a97..d012a0d84 100644
+--- a/docs/helix/05-deploy/microsite/reference/ontology.ts
++++ b/docs/helix/05-deploy/microsite/reference/ontology.ts
+@@ -1,5 +1,6 @@
+ import {renderRecordMap} from '@documentdrivendx/umf-schema-browser';
+ import {balancedLayouts} from './ontology-layout';
++import {definitionFinder} from './definition-finder';
+ import {selfModelGraph,type SelfModelCatalog,type ReaderCatalog} from '../../reference/model';
+ const el=(tag:string,text?:string,cls?:string)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
+ const link=(text:string,href:string)=>{const a=el('a',text) as HTMLAnchorElement;a.href=href;return a;};
+@@ -92,14 +93,18 @@ export function showOntology(root:HTMLElement,catalog:SelfModelCatalog,reader:Re
+  const requested=params.get('node'),decoded=requested?(()=>{try{return JSON.parse(requested);}catch{return null;}})():['umf','document'];
+  if(!Array.isArray(decoded)||decoded.length!==2)throw Error('SELF_MODEL_LINK invalid node');const selected=elements.find(e=>e.module===decoded[0]&&e.id===decoded[1]);if(!selected||!['record','field'].includes(selected.kind))throw Error('SELF_MODEL_LINK unknown type');
+  const downloads=el('div',undefined,'chips');downloads.append(link('Download authored UMF model · YAML','umf.yaml'),link('JSON','umf.json'));const about=el('details',undefined,'ontology-about');about.append(el('summary','About & downloads'),el('div',undefined,'ontology-about-content'));about.lastElementChild!.append(el('p','Browse the authored current language model. Record members resolve to their single declared Fields; Field shapes show only relationships stated in the model. JSON Schema and validators are generated outputs.'),downloads,el('p','This view reports authored language definitions and source relationships only. It does not infer inheritance, instance counts, native storage meaning or enforcement beyond the separately generated validators.'));root.append(el('h2','UMF ontology','visually-hidden'));
+- const layout=el('div',undefined,'ontology-layout'),aside=el('aside',undefined,'ontology-types');aside.setAttribute('aria-label','UMF language definitions');const label=el('label','Find a definition');const search=el('input') as HTMLInputElement;search.type='search';search.placeholder='Record, Field, Key…';label.append(search);aside.append(label);const list=el('div',undefined,'ontology-groups');aside.append(list,about);
++ const layout=el('div',undefined,'ontology-layout'),aside=el('aside',undefined,'ontology-types');aside.setAttribute('aria-label','UMF language definitions');aside.append(definitionFinder([...records,...fields],id=>route('ontology',id),()=>{
++  // Fragment navigation can render through both popstate and hashchange. Focus
++  // the final detail after those handlers have replaced the old input.
++  requestAnimationFrame(()=>root.querySelector<HTMLElement>('#ontology-detail')?.focus());
++ }));const list=el('div',undefined,'ontology-groups');aside.append(list,about);
+  const content=el('div',undefined,'ontology-content'),map=el('div');map.id='ontology-map';content.append(map);layout.append(aside,content);root.append(layout);
+  const graph=selfModelGraph(catalog);const owner=selected.kind==='record'?selected:records.find(r=>(r.members??[]).some((m:any)=>m.module===selected.module&&m.element===selected.id));const focus=params.get('focus')??'';if(focus&&!graph.records.some(r=>r.id===focus))throw Error('SELF_MODEL_LINK unknown focus');
+  const edgeId=params.get('edge'),selectedEdge=graph.edges.find(e=>e.id===edgeId);if(edgeId&&!selectedEdge)throw Error('SELF_MODEL_LINK unknown connection');
+  const recordList=el('details') as HTMLDetailsElement;recordList.append(el('summary','Records · '+records.length));
+  const fieldList=el('details') as HTMLDetailsElement;fieldList.append(el('summary','Fields · '+fields.length));
+  const add=(parent:HTMLElement,items:any[])=>{for(const item of items){const a=link(item.name??item.id,route('ontology',item.id));if(item===selected)a.setAttribute('aria-current','true');a.dataset.element=item.id;parent.append(a);}};
+- const refresh=()=>{recordList.replaceChildren(el('summary','Records · '+records.length));fieldList.replaceChildren(el('summary','Fields · '+fields.length));const recordOptions=el('div',undefined,'definition-options'),fieldOptions=el('div',undefined,'definition-options');recordList.append(recordOptions);fieldList.append(fieldOptions);const query=search.value.toLocaleLowerCase();add(recordOptions,records.filter(e=>(e.name+' '+e.id+' '+(e.description??'')).toLocaleLowerCase().includes(query)));add(fieldOptions,fields.filter(e=>(e.name+' '+e.id+' '+(e.description??'')).toLocaleLowerCase().includes(query)));if(!recordList.querySelector('a')&&!fieldList.querySelector('a'))list.replaceChildren(el('p','No matching definitions.'));else list.replaceChildren(recordList,fieldList);};search.oninput=refresh;refresh();
++ const recordOptions=el('div',undefined,'definition-options'),fieldOptions=el('div',undefined,'definition-options');recordList.append(recordOptions);fieldList.append(fieldOptions);add(recordOptions,records);add(fieldOptions,fields);list.append(recordList,fieldList);
+  const graphRoute=(id:string)=>{const next=new URLSearchParams(route('ontology',id).slice(1));if(focus)next.set('focus',focus);return '#'+next;};
+  if(graph.records.length){
+   renderRecordMap(map,graph,{focus,onNavigate:(id,kind)=>{if(kind==='relationship'){const edge=graph.edges.find(e=>e.id===id);if(edge)location.hash=graphRoute(JSON.parse(edge.source)[1])+'&edge='+encodeURIComponent(id);}else location.hash=graphRoute(JSON.parse(id)[1]);},onFocusChange:(next)=>{const params=new URLSearchParams(location.hash.slice(1));params.set('view','ontology');params.delete('edge');if(next){params.set('focus',next);params.set('node',next);}else params.delete('focus');const hash='#'+params;if(location.hash===hash)showOntology(root,catalog,reader);else location.hash=hash;}});
+diff --git a/docs/helix/05-deploy/microsite/reference/style.css b/docs/helix/05-deploy/microsite/reference/style.css
+index d6097a984..e8b03f6d2 100644
+--- a/docs/helix/05-deploy/microsite/reference/style.css
++++ b/docs/helix/05-deploy/microsite/reference/style.css
+@@ -27,7 +27,7 @@
+ .schema-page footer{max-width:none;padding:12px 24px}
+ .schema-page .ontology-layout{display:block;padding:0 0 20px}
+ .schema-page .ontology-types{display:flex;align-items:center;gap:18px;flex-wrap:wrap;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 0;margin-bottom:16px}
+-.schema-page .ontology-types>label{width:240px;font-size:12px}
++.schema-page .ontology-types>.definition-finder{width:240px;font-size:12px}
+ .schema-page .ontology-types input{margin:2px 0 0;padding:6px 9px}
+ .schema-page .ontology-groups{display:flex;gap:18px}
+ .schema-page .ontology-types details{position:relative;border:0;padding:0}
+@@ -69,7 +69,7 @@
+  .schema-page .schema-toolbar h1{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+  .schema-page .schema-views a{font-size:12px;padding:5px 7px}
+  .schema-page .ontology-types{margin-bottom:12px;padding:6px 0;align-items:center}
+- .schema-page .ontology-types>label{width:100%}
++ .schema-page .ontology-types>.definition-finder{width:100%}
+  .schema-page .ontology-types>div{max-height:none;overflow:visible;display:flex;grid-template-columns:none}
+  .schema-page .ontology-about{margin-left:auto}
+  .schema-page .ontology-content{gap:12px;overflow:visible}
+@@ -108,3 +108,11 @@
+ .schema-page .ontology-viewport a:hover path,.schema-page .ontology-viewport a:focus path{opacity:1;stroke-width:3}
+ .schema-page .ontology-viewport .map-count{font-size:12px;fill:var(--muted)}
+ .schema-page .ontology-viewport .graph-standalone{font-size:13px;fill:var(--muted);letter-spacing:.4px}
++
++/* Suggestions appear directly below the finder, independent of browse disclosures. */
++.schema-page .ontology-types>.definition-finder{position:relative;display:block;overflow:visible;max-height:none}
++.definition-suggestions{position:absolute;top:100%;left:0;z-index:5;width:min(380px,calc(100vw - 32px));max-height:50vh;overflow:auto;background:var(--white);border:1px solid var(--line);border-radius:4px;box-shadow:0 8px 22px #203c351c;padding:6px}
++.definition-suggestions [role=option]{overflow-wrap:anywhere;border-radius:3px}
++.definition-suggestions [role=option]:hover,.definition-suggestions [aria-selected=true]{background:var(--panel);color:var(--ink)}
++.definition-suggestions small{display:block;font-size:11px;color:var(--muted)}
++.definition-suggestions p{font-size:13px;margin:8px}
+diff --git a/scripts/reference/ontology-browser.ts b/scripts/reference/ontology-browser.ts
+index e2f59f6a0..9b45e6449 100644
+--- a/scripts/reference/ontology-browser.ts
++++ b/scripts/reference/ontology-browser.ts
+@@ -52,6 +52,43 @@ try{
+  assert(sameStrings(projected.records.map(record=>record.id),expectedRecordIds),'Self-model projection omitted or added authored Record identities');
+  assert(expectedRecordIds.length===24,'Expected the complete authored 24-Record source model');
+  assert(expectedRecordIds.filter(id=>JSON.parse(id)[1].startsWith('extensionKind')).length===9,'Expected all nine authored extension-kind Record identities');
++ // Definition search must expose suggestions without opening browse disclosures.
++ for(const width of [1280,390]){
++  await page.setViewportSize({width,height:900});await ontology();
++  const finder=page.getByRole('combobox',{name:'Find a definition'}),suggestions=page.getByRole('listbox',{name:'Matching definitions'});
++  assert(await finder.getAttribute('aria-expanded')==='false','Finder initially expanded');
++  await finder.fill('  mOdUlE  ');
++  await suggestions.waitFor();
++  assert(await suggestions.getByRole('option').count()>0,'Typing did not show suggestions');
++  assert(await suggestions.getByRole('option').first().locator('span').innerText()==='Module','Exact name not ranked first');
++  assert(await page.locator('.ontology-groups details[open]').count()===0,'Search requires browse disclosure');
++  assert(await finder.evaluate(input=>input===document.activeElement),'Typing lost input focus');
++  await page.screenshot({path:join(evidence,'definition-autocomplete-'+width+'.png')});
++  await finder.press('ArrowDown');
++  const first=await finder.getAttribute('aria-activedescendant');
++  assert(!!first&&await page.locator('#'+first).getAttribute('aria-selected')==='true','ArrowDown did not select an option');
++  await finder.press('ArrowDown');assert(await finder.getAttribute('aria-activedescendant')!==first,'ArrowDown did not move');
++  await finder.press('ArrowUp');assert(await finder.getAttribute('aria-activedescendant')===first,'ArrowUp did not return');
++  assert(await suggestions.evaluate(node=>{const b=node.getBoundingClientRect();return b.left>=0&&b.right<=innerWidth;}),'Suggestions overflow viewport');
++  await finder.press('Enter');await page.locator('#ontology-detail h3').filter({hasText:/^Module$/}).waitFor();
++  await page.waitForFunction(()=>document.activeElement?.id==='ontology-detail');
++  assert(new URLSearchParams(new URL(page.url()).hash.slice(1)).get('node')===JSON.stringify(['umf','module']),'Autocomplete selected wrong identity');
++  const nextFinder=page.getByRole('combobox',{name:'Find a definition'});
++  await nextFinder.fill('scalarType');await page.getByRole('option').first().click();
++  await page.locator('#ontology-detail h3').filter({hasText:/^scalarType$/}).waitFor();
++  await page.goBack();await page.locator('#ontology-detail h3').filter({hasText:/^Module$/}).waitFor();
++  const currentFinder=page.getByRole('combobox',{name:'Find a definition'});
++  await currentFinder.fill('module');await currentFinder.press('Escape');assert(await currentFinder.getAttribute('aria-expanded')==='false','Escape did not dismiss');
++  assert(await currentFinder.inputValue()==='module','Escape discarded query');
++  await currentFinder.press('ArrowUp');assert(await currentFinder.getAttribute('aria-expanded')==='true','ArrowUp did not reopen');
++  await currentFinder.press('Tab');assert(await currentFinder.getAttribute('aria-expanded')==='false','Tab did not dismiss');
++  await currentFinder.fill('module');await page.locator('header').click({position:{x:2,y:2}});assert(await currentFinder.getAttribute('aria-expanded')==='false','Blur did not dismiss');
++  await currentFinder.fill('no-such-definition-xyz');assert(await page.getByRole('status').filter({hasText:'No matching definitions.'}).isVisible(),'No-result message hidden');
++  await currentFinder.press('Enter');assert(await page.locator('#ontology-detail h3').innerText()==='Module','No-result Enter navigated');
++  await currentFinder.fill('');assert(await currentFinder.getAttribute('aria-expanded')==='false','Clearing did not close');
++  await currentFinder.fill('   ');assert(await currentFinder.getAttribute('aria-expanded')==='false','Whitespace opened suggestions');
++  checks.push(`Definition autocomplete at ${width}px: immediate ranked results, keyboard/pointer navigation, focus, Back, dismissal and empty states`);
++ }
+  // The default is the whole model, fitted into a substantial graph viewport.
+  for(const [width,height] of [[1440,900],[1280,800],[798,900],[390,844]] as const){
+   await page.setViewportSize({width,height});await ontology();

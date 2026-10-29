@@ -1,0 +1,1523 @@
+{
+  "allOwnedRoleNames": [
+    "g03o_483b42249e",
+    "g03p_483b42249e",
+    "g03b_483b42249e",
+    "g03a_483b42249e",
+    "g03z_483b42249e",
+    "g03lo_483b42249e",
+    "g03lp_483b42249e",
+    "g03lb_483b42249e"
+  ],
+  "cleanup": {
+    "createdDatabase": true,
+    "createdRoles": [
+      "g03o_483b42249e",
+      "g03p_483b42249e",
+      "g03b_483b42249e",
+      "g03a_483b42249e",
+      "g03z_483b42249e",
+      "g03lo_483b42249e",
+      "g03lp_483b42249e",
+      "g03lb_483b42249e"
+    ],
+    "errors": [],
+    "status": "PASS"
+  },
+  "cleanupVerification": {
+    "ownedDatabaseAbsent": true,
+    "ownedDatabaseRemaining": null,
+    "ownedRolesAbsent": true,
+    "remainingRoleIdentities": [],
+    "schemaAndTableAbsentByOwnedDatabaseRemoval": true,
+    "targetIdentityUnchanged": true
+  },
+  "configurationSha256": "6c65586c389c0ce592b89ecbc9071958c333503d79911cd2c2cd26d9c71162de",
+  "createdDatabaseIdentity": {
+    "name": "g03_483b42249e",
+    "oid": "16394",
+    "ownerOid": "10"
+  },
+  "createdRoleIdentities": [
+    {
+      "bypassRls": false,
+      "createDatabase": false,
+      "createRole": false,
+      "login": false,
+      "name": "g03o_483b42249e",
+      "oid": "16384",
+      "replication": false,
+      "superuser": false
+    },
+    {
+      "bypassRls": false,
+      "createDatabase": false,
+      "createRole": false,
+      "login": false,
+      "name": "g03p_483b42249e",
+      "oid": "16385",
+      "replication": false,
+      "superuser": false
+    },
+    {
+      "bypassRls": false,
+      "createDatabase": false,
+      "createRole": false,
+      "login": false,
+      "name": "g03b_483b42249e",
+      "oid": "16386",
+      "replication": false,
+      "superuser": false
+    },
+    {
+      "bypassRls": false,
+      "createDatabase": false,
+      "createRole": false,
+      "login": false,
+      "name": "g03a_483b42249e",
+      "oid": "16387",
+      "replication": false,
+      "superuser": false
+    },
+    {
+      "bypassRls": false,
+      "createDatabase": false,
+      "createRole": false,
+      "login": false,
+      "name": "g03z_483b42249e",
+      "oid": "16388",
+      "replication": false,
+      "superuser": false
+    },
+    {
+      "bypassRls": false,
+      "createDatabase": false,
+      "createRole": false,
+      "login": false,
+      "name": "g03lo_483b42249e",
+      "oid": "16389",
+      "replication": false,
+      "superuser": false
+    },
+    {
+      "bypassRls": false,
+      "createDatabase": false,
+      "createRole": false,
+      "login": false,
+      "name": "g03lp_483b42249e",
+      "oid": "16390",
+      "replication": false,
+      "superuser": false
+    },
+    {
+      "bypassRls": false,
+      "createDatabase": false,
+      "createRole": false,
+      "login": false,
+      "name": "g03lb_483b42249e",
+      "oid": "16391",
+      "replication": false,
+      "superuser": false
+    }
+  ],
+  "createdSchemaIdentity": {
+    "name": "g03s_483b42249e",
+    "oid": "16395",
+    "ownerOid": "16384"
+  },
+  "createdTableIdentity": {
+    "name": "notes",
+    "oid": "16396",
+    "ownerOid": "16384",
+    "schemaOid": "16395"
+  },
+  "database": "g03_483b42249e",
+  "historicalRows": [
+    [
+      "a",
+      "Alice",
+      null
+    ],
+    [
+      "b",
+      "Bob",
+      2
+    ],
+    [
+      "c",
+      "Alice",
+      9
+    ]
+  ],
+  "initialObservation": {
+    "columnDefault": "'5'::numeric",
+    "columnNativeType": {
+      "formatted": "integer",
+      "oid": 23,
+      "typeName": "int4"
+    },
+    "observer": {
+      "currentUser": "postgres",
+      "sessionUser": "postgres",
+      "superuser": true
+    },
+    "relationFileNode": 16396,
+    "rows": [
+      [
+        "a",
+        "g03a_483b42249e",
+        null,
+        "16396",
+        "769",
+        "(0,1)"
+      ],
+      [
+        "b",
+        "g03z_483b42249e",
+        2,
+        "16396",
+        "770",
+        "(0,2)"
+      ],
+      [
+        "c",
+        "g03a_483b42249e",
+        9,
+        "16396",
+        "771",
+        "(0,3)"
+      ]
+    ],
+    "rowsDigest": "36eeada4cc669ef1738bdb6dcd0c58fa1edc80018a6760513e36b0bae7c1554b"
+  },
+  "initialRowCount": 3,
+  "logicalRoleNames": [
+    "g03lo_483b42249e",
+    "g03lp_483b42249e",
+    "g03lb_483b42249e"
+  ],
+  "openedOwnedConnection": {
+    "backendPid": 102,
+    "currentUser": "postgres",
+    "database": "g03_483b42249e",
+    "postmasterStart": "2026-10-29 08:52:39.484107+00",
+    "serverVersion": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "sessionUser": "postgres",
+    "systemIdentifier": "7702010048883478572"
+  },
+  "ordinaryN12": {
+    "caseId": "G03-N12",
+    "checkCount": 71,
+    "checks": [
+      "native-family-historical-baseline",
+      "sync-01-native-read-page",
+      "sync-01-same-profile-cursor",
+      "sync-01-declared-query-preserves-null",
+      "sync-01-omitted-write-observed-default-before-update",
+      "sync-01-explicit-null-and-value",
+      "sync-01-targeted-update",
+      "sync-01-same-profile-replay-and-observe",
+      "sync-01-independent-row-observation",
+      "sync-02-native-read-page",
+      "sync-02-same-profile-cursor",
+      "sync-02-declared-query-preserves-null",
+      "sync-02-omitted-write-observed-default-before-update",
+      "sync-02-explicit-null-and-value",
+      "sync-02-targeted-update",
+      "sync-02-same-profile-replay-and-observe",
+      "sync-02-independent-row-observation",
+      "async-01-native-read-page",
+      "async-01-same-profile-cursor",
+      "async-01-declared-query",
+      "async-01-omitted-write-observed-default-before-update",
+      "async-01-omitted-null-value-update-observed",
+      "async-02-native-read-page",
+      "async-02-same-profile-cursor",
+      "async-02-declared-query",
+      "async-02-omitted-write-observed-default-before-update",
+      "async-02-omitted-null-value-update-observed",
+      "same-profile-source-owner-legacy-to-selected",
+      "source-owner-legacy-to-selected",
+      "cursor-legacy-to-selected",
+      "same-profile-source-owner-selected-to-legacy",
+      "source-owner-selected-to-legacy",
+      "cursor-selected-to-legacy",
+      "same-profile-async-source-owner-async-legacy-to-selected",
+      "async-source-owner-async-legacy-to-selected",
+      "async-cursor-async-legacy-to-selected",
+      "same-profile-async-source-owner-async-selected-to-legacy",
+      "async-source-owner-async-selected-to-legacy",
+      "async-cursor-async-selected-to-legacy",
+      "occupied-slot-independent-slot-derivation-cross-a",
+      "occupied-slot-cross-profile-observe-refusal-cross-a",
+      "occupied-slot-incompatible-cross-a",
+      "occupied-slot-one-effect-and-same-profile-recovery-cross-a",
+      "occupied-slot-independent-slot-derivation-cross-b",
+      "occupied-slot-cross-profile-observe-refusal-cross-b",
+      "occupied-slot-incompatible-cross-b",
+      "occupied-slot-one-effect-and-same-profile-recovery-cross-b",
+      "same-profile-changed-input-observe-refusal",
+      "same-profile-secret-rotation-observe-refusal",
+      "same-profile-verifier-input-variation-preserves-one-slot-and-effect",
+      "caller-rollback-removes-effect-and-outcome",
+      "sync-lost-commit-response-classified-unknown",
+      "sync-lost-commit-observed-with-one-effect",
+      "async-lost-commit-response-classified-unknown",
+      "async-lost-commit-observed-with-one-effect",
+      "async-caller-rollback-removes-effect-and-outcome",
+      "source-derived-next-generation-was-applied",
+      "same-profile-new-generation-occupied-slot-refusal",
+      "new-generation-refusal-keeps-one-physical-slot-and-effect",
+      "logical-family-dedicated-root-roles-and-person-membership",
+      "logical-matching-selected-read-and-query",
+      "logical-selected-sync-omitted-default-witness-before-update",
+      "logical-matching-selected-profile-and-independent-default",
+      "logical-matching-refused-by-legacy-before-lease",
+      "logical-legacy-refusal-precedes-lease",
+      "logical-legacy-refusal-had-no-business-effect",
+      "logical-matching-async-selected-read-query-write-null-value-update-replay-observe",
+      "logical-matching-async-legacy-refusal",
+      "logical-async-legacy-refusal-precedes-lease",
+      "logical-async-legacy-refusal-had-no-business-effect",
+      "historical-rows-retained-after-all-adapter-effects"
+    ],
+    "cleanupAuthority": "enclosing verified owned database removal covers both schemas",
+    "generationTransition": {
+      "afterDefault": "'9'::numeric",
+      "afterNativeType": {
+        "formatted": "integer",
+        "oid": 23,
+        "typeName": "int4"
+      },
+      "afterRows": [
+        [
+          "a",
+          "g03a_483b42249e",
+          null,
+          "16396",
+          "769",
+          "(0,1)"
+        ],
+        [
+          "b",
+          "g03z_483b42249e",
+          2,
+          "16396",
+          "770",
+          "(0,2)"
+        ],
+        [
+          "c",
+          "g03a_483b42249e",
+          9,
+          "16396",
+          "771",
+          "(0,3)"
+        ],
+        [
+          "g03_n12_as",
+          "g03z_483b42249e",
+          17,
+          "16396",
+          "783",
+          "(0,15)"
+        ],
+        [
+          "g03_n12_av",
+          "g03z_483b42249e",
+          17,
+          "16396",
+          "787",
+          "(0,19)"
+        ],
+        [
+          "g03_n12_cross-a",
+          "g03a_483b42249e",
+          23,
+          "16396",
+          "788",
+          "(0,20)"
+        ],
+        [
+          "g03_n12_cross-b",
+          "g03a_483b42249e",
+          23,
+          "16396",
+          "789",
+          "(0,21)"
+        ],
+        [
+          "g03_n12_lost_async_483b42249e",
+          "g03z_483b42249e",
+          27,
+          "16396",
+          "794",
+          "(0,25)"
+        ],
+        [
+          "g03_n12_lost_sync_483b42249e",
+          "g03a_483b42249e",
+          26,
+          "16396",
+          "793",
+          "(0,24)"
+        ],
+        [
+          "g03_n12_null_as",
+          "g03z_483b42249e",
+          null,
+          "16396",
+          "781",
+          "(0,13)"
+        ],
+        [
+          "g03_n12_null_av",
+          "g03z_483b42249e",
+          null,
+          "16396",
+          "785",
+          "(0,17)"
+        ],
+        [
+          "g03_n12_null_s",
+          "g03a_483b42249e",
+          null,
+          "16396",
+          "773",
+          "(0,5)"
+        ],
+        [
+          "g03_n12_null_v",
+          "g03a_483b42249e",
+          null,
+          "16396",
+          "777",
+          "(0,9)"
+        ],
+        [
+          "g03_n12_s",
+          "g03a_483b42249e",
+          17,
+          "16396",
+          "775",
+          "(0,7)"
+        ],
+        [
+          "g03_n12_stable_slot",
+          "g03a_483b42249e",
+          41,
+          "16396",
+          "790",
+          "(0,22)"
+        ],
+        [
+          "g03_n12_v",
+          "g03a_483b42249e",
+          17,
+          "16396",
+          "779",
+          "(0,11)"
+        ],
+        [
+          "g03_n12_value_as",
+          "g03z_483b42249e",
+          13,
+          "16396",
+          "782",
+          "(0,14)"
+        ],
+        [
+          "g03_n12_value_av",
+          "g03z_483b42249e",
+          13,
+          "16396",
+          "786",
+          "(0,18)"
+        ],
+        [
+          "g03_n12_value_s",
+          "g03a_483b42249e",
+          13,
+          "16396",
+          "774",
+          "(0,6)"
+        ],
+        [
+          "g03_n12_value_v",
+          "g03a_483b42249e",
+          13,
+          "16396",
+          "778",
+          "(0,10)"
+        ]
+      ],
+      "approvalId": "e35ac68f-5f6c-47ab-a6da-c8578cd6c998",
+      "beforeDefault": "'5'::numeric",
+      "beforeNativeType": {
+        "formatted": "integer",
+        "oid": 23,
+        "typeName": "int4"
+      },
+      "beforeRows": [
+        [
+          "a",
+          "g03a_483b42249e",
+          null,
+          "16396",
+          "769",
+          "(0,1)"
+        ],
+        [
+          "b",
+          "g03z_483b42249e",
+          2,
+          "16396",
+          "770",
+          "(0,2)"
+        ],
+        [
+          "c",
+          "g03a_483b42249e",
+          9,
+          "16396",
+          "771",
+          "(0,3)"
+        ],
+        [
+          "g03_n12_as",
+          "g03z_483b42249e",
+          17,
+          "16396",
+          "783",
+          "(0,15)"
+        ],
+        [
+          "g03_n12_av",
+          "g03z_483b42249e",
+          17,
+          "16396",
+          "787",
+          "(0,19)"
+        ],
+        [
+          "g03_n12_cross-a",
+          "g03a_483b42249e",
+          23,
+          "16396",
+          "788",
+          "(0,20)"
+        ],
+        [
+          "g03_n12_cross-b",
+          "g03a_483b42249e",
+          23,
+          "16396",
+          "789",
+          "(0,21)"
+        ],
+        [
+          "g03_n12_lost_async_483b42249e",
+          "g03z_483b42249e",
+          27,
+          "16396",
+          "794",
+          "(0,25)"
+        ],
+        [
+          "g03_n12_lost_sync_483b42249e",
+          "g03a_483b42249e",
+          26,
+          "16396",
+          "793",
+          "(0,24)"
+        ],
+        [
+          "g03_n12_null_as",
+          "g03z_483b42249e",
+          null,
+          "16396",
+          "781",
+          "(0,13)"
+        ],
+        [
+          "g03_n12_null_av",
+          "g03z_483b42249e",
+          null,
+          "16396",
+          "785",
+          "(0,17)"
+        ],
+        [
+          "g03_n12_null_s",
+          "g03a_483b42249e",
+          null,
+          "16396",
+          "773",
+          "(0,5)"
+        ],
+        [
+          "g03_n12_null_v",
+          "g03a_483b42249e",
+          null,
+          "16396",
+          "777",
+          "(0,9)"
+        ],
+        [
+          "g03_n12_s",
+          "g03a_483b42249e",
+          17,
+          "16396",
+          "775",
+          "(0,7)"
+        ],
+        [
+          "g03_n12_stable_slot",
+          "g03a_483b42249e",
+          41,
+          "16396",
+          "790",
+          "(0,22)"
+        ],
+        [
+          "g03_n12_v",
+          "g03a_483b42249e",
+          17,
+          "16396",
+          "779",
+          "(0,11)"
+        ],
+        [
+          "g03_n12_value_as",
+          "g03z_483b42249e",
+          13,
+          "16396",
+          "782",
+          "(0,14)"
+        ],
+        [
+          "g03_n12_value_av",
+          "g03z_483b42249e",
+          13,
+          "16396",
+          "786",
+          "(0,18)"
+        ],
+        [
+          "g03_n12_value_s",
+          "g03a_483b42249e",
+          13,
+          "16396",
+          "774",
+          "(0,6)"
+        ],
+        [
+          "g03_n12_value_v",
+          "g03a_483b42249e",
+          13,
+          "16396",
+          "778",
+          "(0,10)"
+        ]
+      ],
+      "bundleDigest": "68d97afea914c67b8a12f0ef5b9df165ebdc417727a4e7304681731f23949daf",
+      "fileDigest": "b68afcc83b5f151d06201718ac122cdc9f8954f01b8203423ac75980e5d35d6c",
+      "migrationId": "g03-483b42249e-n12-generation-001",
+      "newGeneration": 2,
+      "newHeadDigest": "61613cf8ffa61bf2d03b2d762c8332b1c3f3e61930dbce1f0734810bf3a2b430",
+      "oldGeneration": 1,
+      "oldHeadDigest": "58bf68eb54697aa3ba211de8d9d9ae14450960830e546ff8c1f3f089ca327d16",
+      "planDigest": "89fb769c5f3279ed17573d6fd426d7b3c817e2b6601eb37755bdb709a69a3a43",
+      "sourceDigest": "257230cb6d2edc00eb80efb4e933ecbf7805e8f356867c43523c7a9f8521ec07",
+      "status": "applied"
+    },
+    "helperSha256": "5e64050386952466c80f8fcbd4ce37a2793308efcd05977a998d627a68fff051",
+    "historicalRowsUnchanged": true,
+    "logicalConfigurationSha256": "a8d11cbf5c87cd5a79b6b9f04d23abcae66632cff5a137c671b16b1dbd69eacd",
+    "logicalMatchingSource": "f7d30e1f314c6217cebe966f22c68390e92673f9484bb87e7c6145286c680ed0",
+    "nativeOnlySource": "69f4444c62cf805f9c0caf2234022ba7ce6e8fe7b13382520e334c340b6fd05b",
+    "nativeQualificationClaim": false,
+    "profile": "umf.g03-ordinary-module-compatibility/0.1",
+    "scenario": "ordinary",
+    "schemasCovered": [
+      "g03s_483b42249e",
+      "g03s_483b42249e_logical"
+    ],
+    "status": "PASS",
+    "structuredEvidence": {
+      "generationTransition": {
+        "afterDefault": "'9'::numeric",
+        "afterNativeType": {
+          "formatted": "integer",
+          "oid": 23,
+          "typeName": "int4"
+        },
+        "afterRows": [
+          [
+            "a",
+            "g03a_483b42249e",
+            null,
+            "16396",
+            "769",
+            "(0,1)"
+          ],
+          [
+            "b",
+            "g03z_483b42249e",
+            2,
+            "16396",
+            "770",
+            "(0,2)"
+          ],
+          [
+            "c",
+            "g03a_483b42249e",
+            9,
+            "16396",
+            "771",
+            "(0,3)"
+          ],
+          [
+            "g03_n12_as",
+            "g03z_483b42249e",
+            17,
+            "16396",
+            "783",
+            "(0,15)"
+          ],
+          [
+            "g03_n12_av",
+            "g03z_483b42249e",
+            17,
+            "16396",
+            "787",
+            "(0,19)"
+          ],
+          [
+            "g03_n12_cross-a",
+            "g03a_483b42249e",
+            23,
+            "16396",
+            "788",
+            "(0,20)"
+          ],
+          [
+            "g03_n12_cross-b",
+            "g03a_483b42249e",
+            23,
+            "16396",
+            "789",
+            "(0,21)"
+          ],
+          [
+            "g03_n12_lost_async_483b42249e",
+            "g03z_483b42249e",
+            27,
+            "16396",
+            "794",
+            "(0,25)"
+          ],
+          [
+            "g03_n12_lost_sync_483b42249e",
+            "g03a_483b42249e",
+            26,
+            "16396",
+            "793",
+            "(0,24)"
+          ],
+          [
+            "g03_n12_null_as",
+            "g03z_483b42249e",
+            null,
+            "16396",
+            "781",
+            "(0,13)"
+          ],
+          [
+            "g03_n12_null_av",
+            "g03z_483b42249e",
+            null,
+            "16396",
+            "785",
+            "(0,17)"
+          ],
+          [
+            "g03_n12_null_s",
+            "g03a_483b42249e",
+            null,
+            "16396",
+            "773",
+            "(0,5)"
+          ],
+          [
+            "g03_n12_null_v",
+            "g03a_483b42249e",
+            null,
+            "16396",
+            "777",
+            "(0,9)"
+          ],
+          [
+            "g03_n12_s",
+            "g03a_483b42249e",
+            17,
+            "16396",
+            "775",
+            "(0,7)"
+          ],
+          [
+            "g03_n12_stable_slot",
+            "g03a_483b42249e",
+            41,
+            "16396",
+            "790",
+            "(0,22)"
+          ],
+          [
+            "g03_n12_v",
+            "g03a_483b42249e",
+            17,
+            "16396",
+            "779",
+            "(0,11)"
+          ],
+          [
+            "g03_n12_value_as",
+            "g03z_483b42249e",
+            13,
+            "16396",
+            "782",
+            "(0,14)"
+          ],
+          [
+            "g03_n12_value_av",
+            "g03z_483b42249e",
+            13,
+            "16396",
+            "786",
+            "(0,18)"
+          ],
+          [
+            "g03_n12_value_s",
+            "g03a_483b42249e",
+            13,
+            "16396",
+            "774",
+            "(0,6)"
+          ],
+          [
+            "g03_n12_value_v",
+            "g03a_483b42249e",
+            13,
+            "16396",
+            "778",
+            "(0,10)"
+          ]
+        ],
+        "approvalId": "e35ac68f-5f6c-47ab-a6da-c8578cd6c998",
+        "beforeDefault": "'5'::numeric",
+        "beforeNativeType": {
+          "formatted": "integer",
+          "oid": 23,
+          "typeName": "int4"
+        },
+        "beforeRows": [
+          [
+            "a",
+            "g03a_483b42249e",
+            null,
+            "16396",
+            "769",
+            "(0,1)"
+          ],
+          [
+            "b",
+            "g03z_483b42249e",
+            2,
+            "16396",
+            "770",
+            "(0,2)"
+          ],
+          [
+            "c",
+            "g03a_483b42249e",
+            9,
+            "16396",
+            "771",
+            "(0,3)"
+          ],
+          [
+            "g03_n12_as",
+            "g03z_483b42249e",
+            17,
+            "16396",
+            "783",
+            "(0,15)"
+          ],
+          [
+            "g03_n12_av",
+            "g03z_483b42249e",
+            17,
+            "16396",
+            "787",
+            "(0,19)"
+          ],
+          [
+            "g03_n12_cross-a",
+            "g03a_483b42249e",
+            23,
+            "16396",
+            "788",
+            "(0,20)"
+          ],
+          [
+            "g03_n12_cross-b",
+            "g03a_483b42249e",
+            23,
+            "16396",
+            "789",
+            "(0,21)"
+          ],
+          [
+            "g03_n12_lost_async_483b42249e",
+            "g03z_483b42249e",
+            27,
+            "16396",
+            "794",
+            "(0,25)"
+          ],
+          [
+            "g03_n12_lost_sync_483b42249e",
+            "g03a_483b42249e",
+            26,
+            "16396",
+            "793",
+            "(0,24)"
+          ],
+          [
+            "g03_n12_null_as",
+            "g03z_483b42249e",
+            null,
+            "16396",
+            "781",
+            "(0,13)"
+          ],
+          [
+            "g03_n12_null_av",
+            "g03z_483b42249e",
+            null,
+            "16396",
+            "785",
+            "(0,17)"
+          ],
+          [
+            "g03_n12_null_s",
+            "g03a_483b42249e",
+            null,
+            "16396",
+            "773",
+            "(0,5)"
+          ],
+          [
+            "g03_n12_null_v",
+            "g03a_483b42249e",
+            null,
+            "16396",
+            "777",
+            "(0,9)"
+          ],
+          [
+            "g03_n12_s",
+            "g03a_483b42249e",
+            17,
+            "16396",
+            "775",
+            "(0,7)"
+          ],
+          [
+            "g03_n12_stable_slot",
+            "g03a_483b42249e",
+            41,
+            "16396",
+            "790",
+            "(0,22)"
+          ],
+          [
+            "g03_n12_v",
+            "g03a_483b42249e",
+            17,
+            "16396",
+            "779",
+            "(0,11)"
+          ],
+          [
+            "g03_n12_value_as",
+            "g03z_483b42249e",
+            13,
+            "16396",
+            "782",
+            "(0,14)"
+          ],
+          [
+            "g03_n12_value_av",
+            "g03z_483b42249e",
+            13,
+            "16396",
+            "786",
+            "(0,18)"
+          ],
+          [
+            "g03_n12_value_s",
+            "g03a_483b42249e",
+            13,
+            "16396",
+            "774",
+            "(0,6)"
+          ],
+          [
+            "g03_n12_value_v",
+            "g03a_483b42249e",
+            13,
+            "16396",
+            "778",
+            "(0,10)"
+          ]
+        ],
+        "bundleDigest": "68d97afea914c67b8a12f0ef5b9df165ebdc417727a4e7304681731f23949daf",
+        "fileDigest": "b68afcc83b5f151d06201718ac122cdc9f8954f01b8203423ac75980e5d35d6c",
+        "migrationId": "g03-483b42249e-n12-generation-001",
+        "newGeneration": 2,
+        "newHeadDigest": "61613cf8ffa61bf2d03b2d762c8332b1c3f3e61930dbce1f0734810bf3a2b430",
+        "oldGeneration": 1,
+        "oldHeadDigest": "58bf68eb54697aa3ba211de8d9d9ae14450960830e546ff8c1f3f089ca327d16",
+        "planDigest": "89fb769c5f3279ed17573d6fd426d7b3c817e2b6601eb37755bdb709a69a3a43",
+        "sourceDigest": "257230cb6d2edc00eb80efb4e933ecbf7805e8f356867c43523c7a9f8521ec07",
+        "status": "applied"
+      },
+      "logicalAsyncRowsAfter": [
+        [
+          "a",
+          "g03a_483b42249e",
+          null
+        ],
+        [
+          "b",
+          "g03z_483b42249e",
+          2
+        ],
+        [
+          "c",
+          "g03a_483b42249e",
+          9
+        ],
+        [
+          "g03_n12_logical",
+          "g03a_483b42249e",
+          32
+        ],
+        [
+          "g03_n12_logical_async",
+          "g03z_483b42249e",
+          34
+        ],
+        [
+          "g03_n12_logical_async_null",
+          "g03z_483b42249e",
+          null
+        ],
+        [
+          "g03_n12_logical_async_value",
+          "g03z_483b42249e",
+          33
+        ],
+        [
+          "g03_n12_logical_null",
+          "g03a_483b42249e",
+          null
+        ],
+        [
+          "g03_n12_logical_value",
+          "g03a_483b42249e",
+          31
+        ]
+      ],
+      "logicalRoleMembershipWitness": {
+        "expectedPersonMembershipRows": [
+          [
+            "16390",
+            "16387",
+            false,
+            true,
+            false
+          ],
+          [
+            "16390",
+            "16388",
+            false,
+            true,
+            false
+          ]
+        ],
+        "logicalRootRoleIdentities": [
+          [
+            "16389",
+            "g03lo_483b42249e",
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          [
+            "16390",
+            "g03lp_483b42249e",
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          [
+            "16391",
+            "g03lb_483b42249e",
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        ],
+        "logicalRootRoleNames": [
+          "g03lo_483b42249e",
+          "g03lp_483b42249e",
+          "g03lb_483b42249e"
+        ],
+        "personMembershipRows": [
+          [
+            "16390",
+            "16387",
+            false,
+            true,
+            false
+          ],
+          [
+            "16390",
+            "16388",
+            false,
+            true,
+            false
+          ]
+        ]
+      },
+      "logicalRowsAfter": [
+        [
+          "a",
+          "g03a_483b42249e",
+          null
+        ],
+        [
+          "b",
+          "g03z_483b42249e",
+          2
+        ],
+        [
+          "c",
+          "g03a_483b42249e",
+          9
+        ],
+        [
+          "g03_n12_logical",
+          "g03a_483b42249e",
+          32
+        ],
+        [
+          "g03_n12_logical_null",
+          "g03a_483b42249e",
+          null
+        ],
+        [
+          "g03_n12_logical_value",
+          "g03a_483b42249e",
+          31
+        ]
+      ],
+      "logicalRowsBefore": [
+        [
+          "a",
+          "g03a_483b42249e",
+          null
+        ],
+        [
+          "b",
+          "g03z_483b42249e",
+          2
+        ],
+        [
+          "c",
+          "g03a_483b42249e",
+          9
+        ]
+      ],
+      "nativeHistoricalRowsAfter": [
+        [
+          "a",
+          "g03a_483b42249e",
+          null
+        ],
+        [
+          "b",
+          "g03z_483b42249e",
+          2
+        ],
+        [
+          "c",
+          "g03a_483b42249e",
+          9
+        ]
+      ],
+      "nativeRowsAfter": [
+        [
+          "a",
+          "g03a_483b42249e",
+          null
+        ],
+        [
+          "b",
+          "g03z_483b42249e",
+          2
+        ],
+        [
+          "c",
+          "g03a_483b42249e",
+          9
+        ],
+        [
+          "g03_n12_as",
+          "g03z_483b42249e",
+          17
+        ],
+        [
+          "g03_n12_av",
+          "g03z_483b42249e",
+          17
+        ],
+        [
+          "g03_n12_cross-a",
+          "g03a_483b42249e",
+          23
+        ],
+        [
+          "g03_n12_cross-b",
+          "g03a_483b42249e",
+          23
+        ],
+        [
+          "g03_n12_lost_async_483b42249e",
+          "g03z_483b42249e",
+          27
+        ],
+        [
+          "g03_n12_lost_sync_483b42249e",
+          "g03a_483b42249e",
+          26
+        ],
+        [
+          "g03_n12_null_as",
+          "g03z_483b42249e",
+          null
+        ],
+        [
+          "g03_n12_null_av",
+          "g03z_483b42249e",
+          null
+        ],
+        [
+          "g03_n12_null_s",
+          "g03a_483b42249e",
+          null
+        ],
+        [
+          "g03_n12_null_v",
+          "g03a_483b42249e",
+          null
+        ],
+        [
+          "g03_n12_s",
+          "g03a_483b42249e",
+          17
+        ],
+        [
+          "g03_n12_stable_slot",
+          "g03a_483b42249e",
+          41
+        ],
+        [
+          "g03_n12_v",
+          "g03a_483b42249e",
+          17
+        ],
+        [
+          "g03_n12_value_as",
+          "g03z_483b42249e",
+          13
+        ],
+        [
+          "g03_n12_value_av",
+          "g03z_483b42249e",
+          13
+        ],
+        [
+          "g03_n12_value_s",
+          "g03a_483b42249e",
+          13
+        ],
+        [
+          "g03_n12_value_v",
+          "g03a_483b42249e",
+          13
+        ]
+      ],
+      "nativeRowsBefore": [
+        [
+          "a",
+          "g03a_483b42249e",
+          null
+        ],
+        [
+          "b",
+          "g03z_483b42249e",
+          2
+        ],
+        [
+          "c",
+          "g03a_483b42249e",
+          9
+        ]
+      ],
+      "occupiedSlotObservations": [
+        {
+          "afterRowCount": 16,
+          "beforeRowCount": 16,
+          "crossProfileObserveRefusal": "stored outcome differs from this invocation or authority",
+          "crossProfileWriteRefusal": "stored outcome differs from this invocation or authority",
+          "direction": "cross-a",
+          "effectRow": [
+            "g03_n12_cross-a",
+            "g03a_483b42249e",
+            23
+          ],
+          "expectedSlot": "4dcaa894da184f37fdb2b71871b5ae7128477170314cdd2629ea5d865fa667e6",
+          "firstProfile": "weft.table-operation-module/0.1",
+          "keyDigest": "4dcaa894da184f37fdb2b71871b5ae7128477170314cdd2629ea5d865fa667e6",
+          "principalOid": 16387,
+          "sameProfileRecovery": "recovered",
+          "secondProfile": "weft.table-operation-module/0.2",
+          "slotRowsAfter": [
+            [
+              16387,
+              "4dcaa894da184f37fdb2b71871b5ae7128477170314cdd2629ea5d865fa667e6"
+            ]
+          ],
+          "slotRowsBefore": [
+            [
+              16387,
+              "4dcaa894da184f37fdb2b71871b5ae7128477170314cdd2629ea5d865fa667e6"
+            ]
+          ]
+        },
+        {
+          "afterRowCount": 17,
+          "beforeRowCount": 17,
+          "crossProfileObserveRefusal": "stored outcome differs from this invocation or authority",
+          "crossProfileWriteRefusal": "stored outcome differs from this invocation or authority",
+          "direction": "cross-b",
+          "effectRow": [
+            "g03_n12_cross-b",
+            "g03a_483b42249e",
+            23
+          ],
+          "expectedSlot": "c6b912861dbd8e915b38801af097f3c32c48f24e50bbddec2940cd94107d551d",
+          "firstProfile": "weft.table-operation-module/0.2",
+          "keyDigest": "c6b912861dbd8e915b38801af097f3c32c48f24e50bbddec2940cd94107d551d",
+          "principalOid": 16387,
+          "sameProfileRecovery": "recovered",
+          "secondProfile": "weft.table-operation-module/0.1",
+          "slotRowsAfter": [
+            [
+              16387,
+              "c6b912861dbd8e915b38801af097f3c32c48f24e50bbddec2940cd94107d551d"
+            ]
+          ],
+          "slotRowsBefore": [
+            [
+              16387,
+              "c6b912861dbd8e915b38801af097f3c32c48f24e50bbddec2940cd94107d551d"
+            ]
+          ]
+        }
+      ],
+      "profileMatrix": [
+        {
+          "adapter": "sync",
+          "profile": "weft.table-operation-module/0.1",
+          "sourceFamily": "native-only",
+          "status": "admitted"
+        },
+        {
+          "adapter": "sync",
+          "profile": "weft.table-operation-module/0.2",
+          "sourceFamily": "native-only",
+          "status": "admitted"
+        },
+        {
+          "adapter": "async",
+          "profile": "weft.table-operation-module/0.1",
+          "sourceFamily": "native-only",
+          "status": "admitted"
+        },
+        {
+          "adapter": "async",
+          "profile": "weft.table-operation-module/0.2",
+          "sourceFamily": "native-only",
+          "status": "admitted"
+        },
+        {
+          "adapter": "sync",
+          "profile": "weft.table-operation-module/0.2",
+          "sourceFamily": "logical-matching",
+          "status": "admitted"
+        },
+        {
+          "adapter": "async",
+          "profile": "weft.table-operation-module/0.2",
+          "sourceFamily": "logical-matching",
+          "status": "admitted"
+        },
+        {
+          "adapter": "sync",
+          "profile": "weft.table-operation-module/0.1",
+          "sourceFamily": "logical-matching",
+          "status": "refused-before-lease"
+        },
+        {
+          "adapter": "async",
+          "profile": "weft.table-operation-module/0.1",
+          "sourceFamily": "logical-matching",
+          "status": "refused-before-lease"
+        }
+      ],
+      "recoveryObservations": [
+        {
+          "afterRollback": "not-observed",
+          "kind": "sync-caller-rollback",
+          "pendingDurability": "pending-caller-commit"
+        },
+        {
+          "classification": "unknown",
+          "effectCount": 1,
+          "kind": "sync-lost-commit",
+          "recovered": "recovered"
+        },
+        {
+          "classification": "unknown",
+          "effectCount": 1,
+          "kind": "async-lost-commit",
+          "recovered": "recovered"
+        },
+        {
+          "afterRollback": "not-observed",
+          "kind": "async-caller-rollback",
+          "pendingDurability": "pending-caller-commit"
+        }
+      ],
+      "verifierInputControls": {
+        "changedInputRefusal": "stored outcome differs from this invocation or authority",
+        "effectRows": [
+          [
+            "g03_n12_stable_slot",
+            "g03a_483b42249e",
+            41
+          ]
+        ],
+        "keyDigest": "95de4468ae66418beaa08f442d7ebddc4be0e98aeea51040b9966332f9e1d81a",
+        "principalOid": 16387,
+        "profile": "weft.table-operation-module/0.2",
+        "rotatedSecretRefusal": "stored outcome cannot be authenticated",
+        "slotRows": [
+          [
+            16387,
+            "95de4468ae66418beaa08f442d7ebddc4be0e98aeea51040b9966332f9e1d81a"
+          ]
+        ]
+      }
+    }
+  },
+  "ordinarySourceAdmissionPreflight": {
+    "businessEffects": 0,
+    "databaseLeases": 0,
+    "profile": "umf.g03-n12-source-admission-preflight/1",
+    "receipts": [
+      {
+        "bundleDigest": "14e607bd326415d33013d8ba50f885347328b0798b849e1a380aa43a4bee497e",
+        "configurationSha256": "6c65586c389c0ce592b89ecbc9071958c333503d79911cd2c2cd26d9c71162de",
+        "disposition": "admitted-all-ordinary-operations-and-query",
+        "family": "native-only",
+        "profile": "weft.table-operation-module/0.1",
+        "sourceDigest": "69f4444c62cf805f9c0caf2234022ba7ce6e8fe7b13382520e334c340b6fd05b"
+      },
+      {
+        "bundleDigest": "14e607bd326415d33013d8ba50f885347328b0798b849e1a380aa43a4bee497e",
+        "configurationSha256": "6c65586c389c0ce592b89ecbc9071958c333503d79911cd2c2cd26d9c71162de",
+        "disposition": "admitted-all-ordinary-operations-and-query",
+        "family": "native-only",
+        "profile": "weft.table-operation-module/0.2",
+        "sourceDigest": "69f4444c62cf805f9c0caf2234022ba7ce6e8fe7b13382520e334c340b6fd05b"
+      },
+      {
+        "bundleDigest": "18638bfbca85d111106b0990e244d7fe645a802cc8eb0c3b5b2e8d417ffb5753",
+        "configurationSha256": "a8d11cbf5c87cd5a79b6b9f04d23abcae66632cff5a137c671b16b1dbd69eacd",
+        "disposition": "expected-source-admission-refusal",
+        "error": "table absent/ambiguous in UMF",
+        "family": "logical-matching",
+        "profile": "weft.table-operation-module/0.1",
+        "sourceDigest": "f7d30e1f314c6217cebe966f22c68390e92673f9484bb87e7c6145286c680ed0"
+      },
+      {
+        "bundleDigest": "18638bfbca85d111106b0990e244d7fe645a802cc8eb0c3b5b2e8d417ffb5753",
+        "configurationSha256": "a8d11cbf5c87cd5a79b6b9f04d23abcae66632cff5a137c671b16b1dbd69eacd",
+        "disposition": "admitted-all-ordinary-operations-and-query",
+        "family": "logical-matching",
+        "profile": "weft.table-operation-module/0.2",
+        "sourceDigest": "f7d30e1f314c6217cebe966f22c68390e92673f9484bb87e7c6145286c680ed0"
+      }
+    ],
+    "status": "PASS_SOURCE_ADMISSION_BEFORE_TARGET_RESOURCES"
+  },
+  "roleNames": [
+    "g03o_483b42249e",
+    "g03p_483b42249e",
+    "g03b_483b42249e",
+    "g03a_483b42249e",
+    "g03z_483b42249e"
+  ],
+  "scenario": "ordinary",
+  "schema": "g03s_483b42249e",
+  "serverVersion": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "status": "PASS",
+  "steps": [],
+  "targetIdentity": {
+    "currentUser": "postgres",
+    "maintenanceDatabase": "postgres",
+    "observerOid": "10",
+    "observerSuperuser": true,
+    "postmasterStart": "2026-10-29 08:52:39.484107+00",
+    "serverAddress": "192.168.165.2/32",
+    "serverPort": 5432,
+    "serverVersion": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "sessionUser": "postgres",
+    "systemIdentifier": "7702010048883478572"
+  }
+}

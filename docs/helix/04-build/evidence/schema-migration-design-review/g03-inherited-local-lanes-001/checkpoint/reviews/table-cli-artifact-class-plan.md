@@ -1,0 +1,29 @@
+# Table011 actual artifact-class failure: finite successor plan
+
+Disposition: **ACCEPT the narrow artifact-class correction plan below.** Table011 remains FAIL_OR_UNKNOWN; no exact CLI size/mode or later gate result is inferred. Luna implements a fresh successor; Sol reviews affected source; root executes the original complete table lane after Truss's separate heavy lane has ended. No parallel heavy work or cross-lane evidence stitching.
+
+## Actual retained cause and limits
+
+Output `/private/tmp/g03-final-table-operations-operator-011/runs/8119c30c147e4c3d868999fb60ebc517/operator-result.json`:90,079 bytes SHA-256 `c25a881218e891aaa16f3b8f483e61b797bdee26809abfe772932704f3ac00cc`, FAIL_OR_UNKNOWN in101.089s. Prepare receipt30,696 bytes SHA-256 `046d9c305a64d1db8bec95cc3ea48974ed0e5e5dd95565afec9d070038ecf6f1` fails in97.808s with exact `RuntimeError: file exceeds cap: /target/debug/examples/compile_table_operation`.
+
+Sol independently verified all16 recorded prepare command exits0, false timeout/failure, and32 actual stream files against raw/retained size/SHA and physicalClosed/not-truncated flags; total15,815 raw bytes. The fixed locked/offline native compiler command completed in75.960094s, followed by the unchanged installed-bindings command in8.50798s. The latter retained56 binding cases and56 browser cases; its report keeps nativeExecutionQualified=false/browserExecutionQualified=false. These are partial observations, not completed table qualification. No PostgreSQL/native-oracle, WASM or Chromium phase ran. Actual cleanup verifies the prepare container and all four owned volumes absent; the deleted target volume prevents recovery of the CLI's exact size or mode. The source guard proves only that its stat exceeded the64MiB threshold; it supplies no exact size or guarantee it fits a different limit.
+
+## A. Correct only the native CLI identity class
+
+In the fresh derivative of `runtime/table_guest.py`, use a named selected-software limit of **256MiB** for all three identity hash sites of the exact `/target/debug/examples/compile_table_operation` path: post-build preparation, pre-native/WASM comparison, and post-WASM comparison (current lines351/363/381). This is the lane's already declared selected software-artifact limit; the CLI's existing64MiB check was an extra local per-file defense, not an inherited table workflow constraint. No inherited deadline, command budget, public-file/public-total, source, cache or aggregate software bound increases.
+
+Before each of these hashes, record the actual fixed path, stage, lstat size, permission mode and file type into a small fixed-shape phase-receipt observation, then persist the existing bounded fail-only phase receipt before the cap refusal can occur. Refuse symlink/non-regular targets and invalid/over-limit size; retain the existing stable pre/post hashing checks. Do not execute the CLI for measurement, dump binary bytes, synthesize its size, strip/rebuild it differently, change Cargo flags or alter product behavior. Keep successful digest/size equality comparisons and P56 provenance exactly as before. An over256MiB artifact must still fail with its measured metadata retained.
+
+## B. Correct the same exposed class mismatch for the actual generated corpus
+
+The retained software artifact `prepare/artifacts/operation-browser-cases.json` is **2,537,368 bytes**, SHA-256 `6dfc3ed5da783d8e17094cb30dc9746d5fdd41c1216bd4ad574fa9fa123af71c`, an actual56-item JSON corpus. The existing final collector already classifies paths under artifacts as selected software, with128MiB per retained artifact and256MiB aggregate. It is not a public report/log.
+
+Current guest line361 hashes this artifact using PER_FILE=1MiB; host lines868/869/891 read/hash/recheck it with1MiB. Those four sites would deterministically refuse the retained generated corpus later, even after the CLI correction. In the same finite repair, use the existing **128MiB selected-artifact per-file limit** at exactly these four corpus consumers, still under the existing256MiB software aggregate limit. Preserve complete JSON/case parsing, all56 rows and byte/hash equality across prepare, native/WASM and browser comparison. Do not truncate the corpus, shrink fixtures, treat it as a public1MiB file, or widen any actual public evidence cap. No other source/public/cache read cap is changed. No speculative adjustment of unobserved WASM outputs is requested.
+
+## Source freeze and execution
+
+Limit implementation changes to the guest's three CLI identity/observation sites, the four named guest/host corpus consumers, fresh derivative paths and corresponding source manifest metadata. Packet product/source/cohort/cache/tool/browser values, case expectations, compile/bind/native/WASM/browser commands, stage ordering,2700s original table owner with its existing offsets/reserve,1MiB raw/per-public-file and8MiB public evidence, original selected artifact classification and owned cleanup remain. Preserve table011 raw failures and partial reports unchanged. Truss is a distinct already accepted source profile and has no dependency on this native CLI; do not modify or borrow its results for this repair.
+
+After affected source closure, root runs the full original successor table lane on the unchanged P56/final18/cache007 inputs. Every phase must close in that new run; successful011 preparation records do not substitute for successor phases. Existing meaningful full-lane case, native/WASM/Chromium, custody and cleanup predicates are the validation; no additional mirror test or framework is needed. This plan does not guarantee future performance or artifact-size fit and grants no final table, release, public or Mac runtime qualification.
+
+Sol performed source/data/hash inspection only; no candidate/helper/product/test execution/import, Docker, Git, network, public write or source edit.

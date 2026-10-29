@@ -1,0 +1,17 @@
+# G03 Weft local Linux test/build operator source review
+
+Disposition: ACCEPT SOURCE for root to execute the bounded LOCAL_EMULATED local test/build attempt. Actual source tests, build, wheel and later compatibility remain unqualified.
+
+Verified all five physical operator-manifest rows. Manifest fd67c3f5355ce64aaa19ff2d9b1d61f982e82ef1aa018cf6c4c17a37d4ebd52d. Runner run.py: 7831607d4914c2b905ff41ec949314eb960da22a87fe81e2639a014415753850, 24,523 bytes. fetch_maturin.py: bd936fffbe758e265666230d2b554d463dbb17593fdf005ae04d4a4d328485a2. Requirements: 456c2c84a0d72376a5235ac8da66568cd95e86fed4b4170a92dea3eabc90fb8f. Official PyPI JSON: ff36b1d43664c264059608e2c475db66efe93264c894a80f6b0181b2f85bdf4e. README: f6cf9458f562dca3fd49dbc2f82f52f945d3d512fc234f998126104f245c3481.
+
+The nine-file source identity is explicit: exact base HEAD/tree, six-file semantic patch a96e4f29262edb6d459b56c607f1d22527a622255bedeafd9e26274884531936 and three-file candidate version patch 25ccab8a9c2a3576ac09783a9c06dabfa503e1dbd9b7b67495e751424552564f, verified before and after. Git status whitespace is preserved, avoiding a false dirty-postimage refusal. Candidate 0.4.55+g03.a96e4f29262e remains held and distinct from immutable public 0.4.55.
+
+The pinned existing Linux amd64 image and exact observed Rust/Cargo 1.90 and Python 3.11.17 are enforced. Source/operator mounts are read-only; unique owned target/Cargo volumes and fresh candidate output contain writes. Exact hash/size-pinned maturin 1.9.6 is acquired and installed into an isolated tooling venv. Locked setup alone uses networking; Docker network detachment is checked before offline core/PostgreSQL tests and full existing-feature release build from the actual Python pyproject directory. No default feature subset or direct host product execution substitutes for these commands.
+
+The operator retains three distinct physical captures, checks actual subprocess status, timeout/drain/truncation/capture closure and combined log budget. Setup/test/build ceilings are 600/1800/1800 seconds, clamped within one 3600-second local operator budget and 60-second terminal reserve; termination grace is 10 seconds. Source checks, cleanup and final metadata count are included in the fail-closed terminal elapsed check. This is a named local emulation resource profile, not a hosted CI performance assertion.
+
+Candidate wheel compressed/expanded bounds are 32/128 MiB, separate from selected metadata's 16 MiB and logs' 1 MiB limits. Inspection checks safe member paths/types, duplicates, bounded expanded bytes, physical hashes and unique METADATA/WHEEL/RECORD, and enforces held distribution name/version. Actual platform/native members/RECORD semantic custody will be independently reviewed after a successful build. Volumes/container have execution-owned labels; cleanup uses reachable exact name/ownership/absence checks and shared terminal bounds. Unknown cleanup or evidence status cannot pass.
+
+The reviewed draft issues (capture schema, cwd/feature discovery, tooling environment, source status whitespace, wheel metadata suffix, explicit runtime pins and cleanup closure) are resolved in this frozen source. Preserve its manifest with actual result/logs; a nonzero test/build or artifact refusal requires concrete diagnosis, not expectation/case reduction. No push, release or Actions is authorized by this source review.
+
+Review performed only through text/data/hash inspection, with no candidate imports, AST/test/runtime/container/CI execution or Git mutation.

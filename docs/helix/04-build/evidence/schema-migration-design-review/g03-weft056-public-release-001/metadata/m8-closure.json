@@ -1,0 +1,65 @@
+{
+  "allOtherProducerModeBlobTuplesUnchanged": true,
+  "changedPaths": [
+    "docs/helix/05-deploy/README.md",
+    "docs/helix/05-deploy/local-release-runbook-0.4.56.md",
+    "docs/helix/05-deploy/releases/v0.4.56.md",
+    "scripts/release/publish_local_release.py",
+    "scripts/release/test_publish_local_release.py",
+    "scripts/release/test_verify_local_release_profile.py",
+    "scripts/release/verify_local_release_profile.py"
+  ],
+  "independentReview": {
+    "path": "/private/tmp/g03-weft-m8-source-sol-review001.md",
+    "sha256": "945c049bb53424bf395f05d7426209187f58beae81237fdae165d03ca7427e64",
+    "sizeBytes": 5222
+  },
+  "metadataCommit": "2f62e1148d1b2030558550e4f6f2ffe518bac62d",
+  "metadataFiles": [
+    {
+      "path": "docs/helix/05-deploy/README.md",
+      "sha256": "4a2217b08e76dcab236c4bc5c1adb50bb583e5145b5e22ef949917119892549d",
+      "sizeBytes": 6331
+    },
+    {
+      "path": "docs/helix/05-deploy/local-release-runbook-0.4.56.md",
+      "sha256": "3f6f9f5c4e3042350dc70df5def86ced0c948412b528af6eff44f6be293c5610",
+      "sizeBytes": 8377
+    },
+    {
+      "path": "docs/helix/05-deploy/releases/v0.4.56.md",
+      "sha256": "f76502c3754b27af4527dfd8446f7a895b89b740548ec1d7087a5fdcb4b7dcb8",
+      "sizeBytes": 3171
+    },
+    {
+      "path": "scripts/release/publish_local_release.py",
+      "sha256": "476e9ce147c151c27cc55e9f49243832c4e0fbc9aa2c6ead6b55caea7f9d2647",
+      "sizeBytes": 76036
+    },
+    {
+      "path": "scripts/release/test_publish_local_release.py",
+      "sha256": "767cb92aa14a4d124c76f1a2219e9948d1072155b8caaa5492b6e4e3803a29d9",
+      "sizeBytes": 37116
+    },
+    {
+      "path": "scripts/release/test_verify_local_release_profile.py",
+      "sha256": "6f33cef1f4a0b04d8a4fdba5ef1276c3c78e87a42736b8d4f2108c9e56812938",
+      "sizeBytes": 233978
+    },
+    {
+      "path": "scripts/release/verify_local_release_profile.py",
+      "sha256": "bb06ac9070bd2630def240a299d611a5f9b53dd509461671524d3491ebe37626",
+      "sizeBytes": 218650
+    }
+  ],
+  "metadataTree": "6d7fe34812456754a910b22bea462aa48696ce03",
+  "producerCommit": "973d864c8d26b2bc173a411eac8368da5efc1ab3",
+  "producerTree": "8b20d1f01bea72ea08ed01fcaac97266ed3cb4ff",
+  "profile": "weft.g03-reviewed-metadata-change-closure/1",
+  "selectedBuildInputsEqual": true,
+  "sourceCorrespondence": {
+    "path": "/private/tmp/g03-weft-m8-source-correspondence-001/correspondence.json",
+    "sha256": "65978f77f3f7524cb4c3b737a75ddf07759bfb3d0e5dbc382be2a3c1152c6b63",
+    "sizeBytes": 3964
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "budgets": {
+    "aggregateSeconds": 1500,
+    "cargoFetchSeconds": 600,
+    "installSeconds": 300,
+    "publicEvidenceBytes": 16777216,
+    "rawBytes": 1048576,
+    "single139ConsumerSeconds": 180,
+    "standardSDKBuildSeconds": 600
+  },
+  "networkProfile": "SDK locked registry acquisition; not claimed offline. Python final18 cohort remains separate offline profile.",
+  "output": "/private/tmp/g03-sdk058-local-producer-actual-001",
+  "producerCommit": "855f6c48649496fc60b3303798790d0ddb55d38f",
+  "producerTree": "53f2bfffbc0c5780e79d76d8fd3d202239d088b2",
+  "profile": "umf.g03-sdk058-local-execution-admission/1",
+  "review": {
+    "path": "/private/tmp/g03-sdk058-producer004-sol-source-review001.md",
+    "sha256": "9547b274e3fbb2dcaaa0913f915dd4503e4b7a4ce3cc6e7770bcf4acd2ebed89"
+  },
+  "scope": "One fresh standard Linux SDK build and one139consumer; noActions/Macruntime/release/publicproof",
+  "sourcePins": {
+    "SHA256SUMS": "bf44e11b42dae8978c0cfba99761507862b6f8a0ef64bdf27221eda655a69c66",
+    "binding.json": "a000c0dc2fc1b18f638159186639d669ac8f027eb141f89798f7d652c6e514b5",
+    "manifest.json": "88ec8b6df5ddcadefaec1d6db0d35f427c52e7c26b66e1188beaa0055d7a6679"
+  },
+  "sourceRoot": "/private/tmp/g03-sdk058-producer-004",
+  "sourceVolume": "umf-sdk058-source-855f6c486-001",
+  "sourceVolumePrep": "/private/tmp/g03-sdk058-source-volume-prep-003/result.json"
+}

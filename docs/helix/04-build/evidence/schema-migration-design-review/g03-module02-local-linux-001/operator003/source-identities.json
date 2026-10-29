@@ -1,0 +1,212 @@
+{
+  "candidateSource": {
+    "commit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+    "containerPath": "/volume-producer",
+    "mount": "read-only",
+    "tree": "8b98c0d895983ba2b7637dd3aea567dab0943883",
+    "volume": "umf-migration-source-267675510",
+    "expectedMountedGitStatus": "clean; to be observed by the bounded guest, not claimed before execution"
+  },
+  "cohort": {
+    "aggregateIndexSha256": "c4d99294936f1631949cb7252d98c8e91b9ba106bf329e251dc9c8ef41e5287d",
+    "mirrorManifestSha256": "9e304930ca19abc38091a90e324806649d1f75b1ca799b37448327c5c0b052b9",
+    "mount": "read-only at /cohort/aggregate",
+    "requiredDefaultWheels": 18,
+    "requirementsLockSha256": "c28065235c7863051de1498c6144dfc1813264f5011dcaff865c2791515b75e4",
+    "root": "/private/tmp/g03-held-cohort-001/aggregate",
+    "selectedChildLockPath": "/private/tmp/g03-held-cohort-001/cells/linux-x86_64-py311/cohort.lock.json",
+    "selectedChildLockSha256": "29c69360e6bcbea329f1ddab05725f727316a729954f123cf11c102486a5c94b",
+    "aggregateIndex": "/private/tmp/g03-held-cohort-001/aggregate/aggregate.json",
+    "distributionProfile": "held 18-wheel local diagnostic cohort; exact held source-built Weft candidate plus 17 unchanged rows; no release claim",
+    "aggregateRoot": "/private/tmp/g03-held-cohort-001/aggregate",
+    "custodyReview": {
+      "path": "/private/tmp/g03-held-cohort-sol-custody-review001.md",
+      "sha256": "092e996255e4d063eb8a2baab66ed2d429546bb0eb7620b544d88d97138637cf"
+    },
+    "comparisonToPreviousSelectedChildLock": {
+      "previousPath": "/private/tmp/migration-full18-e4299aff8-002/cells/linux-x86_64-py311/cohort.lock.json",
+      "previousSha256": "4337ab0597dcec245402abe73bcf8ea1d09bc72a4cb2907473c9e53d0327e611",
+      "currentPath": "/private/tmp/g03-held-cohort-001/cells/linux-x86_64-py311/cohort.lock.json",
+      "currentSha256": "29c69360e6bcbea329f1ddab05725f727316a729954f123cf11c102486a5c94b",
+      "changedDistribution": "umf-weft",
+      "unchangedDistributionCount": 17,
+      "unchangedDistributionNames": [
+        "annotated-types",
+        "attrs",
+        "jsonschema",
+        "jsonschema-specifications",
+        "mini-racer",
+        "psycopg",
+        "psycopg-binary",
+        "pydantic",
+        "pydantic-core",
+        "referencing",
+        "rpds-py",
+        "ruamel-yaml",
+        "typing-extensions",
+        "typing-inspection",
+        "umf-access",
+        "umf-codegen",
+        "umf-core"
+      ]
+    },
+    "requirementsFile": "/private/tmp/g03-held-cohort-001/aggregate/mirror/requirements.lock",
+    "mirrorManifest": "/private/tmp/g03-held-cohort-001/aggregate/mirror/manifest.json"
+  },
+  "deltaFromAccepted001": {
+    "allCandidateInputsAndCommandsUnchanged": true,
+    "changes": [
+      "/tmp and /venv tmpfs add exec to permit dlopen of locked native wheels; original noexec flags were confirmed from the container mount table",
+      "failure cleanup first checks exact container-name absence and avoids redundant inspect after a closed successful removal"
+    ],
+    "sourceReview001": "/private/tmp/g03-local-linux-admission-operator-sol-source-review001.md",
+    "sourceReview001Sha256": "13c3e11cc8381380c45bab05e896ed70dc5cd0ac6ad642c88fe0f5dd0457fe29"
+  },
+  "externalFrozenInputs": {
+    "boundedCaptureHelper": {
+      "path": "/private/tmp/sdk-057-local3600-public-h-operator-proposal011/run_public_h_docker.py",
+      "sha256": "8e383bece7d44484421302f8be32fdb1ba1ed96cd895749093a58171648cf1cd"
+    },
+    "probe": {
+      "path": "/private/tmp/g03-local-linux-admission-probe-003/probe.py",
+      "sha256": "b8f672f3ceefac3a9c085424edf50d9173534b7a0803689b7d211b0d41482630",
+      "sizeBytes": 14133,
+      "sourceReview": {
+        "path": "PENDING_SOL_REVIEW",
+        "sha256": null
+      }
+    },
+    "probeSourceReview": {
+      "path": "/private/tmp/g03-local-linux-admission-probe-sol-source-review002.md",
+      "sha256": "bf84218989422df2447aa069b0953001f20e999d77e59bd5dfcb56c349610657"
+    },
+    "sourcePins": {
+      "path": "/private/tmp/g03-local-linux-admission-probe-003/source-pins.json",
+      "sha256": "0def26ca06ff03c7fcf902f8e843f270e4987628c5cdd76c646bfc4fe8817185",
+      "sizeBytes": 6767
+    }
+  },
+  "guestProfile": "umf.g03-local-linux-admission-guest/3",
+  "operatorProfile": "umf.g03-local-linux-admission-docker-operator/3",
+  "operatorSources": {
+    "PLAN.md": {
+      "path": "PLAN.md",
+      "sha256": "fd1dde2953515a961f00e430e43fcae159cac7c00c732b9c58947f1862f3de86",
+      "sizeBytes": 4059
+    },
+    "README.md": {
+      "path": "README.md",
+      "sha256": "80bc988cce565d6829fa499f54a34efdfd7428e3312820f80a8b09add2eca008",
+      "sizeBytes": 1352
+    },
+    "guest_runner.py": {
+      "path": "guest_runner.py",
+      "sha256": "5534760c8fbbdf835659b91eb1fda1dd02469ea4dd25b36436bf93eb9e3f5387",
+      "sizeBytes": 16521
+    },
+    "run_operator.py": {
+      "path": "run_operator.py",
+      "sha256": "f3da54a7d6bd619c9d47a7078f2a4fce04b4d36b811a3e974b5d7b6e7250656f",
+      "sizeBytes": 16145
+    },
+    "verify_weft_wheel.py": {
+      "path": "verify_weft_wheel.py",
+      "sha256": "adc464ca7b80e104e94802789a87d270cc497d03a2cb3651fed638f7e698c2ea",
+      "sizeBytes": 3685
+    }
+  },
+  "priorAttemptEvidence": {
+    "casesExecuted": 0,
+    "cleanup": {
+      "nameAbsent": true,
+      "removed": true,
+      "reportedError": "redundant inspect of already removed container after probe exit 1",
+      "rmExitCode": 0
+    },
+    "executionId": "e2dbd083504c4d6e9d722cac595975e1",
+    "guestResultSha256": "4e3b5937fecc838173ca62e03e856f43edbf8637b3c12496c3c942970203b4a9",
+    "installAndWheelMemberVerificationPassed": true,
+    "nativeImportErrorLogSha256": "06075ba5f5c50afeb2ad0de7de98db60b90912245977a6fbb8e081002e23f5e9",
+    "operatorResultSha256": "c5c563833bd288f25c2e155348a60d4584113ed88aa9c097d293dcd3a40ca8d3",
+    "path": "/private/tmp/g03-local-linux-admission-operator-001/runs/e2dbd083504c4d6e9d722cac595975e1",
+    "status": "FAIL_OR_UNKNOWN",
+    "preservedAsHistorical": true
+  },
+  "probe": {
+    "path": "/private/tmp/g03-local-linux-admission-probe-003/probe.py",
+    "revision": "003",
+    "sha256": "b8f672f3ceefac3a9c085424edf50d9173534b7a0803689b7d211b0d41482630",
+    "sourceReview": {
+      "path": "/private/tmp/g03-local-linux-admission-probe-sol-source-review002.md",
+      "sha256": "bf84218989422df2447aa069b0953001f20e999d77e59bd5dfcb56c349610657"
+    },
+    "status": "SOURCE_ONLY_PENDING_REVIEW"
+  },
+  "probePinsSha256": "0def26ca06ff03c7fcf902f8e843f270e4987628c5cdd76c646bfc4fe8817185",
+  "profile": "umf.g03-local-linux-admission-operator-inputs/3",
+  "runtime": {
+    "bun": "1.4.3; observed exact output required before fixture generation",
+    "imageId": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+    "network": "Docker network none; unshare --net for pip and probe",
+    "platform": "linux/amd64",
+    "python": "3.11.17; observed exact output required before candidate commands"
+  },
+  "scope": "source compiler and Access-to-Weft wrapper admission only; no PostgreSQL, SQL, native N12, hosted workflow or release qualification",
+  "status": "PREPARED_NOT_EXECUTED_REVISION_003",
+  "supersedes": {
+    "path": "/private/tmp/g03-local-linux-admission-operator-002",
+    "reason": "new source-only attempt packet points at the reviewed local held Weft candidate/cohort and adds baseline compiled-program digest closure; revision 002 itself was prepared but not executed",
+    "status": "PREPARED_NOT_EXECUTED"
+  },
+  "weftInstalledFiles": {
+    "verification": "every regular weft/ wrapper/native member in selected wheel compared by size+SHA to actual installed site-packages bytes after locked install",
+    "wheelPath": "/cohort/aggregate/mirror/files/umf_weft-0.4.55+g03.a96e4f29262e-cp39-abi3-manylinux_2_34_x86_64.whl",
+    "wheelSha256": "51d607f851c72cffbc0dc45a969237f23d90b59185826b9eda56a791e799533e",
+    "wheelSizeBytes": 14373430,
+    "status": "HELD_UNPUBLISHED_LOCAL_LINUX_CANDIDATE",
+    "candidateProvenance": {
+      "source": "/private/tmp/g03-held-cohort-001/aggregate/mirror/manifest.json",
+      "manifestSha256": "9e304930ca19abc38091a90e324806649d1f75b1ca799b37448327c5c0b052b9",
+      "rowKind": "local-held-wheel",
+      "sourceCommit": "e7e88b077c256c852a83d7951e3bc5fd1ec234aa",
+      "semanticPatchSha256": "3f890d60802ef3cedbf212a98f1142dbb202c39e81ea181b13fd0d8960f8dd1c",
+      "fullPatchSha256": "9ecea333630123baaee91dfec3b6520d90e5d73a5cdc5b407310d511fe4200a4",
+      "buildResultSha256": "bdb2bdba791f64c83b35fe866989875cdebc232c93057f0cdedfc5f3dfcb8e88",
+      "actualReviewSha256": "b0d88fb9599789826b2df3402ec65257bb88e938c79d9aa7be50d986d33a1871",
+      "nativeMemberSha256": "efc152e58bbc3771a70f5a1d2f962ebc5d1a05f4dab023516a079ce3db5fc3bf",
+      "platformLimit": "manylinux_2_34_x86_64; no Mac/hosted/other-runtime claim"
+    }
+  },
+  "deltaFromAccepted002": {
+    "allFiveProbeCasesAndNegativeBoundariesUnchanged": true,
+    "changes": [
+      "uses the Sol-custody-accepted held 18-wheel cohort, replacing only the Weft distribution with the exact held 0.4.55+g03.a96e4f29262e wheel; other 17 wheel bytes remain identical",
+      "pins the candidate held Weft package version, filename, wheel SHA-256, and byte size through probe, cohort lock, mirror, verifier, and operator",
+      "requires baseline-absent-envelope-01 programSha256 to equal the pinned source output SHA-256 c8be43e133c5869b2ac01c520e92177d620b558c326cc8d6aa6b087454ecaf5e before probe PASS",
+      "changes only evidence roots to this fresh operator-003 packet and held-cohort-001 inputs; preserves P source volume, image, candidate commands, isolation, resource/log/time bounds"
+    ],
+    "sourceReview002": "/private/tmp/g03-local-linux-admission-operator-sol-source-review002.md",
+    "sourceReview002Sha256": "ad1db9ba8cded7507fc58bfd50c7acf8883eba9e1dd295b9cb536c32490b6bdb"
+  },
+  "probePinsPath": "/private/tmp/g03-local-linux-admission-probe-003/source-pins.json",
+  "baselineProgramSha256": "c8be43e133c5869b2ac01c520e92177d620b558c326cc8d6aa6b087454ecaf5e",
+  "outputRoot": "/private/tmp/g03-local-linux-admission-operator-003/runs",
+  "heldCandidate": {
+    "version": "0.4.55+g03.a96e4f29262e",
+    "filename": "umf_weft-0.4.55+g03.a96e4f29262e-cp39-abi3-manylinux_2_34_x86_64.whl",
+    "sizeBytes": 14373430,
+    "sha256": "51d607f851c72cffbc0dc45a969237f23d90b59185826b9eda56a791e799533e",
+    "status": "HELD_UNPUBLISHED_LOCAL_LINUX_CANDIDATE",
+    "platformLimit": "manylinux_2_34_x86_64 only; no Mac/hosted/other-runtime qualification"
+  },
+  "documentationCheckout": {
+    "status": "outside mounted candidate source",
+    "note": "host documentation changes are not mounted into the exact read-only P producer volume"
+  },
+  "sourcePExecutionStatus": "expected clean at exact P commit/tree; execution not yet performed",
+  "probeSourceReview": {
+    "status": "PENDING_SOL_SOURCE_REVIEW",
+    "path": null,
+    "sha256": null
+  }
+}

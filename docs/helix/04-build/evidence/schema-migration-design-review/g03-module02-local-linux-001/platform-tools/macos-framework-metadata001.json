@@ -1,0 +1,19 @@
+{
+  "profile": "umf.g03-local-macos-build-interpreter-metadata/1",
+  "argv": [
+    "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+    "-I",
+    "-c",
+    "import json,sys,sysconfig; print(json.dumps({'executable':sys.executable,'prefix':sys.prefix,'base_prefix':sys.base_prefix,'include':sysconfig.get_path('include'),'platinclude':sysconfig.get_path('platinclude'),'vars':{k:sysconfig.get_config_var(k) for k in ('LIBDIR','LDLIBRARY','LIBPL','PYTHONFRAMEWORK','PYTHONFRAMEWORKDIR','PYTHONFRAMEWORKPREFIX','PYTHONFRAMEWORKINSTALLDIR')}},sort_keys=True))"
+  ],
+  "exitCode": 0,
+  "stdout": "{\"base_prefix\": \"/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9\", \"executable\": \"/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9\", \"include\": \"/Library/Python/3.9/include\", \"platinclude\": \"/Library/Python/3.9/include\", \"prefix\": \"/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9\", \"vars\": {\"LDLIBRARY\": \"Python3.framework/Versions/3.9/Python3\", \"LIBDIR\": \"/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib\", \"LIBPL\": \"/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/config-3.9-darwin\", \"PYTHONFRAMEWORK\": \"Python3\", \"PYTHONFRAMEWORKDIR\": \"Python3.framework\", \"PYTHONFRAMEWORKINSTALLDIR\": \"/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework\", \"PYTHONFRAMEWORKPREFIX\": \"/Applications/Xcode.app/Contents/Developer/Library/Frameworks\"}}\n",
+  "stderr": "",
+  "elapsedSeconds": 0.167,
+  "frameworkBinary": {
+    "path": "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Python3",
+    "bytes": 2949168,
+    "sha256": "6d3f7badc96687779a34b0bb10b74800b69cd97f7cda4a39a41a35e5d7175d01"
+  },
+  "noCandidateImportOrBuildOrRuntime": true
+}

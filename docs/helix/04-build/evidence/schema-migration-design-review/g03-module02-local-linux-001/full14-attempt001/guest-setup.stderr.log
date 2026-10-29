@@ -1,0 +1,3 @@
+docker: Error response from daemon: failed to create task for container: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: error during container init: error mounting "/private/tmp/g03-full14-bounded-operator-005-output/fae9d6d816d64ad09006187395031d19/inputs.json" to rootfs at "/operator/inputs.json": create mountpoint for /operator/inputs.json mount: make mountpoint "/operator/inputs.json": openat inputs.json: read-only file system
+
+Run 'docker run --help' for more information

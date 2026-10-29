@@ -1,0 +1,135 @@
+{
+  "explicitlyApprovedIds": [
+    383307356,
+    389805166,
+    397163983,
+    397164017,
+    399841670
+  ],
+  "profile": "g03.user-approved-automatic-ci-disable/1",
+  "scope": "Setting changes only; no workflow dispatched/restarted/rerun; no Git push/tag/release",
+  "timestampUtc": "2026-10-29T12:40:00Z",
+  "verified": "Exactly5approveddisabled_manually;15unselectedunchangedactive",
+  "workflowInventory": [
+    {
+      "id": 378392042,
+      "name": "Compiler conformance",
+      "path": ".github/workflows/conformance.yml",
+      "state": "active"
+    },
+    {
+      "id": 385905654,
+      "name": "Fresh host qualification",
+      "path": ".github/workflows/fresh-hosts.yml",
+      "state": "active"
+    },
+    {
+      "id": 379037957,
+      "name": "Deploy signed Weft microsite",
+      "path": ".github/workflows/pages.yml",
+      "state": "active"
+    },
+    {
+      "id": 397163983,
+      "name": "Publish Weft wheels to PyPI",
+      "path": ".github/workflows/publish-pypi.yml",
+      "state": "disabled_manually"
+    },
+    {
+      "id": 399841670,
+      "name": "Pull request source checks",
+      "path": ".github/workflows/pull-request.yml",
+      "state": "disabled_manually"
+    },
+    {
+      "id": 397164017,
+      "name": "PyPI publisher validation",
+      "path": ".github/workflows/pypi-validation.yml",
+      "state": "disabled_manually"
+    },
+    {
+      "id": 381680229,
+      "name": "Python release wheels",
+      "path": ".github/workflows/python-wheels.yml",
+      "state": "active"
+    },
+    {
+      "id": 397667108,
+      "name": "Build Weft hosted macOS ARM64 wheel and refusal-parity profile",
+      "path": ".github/workflows/release-hosted-macos.yml",
+      "state": "active"
+    },
+    {
+      "id": 392153150,
+      "name": "Build selected Weft 0.4.50 Linux wheel",
+      "path": ".github/workflows/release-selected-linux-0.4.50.yml",
+      "state": "active"
+    },
+    {
+      "id": 394227886,
+      "name": "Build selected Weft 0.4.52 Linux wheel",
+      "path": ".github/workflows/release-selected-linux-0.4.52.yml",
+      "state": "active"
+    },
+    {
+      "id": 396520743,
+      "name": "Build selected Weft 0.4.54 macOS ARM64 wheel and compiler parity",
+      "path": ".github/workflows/release-selected-macos-0.4.54.yml",
+      "state": "active"
+    },
+    {
+      "id": 392153154,
+      "name": "Publish selected qualified Weft 0.4.50 assets",
+      "path": ".github/workflows/release-selected-publish-0.4.50.yml",
+      "state": "active"
+    },
+    {
+      "id": 394301211,
+      "name": "Publish selected Weft 0.4.52 assets",
+      "path": ".github/workflows/release-selected-publish-0.4.52.yml",
+      "state": "active"
+    },
+    {
+      "id": 396520745,
+      "name": "Publish selected Weft 0.4.54 three-wheel assets",
+      "path": ".github/workflows/release-selected-publish-0.4.54.yml",
+      "state": "active"
+    },
+    {
+      "id": 383307356,
+      "name": "Release Python wheels",
+      "path": ".github/workflows/release.yml",
+      "state": "disabled_manually"
+    },
+    {
+      "id": 389805166,
+      "name": "Declared table operation candidate",
+      "path": ".github/workflows/table-operations.yml",
+      "state": "disabled_manually"
+    },
+    {
+      "id": 392035865,
+      "name": "Truss facts compiler regression",
+      "path": ".github/workflows/truss-facts.yml",
+      "state": "active"
+    },
+    {
+      "id": 396621480,
+      "name": "Verify installed public Weft 0.4.54 wheel bytes",
+      "path": ".github/workflows/verify-published-selected-0.4.54.yml",
+      "state": "active"
+    },
+    {
+      "id": 396465767,
+      "name": "Weft owned-surface diagnostic (disposable)",
+      "path": ".github/workflows/weft-owned-surface-diagnostic.yml",
+      "state": "active"
+    },
+    {
+      "id": 396283232,
+      "name": "Weft main aggregate source qualification",
+      "path": ".github/workflows/weft-sum-avg-qualification.yml",
+      "state": "active"
+    }
+  ]
+}

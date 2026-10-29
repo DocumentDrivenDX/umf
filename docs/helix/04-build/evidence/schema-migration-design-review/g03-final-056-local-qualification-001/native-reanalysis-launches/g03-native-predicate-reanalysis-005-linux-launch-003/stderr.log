@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/private/tmp/g03-native-predicate-reanalysis-operator-005/reanalyze.py", line 703, in <module>
+    if __name__=='__main__': raise SystemExit(main())
+                                              ^^^^^^
+  File "/private/tmp/g03-native-predicate-reanalysis-operator-005/reanalyze.py", line 649, in main
+    verify_native_cleanup_roster(cases,full['targetBefore'])
+  File "/private/tmp/g03-native-predicate-reanalysis-operator-005/reanalyze.py", line 425, in verify_native_cleanup_roster
+    fail('native case cleanup report is not closed: '+str(case.get('caseId')))
+  File "/private/tmp/g03-native-predicate-reanalysis-operator-005/reanalyze.py", line 54, in fail
+    raise RuntimeError(message)
+RuntimeError: native case cleanup report is not closed: G03-N01

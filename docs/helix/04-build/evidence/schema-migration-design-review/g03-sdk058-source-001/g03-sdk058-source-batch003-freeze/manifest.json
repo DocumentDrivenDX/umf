@@ -1,0 +1,47 @@
+{
+  "profile": "umf.sdk058-source-freeze/1",
+  "sourceRoot": "/Users/erik/.codex/worktrees/eb69/umf",
+  "previousFreeze": "/private/tmp/g03-sdk058-source-batch002-freeze",
+  "delta": "Install archive-member receipt comparison uses Object.entries to remain valid under strict TypeScript indexing.",
+  "reviewPlan": "/private/tmp/g03-umf-sdk-successor-sol-plan001.md",
+  "sourceReview": "/private/tmp/g03-sdk058-sol-source-review001.md",
+  "sourceReviewSha256": "88485ed6be95c9097115b9516d620dbc306f51d61381c722e7366ea10d5fbb16",
+  "files": [
+    {
+      "path": "package.json",
+      "size": 5380,
+      "sha256": "323d619288cd35e7e86c932c0d26bfbfb2f8b4a5e5cc3f39bcaa415dd3c3aeaa"
+    },
+    {
+      "path": "docs/helix/05-deploy/sdk-release-notes-0.5.8.md",
+      "size": 6092,
+      "sha256": "b6b85cb6b562a006a97c247b4cdbe54f8a1e4a0c4a39895125430bb1e62ef661"
+    },
+    {
+      "path": "docs/helix/05-deploy/README.md",
+      "size": 4821,
+      "sha256": "297a1286bfda5bbe48305e04d2298105ff25eba821f4bd2892968fc787a1ca04"
+    },
+    {
+      "path": "docs/helix/04-build/schema-migration-plan.md",
+      "size": 78108,
+      "sha256": "7cb1be0e352a409fac3b1f3f7553839eba34cbcf3c2eaf3d6459657497c85ff6"
+    },
+    {
+      "path": "scripts/g03-sdk-browser.ts",
+      "size": 14350,
+      "sha256": "136e43410f5d58e7259cc0edc23ff1e20e59ef0e16ccf5789031e5868ce32805"
+    },
+    {
+      "path": "scripts/test-sdk-install.ts",
+      "size": 7158,
+      "sha256": "f7c34122585507c0b31c2846e532cca666e119641ab970e47083082504516b78"
+    },
+    {
+      "path": "tests/codegen/g03_migration_probe.py",
+      "size": 5477,
+      "sha256": "5d9720354ec6e294b9be72360bcc6d54fcdc11161887a655424152691e032e83"
+    }
+  ],
+  "totalBytes": 121386
+}

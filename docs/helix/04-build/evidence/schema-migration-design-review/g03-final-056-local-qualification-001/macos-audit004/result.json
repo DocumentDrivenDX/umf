@@ -1,0 +1,221 @@
+{
+  "acceptedPlan": {
+    "path": "/private/tmp/g03-macos-build002-static-oracle-sol-actual-plan001.md",
+    "sha256": "cad229b19abb5b61423aa37065d2de751e9e3ba417dbab484baa00e70629af24"
+  },
+  "browserParity": false,
+  "capture": {
+    "argv": [
+      "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+      "/private/tmp/g03-macos-static-audit-only-operator-004/static_audit.py",
+      "/private/tmp/g03-weft-macos-arm64-build-002/dist/umf_weft-0.4.56-cp39-abi3-macosx_11_0_arm64.whl",
+      "/private/tmp/g03-weft-macos-arm64-audit-004/static-audit.json",
+      "/private/tmp/weft-g03-ordinary-module"
+    ],
+    "captureErrors": [],
+    "captureVerified": true,
+    "cwd": "/private/tmp/weft-g03-ordinary-module",
+    "drainExpired": false,
+    "durationSeconds": 0.525,
+    "effectiveDeadlineSeconds": 113.487,
+    "endUtc": "2026-10-29T11:13:41.975213+00:00",
+    "exitCode": 0,
+    "limitSeconds": 120,
+    "monotonicEnd": 7.104380208,
+    "monotonicStart": 6.579465416,
+    "name": "static-audit",
+    "ok": true,
+    "paths": [
+      "/private/tmp/g03-weft-macos-arm64-audit-004/logs/static-audit.stdout.log",
+      "/private/tmp/g03-weft-macos-arm64-audit-004/logs/static-audit.stderr.log"
+    ],
+    "physical": [
+      {
+        "bytes": 395,
+        "path": "/private/tmp/g03-weft-macos-arm64-audit-004/logs/static-audit.stdout.log",
+        "sha256": "365ad407bc9534c8f9504829f2bb223f016ed7807cfccaefe570dadaca36e8bd"
+      },
+      {
+        "bytes": 0,
+        "path": "/private/tmp/g03-weft-macos-arm64-audit-004/logs/static-audit.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "rawSha256": [
+      "365ad407bc9534c8f9504829f2bb223f016ed7807cfccaefe570dadaca36e8bd",
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    ],
+    "retainedBytes": [
+      395,
+      0
+    ],
+    "retainedSha256": [
+      "365ad407bc9534c8f9504829f2bb223f016ed7807cfccaefe570dadaca36e8bd",
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    ],
+    "startUtc": "2026-10-29T11:13:41.450579+00:00",
+    "timedOut": false,
+    "truncated": [
+      false,
+      false
+    ]
+  },
+  "cleanupErrors": [],
+  "closureErrors": [],
+  "compilerParity": false,
+  "executionId": "16fc68da-938b-4215-9b04-6884fe4615a6",
+  "executionKind": "local-static-audit-only",
+  "failure": null,
+  "functionalQualification": "NOT_RUN",
+  "hosted": false,
+  "imported": false,
+  "installed": false,
+  "limits": {
+    "aggregateLogBytes": 1048576,
+    "aggregateSeconds": 180,
+    "auditSeconds": 120,
+    "killGraceSeconds": 10,
+    "memberBytes": 134217728,
+    "memberCount": 160,
+    "metadataBytes": 16777216,
+    "publicationMarginSeconds": 10,
+    "receiptVerifyFallbackMarginSeconds": 5,
+    "terminalDeadlineMonotonic": 67.112663208,
+    "terminalReserveSeconds": 60,
+    "wheelCompressedBytes": 33554432,
+    "wheelExpandedBytes": 134217728
+  },
+  "nativeExecuted": false,
+  "operator": {
+    "helper": {
+      "bytes": 15878,
+      "path": "/private/tmp/g03-macos-static-audit-only-operator-004/static_audit.py",
+      "sha256": "ff38aded4a48b285a7c0c6f1bc02def7b24fcd7890dd896a440ea38ebf833fb6"
+    },
+    "helperAfter": [
+      15878,
+      "ff38aded4a48b285a7c0c6f1bc02def7b24fcd7890dd896a440ea38ebf833fb6"
+    ],
+    "pythonAfter": [
+      53200,
+      "6e7ae61f68a3838094fc56590f84c52069a97d7816f6bb79e0e85995b340e464"
+    ],
+    "pythonBefore": [
+      53200,
+      "6e7ae61f68a3838094fc56590f84c52069a97d7816f6bb79e0e85995b340e464"
+    ],
+    "pythonPath": "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+    "runnerAfter": [
+      22917,
+      "7657c0a79f34a67ddcdbe359ab1910a56642b1b95ee06af18881b77afbf3e4ce"
+    ],
+    "runnerBefore": [
+      22917,
+      "7657c0a79f34a67ddcdbe359ab1910a56642b1b95ee06af18881b77afbf3e4ce"
+    ],
+    "runnerPath": "/private/tmp/g03-macos-static-audit-only-operator-004/run_static_audit.py"
+  },
+  "originalInputs": {
+    "result": {
+      "after": [
+        376450,
+        "2aaa9dbe418cae86db3cac1f3c688a60d8b75746e31ec02badb1456941b663f0"
+      ],
+      "before": [
+        376450,
+        "2aaa9dbe418cae86db3cac1f3c688a60d8b75746e31ec02badb1456941b663f0"
+      ],
+      "bytes": 376450,
+      "path": "/private/tmp/g03-weft-macos-arm64-build-002/result.json",
+      "sha256": "2aaa9dbe418cae86db3cac1f3c688a60d8b75746e31ec02badb1456941b663f0"
+    },
+    "source": {
+      "commit": "973d864c8d26b2bc173a411eac8368da5efc1ab3",
+      "custodyAssetsAfter": {
+        "custody.json": {
+          "bytes": 619,
+          "path": "/private/tmp/g03-macos-source-custody-for-audit003-001/custody.json",
+          "sha256": "e936a962be023654bd045cafa1f02d664e06e4c6bd6f686e4441f8558e027621"
+        },
+        "git-stage-roster.txt": {
+          "bytes": 780359,
+          "path": "/private/tmp/g03-macos-source-custody-for-audit003-001/git-stage-roster.txt",
+          "sha256": "bc3018c0d674cd2fc80794f9f36c523565c91558f70649cd3fe415f8e88b701b"
+        },
+        "source-inputs.rows.json": {
+          "bytes": 235442,
+          "path": "/private/tmp/g03-macos-source-custody-for-audit003-001/source-inputs.rows.json",
+          "sha256": "6a671799d5be7a511cc6b5f7c9282d8745fbc80f4a5d796538b6643e8492f2a2"
+        }
+      },
+      "custodyAssetsBefore": {
+        "custody.json": {
+          "bytes": 619,
+          "path": "/private/tmp/g03-macos-source-custody-for-audit003-001/custody.json",
+          "sha256": "e936a962be023654bd045cafa1f02d664e06e4c6bd6f686e4441f8558e027621"
+        },
+        "git-stage-roster.txt": {
+          "bytes": 780359,
+          "path": "/private/tmp/g03-macos-source-custody-for-audit003-001/git-stage-roster.txt",
+          "sha256": "bc3018c0d674cd2fc80794f9f36c523565c91558f70649cd3fe415f8e88b701b"
+        },
+        "source-inputs.rows.json": {
+          "bytes": 235442,
+          "path": "/private/tmp/g03-macos-source-custody-for-audit003-001/source-inputs.rows.json",
+          "sha256": "6a671799d5be7a511cc6b5f7c9282d8745fbc80f4a5d796538b6643e8492f2a2"
+        }
+      },
+      "selectedInputCount": 1459,
+      "selectedInputRosterSha256": "6a671799d5be7a511cc6b5f7c9282d8745fbc80f4a5d796538b6643e8492f2a2",
+      "sourceInputsAfter": {
+        "count": 1459,
+        "rosterSha256": "6a671799d5be7a511cc6b5f7c9282d8745fbc80f4a5d796538b6643e8492f2a2",
+        "totalBytes": 134880002
+      },
+      "sourceInputsBefore": {
+        "count": 1459,
+        "rosterSha256": "6a671799d5be7a511cc6b5f7c9282d8745fbc80f4a5d796538b6643e8492f2a2",
+        "totalBytes": 134880002
+      },
+      "tree": "8b20d1f01bea72ea08ed01fcaac97266ed3cb4ff"
+    },
+    "wheel": {
+      "bytes": 11190603,
+      "path": "/private/tmp/g03-weft-macos-arm64-build-002/dist/umf_weft-0.4.56-cp39-abi3-macosx_11_0_arm64.whl",
+      "sha256": "68f9297b4b55df483b86d3041040991c4dadfb9b4d63afcff1420c43f93ae41d"
+    }
+  },
+  "profile": "weft-local-macos-static-audit-only/1",
+  "selectedEvidenceBytes": 9999,
+  "selectedEvidenceFiles": [
+    {
+      "bytes": 9604,
+      "path": "static-audit.json",
+      "sha256": "2a79490c17a4856823a9eb9ea8db5cb8cf342f4c961705e8e3fe5f22f9b96424"
+    },
+    {
+      "bytes": 395,
+      "path": "logs/static-audit.stdout.log",
+      "sha256": "365ad407bc9534c8f9504829f2bb223f016ed7807cfccaefe570dadaca36e8bd"
+    },
+    {
+      "bytes": 0,
+      "path": "logs/static-audit.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "staticReport": {
+    "bytes": 9604,
+    "path": "/private/tmp/g03-weft-macos-arm64-audit-004/static-audit.json",
+    "sha256": "2a79490c17a4856823a9eb9ea8db5cb8cf342f4c961705e8e3fe5f22f9b96424"
+  },
+  "status": "LOCAL_MACOS_STATIC_AUDIT_ONLY_PASS",
+  "wheelAfter": [
+    11190603,
+    "68f9297b4b55df483b86d3041040991c4dadfb9b4d63afcff1420c43f93ae41d"
+  ],
+  "wheelBefore": [
+    11190603,
+    "68f9297b4b55df483b86d3041040991c4dadfb9b4d63afcff1420c43f93ae41d"
+  ]
+}

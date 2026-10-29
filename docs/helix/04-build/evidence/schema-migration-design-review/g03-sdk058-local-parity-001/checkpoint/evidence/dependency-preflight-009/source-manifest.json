@@ -1,0 +1,188 @@
+{
+  "dependencyInput": {
+    "configuredSubpathField": "HostConfig.Mounts[].VolumeOptions.Subpath",
+    "mountTarget": "/volume-producer/node_modules",
+    "originMountTarget": "/dependency-origin",
+    "originMountWholeVolume": true,
+    "originReadonly": true,
+    "readonly": true,
+    "runtimeSourcePathCompared": false,
+    "subpath": "node_modules",
+    "volume": "umf-migration-source-267675510"
+  },
+  "externalPins": [
+    {
+      "path": "/private/tmp/g03-sdk058-parity006-sol-existing-deps-plan002.md",
+      "sha256": "7341e9303e542c0627d12691702efb86f3b83e1c7dc45cb6781ebe628ce18977",
+      "sizeBytes": 4178
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-dependency-preflight006-sol-source-review001.md",
+      "sha256": "168afe64e741918b61a134c0aad4821fadec78363b9f3a07c4fd893291e65f25",
+      "sizeBytes": 1745
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-dependency-preflight009-sol-mount-plan001.md",
+      "sha256": "3bb5a790ab415baa371343633f5f19294709ba386e572eba88fab7cbf3ec515c",
+      "sizeBytes": 3622
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-source-volume-prep-003/result.json",
+      "sha256": "dbeeffaf77a8e484deb65c4dfc9fca3ef6054cc673b40061d156d6570fe620d2",
+      "sizeBytes": 1290
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-typecheck-linux-002/result.json",
+      "sha256": "9de888293d1329148e99476b9f1d016c193df0db16de0c6c075b68da16079b80",
+      "sizeBytes": 3962
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-typecheck-linux-002/run.py",
+      "sha256": "e531b2763f86e7f9f66cf9af7640db3b6e7d0ed7a7ca0bd6e027839f8deacec7",
+      "sizeBytes": 3205
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-typecheck002-sol-actual-review001.md",
+      "sha256": "f52dc92a99c147c4f858fe67c1edf400214c0e211c9af3295b25affbe508c1f4",
+      "sizeBytes": 4594
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-005/source-manifest.json",
+      "sha256": "1ea1dee30c6d1ccecae91f970d0e82fc2358a1a8f31227a761964a449cb3d43c",
+      "sizeBytes": 9060
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-005/binding.json",
+      "sha256": "b2b2143563ecf3b5e9e26c5e91909201f1644f22b8bcfea6dca02200dd2769ef",
+      "sizeBytes": 1001
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-005/SHA256SUMS",
+      "sha256": "09b56d6dbdafedc8cf61c1da4c826523cf126e337bcb2607b05da1211703e0a7",
+      "sizeBytes": 1878
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity005-sol-source-review001.md",
+      "sha256": "f2f154c0f6aa6f1a15fe7f79b0c657c5b71b32ef9bfc7c9a30a87efc44a9e092",
+      "sizeBytes": 2474
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-005/combined-runs/dabcef739bac431c94eeecd93292e5fa/owner-result.json",
+      "sha256": "1453fc411b8d47977c7f2deeb2d4da8d9b2a8c21ea431ed453bb9e350c501aca",
+      "sizeBytes": 5576
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/eb69/umf/package.json",
+      "sha256": "323d619288cd35e7e86c932c0d26bfbfb2f8b4a5e5cc3f39bcaa415dd3c3aeaa",
+      "sizeBytes": 5380
+    },
+    {
+      "path": "/Users/erik/.codex/worktrees/eb69/umf/bun.lock",
+      "sha256": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4",
+      "sizeBytes": 59024
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-producer-855f6c486.bundle",
+      "sha256": "72112c9d319eedda9774ff114f737366f61f20afb105c3527ebb7933fba264ef",
+      "sizeBytes": 4531838
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-007-preflight/source-manifest.json",
+      "sha256": "d49b9a23e5c75e42b9adfe01184ad7f8d76ab313ac149a8042379f22d2b500ff",
+      "sizeBytes": 5274
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-007-preflight/out/preflight-owner-result.json",
+      "sha256": "1819bec89de744e5f5ce9cb82d3e9d56f1304282ca479d29ae02e6bc7d9e465a",
+      "sizeBytes": 832
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-008-preflight/source-manifest.json",
+      "sha256": "cfb7e9292fe6150fd726fd13dd24b4f27bc0d7e83cfb9ec787b3c79187cbc054",
+      "sizeBytes": 5692
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-008-preflight/out/preflight-owner-result.json",
+      "sha256": "22be14d0dcaa39b24d4f9945f156dbc518bddac3db4a3db18e4ce859e7c68278",
+      "sizeBytes": 1895
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-input-mount-prep-001/result.json",
+      "sha256": "773ed3170ce4b881db4348cbf2c624d1a93b9c0633aecf399bef06288790f909",
+      "sizeBytes": 7816
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-input-mount-prep001-sol-actual-review001.md",
+      "sha256": "a7b13f6b8f5100a347fb1ebbecf60b15eec434fa94ec2a22649c102a7e646086",
+      "sizeBytes": 1543
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-mount-config-control-001/result.json",
+      "sha256": "e42b63b2d530ac03808cffa00fbf2248fabcc37c627fe3786898a1f17c7867a7",
+      "sizeBytes": 5568
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-mount-config-control001-sol-actual-review001.md",
+      "sha256": "ef566f9d3aa5478473a7dee77487532fba5bd0897a35f485ce008427a7195844",
+      "sizeBytes": 1896
+    }
+  ],
+  "files": [
+    {
+      "path": "/private/tmp/g03-sdk058-parity-009-preflight/preflight.py",
+      "sha256": "764c86f2f8a942bcff2445a29a13836a3edd17468da446ea40ba91285964f7a9",
+      "sizeBytes": 33734
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-009-preflight/README.md",
+      "sha256": "1db106400c3d6327e6a926bba00379196cacf9e1e3b7a01033f33547876241de",
+      "sizeBytes": 2524
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-009-preflight/admission.template.json",
+      "sha256": "33e2734a1ae5eca53f19158d06feece54bea9ab1964b3ac9bea2cd4d23fb8f32",
+      "sizeBytes": 2986
+    },
+    {
+      "path": "/private/tmp/g03-sdk058-parity-009-preflight/runtime-import-census.json",
+      "sha256": "c4e3e79e5a0a51fb9b21261f458ede1a14042042aae1c8c2faf29c15f1d7eaae",
+      "sizeBytes": 82617
+    }
+  ],
+  "historicalHostPackageContext": {
+    "bunLock": "/Users/erik/.codex/worktrees/eb69/umf/bun.lock",
+    "package": "/Users/erik/.codex/worktrees/eb69/umf/package.json",
+    "role": "historical host checkout context only; not dependency volume origin"
+  },
+  "limits": {
+    "dependencyFileBytes": 67108864,
+    "dependencyRegularBytes": 268435456,
+    "inclusiveEvidenceBytes": 16777216,
+    "ownerSeconds": 180,
+    "rawLogBytes": 1048576
+  },
+  "prerequisites": {
+    "mountConfigurationControlReceipt": "/private/tmp/g03-sdk058-mount-config-control-001/result.json",
+    "mountConfigurationControlReview": "/private/tmp/g03-sdk058-mount-config-control001-sol-actual-review001.md",
+    "mountpointPreparationReceipt": "/private/tmp/g03-sdk058-input-mount-prep-001/result.json",
+    "mountpointPreparationReview": "/private/tmp/g03-sdk058-input-mount-prep001-sol-actual-review001.md",
+    "prior008Failure": "/private/tmp/g03-sdk058-parity-008-preflight/out/preflight-owner-result.json",
+    "prior008SourceManifest": "/private/tmp/g03-sdk058-parity-008-preflight/source-manifest.json"
+  },
+  "producer": {
+    "commit": "855f6c48649496fc60b3303798790d0ddb55d38f",
+    "tree": "53f2bfffbc0c5780e79d76d8fd3d202239d088b2",
+    "volume": "umf-sdk058-source-855f6c486-001"
+  },
+  "profile": "umf.g03-sdk058-dependency-preflight-source-closure/4",
+  "runtimeImportCensus": {
+    "barePackages": [
+      "ajv",
+      "yaml"
+    ],
+    "localEdges": 432,
+    "sha256": "c4e3e79e5a0a51fb9b21261f458ede1a14042042aae1c8c2faf29c15f1d7eaae",
+    "sourceFiles": 97
+  },
+  "status": "SOURCE_ONLY_PENDING_ROOT_VERIFICATION_AND_SOL_REVIEW"
+}

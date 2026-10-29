@@ -1,0 +1,78 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--pull=never",
+        "--platform=linux/amd64",
+        "--name",
+        "g03-umf-typecheck-238a9d7c0a46447ea32e5c9ecc83a168",
+        "--network=none",
+        "--read-only",
+        "--cap-drop=ALL",
+        "--cpus=1",
+        "--memory=2g",
+        "--pids-limit=512",
+        "--tmpfs=/tmp:rw,nosuid,nodev,size=512m",
+        "--mount",
+        "type=bind,source=/Users/erik/.codex/worktrees/eb69/umf,target=/workspace,readonly",
+        "--mount",
+        "type=volume,source=umf-migration-source-267675510,target=/workspace/node_modules,readonly,volume-subpath=node_modules",
+        "--workdir=/workspace",
+        "-e",
+        "BUN_RUNTIME_TRANSPILER_CACHE_PATH=/tmp/bun-cache",
+        "--entrypoint=/usr/bin/timeout",
+        "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+        "--signal=TERM",
+        "--kill-after=10s",
+        "300s",
+        "bun",
+        "run",
+        "typecheck"
+      ],
+      "elapsedSeconds": 23.39,
+      "exitCode": 1,
+      "logs": [
+        {
+          "bytes": 215,
+          "path": "typecheck.stdout.log",
+          "sha256": "c76f41570faed5d712eb343bc65f13d17fdd7e8c1ec5d2a106913b4a3669347d"
+        },
+        {
+          "bytes": 154,
+          "path": "typecheck.stderr.log",
+          "sha256": "34eb497d4494cf8bd5639e8264af537aa2d8072aa87d3c3313d5cbf3651b97b9"
+        }
+      ],
+      "name": "typecheck",
+      "ownedContainerAbsent": true
+    }
+  ],
+  "dependencySource": "existing Linux volume umf-migration-source-267675510/node_modules; bun.lock identical; package.json differs only SDK version0.5.8; typescript7.0.2 Linux x64 native package present",
+  "elapsedSeconds": 23.393,
+  "imageId": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+  "profile": "g03.umf-changed-fixture-local-linux-checks/1",
+  "scope": "TypeScript typecheck for candidateSDK0.5.8 and newG03parityadapter; local Linux only, no browser/native DB/Mac/CI/release qualification",
+  "sourceAfter": {
+    "bun.lock": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4",
+    "docs/helix/04-build/schema-migration-plan.md": "7cb1be0e352a409fac3b1f3f7553839eba34cbcf3c2eaf3d6459657497c85ff6",
+    "docs/helix/05-deploy/README.md": "297a1286bfda5bbe48305e04d2298105ff25eba821f4bd2892968fc787a1ca04",
+    "docs/helix/05-deploy/sdk-release-notes-0.5.8.md": "446ddd48542e14ae0ec934696a2ee1c8271d429ab08b5662f155667d45346a12",
+    "package.json": "323d619288cd35e7e86c932c0d26bfbfb2f8b4a5e5cc3f39bcaa415dd3c3aeaa",
+    "scripts/g03-sdk-browser.ts": "19dcdcf8307840ea00a06d090d5877f97f08ecb06f284aef9716494623934f7d"
+  },
+  "sourceBefore": {
+    "bun.lock": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4",
+    "docs/helix/04-build/schema-migration-plan.md": "7cb1be0e352a409fac3b1f3f7553839eba34cbcf3c2eaf3d6459657497c85ff6",
+    "docs/helix/05-deploy/README.md": "297a1286bfda5bbe48305e04d2298105ff25eba821f4bd2892968fc787a1ca04",
+    "docs/helix/05-deploy/sdk-release-notes-0.5.8.md": "446ddd48542e14ae0ec934696a2ee1c8271d429ab08b5662f155667d45346a12",
+    "package.json": "323d619288cd35e7e86c932c0d26bfbfb2f8b4a5e5cc3f39bcaa415dd3c3aeaa",
+    "scripts/g03-sdk-browser.ts": "19dcdcf8307840ea00a06d090d5877f97f08ecb06f284aef9716494623934f7d"
+  },
+  "sourceBytesUnchanged": true,
+  "sourceCommit": "03e2da25a",
+  "status": "FAIL_OR_UNKNOWN",
+  "workingTreeDelta": "candidateSDK0.5.8metadata and installedSDKG03browser adapter"
+}
