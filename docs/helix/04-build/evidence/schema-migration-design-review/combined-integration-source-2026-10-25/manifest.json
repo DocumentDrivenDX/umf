@@ -1,0 +1,62 @@
+{
+  "profile": "umf.migration-integration-source-evidence/1",
+  "status": "SOURCE_REVIEW_AND_HOSTED_QUALIFICATION_IN_PROGRESS",
+  "combinedSourceCommit": "45b41b42db2bea6895ea7adda6afba8b6e91825d",
+  "combinedQualificationCommit": "880f1e53032e7e46752c9767865fb03e246c959c",
+  "combinedRun": 40230355264,
+  "g04Status": "implementation-in-progress-not-reviewed-or-run",
+  "weftRunStatus": "54passed4failed-no-unchanged-rerun",
+  "limits": [
+    "No complete public inventory.2 claim",
+    "No native G02/G03/G04 acceptance",
+    "No installed Python/WASM parity yet",
+    "No merge or successor release",
+    "Praxis excluded"
+  ],
+  "files": [
+    {
+      "path": "r2-combined-context-sol-review003.json",
+      "sha256": "b2e2fc482e0788d599d9b7182863c3bf48430d9e8f65c2b1874832d757867fd7"
+    },
+    {
+      "path": "r2-combined-context-commit001.json",
+      "sha256": "c4cf709157cbab341e821a2e6977a9717546561398727ba16c434706ed7de139"
+    },
+    {
+      "path": "umf-combined-migration-qualification-sol-review001.json",
+      "sha256": "2da0b92908db2eb5c5fc3f7f444454c9879913458406eb75d13b10ffa66fc22a"
+    },
+    {
+      "path": "umf-combined-qualification-owner-adoption001.json",
+      "sha256": "024abf6800baf4ae51c9ed5dc7b0025bd63fe87b8e38bd76f360ca50e83f6b45"
+    },
+    {
+      "path": "umf-combined-prepush001.json",
+      "sha256": "21f53c48e54f613c5eb16f94443926542417f9f505c6e931c98bd485b095d3b8"
+    },
+    {
+      "path": "g04-original-host-budget-owner-decision001.json",
+      "sha256": "93db6168679e310301b9b3875afec0b9e5641cdc34aa72c1e18546be94ae345a"
+    },
+    {
+      "path": "g04-readonly-recovery-host-budget-owner-decision001.json",
+      "sha256": "71a80e37001c7e19feb324c007f8f76755de5e39e7b87c13a9a470248a35d22a"
+    },
+    {
+      "path": "g04-readonly-mode-owner-rule001.md",
+      "sha256": "f43ed9d9a3c2758c04295a3572470cb453191fc7bc9314538b17c7a54335b61a"
+    },
+    {
+      "path": "g04-readonly-mode-owner-rule001-observation-addendum.json",
+      "sha256": "1924a8381eb101f9e58bbaf4ddcdbf9d017d62fc416ba9e394670690e4a88357"
+    },
+    {
+      "path": "g04-readonly-mode-owner-decision001.json",
+      "sha256": "bca16ffcdd8c346c465422433a0b9c357260c0495fb107f67d05b2e1a6e796ff"
+    },
+    {
+      "path": "weft-sum-avg-40228791454-outcome.json",
+      "sha256": "34f67aadaab4cba654a988f0df9454ff99a69f9b7b36f2c48616052ae5d1ecbf"
+    }
+  ]
+}

@@ -376,6 +376,200 @@ The [build plan](../../04-build/schema-migration-plan.md#remaining-gap-delivery-
 defines the G01 implementation gates and subsequent residual sequence. Existing
 fail-if-any-null tightening and appended-column fill retain regression coverage.
 
+## MIG-G02 — typed same-row backfills (selected 2026-10-23)
+
+### Ownership and version boundary
+
+The human selected all remaining MIG-G02–G11 work through review, verification
+and release, with G02 first. This section fixes the G02 design; it does not claim
+implemented support. The implementation session owns product code and integrated
+CONTRACT-081/TD-085/STP-085 amendments. The design session independently reviews
+those interfaces, candidate code and installed native behavior.
+
+UMF owns the closed expression description, stable references, source/target
+compatibility, effect/phase intent, canonical identity and refusal diagnostics.
+Weft owns expression admission against native types, parameter binding, all SQL
+and the exact-value guard. The host owns approved installation authority, native
+catalog closure, writer exclusion, execution limits, atomic progress and outcome
+recovery. No portable library connects to storage or evaluates application code.
+No Praxis implementation changes belong to this workstream.
+
+Allocate `umf.table-operation/0.2` for this closed UPDATE capability and
+`umf.table-migration-options/0.4` / `umf.table-migration/0.4` for its migration
+profile. Allocate `weft.table-operation/0.2` for guarded compiled programs. Existing
+0.1 operation and 0.1–0.3 migration artifacts retain their exact grammar, digest
+and replay semantics. Source-module, approval, execution-reference and ledger
+admission must explicitly distinguish the successor: unchanged storage layout is
+not permission to reinterpret old records. CONTRACT-081 must fix each affected
+version and wire member before code. An unchanged wrapper is acceptable only
+with an explicit closed version dispatch and rejection by incompatible hosts.
+The UMF opt-in Rust migration compiler must refuse 0.4 before effects unless it
+receives its own implementation and qualification. Weft's Rust lowering does not
+establish UMF Rust migration support.
+
+### Closed value algebra
+
+A successor assignment adds `{kind: "rowExpression", expression: RowExpression}`.
+`RowExpression` has exactly these tagged forms (all objects closed):
+
+| Form | Members besides `op` | Meaning |
+| --- | --- | --- |
+| `field` | `field: TableRef` | Stored value of an unchanged input Field in this row |
+| `literal` | `value: CoreLiteral` | Exact typed core literal, including explicit NULL |
+| `coalesce` | `args: RowExpression[]` | First non-NULL argument, left to right |
+| `concat` | `args: RowExpression[]` | Text concatenation; any NULL operand yields NULL |
+| `add`, `subtract`, `multiply` | `left`, `right: RowExpression` | Exact finite arithmetic |
+| `conditional` | `when: TableOperationPredicate`, `then`, `else: RowExpression` | True selects then; false or unknown selects else |
+
+Coalesce/concat have 2–32 operands. Bound the entire expression, including
+conditional predicates, to depth 16 and 256 nodes; repeated references count
+again. Unknown operators/members, malformed tokens, cyclic in-memory objects,
+nonfinite literals and resource excess refuse before SQL. Existing predicate
+syntax supplies conditions, not an alternative value-expression language.
+Predicates in this capability reference only the same admitted input Fields and
+closed literals; parameter, principal and clock predicates are forbidden.
+
+Every referenced input exists with the same stable module/element identity,
+stored native/logical type, facets and meaning in both retained sources. Inputs
+belong to the target table, are unchanged by this migration, and exclude the
+target, generated/volatile values, newly appended siblings and unknown relevant
+semantics. No join, subquery, callback, native SQL, ambient principal, clock,
+lookup, aggregate, recursion or external effect is permitted inside this algebra.
+The exact AST and retained source bytes are digest-covered transform identity;
+there is no independently mutable transform registry or host callback package.
+Legacy literal/transaction-clock assignments retain their separate qualification.
+
+### Type, NULL and exactness semantics
+
+Field and literal leaves have carrier types. Intermediate typing does not apply
+all target refinements to each operand: a separator literal need not satisfy the
+final string's enumeration or minimum length. Coalesce and conditional branches
+must have compatible carriers. Text/varchar uses exact Unicode text and C
+collation; NUL and unpaired UTF-16 surrogate literals refuse rather than being
+normalized during UTF-8 transport. Valid supplementary/combining Unicode is
+preserved exactly. Char/bpchar and locale-dependent operations refuse. Date, instant,
+UUID and boolean support copy/coalesce/conditional only when source and target
+native/logical meanings match exactly. No parsing, timezone conversion or cast
+language is implied. Float and mixed text/numeric coercions refuse.
+
+Integer arithmetic and finite decimal arithmetic use an exact numeric evaluation
+carrier. Integer-to-decimal promotion is exact and explicit in the type rules;
+integer targets require a statically integral result. Decimal inputs require a
+known finite native precision and scale with 0 <= scale <= precision. Unbounded
+numeric and negative-scale numeric refuse in this profile. Represent each numeric
+node conservatively by maximum integral digits I and fractional digits S:
+leaves use native/token bounds; add/subtract use I=max(I1,I2)+1 and
+S=max(S1,S2); multiply uses I=I1+I2 and S=S1+S2; branch/coalesce uses componentwise
+maxima. Every node must satisfy I+S <= 1000. SQL uses unconstrained exact numeric
+intermediates, never a typmod cast that rounds an intermediate. Native target
+range/precision and all authored refinements remain effective. Native constrained
+numeric can still contain NaN: a matched row with a nonfinite value in any
+referenced numeric input must abort, even if a conditional branch would not use
+it. The Weft full-effects guard checks that input closure plus finite final
+numeric output; static typmods alone do not prove finiteness. NULL input is
+permitted according to the expression rules. No NaN equality or ordering may
+silently select a branch or certify an exact output.
+
+Potential NULL is recorded in static typing. It need not be proved absent to
+admit an expression: the selected policy is **abort the entire phase on any NULL
+or invalid final result**, never skip, substitute an implicit default, quarantine
+or report partial success. A coalesce fallback is an explicit authored choice.
+Target NOT NULL, checks, allowed values, length/facets, uniqueness and references
+must be enforced before the phase can commit. Unsupported refinements refuse;
+ordinary validation warnings cannot stand in for enforcement.
+
+A value satisfying the target constraint can still have lost meaning:
+[PostgreSQL 18 numeric assignment can round](https://www.postgresql.org/docs/18/datatype-numeric.html),
+and [varchar assignment can discard trailing spaces](https://www.postgresql.org/docs/18/datatype-character.html).
+Weft must prove the stored value equals the exact intended result for **every**
+matched row. The selected mechanism extends its existing data-modifying CTE:
+RETURNING privately compares the stored target to the pure expression evaluated
+from unchanged inputs; a full aggregate guard combines exactness/non-NULL with
+the existing effect-count guard and raises a statement error on any failure.
+Numeric comparison uses exact numeric values; text comparison uses text with C
+collation and significant trailing spaces. No private row values or booleans
+escape through the public result. The public marker frame limit does not bound
+private expression/input memory. Source/token/AST/numeric/row limits, host
+statement and lock timeouts, and PostgreSQL datum/server resource limits apply;
+there is no claimed 8 MiB private-value memory guarantee. SQL expansion must
+remain bounded by the admitted AST/slots, without exponential subtree cloning. Zero matches pass the exactness guard. The
+guard must depend on the full effects relation, so pagination or a LIMIT cannot
+hide an invalid row. Native errors remain errors. All functions, operators, types and collations use qualified built-in resolution;
+ambient search_path must not change meaning. No CTID join or speculative
+preflight scan is introduced. Catalog authority excludes effectful triggers,
+rules and other unreviewed objects that could invalidate pure reevaluation.
+The exact compiled-program guard descriptor and host validation are contract
+requirements, not optional SQL hints. An old host must reject a 0.2 program.
+
+### Atomic migration profile
+
+One parameter-free, nonbatch UPDATE assigns one selected target, with exactly
+`isNull(target)` as its predicate, no returned row values and maxRows in 1–10000.
+Present target values and all input/unrelated values remain unchanged. Application
+admission stays fenced; native locks exclude direct writers throughout the phase.
+
+Support two independently tested shapes before calling the selected G02 profile
+complete: (a) an existing optional target becomes required without any other
+meaning/default change, using the G01 fill/tighten pair; (b) one appended required
+target is added nullable, filled, given its independently authored future default
+if selected, and constrained in one required transaction. All target validation
+and data/DDL/progress commit together. No concurrent index barrier or lock release
+may split either shape. If shape (b) needs extra phase grammar, encode it as a
+closed correspondence with exact ordered steps; never inherit a split legacy
+phase accidentally. Compound unrelated changes and dependent new-field chains
+remain refused. Future defaults do not supply existing-row values implicitly.
+
+Both retained sources must independently compile. In particular, appending a
+required target without a future default can invalidate an existing create
+command that omits it. This profile does not rewrite that command or admit a
+combined command edit outside its closed source correspondence. Refuse that
+composition explicitly; qualify no-default append only with a valid successor
+source. Companion command evolution remains a tracked later composition scope.
+
+Known aborted attempts may retry. Unknown commit outcomes must be observed from
+authenticated progress/native witnesses before dispatch. Committed work is never
+rerun, even though expressions are pure. Failure after this phase commits keeps
+the installation fenced for exact resume or separately authorized forward repair;
+whole-plan data rollback is not promised. Receipts contain counts, identities and
+outcomes, not birthdays, raw rows or rejected samples. Ordinary diagnostics must
+sanitize native DETAIL; private host error custody is a separate authority.
+
+Distinguish phase atomicity from durable job setup. The existing host commits a
+source-bound initial READY receipt and fences the installed head before entering
+the required phase. A known first-phase failure rolls back its data, DDL and
+phase-completion receipt; the initial READY receipt and fencing remain for
+authenticated recovery. The oracle must distinguish an absent progress relation
+before setup from one exact READY row afterward: phase index zero, no completed
+steps, the empty-input SHA-256 phase digest and exact plan/file/predecessor/prefix
+bindings. History and application values/column constraints remain unchanged.
+Successful final publication advances history and removes the progress relation.
+Neither a missing table nor an empty row array may conceal these distinct states.
+
+### Required independent acceptance
+
+Before code, the implementation owner integrates the exact successor schemas,
+program guard descriptor, diagnostic/refusal codes, wrapper/runtime/version
+matrix and phase correspondences in CONTRACT-081/TD-085, plus STP-085 cases.
+Design review must pass those concrete interfaces before implementation begins.
+
+Native acceptance uses a fresh frozen installed cohort and manually specified
+expected rows (high-precision independent decimal calculations where useful),
+never the same AST evaluator as the oracle. Include distinct per-row outputs,
+copy/coalesce/strict concat/conditional/arithmetic, Unicode and trailing spaces,
+zero matches, preserved present/input/unrelated values, and both phase shapes.
+Exercise intermediate budget refusals, overflow, NULL, decimal rounding, length,
+checks/enumerations, unique/FK failures, row-bound overflow and invalid rows after
+valid rows; every failed phase must leave no partial data, DDL or phase-completion
+progress. Separately verify the durable READY/fencing state described above.
+Held writers, cancellation, faults before/after commit, lost commit responses,
+resume without repeat, tampered AST/references/source/approval/program and old
+0.1–0.3 verification/replay are mandatory. Bun and real Chromium establish
+portable behavior; native PostgreSQL establishes storage effects. Release review
+must verify exact dependency wheels/WASM/SDK hashes, supported platforms and fresh
+published downloads against the approved candidate. No arbitrary transforms,
+online execution, managed consumer acceptance or additional backend qualification
+is implied by this finite G02 algebra.
+
 ## Concern Alignment
 
 ADR-002 keeps planning browser-compatible TypeScript, tested in Bun and Chromium.

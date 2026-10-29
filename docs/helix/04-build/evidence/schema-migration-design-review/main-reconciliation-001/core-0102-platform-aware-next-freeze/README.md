@@ -1,0 +1,7 @@
+# Platform-aware next migration freeze
+
+Preparation only. The Sol plan is the controlling correction to the prior unconditional Linux-only update. Keep the native qualification dependency pin a selected Linux assertion; the shared acquisition helper needs a closed Linux/Mac mapping. Luna's proposal to replace the native pin's single SHA with a two-platform map is advisory and is not required or approved by this packet. Preserve existing native assertion shape unless the completed source review demonstrates a need. Shared helper selection must follow actual runner/cell validation.
+
+Preserve original Linux/Mac Python 3.11/3.14 cells; update the shared distribution assertion as well as the helper/template. Semantic Core remains 0.10.0. Core distribution 0.10.2 is distinct. The template Linux cohort floor becomes 2.34; independent MiniRacer selector stays unchanged. SDK 0.5.7 package/version and final merged source must precede canonical R3 generation.
+
+The preparation report's candidate HEAD was a snapshot before root's subsequent Linux-evidence commit b21a46fbf; it is not the final freeze. Main 8e82e134a7b4c23aad561954aa2a48cbc738fb23 adds publication receipts after release M6337. The two R3 paths are overlaps, not confirmed merge conflicts. All actual integration, source edits, canonical generation, native and four-cell gates remain pending. Mac public proof and automatic PyPI remain queued at capture; native dispatch remains held. No Praxis work.

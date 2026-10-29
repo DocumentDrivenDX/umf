@@ -1,0 +1,33 @@
+{
+  "runId": 40600969163,
+  "jobId": 122528687696,
+  "job": "commands",
+  "conclusion": "success",
+  "event": "pull_request",
+  "apiHeadSha": "6eca705a8ca2d9f99517e2fc919cd211fe00f98d",
+  "syntheticProducerCommit": "7cf121baa40601ba0b92a14cd0f7e121783cb8e2",
+  "artifactId": 12782735158,
+  "artifactName": "command-execution-evidence",
+  "artifactZipBytes": 30886857,
+  "artifactZipSha256": "4fab3dc68cc9c5e91e110361ebbcc02dfe27c2b4a2ede5085635846300388323",
+  "sdkAsset": {
+    "pathInArtifact": ".cache/sdk-distribution/umf-sdk.tgz",
+    "bytes": 30835188,
+    "sha256": "35904ecd1dd7938cdf98750715e6291a878b2ff7edbe982633c016dfe05c5fcf"
+  },
+  "otherMembers": {
+    "command-execution.log": {"bytes": 47170, "sha256": "4239f3ad401d3a386286781474482caa7e2af619e6b59d7915964e24b6e84b50"},
+    "fixtures/actions/browser.json": {"bytes": 268217, "sha256": "638eea54309ffe1efec4eacc738e3ca47e2f98b755704c29b0f2645d88f160ea"},
+    ".cache/sdk-distribution/manifest.json": {"bytes": 229540, "sha256": "5e903bddb0c738c6f2b4d6f1257ef6dbe767133ac05a003be7a834981b56d106"}
+  },
+  "installed139Proof": {
+    "unifiedGenerator": true,
+    "conformanceCases": 139,
+    "singleInstall": true,
+    "bundledActions": true,
+    "loaderEntrypoint": true,
+    "opaqueMeaningRemainsUnchecked": true
+  },
+  "rawLogReference": "GitHub Actions job log API: repo DocumentDrivenDX/umf, job 122528687696",
+  "qualification": "Actual PR-produced distribution evidence; keep separate from a public release qualification claim."
+}

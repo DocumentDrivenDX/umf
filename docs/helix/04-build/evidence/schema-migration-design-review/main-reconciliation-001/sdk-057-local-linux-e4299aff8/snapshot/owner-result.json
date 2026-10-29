@@ -1,0 +1,168 @@
+{
+  "d5": {
+    "attempt": "002",
+    "cleanup": {
+      "clientRemoved": true,
+      "networkRemoved": true,
+      "postgresRemoved": true
+    },
+    "completedEvidence": {
+      "faultFencedResume": "completed with raw exit 0",
+      "noDefaultChecksPassed": 19,
+      "ordinaryCasesPassed": 37
+    },
+    "executionId": "local-97eb1184aa8b47b1a1304829546470b0",
+    "notClosed": [
+      "Two remaining fault obligations and the final audit did not close.",
+      "fault-backfill-commit-lost had a 48-second selected limit but no command record and empty evidence/upload logs; command outcome is unknown.",
+      "Finalizer exited 1 with required-evidence-missing; no D5 pass is established."
+    ],
+    "priorAttempt001": "preserved separately in baseline staging packet; no acceptance claim",
+    "receipt": "d5/attempt-002/upload-evidence/d5-receipt.json",
+    "receiptSha256": "29d990e026af304e2507151b9d27eb9c3724ad3b086e26230188e652bd783af5",
+    "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+    "sourceTree": "8b98c0d895983ba2b7637dd3aea567dab0943883",
+    "status": "FAIL_OR_UNKNOWN"
+  },
+  "diagnostics": {
+    "nativeRouteReview": "no useful gain; no third emulated retry. Genuine native Linux/amd64 D5 remains necessary; no endpoint is currently present. Manual native CI is only a proposal and requires separate authorization.",
+    "storage": {
+      "d5StatusEffect": "none",
+      "receipt": "d5/diagnostics/storage/run/diagnostic-receipt.json",
+      "receiptSha256": "e3db411154f1ddd4c3793b9aba8951a2f67c0a8aab2588900edc2c03da949f35",
+      "releaseGate": false,
+      "status": "diagnostic-complete; no release-gate effect"
+    },
+    "v8": {
+      "d5StatusEffect": "none",
+      "receipt": "d5/diagnostics/v8/runs/local-27a723db53344b6cafe868e666f8bf1a-attempt2/diagnostic-receipt.json",
+      "receiptSha256": "341f79b9b08ff5f75be62e80bf4eb38bcec0b00410287096f2d9f377891d110c",
+      "releaseGate": false,
+      "status": "diagnostic-complete; no release-gate effect"
+    }
+  },
+  "environment": {
+    "containerPlatform": "linux/amd64",
+    "engine": "OrbStack Docker 29.8.2",
+    "hostArchitecture": "Darwin arm64 / linux-aarch64 daemon context",
+    "hostedActions": false,
+    "macOSRuntime": false,
+    "nativeLinuxAmd64Host": false
+  },
+  "evidenceStaging": {
+    "baselinePacket": "/private/tmp/migration-sdk057-final-evidence-staging-001/",
+    "finalIntegrityManifest": "staging-integrity-002.json",
+    "payloadsExcluded": [
+      "SDK archive",
+      "target wheels",
+      "MiniRacer wheel",
+      "installed virtual environment",
+      "copied native volume"
+    ],
+    "supplementSourceIndex": "supplement-source-custody-index-002.json"
+  },
+  "full18": {
+    "sourceAcquisitionAndAggregate": {
+      "aggregateIndexSha256": "fac25d7d5041983f1e3d464efbdda70e84df19f9fd7b70882990e4a05e69a634",
+      "attempt": "002",
+      "cells": [
+        "linux-x86_64-py311 / CPython 3.11.17",
+        "linux-x86_64-py314 / CPython 3.14.9"
+      ],
+      "macInputsExecuted": false,
+      "receipt": "full18/attempt-002/local-aggregate-producer-receipt.json",
+      "status": "accepted-local-selected-cells",
+      "unionLockSha256": "d72b1fe64f403fc52aaca586c6b73147feaea99c6a291767385e3caa351015ab"
+    },
+    "unionReplay": {
+      "continuation": "003",
+      "dockerStopGraceSeconds": 30,
+      "executionId": "umf-local-full18-union-continuation-20261028T210818Z-1e6e0d6f-5cde-48cb-8c16-e4b15d5552ab-attempt1",
+      "harnessSha256": "07904d34b782a07bad53cd29797eaca70e0f3c6cb20adc51b1084004b4084ea3",
+      "priorAttemptsPreserved": {
+        "attempt002Original": "failed py311 packaging-extra parse; py314 not run",
+        "continuation001": "functional passes, watchdog/resource qualification absent",
+        "continuation002": "functional passes, host/inner log path collision; custody unqualified"
+      },
+      "receipt": "full18/union-continuation-003/output/continuation-receipt.json",
+      "receiptSha256": "dcf11127fc5a3c5971218974fc46689f6df080518cac17170c0e6220bec88399",
+      "reports": {
+        "linux-x86_64-py311": {
+          "sha256": "6006c8ec82a2f7bd716356138fc673b8654047a3944edfe36ca422909a0d3c13"
+        },
+        "linux-x86_64-py314": {
+          "sha256": "02b7d59b32e63ce265602dc3a1b265a99f2c22cb08fadb9ec29df72214a4effe"
+        }
+      },
+      "solActualReview": "accepted; all ten physical host/command logs and receipt refs checked",
+      "stageWatchdogSeconds": 3600,
+      "status": "accepted-local-selected-cells"
+    }
+  },
+  "heldAssets": {
+    "ledger": "release-payload-held.json",
+    "ledgerSha256": "ac69402096ff4223035acd409d8bed79e391559e2db1b30b2ba43ea559e2aeb3",
+    "packageAssetCount": 3,
+    "published": false
+  },
+  "notClaimed": [
+    "G02-D5 acceptance",
+    "release merge, tag, or publication",
+    "public-H proof",
+    "native Linux/amd64 host qualification",
+    "macOS runtime qualification",
+    "G03-G11 support",
+    "managed-consumer acceptance",
+    "additional backends",
+    "Praxis changes"
+  ],
+  "packetAdopted": false,
+  "proposedRepositoryPath": "docs/helix/04-build/evidence/schema-migration-design-review/main-reconciliation-001/sdk-057-local-linux-e4299aff8/",
+  "publicH": {
+    "continuationBindingReviewSha256": "0c209e80e548c75bd73f0bb55d50b4eb2c93034cb60c0e8af08a541b2a94a5e7",
+    "fullPublicProof": "not run; no M, SDK tag, publication, public-H identity, or public asset identity asserted",
+    "heldInputPacketSha256": "4575c64dc59620817fab27c6952db4f05a487f22b5484b05ded85838914bb550",
+    "readerSourceSha256": "a04eafa0bfe5fdefbfb126ff64f2f249d4daf6a64e3bfbe9bdf6ab27cec14c98",
+    "sourceDisposition": "accepted source only",
+    "sourceReviewSha256": "8e56b2f7dbc1e5d98798e5a86a2ad48afc035e31f88d12d1811e5345c5679499"
+  },
+  "releaseNotesDraft": {
+    "baseline": "drafts/sdk-release-notes-0.5.7.baseline.md",
+    "frontmatter": "preserved unchanged",
+    "links": "point to proposed repository staging destination; require confirmation after evidence adoption",
+    "patch": "drafts/sdk-release-notes-0.5.7.proposed.patch",
+    "patchSha256": "cb67a7870e8b0e9e12fc4f319f708bb53a416a0940fb7aff358c7207549bd571",
+    "proposedDocument": "drafts/sdk-release-notes-0.5.7.proposed.md",
+    "status": "unapplied review patch; no repo write",
+    "target": "docs/helix/05-deploy/sdk-release-notes-0.5.7.md"
+  },
+  "releaseOrPublication": "held; no merge, tag, release, or public-H proof",
+  "schema": "umf.sdk057.local-linux-evidence-owner-result/2",
+  "sdkDistribution": {
+    "artifact": {
+      "path": "sdk-distribution/umf-sdk.tgz",
+      "payloadIncluded": false,
+      "sha256": "cd851d3338b1b2af79197cbafaeefdd03a8aac3e02373a893ddd5d07a930ab26",
+      "sizeBytes": 30834843
+    },
+    "attempt": "003",
+    "consumerCases": 139,
+    "executionId": "local-sdk-20261028T202157Z-38d3c32d-05e2-4803-97e1-dd396aebcba1-attempt1",
+    "limitations": [
+      "Local Linux/amd64 container execution on OrbStack Darwin arm64; not hosted CI or a native x86_64 host.",
+      "Not publication, release identity, public-H proof, or D5 acceptance."
+    ],
+    "receipt": "sdk/attempt-003/sdk-producer-receipt.json",
+    "recordedConsumerFlags": "all true",
+    "status": "accepted-local-profile"
+  },
+  "source": {
+    "dependencies": {
+      "core": "0.10.3",
+      "weft": "0.4.55"
+    },
+    "producerCommitP": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+    "tree": "8b98c0d895983ba2b7637dd3aea567dab0943883"
+  },
+  "status": "held"
+}

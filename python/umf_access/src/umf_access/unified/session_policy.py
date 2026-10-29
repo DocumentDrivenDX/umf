@@ -44,10 +44,19 @@ class SessionPolicy:
     statement_timeout_ms: int = 30_000
     lock_timeout_ms: int = 5_000
     catalog_only: bool = False
+    table_operation_module_profile: Literal[
+        "weft.table-operation-module/0.1",
+        "weft.table-operation-module/0.2",
+    ] = "weft.table-operation-module/0.1"
 
     def __post_init__(self) -> None:
         if type(self.catalog_only) is not bool:
             raise ValueError('catalog_only must be bool')
+        if type(self.table_operation_module_profile) is not str or self.table_operation_module_profile not in (
+            "weft.table-operation-module/0.1",
+            "weft.table-operation-module/0.2",
+        ):
+            raise ValueError("unsupported table operation module profile")
         for name in ("people", "batches"):
             entries = dict(getattr(self, name))
             if any(type(k) is not str or not k or not _identifier(v) for k, v in entries.items()):
@@ -85,7 +94,17 @@ class SessionPolicy:
         """Bind page tokens to the authenticated authority and policy, across calls."""
         if type(secret) is not bytes or len(secret) < 32:
             raise ValueError("cursor root secret requires at least 256 bits")
-        scope = json.dumps([identity.kind, identity.subject, self.settings(identity)], sort_keys=True)
+        if self.table_operation_module_profile == "weft.table-operation-module/0.1":
+            # Keep the historical 0.1 derivation byte-for-byte stable.
+            scope = json.dumps([identity.kind, identity.subject, self.settings(identity)], sort_keys=True)
+        else:
+            scope = json.dumps([
+                "umf.session-table-operation-profile/0.1",
+                "weft.table-operation-module/0.2",
+                identity.kind,
+                identity.subject,
+                self.settings(identity),
+            ], sort_keys=True)
         return hmac.new(secret, scope.encode(), hashlib.sha256).digest()
 
 

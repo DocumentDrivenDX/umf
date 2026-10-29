@@ -47,7 +47,7 @@ def _issue_reference(connection: Any, source: dict[str, Any], entry: dict[str, A
     outcome_shape=_outcome_shape(connection,schema)
     if outcome_shape is not None:
         reference.update(version='umf.table-installation/0.2',outcomeShape=_normalized(outcome_shape))
-    if entry['plan'].get('version') == 'umf.table-migration/0.3':
+    if entry['plan'].get('version') in ('umf.table-migration/0.3','umf.table-migration/0.4','umf.table-migration/0.5'):
         from .approval import APPROVAL_PROFILE, _approval_shape
 
         if entry['plan'].get('approvalProfile') != APPROVAL_PROFILE or entry['plan']['digest'] != reference['planDigest']:

@@ -1,0 +1,94 @@
+stage=install
+argv=timeout --signal=TERM --kill-after=10s 160s bun install --frozen-lockfile --ignore-scripts 
+started_utc=2026-10-26T18:47:07Z
+ended_utc=2026-10-26T18:47:13Z
+exit=0
+duration_seconds=6
+log_bytes_before_cap=1052
+log_truncated=no
+stage=full-typescript
+argv=timeout --signal=TERM --kill-after=10s 180s bun node_modules/typescript/bin/tsc --noEmit 
+started_utc=2026-10-26T18:47:13Z
+ended_utc=2026-10-26T18:47:16Z
+exit=0
+duration_seconds=3
+log_bytes_before_cap=0
+log_truncated=no
+stage=tools-typescript
+argv=timeout --signal=TERM --kill-after=10s 180s bun node_modules/typescript/bin/tsc -p tsconfig.tools.json 
+started_utc=2026-10-26T18:47:16Z
+ended_utc=2026-10-26T18:47:24Z
+exit=0
+duration_seconds=8
+log_bytes_before_cap=0
+log_truncated=no
+stage=r2-typescript
+argv=timeout --signal=TERM --kill-after=10s 180s bun node_modules/typescript/bin/tsc --noEmit -p tsconfig.r2-metering-stageb.json 
+started_utc=2026-10-26T18:47:24Z
+ended_utc=2026-10-26T18:47:24Z
+exit=0
+duration_seconds=0
+log_bytes_before_cap=0
+log_truncated=no
+stage=api-g02
+argv=timeout --signal=TERM --kill-after=10s 180s bun test --timeout 15000 tests/lifecycle/table-inventory-api.test.ts tests/lifecycle/g02-derived-fill.test.ts tests/lifecycle/g02-renderer-operation-sidecar.test.ts 
+started_utc=2026-10-26T18:47:24Z
+ended_utc=2026-10-26T18:49:35Z
+exit=0
+duration_seconds=131
+log_bytes_before_cap=5363
+log_truncated=no
+stage=g02-fixture-source-control
+argv=timeout --signal=TERM --kill-after=10s 60s bun test --timeout 30000 tests/lifecycle/g02-temporal-native-fixture.test.ts 
+started_utc=2026-10-26T18:49:35Z
+ended_utc=2026-10-26T18:49:38Z
+exit=0
+duration_seconds=3
+log_bytes_before_cap=298
+log_truncated=no
+stage=g03-and-migration-regressions
+argv=timeout --signal=TERM --kill-after=10s 180s bun test --timeout 15000 tests/lifecycle/g04-checked-conversion.test.ts tests/lifecycle/g03-defaults.test.ts tests/lifecycle/g03-discovery-bridge.test.ts tests/lifecycle/g03-renderer-compatibility.test.ts tests/lifecycle/g11-field-replacement.test.ts tests/lifecycle/table-deployment-operations.test.ts tests/lifecycle/migration.test.ts tests/lifecycle/reviewed.test.ts 
+started_utc=2026-10-26T18:49:38Z
+ended_utc=2026-10-26T18:51:03Z
+exit=0
+duration_seconds=85
+log_bytes_before_cap=9763
+log_truncated=no
+stage=r2-controls-and-parity
+argv=timeout --signal=TERM --kill-after=10s 180s bun test --timeout 15000 tests/metamodel/structural-accounting-source.test.ts tests/lifecycle/table-inventory-r2-context.test.ts tests/lifecycle/table-inventory-verified-deployment.test.ts tests/lifecycle/table-deployment-r2-accounting.test.ts tests/metamodel/structural-accounting-parity.test.ts 
+started_utc=2026-10-26T18:51:03Z
+ended_utc=2026-10-26T18:51:09Z
+exit=0
+duration_seconds=6
+log_bytes_before_cap=5696
+log_truncated=no
+stage=generate-reviewed-r2-reproduction
+argv=timeout --signal=TERM --kill-after=10s 120s bun scripts/qualification/r2-metering-generate.ts 
+started_utc=2026-10-26T18:51:09Z
+ended_utc=2026-10-26T18:51:10Z
+exit=0
+duration_seconds=1
+log_bytes_before_cap=857
+log_truncated=no
+314cac8416711899285bc3f1a734765d557f7446f7ab0cf58d3dbd2a7dfdd81e  /home/runner/work/_temp/r2-metering-generated-40380693127-1-reproduction/core-validators-accounted.ts
+stage=install-pinned-chromium
+argv=timeout --signal=TERM --kill-after=10s 180s bun node_modules/playwright/cli.js install chromium 
+started_utc=2026-10-26T18:51:10Z
+ended_utc=2026-10-26T18:51:19Z
+exit=0
+duration_seconds=9
+log_bytes_before_cap=6811
+log_truncated=no
+stage=r2-chromium-parity
+argv=timeout --signal=TERM --kill-after=10s 180s bun scripts/r2-metering-browser.ts 
+started_utc=2026-10-26T18:51:19Z
+ended_utc=2026-10-26T18:51:29Z
+exit=0
+duration_seconds=10
+log_bytes_before_cap=607
+log_truncated=no
+qualification_exit=0
+aggregate_elapsed_seconds=262
+artifact_public_bytes=39789
+artifact_max_bytes=16777216
+qualification_step_outcome=success

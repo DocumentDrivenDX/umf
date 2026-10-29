@@ -1,0 +1,48 @@
+{
+  "capturedArtifactBytes": 1910205,
+  "capturedLogsBytes": 26513,
+  "cohortLockSha256": "079ee79d66b78d100bdb818c0c89c521ff8580b7862c59bcaec300c86de18e5f",
+  "finalCombinedGate": "OPEN; this result covers selected subcases only, not full G03 or campaign",
+  "fullG03Campaign": "OPEN",
+  "g03N12": "UNQUALIFIED pending compatible Weft .2 cohort",
+  "g03N14AndFullCampaign": "OPEN; campaign selector was not invoked",
+  "limits": {
+    "artifacts": 16777216,
+    "logs": 1048576
+  },
+  "manifestSha256": "be9e57777b5eefb4c72992cbccb98bf49fad192cc3178a9eac41aa70b6974f23",
+  "profile": "umf.g02-g03-selected-native-qualification/1",
+  "qualificationPhase": "final-stable-five-G02-thirteen-selected-G03/1",
+  "ref": "refs/heads/codex/migration-g02-g03-native-qualification",
+  "runAttempt": "1",
+  "runId": "40393356844",
+  "selectedG02CaseCount": 5,
+  "selectedG03ScenarioCount": 13,
+  "selectedScopeOnly": true,
+  "sourceCommit": "71b5f87805324c0e0d12c279a4898c8a44f625a9",
+  "status": "PASS_SELECTED_NATIVE_SUBCASES_FULL_CASE_OPEN",
+  "toolchain": {
+    "bun": {
+      "binarySha256": "7ce7d6b654eddeec20afddf2396317fba6dc19ab52788a27e894e1806bf8f24b",
+      "path": "/home/runner/.bun/bin/bun",
+      "version": "1.4.3"
+    },
+    "git": {
+      "binarySha256": "d4d2ba562243015206d4248edfec871a74786499292d00ed072dbca2f5ae8073",
+      "path": "/usr/bin/git",
+      "version": "git version 2.55.0"
+    },
+    "python": {
+      "binarySha256": "d601e62487858384d3000725c3b2e16e86ff11a6ad0b0810b76281e45426ea62",
+      "path": "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11",
+      "version": "Python 3.11.17"
+    },
+    "timeout": {
+      "binarySha256": "12690a043dfd555a6c14ccc1564f5649c18f1762c0d6ff66729948130898ec52",
+      "path": "/usr/bin/timeout",
+      "version": "timeout (GNU coreutils) 9.4\nCopyright (C) 2023 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n\nWritten by P\u00e1draig Brady."
+    }
+  },
+  "workflow": "G02 and G03 selected native qualification",
+  "workflowSha256": "9d0d92c26eab0fd19c000073d46c1c70d1b959115bd52f7b43e669d0222040c8"
+}

@@ -1,0 +1,127 @@
+{
+  "evidenceId": "weft-g02-predicate-domain-prepare-bind-valid-model-008",
+  "scope": "Installed Weft 0.4.53 prepare+bind positive controls using valid source model with only the selected .2 operation. No database execution qualification.",
+  "sourceCommit": "7413c19d16ca5d8d8ce60b62d49ca0a3250544df",
+  "corpus": "/private/tmp/weft-g02-wasm-008/g02-browser-cases-valid-model-008.json",
+  "corpusSha256": "dd869f69ad20182652ed6a44921556ea73d86f7fcd4dd6536160768253ce361b",
+  "wheel": {
+    "path": "/private/tmp/umf-g02-candidate-008-artifacts/weft_sql-0.4.53-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "4c8281945b852af02cae8602747fb7b1b652ab3a1369d7650efce62ae6d35c6c",
+    "version": "0.4.53"
+  },
+  "nativeModule": {
+    "path": "/private/tmp/umf-g02-candidate-008-venv/lib/python3.11/site-packages/weft/weft.abi3.so",
+    "sha256": "1c7692578ff60ec4f6d243c9356609c042cd749f407ed8f47640081a7e93fdbc"
+  },
+  "python": "3.11.17 (main, Oct  3 2026, 00:54:14) [Clang 22.1.3 ]",
+  "cases": [
+    {
+      "name": "G02-varchar-native-width-admitted",
+      "prepare": "passed",
+      "bindStatus": "compiled",
+      "version": "weft.table-operation/0.2",
+      "sql": "WITH umf_effects AS (UPDATE \"plugin_demo\".\"notes\" AS t SET \"owner\" = CASE WHEN ((((t.\"id\" COLLATE pg_catalog.\"C\") OPERATOR(pg_catalog.=) ($1::pg_catalog.text COLLATE pg_catalog.\"C\")) IS TRUE OR ((t.\"id\" COLLATE pg_catalog.\"C\") IS NULL AND ($1::pg_catalog.text COLLATE pg_catalog.\"C\") IS NULL))) IS TRUE THEN (t.\"id\" COLLATE pg_catalog.\"C\") ELSE ($2::pg_catalog.text COLLATE pg_catalog.\"C\") END WHERE (t.\"owner\" IS NULL) RETURNING 1 AS umf_affected, (((t.\"owner\" COLLATE pg_catalog.\"C\") OPERATOR(pg_catalog.=) CASE WHEN ((((t.\"id\" COLLATE pg_catalog.\"C\") OPERATOR(pg_catalog.=) ($1::pg_catalog.text COLLATE pg_catalog.\"C\")) IS TRUE OR ((t.\"id\" COLLATE pg_catalog.\"C\") IS NULL AND ($1::pg_catalog.text COLLATE pg_catalog.\"C\") IS NULL))) IS TRUE THEN (t.\"id\" COLLATE pg_catalog.\"C\") ELSE ($2::pg_catalog.text COLLATE pg_catalog.\"C\") END) IS TRUE) AS umf_native_exact, (t.\"owner\" IS NOT NULL) AS umf_native_nonnull, ((TRUE)) AS umf_native_finite), umf_bound AS MATERIALIZED (SELECT CASE WHEN pg_catalog.count(*) OPERATOR(pg_catalog.<=) 100 AND COALESCE(pg_catalog.sum(pg_catalog.octet_length(e.umf_affected::pg_catalog.text)::pg_catalog.int8),0) OPERATOR(pg_catalog.<=) 8388608 AND COALESCE(pg_catalog.bool_and(e.umf_native_exact AND e.umf_native_nonnull AND e.umf_native_finite),TRUE) THEN 1::pg_catalog.int8 ELSE 1::pg_catalog.int8 OPERATOR(pg_catalog./) (pg_catalog.count(*) OPERATOR(pg_catalog.-) pg_catalog.count(*)) END AS ok FROM umf_effects AS e) SELECT e.umf_affected FROM umf_bound AS b CROSS JOIN umf_effects AS e WHERE b.ok OPERATOR(pg_catalog.=) 1",
+      "parameterOrder": [
+        "slot0",
+        "slot1"
+      ],
+      "parameterSources": [
+        {
+          "carrier": "string",
+          "field": {
+            "element": "id",
+            "module": "demo"
+          },
+          "id": "slot0",
+          "nullable": false,
+          "source": {
+            "kind": "literal",
+            "nativeValue": "abcd",
+            "value": {
+              "string": "abcd"
+            }
+          }
+        },
+        {
+          "carrier": "string",
+          "field": {
+            "element": "owner",
+            "module": "demo"
+          },
+          "id": "slot1",
+          "nullable": false,
+          "source": {
+            "kind": "literal",
+            "nativeValue": "fallback",
+            "value": {
+              "string": "fallback"
+            }
+          }
+        }
+      ],
+      "nativeExactValueGuard": {
+        "lossyAssignment": "statement-error-and-transaction-rollback",
+        "nonfiniteInput": "statement-error-and-transaction-rollback",
+        "nullResult": "statement-error-and-transaction-rollback",
+        "privateResults": true,
+        "profile": "pg18-row-expression-exact/0.1",
+        "scope": "all-direct-target-rows",
+        "sqlstate": "22012"
+      }
+    },
+    {
+      "name": "G02-int2-native-width-admitted",
+      "prepare": "passed",
+      "bindStatus": "compiled",
+      "version": "weft.table-operation/0.2",
+      "sql": "WITH umf_effects AS (UPDATE \"plugin_demo\".\"notes\" AS t SET \"integer_target\" = CASE WHEN (((t.\"integer_source\" OPERATOR(pg_catalog.=) $1::pg_catalog.numeric) IS TRUE OR (t.\"integer_source\" IS NULL AND $1::pg_catalog.numeric IS NULL))) IS TRUE THEN (t.\"integer_source\")::pg_catalog.numeric ELSE $2::pg_catalog.numeric END WHERE (t.\"integer_target\" IS NULL) RETURNING 1 AS umf_affected, (((t.\"integer_target\")::pg_catalog.numeric OPERATOR(pg_catalog.=) CASE WHEN (((t.\"integer_source\" OPERATOR(pg_catalog.=) $1::pg_catalog.numeric) IS TRUE OR (t.\"integer_source\" IS NULL AND $1::pg_catalog.numeric IS NULL))) IS TRUE THEN (t.\"integer_source\")::pg_catalog.numeric ELSE $2::pg_catalog.numeric END) IS TRUE) AS umf_native_exact, (t.\"integer_target\" IS NOT NULL) AS umf_native_nonnull, ((TRUE)) AS umf_native_finite), umf_bound AS MATERIALIZED (SELECT CASE WHEN pg_catalog.count(*) OPERATOR(pg_catalog.<=) 100 AND COALESCE(pg_catalog.sum(pg_catalog.octet_length(e.umf_affected::pg_catalog.text)::pg_catalog.int8),0) OPERATOR(pg_catalog.<=) 8388608 AND COALESCE(pg_catalog.bool_and(e.umf_native_exact AND e.umf_native_nonnull AND e.umf_native_finite),TRUE) THEN 1::pg_catalog.int8 ELSE 1::pg_catalog.int8 OPERATOR(pg_catalog./) (pg_catalog.count(*) OPERATOR(pg_catalog.-) pg_catalog.count(*)) END AS ok FROM umf_effects AS e) SELECT e.umf_affected FROM umf_bound AS b CROSS JOIN umf_effects AS e WHERE b.ok OPERATOR(pg_catalog.=) 1",
+      "parameterOrder": [
+        "slot0",
+        "slot1"
+      ],
+      "parameterSources": [
+        {
+          "carrier": "integer",
+          "field": {
+            "element": "integerSource",
+            "module": "demo"
+          },
+          "id": "slot0",
+          "nullable": false,
+          "source": {
+            "kind": "literal",
+            "nativeValue": "200000",
+            "value": {
+              "integerToken": "200000"
+            }
+          }
+        },
+        {
+          "carrier": "integer",
+          "field": {
+            "element": "integerTarget",
+            "module": "demo"
+          },
+          "id": "slot1",
+          "nullable": true,
+          "source": {
+            "kind": "literal",
+            "nativeValue": "0",
+            "value": {
+              "integerToken": "0"
+            }
+          }
+        }
+      ],
+      "nativeExactValueGuard": {
+        "lossyAssignment": "statement-error-and-transaction-rollback",
+        "nonfiniteInput": "statement-error-and-transaction-rollback",
+        "nullResult": "statement-error-and-transaction-rollback",
+        "privateResults": true,
+        "profile": "pg18-row-expression-exact/0.1",
+        "scope": "all-direct-target-rows",
+        "sqlstate": "22012"
+      }
+    }
+  ]
+}

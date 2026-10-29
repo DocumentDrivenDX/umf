@@ -47,6 +47,16 @@ def _supported_obligations(value):
         and value['tableLifecycle']['sourceInterpretation']=='original-umf-deployment-compiler')
 
 
+def _operation_scope(context, operation, target, inputs, size, items, profile):
+    scope = {key:context[key] for key in ('module','schema','sourceDigest','configurationDigest',
+                                          'bundleDigest','headDigest','referenceDigest')}
+    scope.update(operation=operation, target=target, inputsDigest=digest(inputs if items is None else items),
+                 requestedSize=size, profile='python-sorted-json/0.1')
+    if profile == 'weft.table-operation-module/0.2':
+        scope['tableOperationModuleProfile'] = profile
+    return scope
+
+
 class _TableReader:
     _mutation=False
     def __init__(self, session: SyncSession | AsyncSession, bundle: dict[str, object],
@@ -58,9 +68,12 @@ class _TableReader:
             raise ValueError('cursor root secret requires at least 256 bits')
         self._session = session
         self._source_owner = self if _source_owner is None else _source_owner
+        self._table_operation_module_profile = session.policy.table_operation_module_profile
         if _source_owner is None:
             self._bundle, self._reference, self._binding = copy.deepcopy((bundle, reference, binding))
         else:
+            if _source_owner._table_operation_module_profile != self._table_operation_module_profile:
+                raise SessionError('table operation module profile differs from shared source owner')
             self._bundle, self._reference, self._binding = (_source_owner._bundle, _source_owner._reference, _source_owner._binding)
         self._secret, self._target = cursor_secret, target
         self._source_pid = os.getpid()
@@ -80,10 +93,14 @@ class _TableReader:
 
     def _source_for(self, identity):
         if self._source_owner is not self:
+            if self._session.policy.table_operation_module_profile != self._source_owner._table_operation_module_profile:
+                raise SessionError('table operation module profile differs from shared source owner')
             return self._source_owner._source_for(identity)
         if os.getpid() != self._source_pid:
             raise SessionError("create session factories and pools after process creation")
         policy = self._session.policy
+        if policy.table_operation_module_profile != self._table_operation_module_profile:
+            raise SessionError('table operation module profile differs from prepared source owner')
         role = policy.role(identity)
         # The constructor owns these source/reference/binding snapshots. Cache
         # only source meaning, never a lease, principal or native observation.
@@ -115,6 +132,9 @@ class _TableReader:
 
     def _prepared_for(self, context, operation, *, query=False):
         owner = self._source_owner
+        if (self._session.policy.table_operation_module_profile != self._table_operation_module_profile
+                or owner._table_operation_module_profile != self._table_operation_module_profile):
+            raise SessionError('table operation module profile differs from prepared source owner')
         with owner._source_lock:
             cache = owner._queries if query else owner._operations
             prepared = cache.get(operation)
@@ -123,7 +143,7 @@ class _TableReader:
                     if owner._operation_module is None:
                         from weft import prepare_table_operation_module_json
                         owner._operation_module = prepare_table_operation_module_json(canonical({
-                            'version':'weft.table-operation-module/0.1','target':self._target,
+                            'version':self._table_operation_module_profile,'target':self._target,
                             'binding':owner._binding,'module':context['module']}))
                     prepared = (owner._operation_module.prepare_query(operation) if query
                                 else owner._operation_module.prepare(operation))
@@ -139,6 +159,10 @@ class _TableReader:
         declaration = declarations.get(operation) if type(operation) is str else None
         if declaration is None:
             raise SessionError('operation is not declared in this module')
+        if declaration.get('version') != 'umf.table-operation/0.1':
+            # Typed row expressions are migration-only at this runtime version.
+            # Refuse before program binding or any SQL/authority acquisition.
+            raise SessionError('unsupported ordinary table operation version')
         query=declaration['body']['kind']=='query'
         read=query or declaration['body']['kind']=='read'
         if query and (size is not None or cursor is not None or items is not None):
@@ -148,10 +172,8 @@ class _TableReader:
         if read and self._mutation:
             raise SessionError('a declared mutation is required')
         secret = self._session.policy.cursor_secret(identity, self._secret)
-        scope = {key:context[key] for key in ('module','schema','sourceDigest','configurationDigest',
-                                             'bundleDigest','headDigest','referenceDigest')}
-        scope.update(operation=operation, target=self._target, inputsDigest=digest(inputs if items is None else items), requestedSize=size,
-                     profile='python-sorted-json/0.1')
+        scope = _operation_scope(context,operation,self._target,inputs,size,items,
+                                 self._table_operation_module_profile)
         token = token_decode(secret, cursor) if cursor is not None else None
         if token is not None and any(token['scope'].get(k) != v for k,v in scope.items()):
             raise SessionError('cursor differs from this operation scope')

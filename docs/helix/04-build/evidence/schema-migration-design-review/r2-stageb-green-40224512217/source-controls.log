@@ -1,0 +1,60 @@
+bun test v1.4.3 (c6da4a4d3)
+
+::group::tests/metamodel/structural-accounting-source.test.ts:
+(pass) R2 structural companion accepts only pinned canonical map-join pipelines [619.40ms]
+(pass) R2 structural companion refuses an unpinned altered canonical pipeline before classification [0.62ms]
+(pass) R2 canonical join classifier accepts the actual left-associated object-key mapping [1.11ms]
+(pass) R2 canonical join classifier refuses malformed and user-shaped pipelines [0.75ms]
+(pass) R2 structural companion carries the closed pointer escape kind before replacement [523.11ms]
+
+::endgroup::
+
+::group::tests/metamodel/structural-accounting-parity.test.ts:
+(pass) accounted core matches the complete current-conformance corpus [245.95ms]
+(pass) accounted core matches focused valid and refusal values [0.19ms]
+(pass) accounting work overflow refuses before the accounted validator runs [0.18ms]
+
+::endgroup::
+
+::group::tests/lifecycle/table-deployment-r2-accounting.test.ts:
+(pass) R2 SQL quoting reserves each escaped intermediate and final output before allocation [0.26ms]
+(pass) R2 canonical and hash kernels preserve sorted JSON while charging variable object-key carriers [1.63ms]
+(pass) R2 charged JSON copy reserves property descriptors and text before retaining the copy [0.15ms]
+
+::endgroup::
+
+::group::tests/lifecycle/table-inventory-r2-context.test.ts:
+(pass) R2-RA-01 ordinary object and array keep valid unknown JSON properties [0.53ms]
+(pass) R2-RA-02 accessors, hidden keys, symbols and custom prototypes refuse without getter calls [0.24ms]
+(pass) R2-RA-03 each admitted object charges one captured own-key result and one descriptor per string key [0.30ms]
+(pass) R2-RA-04 exact own-key extent includes symbols and array length before rejection [0.17ms]
+(pass) R2-RA-05 actual near-limit own-key result overflow refuses before descriptors [0.17ms]
+(pass) R2-RA-06 nested raw nodes each use their own one-call boundary [0.23ms]
+(pass) R2-RA-07 descriptor work is charged before getter-safe data-property refusal [0.10ms]
+(pass) R2-RA-08 array length is accounted but keeps its original special treatment [0.14ms]
+(pass) R2-RA-09 oversized key byte refusal reports the container without expanding a key path [0.19ms]
+(pass) R2-RA-10 valid __proto__ extension is copied as inert JSON data [0.16ms]
+(pass) R2-RA-11 caller mutation cannot change a private root-owned shape snapshot [0.11ms]
+(pass) R2-RA-12 original numeric and depth ceilings remain in force [0.57ms]
+(pass) R2 component depth starts at each component root, not the request envelope [1.66ms]
+(pass) R2 component value ceilings are applied per owned component under one meter [154.94ms]
+(pass) R2 selector .2 is closed and excludes future review/compiler selectors [1.07ms]
+(pass) R2 source snapshot owns data so later caller mutation cannot alter it [0.23ms]
+(pass) R2 context meters exact source verification and one parsed-source index before refusing unmetered catalog projection [1233.63ms]
+(pass) R2 shared meter refuses the exact work and subject overflows [9.07ms]
+(pass) R2 JSON reader uses the bounded qualified scanner before JSON tree admission [0.65ms]
+(pass) R2 scanner reserves exact decoded UTF-8 bytes before decoding strings or retaining keys [0.87ms]
+(pass) R2 scanner reserves exact bytes for escaped scalar widths and rejects decoded duplicate keys [0.27ms]
+(pass) R2 descriptor admission rejects hostile JSON shape without invoking getters [0.41ms]
+(pass) R2 descriptor admission enforces depth and numeric limits while preserving JSON extensions [0.62ms]
+(pass) R2 exported selector parser admits unknown input before shape reads and owns its result [0.24ms]
+(pass) R2 table archive material accepts only canonical unpadded base64url [1.80ms]
+(pass) R2 restoration parser preserves old exact branch and admits both closed lineage target modes [3.16ms]
+(pass) R2 parser preserves ordinary u/0 identifiers and rejects actual NUL plus open recipe controls [0.51ms]
+
+::endgroup::
+
+ 38 pass
+ 0 fail
+ 419 expect() calls
+Ran 38 tests across 4 files. [3.58s]

@@ -10408,3 +10408,33 @@ construction: each element wrapper retains a complete module. Correct the
 generator, verify unchanged diagnostics and unknown retention, and measure
 scaled source and browser behavior before default selection. Native target
 projections remain separately qualified from these metadata operations.
+
+### Main integration and local qualification — 2026-10-29
+
+Integrated main `dce9b4304`, including the reviewed G02 migration work. Resolved
+packaging conflicts in favor of the native Rust codegen profile while retaining
+new lifecycle functionality and strict per-file Python boundary controls. The
+canonical default-facade generator exposes the new inventory-migration API and
+its types on both package roots. The refreshed ledger reports 930 remaining
+default-route gaps and 844 executable declarations without a recorded Rust
+mapping; no new retirement is claimed. The increase reflects incoming work.
+
+The upstream accounted validator retains its exact historical producer custody.
+[Archived predecessor inputs](evidence/rust-migration/r8-accounted-companion-inputs/README.md)
+and a fail-closed compatibility check permit only root schema provenance changes
+before reusing that byte-pinned companion. Current Rust compilation remains
+source-bound and clean generation has no live generated-output source dependency.
+Sol reviewed the merge resolutions and compatibility checks independently.
+
+Local results include 16 Facets/Kind/Nullability Rust integration tests, three
+completed-copy unit tests, 20 Cardinality unit tests, 23 installed-gate control
+tests, five Facets facade tests, 25 Python boundary tests, and 119 Python
+distribution tests. The full source boundary checks report zero violations and
+zero V8 debt. Compiler clean generation and accounted structural parity pass;
+historical generator controls use the archived inputs and remain exact-pinned.
+Current installed Darwin/Linux acceptance and full-port release remain pending.
+
+All CI and release qualification runs locally under the owner's explicit
+direction. GitHub Actions credit exhaustion is not a release dependency. Direct
+binary publication still requires the completed port, integrated local tests,
+independent review, and verification of the published bytes.

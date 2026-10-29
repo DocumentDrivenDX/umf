@@ -1,0 +1,165 @@
+{
+  "baseCommit": "8570ebbed0a0f4fa9a1f09c121614a3ac8125641",
+  "files": {
+    ".github/workflows/access-boundaries.yml": {
+      "bytes": 45062,
+      "sha256": "fc93f939ae4c3dd9d02b5f8958256c87a2a0f33deb17afc7943c5df0f9a67f74"
+    },
+    "docs/helix/02-design/solution-designs/SD-007-schema-migrations.md": {
+      "bytes": 38681,
+      "sha256": "2ac5f4c25396c84b1bf7640792570a45fd17a8098f4b1340d09a4c90487ad3aa"
+    },
+    "docs/helix/03-test/test-plans/STP-085-typed-actions-on-raw-tables.md": {
+      "bytes": 129767,
+      "sha256": "12e68c54da5bf5ac699e292cd539ebe944f0a17c65fe3b3ef08aaf34d3098266"
+    },
+    "docs/helix/04-build/evidence/mig-g02/final-integration/core-public-acquisition.json": {
+      "bytes": 3332,
+      "sha256": "4aa57460ae0d4ca56b86686dd1865f29ba048da06794e219a9ebf5e3b115ade7"
+    },
+    "docs/helix/04-build/evidence/mig-g02/final-integration/core-reuse-comparison.json": {
+      "bytes": 16347,
+      "sha256": "927000348ef8837dd3b4bf93030e4ed2f008f88b6508a70e88697e37464f4663"
+    },
+    "docs/helix/04-build/evidence/mig-g02/final-integration/core-reuse-independent-review.json": {
+      "bytes": 8185,
+      "sha256": "8648c758e5e928af5cac8ad6c4ba3882eb676cda25da399026720b656c4ca1e2"
+    },
+    "docs/helix/04-build/evidence/mig-g02/final-integration/core-reuse-root-review.json": {
+      "bytes": 386,
+      "sha256": "ded73fdb76242794c950779565199e8272885fdb5e9df95d2245eda785704139"
+    },
+    "docs/helix/04-build/evidence/mig-g02/final-integration/legacy-public-0.5.5/custody-wording-correction.json": {
+      "bytes": 505,
+      "sha256": "737b5ce6db933635da20631002ce8ceb3daaf923eeaadc3f70eca737a1d06b54"
+    },
+    "docs/helix/04-build/evidence/mig-g02/final-integration/legacy-public-0.5.5/execution-receipt.json": {
+      "bytes": 1339,
+      "sha256": "4ea7221c86c5e9a8c3b6056d9634ddcb888c6e1f13c78960ba084b774cd7f632"
+    },
+    "docs/helix/04-build/evidence/mig-g02/final-integration/legacy-public-0.5.5/independent-review.json": {
+      "bytes": 18453,
+      "sha256": "f7b725d7aa6156454b1e244539429576883584b313e60ae1e6a43284c34c0e82"
+    },
+    "docs/helix/04-build/evidence/mig-g02/final-integration/legacy-public-0.5.5/replay-report.json": {
+      "bytes": 1749,
+      "sha256": "0da64c5b22efda4de4f18821f9adeef4c0effeba86aa0f6be565c1a289359024"
+    },
+    "docs/helix/04-build/evidence/mig-g02/final-integration/legacy-public-0.5.5/root-custody-review.json": {
+      "bytes": 5826,
+      "sha256": "bd4eba4778a65a601b89235d44d8061e790e478849d58a764a0fdf5e972c3a92"
+    },
+    "docs/helix/04-build/evidence/mig-g02/final-integration/legacy-public-0.5.5/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/helix/04-build/evidence/mig-g02/final-integration/legacy-public-0.5.5/stdout.log": {
+      "bytes": 224,
+      "sha256": "686c8b6c4d2554a67d533f6f3091ed1f9c92400a0d0bd5c46afb420f69a462b2"
+    },
+    "docs/helix/04-build/evidence/mig-g02/final-integration/sdk-aca8d14-independent-installed-review.json": {
+      "bytes": 1627,
+      "sha256": "6c6b12eaf55631dcc9d01cc3a488191f0be88fe12cfcf64bd771dcba6c074bc8"
+    },
+    "docs/helix/04-build/evidence/mig-g02/final-integration/temporal-independent-007-report.json": {
+      "bytes": 6222,
+      "sha256": "263dd7b76d95e31be0a154dce4ec59d9f3561360082508dd31012ea254d5e5e3"
+    },
+    "docs/helix/04-build/evidence/mig-g02/final-integration/temporal-independent-007-review.json": {
+      "bytes": 2023,
+      "sha256": "30a7c4719338eb54dda31873af3c082cdfb977692ca39b7b47387d6be3e1db0b"
+    },
+    "docs/helix/04-build/evidence/mig-g02/final-integration/temporal-native-attempt-005/dispatch.json": {
+      "bytes": 11684,
+      "sha256": "cd22fdb6335030fe0a71a42cf7b49c99997650ab95fc997bbaae877be6706b09"
+    },
+    "docs/helix/04-build/evidence/mig-g02/final-integration/temporal-native-attempt-005/runner-report.json": {
+      "bytes": 6222,
+      "sha256": "31724e60b378a0e26ef2853713e53c3aa02e546bb68836b300ce4d5516bee296"
+    },
+    "docs/helix/04-build/evidence/mig-g02/final-integration/temporal-observer-source-note.json": {
+      "bytes": 1108,
+      "sha256": "bfd961533c7b993c1c6da33c18ed4fcd8812d29bde2d42e1ea7886061935c940"
+    },
+    "docs/helix/04-build/evidence/mig-g02/final-integration/temporal-owner-observer-diagnostic.json": {
+      "bytes": 4550,
+      "sha256": "39e831b1e53222f441eca29c4f789cfd4b743c12343bf5dfd54bac08d973306d"
+    },
+    "docs/helix/04-build/evidence/mig-g02/final-integration/temporal-source-006-independent-review.json": {
+      "bytes": 1088,
+      "sha256": "7f82bccc80898a4c420c3db695ac06c9de0b82be744a2b52003e98737c01cf65"
+    },
+    "docs/helix/04-build/evidence/mig-g02/final-integration/temporal-source-007-independent-review.json": {
+      "bytes": 1257,
+      "sha256": "41564e4ca257acb344b00cdd419be18d8b27c2d4aa5ec58b576d410a66eb177f"
+    },
+    "docs/helix/04-build/guides/legal-table-lifecycle.md": {
+      "bytes": 15706,
+      "sha256": "f12eec7c4fa647704c29f213ac4b3ce9b3ade2f7ac8f79cce03f2cfab51b6ad1"
+    },
+    "docs/helix/04-build/guides/python-wheel-mirror.md": {
+      "bytes": 9811,
+      "sha256": "4e3b9bc3b7e8e722a47502de8962129d685e3fc2bae7bbe8e12e9e31dec05b53"
+    },
+    "docs/helix/04-build/schema-migration-plan.md": {
+      "bytes": 67741,
+      "sha256": "69677cd06b710aa613a5fa7c19669eb18f6286c346d6f12ba4680080ce6779c5"
+    },
+    "docs/helix/05-deploy/sdk-release-notes-0.5.7.md": {
+      "bytes": 13817,
+      "sha256": "1a9f4cef3b5400169ce392df68f7e3a4dcb31cd94c3645eab496cfc52671d5ba"
+    },
+    "python/packaging/embedder-wheel-lock.template.json": {
+      "bytes": 4595,
+      "sha256": "726108e5a03af52c24d3c1efc36b37f6bdd53bdcd698af97f5165f07b1a1ee30"
+    },
+    "scripts/python-package-mirror.py": {
+      "bytes": 24696,
+      "sha256": "11d57f3b166728ffa75a6a2a7d19a740220f1a7f5ba3a2d45b302888c1daeb7f"
+    },
+    "tests/codegen/README-aggregate-cohort.md": {
+      "bytes": 395,
+      "sha256": "239e57a9357163152a1aea2e715644bf0563fba1bd07a87572568c1ddb18a541"
+    },
+    "tests/codegen/acquire_offline_cohort.py": {
+      "bytes": 20155,
+      "sha256": "72d9d5b9e3886f54c63e25d2f851b626d833eacd6c8bbe4bbf26f518c0812ce0"
+    },
+    "tests/codegen/aggregate_cohort.py": {
+      "bytes": 33581,
+      "sha256": "9e2def3d465c6f3295936f019a566c5541583c1b1327e40e2c0a22d3e9b68584"
+    },
+    "tests/codegen/cohort_selector.py": {
+      "bytes": 8059,
+      "sha256": "65e4e20c5bd21d0c94af0d7f0fca496210242cc36a0b17e28d6f2192ade8cee0"
+    },
+    "tests/codegen/offline_mirror_probe.py": {
+      "bytes": 19098,
+      "sha256": "9f135a31b06eca07402b4ceaa33bc270de7cb2715126308b203755c1da4fac90"
+    },
+    "tests/codegen/offline_mirror_probe_legacy.py": {
+      "bytes": 11156,
+      "sha256": "8e01356472c51861619f5dc243dc596006d58b0b63d0d7386761609c58f9e002"
+    },
+    "tests/codegen/test_aggregate_cohort.py": {
+      "bytes": 21127,
+      "sha256": "5ed231e43af34ccd9a3b5b93c0b511f60d84152555a90e1456363bb64e661548"
+    },
+    "tests/codegen/test_cohort_selector.py": {
+      "bytes": 13011,
+      "sha256": "2b4b76f261b21a0706d5aff6567d7a32b37c886dfa719f54a60d0bf6ae546c8d"
+    }
+  },
+  "generatedFiles": "Exact current HEAD seeds pending genuine hosted canonical generation",
+  "mergedOldPrHead": "56c3ad6159d9300e6755a4b3b8d91cca6e4a66c9",
+  "pending": [
+    "Merge accepted D5 commit d8101338b",
+    "Refresh guide test/workflow source prefixes and combined qualification pins preserving97 rows and extending native32 to34 imported dependencies",
+    "Actual canonical generation/check from final source",
+    "Original portable/native/full PR/four-cell union gates",
+    "Normal merge and qualified immutable release with fresh exact public installs"
+  ],
+  "runtimeExecuted": false,
+  "scope": "Source-only normal ancestry reconciliation of existing PR48; no execution or generation acceptance",
+  "sourceOnly": true
+}

@@ -1,0 +1,56 @@
+{
+  "status": "correction-required-source002-not-adopted",
+  "candidateManifestSha256": "0891f2bd183b5d6e6485bc6835855c7c5573f34c8175724ae712b8fcda52f78e",
+  "verifiedSourceMembers": 11,
+  "verifiedEvidenceMembers": 16,
+  "integratedTests": {
+    "pass": true,
+    "count": 143,
+    "seconds": 7.48
+  },
+  "findings": [
+    {
+      "severity": "P1",
+      "subject": "config helper confuses exclusion with authority",
+      "evidence": "actual genuine original session/kernel target-apply lease with zero prepared requests/reservations writes both caller-selected own temp files through _write_creation_config",
+      "probe": "config-permit-probe.py"
+    },
+    {
+      "severity": "P1",
+      "subject": "bounded child uses wrong real request attribute",
+      "evidence": "pending._request is OwnerApprovalRequest whose actualslots include_intent_bytes; _request_bytes belongs _PendingTargetCreation.002 helper reads pending._request._request_bytes."
+    },
+    {
+      "severity": "P1",
+      "subject": "database helper uses wrong real outcome attribute",
+      "evidence": "OriginalApprovalOutcome actualfields intent_digest, not request_digest.002 checks state.request_digest; new synthetic core fabricates thatattribute."
+    },
+    {
+      "severity": "P1",
+      "subject": "remaining late registration core write",
+      "evidence": "prepare_target_registration observesnative then calls owner_core.prepare_request without revalidation immediatelybefore; later journal helper checks afterledgerwrite."
+    },
+    {
+      "severity": "P2",
+      "subject": "generic structural first supervisor registrar",
+      "evidence": "new issuer._retain_original_supervisor(object) takes arbitrary structuralobject; fixedconstructor should bind exactself once, not add registration API."
+    }
+  ],
+  "testCoverageLimits": [
+    "Principal positive test substitutes lease resolver AND owner_core, so it cannot establish genuine Core/kernel positive recovery",
+    "No fullnative target/custodian/transaction/checkpoint qualification",
+    "Original three Sol source001 regressions close per independentlyreported replay; final002 independentreview not yet sealed"
+  ],
+  "next": "Luna successor003 active, preserve001/002 and all original failure evidence; review source+genuineCore/lease admission beforeadoption",
+  "evidence": {
+    "integrated.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "integrated.stderr": "ac570083cba14c470698810bdcc05f2240db0897c284db5e2f4dee2c86bbd1ae",
+    "config-permit-probe.py": "00b19b0fab88865ec3d3229a406bd029002211fa8da4e0b95cbe73cb548db804",
+    "config-permit-probe.stdout": "a27db8fcd25d434a7d4e8408a395184b6f7f7527968bd38304c1f2a03d69187c",
+    "config-permit-probe.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "owner_bootstrap.py.diff": "61efb47d55942de77dcea11e293933af7b1446b97f393ab48c55d6f70508f582",
+    "owner_authority.py.diff": "243990471084d82d41957b025887d7ca8024c8dc3c396bd135f0f53799fa7038",
+    "ingress_local_postgres.py.diff": "8fc1b47bc022904fea6285ce85e5aaca0488cce12c1f5b7aab3ea4a21263efdf",
+    "ingress_custody.py.diff": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

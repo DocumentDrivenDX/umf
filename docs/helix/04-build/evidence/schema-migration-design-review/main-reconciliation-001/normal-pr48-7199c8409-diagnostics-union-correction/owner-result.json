@@ -1,0 +1,116 @@
+{
+  "status": "SOURCE_ACCEPTED_SUCCESSOR_GENERATION_AND_QUALIFICATION_OPEN",
+  "apiHead": "7199c8409d0a67f3a99c1f1fd62ffc0f078d6eb2",
+  "producerP": "06494602fe83d1af90f743243dad6afb7921206c",
+  "sourceTree": "9d2e08d48d1abe788a0af20f5c2f45bdaaf94041",
+  "runId": 40582138791,
+  "d5": {
+    "jobId": 122464044497,
+    "artifactId": 12772174348,
+    "replayStep": "SUCCESS,20m42s",
+    "finalizerFailureCode": "report-evidence-invalid",
+    "activeCommand": null,
+    "failureEvidenceCode": "unexpected-failure-entry",
+    "primaryFailedPredicate": "UNKNOWN; no assertion is removed or treated as passing.",
+    "collectorFinding": "Retained oracle writes reports/plans/<digest>.json; fallback previously refused the plans directory."
+  },
+  "union": {
+    "assemblyArtifact": 12772836170,
+    "assemblyBytes": 201567988,
+    "assemblySha256": "a80627f7fcb75c19002bfab1af9874d8acbefd633ce6cf692d763842c52feee1",
+    "completeArchiveLocal": "/private/tmp/migration-aggregate-40582138791-12772836170/artifact.zip",
+    "archiveRetention": "Exact GitHub artifact and local capture; not duplicated into repository. Metadata custody review is retained.",
+    "assembly": "SUCCESS with30 distinct wheels, two Linux runtime child locks and two Mac artifact-only targets",
+    "runtimeReplayPy314": {
+      "jobId": 122482080706,
+      "status": "FAILURE_BEFORE_INSTALL",
+      "reason": "Linux runtime package provenance conflicts: psycopg-binary"
+    },
+    "sourceFinding": "Assembly canonicalizes platform-specific package provenance; independent validator compared raw per-wheel publisher hashes/sizes across runtime cells. Exact wheel records remain distinct and bound."
+  },
+  "files": {
+    "d5/job.log": {
+      "bytes": 299286,
+      "sha256": "7c976e3ba171b0fdd82de8ab938f45a021ed2a4c3819388895aeba45b9cbca9c"
+    },
+    "d5/receipt-artifact.zip": {
+      "bytes": 505,
+      "sha256": "52229c3d23c807a896ae04f7bcedbd041a34d5f5557be1d62343b5e756d19d37"
+    },
+    "d5/run-observed.json": {
+      "bytes": 33782,
+      "sha256": "ada4c4d14740a21b636c003f35180b5778f0c7e1342d58e3db5badc88e628a43"
+    },
+    "d5/artifacts-observed.json": {
+      "bytes": 5168,
+      "sha256": "76038dd52ce86f59d1894498f53874a5e8ad83cb0f21d684530468fe2dd85e21"
+    },
+    "union/replay-py314-job.log": {
+      "bytes": 25055,
+      "sha256": "2199539e41ab7526ed208dd2f5542c7db2625d930a9cfe14a52470fda3dc1bcc"
+    },
+    "union/replay-py314-steps.json": {
+      "bytes": 1266,
+      "sha256": "49a94659a42717fb0ba45afc524ab5059b90ad46c4982efbe890154913a3533e"
+    },
+    "union/artifacts-observed.json": {
+      "bytes": 6759,
+      "sha256": "2ed72e9bbf27651aff3d057301aa83d31c2fb8fff4c51bc1cefa13508f1a2552"
+    },
+    "union/assembly-custody-review.json": {
+      "bytes": 7331,
+      "sha256": "51db9038d187d86427fe5b82d596b8a5dd826bd80503ac901552e3cc57560265"
+    },
+    "checkpoint/portable-artifact.zip": {
+      "bytes": 74206,
+      "sha256": "acd0e301c9bd59960d5cba55e07b47ba40e47df8368256e9649f7fe7160e19ce"
+    },
+    "checkpoint/native-artifact.zip": {
+      "bytes": 211538,
+      "sha256": "e6a59953f631f61a98f6da8982b6a01ce1120f2cfb45f9c56d73e95c6cb4fd2a"
+    },
+    "checkpoint/sol-review.md": {
+      "bytes": 2265,
+      "sha256": "8209cb434b1ee27d67bce444247776e13f0232210bc45c18ab2eba07a53071f2"
+    },
+    "checkpoint/portable-custody-review.json": {
+      "bytes": 27849,
+      "sha256": "9615204a4e6fb3cfca18bb1284e1c5c31fe3e4e5e931e061f8297adc093ddffc"
+    },
+    "checkpoint/native-custody-review.json": {
+      "bytes": 45756,
+      "sha256": "a86d4a14efda22ff8b9af0e56dea301a401aa209873451389cc3a69b1706c43d"
+    },
+    "source-review/d5-sidecar-review.md": {
+      "bytes": 1290,
+      "sha256": "2a760da42bfdf622e672c9697575ee996e41a0944c3a278a5cd90dd61cccb095"
+    },
+    "source-review/d5-codes-review.md": {
+      "bytes": 1556,
+      "sha256": "980cc9d294dd1f02be87e339c34a758032be092893c534d217946de68de47618"
+    }
+  },
+  "ciPolicy": "Linux only; built Mac inputs are data only with historical runtime limits, no fresh Mac execution.",
+  "next": "Final Sol source/pin seal, coherent commit, genuine generation and fresh Linux qualification. Independent D5 must still pass its unchanged full gates.",
+  "sourceReviewSha256": "fa97650e3fd1cec21f081839e97f661032d4adf4c4a0682ad7337739b2aba8fd",
+  "priorLintCorrection": {
+    "commit": "941cb337d5e9a3250995c2fd962b4580f3361bfe",
+    "reviewSha256": "f6e7b908ad6b7eace943a81804c3f2f1155a1490d8e52ce99be02d896bc017a7"
+  },
+  "pinClosure": {
+    "nativeRows": 34,
+    "portableRows": 97,
+    "allActualMatches": true,
+    "nativeChangedRows": [
+      "tests/codegen/aggregate_cohort.py"
+    ],
+    "portableChangedRows": [
+      ".github/workflows/access-boundaries.yml"
+    ]
+  },
+  "sourceCorrections": [
+    "Preserve each raw wheel source and compare package rows using the same existing split canonicalization as assembly.",
+    "Add real distinct CPython311/314 wheel fixtures and coherent logical provenance refusal controls.",
+    "Collect all known plan sidecars under unchanged caps and emit only closed fixed validationFailureCodes."
+  ]
+}

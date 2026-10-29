@@ -1,0 +1,15 @@
+{
+  "assemblyIndexPath": "/private/tmp/migration-full18-e4299aff8-002/aggregate/aggregate.json",
+  "assemblyIndexSha256": "fac25d7d5041983f1e3d464efbdda70e84df19f9fd7b70882990e4a05e69a634",
+  "error": "[Errno 21] Is a directory: '/private/tmp/migration-full18-e4299aff8-union-continuation-003'",
+  "errorType": "IsADirectoryError",
+  "inputCorrection": "Changed only unionContinuation.harnessRoot from relative \"harness\" to the absolute actual continuation package root; no receipt/evidence bytes changed.",
+  "inputPacketPath": "/private/tmp/sdk-057-local3600-public-h-v2/local3600-public-h-inputs.002.held.json",
+  "inputPacketSha256": "c65547061a6eba1bc471ef102b98a3ab222ed0a8efdb44d55e31bba45971a25e",
+  "previousHeldPacketPath": "/private/tmp/sdk-057-local3600-public-h-v2/local3600-public-h-inputs.held.json",
+  "previousHeldPacketSha256": "0b4732e008715b292390c6382ea5c80594462be5eed3262ac476a14e78493ffd",
+  "readerPath": "/private/tmp/sdk-057-local3600-public-h-v2/run-local3600-public-h.py",
+  "readerSha256": "5feed5ed5516b73838650b7c42e9121839e970cee130e49f1f7f479069f9938f",
+  "result": "FAIL_METADATA_BINDING_ONLY",
+  "scope": "Direct validate_union_continuation invocation only. No public-H workflow, SDK/D5 execution, public downloads, installs, oracle, or qualification."
+}

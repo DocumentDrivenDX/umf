@@ -1,0 +1,7 @@
+{
+  "error": "D5 upload tree is missing required top-level files or has an unexpected directory layout",
+  "errorType": "ValueError",
+  "result": "FAIL_D5_METADATA_BINDING_ONLY",
+  "scope": "Direct D5 profile and selected-evidence metadata validators only; no H commands, SDK/public download/install, product oracle, or qualification.",
+  "traceback": "Traceback (most recent call last):\n  File \"<stdin>\", line 10, in <module>\n  File \"/private/tmp/sdk-057-local3600-public-h-v2/run-local3600-public-h.py\", line 430, in validate_d5_selected_evidence\n    fail('D5 upload tree is missing required top-level files or has an unexpected directory layout')\n  File \"/private/tmp/sdk-057-local3600-public-h-v2/run-local3600-public-h.py\", line 117, in fail\n    raise ValueError(message)\nValueError: D5 upload tree is missing required top-level files or has an unexpected directory layout\n"
+}

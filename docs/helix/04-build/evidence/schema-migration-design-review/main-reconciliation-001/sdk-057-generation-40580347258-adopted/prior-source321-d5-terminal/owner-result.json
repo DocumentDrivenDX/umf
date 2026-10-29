@@ -1,0 +1,29 @@
+{
+  "status": "FAIL_OR_UNKNOWN",
+  "apiHead": "3217304eca8652fa6cd02afde8ead1ca95224aa8",
+  "sourceP": "469f4aff13aba39de48631711114be7a3f56cbf5",
+  "sourceTree": "8f273def4d46b0f1b898fe69cc8aa63042a53cbc",
+  "runId": 40575475711,
+  "artifactId": 12768314444,
+  "replayStep": "SUCCESS exit0,18m01s API precision",
+  "finalizer": "FAILURE ValueError; failure diagnostic staging also ValueError; receipt only",
+  "actualCause": "Unknown. No timeout or oracle failure may be inferred from the earlier953 run.",
+  "files": {
+    "artifact.zip": {
+      "bytes": 453,
+      "sha256": "e68f8cebc55469202704fdd0eab76c938e28545126c1a8a05e08a7ab90885efc"
+    },
+    "job.log": {
+      "bytes": 453519,
+      "sha256": "a92bafb63eab623309cfc62df34894430cdf474697d3284396de6ec91c39f689"
+    },
+    "run-terminal.json": {
+      "bytes": 12780,
+      "sha256": "7ec6d192e036c43f5adb886b02580f1270447c45dea93f9c4ad7b8dfe15a3e7c"
+    },
+    "job-terminal.json": {
+      "bytes": 627,
+      "sha256": "9845660a174f1f528168ac3c0c382f348e14d1796fe0d3913d1b3ece6da1efac"
+    }
+  }
+}

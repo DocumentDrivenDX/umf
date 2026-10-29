@@ -1,0 +1,1253 @@
+﻿2026-10-27T19:41:33.0727132Z Current runner version: '2.338.0'
+2026-10-27T19:41:33.0748692Z ##[group]Runner Image Provisioner
+2026-10-27T19:41:33.0749387Z Hosted Compute Agent
+2026-10-27T19:41:33.0749949Z Version: 20261021.618
+2026-10-27T19:41:33.0750463Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-10-27T19:41:33.0751114Z Build Date: 2026-10-21T00:45:21Z
+2026-10-27T19:41:33.0751714Z Worker ID: {f9d33cf2-8e02-4698-80e0-54d42f7d844c}
+2026-10-27T19:41:33.0752269Z Region: westus3
+2026-10-27T19:41:33.0752770Z Cloud: Azure
+2026-10-27T19:41:33.0753212Z ##[endgroup]
+2026-10-27T19:41:33.0754697Z ##[group]Operating System
+2026-10-27T19:41:33.0755256Z Ubuntu
+2026-10-27T19:41:33.0755684Z 26.04.1
+2026-10-27T19:41:33.0756138Z LTS
+2026-10-27T19:41:33.0756585Z ##[endgroup]
+2026-10-27T19:41:33.0757022Z ##[group]Runner Image
+2026-10-27T19:41:33.0757629Z Image: ubuntu-26.04
+2026-10-27T19:41:33.0758096Z Version: 20261012.163.1
+2026-10-27T19:41:33.0759163Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261012.163/images/ubuntu/Ubuntu2604-Readme.md
+2026-10-27T19:41:33.0760431Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261012.163
+2026-10-27T19:41:33.0761258Z ##[endgroup]
+2026-10-27T19:41:33.0762188Z ##[group]GITHUB_TOKEN Permissions
+2026-10-27T19:41:33.0763776Z Contents: read
+2026-10-27T19:41:33.0764482Z Metadata: read
+2026-10-27T19:41:33.0765115Z Packages: read
+2026-10-27T19:41:33.0765580Z ##[endgroup]
+2026-10-27T19:41:33.0767335Z Secret source: Actions
+2026-10-27T19:41:33.0768184Z Cache mode: write
+2026-10-27T19:41:33.0768740Z Prepare workflow directory
+2026-10-27T19:41:33.1066602Z Prepare all required actions
+2026-10-27T19:41:33.1113649Z Getting action download info
+2026-10-27T19:41:33.4093535Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-27T19:41:33.6333035Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-10-27T19:41:33.8546353Z Download action repository 'dtolnay/rust-toolchain@stable' (SHA:b725eda525362e7cf34af9a7243cac1e3f01a7ec)
+2026-10-27T19:41:34.0940449Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-27T19:41:34.3351683Z Complete job name: python
+2026-10-27T19:41:34.4091601Z ##[group]Run actions/checkout@v4
+2026-10-27T19:41:34.4092313Z with:
+2026-10-27T19:41:34.4092698Z   repository: DocumentDrivenDX/umf
+2026-10-27T19:41:34.4096081Z   token: ***
+2026-10-27T19:41:34.4096464Z   ssh-strict: true
+2026-10-27T19:41:34.4096844Z   ssh-user: git
+2026-10-27T19:41:34.4097238Z   persist-credentials: true
+2026-10-27T19:41:34.4097663Z   clean: true
+2026-10-27T19:41:34.4098052Z   sparse-checkout-cone-mode: true
+2026-10-27T19:41:34.4098509Z   fetch-depth: 1
+2026-10-27T19:41:34.4098881Z   fetch-tags: false
+2026-10-27T19:41:34.4099259Z   show-progress: true
+2026-10-27T19:41:34.4099638Z   lfs: false
+2026-10-27T19:41:34.4100008Z   submodules: false
+2026-10-27T19:41:34.4100422Z   set-safe-directory: true
+2026-10-27T19:41:34.4100897Z   allow-unsafe-pr-checkout: false
+2026-10-27T19:41:34.4101534Z ##[endgroup]
+2026-10-27T19:41:34.8323229Z Syncing repository: DocumentDrivenDX/umf
+2026-10-27T19:41:34.8325766Z ##[group]Getting Git version info
+2026-10-27T19:41:34.8326813Z Working directory is '/home/runner/work/umf/umf'
+2026-10-27T19:41:34.8328179Z [command]/usr/bin/git version
+2026-10-27T19:41:34.8328892Z git version 2.55.0
+2026-10-27T19:41:34.8331198Z ##[endgroup]
+2026-10-27T19:41:34.8336365Z Temporarily overriding HOME='/home/runner/work/_temp/28c08e4c-01ec-4e08-acfa-786ba5fb2151' before making global git config changes
+2026-10-27T19:41:34.8338600Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-27T19:41:34.8340264Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf
+2026-10-27T19:41:34.8526474Z Deleting the contents of '/home/runner/work/umf/umf'
+2026-10-27T19:41:34.8529863Z ##[group]Initializing the repository
+2026-10-27T19:41:34.8535302Z [command]/usr/bin/git init /home/runner/work/umf/umf
+2026-10-27T19:41:34.8937136Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-27T19:41:34.8939203Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-27T19:41:34.8940981Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-27T19:41:34.8942409Z hint: call:
+2026-10-27T19:41:34.8943123Z hint:
+2026-10-27T19:41:34.8943980Z hint: 	git config --global init.defaultBranch <name>
+2026-10-27T19:41:34.8945248Z hint:
+2026-10-27T19:41:34.8946234Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-27T19:41:34.8947744Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-27T19:41:34.8949051Z hint:
+2026-10-27T19:41:34.8949875Z hint: 	git branch -m <name>
+2026-10-27T19:41:34.8950765Z hint:
+2026-10-27T19:41:34.8951826Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-27T19:41:34.8953760Z Initialized empty Git repository in /home/runner/work/umf/umf/.git/
+2026-10-27T19:41:34.8956783Z [command]/usr/bin/git remote add origin https://github.com/DocumentDrivenDX/umf
+2026-10-27T19:41:34.9487140Z ##[endgroup]
+2026-10-27T19:41:34.9487937Z ##[group]Disabling automatic garbage collection
+2026-10-27T19:41:34.9490083Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-27T19:41:34.9999422Z ##[endgroup]
+2026-10-27T19:41:35.0000165Z ##[group]Setting up auth
+2026-10-27T19:41:35.0006083Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T19:41:35.0040832Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-27T19:41:35.1162742Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T19:41:35.1195354Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-27T19:41:35.1439277Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T19:41:35.1472556Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-27T19:41:35.1723457Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-27T19:41:35.2385986Z ##[endgroup]
+2026-10-27T19:41:35.2387637Z ##[group]Fetching the repository
+2026-10-27T19:41:35.2396850Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +af3dd82f7b273f49f4398399f74d81f0bb01f9c0:refs/remotes/pull/48/merge
+2026-10-27T19:42:09.3340668Z From https://github.com/DocumentDrivenDX/umf
+2026-10-27T19:42:09.3341792Z  * [new ref]           af3dd82f7b273f49f4398399f74d81f0bb01f9c0 -> pull/48/merge
+2026-10-27T19:42:09.3344865Z ##[endgroup]
+2026-10-27T19:42:09.3346278Z ##[group]Determining the checkout info
+2026-10-27T19:42:09.3347285Z ##[endgroup]
+2026-10-27T19:42:09.3352538Z [command]/usr/bin/git sparse-checkout disable
+2026-10-27T19:42:09.3401350Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-27T19:42:09.3427638Z ##[group]Checking out the ref
+2026-10-27T19:42:09.3430708Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/48/merge
+2026-10-27T19:42:10.4522785Z Updating files:   6% (4186/63909)
+2026-10-27T19:42:10.7255894Z Updating files:   7% (4474/63909)
+2026-10-27T19:42:10.7845691Z Updating files:   8% (5113/63909)
+2026-10-27T19:42:10.8160833Z Updating files:   9% (5752/63909)
+2026-10-27T19:42:10.9657230Z Updating files:  10% (6391/63909)
+2026-10-27T19:42:11.0425383Z Updating files:  11% (7030/63909)
+2026-10-27T19:42:11.1101601Z Updating files:  12% (7670/63909)
+2026-10-27T19:42:11.1448050Z Updating files:  13% (8309/63909)
+2026-10-27T19:42:11.4153305Z Updating files:  14% (8948/63909)
+2026-10-27T19:42:11.6592321Z Updating files:  14% (9245/63909)
+2026-10-27T19:42:12.1764934Z Updating files:  15% (9587/63909)
+2026-10-27T19:42:12.3881815Z Updating files:  16% (10226/63909)
+2026-10-27T19:42:12.4082528Z Updating files:  16% (10560/63909)
+2026-10-27T19:42:12.4368594Z Updating files:  17% (10865/63909)
+2026-10-27T19:42:12.8599397Z Updating files:  18% (11504/63909)
+2026-10-27T19:42:13.0372826Z Updating files:  19% (12143/63909)
+2026-10-27T19:42:13.1786169Z Updating files:  20% (12782/63909)
+2026-10-27T19:42:13.3569928Z Updating files:  21% (13421/63909)
+2026-10-27T19:42:13.3859838Z Updating files:  22% (14060/63909)
+2026-10-27T19:42:13.3879015Z Updating files:  23% (14700/63909)
+2026-10-27T19:42:13.4157941Z Updating files:  23% (14753/63909)
+2026-10-27T19:42:13.4378815Z Updating files:  24% (15339/63909)
+2026-10-27T19:42:13.4608663Z Updating files:  25% (15978/63909)
+2026-10-27T19:42:13.4845623Z Updating files:  26% (16617/63909)
+2026-10-27T19:42:13.5077499Z Updating files:  27% (17256/63909)
+2026-10-27T19:42:13.5315948Z Updating files:  28% (17895/63909)
+2026-10-27T19:42:13.5545012Z Updating files:  29% (18534/63909)
+2026-10-27T19:42:13.5867786Z Updating files:  30% (19173/63909)
+2026-10-27T19:42:13.6280234Z Updating files:  31% (19812/63909)
+2026-10-27T19:42:13.6507163Z Updating files:  32% (20451/63909)
+2026-10-27T19:42:14.2796816Z Updating files:  33% (21090/63909)
+2026-10-27T19:42:14.3891298Z Updating files:  34% (21730/63909)
+2026-10-27T19:42:15.5705375Z Updating files:  34% (21741/63909)
+2026-10-27T19:42:16.4018966Z Updating files:  34% (21790/63909)
+2026-10-27T19:42:17.5863079Z Updating files:  34% (21811/63909)
+2026-10-27T19:42:18.4696506Z Updating files:  34% (21849/63909)
+2026-10-27T19:42:19.4373675Z Updating files:  34% (21874/63909)
+2026-10-27T19:42:20.5015066Z Updating files:  34% (21898/63909)
+2026-10-27T19:42:21.2137638Z Updating files:  34% (21927/63909)
+2026-10-27T19:42:21.3934107Z Updating files:  35% (22369/63909)
+2026-10-27T19:42:21.6944521Z Updating files:  35% (22711/63909)
+2026-10-27T19:42:21.9483597Z Updating files:  36% (23008/63909)
+2026-10-27T19:42:22.0298041Z Updating files:  37% (23647/63909)
+2026-10-27T19:42:22.0819950Z Updating files:  38% (24286/63909)
+2026-10-27T19:42:22.1534614Z Updating files:  39% (24925/63909)
+2026-10-27T19:42:22.2029738Z Updating files:  40% (25564/63909)
+2026-10-27T19:42:22.2426285Z Updating files:  41% (26203/63909)
+2026-10-27T19:42:22.2900431Z Updating files:  42% (26842/63909)
+2026-10-27T19:42:22.5639838Z Updating files:  43% (27481/63909)
+2026-10-27T19:42:22.7063728Z Updating files:  43% (28101/63909)
+2026-10-27T19:42:22.9746934Z Updating files:  44% (28120/63909)
+2026-10-27T19:42:23.1975934Z Updating files:  45% (28760/63909)
+2026-10-27T19:42:23.3737406Z Updating files:  46% (29399/63909)
+2026-10-27T19:42:23.3887968Z Updating files:  47% (30038/63909)
+2026-10-27T19:42:23.5696661Z Updating files:  47% (30052/63909)
+2026-10-27T19:42:23.6859514Z Updating files:  48% (30677/63909)
+2026-10-27T19:42:23.8998103Z Updating files:  49% (31316/63909)
+2026-10-27T19:42:24.0778291Z Updating files:  50% (31955/63909)
+2026-10-27T19:42:24.1690658Z Updating files:  51% (32594/63909)
+2026-10-27T19:42:24.2163300Z Updating files:  52% (33233/63909)
+2026-10-27T19:42:24.3297950Z Updating files:  53% (33872/63909)
+2026-10-27T19:42:24.3486421Z Updating files:  54% (34511/63909)
+2026-10-27T19:42:24.3664082Z Updating files:  55% (35150/63909)
+2026-10-27T19:42:24.3880794Z Updating files:  56% (35790/63909)
+2026-10-27T19:42:24.3926593Z Updating files:  56% (36362/63909)
+2026-10-27T19:42:24.5160887Z Updating files:  57% (36429/63909)
+2026-10-27T19:42:24.5882511Z Updating files:  58% (37068/63909)
+2026-10-27T19:42:24.6373757Z Updating files:  59% (37707/63909)
+2026-10-27T19:42:24.7744408Z Updating files:  60% (38346/63909)
+2026-10-27T19:42:24.8506294Z Updating files:  61% (38985/63909)
+2026-10-27T19:42:24.9063720Z Updating files:  62% (39624/63909)
+2026-10-27T19:42:24.9336076Z Updating files:  63% (40263/63909)
+2026-10-27T19:42:24.9521003Z Updating files:  64% (40902/63909)
+2026-10-27T19:42:24.9691634Z Updating files:  65% (41541/63909)
+2026-10-27T19:42:24.9892707Z Updating files:  66% (42180/63909)
+2026-10-27T19:42:25.0327919Z Updating files:  67% (42820/63909)
+2026-10-27T19:42:25.0895386Z Updating files:  68% (43459/63909)
+2026-10-27T19:42:25.2207851Z Updating files:  69% (44098/63909)
+2026-10-27T19:42:25.3618361Z Updating files:  70% (44737/63909)
+2026-10-27T19:42:25.3880430Z Updating files:  71% (45376/63909)
+2026-10-27T19:42:25.3918189Z Updating files:  71% (45901/63909)
+2026-10-27T19:42:25.4167165Z Updating files:  72% (46015/63909)
+2026-10-27T19:42:25.4357771Z Updating files:  73% (46654/63909)
+2026-10-27T19:42:25.4519044Z Updating files:  74% (47293/63909)
+2026-10-27T19:42:25.4680439Z Updating files:  75% (47932/63909)
+2026-10-27T19:42:25.4847097Z Updating files:  76% (48571/63909)
+2026-10-27T19:42:25.5056019Z Updating files:  77% (49210/63909)
+2026-10-27T19:42:25.5218865Z Updating files:  78% (49850/63909)
+2026-10-27T19:42:25.5387580Z Updating files:  79% (50489/63909)
+2026-10-27T19:42:25.5579829Z Updating files:  80% (51128/63909)
+2026-10-27T19:42:25.6580551Z Updating files:  81% (51767/63909)
+2026-10-27T19:42:25.8095021Z Updating files:  82% (52406/63909)
+2026-10-27T19:42:25.9886119Z Updating files:  83% (53045/63909)
+2026-10-27T19:42:26.0854627Z Updating files:  84% (53684/63909)
+2026-10-27T19:42:26.1078087Z Updating files:  85% (54323/63909)
+2026-10-27T19:42:26.1269929Z Updating files:  86% (54962/63909)
+2026-10-27T19:42:26.1461841Z Updating files:  87% (55601/63909)
+2026-10-27T19:42:26.2035696Z Updating files:  88% (56240/63909)
+2026-10-27T19:42:26.2285620Z Updating files:  89% (56880/63909)
+2026-10-27T19:42:26.2462653Z Updating files:  90% (57519/63909)
+2026-10-27T19:42:26.2680538Z Updating files:  91% (58158/63909)
+2026-10-27T19:42:26.3080510Z Updating files:  92% (58797/63909)
+2026-10-27T19:42:26.3344058Z Updating files:  93% (59436/63909)
+2026-10-27T19:42:26.3608803Z Updating files:  94% (60075/63909)
+2026-10-27T19:42:26.3887693Z Updating files:  95% (60714/63909)
+2026-10-27T19:42:26.4883181Z Updating files:  95% (61118/63909)
+2026-10-27T19:42:26.5753965Z Updating files:  96% (61353/63909)
+2026-10-27T19:42:26.9472191Z Updating files:  97% (61992/63909)
+2026-10-27T19:42:26.9753868Z Updating files:  98% (62631/63909)
+2026-10-27T19:42:27.0173937Z Updating files:  99% (63270/63909)
+2026-10-27T19:42:27.0174460Z Updating files: 100% (63909/63909)
+2026-10-27T19:42:27.0174809Z Updating files: 100% (63909/63909), done.
+2026-10-27T19:42:27.1314119Z Note: switching to 'refs/remotes/pull/48/merge'.
+2026-10-27T19:42:27.1314915Z 
+2026-10-27T19:42:27.1315161Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-27T19:42:27.1315687Z changes and commit them, and you can discard any commits you make in this
+2026-10-27T19:42:27.1316215Z state without impacting any branches by switching back to a branch.
+2026-10-27T19:42:27.1316533Z 
+2026-10-27T19:42:27.1316745Z If you want to create a new branch to retain commits you create, you may
+2026-10-27T19:42:27.1317302Z do so (now or later) by using -c with the switch command. Example:
+2026-10-27T19:42:27.1317575Z 
+2026-10-27T19:42:27.1317704Z   git switch -c <new-branch-name>
+2026-10-27T19:42:27.1317917Z 
+2026-10-27T19:42:27.1318038Z Or undo this operation with:
+2026-10-27T19:42:27.1318220Z 
+2026-10-27T19:42:27.1318318Z   git switch -
+2026-10-27T19:42:27.1318446Z 
+2026-10-27T19:42:27.1318685Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-27T19:42:27.1319028Z 
+2026-10-27T19:42:27.1319422Z HEAD is now at af3dd82f Merge 953017084df517deb5262dd071bfe406f2d956be into 7d334dec45948953718bfacd3ed6dd199cadba79
+2026-10-27T19:42:27.1574597Z ##[endgroup]
+2026-10-27T19:42:27.1614356Z [command]/usr/bin/git log -1 --format=%H
+2026-10-27T19:42:27.1644506Z af3dd82f7b273f49f4398399f74d81f0bb01f9c0
+2026-10-27T19:42:27.4739292Z ##[group]Run printf 'RUSTUP_HOME=%s/umf-rustup\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
+2026-10-27T19:42:27.4739803Z [36;1mprintf 'RUSTUP_HOME=%s/umf-rustup\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"[0m
+2026-10-27T19:42:27.4926196Z shell: /usr/bin/bash -e {0}
+2026-10-27T19:42:27.4926455Z ##[endgroup]
+2026-10-27T19:42:27.5182873Z ##[group]Run actions/setup-python@v5
+2026-10-27T19:42:27.5183112Z with:
+2026-10-27T19:42:27.5183282Z   python-version: 3.12
+2026-10-27T19:42:27.5183476Z   check-latest: false
+2026-10-27T19:42:27.5185501Z   token: ***
+2026-10-27T19:42:27.5185680Z   update-environment: true
+2026-10-27T19:42:27.5185881Z   allow-prereleases: false
+2026-10-27T19:42:27.5186073Z   freethreaded: false
+2026-10-27T19:42:27.5186246Z env:
+2026-10-27T19:42:27.5186437Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T19:42:27.5186675Z ##[endgroup]
+2026-10-27T19:42:27.6347060Z ##[group]Installed versions
+2026-10-27T19:42:27.6433555Z (node:2188) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-27T19:42:27.6434493Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-27T19:42:27.6435055Z Successfully set up CPython (3.12.15)
+2026-10-27T19:42:27.6435576Z ##[endgroup]
+2026-10-27T19:42:27.6756308Z ##[group]Run dtolnay/rust-toolchain@stable
+2026-10-27T19:42:27.6756555Z with:
+2026-10-27T19:42:27.6756719Z   toolchain: 1.90.0
+2026-10-27T19:42:27.6756894Z   components: rustfmt
+2026-10-27T19:42:27.6757064Z env:
+2026-10-27T19:42:27.6757246Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T19:42:27.6757539Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:27.6757898Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T19:42:27.6758241Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:27.6758544Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:27.6758848Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:27.6759157Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T19:42:27.6759433Z ##[endgroup]
+2026-10-27T19:42:27.6837470Z ##[start-action display=Parse toolchain version;id=__dtolnay_rust-toolchain.parse]
+2026-10-27T19:42:27.6967723Z ##[group]Run if [[ -z $toolchain ]]; then
+2026-10-27T19:42:27.6968042Z [36;1mif [[ -z $toolchain ]]; then[0m
+2026-10-27T19:42:27.6968489Z [36;1m  # GitHub does not enforce `required: true` inputs itself. https://github.com/actions/runner/issues/1070[0m
+2026-10-27T19:42:27.6968938Z [36;1m  echo "'toolchain' is a required input" >&2[0m
+2026-10-27T19:42:27.6969183Z [36;1m  exit 1[0m
+2026-10-27T19:42:27.6969447Z [36;1melif [[ $toolchain =~ ^stable' '[0-9]+' '(year|month|week|day)s?' 'ago$ ]]; then[0m
+2026-10-27T19:42:27.6969769Z [36;1m  if [[ Linux == macOS ]]; then[0m
+2026-10-27T19:42:27.6970185Z [36;1m    echo "toolchain=1.$((($(date -v-$(sed 's/stable \([0-9]*\) \(.\).*/\1\2/' <<< $toolchain) +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT[0m
+2026-10-27T19:42:27.6970581Z [36;1m  else[0m
+2026-10-27T19:42:27.6970909Z [36;1m    echo "toolchain=1.$((($(date --date "${toolchain#stable }" +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT[0m
+2026-10-27T19:42:27.6971268Z [36;1m  fi[0m
+2026-10-27T19:42:27.6971508Z [36;1melif [[ $toolchain =~ ^stable' 'minus' '[0-9]+' 'releases?$ ]]; then[0m
+2026-10-27T19:42:27.6971910Z [36;1m  echo "toolchain=1.$((($(date +%s)/60/60/24-16569)/7/6-${toolchain//[^0-9]/}))" >> $GITHUB_OUTPUT[0m
+2026-10-27T19:42:27.6972259Z [36;1melif [[ $toolchain =~ ^1\.[0-9]+$ ]]; then[0m
+2026-10-27T19:42:27.6972664Z [36;1m  echo "toolchain=1.$((i=${toolchain#1.}, c=($(date +%s)/60/60/24-16569)/7/6, i+9*i*(10*i<=c)+90*i*(100*i<=c)))" >> $GITHUB_OUTPUT[0m
+2026-10-27T19:42:27.6973081Z [36;1melse[0m
+2026-10-27T19:42:27.6973260Z [36;1m  delimiter=EOF[0m
+2026-10-27T19:42:27.6973511Z [36;1m  while [[ $toolchain == *$delimiter* ]]; do delimiter+=_; done[0m
+2026-10-27T19:42:27.6973899Z [36;1m  printf 'toolchain<<%s\n%s\n%s\n' "$delimiter" "$toolchain" "$delimiter" >> $GITHUB_OUTPUT[0m
+2026-10-27T19:42:27.6974319Z [36;1mfi[0m
+2026-10-27T19:42:27.7044897Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:42:27.7045192Z env:
+2026-10-27T19:42:27.7045417Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T19:42:27.7045735Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:27.7046078Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T19:42:27.7046408Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:27.7046706Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:27.7047003Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:27.7047302Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T19:42:27.7047562Z   toolchain: 1.90.0
+2026-10-27T19:42:27.7047732Z ##[endgroup]
+2026-10-27T19:42:27.7182799Z ##[end-action id=__dtolnay_rust-toolchain.parse;outcome=success;conclusion=success;duration_ms=34]
+2026-10-27T19:42:27.7187482Z ##[start-action display=Set $CARGO_HOME;id=__dtolnay_rust-toolchain.__run]
+2026-10-27T19:42:27.7211564Z ##[group]Run echo CARGO_HOME=${CARGO_HOME:-"$HOME/.cargo"} >> $GITHUB_ENV
+2026-10-27T19:42:27.7211995Z [36;1mecho CARGO_HOME=${CARGO_HOME:-"$HOME/.cargo"} >> $GITHUB_ENV[0m
+2026-10-27T19:42:27.7273448Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:42:27.7273722Z env:
+2026-10-27T19:42:27.7273926Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T19:42:27.7274339Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:27.7274675Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T19:42:27.7275011Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:27.7275310Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:27.7275608Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:27.7275907Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T19:42:27.7276182Z ##[endgroup]
+2026-10-27T19:42:27.7438118Z ##[end-action id=__dtolnay_rust-toolchain.__run;outcome=success;conclusion=success;duration_ms=24]
+2026-10-27T19:42:27.7440411Z ##[start-action display=Install rustup if needed;id=__dtolnay_rust-toolchain.__run_2]
+2026-10-27T19:42:27.7511460Z ##[group]Run if ! command -v rustup &>/dev/null; then
+2026-10-27T19:42:27.7511792Z [36;1mif ! command -v rustup &>/dev/null; then[0m
+2026-10-27T19:42:27.7512400Z [36;1m  curl --proto '=https' --tlsv1.2 --retry 10 --retry-connrefused --location --silent --show-error --fail https://sh.rustup.rs | sh -s -- --default-toolchain none -y[0m
+2026-10-27T19:42:27.7512966Z [36;1m  echo "$CARGO_HOME/bin" >> $GITHUB_PATH[0m
+2026-10-27T19:42:27.7513199Z [36;1mfi[0m
+2026-10-27T19:42:27.7575113Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:42:27.7575392Z env:
+2026-10-27T19:42:27.7575601Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T19:42:27.7575904Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:27.7576262Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T19:42:27.7576603Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:27.7576898Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:27.7577196Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:27.7577497Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T19:42:27.7577763Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T19:42:27.7577962Z ##[endgroup]
+2026-10-27T19:42:27.7697443Z ##[end-action id=__dtolnay_rust-toolchain.__run_2;outcome=success;conclusion=success;duration_ms=25]
+2026-10-27T19:42:27.7699830Z ##[start-action display=Install rustup if needed on windows;id=__dtolnay_rust-toolchain.__run_3]
+2026-10-27T19:42:27.7706074Z ##[end-action id=__dtolnay_rust-toolchain.__run_3;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-10-27T19:42:27.7717446Z ##[start-action display=rustup toolchain install 1.90.0;id=__dtolnay_rust-toolchain.__run_4]
+2026-10-27T19:42:27.7768924Z ##[group]Run set -f  # split targets and components on commas and whitespace, without glob expansion
+2026-10-27T19:42:27.7769480Z [36;1mset -f  # split targets and components on commas and whitespace, without glob expansion[0m
+2026-10-27T19:42:27.7769823Z [36;1mflags=()[0m
+2026-10-27T19:42:27.7770051Z [36;1mfor t in ${targets//,/ }; do flags+=(--target "$t"); done[0m
+2026-10-27T19:42:27.7770368Z [36;1mfor c in ${components//,/ }; do flags+=(--component "$c"); done[0m
+2026-10-27T19:42:27.7770756Z [36;1mif [[ $toolchain == nightly && -n $components ]]; then flags+=(--allow-downgrade); fi[0m
+2026-10-27T19:42:27.7771091Z [36;1mlog=$(mktemp)[0m
+2026-10-27T19:42:27.7771292Z [36;1mtrap 'rm -f "$log"' EXIT[0m
+2026-10-27T19:42:27.7771505Z [36;1mfor attempt in 1 2 3 4 5; do[0m
+2026-10-27T19:42:27.7771955Z [36;1m  if rustup toolchain install "$toolchain" "${flags[@]}" --profile minimal --no-self-update --force-non-host 2>&1 | tee "$log"; then[0m
+2026-10-27T19:42:27.7772389Z [36;1m    break[0m
+2026-10-27T19:42:27.7772554Z [36;1m  else[0m
+2026-10-27T19:42:27.7772877Z [36;1m    status=$?[0m
+2026-10-27T19:42:27.7773053Z [36;1m  fi[0m
+2026-10-27T19:42:27.7773287Z [36;1m  if [[ $attempt == 5 ]] || ! grep -Fq 'checksum failed for ' "$log" \[0m
+2026-10-27T19:42:27.7773714Z [36;1m      || ! grep -Fq 'this is likely due to an ongoing update of the official release server' "$log"; then[0m
+2026-10-27T19:42:27.7774064Z [36;1m    exit "$status"[0m
+2026-10-27T19:42:27.7774462Z [36;1m  fi[0m
+2026-10-27T19:42:27.7774743Z [36;1m  echo "Retrying rustup toolchain install in 30 seconds (retry $attempt of 4)" >&2[0m
+2026-10-27T19:42:27.7775065Z [36;1m  sleep 30[0m
+2026-10-27T19:42:27.7775233Z [36;1mdone[0m
+2026-10-27T19:42:27.7836647Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:42:27.7836925Z env:
+2026-10-27T19:42:27.7837134Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T19:42:27.7837445Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:27.7837778Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T19:42:27.7838105Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:27.7838401Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:27.7838699Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:27.7838989Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T19:42:27.7839256Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T19:42:27.7839465Z   toolchain: 1.90.0
+2026-10-27T19:42:27.7839631Z   targets: 
+2026-10-27T19:42:27.7839794Z   components: rustfmt
+2026-10-27T19:42:27.7839978Z   RUSTUP_PERMIT_COPY_RENAME: 1
+2026-10-27T19:42:27.7840167Z ##[endgroup]
+2026-10-27T19:42:27.8845446Z info: syncing channel updates for 1.90.0-x86_64-unknown-linux-gnu
+2026-10-27T19:42:28.4404862Z info: latest update on 2025-09-18 for version 1.90.0 (1159e78c4 2025-09-14)
+2026-10-27T19:42:28.4405441Z info: downloading 4 components
+2026-10-27T19:42:37.4226305Z 
+2026-10-27T19:42:37.4297804Z   1.90.0-x86_64-unknown-linux-gnu installed - rustc 1.90.0 (1159e78c4 2025-09-14)
+2026-10-27T19:42:37.4298165Z 
+2026-10-27T19:42:37.4301769Z info: default toolchain set to 1.90.0-x86_64-unknown-linux-gnu
+2026-10-27T19:42:37.4484009Z ##[end-action id=__dtolnay_rust-toolchain.__run_4;outcome=success;conclusion=success;duration_ms=9676]
+2026-10-27T19:42:37.4490407Z ##[start-action display=rustup default 1.90.0;id=__dtolnay_rust-toolchain.__run_5]
+2026-10-27T19:42:37.4508864Z ##[group]Run rustup default "$toolchain" --force-non-host
+2026-10-27T19:42:37.4509198Z [36;1mrustup default "$toolchain" --force-non-host[0m
+2026-10-27T19:42:37.4566369Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:42:37.4566647Z env:
+2026-10-27T19:42:37.4566848Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T19:42:37.4567152Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.4567683Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T19:42:37.4568026Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.4568325Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.4568620Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.4568914Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T19:42:37.4569187Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T19:42:37.4569391Z   toolchain: 1.90.0
+2026-10-27T19:42:37.4569578Z ##[endgroup]
+2026-10-27T19:42:37.4690954Z info: using existing install for 1.90.0-x86_64-unknown-linux-gnu
+2026-10-27T19:42:37.4790002Z info: default toolchain set to 1.90.0-x86_64-unknown-linux-gnu
+2026-10-27T19:42:37.4790394Z 
+2026-10-27T19:42:37.4865122Z   1.90.0-x86_64-unknown-linux-gnu unchanged - rustc 1.90.0 (1159e78c4 2025-09-14)
+2026-10-27T19:42:37.4865577Z 
+2026-10-27T19:42:37.4866605Z info: note that the toolchain '1.90.0-x86_64-unknown-linux-gnu' is currently in use (overridden by '/home/runner/work/umf/umf/rust-toolchain.toml')
+2026-10-27T19:42:37.4882169Z ##[end-action id=__dtolnay_rust-toolchain.__run_5;outcome=success;conclusion=success;duration_ms=39]
+2026-10-27T19:42:37.4885901Z ##[start-action display=Create cachekey;id=__dtolnay_rust-toolchain.rustc-version]
+2026-10-27T19:42:37.4902967Z ##[group]Run DATE=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-date: \(20[0-9][0-9]\)-\([01][0-9]\)-\([0-3][0-9]\)$/\1\2\3/p')
+2026-10-27T19:42:37.4903619Z [36;1mDATE=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-date: \(20[0-9][0-9]\)-\([01][0-9]\)-\([0-3][0-9]\)$/\1\2\3/p')[0m
+2026-10-27T19:42:37.4904124Z [36;1mHASH=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-hash: //p')[0m
+2026-10-27T19:42:37.4904766Z [36;1mecho "cachekey=$(echo $DATE$HASH | head -c12)" >> $GITHUB_OUTPUT[0m
+2026-10-27T19:42:37.4960965Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:42:37.4961266Z env:
+2026-10-27T19:42:37.4961480Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T19:42:37.4961779Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.4962115Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T19:42:37.4962445Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.4962739Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.4963046Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.4963360Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T19:42:37.4963624Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T19:42:37.4963825Z   toolchain: 1.90.0
+2026-10-27T19:42:37.4963997Z ##[endgroup]
+2026-10-27T19:42:37.5299170Z ##[end-action id=__dtolnay_rust-toolchain.rustc-version;outcome=success;conclusion=success;duration_ms=41]
+2026-10-27T19:42:37.5301662Z ##[start-action display=Disable incremental compilation;id=__dtolnay_rust-toolchain.__run_6]
+2026-10-27T19:42:37.5339203Z ##[group]Run if [ -z "${CARGO_INCREMENTAL+set}" ]; then
+2026-10-27T19:42:37.5339541Z [36;1mif [ -z "${CARGO_INCREMENTAL+set}" ]; then[0m
+2026-10-27T19:42:37.5339835Z [36;1m  echo CARGO_INCREMENTAL=0 >> $GITHUB_ENV[0m
+2026-10-27T19:42:37.5340064Z [36;1mfi[0m
+2026-10-27T19:42:37.5395896Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:42:37.5396173Z env:
+2026-10-27T19:42:37.5396367Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T19:42:37.5396661Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.5396995Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T19:42:37.5397331Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.5397624Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.5397926Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.5398393Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T19:42:37.5398667Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T19:42:37.5398866Z ##[endgroup]
+2026-10-27T19:42:37.5475652Z ##[end-action id=__dtolnay_rust-toolchain.__run_6;outcome=success;conclusion=success;duration_ms=17]
+2026-10-27T19:42:37.5477540Z ##[start-action display=Enable colors in Cargo output;id=__dtolnay_rust-toolchain.__run_7]
+2026-10-27T19:42:37.5493811Z ##[group]Run if [ -z "${CARGO_TERM_COLOR+set}" ]; then
+2026-10-27T19:42:37.5494106Z [36;1mif [ -z "${CARGO_TERM_COLOR+set}" ]; then[0m
+2026-10-27T19:42:37.5494610Z [36;1m  echo CARGO_TERM_COLOR=always >> $GITHUB_ENV[0m
+2026-10-27T19:42:37.5494844Z [36;1mfi[0m
+2026-10-27T19:42:37.5542599Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:42:37.5542868Z env:
+2026-10-27T19:42:37.5543061Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T19:42:37.5543356Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.5543705Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T19:42:37.5544311Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.5544643Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.5544945Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.5545242Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T19:42:37.5545508Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T19:42:37.5545707Z   CARGO_INCREMENTAL: 0
+2026-10-27T19:42:37.5545880Z ##[endgroup]
+2026-10-27T19:42:37.5618280Z ##[end-action id=__dtolnay_rust-toolchain.__run_7;outcome=success;conclusion=success;duration_ms=14]
+2026-10-27T19:42:37.5621528Z ##[start-action display=Enable Cargo sparse registry;id=__dtolnay_rust-toolchain.__run_8]
+2026-10-27T19:42:37.5638630Z ##[group]Run # implemented in 1.66, stabilized in 1.68, made default in 1.70
+2026-10-27T19:42:37.5639065Z [36;1m# implemented in 1.66, stabilized in 1.68, made default in 1.70[0m
+2026-10-27T19:42:37.5639646Z [36;1mif [ -z "${CARGO_REGISTRIES_CRATES_IO_PROTOCOL+set}" -o -f "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol ]; then[0m
+2026-10-27T19:42:37.5640224Z [36;1m  if rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.6[89]\.'; then[0m
+2026-10-27T19:42:37.5640680Z [36;1m    touch "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol || true[0m
+2026-10-27T19:42:37.5641102Z [36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse >> $GITHUB_ENV[0m
+2026-10-27T19:42:37.5641501Z [36;1m  elif rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.6[67]\.'; then[0m
+2026-10-27T19:42:37.5641931Z [36;1m    touch "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol || true[0m
+2026-10-27T19:42:37.5642322Z [36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=git >> $GITHUB_ENV[0m
+2026-10-27T19:42:37.5642596Z [36;1m  fi[0m
+2026-10-27T19:42:37.5642762Z [36;1mfi[0m
+2026-10-27T19:42:37.5691439Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:42:37.5691719Z env:
+2026-10-27T19:42:37.5691932Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T19:42:37.5692241Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.5692582Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T19:42:37.5692915Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.5693210Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.5693505Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.5693797Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T19:42:37.5694063Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T19:42:37.5694442Z   CARGO_INCREMENTAL: 0
+2026-10-27T19:42:37.5694637Z   CARGO_TERM_COLOR: always
+2026-10-27T19:42:37.5694819Z   toolchain: 1.90.0
+2026-10-27T19:42:37.5694986Z ##[endgroup]
+2026-10-27T19:42:37.5989855Z ##[end-action id=__dtolnay_rust-toolchain.__run_8;outcome=success;conclusion=success;duration_ms=36]
+2026-10-27T19:42:37.5993377Z ##[start-action display=Work around spurious network errors in curl 8.0;id=__dtolnay_rust-toolchain.__run_9]
+2026-10-27T19:42:37.6010547Z ##[group]Run # https://rust-lang.zulipchat.com/#narrow/stream/246057-t-cargo/topic/timeout.20investigation
+2026-10-27T19:42:37.6011149Z [36;1m# https://rust-lang.zulipchat.com/#narrow/stream/246057-t-cargo/topic/timeout.20investigation[0m
+2026-10-27T19:42:37.6011637Z [36;1mif rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.7[01]\.'; then[0m
+2026-10-27T19:42:37.6012004Z [36;1m  echo CARGO_HTTP_MULTIPLEXING=false >> $GITHUB_ENV[0m
+2026-10-27T19:42:37.6012252Z [36;1mfi[0m
+2026-10-27T19:42:37.6068223Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:42:37.6068489Z env:
+2026-10-27T19:42:37.6068690Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T19:42:37.6069005Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.6069514Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T19:42:37.6069851Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.6070146Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.6070445Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.6070740Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T19:42:37.6071006Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T19:42:37.6071212Z   CARGO_INCREMENTAL: 0
+2026-10-27T19:42:37.6071393Z   CARGO_TERM_COLOR: always
+2026-10-27T19:42:37.6071580Z   toolchain: 1.90.0
+2026-10-27T19:42:37.6071760Z ##[endgroup]
+2026-10-27T19:42:37.6253692Z ##[end-action id=__dtolnay_rust-toolchain.__run_9;outcome=success;conclusion=success;duration_ms=25]
+2026-10-27T19:42:37.6258167Z ##[start-action display=rustc +1.90.0 --version --verbose;id=__dtolnay_rust-toolchain.__run_10]
+2026-10-27T19:42:37.6274173Z ##[group]Run rustc +"$toolchain" --version --verbose
+2026-10-27T19:42:37.6274728Z [36;1mrustc +"$toolchain" --version --verbose[0m
+2026-10-27T19:42:37.6327361Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:42:37.6327637Z env:
+2026-10-27T19:42:37.6327963Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T19:42:37.6328266Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.6328599Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T19:42:37.6328949Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.6329246Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.6329546Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.6329841Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T19:42:37.6330104Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T19:42:37.6330309Z   CARGO_INCREMENTAL: 0
+2026-10-27T19:42:37.6330496Z   CARGO_TERM_COLOR: always
+2026-10-27T19:42:37.6330682Z   toolchain: 1.90.0
+2026-10-27T19:42:37.6330855Z ##[endgroup]
+2026-10-27T19:42:37.6505204Z rustc 1.90.0 (1159e78c4 2025-09-14)
+2026-10-27T19:42:37.6505870Z binary: rustc
+2026-10-27T19:42:37.6506428Z commit-hash: 1159e78c4747b02ef996e55082b704c09b970588
+2026-10-27T19:42:37.6506865Z commit-date: 2025-09-14
+2026-10-27T19:42:37.6507154Z host: x86_64-unknown-linux-gnu
+2026-10-27T19:42:37.6507450Z release: 1.90.0
+2026-10-27T19:42:37.6507637Z LLVM version: 20.1.8
+2026-10-27T19:42:37.6515401Z ##[end-action id=__dtolnay_rust-toolchain.__run_10;outcome=success;conclusion=success;duration_ms=25]
+2026-10-27T19:42:37.6562862Z ##[group]Run python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'
+2026-10-27T19:42:37.6563361Z [36;1mpython -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'[0m
+2026-10-27T19:42:37.6617937Z shell: /usr/bin/bash -e {0}
+2026-10-27T19:42:37.6618154Z env:
+2026-10-27T19:42:37.6618544Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T19:42:37.6618849Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.6619190Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T19:42:37.6619519Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.6619822Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.6620122Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:42:37.6620419Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T19:42:37.6620690Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T19:42:37.6620938Z   CARGO_INCREMENTAL: 0
+2026-10-27T19:42:37.6621124Z   CARGO_TERM_COLOR: always
+2026-10-27T19:42:37.6621313Z ##[endgroup]
+2026-10-27T19:42:38.1454408Z Processing ./python
+2026-10-27T19:42:38.1466668Z   Installing build dependencies: started
+2026-10-27T19:42:38.9403144Z   Installing build dependencies: finished with status 'done'
+2026-10-27T19:42:38.9407138Z   Getting requirements to build wheel: started
+2026-10-27T19:42:39.0875694Z   Getting requirements to build wheel: finished with status 'done'
+2026-10-27T19:42:39.0881778Z   Preparing metadata (pyproject.toml): started
+2026-10-27T19:43:19.4327986Z   Preparing metadata (pyproject.toml): finished with status 'done'
+2026-10-27T19:43:19.5805273Z Collecting pytest
+2026-10-27T19:43:19.6118357Z   Downloading pytest-9.1.1-py3-none-any.whl.metadata (7.6 kB)
+2026-10-27T19:43:19.8752671Z Collecting ruff==0.17.1
+2026-10-27T19:43:19.8786177Z   Downloading ruff-0.17.1-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (20 kB)
+2026-10-27T19:43:19.8978614Z Collecting build
+2026-10-27T19:43:19.9006115Z   Downloading build-1.6.1-py3-none-any.whl.metadata (5.6 kB)
+2026-10-27T19:43:19.9101939Z Collecting hatchling<2,>=1.27
+2026-10-27T19:43:19.9111158Z   Using cached hatchling-1.32.4-py3-none-any.whl.metadata (3.9 kB)
+2026-10-27T19:43:19.9854116Z Collecting pydantic<3,>=2.11 (from umf-core==0.10.3)
+2026-10-27T19:43:19.9885072Z   Downloading pydantic-2.14.1-py3-none-any.whl.metadata (133 kB)
+2026-10-27T19:43:20.0032855Z Collecting packaging>=24.2 (from hatchling<2,>=1.27)
+2026-10-27T19:43:20.0042046Z   Using cached packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+2026-10-27T19:43:20.0086054Z Collecting pathspec>=0.10.1 (from hatchling<2,>=1.27)
+2026-10-27T19:43:20.0094681Z   Using cached pathspec-1.1.1-py3-none-any.whl.metadata (14 kB)
+2026-10-27T19:43:20.0140625Z Collecting pluggy>=1.0.0 (from hatchling<2,>=1.27)
+2026-10-27T19:43:20.0149675Z   Using cached pluggy-1.7.0-py3-none-any.whl.metadata (5.0 kB)
+2026-10-27T19:43:20.0213984Z Collecting tomlkit>=0.11.1 (from hatchling<2,>=1.27)
+2026-10-27T19:43:20.0222838Z   Using cached tomlkit-0.15.2-py3-none-any.whl.metadata (3.4 kB)
+2026-10-27T19:43:20.0355748Z Collecting trove-classifiers (from hatchling<2,>=1.27)
+2026-10-27T19:43:20.0365146Z   Using cached trove_classifiers-2026.9.21.13-py3-none-any.whl.metadata (2.4 kB)
+2026-10-27T19:43:20.0501401Z Collecting annotated-types>=0.6.0 (from pydantic<3,>=2.11->umf-core==0.10.3)
+2026-10-27T19:43:20.0530749Z   Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+2026-10-27T19:43:20.6031133Z Collecting pydantic-core==2.50.1 (from pydantic<3,>=2.11->umf-core==0.10.3)
+2026-10-27T19:43:20.6063754Z   Downloading pydantic_core-2.50.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.5 kB)
+2026-10-27T19:43:20.6238245Z Collecting typing-extensions>=4.16.0 (from pydantic<3,>=2.11->umf-core==0.10.3)
+2026-10-27T19:43:20.6268228Z   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+2026-10-27T19:43:20.6413122Z Collecting typing-inspection>=0.4.4 (from pydantic<3,>=2.11->umf-core==0.10.3)
+2026-10-27T19:43:20.6441475Z   Downloading typing_inspection-0.4.4-py3-none-any.whl.metadata (2.6 kB)
+2026-10-27T19:43:20.6594585Z Collecting iniconfig>=1.0.1 (from pytest)
+2026-10-27T19:43:20.6623456Z   Downloading iniconfig-2.3.1-py3-none-any.whl.metadata (2.8 kB)
+2026-10-27T19:43:20.6820624Z Collecting pygments>=2.7.2 (from pytest)
+2026-10-27T19:43:20.6848352Z   Downloading pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+2026-10-27T19:43:20.7004043Z Collecting pyproject_hooks (from build)
+2026-10-27T19:43:20.7033127Z   Downloading pyproject_hooks-1.3.3-py3-none-any.whl.metadata (1.3 kB)
+2026-10-27T19:43:20.7110474Z Downloading ruff-0.17.1-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (10.4 MB)
+2026-10-27T19:43:20.8155680Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.4/10.4 MB 100.5 MB/s  0:00:00
+2026-10-27T19:43:20.8166494Z Using cached hatchling-1.32.4-py3-none-any.whl (78 kB)
+2026-10-27T19:43:20.8200012Z Downloading pydantic-2.14.1-py3-none-any.whl (488 kB)
+2026-10-27T19:43:20.8281150Z Downloading pydantic_core-2.50.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.2 MB)
+2026-10-27T19:43:20.8463872Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.2/2.2 MB 116.2 MB/s  0:00:00
+2026-10-27T19:43:20.8496769Z Downloading pytest-9.1.1-py3-none-any.whl (386 kB)
+2026-10-27T19:43:20.8529140Z Using cached pluggy-1.7.0-py3-none-any.whl (27 kB)
+2026-10-27T19:43:20.8584728Z Downloading build-1.6.1-py3-none-any.whl (31 kB)
+2026-10-27T19:43:20.8632157Z Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+2026-10-27T19:43:20.8674985Z Downloading iniconfig-2.3.1-py3-none-any.whl (7.6 kB)
+2026-10-27T19:43:20.8695977Z Using cached packaging-26.3-py3-none-any.whl (129 kB)
+2026-10-27T19:43:20.8704784Z Using cached pathspec-1.1.1-py3-none-any.whl (57 kB)
+2026-10-27T19:43:20.8738079Z Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
+2026-10-27T19:43:20.8841669Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 117.0 MB/s  0:00:00
+2026-10-27T19:43:20.8850649Z Using cached tomlkit-0.15.2-py3-none-any.whl (52 kB)
+2026-10-27T19:43:20.8880781Z Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+2026-10-27T19:43:20.8926770Z Downloading typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+2026-10-27T19:43:20.8979245Z Downloading pyproject_hooks-1.3.3-py3-none-any.whl (10 kB)
+2026-10-27T19:43:20.9000219Z Using cached trove_classifiers-2026.9.21.13-py3-none-any.whl (14 kB)
+2026-10-27T19:43:20.9425198Z Building wheels for collected packages: umf-core
+2026-10-27T19:43:20.9430227Z   Building wheel for umf-core (pyproject.toml): started
+2026-10-27T19:43:20.9723950Z   Building wheel for umf-core (pyproject.toml): finished with status 'done'
+2026-10-27T19:43:20.9752644Z   Created wheel for umf-core: filename=umf_core-0.10.3-cp311-abi3-linux_x86_64.whl size=3611895 sha256=5a9daa8ecada8c2504f90b94d3e8b858d9978622cde9d9793a0242028be0d288
+2026-10-27T19:43:20.9753893Z   Stored in directory: /tmp/pip-ephem-wheel-cache-4g3p7__q/wheels/ab/15/ac/d46ad78b5110a5a0bf7805d13317043550eb468f03bce8ceb0
+2026-10-27T19:43:20.9770268Z Successfully built umf-core
+2026-10-27T19:43:21.0073976Z Installing collected packages: trove-classifiers, typing-extensions, tomlkit, ruff, pyproject_hooks, pygments, pluggy, pathspec, packaging, iniconfig, annotated-types, typing-inspection, pytest, pydantic-core, hatchling, build, pydantic, umf-core
+2026-10-27T19:43:22.5851722Z 
+2026-10-27T19:43:22.5870027Z Successfully installed annotated-types-0.8.0 build-1.6.1 hatchling-1.32.4 iniconfig-2.3.1 packaging-26.3 pathspec-1.1.1 pluggy-1.7.0 pydantic-2.14.1 pydantic-core-2.50.1 pygments-2.21.0 pyproject_hooks-1.3.3 pytest-9.1.1 ruff-0.17.1 tomlkit-0.15.2 trove-classifiers-2026.9.21.13 typing-extensions-4.16.0 typing-inspection-0.4.4 umf-core-0.10.3
+2026-10-27T19:43:22.5877448Z 
+2026-10-27T19:43:22.5877729Z [notice] A new release of pip is available: 26.2.1 -> 26.2.2
+2026-10-27T19:43:22.5878209Z [notice] To update, run: pip install --upgrade pip
+2026-10-27T19:43:22.6848401Z ##[group]Run python -m pytest python/tests -q
+2026-10-27T19:43:22.6848728Z [36;1mpython -m pytest python/tests -q[0m
+2026-10-27T19:43:22.6905034Z shell: /usr/bin/bash -e {0}
+2026-10-27T19:43:22.6905446Z env:
+2026-10-27T19:43:22.6905746Z   RUSTUP_HOME: /home/runner/work/_temp/umf-rustup
+2026-10-27T19:43:22.6906167Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:43:22.6906826Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T19:43:22.6907245Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:43:22.6922476Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:43:22.6922820Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T19:43:22.6923129Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T19:43:22.6923393Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T19:43:22.6923591Z   CARGO_INCREMENTAL: 0
+2026-10-27T19:43:22.6923810Z   CARGO_TERM_COLOR: always
+2026-10-27T19:43:22.6924002Z ##[endgroup]
+2026-10-27T19:43:30.0152814Z ........................................................................ [ 18%]
+2026-10-27T19:43:31.4844822Z ........................................................................ [ 36%]
+2026-10-27T19:43:33.6044080Z ........................................................................ [ 54%]
+2026-10-27T19:43:33.9330194Z ....................................................................EEEE [ 72%]
+2026-10-27T19:43:35.3768975Z EEEEEEEEEEEEEE.......................................................... [ 90%]
+2026-10-27T19:43:50.7249638Z .....................................                                    [100%]
+2026-10-27T19:43:50.7250185Z ==================================== ERRORS ====================================
+2026-10-27T19:43:50.7250689Z _ ERROR at setup of test_retained_source_map_validates_full_531_file_archive_and_exact_m_delta _
+2026-10-27T19:43:50.7251048Z 
+2026-10-27T19:43:50.7251227Z     @pytest.fixture(scope="module")
+2026-10-27T19:43:50.7251547Z     def retained_sdist_source_fixture():
+2026-10-27T19:43:50.7251900Z         verifier = _core_public_release_verifier()
+2026-10-27T19:43:50.7252278Z         repository = Path(__file__).resolve().parents[2]
+2026-10-27T19:43:50.7252685Z         helper_path = repository / "tools/_python_sdist.py"
+2026-10-27T19:43:50.7253117Z         spec = importlib.util.spec_from_file_location(
+2026-10-27T19:43:50.7253510Z             "umf_test_retained_sdist_inventory", helper_path
+2026-10-27T19:43:50.7253840Z         )
+2026-10-27T19:43:50.7254111Z         assert spec is not None and spec.loader is not None
+2026-10-27T19:43:50.7254688Z         helper = importlib.util.module_from_spec(spec)
+2026-10-27T19:43:50.7255034Z         spec.loader.exec_module(helper)
+2026-10-27T19:43:50.7255300Z     
+2026-10-27T19:43:50.7255576Z         release_files = helper._source_inventory(repository)
+2026-10-27T19:43:50.7256086Z         assert release_files[verifier.RETAINED_TEST_PATH] != verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7256552Z         release_files["PKG-INFO"] = (
+2026-10-27T19:43:50.7256929Z             "aa760d74b8bc9a535520613f5d2788c50f5aed9ca5b3b59fbd941b9711d29b93"
+2026-10-27T19:43:50.7257327Z         )
+2026-10-27T19:43:50.7257583Z         producer_files = dict(release_files)
+2026-10-27T19:43:50.7258086Z         producer_files[verifier.RETAINED_TEST_PATH] = verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7258610Z         manifest_digest = hashlib.sha256(
+2026-10-27T19:43:50.7258927Z             json.dumps(
+2026-10-27T19:43:50.7259326Z                 producer_files, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+2026-10-27T19:43:50.7259813Z             ).encode("ascii")
+2026-10-27T19:43:50.7260096Z         ).hexdigest()
+2026-10-27T19:43:50.7260363Z >       assert len(release_files) == 531
+2026-10-27T19:43:50.7260693Z E       AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7262280Z E        +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7263397Z 
+2026-10-27T19:43:50.7263543Z python/tests/test_distribution_artifact.py:1124: AssertionError
+2026-10-27T19:43:50.7263980Z _ ERROR at setup of test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[archive-digest] _
+2026-10-27T19:43:50.7264649Z 
+2026-10-27T19:43:50.7264784Z     @pytest.fixture(scope="module")
+2026-10-27T19:43:50.7265122Z     def retained_sdist_source_fixture():
+2026-10-27T19:43:50.7265486Z         verifier = _core_public_release_verifier()
+2026-10-27T19:43:50.7265894Z         repository = Path(__file__).resolve().parents[2]
+2026-10-27T19:43:50.7266318Z         helper_path = repository / "tools/_python_sdist.py"
+2026-10-27T19:43:50.7266748Z         spec = importlib.util.spec_from_file_location(
+2026-10-27T19:43:50.7267168Z             "umf_test_retained_sdist_inventory", helper_path
+2026-10-27T19:43:50.7267525Z         )
+2026-10-27T19:43:50.7267806Z         assert spec is not None and spec.loader is not None
+2026-10-27T19:43:50.7268229Z         helper = importlib.util.module_from_spec(spec)
+2026-10-27T19:43:50.7268603Z         spec.loader.exec_module(helper)
+2026-10-27T19:43:50.7268912Z     
+2026-10-27T19:43:50.7269204Z         release_files = helper._source_inventory(repository)
+2026-10-27T19:43:50.7269782Z         assert release_files[verifier.RETAINED_TEST_PATH] != verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7270192Z         release_files["PKG-INFO"] = (
+2026-10-27T19:43:50.7270485Z             "aa760d74b8bc9a535520613f5d2788c50f5aed9ca5b3b59fbd941b9711d29b93"
+2026-10-27T19:43:50.7270771Z         )
+2026-10-27T19:43:50.7270940Z         producer_files = dict(release_files)
+2026-10-27T19:43:50.7271278Z         producer_files[verifier.RETAINED_TEST_PATH] = verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7271628Z         manifest_digest = hashlib.sha256(
+2026-10-27T19:43:50.7271850Z             json.dumps(
+2026-10-27T19:43:50.7272122Z                 producer_files, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+2026-10-27T19:43:50.7272434Z             ).encode("ascii")
+2026-10-27T19:43:50.7272632Z         ).hexdigest()
+2026-10-27T19:43:50.7272810Z >       assert len(release_files) == 531
+2026-10-27T19:43:50.7273037Z E       AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7273823Z E        +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7274726Z 
+2026-10-27T19:43:50.7274867Z python/tests/test_distribution_artifact.py:1124: AssertionError
+2026-10-27T19:43:50.7275307Z _ ERROR at setup of test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[archive-missing] _
+2026-10-27T19:43:50.7275611Z 
+2026-10-27T19:43:50.7275701Z     @pytest.fixture(scope="module")
+2026-10-27T19:43:50.7275930Z     def retained_sdist_source_fixture():
+2026-10-27T19:43:50.7276165Z         verifier = _core_public_release_verifier()
+2026-10-27T19:43:50.7276435Z         repository = Path(__file__).resolve().parents[2]
+2026-10-27T19:43:50.7276712Z         helper_path = repository / "tools/_python_sdist.py"
+2026-10-27T19:43:50.7276990Z         spec = importlib.util.spec_from_file_location(
+2026-10-27T19:43:50.7277257Z             "umf_test_retained_sdist_inventory", helper_path
+2026-10-27T19:43:50.7277495Z         )
+2026-10-27T19:43:50.7277680Z         assert spec is not None and spec.loader is not None
+2026-10-27T19:43:50.7277952Z         helper = importlib.util.module_from_spec(spec)
+2026-10-27T19:43:50.7278217Z         spec.loader.exec_module(helper)
+2026-10-27T19:43:50.7278419Z     
+2026-10-27T19:43:50.7278609Z         release_files = helper._source_inventory(repository)
+2026-10-27T19:43:50.7279132Z         assert release_files[verifier.RETAINED_TEST_PATH] != verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7279487Z         release_files["PKG-INFO"] = (
+2026-10-27T19:43:50.7279839Z             "aa760d74b8bc9a535520613f5d2788c50f5aed9ca5b3b59fbd941b9711d29b93"
+2026-10-27T19:43:50.7280283Z         )
+2026-10-27T19:43:50.7280516Z         producer_files = dict(release_files)
+2026-10-27T19:43:50.7281120Z         producer_files[verifier.RETAINED_TEST_PATH] = verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7281599Z         manifest_digest = hashlib.sha256(
+2026-10-27T19:43:50.7281906Z             json.dumps(
+2026-10-27T19:43:50.7282306Z                 producer_files, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+2026-10-27T19:43:50.7282757Z             ).encode("ascii")
+2026-10-27T19:43:50.7283024Z         ).hexdigest()
+2026-10-27T19:43:50.7283287Z >       assert len(release_files) == 531
+2026-10-27T19:43:50.7283615Z E       AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7285041Z E        +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7286191Z 
+2026-10-27T19:43:50.7286397Z python/tests/test_distribution_artifact.py:1124: AssertionError
+2026-10-27T19:43:50.7286923Z _ ERROR at setup of test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[archive-extra] _
+2026-10-27T19:43:50.7287220Z 
+2026-10-27T19:43:50.7287306Z     @pytest.fixture(scope="module")
+2026-10-27T19:43:50.7287526Z     def retained_sdist_source_fixture():
+2026-10-27T19:43:50.7287760Z         verifier = _core_public_release_verifier()
+2026-10-27T19:43:50.7288029Z         repository = Path(__file__).resolve().parents[2]
+2026-10-27T19:43:50.7288297Z         helper_path = repository / "tools/_python_sdist.py"
+2026-10-27T19:43:50.7288570Z         spec = importlib.util.spec_from_file_location(
+2026-10-27T19:43:50.7288842Z             "umf_test_retained_sdist_inventory", helper_path
+2026-10-27T19:43:50.7289082Z         )
+2026-10-27T19:43:50.7289277Z         assert spec is not None and spec.loader is not None
+2026-10-27T19:43:50.7289552Z         helper = importlib.util.module_from_spec(spec)
+2026-10-27T19:43:50.7289802Z         spec.loader.exec_module(helper)
+2026-10-27T19:43:50.7290015Z     
+2026-10-27T19:43:50.7290218Z         release_files = helper._source_inventory(repository)
+2026-10-27T19:43:50.7290593Z         assert release_files[verifier.RETAINED_TEST_PATH] != verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7290951Z         release_files["PKG-INFO"] = (
+2026-10-27T19:43:50.7291247Z             "aa760d74b8bc9a535520613f5d2788c50f5aed9ca5b3b59fbd941b9711d29b93"
+2026-10-27T19:43:50.7291534Z         )
+2026-10-27T19:43:50.7291710Z         producer_files = dict(release_files)
+2026-10-27T19:43:50.7292046Z         producer_files[verifier.RETAINED_TEST_PATH] = verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7292384Z         manifest_digest = hashlib.sha256(
+2026-10-27T19:43:50.7292596Z             json.dumps(
+2026-10-27T19:43:50.7292863Z                 producer_files, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+2026-10-27T19:43:50.7293161Z             ).encode("ascii")
+2026-10-27T19:43:50.7293347Z         ).hexdigest()
+2026-10-27T19:43:50.7293527Z >       assert len(release_files) == 531
+2026-10-27T19:43:50.7293751Z E       AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7294711Z E        +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7295425Z 
+2026-10-27T19:43:50.7295572Z python/tests/test_distribution_artifact.py:1124: AssertionError
+2026-10-27T19:43:50.7296015Z _ ERROR at setup of test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[producer-projection] _
+2026-10-27T19:43:50.7296584Z 
+2026-10-27T19:43:50.7296668Z     @pytest.fixture(scope="module")
+2026-10-27T19:43:50.7296881Z     def retained_sdist_source_fixture():
+2026-10-27T19:43:50.7297145Z         verifier = _core_public_release_verifier()
+2026-10-27T19:43:50.7297412Z         repository = Path(__file__).resolve().parents[2]
+2026-10-27T19:43:50.7297796Z         helper_path = repository / "tools/_python_sdist.py"
+2026-10-27T19:43:50.7298064Z         spec = importlib.util.spec_from_file_location(
+2026-10-27T19:43:50.7298333Z             "umf_test_retained_sdist_inventory", helper_path
+2026-10-27T19:43:50.7298566Z         )
+2026-10-27T19:43:50.7298754Z         assert spec is not None and spec.loader is not None
+2026-10-27T19:43:50.7299016Z         helper = importlib.util.module_from_spec(spec)
+2026-10-27T19:43:50.7299258Z         spec.loader.exec_module(helper)
+2026-10-27T19:43:50.7299457Z     
+2026-10-27T19:43:50.7299644Z         release_files = helper._source_inventory(repository)
+2026-10-27T19:43:50.7300013Z         assert release_files[verifier.RETAINED_TEST_PATH] != verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7300354Z         release_files["PKG-INFO"] = (
+2026-10-27T19:43:50.7300643Z             "aa760d74b8bc9a535520613f5d2788c50f5aed9ca5b3b59fbd941b9711d29b93"
+2026-10-27T19:43:50.7300915Z         )
+2026-10-27T19:43:50.7301080Z         producer_files = dict(release_files)
+2026-10-27T19:43:50.7301405Z         producer_files[verifier.RETAINED_TEST_PATH] = verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7301723Z         manifest_digest = hashlib.sha256(
+2026-10-27T19:43:50.7301931Z             json.dumps(
+2026-10-27T19:43:50.7302189Z                 producer_files, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+2026-10-27T19:43:50.7302481Z             ).encode("ascii")
+2026-10-27T19:43:50.7302668Z         ).hexdigest()
+2026-10-27T19:43:50.7302842Z >       assert len(release_files) == 531
+2026-10-27T19:43:50.7303056Z E       AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7303889Z E        +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7304765Z 
+2026-10-27T19:43:50.7304903Z python/tests/test_distribution_artifact.py:1124: AssertionError
+2026-10-27T19:43:50.7305315Z _ ERROR at setup of test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[m-runtime] _
+2026-10-27T19:43:50.7305598Z 
+2026-10-27T19:43:50.7305685Z     @pytest.fixture(scope="module")
+2026-10-27T19:43:50.7305905Z     def retained_sdist_source_fixture():
+2026-10-27T19:43:50.7306142Z         verifier = _core_public_release_verifier()
+2026-10-27T19:43:50.7306409Z         repository = Path(__file__).resolve().parents[2]
+2026-10-27T19:43:50.7306679Z         helper_path = repository / "tools/_python_sdist.py"
+2026-10-27T19:43:50.7306951Z         spec = importlib.util.spec_from_file_location(
+2026-10-27T19:43:50.7307213Z             "umf_test_retained_sdist_inventory", helper_path
+2026-10-27T19:43:50.7307442Z         )
+2026-10-27T19:43:50.7307627Z         assert spec is not None and spec.loader is not None
+2026-10-27T19:43:50.7307902Z         helper = importlib.util.module_from_spec(spec)
+2026-10-27T19:43:50.7308147Z         spec.loader.exec_module(helper)
+2026-10-27T19:43:50.7308353Z     
+2026-10-27T19:43:50.7308537Z         release_files = helper._source_inventory(repository)
+2026-10-27T19:43:50.7308901Z         assert release_files[verifier.RETAINED_TEST_PATH] != verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7309241Z         release_files["PKG-INFO"] = (
+2026-10-27T19:43:50.7309525Z             "aa760d74b8bc9a535520613f5d2788c50f5aed9ca5b3b59fbd941b9711d29b93"
+2026-10-27T19:43:50.7309799Z         )
+2026-10-27T19:43:50.7309964Z         producer_files = dict(release_files)
+2026-10-27T19:43:50.7310400Z         producer_files[verifier.RETAINED_TEST_PATH] = verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7310745Z         manifest_digest = hashlib.sha256(
+2026-10-27T19:43:50.7310957Z             json.dumps(
+2026-10-27T19:43:50.7311219Z                 producer_files, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+2026-10-27T19:43:50.7311521Z             ).encode("ascii")
+2026-10-27T19:43:50.7311708Z         ).hexdigest()
+2026-10-27T19:43:50.7311982Z >       assert len(release_files) == 531
+2026-10-27T19:43:50.7312198Z E       AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7312967Z E        +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7313660Z 
+2026-10-27T19:43:50.7313803Z python/tests/test_distribution_artifact.py:1124: AssertionError
+2026-10-27T19:43:50.7314365Z _ ERROR at setup of test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[m-cargo] _
+2026-10-27T19:43:50.7314666Z 
+2026-10-27T19:43:50.7314754Z     @pytest.fixture(scope="module")
+2026-10-27T19:43:50.7314973Z     def retained_sdist_source_fixture():
+2026-10-27T19:43:50.7315202Z         verifier = _core_public_release_verifier()
+2026-10-27T19:43:50.7315467Z         repository = Path(__file__).resolve().parents[2]
+2026-10-27T19:43:50.7315745Z         helper_path = repository / "tools/_python_sdist.py"
+2026-10-27T19:43:50.7316017Z         spec = importlib.util.spec_from_file_location(
+2026-10-27T19:43:50.7316291Z             "umf_test_retained_sdist_inventory", helper_path
+2026-10-27T19:43:50.7316526Z         )
+2026-10-27T19:43:50.7316713Z         assert spec is not None and spec.loader is not None
+2026-10-27T19:43:50.7316979Z         helper = importlib.util.module_from_spec(spec)
+2026-10-27T19:43:50.7317221Z         spec.loader.exec_module(helper)
+2026-10-27T19:43:50.7317416Z     
+2026-10-27T19:43:50.7317600Z         release_files = helper._source_inventory(repository)
+2026-10-27T19:43:50.7317965Z         assert release_files[verifier.RETAINED_TEST_PATH] != verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7318307Z         release_files["PKG-INFO"] = (
+2026-10-27T19:43:50.7318602Z             "aa760d74b8bc9a535520613f5d2788c50f5aed9ca5b3b59fbd941b9711d29b93"
+2026-10-27T19:43:50.7318884Z         )
+2026-10-27T19:43:50.7319056Z         producer_files = dict(release_files)
+2026-10-27T19:43:50.7319374Z         producer_files[verifier.RETAINED_TEST_PATH] = verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7319696Z         manifest_digest = hashlib.sha256(
+2026-10-27T19:43:50.7319904Z             json.dumps(
+2026-10-27T19:43:50.7320163Z                 producer_files, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+2026-10-27T19:43:50.7320454Z             ).encode("ascii")
+2026-10-27T19:43:50.7320635Z         ).hexdigest()
+2026-10-27T19:43:50.7320821Z >       assert len(release_files) == 531
+2026-10-27T19:43:50.7321035Z E       AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7321808Z E        +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7322491Z 
+2026-10-27T19:43:50.7322633Z python/tests/test_distribution_artifact.py:1124: AssertionError
+2026-10-27T19:43:50.7323036Z _ ERROR at setup of test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[m-schema] _
+2026-10-27T19:43:50.7323317Z 
+2026-10-27T19:43:50.7323396Z     @pytest.fixture(scope="module")
+2026-10-27T19:43:50.7323611Z     def retained_sdist_source_fixture():
+2026-10-27T19:43:50.7323843Z         verifier = _core_public_release_verifier()
+2026-10-27T19:43:50.7324100Z         repository = Path(__file__).resolve().parents[2]
+2026-10-27T19:43:50.7324576Z         helper_path = repository / "tools/_python_sdist.py"
+2026-10-27T19:43:50.7324968Z         spec = importlib.util.spec_from_file_location(
+2026-10-27T19:43:50.7325235Z             "umf_test_retained_sdist_inventory", helper_path
+2026-10-27T19:43:50.7325461Z         )
+2026-10-27T19:43:50.7325639Z         assert spec is not None and spec.loader is not None
+2026-10-27T19:43:50.7325901Z         helper = importlib.util.module_from_spec(spec)
+2026-10-27T19:43:50.7326142Z         spec.loader.exec_module(helper)
+2026-10-27T19:43:50.7326466Z     
+2026-10-27T19:43:50.7326652Z         release_files = helper._source_inventory(repository)
+2026-10-27T19:43:50.7327014Z         assert release_files[verifier.RETAINED_TEST_PATH] != verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7327353Z         release_files["PKG-INFO"] = (
+2026-10-27T19:43:50.7327642Z             "aa760d74b8bc9a535520613f5d2788c50f5aed9ca5b3b59fbd941b9711d29b93"
+2026-10-27T19:43:50.7327920Z         )
+2026-10-27T19:43:50.7328080Z         producer_files = dict(release_files)
+2026-10-27T19:43:50.7328406Z         producer_files[verifier.RETAINED_TEST_PATH] = verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7328733Z         manifest_digest = hashlib.sha256(
+2026-10-27T19:43:50.7328943Z             json.dumps(
+2026-10-27T19:43:50.7329197Z                 producer_files, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+2026-10-27T19:43:50.7329491Z             ).encode("ascii")
+2026-10-27T19:43:50.7329675Z         ).hexdigest()
+2026-10-27T19:43:50.7329856Z >       assert len(release_files) == 531
+2026-10-27T19:43:50.7330067Z E       AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7330835Z E        +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7331536Z 
+2026-10-27T19:43:50.7331667Z python/tests/test_distribution_artifact.py:1124: AssertionError
+2026-10-27T19:43:50.7332093Z _ ERROR at setup of test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[m-build-hook] _
+2026-10-27T19:43:50.7332376Z 
+2026-10-27T19:43:50.7332462Z     @pytest.fixture(scope="module")
+2026-10-27T19:43:50.7332684Z     def retained_sdist_source_fixture():
+2026-10-27T19:43:50.7332909Z         verifier = _core_public_release_verifier()
+2026-10-27T19:43:50.7333162Z         repository = Path(__file__).resolve().parents[2]
+2026-10-27T19:43:50.7333430Z         helper_path = repository / "tools/_python_sdist.py"
+2026-10-27T19:43:50.7333689Z         spec = importlib.util.spec_from_file_location(
+2026-10-27T19:43:50.7333948Z             "umf_test_retained_sdist_inventory", helper_path
+2026-10-27T19:43:50.7334308Z         )
+2026-10-27T19:43:50.7334536Z         assert spec is not None and spec.loader is not None
+2026-10-27T19:43:50.7334792Z         helper = importlib.util.module_from_spec(spec)
+2026-10-27T19:43:50.7335029Z         spec.loader.exec_module(helper)
+2026-10-27T19:43:50.7335225Z     
+2026-10-27T19:43:50.7335416Z         release_files = helper._source_inventory(repository)
+2026-10-27T19:43:50.7335775Z         assert release_files[verifier.RETAINED_TEST_PATH] != verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7336112Z         release_files["PKG-INFO"] = (
+2026-10-27T19:43:50.7336396Z             "aa760d74b8bc9a535520613f5d2788c50f5aed9ca5b3b59fbd941b9711d29b93"
+2026-10-27T19:43:50.7336678Z         )
+2026-10-27T19:43:50.7336843Z         producer_files = dict(release_files)
+2026-10-27T19:43:50.7337158Z         producer_files[verifier.RETAINED_TEST_PATH] = verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7337479Z         manifest_digest = hashlib.sha256(
+2026-10-27T19:43:50.7337686Z             json.dumps(
+2026-10-27T19:43:50.7337939Z                 producer_files, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+2026-10-27T19:43:50.7338260Z             ).encode("ascii")
+2026-10-27T19:43:50.7338446Z         ).hexdigest()
+2026-10-27T19:43:50.7338618Z >       assert len(release_files) == 531
+2026-10-27T19:43:50.7339179Z E       AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7340305Z E        +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7341381Z 
+2026-10-27T19:43:50.7341798Z python/tests/test_distribution_artifact.py:1124: AssertionError
+2026-10-27T19:43:50.7342448Z _ ERROR at setup of test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[m-resource] _
+2026-10-27T19:43:50.7342817Z 
+2026-10-27T19:43:50.7342902Z     @pytest.fixture(scope="module")
+2026-10-27T19:43:50.7343123Z     def retained_sdist_source_fixture():
+2026-10-27T19:43:50.7343364Z         verifier = _core_public_release_verifier()
+2026-10-27T19:43:50.7343636Z         repository = Path(__file__).resolve().parents[2]
+2026-10-27T19:43:50.7343912Z         helper_path = repository / "tools/_python_sdist.py"
+2026-10-27T19:43:50.7344342Z         spec = importlib.util.spec_from_file_location(
+2026-10-27T19:43:50.7344665Z             "umf_test_retained_sdist_inventory", helper_path
+2026-10-27T19:43:50.7344902Z         )
+2026-10-27T19:43:50.7345089Z         assert spec is not None and spec.loader is not None
+2026-10-27T19:43:50.7345362Z         helper = importlib.util.module_from_spec(spec)
+2026-10-27T19:43:50.7345616Z         spec.loader.exec_module(helper)
+2026-10-27T19:43:50.7345818Z     
+2026-10-27T19:43:50.7346004Z         release_files = helper._source_inventory(repository)
+2026-10-27T19:43:50.7346374Z         assert release_files[verifier.RETAINED_TEST_PATH] != verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7346717Z         release_files["PKG-INFO"] = (
+2026-10-27T19:43:50.7347008Z             "aa760d74b8bc9a535520613f5d2788c50f5aed9ca5b3b59fbd941b9711d29b93"
+2026-10-27T19:43:50.7347292Z         )
+2026-10-27T19:43:50.7347456Z         producer_files = dict(release_files)
+2026-10-27T19:43:50.7347777Z         producer_files[verifier.RETAINED_TEST_PATH] = verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7348103Z         manifest_digest = hashlib.sha256(
+2026-10-27T19:43:50.7348309Z             json.dumps(
+2026-10-27T19:43:50.7348570Z                 producer_files, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+2026-10-27T19:43:50.7348874Z             ).encode("ascii")
+2026-10-27T19:43:50.7349061Z         ).hexdigest()
+2026-10-27T19:43:50.7349244Z >       assert len(release_files) == 531
+2026-10-27T19:43:50.7349467Z E       AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7350243Z E        +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7350937Z 
+2026-10-27T19:43:50.7351071Z python/tests/test_distribution_artifact.py:1124: AssertionError
+2026-10-27T19:43:50.7351482Z _ ERROR at setup of test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[m-added] _
+2026-10-27T19:43:50.7351759Z 
+2026-10-27T19:43:50.7351844Z     @pytest.fixture(scope="module")
+2026-10-27T19:43:50.7352056Z     def retained_sdist_source_fixture():
+2026-10-27T19:43:50.7352293Z         verifier = _core_public_release_verifier()
+2026-10-27T19:43:50.7352554Z         repository = Path(__file__).resolve().parents[2]
+2026-10-27T19:43:50.7352838Z         helper_path = repository / "tools/_python_sdist.py"
+2026-10-27T19:43:50.7353114Z         spec = importlib.util.spec_from_file_location(
+2026-10-27T19:43:50.7353382Z             "umf_test_retained_sdist_inventory", helper_path
+2026-10-27T19:43:50.7353614Z         )
+2026-10-27T19:43:50.7353799Z         assert spec is not None and spec.loader is not None
+2026-10-27T19:43:50.7354064Z         helper = importlib.util.module_from_spec(spec)
+2026-10-27T19:43:50.7354456Z         spec.loader.exec_module(helper)
+2026-10-27T19:43:50.7354657Z     
+2026-10-27T19:43:50.7354993Z         release_files = helper._source_inventory(repository)
+2026-10-27T19:43:50.7355366Z         assert release_files[verifier.RETAINED_TEST_PATH] != verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7355701Z         release_files["PKG-INFO"] = (
+2026-10-27T19:43:50.7355987Z             "aa760d74b8bc9a535520613f5d2788c50f5aed9ca5b3b59fbd941b9711d29b93"
+2026-10-27T19:43:50.7356368Z         )
+2026-10-27T19:43:50.7356536Z         producer_files = dict(release_files)
+2026-10-27T19:43:50.7356864Z         producer_files[verifier.RETAINED_TEST_PATH] = verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7357193Z         manifest_digest = hashlib.sha256(
+2026-10-27T19:43:50.7357401Z             json.dumps(
+2026-10-27T19:43:50.7357668Z                 producer_files, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+2026-10-27T19:43:50.7357962Z             ).encode("ascii")
+2026-10-27T19:43:50.7358144Z         ).hexdigest()
+2026-10-27T19:43:50.7358322Z >       assert len(release_files) == 531
+2026-10-27T19:43:50.7358541Z E       AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7359304Z E        +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7360001Z 
+2026-10-27T19:43:50.7360144Z python/tests/test_distribution_artifact.py:1124: AssertionError
+2026-10-27T19:43:50.7360559Z _ ERROR at setup of test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[m-deleted] _
+2026-10-27T19:43:50.7360838Z 
+2026-10-27T19:43:50.7360927Z     @pytest.fixture(scope="module")
+2026-10-27T19:43:50.7361148Z     def retained_sdist_source_fixture():
+2026-10-27T19:43:50.7361383Z         verifier = _core_public_release_verifier()
+2026-10-27T19:43:50.7361648Z         repository = Path(__file__).resolve().parents[2]
+2026-10-27T19:43:50.7361925Z         helper_path = repository / "tools/_python_sdist.py"
+2026-10-27T19:43:50.7362207Z         spec = importlib.util.spec_from_file_location(
+2026-10-27T19:43:50.7362475Z             "umf_test_retained_sdist_inventory", helper_path
+2026-10-27T19:43:50.7362705Z         )
+2026-10-27T19:43:50.7362894Z         assert spec is not None and spec.loader is not None
+2026-10-27T19:43:50.7363170Z         helper = importlib.util.module_from_spec(spec)
+2026-10-27T19:43:50.7363425Z         spec.loader.exec_module(helper)
+2026-10-27T19:43:50.7363629Z     
+2026-10-27T19:43:50.7363823Z         release_files = helper._source_inventory(repository)
+2026-10-27T19:43:50.7364338Z         assert release_files[verifier.RETAINED_TEST_PATH] != verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7364739Z         release_files["PKG-INFO"] = (
+2026-10-27T19:43:50.7365035Z             "aa760d74b8bc9a535520613f5d2788c50f5aed9ca5b3b59fbd941b9711d29b93"
+2026-10-27T19:43:50.7365318Z         )
+2026-10-27T19:43:50.7365489Z         producer_files = dict(release_files)
+2026-10-27T19:43:50.7365816Z         producer_files[verifier.RETAINED_TEST_PATH] = verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7366140Z         manifest_digest = hashlib.sha256(
+2026-10-27T19:43:50.7366354Z             json.dumps(
+2026-10-27T19:43:50.7366614Z                 producer_files, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+2026-10-27T19:43:50.7366915Z             ).encode("ascii")
+2026-10-27T19:43:50.7367113Z         ).hexdigest()
+2026-10-27T19:43:50.7367297Z >       assert len(release_files) == 531
+2026-10-27T19:43:50.7367517Z E       AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7368291Z E        +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7368978Z 
+2026-10-27T19:43:50.7369111Z python/tests/test_distribution_artifact.py:1124: AssertionError
+2026-10-27T19:43:50.7369655Z _ ERROR at setup of test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[wrong-test-old] _
+2026-10-27T19:43:50.7369959Z 
+2026-10-27T19:43:50.7370040Z     @pytest.fixture(scope="module")
+2026-10-27T19:43:50.7370264Z     def retained_sdist_source_fixture():
+2026-10-27T19:43:50.7370497Z         verifier = _core_public_release_verifier()
+2026-10-27T19:43:50.7370853Z         repository = Path(__file__).resolve().parents[2]
+2026-10-27T19:43:50.7371124Z         helper_path = repository / "tools/_python_sdist.py"
+2026-10-27T19:43:50.7371398Z         spec = importlib.util.spec_from_file_location(
+2026-10-27T19:43:50.7371665Z             "umf_test_retained_sdist_inventory", helper_path
+2026-10-27T19:43:50.7371897Z         )
+2026-10-27T19:43:50.7372083Z         assert spec is not None and spec.loader is not None
+2026-10-27T19:43:50.7372352Z         helper = importlib.util.module_from_spec(spec)
+2026-10-27T19:43:50.7372597Z         spec.loader.exec_module(helper)
+2026-10-27T19:43:50.7372797Z     
+2026-10-27T19:43:50.7372991Z         release_files = helper._source_inventory(repository)
+2026-10-27T19:43:50.7373353Z         assert release_files[verifier.RETAINED_TEST_PATH] != verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7373701Z         release_files["PKG-INFO"] = (
+2026-10-27T19:43:50.7373989Z             "aa760d74b8bc9a535520613f5d2788c50f5aed9ca5b3b59fbd941b9711d29b93"
+2026-10-27T19:43:50.7374423Z         )
+2026-10-27T19:43:50.7374595Z         producer_files = dict(release_files)
+2026-10-27T19:43:50.7374908Z         producer_files[verifier.RETAINED_TEST_PATH] = verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7375243Z         manifest_digest = hashlib.sha256(
+2026-10-27T19:43:50.7375451Z             json.dumps(
+2026-10-27T19:43:50.7375710Z                 producer_files, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+2026-10-27T19:43:50.7376008Z             ).encode("ascii")
+2026-10-27T19:43:50.7376196Z         ).hexdigest()
+2026-10-27T19:43:50.7376385Z >       assert len(release_files) == 531
+2026-10-27T19:43:50.7376599Z E       AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7377361Z E        +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7378058Z 
+2026-10-27T19:43:50.7378210Z python/tests/test_distribution_artifact.py:1124: AssertionError
+2026-10-27T19:43:50.7378652Z _ ERROR at setup of test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[wrong-test-new] _
+2026-10-27T19:43:50.7378964Z 
+2026-10-27T19:43:50.7379056Z     @pytest.fixture(scope="module")
+2026-10-27T19:43:50.7379272Z     def retained_sdist_source_fixture():
+2026-10-27T19:43:50.7379504Z         verifier = _core_public_release_verifier()
+2026-10-27T19:43:50.7379766Z         repository = Path(__file__).resolve().parents[2]
+2026-10-27T19:43:50.7380042Z         helper_path = repository / "tools/_python_sdist.py"
+2026-10-27T19:43:50.7380309Z         spec = importlib.util.spec_from_file_location(
+2026-10-27T19:43:50.7380585Z             "umf_test_retained_sdist_inventory", helper_path
+2026-10-27T19:43:50.7380812Z         )
+2026-10-27T19:43:50.7380993Z         assert spec is not None and spec.loader is not None
+2026-10-27T19:43:50.7381261Z         helper = importlib.util.module_from_spec(spec)
+2026-10-27T19:43:50.7381498Z         spec.loader.exec_module(helper)
+2026-10-27T19:43:50.7381697Z     
+2026-10-27T19:43:50.7381880Z         release_files = helper._source_inventory(repository)
+2026-10-27T19:43:50.7382238Z         assert release_files[verifier.RETAINED_TEST_PATH] != verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7382580Z         release_files["PKG-INFO"] = (
+2026-10-27T19:43:50.7382863Z             "aa760d74b8bc9a535520613f5d2788c50f5aed9ca5b3b59fbd941b9711d29b93"
+2026-10-27T19:43:50.7383157Z         )
+2026-10-27T19:43:50.7383319Z         producer_files = dict(release_files)
+2026-10-27T19:43:50.7383749Z         producer_files[verifier.RETAINED_TEST_PATH] = verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7384082Z         manifest_digest = hashlib.sha256(
+2026-10-27T19:43:50.7384369Z             json.dumps(
+2026-10-27T19:43:50.7384624Z                 producer_files, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+2026-10-27T19:43:50.7385024Z             ).encode("ascii")
+2026-10-27T19:43:50.7385208Z         ).hexdigest()
+2026-10-27T19:43:50.7385384Z >       assert len(release_files) == 531
+2026-10-27T19:43:50.7385603Z E       AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7386363Z E        +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7387044Z 
+2026-10-27T19:43:50.7387187Z python/tests/test_distribution_artifact.py:1124: AssertionError
+2026-10-27T19:43:50.7387614Z _ ERROR at setup of test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[missing-test-delta] _
+2026-10-27T19:43:50.7387923Z 
+2026-10-27T19:43:50.7388002Z     @pytest.fixture(scope="module")
+2026-10-27T19:43:50.7388217Z     def retained_sdist_source_fixture():
+2026-10-27T19:43:50.7388448Z         verifier = _core_public_release_verifier()
+2026-10-27T19:43:50.7388721Z         repository = Path(__file__).resolve().parents[2]
+2026-10-27T19:43:50.7388986Z         helper_path = repository / "tools/_python_sdist.py"
+2026-10-27T19:43:50.7389250Z         spec = importlib.util.spec_from_file_location(
+2026-10-27T19:43:50.7389508Z             "umf_test_retained_sdist_inventory", helper_path
+2026-10-27T19:43:50.7389736Z         )
+2026-10-27T19:43:50.7389921Z         assert spec is not None and spec.loader is not None
+2026-10-27T19:43:50.7390182Z         helper = importlib.util.module_from_spec(spec)
+2026-10-27T19:43:50.7390419Z         spec.loader.exec_module(helper)
+2026-10-27T19:43:50.7390626Z     
+2026-10-27T19:43:50.7390815Z         release_files = helper._source_inventory(repository)
+2026-10-27T19:43:50.7391178Z         assert release_files[verifier.RETAINED_TEST_PATH] != verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7391512Z         release_files["PKG-INFO"] = (
+2026-10-27T19:43:50.7391795Z             "aa760d74b8bc9a535520613f5d2788c50f5aed9ca5b3b59fbd941b9711d29b93"
+2026-10-27T19:43:50.7392078Z         )
+2026-10-27T19:43:50.7392240Z         producer_files = dict(release_files)
+2026-10-27T19:43:50.7392558Z         producer_files[verifier.RETAINED_TEST_PATH] = verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7392879Z         manifest_digest = hashlib.sha256(
+2026-10-27T19:43:50.7393085Z             json.dumps(
+2026-10-27T19:43:50.7393342Z                 producer_files, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+2026-10-27T19:43:50.7393636Z             ).encode("ascii")
+2026-10-27T19:43:50.7393814Z         ).hexdigest()
+2026-10-27T19:43:50.7393996Z >       assert len(release_files) == 531
+2026-10-27T19:43:50.7394297Z E       AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7395064Z E        +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7395757Z 
+2026-10-27T19:43:50.7395884Z python/tests/test_distribution_artifact.py:1124: AssertionError
+2026-10-27T19:43:50.7396352Z _ ERROR at setup of test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[malformed-map-path] _
+2026-10-27T19:43:50.7396670Z 
+2026-10-27T19:43:50.7396759Z     @pytest.fixture(scope="module")
+2026-10-27T19:43:50.7396979Z     def retained_sdist_source_fixture():
+2026-10-27T19:43:50.7397207Z         verifier = _core_public_release_verifier()
+2026-10-27T19:43:50.7397470Z         repository = Path(__file__).resolve().parents[2]
+2026-10-27T19:43:50.7397854Z         helper_path = repository / "tools/_python_sdist.py"
+2026-10-27T19:43:50.7398124Z         spec = importlib.util.spec_from_file_location(
+2026-10-27T19:43:50.7398390Z             "umf_test_retained_sdist_inventory", helper_path
+2026-10-27T19:43:50.7398619Z         )
+2026-10-27T19:43:50.7398811Z         assert spec is not None and spec.loader is not None
+2026-10-27T19:43:50.7399175Z         helper = importlib.util.module_from_spec(spec)
+2026-10-27T19:43:50.7399415Z         spec.loader.exec_module(helper)
+2026-10-27T19:43:50.7399613Z     
+2026-10-27T19:43:50.7399800Z         release_files = helper._source_inventory(repository)
+2026-10-27T19:43:50.7400161Z         assert release_files[verifier.RETAINED_TEST_PATH] != verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7400500Z         release_files["PKG-INFO"] = (
+2026-10-27T19:43:50.7400789Z             "aa760d74b8bc9a535520613f5d2788c50f5aed9ca5b3b59fbd941b9711d29b93"
+2026-10-27T19:43:50.7401065Z         )
+2026-10-27T19:43:50.7401247Z         producer_files = dict(release_files)
+2026-10-27T19:43:50.7401565Z         producer_files[verifier.RETAINED_TEST_PATH] = verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7401890Z         manifest_digest = hashlib.sha256(
+2026-10-27T19:43:50.7402098Z             json.dumps(
+2026-10-27T19:43:50.7402360Z                 producer_files, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+2026-10-27T19:43:50.7402657Z             ).encode("ascii")
+2026-10-27T19:43:50.7402837Z         ).hexdigest()
+2026-10-27T19:43:50.7403020Z >       assert len(release_files) == 531
+2026-10-27T19:43:50.7403239Z E       AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7404018Z E        +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7404891Z 
+2026-10-27T19:43:50.7405041Z python/tests/test_distribution_artifact.py:1124: AssertionError
+2026-10-27T19:43:50.7405473Z _ ERROR at setup of test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[wrong-map-digest] _
+2026-10-27T19:43:50.7405769Z 
+2026-10-27T19:43:50.7405852Z     @pytest.fixture(scope="module")
+2026-10-27T19:43:50.7406067Z     def retained_sdist_source_fixture():
+2026-10-27T19:43:50.7406304Z         verifier = _core_public_release_verifier()
+2026-10-27T19:43:50.7406567Z         repository = Path(__file__).resolve().parents[2]
+2026-10-27T19:43:50.7406838Z         helper_path = repository / "tools/_python_sdist.py"
+2026-10-27T19:43:50.7407108Z         spec = importlib.util.spec_from_file_location(
+2026-10-27T19:43:50.7407371Z             "umf_test_retained_sdist_inventory", helper_path
+2026-10-27T19:43:50.7407603Z         )
+2026-10-27T19:43:50.7407790Z         assert spec is not None and spec.loader is not None
+2026-10-27T19:43:50.7408055Z         helper = importlib.util.module_from_spec(spec)
+2026-10-27T19:43:50.7408302Z         spec.loader.exec_module(helper)
+2026-10-27T19:43:50.7408502Z     
+2026-10-27T19:43:50.7408687Z         release_files = helper._source_inventory(repository)
+2026-10-27T19:43:50.7409043Z         assert release_files[verifier.RETAINED_TEST_PATH] != verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7409386Z         release_files["PKG-INFO"] = (
+2026-10-27T19:43:50.7409674Z             "aa760d74b8bc9a535520613f5d2788c50f5aed9ca5b3b59fbd941b9711d29b93"
+2026-10-27T19:43:50.7409952Z         )
+2026-10-27T19:43:50.7410119Z         producer_files = dict(release_files)
+2026-10-27T19:43:50.7410438Z         producer_files[verifier.RETAINED_TEST_PATH] = verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7410764Z         manifest_digest = hashlib.sha256(
+2026-10-27T19:43:50.7410971Z             json.dumps(
+2026-10-27T19:43:50.7411230Z                 producer_files, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+2026-10-27T19:43:50.7411530Z             ).encode("ascii")
+2026-10-27T19:43:50.7411845Z         ).hexdigest()
+2026-10-27T19:43:50.7412026Z >       assert len(release_files) == 531
+2026-10-27T19:43:50.7412243Z E       AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7413008Z E        +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7413804Z 
+2026-10-27T19:43:50.7413935Z python/tests/test_distribution_artifact.py:1124: AssertionError
+2026-10-27T19:43:50.7414584Z _ ERROR at setup of test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[extra-correspondence-field] _
+2026-10-27T19:43:50.7414921Z 
+2026-10-27T19:43:50.7415009Z     @pytest.fixture(scope="module")
+2026-10-27T19:43:50.7415221Z     def retained_sdist_source_fixture():
+2026-10-27T19:43:50.7415449Z         verifier = _core_public_release_verifier()
+2026-10-27T19:43:50.7415715Z         repository = Path(__file__).resolve().parents[2]
+2026-10-27T19:43:50.7415988Z         helper_path = repository / "tools/_python_sdist.py"
+2026-10-27T19:43:50.7416256Z         spec = importlib.util.spec_from_file_location(
+2026-10-27T19:43:50.7416525Z             "umf_test_retained_sdist_inventory", helper_path
+2026-10-27T19:43:50.7416761Z         )
+2026-10-27T19:43:50.7416958Z         assert spec is not None and spec.loader is not None
+2026-10-27T19:43:50.7417231Z         helper = importlib.util.module_from_spec(spec)
+2026-10-27T19:43:50.7417473Z         spec.loader.exec_module(helper)
+2026-10-27T19:43:50.7417670Z     
+2026-10-27T19:43:50.7417856Z         release_files = helper._source_inventory(repository)
+2026-10-27T19:43:50.7418217Z         assert release_files[verifier.RETAINED_TEST_PATH] != verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7418552Z         release_files["PKG-INFO"] = (
+2026-10-27T19:43:50.7418837Z             "aa760d74b8bc9a535520613f5d2788c50f5aed9ca5b3b59fbd941b9711d29b93"
+2026-10-27T19:43:50.7419119Z         )
+2026-10-27T19:43:50.7419285Z         producer_files = dict(release_files)
+2026-10-27T19:43:50.7419603Z         producer_files[verifier.RETAINED_TEST_PATH] = verifier.RETAINED_TEST_OLD_SHA256
+2026-10-27T19:43:50.7419935Z         manifest_digest = hashlib.sha256(
+2026-10-27T19:43:50.7420144Z             json.dumps(
+2026-10-27T19:43:50.7420406Z                 producer_files, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+2026-10-27T19:43:50.7420705Z             ).encode("ascii")
+2026-10-27T19:43:50.7420888Z         ).hexdigest()
+2026-10-27T19:43:50.7421061Z >       assert len(release_files) == 531
+2026-10-27T19:43:50.7421272Z E       AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7422044Z E        +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7422745Z 
+2026-10-27T19:43:50.7422885Z python/tests/test_distribution_artifact.py:1124: AssertionError
+2026-10-27T19:43:50.7423198Z =========================== short test summary info ============================
+2026-10-27T19:43:50.7423817Z ERROR python/tests/test_distribution_artifact.py::test_retained_source_map_validates_full_531_file_archive_and_exact_m_delta - AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7424955Z  +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7426047Z ERROR python/tests/test_distribution_artifact.py::test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[archive-digest] - AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7427237Z  +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7428320Z ERROR python/tests/test_distribution_artifact.py::test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[archive-missing] - AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7429491Z  +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7430544Z ERROR python/tests/test_distribution_artifact.py::test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[archive-extra] - AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7431598Z  +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7432665Z ERROR python/tests/test_distribution_artifact.py::test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[producer-projection] - AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7433725Z  +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7434835Z ERROR python/tests/test_distribution_artifact.py::test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[m-runtime] - AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7435860Z  +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7436883Z ERROR python/tests/test_distribution_artifact.py::test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[m-cargo] - AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7517261Z  +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7519016Z ERROR python/tests/test_distribution_artifact.py::test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[m-schema] - AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7520737Z  +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7521999Z ERROR python/tests/test_distribution_artifact.py::test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[m-build-hook] - AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7523041Z  +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7524079Z ERROR python/tests/test_distribution_artifact.py::test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[m-resource] - AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7525397Z  +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7526613Z ERROR python/tests/test_distribution_artifact.py::test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[m-added] - AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7527640Z  +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7528839Z ERROR python/tests/test_distribution_artifact.py::test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[m-deleted] - AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7529862Z  +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7530914Z ERROR python/tests/test_distribution_artifact.py::test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[wrong-test-old] - AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7531953Z  +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7532990Z ERROR python/tests/test_distribution_artifact.py::test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[wrong-test-new] - AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7534021Z  +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7535236Z ERROR python/tests/test_distribution_artifact.py::test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[missing-test-delta] - AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7536288Z  +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7537600Z ERROR python/tests/test_distribution_artifact.py::test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[malformed-map-path] - AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7538988Z  +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7540052Z ERROR python/tests/test_distribution_artifact.py::test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[wrong-map-digest] - AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7541138Z  +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7542220Z ERROR python/tests/test_distribution_artifact.py::test_retained_source_map_refuses_any_unreviewed_path_or_byte_change[extra-correspondence-field] - AssertionError: assert 576 == 531
+2026-10-27T19:43:50.7543299Z  +  where 576 = len({'.gitignore': '820f6b47d66a30aea9a0397be0ed0a46f7834403d570b8e189d9639057dd683d', '.cargo/config.toml': '84fd4fa17fd9...f025bf063f6aca90fbead32388a34f', 'Cargo.toml': '89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f', ...})
+2026-10-27T19:43:50.7544043Z 379 passed, 18 errors in 27.61s
+2026-10-27T19:43:50.8071332Z ##[error]Process completed with exit code 1.
+2026-10-27T19:43:50.8201624Z Post job cleanup.
+2026-10-27T19:43:50.8887606Z [command]/usr/bin/git version
+2026-10-27T19:43:50.8924158Z git version 2.55.0
+2026-10-27T19:43:50.8954557Z Temporarily overriding HOME='/home/runner/work/_temp/3a02968d-19e8-47b3-a56a-dc4eee5b2108' before making global git config changes
+2026-10-27T19:43:50.8955620Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-27T19:43:50.8959151Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf
+2026-10-27T19:43:50.8995158Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T19:43:50.9026998Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-27T19:43:50.9400963Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T19:43:50.9420698Z http.https://github.com/.extraheader
+2026-10-27T19:43:50.9435893Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-27T19:43:50.9578024Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-27T19:43:50.9937028Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T19:43:50.9970079Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-27T19:43:51.0468684Z Cleaning up orphan processes
+2026-10-27T19:43:51.0783410Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

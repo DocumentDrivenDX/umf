@@ -1,0 +1,12 @@
+{
+  "profile": "umf.combined-qualification-owner-result/1",
+  "runId": 40269617904,
+  "source": "500c59061927c3ac2af88d23e7f1ad12c70c8a08",
+  "artifactId": 12627935515,
+  "zipSha256": "54e2941f0d5ebe3b27514c0800ded19fcf1bca22f1da09bbca68af3abbb4ee6c",
+  "status": "ALL_RUNTIME_PASS_TEST_MATCHER_READONLY_TYPE_ONLY",
+  "passed": "45/45API including complete primary context, independent admitted recovery equality, failure/fresh retry and all later proof/tamper controls;87migration;53R2controls;141Chromium/reproduction;fullsource/r2TypeScript.",
+  "remaining": "Tools TypeScript only: matcher expects mutable array, state.seedLineage is readonly. Root fixes expected value to [...state.seedLineage], retaining complete element equality, production source and all caps/fixture unchanged.",
+  "correctedTestSha256": "d6e00e34d096d3b7ab8de3d2fe2fde4cb9ffbde3ebb7d855ec71910aabd255b3",
+  "next": "Exact full gate before finalnative/merge/release; no broader support claims."
+}

@@ -1,0 +1,18 @@
+{
+  "status": "PORTABLE_QUALIFICATION_FAILED_TOOLS_TYPESCRIPT",
+  "sourceCommit": "a4af875748b085ac531fe06089a675a0ea1059fc",
+  "runId": 40561375337,
+  "runAttempt": 1,
+  "artifactId": 12761456468,
+  "artifactSha256": "e588cd46f70b601f78c2905c1055c9292474bb65b4d3584a4e1e8fd4fcd6c856",
+  "toolsTypeScriptDiagnostics": 60,
+  "independentRecordedPasses": {
+    "apiG02": 45,
+    "fixtureControl": 1,
+    "G03Migration": 87,
+    "R2ControlsParity": 54,
+    "Chromium": 156
+  },
+  "sourceReviewSha256": "baffb5b379d31765b0ee94e3cb0c06b8dc28be072a0521f3f30101f5d5ae4600",
+  "claims": "Actual tools TypeScript failure preserved without relabel. Other passing source-checkpoint results remain bounded observations, not full current SDK qualification. Four-file correction requires genuine hosted output refresh before new qualification. Full original ZIP retained, including generated reproduction source; extracted raw subset contains original text/log/JSON/pin receipts. Native campaign result is independent."
+}

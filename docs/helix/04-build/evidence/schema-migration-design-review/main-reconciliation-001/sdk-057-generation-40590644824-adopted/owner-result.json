@@ -1,0 +1,25 @@
+{
+  "profile": "umf.generated-source-adoption/1",
+  "status": "ACTUAL_GENERATED_OUTPUT_ADOPTED_QUALIFICATION_OPEN",
+  "sourceCommit": "45aa6b90e80bb03a4af4a7a6987bdab5bd7c937f",
+  "sourceTree": "8364cbfecd2a826b12009b3cf5501a0db5ecebde",
+  "runId": 40590644824,
+  "runAttempt": 1,
+  "jobId": 122493680498,
+  "artifactId": 12773519192,
+  "artifactBytes": 736918,
+  "artifactSha256": "7d914620c8e1867771d2f4ee0e2cf87ab3c5e7ab4f9eca04c9159ab30b177eb3",
+  "sourceInputsSha256": "198593092b236bb062fd1407933cf23dbff1179d9141d8318ca56d936cef6ac0",
+  "generatedOutputCount": 27,
+  "changedOutputs": [
+    "docs/helix/04-build/evidence/rust-migration/r3/inventory.json"
+  ],
+  "unchangedOutputs": 26,
+  "canonicalMetamodelOutputsUnchanged": 11,
+  "reviewSha256": "fa8429173c7a8ec68fe1d9678d33418b22e190bc65a9d4cb81817ec2d8eeb35e",
+  "nativePinRowsUnchanged": 34,
+  "portablePinRowsUnchanged": 97,
+  "execution": "Hosted Linux generation only; local inspection used stdlib data/hash/ZIP reads, without candidate execution.",
+  "limits": "Original caps/deadlines retained. Linux CI only. Retained macOS artifacts do not establish fresh macOS runtime qualification; Python3.14 remains unqualified and macosx_11_0 is a static packaging target.",
+  "next": "Batch remaining7199 material findings, then fresh exact-source portable, selected native and normal PR Linux checks; review, merge, immutable release and fresh public proof remain open."
+}

@@ -1,0 +1,41 @@
+{
+  "profile": "umf.g10.governing-adoption-review/0.1",
+  "status": "PASS-design-only",
+  "baseCommit": "3db957baa5f7b8fc204791f4506fa264d1a71c15",
+  "proposalManifestSha256": "fe8ee6ffd096a5e2586e97537ee7338676860aa02cadc6581334f5401d1e9635",
+  "normativeSourceSha256": "86a9736e3eafed40367084574be122f710062641beea47047ce4c405bcdc3cac",
+  "checks": [
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-081-table-lifecycle.md",
+      "priorBytesPreserved": 547642,
+      "candidateSha256": "386dd4692f10ccc6c4525f2e8d6297ad20657227485c353b0e8516609dcc94b8",
+      "appendedBytes": 6603
+    },
+    {
+      "path": "docs/helix/02-design/technical-designs/TD-085-typed-actions-on-raw-tables.md",
+      "priorBytesPreserved": 105731,
+      "candidateSha256": "0125c11d107c41bd3093d862e8b98726b22d7083329893f954509c6ff65fee83",
+      "appendedBytes": 839
+    },
+    {
+      "path": "docs/helix/03-test/test-plans/STP-085-typed-actions-on-raw-tables.md",
+      "priorBytesPreserved": 118569,
+      "candidateSha256": "5a1ae70638d451bc55aae65401567f427c4d640f79b1c4fa7fc6e8d8b141d301",
+      "appendedBytes": 866
+    }
+  ],
+  "assessment": [
+    "Read complete schema grant addendum and original governing001 contract-proposal/step-branches. Adds one exact unreleased schema-grant subject and exhaustive step branch; existing dependency table binding remains required.",
+    "One actual combined renderer statement maps both original audience roles and two catalog rows; original bootstrap authority, complete ACL verification and ingress fences remain required.",
+    "Initial before state lacks both grants; installed unchanged state retains them without redundant grant or revoke, including last-table removal.",
+    "Phase boundaries remain whole-phase boundaries; required grant is ordered after business/data effects and before publication, with original unknown-COMMIT settlement.",
+    "Private complete closed renderer tags require exact public-step projection; historical five-member public steps/bundles/digests remain unchanged.",
+    "All original document prefixes/frontmatter/traceability preserved byte-for-byte; no implementation or native/browser/installed/release acceptance inferred."
+  ],
+  "remaining": [
+    "Product schema/validator/compiler and mixed/historical replay implementation",
+    "Full stated source tests and legacy golden parity",
+    "Genuine bootstrap/ACL, native COMMIT recovery and fenced client qualification",
+    "Portable/browser/installed/native/managed gates, independent source review, merge/release/public-byte verification"
+  ]
+}

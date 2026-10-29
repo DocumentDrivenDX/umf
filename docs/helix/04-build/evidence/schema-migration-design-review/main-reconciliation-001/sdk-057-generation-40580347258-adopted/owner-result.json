@@ -1,0 +1,25 @@
+{
+  "profile": "umf.generated-source-adoption/1",
+  "status": "ACTUAL_GENERATED_OUTPUT_ADOPTED_QUALIFICATION_OPEN",
+  "sourceCommit": "bc61be889067d3e9bd537ea2c7910e189ffb46e1",
+  "sourceTree": "d8cd03324ff7e2a9571a0774a8ed1dad41ff4605",
+  "runId": 40580347258,
+  "runAttempt": 1,
+  "artifactId": 12770575959,
+  "artifactBytes": 736895,
+  "artifactSha256": "dbc962520f66e29af3fdcaa27725eece16aec4f57cc30f18c252be84d5c3803e",
+  "sourceInputsSha256": "43b9cdd82e4822bae8215e83828e1a8cc33b8f6e0b17cafbce0d92969c2f3f30",
+  "generatedOutputCount": 27,
+  "changedOutputs": [
+    "docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json",
+    "docs/helix/04-build/evidence/rust-migration/r3/inventory.json"
+  ],
+  "unchangedOutputs": 25,
+  "canonicalMetamodelOutputsUnchanged": 11,
+  "reviewSha256": "3998ed33957c61a93f2a962b3f45e6a14246af86e42882aa16b0f0c4702225c8",
+  "nativePinRowsUnchanged": 34,
+  "portablePinRowsUnchanged": 97,
+  "execution": "Hosted artifact generation only; no local candidate execution.",
+  "limits": "Original caps and deadlines retained. Linux CI only. Mac retained inputs do not establish fresh Mac runtime qualification.",
+  "next": "Fresh exact-source portable, selected native and normal PR Linux checks, then review/merge/release/public proof."
+}

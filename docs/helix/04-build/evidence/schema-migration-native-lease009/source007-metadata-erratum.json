@@ -1,0 +1,34 @@
+{
+  "profile": "umf.g11.native-lease-source-candidate-erratum/0.1",
+  "packet": "/private/tmp/g11-native-lease-source-007",
+  "currentManifestSha256": "d6eb2a7f073cb024dcb2b84826f0c4a05e51d1b799f9ec125615d2771a299788",
+  "custodyCorrection": {
+    "event": "The candidate packet metadata was modified after an earlier manifest variant had been read-only. Source members were not changed after the 007 source capture, but the manifest and evidence list were updated to add the effect-guard map and rebind evidence hashes.",
+    "earlierManifestSha256": "105bc4e6ee191ef7bf7a1aaf8e6a817d4a87dff17bdb7cff04a6be8adaa50e16",
+    "earlierManifestFileAvailable": false,
+    "sourceMembersUnchangedAcrossMetadataUpdate": true
+  },
+  "probePinCorrection": {
+    "source": "/private/tmp/g11-native-lease-sol-review001/early-probes.py",
+    "sha256": "551cfc1811990c445f32d72ed58966d37ebdf42e8d150fe0013fd1918905779a",
+    "result": "All three expected refusal probes passed against the frozen 007 source snapshot: lock replacement refuses without ledger mutation, copied supervisor projection refuses, and child sentinel is not reached."
+  },
+  "authorshipAndDependencyScope": {
+    "nativeImplementationAndControls": [
+      "python/umf_access/src/umf_access/lifecycle/ingress_local_postgres.py",
+      "python/umf_access/tests/test_original_control_lease.py",
+      "python/umf_access/tests/test_owner_ledger_birth_recovery.py"
+    ],
+    "concurrentIntegrationDependenciesNotClaimedAsThisRevisionAuthorship": [
+      "python/umf_access/src/umf_access/lifecycle/owner_bootstrap.py",
+      "python/umf_access/src/umf_access/lifecycle/ingress_custody.py",
+      "python/umf_access/src/umf_access/lifecycle/owner_authority.py",
+      "python/umf_access/src/umf_access/lifecycle/ingress_store.py",
+      "python/umf_access/tests/test_ingress_custody.py",
+      "python/umf_access/tests/test_ingress_store.py",
+      "python/umf_access/tests/test_owner_authority.py"
+    ],
+    "classification": "The packet freezes all current local Python source dependencies for reproducibility. The packet does not claim authorship or acceptance of concurrent dependency changes. In particular, owner_bootstrap.py's removal of the generic supervisor registrar is a readiness-owned integration change."
+  },
+  "limitations": "Source-only evidence; no native PostgreSQL, initdb/postmaster, service, production or release qualification. The signed database-stage test uses a synthetic connector."
+}

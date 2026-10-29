@@ -1,0 +1,18 @@
+{
+  "status": "SOURCE_CORRECTION_ACCEPTED_HOSTED_QUALIFICATION_OPEN",
+  "sourceBase": "7199c8409d0a67f3a99c1f1fd62ffc0f078d6eb2",
+  "sourceBaseTree": "9d2e08d48d1abe788a0af20f5c2f45bdaaf94041",
+  "actualProducerP": "06494602fe83d1af90f743243dad6afb7921206c",
+  "runId": 40582139014,
+  "failure": "41 actual Ruff diagnostics: compatibility selfalias PLC0414, import sorting, unused extracted imports and one adjacent-context SIM117.",
+  "correction": "Fixed private-module aliases and explicit same-object compatibility assignments, unused-import removal and adjacent context combination. No suppression, wrapper or semantic weakening.",
+  "reviewSha256": "f6e7b908ad6b7eace943a81804c3f2f1155a1490d8e52ce99be02d896bc017a7",
+  "sourcePostimages": {
+    "python/umf_access/src/umf_access/lifecycle/ingress_custody.py": "4a5c78004e88eaddaf8ce0529b3e6304b97939e5c7e3b120da801a934439c1b7",
+    "python/umf_access/src/umf_access/lifecycle/row_originals_creation.py": "a767425c1354af11929611273f0b8815d764dae731f841158ae024da0f88d6b3",
+    "python/umf_access/tests/test_g03_host.py": "09020973aca090a3547995460a3ffd7cceef4f9569dc515e0961ba87bf207fdc",
+    "python/umf_access/tests/test_ingress_local_postgres.py": "b9d7aa9cc29fc2734c60d9c7e11ab590771fee7f0cee582b575d2586347e6aee"
+  },
+  "execution": "NONE locally; no hosted successor lint claim.",
+  "pushDisposition": "Hold until remaining current campaign material results can be batched."
+}

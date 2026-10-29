@@ -1,0 +1,282 @@
+{
+  "profile": "umf.g02-g03-selected-native-qualification-pins/1",
+  "status": "PROPOSAL_NOT_EXECUTED",
+  "workflow": ".github/workflows/g02-g03-native-qualification.yml",
+  "qualificationBranch": "codex/migration-g02-g03-native-qualification",
+  "reviewBasis": {
+    "profile": "umf.g02-g03-native-integration-source-review/1",
+    "disposition": "SOURCE_ACCEPT_BOUNDED",
+    "baseCommit": "e66381bb81337bb58ee958121fec4753f4e5b843",
+    "receiptSha256": "84242306cd236bd845014b06976b22b12f31578913be41700abb22c9d812fbfa",
+    "sourceReviewExecution": "NONE"
+  },
+  "target": {
+    "runner": "ubuntu-24.04 x86_64",
+    "python": "3.11",
+    "bun": "1.4.3",
+    "postgresImage": "postgres:18.6",
+    "requiredServerVersionNum": "180006",
+    "dsnBounds": {
+      "connectTimeoutSeconds": 5,
+      "statementTimeoutMilliseconds": 120000,
+      "lockTimeoutMilliseconds": 5000,
+      "commandTimeoutSeconds": 180,
+      "commandKillGraceSeconds": 10,
+      "aggregateWorkTimeoutSeconds": 1740,
+      "evidenceReserveSeconds": 60,
+      "jobTimeoutMinutes": 35
+    },
+    "executionConcurrency": {
+      "g02TemporalMaximumWorkers": 2,
+      "perWorkerCodegenVmHardMemoryBytes": 536870912,
+      "peakOverlappingCodegenVmHardMemoryBytes": 1073741824,
+      "githubRunnerEnvironmentCapUnchanged": true
+    }
+  },
+  "dependencyPins": {
+    "sourceCohort": "Current Access/Codegen wheels built from github.sha; published Core and Weft retain their separate release/build identities in cohort.lock.json.",
+    "cohortProfile": "python/packaging/embedder-wheel-lock.template.json",
+    "cohortProfileSha256": "1ad4bf560a2c499e76fc434aa1f43adffc4d19d0be60699d0ed1f2ab1cd997d9",
+    "weft": {
+      "distribution": "umf-weft",
+      "version": "0.4.55",
+      "wheel": "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sha256": "b34ca17fa37412afa7b8e8bd86aac8ee67a3c895a9b253221e1d582b39073a85"
+    },
+    "core": {
+      "distribution": "umf-core",
+      "version": "0.10.3",
+      "wheel": "umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl",
+      "sha256": "cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75",
+      "nativeSha256": "c51b511a06bc1ccde6cc2208d33a4fb70ef66c67507ba8f2a6ea05fd2543cf57"
+    },
+    "wheelBuilder": {
+      "build": "1.3.0",
+      "hatchling": "1.27.0",
+      "requirementsFile": "docs/helix/04-build/evidence/mig-g02-g03/build-tools-requirements.txt",
+      "requirementsFileSha256": "e83304c7c1ec7b5d6eb26ca519b3b72a20dbd693d899753b8dce9f1bd3ded84c",
+      "wheelHashesAreEnforced": true
+    },
+    "pythonRuntimeInstall": "offline --require-hashes from the generated cohort mirror; generated lock and wheel hashes are retained as run evidence"
+  },
+  "sourcePins": {
+    "tests/lifecycle/g02-temporal-native-fixture.ts": {
+      "sha256": "3f560b6be517d5328c08717239c8728dedbeae4a6e25f95538b2e8405c805122",
+      "purpose": "G02 temporal five-case fixture generator"
+    },
+    "tests/lifecycle/g02-temporal-native.py": {
+      "sha256": "5c11f8861ba66161ca6a578e6ac4b6f384da655275d608fe28c1eedcfb19280e",
+      "purpose": "G02 temporal PostgreSQL 18 native runner"
+    },
+    "tests/lifecycle/g03-defaults-native-fixture.ts": {
+      "sha256": "8547d5f51aa0af84fc693bb2283ec35fc1aaa255ca3d79ee6a187227a9e7bf6d",
+      "purpose": "G03 fixed-source fixture and case-status generator"
+    },
+    "tests/lifecycle/g03-defaults-native.py": {
+      "sha256": "2f4553a0f6c1c364aecc0541d4a4bbf876cce8bb5407514cf8f4473470b51958",
+      "purpose": "G03 selected-scenario PostgreSQL 18 native runner"
+    },
+    "tests/lifecycle/g03_campaign_orchestration.py": {
+      "sha256": "fe2fa9bee0f648e24095d9fb5b30d2430ebde351f3db42261d69d14d476dd265",
+      "purpose": "Imported G03 fixed-roster helper; pinned even though this gate does not invoke the campaign selector"
+    },
+    "tests/binding/fixtures/table-lifecycle-note.json": {
+      "sha256": "0f8a2f5d38d32514ec38fc3bbe393c5b88d45c251c2ae05ac23bea261b0e94ee",
+      "purpose": "Shared source fixture imported by both G02 and G03 fixture generators"
+    },
+    "package.json": {
+      "sha256": "c7b69fba001805dc9cd4e26e84a9b786be379c1413d020c34600c063d287101b",
+      "purpose": "Bun fixture-generation environment"
+    },
+    "bun.lock": {
+      "sha256": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4",
+      "purpose": "Frozen Bun dependency graph"
+    },
+    "tests/codegen/acquire_offline_cohort.py": {
+      "sha256": "7bc10736496b3116eb81b9688321f15e3996e636024f9c0e07f4a96d27911d7f",
+      "purpose": "Existing current-source cohort acquisition and lock construction"
+    },
+    "scripts/python-package-mirror.py": {
+      "sha256": "11d57f3b166728ffa75a6a2a7d19a740220f1a7f5ba3a2d45b302888c1daeb7f",
+      "purpose": "Existing wheel mirror and hash-lock implementation"
+    },
+    "tests/codegen/offline_mirror_probe.py": {
+      "sha256": "b8cc2330539640168d97491aeb118922a796b4a30d20fcc66cb3ec0d19aabee7",
+      "purpose": "Existing offline installation and network-denial probe"
+    },
+    "tests/codegen/verify_mini_racer_wheel.py": {
+      "sha256": "91b096c95a96933edb6065fe4aaa84ae797cdde9bac9fce5e2fdaa024ce4ba0e",
+      "purpose": "Existing platform wheel verification used by the cohort workflow"
+    },
+    "docs/helix/04-build/evidence/praxis-embedder/mini-racer-wheel-pins.json": {
+      "sha256": "834388231050ac831f5a59623155f71cc8d5269d8189e54f21d929d1ea25862f",
+      "purpose": "Existing public platform-wheel pins checked before building the runtime cohort"
+    },
+    "python/umf_access/pyproject.toml": {
+      "sha256": "73889fb402ed50d253dd76c4bad1cff5a0c3d7b68885dfd5d32e8b17d0557003",
+      "purpose": "Current-source UMF access wheel build inputs"
+    },
+    "python/umf_codegen/pyproject.toml": {
+      "sha256": "07253df785a646223c12051e41e3a07b0d5806e442b5aec96f8dce9362d30620",
+      "purpose": "Current-source UMF compiler wheel build inputs"
+    },
+    "scripts/build-codegen.ts": {
+      "sha256": "aa0854e148e47b6f0d5e385841a2d602155db2dc0a1f3cb8901f55b217bdcd9b",
+      "purpose": "Reviewed deterministic codegen rebuild and output hash-check script"
+    },
+    "scripts/codegen/gzip.ts": {
+      "sha256": "ac7316a19cf573d91e20d54f17f65c5b7093669d5a72bb0523edf72c52a87ed3",
+      "purpose": "Reviewed deterministic generator asset compression input"
+    },
+    "python/umf_codegen/src/umf_codegen/_release.py": {
+      "sha256": "2ae57c276f24c6aa9e93402fb95a431369089aa42fb6eee851baf2ede612bfed",
+      "purpose": "Reviewed pre-rebuild generated release manifest reference"
+    },
+    "python/umf_codegen/src/umf_codegen/_assets/manifest.json": {
+      "sha256": "ad326f5c95d4c9dde9ec09d9413aac156e50a1e0b1934cc357b249fd560a6e95",
+      "purpose": "Reviewed pre-rebuild generated codegen input/output hash manifest"
+    },
+    "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz": {
+      "sha256": "3f48410cb6013c2321ecb6f142779123730bfa9f85bbaabab1b412d5984cdd47",
+      "purpose": "Reviewed pre-rebuild bundled generator output; refreshed and hash-checked before wheel build"
+    },
+    "python/umf_codegen/src/umf_codegen/_assets/notices/ajv/LICENSE": {
+      "sha256": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3",
+      "purpose": "Reviewed pre-rebuild bundled Ajv license output"
+    },
+    "python/umf_codegen/src/umf_codegen/_assets/notices/ajv/package.json": {
+      "sha256": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
+      "purpose": "Reviewed pre-rebuild bundled Ajv package metadata output"
+    },
+    "python/umf_codegen/src/umf_codegen/_assets/notices/fast-deep-equal/LICENSE": {
+      "sha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a",
+      "purpose": "Reviewed pre-rebuild bundled fast-deep-equal license output"
+    },
+    "python/umf_codegen/src/umf_codegen/_assets/notices/fast-deep-equal/package.json": {
+      "sha256": "a5c63940db0260739be9e2ac67f3aac268df4db5770420ee4e34e493152f97d2",
+      "purpose": "Reviewed pre-rebuild bundled fast-deep-equal package metadata output"
+    },
+    "python/umf_codegen/src/umf_codegen/_assets/notices/fast-uri/LICENSE": {
+      "sha256": "b010b0dfdfdb23d7396e03b82cd4621fc9bb8f95d6b0aea70b9c24e12074c786",
+      "purpose": "Reviewed pre-rebuild bundled fast-uri license output"
+    },
+    "python/umf_codegen/src/umf_codegen/_assets/notices/fast-uri/package.json": {
+      "sha256": "30cad05aad3d3596513706451dbfc7e0422f9c1d00f2903ecc34580327d54bc7",
+      "purpose": "Reviewed pre-rebuild bundled fast-uri package metadata output"
+    },
+    "python/umf_codegen/src/umf_codegen/_assets/notices/json-schema-traverse/LICENSE": {
+      "sha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a",
+      "purpose": "Reviewed pre-rebuild bundled json-schema-traverse license output"
+    },
+    "python/umf_codegen/src/umf_codegen/_assets/notices/json-schema-traverse/package.json": {
+      "sha256": "156fb24af02845c190701360d06dfda35ef04282e34a734289ea9535ad9819ae",
+      "purpose": "Reviewed pre-rebuild bundled json-schema-traverse package metadata output"
+    },
+    "python/umf_codegen/src/umf_codegen/_assets/notices/yaml/LICENSE": {
+      "sha256": "5bba27375d93e9119f76c1015f7672cf9ad5f70952296e0842fb2243d6376869",
+      "purpose": "Reviewed pre-rebuild bundled YAML license output"
+    },
+    "python/umf_codegen/src/umf_codegen/_assets/notices/yaml/package.json": {
+      "sha256": "1c6441703d8204a23ded0d37ddf57c3b69d821dc392f20852d1f605bb9b8861c",
+      "purpose": "Reviewed pre-rebuild bundled YAML package metadata output"
+    },
+    "python/packaging/embedder-wheel-lock.template.json": {
+      "sha256": "1ad4bf560a2c499e76fc434aa1f43adffc4d19d0be60699d0ed1f2ab1cd997d9",
+      "purpose": "Existing 18-wheel public dependency cohort template"
+    },
+    "docs/helix/04-build/evidence/mig-g02-g03/build-tools-requirements.txt": {
+      "sha256": "e83304c7c1ec7b5d6eb26ca519b3b72a20dbd693d899753b8dce9f1bd3ded84c",
+      "purpose": "Hash-locked public wheel builder toolchain"
+    },
+    "tests/codegen/cohort_selector.py": {
+      "sha256": "a300e173f000c949c5d3ab3f385b083279a58294c91276847af74b72ef391bb7",
+      "purpose": "Strict immutable-release selector and exact original18 dependency-closure guard imported by current acquisition and probe"
+    },
+    "tests/codegen/aggregate_cohort.py": {
+      "sha256": "e2d50857b911c135df1489e671fdf7eadbaa1d8ddd283ec019546d1db68c5a63",
+      "purpose": "Closed four-cell union validator imported by offline probe; selected-native gate uses the existing single-cell mode"
+    }
+  },
+  "codegenRefresh": {
+    "buildCommand": "bun scripts/build-codegen.ts",
+    "postBuildHashPreservationCommand": "bun scripts/build-codegen.ts --check",
+    "reviewedPreBuildGeneratedOutputsArePinned": true,
+    "postBuildHashReceipt": "reports/codegen-generated-outputs.json",
+    "staleGeneratedOutputGuardBypassed": false
+  },
+  "generatedInputPins": {
+    "g02TemporalFixture": {
+      "version": "umf.g02-temporal-native-fixture/1",
+      "reviewedArtifactSha256": "91a419debb54378a60982480259c48e02860695229ef8eed748a25758f8426fb",
+      "caseIds": [
+        "temporal-birthday-date-coalesce",
+        "temporal-instant-copy-coalesce",
+        "temporal-uuid-copy-coalesce",
+        "temporal-boolean-copy-coalesce",
+        "temporal-matched-null-date-rollback"
+      ]
+    },
+    "g03DefaultsFixture": {
+      "version": "umf.praxis.g03-defaults-native-fixture/1",
+      "statusMustRemain": "SOURCE_ONLY_ALL_NATIVE_CASES_UNRUN",
+      "caseStatusMustRemain": {
+        "G03-N12": "UNQUALIFIED_COMPATIBLE_WEFT_02_COHORT_REQUIRED",
+        "G03-N14": "SERIAL_CLEANUP_CAMPAIGN_SOURCE_IMPLEMENTED_NATIVE_UNRUN_FULL_CASE_OPEN"
+      }
+    }
+  },
+  "selectedNativeScope": {
+    "g02Temporal": "all five fixture cases",
+    "g03ScenarioArguments": [
+      "transitions",
+      "empty",
+      "required",
+      "admission-refusal",
+      "semantics",
+      "rollback",
+      "commit-observation",
+      "finalize-observation",
+      "finalize-before-publication",
+      "unknown-no-commit",
+      "writer-barrier",
+      "domains",
+      "tampering"
+    ],
+    "g03DomainSubscenarioArguments": [
+      "domain-date",
+      "domain-text",
+      "domain-decimal",
+      "domain-uuid-selected",
+      "domain-currentTimestamp"
+    ],
+    "g03CaseIds": [
+      "G03-N01",
+      "G03-N02",
+      "G03-N03",
+      "G03-N04",
+      "G03-N05",
+      "G03-N06",
+      "G03-N07",
+      "G03-N08",
+      "G03-N09",
+      "G03-N10",
+      "G03-N11",
+      "G03-N13"
+    ],
+    "explicitlyNotQualified": [
+      "G03-N12 ordinary selected-module .2 execution: UNQUALIFIED pending compatible Weft .2 cohort",
+      "G03-N14 and the full serial G03 campaign: OPEN; campaign selector is never invoked"
+    ],
+    "aggregateDecision": "PASS_SELECTED_NATIVE_SUBCASES_FULL_CASE_OPEN; never label this a full G03 pass"
+  },
+  "evidenceLimits": {
+    "capturedRunArtifactsMaximumBytes": 16777216,
+    "capturedCommandLogsMaximumBytes": 1048576,
+    "freshFailureReceipt": true,
+    "noSecrets": true,
+    "noPrivateOrManagedTargets": true,
+    "disposableServiceOnly": true,
+    "noLocalVmOrUserDatabase": true
+  },
+  "reviewBasisScope": "Historical baseline source acceptance only. Current combined-source acceptance is recorded separately with the exact candidate/source ledger; this preserved baseline receipt does not accept the refresh."
+}

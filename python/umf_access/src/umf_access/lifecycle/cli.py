@@ -122,7 +122,7 @@ def main(argv=None):
 
             raw = args.plan.read_bytes()
             plan = verify_table_migration(json.loads(raw))
-            if plan.get('version') == 'umf.table-migration/0.3':
+            if plan.get('version') in ('umf.table-migration/0.3','umf.table-migration/0.4','umf.table-migration/0.5'):
                 _require_host_arguments(args)
                 head = _required_head(args.expected_head)
             else:
@@ -130,7 +130,7 @@ def main(argv=None):
                     raise CatalogError('migration-head-required')
                 head = None if args.expected_head == 'initial' else args.expected_head
             file_digest = hashlib.sha256(raw).hexdigest()
-            if plan.get('version') == 'umf.table-migration/0.3':
+            if plan.get('version') in ('umf.table-migration/0.3','umf.table-migration/0.4','umf.table-migration/0.5'):
                 _require_host_profile(plan)
                 if args.repair_invalid:
                     raise CatalogError('repair-profile-unsupported')
@@ -175,7 +175,10 @@ def main(argv=None):
         return 0
     except Exception as error:  # noqa: BLE001 -- fixed sanitized process boundary, never DSN/native data
         code = str(error) if isinstance(error,CatalogError) else getattr(error,'code','LIFECYCLE_FAILED')
-        print(json.dumps({'status':'blocked','code':code}),file=sys.stderr)
+        payload = {'status':'blocked','code':code}
+        if isinstance(error,CatalogError) and error.sqlstate is not None:
+            payload['sqlstate'] = error.sqlstate
+        print(json.dumps(payload),file=sys.stderr)
         return 1
 
 
@@ -189,7 +192,13 @@ def _add_host_arguments(command, *, include_receipt=False):
 
 
 def _require_host_profile(plan):
-    if (plan.get('version') != 'umf.table-migration/0.3'
+    expected_options = {
+        'umf.table-migration/0.3': 'umf.table-migration-options/0.3',
+        'umf.table-migration/0.4': 'umf.table-migration-options/0.4',
+        'umf.table-migration/0.5': 'umf.table-migration-options/0.5',
+    }
+    if (plan.get('version') not in expected_options
+            or plan.get('options', {}).get('version') != expected_options.get(plan.get('version'))
             or plan.get('approvalProfile') != {
                 'version':'umf.table-migration-approval/0.1',
                 'relation':'umf_lifecycle_approvals','ownerOnly':True}):

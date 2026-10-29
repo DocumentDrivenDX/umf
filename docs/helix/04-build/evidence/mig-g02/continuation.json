@@ -1,0 +1,203 @@
+{
+  "phase": "Weft 0.4.53 dependency release published; root and independent fresh-asset verification passed; final UMF source CI/cohort/release gates remain open",
+  "baseCommit": "009c042545a17b49ea857eff22d0fcf3fd71ef44",
+  "designReviewerThread": "01a1605c-de92-72c0-afcd-0498b7422c1c",
+  "governingInputs": [
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-081-table-lifecycle.md",
+      "sha256": "bc6373ccc72452174caa941e01edcab0fa0bfbbeed8bde4f2682e40026492574"
+    },
+    {
+      "path": "docs/helix/02-design/solution-designs/SD-007-schema-migrations.md",
+      "sha256": "76620af44e6fd389819ce5230f8bd5714ea403ed9820ba504d90d2f2e5f9d8e5"
+    },
+    {
+      "path": "docs/helix/02-design/technical-designs/TD-085-typed-actions-on-raw-tables.md",
+      "sha256": "29f61cd70ef72e3318da38da0ba2acb70fe016271093a11e68f29e209983285c"
+    },
+    {
+      "path": "docs/helix/03-test/test-plans/STP-085-typed-actions-on-raw-tables.md",
+      "sha256": "a5a54495aaf1138472a507ed34de9d80535c1bc24b712016bcb4244a99cc5464"
+    },
+    {
+      "path": "docs/helix/04-build/schema-migration-plan.md",
+      "sha256": "882a61ee0798d6fe54f6035cb7fdaedc78cd877ee71575747870f855e7502c51"
+    }
+  ],
+  "baseline": {
+    "umfMigrationTests": 22,
+    "assertions": 121,
+    "weftOperationTests": 19,
+    "boundaryViolations": 0
+  },
+  "noPraxisChanges": true,
+  "nativeFeasibility": "5 temporary-table guard cases pass; not implementation qualification",
+  "remaining": "Complete final UMF current-source hosted CI, integrate and qualify the selected SDK/package cohort, complete UMF source/native/license custody and release review, then merge/tag and verify the UMF release. Weft 0.4.53 is already published and independently verified. Managed consumer/backend qualification and G03-G11 remain separate. No Praxis changes.",
+  "decisions": [
+    "Append target CHECKs must permit NULL staging or refuse",
+    "New .2 text literals reject NUL/unpaired surrogates",
+    "Ordinary generated action catalogs exclude administrative .2; ordinary runtime remains .1-only",
+    "Finite guard covers all numeric references, including unused conditional branches"
+  ],
+  "agents": {
+    "g02_readiness": "AST/schema/ordinary-client exclusion",
+    "g02_weft": "Weft shared Rust admission/PostgreSQL guard",
+    "g02_migration_host": "migration/options/host/native fixtures"
+  },
+  "candidateState": {
+    "004": "Historical preliminary immutable artifacts/browser receipt only; superseded after source-review fixes.",
+    "005": "Historical preliminary; superseded after exponent cancellation, intrinsic NULL carrier and NULL-safe conditional comparison findings were fixed.",
+    "006": "Historical preliminary: 31-case native/WASM parity, primary 20 native cases and three fault scenarios passed. Superseded for current qualification by later UMF source-admission and Weft predicate-domain fixes.",
+    "007": "Historical preliminary: UMF JSON-source correction, installed SDK checks and Chromium ran. Its native rerun and Weft006 binary are not current qualification evidence.",
+    "008": "Frozen Weft compiler 7413c19d16ca5d8d8ce60b62d49ca0a3250544df with UMF input checkpoint fa722648c8a70044a31420b32c3979253493dbe5 and Weft metadata head 5d196ea3184b1a711bb4bcf91215a496c18ce9b2. Independent review passed for its recorded bytes: PostgreSQL 18.6/macOS arm64 host cases 37, fault assertions 87, no-default append assertions 19, literal admission/bind cases 37, Chromium native/WASM cases 47, installed SDK cases 139 and exact Python/native plan cases 37. Candidate008 is superseded only for Access package custody by candidate009; its unchanged compiler/SDK/Weft evidence is inherited. The unchanged Weft 0.4.53 compiler wheel was later published and both root and independent fresh-asset verifiers passed; Access package custody was superseded by 009.",
+    "009": "Fresh Access 0.1.0.dev8 wheel/sdist from source 63f1f50d4cbfad5949e382fce2d5fcbacfd611e0 replaces Access008; codegen007, SDK007, Weft008 and original Core0.10 bytes are reused. Independent review passed for recorded candidate bytes: 9 installed unit controls, one native unique-privacy case, two native guard/rollback cases, three recovery scenarios/87 assertions, 19 no-default append assertions and 18 runtime distributions. Local PostgreSQL 18.6/macOS arm64. Final Linux native CI and release decisions remain separate. Weft 0.4.53 dependency publication is complete and independently verified; UMF release gates remain separate."
+  },
+  "verificationLimits": [
+    "Candidates 008/009 qualify the recorded compiler/host/package bytes on local PostgreSQL 18.6 macOS arm64. Weft 0.4.53 is now published and the three assets were independently checked; Linux G02 native functional execution is not claimed.",
+    "Candidate008 provides 47-case UMF/installed-Weft/native/WASM agreement in real Chromium 153.0.8010.12 and 25 focused Weft PostgreSQL compiler tests; this parity does not itself prove database execution.",
+    "Candidate009 uses a fresh offline 18-distribution runtime environment and records Access package/source equality; its checks do not qualify additional platforms or managed consumers.",
+    "The independent replay fixture is retained as a compressed source-bound oracle and is linked below; archive and review records bind their exact hashes.",
+    "The full selected profile remains one existing table/target, at most10,000 rows, bounded expressions/literals and retained JSON predecessor/successor sources. No arbitrary SQL or general transform protocol is qualified.",
+    "The earlier local Docker wrapper failure due to its credential helper remains historical only; no broad-wrapper pass is claimed.",
+    "Publication evidence verifies the external Weft 0.4.53 dependency only; it does not complete UMF current-source CI, selected cohort integration, UMF release review or UMF publication."
+  ],
+  "sourceCheckpoints": {
+    "umfInitial": "8a79d269e648f17ae1e24841ebc02b5f17020973",
+    "weftInitial": "1639d43fce681480a722eb3447b32837585ba42b",
+    "weftNumericNullFix": "54a8af9d02827cce85374db56e9cd50fbb7de97c",
+    "umfNullCarrierFix": "76ff1cc787cc5d9b3970ab287832176bed7839a2",
+    "umfJsonSourceAdmission": "04097327ead1977c320be33d0d1abd85e6e0225a",
+    "weftPredicateDomainFix": "7413c19d16ca5d8d8ce60b62d49ca0a3250544df",
+    "weftMetadataHead": "5d196ea3184b1a711bb4bcf91215a496c18ce9b2",
+    "umfAccessFinal": "63f1f50d4cbfad5949e382fce2d5fcbacfd611e0"
+  },
+  "openFindings": [],
+  "currentSourceCheckpoint": "63f1f50d4cbfad5949e382fce2d5fcbacfd611e0",
+  "resolvedFindings": [
+    {
+      "id": "G02-predicate-field-literals",
+      "status": "Resolved in Weft compiler source 7413c19d16ca5d8d8ce60b62d49ca0a3250544df; independently covered in frozen candidate008/009 review.",
+      "historicalReproduction": "/private/tmp/g02-predicate-domain-probe.py",
+      "historicalReport": "/private/tmp/g02-predicate-domain-probe.json",
+      "resolution": "Weft .2 comparison and IN literal admission now follows UMF Field logical wrapper, nullability and declared value facets, while leaving native storage width/length constraints out of predicate transport admission. Frozen corpus contains positive and negative required/optional NULL, membership, range, length, integer/decimal wrapper, IN and native-capacity cases.",
+      "evidencePath": "docs/helix/04-build/evidence/mig-g02/weft-wasm-008/predicate-umf-weft-parity-valid-model-008.json",
+      "evidenceSha256": "28889d1481fa852c866be265632d96c0ad8753cdd7f55372a3e8a41de0fba1f0"
+    }
+  ],
+  "independentReviewEvidence": {
+    "candidate008": {
+      "review": "docs/helix/04-build/evidence/mig-g02/independent-review/candidate-008-review.json",
+      "reviewSha256": "fe5ddd481f8ca574bd23854c607f48d353e4012873896acadbfaf53168e03f11",
+      "archive": "docs/helix/04-build/evidence/mig-g02/independent-review/candidate-008-independent-evidence.tar.gz",
+      "archiveSha256": "eff02abb641c3955b3a99c884d268df86f8852e42b0292d3834b2d9e2267702d",
+      "archiveCustody": "docs/helix/04-build/evidence/mig-g02/independent-review/candidate-008-independent-archive.json",
+      "archiveCustodySha256": "554dff0493a1698872dc8f1549cfb08e5ce0909e516d822ebeb804ab57eed996",
+      "reviewResult": "passed-for-recorded-candidate; release not approved",
+      "manifestSha256": "51d8f62a1e0cca768221ba2e8938058a09d10753ef31f48df7b4e9a60b71450c"
+    },
+    "candidate009": {
+      "review": "docs/helix/04-build/evidence/mig-g02/independent-review/candidate-009-review.json",
+      "reviewSha256": "1d6755601ae0d8297c80d2465f3fffe04f397d47447ec8e92342e009db3fa40e",
+      "archive": "docs/helix/04-build/evidence/mig-g02/independent-review/candidate-009-independent-evidence.tar.gz",
+      "archiveSha256": "092b2db842101fe9aac485e05c8d79775b048602b671189a9c83e91467a64d86",
+      "archiveCustody": "docs/helix/04-build/evidence/mig-g02/independent-review/candidate-009-independent-archive.json",
+      "archiveCustodySha256": "c9b55eb7f97b3ca828deb40dd0abc61614bbed58fe77f25d5d90d10b0483480d",
+      "reviewResult": "passed-for-recorded-candidate; release not approved",
+      "manifestSha256": "697e45839dbd25a0d58d5a2ec3ff0275d21ddad2716639264656dc5b22555122"
+    },
+    "independentNativeReplayFixture": {
+      "path": "docs/helix/04-build/evidence/mig-g02/independent-review/independent-native-replay-fixture.json.gz",
+      "sha256": "c29ee30dd76e6e4fbbf6ceea64cb22d77764c2a349081819d0d7ac1c1dc59af1",
+      "custodyPath": "docs/helix/04-build/evidence/mig-g02/independent-review/independent-native-replay-fixture-custody.json",
+      "custodySha256": "9f21bffc83a445c315ee5cea6908d61c9d9ba0bbc5a346b9d0daa81af6cecb1e",
+      "scope": "Independent replay oracle bound to the008/009 review archives; the archive payloads were not modified."
+    }
+  },
+  "candidateArtifactIdentities": {
+    "candidate008": {
+      "weftSource": "7413c19d16ca5d8d8ce60b62d49ca0a3250544df",
+      "weftMacWheelSha256": "4c8281945b852af02cae8602747fb7b1b652ab3a1369d7650efce62ae6d35c6c",
+      "weftNativeModuleSha256": "1c7692578ff60ec4f6d243c9356609c042cd749f407ed8f47640081a7e93fdbc",
+      "umfOperationSchemaSha256": "5634f932533cebb972ba27b96d60802e2bc4f154cc1ef65b2d4c25cecfe3351e",
+      "wasmParityCorpusSha256": "c16886819f488f2bf0365b0604ef6fb911c389e4075d55e95591c4fb9a72e3da",
+      "wasmParityReportSha256": "5231300eae50ad6ada53388d903e20aabb07d44d531fad8a339416f409b14ce0",
+      "weftPackagingReceiptSha256": "d7890192fcf96220e84495a4531479a3cae998c03ad6809b40e41ae7843a76c4"
+    },
+    "candidate009": {
+      "accessSource": "63f1f50d4cbfad5949e382fce2d5fcbacfd611e0",
+      "accessWheelSha256": "e5f68b12375e9181db531fdb2e49eca9e2ba61498a0cd2ebc0defc38efe99faf",
+      "accessSdistSha256": "f9fbcdb04df144cc558b03d98a0fca5862510aa65611bb8dbde82f85e2e326da",
+      "weft008WheelSha256": "4c8281945b852af02cae8602747fb7b1b652ab3a1369d7650efce62ae6d35c6c",
+      "weft008NativeModuleSha256": "1c7692578ff60ec4f6d243c9356609c042cd749f407ed8f47640081a7e93fdbc",
+      "accessBuildManifestSha256": "697e45839dbd25a0d58d5a2ec3ff0275d21ddad2716639264656dc5b22555122",
+      "runtimeEnvironmentAddendum": "/private/tmp/umf-g02-candidate-009-artifacts/runtime-environment-addendum.json",
+      "runtimeEnvironmentAddendumSha256": "009a3adbbe64a4074b334e241b0ddfd42d598c64b3c8698587d940d9d8957a7a",
+      "reuse": "codegen007, SDK007 and original Core0.10 distributions retained byte-for-byte; Weft008 retained byte-for-byte.",
+      "runtimeWheelCustodyPath": "docs/helix/04-build/evidence/mig-g02/independent-review/candidate-009-runtime-wheel-custody.json",
+      "runtimeWheelCustodySha256": "82aafc27925909db73c9af46ab97aab881ec7666984aeb800e36ecc144b86080",
+      "runtimeWheelCustodyCoverage": "18 selected runtime wheels; 584 installed payload members byte-equal to selected wheel members.",
+      "primary009EvidenceArchive": "docs/helix/04-build/evidence/mig-g02/primary-009/primary-009-evidence.tar.gz",
+      "primary009EvidenceArchiveSha256": "e2f5f308682a3cf2ccd4c793409733823153ddbe4ce45fd9c55e06c3880dcc5b",
+      "primary009EvidenceManifest": "docs/helix/04-build/evidence/mig-g02/primary-009/primary-009-manifest.json",
+      "primary009EvidenceManifestSha256": "0570c2bb02a7651ad17ea372650d8b034b05e50aa81dbed0872ec1803e1f9104",
+      "primary009EvidenceArchiveMembers": 31
+    }
+  },
+  "finalWeftCiReceipt": {
+    "path": "docs/helix/04-build/evidence/mig-g02/weft-ci-5d196/receipt-final.json",
+    "sha256": "67cc0a176aa4c54f508bd2aec0234488492a16ea82466510c73e81cfd2cd32e2",
+    "memberHashManifest": "docs/helix/04-build/evidence/mig-g02/weft-ci-5d196/members.sha256",
+    "memberHashManifestSha256": "455c65c1d013477ed7ee0a58140acd917fa7c07abd2571491d05607b0f6ff5b3",
+    "sourceCommit": "5d196ea3184b1a711bb4bcf91215a496c18ce9b2",
+    "checkoutCommit": "c6414d163f270425027db08ef454747904bde406",
+    "sourceAndCheckoutTree": "82913d1be942577389b6568d900cdf7c0ec3a20f",
+    "selectedJobCount": 4,
+    "status": "all four selected source-defined PR checks passed at exact head 5d196ea3184b1a711bb4bcf91215a496c18ce9b2; Weft 0.4.53 subsequently published and root/independent fresh-asset verification passed; UMF final CI/cohort/release gates remain separate.",
+    "archivePath": "docs/helix/04-build/evidence/mig-g02/weft-ci-5d196/weft-ci-5d196-evidence.tar.gz",
+    "archiveSha256": "99aae101f641ab520698630ef78edb413982569259e32793d619e5f74885d103",
+    "archiveManifestPath": "docs/helix/04-build/evidence/mig-g02/weft-ci-5d196/archive-manifest.json",
+    "archiveManifestSha256": "6c4e62c8ea403f828ba51c9328fe60f307da51320ffbcb222c9b43b51daccc09",
+    "historicalMemberInventoryPathInsideArchive": "weft-ci-5d196/members.sha256",
+    "historicalMemberInventorySha256": "455c65c1d013477ed7ee0a58140acd917fa7c07abd2571491d05607b0f6ff5b3"
+  },
+  "weftPublication": {
+    "status": "published-and-verified",
+    "repository": "DocumentDrivenDX/weft",
+    "version": "0.4.53",
+    "tag": "v0.4.53",
+    "releaseId": 422347988,
+    "publishedAt": "2026-10-23T22:07:21Z",
+    "releaseUrl": "https://github.com/DocumentDrivenDX/weft/releases/tag/v0.4.53",
+    "mergeCommit": "726a840e956e25217d6aeea2674fdfcf3f342a24",
+    "mergeTree": "82913d1be942577389b6568d900cdf7c0ec3a20f",
+    "packagingSourceCommit": "7413c19d16ca5d8d8ce60b62d49ca0a3250544df",
+    "packagingRunId": 40019944651,
+    "promotionRunId": 40031490546,
+    "promotionStatus": "success",
+    "automaticTagRunId": 40031224537,
+    "automaticTagRunStatus": "completed/cancelled before macOS staging",
+    "evidenceManifest": "docs/helix/04-build/evidence/mig-g02/weft-publication-0.4.53/manifest.json",
+    "assetInventorySha256": "3ce9110319b90f264f0d542a8728018b86dbe55814fcf161b5245f2de142f2b9",
+    "rootVerifier": {
+      "path": "docs/helix/04-build/evidence/mig-g02/weft-publication-0.4.53/root-verification/verification.json",
+      "sha256": "38595ee113837f706caeee75ed5fc012ba414868a4b7e3d743589b636bcde73b",
+      "status": "passed-local-asset-verification"
+    },
+    "independentVerifier": {
+      "path": "docs/helix/04-build/evidence/mig-g02/weft-publication-0.4.53/independent-review/verification.json",
+      "sha256": "38595ee113837f706caeee75ed5fc012ba414868a4b7e3d743589b636bcde73b",
+      "status": "passed-local-asset-verification"
+    },
+    "reviewerSignoff": {
+      "path": "docs/helix/04-build/evidence/mig-g02/weft-publication-0.4.53/independent-review/weft-0.4.53-published-review.json",
+      "sha256": "094b7179a60aac72662e5499415aa6b33366960ff317011af6f8c5f7ccb9c442",
+      "status": "passed-independent-fresh-published-verification"
+    },
+    "workflowPinCheck": {
+      "path": "docs/helix/04-build/evidence/mig-g02/weft-publication-0.4.53/workflow-pin-verification.json",
+      "sha256": "674c88d83bc5c375a5ebd3d102ff5ef8b38dcb29ec323f1f6791af2459d446f1",
+      "status": "passed"
+    },
+    "limitation": "Weft Linux wheels are packaging-qualified only; no Linux G02 native functional execution claim."
+  }
+}

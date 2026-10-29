@@ -1,0 +1,10 @@
+--- /private/tmp/g11-supervisor-journal-015-source-004/snapshot/python/umf_access/src/umf_access/lifecycle/supervisor_journal_codec.py	2026-10-24 12:44:57
++++ /private/tmp/g11-supervisor-journal-015-source-005/snapshot/python/umf_access/src/umf_access/lifecycle/supervisor_journal_codec.py	2026-10-24 12:58:38
+@@ -917,6 +917,7 @@
+                         or custody.get('registrationId') != registration.get('registrationId')
+                         or custody.get('resourceId') != origin.get('clusterId')
+                         or custody.get('incarnation') != origin.get('incarnationId')
++                        or custody.get('registrationDigest') != _digest(registration)
+                         or reservation['providerId'] != registration.get('providerId')
+                         or reservation['installationId'] != registration.get('installationId')
+                         or any(type(custody.get(name)) is not str

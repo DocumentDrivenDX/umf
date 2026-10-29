@@ -2,12 +2,19 @@
 import {expect,test} from 'bun:test';
 import {generatePythonClient,inspectTableLifecycle,readDocument,writeDocument} from '../../src';
 import {compileTableDeployment,verifyTableDeployment} from '../../src/table-deployment';
+import {rowExpressionInputRefs} from '../../src/extensions/tables/row-expressions';
 import {tableOperationSource} from '../unified/table-operation-fixture';
 const ref=(element:string)=>({module:'demo',element});
 const source=()=>tableOperationSource() as any;
 const payload=(d:any)=>d.modules[0].extensions['umf.tables'];
 const inspect=(d:any)=>inspectTableLifecycle(d);
 const codes=(d:any)=>inspect(d).diagnostics.map(d=>d.code);
+const addColumn=(d:any,id:string,scalarType:string,nativeType:any,extra:any={})=>{
+ const module=d.modules[0],record=module.elements.find((element:any)=>element.kind==='record'),table=payload(d).tables[0];
+ module.elements.push({id,kind:'field',scalarType,cardinality:'one',nullability:extra.nullability??'absent-allowed',extensions:{},...extra});
+ record.members.push(ref(id));table.columns.push({field:ref(id),name:id,nativeType});
+};
+const backfill=(d:any,target:string,expression:any,where:any={op:'isNull',field:ref(target)})=>payload(d).commands.push({version:'umf.table-operation/0.2',id:'fill_'+target+'_'+payload(d).commands.length,parameters:[],consistency:'transaction',replay:'caller-key-required',body:{kind:'update',table:'notes',values:[{field:ref(target),value:{kind:'rowExpression',expression}}],where,returning:[],maxRows:10}});
 
 test('CONTRACT-079/081: all declared result/write/conflict/batch shapes admit without execution authority',()=>{
  const d=source(),before=structuredClone(d),result=inspect(d);
@@ -112,6 +119,7 @@ test('defaulted create omission and each predicate shape retain explicit typed m
   {op:'in',field:ref('owner'),values:[{kind:'literal',value:{string:'a'}},{kind:'literal',value:{string:'b'}}]},
   ...['eq','ne','lt','le','gt','ge','startsWith'].map(op=>({op,field:ref('owner'),value:{kind:'literal',value:{string:'a'}}})),
  ]){const e=source(),c=payload(e).commands[0];c.parameters=[];c.body.where=where;expect(inspect(e).diagnostics).toEqual([]);}
+ for(const op of ['eq','ne']){const e=source(),c=payload(e).commands[0];e.modules[0].elements.find((x:any)=>x.id==='owner').nullability='absent-allowed';c.parameters=[];c.body.where={op,field:ref('owner'),value:{kind:'literal',value:null}};expect(inspect(e).diagnostics,`${op} retains nullable closed-predicate admission`).toEqual([]);}
 });
 
 test('module-wide operation predicate capacity refuses before interpreting an excess subtree',()=>{
@@ -120,4 +128,117 @@ test('module-wide operation predicate capacity refuses before interpreting an ex
  p.commands[0].body.where={op:'or',args:Array.from({length:40},branch)};
  expect(inspect(d).complete).toBe(true);
  p.commands[0].body.where.args.push(branch());expect(codes(d)).toContain('TABLES_COMPLEXITY');
+});
+
+test('G02 operation 0.2 is a closed migration-only declaration with stable same-row input closure',()=>{
+ const d=source(),p=payload(d);p.commands.push({version:'umf.table-operation/0.2',id:'backfill_owner',parameters:[],consistency:'transaction',replay:'caller-key-required',body:{kind:'update',table:'notes',values:[{field:ref('owner'),value:{kind:'rowExpression',expression:{op:'concat',args:[{op:'field',field:ref('id')},{op:'literal',value:{string:'é é 😀  '}}]}}}],where:{op:'isNull',field:ref('owner')},returning:[],maxRows:100}});
+ expect(inspect(d).diagnostics).toEqual([]);
+ const expression=p.commands.at(-1).body.values[0].value.expression;
+ expect(rowExpressionInputRefs({op:'conditional',when:{op:'and',args:[{op:'isNull',field:ref('owner')},{op:'eq',field:ref('id'),value:{kind:'literal',value:{string:'x'}}}]},then:{op:'field',field:ref('id')},else:{op:'field',field:ref('id')}} as any)).toEqual([ref('owner'),ref('id')]);
+ const generated=generatePythonClient({text:JSON.stringify(d),package:'operation_demo'}),all=generated.files.map(file=>file.text).join('\n');
+ expect(all).toContain('rename');expect(all).not.toMatch(/(?:async )?def backfill_owner\(/);expect(all).not.toContain('_TABLE_OPERATIONS[(\"demo\", \"backfill_owner\")]');
+ const old=source();expect(inspect(old).complete).toBe(true);
+});
+
+test('G02 operation 0.2 refuses changed shape, ambient inputs, invalid Unicode, and bounded-AST violations',()=>{
+ const valid=()=>{const d=source();payload(d).commands.push({version:'umf.table-operation/0.2',id:'backfill_owner',parameters:[],consistency:'transaction',replay:'caller-key-required',body:{kind:'update',table:'notes',values:[{field:ref('owner'),value:{kind:'rowExpression',expression:{op:'field',field:ref('id')}}}],where:{op:'isNull',field:ref('owner')},returning:[],maxRows:1}});return d;};
+ for(const mutate of [
+  (c:any)=>c.batch={maxItems:1},(c:any)=>c.parameters=[{id:'x',field:ref('id')}],(c:any)=>c.body.where.field=ref('id'),
+  (c:any)=>c.body.values[0].value.expression.future=true,(c:any)=>c.body.values[0].value.expression={op:'conditional',when:{op:'related',table:'notes',matches:[{source:ref('id'),target:ref('id')}],where:{op:'all'}},then:{op:'field',field:ref('id')},else:{op:'field',field:ref('id')}},
+  (c:any)=>c.body.values[0].value.expression={op:'conditional',when:{op:'eq',field:ref('id'),value:{string:'x'}},then:{op:'field',field:ref('id')},else:{op:'field',field:ref('id')}},
+  (c:any)=>c.body.values[0].value.expression={op:'literal',value:{string:'bad\u0000text'}},(c:any)=>c.body.values[0].value.expression={op:'literal',value:{string:'bad\ud800'}},
+ ]){const d=valid();mutate(payload(d).commands.at(-1));expect(inspect(d).valid).toBe(false);}
+ const cyclic:any={op:'coalesce',args:[]};cyclic.args.push(cyclic,{op:'field',field:ref('id')});expect(()=>rowExpressionInputRefs(cyclic)).toThrow(/Cyclic/);
+ let deep:any={op:'field',field:ref('id')};for(let i=0;i<17;i++)deep={op:'coalesce',args:[deep,{op:'field',field:ref('id')}]};expect(()=>rowExpressionInputRefs(deep)).toThrow(/limit/);
+});
+
+test('G02 expression typing admits every operator family and literal-only condition predicates',()=>{
+ const typed=(target:string,expression:any,extra:(d:any)=>void=()=>{})=>{const d=source();
+  addColumn(d,'count','integer',{kind:'int4'});addColumn(d,'count_decimal','decimal',{kind:'numeric',precision:5,scale:0},{facets:{precision:5,scale:0}});
+  addColumn(d,'amount','decimal',{kind:'numeric',precision:8,scale:2},{facets:{precision:8,scale:2}});addColumn(d,'flag','boolean',{kind:'boolean'});
+  addColumn(d,'event_at','timestamp',{kind:'timestamptz'});addColumn(d,'instant_copy','timestamp',{kind:'timestamptz'});
+  addColumn(d,'boolean_copy','boolean',{kind:'boolean'});
+  addColumn(d,'event_day','date',{kind:'date'});addColumn(d,'date_copy','date',{kind:'date'});
+  addColumn(d,'event_uuid','uuid',{kind:'uuid'});addColumn(d,'uuid_copy','uuid',{kind:'uuid'});
+  addColumn(d,'display','string',{kind:'text'});addColumn(d,'display_limited','string',{kind:'text'},{allowedValues:[{string:'ok'}]});
+  addColumn(d,'checked_display','string',{kind:'text'});d.modules[0].extensions['umf.tables'].tables[0].checks.push({id:'checked-display-ok',name:'checked_display_ok',expression:{op:'eq',left:{op:'field',field:ref('checked_display')},right:{op:'literal',value:{string:'ok'}}}});
+  addColumn(d,'count_copy','integer',{kind:'int4'});addColumn(d,'amount_wide','decimal',{kind:'numeric',precision:12,scale:0},{facets:{precision:12,scale:0}});
+  extra(d);backfill(d,target,expression);return inspect(d);};
+ const lit=(value:any)=>({op:'literal',value}),field=(element:string)=>({op:'field',field:ref(element)});
+ const good:Array<[string,any]>=[
+  ['display',field('id')],['display',lit({string:'a'})],['display',{op:'coalesce',args:[lit(null),field('id')]}],
+  ['display',{op:'concat',args:[field('id'),lit({string:' '}),field('owner')]}],
+  ['count_copy',{op:'add',left:field('count'),right:lit({integerToken:'1'})}],
+  ['count_copy',{op:'subtract',left:field('count'),right:lit({integerToken:'1'})}],
+  ['count_copy',{op:'multiply',left:field('count'),right:lit({integerToken:'2'})}],
+  ['count_copy',{op:'add',left:lit(null),right:lit(null)}],
+  ['amount_wide',{op:'multiply',left:lit(null),right:lit(null)}],
+  ['display',{op:'concat',args:[lit(null),lit(null)]}],
+  ['count_copy',lit({integerToken:'1.0'})],['count_copy',lit({decimalToken:'1.0'})],
+  ['count_copy',lit({decimalToken:'100e-2'})],['count_copy',lit({decimalToken:'-0e999999999999999999999999'})],
+  ['count_copy',lit({decimalToken:'2e1'})],
+  ['count_copy',{op:'coalesce',args:[lit(null),field('count')]}],
+  ['count_copy',{op:'conditional',when:{op:'all'},then:lit(null),else:field('count')}],
+  ['display',{op:'conditional',when:{op:'eq',field:ref('flag'),value:{kind:'literal',value:{boolean:true}}},then:field('id'),else:lit({string:'none'})}],
+  ['display',{op:'conditional',when:{op:'in',field:ref('id'),values:[{kind:'literal',value:{string:'a'}},{kind:'literal',value:{string:'b'}}]},then:field('id'),else:lit({string:'none'})}],
+  ['count_copy',field('count_decimal')],['amount_wide',lit({decimalToken:'1e10'})],
+  ['instant_copy',{op:'coalesce',args:[lit(null),field('event_at')]}],['display',lit(null)],
+  ['boolean_copy',field('flag')],['boolean_copy',lit({boolean:true})],
+  ['boolean_copy',{op:'coalesce',args:[lit(null),field('flag')]}],
+  ['boolean_copy',{op:'conditional',when:{op:'all'},then:field('flag'),else:lit({boolean:false})}],
+  ['date_copy',field('event_day')],['date_copy',{op:'coalesce',args:[lit(null),field('event_day')]}],
+  ['date_copy',{op:'conditional',when:{op:'all'},then:field('event_day'),else:lit({date:'2026-01-01'})}],
+  ['uuid_copy',field('event_uuid')],['uuid_copy',{op:'coalesce',args:[lit(null),field('event_uuid')]}],
+  ['uuid_copy',{op:'conditional',when:{op:'all'},then:field('event_uuid'),else:lit({uuid:'00000000-0000-0000-0000-000000000000'})}],
+  ['display_limited',lit({string:'ok'})],
+  ['checked_display',lit({string:'ok'})],
+ ];
+ for(const [target,expression]of good){const result=typed(target,expression);expect(result.valid,`${target}:${JSON.stringify(expression)} ${JSON.stringify(result.diagnostics)}`).toBe(true);}
+});
+
+test('G02 conditional predicates preserve NULL-safe equality and reject boolean/UUID ordering',()=>{
+ const condition=(when:any)=>({op:'conditional',when,then:{op:'field',field:ref('id')},else:{op:'literal',value:{string:'fallback'}}});
+ const nullValue={kind:'literal',value:null};
+ for(const op of ['eq','ne'])for(const predicate of [
+  {op,field:ref('owner'),value:nullValue},
+  {op:'not',arg:{op,field:ref('owner'),value:nullValue}},
+ ]){
+  const d=source();addColumn(d,'display','string',{kind:'text'});d.modules[0].elements.find((x:any)=>x.id==='owner').nullability='absent-allowed';
+  backfill(d,'display',condition(predicate));
+  expect(inspect(d).valid,`${JSON.stringify(predicate)} ${JSON.stringify(inspect(d).diagnostics)}`).toBe(true);
+ }
+ for(const field of ['flag','event_uuid']){
+  const d=source();addColumn(d,'display','string',{kind:'text'});addColumn(d,'flag','boolean',{kind:'boolean'});addColumn(d,'event_uuid','uuid',{kind:'uuid'});d.modules[0].elements.find((x:any)=>x.id===field).nullability='absent-allowed';
+  const expression=condition({op:'lt',field:ref(field),value:nullValue});
+  backfill(d,'display',expression);
+  expect(inspect(d).valid,`${field} ordering with NULL must refuse`).toBe(false);
+ }
+});
+
+test('G02 rejects incompatible branches and numeric bounds at every expression node',()=>{
+ const typed=(target:string,expression:any)=>{const d=source();
+  addColumn(d,'count','integer',{kind:'int4'});addColumn(d,'count_decimal','decimal',{kind:'numeric',precision:5,scale:0},{facets:{precision:5,scale:0}});
+  addColumn(d,'amount_wide','decimal',{kind:'numeric',precision:1000,scale:1000},{facets:{precision:1000,scale:1000}});addColumn(d,'display','string',{kind:'text'});addColumn(d,'count_copy','integer',{kind:'int4'});addColumn(d,'ranged_count','integer',{kind:'int4'},{facets:{range:{min:{integerToken:'0'},max:{integerToken:'100'}}}});
+  backfill(d,target,expression);return inspect(d);};
+ const field=(element:string)=>({op:'field',field:ref(element)}),lit=(value:any)=>({op:'literal',value});
+ for(const expr of [
+  {op:'conditional',when:{op:'all'},then:field('id'),else:field('count')},
+  {op:'coalesce',args:[field('id'),field('count')]},
+ ])expect(typed('display',expr).valid).toBe(false);
+ const integralDecimal=typed('count_copy',field('count_decimal'));expect(integralDecimal.valid,JSON.stringify(integralDecimal.diagnostics)).toBe(true);
+ expect(typed('ranged_count',lit({integerToken:'9'})).valid).toBe(true);
+ expect(typed('amount_wide',lit({decimalToken:'1e-1000'})).valid).toBe(true);
+ expect(typed('count_copy',lit({decimalToken:'1.5'})).valid).toBe(false);
+ expect(typed('count_copy',lit({integerToken:'1.2'})).valid).toBe(false);
+ for(const target of ['display','flag','event_day'])expect(typed(target,{op:'add',left:lit(null),right:lit(null)}).valid,`NULL arithmetic must not acquire ${target} carrier`).toBe(false);
+ expect(typed('count_copy',{op:'concat',args:[lit(null),lit(null)]}).valid).toBe(false);
+ expect(typed('amount_wide',lit({integerToken:'1'.repeat(1001)})).diagnostics.map(x=>x.code)).toContain('TABLES_OPERATION_CAPACITY');
+ expect(typed('amount_wide',lit({decimalToken:'1e-1001'})).diagnostics.map(x=>x.code)).toContain('TABLES_OPERATION_CAPACITY');
+ const cancelled='0.'+'0'.repeat(2000)+'99999e2005';
+ expect(typed('count_copy',lit({integerToken:cancelled})).valid).toBe(true);
+ expect(typed('count_copy',lit({decimalToken:cancelled})).valid).toBe(true);
+ expect(typed('count_copy',lit({decimalToken:'0.'+'0'.repeat(2001)+'99999e2005'})).valid).toBe(false);
+ expect(typed('amount_wide',{op:'coalesce',args:[lit(null),{op:'coalesce',args:[lit({decimalToken:'1e-1001'}),field('amount_wide')]}]}).diagnostics.map(x=>x.code)).toContain('TABLES_OPERATION_CAPACITY');
+ const tooMany={op:'conditional',when:{op:'in',field:ref('id'),values:Array.from({length:33},()=>({kind:'literal',value:{string:'x'}}))},then:field('id'),else:lit({string:'x'})};
+ expect(()=>rowExpressionInputRefs(tooMany as any)).toThrow(/fanout/);
 });

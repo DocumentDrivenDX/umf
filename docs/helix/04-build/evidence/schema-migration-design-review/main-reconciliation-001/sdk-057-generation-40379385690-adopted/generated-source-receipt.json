@@ -1,0 +1,71 @@
+{
+  "adoptedR2CompanionSha256": "314cac8416711899285bc3f1a734765d557f7446f7ab0cf58d3dbd2a7dfdd81e",
+  "artifactBytes": 3822666,
+  "dependencyOutcome": "success",
+  "generatedFiles": {
+    "docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json": {
+      "bytes": 26687,
+      "sha256": "874d18cf82117e573dbffd77c8457f04dafdfe6841ae575c319c497be7a07fe0"
+    },
+    "docs/helix/04-build/evidence/rust-migration/r3/inventory.json": {
+      "bytes": 2793151,
+      "sha256": "ef17ba6b3f3784c58f5ad26b6d173443273e6a8e3551060420744ed8219e24e5"
+    },
+    "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz": {
+      "bytes": 925422,
+      "sha256": "0cf4359a70581322030763e637026b221a9e8f953a4fb8652e4bb8a29a950d7c"
+    },
+    "python/umf_codegen/src/umf_codegen/_assets/manifest.json": {
+      "bytes": 33447,
+      "sha256": "1487c538d1e49c661a79dcd9b0c08ab2a4c31a7ce479dd419e550938bb5f5e62"
+    },
+    "python/umf_codegen/src/umf_codegen/_release.py": {
+      "bytes": 170,
+      "sha256": "e547adb26c94ba84df8ec53737081178e7b343e448bd6a634c3a0a417df65bbb"
+    },
+    "src/extensions/actions/plan-identity.ts": {
+      "bytes": 355,
+      "sha256": "3bd7b81b584ac4dfc838551834fac0c11f573ea77b54a9b793e4e48befdfa3f0"
+    }
+  },
+  "historicalPlaceholderReceipt": "historical-placeholder-inputs.json",
+  "limits": {
+    "aggregateWorkSeconds": 1800,
+    "artifactMaximumBytes": 16777216,
+    "capturedCommandLogsMaximumBytes": 1048576,
+    "evidenceReserveSeconds": 60
+  },
+  "logBytes": 7724,
+  "outputArtifactBytes": 3797163,
+  "outputFilesSha256": {
+    "docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json": "874d18cf82117e573dbffd77c8457f04dafdfe6841ae575c319c497be7a07fe0",
+    "docs/helix/04-build/evidence/rust-migration/r3/inventory.json": "ef17ba6b3f3784c58f5ad26b6d173443273e6a8e3551060420744ed8219e24e5",
+    "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz": "0cf4359a70581322030763e637026b221a9e8f953a4fb8652e4bb8a29a950d7c",
+    "python/umf_codegen/src/umf_codegen/_assets/manifest.json": "1487c538d1e49c661a79dcd9b0c08ab2a4c31a7ce479dd419e550938bb5f5e62",
+    "python/umf_codegen/src/umf_codegen/_assets/notices/ajv/LICENSE": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3",
+    "python/umf_codegen/src/umf_codegen/_assets/notices/ajv/package.json": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
+    "python/umf_codegen/src/umf_codegen/_assets/notices/fast-deep-equal/LICENSE": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a",
+    "python/umf_codegen/src/umf_codegen/_assets/notices/fast-deep-equal/package.json": "a5c63940db0260739be9e2ac67f3aac268df4db5770420ee4e34e493152f97d2",
+    "python/umf_codegen/src/umf_codegen/_assets/notices/fast-uri/LICENSE": "b010b0dfdfdb23d7396e03b82cd4621fc9bb8f95d6b0aea70b9c24e12074c786",
+    "python/umf_codegen/src/umf_codegen/_assets/notices/fast-uri/package.json": "30cad05aad3d3596513706451dbfc7e0422f9c1d00f2903ecc34580327d54bc7",
+    "python/umf_codegen/src/umf_codegen/_assets/notices/json-schema-traverse/LICENSE": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a",
+    "python/umf_codegen/src/umf_codegen/_assets/notices/json-schema-traverse/package.json": "156fb24af02845c190701360d06dfda35ef04282e34a734289ea9535ad9819ae",
+    "python/umf_codegen/src/umf_codegen/_assets/notices/yaml/LICENSE": "5bba27375d93e9119f76c1015f7672cf9ad5f70952296e0842fb2243d6376869",
+    "python/umf_codegen/src/umf_codegen/_assets/notices/yaml/package.json": "1c6441703d8204a23ded0d37ddf57c3b69d821dc392f20852d1f605bb9b8861c",
+    "python/umf_codegen/src/umf_codegen/_release.py": "e547adb26c94ba84df8ec53737081178e7b343e448bd6a634c3a0a417df65bbb",
+    "src/extensions/actions/plan-identity.ts": "3bd7b81b584ac4dfc838551834fac0c11f573ea77b54a9b793e4e48befdfa3f0"
+  },
+  "profile": "umf.merged-source-generation/1",
+  "qualifiesMergedSource": false,
+  "r3BoundaryStatus": "pass",
+  "ref": "refs/heads/codex/migration-merged-generation",
+  "runAttempt": "1",
+  "runId": "40379385690",
+  "scope": "Artifact-only generation after accounted R2 companion adoption. No test, qualification, production claim or automatic source adoption.",
+  "sourceCommit": "41590b2b02daef923a21103cb4d04eb419d87633",
+  "sourceInputsSha256": "b8a22cbcb2e5efcb8c0badff5931aac093425d5a6653b18329285acd0252bb1d",
+  "sourceOutcome": "success",
+  "status": "GENERATED_ARTIFACT_ONLY",
+  "workflow": "Generate merged-source action, codegen and R3 artifacts",
+  "workflowOutcome": "success"
+}

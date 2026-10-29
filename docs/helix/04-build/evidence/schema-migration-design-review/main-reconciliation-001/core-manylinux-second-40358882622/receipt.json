@@ -1,0 +1,41 @@
+{
+  "artifactFamilyBytes": 35948,
+  "claims": {
+    "installedBytes": false,
+    "publication": false,
+    "repairedArtifactPayload": false,
+    "sixModuleSuite": false
+  },
+  "evidenceBytes": 34644,
+  "evidencePaths": [
+    "command-records.jsonl",
+    "deadline-ms",
+    "direct-elf.json",
+    "host-tools.json",
+    "original-input.json",
+    "qualification.json",
+    "source-identities.json",
+    "tool-downloads.json",
+    "tool-install-report.json",
+    "tool-requirements.txt",
+    "tool-versions.json",
+    "logs/auditwheel-show-direct.log",
+    "logs/auditwheel-version.log",
+    "logs/create-tool-environment.log",
+    "logs/inspect-direct-elf.log",
+    "logs/install-locked-tools.log",
+    "logs/patchelf-version.log"
+  ],
+  "failureOnlyReceipt": false,
+  "harnessCommit": "ca6a6d009af847687b568ff84b58197d40e49bc7",
+  "profile": "umf.core-0102-manylinux-repair-qualification/1",
+  "qualificationSha256": "a86f923911ddfa7bcfd5aab5c5b5612f229a9019af1fb91750f076a4b4625b75",
+  "reasonType": "ValueError",
+  "ref": "refs/heads/codex/core-0102-manylinux-qualification",
+  "runAttempt": "1",
+  "runId": "40358882622",
+  "sourceCommit": "a1b909d4f92da6604aeb21d3ea60e9a9943a7f87",
+  "status": "FAIL_OR_UNKNOWN",
+  "wheelBytes": 0,
+  "workflow": "Core 0.10.2 exact manylinux repair qualification"
+}

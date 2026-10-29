@@ -1,0 +1,42 @@
+{
+  "evidence": [
+    {
+      "path": "evidence/codec.patch",
+      "sha256": "69103f5ecc280492d12031a9cbd4802918094a51641f8b30679ca1b0354e113f"
+    },
+    {
+      "path": "evidence/test.patch",
+      "sha256": "b67f17211a2d7d52676361698090d7d2463bc55f1bfac5a46f3b369fef40788e"
+    },
+    {
+      "path": "README.md",
+      "sha256": "5430453ee7c42e14610f96312018ec7cbbc76bba4bf377ec533429c4c2c7bb7a"
+    }
+  ],
+  "ownedPaths": [
+    {
+      "candidateBytes": 76671,
+      "candidateSha256": "77a07135b25e35bb2d5d4afc549e5604ad71ee2bf75ea7e1b94eca7c478f7a33",
+      "parent004Sha256": "69ce75b702bcbcf19e911ca6364a6e23c2e1d6d50a245638410ff704ea7a02be",
+      "path": "python/umf_access/src/umf_access/lifecycle/supervisor_journal_codec.py"
+    },
+    {
+      "candidateBytes": 56917,
+      "candidateSha256": "4d9d41d4e362a274ae1160f03336dc0acf07d688b89a16399d4899397ea6e8b6",
+      "parent004Sha256": "590b3a4ea4f0243e390432dcda93b86987675c416f7ec4a72ab14fbf242b7534",
+      "path": "python/umf_access/tests/test_supervisor_journal_codec.py"
+    }
+  ],
+  "parentCandidateManifestSha256": "ea088621b40fb95f3558c115f1285cbffdb5a84e34eacfde706317a0655d7dc8",
+  "profile": "umf.g11-supervisor-journal-source-candidate/1",
+  "remainingAssociationLimits": [
+    "custodianReservedEventDigest and custodySequence require authoritative external custody-journal/provider verification; this codec syntax association does not establish native origin or custody provenance."
+  ],
+  "scope": "Bind typed .2 ORIGINALS targetCustody.registrationDigest to the original prepared registration payload; preserve legacy .1 and other .2 semantics.",
+  "status": "source-only-unverified-review-candidate",
+  "verification": {
+    "native": "not-run",
+    "ruff": "not-run-D9-resource-hold",
+    "tests": "not-run-D9-resource-hold"
+  }
+}

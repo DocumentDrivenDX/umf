@@ -1,0 +1,705 @@
+$ bun scripts/prepare-action-tests.ts && bun scripts/run-tests.ts tests/actions-reference
+17.9: Pulling from library/postgres
+3cc5adf8351e: Pulling fs layer
+156a40446245: Pulling fs layer
+f0241e7beec7: Pulling fs layer
+2f80f30ad7f1: Pulling fs layer
+4603be59720a: Pulling fs layer
+3d94305211dc: Pulling fs layer
+472ffdecc4a8: Pulling fs layer
+06b86868b609: Pulling fs layer
+a980c9fcef8c: Pulling fs layer
+9a3a8cff569f: Pulling fs layer
+9bd8688dc8e1: Pulling fs layer
+1d4072181936: Pulling fs layer
+7af37a00632a: Pulling fs layer
+57fb71246055: Pulling fs layer
+a980c9fcef8c: Download complete
+3cc5adf8351e: Download complete
+9bd8688dc8e1: Download complete
+7af37a00632a: Download complete
+4603be59720a: Download complete
+3d94305211dc: Download complete
+06b86868b609: Download complete
+472ffdecc4a8: Download complete
+1d4072181936: Download complete
+2f80f30ad7f1: Download complete
+9a3a8cff569f: Download complete
+156a40446245: Download complete
+57fb71246055: Download complete
+1e1debc0061d: Download complete
+0d0aaf6e7975: Download complete
+57fb71246055: Pull complete
+f0241e7beec7: Download complete
+a980c9fcef8c: Pull complete
+1d4072181936: Pull complete
+9a3a8cff569f: Pull complete
+156a40446245: Pull complete
+7af37a00632a: Pull complete
+472ffdecc4a8: Pull complete
+2f80f30ad7f1: Pull complete
+9bd8688dc8e1: Pull complete
+4603be59720a: Pull complete
+06b86868b609: Pull complete
+f0241e7beec7: Pull complete
+3cc5adf8351e: Pull complete
+3d94305211dc: Pull complete
+Digest: sha256:2a0d0fe14825b0939f78a8cad5cd4e6aa68bf94d0e5dd96e24b6d23af4315545
+Status: Downloaded newer image for postgres:17.9
+docker.io/library/postgres:17.9
+mcr.microsoft.com/playwright@sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27: Pulling from playwright
+1b189482e65c: Pulling fs layer
+a2ac83a9a562: Pulling fs layer
+d8cf7dc1ff62: Pulling fs layer
+74c72610aa2d: Pulling fs layer
+0926a8eb0e60: Pulling fs layer
+e2bfec3c8017: Pulling fs layer
+b4dfe9b5d621: Pulling fs layer
+74c72610aa2d: Download complete
+0926a8eb0e60: Download complete
+0926a8eb0e60: Pull complete
+a2ac83a9a562: Download complete
+1b189482e65c: Download complete
+e2bfec3c8017: Download complete
+d8cf7dc1ff62: Download complete
+b4dfe9b5d621: Download complete
+e2bfec3c8017: Pull complete
+74c72610aa2d: Pull complete
+d8cf7dc1ff62: Pull complete
+b4dfe9b5d621: Pull complete
+a2ac83a9a562: Pull complete
+1b189482e65c: Pull complete
+Digest: sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27
+Status: Downloaded newer image for mcr.microsoft.com/playwright@sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27
+mcr.microsoft.com/playwright@sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27
+{"testProcess":"tests/actions-reference/admission.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/admission.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/admission.test.ts:
+(pass) trusted issuer authenticates human and service independently and refuses credential tampering [0.78ms]
+(pass) logical requests refuse spoofed context and canonicalize version assertions by declaration [1.17ms]
+(pass) lossless native codec preserves every admitted string identity and refuses ambiguous representations [0.42ms]
+
+::endgroup::
+
+ 3 pass
+ 0 fail
+ 23 expect() calls
+Ran 3 tests across 1 file. [20.00ms]
+{"testProcess":"tests/actions-reference/admission.test.ts","exitCode":0,"pass":3,"fail":0,"skip":0,"assertions":23,"completeSummary":true,"logSha256":"730afa86ed59ac445796d29e11203a90c52464edfd7c58ea71522c147f82f163"}
+{"testProcess":"tests/actions-reference/attempts.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/attempts.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/attempts.test.ts:
+(pass) native early-denial journal requires no business SELECT and never records untrusted actor or secrets [14653.53ms]
+(pass) native abort observations survive rollback with distinct retry IDs and one terminal atomic ID [3559.28ms]
+(pass) uncertain acknowledgement shares the terminal ID without inventing rollback or retry [2572.38ms]
+(pass) actual journal SQL failures and throwing diagnostics cannot replace commit or trigger business retry [2371.07ms]
+(pass) operational journal reader has independent header/detail grants and irreversible visibility retention [4634.27ms]
+(pass) caller mutation during journal latency cannot change the admitted invocation [2868.18ms]
+(pass) late native rollback preserves attempt observations and no terminal or business write [2157.90ms]
+(pass) unknown or inconsistent operational headers refuse without changing retained source [2122.28ms]
+(pass) a row committed after the journal existence boundary cannot bypass native expiry [4071.43ms]
+(pass) native journal lock timeout and async failing diagnostics stay outside business classification [3715.70ms]
+(pass) rejected replay and token reuse attribute the original authorized revision, never the requested substitute [2688.11ms]
+(pass) supervisor death after acknowledged start leaves unresolved observation and no invented business result [3901.56ms]
+(pass) unqualified retained deployment meaning stays intact but never enters attempt telemetry [3745.28ms]
+(pass) malformed retained details refuse only authorized detail reads while exact bytes stay intact [2440.75ms]
+(pass) business audit grants cannot authorize operational attempt observations [3877.01ms]
+
+::endgroup::
+
+ 15 pass
+ 0 fail
+ 146 expect() calls
+Ran 15 tests across 1 file. [59.89s]
+{"testProcess":"tests/actions-reference/attempts.test.ts","exitCode":0,"pass":15,"fail":0,"skip":0,"assertions":146,"completeSummary":true,"logSha256":"7797974e8c14c761637abe14d37d4ace39440118c8176244282ff80349e5be34"}
+{"testProcess":"tests/actions-reference/audit.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/audit.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/audit.test.ts:
+(pass) native terminal audit protects executor attempt/profile, trusted actor/policy and omits raw inputs [2957.99ms]
+(pass) native audit access denies before row queries and separates header/detail roles and family scope [2442.99ms]
+(pass) native audit horizon is pinned, expiry irreversible and payload selection stops before disclosure [3578.27ms]
+
+::endgroup::
+
+ 3 pass
+ 0 fail
+ 83 expect() calls
+Ran 3 tests across 1 file. [9.50s]
+{"testProcess":"tests/actions-reference/audit.test.ts","exitCode":0,"pass":3,"fail":0,"skip":0,"assertions":83,"completeSummary":true,"logSha256":"043ddc35322a46a0f10d3e1a76aabe573e21f74230e0629477ef026a3317c518"}
+{"testProcess":"tests/actions-reference/composite-key.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/composite-key.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/composite-key.test.ts:
+{"nativeCompositeKey":{"nativeVersion":"17.9 (Debian 17.9-1.pgdg13+1)","bun":"1.4.2","components":2,"family":"string","swappedIdentitiesDistinct":true,"commits":2,"restartedReplay":"exact","scope":"One two-component primary Key, two reversed tuples, explicit resource versions and recipe typed identities; no universal Key-domain claim"}}
+(pass) native composite Keys preserve ordered components through preparation, freeze, typed results and restarted replay [5146.90ms]
+{"nativeUnsupportedRelationships":{"nativeVersion":"17.9 (Debian 17.9-1.pgdg13+1)","bun":"1.4.2","declarations":["owned","association-record"],"validMetadata":true,"independentLayoutControl":"admitted","allInputsTyped":"admitted","prepare":"refused","preview":"unsupported/PARAMETER","invoke":"unsupported/PARAMETER","businessAccesses":0,"transactionalWrites":0,"allActionTablesGuarded":20,"allActionRowsUnchanged":true,"scope":"Named unqualified arrangements refuse through actual native admission; no support or generic database-trigger detection claim"}}
+(pass) native owned and association-Record declarations refuse before business access or any transactional write [5319.93ms]
+
+::endgroup::
+
+ 2 pass
+ 0 fail
+ 51 expect() calls
+Ran 2 tests across 1 file. [10.97s]
+{"testProcess":"tests/actions-reference/composite-key.test.ts","exitCode":0,"pass":2,"fail":0,"skip":0,"assertions":51,"completeSummary":true,"logSha256":"b19ac1cfe534c06a3f51b3d2ac6798b2e6cde0d7b1625ff1f8446719cb4ccc2b"}
+{"testProcess":"tests/actions-reference/create.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/create.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/create.test.ts:
+(pass) native CREATE proves aliases, preserves pre-state, supports later SET and blocks all-Key/concurrent collisions [8761.06ms]
+
+::endgroup::
+
+ 1 pass
+ 0 fail
+ 31 expect() calls
+Ran 1 test across 1 file. [9.26s]
+{"testProcess":"tests/actions-reference/create.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":31,"completeSummary":true,"logSha256":"ca34d88ffcdfd12e4a72c29b34ea2f2f0112d4047325e5449a8deee00ec07d30"}
+{"testProcess":"tests/actions-reference/creation-relationships.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/creation-relationships.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/creation-relationships.test.ts:
+(pass) CREATE lower bounds use targets per source and sources per target independently [343.29ms]
+
+::endgroup::
+
+ 1 pass
+ 0 fail
+ 8 expect() calls
+Ran 1 test across 1 file. [849.00ms]
+{"testProcess":"tests/actions-reference/creation-relationships.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":8,"completeSummary":true,"logSha256":"e5ea301542b394ff9c71f184b53a798e52a79a5bd5866cad0827e8c95dbd1800"}
+{"testProcess":"tests/actions-reference/delete.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/delete.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/delete.test.ts:
+(pass) native deletion is canonical, atomic and replayable; alias reuse and remaining-link constraints roll back [6745.45ms]
+
+::endgroup::
+
+ 1 pass
+ 0 fail
+ 21 expect() calls
+Ran 1 test across 1 file. [7.25s]
+{"testProcess":"tests/actions-reference/delete.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":21,"completeSummary":true,"logSha256":"68ab30e7c267289936eecd16e38486e48c867e5f3b36a6e0b7f1bd5f96e702a3"}
+{"testProcess":"tests/actions-reference/discovery.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/discovery.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/discovery.test.ts:
+(pass) native discovery permission protects token presence across changing revision policies before any token SQL access [2979.96ms]
+
+::endgroup::
+
+ 1 pass
+ 0 fail
+ 21 expect() calls
+Ran 1 test across 1 file. [3.50s]
+{"testProcess":"tests/actions-reference/discovery.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":21,"completeSummary":true,"logSha256":"244a0d9a748def2bdedf26f39419b81ca078fc02f6d3fc64fb9ed6206989e707"}
+{"testProcess":"tests/actions-reference/evolution.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/evolution.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/evolution.test.ts:
+(pass) evolution review preserves exact signature/frame/condition/policy/profile/unknown changes without proving caller compatibility [1889.29ms]
+(pass) native immutable revision comparison flags strengthened conditions and leaves original replay and explicit fresh selection independent [3803.64ms]
+
+::endgroup::
+
+ 2 pass
+ 0 fail
+ 57 expect() calls
+Ran 2 tests across 1 file. [6.21s]
+{"testProcess":"tests/actions-reference/evolution.test.ts","exitCode":0,"pass":2,"fail":0,"skip":0,"assertions":57,"completeSummary":true,"logSha256":"177b92fb00a1f978b9d67653c39ded565cbb375d33c17ddda4b7e82f7884d2c7"}
+{"testProcess":"tests/actions-reference/executor.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/executor.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/executor.test.ts:
+(pass) native SET invocation atomically commits typed verification, replays, preserves no-op versions and rolls back audit failure [4992.04ms]
+(pass) native missing/version/precondition terminal decisions persist and replay without reevaluating state [5133.01ms]
+(pass) native concurrent invokes retain one same-token result and serialize distinct-token resource assertions [4944.83ms]
+
+::endgroup::
+
+ 3 pass
+ 0 fail
+ 58 expect() calls
+Ran 3 tests across 1 file. [15.60s]
+{"testProcess":"tests/actions-reference/executor.test.ts","exitCode":0,"pass":3,"fail":0,"skip":0,"assertions":58,"completeSummary":true,"logSha256":"fe35bbedec2919a594c7405a4f85e9de3fd7321cdf98107d516b538709c4efba"}
+{"testProcess":"tests/actions-reference/fresh-admission.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/fresh-admission.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/fresh-admission.test.ts:
+(pass) native fresh admission refuses full-declaration unknowns and fences without business or terminal writes [5502.41ms]
+
+::endgroup::
+
+ 1 pass
+ 0 fail
+ 9 expect() calls
+Ran 1 test across 1 file. [6.00s]
+{"testProcess":"tests/actions-reference/fresh-admission.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":9,"completeSummary":true,"logSha256":"9c61915be0425148400ad6300161d277f47a1780d904218bd8a9db003949ed16"}
+{"testProcess":"tests/actions-reference/gateway.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/gateway.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/gateway.test.ts:
+(pass) gateway verifies immediate writes, reports net restoration and isolates snapshots [32.75ms]
+(pass) gateway permanently aborts outside-frame, immutable-Key and invalid refinement attempts [11.03ms]
+(pass) gateway unions write aliases while read grants cannot widen write permission [25.10ms]
+(pass) public typed input admission refuses coercible malformed literal wrappers [13.02ms]
+(pass) gateway operation bound counts no-ops and permanently aborts on operation 257 [582.51ms]
+(pass) gateway reads candidate state through read aliases without granting writes and keeps pre-state frozen [6.61ms]
+(pass) gateway delete unions only write grants and permanently rejects canonical alias reuse [33.27ms]
+(pass) gateway runtime value refinement failure has stable CONSTRAINT and permanent abort [6.71ms]
+(pass) gateway CREATE keeps pre-state absent, emits one final creation and never permits created deletion [24.47ms]
+(pass) gateway CREATE requires the exact frozen primary tuple and primary-origin create flag [9.17ms]
+(pass) gateway CREATE cannot borrow Field permission from a proven read alias [6.10ms]
+
+::endgroup::
+
+ 11 pass
+ 0 fail
+ 349 expect() calls
+Ran 11 tests across 1 file. [1240.00ms]
+{"testProcess":"tests/actions-reference/gateway.test.ts","exitCode":0,"pass":11,"fail":0,"skip":0,"assertions":349,"completeSummary":true,"logSha256":"9d4a478f2cc53b0e21e2783978a3b537d29764476542568ae13ad8eaf18f5088"}
+{"testProcess":"tests/actions-reference/graph.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/graph.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/graph.test.ts:
+(pass) native final graph applies CREATE/LINK and UNLINK/DELETE deltas and sees unselected competing edges [2108.92ms]
+
+::endgroup::
+
+ 1 pass
+ 0 fail
+ 15 expect() calls
+Ran 1 test across 1 file. [2.60s]
+{"testProcess":"tests/actions-reference/graph.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":15,"completeSummary":true,"logSha256":"b6a3c09c5dea588fac34a8e85242a4dc812b16a1a18e79db4efe7295e272395d"}
+{"testProcess":"tests/actions-reference/handler-executor.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/handler-executor.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/handler-executor.test.ts:
+(pass) native isolated handler commits typed outputs, pins verification, previews without effects and replays after retirement/restart [6182.43ms]
+(pass) native handler access/output/postcondition failures roll back every protected and business write [18769.20ms]
+(pass) native handler creates complete Keys, returns a verified alternate identity and refuses malformed CREATE without leakage [7305.20ms]
+(pass) arbitrary entity outputs disclose neither existing nor absent unselected native identities and execute zero business queries [2794.90ms]
+(pass) native handler CREATE/SET/LINK then UNLINK/DELETE shares graph invariants and read-only target stamps [5496.96ms]
+(pass) retirement during an admitted native handler pins its accepted build and fences subsequent fresh admission [3398.65ms]
+(pass) durable operator catalog survives new consumers, scopes stores and permanently retains retirement [4443.43ms]
+(pass) native catalog retirement waits for admitted handler commit then refuses fresh work [4082.62ms]
+
+::endgroup::
+
+ 8 pass
+ 0 fail
+ 211 expect() calls
+Ran 8 tests across 1 file. [53.00s]
+{"testProcess":"tests/actions-reference/handler-executor.test.ts","exitCode":0,"pass":8,"fail":0,"skip":0,"assertions":211,"completeSummary":true,"logSha256":"2a9e670d67a9aa7af16a8985e512de4a2ab01ecb73245192ee5ec563a961c762"}
+{"testProcess":"tests/actions-reference/handlers.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/handlers.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/handlers.test.ts:
+(pass) trusted handler allowlist binds exact immutable copied code and retirement cannot be silently reinstalled [0.77ms]
+(pass) qualified handlers still require whole understood declaration including opaque profile members and unused model dependencies [248.12ms]
+
+::endgroup::
+
+ 2 pass
+ 0 fail
+ 10 expect() calls
+Ran 2 tests across 1 file. [748.00ms]
+{"testProcess":"tests/actions-reference/handlers.test.ts","exitCode":0,"pass":2,"fail":0,"skip":0,"assertions":10,"completeSummary":true,"logSha256":"fe005ae47750d4d04f0cf96f04862f0701f13a1fe693ad95322f12d5e75343cf"}
+{"testProcess":"tests/actions-reference/intent.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/intent.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/intent.test.ts:
+(pass) original-revision intent uses exact typed equality, presence and declared concurrency order [614.10ms]
+
+::endgroup::
+
+ 1 pass
+ 0 fail
+ 7 expect() calls
+Ran 1 test across 1 file. [1126.00ms]
+{"testProcess":"tests/actions-reference/intent.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":7,"completeSummary":true,"logSha256":"1f2edfb4776ef2af619e990e31a345362d499a1eacd53783b15d681f77679c37"}
+{"testProcess":"tests/actions-reference/invariant-mutants.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/invariant-mutants.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/invariant-mutants.test.ts:
+{"nativeInvariantMutation":{"bun":"1.4.2","nativeVersion":"17.9 (Debian 17.9-1.pgdg13+1)","killed":2,"total":2,"witnesses":[{"id":"per-key-canonical-identity","sourceSha256":"7a0283730f6cb495ff3942aea3f6c0485d7cba7b86e25b8e0c01d5caeb82bb1e","mutantSha256":"b2d5a78475a57bfde038c6d830370fb5ed17e4eed60305aa5a7f358fd4c2cc0a","baseline":"passed","boundary":"alias canonical identity","expected":["entity:2","entity:2"],"actual":["key:[\"sales\",\"order\",\"external\",\"554d464b3101040c65787465726e616c2d6f6e65\"]","key:[\"sales\",\"order\",\"pk\",\"554d464b310104036f6e65\"]"]},{"id":"skip-missing-projection-prefix","sourceSha256":"f370c319e24c18b1516e82ff77279abfd554abc82c016d34a592c72bf5dc8ae0","mutantSha256":"5c4d3527220a3e7ae8ca10277eb27411ae9cb85aa502cc180ff6c6e6fb7065d0","baseline":"passed","boundary":"projection missing-prefix visibility","expected":{"delivery":{"status":"delivered","prefix":"0"},"prefix":"0","content":{"profile":{"id":"umf.actions.native-graph","version":"1"},"entities":[{"id":"5","record":{"element":"order","module":"sales"},"fields":{"[\"sales\",\"id\"]":{"string":"one"},"[\"sales\",\"status\"]":{"string":"pending"}},"version":"original-version"},{"id":"6","record":{"element":"order","module":"sales"},"fields":{"[\"sales\",\"id\"]":{"string":"two"},"[\"sales\",\"status\"]":{"string":"pending"}},"version":"original-version"}],"links":[]},"queued":["2"],"readStatus":"pending"},"actual":{"delivery":{"status":"delivered","prefix":"2"},"prefix":"2","content":{"profile":{"id":"umf.actions.native-graph","version":"1"},"entities":[{"id":"5","record":{"element":"order","module":"sales"},"fields":{"[\"sales\",\"id\"]":{"string":"one"},"[\"sales\",\"status\"]":{"string":"pending"}},"version":"original-version"},{"id":"6","record":{"element":"order","module":"sales"},"fields":{"[\"sales\",\"id\"]":{"string":"two"},"[\"sales\",\"status\"]":{"string":"approved"}},"version":"b6210f8167fd0359e4ff376202fb7b0ffc0498d68db6e1aac35c3816b563e8ab"}],"links":[]},"queued":["2"],"readStatus":"visible"}}],"scope":"One native primary/alternate alias pair and two disjoint SET commits delivered 2-before-1; actual copied implementations, exact semantic failures only; no universal refinement claim"}}
+(pass) native alias and projection histories kill actual canonicalization and prefix-gap implementation mutants [4615.66ms]
+
+::endgroup::
+
+ 1 pass
+ 0 fail
+ 6 expect() calls
+Ran 1 test across 1 file. [5.18s]
+{"testProcess":"tests/actions-reference/invariant-mutants.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":6,"completeSummary":true,"logSha256":"eb7e07476451ea7b3842f6026af5b1570b2f791e72dcf62a7af56a3eb05d4a2f"}
+{"testProcess":"tests/actions-reference/launch-owner-metadata.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/launch-owner-metadata.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/launch-owner-metadata.test.ts:
+(pass) cold installation metadata can exceed two seconds; a stalled observation refuses before ownership [7252.53ms]
+
+::endgroup::
+
+ 1 pass
+ 0 fail
+ 4 expect() calls
+Ran 1 test across 1 file. [7.27s]
+{"testProcess":"tests/actions-reference/launch-owner-metadata.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":4,"completeSummary":true,"logSha256":"9bcfa5a88036afa9d91c3f61abd3faea2327299325a4e93292fe523fb0672657"}
+{"testProcess":"tests/actions-reference/launch-owner.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/launch-owner.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/launch-owner.test.ts:
+(pass) native delayed CREATE preserves unresolved ownership across consumer restart, never starts late and recovers only acknowledged CID [1692.06ms]
+(pass) native delayed START cannot activate an acknowledged container after immutable CID removal [1648.46ms]
+(pass) native handler uses the reviewed program snapshot across durable launcher admission latency [317.75ms]
+(pass) stale owner cannot acknowledge into or release a subsequent slot; malformed ownership keeps admission closed [416.99ms]
+
+::endgroup::
+
+ 4 pass
+ 0 fail
+ 40 expect() calls
+Ran 4 tests across 1 file. [4.09s]
+{"testProcess":"tests/actions-reference/launch-owner.test.ts","exitCode":0,"pass":4,"fail":0,"skip":0,"assertions":40,"completeSummary":true,"logSha256":"03deb32fb7cedfe601238302adc7b1b14c9e9f355af3f7ec9387cb44408b972c"}
+{"testProcess":"tests/actions-reference/link-executor.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/link-executor.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/link-executor.test.ts:
+(pass) native ordered CREATE/LINK satisfies required relationships, stamps read-only targets and replays exact typed changes [5595.21ms]
+(pass) native LINK set no-ops/restoration preserve versions; hidden-edge constraints precede posts and link-only stamps conflict [10364.13ms]
+
+::endgroup::
+
+ 2 pass
+ 0 fail
+ 79 expect() calls
+Ran 2 tests across 1 file. [16.46s]
+{"testProcess":"tests/actions-reference/link-executor.test.ts","exitCode":0,"pass":2,"fail":0,"skip":0,"assertions":79,"completeSummary":true,"logSha256":"b008a946bbfe017d05383979777e5e4d8730379e989fc3764ebabc5dba093269"}
+{"testProcess":"tests/actions-reference/lookup-horizon.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/lookup-horizon.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/lookup-horizon.test.ts:
+(pass) logical lookup malformed envelopes refuse PARAMETER before authentication or native access [0.57ms]
+(pass) native namespace-lifetime token recognition survives expiry, changed intent and a fresh consumer without reexecution [2784.48ms]
+
+::endgroup::
+
+ 2 pass
+ 0 fail
+ 15 expect() calls
+Ran 2 tests across 1 file. [3.31s]
+{"testProcess":"tests/actions-reference/lookup-horizon.test.ts","exitCode":0,"pass":2,"fail":0,"skip":0,"assertions":15,"completeSummary":true,"logSha256":"13e3017fce75f78fd02f68d17f8544b423bb6157aa14ed8cd68c4eec6338388d"}
+{"testProcess":"tests/actions-reference/native-refinement.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/native-refinement.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/native-refinement.test.ts:
+{"nativeRefinement":{"profile":"umf.actions.finite-idempotent-set/1","nativeVersion":"17.9 (Debian 17.9-1.pgdg13+1)","alphabet":["invoke-A","invoke-B","lookup-A","revoke","grant","retire"],"depth":3,"traces":216,"transitions":648,"mismatches":0,"scope":"One scalar SET, two tokens, one human/role, serial schedules; no universal graph or concurrent refinement claim"}}
+(pass) native bounded traces refine independent authorization, token, retirement and atomic-state semantics [81870.24ms]
+{"nativeMutation":{"nativeVersion":"17.9 (Debian 17.9-1.pgdg13+1)","killed":3,"total":3,"witnesses":[{"id":"skip-replay","sourceSha256":"2fc6849548220155e70a25e0dfb87ace7a5047a57aa7a1bd1579564920cfe95a","mutantSha256":"69cd577302044b0e85feff1e8538c709a99979cb81a60910c5d12aaa81650ca6","trace":["invoke-A","invoke-A"],"reason":"Error: NATIVE_REFINEMENT invoke-A → invoke-A exact replay expected {\"status\":\"committed\",\"revision\":{\"module\":\"sales\",\"action\":\"approve\",\"revision\":\"r\"},\"outputs\":{},\"changes\":[{\"kind\":\"updated\",\"entity\":{\"key\":{\"element\":\"order\",\"module\":\"sales\",\"key\":\"pk\"},\"components\":[{\"string\":\"one\"}]}}],\"version\":\"504207cc42f049be9b5d869727a4cad7a5e47c97b42ddfa6e535ce2d3dfcfb2c\",\"receipt\":{\"store\":\"mutant-skip-replay\",\"epoch\":\"epoch\",\"version\":\"504207cc42f049be9b5d869727a4cad7a5e47c97b42ddfa6e535ce2d3dfcfb2c\"},\"noOp\":false,\"verification\":{\"kind\":\"recipe\",\"effects\":[{\"effect\":\"approve-status\",\"status\":\"verified\",\"outcome\":\"changed\"}],\"postconditions\":[],\"frames\":\"enforced\",\"constraints\":\"verified\"}} got {\"status\":\"unsupported\",\"code\":\"TOKEN_REUSE\"}"},{"id":"ignore-role-membership","sourceSha256":"7b851e0a1f925d3158065eca725d9ea86eb39461133805e941beb2016948a13b","mutantSha256":"39ae8d0378d6499d1f00e2e5ae848c130eccfac6abeb88291a424a5a382028c3","trace":["invoke-A","revoke","invoke-A"],"reason":"Error: NATIVE_REFINEMENT invoke-A → revoke → invoke-A authorization expected {\"status\":\"denied\",\"code\":\"AUTHORIZATION\"} got {\"status\":\"committed\",\"revision\":{\"module\":\"sales\",\"action\":\"approve\",\"revision\":\"r\"},\"outputs\":{},\"changes\":[{\"kind\":\"updated\",\"entity\":{\"key\":{\"element\":\"order\",\"module\":\"sales\",\"key\":\"pk\"},\"components\":[{\"string\":\"one\"}]}}],\"version\":\"33f821660da3f6f27008db5587f71424c6121faa283d0f25128ad2607c19bd09\",\"receipt\":{\"store\":\"mutant-ignore-role-membership\",\"epoch\":\"epoch\",\"version\":\"33f821660da3f6f27008db5587f71424c6121faa283d0f25128ad2607c19bd09\"},\"noOp\":false,\"verification\":{\"kind\":\"recipe\",\"effects\":[{\"effect\":\"approve-status\",\"status\":\"verified\",\"outcome\":\"changed\"}],\"postconditions\":[],\"frames\":\"enforced\",\"constraints\":\"verified\"}}"},{"id":"omit-terminal-audit","sourceSha256":"2fc6849548220155e70a25e0dfb87ace7a5047a57aa7a1bd1579564920cfe95a","mutantSha256":"5b785ebe59957e66c03234df5a26f13399a2698346b9d17bde9d5f49f4aeb1f3","trace":["invoke-A"],"reason":"Error: NATIVE_REFINEMENT invoke-A atomic audit expected 1 got 0"}]}}
+(pass) native refinement kills replay, authorization and terminal-audit implementation mutants [6474.45ms]
+
+::endgroup::
+
+ 2 pass
+ 0 fail
+ 8 expect() calls
+Ran 2 tests across 1 file. [88.84s]
+{"testProcess":"tests/actions-reference/native-refinement.test.ts","exitCode":0,"pass":2,"fail":0,"skip":0,"assertions":8,"completeSummary":true,"logSha256":"5fa5279e8a4c63b59ee7308689e0915b4efe6212c4a5787f8a1559511e077fd5"}
+{"testProcess":"tests/actions-reference/outcomes.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/outcomes.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/outcomes.test.ts:
+(pass) native protected terminal lookup retains original decisions across retirement, service changes and restart [4022.46ms]
+
+::endgroup::
+
+ 1 pass
+ 0 fail
+ 19 expect() calls
+Ran 1 test across 1 file. [4.52s]
+{"testProcess":"tests/actions-reference/outcomes.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":19,"completeSummary":true,"logSha256":"b77b7f878536a3be89ae9e99575d0b4d4576c4e53f5ed8a2a69d7acf8d4fc89e"}
+{"testProcess":"tests/actions-reference/policy.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/policy.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/policy.test.ts:
+(pass) native current policy gates protected callbacks and serializes revocation with accepted work [3304.10ms]
+
+::endgroup::
+
+ 1 pass
+ 0 fail
+ 16 expect() calls
+Ran 1 test across 1 file. [3.51s]
+{"testProcess":"tests/actions-reference/policy.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":16,"completeSummary":true,"logSha256":"e1619e708d5542667cbd850161db8413d3376a924e5e9465a7af4ba2caa6ad8f"}
+{"testProcess":"tests/actions-reference/preparation.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/preparation.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/preparation.test.ts:
+(pass) fresh preparation gates the entire retained declaration before narrow input and rule consumers [515.17ms]
+(pass) fresh preparation retains qualified create/link selectors and their ordered identities [301.98ms]
+(pass) mutation endpoint invariant dependencies admit before false preconditions, including read-only targets [517.80ms]
+
+::endgroup::
+
+ 3 pass
+ 0 fail
+ 15 expect() calls
+Ran 3 tests across 1 file. [1.79s]
+{"testProcess":"tests/actions-reference/preparation.test.ts","exitCode":0,"pass":3,"fail":0,"skip":0,"assertions":15,"completeSummary":true,"logSha256":"77dbdb1a0098408bdbb40a662dcc92c6a616f27688f1d11e9a71d4999c671aab"}
+{"testProcess":"tests/actions-reference/preview.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/preview.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/preview.test.ts:
+(pass) native preview is advisory, ordered and write-free under independent SQL write guards [5927.90ms]
+
+::endgroup::
+
+ 1 pass
+ 0 fail
+ 23 expect() calls
+Ran 1 test across 1 file. [6.43s]
+{"testProcess":"tests/actions-reference/preview.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":23,"completeSummary":true,"logSha256":"1c74f21e1d9a29000b07af4a15633c09ac90ffd8770fe845ad9e3c8485fceb45"}
+{"testProcess":"tests/actions-reference/process-recovery.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/process-recovery.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/process-recovery.test.ts:
+(pass) actual command-process death before commit rolls back; death after native acknowledgement reconciles once in a fresh process [5233.97ms]
+
+::endgroup::
+
+ 1 pass
+ 0 fail
+ 39 expect() calls
+Ran 1 test across 1 file. [5.72s]
+{"testProcess":"tests/actions-reference/process-recovery.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":39,"completeSummary":true,"logSha256":"91eb3f921c9ef85123843d91f5982027b2edf283f865152f6cde96eec403ddee"}
+{"testProcess":"tests/actions-reference/projection.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/projection.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/projection.test.ts:
+(pass) native full graph baseline and reordered duplicate delivery preserve all primitives, exact receipts and independent named prefixes [4908.62ms]
+(pass) projection authority cannot collide with business audit roles; malformed retained meaning refuses without loss [1938.38ms]
+(pass) unknown native fact meaning remains queued and never advances its sequence [2563.83ms]
+
+::endgroup::
+
+ 3 pass
+ 0 fail
+ 63 expect() calls
+Ran 3 tests across 1 file. [9.91s]
+{"testProcess":"tests/actions-reference/projection.test.ts","exitCode":0,"pass":3,"fail":0,"skip":0,"assertions":63,"completeSummary":true,"logSha256":"ee4fa78572385d989c6402610274917636a34e0cd88286ad2ee8ed8a7cf14bbb"}
+{"testProcess":"tests/actions-reference/reader-revocation.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/reader-revocation.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/reader-revocation.test.ts:
+(pass) native audit read linearizes before queued revocation and later denial selects no protected rows [3248.53ms]
+(pass) native projection read linearizes before queued revocation and later denial selects no protected rows [3058.84ms]
+
+::endgroup::
+
+ 2 pass
+ 0 fail
+ 16 expect() calls
+Ran 2 tests across 1 file. [6.79s]
+{"testProcess":"tests/actions-reference/reader-revocation.test.ts","exitCode":0,"pass":2,"fail":0,"skip":0,"assertions":16,"completeSummary":true,"logSha256":"d859cb370453597214f812c785caf2b05a280d1d28de6280773bf96dc4f720e9"}
+{"testProcess":"tests/actions-reference/receipts.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/receipts.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/receipts.test.ts:
+(pass) native exact receipt map includes baseline, committed order and no-op/replay without preview writes [5120.83ms]
+(pass) native no-op at genesis retains sequence-zero receipt without an outbox event [2672.45ms]
+(pass) late native audit failure rolls back the tentative receipt and all business facts [3749.19ms]
+(pass) native committed outbox and receipt fields reject mutation and deletion [3557.49ms]
+
+::endgroup::
+
+ 4 pass
+ 0 fail
+ 45 expect() calls
+Ran 4 tests across 1 file. [15.56s]
+{"testProcess":"tests/actions-reference/receipts.test.ts","exitCode":0,"pass":4,"fail":0,"skip":0,"assertions":45,"completeSummary":true,"logSha256":"060a94e38053c97b347645f83e76aed1153367b2af4e02fc1fdf8421d35dfaa6"}
+{"testProcess":"tests/actions-reference/recipe.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/recipe.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/recipe.test.ts:
+(pass) native candidate recipe orders missing inputs, versions, conditions and evaluates isolated final state [3971.12ms]
+
+::endgroup::
+
+ 1 pass
+ 0 fail
+ 10 expect() calls
+Ran 1 test across 1 file. [4.48s]
+{"testProcess":"tests/actions-reference/recipe.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":10,"completeSummary":true,"logSha256":"c97dbf71f7a79a0278f7451ab273a6e776216e2b3218bc04a1bfbf74c1934542"}
+{"testProcess":"tests/actions-reference/recovery.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/recovery.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/recovery.test.ts:
+(pass) native server abort after all writes retries at most three complete transactions [14236.66ms]
+(pass) injected lost acknowledgement after actual commit never retries; new connection recovers keyed original result [12216.70ms]
+(pass) native backend termination before acknowledgement is indeterminate and never automatically retried [4471.01ms]
+(pass) retry rechecks authorization after a native rollback and intervening revocation [2864.18ms]
+(pass) native unknown-completion diagnostics never qualify as known rollback retries [6513.36ms]
+
+::endgroup::
+
+ 5 pass
+ 0 fail
+ 91 expect() calls
+Ran 5 tests across 1 file. [40.78s]
+{"testProcess":"tests/actions-reference/recovery.test.ts","exitCode":0,"pass":5,"fail":0,"skip":0,"assertions":91,"completeSummary":true,"logSha256":"eaf57d1596f2d26c3e4cb27093ed53721c6ffb3ef1c48a6b72d63e4615f1d43d"}
+{"testProcess":"tests/actions-reference/relationship-gateway.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/relationship-gateway.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/relationship-gateway.test.ts:
+(pass) linked gateway validates authored endpoint orientation before absence and permanently aborts invalid calls [217.24ms]
+(pass) candidate LINK/UNLINK enforce write access, preserve pre-state and discard restored membership [233.13ms]
+(pass) candidate relationship mutation preserves authored target Key while accepting a read-only target reference [195.08ms]
+(pass) candidate net changes retain combined first-modification order and remove restored relationships [113.11ms]
+
+::endgroup::
+
+ 4 pass
+ 0 fail
+ 49 expect() calls
+Ran 4 tests across 1 file. [1279.00ms]
+{"testProcess":"tests/actions-reference/relationship-gateway.test.ts","exitCode":0,"pass":4,"fail":0,"skip":0,"assertions":49,"completeSummary":true,"logSha256":"c70a9fc3f5b5041fbd14f0ba144ecd53a8bf3548fdc78f409bc51004115304df"}
+{"testProcess":"tests/actions-reference/relationship-snapshot.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/relationship-snapshot.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/relationship-snapshot.test.ts:
+(pass) native linked snapshots preserve direction, canonical read aliases and durable rejection under preview write guards [10356.34ms]
+
+::endgroup::
+
+ 1 pass
+ 0 fail
+ 27 expect() calls
+Ran 1 test across 1 file. [10.82s]
+{"testProcess":"tests/actions-reference/relationship-snapshot.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":27,"completeSummary":true,"logSha256":"ff849efb08870e154e06af021b825d1b54fab7df643ab8755cde6e0951bd7f19"}
+{"testProcess":"tests/actions-reference/restore.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/restore.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/restore.test.ts:
+(pass) physical older backup stays fenced across epochs and restart; explicit validated namespace starts independent genesis [4864.64ms]
+(pass) new genesis refuses alias reconciliation, unsupported domain and isolated required relationships atomically [3117.79ms]
+(pass) required linked genesis remaps native IDs, preserves alternate key identity and publishes exact baseline [2009.38ms]
+(pass) whole restored database fences every business and administration namespace before exposure [2774.62ms]
+(pass) corrupted restored edge with both endpoint Records unrelated to authored relationship refuses without repair [2202.17ms]
+
+::endgroup::
+
+ 5 pass
+ 0 fail
+ 60 expect() calls
+Ran 5 tests across 1 file. [15.44s]
+{"testProcess":"tests/actions-reference/restore.test.ts","exitCode":0,"pass":5,"fail":0,"skip":0,"assertions":60,"completeSummary":true,"logSha256":"37d2a55f07ada632429d10e09654f213386305217d8db475d03e6c00c6463513"}
+{"testProcess":"tests/actions-reference/revisions.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/revisions.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/revisions.test.ts:
+(pass) native revision retention preserves original source across retirement and refuses replacement [2969.16ms]
+
+::endgroup::
+
+ 1 pass
+ 0 fail
+ 12 expect() calls
+Ran 1 test across 1 file. [3.44s]
+{"testProcess":"tests/actions-reference/revisions.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":12,"completeSummary":true,"logSha256":"84b26bb85b5f5e80b468e42a6307ce0d42a3e0e631ae2f9fb1d4063eea42428d"}
+{"testProcess":"tests/actions-reference/sandbox-security.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/sandbox-security.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/sandbox-security.test.ts:
+(pass) handler clears image and client proxy credentials before any program/subprocess observes environment [1850.88ms]
+(pass) native host sentinel/socket/listener and external route are inaccessible; kernel confinement is enforced [547.53ms]
+(pass) native process bound refuses additional forks while successful children are reaped [407.54ms]
+(pass) natural EOF preserves successful results and refuses an early exit without a result [3609.95ms]
+(pass) actual cgroup memory exhaustion yields LIMIT with native OOM evidence and confirmed removal [553.80ms]
+(pass) timeout, malformed protocol and dispatch refusal each independently confirm owned removal [2250.88ms]
+(pass) native watchdog stops an executing handler after its Bun supervisor is killed [10581.74ms]
+
+::endgroup::
+
+ 7 pass
+ 0 fail
+ 149 expect() calls
+Ran 7 tests across 1 file. [19.82s]
+{"testProcess":"tests/actions-reference/sandbox-security.test.ts","exitCode":0,"pass":7,"fail":0,"skip":0,"assertions":149,"completeSummary":true,"logSha256":"56e22d9c17fb31c665245d2ad93203b9acc043dab841d115344f78ac3320a76b"}
+{"testProcess":"tests/actions-reference/sandbox-state.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/sandbox-state.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/sandbox-state.test.ts:
+(pass) cleanup diagnostic distinguishes initial and settlement native inspection failures [0.28ms]
+(pass) native exit137 never becomes OOM without original Boolean evidence [0.06ms]
+(pass) rounded optional final-poll timer preserves validated non-OOM state before the clock deadline [0.40ms]
+(pass) only the optional settlement budget may expire without an inspection diagnostic [0.17ms]
+
+::endgroup::
+
+ 4 pass
+ 0 fail
+ 31 expect() calls
+Ran 4 tests across 1 file. [7.00ms]
+{"testProcess":"tests/actions-reference/sandbox-state.test.ts","exitCode":0,"pass":4,"fail":0,"skip":0,"assertions":31,"completeSummary":true,"logSha256":"0dfff611c3c8d47c9d618b7a817d5e3cb607e410ae64f6e365c16cbb920f037f"}
+{"testProcess":"tests/actions-reference/sandbox.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/sandbox.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/sandbox.test.ts:
+(pass) actual isolated handler foundation > copied authenticated ordered gateway calls and isolated runtime [522.33ms]
+(pass) actual isolated handler foundation > asynchronous candidate dispatch is refused rather than outliving an attempt [529.93ms]
+(pass) actual isolated handler foundation > deployment build mismatch refuses before dispatch [0.32ms]
+(pass) actual isolated handler foundation > unauthenticated output and caught gateway refusal cannot finish successfully [607.87ms]
+(pass) actual isolated handler foundation > authenticated malformed requests and stderr flooding refuse [1153.98ms]
+{"case":"unsafe-gateway-argument","stage":"finished","cleanupConfirmed":true,"initialState":{"ExitCode":0,"OOMKilled":false,"Running":false},"exitCode":0,"oomKilled":false,"attachExitCode":0,"attachExitedBeforeInspect":false}
+{"case":"unsafe-output","stage":"finished","cleanupConfirmed":true,"initialState":{"ExitCode":0,"OOMKilled":false,"Running":false},"exitCode":0,"oomKilled":false,"attachExitCode":0,"attachExitedBeforeInspect":false}
+(pass) actual isolated handler foundation > hostile numeric protocol payloads normalize to FRAME_ACCESS before dispatch [785.82ms]
+(pass) actual isolated handler foundation > absolute deadline refuses success even when synchronous dispatch delays timers [3374.62ms]
+(pass) actual isolated handler foundation > invalid and truncated UTF-8 fail through the profile protocol error [682.59ms]
+(pass) actual isolated handler foundation > infinite computation, protocol flood and operation 257 abort [3001.92ms]
+
+::endgroup::
+
+ 9 pass
+ 0 fail
+ 27 expect() calls
+Ran 9 tests across 1 file. [10.67s]
+{"testProcess":"tests/actions-reference/sandbox.test.ts","exitCode":0,"pass":9,"fail":0,"skip":0,"assertions":27,"completeSummary":true,"logSha256":"d3a99d02827ec5657edee545c488028d322a53985efcc693fccc6f1ab5c28e22"}
+{"testProcess":"tests/actions-reference/state.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/state.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/state.test.ts:
+(pass) native frozen frames resolve primary/alternate Keys to one resource and reject duplicate alias writes atomically [2933.01ms]
+
+::endgroup::
+
+ 1 pass
+ 0 fail
+ 15 expect() calls
+Ran 1 test across 1 file. [3.42s]
+{"testProcess":"tests/actions-reference/state.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":15,"completeSummary":true,"logSha256":"13b405957eab0ecc482ef933c23fb7340094eba4b81b6ce915814b6e5fbd8348"}
+{"testProcess":"tests/actions-reference/store.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/store.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+::group::tests/actions-reference/store.test.ts:
+{"nativeVersion":"17.9 (Debian 17.9-1.pgdg13+1)","nativeVersionNumber":"170009"}
+(pass) native store foundation enforces exact aliases, FKs, control serialization and atomic rollback [1742.88ms]
+(pass) native lossless payloads and identity buckets preserve NUL/surrogates, large tokens/Keys and digest collisions [1925.00ms]
+(pass) native qualified isolation preserves exact concurrent uniqueness and independent stores [1921.71ms]
+
+::endgroup::
+
+ 3 pass
+ 0 fail
+ 41 expect() calls
+Ran 3 tests across 1 file. [5.74s]
+{"testProcess":"tests/actions-reference/store.test.ts","exitCode":0,"pass":3,"fail":0,"skip":0,"assertions":41,"completeSummary":true,"logSha256":"2a3b3e1181aa2d2fc7bac313d74e60d7fc66f48beb7f24a9804b08e6d5899dc9"}
+
+ 125 pass
+ 0 skip
+ 0 fail
+ 2000 expect() calls
+Ran 125 tests across 41 files. [483.58s]

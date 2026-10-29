@@ -1,0 +1,7 @@
+src/table-migration/g04-conversion.ts(46,226): error TS2322: Type 'TableColumnExpectation | undefined' is not assignable to type 'TableColumnExpectation'.
+  Type 'undefined' is not assignable to type 'TableColumnExpectation'.
+src/table-migration/index.ts(719,99): error TS2379: Argument of type 'TableMigrationStep' is not assignable to parameter of type 'TableMigrationStepDraft' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Type 'TableMigrationStep' is not assignable to type 'Omit<LegacyTableMigrationStep, "expectedOutcome" | "preconditions" | "recovery" | "verification">' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'kind' are incompatible.
+      Type '"backfill" | "comment" | "conversion" | "foreignKey" | "grant" | "index" | "policy" | "seed" | "table"' is not assignable to type '"backfill" | "comment" | "foreignKey" | "grant" | "index" | "policy" | "seed" | "table"'.
+        Type '"conversion"' is not assignable to type '"backfill" | "comment" | "foreignKey" | "grant" | "index" | "policy" | "seed" | "table"'.

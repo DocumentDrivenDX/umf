@@ -1,0 +1,590 @@
+{
+  "actualMetadataBytes": 159949,
+  "actualRetainedLogBytes": 9500,
+  "aggregateElapsedMs": 198055,
+  "aggregateLimitSeconds": 600,
+  "attempt": 2,
+  "captureHelperSha256": "f3520d808d9d748be68a0bfced22e7970844c5916af65dbe7fdf519b7a8ffda5",
+  "childLimitSeconds": 180,
+  "d5StatusEffect": "none",
+  "dockerClientServerVersion": "29.8.2/29.8.2",
+  "executionId": "local-27a723db53344b6cafe868e666f8bf1a",
+  "harnessSha256": "7d2be418526f7cb640a5a883ba21cd806b305dac8aea542ba84e063c83d13746",
+  "hostPlatform": {
+    "machine": "arm64",
+    "system": "Darwin"
+  },
+  "interpretation": "timing diagnostic only; no performance or release-gate claim",
+  "metadataCapBytes": 16777216,
+  "operatorWrapperSha256": "550a1b9b06cd2fce45b3af92cd5e9d7850411f8ef3f28f57d10c7e091c5d7fb1",
+  "oracleElapsedMsByMode": {
+    "default": [
+      45655,
+      44456
+    ],
+    "jitless": [
+      44120,
+      45721
+    ]
+  },
+  "order": [
+    "default",
+    "jitless",
+    "jitless",
+    "default"
+  ],
+  "postgresImage": {
+    "imageId": "sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336",
+    "platform": "linux/arm64",
+    "reference": "sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336"
+  },
+  "postgresPlatform": "linux/arm64",
+  "releaseGate": false,
+  "resourceLimits": {
+    "client": {
+      "cpus": 8,
+      "memoryBytes": 8589934592,
+      "pidsLimit": 4096
+    },
+    "postgres": {
+      "cpus": 2,
+      "memoryBytes": 2147483648,
+      "pidsLimit": 1024
+    }
+  },
+  "runtimeImage": {
+    "imageId": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+    "platform": "linux/amd64",
+    "reference": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556"
+  },
+  "runtimePlatform": "linux/amd64",
+  "schema": "umf.local-d5-v8-flags-diagnostic/1",
+  "source": {
+    "cohort": {
+      "core": "0.10.3",
+      "miniRacer": "0.14.1",
+      "python": "3.11.17",
+      "umfAccess": "0.1.0.dev8",
+      "umfCodegen": "0.1.0a5",
+      "weft": "0.4.55"
+    },
+    "inputSha256": {
+      "d5/evidence/cohort.lock.json": "4337ab0597dcec245402abe73bcf8ea1d09bc72a4cb2907473c9e53d0327e611",
+      "d5/evidence/installed-versions.json": "6f524800d52f199acc8a07f2e1624a38d250088b1d90900034e81531d3ee983a",
+      "d5/evidence/mirror-manifest.json": "a8718abda3775d958df3756e200e9b037c7c25e8961cdbc10b9fb095924a6561",
+      "d5/evidence/owner-artifacts.json": "64d9a12d4f92ffe7c080568b0b0aaad7ab4e454da4f08fea075143b883fb5ddc",
+      "d5/evidence/replay/candidate-009/installed-text-oracle-d5-weft55-metadata-successor.py": "e197d3630079c597964aa81b875ef6e7cd53f1c2fab42018bdb5a8684bf53600",
+      "d5/evidence/replay/g01/fixture.json.gz": "c29ee30dd76e6e4fbbf6ceea64cb22d77764c2a349081819d0d7ac1c1dc59af1",
+      "local-docker-context.json": "407407e27cd1db41c34c6ab0610ddef0df0d38485fb435141923bafc48a7fdf1"
+    },
+    "miniRacerWheel": {
+      "filename": "mini_racer-0.14.1-py3-none-manylinux_2_27_x86_64.whl",
+      "sha256": "cdf3a088e1363f16a695288f882abf76b3705b8e1df21418208b87ed010037a4",
+      "sizeBytes": 22178205
+    },
+    "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+    "sourceTree": "8b98c0d895983ba2b7637dd3aea567dab0943883"
+  },
+  "status": "diagnostic-complete",
+  "streamCapBytes": 131072,
+  "teardownReserveSeconds": 60,
+  "trials": [
+    {
+      "child": {
+        "elapsedMs": 46466,
+        "exitCode": 0,
+        "logPaths": [
+          "logs/outer.stdout.log",
+          "logs/outer.stderr.log"
+        ],
+        "stderrBytes": 53,
+        "stderrCaptureExit": 0,
+        "stderrSha256": "c7ac1d27835e83cbfae62ba648a9201a4a4c1c51f5f2ce1d63d4f0da2858d2ea",
+        "stdoutBytes": 2322,
+        "stdoutCaptureExit": 0,
+        "stdoutSha256": "4507a074eb2abf7b7c9835e78165c0277215e97435c3ff0c9de5021a39f0f4fe",
+        "timedOut": false
+      },
+      "cleanupReport": "all created isolated databases and roles removed",
+      "clientContainerId": "2715d2ee3c2e73ba1a8e1984da51448cdcc8ef1b0c7355d934395f6e3211befd",
+      "elapsedMsIncludingOwnedPostgres": 49270,
+      "expectedObservationMatch": true,
+      "flags": [
+        "--single-threaded"
+      ],
+      "mode": "default",
+      "observedCase": {
+        "actualColumns": [
+          "id",
+          "owner",
+          "amount",
+          "summary"
+        ],
+        "actualRows": [
+          [
+            "a",
+            "Ada",
+            100000,
+            9
+          ],
+          [
+            "b",
+            "Bjørn",
+            99999,
+            0
+          ],
+          [
+            "c",
+            "李",
+            100001,
+            2
+          ]
+        ],
+        "appended": false,
+        "domain": "integer",
+        "failure": null,
+        "futureDefaultValue": [
+          7
+        ],
+        "invalid": false,
+        "passed": true
+      },
+      "oracleProvenance": {
+        "artifactManifestSha256": "64d9a12d4f92ffe7c080568b0b0aaad7ab4e454da4f08fea075143b883fb5ddc",
+        "fixtureSha256": "c29ee30dd76e6e4fbbf6ceea64cb22d77764c2a349081819d0d7ac1c1dc59af1",
+        "originalRunnerSha256": "5dfddd7f1bd7f6e254e927292246ceddf5debfe172995ad267d4bbbfd32c2ea4",
+        "packageOrigins": {
+          "umf_access": "/d5-host/d5/venv-parent/venv/lib/python3.11/site-packages/umf_access/__init__.py",
+          "umf_codegen": "/d5-host/d5/venv-parent/venv/lib/python3.11/site-packages/umf_codegen/__init__.py",
+          "weft": "/d5-host/d5/venv-parent/venv/lib/python3.11/site-packages/weft/__init__.py"
+        },
+        "runnerSha256": "e197d3630079c597964aa81b875ef6e7cd53f1c2fab42018bdb5a8684bf53600",
+        "runtimeFiles": {
+          "umf_codegen/_assets/generator.js.gz": "3f48410cb6013c2321ecb6f142779123730bfa9f85bbaabab1b412d5984cdd47",
+          "umf_codegen/_assets/manifest.json": "ad326f5c95d4c9dde9ec09d9413aac156e50a1e0b1934cc357b249fd560a6e95",
+          "weft/weft.abi3.so": "2f39a3e2bf356922a44fef0e88ffaae155d6d850e66d7f7e35d9209cd85c3760"
+        }
+      },
+      "packageVersions": {
+        "psycopg": "3.2.13",
+        "umf-access": "0.1.0.dev8",
+        "umf-codegen": "0.1.0a5"
+      },
+      "postgresCleanupSucceeded": true,
+      "postgresContainerId": "097c169cb130bab795e9a15ef4b331302a191bfb2410453264a365b411d226f1",
+      "postgresServerVersion": "18.6 (Debian 18.6-1.pgdg13+2)",
+      "reportPath": "trials/01-default/report.json",
+      "reportSha256": "6ecd0a4e071140d973b0376c340d0fde8650919c75ba1ee7bfaa3aa87880528d",
+      "reportStatus": "passed",
+      "resourceLimits": {
+        "client": {
+          "cpus": 8,
+          "memoryBytes": 8589934592,
+          "pidsLimit": 4096
+        },
+        "postgres": {
+          "cpus": 2,
+          "memoryBytes": 2147483648,
+          "pidsLimit": 1024
+        }
+      },
+      "runtimeCompletion": {
+        "mode": "default",
+        "oracleElapsedMs": 45655,
+        "reportSha256": "6ecd0a4e071140d973b0376c340d0fde8650919c75ba1ee7bfaa3aa87880528d"
+      },
+      "runtimeInitialization": {
+        "flagsPassed": [
+          "--single-threaded"
+        ],
+        "guestPlatform": {
+          "machine": "x86_64",
+          "release": "7.2.9-orbstack-00391-g2b298d05fbd4",
+          "system": "Linux"
+        },
+        "initializer": "py_mini_racer.init_mini_racer(flags=...)",
+        "initializerElapsedMs": 123,
+        "initializerReturned": true,
+        "miniRacerVersion": "0.14.1",
+        "mode": "default",
+        "pythonVersion": "3.11.17"
+      },
+      "sequence": "01-default",
+      "status": "passed"
+    },
+    {
+      "child": {
+        "elapsedMs": 45126,
+        "exitCode": 0,
+        "logPaths": [
+          "logs/outer.stdout.log",
+          "logs/outer.stderr.log"
+        ],
+        "stderrBytes": 53,
+        "stderrCaptureExit": 0,
+        "stderrSha256": "c7ac1d27835e83cbfae62ba648a9201a4a4c1c51f5f2ce1d63d4f0da2858d2ea",
+        "stdoutBytes": 2322,
+        "stdoutCaptureExit": 0,
+        "stdoutSha256": "b56a7e7dfd2312dfcb57407ab1441f68e52ac8bac29adcc18935aeed721b8a7e",
+        "timedOut": false
+      },
+      "cleanupReport": "all created isolated databases and roles removed",
+      "clientContainerId": "844451b5f524c3c88d19fe80ade59b9fbcb1e782448e89fa222bfcbe2c5c0288",
+      "elapsedMsIncludingOwnedPostgres": 48307,
+      "expectedObservationMatch": true,
+      "flags": [
+        "--single-threaded",
+        "--jitless"
+      ],
+      "mode": "jitless",
+      "observedCase": {
+        "actualColumns": [
+          "id",
+          "owner",
+          "amount",
+          "summary"
+        ],
+        "actualRows": [
+          [
+            "a",
+            "Ada",
+            100000,
+            9
+          ],
+          [
+            "b",
+            "Bjørn",
+            99999,
+            0
+          ],
+          [
+            "c",
+            "李",
+            100001,
+            2
+          ]
+        ],
+        "appended": false,
+        "domain": "integer",
+        "failure": null,
+        "futureDefaultValue": [
+          7
+        ],
+        "invalid": false,
+        "passed": true
+      },
+      "oracleProvenance": {
+        "artifactManifestSha256": "64d9a12d4f92ffe7c080568b0b0aaad7ab4e454da4f08fea075143b883fb5ddc",
+        "fixtureSha256": "c29ee30dd76e6e4fbbf6ceea64cb22d77764c2a349081819d0d7ac1c1dc59af1",
+        "originalRunnerSha256": "5dfddd7f1bd7f6e254e927292246ceddf5debfe172995ad267d4bbbfd32c2ea4",
+        "packageOrigins": {
+          "umf_access": "/d5-host/d5/venv-parent/venv/lib/python3.11/site-packages/umf_access/__init__.py",
+          "umf_codegen": "/d5-host/d5/venv-parent/venv/lib/python3.11/site-packages/umf_codegen/__init__.py",
+          "weft": "/d5-host/d5/venv-parent/venv/lib/python3.11/site-packages/weft/__init__.py"
+        },
+        "runnerSha256": "e197d3630079c597964aa81b875ef6e7cd53f1c2fab42018bdb5a8684bf53600",
+        "runtimeFiles": {
+          "umf_codegen/_assets/generator.js.gz": "3f48410cb6013c2321ecb6f142779123730bfa9f85bbaabab1b412d5984cdd47",
+          "umf_codegen/_assets/manifest.json": "ad326f5c95d4c9dde9ec09d9413aac156e50a1e0b1934cc357b249fd560a6e95",
+          "weft/weft.abi3.so": "2f39a3e2bf356922a44fef0e88ffaae155d6d850e66d7f7e35d9209cd85c3760"
+        }
+      },
+      "packageVersions": {
+        "psycopg": "3.2.13",
+        "umf-access": "0.1.0.dev8",
+        "umf-codegen": "0.1.0a5"
+      },
+      "postgresCleanupSucceeded": true,
+      "postgresContainerId": "8d4e82f0f096ebbee4c855d504eb3ebc40734ce3b6710683ef6d0df2996cdceb",
+      "postgresServerVersion": "18.6 (Debian 18.6-1.pgdg13+2)",
+      "reportPath": "trials/02-jitless/report.json",
+      "reportSha256": "177fa6680fa3c44f8a145e0df280732ac232d943e933d5048f3e2c3203367de7",
+      "reportStatus": "passed",
+      "resourceLimits": {
+        "client": {
+          "cpus": 8,
+          "memoryBytes": 8589934592,
+          "pidsLimit": 4096
+        },
+        "postgres": {
+          "cpus": 2,
+          "memoryBytes": 2147483648,
+          "pidsLimit": 1024
+        }
+      },
+      "runtimeCompletion": {
+        "mode": "jitless",
+        "oracleElapsedMs": 44120,
+        "reportSha256": "177fa6680fa3c44f8a145e0df280732ac232d943e933d5048f3e2c3203367de7"
+      },
+      "runtimeInitialization": {
+        "flagsPassed": [
+          "--single-threaded",
+          "--jitless"
+        ],
+        "guestPlatform": {
+          "machine": "x86_64",
+          "release": "7.2.9-orbstack-00391-g2b298d05fbd4",
+          "system": "Linux"
+        },
+        "initializer": "py_mini_racer.init_mini_racer(flags=...)",
+        "initializerElapsedMs": 79,
+        "initializerReturned": true,
+        "miniRacerVersion": "0.14.1",
+        "mode": "jitless",
+        "pythonVersion": "3.11.17"
+      },
+      "sequence": "02-jitless",
+      "status": "passed"
+    },
+    {
+      "child": {
+        "elapsedMs": 46915,
+        "exitCode": 0,
+        "logPaths": [
+          "logs/outer.stdout.log",
+          "logs/outer.stderr.log"
+        ],
+        "stderrBytes": 53,
+        "stderrCaptureExit": 0,
+        "stderrSha256": "c7ac1d27835e83cbfae62ba648a9201a4a4c1c51f5f2ce1d63d4f0da2858d2ea",
+        "stdoutBytes": 2322,
+        "stdoutCaptureExit": 0,
+        "stdoutSha256": "5e0c1ef38a6928ea76a48442ce85279fa031567657e9b156ad28f2c387bbbdc2",
+        "timedOut": false
+      },
+      "cleanupReport": "all created isolated databases and roles removed",
+      "clientContainerId": "efe445ba7a6a4a12c1f1d2a78519fce191453a7a27e87f2df473f7d79d2b6e6d",
+      "elapsedMsIncludingOwnedPostgres": 50715,
+      "expectedObservationMatch": true,
+      "flags": [
+        "--single-threaded",
+        "--jitless"
+      ],
+      "mode": "jitless",
+      "observedCase": {
+        "actualColumns": [
+          "id",
+          "owner",
+          "amount",
+          "summary"
+        ],
+        "actualRows": [
+          [
+            "a",
+            "Ada",
+            100000,
+            9
+          ],
+          [
+            "b",
+            "Bjørn",
+            99999,
+            0
+          ],
+          [
+            "c",
+            "李",
+            100001,
+            2
+          ]
+        ],
+        "appended": false,
+        "domain": "integer",
+        "failure": null,
+        "futureDefaultValue": [
+          7
+        ],
+        "invalid": false,
+        "passed": true
+      },
+      "oracleProvenance": {
+        "artifactManifestSha256": "64d9a12d4f92ffe7c080568b0b0aaad7ab4e454da4f08fea075143b883fb5ddc",
+        "fixtureSha256": "c29ee30dd76e6e4fbbf6ceea64cb22d77764c2a349081819d0d7ac1c1dc59af1",
+        "originalRunnerSha256": "5dfddd7f1bd7f6e254e927292246ceddf5debfe172995ad267d4bbbfd32c2ea4",
+        "packageOrigins": {
+          "umf_access": "/d5-host/d5/venv-parent/venv/lib/python3.11/site-packages/umf_access/__init__.py",
+          "umf_codegen": "/d5-host/d5/venv-parent/venv/lib/python3.11/site-packages/umf_codegen/__init__.py",
+          "weft": "/d5-host/d5/venv-parent/venv/lib/python3.11/site-packages/weft/__init__.py"
+        },
+        "runnerSha256": "e197d3630079c597964aa81b875ef6e7cd53f1c2fab42018bdb5a8684bf53600",
+        "runtimeFiles": {
+          "umf_codegen/_assets/generator.js.gz": "3f48410cb6013c2321ecb6f142779123730bfa9f85bbaabab1b412d5984cdd47",
+          "umf_codegen/_assets/manifest.json": "ad326f5c95d4c9dde9ec09d9413aac156e50a1e0b1934cc357b249fd560a6e95",
+          "weft/weft.abi3.so": "2f39a3e2bf356922a44fef0e88ffaae155d6d850e66d7f7e35d9209cd85c3760"
+        }
+      },
+      "packageVersions": {
+        "psycopg": "3.2.13",
+        "umf-access": "0.1.0.dev8",
+        "umf-codegen": "0.1.0a5"
+      },
+      "postgresCleanupSucceeded": true,
+      "postgresContainerId": "1fa35a383d17a528fbaa6984ec3a3774347a8ac342159912c407c208458c6671",
+      "postgresServerVersion": "18.6 (Debian 18.6-1.pgdg13+2)",
+      "reportPath": "trials/03-jitless/report.json",
+      "reportSha256": "866a03bb28651687ff2e483068baa03b82c155b5d6bb15d85ccc13e095efcf72",
+      "reportStatus": "passed",
+      "resourceLimits": {
+        "client": {
+          "cpus": 8,
+          "memoryBytes": 8589934592,
+          "pidsLimit": 4096
+        },
+        "postgres": {
+          "cpus": 2,
+          "memoryBytes": 2147483648,
+          "pidsLimit": 1024
+        }
+      },
+      "runtimeCompletion": {
+        "mode": "jitless",
+        "oracleElapsedMs": 45721,
+        "reportSha256": "866a03bb28651687ff2e483068baa03b82c155b5d6bb15d85ccc13e095efcf72"
+      },
+      "runtimeInitialization": {
+        "flagsPassed": [
+          "--single-threaded",
+          "--jitless"
+        ],
+        "guestPlatform": {
+          "machine": "x86_64",
+          "release": "7.2.9-orbstack-00391-g2b298d05fbd4",
+          "system": "Linux"
+        },
+        "initializer": "py_mini_racer.init_mini_racer(flags=...)",
+        "initializerElapsedMs": 80,
+        "initializerReturned": true,
+        "miniRacerVersion": "0.14.1",
+        "mode": "jitless",
+        "pythonVersion": "3.11.17"
+      },
+      "sequence": "03-jitless",
+      "status": "passed"
+    },
+    {
+      "child": {
+        "elapsedMs": 45398,
+        "exitCode": 0,
+        "logPaths": [
+          "logs/outer.stdout.log",
+          "logs/outer.stderr.log"
+        ],
+        "stderrBytes": 53,
+        "stderrCaptureExit": 0,
+        "stderrSha256": "c7ac1d27835e83cbfae62ba648a9201a4a4c1c51f5f2ce1d63d4f0da2858d2ea",
+        "stdoutBytes": 2322,
+        "stdoutCaptureExit": 0,
+        "stdoutSha256": "4a94af610e885fed577a319e398001fb15bbf7b3635dd120dcb1a6fe68c340f8",
+        "timedOut": false
+      },
+      "cleanupReport": "all created isolated databases and roles removed",
+      "clientContainerId": "900b77269322aa517f5334ec1a32b4e9cf77992c9fe00dd7e6dea0683f12d14c",
+      "elapsedMsIncludingOwnedPostgres": 49006,
+      "expectedObservationMatch": true,
+      "flags": [
+        "--single-threaded"
+      ],
+      "mode": "default",
+      "observedCase": {
+        "actualColumns": [
+          "id",
+          "owner",
+          "amount",
+          "summary"
+        ],
+        "actualRows": [
+          [
+            "a",
+            "Ada",
+            100000,
+            9
+          ],
+          [
+            "b",
+            "Bjørn",
+            99999,
+            0
+          ],
+          [
+            "c",
+            "李",
+            100001,
+            2
+          ]
+        ],
+        "appended": false,
+        "domain": "integer",
+        "failure": null,
+        "futureDefaultValue": [
+          7
+        ],
+        "invalid": false,
+        "passed": true
+      },
+      "oracleProvenance": {
+        "artifactManifestSha256": "64d9a12d4f92ffe7c080568b0b0aaad7ab4e454da4f08fea075143b883fb5ddc",
+        "fixtureSha256": "c29ee30dd76e6e4fbbf6ceea64cb22d77764c2a349081819d0d7ac1c1dc59af1",
+        "originalRunnerSha256": "5dfddd7f1bd7f6e254e927292246ceddf5debfe172995ad267d4bbbfd32c2ea4",
+        "packageOrigins": {
+          "umf_access": "/d5-host/d5/venv-parent/venv/lib/python3.11/site-packages/umf_access/__init__.py",
+          "umf_codegen": "/d5-host/d5/venv-parent/venv/lib/python3.11/site-packages/umf_codegen/__init__.py",
+          "weft": "/d5-host/d5/venv-parent/venv/lib/python3.11/site-packages/weft/__init__.py"
+        },
+        "runnerSha256": "e197d3630079c597964aa81b875ef6e7cd53f1c2fab42018bdb5a8684bf53600",
+        "runtimeFiles": {
+          "umf_codegen/_assets/generator.js.gz": "3f48410cb6013c2321ecb6f142779123730bfa9f85bbaabab1b412d5984cdd47",
+          "umf_codegen/_assets/manifest.json": "ad326f5c95d4c9dde9ec09d9413aac156e50a1e0b1934cc357b249fd560a6e95",
+          "weft/weft.abi3.so": "2f39a3e2bf356922a44fef0e88ffaae155d6d850e66d7f7e35d9209cd85c3760"
+        }
+      },
+      "packageVersions": {
+        "psycopg": "3.2.13",
+        "umf-access": "0.1.0.dev8",
+        "umf-codegen": "0.1.0a5"
+      },
+      "postgresCleanupSucceeded": true,
+      "postgresContainerId": "c5b3b8f28ad7d4b3930018ae52b81d34378a5a8f8aa3085e739b948d8a0edbb0",
+      "postgresServerVersion": "18.6 (Debian 18.6-1.pgdg13+2)",
+      "reportPath": "trials/04-default/report.json",
+      "reportSha256": "f9e280ceaad50bd167b370791f893639b08221d9f14367b76fe6ed9b66395efa",
+      "reportStatus": "passed",
+      "resourceLimits": {
+        "client": {
+          "cpus": 8,
+          "memoryBytes": 8589934592,
+          "pidsLimit": 4096
+        },
+        "postgres": {
+          "cpus": 2,
+          "memoryBytes": 2147483648,
+          "pidsLimit": 1024
+        }
+      },
+      "runtimeCompletion": {
+        "mode": "default",
+        "oracleElapsedMs": 44456,
+        "reportSha256": "f9e280ceaad50bd167b370791f893639b08221d9f14367b76fe6ed9b66395efa"
+      },
+      "runtimeInitialization": {
+        "flagsPassed": [
+          "--single-threaded"
+        ],
+        "guestPlatform": {
+          "machine": "x86_64",
+          "release": "7.2.9-orbstack-00391-g2b298d05fbd4",
+          "system": "Linux"
+        },
+        "initializer": "py_mini_racer.init_mini_racer(flags=...)",
+        "initializerElapsedMs": 78,
+        "initializerReturned": true,
+        "miniRacerVersion": "0.14.1",
+        "mode": "default",
+        "pythonVersion": "3.11.17"
+      },
+      "sequence": "04-default",
+      "status": "passed"
+    }
+  ],
+  "typedObservationEquality": true
+}

@@ -1,0 +1,14 @@
+{
+  "profile": "umf.hosted-failure-corrections-owner-review/1",
+  "runId": 40262946307,
+  "status": "SOURCE_REVIEWED_RUNTIME_UNRUN",
+  "sourcePins": {
+    "src/table-migration/g04-conversion.ts": "2eced0611a97fa787096f573655cd7c9e692da1114021b7d10a69a99b6ab6c8d",
+    "src/table-migration/index.ts": "db6a7b9a7f3357b4c762cdc299b2c9dc69f19d8df92a0614f42c814ea548f354",
+    "src/table-migration/internal.ts": "91daa74b3e9bb14d352fdbaee8262222769a748d360a41921326d3331be9ed71",
+    "src/table-migration/inventory-graph.ts": "a1f40b48638563d939701d43e0f745ea16a8c5a18186ed47d687e16dce3b4f3a",
+    "tests/lifecycle/table-inventory-api.test.ts": "10a7d876859d98bffdf78ad082d767c96f1c84343a563a26b58aacf53b6be9cf"
+  },
+  "review": "Root read full five-file diff. Exact concrete compiler errors corrected using narrowed locals/if-else and explicit graph fixture return. G04 null/recovery branches narrow genuine installed source; marker binds existing typed physical sourcePath; original mapping sourcePath was undefined. Legacy steps/options/results narrowed separately, actual legacy dispatch/validation bodies unchanged; no widening legacy accepted phase operations. G04 closed marker/no native execution retained.",
+  "remaining": "R2 positive still capped during final whole-plan hash; bounded source-backed plan pending. No unchanged test rerun until new batch ready."
+}

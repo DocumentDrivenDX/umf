@@ -19,6 +19,10 @@ from .table_boundary import TABLE_BOUNDARY
 class CatalogError(RuntimeError):
     """Fixed administrative failure reason, without native diagnostics or data."""
 
+    def __init__(self, message: str, *, sqlstate: str | None = None):
+        super().__init__(message)
+        self.sqlstate = sqlstate
+
 
 def _q(value: str) -> str:
     return '"' + value.replace('"', '""') + '"'

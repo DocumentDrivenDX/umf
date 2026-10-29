@@ -1,0 +1,34 @@
+{
+  "aggregateDeadlineIncludesPreparation": true,
+  "copyCommandExitCode": 0,
+  "copyManifestSha256": "c2e9b3ed01ebde52a4d528d0758677a54775301ff9ec915ccf43d380f004345c",
+  "copyPreparationLimitSeconds": 300,
+  "copyStderr": "",
+  "copyStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "copyStdout": "{\"directoryCount\": 388, \"elapsedMs\": 1611, \"fileBytes\": 203142603, \"fileCount\": 3033, \"itemCount\": 3425, \"manifestSha256\": \"c2e9b3ed01ebde52a4d528d0758677a54775301ff9ec915ccf43d380f004345c\", \"status\": \"verified\", \"symlinkCount\": 4}",
+  "copyStdoutSha256": "9c521cd1d30d129c2706f9570fcda2d0709222837a12a33af5cd4feef9707752",
+  "copyVerification": {
+    "directoryCount": 388,
+    "elapsedMs": 1611,
+    "fileBytes": 203142603,
+    "fileCount": 3033,
+    "itemCount": 3425,
+    "manifestSha256": "c2e9b3ed01ebde52a4d528d0758677a54775301ff9ec915ccf43d380f004345c",
+    "status": "verified",
+    "symlinkCount": 4
+  },
+  "externalInterpreterTarget": {
+    "path": "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python",
+    "pythonVersion": "3.11.17",
+    "resolved": "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11",
+    "sha256": "d601e62487858384d3000725c3b2e16e86ff11a6ad0b0810b76281e45426ea62"
+  },
+  "sourceHostPath": "/private/tmp/migration-d5-e4299aff8-002/d5-host",
+  "status": "verified",
+  "targetContainerPath": "/d5-host",
+  "volumeDriver": "local",
+  "volumeMountpoint": "/var/lib/docker/volumes/umf-d5-storage-d40b83eb1c6842e4/_data",
+  "volumeName": "umf-d5-storage-d40b83eb1c6842e4",
+  "volumePreparationElapsedMs": 3668,
+  "volumeScope": "local"
+}

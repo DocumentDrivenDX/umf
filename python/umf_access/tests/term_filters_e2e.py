@@ -216,7 +216,7 @@ finally:
         command("stop", [pg / "pg_ctl", "-D", out / "data", "-m", "fast", "-w", "stop"])
     (out / "result.json").write_text(json.dumps({
         "checks": checks, "language": language, "nullable": nullable,
-        "versions": {"python": sys.version, "postgresql": native_version, "weft-sql": version("weft-sql"), "umf_access": version("umf_access"), "psycopg": version("psycopg"), "pydantic": version("pydantic")},
+        "versions": {"python": sys.version, "postgresql": native_version, "umf-weft": version("umf-weft"), "umf_access": version("umf_access"), "psycopg": version("psycopg"), "pydantic": version("pydantic")},
         "harnessSha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "modelSha256": binding["modelSha256"],
         "serverStopped": not (out / "data/postmaster.pid").exists(), "temporal": "HELD",

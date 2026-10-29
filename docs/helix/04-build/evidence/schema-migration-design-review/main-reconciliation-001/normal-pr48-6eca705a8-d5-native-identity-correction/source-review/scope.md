@@ -1,0 +1,7 @@
+# Actual D5 server-identity refusal: Sol diagnosis
+
+Actual run40600969078/job122528687536 remains FAIL_OR_UNKNOWN. Exact diagnostic ZIP337983B SHA-2564314111f73675c50fd17b54c2f365b0e2907a883ab0ced64c503f1299d138d30. Receipt validationFailureCodes contains only oracle-postgresql-identity-mismatch. All16 actual oracle reports statuspassed and server exactly18.6 (Debian18.6-1.pgdg13+2) with normal spaces. Actual baseline/final equal, full pg_catalog.version() starts PostgreSQL18.6, numeric180006 and empty DB/role/schema resources.
+
+Retained executed oracle explicitly queries SHOW server_version, which returns shortform; producer baseline/final query pg_catalog.version(), the full description. Existing finalizer incorrectly tests shortform for full PostgreSQL prefix. This identifies a representation mismatch in the current finalizer, not wrong native version or a claimed successful D5 gate.
+
+Approve source remedy only: capture current_setting('server_version') as serverVersion in BOTH existing baseline/final queries, retaining fullserver/numeric/cleanup equality checks; require nonempty string and exact oracle.server equality to that same-service baseline field. Preserve all assertions37cases/19checks/3faults, provenance, roster, commands/caps. No broad substring admission or oracle relabeling. Review actual postimage and pins before commit; genuine successor gate required. No candidate execution/Git mutation.

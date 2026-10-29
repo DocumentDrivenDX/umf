@@ -1,0 +1,1265 @@
+{
+  "artifact": {
+    "copyHashManifest": {
+      "allRecordedFilesMatch": true,
+      "entryCount": 69,
+      "mismatches": [],
+      "receiptAndCopyHashManifestExcludedByDesign": true
+    },
+    "entryCount": 71,
+    "expandedBytes": 1924514,
+    "id": 12772296037,
+    "sha256": "e6a59953f631f61a98f6da8982b6a01ce1120f2cfb45f9c56d73e95c6cb4fd2a",
+    "sizeBytes": 211538,
+    "under16MiBCap": true,
+    "unsafeEntries": [],
+    "zipTest": null
+  },
+  "cohort": {
+    "allPackages": [
+      {
+        "distribution": "annotated-types",
+        "filename": "annotated_types-0.8.0-py3-none-any.whl",
+        "sha256": "f072f4d804ea359e4eaf198b1af7a8b0943881a87f31bb764f8bf219bb9419e0",
+        "sizeBytes": 13427,
+        "version": "0.8.0"
+      },
+      {
+        "distribution": "attrs",
+        "filename": "attrs-26.1.0-py3-none-any.whl",
+        "sha256": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309",
+        "sizeBytes": 67548,
+        "version": "26.1.0"
+      },
+      {
+        "distribution": "jsonschema",
+        "filename": "jsonschema-4.26.0-py3-none-any.whl",
+        "sha256": "d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce",
+        "sizeBytes": 90630,
+        "version": "4.26.0"
+      },
+      {
+        "distribution": "jsonschema-specifications",
+        "filename": "jsonschema_specifications-2025.9.1-py3-none-any.whl",
+        "sha256": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe",
+        "sizeBytes": 18437,
+        "version": "2025.9.1"
+      },
+      {
+        "distribution": "mini-racer",
+        "filename": "mini_racer-0.14.1-py3-none-manylinux_2_27_x86_64.whl",
+        "sha256": "cdf3a088e1363f16a695288f882abf76b3705b8e1df21418208b87ed010037a4",
+        "sizeBytes": 22178205,
+        "version": "0.14.1"
+      },
+      {
+        "distribution": "psycopg",
+        "filename": "psycopg-3.2.13-py3-none-any.whl",
+        "sha256": "a481374514f2da627157f767a9336705ebefe93ea7a0522a6cbacba165da179a",
+        "sizeBytes": 206797,
+        "version": "3.2.13"
+      },
+      {
+        "distribution": "psycopg-binary",
+        "filename": "psycopg_binary-3.2.13-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+        "sha256": "27150515de5f709e4142429db6fd36a1d01f0b8b17d915b5f7bb095364465398",
+        "sizeBytes": 4421537,
+        "version": "3.2.13"
+      },
+      {
+        "distribution": "pydantic",
+        "filename": "pydantic-2.14.1-py3-none-any.whl",
+        "sha256": "9195d967ec791692a04438115466764fb8b9a27b31f14a760437694f40d6b454",
+        "sizeBytes": 488106,
+        "version": "2.14.1"
+      },
+      {
+        "distribution": "pydantic-core",
+        "filename": "pydantic_core-2.50.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "sha256": "8812592c85d0edf423f10eadcef42716d71e8219085ad9e85b775057b7306133",
+        "sizeBytes": 2157623,
+        "version": "2.50.1"
+      },
+      {
+        "distribution": "referencing",
+        "filename": "referencing-0.37.0-py3-none-any.whl",
+        "sha256": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231",
+        "sizeBytes": 26766,
+        "version": "0.37.0"
+      },
+      {
+        "distribution": "rpds-py",
+        "filename": "rpds_py-2026.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "sha256": "136a1c3fe4402b7008bc81cb62ee538481795b61a7e83df88dff3b3f02b726ff",
+        "sizeBytes": 375426,
+        "version": "2026.9.1"
+      },
+      {
+        "distribution": "ruamel-yaml",
+        "filename": "ruamel_yaml-0.19.1-py3-none-any.whl",
+        "sha256": "27592957fedf6e0b62f281e96effd28043345e0e66001f97683aa9a40c667c93",
+        "sizeBytes": 118102,
+        "version": "0.19.1"
+      },
+      {
+        "distribution": "typing-extensions",
+        "filename": "typing_extensions-4.16.0-py3-none-any.whl",
+        "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+        "sizeBytes": 45571,
+        "version": "4.16.0"
+      },
+      {
+        "distribution": "typing-inspection",
+        "filename": "typing_inspection-0.4.4-py3-none-any.whl",
+        "sha256": "65b8397ba37ccbce054456aaccddfc91e6e3083c92824df348d96ca832f3f147",
+        "sizeBytes": 14750,
+        "version": "0.4.4"
+      },
+      {
+        "distribution": "umf-access",
+        "filename": "umf_access-0.1.0.dev8-py3-none-any.whl",
+        "sha256": "c2182bf6cd542febfef8dea4d728fec500e2dd08dd5a029d7b3b94e6a7f0c950",
+        "sizeBytes": 580002,
+        "version": "0.1.0.dev8"
+      },
+      {
+        "distribution": "umf-codegen",
+        "filename": "umf_codegen-0.1.0a5-py3-none-any.whl",
+        "sha256": "36a6f7e0ab92feb9cb20ed8842cc3c1f073cdd3ff2c4edff137c1fcbc3ace158",
+        "sizeBytes": 261296,
+        "version": "0.1.0a5"
+      },
+      {
+        "distribution": "umf-core",
+        "filename": "umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl",
+        "sha256": "cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75",
+        "sizeBytes": 3612043,
+        "version": "0.10.3"
+      },
+      {
+        "distribution": "umf-weft",
+        "filename": "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "sha256": "b34ca17fa37412afa7b8e8bd86aac8ee67a3c895a9b253221e1d582b39073a85",
+        "sizeBytes": 14347375,
+        "version": "0.4.55"
+      }
+    ],
+    "coreSemanticVersion": "0.10.0",
+    "lockSha256": "bb7c18614997b7938979b2117e99893420fe1960adecd489c3c4f408e558db6b",
+    "mirrorMatchesLock": true,
+    "mirrorSha256": "627f557534602e8465debb69d6f04b2dfb4f0e2c8297270398e1736e7cc393bc",
+    "networkUsed": false,
+    "offlineProbeStatus": "passed",
+    "postgresqlServerVersionNum": "180006",
+    "profile": "umf.embedder-wheel-lock/1",
+    "selectedPackages": {
+      "mini-racer": {
+        "filename": "mini_racer-0.14.1-py3-none-manylinux_2_27_x86_64.whl",
+        "sha256": "cdf3a088e1363f16a695288f882abf76b3705b8e1df21418208b87ed010037a4",
+        "sizeBytes": 22178205,
+        "version": "0.14.1"
+      },
+      "umf-access": {
+        "filename": "umf_access-0.1.0.dev8-py3-none-any.whl",
+        "sha256": "c2182bf6cd542febfef8dea4d728fec500e2dd08dd5a029d7b3b94e6a7f0c950",
+        "sizeBytes": 580002,
+        "version": "0.1.0.dev8"
+      },
+      "umf-codegen": {
+        "filename": "umf_codegen-0.1.0a5-py3-none-any.whl",
+        "sha256": "36a6f7e0ab92feb9cb20ed8842cc3c1f073cdd3ff2c4edff137c1fcbc3ace158",
+        "sizeBytes": 261296,
+        "version": "0.1.0a5"
+      },
+      "umf-core": {
+        "filename": "umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl",
+        "sha256": "cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75",
+        "sizeBytes": 3612043,
+        "version": "0.10.3"
+      },
+      "umf-weft": {
+        "filename": "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "sha256": "b34ca17fa37412afa7b8e8bd86aac8ee67a3c895a9b253221e1d582b39073a85",
+        "sizeBytes": 14347375,
+        "version": "0.4.55"
+      }
+    },
+    "status": "locked",
+    "wheelCount": 18
+  },
+  "commandCapture": {
+    "allExitCodesZero": true,
+    "allLogBytesAndHashesMatch": true,
+    "allUntruncated": true,
+    "commands": [
+      {
+        "captureExit": 0,
+        "logBytes": 948,
+        "logMatches": true,
+        "logSha256": "de22d086d7067f5cb6227186f07ea8361bea6724bd414f8118d085b65c8fac29",
+        "monotonicDurationMs": 220,
+        "name": "toolchain-identity",
+        "rawExit": 0,
+        "stage": "toolchain-identity",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 79,
+        "logMatches": true,
+        "logSha256": "dd06e4884e04a0e1521fe50a83861812cb369de6cc7b24873631aed014824291",
+        "monotonicDurationMs": 50,
+        "name": "source-pins",
+        "rawExit": 0,
+        "stage": "source-pins",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 1052,
+        "logMatches": true,
+        "logSha256": "d070cbcfdb845cd3cb313d1cb7c620af55d3bc4590fef527786d0e4827b77a9d",
+        "monotonicDurationMs": 1560,
+        "name": "bun-install",
+        "rawExit": 0,
+        "stage": "bun-install",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 2058,
+        "logMatches": true,
+        "logSha256": "2cd82db0d2458a2efe719623f9381045b79b10a4a557e18eed0405fc50bf5c94",
+        "monotonicDurationMs": 1920,
+        "name": "builder-wheel-download",
+        "rawExit": 0,
+        "stage": "builder-wheel-download",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 0,
+        "logMatches": true,
+        "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "monotonicDurationMs": 3890,
+        "name": "builder-venv",
+        "rawExit": 0,
+        "stage": "builder-venv",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 1727,
+        "logMatches": true,
+        "logSha256": "372e38109341be80b4920acc01fd914455a6388a8c937df262104ae84c1bad49",
+        "monotonicDurationMs": 1180,
+        "name": "builder-install",
+        "rawExit": 0,
+        "stage": "builder-install",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 499,
+        "logMatches": true,
+        "logSha256": "e4c4d0c15f93e8e87190afb1b6c9c72a65451c0d9855dd7b8f086d4b8030d8d6",
+        "monotonicDurationMs": 1330,
+        "name": "mini-racer-download",
+        "rawExit": 0,
+        "stage": "mini-racer-download",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 194,
+        "logMatches": true,
+        "logSha256": "b0291c4d68914286a6a089e57b547b8fdf3443629ced7832ebffeedee3ab778b",
+        "monotonicDurationMs": 70,
+        "name": "mini-racer-verify",
+        "rawExit": 0,
+        "stage": "mini-racer-verify",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 58,
+        "logMatches": true,
+        "logSha256": "72a7fef4da20f96153504e4944b3ad0dc1d9a7e30ca2e38ac4fef6ba9590d043",
+        "monotonicDurationMs": 180,
+        "name": "codegen-refresh",
+        "rawExit": 0,
+        "stage": "codegen-refresh",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 45,
+        "logMatches": true,
+        "logSha256": "7deb1623aeba7ae1a32e7c96ec280148fda27d92eb74fd293c490e905704ba87",
+        "monotonicDurationMs": 180,
+        "name": "codegen-refresh-hash-check",
+        "rawExit": 0,
+        "stage": "codegen-refresh-hash-check",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 156,
+        "logMatches": true,
+        "logSha256": "57743e1c909237f62b3fa8d6353da4a07fb3af6d648eb24368e4484e6ba7d88f",
+        "monotonicDurationMs": 40,
+        "name": "codegen-refresh-output-hashes",
+        "rawExit": 0,
+        "stage": "codegen-refresh-output-hashes",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 7617,
+        "logMatches": true,
+        "logSha256": "52e80f9415cec9497ea7903c99dfd779a5a75d12cd9cb2c278e3eb7abf7b5ae7",
+        "monotonicDurationMs": 9250,
+        "name": "cohort-build",
+        "rawExit": 0,
+        "stage": "cohort-build",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 1487,
+        "logMatches": true,
+        "logSha256": "408234e2b1ca5a6afca35f03bcf848045b0c8a25b50ad9fc022c02c4a938706b",
+        "monotonicDurationMs": 3310,
+        "name": "current-codegen-corpus",
+        "rawExit": 0,
+        "stage": "current-codegen-corpus",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 711,
+        "logMatches": true,
+        "logSha256": "b412ed6d42050f159cbec2bd6c26d07311ae0b91972268a533c36971b64e389c",
+        "monotonicDurationMs": 23530,
+        "name": "offline-cohort-probe",
+        "rawExit": 0,
+        "stage": "offline-cohort-probe",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 0,
+        "logMatches": true,
+        "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "monotonicDurationMs": 3540,
+        "name": "cohort-install",
+        "rawExit": 0,
+        "stage": "cohort-install",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 4783,
+        "logMatches": true,
+        "logSha256": "3be22ca5894b2dad2c98b74dd0d4d6d06aa4b2f57625029f0526c7c71f0ce2f7",
+        "monotonicDurationMs": 3430,
+        "name": "locked-install",
+        "rawExit": 0,
+        "stage": "locked-install",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 30,
+        "logMatches": true,
+        "logSha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+        "monotonicDurationMs": 420,
+        "name": "locked-check",
+        "rawExit": 0,
+        "stage": "locked-check",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 101,
+        "logMatches": true,
+        "logSha256": "2fe1eb871b5ce5c2ff947e594f47653b39b5a1bf18a4585e4075565faf116434",
+        "monotonicDurationMs": 180,
+        "name": "postgres-version",
+        "rawExit": 0,
+        "stage": "postgres-version",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 433,
+        "logMatches": true,
+        "logSha256": "18584bb4aa650fd29b70b9324f8e566dc376084f171cbb2a37fe40e96fc18434",
+        "monotonicDurationMs": 4450,
+        "name": "g02-fixture",
+        "rawExit": 0,
+        "stage": "g02-fixture",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 1106,
+        "logMatches": true,
+        "logSha256": "3dd61c4417241bad75451f97a5cadbe31026eb43287b459fa87babdd2b3ee6f8",
+        "monotonicDurationMs": 30,
+        "name": "g03-fixture",
+        "rawExit": 0,
+        "stage": "g03-fixture",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 275,
+        "logMatches": true,
+        "logSha256": "70702aae8f699dba097a074fb6d43a42a6545c95c48f0f9967021ea38b022a01",
+        "monotonicDurationMs": 40,
+        "name": "fixture-guards",
+        "rawExit": 0,
+        "stage": "fixture-guards",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 0,
+        "logMatches": true,
+        "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "monotonicDurationMs": 112440,
+        "name": "g02-temporal-native",
+        "rawExit": 0,
+        "stage": "g02-temporal-native",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 179,
+        "logMatches": true,
+        "logSha256": "5227170a3c6580c93cb70bc3d6afcb824b3d20620c72b9c60c91ca649bb35e0a",
+        "monotonicDurationMs": 123470,
+        "name": "g03-transitions",
+        "rawExit": 0,
+        "stage": "g03-transitions",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 167,
+        "logMatches": true,
+        "logSha256": "72413ba1a55632aff2d125a37344d3b1d8bd5616d52649366531662cbe9d0280",
+        "monotonicDurationMs": 124390,
+        "name": "g03-empty",
+        "rawExit": 0,
+        "stage": "g03-empty",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 173,
+        "logMatches": true,
+        "logSha256": "3ca4cf7fbd1cfcbdeaeda646bdd0b7caa969f6fd677f7e7ee1e4653685adcaf1",
+        "monotonicDurationMs": 77640,
+        "name": "g03-required",
+        "rawExit": 0,
+        "stage": "g03-required",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 189,
+        "logMatches": true,
+        "logSha256": "0599bf808a8e3efe2f163ab257ab9fc6d325922ad1af01b783b64f37d02fad36",
+        "monotonicDurationMs": 1590,
+        "name": "g03-admission-refusal",
+        "rawExit": 0,
+        "stage": "g03-admission-refusal",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 176,
+        "logMatches": true,
+        "logSha256": "ad69bd7a39da3342e537dbdf7791e67ff65e5f1cf9de65048783ff8db199e081",
+        "monotonicDurationMs": 77080,
+        "name": "g03-semantics",
+        "rawExit": 0,
+        "stage": "g03-semantics",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 173,
+        "logMatches": true,
+        "logSha256": "1cdf9620eea6733f46ac0af3ed3b6115b001f4dc272df6275429d17569b97ed3",
+        "monotonicDurationMs": 47620,
+        "name": "g03-rollback",
+        "rawExit": 0,
+        "stage": "g03-rollback",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 193,
+        "logMatches": true,
+        "logSha256": "b3e8c5ae28b27e8e9feab98b1e81443bf9e5b9c3b7a82c59138902748182ca06",
+        "monotonicDurationMs": 39340,
+        "name": "g03-commit-observation",
+        "rawExit": 0,
+        "stage": "g03-commit-observation",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 197,
+        "logMatches": true,
+        "logSha256": "0222154c103ebbd33b9267dda188895e140fa0d046530728596d9c5ebab3bf6c",
+        "monotonicDurationMs": 52760,
+        "name": "g03-finalize-observation",
+        "rawExit": 0,
+        "stage": "g03-finalize-observation",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 211,
+        "logMatches": true,
+        "logSha256": "98af5b5031e9642931454ce0c4c88b47ead8aee767a249612ed91f08bc7b112f",
+        "monotonicDurationMs": 57060,
+        "name": "g03-finalize-before-publication",
+        "rawExit": 0,
+        "stage": "g03-finalize-before-publication",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 191,
+        "logMatches": true,
+        "logSha256": "f5f3e912c84c11a5678a83e21299316afdfe437219022df32958f26d9a7d3876",
+        "monotonicDurationMs": 30170,
+        "name": "g03-unknown-no-commit",
+        "rawExit": 0,
+        "stage": "g03-unknown-no-commit",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 185,
+        "logMatches": true,
+        "logSha256": "7c5170d33812374ab94ac14d56282349dec10506bef3177e8505d80178982986",
+        "monotonicDurationMs": 38750,
+        "name": "g03-writer-barrier",
+        "rawExit": 0,
+        "stage": "g03-writer-barrier",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 179,
+        "logMatches": true,
+        "logSha256": "83d1344d815de06c9855dd0d46e5bf97a9644568a378d00809adc9ae23307021",
+        "monotonicDurationMs": 41390,
+        "name": "g03-domain-date",
+        "rawExit": 0,
+        "stage": "g03-domain-date",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 179,
+        "logMatches": true,
+        "logSha256": "5411c8d74c76a36971f08f8d900892809cc01e17bfa0a936f19eec1dd12a3d98",
+        "monotonicDurationMs": 41530,
+        "name": "g03-domain-text",
+        "rawExit": 0,
+        "stage": "g03-domain-text",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 185,
+        "logMatches": true,
+        "logSha256": "44d83b441839d37c42bfc96b77c288ca656c1b9a436f0f84676cc76b0b5039aa",
+        "monotonicDurationMs": 41740,
+        "name": "g03-domain-decimal",
+        "rawExit": 0,
+        "stage": "g03-domain-decimal",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 197,
+        "logMatches": true,
+        "logSha256": "808308da85963e12a2d26e331f45db8486ad3f7df05ed6917764bbf7cf95477d",
+        "monotonicDurationMs": 41230,
+        "name": "g03-domain-uuid-selected",
+        "rawExit": 0,
+        "stage": "g03-domain-uuid-selected",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 203,
+        "logMatches": true,
+        "logSha256": "6808558efb656fa60807b21a6ddcd3ddd6c2bf5e7be79c3955a853663f1cc849",
+        "monotonicDurationMs": 41570,
+        "name": "g03-domain-currentTimestamp",
+        "rawExit": 0,
+        "stage": "g03-domain-currentTimestamp",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 175,
+        "logMatches": true,
+        "logSha256": "8d4f4157753dc799fd28a0f1de343243c33ddaeede6d3d54f9e2fc8065ab79cf",
+        "monotonicDurationMs": 58920,
+        "name": "g03-tampering",
+        "rawExit": 0,
+        "stage": "g03-tampering",
+        "truncated": false
+      },
+      {
+        "captureExit": 0,
+        "logBytes": 0,
+        "logMatches": true,
+        "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "monotonicDurationMs": 60,
+        "name": "finalize-receipt",
+        "rawExit": 0,
+        "stage": "finalize-receipt",
+        "truncated": false
+      }
+    ],
+    "commandsAtOrBelow180Seconds": true,
+    "count": 40,
+    "maxCommandDurationMs": 124390,
+    "receiptCapturedLogsBytes": 26511,
+    "recordedLogBytes": 26511
+  },
+  "evidenceDirectory": "/private/tmp/migration-native-40582128904",
+  "hostedRun": {
+    "attempt": 1,
+    "conclusion": "success",
+    "createdAt": "2026-10-27T20:54:09Z",
+    "elapsedSeconds": 1413.0,
+    "event": "push",
+    "headBranch": "codex/migration-g02-g03-native-qualification",
+    "headSha": "7199c8409d0a67f3a99c1f1fd62ffc0f078d6eb2",
+    "jobCompletedAt": "2026-10-27T21:17:42Z",
+    "jobConclusion": "success",
+    "jobId": 122464011812,
+    "jobStartedAt": "2026-10-27T20:58:18Z",
+    "jobStatus": "completed",
+    "runId": 40582128904,
+    "startedAt": "2026-10-27T20:54:09Z",
+    "status": "completed",
+    "updatedAt": "2026-10-27T21:17:42Z",
+    "workflowPath": ".github/workflows/g02-g03-native-qualification.yml"
+  },
+  "limitations": [
+    "This run qualifies only the declared five G02 temporal cases and thirteen selected G03 scenarios at source commit 7199c8409d0a67f3a99c1f1fd62ffc0f078d6eb2 and this locked cohort.",
+    "G03-N12 remains unqualified pending a compatible Weft .2 cohort; N14 and the full G03 campaign were not run.",
+    "The final combined release gate remains OPEN. The artifact contains wheel lock/mirror metadata and installed offline-probe evidence, not ephemeral wheel binaries for independent post-run byte rehashing."
+  ],
+  "limits": {
+    "aggregateWorkTimeoutSeconds": 1740,
+    "artifactsMaximumBytes": 16777216,
+    "commandKillGraceSeconds": 10,
+    "commandTimeoutSeconds": 180,
+    "connectTimeoutSeconds": 5,
+    "evidenceReserveSeconds": 60,
+    "jobTimeoutMinutes": 35,
+    "lockTimeoutMilliseconds": 5000,
+    "logsMaximumBytes": 1048576,
+    "physicalExpandedArtifactBytes": 1924514,
+    "physicalLogsBytes": 26511,
+    "statementTimeoutMilliseconds": 120000
+  },
+  "qualification": {
+    "explicitOpenScope": {
+      "N12": "UNQUALIFIED pending compatible Weft .2 cohort",
+      "N14AndFullCampaign": "OPEN; campaign selector was not invoked",
+      "finalCombinedGate": "OPEN; this result covers selected subcases only, not full G03 or campaign",
+      "fullG03Campaign": "OPEN"
+    },
+    "g02": {
+      "caseCount": 5,
+      "cases": [
+        {
+          "caseId": "temporal-birthday-date-coalesce",
+          "checkCount": 16,
+          "databaseCleanup": "VERIFIED",
+          "status": "PASS_AND_CLEANED"
+        },
+        {
+          "caseId": "temporal-instant-copy-coalesce",
+          "checkCount": 16,
+          "databaseCleanup": "VERIFIED",
+          "status": "PASS_AND_CLEANED"
+        },
+        {
+          "caseId": "temporal-uuid-copy-coalesce",
+          "checkCount": 16,
+          "databaseCleanup": "VERIFIED",
+          "status": "PASS_AND_CLEANED"
+        },
+        {
+          "caseId": "temporal-boolean-copy-coalesce",
+          "checkCount": 16,
+          "databaseCleanup": "VERIFIED",
+          "status": "PASS_AND_CLEANED"
+        },
+        {
+          "caseId": "temporal-matched-null-date-rollback",
+          "checkCount": 14,
+          "databaseCleanup": "VERIFIED",
+          "status": "PASS_EXPECTED_ROLLBACK_AND_CLEANED"
+        }
+      ],
+      "checks": 78,
+      "cleanupUnknown": false,
+      "deadlineExceeded": false,
+      "maxWorkers": 2,
+      "sharedRolesCleanup": "VERIFIED",
+      "uniqueChecks": 78
+    },
+    "g03CaseIds": [
+      "G03-N01",
+      "G03-N02",
+      "G03-N03",
+      "G03-N04",
+      "G03-N05",
+      "G03-N06",
+      "G03-N07",
+      "G03-N08",
+      "G03-N09",
+      "G03-N10",
+      "G03-N11",
+      "G03-N13"
+    ],
+    "g03Cleanup": {
+      "g03-admission-refusal.json": {
+        "noEffectsStatus": true
+      },
+      "g03-commit-observation.json": {
+        "cleanupRecords": 2,
+        "verified": true
+      },
+      "g03-domain-currentTimestamp.json": {
+        "cleanupRecords": 2,
+        "verified": true
+      },
+      "g03-domain-date.json": {
+        "cleanupRecords": 2,
+        "verified": true
+      },
+      "g03-domain-decimal.json": {
+        "cleanupRecords": 2,
+        "verified": true
+      },
+      "g03-domain-text.json": {
+        "cleanupRecords": 2,
+        "verified": true
+      },
+      "g03-domain-uuid-selected.json": {
+        "cleanupRecords": 2,
+        "verified": true
+      },
+      "g03-empty.json": {
+        "cleanupRecords": 2,
+        "verified": true
+      },
+      "g03-finalize-before-publication.json": {
+        "cleanupRecords": 2,
+        "verified": true
+      },
+      "g03-finalize-observation.json": {
+        "cleanupRecords": 2,
+        "verified": true
+      },
+      "g03-required.json": {
+        "cleanupRecords": 2,
+        "verified": true
+      },
+      "g03-rollback.json": {
+        "cleanupRecords": 2,
+        "verified": true
+      },
+      "g03-semantics.json": {
+        "cleanupRecords": 4,
+        "verified": true
+      },
+      "g03-tampering.json": {
+        "cleanupRecords": 2,
+        "verified": true
+      },
+      "g03-transitions.json": {
+        "cleanupRecords": 2,
+        "verified": true
+      },
+      "g03-unknown-no-commit.json": {
+        "cleanupRecords": 2,
+        "verified": true
+      },
+      "g03-writer-barrier.json": {
+        "cleanupRecords": 2,
+        "verified": true
+      }
+    },
+    "g03ReportFiles": {
+      "g03-admission-refusal.json": {
+        "scenario": "admission-refusal",
+        "status": "PASS_SOURCE_REFUSAL_AND_NATIVE_NO_EFFECTS"
+      },
+      "g03-commit-observation.json": {
+        "scenario": "commit-observation",
+        "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN"
+      },
+      "g03-domain-currentTimestamp.json": {
+        "scenario": "domain-currentTimestamp",
+        "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN"
+      },
+      "g03-domain-date.json": {
+        "scenario": "domain-date",
+        "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN"
+      },
+      "g03-domain-decimal.json": {
+        "scenario": "domain-decimal",
+        "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN"
+      },
+      "g03-domain-text.json": {
+        "scenario": "domain-text",
+        "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN"
+      },
+      "g03-domain-uuid-selected.json": {
+        "scenario": "domain-uuid-selected",
+        "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN"
+      },
+      "g03-empty.json": {
+        "scenario": "empty",
+        "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN"
+      },
+      "g03-finalize-before-publication.json": {
+        "scenario": "finalize-before-publication",
+        "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN"
+      },
+      "g03-finalize-observation.json": {
+        "scenario": "finalize-observation",
+        "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN"
+      },
+      "g03-required.json": {
+        "scenario": "required",
+        "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN"
+      },
+      "g03-rollback.json": {
+        "scenario": "rollback",
+        "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN"
+      },
+      "g03-semantics.json": {
+        "scenario": "semantics",
+        "status": "PASS_SELECTED_NATIVE_SUBCASES_FULL_CASE_OPEN"
+      },
+      "g03-tampering.json": {
+        "scenario": "tampering",
+        "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN"
+      },
+      "g03-transitions.json": {
+        "scenario": "transitions",
+        "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN"
+      },
+      "g03-unknown-no-commit.json": {
+        "scenario": "unknown-no-commit",
+        "status": "PASS_EXPECTED_FENCED_SUBCASE_FULL_CASE_OPEN"
+      },
+      "g03-writer-barrier.json": {
+        "scenario": "writer-barrier",
+        "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN"
+      }
+    },
+    "g03SelectedScenarioCount": 13,
+    "g03SelectedScenarioStatuses": {
+      "admission-refusal": "PASS_SOURCE_REFUSAL_AND_NATIVE_NO_EFFECTS",
+      "commit-observation": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
+      "domains": "PASS_SELECTED_NATIVE_SUBCASES_FULL_CASE_OPEN",
+      "empty": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
+      "finalize-before-publication": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
+      "finalize-observation": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
+      "required": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
+      "rollback": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
+      "semantics": "PASS_SELECTED_NATIVE_SUBCASES_FULL_CASE_OPEN",
+      "tampering": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
+      "transitions": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
+      "unknown-no-commit": "PASS_EXPECTED_FENCED_SUBCASE_FULL_CASE_OPEN",
+      "writer-barrier": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN"
+    },
+    "phase": "final-stable-five-G02-thirteen-selected-G03/1",
+    "profile": "umf.g02-g03-selected-native-qualification/1",
+    "receiptStatus": "PASS_SELECTED_NATIVE_SUBCASES_FULL_CASE_OPEN",
+    "runManifestStatus": "PASS_SELECTED_NATIVE_SUBCASES_FULL_CASE_OPEN",
+    "selectedScopeOnly": true
+  },
+  "reportCustody": {
+    "allHashesMatchManifest": true,
+    "count": 20,
+    "reports": [
+      {
+        "matchesManifest": true,
+        "path": "reports/codegen-generated-outputs.json",
+        "sha256": "dcc68d75aecd792d6962590cd716e013745fa6dc2a0f64b0639f7ddb556d6cdf",
+        "sizeBytes": 34441
+      },
+      {
+        "matchesManifest": true,
+        "path": "reports/g02-temporal-native.json",
+        "sha256": "8b50eb1fe7cb0412095a3a30b2018d443306f1dfae9013e98ef8165291a1d180",
+        "sizeBytes": 13731
+      },
+      {
+        "matchesManifest": true,
+        "path": "reports/g03-admission-refusal.json",
+        "sha256": "3a6f1d85a39af4cefb6a199a67dde9c8378c8f4cf65b01c1734c2364a6471b17",
+        "sizeBytes": 3936
+      },
+      {
+        "matchesManifest": true,
+        "path": "reports/g03-commit-observation.json",
+        "sha256": "3c3cc7e6d0d3eb451c37e3edd4fbd7977a9c30447749e54afa9f3de4437256ed",
+        "sizeBytes": 64921
+      },
+      {
+        "matchesManifest": true,
+        "path": "reports/g03-domain-currentTimestamp.json",
+        "sha256": "976a204f2c8a428ce1faa39e713a9d64b9a359571a733ad8b2f7ceaa99354ba2",
+        "sizeBytes": 70811
+      },
+      {
+        "matchesManifest": true,
+        "path": "reports/g03-domain-date.json",
+        "sha256": "48fd96a955f25a22726c45eeb7dfd4d9534b1438b712c97fb1c083fde931d91b",
+        "sizeBytes": 70701
+      },
+      {
+        "matchesManifest": true,
+        "path": "reports/g03-domain-decimal.json",
+        "sha256": "79d7f5d94de12260374c428794da3694f01f6b574d1dd60e887b255eeede355d",
+        "sizeBytes": 70967
+      },
+      {
+        "matchesManifest": true,
+        "path": "reports/g03-domain-text.json",
+        "sha256": "ac45d0a0e3b80023efe0353128828d613ad29ec17222c0637d2b80344f3077c7",
+        "sizeBytes": 68801
+      },
+      {
+        "matchesManifest": true,
+        "path": "reports/g03-domain-uuid-selected.json",
+        "sha256": "6e15d2bd419d8d7b2f24d220fef2371cabfbe6ad6ca11be5aaa5aac4518a39a4",
+        "sizeBytes": 69230
+      },
+      {
+        "matchesManifest": true,
+        "path": "reports/g03-empty.json",
+        "sha256": "469a2c2113240ae4e8795183b2d45b991783121ef15f8b39dc2b1b96394a2294",
+        "sizeBytes": 180786
+      },
+      {
+        "matchesManifest": true,
+        "path": "reports/g03-finalize-before-publication.json",
+        "sha256": "65392cabcb79f0e3d8b1b3fa1bf4156757ae427f5b857ed446d05f04019df614",
+        "sizeBytes": 112456
+      },
+      {
+        "matchesManifest": true,
+        "path": "reports/g03-finalize-observation.json",
+        "sha256": "77b3bb0908cbfe3f92fc20c05990255e95da9c1629bedb2dc45c0867dbfacf12",
+        "sizeBytes": 111671
+      },
+      {
+        "matchesManifest": true,
+        "path": "reports/g03-required.json",
+        "sha256": "9d51436be42da6f97355baa31db025498609115956b197f28143cb869a5319d3",
+        "sizeBytes": 126537
+      },
+      {
+        "matchesManifest": true,
+        "path": "reports/g03-rollback.json",
+        "sha256": "a36a4cdae9a4b09a6685639b262faad54eca8a748b958786cddec6f3fd19e0cd",
+        "sizeBytes": 66308
+      },
+      {
+        "matchesManifest": true,
+        "path": "reports/g03-semantics.json",
+        "sha256": "408bb55c150baf077d7a7365ae801d772594e8695ac17088f9fbb6d5f085854d",
+        "sizeBytes": 134556
+      },
+      {
+        "matchesManifest": true,
+        "path": "reports/g03-tampering.json",
+        "sha256": "3bd2bf1c3c9a43f6bab43f0eb95baa47413b4901a9775669e30411dd40143ed8",
+        "sizeBytes": 64839
+      },
+      {
+        "matchesManifest": true,
+        "path": "reports/g03-transitions.json",
+        "sha256": "c1b6f7ec32cf5a8fa221147fcd57adba3c75da97f2d866d016fab2157060c234",
+        "sizeBytes": 184390
+      },
+      {
+        "matchesManifest": true,
+        "path": "reports/g03-unknown-no-commit.json",
+        "sha256": "6fec7233cf863ee655306bb463667462ae74c7ff7d7cf5751c3066fe0aa3acff",
+        "sizeBytes": 8070
+      },
+      {
+        "matchesManifest": true,
+        "path": "reports/g03-writer-barrier.json",
+        "sha256": "d65051dc4e8489d7a699408aa243daa86ef1f43bb321518867fba21cb4e92f37",
+        "sizeBytes": 64915
+      },
+      {
+        "matchesManifest": true,
+        "path": "reports/offline-cohort.json",
+        "sha256": "964d8c092151f3ea5d513ecb2896d2463579f3296b2834de3976aa0a822dbf88",
+        "sizeBytes": 3124
+      }
+    ]
+  },
+  "reviewType": "data-only-native-qualification-custody-review/1",
+  "runFiles": {
+    "artifacts-terminal.json": {
+      "sha256": "a1cc8c75d74656c8677b905741107d9906c65b235bc06ffb8720a82ae4fee0b9",
+      "sizeBytes": 809
+    },
+    "job.log": {
+      "sha256": "db12fde90f9768d72ddc007d8617616e60a5d3e141b1c01504801a234482eb75",
+      "sizeBytes": 120963
+    },
+    "jobs-terminal.json": {
+      "sha256": "8bd2b56e2575bde430e7be6d447c0c42d9a076e85f28d760395b2afb5b91235c",
+      "sizeBytes": 3422
+    },
+    "run-terminal.json": {
+      "sha256": "6f4b723fd3ee34db5dd01d08b2a3d97cc6603fa039515865cceca97f53a6c8b4",
+      "sizeBytes": 12369
+    }
+  },
+  "source": {
+    "allSourcePinsMatchCommit": true,
+    "commit": "7199c8409d0a67f3a99c1f1fd62ffc0f078d6eb2",
+    "ref": "refs/heads/codex/migration-g02-g03-native-qualification",
+    "sourceManifestSha256MatchesCommit": true,
+    "sourcePinCount": 34,
+    "sourcePins": [
+      {
+        "actualSha256": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4",
+        "expectedSha256": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4",
+        "matches": true,
+        "path": "bun.lock"
+      },
+      {
+        "actualSha256": "e83304c7c1ec7b5d6eb26ca519b3b72a20dbd693d899753b8dce9f1bd3ded84c",
+        "expectedSha256": "e83304c7c1ec7b5d6eb26ca519b3b72a20dbd693d899753b8dce9f1bd3ded84c",
+        "matches": true,
+        "path": "docs/helix/04-build/evidence/mig-g02-g03/build-tools-requirements.txt"
+      },
+      {
+        "actualSha256": "834388231050ac831f5a59623155f71cc8d5269d8189e54f21d929d1ea25862f",
+        "expectedSha256": "834388231050ac831f5a59623155f71cc8d5269d8189e54f21d929d1ea25862f",
+        "matches": true,
+        "path": "docs/helix/04-build/evidence/praxis-embedder/mini-racer-wheel-pins.json"
+      },
+      {
+        "actualSha256": "c7b69fba001805dc9cd4e26e84a9b786be379c1413d020c34600c063d287101b",
+        "expectedSha256": "c7b69fba001805dc9cd4e26e84a9b786be379c1413d020c34600c063d287101b",
+        "matches": true,
+        "path": "package.json"
+      },
+      {
+        "actualSha256": "1ad4bf560a2c499e76fc434aa1f43adffc4d19d0be60699d0ed1f2ab1cd997d9",
+        "expectedSha256": "1ad4bf560a2c499e76fc434aa1f43adffc4d19d0be60699d0ed1f2ab1cd997d9",
+        "matches": true,
+        "path": "python/packaging/embedder-wheel-lock.template.json"
+      },
+      {
+        "actualSha256": "73889fb402ed50d253dd76c4bad1cff5a0c3d7b68885dfd5d32e8b17d0557003",
+        "expectedSha256": "73889fb402ed50d253dd76c4bad1cff5a0c3d7b68885dfd5d32e8b17d0557003",
+        "matches": true,
+        "path": "python/umf_access/pyproject.toml"
+      },
+      {
+        "actualSha256": "07253df785a646223c12051e41e3a07b0d5806e442b5aec96f8dce9362d30620",
+        "expectedSha256": "07253df785a646223c12051e41e3a07b0d5806e442b5aec96f8dce9362d30620",
+        "matches": true,
+        "path": "python/umf_codegen/pyproject.toml"
+      },
+      {
+        "actualSha256": "3f48410cb6013c2321ecb6f142779123730bfa9f85bbaabab1b412d5984cdd47",
+        "expectedSha256": "3f48410cb6013c2321ecb6f142779123730bfa9f85bbaabab1b412d5984cdd47",
+        "matches": true,
+        "path": "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz"
+      },
+      {
+        "actualSha256": "ad326f5c95d4c9dde9ec09d9413aac156e50a1e0b1934cc357b249fd560a6e95",
+        "expectedSha256": "ad326f5c95d4c9dde9ec09d9413aac156e50a1e0b1934cc357b249fd560a6e95",
+        "matches": true,
+        "path": "python/umf_codegen/src/umf_codegen/_assets/manifest.json"
+      },
+      {
+        "actualSha256": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3",
+        "expectedSha256": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3",
+        "matches": true,
+        "path": "python/umf_codegen/src/umf_codegen/_assets/notices/ajv/LICENSE"
+      },
+      {
+        "actualSha256": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
+        "expectedSha256": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
+        "matches": true,
+        "path": "python/umf_codegen/src/umf_codegen/_assets/notices/ajv/package.json"
+      },
+      {
+        "actualSha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a",
+        "expectedSha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a",
+        "matches": true,
+        "path": "python/umf_codegen/src/umf_codegen/_assets/notices/fast-deep-equal/LICENSE"
+      },
+      {
+        "actualSha256": "a5c63940db0260739be9e2ac67f3aac268df4db5770420ee4e34e493152f97d2",
+        "expectedSha256": "a5c63940db0260739be9e2ac67f3aac268df4db5770420ee4e34e493152f97d2",
+        "matches": true,
+        "path": "python/umf_codegen/src/umf_codegen/_assets/notices/fast-deep-equal/package.json"
+      },
+      {
+        "actualSha256": "b010b0dfdfdb23d7396e03b82cd4621fc9bb8f95d6b0aea70b9c24e12074c786",
+        "expectedSha256": "b010b0dfdfdb23d7396e03b82cd4621fc9bb8f95d6b0aea70b9c24e12074c786",
+        "matches": true,
+        "path": "python/umf_codegen/src/umf_codegen/_assets/notices/fast-uri/LICENSE"
+      },
+      {
+        "actualSha256": "30cad05aad3d3596513706451dbfc7e0422f9c1d00f2903ecc34580327d54bc7",
+        "expectedSha256": "30cad05aad3d3596513706451dbfc7e0422f9c1d00f2903ecc34580327d54bc7",
+        "matches": true,
+        "path": "python/umf_codegen/src/umf_codegen/_assets/notices/fast-uri/package.json"
+      },
+      {
+        "actualSha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a",
+        "expectedSha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a",
+        "matches": true,
+        "path": "python/umf_codegen/src/umf_codegen/_assets/notices/json-schema-traverse/LICENSE"
+      },
+      {
+        "actualSha256": "156fb24af02845c190701360d06dfda35ef04282e34a734289ea9535ad9819ae",
+        "expectedSha256": "156fb24af02845c190701360d06dfda35ef04282e34a734289ea9535ad9819ae",
+        "matches": true,
+        "path": "python/umf_codegen/src/umf_codegen/_assets/notices/json-schema-traverse/package.json"
+      },
+      {
+        "actualSha256": "5bba27375d93e9119f76c1015f7672cf9ad5f70952296e0842fb2243d6376869",
+        "expectedSha256": "5bba27375d93e9119f76c1015f7672cf9ad5f70952296e0842fb2243d6376869",
+        "matches": true,
+        "path": "python/umf_codegen/src/umf_codegen/_assets/notices/yaml/LICENSE"
+      },
+      {
+        "actualSha256": "1c6441703d8204a23ded0d37ddf57c3b69d821dc392f20852d1f605bb9b8861c",
+        "expectedSha256": "1c6441703d8204a23ded0d37ddf57c3b69d821dc392f20852d1f605bb9b8861c",
+        "matches": true,
+        "path": "python/umf_codegen/src/umf_codegen/_assets/notices/yaml/package.json"
+      },
+      {
+        "actualSha256": "2ae57c276f24c6aa9e93402fb95a431369089aa42fb6eee851baf2ede612bfed",
+        "expectedSha256": "2ae57c276f24c6aa9e93402fb95a431369089aa42fb6eee851baf2ede612bfed",
+        "matches": true,
+        "path": "python/umf_codegen/src/umf_codegen/_release.py"
+      },
+      {
+        "actualSha256": "aa0854e148e47b6f0d5e385841a2d602155db2dc0a1f3cb8901f55b217bdcd9b",
+        "expectedSha256": "aa0854e148e47b6f0d5e385841a2d602155db2dc0a1f3cb8901f55b217bdcd9b",
+        "matches": true,
+        "path": "scripts/build-codegen.ts"
+      },
+      {
+        "actualSha256": "ac7316a19cf573d91e20d54f17f65c5b7093669d5a72bb0523edf72c52a87ed3",
+        "expectedSha256": "ac7316a19cf573d91e20d54f17f65c5b7093669d5a72bb0523edf72c52a87ed3",
+        "matches": true,
+        "path": "scripts/codegen/gzip.ts"
+      },
+      {
+        "actualSha256": "11d57f3b166728ffa75a6a2a7d19a740220f1a7f5ba3a2d45b302888c1daeb7f",
+        "expectedSha256": "11d57f3b166728ffa75a6a2a7d19a740220f1a7f5ba3a2d45b302888c1daeb7f",
+        "matches": true,
+        "path": "scripts/python-package-mirror.py"
+      },
+      {
+        "actualSha256": "0f8a2f5d38d32514ec38fc3bbe393c5b88d45c251c2ae05ac23bea261b0e94ee",
+        "expectedSha256": "0f8a2f5d38d32514ec38fc3bbe393c5b88d45c251c2ae05ac23bea261b0e94ee",
+        "matches": true,
+        "path": "tests/binding/fixtures/table-lifecycle-note.json"
+      },
+      {
+        "actualSha256": "7bc10736496b3116eb81b9688321f15e3996e636024f9c0e07f4a96d27911d7f",
+        "expectedSha256": "7bc10736496b3116eb81b9688321f15e3996e636024f9c0e07f4a96d27911d7f",
+        "matches": true,
+        "path": "tests/codegen/acquire_offline_cohort.py"
+      },
+      {
+        "actualSha256": "e2e8bc524bcc49831d1f06b992a7c3ae5f2efeb1d33172a11a1470009aae56aa",
+        "expectedSha256": "e2e8bc524bcc49831d1f06b992a7c3ae5f2efeb1d33172a11a1470009aae56aa",
+        "matches": true,
+        "path": "tests/codegen/aggregate_cohort.py"
+      },
+      {
+        "actualSha256": "a300e173f000c949c5d3ab3f385b083279a58294c91276847af74b72ef391bb7",
+        "expectedSha256": "a300e173f000c949c5d3ab3f385b083279a58294c91276847af74b72ef391bb7",
+        "matches": true,
+        "path": "tests/codegen/cohort_selector.py"
+      },
+      {
+        "actualSha256": "b8cc2330539640168d97491aeb118922a796b4a30d20fcc66cb3ec0d19aabee7",
+        "expectedSha256": "b8cc2330539640168d97491aeb118922a796b4a30d20fcc66cb3ec0d19aabee7",
+        "matches": true,
+        "path": "tests/codegen/offline_mirror_probe.py"
+      },
+      {
+        "actualSha256": "91b096c95a96933edb6065fe4aaa84ae797cdde9bac9fce5e2fdaa024ce4ba0e",
+        "expectedSha256": "91b096c95a96933edb6065fe4aaa84ae797cdde9bac9fce5e2fdaa024ce4ba0e",
+        "matches": true,
+        "path": "tests/codegen/verify_mini_racer_wheel.py"
+      },
+      {
+        "actualSha256": "3f560b6be517d5328c08717239c8728dedbeae4a6e25f95538b2e8405c805122",
+        "expectedSha256": "3f560b6be517d5328c08717239c8728dedbeae4a6e25f95538b2e8405c805122",
+        "matches": true,
+        "path": "tests/lifecycle/g02-temporal-native-fixture.ts"
+      },
+      {
+        "actualSha256": "5c11f8861ba66161ca6a578e6ac4b6f384da655275d608fe28c1eedcfb19280e",
+        "expectedSha256": "5c11f8861ba66161ca6a578e6ac4b6f384da655275d608fe28c1eedcfb19280e",
+        "matches": true,
+        "path": "tests/lifecycle/g02-temporal-native.py"
+      },
+      {
+        "actualSha256": "8547d5f51aa0af84fc693bb2283ec35fc1aaa255ca3d79ee6a187227a9e7bf6d",
+        "expectedSha256": "8547d5f51aa0af84fc693bb2283ec35fc1aaa255ca3d79ee6a187227a9e7bf6d",
+        "matches": true,
+        "path": "tests/lifecycle/g03-defaults-native-fixture.ts"
+      },
+      {
+        "actualSha256": "2f4553a0f6c1c364aecc0541d4a4bbf876cce8bb5407514cf8f4473470b51958",
+        "expectedSha256": "2f4553a0f6c1c364aecc0541d4a4bbf876cce8bb5407514cf8f4473470b51958",
+        "matches": true,
+        "path": "tests/lifecycle/g03-defaults-native.py"
+      },
+      {
+        "actualSha256": "fe2fa9bee0f648e24095d9fb5b30d2430ebde351f3db42261d69d14d476dd265",
+        "expectedSha256": "fe2fa9bee0f648e24095d9fb5b30d2430ebde351f3db42261d69d14d476dd265",
+        "matches": true,
+        "path": "tests/lifecycle/g03_campaign_orchestration.py"
+      }
+    ],
+    "tree": "9d2e08d48d1abe788a0af20f5c2f45bdaaf94041",
+    "workflow": "G02 and G03 selected native qualification",
+    "workflowSha256MatchesCommit": true
+  }
+}

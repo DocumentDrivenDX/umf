@@ -1,0 +1,90 @@
+{
+  "aggregateTimeoutSeconds": 1500,
+  "artifacts": {
+    "sdkArchive": null,
+    "sdkManifest": null
+  },
+  "attempt": 1,
+  "command": {
+    "exitCode": 1,
+    "name": "sdk-test-install"
+  },
+  "commands": [
+    {
+      "argv": [
+        "bun",
+        "install",
+        "--frozen-lockfile"
+      ],
+      "durationSeconds": 3.567,
+      "exitCode": 0,
+      "log": {
+        "path": "bun-install-frozen.log",
+        "sha256": "4867c33fd940354ddd79e9ae17fade9e4257128cd5865f797b08b1260bc95cb9",
+        "sizeBytes": 1052
+      },
+      "name": "bun-install-frozen",
+      "timeoutSeconds": 300
+    },
+    {
+      "argv": [
+        "cargo",
+        "fetch",
+        "--locked"
+      ],
+      "durationSeconds": 6.821,
+      "exitCode": 0,
+      "log": {
+        "path": "cargo-fetch-locked.log",
+        "sha256": "7775cc4c8dbc6b33211096626021f4fbc3411cf6950bd53de1984f6b673d67cb",
+        "sizeBytes": 4163
+      },
+      "name": "cargo-fetch-locked",
+      "timeoutSeconds": 600
+    },
+    {
+      "argv": [
+        "bun",
+        "run",
+        "build:sdk"
+      ],
+      "durationSeconds": 5.492,
+      "exitCode": 1,
+      "log": {
+        "path": "sdk-build.log",
+        "sha256": "c35df0bec0473cc58a9b4df85bee7de649c19c0f60b244f09caba184cbcc3e63",
+        "sizeBytes": 1507
+      },
+      "name": "sdk-build",
+      "timeoutSeconds": 600
+    }
+  ],
+  "consumer": null,
+  "durationSeconds": 41.242,
+  "executionId": "local-sdk-20261028T201256Z-44500163-6bad-4580-9b88-289e34830b66-attempt1",
+  "failureCode": "sdk-build-failed-or-log-cap",
+  "harness": {
+    "sha256": "5d4973f94aa4a1905431311c8118b54e65c4c6021bb0249a8000c221f46cfe4d"
+  },
+  "profile": "umf.sdk.distribution/1",
+  "resourceLimits": {
+    "cpus": 4,
+    "memoryBytes": 8589934592,
+    "network": "bridge",
+    "pids": 4096,
+    "pullPolicy": "never"
+  },
+  "runtime": {
+    "architecture": "x86_64",
+    "bun": "1.4.3",
+    "imageId": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+    "node": "v26.12.1",
+    "python": "3.11.17",
+    "release": "7.2.9-orbstack-00391-g2b298d05fbd4",
+    "system": "Linux"
+  },
+  "schema": "umf.local-linux-sdk-producer/1",
+  "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+  "sourceTree": "8b98c0d895983ba2b7637dd3aea567dab0943883",
+  "status": "failed"
+}

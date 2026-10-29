@@ -1,0 +1,61 @@
+{
+  "status": "METAMODEL_OUTPUTS_SOURCE_ADOPTED",
+  "sourceCommit": "9b1fc3e44925d20347a9f9081926ca3a76a43c8f",
+  "runId": 40565319782,
+  "runAttempt": 1,
+  "artifactId": 12762662454,
+  "artifactSha256": "7d7abeba728f5ed6fdf2545481c5ca02094345481ffaa55caa4caf6e9f4a9f60",
+  "adoptionParentCommit": "9b1fc3e44925d20347a9f9081926ca3a76a43c8f",
+  "sourceOutputReviewSha256": "ffe6a1e2c0d2fe3419bd67aa389c11f48d02a51960ad17c1919682aa94348946",
+  "changedOutputs": [
+    "spec/metamodel/generated/manifest.json"
+  ],
+  "adoptedOutputs": {
+    "python/umf_access/src/umf_access/generated_core.py": {
+      "bytes": 360,
+      "sha256": "5366ba6be1c2eb042b14f30723648686294e1f450d75a645e76806a4494593a1"
+    },
+    "spec/core/extension-package.schema.json": {
+      "bytes": 45001,
+      "sha256": "4df3c8f92c5baa2c52f965d83b681ff306392bf9ba333bd39213a8f1065ac766"
+    },
+    "spec/core/schema.json": {
+      "bytes": 45342,
+      "sha256": "c6004664eb93dcef28ce6e0583f91225b618aa0fb42967a892242402557cf71d"
+    },
+    "spec/core/semantic-type-reference.schema.json": {
+      "bytes": 45463,
+      "sha256": "207abbad54ebf8c660a958e2deda072a5a3236b5b8df5af8a8656f90c3e46ba9"
+    },
+    "spec/metamodel/generated/core-constraints.json": {
+      "bytes": 190252,
+      "sha256": "e4e667c6a23ebcfe12a937730adfa60081475ad11d367b8986a9ea94429d5dcd"
+    },
+    "spec/metamodel/generated/domain-policy.json": {
+      "bytes": 14827,
+      "sha256": "7827703fe00b4eb955e9a1d1632fec4e7b9e8c52df0d67eb700dbd7ce9a6d436"
+    },
+    "spec/metamodel/generated/manifest.json": {
+      "bytes": 58660,
+      "sha256": "49d13a735d92c9db935fc9c7f5f804e0529c5bb374e4c98fe246e03d979353b6"
+    },
+    "spec/metamodel/generated/python-shapes.json": {
+      "bytes": 98734,
+      "sha256": "884fb5d09e1cd512e32b188144aa0f9ac55d396cc5a3b10341b3aeb06093fde7"
+    },
+    "spec/metamodel/package.json": {
+      "bytes": 1265,
+      "sha256": "5930c77eaa8308d76761cd93d5a58bd5b0a7b3f30b5bc56fdc7db6d961fb0b89"
+    },
+    "src/generated/core-model.ts": {
+      "bytes": 6714,
+      "sha256": "55485912b78640ef970244ffd8d4cbd6f186e035efccd77259aadff6120b7106"
+    },
+    "src/generated/core-validators.ts": {
+      "bytes": 305070,
+      "sha256": "563602e0f21f6d6b0efd1ae069dbda28926e085585b4bf0430347b65ff2bd0ff"
+    }
+  },
+  "qualifiesMergedSource": false,
+  "claims": "Exact11 hosted outputs byte-copied after review; onlymanifest changed. Four companioninputs match. Original selfFIRST/dependent27 and corrected-source portable/native/cohort/normalPR/SDK release gates remain pending."
+}

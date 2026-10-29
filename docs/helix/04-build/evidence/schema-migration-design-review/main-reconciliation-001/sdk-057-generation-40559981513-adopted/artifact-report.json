@@ -1,0 +1,238 @@
+{
+  "artifact": {
+    "apiArtifactId": 12758813044,
+    "apiDigest": "sha256:7165870575d253857177de46bae1c72c52ac471f154eaa06f373ed4795817383",
+    "bytes": 736324,
+    "memberCount": 51,
+    "path": "/private/tmp/migration-merged-40559981513/umf-merged-source-generated-6ddb0e7d60a9377b168068311be500a1037a7b48-40559981513-1.zip",
+    "sha256": "7165870575d253857177de46bae1c72c52ac471f154eaa06f373ed4795817383"
+  },
+  "commands": {
+    "allRawAndCaptureExitZero": true,
+    "allUntruncated": true,
+    "count": 15,
+    "names": [
+      "bun-install",
+      "cargo-fetch",
+      "pre-generation-placeholders",
+      "toolchain-identity",
+      "prepare-metamodel-stage",
+      "metamodel-output-generation",
+      "metamodel-output-stage-check",
+      "metamodel-output-correspondence",
+      "check-adopted-metamodel-and-self",
+      "action-plan-identity",
+      "codegen-assets",
+      "action-plan-identity-check",
+      "codegen-assets-check",
+      "r3-inventory",
+      "r3-boundary-check"
+    ],
+    "sumMonotonicDurationMs": 58810
+  },
+  "outputs": [
+    {
+      "bytes": 26687,
+      "matchesReceipt": true,
+      "path": "docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json",
+      "sha256": "5cbda712b86b3264f781a7df57d64b807659ff27afdbe165e589923d522d0a04"
+    },
+    {
+      "bytes": 2809279,
+      "matchesReceipt": true,
+      "path": "docs/helix/04-build/evidence/rust-migration/r3/inventory.json",
+      "sha256": "bfe2ff87ced5c9b9e56b23f80cd678fc7c787bcf68fe209ce11cec46f8b686cd"
+    },
+    {
+      "bytes": 360,
+      "matchesReceipt": true,
+      "path": "python/umf_access/src/umf_access/generated_core.py",
+      "sha256": "5366ba6be1c2eb042b14f30723648686294e1f450d75a645e76806a4494593a1"
+    },
+    {
+      "bytes": 925422,
+      "matchesReceipt": true,
+      "path": "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz",
+      "sha256": "3f48410cb6013c2321ecb6f142779123730bfa9f85bbaabab1b412d5984cdd47"
+    },
+    {
+      "bytes": 33447,
+      "matchesReceipt": true,
+      "path": "python/umf_codegen/src/umf_codegen/_assets/manifest.json",
+      "sha256": "ad326f5c95d4c9dde9ec09d9413aac156e50a1e0b1934cc357b249fd560a6e95"
+    },
+    {
+      "bytes": 1090,
+      "matchesReceipt": true,
+      "path": "python/umf_codegen/src/umf_codegen/_assets/notices/ajv/LICENSE",
+      "sha256": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3"
+    },
+    {
+      "bytes": 4405,
+      "matchesReceipt": true,
+      "path": "python/umf_codegen/src/umf_codegen/_assets/notices/ajv/package.json",
+      "sha256": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989"
+    },
+    {
+      "bytes": 1074,
+      "matchesReceipt": true,
+      "path": "python/umf_codegen/src/umf_codegen/_assets/notices/fast-deep-equal/LICENSE",
+      "sha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a"
+    },
+    {
+      "bytes": 1496,
+      "matchesReceipt": true,
+      "path": "python/umf_codegen/src/umf_codegen/_assets/notices/fast-deep-equal/package.json",
+      "sha256": "a5c63940db0260739be9e2ac67f3aac268df4db5770420ee4e34e493152f97d2"
+    },
+    {
+      "bytes": 1813,
+      "matchesReceipt": true,
+      "path": "python/umf_codegen/src/umf_codegen/_assets/notices/fast-uri/LICENSE",
+      "sha256": "b010b0dfdfdb23d7396e03b82cd4621fc9bb8f95d6b0aea70b9c24e12074c786"
+    },
+    {
+      "bytes": 1983,
+      "matchesReceipt": true,
+      "path": "python/umf_codegen/src/umf_codegen/_assets/notices/fast-uri/package.json",
+      "sha256": "30cad05aad3d3596513706451dbfc7e0422f9c1d00f2903ecc34580327d54bc7"
+    },
+    {
+      "bytes": 1074,
+      "matchesReceipt": true,
+      "path": "python/umf_codegen/src/umf_codegen/_assets/notices/json-schema-traverse/LICENSE",
+      "sha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a"
+    },
+    {
+      "bytes": 1004,
+      "matchesReceipt": true,
+      "path": "python/umf_codegen/src/umf_codegen/_assets/notices/json-schema-traverse/package.json",
+      "sha256": "156fb24af02845c190701360d06dfda35ef04282e34a734289ea9535ad9819ae"
+    },
+    {
+      "bytes": 738,
+      "matchesReceipt": true,
+      "path": "python/umf_codegen/src/umf_codegen/_assets/notices/yaml/LICENSE",
+      "sha256": "5bba27375d93e9119f76c1015f7672cf9ad5f70952296e0842fb2243d6376869"
+    },
+    {
+      "bytes": 3254,
+      "matchesReceipt": true,
+      "path": "python/umf_codegen/src/umf_codegen/_assets/notices/yaml/package.json",
+      "sha256": "1c6441703d8204a23ded0d37ddf57c3b69d821dc392f20852d1f605bb9b8861c"
+    },
+    {
+      "bytes": 170,
+      "matchesReceipt": true,
+      "path": "python/umf_codegen/src/umf_codegen/_release.py",
+      "sha256": "2ae57c276f24c6aa9e93402fb95a431369089aa42fb6eee851baf2ede612bfed"
+    },
+    {
+      "bytes": 45001,
+      "matchesReceipt": true,
+      "path": "spec/core/extension-package.schema.json",
+      "sha256": "4df3c8f92c5baa2c52f965d83b681ff306392bf9ba333bd39213a8f1065ac766"
+    },
+    {
+      "bytes": 45342,
+      "matchesReceipt": true,
+      "path": "spec/core/schema.json",
+      "sha256": "c6004664eb93dcef28ce6e0583f91225b618aa0fb42967a892242402557cf71d"
+    },
+    {
+      "bytes": 45463,
+      "matchesReceipt": true,
+      "path": "spec/core/semantic-type-reference.schema.json",
+      "sha256": "207abbad54ebf8c660a958e2deda072a5a3236b5b8df5af8a8656f90c3e46ba9"
+    },
+    {
+      "bytes": 190252,
+      "matchesReceipt": true,
+      "path": "spec/metamodel/generated/core-constraints.json",
+      "sha256": "e4e667c6a23ebcfe12a937730adfa60081475ad11d367b8986a9ea94429d5dcd"
+    },
+    {
+      "bytes": 14827,
+      "matchesReceipt": true,
+      "path": "spec/metamodel/generated/domain-policy.json",
+      "sha256": "7827703fe00b4eb955e9a1d1632fec4e7b9e8c52df0d67eb700dbd7ce9a6d436"
+    },
+    {
+      "bytes": 58660,
+      "matchesReceipt": true,
+      "path": "spec/metamodel/generated/manifest.json",
+      "sha256": "7c7cec644eb3afc9aecff90cef576219113f299c512776069afe95561345e843"
+    },
+    {
+      "bytes": 98734,
+      "matchesReceipt": true,
+      "path": "spec/metamodel/generated/python-shapes.json",
+      "sha256": "884fb5d09e1cd512e32b188144aa0f9ac55d396cc5a3b10341b3aeb06093fde7"
+    },
+    {
+      "bytes": 1265,
+      "matchesReceipt": true,
+      "path": "spec/metamodel/package.json",
+      "sha256": "5930c77eaa8308d76761cd93d5a58bd5b0a7b3f30b5bc56fdc7db6d961fb0b89"
+    },
+    {
+      "bytes": 355,
+      "matchesReceipt": true,
+      "path": "src/extensions/actions/plan-identity.ts",
+      "sha256": "0ad8f9ee30eb839955d359b860acb6b35441140d7a8b213e78713a98602cbebb"
+    },
+    {
+      "bytes": 6714,
+      "matchesReceipt": true,
+      "path": "src/generated/core-model.ts",
+      "sha256": "55485912b78640ef970244ffd8d4cbd6f186e035efccd77259aadff6120b7106"
+    },
+    {
+      "bytes": 305070,
+      "matchesReceipt": true,
+      "path": "src/generated/core-validators.ts",
+      "sha256": "563602e0f21f6d6b0efd1ae069dbda28926e085585b4bf0430347b65ff2bd0ff"
+    }
+  ],
+  "phase": {
+    "committedOutputsMatch": true,
+    "companionInputsMatch": true,
+    "r3BoundaryStatus": "pass",
+    "status": "DEPENDENT_GENERATION_READY"
+  },
+  "receipt": {
+    "artifactBytes": 4723336,
+    "finalSourceInputsSha256": "e3dc82f75f6a7860fa6d056ca9ecf536f35ee4b8ac79bb03b436a625a95c8e83",
+    "generatedFilesCount": 17,
+    "limits": {
+      "aggregateWorkSeconds": 1800,
+      "artifactMaximumBytes": 16777216,
+      "capturedCommandLogsMaximumBytes": 1048576,
+      "evidenceReserveSeconds": 60
+    },
+    "logBytes": 7908,
+    "outputArtifactBytes": 4624979,
+    "outputCount": 27,
+    "outputMembersAllMatchReceipt": true,
+    "qualifiesMergedSource": false,
+    "sourceInputDigestMatches": true,
+    "sourceInputsSha256": "e3dc82f75f6a7860fa6d056ca9ecf536f35ee4b8ac79bb03b436a625a95c8e83",
+    "status": "GENERATED_ARTIFACT_ONLY"
+  },
+  "run": {
+    "attempt": 1,
+    "conclusion": "success",
+    "id": 40559981513,
+    "jobId": 122386071005,
+    "ref": "refs/heads/codex/migration-merged-generation",
+    "sourceCommit": "6ddb0e7d60a9377b168068311be500a1037a7b48",
+    "status": "completed"
+  },
+  "terminalCaptures": [
+    "run-terminal.json",
+    "jobs-terminal.json",
+    "artifacts-terminal.json",
+    "job-logs-terminal.json",
+    "job-steps-terminal.json"
+  ]
+}

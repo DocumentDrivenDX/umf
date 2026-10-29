@@ -1,0 +1,55 @@
+{
+  "cancelledDuplicatePushRuns": [
+    40366190733,
+    40366190757,
+    40366190766,
+    40366190784,
+    40366190820,
+    40366190853,
+    40366190870
+  ],
+  "changedFiles": [
+    ".github/workflows/publish-pypi.yml",
+    ".github/workflows/pypi-validation.yml",
+    ".github/workflows/pypi.yml",
+    "docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json",
+    "docs/helix/04-build/evidence/rust-migration/r3/inventory.json",
+    "docs/helix/05-deploy/pypi.md",
+    "scripts/dispatch_core_pypi_release.py",
+    "scripts/publish_core_pypi_release.py",
+    "scripts/test_dispatch_core_pypi_release.py",
+    "scripts/test_publish_core_pypi_release.py"
+  ],
+  "checkSnapshotCounts": {
+    "cancelled": 31,
+    "in_progress": 6,
+    "queued": 19,
+    "success": 8
+  },
+  "corePackageSourceChanged": false,
+  "mergedAt": "2026-10-26T17:22:23Z",
+  "otherChecksScope": "Other PR checks queued/running at capture time are retained; this record does not claim every publisher-head runtime/site check passed. Product source qualification remains bound to a1b and its 63 successful checks.",
+  "publication": false,
+  "publisherGates": [
+    {
+      "conclusion": "success",
+      "id": 121724450426,
+      "name": "publisher-controls",
+      "status": "completed",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40366198405/job/121724450426"
+    },
+    {
+      "conclusion": "success",
+      "id": 121724450441,
+      "name": "inventory-boundaries",
+      "status": "completed",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40366198413/job/121724450441"
+    }
+  ],
+  "publisherHead": "d9c9b5ef8e0feb7e5fb5b0dcf688d8220f9c463d",
+  "pullRequest": 50,
+  "qualifiedProductSource": "a1b909d4f92da6604aeb21d3ea60e9a9943a7f87",
+  "releaseTargetCommit": "6337b4b5f65144387ce5c0bbf9cbad955a921c8f",
+  "releaseTree": "d3adf126be14b38a982d496844212fba6e8c523a",
+  "status": "PUBLISHER_NORMAL_MERGE_SOURCE_CORRESPONDENCE_VERIFIED"
+}

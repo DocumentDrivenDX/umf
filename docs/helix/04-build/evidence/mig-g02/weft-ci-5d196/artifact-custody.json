@@ -1,0 +1,113 @@
+{
+  "schema": "umf.g02-weft-ci-artifact-custody/1",
+  "scope": "PR 29 final selected Weft CI checks at source H 5d196ea3184b1a711bb4bcf91215a496c18ce9b2",
+  "archiveDirectory": "docs/helix/04-build/evidence/mig-g02/weft-ci-5d196",
+  "artifactArchives": [
+    {
+      "runId": 40023185471,
+      "artifactId": 12531664254,
+      "name": "truss-facts-parity",
+      "downloadEndpoint": "https://api.github.com/repos/DocumentDrivenDX/weft/actions/artifacts/12531664254/zip",
+      "sizeBytes": 66936,
+      "sha256": "802f0087b873da898a317537136599255edd1b282dce9b17ae3a9317f0bcae56",
+      "apiDigest": "sha256:802f0087b873da898a317537136599255edd1b282dce9b17ae3a9317f0bcae56",
+      "downloadedAndVerified": true,
+      "downloadIdentity": "/private/tmp/weft-g02-final-ci-5d196/final-complete/artifacts/truss-facts-parity.zip",
+      "permanentArchiveIncluded": false,
+      "exclusionReason": "Large binary ZIP; immutable metadata and digest retained here, raw ZIP excluded from the compact repository evidence archive."
+    },
+    {
+      "runId": 40023185590,
+      "artifactId": 12532456045,
+      "name": "declared-table-operation-candidate",
+      "downloadEndpoint": "https://api.github.com/repos/DocumentDrivenDX/weft/actions/artifacts/12532456045/zip",
+      "sizeBytes": 6569,
+      "sha256": "802303220cb647d0ddca0776d4753d1daba19e60c69649619001ce91cf0df54c",
+      "apiDigest": "sha256:802303220cb647d0ddca0776d4753d1daba19e60c69649619001ce91cf0df54c",
+      "downloadedAndVerified": true,
+      "downloadIdentity": "/private/tmp/weft-g02-final-ci-5d196/final-complete/artifacts/declared-table-operation-candidate.zip",
+      "permanentArchiveIncluded": false,
+      "exclusionReason": "Large binary ZIP; immutable metadata and digest retained here, raw ZIP excluded from the compact repository evidence archive."
+    },
+    {
+      "runId": 40023185354,
+      "artifactId": 12532482001,
+      "name": "graph-requirements-candidate-c6414d163f270425027db08ef454747904bde406",
+      "downloadEndpoint": "https://api.github.com/repos/DocumentDrivenDX/weft/actions/artifacts/12532482001/zip",
+      "sizeBytes": 139682751,
+      "sha256": "c4a35bc043ab90a91e8b465cb7c5004fb096ec91b220c5ce62b3bd2fd40bd4fb",
+      "apiDigest": "sha256:c4a35bc043ab90a91e8b465cb7c5004fb096ec91b220c5ce62b3bd2fd40bd4fb",
+      "downloadedAndVerified": true,
+      "downloadIdentity": "/private/tmp/weft-g02-final-ci-5d196/final-complete/artifacts/graph-requirements-candidate-c6414d163f270425027db08ef454747904bde406.zip",
+      "permanentArchiveIncluded": false,
+      "exclusionReason": "Large binary ZIP; immutable metadata and digest retained here, raw ZIP excluded from the compact repository evidence archive."
+    },
+    {
+      "runId": 40023185354,
+      "artifactId": 12534441648,
+      "name": "current-qualification-c6414d163f270425027db08ef454747904bde406",
+      "downloadEndpoint": "https://api.github.com/repos/DocumentDrivenDX/weft/actions/artifacts/12534441648/zip",
+      "sizeBytes": 67071296,
+      "sha256": "c9a4a540e0056530839fe7c5546fed863737f9fdd29730e8103d5cc2132636fa",
+      "apiDigest": "sha256:c9a4a540e0056530839fe7c5546fed863737f9fdd29730e8103d5cc2132636fa",
+      "downloadedAndVerified": true,
+      "downloadIdentity": "/private/tmp/weft-g02-final-ci-5d196/final-complete/artifacts/current-qualification-c6414d163f270425027db08ef454747904bde406.zip",
+      "permanentArchiveIncluded": false,
+      "exclusionReason": "Large binary ZIP; immutable metadata and digest retained here, raw ZIP excluded from the compact repository evidence archive."
+    }
+  ],
+  "largePayloadMembers": [
+    {
+      "artifactId": 12532482001,
+      "artifactName": "graph-requirements-candidate",
+      "memberPath": "/private/tmp/weft-g02-final-ci-5d196/extracted/graph-wheels/default/weft_sql-0.4.53-cp39-abi3-manylinux_2_34_x86_64.whl",
+      "fileName": "weft_sql-0.4.53-cp39-abi3-manylinux_2_34_x86_64.whl",
+      "sizeBytes": 38414042,
+      "sha256": "99ded52c079367b591cd7937ebc86acae4284816b97c7d3dbb111ca72988333e",
+      "permanentArchiveIncluded": false,
+      "exclusionReason": "Generated wheel/WASM binary excluded; its enclosing artifact ZIP is separately bound by artifact ID, byte size and SHA-256."
+    },
+    {
+      "artifactId": 12532482001,
+      "artifactName": "graph-requirements-candidate",
+      "memberPath": "/private/tmp/weft-g02-final-ci-5d196/extracted/graph-wheels/model/weft_sql-0.4.53-cp39-abi3-manylinux_2_34_x86_64.whl",
+      "fileName": "weft_sql-0.4.53-cp39-abi3-manylinux_2_34_x86_64.whl",
+      "sizeBytes": 51272100,
+      "sha256": "ecbe4c42c92067fc4e1cea91c74b7280e66cfeb45a2fb78e3167171fa4e1826c",
+      "permanentArchiveIncluded": false,
+      "exclusionReason": "Generated wheel/WASM binary excluded; its enclosing artifact ZIP is separately bound by artifact ID, byte size and SHA-256."
+    },
+    {
+      "artifactId": 12532482001,
+      "artifactName": "graph-requirements-candidate",
+      "memberPath": "/private/tmp/weft-g02-final-ci-5d196/extracted/graph-wheels/graph/weft_sql-0.4.53-cp39-abi3-manylinux_2_34_x86_64.whl",
+      "fileName": "weft_sql-0.4.53-cp39-abi3-manylinux_2_34_x86_64.whl",
+      "sizeBytes": 51555060,
+      "sha256": "b1d2430c44fbaa58f3cd4302fcd22ec026909e0f55a6b4a5d536a4574246e11a",
+      "permanentArchiveIncluded": false,
+      "exclusionReason": "Generated wheel/WASM binary excluded; its enclosing artifact ZIP is separately bound by artifact ID, byte size and SHA-256."
+    },
+    {
+      "artifactId": 12534441648,
+      "artifactName": "current-qualification",
+      "memberPath": "/private/tmp/weft-g02-final-ci-5d196/final-complete/downloaded-current-qualification/weft-fresh-hosts/fresh-host-evidence/wheels/weft_sql-0.4.53-cp39-abi3-manylinux_2_34_x86_64.whl",
+      "fileName": "weft_sql-0.4.53-cp39-abi3-manylinux_2_34_x86_64.whl",
+      "sizeBytes": 54139528,
+      "sha256": "4092be03e6956ed61bd4974f985529ba6b4751b535fe8ed0babefdeb15a7301a",
+      "permanentArchiveIncluded": false,
+      "exclusionReason": "Generated wheel/WASM binary excluded; its enclosing artifact ZIP is separately bound by artifact ID, byte size and SHA-256."
+    },
+    {
+      "artifactId": 12534441648,
+      "artifactName": "current-qualification",
+      "memberPath": "/private/tmp/weft-g02-final-ci-5d196/final-complete/downloaded-current-qualification/weft-fresh-hosts/fresh-host-evidence/web/weft_wasm_bg.wasm",
+      "fileName": "weft_wasm_bg.wasm",
+      "sizeBytes": 30515762,
+      "sha256": "d5cca3d668940f00113da32db7d190c8e97f668ad3f6fa0f6627e1816b7f28fd",
+      "permanentArchiveIncluded": false,
+      "exclusionReason": "Generated wheel/WASM binary excluded; its enclosing artifact ZIP is separately bound by artifact ID, byte size and SHA-256."
+    }
+  ],
+  "zipCheck": "The four ZIP SHA-256 values equal GitHub artifact metadata digests. Current qualification ZIP passed unzip -t; prior three downloaded ZIPs passed unzip -t in the unchanged temporary full capture.",
+  "policy": "No ZIP, wheel, native extension or WASM binary is included in this compact archive."
+}

@@ -1,0 +1,142 @@
+{
+  "profile": "umf.native-lease-source-adoption/0.1",
+  "status": "bounded source implementation accepted; native qualification and full migration release open",
+  "baseCommit": "8381db549f1b425eae0ee9b4b967af2c26b38550",
+  "sourceMembers": [
+    {
+      "path": "python/umf_access/src/umf_access/lifecycle/ingress_custody.py",
+      "sha256": "abf1d0174a1305cc1ea630219c45d89a1ece86bc62ebf8707372acd9c2755e4a",
+      "bytes": 53674,
+      "baseSha256": "e048e7e0abb14c7120b6aae08752a363c2c2b244479a2bab9f168aaa087b75c6"
+    },
+    {
+      "path": "python/umf_access/src/umf_access/lifecycle/ingress_local_postgres.py",
+      "sha256": "7afd677336ebf723bf4f38d4ecff936f450f9fea420535837dfdad4126b01df0",
+      "bytes": 258415,
+      "baseSha256": "8290f73d7736e0bb917853a3cd49837f57118752dc5e424def1754fdfafb4477"
+    },
+    {
+      "path": "python/umf_access/src/umf_access/lifecycle/owner_authority.py",
+      "sha256": "af506ff9675a0624ae11a10d93b15d885edd5f3ce8d2ff93e67ee4a133a15572",
+      "bytes": 22468,
+      "baseSha256": "d4b658a240fbe5acc88ad46acc97cda1fafa9caf21c5ebc9063af5d49c6c7e1d"
+    },
+    {
+      "path": "python/umf_access/src/umf_access/lifecycle/owner_bootstrap.py",
+      "sha256": "7c3285e1d62c2e836b712b9c6e098e1c4f20b617eeb2c5263b67664797d8f7c9",
+      "bytes": 75688,
+      "baseSha256": "e43a43b8772426a7dfdf566593942fab2fa5f58c7de83707fcb4ddafbd7ebf07"
+    },
+    {
+      "path": "python/umf_access/tests/test_ingress_local_postgres.py",
+      "sha256": "d88853dca8c7aa34398ccb2a8b7e9e72f202bc0e566d3aaee63ec773e7017b00",
+      "bytes": 55614,
+      "baseSha256": "bd5a26693f3f24392a918174644a9b6d2e376a0a1dc11e79ae0836b52d0fbefb"
+    },
+    {
+      "path": "python/umf_access/tests/test_ingress_local_postgres_authority_bridge.py",
+      "sha256": "91696c88742c06817677504f3081aea9b32da077a519bc0155c9bf662b808f55",
+      "bytes": 20448,
+      "baseSha256": "8892226d08b5589376c67183ebb10cfe0de103ab10345002df6dc12d81d6f876"
+    },
+    {
+      "path": "python/umf_access/tests/test_original_control_lease.py",
+      "sha256": "4b1bc6b743e343ef7c47ea338925fa84b43b3756a18ad13b9f5db2aeee0c8245",
+      "bytes": 30550,
+      "baseSha256": null
+    },
+    {
+      "path": "python/umf_access/tests/test_owner_ledger_birth_recovery.py",
+      "sha256": "71e1a3ae4d9dcae9b061a26a4ea31356d423e6fb86e14459e192ea81841b1581",
+      "bytes": 19338,
+      "baseSha256": "6526ef1699794753199edda272a16b2aae9403e9e074a55650ae632d8382e61a"
+    },
+    {
+      "path": "python/umf_access/tests/test_owner_authority.py",
+      "sha256": "2604f8cff3988d26d9cb398e3b145a3a16e3d389db33eb4c2b5697f3545264f4",
+      "bytes": 51575,
+      "baseSha256": "ed2ff697a6806a4af41a5320288448cd4e4dc3bc7a083993f93f1d28d9714464"
+    },
+    {
+      "path": "python/umf_access/tests/test_ingress_custody.py",
+      "sha256": "69b8aac19727b3799e8f5adce85de85f6608b00caaa81b71ecf94902ae4b7f5d",
+      "bytes": 25607,
+      "baseSha256": "0e927c331ffef9762d260674e179164bdcc631ad677b9e650a74a187945fc327"
+    },
+    {
+      "path": "python/umf_access/tests/test_ingress_store.py",
+      "sha256": "8e18348a59c679560a254e35524188dfa690b358cd981926853a01d779f08ca7",
+      "bytes": 42161,
+      "baseSha256": "cfd00dac4d87e43c51eeb490d2e892e74066650d68a405577d8424a2857e8b3e"
+    }
+  ],
+  "rootVerification": {
+    "leaseTests": 14,
+    "integratedTests": 148,
+    "storeTests": 17,
+    "isolatedSourceMatchesAllAdoptedMembers": true
+  },
+  "independentReviewSha256": "fa3816d06798ffc2a9a62a8bc44a33f2759377cf4d5af3cd683ff78cb0a4f374",
+  "historicalFailures": "Source001/002 defects, source007 metadata mutation and unavailable earlier manifest, unused deletion helper008 and withdrawn008 acceptance remain retained. Source009 repairs creator PID unlock ownership.",
+  "fixtureQualifications": "Custody/store test adapters use explicitly synthetic lease tokens only for unchanged journal semantics; the actual signed-core/lease database-stage control has synthetic SQL connector. No source fixture proves native origin.",
+  "remaining": "Actual signed full PostgreSQL apply/recovery, ROOT checkpoints/all-writer pending fences, journal015, committed ingress/application/epoch provider, other G02-G11 scopes, browser/installed/native/managed/CI/merge/release/public-byte gates remain required.",
+  "evidenceFiles": [
+    {
+      "path": "source007-manifest.json",
+      "sha256": "d6eb2a7f073cb024dcb2b84826f0c4a05e51d1b799f9ec125615d2771a299788"
+    },
+    {
+      "path": "source007-metadata-erratum.json",
+      "sha256": "cfda436769ab119279728fcd22b0a31e7c1dee396335164f06cee907b6487eda"
+    },
+    {
+      "path": "source008-manifest.json",
+      "sha256": "361cced72b2833641139900ea765e6b909369c6a62a27726466fdb16571e44c0"
+    },
+    {
+      "path": "source008.patch",
+      "sha256": "3d51ae566a5a9800a8cf14e4a52f0cdb71e63e47db7a100e17f57f93f58bb7e4"
+    },
+    {
+      "path": "source009-manifest.json",
+      "sha256": "da8f39417826b06c2f95da8cca784f0031ec228f5c6403b653c381114bda0bfa"
+    },
+    {
+      "path": "source009.patch",
+      "sha256": "f6f251c7ae0681aff4aeecae963caf28f834f83dad464eb8d19fe3e7688b4e50"
+    },
+    {
+      "path": "sol-source007-review.json",
+      "sha256": "3ea2910568ed92edaa1733533f8005219cad9c08c81b9f7350e477142567af93"
+    },
+    {
+      "path": "sol-source008-withdrawal.json",
+      "sha256": "66a730fd88fd53cb0e35d695b64aeda5588267d4ceff982adfce08ee29bd265c"
+    },
+    {
+      "path": "sol-source009-review.json",
+      "sha256": "fa3816d06798ffc2a9a62a8bc44a33f2759377cf4d5af3cd683ff78cb0a4f374"
+    },
+    {
+      "path": "root-lease14-tests.log",
+      "sha256": "1ee124aa83bc5a86772aad07486922deb55803c12f0ba21fec1e0cd2139d360d"
+    },
+    {
+      "path": "root-integrated148-tests.log",
+      "sha256": "e86368b83cac8042b419ecead563500cb2f9a1b4a275255784d812f21c1b20c6"
+    },
+    {
+      "path": "root-store17-tests.log",
+      "sha256": "7663446751165d41cc611b7e95e8c7b98564bfafc36cf9c6f114f39f0df40780"
+    },
+    {
+      "path": "root-source001-rejection.json",
+      "sha256": "736093cc9143903f95a79eab8aa4f91cb78c1d902d68090602b5bc93898301e6"
+    },
+    {
+      "path": "root-source002-rejection.json",
+      "sha256": "830aa2e5c19187d84e3bf1e1ff880df8dd80efe11eb6f99d523d1b3b3dcb05b6"
+    }
+  ],
+  "whitespaceVerification": "Product/test/plan/JSON/log paths pass staged diff --check. Two exact retained historical patch files contain six whitespace-only context lines; those evidence bytes are preserved and excluded only from this whitespace check. No Git whitespace configuration was changed."
+}

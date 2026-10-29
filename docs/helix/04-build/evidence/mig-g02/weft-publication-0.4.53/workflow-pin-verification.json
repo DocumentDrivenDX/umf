@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "sourcePath": ".github/workflows/access-boundaries.yml",
+  "sourceSha256": "f803375c30def06dd095aebb192e3c012c1b22e39e9118b9c805d830b82c832f",
+  "checkedAt": "2026-10-23",
+  "pins": [
+    {
+      "platform": "linux-x86_64",
+      "filename": "weft_sql-0.4.53-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "filenameOccurrences": 7,
+      "url": "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.53/weft_sql-0.4.53-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "urlOccurrences": 4,
+      "sha256": "db01c4cf6357d674f1591609a2b9c83a9322ad8f8937c345e5950cc1582b83d2",
+      "sha256Occurrences": 4,
+      "matchesFreshInventory": true
+    },
+    {
+      "platform": "macos-arm64",
+      "filename": "weft_sql-0.4.53-cp39-abi3-macosx_11_0_arm64.whl",
+      "filenameOccurrences": 4,
+      "url": "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.53/weft_sql-0.4.53-cp39-abi3-macosx_11_0_arm64.whl",
+      "urlOccurrences": 2,
+      "sha256": "4c8281945b852af02cae8602747fb7b1b652ab3a1369d7650efce62ae6d35c6c",
+      "sha256Occurrences": 2,
+      "matchesFreshInventory": true
+    }
+  ],
+  "oldWeft049PinRemains": false,
+  "scope": "Read-only comparison of current dirty UMF workflow URLs/filenames/digests to all matching freshly published release asset records; no workflow edits."
+}

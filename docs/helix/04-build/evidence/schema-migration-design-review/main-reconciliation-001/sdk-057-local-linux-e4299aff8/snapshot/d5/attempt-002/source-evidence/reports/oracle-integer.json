@@ -1,0 +1,256 @@
+{
+  "status": "passed",
+  "server": "18.6 (Debian 18.6-1.pgdg13+2)",
+  "versions": {
+    "umf-access": "0.1.0.dev8",
+    "umf-codegen": "0.1.0a5",
+    "psycopg": "3.2.13"
+  },
+  "provenance": {
+    "runnerSha256": "e197d3630079c597964aa81b875ef6e7cd53f1c2fab42018bdb5a8684bf53600",
+    "originalRunnerSha256": "5dfddd7f1bd7f6e254e927292246ceddf5debfe172995ad267d4bbbfd32c2ea4",
+    "fixtureSha256": "c29ee30dd76e6e4fbbf6ceea64cb22d77764c2a349081819d0d7ac1c1dc59af1",
+    "artifactManifestSha256": "64d9a12d4f92ffe7c080568b0b0aaad7ab4e454da4f08fea075143b883fb5ddc",
+    "packageOrigins": {
+      "umf_access": "/d5-host/d5/venv-parent/venv/lib/python3.11/site-packages/umf_access/__init__.py",
+      "umf_codegen": "/d5-host/d5/venv-parent/venv/lib/python3.11/site-packages/umf_codegen/__init__.py",
+      "weft": "/d5-host/d5/venv-parent/venv/lib/python3.11/site-packages/weft/__init__.py"
+    },
+    "runtimeFiles": {
+      "umf_codegen/_assets/generator.js.gz": "3f48410cb6013c2321ecb6f142779123730bfa9f85bbaabab1b412d5984cdd47",
+      "umf_codegen/_assets/manifest.json": "ad326f5c95d4c9dde9ec09d9413aac156e50a1e0b1934cc357b249fd560a6e95",
+      "weft/weft.abi3.so": "2f39a3e2bf356922a44fef0e88ffaae155d6d850e66d7f7e35d9209cd85c3760"
+    }
+  },
+  "cases": [
+    {
+      "domain": "integer",
+      "textExpression": "concat",
+      "nativeConstraint": "none",
+      "boundExcess": false,
+      "emptyTable": false,
+      "allPopulated": false,
+      "literalWrapper": "integerToken",
+      "literalToken": "99999",
+      "decimalInvalidMode": "rounding",
+      "enumRejection": false,
+      "appended": false,
+      "invalid": false,
+      "ambientOperatorGuard": null,
+      "injectedNonfiniteGuard": null,
+      "unknownCommitAfterRealPhase": [],
+      "explicitNullAfterDefaultSqlstate": "23502",
+      "failure": null,
+      "publicFailurePrivacy": null,
+      "nativeStates": [],
+      "nativeDispatches": 1,
+      "nativeAffectedCounts": [
+        2
+      ],
+      "planDigest": "65cb2f968672b3e737cba4f167c92e34906af44898c518c559f942e0a43a9465",
+      "planFile": "plans/65cb2f968672b3e737cba4f167c92e34906af44898c518c559f942e0a43a9465.json",
+      "planFileSha256": "ed899c244bf6cb9c0dcb22749c6b73c954a5c1e5e3d54e752ed11590bbd16ba9",
+      "sourceDigest": "1e87f369e9d92bda725de52c92cccbaf69aef3765c7bf3a71805a8a0b3ef7dd0",
+      "actualColumns": [
+        "id",
+        "owner",
+        "amount",
+        "summary"
+      ],
+      "actualRows": [
+        [
+          "a",
+          "Ada",
+          100000,
+          9
+        ],
+        [
+          "b",
+          "Bj\u00f8rn",
+          99999,
+          0
+        ],
+        [
+          "c",
+          "\u674e",
+          100001,
+          2
+        ]
+      ],
+      "futureDefaultValue": [
+        7
+      ],
+      "passed": true
+    },
+    {
+      "domain": "integer",
+      "textExpression": "concat",
+      "nativeConstraint": "none",
+      "boundExcess": false,
+      "emptyTable": false,
+      "allPopulated": false,
+      "literalWrapper": "integerToken",
+      "literalToken": "99999",
+      "decimalInvalidMode": "rounding",
+      "enumRejection": false,
+      "appended": true,
+      "invalid": false,
+      "ambientOperatorGuard": null,
+      "injectedNonfiniteGuard": null,
+      "unknownCommitAfterRealPhase": [],
+      "explicitNullAfterDefaultSqlstate": "23502",
+      "failure": null,
+      "publicFailurePrivacy": null,
+      "nativeStates": [],
+      "nativeDispatches": 1,
+      "nativeAffectedCounts": [
+        3
+      ],
+      "planDigest": "bb653242664eefcdae0e2edaf3f0fcfc83ed6ee531edab995c756b8c48b5aa22",
+      "planFile": "plans/bb653242664eefcdae0e2edaf3f0fcfc83ed6ee531edab995c756b8c48b5aa22.json",
+      "planFileSha256": "6908f627c3cfecbb38cf2168ce0a1d1c0833d27b48da4a1fe1132d3aa371acb7",
+      "sourceDigest": "1e87f369e9d92bda725de52c92cccbaf69aef3765c7bf3a71805a8a0b3ef7dd0",
+      "actualColumns": [
+        "id",
+        "owner",
+        "amount",
+        "summary"
+      ],
+      "actualRows": [
+        [
+          "a",
+          "Ada",
+          100000,
+          1
+        ],
+        [
+          "b",
+          "Bj\u00f8rn",
+          99999,
+          0
+        ],
+        [
+          "c",
+          "\u674e",
+          100001,
+          2
+        ]
+      ],
+      "futureDefaultValue": [
+        7
+      ],
+      "passed": true
+    },
+    {
+      "domain": "integer",
+      "textExpression": "concat",
+      "nativeConstraint": "none",
+      "boundExcess": false,
+      "emptyTable": false,
+      "allPopulated": false,
+      "literalWrapper": "integerToken",
+      "literalToken": "99999",
+      "decimalInvalidMode": "rounding",
+      "enumRejection": false,
+      "appended": false,
+      "invalid": true,
+      "ambientOperatorGuard": null,
+      "injectedNonfiniteGuard": null,
+      "unknownCommitAfterRealPhase": [],
+      "explicitNullAfterDefaultSqlstate": null,
+      "failure": "CatalogError",
+      "publicFailurePrivacy": true,
+      "nativeStates": [
+        "22003"
+      ],
+      "nativeDispatches": 1,
+      "nativeAffectedCounts": [],
+      "planDigest": "2cb38c3efe098f069e8389ccd917be5d8a4a17e4befaa35cdac79b8a0a6d01fa",
+      "planFile": "plans/2cb38c3efe098f069e8389ccd917be5d8a4a17e4befaa35cdac79b8a0a6d01fa.json",
+      "planFileSha256": "e391436bda136c854ef166fc6c0d8de9f9139811238175f3583634c07dee9681",
+      "sourceDigest": "1e87f369e9d92bda725de52c92cccbaf69aef3765c7bf3a71805a8a0b3ef7dd0",
+      "actualColumns": [
+        "id",
+        "owner",
+        "amount",
+        "summary"
+      ],
+      "actualRows": [
+        [
+          "a",
+          "Ada",
+          100000,
+          9
+        ],
+        [
+          "b",
+          "Bj\u00f8rn",
+          40000,
+          null
+        ],
+        [
+          "c",
+          "\u674e",
+          100001,
+          null
+        ]
+      ],
+      "futureDefaultValue": null,
+      "passed": true
+    },
+    {
+      "domain": "integer",
+      "textExpression": "concat",
+      "nativeConstraint": "none",
+      "boundExcess": false,
+      "emptyTable": false,
+      "allPopulated": false,
+      "literalWrapper": "integerToken",
+      "literalToken": "99999",
+      "decimalInvalidMode": "rounding",
+      "enumRejection": false,
+      "appended": true,
+      "invalid": true,
+      "ambientOperatorGuard": null,
+      "injectedNonfiniteGuard": null,
+      "unknownCommitAfterRealPhase": [],
+      "explicitNullAfterDefaultSqlstate": null,
+      "failure": "CatalogError",
+      "publicFailurePrivacy": true,
+      "nativeStates": [
+        "22003"
+      ],
+      "nativeDispatches": 1,
+      "nativeAffectedCounts": [],
+      "planDigest": "bea628799100cf875795e111bda0967e0edca7e4c04a5739fd422bd4bc76787c",
+      "planFile": "plans/bea628799100cf875795e111bda0967e0edca7e4c04a5739fd422bd4bc76787c.json",
+      "planFileSha256": "e3008c7a36df1d3a35300b90b26b4f3c443f453c26640cf439d9ec78552eff51",
+      "sourceDigest": "1e87f369e9d92bda725de52c92cccbaf69aef3765c7bf3a71805a8a0b3ef7dd0",
+      "actualColumns": [
+        "id",
+        "owner",
+        "amount"
+      ],
+      "actualRows": [
+        [
+          "a",
+          "Ada",
+          100000
+        ],
+        [
+          "b",
+          "Bj\u00f8rn",
+          40000
+        ],
+        [
+          "c",
+          "\u674e",
+          100001
+        ]
+      ],
+      "futureDefaultValue": null,
+      "passed": true
+    }
+  ],
+  "cleanup": "all created isolated databases and roles removed"
+}

@@ -1,0 +1,20 @@
+{
+  "profile": "umf.combined-qualification-owner-adoption/1",
+  "sourceCommit": "45b41b42db2bea6895ea7adda6afba8b6e91825d",
+  "sourceReview": "b2e2fc482e0788d599d9b7182863c3bf48430d9e8f65c2b1874832d757867fd7",
+  "proposalReview": "2da0b92908db2eb5c5fc3f7f444454c9879913458406eb75d13b10ffa66fc22a",
+  "workflowSha256": "ea1ea7aa21869d0091be3e48abcc2ec351318f9643dcde0caa5820761883874d",
+  "pinCount": 79,
+  "pinsSha256": "517c4f52272649f157d6a765100d23bf687d2e685c25b672da066632d9efe118",
+  "triggerPreimages": {
+    "python.yml": "6edc7850aea1436fe97c2d9da2a3c991775bae125b332b0b0d727f40d51dfa45",
+    "sql-containment.yml": "6a16dafda6cbff23e9f97fa3129fe93f7dfe5af9ee3d76d4a5ca5f49b0a2c1c2",
+    "actions.yml": "6f669edb2b5299de7d82af035f275743900203968f7660cdebda7b48034f6c8d",
+    "rust-core.yml": "674bba1b367d6db480baf99d1cdb6b4aab62fd571ea6f8cd03d6db8f62421fdf",
+    "rust-spike.yml": "4a74043265f3aa9a6409700f72af8fa38970db33f9790b659c541ed725b7b6bd",
+    "access-boundaries.yml": "59e4e5c7fec121eb8ad479b0f4ec20d1fd91027e8b90349ac527757241247d66"
+  },
+  "dataflow": "public repository and locked public dependencies on isolated hosted Ubuntu; loopback browser; bounded public logs/source receipts only",
+  "scope": "portable/typecheck/R2 Bun+Chromium only; no Python/native/DB/Rust/public release qualification",
+  "status": "ADOPTED_SOURCE_UNRUN"
+}

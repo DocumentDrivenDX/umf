@@ -1,0 +1,41 @@
+{
+  "child": {
+    "elapsedMs": 768,
+    "exitCode": 1,
+    "logPaths": [
+      "logs/outer.stdout.log",
+      "logs/outer.stderr.log"
+    ],
+    "stderrBytes": 180,
+    "stderrCaptureExit": 0,
+    "stderrSha256": "d5f8d95239b294480d88627eae3d6d8cbdaf992b75594a3a8274852a55f89f2e",
+    "stdoutBytes": 0,
+    "stdoutCaptureExit": 0,
+    "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "timedOut": false
+  },
+  "clientContainerId": "4ca913444648426349369c51ab7c00253746ef86f517d841db560da876da2781",
+  "elapsedMsIncludingOwnedPostgres": 3782,
+  "flags": [
+    "--single-threaded"
+  ],
+  "mode": "default",
+  "postgresCleanupSucceeded": true,
+  "postgresContainerId": "a268649d63c4e57d8b4765dd4420fc78c821552ada570455a24067e50d33bb39",
+  "reason": "report-missing",
+  "reportPath": "trials/01-default/report.json",
+  "resourceLimits": {
+    "client": {
+      "cpus": 8,
+      "memoryBytes": 8589934592,
+      "pidsLimit": 4096
+    },
+    "postgres": {
+      "cpus": 2,
+      "memoryBytes": 2147483648,
+      "pidsLimit": 1024
+    }
+  },
+  "sequence": "01-default",
+  "status": "unknown"
+}

@@ -1,0 +1,400 @@
+﻿2026-10-27T20:13:50.9214423Z Current runner version: '2.338.0'
+2026-10-27T20:13:50.9252081Z ##[group]Runner Image Provisioner
+2026-10-27T20:13:50.9253772Z Hosted Compute Agent
+2026-10-27T20:13:50.9254745Z Version: 20261021.618
+2026-10-27T20:13:50.9255693Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-10-27T20:13:50.9256957Z Build Date: 2026-10-21T00:45:21Z
+2026-10-27T20:13:50.9258072Z Worker ID: {a3a0e1c8-cb18-40ee-a739-ce1d7a9a36ff}
+2026-10-27T20:13:50.9259382Z Region: eastus2
+2026-10-27T20:13:50.9260288Z Cloud: Azure
+2026-10-27T20:13:50.9261120Z ##[endgroup]
+2026-10-27T20:13:50.9263454Z ##[group]Operating System
+2026-10-27T20:13:50.9264702Z Ubuntu
+2026-10-27T20:13:50.9265660Z 26.04.1
+2026-10-27T20:13:50.9266473Z LTS
+2026-10-27T20:13:50.9267265Z ##[endgroup]
+2026-10-27T20:13:50.9268227Z ##[group]Runner Image
+2026-10-27T20:13:50.9269238Z Image: ubuntu-26.04
+2026-10-27T20:13:50.9270077Z Version: 20261025.179.1
+2026-10-27T20:13:50.9272203Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261025.179/images/ubuntu/Ubuntu2604-Readme.md
+2026-10-27T20:13:50.9275031Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261025.179
+2026-10-27T20:13:50.9276715Z ##[endgroup]
+2026-10-27T20:13:50.9278538Z ##[group]GITHUB_TOKEN Permissions
+2026-10-27T20:13:50.9281628Z Contents: read
+2026-10-27T20:13:50.9282516Z Metadata: read
+2026-10-27T20:13:50.9285582Z ##[endgroup]
+2026-10-27T20:13:50.9289226Z Secret source: Actions
+2026-10-27T20:13:50.9290826Z Cache mode: write
+2026-10-27T20:13:50.9292472Z Prepare workflow directory
+2026-10-27T20:13:50.9778141Z Prepare all required actions
+2026-10-27T20:13:50.9850643Z Getting action download info
+2026-10-27T20:13:51.2107392Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-27T20:13:51.3730298Z Download action repository 'oven-sh/setup-bun@v2' (SHA:0c5077e51419868618aeaa5fe8019c62421857d6)
+2026-10-27T20:13:51.5667588Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-10-27T20:13:51.7492718Z Complete job name: boundaries
+2026-10-27T20:13:51.8365831Z ##[group]Run actions/checkout@v4
+2026-10-27T20:13:51.8366658Z with:
+2026-10-27T20:13:51.8367117Z   repository: DocumentDrivenDX/umf
+2026-10-27T20:13:51.8371458Z   token: ***
+2026-10-27T20:13:51.8372006Z   ssh-strict: true
+2026-10-27T20:13:51.8372445Z   ssh-user: git
+2026-10-27T20:13:51.8372895Z   persist-credentials: true
+2026-10-27T20:13:51.8373384Z   clean: true
+2026-10-27T20:13:51.8373955Z   sparse-checkout-cone-mode: true
+2026-10-27T20:13:51.8374483Z   fetch-depth: 1
+2026-10-27T20:13:51.8374920Z   fetch-tags: false
+2026-10-27T20:13:51.8375356Z   show-progress: true
+2026-10-27T20:13:51.8375797Z   lfs: false
+2026-10-27T20:13:51.8376212Z   submodules: false
+2026-10-27T20:13:51.8376657Z   set-safe-directory: true
+2026-10-27T20:13:51.8377157Z   allow-unsafe-pr-checkout: false
+2026-10-27T20:13:51.8377859Z ##[endgroup]
+2026-10-27T20:13:52.4288081Z Syncing repository: DocumentDrivenDX/umf
+2026-10-27T20:13:52.4291546Z ##[group]Getting Git version info
+2026-10-27T20:13:52.4292956Z Working directory is '/home/runner/work/umf/umf'
+2026-10-27T20:13:52.4295098Z [command]/usr/bin/git version
+2026-10-27T20:13:52.4296215Z git version 2.56.0
+2026-10-27T20:13:52.4309159Z ##[endgroup]
+2026-10-27T20:13:52.4329524Z Temporarily overriding HOME='/home/runner/work/_temp/e0c297ea-21c0-4d80-bb71-fe6b19d49428' before making global git config changes
+2026-10-27T20:13:52.4332707Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-27T20:13:52.4335725Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf
+2026-10-27T20:13:52.4625657Z Deleting the contents of '/home/runner/work/umf/umf'
+2026-10-27T20:13:52.4629542Z ##[group]Initializing the repository
+2026-10-27T20:13:52.4636434Z [command]/usr/bin/git init /home/runner/work/umf/umf
+2026-10-27T20:13:52.4751353Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-27T20:13:52.4753273Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-27T20:13:52.4755309Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-27T20:13:52.4756443Z hint: call:
+2026-10-27T20:13:52.4757180Z hint:
+2026-10-27T20:13:52.4758084Z hint: 	git config --global init.defaultBranch <name>
+2026-10-27T20:13:52.4759035Z hint:
+2026-10-27T20:13:52.4760013Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-27T20:13:52.4761335Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-27T20:13:52.4762382Z hint:
+2026-10-27T20:13:52.4763135Z hint: 	git branch -m <name>
+2026-10-27T20:13:52.4768273Z hint:
+2026-10-27T20:13:52.4769252Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-27T20:13:52.4771053Z Initialized empty Git repository in /home/runner/work/umf/umf/.git/
+2026-10-27T20:13:52.4788135Z [command]/usr/bin/git remote add origin https://github.com/DocumentDrivenDX/umf
+2026-10-27T20:13:52.4839529Z ##[endgroup]
+2026-10-27T20:13:52.4841148Z ##[group]Disabling automatic garbage collection
+2026-10-27T20:13:52.4842561Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-27T20:13:52.4881472Z ##[endgroup]
+2026-10-27T20:13:52.4882863Z ##[group]Setting up auth
+2026-10-27T20:13:52.4889184Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T20:13:52.4942876Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-27T20:13:52.5698140Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T20:13:52.5735745Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-27T20:13:52.6069765Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T20:13:52.6113273Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-27T20:13:52.6427191Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-27T20:13:52.6664226Z ##[endgroup]
+2026-10-27T20:13:52.6665428Z ##[group]Fetching the repository
+2026-10-27T20:13:52.6675543Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +469f4aff13aba39de48631711114be7a3f56cbf5:refs/remotes/pull/48/merge
+2026-10-27T20:14:15.5805966Z From https://github.com/DocumentDrivenDX/umf
+2026-10-27T20:14:15.5806959Z  * [new ref]           469f4aff13aba39de48631711114be7a3f56cbf5 -> pull/48/merge
+2026-10-27T20:14:15.5811888Z ##[endgroup]
+2026-10-27T20:14:15.5812863Z ##[group]Determining the checkout info
+2026-10-27T20:14:15.5815545Z ##[endgroup]
+2026-10-27T20:14:15.5823249Z [command]/usr/bin/git sparse-checkout disable
+2026-10-27T20:14:15.5877217Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-27T20:14:15.5910964Z ##[group]Checking out the ref
+2026-10-27T20:14:15.5914522Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/48/merge
+2026-10-27T20:14:16.8730162Z Updating files:   5% (3593/63964)
+2026-10-27T20:14:17.0128993Z Updating files:   6% (3838/63964)
+2026-10-27T20:14:17.3569781Z Updating files:   7% (4478/63964)
+2026-10-27T20:14:17.4325745Z Updating files:   8% (5118/63964)
+2026-10-27T20:14:17.4729869Z Updating files:   9% (5757/63964)
+2026-10-27T20:14:17.6613343Z Updating files:  10% (6397/63964)
+2026-10-27T20:14:17.6646596Z Updating files:  10% (7026/63964)
+2026-10-27T20:14:17.7595575Z Updating files:  11% (7037/63964)
+2026-10-27T20:14:17.8558157Z Updating files:  12% (7676/63964)
+2026-10-27T20:14:17.9010738Z Updating files:  13% (8316/63964)
+2026-10-27T20:14:18.5195732Z Updating files:  14% (8955/63964)
+2026-10-27T20:14:18.7252154Z Updating files:  15% (9595/63964)
+2026-10-27T20:14:19.2062053Z Updating files:  15% (9772/63964)
+2026-10-27T20:14:19.5194691Z Updating files:  16% (10235/63964)
+2026-10-27T20:14:19.5551325Z Updating files:  17% (10874/63964)
+2026-10-27T20:14:19.6688423Z Updating files:  18% (11514/63964)
+2026-10-27T20:14:20.0514154Z Updating files:  18% (11823/63964)
+2026-10-27T20:14:20.2138095Z Updating files:  19% (12154/63964)
+2026-10-27T20:14:20.5266656Z Updating files:  20% (12793/63964)
+2026-10-27T20:14:20.6513969Z Updating files:  21% (13433/63964)
+2026-10-27T20:14:20.8128934Z Updating files:  21% (13491/63964)
+2026-10-27T20:14:20.8484364Z Updating files:  22% (14073/63964)
+2026-10-27T20:14:20.8836698Z Updating files:  23% (14712/63964)
+2026-10-27T20:14:20.9123063Z Updating files:  24% (15352/63964)
+2026-10-27T20:14:20.9416818Z Updating files:  25% (15991/63964)
+2026-10-27T20:14:20.9728001Z Updating files:  26% (16631/63964)
+2026-10-27T20:14:21.0025291Z Updating files:  27% (17271/63964)
+2026-10-27T20:14:21.0334451Z Updating files:  28% (17910/63964)
+2026-10-27T20:14:21.0642043Z Updating files:  29% (18550/63964)
+2026-10-27T20:14:21.1024702Z Updating files:  30% (19190/63964)
+2026-10-27T20:14:21.1577946Z Updating files:  31% (19829/63964)
+2026-10-27T20:14:21.1877638Z Updating files:  32% (20469/63964)
+2026-10-27T20:14:21.6518163Z Updating files:  33% (21109/63964)
+2026-10-27T20:14:21.7516978Z Updating files:  33% (21739/63964)
+2026-10-27T20:14:22.7003138Z Updating files:  34% (21748/63964)
+2026-10-27T20:14:23.6538548Z Updating files:  34% (21815/63964)
+2026-10-27T20:14:24.7274699Z Updating files:  34% (21878/63964)
+2026-10-27T20:14:25.6506265Z Updating files:  34% (21964/63964)
+2026-10-27T20:14:25.6658933Z Updating files:  34% (22282/63964)
+2026-10-27T20:14:25.8325118Z Updating files:  35% (22388/63964)
+2026-10-27T20:14:25.9783183Z Updating files:  36% (23028/63964)
+2026-10-27T20:14:26.0233821Z Updating files:  37% (23667/63964)
+2026-10-27T20:14:26.0598474Z Updating files:  38% (24307/63964)
+2026-10-27T20:14:26.0945952Z Updating files:  39% (24946/63964)
+2026-10-27T20:14:26.1246432Z Updating files:  40% (25586/63964)
+2026-10-27T20:14:26.1535840Z Updating files:  41% (26226/63964)
+2026-10-27T20:14:26.1821901Z Updating files:  42% (26865/63964)
+2026-10-27T20:14:26.2127380Z Updating files:  43% (27505/63964)
+2026-10-27T20:14:26.4452561Z Updating files:  44% (28145/63964)
+2026-10-27T20:14:26.5683292Z Updating files:  45% (28784/63964)
+2026-10-27T20:14:26.6244826Z Updating files:  46% (29424/63964)
+2026-10-27T20:14:26.6516558Z Updating files:  47% (30064/63964)
+2026-10-27T20:14:26.7392693Z Updating files:  47% (30102/63964)
+2026-10-27T20:14:26.7773971Z Updating files:  48% (30703/63964)
+2026-10-27T20:14:26.8857260Z Updating files:  49% (31343/63964)
+2026-10-27T20:14:27.1035624Z Updating files:  50% (31982/63964)
+2026-10-27T20:14:27.1870184Z Updating files:  51% (32622/63964)
+2026-10-27T20:14:27.2209243Z Updating files:  52% (33262/63964)
+2026-10-27T20:14:27.2887617Z Updating files:  53% (33901/63964)
+2026-10-27T20:14:27.3137704Z Updating files:  54% (34541/63964)
+2026-10-27T20:14:27.3367007Z Updating files:  55% (35181/63964)
+2026-10-27T20:14:27.3692517Z Updating files:  56% (35820/63964)
+2026-10-27T20:14:27.4295929Z Updating files:  57% (36460/63964)
+2026-10-27T20:14:27.4754919Z Updating files:  58% (37100/63964)
+2026-10-27T20:14:27.5141781Z Updating files:  59% (37739/63964)
+2026-10-27T20:14:27.5678143Z Updating files:  60% (38379/63964)
+2026-10-27T20:14:27.6155712Z Updating files:  61% (39019/63964)
+2026-10-27T20:14:27.6534159Z Updating files:  62% (39658/63964)
+2026-10-27T20:14:27.6705098Z Updating files:  62% (39997/63964)
+2026-10-27T20:14:27.6971575Z Updating files:  63% (40298/63964)
+2026-10-27T20:14:27.7212156Z Updating files:  64% (40937/63964)
+2026-10-27T20:14:27.7428306Z Updating files:  65% (41577/63964)
+2026-10-27T20:14:27.7686066Z Updating files:  66% (42217/63964)
+2026-10-27T20:14:27.8010588Z Updating files:  67% (42856/63964)
+2026-10-27T20:14:27.8399226Z Updating files:  68% (43496/63964)
+2026-10-27T20:14:27.8820099Z Updating files:  69% (44136/63964)
+2026-10-27T20:14:27.9403477Z Updating files:  70% (44775/63964)
+2026-10-27T20:14:27.9686082Z Updating files:  71% (45415/63964)
+2026-10-27T20:14:27.9905456Z Updating files:  72% (46055/63964)
+2026-10-27T20:14:28.0156229Z Updating files:  73% (46694/63964)
+2026-10-27T20:14:28.0371294Z Updating files:  74% (47334/63964)
+2026-10-27T20:14:28.0584116Z Updating files:  75% (47973/63964)
+2026-10-27T20:14:28.0804668Z Updating files:  76% (48613/63964)
+2026-10-27T20:14:28.1068887Z Updating files:  77% (49253/63964)
+2026-10-27T20:14:28.1285161Z Updating files:  78% (49892/63964)
+2026-10-27T20:14:28.1504807Z Updating files:  79% (50532/63964)
+2026-10-27T20:14:28.1757110Z Updating files:  80% (51172/63964)
+2026-10-27T20:14:28.2389962Z Updating files:  81% (51811/63964)
+2026-10-27T20:14:28.3131428Z Updating files:  82% (52451/63964)
+2026-10-27T20:14:28.3959786Z Updating files:  83% (53091/63964)
+2026-10-27T20:14:28.4438719Z Updating files:  84% (53730/63964)
+2026-10-27T20:14:28.4728003Z Updating files:  85% (54370/63964)
+2026-10-27T20:14:28.4976540Z Updating files:  86% (55010/63964)
+2026-10-27T20:14:28.5224774Z Updating files:  87% (55649/63964)
+2026-10-27T20:14:28.5964432Z Updating files:  88% (56289/63964)
+2026-10-27T20:14:28.6285112Z Updating files:  89% (56928/63964)
+2026-10-27T20:14:28.6505337Z Updating files:  90% (57568/63964)
+2026-10-27T20:14:28.6517041Z Updating files:  90% (58174/63964)
+2026-10-27T20:14:28.6816071Z Updating files:  91% (58208/63964)
+2026-10-27T20:14:28.7347261Z Updating files:  92% (58847/63964)
+2026-10-27T20:14:28.7694550Z Updating files:  93% (59487/63964)
+2026-10-27T20:14:28.8038628Z Updating files:  94% (60127/63964)
+2026-10-27T20:14:28.9456625Z Updating files:  95% (60766/63964)
+2026-10-27T20:14:28.9967584Z Updating files:  96% (61406/63964)
+2026-10-27T20:14:29.0436562Z Updating files:  97% (62046/63964)
+2026-10-27T20:14:29.0808550Z Updating files:  98% (62685/63964)
+2026-10-27T20:14:29.1356336Z Updating files:  99% (63325/63964)
+2026-10-27T20:14:29.1357190Z Updating files: 100% (63964/63964)
+2026-10-27T20:14:29.1357804Z Updating files: 100% (63964/63964), done.
+2026-10-27T20:14:29.2090539Z Note: switching to 'refs/remotes/pull/48/merge'.
+2026-10-27T20:14:29.2090941Z 
+2026-10-27T20:14:29.2091302Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-27T20:14:29.2091837Z changes and commit them, and you can discard any commits you make in this
+2026-10-27T20:14:29.2092319Z state without impacting any branches by switching back to a branch.
+2026-10-27T20:14:29.2092603Z 
+2026-10-27T20:14:29.2092791Z If you want to create a new branch to retain commits you create, you may
+2026-10-27T20:14:29.2093248Z do so (now or later) by using -c with the switch command. Example:
+2026-10-27T20:14:29.2093716Z 
+2026-10-27T20:14:29.2093880Z   git switch -c <new-branch-name>
+2026-10-27T20:14:29.2094047Z 
+2026-10-27T20:14:29.2094157Z Or undo this operation with:
+2026-10-27T20:14:29.2094317Z 
+2026-10-27T20:14:29.2094417Z   git switch -
+2026-10-27T20:14:29.2094592Z 
+2026-10-27T20:14:29.2094814Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-27T20:14:29.2095120Z 
+2026-10-27T20:14:29.2095457Z HEAD is now at 469f4aff Merge 3217304eca8652fa6cd02afde8ead1ca95224aa8 into 7d334dec45948953718bfacd3ed6dd199cadba79
+2026-10-27T20:14:29.2345735Z ##[endgroup]
+2026-10-27T20:14:29.2405992Z [command]/usr/bin/git log -1 --format=%H
+2026-10-27T20:14:29.2439089Z 469f4aff13aba39de48631711114be7a3f56cbf5
+2026-10-27T20:14:29.2738858Z ##[group]Run oven-sh/setup-bun@v2
+2026-10-27T20:14:29.2739155Z with:
+2026-10-27T20:14:29.2739375Z   bun-version: 1.4.2
+2026-10-27T20:14:29.2739606Z   no-cache: false
+2026-10-27T20:14:29.2742314Z   token: ***
+2026-10-27T20:14:29.2742536Z ##[endgroup]
+2026-10-27T20:14:29.5528359Z Cache hit for: bun-gmoqYqdUbaYsI0KujeXt7Zg/p0I=
+2026-10-27T20:14:29.8565437Z Received 35684137 of 35684137 (100.0%), 135.0 MBs/sec
+2026-10-27T20:14:29.8566357Z Cache Size: ~34 MB (35684137 B)
+2026-10-27T20:14:29.8598923Z [command]/usr/bin/tar -xf /home/runner/work/_temp/023bf281-0e87-44fe-a301-a9990d6ced64/cache.tzst -P -C /home/runner/work/umf/umf --use-compress-program unzstd
+2026-10-27T20:14:30.0865410Z Cache restored successfully
+2026-10-27T20:14:30.0891042Z [command]/home/runner/.bun/bin/bun --revision
+2026-10-27T20:14:30.0964208Z 1.4.2+744846f84
+2026-10-27T20:14:30.0971646Z Using a cached version of Bun: 1.4.2+744846f84
+2026-10-27T20:14:30.1221294Z ##[group]Run actions/setup-python@v5
+2026-10-27T20:14:30.1221596Z with:
+2026-10-27T20:14:30.1221822Z   python-version: 3.12
+2026-10-27T20:14:30.1222068Z   check-latest: false
+2026-10-27T20:14:30.1224986Z   token: ***
+2026-10-27T20:14:30.1225227Z   update-environment: true
+2026-10-27T20:14:30.1225490Z   allow-prereleases: false
+2026-10-27T20:14:30.1225745Z   freethreaded: false
+2026-10-27T20:14:30.1225974Z ##[endgroup]
+2026-10-27T20:14:30.2623429Z ##[group]Installed versions
+2026-10-27T20:14:30.2728496Z (node:2393) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-27T20:14:30.2729260Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-27T20:14:30.2730148Z Successfully set up CPython (3.12.15)
+2026-10-27T20:14:30.2730856Z ##[endgroup]
+2026-10-27T20:14:30.2938546Z ##[group]Run bun install --frozen-lockfile
+2026-10-27T20:14:30.2939009Z [36;1mbun install --frozen-lockfile[0m
+2026-10-27T20:14:30.3045206Z shell: /usr/bin/bash -e {0}
+2026-10-27T20:14:30.3045520Z env:
+2026-10-27T20:14:30.3045829Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:14:30.3046297Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T20:14:30.3046749Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:14:30.3047133Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:14:30.3047522Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:14:30.3048010Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T20:14:30.3048599Z ##[endgroup]
+2026-10-27T20:14:30.3187854Z bun install v1.4.2 (744846f84)
+2026-10-27T20:14:30.3209744Z Resolving dependencies
+2026-10-27T20:14:30.3232381Z Resolved, downloaded and extracted [1]
+2026-10-27T20:14:31.4303128Z 
+2026-10-27T20:14:31.4303374Z + @dagrejs/dagre@3.1.1
+2026-10-27T20:14:31.4303938Z + @documentdrivendx/umf-schema-browser@2.0.0
+2026-10-27T20:14:31.4304279Z + @launchql/protobufjs@7.2.6
+2026-10-27T20:14:31.4304548Z + @types/bun@1.4.2
+2026-10-27T20:14:31.4304775Z + @types/n3@1.26.4
+2026-10-27T20:14:31.4304999Z + hyparquet@1.31.1
+2026-10-27T20:14:31.4305215Z + playwright@1.63.0
+2026-10-27T20:14:31.4305463Z + rdfxml-streaming-parser@3.3.0
+2026-10-27T20:14:31.4305737Z + typescript@7.0.2
+2026-10-27T20:14:31.4305968Z + typescript-api@5.9.3
+2026-10-27T20:14:31.4306212Z + @bufbuild/protobuf@2.15.0
+2026-10-27T20:14:31.4306474Z + @libpg-query/parser@17.6.10
+2026-10-27T20:14:31.4306733Z + @typespec/compiler@1.16.0
+2026-10-27T20:14:31.4306992Z + @typespec/emitter-framework@0.21.0
+2026-10-27T20:14:31.4307301Z + @typespec/events@0.86.0
+2026-10-27T20:14:31.4307544Z + @typespec/graphql@0.3.0
+2026-10-27T20:14:31.4307777Z + @typespec/http@1.16.0
+2026-10-27T20:14:31.4308018Z + @typespec/json-schema@1.16.0
+2026-10-27T20:14:31.4308295Z + @typespec/mutator-framework@0.17.1
+2026-10-27T20:14:31.4308574Z + @typespec/openapi@1.16.0
+2026-10-27T20:14:31.4308815Z + @typespec/openapi3@1.16.0
+2026-10-27T20:14:31.4309055Z + @typespec/protobuf@0.86.0
+2026-10-27T20:14:31.4309309Z + @typespec/rest@0.86.0
+2026-10-27T20:14:31.4309537Z + @typespec/sse@0.86.0
+2026-10-27T20:14:31.4309780Z + @typespec/streams@0.86.0
+2026-10-27T20:14:31.4310028Z + @typespec/versioning@0.86.0
+2026-10-27T20:14:31.4310276Z + ajv@8.20.0
+2026-10-27T20:14:31.4310506Z + ajv-draft-04@1.0.0
+2026-10-27T20:14:31.4310738Z + apache-arrow@21.2.0
+2026-10-27T20:14:31.4310960Z + avsc@5.7.9
+2026-10-27T20:14:31.4311163Z + buffer@6.0.3
+2026-10-27T20:14:31.4311379Z + flatbuffers@25.9.23
+2026-10-27T20:14:31.4311615Z + graphql@17.0.2
+2026-10-27T20:14:31.4312116Z + jsonld@9.0.0
+2026-10-27T20:14:31.4312344Z + n3@2.7.12
+2026-10-27T20:14:31.4312550Z + rdf-literal@2.0.0
+2026-10-27T20:14:31.4312779Z + rdf-validate-shacl@0.6.5
+2026-10-27T20:14:31.4313014Z + util@0.12.5
+2026-10-27T20:14:31.4313214Z + yaml@2.9.1
+2026-10-27T20:14:31.4313334Z 
+2026-10-27T20:14:31.4313454Z 234 packages installed [1112.00ms]
+2026-10-27T20:14:31.4432128Z ##[group]Run bun run test:access-boundaries
+2026-10-27T20:14:31.4432670Z [36;1mbun run test:access-boundaries[0m
+2026-10-27T20:14:31.4473978Z shell: /usr/bin/bash -e {0}
+2026-10-27T20:14:31.4474253Z env:
+2026-10-27T20:14:31.4474546Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:14:31.4475010Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T20:14:31.4475460Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:14:31.4475851Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:14:31.4476239Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:14:31.4476644Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T20:14:31.4476980Z ##[endgroup]
+2026-10-27T20:14:31.4584972Z $ bun test tests/compilation/boundaries.test.ts
+2026-10-27T20:14:31.4619432Z bun test v1.4.2 (744846f84)
+2026-10-27T20:14:31.4672852Z 
+2026-10-27T20:14:31.4674032Z ##[group]tests/compilation/boundaries.test.ts:
+2026-10-27T20:14:31.9235967Z (pass) actual compilation boundary checker > allows public IR dependency [451.21ms]
+2026-10-27T20:14:32.2930636Z (pass) actual compilation boundary checker > rejects forbidden direction and private reach-through [369.45ms]
+2026-10-27T20:14:35.2151593Z (pass) actual compilation boundary checker > admits only the exact private erased AccountingContext leaf in bundle hash [2922.04ms]
+2026-10-27T20:14:36.3270850Z (pass) actual compilation boundary checker > rejects host imports, globals, dynamic loading and unresolved imports [1111.91ms]
+2026-10-27T20:14:36.5140945Z (pass) actual compilation boundary checker > rejects cycles including re-exports [187.05ms]
+2026-10-27T20:14:36.8950205Z (pass) actual compilation boundary checker > IR external dependencies are type-only, including relative imports [380.91ms]
+2026-10-27T20:14:38.0615756Z (pass) actual compilation boundary checker > admits direct public semantic symbols through renamed and star re-exports [1166.45ms]
+2026-10-27T20:14:42.8246446Z (pass) actual compilation boundary checker > refuses private or same-named impostor symbols and leaf module loading [4763.09ms]
+2026-10-27T20:14:46.2300743Z (pass) actual compilation boundary checker > IR admits erased public type queries but refuses runtime use [3405.44ms]
+2026-10-27T20:14:49.0850204Z (pass) actual compilation boundary checker > Python metadata's generated marker seam admits no other generated or semantic APIs [2854.87ms]
+2026-10-27T20:14:50.0206200Z (pass) actual compilation boundary checker > rejects network and runtime code execution in portable modules [935.66ms]
+2026-10-27T20:14:51.2397436Z (pass) actual Python boundary checker > SQL containment separates pure admission from optional pinned parser and host I/O [1219.08ms]
+2026-10-27T20:14:51.3353201Z (pass) actual Python boundary checker > stdlib extensions pass and third-party imports refuse under python3 [95.55ms]
+2026-10-27T20:14:51.4492323Z (pass) actual Python boundary checker > stdlib extensions pass and third-party imports refuse under python3.14 [113.92ms]
+2026-10-27T20:14:51.4985103Z (pass) actual Python boundary checker > allows runtime to DSL public boundary [49.26ms]
+2026-10-27T20:14:51.6403173Z (pass) actual Python boundary checker > rejects drivers and Weft outside owned integrations [141.78ms]
+2026-10-27T20:14:51.7366970Z (pass) actual Python boundary checker > rejects private access and relative-import cycles [96.41ms]
+2026-10-27T20:14:51.9804582Z (pass) actual Python boundary checker > bulk exception is narrow; target cannot import generated packages or engines [243.77ms]
+2026-10-27T20:14:52.0769093Z (pass) actual Python boundary checker > rejects dynamic imports and malformed syntax [96.40ms]
+2026-10-27T20:14:52.4644283Z (pass) actual Python boundary checker > discovers src layout and rejects host I/O and dynamic import APIs [387.46ms]
+2026-10-27T20:14:52.5599629Z (pass) actual Python boundary checker > rejects empty scans and scans both source layouts [95.59ms]
+2026-10-27T20:14:52.7077966Z (pass) actual Python boundary checker > named runtime foundations have explicit ownership; arbitrary helpers refuse [147.71ms]
+2026-10-27T20:14:53.0907479Z (pass) actual Python boundary checker > lifecycle administration owns only its public compiler verifier and native exception imports [383.02ms]
+2026-10-27T20:14:53.5251058Z (pass) actual Python boundary checker > ordinary head observations cannot import migration authority or general Psycopg2 APIs [434.33ms]
+2026-10-27T20:14:53.8652901Z (pass) actual Python boundary checker > declared native reads own only the prepared Weft module entry point [340.17ms]
+2026-10-27T20:14:55.5482542Z (pass) local command and installed pre-commit hook reject real violations [1682.98ms]
+2026-10-27T20:14:55.5483096Z 
+2026-10-27T20:14:55.5483766Z ##[endgroup]
+2026-10-27T20:14:55.5483981Z 
+2026-10-27T20:14:55.5484131Z  26 pass
+2026-10-27T20:14:55.5484424Z  0 fail
+2026-10-27T20:14:55.5484723Z  195 expect() calls
+2026-10-27T20:14:55.5485131Z Ran 26 tests across 1 file. [24.09s]
+2026-10-27T20:14:55.5547337Z ##[group]Run bun run check:access-boundaries
+2026-10-27T20:14:55.5547714Z [36;1mbun run check:access-boundaries[0m
+2026-10-27T20:14:55.5583481Z shell: /usr/bin/bash -e {0}
+2026-10-27T20:14:55.5583954Z env:
+2026-10-27T20:14:55.5584246Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:14:55.5584715Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-27T20:14:55.5585145Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:14:55.5585557Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:14:55.5585961Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-27T20:14:55.5586354Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-27T20:14:55.5586685Z ##[endgroup]
+2026-10-27T20:14:55.5682505Z $ bun scripts/check-compilation-boundaries.ts && python3 scripts/check-access-python-boundaries.py
+2026-10-27T20:14:59.2166652Z compilation boundaries: 9 files, 0 violations
+2026-10-27T20:15:04.8439791Z python/umf_access/src/umf_access/lifecycle/ingress_custody.py: CYCLE dependency cycle
+2026-10-27T20:15:04.8440945Z python/umf_access/src/umf_access/lifecycle/ingress_local_postgres.py: CYCLE dependency cycle
+2026-10-27T20:15:04.8442466Z python/umf_access/src/umf_access/lifecycle/ingress_local_postgres.py: PRIVATE administration uses only the original public verifier and native exception boundary
+2026-10-27T20:15:04.8443853Z scan roots: python/umf_access, python/umf_access/src/umf_access
+2026-10-27T20:15:04.8444468Z access Python boundaries: 112 modules, 5 violations
+2026-10-27T20:15:04.8549665Z error: script "check:access-boundaries" exited with code 1
+2026-10-27T20:15:04.8571604Z ##[error]Process completed with exit code 1.
+2026-10-27T20:15:04.8696774Z Post job cleanup.
+2026-10-27T20:15:04.9629546Z [command]/usr/bin/git version
+2026-10-27T20:15:04.9681073Z git version 2.56.0
+2026-10-27T20:15:04.9724366Z Temporarily overriding HOME='/home/runner/work/_temp/228c49a1-1ee1-44e7-90b9-fefbac71bebf' before making global git config changes
+2026-10-27T20:15:04.9725760Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-27T20:15:04.9730632Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf
+2026-10-27T20:15:04.9781101Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T20:15:04.9828296Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-27T20:15:05.0315186Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T20:15:05.0351278Z http.https://github.com/.extraheader
+2026-10-27T20:15:05.0365834Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-27T20:15:05.0418170Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-27T20:15:05.0879838Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T20:15:05.0934545Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-27T20:15:05.1696382Z Cleaning up orphan processes
+2026-10-27T20:15:05.2207365Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

@@ -1,0 +1,47 @@
+{
+  "status": "independent-native-five-case-gate-passed",
+  "cases": 5,
+  "checks": 78,
+  "postgresVersionNum": "180006",
+  "startedAt": "2026-10-24T02:39:29.297890+00:00",
+  "completedAt": "2026-10-24T02:49:48.991396+00:00",
+  "runnerSha256": "ad2e7f74ef4c4a606aa0e8a83610e7e2e035e2c466a744fa0699489fd4f9bdee",
+  "fixtureSha256": "91a419debb54378a60982480259c48e02860695229ef8eed748a25758f8426fb",
+  "nativeReportSha256": "263dd7b76d95e31be0a154dce4ec59d9f3561360082508dd31012ea254d5e5e3",
+  "postRunOriginalPayloadsVerified": 431,
+  "wheels": 12,
+  "noRemainingOwnedDatabasesOrRoles": true,
+  "scope": "Independent installed candidate012 local macOS27 arm64 CPython3.11.17 PostgreSQL18.6 replay. Four successful date/instant/UUID/boolean cases with retained ordinary creates and one matched-NULL date rollback/fence case. Baseline and post-run independent queries cover owned g02t_ databases and g02_t roles; full server settings/inventory equality is separately in owner attempt005. Does not close final-source CI, shared four-cell mirror, release publication, managed Lakebase, or other G03\u2013G11 gaps.",
+  "members": [
+    {
+      "path": "execution.json",
+      "size": 1394,
+      "sha256": "81239345c4952ea823f6934adc4037ff39da73a23674f8f6cfb4afafcebdacad"
+    },
+    {
+      "path": "installed-audit-after.json",
+      "size": 2859,
+      "sha256": "dbc3189ba3693b893afbe6116d895d88ec063800b28fb46803411cd883b2a553"
+    },
+    {
+      "path": "launcher.py",
+      "size": 2585,
+      "sha256": "a4c416233c9284ee885f5193c2223d69dc5e1a2e997b8d13d73a7aefca61b132"
+    },
+    {
+      "path": "native-report.json",
+      "size": 6222,
+      "sha256": "263dd7b76d95e31be0a154dce4ec59d9f3561360082508dd31012ea254d5e5e3"
+    },
+    {
+      "path": "stderr.log",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "stdout.json",
+      "size": 5175,
+      "sha256": "4f4350620d20b03eaa39052fa3f01128a7ccc1dd282a6ac960c7b493ce2943c7"
+    }
+  ]
+}

@@ -131,6 +131,17 @@ describe('clean source generation',()=>{
   const snapshots=await Promise.all(files.map(async path=>({path,text:await readFile(join(dir,path),'utf8'),mtime:(await stat(join(dir,path))).mtimeMs})));
   expect((await run(true)).status).toBe(0);
   for(const file of snapshots){expect(await readFile(join(dir,file.path),'utf8')).toBe(file.text);expect((await stat(join(dir,file.path))).mtimeMs).toBe(file.mtime);}
+  const first=snapshots[0]!;
+  await writeFile(join(dir,first.path),first.text+'\n');expect((await run(true)).status).toBe(1);
+  await writeFile(join(dir,first.path),first.text);
+  await rm(join(dir,first.path));expect((await run(true)).status).toBe(1);
+  await writeFile(join(dir,first.path),first.text);
+  const companion=generatedManifest.separatelyOwned.accountedCompanion;
+  const companionBytes=await readFile(join(dir,companion.path));
+  await writeFile(join(dir,companion.path),Buffer.concat([companionBytes,Buffer.from('\n')]));
+  expect((await run(true)).status).toBe(1);
+  await writeFile(join(dir,companion.path),companionBytes);
+  expect((await run(true)).status).toBe(0);
   await writeFile(join(dir,'src/generated/unexpected.ts'),'export const surprise=true;');expect((await run(true)).status).toBe(1);
  },120_000);
 });

@@ -1,0 +1,899 @@
+--- /dev/null
++++ b/DECISION.md
+@@ -0,0 +1,13 @@
++# LOCAL_EMULATED_3600 D5 operator proposal
++
++This is a source-only proposal for one new local Linux emulation qualification run. It does not modify the UMF checkout, original proposal at `/private/tmp/migration-d5-local-linux`, the original workflow, or any D5 case/oracle implementation. No candidate, Docker container, test, Git command, or Actions workflow was run for this proposal.
++
++The adopted local operator resource policy raises only the whole-suite aggregate ceiling to 3,600 seconds. Its work clamp is 3,530 seconds, retaining the 60-second evidence reserve and 10-second kill grace. The 180-second per-command cap and all other scope and limits remain fixed: 30 ordered commands, 37 cases, 16 oracle groups, 19 no-default checks, three fault scenarios, 180 child bound, 1 MiB raw logs, 16 MiB evidence, and 2 MiB payload. Product/API budgets and production-host semantics are unchanged. The profile is explicitly `LOCAL_EMULATED_3600`, reports local diagnostic evidence, and carries the profile and operator-source hashes into the child qualification inputs, local result receipt, and outer Docker-context receipt.
++
++The three extracted source workflow steps are byte-identical to the original proposal and retain their frozen source hashes. The three local adapter steps change only aggregate deadline inputs, local profile/hash identity, and finalizer aggregate acceptance. The driver enforces the new profile, wraps the complete client-container run in a 3,600-second watchdog, and captures outer stdout/stderr separately with 128 KiB per-stream caps and full-stream digests; a truncation marker consumes space inside each cap and any truncation or capture failure returns nonzero. The 1 MiB raw-log budget is explicitly split into 768 KiB for child logs and 256 KiB for outer logs, then counted together. The physical selected-evidence receipt inventories the entire bounded regular child `d5/upload` tree, including replay custody, fixed evidence, all 30 command logs and the full 22-report roster. It rejects symlinks and special files, verifies exact route log names, and counts child logs once. It separately binds outer capture and streams, operator inputs, source workflow and attestations, plus the exact three-file release payload. Its `roots` map explicitly binds output, proposal operator/attestation, and pinned source roots. The receipt digest is bound by context, with the context's final byte count included in the receipt through a fixed-point closure; total selected bytes are rechecked against 16 MiB. The trap first proves the Docker daemon is reachable, removes only the uniquely named client container, PostgreSQL container, and private network, then verifies successful exact-name filtered listings are empty for those owned names. Daemon loss or any listing error leaves cleanup unverified and makes the driver fail.
++
++This proposal fixes both outer and child attempt identifiers at attempt 1 for a fresh `LOCAL_EMULATED_3600` profile run; it does not reuse attempt 2 from prior evidence.
++
++The earlier original-profile 1,800-second attempt at `/private/tmp/migration-d5-e4299aff8-002/` remains a failed/unqualified attempt. Its 37/19 coverage and fenced-resume evidence are preserved, while two fault rows remained unclosed as FAIL_OR_UNKNOWN and the final audit stayed unqualified; this is not a claim that the underlying fault semantics failed. This proposal does not reinterpret that result or stitch it into a new run. A future authorized fresh run must independently close all 37 cases and all three fault scenarios under this profile before it can support a `LOCAL_EMULATED_3600` semantic qualification claim. It cannot claim the original 1,800-second gate or hosted qualification.
++
++`unified.diff` contains focused diffs against the original operator proposal for the changed files. `frozen-source-hashes.json` records the original and proposed source roster and explicitly records the unchanged workflow-step hashes. `resource-profile.json` is the separately named policy object; its digest is pinned by `local-adapter-manifest.json` and included in receipts.
+--- a/README.md
++++ b/README.md
+@@ -9,12 +9,12 @@
+ - Workflow: `.github/workflows/access-boundaries.yml`, SHA-256 `f0963d2df1e371112ba6e57999dbf69290796d711eb97ed46637d4ebc63918a1`
+ - Client image: Ubuntu 24.04.5 amd64 guest, image digest `sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556`; expected Python 3.11.17, Bun 1.4.3, Node 26.12.1, Rust/Cargo 1.90.0.
+ - Disposable server image: PostgreSQL 18.6 arm64, digest `sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336`; the orchestrator checks full version text, `server_version=18.6`, and `server_version_num=180006`.
+-- Current-source 18-wheel cohort: **not attached**. `prepared-route.json` deliberately remains `PREPARED_WAITING_FOR_CURRENT_COHORT`; it rejects the older 6eca705a cohort.
++- Current-source 18-wheel cohort: bound in `prepared-route.json` as the verified 18-wheel cohort from `/private/tmp/migration-full18-e4299aff8-002/cells/linux-x86_64-py311`, lock SHA-256 `4337ab0597dcec245402abe73bcf8ea1d09bc72a4cb2907473c9e53d0327e611`. The route accepts only this exact cohort and rejects older 6eca705a bytes.
+ 
+ ## Local identity and execution boundary
+ 
+ The adapter changes only extracted `/private/tmp` copies of the workflow shell blocks. It replaces GitHub-only event/ref/run variables with `LOCAL_*` values, checks actual source commit/tree/cleanliness, and labels success `LOCAL_DIAGNOSTIC_PASS_...`. The source workflow remains unchanged. The Docker script also verifies that the mounted read-only source volume has the exact commit, tree, branch, clean status, and workflow hash before creating the new private network.
+ 
+-The client shares only the new PostgreSQL container's network namespace. The network is internal, no ports are published, source and cohort mounts are read-only, and D5 output is a fresh writable directory. The script removes only its uniquely named client, PostgreSQL container, and network, recording the observed cleanup outcomes. It does not address or stop the user's existing UMF containers.
++The client shares only the new PostgreSQL container's network namespace. The network is internal, no ports are published, source and cohort mounts are read-only, and D5 output is a fresh writable directory. The cleanup trap proves the Docker daemon is reachable, removes only the uniquely named client, PostgreSQL container, and private network, then verifies successful exact-name filtered listings are empty for those owned names.
+ 
+-The route retains the existing 30-command roster, 37 cases, 16 oracle groups, 19 no-default checks, and three fault scenarios. The existing limits remain 1,800 seconds aggregate, 180 seconds per child, 10 seconds TERM grace, 60 seconds evidence reserve, 1 MiB logs, and 16 MiB evidence. The orchestration script requires `D5_EXECUTE=1`, an exact current-source cohort, a named dedicated source Docker volume, and a fresh output directory. It has not been run.
++The route retains the existing 30-command roster, 37 cases, 16 oracle groups, 19 no-default checks, and three fault scenarios. The new `LOCAL_EMULATED_3600` profile uses a 3,600-second aggregate ceiling with a 3,530-second work clamp, 180 seconds per child, 10 seconds TERM grace, 60 seconds evidence reserve, 1 MiB combined raw logs (768 KiB child plus 256 KiB outer), and 16 MiB selected output metadata. It changes only this local operator policy; the original 1,800-second attempt remains FAIL_OR_UNKNOWN and unqualified. The selected-evidence receipt inventories the complete bounded regular `d5/upload` tree, checks the exact 30 child logs and 22 direct report files (16 oracle, three fault, no-default, and two resource reports), and separately binds the outer capture, operator inputs, source workflow, and three-file payload. Its `roots` map explicitly binds output, proposal operator/attestation, and pinned source roots. Symlinks or special files fail; total selected metadata including the final context and receipt is capped at 16 MiB. The orchestration script requires `D5_EXECUTE=1`, an exact current-source cohort, a named dedicated source Docker volume, and a fresh output directory. It has not been run.
+--- /dev/null
++++ b/capture_docker.py
+@@ -0,0 +1,112 @@
++#!/usr/bin/env python3
++"""Run one local Docker command with bounded, hash-recorded stdout/stderr custody."""
++import hashlib
++import json
++import os
++import selectors
++import signal
++import subprocess
++import sys
++import time
++from pathlib import Path
++
++if len(sys.argv) < 5 or sys.argv[4] != "--":
++    raise SystemExit("usage: capture_docker.py RECEIPT STDOUT_LOG STDERR_LOG -- COMMAND...")
++receipt_path, stdout_path, stderr_path = map(Path, sys.argv[1:4])
++command = sys.argv[5:]
++cap = 131072
++marker = b"\n[OUTER LOG TRUNCATED; full stream digest retained]\n"
++payload_cap = cap - len(marker)
++proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, start_new_session=True)
++sel = selectors.DefaultSelector()
++streams = {}
++capture_failed = False
++for name, pipe, path in (("stdout", proc.stdout, stdout_path), ("stderr", proc.stderr, stderr_path)):
++    try:
++        handle = path.open("wb")
++    except OSError:
++        handle = None
++        capture_failed = True
++    streams[pipe.fileno()] = {"name": name, "pipe": pipe, "path": path, "handle": handle,
++        "hash": hashlib.sha256(), "total": 0, "stored": 0, "truncated": False}
++    sel.register(pipe, selectors.EVENT_READ, streams[pipe.fileno()])
++start = time.monotonic()
++termination_started = None
++while sel.get_map():
++    elapsed = time.monotonic() - start
++    if proc.poll() is None and elapsed >= 3600 and termination_started is None:
++        try:
++            os.killpg(proc.pid, signal.SIGTERM)
++        except ProcessLookupError:
++            pass
++        termination_started = time.monotonic()
++    if proc.poll() is None and termination_started is not None and time.monotonic() - termination_started >= 10:
++        try:
++            os.killpg(proc.pid, signal.SIGKILL)
++        except ProcessLookupError:
++            pass
++        termination_started = float("inf")
++    for key, _ in sel.select(timeout=0.25):
++        entry = key.data
++        chunk = entry["pipe"].read1(65536)
++        if not chunk:
++            sel.unregister(entry["pipe"])
++            entry["pipe"].close()
++            continue
++        entry["hash"].update(chunk)
++        entry["total"] += len(chunk)
++        remaining = payload_cap - entry["stored"]
++        if remaining > 0:
++            saved = chunk[:remaining]
++            if entry["handle"] is not None:
++                try:
++                    entry["handle"].write(saved)
++                    entry["stored"] += len(saved)
++                except OSError:
++                    capture_failed = True
++                    entry["handle"].close()
++                    entry["handle"] = None
++            else:
++                capture_failed = True
++        if len(chunk) > max(0, remaining):
++            entry["truncated"] = True
++        target = sys.stdout.buffer if entry["name"] == "stdout" else sys.stderr.buffer
++        target.write(chunk)
++        target.flush()
++rc = proc.wait()
++records = {}
++for entry in streams.values():
++    handle = entry["handle"]
++    if handle is not None:
++        try:
++            if entry["truncated"]:
++                handle.write(marker)
++            handle.flush()
++            os.fsync(handle.fileno())
++            handle.close()
++        except OSError:
++            capture_failed = True
++            try:
++                handle.close()
++            except OSError:
++                pass
++    try:
++        stored_bytes = entry["path"].stat().st_size
++        stored_hash = hashlib.sha256(entry["path"].read_bytes()).hexdigest()
++    except OSError:
++        stored_bytes = 0
++        stored_hash = None
++        capture_failed = True
++    records[entry["name"]] = {"path": str(entry["path"]), "storedBytes": stored_bytes,
++        "streamBytes": entry["total"], "streamSha256": entry["hash"].hexdigest(),
++        "storedSha256": stored_hash, "truncated": entry["truncated"]}
++receipt_path.write_text(json.dumps({"command": command, "exitCode": rc,
++    "durationMs": round((time.monotonic() - start) * 1000), "perStreamCapBytes": cap,
++    "captureFailed": capture_failed, "stdout": records["stdout"], "stderr": records["stderr"]},
++    sort_keys=True, indent=2) + "\n")
++if rc != 0:
++    raise SystemExit(rc)
++if capture_failed:
++    raise SystemExit(74)
++if any(record["truncated"] for record in records.values()):
++    raise SystemExit(75)
+--- /dev/null
++++ b/close_selected_evidence.py
+@@ -0,0 +1,336 @@
++#!/usr/bin/env python3
++"""Close one explicit, hash-bound LOCAL_EMULATED_3600 output inventory."""
++import hashlib
++import json
++import os
++import re
++import sys
++from pathlib import Path
++
++if len(sys.argv) != 3:
++    raise SystemExit("usage: close_selected_evidence.py PROPOSAL_ROOT OUTPUT_ROOT")
++proposal = Path(sys.argv[1]).resolve(strict=True)
++out = Path(sys.argv[2]).resolve(strict=True)
++context_path = out / "local-docker-context.json"
++receipt_path = out / "selected-evidence-receipt.json"
++context = json.loads(context_path.read_text())
++route = json.loads((proposal / "prepared-route.json").read_text())
++missing = []
++files = []
++raw_log_bytes = 0
++
++def add_file(label, path, expected_hash=None, is_log=False):
++    global raw_log_bytes
++    path = Path(path)
++    if not path.is_file() or path.is_symlink():
++        missing.append(label)
++        return
++    body = path.read_bytes()
++    digest = hashlib.sha256(body).hexdigest()
++    if expected_hash is not None and digest != expected_hash:
++        missing.append(label + ":hash-mismatch")
++        return
++    files.append({"path": label, "physicalPath": str(path.resolve(strict=True)), "bytes": len(body), "sha256": digest})
++    if is_log:
++        raw_log_bytes += len(body)
++
++# Select the entire bounded child upload tree. The finalizer validates the D5
++# report roster and caps this tree; this outer closer independently verifies
++# path safety, exact command logs, report families, and byte totals.
++upload = out / "d5-host" / "d5" / "upload"
++commands = route.get("boundedCommands", [])
++if len(commands) != 30 or len(set(commands)) != 30:
++    missing.append("route:expected-30-unique-commands")
++expected_log_names = {name + ".log" for name in commands}
++expected_reports = {
++    "resource-baseline.json", "resource-final.json", "no-default.json",
++    *["oracle-" + name + ".json" for name in (
++        "date", "integer", "decimal", "text", "eq-null", "ne-null",
++        "not-eq-value", "not-ne-null", "coalesce-empty", "enum",
++        "unique", "foreign-key", "varchar-loss", "bound-excess",
++        "empty-table", "all-populated")],
++    *["fault-" + name + ".json" for name in (
++        "fenced-resume", "backfill-commit-lost", "existing-target-commit-lost")],
++}
++
++def scan_regular_tree(root, logical_prefix):
++    """Return every regular file under root; reject symlinks/special entries."""
++    found = []
++    if not root.is_dir() or root.is_symlink():
++        missing.append(logical_prefix + ":missing-or-unsafe-directory")
++        return found
++    def visit(directory):
++        for entry in sorted(directory.iterdir(), key=lambda p: p.name):
++            if entry.is_symlink():
++                missing.append(logical_prefix + ":symlink:" + entry.relative_to(root).as_posix())
++            elif entry.is_dir():
++                visit(entry)
++            elif entry.is_file():
++                found.append(entry)
++            else:
++                missing.append(logical_prefix + ":special-file:" + entry.relative_to(root).as_posix())
++    visit(root)
++    return found
++
++upload_files = scan_regular_tree(upload, "upload")
++upload_relatives = {p.relative_to(upload).as_posix() for p in upload_files}
++if "d5-receipt.json" not in upload_relatives:
++    missing.append("upload:d5-receipt.json-missing")
++logs_relatives = {name for name in upload_relatives if name.startswith("logs/")}
++actual_log_names = {name.removeprefix("logs/") for name in logs_relatives}
++if actual_log_names != expected_log_names or len(logs_relatives) != 30:
++    missing.append("upload:exact-30-command-log-roster-mismatch")
++reports_relatives = {name for name in upload_relatives if name.startswith("reports/")}
++actual_report_names = {name.removeprefix("reports/") for name in reports_relatives if "/" not in name.removeprefix("reports/")}
++if actual_report_names != expected_reports:
++    missing.append("upload:exact-22-report-roster-mismatch")
++for rel in reports_relatives:
++    suffix = rel.removeprefix("reports/")
++    if "/" in suffix and re.fullmatch(r"plans/[0-9a-f]{64}\.json", suffix) is None:
++        missing.append("upload:unexpected-report-nested-path:" + rel)
++for rel in logs_relatives:
++    if "/" in rel.removeprefix("logs/"):
++        missing.append("upload:unexpected-log-nested-path:" + rel)
++upload_log_bytes = 0
++upload_bytes = sum((upload / rel).stat().st_size for rel in upload_relatives)
++for rel in sorted(upload_relatives):
++    is_log = rel.startswith("logs/") and "/" not in rel.removeprefix("logs/")
++    add_file("output/d5-host/d5/upload/" + rel, upload / rel, is_log=is_log)
++    if is_log:
++        uploaded_log = upload / rel
++        evidence_log = out / "d5-host" / "d5" / "evidence" / rel
++        if uploaded_log.is_file() and not uploaded_log.is_symlink():
++            upload_log_bytes += uploaded_log.stat().st_size
++            if not evidence_log.is_file() or evidence_log.is_symlink() or evidence_log.read_bytes() != uploaded_log.read_bytes():
++                missing.append("upload:command-log-copy-mismatch:" + rel)
++try:
++    child_receipt = json.loads((upload / "d5-receipt.json").read_text())
++except (OSError, ValueError):
++    child_receipt = {}
++    missing.append("upload:child-receipt-invalid")
++if (child_receipt.get("status") != "LOCAL_DIAGNOSTIC_PASS_G02_D5_37_CASES_AND_RECOVERY"
++    or child_receipt.get("executionKind") != "local_linux_diagnostic"
++    or child_receipt.get("resourceProfile") != "LOCAL_EMULATED_3600"
++    or str(child_receipt.get("localAttempt")) != "1"
++    or child_receipt.get("resourceProfileSha256") != context.get("resourceProfileSha256")
++    or child_receipt.get("operatorHashes") != context.get("operatorHashes")
++    or child_receipt.get("sourceCommit") != context.get("sourceCommit")
++    or child_receipt.get("aggregateSeconds") != 3600
++    or child_receipt.get("cases") != 37
++    or child_receipt.get("oracleGroups") != 16
++    or child_receipt.get("faultScenarios") != 3
++    or child_receipt.get("noDefaultChecks") != 19
++    or child_receipt.get("commandCount") != 30
++    or child_receipt.get("cleanupVerified") is not True
++    or child_receipt.get("logBytes") != upload_log_bytes
++    or (child_receipt.get("status") == "LOCAL_DIAGNOSTIC_PASS_G02_D5_37_CASES_AND_RECOVERY"
++        and child_receipt.get("evidenceBytes") != upload_bytes - (upload / "d5-receipt.json").stat().st_size)):
++    missing.append("upload:child-qualification-receipt-mismatch")
++
++# The finalizer also writes an evidence copy of the successful final receipt.
++# Index it only when it is distinct from the uploaded receipt.
++final_receipt = out / "d5-host" / "d5" / "evidence" / "final-receipt.json"
++upload_receipt = upload / "d5-receipt.json"
++if final_receipt.is_file() and not final_receipt.is_symlink():
++    if not upload_receipt.is_file() or final_receipt.read_bytes() != upload_receipt.read_bytes():
++        add_file("output/d5-host/d5/evidence/final-receipt.json", final_receipt)
++    elif child_receipt.get("status") != "LOCAL_DIAGNOSTIC_PASS_G02_D5_37_CASES_AND_RECOVERY":
++        missing.append("output:duplicate-final-receipt-present-on-nonpass")
++
++# Outer launch capture is individually bounded and retains full-stream hashes.
++capture_path = out / "outer-capture.json"
++if capture_path.is_file() and not capture_path.is_symlink():
++    capture = json.loads(capture_path.read_text())
++else:
++    capture = {}
++    missing.append("output/outer-capture.json")
++for name in ("stdout", "stderr"):
++    rel = "outer." + name + ".log"
++    expected = capture.get(name, {}).get("storedSha256")
++    add_file("output/" + rel, out / rel, expected_hash=expected, is_log=True)
++add_file("output/outer-capture.json", capture_path)
++
++# Bind every operator input and source attestation used by this profile.
++operator_hashes = context.get("operatorHashes", {})
++expected_operator_files = {
++    "run-d5-docker.sh", "capture_docker.py", "close_selected_evidence.py",
++    "prepare.py", "adapt_local_identity.py", "local-adapter-manifest.json",
++    "prepared-route.json", "resource-profile.json",
++    "steps/initialize.sh", "steps/replay.sh", "steps/finalize.sh",
++    "steps/initialize.local.sh", "steps/replay.local.sh", "steps/finalize.local.sh",
++}
++if set(operator_hashes) != expected_operator_files:
++    missing.append("operator:exact-hash-roster-mismatch")
++for rel, expected in sorted(operator_hashes.items()):
++    if not isinstance(expected, str) or len(expected) != 64:
++        missing.append("operator:malformed-hash:" + str(rel))
++        continue
++    add_file("operator/" + rel, proposal / rel, expected_hash=expected)
++for rel in ("README.md", "DECISION.md", "unified.diff", "frozen-source-hashes.json"):
++    add_file("attestation/" + rel, proposal / rel)
++source = route.get("source", {})
++workflow_path = Path(source.get("path", "")) / source.get("workflowPath", "")
++add_file("source/" + source.get("workflowPath", ".github/workflows/access-boundaries.yml"),
++         workflow_path, expected_hash=context.get("workflowSha256"))
++
++# The three-file SDK release payload has its own 2 MiB cap and exact roster.
++payload_dir = out / "d5-host" / "d5" / "release-payload"
++expected_payload = {
++    "umf_access-0.1.0.dev8-py3-none-any.whl",
++    "umf_codegen-0.1.0a5-py3-none-any.whl",
++    "release-payload-receipt.json",
++}
++payload_files = []
++payload_bytes = 0
++if payload_dir.is_dir() and not payload_dir.is_symlink():
++    payload_entries = list(payload_dir.iterdir())
++    actual_names = {p.name for p in payload_entries if p.is_file() and not p.is_symlink()}
++    payload_entries_valid = all(p.is_file() and not p.is_symlink() for p in payload_entries)
++else:
++    payload_entries = []
++    actual_names = set()
++    payload_entries_valid = False
++if actual_names != expected_payload or not payload_entries_valid:
++    missing.append("release-payload:exact-three-file-roster-mismatch")
++else:
++    for name in sorted(expected_payload):
++        p = payload_dir / name
++        body = p.read_bytes()
++        payload_bytes += len(body)
++        payload_files.append({"path": "output/d5-host/d5/release-payload/" + name,
++                              "physicalPath": str(p.resolve(strict=True)),
++                              "bytes": len(body), "sha256": hashlib.sha256(body).hexdigest()})
++if payload_bytes > 2097152:
++    missing.append("release-payload:exceeds-2-MiB")
++
++base_bytes = sum(item["bytes"] for item in files)
++base_bytes += sum(item["bytes"] for item in payload_files)
++metadata_limit = 16777216
++log_limit = 1048576
++if sum(item["bytes"] for item in files if item["path"].startswith("output/d5-host/d5/upload/")) > metadata_limit:
++    missing.append("upload:exceeds-16-MiB")
++capture_streams_ok = (
++    capture.get("perStreamCapBytes") == 131072
++    and all(isinstance(capture.get(name), dict)
++            and isinstance(capture[name].get("storedBytes"), int)
++            and capture[name]["storedBytes"] <= 131072
++            and isinstance(capture[name].get("streamBytes"), int)
++            and capture[name]["streamBytes"] >= capture[name]["storedBytes"]
++            and re.fullmatch(r"[0-9a-f]{64}", str(capture[name].get("streamSha256", "")))
++            and re.fullmatch(r"[0-9a-f]{64}", str(capture[name].get("storedSha256", "")))
++            for name in ("stdout", "stderr"))
++)
++capture_ok = (
++    capture_streams_ok
++    and context.get("captureFailureCode") is None
++    and context.get("clientExit") == 0
++    and context.get("childRawLogBytes") == sum(x["bytes"] for x in files if x["path"].startswith("output/d5-host/d5/upload/logs/"))
++    and context.get("outerRawLogBytes") == sum(capture.get(name, {}).get("storedBytes", -1) for name in ("stdout", "stderr"))
++    and context.get("rawLogBytes") == raw_log_bytes
++    and context.get("clientExit") == 0
++    and capture.get("exitCode") == 0
++    and capture.get("captureFailed") is False
++    and capture.get("stdout", {}).get("truncated") is False
++    and capture.get("stderr", {}).get("truncated") is False
++)
++cleanup = context.get("cleanup", {})
++cleanup_ok = (
++    cleanup.get("verified") is True
++    and cleanup.get("daemonReachable") is True
++    and cleanup.get("clientAbsentAfterCleanup") is True
++    and cleanup.get("postgresAbsentAfterCleanup") is True
++    and cleanup.get("networkAbsentAfterCleanup") is True
++)
++profile_identity_ok = (
++    context.get("resourceProfile") == "LOCAL_EMULATED_3600"
++    and context.get("attempt") == route.get("localAttempt") == 1
++    and context.get("aggregateSeconds") == 3600
++    and context.get("resourceProfileSha256") == json.loads((proposal / "local-adapter-manifest.json").read_text()).get("resourceProfileSha256")
++)
++
++def dump(obj):
++    return json.dumps(obj, sort_keys=True, indent=2) + "\n"
++
++context_size = context_path.stat().st_size
++selected_guess = base_bytes + context_size
++receipt_bytes = 0
++closed = False
++for _ in range(32):
++    source_root = Path(source.get("path", "")).resolve(strict=True)
++    roots = {
++        "output": str(out),
++        "operator": str(proposal),
++        "attestation": str(proposal),
++        "source": str(source_root),
++    }
++    receipt = {
++        "schema": "umf.local-emulated-3600.selected-evidence/1",
++        "root": str(out),
++        "roots": roots,
++        "profile": context.get("resourceProfile"),
++        "resourceProfileSha256": context.get("resourceProfileSha256"),
++        "files": sorted(files, key=lambda row: row["path"]),
++        "uploadBytes": upload_bytes,
++        "uploadLimitBytes": 16777216,
++        "uploadWithinLimit": upload_bytes <= 16777216,
++        "releasePayload": {"bytes": payload_bytes, "limitBytes": 2097152,
++                           "files": payload_files, "status": "within-limit" if payload_entries_valid and payload_bytes <= 2097152 and len(payload_files) == 3 else "FAIL_OR_UNKNOWN"},
++        "missingOrMismatched": sorted(missing),
++        "rawLogBytes": raw_log_bytes,
++        "rawLogLimitBytes": log_limit,
++        "contextBytes": context_size,
++        "selectedMetadataBytes": selected_guess,
++        "selectedMetadataLimitBytes": metadata_limit,
++        "contextExcludedFromFileHashRoster": True,
++        "receiptExcludedFromFileHashRoster": True,
++    }
++    receipt_path.write_text(dump(receipt))
++    receipt_bytes = receipt_path.stat().st_size
++    digest = hashlib.sha256(receipt_path.read_bytes()).hexdigest()
++    selected_total = base_bytes + receipt_bytes + context_size
++    context.update({
++        "selectedEvidenceReceiptPath": "selected-evidence-receipt.json",
++        "selectedEvidenceReceiptSha256": digest,
++        "selectedEvidenceReceiptBytes": receipt_bytes,
++        "selectedMetadataBytes": selected_total,
++        "selectedMetadataLimitBytes": metadata_limit,
++        "selectedMetadataWithinLimit": selected_total <= metadata_limit,
++        "rawLogBytes": raw_log_bytes,
++        "rawLogLimitBytes": log_limit,
++        "rawLogBudgetWithinLimit": raw_log_bytes <= log_limit,
++        "releasePayloadBytes": payload_bytes,
++        "releasePayloadLimitBytes": 2097152,
++        "releasePayloadWithinLimit": payload_entries_valid and len(payload_files) == 3 and payload_bytes <= 2097152,
++        "selectedEvidenceMissingOrMismatched": sorted(missing),
++    })
++    all_clear = (profile_identity_ok and capture_ok and cleanup_ok and not missing and raw_log_bytes <= log_limit
++                 and upload_bytes <= metadata_limit and selected_total <= metadata_limit
++                 and payload_entries_valid and len(payload_files) == 3 and payload_bytes <= 2097152)
++    context["outerQualificationStatus"] = "LOCAL_DIAGNOSTIC_PASS_LOCAL_EMULATED_3600" if all_clear else "FAIL_OR_UNKNOWN"
++    context_path.write_text(dump(context))
++    actual_context = context_path.stat().st_size
++    actual_total = base_bytes + receipt_bytes + actual_context
++    if (actual_context == context_size and actual_total == selected_total
++            and receipt["contextBytes"] == actual_context
++            and receipt["selectedMetadataBytes"] == actual_total):
++        closed = True
++        break
++    context_size = actual_context
++    selected_guess = actual_total
++if not closed:
++    missing.append("selected-evidence:context-size-fixed-point-not-reached")
++    context["selectedEvidenceMissingOrMismatched"] = sorted(missing)
++    context["outerQualificationStatus"] = "FAIL_OR_UNKNOWN"
++    context_path.write_text(dump(context))
++    raise SystemExit("selected evidence context/receipt fixed-point did not close")
++
++# The receipt hashes the exact selected family and records the final context size;
++# the context binds the receipt path and digest without self-hashing.
++if context.get("selectedEvidenceReceiptSha256") != hashlib.sha256(receipt_path.read_bytes()).hexdigest():
++    raise SystemExit("selected evidence receipt digest binding changed")
++if context.get("selectedEvidenceReceiptBytes") != receipt_path.stat().st_size:
++    raise SystemExit("selected evidence receipt byte binding changed")
++if context.get("selectedMetadataBytes") != base_bytes + receipt_path.stat().st_size + context_path.stat().st_size:
++    raise SystemExit("selected metadata byte accounting does not match files on disk")
++if context.get("outerQualificationStatus") != "LOCAL_DIAGNOSTIC_PASS_LOCAL_EMULATED_3600":
++    raise SystemExit("selected evidence or outer qualification closure is FAIL_OR_UNKNOWN")
+--- a/local-adapter-manifest.json
++++ b/local-adapter-manifest.json
+@@ -1,9 +1,12 @@
+ {
+-  "adapterPurpose": "replace only GitHub event/ref identity with actual local Linux identity; retain D5 command/case/custody/finalizer checks",
+-  "boundsPreserved": true,
++  "adapterPurpose": "replace only GitHub event/ref identity with actual local Linux identity; retain D5 command/case/custody/finalizer checks; separate local whole-suite 3600-second resource policy with unchanged D5 semantic, child, log, evidence, and payload bounds",
++  "boundsPreserved": false,
+   "candidateExecutionPerformed": false,
+   "executionKind": "local_linux_diagnostic",
+   "hostedEvidenceClaim": false,
++  "nonTemporalBoundsPreserved": true,
++  "resourceProfile": "LOCAL_EMULATED_3600",
++  "resourceProfileSha256": "7ef1260d0bd61e7eef80c753091ef605979a376c3d2ab8e158fdecb6830d98fe",
+   "sourceSteps": {
+     "finalize.sh": {
+       "bytes": 33129,
+@@ -21,16 +24,16 @@
+   "sourceWorkflowSha256": "f0963d2df1e371112ba6e57999dbf69290796d711eb97ed46637d4ebc63918a1",
+   "stepCopies": {
+     "finalize.local.sh": {
+-      "bytes": 33590,
+-      "sha256": "af48510b3e5e297a03a90e4b1b0f31bbba4852609226dc8170ff9ff9920ee04a"
++      "bytes": 34270,
++      "sha256": "80a80d88053249cd9d00982200ecd35cfb8e82767b43528fe6d02ce724f21564"
+     },
+     "initialize.local.sh": {
+-      "bytes": 1041,
+-      "sha256": "1aa3122eef9040d321947a33c64d63d97969ea8838c44e60540167c04488cfd0"
++      "bytes": 1321,
++      "sha256": "87d95f05fa68eaa49cb4541aab7e64c918d7ca096853fefb6fc29e378ffc98c6"
+     },
+     "replay.local.sh": {
+-      "bytes": 32151,
+-      "sha256": "9c0ea55948e1a210ac3100d330c08349d5801e4d15cdfd50397782bdc5ef7cc7"
++      "bytes": 32361,
++      "sha256": "03f778295575b364e5a78af45df4506a5eaf20e4248ae13af141beb45e540110"
+     }
+   }
+ }
+--- a/prepared-route.json
++++ b/prepared-route.json
+@@ -33,7 +33,8 @@
+   ],
+   "bounds": {
+     "aggregateLogBytes": 1048576,
+-    "aggregateSeconds": 1800,
++    "aggregateSeconds": 3600,
++    "aggregateWorkSeconds": 3530,
+     "boundedCommandCount": 30,
+     "childSeconds": 180,
+     "evidenceBytes": 16777216,
+@@ -92,6 +93,7 @@
+   },
+   "executionKind": "local-linux-diagnostic-only; never hosted qualification evidence",
+   "hostedEvidenceClaim": false,
++  "localAttempt": 1,
+   "localIdentityNamespace": {
+     "executionIdFormat": "local-<random-uuid-hex>",
+     "executionKind": "local_linux_diagnostic",
+@@ -100,6 +102,7 @@
+     "sourceRef": "actual local refs/heads/<branch>, or local:detached:<actual HEAD> when checkout is detached"
+   },
+   "network": "new internal Docker bridge; only the owned PostgreSQL container is reachable",
++  "resourceProfile": "LOCAL_EMULATED_3600",
+   "server": {
+     "image": "postgres:18.6, immutable digest only",
+     "imageArchitecture": "linux/arm64",
+@@ -118,7 +121,7 @@
+     "workflowSha256": "f0963d2df1e371112ba6e57999dbf69290796d711eb97ed46637d4ebc63918a1",
+     "workingTreeClean": true
+   },
+-  "sourceCommitBindingCaveat": "No current-source full18 cohort is attached. Older 6eca705a cohort bytes are not accepted for this route; supply the independently captured cohort path, exact lock digest and actual producer commit before running.",
++  "sourceCommitBindingCaveat": "Current-source full18 cohort is frozen at the path and exact lock digest in this route; this new operator profile accepts only that exact route/cohort and rejects older 6eca705a bytes.",
+   "sourceWorkflowSteps": {
+     "finalize.sh": {
+       "bytes": 33129,
+--- /dev/null
++++ b/resource-profile.json
+@@ -0,0 +1,25 @@
++{
++  "aggregateSeconds": 3600,
++  "cases": 37,
++  "childLimit": 180,
++  "childRawLogReservationBytes": 786432,
++  "childSeconds": 180,
++  "evidenceBytes": 16777216,
++  "evidenceReserveSeconds": 60,
++  "executionKind": "local_linux_diagnostic",
++  "faultScenarios": 3,
++  "hostedQualificationClaim": false,
++  "killGraceSeconds": 10,
++  "noDefaultChecks": 19,
++  "oracleGroups": 16,
++  "orderedCommands": 30,
++  "outerRawLogReservationBytes": 262144,
++  "payloadBytes": 2097152,
++  "previousLocal1800Status": "FAIL_OR_UNKNOWN; remains unqualified",
++  "productApiBudgetChanged": false,
++  "profile": "LOCAL_EMULATED_3600",
++  "rawLogBytes": 1048576,
++  "selectedMetadataBytes": 16777216,
++  "sourceWorkflowStepsUnchanged": true,
++  "workSeconds": 3530
++}
+--- a/run-d5-docker.sh
++++ b/run-d5-docker.sh
+@@ -1,5 +1,7 @@
+ #!/usr/bin/env bash
+ set -euo pipefail
++
++RESOURCE_PROFILE=LOCAL_EMULATED_3600
+ 
+ # Local-only Docker execution of the three source-extracted D5 workflow steps.
+ # Nothing starts unless the caller explicitly sets D5_EXECUTE=1 and supplies a
+@@ -26,13 +28,15 @@
+ mkdir -p "$(dirname "$OUT")"
+ 
+ eval "$(python3 - "$ROUTE" "$COHORT" "$ROOT" <<'PY'
+-import json,pathlib,re,shlex,sys
++import hashlib,json,pathlib,re,shlex,sys
+ route=json.loads(pathlib.Path(sys.argv[1]).read_text())
+ cohort=pathlib.Path(sys.argv[2]).resolve(strict=True)
+ root=pathlib.Path(sys.argv[3]).resolve(strict=True)
+-if route.get('status')!='PREPARED_NOT_EXECUTED' or not route.get('hostedEvidenceClaim') is False:
++if route.get('status')!='PREPARED_NOT_EXECUTED' or not route.get('hostedEvidenceClaim') is False or route.get('resourceProfile')!='LOCAL_EMULATED_3600' or route.get('localAttempt')!=1:
+     raise SystemExit('route is not prepared against a verified current-source cohort')
+-source=route.get('source',{}); c=route.get('cohort',{})
++source=route.get('source',{}); c=route.get('cohort',{}); bounds=route.get('bounds',{})
++if bounds.get('aggregateSeconds')!=3600 or bounds.get('boundedCommandCount')!=30 or bounds.get('oracleCases')!=37 or bounds.get('oracleGroups')!=16 or bounds.get('noDefaultChecks')!=19 or bounds.get('faultScenarios')!=3 or bounds.get('childSeconds')!=180 or bounds.get('aggregateLogBytes')!=1048576 or bounds.get('evidenceBytes')!=16777216 or bounds.get('releasePayloadBytes')!=2097152:
++    raise SystemExit('LOCAL_EMULATED_3600 route budgets or frozen D5 scope differ')
+ if source.get('head')!='e4299aff8e87e9d211f9d86df2f2013ab9c95945' or source.get('tree')!='8b98c0d895983ba2b7637dd3aea567dab0943883':
+     raise SystemExit('route does not identify the reviewed e429 source snapshot')
+ if source.get('workflowSha256')!='f0963d2df1e371112ba6e57999dbf69290796d711eb97ed46637d4ebc63918a1':
+@@ -54,19 +58,27 @@
+ if manifest_path.is_symlink() or not manifest_path.is_file():
+     raise SystemExit('local adapter manifest is missing or unsafe')
+ manifest=json.loads(manifest_path.read_text())
+-if (set(manifest)!={'executionKind','hostedEvidenceClaim','sourceWorkflowSha256','adapterPurpose','sourceSteps','stepCopies','boundsPreserved','candidateExecutionPerformed'}
++if (set(manifest)!={'executionKind','hostedEvidenceClaim','sourceWorkflowSha256','adapterPurpose','sourceSteps','stepCopies','boundsPreserved','candidateExecutionPerformed','resourceProfile','nonTemporalBoundsPreserved','resourceProfileSha256'}
+     or manifest.get('executionKind')!='local_linux_diagnostic' or manifest.get('hostedEvidenceClaim') is not False
+-    or manifest.get('sourceWorkflowSha256')!=source['workflowSha256'] or manifest.get('boundsPreserved') is not True
+-    or manifest.get('candidateExecutionPerformed') is not False
++    or manifest.get('sourceWorkflowSha256')!=source['workflowSha256'] or manifest.get('boundsPreserved') is not False or manifest.get('nonTemporalBoundsPreserved') is not True
++    or manifest.get('candidateExecutionPerformed') is not False or manifest.get('resourceProfile')!='LOCAL_EMULATED_3600'
+     or set(manifest.get('sourceSteps',{}))!=expected_source
+     or set(manifest.get('stepCopies',{}))!=expected_local):
+     raise SystemExit('local adapter manifest is not the exact closed six-step custody record')
++profile_path=root/'resource-profile.json'
++profile=json.loads(profile_path.read_text())
++if hashlib.sha256(profile_path.read_bytes()).hexdigest()!=manifest['resourceProfileSha256'] or profile.get('profile')!='LOCAL_EMULATED_3600' or profile.get('aggregateSeconds')!=3600 or profile.get('workSeconds')!=3530 or profile.get('evidenceReserveSeconds')!=60 or profile.get('killGraceSeconds')!=10 or profile.get('childSeconds')!=180 or profile.get('cases')!=37 or profile.get('oracleGroups')!=16 or profile.get('noDefaultChecks')!=19 or profile.get('faultScenarios')!=3 or profile.get('orderedCommands')!=30 or profile.get('rawLogBytes')!=1048576 or profile.get('childRawLogReservationBytes')!=786432 or profile.get('outerRawLogReservationBytes')!=262144 or profile.get('evidenceBytes')!=16777216 or profile.get('payloadBytes')!=2097152 or profile.get('productApiBudgetChanged') is not False:
++    raise SystemExit('resource profile identity, hash, or frozen scope differs')
+ for name,record in {**manifest['sourceSteps'],**manifest['stepCopies']}.items():
+     body=(steps/name).read_bytes()
+     if record!={'sha256':__import__('hashlib').sha256(body).hexdigest(),'bytes':len(body)}:
+         raise SystemExit('local source/adapted workflow step hash or byte count differs: '+name)
+ for k,v in {'SOURCE_COMMIT':source['head'],'SOURCE_TREE':source['tree'],'WORKFLOW_SHA':source['workflowSha256'],'COHORT_LOCK_SHA':c['lockSha256'],'COHORT_PATH':str(cohort)}.items():
+     print('export D5_'+k+'='+shlex.quote(v))
++files=['run-d5-docker.sh','capture_docker.py','close_selected_evidence.py','prepare.py','adapt_local_identity.py','local-adapter-manifest.json','prepared-route.json','resource-profile.json','steps/initialize.sh','steps/replay.sh','steps/finalize.sh','steps/initialize.local.sh','steps/replay.local.sh','steps/finalize.local.sh']
++roster={name:__import__('hashlib').sha256((root/name).read_bytes()).hexdigest() for name in files}
++print('export D5_OPERATOR_HASHES='+shlex.quote(json.dumps(roster,sort_keys=True,separators=(',',':'))))
++print('export D5_PROFILE_SHA='+shlex.quote(manifest['resourceProfileSha256']))
+ PY
+ )"
+ 
+@@ -74,7 +86,7 @@
+ mkdir -p "$OUT"
+ chmod 700 "$OUT"
+ EXECUTION_ID="local-$(python3 -c 'import uuid; print(uuid.uuid4().hex)')"
+-ATTEMPT=2
++ATTEMPT=1
+ BRANCH="$(python3 - "$ROUTE" <<'PY'
+ import json,sys
+ print(json.load(open(sys.argv[1]))['source'].get('branch') or '')
+@@ -85,31 +97,59 @@
+ PG_NAME="$NETWORK-pg"
+ CLIENT_NAME="$NETWORK-client"
+ 
+-cleanup_status=not-started
+ D5_CONFIG_ID=unknown
+ PG_CONFIG_ID=unknown
+ cleanup() {
+-  local client_removed=false postgres_removed=false network_removed=false
+-  if docker inspect "$CLIENT_NAME" >/dev/null 2>&1; then docker rm -f "$CLIENT_NAME" >/dev/null 2>&1 && client_removed=true; fi
+-  if docker inspect "$PG_NAME" >/dev/null 2>&1; then docker rm -f "$PG_NAME" >/dev/null 2>&1 && postgres_removed=true; fi
+-  if docker network inspect "$NETWORK" >/dev/null 2>&1; then docker network rm "$NETWORK" >/dev/null 2>&1 && network_removed=true; fi
+-  python3 - "$OUT/local-docker-context.json" "$EXECUTION_ID" "$ATTEMPT" "$D5_SOURCE_COMMIT" "$D5_SOURCE_TREE" "$D5_WORKFLOW_SHA" "$D5_IMAGE" "$D5_CONFIG_ID" "$PG_IMAGE" "$PG_CONFIG_ID" "$NETWORK" "$PG_NAME" "$CLIENT_NAME" "$client_removed" "$postgres_removed" "$network_removed" <<'PY'
+-import json,pathlib,sys,time
+-p,eid,attempt,commit,tree,workflow,d5image,d5config,pgimage,pgconfig,network,pgname,clientname,client_removed,pg_removed,network_removed=sys.argv[1:]
++  local original_status=$?
++  local daemon_reachable=false client_absent=false postgres_absent=false network_absent=false
++  if docker info >/dev/null 2>&1; then daemon_reachable=true; fi
++  if [[ "$daemon_reachable" == true ]]; then
++    local client_names='' postgres_names='' network_names=''
++    if client_names=$(docker container ls -a --filter "name=^/${CLIENT_NAME}$" --format '{{.Names}}'); then
++      if [[ "$client_names" == "$CLIENT_NAME" ]]; then docker rm -f "$CLIENT_NAME" >/dev/null 2>&1 || true
++      elif [[ -n "$client_names" ]]; then client_names='LIST_ERROR'; fi
++    else client_names='LIST_ERROR'; fi
++    if postgres_names=$(docker container ls -a --filter "name=^/${PG_NAME}$" --format '{{.Names}}'); then
++      if [[ "$postgres_names" == "$PG_NAME" ]]; then docker rm -f "$PG_NAME" >/dev/null 2>&1 || true
++      elif [[ -n "$postgres_names" ]]; then postgres_names='LIST_ERROR'; fi
++    else postgres_names='LIST_ERROR'; fi
++    if network_names=$(docker network ls --filter "name=^${NETWORK}$" --format '{{.Name}}'); then
++      if [[ "$network_names" == "$NETWORK" ]]; then docker network rm "$NETWORK" >/dev/null 2>&1 || true
++      elif [[ -n "$network_names" ]]; then network_names='LIST_ERROR'; fi
++    else network_names='LIST_ERROR'; fi
++    if client_names=$(docker container ls -a --filter "name=^/${CLIENT_NAME}$" --format '{{.Names}}') && [[ -z "$client_names" ]]; then client_absent=true; fi
++    if postgres_names=$(docker container ls -a --filter "name=^/${PG_NAME}$" --format '{{.Names}}') && [[ -z "$postgres_names" ]]; then postgres_absent=true; fi
++    if network_names=$(docker network ls --filter "name=^${NETWORK}$" --format '{{.Name}}') && [[ -z "$network_names" ]]; then network_absent=true; fi
++  fi
++  local cleanup_ok=false
++  if [[ "$daemon_reachable" == true && "$client_absent" == true && "$postgres_absent" == true && "$network_absent" == true ]]; then cleanup_ok=true; fi
++  trap - EXIT INT TERM
++  python3 - "$OUT/local-docker-context.json" "$EXECUTION_ID" "$ATTEMPT" "$D5_SOURCE_COMMIT" "$D5_SOURCE_TREE" "$D5_WORKFLOW_SHA" "$D5_IMAGE" "$D5_CONFIG_ID" "$PG_IMAGE" "$PG_CONFIG_ID" "$NETWORK" "$PG_NAME" "$CLIENT_NAME" "$daemon_reachable" "$client_absent" "$postgres_absent" "$network_absent" "$cleanup_ok" <<'PY'
++import json,os,pathlib,sys,time
++p,eid,attempt,commit,tree,workflow,d5image,d5config,pgimage,pgconfig,network,pgname,clientname,daemon_reachable,client_absent,pg_absent,network_absent,cleanup_ok=sys.argv[1:]
+ path=pathlib.Path(p)
+ record=json.loads(path.read_text()) if path.is_file() and not path.is_symlink() else {
+- 'profile':'umf.local-docker-g02-d5-context/1','executionKind':'local_linux_diagnostic',
++ 'profile':'umf.local-docker-g02-d5-context/1','resourceProfile':'LOCAL_EMULATED_3600','aggregateSeconds':3600,'executionKind':'local_linux_diagnostic',
+  'hostedQualificationClaim':False,'executionId':eid,'attempt':int(attempt),
+- 'sourceCommit':commit,'sourceTree':tree,'workflowSha256':workflow,
++ 'sourceCommit':commit,'sourceTree':tree,'workflowSha256':workflow,'operatorHashes':json.loads(os.environ['D5_OPERATOR_HASHES']),'resourceProfileSha256':os.environ['D5_PROFILE_SHA'],
+  'runtimeImageReference':d5image,'runtimeImageConfigId':d5config,
+  'postgresImageReference':pgimage,'postgresImageConfigId':pgconfig,
+  'runtimeEngine':'OrbStack','host':{'os':'Darwin','architecture':'aarch64'},
+- 'guest':{'os':'Linux','distribution':'Ubuntu','version':'24.04.5','architecture':'x86_64','emulated':True}}
+-record.update({'cleanup':{'clientContainer':clientname,'postgresContainer':pgname,'network':network,
+- 'clientRemoved':client_removed=='true','postgresRemoved':pg_removed=='true','networkRemoved':network_removed=='true'},
++ 'guest':{'os':'Linux','distribution':'Ubuntu','version':'24.04.5','architecture':'x86_64','emulated':True},
++ 'clientExit':int(os.environ.get('D5_CLIENT_STATUS','1')),'outerCapture':{},'captureFailureCode':'outer-context-missing'}
++record.update({'cleanup':{'daemonReachable':daemon_reachable=='true','clientContainer':clientname,'postgresContainer':pgname,'network':network,
++ 'clientAbsentAfterCleanup':client_absent=='true','postgresAbsentAfterCleanup':pg_absent=='true','networkAbsentAfterCleanup':network_absent=='true','verified':cleanup_ok=='true'},
+  'cleanupRecordedAtEpochSeconds':int(time.time())})
++path.parent.mkdir(parents=True,exist_ok=True)
+ path.write_text(json.dumps(record,sort_keys=True,indent=2)+'\n')
+ PY
++  local close_status=0
++  if python3 "$ROOT/close_selected_evidence.py" "$ROOT" "$OUT"; then close_status=0; else close_status=$?; fi
++  if [[ "$original_status" -ne 0 ]]; then exit "$original_status"; fi
++  if [[ "$cleanup_ok" != true || "$close_status" -ne 0 ]]; then
++    printf 'D5 selected-evidence closure or owned-resource cleanup did not qualify\n' >&2
++    exit 1
++  fi
+ }
+ trap cleanup EXIT INT TERM
+ 
+@@ -173,8 +213,11 @@
+ export D5_ROOT=/d5-host/d5
+ export PG_DSN="host=127.0.0.1 port=5432 dbname=postgres user=postgres application_name=umf_g02_d5_local connect_timeout=5 options='-c statement_timeout=120000 -c lock_timeout=5000'"
+ export LOCAL_EXECUTION_KIND=local_linux_diagnostic
++export LOCAL_RESOURCE_PROFILE=LOCAL_EMULATED_3600
++export LOCAL_RESOURCE_PROFILE_SHA="$D5_PROFILE_SHA"
++export LOCAL_OPERATOR_HASHES="$D5_OPERATOR_HASHES"
+ export LOCAL_EXECUTION_ID="$D5_LOCAL_EXECUTION_ID"
+-export LOCAL_ATTEMPT=1
++export LOCAL_ATTEMPT="$D5_LOCAL_ATTEMPT"
+ export LOCAL_SOURCE_COMMIT="$D5_SOURCE_COMMIT"
+ export LOCAL_SOURCE_REF="$D5_SOURCE_REF"
+ export LOCAL_SOURCE_BRANCH="$D5_SOURCE_BRANCH"
+@@ -191,34 +234,43 @@
+ chmod 700 "$OUT/d5-host/run-inside.sh"
+ 
+ set +e
+-docker run --pull=never --platform linux/amd64 --name "$CLIENT_NAME" \
++python3 "$ROOT/capture_docker.py" "$OUT/outer-capture.json" "$OUT/outer.stdout.log" "$OUT/outer.stderr.log" -- timeout --signal=TERM --kill-after=10s 3600s docker run --pull=never --platform linux/amd64 --name "$CLIENT_NAME" \
+   --network "container:$PG_NAME" --init --cpus 8 --memory 8g --pids-limit 4096 \
+   --mount "type=volume,src=$SOURCE_VOLUME,dst=/workspace,readonly" \
+   --mount "type=bind,src=$COHORT,dst=/tmp/umf-g02-cohort,readonly" \
+   --mount "type=bind,src=$ROOT/steps,dst=/adapter/steps,readonly" \
+   --mount "type=bind,src=$OUT/d5-host,dst=/d5-host" \
+   -e GIT_CONFIG_COUNT=1 -e GIT_CONFIG_KEY_0=safe.directory -e GIT_CONFIG_VALUE_0=/workspace \
+-  -e D5_LOCAL_EXECUTION_ID="$EXECUTION_ID" -e D5_SOURCE_COMMIT="$D5_SOURCE_COMMIT" \
++  -e D5_LOCAL_EXECUTION_ID="$EXECUTION_ID" -e D5_LOCAL_ATTEMPT="$ATTEMPT" -e D5_SOURCE_COMMIT="$D5_SOURCE_COMMIT" \
+   -e D5_SOURCE_REF="$SOURCE_REF" -e D5_SOURCE_BRANCH="$BRANCH" \
+   -e D5_WORKFLOW_SHA="$D5_WORKFLOW_SHA" -e D5_IMAGE_ID="$D5_IMAGE" \
++  -e D5_PROFILE_SHA="$D5_PROFILE_SHA" -e D5_OPERATOR_HASHES="$D5_OPERATOR_HASHES" \
+   --entrypoint /bin/bash "$D5_IMAGE" -euo pipefail /d5-host/run-inside.sh
+ client_status=$?
+ set -e
+ 
+-CLIENT_LIMITS="$(docker inspect --format '{{.HostConfig.NanoCpus}} {{.HostConfig.Memory}} {{.HostConfig.PidsLimit}}' "$CLIENT_NAME")"
++CLIENT_LIMITS="$(docker inspect --format '{{.HostConfig.NanoCpus}} {{.HostConfig.Memory}} {{.HostConfig.PidsLimit}}' "$CLIENT_NAME" 2>/dev/null || printf unavailable)"
+ PG_LIMITS="$(docker inspect --format '{{.HostConfig.NanoCpus}} {{.HostConfig.Memory}} {{.HostConfig.PidsLimit}}' "$PG_NAME")"
+ 
+-python3 - "$OUT/local-docker-context.json" "$EXECUTION_ID" "$ATTEMPT" "$D5_SOURCE_COMMIT" "$D5_SOURCE_TREE" "$D5_WORKFLOW_SHA" "$D5_IMAGE" "$D5_CONFIG_ID" "$PG_IMAGE" "$PG_CONFIG_ID" "$PG_ID" "$PG_PLATFORM" "$PG_VERSION" "$client_status" "$CLIENT_LIMITS" "$PG_LIMITS" "$PG_QUIET_STATS" <<'PY'
+-import json,pathlib,sys,time
+-p,eid,attempt,commit,tree,workflow,d5image,d5config,pgimage,pgconfig,pgid,pgplatform,pgversion,rc,clientlimits,pglimits,quietstats=sys.argv[1:]
++python3 - "$OUT/local-docker-context.json" "$EXECUTION_ID" "$ATTEMPT" "$D5_SOURCE_COMMIT" "$D5_SOURCE_TREE" "$D5_WORKFLOW_SHA" "$D5_IMAGE" "$D5_CONFIG_ID" "$PG_IMAGE" "$PG_CONFIG_ID" "$PG_ID" "$PG_PLATFORM" "$PG_VERSION" "$client_status" "$CLIENT_LIMITS" "$PG_LIMITS" "$PG_QUIET_STATS" "$OUT/outer-capture.json" "$OUT" <<'PY'
++import json,os,pathlib,sys,time
++p,eid,attempt,commit,tree,workflow,d5image,d5config,pgimage,pgconfig,pgid,pgplatform,pgversion,rc,clientlimits,pglimits,quietstats,capture_path,output_root_arg=sys.argv[1:]
+ def limits(value):
++    if value=='unavailable': return {'status':'container-not-inspectable-after-client-exit'}
+     nano,memory,pids=value.split()
+     return {'NanoCpus':int(nano),'memoryBytes':int(memory),'pidsLimit':int(pids)}
+ quiet=json.loads(quietstats)
+-pathlib.Path(p).write_text(json.dumps({
+- 'profile':'umf.local-docker-g02-d5-context/1','executionKind':'local_linux_diagnostic',
++capture=json.loads(pathlib.Path(capture_path).read_text())
++output_root=pathlib.Path(output_root_arg).resolve()
++child_log_dir=output_root/'d5-host'/'d5'/'evidence'/'logs'
++child_log_bytes=sum(x.stat().st_size for x in child_log_dir.iterdir() if x.is_file() and not x.is_symlink()) if child_log_dir.is_dir() else 0
++outer_log_bytes=capture['stdout']['storedBytes']+capture['stderr']['storedBytes']
++raw_log_bytes=child_log_bytes+outer_log_bytes
++path=pathlib.Path(p)
++record={
++ 'profile':'umf.local-docker-g02-d5-context/1','resourceProfile':'LOCAL_EMULATED_3600','aggregateSeconds':3600,'executionKind':'local_linux_diagnostic',
+  'hostedQualificationClaim':False,'executionId':eid,'attempt':int(attempt),
+- 'sourceCommit':commit,'sourceTree':tree,'workflowSha256':workflow,
++ 'sourceCommit':commit,'sourceTree':tree,'workflowSha256':workflow,'operatorHashes':json.loads(os.environ['D5_OPERATOR_HASHES']),'resourceProfileSha256':os.environ['D5_PROFILE_SHA'],
+  'resourceLimits':{'client':limits(clientlimits),'postgres':limits(pglimits)},
+  'runtimeImageReference':d5image,'runtimeImageConfigId':d5config,
+  'postgresImageReference':pgimage,'postgresImageConfigId':pgconfig,'postgresContainerId':pgid,
+@@ -226,8 +278,10 @@
+  'guest':{'os':'Linux','distribution':'Ubuntu','version':'24.04.5','architecture':'x86_64','emulated':True},
+  'postgresQuietWorkloadBeforeClient':quiet,
+  'postgresPlatform':pgplatform,'postgresIdentityText':pgversion.splitlines(),
+- 'clientExit':int(rc),'cleanup':'pending-trap','recordedAtEpochSeconds':int(time.time())
+-},sort_keys=True,indent=2)+'\n')
++ 'clientExit':int(rc),'captureFailureCode':('outer-capture-failed' if capture.get('captureFailed') else 'outer-capture-truncated' if capture['stdout']['truncated'] or capture['stderr']['truncated'] else None),'outerCapture':capture,'childRawLogBytes':child_log_bytes,'outerRawLogBytes':outer_log_bytes,'rawLogBytes':raw_log_bytes,'rawLogLimitBytes':1048576,'rawLogBudgetWithinLimit':raw_log_bytes<=1048576,'selectedMetadataLimitBytes':16777216,'cleanup':'pending-trap','recordedAtEpochSeconds':int(time.time())
++}
++path.write_text(json.dumps(record,sort_keys=True,indent=2)+'\n')
+ PY
+ 
+ if [[ "$client_status" -ne 0 ]]; then exit "$client_status"; fi
++
+--- a/steps/finalize.local.sh
++++ b/steps/finalize.local.sh
+@@ -137,7 +137,8 @@
+     if inputs.get("sourceCommit")!=os.environ["LOCAL_SOURCE_COMMIT"] or inputs.get("localExecutionId")!=os.environ["LOCAL_EXECUTION_ID"] or inputs.get("localAttempt")!=os.environ["LOCAL_ATTEMPT"] or inputs.get("localSourceRef")!=os.environ["LOCAL_SOURCE_REF"]: errors.append("run/source identity mismatch")
+     if owner.get("workflowSha256")!=inputs.get("workflowSha256"): errors.append("harness workflow identity mismatch")
+     if complete.get("status")!="commands-complete": errors.append("commands incomplete")
+-    if complete.get("aggregateElapsedMs",1800001)>1800000 or complete.get("endedMonotonicMs",0)>complete.get("deadlineMonotonicMs",0)-60000: errors.append("aggregate D5 deadline or evidence reserve exceeded")
++    if inputs.get("resourceProfile")!="LOCAL_EMULATED_3600" or inputs.get("resourceProfileSha256")!=os.environ["LOCAL_RESOURCE_PROFILE_SHA"] or inputs.get("operatorHashes")!=json.loads(os.environ["LOCAL_OPERATOR_HASHES"]): errors.append("resource profile or operator hash identity mismatch")
++    if complete.get("aggregateElapsedMs",3600001)>3600000 or complete.get("endedMonotonicMs",0)>complete.get("deadlineMonotonicMs",0)-60000: errors.append("aggregate D5 deadline or evidence reserve exceeded")
+     rows=[json.loads(line) for line in (evidence/"command-records.jsonl").read_text().splitlines() if line]
+     names=[x.get("name") for x in rows]
+     if names!=expected_names or len(set(names))!=len(expected_names): errors.append("command roster mismatch")
+@@ -236,7 +237,7 @@
+     staged=[p for p in upload.rglob("*") if p.is_file()]
+     staged_total=sum(p.stat().st_size for p in staged)
+     if staged_total>16777216: raise ValueError("staged evidence exceeds 16 MiB")
+-    result={"status":"LOCAL_DIAGNOSTIC_PASS_G02_D5_37_CASES_AND_RECOVERY","executionKind":"local_linux_diagnostic","localSourceRef":os.environ["LOCAL_SOURCE_REF"],"localSourceBranch":os.environ["LOCAL_SOURCE_BRANCH"],"adapterWorkflow":os.environ["LOCAL_WORKFLOW_ID"],"sourceCommit":os.environ["LOCAL_SOURCE_COMMIT"],"localExecutionId":os.environ["LOCAL_EXECUTION_ID"],"localAttempt":os.environ["LOCAL_ATTEMPT"],"cases":37,"oracleGroups":16,"faultScenarios":3,"noDefaultChecks":19,"commandCount":len(rows),"logBytes":log_total,"evidenceBytes":staged_total,"cleanupVerified":True,"currentCohortLockSha256":owner["cohortLockSha256"],"currentOwnerManifestSha256":hashlib.sha256((evidence/"owner-artifacts.json").read_bytes()).hexdigest(),"originalOracleSha256":owner["oracleSha256"],"oracleSuccessorSha256":owner["oracleSuccessorSha256"],"oracleSuccessorPatchSha256":owner["oracleSuccessorPatchSha256"],"releasePayloadReceiptSha256":hashlib.sha256((root/"release-payload"/"release-payload-receipt.json").read_bytes()).hexdigest()}
++    result={"status":"LOCAL_DIAGNOSTIC_PASS_G02_D5_37_CASES_AND_RECOVERY","executionKind":"local_linux_diagnostic","localSourceRef":os.environ["LOCAL_SOURCE_REF"],"localSourceBranch":os.environ["LOCAL_SOURCE_BRANCH"],"adapterWorkflow":os.environ["LOCAL_WORKFLOW_ID"],"sourceCommit":os.environ["LOCAL_SOURCE_COMMIT"],"localExecutionId":os.environ["LOCAL_EXECUTION_ID"],"localAttempt":os.environ["LOCAL_ATTEMPT"],"resourceProfile":"LOCAL_EMULATED_3600","resourceProfileSha256":os.environ["LOCAL_RESOURCE_PROFILE_SHA"],"operatorHashes":json.loads(os.environ["LOCAL_OPERATOR_HASHES"]),"aggregateSeconds":3600,"cases":37,"oracleGroups":16,"faultScenarios":3,"noDefaultChecks":19,"commandCount":len(rows),"logBytes":log_total,"evidenceBytes":staged_total,"cleanupVerified":True,"currentCohortLockSha256":owner["cohortLockSha256"],"currentOwnerManifestSha256":hashlib.sha256((evidence/"owner-artifacts.json").read_bytes()).hexdigest(),"originalOracleSha256":owner["oracleSha256"],"oracleSuccessorSha256":owner["oracleSuccessorSha256"],"oracleSuccessorPatchSha256":owner["oracleSuccessorPatchSha256"],"releasePayloadReceiptSha256":hashlib.sha256((root/"release-payload"/"release-payload-receipt.json").read_bytes()).hexdigest()}
+     result_text=json.dumps(result,sort_keys=True,indent=2)+"\n"
+     if staged_total+len(result_text.encode())>16777216: raise ValueError("final receipt would exceed the 16 MiB evidence cap")
+     (upload/"d5-receipt.json").write_text(result_text)
+@@ -244,7 +245,7 @@
+     print(json.dumps(result,sort_keys=True))
+ except BaseException as error:
+     shutil.rmtree(upload,ignore_errors=True); upload.mkdir(parents=True,exist_ok=True)
+-    result={"status":"FAIL_OR_UNKNOWN","executionKind":"local_linux_diagnostic","sourceCommit":os.environ["LOCAL_SOURCE_COMMIT"],"localSourceBranch":os.environ["LOCAL_SOURCE_BRANCH"],"localExecutionId":os.environ["LOCAL_EXECUTION_ID"],"localAttempt":os.environ["LOCAL_ATTEMPT"],"localSourceRef":os.environ["LOCAL_SOURCE_REF"],"adapterWorkflow":os.environ.get("LOCAL_WORKFLOW_ID"),"localEventKind":os.environ.get("LOCAL_EXECUTION_KIND"),"reason":"fixed D5 report/custody/cleanup finalizer did not close","errorClass":type(error).__name__,"finalizerFailureCode":finalizer_failure_code(error),"validationFailureCodes":validation_failure_codes(error),"activeCommand":active_command_snapshot()}
++    result={"status":"FAIL_OR_UNKNOWN","executionKind":"local_linux_diagnostic","sourceCommit":os.environ["LOCAL_SOURCE_COMMIT"],"localSourceBranch":os.environ["LOCAL_SOURCE_BRANCH"],"localExecutionId":os.environ["LOCAL_EXECUTION_ID"],"localAttempt":os.environ["LOCAL_ATTEMPT"],"localSourceRef":os.environ["LOCAL_SOURCE_REF"],"adapterWorkflow":os.environ.get("LOCAL_WORKFLOW_ID"),"resourceProfile":"LOCAL_EMULATED_3600","resourceProfileSha256":os.environ["LOCAL_RESOURCE_PROFILE_SHA"],"operatorHashes":json.loads(os.environ["LOCAL_OPERATOR_HASHES"]),"aggregateSeconds":3600,"localEventKind":os.environ.get("LOCAL_EXECUTION_KIND"),"reason":"fixed D5 report/custody/cleanup finalizer did not close","errorClass":type(error).__name__,"finalizerFailureCode":finalizer_failure_code(error),"validationFailureCodes":validation_failure_codes(error),"activeCommand":active_command_snapshot()}
+     try:
+         import stat
+         selected=[]
+--- a/steps/initialize.local.sh
++++ b/steps/initialize.local.sh
+@@ -1,16 +1,17 @@
+ set -euo pipefail
+ test ! -e "$D5_ROOT"
++export LOCAL_RESOURCE_PROFILE=LOCAL_EMULATED_3600
+ now_ms="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"
+ mkdir -p "$D5_ROOT/evidence/logs" "$D5_ROOT/evidence/reports" "$D5_ROOT/evidence/replay" "$D5_ROOT/upload"
+ printf '%s\n' "$now_ms" > "$D5_ROOT/monotonic-start-ms"
+-printf '%s\n' "$((now_ms + 1800000))" > "$D5_ROOT/monotonic-deadline-ms"
++printf '%s\n' "$((now_ms + 3600000))" > "$D5_ROOT/monotonic-deadline-ms"
+ python -I - "$D5_ROOT/upload/d5-receipt.json" "$LOCAL_SOURCE_COMMIT" "$LOCAL_EXECUTION_ID" "$LOCAL_ATTEMPT" "$LOCAL_SOURCE_REF" "$LOCAL_SOURCE_BRANCH" "$LOCAL_WORKFLOW_ID" <<'PY'
+ import json, pathlib, sys
+ path, source, run_id, attempt, ref, branch, workflow = sys.argv[1:]
+ pathlib.Path(path).write_text(json.dumps({
+     "status": "FAIL_OR_UNKNOWN", "scope": "G02-D5 independent native replay", "executionKind": "local_linux_diagnostic",
+     "sourceCommit": source, "localExecutionId": run_id, "localAttempt": attempt,
+-    "localSourceRef": ref, "localSourceBranch": branch, "adapterWorkflow": workflow, "reason": "finalizer has not validated the fixed report and cleanup roster"
++    "localSourceRef": ref, "localSourceBranch": branch, "adapterWorkflow": workflow, "resourceProfile": "LOCAL_EMULATED_3600", "resourceProfileSha256": __import__("os").environ["LOCAL_RESOURCE_PROFILE_SHA"], "operatorHashes": json.loads(__import__("os").environ["LOCAL_OPERATOR_HASHES"]), "aggregateSeconds": 3600, "reason": "finalizer has not validated the fixed report and cleanup roster"
+ }, sort_keys=True) + "\n")
+ PY
+ 
+--- a/steps/replay.local.sh
++++ b/steps/replay.local.sh
+@@ -4,7 +4,7 @@
+ NOW_MS="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"
+ REMAINING_SECONDS="$(((DEADLINE_MS - NOW_MS - 70000) / 1000))"
+ if (( REMAINING_SECONDS <= 0 )); then
+-  echo "Original 30-minute D5 budget exhausted before replay work." >&2
++  echo "LOCAL_EMULATED_3600 aggregate D5 budget exhausted before replay work." >&2
+   exit 124
+ fi
+ timeout --signal=TERM --kill-after=10s "${REMAINING_SECONDS}s" bash -euo pipefail <<'BOUNDED_D5_WORK'
+@@ -31,7 +31,7 @@
+   if (( remaining < limit )); then limit="$remaining"; fi
+   log="$EVIDENCE/logs/$name.log"
+   prior_log_bytes="$(find "$EVIDENCE/logs" -type f -name '*.log' -exec wc -c {} + | awk 'END {print $1+0}')"
+-  available_log_bytes=$((1048576 - prior_log_bytes))
++  available_log_bytes=$((786432 - prior_log_bytes))
+   if (( available_log_bytes < 0 )); then available_log_bytes=0; fi
+   started_ms="$now_ms"
+   python -I - "$ACTIVE_COMMAND" "$name" "$started_ms" "$limit" <<'PY'
+@@ -140,8 +140,11 @@
+     "sourceCommit":head,"sourceTree":tree,"localExecutionId":os.environ["LOCAL_EXECUTION_ID"],
+     "localAttempt":os.environ["LOCAL_ATTEMPT"],"localSourceRef":os.environ["LOCAL_SOURCE_REF"],
+     "executionKind":os.environ["LOCAL_EXECUTION_KIND"],"localSourceBranch":os.environ["LOCAL_SOURCE_BRANCH"],
++    "resourceProfile":os.environ["LOCAL_RESOURCE_PROFILE"],
++    "resourceProfileSha256":os.environ["LOCAL_RESOURCE_PROFILE_SHA"],
++    "operatorHashes":json.loads(os.environ["LOCAL_OPERATOR_HASHES"]),
+     "adapterWorkflow":os.environ["LOCAL_WORKFLOW_ID"],"workflowSha256":hashlib.sha256(workflow_file.read_bytes()).hexdigest(),"tools":tools,
+-    "bounds":{"aggregateSeconds":1800,"workSeconds":1730,"evidenceReserveSeconds":60,
++    "bounds":{"aggregateSeconds":3600,"workSeconds":3530,"evidenceReserveSeconds":60,
+                "childSeconds":180,"killGraceSeconds":10,"logBytes":1048576,"evidenceBytes":16777216}},
+     sort_keys=True,indent=2)+"\n")
+ PY

@@ -1,0 +1,25 @@
+
+tests/core/cardinality-ideals.test.ts:
+(pass) Cardinality is explicit Field meaning with independent item/value references and availability [897.16ms]
+(pass) containers cannot acquire scalar labels; invalid roles, labels and item links refuse atomically [40.23ms]
+(pass) unknown cardinality and recursive/cross-module item definitions remain copied and recoverable [30.37ms]
+(pass) retired core markers are refused without transition or reinterpretation [2.36ms]
+
+tests/core/field-ideals.test.ts:
+(pass) field kinds are explicit; missing kind is never inferred from scalar family [78.02ms]
+(pass) retired core markers are refused without reinterpreting colliding names [0.64ms]
+(pass) current profile refuses malformed kinds and structured scalar claims atomically [15.57ms]
+(pass) unknown future kind and other open metadata survive without semantic completion [8.60ms]
+(pass) future envelope versions and unsafe getter inputs cannot be interpreted [3.21ms]
+
+tests/core/nullability-ideals.test.ts:
+(pass) explicit nullability requires a Field and survives both formats without native interpretation [27.92ms]
+(pass) missing availability does not inherit native nullable flags or defaults [27.58ms]
+(pass) retired core markers are refused rather than reinterpreted [0.84ms]
+(pass) unknown availability is retained, but malformed values and non-Field use fail atomically [9.55ms]
+(pass) unsafe getters and unsupported future versions cannot be interpreted [0.40ms]
+
+ 14 pass
+ 0 fail
+ 384 expect() calls
+Ran 14 tests across 3 files. [1.89s]

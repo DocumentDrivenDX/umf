@@ -1,0 +1,7 @@
+# Narrow union003 source acceptance
+
+ACCEPT actual ordered five-file harness digest `07904d34b782a07bad53cd29797eaca70e0f3c6cb20adc51b1084004b4084ea3`. Independent reconstruction matches root verification. Prior advertised454e97… was incorrect combined metadata; corrected planSHA b5fb96d912b7de33a6f40fb50dfe5aacdd031b9067ce6e0d325b342f87e2ec74; prior plan retained386a407db36d85385def437a21bcc4292b337b121e745233dbf201f5f2c4a9f0. Five executable source files unchanged.
+
+Read complete002→003diff4b8f0e88a2ddfdef4c7f5013e6deeb38186e439929572acf4a3fdef0e1ca69d9. Original cell runner, bootstrap proof and bounded capture remain byte-identical. Outer logs now logs/host-<cell>-union-replay.log, distinct from unchanged inner command paths.311physicalhost+innerhash/size/noncollision checked before314; finalizer checks both physical records for both cells and retains002custody-refused disposition. Original3600watchdog/30stop/resource/image/network/ROsource+aggregate controls, exact verifierbootstrap/environment equality/originalprobe+selector commands and explicitly additional bytecaps unchanged. No concrete blocker.
+
+Root may GO exact two-cell continuation. Actual outputs remain review-required. Preserve originalfailure,001unboundedfunctionalpass,002collision and oldplan metadata unchanged. No SDK/acquisition/assembly/R3/projectsource/Actions repetition. Reviewer text/hash only, no execution.

@@ -1,0 +1,96 @@
+{
+  "profile": "umf.independent-sol-source-review/0.1",
+  "status": "accepted-bounded-source007-plus-exact008-removal",
+  "reviewer": "Independent Sol, not author",
+  "reviewedAtUtc": "2026-10-24T15:45:19.196984+00:00",
+  "input": {
+    "source007ManifestSha256": "d6eb2a7f073cb024dcb2b84826f0c4a05e51d1b799f9ec125615d2771a299788",
+    "source007Path": "/private/tmp/g11-native-lease-source-007",
+    "externalErratumSha256": "cfda436769ab119279728fcd22b0a31e7c1dee396335164f06cee907b6487eda",
+    "overlay008ManifestSha256": "361cced72b2833641139900ea765e6b909369c6a62a27726466fdb16571e44c0",
+    "overlay008PatchSha256": "3d51ae566a5a9800a8cf14e4a52f0cdb71e63e47db7a100e17f57f93f58bb7e4",
+    "baseHead": "0f3a0b4970a9374abd3178269c907763398de262",
+    "currentSourceAndTestMembersVerified": 108,
+    "currentEvidenceMembersVerified": 12,
+    "allHashesSizesVerifiedBeforeAfter": true,
+    "assembledRuntimeClosure": 107,
+    "closureExplanation": "102 source modules from007 plus5 immutable0f3 package-root conformance modules retained from exact predecessor snapshot;6 supplied test/fixture files",
+    "allTwoOverlayPreAndPostHashesSizesMatch": true,
+    "overlayProductASTEquivalentExceptRemovedUnusedHelper": true,
+    "inputPacketNeverEdited": true
+  },
+  "acceptedProductBytes": [
+    {
+      "path": "python/umf_access/src/umf_access/lifecycle/ingress_local_postgres.py",
+      "source007Sha256": "f58623f91d47e028b6ea2c14159dc833042a99ee7f333b2e2ff82847d52aaa58",
+      "currentSha256": "7afd677336ebf723bf4f38d4ecff936f450f9fea420535837dfdad4126b01df0",
+      "currentSize": 258415
+    },
+    {
+      "path": "python/umf_access/tests/test_original_control_lease.py",
+      "source007Sha256": "62a5cb5aabf5d46e2495c9741c95f7a1f43f9bc2b2bd902d1b713b7fbfd857e5",
+      "currentSha256": "baa7d89c087369106cec9a05829b4d6569bec357f2536705d12d63545a62faee",
+      "currentSize": 26770
+    }
+  ],
+  "metadataCustody": {
+    "withdrawnEarlierManifestSha256": "105bc4e6ee191ef7bf7a1aaf8e6a817d4a87dff17bdb7cff04a6be8adaa50e16",
+    "earlierManifestBytesUnavailable": true,
+    "noHistoricalSourceEqualityProofInferred": true,
+    "currentManifestPendingLiteralRemainsUnchanged": true,
+    "originalEarlyProbeHashBoundOnlyByExternalErratumAndIndependentByteComparison": true,
+    "authorship": "Native007-owned paths distinguished from concurrent bootstrap/custody/authority/store dependencies; closure pins are not blanket authorship or acceptance."
+  },
+  "remainingFindings": [],
+  "closedCompositionFindings": [
+    {
+      "id": "007-C1",
+      "priority": 1,
+      "title": "Unused cleanup helper admitted deletion without original signed operation binding",
+      "source007Lines": [
+        3338,
+        3375
+      ],
+      "evidence": "Read-only source inspection: constructor/lease/kind only, target-recover skips active creation; no in-module call sites. No operational deletion experiment performed.",
+      "resolution": "008 removes entire unused helper and asserts absence; exact product AST equivalence proves every other007 product statement unchanged."
+    }
+  ],
+  "previous001002": {
+    "originalLockReplacementBeforeEffectsRefuses": true,
+    "copiedSupervisorAfterBindingRefuses": true,
+    "unleasedChildBeforeLogPopenRefuses": true,
+    "OwnerApprovalRequestIntentBytesMismatchCorrected": true,
+    "OriginalApprovalOutcomeIntentDigestMismatchCorrected": true,
+    "genericIssuerRegistrarRemovedInFavorOfFixedConcreteConstructorBinding": true,
+    "nativeOriginGuard": "Exact concrete type and retained (instance,constructorPID) entry; fork behavior source-inspected, not independently process-replayed.",
+    "configWriteGuard": "Exact active pending, native reservation/value registry, immutable original request bytes/path/config/HBA correspondence and actual core pending handle required."
+  },
+  "actualResults": {
+    "originalEarlyProbeCases": 3,
+    "originalProbeByteIdentical": true,
+    "allThreeOriginalExpectedRefusals": true,
+    "safeUnchangedKernelMethods": 4,
+    "safeKernelPassed": 4,
+    "focusedRepositoryMethods": 5,
+    "focusedRepositoryPassed": 5,
+    "ordinaryChangedHelperCallsitesChecked": 4,
+    "noOldTwoWrongAPIReads": true,
+    "databasePositive": "Actual original registered OwnerAuthorityContext, real Ed25519 signed owner request, actual owner core durable pending binding and kernel lease; journal/target source handles and database connector synthetic. Covers database apply-stage helper, not complete native recovery or full facade."
+  },
+  "notRerun": [
+    "Author47 full focused suite (includes process/fork controls)",
+    "Root146 integrated suite",
+    "Two original kernel methods containing fork/subprocess",
+    "Native/PG process, SQL server, build/browser/copy/global inventory or resource campaign"
+  ],
+  "sourceLimits": [
+    "Bounded source/API correctness acceptance of exact007+erratum+008 only; no full native or product acceptance.",
+    "No new operational/security experiments were performed; source-only cleanup flaw was resolved by exact removal.",
+    "Real-core database apply positive is distinct from genuine full principal-recovery/native transaction acceptance, which remains OPEN.",
+    "ROOT durable checkpoint/pending fence, store/epoch/transition/provider integration and fullG11 qualification remain OPEN.",
+    "Kernel/file lifetime faults are finite observations, not exhaustive OS/native cleanup proof.",
+    "No author/repository/frozen packet edits."
+  ],
+  "sourceAcceptance": true,
+  "nativeQualification": false
+}

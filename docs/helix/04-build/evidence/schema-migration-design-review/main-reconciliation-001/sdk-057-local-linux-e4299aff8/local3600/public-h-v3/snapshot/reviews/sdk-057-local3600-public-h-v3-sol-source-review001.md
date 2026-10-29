@@ -1,0 +1,13 @@
+# Public-H v3 exact D5 replay custody — source closure
+
+ACCEPT SOURCE ONLY: /private/tmp/sdk-057-local3600-public-h-v3/run-local3600-public-h.py,175547bytes,SHA-256a8b496f65010551c5fc4bac368bebc95c1b1406cfc125c12aa733eaa726a7b15. Held packet004 SHA2e70370da3718651b10abe9bfc269b8f8f3db40e387a1d03e9e0d0e00b4eebbe remains HELD.
+
+The correction replaces the erroneous flat-only replay assumption with exactly19 retained paths: original10flat records,8fixed candidate-009 original/successor files and g01/fixture.json.gz. Only the two corresponding fixed parent directories are added; arbitrary nested directories and unknown files remain refused. Recursive regular/nonsymlink/physical selected-evidence hash closure and aggregate limits remain intact.
+
+The additional source validator binds six retained archive members to original custody identities, selected original copies to their actual archive bytes, G01 gzip copy to the retained top-level fixture, three successor sources to owner hashes, three gzip contents to those same sources, patch hashes and row/metadata custody parent-successor links. Reviewer independently compared the five selected original archive copies, three decompressed successor digests and duplicate fixture gzip bytes against actual immutable D5 data. No candidate code was evaluated.
+
+Diff from acceptedv2 is limited to gzip import, exact replay roster/directories, the replay binding helper and returned custody summary. Whole-function comparisons confirm validate_union_continuation and validate_d5_profile_evidence unchanged. Original seven H commands and LIMITS are byte-identical: H1800aggregate/180child/60reserve/10grace/1MiB logs/16MiB metadata. Shared assembly+bounded003 checks, SDK139/full18Linux311, exact three public assets, native/payload byte checks and P/M/tag ancestry remain required. This does not change D5 case semantics or its adopted3600 operator profile.
+
+Producer metadata preflight004 SHA7f4979dd922009e8c85163a8aa0a2fb22aec5ad88bef3497ea9f1b01dac7ba3c accurately records only direct profile/selected metadata validation: actual30commands,37/16/19/3scope,3508800selectedbytes and97096rawlogs. This review reads that report as evidence of its limited call and does not claim reviewer execution or fullH. Earlier v2 refusal is preserved; immutable actual D5 files are unchanged.
+
+This closes the replay-roster reader integration defect in source. Update the operator's independent reader pin/path and packet pin coherently before any H execution, with a focused literal-delta seal. Actual M/tag/public assets remain unknown and release proof remains pending. No candidate execution, imports, AST/YAML parsing, tests, Docker, Git mutation or Actions performed by this reviewer.

@@ -1,0 +1,42 @@
+{
+  "profile": "umf.g04-unit-hosted-owner-adoption/33",
+  "head": "085d8d5a6e59c7d28da5b9481d61d2350e63e114",
+  "tree": "393325b995d617b49bee46dfed5f168c457e6f63",
+  "sourceReviewSha256": "ff7e9c05d6fd01c02c216198075990246265c02841ab714be7773775670ba664",
+  "workflowProposalReviewSha256": "5fa6b76f49c9d146ff91a204dc204f475bf728e9dc86ebae5600711d0938daf7",
+  "workflowSha256": "48204ce81a3113e2ffd808101bb974ac7d5a5d981ec6a023dcc36a5f6718507d",
+  "lockSha256": "5d7e5c591fddb14515f8fbf76b125245fc2b2fac337e7b8025edd17524aef5ab",
+  "sourcePinsSha256": "88d319b6066dd495e7e60b40d6ef8800e6ae69e766ccab09767d7a8b14f0831a",
+  "sourceRows": 120,
+  "branch": "codex/g04-python-unit-qualification",
+  "remoteBranch": "51b26ed664a7b21b9f744c4bb6d2a2b688616b23",
+  "matchingPRs": [],
+  "action": "normal push exact commit to isolated bounded source-unit branch",
+  "dataflow": "Reviewed public source and eight URL/SHA-locked public wheels into fresh ephemeral GitHub CPython3.12.15 venv; source imports plus eight unit modules with synthetic signatures/process/DB transport and temp files. No real SQL/PG/VM/process/binary product build/native service/secrets/private input. Bounded public source-derived unit logs/receipts only.",
+  "limits": {
+    "originalMonotonicSeconds": 360,
+    "jobMinutes": 10,
+    "commandGraceSeconds": 10,
+    "evidenceReserveSeconds": 60,
+    "logsAggregateBytes": 1048576,
+    "artifactBytes": 8388608
+  },
+  "triggerIsolation": "Exactnewunitbranch only; six broad push workflows have only reviewed exact branch exclusion; portable/combined/other dedicated branches and main/manual/tag/PR checks unchanged.",
+  "modules": [
+    "test_g04_conversion_policy",
+    "test_original_supervisor_birth_integration",
+    "test_supervisor_journal_codec",
+    "test_ingress_custody",
+    "test_ingress_local_postgres",
+    "test_row_originals_creation",
+    "test_row_originals_profile",
+    "test_original_store_pending_restart"
+  ],
+  "claims": "UNRUN exact source; only source-unit scope. No native/driver/database/main/release acceptance.",
+  "delta": "Actualgate bothrestartALLassertionsPASS, finalduplicatecreationcorrectlyhits earlierexistingtargetpath guard3698-3702 ratherthanlaterjournalguard3710. Correctfixtureearliestrefusaloracle andpostrefusal assertunchangedjournal/DDL/Corerequestcount/pendingcreations/nativetargets/handles/noactivecreation/nocapability. Productunchanged.",
+  "fixtureReviewSha256": "9c957b930c33864da04679ee658c8355e647122507f3da8d4328fc0bde2baa2d",
+  "sourceConfirmation": "Rootreadfulldiff andverifiedprivatefieldsareinitializedexistingsupervisorslots; originalduplicate-creationrefusalmeaningstrengthenedwithnoeffectschecks. Same137tests/120verifiedpins/originalbounds/publicsyntheticdataflow; no newreviewchain.",
+  "priorRun": 40254168025,
+  "priorArtifact": 12621176305,
+  "priorArtifactSha256": "b856b097a636168f4016a15ef526e8387c17a09a67ef106ecab426916b4c397e"
+}

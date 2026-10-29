@@ -1,0 +1,135 @@
+"""Independent source-only integration probes; never launch/compile/connect."""
+import ast
+import copy
+import hashlib
+import json
+import os
+import tempfile
+from pathlib import Path
+from types import SimpleNamespace as NS
+from unittest.mock import patch
+from umf_access.lifecycle import ingress_local_postgres as n
+from umf_access.lifecycle import ingress_custody as c
+from umf_access.lifecycle.owner_authority import ConfiguredEd25519OwnerAuthority as A
+from test_owner_authority import OwnerAuthorityTests
+from test_ingress_local_postgres_authority_bridge import RealAuthoritySupervisorBridgeTests
+
+results = []
+def observe(name, call):
+    try:
+        value = call()
+        result = {'probe': name, 'result': repr(value)}
+    except Exception as e:
+        result = {'probe': name, 'exception': type(e).__name__, 'message': str(e)}
+    results.append(result)
+    return result
+
+source = Path(n.__file__).read_text()
+tree = ast.parse(source)
+cls = next(x for x in tree.body if isinstance(x, ast.ClassDef) and x.name == 'LocalPostgresSupervisor')
+methods = {x.name:x for x in cls.body if isinstance(x, ast.FunctionDef)}
+def assigned(method, name, values):
+    node = next(x for x in ast.walk(methods[method]) if isinstance(x, ast.Assign)
+                and any(isinstance(t, ast.Name) and t.id == name for t in x.targets))
+    return eval(compile(ast.Expression(node.value), '<exact-source-expression>', 'eval'), vars(n), values)
+
+# Actual public observer returns flat databaseName/databaseOid/systemIdentifier.
+s = object.__new__(n.LocalPostgresSupervisor)
+request = object()
+payload = {'origin': {'database': {'name':'appdb','oid':5,'systemIdentifier':'123'}}}
+s._handles = {id(request):(request,payload,object())}
+with patch.object(n.LocalPostgresSupervisor, '_verify_live_process', return_value={}), \
+     patch.object(n.LocalPostgresSupervisor, '_observe_native', return_value={
+         'databaseName':'appdb','databaseOid':5,'systemIdentifier':'123'}):
+    observe('flat-native-registration-observation', lambda:s.observe_original_registration(
+        request,original_payload=payload,custodian_sequence=1))
+
+# Store validator is called with the entire native observation, not a projection.
+settings = {'searchPath':'pg_catalog','timeZone':'UTC','rowSecurity':'on',
+            'sessionReplicationRole':'origin','transactionReadOnly':'off',
+            'transactionIsolation':'read committed'}
+observe('minimal-settings-validator-control', lambda:s._store_required_settings(settings))
+observe('actual-native-shape-settings', lambda:s._store_required_settings({**settings,
+    'databaseName':'appdb','databaseOid':5,'sessionUser':'maintenance',
+    'currentUser':'controller','roleSetting':'controller'}))
+
+# Contract-valid launch-confirmed event lacks config/HBA digest fields.
+with tempfile.TemporaryDirectory(prefix='sol-native-shapes-') as d:
+    root = Path(d); hba=root/'hba'; config=root/'config';hba.write_bytes(b'hba');config.write_bytes(b'config')
+    st=root.stat(); origin={'database':{'name':'appdb','oid':5,'systemIdentifier':'123'},
+        'initialPostmaster':{'startToken':'token'},'dataDirectory':{
+            'path':str(root),'device':str(st.st_dev),'inode':str(st.st_ino),'ownerUid':st.st_uid}}
+    events=[{'kind':'creation-intent','payload':{'hbaDigest':hashlib.sha256(b'hba').hexdigest(),
+        'configDigest':hashlib.sha256(b'config').hexdigest()}},
+        {'kind':'launch-confirmed','payload':{'launchId':'launch','process':{'startToken':'token'},
+        'nativeObservationDigest':'a'*64,'endpointReceiptDigest':'b'*64}}]
+    s._journal=NS(read=lambda:{'events':events});s._launch={'sockets':[]}
+    s._observer=NS(sockets=lambda _p:[])
+    native={'databaseOid':5,'systemIdentifier':'123','dataDirectory':str(root),
+        'hbaFile':str(hba),'configFile':str(config)}
+    with patch.object(n.LocalPostgresSupervisor,'_verify_live_process',return_value={'pgid':12,'startToken':'token'}), \
+         patch.object(n.LocalPostgresSupervisor,'_observe_native',return_value=native), \
+         patch.object(n.LocalPostgresSupervisor,'_verify_owned_process_group',return_value=[{'pid':12}]), \
+         patch.object(n.LocalPostgresSupervisor,'_verify_endpoint_sockets',return_value=[]), \
+         patch.object(n,'_read_private',side_effect=lambda p:p.read_bytes()):
+        observe('actual-launch-confirmed-shape-origin',lambda:s._native_origin_matches(
+            origin,n._NativeAttestation(s,{},native,'c'*64)))
+
+# Replay exact constructor expressions against the real custody wire validator.
+fixture=OwnerAuthorityTests();fixture.setUp()
+try:
+    registration_intent=fixture._scope_intents()['local-target-registration']
+    registration=registration_intent['registration']
+    approval=NS(authority_id=fixture.config['authorityId'],approval_id='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',approval_digest='a'*64)
+    owner_approval=assigned('apply_target_registration','owner_approval',{'approval':approval})
+    observe('initial-registration-custody-wire',lambda:c._validate_owner_payload({**registration,'ownerApproval':owner_approval}))
+    recovery_payload=assigned('reattach_original_registration','payload',{'registration':registration,'approval':approval})
+    observe('recovery-registration-custody-wire',lambda:c._validate_owner_payload(recovery_payload))
+    initial_bytes=assigned('apply_target_registration','payload_bytes',{'creation':registration})
+    request_bytes=n._canonical(registration_intent)
+    results.append({'probe':'registration-reservation-request-correspondence',
+        'initialPayloadProfile':json.loads(initial_bytes)['profile'],
+        'signedRequestProfile':registration_intent['profile'],
+        'equal':initial_bytes==request_bytes,
+        'initialSha256':hashlib.sha256(initial_bytes).hexdigest(),
+        'requestSha256':hashlib.sha256(request_bytes).hexdigest()})
+finally:fixture.tearDown()
+
+# Real Ed25519 signing/enrollment/ledger and actual supervisor resolver protocol.
+# The supplied bridge supplies a fabricated journal; no DB/native calls exist.
+real_bind=A.bind_native_effect
+bridge_results=[]
+def intercept(authority, approval, reservation):
+    binding=real_bind(authority,approval,reservation)
+    sup=authority._native_supervisor
+    sup._native_effect_bindings[id(reservation)]=binding
+    outcome=sup._record_native_effect_outcome(reservation,'confirmed',{'profile':'sol-source-receipt/0.1'})
+    state=authority.observe_original_request(sup.authority_context,reservation.effect_key)
+    bridge_results.append({'terminalStatus':state.effect_status,
+        'actualReceiptDigest':state.effect_receipt_digest,
+        'nativeReceiptDigest':outcome.receipt_digest,
+        'adapterRecoveryExpectedDigest':n._digest(outcome.receipt_digest)})
+    # Recreate process-local authority + supervisor to exercise true recovery.
+    journal=sup._journal
+    journal.events[0]['payload'].update({'purpose':'native-acceptance',
+        'requestDigest':reservation.request_digest,'approvalId':approval.approval_id,
+        'approvalDigest':approval.approval_digest})
+    issuer=sup._bootstrap_issuer
+    fresh=A(issuer.owner_configuration,ledger_path=authority._ledger.path,bootstrap_issuer=issuer)
+    with patch.object(n,'sys_platform_darwin',return_value=True), \
+         patch.object(n,'_DarwinProcessObserver',return_value=object()):
+        attached=n.LocalPostgresSupervisor(sup._profile,owner_authority=fresh)
+    attached._journal=journal
+    # Restore the genuine bind method before recovery to avoid recursion.
+    with patch.object(A,'bind_native_effect',real_bind):
+        bridge_results.append(observe('real-authority-terminal-recovery',lambda:attached._recover_original_native_effect('local-target-creation')))
+    return binding
+with patch.object(A,'bind_native_effect',intercept):
+    try:
+        RealAuthoritySupervisorBridgeTests().test_signed_creation_request_crosses_native_reservation_resolver()
+    except AssertionError as e:
+        # Original supplied bridge expects effect-pending; our added terminal
+        # stage intentionally and verifiably changed that state to confirmed.
+        results.append({'probe':'supplied-bridge-after-added-terminal-stage','expectedAssertion':str(e)})
+results.append({'probe':'real-crypto-terminal-owner-ledger','details':bridge_results})
+print(json.dumps(results,indent=2))

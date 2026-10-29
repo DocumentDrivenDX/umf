@@ -1,0 +1,587 @@
+﻿2026-10-27T16:39:00.9132993Z Current runner version: '2.338.0'
+2026-10-27T16:39:00.9161306Z ##[group]Runner Image Provisioner
+2026-10-27T16:39:00.9162219Z Hosted Compute Agent
+2026-10-27T16:39:00.9162839Z Version: 20261021.618
+2026-10-27T16:39:00.9163499Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-10-27T16:39:00.9164283Z Build Date: 2026-10-21T00:45:21Z
+2026-10-27T16:39:00.9164998Z Worker ID: {012285a2-0328-4cce-8476-4c44c28fce62}
+2026-10-27T16:39:00.9165699Z Region: canadaeast
+2026-10-27T16:39:00.9166365Z Cloud: Azure
+2026-10-27T16:39:00.9167249Z ##[endgroup]
+2026-10-27T16:39:00.9168923Z ##[group]Operating System
+2026-10-27T16:39:00.9169640Z Ubuntu
+2026-10-27T16:39:00.9170145Z 24.04.5
+2026-10-27T16:39:00.9170722Z LTS
+2026-10-27T16:39:00.9171234Z ##[endgroup]
+2026-10-27T16:39:00.9171814Z ##[group]Runner Image
+2026-10-27T16:39:00.9172453Z Image: ubuntu-24.04
+2026-10-27T16:39:00.9173015Z Version: 20261012.334.1
+2026-10-27T16:39:00.9174336Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-27T16:39:00.9175948Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-27T16:39:00.9177288Z ##[endgroup]
+2026-10-27T16:39:00.9178569Z ##[group]GITHUB_TOKEN Permissions
+2026-10-27T16:39:00.9180487Z Actions: read
+2026-10-27T16:39:00.9181080Z Contents: read
+2026-10-27T16:39:00.9181782Z Metadata: read
+2026-10-27T16:39:00.9182329Z ##[endgroup]
+2026-10-27T16:39:00.9184408Z Secret source: Actions
+2026-10-27T16:39:00.9185393Z Cache mode: write
+2026-10-27T16:39:00.9186150Z Prepare workflow directory
+2026-10-27T16:39:00.9539397Z Prepare all required actions
+2026-10-27T16:39:00.9611482Z Getting action download info
+2026-10-27T16:39:01.2810767Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-27T16:39:01.4472051Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-10-27T16:39:01.6003628Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-27T16:39:01.8991081Z Complete job name: linux-x86_64 Python 3.14.8 public wheel
+2026-10-27T16:39:01.9885650Z ##[group]Run python - "$RECEIPT" "$RUNNER_TEMP/core-wheel-bounds" <<'PY'
+2026-10-27T16:39:01.9887043Z [36;1mpython - "$RECEIPT" "$RUNNER_TEMP/core-wheel-bounds" <<'PY'[0m
+2026-10-27T16:39:01.9887858Z [36;1mimport json, os, pathlib, sys[0m
+2026-10-27T16:39:01.9888443Z [36;1mimport time[0m
+2026-10-27T16:39:01.9889171Z [36;1mroot = pathlib.Path(sys.argv[2]); root.mkdir(parents=True, exist_ok=True)[0m
+2026-10-27T16:39:01.9889991Z [36;1mnow = time.monotonic()[0m
+2026-10-27T16:39:01.9891414Z [36;1mlimits = {"totalSeconds": 1200, "cleanupReserveSeconds": 60, "timeoutKillGraceSeconds": 10, "drainMarginSeconds": 2, "childSeconds": 180, "aggregateLogBytes": 1048576, "artifactBytes": 16777216}[0m
+2026-10-27T16:39:01.9893844Z [36;1m(root / "deadline.json").write_text(json.dumps({"profile": "umf.core-python-qualification-deadline/1", "startedMonotonic": now, "deadlineMonotonic": now + limits["totalSeconds"], **limits}, sort_keys=True) + "\n")[0m
+2026-10-27T16:39:01.9896355Z [36;1m(root / "failure-receipt.json").write_text(json.dumps({"profile": "umf.core-python-qualification-run/1", "status": "failed_or_incomplete", "commands": [], "limits": limits}, sort_keys=True) + "\n")[0m
+2026-10-27T16:39:01.9898153Z [36;1mpathlib.Path(sys.argv[1]).write_text(json.dumps({[0m
+2026-10-27T16:39:01.9898957Z [36;1m    "profile": "umf.core-0.10.3-public-install-cell/1",[0m
+2026-10-27T16:39:01.9899682Z [36;1m    "status": "FAIL_OR_UNKNOWN",[0m
+2026-10-27T16:39:01.9900437Z [36;1m    "reason": "Public proof did not reach its passing finalizer.",[0m
+2026-10-27T16:39:01.9901225Z [36;1m    "sourceH": os.environ["SOURCE_H"],[0m
+2026-10-27T16:39:01.9901884Z [36;1m    "cohort": os.environ["COHORT"],[0m
+2026-10-27T16:39:01.9902582Z [36;1m    "requestedPython": os.environ["PYTHON_VERSION"],[0m
+2026-10-27T16:39:01.9903354Z [36;1m}, sort_keys=True, indent=2) + "\n", encoding="utf-8")[0m
+2026-10-27T16:39:01.9904257Z [36;1mPY[0m
+2026-10-27T16:39:02.1398485Z shell: /usr/bin/bash -e {0}
+2026-10-27T16:39:02.1399531Z env:
+2026-10-27T16:39:02.1400200Z   RECEIPT: /home/runner/work/_temp/core-0.10.3-public-cell.json
+2026-10-27T16:39:02.1401007Z   COHORT: linux-x86_64
+2026-10-27T16:39:02.1401556Z   PYTHON_VERSION: 3.14.8
+2026-10-27T16:39:02.1402177Z   SOURCE_H: a487d7cac8fb80d437987771689853f0ba682258
+2026-10-27T16:39:02.1402870Z ##[endgroup]
+2026-10-27T16:39:02.2118257Z ##[group]Run actions/checkout@v4
+2026-10-27T16:39:02.2118856Z with:
+2026-10-27T16:39:02.2119291Z   persist-credentials: false
+2026-10-27T16:39:02.2119856Z   submodules: false
+2026-10-27T16:39:02.2120355Z   repository: DocumentDrivenDX/umf
+2026-10-27T16:39:02.2124358Z   token: ***
+2026-10-27T16:39:02.2124799Z   ssh-strict: true
+2026-10-27T16:39:02.2125234Z   ssh-user: git
+2026-10-27T16:39:02.2125661Z   clean: true
+2026-10-27T16:39:02.2126101Z   sparse-checkout-cone-mode: true
+2026-10-27T16:39:02.2126652Z   fetch-depth: 1
+2026-10-27T16:39:02.2127374Z   fetch-tags: false
+2026-10-27T16:39:02.2127826Z   show-progress: true
+2026-10-27T16:39:02.2128271Z   lfs: false
+2026-10-27T16:39:02.2128701Z   set-safe-directory: true
+2026-10-27T16:39:02.2129210Z   allow-unsafe-pr-checkout: false
+2026-10-27T16:39:02.2129738Z ##[endgroup]
+2026-10-27T16:39:02.7981639Z Syncing repository: DocumentDrivenDX/umf
+2026-10-27T16:39:02.7984379Z ##[group]Getting Git version info
+2026-10-27T16:39:02.7985660Z Working directory is '/home/runner/work/umf/umf'
+2026-10-27T16:39:02.7987794Z [command]/usr/bin/git version
+2026-10-27T16:39:02.8084477Z git version 2.55.0
+2026-10-27T16:39:02.8139814Z ##[endgroup]
+2026-10-27T16:39:02.8176358Z Temporarily overriding HOME='/home/runner/work/_temp/79ee4980-4a47-41df-9504-73b55da95229' before making global git config changes
+2026-10-27T16:39:02.8181806Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-27T16:39:02.8190673Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf
+2026-10-27T16:39:02.8421814Z Deleting the contents of '/home/runner/work/umf/umf'
+2026-10-27T16:39:02.8427884Z ##[group]Initializing the repository
+2026-10-27T16:39:02.8433427Z [command]/usr/bin/git init /home/runner/work/umf/umf
+2026-10-27T16:39:02.8600792Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-27T16:39:02.8604879Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-27T16:39:02.8607801Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-27T16:39:02.8610743Z hint: call:
+2026-10-27T16:39:02.8612660Z hint:
+2026-10-27T16:39:02.8615084Z hint: 	git config --global init.defaultBranch <name>
+2026-10-27T16:39:02.8618345Z hint:
+2026-10-27T16:39:02.8621146Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-27T16:39:02.8624799Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-27T16:39:02.8627994Z hint:
+2026-10-27T16:39:02.8629558Z hint: 	git branch -m <name>
+2026-10-27T16:39:02.8631639Z hint:
+2026-10-27T16:39:02.8634184Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-27T16:39:02.8638162Z Initialized empty Git repository in /home/runner/work/umf/umf/.git/
+2026-10-27T16:39:02.8644371Z [command]/usr/bin/git remote add origin https://github.com/DocumentDrivenDX/umf
+2026-10-27T16:39:02.8657675Z ##[endgroup]
+2026-10-27T16:39:02.8660379Z ##[group]Disabling automatic garbage collection
+2026-10-27T16:39:02.8662779Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-27T16:39:02.8835562Z ##[endgroup]
+2026-10-27T16:39:02.8837956Z ##[group]Setting up auth
+2026-10-27T16:39:02.8847392Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T16:39:02.8891658Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-27T16:39:02.9477433Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T16:39:02.9519249Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-27T16:39:02.9774726Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T16:39:02.9827684Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-27T16:39:03.0069363Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-27T16:39:03.0242471Z ##[endgroup]
+2026-10-27T16:39:03.0244731Z ##[group]Fetching the repository
+2026-10-27T16:39:03.0259854Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +a487d7cac8fb80d437987771689853f0ba682258:refs/remotes/origin/codex/core-python314-public-install-proof
+2026-10-27T16:40:29.7296108Z From https://github.com/DocumentDrivenDX/umf
+2026-10-27T16:40:29.7297448Z  * [new ref]           a487d7cac8fb80d437987771689853f0ba682258 -> origin/codex/core-python314-public-install-proof
+2026-10-27T16:40:29.7317520Z ##[endgroup]
+2026-10-27T16:40:29.7318268Z ##[group]Determining the checkout info
+2026-10-27T16:40:29.7318855Z ##[endgroup]
+2026-10-27T16:40:29.7319348Z [command]/usr/bin/git sparse-checkout disable
+2026-10-27T16:40:29.7364414Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-27T16:40:29.7398529Z ##[group]Checking out the ref
+2026-10-27T16:40:29.7402437Z [command]/usr/bin/git checkout --progress --force -B codex/core-python314-public-install-proof refs/remotes/origin/codex/core-python314-public-install-proof
+2026-10-27T16:40:30.8036333Z Updating files:   5% (3652/62065)
+2026-10-27T16:40:30.9220648Z Updating files:   6% (3724/62065)
+2026-10-27T16:40:31.2313184Z Updating files:   7% (4345/62065)
+2026-10-27T16:40:31.2963512Z Updating files:   8% (4966/62065)
+2026-10-27T16:40:31.3698888Z Updating files:   9% (5586/62065)
+2026-10-27T16:40:31.5429270Z Updating files:  10% (6207/62065)
+2026-10-27T16:40:31.7982643Z Updating files:  11% (6828/62065)
+2026-10-27T16:40:31.8124274Z Updating files:  11% (7432/62065)
+2026-10-27T16:40:32.4322590Z Updating files:  12% (7448/62065)
+2026-10-27T16:40:32.7803011Z Updating files:  13% (8069/62065)
+2026-10-27T16:40:32.7953375Z Updating files:  14% (8690/62065)
+2026-10-27T16:40:32.8239216Z Updating files:  14% (8910/62065)
+2026-10-27T16:40:32.8857584Z Updating files:  15% (9310/62065)
+2026-10-27T16:40:33.2818678Z Updating files:  16% (9931/62065)
+2026-10-27T16:40:33.4592351Z Updating files:  17% (10552/62065)
+2026-10-27T16:40:33.7239666Z Updating files:  18% (11172/62065)
+2026-10-27T16:40:33.7954058Z Updating files:  19% (11793/62065)
+2026-10-27T16:40:33.8013162Z Updating files:  19% (12321/62065)
+2026-10-27T16:40:33.8360998Z Updating files:  20% (12413/62065)
+2026-10-27T16:40:33.8762373Z Updating files:  21% (13034/62065)
+2026-10-27T16:40:33.9060002Z Updating files:  22% (13655/62065)
+2026-10-27T16:40:33.9358151Z Updating files:  23% (14275/62065)
+2026-10-27T16:40:33.9717938Z Updating files:  24% (14896/62065)
+2026-10-27T16:40:34.0015604Z Updating files:  25% (15517/62065)
+2026-10-27T16:40:34.0329911Z Updating files:  26% (16137/62065)
+2026-10-27T16:40:34.0627498Z Updating files:  27% (16758/62065)
+2026-10-27T16:40:34.0985768Z Updating files:  28% (17379/62065)
+2026-10-27T16:40:34.1537195Z Updating files:  29% (17999/62065)
+2026-10-27T16:40:34.1829422Z Updating files:  30% (18620/62065)
+2026-10-27T16:40:34.2227274Z Updating files:  31% (19241/62065)
+2026-10-27T16:40:34.7979200Z Updating files:  32% (19861/62065)
+2026-10-27T16:40:35.8507472Z Updating files:  32% (20021/62065)
+2026-10-27T16:40:36.8072957Z Updating files:  32% (20117/62065)
+2026-10-27T16:40:37.1233308Z Updating files:  32% (20217/62065)
+2026-10-27T16:40:37.2518537Z Updating files:  33% (20482/62065)
+2026-10-27T16:40:37.5186047Z Updating files:  34% (21103/62065)
+2026-10-27T16:40:37.5801212Z Updating files:  35% (21723/62065)
+2026-10-27T16:40:37.6217189Z Updating files:  36% (22344/62065)
+2026-10-27T16:40:37.6583878Z Updating files:  37% (22965/62065)
+2026-10-27T16:40:37.6901511Z Updating files:  38% (23585/62065)
+2026-10-27T16:40:37.7211480Z Updating files:  39% (24206/62065)
+2026-10-27T16:40:37.7504200Z Updating files:  40% (24826/62065)
+2026-10-27T16:40:37.7785854Z Updating files:  41% (25447/62065)
+2026-10-27T16:40:37.7953422Z Updating files:  42% (26068/62065)
+2026-10-27T16:40:37.9824022Z Updating files:  42% (26333/62065)
+2026-10-27T16:40:38.0461184Z Updating files:  43% (26688/62065)
+2026-10-27T16:40:38.1863097Z Updating files:  44% (27309/62065)
+2026-10-27T16:40:38.3502988Z Updating files:  45% (27930/62065)
+2026-10-27T16:40:38.3962499Z Updating files:  46% (28550/62065)
+2026-10-27T16:40:38.4354998Z Updating files:  47% (29171/62065)
+2026-10-27T16:40:38.6152068Z Updating files:  48% (29792/62065)
+2026-10-27T16:40:38.6593397Z Updating files:  49% (30412/62065)
+2026-10-27T16:40:38.7375174Z Updating files:  50% (31033/62065)
+2026-10-27T16:40:38.7739315Z Updating files:  51% (31654/62065)
+2026-10-27T16:40:38.7953004Z Updating files:  52% (32274/62065)
+2026-10-27T16:40:38.8333946Z Updating files:  52% (32608/62065)
+2026-10-27T16:40:38.8580069Z Updating files:  53% (32895/62065)
+2026-10-27T16:40:38.8833169Z Updating files:  54% (33516/62065)
+2026-10-27T16:40:38.9180388Z Updating files:  55% (34136/62065)
+2026-10-27T16:40:38.9763202Z Updating files:  56% (34757/62065)
+2026-10-27T16:40:39.0203334Z Updating files:  57% (35378/62065)
+2026-10-27T16:40:39.0554227Z Updating files:  58% (35998/62065)
+2026-10-27T16:40:39.1144316Z Updating files:  59% (36619/62065)
+2026-10-27T16:40:39.1614988Z Updating files:  60% (37239/62065)
+2026-10-27T16:40:39.2137526Z Updating files:  61% (37860/62065)
+2026-10-27T16:40:39.2405231Z Updating files:  62% (38481/62065)
+2026-10-27T16:40:39.2646153Z Updating files:  63% (39101/62065)
+2026-10-27T16:40:39.2872193Z Updating files:  64% (39722/62065)
+2026-10-27T16:40:39.3116287Z Updating files:  65% (40343/62065)
+2026-10-27T16:40:39.3384841Z Updating files:  66% (40963/62065)
+2026-10-27T16:40:39.3797637Z Updating files:  67% (41584/62065)
+2026-10-27T16:40:39.4167812Z Updating files:  68% (42205/62065)
+2026-10-27T16:40:39.4670763Z Updating files:  69% (42825/62065)
+2026-10-27T16:40:39.5067260Z Updating files:  70% (43446/62065)
+2026-10-27T16:40:39.5342295Z Updating files:  71% (44067/62065)
+2026-10-27T16:40:39.5567710Z Updating files:  72% (44687/62065)
+2026-10-27T16:40:39.5800712Z Updating files:  73% (45308/62065)
+2026-10-27T16:40:39.6019962Z Updating files:  74% (45929/62065)
+2026-10-27T16:40:39.6229215Z Updating files:  75% (46549/62065)
+2026-10-27T16:40:39.6451424Z Updating files:  76% (47170/62065)
+2026-10-27T16:40:39.6714775Z Updating files:  77% (47791/62065)
+2026-10-27T16:40:39.6931725Z Updating files:  78% (48411/62065)
+2026-10-27T16:40:39.7169608Z Updating files:  79% (49032/62065)
+2026-10-27T16:40:39.7479861Z Updating files:  80% (49652/62065)
+2026-10-27T16:40:39.7982302Z Updating files:  81% (50273/62065)
+2026-10-27T16:40:39.8184960Z Updating files:  81% (50727/62065)
+2026-10-27T16:40:39.8938730Z Updating files:  82% (50894/62065)
+2026-10-27T16:40:39.9457976Z Updating files:  83% (51514/62065)
+2026-10-27T16:40:39.9951064Z Updating files:  84% (52135/62065)
+2026-10-27T16:40:40.0198013Z Updating files:  85% (52756/62065)
+2026-10-27T16:40:40.0454627Z Updating files:  86% (53376/62065)
+2026-10-27T16:40:40.0696392Z Updating files:  87% (53997/62065)
+2026-10-27T16:40:40.1381949Z Updating files:  88% (54618/62065)
+2026-10-27T16:40:40.1690422Z Updating files:  89% (55238/62065)
+2026-10-27T16:40:40.1933247Z Updating files:  90% (55859/62065)
+2026-10-27T16:40:40.2209315Z Updating files:  91% (56480/62065)
+2026-10-27T16:40:40.2647225Z Updating files:  92% (57100/62065)
+2026-10-27T16:40:40.2972668Z Updating files:  93% (57721/62065)
+2026-10-27T16:40:40.3302134Z Updating files:  94% (58342/62065)
+2026-10-27T16:40:41.0003797Z Updating files:  95% (58962/62065)
+2026-10-27T16:40:41.0204181Z Updating files:  95% (59447/62065)
+2026-10-27T16:40:41.0688542Z Updating files:  96% (59583/62065)
+2026-10-27T16:40:41.1099058Z Updating files:  97% (60204/62065)
+2026-10-27T16:40:41.1435070Z Updating files:  98% (60824/62065)
+2026-10-27T16:40:41.1940363Z Updating files:  99% (61445/62065)
+2026-10-27T16:40:41.1941379Z Updating files: 100% (62065/62065)
+2026-10-27T16:40:41.1941784Z Updating files: 100% (62065/62065), done.
+2026-10-27T16:40:41.5826095Z Switched to a new branch 'codex/core-python314-public-install-proof'
+2026-10-27T16:40:41.5828259Z branch 'codex/core-python314-public-install-proof' set up to track 'origin/codex/core-python314-public-install-proof'.
+2026-10-27T16:40:41.6069110Z ##[endgroup]
+2026-10-27T16:40:41.6128549Z [command]/usr/bin/git log -1 --format=%H
+2026-10-27T16:40:41.6151561Z a487d7cac8fb80d437987771689853f0ba682258
+2026-10-27T16:40:41.6163109Z ##[group]Removing auth
+2026-10-27T16:40:41.6168389Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T16:40:41.6201814Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-27T16:40:41.6479737Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T16:40:41.6507658Z http.https://github.com/.extraheader
+2026-10-27T16:40:41.6517798Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-27T16:40:41.8786632Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-27T16:40:41.9058605Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T16:40:41.9118008Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-27T16:40:41.9377333Z ##[endgroup]
+2026-10-27T16:40:42.3307063Z ##[group]Run set -euo pipefail
+2026-10-27T16:40:42.3307546Z [36;1mset -euo pipefail[0m
+2026-10-27T16:40:42.3308337Z [36;1mpython3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name validate-held-public-proof-packet -- \[0m
+2026-10-27T16:40:42.3309235Z [36;1m  python - "$INPUT_PACKET" "$GITHUB_OUTPUT" <<'PY'[0m
+2026-10-27T16:40:42.3309686Z [36;1mimport json, os, pathlib, re, sys, unittest[0m
+2026-10-27T16:40:42.3310211Z [36;1mfrom tools.verify_core_public_producer import retained_policy_packet[0m
+2026-10-27T16:40:42.3310809Z [36;1mpacket_path, output_path = map(pathlib.Path, sys.argv[1:])[0m
+2026-10-27T16:40:42.3311359Z [36;1mpacket = json.loads(packet_path.read_text(encoding="utf-8"))[0m
+2026-10-27T16:40:42.3312370Z [36;1mif os.environ["REPOSITORY"] != "DocumentDrivenDX/umf" or os.environ["EVENT_NAME"] != "push" or os.environ["REF"] != "refs/heads/codex/core-python314-public-install-proof":[0m
+2026-10-27T16:40:42.3313463Z [36;1m    raise SystemExit("Wrong repository, event, or exact public-proof branch")[0m
+2026-10-27T16:40:42.3314060Z [36;1mif set(packet) != {"profile", "status", "producer", "publicRelease", "limits"}:[0m
+2026-10-27T16:40:42.3314661Z [36;1m    raise SystemExit("Public proof packet differs from the fixed closed top-level profile")[0m
+2026-10-27T16:40:42.3315390Z [36;1mif packet.get("profile") != "umf.core-0.10.3-public-install-proof-inputs/1" or packet.get("status") != "READY":[0m
+2026-10-27T16:40:42.3316188Z [36;1m    raise SystemExit("Public proof is HELD until actual producer, release, and asset identities are reviewed")[0m
+2026-10-27T16:40:42.3317068Z [36;1msha = lambda value: isinstance(value, str) and re.fullmatch(r"[0-9a-f]{40}", value) is not None[0m
+2026-10-27T16:40:42.3317959Z [36;1mdigest = lambda value: isinstance(value, str) and re.fullmatch(r"[0-9a-f]{64}", value) is not None[0m
+2026-10-27T16:40:42.3318460Z [36;1mproducer = packet.get("producer", {})[0m
+2026-10-27T16:40:42.3318798Z [36;1mrelease = packet.get("publicRelease", {})[0m
+2026-10-27T16:40:42.3319112Z [36;1mexpected_producer = {[0m
+2026-10-27T16:40:42.3319452Z [36;1m    "sourceCommit": "34a337b2d398b5ae33954cc250f6237bc1661c21",[0m
+2026-10-27T16:40:42.3319886Z [36;1m    "sourceTree": "0379258db62e498a4b489d2b7f613e99e63c0a4b",[0m
+2026-10-27T16:40:42.3320340Z [36;1m    "workflowPath": ".github/workflows/python-action-runtime.yml",[0m
+2026-10-27T16:40:42.3320737Z [36;1m    "event": "workflow_dispatch",[0m
+2026-10-27T16:40:42.3321071Z [36;1m    "headBranch": "codex/core-python314-generation",[0m
+2026-10-27T16:40:42.3321411Z [36;1m    "workflowRunId": 40448360241,[0m
+2026-10-27T16:40:42.3321693Z [36;1m    "workflowRunAttempt": 1,[0m
+2026-10-27T16:40:42.3322003Z [36;1m    "retainedBuild": retained_policy_packet(),[0m
+2026-10-27T16:40:42.3322314Z [36;1m}[0m
+2026-10-27T16:40:42.3322520Z [36;1mif producer != expected_producer:[0m
+2026-10-27T16:40:42.3323030Z [36;1m    raise SystemExit("Producer identity and retained S34 policy differ from the fixed exact profile")[0m
+2026-10-27T16:40:42.3323660Z [36;1mif set(release) != {"tag", "commit", "assets", "sourceCorrespondence", "metadata"}:[0m
+2026-10-27T16:40:42.3324239Z [36;1m    raise SystemExit("Public release packet differs from the fixed closed profile")[0m
+2026-10-27T16:40:42.3324792Z [36;1mif release.get("tag") != "python-v0.10.3" or not sha(release.get("commit")):[0m
+2026-10-27T16:40:42.3325359Z [36;1m    raise SystemExit("Public release tag or merge commit identity is held or malformed")[0m
+2026-10-27T16:40:42.3325825Z [36;1massets = release.get("assets", {})[0m
+2026-10-27T16:40:42.3326168Z [36;1mif set(assets) != {"linuxWheel", "macosWheel", "sdist"}:[0m
+2026-10-27T16:40:42.3326844Z [36;1m    raise SystemExit("Public Core release asset roster must contain exactly two wheels and one sdist")[0m
+2026-10-27T16:40:42.3327357Z [36;1mexpected_assets = {[0m
+2026-10-27T16:40:42.3328579Z [36;1m    "linuxWheel": {"filename": "umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl", "sizeBytes": 3612043, "sha256": "cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75", "nativeSha256": "c51b511a06bc1ccde6cc2208d33a4fb70ef66c67507ba8f2a6ea05fd2543cf57"},[0m
+2026-10-27T16:40:42.3330395Z [36;1m    "macosWheel": {"filename": "umf_core-0.10.3-cp311-abi3-macosx_11_0_arm64.whl", "sizeBytes": 3331547, "sha256": "dc2586793e1492d1f825bd9e12f27d5db9f9330ae2343d9e7773c7052f1f6ea6", "nativeSha256": "df3dca411dfe11b045e6cd858bc5e3999c314fbe946826ba3b98f1a7d6934256"},[0m
+2026-10-27T16:40:42.3331777Z [36;1m    "sdist": {"filename": "umf_core-0.10.3.tar.gz", "sizeBytes": 2826487, "sha256": "61b3e12a84f68f890fa34e2da14bbda47e101b7c6eadd5207680827e8daa694c"},[0m
+2026-10-27T16:40:42.3332402Z [36;1m}[0m
+2026-10-27T16:40:42.3332606Z [36;1mif assets != expected_assets:[0m
+2026-10-27T16:40:42.3333095Z [36;1m    raise SystemExit("Public archive identities differ from the fixed retained S34 producer bytes")[0m
+2026-10-27T16:40:42.3333606Z [36;1mfor key, row in assets.items():[0m
+2026-10-27T16:40:42.3334584Z [36;1m    if not isinstance(row, dict) or not isinstance(row.get("filename"), str) or row["filename"] == "HELD" or pathlib.PurePosixPath(row["filename"]).name != row["filename"] or type(row.get("sizeBytes")) is not int or row["sizeBytes"] <= 0 or not digest(row.get("sha256")):[0m
+2026-10-27T16:40:42.3335683Z [36;1m        raise SystemExit("Public asset identity is held or malformed: " + key)[0m
+2026-10-27T16:40:42.3336126Z [36;1mfor key in ("linuxWheel", "macosWheel"):[0m
+2026-10-27T16:40:42.3336471Z [36;1m    if not digest(assets[key].get("nativeSha256")):[0m
+2026-10-27T16:40:42.3337085Z [36;1m        raise SystemExit("Public native module identity is held or malformed: " + key)[0m
+2026-10-27T16:40:42.3337775Z [36;1mif not re.fullmatch(r"umf_core-0\.10\.3-cp311-abi3-manylinux_2_[0-9]+_x86_64\.whl", assets["linuxWheel"]["filename"]):[0m
+2026-10-27T16:40:42.3338666Z [36;1m    raise SystemExit("Linux public wheel does not carry an exact abi3 manylinux x86_64 identity")[0m
+2026-10-27T16:40:42.3339487Z [36;1mif assets["macosWheel"]["filename"] != "umf_core-0.10.3-cp311-abi3-macosx_11_0_arm64.whl" or assets["sdist"]["filename"] != "umf_core-0.10.3.tar.gz":[0m
+2026-10-27T16:40:42.3340331Z [36;1m    raise SystemExit("macOS wheel or common sdist filename differs from the closed release profile")[0m
+2026-10-27T16:40:42.3340906Z [36;1mcorrespondence = release.get("sourceCorrespondence", {})[0m
+2026-10-27T16:40:42.3341651Z [36;1mif set(correspondence) != {"profile", "archiveFileCount", "producerMapSha256", "releaseMapSha256", "testPath", "producerTestSha256", "releaseTestSha256"}:[0m
+2026-10-27T16:40:42.3342506Z [36;1m    raise SystemExit("Retained source correspondence differs from the exact closed profile")[0m
+2026-10-27T16:40:42.3344775Z [36;1mif correspondence.get("profile") != "umf.core-retained-sdist-source-correspondence/1" or correspondence.get("archiveFileCount") != 531 or correspondence.get("producerMapSha256") != "3eed351abf9255eb36316089b3d3b2b6ee1985b117468fbbe4bedeceda1b24a6" or correspondence.get("testPath") != "tests/test_distribution_artifact.py" or correspondence.get("producerTestSha256") != "57c2bc4de660798ac1028b93f480ddb77934b2110fce03a72d968039667ae8c1" or not digest(correspondence.get("releaseMapSha256")) or not digest(correspondence.get("releaseTestSha256")):[0m
+2026-10-27T16:40:42.3347275Z [36;1m    raise SystemExit("Final M source map or test-file identity is held or malformed")[0m
+2026-10-27T16:40:42.3347747Z [36;1mmetadata = release.get("metadata", {})[0m
+2026-10-27T16:40:42.3348277Z [36;1mmetadata_roles = {"sha256Sums", "releasePins", "qualification", "sourceCi", "evidence", "notes", "inventory"}[0m
+2026-10-27T16:40:42.3348813Z [36;1mif set(metadata) != metadata_roles:[0m
+2026-10-27T16:40:42.3349312Z [36;1m    raise SystemExit("Public release metadata roles differ from the held closed assembly profile")[0m
+2026-10-27T16:40:42.3349824Z [36;1mfor key, row in metadata.items():[0m
+2026-10-27T16:40:42.3351025Z [36;1m    if not isinstance(row, dict) or not isinstance(row.get("filename"), str) or row["filename"] == "HELD" or pathlib.PurePosixPath(row["filename"]).name != row["filename"] or type(row.get("sizeBytes")) is not int or row["sizeBytes"] <= 0 or row["sizeBytes"] > 16777216 or not digest(row.get("sha256")):[0m
+2026-10-27T16:40:42.3352286Z [36;1m        raise SystemExit("Public release metadata identity is held or malformed: " + key)[0m
+2026-10-27T16:40:42.3353030Z [36;1mif metadata["sha256Sums"]["filename"] != "SHA256SUMS" or metadata["releasePins"]["filename"] != "release-pins.json":[0m
+2026-10-27T16:40:42.3353764Z [36;1m    raise SystemExit("Public checksums or release-pins filename differs from the closed profile")[0m
+2026-10-27T16:40:42.3354338Z [36;1mmetadata_names = [row["filename"] for row in metadata.values()][0m
+2026-10-27T16:40:42.3354795Z [36;1marchive_names = [row["filename"] for row in assets.values()][0m
+2026-10-27T16:40:42.3355196Z [36;1mcomplete_names = archive_names + metadata_names[0m
+2026-10-27T16:40:42.3355581Z [36;1mif len(complete_names) != len(set(complete_names)):[0m
+2026-10-27T16:40:42.3356063Z [36;1m    raise SystemExit("Public release archive and metadata filenames are not unique")[0m
+2026-10-27T16:40:42.3356517Z [36;1mlimits = packet.get("limits", {})[0m
+2026-10-27T16:40:42.3357064Z [36;1mif limits != {"cellSeconds": 1200, "wheelBytes": 16777216, "sdistBytes": 16777216}:[0m
+2026-10-27T16:40:42.3357579Z [36;1m    raise SystemExit("Original bounded public-cell limits changed")[0m
+2026-10-27T16:40:42.3357968Z [36;1mfor key, row in assets.items():[0m
+2026-10-27T16:40:42.3358396Z [36;1m    if row["sizeBytes"] > limits["wheelBytes" if key.endswith("Wheel") else "sdistBytes"]:[0m
+2026-10-27T16:40:42.3358943Z [36;1m        raise SystemExit("Public asset exceeds its exact download bound")[0m
+2026-10-27T16:40:42.3359693Z [36;1mif sum(row["sizeBytes"] for row in assets.values()) + sum(row["sizeBytes"] for row in metadata.values()) > 16777216:[0m
+2026-10-27T16:40:42.3360438Z [36;1m    raise SystemExit("Complete public release asset family exceeds the fixed 16 MiB aggregate bound")[0m
+2026-10-27T16:40:42.3361006Z [36;1mfrom tools import test_core_public_producer_transport[0m
+2026-10-27T16:40:42.3361598Z [36;1mtransport_suite = unittest.defaultTestLoader.loadTestsFromModule(test_core_public_producer_transport)[0m
+2026-10-27T16:40:42.3362268Z [36;1mtransport_result = unittest.TextTestRunner(verbosity=2).run(transport_suite)[0m
+2026-10-27T16:40:42.3362730Z [36;1mif not transport_result.wasSuccessful():[0m
+2026-10-27T16:40:42.3363159Z [36;1m    raise SystemExit("Producer API and artifact redirect regression failed")[0m
+2026-10-27T16:40:42.3364434Z [36;1mfor key, value in (("producer_source_commit", producer["sourceCommit"]), ("producer_source_tree", producer["sourceTree"]), ("producer_run_id", str(producer["workflowRunId"])), ("producer_run_attempt", str(producer["workflowRunAttempt"])), ("release_tag", release["tag"]), ("release_commit", release["commit"])):[0m
+2026-10-27T16:40:42.3365689Z [36;1m    output_path.open("a", encoding="utf-8").write(f"{key}={value}\n")[0m
+2026-10-27T16:40:42.3366062Z [36;1mPY[0m
+2026-10-27T16:40:42.3432990Z shell: /usr/bin/bash -e {0}
+2026-10-27T16:40:42.3433248Z env:
+2026-10-27T16:40:42.3433473Z   REPOSITORY: DocumentDrivenDX/umf
+2026-10-27T16:40:42.3433737Z   EVENT_NAME: push
+2026-10-27T16:40:42.3434025Z   REF: refs/heads/codex/core-python314-public-install-proof
+2026-10-27T16:40:42.3434502Z   INPUT_PACKET: qualification-inputs/core-0.10.3-public-install-proof.json
+2026-10-27T16:40:42.3434909Z   WHEEL_KEY: linuxWheel
+2026-10-27T16:40:42.3438153Z   GH_TOKEN: ***
+2026-10-27T16:40:42.3438372Z ##[endgroup]
+2026-10-27T16:40:43.1500547Z ##[group]Run python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name verify-producer-run-and-artifacts -- \
+2026-10-27T16:40:43.1501659Z [36;1mpython3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name verify-producer-run-and-artifacts -- \[0m
+2026-10-27T16:40:43.1502364Z [36;1m  python3 tools/verify_core_public_producer.py \[0m
+2026-10-27T16:40:43.1502947Z [36;1m    --run-id "$PRODUCER_RUN_ID" --attempt "$PRODUCER_ATTEMPT" --commit "$PRODUCER_COMMIT" --tree "$PRODUCER_TREE" \[0m
+2026-10-27T16:40:43.1503626Z [36;1m    --packet qualification-inputs/core-0.10.3-public-install-proof.json \[0m
+2026-10-27T16:40:43.1504134Z [36;1m    --output "$RUNNER_TEMP/core-0.10.3-producer-evidence.json"[0m
+2026-10-27T16:40:43.1565444Z shell: /usr/bin/bash -e {0}
+2026-10-27T16:40:43.1565699Z env:
+2026-10-27T16:40:43.1568729Z   GH_TOKEN: ***
+2026-10-27T16:40:43.1568966Z   GH_REPO: DocumentDrivenDX/umf
+2026-10-27T16:40:43.1569268Z   PRODUCER_RUN_ID: 40448360241
+2026-10-27T16:40:43.1569515Z   PRODUCER_ATTEMPT: 1
+2026-10-27T16:40:43.1569803Z   PRODUCER_COMMIT: 34a337b2d398b5ae33954cc250f6237bc1661c21
+2026-10-27T16:40:43.1570187Z   PRODUCER_TREE: 0379258db62e498a4b489d2b7f613e99e63c0a4b
+2026-10-27T16:40:43.1570498Z ##[endgroup]
+2026-10-27T16:40:50.3022533Z ##[group]Run actions/checkout@v4
+2026-10-27T16:40:50.3022811Z with:
+2026-10-27T16:40:50.3023009Z   ref: python-v0.10.3
+2026-10-27T16:40:50.3023233Z   path: release-source
+2026-10-27T16:40:50.3023458Z   persist-credentials: false
+2026-10-27T16:40:50.3023696Z   fetch-depth: 0
+2026-10-27T16:40:50.3023902Z   submodules: false
+2026-10-27T16:40:50.3024124Z   repository: DocumentDrivenDX/umf
+2026-10-27T16:40:50.3027460Z   token: ***
+2026-10-27T16:40:50.3027684Z   ssh-strict: true
+2026-10-27T16:40:50.3027895Z   ssh-user: git
+2026-10-27T16:40:50.3028089Z   clean: true
+2026-10-27T16:40:50.3028301Z   sparse-checkout-cone-mode: true
+2026-10-27T16:40:50.3028562Z   fetch-tags: false
+2026-10-27T16:40:50.3028770Z   show-progress: true
+2026-10-27T16:40:50.3028983Z   lfs: false
+2026-10-27T16:40:50.3029383Z   set-safe-directory: true
+2026-10-27T16:40:50.3029640Z   allow-unsafe-pr-checkout: false
+2026-10-27T16:40:50.3029891Z ##[endgroup]
+2026-10-27T16:40:50.3928684Z Syncing repository: DocumentDrivenDX/umf
+2026-10-27T16:40:50.3934292Z ##[group]Getting Git version info
+2026-10-27T16:40:50.3934917Z Working directory is '/home/runner/work/umf/umf/release-source'
+2026-10-27T16:40:50.3976200Z [command]/usr/bin/git version
+2026-10-27T16:40:50.4020448Z git version 2.55.0
+2026-10-27T16:40:50.4041738Z ##[endgroup]
+2026-10-27T16:40:50.4057391Z Temporarily overriding HOME='/home/runner/work/_temp/d6fe5bc8-443f-450f-a3a5-ffc370b486fe' before making global git config changes
+2026-10-27T16:40:50.4058968Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-27T16:40:50.4062920Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf/release-source
+2026-10-27T16:40:50.4275847Z ##[group]Initializing the repository
+2026-10-27T16:40:50.4298874Z [command]/usr/bin/git init /home/runner/work/umf/umf/release-source
+2026-10-27T16:40:50.4360034Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-27T16:40:50.4361302Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-27T16:40:50.4362651Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-27T16:40:50.4363636Z hint: call:
+2026-10-27T16:40:50.4364219Z hint:
+2026-10-27T16:40:50.4364861Z hint: 	git config --global init.defaultBranch <name>
+2026-10-27T16:40:50.4365646Z hint:
+2026-10-27T16:40:50.4366413Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-27T16:40:50.4368049Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-27T16:40:50.4374346Z hint:
+2026-10-27T16:40:50.4437386Z hint: 	git branch -m <name>
+2026-10-27T16:40:50.4438078Z hint:
+2026-10-27T16:40:50.4438863Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-27T16:40:50.4440143Z Initialized empty Git repository in /home/runner/work/umf/umf/release-source/.git/
+2026-10-27T16:40:50.4442361Z [command]/usr/bin/git remote add origin https://github.com/DocumentDrivenDX/umf
+2026-10-27T16:40:50.4468733Z ##[endgroup]
+2026-10-27T16:40:50.4469571Z ##[group]Disabling automatic garbage collection
+2026-10-27T16:40:50.4474439Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-27T16:40:50.4894774Z ##[endgroup]
+2026-10-27T16:40:50.4895338Z ##[group]Setting up auth
+2026-10-27T16:40:50.4895757Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T16:40:50.4937789Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-27T16:40:50.5183899Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T16:40:50.5227925Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-27T16:40:50.5476567Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T16:40:50.5516432Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-27T16:40:50.5764532Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-27T16:40:50.5813783Z ##[endgroup]
+2026-10-27T16:40:50.5814630Z ##[group]Fetching the repository
+2026-10-27T16:40:50.5827963Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-10-27T16:42:50.3029132Z ##[error]The action 'Check out the exact public release source' has timed out after 2 minutes.
+2026-10-27T16:42:50.3117770Z ##[group]Run if [[ ! -x "$RUNNER_TEMP/core-public-venv/bin/python" || ! -f "$WHEEL_PATH" ]]; then
+2026-10-27T16:42:50.3118436Z [36;1mif [[ ! -x "$RUNNER_TEMP/core-public-venv/bin/python" || ! -f "$WHEEL_PATH" ]]; then[0m
+2026-10-27T16:42:50.3118983Z [36;1m  echo 'Public post-test verifier prerequisites are unavailable' >&2[0m
+2026-10-27T16:42:50.3119375Z [36;1m  exit 1[0m
+2026-10-27T16:42:50.3119572Z [36;1mfi[0m
+2026-10-27T16:42:50.3120142Z [36;1mpython3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name public-wheel-post-test-verifier -- \[0m
+2026-10-27T16:42:50.3121026Z [36;1m  "$RUNNER_TEMP/core-public-venv/bin/python" -I -B producer-source/tools/verify_python_artifacts.py \[0m
+2026-10-27T16:42:50.3122810Z [36;1m    --wheel "$WHEEL_PATH" --expected-version 0.10.3 --verify-installed-wheel \[0m
+2026-10-27T16:42:50.3123420Z [36;1m    --receipt "$RUNNER_TEMP/core-0.10.3-public-posttest.json"[0m
+2026-10-27T16:42:50.3188887Z shell: /usr/bin/bash -e {0}
+2026-10-27T16:42:50.3189148Z env:
+2026-10-27T16:42:50.3189334Z   WHEEL_PATH: 
+2026-10-27T16:42:50.3189536Z ##[endgroup]
+2026-10-27T16:42:50.3275888Z Public post-test verifier prerequisites are unavailable
+2026-10-27T16:42:50.3279350Z ##[error]Process completed with exit code 1.
+2026-10-27T16:42:50.3310041Z ##[group]Run python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name finalize-public-cell-receipt -- \
+2026-10-27T16:42:50.3311127Z [36;1mpython3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name finalize-public-cell-receipt -- \[0m
+2026-10-27T16:42:50.3312776Z [36;1m  python - "$RUNNER_TEMP/core-0.10.3-public-cell.json" "$RUNNER_TEMP/core-0.10.3-public-installed.json" "$RUNNER_TEMP/core-0.10.3-public-posttest.json" "$RUNNER_TEMP/core-0.10.3-public-probes.json" "$RUNNER_TEMP/core-0.10.3-public-tests.xml" "$RUNNER_TEMP/core-0.10.3-public-release.json" <<'PY'[0m
+2026-10-27T16:42:50.3314024Z [36;1mimport hashlib, json, os, pathlib, sys, xml.etree.ElementTree as ET[0m
+2026-10-27T16:42:50.3314710Z [36;1mreceipt_path, installed_path, posttest_path, probes_path, junit_path, release_path = map(pathlib.Path, sys.argv[1:])[0m
+2026-10-27T16:42:50.3315401Z [36;1mfor path in (receipt_path, installed_path, posttest_path, probes_path):[0m
+2026-10-27T16:42:50.3315981Z [36;1m    if path.exists() and (path.is_symlink() or not path.is_file() or path.stat().st_size > 16777216):[0m
+2026-10-27T16:42:50.3316592Z [36;1m        raise SystemExit("Public cell JSON evidence is not a bounded regular file")[0m
+2026-10-27T16:42:50.3317575Z [36;1mif release_path.exists() and (release_path.is_symlink() or not release_path.is_file() or release_path.stat().st_size > 16777216):[0m
+2026-10-27T16:42:50.3318311Z [36;1m    raise SystemExit("Public release identity evidence is not a bounded regular file")[0m
+2026-10-27T16:42:50.3318854Z [36;1mreceipt = json.loads(receipt_path.read_text(encoding="utf-8"))[0m
+2026-10-27T16:42:50.3319454Z [36;1minstalled = json.loads(installed_path.read_text(encoding="utf-8")) if installed_path.is_file() else None[0m
+2026-10-27T16:42:50.3320178Z [36;1mposttest = json.loads(posttest_path.read_text(encoding="utf-8")) if posttest_path.is_file() else None[0m
+2026-10-27T16:42:50.3321277Z [36;1mprobes = json.loads(probes_path.read_text(encoding="utf-8")) if probes_path.is_file() else None[0m
+2026-10-27T16:42:50.3321997Z [36;1mrelease_identity = json.loads(release_path.read_text(encoding="utf-8")) if release_path.is_file() else None[0m
+2026-10-27T16:42:50.3322948Z [36;1msource_correspondence = release_identity.get("sourceCorrespondence") if isinstance(release_identity, dict) else None[0m
+2026-10-27T16:42:50.3324044Z [36;1msource_correspondence_sha256 = hashlib.sha256(json.dumps(source_correspondence, sort_keys=True, separators=(",", ":")).encode("ascii")).hexdigest() if isinstance(source_correspondence, dict) else None[0m
+2026-10-27T16:42:50.3325687Z [36;1mexpected_coverage = {"qualifiedProducerCohorts": ["linux-x86_64", "macos-arm64"], "qualifiedSelectedCells": ["linux-x86_64-py11", "linux-x86_64-py14", "macos-arm64-py11"], "cancelledSelectedCell": "macos-arm64-py14", "macosPython314": "unqualified"}[0m
+2026-10-27T16:42:50.3328457Z [36;1msource_correspondence_valid = (release_identity is not None and release_identity.get("status") == "passed" and release_identity.get("producerCoverage") == expected_coverage and isinstance(source_correspondence, dict) and source_correspondence.get("profile") == "umf.core-retained-sdist-source-correspondence/1" and source_correspondence_sha256 == os.environ.get("SOURCE_CORRESPONDENCE_SHA256"))[0m
+2026-10-27T16:42:50.3329964Z [36;1mcounts = None[0m
+2026-10-27T16:42:50.3330199Z [36;1mif junit_path.is_file():[0m
+2026-10-27T16:42:50.3330565Z [36;1m    if junit_path.is_symlink() or junit_path.stat().st_size > 16777216:[0m
+2026-10-27T16:42:50.3331076Z [36;1m        raise SystemExit("Public cell test report exceeds its fixed read bound")[0m
+2026-10-27T16:42:50.3331520Z [36;1m    root = ET.parse(junit_path).getroot()[0m
+2026-10-27T16:42:50.3331960Z [36;1m    suites = [root] if root.tag == "testsuite" else list(root.findall("testsuite"))[0m
+2026-10-27T16:42:50.3332792Z [36;1m    counts = {key: sum(int(suite.get(key, "0")) for suite in suites) for key in ("tests", "errors", "failures", "skipped")}[0m
+2026-10-27T16:42:50.3333527Z [36;1mpacket_path = pathlib.Path("qualification-inputs/core-0.10.3-public-install-proof.json")[0m
+2026-10-27T16:42:50.3334103Z [36;1mif packet_path.is_symlink() or packet_path.stat().st_size > 1048576:[0m
+2026-10-27T16:42:50.3334601Z [36;1m    raise SystemExit("Public proof packet is not a bounded regular file")[0m
+2026-10-27T16:42:50.3339176Z [36;1mreceipt.update({"sourceH": os.environ["SOURCE_H"], "producerSourceCommit": os.environ.get("PRODUCER_COMMIT"), "producerSourceTree": os.environ.get("PRODUCER_TREE"), "releaseCommit": os.environ.get("RELEASE_COMMIT"), "proofRunId": os.environ["PROOF_RUN_ID"], "proofRunAttempt": os.environ["PROOF_RUN_ATTEMPT"], "proofWorkflow": os.environ["PROOF_WORKFLOW"], "packetSha256": hashlib.sha256(packet_path.read_bytes()).hexdigest(), "cohort": os.environ["COHORT"], "platform": os.environ["PLATFORM"], "requestedPython": os.environ["PYTHON_VERSION"], "testOutcome": os.environ.get("TEST_OUTCOME", "not_run"), "probeOutcome": os.environ.get("PROBE_OUTCOME", "not_run"), "posttestOutcome": os.environ.get("POSTTEST_OUTCOME", "not_run"), "testCounts": counts, "installedPayload": installed, "postTestPayload": posttest, "runtimeProbes": probes, "expectedWheelSha256": os.environ.get("EXPECTED_WHEEL_SHA256"), "expectedNativeSha256": os.environ.get("EXPECTED_NATIVE_SHA256"), "commonSdistSha256": os.environ.get("COMMON_SDIST_SHA256"), "producerCoverage": release_identity.get("producerCoverage") if isinstance(release_identity, dict) else None, "sourceCorrespondence": source_correspondence, "sourceCorrespondenceSha256": source_correspondence_sha256})[0m
+2026-10-27T16:42:50.3345353Z [36;1mexpected_probes = probes is not None and probes.get("python") == os.environ["PYTHON_VERSION"] and probes.get("machine", "").lower() == os.environ["EXPECTED_MACHINE"] and probes.get("umfVersion") == "0.10.3" and probes.get("semanticCoreVersion") == "0.10.0" and probes.get("pydanticVersion") == "2.14.1" and probes.get("pydanticCoreVersion") == "2.50.1" and probes.get("documentRoundTrips") == {"json": True, "yaml": True} and (os.environ["EXPECTED_PYTHON_MINOR"] != "14" or probes.get("profile314Probes") == {"strictEndAnchor": True, "emptyInputNonBoundary": True, "unicode16Word": True, "futureProfileRefused": True})[0m
+2026-10-27T16:42:50.3349175Z [36;1mpayload_parity = installed is not None and posttest is not None and installed.get("status") == "passed" and posttest.get("status") == "passed" and installed.get("wheel_sha256") == os.environ.get("EXPECTED_WHEEL_SHA256") and posttest.get("wheel_sha256") == installed.get("wheel_sha256") and installed.get("native_sha256") == os.environ.get("EXPECTED_NATIVE_SHA256") and posttest.get("native_sha256") == installed.get("native_sha256") and posttest.get("package_file_count") == installed.get("package_file_count")[0m
+2026-10-27T16:42:50.3352227Z [36;1mpassed = payload_parity and expected_probes and source_correspondence_valid and bool(os.environ.get("COMMON_SDIST_SHA256")) and counts is not None and counts["tests"] == 254 and counts["errors"] == 0 and counts["failures"] == 0 and counts["skipped"] == 0 and os.environ.get("TEST_OUTCOME") == "success" and os.environ.get("PROBE_OUTCOME") == "success" and os.environ.get("POSTTEST_OUTCOME") == "success"[0m
+2026-10-27T16:42:50.3353775Z [36;1mreceipt["status"] = "passed" if passed else "failed_or_incomplete"[0m
+2026-10-27T16:42:50.3354351Z [36;1mreceipt_path.write_text(json.dumps(receipt, sort_keys=True, indent=2) + "\n", encoding="utf-8")[0m
+2026-10-27T16:42:50.3354827Z [36;1mif not passed:[0m
+2026-10-27T16:42:50.3355229Z [36;1m    raise SystemExit("Public Core wheel cell did not complete its exact installed suite")[0m
+2026-10-27T16:42:50.3355661Z [36;1mPY[0m
+2026-10-27T16:42:50.3411725Z shell: /usr/bin/bash -e {0}
+2026-10-27T16:42:50.3411979Z env:
+2026-10-27T16:42:50.3412172Z   TEST_OUTCOME: skipped
+2026-10-27T16:42:50.3412401Z   COHORT: linux-x86_64
+2026-10-27T16:42:50.3412622Z   PLATFORM: linux
+2026-10-27T16:42:50.3413000Z   EXPECTED_MACHINE: x86_64
+2026-10-27T16:42:50.3413237Z   PYTHON_VERSION: 3.14.8
+2026-10-27T16:42:50.3413468Z   EXPECTED_PYTHON_MINOR: 14
+2026-10-27T16:42:50.3413733Z   SOURCE_H: a487d7cac8fb80d437987771689853f0ba682258
+2026-10-27T16:42:50.3414201Z   RELEASE_COMMIT: 7d334dec45948953718bfacd3ed6dd199cadba79
+2026-10-27T16:42:50.3414795Z   PRODUCER_COMMIT: 34a337b2d398b5ae33954cc250f6237bc1661c21
+2026-10-27T16:42:50.3415174Z   PRODUCER_TREE: 0379258db62e498a4b489d2b7f613e99e63c0a4b
+2026-10-27T16:42:50.3415488Z   PROOF_RUN_ID: 40534691931
+2026-10-27T16:42:50.3415712Z   PROOF_RUN_ATTEMPT: 1
+2026-10-27T16:42:50.3415986Z   PROOF_WORKFLOW: Core 0.10.3 public Python install proof
+2026-10-27T16:42:50.3416294Z   EXPECTED_WHEEL_SHA256: 
+2026-10-27T16:42:50.3416520Z   EXPECTED_NATIVE_SHA256: 
+2026-10-27T16:42:50.3416996Z   COMMON_SDIST_SHA256: 
+2026-10-27T16:42:50.3417231Z   SOURCE_CORRESPONDENCE_SHA256: 
+2026-10-27T16:42:50.3417476Z   PROBE_OUTCOME: skipped
+2026-10-27T16:42:50.3417693Z   POSTTEST_OUTCOME: failure
+2026-10-27T16:42:50.3417918Z ##[endgroup]
+2026-10-27T16:42:50.4383651Z Bounded command failed; inspect /home/runner/work/_temp/core-wheel-bounds/logs/003-finalize-public-cell-receipt.log
+2026-10-27T16:42:50.4468263Z ##[error]Process completed with exit code 1.
+2026-10-27T16:42:50.4513073Z ##[group]Run set -euo pipefail
+2026-10-27T16:42:50.4513423Z [36;1mset -euo pipefail[0m
+2026-10-27T16:42:50.4513678Z [36;1mshopt -s nullglob[0m
+2026-10-27T16:42:50.4513913Z [36;1mfiles=()[0m
+2026-10-27T16:42:50.4514128Z [36;1mfor path in \[0m
+2026-10-27T16:42:50.4514421Z [36;1m  "$RUNNER_TEMP/core-0.10.3-public-cell.json" \[0m
+2026-10-27T16:42:50.4514806Z [36;1m  "$RUNNER_TEMP/core-0.10.3-public-installed.json" \[0m
+2026-10-27T16:42:50.4515195Z [36;1m  "$RUNNER_TEMP/core-0.10.3-public-posttest.json" \[0m
+2026-10-27T16:42:50.4515578Z [36;1m  "$RUNNER_TEMP/core-0.10.3-public-probes.json" \[0m
+2026-10-27T16:42:50.4515931Z [36;1m  "$RUNNER_TEMP/core-0.10.3-public-tests.xml" \[0m
+2026-10-27T16:42:50.4516284Z [36;1m  "$RUNNER_TEMP/core-0.10.3-public-release.json" \[0m
+2026-10-27T16:42:50.4516656Z [36;1m  "$RUNNER_TEMP/core-0.10.3-producer-evidence.json" \[0m
+2026-10-27T16:42:50.4517323Z [36;1m  "$RUNNER_TEMP/core-wheel-bounds/deadline.json" \[0m
+2026-10-27T16:42:50.4517747Z [36;1m  "$RUNNER_TEMP/core-wheel-bounds/failure-receipt.json" \[0m
+2026-10-27T16:42:50.4518138Z [36;1m  "$RUNNER_TEMP/core-wheel-bounds/commands.json" \[0m
+2026-10-27T16:42:50.4518483Z [36;1m  "$RUNNER_TEMP/core-wheel-bounds/logs"/*; do[0m
+2026-10-27T16:42:50.4518806Z [36;1m  [[ -f "$path" ]] && files+=("$path")[0m
+2026-10-27T16:42:50.4519079Z [36;1mdone[0m
+2026-10-27T16:42:50.4519669Z [36;1mif ! python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name assemble-public-cell-evidence -- \[0m
+2026-10-27T16:42:50.4520900Z [36;1m  python3 tools/core_python_qualification_runner.py bundle --output "$RUNNER_TEMP/core-public-cell-evidence" --maximum-bytes 16777216 "${files[@]}"; then[0m
+2026-10-27T16:42:50.4521898Z [36;1m  python3 - "$RUNNER_TEMP/core-wheel-bounds/commands.json" "$RUNNER_TEMP/core-wheel-bounds/last-command-failure.json" <<'PY'[0m
+2026-10-27T16:42:50.4522486Z [36;1mimport json, pathlib, sys[0m
+2026-10-27T16:42:50.4522804Z [36;1msource, output = map(pathlib.Path, sys.argv[1:])[0m
+2026-10-27T16:42:50.4523391Z [36;1mrows = json.loads(source.read_text(encoding="utf-8")) if source.is_file() and source.stat().st_size <= 1048576 else [][0m
+2026-10-27T16:42:50.4523938Z [36;1mlast = rows[-1] if rows else {}[0m
+2026-10-27T16:42:50.4524646Z [36;1mkeys = ("name", "startedUtc", "endedUtc", "appliedAllowanceSeconds", "rawExitCode", "captureExitCode", "timedOut", "overflow", "observedBytes", "capturedBytes", "logSha256")[0m
+2026-10-27T16:42:50.4525985Z [36;1moutput.write_text(json.dumps({"profile": "umf.core-python-qualification-failure/1", "status": "failed_or_incomplete", "lastCommand": {key: last.get(key) for key in keys}}, sort_keys=True, indent=2) + "\n", encoding="utf-8")[0m
+2026-10-27T16:42:50.4527142Z [36;1mPY[0m
+2026-10-27T16:42:50.4528086Z [36;1m  python3 tools/core_python_qualification_runner.py bundle --output "$RUNNER_TEMP/core-public-cell-evidence" --maximum-bytes 16777216 "$RUNNER_TEMP/core-wheel-bounds/deadline.json" "$RUNNER_TEMP/core-wheel-bounds/last-command-failure.json"[0m
+2026-10-27T16:42:50.4529071Z [36;1m  exit 1[0m
+2026-10-27T16:42:50.4529259Z [36;1mfi[0m
+2026-10-27T16:42:50.4592201Z shell: /usr/bin/bash -e {0}
+2026-10-27T16:42:50.4592471Z ##[endgroup]
+2026-10-27T16:42:50.6008393Z ##[group]Run actions/upload-artifact@v4
+2026-10-27T16:42:50.6008696Z with:
+2026-10-27T16:42:50.6008945Z   name: core-0.10.3-public-install-linux-x86_64-py14
+2026-10-27T16:42:50.6009332Z   path: /home/runner/work/_temp/core-public-cell-evidence
+2026-10-27T16:42:50.6009682Z   if-no-files-found: error
+2026-10-27T16:42:50.6009916Z   compression-level: 6
+2026-10-27T16:42:50.6010127Z   overwrite: false
+2026-10-27T16:42:50.6010337Z   include-hidden-files: false
+2026-10-27T16:42:50.6010570Z ##[endgroup]
+2026-10-27T16:42:50.7823750Z (node:2616) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-27T16:42:50.7837590Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-27T16:42:50.7991069Z With the provided path, there will be 8 files uploaded
+2026-10-27T16:42:50.7992017Z Artifact name is valid!
+2026-10-27T16:42:50.7992442Z Root directory input is valid!
+2026-10-27T16:42:51.1040755Z Beginning upload of artifact content to blob storage
+2026-10-27T16:42:51.1487956Z (node:2616) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-27T16:42:51.3101141Z Uploaded bytes 31637
+2026-10-27T16:42:51.3510057Z Finished uploading artifact content to blob storage!
+2026-10-27T16:42:51.3511477Z SHA256 digest of uploaded artifact zip is 549c1393154ce9892b157bd24a1788348b9a95e82c401c6e5ed2f84c9b04e301
+2026-10-27T16:42:51.3513302Z Finalizing artifact upload
+2026-10-27T16:42:51.7895344Z Artifact core-0.10.3-public-install-linux-x86_64-py14.zip successfully finalized. Artifact ID 12751651503
+2026-10-27T16:42:51.7897425Z Artifact core-0.10.3-public-install-linux-x86_64-py14 has been successfully uploaded! Final size is 31637 bytes. Artifact ID is 12751651503
+2026-10-27T16:42:51.7905207Z Artifact download URL: https://github.com/DocumentDrivenDX/umf/actions/runs/40534691931/artifacts/12751651503
+2026-10-27T16:42:51.8101699Z Post job cleanup.
+2026-10-27T16:42:51.8981579Z [command]/usr/bin/git version
+2026-10-27T16:42:51.9023761Z git version 2.55.0
+2026-10-27T16:42:51.9095488Z Temporarily overriding HOME='/home/runner/work/_temp/1aecec3b-00df-44cd-8d70-17ef124c2cef' before making global git config changes
+2026-10-27T16:42:51.9097357Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-27T16:42:51.9101243Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf/release-source
+2026-10-27T16:42:51.9140766Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T16:42:51.9184520Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-27T16:42:51.9433283Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T16:42:51.9462221Z http.https://github.com/.extraheader
+2026-10-27T16:42:51.9475935Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-27T16:42:51.9509464Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-27T16:42:51.9774091Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T16:42:51.9818665Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-27T16:42:52.0358209Z Post job cleanup.
+2026-10-27T16:42:52.1272093Z [command]/usr/bin/git version
+2026-10-27T16:42:52.1317012Z git version 2.55.0
+2026-10-27T16:42:52.1388094Z Temporarily overriding HOME='/home/runner/work/_temp/09b4e935-f617-48a0-a0a9-19291fe4404b' before making global git config changes
+2026-10-27T16:42:52.1389519Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-27T16:42:52.1393831Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf
+2026-10-27T16:42:52.1442810Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T16:42:52.1483813Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-27T16:42:52.1796626Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T16:42:52.1839174Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-27T16:42:52.2154459Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T16:42:52.2189077Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-27T16:42:52.2633909Z Cleaning up orphan processes
+2026-10-27T16:42:52.3012482Z Terminate orphan process: pid (2580) (git)
+2026-10-27T16:42:52.3108892Z Terminate orphan process: pid (2581) (git)
+2026-10-27T16:42:52.3185589Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

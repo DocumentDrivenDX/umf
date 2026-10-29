@@ -1,0 +1,21 @@
+{
+  "profile": "umf.local-linux-r3-output-adoption/1",
+  "status": "PASS_TARGETED_R3_OUTPUTS_ADOPTED",
+  "producerCommit": "28196747faf6e5dc358c4aac708e8b377b20f5ee",
+  "producerTree": "c2721dafaa6f269db6ccc76c477b54038bc82427",
+  "executionId": "local-r3-28196747f-001",
+  "runnerSha256": "c31be2e9543a3f05f22217a1db2ad46144248de06e2f018a37844bb56738d44e",
+  "reviewSha256": "4f67086aca378cae5dd0f335d56e5b1ba04c1be76458fac7711821dc71e0aadd",
+  "outputs": {
+    "boundary-check.json": {
+      "bytes": 26633,
+      "sha256": "6c40c8dc3ae9297b23804e69b3593080b0510538a5a6837ee10863b6dba74b36"
+    },
+    "inventory.json": {
+      "bytes": 2813283,
+      "sha256": "89ba3530373fd0ccc1959a71bb164d062cb8f31d3d91f2777665347648e821e7"
+    }
+  },
+  "adoption": "Exact byte copies from actual Linux generation, not manual JSON changes. Other26 generation outputs and metamodel source inputs unchanged; retain actual earlier producer receipts.",
+  "limits": "Only targeted R3 inventory and boundary qualification. Full18 Linux, SDK139, D5, release/public-byte and Mac limits remain separate."
+}

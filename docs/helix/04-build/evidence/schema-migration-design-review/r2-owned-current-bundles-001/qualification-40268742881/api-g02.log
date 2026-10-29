@@ -1,0 +1,81 @@
+bun test v1.4.3 (c6da4a4d3)
+
+::group::tests/lifecycle/table-inventory-api.test.ts:
+(pass) charged chunk hashing preserves UTF-8 bytes and refuses before later chunks on budget exhaustion [1.35ms]
+(pass) bounded canonical members account exact UTF-8 output and stop before oversized token/key emission [1.04ms]
+(pass) G10 public initial compile, full verification and serialization retain the exact marker wrapper [11379.35ms]
+(pass) G10 dependency projection claims every raw edge as physical work or a complete-source publication obligation [6167.30ms]
+(pass) scheduler prefixes preserve final frames for zero and multiple groups with or without metadata IDs [146.99ms]
+(pass) compiler final IDs preserve complete plan serialization bytes against the legacy remap-and-hash path [2974.58ms]
+(pass) legacy seed history requires exact source-derived reported outcomes and remains explicitly non-native [2206.30ms]
+(pass) G10 historical recompile exact-content cache > initial and second G10 plans compile through their original public requests [15.20ms]
+(pass) G10 historical recompile exact-content cache > reuses only exact plans and exact prior-history members [3977.72ms]
+(pass) G10 historical recompile exact-content cache > rejects a changed cached plan under the same history position [4013.02ms]
+(pass) G10 historical recompile exact-content cache > rejects changed prior execution bytes on a cache hit [3878.39ms]
+468 |  if(failed){try{const report=diagnostic.report(),text=JSON.stringify(report);if(text.length<=16_384)console.error('[R2_ONE_FIXTURE_METER_DIAGNOSTIC] '+text);else console.error('[R2_ONE_FIXTURE_METER_DIAGNOSTIC] '+JSON.stringify({profile:report.profile,incomplete:report.incomplete,checkpointNames:['owned','history','projection','lineage','lineage-final'],checkpoints:report.checkpoints,consumed:report.consumed,phaseNames:R2_DIAGNOSTIC_PHASES,phases:R2_DIAGNOSTIC_PHASES.map(name=>report.phases[name]),categoryNames:R2_DIAGNOSTIC_CATEGORIES,categories:R2_DIAGNOSTIC_PHASES.map(name=>R2_DIAGNOSTIC_CATEGORIES.map(category=>report.categories[name][category]!)),pathNames:R2_DIAGNOSTIC_PATHS,paths:R2_DIAGNOSTIC_PHASES.map(name=>R2_DIAGNOSTIC_PATHS.map(path=>report.paths[name][path]!)),cache:report.cache,unexpectedMeters:report.unexpectedMeters,rejection:report.rejection,reconciliation:report.reconciliation}));}catch{/* diagnostics must not replace the original failure */}throw originalFailure;}
+469 |  expect(diagnostic.report().cache.historyBundleHit).toBeGreaterThan(0);
+470 |  expect(diagnostic.report().cache.currentBundleHit).toBeGreaterThan(0);
+471 |  if(!handle)throw new Error('R2 context preparation returned no handle.');const state=inspectR2InventorySourceContext(handle);
+472 |  expect(state.history.plans).toHaveLength(2);expect(state.history.plans[1]).toEqual(compiled.plan);expect(state.history.executions[1]).toEqual(seedExecution(compiled.plan,fixture.next,'e'.repeat(64)));expect(state.seedLineage).toMatchObject([{id:'initial-note-seed',execution:'confirmed'}]);
+473 |  const current={previous:fixture.next,next:fixture.next,options:{seedSets:[],retiredSeedSets:[]}},recoveryMeter=new R2WorkMeter();expect(()=>deriveInventorySeedLineage(mixedHistory,current,createHistoricalG10Verifier(recoveryMeter),recoveryMeter)).not.toThrow();
+                                                                                                                                                                                                                                                                  ^
+error: expect(received).not.toThrow()
+
+Error name: "Error"
+Error message: "R2_CONTEXT_WORK_LIMIT:/plan/captured-output/prefixes/4/catalog/policies/12/meaning/rule"
+
+      at <anonymous> (/home/runner/work/umf/umf/tests/lifecycle/table-inventory-api.test.ts:473:253)
+
+::error file=tests/lifecycle/table-inventory-api.test.ts,line=473,col=253,title=error: expect(received).not.toThrow()::Error name: "Error"%0AError message: "R2_CONTEXT_WORK_LIMIT:/plan/captured-output/prefixes/4/catalog/policies/12/meaning/rule"%0A%0A      at <anonymous> (/home/runner/work/umf/umf/tests/lifecycle/table-inventory-api.test.ts:473:253)
+(fail) R2 metered context reuses exact source cores for a seeded Note history and mixed G02 plus CREATE [4678.69ms]
+(pass) R2 current-root canonical reuse requires the exact same-meter source-owner association [1767.62ms]
+(pass) R2 final-plan retention failure returns no history context and a fresh invocation succeeds [3676.61ms]
+(pass) G10 installed-create compiled fixture > verifies against complete original history [3703.97ms]
+(pass) G10 installed-create compiled fixture > refuses empty or changed history [3783.16ms]
+(pass) G10 installed-create compiled fixture > historical verifier reuses the installed-create prefix only for exact history members [3994.48ms]
+(pass) G10 installed create review exposes the complete absent-before projection with no old source path [9842.52ms]
+(pass) G10 legacy component review values and optional source paths remain unchanged [2972.19ms]
+(pass) G10 seed retirement review retains the original definition and never claims data replay [6357.46ms]
+(pass) G10 removal candidates expose the exact irreversible purge disclosure before approval [2683.42ms]
+(pass) G10 mixed legal fixture builders clone exported definitions into each returned source [866.88ms]
+(pass) G10 appended CREATE plus G02 compiled fixture > retains source, marker, grant, field, phase, seed and operation ordering assertions [653.44ms]
+(pass) G10 appended CREATE plus G02 compiled fixture > preserves public verification and serialization equality for the admitted plan [8407.42ms]
+(pass) G10 appended CREATE plus G02 compiled fixture > public compilation refuses omitted create claims and duplicate operation markers [2897.53ms]
+(pass) G10 mixed CREATE plus existing-target G02 partitions only the exact tightening marker [12743.93ms]
+(pass) G10 G02 source certificate accepts only the owned change and selected CREATE closure [2779.06ms]
+(pass) G10 per-table review meanings are detached from one shared projection graph [851.45ms]
+(pass) G10 prepared public calls own source/history inputs and never invoke request accessors [6983.92ms]
+(pass) G10 G02 module-context ownership retains only local tightening from complete compiled markers [2960.37ms]
+(pass) G10 discovery rejects selector count and UTF-8 limits at the public boundary [515.62ms]
+(pass) G10 internal legacy discovery reserves candidate count and bytes before retaining rows [1188.52ms]
+(pass) G10 public discovery normalizes malformed selector and history failures to located review errors [512.41ms]
+
+::endgroup::
+
+::group::tests/lifecycle/g02-derived-fill.test.ts:
+(pass) G02 appends, derives, and tightens one required target in the exact ordered native phase [503.16ms]
+(pass) G02 frozen 0.4 future-default plan bytes and digest remain verifiable [401.49ms]
+(pass) G02 puts a declared future default after the derived fill inside the required phase [414.38ms]
+(pass) G02 preserves the existing optional-field fill/tighten pair under the successor profile [472.87ms]
+(pass) G02 existing-target backfill retains its nonempty future default exactly [588.20ms]
+(pass) G02 does not rewrite retained creates: required append needs an existing create input or declared default [352.58ms]
+(pass) G02 refuses a target self-reference, a newly appended input, and a second effect [533.22ms]
+(pass) G02 refuses raw source meaning changes even when they emit no selected DDL [223.51ms]
+(pass) G02 refuses retained YAML sources at portable admission with source-specific paths [464.30ms]
+(pass) G02 format admission leaves historical 0.3 YAML source behavior unchanged [303.13ms]
+
+::endgroup::
+
+::group::tests/lifecycle/g02-renderer-operation-sidecar.test.ts:
+(pass) G02 internal renderer sidecar reports typed source-site effects without changing public plan bytes [540.28ms]
+(pass) metered G02 reuses only the exact bundles already projected in its active G10 scope [499.53ms]
+
+::endgroup::
+
+1 tests failed:
+(fail) R2 metered context reuses exact source cores for a seeded Note history and mixed G02 plus CREATE [4678.69ms]
+
+ 44 pass
+ 1 fail
+ 646 expect() calls
+Ran 45 tests across 3 files. [151.98s]

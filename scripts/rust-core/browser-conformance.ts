@@ -186,7 +186,11 @@ try {
     const parsePython314Outcome = (line: string) => {
       const fields = line.split('\t');
       if (fields.length !== 6) throw new Error('Malformed six-field CPython 3.14 outcome');
-      const [status, startText, endText, patternText, textText, family] = fields as [string, string, string, string, string, string];
+      const [status, startText, endText, patternText, textText, family] = fields;
+      if (status === undefined || startText === undefined || endText === undefined
+        || patternText === undefined || textText === undefined || family === undefined) {
+        throw new Error('Malformed six-field CPython 3.14 outcome');
+      }
       if (!['E', 'M', 'N'].includes(status) || !python314FamilyCounts.has(family)) {
         throw new Error('Malformed CPython 3.14 status or family');
       }

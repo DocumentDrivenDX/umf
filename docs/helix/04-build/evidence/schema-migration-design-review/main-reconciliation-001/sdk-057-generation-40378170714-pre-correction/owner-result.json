@@ -1,0 +1,15 @@
+{
+  "status": "GENERATION_PASS_PRE_CORRECTION_NOT_ADOPTED",
+  "run": 40378170714,
+  "job": 121766855505,
+  "artifact": 12678595087,
+  "artifactBytes": 623623,
+  "artifactSha256": "cad2ee381e0fe811fa785c52576d54b40b9b971a967d55b9fe6560038295bfeb",
+  "source": "02e4326340d8cc66ad0a1ec15e0742b03b916509",
+  "all16OutputHashesMatch": true,
+  "all10CommandsSucceededUntruncated": true,
+  "finalSourceQualification": false,
+  "reasonNotAdopted": "Required SDK package-hash correction in portable reproduction generator is an additional R3 source input change; final canonical generation must follow that reviewed correction",
+  "productOutputsModified": false,
+  "nextStep": "Review exact generator lock and four portable pin rows; regenerate from corrected source; no cap increase or unchanged optional replay"
+}

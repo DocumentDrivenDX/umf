@@ -1,0 +1,63 @@
+{
+  "profile": "umf.independent-sol-source-review/0.1",
+  "status": "accepted-bounded-pure-source005",
+  "reviewer": "Independent Sol, not author",
+  "reviewedAtUtc": "2026-10-24T14:12:09.936879+00:00",
+  "input": {
+    "path": "/private/tmp/g11-root-registry-source005-frozen",
+    "manifestSha256": "965236625c80b8afd77f96f6e8defb93517e339f4b16f412c443c44a883d1ae6",
+    "members": 261,
+    "baseHead": "5edefb5f9039f037486f4bba1c8919d37b68c745",
+    "sourceBase": "339d8b5029bb2c03e442eb76e07c0acb209118b5",
+    "moduleSha256": "0ec6c647a79707fc5ae2afd2f0f12497d29eb3f0b85fc11844efc198361ef746",
+    "checkerSha256": "b5226d8b1374e51816eee4b3d95827f29c75d5a82af33ef5ef414c3cb62ecc80",
+    "boundaryTestSha256": "fc61bf12a9928f5333a9b1e095dcd492aff709a8e914731f2518080e2642e4a4"
+  },
+  "custody": {
+    "all261HashesAndSizesVerifiedBeforeAndAfter": true,
+    "exactMemberSet": true,
+    "allReadonly": true,
+    "noSymlinks": true,
+    "frozenSnapshotOnlyUsedForControls": true,
+    "exactSourceDeltaFrom004": [
+      "scripts/check-access-python-boundaries.py",
+      "python/umf_access/tests/test_access_python_boundaries.py"
+    ],
+    "otherSourceBytesIdentical": true,
+    "baseAdvanceDocsOnlyVerified": true,
+    "fullRuntimeClosure": 107,
+    "originalBodyAndAll6ReviewerHarnessesByteIdentical": true
+  },
+  "actualResults": {
+    "originalIndependentTransitionMethods": 19,
+    "originalPassed": 19,
+    "unchangedIndependentCheckerCases": 13,
+    "checkerExpectationsMet": 13,
+    "newRepositoryBuiltinTestMethods": 1,
+    "newRepositoryBuiltinTestPassed": 1,
+    "newBuiltinSubtests": [
+      "open",
+      "input"
+    ],
+    "fullBoundaryModules": 107,
+    "fullBoundaryViolations": 0
+  },
+  "sourceFindings": [],
+  "resolvedPredecessorFinding": {
+    "source004": "F1/P2 nested builtin open/input omitted from HOST rule",
+    "now": "Exact pure module included without broad lifecycle waiver; both original AST-only controls and new repository nested tests refuse",
+    "source004ReviewReceiptSha256": "b3d3b72286e8ad33501a2ad20cbff0232b748b20f2b1c035acbd40910d1bfea8"
+  },
+  "observedScope": "Canonical strict replay, real configured Ed25519 signature/crosslink negatives, chronological order and conjunctive caps under small test seams, nested forged-state refusal, JSON subclasses and input immutability. Actual pure body has no I/O/callback/UUID allocation/authority factory/durable writer/public package export. Checker is a structural dependency rule, not a hostile-Python sandbox.",
+  "separateSuppliedEvidence": {
+    "authorClaims24FocusedPass": true,
+    "oursDidNotRepeatFull24OrBroader133": true,
+    "prior004IndependentlyRan23": true
+  },
+  "limits": [
+    "Pure transforms over synthetic data and actual Ed25519 do not establish physical association, original custody, held outer lease, durability, concurrency/CAS, or ROOT/native integration.",
+    "Checker fixture snippets parsed only and never executed.",
+    "No repository edits, native effects, C compile, PostgreSQL, build, browser, heavy campaign or resource GO.",
+    "Source acceptance permits review/adoption of this exact pure helper/checker delta only; remaining integration/native gates stay open."
+  ]
+}

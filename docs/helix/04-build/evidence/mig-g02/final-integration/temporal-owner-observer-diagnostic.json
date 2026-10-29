@@ -1,0 +1,193 @@
+{
+  "catalogAndPolicies": {
+    "policies": [
+      [
+        "umf_batch_delete",
+        "PERMISSIVE",
+        [
+          "g02_db_dfd131d9"
+        ],
+        "DELETE",
+        "false",
+        null
+      ],
+      [
+        "umf_batch_insert",
+        "PERMISSIVE",
+        [
+          "g02_db_dfd131d9"
+        ],
+        "INSERT",
+        null,
+        "false"
+      ],
+      [
+        "umf_batch_select",
+        "PERMISSIVE",
+        [
+          "g02_db_dfd131d9"
+        ],
+        "SELECT",
+        "true",
+        null
+      ],
+      [
+        "umf_batch_update",
+        "PERMISSIVE",
+        [
+          "g02_db_dfd131d9"
+        ],
+        "UPDATE",
+        "false",
+        "false"
+      ],
+      [
+        "umf_person_delete",
+        "PERMISSIVE",
+        [
+          "g02_dp_dfd131d9"
+        ],
+        "DELETE",
+        "((owner COLLATE \"C\") = ((CURRENT_USER)::text COLLATE \"C\"))",
+        null
+      ],
+      [
+        "umf_person_insert",
+        "PERMISSIVE",
+        [
+          "g02_dp_dfd131d9"
+        ],
+        "INSERT",
+        null,
+        "((owner COLLATE \"C\") = ((CURRENT_USER)::text COLLATE \"C\"))"
+      ],
+      [
+        "umf_person_select",
+        "PERMISSIVE",
+        [
+          "g02_dp_dfd131d9"
+        ],
+        "SELECT",
+        "((owner COLLATE \"C\") = ((CURRENT_USER)::text COLLATE \"C\"))",
+        null
+      ],
+      [
+        "umf_person_update",
+        "PERMISSIVE",
+        [
+          "g02_dp_dfd131d9"
+        ],
+        "UPDATE",
+        "((owner COLLATE \"C\") = ((CURRENT_USER)::text COLLATE \"C\"))",
+        "((owner COLLATE \"C\") = ((CURRENT_USER)::text COLLATE \"C\"))"
+      ]
+    ],
+    "relforcerowsecurity": true,
+    "relrowsecurity": true
+  },
+  "cleanup": {
+    "cleanupErrors": [],
+    "databaseCount": 3,
+    "databaseInventoryMatchesBaseline": true,
+    "noDiagnosticDatabase": true,
+    "noDiagnosticRoles": true,
+    "roleCount": 17,
+    "roleInventoryMatchesBaseline": true,
+    "settingsMatchBaseline": true
+  },
+  "cohortInstalledReceiptSha256": "ff1adaaba954e463e59fd7c4529fcec1c048350b9cfa5db96d999f7887b7cccd",
+  "cohortManifestSha256": "03113fb7e9dc7a636009da05513a413760a2643759163bbb739576041a150691",
+  "compileAndSeed": {
+    "initialDeploymentStatus": "compiled",
+    "initialInstallGeneration": 1,
+    "initialPlanId": "temporal-matched-null-date-rollback-observer-diagnostic-001",
+    "initialPlanStatus": "compiled",
+    "initialRowsSeeded": 3,
+    "successorCompiledOrApplied": false
+  },
+  "diagnosticDatabase": "g02diag_dfd131d9",
+  "error": null,
+  "finishedAt": "2026-10-24T02:20:09.304342+00:00",
+  "fixture": {
+    "caseId": "temporal-matched-null-date-rollback",
+    "path": "/private/tmp/umf-g02-temporal-native-source-006/g02-temporal-fixture.json",
+    "sha256": "91a419debb54378a60982480259c48e02860695229ef8eed748a25758f8426fb"
+  },
+  "observerSnapshots": [
+    {
+      "context": [
+        "erik",
+        "g02_do_dfd131d9",
+        "on",
+        "g02_do_dfd131d9"
+      ],
+      "count": 0,
+      "label": "configured-owner-before-reset",
+      "rows": []
+    },
+    {
+      "context": [
+        "erik",
+        "erik",
+        "on",
+        "none"
+      ],
+      "count": 3,
+      "label": "superuser-after-reset",
+      "rows": [
+        [
+          "p1",
+          "g02_da_dfd131d9",
+          "2012-03-04",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          "p2",
+          "g02_dz_dfd131d9",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          "p3",
+          "g02_da_dfd131d9",
+          "1999-12-31",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      ]
+    }
+  ],
+  "profile": "umf.g02-owner-observer-diagnostic/1",
+  "roles": [
+    "g02_do_dfd131d9",
+    "g02_dp_dfd131d9",
+    "g02_db_dfd131d9",
+    "g02_da_dfd131d9",
+    "g02_dz_dfd131d9"
+  ],
+  "scope": "Initial installation and observer comparison only. No successor migration, backfill, approval, host lifecycle execution, or source/oracle change.",
+  "server": {
+    "baselineSha256": "deeee8bc8799bd3e2012038b6a8f724e534508c62685ffc234da79b1fe8157a8",
+    "port": 55440,
+    "socketOnly": true,
+    "version": "PostgreSQL 18.6 (Homebrew) on aarch64-apple-darwin27.0.0, compiled by Apple clang version 21.0.0 (clang-2100.3.34.2), 64-bit"
+  },
+  "startedAt": "2026-10-24T02:19:37.110835+00:00"
+}

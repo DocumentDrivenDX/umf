@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import manifest from '../../../spec/extensions/tables/package.json';
 import {CURRENT_CORE_VERSION,UmfError,type Diagnostic,type Document,type ExtensionPackage,type Json,type Validation} from '../../model/types';
-import {copyJson} from '../../model/json';
+import {copyJson,copyJsonCharged} from '../../model/json';
+import type {AccountingContext} from '../../model/internal/accounting-context';
 import {Registry} from '../../registry/registry';
-import {validateDocument} from '../../validation/document';
+import {validateDocument,validateDocumentWithAccounting} from '../../validation/document';
 import {inspectUnknown,refKey,TableContext} from './context';
 import {inspectTable} from './columns';
 import {inspectPolicies} from './policies';
@@ -18,11 +19,13 @@ export interface TableLifecycleInspection extends Validation {
  modules:{module:string;payload:TableLifecyclePayload}[];
  nativeQualified:false;
 }
-function semantics(value:Json,context:{document:Document;path:string;scope:string}):Diagnostic[]{
- const match=/^\/modules\/(0|[1-9][0-9]*)\/extensions\/umf\.tables$/.exec(context.path);
+function semantics(value:Json,context:{document:Document;path:string;scope:string},accounting?:AccountingContext):Diagnostic[]{
+ accounting?.visit('table-semantic-dispatch',context.path);
+ accounting?.visit('table-semantic-module',context.path);const match=/^\/modules\/(0|[1-9][0-9]*)\/extensions\/umf\.tables$/.exec(context.path);
  const module=match?context.document.modules[Number(match[1])]:undefined;
  if(context.scope!=='module'||!module)return [{code:'TABLES_SCOPE',path:context.path,message:'Table declarations belong to an exact module',severity:'error'}];
- const ctx=new TableContext(context.document,module,context.path),payload=value as unknown as TableLifecyclePayload;
+ const ctx=new TableContext(context.document,module,context.path,accounting),payload=value as unknown as TableLifecyclePayload;
+ accounting?.visit('table-semantic-tables',context.path+'/tables',payload.tables.length);accounting?.visit('table-semantic-seeds',context.path+'/seedSets',payload.seedSets.length);accounting?.visit('table-semantic-commands',context.path+'/commands',payload.commands.length);
  inspectUnknown({...payload,commands:[]},manifest.schema,manifest.schema.$defs,ctx,context.path);
  ctx.unique(payload.tables,t=>t.id,context.path+'/tables','table ID');ctx.unique(payload.tables,t=>t.name,context.path+'/tables','native table name');ctx.unique(payload.tables,t=>refKey(t.record),context.path+'/tables','Record binding');
  if(payload.tables.reduce((n,t)=>n+t.columns.length,0)>4096)ctx.add('TABLES_COLUMN_LIMIT',context.path+'/tables','Module column inventory exceeds 4096');
@@ -30,6 +33,7 @@ function semantics(value:Json,context:{document:Document;path:string;scope:strin
  // PostgreSQL tables and indexes share the schema relation namespace.
  const names=new Set(payload.tables.map(t=>t.name));
  for(const[i,table]of payload.tables.entries()){
+  ctx.visit('table-semantic-table',context.path+'/tables/'+i);ctx.visit('table-semantic-indexes',context.path+'/tables/'+i+'/indexes',table.indexes.length);
   inspectTable(table,payload,ctx,context.path+'/tables/'+i);
   for(const[j,index]of table.indexes.entries()){
    if(names.has(index.name))ctx.add('TABLES_RELATION_NAME',context.path+'/tables/'+i+'/indexes/'+j+'/name','Native index name collides in the schema relation namespace');names.add(index.name);
@@ -40,16 +44,22 @@ function semantics(value:Json,context:{document:Document;path:string;scope:strin
  return ctx.diagnostics;
 }
 /** Explicit registry; no global registration or implicit native/plugin loading. */
-export function tableLifecycleRegistry():Registry{return new Registry().register(tableLifecyclePackage,semantics);}
+export function tableLifecycleRegistry():Registry{return tableLifecycleRegistryInternal();}
+function tableLifecycleRegistryInternal(accounting?:AccountingContext):Registry{return new Registry().register(tableLifecyclePackage,(value,context)=>semantics(value,context,accounting));}
 /** Metadata admission only. Native deployment and compiler obligations are separate. */
-export function inspectTableLifecycle(input:unknown):TableLifecycleInspection{
+export function inspectTableLifecycle(input:unknown):TableLifecycleInspection{return inspectTableLifecycleInternal(input);}
+/** Internal source-only metered branch; not re-exported by the public package barrel. */
+export function inspectTableLifecycleWithAccounting(input:unknown,accounting:AccountingContext):TableLifecycleInspection{return inspectTableLifecycleInternal(input,accounting);}
+function inspectTableLifecycleInternal(input:unknown,accounting?:AccountingContext):TableLifecycleInspection{
  let source:Document;
- try{source=copyJson(input) as unknown as Document;}catch(error){if(!(error instanceof UmfError))throw error;return {valid:false,complete:false,modules:[],nativeQualified:false,diagnostics:[{code:error.code,path:error.path,message:error.message,severity:'error'}]};}
- const base=validateDocument(source,tableLifecycleRegistry()),diagnostics=[...base.diagnostics];
+ const copyHooks=accounting?{beforeProperty:(key:string,path:string,isArray:boolean)=>{accounting.visit('table-inspection-copy-property-preflight',path);if(!isArray)accounting.scanUtf8(key,path);},retainText:(text:string,path:string)=>{accounting.scanUtf8(text,path);}}:undefined;
+ try{source=(accounting?copyJsonCharged(input,n=>accounting.visit('table-inspection-copy','/document',n),copyHooks):copyJson(input)) as unknown as Document;}catch(error){if(!(error instanceof UmfError))throw error;return {valid:false,complete:false,modules:[],nativeQualified:false,diagnostics:[{code:error.code,path:error.path,message:error.message,severity:'error'}]};}
+ const registry=tableLifecycleRegistryInternal(accounting);const base=accounting?validateDocumentWithAccounting(source,registry,(category,count)=>accounting.visit(`table-inspection-${category}`,'/document',count),{property:copyHooks!.beforeProperty,text:copyHooks!.retainText}):validateDocument(source,registry),diagnostics=[...base.diagnostics];
  if(!base.valid)return {...base,source:source as unknown as Json,modules:[],nativeQualified:false};
  if(source.umf!==CURRENT_CORE_VERSION)diagnostics.push({code:'TABLES_CORE',path:'/umf',message:'Table lifecycle metadata requires current core0.10.0',severity:'error'});
- const modules=Array.isArray(source.modules)?source.modules.flatMap(module=>{
-  const payload=module.extensions?.[TABLES_EXTENSION];return payload===undefined?[]:[{module:module.id,payload:copyJson(payload) as unknown as TableLifecyclePayload}];
+ const modules=Array.isArray(source.modules)?source.modules.flatMap((module,moduleIndex)=>{
+  accounting?.visit('table-inspection-module',`/modules/${moduleIndex}`);
+  const payload=module.extensions?.[TABLES_EXTENSION];return payload===undefined?[]:[{module:module.id,payload:accounting?copyJsonCharged(payload,n=>accounting.visit('table-inspection-payload-copy',`/modules/${moduleIndex}`,n),copyHooks) as unknown as TableLifecyclePayload:copyJson(payload) as unknown as TableLifecyclePayload}];
  }):[];
  if(!modules.length)diagnostics.push({code:'TABLES_DECLARATION',path:'/modules',message:'No module declares table lifecycle metadata',severity:'error'});
  return {source:source as unknown as Json,modules,nativeQualified:false,valid:!diagnostics.some(d=>d.severity==='error'),complete:diagnostics.length===0,diagnostics};

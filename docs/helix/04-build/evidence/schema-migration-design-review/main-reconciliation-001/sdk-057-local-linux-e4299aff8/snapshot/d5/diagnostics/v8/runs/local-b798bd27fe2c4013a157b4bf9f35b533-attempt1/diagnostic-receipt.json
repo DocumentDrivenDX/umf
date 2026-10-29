@@ -1,0 +1,131 @@
+{
+  "actualMetadataBytes": 8885,
+  "actualRetainedLogBytes": 180,
+  "aggregateElapsedMs": 3942,
+  "aggregateLimitSeconds": 600,
+  "attempt": 1,
+  "captureHelperSha256": "f3520d808d9d748be68a0bfced22e7970844c5916af65dbe7fdf519b7a8ffda5",
+  "childLimitSeconds": 180,
+  "d5StatusEffect": "none",
+  "dockerClientServerVersion": "29.8.2/29.8.2",
+  "executionId": "local-b798bd27fe2c4013a157b4bf9f35b533",
+  "harnessSha256": "476239b4cf5f954d28884eba757589003666f3431f60c295ad3312ba26d5607f",
+  "hostPlatform": {
+    "machine": "arm64",
+    "system": "Darwin"
+  },
+  "interpretation": "timing diagnostic only; no performance or release-gate claim",
+  "metadataCapBytes": 16777216,
+  "operatorWrapperSha256": "95d1d1c1c9aaf5940a32860447729e4c220b3a9d25e740e357f0dd7cafe8014c",
+  "oracleElapsedMsByMode": {
+    "default": [
+      null
+    ],
+    "jitless": []
+  },
+  "order": [
+    "default",
+    "jitless",
+    "jitless",
+    "default"
+  ],
+  "postgresImage": {
+    "imageId": "sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336",
+    "platform": "linux/arm64",
+    "reference": "sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336"
+  },
+  "postgresPlatform": "linux/arm64",
+  "releaseGate": false,
+  "resourceLimits": {
+    "client": {
+      "cpus": 8,
+      "memoryBytes": 8589934592,
+      "pidsLimit": 4096
+    },
+    "postgres": {
+      "cpus": 2,
+      "memoryBytes": 2147483648,
+      "pidsLimit": 1024
+    }
+  },
+  "runtimeImage": {
+    "imageId": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+    "platform": "linux/amd64",
+    "reference": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556"
+  },
+  "runtimePlatform": "linux/amd64",
+  "schema": "umf.local-d5-v8-flags-diagnostic/1",
+  "source": {
+    "cohort": {
+      "core": "0.10.3",
+      "miniRacer": "0.14.1",
+      "python": "3.11.17",
+      "umfAccess": "0.1.0.dev8",
+      "umfCodegen": "0.1.0a5",
+      "weft": "0.4.55"
+    },
+    "inputSha256": {
+      "d5/evidence/cohort.lock.json": "4337ab0597dcec245402abe73bcf8ea1d09bc72a4cb2907473c9e53d0327e611",
+      "d5/evidence/installed-versions.json": "6f524800d52f199acc8a07f2e1624a38d250088b1d90900034e81531d3ee983a",
+      "d5/evidence/mirror-manifest.json": "a8718abda3775d958df3756e200e9b037c7c25e8961cdbc10b9fb095924a6561",
+      "d5/evidence/owner-artifacts.json": "64d9a12d4f92ffe7c080568b0b0aaad7ab4e454da4f08fea075143b883fb5ddc",
+      "d5/evidence/replay/candidate-009/installed-text-oracle-d5-weft55-metadata-successor.py": "e197d3630079c597964aa81b875ef6e7cd53f1c2fab42018bdb5a8684bf53600",
+      "d5/evidence/replay/g01/fixture.json.gz": "c29ee30dd76e6e4fbbf6ceea64cb22d77764c2a349081819d0d7ac1c1dc59af1",
+      "local-docker-context.json": "407407e27cd1db41c34c6ab0610ddef0df0d38485fb435141923bafc48a7fdf1"
+    },
+    "miniRacerWheel": {
+      "filename": "mini_racer-0.14.1-py3-none-manylinux_2_27_x86_64.whl",
+      "sha256": "cdf3a088e1363f16a695288f882abf76b3705b8e1df21418208b87ed010037a4",
+      "sizeBytes": 22178205
+    },
+    "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+    "sourceTree": "8b98c0d895983ba2b7637dd3aea567dab0943883"
+  },
+  "status": "unknown",
+  "streamCapBytes": 131072,
+  "teardownReserveSeconds": 60,
+  "trials": [
+    {
+      "child": {
+        "elapsedMs": 768,
+        "exitCode": 1,
+        "logPaths": [
+          "logs/outer.stdout.log",
+          "logs/outer.stderr.log"
+        ],
+        "stderrBytes": 180,
+        "stderrCaptureExit": 0,
+        "stderrSha256": "d5f8d95239b294480d88627eae3d6d8cbdaf992b75594a3a8274852a55f89f2e",
+        "stdoutBytes": 0,
+        "stdoutCaptureExit": 0,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timedOut": false
+      },
+      "clientContainerId": "4ca913444648426349369c51ab7c00253746ef86f517d841db560da876da2781",
+      "elapsedMsIncludingOwnedPostgres": 3782,
+      "flags": [
+        "--single-threaded"
+      ],
+      "mode": "default",
+      "postgresCleanupSucceeded": true,
+      "postgresContainerId": "a268649d63c4e57d8b4765dd4420fc78c821552ada570455a24067e50d33bb39",
+      "reason": "report-missing",
+      "reportPath": "trials/01-default/report.json",
+      "resourceLimits": {
+        "client": {
+          "cpus": 8,
+          "memoryBytes": 8589934592,
+          "pidsLimit": 4096
+        },
+        "postgres": {
+          "cpus": 2,
+          "memoryBytes": 2147483648,
+          "pidsLimit": 1024
+        }
+      },
+      "sequence": "01-default",
+      "status": "unknown"
+    }
+  ],
+  "typedObservationEquality": false
+}

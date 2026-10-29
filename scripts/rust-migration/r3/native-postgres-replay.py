@@ -101,7 +101,7 @@ try:
         checks.append("weft-backfill-updated-both-fixture-rows")
         report["initialReceiptStatus"] = first.get("status")
         report["forwardReceiptStatus"] = completed.get("status")
-        report["weftVersion"] = importlib.metadata.version("weft-sql")
+        report["umfWeftVersion"] = importlib.metadata.version("umf-weft")
         report["pythonCodegenHostVersion"] = importlib.metadata.version("umf-codegen")
         report["status"] = "passed"
 finally:

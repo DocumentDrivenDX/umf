@@ -1,0 +1,73 @@
+{
+  "captureProfile": "umf-pr48-readonly-campaign-capture/1",
+  "repository": "DocumentDrivenDX/umf",
+  "pullRequest": 48,
+  "run": {
+    "id": 40571378521,
+    "name": "Command execution",
+    "runNumber": 631,
+    "status": "completed",
+    "conclusion": "success",
+    "apiHeadSha": "953017084df517deb5262dd071bfe406f2d956be",
+    "event": "pull_request",
+    "checkoutProducerCommit": "af3dd82f7b273f49f4398399f74d81f0bb01f9c0",
+    "producerTree": "2b522e129dda8e4f6d2580bddcd3453af2f99bef"
+  },
+  "job": {
+    "id": 122426171152,
+    "name": "commands",
+    "conclusion": "success",
+    "githubJobLog": {
+      "path": "/private/tmp/migration-pr48-953-commands/github-job.log",
+      "bytes": 209632,
+      "sha256": "25e28fc31d78208540fd4c7199a17a17940c36b058709f12acf8700cb993fa71"
+    },
+    "successfulSteps": [
+      "Test command declarations",
+      "Test actual PostgreSQL command execution",
+      "Build bundled SDK",
+      "Test command API in Chromium"
+    ]
+  },
+  "artifact": {
+    "id": 12766235680,
+    "name": "command-execution-evidence",
+    "sizeBytes": 30886864,
+    "githubZipSha256": "8298ec2fed6f9fd00ec42e37a88789a4c93f96f03c5c96b21ffcd096e1e59030",
+    "localPath": "/private/tmp/migration-pr48-953-commands/command-execution-evidence.zip",
+    "members": [
+      {"path":"command-execution.log","bytes":47180,"sha256":"9b623c2a53dc2e2599df4386791e438e0fd377ed3fe34199f20dc9c02d05022c"},
+      {"path":"fixtures/actions/browser.json","bytes":268217,"sha256":"638eea54309ffe1efec4eacc738e3ca47e2f98b755704c29b0f2645d88f160ea"},
+      {"path":".cache/sdk-distribution/umf-sdk.tgz","bytes":30835188,"sha256":"35904ecd1dd7938cdf98750715e6291a878b2ff7edbe982633c016dfe05c5fcf"},
+      {"path":".cache/sdk-distribution/manifest.json","bytes":229540,"sha256":"5e903bddb0c738c6f2b4d6f1257ef6dbe767133ac05a003be7a834981b56d106"}
+    ]
+  },
+  "commandEvidence": {
+    "sdkTests": "125 pass, 0 fail across 41 files",
+    "sdkConformanceCases": 139,
+    "sdkArchiveTarEntries": 1799,
+    "distributionProfile": "umf.sdk.distribution/1",
+    "distributionHashRows": 1793,
+    "distributionManifestIncludesConformanceCaseCount": false,
+    "browserBundleBytes": 13865188,
+    "installedDistributionFiles": 1799,
+    "postgreSqlParserBrowserRuntime": "built",
+    "actionsBrowser": {
+      "profile": "umf-actions-browser-1",
+      "browser": "153.0.8010.12",
+      "bun": "1.4.2",
+      "fixtures": 3,
+      "bunParity": true,
+      "publicBundle": true,
+      "externalRequests": [],
+      "image": "mcr.microsoft.com/playwright@sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27",
+      "sourceRows": 35,
+      "actionSourceRows": 20,
+      "planIdentitySourceSha256": "e88f87c9c9c186f2c91e75012a27531538879a144b68136a931069209d17103f",
+      "browserRunnerSha256": "e76f379fa1992d1c62c18a9b0c68446ea69ff29fdf88086a6fedcabbe1fb3344",
+      "browserCorpusSha256": "e51839f44262639cdb56d01a3e7959fd11dd193c24e67780c4cf9a2d8f74924b",
+      "caseCorpusSha256": "2cb7357673478043cb9958993ef76fc755eeb28d28ba6aa382e51a4ff4caf12f"
+    }
+  },
+  "note": "Successful checkpoint only. The PR merge producer commit/tree and workflow API head are separate identities; this run does not qualify current edited source as a release producer."
+}

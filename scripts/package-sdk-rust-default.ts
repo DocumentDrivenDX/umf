@@ -113,7 +113,12 @@ try{
   join(root,'bindings/core/node/index.js'),
   join(root,'bindings/core/wasm/index.js'),
  ];
+ const metamodelManifest=JSON.parse(await readFile(join(root,'spec/metamodel/generated/manifest.json'),'utf8'));
+ // The separately owned accounted validator brings immutable predecessor
+ // inputs and custody receipts into the build; copy the declared backend too.
+ const metamodelBackendInputs=Object.keys(metamodelManifest.backend.inputs).map(path=>join(root,path));
  const sourceInputs=[...new Set([
+  ...metamodelBackendInputs,
   join(root,'Cargo.lock'),join(root,'Cargo.toml'),join(root,'rust-toolchain.toml'),join(root,'package.json'),join(root,'bun.lock'),join(root,'tsconfig.json'),
   join(root,'bindings/core/node/index.js'),join(root,'bindings/core/wasm/index.js'),
   join(root,'bindings/core/node/index.d.ts'),join(root,'bindings/core/wasm/index.d.ts'),
@@ -316,6 +321,7 @@ try{
  // so private regeneration cannot quietly omit an input and appear stale.
  const sourceInputSet=new Set(sourceInputs);
  const declaredMetamodelInputs=[
+  ...metamodelBackendInputs,
   join(root,'Cargo.toml'),join(root,'Cargo.lock'),join(root,'rust-toolchain.toml'),join(root,'.cargo/config.toml'),
   join(root,'spec/metamodel/umf.yaml'),...rustCompileResources.map(path=>join(root,path)),
   ...await sourceClosureFiles(join(root,'crates')),

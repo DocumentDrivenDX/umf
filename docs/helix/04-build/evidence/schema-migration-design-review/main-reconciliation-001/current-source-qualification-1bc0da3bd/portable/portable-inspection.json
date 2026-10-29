@@ -1,0 +1,365 @@
+{
+  "artifact": {
+    "compressed_bytes": 74169,
+    "expanded_bytes": 1565262,
+    "id": 12763422983,
+    "members": 17,
+    "name": "combined-migration-40567567226-1",
+    "path": "/private/tmp/migration-portable-40567567226/artifact.zip",
+    "sha256": "20c0c3d4a1f2d25252f7d6791e3f6b0a2e959ae9c95d5504d60f9f665b2c4af1",
+    "zip_integrity": "clean"
+  },
+  "browser_parity": {
+    "actual": {
+      "count": 156,
+      "failures": [],
+      "work": 2668396
+    },
+    "browser": {
+      "bytes": 293285184,
+      "executable": "/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+      "sha256": "8c599d43aec53f2460a31ae2f4af6bd863f8258b34ff519564bc5d4726bfaa1e",
+      "version": "153.0.8010.12"
+    },
+    "bundle": {
+      "bytes": 2414774,
+      "sha256": "2ee187c5027485dabd4898c97016d4580049ec6d03d863f0d7038ec4344c3ab2"
+    },
+    "chromiumRevision": "1243",
+    "expectedCases": 156,
+    "externalRequests": 0,
+    "pageErrors": [],
+    "playwrightBrowsersJsonSha256": "545d52f8382c391e605562c330e9c1c534a16045898203037a49bb8bd769a946",
+    "profile": "umf.r2.browser-parity/1",
+    "status": "PASS"
+  },
+  "commands": {
+    "aggregate_elapsed_seconds": 182,
+    "artifact_cap_text": "artifact_public_bytes=1565204\nartifact_max_bytes=16777216",
+    "outer_cleanup_reserve_seconds": 60,
+    "outer_deadline_seconds": 1620,
+    "qualification_exit": 0,
+    "stages": [
+      {
+        "argv": "timeout --signal=TERM --kill-after=10s 160s bun install --frozen-lockfile --ignore-scripts ",
+        "duration_seconds": "2",
+        "exit": "0",
+        "log_bytes_before_cap": "1052",
+        "log_truncated": "no",
+        "name": "install"
+      },
+      {
+        "argv": "timeout --signal=TERM --kill-after=10s 180s bun node_modules/typescript/bin/tsc --noEmit ",
+        "duration_seconds": "2",
+        "exit": "0",
+        "log_bytes_before_cap": "0",
+        "log_truncated": "no",
+        "name": "full-typescript"
+      },
+      {
+        "argv": "timeout --signal=TERM --kill-after=10s 180s bun node_modules/typescript/bin/tsc -p tsconfig.tools.json ",
+        "duration_seconds": "7",
+        "exit": "0",
+        "log_bytes_before_cap": "0",
+        "log_truncated": "no",
+        "name": "tools-typescript"
+      },
+      {
+        "argv": "timeout --signal=TERM --kill-after=10s 180s bun node_modules/typescript/bin/tsc --noEmit -p tsconfig.r2-metering-stageb.json ",
+        "duration_seconds": "0",
+        "exit": "0",
+        "log_bytes_before_cap": "0",
+        "log_truncated": "no",
+        "name": "r2-typescript"
+      },
+      {
+        "argv": "timeout --signal=TERM --kill-after=10s 180s bun test --timeout 15000 tests/lifecycle/table-inventory-api.test.ts tests/lifecycle/g02-derived-fill.test.ts tests/lifecycle/g02-renderer-operation-sidecar.test.ts ",
+        "duration_seconds": "92",
+        "exit": "0",
+        "log_bytes_before_cap": "5359",
+        "log_truncated": "no",
+        "name": "api-g02"
+      },
+      {
+        "argv": "timeout --signal=TERM --kill-after=10s 60s bun test --timeout 30000 tests/lifecycle/g02-temporal-native-fixture.test.ts ",
+        "duration_seconds": "3",
+        "exit": "0",
+        "log_bytes_before_cap": "298",
+        "log_truncated": "no",
+        "name": "g02-fixture-source-control"
+      },
+      {
+        "argv": "timeout --signal=TERM --kill-after=10s 180s bun test --timeout 15000 tests/lifecycle/g04-checked-conversion.test.ts tests/lifecycle/g03-defaults.test.ts tests/lifecycle/g03-discovery-bridge.test.ts tests/lifecycle/g03-renderer-compatibility.test.ts tests/lifecycle/g11-field-replacement.test.ts tests/lifecycle/table-deployment-operations.test.ts tests/lifecycle/migration.test.ts tests/lifecycle/reviewed.test.ts ",
+        "duration_seconds": "60",
+        "exit": "0",
+        "log_bytes_before_cap": "9743",
+        "log_truncated": "no",
+        "name": "g03-and-migration-regressions"
+      },
+      {
+        "argv": "timeout --signal=TERM --kill-after=10s 180s bun test --timeout 15000 tests/metamodel/structural-accounting-source.test.ts tests/lifecycle/table-inventory-r2-context.test.ts tests/lifecycle/table-inventory-verified-deployment.test.ts tests/lifecycle/table-deployment-r2-accounting.test.ts tests/metamodel/structural-accounting-parity.test.ts ",
+        "duration_seconds": "5",
+        "exit": "0",
+        "log_bytes_before_cap": "5694",
+        "log_truncated": "no",
+        "name": "r2-controls-and-parity"
+      },
+      {
+        "argv": "timeout --signal=TERM --kill-after=10s 120s bun scripts/qualification/r2-metering-generate.ts ",
+        "duration_seconds": "0",
+        "exit": "0",
+        "log_bytes_before_cap": "857",
+        "log_truncated": "no",
+        "name": "generate-reviewed-r2-reproduction"
+      },
+      {
+        "argv": "timeout --signal=TERM --kill-after=10s 180s bun node_modules/playwright/cli.js install chromium ",
+        "duration_seconds": "8",
+        "exit": "0",
+        "log_bytes_before_cap": "6811",
+        "log_truncated": "no",
+        "name": "install-pinned-chromium"
+      },
+      {
+        "argv": "timeout --signal=TERM --kill-after=10s 180s bun scripts/r2-metering-browser.ts ",
+        "duration_seconds": "3",
+        "exit": "0",
+        "log_bytes_before_cap": "607",
+        "log_truncated": "no",
+        "name": "r2-chromium-parity"
+      }
+    ]
+  },
+  "identity": {
+    "all_expected_pins": "OK",
+    "branch": "codex/migration-integrated-qualification",
+    "bun": "1.4.3",
+    "event": "push",
+    "expected_pin_manifest_sha256": "6fd661b7cb0ae6a4dfd097ee6e88fa2bc1e8b3c503898373c17505bd8470854f",
+    "profile": "umf.combined-portable-migration/1",
+    "runner": "Linux x64 ubuntu24",
+    "source_sha": "1bc0da3bd9cf43dc2a58ae69647a23eea330c1d4",
+    "tree_sha": "ca9af66ad1d90c27868a2e69c2a7b1f6c5145757",
+    "workflow_file_sha256": "1e3f5dcbe37c2f866319a7e462a69a73040f1fe4cb7a21e7ba3a96dd17224b13"
+  },
+  "job": {
+    "conclusion": "success",
+    "id": 122412796504,
+    "name": "combined-portable",
+    "status": "completed",
+    "step_results": [
+      {
+        "conclusion": "success",
+        "name": "Set up job"
+      },
+      {
+        "conclusion": "success",
+        "name": "Check out exact pushed source"
+      },
+      {
+        "conclusion": "success",
+        "name": "Set up pinned Bun"
+      },
+      {
+        "conclusion": "success",
+        "name": "Run one bounded public-source qualification"
+      },
+      {
+        "conclusion": "success",
+        "name": "Record qualification step outcome"
+      },
+      {
+        "conclusion": "success",
+        "name": "Enforce always-path public artifact bounds"
+      },
+      {
+        "conclusion": "success",
+        "name": "Upload public logs and bounded source-derived receipts"
+      },
+      {
+        "conclusion": "success",
+        "name": "Post Set up pinned Bun"
+      },
+      {
+        "conclusion": "success",
+        "name": "Post Check out exact pushed source"
+      },
+      {
+        "conclusion": "success",
+        "name": "Complete job"
+      }
+    ]
+  },
+  "r2_reproduction": {
+    "inputs": [
+      {
+        "bytes": 305070,
+        "kind": "source",
+        "path": "src/generated/core-validators.ts",
+        "sha256": "563602e0f21f6d6b0efd1ae069dbda28926e085585b4bf0430347b65ff2bd0ff"
+      },
+      {
+        "bytes": 45342,
+        "kind": "schema",
+        "path": "spec/core/schema.json",
+        "sha256": "c6004664eb93dcef28ce6e0583f91225b618aa0fb42967a892242402557cf71d"
+      },
+      {
+        "bytes": 45463,
+        "kind": "schema",
+        "path": "spec/core/semantic-type-reference.schema.json",
+        "sha256": "207abbad54ebf8c660a958e2deda072a5a3236b5b8df5af8a8656f90c3e46ba9"
+      },
+      {
+        "bytes": 45001,
+        "kind": "schema",
+        "path": "spec/core/extension-package.schema.json",
+        "sha256": "4df3c8f92c5baa2c52f965d83b681ff306392bf9ba333bd39213a8f1065ac766"
+      }
+    ],
+    "output_bytes": 1525352,
+    "output_path": "core-validators-accounted.ts",
+    "output_sha256": "5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29",
+    "source_compare_exit": 0,
+    "source_pin": "5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29"
+  },
+  "raw_job_log": {
+    "bytes": 38413,
+    "path": "/private/tmp/migration-portable-40567567226/job-122412796504.log",
+    "sha256": "ab427e3da7a9ed6eced2a4e958974cac60dbc27ac083e118b35f9592e3a998b2"
+  },
+  "run": {
+    "conclusion": "success",
+    "created_at": "2026-10-27T19:16:09Z",
+    "head_sha": "1bc0da3bd9cf43dc2a58ae69647a23eea330c1d4",
+    "html_url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40567567226",
+    "id": 40567567226,
+    "name": "Combined portable migration and R2 qualification",
+    "run_attempt": 1,
+    "run_started_at": "2026-10-27T19:16:09Z",
+    "status": "completed",
+    "updated_at": "2026-10-27T19:20:04Z"
+  },
+  "suite_counts": {
+    "groups": [
+      {
+        "expect_calls": 661,
+        "failed": 0,
+        "passed": 45,
+        "path": "api-g02.log",
+        "summary": "Ran 45 tests across 3 files. [91.76s]"
+      },
+      {
+        "expect_calls": 58,
+        "failed": 0,
+        "passed": 1,
+        "path": "g02-fixture-source-control.log",
+        "summary": "Ran 1 test across 1 file. [2.64s]"
+      },
+      {
+        "expect_calls": 709,
+        "failed": 0,
+        "passed": 87,
+        "path": "g03-and-migration-regressions.log",
+        "summary": "Ran 87 tests across 8 files. [60.01s]"
+      },
+      {
+        "expect_calls": 554,
+        "failed": 0,
+        "passed": 54,
+        "path": "r2-controls-and-parity.log",
+        "summary": "Ran 54 tests across 5 files. [4.99s]"
+      }
+    ],
+    "total_expect_calls": 1982,
+    "total_tests_failed": 0,
+    "total_tests_passed": 187
+  },
+  "zip_members": [
+    {
+      "bytes": 5359,
+      "path": "combined-qualification-evidence/api-g02.log",
+      "sha256": "ccaddd82725621b836782e810ac3eb6b3fde37e49166ebecd0fc638b920d03f3"
+    },
+    {
+      "bytes": 58,
+      "path": "combined-qualification-evidence/artifact-cap.txt",
+      "sha256": "737132548a77742f768ff057def7469653c2c51eceb5550b324114b962b51d5f"
+    },
+    {
+      "bytes": 3876,
+      "path": "combined-qualification-evidence/commands.log",
+      "sha256": "99ba347217f5deb1fd4e1e7d531fc7954f01ffc5b9546de84867b8ca860ce963"
+    },
+    {
+      "bytes": 0,
+      "path": "combined-qualification-evidence/full-typescript.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 298,
+      "path": "combined-qualification-evidence/g02-fixture-source-control.log",
+      "sha256": "1b9a81e29e2bd6a8d4c575685463d17962b2954b50e74fe7ac32051d1eb95ae4"
+    },
+    {
+      "bytes": 9743,
+      "path": "combined-qualification-evidence/g03-and-migration-regressions.log",
+      "sha256": "1de781cea3bb6c19e714a0da33af955f6ad88a083d73ce7eefc4c9b333b5b741"
+    },
+    {
+      "bytes": 857,
+      "path": "combined-qualification-evidence/generate-reviewed-r2-reproduction.log",
+      "sha256": "fe04cd1d3bf4ffa17cc9d4455e15c91faafe5a196eaa9381ade2626529431972"
+    },
+    {
+      "bytes": 5555,
+      "path": "combined-qualification-evidence/identity.txt",
+      "sha256": "bc6cc431abd3be81a0bfdb1763d056a25bd76be0c046f4d89897f0ab70cc6f68"
+    },
+    {
+      "bytes": 6811,
+      "path": "combined-qualification-evidence/install-pinned-chromium.log",
+      "sha256": "294a244be3ec3b4141ac869ccb7c711162badc3dd284693eb050e0bd16ede03a"
+    },
+    {
+      "bytes": 1052,
+      "path": "combined-qualification-evidence/install.log",
+      "sha256": "49e4a9510c0024ccdbeee87ab94b971f2e43599298045e291d1e1647df397bf7"
+    },
+    {
+      "bytes": 0,
+      "path": "combined-qualification-evidence/preflight.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 607,
+      "path": "combined-qualification-evidence/r2-chromium-parity.log",
+      "sha256": "eb96b1085d4e63c0fc6e5e07281ac49f6935ee77ded217e8a0ec854b6033459e"
+    },
+    {
+      "bytes": 5694,
+      "path": "combined-qualification-evidence/r2-controls-and-parity.log",
+      "sha256": "ece327a4687c979a051eaa17830264477239310cacc6ecb5bd9f8291182c20fa"
+    },
+    {
+      "bytes": 0,
+      "path": "combined-qualification-evidence/r2-typescript.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "combined-qualification-evidence/reproduction-compare.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "combined-qualification-evidence/tools-typescript.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1525352,
+      "path": "core-validators-accounted.ts",
+      "sha256": "5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29"
+    }
+  ]
+}

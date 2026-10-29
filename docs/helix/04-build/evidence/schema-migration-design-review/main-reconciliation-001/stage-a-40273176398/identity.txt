@@ -1,0 +1,25 @@
+profile=umf.r2-metering-stage-a/1
+event=push
+ref=refs/heads/codex/migration-main-metering-generation
+commit=85f4a645cd14e7673a83fc475d3dd66dcc629edc
+workflow_ref=DocumentDrivenDX/umf/.github/workflows/r2-metering-stage-a.yml@refs/heads/codex/migration-main-metering-generation
+workflow_sha=85f4a645cd14e7673a83fc475d3dd66dcc629edc
+run_id=40273176398
+attempt=1
+runner=ubuntu-24.04
+bun_version=1.4.3
+bun_path=/home/runner/.bun/bin/bun
+bun_binary_sha256=7ce7d6b654eddeec20afddf2396317fba6dc19ab52788a27e894e1806bf8f24b
+pin_manifest=qualification-inputs/r2-metering-stage-a.sha256
+pin_manifest_sha256=ffeb22448d5f941ca67e7d9746728141c07a7e211314cf9efda35d9bda0103e1
+install_exit=0
+argv=python3 bounded-capture timeout=160 bun install --frozen-lockfile --ignore-scripts
+exit=0 bytes_written=1052 aggregate_log_overflow=false timed_out=false
+typescript_api_version=5.9.3
+generator_exit=0
+argv=python3 bounded-capture timeout=90 bun scripts/qualification/r2-metering-generate.ts
+exit=0 bytes_written=844 aggregate_log_overflow=false timed_out=false
+companion_sha256=314cac8416711899285bc3f1a734765d557f7446f7ab0cf58d3dbd2a7dfdd81e
+companion_bytes=1525352
+manifest_sha256=def3865107a9a961ec74757e6bdec46a86f8fc39fdd0a502a829f9c83b297289
+manifest_bytes=2231

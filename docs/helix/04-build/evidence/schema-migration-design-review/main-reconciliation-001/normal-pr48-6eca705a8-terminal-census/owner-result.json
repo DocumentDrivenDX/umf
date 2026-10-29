@@ -1,0 +1,40 @@
+{
+  "aggregate": {
+    "artifactId": 12805614309,
+    "sha256": "b23463647a3dfe504429b63c645cd5b506420facdc226272e3d68a3f701ddf38",
+    "sizeBytes": 201568140,
+    "storage": "Retained external GitHub Actions artifact; large archive excluded from Git."
+  },
+  "executionChange": {
+    "authorization": "Human requested release without Actions, Linux execution and built macOS artifacts with explicit limits.",
+    "macOS": "Retained artifact inputs only. Historical Core Python3.11 arm64 evidence on macOS15.7.9; no fresh macOS runtime and no Python3.14 qualification. Static macosx_11_0 tag does not prove macOS11 runtime.",
+    "noNewActions": true,
+    "runtime": "Existing OrbStack Linux engine on Darwin host; actual candidate execution must remain inside Linux."
+  },
+  "limits": "All results remain bound to their actual source/run. This census does not transfer qualification to a successor commit or establish release/public-byte acceptance.",
+  "passedUnion314": {
+    "artifactId": 12818143450,
+    "artifactSha256": "fed3770f0ce0e767ef479f5557eef6cf5248bf41280ff8eac221a484f21c6421",
+    "jobId": 122744967240
+  },
+  "producerCommit": "7cf121baa40601ba0b92a14cd0f7e121783cb8e2",
+  "profile": "umf.migration-qualification-terminal-census/1",
+  "remainingFailures": [
+    {
+      "code": "oracle-postgresql-identity-mismatch",
+      "disposition": "Reviewed correction compares oracle SHOW server_version exactly with independently observed baseline server_version; prior failure retained.",
+      "gate": "G02 D5 finalizer",
+      "jobId": 122528687536
+    },
+    {
+      "disposition": "No report or artifact produced. Preserve strict equality; acquire and replay within same pinned Linux runtime. Exact mismatching fields were not recorded and remain unknown.",
+      "gate": "Python 3.11 union replay",
+      "jobId": 122744967169,
+      "message": "Offline probe marker environment differs from the acquisition cell environment"
+    }
+  ],
+  "runId": 40600969078,
+  "sourceCommit": "6eca705a8ca2d9f99517e2fc919cd211fe00f98d",
+  "sourceTree": "d10995b85a061942c446a0bc70fa5454672eff71",
+  "status": "TERMINAL_FAILURE_NOT_RELEASE_QUALIFICATION"
+}

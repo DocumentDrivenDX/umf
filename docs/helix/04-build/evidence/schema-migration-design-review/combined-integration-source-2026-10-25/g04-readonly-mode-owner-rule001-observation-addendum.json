@@ -1,0 +1,9 @@
+{
+  "ruling": "/private/tmp/g04-readonly-mode-owner-rule001.md",
+  "rulingSha256": "f43ed9d9a3c2758c04295a3572470cb453191fc7bc9314538b17c7a54335b61a",
+  "sourceObservedSha256": "de8d6b7ef672e7ec8453ac4bdf0ce0043550a08237e890a4a285f1bbf6fb4cc1",
+  "sourceOnly": true,
+  "confirmedRootFinding": "_fetch_original_store_readonly rewrites actual pg_settings timeout values to bounded._lower_ms while retaining source/sourcefile. This fabricates observation tuples.",
+  "requiredCorrection": "Delete value substitution. Retain actual current pg_settings tuples and digest them exactly; keep authenticated original/prior caps as separate private comparison inputs. No fake off facts, reconstructed original setting tuple or digest normalization.",
+  "runtime": "UNRUN"
+}

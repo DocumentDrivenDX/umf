@@ -1,0 +1,135 @@
+{
+  "schema": "orbstack.private-qemu-binfmt-preflight/1",
+  "startedAtUtc": "2026-10-29T03:14:01.057115+00:00",
+  "image": "postgres@sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336",
+  "containerName": "codex-qemu-ns-probe-20261028",
+  "globalBefore": {
+    "argv": [
+      "orbctl",
+      "run",
+      "sh",
+      "-c",
+      "set -eu; d=/proc/sys/fs/binfmt_misc; cat \"$d/status\"; for f in \"$d\"/*; do n=${f##*/}; case \"$n\" in register|status) continue;; esac; printf \"ENTRY:%s\\n\" \"$n\"; cat \"$f\"; done"
+    ],
+    "exitCode": 0,
+    "output": "enabled\nENTRY:mac-macho-arm64\nenabled\ninterpreter [mac]\nflags: PF!\noffset 0\nmagic cffaedfe0c000001\nENTRY:mac-macho-x86_64\nenabled\ninterpreter [mac]\nflags: PF!\noffset 0\nmagic cffaedfe07000001\nENTRY:mac-universal-arm64\nenabled\ninterpreter [mac]\nflags: PF!\noffset 0\nmagic cafebabe000000020100000c\nmask ffffffffffffff02ffffffff\nENTRY:mac-universal-x86_64\nenabled\ninterpreter [mac]\nflags: PF!\noffset 0\nmagic cafebabe0000000201000007\nmask ffffffffffffff02ffffffff\nENTRY:qemu-aarch64\ndisabled\ninterpreter [qemu]\nflags: POCF!\noffset 0\nmagic 7f454c460201010000000000000000000200b700\nmask ffffffffffffff00fffffffffffffffffeffffff\nENTRY:qemu-arm\nenabled\ninterpreter [qemu-arm]\nflags: POCF!\noffset 0\nmagic 7f454c4601010100000000000000000002002800\nmask ffffffffffffff00fffffffffffffffffeffffff\nENTRY:qemu-i386\nenabled\ninterpreter [qemu-i386]\nflags: POCF!\noffset 0\nmagic 7f454c4601010100000000000000000002000300\nmask fffffffffffefefcfffffffffffffffffeffffff\nENTRY:qemu-mips64el\nenabled\ninterpreter [qemu-mips64el]\nflags: POCF!\noffset 0\nmagic 7f454c4602010100000000000000000002000800\nmask ffffffffffffff0000fffffffffffffffeffffff\nENTRY:qemu-ppc64le\nenabled\ninterpreter [qemu-ppc64le]\nflags: POCF!\noffset 0\nmagic 7f454c4602010100000000000000000002001500\nmask ffffffffffffff00fffffffffffffffffeffff00\nENTRY:qemu-riscv64\nenabled\ninterpreter [qemu-riscv64]\nflags: POCF!\noffset 0\nmagic 7f454c460201010000000000000000000200f300\nmask ffffffffffffff00fffffffffffffffffeffffff\nENTRY:qemu-s390x\nenabled\ninterpreter [qemu-s390x]\nflags: POCF!\noffset 0\nmagic 7f454c4602020100000000000000000000020016\nmask ffffffffffffff00fffffffffffffffffffeffff\nENTRY:qemu-x86_64\nenabled\ninterpreter [qemu]\nflags: POCF!\noffset 0\nmagic 7f454c4602010100000000000000000002003e00\nmask fffffffffffefe00343434fffffffffffeffffff\nENTRY:rosetta\nenabled\ninterpreter [rosetta]\nflags: POCF!\noffset 0\nmagic 7f454c4602010100000000000000000002003e00\nmask fffffffffffefe00343434fffffffffffeffffff\nENTRY:rosetta\u200b\nenabled\ninterpreter [rosetta]\nflags: POCF!\noffset 0\nmagic 7f454c4602010100000000000000000002003e00\nmask fffffffffffefe00343434fffffffffffeffffff\nENTRY:rosetta\u200b\u200b\nenabled\ninterpreter [rosetta]\nflags: OCF!\noffset 0\nmagic 7f454c4602010100000000000000000002003e00\nmask fffffffffffefe00343434fffffffffffeffffff\n"
+  },
+  "nameCheck": {
+    "argv": [
+      "docker",
+      "ps",
+      "-a",
+      "--filter",
+      "name=^codex-qemu-ns-probe-20261028$",
+      "--format",
+      "{{.ID}}"
+    ],
+    "exitCode": 0,
+    "output": ""
+  },
+  "launch": {
+    "argv": [
+      "docker",
+      "run",
+      "-d",
+      "--name",
+      "codex-qemu-ns-probe-20261028",
+      "--network",
+      "none",
+      "--platform",
+      "linux/arm64",
+      "--cpus",
+      "1",
+      "--memory",
+      "512m",
+      "--pids-limit",
+      "128",
+      "--cap-add=SYS_ADMIN",
+      "--security-opt",
+      "seccomp=unconfined",
+      "--entrypoint",
+      "/bin/sh",
+      "postgres@sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336",
+      "-c",
+      "unshare --user --map-root-user --mount /bin/sh -c 'set -eu\nD=$(mktemp -d)\ncleanup(){ rm -f \"$D/codex_namespace_probe\" 2>/dev/null || true; umount \"$D\" 2>/dev/null || true; rmdir \"$D\" 2>/dev/null || true; }\ntrap cleanup EXIT\nmount -t binfmt_misc binfmt_misc \"$D\"\nmount --make-private \"$D\"\nprintf \"USERNS=%s\\\\n\" \"$(readlink /proc/self/ns/user)\"\nprintf \"MOUNTNS=%s\\\\n\" \"$(readlink /proc/self/ns/mnt)\"\nprintf \"MOUNTID=%s\\\\n\" \"$(stat -c %d:%i \"$D\")\"\nprintf \"UIDMAP\\\\n\"\ncat /proc/self/uid_map\nprintf \"STATUS=%s\\\\n\" \"$(cat \"$D/status\")\"\nprintf \"ARCH=%s\\\\n\" \"$(uname -m)\"\nprintf \"MOUNTINFO\\\\n\"\ngrep binfmt_misc /proc/self/mountinfo\nprintf \"PRIVATE_ENTRIES_BEFORE\\\\n\"\nfind \"$D\" -maxdepth 1 -type f -printf \"%f\\\\n\" | sort\nprintf \"%s\\\\n\" \":codex_namespace_probe:M::\\\\x11\\\\x22\\\\x33\\\\x44:\\\\xff\\\\xff\\\\xff\\\\xff:/bin/true:F\" > \"$D/register\"\ntest -f \"$D/codex_namespace_probe\"\nprintf \"PRIVATE_ENTRY_BEGIN\\\\n\"\ncat \"$D/codex_namespace_probe\"\nprintf \"PRIVATE_ENTRY_END\\\\n\"\nprintf \"READY\\\\n\"\nsleep 8\n'"
+    ],
+    "exitCode": 0,
+    "output": "3adcff05e3e4b05fb45b250dd487a34a73e1a99440a5d6edbd52da7629b4acad\n"
+  },
+  "containerId": "3adcff05e3e4b05fb45b250dd487a34a73e1a99440a5d6edbd52da7629b4acad",
+  "logsWhileLive": {
+    "argv": [
+      "docker",
+      "logs",
+      "3adcff05e3e4b05fb45b250dd487a34a73e1a99440a5d6edbd52da7629b4acad"
+    ],
+    "exitCode": 0,
+    "output": "USERNS=user:[4026532831]\nMOUNTNS=mnt:[4026532832]\nMOUNTID=88:1\nUIDMAP\n         0          0          1\nSTATUS=enabled\nARCH=aarch64\nMOUNTINFO\n52478 52456 0:88 / /tmp/tmp.LsbyjDOoA7 rw,relatime - binfmt_misc binfmt_misc rw\nPRIVATE_ENTRIES_BEFORE\nregister\nstatus\nPRIVATE_ENTRY_BEGIN\nenabled\ninterpreter /bin/true\nflags: F\noffset 0\nmagic 11223344\nmask ffffffff\nPRIVATE_ENTRY_END\nREADY\n"
+  },
+  "globalDuring": {
+    "argv": [
+      "orbctl",
+      "run",
+      "sh",
+      "-c",
+      "set -eu; d=/proc/sys/fs/binfmt_misc; cat \"$d/status\"; for f in \"$d\"/*; do n=${f##*/}; case \"$n\" in register|status) continue;; esac; printf \"ENTRY:%s\\n\" \"$n\"; cat \"$f\"; done"
+    ],
+    "exitCode": 0,
+    "output": "enabled\nENTRY:mac-macho-arm64\nenabled\ninterpreter [mac]\nflags: PF!\noffset 0\nmagic cffaedfe0c000001\nENTRY:mac-macho-x86_64\nenabled\ninterpreter [mac]\nflags: PF!\noffset 0\nmagic cffaedfe07000001\nENTRY:mac-universal-arm64\nenabled\ninterpreter [mac]\nflags: PF!\noffset 0\nmagic cafebabe000000020100000c\nmask ffffffffffffff02ffffffff\nENTRY:mac-universal-x86_64\nenabled\ninterpreter [mac]\nflags: PF!\noffset 0\nmagic cafebabe0000000201000007\nmask ffffffffffffff02ffffffff\nENTRY:qemu-aarch64\ndisabled\ninterpreter [qemu]\nflags: POCF!\noffset 0\nmagic 7f454c460201010000000000000000000200b700\nmask ffffffffffffff00fffffffffffffffffeffffff\nENTRY:qemu-arm\nenabled\ninterpreter [qemu-arm]\nflags: POCF!\noffset 0\nmagic 7f454c4601010100000000000000000002002800\nmask ffffffffffffff00fffffffffffffffffeffffff\nENTRY:qemu-i386\nenabled\ninterpreter [qemu-i386]\nflags: POCF!\noffset 0\nmagic 7f454c4601010100000000000000000002000300\nmask fffffffffffefefcfffffffffffffffffeffffff\nENTRY:qemu-mips64el\nenabled\ninterpreter [qemu-mips64el]\nflags: POCF!\noffset 0\nmagic 7f454c4602010100000000000000000002000800\nmask ffffffffffffff0000fffffffffffffffeffffff\nENTRY:qemu-ppc64le\nenabled\ninterpreter [qemu-ppc64le]\nflags: POCF!\noffset 0\nmagic 7f454c4602010100000000000000000002001500\nmask ffffffffffffff00fffffffffffffffffeffff00\nENTRY:qemu-riscv64\nenabled\ninterpreter [qemu-riscv64]\nflags: POCF!\noffset 0\nmagic 7f454c460201010000000000000000000200f300\nmask ffffffffffffff00fffffffffffffffffeffffff\nENTRY:qemu-s390x\nenabled\ninterpreter [qemu-s390x]\nflags: POCF!\noffset 0\nmagic 7f454c4602020100000000000000000000020016\nmask ffffffffffffff00fffffffffffffffffffeffff\nENTRY:qemu-x86_64\nenabled\ninterpreter [qemu]\nflags: POCF!\noffset 0\nmagic 7f454c4602010100000000000000000002003e00\nmask fffffffffffefe00343434fffffffffffeffffff\nENTRY:rosetta\nenabled\ninterpreter [rosetta]\nflags: POCF!\noffset 0\nmagic 7f454c4602010100000000000000000002003e00\nmask fffffffffffefe00343434fffffffffffeffffff\nENTRY:rosetta\u200b\nenabled\ninterpreter [rosetta]\nflags: POCF!\noffset 0\nmagic 7f454c4602010100000000000000000002003e00\nmask fffffffffffefe00343434fffffffffffeffffff\nENTRY:rosetta\u200b\u200b\nenabled\ninterpreter [rosetta]\nflags: OCF!\noffset 0\nmagic 7f454c4602010100000000000000000002003e00\nmask fffffffffffefe00343434fffffffffffeffffff\n"
+  },
+  "wait": {
+    "argv": [
+      "docker",
+      "wait",
+      "3adcff05e3e4b05fb45b250dd487a34a73e1a99440a5d6edbd52da7629b4acad"
+    ],
+    "exitCode": 0,
+    "output": "0\n"
+  },
+  "logsFinal": {
+    "argv": [
+      "docker",
+      "logs",
+      "3adcff05e3e4b05fb45b250dd487a34a73e1a99440a5d6edbd52da7629b4acad"
+    ],
+    "exitCode": 0,
+    "output": "USERNS=user:[4026532831]\nMOUNTNS=mnt:[4026532832]\nMOUNTID=88:1\nUIDMAP\n         0          0          1\nSTATUS=enabled\nARCH=aarch64\nMOUNTINFO\n52478 52456 0:88 / /tmp/tmp.LsbyjDOoA7 rw,relatime - binfmt_misc binfmt_misc rw\nPRIVATE_ENTRIES_BEFORE\nregister\nstatus\nPRIVATE_ENTRY_BEGIN\nenabled\ninterpreter /bin/true\nflags: F\noffset 0\nmagic 11223344\nmask ffffffff\nPRIVATE_ENTRY_END\nREADY\n"
+  },
+  "inspect": {
+    "argv": [
+      "docker",
+      "inspect",
+      "--format",
+      "{{.State.ExitCode}} {{.State.Status}}",
+      "3adcff05e3e4b05fb45b250dd487a34a73e1a99440a5d6edbd52da7629b4acad"
+    ],
+    "exitCode": 0,
+    "output": "0 exited\n"
+  },
+  "remove": {
+    "argv": [
+      "docker",
+      "rm",
+      "3adcff05e3e4b05fb45b250dd487a34a73e1a99440a5d6edbd52da7629b4acad"
+    ],
+    "exitCode": 0,
+    "output": "3adcff05e3e4b05fb45b250dd487a34a73e1a99440a5d6edbd52da7629b4acad\n"
+  },
+  "globalAfter": {
+    "argv": [
+      "orbctl",
+      "run",
+      "sh",
+      "-c",
+      "set -eu; d=/proc/sys/fs/binfmt_misc; cat \"$d/status\"; for f in \"$d\"/*; do n=${f##*/}; case \"$n\" in register|status) continue;; esac; printf \"ENTRY:%s\\n\" \"$n\"; cat \"$f\"; done"
+    ],
+    "exitCode": 0,
+    "output": "enabled\nENTRY:mac-macho-arm64\nenabled\ninterpreter [mac]\nflags: PF!\noffset 0\nmagic cffaedfe0c000001\nENTRY:mac-macho-x86_64\nenabled\ninterpreter [mac]\nflags: PF!\noffset 0\nmagic cffaedfe07000001\nENTRY:mac-universal-arm64\nenabled\ninterpreter [mac]\nflags: PF!\noffset 0\nmagic cafebabe000000020100000c\nmask ffffffffffffff02ffffffff\nENTRY:mac-universal-x86_64\nenabled\ninterpreter [mac]\nflags: PF!\noffset 0\nmagic cafebabe0000000201000007\nmask ffffffffffffff02ffffffff\nENTRY:qemu-aarch64\ndisabled\ninterpreter [qemu]\nflags: POCF!\noffset 0\nmagic 7f454c460201010000000000000000000200b700\nmask ffffffffffffff00fffffffffffffffffeffffff\nENTRY:qemu-arm\nenabled\ninterpreter [qemu-arm]\nflags: POCF!\noffset 0\nmagic 7f454c4601010100000000000000000002002800\nmask ffffffffffffff00fffffffffffffffffeffffff\nENTRY:qemu-i386\nenabled\ninterpreter [qemu-i386]\nflags: POCF!\noffset 0\nmagic 7f454c4601010100000000000000000002000300\nmask fffffffffffefefcfffffffffffffffffeffffff\nENTRY:qemu-mips64el\nenabled\ninterpreter [qemu-mips64el]\nflags: POCF!\noffset 0\nmagic 7f454c4602010100000000000000000002000800\nmask ffffffffffffff0000fffffffffffffffeffffff\nENTRY:qemu-ppc64le\nenabled\ninterpreter [qemu-ppc64le]\nflags: POCF!\noffset 0\nmagic 7f454c4602010100000000000000000002001500\nmask ffffffffffffff00fffffffffffffffffeffff00\nENTRY:qemu-riscv64\nenabled\ninterpreter [qemu-riscv64]\nflags: POCF!\noffset 0\nmagic 7f454c460201010000000000000000000200f300\nmask ffffffffffffff00fffffffffffffffffeffffff\nENTRY:qemu-s390x\nenabled\ninterpreter [qemu-s390x]\nflags: POCF!\noffset 0\nmagic 7f454c4602020100000000000000000000020016\nmask ffffffffffffff00fffffffffffffffffffeffff\nENTRY:qemu-x86_64\nenabled\ninterpreter [qemu]\nflags: POCF!\noffset 0\nmagic 7f454c4602010100000000000000000002003e00\nmask fffffffffffefe00343434fffffffffffeffffff\nENTRY:rosetta\nenabled\ninterpreter [rosetta]\nflags: POCF!\noffset 0\nmagic 7f454c4602010100000000000000000002003e00\nmask fffffffffffefe00343434fffffffffffeffffff\nENTRY:rosetta\u200b\nenabled\ninterpreter [rosetta]\nflags: POCF!\noffset 0\nmagic 7f454c4602010100000000000000000002003e00\nmask fffffffffffefe00343434fffffffffffeffffff\nENTRY:rosetta\u200b\u200b\nenabled\ninterpreter [rosetta]\nflags: OCF!\noffset 0\nmagic 7f454c4602010100000000000000000002003e00\nmask fffffffffffefe00343434fffffffffffeffffff\n"
+  },
+  "globalUnchangedBeforeDuringAfter": true,
+  "privateRegistrationObserved": true,
+  "namespaceAndPrivateMountObserved": true,
+  "containerSucceededAndRemoved": true,
+  "passed": true,
+  "finishedAtUtc": "2026-10-29T03:14:10.922879+00:00"
+}

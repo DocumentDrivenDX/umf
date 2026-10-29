@@ -1,0 +1,519 @@
+{
+  "diagnostics": [
+    {
+      "dependency": "../model/internal/accounting-context",
+      "kind": "unapproved",
+      "module": "temporal.ts"
+    },
+    {
+      "dependency": "../model/internal/accounting-context",
+      "kind": "unapproved",
+      "module": "sql.ts"
+    },
+    {
+      "dependency": "../model/internal/accounting-context",
+      "kind": "unapproved",
+      "module": "index.ts"
+    },
+    {
+      "dependency": "../model/document-accounting",
+      "kind": "unapproved",
+      "module": "index.ts"
+    },
+    {
+      "dependency": "../model/internal/accounting-context",
+      "kind": "unapproved",
+      "module": "types.ts"
+    },
+    {
+      "dependency": "../model/internal/accounting-context",
+      "kind": "unapproved",
+      "module": "domains.ts"
+    },
+    {
+      "dependency": null,
+      "kind": "no-owner",
+      "module": "grants.ts"
+    },
+    {
+      "dependency": "./grants",
+      "kind": "unapproved",
+      "module": "ddl.ts"
+    },
+    {
+      "dependency": null,
+      "kind": "no-owner",
+      "module": "migration/internal-operations.ts"
+    },
+    {
+      "dependency": "./g04-conversion",
+      "kind": "unapproved",
+      "module": "migration/index.ts"
+    },
+    {
+      "dependency": "./g03-defaults",
+      "kind": "unapproved",
+      "module": "migration/index.ts"
+    },
+    {
+      "dependency": "../table-deployment/policies",
+      "kind": "unapproved",
+      "module": "migration/index.ts"
+    },
+    {
+      "dependency": "../table-deployment/types",
+      "kind": "unapproved",
+      "module": "migration/index.ts"
+    },
+    {
+      "dependency": "../extensions/tables",
+      "kind": "unapproved",
+      "module": "migration/index.ts"
+    },
+    {
+      "dependency": "./internal-operations",
+      "kind": "unapproved",
+      "module": "migration/index.ts"
+    },
+    {
+      "dependency": "./g02-field-effects",
+      "kind": "unapproved",
+      "module": "migration/index.ts"
+    },
+    {
+      "dependency": "../table-deployment/grants",
+      "kind": "unapproved",
+      "module": "migration/index.ts"
+    },
+    {
+      "dependency": "./g04-conversion",
+      "kind": "unapproved",
+      "module": "migration/index.ts"
+    },
+    {
+      "dependency": "./inventory",
+      "kind": "unapproved",
+      "module": "migration/index.ts"
+    },
+    {
+      "dependency": "./inventory",
+      "kind": "unapproved",
+      "module": "migration/index.ts"
+    },
+    {
+      "dependency": "./inventory-options",
+      "kind": "unapproved",
+      "module": "migration/index.ts"
+    },
+    {
+      "dependency": "./inventory-review",
+      "kind": "unapproved",
+      "module": "migration/index.ts"
+    },
+    {
+      "dependency": "./inventory-review",
+      "kind": "unapproved",
+      "module": "migration/index.ts"
+    },
+    {
+      "dependency": null,
+      "kind": "no-owner",
+      "module": "migration/inventory-verified-deployment.ts"
+    },
+    {
+      "dependency": null,
+      "kind": "no-owner",
+      "module": "migration/inventory-history.ts"
+    },
+    {
+      "dependency": null,
+      "kind": "no-owner",
+      "module": "migration/g04-conversion.ts"
+    },
+    {
+      "dependency": "../model/types",
+      "kind": "unapproved",
+      "module": "migration/reviewed.ts"
+    },
+    {
+      "dependency": "./g03-defaults",
+      "kind": "unapproved",
+      "module": "migration/reviewed.ts"
+    },
+    {
+      "dependency": null,
+      "kind": "no-owner",
+      "module": "migration/g02-field-effects.ts"
+    },
+    {
+      "dependency": null,
+      "kind": "no-owner",
+      "module": "migration/inventory-graph.ts"
+    },
+    {
+      "dependency": null,
+      "kind": "no-owner",
+      "module": "migration/inventory-component-copy.ts"
+    },
+    {
+      "dependency": null,
+      "kind": "no-owner",
+      "module": "migration/inventory.ts"
+    },
+    {
+      "dependency": "./g03-defaults",
+      "kind": "unapproved",
+      "module": "migration/options.ts"
+    },
+    {
+      "dependency": "./g11-source",
+      "kind": "unapproved",
+      "module": "migration/options.ts"
+    },
+    {
+      "dependency": "./g04-conversion",
+      "kind": "unapproved",
+      "module": "migration/options.ts"
+    },
+    {
+      "dependency": null,
+      "kind": "no-owner",
+      "module": "migration/inventory-source.ts"
+    },
+    {
+      "dependency": null,
+      "kind": "no-owner",
+      "module": "migration/inventory-effects.ts"
+    },
+    {
+      "dependency": null,
+      "kind": "no-owner",
+      "module": "migration/inventory-g05-selection.ts"
+    },
+    {
+      "dependency": null,
+      "kind": "no-owner",
+      "module": "migration/internal.ts"
+    },
+    {
+      "dependency": null,
+      "kind": "no-owner",
+      "module": "migration/inventory-projection.ts"
+    },
+    {
+      "dependency": null,
+      "kind": "no-owner",
+      "module": "migration/inventory-operation-references.ts"
+    },
+    {
+      "dependency": null,
+      "kind": "no-owner",
+      "module": "migration/inventory-g02-source.ts"
+    },
+    {
+      "dependency": null,
+      "kind": "no-owner",
+      "module": "migration/inventory-review.ts"
+    },
+    {
+      "dependency": null,
+      "kind": "no-owner",
+      "module": "migration/g03-defaults.ts"
+    },
+    {
+      "dependency": null,
+      "kind": "no-owner",
+      "module": "migration/g11-source.ts"
+    },
+    {
+      "dependency": null,
+      "kind": "no-owner",
+      "module": "migration/inventory-r2-context.ts"
+    },
+    {
+      "dependency": null,
+      "kind": "no-owner",
+      "module": "migration/inventory-options.ts"
+    }
+  ],
+  "interpretation": "Data-only inventory. Missing owner rows need explicit per-module dependency lists. Type-only AccountingContext routes remain narrow; do not broaden to prefixes or weaken scanner/negative controls.",
+  "narrowAccountingImports": [
+    {
+      "dependency": "../model/internal/accounting-context",
+      "module": "temporal.ts"
+    },
+    {
+      "dependency": "../model/internal/accounting-context",
+      "module": "sql.ts"
+    },
+    {
+      "dependency": "../model/internal/accounting-context",
+      "module": "index.ts"
+    },
+    {
+      "dependency": "../model/internal/accounting-context",
+      "module": "types.ts"
+    },
+    {
+      "dependency": "../model/internal/accounting-context",
+      "module": "domains.ts"
+    }
+  ],
+  "runLog": "/private/tmp/migration-pr48-953-failures/table-declarations.log",
+  "sourceHead": "953017084df517deb5262dd071bfe406f2d956be",
+  "sourceTree": "2b522e129dda8e4f6d2580bddcd3453af2f99bef",
+  "summary": {
+    "diagnosticCount": 47,
+    "unapprovedDependencyCount": 26,
+    "unownedModuleCount": 21
+  },
+  "unownedModulesAndCurrentStaticRoutes": [
+    {
+      "checkerModule": "grants.ts",
+      "sourcePath": "/Users/erik/.codex/worktrees/migration-integrated-candidate/umf/src/table-deployment/grants.ts",
+      "staticImportExportSpecifiers": [
+        "../extensions/tables/types",
+        "./sql",
+        "../model/internal/accounting-context"
+      ]
+    },
+    {
+      "checkerModule": "migration/g02-field-effects.ts",
+      "sourcePath": "/Users/erik/.codex/worktrees/migration-integrated-candidate/umf/src/table-migration/g02-field-effects.ts",
+      "staticImportExportSpecifiers": [
+        "../extensions/tables",
+        "../table-deployment/sql",
+        "../table-deployment/grants"
+      ]
+    },
+    {
+      "checkerModule": "migration/g03-defaults.ts",
+      "sourcePath": "/Users/erik/.codex/worktrees/migration-integrated-candidate/umf/src/table-migration/g03-defaults.ts",
+      "staticImportExportSpecifiers": [
+        "../model/document",
+        "../model/json",
+        "../model/schema-literals",
+        "../model/types",
+        "../extensions/tables",
+        "../table-deployment",
+        "../table-deployment/sql",
+        "../extensions/tables/temporal",
+        "../compilation/bundle/hash",
+        "./reviewed"
+      ]
+    },
+    {
+      "checkerModule": "migration/g04-conversion.ts",
+      "sourcePath": "/Users/erik/.codex/worktrees/migration-integrated-candidate/umf/src/table-migration/g04-conversion.ts",
+      "staticImportExportSpecifiers": [
+        "../compilation/bundle/hash",
+        "../model/document",
+        "../model/json",
+        "../model/types",
+        "../table-deployment",
+        "./index",
+        "./options",
+        "./reviewed"
+      ]
+    },
+    {
+      "checkerModule": "migration/g11-source.ts",
+      "sourcePath": "/Users/erik/.codex/worktrees/migration-integrated-candidate/umf/src/table-migration/g11-source.ts",
+      "staticImportExportSpecifiers": [
+        "../compilation/bundle/hash",
+        "../model/json",
+        "../model/document",
+        "../table-deployment",
+        "./reviewed"
+      ]
+    },
+    {
+      "checkerModule": "migration/internal-operations.ts",
+      "sourcePath": "/Users/erik/.codex/worktrees/migration-integrated-candidate/umf/src/table-migration/internal-operations.ts",
+      "staticImportExportSpecifiers": [
+        "../table-deployment/grants"
+      ]
+    },
+    {
+      "checkerModule": "migration/internal.ts",
+      "sourcePath": "/Users/erik/.codex/worktrees/migration-integrated-candidate/umf/src/table-migration/internal.ts",
+      "staticImportExportSpecifiers": [
+        "./index",
+        "./internal-operations",
+        "../compilation/bundle/hash",
+        "../model/internal/accounting-context",
+        "../model/json",
+        "../model/document-accounting",
+        "./options",
+        "../table-deployment",
+        "../model/document",
+        "./g02-field-effects",
+        "./inventory-verified-deployment"
+      ]
+    },
+    {
+      "checkerModule": "migration/inventory-component-copy.ts",
+      "sourcePath": "/Users/erik/.codex/worktrees/migration-integrated-candidate/umf/src/table-migration/inventory-component-copy.ts",
+      "staticImportExportSpecifiers": [
+        "../model/errors",
+        "../model/internal/accounting-context"
+      ]
+    },
+    {
+      "checkerModule": "migration/inventory-effects.ts",
+      "sourcePath": "/Users/erik/.codex/worktrees/migration-integrated-candidate/umf/src/table-migration/inventory-effects.ts",
+      "staticImportExportSpecifiers": [
+        "./inventory"
+      ]
+    },
+    {
+      "checkerModule": "migration/inventory-g02-source.ts",
+      "sourcePath": "/Users/erik/.codex/worktrees/migration-integrated-candidate/umf/src/table-migration/inventory-g02-source.ts",
+      "staticImportExportSpecifiers": [
+        "../table-deployment",
+        "../extensions/tables/types",
+        "../compilation/bundle/hash",
+        "./inventory-options",
+        "./inventory-operation-references"
+      ]
+    },
+    {
+      "checkerModule": "migration/inventory-g05-selection.ts",
+      "sourcePath": "/Users/erik/.codex/worktrees/migration-integrated-candidate/umf/src/table-migration/inventory-g05-selection.ts",
+      "staticImportExportSpecifiers": [
+        "../table-deployment",
+        "../compilation/bundle/hash",
+        "../model/json",
+        "../model/internal/accounting-context",
+        "./inventory-options"
+      ]
+    },
+    {
+      "checkerModule": "migration/inventory-graph.ts",
+      "sourcePath": "/Users/erik/.codex/worktrees/migration-integrated-candidate/umf/src/table-migration/inventory-graph.ts",
+      "staticImportExportSpecifiers": [
+        "../compilation/bundle/hash",
+        "../model/internal/accounting-context"
+      ]
+    },
+    {
+      "checkerModule": "migration/inventory-history.ts",
+      "sourcePath": "/Users/erik/.codex/worktrees/migration-integrated-candidate/umf/src/table-migration/inventory-history.ts",
+      "staticImportExportSpecifiers": [
+        "../compilation/bundle/hash",
+        "../table-deployment",
+        "./index",
+        "../model/internal/accounting-context",
+        "./inventory-r2-context",
+        "./inventory-verified-deployment"
+      ]
+    },
+    {
+      "checkerModule": "migration/inventory-operation-references.ts",
+      "sourcePath": "/Users/erik/.codex/worktrees/migration-integrated-candidate/umf/src/table-migration/inventory-operation-references.ts",
+      "staticImportExportSpecifiers": [
+        "../extensions/tables/types",
+        "../compilation/bundle/hash"
+      ]
+    },
+    {
+      "checkerModule": "migration/inventory-options.ts",
+      "sourcePath": "/Users/erik/.codex/worktrees/migration-integrated-candidate/umf/src/table-migration/inventory-options.ts",
+      "staticImportExportSpecifiers": [
+        "../compilation/bundle/hash",
+        "../table-deployment",
+        "./index",
+        "./inventory-g05-selection",
+        "./inventory-verified-deployment",
+        "../model/internal/accounting-context",
+        "./inventory-r2-context"
+      ]
+    },
+    {
+      "checkerModule": "migration/inventory-projection.ts",
+      "sourcePath": "/Users/erik/.codex/worktrees/migration-integrated-candidate/umf/src/table-migration/inventory-projection.ts",
+      "staticImportExportSpecifiers": [
+        "../table-deployment",
+        "../table-deployment/types",
+        "../table-deployment/grants",
+        "../compilation/bundle/hash",
+        "../model/json",
+        "../model/internal/accounting-context",
+        "./inventory-g05-selection",
+        "./inventory-operation-references",
+        "../extensions/tables/types",
+        "./inventory-verified-deployment"
+      ]
+    },
+    {
+      "checkerModule": "migration/inventory-r2-context.ts",
+      "sourcePath": "/Users/erik/.codex/worktrees/migration-integrated-candidate/umf/src/table-migration/inventory-r2-context.ts",
+      "staticImportExportSpecifiers": [
+        "../compilation/bundle/hash",
+        "./inventory-component-copy",
+        "../table-deployment",
+        "./inventory-projection",
+        "./inventory-g05-selection",
+        "../extensions/tables/row-expressions",
+        "../model/internal/accounting-context"
+      ]
+    },
+    {
+      "checkerModule": "migration/inventory-review.ts",
+      "sourcePath": "/Users/erik/.codex/worktrees/migration-integrated-candidate/umf/src/table-migration/inventory-review.ts",
+      "staticImportExportSpecifiers": [
+        "./inventory-options",
+        "./inventory"
+      ]
+    },
+    {
+      "checkerModule": "migration/inventory-source.ts",
+      "sourcePath": "/Users/erik/.codex/worktrees/migration-integrated-candidate/umf/src/table-migration/inventory-source.ts",
+      "staticImportExportSpecifiers": [
+        "./inventory-projection",
+        "./inventory"
+      ]
+    },
+    {
+      "checkerModule": "migration/inventory-verified-deployment.ts",
+      "sourcePath": "/Users/erik/.codex/worktrees/migration-integrated-candidate/umf/src/table-migration/inventory-verified-deployment.ts",
+      "staticImportExportSpecifiers": [
+        "../compilation/bundle/hash",
+        "./inventory-component-copy",
+        "../table-deployment",
+        "../model/internal/accounting-context"
+      ]
+    },
+    {
+      "checkerModule": "migration/inventory.ts",
+      "sourcePath": "/Users/erik/.codex/worktrees/migration-integrated-candidate/umf/src/table-migration/inventory.ts",
+      "staticImportExportSpecifiers": [
+        "../compilation/bundle/hash",
+        "../model/document",
+        "../table-deployment",
+        "../model/errors",
+        "../model/json",
+        "../model/internal/accounting-context",
+        "./inventory-component-copy",
+        "./inventory-r2-context",
+        "./inventory-graph",
+        "./inventory-projection",
+        "./inventory-options",
+        "./inventory-history",
+        "./inventory-verified-deployment",
+        "./inventory-g02-source",
+        "./inventory-g05-selection",
+        "./internal",
+        "./options",
+        "./reviewed",
+        "./g02-field-effects",
+        "../table-deployment/grants",
+        "../extensions/tables/types",
+        "../table-deployment/sql",
+        "../table-deployment/types",
+        "./inventory-review",
+        "../model/types"
+      ]
+    }
+  ]
+}

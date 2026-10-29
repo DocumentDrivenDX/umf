@@ -1,0 +1,29 @@
+src/table-migration/g04-conversion.ts(187,5): error TS18047: 'previous' is possibly 'null'.
+src/table-migration/g04-conversion.ts(198,24): error TS2345: Argument of type 'TableDeploymentBundle | null' is not assignable to parameter of type 'TableDeploymentBundle'.
+  Type 'null' is not assignable to type 'TableDeploymentBundle'.
+src/table-migration/g04-conversion.ts(203,52): error TS2345: Argument of type 'TableDeploymentBundle | null' is not assignable to parameter of type 'TableDeploymentBundle'.
+  Type 'null' is not assignable to type 'TableDeploymentBundle'.
+src/table-migration/g04-conversion.ts(215,74): error TS2339: Property 'reviewMarker' does not exist on type 'G04Recovery'.
+  Property 'reviewMarker' does not exist on type '{ mode: "retained-originals"; policy: { id: string; revision: string; }; }'.
+src/table-migration/g04-conversion.ts(219,25): error TS2345: Argument of type 'TableDeploymentBundle | null' is not assignable to parameter of type 'TableDeploymentBundle'.
+  Type 'null' is not assignable to type 'TableDeploymentBundle'.
+src/table-migration/index.ts(805,96): error TS2345: Argument of type 'TableMigrationStep[]' is not assignable to parameter of type 'readonly PhasedMigrationStep[]'.
+  Type 'TableMigrationStep' is not assignable to type 'PhasedMigrationStep' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'phaseOperation' are incompatible.
+      Type '"add-column" | "backfill" | "capture-originals" | "change-default" | "convert-field" | "dependency-add" | "dependency-drop" | "drop-column" | "install-default" | "target-check" | "tighten-not-null" | "validate-conversion"' is not assignable to type '"add-column" | "backfill" | "change-default" | "dependency-add" | "dependency-drop" | "drop-column" | "install-default" | "target-check" | "tighten-not-null"'.
+        Type '"capture-originals"' is not assignable to type '"add-column" | "backfill" | "change-default" | "dependency-add" | "dependency-drop" | "drop-column" | "install-default" | "target-check" | "tighten-not-null"'.
+src/table-migration/index.ts(848,41): error TS2375: Type 'TableMigrationStep' is not assignable to type 'PhasedMigrationStep' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'phaseOperation' are incompatible.
+    Type '"add-column" | "backfill" | "capture-originals" | "change-default" | "convert-field" | "dependency-add" | "dependency-drop" | "drop-column" | "install-default" | "target-check" | "tighten-not-null" | "validate-conversion"' is not assignable to type '"add-column" | "backfill" | "change-default" | "dependency-add" | "dependency-drop" | "drop-column" | "install-default" | "target-check" | "tighten-not-null"'.
+      Type '"capture-originals"' is not assignable to type '"add-column" | "backfill" | "change-default" | "dependency-add" | "dependency-drop" | "drop-column" | "install-default" | "target-check" | "tighten-not-null"'.
+src/table-migration/internal.ts(32,281): error TS7053: Element implicitly has an 'any' type because expression of type '"add-column" | "backfill" | "capture-originals" | "change-default" | "convert-field" | "drop-column" | "install-default" | "target-check" | "tighten-not-null" | "validate-conversion"' can't be used to index type '{ readonly 'add-column': "add-column"; readonly backfill: "backfill"; readonly 'target-check': "target-check"; readonly 'install-default': "install-default"; readonly 'tighten-not-null': "tighten-not-null"; readonly 'change-default': "change-default"; readonly 'drop-column': "drop-column"; readonly 'dependency-add':...'.
+  Property 'capture-originals' does not exist on type '{ readonly 'add-column': "add-column"; readonly backfill: "backfill"; readonly 'target-check': "target-check"; readonly 'install-default': "install-default"; readonly 'tighten-not-null': "tighten-not-null"; readonly 'change-default': "change-default"; readonly 'drop-column': "drop-column"; readonly 'dependency-add':...'.
+src/table-migration/inventory-graph.ts(321,337): error TS2322: Type '{ prepare: string | undefined; approval: string | undefined; publication: string | undefined; }' is not assignable to type 'InventoryMetadataStepIds'.
+  Types of property 'prepare' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/table-migration/inventory-graph.ts(321,367): error TS2322: Type '{ prepare: string | undefined; approval: string | undefined; publication: string | undefined; }' is not assignable to type 'InventoryMetadataStepIds'.
+  Types of property 'prepare' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/table-migration/inventory-graph.ts(348,26): error TS2454: Variable 'ordered' is used before being assigned.

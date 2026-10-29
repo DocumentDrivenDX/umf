@@ -201,11 +201,11 @@ def api_json(url: str, token: str) -> dict:
         url,
         headers={
             "Accept": "application/vnd.github+json",
-            "Authorization": f"Bearer {token}",
             "X-GitHub-Api-Version": "2022-11-28",
             "User-Agent": "umf-core-public-install-proof",
         },
     )
+    request.add_unredirected_header("Authorization", f"Bearer {token}")
     with urllib.request.urlopen(request, timeout=30) as response:
         payload = response.read(1_048_577)
     if len(payload) > 1_048_576:
@@ -225,11 +225,11 @@ def artifact_zip(row: dict, repo: str, token: str) -> dict[str, bytes]:
         url,
         headers={
             "Accept": "application/vnd.github+json",
-            "Authorization": f"Bearer {token}",
             "X-GitHub-Api-Version": "2022-11-28",
             "User-Agent": "umf-core-public-install-proof",
         },
     )
+    request.add_unredirected_header("Authorization", f"Bearer {token}")
     with urllib.request.urlopen(request, timeout=30) as response:
         chunks = bytearray()
         while len(chunks) <= size:

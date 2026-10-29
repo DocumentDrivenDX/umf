@@ -1,0 +1,49 @@
+{
+  "status": "SOURCE_ACCEPT_RUNTIME_PENDING",
+  "integrationCommit": "0482b1adf0f7e377facb29f40349bad16f9baeb8",
+  "implementationCommit": "7ee9728e752cde5c5addcbe59cd59cd4691054a6",
+  "sourceReviewSha256": "2fdd6f37d23b1f04b09eb056dc28e05b492ccdcacbfc7a744164e8ab89389a07",
+  "scope": "No generated outputs adopted; no local runtime. Hosted generation held for CorePython3.14 dependency coordination. Two phase source recipe preserves original bounds and cases.",
+  "files": [
+    {
+      "path": ".github/workflows/access-boundaries.yml",
+      "sha256": "ab7b5f228026eebcea2a746ada8e130102ef8e604854220a8ee7385aec16da36",
+      "bytes": 101256
+    },
+    {
+      "path": ".github/workflows/merged-source-generation.yml",
+      "sha256": "08634fd0eec2fe57841cae7ab811513d8e40c0a790dbf931c5fc1ec90e9efa21",
+      "bytes": 60899
+    },
+    {
+      "path": "scripts/metamodel/build.ts",
+      "sha256": "d05dfdd26af4f193337e0e5a7346db20e4df42aa0a4e9416f8803b69c5515297",
+      "bytes": 14328
+    },
+    {
+      "path": "scripts/check-compilation-boundaries.ts",
+      "sha256": "33b0ff4431bc4f38031a616b2c366785a3e4f820dae9a821ce31599c69fda340",
+      "bytes": 12748
+    },
+    {
+      "path": "scripts/check-table-lifecycle-boundaries.ts",
+      "sha256": "717acc9972ada61ca1fed60bc48774b1cf6ba677895631bf499aef5af4b92133",
+      "bytes": 3564
+    },
+    {
+      "path": "tests/compilation/boundaries.test.ts",
+      "sha256": "f5a55c08358af39ea5b23ccc46fa1a9d48431e7130e0c2b3b5aa462cc0ace94b",
+      "bytes": 20361
+    },
+    {
+      "path": "tests/compilation/table-lifecycle-boundaries.test.ts",
+      "sha256": "f0656c94c0b46fd1919b64b26f187cd59b63a74d70ba432690b5f955b7f02269",
+      "bytes": 1968
+    },
+    {
+      "path": "docs/helix/02-design/architecture.md",
+      "sha256": "a9d0b9e72c4b5b4bddde67fbdaac3869a0ec80d142020883dbdc4421f783ff99",
+      "bytes": 70222
+    }
+  ]
+}

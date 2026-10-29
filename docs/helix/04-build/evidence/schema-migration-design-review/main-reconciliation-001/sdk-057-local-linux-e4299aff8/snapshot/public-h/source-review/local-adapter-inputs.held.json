@@ -1,0 +1,72 @@
+{
+  "profile": "umf.sdk-057-public-install-proof-local-inputs/1",
+  "status": "HELD",
+  "executionKind": "local_linux_diagnostic",
+  "repository": "DocumentDrivenDX/umf",
+  "execution": {
+    "executionId": "HELD",
+    "attempt": null,
+    "localAdapterSha256": "9d97803823ef501d59c9b734370120456c0403d1a74a16d6e64b1aa4e71fc1a5",
+    "hostedWorkflowSha256": "32d4b1361c7c3911f8b7f8f58964ec87c5bf60527e27efb6da2fe4f3fc53ef91",
+    "runtimeImageDigest": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+    "runtimeEngine": "OrbStack",
+    "runtimeHost": {"os": "Darwin", "architecture": "aarch64"},
+    "runtimeGuest": {"os": "Linux", "distribution": "Ubuntu", "version": "24.04.5", "architecture": "x86_64"},
+    "emulatedGuest": true
+  },
+  "source": {
+    "producerRoot": "HELD",
+    "producerCommit": "HELD",
+    "producerTree": "HELD"
+  },
+  "release": {
+    "tag": "HELD",
+    "releaseCommitM": "HELD",
+    "releaseId": null,
+    "publishedAt": "HELD",
+    "assets": {
+      "sdk": {"filename": "HELD", "sizeBytes": null, "sha256": "HELD"},
+      "access": {"filename": "HELD", "sizeBytes": null, "sha256": "HELD"},
+      "codegen": {"filename": "HELD", "sizeBytes": null, "sha256": "HELD"}
+    }
+  },
+  "evidence": {
+    "sdkProducer": {"executionId": "HELD", "sourceCommit": "HELD", "root": "HELD", "archivePath": "HELD", "manifestPath": "HELD"},
+    "d5": {"executionId": "HELD", "attempt": null, "sourceCommit": "HELD", "root": "HELD", "receiptPath": "HELD", "ownerManifestPath": "HELD", "releasePayloadRoot": "HELD", "releasePayloadReceiptPath": "HELD"},
+    "aggregate": {"executionId": "HELD", "attempt": null, "sourceCommit": "HELD", "root": "HELD", "indexPath": "HELD", "generatorCorpusPath": "HELD"},
+    "unionContinuation": {"executionId": "HELD", "attempt": null, "sourceCommit": "HELD", "sourceTree": "HELD", "root": "HELD", "receiptPath": "HELD", "receiptSha256": "HELD", "harnessRoot": "HELD", "harnessSha256": "HELD", "bootstrapWheelPath": "HELD", "bootstrapWheelSha256": "HELD", "bootstrapMetadataPath": "HELD", "bootstrapMetadataSha256": "HELD"}
+  },
+  "fixedQualification": {
+    "accessVersion": "0.1.0.dev8",
+    "codegenVersion": "0.1.0a5",
+    "coreDistributionVersion": "0.10.3",
+    "coreLinuxNativeMember": "umf/_rust_core.abi3.so",
+    "coreLinuxNativeSha256": "c51b511a06bc1ccde6cc2208d33a4fb70ef66c67507ba8f2a6ea05fd2543cf57",
+    "coreLinuxWheelFilename": "umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl",
+    "coreLinuxWheelSha256": "cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75",
+    "coreLinuxWheelSizeBytes": 3612043,
+    "coreSemanticVersion": "0.10.0",
+    "pythonCell": "linux-x86_64-py311",
+    "pythonWheelCount": 18,
+    "sdkConformanceCases": 139,
+    "sdkVersion": "0.5.7",
+    "weftDistribution": "umf-weft",
+    "weftLinuxWheelFilename": "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+    "weftLinuxWheelSizeBytes": 14347375,
+    "weftProducerCommit": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+    "weftReleaseTag": "v0.4.55",
+    "weftVersion": "0.4.55",
+    "weftWheelDistribution": "umf-weft",
+    "weftWheelSha256": "b34ca17fa37412afa7b8e8bd86aac8ee67a3c895a9b253221e1d582b39073a85",
+    "weftWireProfile": "weft-sql/0.2.0"
+  },
+  "limits": {
+    "aggregateLogBytes": 1048576,
+    "aggregateSeconds": 1800,
+    "childSeconds": 180,
+    "evidenceReserveSeconds": 60,
+    "metadataArtifactBytes": 16777216,
+    "publicPackageFamilyBytes": null,
+    "termGraceSeconds": 10
+  }
+}

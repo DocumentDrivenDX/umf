@@ -1,0 +1,28 @@
+{
+  "status": "GENERATION_PASS_EXACT_OUTPUTS_ADOPTED",
+  "sourceCommit": "41590b2b02daef923a21103cb4d04eb419d87633",
+  "sourceTree": "fe68aaa76d507ae30468943d73c73f8088bc7fa7",
+  "runId": 40379385690,
+  "jobId": 121771171647,
+  "artifactId": 12677956169,
+  "artifactBytes": 623634,
+  "artifactSha256": "60bcf9ed72415f32b931cb6ba345f17f62657033efd15fb019d0ae660d0b0442",
+  "acceptedOutputCount": 16,
+  "actualChangedOutputPaths": [
+    "docs/helix/04-build/evidence/rust-migration/r3/inventory.json",
+    "src/extensions/actions/plan-identity.ts"
+  ],
+  "all97PortablePinsMatch": true,
+  "all32NativeSourcePinsMatch": true,
+  "workflowIsolationOnlyDelta": {
+    "path": ".github/workflows/python-action-runtime.yml",
+    "beforeSha256": "584f64a1e8e385f6b4fbf49243e8c2e4762afeb8ddb5ba2e34841e35fff453e5",
+    "afterSha256": "b00d4382d5cc7ed94e9f2e4fee73a473971d76646fc39db6697ff76690ddb8b4",
+    "rootExactSingleReplacementVerified": true,
+    "r3RecordedInputDataUnchanged": "Sol review proves only job.if changed, no executable activation commands/paths or recorded digest inputs changed"
+  },
+  "reviewSha256": "c9ce81a5949f697757fe4625cc42676231dadd1d9c7aec922fa0379febb3537b",
+  "nativeExecution": "NOT_YET_DISPATCHED",
+  "portableQualification": "NOT_YET_DISPATCHED",
+  "fourCellSDKAdoption": "OPEN"
+}

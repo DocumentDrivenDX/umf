@@ -1,0 +1,138 @@
+{
+  "committedOutputsMatch": true,
+  "committedRoster": {
+    "python/umf_access/src/umf_access/generated_core.py": {
+      "bytes": 360,
+      "sha256": "5366ba6be1c2eb042b14f30723648686294e1f450d75a645e76806a4494593a1"
+    },
+    "spec/core/extension-package.schema.json": {
+      "bytes": 45001,
+      "sha256": "4df3c8f92c5baa2c52f965d83b681ff306392bf9ba333bd39213a8f1065ac766"
+    },
+    "spec/core/schema.json": {
+      "bytes": 45342,
+      "sha256": "c6004664eb93dcef28ce6e0583f91225b618aa0fb42967a892242402557cf71d"
+    },
+    "spec/core/semantic-type-reference.schema.json": {
+      "bytes": 45463,
+      "sha256": "207abbad54ebf8c660a958e2deda072a5a3236b5b8df5af8a8656f90c3e46ba9"
+    },
+    "spec/metamodel/generated/core-constraints.json": {
+      "bytes": 190252,
+      "sha256": "e4e667c6a23ebcfe12a937730adfa60081475ad11d367b8986a9ea94429d5dcd"
+    },
+    "spec/metamodel/generated/domain-policy.json": {
+      "bytes": 14827,
+      "sha256": "7827703fe00b4eb955e9a1d1632fec4e7b9e8c52df0d67eb700dbd7ce9a6d436"
+    },
+    "spec/metamodel/generated/manifest.json": {
+      "bytes": 58660,
+      "sha256": "7c7cec644eb3afc9aecff90cef576219113f299c512776069afe95561345e843"
+    },
+    "spec/metamodel/generated/python-shapes.json": {
+      "bytes": 98734,
+      "sha256": "884fb5d09e1cd512e32b188144aa0f9ac55d396cc5a3b10341b3aeb06093fde7"
+    },
+    "spec/metamodel/package.json": {
+      "bytes": 1265,
+      "sha256": "5930c77eaa8308d76761cd93d5a58bd5b0a7b3f30b5bc56fdc7db6d961fb0b89"
+    },
+    "src/generated/core-model.ts": {
+      "bytes": 6714,
+      "sha256": "55485912b78640ef970244ffd8d4cbd6f186e035efccd77259aadff6120b7106"
+    },
+    "src/generated/core-validators.ts": {
+      "bytes": 305070,
+      "sha256": "563602e0f21f6d6b0efd1ae069dbda28926e085585b4bf0430347b65ff2bd0ff"
+    }
+  },
+  "companionInputBindings": {
+    "spec/core/extension-package.schema.json": {
+      "bytes": 45001,
+      "sha256": "4df3c8f92c5baa2c52f965d83b681ff306392bf9ba333bd39213a8f1065ac766"
+    },
+    "spec/core/schema.json": {
+      "bytes": 45342,
+      "sha256": "c6004664eb93dcef28ce6e0583f91225b618aa0fb42967a892242402557cf71d"
+    },
+    "spec/core/semantic-type-reference.schema.json": {
+      "bytes": 45463,
+      "sha256": "207abbad54ebf8c660a958e2deda072a5a3236b5b8df5af8a8656f90c3e46ba9"
+    },
+    "src/generated/core-validators.ts": {
+      "bytes": 305070,
+      "sha256": "563602e0f21f6d6b0efd1ae069dbda28926e085585b4bf0430347b65ff2bd0ff"
+    }
+  },
+  "companionInputsMatch": true,
+  "emittedCompanionInputs": {
+    "spec/core/extension-package.schema.json": {
+      "bytes": 45001,
+      "sha256": "4df3c8f92c5baa2c52f965d83b681ff306392bf9ba333bd39213a8f1065ac766"
+    },
+    "spec/core/schema.json": {
+      "bytes": 45342,
+      "sha256": "c6004664eb93dcef28ce6e0583f91225b618aa0fb42967a892242402557cf71d"
+    },
+    "spec/core/semantic-type-reference.schema.json": {
+      "bytes": 45463,
+      "sha256": "207abbad54ebf8c660a958e2deda072a5a3236b5b8df5af8a8656f90c3e46ba9"
+    },
+    "src/generated/core-validators.ts": {
+      "bytes": 305070,
+      "sha256": "563602e0f21f6d6b0efd1ae069dbda28926e085585b4bf0430347b65ff2bd0ff"
+    }
+  },
+  "ref": "refs/heads/codex/migration-merged-generation",
+  "runAttempt": "1",
+  "runId": "40559981513",
+  "schema": "umf.merged-metamodel-phase/1",
+  "sourceCommit": "6ddb0e7d60a9377b168068311be500a1037a7b48",
+  "stageRoster": {
+    "python/umf_access/src/umf_access/generated_core.py": {
+      "bytes": 360,
+      "sha256": "5366ba6be1c2eb042b14f30723648686294e1f450d75a645e76806a4494593a1"
+    },
+    "spec/core/extension-package.schema.json": {
+      "bytes": 45001,
+      "sha256": "4df3c8f92c5baa2c52f965d83b681ff306392bf9ba333bd39213a8f1065ac766"
+    },
+    "spec/core/schema.json": {
+      "bytes": 45342,
+      "sha256": "c6004664eb93dcef28ce6e0583f91225b618aa0fb42967a892242402557cf71d"
+    },
+    "spec/core/semantic-type-reference.schema.json": {
+      "bytes": 45463,
+      "sha256": "207abbad54ebf8c660a958e2deda072a5a3236b5b8df5af8a8656f90c3e46ba9"
+    },
+    "spec/metamodel/generated/core-constraints.json": {
+      "bytes": 190252,
+      "sha256": "e4e667c6a23ebcfe12a937730adfa60081475ad11d367b8986a9ea94429d5dcd"
+    },
+    "spec/metamodel/generated/domain-policy.json": {
+      "bytes": 14827,
+      "sha256": "7827703fe00b4eb955e9a1d1632fec4e7b9e8c52df0d67eb700dbd7ce9a6d436"
+    },
+    "spec/metamodel/generated/manifest.json": {
+      "bytes": 58660,
+      "sha256": "7c7cec644eb3afc9aecff90cef576219113f299c512776069afe95561345e843"
+    },
+    "spec/metamodel/generated/python-shapes.json": {
+      "bytes": 98734,
+      "sha256": "884fb5d09e1cd512e32b188144aa0f9ac55d396cc5a3b10341b3aeb06093fde7"
+    },
+    "spec/metamodel/package.json": {
+      "bytes": 1265,
+      "sha256": "5930c77eaa8308d76761cd93d5a58bd5b0a7b3f30b5bc56fdc7db6d961fb0b89"
+    },
+    "src/generated/core-model.ts": {
+      "bytes": 6714,
+      "sha256": "55485912b78640ef970244ffd8d4cbd6f186e035efccd77259aadff6120b7106"
+    },
+    "src/generated/core-validators.ts": {
+      "bytes": 305070,
+      "sha256": "563602e0f21f6d6b0efd1ae069dbda28926e085585b4bf0430347b65ff2bd0ff"
+    }
+  },
+  "status": "DEPENDENT_GENERATION_READY"
+}

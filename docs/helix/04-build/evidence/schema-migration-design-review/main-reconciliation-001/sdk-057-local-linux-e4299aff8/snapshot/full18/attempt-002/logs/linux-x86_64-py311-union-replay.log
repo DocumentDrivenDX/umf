@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/workspace/tests/codegen/offline_mirror_probe.py", line 113, in <module>
+    recomputed = SELECTOR.resolve_dependency_closure(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/tests/codegen/cohort_selector.py", line 128, in resolve_dependency_closure
+    active = requirement.marker is None or requirement.marker.evaluate(marker_environment)
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pip/_vendor/packaging/markers.py", line 304, in evaluate
+    return _evaluate_markers(self._markers, current_environment)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pip/_vendor/packaging/markers.py", line 234, in _evaluate_markers
+    lhs_value = _get_env(environment, lhs.value)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pip/_vendor/packaging/markers.py", line 215, in _get_env
+    raise UndefinedEnvironmentName(
+pip._vendor.packaging.markers.UndefinedEnvironmentName: 'extra' does not exist in evaluation environment.

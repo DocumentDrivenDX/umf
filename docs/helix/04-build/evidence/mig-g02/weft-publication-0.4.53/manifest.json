@@ -1,0 +1,257 @@
+{
+  "schema": "umf.weft-publication-evidence/1",
+  "status": "passed-root-and-independent-published-asset-verification",
+  "repository": "DocumentDrivenDX/weft",
+  "version": "0.4.53",
+  "tag": "v0.4.53",
+  "releaseId": 422347988,
+  "publishedAt": "2026-10-23T22:07:21Z",
+  "releaseUrl": "https://github.com/DocumentDrivenDX/weft/releases/tag/v0.4.53",
+  "mergeCommit": "726a840e956e25217d6aeea2674fdfcf3f342a24",
+  "mergeTree": "82913d1be942577389b6568d900cdf7c0ec3a20f",
+  "mergeParents": [
+    "b59938f4671e1aa9bd99941f233a8d83e1b576d7",
+    "5d196ea3184b1a711bb4bcf91215a496c18ce9b2"
+  ],
+  "compilerSource": "7413c19d16ca5d8d8ce60b62d49ca0a3250544df",
+  "packagingRunId": 40019944651,
+  "packagingRunSource": "7413c19d16ca5d8d8ce60b62d49ca0a3250544df",
+  "manualPromotionRunId": 40031490546,
+  "manualPromotionStatus": "success",
+  "automaticTagRunId": 40031224537,
+  "automaticTagRunStatus": "completed/cancelled before macOS stage",
+  "rootVerification": {
+    "path": "root-verification/verification.json",
+    "sha256": "38595ee113837f706caeee75ed5fc012ba414868a4b7e3d743589b636bcde73b",
+    "status": "passed-local-asset-verification"
+  },
+  "independentVerification": {
+    "path": "independent-review/verification.json",
+    "sha256": "38595ee113837f706caeee75ed5fc012ba414868a4b7e3d743589b636bcde73b",
+    "status": "passed-local-asset-verification"
+  },
+  "reviewerSignoff": {
+    "path": "independent-review/weft-0.4.53-published-review.json",
+    "sha256": "094b7179a60aac72662e5499415aa6b33366960ff317011af6f8c5f7ccb9c442",
+    "status": "passed-independent-fresh-published-verification"
+  },
+  "assetInventoryPath": "asset-inventory.json",
+  "assetInventorySha256": "3ce9110319b90f264f0d542a8728018b86dbe55814fcf161b5245f2de142f2b9",
+  "assetCount": 9,
+  "wheelBinariesRetained": false,
+  "workflowPinCheckPath": "workflow-pin-verification.json",
+  "workflowPinCheckSha256": "674c88d83bc5c375a5ebd3d102ff5ef8b38dcb29ec323f1f6791af2459d446f1",
+  "scope": "Weft dependency publication and independent verification passed; UMF final CI/cohort/release gates remain separate and pending.",
+  "files": [
+    {
+      "path": "README.md",
+      "size": 2185,
+      "sha256": "87bbde0b61404f0bcaab0053c83cbe5274c8dc1e3c47615acde7e377d5e01f60"
+    },
+    {
+      "path": "asset-inventory.json",
+      "size": 3723,
+      "sha256": "3ce9110319b90f264f0d542a8728018b86dbe55814fcf161b5245f2de142f2b9"
+    },
+    {
+      "path": "assets/SHA256SUMS",
+      "size": 394,
+      "sha256": "b1785570c5995a52dfa276ed4964c309a96177da31884b97d32bf924487c2d26"
+    },
+    {
+      "path": "assets/local-macos-qualification.json",
+      "size": 11451,
+      "sha256": "0c35f88d036a8c6cc7a16fc282d3ad51167cacaaa8d1274bc0ce0ad77c831802"
+    },
+    {
+      "path": "assets/packaging-aarch64-apple-darwin.json",
+      "size": 476,
+      "sha256": "9e0c35af826dc67e9dda43131052dffd4577284ccb68bbc0fa600402251e864b"
+    },
+    {
+      "path": "assets/packaging-aarch64-unknown-linux-gnu.json",
+      "size": 554,
+      "sha256": "b55792f4806458faa9403b050692a7454dc0dc881e7982b4cf4e34a3d68a0553"
+    },
+    {
+      "path": "assets/packaging-x86_64-unknown-linux-gnu.json",
+      "size": 552,
+      "sha256": "7d29a0e36a8ca43da3b1741d4d6d898723f688ce7c8c065a714cdbc3c1a6d57a"
+    },
+    {
+      "path": "assets/release-pins.json",
+      "size": 14467,
+      "sha256": "b2530b7e3791b07ba4d48ca5f3e02dd2540ea7023b717655a10667dd98b1c5b0"
+    },
+    {
+      "path": "independent-review/packaging-run-api.json",
+      "size": 12498,
+      "sha256": "d4343e32949ac48d468139c889dde5212a789b32400ebbc10d42d9b79b3e2ba1"
+    },
+    {
+      "path": "independent-review/release-api.json",
+      "size": 12186,
+      "sha256": "2a71770a0a8af89628b32cd2f46868099a076323c8ebfb8dde47b83dccfb20a5"
+    },
+    {
+      "path": "independent-review/release-notes-body.md",
+      "size": 6303,
+      "sha256": "94449ddc909f942b2816bc2d6f5787864c9e889e2e5a8fb18f0723b7c03de1c8"
+    },
+    {
+      "path": "independent-review/release-rest-api-snapshot.json",
+      "size": 10102,
+      "sha256": "3d771d0f41d6f97f3de8e3b19bb57efc8b7fb65bb1c396c0bd5b08fa4e5a28bc"
+    },
+    {
+      "path": "independent-review/tag-ref-api.json",
+      "size": 348,
+      "sha256": "039712f87fe37e3e81ac82b8d3893aa6c7d7cf9b99976cc610ba8acdc6634d73"
+    },
+    {
+      "path": "independent-review/verification.json",
+      "size": 3025,
+      "sha256": "38595ee113837f706caeee75ed5fc012ba414868a4b7e3d743589b636bcde73b"
+    },
+    {
+      "path": "independent-review/weft-0.4.53-published/SHA256SUMS",
+      "size": 394,
+      "sha256": "b1785570c5995a52dfa276ed4964c309a96177da31884b97d32bf924487c2d26"
+    },
+    {
+      "path": "independent-review/weft-0.4.53-published/local-macos-qualification.json",
+      "size": 11451,
+      "sha256": "0c35f88d036a8c6cc7a16fc282d3ad51167cacaaa8d1274bc0ce0ad77c831802"
+    },
+    {
+      "path": "independent-review/weft-0.4.53-published/packaging-aarch64-apple-darwin.json",
+      "size": 476,
+      "sha256": "9e0c35af826dc67e9dda43131052dffd4577284ccb68bbc0fa600402251e864b"
+    },
+    {
+      "path": "independent-review/weft-0.4.53-published/packaging-aarch64-unknown-linux-gnu.json",
+      "size": 554,
+      "sha256": "b55792f4806458faa9403b050692a7454dc0dc881e7982b4cf4e34a3d68a0553"
+    },
+    {
+      "path": "independent-review/weft-0.4.53-published/packaging-run-api.json",
+      "size": 12498,
+      "sha256": "d4343e32949ac48d468139c889dde5212a789b32400ebbc10d42d9b79b3e2ba1"
+    },
+    {
+      "path": "independent-review/weft-0.4.53-published/packaging-x86_64-unknown-linux-gnu.json",
+      "size": 552,
+      "sha256": "7d29a0e36a8ca43da3b1741d4d6d898723f688ce7c8c065a714cdbc3c1a6d57a"
+    },
+    {
+      "path": "independent-review/weft-0.4.53-published/release-api.json",
+      "size": 12186,
+      "sha256": "2a71770a0a8af89628b32cd2f46868099a076323c8ebfb8dde47b83dccfb20a5"
+    },
+    {
+      "path": "independent-review/weft-0.4.53-published/release-notes-body.md",
+      "size": 6303,
+      "sha256": "94449ddc909f942b2816bc2d6f5787864c9e889e2e5a8fb18f0723b7c03de1c8"
+    },
+    {
+      "path": "independent-review/weft-0.4.53-published/release-pins.json",
+      "size": 14467,
+      "sha256": "b2530b7e3791b07ba4d48ca5f3e02dd2540ea7023b717655a10667dd98b1c5b0"
+    },
+    {
+      "path": "independent-review/weft-0.4.53-published/release-rest-api-snapshot.json",
+      "size": 10102,
+      "sha256": "3d771d0f41d6f97f3de8e3b19bb57efc8b7fb65bb1c396c0bd5b08fa4e5a28bc"
+    },
+    {
+      "path": "independent-review/weft-0.4.53-published/tag-ref-api.json",
+      "size": 348,
+      "sha256": "039712f87fe37e3e81ac82b8d3893aa6c7d7cf9b99976cc610ba8acdc6634d73"
+    },
+    {
+      "path": "independent-review/weft-0.4.53-published/verification.json",
+      "size": 3025,
+      "sha256": "38595ee113837f706caeee75ed5fc012ba414868a4b7e3d743589b636bcde73b"
+    },
+    {
+      "path": "independent-review/weft-0.4.53-published-review.json",
+      "size": 3073,
+      "sha256": "094b7179a60aac72662e5499415aa6b33366960ff317011af6f8c5f7ccb9c442"
+    },
+    {
+      "path": "promotion/automatic-jobs-api.json",
+      "size": 6582,
+      "sha256": "e732c6745a44e6543081423c65977bf5c4718b79950744f11c47330c25b12bdb"
+    },
+    {
+      "path": "promotion/automatic-run-api.json",
+      "size": 12581,
+      "sha256": "e6dafe664c304e0cfd0abaf0cd7d1bfd75e5b0a2d1a87e623232227c4a032cd6"
+    },
+    {
+      "path": "promotion/automatic-tag-run-terminal.json",
+      "size": 211,
+      "sha256": "f0fe3c742468be9744db834aa85f406f952aab5f40e4b3e1a60a10b8687a366c"
+    },
+    {
+      "path": "promotion/draft-release.json",
+      "size": 6555,
+      "sha256": "ea09ef10526ba9db473eff90d8967d779aec4b533240bfa746e5cf01e3d905e7"
+    },
+    {
+      "path": "promotion/mac-staged.json",
+      "size": 788,
+      "sha256": "98fe61c6fa3c9e1995ddd7464aeb9d75ea7c78250333f745f7b8ec52e0368a29"
+    },
+    {
+      "path": "promotion/merge-proof.json",
+      "size": 737,
+      "sha256": "564a9f47d6ba7f3488fd811a2a7b8106c3062546d989a74a894a8f663111a5fd"
+    },
+    {
+      "path": "promotion/promotion-jobs-api.json",
+      "size": 2767,
+      "sha256": "d6d055d2506b964cdda6ab63732d30ec05b16798ecc8a7a2bfdce4500d33ca8c"
+    },
+    {
+      "path": "promotion/promotion-run-api.json",
+      "size": 12541,
+      "sha256": "accbede8ab7cc199f9c0fbd091c6c9854c26347dc5aa658e4feede9ec2a20ea2"
+    },
+    {
+      "path": "root-verification/packaging-run-api.json",
+      "size": 12498,
+      "sha256": "d4343e32949ac48d468139c889dde5212a789b32400ebbc10d42d9b79b3e2ba1"
+    },
+    {
+      "path": "root-verification/promotion-run-api.json",
+      "size": 12541,
+      "sha256": "accbede8ab7cc199f9c0fbd091c6c9854c26347dc5aa658e4feede9ec2a20ea2"
+    },
+    {
+      "path": "root-verification/release-api.json",
+      "size": 12186,
+      "sha256": "2a71770a0a8af89628b32cd2f46868099a076323c8ebfb8dde47b83dccfb20a5"
+    },
+    {
+      "path": "root-verification/release-notes-body.md",
+      "size": 6303,
+      "sha256": "94449ddc909f942b2816bc2d6f5787864c9e889e2e5a8fb18f0723b7c03de1c8"
+    },
+    {
+      "path": "root-verification/tag-ref-api.json",
+      "size": 348,
+      "sha256": "039712f87fe37e3e81ac82b8d3893aa6c7d7cf9b99976cc610ba8acdc6634d73"
+    },
+    {
+      "path": "root-verification/verification.json",
+      "size": 3025,
+      "sha256": "38595ee113837f706caeee75ed5fc012ba414868a4b7e3d743589b636bcde73b"
+    },
+    {
+      "path": "workflow-pin-verification.json",
+      "size": 1373,
+      "sha256": "674c88d83bc5c375a5ebd3d102ff5ef8b38dcb29ec323f1f6791af2459d446f1"
+    }
+  ]
+}

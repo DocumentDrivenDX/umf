@@ -286,7 +286,8 @@ def resolve_configuration(
     if (
         type(pin) is not dict
         or set(pin) != {"distribution", "version"}
-        or pin["distribution"] != "weft-sql"
+        or type(pin["distribution"]) is not str
+        or pin["distribution"] not in ("weft-sql", "umf-weft")
         or type(pin["version"]) is not str
     ):
         raise CatalogBuildError("explicit Weft distribution/version required")

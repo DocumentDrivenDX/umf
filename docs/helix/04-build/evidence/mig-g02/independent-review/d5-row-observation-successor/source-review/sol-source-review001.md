@@ -1,0 +1,44 @@
+# G02-D5 bounded source review
+
+Disposition: **CHANGES REQUIRED for D5 closure; no execution or native qualification claimed.** Reviewed only the added replay/custody/finalization blocks and their single expected-pins row in `/Users/erik/.codex/worktrees/core-reference-browser/umf`, together with the governing D5 sentence and immutable retained oracle/fixtures. No candidate runtime, imports, AST, YAML evaluation, tests or Git mutation occurred.
+
+Frozen reviewed postimages:
+
+- `.github/workflows/access-boundaries.yml`: `f3e760f70561b1a641dd23f5741337ca842cc3dad96d53a0ff8715a70878200c`.
+- `qualification-inputs/expected-pins.sha256`: `a2c6be11fd234fe18b7218c1a11d3c941b8498038f546757f9b9e8582ea08e1a`; its access-workflow row matches those actual bytes.
+
+The originally reported branch and provenance defects are closed: all three step conditions and the source-freeze assertion target `codex/mig-g02-typed-backfills`; the owner manifest is copied byte-for-byte to `venv-parent/owner-artifacts.json`, which is the immutable oracle's `Path(sys.prefix).parent` lookup. Harness SHA/source SHA remain separately recorded.
+
+## D5-F1 — Record actual rows, preserving the original oracle
+
+`schema-migration-plan.md:267` requires the reviewer to record exact rows as well as execute independently specified expectations. Retained oracle `5dfddd7f1bd7f6e254e927292246ceddf5debfe172995ad267d4bbbfd32c2ea4` performs genuine live SELECT comparisons (not a compiler self-oracle), but its case observation at original line 463 does not contain those actual row arrays. The present finalizer can therefore declare `PASS_G02_D5_37_CASES_AND_RECOVERY` without the literal row-recording deliverable.
+
+Minimal corrective batch: preserve the archive and original oracle bytes; retain a distinctly named reviewer successor and its explicit original-to-successor patch/hash. Immediately after the existing RESET ROLE and before the original expected-row checks, perform one `SELECT * FROM` the same safely composed table identifier `ORDER BY id`; retain the actual cursor-description column order and fetched rows in that case observation. This covers invalid appended-target rollback, where summary correctly does not exist, as well as empty/populated tables. Keep every original assertion, manual expected value, case/flag, phase, cleanup and deadline unchanged. Assign the existing future-default fetch to a local and retain its actual fetched value before the unchanged comparison, so future-default observations are also actual evidence.
+
+Use a closed lossless encoding for the encountered finite-domain values: JSON primitives unchanged, Decimal as a tagged exact string (including NaN), date as tagged ISO, float as tagged hexadecimal/nonfinite spelling if encountered; refuse an unknown value type. Do not serialize expected rows as actual rows. The finalizer must require actual columns/row arrays for all 37 cases, the distinct executed successor SHA, and the original oracle/archive/fixture identity. State that this is an observation successor, rather than claiming the executed file still has SHA 5df. No fixture/cap/assertion relaxation is needed.
+
+## Reviewed coverage and limits retained
+
+The 16 command groups match the original 37 cases: date/integer/decimal/text (four each); eq-null/ne-null/not-eq-value/not-ne-null/coalesce-empty/enum/varchar-loss/bound-excess/empty-table (two each); unique/foreign-key/all-populated (one each). Decimal ambient-operator and used/unused nonfinite guards, decimal and eq-null lost-commit phases, 19 no-default checks and three fault scenarios (33/27/27 checks) remain selected. The finalizer requires the fixed command/report roster, original hashes, successful raw/capture exits, no truncation, real SQLSTATE/rollback/lost-commit metadata, baseline/final resource absence and fault cleanup. No report-count substitution or dropped case was found.
+
+Fresh offline installation uses all 18 hash-required wheels after the existing `offline_mirror_probe -> locked_wheels` validation. Current package versions, complete wheel/member and installed-file hash inventories, Codegen input identity, Core wheel/native hashes, and owner manifest are retained. Installed file hashes are observations for independent comparison, not a claim that every wheel-to-installed relocation has already been independently compared by this source review. No wheel binaries are currently retained in the D5 artifact.
+
+The added work retains one monotonic 1800-second deadline, remaining-time clamps, at most 180 seconds per child, GNU timeout/10-second kill grace, 60-second evidence reserve, aggregate 1 MiB draining log capture, 16 MiB stat-before-read/staging cap, one-minute finalizer and seeded FAIL_OR_UNKNOWN receipt. Original native commands, assertions and four-cell scope are unchanged. The shared existing artifact upload remains outside the replay-work timer; do not report its network duration as measured D5 work. A failure does not establish cleanup or D5 acceptance.
+
+## Exact custody and release-payload handoff
+
+The D5 wheel map is recorded but only Core is compared directly there. This does **not** mean the other 17 wheels were never verified: the earlier mirror probe checks the exact filename roster/full hashes and pip requires the lock hashes. For the same corrective batch, add the small local consistency assertion before publishing owner custody: reject duplicate lock filenames, and compare the complete actual `{filename: {sha256, bytes}}` map with `{row.filename: {sha256: row.sha256, bytes: row.size}}` from all 18 lock rows. This directly binds the later snapshot/release extraction without introducing another verifier framework.
+
+For SDK release selection, retain **only the actual job-built Access dev8 and Codegen a5 wheels** in a separate success-only release-payload artifact from this same native job. Select exactly one matching lock row per distribution/version; stat and compare filename/size/SHA to both the lock and D5 owner map before copying, then verify the copied bytes. Include a small receipt binding source commit/tree, workflow SHA, run/attempt, lock SHA, owner-manifest SHA and both filenames/hashes/sizes. A fixed 2 MiB release-payload assembly cap comfortably bounds the previously observed 578631+261287 bytes; refuse overflow rather than broaden the D5 16 MiB artifact. No rebuild/download/new job is required. Publish that separate artifact only after the D5 finalizer passes; retain the original D5 cap. This preserves exact release-payload correspondence and does not qualify another platform. The TypeScript tgz is a distinct existing actions artifact.
+
+## R3 disposition
+
+This exact workflow/pin-row batch does **not** require canonical R3 regeneration merely because it adds replay commands. Read-only comparison found zero added/removed matches for the generator's executable-path activation regex. The new commands introduce no `python -m unittest discover` run, inventoried source/package/lock change, or new activation root. `rust-inventory.py:685-750` uses workflow text for paths/activation and the TypeScript-captured run strings only for unittest discovery; raw workflow bytes are not in its source-cohort hash at line 770. Existing workflow activation evidence remains the same path.
+
+An observation successor retained under the existing `docs/helix/04-build/evidence/` directory and extracted/executed via the same temporary ORACLE path is outside the generator's authored code roots; its exact new hash belongs in D5 custody. If implementation instead adds a source helper under tests/scripts/tools/python, changes a recognized activation path or adds unittest discovery, real regeneration and its original check are required. Reassess only that concrete introduced delta, not the historical inventory corpus.
+
+## Integration prerequisite and remaining holds
+
+Before the real PR48 update, normally merge old PR head `56c3ad6159d9300e6755a4b3b8d91cca6e4a66c9`; do not force-push around the missing ancestry. Preserve unique historical docs/evidence and the genuinely additive aggregate/cohort-selector source/tests; reconcile their overlap to the current platform-aware Core 0.10.2 acquisition, temporal/native behavior and current generated resources. Do not blindly choose ours or resurrect superseded Core 0.10.1/generated bytes. That distinct source reconciliation needs its bounded affected review, genuine canonical regeneration where inventoried source changes, and the original four-cell/union gates. It does not invalidate this replay plan or justify dispatch before the final source freeze.
+
+Actual current-cohort D5 execution and independent artifact/installed-custody/row review remain open. Earlier selected-native and portable passes remain their precisely recorded scopes. Full G03, G04 native and the original SDK four-cell qualification are not closed here.

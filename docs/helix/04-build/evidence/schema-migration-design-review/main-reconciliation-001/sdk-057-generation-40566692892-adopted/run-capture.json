@@ -1,0 +1,134 @@
+{
+  "runId": 40566692892,
+  "attempt": 1,
+  "headSha": "1e0d9545eb6e00dc4521a257be722cf336c3b741",
+  "jobId": 122409748922,
+  "job": {
+    "id": 122409748922,
+    "name": "generate",
+    "status": "completed",
+    "conclusion": "success",
+    "run_id": 40566692892,
+    "logs_url": null,
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1
+      },
+      {
+        "name": "Start original bounded generation budget and failure receipt",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2
+      },
+      {
+        "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3
+      },
+      {
+        "name": "Run oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4
+      },
+      {
+        "name": "Run actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5
+      },
+      {
+        "name": "Run dtolnay/rust-toolchain@stable",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6
+      },
+      {
+        "name": "Require the dedicated generation branch and frozen checkout",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7
+      },
+      {
+        "name": "Verify adopted Stage-A companion and freeze merged input pins",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8
+      },
+      {
+        "name": "Install locked JavaScript build inputs and fetch locked Rust metadata inputs",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9
+      },
+      {
+        "name": "Generate source-bound artifacts and current R3 reports",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10
+      },
+      {
+        "name": "Stage only current generated outputs and hash receipt",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11
+      },
+      {
+        "name": "Upload generation artifact without adopting it",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 12
+      },
+      {
+        "name": "Post Run actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 22
+      },
+      {
+        "name": "Post Run oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 23
+      },
+      {
+        "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 24
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 25
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "id": 12763033295,
+      "name": "umf-merged-source-generated-1e0d9545eb6e00dc4521a257be722cf336c3b741-40566692892-1",
+      "size_in_bytes": 736368,
+      "url": "https://api.github.com/repos/DocumentDrivenDX/umf/actions/artifacts/12763033295",
+      "archive_download_url": "https://api.github.com/repos/DocumentDrivenDX/umf/actions/artifacts/12763033295/zip",
+      "expired": false,
+      "created_at": "2026-10-27T19:13:38Z",
+      "expires_at": "2027-01-25T19:10:29Z",
+      "updated_at": "2026-10-27T19:13:38Z",
+      "digest": "sha256:a9f2d266ade4393c41e02979b62664a90c28dd279ab5fce6728c374050a78010",
+      "workflow_run": {
+        "id": 40566692892,
+        "repository_id": 1382276802,
+        "head_repository_id": 1382276802,
+        "head_branch": "codex/migration-merged-generation",
+        "head_sha": "1e0d9545eb6e00dc4521a257be722cf336c3b741"
+      }
+    }
+  ],
+  "logUtf8Bytes": 141805
+}

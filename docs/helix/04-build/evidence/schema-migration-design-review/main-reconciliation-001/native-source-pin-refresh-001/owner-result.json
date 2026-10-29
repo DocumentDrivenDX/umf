@@ -1,0 +1,13 @@
+{
+  "status": "REVIEWED_GENERATED_SOURCE_IDENTITIES_ADOPTED_NATIVE_HELD",
+  "manifestSha256": "589bf0f3c0a4cd88de1ff0ccf3e8d31d004d5cfba69026959de3f15582789d82",
+  "sourcePins": 32,
+  "changedPins": [
+    "python/umf_codegen/src/umf_codegen/_release.py",
+    "python/umf_codegen/src/umf_codegen/_assets/manifest.json",
+    "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz"
+  ],
+  "authority": "Exact previously Sol-reviewed generated output receipt40277896975, three values only; bytewise root verification.",
+  "nativeDependency": "Unchanged old Core0.10.0 identity. Do not dispatch until immutable public Core0.10.2 proof and reviewed dependency refresh.",
+  "scope": "Source identity only; no new execution or qualification claim."
+}

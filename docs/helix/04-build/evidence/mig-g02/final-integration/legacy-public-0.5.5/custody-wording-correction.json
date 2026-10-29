@@ -1,0 +1,6 @@
+{
+  "corrects": "root-custody-review.json#/freshMirrorIsTestOutput",
+  "originalReceiptRetained": true,
+  "statement": "Missing/tamper negative controls use separate temporary copies. Independent review observed no changed or missing wheel hashes in fresh-mirror after replay. Fresh-mirror is disposable test output and is excluded from publication; all 29 original public input wheels remain hash-exact.",
+  "independentReviewSha256": "f7b725d7aa6156454b1e244539429576883584b313e60ae1e6a43284c34c0e82"
+}

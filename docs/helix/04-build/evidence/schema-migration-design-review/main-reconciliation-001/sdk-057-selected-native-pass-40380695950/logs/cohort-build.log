@@ -1,0 +1,70 @@
+* Getting build dependencies for wheel...
+* Building wheel...
+Successfully built umf_access-0.1.0.dev8-py3-none-any.whl
+* Getting build dependencies for wheel...
+* Building wheel...
+Successfully built umf_codegen-0.1.0a5-py3-none-any.whl
+Collecting annotated-types==0.8.0 (from -r /tmp/umf-offline-cohort-xz5ittha/pypi-dependencies.txt (line 1))
+  Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+Collecting attrs==26.1.0 (from -r /tmp/umf-offline-cohort-xz5ittha/pypi-dependencies.txt (line 2))
+  Downloading attrs-26.1.0-py3-none-any.whl.metadata (8.8 kB)
+Collecting jsonschema==4.26.0 (from -r /tmp/umf-offline-cohort-xz5ittha/pypi-dependencies.txt (line 3))
+  Downloading jsonschema-4.26.0-py3-none-any.whl.metadata (7.6 kB)
+Collecting jsonschema-specifications==2025.9.1 (from -r /tmp/umf-offline-cohort-xz5ittha/pypi-dependencies.txt (line 4))
+  Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl.metadata (2.9 kB)
+Collecting pydantic==2.14.1 (from -r /tmp/umf-offline-cohort-xz5ittha/pypi-dependencies.txt (line 5))
+  Downloading pydantic-2.14.1-py3-none-any.whl.metadata (133 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.0/133.0 kB 3.8 MB/s eta 0:00:00
+Collecting pydantic-core==2.50.1 (from -r /tmp/umf-offline-cohort-xz5ittha/pypi-dependencies.txt (line 6))
+  Downloading pydantic_core-2.50.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.5 kB)
+Collecting psycopg==3.2.13 (from -r /tmp/umf-offline-cohort-xz5ittha/pypi-dependencies.txt (line 7))
+  Downloading psycopg-3.2.13-py3-none-any.whl.metadata (4.5 kB)
+Collecting psycopg-binary==3.2.13 (from -r /tmp/umf-offline-cohort-xz5ittha/pypi-dependencies.txt (line 8))
+  Downloading psycopg_binary-3.2.13-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.9 kB)
+Collecting referencing==0.37.0 (from -r /tmp/umf-offline-cohort-xz5ittha/pypi-dependencies.txt (line 9))
+  Downloading referencing-0.37.0-py3-none-any.whl.metadata (2.8 kB)
+Collecting rpds-py==2026.9.1 (from -r /tmp/umf-offline-cohort-xz5ittha/pypi-dependencies.txt (line 10))
+  Downloading rpds_py-2026.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.1 kB)
+Collecting ruamel-yaml==0.19.1 (from -r /tmp/umf-offline-cohort-xz5ittha/pypi-dependencies.txt (line 11))
+  Downloading ruamel_yaml-0.19.1-py3-none-any.whl.metadata (16 kB)
+Collecting typing-extensions==4.16.0 (from -r /tmp/umf-offline-cohort-xz5ittha/pypi-dependencies.txt (line 12))
+  Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting typing-inspection==0.4.4 (from -r /tmp/umf-offline-cohort-xz5ittha/pypi-dependencies.txt (line 13))
+  Downloading typing_inspection-0.4.4-py3-none-any.whl.metadata (2.6 kB)
+Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+Downloading attrs-26.1.0-py3-none-any.whl (67 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 67.5/67.5 kB 28.6 MB/s eta 0:00:00
+Downloading jsonschema-4.26.0-py3-none-any.whl (90 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 90.6/90.6 kB 26.4 MB/s eta 0:00:00
+Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl (18 kB)
+Downloading pydantic-2.14.1-py3-none-any.whl (488 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 488.1/488.1 kB 11.9 MB/s eta 0:00:00
+Downloading pydantic_core-2.50.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.2/2.2 MB 28.9 MB/s eta 0:00:00
+Downloading psycopg-3.2.13-py3-none-any.whl (206 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 206.8/206.8 kB 326.7 MB/s eta 0:00:00
+Downloading psycopg_binary-3.2.13-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (4.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.4/4.4 MB 101.8 MB/s eta 0:00:00
+Downloading referencing-0.37.0-py3-none-any.whl (26 kB)
+Downloading rpds_py-2026.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (375 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 375.4/375.4 kB 336.5 MB/s eta 0:00:00
+Downloading ruamel_yaml-0.19.1-py3-none-any.whl (118 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 118.1/118.1 kB 290.7 MB/s eta 0:00:00
+Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 45.6/45.6 kB 267.5 MB/s eta 0:00:00
+Downloading typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+Saved /home/runner/work/_temp/umf-g02-g03-native-work/cohort/wheelhouse/annotated_types-0.8.0-py3-none-any.whl
+Saved /home/runner/work/_temp/umf-g02-g03-native-work/cohort/wheelhouse/attrs-26.1.0-py3-none-any.whl
+Saved /home/runner/work/_temp/umf-g02-g03-native-work/cohort/wheelhouse/jsonschema-4.26.0-py3-none-any.whl
+Saved /home/runner/work/_temp/umf-g02-g03-native-work/cohort/wheelhouse/jsonschema_specifications-2025.9.1-py3-none-any.whl
+Saved /home/runner/work/_temp/umf-g02-g03-native-work/cohort/wheelhouse/pydantic-2.14.1-py3-none-any.whl
+Saved /home/runner/work/_temp/umf-g02-g03-native-work/cohort/wheelhouse/pydantic_core-2.50.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+Saved /home/runner/work/_temp/umf-g02-g03-native-work/cohort/wheelhouse/psycopg-3.2.13-py3-none-any.whl
+Saved /home/runner/work/_temp/umf-g02-g03-native-work/cohort/wheelhouse/psycopg_binary-3.2.13-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
+Saved /home/runner/work/_temp/umf-g02-g03-native-work/cohort/wheelhouse/referencing-0.37.0-py3-none-any.whl
+Saved /home/runner/work/_temp/umf-g02-g03-native-work/cohort/wheelhouse/rpds_py-2026.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+Saved /home/runner/work/_temp/umf-g02-g03-native-work/cohort/wheelhouse/ruamel_yaml-0.19.1-py3-none-any.whl
+Saved /home/runner/work/_temp/umf-g02-g03-native-work/cohort/wheelhouse/typing_extensions-4.16.0-py3-none-any.whl
+Saved /home/runner/work/_temp/umf-g02-g03-native-work/cohort/wheelhouse/typing_inspection-0.4.4-py3-none-any.whl
+Successfully downloaded annotated-types attrs jsonschema jsonschema-specifications pydantic pydantic-core psycopg psycopg-binary referencing rpds-py ruamel-yaml typing-extensions typing-inspection
+{"cell": {"architecture": "x86_64", "libc": "glibc >= 2.34", "os": "ubuntu-24.04", "python": "3.11"}, "lock": "/home/runner/work/_temp/umf-g02-g03-native-work/cohort/cohort.lock.json", "lockSha256": "665348c1d33081e0fe31bd3acc7ca8660f59d3cd42e7a8462988c5bfae6ea1ae", "sourceCommit": "b37566f76d57981e4af5a5c0cc62621b00c2d3b3", "status": "acquired-and-locked", "wheelCount": 18, "wheelhouse": "/home/runner/work/_temp/umf-g02-g03-native-work/cohort/wheelhouse"}

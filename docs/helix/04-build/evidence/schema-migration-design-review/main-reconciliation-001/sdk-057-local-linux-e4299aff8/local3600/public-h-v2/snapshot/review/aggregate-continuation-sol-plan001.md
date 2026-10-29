@@ -1,0 +1,15 @@
+# Public-H assembly/continuation evidence integration — source plan
+
+Confirmed a real reader integration gap in accepted source 0d866891a0ba9717531922bb06e6ccf4cab072c1221d44d4fc8547c85c763fe5. The aggregate reader unconditionally requires a same-execution umf.local-linux-full18-union-proof/1 record. No such actual receipt exists. The independently accepted continuation003 instead has its own execution identity and closed continuation schema. Changing a packet field alone cannot satisfy that gate honestly.
+
+The assembly harness is available physically at /private/tmp/migration-local-python-route/run-full18-linux.sh; SHA-256 ceea335b702b2128919051669597a8a1b9163e4fe628a585d111876116a5f08d matches the actual assembly receipt. Retaining an exact byte copy at the declared harness path is metadata custody, not a rerun or newly generated proof.
+
+Approve a narrow explicit second aggregate evidence mode, named for assembly plus bounded continuation003, while keeping the old same-attempt mode intact. Use a closed conditional input schema: the new mode carries the existing assembly identity/harness/index/corpus fields and the already mandatory unionContinuation binding; it must not carry invented proofReceipt fields. Unknown mode/fields fail closed. The old mode continues to require its original proofReceipt fields and checks.
+
+Keep all actual assembly checks common: closed successful assembly receipt, exact original argv and command log, P/tree/clean source, harness digest, runtime images, physical receipt files and index, full 30-wheel union, complete 18-package child locks and target manifests, source/provenance/native-byte checks, Mac data-only coverage and public-payload equality. Only the nonexistent legacy proof-specific block is conditional. A new mode must not bypass any assembly/index/child or public bytes checks.
+
+For new mode, invoke the existing validate_union_continuation against actual003 and the actual original aggregate. It already requires exact original producer receipt/index/corpus hashes, distinct continuation identity, exact P/tree/read-only mount, pinned images and physical five-file harness, packaging26.3 operator bootstrap, both selected-cell reports and controls, all eight inner logs plus two distinct host logs, command/stage custody and original 3600-second watchdog/30-second stop profile. Retain those predicates; bind its returned receipt/reports into final H correspondence. Do not require continuation attempt to equal assembly attempt, and do not manufacture an old-format proof.
+
+This is evidence-reader metadata adaptation only. No reacquisition, assembly, SDK build, product changes or gate reruns are justified. Original union failure and unqualified001/002 evidence remain preserved. H's own seven commands, 139 SDK checks, fresh Linux311 full18 probe, three public assets, P/M/tag ancestry and 1800/180/log/evidence bounds remain unchanged. D5 and unknown publication facts stay HELD. Final postimage requires focused source review before execution.
+
+Review used text/hash/JSON inspection only; no candidate execution, imports, AST/YAML parsing, tests, Docker, Git mutation or Actions.

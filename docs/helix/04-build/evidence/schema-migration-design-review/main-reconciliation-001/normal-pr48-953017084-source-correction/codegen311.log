@@ -1,0 +1,818 @@
+﻿2026-10-27T19:43:45.9095643Z Current runner version: '2.338.0'
+2026-10-27T19:43:45.9120207Z ##[group]Runner Image Provisioner
+2026-10-27T19:43:45.9121407Z Hosted Compute Agent
+2026-10-27T19:43:45.9122109Z Version: 20261021.618
+2026-10-27T19:43:45.9122800Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-10-27T19:43:45.9123542Z Build Date: 2026-10-21T00:45:21Z
+2026-10-27T19:43:45.9124307Z Worker ID: {3c2d2a21-47a6-4fae-acaa-9778c3c10092}
+2026-10-27T19:43:45.9125079Z Region: westus2
+2026-10-27T19:43:45.9125632Z Cloud: Azure
+2026-10-27T19:43:45.9126253Z ##[endgroup]
+2026-10-27T19:43:45.9128105Z ##[group]Operating System
+2026-10-27T19:43:45.9128889Z Ubuntu
+2026-10-27T19:43:45.9129429Z 24.04.5
+2026-10-27T19:43:45.9129931Z LTS
+2026-10-27T19:43:45.9130538Z ##[endgroup]
+2026-10-27T19:43:45.9131425Z ##[group]Runner Image
+2026-10-27T19:43:45.9132080Z Image: ubuntu-24.04
+2026-10-27T19:43:45.9132759Z Version: 20261012.334.1
+2026-10-27T19:43:45.9134129Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-27T19:43:45.9135702Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-27T19:43:45.9136716Z ##[endgroup]
+2026-10-27T19:43:45.9137924Z ##[group]GITHUB_TOKEN Permissions
+2026-10-27T19:43:45.9139919Z Contents: read
+2026-10-27T19:43:45.9140560Z Metadata: read
+2026-10-27T19:43:45.9141372Z ##[endgroup]
+2026-10-27T19:43:45.9143611Z Secret source: Actions
+2026-10-27T19:43:45.9144584Z Cache mode: write
+2026-10-27T19:43:45.9145393Z Prepare workflow directory
+2026-10-27T19:43:45.9527062Z Prepare all required actions
+2026-10-27T19:43:45.9585396Z Getting action download info
+2026-10-27T19:43:46.3355376Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-27T19:43:46.4452910Z Download action repository 'oven-sh/setup-bun@v2' (SHA:0c5077e51419868618aeaa5fe8019c62421857d6)
+2026-10-27T19:43:46.6988880Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-10-27T19:43:46.8563923Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-27T19:43:47.0803565Z Complete job name: python-codegen (ubuntu-24.04, Python 3.11)
+2026-10-27T19:43:47.1918315Z ##[group]Run actions/checkout@v4
+2026-10-27T19:43:47.1919256Z with:
+2026-10-27T19:43:47.1919741Z   repository: DocumentDrivenDX/umf
+2026-10-27T19:43:47.1923830Z   token: ***
+2026-10-27T19:43:47.1924292Z   ssh-strict: true
+2026-10-27T19:43:47.1924755Z   ssh-user: git
+2026-10-27T19:43:47.1925228Z   persist-credentials: true
+2026-10-27T19:43:47.1925741Z   clean: true
+2026-10-27T19:43:47.1926219Z   sparse-checkout-cone-mode: true
+2026-10-27T19:43:47.1926766Z   fetch-depth: 1
+2026-10-27T19:43:47.1927225Z   fetch-tags: false
+2026-10-27T19:43:47.1927697Z   show-progress: true
+2026-10-27T19:43:47.1928183Z   lfs: false
+2026-10-27T19:43:47.1928616Z   submodules: false
+2026-10-27T19:43:47.1929094Z   set-safe-directory: true
+2026-10-27T19:43:47.1929634Z   allow-unsafe-pr-checkout: false
+2026-10-27T19:43:47.1930500Z ##[endgroup]
+2026-10-27T19:43:47.4625362Z Syncing repository: DocumentDrivenDX/umf
+2026-10-27T19:43:47.4628508Z ##[group]Getting Git version info
+2026-10-27T19:43:47.4629826Z Working directory is '/home/runner/work/umf/umf'
+2026-10-27T19:43:47.4631880Z [command]/usr/bin/git version
+2026-10-27T19:43:47.4702322Z git version 2.55.0
+2026-10-27T19:43:47.4725410Z ##[endgroup]
+2026-10-27T19:43:47.4742941Z Temporarily overriding HOME='/home/runner/work/_temp/6734392d-2b3d-408e-ada2-9dc403ef7d2f' before making global git config changes
+2026-10-27T19:43:47.4745517Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-27T19:43:47.4749861Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf
+2026-10-27T19:43:47.4811710Z Deleting the contents of '/home/runner/work/umf/umf'
+2026-10-27T19:43:47.4836630Z ##[group]Initializing the repository
+2026-10-27T19:43:47.4852679Z [command]/usr/bin/git init /home/runner/work/umf/umf
+2026-10-27T19:43:47.4932756Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-27T19:43:47.4934435Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-27T19:43:47.4936233Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-27T19:43:47.4937758Z hint: call:
+2026-10-27T19:43:47.4938489Z hint:
+2026-10-27T19:43:47.4939435Z hint: 	git config --global init.defaultBranch <name>
+2026-10-27T19:43:47.4940619Z hint:
+2026-10-27T19:43:47.4942078Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-27T19:43:47.4943868Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-27T19:43:47.4945159Z hint:
+2026-10-27T19:43:47.4945963Z hint: 	git branch -m <name>
+2026-10-27T19:43:47.4947032Z hint:
+2026-10-27T19:43:47.4948297Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-27T19:43:47.4949994Z Initialized empty Git repository in /home/runner/work/umf/umf/.git/
+2026-10-27T19:43:47.4953088Z [command]/usr/bin/git remote add origin https://github.com/DocumentDrivenDX/umf
+2026-10-27T19:43:47.5003940Z ##[endgroup]
+2026-10-27T19:43:47.5005707Z ##[group]Disabling automatic garbage collection
+2026-10-27T19:43:47.5007520Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-27T19:43:47.5043724Z ##[endgroup]
+2026-10-27T19:43:47.5045146Z ##[group]Setting up auth
+2026-10-27T19:43:47.5052922Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T19:43:47.5089926Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-27T19:43:47.5493610Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T19:43:47.5533755Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-27T19:43:47.5767649Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T19:43:47.5805263Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-27T19:43:47.6032309Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-27T19:43:47.6076028Z ##[endgroup]
+2026-10-27T19:43:47.6076974Z ##[group]Fetching the repository
+2026-10-27T19:43:47.6089335Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +af3dd82f7b273f49f4398399f74d81f0bb01f9c0:refs/remotes/pull/48/merge
+2026-10-27T19:44:12.2498057Z From https://github.com/DocumentDrivenDX/umf
+2026-10-27T19:44:12.2499566Z  * [new ref]           af3dd82f7b273f49f4398399f74d81f0bb01f9c0 -> pull/48/merge
+2026-10-27T19:44:12.2515555Z ##[endgroup]
+2026-10-27T19:44:12.2516741Z ##[group]Determining the checkout info
+2026-10-27T19:44:12.2518610Z ##[endgroup]
+2026-10-27T19:44:12.2524828Z [command]/usr/bin/git sparse-checkout disable
+2026-10-27T19:44:12.2587572Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-27T19:44:12.2635519Z ##[group]Checking out the ref
+2026-10-27T19:44:12.2636266Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/48/merge
+2026-10-27T19:44:13.3847713Z Updating files:   5% (3650/63909)
+2026-10-27T19:44:13.5126983Z Updating files:   6% (3835/63909)
+2026-10-27T19:44:13.7997856Z Updating files:   7% (4474/63909)
+2026-10-27T19:44:13.8722719Z Updating files:   8% (5113/63909)
+2026-10-27T19:44:13.9136054Z Updating files:   9% (5752/63909)
+2026-10-27T19:44:14.0935266Z Updating files:  10% (6391/63909)
+2026-10-27T19:44:14.1893207Z Updating files:  11% (7030/63909)
+2026-10-27T19:44:14.2678481Z Updating files:  12% (7670/63909)
+2026-10-27T19:44:14.3115855Z Updating files:  13% (8309/63909)
+2026-10-27T19:44:14.3238436Z Updating files:  14% (8948/63909)
+2026-10-27T19:44:14.8306678Z Updating files:  14% (9036/63909)
+2026-10-27T19:44:15.3200319Z Updating files:  15% (9587/63909)
+2026-10-27T19:44:15.3286353Z Updating files:  16% (10226/63909)
+2026-10-27T19:44:15.5390539Z Updating files:  16% (10298/63909)
+2026-10-27T19:44:15.5780309Z Updating files:  17% (10865/63909)
+2026-10-27T19:44:16.0101851Z Updating files:  18% (11504/63909)
+2026-10-27T19:44:16.1676551Z Updating files:  19% (12143/63909)
+2026-10-27T19:44:16.3240228Z Updating files:  20% (12782/63909)
+2026-10-27T19:44:16.3461672Z Updating files:  20% (13346/63909)
+2026-10-27T19:44:16.5411949Z Updating files:  21% (13421/63909)
+2026-10-27T19:44:16.5786556Z Updating files:  22% (14060/63909)
+2026-10-27T19:44:16.6185418Z Updating files:  23% (14700/63909)
+2026-10-27T19:44:16.6491149Z Updating files:  24% (15339/63909)
+2026-10-27T19:44:16.6808348Z Updating files:  25% (15978/63909)
+2026-10-27T19:44:16.7130619Z Updating files:  26% (16617/63909)
+2026-10-27T19:44:16.7483832Z Updating files:  27% (17256/63909)
+2026-10-27T19:44:16.7815006Z Updating files:  28% (17895/63909)
+2026-10-27T19:44:16.8137715Z Updating files:  29% (18534/63909)
+2026-10-27T19:44:16.8566867Z Updating files:  30% (19173/63909)
+2026-10-27T19:44:16.9073818Z Updating files:  31% (19812/63909)
+2026-10-27T19:44:16.9404203Z Updating files:  32% (20451/63909)
+2026-10-27T19:44:17.3243308Z Updating files:  33% (21090/63909)
+2026-10-27T19:44:17.5739966Z Updating files:  33% (21693/63909)
+2026-10-27T19:44:18.3488541Z Updating files:  34% (21730/63909)
+2026-10-27T19:44:19.3481593Z Updating files:  34% (21799/63909)
+2026-10-27T19:44:19.9292807Z Updating files:  34% (21906/63909)
+2026-10-27T19:44:20.0964107Z Updating files:  35% (22369/63909)
+2026-10-27T19:44:20.2210633Z Updating files:  36% (23008/63909)
+2026-10-27T19:44:20.2690678Z Updating files:  37% (23647/63909)
+2026-10-27T19:44:20.3062337Z Updating files:  38% (24286/63909)
+2026-10-27T19:44:20.3238660Z Updating files:  39% (24925/63909)
+2026-10-27T19:44:20.3417135Z Updating files:  39% (25247/63909)
+2026-10-27T19:44:20.3745464Z Updating files:  40% (25564/63909)
+2026-10-27T19:44:20.4054386Z Updating files:  41% (26203/63909)
+2026-10-27T19:44:20.4358034Z Updating files:  42% (26842/63909)
+2026-10-27T19:44:20.5141866Z Updating files:  43% (27481/63909)
+2026-10-27T19:44:20.7648208Z Updating files:  44% (28120/63909)
+2026-10-27T19:44:20.8785027Z Updating files:  45% (28760/63909)
+2026-10-27T19:44:20.9682038Z Updating files:  46% (29399/63909)
+2026-10-27T19:44:21.0734439Z Updating files:  47% (30038/63909)
+2026-10-27T19:44:21.1164792Z Updating files:  48% (30677/63909)
+2026-10-27T19:44:21.2329578Z Updating files:  49% (31316/63909)
+2026-10-27T19:44:21.3241740Z Updating files:  50% (31955/63909)
+2026-10-27T19:44:21.3480328Z Updating files:  50% (32313/63909)
+2026-10-27T19:44:21.4305176Z Updating files:  51% (32594/63909)
+2026-10-27T19:44:21.4658182Z Updating files:  52% (33233/63909)
+2026-10-27T19:44:21.5311505Z Updating files:  53% (33872/63909)
+2026-10-27T19:44:21.5636303Z Updating files:  54% (34511/63909)
+2026-10-27T19:44:21.5887398Z Updating files:  55% (35150/63909)
+2026-10-27T19:44:21.6240113Z Updating files:  56% (35790/63909)
+2026-10-27T19:44:21.6851259Z Updating files:  57% (36429/63909)
+2026-10-27T19:44:21.7301990Z Updating files:  58% (37068/63909)
+2026-10-27T19:44:22.1592300Z Updating files:  59% (37707/63909)
+2026-10-27T19:44:22.2149802Z Updating files:  60% (38346/63909)
+2026-10-27T19:44:22.2628690Z Updating files:  61% (38985/63909)
+2026-10-27T19:44:22.3162161Z Updating files:  62% (39624/63909)
+2026-10-27T19:44:22.3237751Z Updating files:  63% (40263/63909)
+2026-10-27T19:44:22.3447068Z Updating files:  63% (40410/63909)
+2026-10-27T19:44:22.3706714Z Updating files:  64% (40902/63909)
+2026-10-27T19:44:22.3943500Z Updating files:  65% (41541/63909)
+2026-10-27T19:44:22.4222108Z Updating files:  66% (42180/63909)
+2026-10-27T19:44:22.4558345Z Updating files:  67% (42820/63909)
+2026-10-27T19:44:22.4961502Z Updating files:  68% (43459/63909)
+2026-10-27T19:44:22.5375741Z Updating files:  69% (44098/63909)
+2026-10-27T19:44:22.5946243Z Updating files:  70% (44737/63909)
+2026-10-27T19:44:22.6235153Z Updating files:  71% (45376/63909)
+2026-10-27T19:44:22.6467810Z Updating files:  72% (46015/63909)
+2026-10-27T19:44:22.6729838Z Updating files:  73% (46654/63909)
+2026-10-27T19:44:22.6955991Z Updating files:  74% (47293/63909)
+2026-10-27T19:44:22.7183264Z Updating files:  75% (47932/63909)
+2026-10-27T19:44:22.7413371Z Updating files:  76% (48571/63909)
+2026-10-27T19:44:22.7689950Z Updating files:  77% (49210/63909)
+2026-10-27T19:44:22.7922355Z Updating files:  78% (49850/63909)
+2026-10-27T19:44:22.8158316Z Updating files:  79% (50489/63909)
+2026-10-27T19:44:22.8427658Z Updating files:  80% (51128/63909)
+2026-10-27T19:44:22.9016639Z Updating files:  81% (51767/63909)
+2026-10-27T19:44:22.9746883Z Updating files:  82% (52406/63909)
+2026-10-27T19:44:23.0534306Z Updating files:  83% (53045/63909)
+2026-10-27T19:44:23.0999009Z Updating files:  84% (53684/63909)
+2026-10-27T19:44:23.1293484Z Updating files:  85% (54323/63909)
+2026-10-27T19:44:23.1571865Z Updating files:  86% (54962/63909)
+2026-10-27T19:44:23.1836959Z Updating files:  87% (55601/63909)
+2026-10-27T19:44:23.2527358Z Updating files:  88% (56240/63909)
+2026-10-27T19:44:23.2856176Z Updating files:  89% (56880/63909)
+2026-10-27T19:44:23.3099062Z Updating files:  90% (57519/63909)
+2026-10-27T19:44:23.3238970Z Updating files:  91% (58158/63909)
+2026-10-27T19:44:23.3396574Z Updating files:  91% (58516/63909)
+2026-10-27T19:44:23.3918578Z Updating files:  92% (58797/63909)
+2026-10-27T19:44:23.4273661Z Updating files:  93% (59436/63909)
+2026-10-27T19:44:23.4627019Z Updating files:  94% (60075/63909)
+2026-10-27T19:44:23.5979258Z Updating files:  95% (60714/63909)
+2026-10-27T19:44:23.6487427Z Updating files:  96% (61353/63909)
+2026-10-27T19:44:23.6972711Z Updating files:  97% (61992/63909)
+2026-10-27T19:44:23.7343137Z Updating files:  98% (62631/63909)
+2026-10-27T19:44:23.7870550Z Updating files:  99% (63270/63909)
+2026-10-27T19:44:23.7871358Z Updating files: 100% (63909/63909)
+2026-10-27T19:44:23.7871798Z Updating files: 100% (63909/63909), done.
+2026-10-27T19:44:23.9573161Z Note: switching to 'refs/remotes/pull/48/merge'.
+2026-10-27T19:44:23.9573981Z 
+2026-10-27T19:44:23.9574897Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-27T19:44:23.9576200Z changes and commit them, and you can discard any commits you make in this
+2026-10-27T19:44:23.9577475Z state without impacting any branches by switching back to a branch.
+2026-10-27T19:44:23.9578221Z 
+2026-10-27T19:44:23.9578709Z If you want to create a new branch to retain commits you create, you may
+2026-10-27T19:44:23.9579886Z do so (now or later) by using -c with the switch command. Example:
+2026-10-27T19:44:23.9580574Z 
+2026-10-27T19:44:23.9581055Z   git switch -c <new-branch-name>
+2026-10-27T19:44:23.9581509Z 
+2026-10-27T19:44:23.9581751Z Or undo this operation with:
+2026-10-27T19:44:23.9582153Z 
+2026-10-27T19:44:23.9582286Z   git switch -
+2026-10-27T19:44:23.9582482Z 
+2026-10-27T19:44:23.9582837Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-27T19:44:23.9583349Z 
+2026-10-27T19:44:23.9583932Z HEAD is now at af3dd82f Merge 953017084df517deb5262dd071bfe406f2d956be into 7d334dec45948953718bfacd3ed6dd199cadba79
+2026-10-27T19:44:23.9740422Z ##[endgroup]
+2026-10-27T19:44:23.9796828Z [command]/usr/bin/git log -1 --format=%H
+2026-10-27T19:44:23.9831585Z af3dd82f7b273f49f4398399f74d81f0bb01f9c0
+2026-10-27T19:44:24.4700612Z ##[group]Run oven-sh/setup-bun@v2
+2026-10-27T19:44:24.4701305Z with:
+2026-10-27T19:44:24.4701528Z   bun-version: 1.4.3
+2026-10-27T19:44:24.4701756Z   no-cache: false
+2026-10-27T19:44:24.4704219Z   token: ***
+2026-10-27T19:44:24.4704430Z ##[endgroup]
+2026-10-27T19:44:25.2737696Z Cache hit for: bun-+NUKu9E/U4apAe78eSCZvQ/GSdc=
+2026-10-27T19:44:26.5720218Z Received 4194304 of 41001437 (10.2%), 4.0 MBs/sec
+2026-10-27T19:44:26.8980436Z Received 41001437 of 41001437 (100.0%), 29.5 MBs/sec
+2026-10-27T19:44:26.8981905Z Cache Size: ~39 MB (41001437 B)
+2026-10-27T19:44:26.9014937Z [command]/usr/bin/tar -xf /home/runner/work/_temp/e57caada-45ff-4809-8cd4-b54aacc948e7/cache.tzst -P -C /home/runner/work/umf/umf --use-compress-program unzstd
+2026-10-27T19:44:27.0534921Z Cache restored successfully
+2026-10-27T19:44:27.0561639Z [command]/home/runner/.bun/bin/bun --revision
+2026-10-27T19:44:27.0610746Z 1.4.3+c6da4a4d3
+2026-10-27T19:44:27.0617083Z Using a cached version of Bun: 1.4.3+c6da4a4d3
+2026-10-27T19:44:27.0830541Z ##[group]Run actions/setup-python@v5
+2026-10-27T19:44:27.0831135Z with:
+2026-10-27T19:44:27.0831357Z   python-version: 3.11
+2026-10-27T19:44:27.0831596Z   check-latest: false
+2026-10-27T19:44:27.0833985Z   token: ***
+2026-10-27T19:44:27.0834210Z   update-environment: true
+2026-10-27T19:44:27.0834468Z   allow-prereleases: false
+2026-10-27T19:44:27.0834728Z   freethreaded: false
+2026-10-27T19:44:27.0834954Z ##[endgroup]
+2026-10-27T19:44:27.2225854Z ##[group]Installed versions
+2026-10-27T19:44:27.2957081Z (node:2582) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-27T19:44:27.2958462Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-27T19:44:27.2959202Z Successfully set up CPython (3.11.17)
+2026-10-27T19:44:27.2962617Z ##[endgroup]
+2026-10-27T19:44:27.3324217Z ##[group]Run bun install --frozen-lockfile
+2026-10-27T19:44:27.3324666Z [36;1mbun install --frozen-lockfile[0m
+2026-10-27T19:44:27.3682639Z shell: /usr/bin/bash -e {0}
+2026-10-27T19:44:27.3683056Z env:
+2026-10-27T19:44:27.3683451Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:27.3684108Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:44:27.3684753Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:27.3685319Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:27.3685898Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:27.3686488Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:44:27.3686969Z ##[endgroup]
+2026-10-27T19:44:27.3888259Z bun install v1.4.3 (c6da4a4d3)
+2026-10-27T19:44:27.3908759Z Resolving dependencies
+2026-10-27T19:44:27.3911573Z Resolved, downloaded and extracted [1]
+2026-10-27T19:44:29.9487821Z 
+2026-10-27T19:44:29.9488629Z + @dagrejs/dagre@3.1.1
+2026-10-27T19:44:29.9489044Z + @documentdrivendx/umf-schema-browser@2.0.0
+2026-10-27T19:44:29.9489447Z + @launchql/protobufjs@7.2.6
+2026-10-27T19:44:29.9489749Z + @types/bun@1.4.2
+2026-10-27T19:44:29.9490007Z + @types/n3@1.26.4
+2026-10-27T19:44:29.9490252Z + hyparquet@1.31.1
+2026-10-27T19:44:29.9490499Z + playwright@1.63.0
+2026-10-27T19:44:29.9490786Z + rdfxml-streaming-parser@3.3.0
+2026-10-27T19:44:29.9491468Z + typescript@7.0.2
+2026-10-27T19:44:29.9491732Z + typescript-api@5.9.3
+2026-10-27T19:44:29.9492018Z + @bufbuild/protobuf@2.15.0
+2026-10-27T19:44:29.9492322Z + @libpg-query/parser@17.6.10
+2026-10-27T19:44:29.9492654Z + @typespec/compiler@1.16.0
+2026-10-27T19:44:29.9492959Z + @typespec/emitter-framework@0.21.0
+2026-10-27T19:44:29.9493288Z + @typespec/events@0.86.0
+2026-10-27T19:44:29.9493573Z + @typespec/graphql@0.3.0
+2026-10-27T19:44:29.9493853Z + @typespec/http@1.16.0
+2026-10-27T19:44:29.9494140Z + @typespec/json-schema@1.16.0
+2026-10-27T19:44:29.9494463Z + @typespec/mutator-framework@0.17.1
+2026-10-27T19:44:29.9494795Z + @typespec/openapi@1.16.0
+2026-10-27T19:44:29.9495082Z + @typespec/openapi3@1.16.0
+2026-10-27T19:44:29.9495376Z + @typespec/protobuf@0.86.0
+2026-10-27T19:44:29.9495655Z + @typespec/rest@0.86.0
+2026-10-27T19:44:29.9495918Z + @typespec/sse@0.86.0
+2026-10-27T19:44:29.9496182Z + @typespec/streams@0.86.0
+2026-10-27T19:44:29.9496469Z + @typespec/versioning@0.86.0
+2026-10-27T19:44:29.9496750Z + ajv@8.20.0
+2026-10-27T19:44:29.9496992Z + ajv-draft-04@1.0.0
+2026-10-27T19:44:29.9497247Z + apache-arrow@21.2.0
+2026-10-27T19:44:29.9497505Z + avsc@5.7.9
+2026-10-27T19:44:29.9497997Z + buffer@6.0.3
+2026-10-27T19:44:29.9498232Z + flatbuffers@25.9.23
+2026-10-27T19:44:29.9498799Z + graphql@17.0.2
+2026-10-27T19:44:29.9499270Z + jsonld@9.0.0
+2026-10-27T19:44:29.9499805Z + n3@2.7.12
+2026-10-27T19:44:29.9512111Z + rdf-literal@2.0.0
+2026-10-27T19:44:29.9532099Z + rdf-validate-shacl@0.6.5
+2026-10-27T19:44:29.9532624Z + util@0.12.5
+2026-10-27T19:44:29.9533151Z + yaml@2.9.1
+2026-10-27T19:44:29.9533470Z 
+2026-10-27T19:44:29.9533831Z 234 packages installed [2.56s]
+2026-10-27T19:44:29.9627882Z ##[group]Run bun test tests/compilation/codegen-gzip.test.ts
+2026-10-27T19:44:29.9628402Z [36;1mbun test tests/compilation/codegen-gzip.test.ts[0m
+2026-10-27T19:44:29.9694380Z shell: /usr/bin/bash -e {0}
+2026-10-27T19:44:29.9694713Z env:
+2026-10-27T19:44:29.9695066Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:29.9695659Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:44:29.9696251Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:29.9696780Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:29.9697308Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:29.9697829Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:44:29.9698268Z ##[endgroup]
+2026-10-27T19:44:30.0031891Z bun test v1.4.3 (c6da4a4d3)
+2026-10-27T19:44:30.0093450Z 
+2026-10-27T19:44:30.0094917Z ##[group]tests/compilation/codegen-gzip.test.ts:
+2026-10-27T19:44:30.0842888Z (pass) universal generator framing round-trips boundary sizes with fixed metadata [59.80ms]
+2026-10-27T19:44:30.0843652Z 
+2026-10-27T19:44:30.0844114Z ##[endgroup]
+2026-10-27T19:44:30.0844252Z 
+2026-10-27T19:44:30.0844342Z  1 pass
+2026-10-27T19:44:30.0844535Z  0 fail
+2026-10-27T19:44:30.0844730Z  18 expect() calls
+2026-10-27T19:44:30.0844986Z Ran 1 test across 1 file. [79.00ms]
+2026-10-27T19:44:30.0895352Z ##[group]Run bun scripts/build-codegen.ts --check
+2026-10-27T19:44:30.0895771Z [36;1mbun scripts/build-codegen.ts --check[0m
+2026-10-27T19:44:30.0969064Z shell: /usr/bin/bash -e {0}
+2026-10-27T19:44:30.0969347Z env:
+2026-10-27T19:44:30.0969723Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:30.0970511Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:44:30.0971296Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:30.0971817Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:30.0972530Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:30.0973243Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:44:30.0973817Z ##[endgroup]
+2026-10-27T19:44:30.3806528Z {"status":"current","inputs":256,"files":13}
+2026-10-27T19:44:30.3932111Z ##[group]Run python scripts/check-codegen-boundaries.py
+2026-10-27T19:44:30.3932930Z [36;1mpython scripts/check-codegen-boundaries.py[0m
+2026-10-27T19:44:30.4038930Z shell: /usr/bin/bash -e {0}
+2026-10-27T19:44:30.4039398Z env:
+2026-10-27T19:44:30.4039742Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:30.4040218Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:44:30.4040680Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:30.4041424Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:30.4041857Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:30.4042285Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:44:30.4042645Z ##[endgroup]
+2026-10-27T19:44:31.0996290Z Codegen boundaries: embedded V8, filesystem writer and CLI own their separate host effects
+2026-10-27T19:44:31.1096636Z ##[group]Run python -m unittest discover -s python/umf_codegen/tests -v
+2026-10-27T19:44:31.1097236Z [36;1mpython -m unittest discover -s python/umf_codegen/tests -v[0m
+2026-10-27T19:44:31.1160674Z shell: /usr/bin/bash -e {0}
+2026-10-27T19:44:31.1161138Z env:
+2026-10-27T19:44:31.1161682Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:31.1162276Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:44:31.1162855Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:31.1163385Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:31.1163896Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:31.1164421Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:44:31.1164880Z   PYTHONPATH: python/umf_codegen/src
+2026-10-27T19:44:31.1165227Z ##[endgroup]
+2026-10-27T19:44:32.0231296Z test_actual_package (test_boundaries.Boundaries.test_actual_package) ... ok
+2026-10-27T19:44:32.0897143Z test_negative_controls (test_boundaries.Boundaries.test_negative_controls) ... ok
+2026-10-27T19:44:32.0900040Z test_undeclared_owner_refuses (test_boundaries.Boundaries.test_undeclared_owner_refuses) ... ok
+2026-10-27T19:44:32.0908728Z test_explicit_none_is_the_legacy_profile (test_migration_discovery_selector.DiscoverySelector.test_explicit_none_is_the_legacy_profile) ... ok
+2026-10-27T19:44:32.0912794Z test_invalid_selector_refusal_is_propagated (test_migration_discovery_selector.DiscoverySelector.test_invalid_selector_refusal_is_propagated) ... ok
+2026-10-27T19:44:32.0916294Z test_legacy_call_omits_selector_and_preserves_output (test_migration_discovery_selector.DiscoverySelector.test_legacy_call_omits_selector_and_preserves_output) ... ok
+2026-10-27T19:44:32.0918939Z test_selector_is_forwarded_only_when_explicit (test_migration_discovery_selector.DiscoverySelector.test_selector_is_forwarded_only_when_explicit) ... ok
+2026-10-27T19:44:32.0923257Z test_dispatches_json_context_to_shared_v8_operation (test_row_scope.RowScopeWrapper.test_dispatches_json_context_to_shared_v8_operation) ... ok
+2026-10-27T19:44:32.0925093Z 
+2026-10-27T19:44:32.0925589Z ----------------------------------------------------------------------
+2026-10-27T19:44:32.0926640Z Ran 8 tests in 0.078s
+2026-10-27T19:44:32.0927148Z 
+2026-10-27T19:44:32.0931555Z OK
+2026-10-27T19:44:32.1149752Z ##[group]Run python -m pip install build==1.3.0 hatchling==1.27.0
+2026-10-27T19:44:32.1150283Z [36;1mpython -m pip install build==1.3.0 hatchling==1.27.0[0m
+2026-10-27T19:44:32.1213591Z shell: /usr/bin/bash -e {0}
+2026-10-27T19:44:32.1213895Z env:
+2026-10-27T19:44:32.1214212Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:32.1214756Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:44:32.1215289Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:32.1215761Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:32.1216244Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:32.1216731Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:44:32.1217170Z ##[endgroup]
+2026-10-27T19:44:34.4017571Z Collecting build==1.3.0
+2026-10-27T19:44:34.4624924Z   Downloading build-1.3.0-py3-none-any.whl.metadata (5.6 kB)
+2026-10-27T19:44:34.4889551Z Collecting hatchling==1.27.0
+2026-10-27T19:44:34.4963568Z   Downloading hatchling-1.27.0-py3-none-any.whl.metadata (3.8 kB)
+2026-10-27T19:44:34.5156629Z Collecting packaging>=19.1 (from build==1.3.0)
+2026-10-27T19:44:34.5232021Z   Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+2026-10-27T19:44:34.5369725Z Collecting pyproject_hooks (from build==1.3.0)
+2026-10-27T19:44:34.5443728Z   Downloading pyproject_hooks-1.3.3-py3-none-any.whl.metadata (1.3 kB)
+2026-10-27T19:44:34.5620240Z Collecting pathspec>=0.10.1 (from hatchling==1.27.0)
+2026-10-27T19:44:34.5696923Z   Downloading pathspec-1.1.1-py3-none-any.whl.metadata (14 kB)
+2026-10-27T19:44:34.5872731Z Collecting pluggy>=1.0.0 (from hatchling==1.27.0)
+2026-10-27T19:44:34.5948844Z   Downloading pluggy-1.7.0-py3-none-any.whl.metadata (5.0 kB)
+2026-10-27T19:44:34.6236379Z Collecting trove-classifiers (from hatchling==1.27.0)
+2026-10-27T19:44:34.6313768Z   Downloading trove_classifiers-2026.9.21.13-py3-none-any.whl.metadata (2.4 kB)
+2026-10-27T19:44:34.6437003Z Downloading build-1.3.0-py3-none-any.whl (23 kB)
+2026-10-27T19:44:34.6545792Z Downloading hatchling-1.27.0-py3-none-any.whl (75 kB)
+2026-10-27T19:44:34.6683852Z Downloading packaging-26.3-py3-none-any.whl (129 kB)
+2026-10-27T19:44:34.6822430Z Downloading pathspec-1.1.1-py3-none-any.whl (57 kB)
+2026-10-27T19:44:34.6908434Z Downloading pluggy-1.7.0-py3-none-any.whl (27 kB)
+2026-10-27T19:44:34.6997371Z Downloading pyproject_hooks-1.3.3-py3-none-any.whl (10 kB)
+2026-10-27T19:44:34.7083881Z Downloading trove_classifiers-2026.9.21.13-py3-none-any.whl (14 kB)
+2026-10-27T19:44:34.9158148Z Installing collected packages: trove-classifiers, pyproject_hooks, pluggy, pathspec, packaging, hatchling, build
+2026-10-27T19:44:35.1404497Z 
+2026-10-27T19:44:35.1416255Z Successfully installed build-1.3.0 hatchling-1.27.0 packaging-26.3 pathspec-1.1.1 pluggy-1.7.0 pyproject_hooks-1.3.3 trove-classifiers-2026.9.21.13
+2026-10-27T19:44:35.1425152Z 
+2026-10-27T19:44:35.1425637Z [notice] A new release of pip is available: 26.2.1 -> 26.2.2
+2026-10-27T19:44:35.1426698Z [notice] To update, run: pip install --upgrade pip
+2026-10-27T19:44:35.1965930Z ##[group]Run python tests/codegen/build_probe.py
+2026-10-27T19:44:35.1966625Z [36;1mpython tests/codegen/build_probe.py[0m
+2026-10-27T19:44:35.2045051Z shell: /usr/bin/bash -e {0}
+2026-10-27T19:44:35.2045331Z env:
+2026-10-27T19:44:35.2045622Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:35.2046127Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:44:35.2046607Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:35.2047027Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:35.2047453Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:35.2047878Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:44:35.2048235Z ##[endgroup]
+2026-10-27T19:44:35.2976945Z {"packagingHookControls": ["current-source-passes", "stale-source-refuses", "damaged-payload-refuses"]}
+2026-10-27T19:44:35.3127650Z ##[group]Run bun scripts/row-scope-codegen-corpus.ts /tmp/umf-row-scope-codegen-corpus.json
+2026-10-27T19:44:35.3128971Z [36;1mbun scripts/row-scope-codegen-corpus.ts /tmp/umf-row-scope-codegen-corpus.json[0m
+2026-10-27T19:44:35.3204387Z shell: /usr/bin/bash -e {0}
+2026-10-27T19:44:35.3204664Z env:
+2026-10-27T19:44:35.3204957Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:35.3205431Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:44:35.3205910Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:35.3206325Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:35.3206733Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:35.3207162Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:44:35.3207526Z ##[endgroup]
+2026-10-27T19:44:36.1803949Z {"cases":[{"id":"supplied-owner-via-group-batch","valid":true},{"id":"unknown-content-preserved","valid":false},{"id":"ambiguous-via-binding","valid":false},{"id":"group-command-widening-refused","valid":false},{"id":"policy-cycle-refused","valid":false},{"id":"related-select-dependency-refused","valid":false}]}
+2026-10-27T19:44:36.1939892Z ##[group]Run python -m build python/umf_codegen --outdir /tmp/umf-codegen-wheels
+2026-10-27T19:44:36.1940533Z [36;1mpython -m build python/umf_codegen --outdir /tmp/umf-codegen-wheels[0m
+2026-10-27T19:44:36.2004723Z shell: /usr/bin/bash -e {0}
+2026-10-27T19:44:36.2005033Z env:
+2026-10-27T19:44:36.2005360Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:36.2005914Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:44:36.2006456Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:36.2006930Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:36.2007584Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:36.2008069Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:44:36.2008470Z ##[endgroup]
+2026-10-27T19:44:36.2878226Z * Creating isolated environment: venv+pip...
+2026-10-27T19:44:36.3277712Z * Installing packages in isolated environment:
+2026-10-27T19:44:37.4716126Z   - hatchling==1.27.0
+2026-10-27T19:44:37.4716597Z * Getting build dependencies for sdist...
+2026-10-27T19:44:37.6110906Z * Building sdist...
+2026-10-27T19:44:37.8817163Z * Building wheel from sdist
+2026-10-27T19:44:37.8823821Z * Creating isolated environment: venv+pip...
+2026-10-27T19:44:37.8842480Z * Installing packages in isolated environment:
+2026-10-27T19:44:39.0166751Z   - hatchling==1.27.0
+2026-10-27T19:44:39.0167181Z * Getting build dependencies for wheel...
+2026-10-27T19:44:39.1584715Z * Building wheel...
+2026-10-27T19:44:39.3604789Z Successfully built umf_codegen-0.1.0a5.tar.gz and umf_codegen-0.1.0a5-py3-none-any.whl
+2026-10-27T19:44:39.3805347Z ##[group]Run bun scripts/codegen-corpus.ts /tmp/umf-codegen-corpus.json
+2026-10-27T19:44:39.3806326Z [36;1mbun scripts/codegen-corpus.ts /tmp/umf-codegen-corpus.json[0m
+2026-10-27T19:44:39.3882162Z shell: /usr/bin/bash -e {0}
+2026-10-27T19:44:39.3882425Z env:
+2026-10-27T19:44:39.3882703Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:39.3883173Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:44:39.3883628Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:39.3884055Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:39.3884462Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:39.3884869Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:44:39.3885203Z ##[endgroup]
+2026-10-27T19:44:42.7213618Z [{"name":"original-json","accepted":true},{"name":"praxis-adoption","accepted":true},{"name":"crlf-source","accepted":true},{"name":"yaml","accepted":true},{"name":"customer-selection","accepted":true},{"name":"action-selection","accepted":true},{"name":"legacy-actions-refuse","accepted":false},{"name":"malformed-action-entry-refuses","accepted":false},{"name":"action-parameter-name-collision-refuses","accepted":false},{"name":"unicode","accepted":true},{"name":"optional-value","accepted":true},{"name":"array-value","accepted":true},{"name":"foreign-field-extension-refuses","accepted":false},{"name":"nullable-key-refuses","accepted":false},{"name":"reserved-name-refuses","accepted":false},{"name":"unknown-facet-refuses","accepted":false},{"name":"table-lifecycle-refuses-unqualified-client","accepted":false},{"name":"source-core-refuses","accepted":false},{"name":"invalid-package-refuses","accepted":false},{"name":"invalid-json-refuses","accepted":false},{"name":"declared-native-module","accepted":true},{"name":"native-yaml-profile-refuses","accepted":false},{"name":"declared-native-temporal-module","accepted":true},{"name":"declared-native-domain-clock-module","accepted":true},{"name":"native-related-policy","accepted":true},{"name":"native-nested-related-policy","accepted":true},{"name":"native-source-snapshot","accepted":true},{"name":"legal-lifecycle-0","accepted":true},{"name":"legal-lifecycle-1","accepted":true},{"name":"legal-lifecycle-2","accepted":true}]
+2026-10-27T19:44:42.7403068Z ##[group]Run bun scripts/table-deployment-corpus.ts /tmp/umf-deployment-corpus.json
+2026-10-27T19:44:42.7404235Z [36;1mbun scripts/table-deployment-corpus.ts /tmp/umf-deployment-corpus.json[0m
+2026-10-27T19:44:42.7498030Z shell: /usr/bin/bash -e {0}
+2026-10-27T19:44:42.7498461Z env:
+2026-10-27T19:44:42.7498923Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:42.7499726Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:44:42.7500530Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:42.7501526Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:42.7502476Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:42.7503202Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:44:42.7503802Z ##[endgroup]
+2026-10-27T19:44:44.1239650Z {"cases":15,"compiled":6}
+2026-10-27T19:44:44.1428915Z ##[group]Run bun scripts/table-migration-corpus.ts /tmp/umf-migration-corpus.json
+2026-10-27T19:44:44.1429576Z [36;1mbun scripts/table-migration-corpus.ts /tmp/umf-migration-corpus.json[0m
+2026-10-27T19:44:44.1493842Z shell: /usr/bin/bash -e {0}
+2026-10-27T19:44:44.1494123Z env:
+2026-10-27T19:44:44.1494421Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:44.1494937Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:44:44.1495433Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:44.1495879Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:44.1496353Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:44.1496806Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:44:44.1497179Z ##[endgroup]
+2026-10-27T19:44:49.0403386Z {"cases":17,"compiled":9}
+2026-10-27T19:44:49.0555327Z ##[group]Run bun scripts/table-reviewed-changes-corpus.ts /tmp/umf-reviewed-changes-corpus.json
+2026-10-27T19:44:49.0556076Z [36;1mbun scripts/table-reviewed-changes-corpus.ts /tmp/umf-reviewed-changes-corpus.json[0m
+2026-10-27T19:44:49.0620690Z shell: /usr/bin/bash -e {0}
+2026-10-27T19:44:49.0621327Z env:
+2026-10-27T19:44:49.0621678Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:49.0622212Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:44:49.0622735Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:49.0623212Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:49.0623688Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:49.0624324Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:44:49.0624744Z ##[endgroup]
+2026-10-27T19:44:51.1986832Z {"cases":3,"candidates":[{"name":"drop-column","count":1},{"name":"numeric-widening","count":1},{"name":"policy-change","count":1}]}
+2026-10-27T19:44:51.2173066Z ##[group]Run python -m pip download --no-deps --only-binary=:all: --dest /tmp/mini-racer-wheelhouse mini-racer==0.14.1
+2026-10-27T19:44:51.2173915Z [36;1mpython -m pip download --no-deps --only-binary=:all: --dest /tmp/mini-racer-wheelhouse mini-racer==0.14.1[0m
+2026-10-27T19:44:51.2174547Z [36;1mpython -I tests/codegen/verify_mini_racer_wheel.py \[0m
+2026-10-27T19:44:51.2174991Z [36;1m  --wheelhouse /tmp/mini-racer-wheelhouse \[0m
+2026-10-27T19:44:51.2175492Z [36;1m  --pins docs/helix/04-build/evidence/praxis-embedder/mini-racer-wheel-pins.json \[0m
+2026-10-27T19:44:51.2176028Z [36;1m  --expected-platform 'linux-x86_64-glibc-2.27+'[0m
+2026-10-27T19:44:51.2240712Z shell: /usr/bin/bash -e {0}
+2026-10-27T19:44:51.2241349Z env:
+2026-10-27T19:44:51.2241645Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:51.2242104Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:44:51.2242608Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:51.2243002Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:51.2243400Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:51.2243809Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:44:51.2244146Z ##[endgroup]
+2026-10-27T19:44:52.1018819Z Collecting mini-racer==0.14.1
+2026-10-27T19:44:52.1628806Z   Downloading mini_racer-0.14.1-py3-none-manylinux_2_27_x86_64.whl.metadata (22 kB)
+2026-10-27T19:44:52.1808412Z Downloading mini_racer-0.14.1-py3-none-manylinux_2_27_x86_64.whl (22.2 MB)
+2026-10-27T19:44:52.5787373Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 22.2/22.2 MB 60.2 MB/s  0:00:00
+2026-10-27T19:44:52.6087868Z Saved /tmp/mini-racer-wheelhouse/mini_racer-0.14.1-py3-none-manylinux_2_27_x86_64.whl
+2026-10-27T19:44:52.6088941Z Successfully downloaded mini-racer
+2026-10-27T19:44:52.6097968Z 
+2026-10-27T19:44:52.6098523Z [notice] A new release of pip is available: 26.2.1 -> 26.2.2
+2026-10-27T19:44:52.6099405Z [notice] To update, run: pip install --upgrade pip
+2026-10-27T19:44:52.7089873Z {"filename": "mini_racer-0.14.1-py3-none-manylinux_2_27_x86_64.whl", "sha256": "cdf3a088e1363f16a695288f882abf76b3705b8e1df21418208b87ed010037a4", "sizeBytes": 22178205, "metadata": "verified"}
+2026-10-27T19:44:52.7199188Z ##[group]Run python -m venv /tmp/umf-codegen-installed
+2026-10-27T19:44:52.7199651Z [36;1mpython -m venv /tmp/umf-codegen-installed[0m
+2026-10-27T19:44:52.7200115Z [36;1m/tmp/umf-codegen-installed/bin/python -m pip --isolated install \[0m
+2026-10-27T19:44:52.7200648Z [36;1m  --disable-pip-version-check --no-cache-dir --no-index --no-deps \[0m
+2026-10-27T19:44:52.7201508Z [36;1m  /tmp/mini-racer-wheelhouse/*.whl /tmp/umf-codegen-wheels/*.whl[0m
+2026-10-27T19:44:52.7201988Z [36;1m/tmp/umf-codegen-installed/bin/python -I -m pip check[0m
+2026-10-27T19:44:52.7265812Z shell: /usr/bin/bash -e {0}
+2026-10-27T19:44:52.7266077Z env:
+2026-10-27T19:44:52.7266360Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:52.7266811Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:44:52.7267262Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:52.7267690Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:52.7268099Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:52.7268490Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:44:52.7268829Z ##[endgroup]
+2026-10-27T19:44:57.5029881Z Processing /tmp/mini-racer-wheelhouse/mini_racer-0.14.1-py3-none-manylinux_2_27_x86_64.whl
+2026-10-27T19:44:57.5293984Z Processing /tmp/umf-codegen-wheels/umf_codegen-0.1.0a5-py3-none-any.whl
+2026-10-27T19:44:57.5336609Z Installing collected packages: umf-codegen, mini-racer
+2026-10-27T19:44:57.8351991Z Successfully installed mini-racer-0.14.1 umf-codegen-0.1.0a5
+2026-10-27T19:44:58.1956136Z No broken requirements found.
+2026-10-27T19:44:58.2469258Z ##[group]Run /tmp/umf-codegen-installed/bin/python -I tests/codegen/row_scope_probe.py --corpus /tmp/umf-row-scope-codegen-corpus.json > /tmp/umf-row-scope-report.json
+2026-10-27T19:44:58.2470554Z [36;1m/tmp/umf-codegen-installed/bin/python -I tests/codegen/row_scope_probe.py --corpus /tmp/umf-row-scope-codegen-corpus.json > /tmp/umf-row-scope-report.json[0m
+2026-10-27T19:44:58.2535385Z shell: /usr/bin/bash -e {0}
+2026-10-27T19:44:58.2535658Z env:
+2026-10-27T19:44:58.2535945Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:58.2536440Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:44:58.2536917Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:58.2537351Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:58.2537769Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:44:58.2538214Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:44:58.2538561Z ##[endgroup]
+2026-10-27T19:45:01.7583702Z ##[group]Run /tmp/umf-codegen-installed/bin/python -I tests/codegen/installed_probe.py --corpus /tmp/umf-codegen-corpus.json --report /tmp/umf-codegen-report.json
+2026-10-27T19:45:01.7584867Z [36;1m/tmp/umf-codegen-installed/bin/python -I tests/codegen/installed_probe.py --corpus /tmp/umf-codegen-corpus.json --report /tmp/umf-codegen-report.json[0m
+2026-10-27T19:45:01.7648962Z shell: /usr/bin/bash -e {0}
+2026-10-27T19:45:01.7649225Z env:
+2026-10-27T19:45:01.7649506Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:45:01.7649990Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:45:01.7650629Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:45:01.7651283Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:45:01.7651724Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:45:01.7652169Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:45:01.7652555Z ##[endgroup]
+2026-10-27T19:45:20.0381510Z {"parityCases": 30, "writerAndIntegrityControls": "passed"}
+2026-10-27T19:45:20.0733710Z ##[group]Run /tmp/umf-codegen-installed/bin/python -I tests/codegen/deployment_probe.py --corpus /tmp/umf-deployment-corpus.json --report /tmp/umf-deployment-python.json
+2026-10-27T19:45:20.0735085Z [36;1m/tmp/umf-codegen-installed/bin/python -I tests/codegen/deployment_probe.py --corpus /tmp/umf-deployment-corpus.json --report /tmp/umf-deployment-python.json[0m
+2026-10-27T19:45:20.0799267Z shell: /usr/bin/bash -e {0}
+2026-10-27T19:45:20.0799570Z env:
+2026-10-27T19:45:20.0799892Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:45:20.0800441Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:45:20.0801261Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:45:20.0801749Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:45:20.0802230Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:45:20.0802740Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:45:20.0803140Z ##[endgroup]
+2026-10-27T19:45:50.0875158Z {"parityCases": 15, "tamperControls": 30}
+2026-10-27T19:45:50.1153720Z ##[group]Run /tmp/umf-codegen-installed/bin/python -I tests/codegen/migration_probe.py --corpus /tmp/umf-migration-corpus.json --report /tmp/umf-migration-python.json
+2026-10-27T19:45:50.1154928Z [36;1m/tmp/umf-codegen-installed/bin/python -I tests/codegen/migration_probe.py --corpus /tmp/umf-migration-corpus.json --report /tmp/umf-migration-python.json[0m
+2026-10-27T19:45:50.1218259Z shell: /usr/bin/bash -e {0}
+2026-10-27T19:45:50.1218540Z env:
+2026-10-27T19:45:50.1218815Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:45:50.1219278Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:45:50.1219729Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:45:50.1220117Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:45:50.1220509Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:45:50.1221070Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:45:50.1221404Z ##[endgroup]
+2026-10-27T19:47:16.6025371Z {"parityCases": 17, "tamperControls": 99, "deadlineControls": 4}
+2026-10-27T19:47:16.6331961Z ##[group]Run /tmp/umf-codegen-installed/bin/python -I tests/codegen/reviewed_changes_probe.py --corpus /tmp/umf-reviewed-changes-corpus.json > /tmp/umf-reviewed-changes-python.json
+2026-10-27T19:47:16.6334444Z [36;1m/tmp/umf-codegen-installed/bin/python -I tests/codegen/reviewed_changes_probe.py --corpus /tmp/umf-reviewed-changes-corpus.json > /tmp/umf-reviewed-changes-python.json[0m
+2026-10-27T19:47:16.6416488Z shell: /usr/bin/bash -e {0}
+2026-10-27T19:47:16.6416763Z env:
+2026-10-27T19:47:16.6417041Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:47:16.6417499Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:47:16.6417958Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:47:16.6418352Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:47:16.6418760Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:47:16.6419197Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:47:16.6419532Z ##[endgroup]
+2026-10-27T19:47:25.7885490Z ##[group]Run /tmp/umf-codegen-installed/bin/python -I tests/codegen/matrix_receipt.py --wheelhouse /tmp/mini-racer-wheelhouse --pins docs/helix/04-build/evidence/praxis-embedder/mini-racer-wheel-pins.json --corpus /tmp/umf-codegen-corpus.json --generator-report /tmp/umf-codegen-report.json --row-scope-report /tmp/umf-row-scope-report.json --deployment-report /tmp/umf-deployment-python.json --migration-report /tmp/umf-migration-python.json --reviewed-report /tmp/umf-reviewed-changes-python.json --expected-os 'ubuntu-24.04' --expected-arch 'x86_64' --expected-python '3.11' --source-commit 'af3dd82f7b273f49f4398399f74d81f0bb01f9c0' --report /tmp/umf-codegen-matrix-receipt.json
+2026-10-27T19:47:25.7891213Z [36;1m/tmp/umf-codegen-installed/bin/python -I tests/codegen/matrix_receipt.py --wheelhouse /tmp/mini-racer-wheelhouse --pins docs/helix/04-build/evidence/praxis-embedder/mini-racer-wheel-pins.json --corpus /tmp/umf-codegen-corpus.json --generator-report /tmp/umf-codegen-report.json --row-scope-report /tmp/umf-row-scope-report.json --deployment-report /tmp/umf-deployment-python.json --migration-report /tmp/umf-migration-python.json --reviewed-report /tmp/umf-reviewed-changes-python.json --expected-os 'ubuntu-24.04' --expected-arch 'x86_64' --expected-python '3.11' --source-commit 'af3dd82f7b273f49f4398399f74d81f0bb01f9c0' --report /tmp/umf-codegen-matrix-receipt.json[0m
+2026-10-27T19:47:25.7956928Z shell: /usr/bin/bash -e {0}
+2026-10-27T19:47:25.7957185Z env:
+2026-10-27T19:47:25.7957464Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:47:25.7957920Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:47:25.7958377Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:47:25.7958773Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:47:25.7959173Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:47:25.7959589Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:47:25.7959933Z ##[endgroup]
+2026-10-27T19:47:25.9110123Z {"cell": {"os": "ubuntu-24.04", "architecture": "x86_64", "libc": ["glibc", "2.39"], "python": "3.11.17", "runnerIdentity": {"system": "Linux", "architecture": "x86_64", "distribution": {"NAME": "Ubuntu", "ID": "ubuntu", "PRETTY_NAME": "Ubuntu 24.04.5 LTS", "VERSION_ID": "24.04", "VERSION": "24.04.5 LTS (Noble Numbat)", "VERSION_CODENAME": "noble", "ID_LIKE": "debian", "HOME_URL": "https://www.ubuntu.com/", "SUPPORT_URL": "https://help.ubuntu.com/", "BUG_REPORT_URL": "https://bugs.launchpad.net/ubuntu/", "PRIVACY_POLICY_URL": "https://www.ubuntu.com/legal/terms-and-policies/privacy-policy", "UBUNTU_CODENAME": "noble", "LOGO": "ubuntu-logo"}, "libc": ["glibc", "2.39"]}}, "miniRacerWheelSha256": "cdf3a088e1363f16a695288f882abf76b3705b8e1df21418208b87ed010037a4", "parityFamilies": 5}
+2026-10-27T19:47:25.9252330Z ##[group]Run python tests/codegen/test_package_mirror.py
+2026-10-27T19:47:25.9252808Z [36;1mpython tests/codegen/test_package_mirror.py[0m
+2026-10-27T19:47:25.9316885Z shell: /usr/bin/bash -e {0}
+2026-10-27T19:47:25.9317186Z env:
+2026-10-27T19:47:25.9317503Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:47:25.9318061Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:47:25.9318585Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:47:25.9319059Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:47:25.9319527Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:47:25.9320005Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:47:25.9320400Z ##[endgroup]
+2026-10-27T19:47:38.1168357Z {"offlineInstall": "pass", "missingWheel": "refused", "tamperedWheel": "refused", "incompleteClosure": "refused", "unresolvedProvenance": "refused"}
+2026-10-27T19:47:38.1383146Z ##[group]Run python -m unittest discover -s tests/codegen -p test_cohort_selector.py -v
+2026-10-27T19:47:38.1383804Z [36;1mpython -m unittest discover -s tests/codegen -p test_cohort_selector.py -v[0m
+2026-10-27T19:47:38.1450436Z shell: /usr/bin/bash -e {0}
+2026-10-27T19:47:38.1450724Z env:
+2026-10-27T19:47:38.1451364Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:47:38.1452179Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:47:38.1452642Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:47:38.1453038Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:47:38.1453436Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:47:38.1453841Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:47:38.1454180Z ##[endgroup]
+2026-10-27T19:47:38.3040111Z test_automatic_core_selector_refuses_outside_exact_runner_cell_before_output (test_cohort_selector.CliAdmissionTests.test_automatic_core_selector_refuses_outside_exact_runner_cell_before_output) ... ok
+2026-10-27T19:47:38.3851120Z test_malformed_core_hash_refuses_before_output_or_network (test_cohort_selector.CliAdmissionTests.test_malformed_core_hash_refuses_before_output_or_network) ... ok
+2026-10-27T19:47:38.3857131Z test_active_closure_refuses_a_missing_qualification_root (test_cohort_selector.InventoryTests.test_active_closure_refuses_a_missing_qualification_root) ... ok
+2026-10-27T19:47:38.4019726Z test_active_direct_url_requirement_refuses_but_inactive_edge_stays_inactive (test_cohort_selector.InventoryTests.test_active_direct_url_requirement_refuses_but_inactive_edge_stays_inactive) ... ok
+2026-10-27T19:47:38.4023195Z test_active_requirement_extras_refuse_but_inactive_optional_edge_stays_inactive (test_cohort_selector.InventoryTests.test_active_requirement_extras_refuse_but_inactive_optional_edge_stays_inactive) ... ok
+2026-10-27T19:47:38.4030058Z test_active_requires_dist_closure_uses_exact_metadata_and_markers (test_cohort_selector.InventoryTests.test_active_requires_dist_closure_uses_exact_metadata_and_markers) ... ok
+2026-10-27T19:47:38.4032682Z test_current_profile_roots_separate_two_linux_cells_from_mac_artifact_targets (test_cohort_selector.InventoryTests.test_current_profile_roots_separate_two_linux_cells_from_mac_artifact_targets) ... ok
+2026-10-27T19:47:38.4035084Z test_duplicate_distribution_refuses (test_cohort_selector.InventoryTests.test_duplicate_distribution_refuses) ... ok
+2026-10-27T19:47:38.4036970Z test_duplicate_template_distribution_refuses (test_cohort_selector.InventoryTests.test_duplicate_template_distribution_refuses) ... ok
+2026-10-27T19:47:38.4038765Z test_missing_selected_distribution_refuses (test_cohort_selector.InventoryTests.test_missing_selected_distribution_refuses) ... ok
+2026-10-27T19:47:38.4041086Z test_selected_release_asset_urls_accept_actual_release_asset_routes (test_cohort_selector.InventoryTests.test_selected_release_asset_urls_accept_actual_release_asset_routes) ... ok
+2026-10-27T19:47:38.4042904Z test_template_complete_inventory_accepts (test_cohort_selector.InventoryTests.test_template_complete_inventory_accepts) ... ok
+2026-10-27T19:47:38.4043999Z test_undeclared_distribution_refuses (test_cohort_selector.InventoryTests.test_undeclared_distribution_refuses) ... ok
+2026-10-27T19:47:38.4044585Z 
+2026-10-27T19:47:38.4044780Z ----------------------------------------------------------------------
+2026-10-27T19:47:38.4045192Z Ran 13 tests in 0.178s
+2026-10-27T19:47:38.4045361Z 
+2026-10-27T19:47:38.4045453Z OK
+2026-10-27T19:47:38.4223958Z ##[group]Run python -m unittest discover -s tests/codegen -p test_aggregate_cohort.py -v
+2026-10-27T19:47:38.4224612Z [36;1mpython -m unittest discover -s tests/codegen -p test_aggregate_cohort.py -v[0m
+2026-10-27T19:47:38.4306491Z shell: /usr/bin/bash -e {0}
+2026-10-27T19:47:38.4306781Z env:
+2026-10-27T19:47:38.4307089Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:47:38.4307599Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:47:38.4308092Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:47:38.4308526Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:47:38.4308970Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:47:38.4309426Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:47:38.4309997Z ##[endgroup]
+2026-10-27T19:47:38.5684531Z test_child_hash_tampering_refuses_before_selected_install (test_aggregate_cohort.AggregateCohortTests.test_child_hash_tampering_refuses_before_selected_install) ... ok
+2026-10-27T19:47:38.5732705Z test_child_native_hash_must_match_receipt_and_exact_wheel_member (test_aggregate_cohort.AggregateCohortTests.test_child_native_hash_must_match_receipt_and_exact_wheel_member) ... ok
+2026-10-27T19:47:38.5822844Z test_conflicting_root_package_provenance_refuses (test_aggregate_cohort.AggregateCohortTests.test_conflicting_root_package_provenance_refuses) ... ok
+2026-10-27T19:47:38.6014130Z test_conflicting_root_version_or_core_semantic_contract_refuses (test_aggregate_cohort.AggregateCohortTests.test_conflicting_root_version_or_core_semantic_contract_refuses) ... ok
+2026-10-27T19:47:38.6132539Z test_existing_output_is_never_reused (test_aggregate_cohort.AggregateCohortTests.test_existing_output_is_never_reused) ... ok
+2026-10-27T19:47:38.6367326Z test_four_cell_assembly_has_exact_union_and_receipt_bindings (test_aggregate_cohort.AggregateCohortTests.test_four_cell_assembly_has_exact_union_and_receipt_bindings) ... ok
+2026-10-27T19:47:38.6466511Z test_legacy_source_provenance_fields_are_not_erased (test_aggregate_cohort.AggregateCohortTests.test_legacy_source_provenance_fields_are_not_erased) ... ok
+2026-10-27T19:47:38.6586060Z test_missing_cell_refuses (test_aggregate_cohort.AggregateCohortTests.test_missing_cell_refuses) ... ok
+2026-10-27T19:47:38.6767947Z test_missing_or_extra_union_wheel_inventory_refuses (test_aggregate_cohort.AggregateCohortTests.test_missing_or_extra_union_wheel_inventory_refuses) ... ok
+2026-10-27T19:47:38.6922961Z test_physical_extra_wheel_refuses (test_aggregate_cohort.AggregateCohortTests.test_physical_extra_wheel_refuses) ... ok
+2026-10-27T19:47:38.7056914Z test_physical_missing_wheel_refuses (test_aggregate_cohort.AggregateCohortTests.test_physical_missing_wheel_refuses) ... ok
+2026-10-27T19:47:38.7209886Z test_rebound_child_lock_with_wrong_cell_identity_refuses (test_aggregate_cohort.AggregateCohortTests.test_rebound_child_lock_with_wrong_cell_identity_refuses) ... ok
+2026-10-27T19:47:38.7400002Z test_rehashed_union_lock_provenance_mutant_refuses (test_aggregate_cohort.AggregateCohortTests.test_rehashed_union_lock_provenance_mutant_refuses) ... ok
+2026-10-27T19:47:38.7465049Z test_same_filename_with_different_bytes_refuses (test_aggregate_cohort.AggregateCohortTests.test_same_filename_with_different_bytes_refuses) ... ok
+2026-10-27T19:47:38.7582790Z test_symlinked_union_path_refuses (test_aggregate_cohort.AggregateCohortTests.test_symlinked_union_path_refuses) ... ok
+2026-10-27T19:47:38.7785242Z test_unexpected_shared_mirror_file_refuses (test_aggregate_cohort.AggregateCohortTests.test_unexpected_shared_mirror_file_refuses) ... ok
+2026-10-27T19:47:38.7901507Z test_unknown_aggregate_fields_refuse (test_aggregate_cohort.AggregateCohortTests.test_unknown_aggregate_fields_refuse) ... ok
+2026-10-27T19:47:38.8027922Z test_unsafe_union_path_refuses_before_path_use (test_aggregate_cohort.AggregateCohortTests.test_unsafe_union_path_refuses_before_path_use) ... ok
+2026-10-27T19:47:38.8229982Z test_wrong_selected_environment_refuses (test_aggregate_cohort.AggregateCohortTests.test_wrong_selected_environment_refuses) ... ok
+2026-10-27T19:47:38.9042074Z test_split_core_native_path_must_match_locked_release_declaration (test_aggregate_cohort.SplitAggregateCohortTests.test_split_core_native_path_must_match_locked_release_declaration) ... ok
+2026-10-27T19:47:39.0040345Z test_split_mac_target_refuses_dylib_alias_for_published_so_member (test_aggregate_cohort.SplitAggregateCohortTests.test_split_mac_target_refuses_dylib_alias_for_published_so_member) ... ok
+2026-10-27T19:47:39.0760466Z test_split_profile_binds_two_linux_receipts_and_two_data_only_mac_targets (test_aggregate_cohort.SplitAggregateCohortTests.test_split_profile_binds_two_linux_receipts_and_two_data_only_mac_targets) ... ERROR
+2026-10-27T19:47:39.1497809Z test_split_target_refuses_rehashed_alternate_access_wheel (test_aggregate_cohort.SplitAggregateCohortTests.test_split_target_refuses_rehashed_alternate_access_wheel) ... FAIL
+2026-10-27T19:47:39.2240244Z test_split_validation_refuses_coherent_nineteenth_linux_distribution (test_aggregate_cohort.SplitAggregateCohortTests.test_split_validation_refuses_coherent_nineteenth_linux_distribution) ... ERROR
+2026-10-27T19:47:39.2260483Z 
+2026-10-27T19:47:39.2260964Z ======================================================================
+2026-10-27T19:47:39.2263246Z ERROR: test_split_profile_binds_two_linux_receipts_and_two_data_only_mac_targets (test_aggregate_cohort.SplitAggregateCohortTests.test_split_profile_binds_two_linux_receipts_and_two_data_only_mac_targets)
+2026-10-27T19:47:39.2265074Z ----------------------------------------------------------------------
+2026-10-27T19:47:39.2265745Z Traceback (most recent call last):
+2026-10-27T19:47:39.2272689Z   File "/home/runner/work/umf/umf/tests/codegen/test_aggregate_cohort.py", line 686, in test_split_profile_binds_two_linux_receipts_and_two_data_only_mac_targets
+2026-10-27T19:47:39.2273792Z     index = AGGREGATE.assemble_linux_runtime_macos_inputs(self.input_root, self.output, self.source_commit)
+2026-10-27T19:47:39.2274422Z             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-27T19:47:39.2275193Z   File "/home/runner/work/umf/umf/tests/codegen/aggregate_cohort.py", line 860, in assemble_linux_runtime_macos_inputs
+2026-10-27T19:47:39.2275826Z     validate_current_release_sources(lock)
+2026-10-27T19:47:39.2276453Z   File "/home/runner/work/umf/umf/tests/codegen/aggregate_cohort.py", line 204, in validate_current_release_sources
+2026-10-27T19:47:39.2277316Z     raise ValueError(f'{distribution} release source does not identify its exact locked wheel bytes')
+2026-10-27T19:47:39.2277996Z ValueError: umf-core release source does not identify its exact locked wheel bytes
+2026-10-27T19:47:39.2278374Z 
+2026-10-27T19:47:39.2278507Z ======================================================================
+2026-10-27T19:47:39.2279466Z ERROR: test_split_validation_refuses_coherent_nineteenth_linux_distribution (test_aggregate_cohort.SplitAggregateCohortTests.test_split_validation_refuses_coherent_nineteenth_linux_distribution)
+2026-10-27T19:47:39.2280448Z ----------------------------------------------------------------------
+2026-10-27T19:47:39.2281075Z Traceback (most recent call last):
+2026-10-27T19:47:39.2281907Z   File "/home/runner/work/umf/umf/tests/codegen/test_aggregate_cohort.py", line 765, in test_split_validation_refuses_coherent_nineteenth_linux_distribution
+2026-10-27T19:47:39.2282779Z     self._assemble_with_release_patches(core_linux, core_mac, weft_linux, weft_mac)
+2026-10-27T19:47:39.2283475Z   File "/home/runner/work/umf/umf/tests/codegen/test_aggregate_cohort.py", line 675, in _assemble_with_release_patches
+2026-10-27T19:47:39.2284067Z     return AGGREGATE.assemble_linux_runtime_macos_inputs(
+2026-10-27T19:47:39.2284413Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-27T19:47:39.2285301Z   File "/home/runner/work/umf/umf/tests/codegen/aggregate_cohort.py", line 860, in assemble_linux_runtime_macos_inputs
+2026-10-27T19:47:39.2285869Z     validate_current_release_sources(lock)
+2026-10-27T19:47:39.2286430Z   File "/home/runner/work/umf/umf/tests/codegen/aggregate_cohort.py", line 204, in validate_current_release_sources
+2026-10-27T19:47:39.2287208Z     raise ValueError(f'{distribution} release source does not identify its exact locked wheel bytes')
+2026-10-27T19:47:39.2287817Z ValueError: umf-core release source does not identify its exact locked wheel bytes
+2026-10-27T19:47:39.2288145Z 
+2026-10-27T19:47:39.2288258Z ======================================================================
+2026-10-27T19:47:39.2289070Z FAIL: test_split_target_refuses_rehashed_alternate_access_wheel (test_aggregate_cohort.SplitAggregateCohortTests.test_split_target_refuses_rehashed_alternate_access_wheel)
+2026-10-27T19:47:39.2290041Z ----------------------------------------------------------------------
+2026-10-27T19:47:39.2290515Z ValueError: umf-core release source does not identify its exact locked wheel bytes
+2026-10-27T19:47:39.2291179Z 
+2026-10-27T19:47:39.2291404Z During handling of the above exception, another exception occurred:
+2026-10-27T19:47:39.2291689Z 
+2026-10-27T19:47:39.2291798Z Traceback (most recent call last):
+2026-10-27T19:47:39.2292505Z   File "/home/runner/work/umf/umf/tests/codegen/test_aggregate_cohort.py", line 730, in test_split_target_refuses_rehashed_alternate_access_wheel
+2026-10-27T19:47:39.2293382Z     with self.assertRaisesRegex(ValueError, "umf-access wheel differs from the exact Linux universal source bytes"):
+2026-10-27T19:47:39.2294350Z AssertionError: "umf-access wheel differs from the exact Linux universal source bytes" does not match "umf-core release source does not identify its exact locked wheel bytes"
+2026-10-27T19:47:39.2294979Z 
+2026-10-27T19:47:39.2295131Z ----------------------------------------------------------------------
+2026-10-27T19:47:39.2295462Z Ran 24 tests in 0.677s
+2026-10-27T19:47:39.2295605Z 
+2026-10-27T19:47:39.2295719Z FAILED (failures=1, errors=2)
+2026-10-27T19:47:39.2464617Z ##[error]Process completed with exit code 1.
+2026-10-27T19:47:39.2539210Z ##[group]Run actions/upload-artifact@v4
+2026-10-27T19:47:39.2539509Z with:
+2026-10-27T19:47:39.2539726Z   name: codegen-ubuntu-24.04-py3.11
+2026-10-27T19:47:39.2541838Z   path: /tmp/umf-codegen-matrix-receipt.json
+/tmp/umf-codegen-report.json
+/tmp/umf-codegen-corpus.json
+/tmp/umf-row-scope-report.json
+/tmp/umf-deployment-python.json
+/tmp/umf-migration-python.json
+/tmp/umf-reviewed-changes-python.json
+/tmp/umf-full-cohort/cohort.lock.json
+/tmp/umf-full-cohort/cohort-template.json
+/tmp/umf-full-cohort/mirror/manifest.json
+/tmp/umf-full-cohort/offline-mirror-receipt.json
+/tmp/umf-full-cohort/wheelhouse/*.whl
+/tmp/umf-full-cohort/release-inputs/*
+
+2026-10-27T19:47:39.2543744Z   if-no-files-found: warn
+2026-10-27T19:47:39.2544008Z   compression-level: 6
+2026-10-27T19:47:39.2544229Z   overwrite: false
+2026-10-27T19:47:39.2544449Z   include-hidden-files: false
+2026-10-27T19:47:39.2544684Z env:
+2026-10-27T19:47:39.2544949Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:47:39.2545414Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:47:39.2545844Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:47:39.2546252Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:47:39.2546637Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:47:39.2547032Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:47:39.2547364Z ##[endgroup]
+2026-10-27T19:47:39.4308743Z (node:3609) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-27T19:47:39.4309490Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-27T19:47:39.4453097Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-10-27T19:47:39.4461934Z The least common ancestor is /tmp. This will be the root directory of the artifact
+2026-10-27T19:47:39.4463056Z With the provided path, there will be 7 files uploaded
+2026-10-27T19:47:39.4465438Z Artifact name is valid!
+2026-10-27T19:47:39.4466448Z Root directory input is valid!
+2026-10-27T19:47:39.8426938Z Beginning upload of artifact content to blob storage
+2026-10-27T19:47:39.9277431Z (node:3609) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-27T19:47:40.5288249Z Uploaded bytes 339028
+2026-10-27T19:47:40.6136000Z Finished uploading artifact content to blob storage!
+2026-10-27T19:47:40.6137393Z SHA256 digest of uploaded artifact zip is 4785e536af0255d0d7ba70a63eb3bf0e02aeeefffc669543b1343655bab48e9f
+2026-10-27T19:47:40.6139330Z Finalizing artifact upload
+2026-10-27T19:47:41.0813176Z Artifact codegen-ubuntu-24.04-py3.11.zip successfully finalized. Artifact ID 12765790582
+2026-10-27T19:47:41.0814598Z Artifact codegen-ubuntu-24.04-py3.11 has been successfully uploaded! Final size is 339028 bytes. Artifact ID is 12765790582
+2026-10-27T19:47:41.0822973Z Artifact download URL: https://github.com/DocumentDrivenDX/umf/actions/runs/40571378371/artifacts/12765790582
+2026-10-27T19:47:41.1045038Z Post job cleanup.
+2026-10-27T19:47:41.1963684Z [command]/usr/bin/git version
+2026-10-27T19:47:41.2012326Z git version 2.55.0
+2026-10-27T19:47:41.2053631Z Temporarily overriding HOME='/home/runner/work/_temp/19ec2540-9ad5-47e6-aa50-6a28528ac810' before making global git config changes
+2026-10-27T19:47:41.2055247Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-27T19:47:41.2060352Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf
+2026-10-27T19:47:41.2109362Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T19:47:41.2149229Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-27T19:47:41.2489229Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T19:47:41.2518128Z http.https://github.com/.extraheader
+2026-10-27T19:47:41.2532513Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-27T19:47:41.2571857Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-27T19:47:41.2940048Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T19:47:41.2988948Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-27T19:47:41.3497999Z Cleaning up orphan processes
+2026-10-27T19:47:41.3968675Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

@@ -9,11 +9,14 @@ from unittest.mock import patch
 
 from umf_access.unified import SessionError, SessionIdentity, outcome_values
 from umf_access.unified.outcome_values import (
+    digest,
     outcome_from_record,
     outcome_invocation,
     outcome_record,
     outcome_slot,
 )
+from umf_access.unified.table_reads import _operation_scope
+from umf_access.unified.table_writes import SyncTableWriter
 
 
 class TableOutcomes(unittest.TestCase):
@@ -158,6 +161,72 @@ class TableOutcomes(unittest.TestCase):
             self.assertNotEqual(slot,outcome_slot(other_actor,principal,context,operation,key))
         for key in ['',None,'x'*257,'\0']:
             with self.assertRaises(SessionError):outcome_slot(actor,42,context,'create',key)
+
+    def test_writer_recovery_checks_profile_digests_before_any_effect_frame(self):
+        from test_operation_input_snapshot import _fixture
+
+        actor=SessionIdentity('person','alice')
+        secret=b's'*32
+        principal=42
+        operation='operation'
+        key='caller-key'
+        context={'module':'demo','schema':'plugin','sourceDigest':'1'*64,
+                 'configurationDigest':'2'*64,'bundleDigest':'3'*64,'headDigest':'4'*64,
+                 'referenceDigest':'5'*64}
+        program={'operation':operation,'module':'demo','idempotencyKey':key,
+                 'declarationDigest':'d'*64,'callKind':'single','nativeInputs':[{}],
+                 'result':{'maxRows':10}}
+
+        def run(current_profile, stored_profile):
+            session,binding,_probe,_identity=_fixture('update')
+            session.policy.table_operation_module_profile=current_profile
+            session.transaction_owner='caller'
+            writer=SyncTableWriter(session,{}, {},binding,outcome_secret=secret)
+            scope=_operation_scope(context,operation,'postgresql18',{'value':1},None,None,current_profile)
+            stored_scope=_operation_scope(context,operation,'postgresql18',{'value':1},None,None,stored_profile)
+            slot=outcome_slot(actor,principal,scope,operation,key)
+            self.assertEqual(slot,outcome_slot(actor,principal,stored_scope,operation,key))
+            stored_metadata={k:stored_scope[k] for k in
+                             ('module','operation','sourceDigest','configurationDigest','bundleDigest','headDigest')}
+            stored_metadata.update(
+                invocationDigest=outcome_invocation(secret,[stored_scope,program['declarationDigest'],program['callKind']]),
+                scopeDigest=digest({k:v for k,v in stored_scope.items() if k!='inputsDigest'}),
+            )
+            record=outcome_record(secret,principal,slot,stored_metadata,[1],{'items':[{'id':'row'}]})
+            packed=tuple(record[k] for k in ('invocationDigest','scopeDigest','payload','signature'))
+
+            class Probe:
+                def __init__(self):self.calls=[]
+                def operation_steps(self):
+                    if False:yield None
+                    return {'principalOid':principal}
+                def outcome_steps(self,action,*_args):
+                    self.calls.append(action)
+                    if action=='read':return packed
+                    if False:yield None
+                    return None
+
+            probe=Probe()
+            with patch.object(writer,'_before',return_value=None), \
+                 patch('umf_access.unified.table_writes._effect_frames',
+                       side_effect=AssertionError('stored-slot recovery must not execute business effects')):
+                iterator=writer._steps(actor,(probe,program,scope,secret,None),False)
+                try:
+                    next(iterator)
+                except StopIteration as stop:
+                    return stop.value,probe.calls
+            self.fail('writer state machine unexpectedly yielded with an already stored receipt')
+
+        for profile in ('weft.table-operation-module/0.1','weft.table-operation-module/0.2'):
+            with self.subTest(profile=profile):
+                result,calls=run(profile,profile)
+                self.assertEqual(result['status'],'recovered')
+                self.assertEqual(calls,['lock','read'])
+        for current,stored in (('weft.table-operation-module/0.1','weft.table-operation-module/0.2'),
+                               ('weft.table-operation-module/0.2','weft.table-operation-module/0.1')):
+            with (self.subTest(current=current, stored=stored),
+                  self.assertRaises(SessionError)):
+                run(current, stored)
 
 
 if __name__=='__main__':unittest.main()

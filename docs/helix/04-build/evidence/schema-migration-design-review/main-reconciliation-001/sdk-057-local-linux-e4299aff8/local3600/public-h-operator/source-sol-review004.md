@@ -1,0 +1,5 @@
+# Public-H operator004 — frozen reader binding closure
+
+ACCEPT SOURCE ONLY: runner5b5696ef0921f1420923446adafcd97653d1897093e29c400d49c38e91941102. Independently compared against acceptedoperator003: exactly two literals change, reader path to /private/tmp/sdk-057-local3600-public-h-v3/run-local3600-public-h.py and independent reader SHAa8b496f65010551c5fc4bac368bebc95c1b1406cfc125c12aa733eaa726a7b15. All executable capture, cleanup, mount, bounds and receipt code is otherwise identical. Manifest and inventoried file sizes/hashes physically match.
+
+The v3 reader has separate source acceptance. Original seven proof commands, SDK139/full18, immutable three public assets/P-M-tag checks and own1800/180/60/10 limits remain. This binding update creates no runtime or publication fact. Packet remains HELD until actual merge/tag/assets are known; no H or release acceptance follows from source review. No candidate execution, tests, imports, AST/YAML parsing, Docker, Git mutation or Actions performed.

@@ -1,0 +1,166 @@
+{
+  "distributionVersion": "0.10.2",
+  "harness": {
+    "commit": "433bfebcba88107995a6a0552dd319d20eb20272",
+    "driverSha256": "8c295df9480f5e49e920c340a03d41aae7cdfba0d31082d318ecab82293c0774",
+    "requirementsSha256": "308dc9b89aab108300cd90ad3ec5f025d12c4bd435d2220caa69aff6f237dfb2",
+    "toolLockSha256": "d3da744a60df39decf9838ea068728bde3378fbb34a294294d634ea0e7a41a23",
+    "tree": "1bce081939eaa81d01dafc902a04d6f760caa7d9",
+    "workflowSha256": "4793f67614ad98850dbc2d364264a029293e6a0331a2e5fa0ae643b59007edfb"
+  },
+  "originalInput": {
+    "archiveBytes": 9110238,
+    "archiveSha256": "741b45e5e15c393e5cc78571f22afb2bacda2cc0c355c929a02a4022fc2b531f",
+    "artifactApiMetadata": {
+      "headSha": "a1b909d4f92da6604aeb21d3ea60e9a9943a7f87",
+      "id": 12659280057,
+      "name": "umf-python-action-runtime-linux-x86_64",
+      "sizeInBytes": 9110238
+    },
+    "artifactId": "12659280057",
+    "directWheel": {
+      "bytes": 3580729,
+      "sha256": "64e98887068563221070e3f265ae24d6871099cd5922f49f6be83eff944a5805"
+    },
+    "nativeMemberSha256": "78dd1542f723b4f4d8c336c137caa478974a981ed759ada171a5877d7e0368a8",
+    "originalQualificationReceiptSha256": "dafeb8d20193432c8ccf833ce6ea115d202bad98a15d297d6e0563247112bc0d",
+    "originalQualificationReceiptStatus": "passed",
+    "rawArtifactRole": "historical input only; not repaired qualification evidence",
+    "runAttempt": 1,
+    "runId": "40338720085",
+    "sdist": {
+      "bytes": 2652087,
+      "sha256": "90a107aaa507930e1d71c0cf208b77182d06c0bf2a1b13681fd5f7b6ed74cb9d"
+    },
+    "sourceCommit": "a1b909d4f92da6604aeb21d3ea60e9a9943a7f87"
+  },
+  "profile": "umf.core-0102-manylinux-repair-qualification/1",
+  "qualificationClaims": {
+    "installedBytes": true,
+    "publication": false,
+    "repairedArtifactPayload": true,
+    "sixModuleSuite": true
+  },
+  "repairedWheel": {
+    "bytes": 3582082,
+    "filename": "umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl",
+    "nativeSha256": "78dd1542f723b4f4d8c336c137caa478974a981ed759ada171a5877d7e0368a8",
+    "sha256": "708f967747b0539b9ca7b6a5f39d1017eea8ddb1d07cd62f4f46592e088f6f39",
+    "tag": "cp311-abi3-manylinux_2_34_x86_64"
+  },
+  "scope": "one exact repaired wheel; source/run identity and repaired bytes are distinct from historical direct/sdist evidence",
+  "semanticCoreVersion": "0.10.0",
+  "source": {
+    "commit": "a1b909d4f92da6604aeb21d3ea60e9a9943a7f87",
+    "files": {
+      "python/_native_platform.py": {
+        "bytes": 4931,
+        "sha256": "5856eb375d176af7671ad22981d983a14cec24663e3a8bc466446b433c2cd7b1"
+      },
+      "python/pyproject.toml": {
+        "bytes": 1424,
+        "sha256": "dea18d8019a736568fc12416044217dacaf7555dc9ab9ea258cbd2316de09605"
+      },
+      "python/tests/test_action_fixture_vectors.py": {
+        "bytes": 5895,
+        "sha256": "c345ab04831c366cb599823a172f83e37a54075e9c7b37022c31ac1c39ead1d9"
+      },
+      "python/tests/test_action_runtime_generated_client.py": {
+        "bytes": 7576,
+        "sha256": "e0380a25eeb27532d0022f56b050fc727331a829286c56e6fd5814e309116ad9"
+      },
+      "python/tests/test_action_runtime_resources.py": {
+        "bytes": 18168,
+        "sha256": "3a08e3ad28da280334ecc75ef215025b2a6241d00b3659dff95a7ea384f7bd71"
+      },
+      "python/tests/test_core.py": {
+        "bytes": 8921,
+        "sha256": "122707d7cf351097f7de779281be27e6dbda555c947b4134735e27d5431e8c60"
+      },
+      "python/tests/test_extension_kinds.py": {
+        "bytes": 3108,
+        "sha256": "69258167b0386cacd2b39ea33d6a3c75b03210fb7a8d7c5070b3b0c627456c18"
+      },
+      "python/tests/test_rust_core.py": {
+        "bytes": 17799,
+        "sha256": "1e8f25b8c39c7f4b45b832dd82bea1cf68751470fa59335f9803f6ff13c9ede6"
+      },
+      "spec/core/schema.json": {
+        "bytes": 45342,
+        "sha256": "bdcf1c6b8a197dfbd769ea47a879eaabeeb1d71cc00cab1f9e600175354c5da7"
+      },
+      "spec/metamodel/generated/core-constraints.json": {
+        "bytes": 190252,
+        "sha256": "7e2a2e4bb3ea3555e449499a2bfa089c2418dcb957b557ff0be22bbab466fe19"
+      },
+      "tools/verify_python_artifacts.py": {
+        "bytes": 36449,
+        "sha256": "628bc0ea00eabca17e976b537ba2534c00a6fe53b09acb46399f74f3c0c85fb3"
+      }
+    },
+    "status": "clean",
+    "tree": "f9f1655af59c4c030e58a19405fe22ae55db40bb"
+  },
+  "status": "QUALIFIED_REPAIRED_LINUX_WHEEL",
+  "tests": {
+    "counts": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 254
+    },
+    "junit": "six-module-tests.xml",
+    "modules": [
+      "test_action_runtime_generated_client.py",
+      "test_action_runtime_resources.py",
+      "test_action_fixture_vectors.py",
+      "test_core.py",
+      "test_rust_core.py",
+      "test_extension_kinds.py"
+    ]
+  },
+  "toolchain": {
+    "distributions": {
+      "auditwheel": "6.8.2",
+      "packaging": "25.0",
+      "patchelf": "0.17.2.4",
+      "pyelftools": "0.32"
+    },
+    "executables": {
+      "auditwheel": {
+        "binarySha256": "30cdab9afe543cc7a6036302209e82e0d99bafd1593d199cb22c277928b72fe9",
+        "path": "/home/runner/work/_temp/core-0102-manylinux-tools/venv/bin/auditwheel",
+        "version": "auditwheel 6.8.2 installed at /home/runner/work/_temp/core-0102-manylinux-\ntools/venv/lib/python3.11/site-packages/auditwheel (python 3.11)"
+      },
+      "patchelf": {
+        "binarySha256": "f2a22996ad184a5329cdc98a2bf7df5badda683894ab9a64c969ac951a05d772",
+        "path": "/home/runner/work/_temp/core-0102-manylinux-tools/venv/bin/patchelf",
+        "selectedByAuditwheelPath": "/home/runner/work/_temp/core-0102-manylinux-tools/venv/bin/patchelf",
+        "selectedByAuditwheelSha256": "f2a22996ad184a5329cdc98a2bf7df5badda683894ab9a64c969ac951a05d772",
+        "version": "patchelf 0.17.2"
+      }
+    },
+    "wheelHashes": [
+      {
+        "bytes": 65324,
+        "filename": "auditwheel-6.8.2-py3-none-any.whl",
+        "sha256": "05fd2dd4b743217cd5f66066adc95b03a079424b1f0a878ad1e40fe2cdea4704"
+      },
+      {
+        "bytes": 66469,
+        "filename": "packaging-25.0-py3-none-any.whl",
+        "sha256": "29572ef2b1f17581046b3a2227d5c611fb25ec70ca1ba8554b24b0e69331a484"
+      },
+      {
+        "bytes": 482846,
+        "filename": "patchelf-0.17.2.4-py3-none-manylinux1_x86_64.manylinux_2_5_x86_64.musllinux_1_1_x86_64.whl",
+        "sha256": "d9b35ebfada70c02679ad036407d9724ffe1255122ba4ac5e4be5868618a5689"
+      },
+      {
+        "bytes": 188525,
+        "filename": "pyelftools-0.32-py3-none-any.whl",
+        "sha256": "013df952a006db5e138b1edf6d8a68ecc50630adbd0d83a2d41e7f846163d738"
+      }
+    ]
+  }
+}

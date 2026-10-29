@@ -1,0 +1,360 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:table-inventory-delta:0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile",
+    "previousTables",
+    "nextTables",
+    "changes",
+    "seedLineage"
+  ],
+  "properties": {
+    "profile": {
+      "const": "umf.table-inventory-delta/0.1"
+    },
+    "previousTables": {
+      "$ref": "#/$defs/tables"
+    },
+    "nextTables": {
+      "$ref": "#/$defs/tables"
+    },
+    "changes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "table",
+          "record",
+          "beforePath",
+          "afterPath",
+          "beforeMeaningDigest",
+          "afterMeaningDigest"
+        ],
+        "properties": {
+          "kind": {
+            "enum": [
+              "create-table",
+              "remove-table"
+            ]
+          },
+          "table": {
+            "type": "string",
+            "minLength": 1
+          },
+          "record": {
+            "$ref": "#/$defs/ref"
+          },
+          "beforePath": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "afterPath": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "beforeMeaningDigest": {
+            "$ref": "#/$defs/digest"
+          },
+          "afterMeaningDigest": {
+            "$ref": "#/$defs/digest"
+          }
+        }
+      }
+    },
+    "seedLineage": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "definitionDigest",
+          "originalSourceDigest",
+          "disposition",
+          "execution"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "definitionDigest": {
+            "$ref": "#/$defs/digest"
+          },
+          "originalSourceDigest": {
+            "$ref": "#/$defs/digest"
+          },
+          "disposition": {
+            "enum": [
+              "retain-definition",
+              "apply-once",
+              "retire-definition"
+            ]
+          },
+          "execution": {
+            "enum": [
+              "not-run",
+              "confirmed"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "module",
+        "element"
+      ],
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "tables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "table",
+          "record",
+          "schema",
+          "name",
+          "meaningDigest"
+        ],
+        "properties": {
+          "table": {
+            "type": "string",
+            "minLength": 1
+          },
+          "record": {
+            "$ref": "#/$defs/ref"
+          },
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "meaningDigest": {
+            "$ref": "#/$defs/digest"
+          }
+        }
+      }
+    },
+    "json": {},
+    "targetCustody": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "custodianId",
+        "registrationId",
+        "resourceId",
+        "incarnation",
+        "registrationDigest"
+      ],
+      "properties": {
+        "profile": {
+          "const": "umf.native-target-custody/0.1"
+        },
+        "custodianId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "registrationId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "resourceId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "incarnation": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "registrationDigest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "fieldSelection": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "table",
+            "field",
+            "retention"
+          ],
+          "properties": {
+            "table": {
+              "type": "string",
+              "minLength": 1
+            },
+            "field": {
+              "$ref": "#/$defs/ref"
+            },
+            "retention": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "policyId",
+                "policyRevision",
+                "minimumRetentionMs"
+              ],
+              "properties": {
+                "policyId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "policyRevision": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "minimumRetentionMs": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 315360000000
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "table",
+            "field",
+            "archive",
+            "newInstances"
+          ],
+          "properties": {
+            "table": {
+              "type": "string",
+              "minLength": 1
+            },
+            "field": {
+              "$ref": "#/$defs/ref"
+            },
+            "archive": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "profile",
+                "providerId",
+                "archiveId",
+                "tableToken",
+                "targetCustody",
+                "retirementPlanDigest",
+                "retirementSourceDigest",
+                "fieldMeaningDigest"
+              ],
+              "properties": {
+                "profile": {
+                  "const": "umf.retired-field-archive-ref/0.1"
+                },
+                "providerId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "archiveId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "tableToken": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "targetCustody": {
+                  "$ref": "#/$defs/targetCustody"
+                },
+                "retirementPlanDigest": {
+                  "$ref": "#/$defs/digest"
+                },
+                "retirementSourceDigest": {
+                  "$ref": "#/$defs/digest"
+                },
+                "fieldMeaningDigest": {
+                  "$ref": "#/$defs/digest"
+                }
+              }
+            },
+            "newInstances": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "mode"
+                  ],
+                  "properties": {
+                    "mode": {
+                      "const": "refuse"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "mode"
+                  ],
+                  "properties": {
+                    "mode": {
+                      "const": "null"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "mode",
+                    "expression"
+                  ],
+                  "properties": {
+                    "mode": {
+                      "const": "fill"
+                    },
+                    "expression": {
+                      "type": "object"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

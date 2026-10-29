@@ -1,0 +1,9 @@
+# Current local3600 adoption documentation — focused review
+
+ACCEPT the current metadata documentation. The narrow correction is physically confirmed in both the outer local3600 README and active SDK notes: the public-H assembly/continuation integration hold is explicit. Reader0d866 source acceptance covers its D5 resource-profile checks; actual end-to-end H is not ready until the explicit assembly-plus-bounded-continuation mode is source-reviewed. Do not alter immutable raw snapshot text to make this correction.
+
+Reviewed current tracked diffs in SDK0.5.7 notes and parent evidence README, plus the untracked local3600 wrapper. They accurately preserve producer P e4299aff8e87e9d211f9d86df2f2013ab9c95945/tree8b98c0d895983ba2b7637dd3aea567dab0943883, distinguish the adopted operator3600 profile from product/API and original1800 qualification, keep live D5 pending, preserve the earlier unknown fault results, retain fast-check dependency/Python311 limitations, and state emulated Linux/ARM PostgreSQL/Mac historical limits. Paused workflow numbers are labeled workflows rather than run IDs. Carrier upload is authorized/unpublished, PR65 unmerged/undispatched, release/public identities absent.
+
+The wrapper correctly reports80 inventoried payload files plus one excluded manifest,81files/3,757,363B, and treats dated raw preparation wording as historical. Separate policy/adoption reviews exist at linked paths. All relative links in the active notes and new wrapper resolve physically, and release-note frontmatter remains identical. No product or workflow definition changes are introduced.
+
+With that explicit H integration hold present, this documentation is ready for metadata-only adoption; no qualification rerun is justified by these prose changes. Actual complete D5 review, final M/assets and fresh public H remain separate release gates. Review performed by data/text inspection only, without candidate execution/tests/Docker/Git mutation/Actions.

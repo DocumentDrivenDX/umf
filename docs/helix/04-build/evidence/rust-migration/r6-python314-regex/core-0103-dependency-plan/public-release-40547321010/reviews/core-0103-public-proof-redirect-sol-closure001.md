@@ -1,0 +1,19 @@
+# Public-proof redirect correction — source check
+
+**SOURCE ACCEPT** for the exact three H-only postimages below, against failed H `35a76f45a18d56ab4fb998efe2d8fdd240748d3e` and plan `/private/tmp/core-0103-public-proof-redirect-sol-plan001.md` (SHAa58b3eda8af1bed888bc29379483f7d0868760b5e1fdf345f7ab37b6a7697e55). No residual source blocker found. This is source acceptance, not local or hosted test execution or public-install acceptance.
+
+| Path | Bytes | SHA-256 |
+|---|---:|---|
+| tools/verify_core_public_producer.py |32816|`7218ef37efe22e02f1140fc8654c6640a6e3d988073b6184fd7fbe63a6c64af3`|
+| tools/test_core_public_producer_transport.py |6527|`13fc58eb6e7da9e3343bad0de6bcf0aa8ff3f669d6d2a069657c92accfb3abfa`|
+| .github/workflows/core-0.10.3-public-install-proof.yml |33788|`a9608ac570e20c86bfa487ae591db0da237a0f1d48d6267ea624a2f830cec150`|
+
+Read-only exact reversal of both authenticated Request changes reconstructs the entire old helper Git blob. The only production change removes Authorization from ordinary headers and adds it via add_unredirected_header before the same urlopen at api_json and artifact_zip. Every other URL/header/30-second timeout/read bound/digest/ZIP/source/run/artifact guard is byte-identical. Python's official contract confirms that this preserves initial authentication and omits that header on redirected requests: https://docs.python.org/3.11/library/urllib.request.html#urllib.request.Request.add_unredirected_header . The prior HTTP401 remains an actual failed transport; forwarding is not asserted to be its proven sole server cause.
+
+The six stdlib tests call the actual helper functions under fake urlopen. For both API and ZIP paths they inspect exact initial URL/GET/timeout/regular headers and fake initial Bearer unredirected header, then invoke the real HTTPRedirectHandler.redirect_request for two cross-origin HTTPS hops. They require no Authorization in ordinary/unredirected/header_items collections after redirect and preserve the ordinary headers with case-normalized comparisons. Initial ordinary Authorization under the old implementation would fail these checks. Responses are tiny synthetic JSON/ZIP only, no sockets or real token. Positives require the actual parsed dict/member; refusals retain non-object JSON, one-MiB API response, artifact download-size and artifact digest rejection. There is no replacement request implementation or copied verifier body.
+
+The workflow invokes that exact module's unittest suite inside the existing bounded packet-validation command, after complete packet/asset validation and before output emission or real producer verification. Any failing test exits nonzero. This meets the plan without an additional command/job: it consumes the same existing deadline, capture, reserve and artifact budget. Removing only the unittest import and five-line invocation reconstructs the entire old workflow blob. Thus all original producer/public acquisition, source correspondence, test-lock install, original254 installed suite/probes/post-verifier/finalizer, two Linux matrices, caps, packet, P/M/ten immutable assets and event/isolation bytes remain unchanged.
+
+Root may freeze/commit this distinct corrected H and perform one normal changed-source push on the existing isolated public-proof branch. No released source/R3/archive mutation, Mac CI, unchanged retry, or predecessor cancellation is authorized by this source check. Preserve the queued prior3.14 cell, fail-fast:false and the independent OIDC run. Actual corrected-H regression results and both fresh Linux254/0/0/0 cells, exact public byte/source/native custody and OIDC publication evidence remain the existing final actual-evidence gate. No public proof success is claimed here.
+
+Method: source/text/hash and read-only Git blob comparisons only. No candidate imports, test execution, AST/YAML parsing, lint, native execution, CI or Git mutation.

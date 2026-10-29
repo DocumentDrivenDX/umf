@@ -1,0 +1,12 @@
+{
+  "status": "FAIL_CORE_PYTHON_314_PROFILE_UNAVAILABLE",
+  "sourceCommit": "88871ad55a1ac348b2070a5ae00714e2299cb646",
+  "headCommit": "71b5f87805324c0e0d12c279a4898c8a44f625a9",
+  "jobId": 121819875324,
+  "runtime": "macOS14 arm64 Python3.14.7",
+  "coreDistribution": "0.10.2",
+  "failure": "Actual installed Core document read/write roundtrip raises Python re profile3.14 unavailable. Native module imports successfully.",
+  "sourceObservation": "PythonReVersion::from_minor accepts11,12,13 only; explicit unit expects14refusal. Python strict native validator chooses actual interpreter minor.",
+  "linux314Evidence": "No actual installed-Core14 acceptance: earlier aggregate unit failure prevented acquisition/probe.",
+  "scope": "Genuine Core dependency requiring owner/design coordination. Keep four-cell gate and published0.10.2 assets; no fallback or matrix reduction. Source-only exploration, no edits/local runtime, no acceptance inferred."
+}

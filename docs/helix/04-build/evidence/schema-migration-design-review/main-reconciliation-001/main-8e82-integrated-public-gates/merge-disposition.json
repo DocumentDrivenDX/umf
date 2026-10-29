@@ -1,0 +1,17 @@
+{
+  "mainIntegrated": "8e82e134a7b4c23aad561954aa2a48cbc738fb23",
+  "releaseTargetUnchanged": "6337b4b5f65144387ce5c0bbf9cbad955a921c8f",
+  "priorCandidate": "5b165c53a96f66d0a13c9cb4d8f920a6133c637a",
+  "conflicts": [
+    "docs/helix/04-build/evidence/rust-migration/r3/inventory.json",
+    "docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json"
+  ],
+  "resolution": "Prior candidate generated outputs retained byte-for-byte as historical generation seeds only; canonical R3 regeneration required after final dependency/version/source freeze",
+  "historicalSeedSha256": {
+    "docs/helix/04-build/evidence/rust-migration/r3/inventory.json": "c691e29078ef0a80a9a8d5ab5a5c2f957d3687494ae55b197b981ba905c9911e",
+    "docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json": "874d18cf82117e573dbffd77c8457f04dafdfe6841ae575c319c497be7a07fe0"
+  },
+  "currentGeneratedQualificationClaim": false,
+  "publicDependencyGates": "ACCEPT exact published Linux/Mac0.10.2 artifacts and PyPI bytes; final independent review retained",
+  "nativeMigrationAndFourCellSDKAcceptance": "OPEN"
+}

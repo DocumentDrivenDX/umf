@@ -1,0 +1,40 @@
+{
+  "format": "root.specific-source-verification-go/1",
+  "status": "GO-ONE-SHOT",
+  "issuedAtUtc": "2026-10-24T17:29:07.704371+00:00",
+  "launchByUtc": "2026-10-24T17:32:07.704371+00:00",
+  "cleanupByUtc": "2026-10-24T17:33:07.704371+00:00",
+  "nonce": "ea0c7ac4-7916-4f53-9542-13ef3c69c8c9",
+  "ownerThreadId": "01a1605c-de92-72c0-afcd-0498b7422c1c",
+  "coordinatorThreadId": "01a163ae-137a-7e13-9220-4f23c2e43bbf",
+  "readinessPath": "/private/tmp/g11-journal005-independent-review001/readiness001.json",
+  "readinessSha256": "af5e42a31144bbbd167aa5f9c0d3029508c4325a11351c486c4351461c0f1e08",
+  "command": [
+    "/private/tmp/arras-public50-qualification-20261024/canonical-managed-hashed-venv/bin/python",
+    "-I",
+    "-B",
+    "/private/tmp/g11-journal005-independent-review001/supervise_journal005.py"
+  ],
+  "cwd": "/private/tmp/g11-journal005-independent-review001",
+  "supervisorSha256": "64aea2c95bea6cb87bbc77ba0b8c36f7db4e1141033679dea3aa865e712b954f",
+  "workerSha256": "dde1a321799ce1418ac3302e651b3001851d190eba20675f8fb757a6ecd889de",
+  "commandsSha256": "372d20e6752ab825b130826002a384098733dbe3140ac57e5df033ed80bba86b",
+  "closureSha256": "31f1d16121a652086295cc62921e74ee1f2823fd5cf5419e2548c65ad0989e27",
+  "bounds": {
+    "workSeconds": 45,
+    "cleanupReserveSeconds": 15,
+    "totalSeconds": 60
+  },
+  "scope": "ONLYsixexactfrozenPythonunit/probe/Ruffcommands;expected207;noBunpackagescriptsDockerPGnativeDBnetworkbuildbrowserretrychain",
+  "rootFreshFileHashChecks": 291,
+  "preconditions": [
+    "readiness/pins/nonceabsencerecheckBEFOREone-shot",
+    "workerawaitssamePIDPGIDstartlaunchhandshakebeforeproductcommands",
+    "no otherGO/followonimplicit"
+  ],
+  "postconditions": [
+    "authoritativeterminal+actualPIDPGIDstart/no timeout/reap+exactgroupabsence",
+    "immediateresourcehandbackbeforeadditionalruntime"
+  ],
+  "resource": "D9andSource10closed/auditedhandback; Arrasv13SOURCEreviewonlyuntilthis<=60jobhandback; historicalG02incidentdoesnotproveglobalisolation"
+}

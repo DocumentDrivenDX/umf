@@ -1,0 +1,125 @@
+bun test v1.4.3 (c6da4a4d3)
+
+::group::tests/lifecycle/g03-renderer-compatibility.test.ts:
+(pass) typed literal, clock and UUID default rendering remains byte-stable [1.16ms]
+(pass) historical G01 existing-default fill/tighten plan remains byte-identical [410.70ms]
+(pass) historical G02 append/fill/default/tighten plan remains byte-identical [329.18ms]
+
+::endgroup::
+
+::group::tests/lifecycle/g03-discovery-bridge.test.ts:
+(pass) discovery bridge keeps the unselected request/output historical and adds defaults only by selector [389.71ms]
+(pass) discovery bridge refuses null, wrong and unknown selectors and unknown request members [540.33ms]
+
+::endgroup::
+
+::group::tests/lifecycle/migration.test.ts:
+(pass) domain descriptions, reviewed scoped backfills, checks/FKs and concurrent phases have exact source custody [2325.35ms]
+(pass) unacknowledged, duplicate, unrelated or parameterized backfills refuse without erasing source [3011.74ms]
+(pass) concurrent source selections refuse mixed effects and rehashed/unapproved phase substitution [1920.25ms]
+(pass) comments escape SQL text and multibyte identifier bounds are byte-based [1081.96ms]
+(pass) legacy description-bearing deployment bundles retain exact verifier recovery [1656.17ms]
+(pass) removing an authored description explicitly clears its native comment [820.51ms]
+(pass) backfill column generation never parses SQL-looking identifier text [2008.17ms]
+
+::endgroup::
+
+::group::tests/lifecycle/g04-checked-conversion.test.ts:
+(pass) G04 .7 emits typed empty-SQL conversion phases and recompiles retained and irreversible recovery choices [803.41ms]
+(pass) G04 discovery strips only irreversible marker references and binds complete source meaning [138.06ms]
+(pass) G04 rejects unsupported round-trip proof issuance, dependent native closure, stale bindings and legacy conversion qualifiers [970.89ms]
+(pass) G04 .7 schemas describe the closed discovery, options, plan and phase carriers [386.45ms]
+
+::endgroup::
+
+::group::tests/lifecycle/reviewed.test.ts:
+(pass) a column drop needs its exact review marker, compiles a digest-bound drop and rejects changed source [3143.10ms]
+(pass) reviewed middle-column removal preserves unchanged trailing fields by stable Field identity [1155.62ms]
+(pass) column removal and appended fields refuse before producing an incomplete plan at same or mixed counts [1979.37ms]
+(pass) column drops resolve nested policy references by stable field identity and require a reviewed policy rewrite [2119.48ms]
+(pass) column drops detect related-policy references from other selected tables and order reviewed rewrites first [2245.75ms]
+(pass) column drops resolve nested command references independent of object key order [1574.68ms]
+(pass) reviewed column rename and NOT NULL tightening compile only with exact source markers [3670.46ms]
+(pass) renamed columns revoke old column grants before changing the physical name [1181.17ms]
+(pass) type changes require a digest-bound explicit safe PostgreSQL widening conversion [3291.64ms]
+(pass) reviewed index replacement emits an ordered drop and create for the exact source object [2065.44ms]
+(pass) stable-ID index replacement emits both drop and create at the same array position [1411.75ms]
+(pass) reviewed index removal names unreviewed objects and emits an explicit DROP INDEX [1814.80ms]
+(pass) policy revisions require old/new policy digests and update stored policy plus grants [1474.98ms]
+(pass) primary-key replacement requires an exact marker and refuses dependent foreign keys by name [1446.26ms]
+(pass) reviewed primary-key replacement emits ordered DROP and ADD when dependency closure is empty [1716.34ms]
+(pass) reviewed foreign-key replacement drops the old constraint before adding the exact successor [1678.62ms]
+(pass) stable-ID foreign-key replacement emits drop and add at the same array position [1188.14ms]
+(pass) reviewed foreign-key removal requires a marker and emits an explicit constraint drop [1536.34ms]
+(pass) reviewed check-constraint replacement drops the old definition before adding its successor [1956.02ms]
+(pass) reviewed check-constraint removal requires a marker and emits an explicit constraint drop [1313.12ms]
+(pass) selected new foreign keys compile as add-not-valid and separate validation phases [1301.69ms]
+(pass) version 0.2 refuses table inventory changes the phase runtime cannot fence yet [855.67ms]
+(pass) version 0.2 refuses initial publication until the mixed runtime supports it [558.52ms]
+
+::endgroup::
+
+::group::tests/lifecycle/g03-defaults.test.ts:
+(pass) G03 changes one existing target default and preserves immutable target identity [962.94ms]
+(pass) G03 marker binds full physical and logical target meaning [267.90ms]
+(pass) G03 supports SET and DROP and records an absent-to-literal-NULL change [466.04ms]
+(pass) G03 plan compilation uses portable JSON copying without structuredClone [252.50ms]
+(pass) G03 discovery selector is exact and legacy discovery stays unchanged [114.57ms]
+(pass) G03 opt-in discovery refuses non-JSON sources while unselected legacy YAML behavior remains unchanged [114.79ms]
+(pass) G03 keeps logical-only default changes out of its selector and refuses unrelated source effects [344.59ms]
+(pass) G03 numeric spellings bind separately while the typed DDL is canonical [319.31ms]
+(pass) G03 typed clock and UUID defaults are accepted only on matching native domains [499.05ms]
+(pass) G03 admits exact unrefined Gregorian date literals and preserves typed qualifiers [728.06ms]
+(pass) G03 temporal literal support does not relax non-temporal refinements or logical defaults [110.70ms]
+(pass) G03 refuses retained unknown native and logical qualifiers before source verification [0.60ms]
+(pass) G03 raw-source preflight rejects malformed retained bundles with located diagnostics [4.24ms]
+(pass) G03 native numeric preflight bounds exact integer widths and numeric precision before coefficient allocation [2.27ms]
+(pass) G03 bounds raw numeric native-type qualifiers before numeric preflight [0.75ms]
+(pass) G03 preflight does not invoke accessors before the JSON-safety refusal [101.43ms]
+(pass) G03 preserves the historical .2 missing-predecessor refusal and handles null inputs [95.97ms]
+(pass) G03 preflight preserves the predecessor-specific YAML refusal path [44.95ms]
+(pass) G03 preflight refuses an oversized predecessor literal even when the new source drops it [53.54ms]
+(pass) G03 reports logical-default errors at the actual module element pointer [0.37ms]
+(pass) G03 native fixture retains complete sources and admits one exact default phase [1051.41ms]
+(pass) G03 required target keeps explicit-only commands and rejects retained omission [100.25ms]
+(pass) G03 N04 compares retained-omission sources before any native lifecycle effect [100.37ms]
+
+::endgroup::
+
+::group::tests/lifecycle/table-deployment-operations.test.ts:
+(pass) internal table deployment operation sidecar > records source-site operations without changing public deployment bytes [153.33ms]
+(pass) shared grant rows preserve complete source mappings, authored UPDATE order, all-Key exclusion, and quoted SQL [70.92ms]
+(pass) generated columns are excluded while insertion remains denied for both audiences [67.80ms]
+(pass) large valid comment-rich deployment retains standard bundle admission and copies its bounded private sidecar [6220.42ms]
+(pass) shared grant SQL renderer refuses malformed row variants instead of coercing them [0.29ms]
+(pass) shared source derivation rejects an unrelated Record binding and denied policies produce no row [0.60ms]
+(pass) an allowed person UPDATE with no mutable ordinary column retains its located refusal [50.81ms]
+
+::endgroup::
+
+::group::tests/lifecycle/g11-field-replacement.test.ts:
+(pass) G11 compiles mapping-only removal by Field identity while retaining the removed Field declaration [404.92ms]
+(pass) G11 JSON Schemas admit the compiled plan and reject inconsistent phase carriers [1132.67ms]
+(pass) G11 admits a new Key only from its shifted successor source identity [754.23ms]
+(pass) G11 preserves unaffected authored seeds without replay when a Field mapping changes [418.34ms]
+(pass) G11 supports definition removal at a middle source position and orders multiple fill targets by typed DAG [1131.24ms]
+(pass) G11 binds changed CHECK subjects and orders their removal/addition around the exact Field carriers [522.04ms]
+(pass) G11 binds generated finite-domain CHECK drops and additions to exact Field mappings [898.35ms]
+(pass) G11 permits only source-path relocation of retained inputs after an earlier column is removed [773.30ms]
+(pass) G11 rejects removal of an unselected unused Field and reordering retained operations [678.99ms]
+(pass) G11 projects a seed-free Legal domain replacement while preserving owner/via RLS and batch UPDATE denial [2083.10ms]
+(pass) G11 represents allow-to-deny policy evolution as typed drop/add subjects without treating deny as a grant [507.23ms]
+(pass) G11 represents deny-to-allow policy evolution and restores the typed update grant [483.97ms]
+(pass) internal G11 grant effects retain complete typed table-grant rows for add and revoke [973.95ms]
+(pass) G11 orders a referenced Key and its cross-table ForeignKey by typed dependency identity [4198.98ms]
+(pass) G11 binds via-policy relationship, ForeignKey, target-Key and terminal Field dependencies [3094.61ms]
+(pass) G11 refuses missing purge review, unrelated logical edits and source-context forgery [1718.53ms]
+(pass) G11 refuses to revise retained authored seed-set behavior [1538.31ms]
+(pass) discovery 0.3 hashes exact source bytes and preserves both pointers for operation identities containing null [299.71ms]
+
+::endgroup::
+
+ 87 pass
+ 0 fail
+ 709 expect() calls
+Ran 87 tests across 8 files. [91.86s]

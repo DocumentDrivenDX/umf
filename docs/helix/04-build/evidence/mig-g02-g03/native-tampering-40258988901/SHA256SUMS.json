@@ -1,0 +1,202 @@
+[
+  {
+    "path": "cohort-mirror-manifest.json",
+    "sha256": "d122e31f8548010ce19ac5c3692f349cf0dc8a4b14bd7120f078529263677ef9",
+    "bytes": 21352
+  },
+  {
+    "path": "cohort.lock.json",
+    "sha256": "bac3e58a1b18addb844d960649adf23ffef1a49733bcc0b4302003051aff5ef6",
+    "bytes": 29024
+  },
+  {
+    "path": "command-records.jsonl",
+    "sha256": "180933e6179e8d5fb56f518eff1d1a36eb5ec8c5fc90ac3aee813359cdc95d57",
+    "bytes": 10462
+  },
+  {
+    "path": "copy-hashes.json",
+    "sha256": "978a7d1aa276fa42c6603c1766d4f9e5b0d537b891adb051932758b7ae13e8e5",
+    "bytes": 3445
+  },
+  {
+    "path": "final-workflow-owner-source-review.json",
+    "sha256": "aa4056b15b5ec75db9322005454ef88b871ad0357e39dcfbd1fa4400ba9bfb26",
+    "bytes": 977
+  },
+  {
+    "path": "g02-temporal-fixture.json",
+    "sha256": "91a419debb54378a60982480259c48e02860695229ef8eed748a25758f8426fb",
+    "bytes": 75686
+  },
+  {
+    "path": "g03-defaults-fixture.json",
+    "sha256": "de8736519bcb9aa1bb3c59c62734d6f31035378e192e317295fdd766e513108f",
+    "bytes": 146171
+  },
+  {
+    "path": "logs/builder-install.log",
+    "sha256": "372e38109341be80b4920acc01fd914455a6388a8c937df262104ae84c1bad49",
+    "bytes": 1727
+  },
+  {
+    "path": "logs/builder-venv.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "logs/builder-wheel-download.log",
+    "sha256": "2cd82db0d2458a2efe719623f9381045b79b10a4a557e18eed0405fc50bf5c94",
+    "bytes": 2058
+  },
+  {
+    "path": "logs/bun-install.log",
+    "sha256": "057ed3d0c3bf8024257bf2a8b1d3c8e6fafd0e73cba492c2ab129cdeec7d07ea",
+    "bytes": 1055
+  },
+  {
+    "path": "logs/codegen-refresh-hash-check.log",
+    "sha256": "d0d394725d7a9841dea7f67e5588938a73bf12dd518f0ae07654da29faf12954",
+    "bytes": 45
+  },
+  {
+    "path": "logs/codegen-refresh-output-hashes.log",
+    "sha256": "6753dc98316b9adca723cc086c5821313cbe4e67a7b4ee91c7c751af020b9b37",
+    "bytes": 156
+  },
+  {
+    "path": "logs/codegen-refresh.log",
+    "sha256": "abd3ab99e8fcb674123d3eb287bd542aded5c98b65ebb60e94b43919702e9bd1",
+    "bytes": 58
+  },
+  {
+    "path": "logs/cohort-build.log",
+    "sha256": "a7faaa3663308c47cf772face8cefca8e6a1305063b4cab974e68039d15861e4",
+    "bytes": 7330
+  },
+  {
+    "path": "logs/cohort-install.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "logs/current-codegen-corpus.log",
+    "sha256": "408234e2b1ca5a6afca35f03bcf848045b0c8a25b50ad9fc022c02c4a938706b",
+    "bytes": 1487
+  },
+  {
+    "path": "logs/finalize-receipt.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "logs/fixture-guards.log",
+    "sha256": "70702aae8f699dba097a074fb6d43a42a6545c95c48f0f9967021ea38b022a01",
+    "bytes": 275
+  },
+  {
+    "path": "logs/g02-fixture.log",
+    "sha256": "18584bb4aa650fd29b70b9324f8e566dc376084f171cbb2a37fe40e96fc18434",
+    "bytes": 433
+  },
+  {
+    "path": "logs/g03-fixture.log",
+    "sha256": "3dd61c4417241bad75451f97a5cadbe31026eb43287b459fa87babdd2b3ee6f8",
+    "bytes": 1106
+  },
+  {
+    "path": "logs/g03-tampering.log",
+    "sha256": "8d4f4157753dc799fd28a0f1de343243c33ddaeede6d3d54f9e2fc8065ab79cf",
+    "bytes": 175
+  },
+  {
+    "path": "logs/locked-check.log",
+    "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09",
+    "bytes": 30
+  },
+  {
+    "path": "logs/locked-install.log",
+    "sha256": "105716e71067fb37afe0ce1f9fb1825ef583405e4748becd99a2738a43fb410c",
+    "bytes": 4763
+  },
+  {
+    "path": "logs/mini-racer-download.log",
+    "sha256": "05e40eaae68af989a748bdefec4429b5bec7141f453ffe91c28d7f81a7bb7d75",
+    "bytes": 498
+  },
+  {
+    "path": "logs/mini-racer-verify.log",
+    "sha256": "b0291c4d68914286a6a089e57b547b8fdf3443629ced7832ebffeedee3ab778b",
+    "bytes": 194
+  },
+  {
+    "path": "logs/offline-cohort-probe.log",
+    "sha256": "ed890f51d87619b5153220bc6195aa3aabe7abb69af932a84cc489902ba06275",
+    "bytes": 711
+  },
+  {
+    "path": "logs/postgres-version.log",
+    "sha256": "2fe1eb871b5ce5c2ff947e594f47653b39b5a1bf18a4585e4075565faf116434",
+    "bytes": 101
+  },
+  {
+    "path": "logs/source-pins.log",
+    "sha256": "464d8ed70a5e2a8f105e4d485cb53de3e51673499bf890989b019ae882cd0f09",
+    "bytes": 79
+  },
+  {
+    "path": "logs/toolchain-identity.log",
+    "sha256": "705afd8bfc94d19426067f66763b2d162ce9d90b79a2dafc8e7306cfe0400b09",
+    "bytes": 948
+  },
+  {
+    "path": "monotonic-deadline-ms",
+    "sha256": "3fb1d9c1cdedd8d3b69d3a884edc7e015cc26a038cf30db5fe6fef4e0b49ed05",
+    "bytes": 8
+  },
+  {
+    "path": "monotonic-start-ms",
+    "sha256": "e134c7089db7fb7becd4cf4de0fc305441edc79764ae18f2b3892837a5a1d135",
+    "bytes": 6
+  },
+  {
+    "path": "owner-adoption.json",
+    "sha256": "7073b09068edad494f7f36b2f4cfaec4ea71d703b7261e55da61a4a69e8e6a68",
+    "bytes": 867
+  },
+  {
+    "path": "owner-result.json",
+    "sha256": "184a83662668184abd1320ac7a2ffcace0931c27b56124991fa9e1116b293d66",
+    "bytes": 708
+  },
+  {
+    "path": "receipt.json",
+    "sha256": "c8dc1e13ff09437924acdd71f893ec95c15b175bf45df06be901da416b9e891a",
+    "bytes": 3759
+  },
+  {
+    "path": "reports/codegen-generated-outputs.json",
+    "sha256": "9605f8ab2e75c1618976075f8978e1c633d4efd95533cb0568e4c827764a411c",
+    "bytes": 34328
+  },
+  {
+    "path": "reports/g03-tampering.json",
+    "sha256": "7d8f16aa085a0737c618f06f279f3ef8c5470f09e6da6e47fbfcd48f0a5f0b40",
+    "bytes": 64829
+  },
+  {
+    "path": "reports/offline-cohort.json",
+    "sha256": "6536c7c8b734e83f1eac5f28c14587977d693f2978135282c5c71501790882d2",
+    "bytes": 2385
+  },
+  {
+    "path": "run-manifest.json",
+    "sha256": "a6a1f4ac948476da38059d0a06ca050696bc73e5a4400a83fe6804eb2667decf",
+    "bytes": 45658
+  },
+  {
+    "path": "toolchain.json",
+    "sha256": "df32a56bc29ad2a0787704fbcb480a22170751025dfdcc751993b28a586acde1",
+    "bytes": 1022
+  }
+]

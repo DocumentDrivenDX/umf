@@ -1,0 +1,1305 @@
+{
+  "baseSnapshot": {
+    "path": "/private/tmp/g11-owner-boundary-source-007/source-current-007",
+    "treeSha256": "9c6eaf7459e792cb80e9f1ba05171f0e115e7fc68e7cb32088b735fc3588ba76"
+  },
+  "candidate": "g11-root-validator-source008-candidate003-frozen",
+  "coverage": {
+    "mutatedToBoolean": true,
+    "originalAuthenticatedSignature": "actual Ed25519 signed confirmed registry fixture",
+    "physicalContext": "actual create_owner_authority_session with controlled original .3 setup; matching prepared and confirmed requests accepted; foreign physical digest/supervisor/custodian/provider/installation refused",
+    "signedOriginalMaximumSubjects": 1,
+    "unittestDiscovery": "fixture classes are imported as modules, avoiding duplicate test collection"
+  },
+  "deltaFromCandidate002": [
+    {
+      "path": "python/umf_access/tests/test_generation_authority_physical_binding.py",
+      "previousSha256": "351ace65c528cc30ac81a1d22f9f21d719ad18dc2a29c45d781b3d457b96ffbf",
+      "sha256": "13971da45e0a6828583020e8bbefee4b5a5c9ab02b9820b46a08c55f832db3c3"
+    },
+    {
+      "path": "python/umf_access/tests/test_generation_enrollment_authority.py",
+      "previousSha256": "dd603a6cd4b03e80fb74d1b8da5602667f5095ad368144e187a68bbb7d734ea6",
+      "sha256": "b1507df0c830058433cf53d764064ae18be61cb6eb959a0944098ef5819482e5"
+    }
+  ],
+  "files": [
+    {
+      "bytes": 2063,
+      "path": "source/python/umf_access/src/umf_access/__init__.py",
+      "sha256": "f644bef73ad6ad86d77a26cef93597e2d44204610f595d55b5f2cb51e701a5c9"
+    },
+    {
+      "bytes": 1152,
+      "path": "source/python/umf_access/src/umf_access/adoption.py",
+      "sha256": "a5bee5fca13c6b7d9b4de7d4750369ada9d86ab766e2a8f7bb0ac4272708c493"
+    },
+    {
+      "bytes": 112,
+      "path": "source/python/umf_access/src/umf_access/build/__init__.py",
+      "sha256": "3b98eab54e92a1498ba16d0177b25775cda9cdb238463b8dd35ad57767720c9a"
+    },
+    {
+      "bytes": 1626,
+      "path": "source/python/umf_access/src/umf_access/build/approximate.py",
+      "sha256": "b56c32a1f2c3cdff5b066e3c993bbe773145db91b1cabcb0558020b0f2e7821f"
+    },
+    {
+      "bytes": 73928,
+      "path": "source/python/umf_access/src/umf_access/build/catalog.py",
+      "sha256": "cb2bd0b998cd151ef513acb040b2431b33976bc1d44902479e83b9f7f6154471"
+    },
+    {
+      "bytes": 17136,
+      "path": "source/python/umf_access/src/umf_access/build/commands.py",
+      "sha256": "864673972f87ebde353663cfabb5354b6b1b435ec727f872c6588ea00ae5705d"
+    },
+    {
+      "bytes": 45530,
+      "path": "source/python/umf_access/src/umf_access/build/pg_privileges.py",
+      "sha256": "e0134e635bf6aca696c1e389f25b89b059e0929f358bd38b89d087a02316fa96"
+    },
+    {
+      "bytes": 6523,
+      "path": "source/python/umf_access/src/umf_access/build/privileges.py",
+      "sha256": "c96b5fe90c5770f547794f5bd062fd379233212aa9c2fb9e189311c7b3dca387"
+    },
+    {
+      "bytes": 15634,
+      "path": "source/python/umf_access/src/umf_access/build/search.py",
+      "sha256": "01a44211c5f8fd6fa3dba67458e3b245a44bb6c401b6ef3d479a8718be3aafba"
+    },
+    {
+      "bytes": 4625,
+      "path": "source/python/umf_access/src/umf_access/build/unity_search.py",
+      "sha256": "391679d8f10646425e563f4a4cf68e08181af42837a2aed1506243fd0a8663a6"
+    },
+    {
+      "bytes": 6778,
+      "path": "source/python/umf_access/src/umf_access/bulk.py",
+      "sha256": "9db882b228d3d3ffd6d92b171399cdb380456589de14ee3bccc72f71d74b568e"
+    },
+    {
+      "bytes": 750,
+      "path": "source/python/umf_access/src/umf_access/canonical.py",
+      "sha256": "b72df3601d5ec13b0089576af2ef4e5c6f70ad9faae22cf62b41faff61a19ccf"
+    },
+    {
+      "bytes": 18786,
+      "path": "source/python/umf_access/src/umf_access/capture.py",
+      "sha256": "492f68954ca66f3fbd15eb008f7e1d6fa690829d9c31e3ec3d85ecb09a7e67a6"
+    },
+    {
+      "bytes": 10978,
+      "path": "source/python/umf_access/src/umf_access/catalog.py",
+      "sha256": "188e816ccad9ed609c1382ea8090471a5ed1266f412742e69b7800d32ed455ec"
+    },
+    {
+      "bytes": 16716,
+      "path": "source/python/umf_access/src/umf_access/codec_support.py",
+      "sha256": "ae6261e0b91d4ed8746c12bde48642f4e50a992af13ed4471e837050200a076f"
+    },
+    {
+      "bytes": 3083,
+      "path": "source/python/umf_access/src/umf_access/commands.py",
+      "sha256": "5cddc06e4097d683b9085306e8a5f00bf67ab2019550d725b34c2c6af318b8e9"
+    },
+    {
+      "bytes": 31751,
+      "path": "source/python/umf_access/src/umf_access/delta_read.py",
+      "sha256": "e9666bee963e78f474c416f1c1a37f59da935d1c585ceedcbdc49b8718d8c64f"
+    },
+    {
+      "bytes": 3775,
+      "path": "source/python/umf_access/src/umf_access/dsl/__init__.py",
+      "sha256": "6e53549c13931ed48fc4cebd5a28d2e7aa523707f3293261529efbde6fa846e2"
+    },
+    {
+      "bytes": 949,
+      "path": "source/python/umf_access/src/umf_access/dsl/_context.py",
+      "sha256": "16214f294fd6f2d74d2d57b7ece87496e8d587830f8f98206f8093d17e54f963"
+    },
+    {
+      "bytes": 25252,
+      "path": "source/python/umf_access/src/umf_access/dsl/_expressions.py",
+      "sha256": "3620e652e4bf1b8af6a3668e50b07ab2ecadb3449df731cd8b1c79a88ece9e64"
+    },
+    {
+      "bytes": 245,
+      "path": "source/python/umf_access/src/umf_access/dsl/_joined.py",
+      "sha256": "f66dd88b0ef8c8d7f4d755e863a4ea3a83699801b44b005533f77d390273e9b8"
+    },
+    {
+      "bytes": 8053,
+      "path": "source/python/umf_access/src/umf_access/dsl/_nodes.py",
+      "sha256": "2791cb533f42521ca6f807eb51230a2b1fc72f1e046ebd3877df36550d4953e5"
+    },
+    {
+      "bytes": 969216,
+      "path": "source/python/umf_access/src/umf_access/dsl/_query.py",
+      "sha256": "ee819f9db981c99075096c797c2686cbd320ae0abe4b4f2a2c10d42ee13da7e7"
+    },
+    {
+      "bytes": 3506,
+      "path": "source/python/umf_access/src/umf_access/dsl/_selection.py",
+      "sha256": "0b6d05700830e85e09d8f58c960bcb646e7d3d8b14008590b79d438e4e7e42e3"
+    },
+    {
+      "bytes": 10708,
+      "path": "source/python/umf_access/src/umf_access/dsl/navigation.py",
+      "sha256": "ce8a4b8b7dc27cc60f9c30f725b50c8a004216cd6186ba9861cb0cc6da05ff9f"
+    },
+    {
+      "bytes": 22729,
+      "path": "source/python/umf_access/src/umf_access/dsl/render.py",
+      "sha256": "8e57926de9cb62d499e549e5edf575d93220c5e0f460fb376a475e774d9c845b"
+    },
+    {
+      "bytes": 10477,
+      "path": "source/python/umf_access/src/umf_access/dsl/search.py",
+      "sha256": "098dde6988a2bb31450fce655d53fb1921dead9d78cee6ba0ba1eb0bd5719dd5"
+    },
+    {
+      "bytes": 37524,
+      "path": "source/python/umf_access/src/umf_access/engine_catalog.py",
+      "sha256": "b79e8b42fddb9380643adcb2b05a09d6e16032b92b7f9c4835d7af48c537bb61"
+    },
+    {
+      "bytes": 360,
+      "path": "source/python/umf_access/src/umf_access/generated_core.py",
+      "sha256": "85a6c567012677d92ffdf511f280317c9a148dd763cd3f956e113b0e76901471"
+    },
+    {
+      "bytes": 2608,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/__init__.py",
+      "sha256": "a7bcdc13271da2796eb439051cddb903167adc0fd943b8797b81036867175c82"
+    },
+    {
+      "bytes": 17166,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/approval.py",
+      "sha256": "276f85f1d005c3199ae40435b553db6ed598b5c0f57bb39ede908676b988d0d2"
+    },
+    {
+      "bytes": 4406,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/backfills.py",
+      "sha256": "43848094e9256570ba83c9ab14a7b50e44cfde9888ef4438200387dd546841a5"
+    },
+    {
+      "bytes": 17643,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/catalog.py",
+      "sha256": "2f61d46fc7f75ecc86b60c5da508310a294ffbbf3dbe7b1e5faf4349b7d67e94"
+    },
+    {
+      "bytes": 12883,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/cli.py",
+      "sha256": "084de4d8f21f0bf68a9cda80438d2c350eef53fa90e2a6ea9dffa480153ddd3d"
+    },
+    {
+      "bytes": 11593,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/concurrent.py",
+      "sha256": "fa3ac5cd8e850b54d03459e5aaae7840867dfd500f1a97cd2c42738c2ca2d826"
+    },
+    {
+      "bytes": 11180,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/correspondence.py",
+      "sha256": "ebb5459b27b9f364e732963bf79e1d6c48653d6adb708dba019c162efd1fb6f5"
+    },
+    {
+      "bytes": 74998,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/generation_authority_bootstrap.py",
+      "sha256": "05a32a0af0d9c4591f09cc8dc6f03a402b4284a415c5684691796e284851363b"
+    },
+    {
+      "bytes": 6330,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/generation_authority_session.py",
+      "sha256": "bd831d8798a819f67f0f3547104a2479b621a5d6ea38ed7b6c41d7eb5100121e"
+    },
+    {
+      "bytes": 55837,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/generation_enrollment_authority.py",
+      "sha256": "23b7b71bb98cc5744ea6820fe7aeeed3b098d9e2492a0238d08f506634789979"
+    },
+    {
+      "bytes": 38966,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/generation_enrollment_ledger.py",
+      "sha256": "adb044872e92e13faf558c1ce65168281d5d16576c4a607dd2a8fe2b2d3c74ef"
+    },
+    {
+      "bytes": 7368,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/generation_ingress.py",
+      "sha256": "413839fae56ea7f80794f6d6463b6928a4fd97e5006e5e4b1e9ff83d82b8c070"
+    },
+    {
+      "bytes": 15531,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/head.py",
+      "sha256": "ac0bb5e2ff8d2d90dfcb4a3dc86f5b06bb588bb710d444828a036342768a1506"
+    },
+    {
+      "bytes": 5607,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/head_view.py",
+      "sha256": "f0183dc8339d172a50fa2c8246133fc1ae366beda101303298841c87566710f5"
+    },
+    {
+      "bytes": 59357,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/host.py",
+      "sha256": "b5d6c43d4f8a075508d2360294a7c8c5b5137c174f083e7deb18bb38c1aed4f7"
+    },
+    {
+      "bytes": 52134,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/ingress_custody.py",
+      "sha256": "e048e7e0abb14c7120b6aae08752a363c2c2b244479a2bab9f168aaa087b75c6"
+    },
+    {
+      "bytes": 228057,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/ingress_local_postgres.py",
+      "sha256": "8290f73d7736e0bb917853a3cd49837f57118752dc5e424def1754fdfafb4477"
+    },
+    {
+      "bytes": 80971,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/ingress_store.py",
+      "sha256": "e6efd94da87d51aac965ad782008ee4664dfd66b649d4407ad7db2e61d7cbb4d"
+    },
+    {
+      "bytes": 16195,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/ledger.py",
+      "sha256": "59f7edd9a5e2d6af169ca40af8d0be2b436f1f30ab4a8b0a768bfb916b0ed271"
+    },
+    {
+      "bytes": 6074,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/ledger_schema.py",
+      "sha256": "aa84acbcff775748c7899ac529ee5bf4f3893f484e55d5d43be8830d8112c02b"
+    },
+    {
+      "bytes": 35116,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/mixed.py",
+      "sha256": "12605e614f235c98bbf507fb1364489da73128ab1b6770b8259192f673da1a9c"
+    },
+    {
+      "bytes": 7109,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/outcome_schema.py",
+      "sha256": "8b35182db7379c25addba58704a078f4e54bbd705a68c69ebd2677d469a0b182"
+    },
+    {
+      "bytes": 90239,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/owner_approval_core.py",
+      "sha256": "b3ced878aff21b4d49620fd2f6c1074815aab4a49cb44ba10a48536f5adea16c"
+    },
+    {
+      "bytes": 21240,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/owner_authority.py",
+      "sha256": "d4b658a240fbe5acc88ad46acc97cda1fafa9caf21c5ebc9063af5d49c6c7e1d"
+    },
+    {
+      "bytes": 63398,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/owner_bootstrap.py",
+      "sha256": "e43a43b8772426a7dfdf566593942fab2fa5f58c7de83707fcb4ddafbd7ebf07"
+    },
+    {
+      "bytes": 6415,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/owner_wire.py",
+      "sha256": "bcf130df7cb0e6a35e5725202b566f29b418de2b5afcb6fdd3606c466b96b320"
+    },
+    {
+      "bytes": 2149,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/phase_fence.py",
+      "sha256": "1ed3b51369b371b36614a03dfe4ddccd0c33b5880f8394b0df52f23e7973a4d6"
+    },
+    {
+      "bytes": 17881,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/phase_policy.py",
+      "sha256": "5d40eb87ee8c874d9aa101b001c2ec3e34dce8139611f6ca403fde62befa927f"
+    },
+    {
+      "bytes": 9350,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/privileges.py",
+      "sha256": "be3194dd93078f88a01c68ad35421e6638c102ee56b4d4cc55ad23d948065762"
+    },
+    {
+      "bytes": 1292,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/probe.py",
+      "sha256": "0b9ae3424c06b8a98c37a1e2bf9d92236b4f6b82b7c9466279469cc5fbc792f1"
+    },
+    {
+      "bytes": 30486,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/progress.py",
+      "sha256": "7225582e67756b26ff899bbefe91bccbb5080e9f47bfec8f1b4b5a7e828b4c49"
+    },
+    {
+      "bytes": 5642,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/roles.py",
+      "sha256": "278afdf5cb715a56ca3676a0cdbb9e6e82942be73dcbaa755ba0a4908d674d53"
+    },
+    {
+      "bytes": 5936,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/seeds.py",
+      "sha256": "5908aac50eb5b21406f14f80b35253ac6bff595d8f5d2c2f26eb31e341f434c2"
+    },
+    {
+      "bytes": 19659,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/sql_containment.py",
+      "sha256": "f30920592ede995797833a59abcb7d5579038df6789b53fee33abd5779e7c7f0"
+    },
+    {
+      "bytes": 1320,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/sql_containment_cli.py",
+      "sha256": "d169146d0b21dc422ddc5660dae78371276ab0cec2b5825eee4012a749a6b276"
+    },
+    {
+      "bytes": 716,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/sql_containment_parser.py",
+      "sha256": "7b558196f99e913c89a38fc42dfaa5b8909b64408d5110f67214d210f496fee2"
+    },
+    {
+      "bytes": 1413,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/table_boundary.py",
+      "sha256": "e7031de620fa2b0608c3b0d4475ebef8e053ce1d42fd831aa3bdd56fda7928fa"
+    },
+    {
+      "bytes": 4833,
+      "path": "source/python/umf_access/src/umf_access/lifecycle/witness.py",
+      "sha256": "8fa345e730df5a1ff6e0d5a21d2b814ff1b160a41da707b5f12ed7861dad9fbe"
+    },
+    {
+      "bytes": 11274,
+      "path": "source/python/umf_access/src/umf_access/managed_actions.py",
+      "sha256": "a9dd5273a1e62179a763444299363cdf107d7dc7979c32ff73f4f27eef68271b"
+    },
+    {
+      "bytes": 15263,
+      "path": "source/python/umf_access/src/umf_access/managed_bulk.py",
+      "sha256": "efa4fc3d8d0da9527ac3a73a448c57d2a1b0d879e111ef59b3efc9c8488267ca"
+    },
+    {
+      "bytes": 5218,
+      "path": "source/python/umf_access/src/umf_access/managed_delta.py",
+      "sha256": "9e84f26f6d0732bd9e7a271bc953e11625364475e0e8b48f64a39f3bdbe6a530"
+    },
+    {
+      "bytes": 5996,
+      "path": "source/python/umf_access/src/umf_access/managed_support.py",
+      "sha256": "29f6c910978177c3a1bafe3d688d533feac9d2489e6a78127e5fb37e923f9195"
+    },
+    {
+      "bytes": 13398,
+      "path": "source/python/umf_access/src/umf_access/manifest_commands.py",
+      "sha256": "273750266edb54490643fb1eac1f7f3313287b1b97ef17593802f87fd0cc5e51"
+    },
+    {
+      "bytes": 41251,
+      "path": "source/python/umf_access/src/umf_access/native_actions.py",
+      "sha256": "9df1fd4711c4af0c19bb696af044d84b15d3bcddfb4ae8915a58478f203f345c"
+    },
+    {
+      "bytes": 29252,
+      "path": "source/python/umf_access/src/umf_access/native_program.py",
+      "sha256": "0d3e102e5a849a55d31b47574755f9193ce0a2a12d1c5eafb4920f8c7eb99333"
+    },
+    {
+      "bytes": 4033,
+      "path": "source/python/umf_access/src/umf_access/pages.py",
+      "sha256": "47fb8eddeb91a0987efeb4e7e7dd7119b765fe4c3636f27e3f61c4f3e9da2234"
+    },
+    {
+      "bytes": 18145,
+      "path": "source/python/umf_access/src/umf_access/postgres_bulk.py",
+      "sha256": "4e004d00becaeb2b61b580ef5afafa89d005a341ca32080864eb4cd8fef682d7"
+    },
+    {
+      "bytes": 51976,
+      "path": "source/python/umf_access/src/umf_access/postgres_read.py",
+      "sha256": "42eb9f310916b9fbcc134d9f1db6d8ee6fff6e9dfe092e1c4bfdab2f21b82931"
+    },
+    {
+      "bytes": 25850,
+      "path": "source/python/umf_access/src/umf_access/postgres_search.py",
+      "sha256": "4ea58d6e0ba25ba2f6fcdee460f26b97f21d9c2e2485974aa601172a1e477993"
+    },
+    {
+      "bytes": 20790,
+      "path": "source/python/umf_access/src/umf_access/protocols.py",
+      "sha256": "3ab0070094d4b9027fa359066ef77a5a36919d2568e5c59603e1b704033a9935"
+    },
+    {
+      "bytes": 14111,
+      "path": "source/python/umf_access/src/umf_access/related_keys.py",
+      "sha256": "dff3862ac453c553288123436d16e71799b6f43669ee8879f6865b4178bc6324"
+    },
+    {
+      "bytes": 34423,
+      "path": "source/python/umf_access/src/umf_access/reviewed.py",
+      "sha256": "175526a3af2a9634e218355a6035181a3b21518f56f98118ee96a991a9133a84"
+    },
+    {
+      "bytes": 3835,
+      "path": "source/python/umf_access/src/umf_access/search_catalog.py",
+      "sha256": "fc96bac2765565c4f7b35f669489fd6a7bcb3efe5a77bbd097128c1babd86f16"
+    },
+    {
+      "bytes": 9244,
+      "path": "source/python/umf_access/src/umf_access/targets.py",
+      "sha256": "68873ff903b1754c23c8a425a6879acc52163e4c4c83a778f627111faadc7674"
+    },
+    {
+      "bytes": 7842,
+      "path": "source/python/umf_access/src/umf_access/types.py",
+      "sha256": "0d4277a0d3329df6ac67929343fa0421c6a803fa2156c9f6e245aee970556064"
+    },
+    {
+      "bytes": 8311,
+      "path": "source/python/umf_access/src/umf_access/unified/__init__.py",
+      "sha256": "0840a2129c63979b7ee2306056f665a9b31842347e7171cb8bb9081c58312445"
+    },
+    {
+      "bytes": 40216,
+      "path": "source/python/umf_access/src/umf_access/unified/_binding.py",
+      "sha256": "360e51fda03e337ba635fc3cfc2b6361354f022ee61930a3408f4faa3b9ce555"
+    },
+    {
+      "bytes": 6892,
+      "path": "source/python/umf_access/src/umf_access/unified/head_session.py",
+      "sha256": "41de32eb33e92d81301d7e3545ccb5976c641b5178236d1aec461f60e4fc58f2"
+    },
+    {
+      "bytes": 8210,
+      "path": "source/python/umf_access/src/umf_access/unified/native_binding.py",
+      "sha256": "75c0e369d9f38ad5272560f1943974d56358520e13ccaa49856ed454ad67312d"
+    },
+    {
+      "bytes": 8197,
+      "path": "source/python/umf_access/src/umf_access/unified/operation_values.py",
+      "sha256": "90638f330104eeb9405e553ef03638fe26db3a2f0440a255c0242deba0ce8b77"
+    },
+    {
+      "bytes": 4163,
+      "path": "source/python/umf_access/src/umf_access/unified/outcome_values.py",
+      "sha256": "c68e19f61947b524d8bb097b1d8b4452b17610f0b18589c4a889ec52df2cfc9e"
+    },
+    {
+      "bytes": 6888,
+      "path": "source/python/umf_access/src/umf_access/unified/session_async.py",
+      "sha256": "ae6aeaa3269e6a3275fb554c583bd9616c119fee014ac36eef3825751e8d3abe"
+    },
+    {
+      "bytes": 6161,
+      "path": "source/python/umf_access/src/umf_access/unified/session_binding.py",
+      "sha256": "3f28499a4a8ea56d526e4c852b880a16b8ae4e1454a2caceb474beb4d40f120c"
+    },
+    {
+      "bytes": 7184,
+      "path": "source/python/umf_access/src/umf_access/unified/session_policy.py",
+      "sha256": "1582fea2148e739beff1378716436ad0ad7bd7839ad154c8e71b185e052e21ee"
+    },
+    {
+      "bytes": 2433,
+      "path": "source/python/umf_access/src/umf_access/unified/session_psycopg2.py",
+      "sha256": "aef93b0099c8a863f176491e32f9ae56a8a4479e01a241866549affea5bc52bd"
+    },
+    {
+      "bytes": 5668,
+      "path": "source/python/umf_access/src/umf_access/unified/session_sqlalchemy.py",
+      "sha256": "77f14f4c87402fdf747f3065623853006415c5abc2a5bcbd2c92ddaa84f344c9"
+    },
+    {
+      "bytes": 6155,
+      "path": "source/python/umf_access/src/umf_access/unified/session_sync.py",
+      "sha256": "2ebc160b442ea0fce6aa00d0b035bc096b24a6fc8755ddb5e3295706b6062b28"
+    },
+    {
+      "bytes": 18652,
+      "path": "source/python/umf_access/src/umf_access/unified/table_reads.py",
+      "sha256": "618d17c6a839f31e77aaa7043a41e8099f77b94c486cb96ca28cf9f9819c7f44"
+    },
+    {
+      "bytes": 9685,
+      "path": "source/python/umf_access/src/umf_access/unified/table_writes.py",
+      "sha256": "089f809fbe5baa4a97a0c9dff11889de6cc42bd0d446ae2ee4541438483e6785"
+    },
+    {
+      "bytes": 17551,
+      "path": "source/python/umf_access/src/umf_access/unity_search.py",
+      "sha256": "b16c8697b239a814ad89d05891bb1d6de6b7160a9f95b69c6098ffa58d3b873b"
+    },
+    {
+      "bytes": 10367,
+      "path": "source/python/umf_access/src/umf_access/values.py",
+      "sha256": "bdb4af0b18def4e2213af6c0c32aee27202d9ebb8f74fceaf47cc823df7efef0"
+    },
+    {
+      "bytes": 2467,
+      "path": "source/python/umf_access/src/umf_access/verification.py",
+      "sha256": "88321e4c3c1bd8f796f8518da312f73efab82835d166974e2a71722f2c842aba"
+    },
+    {
+      "bytes": 15470,
+      "path": "source/python/umf_access/tests/aggregate_native_e2e.py",
+      "sha256": "5952cdbaa9b8cae1e16ffe9351f78c06b165f3f944dcb4bf45e2350b35a6f6bd"
+    },
+    {
+      "bytes": 10645,
+      "path": "source/python/umf_access/tests/alias_native_e2e.py",
+      "sha256": "3987b2bff068ff079a5743d4f6ce81ce3a2568880a9668a32f21740bc4985069"
+    },
+    {
+      "bytes": 27702,
+      "path": "source/python/umf_access/tests/bulk_list_native_e2e.py",
+      "sha256": "54bf4ce8962ea3a0f00b1f0813acbb046b8fafbf2a107eae3cf661f27680620f"
+    },
+    {
+      "bytes": 2327,
+      "path": "source/python/umf_access/tests/catalog_declarations.py",
+      "sha256": "74849e90d895c82edd9b4a612c2eabdd54723736e7bca96b5702f5e07e828af5"
+    },
+    {
+      "bytes": 6279,
+      "path": "source/python/umf_access/tests/catalog_e2e.py",
+      "sha256": "4e8a701738d7155b180cdc6434732c686d457f5ee06d2b8d16bd1a12cd216b62"
+    },
+    {
+      "bytes": 10084,
+      "path": "source/python/umf_access/tests/conformance_selftest/test_actions.py",
+      "sha256": "2a28c10851d58394d834b24c3efd93d915d232ee1fe107e7f1c85ac3998dc8a9"
+    },
+    {
+      "bytes": 10203,
+      "path": "source/python/umf_access/tests/conformance_selftest/test_bulk.py",
+      "sha256": "b33d3c68593927a1a43431114e3e9736bab8f25f32a8a40477bf9b2b3eefe236"
+    },
+    {
+      "bytes": 7511,
+      "path": "source/python/umf_access/tests/conformance_selftest/test_reads.py",
+      "sha256": "6db489b64783a273cf2adca4496b2ceef5bfd10703c2bc6427ab8849eda08cec"
+    },
+    {
+      "bytes": 7692,
+      "path": "source/python/umf_access/tests/delta_e2e.py",
+      "sha256": "f1c04d920b24fed200acdc443dfbf9f130a59991ff3fc362ed9fd37ab2591590"
+    },
+    {
+      "bytes": 15363,
+      "path": "source/python/umf_access/tests/finite_degree_native_e2e.py",
+      "sha256": "2ee797ba48483f7772417537ece086f393469c6804f0fa0101de15c3ce879391"
+    },
+    {
+      "bytes": 3995,
+      "path": "source/python/umf_access/tests/generated_import_probe.py",
+      "sha256": "8af2b6e2b446068b40eba3a9c57f7a9ab4668bf18ad8960bcb9f96a11aaf5a3e"
+    },
+    {
+      "bytes": 5621,
+      "path": "source/python/umf_access/tests/generated_matrix_probe.py",
+      "sha256": "aafdb6a57e89804e6e36592d6f1b3f998160f586949116ea151166fe343ef01a"
+    },
+    {
+      "bytes": 31796,
+      "path": "source/python/umf_access/tests/native_actions_e2e.py",
+      "sha256": "66f8e2cf5041097d6d2842d625aaeabc32028f813a4435f8fb2d498a6bc12a83"
+    },
+    {
+      "bytes": 3319,
+      "path": "source/python/umf_access/tests/owner_bootstrap_setup_fixture.py",
+      "sha256": "29858ff57d9643ed8937b2ae42153175ed86d4239cea5fde782edbb5f47d9f15"
+    },
+    {
+      "bytes": 2560,
+      "path": "source/python/umf_access/tests/packaging/aggregate_receipt_controls.py",
+      "sha256": "7762ff92f7cbe0d6e8fb3c265af50108700aaef8d1246c397b63b4d38428f471"
+    },
+    {
+      "bytes": 6294,
+      "path": "source/python/umf_access/tests/packaging/build_wheel.py",
+      "sha256": "23df705d37736e5a3777e2bc6ed9cc24c86304b4196e45ac68795acabca72b66"
+    },
+    {
+      "bytes": 18590,
+      "path": "source/python/umf_access/tests/packaging/replay_installed.py",
+      "sha256": "05b19e0a4d7193882d1b125ccc92d2b576f10c4bc46be69989b4545afd1deb06"
+    },
+    {
+      "bytes": 7888,
+      "path": "source/python/umf_access/tests/packaging/runtime_fix_e2e.py",
+      "sha256": "c8564b3f8227a87448fc62925049af29809f24b89d6acfc37d65e63607e33ab3"
+    },
+    {
+      "bytes": 6519,
+      "path": "source/python/umf_access/tests/packaging/snapshot_runtime.py",
+      "sha256": "a71184636ea06680e840af1e11597839fbfb0a2367172f19226318ceb8299263"
+    },
+    {
+      "bytes": 3811,
+      "path": "source/python/umf_access/tests/pg_fence_e2e_support.py",
+      "sha256": "939526ac4c0cd591cb859e90ad2a1fff0dcf4b0173d1196db0f405dcabd31a63"
+    },
+    {
+      "bytes": 4989,
+      "path": "source/python/umf_access/tests/pg_ranked_strict_context_e2e.py",
+      "sha256": "f6269f20cfce0e463614d310c452f8e14b99e839eb3c1a3563a2108e08621e9d"
+    },
+    {
+      "bytes": 11426,
+      "path": "source/python/umf_access/tests/pg_search_fence_e2e.py",
+      "sha256": "d22f6f5a35a1035e42ec4dfefcb1aa1284df8f1a508931ca116feb191034ee30"
+    },
+    {
+      "bytes": 19236,
+      "path": "source/python/umf_access/tests/postgres_projection_e2e.py",
+      "sha256": "3d91ffdb866b2793dce77207a6f5d6e48d757502fb7fdf2f3c090d859152b9f0"
+    },
+    {
+      "bytes": 14680,
+      "path": "source/python/umf_access/tests/refinement_native_e2e.py",
+      "sha256": "5c0276c39368168eca5f16a59dce0b18105e62fc909c93a8c0025023366533d1"
+    },
+    {
+      "bytes": 9342,
+      "path": "source/python/umf_access/tests/related_native_e2e.py",
+      "sha256": "c527eae986d7889dc13c8f5d0e027f2084798ebccbc6e7a355b45740c508f8e5"
+    },
+    {
+      "bytes": 20392,
+      "path": "source/python/umf_access/tests/relationship_joined_native_e2e.py",
+      "sha256": "66cdffc9c00920a55072c28d12125b930c6235814d3a9a4b755f6ccb4bd50ae9"
+    },
+    {
+      "bytes": 17962,
+      "path": "source/python/umf_access/tests/relationship_native_e2e.py",
+      "sha256": "1201f857246088592f6c7df530914f86919767ec566f546af3b72bc2da59cdb8"
+    },
+    {
+      "bytes": 26446,
+      "path": "source/python/umf_access/tests/search_e2e.py",
+      "sha256": "912b75b18989d2b5fe65acf5fabc10019514cd0e918c858aacb5ee778888c501"
+    },
+    {
+      "bytes": 14166,
+      "path": "source/python/umf_access/tests/search_filter_parameters_e2e.py",
+      "sha256": "1668ba51d6703a87b43e956d42fd266232e12e034a78350b3054e6696e00a6a3"
+    },
+    {
+      "bytes": 9080,
+      "path": "source/python/umf_access/tests/source_exact_native_e2e.py",
+      "sha256": "f185f363319c7ec27e6aafe25f7f154db181b11a08511db22e05e50591a4c550"
+    },
+    {
+      "bytes": 7188,
+      "path": "source/python/umf_access/tests/source_exact_vector_membership_e2e.py",
+      "sha256": "2eea0ffa2096ae9908f1891ea441a7f5da0d46947401c6d55ac852333a1db522"
+    },
+    {
+      "bytes": 17735,
+      "path": "source/python/umf_access/tests/spark_hll_e2e.py",
+      "sha256": "5436dbaf41ba426e12e92241c6567561d4e643326eb425a6b81b9312c1ac5d34"
+    },
+    {
+      "bytes": 11957,
+      "path": "source/python/umf_access/tests/spark_list_e2e.py",
+      "sha256": "c26dba8807c54fbc7a8f3b7dd2159c11706fc523b30916965bd38f0727def6aa"
+    },
+    {
+      "bytes": 12143,
+      "path": "source/python/umf_access/tests/spark_numeric_e2e.py",
+      "sha256": "e9d48f6246b8ace323f42e8dd780d09e07f2de94e80b832d6f31146851de8bcf"
+    },
+    {
+      "bytes": 637,
+      "path": "source/python/umf_access/tests/static/manifest-commands/negative.py",
+      "sha256": "199a2b44ff79d6ac42ce877d11ff3973ba60f09afddec5ead308b10b50972346"
+    },
+    {
+      "bytes": 1487,
+      "path": "source/python/umf_access/tests/static/manifest-commands/positive.py",
+      "sha256": "c4b0547d50c8ccfb002e5bb2d8c1f8010996b7fd9ee6f7b5f7365052e3c3a717"
+    },
+    {
+      "bytes": 10898,
+      "path": "source/python/umf_access/tests/term_filters_e2e.py",
+      "sha256": "c6d0346b8425db2100569fda5bbdf576e19bd9bbf19cf0dfc2377969de80ef49"
+    },
+    {
+      "bytes": 14152,
+      "path": "source/python/umf_access/tests/test_access_python_boundaries.py",
+      "sha256": "0616d8714b5a46d631d0f16c2bd2e15deff2c90dea90716095a447bd9a2a8eec"
+    },
+    {
+      "bytes": 8429,
+      "path": "source/python/umf_access/tests/test_action_clients.py",
+      "sha256": "baad74ad30bdfa9b09f4f7b7712b438f87ea62d0ba2c0f26f66ea282ea3f66e0"
+    },
+    {
+      "bytes": 7756,
+      "path": "source/python/umf_access/tests/test_adoption_packet.py",
+      "sha256": "2eb7bdfa8f60d2a616eb6d67862d8ebfe0610e3f2e8b2e90457c507eb022584d"
+    },
+    {
+      "bytes": 6212,
+      "path": "source/python/umf_access/tests/test_aggregate_dsl.py",
+      "sha256": "96d6462ac855afe0fefff5cac6c540051c23a6ddf92d0524473961306a5adc63"
+    },
+    {
+      "bytes": 3111,
+      "path": "source/python/umf_access/tests/test_alias_dsl.py",
+      "sha256": "1d4825c125685ca7cd8496b0ce4bdf711f3334f391642042b4e60985164f680c"
+    },
+    {
+      "bytes": 2229,
+      "path": "source/python/umf_access/tests/test_approximate_profile.py",
+      "sha256": "ff98739e23aed5f021c215fe8f4c1dfe0dafdef22a1c3a537820a77dc223d0b1"
+    },
+    {
+      "bytes": 1619,
+      "path": "source/python/umf_access/tests/test_async_bulk_plan.py",
+      "sha256": "91978aa2091afdefa6002630f53fa4b8994dabd7d98d1018a928997cd363942c"
+    },
+    {
+      "bytes": 4647,
+      "path": "source/python/umf_access/tests/test_backfill_error_sanitization.py",
+      "sha256": "b0760de90f8b8c126e7a5364856e504aed6413bd0fee2b485d559f38e6189bb9"
+    },
+    {
+      "bytes": 4697,
+      "path": "source/python/umf_access/tests/test_batch_frames.py",
+      "sha256": "9c92eabcd99f210a036f4ca14c7c7951b4d6a11292c40821f103ad6de1f0d169"
+    },
+    {
+      "bytes": 9837,
+      "path": "source/python/umf_access/tests/test_bulk_list_parameters.py",
+      "sha256": "6a06c90299cfedbaca900d1ba393c1e2ea06c98fcf8110b059ebef69f41f099f"
+    },
+    {
+      "bytes": 10848,
+      "path": "source/python/umf_access/tests/test_capture.py",
+      "sha256": "f259325fbfc743452b443761196dc8cec7d7fb95ebaccf6d7ecc59e0455737df"
+    },
+    {
+      "bytes": 6971,
+      "path": "source/python/umf_access/tests/test_catalog_configuration.py",
+      "sha256": "acc7ddf5e54e355ebad73bde1c41637da0477c1ce6250e9237b3af80012a4fac"
+    },
+    {
+      "bytes": 14229,
+      "path": "source/python/umf_access/tests/test_catalog_fence.py",
+      "sha256": "d25a29c0439fe84735e1bcf58f8f595451aae2744bbef708b99035fb535f803a"
+    },
+    {
+      "bytes": 12982,
+      "path": "source/python/umf_access/tests/test_catalog_writer.py",
+      "sha256": "ea18f39f03c90040f091ffd6ae7993d7634af658a978d1b43f8abcbca081f251"
+    },
+    {
+      "bytes": 8038,
+      "path": "source/python/umf_access/tests/test_codec_support_red.py",
+      "sha256": "042eb35cb8a7f6515ef0e9bd7b2267cacc8963bdf664154d1a6e52e4f379ba29"
+    },
+    {
+      "bytes": 5444,
+      "path": "source/python/umf_access/tests/test_codecs.py",
+      "sha256": "fed462479686b125d7e6028260064138833dab62eb9f20de7cb63cc4af6ba6e0"
+    },
+    {
+      "bytes": 3174,
+      "path": "source/python/umf_access/tests/test_command_source.py",
+      "sha256": "1d0e67677f010d66ea12d1c8322cb6c4aa3ac7ab75ef33a4491f6253cd65129c"
+    },
+    {
+      "bytes": 1634,
+      "path": "source/python/umf_access/tests/test_delta_read_classification.py",
+      "sha256": "de6f15019796506c1760a0c7ebaf54924e970cf7ba193205bb0243244766ad18"
+    },
+    {
+      "bytes": 2348,
+      "path": "source/python/umf_access/tests/test_delta_read_projection_values.py",
+      "sha256": "2c927bedb03261ebc2810fc5c1c02a7d948548406965b5f3033079510e37bdc6"
+    },
+    {
+      "bytes": 2749,
+      "path": "source/python/umf_access/tests/test_delta_stream_limits.py",
+      "sha256": "72e504e714dbc53839849b052bb45a74ae0eafdfe28ced1a3d06401ff1b06de8"
+    },
+    {
+      "bytes": 20306,
+      "path": "source/python/umf_access/tests/test_dsl_render.py",
+      "sha256": "0393795f15a97a6ba3e2bb9e973ff106bddaa609b46a2d5bc4eb13c2edfab9b8"
+    },
+    {
+      "bytes": 13277,
+      "path": "source/python/umf_access/tests/test_dsl_runtime.py",
+      "sha256": "02ccc9a22a673bc6c53230642e62a58dd8c0fa80f040075cfc12e8cc767abead"
+    },
+    {
+      "bytes": 9723,
+      "path": "source/python/umf_access/tests/test_engine_catalog.py",
+      "sha256": "26541631d5ca6e7d95b52e1b30c9f433b1bd0afc89f4fc742a9f65b6a41e27c3"
+    },
+    {
+      "bytes": 20004,
+      "path": "source/python/umf_access/tests/test_engine_presence_signatures.py",
+      "sha256": "8af7c582fc044fac26ba976cd0f54e1c17fa31f0780818e3d872fc81f886461a"
+    },
+    {
+      "bytes": 1650,
+      "path": "source/python/umf_access/tests/test_fixed_query_description.py",
+      "sha256": "7432a4a44f397b10d8467cebe3167d833d9e9be5df4848cc858207b4799423c7"
+    },
+    {
+      "bytes": 8222,
+      "path": "source/python/umf_access/tests/test_fixed_query_preparation.py",
+      "sha256": "2488457bd8873f6f48ea8466b5ee047c4110bc60432752ddcef817c55c5e6586"
+    },
+    {
+      "bytes": 1072,
+      "path": "source/python/umf_access/tests/test_g02_runtime_refusal.py",
+      "sha256": "7f1b9b8d6fd0daaf9ae2a4ae63d833fd278ecec8bb56dc00dc7e1931c183c2a3"
+    },
+    {
+      "bytes": 12715,
+      "path": "source/python/umf_access/tests/test_g03_host.py",
+      "sha256": "0ecad29bdda301d35bb2948f1eb06d7b39489abff2594b5fd28ce3fe23d33666"
+    },
+    {
+      "bytes": 13937,
+      "path": "source/python/umf_access/tests/test_g11_execution_policy.py",
+      "sha256": "8071e730b572f68e7a6191b6dc3aed2d223f921db8905c739998fc8d25520100"
+    },
+    {
+      "bytes": 3203,
+      "path": "source/python/umf_access/tests/test_generated_actiontypes.py",
+      "sha256": "42fd805c33ece6f3393b9dddd8ed335759e5d14702e133222f54ed95f57f9bda"
+    },
+    {
+      "bytes": 4391,
+      "path": "source/python/umf_access/tests/test_generated_models.py",
+      "sha256": "eefe8139d409d8b196aac6476b2abed08a4d52c5d41e85d5fe95211cedba61bd"
+    },
+    {
+      "bytes": 3178,
+      "path": "source/python/umf_access/tests/test_generated_projections.py",
+      "sha256": "5cd9f1827a7c6a8be212a1933c3c2f737bcda337a387d31cfe373db03a5221fa"
+    },
+    {
+      "bytes": 9228,
+      "path": "source/python/umf_access/tests/test_generation_authority_physical_binding.py",
+      "sha256": "13971da45e0a6828583020e8bbefee4b5a5c9ab02b9820b46a08c55f832db3c3"
+    },
+    {
+      "bytes": 50882,
+      "path": "source/python/umf_access/tests/test_generation_enrollment_authority.py",
+      "sha256": "b1507df0c830058433cf53d764064ae18be61cb6eb959a0944098ef5819482e5"
+    },
+    {
+      "bytes": 4483,
+      "path": "source/python/umf_access/tests/test_golden_vectors.py",
+      "sha256": "231c2e6ab793a87f186125ca013b3ef2abcec7d42ba215775da3f7bf432dd33c"
+    },
+    {
+      "bytes": 24525,
+      "path": "source/python/umf_access/tests/test_ingress_custody.py",
+      "sha256": "0e927c331ffef9762d260674e179164bdcc631ad677b9e650a74a187945fc327"
+    },
+    {
+      "bytes": 53453,
+      "path": "source/python/umf_access/tests/test_ingress_local_postgres.py",
+      "sha256": "bd5a26693f3f24392a918174644a9b6d2e376a0a1dc11e79ae0836b52d0fbefb"
+    },
+    {
+      "bytes": 19420,
+      "path": "source/python/umf_access/tests/test_ingress_local_postgres_authority_bridge.py",
+      "sha256": "8892226d08b5589376c67183ebb10cfe0de103ab10345002df6dc12d81d6f876"
+    },
+    {
+      "bytes": 41683,
+      "path": "source/python/umf_access/tests/test_ingress_store.py",
+      "sha256": "cfd00dac4d87e43c51eeb490d2e892e74066650d68a405577d8424a2857e8b3e"
+    },
+    {
+      "bytes": 1368,
+      "path": "source/python/umf_access/tests/test_integer_native_output.py",
+      "sha256": "16f222108175210ea3dcd1e2dcfb05ca3245075db8c877afb4716c73236614c3"
+    },
+    {
+      "bytes": 2341,
+      "path": "source/python/umf_access/tests/test_join_refinement.py",
+      "sha256": "7244b1b0fb354d2dc074bfbe4075f378a6b351d78985786f4f6529d20b157101"
+    },
+    {
+      "bytes": 1872,
+      "path": "source/python/umf_access/tests/test_joined_keys_context.py",
+      "sha256": "c9baf6f03206127e0018b7150a0b18ce3e3906921dd5277440deaa4122cabbaf"
+    },
+    {
+      "bytes": 1234,
+      "path": "source/python/umf_access/tests/test_joined_model_projection.py",
+      "sha256": "31b30bc05d4e139b9e38c150509049fc27a5c48a798c2feffd21f788cb886ce4"
+    },
+    {
+      "bytes": 3133,
+      "path": "source/python/umf_access/tests/test_managed_receipt.py",
+      "sha256": "ea4e87cd840c89aca30408da5b8c7448aa2ef881db225d66ab892e7feaddcd74"
+    },
+    {
+      "bytes": 3116,
+      "path": "source/python/umf_access/tests/test_manifest_bulk_plan.py",
+      "sha256": "d4671692a67305043dd161fc418c4fd2f80234618bee46967af751318e9fe8cb"
+    },
+    {
+      "bytes": 6736,
+      "path": "source/python/umf_access/tests/test_manifest_commands.py",
+      "sha256": "bc6a19be8fa9e3fe39398d2a0a3e88396936871372937d370cee58fab3851f06"
+    },
+    {
+      "bytes": 5898,
+      "path": "source/python/umf_access/tests/test_many_navigation.py",
+      "sha256": "18f1d94874050279c51b93369f9589870b2e6c56ae6a2341ffd90b8adc89fa52"
+    },
+    {
+      "bytes": 23399,
+      "path": "source/python/umf_access/tests/test_migration_phases.py",
+      "sha256": "0f19ad26cedc64762adc8bedef9a4f576d272118cae481084c9dd6cbb8d64e75"
+    },
+    {
+      "bytes": 3941,
+      "path": "source/python/umf_access/tests/test_mutation_fence_driver.py",
+      "sha256": "889cc3edf5a97dc33c90fdffc9223663fcd33f584bec98b53c7b6b27a0ec1634"
+    },
+    {
+      "bytes": 5154,
+      "path": "source/python/umf_access/tests/test_mutation_index_custody.py",
+      "sha256": "9855c56e19f81f53b831913a38c1410cd9405476066f9e1a1663d1cd32e926e3"
+    },
+    {
+      "bytes": 3112,
+      "path": "source/python/umf_access/tests/test_native_binding.py",
+      "sha256": "3139d314a7fe67208ca71737188c39efd6f12097821e608bc29fcfd324af3273"
+    },
+    {
+      "bytes": 7592,
+      "path": "source/python/umf_access/tests/test_native_column_custody.py",
+      "sha256": "b1fb1f87f83f96b300e8684ed53fd3e209a78bd30a13778ea80ba300bec74ac9"
+    },
+    {
+      "bytes": 2485,
+      "path": "source/python/umf_access/tests/test_native_key_admission.py",
+      "sha256": "248f67ce8491e2a4d4038b6e4e82a09c78cdc29db007bd2f6a13382ecb60468c"
+    },
+    {
+      "bytes": 17281,
+      "path": "source/python/umf_access/tests/test_native_sessions.py",
+      "sha256": "2be0fcea8459a148742ff00024add60b76266e6258fbbbe260263ac658e8ce3c"
+    },
+    {
+      "bytes": 14122,
+      "path": "source/python/umf_access/tests/test_operation_input_snapshot.py",
+      "sha256": "da4883e1f88afcce67da2af0759b54e983d08718e29e061a3fd609f7b9efffba"
+    },
+    {
+      "bytes": 50290,
+      "path": "source/python/umf_access/tests/test_owner_authority.py",
+      "sha256": "ed2ff697a6806a4af41a5320288448cd4e4dc3bc7a083993f93f1d28d9714464"
+    },
+    {
+      "bytes": 19046,
+      "path": "source/python/umf_access/tests/test_owner_ledger_birth_recovery.py",
+      "sha256": "6526ef1699794753199edda272a16b2aae9403e9e074a55650ae632d8382e61a"
+    },
+    {
+      "bytes": 12180,
+      "path": "source/python/umf_access/tests/test_pg_privilege_advisory.py",
+      "sha256": "253a4f4bcd40fe514b8cb980b214b19623ede1af6adaf9354795d4d63133ad51"
+    },
+    {
+      "bytes": 2534,
+      "path": "source/python/umf_access/tests/test_postgres_projection_values.py",
+      "sha256": "b61e6a66802aedcf3922d7f2cbd7a9ca36f1cf2ec4f1e1bcee3e730ec2e2d1df"
+    },
+    {
+      "bytes": 1921,
+      "path": "source/python/umf_access/tests/test_postgres_resolution.py",
+      "sha256": "1a87c0339c350676822f941600a3ccc9c2aed75c9a1c705ddb12bc2b16011fc0"
+    },
+    {
+      "bytes": 2291,
+      "path": "source/python/umf_access/tests/test_postgres_search_projection_values.py",
+      "sha256": "e34c78f17f5683243a129aa6a0c554e91b82a992394ceebef8a5d62fee8dc5a9"
+    },
+    {
+      "bytes": 2814,
+      "path": "source/python/umf_access/tests/test_privilege_report.py",
+      "sha256": "4c3b50cd5083db88759fc7783cccfb280d7638706dd7c1ffbe423f5ef71f9262"
+    },
+    {
+      "bytes": 2724,
+      "path": "source/python/umf_access/tests/test_ranked_projection.py",
+      "sha256": "3d76f6f2b17f031267cf518bec528b5b4b0da5cad1dfbc148d1c660e094dbf34"
+    },
+    {
+      "bytes": 6152,
+      "path": "source/python/umf_access/tests/test_read_fence_driver.py",
+      "sha256": "52f002bd1e63117823f09c1035089c43a6c85340eae1d9d02cced76a4526a9ce"
+    },
+    {
+      "bytes": 16120,
+      "path": "source/python/umf_access/tests/test_refactor_regeneration.py",
+      "sha256": "c07879486ce6e30ba07c9266adddde20d017cea2d45a559dfa09d8bb74f8a840"
+    },
+    {
+      "bytes": 2597,
+      "path": "source/python/umf_access/tests/test_related_custody.py",
+      "sha256": "e1209de4a71e09e73840279ff57059e0cb86f6debd7e30144f191c1582d7a24c"
+    },
+    {
+      "bytes": 3019,
+      "path": "source/python/umf_access/tests/test_related_generated.py",
+      "sha256": "8cb6e35f3c5396b1f2ffddd52accfde5a71344890b47e3aa92c9050b728d97d5"
+    },
+    {
+      "bytes": 4217,
+      "path": "source/python/umf_access/tests/test_related_key_transport.py",
+      "sha256": "722b5ec54432865b94c78848eec34cdfee25040c0137766bfbcfbda9f9fe0b09"
+    },
+    {
+      "bytes": 4026,
+      "path": "source/python/umf_access/tests/test_related_projection_stream.py",
+      "sha256": "55c8b64919c3f47377e98e2f15a6bc0e11f22ff8adb9d7f9eac13a73174daf9c"
+    },
+    {
+      "bytes": 5661,
+      "path": "source/python/umf_access/tests/test_relationship_admission.py",
+      "sha256": "260700d180016b83b1cd5c39bb0698868f3f16eca0dbbdadfb73ee1d48d0262f"
+    },
+    {
+      "bytes": 1082,
+      "path": "source/python/umf_access/tests/test_relationship_key_identity.py",
+      "sha256": "1c26afeba7c11b3ca8964ce2f76fef8ff179d7d7b5523c40142c6016e53a40eb"
+    },
+    {
+      "bytes": 4043,
+      "path": "source/python/umf_access/tests/test_relationship_literals.py",
+      "sha256": "a4ddf83bb537b59f507ada767e0ef91a060c497c2305f4a3091cb1e7ccb72431"
+    },
+    {
+      "bytes": 4847,
+      "path": "source/python/umf_access/tests/test_reviewed_dbapi_transport.py",
+      "sha256": "45cec9952f162768ea8ab468a98beb3e9d8d1c1d214aac15896c73821e68aafb"
+    },
+    {
+      "bytes": 1708,
+      "path": "source/python/umf_access/tests/test_reviewed_projection_carriers.py",
+      "sha256": "c4f073553668babba8f8067fe4291b6ac540dcd9b438ba98080a37af7d212ca9"
+    },
+    {
+      "bytes": 45643,
+      "path": "source/python/umf_access/tests/test_reviewed_reads.py",
+      "sha256": "3cb320690d2fa029fe47ccc99d802c2b5865aa4a76eaa7c38f64c99d370dd866"
+    },
+    {
+      "bytes": 8162,
+      "path": "source/python/umf_access/tests/test_reviewed_source.py",
+      "sha256": "0490b5b1f49f4e3c4b635ec5f6c7f603a5e0caebef9964a35ff7ee20a1d4592a"
+    },
+    {
+      "bytes": 5025,
+      "path": "source/python/umf_access/tests/test_runtime_driven_codecs.py",
+      "sha256": "596e24d2755dd53e60a3b73b14e6a8c4f22950736928a85c79664eb88d3c137c"
+    },
+    {
+      "bytes": 1993,
+      "path": "source/python/umf_access/tests/test_schema_binding_configuration.py",
+      "sha256": "a2d9759a741ff20e8fe3a2ea57b1bc6222cbf6dff5e9337e3296d8c191025c54"
+    },
+    {
+      "bytes": 6251,
+      "path": "source/python/umf_access/tests/test_search_parameter_custody.py",
+      "sha256": "1f7a10894c96a7c10cf2ab84e37efc611bbfb3a4942956e9b167e01346f0cb14"
+    },
+    {
+      "bytes": 3094,
+      "path": "source/python/umf_access/tests/test_search_resolution_order.py",
+      "sha256": "0ea6333c66a2e4bf87eddf7fdb36d9037038be23148382bac1b63e3c077da6b8"
+    },
+    {
+      "bytes": 5455,
+      "path": "source/python/umf_access/tests/test_session_binding.py",
+      "sha256": "a5b923e1e07d32ac8f9f03e8b4c95d6afc0a7c06b7270772f96200360223be07"
+    },
+    {
+      "bytes": 3287,
+      "path": "source/python/umf_access/tests/test_snapshot_declarations.py",
+      "sha256": "0a572ed6ee455c16077ac8134ac00065fb3775b393ae408ba05db480c849452c"
+    },
+    {
+      "bytes": 5697,
+      "path": "source/python/umf_access/tests/test_source_exact_read_admission.py",
+      "sha256": "88c16f1862536f3dfb45310a44c3fc55f46aedda0d40dec37c928ef420ddd829"
+    },
+    {
+      "bytes": 4054,
+      "path": "source/python/umf_access/tests/test_spark_list_parameters.py",
+      "sha256": "536155b846cde6e82cd017cc73a1b6b15d88132e24788b9918b7f28f98b584bc"
+    },
+    {
+      "bytes": 4263,
+      "path": "source/python/umf_access/tests/test_spark_numeric_parameters.py",
+      "sha256": "e8cd7d54d666e4b552e2e5c718d668a52ceeec262984f026a9241896de95b303"
+    },
+    {
+      "bytes": 6848,
+      "path": "source/python/umf_access/tests/test_stream_lifecycle.py",
+      "sha256": "e98a74c74871b4a8cd0362f3302755bdac753163fd5a2c7d5e8f69e6029b068e"
+    },
+    {
+      "bytes": 3178,
+      "path": "source/python/umf_access/tests/test_stream_page_size.py",
+      "sha256": "1b58adf8595941f6255b8075b51ada1c20a733e3c9868f26a823612a643ddc0e"
+    },
+    {
+      "bytes": 7729,
+      "path": "source/python/umf_access/tests/test_table_outcomes.py",
+      "sha256": "7f3bd113076e0eca6ee3cbb5c03754ad2dfa5eb564f958ae0150b979ab66fd84"
+    },
+    {
+      "bytes": 5913,
+      "path": "source/python/umf_access/tests/test_table_read_values.py",
+      "sha256": "38612aec63c3f25c5ca535cb1da8d185f8e1665d6d9eb03cb2029fcebd0bb925"
+    },
+    {
+      "bytes": 2045,
+      "path": "source/python/umf_access/tests/test_target_verification.py",
+      "sha256": "ce5246f5aafa4f6ad88029224544bcfc7cea7099bba8e88c2ebbe0170063e8f1"
+    },
+    {
+      "bytes": 6026,
+      "path": "source/python/umf_access/tests/test_temporal_carriers_red.py",
+      "sha256": "bc8dee3208f5d2cb26d5cc54ef6008b903de575d5c3822deb4da6086b6aff626"
+    },
+    {
+      "bytes": 3360,
+      "path": "source/python/umf_access/tests/test_term_admission.py",
+      "sha256": "c7e1206edf27f6d82f356297f9111ab9c6cc0064ddffdcf8d7edb269e37a5be3"
+    },
+    {
+      "bytes": 8555,
+      "path": "source/python/umf_access/tests/test_term_configuration_custody.py",
+      "sha256": "bc90327d8e8533f60d6fdaa35c7ae44aedb1046fa2369f9657595ffede436afa"
+    },
+    {
+      "bytes": 4033,
+      "path": "source/python/umf_access/tests/test_truss_related_metadata.py",
+      "sha256": "9af0d0f70aef366fbbc008c1cf44f7059f50dfa4835e894dcefbef47d82a0430"
+    },
+    {
+      "bytes": 11484,
+      "path": "source/python/umf_access/tests/test_unified_binding_identity.py",
+      "sha256": "926a7794237a68ca5a910769e601479ca1907f610e36f0d9ab3141a339982aca"
+    },
+    {
+      "bytes": 12691,
+      "path": "source/python/umf_access/tests/test_unity_search.py",
+      "sha256": "81025332ef7b6c5527a9ddd3500411d092a02989e03f5b74e5b1193e3db97c9b"
+    },
+    {
+      "bytes": 3099,
+      "path": "source/python/umf_access/tests/test_unity_search_build.py",
+      "sha256": "bcc4f8e6c1646bf54ef1db12437334ba5aa122ff2b9f1e0f66dbddaed68184d8"
+    },
+    {
+      "bytes": 4828,
+      "path": "source/python/umf_access/tests/test_values_red.py",
+      "sha256": "1b266d9980edbe4a767e240034a19d15cfbb68aaac9e97501098396a666af307"
+    },
+    {
+      "bytes": 3977,
+      "path": "source/python/umf_access/tests/test_verification_cache.py",
+      "sha256": "8ab50654c7401fc094de8f7b93305e94b386aaaa9cac759e0aa8857049c98848"
+    },
+    {
+      "bytes": 8467,
+      "path": "source/python/umf_access/tests/test_wheel_contract.py",
+      "sha256": "f34533d6a1a79e5a795d6c3e9889ec49b4800b61ac581561f5d126359947553e"
+    },
+    {
+      "bytes": 3337,
+      "path": "source/python/umf_access/tests/unity_search_schema_e2e.py",
+      "sha256": "1def25fd6ccbd2476da13a7148cddc4be6c76f1438257ec932fcb91465af03e0"
+    },
+    {
+      "bytes": 18720,
+      "path": "source/scripts/check-access-python-boundaries.py",
+      "sha256": "9b0f765d875b2910edae3c9a92449856dace77227e36e3924fd9829c71d6718c"
+    },
+    {
+      "bytes": 712,
+      "path": "run-tests.sh",
+      "sha256": "50dd1f31034dcd87df2636b06dcc4869621c97fe7c6f10e664944afd4e5472d0"
+    },
+    {
+      "bytes": 223,
+      "path": "evidence/tests.log",
+      "sha256": "91a40e32bc01b9e3162170e375e7d76407b79a4a72b3bba3cecf56b34b1deab0"
+    },
+    {
+      "bytes": 19,
+      "path": "evidence/ruff.log",
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "bytes": 2582,
+      "path": "evidence/predecessor-control.log",
+      "sha256": "d1171f7e01fe0e7d2be3fb0f9d0f278144c6bde898d8102cb0b28581dc33bbf2"
+    }
+  ],
+  "lineageCorrectionsSinceCandidate001": [
+    {
+      "change": "_root_same_json catches GenerationAuthorityBootstrapError, the actual canonicalization failure type, rather than the unrelated GenerationEnrollmentAuthorityError.",
+      "path": "python/umf_access/src/umf_access/lifecycle/generation_authority_bootstrap.py"
+    },
+    {
+      "change": "Physical-binding validation directly indexes request intent trust/configuration rather than retaining an unused local intent alias.",
+      "path": "python/umf_access/src/umf_access/lifecycle/owner_bootstrap.py"
+    }
+  ],
+  "notQualified": [
+    "native provider/bootstrap integration",
+    "PostgreSQL/native execution",
+    "production authority enrollment"
+  ],
+  "predecessorControl": {
+    "baseline": "frozen source007 product modules with candidate003 regression test overlay",
+    "command": "python -B -m unittest test_generation_enrollment_authority.GenerationEnrollmentAuthorityTests.test_signed_registry_rejects_python_cross_type_enrollment_copies",
+    "log": "evidence/predecessor-control.log",
+    "logSha256": "d1171f7e01fe0e7d2be3fb0f9d0f278144c6bde898d8102cb0b28581dc33bbf2",
+    "result": "expected regression: exit 1; 3 subtest failures because baseline accepted all three cross-type duplicate values"
+  },
+  "priorCandidate": {
+    "manifestSha256": "7ee512a71cc81009e83b097cacec546bdeb26b7f88dbbce2c162fc376086d0d0",
+    "path": "/private/tmp/g11-root-validator-source008-candidate002-frozen",
+    "preserved": true
+  },
+  "ruff": {
+    "command": "/private/tmp/umf-current010-host-20261019/bin/ruff check --no-cache --config /Users/erik/.codex/worktrees/eb69/umf/.ruff.toml <four changed Python files>",
+    "log": "evidence/ruff.log",
+    "result": "passed"
+  },
+  "runtime": {
+    "cffi": "2.1.1",
+    "cryptography": "50.0.2",
+    "cryptographyWheelSha256": "fa8f5efb344d6908a1ce62f4a24e2e5780f825d6f53f5f50ec5ffacac72936cb",
+    "interpreter": "/private/tmp/g11-owner-authority-crypto-001/venv/bin/python",
+    "pycparser": "3.12",
+    "pydantic": "2.14.1",
+    "pydanticCore": "2.50.1",
+    "python": "3.12.15"
+  },
+  "sourceChangedFromBase": [
+    "python/umf_access/src/umf_access/lifecycle/generation_authority_bootstrap.py",
+    "python/umf_access/src/umf_access/lifecycle/owner_bootstrap.py",
+    "python/umf_access/tests/test_generation_authority_physical_binding.py",
+    "python/umf_access/tests/test_generation_enrollment_authority.py"
+  ],
+  "sourceFileCount": 240,
+  "status": "immutable source-only review candidate; no repository edits/native qualification",
+  "testDiscoveryCorrection": "Fixture classes are module-qualified instead of imported as class objects; this avoids unittest collecting those fixture suites a second time. Distinct source suite result is 123 tests.",
+  "tests": {
+    "command": "./run-tests.sh",
+    "log": "evidence/tests.log",
+    "result": "123 passed",
+    "testLogSha256": "91a40e32bc01b9e3162170e375e7d76407b79a4a72b3bba3cecf56b34b1deab0"
+  }
+}

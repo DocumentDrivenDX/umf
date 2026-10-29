@@ -1,0 +1,180 @@
+{
+  "evidenceArchive": {
+    "bytes": 163526,
+    "entries": 65,
+    "filename": "umf-core-0.10.2-qualification-evidence.zip",
+    "includedContent": "Metadata evidence, run receipts, test reports and independent reviews; package binaries are excluded.",
+    "manifest": {
+      "entry": "evidence-index.json",
+      "sha256": "87d1eb41105f5ca8894cf9672cc06e081e3b7698515e23d0068910a94bff3b95",
+      "sourceEntryCount": 64
+    },
+    "sha256": "e873b3ce9c374607b516332fd990ee6c4121b9e78610fc8151859f2279c57e47"
+  },
+  "platformScope": {
+    "linux": "Exact selected wheel is tagged manylinux_2_34_x86_64; test observation was Ubuntu 24.04, x86_64, Python 3.11.17, glibc 2.39.",
+    "macos": "Exact selected wheel is tagged macosx_11_0_arm64; test observation was macOS 15.7.9 arm64, Python 3.11.9.",
+    "notEstablished": [
+      "older Linux/glibc runtimes",
+      "other CPU architectures",
+      "other Python runtimes beyond the recorded ABI3 artifact tests"
+    ]
+  },
+  "qualificationRuns": [
+    {
+      "artifactId": "12667128999",
+      "artifactZipSha256": "6951c2c2a3adffbadddb2cc0672d94b7d0fbd8a443251ee97a2113a573902eb1",
+      "attempt": 1,
+      "cohort": "linux-x86_64-repaired-wheel",
+      "harnessCommit": "433bfebcba88107995a6a0552dd319d20eb20272",
+      "independentArtifactReview": {
+        "sha256": "3c5930be60da1671b4a963a3a37669d72b137f21b1c18ff82faf39ac4608a2d7",
+        "status": "accepted"
+      },
+      "installedPayloadParity": true,
+      "runId": "40359647952",
+      "sourceCommit": "a1b909d4f92da6604aeb21d3ea60e9a9943a7f87",
+      "testedArtifact": "umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl",
+      "testedEnvironment": {
+        "architecture": "x86_64",
+        "glibc": "2.39",
+        "os": "Ubuntu 24.04 hosted Linux",
+        "python": "3.11.17"
+      },
+      "tests": {
+        "count": 254,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "artifactId": "12664890298",
+      "artifactSourceCommit": "f4d22c6f0f9e308439e3646117e31239cf48bc07",
+      "artifactZipSha256": "d0a2fdca56e715d0470ade79ffd124bb2ee0a61ec9156276570233a7e69fcc7c",
+      "cohort": "macos-arm64-direct-wheel",
+      "independentArtifactReview": {
+        "sha256": "e74b6e24e40a4688e45ad6b9a1adb938b32189fcd26bde7b626b689386756e57",
+        "status": "accepted"
+      },
+      "installedPayloadParity": true,
+      "runId": "40338730518",
+      "testedArtifact": "umf_core-0.10.2-cp311-abi3-macosx_11_0_arm64.whl",
+      "testedEnvironment": {
+        "architecture": "arm64",
+        "os": "macOS 15.7.9",
+        "python": "3.11.9"
+      },
+      "tests": {
+        "count": 254,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0
+      },
+      "tree": "f9f1655af59c4c030e58a19405fe22ae55db40bb"
+    },
+    {
+      "artifactId": "12664890298",
+      "cohort": "macos-arm64-sdist-rebuild-historical-evidence",
+      "nativeSha256": "c6548c79b836fe7adc76fa5cc57aa80d40bb02c6b003d78a4934094014522fd2",
+      "runId": "40338730518",
+      "selectedAsTopLevelWheel": false,
+      "sourceDistributionSha256": "90a107aaa507930e1d71c0cf208b77182d06c0bf2a1b13681fd5f7b6ed74cb9d",
+      "testedArtifact": "umf_core-0.10.2-cp311-abi3-macosx_11_0_arm64.whl",
+      "tests": {
+        "count": 254,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0
+      },
+      "wheelSha256": "5776aecda6cd2397042e0318f59249f364c0d8045e7fb178f0b759d6bb2427b5"
+    },
+    {
+      "artifactId": "12659280057",
+      "attempt": 1,
+      "cohort": "linux-x86_64-sdist-rebuild-historical-evidence",
+      "nativeSha256": "f3047d62c3194648fb84e617708686bb78963ae0955fca3638507d96566021f7",
+      "note": "Historical raw linux_x86_64 rebuild evidence only; this distinct native artifact is not the selected manylinux wheel.",
+      "runId": "40338720085",
+      "selectedAsTopLevelWheel": false,
+      "sourceArtifactZipSha256": "741b45e5e15c393e5cc78571f22afb2bacda2cc0c355c929a02a4022fc2b531f",
+      "sourceCommit": "a1b909d4f92da6604aeb21d3ea60e9a9943a7f87",
+      "sourceDistributionSha256": "90a107aaa507930e1d71c0cf208b77182d06c0bf2a1b13681fd5f7b6ed74cb9d",
+      "testedArtifact": "umf_core-0.10.2-cp311-abi3-linux_x86_64.whl",
+      "tests": {
+        "count": 254,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0
+      },
+      "wheelSha256": "8408b0b803871a390bc13eeed8cb91acca8e22e2d20ae5995a2374a56a8ed84d"
+    }
+  ],
+  "schema": "umf.core-artifact-cohort-qualification/1",
+  "scope": {
+    "claim": "The exact selected wheel artifacts below and the recorded source-distribution rebuild evidence passed the stated hosted test runs and installed-payload checks.",
+    "distribution": "umf-core",
+    "distributionVersion": "0.10.2",
+    "exclusions": [
+      "No publication or public-download verification is claimed.",
+      "No SQL migration behavior or managed-host execution is qualified.",
+      "No compatibility beyond the exact recorded artifact tags and tested environments is claimed."
+    ],
+    "semanticCoreVersion": "0.10.0"
+  },
+  "selectedArtifacts": [
+    {
+      "bytes": 3582082,
+      "filename": "umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl",
+      "nativeSha256": "78dd1542f723b4f4d8c336c137caa478974a981ed759ada171a5877d7e0368a8",
+      "role": "linux-manylinux-wheel",
+      "sha256": "708f967747b0539b9ca7b6a5f39d1017eea8ddb1d07cd62f4f46592e088f6f39",
+      "staticPolicy": "manylinux_2_34_x86_64",
+      "tag": "cp311-abi3-manylinux_2_34_x86_64"
+    },
+    {
+      "bytes": 3294849,
+      "filename": "umf_core-0.10.2-cp311-abi3-macosx_11_0_arm64.whl",
+      "minimumMacOS": "11.0.0",
+      "nativeSha256": "49847a1e052e4337d414415e2e3fd3b752238df0238c20f936db7f7bebe7365a",
+      "role": "macos-arm64-wheel",
+      "sha256": "99ff1d1250c613a7b65bdd4dc6cf3ee9fec647e02ec34f8dc5ffb84285b0ac59",
+      "tag": "cp311-abi3-macosx_11_0_arm64"
+    },
+    {
+      "bytes": 2652087,
+      "filename": "umf_core-0.10.2.tar.gz",
+      "note": "The exact sdist was rebuilt and tested on the recorded Linux and macOS cohorts; rebuilt wheels are evidence, not selected top-level wheel assets.",
+      "role": "source-distribution",
+      "sha256": "90a107aaa507930e1d71c0cf208b77182d06c0bf2a1b13681fd5f7b6ed74cb9d"
+    }
+  ],
+  "source": {
+    "independentReview": {
+      "scope": "accepted source integration and historical raw-Linux evidence; does not expand the exact selected artifact cohort",
+      "sha256": "fd11738656e5dc6156f0c9563f2ad1c1f43b4e9c386f56d8085da9e099324f3c",
+      "status": "accepted"
+    },
+    "macOSArtifactSource": {
+      "commit": "f4d22c6f0f9e308439e3646117e31239cf48bc07",
+      "note": "Distinct producer commit; full tree equals the producer tree above.",
+      "tree": "f9f1655af59c4c030e58a19405fe22ae55db40bb"
+    },
+    "manylinuxRepairHarnessCommit": "433bfebcba88107995a6a0552dd319d20eb20272",
+    "normalMerge": {
+      "checks": {
+        "expectedSkipped": 1,
+        "pending": 0,
+        "successful": 63
+      },
+      "mergeCommit": "3fd8c61cd12cb9f08384e99e9d021834a88070c7",
+      "mergedAt": "2026-10-26T16:56:59Z",
+      "pullRequest": 49,
+      "sourceAndMergeTreeEqual": true,
+      "tree": "f9f1655af59c4c030e58a19405fe22ae55db40bb"
+    },
+    "producerCommit": "a1b909d4f92da6604aeb21d3ea60e9a9943a7f87",
+    "tree": "f9f1655af59c4c030e58a19405fe22ae55db40bb"
+  },
+  "status": "ARTIFACT_COHORT_QUALIFIED"
+}

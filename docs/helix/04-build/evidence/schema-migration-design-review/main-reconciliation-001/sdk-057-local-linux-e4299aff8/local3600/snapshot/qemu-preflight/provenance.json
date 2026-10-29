@@ -1,0 +1,35 @@
+{
+  "indexURL": "https://ports.ubuntu.com/ubuntu-ports/dists/noble-updates/universe/binary-arm64/Packages.gz",
+  "indexBytes": 2223072,
+  "indexSha256": "bf0ac095c91d2ceb7525b9fe55b0af87ed164829cff107feae8c9e1c76ca39be",
+  "package": {
+    "Package": "qemu-user-static",
+    "Version": "1:8.2.2+ds-0ubuntu1.18",
+    "Architecture": "arm64",
+    "Filename": "pool/universe/q/qemu/qemu-user-static_8.2.2+ds-0ubuntu1.18_arm64.deb",
+    "Size": "16942584",
+    "SHA256": "0565144632acc09b92da93e5ef9a2f44fa092797c5b0949744351b184ad948a8",
+    "Depends": null
+  },
+  "debBytes": 16942584,
+  "debSha256": "0565144632acc09b92da93e5ef9a2f44fa092797c5b0949744351b184ad948a8",
+  "debSha256MatchesIndex": true,
+  "binaryMember": {
+    "path": "./usr/bin/qemu-x86_64-static",
+    "size": 4396456,
+    "mode": "0o755",
+    "sha256": "de72ec1143909f0f495a53c36d9215cb86e2952517aad87044c741a1088dc60f",
+    "first4Bytes": "7f454c46"
+  },
+  "payloadArchive": "data.tar.zst",
+  "payloadBytes": 167331840,
+  "extractedBinary": {
+    "path": "/private/tmp/orbstack-private-qemu/qemu-x86_64-static",
+    "sizeBytes": 4396456,
+    "sha256": "de72ec1143909f0f495a53c36d9215cb86e2952517aad87044c741a1088dc60f",
+    "mode": "0o755",
+    "sourcePackage": "/private/tmp/qemu-user-static_8.2.2+ds-0ubuntu1.18_arm64.deb",
+    "sourcePackageSha256": "0565144632acc09b92da93e5ef9a2f44fa092797c5b0949744351b184ad948a8",
+    "readOnlyMountOnly": true
+  }
+}

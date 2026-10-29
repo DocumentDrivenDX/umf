@@ -1,6 +1,7 @@
 name: Python action-runtime artifact qualification
 
-# Full qualification is explicit; routine PR checks live in pr-fast.yml.
+# Historical manual qualification recipe; current qualification runs locally.
+# Retain upstream timeout and Rust checks without push/PR triggers.
 on:
   workflow_dispatch:
 
@@ -14,6 +15,7 @@ permissions:
 
 jobs:
   qualify-installed-artifact:
+    timeout-minutes: 35
     strategy:
       fail-fast: false
       matrix:
@@ -329,7 +331,7 @@ jobs:
               and receipt["sdist_build_inputs"].get("file_count", 0) > 0
               and len(receipt["sdist_build_inputs"].get("sha256", "")) == 64
               and all(char in "0123456789abcdef" for char in receipt["sdist_build_inputs"].get("sha256", ""))
-              and receipt.get("sdist_helper_sha256") == "bfb23f08347d1e7245de6c152276c5fabdf32b8d07ad9bb017ba858493701d95"
+              and receipt.get("sdist_helper_sha256") == "da91c581646a62b9dd0d01248df275e0d6f144129732d46394607ea27cc05731"
               and receipt.get("native_platform_helper_sha256") == "5856eb375d176af7671ad22981d983a14cec24663e3a8bc466446b433c2cd7b1"
               and (os.environ["COHORT"] != "macos-arm64" or (
                   isinstance(direct_artifact.get("native_platform"), dict)

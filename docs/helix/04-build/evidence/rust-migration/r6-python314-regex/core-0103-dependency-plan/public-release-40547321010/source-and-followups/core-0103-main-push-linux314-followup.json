@@ -1,0 +1,18 @@
+{
+  "profile": "umf.release-followup-observation/1",
+  "runId": 40528625630,
+  "sourceCommit": "7d334dec45948953718bfacd3ed6dd199cadba79",
+  "jobId": 122281729335,
+  "cohort": "Linux Python 3.14.8",
+  "conclusion": "failed_or_incomplete",
+  "failedStep": "actions/download-artifact@v4",
+  "observation": "Action reported verified artifact digest and completed download at 15:26:27Z, then exceeded its existing two-minute step deadline at 15:28:21Z. Interpreter setup, installation and runtime tests did not run. Producer and Linux Python 3.11 selected cell passed in this run.",
+  "runtimeQualificationClaim": false,
+  "rerunRequested": false,
+  "limitsChanged": false,
+  "log": {
+    "path": "/private/tmp/core-0103-main-push-linux314-failure.log",
+    "bytes": 67557,
+    "sha256": "77db72a57c238478cec234e680078f2e731cdefab875cc0189937431c3ef0610"
+  }
+}

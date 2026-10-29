@@ -1,0 +1,126 @@
+profile=umf.combined-portable-migration/1
+event=push
+ref=refs/heads/codex/migration-integrated-qualification
+expected_sha=efd872e3d1ce2aab1cbba6587070d29cadbd78d3
+workflow_ref=DocumentDrivenDX/umf/.github/workflows/combined-migration-qualification.yml@refs/heads/codex/migration-integrated-qualification
+workflow_sha=efd872e3d1ce2aab1cbba6587070d29cadbd78d3
+run_id=40267404664
+attempt=1
+checkout_sha=efd872e3d1ce2aab1cbba6587070d29cadbd78d3
+checkout_tree=d300aee422748bff95e877929becfcedfefc0ad9
+runner_os=Linux
+runner_arch=X64
+image_os=ubuntu24
+image_version=20261023.334.3
+workflow_file_sha256=c02913006f8b622b9723f587f536d620821bf36cd110062987e9365b31de2881
+package_json_sha256=031bdb38c663c33804c02de06906c9c4fdd7bbf32728204cd4c8d30959c324ed
+bun_lock_sha256=5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4
+bunfig_sha256=b9fc65eca9014c5179380259d70e76385a6a80788fa9a2df5fb3eaa5554fd2fe
+bun_version=1.4.3
+bun_binary=/home/runner/.bun/bin/bun
+bun_binary_sha256=7ce7d6b654eddeec20afddf2396317fba6dc19ab52788a27e894e1806bf8f24b
+scripts/metamodel/structural-accounting.ts: OK
+scripts/qualification/r2-metering-generate.ts: OK
+scripts/r2-metering-browser.ts: OK
+spec/extensions/tables/inventory-discovery-0.2.schema.json: OK
+src/compilation/bundle/hash.ts: OK
+src/extensions/tables/columns.ts: OK
+src/extensions/tables/context.ts: OK
+src/extensions/tables/index.ts: OK
+src/extensions/tables/operations.ts: OK
+src/extensions/tables/policies.ts: OK
+src/extensions/tables/seeds.ts: OK
+src/generated/core-validators-accounted.ts: OK
+src/index.ts: OK
+src/model/document-accounting.ts: OK
+src/model/internal/accounting-context.ts: OK
+src/model/internal/scan-json-frame.ts: OK
+src/model/json.ts: OK
+src/table-deployment/ddl.ts: OK
+src/table-deployment/domains.ts: OK
+src/table-deployment/grants.ts: OK
+src/table-deployment/index.ts: OK
+src/table-deployment/policies.ts: OK
+src/table-deployment/sql.ts: OK
+src/table-deployment/temporal.ts: OK
+src/table-deployment/types.ts: OK
+src/table-migration/internal.ts: OK
+src/table-migration/inventory-g05-selection.ts: OK
+src/table-migration/inventory-graph.ts: OK
+src/table-migration/inventory-history.ts: OK
+src/table-migration/inventory-options.ts: OK
+src/table-migration/inventory-projection.ts: OK
+src/table-migration/inventory-r2-context.ts: OK
+src/table-migration/inventory.ts: OK
+src/validation/document.ts: OK
+tests/lifecycle/table-deployment-r2-accounting.test.ts: OK
+tests/lifecycle/table-inventory-r2-context.test.ts: OK
+tests/metamodel/r2-metering-browser-entry.ts: OK
+tests/metamodel/structural-accounting-parity.test.ts: OK
+tests/metamodel/structural-accounting-source.test.ts: OK
+tsconfig.r2-metering-stageb.json: OK
+tsconfig.r2-metering.json: OK
+package.json: OK
+bun.lock: OK
+bunfig.toml: OK
+tsconfig.json: OK
+tsconfig.tools.json: OK
+tests/lifecycle/table-inventory-api.test.ts: OK
+tests/lifecycle/g02-derived-fill.test.ts: OK
+tests/lifecycle/g02-renderer-operation-sidecar.test.ts: OK
+tests/lifecycle/g03-defaults.test.ts: OK
+tests/lifecycle/g03-discovery-bridge.test.ts: OK
+tests/lifecycle/g03-renderer-compatibility.test.ts: OK
+tests/lifecycle/g11-field-replacement.test.ts: OK
+tests/lifecycle/table-deployment-operations.test.ts: OK
+tests/lifecycle/migration.test.ts: OK
+tests/lifecycle/reviewed.test.ts: OK
+tests/lifecycle/g02-temporal-native.py: OK
+tests/lifecycle/g03-defaults-native.py: OK
+tests/lifecycle/g02-null-semantics-native-fixture.ts: OK
+tests/lifecycle/g03-defaults-native-fixture.ts: OK
+fixtures/metamodel/current-conformance.json: OK
+.github/workflows/migration-portable.yml: OK
+.github/workflows/microsite.yml: OK
+src/generated/core-validators.ts: OK
+spec/core/schema.json: OK
+spec/core/semantic-type-reference.schema.json: OK
+spec/core/extension-package.schema.json: OK
+tests/lifecycle/g02-temporal-native-fixture.test.ts: OK
+tests/lifecycle/g02-temporal-native-fixture.ts: OK
+tests/lifecycle/g02-temporal-native-observer.test.py: OK
+.github/workflows/python.yml: OK
+.github/workflows/sql-containment.yml: OK
+.github/workflows/actions.yml: OK
+.github/workflows/rust-core.yml: OK
+.github/workflows/rust-spike.yml: OK
+.github/workflows/pypi.yml: OK
+.github/workflows/access-boundaries.yml: OK
+tests/lifecycle/g03_campaign_orchestration.py: OK
+tests/lifecycle/test_g03_campaign_orchestration.py: OK
+src/table-migration/index.ts: OK
+src/table-migration/inventory-g02-source.ts: OK
+tests/binding/fixtures/table-lifecycle-note.json: OK
+src/table-migration/inventory-verified-deployment.ts: OK
+tests/lifecycle/table-inventory-verified-deployment.test.ts: OK
+.github/workflows/combined-migration-qualification.yml: OK
+src/table-migration/inventory-component-copy.ts: OK
+src/table-migration/g04-conversion.ts: OK
+src/table-migration/options.ts: OK
+src/table-migration/phases-options.ts: OK
+spec/extensions/tables/migration-discovery-0.4.schema.json: OK
+spec/extensions/tables/migration-options-0.7.schema.json: OK
+spec/extensions/tables/migration-0.7.schema.json: OK
+spec/extensions/tables/migration-phases-0.6.schema.json: OK
+tests/lifecycle/g04-checked-conversion.test.ts: OK
+spec/extensions/tables/schema.json: OK
+spec/extensions/tables/deployment.schema.json: OK
+expected_pin_manifest_sha256=95fb5985bf7533e324485890cdae3dd1d2943a021e27fc3b3ad24034cf7e74af
+node_modules/playwright-core/browsers.json: OK
+typescript_api=5.9.3
+typescript_cli=7.0.2
+playwright=1.63.0
+playwright_core=1.63.0
+chromium_revision=1243
+chromium_version=153.0.8010.12
+browsers_json_sha256=545d52f8382c391e605562c330e9c1c534a16045898203037a49bb8bd769a946

@@ -1,0 +1,28 @@
+$ bun run build && bun run build:postgresql && bun scripts/package-sdk.ts
+$ bun scripts/build.ts
+37 |  try{
+38 |   for(let attempt=0;attempt<3;attempt++){
+39 |    const inputs=snapshot();
+40 |    const child=Bun.spawnSync([cargo,'build','--quiet','--locked','--offline','-p','umf-cli','--message-format=json'],{cwd:repositoryRoot,env:{...process.env,CARGO_TARGET_DIR:resolve(cacheRoot,'build'),PATH:dirname(cargo)+':'+(process.env.PATH??'')},stdout:'pipe',stderr:'pipe'});
+41 |    const records=new TextDecoder().decode(child.stdout).split('\n').filter(Boolean).map(line=>{try{return JSON.parse(line);}catch{return {};}});
+42 |    if(child.exitCode!==0)throw Error(new TextDecoder().decode(child.stderr).trim()+'\n'+records.filter(item=>item.reason==='compiler-message').map(item=>item.message.rendered).join('\n'));
+                                    ^
+error: error: could not compile `quote` (build script) due to 1 previous error
+error: could not compile `proc-macro2` (build script) due to 1 previous error
+error: linker `cc` not found
+  |
+  = note: No such file or directory (os error 2)
+
+
+error: linker `cc` not found
+  |
+  = note: No such file or directory (os error 2)
+
+
+      at sourceArtifact (/tmp/umf-source/scripts/metamodel/rust.ts:42:32)
+      at rustMetamodel (/tmp/umf-source/scripts/metamodel/rust.ts:57:36)
+      at generate (/tmp/umf-source/scripts/metamodel/build.ts:112:17)
+
+Bun v1.4.3 (Linux x64)
+error: script "build" exited with code 1
+error: script "build:sdk" exited with code 1

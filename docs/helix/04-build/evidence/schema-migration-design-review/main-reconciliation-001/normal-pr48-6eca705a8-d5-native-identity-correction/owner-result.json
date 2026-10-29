@@ -1,0 +1,103 @@
+{
+  "status": "REVIEWED_SOURCE_CORRECTION_CURRENT_CAMPAIGN_NOT_QUALIFIED",
+  "apiHead": "6eca705a8ca2d9f99517e2fc919cd211fe00f98d",
+  "producerP": "7cf121baa40601ba0b92a14cd0f7e121783cb8e2",
+  "sourceTree": "d10995b85a061942c446a0bc70fa5454672eff71",
+  "runId": 40600969078,
+  "d5": {
+    "jobId": 122528687536,
+    "artifactId": 12786591429,
+    "status": "FAIL_OR_UNKNOWN",
+    "finalizerFailureCode": "report-evidence-invalid",
+    "validationFailureCodes": [
+      "oracle-postgresql-identity-mismatch"
+    ],
+    "actualShortServerVersion": "18.6 (Debian 18.6-1.pgdg13+2)",
+    "baselineFinalNumericVersion": "180006",
+    "baselineFinalEqual": true,
+    "resourcesEmpty": true,
+    "caseObservations": {
+      "oracleReports": 16,
+      "oracleCases": 37,
+      "noDefaultChecks": 19,
+      "faultChecks": [
+        33,
+        27,
+        27
+      ]
+    },
+    "qualification": "Replay command success and report observations do not override finalizer failure."
+  },
+  "correction": {
+    "scope": "Capture native server_version in both existing audits; require nonblank string and exact oracle-to-baseline equality, preserving full version, numeric version, final cleanup equality, all cases/commands/caps. Add a closed diagnostic code for malformed baseline version.",
+    "postimages": {
+      ".github/workflows/access-boundaries.yml": "8e46dc1c27f75d7550fec7d26ccaab6031af842234b2c6b16d1d3fa9e9594627",
+      "qualification-inputs/expected-pins.sha256": "6ba49ac59d05b1a401ed40fe411ff8d8498586d9b99593ff99ba56e88b7d0a00"
+    },
+    "reviewSha256": "f45060764ed46835b7eeeb000dc42e125e15b6b073a3f860796058666f43fbfc",
+    "pinScope": "Only existing portable workflow row changed; all97portable/34native physical pins reviewed."
+  },
+  "checkpointScope": "Accepted actual6eca portable/native/SDK/Rust311 evidence is checkpoint-scoped; it is not successor qualification or public release proof. Other current-source gates remain unfinished.",
+  "provenance": "API head6eca and executed synthetic producerP7cf are distinct but have the same tree. Original derived Rust311 summary mislabeled API head as P; corrected provenance and independent review bind raw API head and actual report source separately.",
+  "largeArtifacts": "SDK and full cohort archives retained by exact GitHub artifact and local custody; not duplicated into this packet.",
+  "ciPolicy": "Linux only. Retained built Mac artifact inputs retain historical/data limits; no fresh Mac runtime or Python3.14/OS11 runtime claim.",
+  "next": "Complete current campaign terminal census, batch any other actual material failure, commit reviewed corrections, genuine generation and review/adoption, then fresh Linux qualification. Normal merge, immutable SDK release and public H remain open.",
+  "files": {
+    "checkpoint/sdk-review.md": {
+      "bytes": 1414,
+      "sha256": "66869d4f663307e76eaa963fa1d594c334d67d2aa2d1ccb8ee18620c111fa864"
+    },
+    "checkpoint/rust311-review.md": {
+      "bytes": 1552,
+      "sha256": "a5d9531ad3fd9da68492dc01d2e7f15d6117c439629235c580c13052d5f0bfe7"
+    },
+    "checkpoint/sdk-summary.json": {
+      "bytes": 1504,
+      "sha256": "82c857fda1f33489b4b2522770726e4805528db311ea0c112651cd359b71abd4"
+    },
+    "checkpoint/portable-native-review.md": {
+      "bytes": 2410,
+      "sha256": "f50099331af5786e36ca864c1e984baa1fb94301ac73140a6b484d5dcf823475"
+    },
+    "checkpoint/portable-artifact.zip": {
+      "bytes": 74199,
+      "sha256": "b0176998da4c9c036a376eda5049d0828b808afff5627ec4c3ee159fc2d42dcf"
+    },
+    "checkpoint/rust311-provenance-corrected.json": {
+      "bytes": 8478,
+      "sha256": "9fa608a0d2dddd75d870a2432a5bf89e5142c994bb8f14ff442c2a3359b901ff"
+    },
+    "checkpoint/native-artifact.zip": {
+      "bytes": 211501,
+      "sha256": "0e1873ca3dc8a31cbd75a28c584464ffbe00066cd1a7dd084d5698b47a125488"
+    },
+    "d5/job-terminal.json": {
+      "bytes": 6705,
+      "sha256": "b835d631ab122ebad9769e6d0c0233f528826b3fc59e19eb795de4b4f97de5d7"
+    },
+    "d5/artifacts-observed.json": {
+      "bytes": 3706,
+      "sha256": "d45cac66fde9a859c745ba56378f931f942a46c6a6121bbb3db517e62e2f632c"
+    },
+    "d5/job.log": {
+      "bytes": 313126,
+      "sha256": "4190771475170a6bc6f5e3678a29dd9cb2d2ca2d238f933809436708203eaa99"
+    },
+    "d5/failure-summary.json": {
+      "bytes": 1265,
+      "sha256": "a52669622b95a866b0cc4127fda01257358c700057f4baf6709744b249ceb660"
+    },
+    "d5/artifact.zip": {
+      "bytes": 337983,
+      "sha256": "4314111f73675c50fd17b54c2f365b0e2907a883ab0ced64c503f1299d138d30"
+    },
+    "source-review/scope.md": {
+      "bytes": 1430,
+      "sha256": "1302ca4efb2ddfae0b15b2d602b76eae5361f1916c169b10a488a75d97d28c5f"
+    },
+    "source-review/source-pin-seal.md": {
+      "bytes": 1667,
+      "sha256": "f45060764ed46835b7eeeb000dc42e125e15b6b073a3f860796058666f43fbfc"
+    }
+  }
+}

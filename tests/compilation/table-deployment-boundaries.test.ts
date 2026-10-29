@@ -18,6 +18,54 @@ test('migration plan owner cannot import hosts, SDKs or private compiler interna
 test('deployment cannot acquire filesystem, driver, native compiler or dynamic execution hooks',()=>{
  for(const[file,text]of [['unknown.ts','export const x=1;'],['ddl.ts',"import fs from 'node:fs';"],['index.ts',"import weft from 'weft';"],['types.ts',"export * from '../access';"],['configuration.ts',"import('./ddl');"],['policies.ts',"fetch('https://example.invalid')"],['sql.ts',"new Function('return 1')"],['sql.ts',"globalThis['eval']('1')"]])expect(checkTableDeploymentBoundaries({[file!]:text!}).length).toBeGreaterThan(0);
 });
+test('newly owned migration modules retain exact dependency owners and refusals',()=>{
+ for(const[file,text]of [
+  ['migration/g03-defaults.ts',"import x from '../table-deployment/ddl';"],
+  ['migration/inventory.ts',"import x from '../private/compiler';"],
+  ['migration/inventory-history.ts',"import('./inventory');"],
+  ['migration/inventory-graph.ts',"fetch('https://example.invalid')"],
+  ['migration/unowned-helper.ts','export const value=1;'],
+ ])expect(checkTableDeploymentBoundaries({[file!]:text!}).length).toBeGreaterThan(0);
+});
+test('accounting context is admitted only as its exact named type import',()=>{
+ const file='migration/inventory-graph.ts',route="import type {AccountingContext} from '../model/internal/accounting-context';";
+ expect(checkTableDeploymentBoundaries({[file]:route})).toEqual([]);
+ for(const text of [
+  "import {AccountingContext} from '../model/internal/accounting-context';",
+  "import type {AccountingContext as Context} from '../model/internal/accounting-context';",
+  "import type AccountingContext from '../model/internal/accounting-context';",
+  "import type {AccountingContext} from '../model/accounting-context';",
+  "import type {AccountingContext,Other} from '../model/internal/accounting-context';",
+ ])expect(checkTableDeploymentBoundaries({[file]:text}).length).toBeGreaterThan(0);
+ expect(checkTableDeploymentBoundaries({'migration/unknown.ts':route}).length).toBeGreaterThan(0);
+});
+test('R2 inventory options are admitted only as the exact five named type imports',()=>{
+ const file='migration/inventory-r2-context.ts';
+ const route="import type {TableInventoryArchiveSource,TableInventoryDiscoveryConversion,TableInventoryDiscoveryIntent,TableInventoryRetirement,TableInventorySourceHistory} from './inventory-options';";
+ expect(checkTableDeploymentBoundaries({[file]:route})).toEqual([]);
+ for(const text of [
+  "import {TableInventoryArchiveSource,TableInventoryDiscoveryConversion,TableInventoryDiscoveryIntent,TableInventoryRetirement,TableInventorySourceHistory} from './inventory-options';",
+  "import type {TableInventoryArchiveSource as ArchiveSource,TableInventoryDiscoveryConversion,TableInventoryDiscoveryIntent,TableInventoryRetirement,TableInventorySourceHistory} from './inventory-options';",
+  "import type {TableInventoryArchiveSource,TableInventoryDiscoveryConversion,TableInventoryDiscoveryIntent,TableInventoryRetirement} from './inventory-options';",
+  "import type {TableInventoryArchiveSource,TableInventoryDiscoveryConversion,TableInventoryDiscoveryIntent,TableInventoryRetirement,TableInventoryRetirement} from './inventory-options';",
+  "import type {TableInventoryArchiveSource,TableInventoryDiscoveryConversion,TableInventoryDiscoveryIntent,TableInventoryRetirement,TableInventorySourceHistory,Other} from './inventory-options';",
+  "import type {TableInventoryArchiveSource,TableInventoryDiscoveryConversion,TableInventoryDiscoveryIntent,TableInventoryRetirement,TableInventorySourceHistory} from './inventory-options'; import {runtimeValue} from './inventory-options';",
+ ])expect(checkTableDeploymentBoundaries({[file]:text}).length).toBeGreaterThan(0);
+ expect(checkTableDeploymentBoundaries({'migration/g11-source.ts':route}).length).toBeGreaterThan(0);
+});
+test('deployment and migration entrypoints admit only the named runtime document-accounting helper',()=>{
+ const route="import {readJsonDocumentWithAccounting} from '../model/document-accounting';";
+ for(const file of ['index.ts','migration/internal.ts'])expect(checkTableDeploymentBoundaries({[file]:route})).toEqual([]);
+ for(const text of [
+  "import {readJsonDocumentWithAccounting,other} from '../model/document-accounting';",
+  "import {readJsonDocumentWithAccounting as read} from '../model/document-accounting';",
+  "import helper from '../model/document-accounting';",
+  "import * as helper from '../model/document-accounting';",
+  "import type {readJsonDocumentWithAccounting} from '../model/document-accounting';",
+  "import {readJsonDocumentWithAccounting} from '../model/internal/document-accounting';",
+ ])for(const file of ['index.ts','migration/internal.ts'])expect(checkTableDeploymentBoundaries({[file]:text}).length).toBeGreaterThan(0);
+ expect(checkTableDeploymentBoundaries({'migration/unowned.ts':route}).length).toBeGreaterThan(0);
+});
 test('row-scope authoring helper has an explicit pure-source owner and rejects host/compiler hooks',()=>{
  expect(checkTableDeploymentBoundaries({'authoring/row-scope.ts':"import {copyJson} from '../model/json'; import type {TablePolicy} from '../extensions/tables'; export const normalize=(x:unknown)=>copyJson(x);"})).toEqual([]);
  for(const text of ["import fs from 'node:fs';",'fetch(\'https://example.invalid\')',"import('../table-deployment/ddl')",'process.env.HOME'])expect(checkTableDeploymentBoundaries({'authoring/row-scope.ts':text}).length).toBeGreaterThan(0);
