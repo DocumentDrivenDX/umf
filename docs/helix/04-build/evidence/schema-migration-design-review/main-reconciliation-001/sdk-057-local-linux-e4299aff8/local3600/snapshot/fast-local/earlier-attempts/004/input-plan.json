@@ -1,0 +1,13 @@
+{
+  "commands": [
+    "bun install --frozen-lockfile",
+    "bun test tests/core/cardinality-ideals.test.ts tests/core/nullability-ideals.test.ts tests/core/field-ideals.test.ts",
+    "bun build src/model/document.ts src/validation/document.ts --target=browser --outdir /work/output/umf-pr-fast",
+    "python -m compileall -q python scripts"
+  ],
+  "commit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+  "image": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+  "sourceVolume": "umf-migration-source-267675510",
+  "tree": "8b98c0d895983ba2b7637dd3aea567dab0943883",
+  "workflowSha256": "7aab9a13445f9fcc1e3bb4a3d05a2a2edc1e06598162c1f0dec3f9392860c330"
+}

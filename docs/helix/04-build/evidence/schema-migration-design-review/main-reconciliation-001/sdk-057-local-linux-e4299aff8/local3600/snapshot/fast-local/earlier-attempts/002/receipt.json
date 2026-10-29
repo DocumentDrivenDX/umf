@@ -1,0 +1,83 @@
+{
+  "aggregateCapturedLogBytes": 0,
+  "aggregateLogCapBytes": 1048576,
+  "cleanup": [
+    {
+      "ownedContainerCleanup": "verified-absent",
+      "step": "source-copy"
+    }
+  ],
+  "commands": [
+    {
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--pull=never",
+        "--platform=linux/amd64",
+        "--network=none",
+        "--read-only",
+        "--tmpfs",
+        "/tmp:rw,size=256m",
+        "--cpus=4",
+        "--memory=8g",
+        "--pids-limit=8192",
+        "--cidfile",
+        "/private/tmp/migration-pr-fast-local-e4299aff8-002/evidence/source-copy.cid",
+        "--mount",
+        "type=bind,src=/private/tmp/migration-pr-fast-local-e4299aff8-002/work,dst=/work",
+        "--mount",
+        "type=volume,src=umf-migration-source-267675510,dst=/source,readonly",
+        "--workdir",
+        "/work/source",
+        "--entrypoint",
+        "/bin/bash",
+        "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+        "-lc",
+        "set -euo pipefail\ncommit=\"$(git -c safe.directory=/source -C /source rev-parse HEAD)\"\ntree=\"$(git -c safe.directory=/source -C /source rev-parse 'HEAD^{tree}')\"\nstatus=\"$(GIT_OPTIONAL_LOCKS=0 git -c safe.directory=/source -C /source status --porcelain=v1 --untracked-files=all)\"\ntest \"$commit\" = \"e4299aff8e87e9d211f9d86df2f2013ab9c95945\"\ntest \"$tree\" = \"8b98c0d895983ba2b7637dd3aea567dab0943883\"\ntest -z \"$status\"\ntest \"$(sha256sum /source/.github/workflows/pr-fast.yml | cut -d' ' -f1)\" = \"7aab9a13445f9fcc1e3bb4a3d05a2a2edc1e06598162c1f0dec3f9392860c330\"\nmkdir -p /work/source/tests /work/source/.github/workflows /work/output /work/home /work/pycache\nfor path in src spec python scripts patches package.json bun.lock; do cp -a \"/source/$path\" /work/source/; done\ncp -a /source/tests/core /work/source/tests/\ncp -a /source/.github/workflows/pr-fast.yml /work/source/.github/workflows/\nfor path in /source/tsconfig*.json; do cp -a \"$path\" /work/source/; done\npython3 - \"$commit\" \"$tree\" \"$status\" <<'PYCODE'\nimport json, pathlib, sys\npathlib.Path('/work/source-identity.json').write_text(json.dumps({\n    'commit':sys.argv[1], 'tree':sys.argv[2], 'porcelainStatus':sys.argv[3],\n    'workflowSha256':'7aab9a13445f9fcc1e3bb4a3d05a2a2edc1e06598162c1f0dec3f9392860c330'}, sort_keys=True, indent=2)+'\\n')\nPYCODE"
+      ],
+      "cleanup": {
+        "ownedContainerCleanup": "verified-absent"
+      },
+      "durationSeconds": 110.409,
+      "exitCode": 0,
+      "name": "source-copy",
+      "network": "none",
+      "stderr": {
+        "path": "evidence/source-copy.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      "stdout": {
+        "path": "evidence/source-copy.stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      "timedOut": false,
+      "truncated": false
+    }
+  ],
+  "elapsedSeconds": 142.679,
+  "executionKind": "local_linux_diagnostic",
+  "failure": "FileNotFoundError: [Errno 2] No such file or directory: '/private/tmp/migration-pr-fast-local-e4299aff8-002/work/evidence/source-manifest-before.json'",
+  "finishedUtc": "2026-10-29T03:25:03Z",
+  "profile": "umf.pr-fast-local-equivalent/1",
+  "pythonQualification": "minimum-supported local syntax profile only; Python 3.12 workflow evidence not established",
+  "runtimeImage": {
+    "platform": "linux/amd64",
+    "reference": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10"
+  },
+  "source": {
+    "bunLockSha256": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4",
+    "expectedCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+    "expectedTree": "8b98c0d895983ba2b7637dd3aea567dab0943883",
+    "packageSha256": "c7b69fba001805dc9cd4e26e84a9b786be379c1413d020c34600c063d287101b",
+    "tsconfigSha256": "fb5e87db29d610bb807d2be59e8c40700d9040532d918dfb7c3d8f51ad420918",
+    "volume": "umf-migration-source-267675510",
+    "workflowSha256": "7aab9a13445f9fcc1e3bb4a3d05a2a2edc1e06598162c1f0dec3f9392860c330"
+  },
+  "startedUtc": "2026-10-29T03:22:41Z",
+  "status": "FAIL_OR_UNKNOWN",
+  "termGraceSeconds": 10,
+  "totalTimeLimitSeconds": 600
+}

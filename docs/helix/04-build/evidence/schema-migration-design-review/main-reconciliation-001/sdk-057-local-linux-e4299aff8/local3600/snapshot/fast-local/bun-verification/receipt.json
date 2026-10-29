@@ -1,0 +1,492 @@
+{
+  "aggregateCapturedLogBytes": 14153,
+  "aggregateCapturedLogLimitBytes": 1048576,
+  "aggregateTimeLimitSeconds": 600,
+  "containerArgv": [
+    "docker",
+    "run",
+    "--rm",
+    "--pull=never",
+    "--platform=linux/amd64",
+    "--network=none",
+    "--read-only",
+    "--tmpfs",
+    "/tmp:rw,size=1g",
+    "--cpus=4",
+    "--memory=8g",
+    "--pids-limit=8192",
+    "--cidfile",
+    "/private/tmp/migration-pr-fast-bun-local-e4299aff8-001/evidence/bun-local-owned.cid",
+    "--mount",
+    "type=volume,src=umf-migration-source-267675510,dst=/source,readonly",
+    "--mount",
+    "type=bind,src=/private/tmp/migration-pr-fast-bun-local-e4299aff8-001/work,dst=/work",
+    "--workdir",
+    "/source",
+    "--entrypoint",
+    "/bin/bash",
+    "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+    "-lc",
+    "python3 /work/harness/guest.py"
+  ],
+  "containerCleanup": "verified-absent",
+  "containerExitCode": 0,
+  "containerTimedOut": false,
+  "driverSha256": "2b74d4df95402697beb631f0d140246e8d979bf3f138cf4278269a89deae395f",
+  "elapsedSeconds": 7.981,
+  "guest": {
+    "aggregateCapturedLogBytes": 1696,
+    "aggregateCapturedLogLimitBytes": 983040,
+    "aggregateTimeLimitSeconds": 600,
+    "availableDependencySnapshot": {
+      "entries": 21461,
+      "regularFileBytes": 215399057,
+      "root": "/source/node_modules",
+      "sha256": "9b2d3163c1f117468a6815868b2daaf76282ad68f326c7d9c17a31effc33bc1b"
+    },
+    "browserBundle": {
+      "files": [
+        {
+          "path": "model/document.js",
+          "sha256": "a4fbcc6b5e11d20a5ea659bcec2c6a939796e131e30013c7ef83f35fe8c880fb",
+          "sizeBytes": 1072499
+        },
+        {
+          "path": "validation/document.js",
+          "sha256": "bfc03fe47cb9c5a3eb2ac42845b169c3e0351faa1b8a832a6de440fbab3162ac",
+          "sizeBytes": 874173
+        }
+      ],
+      "totalBytes": 1946672
+    },
+    "bunVersion": "1.4.3",
+    "cleanup": "container-removal-verified-by-host",
+    "commands": [
+      {
+        "argv": [
+          "bun",
+          "test",
+          "tests/core/cardinality-ideals.test.ts",
+          "tests/core/nullability-ideals.test.ts",
+          "tests/core/field-ideals.test.ts"
+        ],
+        "durationSeconds": 1.919,
+        "exitCode": 0,
+        "name": "portable-core-unit",
+        "stderr": {
+          "path": "/work/evidence/portable-core-unit.stderr.log",
+          "sha256": "b0cad687098dde5837a9c44858e585b786d91c620aa1426dd9ca603a9e9b4363",
+          "sizeBytes": 1540
+        },
+        "stdout": {
+          "path": "/work/evidence/portable-core-unit.stdout.log",
+          "sha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+          "sizeBytes": 28
+        },
+        "timedOut": false,
+        "truncated": false
+      },
+      {
+        "argv": [
+          "bun",
+          "build",
+          "src/model/document.ts",
+          "src/validation/document.ts",
+          "--target=browser",
+          "--outdir",
+          "/work/output/umf-pr-fast"
+        ],
+        "durationSeconds": 0.349,
+        "exitCode": 0,
+        "name": "browser-targeted-build",
+        "stderr": {
+          "path": "/work/evidence/browser-targeted-build.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        },
+        "stdout": {
+          "path": "/work/evidence/browser-targeted-build.stdout.log",
+          "sha256": "127d1bc2691a58244044339b614d1970c7209c023b2cfbf89dd9e849f3dfa13d",
+          "sizeBytes": 128
+        },
+        "timedOut": false,
+        "truncated": false
+      }
+    ],
+    "dependencyAfter": {
+      "entries": 21461,
+      "regularFileBytes": 215399057,
+      "root": "/source/node_modules",
+      "sha256": "9b2d3163c1f117468a6815868b2daaf76282ad68f326c7d9c17a31effc33bc1b"
+    },
+    "directDependencyConsistency": {
+      "allMatch": true,
+      "count": 39,
+      "rows": [
+        {
+          "installedVersion": "2.15.0",
+          "lockSpec": "2.15.0",
+          "match": true,
+          "name": "@bufbuild/protobuf",
+          "packageSpec": "2.15.0",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "17.6.10",
+          "lockSpec": "17.6.10",
+          "match": true,
+          "name": "@libpg-query/parser",
+          "packageSpec": "17.6.10",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "1.16.0",
+          "lockSpec": "1.16.0",
+          "match": true,
+          "name": "@typespec/compiler",
+          "packageSpec": "1.16.0",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "0.21.0",
+          "lockSpec": "0.21.0",
+          "match": true,
+          "name": "@typespec/emitter-framework",
+          "packageSpec": "0.21.0",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "0.86.0",
+          "lockSpec": "0.86.0",
+          "match": true,
+          "name": "@typespec/events",
+          "packageSpec": "0.86.0",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "0.3.0",
+          "lockSpec": "0.3.0",
+          "match": true,
+          "name": "@typespec/graphql",
+          "packageSpec": "0.3.0",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "1.16.0",
+          "lockSpec": "1.16.0",
+          "match": true,
+          "name": "@typespec/http",
+          "packageSpec": "1.16.0",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "1.16.0",
+          "lockSpec": "1.16.0",
+          "match": true,
+          "name": "@typespec/json-schema",
+          "packageSpec": "1.16.0",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "0.17.1",
+          "lockSpec": "0.17.1",
+          "match": true,
+          "name": "@typespec/mutator-framework",
+          "packageSpec": "0.17.1",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "1.16.0",
+          "lockSpec": "1.16.0",
+          "match": true,
+          "name": "@typespec/openapi",
+          "packageSpec": "1.16.0",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "1.16.0",
+          "lockSpec": "1.16.0",
+          "match": true,
+          "name": "@typespec/openapi3",
+          "packageSpec": "1.16.0",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "0.86.0",
+          "lockSpec": "0.86.0",
+          "match": true,
+          "name": "@typespec/protobuf",
+          "packageSpec": "0.86.0",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "0.86.0",
+          "lockSpec": "0.86.0",
+          "match": true,
+          "name": "@typespec/rest",
+          "packageSpec": "0.86.0",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "0.86.0",
+          "lockSpec": "0.86.0",
+          "match": true,
+          "name": "@typespec/sse",
+          "packageSpec": "0.86.0",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "0.86.0",
+          "lockSpec": "0.86.0",
+          "match": true,
+          "name": "@typespec/streams",
+          "packageSpec": "0.86.0",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "0.86.0",
+          "lockSpec": "0.86.0",
+          "match": true,
+          "name": "@typespec/versioning",
+          "packageSpec": "0.86.0",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "8.20.0",
+          "lockSpec": "8.20.0",
+          "match": true,
+          "name": "ajv",
+          "packageSpec": "8.20.0",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "1.0.0",
+          "lockSpec": "1.0.0",
+          "match": true,
+          "name": "ajv-draft-04",
+          "packageSpec": "1.0.0",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "21.2.0",
+          "lockSpec": "21.2.0",
+          "match": true,
+          "name": "apache-arrow",
+          "packageSpec": "21.2.0",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "5.7.9",
+          "lockSpec": "5.7.9",
+          "match": true,
+          "name": "avsc",
+          "packageSpec": "5.7.9",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "6.0.3",
+          "lockSpec": "6.0.3",
+          "match": true,
+          "name": "buffer",
+          "packageSpec": "6.0.3",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "25.9.23",
+          "lockSpec": "25.9.23",
+          "match": true,
+          "name": "flatbuffers",
+          "packageSpec": "25.9.23",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "17.0.2",
+          "lockSpec": "17.0.2",
+          "match": true,
+          "name": "graphql",
+          "packageSpec": "17.0.2",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "9.0.0",
+          "lockSpec": "9.0.0",
+          "match": true,
+          "name": "jsonld",
+          "packageSpec": "9.0.0",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "2.7.12",
+          "lockSpec": "2.7.12",
+          "match": true,
+          "name": "n3",
+          "packageSpec": "2.7.12",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "2.0.0",
+          "lockSpec": "2.0.0",
+          "match": true,
+          "name": "rdf-literal",
+          "packageSpec": "2.0.0",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "0.6.5",
+          "lockSpec": "0.6.5",
+          "match": true,
+          "name": "rdf-validate-shacl",
+          "packageSpec": "0.6.5",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "0.12.5",
+          "lockSpec": "0.12.5",
+          "match": true,
+          "name": "util",
+          "packageSpec": "0.12.5",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "2.9.1",
+          "lockSpec": "2.9.1",
+          "match": true,
+          "name": "yaml",
+          "packageSpec": "2.9.1",
+          "section": "dependencies"
+        },
+        {
+          "installedVersion": "3.1.1",
+          "lockSpec": "3.1.1",
+          "match": true,
+          "name": "@dagrejs/dagre",
+          "packageSpec": "3.1.1",
+          "section": "devDependencies"
+        },
+        {
+          "installedVersion": "2.0.0",
+          "lockSpec": "2.0.0",
+          "match": true,
+          "name": "@documentdrivendx/umf-schema-browser",
+          "packageSpec": "2.0.0",
+          "section": "devDependencies"
+        },
+        {
+          "installedVersion": "7.2.6",
+          "lockSpec": "7.2.6",
+          "match": true,
+          "name": "@launchql/protobufjs",
+          "packageSpec": "7.2.6",
+          "section": "devDependencies"
+        },
+        {
+          "installedVersion": "1.4.2",
+          "lockSpec": "1.4.2",
+          "match": true,
+          "name": "@types/bun",
+          "packageSpec": "1.4.2",
+          "section": "devDependencies"
+        },
+        {
+          "installedVersion": "1.26.4",
+          "lockSpec": "1.26.4",
+          "match": true,
+          "name": "@types/n3",
+          "packageSpec": "1.26.4",
+          "section": "devDependencies"
+        },
+        {
+          "installedVersion": "1.31.1",
+          "lockSpec": "1.31.1",
+          "match": true,
+          "name": "hyparquet",
+          "packageSpec": "1.31.1",
+          "section": "devDependencies"
+        },
+        {
+          "installedVersion": "1.63.0",
+          "lockSpec": "1.63.0",
+          "match": true,
+          "name": "playwright",
+          "packageSpec": "1.63.0",
+          "section": "devDependencies"
+        },
+        {
+          "installedVersion": "3.3.0",
+          "lockSpec": "3.3.0",
+          "match": true,
+          "name": "rdfxml-streaming-parser",
+          "packageSpec": "3.3.0",
+          "section": "devDependencies"
+        },
+        {
+          "installedVersion": "7.0.2",
+          "lockSpec": "7.0.2",
+          "match": true,
+          "name": "typescript",
+          "packageSpec": "7.0.2",
+          "section": "devDependencies"
+        },
+        {
+          "installedVersion": "5.9.3",
+          "lockSpec": "npm:typescript@5.9.3",
+          "match": true,
+          "name": "typescript-api",
+          "packageSpec": "npm:typescript@5.9.3",
+          "section": "devDependencies"
+        }
+      ],
+      "rowsSha256": "099297ca459bf67699e17b38bd4b0cffc5400d6b8df1d40eb0da4ca22eeabd9c"
+    },
+    "elapsedSeconds": 6.885,
+    "executionKind": "local_linux_diagnostic",
+    "expectedSourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+    "expectedSourceTree": "8b98c0d895983ba2b7637dd3aea567dab0943883",
+    "network": "none for both candidate commands",
+    "perCandidateCommandLimitSeconds": 180,
+    "profile": "umf.pr-fast-bun-local-existing-tree/1",
+    "runtimeImage": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+    "source": {
+      "bunLockSha256": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4",
+      "commit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+      "packageJsonSha256": "c7b69fba001805dc9cd4e26e84a9b786be379c1413d020c34600c063d287101b",
+      "porcelainStatus": "",
+      "tree": "8b98c0d895983ba2b7637dd3aea567dab0943883"
+    },
+    "sourceAfter": {
+      "bunLockSha256": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4",
+      "commit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+      "packageJsonSha256": "c7b69fba001805dc9cd4e26e84a9b786be379c1413d020c34600c063d287101b",
+      "porcelainStatus": "",
+      "tree": "8b98c0d895983ba2b7637dd3aea567dab0943883"
+    },
+    "sourceVolume": "umf-migration-source-267675510",
+    "status": "LOCAL_LINUX_BUN_TEST_AND_BROWSER_BUILD_PASS",
+    "unitTestSummary": {
+      "capturedStderrSha256": "b0cad687098dde5837a9c44858e585b786d91c620aa1426dd9ca603a9e9b4363",
+      "capturedStdoutSha256": "93e17c6d85569f385aa7b45405c874ee0eea42e855761a831066dd5dcffcdf89",
+      "failCountReported": 0,
+      "passCountReported": 14
+    }
+  },
+  "guestHarnessSha256": "cd45d791039aa286b136779cd2637feca18978e20a502d1b6f6670fb7cb251d0",
+  "guestReceiptPath": "/private/tmp/migration-pr-fast-bun-local-e4299aff8-001/work/evidence/guest-receipt.json",
+  "guestReceiptSha256": "3f4e0c38185d946e90606025600c2606d2630124f0512a2571abfc4f08c650e5",
+  "imageInspect": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10 linux/amd64",
+  "outerLogs": {
+    "stderr": {
+      "path": "/private/tmp/migration-pr-fast-bun-local-e4299aff8-001/evidence/outer.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    "stdout": {
+      "path": "/private/tmp/migration-pr-fast-bun-local-e4299aff8-001/evidence/outer.stdout.log",
+      "sha256": "3f4e0c38185d946e90606025600c2606d2630124f0512a2571abfc4f08c650e5",
+      "sizeBytes": 12457
+    }
+  },
+  "outerOutputBytes": 12457,
+  "outerOutputTruncated": false,
+  "profile": "umf.pr-fast-bun-local-existing-tree/1",
+  "status": "LOCAL_LINUX_BUN_TEST_AND_BROWSER_BUILD_PASS"
+}

@@ -1,0 +1,83 @@
+{
+  "containerCleanup": {
+    "noPersistentMountOrVolumeCreated": true,
+    "ownedProbeContainerAbsent": true,
+    "rootfsExportContainerRemoved": true
+  },
+  "outsideGlobalHandlerTable": {
+    "baselineSha256": "e388ddd64f2b84dc6b1408a9d651e30ec0868a3dd5f0ca5f268c2428bf450411",
+    "byteIdentical": true,
+    "postAttemptPath": "/private/tmp/orbstack-private-qemu/global-after-x64-attempt.txt",
+    "postAttemptSha256": "e388ddd64f2b84dc6b1408a9d651e30ec0868a3dd5f0ca5f268c2428bf450411",
+    "referenceBaseline": "/private/tmp/orbstack-private-qemu-binfmt-preflight.json:globalAfter"
+  },
+  "partialRootfsExtraction": {
+    "complete": false,
+    "note": "Extraction was interrupted immediately after root directed halt; no use as a guest rootfs.",
+    "path": "/private/tmp/orbstack-private-qemu/x64-rootfs",
+    "retainedForEvidence": true
+  },
+  "pinnedGuestImage": {
+    "architecture": "amd64",
+    "dockerReportedImageSizeBytes": 2296873565,
+    "imageId": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+    "os": "linux",
+    "reference": "umf-local-ubuntu-python@sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556"
+  },
+  "privateProbe": {
+    "capabilities": [
+      "SYS_ADMIN"
+    ],
+    "container": "codex-qemu-x64-private-20261029",
+    "exitCode": 126,
+    "limits": {
+      "cpus": 1,
+      "memory": "1g",
+      "pids": 128
+    },
+    "network": "none",
+    "observed": "Outer x64 Bash started under the pinned image; after unshare created the fresh user+mount namespace, /usr/bin/mount could not execute because the private binfmt_misc instance had no x64 interpreter. The private mount/registration and nested guest-Python identity command were not reached.",
+    "platform": "linux/amd64",
+    "seccomp": "unconfined"
+  },
+  "purpose": "metadata-only nested x64 identity preflight; no D5/oracle/product code ran",
+  "qemuBootstrap": {
+    "architecture": "arm64",
+    "binaryBytes": 4396456,
+    "binaryPath": "/private/tmp/orbstack-private-qemu/qemu-x86_64-static",
+    "binarySha256": "de72ec1143909f0f495a53c36d9215cb86e2952517aad87044c741a1088dc60f",
+    "mountIntent": "read-only only",
+    "package": "qemu-user-static",
+    "packageSha256": "0565144632acc09b92da93e5ef9a2f44fa092797c5b0949744351b184ad948a8",
+    "version": "1:8.2.2+ds-0ubuntu1.18"
+  },
+  "retainedFiles": {
+    "global-after-x64-attempt.txt": {
+      "bytes": 2263,
+      "path": "/private/tmp/orbstack-private-qemu/global-after-x64-attempt.txt",
+      "sha256": "e388ddd64f2b84dc6b1408a9d651e30ec0868a3dd5f0ca5f268c2428bf450411"
+    },
+    "private-x64-identity.sh": {
+      "bytes": 1651,
+      "path": "/private/tmp/orbstack-private-qemu/private-x64-identity.sh",
+      "sha256": "753f2b57752158ef9371e877c70b695d5c825ca1959e8e810b69210d7770558d"
+    },
+    "qemu-x86_64-static": {
+      "bytes": 4396456,
+      "path": "/private/tmp/orbstack-private-qemu/qemu-x86_64-static",
+      "sha256": "de72ec1143909f0f495a53c36d9215cb86e2952517aad87044c741a1088dc60f"
+    },
+    "x64-attempt-container.log": {
+      "bytes": 131,
+      "path": "/private/tmp/orbstack-private-qemu/x64-attempt-container.log",
+      "sha256": "c30ef9709486157ac13f7ea44de23a5e154585d2ae17663cdc3c9a5ee9d8eef4"
+    },
+    "x64-rootfs.tar": {
+      "bytes": 1553829376,
+      "path": "/private/tmp/orbstack-private-qemu/x64-rootfs.tar",
+      "sha256": "ff23ec4254a1a20687111cf82018d02df67904130c3171ac6594a66748e24816"
+    }
+  },
+  "schema": "orbstack.private-qemu-x64-identity-attempt/1",
+  "status": "blocked-before-private-registration"
+}
