@@ -140,3 +140,22 @@ test('Core Facets historical projection copies input before invoking Rust', () =
 	expect(output).toEqual(input);
 	expect(output).not.toBe(input);
 });
+
+test('Core Facets preserves the public ordinary-limit error and distinct engine resource failures', () => {
+	const ordinary = Object.assign(new Error('JSON structural limit exceeded'), {
+		name: 'UmfCoreError', code: 'LIMIT', path: '/target/extensions/future/items/49965',
+	});
+	const resource = Object.assign(new Error('Work budget exhausted'), {
+		name: 'UmfCoreError', code: 'RESOURCE_LIMIT', path: '',
+	});
+	for (const failure of [ordinary, resource]) {
+		const api = bindCoreFacetsRust({inspectCoreFacets() { throw failure; }} as unknown as CoreFacetsRustEngine);
+		let thrown: unknown;
+		try { api.inspectCoreFacets(document(), {module: 'm', element: 'v'}); }
+		catch (error) { thrown = error; }
+		if (failure === ordinary) {
+			expect(thrown).toBeInstanceOf(UmfError);
+			expect(thrown).toMatchObject({code: 'LIMIT', message: ordinary.message, path: ordinary.path});
+		} else expect(thrown).toBe(resource);
+	}
+});

@@ -202,7 +202,11 @@ fn direct_verify_reuses_receipt_admission_with_a_large_retained_value() {
             .iter_mut()
             .find(|(key, _)| key == &Utf16::from("future"))
             .unwrap();
-        set_member(future, "opaque", Value::String(Utf16::from("x".repeat(100_000))));
+        set_member(
+            future,
+            "opaque",
+            Value::String(Utf16::from("x".repeat(100_000))),
+        );
     }
     let identity = identity();
     let request = request();
@@ -224,14 +228,9 @@ fn direct_verify_reuses_receipt_admission_with_a_large_retained_value() {
         Ok(())
     };
     let mut staged_context = Context::ordinary().with_meter(&mut staged_meter);
-    let prepared = prepare_core_facet_verification(
-        &receipt,
-        &e,
-        &reg,
-        &mut caps,
-        &mut staged_context,
-    )
-    .unwrap();
+    let prepared =
+        prepare_core_facet_verification(&receipt, &e, &reg, &mut caps, &mut staged_context)
+            .unwrap();
     finish_core_facet_verification(
         &prepared,
         &current,
@@ -243,7 +242,10 @@ fn direct_verify_reuses_receipt_admission_with_a_large_retained_value() {
     .unwrap();
     drop(staged_context);
     drop(staged_meter);
-    assert!(staged_work > 200_000, "staged path must meter both admissions");
+    assert!(
+        staged_work > 200_000,
+        "staged path must meter both admissions"
+    );
 
     let mut direct_work = 0usize;
     let mut direct_meter = |amount: usize| {
@@ -263,6 +265,47 @@ fn direct_verify_reuses_receipt_admission_with_a_large_retained_value() {
     assert!(
         direct_work + 100_000 < staged_work,
         "direct verify must avoid the staged finish's second receipt preparation"
+    );
+}
+
+#[test]
+fn declaration_output_copy_reports_first_over_limit_pointer() {
+    let e = engine();
+    let mut caps = NoCapabilities;
+    let reg = Registry::new();
+    let frozen = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-core-facets/frozen-typescript.json"));
+    let mut src = get(&frozen, "source").unwrap().clone();
+    let identity = get(&frozen, "identity").unwrap().clone();
+    let request = get(&frozen, "request").unwrap().clone();
+    let extensions = get_mut(&mut src, "extensions").unwrap();
+    set_member(
+        extensions,
+        "future",
+        Value::Object(vec![(
+            Utf16::from("items"),
+            Value::Array(vec![Value::Null; 50_000]),
+        )]),
+    );
+    let error = declare_core_facets(
+        &src,
+        &identity,
+        &request,
+        &e,
+        &reg,
+        &mut caps,
+        &mut Context::ordinary(),
+    )
+    .unwrap_err();
+    assert_eq!(error.code, "LIMIT");
+    assert_eq!(
+        error.message,
+        Utf16::from("JSON structural limit exceeded"),
+        "unexpected output copy refusal: {error:?}"
+    );
+    assert_eq!(
+        error.path,
+        Utf16::from("/target/extensions/future/items/49965"),
+        "unexpected output copy pointer: {error:?}"
     );
 }
 #[test]

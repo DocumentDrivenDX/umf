@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-use std::collections::BTreeSet;
+use std::collections::{BTreeSet, HashSet};
 
 use crate::{context::Context, error::EngineError};
 
@@ -36,6 +36,114 @@ impl Utf16 {
 
     pub fn is_empty(&self) -> bool {
         self.0.is_empty()
+    }
+}
+
+#[cfg(test)]
+mod completed_result_copy_tests {
+    use super::{copy_completed_json_result, Utf16, Value};
+    use crate::{
+        context::{Context, Limits, ResourceProfile},
+        error::EngineError,
+    };
+
+    #[test]
+    fn follows_typescript_nodewise_limit_path_and_charges_copy_work() {
+        let value = Value::Object(vec![(
+            Utf16::from("a"),
+            Value::Array(vec![Value::Bool(true); 4]),
+        )]);
+        let mut limits = Limits::ordinary();
+        limits.max_values = 4;
+        let mut observed = 0usize;
+        let mut meter = |amount: usize| {
+            observed += amount;
+            Ok(())
+        };
+        let mut ctx = Context::with_limits(ResourceProfile::Cooperative, limits)
+            .unwrap()
+            .with_meter(&mut meter);
+        let error = copy_completed_json_result(&value, &mut ctx).unwrap_err();
+        drop(ctx);
+        assert_eq!(error.code, "LIMIT");
+        assert_eq!(
+            error.message.to_utf8().unwrap(),
+            "JSON structural limit exceeded"
+        );
+        assert_eq!(error.path.to_utf8().unwrap(), "/a/2");
+        assert_eq!(observed, 25);
+    }
+
+    #[test]
+    fn meter_failure_stops_copy_and_text_is_not_clamped_by_text_limit() {
+        let value = Value::Array(vec![Value::Bool(true); 20]);
+        let mut observed = 0usize;
+        let mut meter = |amount: usize| {
+            observed += amount;
+            if observed >= 4 {
+                Err(EngineError::new(
+                    "METER_FAILURE",
+                    Utf16::default(),
+                    "stop copy",
+                ))
+            } else {
+                Ok(())
+            }
+        };
+        let mut ctx = Context::ordinary().with_meter(&mut meter);
+        let error = copy_completed_json_result(&value, &mut ctx).unwrap_err();
+        drop(ctx);
+        assert_eq!(error.code, "METER_FAILURE");
+        assert_eq!(observed, 4);
+
+        let mut limits = Limits::ordinary();
+        limits.max_text_units = 8;
+        let long = Value::String(Utf16::from("x".repeat(32)));
+        let mut ctx = Context::with_limits(ResourceProfile::Cooperative, limits).unwrap();
+        assert_eq!(copy_completed_json_result(&long, &mut ctx).unwrap(), long);
+
+        let long = Value::String(Utf16::from("x".repeat(32)));
+        let mut observed_units = 0usize;
+        let mut text_meter = |amount: usize| {
+            observed_units += amount;
+            if amount > 8 {
+                Err(EngineError::new(
+                    "METER_FAILURE",
+                    Utf16::default(),
+                    "stop before long clone",
+                ))
+            } else {
+                Ok(())
+            }
+        };
+        let mut ctx = Context::ordinary().with_meter(&mut text_meter);
+        let error = copy_completed_json_result(&long, &mut ctx).unwrap_err();
+        drop(ctx);
+        assert_eq!(error.code, "METER_FAILURE");
+        assert_eq!(observed_units, 33);
+    }
+
+    #[test]
+    fn rejects_duplicate_keys_and_invalid_numbers_preserving_raw_utf16_paths() {
+        let duplicate = Value::Object(vec![
+            (Utf16::from("x/~"), Value::Null),
+            (Utf16::from("x/~"), Value::Bool(true)),
+        ]);
+        let error = copy_completed_json_result(&duplicate, &mut Context::ordinary()).unwrap_err();
+        assert_eq!(error.code, "DUPLICATE_KEY");
+        assert_eq!(error.path.to_utf8().unwrap(), "/x~1~0");
+
+        let value = Value::Object(vec![(Utf16::new(vec![0xd800]), Value::Null)]);
+        let mut limits = Limits::ordinary();
+        limits.max_values = 1;
+        let mut ctx = Context::with_limits(ResourceProfile::Cooperative, limits).unwrap();
+        let error = copy_completed_json_result(&value, &mut ctx).unwrap_err();
+        assert_eq!(error.code, "LIMIT");
+        assert_eq!(error.path, Utf16::new(vec![b'/' as u16, 0xd800]));
+
+        let error = copy_completed_json_result(&Value::Number(f64::NAN), &mut Context::ordinary())
+            .unwrap_err();
+        assert_eq!(error.code, "NUMBER");
     }
 }
 
@@ -209,6 +317,110 @@ pub fn copy_json(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineEr
 
     let mut tree_values = 0;
     visit(value, ctx, &Utf16::default(), 0, &mut tree_values)
+}
+
+/// Copy an already-admitted completed public result with TypeScript's
+/// nodewise structural-limit order. Generic input copies intentionally retain
+/// `copy_json`'s existing error and preflight behavior.
+pub(crate) fn copy_completed_json_result(
+    value: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    fn child_path(
+        path: &Utf16,
+        segment: &Utf16,
+        ctx: &mut Context<'_>,
+    ) -> Result<Utf16, EngineError> {
+        let escaped_capacity = segment
+            .len()
+            .checked_mul(2)
+            .and_then(|size| path.len().checked_add(size))
+            .and_then(|size| size.checked_add(1))
+            .ok_or_else(|| {
+                EngineError::new("LIMIT", path.clone(), "JSON pointer length overflow")
+            })?;
+        ctx.charge_work(escaped_capacity, Utf16::default())?;
+        let mut units = Vec::new();
+        units.try_reserve_exact(escaped_capacity).map_err(|_| {
+            EngineError::new("LIMIT", path.clone(), "JSON pointer allocation failed")
+        })?;
+        units.extend_from_slice(path.units());
+        units.push(b'/' as u16);
+        for unit in segment.units() {
+            match unit {
+                0x7e => units.extend([0x7e, 0x30]),
+                0x2f => units.extend([0x7e, 0x31]),
+                unit => units.push(*unit),
+            }
+        }
+        Ok(Utf16::new(units))
+    }
+
+    fn visit(
+        value: &Value,
+        ctx: &mut Context<'_>,
+        path: &Utf16,
+        depth: usize,
+        count: &mut usize,
+    ) -> Result<Value, EngineError> {
+        ctx.charge_work(1, path.clone())?;
+        *count = count.checked_add(1).ok_or_else(|| {
+            EngineError::new("LIMIT", path.clone(), "JSON structural limit exceeded")
+        })?;
+        if *count > ctx.limits().max_values || depth > ctx.limits().max_depth {
+            return Err(EngineError::new(
+                "LIMIT",
+                path.clone(),
+                "JSON structural limit exceeded",
+            ));
+        }
+        match value {
+            Value::Null => Ok(Value::Null),
+            Value::Bool(value) => Ok(Value::Bool(*value)),
+            Value::Number(value) => Value::number(*value, path.clone()),
+            Value::String(value) => {
+                ctx.charge_work(value.len(), path.clone())?;
+                Ok(Value::String(value.clone()))
+            }
+            Value::Array(items) => {
+                let mut copied = Vec::new();
+                for (index, item) in items.iter().enumerate() {
+                    let child = child_path(path, &Utf16::from(index.to_string()), ctx)?;
+                    copied.try_reserve(1).map_err(|_| {
+                        EngineError::new("LIMIT", child.clone(), "JSON structural limit exceeded")
+                    })?;
+                    copied.push(visit(item, ctx, &child, depth + 1, count)?);
+                }
+                Ok(Value::Array(copied))
+            }
+            Value::Object(members) => {
+                let mut seen: HashSet<&Utf16> = HashSet::new();
+                let mut copied = Vec::new();
+                for (key, item) in members {
+                    ctx.charge_work(key.len(), path.clone())?;
+                    let child = child_path(path, key, ctx)?;
+                    ctx.charge_work(1, path.clone())?;
+                    seen.try_reserve(1).map_err(|_| {
+                        EngineError::new("LIMIT", child.clone(), "JSON structural limit exceeded")
+                    })?;
+                    if !seen.insert(key) {
+                        return Err(EngineError::new(
+                            "DUPLICATE_KEY",
+                            child,
+                            "Duplicate object key",
+                        ));
+                    }
+                    copied.try_reserve(1).map_err(|_| {
+                        EngineError::new("LIMIT", child.clone(), "JSON structural limit exceeded")
+                    })?;
+                    copied.push((key.clone(), visit(item, ctx, &child, depth + 1, count)?));
+                }
+                Ok(Value::Object(copied))
+            }
+        }
+    }
+
+    visit(value, ctx, &Utf16::default(), 0, &mut 0)
 }
 
 /// Validate an already-owned JSON tree using the same accounting and

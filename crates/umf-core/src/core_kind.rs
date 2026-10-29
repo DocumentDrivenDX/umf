@@ -5,7 +5,7 @@ use crate::{
     engine::{Capabilities, Engine},
     error::EngineError,
     registry::Registry,
-    value::{Utf16, Value, copy_json},
+    value::{Utf16, Value, copy_completed_json_result, copy_json},
 };
 
 const INSPECTION_SCHEMA: &str = include_str!("../../../spec/core/kind-operation-v8.schema.json");
@@ -362,6 +362,7 @@ fn inspect_core_kind_copied_inner(
         ("meaning", meaning),
         ("provenance", t("unverified")),
     ]);
+    let r = copy_completed_json_result(&r, ctx)?;
     validate_op_with_schemas(&r, INSPECTION_SCHEMA, ctx, "CORE_KIND_RESULT", schemas)?;
     Ok(r)
 }
@@ -500,6 +501,7 @@ where
             ]),
         ),
     ]);
+    let r = copy_completed_json_result(&r, ctx)?;
     validate_op_with_schemas(&r, DECLARATION_SCHEMA, ctx, "CORE_KIND_RESULT", schemas)?;
     Ok(r)
 }

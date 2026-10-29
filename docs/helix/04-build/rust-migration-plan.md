@@ -10318,3 +10318,93 @@ continue the remaining adapter and extension families. The full Node/Bun/
 browser/Python/Linux release matrix, complete independent review, merge,
 and release remain blocked until those gates and the remaining default routes
 are complete. No version or release asset is published by this packet.
+
+### R8 local qualification direction and Core Facets acceptance — 2026-10-28
+
+The user requires all remaining CI and release qualification to run locally
+because GitHub Actions credits are exhausted. Hosted-run dependencies in earlier
+entries are replaced by reproducible local commands and platform-specific
+artifacts. Cancellation was requested for pending runs `40791472926` and
+`40791472574`; no new Actions run is dispatched. Direct binary publication is
+authorized after the full port, review, integration, and release checks pass.
+
+The local fast PR checks passed 14 core tests with 384 assertions and the browser
+compilation of the document and validation entry points. The schema-browser npm
+publisher controls passed 12 verification and 5 dispatch-identity tests on
+CPython 3.11.17. The Python release publisher controls also passed 15 tests.
+Repository Python source compilation passed with CPython 3.11 after excluding
+virtual environments. These checks cover their named jobs and do not establish
+the complete Rust-port release matrix.
+
+Sol's Core Facets acceptance review identified missing positive historical
+projection and representative inspection, declaration, and saved-receipt cases
+in the first `/4` packet. The packet is being expanded from TypeScript-frozen
+outcomes. Acceptance also requires dependency-resolved exact archives on local
+Darwin arm64 and Linux x86_64, Node/Bun/Chromium default/reference parity,
+ordered dispatch and host effects, asset refusal controls, and bounded resource
+measurements. Docker Linux x86_64 execution on this arm64 host will be recorded
+as emulated Linux userland and ELF-addon evidence.
+
+The programmatic facet APIs retain the predecessor's depth-128 and
+100,000-value copying limits. The 4,000,000 UTF-16 limit belongs to text
+parsing/writing; it does not introduce a new facet string-length rejection.
+The four exports remain open until the complete evidence and independent
+acceptance review pass. The full-port goal still includes the other default
+routes, Python/CLI/binding release qualification, integration, merge, and release.
+
+### R8 acceptance output and build provenance — 2026-10-29
+
+Sol review confirmed that the generated gap ledger is a post-build attestation,
+not a build input. Retirement evidence pins an archive's source closure; placing
+the resulting ledger back inside that closure creates a hash cycle. The SDK
+builder therefore excludes only `r8-symbol-inventory/gap-ledger.json` while
+retaining the declaration inventory, ledger generator and tests, semantic and
+resource sources, and qualification harnesses. Validate the generated ledger
+separately after installed acceptance. The installed SDK verifier checks this
+distinction against the actual captured input manifest.
+
+The expanded TypeScript predecessor resource suite passed all 14 cases locally,
+including successful unknown qualifier retention and strings beyond the text
+writer's limit. Current Darwin/Linux installed replay is pending the callable
+browser assertion fix and acceptance-validator review. No new installed result,
+retirement, or release is claimed by these source checks. All remaining
+qualification runs locally; no GitHub Actions credit is required.
+
+### R8 local release custody and next-family corrections — 2026-10-29
+
+Sol's release audit found hosted-run identity assumptions in the paired Python
+preparer, matrix checker, and public producer verifier. Those historical hosted
+profiles remain historical. The successor release path needs an explicit local
+custody profile, with a local invocation UUID, exact source commit/tree and
+source digest, runner hashes, tool/runtime/container identities, command exit
+statuses, installed-artifact receipts, independent review, and artifact hashes.
+Do not fabricate Actions run IDs or simulate OIDC. Direct GitHub release assets
+can carry the qualified CLI, wheels, npm-installable tarball, WASM, manifests,
+and checksums; download and verify the published bytes and clean installations.
+Registry publication remains a separate channel with its own publisher profile.
+
+The existing coordinated Python matrix names Darwin arm64 and Linux x86_64 on
+CPython 3.11.17, 3.12.15, and 3.13.16. Package metadata also permits 3.14, so that
+interpreter requires execution before claiming the complete declared range.
+Label Docker emulation explicitly. The bounded Linux arm64 wheel observations
+do not establish other operating systems or replace the final source-coherent
+matrix. The current private SDK status and historical version-pinned publishers
+must be deliberately updated before a public release.
+
+Expanded private Cardinality packets matched 39 functional outcomes on Node,
+Bun, and real Chromium against an older installed archive. Resource vectors
+exposed an output-copy depth error: the Rust candidate reported schema nesting
+instead of the predecessor's structural-limit error and child pointer. A common
+completed-result copier and targeted Cardinality/Kind/Nullability corrections
+are being prepared privately with Sol review; they are not installed acceptance.
+
+Sol found no governing numeric latency or relative-speed threshold. The earlier
+Kind/Nullability warm-call parity hold is superseded by explicit measurements,
+single retained initialization, preservation of existing KeyTuple behavior,
+semantic/resource acceptance, and removal of avoidable pathological processing.
+The measured small-source slowdown remains recorded rather than described as
+parity. Larger private measurements exposed a concrete quadratic auxiliary
+construction: each element wrapper retains a complete module. Correct the
+generator, verify unchanged diagnostics and unknown retention, and measure
+scaled source and browser behavior before default selection. Native target
+projections remain separately qualified from these metadata operations.

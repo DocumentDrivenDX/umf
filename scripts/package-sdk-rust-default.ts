@@ -151,6 +151,13 @@ try{
   join(root,'scripts/rust-migration/r8/avro-document-installed.mjs'),
   join(root,'tests/rust-migration/r8-avro-document-installed-probe.test.mjs'),
   join(root,'scripts/rust-migration/r8/core-facets-current-installed.mjs'),
+  join(root,'scripts/rust-migration/r8/core-facets-dependency-installed.mjs'),
+  join(root,'scripts/rust-migration/r8/core-facets-dependency-installed-replay.mjs'),
+  join(root,'scripts/rust-migration/r8/core-facets-installed-asset-controls.mjs'),
+  join(root,'scripts/rust-migration/r8/core-facets-resource-suite.mjs'),
+  join(root,'scripts/rust-migration/r8/core-facets-resource-source-preflight.mjs'),
+  join(root,'scripts/rust-migration/r8/core-facets-dependency-installed.test.mjs'),
+  join(root,'scripts/rust-migration/r8/qualify-core-facets-linux-local.sh'),
   join(root,'tests/rust-migration/r8-core-facets-current-installed.test.mjs'),
   join(root,'tests/rust-migration/r8-core-facets-facade-prereq.test.ts'),
   join(root,'docs/helix/04-build/evidence/rust-migration/r8-core-facets-installed/replay-installed.mjs'),
@@ -164,6 +171,11 @@ try{
   join(root,'scripts/rust-migration/r8/inspectors-default-retirement-replay-browser.mjs'),
   join(root,'scripts/rust-migration/r8/default-route-retirement-evidence.mjs'),
   join(root,'scripts/rust-migration/r8/default-route-retirement-evidence.test.mjs'),
+  join(root,'scripts/rust-migration/r8/facets-retirement-packets/build-packets.mjs'),
+  join(root,'scripts/rust-migration/r8/facets-retirement-packets/expanded-cases.json'),
+  join(root,'docs/helix/04-build/evidence/rust-migration/r8-core-facets-retirement-packets/README.md'),
+  ...['inspectCoreFacets','declareCoreFacets','verifyCoreFacetDeclaration','historicalCoreFacetPatch']
+    .map(name=>join(root,`scripts/rust-migration/r8/facets-retirement-packets/${name}.packet.json`)),
   join(root,'scripts/rust-migration/r8/security-not-retirement-packet.json'),
   join(root,'scripts/rust-migration/r8/security-not-retirement-replay-node.mjs'),
   join(root,'scripts/rust-migration/r8/security-not-retirement-replay-browser.mjs'),
@@ -175,7 +187,9 @@ try{
   join(root,'scripts/rust-migration/r8/gap-ledger.mjs'),join(root,'scripts/rust-migration/r8/gap-ledger.test.mjs'),
   join(root,'docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/README.md'),
   join(root,'docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/inventory.json'),
-  join(root,'docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/gap-ledger.json'),
+  // The generated gap ledger is post-build attestation: retirement records pin
+  // this archive's source digest. Including its output would create a hash cycle.
+  // Keep its inventory, generator and tests above as qualification inputs.
   ...['common','host','host-child','chromium'].map(name=>join(root,`scripts/rust-migration/r8/schema-graph-route-${name}.mjs`)),
   ...['schema-graph-route-build-packet.mjs','schema-graph-route-evidence.mjs','schema-graph-route-evidence.test.mjs']
     .map(name=>join(root,`scripts/rust-migration/r8/${name}`)),

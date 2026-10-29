@@ -10,7 +10,7 @@ use crate::{
     error::EngineError,
     registry::Registry,
     schema::{CompiledSchema, SchemaResources},
-    value::{copy_json, Utf16, Value},
+    value::{copy_completed_json_result, copy_json, Utf16, Value},
 };
 
 const CARDINALITIES: [&str; 4] = ["one", "array", "map", "unspecified"];
@@ -504,6 +504,7 @@ fn inspect_core_cardinality_from_located(
         ),
         ("provenance", text("unverified")),
     ]);
+    let result = copy_completed_json_result(&result, ctx)?;
     validate_operation_schema(
         engine,
         &result,
@@ -836,6 +837,7 @@ fn declare_core_cardinality_from_located(
             ]),
         ),
     ]);
+    let result = copy_completed_json_result(&result, ctx)?;
     validate_operation_schema(
         engine,
         &result,
@@ -1124,6 +1126,114 @@ mod tests {
         )
         .unwrap()
     }
+    #[test]
+    fn completed_inspection_copy_reports_childpath_before_schema_depth() {
+        let mut input = source();
+        let mut nested = Value::Bool(true);
+        for _ in 0..122 {
+            nested = obj(vec![("x", nested)]);
+        }
+        let Value::Array(modules) = get_mut(&mut input, "modules").unwrap() else {
+            panic!()
+        };
+        let Value::Array(elements) = get_mut(&mut modules[0], "elements").unwrap() else {
+            panic!()
+        };
+        let Value::Object(extensions) = get_mut(&mut elements[0], "extensions").unwrap() else {
+            panic!()
+        };
+        let member = extensions
+            .iter_mut()
+            .find(|(k, _)| k == &key("future"))
+            .unwrap();
+        member.1 = nested;
+        let identity = Identity {
+            module: "m".into(),
+            element: "e".into(),
+        };
+        let inspect_error = inspect_core_cardinality(
+            &input,
+            &identity,
+            &engine(),
+            &Registry::new(),
+            &mut NoCapabilities,
+            &mut Context::ordinary(),
+        )
+        .unwrap_err();
+        let declaration_error = declare_core_cardinality(
+            &input,
+            &identity,
+            &obj(vec![("cardinality", text("one"))]),
+            &engine(),
+            &Registry::new(),
+            &mut NoCapabilities,
+            &mut Context::ordinary(),
+        )
+        .unwrap_err();
+        for error in [inspect_error, declaration_error] {
+            assert_eq!(error.code, "LIMIT");
+            assert_eq!(
+                error.message.to_utf8().unwrap(),
+                "JSON structural limit exceeded"
+            );
+            let mut expected = "/source/modules/0/elements/0/extensions/future".to_owned();
+            for _ in 0..122 {
+                expected.push_str("/x");
+            }
+            assert_eq!(error.path.to_utf8().unwrap(), expected);
+        }
+    }
+
+    #[test]
+    fn declaration_completed_copy_reports_exact_amplified_target_path() {
+        let mut input = source();
+        let Value::Array(modules) = get_mut(&mut input, "modules").unwrap() else {
+            panic!()
+        };
+        let Value::Array(elements) = get_mut(&mut modules[0], "elements").unwrap() else {
+            panic!()
+        };
+        let Value::Object(extensions) = get_mut(&mut elements[0], "extensions").unwrap() else {
+            panic!()
+        };
+        let Value::Object(future) = &mut extensions
+            .iter_mut()
+            .find(|(k, _)| k == &key("future"))
+            .unwrap()
+            .1
+        else {
+            panic!()
+        };
+        let values = Value::Array(vec![Value::Null; 50_000]);
+        let opaque = future
+            .iter_mut()
+            .find(|(k, _)| k == &key("opaque"))
+            .unwrap();
+        opaque.1 = values;
+        let error = declare_core_cardinality(
+            &input,
+            &Identity {
+                module: "m".into(),
+                element: "e".into(),
+            },
+            &obj(vec![("cardinality", text("one"))]),
+            &engine(),
+            &Registry::new(),
+            &mut NoCapabilities,
+            &mut Context::ordinary(),
+        )
+        .unwrap_err();
+        assert_eq!(error.code, "LIMIT");
+        assert_eq!(
+            error.message.to_utf8().unwrap(),
+            "JSON structural limit exceeded"
+        );
+        assert_eq!(
+            error.path.to_utf8().unwrap(),
+            "/target/modules/0/elements/0/extensions/future/opaque/49956"
+        );
+    }
+
     #[test]
     fn inspection_keeps_missing_unknown_and_known_distinct() {
         assert_eq!(

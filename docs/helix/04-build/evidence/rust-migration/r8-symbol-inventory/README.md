@@ -1503,3 +1503,18 @@ The symbol inventory remains at the SHA-256 above. The ledger still reports
 opt-in mappings, and zero promoted current-source installed binding routes.
 Installed replay evidence is scoped to its named operations and hosts; it does
 not by itself retire those declarations.
+
+## Core Facets local acceptance source cut — 2026-10-28
+
+The expanded frozen Core Facets packets, dependency-resolved replay, tagged-wire
+dispatch observer, resource suite, asset refusal controls, and local Linux runner
+were included in this historical pre-acceptance SDK source cut. Its authority-bound
+[gap ledger](gap-ledger.json) snapshot had SHA-256
+`c51bbdeb2f0a3531671a8301eabc9a7bd27fc39a10cf99c86e0ffd7f3da1a5da`.
+The symbol inventory and the 920 logical default-route gaps are unchanged.
+This snapshot added qualification and compatibility work; retirement remained
+subject to observed cohort evidence and independent acceptance review. Subsequent
+acceptance results and their generated ledger hashes belong to the matching
+installed evidence packet. The ledger is a post-build output and is excluded
+from the SDK build input closure to avoid a receipt/ledger/archive hash cycle;
+its inventory, generator, tests, and full checker census remain pinned.

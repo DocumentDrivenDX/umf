@@ -699,6 +699,126 @@ fn unknown_unpaired_utf16_labels_survive_inspection() {
     assert_eq!(get(get(&null, "meaning").unwrap(), "value"), Some(&raw));
 }
 
+fn deeply_nested_inspection_source() -> Value {
+    let mut nested = Value::Bool(true);
+    for _ in 0..121 {
+        nested = object(vec![("d", nested)]);
+    }
+    let mut source = source();
+    set_element_field(
+        &mut source,
+        "known",
+        "extensions",
+        object(vec![("future", object(vec![("nested", nested)]))]),
+    );
+    source
+}
+
+#[test]
+fn kind_and_nullability_completed_inspections_match_typescript_depth_limit() {
+    let source = deeply_nested_inspection_source();
+    let e = engine();
+    let r = Registry::new();
+    let expected_path = format!(
+        "/source/modules/0/elements/0/extensions/future/nested{}",
+        "/d".repeat(121)
+    );
+
+    let mut caps = NoCapabilities;
+    let kind_error = umf_core::core_kind::inspect_core_kind(
+        &source,
+        &id("known"),
+        &e,
+        &r,
+        &mut caps,
+        &mut Context::ordinary(),
+    )
+    .unwrap_err();
+    assert_eq!(kind_error.code, "LIMIT");
+    assert_eq!(
+        kind_error.message.to_utf8().unwrap(),
+        "JSON structural limit exceeded"
+    );
+    assert_eq!(kind_error.path.to_utf8().unwrap(), expected_path);
+
+    let mut caps = NoCapabilities;
+    let nullability_error = umf_core::nullability::inspect_core_nullability(
+        &source,
+        &nul_id("known"),
+        &e,
+        &r,
+        &mut caps,
+        &mut Context::ordinary(),
+    )
+    .unwrap_err();
+    assert_eq!(nullability_error.code, "LIMIT");
+    assert_eq!(
+        nullability_error.message.to_utf8().unwrap(),
+        "JSON structural limit exceeded"
+    );
+    assert_eq!(nullability_error.path.to_utf8().unwrap(), expected_path);
+}
+
+fn wide_declaration_source() -> Value {
+    let mut source = source();
+    let opaque = Value::Array(
+        (0..50_000)
+            .map(|index| Value::Bool(index % 2 == 0))
+            .collect(),
+    );
+    set_element_field(
+        &mut source,
+        "known",
+        "extensions",
+        object(vec![("future", object(vec![("opaque", opaque)]))]),
+    );
+    source
+}
+
+#[test]
+fn kind_and_nullability_completed_declarations_match_typescript_structural_limit() {
+    let source = wide_declaration_source();
+    let e = engine();
+    let r = Registry::new();
+    let expected_path = "/target/modules/0/elements/0/extensions/future/opaque/49950";
+
+    let mut caps = NoCapabilities;
+    let kind_error = umf_core::core_kind::declare_core_kind(
+        &source,
+        &id("known"),
+        "field",
+        &e,
+        &r,
+        &mut caps,
+        &mut Context::ordinary(),
+    )
+    .unwrap_err();
+    assert_eq!(kind_error.code, "LIMIT");
+    assert_eq!(
+        kind_error.message.to_utf8().unwrap(),
+        "JSON structural limit exceeded"
+    );
+    assert_eq!(kind_error.path.to_utf8().unwrap(), expected_path);
+
+    let mut caps = NoCapabilities;
+    let nullability_error = umf_core::nullability::declare_core_nullability(
+        &source,
+        &nul_id("known"),
+        "required",
+        &e,
+        &r,
+        &mut caps,
+        &mut Context::ordinary(),
+    )
+    .unwrap_err();
+    assert_eq!(nullability_error.code, "LIMIT");
+    assert_eq!(
+        nullability_error.message.to_utf8().unwrap(),
+        "JSON structural limit exceeded"
+    );
+    assert_eq!(nullability_error.path.to_utf8().unwrap(), expected_path);
+}
+
 #[test]
 fn canonical_sort_work_is_metered_before_long_prefix_comparison() {
     let mut s = source();

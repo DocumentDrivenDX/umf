@@ -1,0 +1,1695 @@
+{
+  "inspections": {
+    "missing": {
+      "args": [
+        {
+          "umf": "0.10.0",
+          "id": "facets",
+          "vocabularies": {
+            "future": {
+              "version": "1.0.0"
+            }
+          },
+          "extensions": {
+            "future": {
+              "opaque": "9007199254740993"
+            }
+          },
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "v",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "extensions": {
+                    "future": {
+                      "unknown": [
+                        null,
+                        "keep"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "module": "m",
+          "element": "v"
+        }
+      ],
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "operation": "inspect-core-facets",
+          "version": "5.0.0",
+          "source": {
+            "umf": "0.10.0",
+            "id": "facets",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            },
+            "extensions": {
+              "future": {
+                "opaque": "9007199254740993"
+              }
+            },
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "integer",
+                    "extensions": {
+                      "future": {
+                        "unknown": [
+                          null,
+                          "keep"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "v"
+          },
+          "path": "/modules/0/elements/0/facets",
+          "meaning": {
+            "state": "missing"
+          },
+          "provenance": "unverified"
+        }
+      }
+    },
+    "inapplicable": {
+      "args": [
+        {
+          "umf": "0.10.0",
+          "id": "facets",
+          "vocabularies": {
+            "future": {
+              "version": "1.0.0"
+            }
+          },
+          "extensions": {
+            "future": {
+              "opaque": "9007199254740993"
+            }
+          },
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "v",
+                  "kind": "record",
+                  "extensions": {
+                    "future": {
+                      "unknown": [
+                        null,
+                        "keep"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "module": "m",
+          "element": "v"
+        }
+      ],
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "operation": "inspect-core-facets",
+          "version": "5.0.0",
+          "source": {
+            "umf": "0.10.0",
+            "id": "facets",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            },
+            "extensions": {
+              "future": {
+                "opaque": "9007199254740993"
+              }
+            },
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "v",
+                    "kind": "record",
+                    "extensions": {
+                      "future": {
+                        "unknown": [
+                          null,
+                          "keep"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "v"
+          },
+          "path": "/modules/0/elements/0/facets",
+          "meaning": {
+            "state": "inapplicable"
+          },
+          "provenance": "unverified"
+        }
+      }
+    },
+    "unknownUnitPartial": {
+      "args": [
+        {
+          "umf": "0.10.0",
+          "id": "facets",
+          "vocabularies": {
+            "future": {
+              "version": "1.0.0"
+            }
+          },
+          "extensions": {
+            "future": {
+              "opaque": "9007199254740993"
+            }
+          },
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "v",
+                  "kind": "field",
+                  "scalarType": "string",
+                  "extensions": {
+                    "future": {
+                      "unknown": [
+                        null,
+                        "keep"
+                      ]
+                    }
+                  },
+                  "facets": {
+                    "length": {
+                      "max": 8,
+                      "unit": "future-unit"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "module": "m",
+          "element": "v"
+        }
+      ],
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "operation": "inspect-core-facets",
+          "version": "5.0.0",
+          "source": {
+            "umf": "0.10.0",
+            "id": "facets",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            },
+            "extensions": {
+              "future": {
+                "opaque": "9007199254740993"
+              }
+            },
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "string",
+                    "extensions": {
+                      "future": {
+                        "unknown": [
+                          null,
+                          "keep"
+                        ]
+                      }
+                    },
+                    "facets": {
+                      "length": {
+                        "max": 8,
+                        "unit": "future-unit"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "v"
+          },
+          "path": "/modules/0/elements/0/facets",
+          "meaning": {
+            "state": "partial",
+            "facets": {
+              "length": {
+                "max": 8,
+                "unit": "future-unit"
+              }
+            },
+            "interpreted": {},
+            "uninterpretedPaths": [
+              "/modules/0/elements/0/facets/length/unit"
+            ]
+          },
+          "provenance": "unverified"
+        }
+      }
+    },
+    "unknownGroupPartial": {
+      "args": [
+        {
+          "umf": "0.10.0",
+          "id": "facets",
+          "vocabularies": {
+            "future": {
+              "version": "1.0.0"
+            }
+          },
+          "extensions": {
+            "future": {
+              "opaque": "9007199254740993"
+            }
+          },
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "v",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "extensions": {
+                    "future": {
+                      "unknown": [
+                        null,
+                        "keep"
+                      ]
+                    }
+                  },
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 8,
+                      "signed": true,
+                      "comparison": {
+                        "native": "opaque"
+                      }
+                    },
+                    "future": {
+                      "token": "9007199254740993"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "module": "m",
+          "element": "v"
+        }
+      ],
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "operation": "inspect-core-facets",
+          "version": "5.0.0",
+          "source": {
+            "umf": "0.10.0",
+            "id": "facets",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            },
+            "extensions": {
+              "future": {
+                "opaque": "9007199254740993"
+              }
+            },
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "integer",
+                    "extensions": {
+                      "future": {
+                        "unknown": [
+                          null,
+                          "keep"
+                        ]
+                      }
+                    },
+                    "facets": {
+                      "integerWidth": {
+                        "bits": 8,
+                        "signed": true,
+                        "comparison": {
+                          "native": "opaque"
+                        }
+                      },
+                      "future": {
+                        "token": "9007199254740993"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "v"
+          },
+          "path": "/modules/0/elements/0/facets",
+          "meaning": {
+            "state": "partial",
+            "facets": {
+              "integerWidth": {
+                "bits": 8,
+                "signed": true,
+                "comparison": {
+                  "native": "opaque"
+                }
+              },
+              "future": {
+                "token": "9007199254740993"
+              }
+            },
+            "interpreted": {
+              "integerWidth": {
+                "bits": 8,
+                "signed": true
+              }
+            },
+            "uninterpretedPaths": [
+              "/modules/0/elements/0/facets/future",
+              "/modules/0/elements/0/facets/integerWidth/comparison"
+            ]
+          },
+          "provenance": "unverified"
+        }
+      }
+    }
+  },
+  "declarations": {
+    "stringLengthZero": {
+      "args": [
+        {
+          "umf": "0.10.0",
+          "id": "facets",
+          "vocabularies": {
+            "future": {
+              "version": "1.0.0"
+            }
+          },
+          "extensions": {
+            "future": {
+              "opaque": "9007199254740993"
+            }
+          },
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "v",
+                  "kind": "field",
+                  "scalarType": "string",
+                  "extensions": {
+                    "future": {
+                      "unknown": [
+                        null,
+                        "keep"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "module": "m",
+          "element": "v"
+        },
+        {
+          "length": {
+            "max": 0,
+            "unit": "unicode-scalar"
+          }
+        }
+      ],
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "operation": "declare-core-facets",
+          "version": "3.0.0",
+          "source": {
+            "umf": "0.10.0",
+            "id": "facets",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            },
+            "extensions": {
+              "future": {
+                "opaque": "9007199254740993"
+              }
+            },
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "string",
+                    "extensions": {
+                      "future": {
+                        "unknown": [
+                          null,
+                          "keep"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.10.0",
+            "id": "facets",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            },
+            "extensions": {
+              "future": {
+                "opaque": "9007199254740993"
+              }
+            },
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "string",
+                    "extensions": {
+                      "future": {
+                        "unknown": [
+                          null,
+                          "keep"
+                        ]
+                      }
+                    },
+                    "facets": {
+                      "length": {
+                        "max": 0,
+                        "unit": "unicode-scalar"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "v"
+          },
+          "request": {
+            "length": {
+              "max": 0,
+              "unit": "unicode-scalar"
+            }
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/facets",
+            "binding": {
+              "id": "umf.core.facets.authoring",
+              "version": "3.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        }
+      }
+    },
+    "binaryLength": {
+      "args": [
+        {
+          "umf": "0.10.0",
+          "id": "facets",
+          "vocabularies": {
+            "future": {
+              "version": "1.0.0"
+            }
+          },
+          "extensions": {
+            "future": {
+              "opaque": "9007199254740993"
+            }
+          },
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "v",
+                  "kind": "field",
+                  "scalarType": "binary",
+                  "extensions": {
+                    "future": {
+                      "unknown": [
+                        null,
+                        "keep"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "module": "m",
+          "element": "v"
+        },
+        {
+          "length": {
+            "max": 16,
+            "unit": "byte"
+          }
+        }
+      ],
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "operation": "declare-core-facets",
+          "version": "3.0.0",
+          "source": {
+            "umf": "0.10.0",
+            "id": "facets",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            },
+            "extensions": {
+              "future": {
+                "opaque": "9007199254740993"
+              }
+            },
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "binary",
+                    "extensions": {
+                      "future": {
+                        "unknown": [
+                          null,
+                          "keep"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.10.0",
+            "id": "facets",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            },
+            "extensions": {
+              "future": {
+                "opaque": "9007199254740993"
+              }
+            },
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "binary",
+                    "extensions": {
+                      "future": {
+                        "unknown": [
+                          null,
+                          "keep"
+                        ]
+                      }
+                    },
+                    "facets": {
+                      "length": {
+                        "max": 16,
+                        "unit": "byte"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "v"
+          },
+          "request": {
+            "length": {
+              "max": 16,
+              "unit": "byte"
+            }
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/facets",
+            "binding": {
+              "id": "umf.core.facets.authoring",
+              "version": "3.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        }
+      }
+    },
+    "decimalPrecisionScale": {
+      "args": [
+        {
+          "umf": "0.10.0",
+          "id": "facets",
+          "vocabularies": {
+            "future": {
+              "version": "1.0.0"
+            }
+          },
+          "extensions": {
+            "future": {
+              "opaque": "9007199254740993"
+            }
+          },
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "v",
+                  "kind": "field",
+                  "scalarType": "decimal",
+                  "extensions": {
+                    "future": {
+                      "unknown": [
+                        null,
+                        "keep"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "module": "m",
+          "element": "v"
+        },
+        {
+          "precision": 38,
+          "scale": 9
+        }
+      ],
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "operation": "declare-core-facets",
+          "version": "3.0.0",
+          "source": {
+            "umf": "0.10.0",
+            "id": "facets",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            },
+            "extensions": {
+              "future": {
+                "opaque": "9007199254740993"
+              }
+            },
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "decimal",
+                    "extensions": {
+                      "future": {
+                        "unknown": [
+                          null,
+                          "keep"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.10.0",
+            "id": "facets",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            },
+            "extensions": {
+              "future": {
+                "opaque": "9007199254740993"
+              }
+            },
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "decimal",
+                    "extensions": {
+                      "future": {
+                        "unknown": [
+                          null,
+                          "keep"
+                        ]
+                      }
+                    },
+                    "facets": {
+                      "precision": 38,
+                      "scale": 9
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "v"
+          },
+          "request": {
+            "precision": 38,
+            "scale": 9
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/facets",
+            "binding": {
+              "id": "umf.core.facets.authoring",
+              "version": "3.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        }
+      }
+    },
+    "decimalSafeIntegerEdge": {
+      "args": [
+        {
+          "umf": "0.10.0",
+          "id": "facets",
+          "vocabularies": {
+            "future": {
+              "version": "1.0.0"
+            }
+          },
+          "extensions": {
+            "future": {
+              "opaque": "9007199254740993"
+            }
+          },
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "v",
+                  "kind": "field",
+                  "scalarType": "decimal",
+                  "extensions": {
+                    "future": {
+                      "unknown": [
+                        null,
+                        "keep"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "module": "m",
+          "element": "v"
+        },
+        {
+          "precision": 9007199254740991,
+          "scale": 9007199254740991
+        }
+      ],
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "operation": "declare-core-facets",
+          "version": "3.0.0",
+          "source": {
+            "umf": "0.10.0",
+            "id": "facets",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            },
+            "extensions": {
+              "future": {
+                "opaque": "9007199254740993"
+              }
+            },
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "decimal",
+                    "extensions": {
+                      "future": {
+                        "unknown": [
+                          null,
+                          "keep"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.10.0",
+            "id": "facets",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            },
+            "extensions": {
+              "future": {
+                "opaque": "9007199254740993"
+              }
+            },
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "decimal",
+                    "extensions": {
+                      "future": {
+                        "unknown": [
+                          null,
+                          "keep"
+                        ]
+                      }
+                    },
+                    "facets": {
+                      "precision": 9007199254740991,
+                      "scale": 9007199254740991
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "v"
+          },
+          "request": {
+            "precision": 9007199254740991,
+            "scale": 9007199254740991
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/facets",
+            "binding": {
+              "id": "umf.core.facets.authoring",
+              "version": "3.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        }
+      }
+    }
+  },
+  "historicalSuccess": {
+    "args": [
+      {
+        "length": {
+          "max": 8,
+          "unit": "byte"
+        },
+        "precision": 10,
+        "scale": 2,
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      }
+    ],
+    "outcome": {
+      "status": "returned",
+      "value": {
+        "length": {
+          "max": 8,
+          "unit": "byte"
+        },
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        },
+        "precision": 10,
+        "scale": 2
+      }
+    }
+  },
+  "verification": {
+    "json": {
+      "args": [
+        {
+          "operation": "declare-core-facets",
+          "version": "3.0.0",
+          "source": {
+            "umf": "0.10.0",
+            "id": "facets",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            },
+            "extensions": {
+              "future": {
+                "opaque": "9007199254740993"
+              }
+            },
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "decimal",
+                    "extensions": {
+                      "future": {
+                        "unknown": [
+                          null,
+                          "keep"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.10.0",
+            "id": "facets",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            },
+            "extensions": {
+              "future": {
+                "opaque": "9007199254740993"
+              }
+            },
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "decimal",
+                    "extensions": {
+                      "future": {
+                        "unknown": [
+                          null,
+                          "keep"
+                        ]
+                      }
+                    },
+                    "facets": {
+                      "precision": 38,
+                      "scale": 9
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "v"
+          },
+          "request": {
+            "precision": 38,
+            "scale": 9
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/facets",
+            "binding": {
+              "id": "umf.core.facets.authoring",
+              "version": "3.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        {
+          "umf": "0.10.0",
+          "id": "facets",
+          "vocabularies": {
+            "future": {
+              "version": "1.0.0"
+            }
+          },
+          "extensions": {
+            "future": {
+              "opaque": "9007199254740993"
+            }
+          },
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "v",
+                  "kind": "field",
+                  "scalarType": "decimal",
+                  "extensions": {
+                    "future": {
+                      "unknown": [
+                        null,
+                        "keep"
+                      ]
+                    }
+                  },
+                  "facets": {
+                    "precision": 38,
+                    "scale": 9
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "operation": "declare-core-facets",
+          "version": "3.0.0",
+          "source": {
+            "umf": "0.10.0",
+            "id": "facets",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            },
+            "extensions": {
+              "future": {
+                "opaque": "9007199254740993"
+              }
+            },
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "decimal",
+                    "extensions": {
+                      "future": {
+                        "unknown": [
+                          null,
+                          "keep"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.10.0",
+            "id": "facets",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            },
+            "extensions": {
+              "future": {
+                "opaque": "9007199254740993"
+              }
+            },
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "decimal",
+                    "extensions": {
+                      "future": {
+                        "unknown": [
+                          null,
+                          "keep"
+                        ]
+                      }
+                    },
+                    "facets": {
+                      "precision": 38,
+                      "scale": 9
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "v"
+          },
+          "request": {
+            "precision": 38,
+            "scale": 9
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/facets",
+            "binding": {
+              "id": "umf.core.facets.authoring",
+              "version": "3.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        }
+      }
+    },
+    "yaml": {
+      "args": [
+        {
+          "operation": "declare-core-facets",
+          "version": "3.0.0",
+          "source": {
+            "umf": "0.10.0",
+            "id": "facets",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            },
+            "extensions": {
+              "future": {
+                "opaque": "9007199254740993"
+              }
+            },
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "decimal",
+                    "extensions": {
+                      "future": {
+                        "unknown": [
+                          null,
+                          "keep"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.10.0",
+            "id": "facets",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            },
+            "extensions": {
+              "future": {
+                "opaque": "9007199254740993"
+              }
+            },
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "decimal",
+                    "extensions": {
+                      "future": {
+                        "unknown": [
+                          null,
+                          "keep"
+                        ]
+                      }
+                    },
+                    "facets": {
+                      "precision": 38,
+                      "scale": 9
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "v"
+          },
+          "request": {
+            "precision": 38,
+            "scale": 9
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/facets",
+            "binding": {
+              "id": "umf.core.facets.authoring",
+              "version": "3.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        {
+          "umf": "0.10.0",
+          "id": "facets",
+          "vocabularies": {
+            "future": {
+              "version": "1.0.0"
+            }
+          },
+          "extensions": {
+            "future": {
+              "opaque": "9007199254740993"
+            }
+          },
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "v",
+                  "kind": "field",
+                  "scalarType": "decimal",
+                  "extensions": {
+                    "future": {
+                      "unknown": [
+                        null,
+                        "keep"
+                      ]
+                    }
+                  },
+                  "facets": {
+                    "precision": 38,
+                    "scale": 9
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "operation": "declare-core-facets",
+          "version": "3.0.0",
+          "source": {
+            "umf": "0.10.0",
+            "id": "facets",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            },
+            "extensions": {
+              "future": {
+                "opaque": "9007199254740993"
+              }
+            },
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "decimal",
+                    "extensions": {
+                      "future": {
+                        "unknown": [
+                          null,
+                          "keep"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.10.0",
+            "id": "facets",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            },
+            "extensions": {
+              "future": {
+                "opaque": "9007199254740993"
+              }
+            },
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "decimal",
+                    "extensions": {
+                      "future": {
+                        "unknown": [
+                          null,
+                          "keep"
+                        ]
+                      }
+                    },
+                    "facets": {
+                      "precision": 38,
+                      "scale": 9
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "v"
+          },
+          "request": {
+            "precision": 38,
+            "scale": 9
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/facets",
+            "binding": {
+              "id": "umf.core.facets.authoring",
+              "version": "3.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        }
+      }
+    },
+    "crossDocument": {
+      "args": [
+        {
+          "operation": "declare-core-facets",
+          "version": "3.0.0",
+          "source": {
+            "umf": "0.10.0",
+            "id": "facets",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            },
+            "extensions": {
+              "future": {
+                "opaque": "9007199254740993"
+              }
+            },
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "decimal",
+                    "extensions": {
+                      "future": {
+                        "unknown": [
+                          null,
+                          "keep"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.10.0",
+            "id": "facets",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            },
+            "extensions": {
+              "future": {
+                "opaque": "9007199254740993"
+              }
+            },
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "decimal",
+                    "extensions": {
+                      "future": {
+                        "unknown": [
+                          null,
+                          "keep"
+                        ]
+                      }
+                    },
+                    "facets": {
+                      "precision": 38,
+                      "scale": 9
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "v"
+          },
+          "request": {
+            "precision": 38,
+            "scale": 9
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/facets",
+            "binding": {
+              "id": "umf.core.facets.authoring",
+              "version": "3.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        },
+        {
+          "umf": "0.10.0",
+          "id": "different",
+          "vocabularies": {
+            "future": {
+              "version": "1.0.0"
+            }
+          },
+          "extensions": {
+            "future": {
+              "opaque": "9007199254740993"
+            }
+          },
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "v",
+                  "kind": "field",
+                  "scalarType": "decimal",
+                  "extensions": {
+                    "future": {
+                      "unknown": [
+                        null,
+                        "keep"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "outcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "CORE_FACET_STALE",
+        "message": "Document changed since facets were declared",
+        "path": ""
+      }
+    }
+  }
+}

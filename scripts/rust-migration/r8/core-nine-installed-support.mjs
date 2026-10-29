@@ -4,6 +4,16 @@ import {createHash} from 'node:crypto';
 import {readFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
 
+export function decodeCoreRequestOperation(wire){
+ const envelope=typeof wire==='string'?JSON.parse(wire):wire;
+ if(envelope?.kind!=='object'||!Array.isArray(envelope.members))throw new Error('Rust wire operation envelope shape mismatch');
+ const matching=envelope.members.filter(item=>Array.isArray(item?.key)&&item.key.length===2&&item.key[0]===111&&item.key[1]===112);
+ if(matching.length!==1)throw new Error('Rust wire operation member must occur exactly once');
+ const units=matching[0].value?.units;
+ if(matching[0].value?.kind!=='string'||!Array.isArray(units)||units.length<1||units.length>128||!units.every(unit=>Number.isInteger(unit)&&unit>=0&&unit<=0xffff))throw new Error('Rust wire operation string shape mismatch');
+ return String.fromCharCode(...units);
+}
+
 export async function verifySourceClosure({repoRoot,sourceClosure,expectedSha256}){
  assert.equal(sourceClosure.sha256,expectedSha256,'archive source closure pin');
  assert.equal(sourceClosure.capturedLiveSha256,expectedSha256,'captured source closure pin');
@@ -52,6 +62,17 @@ export function validateRouteResolution(routes,installedRoot){
   assert(result.root.endsWith('/dist/umf-node.js'),`${runtime} default route`);
   assert(result.reference.endsWith('/dist/umf.js'),`${runtime} reference route`);
  }
+}
+
+export function coreFacetsCohortForHost(platform,arch){
+ if(platform==='darwin'&&arch==='arm64')return 'darwin-arm64';
+ if(platform==='linux'&&arch==='x64')return 'linux-x86_64';
+ throw new Error(`unsupported host for Core Facets gate: ${platform}/${arch}`);
+}
+
+export function assessLinuxX64NativeFormat({platform,arch,nativeMembers,nativeFormat}){
+ const compatible=/ELF 64-bit.*x86-64/.test(nativeFormat);
+ return {status:'asset-format-inspection',execution:'assessed-separately-by-host-replay-receipts',currentHost:{platform,arch},nativeAsset:{members:nativeMembers,format:nativeFormat},linuxX64Compatibility:compatible?'native-format-compatible':'native-format-incompatible',dependencyScope:`offline npm dependency resolution and host replays were performed on ${platform}/${arch}`};
 }
 
 export function exerciseNegativeControls({pkg,lock,installedRoot,consumerRoot,archivePath,archiveIntegrity,routes,validators={validateLock,validateIdentity,validateRouteResolution}}){

@@ -1,0 +1,228 @@
+{
+  "format": "umf.r8.default-route-retirement-packet/4",
+  "profile": "core-facets",
+  "contractId": "CONTRACT-040",
+  "exportName": "historicalCoreFacetPatch",
+  "rustOwner": "umf_core::facets::historical_core_facet_patch",
+  "predecessorHashes": {
+    "frozen-typescript.json": "c81021fbe4083e2f42f921df3213290d59520992623f5104ba782457d5fd70d5",
+    "meaning-cases.json": "4d292db4bdd434b8033199315e420575321cdca6a486dd880bbee24ec3af01d9",
+    "regression-cases.json": "dde541ea2965bc0df725de7d415e3f9057909cb7f32c51d3d7ad2cef60d36183",
+    "exact-errors.json": "5bbd7a15d5e960644c300cf6fe0d85a1ffd4f4a7c519775ee1e143794f70f279",
+    "expanded-cases.json": "74f34614a5dd522fd0cd0722dfb6ff9df77902220dec16469f84ae2e1c60c3dd"
+  },
+  "cases": [
+    {
+      "id": "historical-0",
+      "input": {
+        "args": [
+          {
+            "length": {
+              "min": 1,
+              "max": 8,
+              "unit": "byte",
+              "future": true
+            }
+          }
+        ]
+      },
+      "expectedOutcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "CORE_FACET_PROJECTION_INPUT",
+        "message": "Expected closed interpreted facet groups",
+        "path": ""
+      },
+      "expectedTrace": [],
+      "expectedDefaultRustCalls": 1,
+      "expectedDefaultRustOperations": [
+        "historicalCoreFacetPatch"
+      ]
+    },
+    {
+      "id": "historical-1",
+      "input": {
+        "args": [
+          {
+            "integerWidth": {
+              "bits": 8,
+              "signed": true,
+              "future": true
+            }
+          }
+        ]
+      },
+      "expectedOutcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "CORE_FACET_PROJECTION_INPUT",
+        "message": "Expected closed interpreted facet groups",
+        "path": ""
+      },
+      "expectedTrace": [],
+      "expectedDefaultRustCalls": 1,
+      "expectedDefaultRustOperations": [
+        "historicalCoreFacetPatch"
+      ]
+    },
+    {
+      "id": "historical-2",
+      "input": {
+        "args": [
+          {
+            "collectionSize": null
+          }
+        ]
+      },
+      "expectedOutcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "CORE_FACET_PROJECTION_INPUT",
+        "message": "Expected closed interpreted facet groups",
+        "path": ""
+      },
+      "expectedTrace": [],
+      "expectedDefaultRustCalls": 1,
+      "expectedDefaultRustOperations": [
+        "historicalCoreFacetPatch"
+      ]
+    },
+    {
+      "id": "historical-3",
+      "input": {
+        "args": [
+          {
+            "range": {
+              "min": {
+                "integerToken": "1"
+              },
+              "future": true
+            }
+          }
+        ]
+      },
+      "expectedOutcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "CORE_FACET_PROJECTION_INPUT",
+        "message": "Expected closed interpreted facet groups",
+        "path": ""
+      },
+      "expectedTrace": [],
+      "expectedDefaultRustCalls": 1,
+      "expectedDefaultRustOperations": [
+        "historicalCoreFacetPatch"
+      ]
+    },
+    {
+      "id": "historical-4",
+      "input": {
+        "args": [
+          {
+            "collectionSize": {
+              "min": 1.5
+            }
+          }
+        ]
+      },
+      "expectedOutcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "CORE_FACET_PROJECTION_INPUT",
+        "message": "Expected closed interpreted facet groups",
+        "path": ""
+      },
+      "expectedTrace": [],
+      "expectedDefaultRustCalls": 1,
+      "expectedDefaultRustOperations": [
+        "historicalCoreFacetPatch"
+      ]
+    },
+    {
+      "id": "historical-5",
+      "input": {
+        "args": [
+          {
+            "collectionSize": {
+              "min": 1
+            }
+          }
+        ]
+      },
+      "expectedOutcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "CORE_FACET_PROJECTION_VERSION",
+        "message": "Historical facet projection cannot represent schema-properties bounds",
+        "path": ""
+      },
+      "expectedTrace": [],
+      "expectedDefaultRustCalls": 1,
+      "expectedDefaultRustOperations": [
+        "historicalCoreFacetPatch"
+      ]
+    },
+    {
+      "id": "historical-success-representable-projection",
+      "input": {
+        "args": [
+          {
+            "length": {
+              "max": 8,
+              "unit": "byte"
+            },
+            "precision": 10,
+            "scale": 2,
+            "integerWidth": {
+              "bits": 16,
+              "signed": false
+            }
+          }
+        ]
+      },
+      "expectedOutcome": {
+        "status": "returned",
+        "value": {
+          "length": {
+            "max": 8,
+            "unit": "byte"
+          },
+          "integerWidth": {
+            "bits": 16,
+            "signed": false
+          },
+          "precision": 10,
+          "scale": 2
+        }
+      },
+      "expectedTrace": [],
+      "expectedDefaultRustCalls": 1,
+      "expectedDefaultRustOperations": [
+        "historicalCoreFacetPatch"
+      ]
+    },
+    {
+      "id": "unsafeIntegerCopyRefusal",
+      "input": {
+        "args": [
+          {
+            "integerWidth": {
+              "bits": 9007199254740992,
+              "signed": true
+            }
+          }
+        ]
+      },
+      "expectedOutcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "NUMBER",
+        "message": "Number outside the core interoperable numeric profile",
+        "path": "/integerWidth/bits"
+      },
+      "expectedTrace": [],
+      "expectedDefaultRustCalls": 0,
+      "expectedDefaultRustOperations": []
+    }
+  ]
+}

@@ -6,8 +6,9 @@ use crate::{
     error::EngineError,
     registry::Registry,
     schema::CompiledSchema,
-    value::{Utf16, Value, copy_json},
+    value::{Utf16, Value},
 };
+use std::collections::HashSet;
 
 const CURRENT: &str = "0.10.0";
 const INSPECTION_SCHEMA: &str = include_str!("../../../spec/core/facet-operation-v5.schema.json");
@@ -45,21 +46,117 @@ fn err(c: &str, m: &str, p: &str) -> EngineError {
     EngineError::new(c, k(p), m)
 }
 fn copy(v: &Value, c: &mut Context<'_>) -> Result<Value, EngineError> {
-    copy_json(v, c)
+    facet_copy_json(v, c)
+}
+/// Facet operations use the predecessor's visit-by-visit value ceiling so
+/// output amplification reports the first offending child pointer. The
+/// general value copier retains its historical parent-path diagnostics.
+fn facet_copy_json(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+    fn visit(
+        value: &Value,
+        ctx: &mut Context<'_>,
+        path: &Utf16,
+        depth: usize,
+        count: &mut usize,
+    ) -> Result<Value, EngineError> {
+        ctx.charge_work(1, path.clone())?;
+        *count = count.checked_add(1).ok_or_else(|| {
+            EngineError::new("LIMIT", path.clone(), "JSON structural limit exceeded")
+        })?;
+        if *count > ctx.limits().max_values || depth > ctx.limits().max_depth {
+            return Err(EngineError::new(
+                "LIMIT",
+                path.clone(),
+                "JSON structural limit exceeded",
+            ));
+        }
+        match value {
+            Value::Null => Ok(Value::Null),
+            Value::Bool(value) => Ok(Value::Bool(*value)),
+            Value::Number(value) => Value::number(*value, path.clone()),
+            Value::String(value) => {
+                ctx.charge_work(value.len(), path.clone())?;
+                Ok(Value::String(value.clone()))
+            }
+            Value::Array(items) => {
+                let mut copied = Vec::new();
+                for (index, item) in items.iter().enumerate() {
+                    let child = pointer_segment(path, &Utf16::from(index.to_string()), ctx)?;
+                    reserve_input(&mut copied, 1, ctx, child.clone(), "Facet JSON array")?;
+                    copied.push(visit(item, ctx, &child, depth + 1, count)?);
+                }
+                Ok(Value::Array(copied))
+            }
+            Value::Object(fields) => {
+                let mut seen = HashSet::new();
+                let mut copied = Vec::new();
+                for (key, item) in fields {
+                    ctx.charge_work(key.len(), path.clone())?;
+                    let child = pointer_segment(path, key, ctx)?;
+                    let requested = seen.len().checked_add(1).ok_or_else(|| {
+                        EngineError::new("LIMIT", child.clone(), "JSON structural limit exceeded")
+                    })?;
+                    if requested > ctx.limits().max_values {
+                        return Err(EngineError::new(
+                            "LIMIT",
+                            child,
+                            "JSON structural limit exceeded",
+                        ));
+                    }
+                    ctx.charge_work(1, path.clone())?;
+                    seen.try_reserve(1).map_err(|_| {
+                        EngineError::new("LIMIT", path.clone(), "Facet JSON key allocation failed")
+                    })?;
+                    if !seen.insert(key) {
+                        return Err(EngineError::new(
+                            "DUPLICATE_KEY",
+                            path.clone(),
+                            "Duplicate object key",
+                        ));
+                    }
+                    reserve_input(&mut copied, 1, ctx, child.clone(), "Facet JSON object")?;
+                    copied.push((key.clone(), visit(item, ctx, &child, depth + 1, count)?));
+                }
+                Ok(Value::Object(copied))
+            }
+        }
+    }
+    visit(value, ctx, &Utf16::default(), 0, &mut 0)
+}
+fn reserve_input<T>(
+    values: &mut Vec<T>,
+    additional: usize,
+    ctx: &mut Context<'_>,
+    path: Utf16,
+    label: &str,
+) -> Result<(), EngineError> {
+    let requested = values.len().checked_add(additional).ok_or_else(|| {
+        EngineError::new("LIMIT", path.clone(), format!("{label} length overflow"))
+    })?;
+    if requested > ctx.limits().max_values {
+        return Err(EngineError::new(
+            "LIMIT",
+            path,
+            format!("{label} exceeds the admitted value limit"),
+        ));
+    }
+    ctx.charge_work(additional, path.clone())?;
+    values
+        .try_reserve(additional)
+        .map_err(|_| EngineError::new("LIMIT", path, format!("{label} allocation failed")))
 }
 fn diagnostic_message(
     diagnostics: &[crate::error::Diagnostic],
     ctx: &mut Context<'_>,
 ) -> Result<Utf16, EngineError> {
-    ctx.charge_work(diagnostics.len(), Utf16::default())?;
     let mut values = Vec::new();
-    values.try_reserve_exact(diagnostics.len()).map_err(|_| {
-        EngineError::new(
-            "LIMIT",
-            Utf16::default(),
-            "Facet diagnostic allocation failed",
-        )
-    })?;
+    reserve_input(
+        &mut values,
+        diagnostics.len(),
+        ctx,
+        Utf16::default(),
+        "Facet diagnostic",
+    )?;
     for d in diagnostics {
         ctx.charge_work(
             d.code.len() + d.path.len() + d.message.len() + 1,
@@ -134,7 +231,7 @@ fn scrub_unknown_facets(
     source: &mut Value,
     ctx: &mut Context<'_>,
 ) -> Result<Vec<Utf16>, EngineError> {
-    let mut warnings = vec![];
+    let mut warnings = Vec::new();
     let Some(Value::Array(modules)) = get_mut(source, "modules") else {
         return Ok(warnings);
     };
@@ -156,7 +253,8 @@ fn scrub_unknown_facets(
             };
             let base = Utf16::from(format!("/modules/{mi}/elements/{ei}/facets"));
             let old = std::mem::take(facets);
-            let mut kept = vec![];
+            let mut kept = Vec::new();
+            reserve_input(&mut kept, old.len(), ctx, base.clone(), "Facet group")?;
             for (name, mut value) in old {
                 ctx.charge_work(name.len() + 1, base.clone())?;
                 let path = pointer_segment(&base, &name, ctx)?;
@@ -172,13 +270,16 @@ fn scrub_unknown_facets(
                     kept.push((name, value));
                     continue;
                 } else {
+                    reserve_input(&mut warnings, 1, ctx, base.clone(), "Facet warning")?;
                     warnings.push(path);
                     continue;
                 };
                 if name == k("length")
                     && matches!(get(&value,"unit"),Some(Value::String(u)) if ![k("unicode-scalar"),k("byte")].contains(u))
                 {
-                    warnings.push(pointer_segment(&path, &k("unit"), ctx)?);
+                    let warning = pointer_segment(&path, &k("unit"), ctx)?;
+                    reserve_input(&mut warnings, 1, ctx, path.clone(), "Facet warning")?;
+                    warnings.push(warning);
                     if let Value::Object(length) = &mut value {
                         if let Some((_, old)) = length.iter_mut().find(|(key, _)| key == &k("unit"))
                         {
@@ -189,14 +290,20 @@ fn scrub_unknown_facets(
                 if let Value::Object(nested) = &mut value {
                     ctx.charge_work(nested.len(), path.clone())?;
                     let mut retained = Vec::new();
-                    retained.try_reserve_exact(nested.len()).map_err(|_| {
-                        EngineError::new("LIMIT", path.clone(), "Facet qualifier allocation failed")
-                    })?;
+                    reserve_input(
+                        &mut retained,
+                        nested.len(),
+                        ctx,
+                        path.clone(),
+                        "Facet qualifier",
+                    )?;
                     for (qualifier, qualifier_value) in std::mem::take(nested) {
                         ctx.charge_work(qualifier.len() + 1, path.clone())?;
                         let keep = allowed.iter().any(|known| qualifier == k(known));
                         if !keep {
-                            warnings.push(pointer_segment(&path, &qualifier, ctx)?);
+                            let warning = pointer_segment(&path, &qualifier, ctx)?;
+                            reserve_input(&mut warnings, 1, ctx, path.clone(), "Facet warning")?;
+                            warnings.push(warning);
                         }
                         if keep {
                             retained.push((qualifier, qualifier_value));
@@ -299,17 +406,41 @@ fn locate(
 fn canonical(v: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
     ctx.charge_work(1, Utf16::default())?;
     match v {
-        Value::Array(a) => Ok(Value::Array(
-            a.iter()
-                .map(|x| canonical(x, ctx))
-                .collect::<Result<_, _>>()?,
-        )),
+        Value::Array(a) => {
+            let mut out = Vec::new();
+            reserve_input(
+                &mut out,
+                a.len(),
+                ctx,
+                Utf16::default(),
+                "Facet canonical array",
+            )?;
+            for value in a {
+                out.push(canonical(value, ctx)?);
+            }
+            Ok(Value::Array(out))
+        }
         Value::Object(m) => {
-            let mut out = m
-                .iter()
-                .map(|(k, v)| Ok((k.clone(), canonical(v, ctx)?)))
-                .collect::<Result<Vec<_>, EngineError>>()?;
-            out.sort_by(|a, b| a.0.cmp(&b.0));
+            let mut out = Vec::new();
+            reserve_input(
+                &mut out,
+                m.len(),
+                ctx,
+                Utf16::default(),
+                "Facet canonical object",
+            )?;
+            for (key, value) in m {
+                out.push((key.clone(), canonical(value, ctx)?));
+            }
+            let levels = (usize::BITS - m.len().max(1).leading_zeros()) as u64;
+            let sort_work = u64::try_from(m.len())
+                .ok()
+                .and_then(|length| length.checked_mul(levels))
+                .ok_or_else(|| {
+                    EngineError::new("LIMIT", Utf16::default(), "Facet sort work overflow")
+                })?;
+            ctx.charge_work_u64(sort_work, Utf16::default())?;
+            out.sort_unstable_by(|a, b| a.0.cmp(&b.0));
             Ok(Value::Object(out))
         }
         _ => copy(v, ctx),
@@ -333,42 +464,43 @@ fn validate_result(
     if errors.is_empty() {
         return Ok(());
     }
-    let message = crate::serialization::stringify_compact_metered(
-        &Value::Array(
-            errors
-                .into_iter()
-                .map(|e| {
-                    let raw_params = copy(&e.params, ctx)?;
-                    let (params, message) = if e.keyword == "dependentRequired" {
-                        let property = string(get(&raw_params, "property")).unwrap_or_default();
-                        let missing =
-                            string(get(&raw_params, "missingProperty")).unwrap_or_default();
-                        (
-                            obj(vec![
-                                ("property", t(&property)),
-                                ("missingProperty", t(&missing)),
-                                ("depsCount", Value::Number(1.0)),
-                                ("deps", t(&missing)),
-                            ]),
-                            Value::String(Utf16::from(format!(
-                                "must have property {missing} when property {property} is present"
-                            ))),
-                        )
-                    } else {
-                        (raw_params, Value::String(e.message))
-                    };
-                    Ok(obj(vec![
-                        ("instancePath", Value::String(e.instance_path)),
-                        ("schemaPath", Value::String(e.schema_path)),
-                        ("keyword", t(&e.keyword)),
-                        ("params", params),
-                        ("message", message),
-                    ]))
-                })
-                .collect::<Result<Vec<_>, EngineError>>()?,
-        ),
+    let mut error_values = Vec::new();
+    reserve_input(
+        &mut error_values,
+        errors.len(),
         ctx,
+        Utf16::default(),
+        "Facet validation diagnostic",
     )?;
+    for e in errors {
+        let raw_params = copy(&e.params, ctx)?;
+        let (params, message) = if e.keyword == "dependentRequired" {
+            let property = string(get(&raw_params, "property")).unwrap_or_default();
+            let missing = string(get(&raw_params, "missingProperty")).unwrap_or_default();
+            (
+                obj(vec![
+                    ("property", t(&property)),
+                    ("missingProperty", t(&missing)),
+                    ("depsCount", Value::Number(1.0)),
+                    ("deps", t(&missing)),
+                ]),
+                Value::String(Utf16::from(format!(
+                    "must have property {missing} when property {property} is present"
+                ))),
+            )
+        } else {
+            (raw_params, Value::String(e.message))
+        };
+        error_values.push(obj(vec![
+            ("instancePath", Value::String(e.instance_path)),
+            ("schemaPath", Value::String(e.schema_path)),
+            ("keyword", t(&e.keyword)),
+            ("params", params),
+            ("message", message),
+        ]));
+    }
+    let message =
+        crate::serialization::stringify_compact_metered(&Value::Array(error_values), ctx)?;
     Err(EngineError::new(code, Utf16::default(), message))
 }
 fn validate_request(
@@ -402,42 +534,43 @@ fn validate_request(
     if errors.is_empty() {
         return Ok(());
     }
-    let message = crate::serialization::stringify_compact_metered(
-        &Value::Array(
-            errors
-                .into_iter()
-                .map(|e| {
-                    let raw_params = copy(&e.params, ctx)?;
-                    let (params, message) = if e.keyword == "dependentRequired" {
-                        let property = string(get(&raw_params, "property")).unwrap_or_default();
-                        let missing =
-                            string(get(&raw_params, "missingProperty")).unwrap_or_default();
-                        (
-                            obj(vec![
-                                ("property", t(&property)),
-                                ("missingProperty", t(&missing)),
-                                ("depsCount", Value::Number(1.0)),
-                                ("deps", t(&missing)),
-                            ]),
-                            Value::String(Utf16::from(format!(
-                                "must have property {missing} when property {property} is present"
-                            ))),
-                        )
-                    } else {
-                        (raw_params, Value::String(e.message))
-                    };
-                    Ok(obj(vec![
-                        ("instancePath", Value::String(e.instance_path)),
-                        ("schemaPath", Value::String(e.schema_path)),
-                        ("keyword", t(&e.keyword)),
-                        ("params", params),
-                        ("message", message),
-                    ]))
-                })
-                .collect::<Result<Vec<_>, EngineError>>()?,
-        ),
+    let mut error_values = Vec::new();
+    reserve_input(
+        &mut error_values,
+        errors.len(),
         ctx,
+        Utf16::default(),
+        "Facet request diagnostic",
     )?;
+    for e in errors {
+        let raw_params = copy(&e.params, ctx)?;
+        let (params, message) = if e.keyword == "dependentRequired" {
+            let property = string(get(&raw_params, "property")).unwrap_or_default();
+            let missing = string(get(&raw_params, "missingProperty")).unwrap_or_default();
+            (
+                obj(vec![
+                    ("property", t(&property)),
+                    ("missingProperty", t(&missing)),
+                    ("depsCount", Value::Number(1.0)),
+                    ("deps", t(&missing)),
+                ]),
+                Value::String(Utf16::from(format!(
+                    "must have property {missing} when property {property} is present"
+                ))),
+            )
+        } else {
+            (raw_params, Value::String(e.message))
+        };
+        error_values.push(obj(vec![
+            ("instancePath", Value::String(e.instance_path)),
+            ("schemaPath", Value::String(e.schema_path)),
+            ("keyword", t(&e.keyword)),
+            ("params", params),
+            ("message", message),
+        ]));
+    }
+    let message =
+        crate::serialization::stringify_compact_metered(&Value::Array(error_values), ctx)?;
     Err(EngineError::new(
         "CORE_FACET_REQUEST",
         Utf16::default(),
@@ -523,7 +656,14 @@ fn facet_meaning(
     }
     interpreted.sort_by(|a, b| a.0.cmp(&b.0));
     let prefix = Utf16::from(format!("{path}/"));
-    let mut uninterpreted = vec![];
+    let mut uninterpreted = Vec::new();
+    reserve_input(
+        &mut uninterpreted,
+        unknown.len(),
+        ctx,
+        k(path),
+        "Uninterpreted facet path",
+    )?;
     for p in unknown {
         ctx.charge_work(p.len() + 1, k(path))?;
         if p.units().starts_with(prefix.units()) {
@@ -571,6 +711,7 @@ pub fn inspect_core_facets(
         ("meaning", meaning),
         ("provenance", t("unverified")),
     ]);
+    let _ = copy(&result, ctx)?;
     validate_result(&result, engine, INSPECTION_SCHEMA, ctx, "CORE_FACET_RESULT")?;
     Ok(result)
 }
@@ -661,23 +802,36 @@ pub fn declare_core_facets(
                                         if let Some((_, x)) = old.iter_mut().find(|(a, _)| a == k) {
                                             *x = copy(v, ctx)?
                                         } else {
-                                            old.push((k.clone(), copy(v, ctx)?))
+                                            let copied = copy(v, ctx)?;
+                                            reserve_input(
+                                                old,
+                                                1,
+                                                ctx,
+                                                Utf16::from(path.as_str()),
+                                                "Facet qualifier merge",
+                                            )?;
+                                            old.push((k.clone(), copied))
                                         }
                                     }
                                 }
                             } else {
-                                f.push((n.clone(), copy(v, ctx)?))
+                                let copied = copy(v, ctx)?;
+                                reserve_input(f, 1, ctx, k("/facets"), "Facet group merge")?;
+                                f.push((n.clone(), copied))
                             }
                         } else if let Some((_, x)) = f.iter_mut().find(|(a, _)| a == n) {
                             *x = copy(v, ctx)?
                         } else {
-                            f.push((n.clone(), copy(v, ctx)?))
+                            let copied = copy(v, ctx)?;
+                            reserve_input(f, 1, ctx, k("/facets"), "Facet group merge")?;
+                            f.push((n.clone(), copied))
                         }
                     }
                 }
                 if let Some(i) = facet_index {
                     ef[i].1 = facets
                 } else {
+                    reserve_input(ef, 1, ctx, Utf16::from(path.as_str()), "Facet target merge")?;
                     ef.push((k("facets"), facets))
                 }
             }
@@ -718,6 +872,10 @@ pub fn declare_core_facets(
             ]),
         ),
     ]);
+    // The TypeScript boundary copies the returned envelope after schema
+    // construction and before schema validation. Preserve its visit-order
+    // structural refusal and pointer.
+    let _ = copy(&result, ctx)?;
     validate_result(
         &result,
         engine,
@@ -904,4 +1062,59 @@ pub fn historical_core_facet_patch(
         patch.push((k("scale"), copy(s, ctx)?))
     }
     Ok(Value::Object(patch))
+}
+
+#[cfg(test)]
+mod resource_tests {
+    use super::reserve_input;
+    use crate::{
+        context::{Context, Limits, ResourceProfile},
+        error::EngineError,
+        value::Utf16,
+    };
+
+    #[test]
+    fn input_vector_reservation_fails_closed_before_growth() {
+        let limits = Limits {
+            max_values: 0,
+            ..Limits::ordinary()
+        };
+        let mut ctx = Context::with_limits(ResourceProfile::Cooperative, limits).unwrap();
+        let mut values = Vec::<u8>::new();
+        let error = reserve_input(
+            &mut values,
+            1,
+            &mut ctx,
+            Utf16::default(),
+            "test facet vector",
+        )
+        .unwrap_err();
+        assert_eq!(error.code, "LIMIT");
+        assert!(values.is_empty());
+        assert_eq!(ctx.charged_work(), 0);
+    }
+
+    #[test]
+    fn input_vector_reservation_propagates_work_refusal_before_growth() {
+        let mut meter = |_: usize| {
+            Err(EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "meter",
+            ))
+        };
+        let mut ctx = Context::ordinary().with_meter(&mut meter);
+        let mut values = Vec::<u8>::new();
+        let error = reserve_input(
+            &mut values,
+            1,
+            &mut ctx,
+            Utf16::default(),
+            "test facet vector",
+        )
+        .unwrap_err();
+        assert_eq!(error.code, "RESOURCE_LIMIT");
+        assert!(values.is_empty());
+        assert_eq!(ctx.charged_work(), 1);
+    }
 }

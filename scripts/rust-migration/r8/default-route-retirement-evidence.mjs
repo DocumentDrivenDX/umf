@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { gunzipSync } from 'node:zlib';
+import {coreFacetResourceCaseIds,validateCoreFacetResourceEvidence} from './core-facets-resource-suite.mjs';
 
 const sha = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
 const hashPattern = /^[a-f0-9]{64}$/;
@@ -17,6 +18,13 @@ const securityNotCases = ['T', 'F', 'U', 'null', 'number', 'boolean', 'unknown-s
 const securityNotOutcome = id => ['T', 'F', 'U'].includes(id)
   ? { kind: 'return', value: ({ T: 'F', F: 'T', U: 'U' })[id], trace: [] }
   : { kind: 'throw', name: 'UmfError', constructor: 'UmfError', code: 'SECURITY_TRUTH', message: 'Invalid security truth', path: '', trace: [] };
+const facetsPacketFiles = ['frozen-typescript.json', 'meaning-cases.json', 'regression-cases.json', 'exact-errors.json', 'expanded-cases.json'];
+const facetsPacketProfile = Object.freeze({
+  inspectCoreFacets: 'umf_core::facets::inspect_core_facets',
+  declareCoreFacets: 'umf_core::facets::declare_core_facets',
+  verifyCoreFacetDeclaration: 'umf_core::facets::verify_core_facet_declaration',
+  historicalCoreFacetPatch: 'umf_core::facets::historical_core_facet_patch',
+});
 const stable = value => Array.isArray(value)
   ? value.map(stable)
   : value && typeof value === 'object'
@@ -49,6 +57,12 @@ function readPinned(root, pin, label, json = false) {
   const bytes = fs.readFileSync(full);
   if (sha(bytes) !== pin.sha256) throw new Error(`${label} hash mismatch: ${pin.path}`);
   return { bytes, json: json ? JSON.parse(bytes.toString('utf8')) : null };
+}
+
+function readCohortFile(root, cohortPath, relativePath, digest, label, json = false) {
+  if (typeof relativePath !== 'string' || !relativePath || path.isAbsolute(relativePath) || relativePath.split(/[\\/]/).some(part => !part || part === '.' || part === '..')) throw new Error(`${label} needs a safe cohort-relative path`);
+  const full = path.posix.join(path.posix.dirname(cohortPath), relativePath);
+  return readPinned(root, { path: full, sha256: digest }, label, json);
 }
 
 export function tarMembers(bytes) {
@@ -148,6 +162,7 @@ function verifyArchive(root, cohort, expectedMembers, sourceManifestPin) {
       !sameStringMap(source.liveInputs, sourceDoc.inputs)) {
     throw new Error('archive Rust manifest source closure differs from the pinned live-source manifest');
   }
+  return { archiveContents, archiveSha512: `sha512-${crypto.createHash('sha512').update(bytes).digest('base64')}` };
 }
 
 function contractIdFromMarkdown(source) {
@@ -169,6 +184,76 @@ function verifyLiveSourceManifest(root, pin, archive) {
   }
   if (tree.digest('hex') !== archive.sourceClosureSha256) throw new Error('recomputed live-source closure differs from archive');
   return inputs;
+}
+
+function facetsExpectedCases(root, exportName) {
+  const base = 'docs/helix/04-build/evidence/rust-migration/r5-core-facets/';
+  const files = facetsPacketFiles;
+  const source = Object.fromEntries(files.map(file => {
+    const sourcePath = file === 'expanded-cases.json'
+      ? 'scripts/rust-migration/r8/facets-retirement-packets/expanded-cases.json'
+      : path.join(base, file);
+    const bytes = fs.readFileSync(path.resolve(root, sourcePath));
+    return [file, { value: JSON.parse(bytes.toString('utf8')), sha256: sha(bytes) }];
+  }));
+  const p = Object.fromEntries(files.map(file => [file, source[file].value]));
+  const frozen = p['frozen-typescript.json'], meaning = p['meaning-cases.json'];
+  const regressions = p['regression-cases.json'].cases, errors = p['exact-errors.json'].cases;
+  const expanded = p['expanded-cases.json'];
+  const returned = value => ({ status: 'returned', value });
+  const threw = error => ({ status: 'threw', name: 'UmfError', code: error.code, message: error.message, path: error.path });
+  const row = (id, args, expectedOutcome, expectedDefaultRustCalls = 1, expectedDefaultRustOperations = [], expectedTrace = []) => ({ id, input: { args }, expectedOutcome, expectedTrace, expectedDefaultRustCalls, expectedDefaultRustOperations });
+  const inspect = (id, doc, identity, outcome) => row(id, [doc, identity], outcome, 1, ['inspectCoreFacets']);
+  const cases = {
+    inspectCoreFacets: [
+      inspect('known', frozen.receipt.target, frozen.identity, returned(frozen.inspection)),
+      ...meaning.inspections.map((item, i) => inspect(i === 0 ? 'range' : 'collectionSize', meaning.source, item.identity, returned(item))),
+      ...Object.entries(expanded.inspections).map(([id, item]) => row(id, item.args, item.outcome, 1, ['inspectCoreFacets'])),
+      inspect('loneSurrogateQualifier', regressions.loneSurrogateQualifier.source, regressions.loneSurrogateQualifier.identity, returned(regressions.loneSurrogateQualifier.outcome)),
+      inspect('invalidIdentity', frozen.source, {}, threw(errors.invalidIdentity)),
+      inspect('invalidSource', { ...structuredClone(frozen.source), umf: '0.9.0' }, frozen.identity, threw(errors.invalidSource)),
+      inspect('recordRoleSourceRefusal', (() => { const v = structuredClone(frozen.source); v.modules[0].elements[0].kind = 'record'; return v; })(), frozen.identity, threw(errors.recordRoleSourceRefusal)),
+      { id: 'identityAccessor', input: { hostCase: 'inspect-identity-accessor' }, expectedOutcome: threw({ code: 'NON_JSON', message: 'Hidden fields and accessors cannot be serialized faithfully', path: '/element' }), expectedTrace: ['source:getPrototypeOf', 'source:ownKeys', 'source:ownKeys', 'identity:getPrototypeOf', 'identity:ownKeys', 'identity:ownKeys', 'identity:getOwnPropertyDescriptor:module', 'identity:getOwnPropertyDescriptor:element'], expectedDefaultRustCalls: 0, expectedDefaultRustOperations: [] },
+    ],
+    declareCoreFacets: [
+      row('base', [frozen.source, frozen.identity, frozen.request], returned(frozen.receipt), 2, ['admitCoreFacetRequest', 'declareCoreFacets']),
+      row('unknownFacetPreserved', [frozen.unknownFacetDeclaration.source, frozen.unknownFacetDeclaration.identity, frozen.unknownFacetDeclaration.request], returned(frozen.unknownFacetDeclaration), 2, ['admitCoreFacetRequest', 'declareCoreFacets']),
+      row('lengthMerge', [regressions.lengthMerge.source, regressions.lengthMerge.identity, regressions.lengthMerge.request], returned(regressions.lengthMerge.outcome), 2, ['admitCoreFacetRequest', 'declareCoreFacets']),
+      row('unknownUnit', (() => { const s = structuredClone(frozen.source); s.modules[0].elements[0].scalarType = 'string'; s.modules[0].elements[0].facets = { length: { max: 8, unit: 'future-unit' } }; return [s, frozen.identity, { length: { max: 4, unit: 'unicode-scalar' } }]; })(), threw(errors.unknownUnit), 2, ['admitCoreFacetRequest', 'declareCoreFacets']),
+      row('targetConflict', (() => { const s = structuredClone(frozen.source); s.modules[0].elements[0].scalarType = 'integer'; return [s, frozen.identity, { length: { max: 4, unit: 'byte' } }]; })(), threw(errors.targetConflict), 2, ['admitCoreFacetRequest', 'declareCoreFacets']),
+      row('invalidRequest', [frozen.source, frozen.identity, { precision: 3 }], threw(errors.invalidRequest), 1, ['admitCoreFacetRequest']),
+      { id: 'invalidRequestBeforeSource', input: { hostCase: 'declare-invalid-request-before-source' }, expectedOutcome: threw(errors.invalidRequest), expectedTrace: ['request:getPrototypeOf', 'request:ownKeys', 'request:ownKeys', 'request:getOwnPropertyDescriptor:precision'], expectedDefaultRustCalls: 1, expectedDefaultRustOperations: ['admitCoreFacetRequest'] },
+      { id: 'sourceAccessor', input: { hostCase: 'declare-source-accessor' }, expectedOutcome: threw({ code: 'NON_JSON', message: 'Hidden fields and accessors cannot be serialized faithfully', path: '/future' }), expectedTrace: ['source:getPrototypeOf', 'source:ownKeys', 'source:ownKeys', 'source:getOwnPropertyDescriptor:future'], expectedDefaultRustCalls: 1, expectedDefaultRustOperations: ['admitCoreFacetRequest'] },
+      row('unknownUnitWithInvalidBound', (() => { const s = structuredClone(frozen.source); s.modules[0].elements[0].scalarType = 'string'; s.modules[0].elements[0].facets = { length: { max: -1, unit: 'future-unit' } }; return [s, frozen.identity, { length: { max: 4, unit: 'unicode-scalar' } }]; })(), threw(errors.unknownUnitWithInvalidBound), 2, ['admitCoreFacetRequest', 'declareCoreFacets']),
+      ...Object.entries(expanded.declarations).map(([id, item]) => row(id, item.args, item.outcome, 2, ['admitCoreFacetRequest', 'declareCoreFacets'])),
+    ],
+    verifyCoreFacetDeclaration: [
+      row('valid', [frozen.receipt, frozen.receipt.target], returned(frozen.receipt), 2, ['prepareCoreFacetVerification', 'finishCoreFacetVerification']),
+      row('stale', [frozen.receipt, frozen.source], threw(errors.stale), 2, ['prepareCoreFacetVerification', 'finishCoreFacetVerification']),
+      row('forged', [(() => { const r = structuredClone(frozen.receipt); r.request.integerWidth.bits = 32; return r; })(), frozen.receipt.target], threw(errors.forged), 1, ['prepareCoreFacetVerification']),
+      row('malformedReceipt', [{ operation: 'declare-core-facets', version: '3.0.0' }, frozen.source], threw(errors.malformedReceipt), 1, ['prepareCoreFacetVerification']),
+      row('malformedReceiptBeforeCurrentCopy', [regressions.verifyMalformedBeforeCurrentCopy.receipt, 9007199254740992], threw(regressions.verifyMalformedBeforeCurrentCopy.outcome.error), 1, ['prepareCoreFacetVerification']),
+      row('forgedReceiptBeforeCurrentCopy', [regressions.verifyForgedBeforeCurrentCopy.receipt, 9007199254740992], threw(regressions.verifyForgedBeforeCurrentCopy.outcome.error), 1, ['prepareCoreFacetVerification']),
+      { id: 'malformedReceiptBeforeCurrent', input: { hostCase: 'verify-malformed-before-current' }, expectedOutcome: threw(errors.malformedReceipt), expectedTrace: ['receipt:getPrototypeOf', 'receipt:ownKeys', 'receipt:ownKeys', 'receipt:getOwnPropertyDescriptor:operation', 'receipt:getOwnPropertyDescriptor:version'], expectedDefaultRustCalls: 1, expectedDefaultRustOperations: ['prepareCoreFacetVerification'] },
+      ...Object.entries(expanded.verification).map(([id, item]) => id === 'crossDocument'
+        ? row(`saved-${id}`, item.args, item.outcome, 2, ['prepareCoreFacetVerification', 'finishCoreFacetVerification'])
+        : { id: `saved-${id}`, input: { hostCase: `verify-saved-${id}`, args: item.args }, expectedOutcome: item.outcome, expectedTrace: [], expectedDefaultRustCalls: 2, expectedDefaultRustOperations: ['prepareCoreFacetVerification', 'finishCoreFacetVerification'] }),
+    ],
+    historicalCoreFacetPatch: [
+      ...regressions.historical.map((item, i) => row(`historical-${i}`, [item.input], item.outcome.ok ? returned(item.outcome.value) : threw(item.outcome.error), 1, ['historicalCoreFacetPatch'])),
+      row('historical-success-representable-projection', expanded.historicalSuccess.args, expanded.historicalSuccess.outcome, 1, ['historicalCoreFacetPatch']),
+      row('unsafeIntegerCopyRefusal', [{ integerWidth: { bits: 9007199254740992, signed: true } }], threw(regressions.unsafeIntegerCopyRefusal.outcome.error), 0, []),
+    ],
+  };
+  if (!Object.hasOwn(cases, exportName)) throw new Error(`${exportName} Core Facets packet profile is unsupported`);
+  return { predecessorHashes: Object.fromEntries(files.map(file => [file, source[file].sha256])), cases: cases[exportName] };
+}
+
+export function createCoreFacetsRetirementPacket(root, exportName) {
+  const expected = facetsExpectedCases(root, exportName);
+  const rustOwner = facetsPacketProfile[exportName];
+  if (!rustOwner) throw new Error(`${exportName} Core Facets packet profile is unsupported`);
+  return { format: 'umf.r8.default-route-retirement-packet/4', profile: 'core-facets', contractId: 'CONTRACT-040', exportName, rustOwner, predecessorHashes: expected.predecessorHashes, cases: expected.cases };
 }
 
 function verifyMemberManifest(root, pin, archivedPackagePin, archive, liveInputs) {
@@ -200,37 +285,53 @@ export function verifyPacket(root, pin, op) {
   const packet = readPinned(root, pin, `${op.exportName} frozen packet`, true).json;
   const allRust = packet?.format === 'umf.r8.default-route-retirement-packet/2';
   const securityNot = packet?.format === 'umf.r8.default-route-retirement-packet/3';
+  const coreFacets = packet?.format === 'umf.r8.default-route-retirement-packet/4';
   requireExactKeys(packet, allRust
     ? ['format', 'profile', 'contractId', 'exportName', 'rustOwner', 'cases']
     : securityNot ? ['format', 'profile', 'contractId', 'exportName', 'rustOwner', 'cases']
+      : coreFacets ? ['format', 'profile', 'contractId', 'exportName', 'rustOwner', 'predecessorHashes', 'cases']
       : ['format', 'contractId', 'exportName', 'rustOwner', 'cases'], `${op.exportName} frozen packet`);
-  if ((allRust ? packet.profile !== 'all-rust' : securityNot ? packet.profile !== 'security-not' : packet.format !== 'umf.r8.default-route-retirement-packet/1') || packet.contractId !== op.contract.id || packet.exportName !== op.exportName || packet.rustOwner !== op.rustOwner || !Array.isArray(packet.cases) || packet.cases.length < 1) throw new Error(`${op.exportName} frozen packet identity is invalid`);
+  if ((allRust ? packet.profile !== 'all-rust' : securityNot ? packet.profile !== 'security-not' : coreFacets ? packet.profile !== 'core-facets' : packet.format !== 'umf.r8.default-route-retirement-packet/1') || packet.contractId !== op.contract.id || packet.exportName !== op.exportName || packet.rustOwner !== op.rustOwner || !Array.isArray(packet.cases) || packet.cases.length < 1) throw new Error(`${op.exportName} frozen packet identity is invalid`);
   if (allRust && op.contract.id !== 'CONTRACT-040') throw new Error(`${op.exportName} all-Rust Cardinality packet requires CONTRACT-040`);
   if (allRust && !['inspectCoreCardinality', 'declareCoreCardinality', 'verifyCoreCardinalityDeclaration'].includes(op.exportName)) throw new Error(`${op.exportName} all-Rust packet profile is unsupported`);
   if (securityNot && (op.contract.id !== 'CONTRACT-062' || op.exportName !== 'securityNot' || op.rustOwner !== 'umf_core::security_logic::security_not')) throw new Error(`${op.exportName} securityNot acceptance profile identity is unsupported`);
+  if (coreFacets) {
+    const expectedOwner = facetsPacketProfile[op.exportName];
+    if (op.contract.id !== 'CONTRACT-040' || !expectedOwner || op.rustOwner !== expectedOwner) throw new Error(`${op.exportName} Core Facets packet requires its exact CONTRACT-040 operation and Rust owner`);
+    requireExactKeys(packet.predecessorHashes, facetsPacketFiles, `${op.exportName} Core Facets predecessor hash map`);
+    const expected = facetsExpectedCases(root, op.exportName);
+    if (canonical(packet.predecessorHashes) !== canonical(expected.predecessorHashes) || canonical(packet.cases) !== canonical(expected.cases)) throw new Error(`${op.exportName} packet differs from the exact R5 Core Facets predecessor cases, outcomes, ordered traces or dispatch profile`);
+  }
   const ids = new Set();
   for (const item of packet.cases) {
-    requireExactKeys(item, allRust || securityNot
-      ? ['id', 'input', 'expectedOutcome', 'expectedTrace', 'expectedDefaultRustCalls']
+    requireExactKeys(item, coreFacets
+      ? ['id', 'input', 'expectedOutcome', 'expectedTrace', 'expectedDefaultRustCalls', 'expectedDefaultRustOperations']
+      : allRust || securityNot ? ['id', 'input', 'expectedOutcome', 'expectedTrace', 'expectedDefaultRustCalls']
       : ['id', 'input', 'expectedOutcome', 'expectedTrace', 'expectsRust'], `${op.exportName} packet case`);
     if (typeof item.id !== 'string' || !item.id || ids.has(item.id) || !Array.isArray(item.expectedTrace)) throw new Error(`${op.exportName} packet case identity or Rust-call expectation is invalid`);
-    if (allRust ? (!Number.isSafeInteger(item.expectedDefaultRustCalls) || item.expectedDefaultRustCalls < 1) : securityNot ? ![0, 1].includes(item.expectedDefaultRustCalls) : typeof item.expectsRust !== 'boolean') throw new Error(`${op.exportName} packet case identity or Rust-call expectation is invalid`);
+    if (allRust ? (!Number.isSafeInteger(item.expectedDefaultRustCalls) || item.expectedDefaultRustCalls < 1) : coreFacets ? (!Number.isSafeInteger(item.expectedDefaultRustCalls) || item.expectedDefaultRustCalls < 0) : securityNot ? ![0, 1].includes(item.expectedDefaultRustCalls) : typeof item.expectsRust !== 'boolean') throw new Error(`${op.exportName} packet case identity or Rust-call expectation is invalid`);
+    if (coreFacets && (!Array.isArray(item.expectedDefaultRustOperations) || item.expectedDefaultRustOperations.some(operation => typeof operation !== 'string' || !operation) || item.expectedDefaultRustOperations.length !== item.expectedDefaultRustCalls)) throw new Error(`${op.exportName} packet case must bind an exact Rust operation sequence to its dispatch count`);
     ids.add(item.id);
   }
-  if (!allRust && !securityNot && (!packet.cases.some(item => item.expectsRust) || !packet.cases.some(item => !item.expectsRust))) throw new Error(`${op.exportName} packet must cover Rust execution and preflight refusal`);
+  if (!allRust && !securityNot && !coreFacets && (!packet.cases.some(item => item.expectsRust) || !packet.cases.some(item => !item.expectsRust))) throw new Error(`${op.exportName} packet must cover Rust execution and preflight refusal`);
   if (securityNot) {
     if (packet.cases.length !== securityNotCases.length || packet.cases.some((item, index) => {
       const id = securityNotCases[index];
       return item.id !== id || canonical(item.input) !== canonical({ case: id }) || canonical(item.expectedOutcome) !== canonical(securityNotOutcome(id)) || canonical(item.expectedTrace) !== '[]' || item.expectedDefaultRustCalls !== (['T', 'F', 'U'].includes(id) ? 1 : 0);
     })) throw new Error('securityNot packet must match the exact 14-case truth, invalid-input, trace and Rust-dispatch profile');
   }
-  return { packet, packetSha256: pin.sha256, allRust, securityNot, cases: new Map(packet.cases.map(item => [item.id, item])) };
+  return { packet, packetSha256: pin.sha256, allRust, securityNot, coreFacets, cases: new Map(packet.cases.map(item => [item.id, item])) };
+}
+
+export function requirePacketProfileForManifest(manifestFormat, packet) {
+  if (packet.coreFacets && manifestFormat !== 'umf.r8.default-route-retirement-evidence/4') throw new Error('Core Facets packets require the exact /4 four-operation manifest');
+  if (manifestFormat === 'umf.r8.default-route-retirement-evidence/4' && !packet.coreFacets) throw new Error('/4 Core Facets evidence accepts only the exact core-facets packet profile');
 }
 
 export function verifyHostReceipt(root, pin, op, packet, cohort, members, routeMembers) {
   const receipt = readPinned(root, pin, `${op.exportName}/${pin.runtime} raw receipt`, true).json;
   requireExactKeys(receipt, ['format', 'status', 'runtime', 'hostVersion', 'cohortId', 'hostPlatform', 'archiveSha256', 'sourceClosureSha256', 'packetSha256', 'defaultRoute', 'referenceRoute', 'cases'], `${op.exportName}/${cohort.id}/${pin.runtime} raw receipt`);
-  const receiptFormat = packet.securityNot ? 'umf.r8.default-route-retirement-host-receipt/3' : 'umf.r8.default-route-retirement-host-receipt/2';
+  const receiptFormat = packet.securityNot ? 'umf.r8.default-route-retirement-host-receipt/3' : packet.coreFacets ? 'umf.r8.default-route-retirement-host-receipt/4' : 'umf.r8.default-route-retirement-host-receipt/2';
   if (receipt.format !== receiptFormat || receipt.status !== 'pass' || receipt.runtime !== pin.runtime || typeof receipt.hostVersion !== 'string' || !receipt.hostVersion) throw new Error(`${op.exportName}/${cohort.id}/${pin.runtime} raw receipt identity/status is invalid`);
   const expectedHostPlatform = { os: cohort.platform.os, arch: cohort.platform.nodeArch };
   if (receipt.cohortId !== cohort.id || canonical(receipt.hostPlatform) !== canonical(expectedHostPlatform) ||
@@ -255,19 +356,213 @@ export function verifyHostReceipt(root, pin, op, packet, cohort, members, routeM
   if (!Array.isArray(receipt.cases) || receipt.cases.length !== packet.cases.size) throw new Error(`${op.exportName}/${pin.runtime} raw case inventory is incomplete`);
   const seen = new Set();
   for (const result of receipt.cases) {
-    requireExactKeys(result, ['id', 'defaultOutcome', 'defaultTrace', 'defaultRustCalls', 'referenceOutcome', 'referenceTrace', 'referenceRustCalls'], `${op.exportName}/${pin.runtime} case result`);
+    requireExactKeys(result, packet.coreFacets
+      ? ['id', 'defaultOutcome', 'defaultTrace', 'defaultRustCalls', 'defaultRustOperations', 'referenceOutcome', 'referenceTrace', 'referenceRustCalls']
+      : ['id', 'defaultOutcome', 'defaultTrace', 'defaultRustCalls', 'referenceOutcome', 'referenceTrace', 'referenceRustCalls'], `${op.exportName}/${pin.runtime} case result`);
     const expected = packet.cases.get(result.id);
     if (!expected || seen.has(result.id)) throw new Error(`${op.exportName}/${pin.runtime} has an unknown or duplicate packet case`);
     seen.add(result.id);
     if (canonical(result.defaultOutcome) !== canonical(expected.expectedOutcome) || canonical(result.defaultTrace) !== canonical(expected.expectedTrace)) throw new Error(`${op.exportName}/${pin.runtime}/${result.id} default outcome/trace differs from frozen packet`);
     if (canonical(result.referenceOutcome) !== canonical(expected.expectedOutcome) || canonical(result.referenceTrace) !== canonical(expected.expectedTrace)) throw new Error(`${op.exportName}/${pin.runtime}/${result.id} reference outcome/trace differs from frozen packet`);
-    if (!Number.isSafeInteger(result.defaultRustCalls) || (packet.allRust || packet.securityNot ? result.defaultRustCalls !== expected.expectedDefaultRustCalls : (expected.expectsRust ? result.defaultRustCalls < 1 : result.defaultRustCalls !== 0)) || result.referenceRustCalls !== 0) throw new Error(`${op.exportName}/${pin.runtime}/${result.id} invocation trace violates the frozen Rust-call expectation or reference zero-Rust control`);
+    if (packet.coreFacets && canonical(result.defaultRustOperations) !== canonical(expected.expectedDefaultRustOperations)) throw new Error(`${op.exportName}/${pin.runtime}/${result.id} default Rust operation order differs from frozen packet`);
+    if (!Number.isSafeInteger(result.defaultRustCalls) || (packet.allRust || packet.securityNot || packet.coreFacets ? result.defaultRustCalls !== expected.expectedDefaultRustCalls : (expected.expectsRust ? result.defaultRustCalls < 1 : result.defaultRustCalls !== 0)) || result.referenceRustCalls !== 0) throw new Error(`${op.exportName}/${pin.runtime}/${result.id} invocation trace violates the frozen Rust-call expectation or reference zero-Rust control`);
   }
 }
 
+const coreFacetsOperations = ['inspectCoreFacets', 'declareCoreFacets', 'verifyCoreFacetDeclaration', 'historicalCoreFacetPatch'];
+const acceptanceCohortIds = ['darwin-arm64', 'linux-x86_64'];
+const acceptanceRuntimes = ['node', 'bun', 'chromium'];
+const assetStates = ['intact', 'missing', 'corrupt'];
+const acceptanceHash = value => typeof value === 'string' && hashPattern.test(value);
+
+export function validateCoreFacetAssetControlEvidence(receipt, archive, archiveMembers) {
+  requireExactKeys(receipt, ['format', 'status', 'scope', 'archiveSha256', 'package', 'originalAssets', 'cases'], 'Core Facets installed asset controls');
+  if (receipt.format !== 'umf.r8.core-facets-installed-asset-controls/1' || receipt.status !== 'pass' || receipt.archiveSha256 !== archive.sha256 || receipt.package?.name !== '@umf/core') throw new Error('Core Facets asset controls do not bind the accepted archive');
+  requireExactKeys(receipt.originalAssets, ['native', 'wasm'], 'Core Facets original asset hashes');
+  const assets = { native: 'dist/umf_core_node.node', wasm: 'dist/umf_core_wasm_bg.wasm' };
+  for (const [kind, member] of Object.entries(assets)) {
+    requireExactKeys(receipt.originalAssets[kind], ['path', 'sha256', 'bytes'], `Core Facets ${kind} asset hash`);
+    const asset = receipt.originalAssets[kind];
+    if (asset.path !== member || archiveMembers[member] !== asset.sha256 || !Number.isSafeInteger(asset.bytes) || asset.bytes < 1) throw new Error(`Core Facets ${kind} original asset does not match the archive manifest`);
+  }
+  if (!Array.isArray(receipt.cases) || receipt.cases.length !== 9) throw new Error('Core Facets asset controls must contain exactly nine runtime/state cases');
+  const expected = new Set();
+  for (const runtime of ['node', 'bun']) for (const state of assetStates) expected.add(`${runtime}/${state}`);
+  for (const state of assetStates) expected.add(`chromium/${state}`);
+  for (const item of receipt.cases) {
+    const runtime = item?.runtime?.toLowerCase();
+    const state = item?.state;
+    const key = `${runtime}/${state}`;
+    if (!expected.delete(key)) throw new Error(`Core Facets asset controls contain an unknown or duplicate case: ${key}`);
+    const kind = runtime === 'chromium' ? 'wasm' : 'native';
+    if (item.asset !== assets[kind] || typeof item.version !== 'string' || !item.version) throw new Error(`${key} asset identity is invalid`);
+    if (state === 'intact') {
+      if (runtime === 'chromium') {
+        if (item.outcome?.status !== 'returned' || item.wasmRequested !== true || item.externalRequests !== 0) throw new Error('Chromium intact WASM control did not execute without external requests');
+        if (item.outcome.result?.meaning?.state !== 'known' || item.outcome.result?.meaning?.facets?.integerWidth?.bits !== 16) throw new Error('Chromium intact WASM control did not return the expected facet result');
+      } else if (item.exitCode !== 0 || !Array.isArray(item.nativeOperations) || !item.nativeOperations.includes('model/inspectCoreFacets')) {
+        throw new Error(`${runtime} intact native control lacks an actual Rust inspection trace`);
+      }
+    } else if (runtime === 'chromium') {
+      if (item.outcome?.status !== 'threw' || item.wasmRequested !== true || item.externalRequests !== 0 || /returned/.test(JSON.stringify(item.outcome))) throw new Error(`Chromium ${state} WASM control failed to refuse without fallback`);
+      if (!['import', 'operation'].includes(item.outcome.phase) || !/wasm|webassembly|fetch|compile|instantiate|module/i.test(`${item.outcome.name ?? ''} ${item.outcome.message ?? ''} ${item.outcome.stack ?? ''}`)) throw new Error(`Chromium ${state} WASM control failed for an unrelated reason`);
+    } else if (item.exitCode === 0 || /"status"\s*:\s*"returned"/.test(item.stdout ?? '') || !item.error || typeof item.error.message !== 'string') {
+      throw new Error(`${runtime} ${state} native control failed to refuse without fallback`);
+    } else if (!['import', 'operation'].includes(item.error.phase) || !/\.node|native|shared librar|dlopen|module_not_found/i.test(`${item.error.code ?? ''} ${item.error.message}`)) {
+      throw new Error(`${runtime} ${state} native control failed for an unrelated reason`);
+    }
+    if (state === 'corrupt' && (!acceptanceHash(item.mutatedAssetSha256) || item.mutatedAssetSha256 === receipt.originalAssets[kind].sha256)) throw new Error(`${runtime} corrupt asset control lacks a changed mutated asset digest`);
+    if (runtime === 'chromium' && (item.wasmRequested !== true || item.externalRequests !== 0)) throw new Error(`Chromium ${state} control must request the installed WASM and make no external requests`);
+  }
+  if (expected.size) throw new Error(`Core Facets asset controls are incomplete: ${[...expected].join(', ')}`);
+  return true;
+}
+
+function validateCoreFacetsAcceptanceCohort(root, pin, manifest, cohort, packetByOperation, manifestReceiptPins) {
+  requireExactKeys(pin, ['cohortId', 'cohort'], 'Core Facets acceptance cohort pin');
+  requireExactKeys(pin.cohort, ['path', 'sha256'], `${pin.cohortId} acceptance cohort file pin`);
+  if (pin.cohortId !== cohort.id) throw new Error('acceptance cohort id does not match the pinned archive cohort');
+  const doc = readPinned(root, pin.cohort, `${cohort.id} dependency-installed cohort`, true).json;
+  requireExactKeys(doc, ['format', 'status', 'scope', 'archive', 'sourceClosure', 'consumer', 'negativeControls', 'hosts', 'resourceSuite', 'installedAssetControls', 'linuxX64', 'retirementHostReceipts'], `${cohort.id} dependency-installed cohort`);
+  if (doc.format !== 'umf.r8.core-facets-dependency-installed/1' || doc.status !== 'pass') throw new Error(`${cohort.id} dependency-installed cohort is unsupported or non-pass`);
+  if (doc.archive?.sha256 !== cohort.archive.sha256 || doc.sourceClosure?.sha256 !== cohort.archive.sourceClosureSha256 || doc.archive.bytes < 1) throw new Error(`${cohort.id} dependency-installed archive/source closure differs from the accepted manifest`);
+  const sourceClosure = doc.sourceClosure;
+  if (!Number.isSafeInteger(sourceClosure.fileCount) || sourceClosure.fileCount !== cohort.archive.sourceInputCount || sourceClosure.initialCheck?.sha256 !== sourceClosure.sha256 || sourceClosure.finalCheck?.sha256 !== sourceClosure.sha256 || sourceClosure.initialCheck?.fileCount !== sourceClosure.fileCount || canonical(sourceClosure.initialCheck) !== canonical(sourceClosure.finalCheck)) throw new Error(`${cohort.id} initial/final source closure checks do not match`);
+
+  const lockPin = { path: path.posix.join(path.posix.dirname(pin.cohort.path), 'consumer-lock.json'), sha256: doc.consumer?.lock?.sha256 };
+  const lockBytes = readPinned(root, lockPin, `${cohort.id} consumer-lock.json`).bytes;
+  const lock = JSON.parse(lockBytes.toString('utf8'));
+  if (lock.lockfileVersion !== 3 || lock.lockfileVersion !== doc.consumer.lock.lockfileVersion) throw new Error(`${cohort.id} dependency lock must be the pinned npm v3 lock`);
+  const archiveBytes = path.isAbsolute(cohort.archive.path)
+    ? fs.readFileSync(fs.realpathSync(cohort.archive.path))
+    : readPinned(root, { path: cohort.archive.path, sha256: cohort.archive.sha256 }, `${cohort.id} accepted SDK archive`).bytes;
+  if (sha(archiveBytes) !== cohort.archive.sha256 || archiveBytes.length !== doc.archive.bytes) throw new Error(`${cohort.id} accepted SDK archive hash or byte length differs`);
+  const archiveIntegrity = `sha512-${crypto.createHash('sha512').update(archiveBytes).digest('base64')}`;
+  if (doc.consumer?.manager !== 'npm' || doc.consumer.offline !== true || canonical(doc.consumer.installFlags) !== canonical(['--offline', '--ignore-scripts', '--no-audit', '--no-fund']) || doc.consumer.lock.archiveIntegrity !== archiveIntegrity) throw new Error(`${cohort.id} consumer install and SHA-512 archive integrity are invalid`);
+  const lockEntries = lock.packages;
+  if (!lockEntries || Array.isArray(lockEntries)) throw new Error(`${cohort.id} consumer lock package map is missing`);
+  const dependencies = Object.entries(lockEntries).filter(([name]) => name && name !== 'node_modules/@umf/core');
+  if (dependencies.length === 0 || dependencies.length !== doc.consumer.lock.integrityDependencyCount) throw new Error(`${cohort.id} consumer lock dependency inventory is incomplete`);
+  for (const [name, item] of dependencies) if (!/^sha(1|512|384)-[A-Za-z0-9+/]+=*$/.test(item?.integrity ?? '')) throw new Error(`${cohort.id} dependency lock entry lacks integrity: ${name}`);
+  const pkgMember = tarMembers(archiveBytes).files['package.json'];
+  if (!pkgMember) throw new Error(`${cohort.id} archive omits package.json`);
+  const pkg = JSON.parse(pkgMember.toString('utf8'));
+  const packageLock = lockEntries['node_modules/@umf/core'];
+  if (doc.consumer.package?.name !== '@umf/core' || doc.consumer.package.path !== 'node_modules/@umf/core' || doc.consumer.package.version !== pkg.version || packageLock?.version !== pkg.version || packageLock.integrity !== archiveIntegrity || !String(packageLock.resolved ?? '').startsWith('file:')) throw new Error(`${cohort.id} installed package identity does not bind the archive`);
+  if (doc.consumer.dependencies && canonical(doc.consumer.dependencies) !== canonical(pkg.dependencies ?? {})) throw new Error(`${cohort.id} resolved dependency versions differ from package.json`);
+  for (const [name, version] of Object.entries(pkg.dependencies ?? {})) {
+    const entry = lockEntries[`node_modules/${name}`];
+    if (entry?.version !== version || !/^sha(1|512|384)-[A-Za-z0-9+/]+=*$/.test(entry?.integrity ?? '')) throw new Error(`${cohort.id} direct dependency lock integrity/version is invalid: ${name}`);
+  }
+  const installedSuffix = '/node_modules/@umf/core/';
+  for (const runtime of ['node', 'bun']) {
+    const routes = doc.consumer.resolvedRoutes?.[runtime];
+    if (!routes || !String(routes.root).startsWith('file:') || !String(routes.reference).startsWith('file:') || !new URL(routes.root).pathname.includes(installedSuffix) || !new URL(routes.reference).pathname.includes(installedSuffix) || !routes.root.endsWith('/dist/umf-node.js') || !routes.reference.endsWith('/dist/umf.js')) throw new Error(`${cohort.id} ${runtime} did not resolve the installed default and reference routes`);
+  }
+  if (doc.negativeControls?.lockWithoutIntegrityRejected !== true || doc.negativeControls?.wrongInstalledIdentityRejected !== true || doc.negativeControls?.wrongArchiveIdentityRejected !== true || doc.negativeControls?.wrongDefaultRouteRejected !== true || doc.negativeControls?.wrongResolvedDefaultRouteRejected !== true) throw new Error(`${cohort.id} dependency-installed negative controls are incomplete`);
+
+  const archiveMemberMap = tarMembers(archiveBytes).members;
+  if (doc.resourceSuite?.format !== 'umf.r8.core-facets-resource-suite/1' || doc.resourceSuite.caseCount !== 14 || !acceptanceHash(doc.resourceSuite.harnessSha256)) throw new Error(`${cohort.id} resource suite identity is invalid`);
+  const resourcePath = 'scripts/rust-migration/r8/core-facets-resource-suite.mjs';
+  const liveSourceInputs = readPinned(root, manifest.liveSourceManifest, 'live source manifest', true).json.sourceClosure?.inputs;
+  if (sha(fs.readFileSync(path.resolve(root, resourcePath))) !== doc.resourceSuite.harnessSha256 || liveSourceInputs?.[resourcePath] !== doc.resourceSuite.harnessSha256) throw new Error(`${cohort.id} resource suite is not bound to current source`);
+  const hostEntries = new Map();
+  if (!Array.isArray(doc.hosts) || doc.hosts.length !== acceptanceRuntimes.length) throw new Error(`${cohort.id} needs exactly three raw runtime receipts`);
+  for (const hostPin of doc.hosts) {
+    requireExactKeys(hostPin, ['name', 'sha256', 'path'], `${cohort.id} raw host receipt pin`);
+    if (!acceptanceRuntimes.some(runtime => hostPin.name === `${cohort.id}-${runtime}.json`) || !acceptanceHash(hostPin.sha256) || hostEntries.has(hostPin.name)) throw new Error(`${cohort.id} has an unknown or duplicate raw runtime receipt`);
+    const raw = readCohortFile(root, pin.cohort.path, hostPin.path, hostPin.sha256, `${cohort.id} raw runtime receipt ${hostPin.name}`, true).json;
+    const runtime = hostPin.name.slice(`${cohort.id}-`.length, -'.json'.length);
+    if (raw.format !== 'umf.r8.core-facets-installed/1' || raw.status !== 'pass' || raw.host !== runtime || raw.cohort !== cohort.id || raw.archive?.sha256 !== cohort.archive.sha256 || raw.sourceClosure?.sha256 !== cohort.archive.sourceClosureSha256 || !raw.observation) throw new Error(`${cohort.id}/${runtime} raw replay receipt identity is invalid`);
+    validateCoreFacetResourceEvidence(raw.observation.resourceEvidence, { deepEqual(actual, expected, message) { if (canonical(actual) !== canonical(expected)) throw new Error(message); }, equal(actual, expected, message) { if (actual !== expected) throw new Error(message); }, match(actual, pattern, message) { if (!pattern.test(actual)) throw new Error(message); } });
+    if (runtime === 'chromium' && (raw.browser?.wasmNetworkRequest !== true || !Array.isArray(raw.browser.externalRequests) || raw.browser.externalRequests.length !== 0)) throw new Error(`${cohort.id} Chromium raw replay did not use local installed WASM`);
+    hostEntries.set(runtime, { pin: hostPin, raw });
+  }
+  if (hostEntries.size !== acceptanceRuntimes.length) throw new Error(`${cohort.id} raw runtime receipts are incomplete`);
+  if (!Array.isArray(doc.resourceSuite.hosts) || doc.resourceSuite.hosts.length !== acceptanceRuntimes.length) throw new Error(`${cohort.id} resource suite needs three host receipts`);
+  const resourceRuntimes = new Set();
+  for (const resourceHost of doc.resourceSuite.hosts) {
+    requireExactKeys(resourceHost, ['runtime', 'path', 'sha256', 'cases'], `${cohort.id} resource host record`);
+    if (!acceptanceRuntimes.includes(resourceHost.runtime) || resourceRuntimes.has(resourceHost.runtime)) throw new Error(`${cohort.id} resource host inventory is invalid`);
+    resourceRuntimes.add(resourceHost.runtime);
+    const sourceHost = hostEntries.get(resourceHost.runtime);
+    if (!sourceHost || resourceHost.path !== sourceHost.pin.path || resourceHost.sha256 !== sourceHost.pin.sha256 || canonical(resourceHost.cases) !== canonical(sourceHost.raw.observation.resourceEvidence)) throw new Error(`${cohort.id}/${resourceHost.runtime} resource evidence differs from its raw host receipt`);
+  }
+  if (resourceRuntimes.size !== acceptanceRuntimes.length) throw new Error(`${cohort.id} resource host receipts are incomplete`);
+
+  const assetPin = doc.installedAssetControls;
+  requireExactKeys(assetPin, ['path', 'sha256', 'archiveSha256', 'caseCount', 'status'], `${cohort.id} installed asset-control pin`);
+  if (assetPin.archiveSha256 !== cohort.archive.sha256 || assetPin.caseCount !== 9 || assetPin.status !== 'pass') throw new Error(`${cohort.id} installed asset-control summary is invalid`);
+  const assetReceipt = readCohortFile(root, pin.cohort.path, assetPin.path, assetPin.sha256, `${cohort.id} installed asset controls`, true).json;
+  validateCoreFacetAssetControlEvidence(assetReceipt, cohort.archive, archiveMemberMap);
+
+  if (!Array.isArray(doc.retirementHostReceipts) || doc.retirementHostReceipts.length !== coreFacetsOperations.length * acceptanceRuntimes.length) throw new Error(`${cohort.id} needs exactly 12 operation/runtime retirement receipts`);
+  const receiptByKey = new Map();
+  for (const item of doc.retirementHostReceipts) {
+    requireExactKeys(item, ['runtime', 'operation', 'path', 'sha256', 'caseCount'], `${cohort.id} operation/runtime receipt map`);
+    const key = `${item.operation}\0${item.runtime}`;
+    if (!coreFacetsOperations.includes(item.operation) || !acceptanceRuntimes.includes(item.runtime) || receiptByKey.has(key) || !acceptanceHash(item.sha256) || !Number.isSafeInteger(item.caseCount) || item.caseCount < 1) throw new Error(`${cohort.id} has an invalid or duplicate operation/runtime receipt pin`);
+    receiptByKey.set(key, item);
+  }
+  for (const op of manifest.operations) {
+    const packet = packetByOperation.get(op.exportName);
+    const group = op.receiptCohorts.find(item => item.cohortId === cohort.id);
+    if (!packet || !group) throw new Error(`${cohort.id} lacks the matching ${op.exportName} manifest receipt group`);
+    for (const runtime of acceptanceRuntimes) {
+      const indexed = receiptByKey.get(`${op.exportName}\0${runtime}`);
+      const manifestPin = group.receipts.find(item => item.runtime === runtime);
+      if (!indexed || !manifestPin || indexed.caseCount !== packet.cases.size) throw new Error(`${cohort.id} ${op.exportName}/${runtime} receipt map is incomplete`);
+      const expectedPath = path.posix.join(path.posix.dirname(pin.cohort.path), indexed.path);
+      if (manifestPin.path !== expectedPath || manifestPin.sha256 !== indexed.sha256) throw new Error(`${cohort.id} ${op.exportName}/${runtime} receipt does not match the manifest pin`);
+      readCohortFile(root,pin.cohort.path,indexed.path,indexed.sha256,`${cohort.id} ${op.exportName}/${runtime} retirement receipt`);
+    }
+  }
+  return { path: pin.cohort.path, sha256: pin.cohort.sha256 };
+}
+
+export function validateCoreFacetsAcceptanceCohorts(acceptanceCohorts, manifest, rows, { root }) {
+  if (!Array.isArray(acceptanceCohorts) || acceptanceCohorts.length !== acceptanceCohortIds.length) throw new Error('Core Facets acceptance requires exactly the Darwin and Linux cohort pins');
+  const manifestCohorts = new Map(manifest.cohorts.map(cohort => [cohort.id, cohort]));
+  const pins = new Map();
+  for (let index=0;index<acceptanceCohortIds.length;index++) {
+    const pin=acceptanceCohorts[index],expectedId=acceptanceCohortIds[index];
+    if (pin?.cohortId !== expectedId || pins.has(pin.cohortId)) throw new Error('Core Facets acceptance cohort order/identity must be exactly darwin-arm64 then linux-x86_64');
+    requireExactKeys(pin,['cohortId','cohort'],`${expectedId} acceptance cohort pin`);
+    requireExactKeys(pin.cohort,['path','sha256'],`${expectedId} acceptance cohort file pin`);
+    if (typeof pin.cohort.path !== 'string' || path.isAbsolute(pin.cohort.path) || pin.cohort.path.split(/[\\/]/).includes('..') || path.posix.basename(pin.cohort.path) !== 'cohort.json' || !acceptanceHash(pin.cohort.sha256)) throw new Error(`${expectedId} acceptance cohort pin must name a safe, hashed cohort.json`);
+    pins.set(pin.cohortId,pin);
+  }
+  const bounded=validateBoundedDefaultRouteEvidence(manifest,rows,{root});
+  const packetByOperation = new Map(manifest.operations.map(op => [op.exportName, verifyPacket(root, op.packet, op)]));
+  const acceptanceEvidence = new Map();
+  for (const cohortId of acceptanceCohortIds) {
+    const cohort=manifestCohorts.get(cohortId);
+    if (!cohort) throw new Error(`Core Facets acceptance has no manifest archive for ${cohortId}`);
+    const pin=validateCoreFacetsAcceptanceCohort(root,pins.get(cohortId),manifest,cohort,packetByOperation,manifest.operations);
+    acceptanceEvidence.set(cohortId,pin);
+  }
+  // The acceptance bundle augments each already-validated bounded row with its
+  // cohort pin, then promotes only the exact Core Facets eight-row slice.
+  const out=new Map();
+  for(const [key,item] of bounded){
+    const evidence=[...item.evidence];
+    for(const pin of acceptanceEvidence.values())evidence.push(pin);
+    out.set(key,{...item,status:'retired',evidence});
+  }
+  if(out.size!==8)throw new Error('Core Facets acceptance must retire exactly eight default-route rows');
+  return out;
+}
+
 export function validateBoundedDefaultRouteEvidence(manifest, rows, { root }) {
-  if (!manifest || !['umf.r8.default-route-retirement-evidence/2', 'umf.r8.default-route-retirement-evidence/3'].includes(manifest.format) || manifest.status !== 'pass') throw new Error('unsupported or non-pass bounded default-route evidence');
-  requireExactKeys(manifest, ['format', 'status', 'liveSourceManifest', 'cohorts', 'operations'], 'retirement manifest');
+  if (!manifest || !['umf.r8.default-route-retirement-evidence/2', 'umf.r8.default-route-retirement-evidence/3', 'umf.r8.default-route-retirement-evidence/4'].includes(manifest.format) || manifest.status !== 'pass') throw new Error('unsupported or non-pass bounded default-route evidence');
+  const facetsManifest = manifest.format === 'umf.r8.default-route-retirement-evidence/4';
+  requireExactKeys(manifest, facetsManifest
+    ? (Object.hasOwn(manifest,'acceptanceCohorts') ? ['format', 'profile', 'status', 'liveSourceManifest', 'cohorts', 'operations', 'acceptanceCohorts'] : ['format', 'profile', 'status', 'liveSourceManifest', 'cohorts', 'operations'])
+    : ['format', 'status', 'liveSourceManifest', 'cohorts', 'operations'], 'retirement manifest');
+  if (facetsManifest) {
+    const expected = ['inspectCoreFacets', 'declareCoreFacets', 'verifyCoreFacetDeclaration', 'historicalCoreFacetPatch'];
+    if (manifest.profile !== 'core-facets' || !Array.isArray(manifest.operations) || manifest.operations.length !== expected.length || manifest.operations.some((item, index) => item?.exportName !== expected[index])) throw new Error('/4 Core Facets evidence requires the exact ordered four-operation profile');
+  }
   requireExactKeys(manifest.liveSourceManifest, ['path', 'sha256'], 'live source manifest');
   if (!Array.isArray(manifest.cohorts) || manifest.cohorts.length !== Object.keys(requiredCohorts).length) throw new Error('retirement evidence requires exactly the darwin-arm64 and linux-x86_64 cohorts');
   const cohorts = new Map();
@@ -315,6 +610,7 @@ export function validateBoundedDefaultRouteEvidence(manifest, rows, { root }) {
     const packet = verifyPacket(root, op.packet, op);
     if (manifest.format === 'umf.r8.default-route-retirement-evidence/3' && !packet.securityNot) throw new Error('/3 retirement accepts only the CONTRACT-062 securityNot profile');
     if (manifest.format === 'umf.r8.default-route-retirement-evidence/2' && packet.securityNot) throw new Error('securityNot acceptance requires the /3 retirement manifest');
+    requirePacketProfileForManifest(manifest.format, packet);
     if (liveInputs[op.packet.path] !== op.packet.sha256) throw new Error(`${op.exportName} packet is not in the current fixed-point source closure`);
     if (!Array.isArray(op.rows) || op.rows.length !== 2) throw new Error(`${op.exportName} must identify exactly two default-route rows`);
     const seenRoutes = new Set();
@@ -373,6 +669,12 @@ export function validateDefaultRouteRetirementEvidence(manifest, rows, { root })
     const accepted = validateBoundedDefaultRouteEvidence(manifest, rows, { root });
     if ([...accepted.values()].some(item => item.status !== 'accepted') || accepted.size !== 2) throw new Error('/3 securityNot retirement must cover exactly its Node and browser default routes');
     return new Map([...accepted].map(([key, item]) => [key, { ...item, status: 'retired' }]));
+  }
+  if (manifest?.format === 'umf.r8.default-route-retirement-evidence/4') {
+    if (Object.hasOwn(manifest,'acceptanceCohorts')) return validateCoreFacetsAcceptanceCohorts(manifest.acceptanceCohorts,manifest,rows,{root});
+    const bounded = validateBoundedDefaultRouteEvidence(manifest, rows, { root });
+    if (bounded.size !== 8 || [...bounded.values()].some(item => item.status !== 'bounded')) throw new Error('/4 Core Facets packet evidence remains bounded and must cover exactly four operations across Node and browser routes');
+    return bounded;
   }
   throw new Error('unsupported default-route retirement evidence; no retirement schema is currently accepted');
 }

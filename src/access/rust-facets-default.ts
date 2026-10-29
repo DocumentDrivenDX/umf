@@ -14,14 +14,14 @@ function rustCall<T>(operation:()=>T):T {
  try{return operation();}
  catch(error) {
   const candidate=error as {name?:unknown;code?:unknown;message?:unknown;path?:unknown};
-  if(candidate?.name==='UmfCoreError'&&typeof candidate.code==='string'&&candidate.code.startsWith('CORE_FACET_')) {
+  if(candidate?.name==='UmfCoreError'&&typeof candidate.code==='string'&&(candidate.code.startsWith('CORE_FACET_')||candidate.code==='LIMIT')) {
    throw new UmfError(candidate.code,String(candidate.message??''),typeof candidate.path==='string'?candidate.path:'');
   }
   throw error;
  }
 }
 
-/** Rust operations used by the source package's opt-in facets route. */
+/** Rust operations used by the package's Core Facets facade. */
 export interface CoreFacetsRustEngine {
  inspectCoreFacets(source:Document,identity:unknown):unknown;
  declareCoreFacets(source:Document,identity:unknown,request:CoreFacetPatch):unknown;

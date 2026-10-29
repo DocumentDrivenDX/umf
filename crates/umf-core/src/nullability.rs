@@ -5,7 +5,7 @@ use crate::{
     engine::{Capabilities, Engine},
     error::EngineError,
     registry::Registry,
-    value::{Utf16, Value, copy_json},
+    value::{Utf16, Value, copy_completed_json_result, copy_json},
 };
 
 const INSPECTION_SCHEMA: &str =
@@ -366,6 +366,7 @@ fn inspect_core_nullability_copied_inner(source: Value, id: &Identity, engine: &
         ("meaning", meaning),
         ("provenance", t("unverified")),
     ]);
+    let r = copy_completed_json_result(&r, ctx)?;
     validate_op_with_schemas(&r, INSPECTION_SCHEMA, ctx, "CORE_NULLABILITY_RESULT", schemas)?;
     Ok(r)
 }
@@ -493,6 +494,7 @@ where
             ]),
         ),
     ]);
+    let r = copy_completed_json_result(&r, ctx)?;
     validate_op_with_schemas(&r, DECLARATION_SCHEMA, ctx, "CORE_NULLABILITY_RESULT", schemas)?;
     Ok(r)
 }
