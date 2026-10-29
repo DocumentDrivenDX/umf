@@ -10561,10 +10561,23 @@ resource, `spec/extensions/parquet/idl.json`. The independently reviewed fix
 updates both the producer closure and its independent expected membership,
 preserves the full literal-include audit, and corrects the executable helper
 pins. A fresh source archive passes exact verification of all 1,165 files;
-all 134 integrated packaging tests pass, and the native wheel rebuild is running.
+all 134 integrated packaging tests pass. The offline native wheel rebuild
+succeeds. A clean CPython 3.11.17 install passes both Parquet wrapper tests,
+native dependency inspection, and packaged CLI capabilities with an empty PATH.
+The source archive was reopened and its complete membership matched committed
+source `4dc0d1dae`; this proves one Darwin-arm64 cohort, not the full matrix.
 [Closure review and artifact evidence](evidence/rust-migration/r8-python-parquet-sdist-closure/README.md)
 preserve the bounded scope before the full interpreter matrix resumes.
 Independent Sol review of the private Parquet page/body slice found a wasm32
 Snappy literal-length overflow and a malformed-header diagnostic mismatch;
 that slice remains unaccepted while Luna corrects and tests these defects.
-Main was fetched again and remains an ancestor of the migration branch.
+Main was fetched again and remains an ancestor of the migration branch. The
+observer's integrated inventory-ledger controls also pass all 82 tests.
+
+Further private malformed-header probes demonstrate seven additional Compact
+decoder diagnostic/ordering mismatches beyond the original varint example;
+the page/body slice remains unaccepted while Sol repairs the underlying prefix
+decoder. The wire encoder's Luna delivery used obsolete spike bindings and a
+JSON-text boundary; it was rejected, and Sol is implementing the production
+core/wire profile over raw UTF-16 values. A separate Luna worker is porting the
+three Avro Cardinality classification, verification, and recovery operations.

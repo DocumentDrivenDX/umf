@@ -1,0 +1,37 @@
+{
+  "format": "umf.local-python-sdist-rebuild-observation/1",
+  "status": "observed-local",
+  "releaseEligible": false,
+  "sourceCommit": "4dc0d1daeaecd86ba9286e6cf93d7d5d041cee2d",
+  "sourceArchiveClosureSha256": "f4fe1c544e8f3a6ffaf0bbc667a8d3c7be49914f4091611ab726f59196c80abf",
+  "sourceArchiveFileCount": 1165,
+  "artifacts": {
+    "sdist": {
+      "path": "/private/tmp/umf-packaging-reviewed-sdist/umf_core-0.11.0.tar.gz",
+      "sha256": "46ee2231ad96862495a125b90cfb6e0e055795d93a4509a08a961371f90f8a4f",
+      "bytes": 4554255
+    },
+    "wheel": {
+      "path": "/private/tmp/umf-packaging-reviewed-wheels/umf_core-0.11.0-cp311-abi3-macosx_11_0_arm64.whl",
+      "sha256": "bc5ee6395d76ff2c04598710034cd278e99b95f14d95b91eeb308659dcc339b4",
+      "bytes": 10101219
+    }
+  },
+  "logs": {
+    "wheel-build.log": "8fb156799cab8bfcc03ea7f67e9d346bfcc4154a9001c3ff02b6beea63d41291",
+    "installed-parquet-tests.log": "2fb221b1a3618522cddecff3fa4bf936ac6d5ba46feab9e003fee08f4e8761e5",
+    "installed-identity.log": "f271e52b56f322f150ec94f437a87db1874cf26ad094787bd8f4ed727d65d5da",
+    "installed-binary-closure.json": "3374b64df9792eb645264f1420cb9d03fa7e07a2aebc76f27b8a50e542e7fefe",
+    "installed-cli-capabilities.json": "cd5bb74fb2f554484c5b16685aaad34cd3d79fc04ab7047f2d6b7dff484d5049"
+  },
+  "observations": {
+    "python": "3.11.17",
+    "platform": "Darwin arm64",
+    "installedParquetTests": 2,
+    "binaryClosure": "passed; system load dependencies only",
+    "emptyPathCliCapabilities": "passed",
+    "cliPackageVersion": "0.1.0",
+    "pythonDistributionVersion": "0.11.0"
+  },
+  "scope": "Verified source archive matches current committed source membership and bytes; one installed native Python wheel on Darwin arm64. Not the full interpreter/OS matrix, default SDK qualification, retirement, release or publication."
+}
