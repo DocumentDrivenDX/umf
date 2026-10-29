@@ -43,3 +43,11 @@ both valid and empty names. These controls have not been executed; browser
 parity remains required. Full JavaScript object coercion is still not modeled
 by the current fallback for nonnumeric index arguments. This candidate is not ready to map as
 an accepted Rust owner or select on default routes.
+
+The candidate also adds Python `append_key_value_metadata` and `rename_field`
+wrappers over the same wire dispatcher. They own argument transport and controls,
+with no duplicate edit algorithm. Pending native tests compare two complete
+frozen TypeScript results, recursively check member order, retain the original
+capture, and check the byte prefix of an append with a value-first entry. These
+Python tests have been authored only; no execution or installed-wheel claim is
+made.

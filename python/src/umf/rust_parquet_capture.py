@@ -121,3 +121,14 @@ def inspect_containers(document: Any, **controls):
 
 def get_field_metadata(document: Any, **controls):
     return _call("getFieldMetadata", {"document": document}, **controls)
+
+
+
+def append_key_value_metadata(document: Any, entries: Any, **controls):
+    """Append metadata through the Rust footer editor, preserving source bytes."""
+    return _call("appendKeyValueMetadata", {"document": document, "entries": entries}, **controls)
+
+
+def rename_field(document: Any, index: Any, name: Any, **controls):
+    """Rename a native schema field through the shared Rust operation."""
+    return _call("renameField", {"document": document, "index": index, "name": name}, **controls)
