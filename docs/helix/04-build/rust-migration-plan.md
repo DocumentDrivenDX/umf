@@ -10623,3 +10623,31 @@ passes all four Parquet tests. The captured logs are pinned by the combined
 evidence record. The remaining ten
 Parquet runtime functions are listed in the evidence; the Avro Cardinality port
 continues separately in its private checkout.
+
+
+### Next Parquet dependency order and local qualification — 2026-10-29
+
+The combined page/body/footer source is committed at `ee4e34f1d`; its local
+579-core, 75-wire, four-CLI, 83-ledger and 134-distribution test results are
+recorded separately at `2efa47532`. Fresh Darwin and Linux SDK builds and a
+four-interpreter Darwin Python pair run have started from that source. No
+installed receipt is claimed before each real process and consumer gate passes.
+The Linux SDK run explicitly records x86_64 emulation on the arm64 host.
+
+Luna is implementing complete level decoding and the hybrid run dependency.
+Append-metadata and field-renaming operations can proceed independently through
+the reviewed Compact encoder. The parent's original parallel task also included
+dictionary-offset repair, but its candidate incorrectly substituted page-body
+decoding for the TypeScript operation's required value validation. That task was
+interrupted and corrected before acceptance. Repair remains unported until
+physical/plain/dictionary and value decoding exist; row assembly follows those
+kernels. A package JSON descriptor is likewise insufficient for `parquetRegistry`,
+whose public Registry behavior must survive the Rust registry binding.
+These are sequencing corrections, not reductions in the authorized port scope.
+
+Independent Sol review of the private Avro Cardinality candidate found duplicate
+named-union acceptance, unsafe fixed-size integer acceptance and incomplete
+all-errors request diagnostics. The Sol fallback is repairing those mechanisms
+and expanding actual TypeScript/Rust controls before rereview and integration.
+The typed-wire missing-property case is distinct from the original host input
+containing `undefined`; its host `NON_JSON` observation must remain explicit.
