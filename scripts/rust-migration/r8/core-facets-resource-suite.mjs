@@ -91,6 +91,7 @@ export function assertResourceCaseExpectation(item,outcome,integrity,assert){
 }
 export const resourceSuiteSource = String.raw`
 const coreFacetOutcomeShape=${coreFacetOutcomeShape.toString()};
+const assertCoreFacetOutcomeParity=${assertCoreFacetOutcomeParity.toString()};
 const assertResourceCaseExpectation=${assertResourceCaseExpectation.toString()};
 const expectedCoreFacetResourceRustOperations=${expectedCoreFacetResourceRustOperations.toString()};
 const runCoreFacetResourceSuite=async(root,reference,operations,cap,normalized,assert,canonical)=>{

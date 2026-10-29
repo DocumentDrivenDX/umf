@@ -162,6 +162,7 @@ try{
   join(root,'scripts/rust-migration/r8/core-facets-dispatch-observer.mjs'),
   join(root,'scripts/rust-migration/r8/core-facets-dispatch-observer.test.mjs'),
   join(root,'scripts/rust-migration/r8/core-facets-resource-suite.mjs'),
+  join(root,'scripts/rust-migration/r8/core-facets-outcome-shape.test.mjs'),
   join(root,'scripts/rust-migration/r8/core-facets-resource-source-preflight.mjs'),
   join(root,'scripts/rust-migration/r8/core-facets-dependency-installed.test.mjs'),
   join(root,'scripts/rust-migration/r8/qualify-core-facets-linux-local.sh'),

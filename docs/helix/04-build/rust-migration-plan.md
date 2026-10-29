@@ -10651,3 +10651,16 @@ all-errors request diagnostics. The Sol fallback is repairing those mechanisms
 and expanding actual TypeScript/Rust controls before rereview and integration.
 The typed-wire missing-property case is distinct from the original host input
 containing `undefined`; its host `NON_JSON` observation must remain explicit.
+
+
+The fresh `ee4e34f1d` Darwin/Linux SDKs both build at the same 3,842-input
+fixed-point closure with zero transformations. The Linux installed Node gate
+then exposes an unbound `assertCoreFacetOutcomeParity` in the emitted probe;
+the parent interrupted the Darwin counterpart after establishing the shared
+harness defect. Both archives remain unqualified. The focused repair embeds
+the parity helper alongside its shape dependency and pins an executable
+regression in SDK snapshots. The regression reproduces the exact ReferenceError
+before the fix; all 15 focused shape/resource/dispatch checks pass afterward.
+[Repair evidence](evidence/rust-migration/r8-facets-embedded-parity-helper/README.md)
+records archive hashes and failed/interrupted outcomes. Independent Sol review
+and fresh archive qualification are still required; no retirement is claimed.

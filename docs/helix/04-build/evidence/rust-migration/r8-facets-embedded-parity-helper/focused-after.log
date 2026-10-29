@@ -1,0 +1,23 @@
+✔ observes actual legacy and retained methods in call order, preserving receiver, args, result and thrown identity (1.097ms)
+✔ ignores non-model operations and untouched reference operations without inventing events (0.680334ms)
+✔ rejects absent and non-writable required entrypoints before modifying either method (0.120417ms)
+✔ browser marker lookup derives unique zero-based source lines and rejects missing or duplicate markers (0.132875ms)
+✔ registers both actual browser dispatch signatures and removes both breakpoints (0.235458ms)
+✔ fails before setting breakpoints when either browser marker is missing or ambiguous (0.140541ms)
+✔ rolls back first browser breakpoint if the second registration fails (0.120875ms)
+✔ attempts to remove both browser breakpoints even if the first removal fails (0.107542ms)
+✔ null-prototype outcomes are allowed when frozen data and raw structure agree (2.440166ms)
+✔ prototype-only divergence is rejected, with ordinary historical objects still supported (0.437875ms)
+✔ frozen data changes and custom prototypes are rejected (0.115333ms)
+✔ arrays require the intrinsic prototype and include hidden own descriptors and length flags (0.143041ms)
+✔ shape traversal is linear at depth and distinguishes JSON numeric edge values (0.258042ms)
+✔ generated embedded browser resource harness is valid JavaScript (0.824ms)
+✔ embedded installed probe defines its parity helper and preserves data and own-shape guards (0.578084ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 491.749916

@@ -1,0 +1,43 @@
+{
+  "scope": "local harness repair; no installed-route, retirement, release or full-port qualification",
+  "sourceRevision": "ee4e34f1dfaadd018b07618abb888591366a7a3d",
+  "predecessorSourceClosure": "f42da44bf75ec1c408e8ae3bc3c2be496a7755d8ae59e8e35356f5bedb704690",
+  "sourceInputCount": 3842,
+  "generatedTransformCount": 0,
+  "darwin": {
+    "archive": {
+      "path": "/private/tmp/umf-ee4e-sdk-darwin/umf-sdk.tgz",
+      "sha256": "14e8bd6234ca1c8a9a7ea400471ecfeb3f310a179325b6ac75e8954cbece92e2",
+      "bytes": 44965077
+    },
+    "buildExitCode": 0,
+    "installedGate": "interrupted after identical Linux emitted-probe defect was established",
+    "installedGateExitCode": 130
+  },
+  "linux": {
+    "archive": {
+      "path": "/private/tmp/umf-ee4e-sdk-linux/umf-sdk-linux-x86_64.tgz",
+      "sha256": "871627dff44d3101d1bae0391eac08af48d169145aab5fda2ab9749f132fcc2e",
+      "bytes": 45623730
+    },
+    "buildStatus": "passed",
+    "installedGateExitCode": 1,
+    "failure": "ReferenceError: assertCoreFacetOutcomeParity is not defined",
+    "execution": "linux x86_64 emulated on darwin arm64"
+  },
+  "regressionBefore": {
+    "passed": 6,
+    "failed": 1,
+    "failure": "ReferenceError: assertCoreFacetOutcomeParity is not defined"
+  },
+  "focusedAfter": {
+    "passed": 15,
+    "failed": 0
+  },
+  "review": "pending independent Sol review",
+  "logs": {
+    "focused-after.log": "2aaa34f023ea8b17608e33e2779e7b3214632be4b5e1c54eefcfa3caa7116f62",
+    "predecessor-linux-local.log": "161abe5a5d12899bcd4e0d823a93975700c97ff642c2fffe7c6ad7cb05869599",
+    "regression-before.log": "1dece90d623b11c34c44c5e4d8236708a94510495bdc8c1e66182d5233e0909e"
+  }
+}

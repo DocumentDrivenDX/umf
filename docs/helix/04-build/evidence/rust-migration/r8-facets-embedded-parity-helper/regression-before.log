@@ -1,0 +1,29 @@
+✔ null-prototype outcomes are allowed when frozen data and raw structure agree (2.1155ms)
+✔ prototype-only divergence is rejected, with ordinary historical objects still supported (0.392417ms)
+✔ frozen data changes and custom prototypes are rejected (0.129042ms)
+✔ arrays require the intrinsic prototype and include hidden own descriptors and length flags (0.145209ms)
+✔ shape traversal is linear at depth and distinguishes JSON numeric edge values (0.687416ms)
+✔ generated embedded browser resource harness is valid JavaScript (0.331708ms)
+✖ embedded installed probe defines its parity helper and preserves data and own-shape guards (0.503542ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 908.259625
+
+✖ failing tests:
+
+test at scripts/rust-migration/r8/core-facets-outcome-shape.test.mjs:60:1
+✖ embedded installed probe defines its parity helper and preserves data and own-shape guards (0.503542ms)
+  ReferenceError [Error]: assertCoreFacetOutcomeParity is not defined
+      at eval (eval at <anonymous> (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/core-facets-outcome-shape.test.mjs:61:23), <anonymous>:129:1)
+      at TestContext.<anonymous> (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/core-facets-outcome-shape.test.mjs:61:97)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

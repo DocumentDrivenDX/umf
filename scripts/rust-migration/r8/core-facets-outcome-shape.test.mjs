@@ -55,3 +55,14 @@ test('shape traversal is linear at depth and distinguishes JSON numeric edge val
 test('generated embedded browser resource harness is valid JavaScript',()=>{
  assert.doesNotThrow(()=>new Function(resourceSuiteSource));
 });
+
+
+test('embedded installed probe defines its parity helper and preserves data and own-shape guards',()=>{
+ const embeddedParity=new Function(resourceSuiteSource+'\nreturn assertCoreFacetOutcomeParity;')();
+ const left=Object.assign(Object.create(null),{nested:Object.assign(Object.create(null),{value:1}),list:[1,{x:true}]});
+ const same=Object.assign(Object.create(null),{nested:Object.assign(Object.create(null),{value:1}),list:[1,{x:true}]});
+ assert.equal(embeddedParity(left,same,canonical),coreFacetOutcomeShape(left));
+ assert.throws(()=>embeddedParity(left,{nested:{value:1},list:[1,{x:true}]},canonical),/prototype\/own shape/);
+ same.nested.value=2;
+ assert.throws(()=>embeddedParity(left,same,canonical),/frozen data/);
+});
