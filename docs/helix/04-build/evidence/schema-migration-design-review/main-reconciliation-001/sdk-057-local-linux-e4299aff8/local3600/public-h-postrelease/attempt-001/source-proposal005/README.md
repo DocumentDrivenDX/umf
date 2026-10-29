@@ -1,0 +1,7 @@
+# SDK public-H local Docker operator proposal
+
+This is the fifth outside-repository operator proposal. It is not run and is not a public-H acceptance claim. Read `PLAN.md` for exact scope, mount policy and limits; `run_public_h_docker.py` is the proposed host launcher. The selected image and reader are pinned in `source-identities.json`; `integrity-manifest.json` covers every regular file in this proposal except itself. Proposals v001–v004 remain preserved at their numbered `/private/tmp/sdk-057-local3600-public-h-operator-proposal00N/` paths; none is overwritten.
+
+READY006 binds the Sol-accepted v4 reader (`7cd33c89e2511a581e321a5f64fff292187a7abaad54860d60f2bba16290c57f`) and the published release identity. The v005 operator itself awaits focused source review. Public-H remains unexecuted. The runner is intentionally fail-closed: it checks the READY packet, independent reader pin, image identity, and physical evidence roots before starting Docker. No Docker image inspection, container run, CI dispatch or Git operation was performed for this proposal. Static AST parsing and pure metadata mount planning were the only checks; no H commands ran.
+
+The original seven proof commands and H caps remain unchanged. The two relative D5 profile capture paths are joined under their exact declared profile root using the accepted reader’s closed-path rules. Any later run must use narrow read-only inputs, a disjoint output mount, and the pinned Ubuntu 24.04.5 Linux/amd64 image. Runtime would be OrbStack/Darwin aarch64 emulation, not native Linux or hosted evidence.

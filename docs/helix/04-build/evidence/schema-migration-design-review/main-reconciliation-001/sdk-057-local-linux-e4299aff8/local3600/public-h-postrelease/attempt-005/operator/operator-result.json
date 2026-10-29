@@ -1,0 +1,289 @@
+{
+  "attempt": 5,
+  "cleanup": {
+    "error": null,
+    "evidenceVolumeAbsent": true,
+    "evidenceVolumeError": null,
+    "evidenceVolumeName": "umf-public-h-evidence-d3bee7f855f8d2049200-5",
+    "exactOwnedNameAbsent": true,
+    "removeExitCode": null
+  },
+  "dockerExitCode": 1,
+  "evidenceExport": {
+    "capture": {
+      "captureErrors": [],
+      "captureFailed": false,
+      "drainExpired": false,
+      "paths": [
+        "/private/tmp/migration-sdk057-public-h-postrelease-005/operator/evidence-export.stdout.log",
+        "/private/tmp/migration-sdk057-public-h-postrelease-005/operator/evidence-export.stderr.log"
+      ],
+      "rawSha256": [
+        "dfc561528c4bd51e5e95377d607f8ce75d52128a101668f9eb800f84dfe427b4",
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      ],
+      "retainedBytes": [
+        1178,
+        0
+      ],
+      "timedOut": false,
+      "totalRetainedBytes": 1178,
+      "truncated": [
+        false,
+        false
+      ]
+    },
+    "capturePhysicalClosure": {
+      "errors": [],
+      "files": [
+        {
+          "path": "/private/tmp/migration-sdk057-public-h-postrelease-005/operator/evidence-export.stdout.log",
+          "sha256": "dfc561528c4bd51e5e95377d607f8ce75d52128a101668f9eb800f84dfe427b4",
+          "sizeBytes": 1178
+        },
+        {
+          "path": "/private/tmp/migration-sdk057-public-h-postrelease-005/operator/evidence-export.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "verified": true
+    },
+    "cleanup": {
+      "error": null,
+      "exactOwnedNameAbsent": true
+    },
+    "containerName": "umf-public-h-local-4040da90-7637-405a-8b07-fcce6af3-5-export",
+    "exitCode": 0,
+    "fullSuccessRoster": false,
+    "hostFiles": [
+      {
+        "path": "receipt.json",
+        "sha256": "03f567ee9e2d6d457fb33f68f2ef91b88efcb2f20c40aef388ff263b7da4065b",
+        "sizeBytes": 4672
+      },
+      {
+        "path": "input-packet.json",
+        "sha256": "77837f7f5594f92d105dd1363505bb717b8a7e96c9f044205015ad23bf090c16",
+        "sizeBytes": 8843
+      },
+      {
+        "path": "command-records.jsonl",
+        "sha256": "7a164433e947513482e52417ab303fd2cd54423774d1cf20d2e23f11f1da20ad",
+        "sizeBytes": 2234
+      },
+      {
+        "path": "logs/acquire-and-verify-public-and-qualified-archives.log",
+        "sha256": "56bb8e0701b69790eb611330c95848b3c5834f22977ccf807be8dc0e21230601",
+        "sizeBytes": 962
+      },
+      {
+        "path": "logs/toolchain-identity.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      {
+        "path": "logs/verify-source-tag-and-tree.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      {
+        "path": "reports/source-identity.json",
+        "sha256": "43a2c947878580b9aea7f9180c077ee0868214b791ff1d7a32267272ec96d7cf",
+        "sizeBytes": 1280
+      },
+      {
+        "path": "reports/toolchain.json",
+        "sha256": "3529c7ea17e6819ff08a15d864f1ca5b15e77c43bf83d95b30f52dbb67f89aa1",
+        "sizeBytes": 965
+      }
+    ],
+    "hostInventoryError": null,
+    "manifest": {
+      "complete": false,
+      "files": [
+        {
+          "path": "command-records.jsonl",
+          "sha256": "7a164433e947513482e52417ab303fd2cd54423774d1cf20d2e23f11f1da20ad",
+          "sizeBytes": 2234
+        },
+        {
+          "path": "input-packet.json",
+          "sha256": "77837f7f5594f92d105dd1363505bb717b8a7e96c9f044205015ad23bf090c16",
+          "sizeBytes": 8843
+        },
+        {
+          "path": "receipt.json",
+          "sha256": "03f567ee9e2d6d457fb33f68f2ef91b88efcb2f20c40aef388ff263b7da4065b",
+          "sizeBytes": 4672
+        },
+        {
+          "path": "logs/acquire-and-verify-public-and-qualified-archives.log",
+          "sha256": "56bb8e0701b69790eb611330c95848b3c5834f22977ccf807be8dc0e21230601",
+          "sizeBytes": 962
+        },
+        {
+          "path": "logs/toolchain-identity.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        },
+        {
+          "path": "logs/verify-source-tag-and-tree.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        },
+        {
+          "path": "reports/source-identity.json",
+          "sha256": "43a2c947878580b9aea7f9180c077ee0868214b791ff1d7a32267272ec96d7cf",
+          "sizeBytes": 1280
+        },
+        {
+          "path": "reports/toolchain.json",
+          "sha256": "3529c7ea17e6819ff08a15d864f1ca5b15e77c43bf83d95b30f52dbb67f89aa1",
+          "sizeBytes": 965
+        }
+      ],
+      "missing": [],
+      "readerStatus": "FAIL_OR_UNKNOWN",
+      "safe": true,
+      "selectedBytes": 18956,
+      "status": "copied"
+    },
+    "readerMetadataBytesMatchPhysicalFamily": true,
+    "readerStatus": "FAIL_OR_UNKNOWN",
+    "rowsMatch": true,
+    "verified": true
+  },
+  "evidenceExportCapture": {
+    "captureErrors": [],
+    "captureFailed": false,
+    "drainExpired": false,
+    "paths": [
+      "/private/tmp/migration-sdk057-public-h-postrelease-005/operator/evidence-export.stdout.log",
+      "/private/tmp/migration-sdk057-public-h-postrelease-005/operator/evidence-export.stderr.log"
+    ],
+    "rawSha256": [
+      "dfc561528c4bd51e5e95377d607f8ce75d52128a101668f9eb800f84dfe427b4",
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    ],
+    "retainedBytes": [
+      1178,
+      0
+    ],
+    "timedOut": false,
+    "totalRetainedBytes": 1178,
+    "truncated": [
+      false,
+      false
+    ]
+  },
+  "evidenceExportCapturePhysicalClosure": {
+    "errors": [],
+    "files": [
+      {
+        "path": "/private/tmp/migration-sdk057-public-h-postrelease-005/operator/evidence-export.stdout.log",
+        "sha256": "dfc561528c4bd51e5e95377d607f8ce75d52128a101668f9eb800f84dfe427b4",
+        "sizeBytes": 1178
+      },
+      {
+        "path": "/private/tmp/migration-sdk057-public-h-postrelease-005/operator/evidence-export.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      }
+    ],
+    "verified": true
+  },
+  "evidenceInventoryError": null,
+  "executionId": "local-4040da90-7637-405a-8b07-fcce6af3a73d",
+  "executionKind": "local_linux_diagnostic",
+  "failure": "docker client exited 1",
+  "outerCapture": {
+    "captureErrors": [],
+    "captureFailed": false,
+    "drainExpired": false,
+    "paths": [
+      "/private/tmp/migration-sdk057-public-h-postrelease-005/operator/reader-docker.stdout.log",
+      "/private/tmp/migration-sdk057-public-h-postrelease-005/operator/reader-docker.stderr.log"
+    ],
+    "rawSha256": [
+      "7acd41eca5f7d0aa2d60f9d33559d860d43736423e3aa85c96aff84e9375b2c6",
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    ],
+    "retainedBytes": [
+      34,
+      0
+    ],
+    "timedOut": false,
+    "totalRetainedBytes": 34,
+    "truncated": [
+      false,
+      false
+    ]
+  },
+  "outerCapturePhysicalClosure": {
+    "errors": [],
+    "files": [
+      {
+        "path": "/private/tmp/migration-sdk057-public-h-postrelease-005/operator/reader-docker.stdout.log",
+        "sha256": "7acd41eca5f7d0aa2d60f9d33559d860d43736423e3aa85c96aff84e9375b2c6",
+        "sizeBytes": 34
+      },
+      {
+        "path": "/private/tmp/migration-sdk057-public-h-postrelease-005/operator/reader-docker.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      }
+    ],
+    "verified": true
+  },
+  "outerDurationSeconds": 34.566617209,
+  "profile": "umf.sdk-057-public-h-docker-operator/3",
+  "readerMetadataBytesMatchPhysicalFamily": true,
+  "readerReceiptPath": "/private/tmp/migration-sdk057-public-h-postrelease-005/evidence/receipt.json",
+  "readerReceiptSha256": "03f567ee9e2d6d457fb33f68f2ef91b88efcb2f20c40aef388ff263b7da4065b",
+  "readerStatus": "FAIL_OR_UNKNOWN",
+  "selectedEvidenceBytes": 18956,
+  "selectedEvidenceFiles": [
+    {
+      "path": "receipt.json",
+      "sha256": "03f567ee9e2d6d457fb33f68f2ef91b88efcb2f20c40aef388ff263b7da4065b",
+      "sizeBytes": 4672
+    },
+    {
+      "path": "input-packet.json",
+      "sha256": "77837f7f5594f92d105dd1363505bb717b8a7e96c9f044205015ad23bf090c16",
+      "sizeBytes": 8843
+    },
+    {
+      "path": "command-records.jsonl",
+      "sha256": "7a164433e947513482e52417ab303fd2cd54423774d1cf20d2e23f11f1da20ad",
+      "sizeBytes": 2234
+    },
+    {
+      "path": "logs/acquire-and-verify-public-and-qualified-archives.log",
+      "sha256": "56bb8e0701b69790eb611330c95848b3c5834f22977ccf807be8dc0e21230601",
+      "sizeBytes": 962
+    },
+    {
+      "path": "logs/toolchain-identity.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/verify-source-tag-and-tree.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "reports/source-identity.json",
+      "sha256": "43a2c947878580b9aea7f9180c077ee0868214b791ff1d7a32267272ec96d7cf",
+      "sizeBytes": 1280
+    },
+    {
+      "path": "reports/toolchain.json",
+      "sha256": "3529c7ea17e6819ff08a15d864f1ca5b15e77c43bf83d95b30f52dbb67f89aa1",
+      "sizeBytes": 965
+    }
+  ],
+  "status": "FAIL_OR_UNKNOWN"
+}

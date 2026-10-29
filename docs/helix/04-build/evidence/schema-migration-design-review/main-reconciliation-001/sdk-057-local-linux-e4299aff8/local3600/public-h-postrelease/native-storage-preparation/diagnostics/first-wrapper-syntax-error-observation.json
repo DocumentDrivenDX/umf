@@ -1,0 +1,8 @@
+{
+  "attempt": "first invocation of diagnostic outer wrapper before Docker was launched",
+  "impact": "No Docker invocation occurred in that first wrapper invocation. The wrapper was corrected, syntax-checked without bytecode output, and diagnostic attempt-001 then ran.",
+  "kind": "operator-wrapper-syntax-error-observation",
+  "notAQualification": "This wrapper error is distinct from Git command results in diagnostic attempt-001.",
+  "observedError": "File \"/private/tmp/migration-sdk057-public-h-attempt2-gitmeta-diagnostic-001/run_readonly_git_metadata.py\", line 26: finally: SyntaxError: invalid syntax",
+  "source": "tool execution result surfaced in session; no raw output file was persisted at the time"
+}

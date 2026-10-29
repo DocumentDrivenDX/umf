@@ -1,0 +1,9 @@
+$ bun run build && bun run build:postgresql && bun scripts/package-sdk.ts
+$ bun scripts/build.ts
+Authored model validates against generated current enforcement
+Metamodel outputs generated
+Browser ESM built: 13864963 bytes; declarations emitted.
+$ bun scripts/build-postgresql.ts
+Optional PostgreSQL parser/deparser browser runtime built
+{"archive": ".cache/sdk-distribution/umf-sdk.tgz", "files": 1793, "actionsBundled": true}
+{"coreDistribution":"sdk-archive","files":1799}

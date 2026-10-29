@@ -1,0 +1,60 @@
+{
+  "attempt": 1,
+  "cleanup": {
+    "error": null,
+    "exactOwnedNameAbsent": true,
+    "removeExitCode": null
+  },
+  "dockerExitCode": 125,
+  "evidenceInventoryError": null,
+  "executionId": "local-4040da90-7637-405a-8b07-fcce6af3a73d",
+  "executionKind": "local_linux_diagnostic",
+  "failure": "docker client exited 125",
+  "outerCapture": {
+    "captureErrors": [],
+    "captureFailed": false,
+    "drainExpired": false,
+    "paths": [
+      "/private/tmp/migration-sdk057-public-h-postrelease-001/operator/docker.stdout.log",
+      "/private/tmp/migration-sdk057-public-h-postrelease-001/operator/docker.stderr.log"
+    ],
+    "rawSha256": [
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "b98f1505399278a6997aee6a7855c0de8dae4feaf26a49ca8cd6ec7f73b3b71f"
+    ],
+    "retainedBytes": [
+      0,
+      315
+    ],
+    "timedOut": false,
+    "totalRetainedBytes": 315,
+    "truncated": [
+      false,
+      false
+    ]
+  },
+  "outerCapturePhysicalClosure": {
+    "errors": [],
+    "files": [
+      {
+        "path": "/private/tmp/migration-sdk057-public-h-postrelease-001/operator/docker.stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      {
+        "path": "/private/tmp/migration-sdk057-public-h-postrelease-001/operator/docker.stderr.log",
+        "sha256": "b98f1505399278a6997aee6a7855c0de8dae4feaf26a49ca8cd6ec7f73b3b71f",
+        "sizeBytes": 315
+      }
+    ],
+    "verified": true
+  },
+  "profile": "umf.sdk-057-public-h-docker-operator/2",
+  "readerMetadataBytesMatchPhysicalFamily": false,
+  "readerReceiptPath": null,
+  "readerReceiptSha256": null,
+  "readerStatus": null,
+  "selectedEvidenceBytes": 0,
+  "selectedEvidenceFiles": [],
+  "status": "FAIL_OR_UNKNOWN"
+}

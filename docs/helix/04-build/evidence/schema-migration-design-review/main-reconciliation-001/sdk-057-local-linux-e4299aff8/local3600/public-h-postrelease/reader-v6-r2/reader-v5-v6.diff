@@ -1,0 +1,128 @@
+--- /private/tmp/sdk-057-local3600-public-h-v5/run-local3600-public-h.py
++++ /private/tmp/sdk-057-local3600-public-h-v6/run-local3600-public-h.py
+@@ -2130,7 +2130,32 @@
+                     or report.get('status') != 'passed' or report.get('aggregate', {}).get('selectedCell') != cell):
+                 fail(f'Full18 {cell} union report is not the exact successful selected-cell replay')
+     index_path = beneath(aggregate_root, aggregate['indexPath'], 'aggregate index')
++    index_base = index_path.parent
+     index = json_file(index_path)
++    assembly_files = assembly_receipt.get('files')
++    if type(assembly_files) is not dict or len(assembly_files) < 20:
++        fail('Aggregate producer receipt has an incomplete file-custody map')
++
++    def resolve_index_file(label: str, ref: object, expected_index_path: str,
++                           assembly_key: str, expected_assembly_path: str) -> pathlib.Path:
++        if (type(ref) is not dict or set(ref) != {'path','sha256'}
++                or ref.get('path') != expected_index_path
++                or not isinstance(ref.get('sha256'), str)):
++            fail(f'{label} index reference is not canonical')
++        index_file_path = beneath(index_base, ref['path'], f'{label} index file')
++        actual_sha = sha_file(index_file_path)
++        assembly_ref = assembly_files.get(assembly_key)
++        if (type(assembly_ref) is not dict or set(assembly_ref) != {'path','bytes','sha256'}
++                or assembly_ref.get('path') != expected_assembly_path
++                or type(assembly_ref.get('bytes')) is not int
++                or assembly_ref.get('sha256') != actual_sha
++                or assembly_ref.get('bytes') != index_file_path.stat().st_size
++                or ref.get('sha256') != actual_sha):
++            fail(f'{label} index bytes do not cross-bind to aggregate-root assembly custody')
++        assembly_file_path = beneath(aggregate_root, assembly_ref['path'], f'{label} assembly file')
++        if assembly_file_path != index_file_path:
++            fail(f'{label} index and assembly references resolve to different files')
++        return index_file_path
+     if (set(index) != {'profile','status','sourceCommit','coverage','runtimeCells','artifactTargets','union'}
+             or index.get('profile') != 'umf.embedder-wheel-linux-runtime-macos-inputs/1'
+             or index.get('sourceCommit') != packet['source']['producerCommit'] or index.get('status') != 'assembled'):
+@@ -2151,12 +2176,10 @@
+         fail('Aggregate Mac target roster is not the exact two data-only target set')
+     for target in targets:
+         target_id = target['id']; ref = target.get('artifactManifest')
+-        expected_manifest_path = f"aggregate/artifact-targets/{target_id}/artifact-target.json"
+-        if type(ref) is not dict or set(ref) != {'path','sha256'} or ref.get('path') != expected_manifest_path:
+-            fail(f'{target_id} Mac target manifest reference is not canonical')
+-        manifest_path = beneath(aggregate_root, ref['path'], f'{target_id} Mac target manifest')
+-        if sha_file(manifest_path) != ref['sha256']:
+-            fail(f'{target_id} Mac target manifest hash differs from aggregate index')
++        expected_manifest_path = f"artifact-targets/{target_id}/artifact-target.json"
++        manifest_path = resolve_index_file(
++            f'{target_id} Mac target manifest', ref, expected_manifest_path,
++            f'{target_id}Manifest', f'aggregate/{expected_manifest_path}')
+         manifest = json_file(manifest_path)
+         expected_manifest_keys = {'profile','status','target','selection','sourceCommit','coreSemanticVersion',
+                                   'packageRoots','packages','wheels','dependencyResolution'}
+@@ -2181,6 +2204,18 @@
+         if len(package_names) != 18 or package_names != wheel_names:
+             fail(f'{target_id} manifest does not retain exactly 18 matching package and wheel selections')
+         mac_manifest_values[target_id] = manifest
++    index_cell_files = {}
++    for row in rows:
++        cell = row['id']
++        expected_lock = f'children/{cell}/cohort.lock.json'
++        expected_receipt = f'children/{cell}/offline-mirror-receipt.json'
++        cell_lock = resolve_index_file(
++            f'{cell} lock', row.get('lock'), expected_lock,
++            f'{cell}AggregateLock', f'aggregate/{expected_lock}')
++        resolve_index_file(
++            f'{cell} qualification receipt', row.get('qualificationReceipt'), expected_receipt,
++            f'{cell}AggregateOfflineReceipt', f'aggregate/{expected_receipt}')
++        index_cell_files[cell] = cell_lock
+     union = index.get('union', {}); inventory = {row.get('filename'): row for row in union.get('inventory', []) if type(row) is dict}
+     if len(inventory) != 30 or any(not isinstance(name,str) for name in inventory):
+         fail('Aggregate union inventory is not the exact closed 30-wheel union')
+@@ -2194,7 +2229,18 @@
+     }
+     if set(assembly_files) != expected_assembly_file_keys:
+         fail('Aggregate producer file custody does not cover exactly the 30-wheel union')
+-    mirror_root = beneath(aggregate_root, union.get('wheelhouse'), 'aggregate wheelhouse')
++    resolve_index_file(
++        'aggregate union lock', union.get('lock'), 'union.lock.json',
++        'unionLock', 'aggregate/union.lock.json')
++    resolve_index_file(
++        'aggregate mirror manifest', union.get('mirrorManifest'), 'mirror/manifest.json',
++        'mirrorManifest', 'aggregate/mirror/manifest.json')
++    if union.get('mirror') != 'mirror' or union.get('wheelhouse') != 'wheelhouse':
++        fail('Aggregate mirror and wheelhouse directory references are not canonical')
++    mirror_dir = beneath(index_base, union.get('mirror'), 'aggregate mirror directory')
++    mirror_root = beneath(index_base, union.get('wheelhouse'), 'aggregate wheelhouse')
++    if not mirror_dir.is_dir() or not mirror_root.is_dir():
++        fail('Aggregate mirror or wheelhouse reference is not a directory')
+     for filename, row in inventory.items():
+         wheel_path = beneath(mirror_root, filename, 'aggregate union wheel')
+         if type(row.get('size')) is not int or wheel_path.stat().st_size != row['size']:
+@@ -2204,7 +2250,7 @@
+             fail(f'Aggregate union wheel differs from its independent assembly custody row: {filename}')
+     selected = [x for x in rows if x.get('id') == 'linux-x86_64-py311']
+     if len(selected) != 1: fail('Aggregate selected Linux 3.11 cell is absent or duplicated')
+-    lock_path = beneath(aggregate_root, selected[0]['lock']['path'], 'selected Linux 3.11 lock')
++    lock_path = index_cell_files['linux-x86_64-py311']
+     lock = json_file(lock_path)
+     linux_versions = {
+         re.sub(r'[-_.]+','-',row.get('distribution','')).lower(): row.get('version')
+@@ -2219,9 +2265,6 @@
+         }
+         if mac_versions != linux_versions:
+             fail(f'{target_id} data-only Mac package/version set differs from the selected Linux full18 cohort')
+-    assembly_files = assembly_receipt.get('files')
+-    if type(assembly_files) is not dict or len(assembly_files) < 20:
+-        fail('Aggregate producer receipt has an incomplete file-custody map')
+     def require_assembly_file(key: str, relative: str, path: pathlib.Path) -> None:
+         ref = assembly_files.get(key)
+         if type(ref) is not dict or set(ref) != {'path','bytes','sha256'} or ref.get('path') != relative:
+@@ -2443,7 +2486,7 @@
+                 argv=[sys.executable,'-I',__file__,'--stage',name,str(input_path),str(work)]
+                 row=capped_child(name,argv,producer,env,log,180,deadline,LIMITS['evidenceReserveSeconds']*1_000_000_000,sum(p.stat().st_size for p in logs.glob('*.log')))
+             elif name == 'python-public-install-and-migration-smoke':
+-                agg=packet_value['evidence']['aggregate']; agg_root=abs_path(agg['root'],'aggregate evidence root').resolve(strict=True); index=json_file(beneath(agg_root,agg['indexPath'],'aggregate index'))
++                agg=packet_value['evidence']['aggregate']; agg_root=abs_path(agg['root'],'aggregate evidence root').resolve(strict=True); index_path=beneath(agg_root,agg['indexPath'],'aggregate index'); index=json_file(index_path)
+                 operator_python=work/'operator-venv'/'bin'/'python3'
+                 if not operator_python.exists(): fail('Isolated packaging operator Python is unavailable')
+                 mirror_helper=producer/'scripts/python-package-mirror.py'
+@@ -2451,7 +2494,7 @@
+                 if spec is None or spec.loader is None: fail('Existing Python network-isolation helper is unavailable from exact P source')
+                 module=importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+                 network_prefix,isolation=module.network_isolation_prefix()
+-                args=network_prefix+[str(operator_python),'-I',str(producer/'tests/codegen/offline_mirror_probe.py'),'--aggregate-index',str(beneath(agg_root,agg['indexPath'],'aggregate index')),'--selected-cell','linux-x86_64-py311','--expected-source-commit',source['producerCommit'],'--mirror',str(beneath(agg_root,index['union']['mirror'],'aggregate package index')),'--generator-corpus',str(beneath(agg_root,agg['generatorCorpusPath'],'generator corpus')),'--report',str(reports/'python-installed.json')]
++                args=network_prefix+[str(operator_python),'-I',str(producer/'tests/codegen/offline_mirror_probe.py'),'--aggregate-index',str(beneath(agg_root,agg['indexPath'],'aggregate index')),'--selected-cell','linux-x86_64-py311','--expected-source-commit',source['producerCommit'],'--mirror',str(beneath(index_path.parent,index['union']['mirror'],'aggregate package index')),'--generator-corpus',str(beneath(agg_root,agg['generatorCorpusPath'],'generator corpus')),'--report',str(reports/'python-installed.json')]
+                 row=capped_child(name,args,producer,env,log,180,deadline,LIMITS['evidenceReserveSeconds']*1_000_000_000,sum(p.stat().st_size for p in logs.glob('*.log')))
+             else:
+                 argv=[sys.executable,'-I',__file__,'--stage',name,str(input_path),str(evidence_arg)]

@@ -1,0 +1,196 @@
+--- v2/run-local3600-public-h.py
++++ v3/run-local3600-public-h.py
+@@ -7,6 +7,7 @@
+ """
+ from __future__ import annotations
+ 
++import gzip
+ import hashlib
+ import importlib.util
+ import json
+@@ -101,11 +102,17 @@
+         'fenced-resume', 'backfill-commit-lost', 'existing-target-commit-lost')},
+ }
+ D5_REPLAY_FILES = {
+-    'archive.tar.gz', 'fixture.json.gz', 'oracle-successor.py.gz',
+-    'oracle-successor.patch', 'oracle-successor-custody.json',
++    'archive.tar.gz', 'fixture.json.gz', 'g01/fixture.json.gz',
++    'oracle-successor.py.gz', 'oracle-successor.patch', 'oracle-successor-custody.json',
+     'no-default-metadata-successor.py.gz', 'no-default-metadata-successor.patch',
+     'metadata-oracle-successor.py.gz', 'metadata-oracle-successor.patch',
+     'metadata-successor-custody.json',
++    'candidate-009/fault-fixture.json', 'candidate-009/fault-runner.py',
++    'candidate-009/installed-text-oracle.py', 'candidate-009/no-default-fixture.json',
++    'candidate-009/no-default-runner.py',
++    'candidate-009/installed-text-oracle-d5-row-observation-successor.py',
++    'candidate-009/installed-text-oracle-d5-weft55-metadata-successor.py',
++    'candidate-009/no-default-runner-d5-weft55-metadata-successor.py',
+ }
+ SDK_HARNESS_FILES = (
+     'inside-sdk-producer.py', 'capture-bounded-log.py',
+@@ -322,6 +329,139 @@
+     }
+ 
+ 
++def validate_d5_replay_bindings(upload_root: pathlib.Path, owner: dict) -> dict:
++    """Bind the selected replay copies to the retained archive and custody records."""
++    archive_path = upload_root / 'replay/archive.tar.gz'
++    archive_info = archive_path.lstat()
++    if not stat.S_ISREG(archive_info.st_mode) or archive_info.st_size > 16 * 1024 * 1024:
++        fail('D5 replay archive is not a bounded regular file')
++    archive_sha = sha_file(archive_path)
++    if archive_sha != owner.get('replayArchiveSha256'):
++        fail('D5 replay archive differs from the retained owner identity')
++
++    archive_paths = {
++        'candidate-009/owner-artifacts.json': 'candidate-009/owner-artifacts.json',
++        'candidate-009/fault-fixture.json': 'candidate-009/fault-fixture.json',
++        'candidate-009/fault-runner.py': 'candidate-009/fault-runner.py',
++        'candidate-009/installed-text-oracle.py': 'candidate-009/installed-text-oracle.py',
++        'candidate-009/no-default-fixture.json': 'candidate-009/no-default-fixture.json',
++        'candidate-009/no-default-runner.py': 'candidate-009/no-default-runner.py',
++    }
++    member_bytes = {}
++    try:
++        with tarfile.open(archive_path, 'r:gz') as archive:
++            wanted = set(archive_paths.values())
++            for member in archive.getmembers():
++                if member.name not in wanted:
++                    continue
++                if not member.isfile() or member.name in member_bytes or member.size > 16 * 1024 * 1024:
++                    fail('D5 replay archive has an unsafe or duplicate retained member')
++                stream = archive.extractfile(member)
++                if stream is None:
++                    fail('D5 replay archive member has no data stream')
++                data = stream.read(member.size + 1)
++                if len(data) != member.size:
++                    fail('D5 replay archive member size differs from its header')
++                member_bytes[member.name] = data
++    except (tarfile.TarError, OSError, EOFError) as exc:
++        fail(f'D5 replay archive cannot be read as the retained archive: {type(exc).__name__}')
++    if set(member_bytes) != set(archive_paths.values()):
++        fail('D5 replay archive is missing one of the exact retained original members')
++    metadata_custody = json_file(upload_root / 'replay/metadata-successor-custody.json', 128 * 1024)
++    if metadata_custody.get('originalArchive', {}).get('sha256') != archive_sha:
++        fail('D5 metadata custody does not bind the retained original archive')
++    archive_owner_hashes = {
++        'candidate-009/owner-artifacts.json': None,
++        'candidate-009/fault-fixture.json': None,
++        'candidate-009/fault-runner.py': owner.get('faultRunnerSha256'),
++        'candidate-009/installed-text-oracle.py': owner.get('oracleSha256'),
++        'candidate-009/no-default-fixture.json': None,
++        'candidate-009/no-default-runner.py': owner.get('noDefaultOriginalRunnerSha256'),
++    }
++    original_fixture_hashes = metadata_custody.get('originalFixtureSha256')
++    if type(original_fixture_hashes) is not dict:
++        fail('D5 replay metadata custody lacks the exact retained fixture hashes')
++    archive_owner_hashes['candidate-009/owner-artifacts.json'] = original_fixture_hashes.get('candidate-009/owner-artifacts.json')
++    archive_owner_hashes['candidate-009/fault-fixture.json'] = original_fixture_hashes.get('candidate-009/fault-fixture.json')
++    archive_owner_hashes['candidate-009/no-default-fixture.json'] = original_fixture_hashes.get('candidate-009/no-default-fixture.json')
++    for relative, member_name in archive_paths.items():
++        data = member_bytes[member_name]
++        expected_sha = archive_owner_hashes[relative]
++        if type(expected_sha) is not str or hashlib.sha256(data).hexdigest() != expected_sha:
++            fail(f'D5 replay archive original differs from retained custody: {relative}')
++        if relative != 'candidate-009/owner-artifacts.json' and (upload_root / 'replay' / relative).read_bytes() != data:
++            fail(f'D5 selected original replay file differs from retained archive: {relative}')
++
++    if (owner.get('fixtureSha256') != sha_file(upload_root / 'replay/fixture.json.gz')
++            or (upload_root / 'replay/g01/fixture.json.gz').read_bytes()
++                != (upload_root / 'replay/fixture.json.gz').read_bytes()):
++        fail('D5 G01 fixture copy differs from the retained top-level gzip fixture')
++
++    row_custody = json_file(upload_root / 'replay/oracle-successor-custody.json', 128 * 1024)
++    if (row_custody.get('role') != 'D5 actual-row observation successor; original candidate-009 oracle/archive remain unchanged'
++            or row_custody.get('status') != 'source-only-successor'
++            or row_custody.get('originalArchiveSha256') != archive_sha
++            or row_custody.get('originalOracleSha256') != owner.get('oracleSha256')
++            or row_custody.get('fixtureSha256') != owner.get('fixtureSha256')
++            or row_custody.get('successorSha256') != owner.get('oracleObservationParentSha256')
++            or row_custody.get('successorGzipSha256') != owner.get('oracleObservationParentGzipSha256')
++            or row_custody.get('successorPatchSha256') != owner.get('oracleObservationParentPatchSha256')):
++        fail('D5 row-observation successor custody does not bind its exact original and successor identities')
++    successor_custody = metadata_custody
++    expected_successors = {
++        'candidate-009/installed-text-oracle-d5-row-observation-successor.py': owner.get('oracleObservationParentSha256'),
++        'candidate-009/installed-text-oracle-d5-weft55-metadata-successor.py': owner.get('oracleSuccessorSha256'),
++        'candidate-009/no-default-runner-d5-weft55-metadata-successor.py': owner.get('noDefaultRunnerSha256'),
++    }
++    for relative, expected_sha in expected_successors.items():
++        if (type(expected_sha) is not str
++                or sha_file(upload_root / 'replay' / relative) != expected_sha):
++            fail(f'D5 successor source differs from the pinned owner hash: {relative}')
++    metadata_successor_record = successor_custody.get('successors', {}).get('rowObservationOracle', {})
++    no_default_record = successor_custody.get('successors', {}).get('noDefault', {})
++    if (metadata_custody.get('profile') != 'umf.d5-metadata-name-successor/1'
++            or metadata_custody.get('status') != 'source-only-successor'
++            or metadata_successor_record.get('parent', {}).get('sha256') != owner.get('oracleObservationParentSha256')
++            or metadata_successor_record.get('sourceSha256') != owner.get('oracleSuccessorSha256')
++            or metadata_successor_record.get('gzipSha256') != owner.get('oracleSuccessorGzipSha256')
++            or metadata_successor_record.get('patchSha256') != owner.get('oracleSuccessorPatchSha256')
++            or no_default_record.get('parent', {}).get('sha256') != owner.get('noDefaultOriginalRunnerSha256')
++            or no_default_record.get('sourceSha256') != owner.get('noDefaultRunnerSha256')
++            or no_default_record.get('gzipSha256') != owner.get('noDefaultRunnerGzipSha256')
++            or no_default_record.get('patchSha256') != owner.get('noDefaultRunnerPatchSha256')):
++        fail('D5 metadata successor custody does not bind the exact parent and successor source hashes')
++
++    gzip_bindings = {
++        'oracle-successor.py.gz': (owner.get('oracleObservationParentGzipSha256'), owner.get('oracleObservationParentSha256')),
++        'metadata-oracle-successor.py.gz': (owner.get('oracleSuccessorGzipSha256'), owner.get('oracleSuccessorSha256')),
++        'no-default-metadata-successor.py.gz': (owner.get('noDefaultRunnerGzipSha256'), owner.get('noDefaultRunnerSha256')),
++    }
++    patch_bindings = {
++        'oracle-successor.patch': owner.get('oracleObservationParentPatchSha256'),
++        'metadata-oracle-successor.patch': owner.get('oracleSuccessorPatchSha256'),
++        'no-default-metadata-successor.patch': owner.get('noDefaultRunnerPatchSha256'),
++    }
++    for filename, (compressed_sha, source_sha) in gzip_bindings.items():
++        compressed = upload_root / 'replay' / filename
++        if sha_file(compressed) != compressed_sha:
++            fail(f'D5 successor gzip differs from its owner custody hash: {filename}')
++        try:
++            with gzip.open(compressed, 'rb') as stream:
++                decompressed = stream.read(16 * 1024 * 1024 + 1)
++        except (OSError, EOFError) as exc:
++            fail(f'D5 successor gzip cannot be read: {type(exc).__name__}')
++        if len(decompressed) > 16 * 1024 * 1024 or hashlib.sha256(decompressed).hexdigest() != source_sha:
++            fail(f'D5 successor gzip content differs from its exact source hash: {filename}')
++    for filename, expected_sha in patch_bindings.items():
++        if sha_file(upload_root / 'replay' / filename) != expected_sha:
++            fail(f'D5 successor patch differs from its owner custody hash: {filename}')
++    if (sha_file(upload_root / 'replay/oracle-successor-custody.json') != owner.get('oracleObservationParentCustodySha256')
++            or sha_file(upload_root / 'replay/metadata-successor-custody.json') != owner.get('oracleSuccessorCustodySha256')):
++        fail('D5 successor custody JSON differs from the owner custody hashes')
++    return {'archiveSha256': archive_sha, 'originalMemberCount': len(member_bytes),
++            'successorCount': len(expected_successors), 'gzipCount': len(gzip_bindings)}
++
++
+ def validate_d5_selected_evidence(packet: dict, d5: dict, d5_root: pathlib.Path,
+                                   d5_receipt: dict, d5_inputs: dict,
+                                   d5_context_path: pathlib.Path, d5_context: dict,
+@@ -425,7 +565,7 @@
+     upload_root_files = {name for name in upload_relatives if '/' not in name}
+     if (not D5_UPLOAD_ROOT_FILES <= upload_root_files
+             or not {'logs', 'reports', 'replay'} <= upload_directory_relatives
+-            or upload_directory_relatives - {'logs', 'reports', 'replay', 'reports/plans'}
++            or upload_directory_relatives - {'logs', 'reports', 'replay', 'reports/plans', 'replay/candidate-009', 'replay/g01'}
+             ):
+         fail('D5 upload tree is missing required top-level files or has an unexpected directory layout')
+     upload_logs = {rel[len('logs/'):] for rel in upload_relatives if rel.startswith('logs/')}
+@@ -700,6 +840,8 @@
+         physical = beneath(d5_root, label[len('output/'):], f'D5 release payload {label}')
+         if sha_file(physical) != row['sha256']:
+             fail(f'D5 release payload physical digest differs: {label}')
++    owner = json_file(upload_root / 'owner-artifacts.json', 16 * 1024 * 1024)
++    replay_custody = validate_d5_replay_bindings(upload_root, owner)
+     return {
+         'profileName': LOCAL_D5_PROFILE,
+         'profileSha256': profile_sha,
+@@ -723,6 +865,7 @@
+         'faultScenarios': 3,
+         'commandCount': 30,
+         'cleanupVerified': True,
++        'replayCustody': replay_custody,
+         'cleanup': cleanup,
+         'capture': {
+             'path': str(profile_evidence['outerCapturePath']),

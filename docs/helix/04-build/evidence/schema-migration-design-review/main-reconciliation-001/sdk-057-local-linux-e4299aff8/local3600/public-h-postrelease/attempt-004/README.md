@@ -1,0 +1,3 @@
+# Public-H attempt 4 — SDK input-root refusal
+
+Toolchain and full source/tag verification passed, including the full P archive in 23.502 seconds. Acquisition then refused the retained SDK command-log reference because the packet used a broad parent SDK root while the unchanged producer receipt authored paths relative to its own receipt directory. No installation or consumer check passed. The failed evidence family was exported and retained; no source/receipt/release byte was relabeled. A byte-exact closed SDK input wrapper will resolve the authored paths while preserving the reader and its limits.

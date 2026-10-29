@@ -1,0 +1,13 @@
+--- /private/tmp/sdk-057-local3600-public-h-operator-proposal003/run_public_h_docker.py	2026-10-29 00:16:49
++++ /private/tmp/sdk-057-local3600-public-h-operator-proposal004/run_public_h_docker.py	2026-10-29 00:23:28
+@@ -5,8 +5,8 @@
+ 
+ IMAGE = 'sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556'
+ PLATFORM = 'linux/amd64'
+-READER = pathlib.Path('/private/tmp/sdk-057-local3600-public-h-v2/run-local3600-public-h.py')
+-READER_SHA256 = '5feed5ed5516b73838650b7c42e9121839e970cee130e49f1f7f479069f9938f'
++READER = pathlib.Path('/private/tmp/sdk-057-local3600-public-h-v3/run-local3600-public-h.py')
++READER_SHA256 = 'a8b496f65010551c5fc4bac368bebc95c1b1406cfc125c12aa733eaa726a7b15'
+ HOST_ROOT = pathlib.Path('/private/tmp')
+ H_METADATA_LIMIT = 16 * 1024 * 1024
+ H_LOG_LIMIT = 1024 * 1024

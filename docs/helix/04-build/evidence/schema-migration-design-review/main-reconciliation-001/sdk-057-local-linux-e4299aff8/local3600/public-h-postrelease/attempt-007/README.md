@@ -1,0 +1,3 @@
+# Public-H attempt 7 — final bootstrap path mismatch
+
+All seven commands ran. Fresh SDK139 and offline Python18 probes passed, but the final consistency command failed. The final verifier resolved the operator virtual environment against the evidence root instead of its work subdirectory. The report retains the actual bootstrap prefix and hashes; no package or provenance mismatch was observed. This complete attempt remains FAIL_OR_UNKNOWN. Export and owned-container/evidence-volume cleanup were verified. A path correction requires reviewed source and a new complete attempt; these partial results are not a substitute.

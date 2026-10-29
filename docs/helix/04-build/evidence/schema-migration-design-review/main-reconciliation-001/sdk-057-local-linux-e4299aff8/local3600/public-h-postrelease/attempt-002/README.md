@@ -1,0 +1,3 @@
+# Public-H attempt 2 — source verification timeout
+
+This fresh attempt passed toolchain identity, then its source/tag verification command reached the unchanged 180-second child limit and exited on TERM. The retained command sequence stops at source verification; later public-download/install commands did not begin. Disposable work is excluded, so this bundle does not independently prove the archive directory state. The failure does not identify which preceding Git operation stalled; a bounded read-only Git metadata diagnostic is planned. The complete retained H receipt/logs and operator cleanup record remain failed. Disposable work is excluded. No cap or public asset was changed.

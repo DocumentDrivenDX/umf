@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/private/tmp/sdk-057-local3600-public-h-v5/run-local3600-public-h.py", line 2513, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/private/tmp/sdk-057-local3600-public-h-v5/run-local3600-public-h.py", line 2395, in main
+    stage_acquire_cli(packet, work); return 0
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/sdk-057-local3600-public-h-v5/run-local3600-public-h.py", line 1382, in stage_acquire_cli
+    result=stage_acquire(packet,producer,work)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/sdk-057-local3600-public-h-v5/run-local3600-public-h.py", line 2156, in stage_acquire
+    fail(f'{target_id} Mac target manifest reference is not canonical')
+  File "/private/tmp/sdk-057-local3600-public-h-v5/run-local3600-public-h.py", line 126, in fail
+    raise ValueError(message)
+ValueError: macos-arm64-py311 Mac target manifest reference is not canonical

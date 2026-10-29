@@ -1,0 +1,424 @@
+{
+  "attempt": 8,
+  "cleanup": {
+    "error": null,
+    "evidenceVolumeAbsent": true,
+    "evidenceVolumeError": null,
+    "evidenceVolumeName": "umf-public-h-evidence-d3bee7f855f8d2049200-8",
+    "exactOwnedNameAbsent": true,
+    "removeExitCode": null
+  },
+  "dockerExitCode": 0,
+  "evidenceExport": {
+    "capture": {
+      "captureErrors": [],
+      "captureFailed": false,
+      "drainExpired": false,
+      "paths": [
+        "/private/tmp/migration-sdk057-public-h-postrelease-008/operator/evidence-export.stdout.log",
+        "/private/tmp/migration-sdk057-public-h-postrelease-008/operator/evidence-export.stderr.log"
+      ],
+      "rawSha256": [
+        "d278e566fcf4cc20fa6045131f004c41ea459ab74b3aa0b233589e1251d9f00d",
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      ],
+      "retainedBytes": [
+        2453,
+        0
+      ],
+      "timedOut": false,
+      "totalRetainedBytes": 2453,
+      "truncated": [
+        false,
+        false
+      ]
+    },
+    "capturePhysicalClosure": {
+      "errors": [],
+      "files": [
+        {
+          "path": "/private/tmp/migration-sdk057-public-h-postrelease-008/operator/evidence-export.stdout.log",
+          "sha256": "d278e566fcf4cc20fa6045131f004c41ea459ab74b3aa0b233589e1251d9f00d",
+          "sizeBytes": 2453
+        },
+        {
+          "path": "/private/tmp/migration-sdk057-public-h-postrelease-008/operator/evidence-export.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "verified": true
+    },
+    "cleanup": {
+      "error": null,
+      "exactOwnedNameAbsent": true
+    },
+    "containerName": "umf-public-h-local-4040da90-7637-405a-8b07-fcce6af3-8-export",
+    "exitCode": 0,
+    "fullSuccessRoster": true,
+    "hostFiles": [
+      {
+        "path": "receipt.json",
+        "sha256": "f51ec0850880fac07be080cd931fe386cf2eca71505a13a120a4283874e50881",
+        "sizeBytes": 8705
+      },
+      {
+        "path": "input-packet.json",
+        "sha256": "16d3961fd0ba1d43682264b50ff8f985376030832fa8fa44ab6dce25fd205e4b",
+        "sizeBytes": 8935
+      },
+      {
+        "path": "command-records.jsonl",
+        "sha256": "048de07993c6d174c9d039312f1cbb07f2022314fbe26192b8bde2f237e13847",
+        "sizeBytes": 5479
+      },
+      {
+        "path": "logs/acquire-and-verify-public-and-qualified-archives.log",
+        "sha256": "0a5c5eb20e9f1cbdc8fc566e38c08a13a632128d90fd8a5390a952c89a1f6a8a",
+        "sizeBytes": 195
+      },
+      {
+        "path": "logs/bun-install-locked-source-dependencies.log",
+        "sha256": "5549cd464ac37f8cf532370083749c29985499f02af6a81df40ddb4b0f06a097",
+        "sizeBytes": 1056
+      },
+      {
+        "path": "logs/python-public-install-and-migration-smoke.log",
+        "sha256": "b412ed6d42050f159cbec2bd6c26d07311ae0b91972268a533c36971b64e389c",
+        "sizeBytes": 711
+      },
+      {
+        "path": "logs/sdk-public-install-consumer-smoke.log",
+        "sha256": "0b3d585ca224eceaeb80d9a7694888b18a8465d59c554cf17e6d58f9841746e7",
+        "sizeBytes": 552
+      },
+      {
+        "path": "logs/toolchain-identity.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      {
+        "path": "logs/verify-final-probe-fields.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      {
+        "path": "logs/verify-source-tag-and-tree.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      {
+        "path": "reports/accepted-probe-fields.json",
+        "sha256": "a83d178afa05334ff8491dbbf808d880e0fc5c529053d4542c5822055e037653",
+        "sizeBytes": 4640
+      },
+      {
+        "path": "reports/packaging-bootstrap.json",
+        "sha256": "bb04b9f36a3bf0b83ac60c149ce275d44dd1afa2b3563c8fb9089b67b7b13d6d",
+        "sizeBytes": 1382
+      },
+      {
+        "path": "reports/public-byte-correspondence.json",
+        "sha256": "0c3625d39af746668a3737ee985cc993554a90f82c7135e0a77084cd9662e726",
+        "sizeBytes": 9158
+      },
+      {
+        "path": "reports/python-installed.json",
+        "sha256": "c228ab367824e51adf7e9501f6131206f79e5cf179205c3d9513b09cf81ba69d",
+        "sizeBytes": 3518
+      },
+      {
+        "path": "reports/sdk-install.json",
+        "sha256": "6000cb8eafd5e17a8416e5adcb9e19616419ab6df0321474656813011b1aa902",
+        "sizeBytes": 353
+      },
+      {
+        "path": "reports/source-identity.json",
+        "sha256": "10719075e7069d2e0a9cfb6c1a68350314a7ba6c6b50397fde81ad3c70d92c30",
+        "sizeBytes": 1280
+      },
+      {
+        "path": "reports/toolchain.json",
+        "sha256": "3529c7ea17e6819ff08a15d864f1ca5b15e77c43bf83d95b30f52dbb67f89aa1",
+        "sizeBytes": 965
+      }
+    ],
+    "hostInventoryError": null,
+    "manifest": {
+      "complete": true,
+      "files": [
+        {
+          "path": "command-records.jsonl",
+          "sha256": "048de07993c6d174c9d039312f1cbb07f2022314fbe26192b8bde2f237e13847",
+          "sizeBytes": 5479
+        },
+        {
+          "path": "input-packet.json",
+          "sha256": "16d3961fd0ba1d43682264b50ff8f985376030832fa8fa44ab6dce25fd205e4b",
+          "sizeBytes": 8935
+        },
+        {
+          "path": "receipt.json",
+          "sha256": "f51ec0850880fac07be080cd931fe386cf2eca71505a13a120a4283874e50881",
+          "sizeBytes": 8705
+        },
+        {
+          "path": "logs/acquire-and-verify-public-and-qualified-archives.log",
+          "sha256": "0a5c5eb20e9f1cbdc8fc566e38c08a13a632128d90fd8a5390a952c89a1f6a8a",
+          "sizeBytes": 195
+        },
+        {
+          "path": "logs/bun-install-locked-source-dependencies.log",
+          "sha256": "5549cd464ac37f8cf532370083749c29985499f02af6a81df40ddb4b0f06a097",
+          "sizeBytes": 1056
+        },
+        {
+          "path": "logs/python-public-install-and-migration-smoke.log",
+          "sha256": "b412ed6d42050f159cbec2bd6c26d07311ae0b91972268a533c36971b64e389c",
+          "sizeBytes": 711
+        },
+        {
+          "path": "logs/sdk-public-install-consumer-smoke.log",
+          "sha256": "0b3d585ca224eceaeb80d9a7694888b18a8465d59c554cf17e6d58f9841746e7",
+          "sizeBytes": 552
+        },
+        {
+          "path": "logs/toolchain-identity.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        },
+        {
+          "path": "logs/verify-final-probe-fields.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        },
+        {
+          "path": "logs/verify-source-tag-and-tree.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        },
+        {
+          "path": "reports/accepted-probe-fields.json",
+          "sha256": "a83d178afa05334ff8491dbbf808d880e0fc5c529053d4542c5822055e037653",
+          "sizeBytes": 4640
+        },
+        {
+          "path": "reports/packaging-bootstrap.json",
+          "sha256": "bb04b9f36a3bf0b83ac60c149ce275d44dd1afa2b3563c8fb9089b67b7b13d6d",
+          "sizeBytes": 1382
+        },
+        {
+          "path": "reports/public-byte-correspondence.json",
+          "sha256": "0c3625d39af746668a3737ee985cc993554a90f82c7135e0a77084cd9662e726",
+          "sizeBytes": 9158
+        },
+        {
+          "path": "reports/python-installed.json",
+          "sha256": "c228ab367824e51adf7e9501f6131206f79e5cf179205c3d9513b09cf81ba69d",
+          "sizeBytes": 3518
+        },
+        {
+          "path": "reports/sdk-install.json",
+          "sha256": "6000cb8eafd5e17a8416e5adcb9e19616419ab6df0321474656813011b1aa902",
+          "sizeBytes": 353
+        },
+        {
+          "path": "reports/source-identity.json",
+          "sha256": "10719075e7069d2e0a9cfb6c1a68350314a7ba6c6b50397fde81ad3c70d92c30",
+          "sizeBytes": 1280
+        },
+        {
+          "path": "reports/toolchain.json",
+          "sha256": "3529c7ea17e6819ff08a15d864f1ca5b15e77c43bf83d95b30f52dbb67f89aa1",
+          "sizeBytes": 965
+        }
+      ],
+      "missing": [],
+      "readerStatus": "LOCAL_DIAGNOSTIC_PASS",
+      "safe": true,
+      "selectedBytes": 46929,
+      "status": "copied"
+    },
+    "readerMetadataBytesMatchPhysicalFamily": true,
+    "readerStatus": "LOCAL_DIAGNOSTIC_PASS",
+    "rowsMatch": true,
+    "verified": true
+  },
+  "evidenceExportCapture": {
+    "captureErrors": [],
+    "captureFailed": false,
+    "drainExpired": false,
+    "paths": [
+      "/private/tmp/migration-sdk057-public-h-postrelease-008/operator/evidence-export.stdout.log",
+      "/private/tmp/migration-sdk057-public-h-postrelease-008/operator/evidence-export.stderr.log"
+    ],
+    "rawSha256": [
+      "d278e566fcf4cc20fa6045131f004c41ea459ab74b3aa0b233589e1251d9f00d",
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    ],
+    "retainedBytes": [
+      2453,
+      0
+    ],
+    "timedOut": false,
+    "totalRetainedBytes": 2453,
+    "truncated": [
+      false,
+      false
+    ]
+  },
+  "evidenceExportCapturePhysicalClosure": {
+    "errors": [],
+    "files": [
+      {
+        "path": "/private/tmp/migration-sdk057-public-h-postrelease-008/operator/evidence-export.stdout.log",
+        "sha256": "d278e566fcf4cc20fa6045131f004c41ea459ab74b3aa0b233589e1251d9f00d",
+        "sizeBytes": 2453
+      },
+      {
+        "path": "/private/tmp/migration-sdk057-public-h-postrelease-008/operator/evidence-export.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      }
+    ],
+    "verified": true
+  },
+  "evidenceInventoryError": null,
+  "executionId": "local-4040da90-7637-405a-8b07-fcce6af3a73d",
+  "executionKind": "local_linux_diagnostic",
+  "failure": null,
+  "outerCapture": {
+    "captureErrors": [],
+    "captureFailed": false,
+    "drainExpired": false,
+    "paths": [
+      "/private/tmp/migration-sdk057-public-h-postrelease-008/operator/reader-docker.stdout.log",
+      "/private/tmp/migration-sdk057-public-h-postrelease-008/operator/reader-docker.stderr.log"
+    ],
+    "rawSha256": [
+      "7acd41eca5f7d0aa2d60f9d33559d860d43736423e3aa85c96aff84e9375b2c6",
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    ],
+    "retainedBytes": [
+      34,
+      0
+    ],
+    "timedOut": false,
+    "totalRetainedBytes": 34,
+    "truncated": [
+      false,
+      false
+    ]
+  },
+  "outerCapturePhysicalClosure": {
+    "errors": [],
+    "files": [
+      {
+        "path": "/private/tmp/migration-sdk057-public-h-postrelease-008/operator/reader-docker.stdout.log",
+        "sha256": "7acd41eca5f7d0aa2d60f9d33559d860d43736423e3aa85c96aff84e9375b2c6",
+        "sizeBytes": 34
+      },
+      {
+        "path": "/private/tmp/migration-sdk057-public-h-postrelease-008/operator/reader-docker.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      }
+    ],
+    "verified": true
+  },
+  "outerDurationSeconds": 83.568181542,
+  "profile": "umf.sdk-057-public-h-docker-operator/3",
+  "readerMetadataBytesMatchPhysicalFamily": true,
+  "readerReceiptPath": "/private/tmp/migration-sdk057-public-h-postrelease-008/evidence/receipt.json",
+  "readerReceiptSha256": "f51ec0850880fac07be080cd931fe386cf2eca71505a13a120a4283874e50881",
+  "readerStatus": "LOCAL_DIAGNOSTIC_PASS",
+  "selectedEvidenceBytes": 46929,
+  "selectedEvidenceFiles": [
+    {
+      "path": "receipt.json",
+      "sha256": "f51ec0850880fac07be080cd931fe386cf2eca71505a13a120a4283874e50881",
+      "sizeBytes": 8705
+    },
+    {
+      "path": "input-packet.json",
+      "sha256": "16d3961fd0ba1d43682264b50ff8f985376030832fa8fa44ab6dce25fd205e4b",
+      "sizeBytes": 8935
+    },
+    {
+      "path": "command-records.jsonl",
+      "sha256": "048de07993c6d174c9d039312f1cbb07f2022314fbe26192b8bde2f237e13847",
+      "sizeBytes": 5479
+    },
+    {
+      "path": "logs/acquire-and-verify-public-and-qualified-archives.log",
+      "sha256": "0a5c5eb20e9f1cbdc8fc566e38c08a13a632128d90fd8a5390a952c89a1f6a8a",
+      "sizeBytes": 195
+    },
+    {
+      "path": "logs/bun-install-locked-source-dependencies.log",
+      "sha256": "5549cd464ac37f8cf532370083749c29985499f02af6a81df40ddb4b0f06a097",
+      "sizeBytes": 1056
+    },
+    {
+      "path": "logs/python-public-install-and-migration-smoke.log",
+      "sha256": "b412ed6d42050f159cbec2bd6c26d07311ae0b91972268a533c36971b64e389c",
+      "sizeBytes": 711
+    },
+    {
+      "path": "logs/sdk-public-install-consumer-smoke.log",
+      "sha256": "0b3d585ca224eceaeb80d9a7694888b18a8465d59c554cf17e6d58f9841746e7",
+      "sizeBytes": 552
+    },
+    {
+      "path": "logs/toolchain-identity.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/verify-final-probe-fields.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/verify-source-tag-and-tree.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "reports/accepted-probe-fields.json",
+      "sha256": "a83d178afa05334ff8491dbbf808d880e0fc5c529053d4542c5822055e037653",
+      "sizeBytes": 4640
+    },
+    {
+      "path": "reports/packaging-bootstrap.json",
+      "sha256": "bb04b9f36a3bf0b83ac60c149ce275d44dd1afa2b3563c8fb9089b67b7b13d6d",
+      "sizeBytes": 1382
+    },
+    {
+      "path": "reports/public-byte-correspondence.json",
+      "sha256": "0c3625d39af746668a3737ee985cc993554a90f82c7135e0a77084cd9662e726",
+      "sizeBytes": 9158
+    },
+    {
+      "path": "reports/python-installed.json",
+      "sha256": "c228ab367824e51adf7e9501f6131206f79e5cf179205c3d9513b09cf81ba69d",
+      "sizeBytes": 3518
+    },
+    {
+      "path": "reports/sdk-install.json",
+      "sha256": "6000cb8eafd5e17a8416e5adcb9e19616419ab6df0321474656813011b1aa902",
+      "sizeBytes": 353
+    },
+    {
+      "path": "reports/source-identity.json",
+      "sha256": "10719075e7069d2e0a9cfb6c1a68350314a7ba6c6b50397fde81ad3c70d92c30",
+      "sizeBytes": 1280
+    },
+    {
+      "path": "reports/toolchain.json",
+      "sha256": "3529c7ea17e6819ff08a15d864f1ca5b15e77c43bf83d95b30f52dbb67f89aa1",
+      "sizeBytes": 965
+    }
+  ],
+  "status": "LOCAL_DIAGNOSTIC_PASS"
+}
