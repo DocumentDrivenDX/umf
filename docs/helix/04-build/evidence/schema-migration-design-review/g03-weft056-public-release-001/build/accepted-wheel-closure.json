@@ -1,0 +1,122 @@
+{
+  "assemblyQualifiedByThisClosure": false,
+  "derivation": "Exact three immutable wheel bytes and original build/audit/independent artifact reviews from accepted current producer custody; no receipt rewritten and no runtime replay.",
+  "distribution": "umf-weft",
+  "producerCommit": "973d864c8d26b2bc173a411eac8368da5efc1ab3",
+  "producerTree": "8b20d1f01bea72ea08ed01fcaac97266ed3cb4ff",
+  "profile": "weft.g03-accepted-built-artifact-closure/1",
+  "publicationClaimed": false,
+  "status": "ROOT_ADMITTED_SCOPED_BUILT_ARTIFACTS",
+  "version": "0.4.56",
+  "wheelCount": 3,
+  "wheels": [
+    {
+      "artifactReview": {
+        "path": "/private/tmp/g03-final-baseline-x64-build002-audit003-sol-actual-review001.md",
+        "sha256": "c0b11e668096c3e95bbe581ddc2d1cb6749766eb636a30bed9ea71223921362e",
+        "sizeBytes": 2647
+      },
+      "auditReceipt": {
+        "path": "/private/tmp/g03-final-baseline-amd64-audit-003/result.json",
+        "sha256": "2868c5c7bc298ccfeb96a9a8099ed22c1738f9bedf0a263acec7c6156352de5f",
+        "sizeBytes": 5519
+      },
+      "buildReceipt": {
+        "path": "/private/tmp/g03-final-baseline-amd64-002/result.json",
+        "sha256": "33bfe7e733b42fac5667bf8529afccb7c48dda255105ef9eea5152218a0def2b",
+        "sizeBytes": 8723
+      },
+      "originalBuildStatus": "FAIL_OR_UNKNOWN",
+      "role": "linux-x86_64",
+      "scope": {
+        "artifact": "ACCEPTED_BUILD_STATIC_ARTIFACT",
+        "hosted": false,
+        "macosRuntime": "NOT_APPLICABLE",
+        "runtimeClaimedByThisClosure": false
+      },
+      "staticReview": {
+        "path": "/private/tmp/g03-final-baseline-amd64-audit-003/reports/static-audit.json",
+        "sha256": "544d8617776cea6bb98179a82564e78f85f0793d279ae1d2910cd43af296bdf2",
+        "sizeBytes": 2359
+      },
+      "wheel": {
+        "filename": "umf_weft-0.4.56-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "path": "/private/tmp/g03-weft-twine-product-wheels-001/umf_weft-0.4.56-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "sha256": "32f4c38d9a614dd4c3a367f8b24d5cd4ba41ec80c2a4a2e3423e2082a294dbdd",
+        "sizeBytes": 14358901
+      }
+    },
+    {
+      "artifactReview": {
+        "path": "/private/tmp/g03-final-baseline-arm64-003-sol-actual-review001.md",
+        "sha256": "82cde49249876cae1f078c6842b839867655ce2c4c4d449cb3a7b89a0f172ad7",
+        "sizeBytes": 1974
+      },
+      "auditReceipt": {
+        "path": "/private/tmp/g03-final-baseline-arm64-003/candidate/static-audit.json",
+        "sha256": "bb35a92edfc16ee8a2debb744bd14a9936e921de07a8c11e0f0323352544927a",
+        "sizeBytes": 2276
+      },
+      "buildReceipt": {
+        "path": "/private/tmp/g03-final-baseline-arm64-003/result.json",
+        "sha256": "dfb752976db4898ed56781ac345a6f757ce5a51064d0338c9049ff97dfea2861",
+        "sizeBytes": 9187
+      },
+      "originalBuildStatus": "LOCAL_FINAL_BASELINE_BUILD_STATIC_PASS",
+      "role": "linux-aarch64",
+      "scope": {
+        "artifact": "ACCEPTED_BUILD_STATIC_ARTIFACT",
+        "hosted": false,
+        "macosRuntime": "NOT_APPLICABLE",
+        "runtimeClaimedByThisClosure": false
+      },
+      "staticReview": {
+        "path": "/private/tmp/g03-final-baseline-arm64-003/candidate/static-audit.json",
+        "sha256": "bb35a92edfc16ee8a2debb744bd14a9936e921de07a8c11e0f0323352544927a",
+        "sizeBytes": 2276
+      },
+      "wheel": {
+        "filename": "umf_weft-0.4.56-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+        "path": "/private/tmp/g03-weft-twine-product-wheels-001/umf_weft-0.4.56-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+        "sha256": "2de2156e283c34e45154f5d9fbc83a3eb1dd43fad497d787509d66cc96cfbe5a",
+        "sizeBytes": 13144681
+      }
+    },
+    {
+      "artifactReview": {
+        "path": "/private/tmp/g03-macos-build002-audit004-sol-actual-review001.md",
+        "sha256": "7b38622a5d48e8c3f626ae0ca9fba8e2cc10f6666a51650e30b25d689cdbe7ee",
+        "sizeBytes": 6410
+      },
+      "auditReceipt": {
+        "path": "/private/tmp/g03-weft-macos-arm64-audit-004/result.json",
+        "sha256": "526cc38f854370f6bc34e044e9dc262b137bc1b4e95252c897578b5369c08fbf",
+        "sizeBytes": 8051
+      },
+      "buildReceipt": {
+        "path": "/private/tmp/g03-weft-macos-arm64-build-002/result.json",
+        "sha256": "2aaa9dbe418cae86db3cac1f3c688a60d8b75746e31ec02badb1456941b663f0",
+        "sizeBytes": 376450
+      },
+      "originalBuildStatus": "FAIL_OR_UNKNOWN",
+      "role": "macos-arm64",
+      "scope": {
+        "artifact": "ACCEPTED_BUILD_STATIC_ARTIFACT",
+        "hosted": false,
+        "macosRuntime": "NOT_RUN",
+        "runtimeClaimedByThisClosure": false
+      },
+      "staticReview": {
+        "path": "/private/tmp/g03-weft-macos-arm64-audit-004/static-audit.json",
+        "sha256": "2a79490c17a4856823a9eb9ea8db5cb8cf342f4c961705e8e3fe5f22f9b96424",
+        "sizeBytes": 9604
+      },
+      "wheel": {
+        "filename": "umf_weft-0.4.56-cp39-abi3-macosx_11_0_arm64.whl",
+        "path": "/private/tmp/g03-weft-twine-product-wheels-001/umf_weft-0.4.56-cp39-abi3-macosx_11_0_arm64.whl",
+        "sha256": "68f9297b4b55df483b86d3041040991c4dadfb9b4d63afcff1420c43f93ae41d",
+        "sizeBytes": 11190603
+      }
+    }
+  ]
+}
