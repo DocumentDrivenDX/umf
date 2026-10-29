@@ -133,6 +133,27 @@ fn valid_avro_name(name: &Utf16, qualified: bool) -> bool {
                     })
             })
 }
+// avsc 5's enum and union indexes are ordinary objects. Preserve their
+// inherited-name rejection under the stock Object.prototype profile.
+fn inherited_index_name(name: &Utf16) -> bool {
+    [
+        "constructor",
+        "__defineGetter__",
+        "__defineSetter__",
+        "hasOwnProperty",
+        "__lookupGetter__",
+        "__lookupSetter__",
+        "isPrototypeOf",
+        "propertyIsEnumerable",
+        "toString",
+        "valueOf",
+        "__proto__",
+        "toLocaleString",
+    ]
+    .iter()
+    .any(|key| name.units().iter().copied().eq(key.encode_utf16()))
+}
+
 fn parse_resource(src: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
     serialization::read_json_value(&src.encode_utf16().collect::<Vec<_>>(), Format::Json, ctx)
 }
@@ -582,7 +603,7 @@ impl Types {
                     let Some(name) = branch else {
                         return Err(err("AVRO_TYPE", "unions cannot be directly nested"));
                     };
-                    if !seen.insert(name.clone()) {
+                    if inherited_index_name(&name) || !seen.insert(name.clone()) {
                         return Err(quoted_type_error(
                             "duplicate union branch name: ",
                             &name,
@@ -685,7 +706,7 @@ impl Types {
                         )?;
                         let prefix = if !valid_avro_name(symbol, false) {
                             "invalid"
-                        } else if !seen.insert(symbol.clone()) {
+                        } else if inherited_index_name(symbol) || !seen.insert(symbol.clone()) {
                             "duplicate"
                         } else {
                             continue;
@@ -1421,6 +1442,31 @@ mod tests {
         )
         .unwrap();
         assert_eq!(get(&residuals[0], "reason"), Some(&Value::String(reason)));
+    }
+
+    #[test]
+    fn native_indexes_preserve_inherited_name_rejection() {
+        for symbol in ["constructor", "__proto__", "toString"] {
+            let schema = format!(r#"{{"type":"enum","name":"n.E","symbols":["{symbol}"]}}"#);
+            let failure = walk(&schema).unwrap_err();
+            assert_eq!(failure.code, "AVRO_TYPE");
+            assert_eq!(
+                failure.message.to_utf8().unwrap(),
+                format!("duplicate \"n.E\" symbol: \"{symbol}\"")
+            );
+        }
+        for name in ["constructor", "__proto__", "toString"] {
+            let schema = format!(r#"[{{"type":"record","name":"{name}","fields":[]}}]"#);
+            let failure = walk(&schema).unwrap_err();
+            assert_eq!(
+                failure.message.to_utf8().unwrap(),
+                format!("duplicate union branch name: \"{name}\"")
+            );
+            let qualified = format!(r#"[{{"type":"record","name":"n.{name}","fields":[]}}]"#);
+            assert!(walk(&qualified).is_ok(), "{qualified}");
+            let standalone = format!(r#"{{"type":"record","name":"{name}","fields":[]}}"#);
+            assert!(walk(&standalone).is_ok(), "{standalone}");
+        }
     }
 
     #[test]

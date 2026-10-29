@@ -1,0 +1,153 @@
+   Compiling umf-core v0.1.0 (/private/tmp/umf-avro-cardinality/crates/umf-core)
+warning: unnecessary parentheses around function argument
+    --> crates/umf-core/src/protobuf_descriptor.rs:1525:34
+     |
+1525 |         write_varint(&mut input, (1u64 << 35));
+     |                                  ^          ^
+     |
+     = note: `#[warn(unused_parens)]` on by default
+help: remove these parentheses
+     |
+1525 -         write_varint(&mut input, (1u64 << 35));
+1525 +         write_varint(&mut input, 1u64 << 35);
+     |
+
+warning: variant `Other` is never constructed
+   --> crates/umf-core/src/access_graph_host_observation.rs:728:9
+    |
+724 |     enum MockValue {
+    |          --------- variant in this enum
+...
+728 |         Other,
+    |         ^^^^^
+    |
+    = note: `MockValue` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` on by default
+
+warning: function `remove_member` is never used
+   --> crates/umf-core/src/avro_document.rs:800:4
+    |
+800 | fn remove_member(
+    |    ^^^^^^^^^^^^^
+
+warning: function `is_timestamp` is never used
+   --> crates/umf-core/src/avro_fields.rs:679:4
+    |
+679 | fn is_timestamp(value: &str) -> bool {
+    |    ^^^^^^^^^^^^
+
+warning: variant `NativeSpreadFailureUnresolved` is never constructed
+   --> crates/umf-core/src/host_json.rs:707:5
+    |
+702 | pub(crate) enum HostSemanticIterableOutcome {
+    |                 --------------------------- variant in this enum
+...
+707 |     NativeSpreadFailureUnresolved,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `HostSemanticIterableOutcome` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: function `format_decimal` is never used
+   --> crates/umf-core/src/literal.rs:920:4
+    |
+920 | fn format_decimal(value: &BigInt, ctx: &mut Context<'_>) -> Result<String, LiteralFault> {
+    |    ^^^^^^^^^^^^^^
+
+warning: variants `Fixed64`, `Fixed32`, `Group`, `UInt32`, `SInt32`, and `SInt64` are never constructed
+  --> crates/umf-core/src/protobuf_descriptor.rs:19:5
+   |
+13 | enum WireKind {
+   |      -------- variants in this enum
+...
+19 |     Fixed64,
+   |     ^^^^^^^
+20 |     Fixed32,
+   |     ^^^^^^^
+...
+23 |     Group,
+   |     ^^^^^
+...
+26 |     UInt32,
+   |     ^^^^^^
+...
+30 |     SInt32,
+   |     ^^^^^^
+31 |     SInt64,
+   |     ^^^^^^
+   |
+   = note: `WireKind` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: field `default_value` is never read
+  --> crates/umf-core/src/protobuf_descriptor.rs:44:5
+   |
+39 | struct FieldSpec {
+   |        --------- field in this struct
+...
+44 |     default_value: Option<&'static str>,
+   |     ^^^^^^^^^^^^^
+   |
+   = note: `FieldSpec` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: constant `DESCRIPTOR_PROTO_SHA256` is never used
+ --> crates/umf-core/src/protobuf_descriptor_schema.rs:7:18
+  |
+7 | pub(super) const DESCRIPTOR_PROTO_SHA256: &str = "c96db5406336ebcc82523c1dfb122721986a1f43c4aaed45a4a4ad6996efacc2";
+  |                  ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `BUF_PACKAGE_CLOSURE_SHA256` is never used
+ --> crates/umf-core/src/protobuf_descriptor_schema.rs:8:18
+  |
+8 | pub(super) const BUF_PACKAGE_CLOSURE_SHA256: &str = "f8af62dda87923b9d6cf785bcd18843fd38aaa87ddac1922990a5b37a7f5b943";
+  |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: variant `Unsupported` is never constructed
+  --> crates/umf-core/src/registry.rs:70:5
+   |
+65 | pub(crate) enum HostRegistrationStage {
+   |                 --------------------- variant in this enum
+...
+70 |     Unsupported,
+   |     ^^^^^^^^^^^
+   |
+   = note: `HostRegistrationStage` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: function `opaque_lookup_error` is never used
+   --> crates/umf-core/src/registry.rs:159:4
+    |
+159 | fn opaque_lookup_error() -> EngineError {
+    |    ^^^^^^^^^^^^^^^^^^^
+
+warning: function `require_borrowed` is never used
+   --> crates/umf-core/src/registry.rs:167:15
+    |
+167 | pub(crate) fn require_borrowed<'a>(
+    |               ^^^^^^^^^^^^^^^^
+
+warning: function `select_core_elements_admitted_with_host_refusal` is never used
+   --> crates/umf-core/src/selection.rs:636:15
+    |
+636 | pub(crate) fn select_core_elements_admitted_with_host_refusal(
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: the `args:` in this pattern is redundant
+   --> crates/umf-core/src/selection_host_json.rs:846:13
+    |
+846 |             args: ref args,
+    |             ^^^^^^^^^^^^^^ help: use shorthand field pattern: `ref args`
+    |
+    = note: `#[warn(non_shorthand_field_patterns)]` on by default
+
+warning: `umf-core` (lib test) generated 15 warnings (run `cargo fix --lib -p umf-core --tests` to apply 2 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 23.04s
+     Running unittests src/lib.rs (/private/tmp/umf-avro-cardinality-target/debug/deps/umf_core-80d2473cda0b27bc)
+
+running 6 tests
+test avro_cardinality::tests::avro_registry_and_union_branch_names_follow_the_structural_profile ... ok
+test avro_cardinality::tests::fixed_size_uses_binary64_safe_integer_semantics ... ok
+test avro_cardinality::tests::request_errors_keep_every_extra_in_schema_keyword_order ... ok
+test avro_cardinality::tests::structural_diagnostics_keep_isolated_utf16_through_the_residual ... ok
+test avro_cardinality::tests::structural_projection_precedes_native_union_checks_without_admitting_forward_refs ... ok
+test avro_cardinality::tests::type_walk_preserves_host_control_provenance ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 569 filtered out; finished in 3.63s
+

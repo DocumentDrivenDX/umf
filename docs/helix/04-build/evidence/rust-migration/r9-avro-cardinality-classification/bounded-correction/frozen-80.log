@@ -1,0 +1,325 @@
+{
+  "selected": 80,
+  "results": [
+    {
+      "id": "empty-array/present-non-null-schema/strict",
+      "match": true
+    },
+    {
+      "id": "empty-array/present-non-null-schema/report",
+      "match": true
+    },
+    {
+      "id": "empty-array/unresolved/strict",
+      "match": true
+    },
+    {
+      "id": "empty-array/unresolved/report",
+      "match": true
+    },
+    {
+      "id": "ordered-duplicates/present-non-null-schema/strict",
+      "match": true
+    },
+    {
+      "id": "ordered-duplicates/present-non-null-schema/report",
+      "match": true
+    },
+    {
+      "id": "ordered-duplicates/unresolved/strict",
+      "match": true
+    },
+    {
+      "id": "ordered-duplicates/unresolved/report",
+      "match": true
+    },
+    {
+      "id": "nullable-array-items/present-non-null-schema/strict",
+      "match": true
+    },
+    {
+      "id": "nullable-array-items/present-non-null-schema/report",
+      "match": true
+    },
+    {
+      "id": "nullable-array-items/unresolved/strict",
+      "match": true
+    },
+    {
+      "id": "nullable-array-items/unresolved/report",
+      "match": true
+    },
+    {
+      "id": "nested-arrays/present-non-null-schema/strict",
+      "match": true
+    },
+    {
+      "id": "nested-arrays/present-non-null-schema/report",
+      "match": true
+    },
+    {
+      "id": "nested-arrays/unresolved/strict",
+      "match": true
+    },
+    {
+      "id": "nested-arrays/unresolved/report",
+      "match": true
+    },
+    {
+      "id": "array-of-maps/present-non-null-schema/strict",
+      "match": true
+    },
+    {
+      "id": "array-of-maps/present-non-null-schema/report",
+      "match": true
+    },
+    {
+      "id": "array-of-maps/unresolved/strict",
+      "match": true
+    },
+    {
+      "id": "array-of-maps/unresolved/report",
+      "match": true
+    },
+    {
+      "id": "map-of-arrays/present-non-null-schema/strict",
+      "match": true
+    },
+    {
+      "id": "map-of-arrays/present-non-null-schema/report",
+      "match": true
+    },
+    {
+      "id": "map-of-arrays/unresolved/strict",
+      "match": true
+    },
+    {
+      "id": "map-of-arrays/unresolved/report",
+      "match": true
+    },
+    {
+      "id": "empty-map/present-non-null-schema/strict",
+      "match": true
+    },
+    {
+      "id": "empty-map/present-non-null-schema/report",
+      "match": true
+    },
+    {
+      "id": "empty-map/unresolved/strict",
+      "match": true
+    },
+    {
+      "id": "empty-map/unresolved/report",
+      "match": true
+    },
+    {
+      "id": "exact-string-keys/present-non-null-schema/strict",
+      "match": true
+    },
+    {
+      "id": "exact-string-keys/present-non-null-schema/report",
+      "match": true
+    },
+    {
+      "id": "exact-string-keys/unresolved/strict",
+      "match": true
+    },
+    {
+      "id": "exact-string-keys/unresolved/report",
+      "match": true
+    },
+    {
+      "id": "special-property-keys/present-non-null-schema/strict",
+      "match": true
+    },
+    {
+      "id": "special-property-keys/present-non-null-schema/report",
+      "match": true
+    },
+    {
+      "id": "special-property-keys/unresolved/strict",
+      "match": true
+    },
+    {
+      "id": "special-property-keys/unresolved/report",
+      "match": true
+    },
+    {
+      "id": "nullable-map-values/present-non-null-schema/strict",
+      "match": true
+    },
+    {
+      "id": "nullable-map-values/present-non-null-schema/report",
+      "match": true
+    },
+    {
+      "id": "nullable-map-values/unresolved/strict",
+      "match": true
+    },
+    {
+      "id": "nullable-map-values/unresolved/report",
+      "match": true
+    },
+    {
+      "id": "nested-maps/present-non-null-schema/strict",
+      "match": true
+    },
+    {
+      "id": "nested-maps/present-non-null-schema/report",
+      "match": true
+    },
+    {
+      "id": "nested-maps/unresolved/strict",
+      "match": true
+    },
+    {
+      "id": "nested-maps/unresolved/report",
+      "match": true
+    },
+    {
+      "id": "nullable-array-present/present-non-null-schema/strict",
+      "match": true
+    },
+    {
+      "id": "nullable-array-present/present-non-null-schema/report",
+      "match": true
+    },
+    {
+      "id": "nullable-array-present/unresolved/strict",
+      "match": true
+    },
+    {
+      "id": "nullable-array-present/unresolved/report",
+      "match": true
+    },
+    {
+      "id": "nullable-array-null/present-non-null-schema/strict",
+      "match": true
+    },
+    {
+      "id": "nullable-array-null/present-non-null-schema/report",
+      "match": true
+    },
+    {
+      "id": "nullable-array-null/unresolved/strict",
+      "match": true
+    },
+    {
+      "id": "nullable-array-null/unresolved/report",
+      "match": true
+    },
+    {
+      "id": "array-null-last/present-non-null-schema/strict",
+      "match": true
+    },
+    {
+      "id": "array-null-last/present-non-null-schema/report",
+      "match": true
+    },
+    {
+      "id": "array-null-last/unresolved/strict",
+      "match": true
+    },
+    {
+      "id": "array-null-last/unresolved/report",
+      "match": true
+    },
+    {
+      "id": "array-map-union-array/present-non-null-schema/strict",
+      "match": true
+    },
+    {
+      "id": "array-map-union-array/present-non-null-schema/report",
+      "match": true
+    },
+    {
+      "id": "array-map-union-array/unresolved/strict",
+      "match": true
+    },
+    {
+      "id": "array-map-union-array/unresolved/report",
+      "match": true
+    },
+    {
+      "id": "array-map-union-map/present-non-null-schema/strict",
+      "match": true
+    },
+    {
+      "id": "array-map-union-map/present-non-null-schema/report",
+      "match": true
+    },
+    {
+      "id": "array-map-union-map/unresolved/strict",
+      "match": true
+    },
+    {
+      "id": "array-map-union-map/unresolved/report",
+      "match": true
+    },
+    {
+      "id": "recursive-record-items/present-non-null-schema/strict",
+      "match": true
+    },
+    {
+      "id": "recursive-record-items/present-non-null-schema/report",
+      "match": true
+    },
+    {
+      "id": "recursive-record-items/unresolved/strict",
+      "match": true
+    },
+    {
+      "id": "recursive-record-items/unresolved/report",
+      "match": true
+    },
+    {
+      "id": "enum-items/present-non-null-schema/strict",
+      "match": true
+    },
+    {
+      "id": "enum-items/present-non-null-schema/report",
+      "match": true
+    },
+    {
+      "id": "enum-items/unresolved/strict",
+      "match": true
+    },
+    {
+      "id": "enum-items/unresolved/report",
+      "match": true
+    },
+    {
+      "id": "unknown-logical-array/present-non-null-schema/strict",
+      "match": true
+    },
+    {
+      "id": "unknown-logical-array/present-non-null-schema/report",
+      "match": true
+    },
+    {
+      "id": "unknown-logical-array/unresolved/strict",
+      "match": true
+    },
+    {
+      "id": "unknown-logical-array/unresolved/report",
+      "match": true
+    },
+    {
+      "id": "float-items/present-non-null-schema/strict",
+      "match": true
+    },
+    {
+      "id": "float-items/present-non-null-schema/report",
+      "match": true
+    },
+    {
+      "id": "float-items/unresolved/strict",
+      "match": true
+    },
+    {
+      "id": "float-items/unresolved/report",
+      "match": true
+    }
+  ]
+}
