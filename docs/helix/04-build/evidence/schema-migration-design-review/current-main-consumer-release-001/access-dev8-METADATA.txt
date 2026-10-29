@@ -1,0 +1,15 @@
+Metadata-Version: 2.4
+Name: umf_access
+Version: 0.1.0.dev8
+Summary: Local prerelease typed access runtime; target qualification pending
+License-Expression: MIT OR Apache-2.0
+License-File: LICENSE-APACHE
+License-File: LICENSE-MIT
+License-File: LICENSE.md
+Requires-Python: <3.15,>=3.11
+Requires-Dist: pydantic<3,>=2.13
+Requires-Dist: typing-extensions<5,>=4.16
+Provides-Extra: owner-authority
+Requires-Dist: cryptography==50.0.2; extra == 'owner-authority'
+Provides-Extra: sql-containment
+Requires-Dist: pglast==7.20; extra == 'sql-containment'
