@@ -19,6 +19,10 @@ def assert_ordered_value(actual, expected):
         for left, right in zip(actual, expected):
             assert_ordered_value(left, right)
     else:
+        if type(expected) in (int, float):
+            assert type(actual) in (int, float)
+        else:
+            assert type(actual) is type(expected)
         assert actual == expected
 
 
