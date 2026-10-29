@@ -1,0 +1,179 @@
+{
+  "runner": "/home/runner/work/umf/umf/tests/lifecycle/g03-defaults-native.py",
+  "runnerSha256": "22e86abdeab028aeedc3f9212d14eba534ccf67540b840d606aebeeb5b081467",
+  "fixture": "/tmp/g02-g03-defaults-fixture.json",
+  "fixtureSha256": "de8736519bcb9aa1bb3c59c62734d6f31035378e192e317295fdd766e513108f",
+  "scenario": "domain-uuid",
+  "sourceStatus": "SOURCE_ONLY_ALL_NATIVE_CASES_UNRUN",
+  "packages": {
+    "umf-access": "0.1.0.dev8",
+    "umf-codegen": "0.1.0a5",
+    "weft-sql": "0.4.53",
+    "umf-core": "0.10.0"
+  },
+  "caseStatus": {
+    "G03-N01": "TRANSITIONS_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N02": "EMPTY_TABLE_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N03": "REQUIRED_SET_REPLACE_DROP_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N04": "RETAINED_OMISSION_SOURCE_REFUSAL_AND_READONLY_NATIVE_ABSENCE_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N05": "NULL_AND_DECIMAL_SPELLING_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N06": "KNOWN_ABORT_RETRY_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N07": "COMMIT_AND_PREPUBLICATION_RECOVERY_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N08": "UNKNOWN_UNCOMMITTED_FENCE_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N09": "WRITER_BARRIER_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N10": "DATE_TEXT_DECIMAL_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N11": "FAIL",
+    "G03-N12": "UNQUALIFIED_COMPATIBLE_WEFT_02_COHORT_REQUIRED",
+    "G03-N13": "FULL_PRE_EFFECT_TAMPERING_MATRIX_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N14": "SERIAL_CLEANUP_CAMPAIGN_SOURCE_IMPLEMENTED_NATIVE_UNRUN_FULL_CASE_OPEN"
+  },
+  "checks": [],
+  "domainResults": [
+    {
+      "scenario": "domain-uuid",
+      "status": "FAIL",
+      "database": "g03_36744a80bd",
+      "schema": "g03s_36744a80bd",
+      "roleNames": [
+        "g03o_36744a80bd",
+        "g03p_36744a80bd",
+        "g03b_36744a80bd",
+        "g03a_36744a80bd",
+        "g03z_36744a80bd"
+      ],
+      "configurationSha256": "4a92944e9e68ade3c69db31c1abefa966ad769075ac7a8050d1715cb6410ec0b",
+      "steps": [],
+      "serverVersion": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+      "targetIdentity": {
+        "serverVersion": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+        "sessionUser": "postgres",
+        "currentUser": "postgres",
+        "observerSuperuser": true,
+        "maintenanceDatabase": "postgres",
+        "serverAddress": "172.18.0.2/32",
+        "serverPort": 5432,
+        "postmasterStart": "2026-10-26 02:09:23.807477+00",
+        "systemIdentifier": "7700792880681447468",
+        "observerOid": "10"
+      },
+      "createdRoleIdentities": [
+        {
+          "oid": "16388",
+          "name": "g03o_36744a80bd",
+          "superuser": false,
+          "bypassRls": false,
+          "createDatabase": false,
+          "createRole": false,
+          "replication": false,
+          "login": false
+        },
+        {
+          "oid": "16389",
+          "name": "g03p_36744a80bd",
+          "superuser": false,
+          "bypassRls": false,
+          "createDatabase": false,
+          "createRole": false,
+          "replication": false,
+          "login": false
+        },
+        {
+          "oid": "16390",
+          "name": "g03b_36744a80bd",
+          "superuser": false,
+          "bypassRls": false,
+          "createDatabase": false,
+          "createRole": false,
+          "replication": false,
+          "login": false
+        },
+        {
+          "oid": "16391",
+          "name": "g03a_36744a80bd",
+          "superuser": false,
+          "bypassRls": false,
+          "createDatabase": false,
+          "createRole": false,
+          "replication": false,
+          "login": false
+        },
+        {
+          "oid": "16392",
+          "name": "g03z_36744a80bd",
+          "superuser": false,
+          "bypassRls": false,
+          "createDatabase": false,
+          "createRole": false,
+          "replication": false,
+          "login": false
+        }
+      ],
+      "createdDatabaseIdentity": {
+        "oid": "16395",
+        "name": "g03_36744a80bd",
+        "ownerOid": "10"
+      },
+      "openedOwnedConnection": {
+        "sessionUser": "postgres",
+        "currentUser": "postgres",
+        "backendPid": 228,
+        "database": "g03_36744a80bd",
+        "serverVersion": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+        "systemIdentifier": "7700792880681447468",
+        "postmasterStart": "2026-10-26 02:09:23.807477+00"
+      },
+      "createdSchemaIdentity": {
+        "oid": "16398",
+        "name": "g03s_36744a80bd",
+        "ownerOid": "16388"
+      },
+      "error": {
+        "type": "CatalogError",
+        "checkpoint": "apply-initial-table-migration",
+        "sourceFrames": [
+          {
+            "file": "g03-defaults-native.py",
+            "line": 901,
+            "function": "run_chain"
+          },
+          {
+            "file": "ledger.py",
+            "line": 131,
+            "function": "apply_table_migration"
+          },
+          {
+            "file": "ledger.py",
+            "line": 216,
+            "function": "_apply_table_migration"
+          },
+          {
+            "file": "privileges.py",
+            "line": 104,
+            "function": "verify_native_privileges"
+          }
+        ]
+      },
+      "cleanupVerification": {
+        "ownedDatabaseAbsent": true,
+        "ownedDatabaseRemaining": null,
+        "ownedRolesAbsent": true,
+        "remainingRoleIdentities": [],
+        "targetIdentityUnchanged": true,
+        "schemaAndTableAbsentByOwnedDatabaseRemoval": true
+      },
+      "cleanup": {
+        "createdDatabase": true,
+        "createdRoles": [
+          "g03o_36744a80bd",
+          "g03p_36744a80bd",
+          "g03b_36744a80bd",
+          "g03a_36744a80bd",
+          "g03z_36744a80bd"
+        ],
+        "errors": [],
+        "status": "PASS"
+      }
+    }
+  ],
+  "status": "FAIL"
+}

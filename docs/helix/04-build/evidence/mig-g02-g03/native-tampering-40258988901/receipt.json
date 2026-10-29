@@ -1,0 +1,73 @@
+{
+  "capturedArtifactBytes": 456474,
+  "capturedLogsBytes": 23229,
+  "diagnosticScenarioCount": 1,
+  "finalCombinedGate": "OPEN; requires all five G02 cases and all thirteen selected G03 scenarios at one final stable source and cohort",
+  "fullG03Campaign": "OPEN",
+  "g02CurrentSourceQualification": "NOT_REQUALIFIED_AT_THIS_SOURCE_OR_COHORT",
+  "g03CaseCurrentSourceQualification": {
+    "G03-N01": "NOT_REQUALIFIED_AT_THIS_SOURCE_OR_COHORT",
+    "G03-N02": "NOT_REQUALIFIED_AT_THIS_SOURCE_OR_COHORT",
+    "G03-N03": "NOT_REQUALIFIED_AT_THIS_SOURCE_OR_COHORT",
+    "G03-N04": "NOT_REQUALIFIED_AT_THIS_SOURCE_OR_COHORT",
+    "G03-N05": "NOT_REQUALIFIED_AT_THIS_SOURCE_OR_COHORT",
+    "G03-N06": "NOT_REQUALIFIED_AT_THIS_SOURCE_OR_COHORT",
+    "G03-N07": "NOT_REQUALIFIED_AT_THIS_SOURCE_OR_COHORT",
+    "G03-N08": "NOT_REQUALIFIED_AT_THIS_SOURCE_OR_COHORT",
+    "G03-N09": "NOT_REQUALIFIED_AT_THIS_SOURCE_OR_COHORT",
+    "G03-N10": "NOT_REQUALIFIED_AT_THIS_SOURCE_OR_COHORT",
+    "G03-N11": "NOT_REQUALIFIED_AT_THIS_SOURCE_OR_COHORT",
+    "G03-N13": "TAMPERING_DIAGNOSTIC_SUBCASE_ONLY; broader G03-N13 remains OPEN"
+  },
+  "g03N12": "UNQUALIFIED pending compatible Weft .2 cohort",
+  "g03N14AndFullCampaign": "OPEN; campaign selector was not invoked",
+  "g03TamperingDiagnostic": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
+  "limits": {
+    "artifacts": 16777216,
+    "logs": 1048576
+  },
+  "manifestSha256": "fbbbc6bb9f17ee86c3b6ba32426a30f7c1d967a577f6a994ff110e3892ae0f05",
+  "priorUuid008Evidence": {
+    "artifactSha256": "245a17a1499d6c1df17f6641577c5946c50e17f2243710b55bc81e6b9679a0bf",
+    "cleanupStatus": "PASS",
+    "evidenceRelationship": "separate historical evidence only; no source or cohort trust inheritance",
+    "nativeSubcaseStatus": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
+    "otherSelectedScopesWereHistoricalOnly": true,
+    "reportSha256": "48802d4b107fa0c5c1c1798cae72a40a8137d428657fc284635ace3695ac3313",
+    "runId": "40258467059",
+    "scenario": "domain-uuid",
+    "sourceCommit": "82cb660b28737ac185b589974a0c6590e8f35ae1",
+    "workflowReceiptStatus": "FAIL_OR_UNKNOWN; finalizer raised NameError on lowercase Python true"
+  },
+  "profile": "umf.g02-g03-selected-native-qualification/1",
+  "ref": "refs/heads/codex/migration-g02-g03-native-qualification",
+  "runAttempt": "1",
+  "runId": "40258988901",
+  "selectedScopeOnly": true,
+  "sourceCommit": "eac335e2e52a4b0b1ce644712134a5d77946d763",
+  "status": "PASS_G03_N13_TAMPERING_DIAGNOSTIC_SUBCASE_ONLY_FINAL_COMBINED_GATE_OPEN",
+  "toolchain": {
+    "bun": {
+      "binarySha256": "7ce7d6b654eddeec20afddf2396317fba6dc19ab52788a27e894e1806bf8f24b",
+      "path": "/home/runner/.bun/bin/bun",
+      "version": "1.4.3"
+    },
+    "git": {
+      "binarySha256": "d4d2ba562243015206d4248edfec871a74786499292d00ed072dbca2f5ae8073",
+      "path": "/usr/bin/git",
+      "version": "git version 2.55.0"
+    },
+    "python": {
+      "binarySha256": "d601e62487858384d3000725c3b2e16e86ff11a6ad0b0810b76281e45426ea62",
+      "path": "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3.11",
+      "version": "Python 3.11.17"
+    },
+    "timeout": {
+      "binarySha256": "12690a043dfd555a6c14ccc1564f5649c18f1762c0d6ff66729948130898ec52",
+      "path": "/usr/bin/timeout",
+      "version": "timeout (GNU coreutils) 9.4\nCopyright (C) 2023 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n\nWritten by P\u00e1draig Brady."
+    }
+  },
+  "workflow": "G03 tampering native diagnostic (intermediate)",
+  "workflowSha256": "17b1fadb6ec0a66b671cd3e14bada8d490f777d8cbc99b6978f8356370a1c4ac"
+}

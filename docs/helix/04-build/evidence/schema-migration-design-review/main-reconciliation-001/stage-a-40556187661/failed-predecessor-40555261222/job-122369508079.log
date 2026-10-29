@@ -1,0 +1,497 @@
+﻿2026-10-27T17:56:28.6905049Z Current runner version: '2.338.0'
+2026-10-27T17:56:28.6929469Z ##[group]Runner Image Provisioner
+2026-10-27T17:56:28.6930343Z Hosted Compute Agent
+2026-10-27T17:56:28.6931021Z Version: 20261021.618
+2026-10-27T17:56:28.6931701Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-10-27T17:56:28.6932439Z Build Date: 2026-10-21T00:45:21Z
+2026-10-27T17:56:28.6933223Z Worker ID: {47a253b0-7c17-4557-a03b-e0f6df3d48e0}
+2026-10-27T17:56:28.6933938Z Region: westus
+2026-10-27T17:56:28.6934510Z Cloud: Azure
+2026-10-27T17:56:28.6935119Z ##[endgroup]
+2026-10-27T17:56:28.6936640Z ##[group]Operating System
+2026-10-27T17:56:28.6937387Z Ubuntu
+2026-10-27T17:56:28.6937928Z 24.04.5
+2026-10-27T17:56:28.6938451Z LTS
+2026-10-27T17:56:28.6939267Z ##[endgroup]
+2026-10-27T17:56:28.6939853Z ##[group]Runner Image
+2026-10-27T17:56:28.6940593Z Image: ubuntu-24.04
+2026-10-27T17:56:28.6941190Z Version: 20261012.334.1
+2026-10-27T17:56:28.6942494Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-27T17:56:28.6944094Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-27T17:56:28.6945112Z ##[endgroup]
+2026-10-27T17:56:28.6946251Z ##[group]GITHUB_TOKEN Permissions
+2026-10-27T17:56:28.6948169Z Contents: read
+2026-10-27T17:56:28.6948817Z Metadata: read
+2026-10-27T17:56:28.6949696Z ##[endgroup]
+2026-10-27T17:56:28.6951856Z Secret source: Actions
+2026-10-27T17:56:28.6952812Z Cache mode: write
+2026-10-27T17:56:28.6953593Z Prepare workflow directory
+2026-10-27T17:56:28.7296135Z Prepare all required actions
+2026-10-27T17:56:28.7346486Z Getting action download info
+2026-10-27T17:56:29.1106253Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-27T17:56:29.3352924Z Download action repository 'oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6' (SHA:0c5077e51419868618aeaa5fe8019c62421857d6)
+2026-10-27T17:56:29.7214286Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-27T17:56:29.9198089Z Complete job name: generate-accounted-companion
+2026-10-27T17:56:29.9980397Z ##[group]Run set -euo pipefail
+2026-10-27T17:56:29.9981093Z [36;1mset -euo pipefail[0m
+2026-10-27T17:56:29.9981714Z [36;1mevidence="$RUNNER_TEMP/umf-r2-stage-a-evidence"[0m
+2026-10-27T17:56:29.9982374Z [36;1mmkdir -p "$evidence"[0m
+2026-10-27T17:56:29.9983270Z [36;1mpython3 - "$RUNNER_TEMP/umf-r2-stage-a-capture.py" "$RUNNER_TEMP/umf-r2-stage-a-deadline.txt" <<'PY'[0m
+2026-10-27T17:56:29.9984205Z [36;1mimport pathlib, sys, time[0m
+2026-10-27T17:56:29.9984791Z [36;1mcapture = pathlib.Path(sys.argv[1])[0m
+2026-10-27T17:56:29.9985488Z [36;1mdeadline = pathlib.Path(sys.argv[2])[0m
+2026-10-27T17:56:29.9986388Z [36;1mcapture.write_text(r'''import os, pathlib, selectors, subprocess, sys, time[0m
+2026-10-27T17:56:29.9987196Z [36;1mlog = pathlib.Path(sys.argv[1])[0m
+2026-10-27T17:56:29.9987851Z [36;1mdeadline_file = pathlib.Path(sys.argv[2])[0m
+2026-10-27T17:56:29.9988510Z [36;1mcommand_timeout = float(sys.argv[3])[0m
+2026-10-27T17:56:29.9989316Z [36;1margv = sys.argv[4:][0m
+2026-10-27T17:56:29.9989931Z [36;1mdeadline_ns = int(deadline_file.read_text().strip())[0m
+2026-10-27T17:56:29.9990602Z [36;1mnow = time.monotonic_ns()[0m
+2026-10-27T17:56:29.9991301Z [36;1maggregate_remaining = (deadline_ns - now) / 1_000_000_000 - 72[0m
+2026-10-27T17:56:29.9992163Z [36;1mprior = sum(p.stat().st_size for p in log.parent.glob("*.log"))[0m
+2026-10-27T17:56:29.9992913Z [36;1mremaining_log = max(0, 1_000_000 - prior)[0m
+2026-10-27T17:56:29.9993637Z [36;1mallowance = min(command_timeout, aggregate_remaining)[0m
+2026-10-27T17:56:29.9994303Z [36;1mif allowance <= 0:[0m
+2026-10-27T17:56:29.9994962Z [36;1m    print("aggregate deadline reserve reached", file=sys.stderr)[0m
+2026-10-27T17:56:29.9995664Z [36;1m    sys.exit(124)[0m
+2026-10-27T17:56:29.9996172Z [36;1mproc = subprocess.Popen([0m
+2026-10-27T17:56:29.9997159Z [36;1m    ["timeout", "--signal=TERM", "--kill-after=10s", f"{allowance:.3f}s", *argv],[0m
+2026-10-27T17:56:29.9998065Z [36;1m    stdout=subprocess.PIPE, stderr=subprocess.STDOUT)[0m
+2026-10-27T17:56:29.9998793Z [36;1mselector = selectors.DefaultSelector()[0m
+2026-10-27T17:56:29.9999945Z [36;1mselector.register(proc.stdout, selectors.EVENT_READ)[0m
+2026-10-27T17:56:30.0000627Z [36;1mwritten = 0[0m
+2026-10-27T17:56:30.0001090Z [36;1moverflow = False[0m
+2026-10-27T17:56:30.0001575Z [36;1mtimed_out = False[0m
+2026-10-27T17:56:30.0002103Z [36;1mend = time.monotonic() + allowance + 12[0m
+2026-10-27T17:56:30.0002747Z [36;1mwith log.open("wb") as output:[0m
+2026-10-27T17:56:30.0003523Z [36;1m    while selector.get_map() or proc.poll() is None:[0m
+2026-10-27T17:56:30.0004197Z [36;1m        if time.monotonic() >= end:[0m
+2026-10-27T17:56:30.0004771Z [36;1m            timed_out = True[0m
+2026-10-27T17:56:30.0005295Z [36;1m            break[0m
+2026-10-27T17:56:30.0006130Z [36;1m        events = selector.select(min(0.2, max(0, end-time.monotonic()))) if selector.get_map() else ()[0m
+2026-10-27T17:56:30.0007024Z [36;1m        for key, _ in events:[0m
+2026-10-27T17:56:30.0007603Z [36;1m            chunk = os.read(key.fd, 65536)[0m
+2026-10-27T17:56:30.0008177Z [36;1m            if not chunk:[0m
+2026-10-27T17:56:30.0008747Z [36;1m                selector.unregister(key.fileobj)[0m
+2026-10-27T17:56:30.0009502Z [36;1m                continue[0m
+2026-10-27T17:56:30.0010044Z [36;1m            room = remaining_log - written[0m
+2026-10-27T17:56:30.0010630Z [36;1m            if room > 0:[0m
+2026-10-27T17:56:30.0011155Z [36;1m                kept = chunk[:room][0m
+2026-10-27T17:56:30.0011733Z [36;1m                output.write(kept)[0m
+2026-10-27T17:56:30.0012315Z [36;1m                written += len(kept)[0m
+2026-10-27T17:56:30.0012912Z [36;1m            if len(chunk) > max(0, room):[0m
+2026-10-27T17:56:30.0013503Z [36;1m                overflow = True[0m
+2026-10-27T17:56:30.0014046Z [36;1m    output.flush()[0m
+2026-10-27T17:56:30.0014530Z [36;1mselector.close()[0m
+2026-10-27T17:56:30.0015016Z [36;1mproc.stdout.close()[0m
+2026-10-27T17:56:30.0015711Z [36;1mstatus = proc.poll()[0m
+2026-10-27T17:56:30.0016281Z [36;1mtimed_out = timed_out or status in (124, 137)[0m
+2026-10-27T17:56:30.0017427Z [36;1mprint(f"exit={status} bytes_written={written} aggregate_log_overflow={str(overflow).lower()} timed_out={str(timed_out).lower()}")[0m
+2026-10-27T17:56:30.0018495Z [36;1mif overflow:[0m
+2026-10-27T17:56:30.0019069Z [36;1m    sys.exit(125)[0m
+2026-10-27T17:56:30.0019604Z [36;1mif timed_out:[0m
+2026-10-27T17:56:30.0020112Z [36;1m    sys.exit(124)[0m
+2026-10-27T17:56:30.0020653Z [36;1msys.exit(status)[0m
+2026-10-27T17:56:30.0021170Z [36;1m''')[0m
+2026-10-27T17:56:30.0021815Z [36;1mdeadline.write_text(str(time.monotonic_ns() + 900_000_000_000))[0m
+2026-10-27T17:56:30.0022566Z [36;1mPY[0m
+2026-10-27T17:56:30.0274074Z shell: /usr/bin/bash -e {0}
+2026-10-27T17:56:30.0275226Z ##[endgroup]
+2026-10-27T17:56:30.0926852Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-10-27T17:56:30.0927630Z with:
+2026-10-27T17:56:30.0928096Z   ref: 1721fd7c0a747b87ba1e972e54a1dc1a222e0016
+2026-10-27T17:56:30.0928696Z   persist-credentials: false
+2026-10-27T17:56:30.0929424Z   submodules: false
+2026-10-27T17:56:30.0929897Z   repository: DocumentDrivenDX/umf
+2026-10-27T17:56:30.0933949Z   token: ***
+2026-10-27T17:56:30.0934372Z   ssh-strict: true
+2026-10-27T17:56:30.0934808Z   ssh-user: git
+2026-10-27T17:56:30.0935229Z   clean: true
+2026-10-27T17:56:30.0935669Z   sparse-checkout-cone-mode: true
+2026-10-27T17:56:30.0936185Z   fetch-depth: 1
+2026-10-27T17:56:30.0936617Z   fetch-tags: false
+2026-10-27T17:56:30.0937048Z   show-progress: true
+2026-10-27T17:56:30.0937486Z   lfs: false
+2026-10-27T17:56:30.0937921Z   set-safe-directory: true
+2026-10-27T17:56:30.0938424Z   allow-unsafe-pr-checkout: false
+2026-10-27T17:56:30.0939083Z ##[endgroup]
+2026-10-27T17:56:30.3539566Z Syncing repository: DocumentDrivenDX/umf
+2026-10-27T17:56:30.3542477Z ##[group]Getting Git version info
+2026-10-27T17:56:30.3543728Z Working directory is '/home/runner/work/umf/umf'
+2026-10-27T17:56:30.3545182Z [command]/usr/bin/git version
+2026-10-27T17:56:30.3592249Z git version 2.55.0
+2026-10-27T17:56:30.3617208Z ##[endgroup]
+2026-10-27T17:56:30.3633007Z Temporarily overriding HOME='/home/runner/work/_temp/a2694ed2-b81d-4ccc-b421-e4c44a2063d9' before making global git config changes
+2026-10-27T17:56:30.3635791Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-27T17:56:30.3639269Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf
+2026-10-27T17:56:30.3695242Z Deleting the contents of '/home/runner/work/umf/umf'
+2026-10-27T17:56:30.3700213Z ##[group]Initializing the repository
+2026-10-27T17:56:30.3705732Z [command]/usr/bin/git init /home/runner/work/umf/umf
+2026-10-27T17:56:30.3822971Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-27T17:56:30.3824518Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-27T17:56:30.3825580Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-27T17:56:30.3826409Z hint: call:
+2026-10-27T17:56:30.3826865Z hint:
+2026-10-27T17:56:30.3827461Z hint: 	git config --global init.defaultBranch <name>
+2026-10-27T17:56:30.3828144Z hint:
+2026-10-27T17:56:30.3828785Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-27T17:56:30.3830809Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-27T17:56:30.3832304Z hint:
+2026-10-27T17:56:30.3832957Z hint: 	git branch -m <name>
+2026-10-27T17:56:30.3833481Z hint:
+2026-10-27T17:56:30.3834171Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-27T17:56:30.3840527Z Initialized empty Git repository in /home/runner/work/umf/umf/.git/
+2026-10-27T17:56:30.3853888Z [command]/usr/bin/git remote add origin https://github.com/DocumentDrivenDX/umf
+2026-10-27T17:56:30.3910057Z ##[endgroup]
+2026-10-27T17:56:30.3912239Z ##[group]Disabling automatic garbage collection
+2026-10-27T17:56:30.3915391Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-27T17:56:30.3960931Z ##[endgroup]
+2026-10-27T17:56:30.3963064Z ##[group]Setting up auth
+2026-10-27T17:56:30.3969579Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T17:56:30.4008794Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-27T17:56:30.4395552Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T17:56:30.4433471Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-27T17:56:30.4661641Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T17:56:30.4700209Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-27T17:56:30.4925541Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-27T17:56:30.4967182Z ##[endgroup]
+2026-10-27T17:56:30.4968072Z ##[group]Fetching the repository
+2026-10-27T17:56:30.4978728Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin 1721fd7c0a747b87ba1e972e54a1dc1a222e0016
+2026-10-27T17:58:01.4101939Z From https://github.com/DocumentDrivenDX/umf
+2026-10-27T17:58:01.4102970Z  * branch              1721fd7c0a747b87ba1e972e54a1dc1a222e0016 -> FETCH_HEAD
+2026-10-27T17:58:01.4115483Z ##[endgroup]
+2026-10-27T17:58:01.4115937Z ##[group]Determining the checkout info
+2026-10-27T17:58:01.4116701Z ##[endgroup]
+2026-10-27T17:58:01.4119148Z [command]/usr/bin/git sparse-checkout disable
+2026-10-27T17:58:01.4180243Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-27T17:58:01.4210831Z ##[group]Checking out the ref
+2026-10-27T17:58:01.4216051Z [command]/usr/bin/git checkout --progress --force 1721fd7c0a747b87ba1e972e54a1dc1a222e0016
+2026-10-27T17:58:02.5235838Z Updating files:   5% (3652/63654)
+2026-10-27T17:58:02.6502268Z Updating files:   6% (3820/63654)
+2026-10-27T17:58:02.9415104Z Updating files:   7% (4456/63654)
+2026-10-27T17:58:03.0134562Z Updating files:   8% (5093/63654)
+2026-10-27T17:58:03.0543367Z Updating files:   9% (5729/63654)
+2026-10-27T17:58:03.2085798Z Updating files:  10% (6366/63654)
+2026-10-27T17:58:03.3195683Z Updating files:  11% (7002/63654)
+2026-10-27T17:58:03.3930262Z Updating files:  12% (7639/63654)
+2026-10-27T17:58:03.6025449Z Updating files:  13% (8276/63654)
+2026-10-27T17:58:03.6236426Z Updating files:  13% (8883/63654)
+2026-10-27T17:58:04.2621254Z Updating files:  14% (8912/63654)
+2026-10-27T17:58:04.5344867Z Updating files:  15% (9549/63654)
+2026-10-27T17:58:04.6124321Z Updating files:  15% (10114/63654)
+2026-10-27T17:58:04.6560055Z Updating files:  16% (10185/63654)
+2026-10-27T17:58:04.7325874Z Updating files:  17% (10822/63654)
+2026-10-27T17:58:05.1154873Z Updating files:  18% (11458/63654)
+2026-10-27T17:58:05.3000334Z Updating files:  19% (12095/63654)
+2026-10-27T17:58:05.4807110Z Updating files:  20% (12731/63654)
+2026-10-27T17:58:05.5501101Z Updating files:  20% (13181/63654)
+2026-10-27T17:58:05.6311196Z Updating files:  21% (13368/63654)
+2026-10-27T17:58:05.6639659Z Updating files:  22% (14004/63654)
+2026-10-27T17:58:05.7023960Z Updating files:  23% (14641/63654)
+2026-10-27T17:58:05.7336384Z Updating files:  24% (15277/63654)
+2026-10-27T17:58:05.7658314Z Updating files:  25% (15914/63654)
+2026-10-27T17:58:05.7970470Z Updating files:  26% (16551/63654)
+2026-10-27T17:58:05.8284877Z Updating files:  27% (17187/63654)
+2026-10-27T17:58:05.8604565Z Updating files:  28% (17824/63654)
+2026-10-27T17:58:05.8907729Z Updating files:  29% (18460/63654)
+2026-10-27T17:58:05.9541589Z Updating files:  30% (19097/63654)
+2026-10-27T17:58:05.9850044Z Updating files:  31% (19733/63654)
+2026-10-27T17:58:06.0148833Z Updating files:  32% (20370/63654)
+2026-10-27T17:58:06.4885178Z Updating files:  33% (21006/63654)
+2026-10-27T17:58:07.5520033Z Updating files:  33% (21458/63654)
+2026-10-27T17:58:08.2838674Z Updating files:  33% (21556/63654)
+2026-10-27T17:58:08.5315753Z Updating files:  34% (21643/63654)
+2026-10-27T17:58:08.9933436Z Updating files:  34% (21662/63654)
+2026-10-27T17:58:09.3760469Z Updating files:  35% (22279/63654)
+2026-10-27T17:58:09.4429660Z Updating files:  36% (22916/63654)
+2026-10-27T17:58:09.4801381Z Updating files:  37% (23552/63654)
+2026-10-27T17:58:09.4803234Z Updating files:  37% (24185/63654)
+2026-10-27T17:58:09.5195564Z Updating files:  38% (24189/63654)
+2026-10-27T17:58:09.5534125Z Updating files:  39% (24826/63654)
+2026-10-27T17:58:09.5904496Z Updating files:  40% (25462/63654)
+2026-10-27T17:58:09.6220070Z Updating files:  41% (26099/63654)
+2026-10-27T17:58:09.6595141Z Updating files:  42% (26735/63654)
+2026-10-27T17:58:09.8016254Z Updating files:  43% (27372/63654)
+2026-10-27T17:58:09.9025691Z Updating files:  44% (28008/63654)
+2026-10-27T17:58:10.0668661Z Updating files:  45% (28645/63654)
+2026-10-27T17:58:10.2251872Z Updating files:  46% (29281/63654)
+2026-10-27T17:58:10.2717041Z Updating files:  47% (29918/63654)
+2026-10-27T17:58:10.3110710Z Updating files:  48% (30554/63654)
+2026-10-27T17:58:10.4868382Z Updating files:  49% (31191/63654)
+2026-10-27T17:58:10.4911645Z Updating files:  49% (31782/63654)
+2026-10-27T17:58:10.5371339Z Updating files:  50% (31827/63654)
+2026-10-27T17:58:10.6173933Z Updating files:  51% (32464/63654)
+2026-10-27T17:58:10.6571485Z Updating files:  52% (33101/63654)
+2026-10-27T17:58:10.7149081Z Updating files:  53% (33737/63654)
+2026-10-27T17:58:10.7406754Z Updating files:  54% (34374/63654)
+2026-10-27T17:58:10.7655420Z Updating files:  55% (35010/63654)
+2026-10-27T17:58:10.8042874Z Updating files:  56% (35647/63654)
+2026-10-27T17:58:10.8679481Z Updating files:  57% (36283/63654)
+2026-10-27T17:58:10.9014991Z Updating files:  58% (36920/63654)
+2026-10-27T17:58:10.9379283Z Updating files:  59% (37556/63654)
+2026-10-27T17:58:10.9950472Z Updating files:  60% (38193/63654)
+2026-10-27T17:58:11.0379559Z Updating files:  61% (38829/63654)
+2026-10-27T17:58:11.0907757Z Updating files:  62% (39466/63654)
+2026-10-27T17:58:11.1177921Z Updating files:  63% (40103/63654)
+2026-10-27T17:58:11.1426246Z Updating files:  64% (40739/63654)
+2026-10-27T17:58:11.1656365Z Updating files:  65% (41376/63654)
+2026-10-27T17:58:11.1924882Z Updating files:  66% (42012/63654)
+2026-10-27T17:58:11.2264648Z Updating files:  67% (42649/63654)
+2026-10-27T17:58:11.2646112Z Updating files:  68% (43285/63654)
+2026-10-27T17:58:11.3053220Z Updating files:  69% (43922/63654)
+2026-10-27T17:58:11.3607363Z Updating files:  70% (44558/63654)
+2026-10-27T17:58:11.3890279Z Updating files:  71% (45195/63654)
+2026-10-27T17:58:11.4124229Z Updating files:  72% (45831/63654)
+2026-10-27T17:58:11.4377153Z Updating files:  73% (46468/63654)
+2026-10-27T17:58:11.4604401Z Updating files:  74% (47104/63654)
+2026-10-27T17:58:11.4800319Z Updating files:  75% (47741/63654)
+2026-10-27T17:58:11.4828184Z Updating files:  75% (48299/63654)
+2026-10-27T17:58:11.5054233Z Updating files:  76% (48378/63654)
+2026-10-27T17:58:11.5324397Z Updating files:  77% (49014/63654)
+2026-10-27T17:58:11.5549218Z Updating files:  78% (49651/63654)
+2026-10-27T17:58:11.5784917Z Updating files:  79% (50287/63654)
+2026-10-27T17:58:11.6043902Z Updating files:  80% (50924/63654)
+2026-10-27T17:58:11.6683636Z Updating files:  81% (51560/63654)
+2026-10-27T17:58:11.7364290Z Updating files:  82% (52197/63654)
+2026-10-27T17:58:11.8104409Z Updating files:  83% (52833/63654)
+2026-10-27T17:58:11.8568333Z Updating files:  84% (53470/63654)
+2026-10-27T17:58:11.8880381Z Updating files:  85% (54106/63654)
+2026-10-27T17:58:11.9140555Z Updating files:  86% (54743/63654)
+2026-10-27T17:58:11.9398909Z Updating files:  87% (55379/63654)
+2026-10-27T17:58:12.0103824Z Updating files:  88% (56016/63654)
+2026-10-27T17:58:12.0432093Z Updating files:  89% (56653/63654)
+2026-10-27T17:58:12.0675028Z Updating files:  90% (57289/63654)
+2026-10-27T17:58:12.0964092Z Updating files:  91% (57926/63654)
+2026-10-27T17:58:12.1465435Z Updating files:  92% (58562/63654)
+2026-10-27T17:58:12.4801322Z Updating files:  93% (59199/63654)
+2026-10-27T17:58:12.4802094Z Updating files:  93% (59834/63654)
+2026-10-27T17:58:12.5154847Z Updating files:  94% (59835/63654)
+2026-10-27T17:58:12.6459325Z Updating files:  95% (60472/63654)
+2026-10-27T17:58:12.6934832Z Updating files:  96% (61108/63654)
+2026-10-27T17:58:12.7392830Z Updating files:  97% (61745/63654)
+2026-10-27T17:58:12.7761989Z Updating files:  98% (62381/63654)
+2026-10-27T17:58:12.8285950Z Updating files:  99% (63018/63654)
+2026-10-27T17:58:12.8286743Z Updating files: 100% (63654/63654)
+2026-10-27T17:58:12.8287506Z Updating files: 100% (63654/63654), done.
+2026-10-27T17:58:13.0693935Z Note: switching to '1721fd7c0a747b87ba1e972e54a1dc1a222e0016'.
+2026-10-27T17:58:13.0694584Z 
+2026-10-27T17:58:13.0695018Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-27T17:58:13.0696037Z changes and commit them, and you can discard any commits you make in this
+2026-10-27T17:58:13.0697006Z state without impacting any branches by switching back to a branch.
+2026-10-27T17:58:13.0697578Z 
+2026-10-27T17:58:13.0697963Z If you want to create a new branch to retain commits you create, you may
+2026-10-27T17:58:13.0699249Z do so (now or later) by using -c with the switch command. Example:
+2026-10-27T17:58:13.0699864Z 
+2026-10-27T17:58:13.0700100Z   git switch -c <new-branch-name>
+2026-10-27T17:58:13.0700498Z 
+2026-10-27T17:58:13.0700723Z Or undo this operation with:
+2026-10-27T17:58:13.0701088Z 
+2026-10-27T17:58:13.0701279Z   git switch -
+2026-10-27T17:58:13.0701873Z 
+2026-10-27T17:58:13.0702407Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-27T17:58:13.0703147Z 
+2026-10-27T17:58:13.0703767Z HEAD is now at 1721fd7c Refresh Migration consumers to qualified Core and Weft releases
+2026-10-27T17:58:13.0894036Z ##[endgroup]
+2026-10-27T17:58:13.0952766Z [command]/usr/bin/git log -1 --format=%H
+2026-10-27T17:58:13.0990395Z 1721fd7c0a747b87ba1e972e54a1dc1a222e0016
+2026-10-27T17:58:13.1001902Z ##[group]Removing auth
+2026-10-27T17:58:13.1006408Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T17:58:13.1060092Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-27T17:58:13.1325136Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T17:58:13.1354311Z http.https://github.com/.extraheader
+2026-10-27T17:58:13.1362943Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-27T17:58:13.1635153Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-27T17:58:13.1911305Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T17:58:13.1948151Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-27T17:58:13.2221193Z ##[endgroup]
+2026-10-27T17:58:13.6716396Z ##[group]Run oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+2026-10-27T17:58:13.6716806Z with:
+2026-10-27T17:58:13.6717010Z   bun-version: 1.4.3
+2026-10-27T17:58:13.6717239Z   no-cache: false
+2026-10-27T17:58:13.6720159Z   token: ***
+2026-10-27T17:58:13.6720369Z ##[endgroup]
+2026-10-27T17:58:14.1224265Z Cache hit for: bun-+NUKu9E/U4apAe78eSCZvQ/GSdc=
+2026-10-27T17:58:15.4021133Z Received 0 of 41001437 (0.0%), 0.0 MBs/sec
+2026-10-27T17:58:15.7328093Z Received 41001437 of 41001437 (100.0%), 29.4 MBs/sec
+2026-10-27T17:58:15.7328713Z Cache Size: ~39 MB (41001437 B)
+2026-10-27T17:58:15.7359888Z [command]/usr/bin/tar -xf /home/runner/work/_temp/a9fa8893-7efb-475f-99ae-4aab116280e5/cache.tzst -P -C /home/runner/work/umf/umf --use-compress-program unzstd
+2026-10-27T17:58:15.8902608Z Cache restored successfully
+2026-10-27T17:58:15.8927603Z [command]/home/runner/.bun/bin/bun --revision
+2026-10-27T17:58:15.8971676Z 1.4.3+c6da4a4d3
+2026-10-27T17:58:15.8980372Z Using a cached version of Bun: 1.4.3+c6da4a4d3
+2026-10-27T17:58:15.9139865Z ##[group]Run set -euo pipefail
+2026-10-27T17:58:15.9140233Z [36;1mset -euo pipefail[0m
+2026-10-27T17:58:15.9140560Z [36;1mevidence="$RUNNER_TEMP/umf-r2-stage-a-evidence"[0m
+2026-10-27T17:58:15.9140916Z [36;1mmkdir -p "$evidence"[0m
+2026-10-27T17:58:15.9141195Z [36;1mtest "$EVENT_NAME" = push[0m
+2026-10-27T17:58:15.9141490Z [36;1mcase "$REF_NAME" in[0m
+2026-10-27T17:58:15.9142029Z [36;1m  refs/heads/codex/migration-metering-qualification|refs/heads/codex/migration-main-metering-generation) ;;[0m
+2026-10-27T17:58:15.9142599Z [36;1m  *) exit 1 ;;[0m
+2026-10-27T17:58:15.9142825Z [36;1mesac[0m
+2026-10-27T17:58:15.9143086Z [36;1mtest "$(git rev-parse HEAD)" = "$EXPECTED_SHA"[0m
+2026-10-27T17:58:15.9143605Z [36;1mpin_sha="$(sha256sum qualification-inputs/r2-metering-stage-a.sha256 | cut -d ' ' -f 1)"[0m
+2026-10-27T17:58:15.9144244Z [36;1mtest "$pin_sha" = d885bdc91de07b2df883395c967d6368ad7928f61f965cf6e00f9eb08e3938d0[0m
+2026-10-27T17:58:15.9144836Z [36;1msha256sum -c qualification-inputs/r2-metering-stage-a.sha256[0m
+2026-10-27T17:58:15.9145233Z [36;1mbun_version="$(bun --version)"[0m
+2026-10-27T17:58:15.9145518Z [36;1mtest "$bun_version" = 1.4.3[0m
+2026-10-27T17:58:15.9145788Z [36;1mbun_path="$(command -v bun)"[0m
+2026-10-27T17:58:15.9146046Z [36;1m{[0m
+2026-10-27T17:58:15.9146491Z [36;1m  printf 'profile=umf.r2-metering-stage-a/1\n'[0m
+2026-10-27T17:58:15.9147011Z [36;1m  printf 'event=%s\nref=%s\ncommit=%s\nworkflow_ref=%s\nworkflow_sha=%s\nrun_id=%s\nattempt=%s\n' \[0m
+2026-10-27T17:58:15.9147683Z [36;1m    "$EVENT_NAME" "$REF_NAME" "$EXPECTED_SHA" "$WORKFLOW_REF" "$WORKFLOW_SHA" "$RUN_ID" "$RUN_ATTEMPT"[0m
+2026-10-27T17:58:15.9148314Z [36;1m  printf 'runner=ubuntu-24.04\nbun_version=%s\nbun_path=%s\nbun_binary_sha256=%s\n' \[0m
+2026-10-27T17:58:15.9149119Z [36;1m    "$bun_version" "$bun_path" "$(sha256sum "$bun_path" | cut -d ' ' -f 1)"[0m
+2026-10-27T17:58:15.9149891Z [36;1m  printf 'pin_manifest=qualification-inputs/r2-metering-stage-a.sha256\npin_manifest_sha256=%s\n' "$pin_sha"[0m
+2026-10-27T17:58:15.9150577Z [36;1m} > "$evidence/identity.txt"[0m
+2026-10-27T17:58:15.9151025Z [36;1mcp qualification-inputs/r2-metering-stage-a.sha256 "$evidence/source-pins.sha256"[0m
+2026-10-27T17:58:15.9218235Z shell: /usr/bin/bash -e {0}
+2026-10-27T17:58:15.9218513Z env:
+2026-10-27T17:58:15.9218774Z   EXPECTED_SHA: 1721fd7c0a747b87ba1e972e54a1dc1a222e0016
+2026-10-27T17:58:15.9219405Z   EVENT_NAME: push
+2026-10-27T17:58:15.9219722Z   REF_NAME: refs/heads/codex/migration-main-metering-generation
+2026-10-27T17:58:15.9220420Z   WORKFLOW_REF: DocumentDrivenDX/umf/.github/workflows/r2-metering-stage-a.yml@refs/heads/codex/migration-main-metering-generation
+2026-10-27T17:58:15.9221072Z   WORKFLOW_SHA: 1721fd7c0a747b87ba1e972e54a1dc1a222e0016
+2026-10-27T17:58:15.9221385Z   RUN_ID: 40555261222
+2026-10-27T17:58:15.9221599Z   RUN_ATTEMPT: 1
+2026-10-27T17:58:15.9221818Z ##[endgroup]
+2026-10-27T17:58:16.0062705Z src/generated/core-validators.ts: OK
+2026-10-27T17:58:16.0063116Z spec/core/schema.json: OK
+2026-10-27T17:58:16.0063546Z spec/core/semantic-type-reference.schema.json: OK
+2026-10-27T17:58:16.0064022Z spec/core/extension-package.schema.json: OK
+2026-10-27T17:58:16.0064568Z scripts/metamodel/structural-accounting.ts: OK
+2026-10-27T17:58:16.0065028Z scripts/qualification/r2-metering-generate.ts: OK
+2026-10-27T17:58:16.0065515Z package.json: OK
+2026-10-27T17:58:16.0065734Z bun.lock: OK
+2026-10-27T17:58:16.0065933Z bunfig.toml: OK
+2026-10-27T17:58:16.0848811Z ##[group]Run set -euo pipefail
+2026-10-27T17:58:16.0849352Z [36;1mset -euo pipefail[0m
+2026-10-27T17:58:16.0849691Z [36;1mevidence="$RUNNER_TEMP/umf-r2-stage-a-evidence"[0m
+2026-10-27T17:58:16.0850022Z [36;1mset +e[0m
+2026-10-27T17:58:16.0850905Z [36;1mpython3 "$RUNNER_TEMP/umf-r2-stage-a-capture.py" "$evidence/install.log" "$RUNNER_TEMP/umf-r2-stage-a-deadline.txt" 160 bun install --frozen-lockfile --ignore-scripts > "$RUNNER_TEMP/umf-r2-stage-a-capture-status.txt" 2>&1[0m
+2026-10-27T17:58:16.0851856Z [36;1mresult="$?"[0m
+2026-10-27T17:58:16.0852077Z [36;1mset -e[0m
+2026-10-27T17:58:16.0852695Z [36;1mprintf 'install_exit=%s\nargv=python3 bounded-capture timeout=160 bun install --frozen-lockfile --ignore-scripts\n' "$result" >> "$evidence/identity.txt"[0m
+2026-10-27T17:58:16.0853537Z [36;1mcat "$RUNNER_TEMP/umf-r2-stage-a-capture-status.txt" >> "$evidence/identity.txt"[0m
+2026-10-27T17:58:16.0854104Z [36;1mrm -f "$RUNNER_TEMP/umf-r2-stage-a-capture-status.txt"[0m
+2026-10-27T17:58:16.0854502Z [36;1mif [ "$result" -ne 0 ]; then exit "$result"; fi[0m
+2026-10-27T17:58:16.0854962Z [36;1mgrep -Fq '"version": "5.9.3"' node_modules/typescript-api/package.json[0m
+2026-10-27T17:58:16.0855478Z [36;1mprintf 'typescript_api_version=5.9.3\n' >> "$evidence/identity.txt"[0m
+2026-10-27T17:58:16.0919180Z shell: /usr/bin/bash -e {0}
+2026-10-27T17:58:16.0919455Z ##[endgroup]
+2026-10-27T17:58:17.0920674Z ##[group]Run set -euo pipefail
+2026-10-27T17:58:17.0921032Z [36;1mset -euo pipefail[0m
+2026-10-27T17:58:17.0921348Z [36;1mevidence="$RUNNER_TEMP/umf-r2-stage-a-evidence"[0m
+2026-10-27T17:58:17.0921826Z [36;1moutput="$RUNNER_TEMP/r2-metering-generated-${RUN_ID}-${RUN_ATTEMPT}"[0m
+2026-10-27T17:58:17.0922223Z [36;1mset +e[0m
+2026-10-27T17:58:17.0923108Z [36;1mpython3 "$RUNNER_TEMP/umf-r2-stage-a-capture.py" "$evidence/generator.log" "$RUNNER_TEMP/umf-r2-stage-a-deadline.txt" 90 bun scripts/qualification/r2-metering-generate.ts > "$RUNNER_TEMP/umf-r2-stage-a-capture-status.txt" 2>&1[0m
+2026-10-27T17:58:17.0924215Z [36;1mresult="$?"[0m
+2026-10-27T17:58:17.0924431Z [36;1mset -e[0m
+2026-10-27T17:58:17.0925068Z [36;1mprintf 'generator_exit=%s\nargv=python3 bounded-capture timeout=90 bun scripts/qualification/r2-metering-generate.ts\n' "$result" >> "$evidence/identity.txt"[0m
+2026-10-27T17:58:17.0925957Z [36;1mcat "$RUNNER_TEMP/umf-r2-stage-a-capture-status.txt" >> "$evidence/identity.txt"[0m
+2026-10-27T17:58:17.0926476Z [36;1mrm -f "$RUNNER_TEMP/umf-r2-stage-a-capture-status.txt"[0m
+2026-10-27T17:58:17.0926861Z [36;1mif [ "$result" -ne 0 ]; then exit "$result"; fi[0m
+2026-10-27T17:58:17.0927179Z [36;1mtest -d "$output"[0m
+2026-10-27T17:58:17.0927575Z [36;1mtest "$(find "$output" -mindepth 1 -maxdepth 1 -type f | wc -l | tr -d ' ')" = 2[0m
+2026-10-27T17:58:17.0928053Z [36;1mtest -f "$output/core-validators-accounted.ts"[0m
+2026-10-27T17:58:17.0928398Z [36;1mtest -f "$output/manifest.json"[0m
+2026-10-27T17:58:17.0929050Z [36;1mcompanion_bytes="$(stat -c %s "$output/core-validators-accounted.ts")"[0m
+2026-10-27T17:58:17.0929554Z [36;1mmanifest_bytes="$(stat -c %s "$output/manifest.json")"[0m
+2026-10-27T17:58:17.0929922Z [36;1mtest "$companion_bytes" -le 4000000[0m
+2026-10-27T17:58:17.0930223Z [36;1mtest "$manifest_bytes" -le 16384[0m
+2026-10-27T17:58:17.0930705Z [36;1mprintf 'companion_sha256=%s\ncompanion_bytes=%s\nmanifest_sha256=%s\nmanifest_bytes=%s\n' \[0m
+2026-10-27T17:58:17.0931389Z [36;1m  "$(sha256sum "$output/core-validators-accounted.ts" | cut -d ' ' -f 1)" "$companion_bytes" \[0m
+2026-10-27T17:58:17.0932062Z [36;1m  "$(sha256sum "$output/manifest.json" | cut -d ' ' -f 1)" "$manifest_bytes" >> "$evidence/identity.txt"[0m
+2026-10-27T17:58:17.0932722Z [36;1mcp "$output/core-validators-accounted.ts" "$evidence/core-validators-accounted.ts"[0m
+2026-10-27T17:58:17.0933242Z [36;1mcp "$output/manifest.json" "$evidence/manifest.json"[0m
+2026-10-27T17:58:17.0998016Z shell: /usr/bin/bash -e {0}
+2026-10-27T17:58:17.0998267Z env:
+2026-10-27T17:58:17.0998482Z   UMF_R2_OUTPUT_PURPOSE: stage-a
+2026-10-27T17:58:17.0998743Z   RUN_ID: 40555261222
+2026-10-27T17:58:17.0999326Z   RUN_ATTEMPT: 1
+2026-10-27T17:58:17.0999534Z ##[endgroup]
+2026-10-27T17:58:17.5530804Z ##[error]Process completed with exit code 1.
+2026-10-27T17:58:17.5582901Z ##[group]Run set -euo pipefail
+2026-10-27T17:58:17.5583258Z [36;1mset -euo pipefail[0m
+2026-10-27T17:58:17.5583572Z [36;1mevidence="$RUNNER_TEMP/umf-r2-stage-a-evidence"[0m
+2026-10-27T17:58:17.5583959Z [36;1mupload="$RUNNER_TEMP/umf-r2-stage-a-upload"[0m
+2026-10-27T17:58:17.5584363Z [36;1mcandidate="$RUNNER_TEMP/umf-r2-stage-a-upload-candidate"[0m
+2026-10-27T17:58:17.5584749Z [36;1mrm -rf "$upload" "$candidate"[0m
+2026-10-27T17:58:17.5585036Z [36;1mmkdir -p "$candidate"[0m
+2026-10-27T17:58:17.5585280Z [36;1mfail() {[0m
+2026-10-27T17:58:17.5585668Z [36;1m  printf 'stage-a artifact finalization failed: %s\n' "$1" > "$candidate/failure.txt"[0m
+2026-10-27T17:58:17.5586153Z [36;1m  mv "$candidate" "$upload"[0m
+2026-10-27T17:58:17.5586461Z [36;1m  printf 'ready=true\n' >> "$GITHUB_OUTPUT"[0m
+2026-10-27T17:58:17.5586754Z [36;1m  exit 1[0m
+2026-10-27T17:58:17.5586952Z [36;1m}[0m
+2026-10-27T17:58:17.5587153Z [36;1mtest -d "$evidence"[0m
+2026-10-27T17:58:17.5587611Z [36;1mif [ -f "$evidence/install.log" ] && [ "$(stat -c %s "$evidence/install.log")" -gt 1000000 ]; then[0m
+2026-10-27T17:58:17.5588100Z [36;1m  fail overflow-install-log[0m
+2026-10-27T17:58:17.5588358Z [36;1mfi[0m
+2026-10-27T17:58:17.5588749Z [36;1mif [ -f "$evidence/generator.log" ] && [ "$(stat -c %s "$evidence/generator.log")" -gt 1000000 ]; then[0m
+2026-10-27T17:58:17.5589557Z [36;1m  fail overflow-generator-log[0m
+2026-10-27T17:58:17.5589822Z [36;1mfi[0m
+2026-10-27T17:58:17.5590138Z [36;1mif [ -f "$evidence/install.log" ] && [ -f "$evidence/generator.log" ]; then[0m
+2026-10-27T17:58:17.5590926Z [36;1m  combined_logs=$(( $(stat -c %s "$evidence/install.log") + $(stat -c %s "$evidence/generator.log") ))[0m
+2026-10-27T17:58:17.5591429Z [36;1m  if [ "$combined_logs" -gt 1000000 ]; then[0m
+2026-10-27T17:58:17.5591746Z [36;1m    fail overflow-aggregate-logs[0m
+2026-10-27T17:58:17.5592027Z [36;1m  fi[0m
+2026-10-27T17:58:17.5592218Z [36;1mfi[0m
+2026-10-27T17:58:17.5592589Z [36;1mif find "$evidence" -mindepth 1 -maxdepth 1 ! -type f -print -quit | grep -q .; then[0m
+2026-10-27T17:58:17.5593062Z [36;1m  fail unexpected-non-file-artifact[0m
+2026-10-27T17:58:17.5593355Z [36;1mfi[0m
+2026-10-27T17:58:17.5593739Z [36;1mmapfile -t files < <(find "$evidence" -mindepth 1 -maxdepth 1 -type f -printf '%f\n' | sort)[0m
+2026-10-27T17:58:17.5594198Z [36;1mtotal_bytes=0[0m
+2026-10-27T17:58:17.5594434Z [36;1mfor file in "${files[@]}"; do[0m
+2026-10-27T17:58:17.5594705Z [36;1m  case "$file" in[0m
+2026-10-27T17:58:17.5595211Z [36;1m    identity.txt|source-pins.sha256|install.log|generator.log|core-validators-accounted.ts|manifest.json) ;;[0m
+2026-10-27T17:58:17.5595801Z [36;1m    *) fail unexpected-artifact-file ;;[0m
+2026-10-27T17:58:17.5596095Z [36;1m  esac[0m
+2026-10-27T17:58:17.5596339Z [36;1m  size="$(stat -c %s "$evidence/$file")"[0m
+2026-10-27T17:58:17.5596804Z [36;1m  if [ "$file" = generator.log ] || [ "$file" = install.log ]; then test "$size" -le 1000000; fi[0m
+2026-10-27T17:58:17.5597280Z [36;1m  total_bytes=$((total_bytes + size))[0m
+2026-10-27T17:58:17.5597564Z [36;1mdone[0m
+2026-10-27T17:58:17.5597895Z [36;1mif [ "$total_bytes" -gt 16000000 ]; then fail aggregate-artifact-cap; fi[0m
+2026-10-27T17:58:17.5598398Z [36;1mfor file in "${files[@]}"; do cp "$evidence/$file" "$candidate/$file"; done[0m
+2026-10-27T17:58:17.5598794Z [36;1mmv "$candidate" "$upload"[0m
+2026-10-27T17:58:17.5599373Z [36;1mprintf 'ready=true\n' >> "$GITHUB_OUTPUT"[0m
+2026-10-27T17:58:17.5663653Z shell: /usr/bin/bash -e {0}
+2026-10-27T17:58:17.5663921Z ##[endgroup]
+2026-10-27T17:58:17.6076023Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-10-27T17:58:17.6076442Z with:
+2026-10-27T17:58:17.6076683Z   name: umf-r2-metering-stage-a-40555261222-1
+2026-10-27T17:58:17.6077074Z   path: /home/runner/work/_temp/umf-r2-stage-a-upload/*
+
+2026-10-27T17:58:17.6077410Z   if-no-files-found: warn
+2026-10-27T17:58:17.6077646Z   retention-days: 7
+2026-10-27T17:58:17.6077867Z   compression-level: 0
+2026-10-27T17:58:17.6078087Z   overwrite: false
+2026-10-27T17:58:17.6078313Z   include-hidden-files: false
+2026-10-27T17:58:17.6078563Z ##[endgroup]
+2026-10-27T17:58:17.7777842Z (node:2499) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-27T17:58:17.7779691Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-27T17:58:17.7861643Z With the provided path, there will be 4 files uploaded
+2026-10-27T17:58:17.7867808Z Artifact name is valid!
+2026-10-27T17:58:17.7869047Z Root directory input is valid!
+2026-10-27T17:58:18.2107829Z Beginning upload of artifact content to blob storage
+2026-10-27T17:58:18.2331332Z (node:2499) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-27T17:58:18.4914043Z Uploaded bytes 4965
+2026-10-27T17:58:18.5636506Z Finished uploading artifact content to blob storage!
+2026-10-27T17:58:18.5637885Z SHA256 digest of uploaded artifact zip is 64828821d157a32f27730da79b37b3b7057e0c2690325fce75c9f6ee36bd6012
+2026-10-27T17:58:18.5641830Z Finalizing artifact upload
+2026-10-27T17:58:19.0462626Z Artifact umf-r2-metering-stage-a-40555261222-1.zip successfully finalized. Artifact ID 12756527373
+2026-10-27T17:58:19.0464393Z Artifact umf-r2-metering-stage-a-40555261222-1 has been successfully uploaded! Final size is 4965 bytes. Artifact ID is 12756527373
+2026-10-27T17:58:19.0471595Z Artifact download URL: https://github.com/DocumentDrivenDX/umf/actions/runs/40555261222/artifacts/12756527373
+2026-10-27T17:58:19.0666891Z Post job cleanup.
+2026-10-27T17:58:19.1526863Z [command]/usr/bin/git version
+2026-10-27T17:58:19.1572711Z git version 2.55.0
+2026-10-27T17:58:19.1617143Z Temporarily overriding HOME='/home/runner/work/_temp/38fa66e9-e547-43b0-aab2-93ee9ff5c5de' before making global git config changes
+2026-10-27T17:58:19.1618149Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-27T17:58:19.1623499Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf
+2026-10-27T17:58:19.1665556Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T17:58:19.1702304Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-27T17:58:19.2120619Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T17:58:19.2176370Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-27T17:58:19.2547332Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T17:58:19.2586910Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-27T17:58:19.3022356Z Cleaning up orphan processes
+2026-10-27T17:58:19.3479953Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

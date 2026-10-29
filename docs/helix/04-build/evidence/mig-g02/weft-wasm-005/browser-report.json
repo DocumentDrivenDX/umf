@@ -1,0 +1,134 @@
+{
+  "scope": "real Chromium shared compiler parity; no native database authority",
+  "browser": "153.0.8010.12",
+  "cases": [
+    {
+      "name": "G02-field-copy",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "3fd5ffd73f107e542bc8f9ba6f19d3c79b6839165d01d4c7911ae61c42a4ca90"
+    },
+    {
+      "name": "G02-literal",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "550d9a3fb29b5005e441a2c3ef3486f6140b4598efcadf802fa3aa0eab9f71a5"
+    },
+    {
+      "name": "G02-concat",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "997368124774eab199b56494aa419ec36d11c72b98383a6cc8cfc57f1a77916a"
+    },
+    {
+      "name": "G02-coalesce",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "61dfa6b122c220363277ff0d2d1901280c17167f07bdaf102d7f713c29024490"
+    },
+    {
+      "name": "G02-add",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "fa4a77c0f4259e51ad079377b492867e2ea9595f57ca3b630012bb8882602c4a"
+    },
+    {
+      "name": "G02-subtract",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "1e97e69637035c7ba5142bdd746c501d1417cf14deda997d2db6831bd81db6d3"
+    },
+    {
+      "name": "G02-multiply",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "88c265680a6bd3eae94158c901b0d1be253221b9ac6d92a5c832503bb54adac4"
+    },
+    {
+      "name": "G02-conditional-eq",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "7cccce123f39de3418198c323722c6182629515f4d714ad9dfe0daa475ca1b83"
+    },
+    {
+      "name": "G02-conditional-in",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "bb90a32ad36cfcb0ec2d37c11460ba75da3eef8266a54a5bc65192136126fb17"
+    },
+    {
+      "name": "G02-tiny-decimal",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "e00e3bfcfcb14bc9bf5c8daabc9564dd29bf746364280a2e45ea2f6d2730604c"
+    },
+    {
+      "name": "G02-fractional-integer",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "f9e89fb4d095693ba7acfe20cfa27f4bf5af67244a19b474d4ae7126f6f59a2e"
+    },
+    {
+      "name": "G02-self-reference",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "b9976762740a87b2865507a53607b43860c206411c15b529c470d77f042b6638"
+    },
+    {
+      "name": "G02-literal-1mib",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "822c0747a7635cd7e98e28d1bbb37f1424ccb4aec2569b7c72d58d52d4df1a9c"
+    },
+    {
+      "name": "G02-literal-over-1mib",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "a63b5a704689a25ba0e295da25301d3b1fd704f85ed69cb74aa06ef79fca8c6e"
+    }
+  ],
+  "tamperControls": 1,
+  "invalidUnicodeTransportControls": 2,
+  "wasmSha256": "b2493de749910e4618c0c17f65c0a8149a70e3ea6c29cd788cd544ec00c22c67",
+  "javascriptSha256": "c3c3b25d6a7f996bdc82e2dfb6defc3f9250e1977f24c9454bdd209164a63be2",
+  "imports": [
+    {
+      "module": "wbg",
+      "name": "__wbg_length_a95b69f903b746c4",
+      "kind": "function"
+    },
+    {
+      "module": "wbg",
+      "name": "__wbg_charCodeAt_291b921e27833f8e",
+      "kind": "function"
+    },
+    {
+      "module": "wbg",
+      "name": "__wbg___wbindgen_is_string_fbb76cb2940daafd",
+      "kind": "function"
+    },
+    {
+      "module": "wbg",
+      "name": "__wbg___wbindgen_string_get_e4f06c90489ad01b",
+      "kind": "function"
+    },
+    {
+      "module": "wbg",
+      "name": "__wbg___wbindgen_throw_b855445ff6a94295",
+      "kind": "function"
+    },
+    {
+      "module": "wbg",
+      "name": "__wbindgen_init_externref_table",
+      "kind": "function"
+    },
+    {
+      "module": "wbg",
+      "name": "__wbindgen_cast_2241b6af4c4b2941",
+      "kind": "function"
+    }
+  ],
+  "nodeProcess": false,
+  "require": false,
+  "nativeExecutionQualified": false
+}

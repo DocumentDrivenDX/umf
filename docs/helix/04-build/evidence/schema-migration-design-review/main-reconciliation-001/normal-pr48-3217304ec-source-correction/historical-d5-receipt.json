@@ -1,0 +1,15 @@
+{
+  "errorClass": "ValueError",
+  "event": "pull_request",
+  "failureEvidence": {
+    "errorClass": "ValueError",
+    "status": "receipt-only-because-diagnostics-unavailable-or-over-cap"
+  },
+  "reason": "fixed D5 report/custody/cleanup finalizer did not close",
+  "ref": "refs/pull/48/merge",
+  "runAttempt": "1",
+  "runId": "40571378371",
+  "sourceCommit": "af3dd82f7b273f49f4398399f74d81f0bb01f9c0",
+  "status": "FAIL_OR_UNKNOWN",
+  "workflow": "Typed access boundaries"
+}

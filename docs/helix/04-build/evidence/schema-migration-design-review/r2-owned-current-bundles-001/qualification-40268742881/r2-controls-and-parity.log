@@ -1,0 +1,79 @@
+bun test v1.4.3 (c6da4a4d3)
+
+::group::tests/metamodel/structural-accounting-source.test.ts:
+(pass) R2 structural companion accepts only pinned canonical map-join pipelines [579.48ms]
+(pass) R2 structural companion refuses an unpinned altered canonical pipeline before classification [0.63ms]
+(pass) R2 canonical join classifier accepts the actual left-associated object-key mapping [1.10ms]
+(pass) R2 canonical join classifier refuses malformed and user-shaped pipelines [0.71ms]
+(pass) R2 structural companion carries the closed pointer escape kind before replacement [380.82ms]
+
+::endgroup::
+
+::group::tests/metamodel/structural-accounting-parity.test.ts:
+(pass) accounted core matches the complete current-conformance corpus [228.57ms]
+(pass) accounted core matches focused valid and refusal values [0.17ms]
+(pass) accounting work overflow refuses before the accounted validator runs [0.14ms]
+
+::endgroup::
+
+::group::tests/lifecycle/table-deployment-r2-accounting.test.ts:
+(pass) R2 SQL quoting reserves each escaped intermediate and final output before allocation [0.27ms]
+(pass) R2 canonical and hash kernels preserve sorted JSON while charging variable object-key carriers [1.87ms]
+(pass) R2 charged JSON copy reserves property descriptors and text before retaining the copy [0.12ms]
+
+::endgroup::
+
+::group::tests/lifecycle/table-inventory-r2-context.test.ts:
+(pass) R2-RA-01 ordinary object and array keep valid unknown JSON properties [0.48ms]
+(pass) R2-RA-02 accessors, hidden keys, symbols and custom prototypes refuse without getter calls [0.27ms]
+(pass) R2-RA-03 each admitted object charges one captured own-key result and one descriptor per string key [0.27ms]
+(pass) R2-RA-04 exact own-key extent includes symbols and array length before rejection [0.15ms]
+(pass) R2-RA-05 actual near-limit own-key result overflow refuses before descriptors [0.13ms]
+(pass) R2-RA-06 nested raw nodes each use their own one-call boundary [0.16ms]
+(pass) R2-RA-07 descriptor work is charged before getter-safe data-property refusal [0.08ms]
+(pass) R2-RA-08 array length is accounted but keeps its original special treatment [0.16ms]
+(pass) R2-RA-09 oversized key byte refusal reports the container without expanding a key path [0.17ms]
+(pass) R2-RA-10 valid __proto__ extension is copied as inert JSON data [0.10ms]
+(pass) R2-RA-11 caller mutation cannot change a private root-owned shape snapshot [0.09ms]
+(pass) R2-RA-12 original numeric and depth ceilings remain in force [0.48ms]
+(pass) R2 component depth starts at each component root before bundle-envelope validation [1.84ms]
+(pass) R2 component value ceilings are applied per owned component under one meter [106.89ms]
+(pass) R2 selector .2 is closed and excludes future review/compiler selectors [0.95ms]
+(pass) R2 source snapshot owns data so later caller mutation cannot alter it [0.15ms]
+(pass) R2 complete legal source preserves its located fixed-work refusal before the unsupported projection gate [1033.88ms]
+(pass) R2 complete legal source reports full fixed-budget admission or a located work-limit refusal [849.07ms]
+(pass) R2 source context rejects malformed original history before returning an opaque identity [546.27ms]
+(pass) R2 shared meter refuses the exact work and subject overflows [7.14ms]
+(pass) R2 JSON reader uses the bounded qualified scanner before JSON tree admission [0.48ms]
+(pass) R2 scanner reserves exact decoded UTF-8 bytes before decoding strings or retaining keys [0.64ms]
+(pass) R2 scanner reserves exact bytes for escaped scalar widths and rejects decoded duplicate keys [0.18ms]
+(pass) R2 descriptor admission rejects hostile JSON shape without invoking getters [0.27ms]
+(pass) R2 descriptor admission enforces depth and numeric limits while preserving JSON extensions [0.43ms]
+(pass) R2 owned history canonical spans bind exact frozen roots and members [1.50ms]
+(pass) R2 history spans are not published when charged source admission fails [0.09ms]
+(pass) R2 history metadata and lazy member spans publish only after their charges [1.12ms]
+(pass) R2 canonical string and key bytes are reserved before token construction [0.12ms]
+(pass) R2 exported selector parser admits unknown input before shape reads and owns its result [0.32ms]
+(pass) R2 table archive material accepts only canonical unpadded base64url [1.51ms]
+(pass) R2 restoration parser preserves old exact branch and admits both closed lineage target modes [2.51ms]
+(pass) R2 parser preserves ordinary u/0 identifiers and rejects actual NUL plus open recipe controls [0.50ms]
+
+::endgroup::
+
+::group::tests/lifecycle/table-inventory-verified-deployment.test.ts:
+(pass) metered G10 admission can consume only its own completed exact bundle verification once [223.42ms]
+(pass) changed or unsuccessfully verified bundles cannot borrow a completed verification result [208.41ms]
+(pass) lineage reuse is full-verification-backed, invocation-local, and bundle-only [107.16ms]
+(pass) lineage reuse requires exact owned bytes, rejects accessors, and never crosses meters or invocations [563.46ms]
+(pass) failed lineage verification does not seed a later retry [161.62ms]
+(pass) fixed G02 source reuse is exact, meter-local, and falls back to full verification [325.67ms]
+(pass) metered shape reuse returns only a cached frozen bundle and does not renew one-shot auxiliaries [106.38ms]
+(pass) shape miss keeps a genuine complete verifier result available to projection fallback [185.52ms]
+(pass) shape reuse remains exact, descriptor-safe, and local to its meter and invocation [755.56ms]
+
+::endgroup::
+
+ 53 pass
+ 0 fail
+ 539 expect() calls
+Ran 53 tests across 5 files. [7.07s]

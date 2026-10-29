@@ -1,0 +1,38 @@
+{
+  "schema": "umf.sdk-057-local-linux-evidence-adoption/1",
+  "status": "adopted-qualification-snapshot-release-held",
+  "recordedUtc": "2026-10-28T21:52:39.906018+00:00",
+  "producerCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+  "producerTree": "8b98c0d895983ba2b7637dd3aea567dab0943883",
+  "snapshot": {
+    "path": "snapshot",
+    "integrityManifest": "snapshot/staging-integrity-002.json",
+    "sha256": "cd24d611d73451b2c5fb65305bb1bb7ee72323ae2ca420f3c9aea69353537f02",
+    "fileCount": 402,
+    "rawStagingLabelsPreserved": true
+  },
+  "review": {
+    "path": "review-staging002.md",
+    "sha256": "0c74045d7ed85d35666cddaf5c4747d47ace664f4b4b93e36b237c4a71757026"
+  },
+  "qualification": {
+    "sdk139": "accepted selected local Linux profile",
+    "full18Linux311314": "accepted acquisition/assembly plus bounded continuation003",
+    "d5": "FAIL_OR_UNKNOWN: 37 cases,19 no-default controls,fenced-resume passed; last two fault obligations/final audit not closed",
+    "diagnostics": "no material V8 or storage speedup; no third emulated full retry justified",
+    "publicH": "source accepted for retained local route; execution held; native D5 route needs honest identity binding"
+  },
+  "release": {
+    "status": "HELD",
+    "mergeCommit": null,
+    "tag": null,
+    "publishedAt": null,
+    "publicProof": null
+  },
+  "boundaries": "UMF meaning/planning; Weft admission/SQL; host authority/execution/recovery. No Praxis changes.",
+  "adoptionClosureReview": {
+    "path": "review-adoption-closure001.md",
+    "sha256": "94e1f1cca907a511bb001a19f644cf0a70b786ee8f145c4bc0c31b07f8699c1e",
+    "status": "ACCEPT"
+  }
+}

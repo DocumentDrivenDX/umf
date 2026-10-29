@@ -1,0 +1,14 @@
+# Exact portable pin repair source closure
+
+**SOURCE ACCEPT for the two frozen postimages and one changed-source canonical generation push.** This is affected closure of plan67818abd, not a new source audit or a qualification result. Source-only hashes/JSON/text/read-only Git diff were used; no candidate runtime, imports, AST, tests, generation, Git mutation or source edit.
+
+Candidate baseline HEAD1d8cd0453. Verified:
+
+- `scripts/qualification/r2-metering-generate.ts`: SHA256 `fb265f8b027fe40e50556ba88fc5b91f585b03f6c7a4526e175fd2d8b04ca7d0`, exactly the previously predicted postimage. The only changed byte sequence is the package.json LOCKED_FILES hash031bdb38… → acceptedc7b69fba…; all source/schema/transformer/tool locks, execution guards and output semantics remain unchanged.
+- `qualification-inputs/expected-pins.sha256`: SHA256 `fbb96e3092b49ac4ef390c3efbea8ba25fc80e552f6348dba2dfe61ba027c5fc`. Exactly97 ordered unique paths, byte-equivalent rows except the four authorized generator/package/pypi/access hash fields. Independently checked all97 final rows against actual file bytes; all match. No unrelated hashes or paths were refreshed and the original all-row check remains.
+
+The four targets remain generatorfb265f8b…, packagec7b69fba…, normal-main pypi workflowb970dfb6…, and accepted access workflowe94235c9…. These bind already reviewed source identities; they do not confer native or publisher execution authority. Historical Stage-A package031b provenance is deliberately unchanged. No further companion/structural pin adjustment is indicated by this literal repair; companion314cac84 and four INPUTS retain the prior plan's scope.
+
+Existing canonical recipe SHA256 `0e6e0b970d917c1bc25f15ebdc98c5c7ae2755c36291ee733d39caa345521a80` is unchanged. After root commits the exact repair and confirms any optional mainPR53 merge remains docs-only with the reviewed recipe/source identities preserved, one normal push on the existing generation branch is acceptable under its original caps and artifact-only controls. The generator TypeScript source is genuinely changed and R3-inventoried, so this is required final-source generation, not an unchanged failed-run retry. No history rewrite, native dispatch, limit/case change or extra campaign is authorized.
+
+Reported pre-correction run40378170714 PASS/source02e and its retained artifact remain evidence for their actual historical input only; this review does not adopt them or relabel them final. Do not presume generated hashes from that run. Review/adopt actual final-source generated output and refresh only its justified final pin identities before portable/native execution. Core public gates and six-file source acceptance are inherited unchanged. Original native, portable, four-cell and SDK release gates remain outstanding until their actual receipts close them.

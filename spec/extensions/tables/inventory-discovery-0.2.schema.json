@@ -1,0 +1,634 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:table-inventory-discovery:0.2",
+  "title": "R2 closed marker-free source review selector",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "tableIntents",
+    "conversions",
+    "retiredSeedSets",
+    "retirements",
+    "restorations",
+    "archiveSources",
+    "tableArchiveSources"
+  ],
+  "properties": {
+    "version": {
+      "const": "umf.table-inventory-discovery/0.2"
+    },
+    "tableIntents": {
+      "type": "array",
+      "maxItems": 512,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "table",
+              "record"
+            ],
+            "properties": {
+              "kind": {
+                "const": "create"
+              },
+              "table": {
+                "$ref": "#/$defs/tableId"
+              },
+              "record": {
+                "$ref": "#/$defs/ref"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "table",
+              "record",
+              "disposition"
+            ],
+            "properties": {
+              "kind": {
+                "const": "remove"
+              },
+              "table": {
+                "$ref": "#/$defs/tableId"
+              },
+              "record": {
+                "$ref": "#/$defs/ref"
+              },
+              "disposition": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "mode"
+                ],
+                "properties": {
+                  "mode": {
+                    "const": "irreversible-purge"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "table",
+              "record",
+              "retention"
+            ],
+            "properties": {
+              "kind": {
+                "const": "retire"
+              },
+              "table": {
+                "$ref": "#/$defs/tableId"
+              },
+              "record": {
+                "$ref": "#/$defs/ref"
+              },
+              "retention": {
+                "$ref": "#/$defs/retention"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "table",
+              "record",
+              "archive"
+            ],
+            "properties": {
+              "kind": {
+                "const": "restore"
+              },
+              "table": {
+                "$ref": "#/$defs/tableId"
+              },
+              "record": {
+                "$ref": "#/$defs/ref"
+              },
+              "archive": {
+                "$ref": "#/$defs/tableArchiveRef"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "conversions": {
+      "type": "array",
+      "maxItems": 256,
+      "items": {
+        "$ref": "#/$defs/conversion"
+      }
+    },
+    "retiredSeedSets": {
+      "type": "array",
+      "maxItems": 256,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 256
+      }
+    },
+    "retirements": {
+      "type": "array",
+      "maxItems": 256,
+      "items": {
+        "$ref": "urn:umf:g10:proposal:request-options-history#/$defs/retirement"
+      }
+    },
+    "restorations": {
+      "type": "array",
+      "maxItems": 256,
+      "items": {
+        "$ref": "#/$defs/fieldRestoration"
+      }
+    },
+    "archiveSources": {
+      "type": "array",
+      "maxItems": 64,
+      "items": {
+        "$ref": "urn:umf:g10:proposal:request-options-history#/$defs/archiveSource"
+      }
+    },
+    "tableArchiveSources": {
+      "type": "array",
+      "maxItems": 64,
+      "items": {
+        "$ref": "#/$defs/tableArchiveSource"
+      }
+    }
+  },
+  "$defs": {
+    "uuid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "module",
+        "element"
+      ],
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00]+$"
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\x00]+$"
+        }
+      }
+    },
+    "tableId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^[^\\x00]+$"
+    },
+    "retention": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policyId",
+        "policyRevision",
+        "minimumRetentionMs"
+      ],
+      "properties": {
+        "policyId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[^\\x00]+$"
+        },
+        "policyRevision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "minimumRetentionMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 315360000000
+        }
+      }
+    },
+    "targetCustody": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "custodianId",
+        "registrationId",
+        "resourceId",
+        "incarnation",
+        "registrationDigest"
+      ],
+      "properties": {
+        "profile": {
+          "const": "umf.native-target-custody/0.1"
+        },
+        "custodianId": {
+          "$ref": "#/$defs/uuid"
+        },
+        "registrationId": {
+          "$ref": "#/$defs/uuid"
+        },
+        "resourceId": {
+          "$ref": "#/$defs/uuid"
+        },
+        "incarnation": {
+          "$ref": "#/$defs/uuid"
+        },
+        "registrationDigest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "tableArchiveRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "providerId",
+        "storeId",
+        "archiveId",
+        "lineageId",
+        "originalTableToken",
+        "originalPhysicalGeneration",
+        "targetCustody",
+        "table",
+        "record",
+        "retirementPlanDigest",
+        "retirementSourceDigest",
+        "tableMeaningDigest",
+        "nativeDomainDigest",
+        "archiveSourceDigest"
+      ],
+      "properties": {
+        "profile": {
+          "const": "umf.retained-table-archive-ref/0.1"
+        },
+        "providerId": {
+          "$ref": "#/$defs/uuid"
+        },
+        "storeId": {
+          "$ref": "#/$defs/uuid"
+        },
+        "archiveId": {
+          "$ref": "#/$defs/uuid"
+        },
+        "lineageId": {
+          "$ref": "#/$defs/uuid"
+        },
+        "originalTableToken": {
+          "$ref": "#/$defs/uuid"
+        },
+        "originalPhysicalGeneration": {
+          "$ref": "#/$defs/uuid"
+        },
+        "targetCustody": {
+          "$ref": "#/$defs/targetCustody"
+        },
+        "table": {
+          "$ref": "#/$defs/tableId"
+        },
+        "record": {
+          "$ref": "#/$defs/ref"
+        },
+        "retirementPlanDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "retirementSourceDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "tableMeaningDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "nativeDomainDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "archiveSourceDigest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "material": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "sha256",
+        "bytes"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "source",
+            "configuration",
+            "bundle",
+            "plan",
+            "source-meaning"
+          ]
+        },
+        "sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "bytes": {
+          "type": "string",
+          "maxLength": 33554432,
+          "pattern": "^(?:[A-Za-z0-9_-]{4})*(?:(?:[A-Za-z0-9_-][AQgw])|(?:[A-Za-z0-9_-]{2}[AEIMQUYcgkosw048]))?$"
+        }
+      }
+    },
+    "tableArchiveSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "archive",
+        "materials"
+      ],
+      "properties": {
+        "archive": {
+          "$ref": "#/$defs/tableArchiveRef"
+        },
+        "materials": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "prefixItems": [
+            {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/material"
+                },
+                {
+                  "properties": {
+                    "kind": {
+                      "const": "source"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/material"
+                },
+                {
+                  "properties": {
+                    "kind": {
+                      "const": "configuration"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/material"
+                },
+                {
+                  "properties": {
+                    "kind": {
+                      "const": "bundle"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/material"
+                },
+                {
+                  "properties": {
+                    "kind": {
+                      "const": "plan"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/material"
+                },
+                {
+                  "properties": {
+                    "kind": {
+                      "const": "source-meaning"
+                    }
+                  }
+                }
+              ]
+            }
+          ],
+          "items": false
+        }
+      }
+    },
+    "fieldArchiveRef": {
+      "type":"object","additionalProperties":false,
+      "required":["profile","providerId","archiveId","tableToken","targetCustody","retirementPlanDigest","retirementSourceDigest","fieldMeaningDigest"],
+      "properties":{"profile":{"const":"umf.retired-field-archive-ref/0.1"},"providerId":{"$ref":"#/$defs/uuid"},"archiveId":{"$ref":"#/$defs/uuid"},"tableToken":{"$ref":"#/$defs/uuid"},"targetCustody":{"$ref":"#/$defs/targetCustody"},"retirementPlanDigest":{"$ref":"#/$defs/digest"},"retirementSourceDigest":{"$ref":"#/$defs/digest"},"fieldMeaningDigest":{"$ref":"#/$defs/digest"}}
+    },
+    "newInstances": {
+      "oneOf":[
+        {"type":"object","additionalProperties":false,"required":["mode"],"properties":{"mode":{"const":"refuse"}}},
+        {"type":"object","additionalProperties":false,"required":["mode"],"properties":{"mode":{"const":"null"}}},
+        {"type":"object","additionalProperties":false,"required":["mode","expression"],"properties":{"mode":{"const":"fill"},"expression":{"$ref":"urn:umf:table-operation:0.2#/$defs/rowExpression"}}}
+      ]
+    },
+    "fieldArchiveLineage": {
+      "type":"object","additionalProperties":false,
+      "required":["profile","providerId","storeId","lineageId","originalTableToken","wholeTableArchive","target"],
+      "properties":{"profile":{"const":"umf.field-archive-lineage-selection/0.1"},"providerId":{"$ref":"#/$defs/uuid"},"storeId":{"$ref":"#/$defs/uuid"},"lineageId":{"$ref":"#/$defs/uuid"},"originalTableToken":{"$ref":"#/$defs/uuid"},"wholeTableArchive":{"$ref":"#/$defs/tableArchiveRef"},"target":{"oneOf":[{"type":"object","additionalProperties":false,"required":["kind","expectedTableToken"],"properties":{"kind":{"const":"current-descendant"},"expectedTableToken":{"$ref":"#/$defs/uuid"}}},{"type":"object","additionalProperties":false,"required":["kind","tableRestoreIntentIndex"],"properties":{"kind":{"const":"same-plan-restored-descendant"},"tableRestoreIntentIndex":{"type":"integer","minimum":0,"maximum":511}}}]}}
+    },
+    "fieldRestoration": {
+      "oneOf":[
+        {"type":"object","additionalProperties":false,"required":["table","field","archive","newInstances"],"properties":{"table":{"$ref":"#/$defs/tableId"},"field":{"$ref":"#/$defs/ref"},"archive":{"$ref":"#/$defs/fieldArchiveRef"},"newInstances":{"$ref":"#/$defs/newInstances"}}},
+        {"type":"object","additionalProperties":false,"required":["profile","table","field","archive","newInstances","lineage"],"properties":{"profile":{"const":"umf.lineage-field-restoration/0.1"},"table":{"$ref":"#/$defs/tableId"},"field":{"$ref":"#/$defs/ref"},"archive":{"$ref":"#/$defs/fieldArchiveRef"},"newInstances":{"$ref":"#/$defs/newInstances"},"lineage":{"$ref":"#/$defs/fieldArchiveLineage"}}}
+      ]
+    },
+    "conversion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "table",
+        "field",
+        "recipe",
+        "nulls",
+        "invalid",
+        "recovery"
+      ],
+      "properties": {
+        "table": {
+          "$ref": "#/$defs/tableId"
+        },
+        "field": {
+          "$ref": "#/$defs/ref"
+        },
+        "recipe": {
+          "oneOf": [
+            {"type":"object","additionalProperties":false,"required":["version","kind","parameters"],"properties":{"version":{"const":"umf.conversion-recipe/0.1"},"kind":{"enum":["numeric-exact","text-date","date-text","text-instant","instant-text","text-uuid","uuid-text"]},"parameters":{"type":"object","maxProperties":0,"additionalProperties":false}}},
+            {"type":"object","additionalProperties":false,"required":["version","kind","parameters"],"properties":{"version":{"const":"umf.conversion-recipe/0.1"},"kind":{"const":"numeric-rescale"},"parameters":{"type":"object","additionalProperties":false,"required":["rounding"],"properties":{"rounding":{"enum":["half-even","toward-zero"]}}}}},
+            {"type":"object","additionalProperties":false,"required":["version","kind","parameters"],"properties":{"version":{"const":"umf.conversion-recipe/0.1"},"kind":{"const":"date-instant"},"parameters":{"type":"object","additionalProperties":false,"required":["at","offset"],"properties":{"at":{"const":"00:00:00"},"offset":{"const":"Z"}}}}},
+            {"type":"object","additionalProperties":false,"required":["version","kind","parameters"],"properties":{"version":{"const":"umf.conversion-recipe/0.1"},"kind":{"const":"instant-date"},"parameters":{"type":"object","additionalProperties":false,"required":["time","offset"],"properties":{"time":{"enum":["require-midnight","discard"]},"offset":{"const":"Z"}}}}},
+            {"type":"object","additionalProperties":false,"required":["version","kind","parameters"],"properties":{"version":{"const":"umf.conversion-recipe/0.1"},"kind":{"enum":["text-boolean","boolean-text"]},"parameters":{"type":"object","additionalProperties":false,"required":["trueToken","falseToken"],"properties":{"trueToken":{"type":"string","minLength":1,"maxLength":128,"pattern":"^[^\\x00]+$"},"falseToken":{"type":"string","minLength":1,"maxLength":128,"pattern":"^[^\\x00]+$"}}}}}
+          ]
+        },
+        "nulls": {
+          "const": "preserve"
+        },
+        "invalid": {
+          "const": "abort"
+        },
+        "recovery": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "irreversible"
+                }
+              }
+            },
+            {
+              "$ref": "urn:umf:g10:proposal:request-options-history#/$defs/conversion/properties/recovery/oneOf/1"
+            },
+            {
+              "$ref": "urn:umf:g10:proposal:request-options-history#/$defs/conversion/properties/recovery/oneOf/2"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "tableArchiveSources": {
+            "items": {
+              "properties": {
+                "materials": {
+                  "prefixItems": [
+                    {
+                      "properties": {
+                        "kind": {
+                          "const": "source"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "tableArchiveSources": {
+            "items": {
+              "properties": {
+                "materials": {
+                  "prefixItems": [
+                    {
+                      "properties": {
+                        "bytes": {
+                          "maxLength": 22369624
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "tableArchiveSources": {
+            "items": {
+              "properties": {
+                "materials": {
+                  "prefixItems": [
+                    {},
+                    {},
+                    {
+                      "properties": {
+                        "kind": {
+                          "const": "bundle"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "tableArchiveSources": {
+            "items": {
+              "properties": {
+                "materials": {
+                  "prefixItems": [
+                    {},
+                    {},
+                    {
+                      "properties": {
+                        "bytes": {
+                          "maxLength": 22369624
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

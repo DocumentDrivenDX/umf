@@ -1,0 +1,1471 @@
+﻿2026-10-27T19:10:33.2603843Z Current runner version: '2.338.0'
+2026-10-27T19:10:33.2627065Z ##[group]Runner Image Provisioner
+2026-10-27T19:10:33.2628158Z Hosted Compute Agent
+2026-10-27T19:10:33.2628702Z Version: 20261021.618
+2026-10-27T19:10:33.2629273Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-10-27T19:10:33.2629870Z Build Date: 2026-10-21T00:45:21Z
+2026-10-27T19:10:33.2630654Z Worker ID: {3e32fb44-2d14-4f50-8042-95ea0585294d}
+2026-10-27T19:10:33.2631252Z Region: eastus
+2026-10-27T19:10:33.2631698Z Cloud: Azure
+2026-10-27T19:10:33.2632240Z ##[endgroup]
+2026-10-27T19:10:33.2633457Z ##[group]Operating System
+2026-10-27T19:10:33.2634191Z Ubuntu
+2026-10-27T19:10:33.2634631Z 24.04.5
+2026-10-27T19:10:33.2635049Z LTS
+2026-10-27T19:10:33.2635567Z ##[endgroup]
+2026-10-27T19:10:33.2636029Z ##[group]Runner Image
+2026-10-27T19:10:33.2636552Z Image: ubuntu-24.04
+2026-10-27T19:10:33.2637045Z Version: 20261025.353.1
+2026-10-27T19:10:33.2638133Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261025.353/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-27T19:10:33.2639412Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261025.353
+2026-10-27T19:10:33.2640219Z ##[endgroup]
+2026-10-27T19:10:33.2641514Z ##[group]GITHUB_TOKEN Permissions
+2026-10-27T19:10:33.2643410Z Contents: read
+2026-10-27T19:10:33.2643959Z Metadata: read
+2026-10-27T19:10:33.2644426Z ##[endgroup]
+2026-10-27T19:10:33.2646224Z Secret source: Actions
+2026-10-27T19:10:33.2647037Z Cache mode: write
+2026-10-27T19:10:33.2647933Z Prepare workflow directory
+2026-10-27T19:10:33.2908345Z Prepare all required actions
+2026-10-27T19:10:33.2947255Z Getting action download info
+2026-10-27T19:10:33.5135744Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-27T19:10:33.7151430Z Download action repository 'oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6' (SHA:0c5077e51419868618aeaa5fe8019c62421857d6)
+2026-10-27T19:10:33.8553790Z Download action repository 'actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1' (SHA:ece7cb06caefa5fff74198d8649806c4678c61a1)
+2026-10-27T19:10:33.9611719Z Download action repository 'dtolnay/rust-toolchain@stable' (SHA:b725eda525362e7cf34af9a7243cac1e3f01a7ec)
+2026-10-27T19:10:34.0475435Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-27T19:10:34.3426394Z Complete job name: generate
+2026-10-27T19:10:34.4126471Z ##[group]Run set -euo pipefail
+2026-10-27T19:10:34.4127420Z [36;1mset -euo pipefail[0m
+2026-10-27T19:10:34.4128324Z [36;1mEVIDENCE="$RUNNER_TEMP/umf-merged-generation"[0m
+2026-10-27T19:10:34.4129744Z [36;1mMETAMODEL_STAGE="$RUNNER_TEMP/umf-metamodel-stage-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"[0m
+2026-10-27T19:10:34.4131254Z [36;1mtest ! -e "$METAMODEL_STAGE"[0m
+2026-10-27T19:10:34.4132197Z [36;1mmkdir -p "$EVIDENCE/logs" "$EVIDENCE/outputs"[0m
+2026-10-27T19:10:34.4133421Z [36;1mprintf 'METAMODEL_STAGE_DIR=%s\n' "$METAMODEL_STAGE" >> "$GITHUB_ENV"[0m
+2026-10-27T19:10:34.4134827Z [36;1mSTART_MS="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"[0m
+2026-10-27T19:10:34.4135971Z [36;1mDEADLINE_MS="$((START_MS + 1800000))"[0m
+2026-10-27T19:10:34.4137052Z [36;1mprintf '%s\n' "$START_MS" > "$EVIDENCE/monotonic-start-ms"[0m
+2026-10-27T19:10:34.4138306Z [36;1mprintf '%s\n' "$DEADLINE_MS" > "$EVIDENCE/monotonic-deadline-ms"[0m
+2026-10-27T19:10:34.4139592Z [36;1mprintf 'EVIDENCE_DIR=%s\n' "$EVIDENCE" >> "$GITHUB_ENV"[0m
+2026-10-27T19:10:34.4140944Z [36;1mcat > "$EVIDENCE/generated-source-receipt.json" <<EOF[0m
+2026-10-27T19:10:34.4141949Z [36;1m{[0m
+2026-10-27T19:10:34.4142723Z [36;1m  "profile": "umf.merged-source-generation/1",[0m
+2026-10-27T19:10:34.4143687Z [36;1m  "status": "FAIL_OR_UNKNOWN",[0m
+2026-10-27T19:10:34.4144555Z [36;1m  "sourceCommit": "$GITHUB_SHA",[0m
+2026-10-27T19:10:34.4145416Z [36;1m  "runId": "$GITHUB_RUN_ID",[0m
+2026-10-27T19:10:34.4146289Z [36;1m  "runAttempt": "$GITHUB_RUN_ATTEMPT",[0m
+2026-10-27T19:10:34.4147418Z [36;1m  "ref": "$GITHUB_REF",[0m
+2026-10-27T19:10:34.4148231Z [36;1m  "workflow": "$GITHUB_WORKFLOW",[0m
+2026-10-27T19:10:34.4149385Z [36;1m  "scope": "Artifact-only generation; output is not qualified or adopted."[0m
+2026-10-27T19:10:34.4150599Z [36;1m}[0m
+2026-10-27T19:10:34.4151208Z [36;1mEOF[0m
+2026-10-27T19:10:34.4174033Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:10:34.4175425Z ##[endgroup]
+2026-10-27T19:10:34.4628005Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-10-27T19:10:34.4629088Z with:
+2026-10-27T19:10:34.4629740Z   persist-credentials: false
+2026-10-27T19:10:34.4630648Z   fetch-depth: 16
+2026-10-27T19:10:34.4631332Z   repository: DocumentDrivenDX/umf
+2026-10-27T19:10:34.4637518Z   token: ***
+2026-10-27T19:10:34.4638243Z   ssh-strict: true
+2026-10-27T19:10:34.4638872Z   ssh-user: git
+2026-10-27T19:10:34.4639524Z   clean: true
+2026-10-27T19:10:34.4640173Z   sparse-checkout-cone-mode: true
+2026-10-27T19:10:34.4641075Z   fetch-tags: false
+2026-10-27T19:10:34.4641726Z   show-progress: true
+2026-10-27T19:10:34.4642385Z   lfs: false
+2026-10-27T19:10:34.4642988Z   submodules: false
+2026-10-27T19:10:34.4643639Z   set-safe-directory: true
+2026-10-27T19:10:34.4644372Z   allow-unsafe-pr-checkout: false
+2026-10-27T19:10:34.4645109Z env:
+2026-10-27T19:10:34.4646015Z   METAMODEL_STAGE_DIR: /home/runner/work/_temp/umf-metamodel-stage-40566692892-1
+2026-10-27T19:10:34.4647351Z   EVIDENCE_DIR: /home/runner/work/_temp/umf-merged-generation
+2026-10-27T19:10:34.4648290Z ##[endgroup]
+2026-10-27T19:10:34.7760206Z Syncing repository: DocumentDrivenDX/umf
+2026-10-27T19:10:34.7762311Z ##[group]Getting Git version info
+2026-10-27T19:10:34.7762865Z Working directory is '/home/runner/work/umf/umf'
+2026-10-27T19:10:34.7763662Z [command]/usr/bin/git version
+2026-10-27T19:10:34.7847008Z git version 2.56.0
+2026-10-27T19:10:34.7865057Z ##[endgroup]
+2026-10-27T19:10:34.7878376Z Temporarily overriding HOME='/home/runner/work/_temp/9d3a3604-a0ed-4cf4-8ae3-689042511bc4' before making global git config changes
+2026-10-27T19:10:34.7879761Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-27T19:10:34.7883477Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf
+2026-10-27T19:10:34.7930292Z Deleting the contents of '/home/runner/work/umf/umf'
+2026-10-27T19:10:34.7934200Z ##[group]Initializing the repository
+2026-10-27T19:10:34.7937263Z [command]/usr/bin/git init /home/runner/work/umf/umf
+2026-10-27T19:10:34.8032447Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-27T19:10:34.8033937Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-27T19:10:34.8035038Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-27T19:10:34.8035971Z hint: call:
+2026-10-27T19:10:34.8036831Z hint:
+2026-10-27T19:10:34.8045639Z hint: 	git config --global init.defaultBranch <name>
+2026-10-27T19:10:34.8046366Z hint:
+2026-10-27T19:10:34.8046913Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-27T19:10:34.8047508Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-27T19:10:34.8048031Z hint:
+2026-10-27T19:10:34.8048561Z hint: 	git branch -m <name>
+2026-10-27T19:10:34.8049080Z hint:
+2026-10-27T19:10:34.8049744Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-27T19:10:34.8050627Z Initialized empty Git repository in /home/runner/work/umf/umf/.git/
+2026-10-27T19:10:34.8057508Z [command]/usr/bin/git remote add origin https://github.com/DocumentDrivenDX/umf
+2026-10-27T19:10:34.8103280Z ##[endgroup]
+2026-10-27T19:10:34.8104224Z ##[group]Disabling automatic garbage collection
+2026-10-27T19:10:34.8105884Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-27T19:10:34.8153641Z ##[endgroup]
+2026-10-27T19:10:34.8154401Z ##[group]Setting up auth
+2026-10-27T19:10:34.8155144Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T19:10:34.8189318Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-27T19:10:34.8581805Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T19:10:34.8618743Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-27T19:10:34.8823188Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T19:10:34.8859851Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-27T19:10:34.9063514Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-27T19:10:34.9106021Z ##[endgroup]
+2026-10-27T19:10:34.9106842Z ##[group]Fetching the repository
+2026-10-27T19:10:34.9116520Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=16 origin +1e0d9545eb6e00dc4521a257be722cf336c3b741:refs/remotes/origin/codex/migration-merged-generation
+2026-10-27T19:11:54.3165319Z From https://github.com/DocumentDrivenDX/umf
+2026-10-27T19:11:54.3166275Z  * [new ref]           1e0d9545eb6e00dc4521a257be722cf336c3b741 -> origin/codex/migration-merged-generation
+2026-10-27T19:11:54.3175412Z ##[endgroup]
+2026-10-27T19:11:54.3176883Z ##[group]Determining the checkout info
+2026-10-27T19:11:54.3177764Z ##[endgroup]
+2026-10-27T19:11:54.3178245Z [command]/usr/bin/git sparse-checkout disable
+2026-10-27T19:11:54.3229696Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-27T19:11:54.3265912Z ##[group]Checking out the ref
+2026-10-27T19:11:54.3268878Z [command]/usr/bin/git checkout --progress --force -B codex/migration-merged-generation refs/remotes/origin/codex/migration-merged-generation
+2026-10-27T19:11:55.4140280Z Updating files:   6% (4300/63851)
+2026-10-27T19:11:55.6832070Z Updating files:   7% (4470/63851)
+2026-10-27T19:11:55.7404659Z Updating files:   8% (5109/63851)
+2026-10-27T19:11:55.7717441Z Updating files:   9% (5747/63851)
+2026-10-27T19:11:55.9063681Z Updating files:  10% (6386/63851)
+2026-10-27T19:11:55.9936806Z Updating files:  11% (7024/63851)
+2026-10-27T19:11:56.0572167Z Updating files:  12% (7663/63851)
+2026-10-27T19:11:56.0888997Z Updating files:  13% (8301/63851)
+2026-10-27T19:11:56.3763779Z Updating files:  14% (8940/63851)
+2026-10-27T19:11:56.6276509Z Updating files:  14% (9187/63851)
+2026-10-27T19:11:57.1282844Z Updating files:  15% (9578/63851)
+2026-10-27T19:11:57.3572563Z Updating files:  16% (10217/63851)
+2026-10-27T19:11:57.3744075Z Updating files:  17% (10855/63851)
+2026-10-27T19:11:57.3875258Z Updating files:  17% (11116/63851)
+2026-10-27T19:11:57.7842589Z Updating files:  18% (11494/63851)
+2026-10-27T19:11:57.9900832Z Updating files:  19% (12132/63851)
+2026-10-27T19:11:58.2086019Z Updating files:  20% (12771/63851)
+2026-10-27T19:11:58.2788107Z Updating files:  21% (13409/63851)
+2026-10-27T19:11:58.3068432Z Updating files:  22% (14048/63851)
+2026-10-27T19:11:58.3361585Z Updating files:  23% (14686/63851)
+2026-10-27T19:11:58.3579951Z Updating files:  24% (15325/63851)
+2026-10-27T19:11:58.3727680Z Updating files:  25% (15963/63851)
+2026-10-27T19:11:58.3808391Z Updating files:  25% (16369/63851)
+2026-10-27T19:11:58.4050292Z Updating files:  26% (16602/63851)
+2026-10-27T19:11:58.4272911Z Updating files:  27% (17240/63851)
+2026-10-27T19:11:58.4515121Z Updating files:  28% (17879/63851)
+2026-10-27T19:11:58.4742864Z Updating files:  29% (18517/63851)
+2026-10-27T19:11:58.5084255Z Updating files:  30% (19156/63851)
+2026-10-27T19:11:58.5465689Z Updating files:  31% (19794/63851)
+2026-10-27T19:11:58.5684046Z Updating files:  32% (20433/63851)
+2026-10-27T19:11:59.4756909Z Updating files:  33% (21071/63851)
+2026-10-27T19:11:59.7980617Z Updating files:  33% (21689/63851)
+2026-10-27T19:12:00.5209323Z Updating files:  34% (21710/63851)
+2026-10-27T19:12:01.5008817Z Updating files:  34% (21738/63851)
+2026-10-27T19:12:02.4639853Z Updating files:  34% (21771/63851)
+2026-10-27T19:12:03.4983790Z Updating files:  34% (21799/63851)
+2026-10-27T19:12:04.4714953Z Updating files:  34% (21829/63851)
+2026-10-27T19:12:05.3737913Z Updating files:  34% (21859/63851)
+2026-10-27T19:12:05.5727544Z Updating files:  34% (21879/63851)
+2026-10-27T19:12:06.0721928Z Updating files:  35% (22348/63851)
+2026-10-27T19:12:06.3325521Z Updating files:  36% (22987/63851)
+2026-10-27T19:12:06.3784197Z Updating files:  37% (23625/63851)
+2026-10-27T19:12:06.4095414Z Updating files:  37% (23755/63851)
+2026-10-27T19:12:06.4656661Z Updating files:  38% (24264/63851)
+2026-10-27T19:12:06.5186795Z Updating files:  39% (24902/63851)
+2026-10-27T19:12:06.5761450Z Updating files:  40% (25541/63851)
+2026-10-27T19:12:06.6183331Z Updating files:  41% (26179/63851)
+2026-10-27T19:12:06.6639449Z Updating files:  42% (26818/63851)
+2026-10-27T19:12:07.2065417Z Updating files:  43% (27456/63851)
+2026-10-27T19:12:07.3127199Z Updating files:  44% (28095/63851)
+2026-10-27T19:12:07.5034971Z Updating files:  45% (28733/63851)
+2026-10-27T19:12:07.5346776Z Updating files:  45% (29151/63851)
+2026-10-27T19:12:07.7368429Z Updating files:  46% (29372/63851)
+2026-10-27T19:12:07.9120539Z Updating files:  47% (30010/63851)
+2026-10-27T19:12:08.0340077Z Updating files:  48% (30649/63851)
+2026-10-27T19:12:08.2263652Z Updating files:  49% (31287/63851)
+2026-10-27T19:12:08.3728845Z Updating files:  50% (31926/63851)
+2026-10-27T19:12:08.3915689Z Updating files:  50% (32256/63851)
+2026-10-27T19:12:08.4947925Z Updating files:  51% (32565/63851)
+2026-10-27T19:12:08.5390304Z Updating files:  52% (33203/63851)
+2026-10-27T19:12:08.6550059Z Updating files:  53% (33842/63851)
+2026-10-27T19:12:08.6737184Z Updating files:  54% (34480/63851)
+2026-10-27T19:12:08.6913002Z Updating files:  55% (35119/63851)
+2026-10-27T19:12:08.7181213Z Updating files:  56% (35757/63851)
+2026-10-27T19:12:08.8412816Z Updating files:  57% (36396/63851)
+2026-10-27T19:12:08.9120001Z Updating files:  58% (37034/63851)
+2026-10-27T19:12:08.9542439Z Updating files:  59% (37673/63851)
+2026-10-27T19:12:09.0936030Z Updating files:  60% (38311/63851)
+2026-10-27T19:12:09.1650327Z Updating files:  61% (38950/63851)
+2026-10-27T19:12:09.2192128Z Updating files:  62% (39588/63851)
+2026-10-27T19:12:09.2398211Z Updating files:  63% (40227/63851)
+2026-10-27T19:12:09.2585646Z Updating files:  64% (40865/63851)
+2026-10-27T19:12:09.2747782Z Updating files:  65% (41504/63851)
+2026-10-27T19:12:09.2947680Z Updating files:  66% (42142/63851)
+2026-10-27T19:12:09.3256063Z Updating files:  67% (42781/63851)
+2026-10-27T19:12:09.3727681Z Updating files:  68% (43419/63851)
+2026-10-27T19:12:09.3813406Z Updating files:  68% (43828/63851)
+2026-10-27T19:12:09.5058631Z Updating files:  69% (44058/63851)
+2026-10-27T19:12:09.6399493Z Updating files:  70% (44696/63851)
+2026-10-27T19:12:09.6786791Z Updating files:  71% (45335/63851)
+2026-10-27T19:12:09.6953274Z Updating files:  72% (45973/63851)
+2026-10-27T19:12:09.7139435Z Updating files:  73% (46612/63851)
+2026-10-27T19:12:09.7299576Z Updating files:  74% (47250/63851)
+2026-10-27T19:12:09.7460090Z Updating files:  75% (47889/63851)
+2026-10-27T19:12:09.7626030Z Updating files:  76% (48527/63851)
+2026-10-27T19:12:09.7824830Z Updating files:  77% (49166/63851)
+2026-10-27T19:12:09.7988421Z Updating files:  78% (49804/63851)
+2026-10-27T19:12:09.8156645Z Updating files:  79% (50443/63851)
+2026-10-27T19:12:09.8351197Z Updating files:  80% (51081/63851)
+2026-10-27T19:12:09.9226836Z Updating files:  81% (51720/63851)
+2026-10-27T19:12:10.0607956Z Updating files:  82% (52358/63851)
+2026-10-27T19:12:10.2228747Z Updating files:  83% (52997/63851)
+2026-10-27T19:12:10.3189386Z Updating files:  84% (53635/63851)
+2026-10-27T19:12:10.3407325Z Updating files:  85% (54274/63851)
+2026-10-27T19:12:10.3598157Z Updating files:  86% (54912/63851)
+2026-10-27T19:12:10.3727276Z Updating files:  87% (55551/63851)
+2026-10-27T19:12:10.3788255Z Updating files:  87% (55968/63851)
+2026-10-27T19:12:10.4353594Z Updating files:  88% (56189/63851)
+2026-10-27T19:12:10.4596454Z Updating files:  89% (56828/63851)
+2026-10-27T19:12:10.4774606Z Updating files:  90% (57466/63851)
+2026-10-27T19:12:10.4988426Z Updating files:  91% (58105/63851)
+2026-10-27T19:12:10.5390970Z Updating files:  92% (58743/63851)
+2026-10-27T19:12:10.5652580Z Updating files:  93% (59382/63851)
+2026-10-27T19:12:10.5913977Z Updating files:  94% (60020/63851)
+2026-10-27T19:12:10.6985634Z Updating files:  95% (60659/63851)
+2026-10-27T19:12:10.7691248Z Updating files:  96% (61297/63851)
+2026-10-27T19:12:11.0227742Z Updating files:  97% (61936/63851)
+2026-10-27T19:12:11.0508618Z Updating files:  98% (62574/63851)
+2026-10-27T19:12:11.0919236Z Updating files:  99% (63213/63851)
+2026-10-27T19:12:11.0919579Z Updating files: 100% (63851/63851)
+2026-10-27T19:12:11.0919907Z Updating files: 100% (63851/63851), done.
+2026-10-27T19:12:11.3903499Z Switched to a new branch 'codex/migration-merged-generation'
+2026-10-27T19:12:11.3905535Z branch 'codex/migration-merged-generation' set up to track 'origin/codex/migration-merged-generation'.
+2026-10-27T19:12:11.4202827Z ##[endgroup]
+2026-10-27T19:12:11.4252712Z [command]/usr/bin/git log -1 --format=%H
+2026-10-27T19:12:11.4282836Z 1e0d9545eb6e00dc4521a257be722cf336c3b741
+2026-10-27T19:12:11.4290618Z ##[group]Removing auth
+2026-10-27T19:12:11.4293454Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T19:12:11.4326419Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-27T19:12:11.4628339Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T19:12:11.4658209Z http.https://github.com/.extraheader
+2026-10-27T19:12:11.4665216Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-27T19:12:11.6212600Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-27T19:12:11.6520814Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T19:12:11.6558111Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-27T19:12:11.6857669Z ##[endgroup]
+2026-10-27T19:12:11.7724263Z ##[group]Run oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+2026-10-27T19:12:11.7724572Z with:
+2026-10-27T19:12:11.7724744Z   bun-version: 1.4.3
+2026-10-27T19:12:11.7724922Z   no-cache: false
+2026-10-27T19:12:11.7726820Z   token: ***
+2026-10-27T19:12:11.7726995Z env:
+2026-10-27T19:12:11.7727276Z   METAMODEL_STAGE_DIR: /home/runner/work/_temp/umf-metamodel-stage-40566692892-1
+2026-10-27T19:12:11.7727639Z   EVIDENCE_DIR: /home/runner/work/_temp/umf-merged-generation
+2026-10-27T19:12:11.7727896Z ##[endgroup]
+2026-10-27T19:12:12.0343866Z Cache hit for: bun-+NUKu9E/U4apAe78eSCZvQ/GSdc=
+2026-10-27T19:12:12.3750706Z Received 41001437 of 41001437 (100.0%), 138.7 MBs/sec
+2026-10-27T19:12:12.3751164Z Cache Size: ~39 MB (41001437 B)
+2026-10-27T19:12:12.3773801Z [command]/usr/bin/tar -xf /home/runner/work/_temp/36466937-e203-46e7-beaa-8fdea6b9d8f3/cache.tzst -P -C /home/runner/work/umf/umf --use-compress-program unzstd
+2026-10-27T19:12:12.5519474Z Cache restored successfully
+2026-10-27T19:12:12.5541762Z [command]/home/runner/.bun/bin/bun --revision
+2026-10-27T19:12:12.5615252Z 1.4.3+c6da4a4d3
+2026-10-27T19:12:12.5620800Z Using a cached version of Bun: 1.4.3+c6da4a4d3
+2026-10-27T19:12:12.6703540Z ##[group]Run actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+2026-10-27T19:12:12.6704013Z with:
+2026-10-27T19:12:12.6704428Z   python-version: 3.11.17
+2026-10-27T19:12:12.6704719Z   check-latest: false
+2026-10-27T19:12:12.6707702Z   token: ***
+2026-10-27T19:12:12.6707976Z   update-environment: true
+2026-10-27T19:12:12.6708288Z   allow-prereleases: false
+2026-10-27T19:12:12.6708579Z   freethreaded: false
+2026-10-27T19:12:12.6708842Z env:
+2026-10-27T19:12:12.6709242Z   METAMODEL_STAGE_DIR: /home/runner/work/_temp/umf-metamodel-stage-40566692892-1
+2026-10-27T19:12:12.6709840Z   EVIDENCE_DIR: /home/runner/work/_temp/umf-merged-generation
+2026-10-27T19:12:12.6710259Z ##[endgroup]
+2026-10-27T19:12:12.7745731Z ##[group]Installed versions
+2026-10-27T19:12:12.8734937Z Successfully set up CPython (3.11.17)
+2026-10-27T19:12:12.8735600Z ##[endgroup]
+2026-10-27T19:12:12.9194931Z ##[group]Run dtolnay/rust-toolchain@stable
+2026-10-27T19:12:12.9195193Z with:
+2026-10-27T19:12:12.9195363Z   toolchain: 1.90.0
+2026-10-27T19:12:12.9195549Z   components: rustfmt
+2026-10-27T19:12:12.9195751Z   targets: wasm32-unknown-unknown
+2026-10-27T19:12:12.9196111Z env:
+2026-10-27T19:12:12.9196383Z   METAMODEL_STAGE_DIR: /home/runner/work/_temp/umf-metamodel-stage-40566692892-1
+2026-10-27T19:12:12.9196814Z   EVIDENCE_DIR: /home/runner/work/_temp/umf-merged-generation
+2026-10-27T19:12:12.9197160Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:12.9197544Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:12:12.9197938Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:12.9198242Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:12.9198626Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:12.9198988Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:12:12.9199319Z ##[endgroup]
+2026-10-27T19:12:12.9252910Z ##[start-action display=Parse toolchain version;id=__dtolnay_rust-toolchain.parse]
+2026-10-27T19:12:12.9602769Z ##[group]Run if [[ -z $toolchain ]]; then
+2026-10-27T19:12:12.9603087Z [36;1mif [[ -z $toolchain ]]; then[0m
+2026-10-27T19:12:12.9603516Z [36;1m  # GitHub does not enforce `required: true` inputs itself. https://github.com/actions/runner/issues/1070[0m
+2026-10-27T19:12:12.9603949Z [36;1m  echo "'toolchain' is a required input" >&2[0m
+2026-10-27T19:12:12.9604198Z [36;1m  exit 1[0m
+2026-10-27T19:12:12.9604485Z [36;1melif [[ $toolchain =~ ^stable' '[0-9]+' '(year|month|week|day)s?' 'ago$ ]]; then[0m
+2026-10-27T19:12:12.9604811Z [36;1m  if [[ Linux == macOS ]]; then[0m
+2026-10-27T19:12:12.9605242Z [36;1m    echo "toolchain=1.$((($(date -v-$(sed 's/stable \([0-9]*\) \(.\).*/\1\2/' <<< $toolchain) +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT[0m
+2026-10-27T19:12:12.9605643Z [36;1m  else[0m
+2026-10-27T19:12:12.9605985Z [36;1m    echo "toolchain=1.$((($(date --date "${toolchain#stable }" +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT[0m
+2026-10-27T19:12:12.9606340Z [36;1m  fi[0m
+2026-10-27T19:12:12.9606651Z [36;1melif [[ $toolchain =~ ^stable' 'minus' '[0-9]+' 'releases?$ ]]; then[0m
+2026-10-27T19:12:12.9607242Z [36;1m  echo "toolchain=1.$((($(date +%s)/60/60/24-16569)/7/6-${toolchain//[^0-9]/}))" >> $GITHUB_OUTPUT[0m
+2026-10-27T19:12:12.9607761Z [36;1melif [[ $toolchain =~ ^1\.[0-9]+$ ]]; then[0m
+2026-10-27T19:12:12.9608446Z [36;1m  echo "toolchain=1.$((i=${toolchain#1.}, c=($(date +%s)/60/60/24-16569)/7/6, i+9*i*(10*i<=c)+90*i*(100*i<=c)))" >> $GITHUB_OUTPUT[0m
+2026-10-27T19:12:12.9609101Z [36;1melse[0m
+2026-10-27T19:12:12.9609369Z [36;1m  delimiter=EOF[0m
+2026-10-27T19:12:12.9609776Z [36;1m  while [[ $toolchain == *$delimiter* ]]; do delimiter+=_; done[0m
+2026-10-27T19:12:12.9610376Z [36;1m  printf 'toolchain<<%s\n%s\n%s\n' "$delimiter" "$toolchain" "$delimiter" >> $GITHUB_OUTPUT[0m
+2026-10-27T19:12:12.9610949Z [36;1mfi[0m
+2026-10-27T19:12:12.9913455Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:12:12.9913751Z env:
+2026-10-27T19:12:12.9914041Z   METAMODEL_STAGE_DIR: /home/runner/work/_temp/umf-metamodel-stage-40566692892-1
+2026-10-27T19:12:12.9914611Z   EVIDENCE_DIR: /home/runner/work/_temp/umf-merged-generation
+2026-10-27T19:12:12.9914939Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:12.9915287Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:12:12.9915622Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:12.9915926Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:12.9916231Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:12.9916532Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:12:12.9916821Z   toolchain: 1.90.0
+2026-10-27T19:12:12.9917042Z ##[endgroup]
+2026-10-27T19:12:13.0549270Z ##[end-action id=__dtolnay_rust-toolchain.parse;outcome=success;conclusion=success;duration_ms=129]
+2026-10-27T19:12:13.0553373Z ##[start-action display=Set $CARGO_HOME;id=__dtolnay_rust-toolchain.__run]
+2026-10-27T19:12:13.0967179Z ##[group]Run echo CARGO_HOME=${CARGO_HOME:-"$HOME/.cargo"} >> $GITHUB_ENV
+2026-10-27T19:12:13.0967598Z [36;1mecho CARGO_HOME=${CARGO_HOME:-"$HOME/.cargo"} >> $GITHUB_ENV[0m
+2026-10-27T19:12:13.0985778Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:12:13.0986057Z env:
+2026-10-27T19:12:13.0986340Z   METAMODEL_STAGE_DIR: /home/runner/work/_temp/umf-metamodel-stage-40566692892-1
+2026-10-27T19:12:13.0986721Z   EVIDENCE_DIR: /home/runner/work/_temp/umf-merged-generation
+2026-10-27T19:12:13.0987042Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:13.0987373Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:12:13.0987710Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:13.0988020Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:13.0988324Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:13.0988630Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:12:13.0988905Z ##[endgroup]
+2026-10-27T19:12:13.1826372Z ##[end-action id=__dtolnay_rust-toolchain.__run;outcome=success;conclusion=success;duration_ms=127]
+2026-10-27T19:12:13.1828407Z ##[start-action display=Install rustup if needed;id=__dtolnay_rust-toolchain.__run_2]
+2026-10-27T19:12:13.4095197Z ##[group]Run if ! command -v rustup &>/dev/null; then
+2026-10-27T19:12:13.4095680Z [36;1mif ! command -v rustup &>/dev/null; then[0m
+2026-10-27T19:12:13.4096466Z [36;1m  curl --proto '=https' --tlsv1.2 --retry 10 --retry-connrefused --location --silent --show-error --fail https://sh.rustup.rs | sh -s -- --default-toolchain none -y[0m
+2026-10-27T19:12:13.4097227Z [36;1m  echo "$CARGO_HOME/bin" >> $GITHUB_PATH[0m
+2026-10-27T19:12:13.4097561Z [36;1mfi[0m
+2026-10-27T19:12:13.4118752Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:12:13.4119039Z env:
+2026-10-27T19:12:13.4119323Z   METAMODEL_STAGE_DIR: /home/runner/work/_temp/umf-metamodel-stage-40566692892-1
+2026-10-27T19:12:13.4119721Z   EVIDENCE_DIR: /home/runner/work/_temp/umf-merged-generation
+2026-10-27T19:12:13.4120042Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:13.4120388Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:12:13.4120912Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:13.4121217Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:13.4121516Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:13.4121826Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:12:13.4122094Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T19:12:13.4122301Z ##[endgroup]
+2026-10-27T19:12:13.5715794Z ##[end-action id=__dtolnay_rust-toolchain.__run_2;outcome=success;conclusion=success;duration_ms=388]
+2026-10-27T19:12:13.5718098Z ##[start-action display=Install rustup if needed on windows;id=__dtolnay_rust-toolchain.__run_3]
+2026-10-27T19:12:13.5723254Z ##[end-action id=__dtolnay_rust-toolchain.__run_3;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-10-27T19:12:13.5733718Z ##[start-action display=rustup toolchain install 1.90.0;id=__dtolnay_rust-toolchain.__run_4]
+2026-10-27T19:12:13.6906548Z ##[group]Run set -f  # split targets and components on commas and whitespace, without glob expansion
+2026-10-27T19:12:13.6907271Z [36;1mset -f  # split targets and components on commas and whitespace, without glob expansion[0m
+2026-10-27T19:12:13.6907733Z [36;1mflags=()[0m
+2026-10-27T19:12:13.6908019Z [36;1mfor t in ${targets//,/ }; do flags+=(--target "$t"); done[0m
+2026-10-27T19:12:13.6908498Z [36;1mfor c in ${components//,/ }; do flags+=(--component "$c"); done[0m
+2026-10-27T19:12:13.6909424Z [36;1mif [[ $toolchain == nightly && -n $components ]]; then flags+=(--allow-downgrade); fi[0m
+2026-10-27T19:12:13.6909956Z [36;1mlog=$(mktemp)[0m
+2026-10-27T19:12:13.6910248Z [36;1mtrap 'rm -f "$log"' EXIT[0m
+2026-10-27T19:12:13.6910707Z [36;1mfor attempt in 1 2 3 4 5; do[0m
+2026-10-27T19:12:13.6911425Z [36;1m  if rustup toolchain install "$toolchain" "${flags[@]}" --profile minimal --no-self-update --force-non-host 2>&1 | tee "$log"; then[0m
+2026-10-27T19:12:13.6912133Z [36;1m    break[0m
+2026-10-27T19:12:13.6912385Z [36;1m  else[0m
+2026-10-27T19:12:13.6912630Z [36;1m    status=$?[0m
+2026-10-27T19:12:13.6912892Z [36;1m  fi[0m
+2026-10-27T19:12:13.6913251Z [36;1m  if [[ $attempt == 5 ]] || ! grep -Fq 'checksum failed for ' "$log" \[0m
+2026-10-27T19:12:13.6913912Z [36;1m      || ! grep -Fq 'this is likely due to an ongoing update of the official release server' "$log"; then[0m
+2026-10-27T19:12:13.6914424Z [36;1m    exit "$status"[0m
+2026-10-27T19:12:13.6914715Z [36;1m  fi[0m
+2026-10-27T19:12:13.6915162Z [36;1m  echo "Retrying rustup toolchain install in 30 seconds (retry $attempt of 4)" >&2[0m
+2026-10-27T19:12:13.6915592Z [36;1m  sleep 30[0m
+2026-10-27T19:12:13.6915767Z [36;1mdone[0m
+2026-10-27T19:12:13.6934022Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:12:13.6934287Z env:
+2026-10-27T19:12:13.6934554Z   METAMODEL_STAGE_DIR: /home/runner/work/_temp/umf-metamodel-stage-40566692892-1
+2026-10-27T19:12:13.6934933Z   EVIDENCE_DIR: /home/runner/work/_temp/umf-merged-generation
+2026-10-27T19:12:13.6935248Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:13.6935578Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:12:13.6935909Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:13.6936224Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:13.6936526Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:13.6936839Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:12:13.6937111Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T19:12:13.6937324Z   toolchain: 1.90.0
+2026-10-27T19:12:13.6937509Z   targets: wasm32-unknown-unknown
+2026-10-27T19:12:13.6937710Z   components: rustfmt
+2026-10-27T19:12:13.6937896Z   RUSTUP_PERMIT_COPY_RENAME: 1
+2026-10-27T19:12:13.6938103Z ##[endgroup]
+2026-10-27T19:12:14.3407371Z info: syncing channel updates for 1.90.0-x86_64-unknown-linux-gnu
+2026-10-27T19:12:14.6234722Z info: latest update on 2025-09-18 for version 1.90.0 (1159e78c4 2025-09-14)
+2026-10-27T19:12:14.6236703Z info: downloading 5 components
+2026-10-27T19:12:23.7807822Z 
+2026-10-27T19:12:23.7878519Z   1.90.0-x86_64-unknown-linux-gnu installed - rustc 1.90.0 (1159e78c4 2025-09-14)
+2026-10-27T19:12:23.7878964Z 
+2026-10-27T19:12:23.8618423Z ##[end-action id=__dtolnay_rust-toolchain.__run_4;outcome=success;conclusion=success;duration_ms=10288]
+2026-10-27T19:12:23.8643271Z ##[start-action display=rustup default 1.90.0;id=__dtolnay_rust-toolchain.__run_5]
+2026-10-27T19:12:23.8811228Z ##[group]Run rustup default "$toolchain" --force-non-host
+2026-10-27T19:12:23.8811746Z [36;1mrustup default "$toolchain" --force-non-host[0m
+2026-10-27T19:12:23.8835147Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:12:23.8835623Z env:
+2026-10-27T19:12:23.8835903Z   METAMODEL_STAGE_DIR: /home/runner/work/_temp/umf-metamodel-stage-40566692892-1
+2026-10-27T19:12:23.8836277Z   EVIDENCE_DIR: /home/runner/work/_temp/umf-merged-generation
+2026-10-27T19:12:23.8836596Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:23.8836943Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:12:23.8837277Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:23.8837575Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:23.8837878Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:23.8838302Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:12:23.8838575Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T19:12:23.8838778Z   toolchain: 1.90.0
+2026-10-27T19:12:23.8838957Z ##[endgroup]
+2026-10-27T19:12:23.8971512Z info: using existing install for 1.90.0-x86_64-unknown-linux-gnu
+2026-10-27T19:12:23.9306476Z info: default toolchain set to 1.90.0-x86_64-unknown-linux-gnu
+2026-10-27T19:12:23.9321057Z 
+2026-10-27T19:12:23.9380340Z   1.90.0-x86_64-unknown-linux-gnu unchanged - rustc 1.90.0 (1159e78c4 2025-09-14)
+2026-10-27T19:12:23.9381441Z info: note that the toolchain '1.90.0-x86_64-unknown-linux-gnu' is currently in use (overridden by '/home/runner/work/umf/umf/rust-toolchain.toml')
+2026-10-27T19:12:23.9381852Z 
+2026-10-27T19:12:23.9397323Z ##[end-action id=__dtolnay_rust-toolchain.__run_5;outcome=success;conclusion=success;duration_ms=75]
+2026-10-27T19:12:23.9401080Z ##[start-action display=Create cachekey;id=__dtolnay_rust-toolchain.rustc-version]
+2026-10-27T19:12:24.0422655Z ##[group]Run DATE=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-date: \(20[0-9][0-9]\)-\([01][0-9]\)-\([0-3][0-9]\)$/\1\2\3/p')
+2026-10-27T19:12:24.0423699Z [36;1mDATE=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-date: \(20[0-9][0-9]\)-\([01][0-9]\)-\([0-3][0-9]\)$/\1\2\3/p')[0m
+2026-10-27T19:12:24.0424602Z [36;1mHASH=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-hash: //p')[0m
+2026-10-27T19:12:24.0425244Z [36;1mecho "cachekey=$(echo $DATE$HASH | head -c12)" >> $GITHUB_OUTPUT[0m
+2026-10-27T19:12:24.0451058Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:12:24.0451350Z env:
+2026-10-27T19:12:24.0451640Z   METAMODEL_STAGE_DIR: /home/runner/work/_temp/umf-metamodel-stage-40566692892-1
+2026-10-27T19:12:24.0452034Z   EVIDENCE_DIR: /home/runner/work/_temp/umf-merged-generation
+2026-10-27T19:12:24.0452354Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.0452694Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:12:24.0453038Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.0453336Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.0453629Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.0453937Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:12:24.0454207Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T19:12:24.0454413Z   toolchain: 1.90.0
+2026-10-27T19:12:24.0454583Z ##[endgroup]
+2026-10-27T19:12:24.1707068Z ##[end-action id=__dtolnay_rust-toolchain.rustc-version;outcome=success;conclusion=success;duration_ms=230]
+2026-10-27T19:12:24.1709999Z ##[start-action display=Disable incremental compilation;id=__dtolnay_rust-toolchain.__run_6]
+2026-10-27T19:12:24.1726540Z ##[group]Run if [ -z "${CARGO_INCREMENTAL+set}" ]; then
+2026-10-27T19:12:24.1726868Z [36;1mif [ -z "${CARGO_INCREMENTAL+set}" ]; then[0m
+2026-10-27T19:12:24.1727159Z [36;1m  echo CARGO_INCREMENTAL=0 >> $GITHUB_ENV[0m
+2026-10-27T19:12:24.1727396Z [36;1mfi[0m
+2026-10-27T19:12:24.1745179Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:12:24.1745440Z env:
+2026-10-27T19:12:24.1745716Z   METAMODEL_STAGE_DIR: /home/runner/work/_temp/umf-metamodel-stage-40566692892-1
+2026-10-27T19:12:24.1746254Z   EVIDENCE_DIR: /home/runner/work/_temp/umf-merged-generation
+2026-10-27T19:12:24.1746567Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.1746899Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:12:24.1747237Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.1747535Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.1747827Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.1748133Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:12:24.1748407Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T19:12:24.1748753Z ##[endgroup]
+2026-10-27T19:12:24.1833142Z ##[end-action id=__dtolnay_rust-toolchain.__run_6;outcome=success;conclusion=success;duration_ms=12]
+2026-10-27T19:12:24.1835162Z ##[start-action display=Enable colors in Cargo output;id=__dtolnay_rust-toolchain.__run_7]
+2026-10-27T19:12:24.1911145Z ##[group]Run if [ -z "${CARGO_TERM_COLOR+set}" ]; then
+2026-10-27T19:12:24.1911596Z [36;1mif [ -z "${CARGO_TERM_COLOR+set}" ]; then[0m
+2026-10-27T19:12:24.1912004Z [36;1m  echo CARGO_TERM_COLOR=always >> $GITHUB_ENV[0m
+2026-10-27T19:12:24.1912353Z [36;1mfi[0m
+2026-10-27T19:12:24.1929488Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:12:24.1929750Z env:
+2026-10-27T19:12:24.1930019Z   METAMODEL_STAGE_DIR: /home/runner/work/_temp/umf-metamodel-stage-40566692892-1
+2026-10-27T19:12:24.1930401Z   EVIDENCE_DIR: /home/runner/work/_temp/umf-merged-generation
+2026-10-27T19:12:24.1930914Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.1931259Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:12:24.1931601Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.1931907Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.1932200Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.1932506Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:12:24.1932773Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T19:12:24.1932994Z   CARGO_INCREMENTAL: 0
+2026-10-27T19:12:24.1933178Z ##[endgroup]
+2026-10-27T19:12:24.2033447Z ##[end-action id=__dtolnay_rust-toolchain.__run_7;outcome=success;conclusion=success;duration_ms=19]
+2026-10-27T19:12:24.2036141Z ##[start-action display=Enable Cargo sparse registry;id=__dtolnay_rust-toolchain.__run_8]
+2026-10-27T19:12:24.2112440Z ##[group]Run # implemented in 1.66, stabilized in 1.68, made default in 1.70
+2026-10-27T19:12:24.2113040Z [36;1m# implemented in 1.66, stabilized in 1.68, made default in 1.70[0m
+2026-10-27T19:12:24.2113910Z [36;1mif [ -z "${CARGO_REGISTRIES_CRATES_IO_PROTOCOL+set}" -o -f "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol ]; then[0m
+2026-10-27T19:12:24.2114782Z [36;1m  if rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.6[89]\.'; then[0m
+2026-10-27T19:12:24.2115479Z [36;1m    touch "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol || true[0m
+2026-10-27T19:12:24.2116126Z [36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse >> $GITHUB_ENV[0m
+2026-10-27T19:12:24.2116735Z [36;1m  elif rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.6[67]\.'; then[0m
+2026-10-27T19:12:24.2117400Z [36;1m    touch "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol || true[0m
+2026-10-27T19:12:24.2118032Z [36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=git >> $GITHUB_ENV[0m
+2026-10-27T19:12:24.2118453Z [36;1m  fi[0m
+2026-10-27T19:12:24.2118692Z [36;1mfi[0m
+2026-10-27T19:12:24.2136358Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:12:24.2136641Z env:
+2026-10-27T19:12:24.2136915Z   METAMODEL_STAGE_DIR: /home/runner/work/_temp/umf-metamodel-stage-40566692892-1
+2026-10-27T19:12:24.2137293Z   EVIDENCE_DIR: /home/runner/work/_temp/umf-merged-generation
+2026-10-27T19:12:24.2137797Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.2138138Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:12:24.2138480Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.2138783Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.2139083Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.2139383Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:12:24.2139652Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T19:12:24.2139861Z   CARGO_INCREMENTAL: 0
+2026-10-27T19:12:24.2140056Z   CARGO_TERM_COLOR: always
+2026-10-27T19:12:24.2140356Z   toolchain: 1.90.0
+2026-10-27T19:12:24.2140660Z ##[endgroup]
+2026-10-27T19:12:24.2576678Z ##[end-action id=__dtolnay_rust-toolchain.__run_8;outcome=success;conclusion=success;duration_ms=53]
+2026-10-27T19:12:24.2580023Z ##[start-action display=Work around spurious network errors in curl 8.0;id=__dtolnay_rust-toolchain.__run_9]
+2026-10-27T19:12:24.2610390Z ##[group]Run # https://rust-lang.zulipchat.com/#narrow/stream/246057-t-cargo/topic/timeout.20investigation
+2026-10-27T19:12:24.2611194Z [36;1m# https://rust-lang.zulipchat.com/#narrow/stream/246057-t-cargo/topic/timeout.20investigation[0m
+2026-10-27T19:12:24.2611685Z [36;1mif rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.7[01]\.'; then[0m
+2026-10-27T19:12:24.2612063Z [36;1m  echo CARGO_HTTP_MULTIPLEXING=false >> $GITHUB_ENV[0m
+2026-10-27T19:12:24.2612317Z [36;1mfi[0m
+2026-10-27T19:12:24.2629945Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:12:24.2630221Z env:
+2026-10-27T19:12:24.2630587Z   METAMODEL_STAGE_DIR: /home/runner/work/_temp/umf-metamodel-stage-40566692892-1
+2026-10-27T19:12:24.2630961Z   EVIDENCE_DIR: /home/runner/work/_temp/umf-merged-generation
+2026-10-27T19:12:24.2631278Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.2631628Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:12:24.2631953Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.2632250Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.2632536Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.2632841Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:12:24.2633106Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T19:12:24.2633344Z   CARGO_INCREMENTAL: 0
+2026-10-27T19:12:24.2633523Z   CARGO_TERM_COLOR: always
+2026-10-27T19:12:24.2633704Z   toolchain: 1.90.0
+2026-10-27T19:12:24.2633876Z ##[endgroup]
+2026-10-27T19:12:24.2881341Z ##[end-action id=__dtolnay_rust-toolchain.__run_9;outcome=success;conclusion=success;duration_ms=30]
+2026-10-27T19:12:24.2887505Z ##[start-action display=rustc +1.90.0 --version --verbose;id=__dtolnay_rust-toolchain.__run_10]
+2026-10-27T19:12:24.2913179Z ##[group]Run rustc +"$toolchain" --version --verbose
+2026-10-27T19:12:24.2913691Z [36;1mrustc +"$toolchain" --version --verbose[0m
+2026-10-27T19:12:24.2932456Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:12:24.2932737Z env:
+2026-10-27T19:12:24.2933021Z   METAMODEL_STAGE_DIR: /home/runner/work/_temp/umf-metamodel-stage-40566692892-1
+2026-10-27T19:12:24.2933401Z   EVIDENCE_DIR: /home/runner/work/_temp/umf-merged-generation
+2026-10-27T19:12:24.2933719Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.2934060Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:12:24.2934386Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.2934697Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.2934989Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.2935291Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:12:24.2935561Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T19:12:24.2936031Z   CARGO_INCREMENTAL: 0
+2026-10-27T19:12:24.2936214Z   CARGO_TERM_COLOR: always
+2026-10-27T19:12:24.2936404Z   toolchain: 1.90.0
+2026-10-27T19:12:24.2936580Z ##[endgroup]
+2026-10-27T19:12:24.3136639Z rustc 1.90.0 (1159e78c4 2025-09-14)
+2026-10-27T19:12:24.3137054Z binary: rustc
+2026-10-27T19:12:24.3137376Z commit-hash: 1159e78c4747b02ef996e55082b704c09b970588
+2026-10-27T19:12:24.3137759Z commit-date: 2025-09-14
+2026-10-27T19:12:24.3138053Z host: x86_64-unknown-linux-gnu
+2026-10-27T19:12:24.3138362Z release: 1.90.0
+2026-10-27T19:12:24.3138736Z LLVM version: 20.1.8
+2026-10-27T19:12:24.3153655Z ##[end-action id=__dtolnay_rust-toolchain.__run_10;outcome=success;conclusion=success;duration_ms=26]
+2026-10-27T19:12:24.3211672Z ##[group]Run set -euo pipefail
+2026-10-27T19:12:24.3212048Z [36;1mset -euo pipefail[0m
+2026-10-27T19:12:24.3212383Z [36;1mtest "$GITHUB_EVENT_NAME" = push[0m
+2026-10-27T19:12:24.3212774Z [36;1mtest "$GITHUB_REF" = refs/heads/codex/migration-merged-generation[0m
+2026-10-27T19:12:24.3213130Z [36;1mtest "$GITHUB_REPOSITORY" = DocumentDrivenDX/umf[0m
+2026-10-27T19:12:24.3213415Z [36;1mtest "$(git rev-parse HEAD)" = "$GITHUB_SHA"[0m
+2026-10-27T19:12:24.3213789Z [36;1mgit merge-base --is-ancestor 97d15f9937163a3ab2a9e17eb08796a4734cbd68 "$GITHUB_SHA"[0m
+2026-10-27T19:12:24.3214242Z [36;1mgit merge-base --is-ancestor 7d334dec45948953718bfacd3ed6dd199cadba79 "$GITHUB_SHA"[0m
+2026-10-27T19:12:24.3214595Z [36;1mtest -z "$(git status --porcelain)"[0m
+2026-10-27T19:12:24.3214846Z [36;1mtest "$(bun --version)" = 1.4.3[0m
+2026-10-27T19:12:24.3215111Z [36;1mtest "$(python --version)" = 'Python 3.11.17'[0m
+2026-10-27T19:12:24.3215473Z [36;1mtest "$(rustc --version)" = 'rustc 1.90.0 (1159e78c4 2025-09-14)'[0m
+2026-10-27T19:12:24.3234620Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:12:24.3234911Z env:
+2026-10-27T19:12:24.3235187Z   METAMODEL_STAGE_DIR: /home/runner/work/_temp/umf-metamodel-stage-40566692892-1
+2026-10-27T19:12:24.3235582Z   EVIDENCE_DIR: /home/runner/work/_temp/umf-merged-generation
+2026-10-27T19:12:24.3235970Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.3236396Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:12:24.3236732Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.3237036Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.3237438Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.3237920Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:12:24.3238415Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T19:12:24.3238751Z   CARGO_INCREMENTAL: 0
+2026-10-27T19:12:24.3239053Z   CARGO_TERM_COLOR: always
+2026-10-27T19:12:24.3239458Z ##[endgroup]
+2026-10-27T19:12:24.8918456Z ##[group]Run set -euo pipefail
+2026-10-27T19:12:24.8919465Z [36;1mset -euo pipefail[0m
+2026-10-27T19:12:24.8919677Z [36;1mpython -I - <<'PY'[0m
+2026-10-27T19:12:24.8919937Z [36;1mimport hashlib,json,os,pathlib,tomllib[0m
+2026-10-27T19:12:24.8920236Z [36;1mroot=pathlib.Path(os.environ["GITHUB_WORKSPACE"])[0m
+2026-10-27T19:12:24.8920740Z [36;1mevidence=pathlib.Path(os.environ["EVIDENCE_DIR"])[0m
+2026-10-27T19:12:24.8921087Z [36;1mdef sha(path): return hashlib.sha256(path.read_bytes()).hexdigest()[0m
+2026-10-27T19:12:24.8921495Z [36;1mcompanion_path="src/generated/core-validators-accounted.ts"[0m
+2026-10-27T19:12:24.8921798Z [36;1mcompanion=root/companion_path[0m
+2026-10-27T19:12:24.8922183Z [36;1mexpected_companion_sha="5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29"[0m
+2026-10-27T19:12:24.8922589Z [36;1mexpected_companion_bytes=1525352[0m
+2026-10-27T19:12:24.8923076Z [36;1mif not companion.is_file() or companion.stat().st_size!=expected_companion_bytes or sha(companion)!=expected_companion_sha:[0m
+2026-10-27T19:12:24.8923653Z [36;1m    raise SystemExit("adopted accounted companion bytes do not match the reviewed Stage-A output")[0m
+2026-10-27T19:12:24.8924305Z [36;1mproject=tomllib.loads((root/"python/pyproject.toml").read_text())[0m
+2026-10-27T19:12:24.8924664Z [36;1mpackage_version=project.get("project",{}).get("version")[0m
+2026-10-27T19:12:24.8925008Z [36;1mpackage_init=(root/"python/src/umf/__init__.py").read_text()[0m
+2026-10-27T19:12:24.8925408Z [36;1mif package_version!="0.10.3" or '__version__ = "0.10.3"' not in package_init.splitlines():[0m
+2026-10-27T19:12:24.8925822Z [36;1m    raise SystemExit("Core producer distribution metadata is not 0.10.3")[0m
+2026-10-27T19:12:24.8926168Z [36;1mcore_schema_path=root/"spec/core/schema.json"[0m
+2026-10-27T19:12:24.8926465Z [36;1mcore_schema=json.loads(core_schema_path.read_bytes())[0m
+2026-10-27T19:12:24.8926913Z [36;1mif core_schema.get("$id")!="urn:umf:core:0.10.0" or core_schema.get("properties",{}).get("umf",{}).get("const")!="0.10.0":[0m
+2026-10-27T19:12:24.8927374Z [36;1m    raise SystemExit("Core 0.10.0 semantic schema identity changed")[0m
+2026-10-27T19:12:24.8927845Z [36;1mruntime_manifest=json.loads((root/"python/src/umf/action_runtime_resource_manifest.json").read_bytes())[0m
+2026-10-27T19:12:24.8928422Z [36;1mif set(runtime_manifest)!={"format","resources"} or runtime_manifest.get("format")!="umf.action-runtime-resources/1":[0m
+2026-10-27T19:12:24.8928949Z [36;1m    raise SystemExit("Core runtime resource manifest profile or closed shape changed")[0m
+2026-10-27T19:12:24.8929369Z [36;1mcore_resource=runtime_manifest.get("resources",{}).get("coreSchema")[0m
+2026-10-27T19:12:24.8929786Z [36;1mif (not isinstance(core_resource,dict) or set(core_resource)!={"file","sha256","source"}[0m
+2026-10-27T19:12:24.8930281Z [36;1m    or core_resource.get("file")!="coreSchema.json" or core_resource.get("source")!="spec/core/schema.json"[0m
+2026-10-27T19:12:24.8930879Z [36;1m    or core_resource.get("sha256")!=sha(core_schema_path)):[0m
+2026-10-27T19:12:24.8931306Z [36;1m    raise SystemExit("Core schema resource mapping or pinned digest does not match actual schema bytes")[0m
+2026-10-27T19:12:24.8931950Z [36;1mprovenance_root=pathlib.Path("docs/helix/04-build/evidence/schema-migration-design-review/main-reconciliation-001/stage-a-40556187661")[0m
+2026-10-27T19:12:24.8932487Z [36;1mmanifest_rel=provenance_root/"manifest.json"[0m
+2026-10-27T19:12:24.8932766Z [36;1midentity_rel=provenance_root/"identity.txt"[0m
+2026-10-27T19:12:24.8933045Z [36;1mowner_rel=provenance_root/"owner-result.json"[0m
+2026-10-27T19:12:24.8933358Z [36;1mreview_rel=provenance_root/"sol-output-source-review.md"[0m
+2026-10-27T19:12:24.8933660Z [36;1msums_rel=provenance_root/"SHA256SUMS"[0m
+2026-10-27T19:12:24.8933942Z [36;1msource_pins_rel=provenance_root/"source-pins.sha256"[0m
+2026-10-27T19:12:24.8934220Z [36;1mmanifest_path=root/manifest_rel[0m
+2026-10-27T19:12:24.8934608Z [36;1midentity_path=root/identity_rel[0m
+2026-10-27T19:12:24.8934842Z [36;1mowner_path=root/owner_rel[0m
+2026-10-27T19:12:24.8935061Z [36;1mreview_path=root/review_rel[0m
+2026-10-27T19:12:24.8935271Z [36;1msums_path=root/sums_rel[0m
+2026-10-27T19:12:24.8935498Z [36;1msource_pins_path=root/source_pins_rel[0m
+2026-10-27T19:12:24.8935881Z [36;1mexpected_manifest_sha="67570dddf2c1218381d55ce8e9e7c026e0087772790d6dd9f9f6115e60a8ec79"[0m
+2026-10-27T19:12:24.8936377Z [36;1mexpected_stage_pins_sha="2c3071baeb289c5bc41ce903dbb4597f14cb471e316259baac252887bdfc454c"[0m
+2026-10-27T19:12:24.8936766Z [36;1mif sha(manifest_path)!=expected_manifest_sha:[0m
+2026-10-27T19:12:24.8937110Z [36;1m    raise SystemExit("Stage-A companion provenance manifest hash mismatch")[0m
+2026-10-27T19:12:24.8937465Z [36;1mif sha(source_pins_path)!=expected_stage_pins_sha:[0m
+2026-10-27T19:12:24.8937790Z [36;1m    raise SystemExit("Stage-A source pin manifest hash mismatch")[0m
+2026-10-27T19:12:24.8938117Z [36;1mmanifest=json.loads(manifest_path.read_bytes())[0m
+2026-10-27T19:12:24.8938447Z [36;1mexpected_run={"eventName":"push","id":"40556187661","attempt":"1",[0m
+2026-10-27T19:12:24.8938779Z [36;1m              "sha":"a2cc9c2ff5510d0b6653d50102bd406e3b4556c6",[0m
+2026-10-27T19:12:24.8939307Z [36;1m              "ref":"refs/heads/codex/migration-main-metering-generation",[0m
+2026-10-27T19:12:24.8939869Z [36;1m              "workflowRef":"DocumentDrivenDX/umf/.github/workflows/r2-metering-stage-a.yml@refs/heads/codex/migration-main-metering-generation",[0m
+2026-10-27T19:12:24.8940512Z [36;1m              "workflowSha":"a2cc9c2ff5510d0b6653d50102bd406e3b4556c6"}[0m
+2026-10-27T19:12:24.8940972Z [36;1mif manifest.get("profile")!="umf.r2-metering-generated-companion/1" or manifest.get("run")!=expected_run:[0m
+2026-10-27T19:12:24.8941433Z [36;1m    raise SystemExit("Stage-A manifest run identity mismatch")[0m
+2026-10-27T19:12:24.8941958Z [36;1mif manifest.get("output")!={"path":"core-validators-accounted.ts","sha256":expected_companion_sha,"bytes":expected_companion_bytes}:[0m
+2026-10-27T19:12:24.8942503Z [36;1m    raise SystemExit("Stage-A manifest output identity mismatch")[0m
+2026-10-27T19:12:24.8942994Z [36;1mif manifest.get("execution")!={"artifactOnly":True,"companionEvaluated":False,"publicValidatorChanged":False}:[0m
+2026-10-27T19:12:24.8943462Z [36;1m    raise SystemExit("Stage-A generation boundary mismatch")[0m
+2026-10-27T19:12:24.8943969Z [36;1mif manifest.get("generator")!={"path":"scripts/metamodel/structural-accounting.ts","invocationCount":1,"outputPurpose":"stage-a"}:[0m
+2026-10-27T19:12:24.8944465Z [36;1m    raise SystemExit("Stage-A generator identity mismatch")[0m
+2026-10-27T19:12:24.8944743Z [36;1mexpected_stage_inputs={[0m
+2026-10-27T19:12:24.8944989Z [36;1m    "src/generated/core-validators.ts":"source",[0m
+2026-10-27T19:12:24.8945254Z [36;1m    "spec/core/schema.json":"schema",[0m
+2026-10-27T19:12:24.8945555Z [36;1m    "spec/core/semantic-type-reference.schema.json":"schema",[0m
+2026-10-27T19:12:24.8945891Z [36;1m    "spec/core/extension-package.schema.json":"schema",[0m
+2026-10-27T19:12:24.8946148Z [36;1m}[0m
+2026-10-27T19:12:24.8946326Z [36;1mstage_inputs=manifest.get("inputs")[0m
+2026-10-27T19:12:24.8946686Z [36;1mif not isinstance(stage_inputs,list) or len(stage_inputs)!=len(expected_stage_inputs):[0m
+2026-10-27T19:12:24.8947139Z [36;1m    raise SystemExit("Stage-A source input roster is not the exact four-file closure")[0m
+2026-10-27T19:12:24.8947580Z [36;1mstage_input_map={row.get("path"):row for row in stage_inputs if isinstance(row,dict)}[0m
+2026-10-27T19:12:24.8947958Z [36;1mif set(stage_input_map)!=set(expected_stage_inputs):[0m
+2026-10-27T19:12:24.8948338Z [36;1m    raise SystemExit("Stage-A source input paths differ from the closed four-file roster")[0m
+2026-10-27T19:12:24.8948715Z [36;1mfor name,kind in expected_stage_inputs.items():[0m
+2026-10-27T19:12:24.8948971Z [36;1m    row=stage_input_map[name][0m
+2026-10-27T19:12:24.8949195Z [36;1m    source=root/name[0m
+2026-10-27T19:12:24.8949584Z [36;1m    if (set(row)!={"path","kind","sha256","bytes"} or row.get("kind")!=kind[0m
+2026-10-27T19:12:24.8949932Z [36;1m        or not source.is_file() or row.get("sha256")!=sha(source)[0m
+2026-10-27T19:12:24.8950240Z [36;1m        or row.get("bytes")!=source.stat().st_size):[0m
+2026-10-27T19:12:24.8950774Z [36;1m        raise SystemExit("Current source bytes differ from the Stage-A pinned input: "+name)[0m
+2026-10-27T19:12:24.8951150Z [36;1mowner=json.loads(owner_path.read_bytes())[0m
+2026-10-27T19:12:24.8951646Z [36;1mif owner.get("status")!="GENERATION_PASS_SOURCE_OUTPUT_ADOPTED" or owner.get("runId")!=40556187661 or owner.get("sourceCommit")!=expected_run["sha"]:[0m
+2026-10-27T19:12:24.8952183Z [36;1m    raise SystemExit("Stage-A owner receipt identity mismatch")[0m
+2026-10-27T19:12:24.8952828Z [36;1mif owner.get("artifactId")!=12757082809 or owner.get("artifactSha256")!="122767b97a6da87342321e133a033693fd83df759f939f1bc41c56928c89fc37" or owner.get("output")!=manifest["output"]:[0m
+2026-10-27T19:12:24.8953449Z [36;1m    raise SystemExit("Stage-A artifact receipt mismatch")[0m
+2026-10-27T19:12:24.8953866Z [36;1mexpected_review_sha="0f97c192a6e0fc7dfb4fbe3c05f25807053de7a7bc4b44261d9cb64abf8cab27"[0m
+2026-10-27T19:12:24.8954488Z [36;1mif sha(review_path)!=expected_review_sha or owner.get("outputSourceReviewSha256")!=expected_review_sha:[0m
+2026-10-27T19:12:24.8954943Z [36;1m    raise SystemExit("Stage-A source-output adoption review mismatch")[0m
+2026-10-27T19:12:24.8955470Z [36;1mif owner.get("adoptionTarget")!=companion_path or owner.get("adoptionParentCommit")!="a2cc9c2ff5510d0b6653d50102bd406e3b4556c6":[0m
+2026-10-27T19:12:24.8955969Z [36;1m    raise SystemExit("Stage-A adoption parent identity mismatch")[0m
+2026-10-27T19:12:24.8956266Z [36;1midentity=identity_path.read_text()[0m
+2026-10-27T19:12:24.8956627Z [36;1mfor value in ("profile=umf.r2-metering-stage-a/1", "event=push", "ref="+expected_run["ref"],[0m
+2026-10-27T19:12:24.8957055Z [36;1m              "commit="+expected_run["sha"], "run_id=40556187661", "attempt=1",[0m
+2026-10-27T19:12:24.8957481Z [36;1m              "workflow_ref="+expected_run["workflowRef"],"workflow_sha="+expected_run["workflowSha"],[0m
+2026-10-27T19:12:24.8957876Z [36;1m              "pin_manifest_sha256="+expected_stage_pins_sha,[0m
+2026-10-27T19:12:24.8958242Z [36;1m              "companion_sha256="+expected_companion_sha, "companion_bytes=1525352",[0m
+2026-10-27T19:12:24.8958589Z [36;1m              "manifest_sha256="+expected_manifest_sha):[0m
+2026-10-27T19:12:24.8958943Z [36;1m    if value not in identity: raise SystemExit("Stage-A identity receipt mismatch")[0m
+2026-10-27T19:12:24.8959427Z [36;1msums={line.split()[1]:line.split()[0] for line in sums_path.read_text().splitlines() if len(line.split())==2}[0m
+2026-10-27T19:12:24.8959905Z [36;1mfor name,path in (("manifest.json",manifest_path),("identity.txt",identity_path),[0m
+2026-10-27T19:12:24.8960333Z [36;1m                  ("owner-result.json",owner_path),("source-pins.sha256",source_pins_path),[0m
+2026-10-27T19:12:24.8960793Z [36;1m                  ("sol-output-source-review.md",review_path)):[0m
+2026-10-27T19:12:24.8961184Z [36;1m    if sums.get(name)!=sha(path): raise SystemExit("Stage-A retained checksum mismatch: "+name)[0m
+2026-10-27T19:12:24.8961537Z [36;1mpinned_sources=[[0m
+2026-10-27T19:12:24.8961838Z [36;1m  companion_path,"src/generated/core-validators.ts","spec/core/schema.json",[0m
+2026-10-27T19:12:24.8962321Z [36;1m  "spec/core/semantic-type-reference.schema.json","spec/core/extension-package.schema.json",[0m
+2026-10-27T19:12:24.8962918Z [36;1m  ".github/workflows/merged-source-generation.yml","scripts/actions-plan-identity.ts","scripts/build-codegen.ts",[0m
+2026-10-27T19:12:24.8963367Z [36;1m  "package.json","bun.lock","bunfig.toml",[0m
+2026-10-27T19:12:24.8963659Z [36;1m  "scripts/codegen/entry.ts","scripts/codegen/gzip.ts",[0m
+2026-10-27T19:12:24.8964161Z [36;1m  "python/umf_codegen/pyproject.toml","python/umf_codegen/src/umf_codegen/_embedded.py",[0m
+2026-10-27T19:12:24.8964636Z [36;1m  "python/pyproject.toml","python/src/umf/__init__.py","python/src/umf/schemas.py",[0m
+2026-10-27T19:12:24.8965115Z [36;1m  "python/src/umf/generated_resources.py","python/src/umf/action_runtime_resource_manifest.json",[0m
+2026-10-27T19:12:24.8965529Z [36;1m  "python/tests/test_python_artifact_version.py",[0m
+2026-10-27T19:12:24.8965961Z [36;1m  "scripts/rust-inventory.py","scripts/rust-inventory-typescript.ts","scripts/check-rust-boundaries.py",[0m
+2026-10-27T19:12:24.8966373Z [36;1m  "Cargo.toml","Cargo.lock"[0m
+2026-10-27T19:12:24.8966580Z [36;1m][0m
+2026-10-27T19:12:24.8966745Z [36;1mrows=[][0m
+2026-10-27T19:12:24.8966921Z [36;1mfor name in pinned_sources:[0m
+2026-10-27T19:12:24.8967131Z [36;1m    path=root/name[0m
+2026-10-27T19:12:24.8967453Z [36;1m    if not path.is_file(): raise SystemExit("merged generation source input missing: "+name)[0m
+2026-10-27T19:12:24.8967890Z [36;1m    rows.append({"path":name,"sha256":sha(path),"bytes":path.stat().st_size})[0m
+2026-10-27T19:12:24.8968280Z [36;1msource_inputs={"schema":"umf.merged-source-generation-inputs/1",[0m
+2026-10-27T19:12:24.8968690Z [36;1m               "sourceCommit":os.environ["GITHUB_SHA"],"sourceRef":os.environ["GITHUB_REF"],[0m
+2026-10-27T19:12:24.8969230Z [36;1m               "core0103Release":{"repository":"DocumentDrivenDX/umf","releaseId":425637342,[0m
+2026-10-27T19:12:24.8969677Z [36;1m                 "tag":"python-v0.10.3","releaseCommit":"7d334dec45948953718bfacd3ed6dd199cadba79",[0m
+2026-10-27T19:12:24.8970079Z [36;1m                 "immutable":True,"distributionVersion":package_version,[0m
+2026-10-27T19:12:24.8970567Z [36;1m                 "semanticCoreVersion":core_schema["properties"]["umf"]["const"],[0m
+2026-10-27T19:12:24.8970892Z [36;1m                 "publishedAssets":{[0m
+2026-10-27T19:12:24.8971234Z [36;1m                   "linuxWheel":{"filename":"umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl",[0m
+2026-10-27T19:12:24.8971867Z [36;1m                     "url":"https://github.com/DocumentDrivenDX/umf/releases/download/python-v0.10.3/umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl",[0m
+2026-10-27T19:12:24.8972491Z [36;1m                     "sha256":"cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75",[0m
+2026-10-27T19:12:24.8973047Z [36;1m                     "nativeSha256":"c51b511a06bc1ccde6cc2208d33a4fb70ef66c67507ba8f2a6ea05fd2543cf57","sizeBytes":3612043},[0m
+2026-10-27T19:12:24.8973577Z [36;1m                   "macosWheel":{"filename":"umf_core-0.10.3-cp311-abi3-macosx_11_0_arm64.whl",[0m
+2026-10-27T19:12:24.8974148Z [36;1m                     "url":"https://github.com/DocumentDrivenDX/umf/releases/download/python-v0.10.3/umf_core-0.10.3-cp311-abi3-macosx_11_0_arm64.whl",[0m
+2026-10-27T19:12:24.8974718Z [36;1m                     "sha256":"dc2586793e1492d1f825bd9e12f27d5db9f9330ae2343d9e7773c7052f1f6ea6",[0m
+2026-10-27T19:12:24.8975242Z [36;1m                     "nativeSha256":"df3dca411dfe11b045e6cd858bc5e3999c314fbe946826ba3b98f1a7d6934256","sizeBytes":3331547},[0m
+2026-10-27T19:12:24.8975697Z [36;1m                   "sdist":{"filename":"umf_core-0.10.3.tar.gz",[0m
+2026-10-27T19:12:24.8976136Z [36;1m                     "url":"https://github.com/DocumentDrivenDX/umf/releases/download/python-v0.10.3/umf_core-0.10.3.tar.gz",[0m
+2026-10-27T19:12:24.8976709Z [36;1m                     "sha256":"61b3e12a84f68f890fa34e2da14bbda47e101b7c6eadd5207680827e8daa694c","sizeBytes":2826487}},[0m
+2026-10-27T19:12:24.8977196Z [36;1m                 "retainedBuild":{"profile":"umf.core-retained-s34-producer/1",[0m
+2026-10-27T19:12:24.8977565Z [36;1m                   "sourceCommit":"34a337b2d398b5ae33954cc250f6237bc1661c21",[0m
+2026-10-27T19:12:24.8977912Z [36;1m                   "sourceTree":"0379258db62e498a4b489d2b7f613e99e63c0a4b",[0m
+2026-10-27T19:12:24.8978287Z [36;1m                   "workflowPath":".github/workflows/python-action-runtime.yml",[0m
+2026-10-27T19:12:24.8978747Z [36;1m                   "workflowRunId":40448360241,"workflowRunAttempt":1,[0m
+2026-10-27T19:12:24.8979077Z [36;1m                   "runStatus":"completed","runConclusion":"cancelled",[0m
+2026-10-27T19:12:24.8979516Z [36;1m                   "attemptJsonSha256":"74dc0d0e5942b25734ac88af6e695b89344e188d213e54414946fe64d49c78bd",[0m
+2026-10-27T19:12:24.8980016Z [36;1m                   "runJsonSha256":"cd6391428d262d066eb4f2adb4b138106bec97ddd9bf81dd9aabf4df1525e193",[0m
+2026-10-27T19:12:24.8980623Z [36;1m                   "attemptJobRosterSha256":"866cbd89f555c562a942c8ccae52f47daf86a52723d7090a7ed870bb382a7cf7",[0m
+2026-10-27T19:12:24.8981149Z [36;1m                   "qualifiedSelectedCells":["linux-x86_64-py11","linux-x86_64-py14","macos-arm64-py11"],[0m
+2026-10-27T19:12:24.8981609Z [36;1m                   "macosArm64Python314":"unqualified; selected-wheel job cancelled"},[0m
+2026-10-27T19:12:24.8982129Z [36;1m                 "publicEvidence":{"finalReviewSha256":"e315d3a699ff12a7aa87e97814922e970b9ac56b76aaedafb92be79951208802",[0m
+2026-10-27T19:12:24.8982596Z [36;1m                   "publicH5":{"status":"success","runId":40547321010,[0m
+2026-10-27T19:12:24.8982934Z [36;1m                     "sourceCommit":"1d6d7e3e38401ecf6a85297bb557549e2aef3f9d",[0m
+2026-10-27T19:12:24.8983388Z [36;1m                     "sourceTree":"78a2e48f769250cf346bc8d7b27ee59920f0bd6e",[0m
+2026-10-27T19:12:24.8983822Z [36;1m                     "terminalRunSha256":"f4cb93078d06d63f0f265ea5f795972cdf206fa8d69d05eec38d96277fe86b17",[0m
+2026-10-27T19:12:24.8984348Z [36;1m                     "jobsJsonSha256":"c3a515a58ec1e4cab1aea6eb9cb4369d71a25eed5e51019b071640d441aa4d6b",[0m
+2026-10-27T19:12:24.8984870Z [36;1m                     "artifactsJsonSha256":"b7a9a9faf2b545d840bd27eed9940ec449a83619fcffdd3c3980ad37ade0db39",[0m
+2026-10-27T19:12:24.8985258Z [36;1m                     "cells":[[0m
+2026-10-27T19:12:24.8985610Z [36;1m                       {"cell":"linux-x86_64-cpython-3.11.17","jobId":122341300804,"artifactId":12753537028,[0m
+2026-10-27T19:12:24.8986207Z [36;1m                         "artifactSha256":"6459f4450699f4e980336e3e281a088319c2ac2a389b18b8c588e43cf90523ee","tests":254,"errors":0,"failures":0,"skipped":0},[0m
+2026-10-27T19:12:24.8986804Z [36;1m                       {"cell":"linux-x86_64-cpython-3.14.8","jobId":122341300327,"artifactId":12754420811,[0m
+2026-10-27T19:12:24.8987405Z [36;1m                         "artifactSha256":"9f9b39949d00595998f631fe1a34e08f6b51d7f37885e80c131b1d3fdd80f88f","tests":254,"errors":0,"failures":0,"skipped":0}]},[0m
+2026-10-27T19:12:24.8987967Z [36;1m                   "oidcPypiPublication":{"status":"success","runId":40533286158,[0m
+2026-10-27T19:12:24.8988405Z [36;1m                     "reviewSha256":"23b9cef8b0175b4659ff745b6bee51ad239f277454112043554638f5c02aecd9"},[0m
+2026-10-27T19:12:24.8988909Z [36;1m                   "sourceCorrespondence":{"profile":"umf.core-retained-sdist-source-correspondence/1",[0m
+2026-10-27T19:12:24.8989385Z [36;1m                     "archiveFileCount":531,"testPath":"tests/test_distribution_artifact.py",[0m
+2026-10-27T19:12:24.8989866Z [36;1m                     "producerMapSha256":"3eed351abf9255eb36316089b3d3b2b6ee1985b117468fbbe4bedeceda1b24a6",[0m
+2026-10-27T19:12:24.8990393Z [36;1m                     "releaseMapSha256":"a779c17b35489cfe8fb43fbd2413ba5b1dd6fcb0b758da5bd2b62233636a1089",[0m
+2026-10-27T19:12:24.8991049Z [36;1m                     "producerTestSha256":"57c2bc4de660798ac1028b93f480ddb77934b2110fce03a72d968039667ae8c1",[0m
+2026-10-27T19:12:24.8991586Z [36;1m                     "releaseTestSha256":"49538fff2e27cddedab2e0e97ae14f5d3ad741bd0607926e15846168d149a1cc"}},[0m
+2026-10-27T19:12:24.8992079Z [36;1m                 "metadataPaths":["python/pyproject.toml","python/src/umf/__init__.py",[0m
+2026-10-27T19:12:24.8992532Z [36;1m                   "python/src/umf/action_runtime_resource_manifest.json","spec/core/schema.json"]},[0m
+2026-10-27T19:12:24.8993097Z [36;1m               "adoptedR2Companion":{"path":companion_path,"sha256":expected_companion_sha,[0m
+2026-10-27T19:12:24.8993572Z [36;1m                 "bytes":expected_companion_bytes,"provenanceManifestPath":manifest_rel.as_posix(),[0m
+2026-10-27T19:12:24.8994060Z [36;1m                 "provenanceManifestSha256":expected_manifest_sha,"stageARunId":"40556187661",[0m
+2026-10-27T19:12:24.8994493Z [36;1m                 "stageASourceCommit":expected_run["sha"],"artifactId":12757082809,[0m
+2026-10-27T19:12:24.8994972Z [36;1m                 "artifactSha256":owner["artifactSha256"],"adoptionCommit":"97d15f9937163a3ab2a9e17eb08796a4734cbd68",[0m
+2026-10-27T19:12:24.8995475Z [36;1m                 "ownerResultPath":owner_rel.as_posix(),"ownerResultSha256":sha(owner_path),[0m
+2026-10-27T19:12:24.8995845Z [36;1m                 "sourcePinsSha256":expected_stage_pins_sha,[0m
+2026-10-27T19:12:24.8996267Z [36;1m                 "sourceOutputReviewPath":review_rel.as_posix(),"sourceOutputReviewSha256":expected_review_sha},[0m
+2026-10-27T19:12:24.8996680Z [36;1m               "pinnedSourceInputs":rows,[0m
+2026-10-27T19:12:24.8997034Z [36;1m               "historicalGeneratedOutputsAreCurrentQualificationEvidence":False,[0m
+2026-10-27T19:12:24.8997632Z [36;1m               "historicalInventorySeed":{"path":"docs/helix/04-build/evidence/rust-migration/r3/inventory.json",[0m
+2026-10-27T19:12:24.8998246Z [36;1m                 "role":"Core 0.10.2 historical generation seed; exact bytes and SHA256 are retained in historical-placeholder-inputs.json"}}[0m
+2026-10-27T19:12:24.8998839Z [36;1m(evidence/"source-inputs.json").write_text(json.dumps(source_inputs,indent=2,sort_keys=True)+"\n")[0m
+2026-10-27T19:12:24.8999196Z [36;1mPY[0m
+2026-10-27T19:12:24.9017025Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:12:24.9017294Z env:
+2026-10-27T19:12:24.9017566Z   METAMODEL_STAGE_DIR: /home/runner/work/_temp/umf-metamodel-stage-40566692892-1
+2026-10-27T19:12:24.9017940Z   EVIDENCE_DIR: /home/runner/work/_temp/umf-merged-generation
+2026-10-27T19:12:24.9018275Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.9018609Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:12:24.9018943Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.9019275Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.9019567Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:24.9019869Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:12:24.9020137Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T19:12:24.9020352Z   CARGO_INCREMENTAL: 0
+2026-10-27T19:12:24.9020699Z   CARGO_TERM_COLOR: always
+2026-10-27T19:12:24.9020905Z ##[endgroup]
+2026-10-27T19:12:25.1514688Z ##[group]Run set -euo pipefail
+2026-10-27T19:12:25.1515133Z [36;1mset -euo pipefail[0m
+2026-10-27T19:12:25.1515514Z [36;1mSTART_MS="$(cat "$EVIDENCE_DIR/monotonic-start-ms")"[0m
+2026-10-27T19:12:25.1516011Z [36;1mDEADLINE_MS="$(cat "$EVIDENCE_DIR/monotonic-deadline-ms")"[0m
+2026-10-27T19:12:25.1516495Z [36;1mNOW_MS="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"[0m
+2026-10-27T19:12:25.1516996Z [36;1mREMAINING_SECONDS="$(((DEADLINE_MS - NOW_MS - 60000) / 1000))"[0m
+2026-10-27T19:12:25.1517511Z [36;1mif (( REMAINING_SECONDS <= 0 )); then exit 124; fi[0m
+2026-10-27T19:12:25.1518172Z [36;1mtimeout --signal=TERM --kill-after=10s "${REMAINING_SECONDS}s" bash -euo pipefail <<'BOUNDED_DEPENDENCY_WORK'[0m
+2026-10-27T19:12:25.1518771Z [36;1mEVIDENCE="$EVIDENCE_DIR"[0m
+2026-10-27T19:12:25.1519130Z [36;1mDEADLINE="$EVIDENCE/monotonic-deadline-ms"[0m
+2026-10-27T19:12:25.1519494Z [36;1mrun_bounded() {[0m
+2026-10-27T19:12:25.1520142Z [36;1m  local name="$1" maximum="$2" now deadline remaining limit log existing cap started ended status capture_status log_total[0m
+2026-10-27T19:12:25.1520904Z [36;1m  local -a statuses[0m
+2026-10-27T19:12:25.1521183Z [36;1m  shift 2[0m
+2026-10-27T19:12:25.1521503Z [36;1m  now="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"[0m
+2026-10-27T19:12:25.1521905Z [36;1m  deadline="$(cat "$DEADLINE")"[0m
+2026-10-27T19:12:25.1522290Z [36;1m  remaining=$(((deadline - now - 60000) / 1000))[0m
+2026-10-27T19:12:25.1522711Z [36;1m  if (( remaining <= 0 )); then return 124; fi[0m
+2026-10-27T19:12:25.1523206Z [36;1m  limit="$maximum"; if (( remaining < limit )); then limit="$remaining"; fi[0m
+2026-10-27T19:12:25.1523687Z [36;1m  log="$EVIDENCE/logs/$name.log"[0m
+2026-10-27T19:12:25.1524062Z [36;1m  existing="$(find "$EVIDENCE/logs" -type f -name '*.log' -exec wc -c {} + | awk 'END {print $1+0}')"[0m
+2026-10-27T19:12:25.1524563Z [36;1m  cap=$((1048576 - existing)); if (( cap < 0 )); then cap=0; fi[0m
+2026-10-27T19:12:25.1524994Z [36;1m  started="$now"[0m
+2026-10-27T19:12:25.1525265Z [36;1m  set +e[0m
+2026-10-27T19:12:25.1525676Z [36;1m  timeout --signal=TERM --kill-after=10s "${limit}s" "$@" 2>&1 | python -I -c '[0m
+2026-10-27T19:12:25.1526160Z [36;1mimport sys[0m
+2026-10-27T19:12:25.1526466Z [36;1mpath, cap = sys.argv[1], int(sys.argv[2])[0m
+2026-10-27T19:12:25.1526954Z [36;1mmarker = b"\n[LOG TRUNCATED: aggregate generation log cap reached]\n"[0m
+2026-10-27T19:12:25.1527423Z [36;1mstored = 0[0m
+2026-10-27T19:12:25.1527602Z [36;1mtruncated = False[0m
+2026-10-27T19:12:25.1527801Z [36;1mfailed = False[0m
+2026-10-27T19:12:25.1527980Z [36;1mtry:[0m
+2026-10-27T19:12:25.1528168Z [36;1m    out = open(path, "wb", buffering=0)[0m
+2026-10-27T19:12:25.1528401Z [36;1mexcept OSError:[0m
+2026-10-27T19:12:25.1528595Z [36;1m    out = None[0m
+2026-10-27T19:12:25.1528776Z [36;1m    failed = True[0m
+2026-10-27T19:12:25.1528989Z [36;1mroom_limit = max(0, cap - len(marker))[0m
+2026-10-27T19:12:25.1529220Z [36;1mwhile True:[0m
+2026-10-27T19:12:25.1529433Z [36;1m    chunk = sys.stdin.buffer.read(65536)[0m
+2026-10-27T19:12:25.1529670Z [36;1m    if not chunk:[0m
+2026-10-27T19:12:25.1529852Z [36;1m        break[0m
+2026-10-27T19:12:25.1530034Z [36;1m    if out is None:[0m
+2026-10-27T19:12:25.1530232Z [36;1m        continue[0m
+2026-10-27T19:12:25.1530587Z [36;1m    room = max(0, room_limit - stored)[0m
+2026-10-27T19:12:25.1530854Z [36;1m    part = chunk[:room][0m
+2026-10-27T19:12:25.1531059Z [36;1m    if part:[0m
+2026-10-27T19:12:25.1531242Z [36;1m        try:[0m
+2026-10-27T19:12:25.1531421Z [36;1m            out.write(part)[0m
+2026-10-27T19:12:25.1531638Z [36;1m            stored += len(part)[0m
+2026-10-27T19:12:25.1531857Z [36;1m        except OSError:[0m
+2026-10-27T19:12:25.1532063Z [36;1m            failed = True[0m
+2026-10-27T19:12:25.1532270Z [36;1m            out = None[0m
+2026-10-27T19:12:25.1532473Z [36;1m    if len(chunk) > room:[0m
+2026-10-27T19:12:25.1532677Z [36;1m        truncated = True[0m
+2026-10-27T19:12:25.1533029Z [36;1mif out is not None:[0m
+2026-10-27T19:12:25.1533223Z [36;1m    try:[0m
+2026-10-27T19:12:25.1533400Z [36;1m        if truncated:[0m
+2026-10-27T19:12:25.1533641Z [36;1m            out.write(marker[:max(0, cap - stored)])[0m
+2026-10-27T19:12:25.1533902Z [36;1m        out.close()[0m
+2026-10-27T19:12:25.1534096Z [36;1m    except OSError:[0m
+2026-10-27T19:12:25.1534289Z [36;1m        failed = True[0m
+2026-10-27T19:12:25.1534531Z [36;1msys.exit(74 if failed else 75 if truncated else 0)[0m
+2026-10-27T19:12:25.1534787Z [36;1m' "$log" "$cap"[0m
+2026-10-27T19:12:25.1534993Z [36;1m  statuses=("${PIPESTATUS[@]}")[0m
+2026-10-27T19:12:25.1535211Z [36;1m  set -e[0m
+2026-10-27T19:12:25.1535439Z [36;1m  status="${statuses[0]}"; capture_status="${statuses[1]}"[0m
+2026-10-27T19:12:25.1535768Z [36;1m  ended="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"[0m
+2026-10-27T19:12:25.1536241Z [36;1m  python -I - "$EVIDENCE/command-records.jsonl" "$log" "$name" "$status" "$capture_status" "$((ended-started))" "$@" <<'PY'[0m
+2026-10-27T19:12:25.1536670Z [36;1mimport hashlib,json,pathlib,sys[0m
+2026-10-27T19:12:25.1536969Z [36;1mrecords,log,name,raw,capture,duration,*argv=sys.argv[1:][0m
+2026-10-27T19:12:25.1537291Z [36;1mpayload=pathlib.Path(log).read_bytes()[0m
+2026-10-27T19:12:25.1537661Z [36;1mrecord={"name":name,"stage":name,"argv":argv,"rawExit":int(raw),"captureExit":int(capture),[0m
+2026-10-27T19:12:25.1538088Z [36;1m        "monotonicDurationMs":int(duration),"logBytes":len(payload),[0m
+2026-10-27T19:12:25.1538511Z [36;1m        "logSha256":hashlib.sha256(payload).hexdigest(),"truncated":int(capture)==75,[0m
+2026-10-27T19:12:25.1538996Z [36;1m        "truncationMarker":"aggregate generation log cap reached" if int(capture)==75 else None}[0m
+2026-10-27T19:12:25.1539585Z [36;1mwith pathlib.Path(records).open("a",encoding="utf-8") as stream: stream.write(json.dumps(record,sort_keys=True)+"\n")[0m
+2026-10-27T19:12:25.1539998Z [36;1mPY[0m
+2026-10-27T19:12:25.1540339Z [36;1m  log_total="$(find "$EVIDENCE/logs" -type f -name '*.log' -exec wc -c {} + | awk 'END {print $1+0}')"[0m
+2026-10-27T19:12:25.1540985Z [36;1m  if (( log_total > 1048576 || status != 0 || capture_status != 0 )); then[0m
+2026-10-27T19:12:25.1541299Z [36;1m    head -c 4096 "$log" >&2 || true[0m
+2026-10-27T19:12:25.1541530Z [36;1m    return 1[0m
+2026-10-27T19:12:25.1541711Z [36;1m  fi[0m
+2026-10-27T19:12:25.1541872Z [36;1m}[0m
+2026-10-27T19:12:25.1542312Z [36;1mrun_bounded bun-install 300 bun install --frozen-lockfile --ignore-scripts[0m
+2026-10-27T19:12:25.1542682Z [36;1mrun_bounded cargo-fetch 600 cargo fetch --locked[0m
+2026-10-27T19:12:25.1542949Z [36;1mBOUNDED_DEPENDENCY_WORK[0m
+2026-10-27T19:12:25.1560854Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:12:25.1561121Z env:
+2026-10-27T19:12:25.1561393Z   METAMODEL_STAGE_DIR: /home/runner/work/_temp/umf-metamodel-stage-40566692892-1
+2026-10-27T19:12:25.1561771Z   EVIDENCE_DIR: /home/runner/work/_temp/umf-merged-generation
+2026-10-27T19:12:25.1562096Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:25.1562431Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:12:25.1562762Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:25.1563067Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:25.1563365Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:25.1563671Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:12:25.1563940Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T19:12:25.1564157Z   CARGO_INCREMENTAL: 0
+2026-10-27T19:12:25.1564341Z   CARGO_TERM_COLOR: always
+2026-10-27T19:12:25.1564529Z ##[endgroup]
+2026-10-27T19:12:27.4226691Z ##[group]Run set -euo pipefail
+2026-10-27T19:12:27.4227494Z [36;1mset -euo pipefail[0m
+2026-10-27T19:12:27.4227868Z [36;1mSTART_MS="$(cat "$EVIDENCE_DIR/monotonic-start-ms")"[0m
+2026-10-27T19:12:27.4228363Z [36;1mDEADLINE_MS="$(cat "$EVIDENCE_DIR/monotonic-deadline-ms")"[0m
+2026-10-27T19:12:27.4228848Z [36;1mNOW_MS="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"[0m
+2026-10-27T19:12:27.4229341Z [36;1mREMAINING_SECONDS="$(((DEADLINE_MS - NOW_MS - 60000) / 1000))"[0m
+2026-10-27T19:12:27.4229819Z [36;1mif (( REMAINING_SECONDS <= 0 )); then exit 124; fi[0m
+2026-10-27T19:12:27.4230602Z [36;1mtimeout --signal=TERM --kill-after=10s "${REMAINING_SECONDS}s" bash -euo pipefail <<'BOUNDED_GENERATION_WORK'[0m
+2026-10-27T19:12:27.4231259Z [36;1mEVIDENCE="$EVIDENCE_DIR"[0m
+2026-10-27T19:12:27.4231614Z [36;1mDEADLINE="$EVIDENCE/monotonic-deadline-ms"[0m
+2026-10-27T19:12:27.4231982Z [36;1mrun_bounded() {[0m
+2026-10-27T19:12:27.4232623Z [36;1m  local name="$1" maximum="$2" now deadline remaining limit log existing cap started ended status capture_status log_total[0m
+2026-10-27T19:12:27.4233263Z [36;1m  local -a statuses[0m
+2026-10-27T19:12:27.4233536Z [36;1m  shift 2[0m
+2026-10-27T19:12:27.4233849Z [36;1m  now="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"[0m
+2026-10-27T19:12:27.4234236Z [36;1m  deadline="$(cat "$DEADLINE")"[0m
+2026-10-27T19:12:27.4234598Z [36;1m  remaining=$(((deadline - now - 60000) / 1000))[0m
+2026-10-27T19:12:27.4234996Z [36;1m  if (( remaining <= 0 )); then return 124; fi[0m
+2026-10-27T19:12:27.4235475Z [36;1m  limit="$maximum"; if (( remaining < limit )); then limit="$remaining"; fi[0m
+2026-10-27T19:12:27.4235952Z [36;1m  log="$EVIDENCE/logs/$name.log"[0m
+2026-10-27T19:12:27.4236497Z [36;1m  existing="$(find "$EVIDENCE/logs" -type f -name '*.log' -exec wc -c {} + | awk 'END {print $1+0}')"[0m
+2026-10-27T19:12:27.4237119Z [36;1m  cap=$((1048576 - existing)); if (( cap < 0 )); then cap=0; fi[0m
+2026-10-27T19:12:27.4237536Z [36;1m  started="$now"[0m
+2026-10-27T19:12:27.4237798Z [36;1m  set +e[0m
+2026-10-27T19:12:27.4238197Z [36;1m  timeout --signal=TERM --kill-after=10s "${limit}s" "$@" 2>&1 | python -I -c '[0m
+2026-10-27T19:12:27.4238660Z [36;1mimport sys[0m
+2026-10-27T19:12:27.4238975Z [36;1mpath, cap = sys.argv[1], int(sys.argv[2])[0m
+2026-10-27T19:12:27.4239450Z [36;1mmarker = b"\n[LOG TRUNCATED: aggregate generation log cap reached]\n"[0m
+2026-10-27T19:12:27.4239879Z [36;1mstored = 0[0m
+2026-10-27T19:12:27.4240134Z [36;1mtruncated = False[0m
+2026-10-27T19:12:27.4240725Z [36;1mfailed = False[0m
+2026-10-27T19:12:27.4240983Z [36;1mtry:[0m
+2026-10-27T19:12:27.4241249Z [36;1m    out = open(path, "wb", buffering=0)[0m
+2026-10-27T19:12:27.4241794Z [36;1mexcept OSError:[0m
+2026-10-27T19:12:27.4242064Z [36;1m    out = None[0m
+2026-10-27T19:12:27.4242319Z [36;1m    failed = True[0m
+2026-10-27T19:12:27.4242623Z [36;1mroom_limit = max(0, cap - len(marker))[0m
+2026-10-27T19:12:27.4242957Z [36;1mwhile True:[0m
+2026-10-27T19:12:27.4243255Z [36;1m    chunk = sys.stdin.buffer.read(65536)[0m
+2026-10-27T19:12:27.4243596Z [36;1m    if not chunk:[0m
+2026-10-27T19:12:27.4243860Z [36;1m        break[0m
+2026-10-27T19:12:27.4244115Z [36;1m    if out is None:[0m
+2026-10-27T19:12:27.4244393Z [36;1m        continue[0m
+2026-10-27T19:12:27.4244686Z [36;1m    room = max(0, room_limit - stored)[0m
+2026-10-27T19:12:27.4245022Z [36;1m    part = chunk[:room][0m
+2026-10-27T19:12:27.4245304Z [36;1m    if part:[0m
+2026-10-27T19:12:27.4245553Z [36;1m        try:[0m
+2026-10-27T19:12:27.4245805Z [36;1m            out.write(part)[0m
+2026-10-27T19:12:27.4246114Z [36;1m            stored += len(part)[0m
+2026-10-27T19:12:27.4246435Z [36;1m        except OSError:[0m
+2026-10-27T19:12:27.4246728Z [36;1m            failed = True[0m
+2026-10-27T19:12:27.4247019Z [36;1m            out = None[0m
+2026-10-27T19:12:27.4247304Z [36;1m    if len(chunk) > room:[0m
+2026-10-27T19:12:27.4247593Z [36;1m        truncated = True[0m
+2026-10-27T19:12:27.4248168Z [36;1mif out is not None:[0m
+2026-10-27T19:12:27.4248440Z [36;1m    try:[0m
+2026-10-27T19:12:27.4248679Z [36;1m        if truncated:[0m
+2026-10-27T19:12:27.4249010Z [36;1m            out.write(marker[:max(0, cap - stored)])[0m
+2026-10-27T19:12:27.4249390Z [36;1m        out.close()[0m
+2026-10-27T19:12:27.4249667Z [36;1m    except OSError:[0m
+2026-10-27T19:12:27.4249942Z [36;1m        failed = True[0m
+2026-10-27T19:12:27.4250284Z [36;1msys.exit(74 if failed else 75 if truncated else 0)[0m
+2026-10-27T19:12:27.4250770Z [36;1m' "$log" "$cap"[0m
+2026-10-27T19:12:27.4251057Z [36;1m  statuses=("${PIPESTATUS[@]}")[0m
+2026-10-27T19:12:27.4251372Z [36;1m  set -e[0m
+2026-10-27T19:12:27.4251705Z [36;1m  status="${statuses[0]}"; capture_status="${statuses[1]}"[0m
+2026-10-27T19:12:27.4252183Z [36;1m  ended="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"[0m
+2026-10-27T19:12:27.4252935Z [36;1m  python -I - "$EVIDENCE/command-records.jsonl" "$log" "$name" "$status" "$capture_status" "$((ended-started))" "$@" <<'PY'[0m
+2026-10-27T19:12:27.4253587Z [36;1mimport hashlib,json,pathlib,sys[0m
+2026-10-27T19:12:27.4254018Z [36;1mrecords,log,name,raw,capture,duration,*argv=sys.argv[1:][0m
+2026-10-27T19:12:27.4254471Z [36;1mpayload=pathlib.Path(log).read_bytes()[0m
+2026-10-27T19:12:27.4255001Z [36;1mrecord={"name":name,"stage":name,"argv":argv,"rawExit":int(raw),"captureExit":int(capture),[0m
+2026-10-27T19:12:27.4255626Z [36;1m        "monotonicDurationMs":int(duration),"logBytes":len(payload),[0m
+2026-10-27T19:12:27.4256249Z [36;1m        "logSha256":hashlib.sha256(payload).hexdigest(),"truncated":int(capture)==75,[0m
+2026-10-27T19:12:27.4256964Z [36;1m        "truncationMarker":"aggregate generation log cap reached" if int(capture)==75 else None}[0m
+2026-10-27T19:12:27.4257811Z [36;1mwith pathlib.Path(records).open("a",encoding="utf-8") as stream: stream.write(json.dumps(record,sort_keys=True)+"\n")[0m
+2026-10-27T19:12:27.4258414Z [36;1mPY[0m
+2026-10-27T19:12:27.4258878Z [36;1m  log_total="$(find "$EVIDENCE/logs" -type f -name '*.log' -exec wc -c {} + | awk 'END {print $1+0}')"[0m
+2026-10-27T19:12:27.4259521Z [36;1m  if (( log_total > 1048576 || status != 0 || capture_status != 0 )); then[0m
+2026-10-27T19:12:27.4259969Z [36;1m    head -c 4096 "$log" >&2 || true[0m
+2026-10-27T19:12:27.4260293Z [36;1m    return 1[0m
+2026-10-27T19:12:27.4260675Z [36;1m  fi[0m
+2026-10-27T19:12:27.4260902Z [36;1m}[0m
+2026-10-27T19:12:27.4261453Z [36;1mrun_bounded pre-generation-placeholders 30 python -I - "$EVIDENCE/historical-placeholder-inputs.json" <<'PY'[0m
+2026-10-27T19:12:27.4262116Z [36;1mimport hashlib,json,pathlib,sys[0m
+2026-10-27T19:12:27.4262602Z [36;1mpaths=[[0m
+2026-10-27T19:12:27.4262896Z [36;1m  "src/extensions/actions/plan-identity.ts",[0m
+2026-10-27T19:12:27.4263319Z [36;1m  "python/umf_codegen/src/umf_codegen/_release.py",[0m
+2026-10-27T19:12:27.4263798Z [36;1m  "python/umf_codegen/src/umf_codegen/_assets/manifest.json",[0m
+2026-10-27T19:12:27.4264322Z [36;1m  "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz",[0m
+2026-10-27T19:12:27.4264865Z [36;1m  "docs/helix/04-build/evidence/rust-migration/r3/inventory.json",[0m
+2026-10-27T19:12:27.4265429Z [36;1m  "docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json",[0m
+2026-10-27T19:12:27.4265874Z [36;1m][0m
+2026-10-27T19:12:27.4266097Z [36;1mrows=[][0m
+2026-10-27T19:12:27.4266347Z [36;1mfor name in paths:[0m
+2026-10-27T19:12:27.4266642Z [36;1m    path=pathlib.Path(name)[0m
+2026-10-27T19:12:27.4267323Z [36;1m    rows.append({"path":name,"exists":path.is_file(),"sha256":hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() else None,[0m
+2026-10-27T19:12:27.4268343Z [36;1m                 "disposition":"historical pre-generation placeholder; not consumed as current output or qualification evidence"})[0m
+2026-10-27T19:12:27.4269597Z [36;1mpathlib.Path(sys.argv[1]).write_text(json.dumps({"schema":"umf.merged-generation-placeholders/1","inputs":rows},indent=2,sort_keys=True)+"\n")[0m
+2026-10-27T19:12:27.4270332Z [36;1mPY[0m
+2026-10-27T19:12:27.4270903Z [36;1mrun_bounded toolchain-identity 45 python -I - "$EVIDENCE/toolchain-identity.json" <<'PY'[0m
+2026-10-27T19:12:27.4271526Z [36;1mimport hashlib,json,pathlib,shutil,subprocess,sys[0m
+2026-10-27T19:12:27.4271942Z [36;1mtools={}[0m
+2026-10-27T19:12:27.4272294Z [36;1mfor name in ("bun","python","cargo","rustc","git","timeout"):[0m
+2026-10-27T19:12:27.4272726Z [36;1m    path=shutil.which(name)[0m
+2026-10-27T19:12:27.4273126Z [36;1m    if not path: raise SystemExit("required tool missing: "+name)[0m
+2026-10-27T19:12:27.4273627Z [36;1m    resolved=pathlib.Path(path).resolve(strict=True)[0m
+2026-10-27T19:12:27.4274436Z [36;1m    version=subprocess.run([path,"--version"],check=True,text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,timeout=10).stdout.strip()[0m
+2026-10-27T19:12:27.4275347Z [36;1m    with resolved.open("rb") as stream: digest=hashlib.sha256(stream.read()).hexdigest()[0m
+2026-10-27T19:12:27.4275998Z [36;1m    tools[name]={"path":str(resolved),"version":version,"binarySha256":digest}[0m
+2026-10-27T19:12:27.4276685Z [36;1mpathlib.Path(sys.argv[1]).write_text(json.dumps({"tools":tools},indent=2,sort_keys=True)+"\n")[0m
+2026-10-27T19:12:27.4277213Z [36;1mPY[0m
+2026-10-27T19:12:27.4277639Z [36;1mrun_bounded prepare-metamodel-stage 30 python -I - "$METAMODEL_STAGE_DIR" <<'PY'[0m
+2026-10-27T19:12:27.4278188Z [36;1mimport hashlib,os,pathlib,shutil,sys[0m
+2026-10-27T19:12:27.4278939Z [36;1mroot=pathlib.Path.cwd(); stage=pathlib.Path(sys.argv[1]); expected='5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29'[0m
+2026-10-27T19:12:27.4279747Z [36;1msource=root/'src/generated/core-validators-accounted.ts'[0m
+2026-10-27T19:12:27.4280791Z [36;1mif stage.parent.resolve()!=pathlib.Path(os.environ['RUNNER_TEMP']).resolve() or stage.exists(): raise SystemExit('metamodel stage path is not fresh and runner-local')[0m
+2026-10-27T19:12:27.4281614Z [36;1minfo=source.lstat()[0m
+2026-10-27T19:12:27.4282606Z [36;1mif not source.is_file() or source.is_symlink() or info.st_size!=1525352 or hashlib.sha256(source.read_bytes()).hexdigest()!=expected: raise SystemExit('separately owned accounted companion does not match Stage-A custody')[0m
+2026-10-27T19:12:27.4284135Z [36;1mdestination=stage/'src/generated/core-validators-accounted.ts'; destination.parent.mkdir(parents=True,mode=0o700); shutil.copyfile(source,destination)[0m
+2026-10-27T19:12:27.4285462Z [36;1mif destination.stat().st_size!=info.st_size or hashlib.sha256(destination.read_bytes()).hexdigest()!=expected: raise SystemExit('staged companion byte custody mismatch')[0m
+2026-10-27T19:12:27.4286279Z [36;1mPY[0m
+2026-10-27T19:12:27.4287008Z [36;1mrun_bounded metamodel-output-generation 600 bun scripts/metamodel/build.ts --output-root "$METAMODEL_STAGE_DIR"[0m
+2026-10-27T19:12:27.4288005Z [36;1mrun_bounded metamodel-output-stage-check 600 bun scripts/metamodel/build.ts --check --output-root "$METAMODEL_STAGE_DIR"[0m
+2026-10-27T19:12:27.4289181Z [36;1mrun_bounded metamodel-output-correspondence 45 python -I - "$METAMODEL_STAGE_DIR" "$EVIDENCE/metamodel-phase.json" "$EVIDENCE/metamodel-phase-ready" <<'PY'[0m
+2026-10-27T19:12:27.4290050Z [36;1mimport hashlib,json,os,pathlib,stat,sys[0m
+2026-10-27T19:12:27.4290863Z [36;1mroot=pathlib.Path.cwd(); stage=pathlib.Path(sys.argv[1]); receipt=pathlib.Path(sys.argv[2]); ready_path=pathlib.Path(sys.argv[3])[0m
+2026-10-27T19:12:27.4291916Z [36;1mpaths=["spec/core/schema.json","spec/core/semantic-type-reference.schema.json","spec/core/extension-package.schema.json",[0m
+2026-10-27T19:12:27.4292982Z [36;1m  "spec/metamodel/package.json","spec/metamodel/generated/core-constraints.json","spec/metamodel/generated/domain-policy.json",[0m
+2026-10-27T19:12:27.4293943Z [36;1m  "spec/metamodel/generated/python-shapes.json","python/umf_access/src/umf_access/generated_core.py",[0m
+2026-10-27T19:12:27.4294943Z [36;1m  "src/generated/core-model.ts","src/generated/core-validators.ts","spec/metamodel/generated/manifest.json"][0m
+2026-10-27T19:12:27.4295651Z [36;1mcompanion="src/generated/core-validators-accounted.ts"[0m
+2026-10-27T19:12:27.4296073Z [36;1mdef record(path):[0m
+2026-10-27T19:12:27.4296356Z [36;1m    info=path.lstat()[0m
+2026-10-27T19:12:27.4296883Z [36;1m    if not stat.S_ISREG(info.st_mode): raise ValueError("unsafe staged or committed metamodel output")[0m
+2026-10-27T19:12:27.4297638Z [36;1m    raw=path.read_bytes(); return {"sha256":hashlib.sha256(raw).hexdigest(),"bytes":len(raw)}[0m
+2026-10-27T19:12:27.4298188Z [36;1mstage_sizes={name:(stage/name).lstat().st_size for name in paths}[0m
+2026-10-27T19:12:27.4298680Z [36;1mif any(not stat.S_ISREG((stage/name).lstat().st_mode) for name in paths): raise SystemExit("unsafe staged metamodel output")[0m
+2026-10-27T19:12:27.4299140Z [36;1mstaged_total=sum(stage_sizes.values())[0m
+2026-10-27T19:12:27.4299545Z [36;1mif staged_total>16777216: raise SystemExit("staged 11-output family exceeds the existing artifact cap")[0m
+2026-10-27T19:12:27.4299992Z [36;1mstage_rows={name:record(stage/name) for name in paths}[0m
+2026-10-27T19:12:27.4300266Z [36;1mroot_rows={}[0m
+2026-10-27T19:12:27.4300652Z [36;1mroot_matches=True[0m
+2026-10-27T19:12:27.4300884Z [36;1mfor name,row in stage_rows.items():[0m
+2026-10-27T19:12:27.4301117Z [36;1m    target=root/name[0m
+2026-10-27T19:12:27.4301335Z [36;1m    try: root_rows[name]=record(target)[0m
+2026-10-27T19:12:27.4301616Z [36;1m    except (OSError,ValueError): root_rows[name]=None[0m
+2026-10-27T19:12:27.4301948Z [36;1m    if root_rows[name]!=row: root_matches=False[0m
+2026-10-27T19:12:27.4302434Z [36;1mmanifest=json.loads((stage/"spec/metamodel/generated/manifest.json").read_bytes())[0m
+2026-10-27T19:12:27.4302882Z [36;1mseparately=manifest.get("separatelyOwned",{}).get("accountedCompanion",{})[0m
+2026-10-27T19:12:27.4303238Z [36;1minput_rows=separately.get("inputs",{})[0m
+2026-10-27T19:12:27.4303826Z [36;1mexpected_paths={"src/generated/core-validators.ts","spec/core/schema.json","spec/core/semantic-type-reference.schema.json","spec/core/extension-package.schema.json"}[0m
+2026-10-27T19:12:27.4304500Z [36;1moutput_for_input={"src/generated/core-validators.ts":"src/generated/core-validators.ts",[0m
+2026-10-27T19:12:27.4305197Z [36;1m  "spec/core/schema.json":"spec/core/schema.json","spec/core/semantic-type-reference.schema.json":"spec/core/semantic-type-reference.schema.json",[0m
+2026-10-27T19:12:27.4305930Z [36;1m  "spec/core/extension-package.schema.json":"spec/core/extension-package.schema.json"}[0m
+2026-10-27T19:12:27.4306522Z [36;1mif set(input_rows)!=expected_paths: raise SystemExit("Stage-A companion input binding is not the exact four-file roster")[0m
+2026-10-27T19:12:27.4307113Z [36;1mcompanion_match=True; emitted={}[0m
+2026-10-27T19:12:27.4307411Z [36;1mfor input_path,output_path in output_for_input.items():[0m
+2026-10-27T19:12:27.4307768Z [36;1m    expected=input_rows[input_path]; actual=stage_rows[output_path][0m
+2026-10-27T19:12:27.4308180Z [36;1m    if set(expected)!={"sha256","bytes"} or actual!=expected: companion_match=False[0m
+2026-10-27T19:12:27.4308505Z [36;1m    emitted[input_path]=actual[0m
+2026-10-27T19:12:27.4308909Z [36;1mphase="DEPENDENT_GENERATION_READY" if root_matches and companion_match else "METAMODEL_OUTPUTS_ARTIFACT_ONLY"[0m
+2026-10-27T19:12:27.4309489Z [36;1mpayload={"schema":"umf.merged-metamodel-phase/1","status":phase,"sourceCommit":os.environ["GITHUB_SHA"],[0m
+2026-10-27T19:12:27.4310058Z [36;1m  "runId":os.environ["GITHUB_RUN_ID"],"runAttempt":os.environ["GITHUB_RUN_ATTEMPT"],"ref":os.environ["GITHUB_REF"],[0m
+2026-10-27T19:12:27.4310768Z [36;1m  "stageRoster":stage_rows,"committedRoster":root_rows,"committedOutputsMatch":root_matches,[0m
+2026-10-27T19:12:27.4311672Z [36;1m  "companionInputBindings":input_rows,"emittedCompanionInputs":emitted,"companionInputsMatch":companion_match}[0m
+2026-10-27T19:12:27.4312586Z [36;1mreceipt.write_text(json.dumps(payload,sort_keys=True,indent=2)+"\n")[0m
+2026-10-27T19:12:27.4313310Z [36;1mready="true" if phase=="DEPENDENT_GENERATION_READY" else "false"[0m
+2026-10-27T19:12:27.4313727Z [36;1mready_path.write_text(ready+"\n")[0m
+2026-10-27T19:12:27.4313944Z [36;1mPY[0m
+2026-10-27T19:12:27.4314259Z [36;1mIFS= read -r METAMODEL_DEPENDENT_GENERATION_READY < "$EVIDENCE/metamodel-phase-ready"[0m
+2026-10-27T19:12:27.4314744Z [36;1mprintf 'dependent_generation=%s\n' "$METAMODEL_DEPENDENT_GENERATION_READY" >> "$GITHUB_OUTPUT"[0m
+2026-10-27T19:12:27.4315269Z [36;1mprintf 'METAMODEL_DEPENDENT_GENERATION_READY=%s\n' "$METAMODEL_DEPENDENT_GENERATION_READY" >> "$GITHUB_ENV"[0m
+2026-10-27T19:12:27.4315725Z [36;1mif [[ "$METAMODEL_DEPENDENT_GENERATION_READY" == "true" ]]; then[0m
+2026-10-27T19:12:27.4316117Z [36;1m  run_bounded check-adopted-metamodel-and-self 600 bun run check:metamodel[0m
+2026-10-27T19:12:27.4316541Z [36;1m  run_bounded action-plan-identity 180 bun scripts/actions-plan-identity.ts[0m
+2026-10-27T19:12:27.4316934Z [36;1m  run_bounded codegen-assets 600 bun scripts/build-codegen.ts[0m
+2026-10-27T19:12:27.4317360Z [36;1m  run_bounded action-plan-identity-check 180 bun scripts/actions-plan-identity.ts --check[0m
+2026-10-27T19:12:27.4317809Z [36;1m  run_bounded codegen-assets-check 180 bun scripts/build-codegen.ts --check[0m
+2026-10-27T19:12:27.4318193Z [36;1m  run_bounded r3-inventory 600 python -I scripts/rust-inventory.py[0m
+2026-10-27T19:12:27.4318597Z [36;1m  run_bounded r3-boundary-check 900 python -I scripts/check-rust-boundaries.py[0m
+2026-10-27T19:12:27.4318914Z [36;1mfi[0m
+2026-10-27T19:12:27.4319079Z [36;1mBOUNDED_GENERATION_WORK[0m
+2026-10-27T19:12:27.4336941Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:12:27.4337214Z env:
+2026-10-27T19:12:27.4337481Z   METAMODEL_STAGE_DIR: /home/runner/work/_temp/umf-metamodel-stage-40566692892-1
+2026-10-27T19:12:27.4337850Z   EVIDENCE_DIR: /home/runner/work/_temp/umf-merged-generation
+2026-10-27T19:12:27.4338168Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:27.4338501Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:12:27.4338837Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:27.4339139Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:27.4339430Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:12:27.4339722Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:12:27.4339994Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T19:12:27.4340200Z   CARGO_INCREMENTAL: 0
+2026-10-27T19:12:27.4340386Z   CARGO_TERM_COLOR: always
+2026-10-27T19:12:27.4340663Z ##[endgroup]
+2026-10-27T19:13:37.3310782Z ##[group]Run set -euo pipefail
+2026-10-27T19:13:37.3311649Z [36;1mset -euo pipefail[0m
+2026-10-27T19:13:37.3311933Z [36;1mif [[ "$METAMODEL_DEPENDENT_GENERATION_READY" == "false" ]]; then[0m
+2026-10-27T19:13:37.3312235Z [36;1m  python -I - <<'PY'[0m
+2026-10-27T19:13:37.3312492Z [36;1mimport hashlib,json,os,pathlib,shutil,stat[0m
+2026-10-27T19:13:37.3312931Z [36;1mevidence=pathlib.Path(os.environ["EVIDENCE_DIR"]); stage=pathlib.Path(os.environ["METAMODEL_STAGE_DIR"])[0m
+2026-10-27T19:13:37.3313418Z [36;1mupload=pathlib.Path(os.environ["UPLOAD_DIR"]); outputs=evidence/"outputs"[0m
+2026-10-27T19:13:37.3313977Z [36;1mpaths=["spec/core/schema.json","spec/core/semantic-type-reference.schema.json","spec/core/extension-package.schema.json",[0m
+2026-10-27T19:13:37.3314678Z [36;1m  "spec/metamodel/package.json","spec/metamodel/generated/core-constraints.json","spec/metamodel/generated/domain-policy.json",[0m
+2026-10-27T19:13:37.3315343Z [36;1m  "spec/metamodel/generated/python-shapes.json","python/umf_access/src/umf_access/generated_core.py",[0m
+2026-10-27T19:13:37.3315912Z [36;1m  "src/generated/core-model.ts","src/generated/core-validators.ts","spec/metamodel/generated/manifest.json"][0m
+2026-10-27T19:13:37.3316377Z [36;1mcompanion="src/generated/core-validators-accounted.ts"[0m
+2026-10-27T19:13:37.3316662Z [36;1mdef regular(path):[0m
+2026-10-27T19:13:37.3316858Z [36;1m    info=path.lstat()[0m
+2026-10-27T19:13:37.3317166Z [36;1m    if not stat.S_ISREG(info.st_mode): raise ValueError("unsafe artifact-only source")[0m
+2026-10-27T19:13:37.3317490Z [36;1m    return info.st_size[0m
+2026-10-27T19:13:37.3317794Z [36;1mdef digest(path): return hashlib.sha256(path.read_bytes()).hexdigest()[0m
+2026-10-27T19:13:37.3318502Z [36;1mif os.environ.get("SOURCE_OUTCOME")!="success" or os.environ.get("DEPENDENCY_OUTCOME")!="success" or os.environ.get("GENERATION_OUTCOME")!="success": raise SystemExit("artifact-only phase prerequisites failed")[0m
+2026-10-27T19:13:37.3319247Z [36;1mphase_path=evidence/"metamodel-phase.json"; phase=json.loads(phase_path.read_bytes())[0m
+2026-10-27T19:13:37.3319789Z [36;1mif outputs.exists() and any(outputs.rglob("*")): raise SystemExit("artifact-only output directory is not empty")[0m
+2026-10-27T19:13:37.3321139Z [36;1mif phase.get("schema")!="umf.merged-metamodel-phase/1" or phase.get("status")!="METAMODEL_OUTPUTS_ARTIFACT_ONLY" or phase.get("sourceCommit")!=os.environ["GITHUB_SHA"] or phase.get("runId")!=os.environ["GITHUB_RUN_ID"] or phase.get("runAttempt")!=os.environ["GITHUB_RUN_ATTEMPT"] or phase.get("ref")!=os.environ["GITHUB_REF"]: raise SystemExit("artifact-only phase identity mismatch")[0m
+2026-10-27T19:13:37.3322136Z [36;1mstage_files=[][0m
+2026-10-27T19:13:37.3322339Z [36;1mfor path in stage.rglob("*"):[0m
+2026-10-27T19:13:37.3322661Z [36;1m    if path.is_symlink(): raise SystemExit("symlink in staged metamodel family")[0m
+2026-10-27T19:13:37.3323076Z [36;1m    if path.is_file(): stage_files.append(path.relative_to(stage).as_posix())[0m
+2026-10-27T19:13:37.3323487Z [36;1m    elif not path.is_dir(): raise SystemExit("non-file staged metamodel entry")[0m
+2026-10-27T19:13:37.3323943Z [36;1mif set(stage_files)!=set(paths)|{companion}: raise SystemExit("artifact-only stage roster mismatch")[0m
+2026-10-27T19:13:37.3324337Z [36;1moutput_rows=phase.get("stageRoster",{})[0m
+2026-10-27T19:13:37.3324713Z [36;1mif set(output_rows)!=set(paths): raise SystemExit("phase record output roster mismatch")[0m
+2026-10-27T19:13:37.3325111Z [36;1mstage_sizes={name:regular(stage/name) for name in paths}[0m
+2026-10-27T19:13:37.3325521Z [36;1mif sum(stage_sizes.values())>16777216: raise SystemExit("11-output phase exceeds artifact cap")[0m
+2026-10-27T19:13:37.3326004Z [36;1mstage_rows={name:{"sha256":digest(stage/name),"bytes":stage_sizes[name]} for name in paths}[0m
+2026-10-27T19:13:37.3326513Z [36;1mif stage_rows!=output_rows: raise SystemExit("phase record hashes differ from staged output bytes")[0m
+2026-10-27T19:13:37.3327191Z [36;1mcommitted_rows=phase.get("committedRoster",{})[0m
+2026-10-27T19:13:37.3327641Z [36;1mcommitted_match=set(committed_rows)==set(paths) and committed_rows==stage_rows[0m
+2026-10-27T19:13:37.3328207Z [36;1mif phase.get("committedOutputsMatch") is not committed_match: raise SystemExit("phase committed-output comparison is inconsistent")[0m
+2026-10-27T19:13:37.3328806Z [36;1mmetamodel_manifest=json.loads((stage/"spec/metamodel/generated/manifest.json").read_bytes())[0m
+2026-10-27T19:13:37.3329274Z [36;1mexpected_manifest_paths=set(paths)-{"spec/metamodel/generated/manifest.json"}[0m
+2026-10-27T19:13:37.3329988Z [36;1mif metamodel_manifest.get("profile")!="umf.metamodel.outputs/1" or set(metamodel_manifest.get("outputs",{}))!=expected_manifest_paths: raise SystemExit("metamodel output manifest roster mismatch")[0m
+2026-10-27T19:13:37.3330902Z [36;1mcompanion_inputs=metamodel_manifest.get("separatelyOwned",{}).get("accountedCompanion",{}).get("inputs",{})[0m
+2026-10-27T19:13:37.3331993Z [36;1mif phase.get("companionInputBindings")!=companion_inputs or set(companion_inputs)!={"src/generated/core-validators.ts","spec/core/schema.json","spec/core/semantic-type-reference.schema.json","spec/core/extension-package.schema.json"}: raise SystemExit("artifact-only companion input binding roster mismatch")[0m
+2026-10-27T19:13:37.3332959Z [36;1memitted={name:stage_rows[name] for name in companion_inputs}[0m
+2026-10-27T19:13:37.3333455Z [36;1mif phase.get("emittedCompanionInputs")!=emitted: raise SystemExit("artifact-only emitted companion input identity mismatch")[0m
+2026-10-27T19:13:37.3333920Z [36;1mcompanion_match=emitted==companion_inputs[0m
+2026-10-27T19:13:37.3334541Z [36;1mif phase.get("companionInputsMatch") is not companion_match or (phase.get("committedOutputsMatch") is True and companion_match): raise SystemExit("artifact-only stop reason is inconsistent")[0m
+2026-10-27T19:13:37.3335177Z [36;1mfor name,row in metamodel_manifest["outputs"].items():[0m
+2026-10-27T19:13:37.3335666Z [36;1m    if stage_rows[name]!={"sha256":row.get("sha256"),"bytes":row.get("bytes")}: raise SystemExit("metamodel manifest output custody mismatch")[0m
+2026-10-27T19:13:37.3336290Z [36;1msource_inputs_path=evidence/"source-inputs.json"; source_inputs=json.loads(source_inputs_path.read_bytes())[0m
+2026-10-27T19:13:37.3336905Z [36;1msource_inputs["metamodelGeneration"]={"phase":"METAMODEL_OUTPUTS_ARTIFACT_ONLY","phaseReceiptSha256":digest(phase_path),[0m
+2026-10-27T19:13:37.3337591Z [36;1m    "manifestPath":"spec/metamodel/generated/manifest.json","manifestSha256":stage_rows["spec/metamodel/generated/manifest.json"]["sha256"],[0m
+2026-10-27T19:13:37.3338343Z [36;1m    "modelSha256":metamodel_manifest.get("provenance",{}).get("modelSha256"),"compilerSha256":metamodel_manifest.get("provenance",{}).get("compilerSha256"),[0m
+2026-10-27T19:13:37.3339000Z [36;1m    "sources":metamodel_manifest.get("sources"),"compilerInputs":metamodel_manifest.get("compilerInputs"),[0m
+2026-10-27T19:13:37.3339561Z [36;1m    "workspaceInputs":metamodel_manifest.get("workspaceInputs"),"backend":metamodel_manifest.get("backend"),[0m
+2026-10-27T19:13:37.3340086Z [36;1m    "separatelyOwned":metamodel_manifest.get("separatelyOwned"),"outputRoster":stage_rows}[0m
+2026-10-27T19:13:37.3340765Z [36;1msource_inputs_bytes=(json.dumps(source_inputs,indent=2,sort_keys=True)+"\n").encode()[0m
+2026-10-27T19:13:37.3341458Z [36;1mreceipt={"profile":"umf.merged-source-generation/1","status":"METAMODEL_OUTPUTS_ARTIFACT_ONLY","qualifiesMergedSource":False,[0m
+2026-10-27T19:13:37.3342098Z [36;1m    "sourceCommit":os.environ["GITHUB_SHA"],"runId":os.environ["GITHUB_RUN_ID"],"runAttempt":os.environ["GITHUB_RUN_ATTEMPT"],[0m
+2026-10-27T19:13:37.3342643Z [36;1m    "ref":os.environ["GITHUB_REF"],"workflow":os.environ["GITHUB_WORKFLOW"],"metamodelPhase":phase,[0m
+2026-10-27T19:13:37.3343151Z [36;1m    "sourceInputsSha256":hashlib.sha256(source_inputs_bytes).hexdigest(),"generatedFiles":stage_rows,[0m
+2026-10-27T19:13:37.3343942Z [36;1m    "scope":"Eleven metamodel outputs only for review/adoption. Dependent action, Codegen and R3 generation withheld; no qualification or automatic adoption.",[0m
+2026-10-27T19:13:37.3344814Z [36;1m    "limits":{"aggregateWorkSeconds":1800,"evidenceReserveSeconds":60,"capturedCommandLogsMaximumBytes":1048576,"artifactMaximumBytes":16777216}}[0m
+2026-10-27T19:13:37.3345403Z [36;1mreceipt_bytes=(json.dumps(receipt,indent=2,sort_keys=True)+"\n").encode()[0m
+2026-10-27T19:13:37.3345741Z [36;1mif upload.exists(): shutil.rmtree(upload)[0m
+2026-10-27T19:13:37.3345990Z [36;1mupload.mkdir(parents=True)[0m
+2026-10-27T19:13:37.3346206Z [36;1mselected=[]; log_total=0[0m
+2026-10-27T19:13:37.3346580Z [36;1mif not evidence.is_dir() or evidence.is_symlink(): raise SystemExit("unsafe artifact-only evidence root")[0m
+2026-10-27T19:13:37.3346971Z [36;1mfor path in evidence.rglob("*"):[0m
+2026-10-27T19:13:37.3347291Z [36;1m    if path.is_symlink(): raise SystemExit("symlink in artifact-only evidence")[0m
+2026-10-27T19:13:37.3347612Z [36;1m    if path.is_file():[0m
+2026-10-27T19:13:37.3347842Z [36;1m        rel=path.relative_to(evidence)[0m
+2026-10-27T19:13:37.3348099Z [36;1m        if rel.parts[0]=="outputs": continue[0m
+2026-10-27T19:13:37.3348560Z [36;1m        if rel.parts[0]=="logs" and (len(rel.parts)!=2 or not path.name.endswith(".log")): raise SystemExit("unexpected artifact-only log path")[0m
+2026-10-27T19:13:37.3349030Z [36;1m        selected.append((path,rel,regular(path)))[0m
+2026-10-27T19:13:37.3349394Z [36;1m    elif not path.is_dir(): raise SystemExit("non-file artifact-only evidence entry")[0m
+2026-10-27T19:13:37.3349728Z [36;1mfor _,rel,size in selected:[0m
+2026-10-27T19:13:37.3349964Z [36;1m    if rel.parts[0]=="logs": log_total+=size[0m
+2026-10-27T19:13:37.3350299Z [36;1mif log_total>1048576: raise SystemExit("artifact-only raw logs exceed 1 MiB")[0m
+2026-10-27T19:13:37.3350865Z [36;1mreplacement_names={"source-inputs.json","generated-source-receipt.json"}[0m
+2026-10-27T19:13:37.3351360Z [36;1mbase_total=sum(size for _,rel,size in selected if not (len(rel.parts)==1 and rel.name in replacement_names))[0m
+2026-10-27T19:13:37.3352039Z [36;1mif base_total+sum(stage_sizes.values())+len(source_inputs_bytes)+len(receipt_bytes)>16777216: raise SystemExit("complete artifact-only family exceeds 16 MiB")[0m
+2026-10-27T19:13:37.3352539Z [36;1mfor name in paths:[0m
+2026-10-27T19:13:37.3352914Z [36;1m    target=outputs/name; target.parent.mkdir(parents=True,exist_ok=True); shutil.copyfile(stage/name,target)[0m
+2026-10-27T19:13:37.3353560Z [36;1m    if regular(target)!=stage_rows[name]["bytes"] or digest(target)!=stage_rows[name]["sha256"]: raise SystemExit("staged metamodel output copy mismatch")[0m
+2026-10-27T19:13:37.3354069Z [36;1msource_inputs_path.write_bytes(source_inputs_bytes)[0m
+2026-10-27T19:13:37.3354496Z [36;1mreceipt_path=evidence/"generated-source-receipt.json"; receipt_path.write_bytes(receipt_bytes)[0m
+2026-10-27T19:13:37.3354867Z [36;1mselected=[][0m
+2026-10-27T19:13:37.3355071Z [36;1mfor path in evidence.rglob("*"):[0m
+2026-10-27T19:13:37.3355409Z [36;1m    if path.is_symlink(): raise SystemExit("symlink after artifact-only staging")[0m
+2026-10-27T19:13:37.3355846Z [36;1m    if path.is_file(): selected.append((path,path.relative_to(evidence),regular(path)))[0m
+2026-10-27T19:13:37.3356515Z [36;1mif sum(size for _,rel,size in selected if rel.parts[0]=="logs")>1048576 or sum(size for _,_,size in selected)>16777216: raise SystemExit("staged artifact-only family exceeds existing cap")[0m
+2026-10-27T19:13:37.3357061Z [36;1mfor source,rel,size in selected:[0m
+2026-10-27T19:13:37.3357364Z [36;1m    target=upload/rel; target.parent.mkdir(parents=True,exist_ok=True)[0m
+2026-10-27T19:13:37.3357783Z [36;1m    if regular(source)!=size: raise SystemExit("artifact-only source changed after stat")[0m
+2026-10-27T19:13:37.3358144Z [36;1m    shutil.copyfile(source,target)[0m
+2026-10-27T19:13:37.3358655Z [36;1m    if regular(target)!=size or digest(target)!=digest(source): raise SystemExit("artifact-only copy differs")[0m
+2026-10-27T19:13:37.3359376Z [36;1mprint(json.dumps({"status":receipt["status"],"generatedOutputs":11,"artifactBytes":sum(size for _,_,size in selected)},sort_keys=True))[0m
+2026-10-27T19:13:37.3359821Z [36;1mPY[0m
+2026-10-27T19:13:37.3359978Z [36;1m  exit 0[0m
+2026-10-27T19:13:37.3360140Z [36;1mfi[0m
+2026-10-27T19:13:37.3360302Z [36;1mpython -I - <<'PY'[0m
+2026-10-27T19:13:37.3360692Z [36;1mimport hashlib,json,os,pathlib,re,shutil[0m
+2026-10-27T19:13:37.3360989Z [36;1mroot=pathlib.Path(os.environ["GITHUB_WORKSPACE"])[0m
+2026-10-27T19:13:37.3361285Z [36;1mevidence=pathlib.Path(os.environ["EVIDENCE_DIR"])[0m
+2026-10-27T19:13:37.3361546Z [36;1moutputs=evidence/"outputs"[0m
+2026-10-27T19:13:37.3361791Z [36;1moutputs.mkdir(parents=True,exist_ok=True)[0m
+2026-10-27T19:13:37.3362066Z [36;1mupload=pathlib.Path(os.environ["UPLOAD_DIR"])[0m
+2026-10-27T19:13:37.3362332Z [36;1mif upload.exists(): shutil.rmtree(upload)[0m
+2026-10-27T19:13:37.3362595Z [36;1mupload.mkdir(parents=True,exist_ok=True)[0m
+2026-10-27T19:13:37.3362919Z [36;1mdef sha(path): return hashlib.sha256(path.read_bytes()).hexdigest()[0m
+2026-10-27T19:13:37.3363216Z [36;1mmetamodel_paths=[[0m
+2026-10-27T19:13:37.3363627Z [36;1m  "spec/core/schema.json","spec/core/semantic-type-reference.schema.json","spec/core/extension-package.schema.json",[0m
+2026-10-27T19:13:37.3364290Z [36;1m  "spec/metamodel/package.json","spec/metamodel/generated/core-constraints.json","spec/metamodel/generated/domain-policy.json",[0m
+2026-10-27T19:13:37.3364903Z [36;1m  "spec/metamodel/generated/python-shapes.json","python/umf_access/src/umf_access/generated_core.py",[0m
+2026-10-27T19:13:37.3365468Z [36;1m  "src/generated/core-model.ts","src/generated/core-validators.ts","spec/metamodel/generated/manifest.json",[0m
+2026-10-27T19:13:37.3365857Z [36;1m][0m
+2026-10-27T19:13:37.3366182Z [36;1msources={"src/extensions/actions/plan-identity.ts":"outputs/src/extensions/actions/plan-identity.ts",[0m
+2026-10-27T19:13:37.3366781Z [36;1m  "python/umf_codegen/src/umf_codegen/_release.py":"outputs/python/umf_codegen/src/umf_codegen/_release.py",[0m
+2026-10-27T19:13:37.3367383Z [36;1m  "python/umf_codegen/src/umf_codegen/_assets/manifest.json":"outputs/python/umf_codegen/src/umf_codegen/_assets/manifest.json",[0m
+2026-10-27T19:13:37.3368074Z [36;1m  "docs/helix/04-build/evidence/rust-migration/r3/inventory.json":"outputs/docs/helix/04-build/evidence/rust-migration/r3/inventory.json",[0m
+2026-10-27T19:13:37.3368813Z [36;1m  "docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json":"outputs/docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json"}[0m
+2026-10-27T19:13:37.3369392Z [36;1msources.update({path:"outputs/"+path for path in metamodel_paths})[0m
+2026-10-27T19:13:37.3369889Z [36;1mreceipt={"profile":"umf.merged-source-generation/1","status":"FAIL_OR_UNKNOWN","qualifiesMergedSource":False,[0m
+2026-10-27T19:13:37.3370641Z [36;1m         "sourceCommit":os.environ["GITHUB_SHA"],"runId":os.environ["GITHUB_RUN_ID"],"runAttempt":os.environ["GITHUB_RUN_ATTEMPT"],[0m
+2026-10-27T19:13:37.3371280Z [36;1m         "ref":os.environ["GITHUB_REF"],"workflow":os.environ["GITHUB_WORKFLOW"],"workflowOutcome":os.environ.get("GENERATION_OUTCOME"),[0m
+2026-10-27T19:13:37.3371786Z [36;1m         "dependencyOutcome":os.environ.get("DEPENDENCY_OUTCOME"),[0m
+2026-10-27T19:13:37.3372119Z [36;1m         "sourceOutcome":os.environ.get("SOURCE_OUTCOME"),[0m
+2026-10-27T19:13:37.3372465Z [36;1m         "limits":{"aggregateWorkSeconds":1800,"evidenceReserveSeconds":60,[0m
+2026-10-27T19:13:37.3372899Z [36;1m                   "capturedCommandLogsMaximumBytes":1048576,"artifactMaximumBytes":16777216},[0m
+2026-10-27T19:13:37.3373522Z [36;1m         "scope":"Artifact-only generation after accounted R2 companion adoption. No test, qualification, production claim or automatic source adoption.",[0m
+2026-10-27T19:13:37.3374306Z [36;1m         "historicalPlaceholderReceipt":"historical-placeholder-inputs.json","generatedFiles":{}}[0m
+2026-10-27T19:13:37.3374831Z [36;1msource_input_receipt=evidence/"source-inputs.json"[0m
+2026-10-27T19:13:37.3375228Z [36;1mif source_input_receipt.is_file(): receipt["sourceInputsSha256"]=sha(source_input_receipt)[0m
+2026-10-27T19:13:37.3375766Z [36;1mreceipt["adoptedR2CompanionSha256"]="5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29"[0m
+2026-10-27T19:13:37.3376163Z [36;1mtry:[0m
+2026-10-27T19:13:37.3376569Z [36;1m    if os.environ["GITHUB_REF"]!="refs/heads/codex/migration-merged-generation": raise ValueError("unexpected qualification branch")[0m
+2026-10-27T19:13:37.3377286Z [36;1m    if os.environ.get("METAMODEL_DEPENDENT_GENERATION_READY")!="true": raise ValueError("full generation requires exact adopted metamodel correspondence")[0m
+2026-10-27T19:13:37.3377981Z [36;1m    if os.environ.get("SOURCE_OUTCOME")!="success": raise ValueError("adopted source provenance guard did not pass")[0m
+2026-10-27T19:13:37.3378694Z [36;1m    if os.environ.get("DEPENDENCY_OUTCOME")!="success" or os.environ.get("GENERATION_OUTCOME")!="success": raise ValueError("generation stages did not complete successfully")[0m
+2026-10-27T19:13:37.3379281Z [36;1m    assets=root/"python/umf_codegen/src/umf_codegen/_assets"[0m
+2026-10-27T19:13:37.3379762Z [36;1m    if assets.is_symlink() or not assets.is_dir(): raise ValueError("generated codegen asset directory is missing or unsafe")[0m
+2026-10-27T19:13:37.3380256Z [36;1m    metamodel_stage=pathlib.Path(os.environ["METAMODEL_STAGE_DIR"])[0m
+2026-10-27T19:13:37.3380749Z [36;1m    companion_rel="src/generated/core-validators-accounted.ts"[0m
+2026-10-27T19:13:37.3381094Z [36;1m    expected_stage_files=set(metamodel_paths)|{companion_rel}[0m
+2026-10-27T19:13:37.3381384Z [36;1m    actual_stage_files=set()[0m
+2026-10-27T19:13:37.3381627Z [36;1m    for path in metamodel_stage.rglob("*"):[0m
+2026-10-27T19:13:37.3381991Z [36;1m        if path.is_symlink(): raise ValueError("staged metamodel output contains a symlink")[0m
+2026-10-27T19:13:37.3382469Z [36;1m        if path.is_file(): actual_stage_files.add(path.relative_to(metamodel_stage).as_posix())[0m
+2026-10-27T19:13:37.3382957Z [36;1m        elif not path.is_dir(): raise ValueError("staged metamodel output contains a non-file entry")[0m
+2026-10-27T19:13:37.3383614Z [36;1m    if actual_stage_files!=expected_stage_files: raise ValueError("staged metamodel file roster differs from the exact11 outputs plus separately owned companion")[0m
+2026-10-27T19:13:37.3384163Z [36;1m    companion=metamodel_stage/companion_rel[0m
+2026-10-27T19:13:37.3384568Z [36;1m    if companion.stat().st_size!=1525352: raise ValueError("staged separately owned companion size mismatch")[0m
+2026-10-27T19:13:37.3384949Z [36;1m    output_sources=[][0m
+2026-10-27T19:13:37.3385154Z [36;1m    for source in sources:[0m
+2026-10-27T19:13:37.3385483Z [36;1m        path=(metamodel_stage/source) if source in metamodel_paths else root/source[0m
+2026-10-27T19:13:37.3385996Z [36;1m        if path.is_symlink() or not path.is_file(): raise ValueError("generated fixed output is missing or unsafe: "+source)[0m
+2026-10-27T19:13:37.3386416Z [36;1m        output_sources.append(path)[0m
+2026-10-27T19:13:37.3386641Z [36;1m    asset_files=[][0m
+2026-10-27T19:13:37.3386857Z [36;1m    for path in assets.rglob("*"):[0m
+2026-10-27T19:13:37.3387198Z [36;1m        if path.is_symlink(): raise ValueError("generated codegen asset contains a symlink")[0m
+2026-10-27T19:13:37.3387564Z [36;1m        if path.is_file(): asset_files.append(path)[0m
+2026-10-27T19:13:37.3387971Z [36;1m        elif not path.is_dir(): raise ValueError("generated codegen asset family contains a non-file entry")[0m
+2026-10-27T19:13:37.3388399Z [36;1m    generated_family=set(output_sources)|set(asset_files)[0m
+2026-10-27T19:13:37.3388770Z [36;1m    generated_family_bytes=sum(path.stat().st_size for path in generated_family)[0m
+2026-10-27T19:13:37.3389440Z [36;1m    if generated_family_bytes>16*1024*1024: raise ValueError("exact generated output union exceeds the 16 MiB cap before reads or copies")[0m
+2026-10-27T19:13:37.3390013Z [36;1m    for source,dest in sources.items():[0m
+2026-10-27T19:13:37.3390352Z [36;1m        src=(metamodel_stage/source) if source in metamodel_paths else root/source[0m
+2026-10-27T19:13:37.3390910Z [36;1m        destination=outputs/dest.removeprefix("outputs/")[0m
+2026-10-27T19:13:37.3391243Z [36;1m        destination.parent.mkdir(parents=True,exist_ok=True)[0m
+2026-10-27T19:13:37.3391536Z [36;1m        shutil.copyfile(src,destination)[0m
+2026-10-27T19:13:37.3391786Z [36;1m        raw=destination.read_bytes()[0m
+2026-10-27T19:13:37.3392235Z [36;1m        if source.endswith((".json",".ts",".py")) and b"<<<<<<<" in raw: raise ValueError("conflict-marker bytes remain in generated text: "+source)[0m
+2026-10-27T19:13:37.3392792Z [36;1m        receipt["generatedFiles"][source]={"sha256":sha(destination),"bytes":len(raw)}[0m
+2026-10-27T19:13:37.3393136Z [36;1m    manifest_path=assets/"manifest.json"[0m
+2026-10-27T19:13:37.3393407Z [36;1m    manifest=json.loads(manifest_path.read_bytes())[0m
+2026-10-27T19:13:37.3393712Z [36;1m    expected=set(manifest["files"])|{"manifest.json"}[0m
+2026-10-27T19:13:37.3394081Z [36;1m    actual={p.relative_to(assets).as_posix() for p in assets.rglob("*") if p.is_file()}[0m
+2026-10-27T19:13:37.3394667Z [36;1m    if manifest.get("profile")!="umf.codegen-v8/1" or actual!=expected: raise ValueError("generated codegen asset family does not match its manifest")[0m
+2026-10-27T19:13:37.3395176Z [36;1m    for name,digest in manifest["files"].items():[0m
+2026-10-27T19:13:37.3395537Z [36;1m        if sha(assets/name)!=digest: raise ValueError("codegen asset hash mismatch: "+name)[0m
+2026-10-27T19:13:37.3395945Z [36;1m        target=outputs/"python/umf_codegen/src/umf_codegen/_assets"/name[0m
+2026-10-27T19:13:37.3396367Z [36;1m        target.parent.mkdir(parents=True,exist_ok=True); shutil.copyfile(assets/name,target)[0m
+2026-10-27T19:13:37.3396841Z [36;1m    manifest_out=outputs/"python/umf_codegen/src/umf_codegen/_assets/manifest.json"[0m
+2026-10-27T19:13:37.3397223Z [36;1m    shutil.copyfile(manifest_path,manifest_out)[0m
+2026-10-27T19:13:37.3397550Z [36;1m    release=root/"python/umf_codegen/src/umf_codegen/_release.py"[0m
+2026-10-27T19:13:37.3397872Z [36;1m    release_text=release.read_text()[0m
+2026-10-27T19:13:37.3398119Z [36;1m    manifest_sha=sha(manifest_path)[0m
+2026-10-27T19:13:37.3398617Z [36;1m    if "MANIFEST_SHA256 = "+json.dumps(manifest_sha) not in release_text: raise ValueError("generated release pin does not identify generated manifest")[0m
+2026-10-27T19:13:37.3399211Z [36;1m    plan=(root/"src/extensions/actions/plan-identity.ts").read_text()[0m
+2026-10-27T19:13:37.3399799Z [36;1m    if not re.search(r'export const actionPlanProducerBuild = "sha256:[0-9a-f]{64}";',plan): raise ValueError("action plan producer build identity is malformed")[0m
+2026-10-27T19:13:37.3400718Z [36;1m    if not re.search(r'export const actionPlanModelSchemaDigest = "[0-9a-f]{64}";',plan): raise ValueError("action plan model schema identity is malformed")[0m
+2026-10-27T19:13:37.3401393Z [36;1m    inventory=json.loads((root/"docs/helix/04-build/evidence/rust-migration/r3/inventory.json").read_bytes())[0m
+2026-10-27T19:13:37.3401960Z [36;1m    boundary=json.loads((root/"docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json").read_bytes())[0m
+2026-10-27T19:13:37.3402746Z [36;1m    if inventory.get("schema")!="umf.rust-migration-inventory/0.2" or not inventory.get("capture",{}).get("sourceCohortSha256"): raise ValueError("R3 inventory does not identify current source cohort")[0m
+2026-10-27T19:13:37.3403523Z [36;1m    if boundary.get("schema")!="umf.rust-boundary-check/0.1": raise ValueError("R3 boundary output schema mismatch")[0m
+2026-10-27T19:13:37.3403964Z [36;1m    receipt["r3BoundaryStatus"]=boundary.get("status")[0m
+2026-10-27T19:13:37.3404264Z [36;1m    source_inputs=evidence/"source-inputs.json"[0m
+2026-10-27T19:13:37.3404775Z [36;1m    if not source_inputs.is_file(): raise ValueError("frozen merged source input roster is missing")[0m
+2026-10-27T19:13:37.3405274Z [36;1m    receipt["sourceInputsSha256"]=sha(source_inputs)[0m
+2026-10-27T19:13:37.3405721Z [36;1m    receipt["adoptedR2CompanionSha256"]="5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29"[0m
+2026-10-27T19:13:37.3406192Z [36;1m    source_input_receipt=json.loads(source_inputs.read_bytes())[0m
+2026-10-27T19:13:37.3406704Z [36;1m    if source_input_receipt.get("sourceCommit")!=os.environ["GITHUB_SHA"]: raise ValueError("source roster commit identity mismatch")[0m
+2026-10-27T19:13:37.3407209Z [36;1m    companion=source_input_receipt.get("adoptedR2Companion",{})[0m
+2026-10-27T19:13:37.3407912Z [36;1m    if companion.get("sha256")!=receipt["adoptedR2CompanionSha256"] or companion.get("adoptionCommit")!="97d15f9937163a3ab2a9e17eb08796a4734cbd68": raise ValueError("source roster companion adoption mismatch")[0m
+2026-10-27T19:13:37.3409097Z [36;1m    receipt["generatedFiles"]["python/umf_codegen/src/umf_codegen/_assets/generator.js.gz"]={"sha256":sha(outputs/"python/umf_codegen/src/umf_codegen/_assets/generator.js.gz"),"bytes":(outputs/"python/umf_codegen/src/umf_codegen/_assets/generator.js.gz").stat().st_size}[0m
+2026-10-27T19:13:37.3409965Z [36;1m    metamodel_manifest_path=metamodel_stage/"spec/metamodel/generated/manifest.json"[0m
+2026-10-27T19:13:37.3410393Z [36;1m    metamodel_manifest=json.loads(metamodel_manifest_path.read_bytes())[0m
+2026-10-27T19:13:37.3411004Z [36;1m    expected_metamodel_outputs=set(metamodel_paths)-{"spec/metamodel/generated/manifest.json"}[0m
+2026-10-27T19:13:37.3411619Z [36;1m    if metamodel_manifest.get("profile")!="umf.metamodel.outputs/1" or set(metamodel_manifest.get("outputs",{}))!=expected_metamodel_outputs:[0m
+2026-10-27T19:13:37.3412234Z [36;1m        raise ValueError("metamodel manifest does not bind the exact10 non-manifest generated outputs")[0m
+2026-10-27T19:13:37.3412662Z [36;1m    for name,row in metamodel_manifest["outputs"].items():[0m
+2026-10-27T19:13:37.3412946Z [36;1m        path=metamodel_stage/name[0m
+2026-10-27T19:13:37.3413434Z [36;1m        if path.stat().st_size!=row.get("bytes") or sha(path)!=row.get("sha256"): raise ValueError("metamodel generated output differs from its manifest: "+name)[0m
+2026-10-27T19:13:37.3413949Z [36;1m    source_map=metamodel_manifest.get("sources",{})[0m
+2026-10-27T19:13:37.3414265Z [36;1m    compiler_map=metamodel_manifest.get("compilerInputs",{})[0m
+2026-10-27T19:13:37.3414605Z [36;1m    workspace_map=metamodel_manifest.get("workspaceInputs",{})[0m
+2026-10-27T19:13:37.3414969Z [36;1m    backend_map=metamodel_manifest.get("backend",{}).get("inputs",{})[0m
+2026-10-27T19:13:37.3415283Z [36;1m    model_path="spec/metamodel/umf.yaml"[0m
+2026-10-27T19:13:37.3415754Z [36;1m    if not all(isinstance(value,dict) for value in (source_map,compiler_map,workspace_map,backend_map)) or model_path not in source_map:[0m
+2026-10-27T19:13:37.3416276Z [36;1m        raise ValueError("metamodel source closure records are malformed")[0m
+2026-10-27T19:13:37.3416626Z [36;1m    shared_paths=set(workspace_map)&set(backend_map)[0m
+2026-10-27T19:13:37.3417125Z [36;1m    if model_path in workspace_map or model_path in backend_map or model_path in compiler_map or shared_paths-{"bindings/core/node/src/wire.js"}:[0m
+2026-10-27T19:13:37.3417733Z [36;1m        raise ValueError("metamodel source ownership maps overlap outside the exact shared wire input")[0m
+2026-10-27T19:13:37.3418333Z [36;1m    if any(source_map.get(path)!=digest for mapping in (compiler_map,workspace_map,backend_map) for path,digest in mapping.items()):[0m
+2026-10-27T19:13:37.3418954Z [36;1m        raise ValueError("metamodel compiler/workspace/backend source identity differs from the closed source map")[0m
+2026-10-27T19:13:37.3419445Z [36;1m    if any(workspace_map[path]!=backend_map[path] for path in shared_paths):[0m
+2026-10-27T19:13:37.3419993Z [36;1m        raise ValueError("shared metamodel workspace/backend input digests differ")[0m
+2026-10-27T19:13:37.3420716Z [36;1m    if set(source_map)!=(set(compiler_map)|set(workspace_map)|set(backend_map)|{model_path}):[0m
+2026-10-27T19:13:37.3421142Z [36;1m        raise ValueError("metamodel compiler source closure is incomplete")[0m
+2026-10-27T19:13:37.3421546Z [36;1m    compiler_material=(json.dumps(compiler_map,indent=2)+"\n").encode()[0m
+2026-10-27T19:13:37.3421911Z [36;1m    compiler_sha=hashlib.sha256(compiler_material).hexdigest()[0m
+2026-10-27T19:13:37.3422216Z [36;1m    for path,digest in source_map.items():[0m
+2026-10-27T19:13:37.3422457Z [36;1m        source_file=root/path[0m
+2026-10-27T19:13:37.3422796Z [36;1m        if source_file.is_symlink() or not source_file.is_file() or sha(source_file)!=digest:[0m
+2026-10-27T19:13:37.3423265Z [36;1m            raise ValueError("metamodel source-map digest differs from the current source: "+path)[0m
+2026-10-27T19:13:37.3423669Z [36;1m    provenance=metamodel_manifest.get("provenance",{})[0m
+2026-10-27T19:13:37.3424122Z [36;1m    if provenance.get("modelSha256")!=source_map[model_path] or provenance.get("compilerSha256")!=compiler_sha:[0m
+2026-10-27T19:13:37.3424609Z [36;1m        raise ValueError("metamodel model/compiler provenance digest mismatch")[0m
+2026-10-27T19:13:37.3424971Z [36;1m    source_inputs_path=evidence/"source-inputs.json"[0m
+2026-10-27T19:13:37.3425306Z [36;1m    source_inputs_record=json.loads(source_inputs_path.read_bytes())[0m
+2026-10-27T19:13:37.3425778Z [36;1m    source_inputs_record["metamodelGeneration"]={"manifestPath":"spec/metamodel/generated/manifest.json",[0m
+2026-10-27T19:13:37.3426332Z [36;1m        "manifestSha256":sha(metamodel_manifest_path),"manifestBytes":metamodel_manifest_path.stat().st_size,[0m
+2026-10-27T19:13:37.3426785Z [36;1m        "modelPath":model_path,"modelSha256":provenance["modelSha256"],[0m
+2026-10-27T19:13:37.3427190Z [36;1m        "compilerSha256":provenance["compilerSha256"],"compilerInputs":compiler_map,[0m
+2026-10-27T19:13:37.3427574Z [36;1m        "sources":source_map,"workspaceInputs":workspace_map,[0m
+2026-10-27T19:13:37.3428121Z [36;1m        "backend":{"name":metamodel_manifest.get("backend",{}).get("name"),"ownership":metamodel_manifest.get("backend",{}).get("ownership"),"inputs":backend_map},[0m
+2026-10-27T19:13:37.3428841Z [36;1m        "outputRoster":{name:{"sha256":sha(metamodel_stage/name),"bytes":(metamodel_stage/name).stat().st_size} for name in metamodel_paths}}[0m
+2026-10-27T19:13:37.3429420Z [36;1m    source_inputs_path.write_text(json.dumps(source_inputs_record,indent=2,sort_keys=True)+"\n")[0m
+2026-10-27T19:13:37.3429838Z [36;1m    receipt["sourceInputsSha256"]=sha(source_inputs_path)[0m
+2026-10-27T19:13:37.3430171Z [36;1m    files=sorted(p for p in outputs.rglob("*") if p.is_file())[0m
+2026-10-27T19:13:37.3430901Z [36;1m    expected_output_paths={dest.removeprefix("outputs/") for dest in sources.values()}|{"python/umf_codegen/src/umf_codegen/_assets/"+name for name in expected}[0m
+2026-10-27T19:13:37.3431785Z [36;1m    if {p.relative_to(outputs).as_posix() for p in files}!=expected_output_paths or len(files)!=27: raise ValueError("artifact output roster is not the closed27-file metamodel plus action/codegen/R3 union")[0m
+2026-10-27T19:13:37.3432413Z [36;1m    total=sum(p.stat().st_size for p in files)[0m
+2026-10-27T19:13:37.3432742Z [36;1m    log_total=sum(p.stat().st_size for p in (evidence/"logs").glob("*.log"))[0m
+2026-10-27T19:13:37.3433212Z [36;1m    if log_total>1048576 or total>16*1024*1024: raise ValueError("bounded generated-output or log cap exceeded")[0m
+2026-10-27T19:13:37.3433616Z [36;1m    receipt["logBytes"]=log_total[0m
+2026-10-27T19:13:37.3433864Z [36;1m    receipt["outputArtifactBytes"]=total[0m
+2026-10-27T19:13:37.3434232Z [36;1m    receipt["outputFilesSha256"]={p.relative_to(outputs).as_posix():sha(p) for p in files}[0m
+2026-10-27T19:13:37.3434761Z [36;1m    if boundary.get("status")!="pass": raise ValueError("current R3 boundary report is not passing")[0m
+2026-10-27T19:13:37.3435314Z [36;1m    receipt["status"]="GENERATED_ARTIFACT_ONLY"[0m
+2026-10-27T19:13:37.3435658Z [36;1mexcept Exception as error:[0m
+2026-10-27T19:13:37.3435896Z [36;1m    receipt["status"]="PARTIAL_OR_FAILED"[0m
+2026-10-27T19:13:37.3436152Z [36;1m    receipt["failure"]=type(error).__name__[0m
+2026-10-27T19:13:37.3436455Z [36;1mreceipt_path=evidence/"generated-source-receipt.json"[0m
+2026-10-27T19:13:37.3436766Z [36;1mif receipt["status"]=="GENERATED_ARTIFACT_ONLY":[0m
+2026-10-27T19:13:37.3437109Z [36;1m    receipt_path.write_text(json.dumps(receipt,indent=2,sort_keys=True)+"\n")[0m
+2026-10-27T19:13:37.3437517Z [36;1m    artifact_files=sorted(p for p in evidence.rglob("*") if p.is_file())[0m
+2026-10-27T19:13:37.3437885Z [36;1m    artifact_bytes=sum(p.stat().st_size for p in artifact_files)[0m
+2026-10-27T19:13:37.3438240Z [36;1m    log_bytes=sum(p.stat().st_size for p in (evidence/"logs").glob("*.log"))[0m
+2026-10-27T19:13:37.3438581Z [36;1m    if log_bytes>1048576 or artifact_bytes>16*1024*1024:[0m
+2026-10-27T19:13:37.3438865Z [36;1m        receipt["status"]="PARTIAL_OR_FAILED"[0m
+2026-10-27T19:13:37.3452179Z [36;1m        receipt["failure"]="BoundedArtifactExceeded"[0m
+2026-10-27T19:13:37.3452497Z [36;1m    else:[0m
+2026-10-27T19:13:37.3452704Z [36;1m        receipt["artifactBytes"]=0[0m
+2026-10-27T19:13:37.3452957Z [36;1m        for _ in range(3):[0m
+2026-10-27T19:13:37.3453288Z [36;1m            receipt_path.write_text(json.dumps(receipt,indent=2,sort_keys=True)+"\n")[0m
+2026-10-27T19:13:37.3453741Z [36;1m            artifact_bytes=sum(p.stat().st_size for p in evidence.rglob("*") if p.is_file())[0m
+2026-10-27T19:13:37.3454143Z [36;1m            if artifact_bytes==receipt["artifactBytes"]: break[0m
+2026-10-27T19:13:37.3454457Z [36;1m            receipt["artifactBytes"]=artifact_bytes[0m
+2026-10-27T19:13:37.3454795Z [36;1m        if artifact_bytes!=receipt["artifactBytes"] or artifact_bytes>16*1024*1024:[0m
+2026-10-27T19:13:37.3455147Z [36;1m            receipt["status"]="PARTIAL_OR_FAILED"[0m
+2026-10-27T19:13:37.3455443Z [36;1m            receipt["failure"]="BoundedArtifactExceeded"[0m
+2026-10-27T19:13:37.3455740Z [36;1mif receipt["status"]!="GENERATED_ARTIFACT_ONLY":[0m
+2026-10-27T19:13:37.3456089Z [36;1m    observed_output_files=sum(1 for p in outputs.rglob("*") if p.is_file())[0m
+2026-10-27T19:13:37.3456528Z [36;1m    observed_log_bytes=sum(p.stat().st_size for p in (evidence/"logs").glob("*.log"))[0m
+2026-10-27T19:13:37.3456984Z [36;1m    shutil.rmtree(outputs,ignore_errors=True); outputs.mkdir(parents=True,exist_ok=True)[0m
+2026-10-27T19:13:37.3457347Z [36;1m    if observed_log_bytes>1048576:[0m
+2026-10-27T19:13:37.3457746Z [36;1m        shutil.rmtree(evidence/"logs",ignore_errors=True); (evidence/"logs").mkdir(parents=True,exist_ok=True)[0m
+2026-10-27T19:13:37.3458147Z [36;1m    receipt["generatedFiles"]={}[0m
+2026-10-27T19:13:37.3458385Z [36;1m    receipt["outputFilesSha256"]={}[0m
+2026-10-27T19:13:37.3458631Z [36;1m    receipt["outputArtifactBytes"]=0[0m
+2026-10-27T19:13:37.3458989Z [36;1m    receipt["failureOnlyReceipt"]={"observedGeneratedFileCount":observed_output_files,[0m
+2026-10-27T19:13:37.3459391Z [36;1m                                      "observedLogBytes":observed_log_bytes,[0m
+2026-10-27T19:13:37.3459733Z [36;1m                                      "rawOutputsUploaded":False,"rawLogsUploaded":False}[0m
+2026-10-27T19:13:37.3460116Z [36;1m    receipt_path.write_text(json.dumps(receipt,indent=2,sort_keys=True)+"\n")[0m
+2026-10-27T19:13:37.3460659Z [36;1m    shutil.copyfile(receipt_path,upload/receipt_path.name)[0m
+2026-10-27T19:13:37.3461072Z [36;1m    raise SystemExit("merged-source generation failed or exceeded bounded evidence limits")[0m
+2026-10-27T19:13:37.3461474Z [36;1mshutil.copytree(evidence,upload,dirs_exist_ok=True)[0m
+2026-10-27T19:13:37.3461860Z [36;1mPY[0m
+2026-10-27T19:13:37.3479581Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-27T19:13:37.3479850Z env:
+2026-10-27T19:13:37.3480256Z   METAMODEL_STAGE_DIR: /home/runner/work/_temp/umf-metamodel-stage-40566692892-1
+2026-10-27T19:13:37.3480910Z   EVIDENCE_DIR: /home/runner/work/_temp/umf-merged-generation
+2026-10-27T19:13:37.3481230Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:13:37.3481565Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:13:37.3481906Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:13:37.3482210Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:13:37.3482506Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:13:37.3482807Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:13:37.3483079Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T19:13:37.3483285Z   CARGO_INCREMENTAL: 0
+2026-10-27T19:13:37.3483471Z   CARGO_TERM_COLOR: always
+2026-10-27T19:13:37.3483676Z   METAMODEL_DEPENDENT_GENERATION_READY: true
+2026-10-27T19:13:37.3483910Z   SOURCE_OUTCOME: success
+2026-10-27T19:13:37.3484106Z   DEPENDENCY_OUTCOME: success
+2026-10-27T19:13:37.3484309Z   GENERATION_OUTCOME: success
+2026-10-27T19:13:37.3484570Z   UPLOAD_DIR: /home/runner/work/_temp/umf-merged-generation-upload
+2026-10-27T19:13:37.3484846Z ##[endgroup]
+2026-10-27T19:13:37.4573785Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-10-27T19:13:37.4574114Z with:
+2026-10-27T19:13:37.4574442Z   name: umf-merged-source-generated-1e0d9545eb6e00dc4521a257be722cf336c3b741-40566692892-1
+2026-10-27T19:13:37.4574875Z   path: /home/runner/work/_temp/umf-merged-generation-upload/**
+2026-10-27T19:13:37.4575153Z   if-no-files-found: error
+2026-10-27T19:13:37.4575345Z   retention-days: 90
+2026-10-27T19:13:37.4575532Z   compression-level: 6
+2026-10-27T19:13:37.4575722Z   overwrite: false
+2026-10-27T19:13:37.4575901Z   include-hidden-files: false
+2026-10-27T19:13:37.4576099Z env:
+2026-10-27T19:13:37.4576368Z   METAMODEL_STAGE_DIR: /home/runner/work/_temp/umf-metamodel-stage-40566692892-1
+2026-10-27T19:13:37.4576754Z   EVIDENCE_DIR: /home/runner/work/_temp/umf-merged-generation
+2026-10-27T19:13:37.4577086Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:13:37.4577452Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T19:13:37.4577780Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:13:37.4578081Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:13:37.4578383Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T19:13:37.4578676Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T19:13:37.4578949Z   CARGO_HOME: /home/runner/.cargo
+2026-10-27T19:13:37.4579155Z   CARGO_INCREMENTAL: 0
+2026-10-27T19:13:37.4579348Z   CARGO_TERM_COLOR: always
+2026-10-27T19:13:37.4579554Z   METAMODEL_DEPENDENT_GENERATION_READY: true
+2026-10-27T19:13:37.4579784Z ##[endgroup]
+2026-10-27T19:13:37.5967596Z (node:3939) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-27T19:13:37.5968495Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-27T19:13:37.6149679Z With the provided path, there will be 51 files uploaded
+2026-10-27T19:13:37.6150375Z Artifact name is valid!
+2026-10-27T19:13:37.6150815Z Root directory input is valid!
+2026-10-27T19:13:37.8585633Z Beginning upload of artifact content to blob storage
+2026-10-27T19:13:37.9785705Z (node:3939) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-27T19:13:38.0456121Z Uploaded bytes 736368
+2026-10-27T19:13:38.0581198Z Finished uploading artifact content to blob storage!
+2026-10-27T19:13:38.0581943Z SHA256 digest of uploaded artifact zip is a9f2d266ade4393c41e02979b62664a90c28dd279ab5fce6728c374050a78010
+2026-10-27T19:13:38.0583425Z Finalizing artifact upload
+2026-10-27T19:13:38.5090237Z Artifact umf-merged-source-generated-1e0d9545eb6e00dc4521a257be722cf336c3b741-40566692892-1.zip successfully finalized. Artifact ID 12763033295
+2026-10-27T19:13:38.5092411Z Artifact umf-merged-source-generated-1e0d9545eb6e00dc4521a257be722cf336c3b741-40566692892-1 has been successfully uploaded! Final size is 736368 bytes. Artifact ID is 12763033295
+2026-10-27T19:13:38.5096385Z Artifact download URL: https://github.com/DocumentDrivenDX/umf/actions/runs/40566692892/artifacts/12763033295
+2026-10-27T19:13:38.5279206Z Post job cleanup.
+2026-10-27T19:13:38.6396534Z Post job cleanup.
+2026-10-27T19:13:38.7939824Z Post job cleanup.
+2026-10-27T19:13:38.8681066Z [command]/usr/bin/git version
+2026-10-27T19:13:38.8713069Z git version 2.56.0
+2026-10-27T19:13:38.8744735Z Temporarily overriding HOME='/home/runner/work/_temp/0faa2dc7-bb25-417b-b97e-7ca795654072' before making global git config changes
+2026-10-27T19:13:38.8745855Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-27T19:13:38.8749766Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf
+2026-10-27T19:13:38.8791228Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T19:13:38.8825250Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-27T19:13:38.9179857Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T19:13:38.9216516Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-27T19:13:38.9552735Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T19:13:38.9597370Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-27T19:13:39.0039798Z Cleaning up orphan processes
+2026-10-27T19:13:39.0324680Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

@@ -1,0 +1,126 @@
+{
+  "adoptedR2CompanionSha256": "5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29",
+  "artifactBytes": 4726830,
+  "dependencyOutcome": "success",
+  "generatedFiles": {
+    "docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json": {
+      "bytes": 26687,
+      "sha256": "63898d97108d217ae2ed325d3b7b357839476c9328fad1f05de9e5d71351699e"
+    },
+    "docs/helix/04-build/evidence/rust-migration/r3/inventory.json": {
+      "bytes": 2812768,
+      "sha256": "9caa800d7e8900c006efb6f891a94b3e7097f3084473557d4244b3c2f2f4b40f"
+    },
+    "python/umf_access/src/umf_access/generated_core.py": {
+      "bytes": 360,
+      "sha256": "5366ba6be1c2eb042b14f30723648686294e1f450d75a645e76806a4494593a1"
+    },
+    "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz": {
+      "bytes": 925422,
+      "sha256": "3f48410cb6013c2321ecb6f142779123730bfa9f85bbaabab1b412d5984cdd47"
+    },
+    "python/umf_codegen/src/umf_codegen/_assets/manifest.json": {
+      "bytes": 33447,
+      "sha256": "ad326f5c95d4c9dde9ec09d9413aac156e50a1e0b1934cc357b249fd560a6e95"
+    },
+    "python/umf_codegen/src/umf_codegen/_release.py": {
+      "bytes": 170,
+      "sha256": "2ae57c276f24c6aa9e93402fb95a431369089aa42fb6eee851baf2ede612bfed"
+    },
+    "spec/core/extension-package.schema.json": {
+      "bytes": 45001,
+      "sha256": "4df3c8f92c5baa2c52f965d83b681ff306392bf9ba333bd39213a8f1065ac766"
+    },
+    "spec/core/schema.json": {
+      "bytes": 45342,
+      "sha256": "c6004664eb93dcef28ce6e0583f91225b618aa0fb42967a892242402557cf71d"
+    },
+    "spec/core/semantic-type-reference.schema.json": {
+      "bytes": 45463,
+      "sha256": "207abbad54ebf8c660a958e2deda072a5a3236b5b8df5af8a8656f90c3e46ba9"
+    },
+    "spec/metamodel/generated/core-constraints.json": {
+      "bytes": 190252,
+      "sha256": "e4e667c6a23ebcfe12a937730adfa60081475ad11d367b8986a9ea94429d5dcd"
+    },
+    "spec/metamodel/generated/domain-policy.json": {
+      "bytes": 14827,
+      "sha256": "7827703fe00b4eb955e9a1d1632fec4e7b9e8c52df0d67eb700dbd7ce9a6d436"
+    },
+    "spec/metamodel/generated/manifest.json": {
+      "bytes": 58660,
+      "sha256": "49d13a735d92c9db935fc9c7f5f804e0529c5bb374e4c98fe246e03d979353b6"
+    },
+    "spec/metamodel/generated/python-shapes.json": {
+      "bytes": 98734,
+      "sha256": "884fb5d09e1cd512e32b188144aa0f9ac55d396cc5a3b10341b3aeb06093fde7"
+    },
+    "spec/metamodel/package.json": {
+      "bytes": 1265,
+      "sha256": "5930c77eaa8308d76761cd93d5a58bd5b0a7b3f30b5bc56fdc7db6d961fb0b89"
+    },
+    "src/extensions/actions/plan-identity.ts": {
+      "bytes": 355,
+      "sha256": "e88f87c9c9c186f2c91e75012a27531538879a144b68136a931069209d17103f"
+    },
+    "src/generated/core-model.ts": {
+      "bytes": 6714,
+      "sha256": "55485912b78640ef970244ffd8d4cbd6f186e035efccd77259aadff6120b7106"
+    },
+    "src/generated/core-validators.ts": {
+      "bytes": 305070,
+      "sha256": "563602e0f21f6d6b0efd1ae069dbda28926e085585b4bf0430347b65ff2bd0ff"
+    }
+  },
+  "historicalPlaceholderReceipt": "historical-placeholder-inputs.json",
+  "limits": {
+    "aggregateWorkSeconds": 1800,
+    "artifactMaximumBytes": 16777216,
+    "capturedCommandLogsMaximumBytes": 1048576,
+    "evidenceReserveSeconds": 60
+  },
+  "logBytes": 7911,
+  "outputArtifactBytes": 4628468,
+  "outputFilesSha256": {
+    "docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json": "63898d97108d217ae2ed325d3b7b357839476c9328fad1f05de9e5d71351699e",
+    "docs/helix/04-build/evidence/rust-migration/r3/inventory.json": "9caa800d7e8900c006efb6f891a94b3e7097f3084473557d4244b3c2f2f4b40f",
+    "python/umf_access/src/umf_access/generated_core.py": "5366ba6be1c2eb042b14f30723648686294e1f450d75a645e76806a4494593a1",
+    "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz": "3f48410cb6013c2321ecb6f142779123730bfa9f85bbaabab1b412d5984cdd47",
+    "python/umf_codegen/src/umf_codegen/_assets/manifest.json": "ad326f5c95d4c9dde9ec09d9413aac156e50a1e0b1934cc357b249fd560a6e95",
+    "python/umf_codegen/src/umf_codegen/_assets/notices/ajv/LICENSE": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3",
+    "python/umf_codegen/src/umf_codegen/_assets/notices/ajv/package.json": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
+    "python/umf_codegen/src/umf_codegen/_assets/notices/fast-deep-equal/LICENSE": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a",
+    "python/umf_codegen/src/umf_codegen/_assets/notices/fast-deep-equal/package.json": "a5c63940db0260739be9e2ac67f3aac268df4db5770420ee4e34e493152f97d2",
+    "python/umf_codegen/src/umf_codegen/_assets/notices/fast-uri/LICENSE": "b010b0dfdfdb23d7396e03b82cd4621fc9bb8f95d6b0aea70b9c24e12074c786",
+    "python/umf_codegen/src/umf_codegen/_assets/notices/fast-uri/package.json": "30cad05aad3d3596513706451dbfc7e0422f9c1d00f2903ecc34580327d54bc7",
+    "python/umf_codegen/src/umf_codegen/_assets/notices/json-schema-traverse/LICENSE": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a",
+    "python/umf_codegen/src/umf_codegen/_assets/notices/json-schema-traverse/package.json": "156fb24af02845c190701360d06dfda35ef04282e34a734289ea9535ad9819ae",
+    "python/umf_codegen/src/umf_codegen/_assets/notices/yaml/LICENSE": "5bba27375d93e9119f76c1015f7672cf9ad5f70952296e0842fb2243d6376869",
+    "python/umf_codegen/src/umf_codegen/_assets/notices/yaml/package.json": "1c6441703d8204a23ded0d37ddf57c3b69d821dc392f20852d1f605bb9b8861c",
+    "python/umf_codegen/src/umf_codegen/_release.py": "2ae57c276f24c6aa9e93402fb95a431369089aa42fb6eee851baf2ede612bfed",
+    "spec/core/extension-package.schema.json": "4df3c8f92c5baa2c52f965d83b681ff306392bf9ba333bd39213a8f1065ac766",
+    "spec/core/schema.json": "c6004664eb93dcef28ce6e0583f91225b618aa0fb42967a892242402557cf71d",
+    "spec/core/semantic-type-reference.schema.json": "207abbad54ebf8c660a958e2deda072a5a3236b5b8df5af8a8656f90c3e46ba9",
+    "spec/metamodel/generated/core-constraints.json": "e4e667c6a23ebcfe12a937730adfa60081475ad11d367b8986a9ea94429d5dcd",
+    "spec/metamodel/generated/domain-policy.json": "7827703fe00b4eb955e9a1d1632fec4e7b9e8c52df0d67eb700dbd7ce9a6d436",
+    "spec/metamodel/generated/manifest.json": "49d13a735d92c9db935fc9c7f5f804e0529c5bb374e4c98fe246e03d979353b6",
+    "spec/metamodel/generated/python-shapes.json": "884fb5d09e1cd512e32b188144aa0f9ac55d396cc5a3b10341b3aeb06093fde7",
+    "spec/metamodel/package.json": "5930c77eaa8308d76761cd93d5a58bd5b0a7b3f30b5bc56fdc7db6d961fb0b89",
+    "src/extensions/actions/plan-identity.ts": "e88f87c9c9c186f2c91e75012a27531538879a144b68136a931069209d17103f",
+    "src/generated/core-model.ts": "55485912b78640ef970244ffd8d4cbd6f186e035efccd77259aadff6120b7106",
+    "src/generated/core-validators.ts": "563602e0f21f6d6b0efd1ae069dbda28926e085585b4bf0430347b65ff2bd0ff"
+  },
+  "profile": "umf.merged-source-generation/1",
+  "qualifiesMergedSource": false,
+  "r3BoundaryStatus": "pass",
+  "ref": "refs/heads/codex/migration-merged-generation",
+  "runAttempt": "1",
+  "runId": "40580347258",
+  "scope": "Artifact-only generation after accounted R2 companion adoption. No test, qualification, production claim or automatic source adoption.",
+  "sourceCommit": "bc61be889067d3e9bd537ea2c7910e189ffb46e1",
+  "sourceInputsSha256": "43b9cdd82e4822bae8215e83828e1a8cc33b8f6e0b17cafbce0d92969c2f3f30",
+  "sourceOutcome": "success",
+  "status": "GENERATED_ARTIFACT_ONLY",
+  "workflow": "Generate merged-source action, codegen and R3 artifacts",
+  "workflowOutcome": "success"
+}

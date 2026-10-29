@@ -1,0 +1,956 @@
+{
+  "aggregateArtifact": {
+    "expandedBytes": 207547547,
+    "id": 12805614309,
+    "name": "umf-aggregate-cohort-7cf121baa40601ba0b92a14cd0f7e121783cb8e2",
+    "path": "/private/tmp/migration-access-40600969078/aggregate.zip",
+    "sha256": "b23463647a3dfe504429b63c645cd5b506420facdc226272e3d68a3f701ddf38",
+    "sizeBytes": 201568140,
+    "unsafeEntries": [],
+    "zipEntries": 90
+  },
+  "aggregateStatus": "assembled",
+  "capturedRaw": {
+    "aggregate.log": {
+      "bytes": 49081,
+      "sha256": "ecfc2ac16d573970e44b0a76c8fd94fd573f5cbc3224a4ddea9167a6ab30489d"
+    },
+    "artifacts.json": {
+      "bytes": 9568,
+      "sha256": "c880b12a4ea6f6de39e3a3ca752ba4f3fbb1d3d700a299d1a5dc2c88bfdd767f"
+    },
+    "jobs.json": {
+      "bytes": 74494,
+      "sha256": "cfd7db1bfd0eee05b22382ad35e9e3f369a5ec3a8098ff2d1ee87f2cbcbcf36b"
+    },
+    "run.json": {
+      "bytes": 12793,
+      "sha256": "23f59c5ad32af9305cef8b349eed8ac9ca1b19dfd0e51760e723647ff99f6ff9"
+    },
+    "union311.log": {
+      "bytes": 43413,
+      "sha256": "102c0c5501781f0d12aca25fead26e32fee2b6f41d3bdcef048b7902a0202432"
+    },
+    "union314.log": {
+      "bytes": 46059,
+      "sha256": "4e2de474c75fee26d68ea8d9e620092950591b00bcec71409924e7d88e52c882"
+    }
+  },
+  "coverage": {
+    "artifactTargets": [
+      "macos-arm64-py311",
+      "macos-arm64-py314"
+    ],
+    "macReplay": "not-performed",
+    "qualifiedRuntimeCells": [
+      "linux-x86_64-py311",
+      "linux-x86_64-py314"
+    ],
+    "refreshedMacRuntime": "unqualified"
+  },
+  "generatorCorpus": {
+    "bytes": 3500077,
+    "sha256": "80b8059d48490761bc98255d58409d96f46b399d78b79d0dd9aa43d30d7e6187"
+  },
+  "linuxRuntimeCells": [
+    {
+      "allRowsMatchUnion": true,
+      "architecture": "x86_64",
+      "cell": "linux-x86_64-py311",
+      "core": {
+        "distributionVersion": "0.10.3",
+        "installedPath": "/tmp/umf-offline-mirror-sq_cam_e/venv/lib/python3.11/site-packages/umf/_rust_core.abi3.so",
+        "installedSha256": "c51b511a06bc1ccde6cc2208d33a4fb70ef66c67507ba8f2a6ea05fd2543cf57",
+        "member": "umf/_rust_core.abi3.so",
+        "memberSha256": "c51b511a06bc1ccde6cc2208d33a4fb70ef66c67507ba8f2a6ea05fd2543cf57",
+        "roundtrip": "passed",
+        "semanticCoreVersion": "0.10.0",
+        "wheel": "umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl",
+        "wheelSha256": "cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75"
+      },
+      "lockSha256": "36c9b1c9a821f93d246e7b28f2d8270a6265f7e9fd3cdbc49570d8eec6a0ab95",
+      "os": "ubuntu-24.04",
+      "packageRoster": [
+        [
+          "annotated-types",
+          "0.8.0"
+        ],
+        [
+          "attrs",
+          "26.1.0"
+        ],
+        [
+          "jsonschema",
+          "4.26.0"
+        ],
+        [
+          "jsonschema-specifications",
+          "2025.9.1"
+        ],
+        [
+          "mini-racer",
+          "0.14.1"
+        ],
+        [
+          "psycopg",
+          "3.2.13"
+        ],
+        [
+          "psycopg-binary",
+          "3.2.13"
+        ],
+        [
+          "pydantic",
+          "2.14.1"
+        ],
+        [
+          "pydantic-core",
+          "2.50.1"
+        ],
+        [
+          "referencing",
+          "0.37.0"
+        ],
+        [
+          "rpds-py",
+          "2026.9.1"
+        ],
+        [
+          "ruamel-yaml",
+          "0.19.1"
+        ],
+        [
+          "typing-extensions",
+          "4.16.0"
+        ],
+        [
+          "typing-inspection",
+          "0.4.4"
+        ],
+        [
+          "umf-access",
+          "0.1.0.dev8"
+        ],
+        [
+          "umf-codegen",
+          "0.1.0a5"
+        ],
+        [
+          "umf-core",
+          "0.10.3"
+        ],
+        [
+          "umf-weft",
+          "0.4.55"
+        ]
+      ],
+      "packages": 18,
+      "probes": {
+        "missing-wheel": "refused under OS network denial",
+        "tampered-wheel": "refused under OS network denial",
+        "umf-codegen-check": "passed",
+        "umf-codegen-generate": "passed",
+        "umf-core-native-import": "passed",
+        "umf-core-public-roundtrip": "passed",
+        "umf-core-public-validation": "passed",
+        "umf-table-apply": "approval-required before connection",
+        "umf-table-check": "passed",
+        "umf-table-new": "passed"
+      },
+      "python": "3.11.17",
+      "receiptNetworkIsolation": "Linux network namespace (unshare --net)",
+      "receiptSha256": "a66ad6d64266f559acf60054811ceda64384beadcb7fcc33fefe93f516a5a7ad",
+      "receiptStatus": "passed",
+      "receiptWheelCount": 18,
+      "wheelRows": 18
+    },
+    {
+      "allRowsMatchUnion": true,
+      "architecture": "x86_64",
+      "cell": "linux-x86_64-py314",
+      "core": {
+        "distributionVersion": "0.10.3",
+        "installedPath": "/tmp/umf-offline-mirror-qdkhjjxb/venv/lib/python3.14/site-packages/umf/_rust_core.abi3.so",
+        "installedSha256": "c51b511a06bc1ccde6cc2208d33a4fb70ef66c67507ba8f2a6ea05fd2543cf57",
+        "member": "umf/_rust_core.abi3.so",
+        "memberSha256": "c51b511a06bc1ccde6cc2208d33a4fb70ef66c67507ba8f2a6ea05fd2543cf57",
+        "roundtrip": "passed",
+        "semanticCoreVersion": "0.10.0",
+        "wheel": "umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl",
+        "wheelSha256": "cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75"
+      },
+      "lockSha256": "f91eb4ffa8973795722754dcfbb07fe9542fd149ddad833107ca76e83b98205d",
+      "os": "ubuntu-24.04",
+      "packageRoster": [
+        [
+          "annotated-types",
+          "0.8.0"
+        ],
+        [
+          "attrs",
+          "26.1.0"
+        ],
+        [
+          "jsonschema",
+          "4.26.0"
+        ],
+        [
+          "jsonschema-specifications",
+          "2025.9.1"
+        ],
+        [
+          "mini-racer",
+          "0.14.1"
+        ],
+        [
+          "psycopg",
+          "3.2.13"
+        ],
+        [
+          "psycopg-binary",
+          "3.2.13"
+        ],
+        [
+          "pydantic",
+          "2.14.1"
+        ],
+        [
+          "pydantic-core",
+          "2.50.1"
+        ],
+        [
+          "referencing",
+          "0.37.0"
+        ],
+        [
+          "rpds-py",
+          "2026.9.1"
+        ],
+        [
+          "ruamel-yaml",
+          "0.19.1"
+        ],
+        [
+          "typing-extensions",
+          "4.16.0"
+        ],
+        [
+          "typing-inspection",
+          "0.4.4"
+        ],
+        [
+          "umf-access",
+          "0.1.0.dev8"
+        ],
+        [
+          "umf-codegen",
+          "0.1.0a5"
+        ],
+        [
+          "umf-core",
+          "0.10.3"
+        ],
+        [
+          "umf-weft",
+          "0.4.55"
+        ]
+      ],
+      "packages": 18,
+      "probes": {
+        "missing-wheel": "refused under OS network denial",
+        "tampered-wheel": "refused under OS network denial",
+        "umf-codegen-check": "passed",
+        "umf-codegen-generate": "passed",
+        "umf-core-native-import": "passed",
+        "umf-core-public-roundtrip": "passed",
+        "umf-core-public-validation": "passed",
+        "umf-table-apply": "approval-required before connection",
+        "umf-table-check": "passed",
+        "umf-table-new": "passed"
+      },
+      "python": "3.14.9",
+      "receiptNetworkIsolation": "Linux network namespace (unshare --net)",
+      "receiptSha256": "f14d396531f102eff56d52ff850c2f1fe74a2f13afeac1df65af8a6eb9f89af7",
+      "receiptStatus": "passed",
+      "receiptWheelCount": 18,
+      "wheelRows": 18
+    }
+  ],
+  "macArtifactInputsOnly": [
+    {
+      "allRowsMatchUnion": true,
+      "packageRoster": [
+        [
+          "annotated-types",
+          "0.8.0"
+        ],
+        [
+          "attrs",
+          "26.1.0"
+        ],
+        [
+          "jsonschema",
+          "4.26.0"
+        ],
+        [
+          "jsonschema-specifications",
+          "2025.9.1"
+        ],
+        [
+          "mini-racer",
+          "0.14.1"
+        ],
+        [
+          "psycopg",
+          "3.2.13"
+        ],
+        [
+          "psycopg-binary",
+          "3.2.13"
+        ],
+        [
+          "pydantic",
+          "2.14.1"
+        ],
+        [
+          "pydantic-core",
+          "2.50.1"
+        ],
+        [
+          "referencing",
+          "0.37.0"
+        ],
+        [
+          "rpds-py",
+          "2026.9.1"
+        ],
+        [
+          "ruamel-yaml",
+          "0.19.1"
+        ],
+        [
+          "typing-extensions",
+          "4.16.0"
+        ],
+        [
+          "typing-inspection",
+          "0.4.4"
+        ],
+        [
+          "umf-access",
+          "0.1.0.dev8"
+        ],
+        [
+          "umf-codegen",
+          "0.1.0a5"
+        ],
+        [
+          "umf-core",
+          "0.10.3"
+        ],
+        [
+          "umf-weft",
+          "0.4.55"
+        ]
+      ],
+      "packageRows": 18,
+      "selection": {
+        "kind": "declared-target-wheel-tags",
+        "observedRuntime": false
+      },
+      "semanticCoreVersion": "0.10.0",
+      "sha256": "9cb32edce770b40d71502646cd94e815cea7ecc7f06114a6afc272723a61edee",
+      "sourceCommit": "7cf121baa40601ba0b92a14cd0f7e121783cb8e2",
+      "status": "verified-artifact-inputs",
+      "target": "macos-arm64-py311",
+      "targetTuple": {
+        "architecture": "arm64",
+        "id": "macos-arm64-py311",
+        "libc": "not applicable",
+        "os": "macos-14",
+        "python": "3.11"
+      },
+      "wheelRows": 18
+    },
+    {
+      "allRowsMatchUnion": true,
+      "packageRoster": [
+        [
+          "annotated-types",
+          "0.8.0"
+        ],
+        [
+          "attrs",
+          "26.1.0"
+        ],
+        [
+          "jsonschema",
+          "4.26.0"
+        ],
+        [
+          "jsonschema-specifications",
+          "2025.9.1"
+        ],
+        [
+          "mini-racer",
+          "0.14.1"
+        ],
+        [
+          "psycopg",
+          "3.2.13"
+        ],
+        [
+          "psycopg-binary",
+          "3.2.13"
+        ],
+        [
+          "pydantic",
+          "2.14.1"
+        ],
+        [
+          "pydantic-core",
+          "2.50.1"
+        ],
+        [
+          "referencing",
+          "0.37.0"
+        ],
+        [
+          "rpds-py",
+          "2026.9.1"
+        ],
+        [
+          "ruamel-yaml",
+          "0.19.1"
+        ],
+        [
+          "typing-extensions",
+          "4.16.0"
+        ],
+        [
+          "typing-inspection",
+          "0.4.4"
+        ],
+        [
+          "umf-access",
+          "0.1.0.dev8"
+        ],
+        [
+          "umf-codegen",
+          "0.1.0a5"
+        ],
+        [
+          "umf-core",
+          "0.10.3"
+        ],
+        [
+          "umf-weft",
+          "0.4.55"
+        ]
+      ],
+      "packageRows": 18,
+      "selection": {
+        "kind": "declared-target-wheel-tags",
+        "observedRuntime": false
+      },
+      "semanticCoreVersion": "0.10.0",
+      "sha256": "03577c8a7d7079c0c0e2fcb7bf3a110771f9433235751d483833ca9047251505",
+      "sourceCommit": "7cf121baa40601ba0b92a14cd0f7e121783cb8e2",
+      "status": "verified-artifact-inputs",
+      "target": "macos-arm64-py314",
+      "targetTuple": {
+        "architecture": "arm64",
+        "id": "macos-arm64-py314",
+        "libc": "not applicable",
+        "os": "macos-14",
+        "python": "3.14"
+      },
+      "wheelRows": 18
+    }
+  ],
+  "physicalUnion": {
+    "allInventoryRowsIdentical": true,
+    "inventoryRows": 30,
+    "lockRows": 30,
+    "mirrorManifestRows": 30,
+    "mirrorNetworkUsed": false,
+    "physicalErrors": [],
+    "physicalWheelFilesPerCopy": 30,
+    "wheels": [
+      {
+        "distribution": "annotated-types",
+        "filename": "annotated_types-0.8.0-py3-none-any.whl",
+        "metadataSha256": "614985b278f601b8ef863f82783b991cc3ada4b89f592eb71c7c48c5f2ef2298",
+        "sha256": "f072f4d804ea359e4eaf198b1af7a8b0943881a87f31bb764f8bf219bb9419e0",
+        "size": 13427,
+        "tags": [
+          "py3-none-any"
+        ],
+        "version": "0.8.0"
+      },
+      {
+        "distribution": "attrs",
+        "filename": "attrs-26.1.0-py3-none-any.whl",
+        "metadataSha256": "4cd40e690f23bf37cbcad34efd6758e062df1df07c86833f7e3ce95bf1fa38cc",
+        "sha256": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309",
+        "size": 67548,
+        "tags": [
+          "py3-none-any"
+        ],
+        "version": "26.1.0"
+      },
+      {
+        "distribution": "jsonschema",
+        "filename": "jsonschema-4.26.0-py3-none-any.whl",
+        "metadataSha256": "05b189866ca98a96da3934bf6b83687ced3ff85325273b77e16b705f6d8b26d2",
+        "sha256": "d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce",
+        "size": 90630,
+        "tags": [
+          "py3-none-any"
+        ],
+        "version": "4.26.0"
+      },
+      {
+        "distribution": "jsonschema-specifications",
+        "filename": "jsonschema_specifications-2025.9.1-py3-none-any.whl",
+        "metadataSha256": "35abd41757f32b4ea24756920ded47b70173d77cbc052a5a6d3ab583b2e8d89d",
+        "sha256": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe",
+        "size": 18437,
+        "tags": [
+          "py3-none-any"
+        ],
+        "version": "2025.9.1"
+      },
+      {
+        "distribution": "mini-racer",
+        "filename": "mini_racer-0.14.1-py3-none-macosx_11_0_arm64.whl",
+        "metadataSha256": "0e1473a32861c1254ea7a07b116c706b67c66b6cf97869b515eecbef2c25ccdc",
+        "sha256": "56cc6965a1665a50d8d613bc43aa83b4cec6b1f09acc69dc4c2845dacb201463",
+        "size": 18511166,
+        "tags": [
+          "py3-none-macosx_11_0_arm64"
+        ],
+        "version": "0.14.1"
+      },
+      {
+        "distribution": "mini-racer",
+        "filename": "mini_racer-0.14.1-py3-none-manylinux_2_27_x86_64.whl",
+        "metadataSha256": "0e1473a32861c1254ea7a07b116c706b67c66b6cf97869b515eecbef2c25ccdc",
+        "sha256": "cdf3a088e1363f16a695288f882abf76b3705b8e1df21418208b87ed010037a4",
+        "size": 22178205,
+        "tags": [
+          "py3-none-manylinux_2_27_x86_64"
+        ],
+        "version": "0.14.1"
+      },
+      {
+        "distribution": "psycopg",
+        "filename": "psycopg-3.2.13-py3-none-any.whl",
+        "metadataSha256": "8d7f2fbac4fbd46d8da97b448bab8315091e367748a0cb79dc5387965c5c2b37",
+        "sha256": "a481374514f2da627157f767a9336705ebefe93ea7a0522a6cbacba165da179a",
+        "size": 206797,
+        "tags": [
+          "py3-none-any"
+        ],
+        "version": "3.2.13"
+      },
+      {
+        "distribution": "psycopg-binary",
+        "filename": "psycopg_binary-3.2.13-cp311-cp311-macosx_11_0_arm64.whl",
+        "metadataSha256": "4acafde79dfed2b37e234946066430b6b450be80328b3c6629c24dbe0fd6b33e",
+        "sha256": "8db77fac1dfe3f69c982db92a51fd78e1354fa8f523a6781a636123e5c7ffcde",
+        "size": 4077002,
+        "tags": [
+          "cp311-cp311-macosx_11_0_arm64"
+        ],
+        "version": "3.2.13"
+      },
+      {
+        "distribution": "psycopg-binary",
+        "filename": "psycopg_binary-3.2.13-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+        "metadataSha256": "4acafde79dfed2b37e234946066430b6b450be80328b3c6629c24dbe0fd6b33e",
+        "sha256": "27150515de5f709e4142429db6fd36a1d01f0b8b17d915b5f7bb095364465398",
+        "size": 4421537,
+        "tags": [
+          "cp311-cp311-manylinux_2_17_x86_64",
+          "cp311-cp311-manylinux2014_x86_64"
+        ],
+        "version": "3.2.13"
+      },
+      {
+        "distribution": "psycopg-binary",
+        "filename": "psycopg_binary-3.2.13-cp314-cp314-macosx_11_0_arm64.whl",
+        "metadataSha256": "4acafde79dfed2b37e234946066430b6b450be80328b3c6629c24dbe0fd6b33e",
+        "sha256": "7561a71d764d6f74d66e8b7d844b0f27fa33de508f65c17b1d56a94c73644776",
+        "size": 4071631,
+        "tags": [
+          "cp314-cp314-macosx_11_0_arm64"
+        ],
+        "version": "3.2.13"
+      },
+      {
+        "distribution": "psycopg-binary",
+        "filename": "psycopg_binary-3.2.13-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+        "metadataSha256": "4acafde79dfed2b37e234946066430b6b450be80328b3c6629c24dbe0fd6b33e",
+        "sha256": "c96cb5a27e68acac6d74b64fca38592a692de9c4b7827339190698d58027aa45",
+        "size": 4403046,
+        "tags": [
+          "cp314-cp314-manylinux_2_17_x86_64",
+          "cp314-cp314-manylinux2014_x86_64"
+        ],
+        "version": "3.2.13"
+      },
+      {
+        "distribution": "pydantic",
+        "filename": "pydantic-2.14.1-py3-none-any.whl",
+        "metadataSha256": "4d4c8e8d5e6a27d5208f0d7949f25628e6747133034969d4d1399b1ad5394036",
+        "sha256": "9195d967ec791692a04438115466764fb8b9a27b31f14a760437694f40d6b454",
+        "size": 488106,
+        "tags": [
+          "py3-none-any"
+        ],
+        "version": "2.14.1"
+      },
+      {
+        "distribution": "pydantic-core",
+        "filename": "pydantic_core-2.50.1-cp311-cp311-macosx_11_0_arm64.whl",
+        "metadataSha256": "ae6817764b603fa2300cd31b9566ecc33476df46163c4150fffc353121a166f2",
+        "sha256": "b6d0c2183008c188e19f4906d426b293bdc4f67ab17df8e180fe16cda208fa71",
+        "size": 2045761,
+        "tags": [
+          "cp311-cp311-macosx_11_0_arm64"
+        ],
+        "version": "2.50.1"
+      },
+      {
+        "distribution": "pydantic-core",
+        "filename": "pydantic_core-2.50.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "metadataSha256": "ae6817764b603fa2300cd31b9566ecc33476df46163c4150fffc353121a166f2",
+        "sha256": "8812592c85d0edf423f10eadcef42716d71e8219085ad9e85b775057b7306133",
+        "size": 2157623,
+        "tags": [
+          "cp311-cp311-manylinux_2_17_x86_64",
+          "cp311-cp311-manylinux2014_x86_64"
+        ],
+        "version": "2.50.1"
+      },
+      {
+        "distribution": "pydantic-core",
+        "filename": "pydantic_core-2.50.1-cp314-cp314-macosx_11_0_arm64.whl",
+        "metadataSha256": "ae6817764b603fa2300cd31b9566ecc33476df46163c4150fffc353121a166f2",
+        "sha256": "4df197990c15b5a37c5a277d131d9f2c67de6133f2e5dafd80d9bba4b99f46f9",
+        "size": 2023740,
+        "tags": [
+          "cp314-cp314-macosx_11_0_arm64"
+        ],
+        "version": "2.50.1"
+      },
+      {
+        "distribution": "pydantic-core",
+        "filename": "pydantic_core-2.50.1-cp314-cp314-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "metadataSha256": "ae6817764b603fa2300cd31b9566ecc33476df46163c4150fffc353121a166f2",
+        "sha256": "42b54c2c90ad348b5e3a85e03e715d572c1fde357ef104cdfe3b03b697a404ea",
+        "size": 2159857,
+        "tags": [
+          "cp314-cp314-manylinux_2_17_x86_64",
+          "cp314-cp314-manylinux2014_x86_64"
+        ],
+        "version": "2.50.1"
+      },
+      {
+        "distribution": "referencing",
+        "filename": "referencing-0.37.0-py3-none-any.whl",
+        "metadataSha256": "c93b00e6ab1524fd60848376604c189a114374776475c25a31d57be47b29de6a",
+        "sha256": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231",
+        "size": 26766,
+        "tags": [
+          "py3-none-any"
+        ],
+        "version": "0.37.0"
+      },
+      {
+        "distribution": "rpds-py",
+        "filename": "rpds_py-2026.9.1-cp311-cp311-macosx_11_0_arm64.whl",
+        "metadataSha256": "5d72dca2e387c8d2b4180b68ee87c15b64751e059100a6db58891ec9995445c3",
+        "sha256": "3231c4c0e521dafa5be0c9f114ee2c2ad46650836f2d72caa86801950c3e7044",
+        "size": 346770,
+        "tags": [
+          "cp311-cp311-macosx_11_0_arm64"
+        ],
+        "version": "2026.9.1"
+      },
+      {
+        "distribution": "rpds-py",
+        "filename": "rpds_py-2026.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "metadataSha256": "5d72dca2e387c8d2b4180b68ee87c15b64751e059100a6db58891ec9995445c3",
+        "sha256": "136a1c3fe4402b7008bc81cb62ee538481795b61a7e83df88dff3b3f02b726ff",
+        "size": 375426,
+        "tags": [
+          "cp311-cp311-manylinux_2_17_x86_64",
+          "cp311-cp311-manylinux2014_x86_64"
+        ],
+        "version": "2026.9.1"
+      },
+      {
+        "distribution": "rpds-py",
+        "filename": "rpds_py-2026.9.1-cp314-cp314-macosx_11_0_arm64.whl",
+        "metadataSha256": "5d72dca2e387c8d2b4180b68ee87c15b64751e059100a6db58891ec9995445c3",
+        "sha256": "3f0e9ac28fc067d4d34b88ae43c48e9489455c97fee9633d851f7eeed5a05d35",
+        "size": 341878,
+        "tags": [
+          "cp314-cp314-macosx_11_0_arm64"
+        ],
+        "version": "2026.9.1"
+      },
+      {
+        "distribution": "rpds-py",
+        "filename": "rpds_py-2026.9.1-cp314-cp314-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "metadataSha256": "5d72dca2e387c8d2b4180b68ee87c15b64751e059100a6db58891ec9995445c3",
+        "sha256": "eac2f5dbafd585dfe31f86a23ebf0d3ba480a9d49ebc87947267b5608d4ea0cd",
+        "size": 371623,
+        "tags": [
+          "cp314-cp314-manylinux_2_17_x86_64",
+          "cp314-cp314-manylinux2014_x86_64"
+        ],
+        "version": "2026.9.1"
+      },
+      {
+        "distribution": "ruamel-yaml",
+        "filename": "ruamel_yaml-0.19.1-py3-none-any.whl",
+        "metadataSha256": "1ecd311518266882ede8804686f758255d6dff89a71a646bb6970a69615e39f6",
+        "sha256": "27592957fedf6e0b62f281e96effd28043345e0e66001f97683aa9a40c667c93",
+        "size": 118102,
+        "tags": [
+          "py3-none-any"
+        ],
+        "version": "0.19.1"
+      },
+      {
+        "distribution": "typing-extensions",
+        "filename": "typing_extensions-4.16.0-py3-none-any.whl",
+        "metadataSha256": "b05084ca1d50879865178d9fff9fabeab61bdfb1f361bfbde95421ffc8f9be46",
+        "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+        "size": 45571,
+        "tags": [
+          "py3-none-any"
+        ],
+        "version": "4.16.0"
+      },
+      {
+        "distribution": "typing-inspection",
+        "filename": "typing_inspection-0.4.4-py3-none-any.whl",
+        "metadataSha256": "bad3d9e6342ef6750cf5128ec942327b8bebdce0b6e4d6f67cb15b27ae5118da",
+        "sha256": "65b8397ba37ccbce054456aaccddfc91e6e3083c92824df348d96ca832f3f147",
+        "size": 14750,
+        "tags": [
+          "py3-none-any"
+        ],
+        "version": "0.4.4"
+      },
+      {
+        "distribution": "umf-access",
+        "filename": "umf_access-0.1.0.dev8-py3-none-any.whl",
+        "metadataSha256": "63cfe64d02a7ef3a13313ec3d20b171516bd12994870ce70ad45ae66d0884f33",
+        "sha256": "1a21c1ddd59f6b23e9f0b33228280564af0e96bb4d13699b89616d5143e4fd23",
+        "size": 580062,
+        "tags": [
+          "py3-none-any"
+        ],
+        "version": "0.1.0.dev8"
+      },
+      {
+        "distribution": "umf-codegen",
+        "filename": "umf_codegen-0.1.0a5-py3-none-any.whl",
+        "metadataSha256": "a0ebd80ace569acd5513e94457ed1f880ba9229265d793cb79523ecfe668f940",
+        "sha256": "36a6f7e0ab92feb9cb20ed8842cc3c1f073cdd3ff2c4edff137c1fcbc3ace158",
+        "size": 261296,
+        "tags": [
+          "py3-none-any"
+        ],
+        "version": "0.1.0a5"
+      },
+      {
+        "distribution": "umf-core",
+        "filename": "umf_core-0.10.3-cp311-abi3-macosx_11_0_arm64.whl",
+        "metadataSha256": "aa760d74b8bc9a535520613f5d2788c50f5aed9ca5b3b59fbd941b9711d29b93",
+        "sha256": "dc2586793e1492d1f825bd9e12f27d5db9f9330ae2343d9e7773c7052f1f6ea6",
+        "size": 3331547,
+        "tags": [
+          "cp311-abi3-macosx_11_0_arm64"
+        ],
+        "version": "0.10.3"
+      },
+      {
+        "distribution": "umf-core",
+        "filename": "umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl",
+        "metadataSha256": "aa760d74b8bc9a535520613f5d2788c50f5aed9ca5b3b59fbd941b9711d29b93",
+        "sha256": "cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75",
+        "size": 3612043,
+        "tags": [
+          "cp311-abi3-manylinux_2_34_x86_64"
+        ],
+        "version": "0.10.3"
+      },
+      {
+        "distribution": "umf-weft",
+        "filename": "umf_weft-0.4.55-cp39-abi3-macosx_11_0_arm64.whl",
+        "metadataSha256": "8b889c4918a57c0bf4fda6860c343763a07c0d9a7f4cd58c38173534b1f7776a",
+        "sha256": "b411545189ed573dadd4fd121e00665391f700ebe37e4a5e4ce139a97c03d7e9",
+        "size": 11179376,
+        "tags": [
+          "cp39-abi3-macosx_11_0_arm64"
+        ],
+        "version": "0.4.55"
+      },
+      {
+        "distribution": "umf-weft",
+        "filename": "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "metadataSha256": "8b889c4918a57c0bf4fda6860c343763a07c0d9a7f4cd58c38173534b1f7776a",
+        "sha256": "b34ca17fa37412afa7b8e8bd86aac8ee67a3c895a9b253221e1d582b39073a85",
+        "size": 14347375,
+        "tags": [
+          "cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64"
+        ],
+        "version": "0.4.55"
+      }
+    ]
+  },
+  "profile": "umf.embedder-wheel-linux-runtime-macos-inputs/1",
+  "run": {
+    "apiHeadSha": "6eca705a8ca2d9f99517e2fc919cd211fe00f98d",
+    "attempt": 1,
+    "branch": "codex/mig-g02-typed-backfills",
+    "id": 40600969078,
+    "producerSourceCommit": "7cf121baa40601ba0b92a14cd0f7e121783cb8e2"
+  },
+  "sourceCommit": "7cf121baa40601ba0b92a14cd0f7e121783cb8e2",
+  "union311Failure": {
+    "acquisitionMarkerEnvironment": {
+      "implementation_name": "cpython",
+      "implementation_version": "3.11.17",
+      "os_name": "posix",
+      "platform_machine": "x86_64",
+      "platform_python_implementation": "CPython",
+      "platform_release": "6.17.0-1022-azure",
+      "platform_system": "Linux",
+      "platform_version": "#22-Ubuntu SMP Mon Jul 27 17:24:03 UTC 2026",
+      "python_full_version": "3.11.17",
+      "python_version": "3.11",
+      "sys_platform": "linux"
+    },
+    "conclusion": "failure",
+    "exitCode": 1,
+    "jobId": 122744967169,
+    "message": "Offline probe marker environment differs from the acquisition cell environment",
+    "probeComparator": "dependencyResolution.markerEnvironment exact equality to packaging.markers.default_environment()",
+    "probeOutputArtifact": null,
+    "runnerImageAcquisition": "ubuntu-24.04 version 20261012.334.1",
+    "runnerImageReplay": "ubuntu-24.04 version 20261025.353.1",
+    "specificMismatchingKeysObserved": null,
+    "step": "Replay the selected lock from the shared union under network denial"
+  },
+  "union314Success": {
+    "artifactId": 12818143450,
+    "artifactZipBytes": 1700,
+    "artifactZipSha256": "fed3770f0ce0e767ef479f5557eef6cf5248bf41280ff8eac221a484f21c6421",
+    "jobId": 122744967240,
+    "report": {
+      "aggregate": {
+        "indexSha256": "cf4ef07afa51c55888d622a929df31f28ad1518037a5cb6f7d7750785be163c9",
+        "profile": "umf.embedder-wheel-linux-runtime-macos-inputs/1",
+        "selectedCell": "linux-x86_64-py314",
+        "sharedUnionMirror": "/tmp/umf-aggregate-cohort/mirror",
+        "sourceCommit": "7cf121baa40601ba0b92a14cd0f7e121783cb8e2"
+      },
+      "cell": {
+        "architecture": "x86_64",
+        "libc": "glibc >= 2.34",
+        "os": "ubuntu-24.04",
+        "python": "3.14.9",
+        "runnerIdentity": {
+          "architecture": "x86_64",
+          "distribution": {
+            "BUG_REPORT_URL": "https://bugs.launchpad.net/ubuntu/",
+            "HOME_URL": "https://www.ubuntu.com/",
+            "ID": "ubuntu",
+            "ID_LIKE": "debian",
+            "LOGO": "ubuntu-logo",
+            "NAME": "Ubuntu",
+            "PRETTY_NAME": "Ubuntu 24.04.5 LTS",
+            "PRIVACY_POLICY_URL": "https://www.ubuntu.com/legal/terms-and-policies/privacy-policy",
+            "SUPPORT_URL": "https://help.ubuntu.com/",
+            "UBUNTU_CODENAME": "noble",
+            "VERSION": "24.04.5 LTS (Noble Numbat)",
+            "VERSION_CODENAME": "noble",
+            "VERSION_ID": "24.04"
+          },
+          "libc": [
+            "glibc",
+            "2.39"
+          ],
+          "system": "Linux"
+        }
+      },
+      "coreNative": {
+        "distributionVersion": "0.10.3",
+        "installedPath": "/tmp/umf-offline-mirror-ym_64hwb/venv/lib/python3.14/site-packages/umf/_rust_core.abi3.so",
+        "installedSha256": "c51b511a06bc1ccde6cc2208d33a4fb70ef66c67507ba8f2a6ea05fd2543cf57",
+        "member": "umf/_rust_core.abi3.so",
+        "memberSha256": "c51b511a06bc1ccde6cc2208d33a4fb70ef66c67507ba8f2a6ea05fd2543cf57",
+        "roundtrip": "passed",
+        "semanticCoreVersion": "0.10.0",
+        "wheel": "umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl",
+        "wheelSha256": "cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75"
+      },
+      "install": {
+        "cache": "disabled",
+        "dependencyCheck": "passed",
+        "indexScheme": "file",
+        "networkIsolation": "Linux network namespace (unshare --net)",
+        "pipIsolated": true,
+        "requireHashes": true,
+        "sourceBuilds": "forbidden"
+      },
+      "installedVersions": {
+        "annotated-types": "0.8.0",
+        "attrs": "26.1.0",
+        "jsonschema": "4.26.0",
+        "jsonschema-specifications": "2025.9.1",
+        "mini-racer": "0.14.1",
+        "psycopg": "3.2.13",
+        "psycopg-binary": "3.2.13",
+        "pydantic": "2.14.1",
+        "pydantic-core": "2.50.1",
+        "referencing": "0.37.0",
+        "rpds-py": "2026.9.1",
+        "ruamel-yaml": "0.19.1",
+        "typing-extensions": "4.16.0",
+        "typing-inspection": "0.4.4",
+        "umf-access": "0.1.0.dev8",
+        "umf-codegen": "0.1.0a5",
+        "umf-core": "0.10.3",
+        "umf-weft": "0.4.55"
+      },
+      "lockSha256": "f91eb4ffa8973795722754dcfbb07fe9542fd149ddad833107ca76e83b98205d",
+      "mirrorManifestSha256": "d4f40c76e8c3ceae8b89e74bd2a1093837cb727b79cb27d3c7d5e4495db5152c",
+      "probes": {
+        "missing-wheel": "refused under OS network denial",
+        "tampered-wheel": "refused under OS network denial",
+        "umf-codegen-check": "passed",
+        "umf-codegen-generate": "passed",
+        "umf-core-native-import": "passed",
+        "umf-core-public-roundtrip": "passed",
+        "umf-core-public-validation": "passed",
+        "umf-table-apply": "approval-required before connection",
+        "umf-table-check": "passed",
+        "umf-table-new": "passed"
+      },
+      "profile": "umf-offline-mirror-installed/1",
+      "status": "passed",
+      "wheelCount": 18,
+      "wheelInventorySha256": "cf93834f5c4b4ac74f1566dc41453be206f38f2cc712766084f5bfaa6cbb78a3"
+    },
+    "reportEntry": "umf-union-replay-linux-x86_64-py314.json",
+    "reportSha256": "fe8042abce72ff27bd01f2f2f9733576dce18ae19daa8b21dfbad45cf604ad61"
+  }
+}

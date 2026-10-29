@@ -1,0 +1,32 @@
+{
+  "acceptedD5Commit": "d8101338b",
+  "d5ReplayAndFinalizer": "Byte-identical to independently accepted d810; metadata16MiB artifact separate from original native full cohort and2wheel release payload",
+  "files": {
+    ".github/workflows/access-boundaries.yml": {
+      "bytes": 96852,
+      "sha256": "944efd014566cf8dbf5df3153de39692f49523db1ca13d5bcbaed793637322db"
+    },
+    ".github/workflows/merged-source-generation.yml": {
+      "bytes": 38482,
+      "sha256": "0e6e0b970d917c1bc25f15ebdc98c5c7ae2755c36291ee733d39caa345521a80"
+    },
+    "docs/helix/04-build/evidence/mig-g02-g03/native-qualification-source-pins.json": {
+      "bytes": 13117,
+      "sha256": "be9e57777b5eefb4c72992cbccb98bf49fad192cc3178a9eac41aa70b6974f23"
+    },
+    "docs/helix/04-build/guides/python-wheel-mirror.md": {
+      "bytes": 9811,
+      "sha256": "d174e6ca3ec5075d19568ef5180d3b1a2834aa88de3d885d238d67bbd41bd831"
+    },
+    "qualification-inputs/expected-pins.sha256": {
+      "bytes": 10161,
+      "sha256": "6d84078cbf7ca63c91398bb5bb0a22859cd4cf9fc87a1ae2feb0e0cf087e0c35"
+    }
+  },
+  "generatedOutputs": "Historical current seeds pending actual canonical generation; prior32-row native and97-row portable PASS artifacts retain their own source identities",
+  "nativeChange": "All32 original rows retained; acquisition/mirror/probe/template hashes refreshed; selector/aggregate imports added",
+  "nativeSourceRows": 34,
+  "oldPr48NormalMerge": "763ea2daf",
+  "portableRows": 97,
+  "scope": "Source/generation-input acceptance only; no runtime or output adoption claimed"
+}

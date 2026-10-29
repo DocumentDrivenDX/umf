@@ -1,0 +1,39 @@
+{
+  "actualChecks": {
+    "004FullFrozenBoundary": {
+      "modules": 107,
+      "violations": 0
+    },
+    "004FullIntegratedSourceSuite": 133,
+    "005FocusedAndBoundaryTests": 24,
+    "actualLivePreStrengtheningBoundary": {
+      "modules": 107,
+      "violations": 0
+    },
+    "pass": true
+  },
+  "evidence": {
+    "tests.stderr": "a2c14eade9ca9e6e250afa215a56adb9e4758330dad1ce260d510331563f2d9d",
+    "tests.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "limits": [
+    "Data-onlycanonicalbyteplans; no persistence/CAS/UUID/IO/context/authority/capability/publicpackageexport.",
+    "No durableROOTwriter/native014/storebirth/subjectbirth/native/installed/browser/release qualification.",
+    "Staticchecker is import/directbuiltin policy, not a sandbox for arbitrary adversarial Python."
+  ],
+  "manifestSha256": "965236625c80b8afd77f96f6e8defb93517e339f4b16f412c443c44a883d1ae6",
+  "priorFullSuiteEvidence": {
+    "path": "/private/tmp/g11-root-registry-source004-root-review001/suite.stderr",
+    "sha256": "f8752d910864d931762cac743303ded156edb5585a6369e687a107f8f0542f25"
+  },
+  "review": [
+    "fullpuretransitionimplementationexactstrongsource002",
+    "allnewportabletests",
+    "exactimportallowlistandbuiltinIOchecker",
+    "004to005minimalchecker/testdelta"
+  ],
+  "runtimeModules": 107,
+  "sourceContinuity": "Purehelperbodyunchanged004to005; onlychecker/testbuiltinpolicychanged. Actualbase5edef differsfrom339dbygoverningdocs only.",
+  "status": "root-source-review-clear-awaiting-independent005",
+  "verifiedSafeMembers": 261
+}

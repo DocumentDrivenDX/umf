@@ -711,6 +711,7 @@ excluded; unknown source-module owners refuse.
 | `src/compilation/ir/` | Immutable resolved nodes, provenance, obligations | `ir/index.ts`; private compiler representation | Own internals; erased public semantic types via barrel or identity-checked leaf imports | External values, renderers, host globals |
 | `src/compilation/targets/python/` | Python source emission | `targets/python/index.ts`; CONTRACT-068 output | Own literal renderer, IR public barrel, generated `CURRENT_CORE_VERSION` for emitted metadata | SQL lowering, execution, host I/O |
 | `src/compilation/bundle/` | Manifest, source archive, portable hashing | `bundle/index.ts`; CONTRACT-067 results | Own internals, IR and Python target public barrels | Filesystem, external host dependencies |
+| `src/model/internal/accounting-context.ts` | Private six-method erased work-accounting contract | Named internal interface only; absent from the root public barrel | Erased `AccountingContext` type only in `src/compilation/bundle/hash.ts` and `src/extensions/tables/{context,index}.ts` | Value imports, exports/re-exports, other symbols or consumers, request/DTO/callback/meter authority, host facilities |
 | `src/compilation/index.ts` | Generator facade and trusted composition | `generateAccessPackage`; CONTRACT-067 | Public compilation barrels, named public UMF exports via barrel or identity-checked leaf imports | Artifact-selected loading, host I/O |
 | `scripts/umf-access-generate.ts` | Host writer and drift check | `generate`/`check`; CONTRACT-067 | Generator facade and host APIs | Semantic reimplementation; reviewed host boundary |
 | `types.py`, `values.py`, `codec_support.py` | Shared carriers, strict values, codec revalidation; foundation owner | Named top-level modules; CONTRACT-068/072 | Other foundation modules, standard library, Pydantic | DSL, capture, drivers, Weft, host I/O |
@@ -722,7 +723,7 @@ excluded; unknown source-module owners refuse.
 | `conformance/` | Shared adapter conformance | `conformance/__init__.py`; CONTRACT-069/072 | Runtime/foundation public APIs, pure standard library, Pydantic | Engine internals and host I/O |
 | `__init__.py` | SDK public re-exports | CONTRACT-068/071/072 exports when implemented | DSL, runtime and foundation public APIs | Build/compiler dependencies, drivers |
 
-Named leaf imports are admitted only when TypeScript resolves the imported symbol to the same symbol exported by `src/index.ts`; exposing a symbol in a leaf alone does not make it public. Admission and the facade use this to avoid eager initialization of every adapter. IR dependencies remain erased types (including an erased `typeof` current-marker query); the Python target may load only the generated current marker for metadata. Private, default, namespace and side-effect leaf imports remain refused, together with cross-owner internals and host I/O.
+Named leaf imports are admitted only when TypeScript resolves the imported symbol to the same symbol exported by `src/index.ts`; exposing a symbol in a leaf alone does not make it public. Admission and the facade use this to avoid eager initialization of every adapter. IR dependencies remain erased types (including an erased `typeof` current-marker query); the Python target may load only the generated current marker for metadata. Private, default, namespace and side-effect leaf imports remain refused, together with cross-owner internals and host I/O. The sole private erased-type route is the named `AccountingContext` interface from `src/model/internal/accounting-context.ts`, resolved to that exact declaration and consumed only by the bundle hash kernel plus the table extension context/index. It supplies six optional work-accounting methods to internal implementations; it is absent from the root public barrel and grants no request, DTO, callback or meter authority.
 
 **Integration Owners**: Weft -> Python `build/` and the exact `runtime/bulk.py`
 exception; raw-table drivers -> `targets/`; Truss/Ashlar -> their own repositories'
@@ -882,10 +883,12 @@ index-only concurrent phases. Its `cli` owns explicit connection creation and
 filesystem inputs; no global pool or implicit database invocation exists.
 `phase_fence` owns the exact metadata-head SELECT fence and rollback-only
 verification grants; `concurrent` owns the session lifecycle lock and final
-transactional publication. The boundary checker admits Weft only in backfills
-and seeds, codegen compiler functions only in the explicit CLI/prefix preparation,
-and leaves portable application clients unchanged. Existing negative controls
-remain required. Generic host-applier and mixed-phase profiles are revision2
+transactional publication. The table extension shares only an erased named
+`AccountingContext` type through `context.ts` and `index.ts`; its implementation
+and meter remain private to internal compilation/accounting paths. The boundary
+checker admits Weft only in backfills and seeds, codegen compiler functions only
+in the explicit CLI/prefix preparation, and leaves portable application clients
+unchanged. Existing negative controls remain required. Generic host-applier and mixed-phase profiles are revision2
 next-release work; no adapter-independent native guarantee follows here.
 
 ## Shared Rust engine target

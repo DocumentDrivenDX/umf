@@ -1,0 +1,98 @@
+{
+  "pid": 18927,
+  "pgid": 18927,
+  "launch": {
+    "pgid": 18927,
+    "pid": 18927,
+    "provider_mutations_authorized": false,
+    "sql_authorized": "none",
+    "start_time_unix": 1792863113.373502,
+    "worker_sha256": "dde1a321799ce1418ac3302e651b3001851d190eba20675f8fb757a6ecd889de"
+  },
+  "commands": [
+    {
+      "name": "existing004-integrated-command-with005-paths",
+      "argv": [
+        "/Users/erik/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/bin/python3.12",
+        "-I",
+        "-B",
+        "-c",
+        "import os,pathlib,sys,unittest,json;paths=['/private/tmp/g11-journal005-independent-review001/combined/snapshot/python/umf_access/src', '/private/tmp/g11-journal005-independent-review001/combined/snapshot/python/umf_access/tests', '/private/tmp/g11-owner-authority-crypto-001/venv/lib/python3.12/site-packages', '/private/tmp/umf056-public-wheel-verify/venv/lib/python3.12/site-packages', '/private/tmp/umf-g03-access-001/venv/lib/python3.11/site-packages'];sys.path[:0]=paths;os.environ[\"PYTHONPATH\"]=os.pathsep.join(paths);suite=unittest.defaultTestLoader.loadTestsFromNames(['test_owner_authority', 'test_ingress_local_postgres', 'test_generation_root_registry', 'test_supervisor_journal_codec', 'test_original_supervisor_birth_integration', 'test_owner_ledger_birth_recovery', 'test_generation_authority_physical_binding', 'test_generation_enrollment_authority', 'test_ingress_custody', 'test_ingress_store', 'test_ingress_local_postgres_authority_bridge', 'test_original_control_lease', 'test_migration_phases', 'test_g11_execution_policy', 'test_access_python_boundaries']);out=pathlib.Path('/private/tmp/g11-journal005-independent-review001/suite.log');f=out.open(\"w\");r=unittest.TextTestRunner(stream=f,verbosity=1).run(suite);f.close();v={\"tests\":r.testsRun,\"failures\":len(r.failures),\"errors\":len(r.errors),\"passed\":r.wasSuccessful()};pathlib.Path('/private/tmp/g11-journal005-independent-review001/suite-result.json').write_text(json.dumps(v,indent=2));print(json.dumps(v));raise SystemExit(not r.wasSuccessful())"
+      ],
+      "cwd": "/private/tmp/g11-journal005-independent-review001",
+      "exitCode": 0
+    },
+    {
+      "name": "retained-R1-R3-and-full-signed-positive",
+      "argv": [
+        "/Users/erik/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/bin/python3.12",
+        "-I",
+        "-B",
+        "/private/tmp/g11-journal005-independent-review001/probe.py"
+      ],
+      "cwd": "/private/tmp/g11-journal005-independent-review001",
+      "exitCode": 0
+    },
+    {
+      "name": "retained-nested-custody-malformed-and-foreign-digest",
+      "argv": [
+        "/Users/erik/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/bin/python3.12",
+        "-I",
+        "-B",
+        "/private/tmp/g11-journal005-independent-review001/digest-association.py"
+      ],
+      "cwd": "/private/tmp/g11-journal005-independent-review001",
+      "exitCode": 0
+    },
+    {
+      "name": "retained-legacy-native-differential",
+      "argv": [
+        "/Users/erik/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/bin/python3.12",
+        "-I",
+        "-B",
+        "-c",
+        "import sys,runpy;sys.path[:0]=['/private/tmp/g11-journal005-independent-review001/combined/snapshot/python/umf_access/src', '/private/tmp/g11-journal005-independent-review001/combined/snapshot/python/umf_access/tests', '/private/tmp/g11-owner-authority-crypto-001/venv/lib/python3.12/site-packages', '/private/tmp/umf056-public-wheel-verify/venv/lib/python3.12/site-packages', '/private/tmp/umf-g03-access-001/venv/lib/python3.11/site-packages'];runpy.run_path('/private/tmp/g11-journal005-independent-review001/legacy-probe.py',run_name=\"__main__\")"
+      ],
+      "cwd": "/private/tmp/g11-journal005-independent-review001",
+      "exitCode": 0
+    },
+    {
+      "name": "existing-boundary-check",
+      "argv": [
+        "/Users/erik/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/bin/python3.12",
+        "-I",
+        "-B",
+        "/private/tmp/g11-journal005-independent-review001/combined/snapshot/scripts/check-access-python-boundaries.py",
+        "--root",
+        "/private/tmp/g11-journal005-independent-review001/combined/snapshot"
+      ],
+      "cwd": "/private/tmp/g11-journal005-independent-review001",
+      "exitCode": 0
+    },
+    {
+      "name": "existing-Ruff-owned10",
+      "argv": [
+        "/Users/erik/.cache/uv/archive-v0/CK8JiGH866FVBH6T/bin/ruff",
+        "check",
+        "--no-cache",
+        "--config",
+        "/private/tmp/g11-journal005-independent-review001/combined/snapshot/.ruff.toml",
+        "/private/tmp/g11-journal005-independent-review001/combined/snapshot/python/umf_access/src/umf_access/lifecycle/ingress_local_postgres.py",
+        "/private/tmp/g11-journal005-independent-review001/combined/snapshot/python/umf_access/src/umf_access/lifecycle/owner_approval_core.py",
+        "/private/tmp/g11-journal005-independent-review001/combined/snapshot/python/umf_access/src/umf_access/lifecycle/owner_bootstrap.py",
+        "/private/tmp/g11-journal005-independent-review001/combined/snapshot/python/umf_access/src/umf_access/lifecycle/supervisor_journal_codec.py",
+        "/private/tmp/g11-journal005-independent-review001/combined/snapshot/python/umf_access/tests/test_ingress_local_postgres.py",
+        "/private/tmp/g11-journal005-independent-review001/combined/snapshot/python/umf_access/tests/test_owner_authority.py",
+        "/private/tmp/g11-journal005-independent-review001/combined/snapshot/python/umf_access/tests/test_supervisor_journal_codec.py",
+        "/private/tmp/g11-journal005-independent-review001/combined/snapshot/python/umf_access/tests/test_original_supervisor_birth_integration.py",
+        "/private/tmp/g11-journal005-independent-review001/combined/snapshot/python/umf_access/tests/test_access_python_boundaries.py",
+        "/private/tmp/g11-journal005-independent-review001/combined/snapshot/scripts/check-access-python-boundaries.py"
+      ],
+      "cwd": "/private/tmp/g11-journal005-independent-review001",
+      "exitCode": 0
+    }
+  ],
+  "productExecutionStartedAfterLaunchRecord": true,
+  "completed": true,
+  "elapsedSeconds": 12.435221833060496
+}

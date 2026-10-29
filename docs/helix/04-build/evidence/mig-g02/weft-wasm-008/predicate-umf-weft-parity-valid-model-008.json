@@ -1,0 +1,746 @@
+{
+  "scope": "Selected-command-only UMF/installed-Weft/native comparison for 47 .2 cases; removes unrelated historical operations made incomplete by added test fields.",
+  "cases": 47,
+  "allStatusesMatch": true,
+  "mismatches": [],
+  "results": [
+    {
+      "name": "G02-field-copy",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-literal",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-concat",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-coalesce",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-add",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-subtract",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-multiply",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-conditional-eq",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-conditional-in",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-tiny-decimal",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-fractional-integer",
+      "nativeStatus": "blocked",
+      "nativeDiagnostics": [
+        {
+          "code": "row expression integer target requires statically integral result"
+        }
+      ],
+      "weftStatus": "blocked",
+      "weftDiagnostics": [
+        {
+          "code": "row expression integer target requires statically integral result"
+        }
+      ],
+      "umfStatus": "blocked",
+      "umfDiagnostics": [
+        {
+          "code": "TABLES_OPERATION_DOMAIN",
+          "path": "/modules/0/extensions/umf.tables/commands/0/body/values/0/value/expression",
+          "message": "Expression result scalar type differs from its target Field",
+          "severity": "error"
+        },
+        {
+          "code": "TABLES_OPERATION_DOMAIN",
+          "path": "/modules/0/extensions/umf.tables/commands/0/body/values/0/value/expression",
+          "message": "Integer targets require a statically integral expression",
+          "severity": "error"
+        },
+        {
+          "code": "TABLES_OPERATION_DOMAIN",
+          "path": "/modules/0/extensions/umf.tables/commands/0/body/values/0/value/expression",
+          "message": "Expression carrier does not match target native storage",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "name": "G02-null-add-null-decimal",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-null-add-null-integer",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-null-add-null-string-refused",
+      "nativeStatus": "blocked",
+      "nativeDiagnostics": [
+        {
+          "code": "row expression result type differs from assigned target"
+        }
+      ],
+      "weftStatus": "blocked",
+      "weftDiagnostics": [
+        {
+          "code": "row expression result type differs from assigned target"
+        }
+      ],
+      "umfStatus": "blocked",
+      "umfDiagnostics": [
+        {
+          "code": "TABLES_OPERATION_DOMAIN",
+          "path": "/modules/0/extensions/umf.tables/commands/0/body/values/0/value/expression",
+          "message": "Expression result scalar type differs from its target Field",
+          "severity": "error"
+        },
+        {
+          "code": "TABLES_OPERATION_DOMAIN",
+          "path": "/modules/0/extensions/umf.tables/commands/0/body/values/0/value/expression",
+          "message": "Expression carrier does not match target native storage",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "name": "G02-null-add-null-boolean-refused",
+      "nativeStatus": "blocked",
+      "nativeDiagnostics": [
+        {
+          "code": "row expression result type differs from assigned target"
+        }
+      ],
+      "weftStatus": "blocked",
+      "weftDiagnostics": [
+        {
+          "code": "row expression result type differs from assigned target"
+        }
+      ],
+      "umfStatus": "blocked",
+      "umfDiagnostics": [
+        {
+          "code": "TABLES_OPERATION_DOMAIN",
+          "path": "/modules/0/extensions/umf.tables/commands/0/body/values/0/value/expression",
+          "message": "Expression result scalar type differs from its target Field",
+          "severity": "error"
+        },
+        {
+          "code": "TABLES_OPERATION_DOMAIN",
+          "path": "/modules/0/extensions/umf.tables/commands/0/body/values/0/value/expression",
+          "message": "Expression carrier does not match target native storage",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "name": "G02-null-add-null-date-refused",
+      "nativeStatus": "blocked",
+      "nativeDiagnostics": [
+        {
+          "code": "row expression result type differs from assigned target"
+        }
+      ],
+      "weftStatus": "blocked",
+      "weftDiagnostics": [
+        {
+          "code": "row expression result type differs from assigned target"
+        }
+      ],
+      "umfStatus": "blocked",
+      "umfDiagnostics": [
+        {
+          "code": "TABLES_OPERATION_DOMAIN",
+          "path": "/modules/0/extensions/umf.tables/commands/0/body/values/0/value/expression",
+          "message": "Expression result scalar type differs from its target Field",
+          "severity": "error"
+        },
+        {
+          "code": "TABLES_OPERATION_DOMAIN",
+          "path": "/modules/0/extensions/umf.tables/commands/0/body/values/0/value/expression",
+          "message": "Expression carrier does not match target native storage",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "name": "G02-null-concat-null-string",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-null-concat-null-integer-refused",
+      "nativeStatus": "blocked",
+      "nativeDiagnostics": [
+        {
+          "code": "row expression result type differs from assigned target"
+        }
+      ],
+      "weftStatus": "blocked",
+      "weftDiagnostics": [
+        {
+          "code": "row expression result type differs from assigned target"
+        }
+      ],
+      "umfStatus": "blocked",
+      "umfDiagnostics": [
+        {
+          "code": "TABLES_OPERATION_DOMAIN",
+          "path": "/modules/0/extensions/umf.tables/commands/0/body/values/0/value/expression",
+          "message": "Expression result scalar type differs from its target Field",
+          "severity": "error"
+        },
+        {
+          "code": "TABLES_OPERATION_DOMAIN",
+          "path": "/modules/0/extensions/umf.tables/commands/0/body/values/0/value/expression",
+          "message": "Expression carrier does not match target native storage",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "name": "G02-exponent-cancellation-integerToken",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-exponent-cancellation-decimalToken",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-exponent-cancellation-fractional-refused",
+      "nativeStatus": "blocked",
+      "nativeDiagnostics": [
+        {
+          "code": "row expression integer target requires statically integral result"
+        }
+      ],
+      "weftStatus": "blocked",
+      "weftDiagnostics": [
+        {
+          "code": "row expression integer target requires statically integral result"
+        }
+      ],
+      "umfStatus": "blocked",
+      "umfDiagnostics": [
+        {
+          "code": "TABLES_OPERATION_DOMAIN",
+          "path": "/modules/0/extensions/umf.tables/commands/0/body/values/0/value/expression",
+          "message": "Expression result scalar type differs from its target Field",
+          "severity": "error"
+        },
+        {
+          "code": "TABLES_OPERATION_DOMAIN",
+          "path": "/modules/0/extensions/umf.tables/commands/0/body/values/0/value/expression",
+          "message": "Integer targets require a statically integral expression",
+          "severity": "error"
+        },
+        {
+          "code": "TABLES_OPERATION_DOMAIN",
+          "path": "/modules/0/extensions/umf.tables/commands/0/body/values/0/value/expression",
+          "message": "Expression carrier does not match target native storage",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "name": "G02-conditional-null-eq",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-conditional-null-not-eq",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-conditional-null-ne",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-conditional-null-not-ne",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-conditional-null-order-booleanTarget",
+      "nativeStatus": "blocked",
+      "nativeDiagnostics": [
+        {
+          "code": "row expression condition operand type differs"
+        }
+      ],
+      "weftStatus": "blocked",
+      "weftDiagnostics": [
+        {
+          "code": "row expression condition operand type differs"
+        }
+      ],
+      "umfStatus": "blocked",
+      "umfDiagnostics": [
+        {
+          "code": "TABLES_OPERATION_DOMAIN",
+          "path": "/modules/0/extensions/umf.tables/commands/0/body/values/0/value/expression/when",
+          "message": "Predicate operator is not defined for this input carrier",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "name": "G02-conditional-null-order-uuidTarget",
+      "nativeStatus": "blocked",
+      "nativeDiagnostics": [
+        {
+          "code": "row expression condition operand type differs"
+        }
+      ],
+      "weftStatus": "blocked",
+      "weftDiagnostics": [
+        {
+          "code": "row expression condition operand type differs"
+        }
+      ],
+      "umfStatus": "blocked",
+      "umfDiagnostics": [
+        {
+          "code": "TABLES_OPERATION_DOMAIN",
+          "path": "/modules/0/extensions/umf.tables/commands/0/body/values/0/value/expression/when",
+          "message": "Predicate operator is not defined for this input carrier",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "name": "G02-negative-zero-huge-exponent",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-self-reference",
+      "nativeStatus": "blocked",
+      "nativeDiagnostics": [
+        {
+          "code": "row expression cannot reference assigned target"
+        }
+      ],
+      "weftStatus": "blocked",
+      "weftDiagnostics": [
+        {
+          "code": "row expression cannot reference assigned target"
+        }
+      ],
+      "umfStatus": "blocked",
+      "umfDiagnostics": [
+        {
+          "code": "TABLES_OPERATION_SOURCE",
+          "path": "/modules/0/extensions/umf.tables/commands/0/body/values/0/value/expression/input/owner",
+          "message": "Expression cannot read its assignment target",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "name": "G02-literal-1mib",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-literal-over-1mib",
+      "nativeStatus": "blocked",
+      "nativeDiagnostics": [
+        {
+          "code": "row expression literal capacity exceeded"
+        }
+      ],
+      "weftStatus": "blocked",
+      "weftDiagnostics": [
+        {
+          "code": "row expression literal capacity exceeded"
+        }
+      ],
+      "umfStatus": "blocked",
+      "umfDiagnostics": [
+        {
+          "code": "TABLES_OPERATION_CAPACITY",
+          "path": "/modules/0/extensions/umf.tables/commands/0/body/values/0/value/expression/value",
+          "message": "Literal exceeds its byte limit",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "name": "G02-required-null-refused",
+      "nativeStatus": "blocked",
+      "nativeDiagnostics": [
+        {
+          "code": "operation literal violates original Field"
+        }
+      ],
+      "weftStatus": "blocked",
+      "weftDiagnostics": [
+        {
+          "code": "operation literal violates original Field"
+        }
+      ],
+      "umfStatus": "blocked",
+      "umfDiagnostics": [
+        {
+          "code": "TABLES_LITERAL",
+          "path": "/modules/0/extensions/umf.tables/commands/0/body/values/0/value/expression/when/value",
+          "message": "Null requires explicit absent-allowed",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "name": "G02-optional-null",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-enum-allowed",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-enum-outside-refused",
+      "nativeStatus": "blocked",
+      "nativeDiagnostics": [
+        {
+          "code": "operation literal violates original Field"
+        }
+      ],
+      "weftStatus": "blocked",
+      "weftDiagnostics": [
+        {
+          "code": "operation literal violates original Field"
+        }
+      ],
+      "umfStatus": "blocked",
+      "umfDiagnostics": [
+        {
+          "code": "TABLES_LITERAL",
+          "path": "/modules/0/extensions/umf.tables/commands/0/body/values/0/value/expression/when/value",
+          "message": "Literal is not an allowed value",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "name": "G02-enum-in-allowed",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-enum-in-outside-refused",
+      "nativeStatus": "blocked",
+      "nativeDiagnostics": [
+        {
+          "code": "operation literal violates original Field"
+        }
+      ],
+      "weftStatus": "blocked",
+      "weftDiagnostics": [
+        {
+          "code": "operation literal violates original Field"
+        }
+      ],
+      "umfStatus": "blocked",
+      "umfDiagnostics": [
+        {
+          "code": "TABLES_LITERAL",
+          "path": "/modules/0/extensions/umf.tables/commands/0/body/values/0/value/expression/when/values/1",
+          "message": "Literal is not an allowed value",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "name": "G02-length-allowed",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-length-outside-refused",
+      "nativeStatus": "blocked",
+      "nativeDiagnostics": [
+        {
+          "code": "operation literal violates original Field"
+        }
+      ],
+      "weftStatus": "blocked",
+      "weftDiagnostics": [
+        {
+          "code": "operation literal violates original Field"
+        }
+      ],
+      "umfStatus": "blocked",
+      "umfDiagnostics": [
+        {
+          "code": "TABLES_LITERAL",
+          "path": "/modules/0/extensions/umf.tables/commands/0/body/values/0/value/expression/when/value",
+          "message": "Literal length outside bounds",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "name": "G02-varchar-native-width-admitted",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-decimal-wrapper-allowed",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-decimal-wrong-wrapper-refused",
+      "nativeStatus": "blocked",
+      "nativeDiagnostics": [
+        {
+          "code": "operation literal violates original Field"
+        }
+      ],
+      "weftStatus": "blocked",
+      "weftDiagnostics": [
+        {
+          "code": "operation literal violates original Field"
+        }
+      ],
+      "umfStatus": "blocked",
+      "umfDiagnostics": [
+        {
+          "code": "TABLES_OPERATION_DOMAIN",
+          "path": "/modules/0/extensions/umf.tables/commands/0/body/values/0/value/expression/when",
+          "message": "Predicate literal carrier must match its input Field",
+          "severity": "error"
+        },
+        {
+          "code": "TABLES_LITERAL",
+          "path": "/modules/0/extensions/umf.tables/commands/0/body/values/0/value/expression/when/value",
+          "message": "Literal does not match scalar family",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "name": "G02-numeric-range-allowed",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-numeric-range-outside-refused",
+      "nativeStatus": "blocked",
+      "nativeDiagnostics": [
+        {
+          "code": "operation literal violates original Field"
+        }
+      ],
+      "weftStatus": "blocked",
+      "weftDiagnostics": [
+        {
+          "code": "operation literal violates original Field"
+        }
+      ],
+      "umfStatus": "blocked",
+      "umfDiagnostics": [
+        {
+          "code": "TABLES_LITERAL",
+          "path": "/modules/0/extensions/umf.tables/commands/0/body/values/0/value/expression/when/value",
+          "message": "Literal outside numeric range",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "name": "G02-integer-wrapper-allowed",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    },
+    {
+      "name": "G02-integer-wrong-wrapper-refused",
+      "nativeStatus": "blocked",
+      "nativeDiagnostics": [
+        {
+          "code": "operation literal violates original Field"
+        }
+      ],
+      "weftStatus": "blocked",
+      "weftDiagnostics": [
+        {
+          "code": "operation literal violates original Field"
+        }
+      ],
+      "umfStatus": "blocked",
+      "umfDiagnostics": [
+        {
+          "code": "TABLES_OPERATION_DOMAIN",
+          "path": "/modules/0/extensions/umf.tables/commands/0/body/values/0/value/expression/when",
+          "message": "Predicate literal carrier must match its input Field",
+          "severity": "error"
+        },
+        {
+          "code": "TABLES_LITERAL",
+          "path": "/modules/0/extensions/umf.tables/commands/0/body/values/0/value/expression/when/value",
+          "message": "Literal does not match scalar family",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "name": "G02-int2-native-width-admitted",
+      "nativeStatus": "compiled",
+      "nativeDiagnostics": null,
+      "weftStatus": "compiled",
+      "weftDiagnostics": null,
+      "umfStatus": "compiled",
+      "umfDiagnostics": []
+    }
+  ]
+}

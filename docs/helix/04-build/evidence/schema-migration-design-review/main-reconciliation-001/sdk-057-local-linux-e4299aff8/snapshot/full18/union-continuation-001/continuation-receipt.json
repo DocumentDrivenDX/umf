@@ -1,0 +1,288 @@
+{
+  "attempt": 1,
+  "bootstrap": {
+    "bytes": 129956,
+    "cells": {
+      "linux-x86_64-py311": {
+        "acquisitionDefaultEnvironment": {
+          "implementation_name": "cpython",
+          "implementation_version": "3.11.17",
+          "os_name": "posix",
+          "platform_machine": "x86_64",
+          "platform_python_implementation": "CPython",
+          "platform_release": "7.2.9-orbstack-00391-g2b298d05fbd4",
+          "platform_system": "Linux",
+          "platform_version": "#1 SMP PREEMPT Mon Oct 12 05:39:36 UTC 2026",
+          "python_full_version": "3.11.17",
+          "python_version": "3.11",
+          "sys_platform": "linux"
+        },
+        "bootstrapWheelBytes": 129956,
+        "bootstrapWheelSha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+        "defaultEnvironmentEqual": true,
+        "evidence": "Actual container check printed these version/origin/hash/size values and asserted equality before running the existing control and probe; probe independently reasserted the full environment equality.",
+        "packagingImportOrigin": "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/packaging/__init__.py",
+        "packagingVersion": "26.3",
+        "pythonVersion": "3.11.17",
+        "replayDefaultEnvironment": {
+          "implementation_name": "cpython",
+          "implementation_version": "3.11.17",
+          "os_name": "posix",
+          "platform_machine": "x86_64",
+          "platform_python_implementation": "CPython",
+          "platform_release": "7.2.9-orbstack-00391-g2b298d05fbd4",
+          "platform_system": "Linux",
+          "platform_version": "#1 SMP PREEMPT Mon Oct 12 05:39:36 UTC 2026",
+          "python_full_version": "3.11.17",
+          "python_version": "3.11",
+          "sys_platform": "linux"
+        }
+      },
+      "linux-x86_64-py314": {
+        "acquisitionDefaultEnvironment": {
+          "implementation_name": "cpython",
+          "implementation_version": "3.14.9",
+          "os_name": "posix",
+          "platform_machine": "x86_64",
+          "platform_python_implementation": "CPython",
+          "platform_release": "7.2.9-orbstack-00391-g2b298d05fbd4",
+          "platform_system": "Linux",
+          "platform_version": "#1 SMP PREEMPT Mon Oct 12 05:39:36 UTC 2026",
+          "python_full_version": "3.14.9",
+          "python_version": "3.14",
+          "sys_platform": "linux"
+        },
+        "bootstrapWheelBytes": 129956,
+        "bootstrapWheelSha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+        "defaultEnvironmentEqual": true,
+        "evidence": "Actual container check printed these version/origin/hash/size values and asserted equality before running the existing control and probe; probe independently reasserted the full environment equality.",
+        "packagingImportOrigin": "/opt/hostedtoolcache/Python/3.14.9/x64/lib/python3.14/site-packages/packaging/__init__.py",
+        "packagingVersion": "26.3",
+        "pythonVersion": "3.14.9",
+        "replayDefaultEnvironment": {
+          "implementation_name": "cpython",
+          "implementation_version": "3.14.9",
+          "os_name": "posix",
+          "platform_machine": "x86_64",
+          "platform_python_implementation": "CPython",
+          "platform_release": "7.2.9-orbstack-00391-g2b298d05fbd4",
+          "platform_system": "Linux",
+          "platform_version": "#1 SMP PREEMPT Mon Oct 12 05:39:36 UTC 2026",
+          "python_full_version": "3.14.9",
+          "python_version": "3.14",
+          "sys_platform": "linux"
+        }
+      }
+    },
+    "filename": "packaging-26.3-py3-none-any.whl",
+    "installedOfflineUsing": [
+      "--no-index",
+      "--no-deps",
+      "--ignore-installed"
+    ],
+    "licenseExpression": "Apache-2.0 OR BSD-2-Clause",
+    "package": "packaging",
+    "publisherJson": {
+      "bytes": 5748,
+      "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-001/bootstrap/pypi-26.3.json",
+      "sha256": "4f190d2f0b312b3086058cee64ab4333bf3ce67fb78b4c2bdb43899049b29f4d"
+    },
+    "requiresPython": ">=3.9",
+    "role": "operator/verifier bootstrap only; excluded from original target 18-package lock and install environment",
+    "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+    "source": "PyPI JSON API packaging/26.3",
+    "url": "https://files.pythonhosted.org/packages/63/34/ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527/packaging-26.3-py3-none-any.whl",
+    "version": "26.3",
+    "wheelType": "bdist_wheel",
+    "yanked": false
+  },
+  "commands": {
+    "actualProbe": "python -I tests/codegen/offline_mirror_probe.py --aggregate-index /aggregate/aggregate.json --selected-cell {cell} --expected-source-commit e4299aff8e87e9d211f9d86df2f2013ab9c95945 --mirror /aggregate/mirror --generator-corpus /aggregate/generator-corpus.json --report /out/reports/{cell}.json",
+    "commandRecords": {
+      "bytes": 1190,
+      "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-001/command-records.tsv",
+      "sha256": "eb6de0af6c5ef5b4df07e273af6928706463fc6c02f8d30a79f518a66ea33d80"
+    },
+    "logs": {
+      "py311BootstrapInstall": {
+        "bytes": 355,
+        "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-001/logs/linux-x86_64-py311-packaging-bootstrap-install-retry2.log",
+        "sha256": "269c9437ce2c51e122255e78b10cfecdb0280eb4984cd631c3aaf27173c72872"
+      },
+      "py311SelectorControl": {
+        "bytes": 98,
+        "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-001/logs/linux-x86_64-py311-selector-control-retry2.log",
+        "sha256": "774d1086a37de6d8b9e2865f12621648cb23ee1c9a1e8f5919ee23e907dcf70c"
+      },
+      "py311SelectorInvocationError": {
+        "bytes": 600,
+        "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-001/logs/linux-x86_64-py311-selector-control-invocation-error.log",
+        "sha256": "808970defe7e0d477c88c5c2354544d6078e0b4f81e88f4846704280c0ce96be"
+      },
+      "py311UnionReplay": {
+        "bytes": 711,
+        "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-001/logs/linux-x86_64-py311-union-replay-retry2.log",
+        "sha256": "b412ed6d42050f159cbec2bd6c26d07311ae0b91972268a533c36971b64e389c"
+      },
+      "py314BootstrapInstall": {
+        "bytes": 497,
+        "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-001/logs/linux-x86_64-py314-packaging-bootstrap-install.log",
+        "sha256": "6ad343663112f3286cdcbcb2f99ac15446a098476e0d73bb3198e0aed6220e27"
+      },
+      "py314SelectorControl": {
+        "bytes": 98,
+        "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-001/logs/linux-x86_64-py314-selector-control.log",
+        "sha256": "1f595a73b2ed09c1daaeb8becdd5972805c2e54d319d1d1379fd724d863b04e4"
+      },
+      "py314UnionReplay": {
+        "bytes": 710,
+        "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-001/logs/linux-x86_64-py314-union-replay.log",
+        "sha256": "8ae915b4e99635335f6738283b0e4f3c995a6c7aa5be998a4ffb4ff0c518efc5"
+      }
+    },
+    "networkIsolation": "Docker container --network none; report additionally records Linux network namespace (unshare --net)"
+  },
+  "completedUtc": "2026-10-28T20:24:01Z",
+  "controls": {
+    "assertions": "active extras request refuses; inactive optional extra-marked requirement remains inactive",
+    "py311InitialInvocationError": {
+      "log": {
+        "bytes": 600,
+        "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-001/logs/linux-x86_64-py311-selector-control-invocation-error.log",
+        "sha256": "808970defe7e0d477c88c5c2354544d6078e0b4f81e88f4846704280c0ce96be"
+      },
+      "status": "recorded; test was not executed because an incorrect unittest class was named"
+    },
+    "result": "passed in both actual replay cells under packaging 26.3",
+    "sourceOrVerifierCodeChanges": false,
+    "test": "tests/codegen/test_cohort_selector.py::InventoryTests::test_active_requirement_extras_refuse_but_inactive_optional_edge_stays_inactive"
+  },
+  "executionId": "umf-local-full18-union-continuation-20261028T202401Z-e4299aff8-attempt1",
+  "images": {
+    "linux-x86_64-py311": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+    "linux-x86_64-py314": "sha256:2474bc9010faea57300e5e8c33a6be6fce4d37dada3bf8af7d8230069f4c0a30"
+  },
+  "originalAggregate": {
+    "aggregateWasNotReassembled": true,
+    "generatorCorpus": {
+      "bytes": 3500077,
+      "path": "/private/tmp/migration-full18-e4299aff8-002/aggregate/generator-corpus.json",
+      "sha256": "80b8059d48490761bc98255d58409d96f46b399d78b79d0dd9aa43d30d7e6187"
+    },
+    "index": {
+      "bytes": 24210,
+      "path": "/private/tmp/migration-full18-e4299aff8-002/aggregate/aggregate.json",
+      "sha256": "fac25d7d5041983f1e3d464efbdda70e84df19f9fd7b70882990e4a05e69a634"
+    },
+    "mount": "read-only",
+    "producerAttempt": 1,
+    "producerExecutionId": "umf-local-full18-20261028T201057Z-54247-attempt1",
+    "producerReceipt": {
+      "bytes": 16276,
+      "path": "/private/tmp/migration-full18-e4299aff8-002/local-aggregate-producer-receipt.json",
+      "sha256": "4375e0c4a0faf89f78056086225cd25352e8c7299966395006bdba809da2b064"
+    },
+    "profile": "umf.embedder-wheel-linux-runtime-macos-inputs/1",
+    "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945"
+  },
+  "priorAttempt": {
+    "cell": "linux-x86_64-py311",
+    "executionId": "umf-local-full18-20261028T201057Z-54247-attempt1",
+    "failure": "pip vendored packaging markers raised UndefinedEnvironmentName extra before mirror installation; Linux 3.14 union had not run",
+    "log": {
+      "bytes": 1281,
+      "path": "/private/tmp/migration-full18-e4299aff8-002/logs/linux-x86_64-py311-union-replay.log",
+      "sha256": "f75449d3d87d49de190c2197bc06e0a82ed1f2f489ee64f11649ceb013206880"
+    },
+    "stageResult": "linux-x86_64-py311-union-replay\t1\tlogs/linux-x86_64-py311-union-replay.log\t1281\tf75449d3d87d49de190c2197bc06e0a82ed1f2f489ee64f11649ceb013206880",
+    "status": "failed and preserved; not relabeled"
+  },
+  "reports": {
+    "linux-x86_64-py311": {
+      "bytes": 3450,
+      "cellPython": "3.11.17",
+      "lockSha256": "4337ab0597dcec245402abe73bcf8ea1d09bc72a4cb2907473c9e53d0327e611",
+      "mirrorManifestSha256": "75e64af5b1f3b3d6f5c6cbbf7bbde2174aa955f22afb11f8d6b82ded051ae3db",
+      "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-001/reports/linux-x86_64-py311.json",
+      "probes": {
+        "missing-wheel": "refused under OS network denial",
+        "tampered-wheel": "refused under OS network denial",
+        "umf-codegen-check": "passed",
+        "umf-codegen-generate": "passed",
+        "umf-core-native-import": "passed",
+        "umf-core-public-roundtrip": "passed",
+        "umf-core-public-validation": "passed",
+        "umf-table-apply": "approval-required before connection",
+        "umf-table-check": "passed",
+        "umf-table-new": "passed"
+      },
+      "sha256": "5ff8e0b922e1e2330f8c8e1b1576bd27b02f49c93c81c06f2f948571383b3ab8",
+      "status": "passed",
+      "wheelCount": 18,
+      "wheelInventorySha256": "16ee6fb801d7358a69a4f46aaf8d98dcc05c01e323ee90cb4546c8f91809c8f1"
+    },
+    "linux-x86_64-py314": {
+      "bytes": 3449,
+      "cellPython": "3.14.9",
+      "lockSha256": "715dbb9f59acc6cb3aedca63023ce17b581dde8c7395ebddb34b165e42418686",
+      "mirrorManifestSha256": "75e64af5b1f3b3d6f5c6cbbf7bbde2174aa955f22afb11f8d6b82ded051ae3db",
+      "path": "/private/tmp/migration-full18-e4299aff8-union-continuation-001/reports/linux-x86_64-py314.json",
+      "probes": {
+        "missing-wheel": "refused under OS network denial",
+        "tampered-wheel": "refused under OS network denial",
+        "umf-codegen-check": "passed",
+        "umf-codegen-generate": "passed",
+        "umf-core-native-import": "passed",
+        "umf-core-public-roundtrip": "passed",
+        "umf-core-public-validation": "passed",
+        "umf-table-apply": "approval-required before connection",
+        "umf-table-check": "passed",
+        "umf-table-new": "passed"
+      },
+      "sha256": "26e234aef5d014bcaeac2753c8892458fdee6743ea25d3d07a78106dc21898ab",
+      "status": "passed",
+      "wheelCount": 18,
+      "wheelInventorySha256": "73a5327aa46734dee82fb5006fc8d361f99b54b2ded8d62b8966d5ed84656232"
+    }
+  },
+  "result": {
+    "cells": [
+      "linux-x86_64-py311",
+      "linux-x86_64-py314"
+    ],
+    "eachInstalledTargetWheelCount": 18,
+    "projectSourceOrGitOrActionsOrPraxisEdits": false,
+    "sourceAndAggregateInputsUnchanged": true,
+    "status": "passed"
+  },
+  "runtime": {
+    "containerArgs": [
+      "--platform linux/amd64",
+      "--pull=never",
+      "--network none",
+      "--cpus=4",
+      "--memory=8g",
+      "--cap-add SYS_ADMIN",
+      "--security-opt seccomp=unconfined"
+    ],
+    "containers": [
+      "umf-full18-cont-001-py311-retry2",
+      "umf-full18-cont-001-py314"
+    ],
+    "engine": "OrbStack Docker 29.8.2 linux/aarch64",
+    "executionPlatform": "linux/amd64",
+    "runnerKernel": "Linux 7.2.9-orbstack-00391-g2b298d05fbd4 x86_64 GNU/Linux"
+  },
+  "schema": "umf-full18-union-continuation/1",
+  "source": {
+    "commit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+    "harnessSha256": "ceea335b702b2128919051669597a8a1b9163e4fe628a585d111876116a5f08d",
+    "mode": "existing Docker source volume mounted read-only",
+    "probeSha256": "b8cc2330539640168d97491aeb118922a796b4a30d20fcc66cb3ec0d19aabee7",
+    "selectorControlSha256": "2dfafaed06d9e129a516a6dfc13ddf7487c7e530ca726e0b63b1ed52f373ca96",
+    "status": "clean",
+    "tree": "8b98c0d895983ba2b7637dd3aea567dab0943883",
+    "volume": "umf-migration-source-267675510"
+  },
+  "startedUtc": "2026-10-28T20:21:53Z"
+}

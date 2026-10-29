@@ -56,7 +56,7 @@ class ManifestProgramTests(unittest.TestCase):
                 model = request['model']['utf8']
                 (root/'model.json').write_text(model)
                 config = {'package':'candidate','modules':['not_imported'],
-                          'weft':{'distribution':'weft-sql','version':importlib.metadata.version('weft-sql')},
+                          'weft':{'distribution':'umf-weft','version':importlib.metadata.version('umf-weft')},
                           'umf':{'documents':[{'path':'model.json','sha256':hashlib.sha256(model.encode()).hexdigest()}]},
                           'targets':[{'id':'truss','kind':'truss','binding':{'modelJson':model},
                                       'manifestCommands':{'command:0':{'configuration':registry,'request':request}}}]}

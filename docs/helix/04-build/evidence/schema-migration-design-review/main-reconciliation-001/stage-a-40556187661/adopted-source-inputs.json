@@ -1,0 +1,50 @@
+{
+  "adoptedR2Companion": {
+    "adoptionCommit": "97d15f9937163a3ab2a9e17eb08796a4734cbd68",
+    "artifactId": 12757082809,
+    "artifactSha256": "122767b97a6da87342321e133a033693fd83df759f939f1bc41c56928c89fc37",
+    "bytes": 1525352,
+    "ownerResultPath": "docs/helix/04-build/evidence/schema-migration-design-review/main-reconciliation-001/stage-a-40556187661/owner-result.json",
+    "ownerResultSha256": "a4140025bf7d0c70e889f563f10e22a4e6d6f0a5f99ef5eaadc76549de6a6939",
+    "path": "src/generated/core-validators-accounted.ts",
+    "provenanceManifestPath": "docs/helix/04-build/evidence/schema-migration-design-review/main-reconciliation-001/stage-a-40556187661/manifest.json",
+    "provenanceManifestSha256": "67570dddf2c1218381d55ce8e9e7c026e0087772790d6dd9f9f6115e60a8ec79",
+    "sha256": "5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29",
+    "sourceOutputReviewPath": "docs/helix/04-build/evidence/schema-migration-design-review/main-reconciliation-001/stage-a-40556187661/sol-output-source-review.md",
+    "sourceOutputReviewSha256": "0f97c192a6e0fc7dfb4fbe3c05f25807053de7a7bc4b44261d9cb64abf8cab27",
+    "sourcePinsSha256": "2c3071baeb289c5bc41ce903dbb4597f14cb471e316259baac252887bdfc454c",
+    "stageARunId": "40556187661",
+    "stageASourceCommit": "a2cc9c2ff5510d0b6653d50102bd406e3b4556c6"
+  },
+  "adoptionCommit": "97d15f9937163a3ab2a9e17eb08796a4734cbd68",
+  "historicalGeneratedOutputsAreCurrentQualificationEvidence": false,
+  "pinnedSourceInputs": [
+    {
+      "bytes": 1525352,
+      "path": "src/generated/core-validators-accounted.ts",
+      "sha256": "5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29"
+    },
+    {
+      "bytes": 305070,
+      "path": "src/generated/core-validators.ts",
+      "sha256": "563602e0f21f6d6b0efd1ae069dbda28926e085585b4bf0430347b65ff2bd0ff"
+    },
+    {
+      "bytes": 45342,
+      "path": "spec/core/schema.json",
+      "sha256": "c6004664eb93dcef28ce6e0583f91225b618aa0fb42967a892242402557cf71d"
+    },
+    {
+      "bytes": 45463,
+      "path": "spec/core/semantic-type-reference.schema.json",
+      "sha256": "207abbad54ebf8c660a958e2deda072a5a3236b5b8df5af8a8656f90c3e46ba9"
+    },
+    {
+      "bytes": 45001,
+      "path": "spec/core/extension-package.schema.json",
+      "sha256": "4df3c8f92c5baa2c52f965d83b681ff306392bf9ba333bd39213a8f1065ac766"
+    }
+  ],
+  "profile": "umf.stage-a-adopted-companion-inputs/1",
+  "receiptRole": "Owner-maintained Stage-A companion adoption and exact input custody. This receipt is not a hosted full-generation source-input receipt or generated-output qualification."
+}

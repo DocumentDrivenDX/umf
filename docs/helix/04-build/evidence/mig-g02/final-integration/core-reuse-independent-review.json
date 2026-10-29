@@ -1,0 +1,215 @@
+{
+  "status": "passed-scoped-immutable-Core-reuse",
+  "comparisonPacketSha256": "927000348ef8837dd3b4bf93030e4ed2f008f88b6508a70e88697e37464f4663",
+  "wheelSha256": "49459bb2dbc37ac9b62b269e9664bac1483439c7d4c79f0b07855e9c8546c823",
+  "members": [
+    {
+      "member": "umf/__init__.py",
+      "source": "python/src/umf/__init__.py",
+      "equal": true,
+      "sha256": "f7ca7df3c0b7cd6f493126bfe0edfa1aa7e3e92e66d88274777d77534766caaf"
+    },
+    {
+      "member": "umf/_rust.py",
+      "source": "python/src/umf/_rust.py",
+      "equal": true,
+      "sha256": "f3b573f016fe6c89ac0d45da62cc49f145ea08622d9244490411248dfbb9fddf"
+    },
+    {
+      "member": "umf/action_runtime.py",
+      "source": "python/src/umf/action_runtime.py",
+      "equal": true,
+      "sha256": "6ba9e8f7480b7d2c691af088dc44a1d82efb0b0c4b9e38700eec91a6abfebb89"
+    },
+    {
+      "member": "umf/constraint_kernel.py",
+      "source": "python/src/umf/constraint_kernel.py",
+      "equal": true,
+      "sha256": "4e93b3f9ef520cd6a1e3778fc41ad6e5494713313c420e017188632a4ee20598"
+    },
+    {
+      "member": "umf/generated_resources.py",
+      "source": "python/src/umf/generated_resources.py",
+      "equal": true,
+      "sha256": "9b473cf89f7d9ff5486d741282d590f5cc115e83b831d5b9090464e127e8e7f8"
+    },
+    {
+      "member": "umf/json.py",
+      "source": "python/src/umf/json.py",
+      "equal": true,
+      "sha256": "14e7a4916c581655cca993500cdf76b7372213eab3e421fc2d9892d951b98aec"
+    },
+    {
+      "member": "umf/literal_kernel.py",
+      "source": "python/src/umf/literal_kernel.py",
+      "equal": true,
+      "sha256": "908eaa7d47ab6de89ca3493f0637ba19606936f3db756d984c5e3c6aaae0076f"
+    },
+    {
+      "member": "umf/models.py",
+      "source": "python/src/umf/models.py",
+      "equal": true,
+      "sha256": "c625c5f187268ce66c60a396a7cad14d2b5e3d9ddb976719e0cc6209fcfc08e1"
+    },
+    {
+      "member": "umf/registry.py",
+      "source": "python/src/umf/registry.py",
+      "equal": true,
+      "sha256": "c29cc0087cbd555dc1a964d2deed90d74cf8f3e2c28aff2b9895512fa90c88bc"
+    },
+    {
+      "member": "umf/rust_codegen.py",
+      "source": "python/src/umf/rust_codegen.py",
+      "equal": true,
+      "sha256": "a1d787a1475ac2e52fa13f7d3e62a821896b30f9a8d557ef1661946e10cf825e"
+    },
+    {
+      "member": "umf/schemas.py",
+      "source": "python/src/umf/schemas.py",
+      "equal": true,
+      "sha256": "4729344e8aa9846281b6af82d0398e3aad41d778b59cf5895f5e7a3d219f642d"
+    },
+    {
+      "member": "umf/serialization.py",
+      "source": "python/src/umf/serialization.py",
+      "equal": true,
+      "sha256": "d77a9afc1bd7d500d341fa00f3c8af73ed89694a0a5cd3f2382f577e6fdb947a"
+    },
+    {
+      "member": "umf/validation.py",
+      "source": "python/src/umf/validation.py",
+      "equal": true,
+      "sha256": "0422eb695da542314da853518532fc29466a60be4070123d911277a6b9d02d64"
+    },
+    {
+      "member": "umf/action_runtime_resource_manifest.json",
+      "source": "python/src/umf/action_runtime_resource_manifest.json",
+      "equal": true,
+      "sha256": "857cb47fd75b274631c9008c61d1200ec0141b1d6da972248ba7b4a516967660"
+    },
+    {
+      "member": "umf/action_runtime_resources/actionsPackage.json",
+      "source": "spec/extensions/actions/package.json",
+      "equal": true,
+      "sha256": "b77e7cee2ac6ad9d482122a63d0ab6044c341b2757135a0c896213c3fa596d62"
+    },
+    {
+      "member": "umf/action_runtime_resources/bindingPackage.json",
+      "source": "spec/extensions/binding/package.json",
+      "equal": true,
+      "sha256": "f3326533dcf3d2227955bae2261ab005eaf8692e289c7461f2015fd40565a78f"
+    },
+    {
+      "member": "umf/action_runtime_resources/constraints.json",
+      "source": "spec/metamodel/generated/core-constraints.json",
+      "equal": true,
+      "sha256": "444f3dbb8dca0b3f5777d2c26887fc371efb62e6f37e5ae5600b63067785b412"
+    },
+    {
+      "member": "umf/action_runtime_resources/coreSchema.json",
+      "source": "spec/core/schema.json",
+      "equal": true,
+      "sha256": "89306e2fd6127114b275a367ed1e1908d15aa71fc15d17d8866c53443ce0d78f"
+    },
+    {
+      "member": "umf/action_runtime_resources/domainPolicy.json",
+      "source": "spec/metamodel/generated/domain-policy.json",
+      "equal": true,
+      "sha256": "14c141d6b7adc55f7dbddfaa3ea016eafb158e4e12ccf56155bc75f510c6e641"
+    },
+    {
+      "member": "umf/action_runtime_resources/packageSchema.json",
+      "source": "spec/core/extension-package.schema.json",
+      "equal": true,
+      "sha256": "85a5c4a704bd6222ada4908cb7cfaada6b7869cf21b1b0095cdff8846754494d"
+    },
+    {
+      "member": "umf/action_runtime_resources/referenceSchema.json",
+      "source": "spec/core/semantic-type-reference.schema.json",
+      "equal": true,
+      "sha256": "32ce36e9181dfaad50277f78907ca5374c5cf5e03e77f0b7924a425a19cae3e0"
+    },
+    {
+      "member": "umf/action_runtime_resources/stableBindingPackage.json",
+      "source": "spec/extensions/binding-stable/package.json",
+      "equal": true,
+      "sha256": "0550ae86d0cf07f9e61fb78bbb3a2eeb370838681a1483b1088409ddaeb0631e"
+    },
+    {
+      "member": "umf/action_runtime_resources/tablesPackage.json",
+      "source": "spec/extensions/tables/package.json",
+      "equal": true,
+      "sha256": "beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d"
+    },
+    {
+      "member": "umf/spec/core/extension-package.schema.json",
+      "source": "spec/core/extension-package.schema.json",
+      "equal": true,
+      "sha256": "85a5c4a704bd6222ada4908cb7cfaada6b7869cf21b1b0095cdff8846754494d"
+    },
+    {
+      "member": "umf/spec/core/schema.json",
+      "source": "spec/core/schema.json",
+      "equal": true,
+      "sha256": "89306e2fd6127114b275a367ed1e1908d15aa71fc15d17d8866c53443ce0d78f"
+    },
+    {
+      "member": "umf/spec/core/semantic-type-reference.schema.json",
+      "source": "spec/core/semantic-type-reference.schema.json",
+      "equal": true,
+      "sha256": "32ce36e9181dfaad50277f78907ca5374c5cf5e03e77f0b7924a425a19cae3e0"
+    },
+    {
+      "member": "umf/spec/metamodel/generated/core-constraints.json",
+      "source": "spec/metamodel/generated/core-constraints.json",
+      "equal": true,
+      "sha256": "444f3dbb8dca0b3f5777d2c26887fc371efb62e6f37e5ae5600b63067785b412"
+    },
+    {
+      "member": "umf/spec/metamodel/generated/domain-policy.json",
+      "source": "spec/metamodel/generated/domain-policy.json",
+      "equal": true,
+      "sha256": "14c141d6b7adc55f7dbddfaa3ea016eafb158e4e12ccf56155bc75f510c6e641"
+    },
+    {
+      "member": "umf/spec/metamodel/generated/manifest.json",
+      "source": "spec/metamodel/generated/manifest.json",
+      "equal": false,
+      "sha256": "2599f3f589c2c17e33d733227eeaa0aba17c9a9ba9aa292f42ab0c7870ea567b"
+    },
+    {
+      "member": "umf/spec/metamodel/generated/python-shapes.json",
+      "source": "spec/metamodel/generated/python-shapes.json",
+      "equal": true,
+      "sha256": "414e92bbde701d11e101c17bba3c51d78f396c6d7c2af62b0b1be61bfd6c3589"
+    },
+    {
+      "member": "umf/spec/extensions/dataset-source/schema.json",
+      "source": "spec/extensions/dataset-source/schema.json",
+      "equal": true,
+      "sha256": "385f12f3b643f86838cb2b9baec60d85cbac1e3e543ffd015105465fa1ccbc95"
+    },
+    {
+      "member": "umf/spec/extensions/domain-pack/schema.json",
+      "source": "spec/extensions/domain-pack/schema.json",
+      "equal": true,
+      "sha256": "e34054015eae699987d7fd0640bdbc17906b129fa46b2c5770753ebf0723931e"
+    }
+  ],
+  "jsonDifferences": [
+    {
+      "path": "/sources/package.json",
+      "old": "031bdb38c663c33804c02de06906c9c4fdd7bbf32728204cd4c8d30959c324ed",
+      "new": "c7b69fba001805dc9cd4e26e84a9b786be379c1413d020c34600c063d287101b"
+    },
+    {
+      "path": "/backend/inputs/package.json",
+      "old": "031bdb38c663c33804c02de06906c9c4fdd7bbf32728204cd4c8d30959c324ed",
+      "new": "c7b69fba001805dc9cd4e26e84a9b786be379c1413d020c34600c063d287101b"
+    }
+  ],
+  "producerSourceDiffPaths": [
+    "spec/metamodel/generated/manifest.json"
+  ],
+  "limits": "Distinct producer pins required. No Core rebuild or native functional rerun claimed; final consumer-cohort qualification remains required."
+}

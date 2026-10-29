@@ -212,13 +212,179 @@ whether refusal occurs in planning or requires unqualified host capability.
 | MIG-G07 | Cross-document schema migration and coordinated multi-store execution are not delivered by single-document deployment digests. | US-050/CONTRACT-045 then MIG-02/08 | Exact revision/dependency closure, unknown extensions, source/target identity and explicit cross-store recovery without assumed distributed atomicity |
 | MIG-G08 | Truss, Ashlar and other storage backends lack qualification for this shared migration design. Mutable admission and immutable new-publication semantics remain backend-owned. | MIG-08; each backend owner | Same Person intent with genuine graph/table/file effects, backend-specific refusals and publication/journal recovery |
 | MIG-G09 | Actual managed Lakebase/Praxis consumer migration acceptance is unverified. Local PostgreSQL evidence and installed wheels do not establish managed privileges, platform limits or adoption. | MIG-07; integration and consumer owners | Dedicated managed target and actual consumer schema/workload replay on frozen installed artifacts |
-| MIG-G10 | Mixed v0.2/v0.3 table-inventory changes and initial deployment are outside the selected existing-table evolution profiles. The separately qualified v0.1 bootstrap/add-table route does not imply a downgrade path from persistent-approval metadata or one mixed plan that creates tables and evolves existing ones. | MIG-02/07; table compiler/host | Explicit portable refusal of unsupported v0.2/v0.3 shapes, preserved exact v0.1 bootstrap/add-table behavior, then a separately designed prefix-inventory execution profile before expansion |
-| MIG-G11 | Dropping and appending columns in one existing-table migration is explicitly unsupported and must refuse before plan emission, including equal-count replacement. Do not infer atomic combined support from separate drop/add capabilities. | MIG-02/05; stable-ID dependency scheduling owner | Stable-ID additions/removals and complete ordered effects; same/different counts, denied UPDATE and dependent policies; separately approved migrations only where each intermediate schema/data state is valid and independently qualified |
+| MIG-G10 | Mixed v0.2/v0.3 table-inventory changes and initial deployment are outside the selected existing-table evolution profiles. The separately qualified v0.1 bootstrap/add-table route does not imply a downgrade path from persistent-approval metadata or one mixed plan that creates tables and evolves existing ones. G02 does not rewrite retained create commands: a required appended Field without a default requires those commands already to supply it, or ordinary admission refuses with `TABLES_OPERATION_REQUIRED`. | MIG-02/07; table compiler/host | Explicit portable refusal of unsupported v0.2/v0.3 shapes, preserved exact v0.1 bootstrap/add-table behavior, then a separately designed prefix-inventory execution profile before expansion |
+| MIG-G11 | Dropping and appending columns in one existing-table migration is explicitly unsupported and must refuse before plan emission, including equal-count replacement. G02 does not rewrite retained commands to bridge such replacement; combined command evolution around a derived append/drop remains separately scoped. Do not infer atomic combined support from separate drop/add capabilities. | MIG-02/05; stable-ID dependency scheduling owner | Stable-ID additions/removals and complete ordered effects; same/different counts, denied UPDATE and dependent policies; separately approved migrations only where each intermediate schema/data state is valid and independently qualified |
 
 Do not invent dates or erase residuals to close the bounded release. Each owner
 must select and design its next slice before advertising the corresponding
 capability. A change that was explicitly refused becomes supported only after
 its native and portable acceptance gates pass for the declared version/subset.
+
+## Backlog execution selection — 2026-10-23
+
+The human explicitly selected **all remaining MIG-G02–G11** through planning,
+implementation, test, design review, independent native verification and release.
+G02 is next. This selection supersedes the older proposed ordering below, while
+preserving that historical record and the qualified G01/0.5.5 evidence. The active
+umbrella goal stays open after the G02 release until the remaining entries pass
+their own closure gates or a concrete external prerequisite is explicitly tracked.
+Unavailability of a target is not evidence that its gap is closed.
+
+**UMF/Weft — migration implementation and releases** owns the consolidated
+implementation, integrated contracts, tests, independent Sol review, merge and
+release. **Stack — integration and release coordination** coordinates the other
+surviving **UMF — Rust port and V8 removal** and **Arras — release and Truss
+installer** workstreams. These names supersede the earlier split design and
+implementation chat names. This plan does not authorize changes to Praxis.
+No successor release version/date or managed target is assumed.
+
+The [2026-10-25 combined source evidence](evidence/schema-migration-design-review/combined-integration-source-2026-10-25/manifest.json)
+records actual integrated G02/G03 native fixture sources and the accepted R2
+context/accounting source at `45b41b42db2bea6895ea7adda6afba8b6e91825d`.
+The dedicated hosted qualification at `880f1e53032e7e46752c9767865fb03e246c959c`
+remains pending; its portable/typecheck/Bun/Chromium scope does not qualify native
+campaigns or public inventory 0.2. G04 recovery implementation remains unreviewed
+and unrun. Its owner decisions preserve immutable original signed evidence,
+truthful current read-only observations, a separate 30-second observational
+window with zero DDL, and the original creation window of 30 seconds/two attempts.
+Weft's retained full selected Rust run compiled and recorded 54 passing/four
+failing tests; it supplies no Python/WASM/native acceptance. All release gates
+above remain open until their actual evidence and publication are complete.
+
+### G02 selected delivery gates
+
+The governing design is [SD-007's G02 section](../02-design/solution-designs/SD-007-schema-migrations.md#mig-g02--typed-same-row-backfills-selected-2026-10-23).
+The selected finite typed algebra closes a useful declared profile, not arbitrary
+user code. Broader expression families stay explicitly unsupported; no generic
+trusted callback claim may be inferred.
+
+| Gate | Implementation owner deliverable | Independent acceptance / exit |
+| --- | --- | --- |
+| G02-D1 interfaces | Amend CONTRACT-081, TD-085 and STP-085: closed operation 0.2 AST, options/plan 0.4, Weft program 0.2 guard descriptor, exact source/reference/approval/runtime admission and two atomic phase correspondences | Review concrete shapes, type/NULL/exactness/resource semantics and old-version refusal/replay before feature code |
+| G02-D2 Weft | Shared Rust admission/lowering for Python and WASM; finite exact arithmetic, C text semantics, private full-effects exactness/count guard; qualified built-in resolution | No UMF SQL renderer; no rounding/truncation/intermediate loss; baseline operation 0.1 unchanged; new unsupported shapes refuse |
+| G02-D3 UMF | Browser-compatible compiler/validators, stable input closure, canonical identity, two closed phase variants, unchanged native meaning admission | Bun and actual Chromium; malformed/tampered/resource/unsupported cases; no new operation admitted by old schema authority |
+| G02-D4 host | Versioned program admission, locked atomic data/constraint/progress, full native constraints, bounded effects and sanitized failures | Existing and appended required target shapes; unknown commit resolution, rollback/no repeat and held direct-writer evidence |
+| G02-D5 independent native | Frozen installable cohort and synthetic PostgreSQL fixtures with manually specified expected rows; semantic and fault matrix in SD-007/STP-085 | Reviewer independently runs installed artifacts; records native versions, hashes, SQLSTATEs, exact rows, locks and recovery; no self-oracle |
+| G02-D6 candidate review | Focused source review, dependency/platform inventory, required CI, fresh package installation/network-denied controls and accurate release notes | Candidate source/tree and all artifacts frozen; old capabilities retained, UMF Rust 0.4 refused unless separately qualified; remaining G03–G11 listed |
+| G02-D7 publication | Merge reviewed candidate; publish exact immutable UMF/Weft cohort in dependency order, without colliding with another release | Fresh published downloads match reviewed hashes/inner SDK inventory and merge/tag tree; notes accurately state finite G02 limits and every residual |
+
+D1 must fix exact wrapper/reference version dispatch and the compiled guard wire
+contract, not defer those decisions to implementation. D2–D4 may proceed in
+parallel only after interface review. Any semantic expansion returns to design
+review. The selected native baseline is PostgreSQL 18.6 maintenance execution;
+managed adoption remains G09. Each new dependency release must use a unique actual
+version after checking concurrent publishers; historical 0.4.49 artifacts cannot
+be relabeled. Public platform support follows shipped and verified artifacts,
+not a historical platform count.
+
+#### Local Linux G02 qualification checkpoint — 2026-10-29
+
+The user directed local execution after GitHub Actions credits were exhausted.
+D6's workflow execution is replaced by explicitly qualified local checks; no
+Actions dispatch or macOS CI is authorized by this checkpoint. Workflow
+definitions remain unchanged, with the three automatic entry points paused.
+The [local evidence index](evidence/schema-migration-design-review/main-reconciliation-001/sdk-057-local-linux-e4299aff8/local3600/README.md)
+records the policy, separate fast functional checks and physical evidence.
+
+At frozen producer P `e4299aff8e87e9d211f9d86df2f2013ab9c95945`,
+tree `8b98c0d895983ba2b7637dd3aea567dab0943883`, the SDK 139-case
+installed proof and full18 Linux CPython 3.11.17/3.14.9 offline cohort retain
+their accepted scope. The independently reviewed `LOCAL_EMULATED_3600` D5
+attempt passed all 30 ordered commands, 37 cases, 19 no-default controls, three
+recovery scenarios, final audit and owned-resource cleanup. Its 2,006.341-second
+run qualifies that separate operator profile; the original 1,800-second failure
+remains unchanged. Child and product/API budgets did not change. Linux/amd64
+client emulation on Darwin/arm64 and ARM64 PostgreSQL 18.6 do not establish
+native x86_64-host or hosted CI qualification. Historical built macOS artifacts
+retain their documented verification limits; macOS Python 3.14 is unqualified.
+
+The public-proof reader integration has independent source acceptance and
+metadata preflight; no public install has run. D7 remains open: normal merge,
+immutable SDK release and fresh public-download/install proof require their own actual
+identities and review. No G03–G11, managed-consumer or Praxis acceptance follows.
+
+#### Historical pre-reconciliation G02 integration checkpoint — Core 0.10.1
+
+This is a preserved pre-reconciliation checkpoint for the earlier Core 0.10.1
+producer. Its source comparison and qualification receipts are historical evidence;
+they do not describe the current Core 0.10.2 cohort or qualify reconciled source.
+
+SDK 0.5.7 is selected after the separate Core 0.10.1 publication at
+`umf-v0.5.6`, commit `259bf1ed91466ff7e9782d7517c14f2112282026`.
+The integration retains those immutable Core wheel/sdist bytes and their original
+producer identity. Comparison against the regenerated SDK 0.5.7 source maps
+32 Core Python/JSON payloads: 31 match exactly; the generated metamodel manifest
+differs only in two root `package.json` fingerprints. The Core semantic document
+version remains 0.10.0. Reusing the published component requires fresh installed
+composition tests; an SDK source fingerprint does not relabel its Core producer.
+
+The combined source passed type checking, nine focused G02 compiler tests
+(47 assertions), five host phase tests, one ordinary-runtime refusal test and
+three host-error privacy tests. The reviewed single-cell selector and aggregate
+verifier passed 29 self-contained tests in the integration checkout. These checks precede the final
+source freeze and do not replace current-source CI or native acceptance.
+
+The actual published 0.5.5 legacy mirror passed a fresh network-denied replay on
+macOS 27.0.1 arm64 / CPython 3.11.17 using its original corpus and fixtures.
+Independent review verified the archive, all 29 original wheels, actual exit
+status and probe receipts. The retained [replay evidence](evidence/mig-g02/final-integration/legacy-public-0.5.5/independent-review.json)
+qualifies that legacy path only. Missing/tamper controls use separate temporary
+copies; the generated mirror is disposable test output excluded from publication.
+
+The additional date/instant/UUID/boolean native fixture passed its owner run on
+PostgreSQL 18.6 with the frozen installed cohort: five cases and 78 checks,
+including retained ordinary creates, exact full-row oracles and matched-NULL
+rollback with the authenticated READY receipt and ingress fence retained.
+The [actual report and dispatch](evidence/mig-g02/final-integration/temporal-native-attempt-005/runner-report.json)
+bind the reviewed runner and fixture; settings and database/role inventory
+projections were restored. A separate installed environment independently passed
+the same five cases and 78 checks; all 431 installed payloads remained exact
+afterward. The [independent receipt](evidence/mig-g02/final-integration/temporal-independent-007-review.json)
+records that gate and owned-resource cleanup. Full settings/inventory projection
+equality is the separate owner-run evidence, not an inferred independent check.
+
+Earlier harness failures are retained: an initial boolean cast, a query assuming
+transient progress survives publication, and unequal observation roles under
+FORCE RLS. An initial-install-only diagnostic proved the owner saw zero rows
+while the administrative observer saw all three. The corrected runner uses one
+read-only UTC administrative observer and an explicit manual three-row baseline.
+A separate socket-permission failure occurred before native dispatch. These
+failures do not substitute for the successful run or its independent gate.
+
+Final candidate review includes a closed four-cell wheel-union index and actual
+network-denied installation from that union on each supported runtime cell.
+Aggregate source review passed its scoped gate. Final regeneration, current-source CI, independently
+reviewed native evidence, merge and SDK publication remain open. The
+[0.5.7 candidate notes](../05-deploy/sdk-release-notes-0.5.7.md) retain the finite
+capability and residual migration scopes. Earlier 0.5.6 backfill candidate
+receipts remain historical evidence with their original components and hashes.
+
+### Successor work queue and closure gates
+
+After each reviewed release, update the residual matrix with exact qualified
+subset/evidence and select the next concrete contract slice. Carry any remaining
+part of a gap forward under its existing ID. The default sequence below is by
+dependency; independently available external qualification can proceed earlier.
+
+| Order / ID | Next design and implementation slice | Closure evidence required |
+| --- | --- | --- |
+| 1 / G02 | Finite typed per-row algebra above, both target shapes | All G02-D1–D7 gates; residual arbitrary/external transforms explicitly refused |
+| 2 / G03 | Existing-column SET/DROP future defaults; finite expression identity/type/volatility rules | Old rows unchanged, omitted versus explicit NULL writes, source/native default correspondence, tamper/recovery and installed publication |
+| 3 / G11 | Stable-ID combined drop/append scheduling and full dependency closure | Equal/different counts; exact ordered effects; policies, denied UPDATE and references; no name/count matching; atomic failure and native postconditions |
+| 4 / G10 | Successor initial/prefix inventory profile, including mixed table creation/evolution | Empty/add/remove/combined inventory fixtures, persistent approval continuity, no downgrade, exact historical 0.1 replay and native phase recovery |
+| 5 / G04 | Explicit narrowing/cross-family conversion vocabulary and retained shadow representation | Format/timezone/precision/rounding/loss decisions, target constraints, retained originals and independent native edge-value oracle; no implicit cast claims |
+| 6 / G05 | Retire access, retain recoverable values and separately authorized physical purge | Retention/backup authority, restore after subsequent writes, privacy/access enforcement, expiry and irreversible purge receipt; history alone insufficient |
+| 7 / G06 | Online chunking with stable keys/version reconciliation and guarded cutover | Insert/update/delete/reinsert races, interrupted chunks, bounded progress, cancellation, no lost edits or unprotected activation interval |
+| 8 / G07 | US-050/CONTRACT-045 dependency revision closure followed by coordinated store migration | Exact cross-document pins/unknown meaning handling and multi-store failure recovery; no assumed distributed transaction |
+| independent / G08 | Select actual Truss mutable and Ashlar immutable backend owners/capabilities | Genuine effects, refusal and journal/publication recovery for shared Person intents; adapter-specific versions and native evidence |
+| independent / G09 | Obtain authorized isolated managed target and actual consumer workload from its owner | Frozen installed cohort, actual managed privileges/platform constraints and consumer workload acceptance; local PostgreSQL does not close it |
+
+G08 cannot be marked complete because a reader or schema comparator works. G09
+cannot be marked complete using a local substitute or unauthorized production
+exercise. If external ownership/access remains unavailable, record the precise
+owner, missing prerequisite and remaining acceptance work; keep the umbrella
+objective incomplete and report the actual dependency. Do not silently reduce
+the human's all-backlog scope to the immediate G02 release.
 
 ## Remaining-gap delivery order
 
@@ -340,3 +506,316 @@ installed-native gates; source-bound approval/outcome verification; generated
 client cutover; public documentation and independent review. Each later backend
 receives a separate operation/mode/version qualification. No completion statement
 may imply atomicity, online operation or reversibility outside that evidence.
+
+
+## G11 source002 independent review checkpoint — 2026-10-24
+
+[The source002 review evidence](evidence/schema-migrations/g11-native-adapter-source002-review/README.md)
+rejects the candidate despite its 29 passing supplied source controls. Seven
+integration findings block native qualification: flat native/session observation
+shape, launch-intent digest provenance, exact settings projection, signed
+registration/reservation correspondence, fixed legacy custody approval scope,
+raw terminal receipt comparison and already-unwrapped registration payload.
+Independent real Ed25519 terminal recording succeeds; original adapter recovery
+then refuses the matching confirmed outcome. Authority007's separate acceptance
+is unchanged. Luna repairs the adapter against the frozen failure probes while
+implementing the separate initial-generation authority under governing009.
+
+The governing009 adoption at `e37cd7e45eb351d0c2f95ca720cf2ba4b6c7f126`
+defines two logical enrollment scopes, separate from all six physical owner
+scopes. Existing-head enrollment requires original non-null source/head and
+actual private native capability/barrier/activation recovery. True headless
+installation remains a G10 requirement. Source-only controls and document
+adoption do not close these capabilities, G04 retained originals, G05 lifecycle,
+the broader G02–G11 backlog, or testing/merge/release/public-byte gates.
+
+
+## G11 source correction and release checkpoint — 2026-10-24
+
+The native adapter source004 and authority007 correction is committed at
+`3cdb0b1a36b377596ecd2c2fd759d3704e1cec78`. Its bounded source review passed;
+actual PostgreSQL/helper execution remains unqualified. The full committed
+boundary checker still reports seven violations. The accepted refactor moves
+canonical serialization and bootstrap identity into leaves, keeps ledger logic
+in a pure core, and puts concrete native validation and lifecycle/recovery
+orchestration in the session facade. Original bootstrap must durably bind the
+ledger path and birth intent; confirmed missing history/lock refuses across
+restart. This implementation is in progress, not a passing boundary gate.
+
+[Initial-enrollment review evidence](evidence/schema-migrations/g11-initial-authority-review/source006-root-review.json)
+records root replay of source006: 19 tests, eight independent original-context
+birth/history/immutability controls, the original issuer-subclass refusal probe,
+a two-process append-lock control, and configured lint pass. Earlier source002
+accepted a caller-defined issuer resolver and production-marked test context;
+source003 then incorrectly excluded original native-acceptance purpose. Both
+rejections are retained alongside source006. A later frozen run exposed a shared
+append-lock race; source006 holds an exclusive lock across read/replay/append.
+The frozen packet preserves that failed run. These are bounded prior-dependency
+source controls: external independent review, actual branch integration, original
+production trust bootstrap, native prepared epoch/activation and recovery are
+still required. No source-test issuer establishes native authority.
+
+G04's finite native TOAST/RI creation-inventory correction is adopted at
+`235a149bd17472f0e03527aa930c7aec61ca1b59`. Exact parent/native dependency
+closure is mandatory; no namespace or internal-flag waiver is admitted. The
+adoption receipt retains the sole blank-EOF normalization. Actual fixed DDL,
+full catalog observation and unknown-COMMIT custody remain native gates.
+
+Core candidate `2a76a8e8213ec64334408ec49edadc3b6e765cce` contains the actual
+fresh inventory after the website staging fix. Root and independent Sol approved
+its separate check-only preparation with fixed 300-second total, 180-second
+checker ceiling and 95-second cleanup reserve. The actual check has not run;
+a new coordinator resource handoff is required. CI, platform artifacts, final
+review, merge, publication and fresh public-byte verification remain separate.
+
+G10 proposal003 is under design revision for enrolled-carrier retirement,
+acyclic first native plan approval after metadata creation, and exact signed
+component policies with native phase timeouts and receipt digest correspondence.
+An explicit first-subset refusal does not complete the full carrier-composition
+requirement. G02–G11 implementation, portable/browser/installed/native testing,
+review, merge and immutable release remain the active full delivery objective.
+
+
+## Migration source and qualification checkpoint — 2026-10-24, successor
+
+The preceding Core check preparation has now executed. The actual full-source
+inventory check against `2a76a8e8213ec64334408ec49edadc3b6e765cce` passed,
+with terminal owned child processes, independent cleanup/custody verification,
+unchanged inventory and retained dependency snapshot. Evidence-only successor
+`909a6969b38893e0bb0e5ece81bff42b125811ff` is posted to draft PR49. Its Python
+support and inventory CI passed; the current website browser and command native
+checks failed. The latter returned LIMIT where a handler commit was expected;
+the responsible deadline stage is unproven. No timeout increase, automatic
+retry success, or prior-platform artifact establishes current qualification.
+
+The local Core source successor `37290c7c6261c13106ce42378fe26626220e34ae`
+replaces stale ontology counts with independently pinned 24 record identities
+and 27 projected relationship identities. Pure-source correspondence and
+missing-member controls pass under exact Bun1.4.2. Existing geometry, mobile,
+focus and navigation requirements remain unchanged. Actual rebuilt-browser
+qualification, fresh inventory generation/check and current hosted/platform
+evidence remain required. Isolated checksum-verified Bun1.4.2/Go1.27.1 resolve
+observed default-toolchain drift without changing source version requirements.
+
+G11 governing010 and011 are adopted at
+`fede119d3c11ffe3c4d8c32b8c9434add44cd05f` and
+`3339a9732e96d2afd5e1b84ee51e50a79c827bb4`. Original context0.3 binds ledger
+birth in one primary setup state, composes original enrollment0.1/0.2 and
+requires original deployment setup before ordinary runtime initialization.
+Boundary source005 has 111 focused passing controls and a clean 103-module
+boundary scan, but remains uncommitted and under independent review. Its
+logical-root registry initialization and evolving-history verification have a
+material candidate defect: empty-file birth and full-file initial-digest equality
+cannot implement the adopted closed root registry. Correct original registry
+birth, authenticated evolution and recovery remain implementation gates.
+
+G04 source `b0f09643a35a3f98d6d7d074bce99eaa0a9e672c` records finite store
+creation/catalog guards and source tests. Bounded corrections passed 25 focused
+tests, nine successor controls and 90 distinct independent trigger cases,
+including real PostgreSQL18 constructor shapes represented as source tuples.
+These are not native database observations or exhaustive provider acceptance.
+The original external custodian store reservation/confirmation, supervisor
+capability, positive COMMIT, restart/reopen, enrollment/capture/baseline/restore
+and installed/native evidence remain open; current creation fails closed.
+
+G10 proposal004 is being reconciled to add an exact denied native approval
+outcome and recovery without replacing the original approval identity. No
+moving draft is adopted. G02–G11's full implementation, qualification, review,
+merge, immutable release and fresh public-byte verification remain unfinished.
+
+
+## Migration integration checkpoint — 2026-10-24, journal recovery
+
+G11 governing012 and013 are adopted at
+`867a770b1684f7b422277a6b25f4adc001dd6c05` and
+`8105df3284d7f58793b59996eaaf80235a4677a8`. They fix canonical root-registry
+birth/evolution, preserve native-free component ownership, and require subordinate
+logical context/ledger birth before root enrollment confirmation under the same
+original native exclusion lease. Confirmed missing history refuses recreation.
+The current extraction passes 25 focused authority/birth tests, but production
+root enrollment and session issuance remain incomplete: the concrete native
+lease/resolver and upper session coordinator do not yet exist. The read-only
+source map identifies these actual missing methods; no method-name check,
+source-test issuer or fabricated observation establishes the positive path.
+
+G04 journal governing010 is adopted at
+`e4621c25e1a9a071bd06d6ca1308eea253083ad3`. Fresh original external custody and
+supervisor journal0.2 streams retain the original store reservation and six
+physical owner scopes. External reservation precedes typed supervisor intent
+and the existing generic native reservation bound to owner core. Positive
+native COMMIT precedes external, typed supervisor, generic native and owner
+confirmations. Every gap recovers the same original IDs without committed DDL
+replay; known abort is an attempt observation and unknown remains occupied.
+Legacy0.1 bytes/replay remain exact without implicit upgrade. Concrete source
+types, registries and coordinator binding must be reviewed before implementation.
+Current G04 provider code reserves then executes DDL in its caller transaction;
+it has no owner-session binding seam or actual supervisor store capability yet.
+
+Core37290 browser controller005 was rejected by independent review for parsing
+approval bytes separately from the bytes it hashed. Immutable controller006
+uses one bounded byte snapshot for parsing/hashing and compares fresh bytes
+before effects. Root verified 113 manifest members and reran 14 bounded controls
+successfully. Independent Sol approval and a fresh resource window are still
+required; no actual build/browser qualification or new inventory is implied.
+The handler timing candidate has nine passing mocked-runtime tests covering
+actual handler control flow. It is still under review and does not establish
+the cause or resolution of the hosted native LIMIT failure.
+
+G10 proposal005 adds one common approved/denied decision slot, exact private
+request/reservation/attempt accounting/settlement and retained native binding.
+Its 101 manifest files and 32 document/source/design controls verify, preserving
+all 72 preceding acceptance rows and adding eight. These checks do not execute
+product methods or native transactions. Root semantic and external design review
+remain open; no proposal005 implementation or governing adoption is claimed.
+
+The full G02–G11 implementation, portable/browser/installed/native verification,
+independent review, merge, immutable release and fresh public-byte qualification
+remain the delivery goal. UMF/Weft ownership and the exclusion of Praxis changes
+are unchanged. Shared heavy validation remains serialized by the coordinator.
+
+
+### Reviewed source boundary and inventory design checkpoint
+
+G11 source008 portable candidate003 is adopted after root and independent
+review. Its complete 240-file source closure matches the retained manifest
+under `evidence/g11-source-boundary-008/`. The distinct source suite passes
+123 tests with cryptography50.0.2; the new typed-copy regression fails against
+frozen source007 with three expected failures. Correct matching prepared and
+confirmed physical associations remain accepted; signed foreign associations
+refuse. This qualifies source guards and ownership boundaries only. Native014
+lease/checkpoints, committed ingress-store creation, genuine subject/schema
+births, native effects, installed evidence and release gates remain open.
+Auxiliary scratch ROOT byte-transition helpers are not adopted by this change.
+
+G10 design adoption001 is committed at
+`1fe2ddba25a3d98c34f4b4f55eb7dabb688db7ac`: all three governing documents
+retain their complete base prefixes, and all 21 reviewed definition files are
+retained with the full 88 planned acceptance obligations. One durable original
+provider allocation must serve common and outer campaign records; native
+receipts charge one attempt, while cumulative admission preserves every grant.
+This is a required design, not implemented or native-qualified G10 support.
+
+Core37290 actual browser attempt001 stopped during its build because the
+external dependency symlink failed the existing input realpath guard. The
+browser did not run. Its controller and all 40 recorded child process groups
+are absent; the temporary worktree was removed, source stayed clean, and
+retained full dependency snapshots matched. Source-only preparation work is
+correcting the owned dependency copy; a new reviewed finite resource grant
+remains required before another build/browser attempt.
+
+The full G02-G11 testing, independent review, merge, immutable release and
+fresh public-byte qualification goal remains open. UMF/Weft ownership and
+the exclusion of Praxis changes remain unchanged.
+
+
+G11 pure ROOT registry source005 is adopted after independent review. The
+helper computes canonical reserve/confirm byte transitions with strict original
+policy/signature/cross-link/sequence/cap and replay checks. Its module is internal
+and gains no IO, UUID allocation, native context, capability, persistence or CAS.
+Final focused tests pass24; the unchanged helper body also passed the integrated
+133-test source suite. Independent19 transition controls and13 checker probes
+pass. Both runtime scan roots are retained:107 modules, zero boundary violations;
+the earlier102-module packet omitted five package-root conformance modules and
+is superseded. Exact import and nested open/input controls enforce the selected
+static source boundary, not a general Python sandbox.
+
+Governing014 is adopted at5edefb5f9039f037486f4bba1c8919d37b68c745. Actual
+bounded original target/control exclusion and writer integration are the next
+implementation cuts. Full native observation, durable checkpoint/recovery,
+committed ingress and application origin providers, all other migration gaps
+and testing/review/merge/immutable-release/public-byte gates remain open.
+
+
+Governing015 adopts explicit original supervisor journal birth and fixed private
+context metadata, with a native-free journal codec and signed target request
+version dispatch. Exact prior contract/design/test-plan prefixes are preserved;
+the complete proposal and root source review are retained in
+`evidence/schema-migration-design-review/g11-contract-015/` and
+`g11-contract-015-root-review001.json`. Implementation and all eleven new test
+obligations remain open. Null ingress/application event families are unavailable;
+the full native, managed, installed, merge, release and public-byte gates remain
+required. No current setup, journal or request is automatically upgraded.
+
+
+The bounded original control lease source009 is adopted after independent Sol
+review. Original setup exclusion now spans the reviewed facade/core/native effect
+paths, validates the original lock and owner identities, and retains one bounded
+acquisition budget. Native effects additionally require original signed pending
+requests, reservations and handles; a lease kind alone grants no effect permission.
+Fork-child cleanup closes its inherited descriptor without unlocking the parent.
+Root isolated verification passed148 integrated source tests plus17 store tests;
+the14 lease tests include actual finite fork/exclusion and failed-constructor
+controls. Exact source hashes, review withdrawals, metadata erratum and qualified
+synthetic fixtures are retained in `evidence/schema-migration-native-lease009/`.
+This is source implementation evidence, not PostgreSQL/native acceptance. Journal
+birth015, durable ROOT checkpoints/all-writer fences, original ingress/application
+providers and all remaining migration/release/public-byte gates stay open.
+
+
+G10 governing checkpoint002 adopts the closed schema-USAGE subject and actual
+renderer lowering contract after root review of the complete addendum and
+governing001 definitions. One original combined grant maps exactly the person
+and batch catalog rows; installed unchanged schemas retain both grants without
+reissuing or revoking them, including last-table removal. Private closed renderer
+tags must reproduce the historical public bundle bytes exactly. Exact prior
+contract/design/test-plan prefixes and the complete proposal/review packet are
+retained in `evidence/schema-migration-design-review/g10-contract-002/`.
+This is design adoption only. Source implementation/legacy parity, original
+bootstrap and native ACL/COMMIT recovery, fenced clients and all mixed, browser,
+installed, managed, merge/release/public-byte gates remain open.
+
+
+G10 checkpoint003 adopts the exact compiler-owned metadata diagnostic paths
+retained in `evidence/schema-migration-design-review/g10-fixed-metadata-paths-001.md`.
+All three fixed steps remain present for empty, initial and installed plans;
+paths confer no authority. Original prefix, approval denial, recovery and
+source/native/browser/installed/merge/release/public-byte gates remain open.
+
+
+G11 checkpoint016 clarifies journal family ownership and the pure ROOT/native
+issuer boundary; its complete definition and root review are retained in
+`evidence/schema-migration-design-review/g11-journal-family-codec-boundary-001.md`
+and the adjacent adoption receipt. Independent source002 review found valid
+second-stop replay failure, noncanonical observation acceptance and missing typed
+scope4 parent/per-store state. Candidate002 is not adopted; Luna is implementing
+003 with regressions. Full signed pure ROOT replay remains required, while
+null-ingress cannot create its genuine native prerequisite. Actual original
+creator/snapshot/ROOT writer/provider and all native/installed/managed/merge/
+release/public-byte gates remain open.
+
+
+G10 checkpoint004 adopts one current local table-definition digest, retained in
+`evidence/schema-migration-design-review/g10-table-state-definition-digest-001.md`
+with its root adoption receipt. Complete current catalog rows participate after
+every phase; the full source/review digest remains a separate domain. Semantic
+predecessor continuity and actual operation-bound creation/removal references
+are required. Source009 wire/step-reference/seed-order defects and history
+recompilation remain under source repair in010. No source tests or runtime
+checks were executed for this adoption under the shared resource hold. Native,
+browser, installed, managed, merge/release/public-byte gates remain open.
+
+
+### G11 journal015/016 source005 adoption — 2026-10-24
+
+The ten-path original supervisor journal source slice is adopted with exact
+source/command/custody evidence in
+`evidence/schema-migration-journal015-source005/`. Original pending journal/lock
+birth, fixed private metadata, closed native-free replay and signed target
+request selection preserve old profiles and the original six-scope boundary.
+The final codec binds typed ORIGINALS custody to its original prepared
+registration digest. Rejected precursors and the003 manifest erratum remain
+retained; no frozen manifest or old native profile was rewritten.
+
+Independent verification of the frozen265-file closure passed207 tests, retained
+signed ROOT/restart/typed-parent/custody/legacy controls,108-module boundary
+checks and Ruff. The exact one-shot source ticket completed in12.471691 seconds
+with exit0, no timeout/reap failure and owned process-group absence. Resources
+were returned. All265 source hashes match the adopted live closure; only the
+two final005 overlays changed during adoption. No native/PostgreSQL/build/browser
+or further runtime was launched under that ticket.
+
+This closes the reviewed source cut only. Real native snapshots and origin
+providers, durable ROOT/all-writer checkpoints, complete crash recovery,
+historical active-target upgrade, remaining G02–G11 work, independent native/
+managed/browser/installed acceptance, merge/release and fresh public-byte
+verification remain required. Null ingress/application families are unavailable.

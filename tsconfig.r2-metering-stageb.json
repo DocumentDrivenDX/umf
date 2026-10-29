@@ -1,0 +1,21 @@
+{
+  "extends": "./tsconfig.r2-metering.json",
+  "compilerOptions": {
+    "types": ["bun"],
+    "noEmit": true,
+    "declaration": false,
+    "rootDir": ".",
+    "skipLibCheck": true
+  },
+  "include": [
+    "scripts/qualification/r2-metering-generate.ts",
+    "scripts/metamodel/structural-accounting.ts",
+    "scripts/r2-metering-browser.ts",
+    "src/model/internal/accounting-context.ts",
+    "tests/metamodel/structural-accounting-source.test.ts",
+    "tests/metamodel/structural-accounting-parity.test.ts",
+    "tests/metamodel/r2-metering-browser-entry.ts",
+    "tests/lifecycle/table-inventory-r2-context.test.ts",
+    "tests/lifecycle/table-deployment-r2-accounting.test.ts"
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "aggregateCapturedLogBytes": 672,
+  "aggregateElapsedAtContinuationEndSeconds": 560.717,
+  "aggregateElapsedAtContinuationStartSeconds": 420.728,
+  "aggregateLogLimitBytes": 1048576,
+  "baseDriverSha256": "09a7eae86f13ec6bb22b2477aca6c05911fb692f101097a7dc79df326f0782b3",
+  "baseReceiptPath": "/private/tmp/migration-pr-fast-local-e4299aff8-004/evidence/receipt.json",
+  "baseReceiptSha256": "d49307c67145e58d856789af97a3b5655a870824142d6bf774ac0a8b028ae96c",
+  "cleanup": [
+    {
+      "ownedContainerCleanup": "verified-absent",
+      "step": "python-syntax-compile-continuation"
+    }
+  ],
+  "command": {
+    "argv": [
+      "docker",
+      "run",
+      "--rm",
+      "--pull=never",
+      "--platform=linux/amd64",
+      "--network=none",
+      "--read-only",
+      "--tmpfs",
+      "/tmp:rw,size=256m",
+      "--cpus=4",
+      "--memory=8g",
+      "--pids-limit=8192",
+      "--cidfile",
+      "/private/tmp/migration-pr-fast-local-e4299aff8-004/evidence/python-syntax-compile-continuation.cid",
+      "--mount",
+      "type=bind,src=/private/tmp/migration-pr-fast-local-e4299aff8-004/work,dst=/work",
+      "--workdir",
+      "/work/source",
+      "--entrypoint",
+      "/bin/bash",
+      "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
+      "-lc",
+      "set -eu; export HOME=/work/home PYTHONPYCACHEPREFIX=/work/pycache; python -m compileall -q python scripts"
+    ],
+    "cleanup": {
+      "ownedContainerCleanup": "verified-absent"
+    },
+    "durationSeconds": 49.031,
+    "exitCode": 0,
+    "name": "python-syntax-compile-continuation",
+    "network": "none",
+    "stderr": {
+      "path": "evidence/python-syntax-compile-continuation.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    "stdout": {
+      "path": "evidence/python-syntax-compile-continuation.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    "timedOut": false,
+    "truncated": false
+  },
+  "compiledBytecodeFiles": 721,
+  "continuationDriverSha256": "a0ee0ba2b7bf1608b0356637a00b5b01a53dac258486377ae1fafad2d3f38b9e",
+  "profile": "umf.pr-fast-local-equivalent-python-continuation/1",
+  "python": "Python 3.11.17",
+  "qualification": "Local Linux syntax check only; does not establish the remaining pr-fast checks or Python 3.12.",
+  "requiredWorkflowPython": "Python 3.12",
+  "runtimeImage": {
+    "identityLogBytes": 579,
+    "identityLogSha256": "65b16d79a1486820fb10cbfa4d9aacac6b187f364362d20cfbd523d1d8ab2746",
+    "observedBun": "1.4.3",
+    "observedPython": "Python 3.11.17",
+    "platform": "linux/amd64",
+    "reference": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10"
+  },
+  "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+  "sourceCopyManifestSha256": "4d342f103ff2b2a8e14609fc6c99dafb38d8ce523adc4e2bd287555cb626891f",
+  "sourceManifestUnchanged": true,
+  "sourceTree": "8b98c0d895983ba2b7637dd3aea567dab0943883",
+  "status": "LOCAL_LINUX_PY311_SYNTAX_PASS",
+  "totalAggregateLimitSeconds": 600
+}

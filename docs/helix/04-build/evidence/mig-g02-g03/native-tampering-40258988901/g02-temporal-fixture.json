@@ -1,0 +1,556 @@
+{
+  "version": "umf.g02-temporal-native-fixture/1",
+  "provenance": {
+    "domain": "SD-007 Person optional birthday example",
+    "adaptation": "synthetic native-RLS people table with unchanged owner/key shell; not an imported domain pack"
+  },
+  "configuration": {
+    "module": "demo",
+    "schema": "g02_temporal",
+    "ownerRole": "g02_temporal_owner",
+    "personRole": "g02_temporal_person",
+    "batchRole": "g02_temporal_batch",
+    "groupRoles": {}
+  },
+  "cases": [
+    {
+      "id": "temporal-birthday-date-coalesce",
+      "initialSource": {
+        "format": "json",
+        "utf8": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Person\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"},{\"module\":\"demo\",\"element\":\"birthDate\"},{\"module\":\"demo\",\"element\":\"birthday\"},{\"module\":\"demo\",\"element\":\"sourceInstant\"},{\"module\":\"demo\",\"element\":\"occurredAt\"},{\"module\":\"demo\",\"element\":\"sourceUuid\"},{\"module\":\"demo\",\"element\":\"externalId\"},{\"module\":\"demo\",\"element\":\"sourceActive\"},{\"module\":\"demo\",\"element\":\"active\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}},{\"id\":\"birthDate\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"birthday\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"sourceInstant\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"occurredAt\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"sourceUuid\",\"kind\":\"field\",\"scalarType\":\"uuid\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"externalId\",\"kind\":\"field\",\"scalarType\":\"uuid\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"sourceActive\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"people\",\"record\":{\"module\":\"demo\",\"element\":\"Person\"},\"name\":\"people\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthDate\"},\"name\":\"birthDate\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthday\"},\"name\":\"birthday\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceInstant\"},\"name\":\"sourceInstant\",\"nativeType\":{\"kind\":\"timestamptz\"}},{\"field\":{\"module\":\"demo\",\"element\":\"occurredAt\"},\"name\":\"occurredAt\",\"nativeType\":{\"kind\":\"timestamptz\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceUuid\"},\"name\":\"sourceUuid\",\"nativeType\":{\"kind\":\"uuid\"}},{\"field\":{\"module\":\"demo\",\"element\":\"externalId\"},\"name\":\"externalId\",\"nativeType\":{\"kind\":\"uuid\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceActive\"},\"name\":\"sourceActive\",\"nativeType\":{\"kind\":\"boolean\"}},{\"field\":{\"module\":\"demo\",\"element\":\"active\"},\"name\":\"active\",\"nativeType\":{\"kind\":\"boolean\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[{\"version\":\"umf.table-operation/0.1\",\"id\":\"create_person\",\"parameters\":[],\"consistency\":\"transaction\",\"replay\":\"caller-key-required\",\"body\":{\"kind\":\"insert\",\"table\":\"people\",\"values\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"value\":{\"kind\":\"literal\",\"value\":{\"string\":\"command-id\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"value\":{\"kind\":\"currentPrincipal\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthDate\"},\"value\":{\"kind\":\"literal\",\"value\":{\"date\":\"2000-01-01\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"birthday\"},\"value\":{\"kind\":\"literal\",\"value\":{\"date\":\"2000-01-01\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceInstant\"},\"value\":{\"kind\":\"literal\",\"value\":{\"timestamp\":\"2000-01-02T03:04:05Z\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"occurredAt\"},\"value\":{\"kind\":\"literal\",\"value\":{\"timestamp\":\"2000-01-02T03:04:05Z\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceUuid\"},\"value\":{\"kind\":\"literal\",\"value\":{\"uuid\":\"00000000-0000-4000-8000-000000000001\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"externalId\"},\"value\":{\"kind\":\"literal\",\"value\":{\"uuid\":\"00000000-0000-4000-8000-000000000001\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceActive\"},\"value\":{\"kind\":\"literal\",\"value\":{\"boolean\":false}}},{\"field\":{\"module\":\"demo\",\"element\":\"active\"},\"value\":{\"kind\":\"literal\",\"value\":{\"boolean\":false}}}],\"returning\":[],\"maxRows\":1}}]}}}]}"
+      },
+      "source": {
+        "format": "json",
+        "utf8": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Person\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"},{\"module\":\"demo\",\"element\":\"birthDate\"},{\"module\":\"demo\",\"element\":\"birthday\"},{\"module\":\"demo\",\"element\":\"sourceInstant\"},{\"module\":\"demo\",\"element\":\"occurredAt\"},{\"module\":\"demo\",\"element\":\"sourceUuid\"},{\"module\":\"demo\",\"element\":\"externalId\"},{\"module\":\"demo\",\"element\":\"sourceActive\"},{\"module\":\"demo\",\"element\":\"active\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}},{\"id\":\"birthDate\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"birthday\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"sourceInstant\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"occurredAt\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"sourceUuid\",\"kind\":\"field\",\"scalarType\":\"uuid\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"externalId\",\"kind\":\"field\",\"scalarType\":\"uuid\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"sourceActive\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"people\",\"record\":{\"module\":\"demo\",\"element\":\"Person\"},\"name\":\"people\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthDate\"},\"name\":\"birthDate\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthday\"},\"name\":\"birthday\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceInstant\"},\"name\":\"sourceInstant\",\"nativeType\":{\"kind\":\"timestamptz\"}},{\"field\":{\"module\":\"demo\",\"element\":\"occurredAt\"},\"name\":\"occurredAt\",\"nativeType\":{\"kind\":\"timestamptz\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceUuid\"},\"name\":\"sourceUuid\",\"nativeType\":{\"kind\":\"uuid\"}},{\"field\":{\"module\":\"demo\",\"element\":\"externalId\"},\"name\":\"externalId\",\"nativeType\":{\"kind\":\"uuid\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceActive\"},\"name\":\"sourceActive\",\"nativeType\":{\"kind\":\"boolean\"}},{\"field\":{\"module\":\"demo\",\"element\":\"active\"},\"name\":\"active\",\"nativeType\":{\"kind\":\"boolean\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[{\"version\":\"umf.table-operation/0.1\",\"id\":\"create_person\",\"parameters\":[],\"consistency\":\"transaction\",\"replay\":\"caller-key-required\",\"body\":{\"kind\":\"insert\",\"table\":\"people\",\"values\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"value\":{\"kind\":\"literal\",\"value\":{\"string\":\"command-id\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"value\":{\"kind\":\"currentPrincipal\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthDate\"},\"value\":{\"kind\":\"literal\",\"value\":{\"date\":\"2000-01-01\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"birthday\"},\"value\":{\"kind\":\"literal\",\"value\":{\"date\":\"2000-01-01\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceInstant\"},\"value\":{\"kind\":\"literal\",\"value\":{\"timestamp\":\"2000-01-02T03:04:05Z\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"occurredAt\"},\"value\":{\"kind\":\"literal\",\"value\":{\"timestamp\":\"2000-01-02T03:04:05Z\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceUuid\"},\"value\":{\"kind\":\"literal\",\"value\":{\"uuid\":\"00000000-0000-4000-8000-000000000001\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"externalId\"},\"value\":{\"kind\":\"literal\",\"value\":{\"uuid\":\"00000000-0000-4000-8000-000000000001\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceActive\"},\"value\":{\"kind\":\"literal\",\"value\":{\"boolean\":false}}},{\"field\":{\"module\":\"demo\",\"element\":\"active\"},\"value\":{\"kind\":\"literal\",\"value\":{\"boolean\":false}}}],\"returning\":[],\"maxRows\":1}},{\"version\":\"umf.table-operation/0.2\",\"id\":\"fill_birthday\",\"parameters\":[],\"consistency\":\"transaction\",\"replay\":\"caller-key-required\",\"body\":{\"kind\":\"update\",\"table\":\"people\",\"where\":{\"op\":\"isNull\",\"field\":{\"module\":\"demo\",\"element\":\"birthday\"}},\"values\":[{\"field\":{\"module\":\"demo\",\"element\":\"birthday\"},\"value\":{\"kind\":\"rowExpression\",\"expression\":{\"op\":\"coalesce\",\"args\":[{\"op\":\"field\",\"field\":{\"module\":\"demo\",\"element\":\"birthDate\"}},{\"op\":\"literal\",\"value\":{\"date\":\"2000-02-29\"}}]}}}],\"returning\":[],\"maxRows\":100}}]}}}]}"
+      },
+      "plan": {
+        "id": "g02-temporal-birthday-date-coalesce",
+        "options": {
+          "version": "umf.table-migration-options/0.4",
+          "backfills": [
+            {
+              "table": "people",
+              "column": {
+                "module": "demo",
+                "element": "birthday"
+              },
+              "operation": "fill_birthday",
+              "scopedRows": true
+            }
+          ],
+          "concurrentIndexes": [],
+          "reviewedChanges": [
+            {
+              "id": "review-4c2ee7149b01ff58e3cfdd83",
+              "kind": "tighten-not-null",
+              "path": "/modules/0/extensions/umf.tables/tables/0/columns/3",
+              "oldDigest": "a379b313a295566fea237d169768061dcafa32813de9fa7412c80062a804c430",
+              "newDigest": "841e1da5e559ca577c483ff7a668079999e74891f808ab256337ecc83df9dc0b"
+            }
+          ],
+          "validations": []
+        }
+      },
+      "initialRows": [
+        {
+          "id": "p1",
+          "owner": "g02_alice",
+          "birthDate": "2012-03-04",
+          "birthday": null,
+          "sourceInstant": null,
+          "occurredAt": null,
+          "sourceUuid": null,
+          "externalId": null,
+          "sourceActive": null,
+          "active": null
+        },
+        {
+          "id": "p2",
+          "owner": "g02_bob",
+          "birthDate": null,
+          "birthday": null,
+          "sourceInstant": null,
+          "occurredAt": null,
+          "sourceUuid": null,
+          "externalId": null,
+          "sourceActive": null,
+          "active": null
+        },
+        {
+          "id": "p3",
+          "owner": "g02_alice",
+          "birthDate": "1999-12-31",
+          "birthday": "2020-05-06",
+          "sourceInstant": null,
+          "occurredAt": null,
+          "sourceUuid": null,
+          "externalId": null,
+          "sourceActive": null,
+          "active": null
+        }
+      ],
+      "expectedRows": [
+        [
+          "p1",
+          "g02_alice",
+          "2012-03-04",
+          "2012-03-04",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          "p2",
+          "g02_bob",
+          null,
+          "2000-02-29",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          "p3",
+          "g02_alice",
+          "1999-12-31",
+          "2020-05-06",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "id": "temporal-instant-copy-coalesce",
+      "initialSource": {
+        "format": "json",
+        "utf8": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Person\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"},{\"module\":\"demo\",\"element\":\"birthDate\"},{\"module\":\"demo\",\"element\":\"birthday\"},{\"module\":\"demo\",\"element\":\"sourceInstant\"},{\"module\":\"demo\",\"element\":\"occurredAt\"},{\"module\":\"demo\",\"element\":\"sourceUuid\"},{\"module\":\"demo\",\"element\":\"externalId\"},{\"module\":\"demo\",\"element\":\"sourceActive\"},{\"module\":\"demo\",\"element\":\"active\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}},{\"id\":\"birthDate\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"birthday\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"sourceInstant\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"occurredAt\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"sourceUuid\",\"kind\":\"field\",\"scalarType\":\"uuid\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"externalId\",\"kind\":\"field\",\"scalarType\":\"uuid\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"sourceActive\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"people\",\"record\":{\"module\":\"demo\",\"element\":\"Person\"},\"name\":\"people\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthDate\"},\"name\":\"birthDate\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthday\"},\"name\":\"birthday\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceInstant\"},\"name\":\"sourceInstant\",\"nativeType\":{\"kind\":\"timestamptz\"}},{\"field\":{\"module\":\"demo\",\"element\":\"occurredAt\"},\"name\":\"occurredAt\",\"nativeType\":{\"kind\":\"timestamptz\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceUuid\"},\"name\":\"sourceUuid\",\"nativeType\":{\"kind\":\"uuid\"}},{\"field\":{\"module\":\"demo\",\"element\":\"externalId\"},\"name\":\"externalId\",\"nativeType\":{\"kind\":\"uuid\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceActive\"},\"name\":\"sourceActive\",\"nativeType\":{\"kind\":\"boolean\"}},{\"field\":{\"module\":\"demo\",\"element\":\"active\"},\"name\":\"active\",\"nativeType\":{\"kind\":\"boolean\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[{\"version\":\"umf.table-operation/0.1\",\"id\":\"create_person\",\"parameters\":[],\"consistency\":\"transaction\",\"replay\":\"caller-key-required\",\"body\":{\"kind\":\"insert\",\"table\":\"people\",\"values\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"value\":{\"kind\":\"literal\",\"value\":{\"string\":\"command-id\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"value\":{\"kind\":\"currentPrincipal\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthDate\"},\"value\":{\"kind\":\"literal\",\"value\":{\"date\":\"2000-01-01\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"birthday\"},\"value\":{\"kind\":\"literal\",\"value\":{\"date\":\"2000-01-01\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceInstant\"},\"value\":{\"kind\":\"literal\",\"value\":{\"timestamp\":\"2000-01-02T03:04:05Z\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"occurredAt\"},\"value\":{\"kind\":\"literal\",\"value\":{\"timestamp\":\"2000-01-02T03:04:05Z\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceUuid\"},\"value\":{\"kind\":\"literal\",\"value\":{\"uuid\":\"00000000-0000-4000-8000-000000000001\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"externalId\"},\"value\":{\"kind\":\"literal\",\"value\":{\"uuid\":\"00000000-0000-4000-8000-000000000001\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceActive\"},\"value\":{\"kind\":\"literal\",\"value\":{\"boolean\":false}}},{\"field\":{\"module\":\"demo\",\"element\":\"active\"},\"value\":{\"kind\":\"literal\",\"value\":{\"boolean\":false}}}],\"returning\":[],\"maxRows\":1}}]}}}]}"
+      },
+      "source": {
+        "format": "json",
+        "utf8": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Person\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"},{\"module\":\"demo\",\"element\":\"birthDate\"},{\"module\":\"demo\",\"element\":\"birthday\"},{\"module\":\"demo\",\"element\":\"sourceInstant\"},{\"module\":\"demo\",\"element\":\"occurredAt\"},{\"module\":\"demo\",\"element\":\"sourceUuid\"},{\"module\":\"demo\",\"element\":\"externalId\"},{\"module\":\"demo\",\"element\":\"sourceActive\"},{\"module\":\"demo\",\"element\":\"active\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}},{\"id\":\"birthDate\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"birthday\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"sourceInstant\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"occurredAt\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"sourceUuid\",\"kind\":\"field\",\"scalarType\":\"uuid\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"externalId\",\"kind\":\"field\",\"scalarType\":\"uuid\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"sourceActive\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"people\",\"record\":{\"module\":\"demo\",\"element\":\"Person\"},\"name\":\"people\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthDate\"},\"name\":\"birthDate\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthday\"},\"name\":\"birthday\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceInstant\"},\"name\":\"sourceInstant\",\"nativeType\":{\"kind\":\"timestamptz\"}},{\"field\":{\"module\":\"demo\",\"element\":\"occurredAt\"},\"name\":\"occurredAt\",\"nativeType\":{\"kind\":\"timestamptz\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceUuid\"},\"name\":\"sourceUuid\",\"nativeType\":{\"kind\":\"uuid\"}},{\"field\":{\"module\":\"demo\",\"element\":\"externalId\"},\"name\":\"externalId\",\"nativeType\":{\"kind\":\"uuid\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceActive\"},\"name\":\"sourceActive\",\"nativeType\":{\"kind\":\"boolean\"}},{\"field\":{\"module\":\"demo\",\"element\":\"active\"},\"name\":\"active\",\"nativeType\":{\"kind\":\"boolean\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[{\"version\":\"umf.table-operation/0.1\",\"id\":\"create_person\",\"parameters\":[],\"consistency\":\"transaction\",\"replay\":\"caller-key-required\",\"body\":{\"kind\":\"insert\",\"table\":\"people\",\"values\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"value\":{\"kind\":\"literal\",\"value\":{\"string\":\"command-id\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"value\":{\"kind\":\"currentPrincipal\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthDate\"},\"value\":{\"kind\":\"literal\",\"value\":{\"date\":\"2000-01-01\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"birthday\"},\"value\":{\"kind\":\"literal\",\"value\":{\"date\":\"2000-01-01\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceInstant\"},\"value\":{\"kind\":\"literal\",\"value\":{\"timestamp\":\"2000-01-02T03:04:05Z\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"occurredAt\"},\"value\":{\"kind\":\"literal\",\"value\":{\"timestamp\":\"2000-01-02T03:04:05Z\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceUuid\"},\"value\":{\"kind\":\"literal\",\"value\":{\"uuid\":\"00000000-0000-4000-8000-000000000001\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"externalId\"},\"value\":{\"kind\":\"literal\",\"value\":{\"uuid\":\"00000000-0000-4000-8000-000000000001\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceActive\"},\"value\":{\"kind\":\"literal\",\"value\":{\"boolean\":false}}},{\"field\":{\"module\":\"demo\",\"element\":\"active\"},\"value\":{\"kind\":\"literal\",\"value\":{\"boolean\":false}}}],\"returning\":[],\"maxRows\":1}},{\"version\":\"umf.table-operation/0.2\",\"id\":\"fill_occurredAt\",\"parameters\":[],\"consistency\":\"transaction\",\"replay\":\"caller-key-required\",\"body\":{\"kind\":\"update\",\"table\":\"people\",\"where\":{\"op\":\"isNull\",\"field\":{\"module\":\"demo\",\"element\":\"occurredAt\"}},\"values\":[{\"field\":{\"module\":\"demo\",\"element\":\"occurredAt\"},\"value\":{\"kind\":\"rowExpression\",\"expression\":{\"op\":\"coalesce\",\"args\":[{\"op\":\"field\",\"field\":{\"module\":\"demo\",\"element\":\"sourceInstant\"}},{\"op\":\"literal\",\"value\":{\"timestamp\":\"2025-01-02T03:04:05.123456Z\"}}]}}}],\"returning\":[],\"maxRows\":100}}]}}}]}"
+      },
+      "plan": {
+        "id": "g02-temporal-instant-copy-coalesce",
+        "options": {
+          "version": "umf.table-migration-options/0.4",
+          "backfills": [
+            {
+              "table": "people",
+              "column": {
+                "module": "demo",
+                "element": "occurredAt"
+              },
+              "operation": "fill_occurredAt",
+              "scopedRows": true
+            }
+          ],
+          "concurrentIndexes": [],
+          "reviewedChanges": [
+            {
+              "id": "review-2e135b6022b019fbf94f1455",
+              "kind": "tighten-not-null",
+              "path": "/modules/0/extensions/umf.tables/tables/0/columns/5",
+              "oldDigest": "5a941f3bca9eb0c439ba8174f5d6eb969be5d73d1268f20bc0ee6c3dec9d28dc",
+              "newDigest": "7143cd534529f0fb75d326a93835242c7c0df7ba7e9abf8bfc99cbe7ce45339e"
+            }
+          ],
+          "validations": []
+        }
+      },
+      "initialRows": [
+        {
+          "id": "p1",
+          "owner": "g02_alice",
+          "birthDate": null,
+          "birthday": null,
+          "sourceInstant": "2020-07-08T09:10:11.123456Z",
+          "occurredAt": null,
+          "sourceUuid": null,
+          "externalId": null,
+          "sourceActive": null,
+          "active": null
+        },
+        {
+          "id": "p2",
+          "owner": "g02_bob",
+          "birthDate": null,
+          "birthday": null,
+          "sourceInstant": null,
+          "occurredAt": null,
+          "sourceUuid": null,
+          "externalId": null,
+          "sourceActive": null,
+          "active": null
+        },
+        {
+          "id": "p3",
+          "owner": "g02_alice",
+          "birthDate": null,
+          "birthday": null,
+          "sourceInstant": "1998-01-02T03:04:05Z",
+          "occurredAt": "2019-04-05T06:07:08Z",
+          "sourceUuid": null,
+          "externalId": null,
+          "sourceActive": null,
+          "active": null
+        }
+      ],
+      "expectedRows": [
+        [
+          "p1",
+          "g02_alice",
+          null,
+          null,
+          "2020-07-08 09:10:11.123456+00",
+          "2020-07-08 09:10:11.123456+00",
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          "p2",
+          "g02_bob",
+          null,
+          null,
+          null,
+          "2025-01-02 03:04:05.123456+00",
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          "p3",
+          "g02_alice",
+          null,
+          null,
+          "1998-01-02 03:04:05+00",
+          "2019-04-05 06:07:08+00",
+          null,
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "id": "temporal-uuid-copy-coalesce",
+      "initialSource": {
+        "format": "json",
+        "utf8": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Person\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"},{\"module\":\"demo\",\"element\":\"birthDate\"},{\"module\":\"demo\",\"element\":\"birthday\"},{\"module\":\"demo\",\"element\":\"sourceInstant\"},{\"module\":\"demo\",\"element\":\"occurredAt\"},{\"module\":\"demo\",\"element\":\"sourceUuid\"},{\"module\":\"demo\",\"element\":\"externalId\"},{\"module\":\"demo\",\"element\":\"sourceActive\"},{\"module\":\"demo\",\"element\":\"active\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}},{\"id\":\"birthDate\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"birthday\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"sourceInstant\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"occurredAt\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"sourceUuid\",\"kind\":\"field\",\"scalarType\":\"uuid\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"externalId\",\"kind\":\"field\",\"scalarType\":\"uuid\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"sourceActive\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"people\",\"record\":{\"module\":\"demo\",\"element\":\"Person\"},\"name\":\"people\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthDate\"},\"name\":\"birthDate\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthday\"},\"name\":\"birthday\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceInstant\"},\"name\":\"sourceInstant\",\"nativeType\":{\"kind\":\"timestamptz\"}},{\"field\":{\"module\":\"demo\",\"element\":\"occurredAt\"},\"name\":\"occurredAt\",\"nativeType\":{\"kind\":\"timestamptz\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceUuid\"},\"name\":\"sourceUuid\",\"nativeType\":{\"kind\":\"uuid\"}},{\"field\":{\"module\":\"demo\",\"element\":\"externalId\"},\"name\":\"externalId\",\"nativeType\":{\"kind\":\"uuid\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceActive\"},\"name\":\"sourceActive\",\"nativeType\":{\"kind\":\"boolean\"}},{\"field\":{\"module\":\"demo\",\"element\":\"active\"},\"name\":\"active\",\"nativeType\":{\"kind\":\"boolean\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[{\"version\":\"umf.table-operation/0.1\",\"id\":\"create_person\",\"parameters\":[],\"consistency\":\"transaction\",\"replay\":\"caller-key-required\",\"body\":{\"kind\":\"insert\",\"table\":\"people\",\"values\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"value\":{\"kind\":\"literal\",\"value\":{\"string\":\"command-id\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"value\":{\"kind\":\"currentPrincipal\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthDate\"},\"value\":{\"kind\":\"literal\",\"value\":{\"date\":\"2000-01-01\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"birthday\"},\"value\":{\"kind\":\"literal\",\"value\":{\"date\":\"2000-01-01\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceInstant\"},\"value\":{\"kind\":\"literal\",\"value\":{\"timestamp\":\"2000-01-02T03:04:05Z\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"occurredAt\"},\"value\":{\"kind\":\"literal\",\"value\":{\"timestamp\":\"2000-01-02T03:04:05Z\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceUuid\"},\"value\":{\"kind\":\"literal\",\"value\":{\"uuid\":\"00000000-0000-4000-8000-000000000001\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"externalId\"},\"value\":{\"kind\":\"literal\",\"value\":{\"uuid\":\"00000000-0000-4000-8000-000000000001\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceActive\"},\"value\":{\"kind\":\"literal\",\"value\":{\"boolean\":false}}},{\"field\":{\"module\":\"demo\",\"element\":\"active\"},\"value\":{\"kind\":\"literal\",\"value\":{\"boolean\":false}}}],\"returning\":[],\"maxRows\":1}}]}}}]}"
+      },
+      "source": {
+        "format": "json",
+        "utf8": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Person\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"},{\"module\":\"demo\",\"element\":\"birthDate\"},{\"module\":\"demo\",\"element\":\"birthday\"},{\"module\":\"demo\",\"element\":\"sourceInstant\"},{\"module\":\"demo\",\"element\":\"occurredAt\"},{\"module\":\"demo\",\"element\":\"sourceUuid\"},{\"module\":\"demo\",\"element\":\"externalId\"},{\"module\":\"demo\",\"element\":\"sourceActive\"},{\"module\":\"demo\",\"element\":\"active\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}},{\"id\":\"birthDate\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"birthday\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"sourceInstant\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"occurredAt\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"sourceUuid\",\"kind\":\"field\",\"scalarType\":\"uuid\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"externalId\",\"kind\":\"field\",\"scalarType\":\"uuid\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"sourceActive\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"people\",\"record\":{\"module\":\"demo\",\"element\":\"Person\"},\"name\":\"people\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthDate\"},\"name\":\"birthDate\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthday\"},\"name\":\"birthday\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceInstant\"},\"name\":\"sourceInstant\",\"nativeType\":{\"kind\":\"timestamptz\"}},{\"field\":{\"module\":\"demo\",\"element\":\"occurredAt\"},\"name\":\"occurredAt\",\"nativeType\":{\"kind\":\"timestamptz\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceUuid\"},\"name\":\"sourceUuid\",\"nativeType\":{\"kind\":\"uuid\"}},{\"field\":{\"module\":\"demo\",\"element\":\"externalId\"},\"name\":\"externalId\",\"nativeType\":{\"kind\":\"uuid\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceActive\"},\"name\":\"sourceActive\",\"nativeType\":{\"kind\":\"boolean\"}},{\"field\":{\"module\":\"demo\",\"element\":\"active\"},\"name\":\"active\",\"nativeType\":{\"kind\":\"boolean\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[{\"version\":\"umf.table-operation/0.1\",\"id\":\"create_person\",\"parameters\":[],\"consistency\":\"transaction\",\"replay\":\"caller-key-required\",\"body\":{\"kind\":\"insert\",\"table\":\"people\",\"values\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"value\":{\"kind\":\"literal\",\"value\":{\"string\":\"command-id\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"value\":{\"kind\":\"currentPrincipal\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthDate\"},\"value\":{\"kind\":\"literal\",\"value\":{\"date\":\"2000-01-01\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"birthday\"},\"value\":{\"kind\":\"literal\",\"value\":{\"date\":\"2000-01-01\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceInstant\"},\"value\":{\"kind\":\"literal\",\"value\":{\"timestamp\":\"2000-01-02T03:04:05Z\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"occurredAt\"},\"value\":{\"kind\":\"literal\",\"value\":{\"timestamp\":\"2000-01-02T03:04:05Z\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceUuid\"},\"value\":{\"kind\":\"literal\",\"value\":{\"uuid\":\"00000000-0000-4000-8000-000000000001\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"externalId\"},\"value\":{\"kind\":\"literal\",\"value\":{\"uuid\":\"00000000-0000-4000-8000-000000000001\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceActive\"},\"value\":{\"kind\":\"literal\",\"value\":{\"boolean\":false}}},{\"field\":{\"module\":\"demo\",\"element\":\"active\"},\"value\":{\"kind\":\"literal\",\"value\":{\"boolean\":false}}}],\"returning\":[],\"maxRows\":1}},{\"version\":\"umf.table-operation/0.2\",\"id\":\"fill_externalId\",\"parameters\":[],\"consistency\":\"transaction\",\"replay\":\"caller-key-required\",\"body\":{\"kind\":\"update\",\"table\":\"people\",\"where\":{\"op\":\"isNull\",\"field\":{\"module\":\"demo\",\"element\":\"externalId\"}},\"values\":[{\"field\":{\"module\":\"demo\",\"element\":\"externalId\"},\"value\":{\"kind\":\"rowExpression\",\"expression\":{\"op\":\"coalesce\",\"args\":[{\"op\":\"field\",\"field\":{\"module\":\"demo\",\"element\":\"sourceUuid\"}},{\"op\":\"literal\",\"value\":{\"uuid\":\"00000000-0000-4000-8000-000000000009\"}}]}}}],\"returning\":[],\"maxRows\":100}}]}}}]}"
+      },
+      "plan": {
+        "id": "g02-temporal-uuid-copy-coalesce",
+        "options": {
+          "version": "umf.table-migration-options/0.4",
+          "backfills": [
+            {
+              "table": "people",
+              "column": {
+                "module": "demo",
+                "element": "externalId"
+              },
+              "operation": "fill_externalId",
+              "scopedRows": true
+            }
+          ],
+          "concurrentIndexes": [],
+          "reviewedChanges": [
+            {
+              "id": "review-3ffad48d1afdf0229ab3326e",
+              "kind": "tighten-not-null",
+              "path": "/modules/0/extensions/umf.tables/tables/0/columns/7",
+              "oldDigest": "b12e687511d00e3b0f69b912a603605e0ab8c7708e41fcb092804464ec056b1d",
+              "newDigest": "80751c5359f089f630bdd07df3e2c1a745553c376f6148938e23bad9ee44664d"
+            }
+          ],
+          "validations": []
+        }
+      },
+      "initialRows": [
+        {
+          "id": "p1",
+          "owner": "g02_alice",
+          "birthDate": null,
+          "birthday": null,
+          "sourceInstant": null,
+          "occurredAt": null,
+          "sourceUuid": "00000000-0000-4000-8000-000000000001",
+          "externalId": null,
+          "sourceActive": null,
+          "active": null
+        },
+        {
+          "id": "p2",
+          "owner": "g02_bob",
+          "birthDate": null,
+          "birthday": null,
+          "sourceInstant": null,
+          "occurredAt": null,
+          "sourceUuid": null,
+          "externalId": null,
+          "sourceActive": null,
+          "active": null
+        },
+        {
+          "id": "p3",
+          "owner": "g02_alice",
+          "birthDate": null,
+          "birthday": null,
+          "sourceInstant": null,
+          "occurredAt": null,
+          "sourceUuid": "00000000-0000-4000-8000-000000000003",
+          "externalId": "00000000-0000-4000-8000-000000000004",
+          "sourceActive": null,
+          "active": null
+        }
+      ],
+      "expectedRows": [
+        [
+          "p1",
+          "g02_alice",
+          null,
+          null,
+          null,
+          null,
+          "00000000-0000-4000-8000-000000000001",
+          "00000000-0000-4000-8000-000000000001",
+          null,
+          null
+        ],
+        [
+          "p2",
+          "g02_bob",
+          null,
+          null,
+          null,
+          null,
+          null,
+          "00000000-0000-4000-8000-000000000009",
+          null,
+          null
+        ],
+        [
+          "p3",
+          "g02_alice",
+          null,
+          null,
+          null,
+          null,
+          "00000000-0000-4000-8000-000000000003",
+          "00000000-0000-4000-8000-000000000004",
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "id": "temporal-boolean-copy-coalesce",
+      "initialSource": {
+        "format": "json",
+        "utf8": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Person\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"},{\"module\":\"demo\",\"element\":\"birthDate\"},{\"module\":\"demo\",\"element\":\"birthday\"},{\"module\":\"demo\",\"element\":\"sourceInstant\"},{\"module\":\"demo\",\"element\":\"occurredAt\"},{\"module\":\"demo\",\"element\":\"sourceUuid\"},{\"module\":\"demo\",\"element\":\"externalId\"},{\"module\":\"demo\",\"element\":\"sourceActive\"},{\"module\":\"demo\",\"element\":\"active\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}},{\"id\":\"birthDate\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"birthday\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"sourceInstant\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"occurredAt\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"sourceUuid\",\"kind\":\"field\",\"scalarType\":\"uuid\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"externalId\",\"kind\":\"field\",\"scalarType\":\"uuid\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"sourceActive\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"people\",\"record\":{\"module\":\"demo\",\"element\":\"Person\"},\"name\":\"people\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthDate\"},\"name\":\"birthDate\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthday\"},\"name\":\"birthday\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceInstant\"},\"name\":\"sourceInstant\",\"nativeType\":{\"kind\":\"timestamptz\"}},{\"field\":{\"module\":\"demo\",\"element\":\"occurredAt\"},\"name\":\"occurredAt\",\"nativeType\":{\"kind\":\"timestamptz\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceUuid\"},\"name\":\"sourceUuid\",\"nativeType\":{\"kind\":\"uuid\"}},{\"field\":{\"module\":\"demo\",\"element\":\"externalId\"},\"name\":\"externalId\",\"nativeType\":{\"kind\":\"uuid\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceActive\"},\"name\":\"sourceActive\",\"nativeType\":{\"kind\":\"boolean\"}},{\"field\":{\"module\":\"demo\",\"element\":\"active\"},\"name\":\"active\",\"nativeType\":{\"kind\":\"boolean\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[{\"version\":\"umf.table-operation/0.1\",\"id\":\"create_person\",\"parameters\":[],\"consistency\":\"transaction\",\"replay\":\"caller-key-required\",\"body\":{\"kind\":\"insert\",\"table\":\"people\",\"values\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"value\":{\"kind\":\"literal\",\"value\":{\"string\":\"command-id\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"value\":{\"kind\":\"currentPrincipal\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthDate\"},\"value\":{\"kind\":\"literal\",\"value\":{\"date\":\"2000-01-01\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"birthday\"},\"value\":{\"kind\":\"literal\",\"value\":{\"date\":\"2000-01-01\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceInstant\"},\"value\":{\"kind\":\"literal\",\"value\":{\"timestamp\":\"2000-01-02T03:04:05Z\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"occurredAt\"},\"value\":{\"kind\":\"literal\",\"value\":{\"timestamp\":\"2000-01-02T03:04:05Z\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceUuid\"},\"value\":{\"kind\":\"literal\",\"value\":{\"uuid\":\"00000000-0000-4000-8000-000000000001\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"externalId\"},\"value\":{\"kind\":\"literal\",\"value\":{\"uuid\":\"00000000-0000-4000-8000-000000000001\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceActive\"},\"value\":{\"kind\":\"literal\",\"value\":{\"boolean\":false}}},{\"field\":{\"module\":\"demo\",\"element\":\"active\"},\"value\":{\"kind\":\"literal\",\"value\":{\"boolean\":false}}}],\"returning\":[],\"maxRows\":1}}]}}}]}"
+      },
+      "source": {
+        "format": "json",
+        "utf8": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Person\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"},{\"module\":\"demo\",\"element\":\"birthDate\"},{\"module\":\"demo\",\"element\":\"birthday\"},{\"module\":\"demo\",\"element\":\"sourceInstant\"},{\"module\":\"demo\",\"element\":\"occurredAt\"},{\"module\":\"demo\",\"element\":\"sourceUuid\"},{\"module\":\"demo\",\"element\":\"externalId\"},{\"module\":\"demo\",\"element\":\"sourceActive\"},{\"module\":\"demo\",\"element\":\"active\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}},{\"id\":\"birthDate\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"birthday\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"sourceInstant\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"occurredAt\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"sourceUuid\",\"kind\":\"field\",\"scalarType\":\"uuid\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"externalId\",\"kind\":\"field\",\"scalarType\":\"uuid\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"sourceActive\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"people\",\"record\":{\"module\":\"demo\",\"element\":\"Person\"},\"name\":\"people\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthDate\"},\"name\":\"birthDate\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthday\"},\"name\":\"birthday\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceInstant\"},\"name\":\"sourceInstant\",\"nativeType\":{\"kind\":\"timestamptz\"}},{\"field\":{\"module\":\"demo\",\"element\":\"occurredAt\"},\"name\":\"occurredAt\",\"nativeType\":{\"kind\":\"timestamptz\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceUuid\"},\"name\":\"sourceUuid\",\"nativeType\":{\"kind\":\"uuid\"}},{\"field\":{\"module\":\"demo\",\"element\":\"externalId\"},\"name\":\"externalId\",\"nativeType\":{\"kind\":\"uuid\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceActive\"},\"name\":\"sourceActive\",\"nativeType\":{\"kind\":\"boolean\"}},{\"field\":{\"module\":\"demo\",\"element\":\"active\"},\"name\":\"active\",\"nativeType\":{\"kind\":\"boolean\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[{\"version\":\"umf.table-operation/0.1\",\"id\":\"create_person\",\"parameters\":[],\"consistency\":\"transaction\",\"replay\":\"caller-key-required\",\"body\":{\"kind\":\"insert\",\"table\":\"people\",\"values\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"value\":{\"kind\":\"literal\",\"value\":{\"string\":\"command-id\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"value\":{\"kind\":\"currentPrincipal\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthDate\"},\"value\":{\"kind\":\"literal\",\"value\":{\"date\":\"2000-01-01\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"birthday\"},\"value\":{\"kind\":\"literal\",\"value\":{\"date\":\"2000-01-01\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceInstant\"},\"value\":{\"kind\":\"literal\",\"value\":{\"timestamp\":\"2000-01-02T03:04:05Z\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"occurredAt\"},\"value\":{\"kind\":\"literal\",\"value\":{\"timestamp\":\"2000-01-02T03:04:05Z\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceUuid\"},\"value\":{\"kind\":\"literal\",\"value\":{\"uuid\":\"00000000-0000-4000-8000-000000000001\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"externalId\"},\"value\":{\"kind\":\"literal\",\"value\":{\"uuid\":\"00000000-0000-4000-8000-000000000001\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceActive\"},\"value\":{\"kind\":\"literal\",\"value\":{\"boolean\":false}}},{\"field\":{\"module\":\"demo\",\"element\":\"active\"},\"value\":{\"kind\":\"literal\",\"value\":{\"boolean\":false}}}],\"returning\":[],\"maxRows\":1}},{\"version\":\"umf.table-operation/0.2\",\"id\":\"fill_active\",\"parameters\":[],\"consistency\":\"transaction\",\"replay\":\"caller-key-required\",\"body\":{\"kind\":\"update\",\"table\":\"people\",\"where\":{\"op\":\"isNull\",\"field\":{\"module\":\"demo\",\"element\":\"active\"}},\"values\":[{\"field\":{\"module\":\"demo\",\"element\":\"active\"},\"value\":{\"kind\":\"rowExpression\",\"expression\":{\"op\":\"coalesce\",\"args\":[{\"op\":\"field\",\"field\":{\"module\":\"demo\",\"element\":\"sourceActive\"}},{\"op\":\"literal\",\"value\":{\"boolean\":true}}]}}}],\"returning\":[],\"maxRows\":100}}]}}}]}"
+      },
+      "plan": {
+        "id": "g02-temporal-boolean-copy-coalesce",
+        "options": {
+          "version": "umf.table-migration-options/0.4",
+          "backfills": [
+            {
+              "table": "people",
+              "column": {
+                "module": "demo",
+                "element": "active"
+              },
+              "operation": "fill_active",
+              "scopedRows": true
+            }
+          ],
+          "concurrentIndexes": [],
+          "reviewedChanges": [
+            {
+              "id": "review-0eef2e322ce08fad4c34bd41",
+              "kind": "tighten-not-null",
+              "path": "/modules/0/extensions/umf.tables/tables/0/columns/9",
+              "oldDigest": "114ffbebb9771fae7a77202a1b9f5ee8e8fe86eef19d4a03cf7d7c73c2e330df",
+              "newDigest": "3f8a295041acb67d8c41673bf0765384542ca24053cc00333297696c5a96d4bb"
+            }
+          ],
+          "validations": []
+        }
+      },
+      "initialRows": [
+        {
+          "id": "p1",
+          "owner": "g02_alice",
+          "birthDate": null,
+          "birthday": null,
+          "sourceInstant": null,
+          "occurredAt": null,
+          "sourceUuid": null,
+          "externalId": null,
+          "sourceActive": false,
+          "active": null
+        },
+        {
+          "id": "p2",
+          "owner": "g02_bob",
+          "birthDate": null,
+          "birthday": null,
+          "sourceInstant": null,
+          "occurredAt": null,
+          "sourceUuid": null,
+          "externalId": null,
+          "sourceActive": null,
+          "active": null
+        },
+        {
+          "id": "p3",
+          "owner": "g02_alice",
+          "birthDate": null,
+          "birthday": null,
+          "sourceInstant": null,
+          "occurredAt": null,
+          "sourceUuid": null,
+          "externalId": null,
+          "sourceActive": true,
+          "active": false
+        }
+      ],
+      "expectedRows": [
+        [
+          "p1",
+          "g02_alice",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          false,
+          false
+        ],
+        [
+          "p2",
+          "g02_bob",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          true
+        ],
+        [
+          "p3",
+          "g02_alice",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          true,
+          false
+        ]
+      ]
+    },
+    {
+      "id": "temporal-matched-null-date-rollback",
+      "initialSource": {
+        "format": "json",
+        "utf8": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Person\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"},{\"module\":\"demo\",\"element\":\"birthDate\"},{\"module\":\"demo\",\"element\":\"birthday\"},{\"module\":\"demo\",\"element\":\"sourceInstant\"},{\"module\":\"demo\",\"element\":\"occurredAt\"},{\"module\":\"demo\",\"element\":\"sourceUuid\"},{\"module\":\"demo\",\"element\":\"externalId\"},{\"module\":\"demo\",\"element\":\"sourceActive\"},{\"module\":\"demo\",\"element\":\"active\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}},{\"id\":\"birthDate\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"birthday\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"sourceInstant\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"occurredAt\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"sourceUuid\",\"kind\":\"field\",\"scalarType\":\"uuid\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"externalId\",\"kind\":\"field\",\"scalarType\":\"uuid\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"sourceActive\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"people\",\"record\":{\"module\":\"demo\",\"element\":\"Person\"},\"name\":\"people\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthDate\"},\"name\":\"birthDate\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthday\"},\"name\":\"birthday\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceInstant\"},\"name\":\"sourceInstant\",\"nativeType\":{\"kind\":\"timestamptz\"}},{\"field\":{\"module\":\"demo\",\"element\":\"occurredAt\"},\"name\":\"occurredAt\",\"nativeType\":{\"kind\":\"timestamptz\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceUuid\"},\"name\":\"sourceUuid\",\"nativeType\":{\"kind\":\"uuid\"}},{\"field\":{\"module\":\"demo\",\"element\":\"externalId\"},\"name\":\"externalId\",\"nativeType\":{\"kind\":\"uuid\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceActive\"},\"name\":\"sourceActive\",\"nativeType\":{\"kind\":\"boolean\"}},{\"field\":{\"module\":\"demo\",\"element\":\"active\"},\"name\":\"active\",\"nativeType\":{\"kind\":\"boolean\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[{\"version\":\"umf.table-operation/0.1\",\"id\":\"create_person\",\"parameters\":[],\"consistency\":\"transaction\",\"replay\":\"caller-key-required\",\"body\":{\"kind\":\"insert\",\"table\":\"people\",\"values\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"value\":{\"kind\":\"literal\",\"value\":{\"string\":\"command-id\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"value\":{\"kind\":\"currentPrincipal\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthDate\"},\"value\":{\"kind\":\"literal\",\"value\":{\"date\":\"2000-01-01\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"birthday\"},\"value\":{\"kind\":\"literal\",\"value\":{\"date\":\"2000-01-01\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceInstant\"},\"value\":{\"kind\":\"literal\",\"value\":{\"timestamp\":\"2000-01-02T03:04:05Z\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"occurredAt\"},\"value\":{\"kind\":\"literal\",\"value\":{\"timestamp\":\"2000-01-02T03:04:05Z\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceUuid\"},\"value\":{\"kind\":\"literal\",\"value\":{\"uuid\":\"00000000-0000-4000-8000-000000000001\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"externalId\"},\"value\":{\"kind\":\"literal\",\"value\":{\"uuid\":\"00000000-0000-4000-8000-000000000001\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceActive\"},\"value\":{\"kind\":\"literal\",\"value\":{\"boolean\":false}}},{\"field\":{\"module\":\"demo\",\"element\":\"active\"},\"value\":{\"kind\":\"literal\",\"value\":{\"boolean\":false}}}],\"returning\":[],\"maxRows\":1}}]}}}]}"
+      },
+      "source": {
+        "format": "json",
+        "utf8": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Person\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"},{\"module\":\"demo\",\"element\":\"birthDate\"},{\"module\":\"demo\",\"element\":\"birthday\"},{\"module\":\"demo\",\"element\":\"sourceInstant\"},{\"module\":\"demo\",\"element\":\"occurredAt\"},{\"module\":\"demo\",\"element\":\"sourceUuid\"},{\"module\":\"demo\",\"element\":\"externalId\"},{\"module\":\"demo\",\"element\":\"sourceActive\"},{\"module\":\"demo\",\"element\":\"active\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}},{\"id\":\"birthDate\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"birthday\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"sourceInstant\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"occurredAt\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"sourceUuid\",\"kind\":\"field\",\"scalarType\":\"uuid\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"externalId\",\"kind\":\"field\",\"scalarType\":\"uuid\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"sourceActive\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"people\",\"record\":{\"module\":\"demo\",\"element\":\"Person\"},\"name\":\"people\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthDate\"},\"name\":\"birthDate\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthday\"},\"name\":\"birthday\",\"nativeType\":{\"kind\":\"date\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceInstant\"},\"name\":\"sourceInstant\",\"nativeType\":{\"kind\":\"timestamptz\"}},{\"field\":{\"module\":\"demo\",\"element\":\"occurredAt\"},\"name\":\"occurredAt\",\"nativeType\":{\"kind\":\"timestamptz\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceUuid\"},\"name\":\"sourceUuid\",\"nativeType\":{\"kind\":\"uuid\"}},{\"field\":{\"module\":\"demo\",\"element\":\"externalId\"},\"name\":\"externalId\",\"nativeType\":{\"kind\":\"uuid\"}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceActive\"},\"name\":\"sourceActive\",\"nativeType\":{\"kind\":\"boolean\"}},{\"field\":{\"module\":\"demo\",\"element\":\"active\"},\"name\":\"active\",\"nativeType\":{\"kind\":\"boolean\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[{\"version\":\"umf.table-operation/0.1\",\"id\":\"create_person\",\"parameters\":[],\"consistency\":\"transaction\",\"replay\":\"caller-key-required\",\"body\":{\"kind\":\"insert\",\"table\":\"people\",\"values\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"value\":{\"kind\":\"literal\",\"value\":{\"string\":\"command-id\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"value\":{\"kind\":\"currentPrincipal\"}},{\"field\":{\"module\":\"demo\",\"element\":\"birthDate\"},\"value\":{\"kind\":\"literal\",\"value\":{\"date\":\"2000-01-01\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"birthday\"},\"value\":{\"kind\":\"literal\",\"value\":{\"date\":\"2000-01-01\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceInstant\"},\"value\":{\"kind\":\"literal\",\"value\":{\"timestamp\":\"2000-01-02T03:04:05Z\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"occurredAt\"},\"value\":{\"kind\":\"literal\",\"value\":{\"timestamp\":\"2000-01-02T03:04:05Z\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceUuid\"},\"value\":{\"kind\":\"literal\",\"value\":{\"uuid\":\"00000000-0000-4000-8000-000000000001\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"externalId\"},\"value\":{\"kind\":\"literal\",\"value\":{\"uuid\":\"00000000-0000-4000-8000-000000000001\"}}},{\"field\":{\"module\":\"demo\",\"element\":\"sourceActive\"},\"value\":{\"kind\":\"literal\",\"value\":{\"boolean\":false}}},{\"field\":{\"module\":\"demo\",\"element\":\"active\"},\"value\":{\"kind\":\"literal\",\"value\":{\"boolean\":false}}}],\"returning\":[],\"maxRows\":1}},{\"version\":\"umf.table-operation/0.2\",\"id\":\"fill_birthday\",\"parameters\":[],\"consistency\":\"transaction\",\"replay\":\"caller-key-required\",\"body\":{\"kind\":\"update\",\"table\":\"people\",\"where\":{\"op\":\"isNull\",\"field\":{\"module\":\"demo\",\"element\":\"birthday\"}},\"values\":[{\"field\":{\"module\":\"demo\",\"element\":\"birthday\"},\"value\":{\"kind\":\"rowExpression\",\"expression\":{\"op\":\"field\",\"field\":{\"module\":\"demo\",\"element\":\"birthDate\"}}}}],\"returning\":[],\"maxRows\":100}}]}}}]}"
+      },
+      "plan": {
+        "id": "g02-temporal-matched-null-date-rollback",
+        "options": {
+          "version": "umf.table-migration-options/0.4",
+          "backfills": [
+            {
+              "table": "people",
+              "column": {
+                "module": "demo",
+                "element": "birthday"
+              },
+              "operation": "fill_birthday",
+              "scopedRows": true
+            }
+          ],
+          "concurrentIndexes": [],
+          "reviewedChanges": [
+            {
+              "id": "review-4c2ee7149b01ff58e3cfdd83",
+              "kind": "tighten-not-null",
+              "path": "/modules/0/extensions/umf.tables/tables/0/columns/3",
+              "oldDigest": "a379b313a295566fea237d169768061dcafa32813de9fa7412c80062a804c430",
+              "newDigest": "841e1da5e559ca577c483ff7a668079999e74891f808ab256337ecc83df9dc0b"
+            }
+          ],
+          "validations": []
+        }
+      },
+      "initialRows": [
+        {
+          "id": "p1",
+          "owner": "g02_alice",
+          "birthDate": "2012-03-04",
+          "birthday": null,
+          "sourceInstant": null,
+          "occurredAt": null,
+          "sourceUuid": null,
+          "externalId": null,
+          "sourceActive": null,
+          "active": null
+        },
+        {
+          "id": "p2",
+          "owner": "g02_bob",
+          "birthDate": null,
+          "birthday": null,
+          "sourceInstant": null,
+          "occurredAt": null,
+          "sourceUuid": null,
+          "externalId": null,
+          "sourceActive": null,
+          "active": null
+        },
+        {
+          "id": "p3",
+          "owner": "g02_alice",
+          "birthDate": "1999-12-31",
+          "birthday": null,
+          "sourceInstant": null,
+          "occurredAt": null,
+          "sourceUuid": null,
+          "externalId": null,
+          "sourceActive": null,
+          "active": null
+        }
+      ],
+      "expectedRows": [],
+      "expectedFailure": "null-result"
+    }
+  ]
+}

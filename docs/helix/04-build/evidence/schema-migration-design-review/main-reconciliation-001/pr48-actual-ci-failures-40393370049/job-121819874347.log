@@ -1,0 +1,1604 @@
+﻿2026-10-26T20:15:29.1226513Z Current runner version: '2.338.0'
+2026-10-26T20:15:29.1256485Z ##[group]Runner Image Provisioner
+2026-10-26T20:15:29.1257458Z Hosted Compute Agent
+2026-10-26T20:15:29.1258090Z Version: 20261021.618
+2026-10-26T20:15:29.1258747Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-10-26T20:15:29.1259614Z Build Date: 2026-10-21T00:45:21Z
+2026-10-26T20:15:29.1260366Z Worker ID: {e5d6936d-5f77-4df9-9212-0afb2badab34}
+2026-10-26T20:15:29.1261150Z Region: northcentralus
+2026-10-26T20:15:29.1261776Z Cloud: Azure
+2026-10-26T20:15:29.1262337Z ##[endgroup]
+2026-10-26T20:15:29.1265344Z ##[group]Operating System
+2026-10-26T20:15:29.1266082Z Ubuntu
+2026-10-26T20:15:29.1266611Z 26.04.1
+2026-10-26T20:15:29.1267262Z LTS
+2026-10-26T20:15:29.1267804Z ##[endgroup]
+2026-10-26T20:15:29.1268470Z ##[group]Runner Image
+2026-10-26T20:15:29.1269237Z Image: ubuntu-26.04
+2026-10-26T20:15:29.1269837Z Version: 20261012.163.1
+2026-10-26T20:15:29.1271477Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261012.163/images/ubuntu/Ubuntu2604-Readme.md
+2026-10-26T20:15:29.1273159Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261012.163
+2026-10-26T20:15:29.1274194Z ##[endgroup]
+2026-10-26T20:15:29.1275745Z ##[group]GITHUB_TOKEN Permissions
+2026-10-26T20:15:29.1278333Z Contents: read
+2026-10-26T20:15:29.1278954Z Metadata: read
+2026-10-26T20:15:29.1279670Z ##[endgroup]
+2026-10-26T20:15:29.1281989Z Secret source: Actions
+2026-10-26T20:15:29.1283065Z Cache mode: write
+2026-10-26T20:15:29.1284060Z Prepare workflow directory
+2026-10-26T20:15:29.2641361Z Prepare all required actions
+2026-10-26T20:15:29.2696387Z Getting action download info
+2026-10-26T20:15:29.4956328Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-26T20:15:29.5942296Z Download action repository 'oven-sh/setup-bun@v2' (SHA:0c5077e51419868618aeaa5fe8019c62421857d6)
+2026-10-26T20:15:29.8668061Z Download action repository 'dtolnay/rust-toolchain@stable' (SHA:b725eda525362e7cf34af9a7243cac1e3f01a7ec)
+2026-10-26T20:15:30.0015415Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-26T20:15:30.6457811Z Complete job name: commands
+2026-10-26T20:15:31.1587810Z ##[group]Run actions/checkout@v4
+2026-10-26T20:15:31.1589039Z with:
+2026-10-26T20:15:31.1589794Z   repository: DocumentDrivenDX/umf
+2026-10-26T20:15:31.1597564Z   token: ***
+2026-10-26T20:15:31.1598290Z   ssh-strict: true
+2026-10-26T20:15:31.1599034Z   ssh-user: git
+2026-10-26T20:15:31.1599784Z   persist-credentials: true
+2026-10-26T20:15:31.1600605Z   clean: true
+2026-10-26T20:15:31.1601353Z   sparse-checkout-cone-mode: true
+2026-10-26T20:15:31.1602237Z   fetch-depth: 1
+2026-10-26T20:15:31.1602969Z   fetch-tags: false
+2026-10-26T20:15:31.1603726Z   show-progress: true
+2026-10-26T20:15:31.1604500Z   lfs: false
+2026-10-26T20:15:31.1605473Z   submodules: false
+2026-10-26T20:15:31.1606267Z   set-safe-directory: true
+2026-10-26T20:15:31.1607127Z   allow-unsafe-pr-checkout: false
+2026-10-26T20:15:31.1608505Z ##[endgroup]
+2026-10-26T20:15:31.2802941Z Syncing repository: DocumentDrivenDX/umf
+2026-10-26T20:15:31.2807210Z ##[group]Getting Git version info
+2026-10-26T20:15:31.2809293Z Working directory is '/home/runner/work/umf/umf'
+2026-10-26T20:15:31.2811948Z [command]/usr/bin/git version
+2026-10-26T20:15:31.2813432Z git version 2.55.0
+2026-10-26T20:15:31.2830788Z ##[endgroup]
+2026-10-26T20:15:31.2849058Z Temporarily overriding HOME='/home/runner/work/_temp/a6f06b80-e1b0-4879-bc4f-53f9b3adf25f' before making global git config changes
+2026-10-26T20:15:31.2852739Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-26T20:15:31.2856075Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf
+2026-10-26T20:15:31.2939536Z Deleting the contents of '/home/runner/work/umf/umf'
+2026-10-26T20:15:31.2951324Z ##[group]Initializing the repository
+2026-10-26T20:15:31.2960307Z [command]/usr/bin/git init /home/runner/work/umf/umf
+2026-10-26T20:15:31.3067850Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-26T20:15:31.3071004Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-26T20:15:31.3074021Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-26T20:15:31.3076596Z hint: call:
+2026-10-26T20:15:31.3078180Z hint:
+2026-10-26T20:15:31.3079613Z hint: 	git config --global init.defaultBranch <name>
+2026-10-26T20:15:31.3081323Z hint:
+2026-10-26T20:15:31.3083452Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-26T20:15:31.3086410Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-26T20:15:31.3088546Z hint:
+2026-10-26T20:15:31.3089737Z hint: 	git branch -m <name>
+2026-10-26T20:15:31.3091063Z hint:
+2026-10-26T20:15:31.3092792Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-26T20:15:31.3096120Z Initialized empty Git repository in /home/runner/work/umf/umf/.git/
+2026-10-26T20:15:31.3100929Z [command]/usr/bin/git remote add origin https://github.com/DocumentDrivenDX/umf
+2026-10-26T20:15:31.3139779Z ##[endgroup]
+2026-10-26T20:15:31.3141676Z ##[group]Disabling automatic garbage collection
+2026-10-26T20:15:31.3143970Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-26T20:15:31.3185684Z ##[endgroup]
+2026-10-26T20:15:31.3186937Z ##[group]Setting up auth
+2026-10-26T20:15:31.3193819Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-26T20:15:31.3237169Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-26T20:15:31.3692647Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-26T20:15:31.3740596Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-26T20:15:31.4049311Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-26T20:15:31.4090766Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-26T20:15:31.4415054Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-26T20:15:31.4462215Z ##[endgroup]
+2026-10-26T20:15:31.4463667Z ##[group]Fetching the repository
+2026-10-26T20:15:31.4473298Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +88871ad55a1ac348b2070a5ae00714e2299cb646:refs/remotes/pull/48/merge
+2026-10-26T20:15:51.5467792Z From https://github.com/DocumentDrivenDX/umf
+2026-10-26T20:15:51.5469041Z  * [new ref]           88871ad55a1ac348b2070a5ae00714e2299cb646 -> pull/48/merge
+2026-10-26T20:15:51.5473107Z ##[endgroup]
+2026-10-26T20:15:51.5474051Z ##[group]Determining the checkout info
+2026-10-26T20:15:51.5477051Z ##[endgroup]
+2026-10-26T20:15:51.5483633Z [command]/usr/bin/git sparse-checkout disable
+2026-10-26T20:15:51.5540552Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-26T20:15:51.5572809Z ##[group]Checking out the ref
+2026-10-26T20:15:51.5576576Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/48/merge
+2026-10-26T20:15:52.8043871Z Updating files:   5% (3633/62870)
+2026-10-26T20:15:52.9354498Z Updating files:   6% (3773/62870)
+2026-10-26T20:15:53.3101759Z Updating files:   7% (4401/62870)
+2026-10-26T20:15:53.3743618Z Updating files:   8% (5030/62870)
+2026-10-26T20:15:53.4240998Z Updating files:   9% (5659/62870)
+2026-10-26T20:15:53.5738782Z Updating files:  10% (6287/62870)
+2026-10-26T20:15:53.6200248Z Updating files:  11% (6916/62870)
+2026-10-26T20:15:53.6990076Z Updating files:  11% (6996/62870)
+2026-10-26T20:15:54.0084211Z Updating files:  12% (7545/62870)
+2026-10-26T20:15:54.7513908Z Updating files:  13% (8174/62870)
+2026-10-26T20:15:54.7990253Z Updating files:  13% (8735/62870)
+2026-10-26T20:15:55.2200744Z Updating files:  14% (8802/62870)
+2026-10-26T20:15:55.2626863Z Updating files:  15% (9431/62870)
+2026-10-26T20:15:55.3361044Z Updating files:  16% (10060/62870)
+2026-10-26T20:15:55.6553064Z Updating files:  17% (10688/62870)
+2026-10-26T20:15:55.7938325Z Updating files:  17% (10779/62870)
+2026-10-26T20:15:55.9878276Z Updating files:  18% (11317/62870)
+2026-10-26T20:15:56.3741480Z Updating files:  19% (11946/62870)
+2026-10-26T20:15:56.5159438Z Updating files:  20% (12574/62870)
+2026-10-26T20:15:56.5477089Z Updating files:  21% (13203/62870)
+2026-10-26T20:15:56.5804927Z Updating files:  22% (13832/62870)
+2026-10-26T20:15:56.6101581Z Updating files:  23% (14461/62870)
+2026-10-26T20:15:56.6130143Z Updating files:  24% (15089/62870)
+2026-10-26T20:15:56.6389825Z Updating files:  24% (15158/62870)
+2026-10-26T20:15:56.6699880Z Updating files:  25% (15718/62870)
+2026-10-26T20:15:56.6986198Z Updating files:  26% (16347/62870)
+2026-10-26T20:15:56.7288242Z Updating files:  27% (16975/62870)
+2026-10-26T20:15:56.7576658Z Updating files:  28% (17604/62870)
+2026-10-26T20:15:56.8075359Z Updating files:  29% (18233/62870)
+2026-10-26T20:15:56.8510703Z Updating files:  30% (18861/62870)
+2026-10-26T20:15:56.8801690Z Updating files:  31% (19490/62870)
+2026-10-26T20:15:57.6990628Z Updating files:  32% (20119/62870)
+2026-10-26T20:15:58.3881687Z Updating files:  32% (20709/62870)
+2026-10-26T20:15:58.6616179Z Updating files:  33% (20748/62870)
+2026-10-26T20:15:59.6291754Z Updating files:  33% (20773/62870)
+2026-10-26T20:16:00.6265608Z Updating files:  33% (20836/62870)
+2026-10-26T20:16:01.1801675Z Updating files:  33% (20900/62870)
+2026-10-26T20:16:01.3586666Z Updating files:  34% (21376/62870)
+2026-10-26T20:16:01.5028109Z Updating files:  35% (22005/62870)
+2026-10-26T20:16:01.5471536Z Updating files:  36% (22634/62870)
+2026-10-26T20:16:01.5804295Z Updating files:  37% (23262/62870)
+2026-10-26T20:16:01.6131468Z Updating files:  38% (23891/62870)
+2026-10-26T20:16:01.6149726Z Updating files:  38% (24468/62870)
+2026-10-26T20:16:01.6441344Z Updating files:  39% (24520/62870)
+2026-10-26T20:16:01.6734015Z Updating files:  40% (25148/62870)
+2026-10-26T20:16:01.7030713Z Updating files:  41% (25777/62870)
+2026-10-26T20:16:01.7300256Z Updating files:  42% (26406/62870)
+2026-10-26T20:16:02.3446348Z Updating files:  43% (27035/62870)
+2026-10-26T20:16:02.4689614Z Updating files:  44% (27663/62870)
+2026-10-26T20:16:02.5135942Z Updating files:  45% (28292/62870)
+2026-10-26T20:16:02.6132848Z Updating files:  46% (28921/62870)
+2026-10-26T20:16:02.6331501Z Updating files:  46% (29266/62870)
+2026-10-26T20:16:02.6723933Z Updating files:  47% (29549/62870)
+2026-10-26T20:16:02.7076469Z Updating files:  48% (30178/62870)
+2026-10-26T20:16:02.9257420Z Updating files:  49% (30807/62870)
+2026-10-26T20:16:03.0067014Z Updating files:  50% (31435/62870)
+2026-10-26T20:16:03.0410758Z Updating files:  51% (32064/62870)
+2026-10-26T20:16:03.0818622Z Updating files:  52% (32693/62870)
+2026-10-26T20:16:03.1354933Z Updating files:  53% (33322/62870)
+2026-10-26T20:16:03.1581783Z Updating files:  54% (33950/62870)
+2026-10-26T20:16:03.1805891Z Updating files:  55% (34579/62870)
+2026-10-26T20:16:03.2461716Z Updating files:  56% (35208/62870)
+2026-10-26T20:16:03.2950598Z Updating files:  57% (35836/62870)
+2026-10-26T20:16:03.3280460Z Updating files:  58% (36465/62870)
+2026-10-26T20:16:03.3774342Z Updating files:  59% (37094/62870)
+2026-10-26T20:16:03.4263553Z Updating files:  60% (37722/62870)
+2026-10-26T20:16:03.4812517Z Updating files:  61% (38351/62870)
+2026-10-26T20:16:03.5076240Z Updating files:  62% (38980/62870)
+2026-10-26T20:16:03.5313377Z Updating files:  63% (39609/62870)
+2026-10-26T20:16:03.5542790Z Updating files:  64% (40237/62870)
+2026-10-26T20:16:03.5772894Z Updating files:  65% (40866/62870)
+2026-10-26T20:16:03.6009278Z Updating files:  66% (41495/62870)
+2026-10-26T20:16:03.6130691Z Updating files:  67% (42123/62870)
+2026-10-26T20:16:03.6449546Z Updating files:  67% (42318/62870)
+2026-10-26T20:16:03.6708980Z Updating files:  68% (42752/62870)
+2026-10-26T20:16:03.7211036Z Updating files:  69% (43381/62870)
+2026-10-26T20:16:03.7663215Z Updating files:  70% (44009/62870)
+2026-10-26T20:16:03.7940914Z Updating files:  71% (44638/62870)
+2026-10-26T20:16:03.8162609Z Updating files:  72% (45267/62870)
+2026-10-26T20:16:03.8392689Z Updating files:  73% (45896/62870)
+2026-10-26T20:16:03.8600880Z Updating files:  74% (46524/62870)
+2026-10-26T20:16:03.8804289Z Updating files:  75% (47153/62870)
+2026-10-26T20:16:03.9018722Z Updating files:  76% (47782/62870)
+2026-10-26T20:16:03.9276895Z Updating files:  77% (48410/62870)
+2026-10-26T20:16:03.9483324Z Updating files:  78% (49039/62870)
+2026-10-26T20:16:03.9716257Z Updating files:  79% (49668/62870)
+2026-10-26T20:16:04.0017811Z Updating files:  80% (50296/62870)
+2026-10-26T20:16:04.0731278Z Updating files:  81% (50925/62870)
+2026-10-26T20:16:04.1548979Z Updating files:  82% (51554/62870)
+2026-10-26T20:16:04.2117937Z Updating files:  83% (52183/62870)
+2026-10-26T20:16:04.2639130Z Updating files:  84% (52811/62870)
+2026-10-26T20:16:04.2882474Z Updating files:  85% (53440/62870)
+2026-10-26T20:16:04.3132893Z Updating files:  86% (54069/62870)
+2026-10-26T20:16:04.3862216Z Updating files:  87% (54697/62870)
+2026-10-26T20:16:04.4113929Z Updating files:  88% (55326/62870)
+2026-10-26T20:16:04.4424858Z Updating files:  89% (55955/62870)
+2026-10-26T20:16:04.4651983Z Updating files:  90% (56583/62870)
+2026-10-26T20:16:04.4932915Z Updating files:  91% (57212/62870)
+2026-10-26T20:16:04.5446611Z Updating files:  92% (57841/62870)
+2026-10-26T20:16:04.5776587Z Updating files:  93% (58470/62870)
+2026-10-26T20:16:04.6128818Z Updating files:  94% (59098/62870)
+2026-10-26T20:16:04.6129775Z Updating files:  95% (59727/62870)
+2026-10-26T20:16:04.9589741Z Updating files:  95% (59730/62870)
+2026-10-26T20:16:05.0055904Z Updating files:  96% (60356/62870)
+2026-10-26T20:16:05.0517407Z Updating files:  97% (60984/62870)
+2026-10-26T20:16:05.0872090Z Updating files:  98% (61613/62870)
+2026-10-26T20:16:05.1402928Z Updating files:  99% (62242/62870)
+2026-10-26T20:16:05.1403538Z Updating files: 100% (62870/62870)
+2026-10-26T20:16:05.1404345Z Updating files: 100% (62870/62870), done.
+2026-10-26T20:16:05.2457992Z Note: switching to 'refs/remotes/pull/48/merge'.
+2026-10-26T20:16:05.2458742Z 
+2026-10-26T20:16:05.2459582Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-26T20:16:05.2460373Z changes and commit them, and you can discard any commits you make in this
+2026-10-26T20:16:05.2461113Z state without impacting any branches by switching back to a branch.
+2026-10-26T20:16:05.2461547Z 
+2026-10-26T20:16:05.2461845Z If you want to create a new branch to retain commits you create, you may
+2026-10-26T20:16:05.2462530Z do so (now or later) by using -c with the switch command. Example:
+2026-10-26T20:16:05.2462915Z 
+2026-10-26T20:16:05.2463091Z   git switch -c <new-branch-name>
+2026-10-26T20:16:05.2463393Z 
+2026-10-26T20:16:05.2463561Z Or undo this operation with:
+2026-10-26T20:16:05.2463811Z 
+2026-10-26T20:16:05.2463941Z   git switch -
+2026-10-26T20:16:05.2464138Z 
+2026-10-26T20:16:05.2464474Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-26T20:16:05.2465060Z 
+2026-10-26T20:16:05.2465615Z HEAD is now at 88871ad5 Merge 71b5f87805324c0e0d12c279a4898c8a44f625a9 into d5022e37840329d351bcd6c27fe7d7aad4758544
+2026-10-26T20:16:05.2703125Z ##[endgroup]
+2026-10-26T20:16:05.2754464Z [command]/usr/bin/git log -1 --format=%H
+2026-10-26T20:16:05.2786029Z 88871ad55a1ac348b2070a5ae00714e2299cb646
+2026-10-26T20:16:05.6502123Z ##[group]Run oven-sh/setup-bun@v2
+2026-10-26T20:16:05.6502444Z with:
+2026-10-26T20:16:05.6502683Z   bun-version: 1.4.2
+2026-10-26T20:16:05.6502939Z   no-cache: false
+2026-10-26T20:16:05.6505637Z   token: ***
+2026-10-26T20:16:05.6505876Z ##[endgroup]
+2026-10-26T20:16:06.1151920Z Cache hit for: bun-gmoqYqdUbaYsI0KujeXt7Zg/p0I=
+2026-10-26T20:16:06.7582326Z Received 35684137 of 35684137 (100.0%), 65.4 MBs/sec
+2026-10-26T20:16:06.7582917Z Cache Size: ~34 MB (35684137 B)
+2026-10-26T20:16:06.7610941Z [command]/usr/bin/tar -xf /home/runner/work/_temp/5a6edf7f-2c97-499d-82e4-57f90c6b697b/cache.tzst -P -C /home/runner/work/umf/umf --use-compress-program unzstd
+2026-10-26T20:16:06.8983696Z Cache restored successfully
+2026-10-26T20:16:06.9009263Z [command]/home/runner/.bun/bin/bun --revision
+2026-10-26T20:16:06.9078554Z 1.4.2+744846f84
+2026-10-26T20:16:06.9085031Z Using a cached version of Bun: 1.4.2+744846f84
+2026-10-26T20:16:06.9439198Z ##[group]Run bun install --frozen-lockfile
+2026-10-26T20:16:06.9439670Z [36;1mbun install --frozen-lockfile[0m
+2026-10-26T20:16:06.9597112Z shell: /usr/bin/bash -e {0}
+2026-10-26T20:16:06.9597461Z ##[endgroup]
+2026-10-26T20:16:06.9745427Z bun install v1.4.2 (744846f84)
+2026-10-26T20:16:06.9771638Z Resolving dependencies
+2026-10-26T20:16:06.9775359Z Resolved, downloaded and extracted [1]
+2026-10-26T20:16:08.0345435Z 
+2026-10-26T20:16:08.0345985Z + @dagrejs/dagre@3.1.1
+2026-10-26T20:16:08.0346363Z + @documentdrivendx/umf-schema-browser@2.0.0
+2026-10-26T20:16:08.0346705Z + @launchql/protobufjs@7.2.6
+2026-10-26T20:16:08.0346974Z + @types/bun@1.4.2
+2026-10-26T20:16:08.0347199Z + @types/n3@1.26.4
+2026-10-26T20:16:08.0347437Z + hyparquet@1.31.1
+2026-10-26T20:16:08.0347670Z + playwright@1.63.0
+2026-10-26T20:16:08.0347928Z + rdfxml-streaming-parser@3.3.0
+2026-10-26T20:16:08.0348203Z + typescript@7.0.2
+2026-10-26T20:16:08.0348436Z + typescript-api@5.9.3
+2026-10-26T20:16:08.0348769Z + @bufbuild/protobuf@2.15.0
+2026-10-26T20:16:08.0349040Z + @libpg-query/parser@17.6.10
+2026-10-26T20:16:08.0349305Z + @typespec/compiler@1.16.0
+2026-10-26T20:16:08.0349585Z + @typespec/emitter-framework@0.21.0
+2026-10-26T20:16:08.0349872Z + @typespec/events@0.86.0
+2026-10-26T20:16:08.0350122Z + @typespec/graphql@0.3.0
+2026-10-26T20:16:08.0350363Z + @typespec/http@1.16.0
+2026-10-26T20:16:08.0350609Z + @typespec/json-schema@1.16.0
+2026-10-26T20:16:08.0350888Z + @typespec/mutator-framework@0.17.1
+2026-10-26T20:16:08.0351173Z + @typespec/openapi@1.16.0
+2026-10-26T20:16:08.0351420Z + @typespec/openapi3@1.16.0
+2026-10-26T20:16:08.0351666Z + @typespec/protobuf@0.86.0
+2026-10-26T20:16:08.0351917Z + @typespec/rest@0.86.0
+2026-10-26T20:16:08.0352149Z + @typespec/sse@0.86.0
+2026-10-26T20:16:08.0352385Z + @typespec/streams@0.86.0
+2026-10-26T20:16:08.0352633Z + @typespec/versioning@0.86.0
+2026-10-26T20:16:08.0352884Z + ajv@8.20.0
+2026-10-26T20:16:08.0353099Z + ajv-draft-04@1.0.0
+2026-10-26T20:16:08.0353337Z + apache-arrow@21.2.0
+2026-10-26T20:16:08.0353564Z + avsc@5.7.9
+2026-10-26T20:16:08.0353766Z + buffer@6.0.3
+2026-10-26T20:16:08.0353995Z + flatbuffers@25.9.23
+2026-10-26T20:16:08.0354220Z + graphql@17.0.2
+2026-10-26T20:16:08.0354457Z + jsonld@9.0.0
+2026-10-26T20:16:08.0354901Z + n3@2.7.12
+2026-10-26T20:16:08.0355209Z + rdf-literal@2.0.0
+2026-10-26T20:16:08.0355558Z + rdf-validate-shacl@0.6.5
+2026-10-26T20:16:08.0355905Z + util@0.12.5
+2026-10-26T20:16:08.0356207Z + yaml@2.9.1
+2026-10-26T20:16:08.0356399Z 
+2026-10-26T20:16:08.0356574Z 234 packages installed [1060.00ms]
+2026-10-26T20:16:08.0661741Z ##[group]Run bun scripts/run-tests.ts ./tests/actions/*.test.ts
+2026-10-26T20:16:08.0662418Z [36;1mbun scripts/run-tests.ts ./tests/actions/*.test.ts[0m
+2026-10-26T20:16:08.0730745Z shell: /usr/bin/bash -e {0}
+2026-10-26T20:16:08.0731055Z ##[endgroup]
+2026-10-26T20:16:08.1000700Z {"testProcess":"tests/actions/api.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions/api.test.ts"]}
+2026-10-26T20:16:08.1023329Z bun test v1.4.2 (744846f84)
+2026-10-26T20:16:08.1055486Z 
+2026-10-26T20:16:08.1056590Z ##[group]tests/actions/api.test.ts:
+2026-10-26T20:16:08.8569814Z (pass) inspection reports inert profiles and every primitive/dependency obligation [126.28ms]
+2026-10-26T20:16:09.0522630Z (pass) duplicate registration refuses; unrelated registry semantic errors propagate [195.22ms]
+2026-10-26T20:16:09.3144120Z (pass) semantic violations remain inspectable and prevent assessment/authoring [261.56ms]
+2026-10-26T20:16:09.4468647Z (pass) authoring retains unknown rule/profile meaning without treating it as execution [133.02ms]
+2026-10-26T20:16:09.8268343Z (pass) exact declaration assessment is separate from runtime verification [379.91ms]
+2026-10-26T20:16:10.0293783Z (pass) supported claims cannot erase future effect or model meaning [202.54ms]
+2026-10-26T20:16:10.2592841Z (pass) known roles/1 declaration permits safe editing while unrelated unknown vocabulary survives [229.87ms]
+2026-10-26T20:16:10.7841768Z (pass) unknown package-use metadata and core availability cannot be erased by claims or edits [524.90ms]
+2026-10-26T20:16:11.3589182Z (pass) known profile envelopes/dependencies and model qualifiers preserve unknown meaning [574.68ms]
+2026-10-26T20:16:11.5020372Z (pass) registry callbacks cannot suppress recognized action errors [143.15ms]
+2026-10-26T20:16:12.0313641Z (pass) warnings at existing model obligations and transitive package qualifiers block compatibility [529.22ms]
+2026-10-26T20:16:12.1964277Z (pass) relationship dependency indexes do not import unrelated element vocabulary qualifiers [165.09ms]
+2026-10-26T20:16:12.5888479Z (pass) unknown nested action references remain inspectable and unchecked [392.41ms]
+2026-10-26T20:16:12.7985640Z (pass) opaque future effect objects never acquire model-reference semantics [209.65ms]
+2026-10-26T20:16:13.0006649Z (pass) later known effect reference qualifiers are inventoried before selector compilation [201.96ms]
+2026-10-26T20:16:13.0007316Z 
+2026-10-26T20:16:13.0007890Z ##[endgroup]
+2026-10-26T20:16:13.0008027Z 
+2026-10-26T20:16:13.0008128Z  15 pass
+2026-10-26T20:16:13.0008427Z  0 fail
+2026-10-26T20:16:13.0008745Z  65 expect() calls
+2026-10-26T20:16:13.0009077Z Ran 15 tests across 1 file. [4.90s]
+2026-10-26T20:16:13.0172176Z {"testProcess":"tests/actions/api.test.ts","exitCode":0,"pass":15,"fail":0,"skip":0,"assertions":65,"completeSummary":true,"logSha256":"92de1d91633cd49f37433281df1326f719028ed50c97aa698f9b712d6ebea563"}
+2026-10-26T20:16:13.0173391Z {"testProcess":"tests/actions/assessment.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions/assessment.test.ts"]}
+2026-10-26T20:16:13.0193546Z bun test v1.4.2 (744846f84)
+2026-10-26T20:16:13.0219711Z 
+2026-10-26T20:16:13.0221753Z ##[group]tests/actions/assessment.test.ts:
+2026-10-26T20:16:14.2912892Z (pass) @covers US-900-AC5: complete exact snapshot comparison never proves execution [697.85ms]
+2026-10-26T20:16:16.0318237Z (pass) @covers US-900-AC5: missing, unsupported, unknown and malformed claims cannot waive obligations [1740.42ms]
+2026-10-26T20:16:17.3289665Z (pass) @covers US-900-AC5: unsupported future lifecycle and transitive qualifiers stay unoverrideable [1297.22ms]
+2026-10-26T20:16:17.6602479Z (pass) @covers US-900-AC5: unknown effects and referenced native extensions are never claimed away [331.18ms]
+2026-10-26T20:16:17.6605440Z 
+2026-10-26T20:16:17.6606088Z ##[endgroup]
+2026-10-26T20:16:17.6606280Z 
+2026-10-26T20:16:17.6606408Z  4 pass
+2026-10-26T20:16:17.6606624Z  0 fail
+2026-10-26T20:16:17.6607341Z  30 expect() calls
+2026-10-26T20:16:17.6607606Z Ran 4 tests across 1 file. [4.64s]
+2026-10-26T20:16:17.6788979Z {"testProcess":"tests/actions/assessment.test.ts","exitCode":0,"pass":4,"fail":0,"skip":0,"assertions":30,"completeSummary":true,"logSha256":"61c69874bf3bb049710cef7a576162de39cecf884b3da6acd8c991f0d8650b2d"}
+2026-10-26T20:16:17.6790483Z {"testProcess":"tests/actions/bundled-sdk.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions/bundled-sdk.test.ts"]}
+2026-10-26T20:16:17.6841044Z bun test v1.4.2 (744846f84)
+2026-10-26T20:16:17.6843455Z 
+2026-10-26T20:16:17.6896230Z ##[group]tests/actions/bundled-sdk.test.ts:
+2026-10-26T20:16:27.8028708Z (pass) normal SDK interprets bundled actions without a separate registration or executor [149.48ms]
+2026-10-26T20:16:27.9337045Z (pass) SDK registries are independent and unknown action content remains lossless [130.51ms]
+2026-10-26T20:16:27.9338161Z 
+2026-10-26T20:16:27.9338810Z ##[endgroup]
+2026-10-26T20:16:27.9338996Z 
+2026-10-26T20:16:27.9339157Z  2 pass
+2026-10-26T20:16:27.9339463Z  0 fail
+2026-10-26T20:16:27.9339760Z  11 expect() calls
+2026-10-26T20:16:27.9340126Z Ran 2 tests across 1 file. [10.25s]
+2026-10-26T20:16:27.9761043Z {"testProcess":"tests/actions/bundled-sdk.test.ts","exitCode":0,"pass":2,"fail":0,"skip":0,"assertions":11,"completeSummary":true,"logSha256":"16886489c38a2b227e36bbfc23965452fa26fb39eb7b4d77d4c58dabbf4d5812"}
+2026-10-26T20:16:27.9762283Z {"testProcess":"tests/actions/contracts.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions/contracts.test.ts"]}
+2026-10-26T20:16:27.9780085Z bun test v1.4.2 (744846f84)
+2026-10-26T20:16:27.9808720Z 
+2026-10-26T20:16:27.9809685Z ##[group]tests/actions/contracts.test.ts:
+2026-10-26T20:16:38.5515529Z (pass) @covers US-900-AC1: exact targets and stable identity [352.28ms]
+2026-10-26T20:16:38.6157906Z (pass) @covers US-900-AC2: rules and handlers are inert [64.25ms]
+2026-10-26T20:16:39.5779089Z (pass) @covers US-900-AC3: ordered create link and property effects [962.04ms]
+2026-10-26T20:16:39.7197662Z (pass) @covers US-900-AC4: mandatory execution obligations and handler output metadata [141.86ms]
+2026-10-26T20:16:40.0196225Z (pass) @covers US-900-AC7: DDD bindings are explicit and remain independent [299.79ms]
+2026-10-26T20:16:40.2025121Z (pass) @covers US-900-AC4: opaque policy resources preserve distinct obligations without enforcement evidence [182.83ms]
+2026-10-26T20:16:40.3216467Z (pass) @covers US-900-AC4 @covers US-900-AC5 @covers US-900-AC6: actor profile remains preserved and cannot be claimed as enforced [119.09ms]
+2026-10-26T20:16:40.4855887Z (pass) @covers US-900-AC5: unsupported float and temporal parameter meanings remain unclaimable [163.87ms]
+2026-10-26T20:16:40.4856551Z 
+2026-10-26T20:16:40.4857083Z ##[endgroup]
+2026-10-26T20:16:40.4857222Z 
+2026-10-26T20:16:40.4857382Z  8 pass
+2026-10-26T20:16:40.4857674Z  0 fail
+2026-10-26T20:16:40.4857987Z  94 expect() calls
+2026-10-26T20:16:40.4858301Z Ran 8 tests across 1 file. [12.51s]
+2026-10-26T20:16:40.5382812Z {"testProcess":"tests/actions/contracts.test.ts","exitCode":0,"pass":8,"fail":0,"skip":0,"assertions":94,"completeSummary":true,"logSha256":"49490d35eec2d39248f72f5c7b076dfc9421bd3caef308cb58de90824fbf70e7"}
+2026-10-26T20:16:40.5384014Z {"testProcess":"tests/actions/corpus.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions/corpus.test.ts"]}
+2026-10-26T20:16:40.5413912Z bun test v1.4.2 (744846f84)
+2026-10-26T20:16:40.5438472Z 
+2026-10-26T20:16:40.5439899Z ##[group]tests/actions/corpus.test.ts:
+2026-10-26T20:16:54.3696737Z (pass) @covers US-900-AC1 @covers US-900-AC3 @covers US-900-AC4 @covers US-900-AC6 @covers US-900-AC8 @covers US-900-AC9: language-neutral declaration corpus checks independent expected decisions [4430.23ms]
+2026-10-26T20:16:54.3697489Z 
+2026-10-26T20:16:54.3697992Z ##[endgroup]
+2026-10-26T20:16:54.3698130Z 
+2026-10-26T20:16:54.3698251Z  1 pass
+2026-10-26T20:16:54.3698469Z  0 fail
+2026-10-26T20:16:54.3698679Z  2 expect() calls
+2026-10-26T20:16:54.3699457Z Ran 1 test across 1 file. [13.83s]
+2026-10-26T20:16:54.4253284Z {"testProcess":"tests/actions/corpus.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":2,"completeSummary":true,"logSha256":"1be83427d29eccb52ca179d0c52d38de312bbef0172bc421d5ae95cf26915902"}
+2026-10-26T20:16:54.4254813Z {"testProcess":"tests/actions/interpreter.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions/interpreter.test.ts"]}
+2026-10-26T20:16:54.4272216Z bun test v1.4.2 (744846f84)
+2026-10-26T20:16:54.4300932Z 
+2026-10-26T20:16:54.4301865Z ##[group]tests/actions/interpreter.test.ts:
+2026-10-26T20:16:54.8340972Z (pass) EX-01: exact integer equality/arithmetic never use floating-point coercion [71.72ms]
+2026-10-26T20:16:54.8862945Z (pass) EX-01: optional absence differs from null and can be guarded left-to-right [52.14ms]
+2026-10-26T20:16:54.9031562Z (pass) EX-01: every skipped branch is checked for syntax/type/phase/dependency/access [16.92ms]
+2026-10-26T20:16:54.9227281Z (pass) EX-01: state existence guards absent identities; writes confer no reads [19.45ms]
+2026-10-26T20:16:54.9510101Z (pass) EX-01: outputs and post-state are explicitly postcondition-only [28.35ms]
+2026-10-26T20:16:55.0337077Z (pass) EX-01: depth, syntax node, text, numeric expansion and wrapper limits refuse [82.63ms]
+2026-10-26T20:16:55.0445300Z (pass) EX-01: entity selection preserves original tuples and uses core equality bytes [10.76ms]
+2026-10-26T20:16:55.0584712Z (pass) EX-01: ordered explicit key components require exact Fields and declared dependencies [13.95ms]
+2026-10-26T20:16:55.0717073Z (pass) EX-01: typed admission rejects missing required, wrong wrappers and undeclared values [13.23ms]
+2026-10-26T20:16:55.0779762Z (pass) EX-01: present does not fabricate a field value from an absent entity [6.30ms]
+2026-10-26T20:16:55.1835526Z (pass) EX-01: relationship absence requires an explicit snapshot and exact directed read access [105.42ms]
+2026-10-26T20:16:55.1963943Z (pass) strict consumers refuse external references and uninterpreted selected Field meaning [12.93ms]
+2026-10-26T20:16:55.1974783Z (pass) strict reference admission covers exists frames and selected component inputs [1.13ms]
+2026-10-26T20:16:55.2172208Z (pass) strict exists and input selection refuse transitive unknown Record and Key meaning [19.61ms]
+2026-10-26T20:16:55.2286699Z (pass) rule literal compilation and native snapshot reads refuse coercible malformed wrappers [11.33ms]
+2026-10-26T20:16:55.2287256Z 
+2026-10-26T20:16:55.2287763Z ##[endgroup]
+2026-10-26T20:16:55.2287907Z 
+2026-10-26T20:16:55.2288000Z  15 pass
+2026-10-26T20:16:55.2288215Z  0 fail
+2026-10-26T20:16:55.2288423Z  65 expect() calls
+2026-10-26T20:16:55.2288671Z Ran 15 tests across 1 file. [801.00ms]
+2026-10-26T20:16:55.2378284Z {"testProcess":"tests/actions/interpreter.test.ts","exitCode":0,"pass":15,"fail":0,"skip":0,"assertions":65,"completeSummary":true,"logSha256":"b4cbd1a532f2f8318fcbf634248dedb3cf82068952f9b114c3c4bda761aa764e"}
+2026-10-26T20:16:55.2379632Z {"testProcess":"tests/actions/prepared-identities.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions/prepared-identities.test.ts"]}
+2026-10-26T20:16:55.2399486Z bun test v1.4.2 (744846f84)
+2026-10-26T20:16:55.2428746Z 
+2026-10-26T20:16:55.2429797Z ##[group]tests/actions/prepared-identities.test.ts:
+2026-10-26T20:16:55.7769297Z (pass) prepared keys agree with every existing exact key vector and refusal [200.51ms]
+2026-10-26T20:16:55.7846304Z (pass) prepared receipts retain forged, stale, invalid-source and unknown-member refusals [6.23ms]
+2026-10-26T20:16:55.7858257Z (pass) prepared source, returned receipts, identities and values have isolated lifetimes [2.16ms]
+2026-10-26T20:16:55.9254435Z (pass) prepared action inputs and both selector forms agree with stateless APIs [140.04ms]
+2026-10-26T20:16:55.9360953Z (pass) prepared action cannot observe later declaration/input/output mutation or invoke accessors [10.70ms]
+2026-10-26T20:16:55.9904106Z (pass) reused declaration checks preserve optional absence, output checks and per-call facets [54.19ms]
+2026-10-26T20:16:56.0013839Z (pass) prepared current scopes preserve foreign-source refusals and exact codec-profile verification [11.01ms]
+2026-10-26T20:16:56.0014731Z 
+2026-10-26T20:16:56.0015331Z ##[endgroup]
+2026-10-26T20:16:56.0015521Z 
+2026-10-26T20:16:56.0015661Z  7 pass
+2026-10-26T20:16:56.0015935Z  0 fail
+2026-10-26T20:16:56.0016239Z  169 expect() calls
+2026-10-26T20:16:56.0016589Z Ran 7 tests across 1 file. [761.00ms]
+2026-10-26T20:16:56.0111671Z {"testProcess":"tests/actions/prepared-identities.test.ts","exitCode":0,"pass":7,"fail":0,"skip":0,"assertions":169,"completeSummary":true,"logSha256":"9e31bc4ee515c030bf9ff7de9324fdf1f482d7ac65e0bbb55d9704f14f50a42d"}
+2026-10-26T20:16:56.0112972Z {"testProcess":"tests/actions/preservation.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions/preservation.test.ts"]}
+2026-10-26T20:16:56.0145386Z bun test v1.4.2 (744846f84)
+2026-10-26T20:16:56.0187943Z 
+2026-10-26T20:16:56.0189087Z ##[group]tests/actions/preservation.test.ts:
+2026-10-26T20:16:57.0142435Z (pass) @covers US-900-AC6: JSON/YAML recover exact future meaning and rule text with isolated results [448.12ms]
+2026-10-26T20:16:57.1209921Z (pass) @covers US-900-AC6: an unrelated unknown extension survives a safe known-profile action edit [108.89ms]
+2026-10-26T20:16:57.2133359Z (pass) @covers US-900-AC8: structural/version/identity failures are atomic and getters stay inert [92.32ms]
+2026-10-26T20:16:57.2715492Z (pass) @covers US-900-AC8: every array/expression boundary accepts its bound and refuses bound plus one [58.08ms]
+2026-10-26T20:16:57.2716259Z 
+2026-10-26T20:16:57.2716895Z ##[endgroup]
+2026-10-26T20:16:57.2717110Z 
+2026-10-26T20:16:57.2717246Z  4 pass
+2026-10-26T20:16:57.2717563Z  0 fail
+2026-10-26T20:16:57.2717872Z  42 expect() calls
+2026-10-26T20:16:57.2718230Z Ran 4 tests across 1 file. [1258.00ms]
+2026-10-26T20:16:57.2837993Z {"testProcess":"tests/actions/preservation.test.ts","exitCode":0,"pass":4,"fail":0,"skip":0,"assertions":42,"completeSummary":true,"logSha256":"d0af0816ad925a566262b2805955e1e0a455d5785c5bc30c2b6d94dd23b9a090"}
+2026-10-26T20:16:57.2839466Z {"testProcess":"tests/actions/reports.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions/reports.test.ts"]}
+2026-10-26T20:16:57.2857535Z bun test v1.4.2 (744846f84)
+2026-10-26T20:16:57.2895320Z 
+2026-10-26T20:16:57.2897647Z ##[group]tests/actions/reports.test.ts:
+2026-10-26T20:16:58.2280575Z (pass) @covers US-900-AC5: actual reports satisfy published exact report/profile schemas [242.58ms]
+2026-10-26T20:16:58.2281077Z 
+2026-10-26T20:16:58.2281586Z ##[endgroup]
+2026-10-26T20:16:58.2281725Z 
+2026-10-26T20:16:58.2281826Z  1 pass
+2026-10-26T20:16:58.2282031Z  0 fail
+2026-10-26T20:16:58.2282239Z  16 expect() calls
+2026-10-26T20:16:58.2282489Z Ran 1 test across 1 file. [942.00ms]
+2026-10-26T20:16:58.2399638Z {"testProcess":"tests/actions/reports.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":16,"completeSummary":true,"logSha256":"234cd33f5df031a32cb989ce3cfbf6bb5cadb14f275540f0ed04737112454ee6"}
+2026-10-26T20:16:58.2401123Z {"testProcess":"tests/actions/structure.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions/structure.test.ts"]}
+2026-10-26T20:16:58.2420854Z bun test v1.4.2 (744846f84)
+2026-10-26T20:16:58.2456899Z 
+2026-10-26T20:16:58.2457759Z ##[group]tests/actions/structure.test.ts:
+2026-10-26T20:16:58.5849122Z (pass) action structural admission (partial STP-900 evidence) > actual registry compiler accepts the complete core 0.8.0 fixture [96.80ms]
+2026-10-26T20:16:58.5942568Z (pass) action structural admission (partial STP-900 evidence) > required policy, malformed known effects and ambiguous bindings refuse [9.42ms]
+2026-10-26T20:16:58.5946193Z (pass) action structural admission (partial STP-900 evidence) > future effects and unrelated unknown members retain their exact data [0.32ms]
+2026-10-26T20:16:58.5950169Z (pass) action structural admission (partial STP-900 evidence) > copy isolation and hostile getters [0.41ms]
+2026-10-26T20:16:58.5980922Z (pass) action structural admission (partial STP-900 evidence) > non-BMP expression bounds count UTF-16 units even for opaque languages [3.06ms]
+2026-10-26T20:16:58.6001447Z (pass) action structural admission (partial STP-900 evidence) > array and expression bounds fail before producing a typed action [2.00ms]
+2026-10-26T20:16:58.6002190Z 
+2026-10-26T20:16:58.6002681Z ##[endgroup]
+2026-10-26T20:16:58.6002816Z 
+2026-10-26T20:16:58.6002908Z  6 pass
+2026-10-26T20:16:58.6003114Z  0 fail
+2026-10-26T20:16:58.6003327Z  18 expect() calls
+2026-10-26T20:16:58.6003588Z Ran 6 tests across 1 file. [358.00ms]
+2026-10-26T20:16:58.6078245Z {"testProcess":"tests/actions/structure.test.ts","exitCode":0,"pass":6,"fail":0,"skip":0,"assertions":18,"completeSummary":true,"logSha256":"c6fb43aa7e6f04821ee2a2de41fe7f333078ecb8c1d7cb75f26099974ea2359a"}
+2026-10-26T20:16:58.6079684Z 
+2026-10-26T20:16:58.6079791Z  63 pass
+2026-10-26T20:16:58.6080021Z  0 skip
+2026-10-26T20:16:58.6080223Z  0 fail
+2026-10-26T20:16:58.6080425Z  512 expect() calls
+2026-10-26T20:16:58.6080676Z Ran 63 tests across 10 files. [50.51s]
+2026-10-26T20:16:58.6342521Z ##[group]Run set -o pipefail
+2026-10-26T20:16:58.6342878Z [36;1mset -o pipefail[0m
+2026-10-26T20:16:58.6343225Z [36;1mbun run test:actions 2>&1 | tee command-execution.log[0m
+2026-10-26T20:16:58.6409396Z shell: /usr/bin/bash -e {0}
+2026-10-26T20:16:58.6409677Z ##[endgroup]
+2026-10-26T20:16:58.6532322Z $ bun scripts/prepare-action-tests.ts && bun scripts/run-tests.ts tests/actions-reference
+2026-10-26T20:16:59.0997644Z 17.9: Pulling from library/postgres
+2026-10-26T20:16:59.2249543Z 3cc5adf8351e: Pulling fs layer
+2026-10-26T20:16:59.2250601Z 2f80f30ad7f1: Pulling fs layer
+2026-10-26T20:16:59.2251265Z 472ffdecc4a8: Pulling fs layer
+2026-10-26T20:16:59.2251752Z 7af37a00632a: Pulling fs layer
+2026-10-26T20:16:59.2252237Z a980c9fcef8c: Pulling fs layer
+2026-10-26T20:16:59.2254209Z 4603be59720a: Pulling fs layer
+2026-10-26T20:16:59.2254744Z f0241e7beec7: Pulling fs layer
+2026-10-26T20:16:59.2255234Z 57fb71246055: Pulling fs layer
+2026-10-26T20:16:59.2255749Z 9bd8688dc8e1: Pulling fs layer
+2026-10-26T20:16:59.2256166Z 9a3a8cff569f: Pulling fs layer
+2026-10-26T20:16:59.2256542Z 3d94305211dc: Pulling fs layer
+2026-10-26T20:16:59.2256794Z 1d4072181936: Pulling fs layer
+2026-10-26T20:16:59.2257172Z 156a40446245: Pulling fs layer
+2026-10-26T20:16:59.2257527Z 06b86868b609: Pulling fs layer
+2026-10-26T20:16:59.3440239Z 06b86868b609: Download complete
+2026-10-26T20:16:59.3449853Z 3d94305211dc: Download complete
+2026-10-26T20:16:59.3450310Z 3cc5adf8351e: Download complete
+2026-10-26T20:16:59.3473464Z 7af37a00632a: Download complete
+2026-10-26T20:16:59.3505497Z 1d4072181936: Download complete
+2026-10-26T20:16:59.3506433Z 472ffdecc4a8: Download complete
+2026-10-26T20:16:59.3514937Z a980c9fcef8c: Download complete
+2026-10-26T20:16:59.3523632Z 2f80f30ad7f1: Download complete
+2026-10-26T20:16:59.3551434Z 4603be59720a: Download complete
+2026-10-26T20:16:59.3557551Z 9bd8688dc8e1: Download complete
+2026-10-26T20:16:59.4433572Z 9a3a8cff569f: Download complete
+2026-10-26T20:16:59.4434976Z 156a40446245: Download complete
+2026-10-26T20:16:59.4449418Z 1e1debc0061d: Download complete
+2026-10-26T20:16:59.5416885Z 0d0aaf6e7975: Download complete
+2026-10-26T20:16:59.5421295Z 57fb71246055: Download complete
+2026-10-26T20:16:59.8416832Z f0241e7beec7: Download complete
+2026-10-26T20:17:00.3505965Z a980c9fcef8c: Pull complete
+2026-10-26T20:17:00.3586951Z 57fb71246055: Pull complete
+2026-10-26T20:17:00.4476015Z 1d4072181936: Pull complete
+2026-10-26T20:17:00.4514741Z 9a3a8cff569f: Pull complete
+2026-10-26T20:17:00.6468290Z 7af37a00632a: Pull complete
+2026-10-26T20:17:00.6479584Z 472ffdecc4a8: Pull complete
+2026-10-26T20:17:00.6488328Z 2f80f30ad7f1: Pull complete
+2026-10-26T20:17:00.6518199Z 156a40446245: Pull complete
+2026-10-26T20:17:02.5360407Z 06b86868b609: Pull complete
+2026-10-26T20:17:02.5368835Z 3d94305211dc: Pull complete
+2026-10-26T20:17:02.5390124Z 3cc5adf8351e: Pull complete
+2026-10-26T20:17:02.5409385Z 4603be59720a: Pull complete
+2026-10-26T20:17:02.5418653Z 9bd8688dc8e1: Pull complete
+2026-10-26T20:17:02.5430648Z f0241e7beec7: Pull complete
+2026-10-26T20:17:02.5433042Z Digest: sha256:2a0d0fe14825b0939f78a8cad5cd4e6aa68bf94d0e5dd96e24b6d23af4315545
+2026-10-26T20:17:02.5434099Z Status: Downloaded newer image for postgres:17.9
+2026-10-26T20:17:02.5438628Z docker.io/library/postgres:17.9
+2026-10-26T20:17:02.6359249Z mcr.microsoft.com/playwright@sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27: Pulling from playwright
+2026-10-26T20:17:02.7305260Z e2bfec3c8017: Pulling fs layer
+2026-10-26T20:17:02.7306191Z a2ac83a9a562: Pulling fs layer
+2026-10-26T20:17:02.7307356Z 0926a8eb0e60: Pulling fs layer
+2026-10-26T20:17:02.7308194Z d8cf7dc1ff62: Pulling fs layer
+2026-10-26T20:17:02.7308600Z 74c72610aa2d: Pulling fs layer
+2026-10-26T20:17:02.7309687Z b4dfe9b5d621: Pulling fs layer
+2026-10-26T20:17:02.7310266Z 1b189482e65c: Pulling fs layer
+2026-10-26T20:17:02.8738117Z 74c72610aa2d: Download complete
+2026-10-26T20:17:03.0742254Z 0926a8eb0e60: Download complete
+2026-10-26T20:17:04.0693648Z 1b189482e65c: Download complete
+2026-10-26T20:17:04.1695553Z e2bfec3c8017: Download complete
+2026-10-26T20:17:04.2731883Z a2ac83a9a562: Download complete
+2026-10-26T20:17:04.5722016Z 0926a8eb0e60: Pull complete
+2026-10-26T20:17:05.2706231Z d8cf7dc1ff62: Download complete
+2026-10-26T20:17:05.8694820Z b4dfe9b5d621: Download complete
+2026-10-26T20:17:07.3730323Z e2bfec3c8017: Pull complete
+2026-10-26T20:17:07.4700070Z 74c72610aa2d: Pull complete
+2026-10-26T20:17:12.6736083Z d8cf7dc1ff62: Pull complete
+2026-10-26T20:17:16.1747362Z b4dfe9b5d621: Pull complete
+2026-10-26T20:17:17.6733530Z a2ac83a9a562: Pull complete
+2026-10-26T20:17:18.9430874Z 1b189482e65c: Pull complete
+2026-10-26T20:17:18.9432059Z Digest: sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27
+2026-10-26T20:17:18.9434077Z Status: Downloaded newer image for mcr.microsoft.com/playwright@sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27
+2026-10-26T20:17:18.9441545Z mcr.microsoft.com/playwright@sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27
+2026-10-26T20:17:18.9707110Z {"testProcess":"tests/actions-reference/admission.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/admission.test.ts"]}
+2026-10-26T20:17:18.9731700Z bun test v1.4.2 (744846f84)
+2026-10-26T20:17:18.9759920Z 
+2026-10-26T20:17:18.9761285Z ##[group]tests/actions-reference/admission.test.ts:
+2026-10-26T20:17:18.9946843Z (pass) trusted issuer authenticates human and service independently and refuses credential tampering [0.93ms]
+2026-10-26T20:17:18.9965992Z (pass) logical requests refuse spoofed context and canonicalize version assertions by declaration [1.39ms]
+2026-10-26T20:17:18.9967412Z (pass) lossless native codec preserves every admitted string identity and refuses ambiguous representations [0.53ms]
+2026-10-26T20:17:18.9968211Z 
+2026-10-26T20:17:18.9969162Z ##[endgroup]
+2026-10-26T20:17:18.9969400Z 
+2026-10-26T20:17:18.9969782Z  3 pass
+2026-10-26T20:17:18.9970265Z  0 fail
+2026-10-26T20:17:18.9970719Z  23 expect() calls
+2026-10-26T20:17:18.9971389Z Ran 3 tests across 1 file. [23.00ms]
+2026-10-26T20:17:18.9986788Z {"testProcess":"tests/actions-reference/admission.test.ts","exitCode":0,"pass":3,"fail":0,"skip":0,"assertions":23,"completeSummary":true,"logSha256":"c7fe5d52e26dd0660bb7f1b3774c51db63a9f0ae2881b63b76a225b7100ad662"}
+2026-10-26T20:17:18.9988474Z {"testProcess":"tests/actions-reference/attempts.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/attempts.test.ts"]}
+2026-10-26T20:17:19.0005252Z bun test v1.4.2 (744846f84)
+2026-10-26T20:17:19.0034225Z 
+2026-10-26T20:17:19.0036295Z ##[group]tests/actions-reference/attempts.test.ts:
+2026-10-26T20:17:24.6787520Z (pass) native early-denial journal requires no business SELECT and never records untrusted actor or secrets [5083.10ms]
+2026-10-26T20:17:28.0573818Z (pass) native abort observations survive rollback with distinct retry IDs and one terminal atomic ID [3378.65ms]
+2026-10-26T20:17:30.1289808Z (pass) uncertain acknowledgement shares the terminal ID without inventing rollback or retry [2071.59ms]
+2026-10-26T20:17:32.1685027Z (pass) actual journal SQL failures and throwing diagnostics cannot replace commit or trigger business retry [2039.46ms]
+2026-10-26T20:17:35.2008246Z (pass) operational journal reader has independent header/detail grants and irreversible visibility retention [3032.32ms]
+2026-10-26T20:17:37.1440388Z (pass) caller mutation during journal latency cannot change the admitted invocation [1943.25ms]
+2026-10-26T20:17:39.1441907Z (pass) late native rollback preserves attempt observations and no terminal or business write [2000.08ms]
+2026-10-26T20:17:40.6480746Z (pass) unknown or inconsistent operational headers refuse without changing retained source [1503.90ms]
+2026-10-26T20:17:43.2291684Z (pass) a row committed after the journal existence boundary cannot bypass native expiry [2581.07ms]
+2026-10-26T20:17:46.2169140Z (pass) native journal lock timeout and async failing diagnostics stay outside business classification [2987.71ms]
+2026-10-26T20:17:48.4662402Z (pass) rejected replay and token reuse attribute the original authorized revision, never the requested substitute [2249.35ms]
+2026-10-26T20:17:50.6611274Z (pass) supervisor death after acknowledged start leaves unresolved observation and no invented business result [2194.85ms]
+2026-10-26T20:17:52.7698753Z (pass) unqualified retained deployment meaning stays intact but never enters attempt telemetry [2108.71ms]
+2026-10-26T20:17:54.2630830Z (pass) malformed retained details refuse only authorized detail reads while exact bytes stay intact [1493.18ms]
+2026-10-26T20:17:55.7537034Z (pass) business audit grants cannot authorize operational attempt observations [1489.24ms]
+2026-10-26T20:17:55.7537910Z 
+2026-10-26T20:17:55.7538640Z ##[endgroup]
+2026-10-26T20:17:55.7538921Z 
+2026-10-26T20:17:55.7539243Z  15 pass
+2026-10-26T20:17:55.7539690Z  0 fail
+2026-10-26T20:17:55.7540171Z  146 expect() calls
+2026-10-26T20:17:55.7540741Z Ran 15 tests across 1 file. [36.75s]
+2026-10-26T20:17:55.7671361Z {"testProcess":"tests/actions-reference/attempts.test.ts","exitCode":0,"pass":15,"fail":0,"skip":0,"assertions":146,"completeSummary":true,"logSha256":"69ead12cf7c37398c1aee7f58fe7ca0ee85625355d6864dcbd4bef30d00ff472"}
+2026-10-26T20:17:55.7673031Z {"testProcess":"tests/actions-reference/audit.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/audit.test.ts"]}
+2026-10-26T20:17:55.7689311Z bun test v1.4.2 (744846f84)
+2026-10-26T20:17:55.7720786Z 
+2026-10-26T20:17:55.7723551Z ##[group]tests/actions-reference/audit.test.ts:
+2026-10-26T20:17:58.7614003Z (pass) native terminal audit protects executor attempt/profile, trusted actor/policy and omits raw inputs [2408.28ms]
+2026-10-26T20:18:00.8572190Z (pass) native audit access denies before row queries and separates header/detail roles and family scope [2095.85ms]
+2026-10-26T20:18:03.9364800Z (pass) native audit horizon is pinned, expiry irreversible and payload selection stops before disclosure [3079.12ms]
+2026-10-26T20:18:03.9365582Z 
+2026-10-26T20:18:03.9366226Z ##[endgroup]
+2026-10-26T20:18:03.9366433Z 
+2026-10-26T20:18:03.9366576Z  3 pass
+2026-10-26T20:18:03.9366884Z  0 fail
+2026-10-26T20:18:03.9367191Z  83 expect() calls
+2026-10-26T20:18:03.9367562Z Ran 3 tests across 1 file. [8.17s]
+2026-10-26T20:18:03.9485879Z {"testProcess":"tests/actions-reference/audit.test.ts","exitCode":0,"pass":3,"fail":0,"skip":0,"assertions":83,"completeSummary":true,"logSha256":"6af5394519c42d690f996f148e8dd9cdd2068f8f961d00aaee74d985d1e6ec67"}
+2026-10-26T20:18:03.9487288Z {"testProcess":"tests/actions-reference/composite-key.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/composite-key.test.ts"]}
+2026-10-26T20:18:03.9509530Z bun test v1.4.2 (744846f84)
+2026-10-26T20:18:03.9533685Z 
+2026-10-26T20:18:03.9535210Z ##[group]tests/actions-reference/composite-key.test.ts:
+2026-10-26T20:18:09.3625716Z {"nativeCompositeKey":{"nativeVersion":"17.9 (Debian 17.9-1.pgdg13+1)","bun":"1.4.2","components":2,"family":"string","swappedIdentitiesDistinct":true,"commits":2,"restartedReplay":"exact","scope":"One two-component primary Key, two reversed tuples, explicit resource versions and recipe typed identities; no universal Key-domain claim"}}
+2026-10-26T20:18:09.5113529Z (pass) native composite Keys preserve ordered components through preparation, freeze, typed results and restarted replay [4949.02ms]
+2026-10-26T20:18:13.2441949Z {"nativeUnsupportedRelationships":{"nativeVersion":"17.9 (Debian 17.9-1.pgdg13+1)","bun":"1.4.2","declarations":["owned","association-record"],"validMetadata":true,"independentLayoutControl":"admitted","allInputsTyped":"admitted","prepare":"refused","preview":"unsupported/PARAMETER","invoke":"unsupported/PARAMETER","businessAccesses":0,"transactionalWrites":0,"allActionTablesGuarded":20,"allActionRowsUnchanged":true,"scope":"Named unqualified arrangements refuse through actual native admission; no support or generic database-trigger detection claim"}}
+2026-10-26T20:18:13.4076167Z (pass) native owned and association-Record declarations refuse before business access or any transactional write [3892.41ms]
+2026-10-26T20:18:13.4076803Z 
+2026-10-26T20:18:13.4077302Z ##[endgroup]
+2026-10-26T20:18:13.4077440Z 
+2026-10-26T20:18:13.4077535Z  2 pass
+2026-10-26T20:18:13.4077752Z  0 fail
+2026-10-26T20:18:13.4077964Z  51 expect() calls
+2026-10-26T20:18:13.4078213Z Ran 2 tests across 1 file. [9.45s]
+2026-10-26T20:18:13.4186032Z {"testProcess":"tests/actions-reference/composite-key.test.ts","exitCode":0,"pass":2,"fail":0,"skip":0,"assertions":51,"completeSummary":true,"logSha256":"42eb5f82de1d2868f1c362271aa38ad0cc554b2b6e2358fbd1ade5a30255bfc0"}
+2026-10-26T20:18:13.4187464Z {"testProcess":"tests/actions-reference/create.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/create.test.ts"]}
+2026-10-26T20:18:13.4216058Z bun test v1.4.2 (744846f84)
+2026-10-26T20:18:13.4235679Z 
+2026-10-26T20:18:13.4239041Z ##[group]tests/actions-reference/create.test.ts:
+2026-10-26T20:18:22.8700072Z (pass) native CREATE proves aliases, preserves pre-state, supports later SET and blocks all-Key/concurrent collisions [8803.23ms]
+2026-10-26T20:18:22.8735227Z 
+2026-10-26T20:18:22.8736272Z ##[endgroup]
+2026-10-26T20:18:22.8736455Z 
+2026-10-26T20:18:22.8736557Z  1 pass
+2026-10-26T20:18:22.8736769Z  0 fail
+2026-10-26T20:18:22.8736996Z  31 expect() calls
+2026-10-26T20:18:22.8737378Z Ran 1 test across 1 file. [9.45s]
+2026-10-26T20:18:22.8876419Z {"testProcess":"tests/actions-reference/create.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":31,"completeSummary":true,"logSha256":"5c129f8a6e2e60a417cb7ef83f9b81a7eba5b5e1c09986f0be98459743b7cff2"}
+2026-10-26T20:18:22.8878025Z {"testProcess":"tests/actions-reference/creation-relationships.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/creation-relationships.test.ts"]}
+2026-10-26T20:18:22.8896264Z bun test v1.4.2 (744846f84)
+2026-10-26T20:18:22.8925036Z 
+2026-10-26T20:18:22.8926199Z ##[group]tests/actions-reference/creation-relationships.test.ts:
+2026-10-26T20:18:23.9317590Z (pass) CREATE lower bounds use targets per source and sources per target independently [422.68ms]
+2026-10-26T20:18:23.9318340Z 
+2026-10-26T20:18:23.9318889Z ##[endgroup]
+2026-10-26T20:18:23.9319093Z 
+2026-10-26T20:18:23.9319227Z  1 pass
+2026-10-26T20:18:23.9319523Z  0 fail
+2026-10-26T20:18:23.9319807Z  8 expect() calls
+2026-10-26T20:18:23.9320146Z Ran 1 test across 1 file. [1041.00ms]
+2026-10-26T20:18:23.9437720Z {"testProcess":"tests/actions-reference/creation-relationships.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":8,"completeSummary":true,"logSha256":"97799535d2e17c44aa73d9d2646d9d54b18164790da87cf6e3de56bba0983b8e"}
+2026-10-26T20:18:23.9439114Z {"testProcess":"tests/actions-reference/delete.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/delete.test.ts"]}
+2026-10-26T20:18:23.9480105Z bun test v1.4.2 (744846f84)
+2026-10-26T20:18:23.9495426Z 
+2026-10-26T20:18:23.9496920Z ##[group]tests/actions-reference/delete.test.ts:
+2026-10-26T20:18:30.3862433Z (pass) native deletion is canonical, atomic and replayable; alias reuse and remaining-link constraints roll back [5804.45ms]
+2026-10-26T20:18:30.3863427Z 
+2026-10-26T20:18:30.3864310Z ##[endgroup]
+2026-10-26T20:18:30.3864817Z 
+2026-10-26T20:18:30.3864967Z  1 pass
+2026-10-26T20:18:30.3865278Z  0 fail
+2026-10-26T20:18:30.3865596Z  21 expect() calls
+2026-10-26T20:18:30.3865969Z Ran 1 test across 1 file. [6.44s]
+2026-10-26T20:18:30.4029283Z {"testProcess":"tests/actions-reference/delete.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":21,"completeSummary":true,"logSha256":"738ccef91fb4ca5da8dfcc782f777be01421d640ab052c597a1c793b5a6f4767"}
+2026-10-26T20:18:30.4031848Z {"testProcess":"tests/actions-reference/discovery.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/discovery.test.ts"]}
+2026-10-26T20:18:30.4048951Z bun test v1.4.2 (744846f84)
+2026-10-26T20:18:30.4078293Z 
+2026-10-26T20:18:30.4079134Z ##[group]tests/actions-reference/discovery.test.ts:
+2026-10-26T20:18:33.7614231Z (pass) native discovery permission protects token presence across changing revision policies before any token SQL access [2732.22ms]
+2026-10-26T20:18:33.7615076Z 
+2026-10-26T20:18:33.7615495Z ##[endgroup]
+2026-10-26T20:18:33.7615630Z 
+2026-10-26T20:18:33.7615733Z  1 pass
+2026-10-26T20:18:33.7615944Z  0 fail
+2026-10-26T20:18:33.7616151Z  21 expect() calls
+2026-10-26T20:18:33.7616405Z Ran 1 test across 1 file. [3.36s]
+2026-10-26T20:18:33.7731375Z {"testProcess":"tests/actions-reference/discovery.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":21,"completeSummary":true,"logSha256":"4f0fd0cf22c22ebe2c2f528ce36f962423886a8a7dd36bea00002c1c4f43596d"}
+2026-10-26T20:18:33.7732748Z {"testProcess":"tests/actions-reference/evolution.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/evolution.test.ts"]}
+2026-10-26T20:18:33.7750677Z bun test v1.4.2 (744846f84)
+2026-10-26T20:18:33.7779336Z 
+2026-10-26T20:18:33.7780704Z ##[group]tests/actions-reference/evolution.test.ts:
+2026-10-26T20:18:36.6221142Z (pass) evolution review preserves exact signature/frame/condition/policy/profile/unknown changes without proving caller compatibility [2244.18ms]
+2026-10-26T20:18:39.8565906Z (pass) native immutable revision comparison flags strengthened conditions and leaves original replay and explicit fresh selection independent [3234.44ms]
+2026-10-26T20:18:39.8566527Z 
+2026-10-26T20:18:39.8566952Z ##[endgroup]
+2026-10-26T20:18:39.8567079Z 
+2026-10-26T20:18:39.8567181Z  2 pass
+2026-10-26T20:18:39.8567386Z  0 fail
+2026-10-26T20:18:39.8567639Z  57 expect() calls
+2026-10-26T20:18:39.8567888Z Ran 2 tests across 1 file. [6.08s]
+2026-10-26T20:18:39.8697979Z {"testProcess":"tests/actions-reference/evolution.test.ts","exitCode":0,"pass":2,"fail":0,"skip":0,"assertions":57,"completeSummary":true,"logSha256":"e82625a210b29e566eaa28f1025a8c9b64d927d3fd900e71b3cd5604533787a1"}
+2026-10-26T20:18:39.8699285Z {"testProcess":"tests/actions-reference/executor.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/executor.test.ts"]}
+2026-10-26T20:18:39.8718299Z bun test v1.4.2 (744846f84)
+2026-10-26T20:18:39.8748027Z 
+2026-10-26T20:18:39.8749028Z ##[group]tests/actions-reference/executor.test.ts:
+2026-10-26T20:18:45.4126105Z (pass) native SET invocation atomically commits typed verification, replays, preserves no-op versions and rolls back audit failure [4941.66ms]
+2026-10-26T20:18:48.9418553Z (pass) native missing/version/precondition terminal decisions persist and replay without reevaluating state [3529.22ms]
+2026-10-26T20:18:51.9071789Z (pass) native concurrent invokes retain one same-token result and serialize distinct-token resource assertions [2965.24ms]
+2026-10-26T20:18:51.9072635Z 
+2026-10-26T20:18:51.9073073Z ##[endgroup]
+2026-10-26T20:18:51.9073208Z 
+2026-10-26T20:18:51.9073332Z  3 pass
+2026-10-26T20:18:51.9073565Z  0 fail
+2026-10-26T20:18:51.9073775Z  58 expect() calls
+2026-10-26T20:18:51.9074042Z Ran 3 tests across 1 file. [12.04s]
+2026-10-26T20:18:51.9229558Z {"testProcess":"tests/actions-reference/executor.test.ts","exitCode":0,"pass":3,"fail":0,"skip":0,"assertions":58,"completeSummary":true,"logSha256":"90f6ee63812131e4f92ada8a3fe27d2c75c12677afe357d006c25f84c819b3f7"}
+2026-10-26T20:18:51.9231126Z {"testProcess":"tests/actions-reference/fresh-admission.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/fresh-admission.test.ts"]}
+2026-10-26T20:18:51.9251776Z bun test v1.4.2 (744846f84)
+2026-10-26T20:18:51.9280110Z 
+2026-10-26T20:18:51.9281432Z ##[group]tests/actions-reference/fresh-admission.test.ts:
+2026-10-26T20:18:54.8268462Z (pass) native fresh admission refuses full-declaration unknowns and fences without business or terminal writes [2292.72ms]
+2026-10-26T20:18:54.8269296Z 
+2026-10-26T20:18:54.8270126Z ##[endgroup]
+2026-10-26T20:18:54.8270312Z 
+2026-10-26T20:18:54.8270456Z  1 pass
+2026-10-26T20:18:54.8270752Z  0 fail
+2026-10-26T20:18:54.8271050Z  9 expect() calls
+2026-10-26T20:18:54.8271378Z Ran 1 test across 1 file. [2.90s]
+2026-10-26T20:18:54.8349922Z {"testProcess":"tests/actions-reference/fresh-admission.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":9,"completeSummary":true,"logSha256":"d3e104a13ae088980e156ab3c3bf940a09b70f46d6ba5f16fef657cb93bfa8fd"}
+2026-10-26T20:18:54.8351497Z {"testProcess":"tests/actions-reference/gateway.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/gateway.test.ts"]}
+2026-10-26T20:18:54.8369339Z bun test v1.4.2 (744846f84)
+2026-10-26T20:18:54.8398084Z 
+2026-10-26T20:18:54.8398831Z ##[group]tests/actions-reference/gateway.test.ts:
+2026-10-26T20:18:55.5211129Z (pass) gateway verifies immediate writes, reports net restoration and isolates snapshots [43.21ms]
+2026-10-26T20:18:55.5358012Z (pass) gateway permanently aborts outside-frame, immutable-Key and invalid refinement attempts [14.66ms]
+2026-10-26T20:18:55.5645697Z (pass) gateway unions write aliases while read grants cannot widen write permission [28.73ms]
+2026-10-26T20:18:55.5811836Z (pass) public typed input admission refuses coercible malformed literal wrappers [16.59ms]
+2026-10-26T20:18:56.2776707Z (pass) gateway operation bound counts no-ops and permanently aborts on operation 257 [696.44ms]
+2026-10-26T20:18:56.2854107Z (pass) gateway reads candidate state through read aliases without granting writes and keeps pre-state frozen [7.80ms]
+2026-10-26T20:18:56.3268826Z (pass) gateway delete unions only write grants and permanently rejects canonical alias reuse [41.41ms]
+2026-10-26T20:18:56.3357553Z (pass) gateway runtime value refinement failure has stable CONSTRAINT and permanent abort [8.88ms]
+2026-10-26T20:18:56.3655784Z (pass) gateway CREATE keeps pre-state absent, emits one final creation and never permits created deletion [29.73ms]
+2026-10-26T20:18:56.3765505Z (pass) gateway CREATE requires the exact frozen primary tuple and primary-origin create flag [10.94ms]
+2026-10-26T20:18:56.3841694Z (pass) gateway CREATE cannot borrow Field permission from a proven read alias [7.60ms]
+2026-10-26T20:18:56.3842279Z 
+2026-10-26T20:18:56.3842693Z ##[endgroup]
+2026-10-26T20:18:56.3842837Z 
+2026-10-26T20:18:56.3842992Z  11 pass
+2026-10-26T20:18:56.3843310Z  0 fail
+2026-10-26T20:18:56.3843598Z  349 expect() calls
+2026-10-26T20:18:56.3843945Z Ran 11 tests across 1 file. [1.55s]
+2026-10-26T20:18:56.3940282Z {"testProcess":"tests/actions-reference/gateway.test.ts","exitCode":0,"pass":11,"fail":0,"skip":0,"assertions":349,"completeSummary":true,"logSha256":"1ac949bca2c27b99bf672099418b1f91fb83cfc4975550b2feb127081e633fd0"}
+2026-10-26T20:18:56.3942170Z {"testProcess":"tests/actions-reference/graph.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/graph.test.ts"]}
+2026-10-26T20:18:56.3975443Z bun test v1.4.2 (744846f84)
+2026-10-26T20:18:56.3997798Z 
+2026-10-26T20:18:56.3998907Z ##[group]tests/actions-reference/graph.test.ts:
+2026-10-26T20:18:58.7275841Z (pass) native final graph applies CREATE/LINK and UNLINK/DELETE deltas and sees unselected competing edges [1707.53ms]
+2026-10-26T20:18:58.7276614Z 
+2026-10-26T20:18:58.7277186Z ##[endgroup]
+2026-10-26T20:18:58.7277382Z 
+2026-10-26T20:18:58.7277520Z  1 pass
+2026-10-26T20:18:58.7277813Z  0 fail
+2026-10-26T20:18:58.7278110Z  15 expect() calls
+2026-10-26T20:18:58.7278473Z Ran 1 test across 1 file. [2.33s]
+2026-10-26T20:18:58.7368525Z {"testProcess":"tests/actions-reference/graph.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":15,"completeSummary":true,"logSha256":"7de9afd71fa5be92cb84cb9110c94728dd6368556ebaffff48f7e35dd2f4bc26"}
+2026-10-26T20:18:58.7370192Z {"testProcess":"tests/actions-reference/handler-executor.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/handler-executor.test.ts"]}
+2026-10-26T20:18:58.7389306Z bun test v1.4.2 (744846f84)
+2026-10-26T20:18:58.7423502Z 
+2026-10-26T20:18:58.7425001Z ##[group]tests/actions-reference/handler-executor.test.ts:
+2026-10-26T20:19:04.6290634Z (pass) native isolated handler commits typed outputs, pins verification, previews without effects and replays after retirement/restart [5276.19ms]
+2026-10-26T20:19:21.3205232Z (pass) native handler access/output/postcondition failures roll back every protected and business write [16691.39ms]
+2026-10-26T20:19:27.8238109Z (pass) native handler creates complete Keys, returns a verified alternate identity and refuses malformed CREATE without leakage [6503.33ms]
+2026-10-26T20:19:30.7014829Z (pass) arbitrary entity outputs disclose neither existing nor absent unselected native identities and execute zero business queries [2877.64ms]
+2026-10-26T20:19:36.4975414Z (pass) native handler CREATE/SET/LINK then UNLINK/DELETE shares graph invariants and read-only target stamps [5795.66ms]
+2026-10-26T20:19:39.3690618Z (pass) retirement during an admitted native handler pins its accepted build and fences subsequent fresh admission [2871.89ms]
+2026-10-26T20:19:43.6428658Z (pass) durable operator catalog survives new consumers, scopes stores and permanently retains retirement [4273.82ms]
+2026-10-26T20:19:47.5689686Z (pass) native catalog retirement waits for admitted handler commit then refuses fresh work [3926.04ms]
+2026-10-26T20:19:47.5690361Z 
+2026-10-26T20:19:47.5690868Z ##[endgroup]
+2026-10-26T20:19:47.5691069Z 
+2026-10-26T20:19:47.5691201Z  8 pass
+2026-10-26T20:19:47.5691496Z  0 fail
+2026-10-26T20:19:47.5691800Z  211 expect() calls
+2026-10-26T20:19:47.5692107Z Ran 8 tests across 1 file. [48.83s]
+2026-10-26T20:19:47.5858268Z {"testProcess":"tests/actions-reference/handler-executor.test.ts","exitCode":0,"pass":8,"fail":0,"skip":0,"assertions":211,"completeSummary":true,"logSha256":"3cdabd06bdc340f4cdced72c5b4ddb243399ca21d5feb8cc46cf00e5be1c4cb9"}
+2026-10-26T20:19:47.5860327Z {"testProcess":"tests/actions-reference/handlers.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/handlers.test.ts"]}
+2026-10-26T20:19:47.5878323Z bun test v1.4.2 (744846f84)
+2026-10-26T20:19:47.5908780Z 
+2026-10-26T20:19:47.5909869Z ##[group]tests/actions-reference/handlers.test.ts:
+2026-10-26T20:19:48.1921742Z (pass) trusted handler allowlist binds exact immutable copied code and retirement cannot be silently reinstalled [0.93ms]
+2026-10-26T20:19:48.4874785Z (pass) qualified handlers still require whole understood declaration including opaque profile members and unused model dependencies [295.21ms]
+2026-10-26T20:19:48.4875717Z 
+2026-10-26T20:19:48.4876261Z ##[endgroup]
+2026-10-26T20:19:48.4876454Z 
+2026-10-26T20:19:48.4876604Z  2 pass
+2026-10-26T20:19:48.4876942Z  0 fail
+2026-10-26T20:19:48.4877243Z  10 expect() calls
+2026-10-26T20:19:48.4877604Z Ran 2 tests across 1 file. [899.00ms]
+2026-10-26T20:19:48.4981316Z {"testProcess":"tests/actions-reference/handlers.test.ts","exitCode":0,"pass":2,"fail":0,"skip":0,"assertions":10,"completeSummary":true,"logSha256":"17181842638ee9743a41a19a39ed87026d801dfe270ccb09de621adf379e8eac"}
+2026-10-26T20:19:48.4982781Z {"testProcess":"tests/actions-reference/intent.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/intent.test.ts"]}
+2026-10-26T20:19:48.5027215Z bun test v1.4.2 (744846f84)
+2026-10-26T20:19:48.5037732Z 
+2026-10-26T20:19:48.5039420Z ##[group]tests/actions-reference/intent.test.ts:
+2026-10-26T20:19:49.8232432Z (pass) original-revision intent uses exact typed equality, presence and declared concurrency order [723.96ms]
+2026-10-26T20:19:49.8255302Z 
+2026-10-26T20:19:49.8256075Z ##[endgroup]
+2026-10-26T20:19:49.8256281Z 
+2026-10-26T20:19:49.8256432Z  1 pass
+2026-10-26T20:19:49.8257147Z  0 fail
+2026-10-26T20:19:49.8257369Z  7 expect() calls
+2026-10-26T20:19:49.8257618Z Ran 1 test across 1 file. [1323.00ms]
+2026-10-26T20:19:49.8373005Z {"testProcess":"tests/actions-reference/intent.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":7,"completeSummary":true,"logSha256":"0510a5de3de3a44f0d75a4c0a5bd8f8153c0f607516452a07db99ee8c2040d75"}
+2026-10-26T20:19:49.8376629Z {"testProcess":"tests/actions-reference/invariant-mutants.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/invariant-mutants.test.ts"]}
+2026-10-26T20:19:49.8392506Z bun test v1.4.2 (744846f84)
+2026-10-26T20:19:49.8421999Z 
+2026-10-26T20:19:49.8423039Z ##[group]tests/actions-reference/invariant-mutants.test.ts:
+2026-10-26T20:19:54.8716916Z {"nativeInvariantMutation":{"bun":"1.4.2","nativeVersion":"17.9 (Debian 17.9-1.pgdg13+1)","killed":2,"total":2,"witnesses":[{"id":"per-key-canonical-identity","sourceSha256":"7a0283730f6cb495ff3942aea3f6c0485d7cba7b86e25b8e0c01d5caeb82bb1e","mutantSha256":"b2d5a78475a57bfde038c6d830370fb5ed17e4eed60305aa5a7f358fd4c2cc0a","baseline":"passed","boundary":"alias canonical identity","expected":["entity:2","entity:2"],"actual":["key:[\"sales\",\"order\",\"external\",\"554d464b3101040c65787465726e616c2d6f6e65\"]","key:[\"sales\",\"order\",\"pk\",\"554d464b310104036f6e65\"]"]},{"id":"skip-missing-projection-prefix","sourceSha256":"f370c319e24c18b1516e82ff77279abfd554abc82c016d34a592c72bf5dc8ae0","mutantSha256":"5c4d3527220a3e7ae8ca10277eb27411ae9cb85aa502cc180ff6c6e6fb7065d0","baseline":"passed","boundary":"projection missing-prefix visibility","expected":{"delivery":{"status":"delivered","prefix":"0"},"prefix":"0","content":{"profile":{"id":"umf.actions.native-graph","version":"1"},"entities":[{"id":"5","record":{"element":"order","module":"sales"},"fields":{"[\"sales\",\"id\"]":{"string":"one"},"[\"sales\",\"status\"]":{"string":"pending"}},"version":"original-version"},{"id":"6","record":{"element":"order","module":"sales"},"fields":{"[\"sales\",\"id\"]":{"string":"two"},"[\"sales\",\"status\"]":{"string":"pending"}},"version":"original-version"}],"links":[]},"queued":["2"],"readStatus":"pending"},"actual":{"delivery":{"status":"delivered","prefix":"2"},"prefix":"2","content":{"profile":{"id":"umf.actions.native-graph","version":"1"},"entities":[{"id":"5","record":{"element":"order","module":"sales"},"fields":{"[\"sales\",\"id\"]":{"string":"one"},"[\"sales\",\"status\"]":{"string":"pending"}},"version":"original-version"},{"id":"6","record":{"element":"order","module":"sales"},"fields":{"[\"sales\",\"id\"]":{"string":"two"},"[\"sales\",\"status\"]":{"string":"approved"}},"version":"b6210f8167fd0359e4ff376202fb7b0ffc0498d68db6e1aac35c3816b563e8ab"}],"links":[]},"queued":["2"],"readStatus":"visible"}}],"scope":"One native primary/alternate alias pair and two disjoint SET commits delivered 2-before-1; actual copied implementations, exact semantic failures only; no universal refinement claim"}}
+2026-10-26T20:19:55.0325827Z (pass) native alias and projection histories kill actual canonicalization and prefix-gap implementation mutants [4601.89ms]
+2026-10-26T20:19:55.0326837Z 
+2026-10-26T20:19:55.0327539Z ##[endgroup]
+2026-10-26T20:19:55.0328922Z 
+2026-10-26T20:19:55.0329490Z  1 pass
+2026-10-26T20:19:55.0329857Z  0 fail
+2026-10-26T20:19:55.0330186Z  6 expect() calls
+2026-10-26T20:19:55.0330547Z Ran 1 test across 1 file. [5.19s]
+2026-10-26T20:19:55.0502061Z {"testProcess":"tests/actions-reference/invariant-mutants.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":6,"completeSummary":true,"logSha256":"ae394c1beb0361dca45ba15ed43478e300989c46fac260f9d8fa4624d04422a2"}
+2026-10-26T20:19:55.0503464Z {"testProcess":"tests/actions-reference/launch-owner-metadata.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/launch-owner-metadata.test.ts"]}
+2026-10-26T20:19:55.0520702Z bun test v1.4.2 (744846f84)
+2026-10-26T20:19:55.0547334Z 
+2026-10-26T20:19:55.0548307Z ##[group]tests/actions-reference/launch-owner-metadata.test.ts:
+2026-10-26T20:20:02.3271378Z (pass) cold installation metadata can exceed two seconds; a stalled observation refuses before ownership [7257.95ms]
+2026-10-26T20:20:02.3272099Z 
+2026-10-26T20:20:02.3272610Z ##[endgroup]
+2026-10-26T20:20:02.3273205Z 
+2026-10-26T20:20:02.3273349Z  1 pass
+2026-10-26T20:20:02.3273656Z  0 fail
+2026-10-26T20:20:02.3273943Z  4 expect() calls
+2026-10-26T20:20:02.3274291Z Ran 1 test across 1 file. [7.27s]
+2026-10-26T20:20:02.3275804Z {"testProcess":"tests/actions-reference/launch-owner-metadata.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":4,"completeSummary":true,"logSha256":"1baf8bd73b7f6942b2e46d2de293e5bcceeff6c82eda64965cb00abc2d843ccf"}
+2026-10-26T20:20:02.3277229Z {"testProcess":"tests/actions-reference/launch-owner.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/launch-owner.test.ts"]}
+2026-10-26T20:20:02.3298275Z bun test v1.4.2 (744846f84)
+2026-10-26T20:20:02.3338879Z 
+2026-10-26T20:20:02.3340388Z ##[group]tests/actions-reference/launch-owner.test.ts:
+2026-10-26T20:20:04.1092678Z (pass) native delayed CREATE preserves unresolved ownership across consumer restart, never starts late and recovers only acknowledged CID [1751.17ms]
+2026-10-26T20:20:05.7766593Z (pass) native delayed START cannot activate an acknowledged container after immutable CID removal [1667.42ms]
+2026-10-26T20:20:06.1299870Z (pass) native handler uses the reviewed program snapshot across durable launcher admission latency [353.31ms]
+2026-10-26T20:20:06.6010253Z (pass) stale owner cannot acknowledge into or release a subsequent slot; malformed ownership keeps admission closed [470.94ms]
+2026-10-26T20:20:06.6010869Z 
+2026-10-26T20:20:06.6011310Z ##[endgroup]
+2026-10-26T20:20:06.6011441Z 
+2026-10-26T20:20:06.6011548Z  4 pass
+2026-10-26T20:20:06.6011748Z  0 fail
+2026-10-26T20:20:06.6011956Z  40 expect() calls
+2026-10-26T20:20:06.6012205Z Ran 4 tests across 1 file. [4.27s]
+2026-10-26T20:20:06.6042655Z {"testProcess":"tests/actions-reference/launch-owner.test.ts","exitCode":0,"pass":4,"fail":0,"skip":0,"assertions":40,"completeSummary":true,"logSha256":"1551ae0d58fc3df8a9dfc6498be0b12cdd38ce9ab6f7e04d481a159eaa4b3517"}
+2026-10-26T20:20:06.6045006Z {"testProcess":"tests/actions-reference/link-executor.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/link-executor.test.ts"]}
+2026-10-26T20:20:06.6067308Z bun test v1.4.2 (744846f84)
+2026-10-26T20:20:06.6115140Z 
+2026-10-26T20:20:06.6116498Z ##[group]tests/actions-reference/link-executor.test.ts:
+2026-10-26T20:20:12.8474787Z (pass) native ordered CREATE/LINK satisfies required relationships, stamps read-only targets and replays exact typed changes [5632.33ms]
+2026-10-26T20:20:23.6181225Z (pass) native LINK set no-ops/restoration preserve versions; hidden-edge constraints precede posts and link-only stamps conflict [10770.61ms]
+2026-10-26T20:20:23.6181811Z 
+2026-10-26T20:20:23.6182223Z ##[endgroup]
+2026-10-26T20:20:23.6182386Z 
+2026-10-26T20:20:23.6182485Z  2 pass
+2026-10-26T20:20:23.6182690Z  0 fail
+2026-10-26T20:20:23.6182899Z  79 expect() calls
+2026-10-26T20:20:23.6183170Z Ran 2 tests across 1 file. [17.01s]
+2026-10-26T20:20:23.6396346Z {"testProcess":"tests/actions-reference/link-executor.test.ts","exitCode":0,"pass":2,"fail":0,"skip":0,"assertions":79,"completeSummary":true,"logSha256":"75f40ddbc4f622cf22781cd94fce338e389f58d6082019895a34ba2728b6bd82"}
+2026-10-26T20:20:23.6398268Z {"testProcess":"tests/actions-reference/lookup-horizon.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/lookup-horizon.test.ts"]}
+2026-10-26T20:20:23.6416658Z bun test v1.4.2 (744846f84)
+2026-10-26T20:20:23.6451800Z 
+2026-10-26T20:20:23.6453420Z ##[group]tests/actions-reference/lookup-horizon.test.ts:
+2026-10-26T20:20:24.2691407Z (pass) logical lookup malformed envelopes refuse PARAMETER before authentication or native access [0.67ms]
+2026-10-26T20:20:26.9368302Z (pass) native namespace-lifetime token recognition survives expiry, changed intent and a fresh consumer without reexecution [2667.59ms]
+2026-10-26T20:20:26.9369275Z 
+2026-10-26T20:20:26.9369698Z ##[endgroup]
+2026-10-26T20:20:26.9369826Z 
+2026-10-26T20:20:26.9369928Z  2 pass
+2026-10-26T20:20:26.9370317Z  0 fail
+2026-10-26T20:20:26.9370532Z  15 expect() calls
+2026-10-26T20:20:26.9370782Z Ran 2 tests across 1 file. [3.29s]
+2026-10-26T20:20:26.9502001Z {"testProcess":"tests/actions-reference/lookup-horizon.test.ts","exitCode":0,"pass":2,"fail":0,"skip":0,"assertions":15,"completeSummary":true,"logSha256":"4c3245965b93d06695f15ff2de307dd70572c9219a730e04b21ef5e2e09736b1"}
+2026-10-26T20:20:26.9503505Z {"testProcess":"tests/actions-reference/native-refinement.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/native-refinement.test.ts"]}
+2026-10-26T20:20:26.9521975Z bun test v1.4.2 (744846f84)
+2026-10-26T20:20:26.9558357Z 
+2026-10-26T20:20:26.9559380Z ##[group]tests/actions-reference/native-refinement.test.ts:
+2026-10-26T20:21:48.7142672Z {"nativeRefinement":{"profile":"umf.actions.finite-idempotent-set/1","nativeVersion":"17.9 (Debian 17.9-1.pgdg13+1)","alphabet":["invoke-A","invoke-B","lookup-A","revoke","grant","retire"],"depth":3,"traces":216,"transitions":648,"mismatches":0,"scope":"One scalar SET, two tokens, one human/role, serial schedules; no universal graph or concurrent refinement claim"}}
+2026-10-26T20:21:48.8715781Z (pass) native bounded traces refine independent authorization, token, retirement and atomic-state semantics [81308.17ms]
+2026-10-26T20:21:53.7183558Z {"nativeMutation":{"nativeVersion":"17.9 (Debian 17.9-1.pgdg13+1)","killed":3,"total":3,"witnesses":[{"id":"skip-replay","sourceSha256":"2fc6849548220155e70a25e0dfb87ace7a5047a57aa7a1bd1579564920cfe95a","mutantSha256":"69cd577302044b0e85feff1e8538c709a99979cb81a60910c5d12aaa81650ca6","trace":["invoke-A","invoke-A"],"reason":"Error: NATIVE_REFINEMENT invoke-A → invoke-A exact replay expected {\"status\":\"committed\",\"revision\":{\"module\":\"sales\",\"action\":\"approve\",\"revision\":\"r\"},\"outputs\":{},\"changes\":[{\"kind\":\"updated\",\"entity\":{\"key\":{\"element\":\"order\",\"module\":\"sales\",\"key\":\"pk\"},\"components\":[{\"string\":\"one\"}]}}],\"version\":\"504207cc42f049be9b5d869727a4cad7a5e47c97b42ddfa6e535ce2d3dfcfb2c\",\"receipt\":{\"store\":\"mutant-skip-replay\",\"epoch\":\"epoch\",\"version\":\"504207cc42f049be9b5d869727a4cad7a5e47c97b42ddfa6e535ce2d3dfcfb2c\"},\"noOp\":false,\"verification\":{\"kind\":\"recipe\",\"effects\":[{\"effect\":\"approve-status\",\"status\":\"verified\",\"outcome\":\"changed\"}],\"postconditions\":[],\"frames\":\"enforced\",\"constraints\":\"verified\"}} got {\"status\":\"unsupported\",\"code\":\"TOKEN_REUSE\"}"},{"id":"ignore-role-membership","sourceSha256":"7b851e0a1f925d3158065eca725d9ea86eb39461133805e941beb2016948a13b","mutantSha256":"39ae8d0378d6499d1f00e2e5ae848c130eccfac6abeb88291a424a5a382028c3","trace":["invoke-A","revoke","invoke-A"],"reason":"Error: NATIVE_REFINEMENT invoke-A → revoke → invoke-A authorization expected {\"status\":\"denied\",\"code\":\"AUTHORIZATION\"} got {\"status\":\"committed\",\"revision\":{\"module\":\"sales\",\"action\":\"approve\",\"revision\":\"r\"},\"outputs\":{},\"changes\":[{\"kind\":\"updated\",\"entity\":{\"key\":{\"element\":\"order\",\"module\":\"sales\",\"key\":\"pk\"},\"components\":[{\"string\":\"one\"}]}}],\"version\":\"33f821660da3f6f27008db5587f71424c6121faa283d0f25128ad2607c19bd09\",\"receipt\":{\"store\":\"mutant-ignore-role-membership\",\"epoch\":\"epoch\",\"version\":\"33f821660da3f6f27008db5587f71424c6121faa283d0f25128ad2607c19bd09\"},\"noOp\":false,\"verification\":{\"kind\":\"recipe\",\"effects\":[{\"effect\":\"approve-status\",\"status\":\"verified\",\"outcome\":\"changed\"}],\"postconditions\":[],\"frames\":\"enforced\",\"constraints\":\"verified\"}}"},{"id":"omit-terminal-audit","sourceSha256":"2fc6849548220155e70a25e0dfb87ace7a5047a57aa7a1bd1579564920cfe95a","mutantSha256":"5b785ebe59957e66c03234df5a26f13399a2698346b9d17bde9d5f49f4aeb1f3","trace":["invoke-A"],"reason":"Error: NATIVE_REFINEMENT invoke-A atomic audit expected 1 got 0"}]}}
+2026-10-26T20:21:53.8847483Z (pass) native refinement kills replay, authorization and terminal-audit implementation mutants [5013.12ms]
+2026-10-26T20:21:53.8855201Z 
+2026-10-26T20:21:53.8856374Z ##[endgroup]
+2026-10-26T20:21:53.8856537Z 
+2026-10-26T20:21:53.8856637Z  2 pass
+2026-10-26T20:21:53.8856848Z  0 fail
+2026-10-26T20:21:53.8857088Z  8 expect() calls
+2026-10-26T20:21:53.8857348Z Ran 2 tests across 1 file. [86.93s]
+2026-10-26T20:21:53.9061582Z {"testProcess":"tests/actions-reference/native-refinement.test.ts","exitCode":0,"pass":2,"fail":0,"skip":0,"assertions":8,"completeSummary":true,"logSha256":"49611e8417a555f16c6bc258519b8b9bc94da4a452574ed11ad2cf2404125d61"}
+2026-10-26T20:21:53.9062900Z {"testProcess":"tests/actions-reference/outcomes.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/outcomes.test.ts"]}
+2026-10-26T20:21:53.9081246Z bun test v1.4.2 (744846f84)
+2026-10-26T20:21:53.9114788Z 
+2026-10-26T20:21:53.9115826Z ##[group]tests/actions-reference/outcomes.test.ts:
+2026-10-26T20:21:57.5876440Z (pass) native protected terminal lookup retains original decisions across retirement, service changes and restart [3064.56ms]
+2026-10-26T20:21:57.5877267Z 
+2026-10-26T20:21:57.5877770Z ##[endgroup]
+2026-10-26T20:21:57.5877954Z 
+2026-10-26T20:21:57.5878076Z  1 pass
+2026-10-26T20:21:57.5878371Z  0 fail
+2026-10-26T20:21:57.5878659Z  19 expect() calls
+2026-10-26T20:21:57.5878997Z Ran 1 test across 1 file. [3.68s]
+2026-10-26T20:21:57.5995458Z {"testProcess":"tests/actions-reference/outcomes.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":19,"completeSummary":true,"logSha256":"14bb515f9237fa059babd2c0fe6fbf847ceae6019e97f43f0f5ed197e677781b"}
+2026-10-26T20:21:57.5996805Z {"testProcess":"tests/actions-reference/policy.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/policy.test.ts"]}
+2026-10-26T20:21:57.6014860Z bun test v1.4.2 (744846f84)
+2026-10-26T20:21:57.6044038Z 
+2026-10-26T20:21:57.6045114Z ##[group]tests/actions-reference/policy.test.ts:
+2026-10-26T20:21:59.4419951Z (pass) native current policy gates protected callbacks and serializes revocation with accepted work [1552.48ms]
+2026-10-26T20:21:59.4420729Z 
+2026-10-26T20:21:59.4421276Z ##[endgroup]
+2026-10-26T20:21:59.4421475Z 
+2026-10-26T20:21:59.4421615Z  1 pass
+2026-10-26T20:21:59.4421894Z  0 fail
+2026-10-26T20:21:59.4422172Z  16 expect() calls
+2026-10-26T20:21:59.4422505Z Ran 1 test across 1 file. [1.84s]
+2026-10-26T20:21:59.4476974Z {"testProcess":"tests/actions-reference/policy.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":16,"completeSummary":true,"logSha256":"177c05d43cd07b5ac38702d6a9a262332b395de51eae5e4f85b7d2e95842c964"}
+2026-10-26T20:21:59.4478574Z {"testProcess":"tests/actions-reference/preparation.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/preparation.test.ts"]}
+2026-10-26T20:21:59.4497712Z bun test v1.4.2 (744846f84)
+2026-10-26T20:21:59.4528625Z 
+2026-10-26T20:21:59.4529423Z ##[group]tests/actions-reference/preparation.test.ts:
+2026-10-26T20:22:00.8747632Z (pass) fresh preparation gates the entire retained declaration before narrow input and rule consumers [786.74ms]
+2026-10-26T20:22:01.2754038Z (pass) fresh preparation retains qualified create/link selectors and their ordered identities [400.62ms]
+2026-10-26T20:22:01.9598677Z (pass) mutation endpoint invariant dependencies admit before false preconditions, including read-only targets [684.42ms]
+2026-10-26T20:22:01.9599205Z 
+2026-10-26T20:22:01.9599634Z ##[endgroup]
+2026-10-26T20:22:01.9599770Z 
+2026-10-26T20:22:01.9599864Z  3 pass
+2026-10-26T20:22:01.9600080Z  0 fail
+2026-10-26T20:22:01.9600287Z  15 expect() calls
+2026-10-26T20:22:01.9600531Z Ran 3 tests across 1 file. [2.51s]
+2026-10-26T20:22:01.9752654Z {"testProcess":"tests/actions-reference/preparation.test.ts","exitCode":0,"pass":3,"fail":0,"skip":0,"assertions":15,"completeSummary":true,"logSha256":"fa7be706a76fbd94e394510136f0a5be3972234b5063cdd2924024675c8800f8"}
+2026-10-26T20:22:01.9754967Z {"testProcess":"tests/actions-reference/preview.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/preview.test.ts"]}
+2026-10-26T20:22:01.9772168Z bun test v1.4.2 (744846f84)
+2026-10-26T20:22:01.9804919Z 
+2026-10-26T20:22:01.9805853Z ##[group]tests/actions-reference/preview.test.ts:
+2026-10-26T20:22:08.4304282Z (pass) native preview is advisory, ordered and write-free under independent SQL write guards [5804.55ms]
+2026-10-26T20:22:08.4305049Z 
+2026-10-26T20:22:08.4305465Z ##[endgroup]
+2026-10-26T20:22:08.4305593Z 
+2026-10-26T20:22:08.4305695Z  1 pass
+2026-10-26T20:22:08.4305906Z  0 fail
+2026-10-26T20:22:08.4306118Z  23 expect() calls
+2026-10-26T20:22:08.4306371Z Ran 1 test across 1 file. [6.45s]
+2026-10-26T20:22:08.4460513Z {"testProcess":"tests/actions-reference/preview.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":23,"completeSummary":true,"logSha256":"52f64fb2c76760065d9f832a3c95fc3bbd045d5f14980bb0287a1c344bede916"}
+2026-10-26T20:22:08.4461868Z {"testProcess":"tests/actions-reference/process-recovery.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/process-recovery.test.ts"]}
+2026-10-26T20:22:08.4487901Z bun test v1.4.2 (744846f84)
+2026-10-26T20:22:08.4510929Z 
+2026-10-26T20:22:08.4512409Z ##[group]tests/actions-reference/process-recovery.test.ts:
+2026-10-26T20:22:14.1977250Z (pass) actual command-process death before commit rolls back; death after native acknowledgement reconciles once in a fresh process [5133.53ms]
+2026-10-26T20:22:14.1977852Z 
+2026-10-26T20:22:14.1978262Z ##[endgroup]
+2026-10-26T20:22:14.1978402Z 
+2026-10-26T20:22:14.1978503Z  1 pass
+2026-10-26T20:22:14.1978706Z  0 fail
+2026-10-26T20:22:14.1978914Z  39 expect() calls
+2026-10-26T20:22:14.1979162Z Ran 1 test across 1 file. [5.75s]
+2026-10-26T20:22:14.2045719Z {"testProcess":"tests/actions-reference/process-recovery.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":39,"completeSummary":true,"logSha256":"4518a2786c1d5ec890486ef41fa319cbd80ad5de98cada76f3fa9a224ca7f56a"}
+2026-10-26T20:22:14.2047079Z {"testProcess":"tests/actions-reference/projection.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/projection.test.ts"]}
+2026-10-26T20:22:14.2073505Z bun test v1.4.2 (744846f84)
+2026-10-26T20:22:14.2094905Z 
+2026-10-26T20:22:14.2095756Z ##[group]tests/actions-reference/projection.test.ts:
+2026-10-26T20:22:19.7459788Z (pass) native full graph baseline and reordered duplicate delivery preserve all primitives, exact receipts and independent named prefixes [4866.44ms]
+2026-10-26T20:22:21.2936239Z (pass) projection authority cannot collide with business audit roles; malformed retained meaning refuses without loss [1547.61ms]
+2026-10-26T20:22:23.0281393Z (pass) unknown native fact meaning remains queued and never advances its sequence [1734.45ms]
+2026-10-26T20:22:23.0281979Z 
+2026-10-26T20:22:23.0282383Z ##[endgroup]
+2026-10-26T20:22:23.0282519Z 
+2026-10-26T20:22:23.0282619Z  3 pass
+2026-10-26T20:22:23.0282835Z  0 fail
+2026-10-26T20:22:23.0283051Z  63 expect() calls
+2026-10-26T20:22:23.0283317Z Ran 3 tests across 1 file. [8.82s]
+2026-10-26T20:22:23.0439836Z {"testProcess":"tests/actions-reference/projection.test.ts","exitCode":0,"pass":3,"fail":0,"skip":0,"assertions":63,"completeSummary":true,"logSha256":"f424034a0c5b5593129b87a787d533c981db3d1950fc66bc9d8ce7961fccd271"}
+2026-10-26T20:22:23.0441407Z {"testProcess":"tests/actions-reference/reader-revocation.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/reader-revocation.test.ts"]}
+2026-10-26T20:22:23.0459821Z bun test v1.4.2 (744846f84)
+2026-10-26T20:22:23.0494853Z 
+2026-10-26T20:22:23.0495572Z ##[group]tests/actions-reference/reader-revocation.test.ts:
+2026-10-26T20:22:25.8835624Z (pass) native audit read linearizes before queued revocation and later denial selects no protected rows [2193.61ms]
+2026-10-26T20:22:28.1626904Z (pass) native projection read linearizes before queued revocation and later denial selects no protected rows [2278.73ms]
+2026-10-26T20:22:28.1627436Z 
+2026-10-26T20:22:28.1628158Z ##[endgroup]
+2026-10-26T20:22:28.1628295Z 
+2026-10-26T20:22:28.1628390Z  2 pass
+2026-10-26T20:22:28.1628618Z  0 fail
+2026-10-26T20:22:28.1628820Z  16 expect() calls
+2026-10-26T20:22:28.1629057Z Ran 2 tests across 1 file. [5.12s]
+2026-10-26T20:22:28.1767194Z {"testProcess":"tests/actions-reference/reader-revocation.test.ts","exitCode":0,"pass":2,"fail":0,"skip":0,"assertions":16,"completeSummary":true,"logSha256":"c1276ae5416b906d7b44520cc70d2af77270f9214df001b4d59ce61a4de42c60"}
+2026-10-26T20:22:28.1769216Z {"testProcess":"tests/actions-reference/receipts.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/receipts.test.ts"]}
+2026-10-26T20:22:28.1788090Z bun test v1.4.2 (744846f84)
+2026-10-26T20:22:28.1816558Z 
+2026-10-26T20:22:28.1817484Z ##[group]tests/actions-reference/receipts.test.ts:
+2026-10-26T20:22:31.9397574Z (pass) native exact receipt map includes baseline, committed order and no-op/replay without preview writes [3125.39ms]
+2026-10-26T20:22:34.0097532Z (pass) native no-op at genesis retains sequence-zero receipt without an outbox event [2070.04ms]
+2026-10-26T20:22:36.0704138Z (pass) late native audit failure rolls back the tentative receipt and all business facts [2060.61ms]
+2026-10-26T20:22:38.1325747Z (pass) native committed outbox and receipt fields reject mutation and deletion [2062.09ms]
+2026-10-26T20:22:38.1326171Z 
+2026-10-26T20:22:38.1328383Z ##[endgroup]
+2026-10-26T20:22:38.1328575Z 
+2026-10-26T20:22:38.1328701Z  4 pass
+2026-10-26T20:22:38.1329028Z  0 fail
+2026-10-26T20:22:38.1329300Z  45 expect() calls
+2026-10-26T20:22:38.1329622Z Ran 4 tests across 1 file. [9.95s]
+2026-10-26T20:22:38.1474357Z {"testProcess":"tests/actions-reference/receipts.test.ts","exitCode":0,"pass":4,"fail":0,"skip":0,"assertions":45,"completeSummary":true,"logSha256":"53b113e60cda59e8b7cc1ad57c052fe5abed9ed1ad95d9c727b94b81d37cb2fd"}
+2026-10-26T20:22:38.1476320Z {"testProcess":"tests/actions-reference/recipe.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/recipe.test.ts"]}
+2026-10-26T20:22:38.1508621Z bun test v1.4.2 (744846f84)
+2026-10-26T20:22:38.1538005Z 
+2026-10-26T20:22:38.1539244Z ##[group]tests/actions-reference/recipe.test.ts:
+2026-10-26T20:22:41.7449366Z (pass) native candidate recipe orders missing inputs, versions, conditions and evaluates isolated final state [2987.25ms]
+2026-10-26T20:22:41.7450163Z 
+2026-10-26T20:22:41.7450774Z ##[endgroup]
+2026-10-26T20:22:41.7466078Z 
+2026-10-26T20:22:41.7466538Z  1 pass
+2026-10-26T20:22:41.7466802Z  0 fail
+2026-10-26T20:22:41.7467021Z  10 expect() calls
+2026-10-26T20:22:41.7467275Z Ran 1 test across 1 file. [3.60s]
+2026-10-26T20:22:41.7617853Z {"testProcess":"tests/actions-reference/recipe.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":10,"completeSummary":true,"logSha256":"03284957bb0d61210923f0ca5e4d057908b049277f8a7adda041cad676ca710b"}
+2026-10-26T20:22:41.7619185Z {"testProcess":"tests/actions-reference/recovery.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/recovery.test.ts"]}
+2026-10-26T20:22:41.7636639Z bun test v1.4.2 (744846f84)
+2026-10-26T20:22:41.7663263Z 
+2026-10-26T20:22:41.7664485Z ##[group]tests/actions-reference/recovery.test.ts:
+2026-10-26T20:22:51.0834985Z (pass) native server abort after all writes retries at most three complete transactions [8720.79ms]
+2026-10-26T20:22:55.2021650Z (pass) injected lost acknowledgement after actual commit never retries; new connection recovers keyed original result [4118.65ms]
+2026-10-26T20:22:57.1819784Z (pass) native backend termination before acknowledgement is indeterminate and never automatically retried [1979.81ms]
+2026-10-26T20:22:59.1808446Z (pass) retry rechecks authorization after a native rollback and intervening revocation [1998.83ms]
+2026-10-26T20:23:03.0874113Z (pass) native unknown-completion diagnostics never qualify as known rollback retries [3906.50ms]
+2026-10-26T20:23:03.0874790Z 
+2026-10-26T20:23:03.0875294Z ##[endgroup]
+2026-10-26T20:23:03.0875796Z 
+2026-10-26T20:23:03.0875930Z  5 pass
+2026-10-26T20:23:03.0876238Z  0 fail
+2026-10-26T20:23:03.0876462Z  91 expect() calls
+2026-10-26T20:23:03.0876713Z Ran 5 tests across 1 file. [21.32s]
+2026-10-26T20:23:03.1029095Z {"testProcess":"tests/actions-reference/recovery.test.ts","exitCode":0,"pass":5,"fail":0,"skip":0,"assertions":91,"completeSummary":true,"logSha256":"51f30e726a6e16783ef7937eab1816fad24443c98753d4338c4ba9f265febf02"}
+2026-10-26T20:23:03.1031196Z {"testProcess":"tests/actions-reference/relationship-gateway.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/relationship-gateway.test.ts"]}
+2026-10-26T20:23:03.1050497Z bun test v1.4.2 (744846f84)
+2026-10-26T20:23:03.1077667Z 
+2026-10-26T20:23:03.1078478Z ##[group]tests/actions-reference/relationship-gateway.test.ts:
+2026-10-26T20:23:03.9127263Z (pass) linked gateway validates authored endpoint orientation before absence and permanently aborts invalid calls [240.77ms]
+2026-10-26T20:23:04.1847978Z (pass) candidate LINK/UNLINK enforce write access, preserve pre-state and discard restored membership [272.20ms]
+2026-10-26T20:23:04.4885008Z (pass) candidate relationship mutation preserves authored target Key while accepting a read-only target reference [303.59ms]
+2026-10-26T20:23:04.6367556Z (pass) candidate net changes retain combined first-modification order and remove restored relationships [147.94ms]
+2026-10-26T20:23:04.6368082Z 
+2026-10-26T20:23:04.6368497Z ##[endgroup]
+2026-10-26T20:23:04.6368627Z 
+2026-10-26T20:23:04.6368728Z  4 pass
+2026-10-26T20:23:04.6368934Z  0 fail
+2026-10-26T20:23:04.6369138Z  49 expect() calls
+2026-10-26T20:23:04.6369394Z Ran 4 tests across 1 file. [1.53s]
+2026-10-26T20:23:04.6494116Z {"testProcess":"tests/actions-reference/relationship-gateway.test.ts","exitCode":0,"pass":4,"fail":0,"skip":0,"assertions":49,"completeSummary":true,"logSha256":"fc4e46476cd7da7983097d8b00947471c5048be2a3b267dd8bd24d126a50de76"}
+2026-10-26T20:23:04.6496166Z {"testProcess":"tests/actions-reference/relationship-snapshot.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/relationship-snapshot.test.ts"]}
+2026-10-26T20:23:04.6537287Z bun test v1.4.2 (744846f84)
+2026-10-26T20:23:04.6565848Z 
+2026-10-26T20:23:04.6566916Z ##[group]tests/actions-reference/relationship-snapshot.test.ts:
+2026-10-26T20:23:14.3658727Z (pass) native linked snapshots preserve direction, canonical read aliases and durable rejection under preview write guards [9131.13ms]
+2026-10-26T20:23:14.3659580Z 
+2026-10-26T20:23:14.3660092Z ##[endgroup]
+2026-10-26T20:23:14.3661194Z 
+2026-10-26T20:23:14.3661346Z  1 pass
+2026-10-26T20:23:14.3661659Z  0 fail
+2026-10-26T20:23:14.3661981Z  27 expect() calls
+2026-10-26T20:23:14.3662383Z Ran 1 test across 1 file. [9.71s]
+2026-10-26T20:23:14.3870016Z {"testProcess":"tests/actions-reference/relationship-snapshot.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":27,"completeSummary":true,"logSha256":"1d172c3e548797dedde02c8d114e3945b65659b782c1d834088378a46aa5ff3b"}
+2026-10-26T20:23:14.3872384Z {"testProcess":"tests/actions-reference/restore.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/restore.test.ts"]}
+2026-10-26T20:23:14.3886933Z bun test v1.4.2 (744846f84)
+2026-10-26T20:23:14.3915570Z 
+2026-10-26T20:23:14.3916616Z ##[group]tests/actions-reference/restore.test.ts:
+2026-10-26T20:23:19.5196180Z (pass) physical older backup stays fenced across epochs and restart; explicit validated namespace starts independent genesis [4516.19ms]
+2026-10-26T20:23:21.3719240Z (pass) new genesis refuses alias reconciliation, unsupported domain and isolated required relationships atomically [1852.28ms]
+2026-10-26T20:23:23.1046928Z (pass) required linked genesis remaps native IDs, preserves alternate key identity and publishes exact baseline [1732.73ms]
+2026-10-26T20:23:24.6098900Z (pass) whole restored database fences every business and administration namespace before exposure [1505.21ms]
+2026-10-26T20:23:26.3121503Z (pass) corrupted restored edge with both endpoint Records unrelated to authored relationship refuses without repair [1702.19ms]
+2026-10-26T20:23:26.3122373Z 
+2026-10-26T20:23:26.3122876Z ##[endgroup]
+2026-10-26T20:23:26.3123075Z 
+2026-10-26T20:23:26.3123203Z  5 pass
+2026-10-26T20:23:26.3123513Z  0 fail
+2026-10-26T20:23:26.3123815Z  60 expect() calls
+2026-10-26T20:23:26.3124172Z Ran 5 tests across 1 file. [11.92s]
+2026-10-26T20:23:26.3271595Z {"testProcess":"tests/actions-reference/restore.test.ts","exitCode":0,"pass":5,"fail":0,"skip":0,"assertions":60,"completeSummary":true,"logSha256":"a5252d64874c9c838ceab7318a7141df161309556ccaf6cdfed8eee4e0f41250"}
+2026-10-26T20:23:26.3273069Z {"testProcess":"tests/actions-reference/revisions.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/revisions.test.ts"]}
+2026-10-26T20:23:26.3291250Z bun test v1.4.2 (744846f84)
+2026-10-26T20:23:26.3322227Z 
+2026-10-26T20:23:26.3323053Z ##[group]tests/actions-reference/revisions.test.ts:
+2026-10-26T20:23:28.6982401Z (pass) native revision retention preserves original source across retirement and refuses replacement [1728.18ms]
+2026-10-26T20:23:28.6985213Z 
+2026-10-26T20:23:28.6985755Z ##[endgroup]
+2026-10-26T20:23:28.6985987Z 
+2026-10-26T20:23:28.6986123Z  1 pass
+2026-10-26T20:23:28.6986427Z  0 fail
+2026-10-26T20:23:28.6986667Z  12 expect() calls
+2026-10-26T20:23:28.6986917Z Ran 1 test across 1 file. [2.37s]
+2026-10-26T20:23:28.7085470Z {"testProcess":"tests/actions-reference/revisions.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":12,"completeSummary":true,"logSha256":"73e87a3b780b9b707df63334adf5e0fe135456dec0f605660e65d3904d2bf85e"}
+2026-10-26T20:23:28.7087033Z {"testProcess":"tests/actions-reference/sandbox-security.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/sandbox-security.test.ts"]}
+2026-10-26T20:23:28.7116232Z bun test v1.4.2 (744846f84)
+2026-10-26T20:23:28.7143120Z 
+2026-10-26T20:23:28.7143909Z ##[group]tests/actions-reference/sandbox-security.test.ts:
+2026-10-26T20:23:29.3049633Z (pass) handler clears image and client proxy credentials before any program/subprocess observes environment [575.09ms]
+2026-10-26T20:23:29.6642555Z (pass) native host sentinel/socket/listener and external route are inaccessible; kernel confinement is enforced [359.22ms]
+2026-10-26T20:23:30.0612935Z (pass) native process bound refuses additional forks while successful children are reaped [397.04ms]
+2026-10-26T20:23:32.1121066Z (pass) natural EOF preserves successful results and refuses an early exit without a result [2050.81ms]
+2026-10-26T20:23:32.6161444Z (pass) actual cgroup memory exhaustion yields LIMIT with native OOM evidence and confirmed removal [503.12ms]
+2026-10-26T20:23:35.1047689Z (pass) timeout, malformed protocol and dispatch refusal each independently confirm owned removal [2489.33ms]
+2026-10-26T20:23:45.6043733Z (pass) native watchdog stops an executing handler after its Bun supervisor is killed [10499.63ms]
+2026-10-26T20:23:45.6044291Z 
+2026-10-26T20:23:45.6044893Z ##[endgroup]
+2026-10-26T20:23:45.6045028Z 
+2026-10-26T20:23:45.6045132Z  7 pass
+2026-10-26T20:23:45.6045341Z  0 fail
+2026-10-26T20:23:45.6045553Z  145 expect() calls
+2026-10-26T20:23:45.6045803Z Ran 7 tests across 1 file. [16.89s]
+2026-10-26T20:23:45.6070548Z {"testProcess":"tests/actions-reference/sandbox-security.test.ts","exitCode":0,"pass":7,"fail":0,"skip":0,"assertions":145,"completeSummary":true,"logSha256":"8982ddc8e330330f7929c1f3109ef7116db5192ed9aba6aa234a680f697ae6ff"}
+2026-10-26T20:23:45.6072429Z {"testProcess":"tests/actions-reference/sandbox-state.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/sandbox-state.test.ts"]}
+2026-10-26T20:23:45.6089015Z bun test v1.4.2 (744846f84)
+2026-10-26T20:23:45.6118057Z 
+2026-10-26T20:23:45.6119025Z ##[group]tests/actions-reference/sandbox-state.test.ts:
+2026-10-26T20:23:45.6168638Z (pass) cleanup diagnostic distinguishes initial and settlement native inspection failures [0.30ms]
+2026-10-26T20:23:45.6179153Z (pass) native exit137 never becomes OOM without original Boolean evidence [0.08ms]
+2026-10-26T20:23:45.6181817Z (pass) rounded optional final-poll timer preserves validated non-OOM state before the clock deadline [0.49ms]
+2026-10-26T20:23:45.6182810Z (pass) only the optional settlement budget may expire without an inspection diagnostic [0.19ms]
+2026-10-26T20:23:45.6183439Z 
+2026-10-26T20:23:45.6183910Z ##[endgroup]
+2026-10-26T20:23:45.6184215Z 
+2026-10-26T20:23:45.6184375Z  4 pass
+2026-10-26T20:23:45.6184962Z  0 fail
+2026-10-26T20:23:45.6185331Z  31 expect() calls
+2026-10-26T20:23:45.6185720Z Ran 4 tests across 1 file. [8.00ms]
+2026-10-26T20:23:45.6191652Z {"testProcess":"tests/actions-reference/sandbox-state.test.ts","exitCode":0,"pass":4,"fail":0,"skip":0,"assertions":31,"completeSummary":true,"logSha256":"b90ebdb16f2defb76f3e8b0f32b700ce10c2233f6113610e775b19e6481aad2c"}
+2026-10-26T20:23:45.6193128Z {"testProcess":"tests/actions-reference/sandbox.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/sandbox.test.ts"]}
+2026-10-26T20:23:45.6223681Z bun test v1.4.2 (744846f84)
+2026-10-26T20:23:45.6275042Z 
+2026-10-26T20:23:45.6275744Z ##[group]tests/actions-reference/sandbox.test.ts:
+2026-10-26T20:23:45.9840062Z (pass) actual isolated handler foundation > copied authenticated ordered gateway calls and isolated runtime [345.47ms]
+2026-10-26T20:23:46.3158929Z (pass) actual isolated handler foundation > asynchronous candidate dispatch is refused rather than outliving an attempt [331.58ms]
+2026-10-26T20:23:46.3159946Z (pass) actual isolated handler foundation > deployment build mismatch refuses before dispatch [0.45ms]
+2026-10-26T20:23:46.9569433Z (pass) actual isolated handler foundation > unauthenticated output and caught gateway refusal cannot finish successfully [640.88ms]
+2026-10-26T20:23:48.2197313Z (pass) actual isolated handler foundation > authenticated malformed requests and stderr flooding refuse [1262.72ms]
+2026-10-26T20:23:48.8701795Z (pass) actual isolated handler foundation > hostile numeric protocol payloads normalize to FRAME_ACCESS before dispatch [650.47ms]
+2026-10-26T20:23:52.3033338Z (pass) actual isolated handler foundation > absolute deadline refuses success even when synchronous dispatch delays timers [3433.10ms]
+2026-10-26T20:23:52.9449641Z (pass) actual isolated handler foundation > invalid and truncated UTF-8 fail through the profile protocol error [641.60ms]
+2026-10-26T20:23:55.3361795Z (pass) actual isolated handler foundation > infinite computation, protocol flood and operation 257 abort [2391.19ms]
+2026-10-26T20:23:55.3362516Z 
+2026-10-26T20:23:55.3363072Z ##[endgroup]
+2026-10-26T20:23:55.3363313Z 
+2026-10-26T20:23:55.3363464Z  9 pass
+2026-10-26T20:23:55.3363773Z  0 fail
+2026-10-26T20:23:55.3363991Z  27 expect() calls
+2026-10-26T20:23:55.3364239Z Ran 9 tests across 1 file. [9.71s]
+2026-10-26T20:23:55.3386453Z {"testProcess":"tests/actions-reference/sandbox.test.ts","exitCode":0,"pass":9,"fail":0,"skip":0,"assertions":27,"completeSummary":true,"logSha256":"f83d4fb2408b95b704a8728efb569d29144c5668af484310590a5904d6394fd5"}
+2026-10-26T20:23:55.3387912Z {"testProcess":"tests/actions-reference/state.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/state.test.ts"]}
+2026-10-26T20:23:55.3405234Z bun test v1.4.2 (744846f84)
+2026-10-26T20:23:55.3439675Z 
+2026-10-26T20:23:55.3440180Z ##[group]tests/actions-reference/state.test.ts:
+2026-10-26T20:23:58.8162921Z (pass) native frozen frames resolve primary/alternate Keys to one resource and reject duplicate alias writes atomically [2850.75ms]
+2026-10-26T20:23:58.8163469Z 
+2026-10-26T20:23:58.8163899Z ##[endgroup]
+2026-10-26T20:23:58.8164402Z 
+2026-10-26T20:23:58.8164675Z  1 pass
+2026-10-26T20:23:58.8164988Z  0 fail
+2026-10-26T20:23:58.8165218Z  15 expect() calls
+2026-10-26T20:23:58.8165481Z Ran 1 test across 1 file. [3.48s]
+2026-10-26T20:23:58.8337349Z {"testProcess":"tests/actions-reference/state.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":15,"completeSummary":true,"logSha256":"0773b630c644799eeeb6a7ba1da20feb86a2674120bcacb895a69b909a2cf6fd"}
+2026-10-26T20:23:58.8339360Z {"testProcess":"tests/actions-reference/store.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/store.test.ts"]}
+2026-10-26T20:23:58.8357559Z bun test v1.4.2 (744846f84)
+2026-10-26T20:23:58.8387079Z 
+2026-10-26T20:23:58.8388067Z ##[group]tests/actions-reference/store.test.ts:
+2026-10-26T20:24:00.3461187Z {"nativeVersion":"17.9 (Debian 17.9-1.pgdg13+1)","nativeVersionNumber":"170009"}
+2026-10-26T20:24:00.5415873Z (pass) native store foundation enforces exact aliases, FKs, control serialization and atomic rollback [1503.00ms]
+2026-10-26T20:24:02.3948853Z (pass) native lossless payloads and identity buckets preserve NUL/surrogates, large tokens/Keys and digest collisions [1853.31ms]
+2026-10-26T20:24:03.9060191Z (pass) native qualified isolation preserves exact concurrent uniqueness and independent stores [1511.06ms]
+2026-10-26T20:24:03.9060775Z 
+2026-10-26T20:24:03.9061163Z ##[endgroup]
+2026-10-26T20:24:03.9061307Z 
+2026-10-26T20:24:03.9061407Z  3 pass
+2026-10-26T20:24:03.9061618Z  0 fail
+2026-10-26T20:24:03.9061838Z  41 expect() calls
+2026-10-26T20:24:03.9062090Z Ran 3 tests across 1 file. [5.07s]
+2026-10-26T20:24:03.9132797Z {"testProcess":"tests/actions-reference/store.test.ts","exitCode":0,"pass":3,"fail":0,"skip":0,"assertions":41,"completeSummary":true,"logSha256":"1aa7b443ca43bb1cbc98c2c7fa8aa7152b007c69e22b22b1799d1778e3528dac"}
+2026-10-26T20:24:03.9133990Z 
+2026-10-26T20:24:03.9134138Z  125 pass
+2026-10-26T20:24:03.9134446Z  0 skip
+2026-10-26T20:24:03.9135009Z  0 fail
+2026-10-26T20:24:03.9135353Z  1996 expect() calls
+2026-10-26T20:24:03.9135742Z Ran 125 tests across 41 files. [404.94s]
+2026-10-26T20:24:03.9763486Z ##[group]Run dtolnay/rust-toolchain@stable
+2026-10-26T20:24:03.9763812Z with:
+2026-10-26T20:24:03.9764044Z   toolchain: 1.90.0
+2026-10-26T20:24:03.9764277Z ##[endgroup]
+2026-10-26T20:24:03.9933657Z ##[start-action display=Parse toolchain version;id=__dtolnay_rust-toolchain.parse]
+2026-10-26T20:24:04.0118286Z ##[group]Run if [[ -z $toolchain ]]; then
+2026-10-26T20:24:04.0118664Z [36;1mif [[ -z $toolchain ]]; then[0m
+2026-10-26T20:24:04.0119214Z [36;1m  # GitHub does not enforce `required: true` inputs itself. https://github.com/actions/runner/issues/1070[0m
+2026-10-26T20:24:04.0119788Z [36;1m  echo "'toolchain' is a required input" >&2[0m
+2026-10-26T20:24:04.0120104Z [36;1m  exit 1[0m
+2026-10-26T20:24:04.0120462Z [36;1melif [[ $toolchain =~ ^stable' '[0-9]+' '(year|month|week|day)s?' 'ago$ ]]; then[0m
+2026-10-26T20:24:04.0120898Z [36;1m  if [[ Linux == macOS ]]; then[0m
+2026-10-26T20:24:04.0121526Z [36;1m    echo "toolchain=1.$((($(date -v-$(sed 's/stable \([0-9]*\) \(.\).*/\1\2/' <<< $toolchain) +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT[0m
+2026-10-26T20:24:04.0122062Z [36;1m  else[0m
+2026-10-26T20:24:04.0122498Z [36;1m    echo "toolchain=1.$((($(date --date "${toolchain#stable }" +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT[0m
+2026-10-26T20:24:04.0122967Z [36;1m  fi[0m
+2026-10-26T20:24:04.0123283Z [36;1melif [[ $toolchain =~ ^stable' 'minus' '[0-9]+' 'releases?$ ]]; then[0m
+2026-10-26T20:24:04.0123814Z [36;1m  echo "toolchain=1.$((($(date +%s)/60/60/24-16569)/7/6-${toolchain//[^0-9]/}))" >> $GITHUB_OUTPUT[0m
+2026-10-26T20:24:04.0124272Z [36;1melif [[ $toolchain =~ ^1\.[0-9]+$ ]]; then[0m
+2026-10-26T20:24:04.0124974Z [36;1m  echo "toolchain=1.$((i=${toolchain#1.}, c=($(date +%s)/60/60/24-16569)/7/6, i+9*i*(10*i<=c)+90*i*(100*i<=c)))" >> $GITHUB_OUTPUT[0m
+2026-10-26T20:24:04.0125463Z [36;1melse[0m
+2026-10-26T20:24:04.0125679Z [36;1m  delimiter=EOF[0m
+2026-10-26T20:24:04.0126266Z [36;1m  while [[ $toolchain == *$delimiter* ]]; do delimiter+=_; done[0m
+2026-10-26T20:24:04.0126778Z [36;1m  printf 'toolchain<<%s\n%s\n%s\n' "$delimiter" "$toolchain" "$delimiter" >> $GITHUB_OUTPUT[0m
+2026-10-26T20:24:04.0127206Z [36;1mfi[0m
+2026-10-26T20:24:04.0217123Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-26T20:24:04.0217498Z env:
+2026-10-26T20:24:04.0217718Z   toolchain: 1.90.0
+2026-10-26T20:24:04.0217962Z ##[endgroup]
+2026-10-26T20:24:04.0337944Z ##[end-action id=__dtolnay_rust-toolchain.parse;outcome=success;conclusion=success;duration_ms=40]
+2026-10-26T20:24:04.0409549Z ##[start-action display=Set $CARGO_HOME;id=__dtolnay_rust-toolchain.__run]
+2026-10-26T20:24:04.0557301Z ##[group]Run echo CARGO_HOME=${CARGO_HOME:-"$HOME/.cargo"} >> $GITHUB_ENV
+2026-10-26T20:24:04.0557820Z [36;1mecho CARGO_HOME=${CARGO_HOME:-"$HOME/.cargo"} >> $GITHUB_ENV[0m
+2026-10-26T20:24:04.0624430Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-26T20:24:04.0624926Z ##[endgroup]
+2026-10-26T20:24:04.0720913Z ##[end-action id=__dtolnay_rust-toolchain.__run;outcome=success;conclusion=success;duration_ms=31]
+2026-10-26T20:24:04.0791456Z ##[start-action display=Install rustup if needed;id=__dtolnay_rust-toolchain.__run_2]
+2026-10-26T20:24:04.0934734Z ##[group]Run if ! command -v rustup &>/dev/null; then
+2026-10-26T20:24:04.0935165Z [36;1mif ! command -v rustup &>/dev/null; then[0m
+2026-10-26T20:24:04.0935921Z [36;1m  curl --proto '=https' --tlsv1.2 --retry 10 --retry-connrefused --location --silent --show-error --fail https://sh.rustup.rs | sh -s -- --default-toolchain none -y[0m
+2026-10-26T20:24:04.0936628Z [36;1m  echo "$CARGO_HOME/bin" >> $GITHUB_PATH[0m
+2026-10-26T20:24:04.0936931Z [36;1mfi[0m
+2026-10-26T20:24:04.1003879Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-26T20:24:04.1004248Z env:
+2026-10-26T20:24:04.1004478Z   CARGO_HOME: /home/runner/.cargo
+2026-10-26T20:24:04.1004875Z ##[endgroup]
+2026-10-26T20:24:04.1099735Z ##[end-action id=__dtolnay_rust-toolchain.__run_2;outcome=success;conclusion=success;duration_ms=30]
+2026-10-26T20:24:04.1169390Z ##[start-action display=Install rustup if needed on windows;id=__dtolnay_rust-toolchain.__run_3]
+2026-10-26T20:24:04.1211749Z ##[end-action id=__dtolnay_rust-toolchain.__run_3;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-10-26T20:24:04.1335244Z ##[start-action display=rustup toolchain install 1.90.0;id=__dtolnay_rust-toolchain.__run_4]
+2026-10-26T20:24:04.1423815Z ##[group]Run set -f  # split targets and components on commas and whitespace, without glob expansion
+2026-10-26T20:24:04.1424775Z [36;1mset -f  # split targets and components on commas and whitespace, without glob expansion[0m
+2026-10-26T20:24:04.1425229Z [36;1mflags=()[0m
+2026-10-26T20:24:04.1425657Z [36;1mfor t in ${targets//,/ }; do flags+=(--target "$t"); done[0m
+2026-10-26T20:24:04.1426123Z [36;1mfor c in ${components//,/ }; do flags+=(--component "$c"); done[0m
+2026-10-26T20:24:04.1426668Z [36;1mif [[ $toolchain == nightly && -n $components ]]; then flags+=(--allow-downgrade); fi[0m
+2026-10-26T20:24:04.1427115Z [36;1mlog=$(mktemp)[0m
+2026-10-26T20:24:04.1427391Z [36;1mtrap 'rm -f "$log"' EXIT[0m
+2026-10-26T20:24:04.1427675Z [36;1mfor attempt in 1 2 3 4 5; do[0m
+2026-10-26T20:24:04.1428256Z [36;1m  if rustup toolchain install "$toolchain" "${flags[@]}" --profile minimal --no-self-update --force-non-host 2>&1 | tee "$log"; then[0m
+2026-10-26T20:24:04.1428826Z [36;1m    break[0m
+2026-10-26T20:24:04.1429055Z [36;1m  else[0m
+2026-10-26T20:24:04.1429278Z [36;1m    status=$?[0m
+2026-10-26T20:24:04.1429513Z [36;1m  fi[0m
+2026-10-26T20:24:04.1429825Z [36;1m  if [[ $attempt == 5 ]] || ! grep -Fq 'checksum failed for ' "$log" \[0m
+2026-10-26T20:24:04.1430388Z [36;1m      || ! grep -Fq 'this is likely due to an ongoing update of the official release server' "$log"; then[0m
+2026-10-26T20:24:04.1430862Z [36;1m    exit "$status"[0m
+2026-10-26T20:24:04.1431112Z [36;1m  fi[0m
+2026-10-26T20:24:04.1431710Z [36;1m  echo "Retrying rustup toolchain install in 30 seconds (retry $attempt of 4)" >&2[0m
+2026-10-26T20:24:04.1432144Z [36;1m  sleep 30[0m
+2026-10-26T20:24:04.1432373Z [36;1mdone[0m
+2026-10-26T20:24:04.1499091Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-26T20:24:04.1499459Z env:
+2026-10-26T20:24:04.1499694Z   CARGO_HOME: /home/runner/.cargo
+2026-10-26T20:24:04.1499978Z   toolchain: 1.90.0
+2026-10-26T20:24:04.1500205Z   targets: 
+2026-10-26T20:24:04.1500422Z   components: 
+2026-10-26T20:24:04.1500665Z   RUSTUP_PERMIT_COPY_RENAME: 1
+2026-10-26T20:24:04.1500936Z ##[endgroup]
+2026-10-26T20:24:04.1958764Z info: syncing channel updates for 1.90.0-x86_64-unknown-linux-gnu
+2026-10-26T20:24:04.3363239Z info: latest update on 2025-09-18 for version 1.90.0 (1159e78c4 2025-09-14)
+2026-10-26T20:24:04.3364120Z info: downloading 3 components
+2026-10-26T20:24:12.6521140Z 
+2026-10-26T20:24:12.6606662Z   1.90.0-x86_64-unknown-linux-gnu installed - rustc 1.90.0 (1159e78c4 2025-09-14)
+2026-10-26T20:24:12.6607200Z 
+2026-10-26T20:24:12.6959657Z ##[end-action id=__dtolnay_rust-toolchain.__run_4;outcome=success;conclusion=success;duration_ms=8562]
+2026-10-26T20:24:12.7068343Z ##[start-action display=rustup default 1.90.0;id=__dtolnay_rust-toolchain.__run_5]
+2026-10-26T20:24:12.7232191Z ##[group]Run rustup default "$toolchain" --force-non-host
+2026-10-26T20:24:12.7232891Z [36;1mrustup default "$toolchain" --force-non-host[0m
+2026-10-26T20:24:12.7310817Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-26T20:24:12.7311365Z env:
+2026-10-26T20:24:12.7311704Z   CARGO_HOME: /home/runner/.cargo
+2026-10-26T20:24:12.7312131Z   toolchain: 1.90.0
+2026-10-26T20:24:12.7312483Z ##[endgroup]
+2026-10-26T20:24:12.7469472Z info: using existing install for 1.90.0-x86_64-unknown-linux-gnu
+2026-10-26T20:24:12.7474677Z info: default toolchain set to 1.90.0-x86_64-unknown-linux-gnu
+2026-10-26T20:24:12.7475111Z 
+2026-10-26T20:24:12.7558759Z   1.90.0-x86_64-unknown-linux-gnu unchanged - rustc 1.90.0 (1159e78c4 2025-09-14)
+2026-10-26T20:24:12.7559285Z 
+2026-10-26T20:24:12.7560097Z info: note that the toolchain '1.90.0-x86_64-unknown-linux-gnu' is currently in use (overridden by '/home/runner/work/umf/umf/rust-toolchain.toml')
+2026-10-26T20:24:12.7581447Z ##[end-action id=__dtolnay_rust-toolchain.__run_5;outcome=success;conclusion=success;duration_ms=51]
+2026-10-26T20:24:12.7656393Z ##[start-action display=Create cachekey;id=__dtolnay_rust-toolchain.rustc-version]
+2026-10-26T20:24:12.7791369Z ##[group]Run DATE=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-date: \(20[0-9][0-9]\)-\([01][0-9]\)-\([0-3][0-9]\)$/\1\2\3/p')
+2026-10-26T20:24:12.7792272Z [36;1mDATE=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-date: \(20[0-9][0-9]\)-\([01][0-9]\)-\([0-3][0-9]\)$/\1\2\3/p')[0m
+2026-10-26T20:24:12.7792978Z [36;1mHASH=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-hash: //p')[0m
+2026-10-26T20:24:12.7793509Z [36;1mecho "cachekey=$(echo $DATE$HASH | head -c12)" >> $GITHUB_OUTPUT[0m
+2026-10-26T20:24:12.7861158Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-26T20:24:12.7861527Z env:
+2026-10-26T20:24:12.7861761Z   CARGO_HOME: /home/runner/.cargo
+2026-10-26T20:24:12.7862050Z   toolchain: 1.90.0
+2026-10-26T20:24:12.7862279Z ##[endgroup]
+2026-10-26T20:24:12.8290557Z ##[end-action id=__dtolnay_rust-toolchain.rustc-version;outcome=success;conclusion=success;duration_ms=63]
+2026-10-26T20:24:12.8362477Z ##[start-action display=Disable incremental compilation;id=__dtolnay_rust-toolchain.__run_6]
+2026-10-26T20:24:12.8491099Z ##[group]Run if [ -z "${CARGO_INCREMENTAL+set}" ]; then
+2026-10-26T20:24:12.8491536Z [36;1mif [ -z "${CARGO_INCREMENTAL+set}" ]; then[0m
+2026-10-26T20:24:12.8491887Z [36;1m  echo CARGO_INCREMENTAL=0 >> $GITHUB_ENV[0m
+2026-10-26T20:24:12.8492198Z [36;1mfi[0m
+2026-10-26T20:24:12.8559430Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-26T20:24:12.8559803Z env:
+2026-10-26T20:24:12.8560036Z   CARGO_HOME: /home/runner/.cargo
+2026-10-26T20:24:12.8560573Z ##[endgroup]
+2026-10-26T20:24:12.8661890Z ##[end-action id=__dtolnay_rust-toolchain.__run_6;outcome=success;conclusion=success;duration_ms=29]
+2026-10-26T20:24:12.8790684Z ##[start-action display=Enable colors in Cargo output;id=__dtolnay_rust-toolchain.__run_7]
+2026-10-26T20:24:12.8898548Z ##[group]Run if [ -z "${CARGO_TERM_COLOR+set}" ]; then
+2026-10-26T20:24:12.8898977Z [36;1mif [ -z "${CARGO_TERM_COLOR+set}" ]; then[0m
+2026-10-26T20:24:12.8899338Z [36;1m  echo CARGO_TERM_COLOR=always >> $GITHUB_ENV[0m
+2026-10-26T20:24:12.8899658Z [36;1mfi[0m
+2026-10-26T20:24:12.8966273Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-26T20:24:12.8966646Z env:
+2026-10-26T20:24:12.8966921Z   CARGO_HOME: /home/runner/.cargo
+2026-10-26T20:24:12.8967203Z   CARGO_INCREMENTAL: 0
+2026-10-26T20:24:12.8967443Z ##[endgroup]
+2026-10-26T20:24:12.9061425Z ##[end-action id=__dtolnay_rust-toolchain.__run_7;outcome=success;conclusion=success;duration_ms=26]
+2026-10-26T20:24:12.9137523Z ##[start-action display=Enable Cargo sparse registry;id=__dtolnay_rust-toolchain.__run_8]
+2026-10-26T20:24:12.9241212Z ##[group]Run # implemented in 1.66, stabilized in 1.68, made default in 1.70
+2026-10-26T20:24:12.9241785Z [36;1m# implemented in 1.66, stabilized in 1.68, made default in 1.70[0m
+2026-10-26T20:24:12.9242527Z [36;1mif [ -z "${CARGO_REGISTRIES_CRATES_IO_PROTOCOL+set}" -o -f "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol ]; then[0m
+2026-10-26T20:24:12.9243310Z [36;1m  if rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.6[89]\.'; then[0m
+2026-10-26T20:24:12.9243940Z [36;1m    touch "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol || true[0m
+2026-10-26T20:24:12.9244496Z [36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse >> $GITHUB_ENV[0m
+2026-10-26T20:24:12.9245340Z [36;1m  elif rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.6[67]\.'; then[0m
+2026-10-26T20:24:12.9245937Z [36;1m    touch "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol || true[0m
+2026-10-26T20:24:12.9246741Z [36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=git >> $GITHUB_ENV[0m
+2026-10-26T20:24:12.9247123Z [36;1m  fi[0m
+2026-10-26T20:24:12.9247342Z [36;1mfi[0m
+2026-10-26T20:24:12.9314139Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-26T20:24:12.9314714Z env:
+2026-10-26T20:24:12.9314988Z   CARGO_HOME: /home/runner/.cargo
+2026-10-26T20:24:12.9315285Z   CARGO_INCREMENTAL: 0
+2026-10-26T20:24:12.9315537Z   CARGO_TERM_COLOR: always
+2026-10-26T20:24:12.9315799Z   toolchain: 1.90.0
+2026-10-26T20:24:12.9316030Z ##[endgroup]
+2026-10-26T20:24:12.9698384Z ##[end-action id=__dtolnay_rust-toolchain.__run_8;outcome=success;conclusion=success;duration_ms=55]
+2026-10-26T20:24:12.9775094Z ##[start-action display=Work around spurious network errors in curl 8.0;id=__dtolnay_rust-toolchain.__run_9]
+2026-10-26T20:24:12.9910159Z ##[group]Run # https://rust-lang.zulipchat.com/#narrow/stream/246057-t-cargo/topic/timeout.20investigation
+2026-10-26T20:24:12.9910971Z [36;1m# https://rust-lang.zulipchat.com/#narrow/stream/246057-t-cargo/topic/timeout.20investigation[0m
+2026-10-26T20:24:12.9911647Z [36;1mif rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.7[01]\.'; then[0m
+2026-10-26T20:24:12.9912181Z [36;1m  echo CARGO_HTTP_MULTIPLEXING=false >> $GITHUB_ENV[0m
+2026-10-26T20:24:12.9912539Z [36;1mfi[0m
+2026-10-26T20:24:12.9979487Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-26T20:24:12.9979867Z env:
+2026-10-26T20:24:12.9980109Z   CARGO_HOME: /home/runner/.cargo
+2026-10-26T20:24:12.9980402Z   CARGO_INCREMENTAL: 0
+2026-10-26T20:24:12.9980660Z   CARGO_TERM_COLOR: always
+2026-10-26T20:24:12.9980909Z   toolchain: 1.90.0
+2026-10-26T20:24:12.9981142Z ##[endgroup]
+2026-10-26T20:24:13.0222600Z ##[end-action id=__dtolnay_rust-toolchain.__run_9;outcome=success;conclusion=success;duration_ms=44]
+2026-10-26T20:24:13.0340392Z ##[start-action display=rustc +1.90.0 --version --verbose;id=__dtolnay_rust-toolchain.__run_10]
+2026-10-26T20:24:13.0516488Z ##[group]Run rustc +"$toolchain" --version --verbose
+2026-10-26T20:24:13.0516931Z [36;1mrustc +"$toolchain" --version --verbose[0m
+2026-10-26T20:24:13.0585262Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-26T20:24:13.0585637Z env:
+2026-10-26T20:24:13.0585885Z   CARGO_HOME: /home/runner/.cargo
+2026-10-26T20:24:13.0586176Z   CARGO_INCREMENTAL: 0
+2026-10-26T20:24:13.0586421Z   CARGO_TERM_COLOR: always
+2026-10-26T20:24:13.0586675Z   toolchain: 1.90.0
+2026-10-26T20:24:13.0586907Z ##[endgroup]
+2026-10-26T20:24:13.0810023Z rustc 1.90.0 (1159e78c4 2025-09-14)
+2026-10-26T20:24:13.0810507Z binary: rustc
+2026-10-26T20:24:13.0810927Z commit-hash: 1159e78c4747b02ef996e55082b704c09b970588
+2026-10-26T20:24:13.0811428Z commit-date: 2025-09-14
+2026-10-26T20:24:13.0811781Z host: x86_64-unknown-linux-gnu
+2026-10-26T20:24:13.0812166Z release: 1.90.0
+2026-10-26T20:24:13.0812510Z LLVM version: 20.1.8
+2026-10-26T20:24:13.0830653Z ##[end-action id=__dtolnay_rust-toolchain.__run_10;outcome=success;conclusion=success;duration_ms=48]
+2026-10-26T20:24:13.1180178Z ##[group]Run cargo fetch --locked
+2026-10-26T20:24:13.1180549Z [36;1mcargo fetch --locked[0m
+2026-10-26T20:24:13.1247836Z shell: /usr/bin/bash -e {0}
+2026-10-26T20:24:13.1248119Z env:
+2026-10-26T20:24:13.1248358Z   CARGO_HOME: /home/runner/.cargo
+2026-10-26T20:24:13.1248657Z   CARGO_INCREMENTAL: 0
+2026-10-26T20:24:13.1248908Z   CARGO_TERM_COLOR: always
+2026-10-26T20:24:13.1249162Z ##[endgroup]
+2026-10-26T20:24:13.2049773Z info: syncing channel updates for 1.90.0-x86_64-unknown-linux-gnu
+2026-10-26T20:24:13.2876267Z info: latest update on 2025-09-18 for version 1.90.0 (1159e78c4 2025-09-14)
+2026-10-26T20:24:13.3046550Z info: downloading component rustfmt
+2026-10-26T20:24:13.6259397Z [1m[32m    Updating[0m crates.io index
+2026-10-26T20:24:13.8771949Z [1m[32m Downloading[0m crates ...
+2026-10-26T20:24:13.9095749Z [1m[32m  Downloaded[0m wasm-bindgen-macro v0.2.100
+2026-10-26T20:24:13.9125058Z [1m[32m  Downloaded[0m outref v0.5.2
+2026-10-26T20:24:13.9144889Z [1m[32m  Downloaded[0m proc-macro2 v1.0.107
+2026-10-26T20:24:13.9182338Z [1m[32m  Downloaded[0m wasm-bindgen-backend v0.2.100
+2026-10-26T20:24:13.9203127Z [1m[32m  Downloaded[0m percent-encoding v2.3.2
+2026-10-26T20:24:13.9220766Z [1m[32m  Downloaded[0m sha2 v0.10.8
+2026-10-26T20:24:13.9257420Z [1m[32m  Downloaded[0m convert_case v0.6.0
+2026-10-26T20:24:13.9283620Z [1m[32m  Downloaded[0m napi-build v2.1.3
+2026-10-26T20:24:13.9332186Z [1m[32m  Downloaded[0m form_urlencoded v1.2.2
+2026-10-26T20:24:13.9365226Z [1m[32m  Downloaded[0m thiserror v2.0.21
+2026-10-26T20:24:13.9461738Z [1m[32m  Downloaded[0m arraydeque v0.5.1
+2026-10-26T20:24:13.9492389Z [1m[32m  Downloaded[0m unicode-segmentation v1.13.3
+2026-10-26T20:24:13.9535573Z [1m[32m  Downloaded[0m pyo3-ffi v0.23.5
+2026-10-26T20:24:13.9613903Z [1m[32m  Downloaded[0m ryu-js v1.0.3
+2026-10-26T20:24:13.9666901Z [1m[32m  Downloaded[0m fancy-regex v0.14.0
+2026-10-26T20:24:13.9708423Z [1m[32m  Downloaded[0m icu_collections v2.3.0
+2026-10-26T20:24:13.9775373Z [1m[32m  Downloaded[0m idna v1.1.0
+2026-10-26T20:24:13.9815361Z [1m[32m  Downloaded[0m aho-corasick v1.1.5
+2026-10-26T20:24:13.9875607Z [1m[32m  Downloaded[0m serde_json v1.0.140
+2026-10-26T20:24:13.9948383Z [1m[32m  Downloaded[0m portable-atomic v1.15.0
+2026-10-26T20:24:14.0029113Z [1m[32m  Downloaded[0m icu_properties_data v2.3.0
+2026-10-26T20:24:14.0141519Z [1m[32m  Downloaded[0m typenum v1.20.1
+2026-10-26T20:24:14.0180853Z [1m[32m  Downloaded[0m zerovec v0.11.8
+2026-10-26T20:24:14.0244825Z [1m[32m  Downloaded[0m icu_properties v2.3.0
+2026-10-26T20:24:14.0279643Z [1m[32m  Downloaded[0m zerocopy-derive v0.8.63
+2026-10-26T20:24:14.0409739Z [1m[32m  Downloaded[0m jsonschema v0.29.1
+2026-10-26T20:24:14.0471497Z [1m[32m  Downloaded[0m syn v3.0.9
+2026-10-26T20:24:14.0581854Z [1m[32m  Downloaded[0m zerocopy v0.8.63
+2026-10-26T20:24:14.0859550Z [1m[32m  Downloaded[0m regress v0.12.0
+2026-10-26T20:24:14.0947049Z [1m[32m  Downloaded[0m regex-syntax v0.8.11
+2026-10-26T20:24:14.1019879Z [1m[32m  Downloaded[0m bumpalo v3.20.3
+2026-10-26T20:24:14.1048945Z [1m[32m  Downloaded[0m num-bigint v0.4.8
+2026-10-26T20:24:14.1098393Z [1m[32m  Downloaded[0m wasip2 v1.0.4+wasi-0.2.12
+2026-10-26T20:24:14.1142013Z [1m[32m  Downloaded[0m memchr v2.8.3
+2026-10-26T20:24:14.1198923Z [1m[32m  Downloaded[0m url v2.5.7
+2026-10-26T20:24:14.1227556Z [1m[32m  Downloaded[0m pyo3-macros-backend v0.23.5
+2026-10-26T20:24:14.1254684Z [1m[32m  Downloaded[0m fraction v0.15.4
+2026-10-26T20:24:14.1313292Z [1m[32m  Downloaded[0m icu_locale_core v2.3.0
+2026-10-26T20:24:14.1383139Z [1m[32m  Downloaded[0m icu_normalizer v2.3.0
+2026-10-26T20:24:14.1485325Z [1m[32m  Downloaded[0m regex-automata v0.4.18
+2026-10-26T20:24:14.1632578Z [1m[32m  Downloaded[0m zerotrie v0.2.5
+2026-10-26T20:24:14.1672085Z [1m[32m  Downloaded[0m serde v1.0.219
+2026-10-26T20:24:14.1703424Z [1m[32m  Downloaded[0m napi v2.16.17
+2026-10-26T20:24:14.1757864Z [1m[32m  Downloaded[0m regex v1.13.1
+2026-10-26T20:24:14.1812436Z [1m[32m  Downloaded[0m base64 v0.22.1
+2026-10-26T20:24:14.1850898Z [1m[32m  Downloaded[0m num-traits v0.2.19
+2026-10-26T20:24:14.1877187Z [1m[32m  Downloaded[0m icu_provider v2.3.1
+2026-10-26T20:24:14.1903746Z [1m[32m  Downloaded[0m wit-bindgen v0.57.1
+2026-10-26T20:24:14.1940446Z [1m[32m  Downloaded[0m bitflags v2.13.2
+2026-10-26T20:24:14.1986193Z [1m[32m  Downloaded[0m js-sys v0.3.77
+2026-10-26T20:24:14.2003261Z [1m[32m  Downloaded[0m uuid v1.28.0
+2026-10-26T20:24:14.2034206Z [1m[32m  Downloaded[0m serde_derive v1.0.219
+2026-10-26T20:24:14.2059430Z [1m[32m  Downloaded[0m digest v0.10.7
+2026-10-26T20:24:14.2077421Z [1m[32m  Downloaded[0m icu_normalizer_data v2.3.0
+2026-10-26T20:24:14.2099286Z [1m[32m  Downloaded[0m litemap v0.8.3
+2026-10-26T20:24:14.2122327Z [1m[32m  Downloaded[0m writeable v0.6.4
+2026-10-26T20:24:14.2143039Z [1m[32m  Downloaded[0m libc v0.2.191
+2026-10-26T20:24:14.2612993Z [1m[32m  Downloaded[0m yoke v0.8.3
+2026-10-26T20:24:14.2631140Z [1m[32m  Downloaded[0m synstructure v0.14.0
+2026-10-26T20:24:14.2641217Z [1m[32m  Downloaded[0m getrandom v0.3.4
+2026-10-26T20:24:14.2675148Z [1m[32m  Downloaded[0m smallvec v1.16.3
+2026-10-26T20:24:14.2688866Z [1m[32m  Downloaded[0m parking_lot_core v0.9.12
+2026-10-26T20:24:14.2709761Z [1m[32m  Downloaded[0m referencing v0.29.1
+2026-10-26T20:24:14.2749687Z [1m[32m  Downloaded[0m vsimd v0.8.0
+2026-10-26T20:24:14.2770653Z [1m[32m  Downloaded[0m once_cell v1.21.4
+2026-10-26T20:24:14.2795275Z [1m[32m  Downloaded[0m rustversion v1.0.23
+2026-10-26T20:24:14.2828903Z [1m[32m  Downloaded[0m thiserror-impl v2.0.21
+2026-10-26T20:24:14.2843485Z [1m[32m  Downloaded[0m pyo3-build-config v0.23.5
+2026-10-26T20:24:14.2857213Z [1m[32m  Downloaded[0m pyo3 v0.23.5
+2026-10-26T20:24:14.3117588Z [1m[32m  Downloaded[0m napi-derive-backend v1.0.75
+2026-10-26T20:24:14.3133443Z [1m[32m  Downloaded[0m napi-derive v2.16.13
+2026-10-26T20:24:14.3145367Z [1m[32m  Downloaded[0m email_address v0.2.9
+2026-10-26T20:24:14.3161383Z [1m[32m  Downloaded[0m bit-vec v0.8.0
+2026-10-26T20:24:14.3176959Z [1m[32m  Downloaded[0m num-complex v0.4.6
+2026-10-26T20:24:14.3190608Z [1m[32m  Downloaded[0m num-integer v0.1.47
+2026-10-26T20:24:14.3206201Z [1m[32m  Downloaded[0m num-rational v0.4.2
+2026-10-26T20:24:14.3218124Z [1m[32m  Downloaded[0m tinystr v0.8.4
+2026-10-26T20:24:14.3238116Z [1m[32m  Downloaded[0m displaydoc v0.2.7
+2026-10-26T20:24:14.3257976Z [1m[32m  Downloaded[0m zerovec-derive v0.11.6
+2026-10-26T20:24:14.3274319Z [1m[32m  Downloaded[0m fluent-uri v0.3.2
+2026-10-26T20:24:14.3300921Z [1m[32m  Downloaded[0m lock_api v0.4.14
+2026-10-26T20:24:14.3313712Z [1m[32m  Downloaded[0m redox_syscall v0.5.18
+2026-10-26T20:24:14.3338153Z [1m[32m  Downloaded[0m uuid-simd v0.8.0
+2026-10-26T20:24:14.3349393Z [1m[32m  Downloaded[0m ryu v1.0.23
+2026-10-26T20:24:14.3381102Z [1m[32m  Downloaded[0m cpufeatures v0.2.17
+2026-10-26T20:24:14.3393969Z [1m[32m  Downloaded[0m crypto-common v0.1.7
+2026-10-26T20:24:14.3402723Z [1m[32m  Downloaded[0m cfg-if v1.0.5
+2026-10-26T20:24:14.3415182Z [1m[32m  Downloaded[0m indoc v2.0.8
+2026-10-26T20:24:14.3444633Z [1m[32m  Downloaded[0m pyo3-macros v0.23.5
+2026-10-26T20:24:14.3452552Z [1m[32m  Downloaded[0m target-lexicon v0.12.16
+2026-10-26T20:24:14.3476575Z [1m[32m  Downloaded[0m ctor v0.2.9
+2026-10-26T20:24:14.3491146Z [1m[32m  Downloaded[0m napi-sys v2.4.0
+2026-10-26T20:24:14.3501592Z [1m[32m  Downloaded[0m bytecount v0.6.9
+2026-10-26T20:24:14.3525922Z [1m[32m  Downloaded[0m bit-set v0.8.0
+2026-10-26T20:24:14.3538218Z [1m[32m  Downloaded[0m lazy_static v1.5.1
+2026-10-26T20:24:14.3557857Z [1m[32m  Downloaded[0m autocfg v1.5.1
+2026-10-26T20:24:14.3581848Z [1m[32m  Downloaded[0m stable_deref_trait v1.2.1
+2026-10-26T20:24:14.3590835Z [1m[32m  Downloaded[0m yoke-derive v0.8.4
+2026-10-26T20:24:14.3607768Z [1m[32m  Downloaded[0m zerofrom-derive v0.1.8
+2026-10-26T20:24:14.3621693Z [1m[32m  Downloaded[0m zerofrom v0.1.8
+2026-10-26T20:24:14.3632344Z [1m[32m  Downloaded[0m idna_adapter v1.2.2
+2026-10-26T20:24:14.3644299Z [1m[32m  Downloaded[0m utf8_iter v1.0.4
+2026-10-26T20:24:14.3662918Z [1m[32m  Downloaded[0m ahash v0.8.12
+2026-10-26T20:24:14.3690713Z [1m[32m  Downloaded[0m scopeguard v1.2.0
+2026-10-26T20:24:14.3706598Z [1m[32m  Downloaded[0m windows-link v0.2.1
+2026-10-26T20:24:14.3716258Z [1m[32m  Downloaded[0m block-buffer v0.10.4
+2026-10-26T20:24:14.3731369Z [1m[32m  Downloaded[0m version_check v0.9.5
+2026-10-26T20:24:14.3744845Z [1m[32m  Downloaded[0m generic-array v0.14.7
+2026-10-26T20:24:14.3763222Z [1m[32m  Downloaded[0m memoffset v0.9.1
+2026-10-26T20:24:14.3780525Z [1m[32m  Downloaded[0m heck v0.5.0
+2026-10-26T20:24:14.3796923Z [1m[32m  Downloaded[0m unindent v0.2.4
+2026-10-26T20:24:14.3806417Z [1m[32m  Downloaded[0m libloading v0.8.9
+2026-10-26T20:24:14.3837176Z [1m[32m  Downloaded[0m num-iter v0.1.46
+2026-10-26T20:24:14.3851409Z [1m[32m  Downloaded[0m num v0.4.3
+2026-10-26T20:24:14.3863809Z [1m[32m  Downloaded[0m potential_utf v0.1.6
+2026-10-26T20:24:14.3877918Z [1m[32m  Downloaded[0m num-cmp v0.1.0
+2026-10-26T20:24:14.3887908Z [1m[32m  Downloaded[0m borrow-or-share v0.2.4
+2026-10-26T20:24:14.3902051Z [1m[32m  Downloaded[0m ref-cast-impl v1.0.27
+2026-10-26T20:24:14.3912577Z [1m[32m  Downloaded[0m log v0.4.34
+2026-10-26T20:24:14.3945493Z [1m[32m  Downloaded[0m syn v2.0.119
+2026-10-26T20:24:14.4076782Z [1m[32m  Downloaded[0m semver v1.0.28
+2026-10-26T20:24:14.4099170Z [1m[32m  Downloaded[0m ref-cast v1.0.27
+2026-10-26T20:24:14.4127375Z [1m[32m  Downloaded[0m itoa v1.0.18
+2026-10-26T20:24:14.4141728Z [1m[32m  Downloaded[0m r-efi v5.3.0
+2026-10-26T20:24:14.4190598Z [1m[32m  Downloaded[0m parking_lot v0.12.5
+2026-10-26T20:24:14.4215255Z [1m[32m  Downloaded[0m quote v1.0.47
+2026-10-26T20:24:14.4241942Z [1m[32m  Downloaded[0m wasm-bindgen-macro-support v0.2.100
+2026-10-26T20:24:14.4253312Z [1m[32m  Downloaded[0m unicode-ident v1.0.27
+2026-10-26T20:24:14.4281047Z [1m[32m  Downloaded[0m wasm-bindgen v0.2.100
+2026-10-26T20:24:14.4304247Z [1m[32m  Downloaded[0m wasm-bindgen-shared v0.2.100
+2026-10-26T20:24:14.4972320Z ##[group]Run bun run test:sdk
+2026-10-26T20:24:14.4972645Z [36;1mbun run test:sdk[0m
+2026-10-26T20:24:14.5039950Z shell: /usr/bin/bash -e {0}
+2026-10-26T20:24:14.5040236Z env:
+2026-10-26T20:24:14.5040479Z   CARGO_HOME: /home/runner/.cargo
+2026-10-26T20:24:14.5040772Z   CARGO_INCREMENTAL: 0
+2026-10-26T20:24:14.5041028Z   CARGO_TERM_COLOR: always
+2026-10-26T20:24:14.5041280Z ##[endgroup]
+2026-10-26T20:24:14.5178650Z $ bun run build:sdk && bun scripts/test-sdk-install.ts
+2026-10-26T20:24:14.5226471Z $ bun run build && bun run build:postgresql && bun scripts/package-sdk.ts
+2026-10-26T20:24:14.5263626Z $ bun scripts/build.ts
+2026-10-26T20:24:38.5851556Z Authored model validates against generated current enforcement
+2026-10-26T20:24:39.2828824Z 55 |  // before touching outputs, including added/removed workspace files.
+2026-10-26T20:24:39.2830421Z 56 |  const finalPaths=['spec/metamodel/umf.yaml',...await compilerClosure(),...(await workspaceClosure()).filter(path=>!compilerFiles.includes(path)),...backendFiles];
+2026-10-26T20:24:39.2831460Z 57 |  const finalSources=Object.fromEntries(await Promise.all(finalPaths.map(async path=>[path,hash(await readFile(resolve(root,path)))])));
+2026-10-26T20:24:39.2832445Z 58 |  if(JSON.stringify(Object.entries(sources).sort())!==JSON.stringify(Object.entries(finalSources).sort()))throw Error('METAMODEL_SOURCE_CHANGED_DURING_GENERATION');
+2026-10-26T20:24:39.2833147Z 59 |  const outRoot=options.outputRoot??root;
+2026-10-26T20:24:39.2834985Z 60 |  if(options.check){for(const [path,value]of Object.entries(outputs)){let actual;try{actual=await readFile(resolve(outRoot,path),'utf8');}catch{throw Error('METAMODEL_MISSING_OUTPUT '+path);}if(actual!==value)throw Error('METAMODEL_STALE_OUTPUT '+path);}for(const dir of ['spec/metamodel/generated','src/generated'])for(const name of await readdir(resolve(outRoot,dir)))if(!Object.hasOwn(outputs,dir+'/'+name))throw Error('METAMODEL_EXTRA_OUTPUT '+dir+'/'+name);}
+2026-10-26T20:24:39.2837023Z                                                                                                                                                                                                                                                                                                                                                                                                                                     ^
+2026-10-26T20:24:39.2837857Z error: METAMODEL_EXTRA_OUTPUT src/generated/core-validators-accounted.ts
+2026-10-26T20:24:39.2838385Z       at generate (/home/runner/work/umf/umf/scripts/metamodel/build.ts:60:416)
+2026-10-26T20:24:39.2838706Z 
+2026-10-26T20:24:39.2870324Z ##[error]
+      at generate (/home/runner/work/umf/umf/scripts/metamodel/build.ts:60:416)
+2026-10-26T20:24:39.2880151Z 
+2026-10-26T20:24:39.2880364Z Bun v1.4.2 (Linux x64)
+2026-10-26T20:24:39.2956894Z error: script "build" exited with code 1
+2026-10-26T20:24:39.2966366Z error: script "build:sdk" exited with code 1
+2026-10-26T20:24:39.2975561Z error: script "test:sdk" exited with code 1
+2026-10-26T20:24:39.2988959Z ##[error]Process completed with exit code 1.
+2026-10-26T20:24:39.3610102Z ##[group]Run actions/upload-artifact@v4
+2026-10-26T20:24:39.3610424Z with:
+2026-10-26T20:24:39.3610668Z   name: command-execution-evidence
+2026-10-26T20:24:39.3610964Z   include-hidden-files: true
+2026-10-26T20:24:39.3611576Z   path: command-execution.log
+fixtures/actions/browser.json
+.cache/sdk-distribution/umf-sdk.tgz
+.cache/sdk-distribution/manifest.json
+
+2026-10-26T20:24:39.3612213Z   if-no-files-found: warn
+2026-10-26T20:24:39.3612481Z   compression-level: 6
+2026-10-26T20:24:39.3612729Z   overwrite: false
+2026-10-26T20:24:39.3612967Z env:
+2026-10-26T20:24:39.3613198Z   CARGO_HOME: /home/runner/.cargo
+2026-10-26T20:24:39.3613500Z   CARGO_INCREMENTAL: 0
+2026-10-26T20:24:39.3613743Z   CARGO_TERM_COLOR: always
+2026-10-26T20:24:39.3614000Z ##[endgroup]
+2026-10-26T20:24:39.5565610Z (node:46126) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-26T20:24:39.5566940Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-26T20:24:39.5693258Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-10-26T20:24:39.5703553Z The least common ancestor is /home/runner/work/umf/umf. This will be the root directory of the artifact
+2026-10-26T20:24:39.5705723Z With the provided path, there will be 2 files uploaded
+2026-10-26T20:24:39.5711729Z Artifact name is valid!
+2026-10-26T20:24:39.5719257Z Root directory input is valid!
+2026-10-26T20:24:39.8229476Z Beginning upload of artifact content to blob storage
+2026-10-26T20:24:39.8473756Z (node:46126) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-26T20:24:39.9691222Z Uploaded bytes 22627
+2026-10-26T20:24:40.0010690Z Finished uploading artifact content to blob storage!
+2026-10-26T20:24:40.0011496Z SHA256 digest of uploaded artifact zip is 6f06ce0e32b8a1c84a64cef26ab758ecbef8743c17cd03b899725ce3bc33608b
+2026-10-26T20:24:40.0013087Z Finalizing artifact upload
+2026-10-26T20:24:40.4274335Z Artifact command-execution-evidence.zip successfully finalized. Artifact ID 12687025214
+2026-10-26T20:24:40.4275529Z Artifact command-execution-evidence has been successfully uploaded! Final size is 22627 bytes. Artifact ID is 12687025214
+2026-10-26T20:24:40.4276369Z Artifact download URL: https://github.com/DocumentDrivenDX/umf/actions/runs/40393369772/artifacts/12687025214
+2026-10-26T20:24:40.5498684Z Post job cleanup.
+2026-10-26T20:24:40.6397720Z [command]/usr/bin/git version
+2026-10-26T20:24:40.6442692Z git version 2.55.0
+2026-10-26T20:24:40.6486399Z Temporarily overriding HOME='/home/runner/work/_temp/cf3ae82d-5049-4914-9775-6e270ee0b2ab' before making global git config changes
+2026-10-26T20:24:40.6488356Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-26T20:24:40.6489620Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf
+2026-10-26T20:24:40.6544339Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-26T20:24:40.6604154Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-26T20:24:40.7163040Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-26T20:24:40.7211277Z http.https://github.com/.extraheader
+2026-10-26T20:24:40.7240274Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-26T20:24:40.7297442Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-26T20:24:40.7808376Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-26T20:24:40.7848513Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-26T20:24:40.8426654Z Cleaning up orphan processes
+2026-10-26T20:24:40.8811751Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

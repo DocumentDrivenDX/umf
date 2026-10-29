@@ -1,0 +1,67 @@
+{
+  "attempt": 2,
+  "cleanup": {
+    "clientContainer": "umf-d5-97eb1184aa8b47b1a1304829546470b0-client",
+    "clientRemoved": true,
+    "network": "umf-d5-97eb1184aa8b47b1a1304829546470b0",
+    "networkRemoved": true,
+    "postgresContainer": "umf-d5-97eb1184aa8b47b1a1304829546470b0-pg",
+    "postgresRemoved": true
+  },
+  "cleanupRecordedAtEpochSeconds": 1793221183,
+  "clientExit": 1,
+  "executionId": "local-97eb1184aa8b47b1a1304829546470b0",
+  "executionKind": "local_linux_diagnostic",
+  "guest": {
+    "architecture": "x86_64",
+    "distribution": "Ubuntu",
+    "emulated": true,
+    "os": "Linux",
+    "version": "24.04.5"
+  },
+  "host": {
+    "architecture": "aarch64",
+    "os": "Darwin"
+  },
+  "hostedQualificationClaim": false,
+  "postgresContainerId": "3157c1034e648f6c1835a7f4b40cbff4a6ca5b07cdeab20a8912f97c4ab2a914",
+  "postgresIdentityText": [
+    "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "18.6 (Debian 18.6-1.pgdg13+2)",
+    "180006"
+  ],
+  "postgresImageConfigId": "sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336",
+  "postgresImageReference": "sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336",
+  "postgresPlatform": "linux/arm64",
+  "postgresQuietWorkloadBeforeClient": {
+    "BlockIO": "78MB / 45MB",
+    "CPUPerc": "0.03%",
+    "Container": "umf-d5-97eb1184aa8b47b1a1304829546470b0-pg",
+    "ID": "3157c1034e64",
+    "MemPerc": "1.36%",
+    "MemUsage": "27.75MiB / 2GiB",
+    "Name": "umf-d5-97eb1184aa8b47b1a1304829546470b0-pg",
+    "NetIO": "1.71kB / 126B",
+    "PIDs": "9"
+  },
+  "profile": "umf.local-docker-g02-d5-context/1",
+  "recordedAtEpochSeconds": 1793221182,
+  "resourceLimits": {
+    "client": {
+      "NanoCpus": 8000000000,
+      "memoryBytes": 8589934592,
+      "pidsLimit": 4096
+    },
+    "postgres": {
+      "NanoCpus": 2000000000,
+      "memoryBytes": 2147483648,
+      "pidsLimit": 1024
+    }
+  },
+  "runtimeEngine": "OrbStack",
+  "runtimeImageConfigId": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+  "runtimeImageReference": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+  "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+  "sourceTree": "8b98c0d895983ba2b7637dd3aea567dab0943883",
+  "workflowSha256": "f0963d2df1e371112ba6e57999dbf69290796d711eb97ed46637d4ebc63918a1"
+}

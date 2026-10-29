@@ -1,0 +1,11 @@
+{
+  "status": "FAIL_OR_UNKNOWN_PREFLIGHT_SOURCE_SCAN_INTERRUPTED",
+  "sourceCommit": "26767551076693020ac8f2cfb84c3015fc9f5d71",
+  "execution": "owned local Linux container",
+  "container": "umf-mig-r3-267675510",
+  "observedProcess": "git status --porcelain",
+  "observedElapsedSeconds": 207,
+  "boundedGenerationCommandsStarted": false,
+  "reason": "Host bind mount scan of64144 tracked files did not finish promptly; move exact checkout to Linux-native owned volume before qualification.",
+  "qualificationClaim": false
+}

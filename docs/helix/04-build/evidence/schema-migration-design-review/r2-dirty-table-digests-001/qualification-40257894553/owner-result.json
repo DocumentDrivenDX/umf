@@ -1,0 +1,26 @@
+{
+  "profile": "umf.r2-combined-owner-result/1",
+  "status": "FAIL_CLOSED_RESOURCE_LIMIT",
+  "sourceCommit": "9b5910e943e6fe81e102cb5bd4a6cba71e728c4d",
+  "runId": 40257894553,
+  "artifactId": 12622534643,
+  "artifactZipSha256": "f76664d32eddfef972f1c134fcaf33282f5f2a796be7dc353a6aabd562b27129",
+  "passes": {
+    "typechecks": 3,
+    "resourceControls": 53,
+    "migrationRegressions": 83,
+    "chromiumParityAndRepro": 141,
+    "apiAndG02": 39
+  },
+  "failed": "Full seeded Note+mixedG02+CREATE resource positive; 1of40 APIcases fails at original1Mworkcap. Newnormativedigestcontrolspass.",
+  "consumed": {
+    "work": 1000000,
+    "bytes": 3476625,
+    "subjects": 4,
+    "calls": 934203,
+    "ownedWork": 200798,
+    "historyWork": 799202
+  },
+  "rejection": "scheduleTypedInventoryEffects snapshot\u2192hashCanonicalImpl /prefix/catalog/tables/0/meaning/declaration/record. Fullhistoricalrecompile retained.",
+  "scope": "R2public.2 adoption/native/final installed/main/release resourcefitOPEN; no capincrease or fixtureshrink. Exactsourceonly passscopes, no changedsource inheritance."
+}

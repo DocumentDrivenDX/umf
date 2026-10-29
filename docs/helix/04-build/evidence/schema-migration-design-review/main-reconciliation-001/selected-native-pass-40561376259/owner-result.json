@@ -1,0 +1,22 @@
+{
+  "status": "SELECTED_NATIVE_CHECKPOINT_ACCEPTED",
+  "sourceCommit": "a4af875748b085ac531fe06089a675a0ea1059fc",
+  "runId": 40561376259,
+  "runAttempt": 1,
+  "artifactId": 12761877331,
+  "artifactSha256": "6c1d1741bd6b77185cf91afc3123381a6ffd3be7cb9481242be5bd9f8e390596",
+  "sourceReviewSha256": "ec1476f93e789d4eba627aa98b9e880e5668b31f8df9db1a8d464d8aa1658e60",
+  "G02": {
+    "cases": 5,
+    "checks": 78,
+    "databaseCleanup": "VERIFIED",
+    "sharedRoleCleanup": "VERIFIED",
+    "cleanupUnknown": false,
+    "deadlineExceeded": false
+  },
+  "selectedG03Scenarios": 13,
+  "G03N12": "UNQUALIFIED",
+  "G03N14FullCampaign": "OPEN",
+  "declaredNativeMemberLimitation": "Checkpoint source metadata names nested Core member incorrectly. Actual wheel/member hash and installed native behavior passed. Consumer declaration/actual-path checks are corrected separately; original evidence remains unchanged.",
+  "claims": "Accepted only for actuala4af87574 selectednative checkpoint. Not a substitution for corrected-source qualification, original D5/full18aggregate/normalPR gates or SDK release/public proof."
+}

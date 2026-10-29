@@ -1,0 +1,35 @@
+{
+  "profile": "umf.g11.native-lease-review-fix/0.1",
+  "sourcePacket": "/private/tmp/g11-native-lease-source-007/manifest.json",
+  "sourcePacketManifestSha256": "d6eb2a7f073cb024dcb2b84826f0c4a05e51d1b799f9ec125615d2771a299788",
+  "sourceBaseHead": "0f3a0b4970a9374abd3178269c907763398de262",
+  "scope": "Remove the unused `_cleanup_unstarted_target` helper because it could delete filesystem targets using only control-lease exclusion and operation kind, without a signed pending request/reservation. No replacement cleanup path is introduced; signed target-apply/recovery paths remain unchanged.",
+  "patch": {
+    "path": "source-007-to-008.patch",
+    "sha256": "3d51ae566a5a9800a8cf14e4a52f0cdb71e63e47db7a100e17f57f93f58bb7e4",
+    "size": 3420
+  },
+  "files": [
+    {
+      "path": "python/umf_access/src/umf_access/lifecycle/ingress_local_postgres.py",
+      "source007Sha256": "f58623f91d47e028b6ea2c14159dc833042a99ee7f333b2e2ff82847d52aaa58",
+      "currentSha256": "7afd677336ebf723bf4f38d4ecff936f450f9fea420535837dfdad4126b01df0",
+      "currentSize": 258415
+    },
+    {
+      "path": "python/umf_access/tests/test_original_control_lease.py",
+      "source007Sha256": "62a5cb5aabf5d46e2495c9741c95f7a1f43f9bc2b2bd902d1b713b7fbfd857e5",
+      "currentSha256": "baa7d89c087369106cec9a05829b4d6569bec357f2536705d12d63545a62faee",
+      "currentSize": 26770
+    }
+  ],
+  "verification": {
+    "focusedCommand": "PYTHONPATH=<worktree>/python/umf_access/src:<worktree>/python/umf_access/tests:/private/tmp/umf056-public-wheel-verify/venv/lib/python3.12/site-packages PYTHONDONTWRITEBYTECODE=1 /private/tmp/g11-owner-authority-crypto-001/venv/bin/python -B -m unittest -q test_ingress_local_postgres test_ingress_local_postgres_authority_bridge test_original_control_lease",
+    "focusedResult": "47 tests passed, exit 0, 0.939s",
+    "focusedOutput": "The terminal reported `Ran 47 tests in 0.939s` and `OK`; raw output was not redirected to a file.",
+    "ruff": "ruff 0.17.1 check --no-cache --config .ruff.toml on ingress_local_postgres.py and test_original_control_lease.py: passed",
+    "diffCheck": "git diff --check on the two changed files: passed"
+  },
+  "change": "The unused deletion helper has no callers; only its negative test reference was removed and replaced with an assertion that the helper is absent. No alternate cleanup or broad refusal was added. Signed target-apply/recovery paths are unchanged.",
+  "limitations": "Source-only review correction. No native database or PostgreSQL process was run."
+}

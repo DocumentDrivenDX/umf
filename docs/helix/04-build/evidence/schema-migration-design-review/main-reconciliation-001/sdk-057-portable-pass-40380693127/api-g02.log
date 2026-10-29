@@ -1,0 +1,63 @@
+bun test v1.4.3 (c6da4a4d3)
+
+::group::tests/lifecycle/table-inventory-api.test.ts:
+(pass) charged chunk hashing preserves UTF-8 bytes and refuses before later chunks on budget exhaustion [1.28ms]
+(pass) bounded canonical members account exact UTF-8 output and stop before oversized token/key emission [1.00ms]
+(pass) G10 public initial compile, full verification and serialization retain the exact marker wrapper [9464.84ms]
+(pass) G10 dependency projection claims every raw edge as physical work or a complete-source publication obligation [5448.23ms]
+(pass) scheduler prefixes preserve final frames for zero and multiple groups with or without metadata IDs [118.58ms]
+(pass) compiler final IDs preserve complete plan serialization bytes against the legacy remap-and-hash path [2424.86ms]
+(pass) legacy seed history requires exact source-derived reported outcomes and remains explicitly non-native [1899.20ms]
+(pass) G10 historical recompile exact-content cache > initial and second G10 plans compile through their original public requests [15.40ms]
+(pass) G10 historical recompile exact-content cache > reuses only exact plans and exact prior-history members [3333.21ms]
+(pass) G10 historical recompile exact-content cache > rejects a changed cached plan under the same history position [3273.93ms]
+(pass) G10 historical recompile exact-content cache > rejects changed prior execution bytes on a cache hit [3313.04ms]
+(pass) R2 metered context reuses exact source cores for a seeded Note history and mixed G02 plus CREATE [5155.21ms]
+(pass) R2 current-root canonical reuse requires the exact same-meter source-owner association [1610.85ms]
+(pass) R2 final-plan retention failure returns no history context and a fresh invocation succeeds [3234.76ms]
+(pass) G10 installed-create compiled fixture > verifies against complete original history [3053.64ms]
+(pass) G10 installed-create compiled fixture > refuses empty or changed history [3305.05ms]
+(pass) G10 installed-create compiled fixture > historical verifier reuses the installed-create prefix only for exact history members [3421.08ms]
+(pass) G10 installed create review exposes the complete absent-before projection with no old source path [8302.44ms]
+(pass) G10 legacy component review values and optional source paths remain unchanged [2620.24ms]
+(pass) G10 seed retirement review retains the original definition and never claims data replay [5306.01ms]
+(pass) G10 removal candidates expose the exact irreversible purge disclosure before approval [2339.43ms]
+(pass) G10 mixed legal fixture builders clone exported definitions into each returned source [735.15ms]
+(pass) G10 appended CREATE plus G02 compiled fixture > retains source, marker, grant, field, phase, seed and operation ordering assertions [544.01ms]
+(pass) G10 appended CREATE plus G02 compiled fixture > preserves public verification and serialization equality for the admitted plan [7093.07ms]
+(pass) G10 appended CREATE plus G02 compiled fixture > public compilation refuses omitted create claims and duplicate operation markers [2510.80ms]
+(pass) G10 mixed CREATE plus existing-target G02 partitions only the exact tightening marker [10786.99ms]
+(pass) G10 G02 source certificate accepts only the owned change and selected CREATE closure [2477.08ms]
+(pass) G10 per-table review meanings are detached from one shared projection graph [710.66ms]
+(pass) G10 prepared public calls own source/history inputs and never invoke request accessors [5986.70ms]
+(pass) G10 G02 module-context ownership retains only local tightening from complete compiled markers [2638.36ms]
+(pass) G10 discovery rejects selector count and UTF-8 limits at the public boundary [438.79ms]
+(pass) G10 internal legacy discovery reserves candidate count and bytes before retaining rows [1113.07ms]
+(pass) G10 public discovery normalizes malformed selector and history failures to located review errors [474.88ms]
+
+::endgroup::
+
+::group::tests/lifecycle/g02-derived-fill.test.ts:
+(pass) G02 appends, derives, and tightens one required target in the exact ordered native phase [495.25ms]
+(pass) G02 frozen 0.4 future-default plan bytes and digest remain verifiable [375.31ms]
+(pass) G02 puts a declared future default after the derived fill inside the required phase [392.21ms]
+(pass) G02 preserves the existing optional-field fill/tighten pair under the successor profile [438.16ms]
+(pass) G02 existing-target backfill retains its nonempty future default exactly [558.56ms]
+(pass) G02 does not rewrite retained creates: required append needs an existing create input or declared default [326.30ms]
+(pass) G02 refuses a target self-reference, a newly appended input, and a second effect [502.50ms]
+(pass) G02 refuses raw source meaning changes even when they emit no selected DDL [211.07ms]
+(pass) G02 refuses retained YAML sources at portable admission with source-specific paths [437.65ms]
+(pass) G02 format admission leaves historical 0.3 YAML source behavior unchanged [263.37ms]
+
+::endgroup::
+
+::group::tests/lifecycle/g02-renderer-operation-sidecar.test.ts:
+(pass) G02 internal renderer sidecar reports typed source-site effects without changing public plan bytes [464.62ms]
+(pass) metered G02 reuses only the exact bundles already projected in its active G10 scope [420.78ms]
+
+::endgroup::
+
+ 45 pass
+ 0 fail
+ 661 expect() calls
+Ran 45 tests across 3 files. [130.37s]

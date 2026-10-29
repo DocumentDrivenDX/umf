@@ -1,0 +1,130 @@
+{
+  "artifactSha256": "fe3fd18973fd3b545b93f7dee25915181bcce0b1a1765d2db779e60849e4ef46",
+  "pinOverlapChecks": [
+    {
+      "allOverlapsMatch": true,
+      "name": "portable97",
+      "outputOverlapCount": 4,
+      "overlaps": [
+        {
+          "matches": true,
+          "outputSha256": "4df3c8f92c5baa2c52f965d83b681ff306392bf9ba333bd39213a8f1065ac766",
+          "path": "spec/core/extension-package.schema.json",
+          "pinnedSha256": "4df3c8f92c5baa2c52f965d83b681ff306392bf9ba333bd39213a8f1065ac766"
+        },
+        {
+          "matches": true,
+          "outputSha256": "c6004664eb93dcef28ce6e0583f91225b618aa0fb42967a892242402557cf71d",
+          "path": "spec/core/schema.json",
+          "pinnedSha256": "c6004664eb93dcef28ce6e0583f91225b618aa0fb42967a892242402557cf71d"
+        },
+        {
+          "matches": true,
+          "outputSha256": "207abbad54ebf8c660a958e2deda072a5a3236b5b8df5af8a8656f90c3e46ba9",
+          "path": "spec/core/semantic-type-reference.schema.json",
+          "pinnedSha256": "207abbad54ebf8c660a958e2deda072a5a3236b5b8df5af8a8656f90c3e46ba9"
+        },
+        {
+          "matches": true,
+          "outputSha256": "563602e0f21f6d6b0efd1ae069dbda28926e085585b4bf0430347b65ff2bd0ff",
+          "path": "src/generated/core-validators.ts",
+          "pinnedSha256": "563602e0f21f6d6b0efd1ae069dbda28926e085585b4bf0430347b65ff2bd0ff"
+        }
+      ],
+      "rowCount": 97,
+      "sourcePinFile": "qualification-inputs/expected-pins.sha256",
+      "sourcePinFileSha256": "f8397558867b9123ec23603f35193edac25a1cdf531b231b705f84d66f934cbf"
+    },
+    {
+      "allOverlapsMatch": true,
+      "name": "native34",
+      "outputOverlapCount": 13,
+      "overlaps": [
+        {
+          "matches": true,
+          "outputSha256": "3f48410cb6013c2321ecb6f142779123730bfa9f85bbaabab1b412d5984cdd47",
+          "path": "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz",
+          "pinnedSha256": "3f48410cb6013c2321ecb6f142779123730bfa9f85bbaabab1b412d5984cdd47"
+        },
+        {
+          "matches": true,
+          "outputSha256": "ad326f5c95d4c9dde9ec09d9413aac156e50a1e0b1934cc357b249fd560a6e95",
+          "path": "python/umf_codegen/src/umf_codegen/_assets/manifest.json",
+          "pinnedSha256": "ad326f5c95d4c9dde9ec09d9413aac156e50a1e0b1934cc357b249fd560a6e95"
+        },
+        {
+          "matches": true,
+          "outputSha256": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3",
+          "path": "python/umf_codegen/src/umf_codegen/_assets/notices/ajv/LICENSE",
+          "pinnedSha256": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3"
+        },
+        {
+          "matches": true,
+          "outputSha256": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
+          "path": "python/umf_codegen/src/umf_codegen/_assets/notices/ajv/package.json",
+          "pinnedSha256": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989"
+        },
+        {
+          "matches": true,
+          "outputSha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a",
+          "path": "python/umf_codegen/src/umf_codegen/_assets/notices/fast-deep-equal/LICENSE",
+          "pinnedSha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a"
+        },
+        {
+          "matches": true,
+          "outputSha256": "a5c63940db0260739be9e2ac67f3aac268df4db5770420ee4e34e493152f97d2",
+          "path": "python/umf_codegen/src/umf_codegen/_assets/notices/fast-deep-equal/package.json",
+          "pinnedSha256": "a5c63940db0260739be9e2ac67f3aac268df4db5770420ee4e34e493152f97d2"
+        },
+        {
+          "matches": true,
+          "outputSha256": "b010b0dfdfdb23d7396e03b82cd4621fc9bb8f95d6b0aea70b9c24e12074c786",
+          "path": "python/umf_codegen/src/umf_codegen/_assets/notices/fast-uri/LICENSE",
+          "pinnedSha256": "b010b0dfdfdb23d7396e03b82cd4621fc9bb8f95d6b0aea70b9c24e12074c786"
+        },
+        {
+          "matches": true,
+          "outputSha256": "30cad05aad3d3596513706451dbfc7e0422f9c1d00f2903ecc34580327d54bc7",
+          "path": "python/umf_codegen/src/umf_codegen/_assets/notices/fast-uri/package.json",
+          "pinnedSha256": "30cad05aad3d3596513706451dbfc7e0422f9c1d00f2903ecc34580327d54bc7"
+        },
+        {
+          "matches": true,
+          "outputSha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a",
+          "path": "python/umf_codegen/src/umf_codegen/_assets/notices/json-schema-traverse/LICENSE",
+          "pinnedSha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a"
+        },
+        {
+          "matches": true,
+          "outputSha256": "156fb24af02845c190701360d06dfda35ef04282e34a734289ea9535ad9819ae",
+          "path": "python/umf_codegen/src/umf_codegen/_assets/notices/json-schema-traverse/package.json",
+          "pinnedSha256": "156fb24af02845c190701360d06dfda35ef04282e34a734289ea9535ad9819ae"
+        },
+        {
+          "matches": true,
+          "outputSha256": "5bba27375d93e9119f76c1015f7672cf9ad5f70952296e0842fb2243d6376869",
+          "path": "python/umf_codegen/src/umf_codegen/_assets/notices/yaml/LICENSE",
+          "pinnedSha256": "5bba27375d93e9119f76c1015f7672cf9ad5f70952296e0842fb2243d6376869"
+        },
+        {
+          "matches": true,
+          "outputSha256": "1c6441703d8204a23ded0d37ddf57c3b69d821dc392f20852d1f605bb9b8861c",
+          "path": "python/umf_codegen/src/umf_codegen/_assets/notices/yaml/package.json",
+          "pinnedSha256": "1c6441703d8204a23ded0d37ddf57c3b69d821dc392f20852d1f605bb9b8861c"
+        },
+        {
+          "matches": true,
+          "outputSha256": "2ae57c276f24c6aa9e93402fb95a431369089aa42fb6eee851baf2ede612bfed",
+          "path": "python/umf_codegen/src/umf_codegen/_release.py",
+          "pinnedSha256": "2ae57c276f24c6aa9e93402fb95a431369089aa42fb6eee851baf2ede612bfed"
+        }
+      ],
+      "rowCount": 34,
+      "sourcePinFile": "docs/helix/04-build/evidence/mig-g02-g03/native-qualification-source-pins.json",
+      "sourcePinFileSha256": "7ae4670249e808978ded102c44c0ceb887f29f49d7ab0da72dc0028b076d7273"
+    }
+  ],
+  "runId": 40599652721,
+  "scope": "Compares only output paths overlapping each unchanged source pin roster; not a qualification claim.",
+  "sourceCommit": "c440fe9fc89984dee600f44cd0dd2d17445021ac"
+}

@@ -1,0 +1,171 @@
+{
+  "profile": "umf.independent-source-review/0.1",
+  "disposition": "accepted-scoped-journal005-source-native-provider-unqualified",
+  "candidateManifestSha256": "4c5fdf5d09bcb0f5ed468484caa7ec70a5aa4f858f985a655130a06501dc8841",
+  "closureMembers": 265,
+  "allTestedSourceBytesUnchangedAfterRun": true,
+  "goTicket": {
+    "path": "/private/tmp/root-journal005-specific-go-20261024-01.json",
+    "sha256": "ebe3511f2cb0ab44f2a560cdce42383cfd2ac6b7337913f73de3ecca7463d206",
+    "nonceConsumedOnce": true,
+    "noRetryOrChain": true
+  },
+  "independentSuite": {
+    "tests": 207,
+    "failures": 0,
+    "errors": 0,
+    "passed": true
+  },
+  "terminal": {
+    "elapsed_seconds": 12.471691415994428,
+    "exit_code": 0,
+    "pgid": 18927,
+    "pid": 18927,
+    "process_group_absent": true,
+    "provider_mutations_authorized": false,
+    "sql_authorized": "none",
+    "start_time_unix": 1792863113.373502,
+    "worker_completed_within_work_budget": true,
+    "worker_sha256": "dde1a321799ce1418ac3302e651b3001851d190eba20675f8fb757a6ecd889de"
+  },
+  "scope": "governing015/016 original enrolled journal birth/version dispatch/private bootstrap metadata/typed replay and selected native consumer integration; independent full source suite and retained R1-R5/data-association controls, actual kernel lease controls; no native SQL/DB",
+  "resolved": [
+    "new02 valid restart plus second-stop prefix accepted",
+    "strict complete bounded canonical observation JSON object",
+    "mandatory typed scope4 per-store parent/family dispatch",
+    "malformed and foreign valid-hex custody registration digest refused; exact original registration derivation",
+    "actual legacy01 native-store intent/confirmed/aborted codec parity retained",
+    "positive real signed pure ROOT transitions with fresh digest distinct from original signed snapshot"
+  ],
+  "staticBoundary": {
+    "modules": 108,
+    "violations": 0
+  },
+  "ruff": "10 owned paths PASS",
+  "actionableFindingsInReviewedSourceDelta": [],
+  "remaining": [
+    "actual native target/app/store creator and same-owner signed PostgreSQL apply/recovery",
+    "production typed ORIGINALS/INGRESS execution/provider integration",
+    "complete ROOT request/checkpoint/binding and all-writer pending fences",
+    "fresh complete tuple/application birth/current lifecycle observation/native provider",
+    "installed/browser/managed/cross-component/release and published-byte verification"
+  ],
+  "qualifications": [
+    "synthetic SQL connectors and pure fixtures establish no native origin",
+    "original custody/reserved-event sequence provenance still requires real provider",
+    "journal002/003/004 findings and metadata erratum remain retained",
+    "no global Mac isolation or unrelated process cleanup claim"
+  ],
+  "files": [
+    {
+      "path": "readiness001.json",
+      "sha256": "af5e42a31144bbbd167aa5f9c0d3029508c4325a11351c486c4351461c0f1e08",
+      "bytes": 8116
+    },
+    {
+      "path": "commands.json",
+      "sha256": "372d20e6752ab825b130826002a384098733dbe3140ac57e5df033ed80bba86b",
+      "bytes": 5674
+    },
+    {
+      "path": "assembled-closure.json",
+      "sha256": "31f1d16121a652086295cc62921e74ee1f2823fd5cf5419e2548c65ad0989e27",
+      "bytes": 49278
+    },
+    {
+      "path": "supervise_journal005.py",
+      "sha256": "64aea2c95bea6cb87bbc77ba0b8c36f7db4e1141033679dea3aa865e712b954f",
+      "bytes": 4115
+    },
+    {
+      "path": "verify005_controller.py",
+      "sha256": "dde1a321799ce1418ac3302e651b3001851d190eba20675f8fb757a6ecd889de",
+      "bytes": 3434
+    },
+    {
+      "path": "custody-reference.diff",
+      "sha256": "325e3a1dd5981e380983e7a8aade352018e55ae14da04919f67f4abd1e6c5096",
+      "bytes": 3957
+    },
+    {
+      "path": "controller-result.json",
+      "sha256": "cbe3cae5eea881dbc8accb51f169f34cd6992aab996a42d3cdfa1a271fc26b99",
+      "bytes": 6225
+    },
+    {
+      "path": "suite-result.json",
+      "sha256": "74bf98215a087acd998ed16dbf09860dccf238edbd8bd411b65f72fe76bd252a",
+      "bytes": 68
+    },
+    {
+      "path": "suite.log",
+      "sha256": "b55d8abb076a6d54d6eb5d69968bef979429a320915f7aac0da33c299dbf86c9",
+      "bytes": 307
+    },
+    {
+      "path": "probe.py",
+      "sha256": "ef08da976736acca666ae90eef78100e91c37487305d862371365a281e0b8693",
+      "bytes": 6768
+    },
+    {
+      "path": "findings.json",
+      "sha256": "d32d9a780dfac915c2833ada39e964a6da84a21e9b23cfc60c68b21a1366a8bd",
+      "bytes": 1303
+    },
+    {
+      "path": "digest-association.py",
+      "sha256": "99b8e9f5d415e9c0723a7ef70ff1d287ce77b21f61a851ab63a2c8e39b9415b6",
+      "bytes": 1563
+    },
+    {
+      "path": "digest-association-results.json",
+      "sha256": "be87f07512783f8788570e3bc6895d749bcd93229268d8636e3c551cd7d75171",
+      "bytes": 347
+    },
+    {
+      "path": "legacy-probe.py",
+      "sha256": "34d3c2fbb224abe786acb25d753139ab856bd6363d63d609b99a6e3c18825739",
+      "bytes": 1894
+    },
+    {
+      "path": "legacy-journal.json",
+      "sha256": "a6bc91e32024e59b186e5ae811dcd6227c71b8bb310cb549f2a306e21bd8f59d",
+      "bytes": 4350
+    },
+    {
+      "path": "existing-boundary-check.stdout",
+      "sha256": "dbcd688e82abe2374aedfdd03c0023c131160440c4338d6691c18ff6d112a1f3",
+      "bytes": 116
+    },
+    {
+      "path": "existing-Ruff-owned10.stdout",
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "bytes": 19
+    },
+    {
+      "path": "retained-legacy-native-differential.stdout",
+      "sha256": "4be43c3228223efd166ac067fbc3bfeb3cdb43291d3820a1bd36c4a3fcc4ef3e",
+      "bytes": 130
+    },
+    {
+      "path": "launch.safe.json",
+      "sha256": "08b686d375a1f5a989a4aedb7fbfd6c86912e9c2b5083dd69b3cc2a82b4c55e8",
+      "bytes": 233
+    },
+    {
+      "path": "terminal.safe.json",
+      "sha256": "962847abf1261b458030339f26e2540ea6dfbeb2667887584c6829ba93b9f7d0",
+      "bytes": 371
+    },
+    {
+      "path": "stdout.private.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "stderr.private.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ]
+}

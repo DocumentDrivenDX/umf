@@ -1,0 +1,109 @@
+{
+  "profile": "umf.normal-pr-source-correction/1",
+  "status": "SOURCE_ACCEPTED_SUCCESSOR_RUNTIME_QUALIFICATION_OPEN",
+  "apiHeadCommit": "3217304eca8652fa6cd02afde8ead1ca95224aa8",
+  "actualPrCheckoutCommit": "469f4aff13aba39de48631711114be7a3f56cbf5",
+  "actualPrCheckoutTree": "8f273def4d46b0f1b898fe69cc8aa63042a53cbc",
+  "actualCheckoutTreeEqualsApiHeadTree": true,
+  "runs": {
+    "access": 40575475711,
+    "python": 40575475616
+  },
+  "terminalFailureJobs": {
+    "table-declarations": 122440637235,
+    "boundaries": 122440637674,
+    "codegen314": 122440637661,
+    "python": 122440638858
+  },
+  "capturedLogs": {
+    "table-declarations.log": {
+      "bytes": 23277,
+      "sha256": "7df9d792d4d8298ad79663d41f7481006874d59441debc868a7acc592b55e14e"
+    },
+    "boundaries.log": {
+      "bytes": 29888,
+      "sha256": "81e09ca74010dc1818d9fd05e6fecb4757554dc4780e8372abf26398dc6f13bd"
+    },
+    "codegen314.log": {
+      "bytes": 69222,
+      "sha256": "9cebe75ab300411eef8d760bd7826d339abf41d7507010bf1b020c6024afdd59"
+    },
+    "python.log": {
+      "bytes": 95633,
+      "sha256": "97db95737edaa602cf08bc16ad7f3666613378ee15df3ba955fb14a2270f6baa"
+    }
+  },
+  "observations": [
+    "Python pytest completed397 passing tests before Ruff failed with25 diagnostics.",
+    "TS checker refused exact inventory-r2-context type-only inventory-options import.",
+    "Python checker reported two dependency cycles and the native Connection import exception gap.",
+    "Both Codegen runtimes reached split-cohort validation and refused mismatched source representation in shared mirror manifest."
+  ],
+  "ciPolicy": "Linux only. Retained built macOS artifacts remain data inputs; no fresh macOS runtime qualification is implied.",
+  "qualificationLimit": "These are actual failed checkpoint logs. Source edits require independent postimage review and fresh hosted qualification. No older PASS is transferred to changed source.",
+  "historicalCheckpointEvidence": {
+    "sourceCommit": "3217304eca8652fa6cd02afde8ead1ca95224aa8",
+    "portableRun": 40575465659,
+    "nativeRun": 40575465260,
+    "files": {
+      "portable-checkpoint.zip": {
+        "bytes": 74227,
+        "sha256": "70ac493387edcc078f791cef1f175f95a996c75560556925e04c22ee9322cec5"
+      },
+      "selected-native-checkpoint.zip": {
+        "bytes": 211562,
+        "sha256": "e3db8de4feec46dd92e02579893a192227dd9a591957a87bbccc14741f91856a"
+      },
+      "checkpoint-sol-review.md": {
+        "bytes": 1586,
+        "sha256": "1f9c7a1a199b93def3869a2b940f0b455e16ba34a839f8e0d3a2c9b1ad1335ae"
+      }
+    },
+    "limit": "Source321 checkpoint only. Does not qualify the edited successor. Native scope is five G02 and thirteen selected G03 scenarios; N12 remains UNQUALIFIED and N14/full campaign OPEN."
+  },
+  "historicalD5Timeout": {
+    "runId": 40571378371,
+    "sourceCommit": "af3dd82f7b273f49f4398399f74d81f0bb01f9c0",
+    "apiHeadCommit": "953017084df517deb5262dd071bfe406f2d956be",
+    "artifactId": 12768931254,
+    "artifactBytes": 454,
+    "artifactSha256": "75048f45798025bb4fe1521feade4920f175a1d6101b526a9054787eb0612516",
+    "replayExit": 124,
+    "observedDurationSeconds": 1729,
+    "diagnosis": "Aggregate timeout. Active command unknown; finalizer and bounded failure staging retained only an error-class receipt. No oracle performance cause is established.",
+    "files": {
+      "historical-d5-receipt.json": {
+        "bytes": 476,
+        "sha256": "d48ef5a0c2fb6d5ba1a3be094dd3157c2591ad7e0d03b72fdc291d228a79ea6a"
+      },
+      "historical-access-run.json": {
+        "bytes": 388,
+        "sha256": "0eac5271f330fbbe9e7e6bc3828c02662470556c30f62759af3e3f204cec84b2"
+      }
+    },
+    "fullRunLog": {
+      "githubRunUrl": "https://github.com/DocumentDrivenDX/umf/actions/runs/40571378371",
+      "localCapture": "/private/tmp/migration-pr48-3217304ec-run-40571378371.log",
+      "bytes": 2025169,
+      "sha256": "5cf078c0aaab2567b74debabb2bef9b68f4717ee1f593a7483f7270cb572a96a"
+    },
+    "sourceCorrection": "Add bounded closed active-command snapshot and fixed diagnostic reason codes. Preserve existing roster, cases, caps, deadline and reserve."
+  },
+  "sourceReview": {
+    "path": "source-sol-review.md",
+    "sha256": "1327e0ac8b338a4956fb1caa28e8c9293944ebfcf933f677156d5ec1948bfe43",
+    "sourcePaths": 22,
+    "execution": "NONE"
+  },
+  "pinClosure": {
+    "nativeRows": 34,
+    "portableRows": 97,
+    "nativeChangedRows": [
+      "tests/codegen/aggregate_cohort.py"
+    ],
+    "portableChangedRows": [
+      ".github/workflows/access-boundaries.yml"
+    ],
+    "allRowsMatch": true
+  }
+}

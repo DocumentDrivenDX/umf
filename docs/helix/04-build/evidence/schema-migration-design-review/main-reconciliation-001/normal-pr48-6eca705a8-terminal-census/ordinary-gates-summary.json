@@ -1,0 +1,166 @@
+{
+  "runId": 40600969078,
+  "apiHeadSha": "6eca705a8ca2d9f99517e2fc919cd211fe00f98d",
+  "runtimeProducerCommitP": "7cf121baa40601ba0b92a14cd0f7e121783cb8e2",
+  "tree": "d10995b85a061942c446a0bc70fa5454672eff71",
+  "allFourConclusions": "success",
+  "gates": {
+    "nativeClientTypes": {
+      "jobId": 122528687986,
+      "cases": 129,
+      "matches": 129,
+      "mismatches": [],
+      "generatedFiles": 16,
+      "typecheckers": {
+        "mypy": "2.4.0",
+        "pyright": "1.1.414",
+        "ty": "0.0.88",
+        "each": "positive clean and negative expected rejection"
+      },
+      "positiveMypyFiles": 10,
+      "positivePyrightFiles": 10
+    },
+    "published044": {
+      "jobId": 122528688024,
+      "server": "PostgreSQL 18.6 (180006)",
+      "sessionAssertions": 106,
+      "dbapiTransport": false,
+      "versions": {
+        "psycopg": "3.2.13",
+        "psycopg2": "2.9.11 (dt dec pq3 ext lo64)",
+        "SQLAlchemy": "2.0.44",
+        "pool": "3.3.3",
+        "Weft": "0.4.44"
+      },
+      "statedLimits": [
+        "fixture-only Weft executor; production catalog/privilege admission remains open",
+        "writes below test session transactions directly, not Weft action compilation"
+      ],
+      "sourceDbapiAndMixedOracleSteps": "skipped on published044"
+    },
+    "p1Compatibility": {
+      "jobId": 122528688074,
+      "runtimeTests": 59,
+      "pydantic": "2.14.1",
+      "pydanticCore": "2.50.1",
+      "access": "0.1.0.dev8",
+      "generatedFiles": 16,
+      "refusals": 14,
+      "scope": "Installed Python/Pydantic compatibility; non-temporal model subset; no native engine qualification",
+      "wheelSha256": "1a21c1ddd59f6b23e9f0b33228280564af0e96bb4d13699b89616d5143e4fd23"
+    },
+    "stageOneRuntime": {
+      "jobId": 122528688105,
+      "status": "pass",
+      "cases": [
+        {
+          "fixture": "engine-only",
+          "checks": 25,
+          "python": "3.11.17"
+        },
+        {
+          "fixture": "containers",
+          "checks": 30,
+          "python": "3.11.17"
+        },
+        {
+          "fixture": "alternate-key",
+          "checks": 28,
+          "python": "3.11.17"
+        }
+      ],
+      "caseCheckCount": 83,
+      "commands": 12,
+      "commandOutcomes": [
+        {
+          "label": "engine-only-generate",
+          "exit": 0,
+          "expected": 0
+        },
+        {
+          "label": "engine-only-check",
+          "exit": 0,
+          "expected": 0
+        },
+        {
+          "label": "engine-only-create-decode",
+          "exit": 0,
+          "expected": 0
+        },
+        {
+          "label": "engine-only-invalid-schema-refuses",
+          "exit": 1,
+          "expected": 1
+        },
+        {
+          "label": "containers-generate",
+          "exit": 0,
+          "expected": 0
+        },
+        {
+          "label": "containers-check",
+          "exit": 0,
+          "expected": 0
+        },
+        {
+          "label": "containers-create-decode",
+          "exit": 0,
+          "expected": 0
+        },
+        {
+          "label": "containers-invalid-schema-refuses",
+          "exit": 1,
+          "expected": 1
+        },
+        {
+          "label": "alternate-key-generate",
+          "exit": 0,
+          "expected": 0
+        },
+        {
+          "label": "alternate-key-check",
+          "exit": 0,
+          "expected": 0
+        },
+        {
+          "label": "alternate-key-create-decode",
+          "exit": 0,
+          "expected": 0
+        },
+        {
+          "label": "alternate-key-invalid-schema-refuses",
+          "exit": 1,
+          "expected": 1
+        }
+      ],
+      "wheelSha256": "1a21c1ddd59f6b23e9f0b33228280564af0e96bb4d13699b89616d5143e4fd23",
+      "scope": "public schema load and Rust Node generation plus host writer to installed Python creation/codec round trip; no production CLI cutover, database/native or temporal qualification"
+    }
+  },
+  "artifacts": {
+    "native-client-types.zip": {
+      "id": 12791780773,
+      "name": "native-client-types",
+      "bytes": 348408,
+      "sha256": "a1dd0eaf3c8e80228f2fdf8cb4aa602139747f4f94319b5a2c6e329ae05b03a7"
+    },
+    "native-session-published044.zip": {
+      "id": 12791382948,
+      "name": "native-session-postgresql18-published044",
+      "bytes": 1099,
+      "sha256": "b5d5eb401caaf3872fae4a7ef93571fbbfc0319b16df2e69df78129ef4ae72be"
+    },
+    "p1-compatibility-pydantic-2.14.1.zip": {
+      "id": 12791257573,
+      "name": "p1-compatibility-pydantic-2.14.1",
+      "bytes": 1507,
+      "sha256": "655ab0fb7167c25630ac810cfbd3904e0480cf323e664cde084e73a2e38a574e"
+    },
+    "r3-stage-one-runtime.zip": {
+      "id": 12791373873,
+      "name": "r3-stage-one-runtime",
+      "bytes": 4503,
+      "sha256": "03c03eeb49ba49d4c1cf6456db352036252e3fbf230214de51f291016a1edea9"
+    }
+  }
+}

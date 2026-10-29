@@ -1,0 +1,15 @@
+{
+  "profile": "umf.r2-dirty-table-digests-owner-source-review/1",
+  "status": "SOURCE_REVIEW_ACCEPTED_RUNTIME_FIT_UNRUN",
+  "sourceBase": "d63ee1711e3c29b18da4f747714768a7974e6b74",
+  "sourcePins": {
+    "src/table-migration/inventory-graph.ts": "61478738f17e3c593087ee574902a2066c7d4927e1968c29de8a9eaeed12e4af",
+    "tests/lifecycle/table-inventory-api.test.ts": "bb64a4f60fd5ee971b38cb0c386f55f76d43316f3226dd326109d33a5476fda9"
+  },
+  "decisionSha256": "794f8824a550e38041c5dcd07938a02add73a0daa04c118cd8a3df019d131823",
+  "orderingAddendumSha256": "daf59ab17c65f5e29f39112cc4cb6044ebaac205233a9efce1946c5f4705b974",
+  "closure": "Root read complete graph/test diff, all actual write sites, baseline/carry lifecycle and accounting event policy. Private first full business refresh before any carry; later state and before/after row owners marked at writes, embedded/provenance/cross-owner mutations included. Same-owner row-reference subsequences checked across sort, malformed-owner forces full. Every state shape/duplicate still checked; dirty present/absent full normative binding; clean only private prior emitted-clone. Whole prefix/full history verification unchanged.",
+  "controls": "Independent complete normative per-table digest across genuine emitted frames and stale incoming baseline/cross-owner provenance+comment replacement/same-owner column order/null-global interleaving/absent removal/alias/full Note+mixedG02+CREATE controls. Root corrected stale renamed target variable and invalid synthetic intermediate nonendpoint subject before freeze.",
+  "limits": "Original1000000work/99999subjects/100663296bytes/15stest/180scommand retained; all added tracking charged before retention. No actual fit claim; full fixture unchanged.",
+  "qualification": "Existing finite combined portable source gate only; no local runtime/nativeSQL/browser executed. Prior source-unit/native results remain exact-source historical scopes."
+}

@@ -1,0 +1,104 @@
+enabled
+ENTRY:mac-macho-arm64
+enabled
+interpreter [mac]
+flags: PF!
+offset 0
+magic cffaedfe0c000001
+ENTRY:mac-macho-x86_64
+enabled
+interpreter [mac]
+flags: PF!
+offset 0
+magic cffaedfe07000001
+ENTRY:mac-universal-arm64
+enabled
+interpreter [mac]
+flags: PF!
+offset 0
+magic cafebabe000000020100000c
+mask ffffffffffffff02ffffffff
+ENTRY:mac-universal-x86_64
+enabled
+interpreter [mac]
+flags: PF!
+offset 0
+magic cafebabe0000000201000007
+mask ffffffffffffff02ffffffff
+ENTRY:qemu-aarch64
+disabled
+interpreter [qemu]
+flags: POCF!
+offset 0
+magic 7f454c460201010000000000000000000200b700
+mask ffffffffffffff00fffffffffffffffffeffffff
+ENTRY:qemu-arm
+enabled
+interpreter [qemu-arm]
+flags: POCF!
+offset 0
+magic 7f454c4601010100000000000000000002002800
+mask ffffffffffffff00fffffffffffffffffeffffff
+ENTRY:qemu-i386
+enabled
+interpreter [qemu-i386]
+flags: POCF!
+offset 0
+magic 7f454c4601010100000000000000000002000300
+mask fffffffffffefefcfffffffffffffffffeffffff
+ENTRY:qemu-mips64el
+enabled
+interpreter [qemu-mips64el]
+flags: POCF!
+offset 0
+magic 7f454c4602010100000000000000000002000800
+mask ffffffffffffff0000fffffffffffffffeffffff
+ENTRY:qemu-ppc64le
+enabled
+interpreter [qemu-ppc64le]
+flags: POCF!
+offset 0
+magic 7f454c4602010100000000000000000002001500
+mask ffffffffffffff00fffffffffffffffffeffff00
+ENTRY:qemu-riscv64
+enabled
+interpreter [qemu-riscv64]
+flags: POCF!
+offset 0
+magic 7f454c460201010000000000000000000200f300
+mask ffffffffffffff00fffffffffffffffffeffffff
+ENTRY:qemu-s390x
+enabled
+interpreter [qemu-s390x]
+flags: POCF!
+offset 0
+magic 7f454c4602020100000000000000000000020016
+mask ffffffffffffff00fffffffffffffffffffeffff
+ENTRY:qemu-x86_64
+enabled
+interpreter [qemu]
+flags: POCF!
+offset 0
+magic 7f454c4602010100000000000000000002003e00
+mask fffffffffffefe00343434fffffffffffeffffff
+ENTRY:rosetta
+enabled
+interpreter [rosetta]
+flags: POCF!
+offset 0
+magic 7f454c4602010100000000000000000002003e00
+mask fffffffffffefe00343434fffffffffffeffffff
+ENTRY:rosetta​
+enabled
+interpreter [rosetta]
+flags: POCF!
+offset 0
+magic 7f454c4602010100000000000000000002003e00
+mask fffffffffffefe00343434fffffffffffeffffff
+ENTRY:rosetta​​
+enabled
+interpreter [rosetta]
+flags: OCF!
+offset 0
+magic 7f454c4602010100000000000000000002003e00
+mask fffffffffffefe00343434fffffffffffeffffff

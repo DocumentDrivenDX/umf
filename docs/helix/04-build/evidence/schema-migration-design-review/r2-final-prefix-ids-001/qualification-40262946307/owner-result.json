@@ -1,0 +1,22 @@
+{
+  "profile": "umf.combined-qualification-owner-result/1",
+  "runId": 40262946307,
+  "source": "59f51c75f117b27c49b6f04f2f2ed2069a904d1f",
+  "artifactId": 12624759174,
+  "zipSha256": "7ca0893627d013b2cb668e242c46fb4278f0adcc3e9ac4fab4480a5349291b6c",
+  "status": "FAILED_CLOSED",
+  "passed": "41/42 API including independent full-plan bytes parity;83 existing migration regressions;53 R2 controls;141 Chromium parity; generated reproduction",
+  "failures": [
+    "G04 and R2 strict TypeScript narrowing/type boundaries",
+    "4 G04 discovery INPUT failures",
+    "R2 full mixed case capped during final whole-plan canonical hash /plan/prefixes/4/catalog/policies/1/identity"
+  ],
+  "meter": {
+    "work": 999998,
+    "bytes": 3688533,
+    "subjects": 4,
+    "ownedWork": 200798,
+    "historyWork": 799200
+  },
+  "next": "Batch actual strict types and G04 source-discovery fixes. Bounded review of final-plan hash optimization before any new implementation. Caps/fullmixedfixture retained; no fit/merge/release/native claim."
+}

@@ -1,0 +1,17 @@
+{
+  "profile": "umf.g04-remaining-production-readiness/1",
+  "status": "FORWARD_PLAN_AND_REAL_PHASE_BRIDGE_REQUIRED",
+  "basis": "Sol bounded six-file handoff and Luna phase seam map; 137 passing source unit tests retained separately.",
+  "existing": "Original store creation/custody/recovery and real required_phase transaction/lease hook.",
+  "missing": "Closed G04 plan.7/execution.6 producer/validator/approval/dispatcher/host-to-supervisor bridge before actual phase-bound enrollment. Then bounded actor-correct capture/baseline/native proof.",
+  "seams": [
+    "lifecycle/row_originals.py::enroll_table",
+    "lifecycle/host.py::_PsycopgLease.required_phase",
+    "lifecycle/host.py::apply_migration_on_host",
+    "lifecycle/progress.py::_verified_phases",
+    "cli.py"
+  ],
+  "boundary": "No new Core signature scope or caller DTO/store-creation approval substitute; creation verifier remains controller-strict, with a separate original-phase role resolver. Restore is host-owned; exact closed approved archive/plan binding remains explicitly unknown, with no G05 alias.",
+  "native": "True Darwin LocalSupervisor/PG18.6/Psycopg3/observer qualification OPEN; Linux G03 service and mocks do not supply that evidence.",
+  "scope": "Source-only readiness; no runtime tests, native enablement or release claim."
+}

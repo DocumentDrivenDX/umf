@@ -1,0 +1,80 @@
+{
+  "version": "umf.praxis.g02-no-default-native-fixture/1",
+  "configuration": {
+    "module": "demo",
+    "schema": "g02_no_default",
+    "ownerRole": "g02_nd_owner",
+    "personRole": "g02_nd_person",
+    "batchRole": "g02_nd_batch",
+    "groupRoles": {}
+  },
+  "initialSource": {
+    "format": "json",
+    "utf8": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Note\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"},{\"module\":\"demo\",\"element\":\"amount\"},{\"module\":\"demo\",\"element\":\"tax\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}},{\"id\":\"amount\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"facets\":{\"precision\":8,\"scale\":2},\"extensions\":{}},{\"id\":\"tax\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"notes\",\"record\":{\"module\":\"demo\",\"element\":\"Note\"},\"name\":\"notes\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"amount\"},\"name\":\"amount\",\"nativeType\":{\"kind\":\"numeric\",\"precision\":8,\"scale\":2}},{\"field\":{\"module\":\"demo\",\"element\":\"tax\"},\"name\":\"tax\",\"nativeType\":{\"kind\":\"int4\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[]}}}]}"
+  },
+  "source": {
+    "format": "json",
+    "utf8": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Note\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"},{\"module\":\"demo\",\"element\":\"amount\"},{\"module\":\"demo\",\"element\":\"tax\"},{\"module\":\"demo\",\"element\":\"total\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}},{\"id\":\"amount\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"facets\":{\"precision\":8,\"scale\":2},\"extensions\":{}},{\"id\":\"tax\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"cardinality\":\"one\",\"nullability\":\"required\",\"facets\":{\"precision\":16,\"scale\":2},\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"notes\",\"record\":{\"module\":\"demo\",\"element\":\"Note\"},\"name\":\"notes\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"amount\"},\"name\":\"amount\",\"nativeType\":{\"kind\":\"numeric\",\"precision\":8,\"scale\":2}},{\"field\":{\"module\":\"demo\",\"element\":\"tax\"},\"name\":\"tax\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"demo\",\"element\":\"total\"},\"name\":\"total\",\"nativeType\":{\"kind\":\"numeric\",\"precision\":16,\"scale\":2}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[{\"version\":\"umf.table-operation/0.2\",\"id\":\"derive_total\",\"parameters\":[],\"consistency\":\"transaction\",\"replay\":\"caller-key-required\",\"body\":{\"kind\":\"update\",\"table\":\"notes\",\"where\":{\"op\":\"isNull\",\"field\":{\"module\":\"demo\",\"element\":\"total\"}},\"values\":[{\"field\":{\"module\":\"demo\",\"element\":\"total\"},\"value\":{\"kind\":\"rowExpression\",\"expression\":{\"op\":\"add\",\"left\":{\"op\":\"field\",\"field\":{\"module\":\"demo\",\"element\":\"amount\"}},\"right\":{\"op\":\"field\",\"field\":{\"module\":\"demo\",\"element\":\"tax\"}}}}}],\"returning\":[],\"maxRows\":100}}]}}}]}"
+  },
+  "plan": {
+    "id": "g02-no-default-002",
+    "options": {
+      "version": "umf.table-migration-options/0.4",
+      "backfills": [
+        {
+          "table": "notes",
+          "column": {
+            "module": "demo",
+            "element": "total"
+          },
+          "operation": "derive_total",
+          "scopedRows": true
+        }
+      ],
+      "concurrentIndexes": [],
+      "reviewedChanges": [],
+      "validations": []
+    }
+  },
+  "initialRows": [
+    {
+      "id": "a",
+      "owner": "g02_alice",
+      "amount": "10.25",
+      "tax": 2
+    },
+    {
+      "id": "b",
+      "owner": "g02_bob",
+      "amount": "1.75",
+      "tax": 3
+    },
+    {
+      "id": "c",
+      "owner": "g02_alice",
+      "amount": "0.50",
+      "tax": 10
+    }
+  ],
+  "expectedRows": [
+    [
+      "a",
+      "12.25"
+    ],
+    [
+      "b",
+      "4.75"
+    ],
+    [
+      "c",
+      "10.50"
+    ]
+  ],
+  "futureInsert": {
+    "id": "future",
+    "owner": "g02_alice",
+    "amount": "5.00",
+    "tax": 1,
+    "explicitTotal": "999.99"
+  }
+}

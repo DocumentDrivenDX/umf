@@ -1,0 +1,241 @@
+{
+  "schema": "umf.mig-g02-primary-native-evidence-archive/1",
+  "archive": "primary-009-evidence.tar.gz",
+  "archiveBytes": 51492,
+  "archiveSha256": "e2f5f308682a3cf2ccd4c793409733823153ddbe4ce45fd9c55e06c3880dcc5b",
+  "memberCount": 31,
+  "members": [
+    {
+      "path": "primary-009/fixtures/base-fixture.json",
+      "bytes": 50156,
+      "sha256": "09173dd6294e84e5e6a6416e675a17110b831339b450de8cb597b9bfa2a798cc"
+    },
+    {
+      "path": "primary-009/fixtures/fault-base-fixture.json",
+      "bytes": 50156,
+      "sha256": "09173dd6294e84e5e6a6416e675a17110b831339b450de8cb597b9bfa2a798cc"
+    },
+    {
+      "path": "primary-009/fixtures/no-default-fixture.json",
+      "bytes": 7199,
+      "sha256": "ba3c914d6590ed86640c22c6f4dbd1447168efca833b03c47f9270e2dc8c3af5"
+    },
+    {
+      "path": "primary-009/fixtures/null-predicate-fixture.json",
+      "bytes": 152487,
+      "sha256": "a554938c4adb4e4b4d864682321643de5b9f5adfad7400dd0afd17ac6bf05417"
+    },
+    {
+      "path": "primary-009/inputs/faults-inputs.json",
+      "bytes": 2324,
+      "sha256": "2a92b35aa4a33fd46a66d4079a809b24ee8684e7e9cf4e45f07fe7fe95606b52"
+    },
+    {
+      "path": "primary-009/inputs/faults-preparation.json",
+      "bytes": 913,
+      "sha256": "3eaded03a7ab2465d85fd05829c2477528ad51eb223b7bcecbdbe57a4609d11c"
+    },
+    {
+      "path": "primary-009/inputs/native-inputs.json",
+      "bytes": 2131,
+      "sha256": "a16dea02ac299f543bf022d4e2be0c4265dc4307e0c5ff130582b6cb59da2484"
+    },
+    {
+      "path": "primary-009/inputs/native-preparation.json",
+      "bytes": 1006,
+      "sha256": "73a198b944f5d639b78efbbd77c3e0f9494b90343f8a18ca69d7877df1f3b630"
+    },
+    {
+      "path": "primary-009/inputs/no-default-inputs.json",
+      "bytes": 1840,
+      "sha256": "0c038ff135429e274bd3b07309e6f03cfe101240a601d902350f296577ff1fe0"
+    },
+    {
+      "path": "primary-009/inputs/no-default-preparation.json",
+      "bytes": 908,
+      "sha256": "4adacc09e9faf81665afbda345875bd717b863230486102e37f832ed39aeb154"
+    },
+    {
+      "path": "primary-009/inputs/run-commands.txt",
+      "bytes": 3294,
+      "sha256": "2156f1db9944a01a1f7942f5083af300f54808edc0f3c6a7fccae601c28e514c"
+    },
+    {
+      "path": "primary-009/inputs/source-error-inputs.json",
+      "bytes": 1330,
+      "sha256": "e9f6607560377c4a08df007f9f39555f45239123f2af3c15f5da7bb96dea5e7c"
+    },
+    {
+      "path": "primary-009/inputs/source-error-preparation.json",
+      "bytes": 686,
+      "sha256": "7b84ada95399c80dc7a20a5b171cf2c567f92d4f526baa415a3e19ee92e3aab6"
+    },
+    {
+      "path": "primary-009/manifests/candidate-008-reference-manifest.json",
+      "bytes": 2460,
+      "sha256": "51d8f62a1e0cca768221ba2e8938058a09d10753ef31f48df7b4e9a60b71450c"
+    },
+    {
+      "path": "primary-009/manifests/candidate-009-build-manifest.json",
+      "bytes": 59578,
+      "sha256": "697e45839dbd25a0d58d5a2ec3ff0275d21ddad2716639264656dc5b22555122"
+    },
+    {
+      "path": "primary-009/manifests/installed-check.log",
+      "bytes": 1740,
+      "sha256": "44dbe121ee9544bb3d3e5d62c74599e30176eedea1ca2b4ffee01d057f8b948b"
+    },
+    {
+      "path": "primary-009/manifests/runtime-environment-addendum.json",
+      "bytes": 23242,
+      "sha256": "009a3adbbe64a4074b334e241b0ddfd42d598c64b3c8698587d940d9d8957a7a"
+    },
+    {
+      "path": "primary-009/reports/backfill-commit-lost-report.json",
+      "bytes": 8451,
+      "sha256": "907d858e384dab4b54e7490d2eba6449abd1628c31d41ac7673e5fa2b4dbd3bb"
+    },
+    {
+      "path": "primary-009/reports/base-report.json",
+      "bytes": 836,
+      "sha256": "c11efed13cbe1f050b639b410f430ea132d604216e632da49863d7812cceeb44"
+    },
+    {
+      "path": "primary-009/reports/existing-target-commit-lost-report.json",
+      "bytes": 8409,
+      "sha256": "db56c9adade40a71a84f1f77ac8c912e30093b584c18b076007d3377c2a2114b"
+    },
+    {
+      "path": "primary-009/reports/fault-cleanup-audit.json",
+      "bytes": 1074,
+      "sha256": "4a7d58cd4dab1bfda36e3f98ab4810ecd67955a63bfce8abacb78b192f00de16"
+    },
+    {
+      "path": "primary-009/reports/fenced-resume-report.json",
+      "bytes": 8850,
+      "sha256": "451d9d3486d1269a6d5500fd985edadff1e469315098a2484c027da048ed667e"
+    },
+    {
+      "path": "primary-009/reports/native-evidence-summary.json",
+      "bytes": 6089,
+      "sha256": "6055955330a5282ddf95555baa92c42951cfcc9a62923f871543f595ca59c013"
+    },
+    {
+      "path": "primary-009/reports/no-default-cleanup-audit.json",
+      "bytes": 258,
+      "sha256": "dfeb9a3af2692389f63b5d1d2857a1f2974b8a4bdbd596e90e04db8950d220aa"
+    },
+    {
+      "path": "primary-009/reports/no-default-report.json",
+      "bytes": 49293,
+      "sha256": "f4e92ee4ef5f604dd20d776f0be6e7c868e6b1b5e1fb7bcc73b3ef9ec9022a75"
+    },
+    {
+      "path": "primary-009/reports/null-predicate-report.json",
+      "bytes": 9223,
+      "sha256": "09a420787bd65deb12b48a201c81ba3b6c3637fc4bae8816d964db609d254cea"
+    },
+    {
+      "path": "primary-009/reports/source-error-controls.txt",
+      "bytes": 101,
+      "sha256": "921b60a7fd52e978fbb551cacd29df2d6708879400278e1fcc70fceeb0c6f8e0"
+    },
+    {
+      "path": "primary-009/runners/derived-fill-native.py",
+      "bytes": 10754,
+      "sha256": "af436308e60cbe346e3977b4d94c9b9ceb7cf356eb90fdbb7ee3b86934d8422d"
+    },
+    {
+      "path": "primary-009/runners/g02-faults-native.py",
+      "bytes": 27465,
+      "sha256": "f34931dfea75db09014978f7d069284f50080b8b700e96603c28e03fe7f9433d"
+    },
+    {
+      "path": "primary-009/runners/g02-no-default-native.py",
+      "bytes": 10365,
+      "sha256": "a756e43e7f91d7d55eeb34d639790636bf4af92b6de0fec191d956d0ff568a07"
+    },
+    {
+      "path": "primary-009/runners/test_backfill_error_sanitization.py",
+      "bytes": 4647,
+      "sha256": "b0760de90f8b8c126e7a5364856e504aed6413bd0fee2b485d559f38e6189bb9"
+    }
+  ],
+  "evidence": {
+    "sourceCommit": "63f1f50d4cbfad5949e382fce2d5fcbacfd611e0",
+    "sourceSubtreeClean": true,
+    "manifestSha256": "697e45839dbd25a0d58d5a2ec3ff0275d21ddad2716639264656dc5b22555122",
+    "runtimeAddendumSha256": "009a3adbbe64a4074b334e241b0ddfd42d598c64b3c8698587d940d9d8957a7a",
+    "accessWheelSha256": "e5f68b12375e9181db531fdb2e49eca9e2ba61498a0cd2ebc0defc38efe99faf",
+    "accessSdistSha256": "f9fbcdb04df144cc558b03d98a0fca5862510aa65611bb8dbde82f85e2e326da",
+    "installedVersions": {
+      "annotated-types": "0.8.0",
+      "attrs": "26.1.0",
+      "jsonschema": "4.26.0",
+      "jsonschema-specifications": "2025.9.1",
+      "mini-racer": "0.14.1",
+      "psycopg": "3.2.13",
+      "psycopg-binary": "3.2.13",
+      "pydantic": "2.14.1",
+      "pydantic-core": "2.50.1",
+      "referencing": "0.37.0",
+      "rpds-py": "2026.9.1",
+      "ruamel-yaml": "0.19.1",
+      "typing-extensions": "4.16.0",
+      "typing-inspection": "0.4.4",
+      "umf-access": "0.1.0.dev8",
+      "umf-codegen": "0.1.0a5",
+      "umf-core": "0.10.0",
+      "weft-sql": "0.4.53"
+    },
+    "postgresql": "PostgreSQL 18.6 local qualification only",
+    "base": {
+      "cases": 2,
+      "checks": 10,
+      "reportSha256": "c11efed13cbe1f050b639b410f430ea132d604216e632da49863d7812cceeb44"
+    },
+    "nullPredicate": {
+      "cases": 18,
+      "checks": 108,
+      "compileOnlyControls": 4,
+      "reportSha256": "09a420787bd65deb12b48a201c81ba3b6c3637fc4bae8816d964db609d254cea"
+    },
+    "sourceErrorControls": {
+      "tests": 3,
+      "reportSha256": "921b60a7fd52e978fbb551cacd29df2d6708879400278e1fcc70fceeb0c6f8e0"
+    },
+    "noDefault": {
+      "cases": 1,
+      "checks": 19,
+      "cleanupVerified": true,
+      "reportSha256": "f4e92ee4ef5f604dd20d776f0be6e7c868e6b1b5e1fb7bcc73b3ef9ec9022a75"
+    },
+    "faultScenarios": {
+      "fenced-resume": 33,
+      "backfill-commit-lost": 27,
+      "existing-target-commit-lost": 27
+    },
+    "faultCleanupVerified": true,
+    "qualificationLimits": [
+      "local PostgreSQL 18.6 and selected fixtures/cohort only",
+      "not production operation-executor acceptance",
+      "not current CI or release approval"
+    ],
+    "pending": [
+      "current CI selection",
+      "final source/release review",
+      "asset provenance and release approval"
+    ]
+  },
+  "replayAdjustments": {
+    "archivePaths": "Archive members use safe relative primary-009/ paths. Original inputs.json files preserve their /private/tmp origin paths for custody; substitute extracted primary-009/runners, primary-009/fixtures and primary-009/manifests paths when replaying.",
+    "environment": "The exact runtime venv is intentionally not archived. Replay with /private/tmp/umf-g02-candidate-009-runtime-venv/bin/python -I, verified by runtime-environment-addendum.json; the 18 selected wheels are represented by exact hashes, not duplicated payloads.",
+    "reportOutputs": "Use new output locations for --report; never overwrite archived reports.",
+    "database": "Native replay requires separately authorized isolated local PostgreSQL 18.6 and unique disposable resource names. This packaging operation does not rerun evidence."
+  },
+  "sourceLocations": {
+    "manifest": "/private/tmp/umf-g02-candidate-009-artifacts/manifest.json",
+    "runtimeAddendum": "/private/tmp/umf-g02-candidate-009-artifacts/runtime-environment-addendum.json",
+    "installedCheck": "/private/tmp/umf-g02-candidate-009-artifacts/installed-check.log"
+  }
+}

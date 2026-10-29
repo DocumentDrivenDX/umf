@@ -1,0 +1,31 @@
+{
+  "profile": "umf.combined-qualification-owner-result/1",
+  "runId": 40265542659,
+  "source": "ade444a5b7310d825a6458adcfc70fc2c00133a0",
+  "artifactId": 12625524708,
+  "zipSha256": "772530f91a61c0c927dc2f44e6c5aea098087f75925d6564de091540423a181c",
+  "status": "FAILED_CLOSED_LATER_LINEAGE_COPY",
+  "passed": "History finalization completed; projection completed.42/44API,86/87migration,53R2controls,141Chromium/reproduction passed.",
+  "failures": [
+    "2remainingG04strictTypeerrors",
+    "schemafixturemissingactualtableextensionschema",
+    "2R2tests capatlineagehistorybundlecopy"
+  ],
+  "meter": {
+    "work": 1000000,
+    "bytes": 4680954,
+    "subjects": 4,
+    "ownedWork": 200798,
+    "historyWork": 748325,
+    "projectionWork": 35088,
+    "lineageWork": 15789
+  },
+  "failurePath": "/history-bundle/expectedCatalog/columns/0",
+  "correctedSourcePins": {
+    "src/table-migration/g04-conversion.ts": "582da39849bb8f77c0cbe70994c5d060d3597b0175bad7bec1f89e8bc18d4eeb",
+    "src/table-migration/index.ts": "4daeab691d08ca1cca2c321f98c7c7925e9483e68b50b50881cbc69c082ded99",
+    "tests/lifecycle/g04-checked-conversion.test.ts": "0162af3c396eb11e774bf5ec9c85257871b77e050eb486ed18a546218e5d9c22"
+  },
+  "rootReview": "Read complete3fileG04diff: nullish fail actualtable/physical/mapping narrowing, existing grantLegacyTableMigrationStep type only, register actual tables schema before dependentdeployment fixture. No semantics/closed schema/guards/legacy execution widening.",
+  "remaining": "Bounded same-meter ownedhistorybundlecache plan before any optimization; no cap/fixturechange or fitclaim."
+}

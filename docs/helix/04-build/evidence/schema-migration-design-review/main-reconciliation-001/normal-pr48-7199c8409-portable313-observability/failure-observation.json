@@ -1,0 +1,24 @@
+{
+  "runId": 40582138791,
+  "jobId": 122464045184,
+  "job": "portable-adoption (3.13)",
+  "conclusion": "failure",
+  "event": "pull_request",
+  "apiHeadSha": "7199c8409d0a67f3a99c1f1fd62ffc0f078d6eb2",
+  "syntheticProducerCommit": "06494602fe83d1af90f743243dad6afb7921206c",
+  "failedStep": "Run isolated portable adoption checks",
+  "testFile": "tests/access-adoption.test.ts",
+  "testCounts": {"passed": 7, "failed": 1, "expects": 54},
+  "failedTest": "check is usable as an action parameter and as an independent precondition ID",
+  "failure": {
+    "expectedExit": 0,
+    "actualExit": 143,
+    "stdout": "",
+    "stderr": "",
+    "elapsedMs": 5000,
+    "testLocation": "tests/access-adoption.test.ts:66:32"
+  },
+  "interpretation": "Observed only; root cause not inferred",
+  "rawLogReference": "GitHub Actions job log API: repo DocumentDrivenDX/umf, job 122464045184",
+  "artifacts": []
+}

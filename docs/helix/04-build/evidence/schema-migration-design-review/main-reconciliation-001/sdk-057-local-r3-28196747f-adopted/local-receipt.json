@@ -1,0 +1,106 @@
+{
+  "boundedWorkExit": 0,
+  "commands": [
+    {
+      "argv": [
+        "bun",
+        "install",
+        "--frozen-lockfile",
+        "--ignore-scripts"
+      ],
+      "captureExit": 0,
+      "logBytes": 1052,
+      "logSha256": "1f19bbe619a991dddeaee7504c1b470cee902ba8cbe1e57660c0284e9c542d28",
+      "monotonicDurationMs": 3250,
+      "name": "bun-install",
+      "rawExit": 0,
+      "stage": "bun-install",
+      "truncated": false,
+      "truncationMarker": null
+    },
+    {
+      "argv": [
+        "cargo",
+        "fetch",
+        "--locked"
+      ],
+      "captureExit": 0,
+      "logBytes": 3985,
+      "logSha256": "03485224e16f15bb93145ed45471a989171038fbc2883cdb00b58e68b1f2f462",
+      "monotonicDurationMs": 1720,
+      "name": "cargo-fetch",
+      "rawExit": 0,
+      "stage": "cargo-fetch",
+      "truncated": false,
+      "truncationMarker": null
+    },
+    {
+      "argv": [
+        "python",
+        "-I",
+        "scripts/rust-inventory.py"
+      ],
+      "captureExit": 0,
+      "logBytes": 132,
+      "logSha256": "37c99311be5976cbe01611896d277e380c78190f680d8515887296d560129e56",
+      "monotonicDurationMs": 76550,
+      "name": "r3-inventory",
+      "rawExit": 0,
+      "stage": "r3-inventory",
+      "truncated": false,
+      "truncationMarker": null
+    },
+    {
+      "argv": [
+        "python",
+        "-I",
+        "scripts/check-rust-boundaries.py"
+      ],
+      "captureExit": 0,
+      "logBytes": 545,
+      "logSha256": "99437ba6a0c69b7add1c8bbdef3da0adeca3d7a94b93f3f43e0b758ead532f6a",
+      "monotonicDurationMs": 8150,
+      "name": "r3-boundary-check",
+      "rawExit": 0,
+      "stage": "r3-boundary-check",
+      "truncated": false,
+      "truncationMarker": null
+    }
+  ],
+  "execution": "local-linux-container-diagnostic-only",
+  "executionKind": "local_linux_diagnostic",
+  "failureCodes": [],
+  "limits": {
+    "aggregateSeconds": 1800,
+    "evidenceBytes": 16777216,
+    "evidenceReserveSeconds": 60,
+    "logBytes": 1048576
+  },
+  "localExecutionId": "local-r3-28196747f-001",
+  "localSourceRef": "local:detached:28196747faf6e5dc358c4aac708e8b377b20f5ee",
+  "outputs": {
+    "boundary-check.json": {
+      "bytes": 26633,
+      "sha256": "6c40c8dc3ae9297b23804e69b3593080b0510538a5a6837ee10863b6dba74b36"
+    },
+    "inventory.json": {
+      "bytes": 2813283,
+      "sha256": "89ba3530373fd0ccc1959a71bb164d062cb8f31d3d91f2777665347648e821e7"
+    }
+  },
+  "profile": "umf.local-linux-targeted-r3/1",
+  "runtimeImageDigest": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+  "scope": "Actual R3 inventory and boundary generation only; previous unchanged generation-family outputs retain their actual producer identity.",
+  "sourceCommit": "28196747faf6e5dc358c4aac708e8b377b20f5ee",
+  "status": "PASS_TARGETED_R3",
+  "toolVersions": {
+    "bun": "1.4.3",
+    "cargo": "cargo 1.90.0 (840b83a10 2025-07-30)",
+    "git": "git version 2.43.0",
+    "glibc": "glibc 2.39",
+    "node": "v26.12.1",
+    "python": "Python 3.11.17",
+    "rustc": "rustc 1.90.0 (1159e78c4 2025-09-14)"
+  },
+  "toolVersionsSha256": "c29387cd52308caf921946e0e873f824123a3ea5a2824059cd53cec008744c0c"
+}

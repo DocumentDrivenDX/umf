@@ -1,0 +1,1061 @@
+{
+  "version": "umf.praxis.g02-derived-fill-native-fixture/1",
+  "configuration": {
+    "module": "demo",
+    "schema": "g02_native",
+    "ownerRole": "g02_owner",
+    "personRole": "g02_person",
+    "batchRole": "g02_batch",
+    "groupRoles": {}
+  },
+  "initialSource": {
+    "format": "json",
+    "utf8": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Note\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"},{\"module\":\"demo\",\"element\":\"amount\"},{\"module\":\"demo\",\"element\":\"tax\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}},{\"id\":\"amount\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"facets\":{\"precision\":8,\"scale\":2},\"extensions\":{}},{\"id\":\"tax\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"notes\",\"record\":{\"module\":\"demo\",\"element\":\"Note\"},\"name\":\"notes\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"amount\"},\"name\":\"amount\",\"nativeType\":{\"kind\":\"numeric\",\"precision\":8,\"scale\":2}},{\"field\":{\"module\":\"demo\",\"element\":\"tax\"},\"name\":\"tax\",\"nativeType\":{\"kind\":\"int4\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[]}}}]}"
+  },
+  "source": {
+    "format": "json",
+    "utf8": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Note\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"},{\"module\":\"demo\",\"element\":\"amount\"},{\"module\":\"demo\",\"element\":\"tax\"},{\"module\":\"demo\",\"element\":\"total\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}},{\"id\":\"amount\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"facets\":{\"precision\":8,\"scale\":2},\"extensions\":{}},{\"id\":\"tax\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"cardinality\":\"one\",\"nullability\":\"required\",\"facets\":{\"precision\":16,\"scale\":2},\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"notes\",\"record\":{\"module\":\"demo\",\"element\":\"Note\"},\"name\":\"notes\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"amount\"},\"name\":\"amount\",\"nativeType\":{\"kind\":\"numeric\",\"precision\":8,\"scale\":2}},{\"field\":{\"module\":\"demo\",\"element\":\"tax\"},\"name\":\"tax\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"demo\",\"element\":\"total\"},\"name\":\"total\",\"nativeType\":{\"kind\":\"numeric\",\"precision\":16,\"scale\":2},\"default\":{\"kind\":\"literal\",\"value\":{\"decimalToken\":\"0.00\"}}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[{\"version\":\"umf.table-operation/0.2\",\"id\":\"derive_total\",\"parameters\":[],\"consistency\":\"transaction\",\"replay\":\"caller-key-required\",\"body\":{\"kind\":\"update\",\"table\":\"notes\",\"where\":{\"op\":\"isNull\",\"field\":{\"module\":\"demo\",\"element\":\"total\"}},\"values\":[{\"field\":{\"module\":\"demo\",\"element\":\"total\"},\"value\":{\"kind\":\"rowExpression\",\"expression\":{\"op\":\"add\",\"left\":{\"op\":\"field\",\"field\":{\"module\":\"demo\",\"element\":\"amount\"}},\"right\":{\"op\":\"field\",\"field\":{\"module\":\"demo\",\"element\":\"tax\"}}}}}],\"returning\":[],\"maxRows\":100}}]}}}]}"
+  },
+  "plan": {
+    "version": "umf.table-migration/0.4",
+    "canonicalization": "RFC8785",
+    "id": "g02-native-002",
+    "predecessor": {
+      "id": "g02-native-001",
+      "digest": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+    },
+    "previous": {
+      "version": "umf.table-deployment/0.1",
+      "canonicalization": "RFC8785",
+      "source": {
+        "format": "json",
+        "utf8": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Note\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"},{\"module\":\"demo\",\"element\":\"amount\"},{\"module\":\"demo\",\"element\":\"tax\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}},{\"id\":\"amount\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"facets\":{\"precision\":8,\"scale\":2},\"extensions\":{}},{\"id\":\"tax\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"notes\",\"record\":{\"module\":\"demo\",\"element\":\"Note\"},\"name\":\"notes\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"amount\"},\"name\":\"amount\",\"nativeType\":{\"kind\":\"numeric\",\"precision\":8,\"scale\":2}},{\"field\":{\"module\":\"demo\",\"element\":\"tax\"},\"name\":\"tax\",\"nativeType\":{\"kind\":\"int4\"}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[]}}}]}"
+      },
+      "sourceDigest": "34a5aa6bbc3faa6c5e8294248159371a9b329990dd2d191318c88ca11164c69a",
+      "configuration": {
+        "module": "demo",
+        "schema": "g02_native",
+        "ownerRole": "g02_owner",
+        "personRole": "g02_person",
+        "batchRole": "g02_batch",
+        "groupRoles": {}
+      },
+      "configurationDigest": "c8220352fa3d20ada7799fe2a7bcd304b5097a32f4f83ac553c6c11b247c8363",
+      "module": "demo",
+      "profile": "postgresql18/0.1",
+      "steps": [
+        {
+          "id": "step-00001",
+          "kind": "table",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+          "transaction": "required",
+          "sql": "CREATE TABLE \"g02_native\".\"notes\" (\n  \"id\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  \"owner\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  \"amount\" pg_catalog.\"numeric\"(8,2),\n  \"tax\" pg_catalog.\"int4\" NOT NULL,\n  CONSTRAINT \"umf_k_5d660f25e1c2d3203a1bc5981910bfc2\" PRIMARY KEY (\"id\"),\n  CONSTRAINT \"umf_d_7bb4da652d48e46d9b51544b00a8897f\" CHECK (\"amount\" NOT IN ('NaN'::pg_catalog.numeric, 'Infinity'::pg_catalog.numeric, '-Infinity'::pg_catalog.numeric))\n)"
+        },
+        {
+          "id": "step-00002",
+          "kind": "table",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+          "transaction": "required",
+          "sql": "ALTER TABLE \"g02_native\".\"notes\" ENABLE ROW LEVEL SECURITY"
+        },
+        {
+          "id": "step-00003",
+          "kind": "table",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+          "transaction": "required",
+          "sql": "ALTER TABLE \"g02_native\".\"notes\" FORCE ROW LEVEL SECURITY"
+        },
+        {
+          "id": "step-00004",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+          "transaction": "required",
+          "sql": "REVOKE ALL PRIVILEGES ON TABLE \"g02_native\".\"notes\" FROM PUBLIC"
+        },
+        {
+          "id": "step-00005",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/select",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_person_select\" ON \"g02_native\".\"notes\" AS PERMISSIVE FOR SELECT TO \"g02_person\" USING ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))"
+        },
+        {
+          "id": "step-00006",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/select",
+          "transaction": "required",
+          "sql": "GRANT SELECT ON TABLE \"g02_native\".\"notes\" TO \"g02_person\""
+        },
+        {
+          "id": "step-00007",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/insert",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_person_insert\" ON \"g02_native\".\"notes\" AS PERMISSIVE FOR INSERT TO \"g02_person\" WITH CHECK ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))"
+        },
+        {
+          "id": "step-00008",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/insert",
+          "transaction": "required",
+          "sql": "GRANT INSERT ON TABLE \"g02_native\".\"notes\" TO \"g02_person\""
+        },
+        {
+          "id": "step-00009",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/update",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_person_update\" ON \"g02_native\".\"notes\" AS PERMISSIVE FOR UPDATE TO \"g02_person\" USING ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")) WITH CHECK ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))"
+        },
+        {
+          "id": "step-00010",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/update",
+          "transaction": "required",
+          "sql": "GRANT UPDATE (\"owner\", \"amount\", \"tax\") ON TABLE \"g02_native\".\"notes\" TO \"g02_person\""
+        },
+        {
+          "id": "step-00011",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/delete",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_person_delete\" ON \"g02_native\".\"notes\" AS PERMISSIVE FOR DELETE TO \"g02_person\" USING ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))"
+        },
+        {
+          "id": "step-00012",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/delete",
+          "transaction": "required",
+          "sql": "GRANT DELETE ON TABLE \"g02_native\".\"notes\" TO \"g02_person\""
+        },
+        {
+          "id": "step-00013",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/select",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_batch_select\" ON \"g02_native\".\"notes\" AS PERMISSIVE FOR SELECT TO \"g02_batch\" USING (TRUE)"
+        },
+        {
+          "id": "step-00014",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/select",
+          "transaction": "required",
+          "sql": "GRANT SELECT ON TABLE \"g02_native\".\"notes\" TO \"g02_batch\""
+        },
+        {
+          "id": "step-00015",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/insert",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_batch_insert\" ON \"g02_native\".\"notes\" AS PERMISSIVE FOR INSERT TO \"g02_batch\" WITH CHECK (FALSE)"
+        },
+        {
+          "id": "step-00016",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/update",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_batch_update\" ON \"g02_native\".\"notes\" AS PERMISSIVE FOR UPDATE TO \"g02_batch\" USING (FALSE) WITH CHECK (FALSE)"
+        },
+        {
+          "id": "step-00017",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/delete",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_batch_delete\" ON \"g02_native\".\"notes\" AS PERMISSIVE FOR DELETE TO \"g02_batch\" USING (FALSE)"
+        },
+        {
+          "id": "step-00018",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables",
+          "transaction": "required",
+          "sql": "GRANT USAGE ON SCHEMA \"g02_native\" TO \"g02_person\", \"g02_batch\""
+        }
+      ],
+      "expectedCatalog": {
+        "tables": [
+          {
+            "id": "notes",
+            "record": {
+              "module": "demo",
+              "element": "Note"
+            },
+            "name": "notes",
+            "columns": [
+              {
+                "field": {
+                  "module": "demo",
+                  "element": "id"
+                },
+                "name": "id",
+                "nativeType": {
+                  "kind": "text"
+                }
+              },
+              {
+                "field": {
+                  "module": "demo",
+                  "element": "owner"
+                },
+                "name": "owner",
+                "nativeType": {
+                  "kind": "text"
+                }
+              },
+              {
+                "field": {
+                  "module": "demo",
+                  "element": "amount"
+                },
+                "name": "amount",
+                "nativeType": {
+                  "kind": "numeric",
+                  "precision": 8,
+                  "scale": 2
+                }
+              },
+              {
+                "field": {
+                  "module": "demo",
+                  "element": "tax"
+                },
+                "name": "tax",
+                "nativeType": {
+                  "kind": "int4"
+                }
+              }
+            ],
+            "indexes": [],
+            "checks": [],
+            "foreignKeys": [],
+            "policy": {
+              "mode": "native-rls",
+              "person": {
+                "select": {
+                  "kind": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                },
+                "insert": {
+                  "kind": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                },
+                "update": {
+                  "kind": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                },
+                "delete": {
+                  "kind": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                }
+              },
+              "batch": {
+                "select": {
+                  "kind": "allow"
+                },
+                "insert": {
+                  "kind": "deny"
+                },
+                "update": {
+                  "kind": "deny"
+                },
+                "delete": {
+                  "kind": "deny"
+                }
+              }
+            }
+          }
+        ],
+        "columns": [
+          {
+            "table": "notes",
+            "name": "id",
+            "field": {
+              "module": "demo",
+              "element": "id"
+            },
+            "sourcePath": "/modules/0/extensions/umf.tables/tables/0/columns/0",
+            "typeSchema": "pg_catalog",
+            "typeName": "text",
+            "typeMod": -1,
+            "nullable": false,
+            "collation": "C",
+            "identity": "",
+            "definitionSql": "\"id\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL"
+          },
+          {
+            "table": "notes",
+            "name": "owner",
+            "field": {
+              "module": "demo",
+              "element": "owner"
+            },
+            "sourcePath": "/modules/0/extensions/umf.tables/tables/0/columns/1",
+            "typeSchema": "pg_catalog",
+            "typeName": "text",
+            "typeMod": -1,
+            "nullable": false,
+            "collation": "C",
+            "identity": "",
+            "definitionSql": "\"owner\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL"
+          },
+          {
+            "table": "notes",
+            "name": "amount",
+            "field": {
+              "module": "demo",
+              "element": "amount"
+            },
+            "sourcePath": "/modules/0/extensions/umf.tables/tables/0/columns/2",
+            "typeSchema": "pg_catalog",
+            "typeName": "numeric",
+            "typeMod": 524294,
+            "nullable": true,
+            "collation": null,
+            "identity": "",
+            "definitionSql": "\"amount\" pg_catalog.\"numeric\"(8,2)"
+          },
+          {
+            "table": "notes",
+            "name": "tax",
+            "field": {
+              "module": "demo",
+              "element": "tax"
+            },
+            "sourcePath": "/modules/0/extensions/umf.tables/tables/0/columns/3",
+            "typeSchema": "pg_catalog",
+            "typeName": "int4",
+            "typeMod": -1,
+            "nullable": false,
+            "collation": null,
+            "identity": "",
+            "definitionSql": "\"tax\" pg_catalog.\"int4\" NOT NULL"
+          }
+        ],
+        "keys": [
+          {
+            "table": "notes",
+            "id": "primary",
+            "name": "umf_k_5d660f25e1c2d3203a1bc5981910bfc2",
+            "primary": true,
+            "columns": [
+              "id"
+            ],
+            "definitionSql": "CONSTRAINT \"umf_k_5d660f25e1c2d3203a1bc5981910bfc2\" PRIMARY KEY (\"id\")"
+          }
+        ],
+        "checks": [
+          {
+            "table": "notes",
+            "id": "domain:demo.amount",
+            "name": "umf_d_7bb4da652d48e46d9b51544b00a8897f",
+            "definitionSql": "CONSTRAINT \"umf_d_7bb4da652d48e46d9b51544b00a8897f\" CHECK (\"amount\" NOT IN ('NaN'::pg_catalog.numeric, 'Infinity'::pg_catalog.numeric, '-Infinity'::pg_catalog.numeric))"
+          }
+        ],
+        "foreignKeys": [],
+        "indexes": []
+      },
+      "seedSets": [],
+      "nativeQualified": false,
+      "bundleDigest": "b75af896a96d7e3d3c59b8b09c033bab69ec0f8b97ec388608ebac67fe7ed3c5"
+    },
+    "next": {
+      "version": "umf.table-deployment/0.1",
+      "canonicalization": "RFC8785",
+      "source": {
+        "format": "json",
+        "utf8": "{\"umf\":\"0.10.0\",\"id\":\"synthetic-table-lifecycle\",\"vocabularies\":{\"umf.tables\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"demo\",\"namespace\":\"demo\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"owner\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Note\",\"kind\":\"record\",\"members\":[{\"module\":\"demo\",\"element\":\"id\"},{\"module\":\"demo\",\"element\":\"owner\"},{\"module\":\"demo\",\"element\":\"amount\"},{\"module\":\"demo\",\"element\":\"tax\"},{\"module\":\"demo\",\"element\":\"total\"}],\"keys\":[{\"id\":\"primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"demo\",\"element\":\"id\"}]}],\"extensions\":{}},{\"id\":\"amount\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"facets\":{\"precision\":8,\"scale\":2},\"extensions\":{}},{\"id\":\"tax\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"cardinality\":\"one\",\"nullability\":\"required\",\"facets\":{\"precision\":16,\"scale\":2},\"extensions\":{}}],\"extensions\":{\"umf.tables\":{\"profile\":\"postgresql18/0.1\",\"tables\":[{\"id\":\"notes\",\"record\":{\"module\":\"demo\",\"element\":\"Note\"},\"name\":\"notes\",\"columns\":[{\"field\":{\"module\":\"demo\",\"element\":\"id\"},\"name\":\"id\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"owner\"},\"name\":\"owner\",\"nativeType\":{\"kind\":\"text\"}},{\"field\":{\"module\":\"demo\",\"element\":\"amount\"},\"name\":\"amount\",\"nativeType\":{\"kind\":\"numeric\",\"precision\":8,\"scale\":2}},{\"field\":{\"module\":\"demo\",\"element\":\"tax\"},\"name\":\"tax\",\"nativeType\":{\"kind\":\"int4\"}},{\"field\":{\"module\":\"demo\",\"element\":\"total\"},\"name\":\"total\",\"nativeType\":{\"kind\":\"numeric\",\"precision\":16,\"scale\":2},\"default\":{\"kind\":\"literal\",\"value\":{\"decimalToken\":\"0.00\"}}}],\"indexes\":[],\"checks\":[],\"foreignKeys\":[],\"policy\":{\"mode\":\"native-rls\",\"person\":{\"select\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"insert\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"update\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}},\"delete\":{\"kind\":\"owner\",\"field\":{\"module\":\"demo\",\"element\":\"owner\"}}},\"batch\":{\"select\":{\"kind\":\"allow\"},\"insert\":{\"kind\":\"deny\"},\"update\":{\"kind\":\"deny\"},\"delete\":{\"kind\":\"deny\"}}}}],\"seedSets\":[],\"commands\":[{\"version\":\"umf.table-operation/0.2\",\"id\":\"derive_total\",\"parameters\":[],\"consistency\":\"transaction\",\"replay\":\"caller-key-required\",\"body\":{\"kind\":\"update\",\"table\":\"notes\",\"where\":{\"op\":\"isNull\",\"field\":{\"module\":\"demo\",\"element\":\"total\"}},\"values\":[{\"field\":{\"module\":\"demo\",\"element\":\"total\"},\"value\":{\"kind\":\"rowExpression\",\"expression\":{\"op\":\"add\",\"left\":{\"op\":\"field\",\"field\":{\"module\":\"demo\",\"element\":\"amount\"}},\"right\":{\"op\":\"field\",\"field\":{\"module\":\"demo\",\"element\":\"tax\"}}}}}],\"returning\":[],\"maxRows\":100}}]}}}]}"
+      },
+      "sourceDigest": "efa6fd4349513272c361d7024f9d090724ed69b1ed66e945f26a97036b551810",
+      "configuration": {
+        "module": "demo",
+        "schema": "g02_native",
+        "ownerRole": "g02_owner",
+        "personRole": "g02_person",
+        "batchRole": "g02_batch",
+        "groupRoles": {}
+      },
+      "configurationDigest": "c8220352fa3d20ada7799fe2a7bcd304b5097a32f4f83ac553c6c11b247c8363",
+      "module": "demo",
+      "profile": "postgresql18/0.1",
+      "steps": [
+        {
+          "id": "step-00001",
+          "kind": "table",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+          "transaction": "required",
+          "sql": "CREATE TABLE \"g02_native\".\"notes\" (\n  \"id\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  \"owner\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL,\n  \"amount\" pg_catalog.\"numeric\"(8,2),\n  \"tax\" pg_catalog.\"int4\" NOT NULL,\n  \"total\" pg_catalog.\"numeric\"(16,2) NOT NULL DEFAULT E'0'::pg_catalog.numeric,\n  CONSTRAINT \"umf_k_5d660f25e1c2d3203a1bc5981910bfc2\" PRIMARY KEY (\"id\"),\n  CONSTRAINT \"umf_d_7bb4da652d48e46d9b51544b00a8897f\" CHECK (\"amount\" NOT IN ('NaN'::pg_catalog.numeric, 'Infinity'::pg_catalog.numeric, '-Infinity'::pg_catalog.numeric)),\n  CONSTRAINT \"umf_d_c5f856f6f78980918e1018f416c91f18\" CHECK (\"total\" NOT IN ('NaN'::pg_catalog.numeric, 'Infinity'::pg_catalog.numeric, '-Infinity'::pg_catalog.numeric))\n)"
+        },
+        {
+          "id": "step-00002",
+          "kind": "table",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+          "transaction": "required",
+          "sql": "ALTER TABLE \"g02_native\".\"notes\" ENABLE ROW LEVEL SECURITY"
+        },
+        {
+          "id": "step-00003",
+          "kind": "table",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+          "transaction": "required",
+          "sql": "ALTER TABLE \"g02_native\".\"notes\" FORCE ROW LEVEL SECURITY"
+        },
+        {
+          "id": "step-00004",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0",
+          "transaction": "required",
+          "sql": "REVOKE ALL PRIVILEGES ON TABLE \"g02_native\".\"notes\" FROM PUBLIC"
+        },
+        {
+          "id": "step-00005",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/select",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_person_select\" ON \"g02_native\".\"notes\" AS PERMISSIVE FOR SELECT TO \"g02_person\" USING ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))"
+        },
+        {
+          "id": "step-00006",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/select",
+          "transaction": "required",
+          "sql": "GRANT SELECT ON TABLE \"g02_native\".\"notes\" TO \"g02_person\""
+        },
+        {
+          "id": "step-00007",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/insert",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_person_insert\" ON \"g02_native\".\"notes\" AS PERMISSIVE FOR INSERT TO \"g02_person\" WITH CHECK ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))"
+        },
+        {
+          "id": "step-00008",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/insert",
+          "transaction": "required",
+          "sql": "GRANT INSERT ON TABLE \"g02_native\".\"notes\" TO \"g02_person\""
+        },
+        {
+          "id": "step-00009",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/update",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_person_update\" ON \"g02_native\".\"notes\" AS PERMISSIVE FOR UPDATE TO \"g02_person\" USING ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")) WITH CHECK ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))"
+        },
+        {
+          "id": "step-00010",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/update",
+          "transaction": "required",
+          "sql": "GRANT UPDATE (\"owner\", \"amount\", \"tax\", \"total\") ON TABLE \"g02_native\".\"notes\" TO \"g02_person\""
+        },
+        {
+          "id": "step-00011",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/delete",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_person_delete\" ON \"g02_native\".\"notes\" AS PERMISSIVE FOR DELETE TO \"g02_person\" USING ((\"owner\" COLLATE pg_catalog.\"C\" = CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\"))"
+        },
+        {
+          "id": "step-00012",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/delete",
+          "transaction": "required",
+          "sql": "GRANT DELETE ON TABLE \"g02_native\".\"notes\" TO \"g02_person\""
+        },
+        {
+          "id": "step-00013",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/select",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_batch_select\" ON \"g02_native\".\"notes\" AS PERMISSIVE FOR SELECT TO \"g02_batch\" USING (TRUE)"
+        },
+        {
+          "id": "step-00014",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/select",
+          "transaction": "required",
+          "sql": "GRANT SELECT ON TABLE \"g02_native\".\"notes\" TO \"g02_batch\""
+        },
+        {
+          "id": "step-00015",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/insert",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_batch_insert\" ON \"g02_native\".\"notes\" AS PERMISSIVE FOR INSERT TO \"g02_batch\" WITH CHECK (FALSE)"
+        },
+        {
+          "id": "step-00016",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/update",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_batch_update\" ON \"g02_native\".\"notes\" AS PERMISSIVE FOR UPDATE TO \"g02_batch\" USING (FALSE) WITH CHECK (FALSE)"
+        },
+        {
+          "id": "step-00017",
+          "kind": "policy",
+          "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/batch/delete",
+          "transaction": "required",
+          "sql": "CREATE POLICY \"umf_batch_delete\" ON \"g02_native\".\"notes\" AS PERMISSIVE FOR DELETE TO \"g02_batch\" USING (FALSE)"
+        },
+        {
+          "id": "step-00018",
+          "kind": "grant",
+          "sourcePath": "/modules/0/extensions/umf.tables",
+          "transaction": "required",
+          "sql": "GRANT USAGE ON SCHEMA \"g02_native\" TO \"g02_person\", \"g02_batch\""
+        }
+      ],
+      "expectedCatalog": {
+        "tables": [
+          {
+            "id": "notes",
+            "record": {
+              "module": "demo",
+              "element": "Note"
+            },
+            "name": "notes",
+            "columns": [
+              {
+                "field": {
+                  "module": "demo",
+                  "element": "id"
+                },
+                "name": "id",
+                "nativeType": {
+                  "kind": "text"
+                }
+              },
+              {
+                "field": {
+                  "module": "demo",
+                  "element": "owner"
+                },
+                "name": "owner",
+                "nativeType": {
+                  "kind": "text"
+                }
+              },
+              {
+                "field": {
+                  "module": "demo",
+                  "element": "amount"
+                },
+                "name": "amount",
+                "nativeType": {
+                  "kind": "numeric",
+                  "precision": 8,
+                  "scale": 2
+                }
+              },
+              {
+                "field": {
+                  "module": "demo",
+                  "element": "tax"
+                },
+                "name": "tax",
+                "nativeType": {
+                  "kind": "int4"
+                }
+              },
+              {
+                "field": {
+                  "module": "demo",
+                  "element": "total"
+                },
+                "name": "total",
+                "nativeType": {
+                  "kind": "numeric",
+                  "precision": 16,
+                  "scale": 2
+                },
+                "default": {
+                  "kind": "literal",
+                  "value": {
+                    "decimalToken": "0.00"
+                  }
+                }
+              }
+            ],
+            "indexes": [],
+            "checks": [],
+            "foreignKeys": [],
+            "policy": {
+              "mode": "native-rls",
+              "person": {
+                "select": {
+                  "kind": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                },
+                "insert": {
+                  "kind": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                },
+                "update": {
+                  "kind": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                },
+                "delete": {
+                  "kind": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                }
+              },
+              "batch": {
+                "select": {
+                  "kind": "allow"
+                },
+                "insert": {
+                  "kind": "deny"
+                },
+                "update": {
+                  "kind": "deny"
+                },
+                "delete": {
+                  "kind": "deny"
+                }
+              }
+            }
+          }
+        ],
+        "columns": [
+          {
+            "table": "notes",
+            "name": "id",
+            "field": {
+              "module": "demo",
+              "element": "id"
+            },
+            "sourcePath": "/modules/0/extensions/umf.tables/tables/0/columns/0",
+            "typeSchema": "pg_catalog",
+            "typeName": "text",
+            "typeMod": -1,
+            "nullable": false,
+            "collation": "C",
+            "identity": "",
+            "definitionSql": "\"id\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL"
+          },
+          {
+            "table": "notes",
+            "name": "owner",
+            "field": {
+              "module": "demo",
+              "element": "owner"
+            },
+            "sourcePath": "/modules/0/extensions/umf.tables/tables/0/columns/1",
+            "typeSchema": "pg_catalog",
+            "typeName": "text",
+            "typeMod": -1,
+            "nullable": false,
+            "collation": "C",
+            "identity": "",
+            "definitionSql": "\"owner\" pg_catalog.\"text\" COLLATE pg_catalog.\"C\" NOT NULL"
+          },
+          {
+            "table": "notes",
+            "name": "amount",
+            "field": {
+              "module": "demo",
+              "element": "amount"
+            },
+            "sourcePath": "/modules/0/extensions/umf.tables/tables/0/columns/2",
+            "typeSchema": "pg_catalog",
+            "typeName": "numeric",
+            "typeMod": 524294,
+            "nullable": true,
+            "collation": null,
+            "identity": "",
+            "definitionSql": "\"amount\" pg_catalog.\"numeric\"(8,2)"
+          },
+          {
+            "table": "notes",
+            "name": "tax",
+            "field": {
+              "module": "demo",
+              "element": "tax"
+            },
+            "sourcePath": "/modules/0/extensions/umf.tables/tables/0/columns/3",
+            "typeSchema": "pg_catalog",
+            "typeName": "int4",
+            "typeMod": -1,
+            "nullable": false,
+            "collation": null,
+            "identity": "",
+            "definitionSql": "\"tax\" pg_catalog.\"int4\" NOT NULL"
+          },
+          {
+            "table": "notes",
+            "name": "total",
+            "field": {
+              "module": "demo",
+              "element": "total"
+            },
+            "sourcePath": "/modules/0/extensions/umf.tables/tables/0/columns/4",
+            "typeSchema": "pg_catalog",
+            "typeName": "numeric",
+            "typeMod": 1048582,
+            "nullable": false,
+            "collation": null,
+            "identity": "",
+            "definitionSql": "\"total\" pg_catalog.\"numeric\"(16,2) NOT NULL DEFAULT E'0'::pg_catalog.numeric"
+          }
+        ],
+        "keys": [
+          {
+            "table": "notes",
+            "id": "primary",
+            "name": "umf_k_5d660f25e1c2d3203a1bc5981910bfc2",
+            "primary": true,
+            "columns": [
+              "id"
+            ],
+            "definitionSql": "CONSTRAINT \"umf_k_5d660f25e1c2d3203a1bc5981910bfc2\" PRIMARY KEY (\"id\")"
+          }
+        ],
+        "checks": [
+          {
+            "table": "notes",
+            "id": "domain:demo.amount",
+            "name": "umf_d_7bb4da652d48e46d9b51544b00a8897f",
+            "definitionSql": "CONSTRAINT \"umf_d_7bb4da652d48e46d9b51544b00a8897f\" CHECK (\"amount\" NOT IN ('NaN'::pg_catalog.numeric, 'Infinity'::pg_catalog.numeric, '-Infinity'::pg_catalog.numeric))"
+          },
+          {
+            "table": "notes",
+            "id": "domain:demo.total",
+            "name": "umf_d_c5f856f6f78980918e1018f416c91f18",
+            "definitionSql": "CONSTRAINT \"umf_d_c5f856f6f78980918e1018f416c91f18\" CHECK (\"total\" NOT IN ('NaN'::pg_catalog.numeric, 'Infinity'::pg_catalog.numeric, '-Infinity'::pg_catalog.numeric))"
+          }
+        ],
+        "foreignKeys": [],
+        "indexes": []
+      },
+      "seedSets": [],
+      "nativeQualified": false,
+      "bundleDigest": "19f73809bf9b516c7f268a36a76b16c61ccd6dfde29cd925c97e671292dda035"
+    },
+    "fromBundleDigest": "b75af896a96d7e3d3c59b8b09c033bab69ec0f8b97ec388608ebac67fe7ed3c5",
+    "toBundleDigest": "19f73809bf9b516c7f268a36a76b16c61ccd6dfde29cd925c97e671292dda035",
+    "steps": [
+      {
+        "id": "step-90000",
+        "kind": "table",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/0/columns/4",
+        "transaction": "required",
+        "sql": "ALTER TABLE \"g02_native\".\"notes\" ADD COLUMN \"total\" pg_catalog.\"numeric\"(16,2)",
+        "phaseOperation": "add-column",
+        "phaseTarget": {
+          "table": "notes",
+          "field": {
+            "module": "demo",
+            "element": "total"
+          }
+        },
+        "preconditions": {
+          "phase": "before-plan",
+          "kind": "installed-source-cohort",
+          "bundleDigest": "b75af896a96d7e3d3c59b8b09c033bab69ec0f8b97ec388608ebac67fe7ed3c5"
+        },
+        "expectedOutcome": {
+          "phase": "before-commit",
+          "kind": "complete-next-source-catalog",
+          "bundleDigest": "19f73809bf9b516c7f268a36a76b16c61ccd6dfde29cd925c97e671292dda035"
+        },
+        "verification": "native-catalog-privileges-and-role-scope",
+        "recovery": "rollback-transaction"
+      },
+      {
+        "id": "step-90004",
+        "kind": "table",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/0/columns/4/domain",
+        "transaction": "required",
+        "sql": "ALTER TABLE \"g02_native\".\"notes\" ADD CONSTRAINT \"umf_d_c5f856f6f78980918e1018f416c91f18\" CHECK (\"total\" NOT IN ('NaN'::pg_catalog.numeric, 'Infinity'::pg_catalog.numeric, '-Infinity'::pg_catalog.numeric))",
+        "phaseOperation": "target-check",
+        "phaseTarget": {
+          "table": "notes",
+          "field": {
+            "module": "demo",
+            "element": "total"
+          }
+        },
+        "preconditions": {
+          "phase": "before-plan",
+          "kind": "installed-source-cohort",
+          "bundleDigest": "b75af896a96d7e3d3c59b8b09c033bab69ec0f8b97ec388608ebac67fe7ed3c5"
+        },
+        "expectedOutcome": {
+          "phase": "before-commit",
+          "kind": "complete-next-source-catalog",
+          "bundleDigest": "19f73809bf9b516c7f268a36a76b16c61ccd6dfde29cd925c97e671292dda035"
+        },
+        "verification": "native-catalog-privileges-and-role-scope",
+        "recovery": "rollback-transaction"
+      },
+      {
+        "id": "step-90001",
+        "kind": "backfill",
+        "sourcePath": "/options/backfills/0",
+        "transaction": "required",
+        "sql": "",
+        "operation": "derive_total",
+        "phaseOperation": "backfill",
+        "phaseTarget": {
+          "table": "notes",
+          "field": {
+            "module": "demo",
+            "element": "total"
+          }
+        },
+        "preconditions": {
+          "phase": "before-plan",
+          "kind": "installed-source-cohort",
+          "bundleDigest": "b75af896a96d7e3d3c59b8b09c033bab69ec0f8b97ec388608ebac67fe7ed3c5"
+        },
+        "expectedOutcome": {
+          "phase": "before-commit",
+          "kind": "complete-next-source-catalog",
+          "bundleDigest": "19f73809bf9b516c7f268a36a76b16c61ccd6dfde29cd925c97e671292dda035"
+        },
+        "verification": "native-catalog-privileges-and-role-scope",
+        "recovery": "rollback-transaction"
+      },
+      {
+        "id": "step-90002",
+        "kind": "table",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/0/columns/4",
+        "transaction": "required",
+        "sql": "ALTER TABLE \"g02_native\".\"notes\" ALTER COLUMN \"total\" SET DEFAULT E'0'::pg_catalog.numeric",
+        "phaseOperation": "install-default",
+        "phaseTarget": {
+          "table": "notes",
+          "field": {
+            "module": "demo",
+            "element": "total"
+          }
+        },
+        "preconditions": {
+          "phase": "before-plan",
+          "kind": "installed-source-cohort",
+          "bundleDigest": "b75af896a96d7e3d3c59b8b09c033bab69ec0f8b97ec388608ebac67fe7ed3c5"
+        },
+        "expectedOutcome": {
+          "phase": "before-commit",
+          "kind": "complete-next-source-catalog",
+          "bundleDigest": "19f73809bf9b516c7f268a36a76b16c61ccd6dfde29cd925c97e671292dda035"
+        },
+        "verification": "native-catalog-privileges-and-role-scope",
+        "recovery": "rollback-transaction"
+      },
+      {
+        "id": "step-90003",
+        "kind": "table",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/0/columns/4",
+        "transaction": "required",
+        "sql": "ALTER TABLE \"g02_native\".\"notes\" ALTER COLUMN \"total\" SET NOT NULL",
+        "phaseOperation": "tighten-not-null",
+        "phaseTarget": {
+          "table": "notes",
+          "field": {
+            "module": "demo",
+            "element": "total"
+          }
+        },
+        "preconditions": {
+          "phase": "before-plan",
+          "kind": "installed-source-cohort",
+          "bundleDigest": "b75af896a96d7e3d3c59b8b09c033bab69ec0f8b97ec388608ebac67fe7ed3c5"
+        },
+        "expectedOutcome": {
+          "phase": "before-commit",
+          "kind": "complete-next-source-catalog",
+          "bundleDigest": "19f73809bf9b516c7f268a36a76b16c61ccd6dfde29cd925c97e671292dda035"
+        },
+        "verification": "native-catalog-privileges-and-role-scope",
+        "recovery": "rollback-transaction"
+      },
+      {
+        "id": "step-90005",
+        "kind": "grant",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/update",
+        "transaction": "required",
+        "sql": "REVOKE UPDATE (\"owner\", \"amount\", \"tax\") ON TABLE \"g02_native\".\"notes\" FROM \"g02_person\"",
+        "preconditions": {
+          "phase": "before-plan",
+          "kind": "installed-source-cohort",
+          "bundleDigest": "b75af896a96d7e3d3c59b8b09c033bab69ec0f8b97ec388608ebac67fe7ed3c5"
+        },
+        "expectedOutcome": {
+          "phase": "before-commit",
+          "kind": "complete-next-source-catalog",
+          "bundleDigest": "19f73809bf9b516c7f268a36a76b16c61ccd6dfde29cd925c97e671292dda035"
+        },
+        "verification": "native-catalog-privileges-and-role-scope",
+        "recovery": "rollback-transaction"
+      },
+      {
+        "id": "step-00010",
+        "kind": "grant",
+        "sourcePath": "/modules/0/extensions/umf.tables/tables/0/policy/person/update",
+        "transaction": "required",
+        "sql": "GRANT UPDATE (\"owner\", \"amount\", \"tax\", \"total\") ON TABLE \"g02_native\".\"notes\" TO \"g02_person\"",
+        "preconditions": {
+          "phase": "before-plan",
+          "kind": "installed-source-cohort",
+          "bundleDigest": "b75af896a96d7e3d3c59b8b09c033bab69ec0f8b97ec388608ebac67fe7ed3c5"
+        },
+        "expectedOutcome": {
+          "phase": "before-commit",
+          "kind": "complete-next-source-catalog",
+          "bundleDigest": "19f73809bf9b516c7f268a36a76b16c61ccd6dfde29cd925c97e671292dda035"
+        },
+        "verification": "native-catalog-privileges-and-role-scope",
+        "recovery": "rollback-transaction"
+      }
+    ],
+    "seedExecution": "none",
+    "phases": [
+      {
+        "id": "phase-00001",
+        "kind": "backfill-add",
+        "transaction": "required",
+        "steps": [
+          "step-90000",
+          "step-90004",
+          "step-90001",
+          "step-90002",
+          "step-90003"
+        ]
+      },
+      {
+        "id": "phase-00002",
+        "kind": "transaction",
+        "transaction": "required",
+        "steps": [
+          "step-90005",
+          "step-00010"
+        ]
+      }
+    ],
+    "executionProfile": {
+      "version": "umf.table-migration-execution/0.3",
+      "progressRelation": "umf_lifecycle_progress",
+      "ownerOnly": true
+    },
+    "approvalProfile": {
+      "version": "umf.table-migration-approval/0.1",
+      "relation": "umf_lifecycle_approvals",
+      "ownerOnly": true
+    },
+    "options": {
+      "version": "umf.table-migration-options/0.4",
+      "backfills": [
+        {
+          "table": "notes",
+          "column": {
+            "module": "demo",
+            "element": "total"
+          },
+          "operation": "derive_total",
+          "scopedRows": true
+        }
+      ],
+      "concurrentIndexes": [],
+      "reviewedChanges": [],
+      "validations": []
+    },
+    "review": [
+      {
+        "code": "SCOPED_BACKFILL",
+        "path": "/options/backfills/0",
+        "message": "Administrative UPDATE may touch protected rows; exact source and effect bound require approval"
+      }
+    ],
+    "requiresApproval": true,
+    "nativeQualified": false,
+    "digest": "04ee32ecd9b27bccf2971c06382ce6ea0b1e0ed34988fbff3c65ace8d69a98ec"
+  },
+  "cases": [
+    {
+      "id": "exact-decimal-per-row",
+      "initialRows": [
+        {
+          "id": "a",
+          "owner": "g02_alice",
+          "amount": "10.25",
+          "tax": 2
+        },
+        {
+          "id": "b",
+          "owner": "g02_bob",
+          "amount": "1.75",
+          "tax": 3
+        },
+        {
+          "id": "c",
+          "owner": "g02_alice",
+          "amount": "0.50",
+          "tax": 10
+        }
+      ],
+      "expectedRows": [
+        [
+          "a",
+          "12.25"
+        ],
+        [
+          "b",
+          "4.75"
+        ],
+        [
+          "c",
+          "10.50"
+        ]
+      ]
+    },
+    {
+      "id": "null-derived-result-rolls-back",
+      "initialRows": [
+        {
+          "id": "a",
+          "owner": "g02_alice",
+          "amount": "10.25",
+          "tax": 2
+        },
+        {
+          "id": "b",
+          "owner": "g02_bob",
+          "amount": "1.75",
+          "tax": 3
+        },
+        {
+          "id": "c",
+          "owner": "g02_alice",
+          "amount": null,
+          "tax": 10
+        }
+      ],
+      "expectedFailure": "null-result",
+      "expectedRows": []
+    }
+  ]
+}

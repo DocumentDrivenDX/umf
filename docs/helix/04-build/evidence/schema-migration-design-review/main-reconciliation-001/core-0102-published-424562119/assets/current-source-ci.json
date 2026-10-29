@@ -1,0 +1,72 @@
+{
+  "productSource": {
+    "checks": {
+      "expectedSkipped": 1,
+      "pending": 0,
+      "successful": 63
+    },
+    "commit": "a1b909d4f92da6604aeb21d3ea60e9a9943a7f87",
+    "normalMergeCommit": "3fd8c61cd12cb9f08384e99e9d021834a88070c7",
+    "normalMergeTree": "f9f1655af59c4c030e58a19405fe22ae55db40bb",
+    "tree": "f9f1655af59c4c030e58a19405fe22ae55db40bb"
+  },
+  "publisherMerge": {
+    "cancelledDuplicatePushRuns": [
+      40366190733,
+      40366190757,
+      40366190766,
+      40366190784,
+      40366190820,
+      40366190853,
+      40366190870
+    ],
+    "changedFileCount": 10,
+    "changedFiles": [
+      ".github/workflows/publish-pypi.yml",
+      ".github/workflows/pypi-validation.yml",
+      ".github/workflows/pypi.yml",
+      "docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json",
+      "docs/helix/04-build/evidence/rust-migration/r3/inventory.json",
+      "docs/helix/05-deploy/pypi.md",
+      "scripts/dispatch_core_pypi_release.py",
+      "scripts/publish_core_pypi_release.py",
+      "scripts/test_dispatch_core_pypi_release.py",
+      "scripts/test_publish_core_pypi_release.py"
+    ],
+    "checkSnapshot": {
+      "cancelled": 31,
+      "inProgress": 6,
+      "queued": 19,
+      "success": 8
+    },
+    "commit": "6337b4b5f65144387ce5c0bbf9cbad955a921c8f",
+    "comparisonUrl": "https://api.github.com/repos/DocumentDrivenDX/umf/compare/a1b909d4f92da6604aeb21d3ea60e9a9943a7f87...6337b4b5f65144387ce5c0bbf9cbad955a921c8f",
+    "corePackageSourceChanged": false,
+    "head": "d9c9b5ef8e0feb7e5fb5b0dcf688d8220f9c463d",
+    "pullRequest": 50,
+    "qualifiedSourceCorrespondence": "The ten publisher-only files were compared against the qualified source; this does not assert full-tree equivalence.",
+    "relevantPublisherChecks": [
+      {
+        "conclusion": "success",
+        "jobId": 121724450426,
+        "name": "publisher-controls"
+      },
+      {
+        "conclusion": "success",
+        "jobId": 121724450441,
+        "name": "inventory-boundaries"
+      }
+    ],
+    "snapshotScope": "The remaining snapshot items were queued, in progress, or cancelled duplicate-push runs; no all-checks-passed claim is made for publisher M.",
+    "tree": "d3adf126be14b38a982d496844212fba6e8c523a"
+  },
+  "qualificationReference": {
+    "filename": "qualification.json",
+    "sha256": "44b72323ec0b343911c47477b5058f33fb64b070265f5be10ce0117b373d3718"
+  },
+  "releaseTarget": {
+    "commit": "6337b4b5f65144387ce5c0bbf9cbad955a921c8f",
+    "tag": "python-v0.10.2"
+  },
+  "schema": "umf.core-current-source-ci/1"
+}

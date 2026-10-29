@@ -1,0 +1,203 @@
+{
+  "version": "1",
+  "pip_version": "24.0",
+  "install": [
+    {
+      "download_info": {
+        "url": "file:///home/runner/work/_temp/core-0102-manylinux-tools/auditwheel-6.8.2-py3-none-any.whl",
+        "archive_info": {
+          "hash": "sha256=05fd2dd4b743217cd5f66066adc95b03a079424b1f0a878ad1e40fe2cdea4704",
+          "hashes": {
+            "sha256": "05fd2dd4b743217cd5f66066adc95b03a079424b1f0a878ad1e40fe2cdea4704"
+          }
+        }
+      },
+      "is_direct": false,
+      "is_yanked": false,
+      "requested": true,
+      "metadata": {
+        "metadata_version": "2.4",
+        "name": "auditwheel",
+        "version": "6.8.2",
+        "dynamic": [
+          "license-file"
+        ],
+        "summary": "Cross-distribution Linux wheels",
+        "description": "auditwheel\n==========\n\n.. image:: https://travis-ci.org/pypa/auditwheel.svg?branch=main\n    :target: https://travis-ci.org/pypa/auditwheel\n.. image:: https://badge.fury.io/py/auditwheel.svg\n    :target: https://pypi.org/project/auditwheel\n.. image:: https://pepy.tech/badge/auditwheel/month\n    :target: https://pepy.tech/project/auditwheel/month\n\nAuditing and relabeling of Linux and Android wheels.\n\nOverview\n--------\n\n``auditwheel`` is a command line tool to facilitate the creation of Python\n`wheel packages <http://pythonwheels.com/>`_ (containing pre-compiled\nbinary extensions) that are compatible with a wide variety of distributions,\nconsistent with the `PEP 600 manylinux_x_y\n<https://www.python.org/dev/peps/pep-0600/>`_, `PEP 513 manylinux1\n<https://www.python.org/dev/peps/pep-0513/>`_, `PEP 571 manylinux2010\n<https://www.python.org/dev/peps/pep-0571/>`_, `PEP 599 manylinux2014\n<https://www.python.org/dev/peps/pep-0599/>`_ and `PEP 738 android\n<https://www.python.org/dev/peps/pep-0738/>`_ platform tags.\n\n``auditwheel show``: shows external shared libraries that the wheel depends on\n(beyond the libraries included in the ``manylinux`` policies), and\nchecks the extension modules for the use of versioned symbols that exceed\nthe ``manylinux`` ABI.\n\n``auditwheel repair``: copies these external shared libraries into the wheel itself,\nand automatically modifies the appropriate ``RPATH`` entries such that these libraries\nwill be picked up at runtime. This accomplishes a similar result as if the libraries had\nbeen statically linked without requiring changes to the build system. Packagers are\nadvised that bundling, like static linking, may implicate copyright concerns.\n\nRequirements\n------------\n- OS: Linux (for Android wheels, macOS may also be used)\n- Python: 3.10+\n- `patchelf <https://github.com/NixOS/patchelf>`_: 0.14.5+\n\nOnly systems that use `ELF\n<https://en.wikipedia.org/wiki/Executable_and_Linkable_Format>`_-based linkage\nare supported (this should be essentially every Linux).\n\nIn general, building ``manylinux1`` wheels requires running on a CentOS5\nmachine, building ``manylinux2010`` wheels requires running on a CentOS6\nmachine, and building ``manylinux2014`` wheels requires running on a CentOS7\nmachine, so we recommend using the pre-built manylinux `Docker images\n<https://quay.io/repository/pypa/manylinux_2_28_x86_64>`_, e.g. ::\n\n  $ docker run -i -t -v `pwd`:/io quay.io/pypa/manylinux_2_28_x86_64 /bin/bash\n\nInstallation\n------------\n\n``auditwheel`` can be installed using pip:\n\n.. code:: bash\n\n  $ pip3 install auditwheel\n\nExamples\n--------\n\nInspecting a wheel: ::\n\n    $ auditwheel show cffi-1.5.0-cp35-cp35m-linux_x86_64.whl\n\n    cffi-1.5.0-cp35-cp35m-linux_x86_64.whl is consistent with the\n    following platform tag: \"linux_x86_64\".\n\n    The wheel references the following external versioned symbols in\n    system-provided shared libraries: GLIBC_2.3.\n\n    The following external shared libraries are required by the wheel:\n    {\n        \"libc.so.6\": \"/lib64/libc-2.5.so\",\n        \"libffi.so.5\": \"/usr/lib64/libffi.so.5.0.6\",\n        \"libpthread.so.0\": \"/lib64/libpthread-2.5.so\"\n    }\n\n    In order to achieve the tag platform tag \"manylinux1_x86_64\" the\n    following shared library dependencies will need to be eliminated:\n\n    libffi.so.5\n\nRepairing a wheel. ::\n\n    $ auditwheel repair cffi-1.5.2-cp35-cp35m-linux_x86_64.whl\n    Repairing cffi-1.5.2-cp35-cp35m-linux_x86_64.whl\n    Grafting: /usr/lib64/libffi.so.5.0.6\n    Setting RPATH: _cffi_backend.cpython-35m-x86_64-linux-gnu.so to \"$ORIGIN/.libs_cffi_backend\"\n    Previous filename tags: linux_x86_64\n    New filename tags: manylinux1_x86_64\n    Previous WHEEL info tags: cp35-cp35m-linux_x86_64\n    New WHEEL info tags: cp35-cp35m-manylinux1_x86_64\n\n    Fixed-up wheel written to /wheelhouse/cffi-1.5.2-cp35-cp35m-manylinux1_x86_64.whl\n\n\nLimitations\n-----------\n\n1. ``auditwheel`` uses the `DT_NEEDED <https://en.wikipedia.org/wiki/Direct_binding>`_\n   information (like ``ldd``) from the Python extension modules to determine\n   which system libraries they depend on. Code that dynamically\n   loads libraries at runtime using ``ctypes`` / ``cffi`` (from Python) or\n   ``dlopen`` (from C/C++) doesn't contain this information in a way that can\n   be statically determined, so dependencies that are loaded via those\n   mechanisms will be missed.\n2. There's nothing we can do about \"fixing\" binaries if they were compiled and\n   linked against a too-recent version of ``libc`` or ``libstdc++``. These\n   libraries (and some others) use symbol versioning for backward\n   compatibility. In general, this means that code that was compiled against an\n   old version of ``glibc`` will run fine on systems with a newer version of\n   ``glibc``, but code what was compiled on a new system won't / might not run\n   on older system.\n\n   So, to compile widely-compatible binaries, you're best off doing the build\n   on an old Linux distribution, such as a manylinux Docker image.\n\nTesting\n-------\n\nThe tests can be run with ``nox``, which will automatically install\ntest dependencies.\n\nSome of the integration tests also require a running and accessible Docker\ndaemon. These tests will pull a number of docker images if they are not already\navailable on your system, but it won't update existing images.\nTo update these images manually, run::\n\n    docker pull python:3.10-slim-trixie\n    docker pull quay.io/pypa/manylinux2010_x86_64\n    docker pull quay.io/pypa/manylinux2014_x86_64\n    docker pull quay.io/pypa/manylinux_2_28_x86_64\n    docker pull quay.io/pypa/manylinux_2_34_x86_64\n    docker pull quay.io/pypa/musllinux_1_2_x86_64\n\nYou may also remove these images using ``docker rmi``.\n\nCode of Conduct\n---------------\n\nEveryone interacting in the ``auditwheel`` project's codebases, issue trackers,\nchat rooms, and mailing lists is expected to follow the\n`PSF Code of Conduct`_.\n\n.. _PSF Code of Conduct: https://github.com/pypa/.github/blob/main/CODE_OF_CONDUCT.md\n",
+        "description_content_type": "text/x-rst",
+        "author_email": "\"Robert T. McGibbon\" <rmcgibbo@gmail.com>",
+        "license": "MIT",
+        "classifier": [
+          "Development Status :: 4 - Beta",
+          "Environment :: Console",
+          "Intended Audience :: Developers",
+          "License :: OSI Approved :: MIT License",
+          "Operating System :: POSIX :: Linux",
+          "Programming Language :: Python :: 3",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Programming Language :: Python :: 3.14",
+          "Programming Language :: Python :: 3 :: Only",
+          "Topic :: Software Development",
+          "Topic :: Software Development :: Build Tools",
+          "Topic :: Software Development :: Libraries :: Python Modules"
+        ],
+        "requires_dist": [
+          "packaging>=20.9",
+          "pyelftools>=0.24"
+        ],
+        "requires_python": ">=3.10",
+        "project_url": [
+          "Homepage, https://github.com/pypa/auditwheel"
+        ]
+      }
+    },
+    {
+      "download_info": {
+        "url": "file:///home/runner/work/_temp/core-0102-manylinux-tools/packaging-25.0-py3-none-any.whl",
+        "archive_info": {
+          "hash": "sha256=29572ef2b1f17581046b3a2227d5c611fb25ec70ca1ba8554b24b0e69331a484",
+          "hashes": {
+            "sha256": "29572ef2b1f17581046b3a2227d5c611fb25ec70ca1ba8554b24b0e69331a484"
+          }
+        }
+      },
+      "is_direct": false,
+      "is_yanked": false,
+      "requested": true,
+      "metadata": {
+        "metadata_version": "2.4",
+        "name": "packaging",
+        "version": "25.0",
+        "summary": "Core utilities for Python packages",
+        "description": "packaging\n=========\n\n.. start-intro\n\nReusable core utilities for various Python Packaging\n`interoperability specifications <https://packaging.python.org/specifications/>`_.\n\nThis library provides utilities that implement the interoperability\nspecifications which have clearly one correct behaviour (eg: :pep:`440`)\nor benefit greatly from having a single shared implementation (eg: :pep:`425`).\n\n.. end-intro\n\nThe ``packaging`` project includes the following: version handling, specifiers,\nmarkers, requirements, tags, utilities.\n\nDocumentation\n-------------\n\nThe `documentation`_ provides information and the API for the following:\n\n- Version Handling\n- Specifiers\n- Markers\n- Requirements\n- Tags\n- Utilities\n\nInstallation\n------------\n\nUse ``pip`` to install these utilities::\n\n    pip install packaging\n\nThe ``packaging`` library uses calendar-based versioning (``YY.N``).\n\nDiscussion\n----------\n\nIf you run into bugs, you can file them in our `issue tracker`_.\n\nYou can also join ``#pypa`` on Freenode to ask questions or get involved.\n\n\n.. _`documentation`: https://packaging.pypa.io/\n.. _`issue tracker`: https://github.com/pypa/packaging/issues\n\n\nCode of Conduct\n---------------\n\nEveryone interacting in the packaging project's codebases, issue trackers, chat\nrooms, and mailing lists is expected to follow the `PSF Code of Conduct`_.\n\n.. _PSF Code of Conduct: https://github.com/pypa/.github/blob/main/CODE_OF_CONDUCT.md\n\nContributing\n------------\n\nThe ``CONTRIBUTING.rst`` file outlines how to contribute to this project as\nwell as how to report a potential security issue. The documentation for this\nproject also covers information about `project development`_ and `security`_.\n\n.. _`project development`: https://packaging.pypa.io/en/latest/development/\n.. _`security`: https://packaging.pypa.io/en/latest/security/\n\nProject History\n---------------\n\nPlease review the ``CHANGELOG.rst`` file or the `Changelog documentation`_ for\nrecent changes and project history.\n\n.. _`Changelog documentation`: https://packaging.pypa.io/en/latest/changelog/\n\n",
+        "description_content_type": "text/x-rst",
+        "author_email": "Donald Stufft <donald@stufft.io>",
+        "classifier": [
+          "Development Status :: 5 - Production/Stable",
+          "Intended Audience :: Developers",
+          "License :: OSI Approved :: Apache Software License",
+          "License :: OSI Approved :: BSD License",
+          "Programming Language :: Python",
+          "Programming Language :: Python :: 3",
+          "Programming Language :: Python :: 3 :: Only",
+          "Programming Language :: Python :: 3.8",
+          "Programming Language :: Python :: 3.9",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Programming Language :: Python :: Implementation :: CPython",
+          "Programming Language :: Python :: Implementation :: PyPy",
+          "Typing :: Typed"
+        ],
+        "requires_python": ">=3.8",
+        "project_url": [
+          "Documentation, https://packaging.pypa.io/",
+          "Source, https://github.com/pypa/packaging"
+        ]
+      }
+    },
+    {
+      "download_info": {
+        "url": "file:///home/runner/work/_temp/core-0102-manylinux-tools/pyelftools-0.32-py3-none-any.whl",
+        "archive_info": {
+          "hash": "sha256=013df952a006db5e138b1edf6d8a68ecc50630adbd0d83a2d41e7f846163d738",
+          "hashes": {
+            "sha256": "013df952a006db5e138b1edf6d8a68ecc50630adbd0d83a2d41e7f846163d738"
+          }
+        }
+      },
+      "is_direct": false,
+      "is_yanked": false,
+      "requested": true,
+      "metadata": {
+        "metadata_version": "2.1",
+        "name": "pyelftools",
+        "version": "0.32",
+        "platform": [
+          "Cross Platform"
+        ],
+        "summary": "Library for analyzing ELF files and DWARF debugging information",
+        "home_page": "https://github.com/eliben/pyelftools",
+        "author": "Eli Bendersky",
+        "author_email": "eliben@gmail.com",
+        "maintainer": "Eli Bendersky",
+        "license": "Public domain",
+        "classifier": [
+          "Programming Language :: Python :: 3"
+        ]
+      }
+    },
+    {
+      "download_info": {
+        "url": "file:///home/runner/work/_temp/core-0102-manylinux-tools/patchelf-0.17.2.4-py3-none-manylinux1_x86_64.manylinux_2_5_x86_64.musllinux_1_1_x86_64.whl",
+        "archive_info": {
+          "hash": "sha256=d9b35ebfada70c02679ad036407d9724ffe1255122ba4ac5e4be5868618a5689",
+          "hashes": {
+            "sha256": "d9b35ebfada70c02679ad036407d9724ffe1255122ba4ac5e4be5868618a5689"
+          }
+        }
+      },
+      "is_direct": false,
+      "is_yanked": false,
+      "requested": true,
+      "metadata": {
+        "metadata_version": "2.1",
+        "name": "patchelf",
+        "version": "0.17.2.4",
+        "summary": "A small utility to modify the dynamic linker and RPATH of ELF executables.",
+        "description": "=============\npatchelf PyPI\n=============\n\n`patchelf <https://github.com/NixOS/patchelf>`_ is a  small utility to modify the dynamic linker\nand RPATH of ELF executables.\n\nThis project allows to get this utility from `PyPI <https://pypi.org>`_ with a simple ``pip install patchelf``.\n\nReporting issues\n----------------\n\nThis repo only aims at providing a rebuild of patchelf on PyPI and as such,\nonly issues related to this specific packaging will be dealt with in this repository.\n\nFor all issues you might see when using ``patchelf``, please report directly upstream after reproducing with one of their pre-built\nbinaries or rebuilding patchelf from their repository: https://github.com/NixOS/patchelf\n\nLatest Release\n--------------\n\n.. image:: https://img.shields.io/pypi/v/patchelf.svg\n  :target: https://pypi.python.org/pypi/patchelf\n\nBuild Status\n------------\n\n.. image:: https://github.com/mayeut/patchelf-pypi/actions/workflows/build.yml/badge.svg\n  :target: https://github.com/mayeut/patchelf-pypi/actions/workflows/build.yml\n\nPlatforms\n---------\n\nThe following platforms are supported with binary wheels:\n\n.. table::\n\n  +---------------+--------------------------+\n  | OS            | Arch                     |\n  +===============+==========================+\n  | Linux x86_64  | | manylinux1+            |\n  |               | | musllinux_1_1+         |\n  +---------------+--------------------------+\n  | Linux i686    | | manylinux1+            |\n  |               | | musllinux_1_1+         |\n  +---------------+--------------------------+\n  | Linux aarch64 | | manylinux2014+         |\n  |               | | musllinux_1_1+         |\n  +---------------+--------------------------+\n  | Linux armv7l  | | manylinux2014+         |\n  |               | | musllinux_1_1+         |\n  +---------------+--------------------------+\n  | Linux ppc64le | | manylinux2014+         |\n  |               | | musllinux_1_1+         |\n  +---------------+--------------------------+\n  | Linux s390x   | | manylinux2014+         |\n  |               | | musllinux_1_1+         |\n  +---------------+--------------------------+\n  | Linux riscv64 | | manylinux_2_31+        |\n  |               | | musllinux_1_1+         |\n  +---------------+--------------------------+\n\nLicense\n-------\n\nThis project is covered by the `Apache License, Version 2.0 <http://www.apache.org/licenses/LICENSE-2.0>`_.\n\npatchelf is distributed under the OSI-approved GNU General Public License v3.0.\nFor more information about patchelf, visit https://github.com/NixOS/patchelf\n",
+        "description_content_type": "text/x-rst",
+        "keywords": [
+          "auditwheel",
+          "elf",
+          "manylinux",
+          "musllinux",
+          "patchelf"
+        ],
+        "author_email": "Matthieu Darbois <mayeut@users.noreply.github.com>",
+        "license": "GPL-3.0-or-later",
+        "classifier": [
+          "Development Status :: 5 - Production/Stable",
+          "Intended Audience :: Developers",
+          "License :: OSI Approved :: Apache Software License",
+          "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+          "Operating System :: POSIX :: Linux",
+          "Programming Language :: C",
+          "Programming Language :: C++",
+          "Programming Language :: Python",
+          "Topic :: Software Development :: Build Tools"
+        ],
+        "requires_dist": [
+          "importlib_metadata>=2.0; extra == \"test\"",
+          "pytest>=6.0; extra == \"test\""
+        ],
+        "requires_python": ">=3.7",
+        "project_url": [
+          "Bug Tracker, https://github.com/mayeut/patchelf-pypi/issues",
+          "Homepage, https://github.com/NixOS/patchelf",
+          "Source Code, https://github.com/mayeut/patchelf-pypi"
+        ],
+        "provides_extra": [
+          "test"
+        ]
+      }
+    }
+  ],
+  "environment": {
+    "implementation_name": "cpython",
+    "implementation_version": "3.11.17",
+    "os_name": "posix",
+    "platform_machine": "x86_64",
+    "platform_release": "6.17.0-1022-azure",
+    "platform_system": "Linux",
+    "platform_version": "#22-Ubuntu SMP Mon Jul 27 17:24:03 UTC 2026",
+    "python_full_version": "3.11.17",
+    "platform_python_implementation": "CPython",
+    "python_version": "3.11",
+    "sys_platform": "linux"
+  }
+}

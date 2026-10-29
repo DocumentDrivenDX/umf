@@ -1,0 +1,37 @@
+{
+  "runner": "/home/runner/work/umf/umf/tests/lifecycle/g03-defaults-native.py",
+  "runnerSha256": "ca8aeb612d6536312232d395170e933c3c46a6aae5e1673ae5903a53b26c9cca",
+  "fixture": "/tmp/g02-g03-defaults-fixture.json",
+  "fixtureSha256": "de8736519bcb9aa1bb3c59c62734d6f31035378e192e317295fdd766e513108f",
+  "scenario": "admission-refusal",
+  "sourceStatus": "SOURCE_ONLY_ALL_NATIVE_CASES_UNRUN",
+  "packages": {
+    "umf-access": "0.1.0.dev8",
+    "umf-codegen": "0.1.0a5",
+    "weft-sql": "0.4.53",
+    "umf-core": "0.10.0"
+  },
+  "caseStatus": {
+    "G03-N01": "TRANSITIONS_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N02": "EMPTY_TABLE_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N03": "REQUIRED_SET_REPLACE_DROP_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N04": "FAIL_OR_UNKNOWN",
+    "G03-N05": "NULL_AND_DECIMAL_SPELLING_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N06": "KNOWN_ABORT_RETRY_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N07": "COMMIT_AND_PREPUBLICATION_RECOVERY_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N08": "UNKNOWN_UNCOMMITTED_FENCE_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N09": "WRITER_BARRIER_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N10": "DATE_TEXT_DECIMAL_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N11": "UUID_AND_TRANSACTION_TIMESTAMP_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N12": "UNQUALIFIED_COMPATIBLE_WEFT_02_COHORT_REQUIRED",
+    "G03-N13": "FULL_PRE_EFFECT_TAMPERING_MATRIX_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N14": "SERIAL_CLEANUP_CAMPAIGN_SOURCE_IMPLEMENTED_NATIVE_UNRUN_FULL_CASE_OPEN"
+  },
+  "checks": [],
+  "status": "FAIL_OR_UNKNOWN",
+  "result": {
+    "caseId": "G03-N04",
+    "errorType": "RuntimeError",
+    "nativeEffects": "none; source compilation and readonly observations only"
+  }
+}

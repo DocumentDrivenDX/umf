@@ -1,0 +1,103 @@
+{
+  "profile": "umf.source-review-freeze/1",
+  "status": "SOURCE_REVIEW_PENDING",
+  "baseCommit": "71b5f87805324c0e0d12c279a4898c8a44f625a9",
+  "scope": "Manual Luna Python corrections; no local runtime or test validation. Actual full Ruff0.17.1/full Python checks required.",
+  "files": [
+    {
+      "path": "python/umf_access/src/umf_access/lifecycle/__init__.py",
+      "sha256": "c2f65a01de67ff46640bdf9d70737a7d3860233137ff464bcc393a0cc172f683",
+      "bytes": 2518
+    },
+    {
+      "path": "python/umf_access/src/umf_access/lifecycle/generation_enrollment_ledger.py",
+      "sha256": "22cea4a28baf39d97a989c5731563b2107d2db0ada122f01ed4d5b3cab5b30cd",
+      "bytes": 33908
+    },
+    {
+      "path": "python/umf_access/src/umf_access/lifecycle/host.py",
+      "sha256": "41b72fda9055ee131c5ef1c7236594e53995386864cb099019d534103f504929",
+      "bytes": 59380
+    },
+    {
+      "path": "python/umf_access/src/umf_access/lifecycle/ingress_custody.py",
+      "sha256": "193a43348c3e35721d02170f4b0ab8b7a024294b4c73b176b8873d303a5131e0",
+      "bytes": 83236
+    },
+    {
+      "path": "python/umf_access/src/umf_access/lifecycle/ingress_local_postgres.py",
+      "sha256": "7a718ad57c276e4e18698c497a50ebe4f76e3203eddc0f3dba857b0a047d3949",
+      "bytes": 467500
+    },
+    {
+      "path": "python/umf_access/src/umf_access/lifecycle/owner_bootstrap.py",
+      "sha256": "d4b09e70a0b0d571c6cbf9c834ff95aeab3b697d2a6e8453c7c8ea1f99db4f0e",
+      "bytes": 101279
+    },
+    {
+      "path": "python/umf_access/src/umf_access/lifecycle/row_originals.py",
+      "sha256": "2cb77ffa1b60c5525b8f58807b8ba8de9813d9ce63a2499b2a4680b45000acad",
+      "bytes": 83708
+    },
+    {
+      "path": "python/umf_access/tests/test_fixed_query_preparation.py",
+      "sha256": "77dde4035b7506abfcb97ecb2dbf013b463fdb735b06851353febf048e3b8f21",
+      "bytes": 8212
+    },
+    {
+      "path": "python/umf_access/tests/test_g03_host.py",
+      "sha256": "d5828c5c4e103cc9251efa0d8717f8464b642eb239c9a8daabb71fa77a6f2f38",
+      "bytes": 12627
+    },
+    {
+      "path": "python/umf_access/tests/test_ingress_local_postgres.py",
+      "sha256": "352d5a57b4db450a1b3e25380bef5a0bd90b4eb7eace6005b70b4504abcf03b5",
+      "bytes": 136734
+    },
+    {
+      "path": "python/umf_access/tests/test_migration_phases.py",
+      "sha256": "32a403e5edc8cf0ff03311a37966cf928fdd73f3b75b85a322985f11b74896dc",
+      "bytes": 23568
+    },
+    {
+      "path": "python/umf_access/tests/test_native_sessions.py",
+      "sha256": "27029d478b52590906bb548da00b9eefe69f1fc8a88df2c095046563b13d0de2",
+      "bytes": 17281
+    },
+    {
+      "path": "python/umf_access/tests/test_operation_input_snapshot.py",
+      "sha256": "16c5e8fc5b72e04a8ac23edb2016f92235fd560a6db2015a05daeac3085195ae",
+      "bytes": 14384
+    },
+    {
+      "path": "python/umf_access/tests/test_original_store_pending_restart.py",
+      "sha256": "222fab9ebb020ed6994ee2f2df8cdfa63c7dc58e1bb95ae25842cab7deaf5b20",
+      "bytes": 81103
+    },
+    {
+      "path": "python/umf_access/tests/test_row_originals_creation.py",
+      "sha256": "4c84f7ac7a757871dbaae688118aa0297a54feb4f311f621a45d5f2e70a887cf",
+      "bytes": 27495
+    },
+    {
+      "path": "python/umf_access/tests/test_row_originals_profile.py",
+      "sha256": "696560344796a229c9099c9b0ac4327dfd41452429b5e5103426c64bf38cc087",
+      "bytes": 13880
+    },
+    {
+      "path": "python/umf_access/tests/test_table_outcomes.py",
+      "sha256": "99cba3eb97ddd67f0ce06ec94ca67f845dc68995c4a81a7293d4c421770cfc47",
+      "bytes": 7747
+    },
+    {
+      "path": "python/umf_codegen/tests/test_migration_discovery_selector.py",
+      "sha256": "344d650466d4fe98e0d97c31fbcebe4af091743ac5d9c1571dd90d502e34ee82",
+      "bytes": 2759
+    },
+    {
+      "path": "tests/codegen/test_aggregate_cohort.py",
+      "sha256": "0bb9aa41d832ba462845dceed0b2bc1e37fb7486a6407e047dfecd6b1f7e0d49",
+      "bytes": 21201
+    }
+  ]
+}

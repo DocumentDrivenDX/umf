@@ -1,0 +1,53 @@
+{
+  "acceptanceRows": 88,
+  "adoptedFiles": {
+    "docs/helix/02-design/contracts/CONTRACT-081-table-lifecycle.md": "bb5203eb8c624dc643bb6e45775a66f7d5bcabf6e0d2b87c83d98a803bedd039",
+    "docs/helix/02-design/technical-designs/TD-085-typed-actions-on-raw-tables.md": "845b2eda7d04a7e1dca53c7db277262b3450e54a1ab6503fa252db192350d29e",
+    "docs/helix/03-test/test-plans/STP-085-typed-actions-on-raw-tables.md": "f8005619d3f2e22460fb384cbfe5209eb3e4da7f3132e8a21ccc5e54ccfba060",
+    "docs/helix/04-build/evidence/schema-migration-design-review/g10-contract-001/definitions/acceptance-matrix.md": "cb95e725cb8b0b70309c9449c1fbc0c0e4200b15d8d59bff710fa0e9348a306c",
+    "docs/helix/04-build/evidence/schema-migration-design-review/g10-contract-001/definitions/campaign-grant-accounting.md": "a4b3759604c4fb77fe3ebcf70e7fcb5a82a887af1ff4bcd9060d49fd919cee9c",
+    "docs/helix/04-build/evidence/schema-migration-design-review/g10-contract-001/definitions/carrier-provider-definition-digest.txt": "0dae51fd040e774b2e64a527c50b9cbd2f9f9a355e801aff023d912e0d6fda0d",
+    "docs/helix/04-build/evidence/schema-migration-design-review/g10-contract-001/definitions/carrier-provider-definition.json": "a76c88f59106de11d5df37818f8ba3f4f439eabd7e8bbfbd00708235a1c8e56b",
+    "docs/helix/04-build/evidence/schema-migration-design-review/g10-contract-001/definitions/carrier-retirement-ddl.sql": "63e7b41506c74ac38c3c73d1dc116f23c8b5a60d1064982b260522e01c99dc20",
+    "docs/helix/04-build/evidence/schema-migration-design-review/g10-contract-001/definitions/carrier-retirement.md": "2ab552d1bd5a6881ae25fb8f50e27854eb5537a29325b5c0a713d329dfc362c4",
+    "docs/helix/04-build/evidence/schema-migration-design-review/g10-contract-001/definitions/component-policies.md": "a1c12960c43921644cf9ff055b7af306f25a55116c1d4ce26d5aabcbaae778f4",
+    "docs/helix/04-build/evidence/schema-migration-design-review/g10-contract-001/definitions/contract-proposal.md": "cee0d04ee72da46062c6814efa1c0235e5c087da82593128f9d766f65c05324a",
+    "docs/helix/04-build/evidence/schema-migration-design-review/g10-contract-001/definitions/denied-approval-recovery.md": "a8811dce246636fd88b65214e19d291ae4ed8a02cb1fa46106ab0396af3e9128",
+    "docs/helix/04-build/evidence/schema-migration-design-review/g10-contract-001/definitions/fresh-authority.md": "b69024641bf4bdf94a8e92dcc3743570aa1c9dd9ab21d09c95c4120194a88763",
+    "docs/helix/04-build/evidence/schema-migration-design-review/g10-contract-001/definitions/initial-approval-ordering.md": "166585d47845f07fe646163d300134b91bfc6cb380635e96fe27f2c652b878cd",
+    "docs/helix/04-build/evidence/schema-migration-design-review/g10-contract-001/definitions/metadata-definition-digest.txt": "484dd467482c2123502a0524c67cda573b0e0cd31c980ef934ea22d8d8c041c0",
+    "docs/helix/04-build/evidence/schema-migration-design-review/g10-contract-001/definitions/metadata-definition.json": "e263e852cf57a160a49a66c4bcff713babbbe4af95aea3e3523f22b8a4d40e05",
+    "docs/helix/04-build/evidence/schema-migration-design-review/g10-contract-001/definitions/native-inventory-branches.md": "2e1b2de6f378ad8af4b101500e93576bb9ba89209c93947bccc89732cea40782",
+    "docs/helix/04-build/evidence/schema-migration-design-review/g10-contract-001/definitions/native-metadata.md": "ed069da88e3aa319b28f8b5bfb070234b6c9a35c607556a0949e772a4c86df51",
+    "docs/helix/04-build/evidence/schema-migration-design-review/g10-contract-001/definitions/native-metadata.sql": "5e8131eda95636d476d0d0c0d3540caff22ff117f133d91a9dd39fe111337109",
+    "docs/helix/04-build/evidence/schema-migration-design-review/g10-contract-001/definitions/ordinary-decision-custody.md": "4efd6fe87b2b41bf0a6410c76e4ba78c9f4edbb240892d9aa90ba0505674cd4a",
+    "docs/helix/04-build/evidence/schema-migration-design-review/g10-contract-001/definitions/resolved-open-matrix.md": "febfb8f6d6c8cf6439e748c58e42b082f87279835e48afbcfef225926e8c1c03",
+    "docs/helix/04-build/evidence/schema-migration-design-review/g10-contract-001/definitions/seed-lineage.md": "ab3c044cf055b1ced97a388809be440ae1afab4710514edd27e4d05ecfa0c584",
+    "docs/helix/04-build/evidence/schema-migration-design-review/g10-contract-001/definitions/step-branches.md": "63dabcde5a10ff3b18148211c8a24fcd80add264580542cb389fa5b52705c11e",
+    "docs/helix/04-build/evidence/schema-migration-design-review/g10-contract-001/definitions/technical-design.md": "ebf07de7179646ab37be3c6e3f9d17525ba958263f2886e1b5804f48f0ad6879",
+    "docs/helix/04-build/evidence/schema-migration-design-review/g10-contract-001/independent-design-review.json": "c04707129131fee777f736c68202a954c419427a7dd7af12b9dfd0bb903adcec",
+    "docs/helix/04-build/evidence/schema-migration-design-review/g10-contract-001/manifest.json": "58a84077940cc313f0a2ceed20b057b8a0f2f9b249db52e6e85d2080e48e54a4",
+    "docs/helix/04-build/evidence/schema-migration-design-review/g10-contract-001/root-design-review.json": "d2e0e25780020ef54d9c3b3dd84f69a68762a239e236e76ae230a40e13e72109"
+  },
+  "baseCommit": "00e4f9e43b39afde36e5c8b26a93b03f89d9d6fa",
+  "governingDocuments": [
+    "docs/helix/02-design/contracts/CONTRACT-081-table-lifecycle.md",
+    "docs/helix/02-design/technical-designs/TD-085-typed-actions-on-raw-tables.md",
+    "docs/helix/03-test/test-plans/STP-085-typed-actions-on-raw-tables.md"
+  ],
+  "governingManifestSha256": "58a84077940cc313f0a2ceed20b057b8a0f2f9b249db52e6e85d2080e48e54a4",
+  "limitations": [
+    "Designrequirements only; no product/native/provider/COMMIT/custody/installed/browser acceptance.",
+    "Fulloldstore/carrier/whole-tablearchive/restore/purge/mixedandreleasegates remainopen."
+  ],
+  "normativeDefinitionCount": 21,
+  "proposalManifestSha256": "86ef804046e88edc90021a52d879f0e6bd13a8257322365bc9c9ba0611f9ffc8",
+  "retention": "Complete21normativedefinitions plusexactmanifest/reviews. ManifestcandidateFile entries describe originalproposalpreimages; adoptedbytes reside atfiles[*].path inthiscommit. Gitbase retains originalprefix; duplicatefullcandidatecopies/proposalpatchnotretained.",
+  "status": "governing-design-adopted-native-unqualified",
+  "validation": [
+    "3completebaseprefixes bytepreserved",
+    "21definitionfiles byteidenticalreviewed006",
+    "root36doc+25designcontrolsPASS",
+    "independent132members/45Gitpins+36doc+25designcontrolsPASS"
+  ]
+}

@@ -5,6 +5,8 @@ import hashlib
 import json
 import tempfile
 import unittest
+from copy import deepcopy
+from importlib.metadata import PackageNotFoundError
 from pathlib import Path
 from unittest.mock import patch
 
@@ -12,6 +14,12 @@ from umf_access.build.catalog import CatalogBuildError, resolve_configuration
 
 
 class ConfigurationTests(unittest.TestCase):
+ def _source_pinned_configuration(self, root, distribution):
+  model='{"original":"preserved"}\n';(root/'model.json').write_text(model)
+  binding=json.dumps({'modelJson':model});(root/'binding.json').write_text(binding)
+  def pin(name):return {'path':name,'sha256':hashlib.sha256((root/name).read_bytes()).hexdigest()}
+  return {'package':'shop','modules':['declarations'],'targets':[{'bindingSource':pin('binding.json')}],'weft':{'distribution':distribution,'version':'exact'},'umf':{'documents':[pin('model.json')]}},model
+
  def test_pins_original_bytes_and_distribution_before_capture(self):
   with tempfile.TemporaryDirectory() as tmp:
    root=Path(tmp);model='{"original":"preserved"}\n';(root/'model.json').write_text(model)
@@ -26,6 +34,61 @@ class ConfigurationTests(unittest.TestCase):
     with self.assertRaises(CatalogBuildError):resolve_configuration(config,root)
    with patch('importlib.metadata.version',return_value='different'):  # noqa: SIM117 -- Keep transaction and refusal/cleanup scopes explicit.
     with self.assertRaises(CatalogBuildError):resolve_configuration(config,root)
+
+ def test_both_explicit_distribution_names_bind_exact_source_and_provenance(self):
+  for distribution in ('weft-sql','umf-weft'):
+   with self.subTest(distribution=distribution),tempfile.TemporaryDirectory() as tmp:
+    root=Path(tmp);config,model=self._source_pinned_configuration(root,distribution);original=deepcopy(config)
+    with patch('importlib.metadata.version',return_value='exact') as installed_version:
+     resolved,provenance=resolve_configuration(config,root)
+    self.assertEqual(resolved['targets'][0]['binding'],{'modelJson':model})
+    self.assertEqual(provenance['sources'],[config['umf']['documents'][0],config['targets'][0]['bindingSource']])
+    self.assertEqual(provenance['weft'],{'distribution':distribution,'version':'exact'})
+    self.assertEqual(config,original)
+    installed_version.assert_called_once_with(distribution)
+
+ def test_selected_distribution_version_mismatch_never_falls_back(self):
+  for selected in ('weft-sql','umf-weft'):
+   other='umf-weft' if selected=='weft-sql' else 'weft-sql'
+   with self.subTest(selected=selected),tempfile.TemporaryDirectory() as tmp:
+    root=Path(tmp);config,_=self._source_pinned_configuration(root,selected)
+    def installed_version(name, selected=selected, other=other):return 'wrong' if name==selected else 'exact' if name==other else 'unexpected'
+    with (patch('importlib.metadata.version',side_effect=installed_version) as metadata_version,
+          self.assertRaises(CatalogBuildError)):
+     resolve_configuration(config,root)
+    metadata_version.assert_called_once_with(selected)
+
+ def test_selected_distribution_absence_never_falls_back(self):
+  for selected in ('weft-sql','umf-weft'):
+   other='umf-weft' if selected=='weft-sql' else 'weft-sql'
+   with self.subTest(selected=selected),tempfile.TemporaryDirectory() as tmp:
+    root=Path(tmp);config,_=self._source_pinned_configuration(root,selected)
+    def installed_version(name, selected=selected, other=other):
+     if name==selected:raise PackageNotFoundError(selected)
+     return 'exact' if name==other else 'unexpected'
+    with (patch('importlib.metadata.version',side_effect=installed_version) as metadata_version,
+          self.assertRaises(PackageNotFoundError)):
+     resolve_configuration(config,root)
+    metadata_version.assert_called_once_with(selected)
+
+ def test_noncanonical_distribution_selections_refuse_before_metadata_lookup(self):
+  invalid_pins=(
+   {'distribution':'unrelated','version':'exact'},
+   {'distribution':'umf_weft','version':'exact'},
+   {'distribution':'UMF-WEFT','version':'exact'},
+   {'version':'exact'},
+   {'distribution':'weft-sql','version':'exact','extra':True},
+   {'distribution':['umf-weft'],'version':'exact'},
+   {},
+  )
+  for pin in invalid_pins:
+   with self.subTest(pin=pin),tempfile.TemporaryDirectory() as tmp:
+    root=Path(tmp);config,_=self._source_pinned_configuration(root,'weft-sql');config['weft']=pin
+    with (patch('importlib.metadata.version',return_value='exact') as metadata_version,
+          self.assertRaises(CatalogBuildError)):
+     resolve_configuration(config,root)
+    metadata_version.assert_not_called()
+
  def test_unsafe_sources_and_unexpected_configuration_refuse(self):
   with self.assertRaises(CatalogBuildError):resolve_configuration({'package':'shop','modules':[],'targets':[],'guess':True},Path('.'))
 

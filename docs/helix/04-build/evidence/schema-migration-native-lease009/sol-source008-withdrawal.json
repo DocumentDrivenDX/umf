@@ -1,0 +1,62 @@
+{
+  "profile": "umf.independent-sol-source-review-correction/0.1",
+  "status": "correction-required-fork-release-ownership",
+  "reviewer": "Independent Sol, not author",
+  "reviewedAtUtc": "2026-10-24T15:46:35.804898+00:00",
+  "exactComposition": {
+    "source007ManifestSha256": "d6eb2a7f073cb024dcb2b84826f0c4a05e51d1b799f9ec125615d2771a299788",
+    "externalMetadataErratumSha256": "cfda436769ab119279728fcd22b0a31e7c1dee396335164f06cee907b6487eda",
+    "overlay008ManifestSha256": "361cced72b2833641139900ea765e6b909369c6a62a27726466fdb16571e44c0",
+    "overlay008PatchSha256": "3d51ae566a5a9800a8cf14e4a52f0cdb71e63e47db7a100e17f57f93f58bb7e4",
+    "ownerBootstrapSha256": "17f88e96ef1b861c403fa530433807e4004f589e23069d4a9db7f276738c9a72",
+    "nativePostOverlaySha256": "7afd677336ebf723bf4f38d4ecff936f450f9fea420535837dfdad4126b01df0"
+  },
+  "supersedes": {
+    "reviewPacket": "/private/tmp/g11-native-lease-sol-review007",
+    "receiptSha256": "3ea2910568ed92edaa1733533f8005219cad9c08c81b9f7350e477142567af93",
+    "manifestSha256": "4cd104e26828f7ef1d263cee9474c487e9687f1be709162080bc7d5749697dd3",
+    "reason": "That bounded source/API receipt finished sealing just before newly assigned fork-release ownership finding. Its observed hashes/tests remain factual; its acceptance disposition is WITHDRAWN and superseded by this correction-required receipt.",
+    "originalPreservedImmutable": true
+  },
+  "findings": [
+    {
+      "id": "008-FORK1",
+      "priority": 1,
+      "file": "python/umf_access/src/umf_access/lifecycle/owner_bootstrap.py",
+      "function": "_owner_setup_lease",
+      "unlockLines": [
+        751,
+        740
+      ],
+      "title": "Inherited lease cleanup can unlock parent flock without creator-PID ownership check",
+      "sourceFact": "Both normal and exceptional post-yield cleanup call flock(fd,LOCK_UN) unconditionally when locked. Handle validation checks process/thread on use, but cleanup does not check creator PID before LOCK_UN. Fork shares open-file description, so child normal context-manager/generator unwinding can release parent held exclusion.",
+      "evidence": "Read-only frozen source plus external reviewer/kernel ownership finding acknowledged by root. No new fork/process experiment performed in this review.",
+      "required": "Creator PID must own unlock/release. Child cleanup must never LOCK_UN parent open-file description; safely close only inherited descriptor as appropriate, preserve original parent ownership and exception paths. Add bounded parent-hold/child-normal-unwind/outsider-timeout-until-parent-exit then-positive control in009."
+    }
+  ],
+  "constructorSourceCheck": {
+    "registry": "_NATIVE_SUPERVISORS exact concrete instance+constructorPID",
+    "registryAssignmentIsFinalStatement": true,
+    "issuerBindingAtEndAfterContextCoreObserverAndStateInitialization": true,
+    "observerSetupFailureBeforeRegistrationBySourceOrdering": true,
+    "limits": "Source ordering inspected only; no new injected constructor failure experiment or fork-copied-instance execution was performed."
+  },
+  "unchangedObservedResults": {
+    "current007MembersVerified": 108,
+    "evidenceMembersVerified": 12,
+    "original3ExpectedRefusals": true,
+    "safeKernelMethodsPassed": 4,
+    "focusedAPIMethodsPassed": 5,
+    "ordinaryHelperCallsitesChecked": 4,
+    "twoOldAPIFieldReadsCorrected": true,
+    "008CleanupRemovalExactASTEquivalence": true
+  },
+  "limits": [
+    "No new security/kernel/process experiment after late finding; awaiting exact009 patch and its bounded control.",
+    "No native/PG/build/browser/copy/inventory or repository/frozen packet edits.",
+    "Original001/002 failures and007 metadata-custody failure remain preserved.",
+    "Full native/ROOT/checkpoint/pending-fence/store/provider/recovery acceptance remains OPEN."
+  ],
+  "sourceAcceptance": false,
+  "nativeQualification": false
+}

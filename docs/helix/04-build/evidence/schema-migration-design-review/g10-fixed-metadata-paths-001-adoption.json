@@ -1,0 +1,30 @@
+{
+  "profile": "umf.g10.metadata-path-adoption/0.1",
+  "status": "PASS-design-only",
+  "baseCommit": "d9cbd85fe165b812381a8dc857b32c3ffb811ae4",
+  "normativeSha256": "3642c0b3e420a2f523e9b412db3a4fe2878230a918491a715e7b50dc81df715f",
+  "files": [
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-081-table-lifecycle.md",
+      "priorBytes": 554245,
+      "priorSha256": "386dd4692f10ccc6c4525f2e8d6297ad20657227485c353b0e8516609dcc94b8",
+      "appendSha256": "4d41bfd64888359ae4a7e2e37fc07ef3150836f2e7bfb9f067bd3e43538b8e2e",
+      "candidateSha256": "570314d35224df3abff0c6fa2bf35e27e5084ff3a8efebe6170bc6cd7b16a382"
+    },
+    {
+      "path": "docs/helix/02-design/technical-designs/TD-085-typed-actions-on-raw-tables.md",
+      "priorBytes": 106570,
+      "priorSha256": "0125c11d107c41bd3093d862e8b98726b22d7083329893f954509c6ff65fee83",
+      "appendSha256": "e90a1d97ddcc7f7bbe3653d6722d67646177c8df6f6eca3fe32c826c9ac2f486",
+      "candidateSha256": "b88b020a89ec6b74530e96dc9b6d7f7843433b1c00882d5acd5e035c6d1685a7"
+    },
+    {
+      "path": "docs/helix/03-test/test-plans/STP-085-typed-actions-on-raw-tables.md",
+      "priorBytes": 119435,
+      "priorSha256": "5a1ae70638d451bc55aae65401567f427c4d640f79b1c4fa7fc6e8d8b141d301",
+      "appendSha256": "a8471712a84a621ba444d702e995fe31eb2d4e6051e5a459d4ad70ff524d8222",
+      "candidateSha256": "cf11bb71987c32356b90f0371d8e4973ca60c75fe2906982d60f81c9b3f08f28"
+    }
+  ],
+  "review": "Root read full clarification against existing governing fixed metadata operations/order/subject. Closes previously unspecified compiler diagnostic sourcePath only; no authored pointer/authority. All original prefixes/frontmatter remain exact. Source/native/installed/denial/recovery tests remain required."
+}

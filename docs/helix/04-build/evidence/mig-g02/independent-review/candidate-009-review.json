@@ -1,0 +1,34 @@
+{
+  "status": "passed-for-recorded-candidate",
+  "candidate": "009 Access replacement plus unchanged codegen007/SDK007/Weft008/originalcore",
+  "manifestSha256": "697e45839dbd25a0d58d5a2ec3ff0275d21ddad2716639264656dc5b22555122",
+  "accessSource": "63f1f50d4cbfad5949e382fce2d5fcbacfd611e0",
+  "accessWheelSha256": "e5f68b12375e9181db531fdb2e49eca9e2ba61498a0cd2ebc0defc38efe99faf",
+  "accessSdistSha256": "f9fbcdb04df144cc558b03d98a0fca5862510aa65611bb8dbde82f85e2e326da",
+  "freshChecks": {
+    "installedUnitControls": 9,
+    "nativeUniquePrivacyCases": 1,
+    "nativeGuardPrivacyRollbackCases": 2,
+    "nativeRecoveryScenarios": 3,
+    "nativeRecoveryAssertions": 87,
+    "noDefaultAppendAssertions": 19,
+    "runtimeDistributions": 18,
+    "isolatedPrefixCleanup": true
+  },
+  "custody": {
+    "changedWheelMembers": [
+      "backfills.py",
+      "mixed.py",
+      "RECORD"
+    ],
+    "changedSdistMembers": [
+      "backfills.py",
+      "mixed.py"
+    ],
+    "all88PackagePayloadsMatchCommittedSource": true,
+    "fiveReusedComponentsByteIdentical": true
+  },
+  "inheritedEvidence": "candidate-008-review.json: unchanged compiler/SDK/Weft inputs;37nativehost,37literal/bind,47realChromium,139SDKcore+37exactplan checks remain evidence for their recorded component bytes",
+  "qualification": "local PostgreSQL18.6 macOSarm64; final Linux nativeCI separately required",
+  "releaseDecision": "not approved until final current-head CI, notes, merge/tag/source closure and selected published artifact verification"
+}

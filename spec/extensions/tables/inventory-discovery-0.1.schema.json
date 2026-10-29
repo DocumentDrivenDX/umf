@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:table-inventory-discovery:0.1",
+  "title": "G10 cycle-free source review selector",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "tableIntents", "conversions", "retiredSeedSets", "retirements", "restorations", "archiveSources"],
+  "properties": {
+    "version": {"const": "umf.table-inventory-discovery/0.1"},
+    "tableIntents": {"type": "array", "maxItems": 512, "items": {"oneOf": [{"type": "object", "additionalProperties": false, "required": ["kind", "table", "record"], "properties": {"kind": {"const": "create"}, "table": {"type": "string", "minLength": 1, "maxLength": 256}, "record": {"$ref": "#/$defs/ref"}}}, {"type": "object", "additionalProperties": false, "required": ["kind", "table", "record", "disposition"], "properties": {"kind": {"const": "remove"}, "table": {"type": "string", "minLength": 1, "maxLength": 256}, "record": {"$ref": "#/$defs/ref"}, "disposition": {"type": "object", "additionalProperties": false, "required": ["mode"], "properties": {"mode": {"const": "irreversible-purge"}}}}}]}},
+    "conversions": {"type": "array", "maxItems": 256, "items": {"$ref": "#/$defs/conversion"}},
+    "retiredSeedSets": {"type": "array", "maxItems": 256, "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 256}},
+    "retirements": {"type": "array", "maxItems": 256, "items": {"$ref": "urn:umf:g10:proposal:request-options-history#/$defs/retirement"}},
+    "restorations": {"type": "array", "maxItems": 256, "items": {"$ref": "urn:umf:g10:proposal:request-options-history#/$defs/restoration"}},
+    "archiveSources": {"type": "array", "maxItems": 64, "items": {"$ref": "urn:umf:g10:proposal:request-options-history#/$defs/archiveSource"}}
+  },
+  "$defs": {
+    "ref": {"type": "object", "additionalProperties": false, "required": ["module", "element"], "properties": {"module": {"type": "string", "minLength": 1, "maxLength": 256}, "element": {"type": "string", "minLength": 1, "maxLength": 256}}},
+    "conversion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["table", "field", "recipe", "nulls", "invalid", "recovery"],
+      "properties": {
+        "table": {"type": "string", "minLength": 1},
+        "field": {"$ref": "#/$defs/ref"},
+        "recipe": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["version", "kind", "parameters"],
+          "properties": {
+            "version": {"const": "umf.conversion-recipe/0.1"},
+            "kind": {"enum": ["numeric-exact", "numeric-rescale", "text-date", "date-text", "text-instant", "instant-text", "date-instant", "instant-date", "text-uuid", "uuid-text", "text-boolean", "boolean-text"]},
+            "parameters": {"type": "object"}
+          }
+        },
+        "nulls": {"const": "preserve"},
+        "invalid": {"const": "abort"},
+        "recovery": {
+          "oneOf": [
+            {"type": "object", "additionalProperties": false, "required": ["mode"], "properties": {"mode": {"const": "irreversible"}}},
+            {"$ref": "urn:umf:g10:proposal:request-options-history#/$defs/conversion/properties/recovery/oneOf/1"},
+            {"$ref": "urn:umf:g10:proposal:request-options-history#/$defs/conversion/properties/recovery/oneOf/2"}
+          ]
+        }
+      }
+    },
+    "createIntentCount": {"type": "object", "properties": {"kind": {"const": "create"}}, "required": ["kind"]},
+    "removeIntentCount": {"type": "object", "properties": {"kind": {"const": "remove"}}, "required": ["kind"]}
+  },
+  "allOf": [
+    {"properties": {"tableIntents": {"contains": {"$ref": "#/$defs/createIntentCount"}, "minContains": 0, "maxContains": 256}}},
+    {"properties": {"tableIntents": {"contains": {"$ref": "#/$defs/removeIntentCount"}, "minContains": 0, "maxContains": 256}}}
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "status": "source001-rejected-repair-requested",
+  "candidateManifestSha256": "d3c45293ba28ab595715a203a0aacc51bbeac774b3d85d5f7fbeeebac75fc1f0",
+  "frozenSourceMembersVerified": 11,
+  "frozenEvidenceMembersVerified": 4,
+  "actualChecks": {
+    "integratedQualified312": {
+      "tests": 139,
+      "pass": true,
+      "seconds": 6.075
+    },
+    "store311": {
+      "tests": 17,
+      "pass": true,
+      "seconds": 0.441
+    },
+    "boundary": {
+      "modules": 107,
+      "violations": 0
+    }
+  },
+  "rootFinding": {
+    "severity": "P1",
+    "location": "ingress_local_postgres.py:_create_application_database3149; execute_original_principal_recovery2741",
+    "problem": "apply-only guard rejects same-original principals-recover operation before prepared facts/DB connection; actual recovery caller invokes helper for missing original database",
+    "actualProbe": "real original source setup/session/kernel lease, PreparedSentinel contrasts apply facts lookup with recovery guard refusal; no SQL/process"
+  },
+  "independentSolReviewSha256": "6ef6dd1e32b5b028f483bbffa4c5501455eef2c3085cf3a4e106f4f8e031e619",
+  "independentFindings": [
+    "late lock replacement permits actual ledger mutation/registered pending return",
+    "copied structural supervisor gets issued lease",
+    "unguarded bounded child helper creates log/reaches Popen sentinel"
+  ],
+  "requiredGuardCensus": "method/effect/operation-kind/call-chain/test map; current generic manifest map insufficient",
+  "harnessIncidents": [
+    "First sandbox omitted actual checker filename; no tests executed",
+    "Second lacked qualified Pydantic site path;9 import errors; not product failures",
+    "Qualified corrected run passes139 tests"
+  ],
+  "environment": {
+    "python312": "/private/tmp/g11-owner-authority-crypto-001/venv/bin/python",
+    "additionalSitePackages312": "/private/tmp/umf056-public-wheel-verify/venv/lib/python3.12/site-packages",
+    "python311": "/private/tmp/umf-g03-native-runner-source-004/venv/bin/python"
+  },
+  "evidence": {
+    "integrated.stderr": "f3466c0d6ff44fd20bdb0eab40ab93e455d855648183c60a9698b8196afe4613",
+    "integrated-corrected.stderr": "b8f696bee0ade54f4911966b7c2d64fb667b61e6d3a3c6da3d204912d1b6da12",
+    "integrated-qualified.stderr": "dbdec781b173e6edc4ac6c0c2138e0f5b56be167efb6f1ad0d3cd5dce6abde3b",
+    "integrated-qualified.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "store.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "store.stderr": "037b6312239db6415a89aa428244babe544ba356c38f7c66fd9b0bf64f11bda0",
+    "boundary.stdout": "6ea0034a787075905cd85c8fd8a55faec5689cc542425f40556895992f61f20a",
+    "boundary.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "principal-guard-probe.py": "140da2d370b54466d0896db67240b883eb3df7fee0b7e3bf008ff4d16a1d6531",
+    "principal-guard-probe.stdout": "b18bbbd8fc422b891669f0d35397d63f8c594c0c97eb4a6fb63d2d5f8178eabe",
+    "direct-effect-census.json": "5e34a57a49e1b6e944d0bb639195bfb4a1da8aa9e9e2e6bbbcfa8ffd1885a3a6"
+  },
+  "limits": [
+    "source/kernel only; synthetic native process observation",
+    "No PostgreSQL/native authority/store/root pending fence/installed/merge/release qualification",
+    "Original immutable001 preserved;Luna successor002 repair active"
+  ]
+}

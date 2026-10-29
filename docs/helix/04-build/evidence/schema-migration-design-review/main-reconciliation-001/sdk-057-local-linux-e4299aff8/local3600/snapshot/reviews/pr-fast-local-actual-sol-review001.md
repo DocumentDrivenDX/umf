@@ -1,0 +1,11 @@
+# Current-P local fast checks — actual evidence review
+
+ACCEPT the recorded functional checks for producer e4299aff8e87e9d211f9d86df2f2013ab9c95945, tree 8b98c0d895983ba2b7637dd3aea567dab0943883. This is a local Linux replacement with the limits below, not a pass of the original complete CI job.
+
+Bun evidence receipt SHA-256: 2acec2e94e4a725bc6ef77de053885cab3ef09838846303da52e75d93ec74724. Physical guest receipt, six log streams and two browser output files match their recorded hashes and sizes. Bun 1.4.3 ran the original three-file core test selection: 14 passed, zero failed, 384 expectations; browser bundling passed and emitted 1,946,672 bytes. Both commands exited zero without truncation or timeout. Aggregate elapsed 7.981 seconds is below 600 seconds; command cap is 180 seconds; combined logs are 14,153 bytes, below 1 MiB. The source was read-only, network disabled, and owned-container cleanup verified.
+
+The available dependency tree is recorded with 21,461 entries / 215,399,057 regular-file bytes and before/after fingerprint 9b2d3163c1f117468a6815868b2daaf76282ad68f326c7d9c17a31effc33bc1b. All 39 direct dependency versions match the package/lock declarations. This verifies the reported available tree and direct bindings; it does not establish a new locked dependency installation or independent full transitive publisher proof. The earlier frozen install attempt timed out and remains failed.
+
+Python continuation receipt SHA-256: 0e694d9d72fe2786801ebd6a2710255a861d5f566670b676a4be86cf56031f34. Python 3.11.17 compileall completed in 49.031 seconds with exit zero and empty physical streams. It emitted 721 pycs outside the source copy. All 3,598 regular source-file rows were independently hash/size checked; the 3,913-entry source manifest retains its before/after semantic digest 4d342f103ff2b2a8e14609fc6c99dafb38d8ce523adc4e2bd287555cb626891f. The raw manifest JSON hash is a separate identity. Completion at 560.717 seconds from the original aggregate start remains below 600 seconds, and cleanup is verified. This is Python 3.11 syntax evidence, not Python 3.12 execution.
+
+These results discharge the stated local functional checks only. D5, public H, merge and release gates remain separate. No candidate execution, Docker operation, tests, Git mutation or Actions were performed during this review.

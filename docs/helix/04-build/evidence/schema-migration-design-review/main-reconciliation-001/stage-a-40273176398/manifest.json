@@ -1,0 +1,71 @@
+{
+  "profile": "umf.r2-metering-generated-companion/1",
+  "run": {
+    "eventName": "push",
+    "id": "40273176398",
+    "attempt": "1",
+    "sha": "85f4a645cd14e7673a83fc475d3dd66dcc629edc",
+    "ref": "refs/heads/codex/migration-main-metering-generation",
+    "workflowRef": "DocumentDrivenDX/umf/.github/workflows/r2-metering-stage-a.yml@refs/heads/codex/migration-main-metering-generation",
+    "workflowSha": "85f4a645cd14e7673a83fc475d3dd66dcc629edc"
+  },
+  "inputs": [
+    {
+      "path": "src/generated/core-validators.ts",
+      "kind": "source",
+      "sha256": "4a88fd9bc398c56d71e535841322dcf10d2851e16b026c14679e2d79062e90a7",
+      "bytes": 305070
+    },
+    {
+      "path": "spec/core/schema.json",
+      "kind": "schema",
+      "sha256": "bdcf1c6b8a197dfbd769ea47a879eaabeeb1d71cc00cab1f9e600175354c5da7",
+      "bytes": 45342
+    },
+    {
+      "path": "spec/core/semantic-type-reference.schema.json",
+      "kind": "schema",
+      "sha256": "48def42448706bbdfe68c458746d23610767feae0da6456735674524b8018887",
+      "bytes": 45463
+    },
+    {
+      "path": "spec/core/extension-package.schema.json",
+      "kind": "schema",
+      "sha256": "a4f4694b3ae32ef47a898f49fdce969b890f1ac901fc6747a43cb8c9c6c77c35",
+      "bytes": 45001
+    }
+  ],
+  "lockedFiles": [
+    {
+      "path": "package.json",
+      "sha256": "031bdb38c663c33804c02de06906c9c4fdd7bbf32728204cd4c8d30959c324ed"
+    },
+    {
+      "path": "bun.lock",
+      "sha256": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4"
+    },
+    {
+      "path": "bunfig.toml",
+      "sha256": "b9fc65eca9014c5179380259d70e76385a6a80788fa9a2df5fb3eaa5554fd2fe"
+    },
+    {
+      "path": "scripts/metamodel/structural-accounting.ts",
+      "sha256": "63b0171e644b5ce2d7a10d97393cee5e67a45c6abc03da8144de65a0e1a54c28"
+    }
+  ],
+  "generator": {
+    "path": "scripts/metamodel/structural-accounting.ts",
+    "invocationCount": 1,
+    "outputPurpose": "stage-a"
+  },
+  "output": {
+    "path": "core-validators-accounted.ts",
+    "sha256": "314cac8416711899285bc3f1a734765d557f7446f7ab0cf58d3dbd2a7dfdd81e",
+    "bytes": 1525352
+  },
+  "execution": {
+    "artifactOnly": true,
+    "companionEvaluated": false,
+    "publicValidatorChanged": false
+  }
+}

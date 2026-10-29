@@ -1,0 +1,13 @@
+{
+  "profile": "umf.r2-final-canonical-owner-review/1",
+  "status": "SOURCE_ACCEPT_RUNTIME_UNRUN",
+  "sourcePins": {
+    "src/compilation/bundle/hash.ts": "e602ec04ed32cec9c43bd5e540da1ad647aff23ccc8398354a88170f13846f84",
+    "src/table-migration/inventory-graph.ts": "353332a8cf09f7eea76efc18d4f49d1dfe0c83e853791f5cbac5009698a065f5",
+    "src/table-migration/inventory.ts": "518c77dce8db179246dcb637617bbbee9a2fb69ad99e7bddb6821387ae65b006",
+    "tests/lifecycle/table-inventory-api.test.ts": "7bf4db46e63695e5fb50e4426f259bd4a324a758cc588974951eb52d6d241c70"
+  },
+  "solReviewSha256": "1cbf12b68cc1ab317fb5721a678c614d5a7902f6da660eb129ede2339362783b",
+  "rootReview": "Read full four-file delta including exact prefix key order and private source correspondence, top-level full preimage hashing, size-envelope arithmetic, bounded writer before token/key/output growth and separate same-history failure/retry control. Actual charged freeze and legacy ordinary path retained. Missing import and original unbounded append scan fixed. No escaping row map/caller certificates.",
+  "qualification": "Existing fixed full mixed fixture, 1Mwork/99999subjects/100663296bytes/15stest/180scommands unchanged. No fit claim; next exact hosted gate."
+}

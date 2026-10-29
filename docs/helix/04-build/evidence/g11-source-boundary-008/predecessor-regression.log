@@ -1,0 +1,32 @@
+FFF
+======================================================================
+FAIL: test_signed_registry_rejects_python_cross_type_enrollment_copies (test_generation_enrollment_authority.GenerationEnrollmentAuthorityTests.test_signed_registry_rejects_python_cross_type_enrollment_copies) (path=('trust', 'custodySequence'), replacement=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/g11-root-validator-source008-candidate003-frozen/source/python/umf_access/tests/test_generation_enrollment_authority.py", line 314, in test_signed_registry_rejects_python_cross_type_enrollment_copies
+    with self.assertRaisesRegex(
+         ^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: GenerationAuthorityBootstrapError not raised
+
+======================================================================
+FAIL: test_signed_registry_rejects_python_cross_type_enrollment_copies (test_generation_enrollment_authority.GenerationEnrollmentAuthorityTests.test_signed_registry_rejects_python_cross_type_enrollment_copies) (path=('configuration', 'sourcePolicy', 'maximumSubjects'), replacement=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/g11-root-validator-source008-candidate003-frozen/source/python/umf_access/tests/test_generation_enrollment_authority.py", line 314, in test_signed_registry_rejects_python_cross_type_enrollment_copies
+    with self.assertRaisesRegex(
+         ^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: GenerationAuthorityBootstrapError not raised
+
+======================================================================
+FAIL: test_signed_registry_rejects_python_cross_type_enrollment_copies (test_generation_enrollment_authority.GenerationEnrollmentAuthorityTests.test_signed_registry_rejects_python_cross_type_enrollment_copies) (path=('configuration', 'sourcePolicy', 'allowLegacyLoginConversion'), replacement=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/g11-root-validator-source008-candidate003-frozen/source/python/umf_access/tests/test_generation_enrollment_authority.py", line 314, in test_signed_registry_rejects_python_cross_type_enrollment_copies
+    with self.assertRaisesRegex(
+         ^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: GenerationAuthorityBootstrapError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.026s
+
+FAILED (failures=3)

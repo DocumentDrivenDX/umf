@@ -1,0 +1,93 @@
+{
+  "evidenceId": "mig-g02-weft-wasm-008",
+  "status": "candidate evidence; no database execution or release qualification",
+  "sourceCheckout": "/private/tmp/weft-mig-g02",
+  "sourceHead": "7413c19d16ca5d8d8ce60b62d49ca0a3250544df",
+  "sourceWorkingTree": "clean at build",
+  "sourceInputSha256": {
+    "Cargo.toml": "c665649cd622f7422c96241231db69e454de4b5c69adfe4ddfb62576fea01928",
+    "Cargo.lock": "a44853f6a873d724f38c38f933f69ada23384974bb2bc1207d048e25d03349a9",
+    "crates/weft-core/Cargo.toml": "9cda30f094e5154ba794a2a24d0112335426b93474f8bc727daef3d69a72db4b",
+    "crates/weft-core/src/table_operation/row_expression.rs": "8b6f3278cebfc60afcf1f0d3ea49682d0f0b67f9072a2ab46c640cc56a902e7f",
+    "crates/weft-core/src/table_operation/values.rs": "5cbfc044832892d89e3c929015306c67c7b7eababb1bd7fa22b23a35c4596393",
+    "crates/weft-postgresql/Cargo.toml": "6bf66b4f918d97a2cc85c7e67a16344cb59ee5180aa2a4af3cf4e04a3c26ca7f",
+    "crates/weft-postgresql/tests/table_operation.rs": "429a1e2e44c54cb5bf41229b1f7ee19ec8d6e11db9a8e035791d4dc3f198a6fe",
+    "crates/weft-wasm/Cargo.toml": "a260125cf02bfa850aded88545508e8fa41462f557bb79eda6faa0e61284445a",
+    "crates/weft-wasm/src/lib.rs": "04d786f9adb2f3cdaf03f38d3106cbd6bc2ad7e13f4eaea458a10988518ae103"
+  },
+  "umfSchemaAuthority": {
+    "repository": "DocumentDrivenDX/umf",
+    "revision": "8a79d269e648f17ae1e24841ebc02b5f17020973",
+    "path": "spec/extensions/tables/operation-0.2.schema.json",
+    "sha256": "5634f932533cebb972ba27b96d60802e2bc4f154cc1ef65b2d4c25cecfe3351e"
+  },
+  "toolchain": {
+    "rustc": "1.90.0",
+    "cargo": "1.90.0",
+    "wasmBindgen": "0.2.105",
+    "node": "v26.12.1",
+    "bun": "1.4.3",
+    "chromium": "153.0.8010.12",
+    "target": "wasm32-unknown-unknown"
+  },
+  "features": [
+    "weft-wasm/raw-postgresql-reads"
+  ],
+  "commands": [
+    "CARGO_TARGET_DIR=/private/tmp/weft-g02-wasm-008 CARGO_HOME=/Users/erik/.cargo RUSTC=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/rustc /Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo build --locked --offline -p weft-postgresql --example compile_table_operation",
+    "CARGO_TARGET_DIR=/private/tmp/weft-g02-wasm-008 CARGO_HOME=/Users/erik/.cargo RUSTC=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/rustc /Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo build --locked --offline -p weft-wasm --features raw-postgresql-reads --target wasm32-unknown-unknown",
+    "/private/tmp/weft-table-operation-wasm-tooling/bin/wasm-bindgen --target web --out-dir /private/tmp/weft-g02-wasm-008/web /private/tmp/weft-g02-wasm-008/wasm32-unknown-unknown/debug/weft_wasm.wasm",
+    "python3 /private/tmp/build_g02_browser_corpus_008.py",
+    "WEFT_PLAYWRIGHT_MODULE=/Users/erik/.codex/worktrees/eb69/umf/node_modules/playwright/index.mjs /opt/homebrew/bin/node /Users/erik/.codex/worktrees/eb69/umf/docs/helix/04-build/evidence/mig-g02/weft-wasm-006/table-operation-browser.mjs /private/tmp/weft-g02-wasm-008/g02-browser-cases-008.json /private/tmp/weft-g02-wasm-008/web /private/tmp/weft-g02-wasm-008/g02-browser-report-008.json"
+  ],
+  "browserResult": {
+    "cases": 47,
+    "allNativeWasmEqual": true,
+    "tamperControls": 1,
+    "invalidUnicodeTransportControls": 2,
+    "browser": "153.0.8010.12",
+    "nativeExecutionQualified": false
+  },
+  "artifacts": {
+    "weft_wasm.wasm": {
+      "path": "/private/tmp/weft-g02-wasm-008/wasm32-unknown-unknown/debug/weft_wasm.wasm",
+      "sha256": "f5aefacea654ce3c62504cea75bc27a381aeb9762b517964a6305f2d36c7d46c",
+      "bytes": 288260893
+    },
+    "weft_wasm_bg.wasm": {
+      "path": "/private/tmp/weft-g02-wasm-008/web/weft_wasm_bg.wasm",
+      "sha256": "baa5b0e8bf4691892821f54c9261261499e996d1f41da922decffb588cd92860",
+      "bytes": 49313286
+    },
+    "weft_wasm.js": {
+      "path": "/private/tmp/weft-g02-wasm-008/web/weft_wasm.js",
+      "sha256": "c3c3b25d6a7f996bdc82e2dfb6defc3f9250e1977f24c9454bdd209164a63be2",
+      "bytes": 27452
+    },
+    "compile_table_operation": {
+      "path": "/private/tmp/weft-g02-wasm-008/debug/examples/compile_table_operation",
+      "sha256": "34ea1cdf2de2ff8bb17dbeb473cc8e18f097d61233eb4073d6ee6e645c891f9d",
+      "bytes": 23644328
+    },
+    "g02-browser-cases-008.json": {
+      "path": "/private/tmp/weft-g02-wasm-008/g02-browser-cases-008.json",
+      "sha256": "ac32a2b895b673e1c905eb933236e0523ac6e8006350f04363e5ec476ce169a2",
+      "bytes": 9013994
+    },
+    "g02-browser-report-008.json": {
+      "path": "/private/tmp/weft-g02-wasm-008/g02-browser-report-008.json",
+      "sha256": "8790f91f868a115ae7355c93653faf6ae2d47f51e73e69c18adbe99487794970",
+      "bytes": 10871
+    },
+    "build_g02_browser_corpus_008.py": {
+      "path": "/private/tmp/build_g02_browser_corpus_008.py",
+      "sha256": "18abedbd090e4168fab92c2ed4e6247dac8e8ff6847b5d228742e0b962b9dfbd",
+      "bytes": 15361
+    },
+    "table-operation-browser.mjs": {
+      "path": "/Users/erik/.codex/worktrees/eb69/umf/docs/helix/04-build/evidence/mig-g02/weft-wasm-006/table-operation-browser.mjs",
+      "sha256": "743ff751adbf306ad02eaa26b9310170d4fcc9e12a9f30135910772a882be7ff",
+      "bytes": 4414
+    }
+  }
+}

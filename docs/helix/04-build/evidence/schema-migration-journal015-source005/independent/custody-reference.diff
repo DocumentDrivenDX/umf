@@ -1,0 +1,70 @@
+--- /private/tmp/truss-lakebase-049-20261023/qualification/supervise_f37_native_cleanup_v3.py
++++ /private/tmp/g11-journal005-independent-review001/supervise_journal005.py
+@@ -1,4 +1,4 @@
+-"""One owned endpoint-enable phase under the reviewed 160+20 process guard."""
++"""One owned endpoint-enable phase under the reviewed 45+15 process guard."""
+ import hashlib
+ import json
+ import os
+@@ -11,9 +11,9 @@
+ 
+ import psutil
+ 
+-Q = Path('/private/tmp/truss-lakebase-049-20261023/qualification')
+-WORKER = Q / 'cleanup_f37_owned_native_v1.py'
+-EXPECTED = '17059ae98809d968af5e69dc619db7c09482d247a535e310483f6280cba7c30b'
++Q = Path('/private/tmp/g11-journal005-independent-review001')
++WORKER = Q / 'verify005_controller.py'
++EXPECTED = 'dde1a321799ce1418ac3302e651b3001851d190eba20675f8fb757a6ecd889de'
+ 
+ def write(path, value):
+     raw = (json.dumps(value, sort_keys=True, indent=2) + '\n').encode()
+@@ -39,13 +39,13 @@
+ def main():
+     started = time.monotonic()
+     assert not WORKER.is_symlink() and hashlib.sha256(WORKER.read_bytes()).hexdigest() == EXPECTED
+-    marker = Q / 'f37-native-cleanup-supervisor-consumed.safe.json'
+-    write(marker, {'owner': 'sole-operator', 'scope': 'exact-current-census-owned-native-cleanup', 'worker_sha256': EXPECTED,
++    marker = Q / 'journal005-verification-supervisor-consumed.safe.json'
++    write(marker, {'owner': 'sole-operator', 'scope': 'exact-frozen-journal005-source-verification', 'worker_sha256': EXPECTED,
+                    'replay_allowed': False, 'prior_unused_go_superseded': True})
+-    out = Q / ('f37-native-cleanup-once-' + str(uuid.uuid4()))
++    out = Q / ('journal005-verification-once-' + str(uuid.uuid4()))
+     out.mkdir(mode=0o700)
+     proc = None
+-    facts = {'worker_sha256': EXPECTED, 'sql_authorized': 'exact-census-owned-cleanup', 'provider_mutations_authorized': False}
++    facts = {'worker_sha256': EXPECTED, 'sql_authorized': 'none', 'provider_mutations_authorized': False}
+     with (out / 'stdout.private.log').open('xb') as stdout, (out / 'stderr.private.log').open('xb') as stderr:
+         os.chmod(stdout.name, 0o600)
+         os.chmod(stderr.name, 0o600)
+@@ -57,8 +57,8 @@
+             write(out / 'launch.safe.json', facts)
+             print(json.dumps({'directory': str(out), 'launch': facts}), flush=True)
+             try:
+-                proc.wait(timeout=max(0.0, started + 160 - time.monotonic()))
+-                facts['worker_completed_within_work_budget'] = time.monotonic() <= started + 160
++                proc.wait(timeout=max(0.0, started + 45 - time.monotonic()))
++                facts['worker_completed_within_work_budget'] = time.monotonic() <= started + 45
+             except subprocess.TimeoutExpired:
+                 facts['work_timed_out'] = True
+         finally:
+@@ -68,16 +68,16 @@
+                 if group_alive(proc.pid):
+                     signal_group(proc.pid, signal.SIGTERM)
+                 try:
+-                    proc.wait(timeout=min(5.0, max(0.0, started + 175 - time.monotonic())))
++                    proc.wait(timeout=min(5.0, max(0.0, started + 55 - time.monotonic())))
+                 except subprocess.TimeoutExpired:
+                     pass
+                 if group_alive(proc.pid):
+                     signal_group(proc.pid, signal.SIGKILL)
+                 try:
+-                    proc.wait(timeout=max(0.0, started + 178 - time.monotonic()))
++                    proc.wait(timeout=max(0.0, started + 58 - time.monotonic()))
+                 except subprocess.TimeoutExpired:
+                     facts['reap_incomplete'] = True
+-                while group_alive(proc.pid) and time.monotonic() < started + 179:
++                while group_alive(proc.pid) and time.monotonic() < started + 59:
+                     time.sleep(0.05)
+                 facts.update(exit_code=proc.poll(), process_group_absent=not group_alive(proc.pid))
+             facts['elapsed_seconds'] = time.monotonic() - started

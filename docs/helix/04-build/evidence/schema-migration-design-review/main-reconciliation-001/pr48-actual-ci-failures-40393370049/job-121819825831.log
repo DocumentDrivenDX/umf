@@ -1,0 +1,465 @@
+﻿2026-10-26T20:11:03.6258735Z Current runner version: '2.338.0'
+2026-10-26T20:11:03.6295913Z ##[group]Runner Image Provisioner
+2026-10-26T20:11:03.6297124Z Hosted Compute Agent
+2026-10-26T20:11:03.6297943Z Version: 20261021.618
+2026-10-26T20:11:03.6298983Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-10-26T20:11:03.6300046Z Build Date: 2026-10-21T00:45:21Z
+2026-10-26T20:11:03.6301075Z Worker ID: {6bb97538-45e9-46a7-8f55-ef9d8df0eda0}
+2026-10-26T20:11:03.6302163Z Region: eastus
+2026-10-26T20:11:03.6303101Z Cloud: Azure
+2026-10-26T20:11:03.6303935Z ##[endgroup]
+2026-10-26T20:11:03.6305881Z ##[group]Operating System
+2026-10-26T20:11:03.6306826Z Ubuntu
+2026-10-26T20:11:03.6307491Z 24.04.5
+2026-10-26T20:11:03.6308102Z LTS
+2026-10-26T20:11:03.6308808Z ##[endgroup]
+2026-10-26T20:11:03.6309553Z ##[group]Runner Image
+2026-10-26T20:11:03.6310377Z Image: ubuntu-24.04
+2026-10-26T20:11:03.6311083Z Version: 20261012.334.1
+2026-10-26T20:11:03.6313024Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-26T20:11:03.6315029Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-26T20:11:03.6316325Z ##[endgroup]
+2026-10-26T20:11:03.6317626Z ##[group]GITHUB_TOKEN Permissions
+2026-10-26T20:11:03.6319944Z Contents: read
+2026-10-26T20:11:03.6320669Z Metadata: read
+2026-10-26T20:11:03.6321380Z ##[endgroup]
+2026-10-26T20:11:03.6324665Z Secret source: Actions
+2026-10-26T20:11:03.6325834Z Cache mode: write
+2026-10-26T20:11:03.6326737Z Prepare workflow directory
+2026-10-26T20:11:03.6733688Z Prepare all required actions
+2026-10-26T20:11:03.6791782Z Getting action download info
+2026-10-26T20:11:03.9577340Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-26T20:11:04.0867433Z Download action repository 'oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6' (SHA:0c5077e51419868618aeaa5fe8019c62421857d6)
+2026-10-26T20:11:04.2807099Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-26T20:11:04.5496495Z Complete job name: combined-portable
+2026-10-26T20:11:04.6671626Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-10-26T20:11:04.6673572Z with:
+2026-10-26T20:11:04.6674207Z   ref: 71b5f87805324c0e0d12c279a4898c8a44f625a9
+2026-10-26T20:11:04.6674933Z   persist-credentials: false
+2026-10-26T20:11:04.6675541Z   submodules: false
+2026-10-26T20:11:04.6676125Z   repository: DocumentDrivenDX/umf
+2026-10-26T20:11:04.6681519Z   token: ***
+2026-10-26T20:11:04.6682036Z   ssh-strict: true
+2026-10-26T20:11:04.6682802Z   ssh-user: git
+2026-10-26T20:11:04.6683319Z   clean: true
+2026-10-26T20:11:04.6683859Z   sparse-checkout-cone-mode: true
+2026-10-26T20:11:04.6684496Z   fetch-depth: 1
+2026-10-26T20:11:04.6685047Z   fetch-tags: false
+2026-10-26T20:11:04.6685598Z   show-progress: true
+2026-10-26T20:11:04.6686138Z   lfs: false
+2026-10-26T20:11:04.6686712Z   set-safe-directory: true
+2026-10-26T20:11:04.6687308Z   allow-unsafe-pr-checkout: false
+2026-10-26T20:11:04.6688376Z ##[endgroup]
+2026-10-26T20:11:04.8092881Z Syncing repository: DocumentDrivenDX/umf
+2026-10-26T20:11:04.8096620Z ##[group]Getting Git version info
+2026-10-26T20:11:04.8098023Z Working directory is '/home/runner/work/umf/umf'
+2026-10-26T20:11:04.8099944Z [command]/usr/bin/git version
+2026-10-26T20:11:04.8213458Z git version 2.55.0
+2026-10-26T20:11:04.8245863Z ##[endgroup]
+2026-10-26T20:11:04.8270121Z Temporarily overriding HOME='/home/runner/work/_temp/f585a1a9-ae8a-4231-b2ff-d50078a9b46b' before making global git config changes
+2026-10-26T20:11:04.8273939Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-26T20:11:04.8279093Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf
+2026-10-26T20:11:04.8358958Z Deleting the contents of '/home/runner/work/umf/umf'
+2026-10-26T20:11:04.8373449Z ##[group]Initializing the repository
+2026-10-26T20:11:04.8376016Z [command]/usr/bin/git init /home/runner/work/umf/umf
+2026-10-26T20:11:04.8513694Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-26T20:11:04.8517137Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-26T20:11:04.8520202Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-26T20:11:04.8523390Z hint: call:
+2026-10-26T20:11:04.8524826Z hint:
+2026-10-26T20:11:04.8526710Z hint: 	git config --global init.defaultBranch <name>
+2026-10-26T20:11:04.8528148Z hint:
+2026-10-26T20:11:04.8529563Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-26T20:11:04.8531583Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-26T20:11:04.8533433Z hint:
+2026-10-26T20:11:04.8534250Z hint: 	git branch -m <name>
+2026-10-26T20:11:04.8535150Z hint:
+2026-10-26T20:11:04.8536408Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-26T20:11:04.8538413Z Initialized empty Git repository in /home/runner/work/umf/umf/.git/
+2026-10-26T20:11:04.8542216Z [command]/usr/bin/git remote add origin https://github.com/DocumentDrivenDX/umf
+2026-10-26T20:11:04.8641679Z ##[endgroup]
+2026-10-26T20:11:04.8644180Z ##[group]Disabling automatic garbage collection
+2026-10-26T20:11:04.8648312Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-26T20:11:04.8710410Z ##[endgroup]
+2026-10-26T20:11:04.8712134Z ##[group]Setting up auth
+2026-10-26T20:11:04.8721482Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-26T20:11:04.8786961Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-26T20:11:04.9253937Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-26T20:11:04.9309663Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-26T20:11:04.9615957Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-26T20:11:04.9677910Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-26T20:11:04.9998468Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-26T20:11:05.0066484Z ##[endgroup]
+2026-10-26T20:11:05.0068935Z ##[group]Fetching the repository
+2026-10-26T20:11:05.0082224Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin 71b5f87805324c0e0d12c279a4898c8a44f625a9
+2026-10-26T20:11:26.1843376Z From https://github.com/DocumentDrivenDX/umf
+2026-10-26T20:11:26.1845077Z  * branch              71b5f87805324c0e0d12c279a4898c8a44f625a9 -> FETCH_HEAD
+2026-10-26T20:11:26.1849807Z ##[endgroup]
+2026-10-26T20:11:26.1851142Z ##[group]Determining the checkout info
+2026-10-26T20:11:26.1855279Z ##[endgroup]
+2026-10-26T20:11:26.1863779Z [command]/usr/bin/git sparse-checkout disable
+2026-10-26T20:11:26.1940617Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-26T20:11:26.1987145Z ##[group]Checking out the ref
+2026-10-26T20:11:26.1994872Z [command]/usr/bin/git checkout --progress --force 71b5f87805324c0e0d12c279a4898c8a44f625a9
+2026-10-26T20:11:27.4593416Z Updating files:   5% (3633/62870)
+2026-10-26T20:11:27.5923249Z Updating files:   6% (3773/62870)
+2026-10-26T20:11:27.9473628Z Updating files:   7% (4401/62870)
+2026-10-26T20:11:28.0187623Z Updating files:   8% (5030/62870)
+2026-10-26T20:11:28.0742274Z Updating files:   9% (5659/62870)
+2026-10-26T20:11:28.2310966Z Updating files:  10% (6287/62870)
+2026-10-26T20:11:28.2794537Z Updating files:  11% (6916/62870)
+2026-10-26T20:11:28.3669605Z Updating files:  11% (6996/62870)
+2026-10-26T20:11:28.6612936Z Updating files:  12% (7545/62870)
+2026-10-26T20:11:29.3619810Z Updating files:  13% (8174/62870)
+2026-10-26T20:11:29.4145902Z Updating files:  13% (8735/62870)
+2026-10-26T20:11:29.8263466Z Updating files:  14% (8802/62870)
+2026-10-26T20:11:29.8809633Z Updating files:  15% (9431/62870)
+2026-10-26T20:11:29.9653226Z Updating files:  16% (10060/62870)
+2026-10-26T20:11:30.2908942Z Updating files:  17% (10688/62870)
+2026-10-26T20:11:30.4330637Z Updating files:  17% (10779/62870)
+2026-10-26T20:11:30.6469280Z Updating files:  18% (11317/62870)
+2026-10-26T20:11:30.9572255Z Updating files:  19% (11946/62870)
+2026-10-26T20:11:31.0518345Z Updating files:  20% (12574/62870)
+2026-10-26T20:11:31.0904576Z Updating files:  21% (13203/62870)
+2026-10-26T20:11:31.1350177Z Updating files:  22% (13832/62870)
+2026-10-26T20:11:31.1754390Z Updating files:  23% (14461/62870)
+2026-10-26T20:11:31.2155200Z Updating files:  24% (15089/62870)
+2026-10-26T20:11:31.2541424Z Updating files:  25% (15718/62870)
+2026-10-26T20:11:31.2700188Z Updating files:  26% (16347/62870)
+2026-10-26T20:11:31.2924865Z Updating files:  26% (16594/62870)
+2026-10-26T20:11:31.3315328Z Updating files:  27% (16975/62870)
+2026-10-26T20:11:31.3680443Z Updating files:  28% (17604/62870)
+2026-10-26T20:11:31.4269116Z Updating files:  29% (18233/62870)
+2026-10-26T20:11:31.4780947Z Updating files:  30% (18861/62870)
+2026-10-26T20:11:31.5122255Z Updating files:  31% (19490/62870)
+2026-10-26T20:11:32.2848185Z Updating files:  32% (20119/62870)
+2026-10-26T20:11:32.8574118Z Updating files:  32% (20713/62870)
+2026-10-26T20:11:33.2834160Z Updating files:  33% (20748/62870)
+2026-10-26T20:11:34.2773261Z Updating files:  33% (20779/62870)
+2026-10-26T20:11:35.2857274Z Updating files:  33% (20862/62870)
+2026-10-26T20:11:35.4049810Z Updating files:  33% (20917/62870)
+2026-10-26T20:11:35.5840251Z Updating files:  34% (21376/62870)
+2026-10-26T20:11:35.7274650Z Updating files:  35% (22005/62870)
+2026-10-26T20:11:35.7787974Z Updating files:  36% (22634/62870)
+2026-10-26T20:11:35.8184391Z Updating files:  37% (23262/62870)
+2026-10-26T20:11:35.8594251Z Updating files:  38% (23891/62870)
+2026-10-26T20:11:35.8982255Z Updating files:  39% (24520/62870)
+2026-10-26T20:11:35.9339845Z Updating files:  40% (25148/62870)
+2026-10-26T20:11:35.9703376Z Updating files:  41% (25777/62870)
+2026-10-26T20:11:36.0068139Z Updating files:  42% (26406/62870)
+2026-10-26T20:11:36.2483976Z Updating files:  43% (27035/62870)
+2026-10-26T20:11:36.2698997Z Updating files:  44% (27663/62870)
+2026-10-26T20:11:36.3860091Z Updating files:  44% (27860/62870)
+2026-10-26T20:11:36.4394060Z Updating files:  45% (28292/62870)
+2026-10-26T20:11:36.5640604Z Updating files:  46% (28921/62870)
+2026-10-26T20:11:36.6144245Z Updating files:  47% (29549/62870)
+2026-10-26T20:11:36.6554361Z Updating files:  48% (30178/62870)
+2026-10-26T20:11:36.8714128Z Updating files:  49% (30807/62870)
+2026-10-26T20:11:36.9609508Z Updating files:  50% (31435/62870)
+2026-10-26T20:11:37.0021381Z Updating files:  51% (32064/62870)
+2026-10-26T20:11:37.0528291Z Updating files:  52% (32693/62870)
+2026-10-26T20:11:37.1121761Z Updating files:  53% (33322/62870)
+2026-10-26T20:11:37.1409392Z Updating files:  54% (33950/62870)
+2026-10-26T20:11:37.1691718Z Updating files:  55% (34579/62870)
+2026-10-26T20:11:37.2487068Z Updating files:  56% (35208/62870)
+2026-10-26T20:11:37.5784160Z Updating files:  57% (35836/62870)
+2026-10-26T20:11:37.6152354Z Updating files:  57% (36088/62870)
+2026-10-26T20:11:37.6538954Z Updating files:  58% (36465/62870)
+2026-10-26T20:11:37.7150884Z Updating files:  59% (37094/62870)
+2026-10-26T20:11:37.7739672Z Updating files:  60% (37722/62870)
+2026-10-26T20:11:37.8393945Z Updating files:  61% (38351/62870)
+2026-10-26T20:11:37.8712828Z Updating files:  62% (38980/62870)
+2026-10-26T20:11:37.9001425Z Updating files:  63% (39609/62870)
+2026-10-26T20:11:37.9278038Z Updating files:  64% (40237/62870)
+2026-10-26T20:11:37.9557222Z Updating files:  65% (40866/62870)
+2026-10-26T20:11:37.9873629Z Updating files:  66% (41495/62870)
+2026-10-26T20:11:38.0429192Z Updating files:  67% (42123/62870)
+2026-10-26T20:11:38.0734018Z Updating files:  68% (42752/62870)
+2026-10-26T20:11:38.1321617Z Updating files:  69% (43381/62870)
+2026-10-26T20:11:38.1924131Z Updating files:  70% (44009/62870)
+2026-10-26T20:11:38.2261265Z Updating files:  71% (44638/62870)
+2026-10-26T20:11:38.2584571Z Updating files:  72% (45267/62870)
+2026-10-26T20:11:38.2698785Z Updating files:  73% (45896/62870)
+2026-10-26T20:11:38.2861559Z Updating files:  73% (46146/62870)
+2026-10-26T20:11:38.3111547Z Updating files:  74% (46524/62870)
+2026-10-26T20:11:38.3379453Z Updating files:  75% (47153/62870)
+2026-10-26T20:11:38.3634876Z Updating files:  76% (47782/62870)
+2026-10-26T20:11:38.3943423Z Updating files:  77% (48410/62870)
+2026-10-26T20:11:38.4195829Z Updating files:  78% (49039/62870)
+2026-10-26T20:11:38.4484954Z Updating files:  79% (49668/62870)
+2026-10-26T20:11:38.4851724Z Updating files:  80% (50296/62870)
+2026-10-26T20:11:38.5674622Z Updating files:  81% (50925/62870)
+2026-10-26T20:11:38.6635199Z Updating files:  82% (51554/62870)
+2026-10-26T20:11:38.7254307Z Updating files:  83% (52183/62870)
+2026-10-26T20:11:38.7864280Z Updating files:  84% (52811/62870)
+2026-10-26T20:11:38.8153960Z Updating files:  85% (53440/62870)
+2026-10-26T20:11:38.8444951Z Updating files:  86% (54069/62870)
+2026-10-26T20:11:38.9221150Z Updating files:  87% (54697/62870)
+2026-10-26T20:11:38.9514981Z Updating files:  88% (55326/62870)
+2026-10-26T20:11:38.9876307Z Updating files:  89% (55955/62870)
+2026-10-26T20:11:39.0146176Z Updating files:  90% (56583/62870)
+2026-10-26T20:11:39.0477583Z Updating files:  91% (57212/62870)
+2026-10-26T20:11:39.1050296Z Updating files:  92% (57841/62870)
+2026-10-26T20:11:39.1433180Z Updating files:  93% (58470/62870)
+2026-10-26T20:11:39.1849261Z Updating files:  94% (59098/62870)
+2026-10-26T20:11:39.2704064Z Updating files:  95% (59727/62870)
+2026-10-26T20:11:39.3346771Z Updating files:  95% (60135/62870)
+2026-10-26T20:11:39.3894912Z Updating files:  96% (60356/62870)
+2026-10-26T20:11:39.4439459Z Updating files:  97% (60984/62870)
+2026-10-26T20:11:39.4858510Z Updating files:  98% (61613/62870)
+2026-10-26T20:11:39.7356868Z Updating files:  99% (62242/62870)
+2026-10-26T20:11:39.7357551Z Updating files: 100% (62870/62870)
+2026-10-26T20:11:39.7358123Z Updating files: 100% (62870/62870), done.
+2026-10-26T20:11:39.8741433Z Note: switching to '71b5f87805324c0e0d12c279a4898c8a44f625a9'.
+2026-10-26T20:11:39.8743159Z 
+2026-10-26T20:11:39.8743908Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-26T20:11:39.8745836Z changes and commit them, and you can discard any commits you make in this
+2026-10-26T20:11:39.8747011Z state without impacting any branches by switching back to a branch.
+2026-10-26T20:11:39.8747705Z 
+2026-10-26T20:11:39.8748154Z If you want to create a new branch to retain commits you create, you may
+2026-10-26T20:11:39.8748771Z do so (now or later) by using -c with the switch command. Example:
+2026-10-26T20:11:39.8749124Z 
+2026-10-26T20:11:39.8749256Z   git switch -c <new-branch-name>
+2026-10-26T20:11:39.8749460Z 
+2026-10-26T20:11:39.8749581Z Or undo this operation with:
+2026-10-26T20:11:39.8749778Z 
+2026-10-26T20:11:39.8749885Z   git switch -
+2026-10-26T20:11:39.8750030Z 
+2026-10-26T20:11:39.8750280Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-26T20:11:39.8750657Z 
+2026-10-26T20:11:39.8751039Z HEAD is now at 71b5f878 Adopt canonical reconciled inventory and qualify migration through PR profiles once
+2026-10-26T20:11:39.8944938Z ##[endgroup]
+2026-10-26T20:11:39.9006969Z [command]/usr/bin/git log -1 --format=%H
+2026-10-26T20:11:39.9058484Z 71b5f87805324c0e0d12c279a4898c8a44f625a9
+2026-10-26T20:11:39.9072207Z ##[group]Removing auth
+2026-10-26T20:11:39.9078864Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-26T20:11:39.9124176Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-26T20:11:39.9523600Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-26T20:11:39.9567469Z http.https://github.com/.extraheader
+2026-10-26T20:11:39.9579768Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-26T20:11:39.9878617Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-26T20:11:40.0259848Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-26T20:11:40.0319601Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-26T20:11:40.0686991Z ##[endgroup]
+2026-10-26T20:11:40.1778116Z ##[group]Run oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+2026-10-26T20:11:40.1778718Z with:
+2026-10-26T20:11:40.1779035Z   bun-version: 1.4.3
+2026-10-26T20:11:40.1779350Z   no-cache: false
+2026-10-26T20:11:40.1783416Z   token: ***
+2026-10-26T20:11:40.1783735Z ##[endgroup]
+2026-10-26T20:11:40.6156036Z Cache hit for: bun-+NUKu9E/U4apAe78eSCZvQ/GSdc=
+2026-10-26T20:11:41.1927540Z Received 41001437 of 41001437 (100.0%), 77.7 MBs/sec
+2026-10-26T20:11:41.1929055Z Cache Size: ~39 MB (41001437 B)
+2026-10-26T20:11:41.1978739Z [command]/usr/bin/tar -xf /home/runner/work/_temp/aa8159b2-1a68-4d84-b7a9-798b9b8d8ffd/cache.tzst -P -C /home/runner/work/umf/umf --use-compress-program unzstd
+2026-10-26T20:11:41.4418091Z Cache restored successfully
+2026-10-26T20:11:41.4461324Z [command]/home/runner/.bun/bin/bun --revision
+2026-10-26T20:11:41.4545717Z 1.4.3+c6da4a4d3
+2026-10-26T20:11:41.4555559Z Using a cached version of Bun: 1.4.3+c6da4a4d3
+2026-10-26T20:11:41.5280585Z ##[group]Run timeout --signal=TERM --kill-after=10s 1620s bash -eu -o pipefail <<'QUALIFY'
+2026-10-26T20:11:41.5282275Z [36;1mtimeout --signal=TERM --kill-after=10s 1620s bash -eu -o pipefail <<'QUALIFY'[0m
+2026-10-26T20:11:41.5283252Z [36;1mset -u[0m
+2026-10-26T20:11:41.5283768Z [36;1mevidence=combined-qualification-evidence[0m
+2026-10-26T20:11:41.5284327Z [36;1mmkdir -p "$evidence"[0m
+2026-10-26T20:11:41.5284952Z [36;1mdeadline=$((SECONDS + 1620))[0m
+2026-10-26T20:11:41.5285594Z [36;1mfailed=0[0m
+2026-10-26T20:11:41.5286130Z [36;1m: > "$evidence/commands.log"[0m
+2026-10-26T20:11:41.5286733Z [36;1m{[0m
+2026-10-26T20:11:41.5287377Z [36;1m  printf 'profile=umf.combined-portable-migration/1\n'[0m
+2026-10-26T20:11:41.5288751Z [36;1m  printf 'event=%s\nref=%s\nexpected_sha=%s\nworkflow_ref=%s\nworkflow_sha=%s\nrun_id=%s\nattempt=%s\n' \[0m
+2026-10-26T20:11:41.5290556Z [36;1m    "$EVENT_NAME" "$REF_NAME" "$EXPECTED_SHA" "$WORKFLOW_REF" "$WORKFLOW_SHA" "$RUN_ID" "$RUN_ATTEMPT"[0m
+2026-10-26T20:11:41.5291686Z [36;1m  test "$EVENT_NAME" = push[0m
+2026-10-26T20:11:41.5292752Z [36;1m  test "$REF_NAME" = refs/heads/codex/migration-integrated-qualification[0m
+2026-10-26T20:11:41.5293723Z [36;1m  test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"[0m
+2026-10-26T20:11:41.5294884Z [36;1m  printf 'checkout_sha=%s\ncheckout_tree=%s\n' "$(git rev-parse HEAD)" "$(git rev-parse 'HEAD^{tree}')"[0m
+2026-10-26T20:11:41.5296600Z [36;1m  printf 'runner_os=%s\nrunner_arch=%s\nimage_os=%s\nimage_version=%s\n' "$RUNNER_OS" "$RUNNER_ARCH" "$ImageOS" "$ImageVersion"[0m
+2026-10-26T20:11:41.5298403Z [36;1m  printf 'workflow_file_sha256=%s\npackage_json_sha256=%s\nbun_lock_sha256=%s\nbunfig_sha256=%s\n' \[0m
+2026-10-26T20:11:41.5299534Z [36;1m    "$(sha256sum .github/workflows/combined-migration-qualification.yml | cut -d ' ' -f 1)" \[0m
+2026-10-26T20:11:41.5300879Z [36;1m    "$(sha256sum package.json | cut -d ' ' -f 1)" "$(sha256sum bun.lock | cut -d ' ' -f 1)" "$(sha256sum bunfig.toml | cut -d ' ' -f 1)"[0m
+2026-10-26T20:11:41.5301964Z [36;1m  bun_version=$(bun --version)[0m
+2026-10-26T20:11:41.5303297Z [36;1m  printf 'bun_version=%s\nbun_binary=%s\nbun_binary_sha256=%s\n' "$bun_version" "$(command -v bun)" "$(sha256sum "$(command -v bun)" | cut -d ' ' -f 1)"[0m
+2026-10-26T20:11:41.5304095Z [36;1m  test "$bun_version" = 1.4.3[0m
+2026-10-26T20:11:41.5304541Z [36;1m  sha256sum -c qualification-inputs/expected-pins.sha256[0m
+2026-10-26T20:11:41.5305333Z [36;1m  printf 'expected_pin_manifest_sha256=%s\n' "$(sha256sum qualification-inputs/expected-pins.sha256 | cut -d ' ' -f 1)"[0m
+2026-10-26T20:11:41.5306133Z [36;1m} > "$evidence/identity.txt" 2> "$evidence/preflight.log"[0m
+2026-10-26T20:11:41.5306561Z [36;1m[0m
+2026-10-26T20:11:41.5307201Z [36;1mif ! grep -Fq 'refs/heads/codex/migration-integrated-qualification' scripts/qualification/r2-metering-generate.ts; then[0m
+2026-10-26T20:11:41.5308487Z [36;1m  printf 'stage=reproduction-preflight\nstatus=BLOCKED\nreason=generator-does-not-admit-integrated-qualification-ref\n' >> "$evidence/commands.log"[0m
+2026-10-26T20:11:41.5309394Z [36;1m  exit 78[0m
+2026-10-26T20:11:41.5309666Z [36;1mfi[0m
+2026-10-26T20:11:41.5309908Z [36;1m[0m
+2026-10-26T20:11:41.5310155Z [36;1mrun_stage() {[0m
+2026-10-26T20:11:41.5310469Z [36;1m  name="$1"; limit="$2"; shift 2[0m
+2026-10-26T20:11:41.5310852Z [36;1m  remaining=$((deadline - SECONDS - 60))[0m
+2026-10-26T20:11:41.5311221Z [36;1m  if [ "$remaining" -le 0 ]; then[0m
+2026-10-26T20:11:41.5311843Z [36;1m    printf 'stage=%s refused=aggregate-budget-cleanup-reserve\n' "$name" >> "$evidence/commands.log"[0m
+2026-10-26T20:11:41.5312701Z [36;1m    return 124[0m
+2026-10-26T20:11:41.5312984Z [36;1m  fi[0m
+2026-10-26T20:11:41.5313331Z [36;1m  if [ "$limit" -gt "$remaining" ]; then limit="$remaining"; fi[0m
+2026-10-26T20:11:41.5313787Z [36;1m  log="$evidence/$name.log"[0m
+2026-10-26T20:11:41.5314188Z [36;1m  start_epoch=$(date +%s); start_utc=$(date -u +%FT%TZ)[0m
+2026-10-26T20:11:41.5314875Z [36;1m  set +e[0m
+2026-10-26T20:11:41.5315287Z [36;1m  timeout --signal=TERM --kill-after=10s "${limit}s" "$@" > "$log" 2>&1[0m
+2026-10-26T20:11:41.5315756Z [36;1m  rc=$?[0m
+2026-10-26T20:11:41.5316011Z [36;1m  set -e[0m
+2026-10-26T20:11:41.5316324Z [36;1m  end_epoch=$(date +%s); end_utc=$(date -u +%FT%TZ)[0m
+2026-10-26T20:11:41.5316705Z [36;1m  bytes=$(wc -c < "$log")[0m
+2026-10-26T20:11:41.5317028Z [36;1m  truncated=no[0m
+2026-10-26T20:11:41.5317320Z [36;1m  if [ "$bytes" -gt 1048576 ]; then[0m
+2026-10-26T20:11:41.5317657Z [36;1m    truncated=yes[0m
+2026-10-26T20:11:41.5318026Z [36;1m    head -c 1048576 "$log" > "$log.tmp" && mv "$log.tmp" "$log"[0m
+2026-10-26T20:11:41.5318434Z [36;1m  fi[0m
+2026-10-26T20:11:41.5318777Z [36;1m  printf 'stage=%s\nargv=' "$name" >> "$evidence/commands.log"[0m
+2026-10-26T20:11:41.5319439Z [36;1m  printf '%q ' timeout --signal=TERM --kill-after=10s "${limit}s" "$@" >> "$evidence/commands.log"[0m
+2026-10-26T20:11:41.5320346Z [36;1m  printf '\nstarted_utc=%s\nended_utc=%s\nexit=%s\nduration_seconds=%s\nlog_bytes_before_cap=%s\nlog_truncated=%s\n' \[0m
+2026-10-26T20:11:41.5321286Z [36;1m    "$start_utc" "$end_utc" "$rc" "$((end_epoch-start_epoch))" "$bytes" "$truncated" >> "$evidence/commands.log"[0m
+2026-10-26T20:11:41.5322153Z [36;1m  return "$rc"[0m
+2026-10-26T20:11:41.5322825Z [36;1m}[0m
+2026-10-26T20:11:41.5323117Z [36;1m[0m
+2026-10-26T20:11:41.5323926Z [36;1m# GNU timeout bounds each child; the 1620s outer deadline leaves 60s before its TERM/KILL cleanup margin.[0m
+2026-10-26T20:11:41.5324889Z [36;1mrun_stage install 160 bun install --frozen-lockfile --ignore-scripts || failed=1[0m
+2026-10-26T20:11:41.5325634Z [36;1mrun_stage full-typescript 180 bun node_modules/typescript/bin/tsc --noEmit || failed=1[0m
+2026-10-26T20:11:41.5326484Z [36;1mrun_stage tools-typescript 180 bun node_modules/typescript/bin/tsc -p tsconfig.tools.json || failed=1[0m
+2026-10-26T20:11:41.5327472Z [36;1mrun_stage r2-typescript 180 bun node_modules/typescript/bin/tsc --noEmit -p tsconfig.r2-metering-stageb.json || failed=1[0m
+2026-10-26T20:11:41.5328674Z [36;1mrun_stage api-g02 180 bun test --timeout 15000 \[0m
+2026-10-26T20:11:41.5329814Z [36;1m  tests/lifecycle/table-inventory-api.test.ts \[0m
+2026-10-26T20:11:41.5330542Z [36;1m  tests/lifecycle/g02-derived-fill.test.ts \[0m
+2026-10-26T20:11:41.5331421Z [36;1m  tests/lifecycle/g02-renderer-operation-sidecar.test.ts || failed=1[0m
+2026-10-26T20:11:41.5332702Z [36;1mrun_stage g02-fixture-source-control 60 bun test --timeout 30000 \[0m
+2026-10-26T20:11:41.5333737Z [36;1m  tests/lifecycle/g02-temporal-native-fixture.test.ts || failed=1[0m
+2026-10-26T20:11:41.5334760Z [36;1mrun_stage g03-and-migration-regressions 180 bun test --timeout 15000 \[0m
+2026-10-26T20:11:41.5335695Z [36;1m  tests/lifecycle/g04-checked-conversion.test.ts \[0m
+2026-10-26T20:11:41.5336412Z [36;1m  tests/lifecycle/g03-defaults.test.ts \[0m
+2026-10-26T20:11:41.5337129Z [36;1m  tests/lifecycle/g03-discovery-bridge.test.ts \[0m
+2026-10-26T20:11:41.5337920Z [36;1m  tests/lifecycle/g03-renderer-compatibility.test.ts \[0m
+2026-10-26T20:11:41.5338481Z [36;1m  tests/lifecycle/g11-field-replacement.test.ts \[0m
+2026-10-26T20:11:41.5338958Z [36;1m  tests/lifecycle/table-deployment-operations.test.ts \[0m
+2026-10-26T20:11:41.5339393Z [36;1m  tests/lifecycle/migration.test.ts \[0m
+2026-10-26T20:11:41.5339784Z [36;1m  tests/lifecycle/reviewed.test.ts || failed=1[0m
+2026-10-26T20:11:41.5340301Z [36;1mrun_stage r2-controls-and-parity 180 bun test --timeout 15000 \[0m
+2026-10-26T20:11:41.5340842Z [36;1m  tests/metamodel/structural-accounting-source.test.ts \[0m
+2026-10-26T20:11:41.5341369Z [36;1m  tests/lifecycle/table-inventory-r2-context.test.ts \[0m
+2026-10-26T20:11:41.5341940Z [36;1m  tests/lifecycle/table-inventory-verified-deployment.test.ts \[0m
+2026-10-26T20:11:41.5342740Z [36;1m  tests/lifecycle/table-deployment-r2-accounting.test.ts \[0m
+2026-10-26T20:11:41.5343544Z [36;1m  tests/metamodel/structural-accounting-parity.test.ts || failed=1[0m
+2026-10-26T20:11:41.5344350Z [36;1mrun_stage generate-reviewed-r2-reproduction 120 bun scripts/qualification/r2-metering-generate.ts || failed=1[0m
+2026-10-26T20:11:41.5345350Z [36;1mgenerated="$RUNNER_TEMP/r2-metering-generated-${RUN_ID}-${RUN_ATTEMPT}-reproduction/core-validators-accounted.ts"[0m
+2026-10-26T20:11:41.5346005Z [36;1mif [ -f "$generated" ]; then[0m
+2026-10-26T20:11:41.5346411Z [36;1m  sha256sum "$generated" >> "$evidence/commands.log"[0m
+2026-10-26T20:11:41.5347149Z [36;1m  cmp -- src/generated/core-validators-accounted.ts "$generated" > "$evidence/reproduction-compare.log" 2>&1 || failed=1[0m
+2026-10-26T20:11:41.5347801Z [36;1melse[0m
+2026-10-26T20:11:41.5348290Z [36;1m  printf 'missing_generated_reproduction=%s\n' "$generated" > "$evidence/reproduction-compare.log"[0m
+2026-10-26T20:11:41.5348858Z [36;1m  failed=1[0m
+2026-10-26T20:11:41.5349127Z [36;1mfi[0m
+2026-10-26T20:11:41.5349858Z [36;1mtest "$(sha256sum src/generated/core-validators-accounted.ts | cut -d ' ' -f 1)" = 314cac8416711899285bc3f1a734765d557f7446f7ab0cf58d3dbd2a7dfdd81e || failed=1[0m
+2026-10-26T20:11:41.5351058Z [36;1mtest "$(bun -e 'console.log(JSON.parse(await Bun.file("node_modules/typescript-api/package.json").text()).version)')" = 5.9.3 || failed=1[0m
+2026-10-26T20:11:41.5352348Z [36;1mtest "$(bun -e 'console.log(JSON.parse(await Bun.file("node_modules/typescript/package.json").text()).version)')" = 7.0.2 || failed=1[0m
+2026-10-26T20:11:41.5353825Z [36;1mtest "$(bun -e 'console.log(JSON.parse(await Bun.file("node_modules/playwright/package.json").text()).version)')" = 1.63.0 || failed=1[0m
+2026-10-26T20:11:41.5354891Z [36;1mtest "$(bun -e 'console.log(JSON.parse(await Bun.file("node_modules/playwright-core/package.json").text()).version)')" = 1.63.0 || failed=1[0m
+2026-10-26T20:11:41.5356199Z [36;1mprintf '%s  %s\n' 545d52f8382c391e605562c330e9c1c534a16045898203037a49bb8bd769a946 node_modules/playwright-core/browsers.json | sha256sum -c - >> "$evidence/identity.txt" 2>&1 || failed=1[0m
+2026-10-26T20:11:41.5357979Z [36;1mprintf 'typescript_api=5.9.3\ntypescript_cli=7.0.2\nplaywright=1.63.0\nplaywright_core=1.63.0\nchromium_revision=1243\nchromium_version=153.0.8010.12\nbrowsers_json_sha256=545d52f8382c391e605562c330e9c1c534a16045898203037a49bb8bd769a946\n' >> "$evidence/identity.txt"[0m
+2026-10-26T20:11:41.5360840Z [36;1mrun_stage install-pinned-chromium 180 bun node_modules/playwright/cli.js install chromium || failed=1[0m
+2026-10-26T20:11:41.5362196Z [36;1mrun_stage r2-chromium-parity 180 bun scripts/r2-metering-browser.ts || failed=1[0m
+2026-10-26T20:11:41.5363752Z [36;1mprintf 'qualification_exit=%s\naggregate_elapsed_seconds=%s\n' "$failed" "$((SECONDS))" >> "$evidence/commands.log"[0m
+2026-10-26T20:11:41.5364866Z [36;1mbytes=$(du -sb "$evidence" | cut -f 1)[0m
+2026-10-26T20:11:41.5365757Z [36;1mprintf 'artifact_public_bytes=%s\nartifact_max_bytes=16777216\n' "$bytes" >> "$evidence/commands.log"[0m
+2026-10-26T20:11:41.5366375Z [36;1mtest "$bytes" -le 16777216 || failed=1[0m
+2026-10-26T20:11:41.5366729Z [36;1mexit "$failed"[0m
+2026-10-26T20:11:41.5367026Z [36;1mQUALIFY[0m
+2026-10-26T20:11:41.6310707Z shell: /usr/bin/bash -e {0}
+2026-10-26T20:11:41.6311371Z env:
+2026-10-26T20:11:41.6311952Z   EXPECTED_SHA: 71b5f87805324c0e0d12c279a4898c8a44f625a9
+2026-10-26T20:11:41.6312955Z   EVENT_NAME: push
+2026-10-26T20:11:41.6313678Z   REF_NAME: refs/heads/codex/migration-integrated-qualification
+2026-10-26T20:11:41.6315433Z   WORKFLOW_REF: DocumentDrivenDX/umf/.github/workflows/combined-migration-qualification.yml@refs/heads/codex/migration-integrated-qualification
+2026-10-26T20:11:41.6316537Z   WORKFLOW_SHA: 71b5f87805324c0e0d12c279a4898c8a44f625a9
+2026-10-26T20:11:41.6317010Z   RUN_ID: 40393356507
+2026-10-26T20:11:41.6317430Z   RUN_ATTEMPT: 1
+2026-10-26T20:11:41.6317876Z   UMF_R2_OUTPUT_PURPOSE: stage-b-reproduction
+2026-10-26T20:11:41.6318483Z ##[endgroup]
+2026-10-26T20:17:53.3968248Z ##[error]Process completed with exit code 1.
+2026-10-26T20:17:53.4069116Z ##[group]Run mkdir -p combined-qualification-evidence
+2026-10-26T20:17:53.4069811Z [36;1mmkdir -p combined-qualification-evidence[0m
+2026-10-26T20:17:53.4070828Z [36;1mprintf 'qualification_step_outcome=%s\n' "$QUALIFICATION_OUTCOME" >> combined-qualification-evidence/commands.log[0m
+2026-10-26T20:17:53.4150628Z shell: /usr/bin/bash -e {0}
+2026-10-26T20:17:53.4151072Z env:
+2026-10-26T20:17:53.4151437Z   QUALIFICATION_OUTCOME: failure
+2026-10-26T20:17:53.4151918Z ##[endgroup]
+2026-10-26T20:17:53.4349582Z ##[group]Run set -eu
+2026-10-26T20:17:53.4350210Z [36;1mset -eu[0m
+2026-10-26T20:17:53.4350631Z [36;1mevidence=combined-qualification-evidence[0m
+2026-10-26T20:17:53.4351659Z [36;1mgenerated="/home/runner/work/_temp/r2-metering-generated-40393356507-1-reproduction/core-validators-accounted.ts"[0m
+2026-10-26T20:17:53.4352784Z [36;1mupload=combined-qualification-upload[0m
+2026-10-26T20:17:53.4353227Z [36;1mmkdir -p "$evidence"[0m
+2026-10-26T20:17:53.4353592Z [36;1mrm -rf "$upload"[0m
+2026-10-26T20:17:53.4353940Z [36;1mmkdir -p "$upload"[0m
+2026-10-26T20:17:53.4354298Z [36;1mwhile IFS= read -r -d '' file; do[0m
+2026-10-26T20:17:53.4354720Z [36;1m  bytes=$(wc -c < "$file")[0m
+2026-10-26T20:17:53.4355126Z [36;1m  if [ "$bytes" -gt 1048576 ]; then[0m
+2026-10-26T20:17:53.4355550Z [36;1m    head -c 1048576 "$file" > "$file.cap"[0m
+2026-10-26T20:17:53.4355959Z [36;1m    mv "$file.cap" "$file"[0m
+2026-10-26T20:17:53.4356578Z [36;1m    printf 'artifact_log_truncated=%s\n' "$file" >> "$evidence/artifact-cap.txt"[0m
+2026-10-26T20:17:53.4357159Z [36;1m  fi[0m
+2026-10-26T20:17:53.4357534Z [36;1mdone < <(find "$evidence" -type f -name '*.log' -print0)[0m
+2026-10-26T20:17:53.4358027Z [36;1mcp -a "$evidence" "$upload/"[0m
+2026-10-26T20:17:53.4358393Z [36;1mcap_failed=0[0m
+2026-10-26T20:17:53.4358710Z [36;1mif [ -f "$generated" ]; then[0m
+2026-10-26T20:17:53.4359158Z [36;1m  cp "$generated" "$upload/core-validators-accounted.ts"[0m
+2026-10-26T20:17:53.4359621Z [36;1mfi[0m
+2026-10-26T20:17:53.4359920Z [36;1mbytes=$(du -sb "$upload" | cut -f 1)[0m
+2026-10-26T20:17:53.4360372Z [36;1mif [ "$bytes" -gt 16777216 ]; then[0m
+2026-10-26T20:17:53.4361056Z [36;1m  rm -f "$upload/core-validators-accounted.ts"[0m
+2026-10-26T20:17:53.4361979Z [36;1m  printf 'artifact_generated_companion_omitted=aggregate-cap\nartifact_aggregate_before_omission=%s\n' "$bytes" >> "$evidence/artifact-cap.txt"[0m
+2026-10-26T20:17:53.4363141Z [36;1m  rm -rf "$upload/combined-qualification-evidence"[0m
+2026-10-26T20:17:53.4363590Z [36;1m  cp -a "$evidence" "$upload/"[0m
+2026-10-26T20:17:53.4363939Z [36;1m  cap_failed=1[0m
+2026-10-26T20:17:53.4364233Z [36;1mfi[0m
+2026-10-26T20:17:53.4364501Z [36;1mbytes=$(du -sb "$upload" | cut -f 1)[0m
+2026-10-26T20:17:53.4365306Z [36;1mprintf 'artifact_public_bytes=%s\nartifact_max_bytes=16777216\n' "$bytes" >> "$upload/combined-qualification-evidence/artifact-cap.txt"[0m
+2026-10-26T20:17:53.4366115Z [36;1mbytes=$(du -sb "$upload" | cut -f 1)[0m
+2026-10-26T20:17:53.4366489Z [36;1mif [ "$bytes" -gt 16777216 ]; then[0m
+2026-10-26T20:17:53.4366837Z [36;1m  rm -rf "$upload"[0m
+2026-10-26T20:17:53.4367478Z [36;1m  printf 'artifact_cap_exceeded_bytes=%s\nartifact_max_bytes=16777216\n' "$bytes" >> "$evidence/artifact-cap.txt"[0m
+2026-10-26T20:17:53.4368163Z [36;1m  exit 1[0m
+2026-10-26T20:17:53.4368407Z [36;1mfi[0m
+2026-10-26T20:17:53.4368698Z [36;1mif [ "$cap_failed" -ne 0 ]; then exit 1; fi[0m
+2026-10-26T20:17:53.4446423Z shell: /usr/bin/bash -e {0}
+2026-10-26T20:17:53.4446856Z ##[endgroup]
+2026-10-26T20:17:53.5096544Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-10-26T20:17:53.5097134Z with:
+2026-10-26T20:17:53.5097439Z   name: combined-migration-40393356507-1
+2026-10-26T20:17:53.5097878Z   path: combined-qualification-upload/
+
+2026-10-26T20:17:53.5098272Z   if-no-files-found: warn
+2026-10-26T20:17:53.5098582Z   retention-days: 30
+2026-10-26T20:17:53.5098882Z   compression-level: 6
+2026-10-26T20:17:53.5099185Z   overwrite: false
+2026-10-26T20:17:53.5099471Z   include-hidden-files: false
+2026-10-26T20:17:53.5099853Z ##[endgroup]
+2026-10-26T20:17:53.7149243Z (node:3085) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-26T20:17:53.7150915Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-26T20:17:53.7303600Z With the provided path, there will be 17 files uploaded
+2026-10-26T20:17:53.7305144Z Artifact name is valid!
+2026-10-26T20:17:53.7306226Z Root directory input is valid!
+2026-10-26T20:17:53.9737659Z Beginning upload of artifact content to blob storage
+2026-10-26T20:17:54.0450916Z (node:3085) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-26T20:17:54.0860915Z Uploaded bytes 73450
+2026-10-26T20:17:54.1041831Z Finished uploading artifact content to blob storage!
+2026-10-26T20:17:54.1043972Z SHA256 digest of uploaded artifact zip is 847af131ecde6aefc51daa599cedb2ea4c3afd79e94947c0616a0d114ed91e49
+2026-10-26T20:17:54.1045731Z Finalizing artifact upload
+2026-10-26T20:17:54.5203808Z Artifact combined-migration-40393356507-1.zip successfully finalized. Artifact ID 12685014116
+2026-10-26T20:17:54.5206327Z Artifact combined-migration-40393356507-1 has been successfully uploaded! Final size is 73450 bytes. Artifact ID is 12685014116
+2026-10-26T20:17:54.5215096Z Artifact download URL: https://github.com/DocumentDrivenDX/umf/actions/runs/40393356507/artifacts/12685014116
+2026-10-26T20:17:54.5500932Z Post job cleanup.
+2026-10-26T20:17:54.6578250Z [command]/usr/bin/git version
+2026-10-26T20:17:54.6651779Z git version 2.55.0
+2026-10-26T20:17:54.6715045Z Temporarily overriding HOME='/home/runner/work/_temp/3a10f7a9-959c-4c3f-b1b7-a0e41175e390' before making global git config changes
+2026-10-26T20:17:54.6717037Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-26T20:17:54.6724291Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf
+2026-10-26T20:17:54.6794057Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-26T20:17:54.6853263Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-26T20:17:54.7396663Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-26T20:17:54.7458842Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-26T20:17:54.7961771Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-26T20:17:54.8026089Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-26T20:17:54.8654805Z Cleaning up orphan processes
+2026-10-26T20:17:54.9078303Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

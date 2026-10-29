@@ -1,0 +1,18 @@
+{
+  "schema": "umf.migration-main-reconciliation-owner/0.1",
+  "status": "merge-in-progress-unqualified",
+  "migrationHead": "f1bbe34ea46b1da1aadd903074dbfe9cedc3ac6f",
+  "mainHead": "f5f4b7dbef12a757bc0bba6ae2f581998fe50dba",
+  "planSha256": "871f918f749206e68e60513bad19821efed8d18cce0682b5de46c7f628279d42",
+  "reviewedCleanMergePaths": [
+    ".github/workflows/python.yml",
+    "scripts/check-rust-boundaries.py",
+    "scripts/rust-core/full-conformance.ts",
+    "src/index.ts"
+  ],
+  "cleanMergeDecision": "Upstream Hatchling requirements, generic kind-boundary rules, installed-build dependencies and public kind export coexist with migration changes. No private accounting API export was introduced by the merge.",
+  "historicalPortableRun": 40270287717,
+  "historicalNativeRun": 40270912993,
+  "excluded": "PR49 / Core 0.10.2 remains independent pending release ownership coordination",
+  "qualification": "No runtime performed on the merged tree. Generated conflicts require actual hosted regeneration before qualification."
+}

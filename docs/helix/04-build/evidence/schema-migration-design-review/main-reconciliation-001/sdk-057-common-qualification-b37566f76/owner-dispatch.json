@@ -1,0 +1,38 @@
+{
+  "status": "BOTH_ORIGINAL_QUALIFICATION_RUNS_IN_PROGRESS",
+  "sourceCommit": "b37566f76d57981e4af5a5c0cc62621b00c2d3b3",
+  "sourceTree": "2bbd12f38b29d90977bfe8cd40d27a78f5efc90f",
+  "pushMode": "Atomic normal fast-forward to two existing owned qualification branches; no force",
+  "native": {
+    "run": 40380695950,
+    "job": 121775780646,
+    "branch": "codex/migration-g02-g03-native-qualification",
+    "workflowSha256": "9d0d92c26eab0fd19c000073d46c1c70d1b959115bd52f7b43e669d0222040c8",
+    "sourceManifestSha256": "88a9de55e8d0134451a20e508ff60315ba4fd6844fcbc4abb472bfda7054bd7f",
+    "sourceRows": 32,
+    "allSourcePinsMatch": true
+  },
+  "portable": {
+    "run": 40380693127,
+    "job": 121775770186,
+    "branch": "codex/migration-integrated-qualification",
+    "manifestSha256": "fbb96e3092b49ac4ef390c3efbea8ba25fc80e552f6348dba2dfe61ba027c5fc",
+    "sourceRows": 97,
+    "allSourcePinsMatch": true
+  },
+  "adoptedGeneration": {
+    "source": "41590b2b02daef923a21103cb4d04eb419d87633",
+    "run": 40379385690,
+    "artifact": 12677956169,
+    "zipSha256": "60bcf9ed72415f32b931cb6ba345f17f62657033efd15fb019d0ae660d0b0442",
+    "reviewSha256": "c9ce81a5949f697757fe4625cc42676231dadd1d9c7aec922fa0379febb3537b"
+  },
+  "sourceDeltaAfterGeneration": "Exact16output adoption plus reviewed job.if-only native branch isolation and evidence; no recorded R3 input data change from the guard",
+  "unrelatedCoreRebuilds": {
+    "40380695930": "skipped",
+    "40380692977": "skipped"
+  },
+  "sdkFourCellQualification": "OPEN",
+  "qualificationResult": "NOT_YET_KNOWN",
+  "productionManagedAcceptance": "NOT_CLAIMED"
+}

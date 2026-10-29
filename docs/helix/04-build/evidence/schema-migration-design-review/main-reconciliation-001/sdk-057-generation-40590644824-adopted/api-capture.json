@@ -1,0 +1,359 @@
+{
+  "run": {
+    "id": 40590644824,
+    "name": "Generate merged-source action, codegen and R3 artifacts",
+    "node_id": "WFR_kwLOUmPews8AAAAJc2QWWA",
+    "head_branch": "codex/migration-merged-generation",
+    "head_sha": "45aa6b90e80bb03a4af4a7a6987bdab5bd7c937f",
+    "path": ".github/workflows/merged-source-generation.yml",
+    "display_title": "Align split cohort provenance and retain bounded D5 validation evidence",
+    "run_number": 13,
+    "event": "push",
+    "status": "completed",
+    "conclusion": "success",
+    "workflow_id": 396700537,
+    "check_suite_id": 110022300976,
+    "check_suite_node_id": "CS_kwDOUmPews8AAAAZndcVMA",
+    "url": "https://api.github.com/repos/DocumentDrivenDX/umf/actions/runs/40590644824",
+    "html_url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40590644824",
+    "pull_requests": [],
+    "created_at": "2026-10-27T21:54:45Z",
+    "updated_at": "2026-10-27T22:15:13Z",
+    "actor": {
+      "login": "easel",
+      "id": 94159,
+      "node_id": "MDQ6VXNlcjk0MTU5",
+      "avatar_url": "https://avatars.githubusercontent.com/u/94159?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/easel",
+      "html_url": "https://github.com/easel",
+      "followers_url": "https://api.github.com/users/easel/followers",
+      "following_url": "https://api.github.com/users/easel/following{/other_user}",
+      "gists_url": "https://api.github.com/users/easel/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/easel/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/easel/subscriptions",
+      "organizations_url": "https://api.github.com/users/easel/orgs",
+      "repos_url": "https://api.github.com/users/easel/repos",
+      "events_url": "https://api.github.com/users/easel/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/easel/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "run_attempt": 1,
+    "referenced_workflows": [],
+    "run_started_at": "2026-10-27T21:54:45Z",
+    "triggering_actor": {
+      "login": "easel",
+      "id": 94159,
+      "node_id": "MDQ6VXNlcjk0MTU5",
+      "avatar_url": "https://avatars.githubusercontent.com/u/94159?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/easel",
+      "html_url": "https://github.com/easel",
+      "followers_url": "https://api.github.com/users/easel/followers",
+      "following_url": "https://api.github.com/users/easel/following{/other_user}",
+      "gists_url": "https://api.github.com/users/easel/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/easel/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/easel/subscriptions",
+      "organizations_url": "https://api.github.com/users/easel/orgs",
+      "repos_url": "https://api.github.com/users/easel/repos",
+      "events_url": "https://api.github.com/users/easel/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/easel/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "jobs_url": "https://api.github.com/repos/DocumentDrivenDX/umf/actions/runs/40590644824/jobs",
+    "logs_url": "https://api.github.com/repos/DocumentDrivenDX/umf/actions/runs/40590644824/logs",
+    "check_suite_url": "https://api.github.com/repos/DocumentDrivenDX/umf/check-suites/110022300976",
+    "artifacts_url": "https://api.github.com/repos/DocumentDrivenDX/umf/actions/runs/40590644824/artifacts",
+    "cancel_url": "https://api.github.com/repos/DocumentDrivenDX/umf/actions/runs/40590644824/cancel",
+    "rerun_url": "https://api.github.com/repos/DocumentDrivenDX/umf/actions/runs/40590644824/rerun",
+    "previous_attempt_url": null,
+    "workflow_url": "https://api.github.com/repos/DocumentDrivenDX/umf/actions/workflows/396700537",
+    "head_commit": {
+      "id": "45aa6b90e80bb03a4af4a7a6987bdab5bd7c937f",
+      "tree_id": "8364cbfecd2a826b12009b3cf5501a0db5ecebde",
+      "message": "Align split cohort provenance and retain bounded D5 validation evidence",
+      "timestamp": "2026-10-27T21:51:29Z",
+      "author": {
+        "name": "Erik LaBianca",
+        "email": "erik.labianca@synaptiq.ai"
+      },
+      "committer": {
+        "name": "Erik LaBianca",
+        "email": "erik.labianca@synaptiq.ai"
+      }
+    },
+    "repository": {
+      "id": 1382276802,
+      "node_id": "R_kgDOUmPewg",
+      "name": "umf",
+      "full_name": "DocumentDrivenDX/umf",
+      "private": false,
+      "owner": {
+        "login": "DocumentDrivenDX",
+        "id": 273466046,
+        "node_id": "O_kgDOEEzCvg",
+        "avatar_url": "https://avatars.githubusercontent.com/u/273466046?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/DocumentDrivenDX",
+        "html_url": "https://github.com/DocumentDrivenDX",
+        "followers_url": "https://api.github.com/users/DocumentDrivenDX/followers",
+        "following_url": "https://api.github.com/users/DocumentDrivenDX/following{/other_user}",
+        "gists_url": "https://api.github.com/users/DocumentDrivenDX/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/DocumentDrivenDX/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/DocumentDrivenDX/subscriptions",
+        "organizations_url": "https://api.github.com/users/DocumentDrivenDX/orgs",
+        "repos_url": "https://api.github.com/users/DocumentDrivenDX/repos",
+        "events_url": "https://api.github.com/users/DocumentDrivenDX/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/DocumentDrivenDX/received_events",
+        "type": "Organization",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "html_url": "https://github.com/DocumentDrivenDX/umf",
+      "description": "Universal schema interchange fabric",
+      "fork": false,
+      "url": "https://api.github.com/repos/DocumentDrivenDX/umf",
+      "forks_url": "https://api.github.com/repos/DocumentDrivenDX/umf/forks",
+      "keys_url": "https://api.github.com/repos/DocumentDrivenDX/umf/keys{/key_id}",
+      "collaborators_url": "https://api.github.com/repos/DocumentDrivenDX/umf/collaborators{/collaborator}",
+      "teams_url": "https://api.github.com/repos/DocumentDrivenDX/umf/teams",
+      "hooks_url": "https://api.github.com/repos/DocumentDrivenDX/umf/hooks",
+      "issue_events_url": "https://api.github.com/repos/DocumentDrivenDX/umf/issues/events{/number}",
+      "events_url": "https://api.github.com/repos/DocumentDrivenDX/umf/events",
+      "assignees_url": "https://api.github.com/repos/DocumentDrivenDX/umf/assignees{/user}",
+      "branches_url": "https://api.github.com/repos/DocumentDrivenDX/umf/branches{/branch}",
+      "tags_url": "https://api.github.com/repos/DocumentDrivenDX/umf/tags",
+      "blobs_url": "https://api.github.com/repos/DocumentDrivenDX/umf/git/blobs{/sha}",
+      "git_tags_url": "https://api.github.com/repos/DocumentDrivenDX/umf/git/tags{/sha}",
+      "git_refs_url": "https://api.github.com/repos/DocumentDrivenDX/umf/git/refs{/sha}",
+      "trees_url": "https://api.github.com/repos/DocumentDrivenDX/umf/git/trees{/sha}",
+      "statuses_url": "https://api.github.com/repos/DocumentDrivenDX/umf/statuses/{sha}",
+      "languages_url": "https://api.github.com/repos/DocumentDrivenDX/umf/languages",
+      "stargazers_url": "https://api.github.com/repos/DocumentDrivenDX/umf/stargazers",
+      "contributors_url": "https://api.github.com/repos/DocumentDrivenDX/umf/contributors",
+      "subscribers_url": "https://api.github.com/repos/DocumentDrivenDX/umf/subscribers",
+      "subscription_url": "https://api.github.com/repos/DocumentDrivenDX/umf/subscription",
+      "commits_url": "https://api.github.com/repos/DocumentDrivenDX/umf/commits{/sha}",
+      "git_commits_url": "https://api.github.com/repos/DocumentDrivenDX/umf/git/commits{/sha}",
+      "comments_url": "https://api.github.com/repos/DocumentDrivenDX/umf/comments{/number}",
+      "issue_comment_url": "https://api.github.com/repos/DocumentDrivenDX/umf/issues/comments{/number}",
+      "contents_url": "https://api.github.com/repos/DocumentDrivenDX/umf/contents/{+path}",
+      "compare_url": "https://api.github.com/repos/DocumentDrivenDX/umf/compare/{base}...{head}",
+      "merges_url": "https://api.github.com/repos/DocumentDrivenDX/umf/merges",
+      "archive_url": "https://api.github.com/repos/DocumentDrivenDX/umf/{archive_format}{/ref}",
+      "downloads_url": "https://api.github.com/repos/DocumentDrivenDX/umf/downloads",
+      "issues_url": "https://api.github.com/repos/DocumentDrivenDX/umf/issues{/number}",
+      "pulls_url": "https://api.github.com/repos/DocumentDrivenDX/umf/pulls{/number}",
+      "milestones_url": "https://api.github.com/repos/DocumentDrivenDX/umf/milestones{/number}",
+      "notifications_url": "https://api.github.com/repos/DocumentDrivenDX/umf/notifications{?since,all,participating}",
+      "labels_url": "https://api.github.com/repos/DocumentDrivenDX/umf/labels{/name}",
+      "releases_url": "https://api.github.com/repos/DocumentDrivenDX/umf/releases{/id}",
+      "deployments_url": "https://api.github.com/repos/DocumentDrivenDX/umf/deployments"
+    },
+    "head_repository": {
+      "id": 1382276802,
+      "node_id": "R_kgDOUmPewg",
+      "name": "umf",
+      "full_name": "DocumentDrivenDX/umf",
+      "private": false,
+      "owner": {
+        "login": "DocumentDrivenDX",
+        "id": 273466046,
+        "node_id": "O_kgDOEEzCvg",
+        "avatar_url": "https://avatars.githubusercontent.com/u/273466046?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/DocumentDrivenDX",
+        "html_url": "https://github.com/DocumentDrivenDX",
+        "followers_url": "https://api.github.com/users/DocumentDrivenDX/followers",
+        "following_url": "https://api.github.com/users/DocumentDrivenDX/following{/other_user}",
+        "gists_url": "https://api.github.com/users/DocumentDrivenDX/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/DocumentDrivenDX/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/DocumentDrivenDX/subscriptions",
+        "organizations_url": "https://api.github.com/users/DocumentDrivenDX/orgs",
+        "repos_url": "https://api.github.com/users/DocumentDrivenDX/repos",
+        "events_url": "https://api.github.com/users/DocumentDrivenDX/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/DocumentDrivenDX/received_events",
+        "type": "Organization",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "html_url": "https://github.com/DocumentDrivenDX/umf",
+      "description": "Universal schema interchange fabric",
+      "fork": false,
+      "url": "https://api.github.com/repos/DocumentDrivenDX/umf",
+      "forks_url": "https://api.github.com/repos/DocumentDrivenDX/umf/forks",
+      "keys_url": "https://api.github.com/repos/DocumentDrivenDX/umf/keys{/key_id}",
+      "collaborators_url": "https://api.github.com/repos/DocumentDrivenDX/umf/collaborators{/collaborator}",
+      "teams_url": "https://api.github.com/repos/DocumentDrivenDX/umf/teams",
+      "hooks_url": "https://api.github.com/repos/DocumentDrivenDX/umf/hooks",
+      "issue_events_url": "https://api.github.com/repos/DocumentDrivenDX/umf/issues/events{/number}",
+      "events_url": "https://api.github.com/repos/DocumentDrivenDX/umf/events",
+      "assignees_url": "https://api.github.com/repos/DocumentDrivenDX/umf/assignees{/user}",
+      "branches_url": "https://api.github.com/repos/DocumentDrivenDX/umf/branches{/branch}",
+      "tags_url": "https://api.github.com/repos/DocumentDrivenDX/umf/tags",
+      "blobs_url": "https://api.github.com/repos/DocumentDrivenDX/umf/git/blobs{/sha}",
+      "git_tags_url": "https://api.github.com/repos/DocumentDrivenDX/umf/git/tags{/sha}",
+      "git_refs_url": "https://api.github.com/repos/DocumentDrivenDX/umf/git/refs{/sha}",
+      "trees_url": "https://api.github.com/repos/DocumentDrivenDX/umf/git/trees{/sha}",
+      "statuses_url": "https://api.github.com/repos/DocumentDrivenDX/umf/statuses/{sha}",
+      "languages_url": "https://api.github.com/repos/DocumentDrivenDX/umf/languages",
+      "stargazers_url": "https://api.github.com/repos/DocumentDrivenDX/umf/stargazers",
+      "contributors_url": "https://api.github.com/repos/DocumentDrivenDX/umf/contributors",
+      "subscribers_url": "https://api.github.com/repos/DocumentDrivenDX/umf/subscribers",
+      "subscription_url": "https://api.github.com/repos/DocumentDrivenDX/umf/subscription",
+      "commits_url": "https://api.github.com/repos/DocumentDrivenDX/umf/commits{/sha}",
+      "git_commits_url": "https://api.github.com/repos/DocumentDrivenDX/umf/git/commits{/sha}",
+      "comments_url": "https://api.github.com/repos/DocumentDrivenDX/umf/comments{/number}",
+      "issue_comment_url": "https://api.github.com/repos/DocumentDrivenDX/umf/issues/comments{/number}",
+      "contents_url": "https://api.github.com/repos/DocumentDrivenDX/umf/contents/{+path}",
+      "compare_url": "https://api.github.com/repos/DocumentDrivenDX/umf/compare/{base}...{head}",
+      "merges_url": "https://api.github.com/repos/DocumentDrivenDX/umf/merges",
+      "archive_url": "https://api.github.com/repos/DocumentDrivenDX/umf/{archive_format}{/ref}",
+      "downloads_url": "https://api.github.com/repos/DocumentDrivenDX/umf/downloads",
+      "issues_url": "https://api.github.com/repos/DocumentDrivenDX/umf/issues{/number}",
+      "pulls_url": "https://api.github.com/repos/DocumentDrivenDX/umf/pulls{/number}",
+      "milestones_url": "https://api.github.com/repos/DocumentDrivenDX/umf/milestones{/number}",
+      "notifications_url": "https://api.github.com/repos/DocumentDrivenDX/umf/notifications{?since,all,participating}",
+      "labels_url": "https://api.github.com/repos/DocumentDrivenDX/umf/labels{/name}",
+      "releases_url": "https://api.github.com/repos/DocumentDrivenDX/umf/releases{/id}",
+      "deployments_url": "https://api.github.com/repos/DocumentDrivenDX/umf/deployments"
+    }
+  },
+  "jobs": {
+    "jobs": [
+      {
+        "id": 122493680498,
+        "name": "generate",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 40590644824,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Start original bounded generation budget and failure receipt",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Run oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Run dtolnay/rust-toolchain@stable",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Require the dedicated generation branch and frozen checkout",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7
+          },
+          {
+            "name": "Verify adopted Stage-A companion and freeze merged input pins",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8
+          },
+          {
+            "name": "Install locked JavaScript build inputs and fetch locked Rust metadata inputs",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9
+          },
+          {
+            "name": "Generate source-bound artifacts and current R3 reports",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10
+          },
+          {
+            "name": "Stage only current generated outputs and hash receipt",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          },
+          {
+            "name": "Upload generation artifact without adopting it",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12
+          },
+          {
+            "name": "Post Run actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 22
+          },
+          {
+            "name": "Post Run oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 23
+          },
+          {
+            "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 24
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 25
+          }
+        ]
+      }
+    ]
+  },
+  "artifacts": {
+    "artifacts": [
+      {
+        "id": 12773519192,
+        "name": "umf-merged-source-generated-45aa6b90e80bb03a4af4a7a6987bdab5bd7c937f-40590644824-1",
+        "size_in_bytes": 736918,
+        "url": "https://api.github.com/repos/DocumentDrivenDX/umf/actions/artifacts/12773519192",
+        "archive_download_url": "https://api.github.com/repos/DocumentDrivenDX/umf/actions/artifacts/12773519192/zip",
+        "expired": false,
+        "created_at": "2026-10-27T22:15:10Z",
+        "expires_at": "2027-01-25T21:54:45Z",
+        "updated_at": "2026-10-27T22:15:10Z",
+        "digest": "sha256:7d914620c8e1867771d2f4ee0e2cf87ab3c5e7ab4f9eca04c9159ab30b177eb3",
+        "workflow_run": {
+          "id": 40590644824,
+          "repository_id": 1382276802,
+          "head_repository_id": 1382276802,
+          "head_branch": "codex/migration-merged-generation",
+          "head_sha": "45aa6b90e80bb03a4af4a7a6987bdab5bd7c937f"
+        }
+      }
+    ]
+  }
+}

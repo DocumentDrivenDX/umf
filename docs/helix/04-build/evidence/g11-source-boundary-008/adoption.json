@@ -1,0 +1,62 @@
+{
+  "adoptedSourcePaths": [
+    "python/umf_access/src/umf_access/canonical.py",
+    "python/umf_access/src/umf_access/lifecycle/generation_authority_bootstrap.py",
+    "python/umf_access/src/umf_access/lifecycle/generation_authority_session.py",
+    "python/umf_access/src/umf_access/lifecycle/generation_enrollment_authority.py",
+    "python/umf_access/src/umf_access/lifecycle/generation_enrollment_ledger.py",
+    "python/umf_access/src/umf_access/lifecycle/ingress_custody.py",
+    "python/umf_access/src/umf_access/lifecycle/ingress_local_postgres.py",
+    "python/umf_access/src/umf_access/lifecycle/owner_approval_core.py",
+    "python/umf_access/src/umf_access/lifecycle/owner_authority.py",
+    "python/umf_access/src/umf_access/lifecycle/owner_bootstrap.py",
+    "python/umf_access/src/umf_access/lifecycle/owner_wire.py",
+    "python/umf_access/src/umf_access/native_program.py",
+    "python/umf_access/tests/owner_bootstrap_setup_fixture.py",
+    "python/umf_access/tests/test_access_python_boundaries.py",
+    "python/umf_access/tests/test_generation_authority_physical_binding.py",
+    "python/umf_access/tests/test_generation_enrollment_authority.py",
+    "python/umf_access/tests/test_ingress_custody.py",
+    "python/umf_access/tests/test_ingress_local_postgres.py",
+    "python/umf_access/tests/test_ingress_local_postgres_authority_bridge.py",
+    "python/umf_access/tests/test_owner_authority.py",
+    "python/umf_access/tests/test_owner_ledger_birth_recovery.py",
+    "scripts/check-access-python-boundaries.py"
+  ],
+  "baseCommit": "1fe2ddba25a3d98c34f4b4f55eb7dabb688db7ac",
+  "behavior": [
+    "Native-free logical ledger/bootstrap and upper native session facade retain exact original type identities and capability ownership.",
+    "Canonical signed duplicate records cannot substitute booleans/numeric aliases.",
+    "Every retained prepared/confirmed ROOTrequest binds to exact original physical .3 bytes and physical context tuple."
+  ],
+  "fourFinalFixPaths": [
+    "python/umf_access/src/umf_access/lifecycle/generation_authority_bootstrap.py",
+    "python/umf_access/src/umf_access/lifecycle/owner_bootstrap.py",
+    "python/umf_access/tests/test_generation_authority_physical_binding.py",
+    "python/umf_access/tests/test_generation_enrollment_authority.py"
+  ],
+  "openGates": [
+    "Native014 lease/allmutator exclusion/durable ROOTcheckpoints",
+    "Original committed ingress-store receipt/census/provider",
+    "Original authorized subject/schema births",
+    "FullG02-G11 native/browser/installed/currentCI/merge/immutablepublicrelease acceptance"
+  ],
+  "sourceClosureFiles": 240,
+  "sourceClosureResolution": "source/ prefix in retained candidate manifest maps to repository root; all240 actual adopted source bytes matched beforecommit. No auxiliary scratch ROOTtransition code adopted.",
+  "sourceManifestSha256": "49c6f4d8b633fed4c84a7c8b2be9737cc196f321530358e000f054c75c7ed1da",
+  "status": "reviewed-source-boundary-adopted-native-unqualified",
+  "validation": {
+    "independentFinalReview": "ee62d95d3254742a803be4df9fcf9a83bf7aa5b136ec8faca4868f9ccbedcba5",
+    "predecessorRegressionExpectedFailures": 3,
+    "ruff": "pass",
+    "sourceSuite": 123
+  },
+  "whitespaceDisposition": {
+    "decision": "Preserve exact independently reviewed source bytes; accept these two EOF blanks. Verify all other whitespace with per-command core.whitespace=-blank-at-eof. No repository Git setting changed.",
+    "paths": [
+      "python/umf_access/src/umf_access/lifecycle/generation_enrollment_authority.py:1107",
+      "python/umf_access/src/umf_access/lifecycle/generation_enrollment_ledger.py:771"
+    ],
+    "standardGitDiffCheck": "two new-blank-line-at-EOF findings only"
+  }
+}

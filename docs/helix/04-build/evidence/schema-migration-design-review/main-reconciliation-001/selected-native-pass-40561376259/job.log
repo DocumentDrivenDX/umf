@@ -1,0 +1,1279 @@
+﻿2026-10-27T18:35:26.9786906Z Current runner version: '2.338.0'
+2026-10-27T18:35:26.9806353Z ##[group]Runner Image Provisioner
+2026-10-27T18:35:26.9806965Z Hosted Compute Agent
+2026-10-27T18:35:26.9807342Z Version: 20261021.618
+2026-10-27T18:35:26.9807730Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-10-27T18:35:26.9808204Z Build Date: 2026-10-21T00:45:21Z
+2026-10-27T18:35:26.9808648Z Worker ID: {ad5bb74d-8f45-4b47-95ad-98d485b7a66a}
+2026-10-27T18:35:26.9809057Z Region: centralus
+2026-10-27T18:35:26.9809444Z Cloud: Azure
+2026-10-27T18:35:26.9809916Z ##[endgroup]
+2026-10-27T18:35:26.9810776Z ##[group]Operating System
+2026-10-27T18:35:26.9811174Z Ubuntu
+2026-10-27T18:35:26.9811484Z 24.04.5
+2026-10-27T18:35:26.9811847Z LTS
+2026-10-27T18:35:26.9812164Z ##[endgroup]
+2026-10-27T18:35:26.9812525Z ##[group]Runner Image
+2026-10-27T18:35:26.9812924Z Image: ubuntu-24.04
+2026-10-27T18:35:26.9813275Z Version: 20261012.334.1
+2026-10-27T18:35:26.9814061Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-27T18:35:26.9814973Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-27T18:35:26.9815576Z ##[endgroup]
+2026-10-27T18:35:26.9816272Z ##[group]GITHUB_TOKEN Permissions
+2026-10-27T18:35:26.9817455Z Contents: read
+2026-10-27T18:35:26.9817807Z Metadata: read
+2026-10-27T18:35:26.9818252Z ##[endgroup]
+2026-10-27T18:35:26.9819593Z Secret source: Actions
+2026-10-27T18:35:26.9820307Z Cache mode: write
+2026-10-27T18:35:26.9820733Z Prepare workflow directory
+2026-10-27T18:35:27.0118661Z Prepare all required actions
+2026-10-27T18:35:27.0152212Z Getting action download info
+2026-10-27T18:35:27.3536200Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-27T18:35:27.4401086Z Download action repository 'oven-sh/setup-bun@v2' (SHA:0c5077e51419868618aeaa5fe8019c62421857d6)
+2026-10-27T18:35:27.8441613Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-10-27T18:35:27.9460343Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-27T18:35:28.1658536Z Complete job name: Bounded UMF and Weft PostgreSQL 18.6 qualification
+2026-10-27T18:35:28.2084189Z ##[group]Checking docker version
+2026-10-27T18:35:28.2093011Z ##[command]/usr/bin/docker version --format '{{.Server.APIVersion}}'
+2026-10-27T18:35:28.2974560Z '1.48'
+2026-10-27T18:35:28.2985787Z Docker daemon API version: '1.48'
+2026-10-27T18:35:28.2986286Z ##[command]/usr/bin/docker version --format '{{.Client.APIVersion}}'
+2026-10-27T18:35:28.3122768Z '1.48'
+2026-10-27T18:35:28.3134815Z Docker client API version: '1.48'
+2026-10-27T18:35:28.3138252Z ##[endgroup]
+2026-10-27T18:35:28.3140169Z ##[group]Clean up resources from previous jobs
+2026-10-27T18:35:28.3143490Z ##[command]/usr/bin/docker ps --all --quiet --no-trunc --filter "label=ec3224"
+2026-10-27T18:35:28.3255439Z ##[command]/usr/bin/docker network prune --force --filter "label=ec3224"
+2026-10-27T18:35:28.3354214Z ##[endgroup]
+2026-10-27T18:35:28.3354576Z ##[group]Create local container network
+2026-10-27T18:35:28.3361302Z ##[command]/usr/bin/docker network create --label ec3224 github_network_fd6a86729f1746d8be47e987e0c22434
+2026-10-27T18:35:28.3744453Z feebd437f2481af2f6687cd0bf77e6eac9dd8c1bf349fe25505c95a7463706fd
+2026-10-27T18:35:28.3759492Z ##[endgroup]
+2026-10-27T18:35:28.3778171Z ##[group]Starting postgres service container
+2026-10-27T18:35:28.3793192Z ##[command]/usr/bin/docker pull postgres:18.6
+2026-10-27T18:35:28.9196520Z 18.6: Pulling from library/postgres
+2026-10-27T18:35:29.1084784Z f2be67225471: Pulling fs layer
+2026-10-27T18:35:29.1086322Z 36f05ca1a259: Pulling fs layer
+2026-10-27T18:35:29.1087497Z 92accee5624e: Pulling fs layer
+2026-10-27T18:35:29.1088342Z 5bf0df4dfeec: Pulling fs layer
+2026-10-27T18:35:29.1089296Z fc259989795e: Pulling fs layer
+2026-10-27T18:35:29.1090283Z 33e59af3458c: Pulling fs layer
+2026-10-27T18:35:29.1091077Z bea9e19f5a74: Pulling fs layer
+2026-10-27T18:35:29.1092230Z 19f779d0bd48: Pulling fs layer
+2026-10-27T18:35:29.1093092Z cf9efa127f85: Pulling fs layer
+2026-10-27T18:35:29.1093910Z af1084bcb355: Pulling fs layer
+2026-10-27T18:35:29.1094787Z 40ebd398ec37: Pulling fs layer
+2026-10-27T18:35:29.1095753Z 00490e632b75: Pulling fs layer
+2026-10-27T18:35:29.1096828Z 8ed0c854313a: Pulling fs layer
+2026-10-27T18:35:29.1098218Z 5bf0df4dfeec: Waiting
+2026-10-27T18:35:29.1099288Z fc259989795e: Waiting
+2026-10-27T18:35:29.1100444Z 33e59af3458c: Waiting
+2026-10-27T18:35:29.1101513Z bea9e19f5a74: Waiting
+2026-10-27T18:35:29.1102630Z 19f779d0bd48: Waiting
+2026-10-27T18:35:29.1103550Z cf9efa127f85: Waiting
+2026-10-27T18:35:29.1104396Z 8ed0c854313a: Waiting
+2026-10-27T18:35:29.1105228Z af1084bcb355: Waiting
+2026-10-27T18:35:29.1106068Z 40ebd398ec37: Waiting
+2026-10-27T18:35:29.1106898Z 00490e632b75: Waiting
+2026-10-27T18:35:29.2413400Z 36f05ca1a259: Verifying Checksum
+2026-10-27T18:35:29.2414726Z 36f05ca1a259: Download complete
+2026-10-27T18:35:29.3841774Z 92accee5624e: Verifying Checksum
+2026-10-27T18:35:29.3843486Z 92accee5624e: Download complete
+2026-10-27T18:35:29.3945221Z f2be67225471: Verifying Checksum
+2026-10-27T18:35:29.3946508Z f2be67225471: Download complete
+2026-10-27T18:35:29.4284079Z 5bf0df4dfeec: Verifying Checksum
+2026-10-27T18:35:29.4285356Z 5bf0df4dfeec: Download complete
+2026-10-27T18:35:29.5812921Z bea9e19f5a74: Verifying Checksum
+2026-10-27T18:35:29.5814171Z bea9e19f5a74: Download complete
+2026-10-27T18:35:29.6246541Z 33e59af3458c: Verifying Checksum
+2026-10-27T18:35:29.6271047Z 33e59af3458c: Download complete
+2026-10-27T18:35:29.6403341Z fc259989795e: Verifying Checksum
+2026-10-27T18:35:29.6404602Z fc259989795e: Download complete
+2026-10-27T18:35:29.7165517Z 19f779d0bd48: Verifying Checksum
+2026-10-27T18:35:29.7166637Z 19f779d0bd48: Download complete
+2026-10-27T18:35:29.7806272Z af1084bcb355: Verifying Checksum
+2026-10-27T18:35:29.7808601Z af1084bcb355: Download complete
+2026-10-27T18:35:29.8903613Z 40ebd398ec37: Verifying Checksum
+2026-10-27T18:35:29.8904094Z 40ebd398ec37: Download complete
+2026-10-27T18:35:29.9047543Z 00490e632b75: Verifying Checksum
+2026-10-27T18:35:30.0572248Z 00490e632b75: Download complete
+2026-10-27T18:35:30.0573516Z 8ed0c854313a: Verifying Checksum
+2026-10-27T18:35:30.0573973Z 8ed0c854313a: Download complete
+2026-10-27T18:35:30.1177689Z f2be67225471: Pull complete
+2026-10-27T18:35:30.4077263Z cf9efa127f85: Verifying Checksum
+2026-10-27T18:35:30.4077519Z cf9efa127f85: Download complete
+2026-10-27T18:35:30.6053394Z 36f05ca1a259: Pull complete
+2026-10-27T18:35:38.0676204Z 92accee5624e: Pull complete
+2026-10-27T18:35:38.1141164Z 5bf0df4dfeec: Pull complete
+2026-10-27T18:35:38.4790775Z fc259989795e: Pull complete
+2026-10-27T18:35:38.5688553Z 33e59af3458c: Pull complete
+2026-10-27T18:35:38.5747815Z bea9e19f5a74: Pull complete
+2026-10-27T18:35:38.5825149Z 19f779d0bd48: Pull complete
+2026-10-27T18:35:42.0254577Z cf9efa127f85: Pull complete
+2026-10-27T18:35:42.0415679Z af1084bcb355: Pull complete
+2026-10-27T18:35:42.0714293Z 40ebd398ec37: Pull complete
+2026-10-27T18:35:42.0805481Z 00490e632b75: Pull complete
+2026-10-27T18:35:42.0883592Z 8ed0c854313a: Pull complete
+2026-10-27T18:35:42.0918645Z Digest: sha256:edb0c08dc33befd0262ab3b5cf1c4f3f8cfd8b09e88c05b45adee29d6761ddb6
+2026-10-27T18:35:42.0929370Z Status: Downloaded newer image for postgres:18.6
+2026-10-27T18:35:42.0936198Z docker.io/library/postgres:18.6
+2026-10-27T18:35:42.1046150Z ##[command]/usr/bin/docker create --name 4adbaa44dac74e70b54f0af1564d9e0d_postgres186_44e30a --label ec3224 --network github_network_fd6a86729f1746d8be47e987e0c22434 --network-alias postgres -p 5432:5432 --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 5s --health-retries 12 -e "POSTGRES_HOST_AUTH_METHOD=trust" -e GITHUB_ACTIONS=true -e CI=true postgres:18.6
+2026-10-27T18:35:42.1255048Z a20408f9a670be3f4d86653dfbc89edaa0eda54c432b18de4fb99a91a2ee7225
+2026-10-27T18:35:42.1275864Z ##[command]/usr/bin/docker start a20408f9a670be3f4d86653dfbc89edaa0eda54c432b18de4fb99a91a2ee7225
+2026-10-27T18:35:42.3130046Z a20408f9a670be3f4d86653dfbc89edaa0eda54c432b18de4fb99a91a2ee7225
+2026-10-27T18:35:42.3157515Z ##[command]/usr/bin/docker ps --all --filter id=a20408f9a670be3f4d86653dfbc89edaa0eda54c432b18de4fb99a91a2ee7225 --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
+2026-10-27T18:35:42.3263641Z a20408f9a670be3f4d86653dfbc89edaa0eda54c432b18de4fb99a91a2ee7225 Up Less than a second (health: starting)
+2026-10-27T18:35:42.3282329Z ##[command]/usr/bin/docker port a20408f9a670be3f4d86653dfbc89edaa0eda54c432b18de4fb99a91a2ee7225
+2026-10-27T18:35:42.3387267Z 5432/tcp -> 0.0.0.0:5432
+2026-10-27T18:35:42.3387824Z 5432/tcp -> [::]:5432
+2026-10-27T18:35:42.3426722Z ##[endgroup]
+2026-10-27T18:35:42.3433416Z ##[group]Waiting for all services to be ready
+2026-10-27T18:35:42.3442758Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" a20408f9a670be3f4d86653dfbc89edaa0eda54c432b18de4fb99a91a2ee7225
+2026-10-27T18:35:42.3564674Z starting
+2026-10-27T18:35:42.3574621Z postgres service is starting, waiting 2 seconds before checking again.
+2026-10-27T18:35:44.3576726Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" a20408f9a670be3f4d86653dfbc89edaa0eda54c432b18de4fb99a91a2ee7225
+2026-10-27T18:35:44.3674566Z starting
+2026-10-27T18:35:44.3686141Z postgres service is starting, waiting 3 seconds before checking again.
+2026-10-27T18:35:48.1587364Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" a20408f9a670be3f4d86653dfbc89edaa0eda54c432b18de4fb99a91a2ee7225
+2026-10-27T18:35:48.1682889Z healthy
+2026-10-27T18:35:48.1697154Z postgres service is healthy.
+2026-10-27T18:35:48.1697696Z ##[endgroup]
+2026-10-27T18:35:48.1861433Z ##[group]Run set -euo pipefail
+2026-10-27T18:35:48.1861688Z [36;1mset -euo pipefail[0m
+2026-10-27T18:35:48.1861913Z [36;1mmkdir -p "$QUALIFICATION_DIR/logs" "$QUALIFICATION_DIR/reports"[0m
+2026-10-27T18:35:48.1862193Z [36;1mSTART_MS="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"[0m
+2026-10-27T18:35:48.1862398Z [36;1mDEADLINE_MS="$((START_MS + 1800000))"[0m
+2026-10-27T18:35:48.1862616Z [36;1mprintf '%s\n' "$START_MS" > "$QUALIFICATION_DIR/monotonic-start-ms"[0m
+2026-10-27T18:35:48.1862891Z [36;1mprintf '%s\n' "$DEADLINE_MS" > "$QUALIFICATION_DIR/monotonic-deadline-ms"[0m
+2026-10-27T18:35:48.1863130Z [36;1mcat > "$QUALIFICATION_DIR/receipt.json" <<EOF[0m
+2026-10-27T18:35:48.1863296Z [36;1m{[0m
+2026-10-27T18:35:48.1863460Z [36;1m  "profile": "umf.g02-g03-selected-native-qualification/1",[0m
+2026-10-27T18:35:48.1863667Z [36;1m  "status": "FAIL_OR_UNKNOWN",[0m
+2026-10-27T18:35:48.1863867Z [36;1m  "reason": "The workflow did not reach its passing finalizer.",[0m
+2026-10-27T18:35:48.1864120Z [36;1m  "sourceCommit": "${GITHUB_SHA}",[0m
+2026-10-27T18:35:48.1864280Z [36;1m  "runId": "${GITHUB_RUN_ID}",[0m
+2026-10-27T18:35:48.1864443Z [36;1m  "runAttempt": "${GITHUB_RUN_ATTEMPT}",[0m
+2026-10-27T18:35:48.1864613Z [36;1m  "ref": "${GITHUB_REF}",[0m
+2026-10-27T18:35:48.1864763Z [36;1m  "workflow": "${GITHUB_WORKFLOW}",[0m
+2026-10-27T18:35:48.1864921Z [36;1m  "selectedScopeOnly": true,[0m
+2026-10-27T18:35:48.1865074Z [36;1m  "fullG03Campaign": "OPEN"[0m
+2026-10-27T18:35:48.1865214Z [36;1m}[0m
+2026-10-27T18:35:48.1865319Z [36;1mEOF[0m
+2026-10-27T18:35:48.2061056Z shell: /usr/bin/bash -e {0}
+2026-10-27T18:35:48.2061401Z env:
+2026-10-27T18:35:48.2061616Z   QUALIFICATION_DIR: /home/runner/work/_temp/umf-g02-g03-native-qualification
+2026-10-27T18:35:48.2061875Z   GITHUB_SHA: a4af875748b085ac531fe06089a675a0ea1059fc
+2026-10-27T18:35:48.2062055Z   GITHUB_RUN_ID: 40561376259
+2026-10-27T18:35:48.2062193Z   GITHUB_RUN_ATTEMPT: 1
+2026-10-27T18:35:48.2062392Z   GITHUB_REF: refs/heads/codex/migration-g02-g03-native-qualification
+2026-10-27T18:35:48.2062630Z   GITHUB_WORKFLOW: G02 and G03 selected native qualification
+2026-10-27T18:35:48.2062980Z ##[endgroup]
+2026-10-27T18:35:48.2330149Z ##[group]Run actions/checkout@v4
+2026-10-27T18:35:48.2330475Z with:
+2026-10-27T18:35:48.2330598Z   repository: DocumentDrivenDX/umf
+2026-10-27T18:35:48.2331963Z   token: ***
+2026-10-27T18:35:48.2332077Z   ssh-strict: true
+2026-10-27T18:35:48.2332190Z   ssh-user: git
+2026-10-27T18:35:48.2332309Z   persist-credentials: true
+2026-10-27T18:35:48.2332440Z   clean: true
+2026-10-27T18:35:48.2332561Z   sparse-checkout-cone-mode: true
+2026-10-27T18:35:48.2332702Z   fetch-depth: 1
+2026-10-27T18:35:48.2332816Z   fetch-tags: false
+2026-10-27T18:35:48.2332930Z   show-progress: true
+2026-10-27T18:35:48.2333045Z   lfs: false
+2026-10-27T18:35:48.2333150Z   submodules: false
+2026-10-27T18:35:48.2333275Z   set-safe-directory: true
+2026-10-27T18:35:48.2333411Z   allow-unsafe-pr-checkout: false
+2026-10-27T18:35:48.2333551Z ##[endgroup]
+2026-10-27T18:35:48.4726080Z Syncing repository: DocumentDrivenDX/umf
+2026-10-27T18:35:48.4726899Z ##[group]Getting Git version info
+2026-10-27T18:35:48.4727165Z Working directory is '/home/runner/work/umf/umf'
+2026-10-27T18:35:48.4727481Z [command]/usr/bin/git version
+2026-10-27T18:35:48.4790818Z git version 2.55.0
+2026-10-27T18:35:48.4806333Z ##[endgroup]
+2026-10-27T18:35:48.4817567Z Temporarily overriding HOME='/home/runner/work/_temp/21a7d948-58e4-46b0-a1a2-a69ab85737ba' before making global git config changes
+2026-10-27T18:35:48.4818071Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-27T18:35:48.4822052Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf
+2026-10-27T18:35:48.4873403Z Deleting the contents of '/home/runner/work/umf/umf'
+2026-10-27T18:35:48.4876750Z ##[group]Initializing the repository
+2026-10-27T18:35:48.4880747Z [command]/usr/bin/git init /home/runner/work/umf/umf
+2026-10-27T18:35:48.4984512Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-27T18:35:48.4984954Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-27T18:35:48.4985251Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-27T18:35:48.4985478Z hint: call:
+2026-10-27T18:35:48.4985589Z hint:
+2026-10-27T18:35:48.4985779Z hint: 	git config --global init.defaultBranch <name>
+2026-10-27T18:35:48.4985972Z hint:
+2026-10-27T18:35:48.4986154Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-27T18:35:48.4986453Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-27T18:35:48.4986663Z hint:
+2026-10-27T18:35:48.4986786Z hint: 	git branch -m <name>
+2026-10-27T18:35:48.4986915Z hint:
+2026-10-27T18:35:48.4987107Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-27T18:35:48.4991165Z Initialized empty Git repository in /home/runner/work/umf/umf/.git/
+2026-10-27T18:35:48.4998934Z [command]/usr/bin/git remote add origin https://github.com/DocumentDrivenDX/umf
+2026-10-27T18:35:48.5171251Z ##[endgroup]
+2026-10-27T18:35:48.5171692Z ##[group]Disabling automatic garbage collection
+2026-10-27T18:35:48.5175904Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-27T18:35:48.5210498Z ##[endgroup]
+2026-10-27T18:35:48.5210838Z ##[group]Setting up auth
+2026-10-27T18:35:48.5217031Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T18:35:48.5260264Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-27T18:35:48.5564779Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T18:35:48.5594765Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-27T18:35:48.5774937Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T18:35:48.5804926Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-27T18:35:48.5988955Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-27T18:35:48.6025661Z ##[endgroup]
+2026-10-27T18:35:48.6026027Z ##[group]Fetching the repository
+2026-10-27T18:35:48.6036521Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +a4af875748b085ac531fe06089a675a0ea1059fc:refs/remotes/origin/codex/migration-g02-g03-native-qualification
+2026-10-27T18:36:09.0593362Z From https://github.com/DocumentDrivenDX/umf
+2026-10-27T18:36:09.0593801Z  * [new ref]           a4af875748b085ac531fe06089a675a0ea1059fc -> origin/codex/migration-g02-g03-native-qualification
+2026-10-27T18:36:09.0597404Z ##[endgroup]
+2026-10-27T18:36:09.0597833Z ##[group]Determining the checkout info
+2026-10-27T18:36:09.0600090Z ##[endgroup]
+2026-10-27T18:36:09.0605948Z [command]/usr/bin/git sparse-checkout disable
+2026-10-27T18:36:09.0653173Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-27T18:36:09.0684125Z ##[group]Checking out the ref
+2026-10-27T18:36:09.0687346Z [command]/usr/bin/git checkout --progress --force -B codex/migration-g02-g03-native-qualification refs/remotes/origin/codex/migration-g02-g03-native-qualification
+2026-10-27T18:36:10.2345473Z Updating files:   7% (4786/63776)
+2026-10-27T18:36:10.2875072Z Updating files:   8% (5103/63776)
+2026-10-27T18:36:10.3163045Z Updating files:   9% (5740/63776)
+2026-10-27T18:36:10.4358517Z Updating files:  10% (6378/63776)
+2026-10-27T18:36:10.5126766Z Updating files:  11% (7016/63776)
+2026-10-27T18:36:10.5654108Z Updating files:  12% (7654/63776)
+2026-10-27T18:36:10.6100084Z Updating files:  13% (8291/63776)
+2026-10-27T18:36:10.9884187Z Updating files:  14% (8929/63776)
+2026-10-27T18:36:11.1902052Z Updating files:  15% (9567/63776)
+2026-10-27T18:36:11.3573262Z Updating files:  15% (9619/63776)
+2026-10-27T18:36:11.4936173Z Updating files:  16% (10205/63776)
+2026-10-27T18:36:11.5314791Z Updating files:  17% (10842/63776)
+2026-10-27T18:36:11.8036033Z Updating files:  18% (11480/63776)
+2026-10-27T18:36:11.9713686Z Updating files:  19% (12118/63776)
+2026-10-27T18:36:12.1114857Z Updating files:  20% (12756/63776)
+2026-10-27T18:36:12.1580951Z Updating files:  20% (13300/63776)
+2026-10-27T18:36:12.2473539Z Updating files:  21% (13393/63776)
+2026-10-27T18:36:12.2707066Z Updating files:  22% (14031/63776)
+2026-10-27T18:36:12.2954650Z Updating files:  23% (14669/63776)
+2026-10-27T18:36:12.3167802Z Updating files:  24% (15307/63776)
+2026-10-27T18:36:12.3381663Z Updating files:  25% (15944/63776)
+2026-10-27T18:36:12.3601039Z Updating files:  26% (16582/63776)
+2026-10-27T18:36:12.3806423Z Updating files:  27% (17220/63776)
+2026-10-27T18:36:12.4025506Z Updating files:  28% (17858/63776)
+2026-10-27T18:36:12.4237490Z Updating files:  29% (18496/63776)
+2026-10-27T18:36:12.4596514Z Updating files:  30% (19133/63776)
+2026-10-27T18:36:12.4900947Z Updating files:  31% (19771/63776)
+2026-10-27T18:36:12.5109112Z Updating files:  32% (20409/63776)
+2026-10-27T18:36:13.1712732Z Updating files:  33% (21047/63776)
+2026-10-27T18:36:14.1164920Z Updating files:  33% (21608/63776)
+2026-10-27T18:36:15.1484866Z Updating files:  33% (21641/63776)
+2026-10-27T18:36:15.7284274Z Updating files:  33% (21666/63776)
+2026-10-27T18:36:16.2153404Z Updating files:  34% (21684/63776)
+2026-10-27T18:36:17.1116897Z Updating files:  34% (21699/63776)
+2026-10-27T18:36:18.1475132Z Updating files:  34% (21725/63776)
+2026-10-27T18:36:19.2046140Z Updating files:  34% (21751/63776)
+2026-10-27T18:36:20.1457237Z Updating files:  34% (21774/63776)
+2026-10-27T18:36:20.6670705Z Updating files:  34% (21798/63776)
+2026-10-27T18:36:21.1135398Z Updating files:  35% (22322/63776)
+2026-10-27T18:36:21.2642910Z Updating files:  35% (22779/63776)
+2026-10-27T18:36:21.5523560Z Updating files:  36% (22960/63776)
+2026-10-27T18:36:21.6344040Z Updating files:  37% (23598/63776)
+2026-10-27T18:36:21.7043091Z Updating files:  38% (24235/63776)
+2026-10-27T18:36:21.7656114Z Updating files:  39% (24873/63776)
+2026-10-27T18:36:21.8290089Z Updating files:  40% (25511/63776)
+2026-10-27T18:36:21.8763661Z Updating files:  41% (26149/63776)
+2026-10-27T18:36:21.9300778Z Updating files:  42% (26786/63776)
+2026-10-27T18:36:22.1116837Z Updating files:  43% (27424/63776)
+2026-10-27T18:36:22.4576596Z Updating files:  43% (27968/63776)
+2026-10-27T18:36:22.6353145Z Updating files:  44% (28062/63776)
+2026-10-27T18:36:22.9706059Z Updating files:  45% (28700/63776)
+2026-10-27T18:36:23.1115120Z Updating files:  46% (29337/63776)
+2026-10-27T18:36:23.2328010Z Updating files:  46% (29741/63776)
+2026-10-27T18:36:23.4084868Z Updating files:  47% (29975/63776)
+2026-10-27T18:36:23.5120994Z Updating files:  48% (30613/63776)
+2026-10-27T18:36:23.8000764Z Updating files:  49% (31251/63776)
+2026-10-27T18:36:23.8875198Z Updating files:  50% (31888/63776)
+2026-10-27T18:36:23.9730209Z Updating files:  51% (32526/63776)
+2026-10-27T18:36:24.0394563Z Updating files:  52% (33164/63776)
+2026-10-27T18:36:24.1113980Z Updating files:  53% (33802/63776)
+2026-10-27T18:36:24.1509523Z Updating files:  53% (34322/63776)
+2026-10-27T18:36:24.1743436Z Updating files:  54% (34440/63776)
+2026-10-27T18:36:24.1918066Z Updating files:  55% (35077/63776)
+2026-10-27T18:36:24.2183233Z Updating files:  56% (35715/63776)
+2026-10-27T18:36:24.3544387Z Updating files:  57% (36353/63776)
+2026-10-27T18:36:24.4320669Z Updating files:  58% (36991/63776)
+2026-10-27T18:36:24.4817367Z Updating files:  59% (37628/63776)
+2026-10-27T18:36:24.6349011Z Updating files:  60% (38266/63776)
+2026-10-27T18:36:24.7070918Z Updating files:  61% (38904/63776)
+2026-10-27T18:36:24.7768228Z Updating files:  62% (39542/63776)
+2026-10-27T18:36:24.8031615Z Updating files:  63% (40179/63776)
+2026-10-27T18:36:24.8303574Z Updating files:  64% (40817/63776)
+2026-10-27T18:36:24.8531282Z Updating files:  65% (41455/63776)
+2026-10-27T18:36:24.8725383Z Updating files:  66% (42093/63776)
+2026-10-27T18:36:24.8966429Z Updating files:  67% (42730/63776)
+2026-10-27T18:36:24.9603418Z Updating files:  68% (43368/63776)
+2026-10-27T18:36:25.0902939Z Updating files:  69% (44006/63776)
+2026-10-27T18:36:25.1111309Z Updating files:  70% (44644/63776)
+2026-10-27T18:36:25.2496251Z Updating files:  70% (44725/63776)
+2026-10-27T18:36:25.2875449Z Updating files:  71% (45281/63776)
+2026-10-27T18:36:25.3034556Z Updating files:  72% (45919/63776)
+2026-10-27T18:36:25.3212462Z Updating files:  73% (46557/63776)
+2026-10-27T18:36:25.3367605Z Updating files:  74% (47195/63776)
+2026-10-27T18:36:25.3522770Z Updating files:  75% (47832/63776)
+2026-10-27T18:36:25.3682374Z Updating files:  76% (48470/63776)
+2026-10-27T18:36:25.3964339Z Updating files:  77% (49108/63776)
+2026-10-27T18:36:25.4122057Z Updating files:  78% (49746/63776)
+2026-10-27T18:36:25.4284372Z Updating files:  79% (50384/63776)
+2026-10-27T18:36:25.4465789Z Updating files:  80% (51021/63776)
+2026-10-27T18:36:25.5715683Z Updating files:  81% (51659/63776)
+2026-10-27T18:36:25.7433386Z Updating files:  82% (52297/63776)
+2026-10-27T18:36:25.9327056Z Updating files:  83% (52935/63776)
+2026-10-27T18:36:26.0297792Z Updating files:  84% (53572/63776)
+2026-10-27T18:36:26.0581726Z Updating files:  85% (54210/63776)
+2026-10-27T18:36:26.0767538Z Updating files:  86% (54848/63776)
+2026-10-27T18:36:26.0951395Z Updating files:  87% (55486/63776)
+2026-10-27T18:36:26.1310485Z Updating files:  88% (56123/63776)
+2026-10-27T18:36:26.1481200Z Updating files:  88% (56219/63776)
+2026-10-27T18:36:26.1714313Z Updating files:  89% (56761/63776)
+2026-10-27T18:36:26.1883210Z Updating files:  90% (57399/63776)
+2026-10-27T18:36:26.2103404Z Updating files:  91% (58037/63776)
+2026-10-27T18:36:26.2445781Z Updating files:  92% (58674/63776)
+2026-10-27T18:36:26.2685673Z Updating files:  93% (59312/63776)
+2026-10-27T18:36:26.2932626Z Updating files:  94% (59950/63776)
+2026-10-27T18:36:26.4765535Z Updating files:  95% (60588/63776)
+2026-10-27T18:36:26.5607930Z Updating files:  96% (61225/63776)
+2026-10-27T18:36:27.0882161Z Updating files:  97% (61863/63776)
+2026-10-27T18:36:27.1067422Z Updating files:  98% (62501/63776)
+2026-10-27T18:36:27.1145927Z Updating files:  98% (62959/63776)
+2026-10-27T18:36:27.1523794Z Updating files:  99% (63139/63776)
+2026-10-27T18:36:27.1524096Z Updating files: 100% (63776/63776)
+2026-10-27T18:36:27.1524331Z Updating files: 100% (63776/63776), done.
+2026-10-27T18:36:27.3563456Z Switched to a new branch 'codex/migration-g02-g03-native-qualification'
+2026-10-27T18:36:27.3565312Z branch 'codex/migration-g02-g03-native-qualification' set up to track 'origin/codex/migration-g02-g03-native-qualification'.
+2026-10-27T18:36:27.3703259Z ##[endgroup]
+2026-10-27T18:36:27.3748674Z [command]/usr/bin/git log -1 --format=%H
+2026-10-27T18:36:27.3773910Z a4af875748b085ac531fe06089a675a0ea1059fc
+2026-10-27T18:36:27.5108834Z ##[group]Run oven-sh/setup-bun@v2
+2026-10-27T18:36:27.5109004Z with:
+2026-10-27T18:36:27.5109118Z   bun-version: 1.4.3
+2026-10-27T18:36:27.5109243Z   no-cache: false
+2026-10-27T18:36:27.5110712Z   token: ***
+2026-10-27T18:36:27.5110829Z ##[endgroup]
+2026-10-27T18:36:27.7682090Z Cache hit for: bun-+NUKu9E/U4apAe78eSCZvQ/GSdc=
+2026-10-27T18:36:28.8486965Z Received 41001437 of 41001437 (100.0%), 43.0 MBs/sec
+2026-10-27T18:36:28.8487333Z Cache Size: ~39 MB (41001437 B)
+2026-10-27T18:36:28.8507156Z [command]/usr/bin/tar -xf /home/runner/work/_temp/7a8f1b61-359a-4b2e-9a48-5104d6cdd202/cache.tzst -P -C /home/runner/work/umf/umf --use-compress-program unzstd
+2026-10-27T18:36:28.9568266Z Cache restored successfully
+2026-10-27T18:36:28.9591338Z [command]/home/runner/.bun/bin/bun --revision
+2026-10-27T18:36:28.9635903Z 1.4.3+c6da4a4d3
+2026-10-27T18:36:28.9640937Z Using a cached version of Bun: 1.4.3+c6da4a4d3
+2026-10-27T18:36:29.0208195Z ##[group]Run actions/setup-python@v5
+2026-10-27T18:36:29.0208368Z with:
+2026-10-27T18:36:29.0208489Z   python-version: 3.11
+2026-10-27T18:36:29.0208622Z   check-latest: false
+2026-10-27T18:36:29.0210225Z   token: ***
+2026-10-27T18:36:29.0210352Z   update-environment: true
+2026-10-27T18:36:29.0210511Z   allow-prereleases: false
+2026-10-27T18:36:29.0210642Z   freethreaded: false
+2026-10-27T18:36:29.0210767Z ##[endgroup]
+2026-10-27T18:36:29.1086995Z ##[group]Installed versions
+2026-10-27T18:36:29.1392096Z (node:2710) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-27T18:36:29.1392757Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-27T18:36:29.1393138Z Successfully set up CPython (3.11.17)
+2026-10-27T18:36:29.1393566Z ##[endgroup]
+2026-10-27T18:36:29.1654451Z ##[group]Run set -euo pipefail
+2026-10-27T18:36:29.1655495Z [36;1mset -euo pipefail[0m
+2026-10-27T18:36:29.1655690Z [36;1mSTART_MS="$(cat "$QUALIFICATION_DIR/monotonic-start-ms")"[0m
+2026-10-27T18:36:29.1655949Z [36;1mDEADLINE_MS="$(cat "$QUALIFICATION_DIR/monotonic-deadline-ms")"[0m
+2026-10-27T18:36:29.1656198Z [36;1mNOW_MS="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"[0m
+2026-10-27T18:36:29.1656448Z [36;1mREMAINING_SECONDS="$(((DEADLINE_MS - NOW_MS - 60000) / 1000))"[0m
+2026-10-27T18:36:29.1656668Z [36;1mif (( REMAINING_SECONDS <= 0 )); then[0m
+2026-10-27T18:36:29.1656905Z [36;1m  echo "Original 30-minute budget exhausted before qualification work." >&2[0m
+2026-10-27T18:36:29.1657126Z [36;1m  exit 124[0m
+2026-10-27T18:36:29.1657245Z [36;1mfi[0m
+2026-10-27T18:36:29.1657507Z [36;1mtimeout --signal=TERM --kill-after=10s "${REMAINING_SECONDS}s" bash -euo pipefail <<'BOUNDED_NATIVE_WORK'[0m
+2026-10-27T18:36:29.1657798Z [36;1mEVIDENCE="$QUALIFICATION_DIR"[0m
+2026-10-27T18:36:29.1658019Z [36;1mWORK="$RUNNER_TEMP/umf-g02-g03-native-work"[0m
+2026-10-27T18:36:29.1658329Z [36;1mmkdir -p "$WORK" "$WORK/mini-racer" "$WORK/builder-wheels" "$WORK/installed" "$EVIDENCE/logs" "$EVIDENCE/reports"[0m
+2026-10-27T18:36:29.1658607Z [36;1m[0m
+2026-10-27T18:36:29.1658721Z [36;1mrun_bounded() {[0m
+2026-10-27T18:36:29.1659046Z [36;1m  local name="$1" maximum="$2" now_ms deadline_ms remaining limit status capture_status log started_ms ended_ms log_bytes_before remaining_log_bytes[0m
+2026-10-27T18:36:29.1659587Z [36;1m  local -a pipeline_status[0m
+2026-10-27T18:36:29.1659891Z [36;1m  shift 2[0m
+2026-10-27T18:36:29.1660053Z [36;1m  now_ms="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"[0m
+2026-10-27T18:36:29.1660283Z [36;1m  deadline_ms="$(cat "$EVIDENCE/monotonic-deadline-ms")"[0m
+2026-10-27T18:36:29.1660509Z [36;1m  remaining=$(((deadline_ms - now_ms - 60000) / 1000))[0m
+2026-10-27T18:36:29.1660696Z [36;1m  if (( remaining <= 0 )); then[0m
+2026-10-27T18:36:29.1660895Z [36;1m    echo "Aggregate work deadline exhausted before $name" >&2[0m
+2026-10-27T18:36:29.1661099Z [36;1m    log="$EVIDENCE/logs/$name.log"[0m
+2026-10-27T18:36:29.1661337Z [36;1m    printf '%s\n' "Original aggregate work deadline exhausted before $name" >"$log"[0m
+2026-10-27T18:36:29.1661605Z [36;1m    ended_ms="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"[0m
+2026-10-27T18:36:29.1661916Z [36;1m    python -I - "$EVIDENCE/command-records.jsonl" "$log" "$name" "$name" 124 0 "$((ended_ms - now_ms))" "$@" <<'PY'[0m
+2026-10-27T18:36:29.1662205Z [36;1mimport hashlib, json, pathlib, sys[0m
+2026-10-27T18:36:29.1662450Z [36;1mrecords, log_path, name, stage, raw_exit, capture_exit, duration, *argv = sys.argv[1:][0m
+2026-10-27T18:36:29.1662719Z [36;1mpayload = pathlib.Path(log_path).read_bytes()[0m
+2026-10-27T18:36:29.1662929Z [36;1mrecord = {"name": name, "stage": stage, "argv": argv,[0m
+2026-10-27T18:36:29.1663169Z [36;1m          "rawExit": int(raw_exit), "monotonicDurationMs": int(duration),[0m
+2026-10-27T18:36:29.1663456Z [36;1m          "logBytes": len(payload), "logSha256": hashlib.sha256(payload).hexdigest(),[0m
+2026-10-27T18:36:29.1663719Z [36;1m          "captureExit": int(capture_exit), "truncated": False,[0m
+2026-10-27T18:36:29.1663922Z [36;1m          "truncationMarker": None}[0m
+2026-10-27T18:36:29.1664139Z [36;1mwith pathlib.Path(records).open("a", encoding="utf-8") as stream:[0m
+2026-10-27T18:36:29.1664395Z [36;1m    stream.write(json.dumps(record, sort_keys=True) + "\n")[0m
+2026-10-27T18:36:29.1664582Z [36;1mPY[0m
+2026-10-27T18:36:29.1664695Z [36;1m    return 124[0m
+2026-10-27T18:36:29.1664820Z [36;1m  fi[0m
+2026-10-27T18:36:29.1664940Z [36;1m  limit="$maximum"[0m
+2026-10-27T18:36:29.1665112Z [36;1m  if (( remaining < limit )); then limit="$remaining"; fi[0m
+2026-10-27T18:36:29.1665304Z [36;1m  log="$EVIDENCE/logs/$name.log"[0m
+2026-10-27T18:36:29.1665744Z [36;1m  log_bytes_before="$(find "$EVIDENCE/logs" -type f -name '*.log' -exec wc -c {} + | awk 'END {print $1+0}')"[0m
+2026-10-27T18:36:29.1666051Z [36;1m  remaining_log_bytes=$((1048576 - log_bytes_before))[0m
+2026-10-27T18:36:29.1666283Z [36;1m  if (( remaining_log_bytes < 0 )); then remaining_log_bytes=0; fi[0m
+2026-10-27T18:36:29.1666534Z [36;1m  started_ms="$now_ms"[0m
+2026-10-27T18:36:29.1666673Z [36;1m  : >"$log"[0m
+2026-10-27T18:36:29.1666790Z [36;1m  set +e[0m
+2026-10-27T18:36:29.1666960Z [36;1m  # Drain the full child stream while persisting no more than the[0m
+2026-10-27T18:36:29.1667236Z [36;1m  # aggregate log budget remaining; never impose file limits on the child.[0m
+2026-10-27T18:36:29.1667531Z [36;1m  timeout --signal=TERM --kill-after=10s "${limit}s" "$@" 2>&1 | python -I -c '[0m
+2026-10-27T18:36:29.1667756Z [36;1mimport sys[0m
+2026-10-27T18:36:29.1667899Z [36;1mpath, cap = sys.argv[1], int(sys.argv[2])[0m
+2026-10-27T18:36:29.1668135Z [36;1mmarker = b"\n[LOG TRUNCATED: output exceeded aggregate capture cap]\n"[0m
+2026-10-27T18:36:29.1668347Z [36;1mfailed = False[0m
+2026-10-27T18:36:29.1668478Z [36;1mtruncated = False[0m
+2026-10-27T18:36:29.1668610Z [36;1mstored = 0[0m
+2026-10-27T18:36:29.1668727Z [36;1mtry:[0m
+2026-10-27T18:36:29.1668861Z [36;1m    output = open(path, "wb", buffering=0)[0m
+2026-10-27T18:36:29.1669029Z [36;1mexcept OSError:[0m
+2026-10-27T18:36:29.1669159Z [36;1m    output = None[0m
+2026-10-27T18:36:29.1669293Z [36;1m    failed = True[0m
+2026-10-27T18:36:29.1669420Z [36;1mwhile True:[0m
+2026-10-27T18:36:29.1669662Z [36;1m    chunk = sys.stdin.buffer.read(65536)[0m
+2026-10-27T18:36:29.1669992Z [36;1m    if not chunk:[0m
+2026-10-27T18:36:29.1670123Z [36;1m        break[0m
+2026-10-27T18:36:29.1670251Z [36;1m    if output is None:[0m
+2026-10-27T18:36:29.1670389Z [36;1m        continue[0m
+2026-10-27T18:36:29.1670535Z [36;1m    available = max(0, cap - stored)[0m
+2026-10-27T18:36:29.1670703Z [36;1m    piece = chunk[:available][0m
+2026-10-27T18:36:29.1670851Z [36;1m    if piece:[0m
+2026-10-27T18:36:29.1670976Z [36;1m        try:[0m
+2026-10-27T18:36:29.1671108Z [36;1m            output.write(piece)[0m
+2026-10-27T18:36:29.1671288Z [36;1m            stored += len(piece)[0m
+2026-10-27T18:36:29.1671443Z [36;1m        except OSError:[0m
+2026-10-27T18:36:29.1671586Z [36;1m            failed = True[0m
+2026-10-27T18:36:29.1671726Z [36;1m            try:[0m
+2026-10-27T18:36:29.1671865Z [36;1m                output.close()[0m
+2026-10-27T18:36:29.1672015Z [36;1m            except OSError:[0m
+2026-10-27T18:36:29.1672162Z [36;1m                pass[0m
+2026-10-27T18:36:29.1672298Z [36;1m            output = None[0m
+2026-10-27T18:36:29.1672446Z [36;1m    if len(chunk) > available:[0m
+2026-10-27T18:36:29.1672597Z [36;1m        truncated = True[0m
+2026-10-27T18:36:29.1672742Z [36;1mif output is not None:[0m
+2026-10-27T18:36:29.1672874Z [36;1m    try:[0m
+2026-10-27T18:36:29.1672997Z [36;1m        if truncated:[0m
+2026-10-27T18:36:29.1673148Z [36;1m            marker_bytes = marker[:cap][0m
+2026-10-27T18:36:29.1673344Z [36;1m            output.seek(max(0, cap - len(marker_bytes)))[0m
+2026-10-27T18:36:29.1673530Z [36;1m            output.truncate()[0m
+2026-10-27T18:36:29.1673692Z [36;1m            output.write(marker_bytes)[0m
+2026-10-27T18:36:29.1673854Z [36;1m        output.close()[0m
+2026-10-27T18:36:29.1673992Z [36;1m    except OSError:[0m
+2026-10-27T18:36:29.1674129Z [36;1m        failed = True[0m
+2026-10-27T18:36:29.1674302Z [36;1msys.exit(74 if failed else 75 if truncated else 0)[0m
+2026-10-27T18:36:29.1674491Z [36;1m' "$log" "$remaining_log_bytes"[0m
+2026-10-27T18:36:29.1674657Z [36;1m  pipeline_status=("${PIPESTATUS[@]}")[0m
+2026-10-27T18:36:29.1674817Z [36;1m  set -e[0m
+2026-10-27T18:36:29.1674945Z [36;1m  status="${pipeline_status[0]}"[0m
+2026-10-27T18:36:29.1675115Z [36;1m  capture_status="${pipeline_status[1]}"[0m
+2026-10-27T18:36:29.1675319Z [36;1m  ended_ms="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"[0m
+2026-10-27T18:36:29.1675642Z [36;1m  if (( status != 0 || capture_status != 0 )); then[0m
+2026-10-27T18:36:29.1675830Z [36;1m    head -c 4096 "$log" >&2 || true[0m
+2026-10-27T18:36:29.1676120Z [36;1m    echo "Command $name failed with command status $status, capture status $capture_status (limit ${limit}s)" >&2[0m
+2026-10-27T18:36:29.1676397Z [36;1m  fi[0m
+2026-10-27T18:36:29.1676681Z [36;1m  python -I - "$EVIDENCE/command-records.jsonl" "$log" "$name" "$name" "$status" "$capture_status" "$((ended_ms - started_ms))" "$@" <<'PY'[0m
+2026-10-27T18:36:29.1677014Z [36;1mimport hashlib, json, pathlib, sys[0m
+2026-10-27T18:36:29.1677263Z [36;1mrecords, log_path, name, stage, raw_exit, capture_exit, duration, *argv = sys.argv[1:][0m
+2026-10-27T18:36:29.1677527Z [36;1mpayload = pathlib.Path(log_path).read_bytes()[0m
+2026-10-27T18:36:29.1677716Z [36;1mtruncated = int(capture_exit) == 75[0m
+2026-10-27T18:36:29.1677908Z [36;1mrecord = {"name": name, "stage": stage, "argv": argv,[0m
+2026-10-27T18:36:29.1678146Z [36;1m          "rawExit": int(raw_exit), "monotonicDurationMs": int(duration),[0m
+2026-10-27T18:36:29.1678429Z [36;1m          "logBytes": len(payload), "logSha256": hashlib.sha256(payload).hexdigest(),[0m
+2026-10-27T18:36:29.1678704Z [36;1m          "captureExit": int(capture_exit), "truncated": truncated,[0m
+2026-10-27T18:36:29.1679028Z [36;1m          "truncationMarker": "LOG TRUNCATED: output exceeded aggregate capture cap" if truncated else None}[0m
+2026-10-27T18:36:29.1679358Z [36;1mwith pathlib.Path(records).open("a", encoding="utf-8") as stream:[0m
+2026-10-27T18:36:29.1679880Z [36;1m    stream.write(json.dumps(record, sort_keys=True) + "\n")[0m
+2026-10-27T18:36:29.1680075Z [36;1mPY[0m
+2026-10-27T18:36:29.1680189Z [36;1m  local log_bytes[0m
+2026-10-27T18:36:29.1680429Z [36;1m  log_bytes="$(find "$EVIDENCE/logs" -type f -name '*.log' -exec wc -c {} + | awk 'END {print $1+0}')"[0m
+2026-10-27T18:36:29.1680695Z [36;1m  if (( log_bytes > 1048576 )); then[0m
+2026-10-27T18:36:29.1680896Z [36;1m    echo "Captured command logs exceed the 1 MiB limit" >&2[0m
+2026-10-27T18:36:29.1681081Z [36;1m    return 1[0m
+2026-10-27T18:36:29.1681197Z [36;1m  fi[0m
+2026-10-27T18:36:29.1681339Z [36;1m  if (( status != 0 )); then return "$status"; fi[0m
+2026-10-27T18:36:29.1681536Z [36;1m  if (( capture_status != 0 )); then return 1; fi[0m
+2026-10-27T18:36:29.1681700Z [36;1m}[0m
+2026-10-27T18:36:29.1681804Z [36;1m[0m
+2026-10-27T18:36:29.1681956Z [36;1mrun_bounded toolchain-identity 180 python -I - <<'PY'[0m
+2026-10-27T18:36:29.1682184Z [36;1mimport hashlib, json, os, pathlib, shutil, subprocess[0m
+2026-10-27T18:36:29.1682362Z [36;1mtools = {}[0m
+2026-10-27T18:36:29.1682515Z [36;1mfor name in ("bun", "python", "git", "timeout"):[0m
+2026-10-27T18:36:29.1682698Z [36;1m    path = shutil.which(name)[0m
+2026-10-27T18:36:29.1682883Z [36;1m    resolved = pathlib.Path(path).resolve(strict=True)[0m
+2026-10-27T18:36:29.1683130Z [36;1m    version = subprocess.run([path, "--version"], check=True, text=True,[0m
+2026-10-27T18:36:29.1683452Z [36;1m                             stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=10).stdout.strip()[0m
+2026-10-27T18:36:29.1683717Z [36;1m    with resolved.open("rb") as binary:[0m
+2026-10-27T18:36:29.1683936Z [36;1m        binary_sha256 = hashlib.file_digest(binary, "sha256").hexdigest()[0m
+2026-10-27T18:36:29.1684183Z [36;1m    tools[name] = {"path": str(resolved), "version": version,[0m
+2026-10-27T18:36:29.1684396Z [36;1m                   "binarySha256": binary_sha256}[0m
+2026-10-27T18:36:29.1684583Z [36;1mprint(json.dumps(tools, sort_keys=True))[0m
+2026-10-27T18:36:29.1684824Z [36;1mpathlib.Path(os.environ["QUALIFICATION_DIR"], "toolchain.json").write_text([0m
+2026-10-27T18:36:29.1685158Z [36;1m    json.dumps(tools, indent=2, sort_keys=True) + "\n")[0m
+2026-10-27T18:36:29.1685337Z [36;1mPY[0m
+2026-10-27T18:36:29.1685442Z [36;1m[0m
+2026-10-27T18:36:29.1685581Z [36;1mrun_bounded source-pins 180 python -I - <<'PY'[0m
+2026-10-27T18:36:29.1685777Z [36;1mimport hashlib, json, pathlib, subprocess[0m
+2026-10-27T18:36:29.1686036Z [36;1m[0m
+2026-10-27T18:36:29.1686297Z [36;1mmanifest_path = pathlib.Path("docs/helix/04-build/evidence/mig-g02-g03/native-qualification-source-pins.json")[0m
+2026-10-27T18:36:29.1686616Z [36;1mpins = json.loads(manifest_path.read_text())[0m
+2026-10-27T18:36:29.1686830Z [36;1mexpected_commit = __import__("os").environ["GITHUB_SHA"][0m
+2026-10-27T18:36:29.1687105Z [36;1mactual_commit = subprocess.run(["git", "rev-parse", "HEAD"], check=True, text=True,[0m
+2026-10-27T18:36:29.1687376Z [36;1m                               capture_output=True).stdout.strip()[0m
+2026-10-27T18:36:29.1687628Z [36;1massert actual_commit == expected_commit, (actual_commit, expected_commit)[0m
+2026-10-27T18:36:29.1687877Z [36;1mfor name, entry in pins["sourcePins"].items():[0m
+2026-10-27T18:36:29.1688058Z [36;1m    path = pathlib.Path(name)[0m
+2026-10-27T18:36:29.1688250Z [36;1m    digest = hashlib.sha256(path.read_bytes()).hexdigest()[0m
+2026-10-27T18:36:29.1688495Z [36;1m    assert digest == entry["sha256"], (name, digest, entry["sha256"])[0m
+2026-10-27T18:36:29.1688797Z [36;1mprint(json.dumps({"sourceCommit": actual_commit, "sourcePins": len(pins["sourcePins"])}))[0m
+2026-10-27T18:36:29.1689039Z [36;1mPY[0m
+2026-10-27T18:36:29.1689225Z [36;1mrun_bounded bun-install 180 bun install --frozen-lockfile --ignore-scripts[0m
+2026-10-27T18:36:29.1689566Z [36;1mrun_bounded builder-wheel-download 180 python -m pip download --disable-pip-version-check \[0m
+2026-10-27T18:36:29.1690042Z [36;1m  --no-deps --only-binary=:all: --require-hashes \[0m
+2026-10-27T18:36:29.1690236Z [36;1m  --dest "$WORK/builder-wheels" \[0m
+2026-10-27T18:36:29.1690467Z [36;1m  -r docs/helix/04-build/evidence/mig-g02-g03/build-tools-requirements.txt[0m
+2026-10-27T18:36:29.1690740Z [36;1mrun_bounded builder-venv 180 python -m venv "$WORK/builder"[0m
+2026-10-27T18:36:29.1691028Z [36;1mrun_bounded builder-install 180 "$WORK/builder/bin/python" -m pip --isolated install \[0m
+2026-10-27T18:36:29.1691377Z [36;1m  --disable-pip-version-check --no-cache-dir --no-index --only-binary=:all: --no-deps \[0m
+2026-10-27T18:36:29.1691674Z [36;1m  --find-links "$WORK/builder-wheels" --require-hashes \[0m
+2026-10-27T18:36:29.1691932Z [36;1m  -r docs/helix/04-build/evidence/mig-g02-g03/build-tools-requirements.txt[0m
+2026-10-27T18:36:29.1692391Z [36;1mrun_bounded mini-racer-download 180 python -m pip download --disable-pip-version-check --no-deps --only-binary=:all: --dest "$WORK/mini-racer" mini-racer==0.14.1[0m
+2026-10-27T18:36:29.1692880Z [36;1mrun_bounded mini-racer-verify 180 python -I tests/codegen/verify_mini_racer_wheel.py \[0m
+2026-10-27T18:36:29.1693140Z [36;1m  --wheelhouse "$WORK/mini-racer" \[0m
+2026-10-27T18:36:29.1693393Z [36;1m  --pins docs/helix/04-build/evidence/praxis-embedder/mini-racer-wheel-pins.json \[0m
+2026-10-27T18:36:29.1693688Z [36;1m  --expected-platform linux-x86_64-glibc-2.27+[0m
+2026-10-27T18:36:29.1693918Z [36;1mrun_bounded codegen-refresh 180 bun scripts/build-codegen.ts[0m
+2026-10-27T18:36:29.1694210Z [36;1mrun_bounded codegen-refresh-hash-check 180 bun scripts/build-codegen.ts --check[0m
+2026-10-27T18:36:29.1694515Z [36;1mrun_bounded codegen-refresh-output-hashes 180 python -I - <<'PY'[0m
+2026-10-27T18:36:29.1694738Z [36;1mimport hashlib, json, os, pathlib[0m
+2026-10-27T18:36:29.1694888Z [36;1m[0m
+2026-10-27T18:36:29.1694999Z [36;1mdef sha(path):[0m
+2026-10-27T18:36:29.1695169Z [36;1m    return hashlib.sha256(path.read_bytes()).hexdigest()[0m
+2026-10-27T18:36:29.1695351Z [36;1m[0m
+2026-10-27T18:36:29.1695465Z [36;1mroot = pathlib.Path.cwd()[0m
+2026-10-27T18:36:29.1695660Z [36;1massets = root / "python/umf_codegen/src/umf_codegen/_assets"[0m
+2026-10-27T18:36:29.1695917Z [36;1mrelease_path = root / "python/umf_codegen/src/umf_codegen/_release.py"[0m
+2026-10-27T18:36:29.1696147Z [36;1mmanifest_path = assets / "manifest.json"[0m
+2026-10-27T18:36:29.1696360Z [36;1mgenerator_manifest = json.loads(manifest_path.read_text())[0m
+2026-10-27T18:36:29.1696734Z [36;1mexpected_inputs = ("scripts/build-codegen.ts", "scripts/codegen/gzip.ts")[0m
+2026-10-27T18:36:29.1696962Z [36;1mfor name in expected_inputs:[0m
+2026-10-27T18:36:29.1697174Z [36;1m    assert generator_manifest["inputs"][name] == sha(root / name), name[0m
+2026-10-27T18:36:29.1697467Z [36;1mgenerated = {name: digest for name, digest in generator_manifest["files"].items()}[0m
+2026-10-27T18:36:29.1697719Z [36;1mfor name, digest in generated.items():[0m
+2026-10-27T18:36:29.1697907Z [36;1m    assert sha(assets / name) == digest, name[0m
+2026-10-27T18:36:29.1698084Z [36;1mmanifest_sha = sha(manifest_path)[0m
+2026-10-27T18:36:29.1698257Z [36;1mrelease_text = release_path.read_text()[0m
+2026-10-27T18:36:29.1698483Z [36;1massert "MANIFEST_SHA256 = " + json.dumps(manifest_sha) in release_text[0m
+2026-10-27T18:36:29.1698873Z [36;1mpins = json.loads(pathlib.Path("docs/helix/04-build/evidence/mig-g02-g03/native-qualification-source-pins.json").read_text())[0m
+2026-10-27T18:36:29.1699262Z [36;1moutput_prefixes = ("python/umf_codegen/src/umf_codegen/_release.py",[0m
+2026-10-27T18:36:29.1699514Z [36;1m                   "python/umf_codegen/src/umf_codegen/_assets/")[0m
+2026-10-27T18:36:29.1699860Z [36;1mreviewed_prebuild = {name: item["sha256"] for name, item in pins["sourcePins"].items()[0m
+2026-10-27T18:36:29.1700130Z [36;1m                     if name.startswith(output_prefixes)}[0m
+2026-10-27T18:36:29.1700307Z [36;1mreport = {[0m
+2026-10-27T18:36:29.1700548Z [36;1m    "profile": "umf.g02-g03-codegen-refresh/1",[0m
+2026-10-27T18:36:29.1700739Z [36;1m    "status": "BUILT_THEN_HASH_CHECKED",[0m
+2026-10-27T18:36:29.1700954Z [36;1m    "buildScriptSha256": sha(root / "scripts/build-codegen.ts"),[0m
+2026-10-27T18:36:29.1701187Z [36;1m    "generatorManifestSha256": manifest_sha,[0m
+2026-10-27T18:36:29.1701379Z [36;1m    "releaseModuleSha256": sha(release_path),[0m
+2026-10-27T18:36:29.1701587Z [36;1m    "reviewedPrebuildOutputPins": reviewed_prebuild,[0m
+2026-10-27T18:36:29.1701794Z [36;1m    "postBuildAssetHashes": generated,[0m
+2026-10-27T18:36:29.1702003Z [36;1m    "postBuildInputHashes": generator_manifest["inputs"],[0m
+2026-10-27T18:36:29.1702187Z [36;1m}[0m
+2026-10-27T18:36:29.1702425Z [36;1mpathlib.Path(os.environ["QUALIFICATION_DIR"], "reports", "codegen-generated-outputs.json").write_text([0m
+2026-10-27T18:36:29.1702737Z [36;1m    json.dumps(report, indent=2, sort_keys=True) + "\n")[0m
+2026-10-27T18:36:29.1703008Z [36;1mprint(json.dumps({"status": report["status"], "generatedAssets": len(generated),[0m
+2026-10-27T18:36:29.1703301Z [36;1m                  "generatorManifestSha256": manifest_sha}, sort_keys=True))[0m
+2026-10-27T18:36:29.1703511Z [36;1mPY[0m
+2026-10-27T18:36:29.1703743Z [36;1mrun_bounded cohort-build 480 "$WORK/builder/bin/python" tests/codegen/acquire_offline_cohort.py \[0m
+2026-10-27T18:36:29.1704016Z [36;1m  --output-dir "$WORK/cohort" \[0m
+2026-10-27T18:36:29.1704178Z [36;1m  --source-commit "$GITHUB_SHA" \[0m
+2026-10-27T18:36:29.1704341Z [36;1m  --expected-os ubuntu-24.04 \[0m
+2026-10-27T18:36:29.1704511Z [36;1m  --expected-architecture x86_64 \[0m
+2026-10-27T18:36:29.1704678Z [36;1m  --expected-python 3.11 \[0m
+2026-10-27T18:36:29.1705084Z [36;1m  --weft-wheel-url "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.55/umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl" \[0m
+2026-10-27T18:36:29.1705584Z [36;1m  --weft-wheel-filename 'umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl' \[0m
+2026-10-27T18:36:29.1705963Z [36;1m  --weft-wheel-sha256 "b34ca17fa37412afa7b8e8bd86aac8ee67a3c895a9b253221e1d582b39073a85" \[0m
+2026-10-27T18:36:29.1706249Z [36;1m  --mini-racer-wheel "$WORK/mini-racer"/*.whl[0m
+2026-10-27T18:36:29.1706568Z [36;1mrun_bounded current-codegen-corpus 180 bun scripts/codegen-corpus.ts /tmp/g02-g03-current-codegen-corpus.json[0m
+2026-10-27T18:36:29.1706968Z [36;1mrun_bounded offline-cohort-probe 180 python -I tests/codegen/offline_mirror_probe.py \[0m
+2026-10-27T18:36:29.1707330Z [36;1m  --wheelhouse "$WORK/cohort/wheelhouse" \[0m
+2026-10-27T18:36:29.1707765Z [36;1m  --lock "$WORK/cohort/cohort.lock.json" \[0m
+2026-10-27T18:36:29.1708028Z [36;1m  --mirror "$WORK/cohort/mirror" \[0m
+2026-10-27T18:36:29.1708354Z [36;1m  --generator-corpus /tmp/g02-g03-current-codegen-corpus.json \[0m
+2026-10-27T18:36:29.1708745Z [36;1m  --report "$EVIDENCE/reports/offline-cohort.json"[0m
+2026-10-27T18:36:29.1709058Z [36;1mrun_bounded cohort-install 180 python -m venv "$WORK/installed"[0m
+2026-10-27T18:36:29.1709465Z [36;1mrun_bounded locked-install 180 "$WORK/installed/bin/python" -I -m pip --isolated install \[0m
+2026-10-27T18:36:29.1710027Z [36;1m  --disable-pip-version-check --no-cache-dir --no-index --only-binary=:all: \[0m
+2026-10-27T18:36:29.1710372Z [36;1m  --find-links "$WORK/cohort/wheelhouse" --require-hashes \[0m
+2026-10-27T18:36:29.1710711Z [36;1m  -r "$WORK/cohort/mirror/requirements.lock"[0m
+2026-10-27T18:36:29.1711049Z [36;1mrun_bounded locked-check 180 "$WORK/installed/bin/python" -I -m pip --isolated check[0m
+2026-10-27T18:36:29.1711501Z [36;1mrun_bounded postgres-version 180 "$WORK/installed/bin/python" -I - <<'PY'[0m
+2026-10-27T18:36:29.1711836Z [36;1mimport psycopg[0m
+2026-10-27T18:36:29.1712294Z [36;1mwith psycopg.connect("host=127.0.0.1 port=5432 dbname=postgres user=postgres connect_timeout=5 options='-c statement_timeout=120000 -c lock_timeout=5000'", autocommit=True) as connection:[0m
+2026-10-27T18:36:29.1713117Z [36;1m    version, number = connection.execute("select current_setting('server_version'), current_setting('server_version_num')").fetchone()[0m
+2026-10-27T18:36:29.1713535Z [36;1massert number == "180006", (version, number)[0m
+2026-10-27T18:36:29.1713937Z [36;1mprint({"postgresqlServerVersion": version, "postgresqlServerVersionNum": number})[0m
+2026-10-27T18:36:29.1714280Z [36;1mPY[0m
+2026-10-27T18:36:29.1728352Z [36;1mrun_bounded g02-fixture 180 bun tests/lifecycle/g02-temporal-native-fixture.ts /tmp/g02-g03-temporal-fixture.json[0m
+2026-10-27T18:36:29.1729076Z [36;1mrun_bounded g03-fixture 180 bun tests/lifecycle/g03-defaults-native-fixture.ts /tmp/g02-g03-defaults-fixture.json[0m
+2026-10-27T18:36:29.1729502Z [36;1mrun_bounded fixture-guards 180 python -I - <<'PY'[0m
+2026-10-27T18:36:29.1729847Z [36;1mimport hashlib, json, pathlib[0m
+2026-10-27T18:36:29.1730176Z [36;1mpins = json.loads(pathlib.Path("docs/helix/04-build/evidence/mig-g02-g03/native-qualification-source-pins.json").read_text())[0m
+2026-10-27T18:36:29.1730561Z [36;1mtemporal = pathlib.Path("/tmp/g02-g03-temporal-fixture.json")[0m
+2026-10-27T18:36:29.1730823Z [36;1mdefaults = pathlib.Path("/tmp/g02-g03-defaults-fixture.json")[0m
+2026-10-27T18:36:29.1731063Z [36;1mtemporal_fixture = json.loads(temporal.read_text())[0m
+2026-10-27T18:36:29.1731282Z [36;1mdefaults_fixture = json.loads(defaults.read_text())[0m
+2026-10-27T18:36:29.1731575Z [36;1massert temporal_fixture["version"] == pins["generatedInputPins"]["g02TemporalFixture"]["version"][0m
+2026-10-27T18:36:29.1731982Z [36;1massert [case["id"] for case in temporal_fixture["cases"]] == pins["generatedInputPins"]["g02TemporalFixture"]["caseIds"][0m
+2026-10-27T18:36:29.1732332Z [36;1mtemporal_sha = hashlib.sha256(temporal.read_bytes()).hexdigest()[0m
+2026-10-27T18:36:29.1732674Z [36;1massert temporal_sha == pins["generatedInputPins"]["g02TemporalFixture"]["reviewedArtifactSha256"], temporal_sha[0m
+2026-10-27T18:36:29.1733066Z [36;1massert defaults_fixture["version"] == pins["generatedInputPins"]["g03DefaultsFixture"]["version"][0m
+2026-10-27T18:36:29.1733446Z [36;1massert defaults_fixture["status"] == pins["generatedInputPins"]["g03DefaultsFixture"]["statusMustRemain"][0m
+2026-10-27T18:36:29.1733844Z [36;1mfor case_id, expected in pins["generatedInputPins"]["g03DefaultsFixture"]["caseStatusMustRemain"].items():[0m
+2026-10-27T18:36:29.1734189Z [36;1m    assert defaults_fixture["caseStatus"][case_id] == expected, case_id[0m
+2026-10-27T18:36:29.1734595Z [36;1mprint({"g02TemporalFixtureSha256": temporal_sha,[0m
+2026-10-27T18:36:29.1734834Z [36;1m       "g03DefaultsCaseIds": list(defaults_fixture["caseStatus"])})[0m
+2026-10-27T18:36:29.1735030Z [36;1mPY[0m
+2026-10-27T18:36:29.1735139Z [36;1m[0m
+2026-10-27T18:36:29.1735388Z [36;1mrun_bounded g02-temporal-native 180 "$WORK/installed/bin/python" -I tests/lifecycle/g02-temporal-native.py \[0m
+2026-10-27T18:36:29.1735726Z [36;1m  --dsn "$PG_DSN" --fixture /tmp/g02-g03-temporal-fixture.json \[0m
+2026-10-27T18:36:29.1735972Z [36;1m  --report "$EVIDENCE/reports/g02-temporal-native.json"[0m
+2026-10-27T18:36:29.1736154Z [36;1m[0m
+2026-10-27T18:36:29.1736351Z [36;1mfor scenario in transitions empty required admission-refusal semantics rollback \[0m
+2026-10-27T18:36:29.1736697Z [36;1m  commit-observation finalize-observation finalize-before-publication unknown-no-commit \[0m
+2026-10-27T18:36:29.1736963Z [36;1m  writer-barrier; do[0m
+2026-10-27T18:36:29.1737222Z [36;1m  run_bounded "g03-$scenario" 180 "$WORK/installed/bin/python" tests/lifecycle/g03-defaults-native.py \[0m
+2026-10-27T18:36:29.1737540Z [36;1m    --dsn "$PG_DSN" --fixture /tmp/g02-g03-defaults-fixture.json \[0m
+2026-10-27T18:36:29.1737810Z [36;1m    --scenario "$scenario" --report "$EVIDENCE/reports/g03-$scenario.json"[0m
+2026-10-27T18:36:29.1738019Z [36;1mdone[0m
+2026-10-27T18:36:29.1738194Z [36;1mfor domain in date text decimal uuid-selected currentTimestamp; do[0m
+2026-10-27T18:36:29.1738524Z [36;1m  run_bounded "g03-domain-$domain" 180 "$WORK/installed/bin/python" tests/lifecycle/g03-defaults-native.py \[0m
+2026-10-27T18:36:29.1738934Z [36;1m    --dsn "$PG_DSN" --fixture /tmp/g02-g03-defaults-fixture.json \[0m
+2026-10-27T18:36:29.1739217Z [36;1m    --scenario "domain-$domain" --report "$EVIDENCE/reports/g03-domain-$domain.json"[0m
+2026-10-27T18:36:29.1739444Z [36;1mdone[0m
+2026-10-27T18:36:29.1739797Z [36;1mrun_bounded g03-tampering 180 "$WORK/installed/bin/python" tests/lifecycle/g03-defaults-native.py \[0m
+2026-10-27T18:36:29.1740133Z [36;1m  --dsn "$PG_DSN" --fixture /tmp/g02-g03-defaults-fixture.json \[0m
+2026-10-27T18:36:29.1740395Z [36;1m  --scenario tampering --report "$EVIDENCE/reports/g03-tampering.json"[0m
+2026-10-27T18:36:29.1740599Z [36;1m[0m
+2026-10-27T18:36:29.1740764Z [36;1mcp "$WORK/cohort/cohort.lock.json" "$EVIDENCE/cohort.lock.json"[0m
+2026-10-27T18:36:29.1741052Z [36;1mcp "$WORK/cohort/mirror/manifest.json" "$EVIDENCE/cohort-mirror-manifest.json"[0m
+2026-10-27T18:36:29.1741366Z [36;1mcp /tmp/g02-g03-temporal-fixture.json "$EVIDENCE/g02-temporal-fixture.json"[0m
+2026-10-27T18:36:29.1741667Z [36;1mcp /tmp/g02-g03-defaults-fixture.json "$EVIDENCE/g03-defaults-fixture.json"[0m
+2026-10-27T18:36:29.1741933Z [36;1mrun_bounded finalize-receipt 180 python -I - <<'PY'[0m
+2026-10-27T18:36:29.1742128Z [36;1mimport hashlib, json, os, pathlib[0m
+2026-10-27T18:36:29.1742276Z [36;1m[0m
+2026-10-27T18:36:29.1742433Z [36;1mevidence = pathlib.Path(os.environ["QUALIFICATION_DIR"])[0m
+2026-10-27T18:36:29.1742804Z [36;1mpins = json.loads(pathlib.Path("docs/helix/04-build/evidence/mig-g02-g03/native-qualification-source-pins.json").read_text())[0m
+2026-10-27T18:36:29.1743132Z [36;1mreports = evidence / "reports"[0m
+2026-10-27T18:36:29.1743303Z [36;1msource_commit = os.environ["GITHUB_SHA"][0m
+2026-10-27T18:36:29.1743486Z [36;1mrun_id = os.environ["GITHUB_RUN_ID"][0m
+2026-10-27T18:36:29.1743674Z [36;1mrun_attempt = os.environ["GITHUB_RUN_ATTEMPT"][0m
+2026-10-27T18:36:29.1743853Z [36;1mref = os.environ["GITHUB_REF"][0m
+2026-10-27T18:36:29.1744017Z [36;1mworkflow = os.environ["GITHUB_WORKFLOW"][0m
+2026-10-27T18:36:29.1744245Z [36;1massert source_commit and run_id and run_attempt and ref and workflow[0m
+2026-10-27T18:36:29.1744447Z [36;1m[0m
+2026-10-27T18:36:29.1744555Z [36;1mdef sha(path):[0m
+2026-10-27T18:36:29.1744724Z [36;1m    return hashlib.sha256(path.read_bytes()).hexdigest()[0m
+2026-10-27T18:36:29.1744908Z [36;1m[0m
+2026-10-27T18:36:29.1745057Z [36;1mtemporal_path = evidence / "g02-temporal-fixture.json"[0m
+2026-10-27T18:36:29.1745380Z [36;1mdefaults_path = evidence / "g03-defaults-fixture.json"[0m
+2026-10-27T18:36:29.1745610Z [36;1mtemporal_fixture = json.loads(temporal_path.read_text())[0m
+2026-10-27T18:36:29.1745840Z [36;1mdefaults_fixture = json.loads(defaults_path.read_text())[0m
+2026-10-27T18:36:29.1746105Z [36;1mexpected_g02_ids = pins["generatedInputPins"]["g02TemporalFixture"]["caseIds"][0m
+2026-10-27T18:36:29.1746445Z [36;1massert temporal_fixture["version"] == pins["generatedInputPins"]["g02TemporalFixture"]["version"][0m
+2026-10-27T18:36:29.1746774Z [36;1massert [case["id"] for case in temporal_fixture["cases"]] == expected_g02_ids[0m
+2026-10-27T18:36:29.1747115Z [36;1massert sha(temporal_path) == pins["generatedInputPins"]["g02TemporalFixture"]["reviewedArtifactSha256"][0m
+2026-10-27T18:36:29.1747491Z [36;1massert defaults_fixture["version"] == pins["generatedInputPins"]["g03DefaultsFixture"]["version"][0m
+2026-10-27T18:36:29.1747871Z [36;1massert defaults_fixture["status"] == pins["generatedInputPins"]["g03DefaultsFixture"]["statusMustRemain"][0m
+2026-10-27T18:36:29.1748268Z [36;1mfor case_id, expected in pins["generatedInputPins"]["g03DefaultsFixture"]["caseStatusMustRemain"].items():[0m
+2026-10-27T18:36:29.1748605Z [36;1m    assert defaults_fixture["caseStatus"][case_id] == expected, case_id[0m
+2026-10-27T18:36:29.1748806Z [36;1m[0m
+2026-10-27T18:36:29.1748977Z [36;1mg02 = json.loads((reports / "g02-temporal-native.json").read_text())[0m
+2026-10-27T18:36:29.1749347Z [36;1mexpected_g02_passes = ("PASS_AND_CLEANED", "PASS_EXPECTED_ROLLBACK_AND_CLEANED")[0m
+2026-10-27T18:36:29.1749614Z [36;1massert g02["status"] == "PASS_G02_TEMPORAL_FIVE_CASES"[0m
+2026-10-27T18:36:29.1750025Z [36;1massert g02["serverVersionNum"] == "180006" and g02["cases"] == 5 and g02["checks"][0m
+2026-10-27T18:36:29.1750270Z [36;1massert g02["caseIds"] == expected_g02_ids[0m
+2026-10-27T18:36:29.1750548Z [36;1massert g02["maxWorkers"] == pins["target"]["executionConcurrency"]["g02TemporalMaximumWorkers"] == 2[0m
+2026-10-27T18:36:29.1750823Z [36;1massert g02["cleanupUnknown"] is False[0m
+2026-10-27T18:36:29.1751016Z [36;1massert g02["sharedRolesCleanup"] == "VERIFIED"[0m
+2026-10-27T18:36:29.1751388Z [36;1massert g02["peakOverlappingCodegenVmHardMemoryBytes"] == pins["target"]["executionConcurrency"]["peakOverlappingCodegenVmHardMemoryBytes"][0m
+2026-10-27T18:36:29.1751793Z [36;1massert g02["githubRunnerEnvironmentCapUnchanged"] is True[0m
+2026-10-27T18:36:29.1752008Z [36;1massert len(g02["caseResults"]) == 5[0m
+2026-10-27T18:36:29.1752230Z [36;1massert [case["caseId"] for case in g02["caseResults"]] == expected_g02_ids[0m
+2026-10-27T18:36:29.1752536Z [36;1massert all(case["status"] in expected_g02_passes and case["databaseCleanup"] == "VERIFIED"[0m
+2026-10-27T18:36:29.1752795Z [36;1m           for case in g02["caseResults"])[0m
+2026-10-27T18:36:29.1753069Z [36;1massert g02["runnerSha256"] == pins["sourcePins"]["tests/lifecycle/g02-temporal-native.py"]["sha256"][0m
+2026-10-27T18:36:29.1753360Z [36;1massert g02["fixtureSha256"] == sha(temporal_path)[0m
+2026-10-27T18:36:29.1753529Z [36;1m[0m
+2026-10-27T18:36:29.1753659Z [36;1mlock_path = evidence / "cohort.lock.json"[0m
+2026-10-27T18:36:29.1753871Z [36;1mmirror_path = evidence / "cohort-mirror-manifest.json"[0m
+2026-10-27T18:36:29.1754086Z [36;1moffline_path = reports / "offline-cohort.json"[0m
+2026-10-27T18:36:29.1754279Z [36;1mcohort = json.loads(lock_path.read_text())[0m
+2026-10-27T18:36:29.1754470Z [36;1mmirror = json.loads(mirror_path.read_text())[0m
+2026-10-27T18:36:29.1754661Z [36;1moffline = json.loads(offline_path.read_text())[0m
+2026-10-27T18:36:29.1754835Z [36;1mlock_sha = sha(lock_path)[0m
+2026-10-27T18:36:29.1754984Z [36;1mmirror_sha = sha(mirror_path)[0m
+2026-10-27T18:36:29.1755226Z [36;1massert cohort["status"] == "locked" and cohort["profile"] == "umf.embedder-wheel-lock/1"[0m
+2026-10-27T18:36:29.1755553Z [36;1massert mirror["profile"] == "local-wheel-mirror/2" and mirror["networkUsed"] is False[0m
+2026-10-27T18:36:29.1755904Z [36;1massert mirror["lockSha256"] == lock_sha[0m
+2026-10-27T18:36:29.1756177Z [36;1massert offline["profile"] == "umf-offline-mirror-installed/1" and offline["status"] == "passed"[0m
+2026-10-27T18:36:29.1756527Z [36;1massert offline["lockSha256"] == lock_sha and offline["mirrorManifestSha256"] == mirror_sha[0m
+2026-10-27T18:36:29.1756851Z [36;1mpackages = {package["distribution"]: package for package in cohort["packages"]}[0m
+2026-10-27T18:36:29.1757117Z [36;1mfor distribution in ("umf-access", "umf-codegen"):[0m
+2026-10-27T18:36:29.1757359Z [36;1m    assert packages[distribution]["source"]["commit"] == source_commit[0m
+2026-10-27T18:36:29.1757589Z [36;1mweft_pin = pins["dependencyPins"]["weft"][0m
+2026-10-27T18:36:29.1757806Z [36;1massert packages["umf-weft"]["version"] == weft_pin["version"][0m
+2026-10-27T18:36:29.1758063Z [36;1massert packages["umf-weft"]["source"]["sha256"] == weft_pin["sha256"][0m
+2026-10-27T18:36:29.1758294Z [36;1mcore_pin = pins["dependencyPins"]["core"][0m
+2026-10-27T18:36:29.1758505Z [36;1massert packages["umf-core"]["version"] == core_pin["version"][0m
+2026-10-27T18:36:29.1758754Z [36;1massert packages["umf-core"]["source"]["sha256"] == core_pin["sha256"][0m
+2026-10-27T18:36:29.1759055Z [36;1mcore_wheels = [wheel for wheel in cohort["wheels"] if wheel["distribution"] == "umf-core"][0m
+2026-10-27T18:36:29.1759366Z [36;1massert len(core_wheels) == 1 and core_wheels[0]["filename"] == core_pin["wheel"][0m
+2026-10-27T18:36:29.1759892Z [36;1mruntime_distributions = ("umf-access", "umf-codegen", "umf-weft", "umf-core")[0m
+2026-10-27T18:36:29.1760208Z [36;1mruntime_versions = {name: packages[name]["version"] for name in runtime_distributions}[0m
+2026-10-27T18:36:29.1760469Z [36;1massert g02["packages"] == runtime_versions[0m
+2026-10-27T18:36:29.1760625Z [36;1m[0m
+2026-10-27T18:36:29.1760790Z [36;1mscenarios = pins["selectedNativeScope"]["g03ScenarioArguments"][0m
+2026-10-27T18:36:29.1761094Z [36;1mexpected_scenarios = ["transitions", "empty", "required", "admission-refusal", "semantics",[0m
+2026-10-27T18:36:29.1761396Z [36;1m                      "rollback", "commit-observation", "finalize-observation",[0m
+2026-10-27T18:36:29.1761688Z [36;1m                      "finalize-before-publication", "unknown-no-commit", "writer-barrier",[0m
+2026-10-27T18:36:29.1761936Z [36;1m                      "domains", "tampering"][0m
+2026-10-27T18:36:29.1762115Z [36;1massert scenarios == expected_scenarios[0m
+2026-10-27T18:36:29.1762366Z [36;1mdomain_scenarios = pins["selectedNativeScope"]["g03DomainSubscenarioArguments"][0m
+2026-10-27T18:36:29.1762712Z [36;1massert domain_scenarios == ["domain-date", "domain-text", "domain-decimal", "domain-uuid-selected",[0m
+2026-10-27T18:36:29.1763002Z [36;1m                            "domain-currentTimestamp"][0m
+2026-10-27T18:36:29.1763202Z [36;1mpartial = "PARTIAL_SUBCASE_PASS_FULL_CASE_OPEN"[0m
+2026-10-27T18:36:29.1763379Z [36;1mcase_ids_by_scenario = {[0m
+2026-10-27T18:36:29.1763548Z [36;1m    "transitions": ("G03-N01", "G03-N14"),[0m
+2026-10-27T18:36:29.1763716Z [36;1m    "empty": ("G03-N02", "G03-N14"),[0m
+2026-10-27T18:36:29.1763881Z [36;1m    "required": ("G03-N03", "G03-N14"),[0m
+2026-10-27T18:36:29.1764046Z [36;1m    "admission-refusal": ("G03-N04",),[0m
+2026-10-27T18:36:29.1764212Z [36;1m    "semantics": ("G03-N05", "G03-N14"),[0m
+2026-10-27T18:36:29.1764378Z [36;1m    "rollback": ("G03-N06", "G03-N14"),[0m
+2026-10-27T18:36:29.1764559Z [36;1m    "commit-observation": ("G03-N07", "G03-N14"),[0m
+2026-10-27T18:36:29.1764757Z [36;1m    "finalize-observation": ("G03-N07", "G03-N14"),[0m
+2026-10-27T18:36:29.1764972Z [36;1m    "finalize-before-publication": ("G03-N07", "G03-N14"),[0m
+2026-10-27T18:36:29.1765184Z [36;1m    "unknown-no-commit": ("G03-N08", "G03-N14"),[0m
+2026-10-27T18:36:29.1765369Z [36;1m    "writer-barrier": ("G03-N09", "G03-N14"),[0m
+2026-10-27T18:36:29.1765548Z [36;1m    "domains": ("G03-N10", "G03-N11", "G03-N14"),[0m
+2026-10-27T18:36:29.1765816Z [36;1m    "tampering": ("G03-N13", "G03-N14"),[0m
+2026-10-27T18:36:29.1765969Z [36;1m}[0m
+2026-10-27T18:36:29.1766076Z [36;1mstatuses = {}[0m
+2026-10-27T18:36:29.1766209Z [36;1mnative_target_identity = None[0m
+2026-10-27T18:36:29.1766362Z [36;1mfor scenario in scenarios:[0m
+2026-10-27T18:36:29.1766508Z [36;1m    if scenario == "domains":[0m
+2026-10-27T18:36:29.1766741Z [36;1m        item = {"scenario": "domains", "status": "PASS_SELECTED_NATIVE_SUBCASES_FULL_CASE_OPEN",[0m
+2026-10-27T18:36:29.1767080Z [36;1m                "runnerSha256": pins["sourcePins"]["tests/lifecycle/g03-defaults-native.py"]["sha256"],[0m
+2026-10-27T18:36:29.1767394Z [36;1m                "fixtureSha256": sha(defaults_path), "packages": runtime_versions}[0m
+2026-10-27T18:36:29.1767603Z [36;1m    else:[0m
+2026-10-27T18:36:29.1767778Z [36;1m        item = json.loads((reports / f"g03-{scenario}.json").read_text())[0m
+2026-10-27T18:36:29.1767992Z [36;1m    assert item["scenario"] == scenario[0m
+2026-10-27T18:36:29.1768267Z [36;1m    assert item["runnerSha256"] == pins["sourcePins"]["tests/lifecycle/g03-defaults-native.py"]["sha256"][0m
+2026-10-27T18:36:29.1768560Z [36;1m    assert item["fixtureSha256"] == sha(defaults_path)[0m
+2026-10-27T18:36:29.1768761Z [36;1m    assert item["packages"] == runtime_versions[0m
+2026-10-27T18:36:29.1768977Z [36;1m    expected_case_status = dict(defaults_fixture["caseStatus"])[0m
+2026-10-27T18:36:29.1769187Z [36;1m    if scenario == "admission-refusal":[0m
+2026-10-27T18:36:29.1769487Z [36;1m        assert item["status"] == "PASS_SOURCE_REFUSAL_AND_NATIVE_NO_EFFECTS"[0m
+2026-10-27T18:36:29.1769835Z [36;1m        result = item["result"][0m
+2026-10-27T18:36:29.1770058Z [36;1m        assert result["scenario"] == scenario and result["status"] == item["status"][0m
+2026-10-27T18:36:29.1770338Z [36;1m        assert result["nativeEffects"] == "none; compilation refusal only"[0m
+2026-10-27T18:36:29.1770585Z [36;1m        assert result["targetBefore"] == result["targetAfter"][0m
+2026-10-27T18:36:29.1770797Z [36;1m        target = result["targetBefore"]["target"][0m
+2026-10-27T18:36:29.1770995Z [36;1m        observer = result["targetBefore"]["observer"][0m
+2026-10-27T18:36:29.1771238Z [36;1m        admission_target_identity = (target["database"], target["serverVersion"],[0m
+2026-10-27T18:36:29.1771507Z [36;1m                                     observer["sessionUser"], observer["currentUser"],[0m
+2026-10-27T18:36:29.1771759Z [36;1m                                     target["serverPort"], target["postmasterStart"],[0m
+2026-10-27T18:36:29.1771982Z [36;1m                                     target["systemIdentifier"])[0m
+2026-10-27T18:36:29.1772175Z [36;1m        if native_target_identity is None:[0m
+2026-10-27T18:36:29.1772371Z [36;1m            native_target_identity = admission_target_identity[0m
+2026-10-27T18:36:29.1772551Z [36;1m        else:[0m
+2026-10-27T18:36:29.1772726Z [36;1m            assert admission_target_identity == native_target_identity[0m
+2026-10-27T18:36:29.1772961Z [36;1m        assert "PostgreSQL 18.6" in target["serverVersion"][0m
+2026-10-27T18:36:29.1773177Z [36;1m        expected_case_status["G03-N04"] = item["status"][0m
+2026-10-27T18:36:29.1773360Z [36;1m    elif scenario == "domains":[0m
+2026-10-27T18:36:29.1773513Z [36;1m        expected_controls = None[0m
+2026-10-27T18:36:29.1773670Z [36;1m        domain_database_names = [][0m
+2026-10-27T18:36:29.1773829Z [36;1m        domain_schema_names = [][0m
+2026-10-27T18:36:29.1773982Z [36;1m        domain_role_names = [][0m
+2026-10-27T18:36:29.1774151Z [36;1m        for domain_scenario in domain_scenarios:[0m
+2026-10-27T18:36:29.1774363Z [36;1m            domain_name = domain_scenario.removeprefix("domain-")[0m
+2026-10-27T18:36:29.1774683Z [36;1m            domain_item = json.loads((reports / f"g03-{domain_scenario}.json").read_text())[0m
+2026-10-27T18:36:29.1774947Z [36;1m            assert domain_item["scenario"] == domain_scenario[0m
+2026-10-27T18:36:29.1775354Z [36;1m            assert domain_item["runnerSha256"] == pins["sourcePins"]["tests/lifecycle/g03-defaults-native.py"]["sha256"][0m
+2026-10-27T18:36:29.1775681Z [36;1m            assert domain_item["fixtureSha256"] == sha(defaults_path)[0m
+2026-10-27T18:36:29.1775910Z [36;1m            assert domain_item["packages"] == runtime_versions[0m
+2026-10-27T18:36:29.1776168Z [36;1m            assert domain_item["status"] == "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN"[0m
+2026-10-27T18:36:29.1776425Z [36;1m            controls = domain_item["compileOnlyRefusals"][0m
+2026-10-27T18:36:29.1776714Z [36;1m            expected_control_ids = [control["id"] for control in defaults_fixture["compileOnlyControls"]][0m
+2026-10-27T18:36:29.1777034Z [36;1m            assert [control["id"] for control in controls] == expected_control_ids[0m
+2026-10-27T18:36:29.1777305Z [36;1m            assert all(control["status"] == "blocked" for control in controls)[0m
+2026-10-27T18:36:29.1777530Z [36;1m            if expected_controls is None:[0m
+2026-10-27T18:36:29.1777705Z [36;1m                expected_controls = controls[0m
+2026-10-27T18:36:29.1777864Z [36;1m            else:[0m
+2026-10-27T18:36:29.1778017Z [36;1m                assert controls == expected_controls[0m
+2026-10-27T18:36:29.1778210Z [36;1m            cases = domain_item["domainResults"][0m
+2026-10-27T18:36:29.1778489Z [36;1m            case_scenario = "domain-uuid" if domain_scenario == "domain-uuid-selected" else domain_scenario[0m
+2026-10-27T18:36:29.1778878Z [36;1m            assert len(cases) == 1 and cases[0]["scenario"] == case_scenario[0m
+2026-10-27T18:36:29.1779079Z [36;1m            case = cases[0][0m
+2026-10-27T18:36:29.1779286Z [36;1m            assert case["status"] == "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN"[0m
+2026-10-27T18:36:29.1779562Z [36;1m            assert len(case["roleNames"]) == 5 and len(set(case["roleNames"])) == 5[0m
+2026-10-27T18:36:29.1779964Z [36;1m            domain_database_names.append(case["database"])[0m
+2026-10-27T18:36:29.1780174Z [36;1m            domain_schema_names.append(case["schema"])[0m
+2026-10-27T18:36:29.1780374Z [36;1m            domain_role_names.extend(case["roleNames"])[0m
+2026-10-27T18:36:29.1780576Z [36;1m            assert case["cleanup"]["status"] == "PASS"[0m
+2026-10-27T18:36:29.1780773Z [36;1m            verification = case["cleanupVerification"][0m
+2026-10-27T18:36:29.1780985Z [36;1m            assert verification["ownedDatabaseAbsent"] is True[0m
+2026-10-27T18:36:29.1781208Z [36;1m            assert verification["ownedRolesAbsent"] is True[0m
+2026-10-27T18:36:29.1781433Z [36;1m            assert verification["targetIdentityUnchanged"] is True[0m
+2026-10-27T18:36:29.1781718Z [36;1m            assert verification["schemaAndTableAbsentByOwnedDatabaseRemoval"] is True[0m
+2026-10-27T18:36:29.1782017Z [36;1m            assert "PostgreSQL 18.6" in case["targetIdentity"]["serverVersion"][0m
+2026-10-27T18:36:29.1782324Z [36;1m            assert case["targetIdentity"]["currentUser"] == case["targetIdentity"]["sessionUser"][0m
+2026-10-27T18:36:29.1782596Z [36;1m            case_target_identity = case["targetIdentity"][0m
+2026-10-27T18:36:29.1782832Z [36;1m            identity_tuple = (case_target_identity["maintenanceDatabase"],[0m
+2026-10-27T18:36:29.1783071Z [36;1m                              case_target_identity["serverVersion"],[0m
+2026-10-27T18:36:29.1783278Z [36;1m                              case_target_identity["sessionUser"],[0m
+2026-10-27T18:36:29.1783483Z [36;1m                              case_target_identity["currentUser"],[0m
+2026-10-27T18:36:29.1783682Z [36;1m                              case_target_identity["serverPort"],[0m
+2026-10-27T18:36:29.1783892Z [36;1m                              case_target_identity["postmasterStart"],[0m
+2026-10-27T18:36:29.1784109Z [36;1m                              case_target_identity["systemIdentifier"])[0m
+2026-10-27T18:36:29.1784310Z [36;1m            if native_target_identity is None:[0m
+2026-10-27T18:36:29.1784625Z [36;1m                native_target_identity = identity_tuple[0m
+2026-10-27T18:36:29.1784794Z [36;1m            else:[0m
+2026-10-27T18:36:29.1784959Z [36;1m                assert identity_tuple == native_target_identity[0m
+2026-10-27T18:36:29.1785217Z [36;1m            case_id = "G03-N10" if domain_name in ("date", "text", "decimal") else "G03-N11"[0m
+2026-10-27T18:36:29.1785502Z [36;1m            expected_domain_case_status = dict(defaults_fixture["caseStatus"])[0m
+2026-10-27T18:36:29.1785795Z [36;1m            expected_domain_case_status.update({case_id: partial, "G03-N14": partial})[0m
+2026-10-27T18:36:29.1786105Z [36;1m            assert domain_item["caseStatus"] == expected_domain_case_status, domain_scenario[0m
+2026-10-27T18:36:29.1786387Z [36;1m        assert len(set(domain_database_names)) == len(domain_scenarios)[0m
+2026-10-27T18:36:29.1786635Z [36;1m        assert len(set(domain_schema_names)) == len(domain_scenarios)[0m
+2026-10-27T18:36:29.1786879Z [36;1m        assert len(set(domain_role_names)) == len(domain_scenarios) * 5[0m
+2026-10-27T18:36:29.1787127Z [36;1m        item = {"status": "PASS_SELECTED_NATIVE_SUBCASES_FULL_CASE_OPEN"}[0m
+2026-10-27T18:36:29.1787424Z [36;1m        expected_case_status.update({"G03-N10": partial, "G03-N11": partial, "G03-N14": partial})[0m
+2026-10-27T18:36:29.1787661Z [36;1m    else:[0m
+2026-10-27T18:36:29.1787790Z [36;1m        if scenario == "semantics":[0m
+2026-10-27T18:36:29.1788010Z [36;1m            assert item["status"] == "PASS_SELECTED_NATIVE_SUBCASES_FULL_CASE_OPEN"[0m
+2026-10-27T18:36:29.1788323Z [36;1m            cases = item["semanticResults"][0m
+2026-10-27T18:36:29.1788542Z [36;1m            expected_subscenarios = ("semantic-null", "semantic-decimal")[0m
+2026-10-27T18:36:29.1788741Z [36;1m        else:[0m
+2026-10-27T18:36:29.1788872Z [36;1m            case = item["result"][0m
+2026-10-27T18:36:29.1789021Z [36;1m            cases = [case][0m
+2026-10-27T18:36:29.1789183Z [36;1m            expected_subscenarios = (scenario,)[0m
+2026-10-27T18:36:29.1789367Z [36;1m            if scenario == "unknown-no-commit":[0m
+2026-10-27T18:36:29.1789598Z [36;1m                assert item["status"] == "PASS_EXPECTED_FENCED_SUBCASE_FULL_CASE_OPEN"[0m
+2026-10-27T18:36:29.1789948Z [36;1m            else:[0m
+2026-10-27T18:36:29.1790142Z [36;1m                assert item["status"] == "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN"[0m
+2026-10-27T18:36:29.1790423Z [36;1m        assert tuple(case["scenario"] for case in cases) == expected_subscenarios[0m
+2026-10-27T18:36:29.1790645Z [36;1m        for case in cases:[0m
+2026-10-27T18:36:29.1790850Z [36;1m            assert case["status"] == ("PASS_EXPECTED_FENCED_SUBCASE_FULL_CASE_OPEN"[0m
+2026-10-27T18:36:29.1791101Z [36;1m                                       if case["scenario"] == "unknown-no-commit"[0m
+2026-10-27T18:36:29.1791344Z [36;1m                                       else "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN")[0m
+2026-10-27T18:36:29.1791571Z [36;1m            assert case["cleanup"]["status"] == "PASS"[0m
+2026-10-27T18:36:29.1791772Z [36;1m            verification = case["cleanupVerification"][0m
+2026-10-27T18:36:29.1791985Z [36;1m            assert verification["ownedDatabaseAbsent"] is True[0m
+2026-10-27T18:36:29.1792204Z [36;1m            assert verification["ownedRolesAbsent"] is True[0m
+2026-10-27T18:36:29.1792430Z [36;1m            assert verification["targetIdentityUnchanged"] is True[0m
+2026-10-27T18:36:29.1792716Z [36;1m            assert verification["schemaAndTableAbsentByOwnedDatabaseRemoval"] is True[0m
+2026-10-27T18:36:29.1793013Z [36;1m            assert "PostgreSQL 18.6" in case["targetIdentity"]["serverVersion"][0m
+2026-10-27T18:36:29.1793319Z [36;1m            assert case["targetIdentity"]["currentUser"] == case["targetIdentity"]["sessionUser"][0m
+2026-10-27T18:36:29.1793592Z [36;1m            case_target_identity = case["targetIdentity"][0m
+2026-10-27T18:36:29.1793917Z [36;1m            identity_tuple = (case_target_identity["maintenanceDatabase"],[0m
+2026-10-27T18:36:29.1794154Z [36;1m                              case_target_identity["serverVersion"],[0m
+2026-10-27T18:36:29.1794361Z [36;1m                              case_target_identity["sessionUser"],[0m
+2026-10-27T18:36:29.1794564Z [36;1m                              case_target_identity["currentUser"],[0m
+2026-10-27T18:36:29.1794764Z [36;1m                              case_target_identity["serverPort"],[0m
+2026-10-27T18:36:29.1794979Z [36;1m                              case_target_identity["postmasterStart"],[0m
+2026-10-27T18:36:29.1795194Z [36;1m                              case_target_identity["systemIdentifier"])[0m
+2026-10-27T18:36:29.1795393Z [36;1m            if native_target_identity is None:[0m
+2026-10-27T18:36:29.1795579Z [36;1m                native_target_identity = identity_tuple[0m
+2026-10-27T18:36:29.1795747Z [36;1m            else:[0m
+2026-10-27T18:36:29.1795909Z [36;1m                assert identity_tuple == native_target_identity[0m
+2026-10-27T18:36:29.1796103Z [36;1m            if scenario == "tampering":[0m
+2026-10-27T18:36:29.1796281Z [36;1m                assert case["tamperingRefusals"] == [[0m
+2026-10-27T18:36:29.1796644Z [36;1m                    "wrong-approval", "wrong-head", "wrong-file", "wrong-source",[0m
+2026-10-27T18:36:29.1797012Z [36;1m                    "wrong-default-target", "wrong-default-value", "wrong-phase", "wrong-marker"][0m
+2026-10-27T18:36:29.1797355Z [36;1m        if scenario == "semantics":[0m
+2026-10-27T18:36:29.1797670Z [36;1m            expected_case_status.update({"G03-N05": partial, "G03-N14": partial})[0m
+2026-10-27T18:36:29.1797882Z [36;1m        else:[0m
+2026-10-27T18:36:29.1798033Z [36;1m            for case_id in case_ids_by_scenario[scenario]:[0m
+2026-10-27T18:36:29.1798231Z [36;1m                expected_case_status[case_id] = partial[0m
+2026-10-27T18:36:29.1798406Z [36;1m    if scenario != "domains":[0m
+2026-10-27T18:36:29.1798600Z [36;1m        assert item["caseStatus"] == expected_case_status, scenario[0m
+2026-10-27T18:36:29.1798808Z [36;1m    statuses[scenario] = item["status"][0m
+2026-10-27T18:36:29.1798958Z [36;1m[0m
+2026-10-27T18:36:29.1799134Z [36;1martifact_files = [path for path in evidence.rglob("*") if path.is_file()][0m
+2026-10-27T18:36:29.1799400Z [36;1mtotal_bytes = sum(path.stat().st_size for path in artifact_files)[0m
+2026-10-27T18:36:29.1799783Z [36;1mlog_bytes = sum(path.stat().st_size for path in (evidence / "logs").glob("*.log"))[0m
+2026-10-27T18:36:29.1800159Z [36;1massert total_bytes <= pins["evidenceLimits"]["capturedRunArtifactsMaximumBytes"], total_bytes[0m
+2026-10-27T18:36:29.1800512Z [36;1massert log_bytes <= pins["evidenceLimits"]["capturedCommandLogsMaximumBytes"], log_bytes[0m
+2026-10-27T18:36:29.1800849Z [36;1mworkflow_path = pathlib.Path(".github/workflows/g02-g03-native-qualification.yml")[0m
+2026-10-27T18:36:29.1801227Z [36;1mmanifest_path = pathlib.Path("docs/helix/04-build/evidence/mig-g02-g03/native-qualification-source-pins.json")[0m
+2026-10-27T18:36:29.1801520Z [36;1moutputs = {[0m
+2026-10-27T18:36:29.1801696Z [36;1m    "profile": "umf.g02-g03-selected-native-qualification/1",[0m
+2026-10-27T18:36:29.1801939Z [36;1m    "status": "PASS_SELECTED_NATIVE_SUBCASES_FULL_CASE_OPEN",[0m
+2026-10-27T18:36:29.1802205Z [36;1m    "qualificationPhase": "final-stable-five-G02-thirteen-selected-G03/1",[0m
+2026-10-27T18:36:29.1802445Z [36;1m    "sourceCommit": source_commit,[0m
+2026-10-27T18:36:29.1802605Z [36;1m    "runId": run_id,[0m
+2026-10-27T18:36:29.1802747Z [36;1m    "runAttempt": run_attempt,[0m
+2026-10-27T18:36:29.1802897Z [36;1m    "ref": ref,[0m
+2026-10-27T18:36:29.1803027Z [36;1m    "workflow": workflow,[0m
+2026-10-27T18:36:29.1803189Z [36;1m    "workflowSha256": sha(workflow_path),[0m
+2026-10-27T18:36:29.1803370Z [36;1m    "manifestSha256": sha(manifest_path),[0m
+2026-10-27T18:36:29.1803579Z [36;1m    "postgresqlServerVersionNum": g02["serverVersionNum"],[0m
+2026-10-27T18:36:29.1803920Z [36;1m    "g02Temporal": {"cases": g02["cases"], "checks": len(g02["checks"]),[0m
+2026-10-27T18:36:29.1804217Z [36;1m                    "maxWorkers": g02["maxWorkers"], "sharedRolesCleanup": g02["sharedRolesCleanup"],[0m
+2026-10-27T18:36:29.1804537Z [36;1m                    "fixtureSha256": g02["fixtureSha256"], "runnerSha256": g02["runnerSha256"]},[0m
+2026-10-27T18:36:29.1804784Z [36;1m    "g03SelectedScenarios": statuses,[0m
+2026-10-27T18:36:29.1805003Z [36;1m    "g03SelectedCaseIds": pins["selectedNativeScope"]["g03CaseIds"],[0m
+2026-10-27T18:36:29.1805255Z [36;1m    "g03N12": "UNQUALIFIED pending compatible Weft .2 cohort",[0m
+2026-10-27T18:36:29.1805511Z [36;1m    "g03N14AndFullCampaign": "OPEN; campaign selector was not invoked",[0m
+2026-10-27T18:36:29.1805730Z [36;1m    "cohortLockSha256": lock_sha,[0m
+2026-10-27T18:36:29.1805909Z [36;1m    "cohortMirrorManifestSha256": mirror_sha,[0m
+2026-10-27T18:36:29.1806092Z [36;1m    "sourcePins": pins["sourcePins"],[0m
+2026-10-27T18:36:29.1806339Z [36;1m    "reportHashes": {path.name: sha(path) for path in sorted(reports.glob("*.json"))},[0m
+2026-10-27T18:36:29.1806690Z [36;1m    "generatedCodegenOutputs": json.loads((reports / "codegen-generated-outputs.json").read_text()),[0m
+2026-10-27T18:36:29.1806976Z [36;1m    "capturedCommandLogBytes": log_bytes,[0m
+2026-10-27T18:36:29.1807159Z [36;1m    "capturedArtifactBytes": total_bytes,[0m
+2026-10-27T18:36:29.1807342Z [36;1m    "limits": pins["target"]["dsnBounds"],[0m
+2026-10-27T18:36:29.1807843Z [36;1m    "nativeQualification": "all five G02 cases and all thirteen selected G03 scenarios passed at this source and cohort; G03-N12 remains unqualified and G03-N14/full campaign remains open"[0m
+2026-10-27T18:36:29.1808237Z [36;1m}[0m
+2026-10-27T18:36:29.1808459Z [36;1m(evidence / "run-manifest.json").write_text(json.dumps(outputs, indent=2, sort_keys=True) + "\n")[0m
+2026-10-27T18:36:29.1808748Z [36;1m(evidence / "receipt.json").write_text(json.dumps({[0m
+2026-10-27T18:36:29.1808975Z [36;1m    "profile": outputs["profile"], "status": outputs["status"],[0m
+2026-10-27T18:36:29.1809217Z [36;1m    "qualificationPhase": outputs["qualificationPhase"],[0m
+2026-10-27T18:36:29.1809428Z [36;1m    "sourceCommit": outputs["sourceCommit"],[0m
+2026-10-27T18:36:29.1809647Z [36;1m    "runId": outputs["runId"], "runAttempt": outputs["runAttempt"],[0m
+2026-10-27T18:36:29.1810067Z [36;1m    "ref": outputs["ref"], "workflow": outputs["workflow"],[0m
+2026-10-27T18:36:29.1810283Z [36;1m    "workflowSha256": outputs["workflowSha256"],[0m
+2026-10-27T18:36:29.1810483Z [36;1m    "manifestSha256": outputs["manifestSha256"],[0m
+2026-10-27T18:36:29.1810674Z [36;1m    "selectedG02CaseCount": g02["cases"],[0m
+2026-10-27T18:36:29.1810860Z [36;1m    "selectedG03ScenarioCount": len(statuses),[0m
+2026-10-27T18:36:29.1811045Z [36;1m    "cohortLockSha256": lock_sha,[0m
+2026-10-27T18:36:29.1811202Z [36;1m    "g03N12": outputs["g03N12"],[0m
+2026-10-27T18:36:29.1811400Z [36;1m    "g03N14AndFullCampaign": outputs["g03N14AndFullCampaign"],[0m
+2026-10-27T18:36:29.1811707Z [36;1m    "finalCombinedGate": "OPEN; this result covers selected subcases only, not full G03 or campaign"[0m
+2026-10-27T18:36:29.1811980Z [36;1m}, indent=2, sort_keys=True) + "\n")[0m
+2026-10-27T18:36:29.1812130Z [36;1mPY[0m
+2026-10-27T18:36:29.1812244Z [36;1mBOUNDED_NATIVE_WORK[0m
+2026-10-27T18:36:29.1874432Z shell: /usr/bin/bash -e {0}
+2026-10-27T18:36:29.1874584Z env:
+2026-10-27T18:36:29.1874744Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T18:36:29.1874994Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T18:36:29.1875231Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T18:36:29.1875445Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T18:36:29.1875654Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T18:36:29.1875868Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T18:36:29.1876213Z   QUALIFICATION_DIR: /home/runner/work/_temp/umf-g02-g03-native-qualification
+2026-10-27T18:36:29.1876519Z   QUALIFICATION_STAGE_DIR: /home/runner/work/_temp/umf-g02-g03-native-qualification-upload
+2026-10-27T18:36:29.1877000Z   PG_DSN: host=127.0.0.1 port=5432 dbname=postgres user=postgres application_name=umf_g02_g03_native_gate connect_timeout=5 options='-c statement_timeout=120000 -c lock_timeout=5000'
+2026-10-27T18:36:29.1877410Z   GITHUB_SHA: a4af875748b085ac531fe06089a675a0ea1059fc
+2026-10-27T18:36:29.1877585Z   GITHUB_RUN_ID: 40561376259
+2026-10-27T18:36:29.1877719Z   GITHUB_RUN_ATTEMPT: 1
+2026-10-27T18:36:29.1877900Z   GITHUB_REF: refs/heads/codex/migration-g02-g03-native-qualification
+2026-10-27T18:36:29.1878202Z   GITHUB_WORKFLOW: G02 and G03 selected native qualification
+2026-10-27T18:36:29.1878481Z ##[endgroup]
+2026-10-27T18:48:00.0191472Z ##[group]Run set -euo pipefail
+2026-10-27T18:48:00.0191694Z [36;1mset -euo pipefail[0m
+2026-10-27T18:48:00.0191842Z [36;1mrm -rf "$QUALIFICATION_STAGE_DIR"[0m
+2026-10-27T18:48:00.0192020Z [36;1mrm -rf "${QUALIFICATION_STAGE_DIR}.candidate"[0m
+2026-10-27T18:48:00.0192375Z [36;1mpython -I - "$QUALIFICATION_DIR" "$QUALIFICATION_STAGE_DIR" "$GITHUB_SHA" "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" "$GITHUB_REF" "$GITHUB_WORKFLOW" <<'PY'[0m
+2026-10-27T18:48:00.0192730Z [36;1mimport hashlib, json, pathlib, shutil, sys[0m
+2026-10-27T18:48:00.0192958Z [36;1mroot, stage = pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2])[0m
+2026-10-27T18:48:00.0193334Z [36;1mcandidate = stage.with_name(stage.name + ".candidate")[0m
+2026-10-27T18:48:00.0193530Z [36;1mcandidate.mkdir(parents=True)[0m
+2026-10-27T18:48:00.0193710Z [36;1msource, run_id, attempt, ref, workflow = sys.argv[3:][0m
+2026-10-27T18:48:00.0193930Z [36;1mfiles = [path for path in root.rglob("*") if path.is_file()][0m
+2026-10-27T18:48:00.0194179Z [36;1mtotal = sum(path.stat().st_size for path in files)[0m
+2026-10-27T18:48:00.0194413Z [36;1mlogs = sum(path.stat().st_size for path in (root / "logs").glob("*.log"))[0m
+2026-10-27T18:48:00.0194627Z [36;1mreceipt = root / "receipt.json"[0m
+2026-10-27T18:48:00.0194793Z [36;1mtoolchain_path = root / "toolchain.json"[0m
+2026-10-27T18:48:00.0195006Z [36;1mfailed = (not receipt.is_file() or not toolchain_path.is_file() or[0m
+2026-10-27T18:48:00.0195217Z [36;1m          logs > 1048576 or total > 16777216)[0m
+2026-10-27T18:48:00.0195431Z [36;1mcommon = {"profile": "umf.g02-g03-selected-native-qualification/1",[0m
+2026-10-27T18:48:00.0195695Z [36;1m          "sourceCommit": source, "runId": run_id, "runAttempt": attempt,[0m
+2026-10-27T18:48:00.0195939Z [36;1m          "ref": ref, "workflow": workflow, "selectedScopeOnly": True,[0m
+2026-10-27T18:48:00.0196167Z [36;1m          "fullG03Campaign": "OPEN", "capturedLogsBytes": logs,[0m
+2026-10-27T18:48:00.0196374Z [36;1m          "capturedArtifactBytes": total,[0m
+2026-10-27T18:48:00.0196559Z [36;1m          "limits": {"logs": 1048576, "artifacts": 16777216}}[0m
+2026-10-27T18:48:00.0196822Z [36;1mworkflow_path = pathlib.Path(".github/workflows/g02-g03-native-qualification.yml")[0m
+2026-10-27T18:48:00.0197194Z [36;1mmanifest_path = pathlib.Path("docs/helix/04-build/evidence/mig-g02-g03/native-qualification-source-pins.json")[0m
+2026-10-27T18:48:00.0197622Z [36;1mcommon["workflowSha256"] = hashlib.sha256(workflow_path.read_bytes()).hexdigest() if workflow_path.is_file() else None[0m
+2026-10-27T18:48:00.0198037Z [36;1mcommon["manifestSha256"] = hashlib.sha256(manifest_path.read_bytes()).hexdigest() if manifest_path.is_file() else None[0m
+2026-10-27T18:48:00.0198315Z [36;1mif failed:[0m
+2026-10-27T18:48:00.0198546Z [36;1m    common["toolchain"] = json.loads(toolchain_path.read_text()) if toolchain_path.is_file() else None[0m
+2026-10-27T18:48:00.0198821Z [36;1m    common.update({"status": "FAIL_OR_UNKNOWN",[0m
+2026-10-27T18:48:00.0199106Z [36;1m                   "reason": "Evidence receipt missing or bounded artifact limits exceeded; raw evidence withheld."})[0m
+2026-10-27T18:48:00.0199463Z [36;1m    (candidate / "receipt.json").write_text(json.dumps(common, indent=2, sort_keys=True) + "\n")[0m
+2026-10-27T18:48:00.0199905Z [36;1m    candidate.rename(stage)[0m
+2026-10-27T18:48:00.0200123Z [36;1m    raise SystemExit(1)[0m
+2026-10-27T18:48:00.0200401Z [36;1mcommon["toolchain"] = json.loads(toolchain_path.read_text())[0m
+2026-10-27T18:48:00.0200643Z [36;1moriginal_receipt = json.loads(receipt.read_text())[0m
+2026-10-27T18:48:00.0200829Z [36;1moriginal_receipt.update(common)[0m
+2026-10-27T18:48:00.0201087Z [36;1m(candidate / "receipt.json").write_text(json.dumps(original_receipt, indent=2, sort_keys=True) + "\n")[0m
+2026-10-27T18:48:00.0201340Z [36;1mexpected = {}[0m
+2026-10-27T18:48:00.0201468Z [36;1mfor path in files:[0m
+2026-10-27T18:48:00.0201612Z [36;1m    relative = path.relative_to(root)[0m
+2026-10-27T18:48:00.0201909Z [36;1m    if relative.as_posix() == "receipt.json":[0m
+2026-10-27T18:48:00.0202071Z [36;1m        continue[0m
+2026-10-27T18:48:00.0202213Z [36;1m    destination = candidate / relative[0m
+2026-10-27T18:48:00.0202412Z [36;1m    destination.parent.mkdir(parents=True, exist_ok=True)[0m
+2026-10-27T18:48:00.0202612Z [36;1m    shutil.copyfile(path, destination)[0m
+2026-10-27T18:48:00.0202804Z [36;1m    digest = hashlib.sha256(path.read_bytes()).hexdigest()[0m
+2026-10-27T18:48:00.0203034Z [36;1m    copied = hashlib.sha256(destination.read_bytes()).hexdigest()[0m
+2026-10-27T18:48:00.0203230Z [36;1m    if copied != digest:[0m
+2026-10-27T18:48:00.0203526Z [36;1m        raise SystemExit("Evidence copy hash mismatch: " + relative.as_posix())[0m
+2026-10-27T18:48:00.0203762Z [36;1m    expected[relative.as_posix()] = digest[0m
+2026-10-27T18:48:00.0204024Z [36;1m(candidate / "copy-hashes.json").write_text(json.dumps(expected, indent=2, sort_keys=True) + "\n")[0m
+2026-10-27T18:48:00.0204386Z [36;1mstaged_total = sum(path.stat().st_size for path in candidate.rglob("*") if path.is_file())[0m
+2026-10-27T18:48:00.0204623Z [36;1mif staged_total > 16777216:[0m
+2026-10-27T18:48:00.0204768Z [36;1m    shutil.rmtree(candidate)[0m
+2026-10-27T18:48:00.0204920Z [36;1m    candidate.mkdir(parents=True)[0m
+2026-10-27T18:48:00.0205095Z [36;1m    failure = {**common, "status": "FAIL_OR_UNKNOWN",[0m
+2026-10-27T18:48:00.0205334Z [36;1m               "reason": "Staged evidence would exceed 16 MiB; raw evidence withheld.",[0m
+2026-10-27T18:48:00.0205575Z [36;1m               "stagedArtifactBytes": staged_total}[0m
+2026-10-27T18:48:00.0205836Z [36;1m    (candidate / "receipt.json").write_text(json.dumps(failure, indent=2, sort_keys=True) + "\n")[0m
+2026-10-27T18:48:00.0206081Z [36;1m    candidate.rename(stage)[0m
+2026-10-27T18:48:00.0206224Z [36;1m    raise SystemExit(1)[0m
+2026-10-27T18:48:00.0206435Z [36;1mprint(json.dumps({"capturedLogsBytes": logs, "capturedArtifactBytes": total,[0m
+2026-10-27T18:48:00.0206683Z [36;1m                  "stagedArtifactBytes": staged_total,[0m
+2026-10-27T18:48:00.0206877Z [36;1m                  "workflowSha256": common["workflowSha256"],[0m
+2026-10-27T18:48:00.0207108Z [36;1m                  "manifestSha256": common["manifestSha256"]}, sort_keys=True))[0m
+2026-10-27T18:48:00.0207312Z [36;1mcandidate.rename(stage)[0m
+2026-10-27T18:48:00.0207442Z [36;1mPY[0m
+2026-10-27T18:48:00.0257603Z shell: /usr/bin/bash -e {0}
+2026-10-27T18:48:00.0257739Z env:
+2026-10-27T18:48:00.0257885Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T18:48:00.0258116Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T18:48:00.0258353Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T18:48:00.0258559Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T18:48:00.0258758Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T18:48:00.0258970Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T18:48:00.0259212Z   QUALIFICATION_DIR: /home/runner/work/_temp/umf-g02-g03-native-qualification
+2026-10-27T18:48:00.0259504Z   QUALIFICATION_STAGE_DIR: /home/runner/work/_temp/umf-g02-g03-native-qualification-upload
+2026-10-27T18:48:00.0259901Z   GITHUB_SHA: a4af875748b085ac531fe06089a675a0ea1059fc
+2026-10-27T18:48:00.0260068Z   GITHUB_RUN_ID: 40561376259
+2026-10-27T18:48:00.0260196Z   GITHUB_RUN_ATTEMPT: 1
+2026-10-27T18:48:00.0260370Z   GITHUB_REF: refs/heads/codex/migration-g02-g03-native-qualification
+2026-10-27T18:48:00.0260592Z   GITHUB_WORKFLOW: G02 and G03 selected native qualification
+2026-10-27T18:48:00.0260767Z ##[endgroup]
+2026-10-27T18:48:00.0593595Z {"capturedArtifactBytes": 1916251, "capturedLogsBytes": 26512, "manifestSha256": "e8a5038613b906e5b3074bcc0c67100fc47a7a5274f1e1972b0283f437489508", "stagedArtifactBytes": 1924488, "workflowSha256": "00bcfb84aa06d02da6376b89d94e507a16dcd22ec31f3a7f62c3eadc2aefc912"}
+2026-10-27T18:48:00.0698783Z ##[group]Run actions/upload-artifact@v4
+2026-10-27T18:48:00.0698944Z with:
+2026-10-27T18:48:00.0699133Z   name: g02-g03-native-qualification-a4af875748b085ac531fe06089a675a0ea1059fc
+2026-10-27T18:48:00.0699422Z   path: /home/runner/work/_temp/umf-g02-g03-native-qualification-upload/
+2026-10-27T18:48:00.0699631Z   if-no-files-found: error
+2026-10-27T18:48:00.0699926Z   retention-days: 14
+2026-10-27T18:48:00.0700049Z   compression-level: 6
+2026-10-27T18:48:00.0700168Z   overwrite: false
+2026-10-27T18:48:00.0700288Z   include-hidden-files: false
+2026-10-27T18:48:00.0700421Z env:
+2026-10-27T18:48:00.0700561Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T18:48:00.0700930Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T18:48:00.0701158Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T18:48:00.0701364Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T18:48:00.0701603Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T18:48:00.0701811Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T18:48:00.0701989Z ##[endgroup]
+2026-10-27T18:48:00.1735512Z (node:10271) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-27T18:48:00.1735911Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-27T18:48:00.1839334Z With the provided path, there will be 71 files uploaded
+2026-10-27T18:48:00.1843204Z Artifact name is valid!
+2026-10-27T18:48:00.1843454Z Root directory input is valid!
+2026-10-27T18:48:00.4811600Z Beginning upload of artifact content to blob storage
+2026-10-27T18:48:00.5519098Z (node:10271) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-27T18:48:00.8208473Z Uploaded bytes 211479
+2026-10-27T18:48:00.8651141Z Finished uploading artifact content to blob storage!
+2026-10-27T18:48:00.8651904Z SHA256 digest of uploaded artifact zip is 6c1d1741bd6b77185cf91afc3123381a6ffd3be7cb9481242be5bd9f8e390596
+2026-10-27T18:48:00.8653127Z Finalizing artifact upload
+2026-10-27T18:48:01.3487343Z Artifact g02-g03-native-qualification-a4af875748b085ac531fe06089a675a0ea1059fc.zip successfully finalized. Artifact ID 12761877331
+2026-10-27T18:48:01.3488216Z Artifact g02-g03-native-qualification-a4af875748b085ac531fe06089a675a0ea1059fc has been successfully uploaded! Final size is 211479 bytes. Artifact ID is 12761877331
+2026-10-27T18:48:01.3492343Z Artifact download URL: https://github.com/DocumentDrivenDX/umf/actions/runs/40561376259/artifacts/12761877331
+2026-10-27T18:48:01.3650810Z Post job cleanup.
+2026-10-27T18:48:01.4381588Z (node:10284) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-27T18:48:01.4382002Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-27T18:48:01.4502628Z Post job cleanup.
+2026-10-27T18:48:01.5622024Z Post job cleanup.
+2026-10-27T18:48:01.6201682Z [command]/usr/bin/git version
+2026-10-27T18:48:01.6235095Z git version 2.55.0
+2026-10-27T18:48:01.6259633Z Temporarily overriding HOME='/home/runner/work/_temp/6015c3b4-9ec1-4b94-8d01-759194240e3c' before making global git config changes
+2026-10-27T18:48:01.6260525Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-27T18:48:01.6263246Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf
+2026-10-27T18:48:01.6295457Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T18:48:01.6323058Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-27T18:48:01.6568274Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T18:48:01.6586373Z http.https://github.com/.extraheader
+2026-10-27T18:48:01.6600495Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-27T18:48:01.6626325Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-27T18:48:01.6873572Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T18:48:01.6905926Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-27T18:48:01.7217186Z Print service container logs: 4adbaa44dac74e70b54f0af1564d9e0d_postgres186_44e30a
+2026-10-27T18:48:01.7220200Z ##[command]/usr/bin/docker logs --details a20408f9a670be3f4d86653dfbc89edaa0eda54c432b18de4fb99a91a2ee7225
+2026-10-27T18:48:01.7312326Z  ********************************************************************************
+2026-10-27T18:48:01.7312743Z  WARNING: POSTGRES_HOST_AUTH_METHOD has been set to "trust". This will allow
+2026-10-27T18:48:01.7313204Z           anyone with access to the Postgres port to access your database without
+2026-10-27T18:48:01.7313622Z           a password, even if POSTGRES_PASSWORD is set. See PostgreSQL
+2026-10-27T18:48:01.7313938Z           documentation about "trust":
+2026-10-27T18:48:01.7314247Z           https://www.postgresql.org/docs/current/auth-trust.html
+2026-10-27T18:48:01.7314625Z           In Docker's default configuration, this is effectively any other
+2026-10-27T18:48:01.7314955Z           container on the same system.
+2026-10-27T18:48:01.7315211Z  
+2026-10-27T18:48:01.7315448Z           It is not recommended to use POSTGRES_HOST_AUTH_METHOD=trust. Replace
+2026-10-27T18:48:01.7315828Z           it with "-e POSTGRES_PASSWORD=password" instead to set a password in
+2026-10-27T18:48:01.7316138Z           "docker run".
+2026-10-27T18:48:01.7316360Z  ********************************************************************************
+2026-10-27T18:48:01.7316697Z  initdb: warning: enabling "trust" authentication for local connections
+2026-10-27T18:48:01.7317263Z  initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+2026-10-27T18:48:01.7317872Z  The files belonging to this database system will be owned by user "postgres".
+2026-10-27T18:48:01.7318511Z  2026-10-27 18:35:43.290 UTC [1] LOG:  starting PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+2026-10-27T18:48:01.7318931Z  2026-10-27 18:35:43.290 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2026-10-27T18:48:01.7319194Z  2026-10-27 18:35:43.290 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+2026-10-27T18:48:01.7319469Z  2026-10-27 18:35:43.291 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-10-27T18:48:01.7320258Z  2026-10-27 18:35:43.294 UTC [74] LOG:  database system was shut down at 2026-10-27 18:35:43 UTC
+2026-10-27T18:48:01.7320873Z  2026-10-27 18:35:43.297 UTC [1] LOG:  database system is ready to accept connections
+2026-10-27T18:48:01.7321301Z  2026-10-27 18:37:39.767 UTC [228] ERROR:  permission denied for table umf_lifecycle_approvals
+2026-10-27T18:48:01.7321767Z  2026-10-27 18:37:39.767 UTC [228] STATEMENT:  SELECT * FROM "g02_temporal"."umf_lifecycle_approvals"
+2026-10-27T18:48:01.7322231Z  2026-10-27 18:37:39.768 UTC [228] ERROR:  permission denied for table umf_lifecycle_approvals
+2026-10-27T18:48:01.7322692Z  2026-10-27 18:37:39.768 UTC [228] STATEMENT:  SELECT * FROM "g02_temporal"."umf_lifecycle_approvals"
+2026-10-27T18:48:01.7323155Z  2026-10-27 18:37:39.768 UTC [228] ERROR:  permission denied for table umf_lifecycle_approvals
+2026-10-27T18:48:01.7323455Z  2026-10-27 18:37:39.768 UTC [228] STATEMENT:  SELECT * FROM "g02_temporal"."umf_lifecycle_approvals"
+2026-10-27T18:48:01.7323748Z  2026-10-27 18:37:40.002 UTC [229] ERROR:  permission denied for table umf_lifecycle_approvals
+2026-10-27T18:48:01.7324039Z  2026-10-27 18:37:40.002 UTC [229] STATEMENT:  SELECT * FROM "g02_temporal"."umf_lifecycle_approvals"
+2026-10-27T18:48:01.7324329Z  2026-10-27 18:37:40.003 UTC [229] ERROR:  permission denied for table umf_lifecycle_approvals
+2026-10-27T18:48:01.7324619Z  2026-10-27 18:37:40.003 UTC [229] STATEMENT:  SELECT * FROM "g02_temporal"."umf_lifecycle_approvals"
+2026-10-27T18:48:01.7324910Z  2026-10-27 18:37:40.004 UTC [229] ERROR:  permission denied for table umf_lifecycle_approvals
+2026-10-27T18:48:01.7325453Z  2026-10-27 18:37:40.004 UTC [229] STATEMENT:  SELECT * FROM "g02_temporal"."umf_lifecycle_approvals"
+2026-10-27T18:48:01.7325837Z  2026-10-27 18:37:40.178 UTC [72] LOG:  checkpoint starting: immediate force wait
+2026-10-27T18:48:01.7326444Z  2026-10-27 18:37:40.270 UTC [72] LOG:  checkpoint complete: wrote 1199 buffers (7.3%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 1 recycled; write=0.069 s, sync=0.016 s, total=0.092 s; sync files=604, longest=0.012 s, average=0.001 s; distance=14937 kB, estimate=14937 kB; lsn=0/25F7F20, redo lsn=0/25F7EC8
+2026-10-27T18:48:01.7327068Z  2026-10-27 18:37:40.421 UTC [72] LOG:  checkpoint starting: immediate force wait
+2026-10-27T18:48:01.7327647Z  2026-10-27 18:37:40.484 UTC [72] LOG:  checkpoint complete: wrote 958 buffers (5.8%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.061 s, sync=0.002 s, total=0.064 s; sync files=305, longest=0.001 s, average=0.001 s; distance=4393 kB, estimate=13883 kB; lsn=0/2A42438, redo lsn=0/2A423E0
+2026-10-27T18:48:01.7328254Z  2026-10-27 18:38:05.293 UTC [273] ERROR:  permission denied for table umf_lifecycle_approvals
+2026-10-27T18:48:01.7328549Z  2026-10-27 18:38:05.293 UTC [273] STATEMENT:  SELECT * FROM "g02_temporal"."umf_lifecycle_approvals"
+2026-10-27T18:48:01.7328844Z  2026-10-27 18:38:05.294 UTC [273] ERROR:  permission denied for table umf_lifecycle_approvals
+2026-10-27T18:48:01.7329361Z  2026-10-27 18:38:05.294 UTC [273] STATEMENT:  SELECT * FROM "g02_temporal"."umf_lifecycle_approvals"
+2026-10-27T18:48:01.7330763Z  2026-10-27 18:38:05.295 UTC [273] ERROR:  permission denied for table umf_lifecycle_approvals
+2026-10-27T18:48:01.7331210Z  2026-10-27 18:38:05.295 UTC [273] STATEMENT:  SELECT * FROM "g02_temporal"."umf_lifecycle_approvals"
+2026-10-27T18:48:01.7331612Z  2026-10-27 18:38:05.726 UTC [72] LOG:  checkpoint starting: immediate force wait
+2026-10-27T18:48:01.7332201Z  2026-10-27 18:38:05.815 UTC [72] LOG:  checkpoint complete: wrote 1112 buffers (6.8%), wrote 2 SLRU buffers; 0 WAL file(s) added, 0 removed, 1 recycled; write=0.069 s, sync=0.016 s, total=0.090 s; sync files=586, longest=0.009 s, average=0.001 s; distance=10924 kB, estimate=13587 kB; lsn=0/3535848, redo lsn=0/34ED4B0
+2026-10-27T18:48:01.7332812Z  2026-10-27 18:38:05.816 UTC [276] ERROR:  permission denied for table umf_lifecycle_approvals
+2026-10-27T18:48:01.7333100Z  2026-10-27 18:38:05.816 UTC [276] STATEMENT:  SELECT * FROM "g02_temporal"."umf_lifecycle_approvals"
+2026-10-27T18:48:01.7333390Z  2026-10-27 18:38:05.817 UTC [276] ERROR:  permission denied for table umf_lifecycle_approvals
+2026-10-27T18:48:01.7333679Z  2026-10-27 18:38:05.817 UTC [276] STATEMENT:  SELECT * FROM "g02_temporal"."umf_lifecycle_approvals"
+2026-10-27T18:48:01.7333969Z  2026-10-27 18:38:05.817 UTC [276] ERROR:  permission denied for table umf_lifecycle_approvals
+2026-10-27T18:48:01.7334256Z  2026-10-27 18:38:05.817 UTC [276] STATEMENT:  SELECT * FROM "g02_temporal"."umf_lifecycle_approvals"
+2026-10-27T18:48:01.7334529Z  2026-10-27 18:38:06.231 UTC [72] LOG:  checkpoint starting: immediate force wait
+2026-10-27T18:48:01.7335130Z  2026-10-27 18:38:06.298 UTC [72] LOG:  checkpoint complete: wrote 958 buffers (5.8%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.056 s, sync=0.011 s, total=0.068 s; sync files=305, longest=0.010 s, average=0.001 s; distance=4838 kB, estimate=12712 kB; lsn=0/39A6F70, redo lsn=0/39A6F18
+2026-10-27T18:48:01.7335689Z  2026-10-27 18:38:23.441 UTC [320] ERROR:  division by zero
+2026-10-27T18:48:01.7337503Z  2026-10-27 18:38:23.441 UTC [320] STATEMENT:  WITH umf_effects AS (UPDATE "g02_temporal"."people" AS t SET "birthday" = t."birthDate" WHERE (t."birthday" IS NULL) RETURNING 1 AS umf_affected, ((t."birthday" OPERATOR(pg_catalog.=) t."birthDate") IS TRUE) AS umf_native_exact, (t."birthday" IS NOT NULL) AS umf_native_nonnull, ((TRUE)) AS umf_native_finite), umf_bound AS MATERIALIZED (SELECT CASE WHEN pg_catalog.count(*) OPERATOR(pg_catalog.<=) 100 AND COALESCE(pg_catalog.sum(pg_catalog.octet_length(e.umf_affected::pg_catalog.text)::pg_catalog.int8),0) OPERATOR(pg_catalog.<=) 8388608 AND COALESCE(pg_catalog.bool_and(e.umf_native_exact AND e.umf_native_nonnull AND e.umf_native_finite),TRUE) THEN 1::pg_catalog.int8 ELSE 1::pg_catalog.int8 OPERATOR(pg_catalog./) (pg_catalog.count(*) OPERATOR(pg_catalog.-) pg_catalog.count(*)) END AS ok FROM umf_effects AS e) SELECT e.umf_affected FROM umf_bound AS b CROSS JOIN umf_effects AS e WHERE b.ok OPERATOR(pg_catalog.=) 1
+2026-10-27T18:48:01.7339218Z  2026-10-27 18:38:23.447 UTC [320] ERROR:  permission denied for view umf_lifecycle_head
+2026-10-27T18:48:01.7339500Z  2026-10-27 18:38:23.447 UTC [320] STATEMENT:  SELECT * FROM "g02_temporal"."umf_lifecycle_head"
+2026-10-27T18:48:01.7339954Z  2026-10-27 18:38:23.448 UTC [72] LOG:  checkpoint starting: immediate force wait
+2026-10-27T18:48:01.7340545Z  2026-10-27 18:38:23.451 UTC [72] LOG:  checkpoint complete: wrote 14 buffers (0.1%), wrote 2 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.003 s; sync files=7, longest=0.001 s, average=0.001 s; distance=2732 kB, estimate=11714 kB; lsn=0/3C522B8, redo lsn=0/3C52260
+2026-10-27T18:48:01.7341173Z  2026-10-27 18:39:38.763 UTC [72] LOG:  checkpoint starting: immediate force wait
+2026-10-27T18:48:01.7341743Z  2026-10-27 18:39:38.766 UTC [72] LOG:  checkpoint complete: wrote 33 buffers (0.2%), wrote 2 SLRU buffers; 0 WAL file(s) added, 0 removed, 1 recycled; write=0.001 s, sync=0.001 s, total=0.003 s; sync files=27, longest=0.001 s, average=0.001 s; distance=13024 kB, estimate=13024 kB; lsn=0/490A3C8, redo lsn=0/490A370
+2026-10-27T18:48:01.7342315Z  2026-10-27 18:40:55.048 UTC [72] LOG:  checkpoint starting: immediate force wait
+2026-10-27T18:48:01.7342880Z  2026-10-27 18:40:55.051 UTC [72] LOG:  checkpoint complete: wrote 25 buffers (0.2%), wrote 2 SLRU buffers; 0 WAL file(s) added, 0 removed, 1 recycled; write=0.001 s, sync=0.001 s, total=0.003 s; sync files=22, longest=0.001 s, average=0.001 s; distance=12938 kB, estimate=13015 kB; lsn=0/55ACDE0, redo lsn=0/55ACD88
+2026-10-27T18:48:01.7343524Z  2026-10-27 18:40:58.883 UTC [617] ERROR:  null value in column "measure" of relation "notes" violates not-null constraint
+2026-10-27T18:48:01.7343931Z  2026-10-27 18:40:58.883 UTC [617] STATEMENT:  INSERT INTO "g03s_8a7c52a9ed"."notes" (id,owner,measure) VALUES ($1,$2,$3) RETURNING measure
+2026-10-27T18:48:01.7344334Z  2026-10-27 18:41:19.023 UTC [617] ERROR:  null value in column "measure" of relation "notes" violates not-null constraint
+2026-10-27T18:48:01.7344731Z  2026-10-27 18:41:19.023 UTC [617] STATEMENT:  INSERT INTO "g03s_8a7c52a9ed"."notes" (id,owner,measure) VALUES ($1,$2,$3) RETURNING measure
+2026-10-27T18:48:01.7345130Z  2026-10-27 18:41:43.471 UTC [617] ERROR:  null value in column "measure" of relation "notes" violates not-null constraint
+2026-10-27T18:48:01.7345504Z  2026-10-27 18:41:43.471 UTC [617] STATEMENT:  INSERT INTO "g03s_8a7c52a9ed"."notes" (id,owner) VALUES ($1,$2) RETURNING measure
+2026-10-27T18:48:01.7345882Z  2026-10-27 18:41:43.472 UTC [617] ERROR:  null value in column "measure" of relation "notes" violates not-null constraint
+2026-10-27T18:48:01.7346366Z  2026-10-27 18:41:43.472 UTC [617] STATEMENT:  INSERT INTO "g03s_8a7c52a9ed"."notes" (id,owner,measure) VALUES ($1,$2,$3) RETURNING measure
+2026-10-27T18:48:01.7346698Z  2026-10-27 18:41:43.476 UTC [72] LOG:  checkpoint starting: immediate force wait
+2026-10-27T18:48:01.7347345Z  2026-10-27 18:41:43.478 UTC [72] LOG:  checkpoint complete: wrote 23 buffers (0.1%), wrote 2 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.003 s; sync files=20, longest=0.001 s, average=0.001 s; distance=10020 kB, estimate=12716 kB; lsn=0/5F75FA0, redo lsn=0/5F75F48
+2026-10-27T18:48:01.7347919Z  2026-10-27 18:42:08.997 UTC [72] LOG:  checkpoint starting: immediate force wait
+2026-10-27T18:48:01.7348587Z  2026-10-27 18:42:08.999 UTC [72] LOG:  checkpoint complete: wrote 19 buffers (0.1%), wrote 2 SLRU buffers; 0 WAL file(s) added, 0 removed, 1 recycled; write=0.001 s, sync=0.001 s, total=0.003 s; sync files=17, longest=0.001 s, average=0.001 s; distance=7262 kB, estimate=12170 kB; lsn=0/668D7F0, redo lsn=0/668D798
+2026-10-27T18:48:01.7349234Z  2026-10-27 18:42:32.686 UTC [72] LOG:  checkpoint starting: immediate force wait
+2026-10-27T18:48:01.7349934Z  2026-10-27 18:42:32.688 UTC [72] LOG:  checkpoint complete: wrote 17 buffers (0.1%), wrote 2 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.003 s; sync files=17, longest=0.001 s, average=0.001 s; distance=7294 kB, estimate=11683 kB; lsn=0/6DAD090, redo lsn=0/6DAD038
+2026-10-27T18:48:01.7350507Z  2026-10-27 18:43:02.211 UTC [72] LOG:  checkpoint starting: immediate force wait
+2026-10-27T18:48:01.7351076Z  2026-10-27 18:43:02.214 UTC [72] LOG:  checkpoint complete: wrote 22 buffers (0.1%), wrote 2 SLRU buffers; 0 WAL file(s) added, 0 removed, 1 recycled; write=0.001 s, sync=0.001 s, total=0.003 s; sync files=19, longest=0.001 s, average=0.001 s; distance=8234 kB, estimate=11338 kB; lsn=0/75B7C30, redo lsn=0/75B7BD8
+2026-10-27T18:48:01.7351652Z  2026-10-27 18:43:27.113 UTC [72] LOG:  checkpoint starting: immediate force wait
+2026-10-27T18:48:01.7352221Z  2026-10-27 18:43:27.115 UTC [72] LOG:  checkpoint complete: wrote 19 buffers (0.1%), wrote 2 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.003 s; sync files=17, longest=0.001 s, average=0.001 s; distance=7334 kB, estimate=10937 kB; lsn=0/7CE1628, redo lsn=0/7CE15D0
+2026-10-27T18:48:01.7352785Z  2026-10-27 18:43:59.765 UTC [72] LOG:  checkpoint starting: immediate force wait
+2026-10-27T18:48:01.7353356Z  2026-10-27 18:43:59.768 UTC [72] LOG:  checkpoint complete: wrote 21 buffers (0.1%), wrote 2 SLRU buffers; 0 WAL file(s) added, 0 removed, 1 recycled; write=0.001 s, sync=0.001 s, total=0.003 s; sync files=19, longest=0.001 s, average=0.001 s; distance=8318 kB, estimate=10675 kB; lsn=0/85010F8, redo lsn=0/85010A0
+2026-10-27T18:48:01.7353927Z  2026-10-27 18:44:35.308 UTC [72] LOG:  checkpoint starting: immediate force wait
+2026-10-27T18:48:01.7354498Z  2026-10-27 18:44:35.311 UTC [72] LOG:  checkpoint complete: wrote 22 buffers (0.1%), wrote 2 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.003 s; sync files=19, longest=0.001 s, average=0.001 s; distance=8767 kB, estimate=10485 kB; lsn=0/8D90F58, redo lsn=0/8D90F00
+2026-10-27T18:48:01.7355068Z  2026-10-27 18:44:53.746 UTC [72] LOG:  checkpoint starting: immediate force wait
+2026-10-27T18:48:01.7355636Z  2026-10-27 18:44:53.748 UTC [72] LOG:  checkpoint complete: wrote 19 buffers (0.1%), wrote 2 SLRU buffers; 0 WAL file(s) added, 0 removed, 1 recycled; write=0.001 s, sync=0.001 s, total=0.003 s; sync files=17, longest=0.001 s, average=0.001 s; distance=6677 kB, estimate=10104 kB; lsn=0/94165F8, redo lsn=0/94165A0
+2026-10-27T18:48:01.7356204Z  2026-10-27 18:45:17.134 UTC [72] LOG:  checkpoint starting: immediate force wait
+2026-10-27T18:48:01.7356771Z  2026-10-27 18:45:17.137 UTC [72] LOG:  checkpoint complete: wrote 21 buffers (0.1%), wrote 2 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.003 s; sync files=19, longest=0.001 s, average=0.001 s; distance=7405 kB, estimate=9834 kB; lsn=0/9B51BB0, redo lsn=0/9B51B58
+2026-10-27T18:48:01.7357342Z  2026-10-27 18:45:42.560 UTC [72] LOG:  checkpoint starting: immediate force wait
+2026-10-27T18:48:01.7357906Z  2026-10-27 18:45:42.576 UTC [72] LOG:  checkpoint complete: wrote 18 buffers (0.1%), wrote 2 SLRU buffers; 0 WAL file(s) added, 0 removed, 1 recycled; write=0.001 s, sync=0.001 s, total=0.016 s; sync files=18, longest=0.001 s, average=0.001 s; distance=7300 kB, estimate=9581 kB; lsn=0/A272BF8, redo lsn=0/A272BA0
+2026-10-27T18:48:01.7358474Z  2026-10-27 18:46:08.016 UTC [72] LOG:  checkpoint starting: immediate force wait
+2026-10-27T18:48:01.7359129Z  2026-10-27 18:46:08.021 UTC [72] LOG:  checkpoint complete: wrote 17 buffers (0.1%), wrote 2 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.001 s, total=0.005 s; sync files=17, longest=0.001 s, average=0.001 s; distance=7295 kB, estimate=9352 kB; lsn=0/A992880, redo lsn=0/A992828
+2026-10-27T18:48:01.7359936Z  2026-10-27 18:46:33.432 UTC [72] LOG:  checkpoint starting: immediate force wait
+2026-10-27T18:48:01.7360504Z  2026-10-27 18:46:33.434 UTC [72] LOG:  checkpoint complete: wrote 16 buffers (0.1%), wrote 2 SLRU buffers; 0 WAL file(s) added, 0 removed, 1 recycled; write=0.001 s, sync=0.001 s, total=0.003 s; sync files=16, longest=0.001 s, average=0.001 s; distance=7275 kB, estimate=9144 kB; lsn=0/B0AD778, redo lsn=0/B0AD720
+2026-10-27T18:48:01.7361069Z  2026-10-27 18:46:58.705 UTC [72] LOG:  checkpoint starting: immediate force wait
+2026-10-27T18:48:01.7361637Z  2026-10-27 18:46:58.708 UTC [72] LOG:  checkpoint complete: wrote 19 buffers (0.1%), wrote 2 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.004 s; sync files=18, longest=0.001 s, average=0.001 s; distance=7363 kB, estimate=8966 kB; lsn=0/B7DE4A0, redo lsn=0/B7DE448
+2026-10-27T18:48:01.7362210Z  2026-10-27 18:47:24.114 UTC [72] LOG:  checkpoint starting: immediate force wait
+2026-10-27T18:48:01.7362778Z  2026-10-27 18:47:24.117 UTC [72] LOG:  checkpoint complete: wrote 17 buffers (0.1%), wrote 2 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.003 s; sync files=16, longest=0.001 s, average=0.001 s; distance=7303 kB, estimate=8800 kB; lsn=0/BF001C8, redo lsn=0/BF00170
+2026-10-27T18:48:01.7363343Z  2026-10-27 18:47:59.829 UTC [72] LOG:  checkpoint starting: immediate force wait
+2026-10-27T18:48:01.7363909Z  2026-10-27 18:47:59.832 UTC [72] LOG:  checkpoint complete: wrote 20 buffers (0.1%), wrote 2 SLRU buffers; 0 WAL file(s) added, 0 removed, 1 recycled; write=0.001 s, sync=0.001 s, total=0.003 s; sync files=19, longest=0.001 s, average=0.001 s; distance=8260 kB, estimate=8746 kB; lsn=0/C711460, redo lsn=0/C711408
+2026-10-27T18:48:01.7364449Z  This user must also own the server process.
+2026-10-27T18:48:01.7364622Z  
+2026-10-27T18:48:01.7364784Z  The database cluster will be initialized with locale "en_US.utf8".
+2026-10-27T18:48:01.7365019Z  The default database encoding has accordingly been set to "UTF8".
+2026-10-27T18:48:01.7365249Z  The default text search configuration will be set to "english".
+2026-10-27T18:48:01.7365425Z  
+2026-10-27T18:48:01.7365533Z  Data page checksums are enabled.
+2026-10-27T18:48:01.7365671Z  
+2026-10-27T18:48:01.7365837Z  fixing permissions on existing directory /var/lib/postgresql/18/docker ... ok
+2026-10-27T18:48:01.7366057Z  creating subdirectories ... ok
+2026-10-27T18:48:01.7366233Z  selecting dynamic shared memory implementation ... posix
+2026-10-27T18:48:01.7366423Z  selecting default "max_connections" ... 100
+2026-10-27T18:48:01.7366590Z  selecting default "shared_buffers" ... 128MB
+2026-10-27T18:48:01.7366751Z  selecting default time zone ... Etc/UTC
+2026-10-27T18:48:01.7366908Z  creating configuration files ... ok
+2026-10-27T18:48:01.7367057Z  running bootstrap script ... ok
+2026-10-27T18:48:01.7367227Z  performing post-bootstrap initialization ... ok
+2026-10-27T18:48:01.7367393Z  syncing data to disk ... ok
+2026-10-27T18:48:01.7367522Z  
+2026-10-27T18:48:01.7367615Z  
+2026-10-27T18:48:01.7367744Z  Success. You can now start the database server using:
+2026-10-27T18:48:01.7367906Z  
+2026-10-27T18:48:01.7368044Z      pg_ctl -D /var/lib/postgresql/18/docker -l logfile start
+2026-10-27T18:48:01.7368217Z  
+2026-10-27T18:48:01.7368549Z  waiting for server to start....2026-10-27 18:35:43.063 UTC [54] LOG:  starting PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+2026-10-27T18:48:01.7369006Z  2026-10-27 18:35:43.063 UTC [54] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-10-27T18:48:01.7369304Z  2026-10-27 18:35:43.080 UTC [60] LOG:  database system was shut down at 2026-10-27 18:35:42 UTC
+2026-10-27T18:48:01.7369581Z  2026-10-27 18:35:43.086 UTC [54] LOG:  database system is ready to accept connections
+2026-10-27T18:48:01.7370123Z   done
+2026-10-27T18:48:01.7370233Z  server started
+2026-10-27T18:48:01.7370342Z  
+2026-10-27T18:48:01.7370515Z  /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+2026-10-27T18:48:01.7370723Z  
+2026-10-27T18:48:01.7370861Z  2026-10-27 18:35:43.173 UTC [54] LOG:  received fast shutdown request
+2026-10-27T18:48:01.7371144Z  waiting for server to shut down....2026-10-27 18:35:43.174 UTC [54] LOG:  aborting any active transactions
+2026-10-27T18:48:01.7371502Z  2026-10-27 18:35:43.175 UTC [54] LOG:  background worker "logical replication launcher" (PID 63) exited with exit code 1
+2026-10-27T18:48:01.7371788Z  2026-10-27 18:35:43.175 UTC [58] LOG:  shutting down
+2026-10-27T18:48:01.7371999Z  2026-10-27 18:35:43.176 UTC [58] LOG:  checkpoint starting: shutdown immediate
+2026-10-27T18:48:01.7372572Z  2026-10-27 18:35:43.178 UTC [58] LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.003 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/1761888, redo lsn=0/1761888
+2026-10-27T18:48:01.7373126Z  2026-10-27 18:35:43.184 UTC [54] LOG:  database system is shut down
+2026-10-27T18:48:01.7373302Z   done
+2026-10-27T18:48:01.7373404Z  server stopped
+2026-10-27T18:48:01.7373514Z  
+2026-10-27T18:48:01.7373644Z  PostgreSQL init process complete; ready for start up.
+2026-10-27T18:48:01.7373806Z  
+2026-10-27T18:48:01.7376970Z Stop and remove container: 4adbaa44dac74e70b54f0af1564d9e0d_postgres186_44e30a
+2026-10-27T18:48:01.7380429Z ##[command]/usr/bin/docker rm --force a20408f9a670be3f4d86653dfbc89edaa0eda54c432b18de4fb99a91a2ee7225
+2026-10-27T18:48:01.8688190Z a20408f9a670be3f4d86653dfbc89edaa0eda54c432b18de4fb99a91a2ee7225
+2026-10-27T18:48:01.8708800Z Remove container network: github_network_fd6a86729f1746d8be47e987e0c22434
+2026-10-27T18:48:01.8711479Z ##[command]/usr/bin/docker network rm github_network_fd6a86729f1746d8be47e987e0c22434
+2026-10-27T18:48:01.9475240Z github_network_fd6a86729f1746d8be47e987e0c22434
+2026-10-27T18:48:01.9526594Z Cleaning up orphan processes
+2026-10-27T18:48:01.9762633Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

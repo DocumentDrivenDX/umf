@@ -1,0 +1,19 @@
+--- /private/tmp/g11-supervisor-journal-015-source-004/snapshot/python/umf_access/tests/test_supervisor_journal_codec.py	2026-10-24 12:44:57
++++ /private/tmp/g11-supervisor-journal-015-source-005/snapshot/python/umf_access/tests/test_supervisor_journal_codec.py	2026-10-24 12:58:42
+@@ -729,7 +729,7 @@
+                 'profile': 'umf.native-target-custody/0.1',
+                 'custodianId': custodian_id, 'registrationId': registration_id,
+                 'resourceId': creation['clusterId'], 'incarnation': creation['incarnationId'],
+-                'registrationDigest': 'a' * 64,
++                'registrationDigest': hashlib.sha256(codec.canonical(registration)).hexdigest(),
+             }
+             store = {'profile': 'umf.native-row-originals-store/0.1',
+                      'storeId': provider_id,
+@@ -787,6 +787,7 @@
+                 root_replay_context=root_context)['sequence'], len(events))
+             for nested_path, replacement in (
+                     (('registrationDigest',), 'not-a-digest'),
++                    (('registrationDigest',), '0' * 64),
+                     (('registrationId',), True),
+                     (('registrationId',), 'abababab-abab-4bab-8bab-abababababac')):
+                 candidate = copy.deepcopy(events)

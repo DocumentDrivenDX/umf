@@ -1,0 +1,28 @@
+{
+  "schema": "umf.sdk-057-prospective-release-payload/1",
+  "status": "HELD",
+  "reason": "D5 incomplete; no merge/tag/release/publicH",
+  "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+  "sourceTree": "8b98c0d895983ba2b7637dd3aea567dab0943883",
+  "packageAssetCount": 3,
+  "assets": [
+    {
+      "filename": "umf-sdk.tgz",
+      "sizeBytes": 30834843,
+      "sha256": "cd851d3338b1b2af79197cbafaeefdd03a8aac3e02373a893ddd5d07a930ab26",
+      "sourcePath": "/private/tmp/migration-sdk-e4299aff8-003/sdk-distribution/umf-sdk.tgz"
+    },
+    {
+      "filename": "umf_access-0.1.0.dev8-py3-none-any.whl",
+      "sizeBytes": 580062,
+      "sha256": "1a21c1ddd59f6b23e9f0b33228280564af0e96bb4d13699b89616d5143e4fd23",
+      "sourcePath": "/private/tmp/migration-full18-e4299aff8-002/cells/linux-x86_64-py311/wheelhouse/umf_access-0.1.0.dev8-py3-none-any.whl"
+    },
+    {
+      "filename": "umf_codegen-0.1.0a5-py3-none-any.whl",
+      "sizeBytes": 261296,
+      "sha256": "36a6f7e0ab92feb9cb20ed8842cc3c1f073cdd3ff2c4edff137c1fcbc3ace158",
+      "sourcePath": "/private/tmp/migration-full18-e4299aff8-002/cells/linux-x86_64-py311/wheelhouse/umf_codegen-0.1.0a5-py3-none-any.whl"
+    }
+  ]
+}

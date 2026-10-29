@@ -1,0 +1,44 @@
+{
+  "distributions": {
+    "auditwheel": "6.8.2",
+    "packaging": "25.0",
+    "patchelf": "0.17.2.4",
+    "pyelftools": "0.32"
+  },
+  "executables": {
+    "auditwheel": {
+      "path": "/home/runner/work/_temp/core-0102-manylinux-tools/venv/bin/auditwheel",
+      "version": "auditwheel 6.8.2 installed at /home/runner/work/_temp/core-0102-manylinux-\ntools/venv/lib/python3.11/site-packages/auditwheel (python 3.11)",
+      "binarySha256": "30cdab9afe543cc7a6036302209e82e0d99bafd1593d199cb22c277928b72fe9"
+    },
+    "patchelf": {
+      "path": "/home/runner/work/_temp/core-0102-manylinux-tools/venv/bin/patchelf",
+      "version": "patchelf 0.17.2",
+      "binarySha256": "f2a22996ad184a5329cdc98a2bf7df5badda683894ab9a64c969ac951a05d772",
+      "selectedByAuditwheelPath": "/home/runner/work/_temp/core-0102-manylinux-tools/venv/bin/patchelf",
+      "selectedByAuditwheelSha256": "f2a22996ad184a5329cdc98a2bf7df5badda683894ab9a64c969ac951a05d772"
+    }
+  },
+  "wheelHashes": [
+    {
+      "filename": "auditwheel-6.8.2-py3-none-any.whl",
+      "sha256": "05fd2dd4b743217cd5f66066adc95b03a079424b1f0a878ad1e40fe2cdea4704",
+      "bytes": 65324
+    },
+    {
+      "filename": "packaging-25.0-py3-none-any.whl",
+      "sha256": "29572ef2b1f17581046b3a2227d5c611fb25ec70ca1ba8554b24b0e69331a484",
+      "bytes": 66469
+    },
+    {
+      "filename": "patchelf-0.17.2.4-py3-none-manylinux1_x86_64.manylinux_2_5_x86_64.musllinux_1_1_x86_64.whl",
+      "sha256": "d9b35ebfada70c02679ad036407d9724ffe1255122ba4ac5e4be5868618a5689",
+      "bytes": 482846
+    },
+    {
+      "filename": "pyelftools-0.32-py3-none-any.whl",
+      "sha256": "013df952a006db5e138b1edf6d8a68ecc50630adbd0d83a2d41e7f846163d738",
+      "bytes": 188525
+    }
+  ]
+}

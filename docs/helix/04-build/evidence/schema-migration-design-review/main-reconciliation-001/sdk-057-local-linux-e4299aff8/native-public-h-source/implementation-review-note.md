@@ -1,0 +1,11 @@
+# Public-H native D5 reader extension — implementation-only review note
+
+New reader: `/private/tmp/sdk-057-native-d5-public-h/run-native-d5-public-h.py`
+
+The accepted source `/private/tmp/sdk-057-local-public-h/run-local-public-h.py` remains unchanged (SHA-256 `a04eafa0bfe5fdefbfb126ff64f2f249d4daf6a64e3bfbe9bdf6ab27cec14c98`). This is a separate candidate copy for review only.
+
+The reader preserves the exact local D5 route and adds a mutually exclusive native route requiring `nativeOperatorRunPath` plus `nativeOperatorRunSha256`, and a closed expected-Q input with actual Q commit/tree and exact reviewed workflow/driver/acquirer hashes. It validates captured workflow-dispatch identity, Q/P separation, actual workflow/tree bytes, producer P/tree/workflow/cohort lock, post-run source cleanliness, and the child adapter as `local_linux_diagnostic`; public-H itself retains its truthful local OrbStack/Darwin runtime identity.
+
+The native branch checks actual observed Ubuntu 24.04 Linux/amd64 identity and positive observed resource values without imposing an unapproved CPU/memory minimum; pinned PostgreSQL image, image/engine platforms, exact PostgreSQL `18.6 (Debian 18.6-1.pgdg13+2)`/180006 identity, frozen repo-digest aliases and cleanup; acquisition receipt, actual release IDs/tags/assets and the pinned carrier/Python archives; Python `Python 3.11.17` observed version, canonical toolcache path, archive byte comparison with a closed bounded site-packages extras inventory, complete marker and provisioning facts; and the separately exported three-file D5 release payload under the exact 2 MiB bound. Each exported payload file is resolved under the D5 evidence root and checked for path, size and SHA-256; the receipt and two public wheels are tied to D5/public asset identities and retained in final correspondence.
+
+The accepted seven commands and order, 139 SDK cases, full18 cohort, three public assets, existing time/log/evidence caps and all existing semantic/custody checks remain unchanged. Static validation consists of Python AST parsing and AST equality checks for `EXPECTED_COMMANDS` and `LIMITS`; no H execution, candidate source, Docker, Git, CI, upload, public release or runtime was performed. Native Q commit/tree and actual operator receipt remain unavailable, so this candidate establishes no PASS and awaits Sol source review.

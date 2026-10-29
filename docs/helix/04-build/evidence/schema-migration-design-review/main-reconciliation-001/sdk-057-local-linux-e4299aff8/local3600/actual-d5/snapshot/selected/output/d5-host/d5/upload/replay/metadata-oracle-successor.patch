@@ -1,0 +1,11 @@
+--- candidate-009/installed-text-oracle-d5-row-observation-successor.py
++++ candidate-009/installed-text-oracle-d5-weft55-metadata-successor.py
+@@ -167,7 +167,7 @@
+     manifest_path = Path(__import__("sys").prefix).parent / "owner-artifacts.json"
+     provenance = {"runnerSha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), "originalRunnerSha256": "5dfddd7f1bd7f6e254e927292246ceddf5debfe172995ad267d4bbbfd32c2ea4", "fixtureSha256": hashlib.sha256(fixture_path.read_bytes()).hexdigest(), "artifactManifestSha256": hashlib.sha256(manifest_path.read_bytes()).hexdigest() if manifest_path.exists() else None, "packageOrigins": {name: importlib.util.find_spec(name).origin for name in ("umf_access", "umf_codegen", "weft")}}
+     provenance["runtimeFiles"] = {}
+-    for name in ("umf-codegen", "weft-sql"):
++    for name in ("umf-codegen", "umf-weft"):
+         distribution = importlib.metadata.distribution(name)
+         for item in distribution.files or ():
+             if str(item).endswith(("generator.js.gz", "manifest.json", ".so", ".pyd")):

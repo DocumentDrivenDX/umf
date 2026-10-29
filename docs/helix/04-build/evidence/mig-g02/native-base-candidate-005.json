@@ -1,0 +1,16 @@
+{
+  "server": "PostgreSQL 18.6 (Homebrew) on aarch64-apple-darwin27.0.0, compiled by Apple clang version 21.0.0 (clang-2100.3.34.2), 64-bit",
+  "cases": 2,
+  "checks": [
+    "exact-decimal-per-row-approved-source-bound-plan",
+    "exact-decimal-per-row-public-host-committed",
+    "exact-decimal-per-row-manual-per-row-decimal-oracle",
+    "exact-decimal-per-row-target-is-required",
+    "exact-decimal-per-row-future-default-remains-installed-after-fill",
+    "exact-decimal-per-row-future-default-applies-to-later-omitted-target",
+    "null-derived-result-rolls-back-approved-source-bound-plan",
+    "null-derived-result-rolls-back-native-null-guard-sanitized",
+    "null-derived-result-rolls-back-all-data-and-add-fill-tighten-phase-rolled-back",
+    "null-derived-result-rolls-back-appended-column-rolled-back"
+  ]
+}

@@ -11,6 +11,8 @@ ddx:
       kind: informed_by
     - id: TD-085
       kind: informed_by
+    - id: SD-007
+      kind: informed_by
 ---
 
 # STP-085: Invoke typed actions on raw tables
@@ -236,3 +238,1113 @@ runner name may follow the existing host harness; these are required observation
 Record exact installed runtime/generator/source hashes and final person/batch
 observations. This is a release-blocking data-client integration gate, not proof
 from approval-store unit tests or a successful migration return alone.
+## G02 typed same-row backfill acceptance
+
+SD-007 and CONTRACT-081 select operation 0.2, migration/options 0.4, execution
+0.3 and guarded Weft program 0.2. TD-085 owns component integration. These planned
+cases extend the existing primary suites; no pass is claimed by their presence.
+Both existing-target and appended-required-target shapes must pass before release.
+
+| Stable criterion / primary layer | Test and source citation | Required observation |
+| --- | --- | --- |
+| US-051-AC12/16, portable | Extend `tests/binding/table-migration.test.ts`, `tests/lifecycle/migration.test.ts`; `@covers US-051-AC12`, `@covers US-051-AC16` | Exact closed AST/options/plan/version admission; stable old/new input closure; no target self/new sibling/related/ambient dependencies; max depth/node/fanout/token and per-node numeric budget; all refused inputs yield no partial plan |
+| US-051-AC12/16, compiler parity | Shared derived-backfill fixture through Bun, lifecycle Chromium suite and installed `umf_codegen` | Deterministic plans/refusals and original source/AST identity; explicit UMF Rust 0.4 refusal; 0.1–0.3 frozen verification/replay and default TS/V8 path unchanged |
+| US-051-AC12, Weft shared Rust | Extend `crates/weft-postgresql/tests/table_operation.rs`, native Python and real WASM browser corpus | Field/literal/coalesce/strict concat/add/subtract/multiply/conditional type and NULL semantics; exact program 0.2/guard closure, fully qualified resolution and private marker isolation; source/AST/SQL/program self-rehash forgery refuses |
+| US-051-AC12/15/16, installed native | New `tests/lifecycle/derived-fill-native.py` using existing G01 helpers; cite all three ACs | Distinct manually specified per-row results for fabricated Person and commerce domains; existing optional tightening and appended required field with/without future default; preserved present/input/unrelated data and final catalogs |
+| US-051-AC12/15, native invalid data | Same installed native suite and reviewer-owned independent oracle | NULL result, NaN numeric input (including unused branch), NaN result, decimal rounding, intermediate/resource excess, integer overflow, significant trailing spaces, Unicode/varchar length, enum/range/CHECK/unique/FK and maxRows failures abort the entire phase including earlier valid rows |
+| US-051-AC15, native writers/recovery | Same installed native suite with actual two-session barriers and driver fault injection | Writer exclusion across complete existing/append phases; no partial column/fill/default/constraint/progress; known abort retry, lost commit response observation, committed phase never repeated, later failure keeps ingress fenced until exact resume |
+| US-051-AC16, host admission/privacy | Extend host-native/progress tests and derived suite | Wrong old/new source, selector, marker, AST/ref, approval, program version, guard descriptor, partial/reordered phase or native privilege/catalog drift refuses before effects; ordinary errors contain SQLSTATE/paths, never native DETAIL/raw rows |
+
+Use synthetic non-PII records with multiple different inputs, all-NULL/mixed/
+populated targets, valid and invalid rows in the same statement, and zero matches.
+Expected decimals use manually specified exact tokens or an independent
+high-precision decimal calculation, not the implementation AST evaluator. Include
+numeric(p,s) NaN despite its finite typmod, and invalid data in an unused branch.
+Test text/native numeric assignment alterations that satisfy the target's native
+type but differ from the intended result. Snapshot actual rows/catalog/progress
+before a failing phase and independently prove complete rollback afterward.
+
+Native G02 coverage must include the admitted non-numeric carriers. Use fabricated
+Person birthdays to fill an existing optional `date` target from an unchanged
+same-row date Field and an explicit typed date literal/coalesce fallback, then
+enforce NOT NULL. Preserve a distinct already-present target and unchanged input
+values. Exercise admitted instant, UUID and boolean copy/coalesce with exact
+native/logical matches and independently written expected values. A matched NULL
+result must roll back every earlier valid row and the requiredness transition.
+Observe the host's actual durable boundaries: initial admission commits the
+owner-only READY receipt and ingress fence before the required phase. After a
+known phase abort, history and row/column catalog snapshots stay unchanged; the
+exact plan/file/head-bound READY receipt remains at phase index zero with no
+completed steps and the original prefix witness, and ordinary ingress stays
+fenced. Do not require progress to return to its pre-admission absence. Successful
+final publication advances history once and removes the progress relation.
+Qualify these as installed row-expression migrations; G03 future-default changes
+and standalone Weft scalar checks cannot substitute for this host-phase evidence.
+
+Append fixtures must prove nullable creation, only NULL-permitting target domain
+CHECKs, fill, optional future default and final NOT NULL share one native required
+transaction. A NULL-rejecting staged CHECK explicitly refuses; a compiler may not
+weaken it. Existing-target fixtures retain native constraint failure cases.
+Every unsupported compound refuses before any executable plan is emitted.
+
+Run the existing boundary commands and negative controls before feature handoff.
+After source tests, build fresh SDK/access/codegen and Weft Python/WASM artifacts;
+audit source/embedded/RECORD/schema hashes and run isolated installed native tests
+on the exact cohort. The design reviewer independently executes native acceptance
+on the frozen candidate and reviews scoped support and platform receipts.
+Release gates include required CI, reviewed actual merge/source equivalence,
+immutable packages/mirrors/licenses, and two independent fresh published-download
+comparisons plus the packaged network-denied offline probe. Managed/Praxis
+acceptance and MIG-G03–G11 are separate gates, never inferred from local passes.
+
+## G03 existing-column future-default acceptance
+
+CONTRACT-081 selects the exact successor surface; SD-007 and TD-085 govern
+ownership and integration. The following allocations are planned tests, not
+executed G03 evidence. Existing G01/G02 and PostgreSQL feasibility observations
+retain their narrower scope.
+
+| Stable criterion / layer | Planned test and source citation | Required observation |
+| --- | --- | --- |
+| US-051-AC12/16, portable | `tests/lifecycle/g03-defaults.test.ts`; `@covers US-051-AC12`, `@covers US-051-AC16` | SET/replace/DROP for one existing nullable/required target; exact version and marker consumption; all other source meaning unchanged; coupled missing-only logical/native defaults; both sources independently compile; invalid required-create omission refuses. |
+| US-051-AC12/16, literal admission | Same suite and `tests/binding/table-migration.test.ts`; same citations | NULL versus absence, exact numeric capacity/refinements, unsupported volatile domain, NUL/unpaired surrogate and decoded/rendered UTF-8 boundary controls; supplementary Unicode and escaping preserved; no partial plan or native effect on refusal. |
+| US-051-AC15/16, source/phase authority | Same suite plus host phase tests; `@covers US-051-AC15`, `@covers US-051-AC16` | Absent-to-NULL and equivalent numeric spelling still produce one required DDL/progress phase; equal native witnesses cannot skip or publish; source/default/marker/step/phase/approval/progress tampering refuses. |
+| US-051-AC12/16, compiler parity | Shared new corpus through Bun, real Chromium and installed `umf_codegen`; same citations | Deterministic discovery, plan, verification and refusals; old two-member discovery and profiles 0.1–0.4 retain frozen outputs; opt-in unsupported Rust successor refuses before effects. |
+| US-051-AC12/15/16, installed native | `tests/lifecycle/g03-defaults-native.py`, fixture producer and independent reviewer oracle; cite all three | PostgreSQL18.6 nullable and required SET/replace/DROP; unchanged complete historical row snapshots including NULLs; distinct omitted/explicit-NULL/explicit-value commands and raw writes; logical validation does not insert defaults; no UPDATE dispatch or row rewrite. |
+| US-051-AC15, volatile/native boundary | Same installed suite; `@covers US-051-AC15` | UUID values use the qualified generator; timestamps equal transaction start across later statements; malicious search_path cannot replace builtins; unchanged RLS/constraints/ACLs remain effective. |
+| US-051-AC15, real recovery | Same suite with two-session writer barriers and driver fault injection; `@covers US-051-AC15` | Native writer exclusion, rollback before commit, lost COMMIT response with committed progress and no redispatch, same-catalog transition with/without authenticated progress, publication fault/resume and retained fencing. |
+
+Selected discovery 0.2 must refuse retained YAML with the actual previous or
+next source-format pointer, while unselected YAML discovery retains its old
+output. Test Python `options=None` omission separately from raw bridge
+`options:null` refusal; do not assign one expected result to both routes.
+
+Temporal literal controls must include a native date default `2000-02-29`
+without a logical Field default, an invalid Gregorian date, the wrong carrier,
+and temporal facets/allowedValues. Unsupported temporal logical defaults must
+still fail complete-source admission. Preserve numeric and string refinement
+refusals to prove that native temporal admission does not relax other domains.
+
+Use fabricated commerce integer/decimal targets, Person nullable values, an
+audit transaction timestamp and UUID identifiers. Manually specify expected
+historical and new row values. Include an empty table and multiple differing old
+rows. Compare complete values, row identity/version witnesses and relation-file
+identity where applicable; catalog equality alone cannot prove nonmutation or
+source publication. Keep exact source distinctions for absent versus literal
+NULL and numeric spellings. Command-free-only coverage cannot replace positive
+omitted/explicit command cases.
+
+Planned portable command: `bun test tests/lifecycle/g03-defaults.test.ts`.
+The native runner must take an explicit isolated target, frozen fixtures and
+report path; run it through a fresh installed wheel cohort and independently
+repeat its assertions. Exercise both host-neutral and Psycopg routes, including
+sync/async where supported. Add default-only replay to the frozen historical
+corpus before extracting the shared renderer, so a byte change fails its gate.
+
+Release acceptance requires the actual final source workflow inventory,
+source/merge tree correspondence, source/SDK/embedded/RECORD custody, full locked
+platform closure and separate optional-parser license custody. Independently
+review the exact cohort and repeat fresh published-download/offline tests.
+G02 candidate artifacts, guessed dependency counts, another package's release
+version and local native feasibility do not satisfy these G03 gates. Managed
+consumer, other backends, G10/G11 command composition and Praxis changes remain
+outside this slice.
+
+
+### G03 selected-module compatibility allocation
+
+These are additional planned acceptance criteria, not completed evidence.
+Allocate US-051-AC12/15/16 citations to the actual source-admission, native
+session, fixed-query, operation-input and table-outcome suites.
+
+- Validate policy default/exact opt-in, unknown strings/non-string refusal,
+  immutability and absence of a request-wire/GUC selector. Freeze historical 0.1
+  module outputs, cursor derivation, authority scope and outcome receipt bytes.
+- On the same default-bearing retained source, module 0.1 still refuses while
+  selected 0.2 admits the qualified literal subset. Invalid/mismatched defaults,
+  unknown qualifiers and unsupported temporal logical defaults refuse. Native
+  date-only defaults retain their separate positive and negative controls.
+- Use an actual compatible immutable Weft native artifact and freshly installed
+  UMF packages. Selected 0.2 against historical Weft refuses without fallback or
+  database effects. Exercise wrapper propagation, not a native-only shortcut.
+- Execute ordinary read, declared query, create/update and outcome recovery in
+  sync and async routes. Preserve omitted, explicit NULL and explicit value
+  behavior and complete historical rows. No default input materialization or
+  UPDATE may be introduced merely by preparation.
+- Reuse a source-owner cache/prepared handle across profiles and require early
+  refusal. Copy a valid page token across profiles and refuse authentication.
+  Seed an occupied native outcome slot with the same identity, operation and
+  key, then retry/recover under the other profile: find the same slot, refuse
+  incompatible scope/invocation and prove exactly one original business effect.
+  Repeat both profile directions; a different secret or deployment must not
+  evade the stable occupied slot. Include rollback and lost-COMMIT recovery.
+- Run the full G03 future-default native matrix after admission is fixed;
+  successful preparation alone is insufficient. Preserve G01/G02 historical
+  profile checks, actual Chromium/compiler parity, package closure/custody and
+  independent published artifact verification. Report any unqualified carrier,
+  wrapper, host route or managed identity as an explicit remaining limit.
+
+## G11 combined replacement acceptance allocation (proposed)
+
+Allocate US-051-AC12/15/16 coverage to a dedicated portable G11 suite, compiler
+parity corpus, host-profile/refusal suites and fresh installed native runner.
+These are planned gates, not execution evidence.
+
+- Stable-ID drop/add with equal and different counts; reuse the old SQL name
+  with a new Field identity and prove no implicit rename/value transfer. Include
+  nullable no-fill/no-UPDATE and required G02 fill from unchanged inputs; reject
+  old-only input copy, new-field chain and future-default-only historical fill.
+  Add at least two new required Fields with independent explicit fills, verify
+  deterministic ordering and complete expected rows, then fail the second fill
+  and prove all first-fill values and DDL rolled back. Test aggregate effect and
+  absolute deadline exhaustion without resetting budgets per operation.
+- Complete Key/FK/check/index/policy/grant and operation dependencies; explicit
+  supported replacements with exact markers, unknown/native dependency refusal,
+  inbound retained-table dependencies and deterministic DAG ordering. Refuse
+  concurrent effects and unsupported generated cycles. Roll back native
+  constraints on invalid complete data, including rows ordinary RLS hides.
+  Include NULL-rejecting and cross-new-Field CHECKs that pass only after both
+  fills, precise target-check versus dependency-check ownership, and unchanged
+  complete CHECK semantics. Reused declaration pointers with distinct operation
+  IDs must consume distinct complete markers, never path-only deduplication.
+- Actual Person create example: remove old Field `legacyName`, remove its old
+  read command, add required `displayName`, and explicitly add a new create
+  parameter/assignment. Use unchanged `name` as the reviewed historical fill
+  input. Validate both complete sources and regenerated parameter/result types.
+  Do not use a source that was invalid before migration as a positive fixture.
+  Exercise actual ordinary create after publication and reject the old client.
+- Companion parameter removal with another retained use refuses; unchanged
+  operation context changes require conservative context markers; unrelated same-ID predicate,
+  audience/effect changes refuse. Added/removed command markers are exact and
+  fully consumed. Policy review does not grant ordinary batch UPDATE.
+- Real old reader/writer transactions and direct granted clients during cutover:
+  block/drain before native replacement and keep fenced until publication.
+  A prepared old query must never read a new Field through a reused SQL name.
+  Include inherited/PUBLIC grants and actual non-owner principals; administrative
+  SET ROLE checks alone do not qualify authenticated client isolation.
+- Inject failure after each dependency/carrier/fill/default/constraint action
+  and before commit: complete old values/catalog survive, no phase completion,
+  ingress remains accurately fenced. Inject lost COMMIT response and final
+  publication failure: observe exact progress, resume without duplicate fill,
+  and retain deleted-value irreversibility disclosure. Forge equal final
+  column counts/native names without progress and require refusal.
+- Old discovery/profiles and byte-frozen outputs remain unchanged; G03 selected
+  module propagation remains explicit where required. Bun/real Chromium and
+  installed compiler parity, both host routes, fresh qualified native artifact
+  cohort, platform closure, public-download byte identity and release notes
+  with all remaining G02–G11 limits are separate mandatory release gates.
+
+Context controls cover an unchanged operation with cross-module Field changes,
+metadata-only source byte changes and complete configuration changes. Verify
+exact RFC8785 context digests, full source-byte hashing once per side and no
+context marker for a changed declaration. Actual Weft result/parameter typing
+remains a separate acceptance check. Generated subject controls tamper role,
+rule, command, ordered mutable column identities/names, expression and digest;
+refuse name-only adoption, role/relation recreation and extra PUBLIC/inherited
+capabilities. Positive UPDATE grant scheduling must preserve unrelated mutable
+columns and exclude immutable/generated/Key columns exactly.
+
+Whole-source negative controls alter schema/roles/group mapping, retained table
+name/order, retained Field default/type/nullability/facets/generation/immutability,
+unknown qualifiers and unrelated content. Even complete forged review markers
+or a changed source-context digest must not authorize them. Positive shared-Field
+cases retain a definition still used elsewhere while dropping only one selected
+native mapping. Preserve retained relative ordering and exact new authored order.
+Test a predecessor containing seeds unaffected by selected Fields (unchanged,
+no replay), a seed row referencing a removed Field, and a row made invalid by a
+new required Field. The latter cases refuse before effects with located seed
+diagnostics. Editing/removing those declarations to make a fixture pass also
+refuses as an unsupported seed companion, explicitly reported as a remaining
+G11 limit. Metadata history/source custody is not mistaken for restoring purged
+business values.
+
+
+### G11 generation ingress acceptance
+
+Allocate US-051-AC15/16 to the concrete provider/custodian/store tests and real
+G11 installed-native runner. Structural/fake provider tests are source controls;
+they cannot qualify any native capability. Pin full artifacts/auth/HBA/runtime
+versions, source census, custody and the actual PostgreSQL18.6 source ordering.
+
+- Enroll an existing isolated populated installation with stable Alice/Bob/batch
+  roles and real SCRAM login epochs. Verify unchanged CURRENT_USER/roleOIDs,
+  owner values and occupied outcome slots across credential rotation. Prove
+  wrapper memberships SET-only/noninherit/noADMIN and no cross-subject/owner/
+  controller reachability. Legacy LOGIN-subject enrollment permanently converts
+  that authentication role to NOLOGIN without changing subject identity.
+- Use old actual connections that already SET ROLE, prepared SQL, held cursors,
+  idle and active transactions. Race reconnects/late pool checkout and a paused
+  actual SCRAM handshake begun before fencing. Capture starting/NULLidentity
+  backend tokens without role/database filtering; wait unknown unrelated
+  handshakes, never broadly kill them. Prove all old sessions actually gone,
+  wrong credentials/old principals denied after fence AND publication, and only
+  explicitly re-admitted successor logins can bind the reused native name.
+- Independently verify full native stats access/fresh snapshots, exact owned PID/
+  backend_start identity, timeout-positive termination versus signal-only result,
+  PID reuse and native authentication registration ordering. Failed termination,
+  invisible stats, extra PUBLIC/inherited/definer access, prepared transaction,
+  unknown role/marker/target and resource exhaustion refuse before carrier effects.
+- Verify exact private store DDL/owner/inventory/constraints/indexes/ACL and
+  closed record/column/digest correspondence. Native concurrent requests cannot
+  create two active epochs or competing original transition bindings. No app or
+  business owner can access the store; no extra-object namespace waiver.
+- Verify actual same-connection controller-role hook entry/restore around phase
+  and publication DML. Inject denied SET, wrong actor/settings, SQL error,
+  timeout/cancellation and failed restoration. Prove no business-only commit or
+  controller connection returned to a pool. Record previous catalog at index0,
+  next at index1 and distinguish predecessor metadata head from cutover carriers.
+- Inject failure/crash/lost acknowledgement at fence commit, each retirement,
+  phase commit, final publication and external confirmation. Reconcile original
+  binding/reservation/progress/native state without duplicate effects or a new
+  transition. Preserve durable fence/retired credentials on uncertainty.
+- Copy/restore the database/control schema while retaining the actual external
+  custodian journal. Prove wrong resource/incarnation/rewind is refused BEFORE
+  ordinary endpoint exposure; no same-name/OID-marker adoption. Authorized
+  restart/restore is custodian-controlled and opens admission only after verified
+  continuity or separately approved recovery/new incarnation.
+- Reproduce the real commit-to-finalize crash gap with old prepared direct SQL:
+  no old login/session regains authority when successor data/head ACLs return.
+  Newly authenticated principals require exact new reference and explicit fresh
+  admission; source factory/head/token checks remain effective. Cached old data
+  already delivered is not represented as new-generation results.
+
+Complete the independent multiple-fill rollback oracle, whole dependency/CHECK
+and command matrix, both host routes, browser/planning compatibility, final
+installed artifact cohort and public release-byte gates. Record unqualified
+managed issuers, seed-history evolution, generated dependency compositions,
+old-only copies and retained recovery separately; passing this provider subset
+must not erase the full remaining backlog.
+
+- Provision disabled successor roles before final OID-bound transition approval.
+  Lose the provision COMMIT acknowledgement and reconcile the original creation
+  receipt; reject same-name adoption, guessed OIDs and a recursive future digest.
+- Verify exact trusted policy bounds, boolean/unknown-member refusal, immutable
+  approval binding and legacy behavior. Execute two fills that individually fit
+  maxRows but jointly exceed the actual aggregate counter; prove the first fill
+  executed and the second overflow rolls back all business effects. Count the
+  same business row twice when two fills affect it; prove no-fill dispatch is zero.
+- Use multiple individually short native statements whose combined runtime
+  exceeds the phase budget, including a blocked statement and COMMIT boundary.
+  Prove transaction_timeout was installed before BEGIN, the native transaction
+  aborts, the host cannot dispatch after expiry, and timeout restoration/discard
+  and unknown COMMIT reconciliation preserve original custody. Fake clocks are
+  source controls only; actual PostgreSQL18 timeout behavior must pass.
+- Qualify a retained missing-only-default source through module0.2 with an
+  explicit typed backfill and unchanged future-default behavior. Pin the actual
+  new Weft artifact and prove trusted admin/client identities and legacy0.1
+  compatibility separately. Record exact committed budget receipt and counts.
+
+
+### G11 owner authority and backend normal-form acceptance
+
+Allocate the closed owner/session/backend records to actual US-051-AC15/16
+provider tests. Source controls reject swapped issuer/resolver, dict/digest minting,
+wrong provider/custodian/installation, unknown/bad bounds and cyclic approval
+hashes; preserve exact native state/null shapes and require original candidate
+resolution. Source tests do not qualify a live authority or admission barrier.
+
+Actual native tests must create/observe an isolated supervised target, authenticate
+maintenance separately from controller/businessOwner, verify exact real role
+flags/memberships/full closure, target/settings and fixed same-connection hooks.
+Prove original external intent before role/store creation, unknown-outcome
+reconciliation, native restart versus copied/restored target, endpoint gating,
+wrong process/PID reuse/alternate routes and journal rewind refusal.
+
+Observe real delayed SCRAM activity as actually emitted: starting or SQL NULL
+state is retained, never synthesized. Verify full native stats visibility,
+missing-start refusal, pending/non-old/exited/owned-old resolutions, cross-DB
+old sessions, unrelated pending handshakes, activity-disabled clients, bounded
+positive termination and fresh zero-old-session proof. Lose fence acknowledgements
+and prove original candidates survive. Test introducing the verified fence
+receipt on fencing→fenced and no old-client authority through carrier COMMIT,
+publication or recovery. Native/profile/artifact/release gates remain mandatory.
+
+
+### G04 checked conversion acceptance
+
+Allocate US-051-AC14 plus AC15/16 recovery/client gates to the exact selected
+CONTRACT-081 successor. The50 manually specified cases in the design-review
+g04-independent-oracle-001.json are planned scalar oracles, not native passes.
+Exercise all12 recipes/NULL cases and refusals through actual typed native
+conversion, not a source-only helper that never changes a carrier. Include
+numeric ties/negative/carry/nonfinite, Gregorian/UTC bounds, offset/precision,
+strict lexical/token/UUID cases and complete target facets/Key collisions.
+
+Test exact discovery wire, cycle-free marker/irreversibility binding, full
+unknown source preservation, explicit companion defaults/commands/dependencies,
+old version replay/refusal and browser parity. Native round-trip CHECKs must
+reject broad target-domain writes through real direct SQL/COPY/admitted MERGE,
+not only generated clients.
+
+Independently observe all native private-store objects, exact typed old values
+including NULL, counts and logical-byte accounting, complete nonempty FORCERLS
+capture, no data in public receipts/logs, private controller-role restoration,
+column grants, token supplied/RETURNING/COPY/ON CONFLICT/MERGE attacks, parameter
+role/trigger bypass, UUID collision, revision overflow and no-op updates. Test
+unchanged/updated/inserted/deleted/Key-reused restore populations; verify current
+revision matches actual post-cutover baseline and conflicts cause full refusal.
+
+Inject lost acknowledgements and errors at enrollment/capture/rewrite/validation/
+phase COMMIT/publication. Actual held prepared readers/cursors/direct writers
+must stay fenced through the commit-to-publication gap; original-progress lookup
+proves no double conversion. Missing/tampered/expired/restored custody, unknown
+objects/ACLs and budget exhaustion refuse. Qualify native function/trigger
+authority and each pinned platform/driver, then freeze installed artifacts,
+browser/CI matrix and fresh public release bytes. No G05/G06/other-backend
+claim follows from this maintenance subset.
+
+Test exact source recompile and closed step.kind/operation/phaseOperation/SQL/path
+variants; swapped before/after/source/target/recipe/program/artifact and fake
+prepared handles; descriptor injection/truncation and wrong private guards;
+no portable runtime Weft dependency or fallback native cast; native recipe-token
+escaping inside the fixed DDL expression and no assumed driver-DDL parameters.
+Verify original-source-only input, all-row conversion coverage and exact committed
+G04 descriptor/artifact/domain/count/archive correspondence. Exercise defined
+cycle-free logical-byte projection at counter digit/metadata/NULL/limit edges.
+
+
+### G11 concrete supervisor and native issuer acceptance
+
+US-051-AC15/16 must now execute the selected privileged local profile rather than
+qualifying a structural fake. Independently create and observe an actual owned
+PG18.6 SCRAM cluster, exact native flags/role edges/authority, dedicated process
+birth/binary/PGDATA/endpoint chain, private original external journal and all
+listener/auth routes. Verify maintenance-only external HBA precedes every actual
+startup, not a later best-effort check on restored LOGIN roles. Native source/
+platform/toolchain/helper/wrapper artifact census is mandatory.
+
+Run real populated G11 migration with actual old/new authenticated clients,
+prepared direct SQL, held cursors/transactions, paused SCRAM and reload races.
+Observe actual native state/null/token populations, durable old NOLOGIN and
+positive retirement before carrier changes. Prove old identities remain retired
+after publication and stable effective subject/outcome identity is preserved.
+Test exact new-epoch admission with real SCRAM/reference/source probe.
+
+Inject worker/supervisor crashes and unknown journal/native commits, same-target
+restart, wrong target/secret/config/binary, PID/group reuse, extra membership,
+Unix/IPv6/alternate listener and external journal rewind. Prove original-outcome
+lookup without repeated effects, correct same-connection role restoration and
+no ordinary exposure while origin/epoch/source is uncertain. Copy/restore native
+data/control markers under a different observed incarnation with original
+external custody unchanged and prove rejection before ordinary access. Native
+full restored-generation forward recovery is separate and cannot be claimed
+from this rejection test. Record bounded actual owned shutdown/cleanup and no
+changes to shared services. Source simulations, old trust-auth runs and a provider
+that always refuses do not pass these acceptance gates.
+
+
+### G11 all-six-scope authenticated authority acceptance
+
+Test actual valid/invalid Ed25519 verification under original configured keys for
+ALL six exact scopes, full target/principal/policy/purpose binding, unknown or
+dropped fields, embedded-key substitution, noncanonical/bounded forms and actual
+original request/consumption races across processes and same-issuer threads.
+Configured production verification must actually succeed for a correct signed
+request; missing configuration refuses. Acceptance fixture cannot issue a
+production-context capability or adopt an existing/shared target, while native
+store/provider effect logic remains the same implementation.
+
+Verify acyclic pre-creation/principal/final-registration/store ordering and
+original native receipt binding. RegistrationId precedes signing; ownerApproval
+is the exact fixed projection with the existing enrollment scope. Native role/DB
+creation is not a fictional single transaction. Lose each native/bootstrap
+stage acknowledgement and prove original-outcome recovery, no role/name adoption
+and no repeated confirmed stage. Actual OIDs/flags/native context must exist
+before final store approval and be reobserved before issuance.
+
+Exercise known abort versus pending/unknown effect, actual replay no duplicate
+effects, ledger overflow/tamper/rewind, policy change/revocation for new actions,
+read-only historical settlement and settled-only authenticated rotation. Verify
+no production fallback to fixture/UID/TTY path. Retain the actual rejected UID
+autoapproval evidence and show it was not applied. Native SCRAM, kernel/process
+origin, owned endpoint gate, same-connection role restoration, phase/receipt and
+publication tests still require actual artifacts and real execution; source
+signature tests alone do not complete G11.
+
+
+### G04 deleted-instance collision and durable reservation acceptance
+
+Independently execute the real fixed guard with an isolated native collision
+fixture: reserve an original ID, delete its row and retain then purge its archive
+values, force the next generated UUID to collide and prove statement failure
+with counter/ledger/business rollback. No production RNG injection or replaced
+guard counts as acceptance. Demonstrate a noncolliding Key reuse is a new
+instance and a deleted row is never resurrected by restoration.
+
+Test protected existing-row enrollment including FORCE RLS, concurrent issuing
+transactions, capacity boundary/exhaustion, rollback after increment, ON CONFLICT
+DO NOTHING and UPDATE, COPY and every admitted MERGE route. Preserve committed
+unused reservations. Verify exact native object/ACL/custody closure, original
+TG_RELID, tampered/rewound/missing ledger/counter refusal and ordinary metadata
+read/write/trigger/parameter bypass refusal. Lose enrollment COMMIT acknowledgement
+and settle the original outcome without repeating enrollment. Record counter
+contention/resource behavior and distinguish reservation bounds from archive
+value-byte accounting. These are required native gates, not source-test claims.
+
+
+### G05 independent retained retirement, restoration and purge acceptance
+
+Prove closed source/options/discovery/step/recompile semantics in Bun and an
+actual browser, including historical replay, duplicate/unused/unknown entries,
+complete archive source closure and bounds, explicit current defaults/dependencies
+and no seed replay. Source-only archive descriptors cannot create native custody.
+
+Execute populated/NULL/empty and FORCE RLS retirement with native per-instance
+oracles; verify actual private old typed values and complete source/instance
+set, direct/generated ACL denial, no retired live-column leak, dependency closure
+and actual old prepared reader/cursor/writer fencing. After current unrelated/
+no-op/Key-changing updates, restores preserve all unrelated values. Test deleted
+originals, new and Key-reused instances, null/refuse and required scoped fill
+with a fill invalid on originals but valid on new instances. Required original
+NULL, changed type/meaning/history/guard, missing/tampered/foreign origin and
+post-restore replay must refuse without partial activation. Test real issued-ID
+collision and persistence after value purge; matching counts are insufficient.
+
+Verify actual Ed25519 signatures/config/scope/purpose/target and original durable
+request/effect/history races, current policy and hold mutation serialization,
+native reservation separate from effect COMMIT and original positive recovery.
+Exercise real enrolled monotonic clock checkpoints/reboot/uncertain intervals/
+rollback/rewind and no early purge. Normal purge requires actual lower-bound
+eligibility; minimum-only override records unmet duration and cannot bypass hold,
+unknown effect, native origin or retained dependency. Lose capture/publication/
+restore/purge acknowledgements, prove original outcome lookup and no duplicate
+DDL/value effects. Known abort preserves values; confirmed purge is exact native
+relation removal plus original tombstone, no source-head reset or UUID reuse.
+
+Test real capacity/time bounds and private diagnostics, current generated
+consumers, frozen installed native wrappers/artifacts, source census/platform
+CI matrix and fresh public-download bytes. Qualify the actual immutable Weft
+archive-complement port and session policy explicitly; its absence is a refusal,
+not a fill pass. Keep every remaining family/backend/composition and external
+backup/log erasure limitation explicit in the release, rather than closing G05
+from an irreversible/null-only/source-only subset.
+
+
+### G11 initial enrollment independent authority and native acceptance
+
+Test actual valid/invalid Ed25519 signatures for both separate initial scopes,
+original configuration/policy/context/key binding, full cohort tuple rather
+than independent allowed-list cross-product, EVERY subject flags/ownership/
+groups/audience and purpose isolation. Original owner/store signatures, copied
+context/config/receipt, raw epoch dictionaries, caller resolver/seal, future
+OID injection, first-subject-only checks and fake/null heads must refuse.
+
+Exercise original context bootstrap/registry, positive request/signature recovery
+and missing original lock/history refusal. Prove actual role effects and one
+prepared epoch commit together under original initial reservation, exact receipt
+shape, complete pre/post source/native witnesses and original gate. Delayed
+SCRAM/NULL/starting/unrelated/cross-database session tests must run through the
+SAME native barrier implementation with distinct initial binding, preserving
+original candidate set and resolution evidence after process restart.
+
+Activate actual prepared roles/epoch atomically, retain stable subject OIDs/
+current_user/groups, require final source/head/policy/custody checks, and release
+only exact fresh admissions after original external/native confirmation. Inject
+known abort/cancellation/lost acknowledgements at preparation, fence, activation
+and publication. Prove positive original recovery without repeated role/epoch
+DDL, credential leak or legacy re-enable. Existing epoch/concurrent enrollment
+and source drift during signing refuse. True headless install stays a distinct
+G10 test/profile. Actual frozen installed artifacts/native platform/CI/browser
+and fresh public bytes are separate required gates; no source-only closure.
+
+
+### G04 original creation/enrollment and actual capture boundary acceptance
+
+Independently test exact policy0.2/source/plan/ingress/capacity request binding,
+original private capability/reservation issuer/registry and no raw JSON/cursor/
+callback authority. Execute actual store creation with exact data-free schema
+COMMENT and complete native created OID/type/constraint/index inventory in SAME
+transaction; external confirmation follows observed COMMIT. Lose acknowledgement
+and positively recover original reservation/receipt; copied comment, wrong native
+target, same name, missing history and arbitrary extra metadata refuse.
+
+Run real approved per-table ALTER/guard/ledger/record/ACL enrollment with native
+name collisions, unknown outcome, original request reuse and no duplicate ALTER.
+Use real distinct maintenance/controller/businessOwner identities and verify
+backend/xid8/INTRANS continuity plus complete selected policy/dynamic settings.
+Capture actual FORCE RLS-hidden/NULL/special/boundary values only inside locked/
+fenced businessOwner TABLE RLS-off scope; GUC stays on, controller inserts only
+private archives, final RLS/policies/role/settings are exact before receipt.
+Test denied SET, wrong actor/transaction, hook exception, rollback/close/quarantine,
+ordinary metadata/value denial, partial restoration and no elevated pool reuse.
+
+Verify ISO,YMD/UTC genuine typed value and canonical byte oracles, preadaptation
+finite/calendar/size checks,1000-row/8MiB buffer and aggregate capacity edges,
+complete instance sets and no public values. Repeat actual original phase/native
+COMMIT recovery and no capture replay. Source controls are separate from real
+PostgreSQL18.6/driver/installed qualification; G05 .2 upgrade, online and external
+custody remain distinct compositions.
+
+
+### G04 capacity wire and batch-versus-population controls
+
+Test trusted unsigned default construction separately from signed-wire missing
+capacity refusal. Execute more than1000rows and8MiB total across repeated private
+batches while within aggregate signed limits, proving complete per-instance
+capture. Separately refuse a single value above8MiB before adaptation and verify
+rollback/no omitted rows. Integration002 SHA256: b2ff1a1b90f1ff279e65d06442adad5a4dfe45f284dc7d5e45df2c7d4db26f9c.
+
+
+### G04 actual implicit storage and FK trigger acceptance
+
+Execute exact fixed originals DDL on real PostgreSQL18.6 and independently
+observe its actual TOAST tables/indexes/columns/types and FK RI trigger set.
+Prove every recorded internal object has the exact native parent/dependency,
+owner/flags/definition and receipt origin. Force extra/missing/disabled/foreign
+internal trigger, unrelated pg_toast object, wrong parent and copied receipt
+refusal; no namespace/prefix waiver. No TOAST chunk/row values enter receipts.
+Confirm unknown creation COMMIT through complete original receipt+native closure
+and external custody. Native source mocks are not execution evidence.
+Integration003 source SHA256: d319c315a1b50c44eb1777017e1016dd2a18eb65627adf4b6ff687190e2f9786.
+
+
+### G11 original logical trust root qualification
+
+Prove exact old .1 physical compatibility and logical refusal; original .2 root
+installation before future OIDs; complete actual native configuration export;
+valid real root signature; and positive confirmation/restart using the SAME
+production verification/provider path for isolated acceptance. Wrong root key,
+principal, purpose, policy, logical ID/profile, complete source/cohort/subject/
+store binding, copied request, subclass, mutable request and caller resolver
+refuse. Source-only acceptance issuers cannot become production roots.
+
+Exercise two real writer processes, every birth/replace/fsync/return interruption,
+actual original positive prepared/confirmed recovery, duplicate approval/effect
+refusal, rewind/cap exhaustion and new-process missing-file refusal without
+O_CREAT repair. Exact root signature and confirmation survive restart. A crash
+after durable replacement must return the same context/enrollment; no second
+consumption or native effect follows. No configuration parser that always
+refuses valid production input can pass this gate.
+
+Then qualify actual target/source/head/subject/store/gate/epoch operations,
+installed concrete crypto and platform CI, final release and public bytes.
+Source tests/signature examples and data-only native receipts cannot substitute
+for those gates. Old active .1 root upgrade and absent subject/schema bootstrap
+remain explicitly tracked until separately implemented and qualified.
+
+
+### G11 primary setup birth original positive recovery and missing custody
+
+Rerun all original boundary003 seven probes and BOTH actual004 failure controls
+against exact frozen source. The original signed pending effect history cannot
+be rebound after both obsolete sidecars are lost. Inject real filesystem failure
+at every init lock/header/fsync/replace/return boundary and positively resume
+SAME pending IDs/path/expected bytes; no effect DDL or signature replay.
+
+Exercise new-process and real two-writer initialization, original setup lease
+ordering, missing primary/setup lock, foreign path/ID/root/config/purpose,
+lock-only/empty/expected header prefix, wrong prefix/effect records and every
+confirmed missing resource. Runtime factory must never install first operator
+configuration on absence. Supervisor direct-constructor bypass refuses; copied
+config/UID/hash/fixture is not an original production deployment authority.
+
+Prove old enrollment0.1 byte compatibility with originally installed owner-only
+context0.3 and root enrollment0.2 with generation registry birth under SAME
+primary commit. Old context upgrade remains a located refusal. Source crypto/
+file controls alone cannot establish actual deployment-origin/native provider/
+process/epoch behavior, installed platform/browser or release/public-byte gates.
+
+
+### G11 complete root-registry and original continuation qualification
+
+Independently replay005 structured-birth refusal, owner-only positive original
+recovery and both missing-sidecar invariants, descriptor leaks and nested-class
+crypto import negatives. Verify canonical no-LF zero-state bytes, full current
+closed registry and actual root signature after one real original enrollment;
+subsequent owner/logical session must retain valid original continuity. A mere
+removed digest comparison or shared JSONL parser cannot pass this gate.
+
+Exercise actual root key/purpose/scope/config/native mismatch, exact original
+prepare/confirm/restart/session, duplicate effect/ID/approval, immutable request,
+capacity conjunction, two writers and every fsync/replace/return crash boundary.
+Unknown confirmation observes SAME actual entry/context; missing confirmed files
+refuse without O_CREAT. Original type/error/registry/canonical identities and
+full module-map/strict lazy verifier dependency negatives remain mandatory.
+
+Original deployment/native target/store/head/subjects/barrier/epoch/effects and
+installed platform/browser/CI/release/public bytes remain separate qualification.
+No source-only root signature or receipt dictionary closes these gates.
+
+
+### G11 logical birth reset refusal and original root-confirmation recovery
+
+Independently exercise distinct signed context/trust enrollment IDs, actual
+ROOT confirmation with loss of ALL subordinate logical journal/birth/ledger
+files, shared journal loss while another root entry remains confirmed, and
+constructor/reserve-context bypass. All refuse without O_CREAT or new IDs.
+
+Before root confirmation inject failure at each context/ledger/root fsync/
+replace/return boundary and positively settle SAME prepared request/derived
+IDs/path, without effect history or native role/epoch DDL. After confirmation
+recover only readonly existing exact context. Two writers obey original native
+lease→ROOT release→context locks release→ROOT confirm ordering. Preserve
+original aliases/source-test purpose and actual final-native freshness guards.
+
+These source/file controls do not qualify original deployment/native provider/
+process/barrier/epoch/installed/browser/platform/CI/release/public-byte gates.
+
+
+### G04 original store creation independent confirmation/recovery matrix
+
+Add source controls for fresh enrollment0.5 birth: exact closed descriptor,
+derived paths, event-definition digest and zero-header digest; reject altered
+IDs, caller paths, reordered/extra event kinds and mismatched metadata binding.
+Exercise pending creation of only the zero journal/empty lock and confirm only
+after every primary resource verifies. Confirmed loss, replacement, invalid
+nonzero history, and attempts to use an old0.1 enrollment must refuse without
+recreating or upgrading files. Verify birth-handle issuance and resolution
+require the original issuer/context/supervisor/control lease. For valid0.2
+history, test full event replay and cross-journal linkage; recovery must
+positively reattach the same committed receipt only after exact native
+footprint re-observation. Exercise pending, unknown/aborted, and every
+incomplete journal/core confirmation boundary as fail-closed without repeating
+DDL. Keep these controls source-authored and UNRUN; they do not qualify store
+creation or native recovery.
+
+Verify exact legacy0.1 wire/replay and new0.2 stream birth/profile/caps/state
+guards, per-store complete key/request identity, parent chain, typed intent→
+generic native reservation/owner-core binding and no unowned interleaving. Use
+actual original scope4 signatures and current target/custody/native evidence.
+
+Inject each external reservation, typed-intent, generic-intent, core-bind,
+DDL, COMMENT, COMMIT, observation, confirmation, and return failure. Recovery
+after external reservation or typed intent but before native dispatch may
+continue only the same signed request and reservation, without DDL. Recovery
+after generic intent/binding must reattach that exact effect. Positive
+same-request recovery must append/finish only missing confirmations, return the
+same receipt/schema/reservation IDs and never repeat committed DDL; in
+particular cover native COMMIT before external observation. Known-abort may
+settle only after same-database/controller full fixed-schema absence proof and
+must be backed by positive noncommit evidence for the exact original native
+transaction on the live original connection, followed by fresh full absence and
+authority checks. Consume the supervisor-issued witness once; keep the same
+request, reservation, pending Core binding, and IDs, with no terminal native or
+Core abort. Absence-only, forged, reused, or lost/restarted witness controls
+remain fenced. Exercise one successful same-original retry, exhausted original
+approval/budget refusal, unknown and committed-then-missing refusal, newer
+conflicting custody/native state, copied
+receipt/callback/constructor seal, capacity exhaustion, two creators and epoch/
+transition contention. No terminal owner-abort may be silently reused for
+retry, and no absent or malformed receipt may settle unknown COMMIT.
+
+For the adopted host allowance, prove exactly one issuer/PID-bound 30,000 ms
+budget is minted after final approval and before the first external reservation
+write, bound to the exact original request/effect/configuration/approval and
+then reservation. Initial dispatch plus one positively proved-abort retry may
+consume the two attempt slots; third dispatch, duplicate begin, refund, fresh
+budget on resume, and reconstructed/forked/missing registry state must refuse.
+Expire the absolute monotonic window during validation and prove refusal before
+DDL. Verify each statement timeout is the minimum of remaining time, 30,000 ms,
+and its existing lower bound; each lock timeout is also bounded by 5,000 ms,
+and each connection wait by its existing lower connection bound. Lower qualified
+limits must never be raised. Verify transaction-local changes restore on both
+commit and rollback; timeout or transport error remains unknown absent positive
+noncommit evidence. After the execution budget expires, independently test that
+only bounded positive committed read-only settlement can finish the same
+original confirmations and can never dispatch DDL. Approval validation must
+remain unchanged and no caller-supplied clock, budget, expiry, or profile field
+may influence the host allowance. These source controls are UNRUN and are not
+native qualification evidence.
+
+For every confirmation and recovery invocation, separately test the
+supervisor-issued 30,000 ms read-only budget from method entry: exact request,
+effect, original reservation bytes/digest, target, connection, store, operation,
+and issuer/PID binding; no reset/refund or DDL on resume/fork; active caller
+transaction refusal without commit/rollback; and deadline checks before and
+after connection, query, fetch, append, and return. Exercise lower existing
+connection/statement/lock bounds and verify transaction-local settings restore
+on success, refusal, and exception. Compare immutable original preparation
+evidence and fresh actual read-only session/transaction observations in their
+separate ownership contexts; assert actual observed values are preserved, and
+mismatched stable authority or identity remains fenced. These controls are
+source-only until run under a separately authorized ticket.
+
+Qualify actual PG18.6 source/actor/session/privileged-DDL exclusion/COMMENT/full
+TOAST/RI/native inventory/ACL/commit/restart and dynamic registered additions.
+Old journal/store upgrade, managed/external origin, installed/browser/platform/
+CI/release/public bytes remain explicit gates, never implied by source replay.
+
+
+## MIG-G10 full phase-aware inventory design adoption 001
+
+This amendment adopts the exact reviewed successor006 inventory definition set
+as REQUIRED design for CONTRACT-081/TD-085/STP-085. It does not claim implemented
+support, issue authority or relax any original native/installed/release gate.
+The reviewed source manifest is
+`86ef804046e88edc90021a52d879f0e6bd13a8257322365bc9c9ba0611f9ffc8`;
+independent design review is
+`c04707129131fee777f736c68202a954c419427a7dd7af12b9dfd0bb903adcec`.
+The existing artifact frontmatter, IDs and complete prior bytes are retained.
+
+The complete exact definition set is retained under
+`docs/helix/04-build/evidence/schema-migration-design-review/g10-contract-001/definitions/`
+and each complete file is hash-pinned in that folder's parent manifest. These
+are project design elaborations, not a copied methodology catalog. Within the
+scope of this amendment their exact records/DDL/compatibility/ordering/recovery
+rules are normative requirements; reviewed proposal status prose remains
+historical provenance, not an implementation claim. No omission from the
+excerpt below removes a definition-set requirement.
+
+Precedence: successor006 campaign-grant-accounting closes ambiguous005 charge
+prose; ordinary-decision-custody replaces004 denial-only private reservation
+profiles for BOTH decisions. The004 negative native observation/outcome/return
+shapes remain exact. Original approved-only ApprovalReceipt.verify remains
+unchanged; genuine denied protected-row/native verification is separate.
+Old protocol variants remain exact and refuse unadmitted new profiles. No later
+G11 context/native interface is implicitly adopted by these006 source pins.
+
+Full scope includes create/remove/unequal/mixed/empty inventories in initial
+and installed modes; complete typed dependency/atomic phase semantics, actual
+execution-aware seed lineage, exact metadata/publication/reference and signed
+full component/session/provider policies, initial prospective approval ordering,
+one original approved/denied decision journal and same-provider campaign grant
+allocation, exact carrier retirement branch, and all88 planned acceptance rows.
+Do not replace this scope with create-only implementation or safe refusals.
+Immediate irreversible table removal is the explicitly disclosed first subset;
+retained whole-table archive/restore/separate purge and old enrolled-store
+migration remain REQUIRED backlog work, not silently completed by G05 Field
+archives or by this adoption.
+
+Concrete enablement remains gated on original schema/stable-subject bootstrap,
+genuine authenticated review adapter, actually admitted durable fixed provider
+records and same-store atomic CAS, native timers/original continuity/COMMIT and
+positive restarted recovery, complete Weft/compiler/session/identity/retention
+composition and initial/existing/mixed/empty native acceptance. Old-context/store
+upgrade, retained-table recovery, installed/browser/platform/CI/release and
+published-byte verification remain explicitly OPEN. Full G02–G11 goal remains
+open; design controls do not replace actual implementation/native evidence.
+
+All exact shared shapes remain owned by CONTRACT-081 and its pinned definition closure.
+
+### Exact reviewed acceptance-matrix.md
+
+# G10 acceptance additions proposed for STP-085
+
+All rows below are REQUIRED future evidence, not tests run or capabilities established. Map to US-051-AC11–16 and MIG-G10; do not close G10 from table creation alone. Use synthetic schemas/data with manually specified expected rows and native inventories. Native assertions must inspect the actual installed candidate independently, not call its own catalog projector as the expected oracle.
+
+## Portable, compatibility and source correspondence
+
+| ID | Layer / fixture | Required result |
+| --- | --- | --- |
+| C01 | Historical frozen plan0.1 initial + additive artifacts | Exact full canonical bytes/digests/SQL/seed behavior verify under their original schemas and regenerate unchanged; no change to accepted historical policy replay versus fresh-effect refusal |
+| C02 | Historical plan/options0.2/0.3 and installation0.2/0.3 | Original exact keys/inventory dispatch retained. Persistent approval cannot select fresh legacy0.1/0.2 effects; historical replay reports actual CURRENT final reference, no deletion of approval rows/history/outcomes |
+| C03 | G02 frozen future-default artifact | Digest EXACTLY `dfdf88b70b80a228c381fe4ddf8db9233e2c099dc4de6a7bebcdbf4307ef65ae`; original phases, checks/fill/default ordering and old decoder refusals unchanged |
+| C04 | All candidate wire/version schemas | Unknown versions/members, missing arrays, booleans-as-counts, duplicate/stale/unused selectors, invalid refs and cross-bound digests refuse. Public irreversible discovery is cycle-free; compiler-only marker is not silently discarded from public input |
+| C05 | Zero-table source and initial null state | Distinguish first install, installed empty inventory, failed pending bootstrap and ordinary nonempty predecessor. Never synthesize previous/head/old epoch. Empty initial plan still selects prepare/publication and owner-only persistent metadata |
+| C06 | Stable identity collisions | Same name/different binding+Record is explicit remove+create; same binding/changed Record or retained physical name refuses. Equal/unequal counts and array order cannot stand in for identity; same local IDs in different modules stay distinct |
+| C07 | Complete source content | Preserve original before/after bytes, external-module Fields, descriptions, logical metadata and unknown extension payloads. Unsupported affected meaning yields located refusal; candidate normalization cannot hide it by erasing a table/Record |
+| C08 | Competing storage/compute meaning | Shared Field/Record across mappings remains shared; removing one table does not delete its logical definitions. Inbound reference/operation/policy/default/seed closure is complete or full plan refuses |
+| C09 | Pure history/prefix projector | Explicit source-history context matches exact predecessor; fake omitted/reordered/rehashed plans, an older retired seed ID reused as new, or hidden native lookup refuse. Every phase index0..N yields exact present/absent table/column/constraint/RLS/policy/grant/comment/metadata/seed state. Absent/new targets do not appear as original native objects. Invalid/missing/extra steps and forged prefix hashes refuse after source recompile |
+| C10 | Deterministic typed DAG | Arbitrary source declaration order, two new mutually referencing tables, existing→new and new→existing FKs, changed old Key plus unchanged FK, reused physical names, cross-Field CHECKs. Edges and reverse drop order follow actual identities, not SQL/ranks; cycles yield located refusal |
+| C11 | Existing atomic groups | Mixed creation with G01/G02/G11 and selected G03/G04 obligations preserves every original indivisible transaction. Concurrent-index conflict with an atomic group refuses before any executable plan; no old scalar/default/source restriction is weakened by concatenation |
+| C12 | Ordinary generated commands | Required append without future default plus old create command omission remains `TABLES_OPERATION_REQUIRED`; companion command/query/context changes need exact review, independently valid target typing and no inferred write grant |
+| C13 | Bounds/adversarial input | Tables/intents/steps/phases/markers/prefix bytes/rows/SQL/tokens at, below, above limits; early incremental budget refusal. Unicode/NUL/invalid encodings, forged intrinsic names, hostile dependency expansion and recipe misuse refuse without host I/O |
+| C14 | Bun / real Chromium / embedded installed runtime | Exact same accepted/refused source corpus and plan/prefix bytes, dependency graph, diagnostics and golden digests. Browser build+actual execution separately prove purity; source typecheck or mocked browser is insufficient |
+
+## Domain fixture matrix
+
+| ID | Synthetic domain and topology | Required behavior / independently authored expected result |
+| --- | --- | --- |
+| D01 | Empty module, no application tables/seeds | Real first generation with zero application relations; exact fixed metadata and denied ordinary admission before publication |
+| D02 | Initial Person(id,name,birthday) + Team, inline/default date, declared person/batch policies | New tables begin empty, complete native domains/defaults/keys/RLS/policies/grants/comments are exact, optional NULL preserved, required omission obeys original source default/seed semantics |
+| D03 | Existing populated Person + new Team; Person required label from G02 + FK to seeded Team | Original two Person rows get manually expected exact derived labels once; Team original selected seeds execute once; explicit NOT VALID/VALIDATE closes prior-row FK dependency; default remains future-only; unrelated Person data and ordinary denials preserved |
+| D04 | Legal Matter + existing memberships/billing; new Assignment linking existing Person/Matter | Both existing→new and new→existing constraints/policy joins are modeled. Existing security/team meaning preserved; row predicates and person/batch/owner+via access tested with independent native roles |
+| D05 | New Parent/Child with reversed declaration order; cycle with deferred vs immediate FK | Keys precede FKs despite source ordering. Authored seed row/set order preserved; declared deferred cycle succeeds in its actual transaction, immediate forward-reference case aborts without hidden constraint disabling |
+| D06 | Remove populated unseeded Obsolete table, preserve shared logical Field definition | Exact irreversible table marker and complete inbound/outbound/policy/grant/command cleanup; full stored-row loss disclosed. Missing marker/unknown dependency refuses, no CASCADE |
+| D07 | Remove seeded table; one historical seed set spans removed and retained tables | R1 must be adopted. Entire old definitions/IDs remain in immutable history; selected whole-set definition retirement never replays/deletes retained-table rows. Next standalone source valid; changed/split seed content or reused ID refuses |
+| D08 | Drop old Person binding and create different Record at same physical name | Explicit loss+dependency graph; original old relation removed, newly created object bound to original create receipt. Equal names/counts/native types do not make it retained; OID observation alone cannot prove identity |
+| D09 | Two removes + one create; one remove + two creates; remove all | Unequal counts, arbitrary authored order and empty final application inventory handled. Persistent approval/history/outcome identity retained; final empty generation cannot be reused as an unowned bootstrap target |
+| D10 | Mixed new Audit table + existing G03 default change / G11 replacement / G04 conversion | Separate supported combinations preserve source/default/input/NULL/loss semantics and atomic groups; each requires its actual native capability. Unqualified G04/retention/provider shape yields explicit refusal, not a profile-derived claim |
+| D11 | Adversarial existing same-name table/role/schema/function/type/extra trigger/PUBLIC/inherited privilege | Exact initial/prefix refusal before effects. A business table cannot be adopted from matching columns; metadata cannot be accepted by name prefix or rehashed reference |
+| D12 | Full synthetic counterpart of consumer multi-table migration chain | Include initial/add/remove/replacement/seeds/defaults/denied operations/dependency mix. Every operation is mapped or explicitly blocked; no private consumer/Praxis acceptance inferred from this counterpart |
+
+## Actual native execution, recovery and authority
+
+| ID | Actual installed native campaign | Required independent observation |
+| --- | --- | --- |
+| N01 | Existing persistent-approval installation | Original head/source/schema/role/ACL/approval proof before effects, exact selected new progress inventory only, original actual G11 retirement barrier and direct SQL exclusion through every prefix/publication gap |
+| N02 | Initial pristine target | Actual independently authorized supervised target/principal/schema custody, empty namespace closure, original bootstrap signing/plan approval before metadata effects; no old head/source/epoch fabrication or six-scope fallback |
+| N03 | Initial prepare acknowledgement lost, crash before first history row | Actual fixed metadata+progress original receipt determines committed state; exact empty-history pending context resumes, missing/tampered/reconstructed custody refuses. No repeated metadata/native birth/adoption by name |
+| N04 | Faults before/after EVERY required phase COMMIT | Exact rows, defaults, role restoration, RLS/grants/Keys/FKs and contiguous prefix/progress. Known abort rolls back complete group; lost response observes original commit without repeating backfill/conversion/seed |
+| N05 | Old native writer/read cursor/paused authentication and second migrator | Actual held sessions are drained/fenced under qualified G11. No writer crosses invariant activation; no reader/direct client accesses partial newly created tables or mixed old/new carriers. Competing migrator cannot race names or schema metadata |
+| N06 | New table actual physical custody | Before CREATE, full absence under enforced DDL exclusion; after CREATE, real native identity and original transaction receipt. Same-name object replacement, OID reuse/lookalike receipt and privilege drift between phases refuse |
+| N07 | Concurrent index on new and retained tables | No dispatch before prerequisites commit; exact fixed intent+index shape/validity recovery at each dispatch/return/receipt loss. Invalid index repair requires its original approved failed-object custody; no IF NOT EXISTS/retry shortcut |
+| N08 | Constraint and seed failures | Duplicate Key, FK missing referenced row, CHECK/domain/NULL/overflow, volatile/default omission, seed error/ignore, effect/resource overflow. Independent SQLSTATEs and complete rollback, not partial rows or relaxed source semantics |
+| N09 | Unknown final publication/response loss | Real final source/history/approval/provider/external journal reconciliation returns original current reference; no source step reexecution. No premature new credentials/HBA admission; old retired roles stay inert |
+| N10 | Real worker/supervisor restart at initial and existing prefixes | Original kernel/native process/target/role/custodian purpose reobserved; exact original head/file/plan/policy and pending outcomes. Committed seed/fill counts unchanged; source-modeled replay cannot substitute |
+| N11 | Restore/clone/stale external ledger or copied progress | Actual nonrewinding custodian detects changed incarnation/history/namespace. No reset of approval IDs/epoch/outcome slots or new plan after unknown. Ordinary gate remains closed; general restored-target recovery requires separate qualified successor |
+| N12 | Production vs native-acceptance configured authority | Real valid/invalid signatures for newly adopted initial forms, wrong scope/key/target/purpose, absent config, races/issued-ID history/unknown consumption. Fixture cannot mint production capabilities or adopt an existing target. Prior rejected UID shortcut remains unapplied |
+| N13 | Host-neutral and Psycopg native routes / shipped cohort | Both actual adapters obey same original protocol; exact installed source/wheel/embedded/compiler/profile/binary/OS/driver hashes, actual independent expected rows/catalogs, original attempt receipts and owned cleanup. Unsupported host modes explicitly remain open |
+| N14 | No data/authority leakage | Public diagnostics/receipts contain source locations and aggregate counts, not row values/passwords/approval private keys or per-value low-entropy hashes. Ordinary roles cannot query approval/progress/evidence rows or reach maintenance/controller |
+
+No native pass follows from a mock issuer, always-refusing provider, source schema validator, signature test alone, source-only G04 receipt or historical trust-auth runner. Use actual authorized dedicated targets; resource GO and shared-service constraints remain external execution prerequisites.
+
+## Release acceptance and invariants
+
+Before support: adopted contract/TD/STP, complete compatibility corpus, actual Chromium, independent installed native initial+existing/remove/mixed campaigns, fixed metadata/reference schema tests, both host routes, packaging source/RECORD closure and fresh published byte comparison. Report each version, recipe, recovery mode, native host and remaining G02–G11 requirement. No managed/backend/G05 retained-table/online claim is inherited.
+
+Safety invariants: original IDs/purpose/custody cannot be recreated by input JSON; absent relation cannot be adopted; every committed data group has one original receipt; completed prefix never reexecutes; publication implies full next meaning and exact selected metadata; persistent approval never downgrades; source data/default/seed semantics are not changed by scheduling. Liveness is conditional on original custody, qualified capabilities, finite budgets and eventually settled native outcomes; unresolved COMMIT or missing external authority may remain safely fenced. No automatic eventual-success guarantee is claimed.
+
+## Additional external-review successor002 obligations
+
+The original C01–C14/D01–D12/N01–N14 forty rows above remain REQUIRED unchanged. The following fourteen rows add independent evidence; none has run in this planning task.
+
+| ID | Fixture | Required independent result |
+| --- | --- | --- |
+| C15 | Definition vs selection vs actual outcome | An authored never-selected set is retain-definition/not-run, can later become apply-once/not-run under exact original selection, and becomes confirmed ONLY after actual original phase proof. A source/plan selection alone cannot fabricate native success |
+| C16 | Bounded chronological history | Full plans+executions<=128/24MiB; verify each historical plan with its original prefix, never later outcomes/self-embedded history. Wrong proof/phase/entry/source, omitted never-run definition, changed bytes/order/retired ID recycling and overflow refuse incrementally |
+| C17 | Closed new branch/policy/schema corpus | Every kind/operation/subject/SQL/extra-member combination and every numeric/null/mode/config/key/context/reference branch is accepted/refused exactly. All unknowns, booleans as OIDs/counts, arbitrary empty SQL, missing arrays or signature cross-domain substitutions refuse |
+| D13 | Never-run mixed-table seed retired with removed table | Full original whole set remains in retained history with retire-definition/not-run; no successful execution fabricated, surviving-table rows untouched, next standalone source valid, no later reuse |
+| D14 | New Audit table plus selected G05 Field retirement/restoration on surviving table | Preserve actual typed source/instance/archive/current-data/Weft constraints and merged atomic group. Missing actual qualified scope-fill/issued-ID/private-store0.2 capability refuses. Whole-table retained recovery remains separately OPEN |
+| N15 | Real original native seed execution lineage | Independently inspect actual original selected set effects/phase receipts/publication and never-selected sets. Lose COMMIT response, then prohibit retirement/replay until same original outcome settles. Conflict-ignore zero-row execution is still confirmed once |
+| N16 | Exact fresh trust/context and both additional scopes | Actual valid/invalid Ed25519 signatures, immutable original bootstrap enrollment, tuple policy/EVERY subject/purpose/config/context/domain/scopes. Existing-head and six physical owner approvals cannot authorize fresh preparation/activation; no null-head wrapper or submitted trust root |
+| N17 | Missing stable-role/schema bootstrap and namespace race | Actual missing/foreign/shared/non-owned role/schema or LOGIN subject refuses before metadata/role effects; source names do not create authority. Original exclusive DDL/absence census recheck catches competing metadata/table/function/type/default-ACL creation; no same-name adoption |
+| N18 | Fresh disabled role + metadata birth + prepared epoch atomicity | Same native transaction creates only actual absent disabled logins and exact metadata/prepared epoch, records phase1 complete progress with actual new OIDs/birth receipts. Unknown commit positively recovers originals; zero-row history alone cannot be adopted or read as published empty |
+| N19 | Full fixed metadata mutation corpus | Independently mutate each column/type/order/NULL/default/check/PK/unique/index validity/opclass/ACL/grant option/owner/RLS/trigger/rule/inheritance/extra object/record binding. Refuse against fixed definitions and original OIDs, never matching dictionary/name/rehashed receipt |
+| N20 | Full original prefix/native witness and resource custody | Actual create/remove origin for each stable physical generation survives worker/supervisor restart, OID/name reuse/clone/restore/ledger loss refuses. Exercise8MiB canonical/16MiB jsonb record,24MiB context/plan,128/32MiB native history and conjunctive component caps; campaign budget cannot reset on retry/reboot |
+| N21 | Final atomic fresh/installed publication and digest acyclicity | Actual history/head/approval/publication row/epoch/role effects and selected progress DROP commit together. Final record includes only already-confirmed prepare/business receipts and preparation authority, never its future activation signature/transaction/confirmation/reference. Real final signature binds that record; external confirmation binds the later actual final reference |
+| N22 | Final reference/read-only/current replay closure | Actual source/head/plan/native shapes/ingress/complete retained plans+execution match new installation0.1, no progress remains. Old helper/profile/client refuses or uses actual current new reference; historical replay and next admitted existing-only transition never downgrade or discard custody. Ordinary verifier does not create helper objects |
+| N23 | Whole-table retained recovery release tracking | Immediate reviewed irreversible purge passes ONLY its disclosed subset. Explicit release still lists missing table-level archive/source/row-membership/constraint/reconciliation/restore/separate purge composition; G05 Field restore, unseeded/create-only fixture or source history cannot close it |
+
+
+## Additional successor003 F1/F2/F3 obligations
+
+All exact original C01–C17/D01–D14/N01–N23 rows above remain unchanged and REQUIRED. For their metadata schedules,003 adds the explicit approval phase between prepare and business/publication; original required prepare/publication effects remain present. These twelve rows are additional future obligations, not executed tests.
+
+| ID | Fixture | Required independent result |
+| --- | --- | --- |
+| C18 | Original carrier/domain admission | Mixed created+existing tables cannot select G01/G02/G11/G04 historical fills/conversions on new carriers, same-name replacement or disappearing Field; valid new-Field G02 on retained existing carrier and shared cross-new/existing DAG still admitted. No source rewrite/implicit fill/default/seed replay |
+| C19 | Complete policy normal forms and digest separation | Every original G04 .1/.2/G05/G11 member, explicit issued capacity, native phase timer and full session/compiler/provider identity is signed. Unknown/missing/defaulted-after-signature policy, altered .2 cap, wrong component policyDigest or outer-hash substitution refuses |
+| C20 | Approval and policy hash DAG | Fresh prepare carries complete prospective binding/evidence with no native receipt; phase2 actual native receipt precedes business. Hash graph has no future OID/UUID/time/activation/publication self-reference. Envelope cannot include a fresh authority configuration that in turn embeds that same envelope/cohort digest |
+| N24 | Old enrolled carrier removal refusal | Actual old0.1/0.2 table with issued IDs, G04 originals and G05 archive/hold is refused before DROP/guard/metadata changes; unknown or unresolved provider census refuses. Unenrolled reviewed purge remains distinct |
+| N25 | Qualified successor carrier retirement | Actual new provider original token/oldOID/creation receipt and issued IDs/count survive; business/trigger/live metadata absent, original inert function retained under exact ACL, same-transaction retirement receipt/progress and actual native dependency closure. Remove+create/OID reuse gets independent new generation/token; no old ledger adoption |
+| N26 | Carrier unknown outcome, holds and retired validation | Lose actual DROP COMMIT response; recover only original reservation/row/receipt/removal history and never repeat DROP. Concurrent newer hold/policy revisions survive known abort/restart. Retired validation cannot query a reused oldOID as live carrier, issue IDs, restore removed table or erase archive/hold metadata. Missing successor purger remains explicit refusal/open obligation |
+| N27 | Actual fresh native approval sequencing | Real metadata setup is authorized by original logical fresh signature+prospective binding. Phase2 obtains actual protected session_user/clock/UUID through genuine authenticated review adapter and persists phase2 outcome atomically; no business before confirmed native approval. Matching dictionaries, external success echo or existing public null-head call refuse |
+| N28 | Approval denial and unknown phase2 COMMIT | Actual denied row cannot be overwritten as approved; no successful phase2/capability. Lost response resolves SAME original row UUID/time/receipt/outcome, no second INSERT/re-sign/new bootstrap. Row alone, cloned approval/custody, evidence/shape/OID drift refuses while gate remains fenced |
+| N29 | Native full-transaction timing and state restore | Independently inspect actual transaction_timeout installed while IDLE BEFORE BEGIN, one absolute deadline across all statements/COMMIT and exact remaining clamp. Exercise slow multi-statement/lock/driver/cancel/unknown outcome; full role/settings restore or quarantine occurs, no per-statement timer reset claim |
+| N30 | Real immutable mixed sessions/modules | Qualified legacy .1 plus derived .2 and selected G04/scoped-fill handle identities/policies are immutable actual installed objects on SAME phase connection under fixed verified scope switches. Mutation, replacement callback/module, incomplete six-setting projection, separate connection or missing public symbol refuses entire group |
+| N31 | Conjunctive original/outer limits and atomic groups | Independently inspect original component receipts/counts/source populations and outer charges. Multi-Field fills, conversions, captures, G05 new-instance NULL/fill, issued-cap boundary and seeds cannot multiply/reset/substitute limits. Incompatible signed timeouts or overflow aborts/refuses complete original group without splitting; original unknown COMMIT never gets fresh budget |
+| N32 | New native branches and post-publication custody | Actual inventory enrollment/ingress/provider variants accept only exact adopted new closed records and complete envelope/reference binding. Old .1/.2 validators refuse them; no extra-key fallback. Current final reference/history/seed/approval/provider custody survives installed replay/subsequent integration or effects refuse |
+
+
+## Additional successor004 denied approval obligations
+
+All exact66 prior rows remain REQUIRED unchanged. The negative branch in denied-approval-recovery.md supplements their successful-phase schedule; a denied phase2 is not phase2 completion. These six rows are future evidence, not tests executed by this design packet.
+
+| ID | Fixture | Required independent result |
+| --- | --- | --- |
+| C21 | Closed negative records and digest DAG | Exact denial intent/reservation/observation/outcome/settlement/result, denied approval union, progress-state/phaseIndex and null-field rules validate; unknown keys/missing members/booleans as IDs/counters/cross-purpose data refuse. Native observation excludes progress/outcome/settlement hashes, so its atomic row is not self-referential |
+| N33 | Actual protected native DENIED transaction | Genuine authenticated review adapter, actual protected approval UUID/session_user/native clock and singleton denied census commit atomically with approval-denied progress/negative original outcome. phaseIndex stays1/completedSteps stays phase1, no successful phase2 receipt/Approved capability, business/activation/publication/gate/credentials remain refused |
+| N34 | Unknown denied COMMIT and read-only original return | Lose response after real denied COMMIT, recover original confirmed context0.3/setup/decision reservation/native row/progress/outcome, settle SAME original pending reservation and return SAME UUID/time/decision. Repeat confirmed recovery appends nothing and allocates no IDs; ordinary prospective-zero-row reader is not used |
+| N35 | Negative row/custody/source/catalog inconsistency | Denied row without matching negative progress/outcome, inverse mismatch, changed decision/receipt/binding/file/policy/evidence/target/epoch/source/metadata ACL/OID, external journal loss/rewind and competing approval refuse while fenced. Never overwrite denied as approved, synthesize missing rows or choose new bootstrap/ledger |
+| N36 | Before-COMMIT failure vs absence-only ambiguity | Actual whole transaction abort leaves original prospective phase1/zero approval row, and SAME reserved denied intent may retry only after positive original noncommit proof with original nonrefundable accounting. Missing row alone after connection loss stays unknown; no fresh timer/request/INSERT or budget reset |
+| N37 | Governing011 original setup/purpose composition | Actual originally installed context0.3 pending/confirmed setup, owner ledger and optional logical roots/registry retain exact IDs/paths/headers/purpose. Missing primary/setup lock/ledger/required registry or old context0.1/0.2 cannot be recreated/widened. Physical enrollment0.1 alone cannot authorize fresh logical publication; production/acceptance boundaries remain exact |
+
+
+## Additional successor005 common ordinary-decision obligations
+
+All exact72 predecessor rows remain REQUIRED verbatim. Their references to denial intent/reservation/settlement now select the common005 branch with decision=denied; no old denial-only private profile is admitted. Exact004 negative native observation/outcome/return shapes remain unchanged. These eight rows are future real obligations, not this packet's document controls.
+
+| ID | Fixture | Required independent result |
+| --- | --- | --- |
+| C22 | Common closed request/reservation/grant/accounting/journal/settlement | Both decisions use ONE exact grammar/key/original decisionId, purpose/source/policy/context and actual typed registry; old denial-only profiles, extra/missing keys, alternative locator/slot/bootstrap, divergent decision or self-hash refuse. Actual signed allowance/grant accounting is exact/conjunctive/nonrefundable |
+| C23 | Native binding and positive/negative outcome DAG | Same original decisionBinding is atomic in progress/witness and original initial publication; positive projection is actual approved receipt+existing successful phase2 receipt, negative004 native observation/outcome/return byte shapes stay exact. No outcome/settlement/selfhash cycle or public reference embedding; installed branch decisionBinding=null |
+| N38 | Actual approved COMMIT with original journal pending | Lose response after real approved row+phase2 native COMMIT, recover original common request/reservation/grant/native binding, positively settle SAME slot, return SAME actual UUID/time/decision; business capability only after original settlement, never reexecute constructor or allocate replacement |
+| N39 | Common approved/denied race and settled replay | Competing opposite decisions/evidence/purpose on same common installation/binding slot refuse; SAME original decision repeated resolves SAME decisionId/reservation. Confirmed approved/denied reattach is readonly with zero appends/IDs/grants/native effects. Neither settled handle nor caller dictionary dispatches |
+| N40 | Positive abort vs unknown and exhausted accounting | Positively proved original noncommit alone permits next numbered charged attempt under SAME request/reservation; absent row alone/unknown/uncertain clock refuses. Exact timeout+signed statement allowance and all prior grants remain charged, no budget reset/refund/new bootstrap; insufficient remaining cap refuses before BEGIN |
+| N41 | Actual denied verification and provenance | Existing approved-only ApprovalReceipt.verify still rejects denied; new fixed adapter uses genuine protected denied-row reader with actual original UUID/session/native clock/complete binding/evidence/census/negative outcome and common original custody. Copied dataclass/hash/JSON never authorizes a decision |
+| N42 | Approved historical recovery after progress DROP/later installed migration | Original initial publication retains decisionBinding and exact phase2 receipt; original native approval/common journal/settlement/history return SAME approved data under current original custody without fresh mutable capability, reinitialization or current-head substitution. Later valid approval rows do not erase old binding; missing original history refuses |
+| N43 | Branch inconsistency/forward advancement refuses | Wrong decision/attempt grant/native receipt/source/policy/ACL/OID, inverse row/progress/outcome mismatch or external pending journal with business-prefix/publication advancement refuses while fenced; no retroactive fabricated confirmation, generic append or old context/signature widening |
+
+
+## Additional successor006 original campaign accounting obligations
+
+All80 predecessor rows are retained verbatim. These eight rows require future actual independent evidence; document/finite fixture controls are not that evidence.
+
+| ID | Fixture | Required independent result |
+| --- | --- | --- |
+| C24 | Per-attempt native vs cumulative original checkpoint | Approved phase2 receipt and denied outcome each charge EXACT one matching dispatched grant.reservedMs; common priorCampaignCharge equals original cumulative preparation checkpoint, never phase1 success or latest receipt. Full shared record keys/scalars/bounds/refusals are exact |
+| C25 | Global grant key/digest bijection | ONE original campaign+phaseId+decisionId+attemptNumber key maps to ONE complete immutable grant/digest. Common phase2 attempts and outer entries match bijectively; alternate digest, duplicate key/digest, missing/extra grant, wrong purpose/phase/policy/decisionBinding or fabricated checkpoint refuses |
+| N44 | Preparation aborts survive native rollback | Real phase1 abort then commit preserves BOTH nonrefundable grants in original external history; successful phase1 native receipt contains only its one grant. Common prior checkpoint includes both, including originally unknown then positively resolved attempts. Missing abort history cannot be reconstructed from success receipts |
+| N45 | One original atomic allocation and unknown CAS | Actual SAME original provider transaction creates common grant/attempt/accounting and outer entry/charge atomically BEFORE native effects. Lost durable-CAS response resolves SAME original allocation key without effects/new debit; partial views/missing original primary/history/rewind refuse, no independent second allocation |
+| N46 | Native pending gap and replay adds zero | Real approved/denied native COMMIT with private pending resolves existing decisionBinding/SAME grant, settles original request once and preserves charge. Repeated native/settlement/checkpoint replay allocates/chargesZERO, appends nothing and cannot execute settled handles |
+| N47 | Positive abort vs already charged unknown | Positive original noncommit proof permits SAME request's next numbered fully charged grant iff remaining original cumulative cap fits; old grant never refunded. Unknown already charges full grant and blocks another attempt/phase; row absence, clock reset or alternative bootstrap never grants retry |
+| N48 | Later business uses current original cumulative total | After preparation+multiple phase2 attempts, real next business admission uses campaignBudgetMs minus ALL original grants. Historical phase2 receipt/common settlement replay never replaces/decrements newer outer checkpoint; boundary/overflow fixtures refuse before BEGIN without splitting atomic groups |
+| N49 | Provider/bounds/identity gate refusal | Missing exact new typed same-store campaign/CAS branch, wrong original campaign/custody/policy, unsupported old store/context,4096-entry or tighter record/history exhaustion and uncertain clock/COMMIT refuse before new allocation/effects. Full mixed/table/carrier/native acceptance remains OPEN |
+
+
+### G11 concrete original native ROOT session and durable checkpoints014
+
+This amendment adopts the following concrete native session/exclusion and ROOT
+checkpoint design as requirements. It is not native execution evidence or a
+claim that the original ingress-store and application-origin interfaces exist.
+Existing010–013 ROOT/config/trust/context/ledger wires remain exact. New typed
+native checkpoint events select only original supervisor-journal0.2; legacy0.1
+history is never reinterpreted, upgraded or recreated. Source008339d's reviewed
+pure validation/physical-context association does not supply actual native facts.
+
+Precedence correction to native-session-interface001: the actual current ingress
+store verifier's `_verify_relation` CREATES/DROPS reference tables. That method
+MUST NOT run inside the effect-free ROOT observer. Implement a complete read-only
+catalog/ACL/role/dependency census against original committed born descriptors
+and identities. Creation-time descriptor DDL belongs only inside separately
+approved physical store creation. Actual prepared head/correspondence read-only
+steps are distinct from administrative verifier paths containing probe DDL;
+freeze their exact dependency/source map and verify the executed SQL path.
+ROLLBACK does not authorize DDL. No metadata observer runs arbitrary callbacks.
+
+Full original SourceCohort/native evidence closed encoding, actual SQL/census/
+deadline projections, concrete original committed INGRESS-store creator and
+subject/schema ownership provider remain separate pre-code/enablement gates.
+Ingress coordinator002 is a proposed next interface, not adopted here. It must
+separately freeze its full born-object witness, dispatch/attempt/custody/COMMIT
+receipt and execution-policy source definitions. No pre-DDL authority/schema OID/
+marker, source-test issuer or hash of current flags substitutes for those origins.
+New application bootstrap authority/profile/scope requires separate exact review;
+existing physical scope2 and logical ROOT signatures do not authorize it.
+
+All014 positive paths below require actual original native proofs. Missing
+prerequisites refuse and keep full implementation/native acceptance OPEN; named
+methods, unavailable stubs or pure helper tests do not qualify this design as
+implemented. Active0.1 deployment upgrade, unknown restore/all-history rollback,
+managed original continuity, full effect/barrier/epoch/installed/browser/platform/
+CI/release qualification remain explicit backlog obligations.
+
+#### Required source and independent actual native verification
+
+All cases here are planned and UNTESTED until their exact frozen source/command/
+actual result receipts are retained. Existing123 source tests do not exercise
+these future native paths or satisfy this matrix.
+
+| Obligation | Required assertion and actual proof |
+| --- | --- |
+| Original lease identity | Genuine original target/supervisor/custodian acquires existing original lock; foreign/copied/expired/thread/process/inode/target handles refuse without effect |
+| Full writer exclusion | Actual second supervisor/process and every source-mapped physical/store/custody/epoch/ROOT/context writer contend or refuse pending; individual journal locks alone cannot pass |
+| Resource/deadline cleanup | Inject EVERY acquisition/read/SQL/append/rename/response failure; no leaked lock/FD/backend or unbounded driver wait; timeout settings installed before BEGIN and actual remaining bounds checked before each dispatch |
+| No observer DDL | Actual native SQL capture proves fixed ROOT observer uses only selected metadata queries/locks; no reference-table CREATE/DROP, DML, caller SQL or callback; actual transaction always rolls back/closes |
+| Full genuine native observation | Same owned native connection/transaction holds actual lifecycle lock and observes original target/store/source/head/full correspondence/subject/privilege facts, not a short probe or expected data echo |
+| Genuine origin prerequisites | Actual committed original ingress creation receipt/full born OIDs and real application subject/schema ownership resolve; pre-DDL authority/marker/name/flag hash/source-test issuer refuses |
+| Snapshot and signing wait | Complete exact canonical snapshot persisted before request export; wait outside lease/transaction; restart retains original signed digest and separately proves fresh actual original continuity |
+| ROOT reserve/confirm ordering | Both mutation kinds record exact native prior/next/full delta before ROOT replacement; export/context issue occurs only after original native confirmation/binding, with013 subordinate birth under same outer lease |
+| Crash matrix | Inject before/after each durable intent/replacement/confirmation/binding/issue; exact prior resumes same request only, exact next completes only missing confirmation, other state refuses; no new IDs/DDL or subordinate rebirth |
+| Missing/rewound ROOT | Restore older correctly signed prepared/confirmed prefixes or remove a reserved request while retaining native history; full original replay refuses before any control/effect writer |
+| Pending confirm subordinate loss | With native confirm intent but ROOT still prepared, remove each pinned subordinate birth file; refuse without recreation, even before ROOT confirmed |
+| Legitimate future ROOT appends | A historical binding remains resolvable after other legal enrollments; validate historical checkpoint inclusion plus exact latest replay, not whole-current-file equality to old birth/binding digest |
+| Actual native binding | Positive actual confirmed ROOT entry/original .3 context/logical core/native target/store/subject/source association succeeds; each foreign object/ID/projection/copy independently refuses |
+| All-history restore limit | Do not claim hashes detect restoration of every history together; require actual independent original custody/continuity acceptance or refuse profile |
+| Exact backward compatibility | Original0.1 journal/old context/enrollment/physical six scopes and logical wire remain exact; missing original new journals/locks/history never auto-create or upgrade |
+| Qualified final composition | Real production/native-acceptance purposes remain separate; installed/restarted/native barrier/epoch/provider/platform/browser/CI/release/published-byte evidence independently required |
+
+Record exact source cohort, qualified PG/driver/platform versions, immutable
+packet/adoption hashes, actual kernel/native effects and original event/request/
+receipt identities. Preserve failures and unknown outcomes; no source model,
+negative-only refusal suite or author-attributed log replaces independent native
+positive acceptance. The full G02–G11 goal and all existing G10/G04/G05 obligations
+stay open until independently verified and accurately released.
+
+
+### G11 original supervisor-journal birth/selection015
+
+This amendment adopts the exact new ORIGINAL enrollment0.3/journal0.2 birth,
+acyclic header/definition, private context metadata and explicit target request0.2
+requirements below. Existing primary context0.3 member set, original six-scope
+owner configuration/signing payload/domain, old enrollment0.1/0.2 and old actual
+`umf.local-postgresql-supervisor-journal/0.1` bytes/behavior remain exact. NEW
+`umf.local-postgresql-owner-journal/0.2` is a distinct literal, not an alias.
+No active setup/header/old request is silently upgraded. No missing-file virtual
+zero, O_CREAT lock fallback, caller flag/definition or arbitrary registry can
+select or create this new original history after confirmation.
+
+The fixed initial definition's ingressEvents/applicationEvents are null. This
+means those capabilities are UNAVAILABLE, not accepted or qualified by null.
+Full positive ROOT observation/store/application/managed/installed/release support
+remains OPEN until actual approved complete interfaces/native evidence exist;
+a future supported complete tuple requires its own fresh original enrollment.
+The separate unadopted application bootstrap allocation now targets enrollment0.4
+with separately reviewed ownerconfig/ledger/context variants. No seventh scope
+is introduced here.
+
+#### Required original birth/current-state and native tests
+
+All following tests are planned and UNTESTED until exact frozen sources/commands/
+actual result receipts exist. Prior pure107-module/source tests do not satisfy
+new original resource or native authority acceptance.
+
+| Obligation | Required assertion |
+| --- | --- |
+| Exact original selection | Enrollment0.3 descriptor/known definition +unchanged actual context0.3 selects ONLY new owner-journal0.2; old enrollment/request/journal behavior remains byte exact |
+| Hash-cycle exclusion | Recompute anchor→actual zero bytes→descriptor→enrollment→final context without self/future digest; changing any original policy/profile/path/ID changes binding and refuses foreign resource |
+| Pending resource crash matrix | Inject each file/lock/fsync/rename cut before ONE primary confirmation; exact known initial subset finishes SAME paths/IDs, conflicting/nonzero subset refuses, no usable context before all resources |
+| Confirmed file loss | Remove journal or lock after primary confirmed, including sequence0; every read/open/recover refuses with no O_CREAT/virtualzero/rebirth/alternate path |
+| Legitimate nonzero journal | Validate exact immutable birth projection plus complete current events/head/sequence; actual later event append never requires whole current hash==initialHeaderDigest |
+| Closed pure codec | Wrong profile/tuple/definition/digest/scalar/unknown key/kind/state/order/crosslink/size refuses; old untyped store-intents refuse in0.2 while actual old0.1 fixture bytes remain exact |
+| Real opaque birth | Only registered original bootstrap context/issuer/resource proof produces birth; copied JSON/hash/seal/foreign context cannot select/open/append new journal |
+| Pure metadata | Old enrollment has explicit journal:null, new enrollment requires full exact record; missing registry is not legacy, mutation cannot change version, getter performs no file/native/caller lookup |
+| Exact signed request dispatch | New enrollment requires target request0.2 with actual birth/context digests and genuine original owner signature; old requests cannot downgrade/upgrade/reissue at occupied keys; no future native OID signed |
+| Same original native recovery | Real target/custodian/signature/lease/current history reattachment resolves SAME original operations; missing/rewound/lookalike/native-unknown state stays fenced |
+| Independent native/installed gates | Real PG18/platform/driver/controller authority/checkpoint positive+crash recovery and release artifacts independently qualify; no null ingress/application capability, source fixture or parser proof replaces them |
+
+Source/kernel actual file-lock/identity/crash controls, real native process/SQL/
+custody controls, and installed/release proof remain separate named qualifications.
+Retain every failed precursor and unknown result. No passing count or future stub
+closes this adoption's implementation or the remaining G02–G11 release backlog.
+
+
+### G10 verification checkpoint 002: schema-USAGE and internal tags
+
+Required future acceptance: initial empty/nonempty and mixed inventory; one closed schema-grant step versus exactly two declared catalog rows; installed unchanged and last-table removal have no redundant grant/revoke; quoted names; schema/audience/privilege/extra-member/null-table/fake-table/metadata/SQL contradictions refuse; every actual renderer has complete closed tags; full tagged-to-public equality and historical golden bundle bytes/digests remain exact. Native cases prove genuine original empty schema/principals, exact before/after ACLs, fenced clients through publication/external activation, positive commit and same-original unknown-COMMIT recovery. All phase/step/prefix/cap accounting includes the real step. None of these obligations is marked passed by this design adoption.
+
+
+### G10 verification checkpoint003: fixed metadata paths
+
+Require the three exact operation/path pairings in CONTRACT-081 checkpoint003
+and `../../04-build/evidence/schema-migration-design-review/g10-fixed-metadata-paths-001.md`.
+Test initial empty/nonempty, installed and mixed plans; reject missing, duplicate,
+mismatched and caller-overridden metadata paths. Preserve denied approval and
+same-original unknown-COMMIT cases. No source/native/installed/release case is
+marked passed by this design clarification.
+
+
+### G11 verification checkpoint016: replay and typed parent controls
+
+Require full pure signed ROOT replay with clearly synthetic canonical observation
+data, without an invented ingress creation alias. Exercise repeated restart and
+second stop, noncanonical/non-JSON/non-object observation bytes, exact ROOT
+associations, immediate bare-scope4 refusal, multiple typed per-store reservations
+and unavailable ingress/application families. Source fixtures never satisfy the
+genuine native origin/snapshot/provider gates. Keep original signed versus fresh
+observation digests distinct; original semantics permit changing native facts.
+All native/installed/managed/release acceptance remains open.
+
+
+### G10 verification checkpoint004: local definition and step references
+
+Require the exact preimage and continuity tests in CONTRACT-081 checkpoint004
+and `../../04-build/evidence/schema-migration-design-review/g10-table-state-definition-digest-001.md`.
+Cover every catalog collection, unchanged local schema across source changes,
+initial/installed/created phase equality, absent H(null) with no local leftovers,
+schema-global exclusions, complete admitted row content, and correct operation
+and stable identity for every serialized creation/removal reference. Existing
+unrelated metadata step IDs must not satisfy the provenance check. All new
+checks remain required; no execution occurred under the shared resource hold.
+
+### G10 portable API and review-value amendment002
+
+The following are required tests from the accepted
+`../../04-build/evidence/schema-migration-design-review/g10-review-marker-adoption-addendum-002.md`
+and CONTRACT-081 amendment002. **All rows are UNRUN in this source-integration
+candidate.** No compile, schema, test, browser, native, or installed result is
+implied.
+
+| ID | Fixture / route | Required result |
+| --- | --- | --- |
+| API01 | Public table-migration exports | The four new entrypoints and closed request/options/plan/result/discovery/history/candidate types are explicitly exported; no private scheduler/effect builder is public; old `.1–.6` exports and bytes remain exact. |
+| API02 | Initial null predecessor with selected creates | Use no synthesized before bundle. Create candidates carry `oldValue:null`, `oldPath:null`, full next P and actual source path. The complete marker list is consumed once in authored intent order. |
+| API03 | Installed create for a previously absent table | Candidate oldValue is full previous-side absent P, with null oldPath; never a fabricated table declaration path. |
+| API04 | Existing component review candidates | Preserve original complete value shapes and only supplied optional oldPath/newPath; never cast values into P or SeedReview and never discard path collisions. |
+| API05 | Seed retirement with verified original source history | Previous and next values are exact SeedReview, bind the original complete seed definition/source digests and execution state, and show `no-data-replay`; stale/retired/reused/unknown outcomes refuse. |
+| API06 | Remove selector and approval options | Discovery remove disposition is exactly `{mode:'irreversible-purge'}`. Compiler options carry the exact effects marker ID; wrong/extra/missing marker or reordered/duplicate candidate refuses. |
+| API07 | Purge approval presentation | Every table-removal-effects Candidate maps to the exact `IRREVERSIBLE_TABLE_PURGE` disclosure path, marker ID, and stored-row/column loss text before approval UI; no extra candidate/plan/diagnostic fields. |
+| API08 | Complete plan verification/serialization | Verify with required original history replays every source/history check and compares the full canonical plan. Serialize returns those bytes without terminal LF; mutations to review/steps/phases/prefixes/history binding/digest refuse. |
+| API09 | New schema family and legacy schemas | Validate request, marker-free discovery selector, TableReview, SeedReview, Candidate wrapper, plan/step/prefix definitions together; old schemas reject new profiles and remain byte-identical. |
+| API10 | Browser approval example | The application visibly renders all purge disclosures in candidate order before requesting approval; omitted/changed disclosure or native-qualified claim refuses. |

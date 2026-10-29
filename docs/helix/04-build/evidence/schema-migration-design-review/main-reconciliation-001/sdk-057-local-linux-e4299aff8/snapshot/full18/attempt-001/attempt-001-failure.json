@@ -1,0 +1,16 @@
+{
+  "attempt": 1,
+  "executionId": null,
+  "failure": {
+    "checksStarted": false,
+    "code": "orchestration-unbound-bashpid",
+    "dockerStarted": false,
+    "line": 43,
+    "script": "run-full18-linux.sh"
+  },
+  "harnessSha256": "a460651a3d412fbccdcb0e37a887487f7c45d5f5e4986c5f6cadec8adbbf2d76",
+  "outputRootWasEmptyAtFailure": true,
+  "schema": "umf.local-linux-full18-attempt/1",
+  "sourceCommitRequested": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+  "status": "failed-before-checks"
+}

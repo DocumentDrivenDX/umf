@@ -1,0 +1,43 @@
+[
+  {
+    "case": "supplied-positive-observation-correspondence",
+    "accepted": true,
+    "operation": "reserve",
+    "mutationEvidenceDigest": "7f9cbb0d529368c4ca4754f6707e2bf4e80e5ed36cb921966aaeed7952f46f74",
+    "observationEvidenceDigest": "089740266f52fd7865a82f3405ff311c8cecd9f27fd1712cf2bc6f9ba74dc464",
+    "equal": false
+  },
+  {
+    "case": "supplied-positive-observation-correspondence",
+    "accepted": true,
+    "operation": "confirm",
+    "mutationEvidenceDigest": "7f9cbb0d529368c4ca4754f6707e2bf4e80e5ed36cb921966aaeed7952f46f74",
+    "observationEvidenceDigest": "089740266f52fd7865a82f3405ff311c8cecd9f27fd1712cf2bc6f9ba74dc464",
+    "equal": false
+  },
+  {
+    "case": "foreign-noncanonical-observation-real-signed-root-unmodified",
+    "accepted": false,
+    "error": "supervisor-journal-root-observation-invalid"
+  },
+  {
+    "case": "bare-scope4-generic-intent-no-typed-store-parent",
+    "accepted": false,
+    "error": "supervisor-journal-origin-mismatch"
+  },
+  {
+    "case": "actual-second-launch-legitimate-stop-intent",
+    "accepted": false,
+    "error": "supervisor-journal-order-invalid"
+  },
+  {
+    "case": "new02-restart-prefix-8",
+    "accepted": true,
+    "error": null
+  },
+  {
+    "case": "new02-restart-prefix-9",
+    "accepted": true,
+    "error": null
+  }
+]

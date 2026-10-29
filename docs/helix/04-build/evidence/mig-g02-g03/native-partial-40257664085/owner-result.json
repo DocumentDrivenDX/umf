@@ -1,0 +1,12 @@
+{
+  "profile": "umf.g03-uuid-native-diagnostic-owner-result/1",
+  "status": "FAILED_CONCRETE_FIXTURE_PRIVILEGE_GUARD",
+  "sourceCommit": "d63ee1711e3c29b18da4f747714768a7974e6b74",
+  "runId": 40257664085,
+  "artifactId": 12623102995,
+  "artifactZipSha256": "08e87f72ecda0b05130af9e4236120d269fa0e4006117578df60f26cd0c2d21e",
+  "cause": "Initialapply\u2192ledger216\u2192privileges104 external-authority-present. UUIDfixture created shadow schema/function as plugin owner, granting forbidden outside authority. Product guard correct.",
+  "cleanup": "Owned DB and allroles absent; original target unchanged.",
+  "fixSourceReview": "Root reviewed exact guard and whole fixture diff. Shadow remains before initial apply and all real privilege checks. Admin owns schema/function; PUBLIC revoked; Alice login only granted usage/execute. Catalog ownership/directACL/effective root noaccess +Aliceaccess and exact sentinel assertions before apply. No product verifier change or postponement of adversary.",
+  "scope": "UUIDdiagnostic only; final stable all5G02+13G03, N12/N14/G04native/main/release OPEN."
+}

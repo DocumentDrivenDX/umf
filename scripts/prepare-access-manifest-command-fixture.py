@@ -80,7 +80,7 @@ def prepare(root: Path) -> Path:
         descriptors.append({"path": str(path.relative_to(root)), "sha256": hashlib.sha256(text.encode()).hexdigest()})
     config = {
         "package": package, "modules": ["manifest_declarations"], "targets": targets,
-        "weft": {"distribution": "weft-sql", "version": importlib.metadata.version("weft-sql")}, "umf": {"documents": descriptors},
+        "weft": {"distribution": "umf-weft", "version": importlib.metadata.version("umf-weft")}, "umf": {"documents": descriptors},
     }
     path = root / "catalog-config.json"
     path.write_text(json.dumps(config, indent=2) + "\n")

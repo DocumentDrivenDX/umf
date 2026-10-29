@@ -1,0 +1,16 @@
+{
+  "profile": "umf.g04-readonly-recovery-host-budget-decision/1",
+  "creationBudgetDecision": "/private/tmp/g04-original-host-budget-owner-decision001.json",
+  "readonlyInvocationWindowMs": 30000,
+  "maximumDdlTransactions": 0,
+  "rules": [
+    "fresh fixed-supervisor issuer-owned observational budget per confirm/recover invocation, no caller budget/clock/callback DTO",
+    "cannot mint/reset/refund original creation budget, pending request or attempt allowance",
+    "all native SQL/connect/lock waits min remaining read allowance, proposed ceilings, and every existing tighter qualified bound",
+    "check monotonic/PID/identity at boundaries; no comparably lost budget reuse",
+    "preserve actual caller transaction ownership; use only concretely owned read-only transaction scope or failclosed, never silently commit/rollback an existing caller transaction",
+    "positive committed native receipt/continuity can settle SAME original external/supervisor/Core confirmations after creation expiry; no DDL or expired execution reactivation",
+    "restore prior session settings on every path; bounds cooperative not OS hardwall",
+    "native/runtime qualification remains UNRUN"
+  ]
+}

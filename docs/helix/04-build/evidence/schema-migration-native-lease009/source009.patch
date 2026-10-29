@@ -1,0 +1,158 @@
+--- a/python/umf_access/src/umf_access/lifecycle/owner_bootstrap.py
++++ b/python/umf_access/src/umf_access/lifecycle/owner_bootstrap.py
+@@ -670,6 +670,7 @@
+     if timeout_ms is not None and (type(timeout_ms) is not int
+                                    or not 1 <= timeout_ms <= 30_000):
+         raise LocalPostgresError('owner-bootstrap-setup-lock-timeout-invalid')
++    acquisition_pid = os.getpid()
+     try:
+         _private_directory(control_home)
+     except LocalPostgresError:
+@@ -735,7 +736,7 @@
+         except BaseException:
+             if fd >= 0:
+                 try:
+-                    if locked:
++                    if locked and os.getpid() == acquisition_pid:
+                         try:
+                             fcntl.flock(fd, fcntl.LOCK_UN)
+                         except OSError:
+@@ -747,7 +748,7 @@
+         else:
+             if fd >= 0:
+                 try:
+-                    if locked:
++                    if locked and os.getpid() == acquisition_pid:
+                         fcntl.flock(fd, fcntl.LOCK_UN)
+                 finally:
+                     os.close(fd)
+@@ -761,6 +762,7 @@
+ 
+ @contextmanager
+ def _owner_resource_lease(path: Path, error_code: str):
++    acquisition_pid = os.getpid()
+     fd = -1
+     locked = False
+     try:
+@@ -790,7 +792,7 @@
+     except BaseException:
+         if fd >= 0:
+             try:
+-                if locked:
++                if locked and os.getpid() == acquisition_pid:
+                     try:
+                         fcntl.flock(fd, fcntl.LOCK_UN)
+                     except OSError:
+@@ -802,7 +804,7 @@
+     else:
+         if fd >= 0:
+             try:
+-                if locked:
++                if locked and os.getpid() == acquisition_pid:
+                     fcntl.flock(fd, fcntl.LOCK_UN)
+             finally:
+                 os.close(fd)
+--- a/python/umf_access/tests/test_original_control_lease.py
++++ b/python/umf_access/tests/test_original_control_lease.py
+@@ -3,6 +3,7 @@
+ from __future__ import annotations
+ 
+ import base64
++import fcntl
+ import os
+ import subprocess
+ import sys
+@@ -38,6 +39,68 @@
+ 
+ 
+ class OriginalControlLeaseTests(unittest.TestCase):
++    @unittest.skipUnless(hasattr(os, 'fork'), 'requires a fork-capable host')
++    def test_forked_normal_context_exit_does_not_release_parent_flock(self) -> None:
++        temporary, _root, control, _profile, _enrollment, _raw, ledger, _setup = (
++            birth_fixture.OwnerLedgerBirthRecoveryTests()._fixture())
++
++        def probe(path: Path) -> bytes:
++            read_fd, write_fd = os.pipe()
++            child = os.fork()
++            if child == 0:
++                os.close(read_fd)
++                fd = os.open(path, os.O_RDWR)
++                try:
++                    try:
++                        fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
++                    except BlockingIOError:
++                        os.write(write_fd, b'blocked')
++                    else:
++                        fcntl.flock(fd, fcntl.LOCK_UN)
++                        os.write(write_fd, b'acquired')
++                finally:
++                    os.close(fd)
++                    os.close(write_fd)
++                os._exit(0)
++            os.close(write_fd)
++            result = os.read(read_fd, 16)
++            os.close(read_fd)
++            _pid, status = os.waitpid(child, 0)
++            self.assertEqual(os.waitstatus_to_exitcode(status), 0)
++            return result
++
++        def inherited_context_exits(context_factory, path: Path) -> None:
++            child_exit = False
++            with context_factory():
++                child = os.fork()
++                if child == 0:
++                    # Returning normally runs the inherited context manager's
++                    # cleanup in the child while the parent's lease is active.
++                    child_exit = True
++                else:
++                    _pid, status = os.waitpid(child, 0)
++                    self.assertEqual(os.waitstatus_to_exitcode(status), 0)
++                    self.assertEqual(probe(path), b'blocked')
++            if child_exit:
++                os._exit(0)
++
++        try:
++            setup_path = control / bootstrap._OWNER_SETUP_LOCK
++            inherited_context_exits(
++                lambda: bootstrap._owner_setup_lease(control, timeout_ms=1000),
++                setup_path)
++            self.assertEqual(probe(setup_path), b'acquired')
++
++            resource_path = ledger.with_name(ledger.name + '.lock')
++            bootstrap._create_empty_private(resource_path)
++            inherited_context_exits(
++                lambda: bootstrap._owner_resource_lease(
++                    resource_path, 'owner-approval-ledger-lock-invalid'),
++                resource_path)
++            self.assertEqual(probe(resource_path), b'acquired')
++        finally:
++            temporary.cleanup()
++
+     def test_lock_replacement_during_real_prepare_refuses_before_request_or_return(self) -> None:
+         temporary, _root, control, profile, _enrollment, _raw, ledger, _setup = (
+             birth_fixture.OwnerLedgerBirthRecoveryTests()._fixture())
+@@ -260,6 +323,24 @@
+         finally:
+             temporary.cleanup()
+ 
++    def test_failed_supervisor_construction_does_not_register_native_origin(self) -> None:
++        temporary, _root, _control, profile, _enrollment, _raw, ledger, _setup = (
++            birth_fixture.OwnerLedgerBirthRecoveryTests()._fixture())
++        try:
++            with patch.object(native, '_DarwinProcessObserver', return_value=object()):
++                session = create_owner_authority_session(profile, ledger_path=ledger)
++            before = dict(native._NATIVE_SUPERVISORS)
++            with (patch.object(native, '_DarwinProcessObserver',
++                               side_effect=RuntimeError('controlled observer failure')),
++                  self.assertRaisesRegex(RuntimeError, 'controlled observer failure')):
++                native.LocalPostgresSupervisor(
++                    profile, owner_core=session.supervisor._owner_core,
++                    authority_context=session.supervisor.authority_context,
++                    bootstrap_issuer=session.supervisor._bootstrap_issuer)
++            self.assertEqual(native._NATIVE_SUPERVISORS, before)
++        finally:
++            temporary.cleanup()
++
+     @unittest.skipUnless(hasattr(os, 'fork'), 'requires a fork-capable host')
+     def test_forked_supervisor_copy_is_not_original_native_origin(self) -> None:
+         temporary, _root, _control, profile, _enrollment, _raw, ledger, _setup = (

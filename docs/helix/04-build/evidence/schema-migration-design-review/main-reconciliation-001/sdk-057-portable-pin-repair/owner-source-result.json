@@ -1,0 +1,18 @@
+{
+  "status": "SOURCE_ACCEPT_EXACT_TWO_FILE_CORRECTION",
+  "generatorSha256": "fb265f8b027fe40e50556ba88fc5b91f585b03f6c7a4526e175fd2d8b04ca7d0",
+  "portableManifestSha256": "fbb96e3092b49ac4ef390c3efbea8ba25fc80e552f6348dba2dfe61ba027c5fc",
+  "portablePinRows": 97,
+  "all97Match": true,
+  "nativeSourcePinRows": 32,
+  "all32Match": true,
+  "changedPortableRows": [
+    "package.json",
+    ".github/workflows/pypi.yml",
+    ".github/workflows/access-boundaries.yml",
+    "scripts/qualification/r2-metering-generate.ts"
+  ],
+  "generatorChange": "Only locked package SHA; transformer/four schema inputs/companion unchanged",
+  "requiredNextStep": "Canonical generation from genuinely changed corrected source, before original qualification gates",
+  "historicalStageAUnchanged": true
+}

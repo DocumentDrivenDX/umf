@@ -1,0 +1,54 @@
+{
+  "schema": "umf.g02-weft-ci-replay-pointers/1",
+  "repository": "https://github.com/DocumentDrivenDX/weft",
+  "pullRequest": "https://github.com/DocumentDrivenDX/weft/pull/29",
+  "sourceHead": "5d196ea3184b1a711bb4bcf91215a496c18ce9b2",
+  "baseCommit": "b59938f4671e1aa9bd99941f233a8d83e1b576d7",
+  "actualCheckoutCommit": "c6414d163f270425027db08ef454747904bde406",
+  "sourceAndMergeTree": "82913d1be942577389b6568d900cdf7c0ec3a20f",
+  "workflows": [
+    {
+      "path": ".github/workflows/truss-facts.yml",
+      "sha256": "05af442aa03832fcb48b856ec6f2dc1bda5be200dfb17474471d7e5ab77c15de",
+      "runId": 40023185471,
+      "jobId": 120652687377
+    },
+    {
+      "path": ".github/workflows/table-operations.yml",
+      "sha256": "5db6adc9dfc6b58053f2e8926701a4760dbf7aa170f0dd7c2ce1c1c0c682ea55",
+      "runId": 40023185590,
+      "jobId": 120652687772
+    },
+    {
+      "path": ".github/workflows/conformance.yml",
+      "sha256": "65d93dd3034623ea8f276d26174ef94e800dcb4d9e75563db8fdc09745c183a6",
+      "runId": 40023185354,
+      "jobIds": [
+        120652687811,
+        120652688055
+      ]
+    }
+  ],
+  "artifactEndpoints": [
+    "https://api.github.com/repos/DocumentDrivenDX/weft/actions/artifacts/12531664254/zip",
+    "https://api.github.com/repos/DocumentDrivenDX/weft/actions/artifacts/12532456045/zip",
+    "https://api.github.com/repos/DocumentDrivenDX/weft/actions/artifacts/12532482001/zip",
+    "https://api.github.com/repos/DocumentDrivenDX/weft/actions/artifacts/12534441648/zip"
+  ],
+  "jobEndpoints": [
+    "https://github.com/DocumentDrivenDX/weft/actions/runs/40023185471/job/120652687377",
+    "https://github.com/DocumentDrivenDX/weft/actions/runs/40023185590/job/120652687772",
+    "https://github.com/DocumentDrivenDX/weft/actions/runs/40023185354/job/120652687811",
+    "https://github.com/DocumentDrivenDX/weft/actions/runs/40023185354/job/120652688055"
+  ],
+  "duplicatePushRun": {
+    "runId": 40023180158,
+    "event": "push",
+    "conclusion": "cancelled",
+    "countedAsPass": false
+  },
+  "fullTemporaryCapture": "/private/tmp/weft-g02-final-ci-5d196/final-complete",
+  "priorPartialCapture": "/private/tmp/weft-g02-final-ci-5d196",
+  "permanentArchiveReceipt": "docs/helix/04-build/evidence/mig-g02/weft-ci-5d196/receipt-final.json",
+  "permanentArchiveHashes": "docs/helix/04-build/evidence/mig-g02/weft-ci-5d196/members.sha256"
+}

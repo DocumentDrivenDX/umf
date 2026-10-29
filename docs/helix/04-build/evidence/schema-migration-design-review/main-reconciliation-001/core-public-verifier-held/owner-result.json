@@ -1,0 +1,8 @@
+{
+  "status": "SOURCE_DRAFT_HELD_NON_DISPATCHABLE",
+  "workflowSha256": "a4e74814a707a9f43b5ff28e79269ee677aea6965f5a8874616209e1f40c8102",
+  "reviewedPreimageSha256": "55bc5219ab40cd7d64c7d08009f543dfbdc244d50954ad8be7dd3e4b4185e047",
+  "change": "Exact repository check before checkout/download; require literal40hex immutable release commit and equality with resolved tag; only three additions reconstruct acceptedpreimage.",
+  "buildSourceAndArtifactTuple": "Historical cde source/Mac values pending final current-source selectedtuple. Actual M unknown.",
+  "scope": "Held manual public-wheel verification recipe only; no runtime, deployment, tag, release or public proof. Do not dispatch before actual immutable commit and both current platform artifact tuple are inserted and reviewed."
+}

@@ -1,0 +1,33 @@
+{
+  "312": {
+    "file": "/private/tmp/migration-pr48-7199-portable312-job.log",
+    "bytes": 25881,
+    "sha256": "400cac23c8d019e1f45be21d8b3d65a335913bfcbf44bd59be83a70c98cf76c5",
+    "observations": [
+      "2026-10-27T21:49:55.8065287Z (pass) check is usable as an action parameter and as an independent precondition ID [229.34ms]",
+      "2026-10-27T21:49:56.1925479Z (pass) isolated sync and async clients preserve optional inputs, batch settlement, validation and write uncertainty [176.77ms]",
+      "2026-10-27T21:49:56.1926987Z Ran 8 tests across 1 file. [1239.00ms]"
+    ]
+  },
+  "313": {
+    "file": "/private/tmp/migration-pr48-7199-portable313-job.log",
+    "bytes": 28417,
+    "sha256": "1fa9a2c2049216e482776529d6e3587afac574c36f5b37bec9bd7042142c71eb",
+    "observations": [
+      "2026-10-27T22:55:38.4957437Z (fail) check is usable as an action parameter and as an independent precondition ID [5000.51ms]",
+      "2026-10-27T22:55:38.4958016Z   ^ this test timed out after 5000ms.",
+      "2026-10-27T22:55:39.4645534Z (pass) isolated sync and async clients preserve optional inputs, batch settlement, validation and write uncertainty [672.63ms]",
+      "2026-10-27T22:55:39.4657164Z Ran 8 tests across 1 file. [6.93s]"
+    ]
+  },
+  "314": {
+    "file": "/private/tmp/migration-pr48-7199-portable314-job.log",
+    "bytes": 25730,
+    "sha256": "e18453df8bca317211cd0a5efe30e9cadec19ca222572f223d887cf9eba05e7f",
+    "observations": [
+      "2026-10-27T21:09:15.7792898Z (pass) check is usable as an action parameter and as an independent precondition ID [508.67ms]",
+      "2026-10-27T21:09:16.3356365Z (pass) isolated sync and async clients preserve optional inputs, batch settlement, validation and write uncertainty [296.84ms]",
+      "2026-10-27T21:09:16.3358764Z Ran 8 tests across 1 file. [1.87s]"
+    ]
+  }
+}

@@ -1,0 +1,269 @@
+{
+  "server": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "observations": {
+    "scenario": "fenced-resume",
+    "candidate": "G02-D5-e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+    "manifestPath": "/d5-host/d5/evidence/owner-artifacts.json",
+    "manifestSha256": "64d9a12d4f92ffe7c080568b0b0aaad7ab4e454da4f08fea075143b883fb5ddc",
+    "artifactHashes": {
+      "annotated_types-0.8.0-py3-none-any.whl": "f072f4d804ea359e4eaf198b1af7a8b0943881a87f31bb764f8bf219bb9419e0",
+      "attrs-26.1.0-py3-none-any.whl": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309",
+      "jsonschema-4.26.0-py3-none-any.whl": "d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce",
+      "jsonschema_specifications-2025.9.1-py3-none-any.whl": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe",
+      "mini_racer-0.14.1-py3-none-manylinux_2_27_x86_64.whl": "cdf3a088e1363f16a695288f882abf76b3705b8e1df21418208b87ed010037a4",
+      "psycopg-3.2.13-py3-none-any.whl": "a481374514f2da627157f767a9336705ebefe93ea7a0522a6cbacba165da179a",
+      "psycopg_binary-3.2.13-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl": "27150515de5f709e4142429db6fd36a1d01f0b8b17d915b5f7bb095364465398",
+      "pydantic-2.14.1-py3-none-any.whl": "9195d967ec791692a04438115466764fb8b9a27b31f14a760437694f40d6b454",
+      "pydantic_core-2.50.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": "8812592c85d0edf423f10eadcef42716d71e8219085ad9e85b775057b7306133",
+      "referencing-0.37.0-py3-none-any.whl": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231",
+      "rpds_py-2026.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": "136a1c3fe4402b7008bc81cb62ee538481795b61a7e83df88dff3b3f02b726ff",
+      "ruamel_yaml-0.19.1-py3-none-any.whl": "27592957fedf6e0b62f281e96effd28043345e0e66001f97683aa9a40c667c93",
+      "typing_extensions-4.16.0-py3-none-any.whl": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+      "typing_inspection-0.4.4-py3-none-any.whl": "65b8397ba37ccbce054456aaccddfc91e6e3083c92824df348d96ca832f3f147",
+      "umf_access-0.1.0.dev8-py3-none-any.whl": "1a21c1ddd59f6b23e9f0b33228280564af0e96bb4d13699b89616d5143e4fd23",
+      "umf_codegen-0.1.0a5-py3-none-any.whl": "36a6f7e0ab92feb9cb20ed8842cc3c1f073cdd3ff2c4edff137c1fcbc3ace158",
+      "umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl": "cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75",
+      "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": "b34ca17fa37412afa7b8e8bd86aac8ee67a3c895a9b253221e1d582b39073a85"
+    },
+    "fixturePath": "/d5-host/d5/evidence/replay/candidate-009/fault-fixture.json",
+    "fixtureSha256": "09173dd6294e84e5e6a6416e675a17110b831339b450de8cb597b9bfa2a798cc",
+    "runnerPath": "/d5-host/d5/evidence/replay/candidate-009/fault-runner.py",
+    "runnerSha256": "f34931dfea75db09014978f7d069284f50080b8b700e96603c28e03fe7f9433d",
+    "postgresqlVersion": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "disposableDatabase": "g02f_49776b7c8",
+    "disposableSchema": "g02fs_49776b7c8",
+    "disposableRoles": [
+      "g02fo_49776b7c8",
+      "g02fp_49776b7c8",
+      "g02fb_49776b7c8",
+      "g02fa_49776b7c8",
+      "g02fz_49776b7c8"
+    ],
+    "initialFixtureRowCount": 3,
+    "migrationVersion": "umf.table-migration/0.4",
+    "executionProfile": {
+      "version": "umf.table-migration-execution/0.3",
+      "progressRelation": "umf_lifecycle_progress",
+      "ownerOnly": true
+    },
+    "approvalDigest": "ac4d2484c8367ee2642d7a9638e8e9b4a05114e28d00b96259618618d68c1a7d",
+    "target": {
+      "table": "notes",
+      "field": {
+        "module": "demo",
+        "element": "total"
+      }
+    },
+    "approvalReceipt": {
+      "receiptId": "5cfc5ec9-27e6-4c6d-9c33-47393b82277f",
+      "bindingDigest": "4b6f6559de1ee928b11e6b71ca82fa4ac9b095059e46b804862bc0529eff589c",
+      "decision": "approved",
+      "qualificationProfile": "postgresql18/0.1",
+      "evidenceDigest": "85407354a69ce6037b5e8cb93dfdd6a7c7ea33777ed8e8dabd1b103f78b59529"
+    },
+    "rollbackObserver": {
+      "sessionUser": "postgres",
+      "currentUser": "postgres",
+      "superuser": true
+    },
+    "rolledBackAttempt": {
+      "targetUpdateDispatches": 1,
+      "rowsBefore": [
+        [
+          "a",
+          "10.25",
+          2
+        ],
+        [
+          "b",
+          "1.75",
+          3
+        ],
+        [
+          "c",
+          "0.50",
+          10
+        ]
+      ],
+      "rowsAfter": [
+        [
+          "a",
+          "10.25",
+          2
+        ],
+        [
+          "b",
+          "1.75",
+          3
+        ],
+        [
+          "c",
+          "0.50",
+          10
+        ]
+      ],
+      "targetExistsAfter": false
+    },
+    "writer": {
+      "waitEventType": "Lock",
+      "insertReturnedTotal": "0.00",
+      "finished": true
+    },
+    "interruptedProgress": {
+      "phaseIndex": 1,
+      "phaseDigest": "444b44904348c1e9966fdc19638d7852b4ace1c5ceab442603544df821e3685b",
+      "completedSteps": [
+        "step-90000",
+        "step-90004",
+        "step-90001",
+        "step-90002",
+        "step-90003"
+      ]
+    },
+    "dbapiUpdateDispatches": {
+      "total": 2,
+      "afterRollbackBaseline": 1,
+      "statementSha256": [
+        "e323ee3aa92161f4e4ff1f9dfd86a8a01b6cc01ee5315a23389d4c8bf8bbb54d",
+        "e323ee3aa92161f4e4ff1f9dfd86a8a01b6cc01ee5315a23389d4c8bf8bbb54d"
+      ],
+      "statementPrefixes": [
+        "WITH umf_effects AS (UPDATE \"g02fs_49776b7c8\".\"notes\" AS t SET \"total\" = ((t.\"amount\")::pg_catal",
+        "WITH umf_effects AS (UPDATE \"g02fs_49776b7c8\".\"notes\" AS t SET \"total\" = ((t.\"amount\")::pg_catal"
+      ]
+    },
+    "progressReads": [
+      {
+        "phaseIndex": 0,
+        "phaseDigest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "state": "ready",
+        "completedSteps": []
+      },
+      {
+        "phaseIndex": 1,
+        "phaseDigest": "444b44904348c1e9966fdc19638d7852b4ace1c5ceab442603544df821e3685b",
+        "state": "complete",
+        "completedSteps": [
+          "step-90000",
+          "step-90004",
+          "step-90001",
+          "step-90002",
+          "step-90003"
+        ]
+      },
+      {
+        "phaseIndex": 2,
+        "phaseDigest": "89993b9c34d45301d01ad4b8867d6f64ecd3562c51b6207cec5e383498d0f76c",
+        "state": "complete",
+        "completedSteps": [
+          "step-90000",
+          "step-90004",
+          "step-90001",
+          "step-90002",
+          "step-90003",
+          "step-90005",
+          "step-00010"
+        ]
+      }
+    ],
+    "actualRowsAfterPublication": [
+      [
+        "a",
+        "12.25"
+      ],
+      [
+        "b",
+        "4.75"
+      ],
+      [
+        "c",
+        "10.50"
+      ],
+      [
+        "g02_writer_49776b7c8",
+        "0.00"
+      ]
+    ],
+    "finalInstallation": {
+      "generation": 2,
+      "migrationVersion": "umf.table-migration/0.4",
+      "executionProfile": "umf.table-migration-execution/0.3",
+      "installationVersion": "umf.table-installation/0.3",
+      "installationReferenceDigest": "2c4b9833e12084cb9e83d2c2354a6434e3902c59da2ea9b5fb36bc2da9c56dd6",
+      "sourceDigest": "e921a90feaaffb90a79a633b99aa481f44696771b99249258a2e44802a88574d",
+      "bundleDigest": "b127d3cf15ee52c7fd32cbfb083c2dadec4c63205e2f9e64a449327d9176ba99",
+      "planDigest": "ac4d2484c8367ee2642d7a9638e8e9b4a05114e28d00b96259618618d68c1a7d",
+      "approvalPlanDigest": "ac4d2484c8367ee2642d7a9638e8e9b4a05114e28d00b96259618618d68c1a7d",
+      "latestApprovalDigest": "4b6f6559de1ee928b11e6b71ca82fa4ac9b095059e46b804862bc0529eff589c",
+      "publishedPlanDigest": "ac4d2484c8367ee2642d7a9638e8e9b4a05114e28d00b96259618618d68c1a7d",
+      "publishedGeneration": 2
+    },
+    "generatedAudienceCounts": {
+      "personAlice": 3,
+      "personBob": 1,
+      "batch": 4,
+      "adminFillMethodExposed": false
+    },
+    "approvalAccessSqlstates": {
+      "g02fa_49776b7c8": "42501",
+      "g02fz_49776b7c8": "42501",
+      "g02fb_49776b7c8": "42501"
+    },
+    "finalHead": {
+      "generation": 2,
+      "head_digest": "c854b8345ca9b26bccc0945168ab6670ed28daa729a0c18040d9a39cbf6a4bc5",
+      "plan_digest": "ac4d2484c8367ee2642d7a9638e8e9b4a05114e28d00b96259618618d68c1a7d",
+      "bundle_digest": "b127d3cf15ee52c7fd32cbfb083c2dadec4c63205e2f9e64a449327d9176ba99",
+      "source_digest": "e921a90feaaffb90a79a633b99aa481f44696771b99249258a2e44802a88574d",
+      "configuration_digest": "a5d489d8f10a5020f35c637d186425806b1272902aa9afa3a5d789f02566f507"
+    },
+    "latestApproval": {
+      "receiptId": "5cfc5ec9-27e6-4c6d-9c33-47393b82277f",
+      "bindingDigest": "4b6f6559de1ee928b11e6b71ca82fa4ac9b095059e46b804862bc0529eff589c",
+      "decision": "approved",
+      "qualificationProfile": "postgresql18/0.1",
+      "evidenceDigest": "85407354a69ce6037b5e8cb93dfdd6a7c7ea33777ed8e8dabd1b103f78b59529"
+    },
+    "cleanup": {
+      "databaseExists": false,
+      "remainingRoles": [],
+      "droppedDatabase": true,
+      "droppedRoles": 5
+    }
+  },
+  "checks": [
+    "fixture-initial-rows-inserted",
+    "forged-approval-refused",
+    "forged-source-refused",
+    "forgeries-have-no-target-ddl",
+    "rollback-observer-sees-all-fixture-rows",
+    "midphase-failure-injected-after-update",
+    "midphase-ddl-and-data-rolled-back",
+    "rollback-test-dispatched-one-real-dbapi-update",
+    "publication-interruption-after-atomic-phase",
+    "committed-backfill-phase-and-progress-survive-interruption",
+    "second-session-observed-real-postgres-lock-wait",
+    "blocked-writer-resumed-after-whole-atomic-phase",
+    "clients-remain-fenced-during-interrupted-publication",
+    "saved-progress-shows-one-committed-required-phase",
+    "forged-progress-guard-refused-before-next-phase",
+    "forged-progress-caused-no-backfill-repeat",
+    "forged-progress-caused-no-dbapi-update-dispatch",
+    "lost-later-commit-observed-and-published",
+    "backfill-not-repeated-on-fenced-resume",
+    "fenced-resume-had-exactly-one-committed-update-dispatch",
+    "recovered-phase-has-manual-decimal-results",
+    "published-target-not-null",
+    "generated-final-client-exposes-preserved-reader-and-hides-admin-fill",
+    "generated-person-reads-follow-native-rls",
+    "generated-batch-read-follows-batch-policy",
+    "published-target-column-grant-g02fa_49776b7c8",
+    "approval-relation-owner-only-g02fa_49776b7c8",
+    "published-target-column-grant-g02fz_49776b7c8",
+    "approval-relation-owner-only-g02fz_49776b7c8",
+    "published-target-column-grant-g02fb_49776b7c8",
+    "approval-relation-owner-only-g02fb_49776b7c8",
+    "final-head-and-installation-reference-match-published-plan",
+    "final-installation-approval-plan-digest-matches-latest-approval"
+  ]
+}

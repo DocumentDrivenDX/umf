@@ -1,0 +1,84 @@
+{
+  "profile": "umf.g02-g03-native-partial-owner-result/1",
+  "status": "PARTIAL_EVIDENCE_OVERALL_RUN_FAILED",
+  "sourceCommit": "bfc5575e4096cb550a80fd5f13eea686b1b8ebd2",
+  "runId": 40256054045,
+  "artifactId": 12622547648,
+  "artifactZipSha256": "a2197a49bfb038ed75d1f82929b9e238c0b66d517377786a269ef28cea1c22f7",
+  "reports": [
+    {
+      "scenario": "admission-refusal",
+      "status": "PASS_SOURCE_REFUSAL_AND_NATIVE_NO_EFFECTS",
+      "sha256": "f7c8987b1ae45530490a03b02c7bb6a369e1560ce7b2a25cf018d616bb790e78"
+    },
+    {
+      "scenario": "commit-observation",
+      "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
+      "sha256": "94c1370788682f2283fbf89f2569d46781a4ab986090c2cca25217191e397a6f"
+    },
+    {
+      "scenario": "domains",
+      "status": "FAIL",
+      "sha256": "998d7b32c7d4fcef2437a8d6071fe1716efd2b7a1967d10e2ba94ac671e8d08c",
+      "domains": [
+        {
+          "scenario": "domain-date",
+          "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
+          "errorClass": null
+        },
+        {
+          "scenario": "domain-text",
+          "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
+          "errorClass": null
+        },
+        {
+          "scenario": "domain-decimal",
+          "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
+          "errorClass": null
+        },
+        {
+          "scenario": "domain-uuid",
+          "status": "FAIL",
+          "errorClass": "CatalogError"
+        },
+        {
+          "scenario": "domain-currentTimestamp",
+          "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
+          "errorClass": null
+        }
+      ]
+    },
+    {
+      "scenario": "finalize-before-publication",
+      "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
+      "sha256": "cea6cb3e3f8202399e31e3ffb5a8f380f6906766899489eda530085bdcc9666f"
+    },
+    {
+      "scenario": "finalize-observation",
+      "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
+      "sha256": "54247e973bbf5495622da51532eb6fc08cf95530eb4e81e60984d249197646fb"
+    },
+    {
+      "scenario": "rollback",
+      "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
+      "sha256": "cffb2f42bf69caf6b8d631bf41cfe17bb8edd66c9abbe70a0124d666f4e14da7"
+    },
+    {
+      "scenario": "semantics",
+      "status": "PASS_SELECTED_NATIVE_SUBCASES_FULL_CASE_OPEN",
+      "sha256": "12bea2a175d199cd8bc422ccfa125e814e0db2bf332831b138ece2d9557f53f3"
+    },
+    {
+      "scenario": "unknown-no-commit",
+      "status": "PASS_EXPECTED_FENCED_SUBCASE_FULL_CASE_OPEN",
+      "sha256": "d1249bb11240b7a8ba8bca51336b9ea41f8720c3ffdc77c2c66c7bbc109bcb8d"
+    },
+    {
+      "scenario": "writer-barrier",
+      "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
+      "sha256": "ebb7cf74655c13ace10479a3bd81001c531333487352f7d82ccbff889b3a7b50"
+    }
+  ],
+  "failure": "UUID domain CatalogError before initial install completes; safe exact failure coordinate not retained. Other four domain subcases pass. Tampering not reached.",
+  "scope": "Intermediate remaining-G03 selected phase only. Prior G02/N01-N03 evidence remains separate at original source/cohort. No current G02/N01-N03, complete G03/N12/N14/G04 native/main/release qualification. Stable all5 G02 +13 G03 final qualification OPEN."
+}

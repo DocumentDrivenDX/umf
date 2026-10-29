@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:table-migration-phases:0.6",
+  "title": "G04 single atomic checked-conversion phase",
+  "type": "object",
+  "properties": {
+    "executionProfile": {"type": "object", "properties": {"version": {"const": "umf.table-migration-execution/0.6"}, "progressRelation": {"const": "umf_lifecycle_progress"}, "ownerOnly": {"const": true}, "ingressProfile": {"const": "umf.table-generation-ingress/0.1"}, "conversionProfile": {"const": "umf.checked-field-conversion/0.1"}, "originalsProfile": {"enum": ["umf.pg-row-originals/0.1", null]}}, "required": ["version", "progressRelation", "ownerOnly", "ingressProfile", "conversionProfile", "originalsProfile"], "additionalProperties": false},
+    "phases": {"type": "array", "minItems": 1, "maxItems": 1, "items": {"type": "object", "properties": {"id": {"type": "string", "pattern": "^phase-[0-9]{5}$"}, "kind": {"const": "field-conversion"}, "transaction": {"const": "required"}, "steps": {"type": "array", "minItems": 2, "maxItems": 99999, "uniqueItems": true, "items": {"type": "string", "pattern": "^step-[0-9]{5}$"}}}, "additionalProperties": false, "required": ["id", "kind", "transaction", "steps"]}}
+  },
+  "required": ["executionProfile", "phases"],
+  "additionalProperties": false
+}

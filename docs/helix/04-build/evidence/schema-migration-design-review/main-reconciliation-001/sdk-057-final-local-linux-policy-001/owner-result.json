@@ -1,0 +1,15 @@
+{
+  "profile": "umf.sdk-057-local-linux-policy/1",
+  "status": "SOURCE_REVIEWED_QUALIFICATION_PENDING",
+  "previousSource": "26767551076693020ac8f2cfb84c3015fc9f5d71",
+  "mainPolicyMerge": "ec3050566424e10cd30291e737218d789a2fea99",
+  "workflowSha256": "f0963d2df1e371112ba6e57999dbf69290796d711eb97ed46637d4ebc63918a1",
+  "runtimeImages": {
+    "ubuntu311Sdk": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+    "ubuntu314": "sha256:2474bc9010faea57300e5e8c33a6be6fce4d37dada3bf8af7d8230069f4c0a30"
+  },
+  "runtimeQualification": "Pending. Linux amd64 containers under emulation on existing OrbStack Linux aarch64 engine; Darwin host only orchestrates. Actual Ubuntu24.04.5/glibc2.39/Python3.11.17,3.14.9 identities and unshare prerequisites verified; no fresh macOS runtime claim.",
+  "scope": "Final approved lean PR/full explicit release workflow policy, preserved complete native and installed gates, honest manual D5 identity. No Actions dispatched. Previous failed preflight and earlier campaign failures retained.",
+  "remaining": "One targeted R3 generation/boundary run, then current-source full18 Linux/union and D5, SDK proof, review, normal merge, immutable release and fresh public proof.",
+  "localPublicRecipe": "Exact Bun1.4.3. Original held hosted Bun1.4.2 recipe and actual earlier receipts remain historical; all139 SDK cases and full18 proof remain required."
+}

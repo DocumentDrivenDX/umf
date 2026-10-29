@@ -1,0 +1,11 @@
+{
+  "recordedAt": "2026-10-24T17:27:10.097420+00:00",
+  "scope": "Metadata custody and source reading only. No supervisor, product imports, tests, probes, native or provider code executed.",
+  "readinessSha256": "af5e42a31144bbbd167aa5f9c0d3029508c4325a11351c486c4351461c0f1e08",
+  "hashChecks": 294,
+  "failures": [],
+  "sourceReview": "Read full constant-only diff, supervisor, worker and six literal commands. Separate Python3.11 supervisor and Python3.12 worker commands; own new process group; launch PID/PGID/start handshake before product execution; O_EXCL one-shot marker; 45-second work plus finite TERM/KILL/reap/group absence; strict success requires worker completion/exit0/no timeout/group absent. No package scripts or native/DB/network work is authorized.",
+  "nonceAbsent": true,
+  "disposition": "ready for coordinator exact-slot review; NO_GO until specific authorization",
+  "executor": "Independent migration design/review chat only"
+}

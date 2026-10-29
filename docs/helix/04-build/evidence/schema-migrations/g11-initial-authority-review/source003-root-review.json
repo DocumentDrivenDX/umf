@@ -1,0 +1,13 @@
+{
+  "status": "changes-required-before-independent-review",
+  "candidateManifestSha256": "0cad18e3a411dd481724324cc6819023a53f59f17b30dfb1cfc4d72ee41d25e3",
+  "finding": {
+    "priority": "P1",
+    "location": "ConfiguredGenerationEnrollmentAuthority.__init__ original-production-origin purpose predicate",
+    "actualSourcePredicate": "origin == 'production' and ('sourceTestOnly' in projection or config['purpose'] != 'production')",
+    "governing": "g11-initial-generation-enrollment-003.md lines25,191,218-220: separate immutable native-acceptance purpose uses SAME original effects; config allows production|native-acceptance",
+    "consequence": "Real original native bootstrap acceptance-purpose context would be refused, narrowing required purpose domain. Source-test origin must remain marked acceptance-only, but real origin must permit both exact bound configured purposes.",
+    "scope": "source contract mismatch; production bootstrap native integration remains unimplemented, no native execution asserted"
+  },
+  "disposition": "Luna correcting and preserving003 immutable; no adoption or fresh repeated full suite until successor frozen"
+}

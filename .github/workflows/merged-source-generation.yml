@@ -1,0 +1,879 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
+name: Generate merged-source action, codegen and R3 artifacts
+
+on:
+  push:
+    branches:
+      - codex/migration-merged-generation
+
+permissions:
+  contents: read
+
+concurrency:
+  group: umf-merged-source-generation-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - name: Start original bounded generation budget and failure receipt
+        timeout-minutes: 1
+        shell: bash
+        run: |
+          set -euo pipefail
+          EVIDENCE="$RUNNER_TEMP/umf-merged-generation"
+          METAMODEL_STAGE="$RUNNER_TEMP/umf-metamodel-stage-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          test ! -e "$METAMODEL_STAGE"
+          mkdir -p "$EVIDENCE/logs" "$EVIDENCE/outputs"
+          printf 'METAMODEL_STAGE_DIR=%s\n' "$METAMODEL_STAGE" >> "$GITHUB_ENV"
+          START_MS="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"
+          DEADLINE_MS="$((START_MS + 1800000))"
+          printf '%s\n' "$START_MS" > "$EVIDENCE/monotonic-start-ms"
+          printf '%s\n' "$DEADLINE_MS" > "$EVIDENCE/monotonic-deadline-ms"
+          printf 'EVIDENCE_DIR=%s\n' "$EVIDENCE" >> "$GITHUB_ENV"
+          cat > "$EVIDENCE/generated-source-receipt.json" <<EOF
+          {
+            "profile": "umf.merged-source-generation/1",
+            "status": "FAIL_OR_UNKNOWN",
+            "sourceCommit": "$GITHUB_SHA",
+            "runId": "$GITHUB_RUN_ID",
+            "runAttempt": "$GITHUB_RUN_ATTEMPT",
+            "ref": "$GITHUB_REF",
+            "workflow": "$GITHUB_WORKFLOW",
+            "scope": "Artifact-only generation; output is not qualified or adopted."
+          }
+          EOF
+
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # immutable checkout action
+        timeout-minutes: 2
+        with:
+          persist-credentials: false
+          fetch-depth: 24
+
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # immutable Bun setup action
+        timeout-minutes: 2
+        with:
+          bun-version: 1.4.3
+
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # immutable setup-python action
+        timeout-minutes: 2
+        with:
+          python-version: '3.11.17'
+
+      - uses: dtolnay/rust-toolchain@stable
+        timeout-minutes: 3
+        with:
+          toolchain: 1.90.0
+          components: rustfmt
+          targets: wasm32-unknown-unknown
+
+      - name: Require the dedicated generation branch and frozen checkout
+        timeout-minutes: 1
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_EVENT_NAME" = push
+          test "$GITHUB_REF" = refs/heads/codex/migration-merged-generation
+          test "$GITHUB_REPOSITORY" = DocumentDrivenDX/umf
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          git merge-base --is-ancestor 97d15f9937163a3ab2a9e17eb08796a4734cbd68 "$GITHUB_SHA"
+          git merge-base --is-ancestor 7d334dec45948953718bfacd3ed6dd199cadba79 "$GITHUB_SHA"
+          test -z "$(git status --porcelain)"
+          test "$(bun --version)" = 1.4.3
+          test "$(python --version)" = 'Python 3.11.17'
+          test "$(rustc --version)" = 'rustc 1.90.0 (1159e78c4 2025-09-14)'
+
+      - name: Verify adopted Stage-A companion and freeze merged input pins
+        id: source
+        timeout-minutes: 1
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -I - <<'PY'
+          import hashlib,json,os,pathlib,tomllib
+          root=pathlib.Path(os.environ["GITHUB_WORKSPACE"])
+          evidence=pathlib.Path(os.environ["EVIDENCE_DIR"])
+          def sha(path): return hashlib.sha256(path.read_bytes()).hexdigest()
+          companion_path="src/generated/core-validators-accounted.ts"
+          companion=root/companion_path
+          expected_companion_sha="5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29"
+          expected_companion_bytes=1525352
+          if not companion.is_file() or companion.stat().st_size!=expected_companion_bytes or sha(companion)!=expected_companion_sha:
+              raise SystemExit("adopted accounted companion bytes do not match the reviewed Stage-A output")
+          project=tomllib.loads((root/"python/pyproject.toml").read_text())
+          package_version=project.get("project",{}).get("version")
+          package_init=(root/"python/src/umf/__init__.py").read_text()
+          if package_version!="0.10.3" or '__version__ = "0.10.3"' not in package_init.splitlines():
+              raise SystemExit("Core producer distribution metadata is not 0.10.3")
+          core_schema_path=root/"spec/core/schema.json"
+          core_schema=json.loads(core_schema_path.read_bytes())
+          if core_schema.get("$id")!="urn:umf:core:0.10.0" or core_schema.get("properties",{}).get("umf",{}).get("const")!="0.10.0":
+              raise SystemExit("Core 0.10.0 semantic schema identity changed")
+          runtime_manifest=json.loads((root/"python/src/umf/action_runtime_resource_manifest.json").read_bytes())
+          if set(runtime_manifest)!={"format","resources"} or runtime_manifest.get("format")!="umf.action-runtime-resources/1":
+              raise SystemExit("Core runtime resource manifest profile or closed shape changed")
+          core_resource=runtime_manifest.get("resources",{}).get("coreSchema")
+          if (not isinstance(core_resource,dict) or set(core_resource)!={"file","sha256","source"}
+              or core_resource.get("file")!="coreSchema.json" or core_resource.get("source")!="spec/core/schema.json"
+              or core_resource.get("sha256")!=sha(core_schema_path)):
+              raise SystemExit("Core schema resource mapping or pinned digest does not match actual schema bytes")
+          provenance_root=pathlib.Path("docs/helix/04-build/evidence/schema-migration-design-review/main-reconciliation-001/stage-a-40556187661")
+          manifest_rel=provenance_root/"manifest.json"
+          identity_rel=provenance_root/"identity.txt"
+          owner_rel=provenance_root/"owner-result.json"
+          review_rel=provenance_root/"sol-output-source-review.md"
+          sums_rel=provenance_root/"SHA256SUMS"
+          source_pins_rel=provenance_root/"source-pins.sha256"
+          manifest_path=root/manifest_rel
+          identity_path=root/identity_rel
+          owner_path=root/owner_rel
+          review_path=root/review_rel
+          sums_path=root/sums_rel
+          source_pins_path=root/source_pins_rel
+          expected_manifest_sha="67570dddf2c1218381d55ce8e9e7c026e0087772790d6dd9f9f6115e60a8ec79"
+          expected_stage_pins_sha="2c3071baeb289c5bc41ce903dbb4597f14cb471e316259baac252887bdfc454c"
+          if sha(manifest_path)!=expected_manifest_sha:
+              raise SystemExit("Stage-A companion provenance manifest hash mismatch")
+          if sha(source_pins_path)!=expected_stage_pins_sha:
+              raise SystemExit("Stage-A source pin manifest hash mismatch")
+          manifest=json.loads(manifest_path.read_bytes())
+          expected_run={"eventName":"push","id":"40556187661","attempt":"1",
+                        "sha":"a2cc9c2ff5510d0b6653d50102bd406e3b4556c6",
+                        "ref":"refs/heads/codex/migration-main-metering-generation",
+                        "workflowRef":"DocumentDrivenDX/umf/.github/workflows/r2-metering-stage-a.yml@refs/heads/codex/migration-main-metering-generation",
+                        "workflowSha":"a2cc9c2ff5510d0b6653d50102bd406e3b4556c6"}
+          if manifest.get("profile")!="umf.r2-metering-generated-companion/1" or manifest.get("run")!=expected_run:
+              raise SystemExit("Stage-A manifest run identity mismatch")
+          if manifest.get("output")!={"path":"core-validators-accounted.ts","sha256":expected_companion_sha,"bytes":expected_companion_bytes}:
+              raise SystemExit("Stage-A manifest output identity mismatch")
+          if manifest.get("execution")!={"artifactOnly":True,"companionEvaluated":False,"publicValidatorChanged":False}:
+              raise SystemExit("Stage-A generation boundary mismatch")
+          if manifest.get("generator")!={"path":"scripts/metamodel/structural-accounting.ts","invocationCount":1,"outputPurpose":"stage-a"}:
+              raise SystemExit("Stage-A generator identity mismatch")
+          expected_stage_inputs={
+              "src/generated/core-validators.ts":"source",
+              "spec/core/schema.json":"schema",
+              "spec/core/semantic-type-reference.schema.json":"schema",
+              "spec/core/extension-package.schema.json":"schema",
+          }
+          stage_inputs=manifest.get("inputs")
+          if not isinstance(stage_inputs,list) or len(stage_inputs)!=len(expected_stage_inputs):
+              raise SystemExit("Stage-A source input roster is not the exact four-file closure")
+          stage_input_map={row.get("path"):row for row in stage_inputs if isinstance(row,dict)}
+          if set(stage_input_map)!=set(expected_stage_inputs):
+              raise SystemExit("Stage-A source input paths differ from the closed four-file roster")
+          for name,kind in expected_stage_inputs.items():
+              row=stage_input_map[name]
+              source=root/name
+              if (set(row)!={"path","kind","sha256","bytes"} or row.get("kind")!=kind
+                  or not source.is_file() or row.get("sha256")!=sha(source)
+                  or row.get("bytes")!=source.stat().st_size):
+                  raise SystemExit("Current source bytes differ from the Stage-A pinned input: "+name)
+          owner=json.loads(owner_path.read_bytes())
+          if owner.get("status")!="GENERATION_PASS_SOURCE_OUTPUT_ADOPTED" or owner.get("runId")!=40556187661 or owner.get("sourceCommit")!=expected_run["sha"]:
+              raise SystemExit("Stage-A owner receipt identity mismatch")
+          if owner.get("artifactId")!=12757082809 or owner.get("artifactSha256")!="122767b97a6da87342321e133a033693fd83df759f939f1bc41c56928c89fc37" or owner.get("output")!=manifest["output"]:
+              raise SystemExit("Stage-A artifact receipt mismatch")
+          expected_review_sha="0f97c192a6e0fc7dfb4fbe3c05f25807053de7a7bc4b44261d9cb64abf8cab27"
+          if sha(review_path)!=expected_review_sha or owner.get("outputSourceReviewSha256")!=expected_review_sha:
+              raise SystemExit("Stage-A source-output adoption review mismatch")
+          if owner.get("adoptionTarget")!=companion_path or owner.get("adoptionParentCommit")!="a2cc9c2ff5510d0b6653d50102bd406e3b4556c6":
+              raise SystemExit("Stage-A adoption parent identity mismatch")
+          identity=identity_path.read_text()
+          for value in ("profile=umf.r2-metering-stage-a/1", "event=push", "ref="+expected_run["ref"],
+                        "commit="+expected_run["sha"], "run_id=40556187661", "attempt=1",
+                        "workflow_ref="+expected_run["workflowRef"],"workflow_sha="+expected_run["workflowSha"],
+                        "pin_manifest_sha256="+expected_stage_pins_sha,
+                        "companion_sha256="+expected_companion_sha, "companion_bytes=1525352",
+                        "manifest_sha256="+expected_manifest_sha):
+              if value not in identity: raise SystemExit("Stage-A identity receipt mismatch")
+          sums={line.split()[1]:line.split()[0] for line in sums_path.read_text().splitlines() if len(line.split())==2}
+          for name,path in (("manifest.json",manifest_path),("identity.txt",identity_path),
+                            ("owner-result.json",owner_path),("source-pins.sha256",source_pins_path),
+                            ("sol-output-source-review.md",review_path)):
+              if sums.get(name)!=sha(path): raise SystemExit("Stage-A retained checksum mismatch: "+name)
+          pinned_sources=[
+            companion_path,"src/generated/core-validators.ts","spec/core/schema.json",
+            "spec/core/semantic-type-reference.schema.json","spec/core/extension-package.schema.json",
+            ".github/workflows/merged-source-generation.yml","scripts/actions-plan-identity.ts","scripts/build-codegen.ts",
+            "package.json","bun.lock","bunfig.toml",
+            "scripts/codegen/entry.ts","scripts/codegen/gzip.ts",
+            "python/umf_codegen/pyproject.toml","python/umf_codegen/src/umf_codegen/_embedded.py",
+            "python/pyproject.toml","python/src/umf/__init__.py","python/src/umf/schemas.py",
+            "python/src/umf/generated_resources.py","python/src/umf/action_runtime_resource_manifest.json",
+            "python/tests/test_python_artifact_version.py",
+            "scripts/rust-inventory.py","scripts/rust-inventory-typescript.ts","scripts/check-rust-boundaries.py",
+            "Cargo.toml","Cargo.lock"
+          ]
+          rows=[]
+          for name in pinned_sources:
+              path=root/name
+              if not path.is_file(): raise SystemExit("merged generation source input missing: "+name)
+              rows.append({"path":name,"sha256":sha(path),"bytes":path.stat().st_size})
+          source_inputs={"schema":"umf.merged-source-generation-inputs/1",
+                         "sourceCommit":os.environ["GITHUB_SHA"],"sourceRef":os.environ["GITHUB_REF"],
+                         "core0103Release":{"repository":"DocumentDrivenDX/umf","releaseId":425637342,
+                           "tag":"python-v0.10.3","releaseCommit":"7d334dec45948953718bfacd3ed6dd199cadba79",
+                           "immutable":True,"distributionVersion":package_version,
+                           "semanticCoreVersion":core_schema["properties"]["umf"]["const"],
+                           "publishedAssets":{
+                             "linuxWheel":{"filename":"umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl",
+                               "url":"https://github.com/DocumentDrivenDX/umf/releases/download/python-v0.10.3/umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl",
+                               "sha256":"cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75",
+                               "nativeSha256":"c51b511a06bc1ccde6cc2208d33a4fb70ef66c67507ba8f2a6ea05fd2543cf57","sizeBytes":3612043},
+                             "macosWheel":{"filename":"umf_core-0.10.3-cp311-abi3-macosx_11_0_arm64.whl",
+                               "url":"https://github.com/DocumentDrivenDX/umf/releases/download/python-v0.10.3/umf_core-0.10.3-cp311-abi3-macosx_11_0_arm64.whl",
+                               "sha256":"dc2586793e1492d1f825bd9e12f27d5db9f9330ae2343d9e7773c7052f1f6ea6",
+                               "nativeSha256":"df3dca411dfe11b045e6cd858bc5e3999c314fbe946826ba3b98f1a7d6934256","sizeBytes":3331547},
+                             "sdist":{"filename":"umf_core-0.10.3.tar.gz",
+                               "url":"https://github.com/DocumentDrivenDX/umf/releases/download/python-v0.10.3/umf_core-0.10.3.tar.gz",
+                               "sha256":"61b3e12a84f68f890fa34e2da14bbda47e101b7c6eadd5207680827e8daa694c","sizeBytes":2826487}},
+                           "retainedBuild":{"profile":"umf.core-retained-s34-producer/1",
+                             "sourceCommit":"34a337b2d398b5ae33954cc250f6237bc1661c21",
+                             "sourceTree":"0379258db62e498a4b489d2b7f613e99e63c0a4b",
+                             "workflowPath":".github/workflows/python-action-runtime.yml",
+                             "workflowRunId":40448360241,"workflowRunAttempt":1,
+                             "runStatus":"completed","runConclusion":"cancelled",
+                             "attemptJsonSha256":"74dc0d0e5942b25734ac88af6e695b89344e188d213e54414946fe64d49c78bd",
+                             "runJsonSha256":"cd6391428d262d066eb4f2adb4b138106bec97ddd9bf81dd9aabf4df1525e193",
+                             "attemptJobRosterSha256":"866cbd89f555c562a942c8ccae52f47daf86a52723d7090a7ed870bb382a7cf7",
+                             "qualifiedSelectedCells":["linux-x86_64-py11","linux-x86_64-py14","macos-arm64-py11"],
+                             "macosArm64Python314":"unqualified; selected-wheel job cancelled"},
+                           "publicEvidence":{"finalReviewSha256":"e315d3a699ff12a7aa87e97814922e970b9ac56b76aaedafb92be79951208802",
+                             "publicH5":{"status":"success","runId":40547321010,
+                               "sourceCommit":"1d6d7e3e38401ecf6a85297bb557549e2aef3f9d",
+                               "sourceTree":"78a2e48f769250cf346bc8d7b27ee59920f0bd6e",
+                               "terminalRunSha256":"f4cb93078d06d63f0f265ea5f795972cdf206fa8d69d05eec38d96277fe86b17",
+                               "jobsJsonSha256":"c3a515a58ec1e4cab1aea6eb9cb4369d71a25eed5e51019b071640d441aa4d6b",
+                               "artifactsJsonSha256":"b7a9a9faf2b545d840bd27eed9940ec449a83619fcffdd3c3980ad37ade0db39",
+                               "cells":[
+                                 {"cell":"linux-x86_64-cpython-3.11.17","jobId":122341300804,"artifactId":12753537028,
+                                   "artifactSha256":"6459f4450699f4e980336e3e281a088319c2ac2a389b18b8c588e43cf90523ee","tests":254,"errors":0,"failures":0,"skipped":0},
+                                 {"cell":"linux-x86_64-cpython-3.14.8","jobId":122341300327,"artifactId":12754420811,
+                                   "artifactSha256":"9f9b39949d00595998f631fe1a34e08f6b51d7f37885e80c131b1d3fdd80f88f","tests":254,"errors":0,"failures":0,"skipped":0}]},
+                             "oidcPypiPublication":{"status":"success","runId":40533286158,
+                               "reviewSha256":"23b9cef8b0175b4659ff745b6bee51ad239f277454112043554638f5c02aecd9"},
+                             "sourceCorrespondence":{"profile":"umf.core-retained-sdist-source-correspondence/1",
+                               "archiveFileCount":531,"testPath":"tests/test_distribution_artifact.py",
+                               "producerMapSha256":"3eed351abf9255eb36316089b3d3b2b6ee1985b117468fbbe4bedeceda1b24a6",
+                               "releaseMapSha256":"a779c17b35489cfe8fb43fbd2413ba5b1dd6fcb0b758da5bd2b62233636a1089",
+                               "producerTestSha256":"57c2bc4de660798ac1028b93f480ddb77934b2110fce03a72d968039667ae8c1",
+                               "releaseTestSha256":"49538fff2e27cddedab2e0e97ae14f5d3ad741bd0607926e15846168d149a1cc"}},
+                           "metadataPaths":["python/pyproject.toml","python/src/umf/__init__.py",
+                             "python/src/umf/action_runtime_resource_manifest.json","spec/core/schema.json"]},
+                         "adoptedR2Companion":{"path":companion_path,"sha256":expected_companion_sha,
+                           "bytes":expected_companion_bytes,"provenanceManifestPath":manifest_rel.as_posix(),
+                           "provenanceManifestSha256":expected_manifest_sha,"stageARunId":"40556187661",
+                           "stageASourceCommit":expected_run["sha"],"artifactId":12757082809,
+                           "artifactSha256":owner["artifactSha256"],"adoptionCommit":"97d15f9937163a3ab2a9e17eb08796a4734cbd68",
+                           "ownerResultPath":owner_rel.as_posix(),"ownerResultSha256":sha(owner_path),
+                           "sourcePinsSha256":expected_stage_pins_sha,
+                           "sourceOutputReviewPath":review_rel.as_posix(),"sourceOutputReviewSha256":expected_review_sha},
+                         "pinnedSourceInputs":rows,
+                         "historicalGeneratedOutputsAreCurrentQualificationEvidence":False,
+                         "historicalInventorySeed":{"path":"docs/helix/04-build/evidence/rust-migration/r3/inventory.json",
+                           "role":"Core 0.10.2 historical generation seed; exact bytes and SHA256 are retained in historical-placeholder-inputs.json"}}
+          (evidence/"source-inputs.json").write_text(json.dumps(source_inputs,indent=2,sort_keys=True)+"\n")
+          PY
+
+      - name: Install locked JavaScript build inputs and fetch locked Rust metadata inputs
+        timeout-minutes: 12
+        id: dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          START_MS="$(cat "$EVIDENCE_DIR/monotonic-start-ms")"
+          DEADLINE_MS="$(cat "$EVIDENCE_DIR/monotonic-deadline-ms")"
+          NOW_MS="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"
+          REMAINING_SECONDS="$(((DEADLINE_MS - NOW_MS - 60000) / 1000))"
+          if (( REMAINING_SECONDS <= 0 )); then exit 124; fi
+          timeout --signal=TERM --kill-after=10s "${REMAINING_SECONDS}s" bash -euo pipefail <<'BOUNDED_DEPENDENCY_WORK'
+          EVIDENCE="$EVIDENCE_DIR"
+          DEADLINE="$EVIDENCE/monotonic-deadline-ms"
+          run_bounded() {
+            local name="$1" maximum="$2" now deadline remaining limit log existing cap started ended status capture_status log_total
+            local -a statuses
+            shift 2
+            now="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"
+            deadline="$(cat "$DEADLINE")"
+            remaining=$(((deadline - now - 60000) / 1000))
+            if (( remaining <= 0 )); then return 124; fi
+            limit="$maximum"; if (( remaining < limit )); then limit="$remaining"; fi
+            log="$EVIDENCE/logs/$name.log"
+            existing="$(find "$EVIDENCE/logs" -type f -name '*.log' -exec wc -c {} + | awk 'END {print $1+0}')"
+            cap=$((1048576 - existing)); if (( cap < 0 )); then cap=0; fi
+            started="$now"
+            set +e
+            timeout --signal=TERM --kill-after=10s "${limit}s" "$@" 2>&1 | python -I -c '
+          import sys
+          path, cap = sys.argv[1], int(sys.argv[2])
+          marker = b"\n[LOG TRUNCATED: aggregate generation log cap reached]\n"
+          stored = 0
+          truncated = False
+          failed = False
+          try:
+              out = open(path, "wb", buffering=0)
+          except OSError:
+              out = None
+              failed = True
+          room_limit = max(0, cap - len(marker))
+          while True:
+              chunk = sys.stdin.buffer.read(65536)
+              if not chunk:
+                  break
+              if out is None:
+                  continue
+              room = max(0, room_limit - stored)
+              part = chunk[:room]
+              if part:
+                  try:
+                      out.write(part)
+                      stored += len(part)
+                  except OSError:
+                      failed = True
+                      out = None
+              if len(chunk) > room:
+                  truncated = True
+          if out is not None:
+              try:
+                  if truncated:
+                      out.write(marker[:max(0, cap - stored)])
+                  out.close()
+              except OSError:
+                  failed = True
+          sys.exit(74 if failed else 75 if truncated else 0)
+          ' "$log" "$cap"
+            statuses=("${PIPESTATUS[@]}")
+            set -e
+            status="${statuses[0]}"; capture_status="${statuses[1]}"
+            ended="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"
+            python -I - "$EVIDENCE/command-records.jsonl" "$log" "$name" "$status" "$capture_status" "$((ended-started))" "$@" <<'PY'
+          import hashlib,json,pathlib,sys
+          records,log,name,raw,capture,duration,*argv=sys.argv[1:]
+          payload=pathlib.Path(log).read_bytes()
+          record={"name":name,"stage":name,"argv":argv,"rawExit":int(raw),"captureExit":int(capture),
+                  "monotonicDurationMs":int(duration),"logBytes":len(payload),
+                  "logSha256":hashlib.sha256(payload).hexdigest(),"truncated":int(capture)==75,
+                  "truncationMarker":"aggregate generation log cap reached" if int(capture)==75 else None}
+          with pathlib.Path(records).open("a",encoding="utf-8") as stream: stream.write(json.dumps(record,sort_keys=True)+"\n")
+          PY
+            log_total="$(find "$EVIDENCE/logs" -type f -name '*.log' -exec wc -c {} + | awk 'END {print $1+0}')"
+            if (( log_total > 1048576 || status != 0 || capture_status != 0 )); then
+              head -c 4096 "$log" >&2 || true
+              return 1
+            fi
+          }
+          run_bounded bun-install 300 bun install --frozen-lockfile --ignore-scripts
+          run_bounded cargo-fetch 600 cargo fetch --locked
+          BOUNDED_DEPENDENCY_WORK
+
+      - name: Generate source-bound artifacts and current R3 reports
+        id: generate
+        timeout-minutes: 25
+        shell: bash
+        run: |
+          set -euo pipefail
+          START_MS="$(cat "$EVIDENCE_DIR/monotonic-start-ms")"
+          DEADLINE_MS="$(cat "$EVIDENCE_DIR/monotonic-deadline-ms")"
+          NOW_MS="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"
+          REMAINING_SECONDS="$(((DEADLINE_MS - NOW_MS - 60000) / 1000))"
+          if (( REMAINING_SECONDS <= 0 )); then exit 124; fi
+          timeout --signal=TERM --kill-after=10s "${REMAINING_SECONDS}s" bash -euo pipefail <<'BOUNDED_GENERATION_WORK'
+          EVIDENCE="$EVIDENCE_DIR"
+          DEADLINE="$EVIDENCE/monotonic-deadline-ms"
+          run_bounded() {
+            local name="$1" maximum="$2" now deadline remaining limit log existing cap started ended status capture_status log_total
+            local -a statuses
+            shift 2
+            now="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"
+            deadline="$(cat "$DEADLINE")"
+            remaining=$(((deadline - now - 60000) / 1000))
+            if (( remaining <= 0 )); then return 124; fi
+            limit="$maximum"; if (( remaining < limit )); then limit="$remaining"; fi
+            log="$EVIDENCE/logs/$name.log"
+            existing="$(find "$EVIDENCE/logs" -type f -name '*.log' -exec wc -c {} + | awk 'END {print $1+0}')"
+            cap=$((1048576 - existing)); if (( cap < 0 )); then cap=0; fi
+            started="$now"
+            set +e
+            timeout --signal=TERM --kill-after=10s "${limit}s" "$@" 2>&1 | python -I -c '
+          import sys
+          path, cap = sys.argv[1], int(sys.argv[2])
+          marker = b"\n[LOG TRUNCATED: aggregate generation log cap reached]\n"
+          stored = 0
+          truncated = False
+          failed = False
+          try:
+              out = open(path, "wb", buffering=0)
+          except OSError:
+              out = None
+              failed = True
+          room_limit = max(0, cap - len(marker))
+          while True:
+              chunk = sys.stdin.buffer.read(65536)
+              if not chunk:
+                  break
+              if out is None:
+                  continue
+              room = max(0, room_limit - stored)
+              part = chunk[:room]
+              if part:
+                  try:
+                      out.write(part)
+                      stored += len(part)
+                  except OSError:
+                      failed = True
+                      out = None
+              if len(chunk) > room:
+                  truncated = True
+          if out is not None:
+              try:
+                  if truncated:
+                      out.write(marker[:max(0, cap - stored)])
+                  out.close()
+              except OSError:
+                  failed = True
+          sys.exit(74 if failed else 75 if truncated else 0)
+          ' "$log" "$cap"
+            statuses=("${PIPESTATUS[@]}")
+            set -e
+            status="${statuses[0]}"; capture_status="${statuses[1]}"
+            ended="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"
+            python -I - "$EVIDENCE/command-records.jsonl" "$log" "$name" "$status" "$capture_status" "$((ended-started))" "$@" <<'PY'
+          import hashlib,json,pathlib,sys
+          records,log,name,raw,capture,duration,*argv=sys.argv[1:]
+          payload=pathlib.Path(log).read_bytes()
+          record={"name":name,"stage":name,"argv":argv,"rawExit":int(raw),"captureExit":int(capture),
+                  "monotonicDurationMs":int(duration),"logBytes":len(payload),
+                  "logSha256":hashlib.sha256(payload).hexdigest(),"truncated":int(capture)==75,
+                  "truncationMarker":"aggregate generation log cap reached" if int(capture)==75 else None}
+          with pathlib.Path(records).open("a",encoding="utf-8") as stream: stream.write(json.dumps(record,sort_keys=True)+"\n")
+          PY
+            log_total="$(find "$EVIDENCE/logs" -type f -name '*.log' -exec wc -c {} + | awk 'END {print $1+0}')"
+            if (( log_total > 1048576 || status != 0 || capture_status != 0 )); then
+              head -c 4096 "$log" >&2 || true
+              return 1
+            fi
+          }
+          run_bounded pre-generation-placeholders 30 python -I - "$EVIDENCE/historical-placeholder-inputs.json" <<'PY'
+          import hashlib,json,pathlib,sys
+          paths=[
+            "src/extensions/actions/plan-identity.ts",
+            "python/umf_codegen/src/umf_codegen/_release.py",
+            "python/umf_codegen/src/umf_codegen/_assets/manifest.json",
+            "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz",
+            "docs/helix/04-build/evidence/rust-migration/r3/inventory.json",
+            "docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json",
+          ]
+          rows=[]
+          for name in paths:
+              path=pathlib.Path(name)
+              rows.append({"path":name,"exists":path.is_file(),"sha256":hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() else None,
+                           "disposition":"historical pre-generation placeholder; not consumed as current output or qualification evidence"})
+          pathlib.Path(sys.argv[1]).write_text(json.dumps({"schema":"umf.merged-generation-placeholders/1","inputs":rows},indent=2,sort_keys=True)+"\n")
+          PY
+          run_bounded toolchain-identity 45 python -I - "$EVIDENCE/toolchain-identity.json" <<'PY'
+          import hashlib,json,pathlib,shutil,subprocess,sys
+          tools={}
+          for name in ("bun","python","cargo","rustc","git","timeout"):
+              path=shutil.which(name)
+              if not path: raise SystemExit("required tool missing: "+name)
+              resolved=pathlib.Path(path).resolve(strict=True)
+              version=subprocess.run([path,"--version"],check=True,text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,timeout=10).stdout.strip()
+              with resolved.open("rb") as stream: digest=hashlib.sha256(stream.read()).hexdigest()
+              tools[name]={"path":str(resolved),"version":version,"binarySha256":digest}
+          pathlib.Path(sys.argv[1]).write_text(json.dumps({"tools":tools},indent=2,sort_keys=True)+"\n")
+          PY
+          run_bounded prepare-metamodel-stage 30 python -I - "$METAMODEL_STAGE_DIR" <<'PY'
+          import hashlib,os,pathlib,shutil,sys
+          root=pathlib.Path.cwd(); stage=pathlib.Path(sys.argv[1]); expected='5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29'
+          source=root/'src/generated/core-validators-accounted.ts'
+          if stage.parent.resolve()!=pathlib.Path(os.environ['RUNNER_TEMP']).resolve() or stage.exists(): raise SystemExit('metamodel stage path is not fresh and runner-local')
+          info=source.lstat()
+          if not source.is_file() or source.is_symlink() or info.st_size!=1525352 or hashlib.sha256(source.read_bytes()).hexdigest()!=expected: raise SystemExit('separately owned accounted companion does not match Stage-A custody')
+          destination=stage/'src/generated/core-validators-accounted.ts'; destination.parent.mkdir(parents=True,mode=0o700); shutil.copyfile(source,destination)
+          if destination.stat().st_size!=info.st_size or hashlib.sha256(destination.read_bytes()).hexdigest()!=expected: raise SystemExit('staged companion byte custody mismatch')
+          PY
+          run_bounded metamodel-output-generation 600 bun scripts/metamodel/build.ts --output-root "$METAMODEL_STAGE_DIR"
+          run_bounded metamodel-output-stage-check 600 bun scripts/metamodel/build.ts --check --output-root "$METAMODEL_STAGE_DIR"
+          run_bounded metamodel-output-correspondence 45 python -I - "$METAMODEL_STAGE_DIR" "$EVIDENCE/metamodel-phase.json" "$EVIDENCE/metamodel-phase-ready" <<'PY'
+          import hashlib,json,os,pathlib,stat,sys
+          root=pathlib.Path.cwd(); stage=pathlib.Path(sys.argv[1]); receipt=pathlib.Path(sys.argv[2]); ready_path=pathlib.Path(sys.argv[3])
+          paths=["spec/core/schema.json","spec/core/semantic-type-reference.schema.json","spec/core/extension-package.schema.json",
+            "spec/metamodel/package.json","spec/metamodel/generated/core-constraints.json","spec/metamodel/generated/domain-policy.json",
+            "spec/metamodel/generated/python-shapes.json","python/umf_access/src/umf_access/generated_core.py",
+            "src/generated/core-model.ts","src/generated/core-validators.ts","spec/metamodel/generated/manifest.json"]
+          companion="src/generated/core-validators-accounted.ts"
+          def record(path):
+              info=path.lstat()
+              if not stat.S_ISREG(info.st_mode): raise ValueError("unsafe staged or committed metamodel output")
+              raw=path.read_bytes(); return {"sha256":hashlib.sha256(raw).hexdigest(),"bytes":len(raw)}
+          stage_sizes={name:(stage/name).lstat().st_size for name in paths}
+          if any(not stat.S_ISREG((stage/name).lstat().st_mode) for name in paths): raise SystemExit("unsafe staged metamodel output")
+          staged_total=sum(stage_sizes.values())
+          if staged_total>16777216: raise SystemExit("staged 11-output family exceeds the existing artifact cap")
+          stage_rows={name:record(stage/name) for name in paths}
+          root_rows={}
+          root_matches=True
+          for name,row in stage_rows.items():
+              target=root/name
+              try: root_rows[name]=record(target)
+              except (OSError,ValueError): root_rows[name]=None
+              if root_rows[name]!=row: root_matches=False
+          manifest=json.loads((stage/"spec/metamodel/generated/manifest.json").read_bytes())
+          separately=manifest.get("separatelyOwned",{}).get("accountedCompanion",{})
+          input_rows=separately.get("inputs",{})
+          expected_paths={"src/generated/core-validators.ts","spec/core/schema.json","spec/core/semantic-type-reference.schema.json","spec/core/extension-package.schema.json"}
+          output_for_input={"src/generated/core-validators.ts":"src/generated/core-validators.ts",
+            "spec/core/schema.json":"spec/core/schema.json","spec/core/semantic-type-reference.schema.json":"spec/core/semantic-type-reference.schema.json",
+            "spec/core/extension-package.schema.json":"spec/core/extension-package.schema.json"}
+          if set(input_rows)!=expected_paths: raise SystemExit("Stage-A companion input binding is not the exact four-file roster")
+          companion_match=True; emitted={}
+          for input_path,output_path in output_for_input.items():
+              expected=input_rows[input_path]; actual=stage_rows[output_path]
+              if set(expected)!={"sha256","bytes"} or actual!=expected: companion_match=False
+              emitted[input_path]=actual
+          phase="DEPENDENT_GENERATION_READY" if root_matches and companion_match else "METAMODEL_OUTPUTS_ARTIFACT_ONLY"
+          payload={"schema":"umf.merged-metamodel-phase/1","status":phase,"sourceCommit":os.environ["GITHUB_SHA"],
+            "runId":os.environ["GITHUB_RUN_ID"],"runAttempt":os.environ["GITHUB_RUN_ATTEMPT"],"ref":os.environ["GITHUB_REF"],
+            "stageRoster":stage_rows,"committedRoster":root_rows,"committedOutputsMatch":root_matches,
+            "companionInputBindings":input_rows,"emittedCompanionInputs":emitted,"companionInputsMatch":companion_match}
+          receipt.write_text(json.dumps(payload,sort_keys=True,indent=2)+"\n")
+          ready="true" if phase=="DEPENDENT_GENERATION_READY" else "false"
+          ready_path.write_text(ready+"\n")
+          PY
+          IFS= read -r METAMODEL_DEPENDENT_GENERATION_READY < "$EVIDENCE/metamodel-phase-ready"
+          printf 'dependent_generation=%s\n' "$METAMODEL_DEPENDENT_GENERATION_READY" >> "$GITHUB_OUTPUT"
+          printf 'METAMODEL_DEPENDENT_GENERATION_READY=%s\n' "$METAMODEL_DEPENDENT_GENERATION_READY" >> "$GITHUB_ENV"
+          if [[ "$METAMODEL_DEPENDENT_GENERATION_READY" == "true" ]]; then
+            run_bounded check-adopted-metamodel-and-self 600 bun run check:metamodel
+            run_bounded action-plan-identity 180 bun scripts/actions-plan-identity.ts
+            run_bounded codegen-assets 600 bun scripts/build-codegen.ts
+            run_bounded action-plan-identity-check 180 bun scripts/actions-plan-identity.ts --check
+            run_bounded codegen-assets-check 180 bun scripts/build-codegen.ts --check
+            run_bounded r3-inventory 600 python -I scripts/rust-inventory.py
+            run_bounded r3-boundary-check 900 python -I scripts/check-rust-boundaries.py
+          fi
+          BOUNDED_GENERATION_WORK
+
+      - name: Stage only current generated outputs and hash receipt
+        if: always()
+        id: finalize
+        timeout-minutes: 1
+        shell: bash
+        env:
+          SOURCE_OUTCOME: ${{ steps.source.outcome }}
+          DEPENDENCY_OUTCOME: ${{ steps.dependencies.outcome }}
+          GENERATION_OUTCOME: ${{ steps.generate.outcome }}
+          METAMODEL_STAGE_DIR: ${{ runner.temp }}/umf-metamodel-stage-${{ github.run_id }}-${{ github.run_attempt }}
+          METAMODEL_DEPENDENT_GENERATION_READY: ${{ steps.generate.outputs.dependent_generation }}
+          UPLOAD_DIR: ${{ runner.temp }}/umf-merged-generation-upload
+        run: |
+          set -euo pipefail
+          if [[ "$METAMODEL_DEPENDENT_GENERATION_READY" == "false" ]]; then
+            python -I - <<'PY'
+          import hashlib,json,os,pathlib,shutil,stat
+          evidence=pathlib.Path(os.environ["EVIDENCE_DIR"]); stage=pathlib.Path(os.environ["METAMODEL_STAGE_DIR"])
+          upload=pathlib.Path(os.environ["UPLOAD_DIR"]); outputs=evidence/"outputs"
+          paths=["spec/core/schema.json","spec/core/semantic-type-reference.schema.json","spec/core/extension-package.schema.json",
+            "spec/metamodel/package.json","spec/metamodel/generated/core-constraints.json","spec/metamodel/generated/domain-policy.json",
+            "spec/metamodel/generated/python-shapes.json","python/umf_access/src/umf_access/generated_core.py",
+            "src/generated/core-model.ts","src/generated/core-validators.ts","spec/metamodel/generated/manifest.json"]
+          companion="src/generated/core-validators-accounted.ts"
+          def regular(path):
+              info=path.lstat()
+              if not stat.S_ISREG(info.st_mode): raise ValueError("unsafe artifact-only source")
+              return info.st_size
+          def digest(path): return hashlib.sha256(path.read_bytes()).hexdigest()
+          if os.environ.get("SOURCE_OUTCOME")!="success" or os.environ.get("DEPENDENCY_OUTCOME")!="success" or os.environ.get("GENERATION_OUTCOME")!="success": raise SystemExit("artifact-only phase prerequisites failed")
+          phase_path=evidence/"metamodel-phase.json"; phase=json.loads(phase_path.read_bytes())
+          if outputs.exists() and any(outputs.rglob("*")): raise SystemExit("artifact-only output directory is not empty")
+          if phase.get("schema")!="umf.merged-metamodel-phase/1" or phase.get("status")!="METAMODEL_OUTPUTS_ARTIFACT_ONLY" or phase.get("sourceCommit")!=os.environ["GITHUB_SHA"] or phase.get("runId")!=os.environ["GITHUB_RUN_ID"] or phase.get("runAttempt")!=os.environ["GITHUB_RUN_ATTEMPT"] or phase.get("ref")!=os.environ["GITHUB_REF"]: raise SystemExit("artifact-only phase identity mismatch")
+          stage_files=[]
+          for path in stage.rglob("*"):
+              if path.is_symlink(): raise SystemExit("symlink in staged metamodel family")
+              if path.is_file(): stage_files.append(path.relative_to(stage).as_posix())
+              elif not path.is_dir(): raise SystemExit("non-file staged metamodel entry")
+          if set(stage_files)!=set(paths)|{companion}: raise SystemExit("artifact-only stage roster mismatch")
+          output_rows=phase.get("stageRoster",{})
+          if set(output_rows)!=set(paths): raise SystemExit("phase record output roster mismatch")
+          stage_sizes={name:regular(stage/name) for name in paths}
+          if sum(stage_sizes.values())>16777216: raise SystemExit("11-output phase exceeds artifact cap")
+          stage_rows={name:{"sha256":digest(stage/name),"bytes":stage_sizes[name]} for name in paths}
+          if stage_rows!=output_rows: raise SystemExit("phase record hashes differ from staged output bytes")
+          committed_rows=phase.get("committedRoster",{})
+          committed_match=set(committed_rows)==set(paths) and committed_rows==stage_rows
+          if phase.get("committedOutputsMatch") is not committed_match: raise SystemExit("phase committed-output comparison is inconsistent")
+          metamodel_manifest=json.loads((stage/"spec/metamodel/generated/manifest.json").read_bytes())
+          expected_manifest_paths=set(paths)-{"spec/metamodel/generated/manifest.json"}
+          if metamodel_manifest.get("profile")!="umf.metamodel.outputs/1" or set(metamodel_manifest.get("outputs",{}))!=expected_manifest_paths: raise SystemExit("metamodel output manifest roster mismatch")
+          companion_inputs=metamodel_manifest.get("separatelyOwned",{}).get("accountedCompanion",{}).get("inputs",{})
+          if phase.get("companionInputBindings")!=companion_inputs or set(companion_inputs)!={"src/generated/core-validators.ts","spec/core/schema.json","spec/core/semantic-type-reference.schema.json","spec/core/extension-package.schema.json"}: raise SystemExit("artifact-only companion input binding roster mismatch")
+          emitted={name:stage_rows[name] for name in companion_inputs}
+          if phase.get("emittedCompanionInputs")!=emitted: raise SystemExit("artifact-only emitted companion input identity mismatch")
+          companion_match=emitted==companion_inputs
+          if phase.get("companionInputsMatch") is not companion_match or (phase.get("committedOutputsMatch") is True and companion_match): raise SystemExit("artifact-only stop reason is inconsistent")
+          for name,row in metamodel_manifest["outputs"].items():
+              if stage_rows[name]!={"sha256":row.get("sha256"),"bytes":row.get("bytes")}: raise SystemExit("metamodel manifest output custody mismatch")
+          source_inputs_path=evidence/"source-inputs.json"; source_inputs=json.loads(source_inputs_path.read_bytes())
+          source_inputs["metamodelGeneration"]={"phase":"METAMODEL_OUTPUTS_ARTIFACT_ONLY","phaseReceiptSha256":digest(phase_path),
+              "manifestPath":"spec/metamodel/generated/manifest.json","manifestSha256":stage_rows["spec/metamodel/generated/manifest.json"]["sha256"],
+              "modelSha256":metamodel_manifest.get("provenance",{}).get("modelSha256"),"compilerSha256":metamodel_manifest.get("provenance",{}).get("compilerSha256"),
+              "sources":metamodel_manifest.get("sources"),"compilerInputs":metamodel_manifest.get("compilerInputs"),
+              "workspaceInputs":metamodel_manifest.get("workspaceInputs"),"backend":metamodel_manifest.get("backend"),
+              "separatelyOwned":metamodel_manifest.get("separatelyOwned"),"outputRoster":stage_rows}
+          source_inputs_bytes=(json.dumps(source_inputs,indent=2,sort_keys=True)+"\n").encode()
+          receipt={"profile":"umf.merged-source-generation/1","status":"METAMODEL_OUTPUTS_ARTIFACT_ONLY","qualifiesMergedSource":False,
+              "sourceCommit":os.environ["GITHUB_SHA"],"runId":os.environ["GITHUB_RUN_ID"],"runAttempt":os.environ["GITHUB_RUN_ATTEMPT"],
+              "ref":os.environ["GITHUB_REF"],"workflow":os.environ["GITHUB_WORKFLOW"],"metamodelPhase":phase,
+              "sourceInputsSha256":hashlib.sha256(source_inputs_bytes).hexdigest(),"generatedFiles":stage_rows,
+              "scope":"Eleven metamodel outputs only for review/adoption. Dependent action, Codegen and R3 generation withheld; no qualification or automatic adoption.",
+              "limits":{"aggregateWorkSeconds":1800,"evidenceReserveSeconds":60,"capturedCommandLogsMaximumBytes":1048576,"artifactMaximumBytes":16777216}}
+          receipt_bytes=(json.dumps(receipt,indent=2,sort_keys=True)+"\n").encode()
+          if upload.exists(): shutil.rmtree(upload)
+          upload.mkdir(parents=True)
+          selected=[]; log_total=0
+          if not evidence.is_dir() or evidence.is_symlink(): raise SystemExit("unsafe artifact-only evidence root")
+          for path in evidence.rglob("*"):
+              if path.is_symlink(): raise SystemExit("symlink in artifact-only evidence")
+              if path.is_file():
+                  rel=path.relative_to(evidence)
+                  if rel.parts[0]=="outputs": continue
+                  if rel.parts[0]=="logs" and (len(rel.parts)!=2 or not path.name.endswith(".log")): raise SystemExit("unexpected artifact-only log path")
+                  selected.append((path,rel,regular(path)))
+              elif not path.is_dir(): raise SystemExit("non-file artifact-only evidence entry")
+          for _,rel,size in selected:
+              if rel.parts[0]=="logs": log_total+=size
+          if log_total>1048576: raise SystemExit("artifact-only raw logs exceed 1 MiB")
+          replacement_names={"source-inputs.json","generated-source-receipt.json"}
+          base_total=sum(size for _,rel,size in selected if not (len(rel.parts)==1 and rel.name in replacement_names))
+          if base_total+sum(stage_sizes.values())+len(source_inputs_bytes)+len(receipt_bytes)>16777216: raise SystemExit("complete artifact-only family exceeds 16 MiB")
+          for name in paths:
+              target=outputs/name; target.parent.mkdir(parents=True,exist_ok=True); shutil.copyfile(stage/name,target)
+              if regular(target)!=stage_rows[name]["bytes"] or digest(target)!=stage_rows[name]["sha256"]: raise SystemExit("staged metamodel output copy mismatch")
+          source_inputs_path.write_bytes(source_inputs_bytes)
+          receipt_path=evidence/"generated-source-receipt.json"; receipt_path.write_bytes(receipt_bytes)
+          selected=[]
+          for path in evidence.rglob("*"):
+              if path.is_symlink(): raise SystemExit("symlink after artifact-only staging")
+              if path.is_file(): selected.append((path,path.relative_to(evidence),regular(path)))
+          if sum(size for _,rel,size in selected if rel.parts[0]=="logs")>1048576 or sum(size for _,_,size in selected)>16777216: raise SystemExit("staged artifact-only family exceeds existing cap")
+          for source,rel,size in selected:
+              target=upload/rel; target.parent.mkdir(parents=True,exist_ok=True)
+              if regular(source)!=size: raise SystemExit("artifact-only source changed after stat")
+              shutil.copyfile(source,target)
+              if regular(target)!=size or digest(target)!=digest(source): raise SystemExit("artifact-only copy differs")
+          print(json.dumps({"status":receipt["status"],"generatedOutputs":11,"artifactBytes":sum(size for _,_,size in selected)},sort_keys=True))
+          PY
+            exit 0
+          fi
+          python -I - <<'PY'
+          import hashlib,json,os,pathlib,re,shutil
+          root=pathlib.Path(os.environ["GITHUB_WORKSPACE"])
+          evidence=pathlib.Path(os.environ["EVIDENCE_DIR"])
+          outputs=evidence/"outputs"
+          outputs.mkdir(parents=True,exist_ok=True)
+          upload=pathlib.Path(os.environ["UPLOAD_DIR"])
+          if upload.exists(): shutil.rmtree(upload)
+          upload.mkdir(parents=True,exist_ok=True)
+          def sha(path): return hashlib.sha256(path.read_bytes()).hexdigest()
+          metamodel_paths=[
+            "spec/core/schema.json","spec/core/semantic-type-reference.schema.json","spec/core/extension-package.schema.json",
+            "spec/metamodel/package.json","spec/metamodel/generated/core-constraints.json","spec/metamodel/generated/domain-policy.json",
+            "spec/metamodel/generated/python-shapes.json","python/umf_access/src/umf_access/generated_core.py",
+            "src/generated/core-model.ts","src/generated/core-validators.ts","spec/metamodel/generated/manifest.json",
+          ]
+          sources={"src/extensions/actions/plan-identity.ts":"outputs/src/extensions/actions/plan-identity.ts",
+            "python/umf_codegen/src/umf_codegen/_release.py":"outputs/python/umf_codegen/src/umf_codegen/_release.py",
+            "python/umf_codegen/src/umf_codegen/_assets/manifest.json":"outputs/python/umf_codegen/src/umf_codegen/_assets/manifest.json",
+            "docs/helix/04-build/evidence/rust-migration/r3/inventory.json":"outputs/docs/helix/04-build/evidence/rust-migration/r3/inventory.json",
+            "docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json":"outputs/docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json"}
+          sources.update({path:"outputs/"+path for path in metamodel_paths})
+          receipt={"profile":"umf.merged-source-generation/1","status":"FAIL_OR_UNKNOWN","qualifiesMergedSource":False,
+                   "sourceCommit":os.environ["GITHUB_SHA"],"runId":os.environ["GITHUB_RUN_ID"],"runAttempt":os.environ["GITHUB_RUN_ATTEMPT"],
+                   "ref":os.environ["GITHUB_REF"],"workflow":os.environ["GITHUB_WORKFLOW"],"workflowOutcome":os.environ.get("GENERATION_OUTCOME"),
+                   "dependencyOutcome":os.environ.get("DEPENDENCY_OUTCOME"),
+                   "sourceOutcome":os.environ.get("SOURCE_OUTCOME"),
+                   "limits":{"aggregateWorkSeconds":1800,"evidenceReserveSeconds":60,
+                             "capturedCommandLogsMaximumBytes":1048576,"artifactMaximumBytes":16777216},
+                   "scope":"Artifact-only generation after accounted R2 companion adoption. No test, qualification, production claim or automatic source adoption.",
+                   "historicalPlaceholderReceipt":"historical-placeholder-inputs.json","generatedFiles":{}}
+          source_input_receipt=evidence/"source-inputs.json"
+          if source_input_receipt.is_file(): receipt["sourceInputsSha256"]=sha(source_input_receipt)
+          receipt["adoptedR2CompanionSha256"]="5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29"
+          try:
+              if os.environ["GITHUB_REF"]!="refs/heads/codex/migration-merged-generation": raise ValueError("unexpected qualification branch")
+              if os.environ.get("METAMODEL_DEPENDENT_GENERATION_READY")!="true": raise ValueError("full generation requires exact adopted metamodel correspondence")
+              if os.environ.get("SOURCE_OUTCOME")!="success": raise ValueError("adopted source provenance guard did not pass")
+              if os.environ.get("DEPENDENCY_OUTCOME")!="success" or os.environ.get("GENERATION_OUTCOME")!="success": raise ValueError("generation stages did not complete successfully")
+              assets=root/"python/umf_codegen/src/umf_codegen/_assets"
+              if assets.is_symlink() or not assets.is_dir(): raise ValueError("generated codegen asset directory is missing or unsafe")
+              metamodel_stage=pathlib.Path(os.environ["METAMODEL_STAGE_DIR"])
+              companion_rel="src/generated/core-validators-accounted.ts"
+              expected_stage_files=set(metamodel_paths)|{companion_rel}
+              actual_stage_files=set()
+              for path in metamodel_stage.rglob("*"):
+                  if path.is_symlink(): raise ValueError("staged metamodel output contains a symlink")
+                  if path.is_file(): actual_stage_files.add(path.relative_to(metamodel_stage).as_posix())
+                  elif not path.is_dir(): raise ValueError("staged metamodel output contains a non-file entry")
+              if actual_stage_files!=expected_stage_files: raise ValueError("staged metamodel file roster differs from the exact11 outputs plus separately owned companion")
+              companion=metamodel_stage/companion_rel
+              if companion.stat().st_size!=1525352: raise ValueError("staged separately owned companion size mismatch")
+              output_sources=[]
+              for source in sources:
+                  path=(metamodel_stage/source) if source in metamodel_paths else root/source
+                  if path.is_symlink() or not path.is_file(): raise ValueError("generated fixed output is missing or unsafe: "+source)
+                  output_sources.append(path)
+              asset_files=[]
+              for path in assets.rglob("*"):
+                  if path.is_symlink(): raise ValueError("generated codegen asset contains a symlink")
+                  if path.is_file(): asset_files.append(path)
+                  elif not path.is_dir(): raise ValueError("generated codegen asset family contains a non-file entry")
+              generated_family=set(output_sources)|set(asset_files)
+              generated_family_bytes=sum(path.stat().st_size for path in generated_family)
+              if generated_family_bytes>16*1024*1024: raise ValueError("exact generated output union exceeds the 16 MiB cap before reads or copies")
+              for source,dest in sources.items():
+                  src=(metamodel_stage/source) if source in metamodel_paths else root/source
+                  destination=outputs/dest.removeprefix("outputs/")
+                  destination.parent.mkdir(parents=True,exist_ok=True)
+                  shutil.copyfile(src,destination)
+                  raw=destination.read_bytes()
+                  if source.endswith((".json",".ts",".py")) and b"<<<<<<<" in raw: raise ValueError("conflict-marker bytes remain in generated text: "+source)
+                  receipt["generatedFiles"][source]={"sha256":sha(destination),"bytes":len(raw)}
+              manifest_path=assets/"manifest.json"
+              manifest=json.loads(manifest_path.read_bytes())
+              expected=set(manifest["files"])|{"manifest.json"}
+              actual={p.relative_to(assets).as_posix() for p in assets.rglob("*") if p.is_file()}
+              if manifest.get("profile")!="umf.codegen-v8/1" or actual!=expected: raise ValueError("generated codegen asset family does not match its manifest")
+              for name,digest in manifest["files"].items():
+                  if sha(assets/name)!=digest: raise ValueError("codegen asset hash mismatch: "+name)
+                  target=outputs/"python/umf_codegen/src/umf_codegen/_assets"/name
+                  target.parent.mkdir(parents=True,exist_ok=True); shutil.copyfile(assets/name,target)
+              manifest_out=outputs/"python/umf_codegen/src/umf_codegen/_assets/manifest.json"
+              shutil.copyfile(manifest_path,manifest_out)
+              release=root/"python/umf_codegen/src/umf_codegen/_release.py"
+              release_text=release.read_text()
+              manifest_sha=sha(manifest_path)
+              if "MANIFEST_SHA256 = "+json.dumps(manifest_sha) not in release_text: raise ValueError("generated release pin does not identify generated manifest")
+              plan=(root/"src/extensions/actions/plan-identity.ts").read_text()
+              if not re.search(r'export const actionPlanProducerBuild = "sha256:[0-9a-f]{64}";',plan): raise ValueError("action plan producer build identity is malformed")
+              if not re.search(r'export const actionPlanModelSchemaDigest = "[0-9a-f]{64}";',plan): raise ValueError("action plan model schema identity is malformed")
+              inventory=json.loads((root/"docs/helix/04-build/evidence/rust-migration/r3/inventory.json").read_bytes())
+              boundary=json.loads((root/"docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json").read_bytes())
+              if inventory.get("schema")!="umf.rust-migration-inventory/0.2" or not inventory.get("capture",{}).get("sourceCohortSha256"): raise ValueError("R3 inventory does not identify current source cohort")
+              if boundary.get("schema")!="umf.rust-boundary-check/0.1": raise ValueError("R3 boundary output schema mismatch")
+              receipt["r3BoundaryStatus"]=boundary.get("status")
+              source_inputs=evidence/"source-inputs.json"
+              if not source_inputs.is_file(): raise ValueError("frozen merged source input roster is missing")
+              receipt["sourceInputsSha256"]=sha(source_inputs)
+              receipt["adoptedR2CompanionSha256"]="5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29"
+              source_input_receipt=json.loads(source_inputs.read_bytes())
+              if source_input_receipt.get("sourceCommit")!=os.environ["GITHUB_SHA"]: raise ValueError("source roster commit identity mismatch")
+              companion=source_input_receipt.get("adoptedR2Companion",{})
+              if companion.get("sha256")!=receipt["adoptedR2CompanionSha256"] or companion.get("adoptionCommit")!="97d15f9937163a3ab2a9e17eb08796a4734cbd68": raise ValueError("source roster companion adoption mismatch")
+              receipt["generatedFiles"]["python/umf_codegen/src/umf_codegen/_assets/generator.js.gz"]={"sha256":sha(outputs/"python/umf_codegen/src/umf_codegen/_assets/generator.js.gz"),"bytes":(outputs/"python/umf_codegen/src/umf_codegen/_assets/generator.js.gz").stat().st_size}
+              metamodel_manifest_path=metamodel_stage/"spec/metamodel/generated/manifest.json"
+              metamodel_manifest=json.loads(metamodel_manifest_path.read_bytes())
+              expected_metamodel_outputs=set(metamodel_paths)-{"spec/metamodel/generated/manifest.json"}
+              if metamodel_manifest.get("profile")!="umf.metamodel.outputs/1" or set(metamodel_manifest.get("outputs",{}))!=expected_metamodel_outputs:
+                  raise ValueError("metamodel manifest does not bind the exact10 non-manifest generated outputs")
+              for name,row in metamodel_manifest["outputs"].items():
+                  path=metamodel_stage/name
+                  if path.stat().st_size!=row.get("bytes") or sha(path)!=row.get("sha256"): raise ValueError("metamodel generated output differs from its manifest: "+name)
+              source_map=metamodel_manifest.get("sources",{})
+              compiler_map=metamodel_manifest.get("compilerInputs",{})
+              workspace_map=metamodel_manifest.get("workspaceInputs",{})
+              backend_map=metamodel_manifest.get("backend",{}).get("inputs",{})
+              model_path="spec/metamodel/umf.yaml"
+              if not all(isinstance(value,dict) for value in (source_map,compiler_map,workspace_map,backend_map)) or model_path not in source_map:
+                  raise ValueError("metamodel source closure records are malformed")
+              shared_paths=set(workspace_map)&set(backend_map)
+              if model_path in workspace_map or model_path in backend_map or model_path in compiler_map or shared_paths-{"bindings/core/node/src/wire.js"}:
+                  raise ValueError("metamodel source ownership maps overlap outside the exact shared wire input")
+              if any(source_map.get(path)!=digest for mapping in (compiler_map,workspace_map,backend_map) for path,digest in mapping.items()):
+                  raise ValueError("metamodel compiler/workspace/backend source identity differs from the closed source map")
+              if any(workspace_map[path]!=backend_map[path] for path in shared_paths):
+                  raise ValueError("shared metamodel workspace/backend input digests differ")
+              if set(source_map)!=(set(compiler_map)|set(workspace_map)|set(backend_map)|{model_path}):
+                  raise ValueError("metamodel compiler source closure is incomplete")
+              compiler_material=(json.dumps(compiler_map,indent=2)+"\n").encode()
+              compiler_sha=hashlib.sha256(compiler_material).hexdigest()
+              for path,digest in source_map.items():
+                  source_file=root/path
+                  if source_file.is_symlink() or not source_file.is_file() or sha(source_file)!=digest:
+                      raise ValueError("metamodel source-map digest differs from the current source: "+path)
+              provenance=metamodel_manifest.get("provenance",{})
+              if provenance.get("modelSha256")!=source_map[model_path] or provenance.get("compilerSha256")!=compiler_sha:
+                  raise ValueError("metamodel model/compiler provenance digest mismatch")
+              source_inputs_path=evidence/"source-inputs.json"
+              source_inputs_record=json.loads(source_inputs_path.read_bytes())
+              source_inputs_record["metamodelGeneration"]={"manifestPath":"spec/metamodel/generated/manifest.json",
+                  "manifestSha256":sha(metamodel_manifest_path),"manifestBytes":metamodel_manifest_path.stat().st_size,
+                  "modelPath":model_path,"modelSha256":provenance["modelSha256"],
+                  "compilerSha256":provenance["compilerSha256"],"compilerInputs":compiler_map,
+                  "sources":source_map,"workspaceInputs":workspace_map,
+                  "backend":{"name":metamodel_manifest.get("backend",{}).get("name"),"ownership":metamodel_manifest.get("backend",{}).get("ownership"),"inputs":backend_map},
+                  "outputRoster":{name:{"sha256":sha(metamodel_stage/name),"bytes":(metamodel_stage/name).stat().st_size} for name in metamodel_paths}}
+              source_inputs_path.write_text(json.dumps(source_inputs_record,indent=2,sort_keys=True)+"\n")
+              receipt["sourceInputsSha256"]=sha(source_inputs_path)
+              files=sorted(p for p in outputs.rglob("*") if p.is_file())
+              expected_output_paths={dest.removeprefix("outputs/") for dest in sources.values()}|{"python/umf_codegen/src/umf_codegen/_assets/"+name for name in expected}
+              if {p.relative_to(outputs).as_posix() for p in files}!=expected_output_paths or len(files)!=27: raise ValueError("artifact output roster is not the closed27-file metamodel plus action/codegen/R3 union")
+              total=sum(p.stat().st_size for p in files)
+              log_total=sum(p.stat().st_size for p in (evidence/"logs").glob("*.log"))
+              if log_total>1048576 or total>16*1024*1024: raise ValueError("bounded generated-output or log cap exceeded")
+              receipt["logBytes"]=log_total
+              receipt["outputArtifactBytes"]=total
+              receipt["outputFilesSha256"]={p.relative_to(outputs).as_posix():sha(p) for p in files}
+              if boundary.get("status")!="pass": raise ValueError("current R3 boundary report is not passing")
+              receipt["status"]="GENERATED_ARTIFACT_ONLY"
+          except Exception as error:
+              receipt["status"]="PARTIAL_OR_FAILED"
+              receipt["failure"]=type(error).__name__
+          receipt_path=evidence/"generated-source-receipt.json"
+          if receipt["status"]=="GENERATED_ARTIFACT_ONLY":
+              receipt_path.write_text(json.dumps(receipt,indent=2,sort_keys=True)+"\n")
+              artifact_files=sorted(p for p in evidence.rglob("*") if p.is_file())
+              artifact_bytes=sum(p.stat().st_size for p in artifact_files)
+              log_bytes=sum(p.stat().st_size for p in (evidence/"logs").glob("*.log"))
+              if log_bytes>1048576 or artifact_bytes>16*1024*1024:
+                  receipt["status"]="PARTIAL_OR_FAILED"
+                  receipt["failure"]="BoundedArtifactExceeded"
+              else:
+                  receipt["artifactBytes"]=0
+                  for _ in range(3):
+                      receipt_path.write_text(json.dumps(receipt,indent=2,sort_keys=True)+"\n")
+                      artifact_bytes=sum(p.stat().st_size for p in evidence.rglob("*") if p.is_file())
+                      if artifact_bytes==receipt["artifactBytes"]: break
+                      receipt["artifactBytes"]=artifact_bytes
+                  if artifact_bytes!=receipt["artifactBytes"] or artifact_bytes>16*1024*1024:
+                      receipt["status"]="PARTIAL_OR_FAILED"
+                      receipt["failure"]="BoundedArtifactExceeded"
+          if receipt["status"]!="GENERATED_ARTIFACT_ONLY":
+              observed_output_files=sum(1 for p in outputs.rglob("*") if p.is_file())
+              observed_log_bytes=sum(p.stat().st_size for p in (evidence/"logs").glob("*.log"))
+              shutil.rmtree(outputs,ignore_errors=True); outputs.mkdir(parents=True,exist_ok=True)
+              if observed_log_bytes>1048576:
+                  shutil.rmtree(evidence/"logs",ignore_errors=True); (evidence/"logs").mkdir(parents=True,exist_ok=True)
+              receipt["generatedFiles"]={}
+              receipt["outputFilesSha256"]={}
+              receipt["outputArtifactBytes"]=0
+              receipt["failureOnlyReceipt"]={"observedGeneratedFileCount":observed_output_files,
+                                                "observedLogBytes":observed_log_bytes,
+                                                "rawOutputsUploaded":False,"rawLogsUploaded":False}
+              receipt_path.write_text(json.dumps(receipt,indent=2,sort_keys=True)+"\n")
+              shutil.copyfile(receipt_path,upload/receipt_path.name)
+              raise SystemExit("merged-source generation failed or exceeded bounded evidence limits")
+          shutil.copytree(evidence,upload,dirs_exist_ok=True)
+          PY
+
+      - name: Upload generation artifact without adopting it
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # immutable upload-artifact action
+        timeout-minutes: 1
+        with:
+          name: umf-merged-source-generated-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/umf-merged-generation-upload/**
+          if-no-files-found: error
+          retention-days: 90

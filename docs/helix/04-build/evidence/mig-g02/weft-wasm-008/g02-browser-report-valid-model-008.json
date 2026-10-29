@@ -1,0 +1,332 @@
+{
+  "scope": "real Chromium shared compiler parity; no native database authority",
+  "browser": "153.0.8010.12",
+  "cases": [
+    {
+      "name": "G02-field-copy",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "36bee5e91751b05537b918b1329c76a11e7ccd2a4f75769acfea25309947c609"
+    },
+    {
+      "name": "G02-literal",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "3cd96ad2ad3ed49354c87d91ce868a692b8bcdd1eb30aa0ec60fab76f38936f5"
+    },
+    {
+      "name": "G02-concat",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "5546e05a2a283c5038ba35883f5cfb064995e8c45ecc13912b0f63f60cdc402b"
+    },
+    {
+      "name": "G02-coalesce",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "3b133600c4fb09d1be418fe57456dd1632fb5611e918fe6dd3c3d13c2d3b3cdc"
+    },
+    {
+      "name": "G02-add",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "3bd350957ad591349edd89706c87227ba8a8a0c2ce0911bd9c724d33a2e5436a"
+    },
+    {
+      "name": "G02-subtract",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "d2f81e032398f19ee79db67e4a2723ffe83b583b9cdeea9a7730790e60867e66"
+    },
+    {
+      "name": "G02-multiply",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "8d7b582f82b626d413b2c19d022e769d1bf64471a485cfc51bcab7dcf30ec148"
+    },
+    {
+      "name": "G02-conditional-eq",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "6002860cc9d2aeb9d270c3c83f1da1523149be081a3d1eb2d6eee78ea41f6802"
+    },
+    {
+      "name": "G02-conditional-in",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "38b3ca9b18de6a4ccb1442512eb90c3fbf29a7d94778e11d5666ef503a5ead1f"
+    },
+    {
+      "name": "G02-tiny-decimal",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "f125991b189f501707f0cb51b9e4f392640b0192b34c625363ff82f7d3dc5442"
+    },
+    {
+      "name": "G02-fractional-integer",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "03c037d6dfb4b1d5ff7d34a7877d6166fc55bebb6de0e39a38910f06f7ad38c5"
+    },
+    {
+      "name": "G02-null-add-null-decimal",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "299402afc160261421eb7fc847020d1ba7a5be3861eec4cec8a21af94f6f832f"
+    },
+    {
+      "name": "G02-null-add-null-integer",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "98ef3cf1946fd135b0514bc923432b3ddfa561fd41b53a16accef3086ee0c641"
+    },
+    {
+      "name": "G02-null-add-null-string-refused",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "39d64bdf7dd4e011fe8152b068d5f70c652fce9843d66a9478174bfd379d9947"
+    },
+    {
+      "name": "G02-null-add-null-boolean-refused",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "d3f6af12150582e7685af556a15ddfeb22fa378b565b003efb7a2d53abd52850"
+    },
+    {
+      "name": "G02-null-add-null-date-refused",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "6ce6f6f0f62368b3f470195606fb55f4f9144c611ffca0bce82ff5d7fe17e26a"
+    },
+    {
+      "name": "G02-null-concat-null-string",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "5abd071234b6c6364210507afef9b4dbeb4e511725efff545e571f705540b113"
+    },
+    {
+      "name": "G02-null-concat-null-integer-refused",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "705a9434b31c1d99eced2c56c3994292973422ac0ba0e45cc78297ca0ea1354f"
+    },
+    {
+      "name": "G02-exponent-cancellation-integerToken",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "0ce35b54049572fb6190187a7ff97190c3796524e6fca42ea5e9cd9433d364b8"
+    },
+    {
+      "name": "G02-exponent-cancellation-decimalToken",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "a9f9e889bbba0316e6c8905376788d89b7c6f1477a9e27e90748d22c56ff44e2"
+    },
+    {
+      "name": "G02-exponent-cancellation-fractional-refused",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "f1d6d883188cab257b0b09230ed5bdcf6c5058dbc7ad6bd368831d05a31d2a0f"
+    },
+    {
+      "name": "G02-conditional-null-eq",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "f87346fc9470572857c1d0e7aa7112e5e9db865511b12db6c6389e91c7b70f62"
+    },
+    {
+      "name": "G02-conditional-null-not-eq",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "41400471879b189b561947407bc2cf93348cc14c8aea66b068ddde2ac109ca0f"
+    },
+    {
+      "name": "G02-conditional-null-ne",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "6f0c060b9361da300b9747f8fb16d950bf5998c581f190db4956328bede90b5c"
+    },
+    {
+      "name": "G02-conditional-null-not-ne",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "e56354f76f624edc36e3d2df858030be7a06a36f27d49d9546432e2508644fbe"
+    },
+    {
+      "name": "G02-conditional-null-order-booleanTarget",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "7c2b7250bfc6725bebbece49703fc1873ea8ffb80ea091a9c39f73f183fcadf7"
+    },
+    {
+      "name": "G02-conditional-null-order-uuidTarget",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "41fbd1eb3496ae6c90590b07400126fd5390ecf5f0b51ef21d01d520c1dbd34d"
+    },
+    {
+      "name": "G02-negative-zero-huge-exponent",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "a85bced23013e577d346b739091f79a32ee523322592d06aa915c4c91103344c"
+    },
+    {
+      "name": "G02-self-reference",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "fb6ec7571f3ab1716d0f5bd4e27558706bb7d7e57a1bbecb21a29ef43550be41"
+    },
+    {
+      "name": "G02-literal-1mib",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "68774b562c76555b8993ab761005708b158b3ff0e2fb72b48623b0be5d20bc37"
+    },
+    {
+      "name": "G02-literal-over-1mib",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "af0128364e554e0770445439f5bbe84a8ca83cad1e69543a1b5d65f477a00882"
+    },
+    {
+      "name": "G02-required-null-refused",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "0f7ea3fd2e94b3fa1d6ebb5db0a0c341b1158030cfc510663681207696004518"
+    },
+    {
+      "name": "G02-optional-null",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "f21a479bb45b8d188a668743dc8efd4a51bd8cf1872dcaae613bbae9f5b514db"
+    },
+    {
+      "name": "G02-enum-allowed",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "139178343bf2e3835cc2880e7d8f10ba266a735b0eaac027faf2c96ff1ed23f7"
+    },
+    {
+      "name": "G02-enum-outside-refused",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "d3d86461cfb9a948f88e451d8c90a854ea97ebd101f76aa646d0b5c235fef13a"
+    },
+    {
+      "name": "G02-enum-in-allowed",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "e5a5c1d0ba2691282d8c398b36471cd8de1126c3bf58dae4a228e15b75adc7e2"
+    },
+    {
+      "name": "G02-enum-in-outside-refused",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "a4f8d7ccdc9a2fb72a140d62f27651e1de469ce339f4c90d699d46d5d7acc839"
+    },
+    {
+      "name": "G02-length-allowed",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "582e9a3c65daa9824937f5e4f66076b367906ad0abc26e00c5ff6b2eaa244f75"
+    },
+    {
+      "name": "G02-length-outside-refused",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "5c6d92a5f1be44cb2a5a75f94e45e6d55ec32f1e9a28d9346fb53d5f7f084bc3"
+    },
+    {
+      "name": "G02-varchar-native-width-admitted",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "4aebd3b38f679d1143a8d31bf5d0be40e6c119fe44e8cdfd9f0884c70dffb013"
+    },
+    {
+      "name": "G02-decimal-wrapper-allowed",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "e8ee8d7df7a8e458a6f4d0e3a9bcd38ffa01834cb610cf6e37db1caadb05df44"
+    },
+    {
+      "name": "G02-decimal-wrong-wrapper-refused",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "ccdc55aa9259caebe93e80cb279773f44948b6f2733a3ab3794f25566567dc85"
+    },
+    {
+      "name": "G02-numeric-range-allowed",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "8c6201abb08da3a15a199a95ca0a2182fa114a847e575177c9c6cb9cd8bef457"
+    },
+    {
+      "name": "G02-numeric-range-outside-refused",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "3b9d820de4b3b44ee102ed20980513d764be00a55ac366e8bcb430e1542f3c18"
+    },
+    {
+      "name": "G02-integer-wrapper-allowed",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "4d7acf99abbee519b4ff31dc4066618e127c31cd8459108b34f2dfc161bba63a"
+    },
+    {
+      "name": "G02-integer-wrong-wrapper-refused",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "d55e772a7a7150999a4e90373de7466a56dff9bac5d47c01f13e12e196cf38c7"
+    },
+    {
+      "name": "G02-int2-native-width-admitted",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "df26a9dc3561d0e341feccd3abafdd5de342e434acac6786b7aa2b2023fe4be1"
+    }
+  ],
+  "tamperControls": 1,
+  "invalidUnicodeTransportControls": 2,
+  "wasmSha256": "baa5b0e8bf4691892821f54c9261261499e996d1f41da922decffb588cd92860",
+  "javascriptSha256": "c3c3b25d6a7f996bdc82e2dfb6defc3f9250e1977f24c9454bdd209164a63be2",
+  "imports": [
+    {
+      "module": "wbg",
+      "name": "__wbg_length_a95b69f903b746c4",
+      "kind": "function"
+    },
+    {
+      "module": "wbg",
+      "name": "__wbg_charCodeAt_291b921e27833f8e",
+      "kind": "function"
+    },
+    {
+      "module": "wbg",
+      "name": "__wbg___wbindgen_is_string_fbb76cb2940daafd",
+      "kind": "function"
+    },
+    {
+      "module": "wbg",
+      "name": "__wbg___wbindgen_string_get_e4f06c90489ad01b",
+      "kind": "function"
+    },
+    {
+      "module": "wbg",
+      "name": "__wbg___wbindgen_throw_b855445ff6a94295",
+      "kind": "function"
+    },
+    {
+      "module": "wbg",
+      "name": "__wbindgen_init_externref_table",
+      "kind": "function"
+    },
+    {
+      "module": "wbg",
+      "name": "__wbindgen_cast_2241b6af4c4b2941",
+      "kind": "function"
+    }
+  ],
+  "nodeProcess": false,
+  "require": false,
+  "nativeExecutionQualified": false
+}

@@ -1,0 +1,32 @@
+{
+  "adoptedR2CompanionSha256": "5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29",
+  "dependencyOutcome": "skipped",
+  "failure": "ValueError",
+  "failureOnlyReceipt": {
+    "observedGeneratedFileCount": 0,
+    "observedLogBytes": 0,
+    "rawLogsUploaded": false,
+    "rawOutputsUploaded": false
+  },
+  "generatedFiles": {},
+  "historicalPlaceholderReceipt": "historical-placeholder-inputs.json",
+  "limits": {
+    "aggregateWorkSeconds": 1800,
+    "artifactMaximumBytes": 16777216,
+    "capturedCommandLogsMaximumBytes": 1048576,
+    "evidenceReserveSeconds": 60
+  },
+  "outputArtifactBytes": 0,
+  "outputFilesSha256": {},
+  "profile": "umf.merged-source-generation/1",
+  "qualifiesMergedSource": false,
+  "ref": "refs/heads/codex/migration-merged-generation",
+  "runAttempt": "1",
+  "runId": "40563137681",
+  "scope": "Artifact-only generation after accounted R2 companion adoption. No test, qualification, production claim or automatic source adoption.",
+  "sourceCommit": "0bce2e5394f4bd97697a29ed1a4f982da19db2ed",
+  "sourceOutcome": "skipped",
+  "status": "PARTIAL_OR_FAILED",
+  "workflow": "Generate merged-source action, codegen and R3 artifacts",
+  "workflowOutcome": "skipped"
+}

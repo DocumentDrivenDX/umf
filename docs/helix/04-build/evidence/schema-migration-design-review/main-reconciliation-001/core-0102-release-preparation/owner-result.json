@@ -1,0 +1,24 @@
+{
+  "status": "PROSPECTIVE_RELEASE_METADATA_ONLY_PUBLICATION_HELD",
+  "producerCandidateCommit": "a1b909d4f92da6604aeb21d3ea60e9a9943a7f87",
+  "proposedTag": "python-v0.10.2",
+  "actualTagCommit": null,
+  "publication": "Immutable GitHub assets and actual public PyPI remain required. Exact manylinux artifact passed independent review; normal merge, publisher and public-proof gates remain open.",
+  "remainingGates": [
+    "All normal current-head Coregates",
+    "Normal PR49thenPR50 merge with actualsourceidentities",
+    "Final selectedmanylinux/Mac/sdist maps and actualimmutabletag",
+    "Fresh GitHub public-byte/installedverification",
+    "Actual automaticPyPI publication and freshpublicindexverification"
+  ],
+  "publisherOwnership": "Separate Arras PR50; release-pins.json must use tag/commit/distribution/version/selected filenames+SHA256 and be included in final SHA256SUMS.",
+  "scope": "Prospective release metadata only. RawLinux candidateproof preserved, excluded from selectedtop-leveldistribution; Mac actualf4d provenance retained with full-tree equivalence. No publication claim.",
+  "acceptedManylinux": {
+    "runId": 40359647952,
+    "artifactId": 12667128999,
+    "filename": "umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl",
+    "sha256": "708f967747b0539b9ca7b6a5f39d1017eea8ddb1d07cd62f4f46592e088f6f39",
+    "reviewSha256": "3c5930be60da1671b4a963a3a37669d72b137f21b1c18ff82faf39ac4608a2d7",
+    "tests": 254
+  }
+}

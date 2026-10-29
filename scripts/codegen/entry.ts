@@ -20,9 +20,14 @@ Object.assign(globalThis,{__umf_table_migrate(input:string):string {
 },__umf_table_migration_changes(input:string):string {
  try {
   const request=JSON.parse(input);
-  if(!request||typeof request!=='object'||Array.isArray(request)||Object.keys(request).sort().join(',')!=='next,previous')throw new Error('Expected exact previous and next deployment bundle members');
+  if(!request||typeof request!=='object'||Array.isArray(request))throw new Error('Expected exact previous and next deployment bundle members');
+  const keys=Object.keys(request).sort().join(',');
+  if(keys!=='next,previous'&&keys!=='next,options,previous')throw new Error('Expected exact previous and next deployment bundle members');
   const previous=verifyTableDeployment(request.previous),next=verifyTableDeployment(request.next);
-  return JSON.stringify({ok:true,result:{changes:discoverTableMigrationChanges(previous,next)}});
+  const changes=keys==='next,options,previous'
+   ?discoverTableMigrationChanges(previous,next,request.options)
+   :discoverTableMigrationChanges(previous,next);
+  return JSON.stringify({ok:true,result:{changes}});
  } catch(error){const e=error as {code?:string;message?:string;path?:string};return JSON.stringify({ok:false,error:{code:e.code??'MIGRATION_CHANGES_FAILED',message:e.message??'Reviewed change discovery refused',...(e.path===undefined?{}:{path:e.path})}});}
 }});
 Object.assign(globalThis,{__umf_table_deploy(input:string):string {

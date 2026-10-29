@@ -1,0 +1,140 @@
+﻿2026-10-27T16:37:37.7951300Z Current runner version: '2.338.0'
+2026-10-27T16:37:37.7977859Z ##[group]Runner Image Provisioner
+2026-10-27T16:37:37.7978836Z Hosted Compute Agent
+2026-10-27T16:37:37.7979414Z Version: 20261021.618
+2026-10-27T16:37:37.7980045Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-10-27T16:37:37.7980824Z Build Date: 2026-10-21T00:45:21Z
+2026-10-27T16:37:37.7981895Z Worker ID: {5a71193b-b6af-45f5-9952-bf33b4a806a4}
+2026-10-27T16:37:37.7982690Z Region: northcentralus
+2026-10-27T16:37:37.7983282Z Cloud: Azure
+2026-10-27T16:37:37.7983843Z ##[endgroup]
+2026-10-27T16:37:37.7985405Z ##[group]Operating System
+2026-10-27T16:37:37.7986109Z Ubuntu
+2026-10-27T16:37:37.7986721Z 24.04.5
+2026-10-27T16:37:37.7987244Z LTS
+2026-10-27T16:37:37.7987783Z ##[endgroup]
+2026-10-27T16:37:37.7988378Z ##[group]Runner Image
+2026-10-27T16:37:37.7988966Z Image: ubuntu-24.04
+2026-10-27T16:37:37.7989510Z Version: 20261012.334.1
+2026-10-27T16:37:37.7990853Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-27T16:37:37.7993354Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-27T16:37:37.7994312Z ##[endgroup]
+2026-10-27T16:37:37.7995564Z ##[group]GITHUB_TOKEN Permissions
+2026-10-27T16:37:37.7997526Z Actions: read
+2026-10-27T16:37:37.7998643Z Contents: read
+2026-10-27T16:37:37.7999203Z Metadata: read
+2026-10-27T16:37:37.7999738Z ##[endgroup]
+2026-10-27T16:37:37.8002437Z Secret source: Actions
+2026-10-27T16:37:37.8003388Z Cache mode: write
+2026-10-27T16:37:37.8004494Z Prepare workflow directory
+2026-10-27T16:37:37.8360079Z Prepare all required actions
+2026-10-27T16:37:37.8409558Z Getting action download info
+2026-10-27T16:37:38.0948124Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-10-27T16:37:38.2472523Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-27T16:37:38.4662939Z Complete job name: installed-consumer
+2026-10-27T16:37:38.5593418Z ##[group]Run actions/setup-python@v5
+2026-10-27T16:37:38.5594351Z with:
+2026-10-27T16:37:38.5594803Z   python-version: 3.11
+2026-10-27T16:37:38.5595283Z   check-latest: false
+2026-10-27T16:37:38.5598869Z   token: ***
+2026-10-27T16:37:38.5599317Z   update-environment: true
+2026-10-27T16:37:38.5599822Z   allow-prereleases: false
+2026-10-27T16:37:38.5600303Z   freethreaded: false
+2026-10-27T16:37:38.5601270Z ##[endgroup]
+2026-10-27T16:37:38.7135912Z ##[group]Installed versions
+2026-10-27T16:37:38.7210620Z (node:2159) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-27T16:37:38.7212883Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-27T16:37:38.7213908Z Successfully set up CPython (3.11.17)
+2026-10-27T16:37:38.7215230Z ##[endgroup]
+2026-10-27T16:37:38.7535694Z ##[group]Run set -euo pipefail
+2026-10-27T16:37:38.7537176Z [36;1mset -euo pipefail[0m
+2026-10-27T16:37:38.7538240Z [36;1mpython -m venv "$RUNNER_TEMP/pypi-consumer"[0m
+2026-10-27T16:37:38.7540288Z [36;1m"$RUNNER_TEMP/pypi-consumer/bin/python" -m pip --isolated install --disable-pip-version-check --no-cache-dir --only-binary=umf-core \[0m
+2026-10-27T16:37:38.7542667Z [36;1m  --index-url https://pypi.org/simple "umf-core==$VERSION"[0m
+2026-10-27T16:37:38.7544147Z [36;1m"$RUNNER_TEMP/pypi-consumer/bin/python" -m pip --isolated check[0m
+2026-10-27T16:37:38.7545363Z [36;1mcd "$RUNNER_TEMP"[0m
+2026-10-27T16:37:38.7546330Z [36;1m"$RUNNER_TEMP/pypi-consumer/bin/python" -I - <<'PYTHON'[0m
+2026-10-27T16:37:38.7547351Z [36;1mimport importlib.metadata, json, os, pathlib, sysconfig[0m
+2026-10-27T16:37:38.7548114Z [36;1mimport umf[0m
+2026-10-27T16:37:38.7549085Z [36;1mdist = importlib.metadata.distribution("umf-core")[0m
+2026-10-27T16:37:38.7550129Z [36;1massert dist.version == os.environ["VERSION"][0m
+2026-10-27T16:37:38.7551522Z [36;1massert pathlib.Path(umf.__file__).is_relative_to(sysconfig.get_path("purelib"))[0m
+2026-10-27T16:37:38.7553527Z [36;1massert dist.read_text("direct_url.json") is None[0m
+2026-10-27T16:37:38.7554445Z [36;1mrecord = {"schema": "pypi-consumer-receipt.v1", "status": "passed",[0m
+2026-10-27T16:37:38.7555385Z [36;1m          "index": "https://pypi.org/simple", "umf_core_version": dist.version}[0m
+2026-10-27T16:37:38.7556436Z [36;1mpathlib.Path("consumer-receipt.json").write_text(json.dumps(record, indent=2) + "\n")[0m
+2026-10-27T16:37:38.7557259Z [36;1mPYTHON[0m
+2026-10-27T16:37:38.7967915Z shell: /usr/bin/bash -e {0}
+2026-10-27T16:37:38.7968640Z env:
+2026-10-27T16:37:38.7969254Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T16:37:38.7970237Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T16:37:38.7971550Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T16:37:38.7972356Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T16:37:38.7973115Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T16:37:38.7973897Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T16:37:38.7974538Z   VERSION: 0.10.3
+2026-10-27T16:37:38.7974971Z   PIP_CONFIG_FILE: /dev/null
+2026-10-27T16:37:38.7975444Z ##[endgroup]
+2026-10-27T16:37:43.5267750Z Collecting umf-core==0.10.3
+2026-10-27T16:37:43.5629682Z   Downloading umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl.metadata (5.9 kB)
+2026-10-27T16:37:43.7361845Z Collecting pydantic<3,>=2.11 (from umf-core==0.10.3)
+2026-10-27T16:37:43.7447647Z   Downloading pydantic-2.14.1-py3-none-any.whl.metadata (133 kB)
+2026-10-27T16:37:43.7580428Z      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.0/133.0 kB 12.1 MB/s eta 0:00:00
+2026-10-27T16:37:43.7809491Z Collecting annotated-types>=0.6.0 (from pydantic<3,>=2.11->umf-core==0.10.3)
+2026-10-27T16:37:43.7851436Z   Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+2026-10-27T16:37:44.7237567Z Collecting pydantic-core==2.50.1 (from pydantic<3,>=2.11->umf-core==0.10.3)
+2026-10-27T16:37:44.7280154Z   Downloading pydantic_core-2.50.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.5 kB)
+2026-10-27T16:37:44.7524222Z Collecting typing-extensions>=4.16.0 (from pydantic<3,>=2.11->umf-core==0.10.3)
+2026-10-27T16:37:44.7563480Z   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+2026-10-27T16:37:44.7696027Z Collecting typing-inspection>=0.4.4 (from pydantic<3,>=2.11->umf-core==0.10.3)
+2026-10-27T16:37:44.7738644Z   Downloading typing_inspection-0.4.4-py3-none-any.whl.metadata (2.6 kB)
+2026-10-27T16:37:44.7926131Z Downloading umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl (3.6 MB)
+2026-10-27T16:37:44.8437779Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.6/3.6 MB 74.3 MB/s eta 0:00:00
+2026-10-27T16:37:44.8474917Z Downloading pydantic-2.14.1-py3-none-any.whl (488 kB)
+2026-10-27T16:37:44.8532627Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 488.1/488.1 kB 129.6 MB/s eta 0:00:00
+2026-10-27T16:37:44.8568731Z Downloading pydantic_core-2.50.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.2 MB)
+2026-10-27T16:37:44.8729092Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.2/2.2 MB 156.6 MB/s eta 0:00:00
+2026-10-27T16:37:44.8767751Z Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+2026-10-27T16:37:44.8808469Z Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+2026-10-27T16:37:44.8830022Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 45.6/45.6 kB 261.5 MB/s eta 0:00:00
+2026-10-27T16:37:44.8867715Z Downloading typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+2026-10-27T16:37:44.9506038Z Installing collected packages: typing-extensions, annotated-types, typing-inspection, pydantic-core, pydantic, umf-core
+2026-10-27T16:37:45.3999082Z Successfully installed annotated-types-0.8.0 pydantic-2.14.1 pydantic-core-2.50.1 typing-extensions-4.16.0 typing-inspection-0.4.4 umf-core-0.10.3
+2026-10-27T16:37:46.1079361Z No broken requirements found.
+2026-10-27T16:37:46.3432183Z ##[group]Run actions/upload-artifact@v4
+2026-10-27T16:37:46.3432810Z with:
+2026-10-27T16:37:46.3433092Z   name: umf-core-pypi-consumer-0.10.3
+2026-10-27T16:37:46.3433508Z   path: /home/runner/work/_temp/consumer-receipt.json
+2026-10-27T16:37:46.3433910Z   if-no-files-found: error
+2026-10-27T16:37:46.3434194Z   retention-days: 365
+2026-10-27T16:37:46.3434456Z   compression-level: 6
+2026-10-27T16:37:46.3434713Z   overwrite: false
+2026-10-27T16:37:46.3434975Z   include-hidden-files: false
+2026-10-27T16:37:46.3435253Z env:
+2026-10-27T16:37:46.3435551Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T16:37:46.3436045Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+2026-10-27T16:37:46.3436543Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T16:37:46.3437014Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T16:37:46.3437454Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+2026-10-27T16:37:46.3437978Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+2026-10-27T16:37:46.3438370Z ##[endgroup]
+2026-10-27T16:37:46.5214054Z (node:2224) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-27T16:37:46.5215438Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-27T16:37:46.5294472Z With the provided path, there will be 1 file uploaded
+2026-10-27T16:37:46.5303413Z Artifact name is valid!
+2026-10-27T16:37:46.5305443Z Root directory input is valid!
+2026-10-27T16:37:46.5392685Z ##[warning]Retention days cannot be greater than the maximum allowed retention set within the repository. Using 90 instead.
+2026-10-27T16:37:46.7851676Z Beginning upload of artifact content to blob storage
+2026-10-27T16:37:46.8053685Z (node:2224) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-27T16:37:46.8901301Z Uploaded bytes 265
+2026-10-27T16:37:46.9246711Z Finished uploading artifact content to blob storage!
+2026-10-27T16:37:46.9248066Z SHA256 digest of uploaded artifact zip is 0ca78791cf80efd4d99d70ea01ea4ebc139d222e1a0a3bfea8c28ec191db719a
+2026-10-27T16:37:46.9249203Z Finalizing artifact upload
+2026-10-27T16:37:47.3542315Z Artifact umf-core-pypi-consumer-0.10.3.zip successfully finalized. Artifact ID 12751965517
+2026-10-27T16:37:47.3543906Z Artifact umf-core-pypi-consumer-0.10.3 has been successfully uploaded! Final size is 265 bytes. Artifact ID is 12751965517
+2026-10-27T16:37:47.3545470Z Artifact download URL: https://github.com/DocumentDrivenDX/umf/actions/runs/40533286158/artifacts/12751965517
+2026-10-27T16:37:47.3863694Z Post job cleanup.
+2026-10-27T16:37:47.5099993Z (node:2238) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-27T16:37:47.5101198Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-27T16:37:47.5289880Z Cleaning up orphan processes
+2026-10-27T16:37:47.5763222Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

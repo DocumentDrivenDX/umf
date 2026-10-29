@@ -82,7 +82,39 @@ function queriedTypeOnly(source: ts.SourceFile, declaration: ts.ImportDeclaratio
   visit(source);
   return safe && names.every(name => seen.has(name));
 }
-function edge(file: string, specifier: string, typeOnly = false, names: readonly string[] = []) {
+function exactPrivateAccountingType(file: string, target: string, typeOnly: boolean, names: readonly string[], node?: ts.Node): boolean {
+  if (label(file) !== "src/compilation/bundle/hash.ts" || label(target) !== "src/model/internal/accounting-context.ts" || !typeOnly || names.length !== 1 || names[0] !== "AccountingContext" || !node || !ts.isImportDeclaration(node)) return false;
+  const clause = node.importClause, bindings = clause?.namedBindings;
+  if (!clause?.isTypeOnly || clause.name || !bindings || !ts.isNamedImports(bindings) || bindings.elements.length !== 1) return false;
+  const element = bindings.elements[0];
+  if (!element || element.propertyName || element.name.text !== "AccountingContext" || element.isTypeOnly || !ts.isStringLiteral(node.moduleSpecifier)) return false;
+  const { checker, program, symbols } = api();
+  const source = program.getSourceFile(file);
+  if (!source) return false;
+  const specifier = node.moduleSpecifier.text;
+  // Resolve the corresponding import from the checker-owned Program AST. The
+  // boundary walk parses a separate SourceFile, whose nodes cannot be passed
+  // to this Program's TypeChecker for symbol identity.
+  const matches = source.statements.filter((statement): statement is ts.ImportDeclaration =>
+    ts.isImportDeclaration(statement) && ts.isStringLiteral(statement.moduleSpecifier)
+    && statement.moduleSpecifier.text === specifier);
+  if (matches.length !== 1) return false;
+  const programBindings = matches[0]!.importClause?.namedBindings;
+  if (!matches[0]!.importClause?.isTypeOnly || matches[0]!.importClause?.name || !programBindings
+    || !ts.isNamedImports(programBindings) || programBindings.elements.length !== 1) return false;
+  const programElement = programBindings.elements[0];
+  if (!programElement || programElement.propertyName || programElement.name.text !== "AccountingContext" || programElement.isTypeOnly) return false;
+  const imported = checker.getSymbolAtLocation(programElement.name);
+  if (!imported) return false;
+  const resolved = imported.flags & ts.SymbolFlags.Alias ? checker.getAliasedSymbol(imported) : imported;
+  const declarations = resolved.getDeclarations() ?? [];
+  return declarations.length === 1
+    && ts.isInterfaceDeclaration(declarations[0]!)
+    && declarations[0]!.name?.text === "AccountingContext"
+    && realpathSync(declarations[0]!.getSourceFile().fileName) === target
+    && !symbols.has(resolved);
+}
+function edge(file: string, specifier: string, typeOnly = false, names: readonly string[] = [], node?: ts.Node) {
   const resolved = ts.resolveModuleName(specifier, file, options, ts.sys).resolvedModule;
   if (!resolved) { fail(file, specifier.startsWith(".") ? "UNRESOLVED" : "HOST", `unapproved or unresolved import ${specifier}`); return; }
   const target = realpathSync(resolved.resolvedFileName);
@@ -102,6 +134,7 @@ function edge(file: string, specifier: string, typeOnly = false, names: readonly
     return;
   }
   const owner = moduleOf(file);
+  if (target.startsWith(resolve(root, "src") + sep) && exactPrivateAccountingType(file, target, typeOnly, names, node)) return;
   if (target.startsWith(resolve(root, "src") + sep) && names.length) {
     const marker = targetLabel === "src/generated/core-model.ts" && names.every(name => name === "CURRENT_CORE_VERSION");
     const semantic = ["admission", "facade", "ir"].includes(owner);
@@ -129,7 +162,7 @@ for (const file of sources) {
       const typeOnly = ts.isExportDeclaration(node) ? node.isTypeOnly || Boolean(exported?.length && exported.every(item => item.isTypeOnly))
         : Boolean(clause?.isTypeOnly || (!clause?.name && named && ts.isNamedImports(named) && named.elements.length && named.elements.every(item => item.isTypeOnly)));
       const erased = ts.isImportDeclaration(node) && bindings && queriedTypeOnly(source, node, bindings.map(item => item.name.text));
-      edge(file, node.moduleSpecifier.text, typeOnly || Boolean(erased), names);
+      edge(file, node.moduleSpecifier.text, typeOnly || Boolean(erased), names, node);
     }
     if (ts.isImportEqualsDeclaration(node)) fail(file, "HOST", "import-equals loading is forbidden");
     if (ts.isImportTypeNode(node) && ts.isLiteralTypeNode(node.argument) && ts.isStringLiteral(node.argument.literal)) {

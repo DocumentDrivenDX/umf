@@ -1,0 +1,138 @@
+{
+  "status": "passed",
+  "server": "18.6 (Debian 18.6-1.pgdg13+2)",
+  "versions": {
+    "umf-access": "0.1.0.dev8",
+    "umf-codegen": "0.1.0a5",
+    "psycopg": "3.2.13"
+  },
+  "provenance": {
+    "runnerSha256": "e197d3630079c597964aa81b875ef6e7cd53f1c2fab42018bdb5a8684bf53600",
+    "originalRunnerSha256": "5dfddd7f1bd7f6e254e927292246ceddf5debfe172995ad267d4bbbfd32c2ea4",
+    "fixtureSha256": "c29ee30dd76e6e4fbbf6ceea64cb22d77764c2a349081819d0d7ac1c1dc59af1",
+    "artifactManifestSha256": "a23053af3571b287b1d6dbe066479c8d9ba722c673e91f70bfeceb66a109e723",
+    "packageOrigins": {
+      "umf_access": "/d5-host/d5/venv-parent/venv/lib/python3.11/site-packages/umf_access/__init__.py",
+      "umf_codegen": "/d5-host/d5/venv-parent/venv/lib/python3.11/site-packages/umf_codegen/__init__.py",
+      "weft": "/d5-host/d5/venv-parent/venv/lib/python3.11/site-packages/weft/__init__.py"
+    },
+    "runtimeFiles": {
+      "umf_codegen/_assets/generator.js.gz": "3f48410cb6013c2321ecb6f142779123730bfa9f85bbaabab1b412d5984cdd47",
+      "umf_codegen/_assets/manifest.json": "ad326f5c95d4c9dde9ec09d9413aac156e50a1e0b1934cc357b249fd560a6e95",
+      "weft/weft.abi3.so": "2f39a3e2bf356922a44fef0e88ffaae155d6d850e66d7f7e35d9209cd85c3760"
+    }
+  },
+  "cases": [
+    {
+      "domain": "integer",
+      "textExpression": "concat",
+      "nativeConstraint": "none",
+      "boundExcess": false,
+      "emptyTable": false,
+      "allPopulated": false,
+      "literalWrapper": "integerToken",
+      "literalToken": "99999",
+      "decimalInvalidMode": "rounding",
+      "enumRejection": true,
+      "appended": false,
+      "invalid": true,
+      "ambientOperatorGuard": null,
+      "injectedNonfiniteGuard": null,
+      "unknownCommitAfterRealPhase": [],
+      "explicitNullAfterDefaultSqlstate": null,
+      "failure": "CatalogError",
+      "publicFailurePrivacy": true,
+      "nativeStates": [
+        "23514"
+      ],
+      "nativeDispatches": 1,
+      "nativeAffectedCounts": [],
+      "planDigest": "5981e2330196795266d70dba8d064331985e2f478809610df8696d53211ac5ef",
+      "planFile": "plans/5981e2330196795266d70dba8d064331985e2f478809610df8696d53211ac5ef.json",
+      "planFileSha256": "80179c77a00dc17532049b1e6e38f38c3df6167d2c2e13e9e454fa217bc65949",
+      "sourceDigest": "95907adf82dd69594de8320f498f984e074e9249a029f9cba4cdff308bdfe82b",
+      "actualColumns": [
+        "id",
+        "owner",
+        "amount",
+        "summary"
+      ],
+      "actualRows": [
+        [
+          "a",
+          "Ada",
+          100000,
+          9
+        ],
+        [
+          "b",
+          "Bj\u00f8rn",
+          99999,
+          null
+        ],
+        [
+          "c",
+          "\u674e",
+          100001,
+          null
+        ]
+      ],
+      "futureDefaultValue": null,
+      "passed": true
+    },
+    {
+      "domain": "integer",
+      "textExpression": "concat",
+      "nativeConstraint": "none",
+      "boundExcess": false,
+      "emptyTable": false,
+      "allPopulated": false,
+      "literalWrapper": "integerToken",
+      "literalToken": "99999",
+      "decimalInvalidMode": "rounding",
+      "enumRejection": true,
+      "appended": true,
+      "invalid": true,
+      "ambientOperatorGuard": null,
+      "injectedNonfiniteGuard": null,
+      "unknownCommitAfterRealPhase": [],
+      "explicitNullAfterDefaultSqlstate": null,
+      "failure": "CatalogError",
+      "publicFailurePrivacy": true,
+      "nativeStates": [
+        "23514"
+      ],
+      "nativeDispatches": 1,
+      "nativeAffectedCounts": [],
+      "planDigest": "425581ea8cfd2cabbeca64208bc0c694633ff2b71658203536bf2d26172a346b",
+      "planFile": "plans/425581ea8cfd2cabbeca64208bc0c694633ff2b71658203536bf2d26172a346b.json",
+      "planFileSha256": "61d6066795b9dfb1b0a2ec3520d5f6762123842c2c8c10eb53cf9340888b1a93",
+      "sourceDigest": "95907adf82dd69594de8320f498f984e074e9249a029f9cba4cdff308bdfe82b",
+      "actualColumns": [
+        "id",
+        "owner",
+        "amount"
+      ],
+      "actualRows": [
+        [
+          "a",
+          "Ada",
+          100000
+        ],
+        [
+          "b",
+          "Bj\u00f8rn",
+          99999
+        ],
+        [
+          "c",
+          "\u674e",
+          100001
+        ]
+      ],
+      "futureDefaultValue": null,
+      "passed": true
+    }
+  ],
+  "cleanup": "all created isolated databases and roles removed"
+}

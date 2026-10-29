@@ -1,0 +1,13 @@
+# Actual metamodel40565319782 source-output adoption
+
+ACCEPT actual11-family for byte-copy source adoption only. Solechangedrootfile spec/metamodel/generated/manifest.json58660B SHA49d13a735d92c9db935fc9c7f5f804e0529c5bb374e4c98fe246e03d979353b6; other10actualoutputs byteequal exactsourcecommit. Root may adopt emittedmanifest+newrun-specific evidence/review/owner then onegenuinechangedsource existingmergedroute. No guardchange/unchangedretry/unknown27preacceptance.
+
+ActualLinux run40565319782/attempt1 source9b1fc3e44925d20347a9f9081926ca3a76a43c8f/treea37bcfcd5883f6158d407bdbb500d18b72521d36, job122404892080/allstepssuccess. Artifact12762662454 ZIP117524B SHA7d7abeba728f5ed6fdf2545481c5ca02094345481ffaa55caa4caf6e9f4a9f60 equalsAPI;28safe regular members909583expanded. Captures/private/tmp/migration-merged-40565319782.
+
+Actualphase METAMODEL_OUTPUTS_ARTIFACT_ONLY/qualifiesMergedSourcefalse/committedOutputsMatchfalse/companionInputsMatchtrue/11outputsonly. Finalphysicalsource-inputsSHA c6ca0b22c226a8811146b0be3e62ba1d7a1b1904f0c9366f065cae389e0c7ecb equalsgeneratedreceipt. Independently verified all11actualsizes/digests/stageRoster and committedRoster againstsourceGitblobs; onlymanifestdiff. All434manifestsource/compiler/workspacehashrows matchactualcurrentclean sourcebytes;10manifestoutputrows matchactualstagedbytes. Exactfourcompanionbindings equal emitted/currentfourpublicinputs and adoptedStageA5fea0581…custody; no newStageAsuccessorneeded. Originalprofiles/semanticCore/compiler/schema/guardmeanings retained; manifestgenuinelyupdates source/type-fix custody, no manuallypatchedgeneratedhash.
+
+Eightboundedcommands actualraw/captureexit0/notruncated, everyphysical loghash/size matches; combined7001B below1MiB. Original1800s/reserve60/artifact16MiB limits and source/ancestry/toolchain checks preserved. Actualdepth16 fullcheckout passed, but neitherthisnorjobgreen establishesruntime/nativequalification. OriginalselfFIRST/dependentaction/Codegen/R3 were withheld because changedrootmanifest correspondencefailed, asdesigned.
+
+After exactmanifestadoption, existingownedchangedsource run must establish11+4true then originalselfFIRST→actionidentity→Codegen/checks→R3 actual27sourcecustody. Later currentportable/native/API/D5/full18aggregate/normalPR/SDKrelease/publicproof remainopen. Prior nativecheckpointec1476 remains scoped to a4afsource, no newer-source substitution. No MacCI/Coregate reopening/G03–G11/managed/Praxis admission.
+
+Method: actualJSON/log/hash/ZIP/source-map/readonlyGitblob inspection only; no candidateimports/tests/AST/YAML/native/compiler/generator/Git/CImutation byreviewer.

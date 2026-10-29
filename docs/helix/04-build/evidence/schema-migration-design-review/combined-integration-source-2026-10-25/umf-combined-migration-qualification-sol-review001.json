@@ -1,0 +1,80 @@
+{
+  "disposition": "CORRECTION_REQUIRED_EXECUTION_PROPOSAL_ONLY",
+  "mode": "SOURCE_ONLY",
+  "inputs": [
+    {
+      "path": "README.md",
+      "sha256": "95503d90a977722b8851eace2d878485b923e4bf9f66f26d2f7e99849a115af9",
+      "bytes": 4608
+    },
+    {
+      "path": "combined-migration-qualification.yml",
+      "sha256": "489326ce59986f132c4c1f7aaf63f3dcf388f7554dcd352429fdb1fcf2210ac5",
+      "bytes": 10003
+    },
+    {
+      "path": "proposal.json",
+      "sha256": "634bfea054b0b46f9381f81b7860874e8ff1beeada1668d948ecdf1f471ef48e",
+      "bytes": 1053
+    },
+    {
+      "path": "qualification-inputs/expected-pins.sha256",
+      "sha256": "a376f246fafc0ed289f07fd95302c1540295c12c8f81a1c8994fc450daa455c3",
+      "bytes": 8654
+    },
+    {
+      "path": "r2-source-freeze.json",
+      "sha256": "c38ff2f5742084533e2e38eacd0facd0972c67bec4fbf4cf7c737e3872de2750",
+      "bytes": 10386
+    },
+    {
+      "path": "r2-source-pins.sha256",
+      "sha256": "044c4e544bfbe732da7c2c6d52876b7d198778ac05786ebd2b11fb31c8bd8340",
+      "bytes": 4209
+    },
+    {
+      "path": "supplemental-pins.sha256",
+      "sha256": "707019f34fff2adaa93911d265d47bddf8426ade7f78623d2944eb9cb9207450",
+      "bytes": 4445
+    }
+  ],
+  "findings": [
+    {
+      "id": "CQ-F1",
+      "priority": "P1",
+      "path": "combined-migration-qualification.yml",
+      "problem": "Identity/hash preflight group is left of ||failed=1, disabling errexit within the group. Failed checks are followed by successful printf, losing failure and allowing product execution.",
+      "fix": "Make each identity/hash failure terminal before install; remove conditional treatment of entire group or explicitly exit each failed check."
+    },
+    {
+      "id": "CQ-F2",
+      "priority": "P2",
+      "path": "combined-migration-qualification.yml",
+      "problem": "Actual Bun1.4.3 is recorded but never asserted; other package/runtime versions have explicit checks.",
+      "fix": "Assert observed Bun version in terminal preflight, preserving requested exact toolchain."
+    },
+    {
+      "id": "CQ-F3",
+      "priority": "P2",
+      "path": "combined-migration-qualification.yml",
+      "problem": "Cap enforcement is only normal-path qualification-shell code; always outcome/upload path can upload logs/generated output after timeout/error bypasses those checks.",
+      "fix": "Enforce declared1MiB/log and16MiB complete upload total on always path before upload, including companion, and preserve original timeout/failure status."
+    }
+  ],
+  "confirmed": [
+    "Exact new branch push-only workflow; pinned checkout/setup/upload; readonly permissions; no native/Python/Rust/database scripts selected",
+    "Six existing broad push workflows need only exact branch exclusion in existing branches-ignore, preserving tags:** and pull_request; remaining3 old triggers do not match",
+    "Portable source-control/regression and R2 context/structural/browser/reproduction command families selected; literal Bun test first; no build.ts chain",
+    "1620s outer timeout+10s termination,28min step,35min job and60s reserve are internally finite; per-child remaining budget clamp preserves reserve",
+    "Generator actual source now admits combined ref only for stage-b-reproduction; no environment spoof"
+  ],
+  "preIntegrationConditions": [
+    "Refresh pin manifest to all42 final source paths plus six changed existing workflows and exact new workflow; current84 rows are preimages",
+    "Correct proposal.json30min versus actual35min, stale41-file and unresolved generator README claims",
+    "No source acceptance or proposal review authorizes execution/push; parent owns concrete reviewed commit/publication and resource coordination"
+  ],
+  "limits": [
+    "No candidate imports/runtime/controller/tests/type/schema/Bun/browser/native executed",
+    "Do not infer green combined114/R2controls/141browser from separate historical greens"
+  ]
+}

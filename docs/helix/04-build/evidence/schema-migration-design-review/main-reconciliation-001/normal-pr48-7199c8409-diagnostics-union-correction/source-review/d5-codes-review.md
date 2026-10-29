@@ -1,0 +1,7 @@
+# D5 fixed validation codes: Sol finite source closure
+
+ACCEPT SOURCE ONLY for access-boundaries.yml SHA-256 `15106182b88cff0e4556c9aae86a64aacbebfcccf70463f7d07217c4cca727e1` (118796 bytes), including previously accepted bounded plan-sidecar collector. Root may refresh the single existing portable workflow row and retain actual failed evidence before coherent source commit/genuine generation.
+
+Text inspection independently matches all44 existing errors.append literal predicates one-to-one to44 unique authored codes. Existing append expressions/predicates/raises are unchanged. Codes are emitted in fixed mapping order, deduplicated per predicate, bounded to mapping count+1. Dynamic filename/name/scenario suffixes are recognized by fixed authored colon prefixes and never emitted. Early fixed literal cap/missing errors map to fixed codes; unknown input emits only unknown-validation-branch. Coarse compatibility field remains. Codes are included in failure receipt before fallback staging, so collector failure cannot hide known validation predicates.
+
+No arbitrary exception text, argv/environment or source payload enters diagnostic outputs; no success assertion,37case/19check/3fault roster, command, deadline/reserve/log/artifact cap changes. Actual7199 primary predicate remains unknown and no cause/performance/runtime fix is claimed. Source941 lint correction remains separately reviewed; successor generation/output adoption and all required qualification remain open. No candidate execution/imports/tests/AST/YAML/Git mutation performed.

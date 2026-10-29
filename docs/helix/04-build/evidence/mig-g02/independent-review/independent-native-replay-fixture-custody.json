@@ -1,0 +1,10 @@
+{
+  "fixture": "independent-native-replay-fixture.json.gz",
+  "sha256": "c29ee30dd76e6e4fbbf6ceea64cb22d77764c2a349081819d0d7ac1c1dc59af1",
+  "archives": {
+    "candidate-008-independent-evidence.tar.gz": "eff02abb641c3955b3a99c884d268df86f8852e42b0292d3834b2d9e2267702d",
+    "candidate-009-independent-evidence.tar.gz": "092b2db842101fe9aac485e05c8d79775b048602b671189a9c83e91467a64d86"
+  },
+  "replayPlacement": "Extract either archive into a directory; copy the fixture without recompressing to that directory/g01/fixture.json.gz. installed-text-oracle.py resolves ../g01 relative to the candidate directory. Frozen host fault and no-default fixtures are already inside each archive.",
+  "scope": "Replay-fixture custody addendum; does not modify either frozen archive or product artifact."
+}

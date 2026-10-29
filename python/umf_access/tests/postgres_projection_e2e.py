@@ -63,7 +63,7 @@ def main():
                            'backendVersion': 'raw-read/0.1', 'targetProfile': 'weft.raw-read/0.1',
                            'platform': [{'name': 'postgresql', 'versions': ['180006']}],
                            'schemaBinding': 'search-path', 'binding': binding}],
-              'weft': {'distribution': 'weft-sql', 'version': importlib.metadata.version('weft-sql')},
+              'weft': {'distribution': 'umf-weft', 'version': importlib.metadata.version('umf-weft')},
               'umf': {'documents': [{'path': name, 'sha256': hashlib.sha256((root / name).read_bytes()).hexdigest()}
                                     for name in ['model.json', 'physical.json']]}}
     (root / 'config.json').write_text(json.dumps(config, indent=2) + '\n')

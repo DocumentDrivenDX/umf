@@ -1,0 +1,4429 @@
+{
+  "runner": "/home/runner/work/umf/umf/tests/lifecycle/g03-defaults-native.py",
+  "runnerSha256": "361f250158e10ade881e78baf480d534e0b27ecf6c70062b9955e2110e23c0ed",
+  "fixture": "/tmp/g02-g03-defaults-fixture.json",
+  "fixtureSha256": "de8736519bcb9aa1bb3c59c62734d6f31035378e192e317295fdd766e513108f",
+  "scenario": "finalize-before-publication",
+  "sourceStatus": "SOURCE_ONLY_ALL_NATIVE_CASES_UNRUN",
+  "packages": {
+    "umf-access": "0.1.0.dev8",
+    "umf-codegen": "0.1.0a5",
+    "weft-sql": "0.4.53",
+    "umf-core": "0.10.2"
+  },
+  "caseStatus": {
+    "G03-N01": "TRANSITIONS_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N02": "EMPTY_TABLE_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N03": "REQUIRED_SET_REPLACE_DROP_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N04": "RETAINED_OMISSION_SOURCE_REFUSAL_AND_READONLY_NATIVE_ABSENCE_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N05": "NULL_AND_DECIMAL_SPELLING_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N06": "KNOWN_ABORT_RETRY_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N07": "PARTIAL_SUBCASE_PASS_FULL_CASE_OPEN",
+    "G03-N08": "UNKNOWN_UNCOMMITTED_FENCE_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N09": "WRITER_BARRIER_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N10": "DATE_TEXT_DECIMAL_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N11": "UUID_AND_TRANSACTION_TIMESTAMP_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N12": "UNQUALIFIED_COMPATIBLE_WEFT_02_COHORT_REQUIRED",
+    "G03-N13": "FULL_PRE_EFFECT_TAMPERING_MATRIX_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N14": "PARTIAL_SUBCASE_PASS_FULL_CASE_OPEN"
+  },
+  "checks": [],
+  "result": {
+    "scenario": "finalize-before-publication",
+    "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
+    "database": "g03_6bfebe910d",
+    "schema": "g03s_6bfebe910d",
+    "roleNames": [
+      "g03o_6bfebe910d",
+      "g03p_6bfebe910d",
+      "g03b_6bfebe910d",
+      "g03a_6bfebe910d",
+      "g03z_6bfebe910d"
+    ],
+    "configurationSha256": "a8145a09e9c89a4f8d85c68e21bdef1bd5387d7722567da630f044979736b94a",
+    "steps": [
+      {
+        "migrationId": "g03-6bfebe910d-001",
+        "planDigest": "0c4264505446c5f9b22b0de6eb5f5886b7cc3324d37cea0e7b32ed97187ff916",
+        "candidate": {
+          "id": "review-684b9ad7da5fb7052f6dd1a5",
+          "kind": "change-default",
+          "path": "/modules/0/extensions/umf.tables/tables/0/columns/2/default",
+          "oldDigest": "772a71e827579b414dc6ce4adf715bab3809028cfd3f3505775a88853c30c944",
+          "newDigest": "12acb6c552a952bfe611f8641fb1b6205340eec1d2dadb3bf00cadef98edd9f7"
+        },
+        "approvalReceiptId": "82d49ade-5483-4a4c-bbd5-1bfeeae3d330",
+        "before": {
+          "observer": {
+            "sessionUser": "postgres",
+            "currentUser": "postgres",
+            "superuser": true
+          },
+          "rows": [
+            [
+              "a",
+              "g03a_6bfebe910d",
+              null,
+              "40514",
+              "1701",
+              "(0,1)"
+            ],
+            [
+              "b",
+              "g03z_6bfebe910d",
+              2,
+              "40514",
+              "1702",
+              "(0,2)"
+            ],
+            [
+              "c",
+              "g03a_6bfebe910d",
+              9,
+              "40514",
+              "1703",
+              "(0,3)"
+            ]
+          ],
+          "rowsDigest": "3ce661557d2f72347ec90b1153666983f05fc64047c06ae9ab4abe9b4ff21460",
+          "relationFileNode": 40514,
+          "columnDefault": null
+        },
+        "after": {
+          "observer": {
+            "sessionUser": "postgres",
+            "currentUser": "postgres",
+            "superuser": true
+          },
+          "rows": [
+            [
+              "a",
+              "g03a_6bfebe910d",
+              null,
+              "40514",
+              "1701",
+              "(0,1)"
+            ],
+            [
+              "b",
+              "g03z_6bfebe910d",
+              2,
+              "40514",
+              "1702",
+              "(0,2)"
+            ],
+            [
+              "c",
+              "g03a_6bfebe910d",
+              9,
+              "40514",
+              "1703",
+              "(0,3)"
+            ]
+          ],
+          "rowsDigest": "3ce661557d2f72347ec90b1153666983f05fc64047c06ae9ab4abe9b4ff21460",
+          "relationFileNode": 40514,
+          "columnDefault": "'5'::numeric"
+        },
+        "hostResult": {
+          "status": "committed",
+          "migrationId": "g03-6bfebe910d-001",
+          "entryDigest": "7f677ffbff9654a78c124345294e1d628061088bc4e05f2991087f0286e7d653",
+          "headDigest": "7f677ffbff9654a78c124345294e1d628061088bc4e05f2991087f0286e7d653",
+          "generation": 2,
+          "installedBundleDigest": "066aae8168d1a9c61f53aa12420933d6d013db390ed5ebfa4c522bd37996719f",
+          "installationReference": {
+            "bundleDigest": "066aae8168d1a9c61f53aa12420933d6d013db390ed5ebfa4c522bd37996719f",
+            "configurationDigest": "a8145a09e9c89a4f8d85c68e21bdef1bd5387d7722567da630f044979736b94a",
+            "generation": 2,
+            "headDigest": "7f677ffbff9654a78c124345294e1d628061088bc4e05f2991087f0286e7d653",
+            "headRelationOid": 40551,
+            "headShape": {
+              "acl": [
+                [
+                  40505,
+                  40505,
+                  "DELETE",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "INSERT",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "MAINTAIN",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "REFERENCES",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "SELECT",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "TRIGGER",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "TRUNCATE",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "UPDATE",
+                  false
+                ],
+                [
+                  40505,
+                  40506,
+                  "SELECT",
+                  false
+                ],
+                [
+                  40505,
+                  40507,
+                  "SELECT",
+                  false
+                ]
+              ],
+              "columnAcl": [],
+              "columns": [
+                [
+                  "generation",
+                  "pg_catalog",
+                  "int8",
+                  -1,
+                  true,
+                  null,
+                  "",
+                  "",
+                  null
+                ],
+                [
+                  "head_digest",
+                  "pg_catalog",
+                  "text",
+                  -1,
+                  true,
+                  "pg_catalog.C",
+                  "",
+                  "",
+                  null
+                ],
+                [
+                  "plan_digest",
+                  "pg_catalog",
+                  "text",
+                  -1,
+                  true,
+                  "pg_catalog.C",
+                  "",
+                  "",
+                  null
+                ],
+                [
+                  "bundle_digest",
+                  "pg_catalog",
+                  "text",
+                  -1,
+                  true,
+                  "pg_catalog.default",
+                  "",
+                  "",
+                  null
+                ],
+                [
+                  "source_digest",
+                  "pg_catalog",
+                  "text",
+                  -1,
+                  true,
+                  "pg_catalog.default",
+                  "",
+                  "",
+                  null
+                ],
+                [
+                  "configuration_digest",
+                  "pg_catalog",
+                  "text",
+                  -1,
+                  true,
+                  "pg_catalog.default",
+                  "",
+                  "",
+                  null
+                ],
+                [
+                  "native_witness",
+                  "pg_catalog",
+                  "jsonb",
+                  -1,
+                  true,
+                  null,
+                  "",
+                  "",
+                  null
+                ]
+              ],
+              "definition": " SELECT \"position\" AS generation,\n    entry_digest AS head_digest,\n    plan_digest,\n    jsonb_extract_path_text(payload, VARIADIC ARRAY['plan'::text, 'toBundleDigest'::text]) AS bundle_digest,\n    jsonb_extract_path_text(payload, VARIADIC ARRAY['plan'::text, 'next'::text, 'sourceDigest'::text]) AS source_digest,\n    jsonb_extract_path_text(payload, VARIADIC ARRAY['plan'::text, 'next'::text, 'configurationDigest'::text]) AS configuration_digest,\n    jsonb_extract_path(payload, VARIADIC ARRAY['witness'::text]) AS native_witness\n   FROM g03s_6bfebe910d.umf_lifecycle_history\n  ORDER BY \"position\" DESC\n LIMIT 1;",
+              "dependencies": [
+                [
+                  1259,
+                  "40531",
+                  1,
+                  "n"
+                ],
+                [
+                  1259,
+                  "40531",
+                  4,
+                  "n"
+                ],
+                [
+                  1259,
+                  "40531",
+                  5,
+                  "n"
+                ],
+                [
+                  1259,
+                  "40531",
+                  6,
+                  "n"
+                ],
+                [
+                  1259,
+                  "self",
+                  0,
+                  "i"
+                ]
+              ],
+              "rules": [
+                [
+                  "_RETURN",
+                  "1",
+                  true,
+                  "O"
+                ]
+              ],
+              "state": [
+                "v",
+                "p",
+                40505,
+                false,
+                false,
+                false,
+                false,
+                true,
+                "n",
+                [
+                  "security_barrier=true",
+                  "security_invoker=false"
+                ],
+                false,
+                false,
+                false,
+                false
+              ]
+            },
+            "historyShape": {
+              "acl": [
+                [
+                  40505,
+                  40505,
+                  "DELETE",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "INSERT",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "MAINTAIN",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "REFERENCES",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "SELECT",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "TRIGGER",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "TRUNCATE",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "UPDATE",
+                  false
+                ]
+              ],
+              "columnAcl": [],
+              "columns": [
+                [
+                  "position",
+                  "pg_catalog",
+                  "int8",
+                  -1,
+                  false,
+                  null,
+                  "",
+                  "",
+                  null
+                ],
+                [
+                  "migration_id",
+                  "pg_catalog",
+                  "text",
+                  -1,
+                  false,
+                  "pg_catalog.C",
+                  "",
+                  "",
+                  null
+                ],
+                [
+                  "predecessor_entry_digest",
+                  "pg_catalog",
+                  "text",
+                  -1,
+                  true,
+                  "pg_catalog.C",
+                  "",
+                  "",
+                  null
+                ],
+                [
+                  "plan_digest",
+                  "pg_catalog",
+                  "text",
+                  -1,
+                  false,
+                  "pg_catalog.C",
+                  "",
+                  "",
+                  null
+                ],
+                [
+                  "entry_digest",
+                  "pg_catalog",
+                  "text",
+                  -1,
+                  false,
+                  "pg_catalog.C",
+                  "",
+                  "",
+                  null
+                ],
+                [
+                  "payload",
+                  "pg_catalog",
+                  "jsonb",
+                  -1,
+                  false,
+                  null,
+                  "",
+                  "",
+                  null
+                ]
+              ],
+              "constraints": [
+                [
+                  "bounded_id",
+                  "c",
+                  "CHECK (octet_length(migration_id) >= 1 AND octet_length(migration_id) <= 256)",
+                  [
+                    "migration_id"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "entry_digest_shape",
+                  "c",
+                  "CHECK (entry_digest ~ '^[a-f0-9]{64}$'::text)",
+                  [
+                    "entry_digest"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "object_payload",
+                  "c",
+                  "CHECK (jsonb_typeof(payload) = 'object'::text)",
+                  [
+                    "payload"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "plan_digest_shape",
+                  "c",
+                  "CHECK (plan_digest ~ '^[a-f0-9]{64}$'::text)",
+                  [
+                    "plan_digest"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "positive_position",
+                  "c",
+                  "CHECK (\"position\" > 0)",
+                  [
+                    "position"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "predecessor_shape",
+                  "c",
+                  "CHECK (predecessor_entry_digest IS NULL OR predecessor_entry_digest ~ '^[a-f0-9]{64}$'::text)",
+                  [
+                    "predecessor_entry_digest"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "umf_lifecycle_history_entry_digest_not_null",
+                  "n",
+                  "NOT NULL entry_digest",
+                  [
+                    "entry_digest"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "umf_lifecycle_history_id_key",
+                  "u",
+                  "UNIQUE (migration_id)",
+                  [
+                    "migration_id"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  true,
+                  false,
+                  "umf_lifecycle_history_id_key",
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "umf_lifecycle_history_migration_id_not_null",
+                  "n",
+                  "NOT NULL migration_id",
+                  [
+                    "migration_id"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "umf_lifecycle_history_payload_not_null",
+                  "n",
+                  "NOT NULL payload",
+                  [
+                    "payload"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "umf_lifecycle_history_pkey",
+                  "p",
+                  "PRIMARY KEY (\"position\")",
+                  [
+                    "position"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  true,
+                  false,
+                  "umf_lifecycle_history_pkey",
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "umf_lifecycle_history_plan_digest_not_null",
+                  "n",
+                  "NOT NULL plan_digest",
+                  [
+                    "plan_digest"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "umf_lifecycle_history_position_not_null",
+                  "n",
+                  "NOT NULL \"position\"",
+                  [
+                    "position"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ]
+              ],
+              "indexes": [
+                [
+                  "umf_lifecycle_history_id_key",
+                  1,
+                  1,
+                  true,
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  [
+                    "migration_id"
+                  ],
+                  [
+                    3126
+                  ],
+                  [
+                    950
+                  ],
+                  [
+                    0
+                  ],
+                  null,
+                  null,
+                  "btree",
+                  "bthandler"
+                ],
+                [
+                  "umf_lifecycle_history_pkey",
+                  1,
+                  1,
+                  true,
+                  true,
+                  false,
+                  true,
+                  true,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  [
+                    "position"
+                  ],
+                  [
+                    3124
+                  ],
+                  [
+                    0
+                  ],
+                  [
+                    0
+                  ],
+                  null,
+                  null,
+                  "btree",
+                  "bthandler"
+                ]
+              ],
+              "state": [
+                "r",
+                "p",
+                "g03o_6bfebe910d",
+                false,
+                false,
+                false,
+                false,
+                false,
+                "d",
+                false,
+                false,
+                false,
+                40505,
+                40531,
+                2
+              ]
+            },
+            "nativeWitness": {
+              "database": [
+                40512,
+                "g03_6bfebe910d"
+              ],
+              "roles": [
+                [
+                  40507,
+                  "g03b_6bfebe910d"
+                ],
+                [
+                  40505,
+                  "g03o_6bfebe910d"
+                ],
+                [
+                  40506,
+                  "g03p_6bfebe910d"
+                ]
+              ],
+              "schema": [
+                40513,
+                40505
+              ],
+              "serverVersion": 180006,
+              "tables": [
+                {
+                  "columnAcl": [
+                    [
+                      "measure",
+                      40505,
+                      40506,
+                      "UPDATE",
+                      false
+                    ],
+                    [
+                      "owner",
+                      40505,
+                      40506,
+                      "UPDATE",
+                      false
+                    ]
+                  ],
+                  "columns": [
+                    [
+                      "id",
+                      "pg_catalog",
+                      "text",
+                      -1,
+                      false,
+                      "pg_catalog.C",
+                      "",
+                      "",
+                      null
+                    ],
+                    [
+                      "owner",
+                      "pg_catalog",
+                      "text",
+                      -1,
+                      false,
+                      "pg_catalog.C",
+                      "",
+                      "",
+                      null
+                    ],
+                    [
+                      "measure",
+                      "pg_catalog",
+                      "int4",
+                      -1,
+                      true,
+                      null,
+                      "",
+                      "",
+                      "'5'::numeric"
+                    ]
+                  ],
+                  "constraints": [
+                    [
+                      "notes_id_not_null",
+                      "n",
+                      "NOT NULL id",
+                      [
+                        "id"
+                      ],
+                      false,
+                      false,
+                      true,
+                      true,
+                      false,
+                      false,
+                      null,
+                      null,
+                      null,
+                      null
+                    ],
+                    [
+                      "notes_owner_not_null",
+                      "n",
+                      "NOT NULL owner",
+                      [
+                        "owner"
+                      ],
+                      false,
+                      false,
+                      true,
+                      true,
+                      false,
+                      false,
+                      null,
+                      null,
+                      null,
+                      null
+                    ],
+                    [
+                      "umf_k_5d660f25e1c2d3203a1bc5981910bfc2",
+                      "p",
+                      "PRIMARY KEY (id)",
+                      [
+                        "id"
+                      ],
+                      false,
+                      false,
+                      true,
+                      true,
+                      true,
+                      false,
+                      "umf_k_5d660f25e1c2d3203a1bc5981910bfc2",
+                      null,
+                      null,
+                      null
+                    ]
+                  ],
+                  "id": "notes",
+                  "indexes": [
+                    [
+                      "umf_k_5d660f25e1c2d3203a1bc5981910bfc2",
+                      1,
+                      1,
+                      true,
+                      true,
+                      false,
+                      true,
+                      true,
+                      false,
+                      true,
+                      true,
+                      false,
+                      false,
+                      [
+                        "id"
+                      ],
+                      [
+                        3126
+                      ],
+                      [
+                        950
+                      ],
+                      [
+                        0
+                      ],
+                      null,
+                      null,
+                      "btree",
+                      "bthandler"
+                    ]
+                  ],
+                  "policies": [
+                    [
+                      "person",
+                      "select",
+                      [
+                        "r",
+                        true,
+                        [
+                          40506
+                        ],
+                        "((owner COLLATE \"C\") = ((CURRENT_USER)::text COLLATE \"C\"))",
+                        null,
+                        [
+                          "1259:40514:0:a",
+                          "1259:40514:2:n"
+                        ]
+                      ]
+                    ],
+                    [
+                      "person",
+                      "insert",
+                      [
+                        "a",
+                        true,
+                        [
+                          40506
+                        ],
+                        null,
+                        "((owner COLLATE \"C\") = ((CURRENT_USER)::text COLLATE \"C\"))",
+                        [
+                          "1259:40514:0:a",
+                          "1259:40514:2:n"
+                        ]
+                      ]
+                    ],
+                    [
+                      "person",
+                      "update",
+                      [
+                        "w",
+                        true,
+                        [
+                          40506
+                        ],
+                        "((owner COLLATE \"C\") = ((CURRENT_USER)::text COLLATE \"C\"))",
+                        "((owner COLLATE \"C\") = ((CURRENT_USER)::text COLLATE \"C\"))",
+                        [
+                          "1259:40514:0:a",
+                          "1259:40514:2:n",
+                          "1259:40514:2:n"
+                        ]
+                      ]
+                    ],
+                    [
+                      "person",
+                      "delete",
+                      [
+                        "d",
+                        true,
+                        [
+                          40506
+                        ],
+                        "((owner COLLATE \"C\") = ((CURRENT_USER)::text COLLATE \"C\"))",
+                        null,
+                        [
+                          "1259:40514:0:a",
+                          "1259:40514:2:n"
+                        ]
+                      ]
+                    ],
+                    [
+                      "batch",
+                      "select",
+                      [
+                        "r",
+                        true,
+                        [
+                          40507
+                        ],
+                        "true",
+                        null,
+                        [
+                          "1259:40514:0:a"
+                        ]
+                      ]
+                    ],
+                    [
+                      "batch",
+                      "insert",
+                      [
+                        "a",
+                        true,
+                        [
+                          40507
+                        ],
+                        null,
+                        "false",
+                        [
+                          "1259:40514:0:a"
+                        ]
+                      ]
+                    ],
+                    [
+                      "batch",
+                      "update",
+                      [
+                        "w",
+                        true,
+                        [
+                          40507
+                        ],
+                        "false",
+                        "false",
+                        [
+                          "1259:40514:0:a"
+                        ]
+                      ]
+                    ],
+                    [
+                      "batch",
+                      "delete",
+                      [
+                        "d",
+                        true,
+                        [
+                          40507
+                        ],
+                        "false",
+                        null,
+                        [
+                          "1259:40514:0:a"
+                        ]
+                      ]
+                    ]
+                  ],
+                  "relation": [
+                    40514,
+                    40505,
+                    "r",
+                    "p",
+                    true,
+                    true,
+                    false,
+                    false,
+                    false,
+                    "d",
+                    2
+                  ],
+                  "tableAcl": [
+                    [
+                      40505,
+                      40505,
+                      "DELETE",
+                      false
+                    ],
+                    [
+                      40505,
+                      40505,
+                      "INSERT",
+                      false
+                    ],
+                    [
+                      40505,
+                      40505,
+                      "MAINTAIN",
+                      false
+                    ],
+                    [
+                      40505,
+                      40505,
+                      "REFERENCES",
+                      false
+                    ],
+                    [
+                      40505,
+                      40505,
+                      "SELECT",
+                      false
+                    ],
+                    [
+                      40505,
+                      40505,
+                      "TRIGGER",
+                      false
+                    ],
+                    [
+                      40505,
+                      40505,
+                      "TRUNCATE",
+                      false
+                    ],
+                    [
+                      40505,
+                      40505,
+                      "UPDATE",
+                      false
+                    ],
+                    [
+                      40505,
+                      40506,
+                      "DELETE",
+                      false
+                    ],
+                    [
+                      40505,
+                      40506,
+                      "INSERT",
+                      false
+                    ],
+                    [
+                      40505,
+                      40506,
+                      "SELECT",
+                      false
+                    ],
+                    [
+                      40505,
+                      40507,
+                      "SELECT",
+                      false
+                    ]
+                  ]
+                }
+              ],
+              "version": "umf.native-table-witness/0.1"
+            },
+            "planDigest": "0c4264505446c5f9b22b0de6eb5f5886b7cc3324d37cea0e7b32ed97187ff916",
+            "sourceDigest": "0364a4c9bf26b0084854df6537bba803312125caa33953c4b56f72f42f7b87dd",
+            "version": "umf.table-installation/0.3",
+            "outcomeShape": {
+              "acl": [
+                [
+                  40505,
+                  40505,
+                  "DELETE",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "INSERT",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "MAINTAIN",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "REFERENCES",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "SELECT",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "TRIGGER",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "TRUNCATE",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "UPDATE",
+                  false
+                ],
+                [
+                  40505,
+                  40506,
+                  "INSERT",
+                  false
+                ],
+                [
+                  40505,
+                  40506,
+                  "SELECT",
+                  false
+                ],
+                [
+                  40505,
+                  40507,
+                  "INSERT",
+                  false
+                ],
+                [
+                  40505,
+                  40507,
+                  "SELECT",
+                  false
+                ]
+              ],
+              "boundary": [
+                false,
+                false
+              ],
+              "columnAcl": [],
+              "columns": [
+                [
+                  "principal_oid",
+                  "pg_catalog",
+                  "oid",
+                  -1,
+                  false,
+                  null,
+                  "",
+                  "",
+                  null
+                ],
+                [
+                  "key_digest",
+                  "pg_catalog",
+                  "text",
+                  -1,
+                  false,
+                  "pg_catalog.C",
+                  "",
+                  "",
+                  null
+                ],
+                [
+                  "invocation_digest",
+                  "pg_catalog",
+                  "text",
+                  -1,
+                  false,
+                  "pg_catalog.C",
+                  "",
+                  "",
+                  null
+                ],
+                [
+                  "scope_digest",
+                  "pg_catalog",
+                  "text",
+                  -1,
+                  false,
+                  "pg_catalog.C",
+                  "",
+                  "",
+                  null
+                ],
+                [
+                  "payload",
+                  "pg_catalog",
+                  "text",
+                  -1,
+                  false,
+                  "pg_catalog.C",
+                  "",
+                  "",
+                  null
+                ],
+                [
+                  "signature",
+                  "pg_catalog",
+                  "text",
+                  -1,
+                  false,
+                  "pg_catalog.C",
+                  "",
+                  "",
+                  null
+                ]
+              ],
+              "constraints": [
+                [
+                  "bounded_payload",
+                  "c",
+                  "CHECK (octet_length(payload) >= 2 AND octet_length(payload) <= 131072)",
+                  [
+                    "payload"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "invocation_digest_shape",
+                  "c",
+                  "CHECK (invocation_digest ~ '^[a-f0-9]{64}$'::text)",
+                  [
+                    "invocation_digest"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "key_digest_shape",
+                  "c",
+                  "CHECK (key_digest ~ '^[a-f0-9]{64}$'::text)",
+                  [
+                    "key_digest"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "positive_principal",
+                  "c",
+                  "CHECK (principal_oid <> 0::oid)",
+                  [
+                    "principal_oid"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "scope_digest_shape",
+                  "c",
+                  "CHECK (scope_digest ~ '^[a-f0-9]{64}$'::text)",
+                  [
+                    "scope_digest"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "signature_shape",
+                  "c",
+                  "CHECK (signature ~ '^[a-f0-9]{64}$'::text)",
+                  [
+                    "signature"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "umf_lifecycle_outcomes_invocation_digest_not_null",
+                  "n",
+                  "NOT NULL invocation_digest",
+                  [
+                    "invocation_digest"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "umf_lifecycle_outcomes_key_digest_not_null",
+                  "n",
+                  "NOT NULL key_digest",
+                  [
+                    "key_digest"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "umf_lifecycle_outcomes_payload_not_null",
+                  "n",
+                  "NOT NULL payload",
+                  [
+                    "payload"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "umf_lifecycle_outcomes_pkey",
+                  "p",
+                  "PRIMARY KEY (principal_oid, key_digest)",
+                  [
+                    "principal_oid",
+                    "key_digest"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  true,
+                  false,
+                  "umf_lifecycle_outcomes_pkey",
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "umf_lifecycle_outcomes_principal_oid_not_null",
+                  "n",
+                  "NOT NULL principal_oid",
+                  [
+                    "principal_oid"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "umf_lifecycle_outcomes_scope_digest_not_null",
+                  "n",
+                  "NOT NULL scope_digest",
+                  [
+                    "scope_digest"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "umf_lifecycle_outcomes_signature_not_null",
+                  "n",
+                  "NOT NULL signature",
+                  [
+                    "signature"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ]
+              ],
+              "indexes": [
+                [
+                  "umf_lifecycle_outcomes_pkey",
+                  2,
+                  2,
+                  true,
+                  true,
+                  false,
+                  true,
+                  true,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  [
+                    "principal_oid",
+                    "key_digest"
+                  ],
+                  [
+                    1981,
+                    3126
+                  ],
+                  [
+                    0,
+                    950
+                  ],
+                  [
+                    0,
+                    0
+                  ],
+                  null,
+                  null,
+                  "btree",
+                  "bthandler"
+                ]
+              ],
+              "policies": [
+                [
+                  "umf_outcome_batch",
+                  "*",
+                  true,
+                  [
+                    40507
+                  ],
+                  "(principal_oid = ( SELECT pg_roles.oid\n   FROM pg_roles\n  WHERE (pg_roles.rolname = CURRENT_USER)))",
+                  "(principal_oid = ( SELECT pg_roles.oid\n   FROM pg_roles\n  WHERE (pg_roles.rolname = CURRENT_USER)))"
+                ],
+                [
+                  "umf_outcome_person",
+                  "*",
+                  true,
+                  [
+                    40506
+                  ],
+                  "(principal_oid = ( SELECT pg_roles.oid\n   FROM pg_roles\n  WHERE (pg_roles.rolname = CURRENT_USER)))",
+                  "(principal_oid = ( SELECT pg_roles.oid\n   FROM pg_roles\n  WHERE (pg_roles.rolname = CURRENT_USER)))"
+                ]
+              ],
+              "state": [
+                "r",
+                "p",
+                "g03o_6bfebe910d",
+                true,
+                true,
+                false,
+                false,
+                false,
+                "d",
+                false,
+                false,
+                true,
+                40505,
+                40555,
+                2
+              ]
+            },
+            "approvalProfile": {
+              "version": "umf.table-migration-approval/0.1",
+              "relation": "umf_lifecycle_approvals",
+              "ownerOnly": true
+            },
+            "approvalPlanDigest": "0c4264505446c5f9b22b0de6eb5f5886b7cc3324d37cea0e7b32ed97187ff916",
+            "approvalShape": {
+              "columnAcl": [],
+              "columns": [
+                [
+                  "approval_id",
+                  "pg_catalog",
+                  "uuid",
+                  -1,
+                  false,
+                  null,
+                  "",
+                  "",
+                  null
+                ],
+                [
+                  "binding_digest",
+                  "pg_catalog",
+                  "text",
+                  -1,
+                  false,
+                  "pg_catalog.C",
+                  "",
+                  "",
+                  null
+                ],
+                [
+                  "binding",
+                  "pg_catalog",
+                  "jsonb",
+                  -1,
+                  false,
+                  null,
+                  "",
+                  "",
+                  null
+                ],
+                [
+                  "decision",
+                  "pg_catalog",
+                  "text",
+                  -1,
+                  false,
+                  "pg_catalog.C",
+                  "",
+                  "",
+                  null
+                ],
+                [
+                  "decider",
+                  "pg_catalog",
+                  "text",
+                  -1,
+                  false,
+                  "pg_catalog.C",
+                  "",
+                  "",
+                  null
+                ],
+                [
+                  "decided_at",
+                  "pg_catalog",
+                  "timestamptz",
+                  -1,
+                  false,
+                  null,
+                  "",
+                  "",
+                  null
+                ],
+                [
+                  "qualification_profile",
+                  "pg_catalog",
+                  "text",
+                  -1,
+                  false,
+                  "pg_catalog.C",
+                  "",
+                  "",
+                  null
+                ],
+                [
+                  "evidence_digest",
+                  "pg_catalog",
+                  "text",
+                  -1,
+                  false,
+                  "pg_catalog.C",
+                  "",
+                  "",
+                  null
+                ]
+              ],
+              "constraints": [
+                [
+                  "approval_binding_digest",
+                  "c",
+                  "CHECK (binding_digest ~ '^[a-f0-9]{64}$'::text)",
+                  [
+                    "binding_digest"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "approval_binding_object",
+                  "c",
+                  "CHECK (jsonb_typeof(binding) = 'object'::text)",
+                  [
+                    "binding"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "approval_binding_unique",
+                  "u",
+                  "UNIQUE (binding_digest)",
+                  [
+                    "binding_digest"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  true,
+                  false,
+                  "approval_binding_unique",
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "approval_decider",
+                  "c",
+                  "CHECK (decider <> ''::text)",
+                  [
+                    "decider"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "approval_decision",
+                  "c",
+                  "CHECK (decision = ANY (ARRAY['approved'::text, 'denied'::text]))",
+                  [
+                    "decision"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "approval_evidence_digest",
+                  "c",
+                  "CHECK (evidence_digest ~ '^[a-f0-9]{64}$'::text)",
+                  [
+                    "evidence_digest"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "approval_profile",
+                  "c",
+                  "CHECK (qualification_profile <> ''::text)",
+                  [
+                    "qualification_profile"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "umf_lifecycle_approvals_approval_id_not_null",
+                  "n",
+                  "NOT NULL approval_id",
+                  [
+                    "approval_id"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "umf_lifecycle_approvals_binding_digest_not_null",
+                  "n",
+                  "NOT NULL binding_digest",
+                  [
+                    "binding_digest"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "umf_lifecycle_approvals_binding_not_null",
+                  "n",
+                  "NOT NULL binding",
+                  [
+                    "binding"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "umf_lifecycle_approvals_decided_at_not_null",
+                  "n",
+                  "NOT NULL decided_at",
+                  [
+                    "decided_at"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "umf_lifecycle_approvals_decider_not_null",
+                  "n",
+                  "NOT NULL decider",
+                  [
+                    "decider"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "umf_lifecycle_approvals_decision_not_null",
+                  "n",
+                  "NOT NULL decision",
+                  [
+                    "decision"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "umf_lifecycle_approvals_evidence_digest_not_null",
+                  "n",
+                  "NOT NULL evidence_digest",
+                  [
+                    "evidence_digest"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "umf_lifecycle_approvals_pkey",
+                  "p",
+                  "PRIMARY KEY (approval_id)",
+                  [
+                    "approval_id"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  true,
+                  false,
+                  "umf_lifecycle_approvals_pkey",
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "umf_lifecycle_approvals_qualification_profile_not_null",
+                  "n",
+                  "NOT NULL qualification_profile",
+                  [
+                    "qualification_profile"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ]
+              ],
+              "indexes": [
+                [
+                  "approval_binding_unique",
+                  1,
+                  1,
+                  true,
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  [
+                    "binding_digest"
+                  ],
+                  [
+                    3126
+                  ],
+                  [
+                    950
+                  ],
+                  [
+                    0
+                  ],
+                  null,
+                  null,
+                  "btree",
+                  "bthandler"
+                ],
+                [
+                  "umf_lifecycle_approvals_pkey",
+                  1,
+                  1,
+                  true,
+                  true,
+                  false,
+                  true,
+                  true,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  [
+                    "approval_id"
+                  ],
+                  [
+                    10065
+                  ],
+                  [
+                    0
+                  ],
+                  [
+                    0
+                  ],
+                  null,
+                  null,
+                  "btree",
+                  "bthandler"
+                ]
+              ],
+              "state": [
+                "r",
+                "p",
+                "g03o_6bfebe910d",
+                false,
+                false,
+                false,
+                false,
+                false,
+                "d",
+                false,
+                false,
+                false,
+                40505,
+                40907,
+                2,
+                false
+              ],
+              "tableAcl": [
+                [
+                  40505,
+                  40505,
+                  "DELETE",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "INSERT",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "MAINTAIN",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "REFERENCES",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "SELECT",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "TRIGGER",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "TRUNCATE",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "UPDATE",
+                  false
+                ]
+              ]
+            },
+            "referenceDigest": "8469f085cdd081b1d35a5c92d3a8a142e1281cac207db2595e88a6e28c66791d"
+          },
+          "commitResponsibility": "adapter",
+          "lifecycleAdmission": false
+        },
+        "futureWritesAsPerson": [
+          {
+            "kind": "omitted",
+            "expected": 5,
+            "actual": 5
+          },
+          {
+            "kind": "null",
+            "expected": null,
+            "actual": null
+          },
+          {
+            "kind": "explicit13",
+            "expected": 13,
+            "actual": 13
+          }
+        ]
+      }
+    ],
+    "serverVersion": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "targetIdentity": {
+      "serverVersion": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+      "sessionUser": "postgres",
+      "currentUser": "postgres",
+      "observerSuperuser": true,
+      "maintenanceDatabase": "postgres",
+      "serverAddress": "172.18.0.2/32",
+      "serverPort": 5432,
+      "postmasterStart": "2026-10-26 20:11:14.804182+00",
+      "systemIdentifier": "7701071671247147052",
+      "observerOid": "10"
+    },
+    "createdRoleIdentities": [
+      {
+        "oid": "40505",
+        "name": "g03o_6bfebe910d",
+        "superuser": false,
+        "bypassRls": false,
+        "createDatabase": false,
+        "createRole": false,
+        "replication": false,
+        "login": false
+      },
+      {
+        "oid": "40506",
+        "name": "g03p_6bfebe910d",
+        "superuser": false,
+        "bypassRls": false,
+        "createDatabase": false,
+        "createRole": false,
+        "replication": false,
+        "login": false
+      },
+      {
+        "oid": "40507",
+        "name": "g03b_6bfebe910d",
+        "superuser": false,
+        "bypassRls": false,
+        "createDatabase": false,
+        "createRole": false,
+        "replication": false,
+        "login": false
+      },
+      {
+        "oid": "40508",
+        "name": "g03a_6bfebe910d",
+        "superuser": false,
+        "bypassRls": false,
+        "createDatabase": false,
+        "createRole": false,
+        "replication": false,
+        "login": false
+      },
+      {
+        "oid": "40509",
+        "name": "g03z_6bfebe910d",
+        "superuser": false,
+        "bypassRls": false,
+        "createDatabase": false,
+        "createRole": false,
+        "replication": false,
+        "login": false
+      }
+    ],
+    "createdDatabaseIdentity": {
+      "oid": "40512",
+      "name": "g03_6bfebe910d",
+      "ownerOid": "10"
+    },
+    "openedOwnedConnection": {
+      "sessionUser": "postgres",
+      "currentUser": "postgres",
+      "backendPid": 1352,
+      "database": "g03_6bfebe910d",
+      "serverVersion": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+      "systemIdentifier": "7701071671247147052",
+      "postmasterStart": "2026-10-26 20:11:14.804182+00"
+    },
+    "createdSchemaIdentity": {
+      "oid": "40513",
+      "name": "g03s_6bfebe910d",
+      "ownerOid": "40505"
+    },
+    "createdTableIdentity": {
+      "oid": "40514",
+      "name": "notes",
+      "ownerOid": "40505",
+      "schemaOid": "40513"
+    },
+    "initialRowCount": 3,
+    "initialObservation": {
+      "observer": {
+        "sessionUser": "postgres",
+        "currentUser": "postgres",
+        "superuser": true
+      },
+      "rows": [
+        [
+          "a",
+          "g03a_6bfebe910d",
+          null,
+          "40514",
+          "1701",
+          "(0,1)"
+        ],
+        [
+          "b",
+          "g03z_6bfebe910d",
+          2,
+          "40514",
+          "1702",
+          "(0,2)"
+        ],
+        [
+          "c",
+          "g03a_6bfebe910d",
+          9,
+          "40514",
+          "1703",
+          "(0,3)"
+        ]
+      ],
+      "rowsDigest": "3ce661557d2f72347ec90b1153666983f05fc64047c06ae9ab4abe9b4ff21460",
+      "relationFileNode": 40514,
+      "columnDefault": null
+    },
+    "defaultStatementDispatches": 1,
+    "progressReads": [
+      {
+        "phaseIndex": 1,
+        "phaseDigest": "9872224d8433a9506ebaf59e1c9780e938e809e44300431f4f91527e26de85d0",
+        "state": "complete",
+        "completedSteps": [
+          "step-00001"
+        ],
+        "observation": "required-transaction-committed"
+      },
+      {
+        "phaseIndex": 1,
+        "phaseDigest": "9872224d8433a9506ebaf59e1c9780e938e809e44300431f4f91527e26de85d0",
+        "state": "complete",
+        "completedSteps": [
+          "step-00001"
+        ]
+      }
+    ],
+    "publicationBeforeRecovery": null,
+    "finalizeRefusalInjected": "before-final-publication-transaction",
+    "committedUnpublishedFence": {
+      "personCanReadHead": false,
+      "batchCanReadHead": false,
+      "personCanReadApproval": false,
+      "batchCanReadApproval": false,
+      "personCanReadProgress": false,
+      "batchCanReadProgress": false,
+      "personVisibleRows": 2,
+      "batchVisibleRows": 3,
+      "progress": [
+        1,
+        "complete",
+        "9872224d8433a9506ebaf59e1c9780e938e809e44300431f4f91527e26de85d0",
+        "[\"step-00001\"]"
+      ]
+    },
+    "sameOriginalReplay": {
+      "status": "already-applied",
+      "migrationId": "g03-6bfebe910d-001",
+      "entryDigest": "7f677ffbff9654a78c124345294e1d628061088bc4e05f2991087f0286e7d653",
+      "headDigest": "7f677ffbff9654a78c124345294e1d628061088bc4e05f2991087f0286e7d653",
+      "generation": 2,
+      "installedBundleDigest": "066aae8168d1a9c61f53aa12420933d6d013db390ed5ebfa4c522bd37996719f",
+      "installationReference": {
+        "bundleDigest": "066aae8168d1a9c61f53aa12420933d6d013db390ed5ebfa4c522bd37996719f",
+        "configurationDigest": "a8145a09e9c89a4f8d85c68e21bdef1bd5387d7722567da630f044979736b94a",
+        "generation": 2,
+        "headDigest": "7f677ffbff9654a78c124345294e1d628061088bc4e05f2991087f0286e7d653",
+        "headRelationOid": 40551,
+        "headShape": {
+          "acl": [
+            [
+              40505,
+              40505,
+              "DELETE",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "INSERT",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "MAINTAIN",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "REFERENCES",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "SELECT",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "TRIGGER",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "TRUNCATE",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "UPDATE",
+              false
+            ],
+            [
+              40505,
+              40506,
+              "SELECT",
+              false
+            ],
+            [
+              40505,
+              40507,
+              "SELECT",
+              false
+            ]
+          ],
+          "columnAcl": [],
+          "columns": [
+            [
+              "generation",
+              "pg_catalog",
+              "int8",
+              -1,
+              true,
+              null,
+              "",
+              "",
+              null
+            ],
+            [
+              "head_digest",
+              "pg_catalog",
+              "text",
+              -1,
+              true,
+              "pg_catalog.C",
+              "",
+              "",
+              null
+            ],
+            [
+              "plan_digest",
+              "pg_catalog",
+              "text",
+              -1,
+              true,
+              "pg_catalog.C",
+              "",
+              "",
+              null
+            ],
+            [
+              "bundle_digest",
+              "pg_catalog",
+              "text",
+              -1,
+              true,
+              "pg_catalog.default",
+              "",
+              "",
+              null
+            ],
+            [
+              "source_digest",
+              "pg_catalog",
+              "text",
+              -1,
+              true,
+              "pg_catalog.default",
+              "",
+              "",
+              null
+            ],
+            [
+              "configuration_digest",
+              "pg_catalog",
+              "text",
+              -1,
+              true,
+              "pg_catalog.default",
+              "",
+              "",
+              null
+            ],
+            [
+              "native_witness",
+              "pg_catalog",
+              "jsonb",
+              -1,
+              true,
+              null,
+              "",
+              "",
+              null
+            ]
+          ],
+          "definition": " SELECT \"position\" AS generation,\n    entry_digest AS head_digest,\n    plan_digest,\n    jsonb_extract_path_text(payload, VARIADIC ARRAY['plan'::text, 'toBundleDigest'::text]) AS bundle_digest,\n    jsonb_extract_path_text(payload, VARIADIC ARRAY['plan'::text, 'next'::text, 'sourceDigest'::text]) AS source_digest,\n    jsonb_extract_path_text(payload, VARIADIC ARRAY['plan'::text, 'next'::text, 'configurationDigest'::text]) AS configuration_digest,\n    jsonb_extract_path(payload, VARIADIC ARRAY['witness'::text]) AS native_witness\n   FROM g03s_6bfebe910d.umf_lifecycle_history\n  ORDER BY \"position\" DESC\n LIMIT 1;",
+          "dependencies": [
+            [
+              1259,
+              "40531",
+              1,
+              "n"
+            ],
+            [
+              1259,
+              "40531",
+              4,
+              "n"
+            ],
+            [
+              1259,
+              "40531",
+              5,
+              "n"
+            ],
+            [
+              1259,
+              "40531",
+              6,
+              "n"
+            ],
+            [
+              1259,
+              "self",
+              0,
+              "i"
+            ]
+          ],
+          "rules": [
+            [
+              "_RETURN",
+              "1",
+              true,
+              "O"
+            ]
+          ],
+          "state": [
+            "v",
+            "p",
+            40505,
+            false,
+            false,
+            false,
+            false,
+            true,
+            "n",
+            [
+              "security_barrier=true",
+              "security_invoker=false"
+            ],
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        "historyShape": {
+          "acl": [
+            [
+              40505,
+              40505,
+              "DELETE",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "INSERT",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "MAINTAIN",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "REFERENCES",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "SELECT",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "TRIGGER",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "TRUNCATE",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "UPDATE",
+              false
+            ]
+          ],
+          "columnAcl": [],
+          "columns": [
+            [
+              "position",
+              "pg_catalog",
+              "int8",
+              -1,
+              false,
+              null,
+              "",
+              "",
+              null
+            ],
+            [
+              "migration_id",
+              "pg_catalog",
+              "text",
+              -1,
+              false,
+              "pg_catalog.C",
+              "",
+              "",
+              null
+            ],
+            [
+              "predecessor_entry_digest",
+              "pg_catalog",
+              "text",
+              -1,
+              true,
+              "pg_catalog.C",
+              "",
+              "",
+              null
+            ],
+            [
+              "plan_digest",
+              "pg_catalog",
+              "text",
+              -1,
+              false,
+              "pg_catalog.C",
+              "",
+              "",
+              null
+            ],
+            [
+              "entry_digest",
+              "pg_catalog",
+              "text",
+              -1,
+              false,
+              "pg_catalog.C",
+              "",
+              "",
+              null
+            ],
+            [
+              "payload",
+              "pg_catalog",
+              "jsonb",
+              -1,
+              false,
+              null,
+              "",
+              "",
+              null
+            ]
+          ],
+          "constraints": [
+            [
+              "bounded_id",
+              "c",
+              "CHECK (octet_length(migration_id) >= 1 AND octet_length(migration_id) <= 256)",
+              [
+                "migration_id"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "entry_digest_shape",
+              "c",
+              "CHECK (entry_digest ~ '^[a-f0-9]{64}$'::text)",
+              [
+                "entry_digest"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "object_payload",
+              "c",
+              "CHECK (jsonb_typeof(payload) = 'object'::text)",
+              [
+                "payload"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "plan_digest_shape",
+              "c",
+              "CHECK (plan_digest ~ '^[a-f0-9]{64}$'::text)",
+              [
+                "plan_digest"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "positive_position",
+              "c",
+              "CHECK (\"position\" > 0)",
+              [
+                "position"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "predecessor_shape",
+              "c",
+              "CHECK (predecessor_entry_digest IS NULL OR predecessor_entry_digest ~ '^[a-f0-9]{64}$'::text)",
+              [
+                "predecessor_entry_digest"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "umf_lifecycle_history_entry_digest_not_null",
+              "n",
+              "NOT NULL entry_digest",
+              [
+                "entry_digest"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "umf_lifecycle_history_id_key",
+              "u",
+              "UNIQUE (migration_id)",
+              [
+                "migration_id"
+              ],
+              false,
+              false,
+              true,
+              true,
+              true,
+              false,
+              "umf_lifecycle_history_id_key",
+              null,
+              null,
+              null
+            ],
+            [
+              "umf_lifecycle_history_migration_id_not_null",
+              "n",
+              "NOT NULL migration_id",
+              [
+                "migration_id"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "umf_lifecycle_history_payload_not_null",
+              "n",
+              "NOT NULL payload",
+              [
+                "payload"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "umf_lifecycle_history_pkey",
+              "p",
+              "PRIMARY KEY (\"position\")",
+              [
+                "position"
+              ],
+              false,
+              false,
+              true,
+              true,
+              true,
+              false,
+              "umf_lifecycle_history_pkey",
+              null,
+              null,
+              null
+            ],
+            [
+              "umf_lifecycle_history_plan_digest_not_null",
+              "n",
+              "NOT NULL plan_digest",
+              [
+                "plan_digest"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "umf_lifecycle_history_position_not_null",
+              "n",
+              "NOT NULL \"position\"",
+              [
+                "position"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ]
+          ],
+          "indexes": [
+            [
+              "umf_lifecycle_history_id_key",
+              1,
+              1,
+              true,
+              false,
+              false,
+              true,
+              true,
+              false,
+              true,
+              true,
+              false,
+              false,
+              [
+                "migration_id"
+              ],
+              [
+                3126
+              ],
+              [
+                950
+              ],
+              [
+                0
+              ],
+              null,
+              null,
+              "btree",
+              "bthandler"
+            ],
+            [
+              "umf_lifecycle_history_pkey",
+              1,
+              1,
+              true,
+              true,
+              false,
+              true,
+              true,
+              false,
+              true,
+              true,
+              false,
+              false,
+              [
+                "position"
+              ],
+              [
+                3124
+              ],
+              [
+                0
+              ],
+              [
+                0
+              ],
+              null,
+              null,
+              "btree",
+              "bthandler"
+            ]
+          ],
+          "state": [
+            "r",
+            "p",
+            "g03o_6bfebe910d",
+            false,
+            false,
+            false,
+            false,
+            false,
+            "d",
+            false,
+            false,
+            false,
+            40505,
+            40531,
+            2
+          ]
+        },
+        "nativeWitness": {
+          "database": [
+            40512,
+            "g03_6bfebe910d"
+          ],
+          "roles": [
+            [
+              40507,
+              "g03b_6bfebe910d"
+            ],
+            [
+              40505,
+              "g03o_6bfebe910d"
+            ],
+            [
+              40506,
+              "g03p_6bfebe910d"
+            ]
+          ],
+          "schema": [
+            40513,
+            40505
+          ],
+          "serverVersion": 180006,
+          "tables": [
+            {
+              "columnAcl": [
+                [
+                  "measure",
+                  40505,
+                  40506,
+                  "UPDATE",
+                  false
+                ],
+                [
+                  "owner",
+                  40505,
+                  40506,
+                  "UPDATE",
+                  false
+                ]
+              ],
+              "columns": [
+                [
+                  "id",
+                  "pg_catalog",
+                  "text",
+                  -1,
+                  false,
+                  "pg_catalog.C",
+                  "",
+                  "",
+                  null
+                ],
+                [
+                  "owner",
+                  "pg_catalog",
+                  "text",
+                  -1,
+                  false,
+                  "pg_catalog.C",
+                  "",
+                  "",
+                  null
+                ],
+                [
+                  "measure",
+                  "pg_catalog",
+                  "int4",
+                  -1,
+                  true,
+                  null,
+                  "",
+                  "",
+                  "'5'::numeric"
+                ]
+              ],
+              "constraints": [
+                [
+                  "notes_id_not_null",
+                  "n",
+                  "NOT NULL id",
+                  [
+                    "id"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "notes_owner_not_null",
+                  "n",
+                  "NOT NULL owner",
+                  [
+                    "owner"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                [
+                  "umf_k_5d660f25e1c2d3203a1bc5981910bfc2",
+                  "p",
+                  "PRIMARY KEY (id)",
+                  [
+                    "id"
+                  ],
+                  false,
+                  false,
+                  true,
+                  true,
+                  true,
+                  false,
+                  "umf_k_5d660f25e1c2d3203a1bc5981910bfc2",
+                  null,
+                  null,
+                  null
+                ]
+              ],
+              "id": "notes",
+              "indexes": [
+                [
+                  "umf_k_5d660f25e1c2d3203a1bc5981910bfc2",
+                  1,
+                  1,
+                  true,
+                  true,
+                  false,
+                  true,
+                  true,
+                  false,
+                  true,
+                  true,
+                  false,
+                  false,
+                  [
+                    "id"
+                  ],
+                  [
+                    3126
+                  ],
+                  [
+                    950
+                  ],
+                  [
+                    0
+                  ],
+                  null,
+                  null,
+                  "btree",
+                  "bthandler"
+                ]
+              ],
+              "policies": [
+                [
+                  "person",
+                  "select",
+                  [
+                    "r",
+                    true,
+                    [
+                      40506
+                    ],
+                    "((owner COLLATE \"C\") = ((CURRENT_USER)::text COLLATE \"C\"))",
+                    null,
+                    [
+                      "1259:40514:0:a",
+                      "1259:40514:2:n"
+                    ]
+                  ]
+                ],
+                [
+                  "person",
+                  "insert",
+                  [
+                    "a",
+                    true,
+                    [
+                      40506
+                    ],
+                    null,
+                    "((owner COLLATE \"C\") = ((CURRENT_USER)::text COLLATE \"C\"))",
+                    [
+                      "1259:40514:0:a",
+                      "1259:40514:2:n"
+                    ]
+                  ]
+                ],
+                [
+                  "person",
+                  "update",
+                  [
+                    "w",
+                    true,
+                    [
+                      40506
+                    ],
+                    "((owner COLLATE \"C\") = ((CURRENT_USER)::text COLLATE \"C\"))",
+                    "((owner COLLATE \"C\") = ((CURRENT_USER)::text COLLATE \"C\"))",
+                    [
+                      "1259:40514:0:a",
+                      "1259:40514:2:n",
+                      "1259:40514:2:n"
+                    ]
+                  ]
+                ],
+                [
+                  "person",
+                  "delete",
+                  [
+                    "d",
+                    true,
+                    [
+                      40506
+                    ],
+                    "((owner COLLATE \"C\") = ((CURRENT_USER)::text COLLATE \"C\"))",
+                    null,
+                    [
+                      "1259:40514:0:a",
+                      "1259:40514:2:n"
+                    ]
+                  ]
+                ],
+                [
+                  "batch",
+                  "select",
+                  [
+                    "r",
+                    true,
+                    [
+                      40507
+                    ],
+                    "true",
+                    null,
+                    [
+                      "1259:40514:0:a"
+                    ]
+                  ]
+                ],
+                [
+                  "batch",
+                  "insert",
+                  [
+                    "a",
+                    true,
+                    [
+                      40507
+                    ],
+                    null,
+                    "false",
+                    [
+                      "1259:40514:0:a"
+                    ]
+                  ]
+                ],
+                [
+                  "batch",
+                  "update",
+                  [
+                    "w",
+                    true,
+                    [
+                      40507
+                    ],
+                    "false",
+                    "false",
+                    [
+                      "1259:40514:0:a"
+                    ]
+                  ]
+                ],
+                [
+                  "batch",
+                  "delete",
+                  [
+                    "d",
+                    true,
+                    [
+                      40507
+                    ],
+                    "false",
+                    null,
+                    [
+                      "1259:40514:0:a"
+                    ]
+                  ]
+                ]
+              ],
+              "relation": [
+                40514,
+                40505,
+                "r",
+                "p",
+                true,
+                true,
+                false,
+                false,
+                false,
+                "d",
+                2
+              ],
+              "tableAcl": [
+                [
+                  40505,
+                  40505,
+                  "DELETE",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "INSERT",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "MAINTAIN",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "REFERENCES",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "SELECT",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "TRIGGER",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "TRUNCATE",
+                  false
+                ],
+                [
+                  40505,
+                  40505,
+                  "UPDATE",
+                  false
+                ],
+                [
+                  40505,
+                  40506,
+                  "DELETE",
+                  false
+                ],
+                [
+                  40505,
+                  40506,
+                  "INSERT",
+                  false
+                ],
+                [
+                  40505,
+                  40506,
+                  "SELECT",
+                  false
+                ],
+                [
+                  40505,
+                  40507,
+                  "SELECT",
+                  false
+                ]
+              ]
+            }
+          ],
+          "version": "umf.native-table-witness/0.1"
+        },
+        "planDigest": "0c4264505446c5f9b22b0de6eb5f5886b7cc3324d37cea0e7b32ed97187ff916",
+        "sourceDigest": "0364a4c9bf26b0084854df6537bba803312125caa33953c4b56f72f42f7b87dd",
+        "version": "umf.table-installation/0.3",
+        "outcomeShape": {
+          "acl": [
+            [
+              40505,
+              40505,
+              "DELETE",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "INSERT",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "MAINTAIN",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "REFERENCES",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "SELECT",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "TRIGGER",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "TRUNCATE",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "UPDATE",
+              false
+            ],
+            [
+              40505,
+              40506,
+              "INSERT",
+              false
+            ],
+            [
+              40505,
+              40506,
+              "SELECT",
+              false
+            ],
+            [
+              40505,
+              40507,
+              "INSERT",
+              false
+            ],
+            [
+              40505,
+              40507,
+              "SELECT",
+              false
+            ]
+          ],
+          "boundary": [
+            false,
+            false
+          ],
+          "columnAcl": [],
+          "columns": [
+            [
+              "principal_oid",
+              "pg_catalog",
+              "oid",
+              -1,
+              false,
+              null,
+              "",
+              "",
+              null
+            ],
+            [
+              "key_digest",
+              "pg_catalog",
+              "text",
+              -1,
+              false,
+              "pg_catalog.C",
+              "",
+              "",
+              null
+            ],
+            [
+              "invocation_digest",
+              "pg_catalog",
+              "text",
+              -1,
+              false,
+              "pg_catalog.C",
+              "",
+              "",
+              null
+            ],
+            [
+              "scope_digest",
+              "pg_catalog",
+              "text",
+              -1,
+              false,
+              "pg_catalog.C",
+              "",
+              "",
+              null
+            ],
+            [
+              "payload",
+              "pg_catalog",
+              "text",
+              -1,
+              false,
+              "pg_catalog.C",
+              "",
+              "",
+              null
+            ],
+            [
+              "signature",
+              "pg_catalog",
+              "text",
+              -1,
+              false,
+              "pg_catalog.C",
+              "",
+              "",
+              null
+            ]
+          ],
+          "constraints": [
+            [
+              "bounded_payload",
+              "c",
+              "CHECK (octet_length(payload) >= 2 AND octet_length(payload) <= 131072)",
+              [
+                "payload"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "invocation_digest_shape",
+              "c",
+              "CHECK (invocation_digest ~ '^[a-f0-9]{64}$'::text)",
+              [
+                "invocation_digest"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "key_digest_shape",
+              "c",
+              "CHECK (key_digest ~ '^[a-f0-9]{64}$'::text)",
+              [
+                "key_digest"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "positive_principal",
+              "c",
+              "CHECK (principal_oid <> 0::oid)",
+              [
+                "principal_oid"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "scope_digest_shape",
+              "c",
+              "CHECK (scope_digest ~ '^[a-f0-9]{64}$'::text)",
+              [
+                "scope_digest"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "signature_shape",
+              "c",
+              "CHECK (signature ~ '^[a-f0-9]{64}$'::text)",
+              [
+                "signature"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "umf_lifecycle_outcomes_invocation_digest_not_null",
+              "n",
+              "NOT NULL invocation_digest",
+              [
+                "invocation_digest"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "umf_lifecycle_outcomes_key_digest_not_null",
+              "n",
+              "NOT NULL key_digest",
+              [
+                "key_digest"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "umf_lifecycle_outcomes_payload_not_null",
+              "n",
+              "NOT NULL payload",
+              [
+                "payload"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "umf_lifecycle_outcomes_pkey",
+              "p",
+              "PRIMARY KEY (principal_oid, key_digest)",
+              [
+                "principal_oid",
+                "key_digest"
+              ],
+              false,
+              false,
+              true,
+              true,
+              true,
+              false,
+              "umf_lifecycle_outcomes_pkey",
+              null,
+              null,
+              null
+            ],
+            [
+              "umf_lifecycle_outcomes_principal_oid_not_null",
+              "n",
+              "NOT NULL principal_oid",
+              [
+                "principal_oid"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "umf_lifecycle_outcomes_scope_digest_not_null",
+              "n",
+              "NOT NULL scope_digest",
+              [
+                "scope_digest"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "umf_lifecycle_outcomes_signature_not_null",
+              "n",
+              "NOT NULL signature",
+              [
+                "signature"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ]
+          ],
+          "indexes": [
+            [
+              "umf_lifecycle_outcomes_pkey",
+              2,
+              2,
+              true,
+              true,
+              false,
+              true,
+              true,
+              false,
+              true,
+              true,
+              false,
+              false,
+              [
+                "principal_oid",
+                "key_digest"
+              ],
+              [
+                1981,
+                3126
+              ],
+              [
+                0,
+                950
+              ],
+              [
+                0,
+                0
+              ],
+              null,
+              null,
+              "btree",
+              "bthandler"
+            ]
+          ],
+          "policies": [
+            [
+              "umf_outcome_batch",
+              "*",
+              true,
+              [
+                40507
+              ],
+              "(principal_oid = ( SELECT pg_roles.oid\n   FROM pg_roles\n  WHERE (pg_roles.rolname = CURRENT_USER)))",
+              "(principal_oid = ( SELECT pg_roles.oid\n   FROM pg_roles\n  WHERE (pg_roles.rolname = CURRENT_USER)))"
+            ],
+            [
+              "umf_outcome_person",
+              "*",
+              true,
+              [
+                40506
+              ],
+              "(principal_oid = ( SELECT pg_roles.oid\n   FROM pg_roles\n  WHERE (pg_roles.rolname = CURRENT_USER)))",
+              "(principal_oid = ( SELECT pg_roles.oid\n   FROM pg_roles\n  WHERE (pg_roles.rolname = CURRENT_USER)))"
+            ]
+          ],
+          "state": [
+            "r",
+            "p",
+            "g03o_6bfebe910d",
+            true,
+            true,
+            false,
+            false,
+            false,
+            "d",
+            false,
+            false,
+            true,
+            40505,
+            40555,
+            2
+          ]
+        },
+        "approvalProfile": {
+          "version": "umf.table-migration-approval/0.1",
+          "relation": "umf_lifecycle_approvals",
+          "ownerOnly": true
+        },
+        "approvalPlanDigest": "0c4264505446c5f9b22b0de6eb5f5886b7cc3324d37cea0e7b32ed97187ff916",
+        "approvalShape": {
+          "columnAcl": [],
+          "columns": [
+            [
+              "approval_id",
+              "pg_catalog",
+              "uuid",
+              -1,
+              false,
+              null,
+              "",
+              "",
+              null
+            ],
+            [
+              "binding_digest",
+              "pg_catalog",
+              "text",
+              -1,
+              false,
+              "pg_catalog.C",
+              "",
+              "",
+              null
+            ],
+            [
+              "binding",
+              "pg_catalog",
+              "jsonb",
+              -1,
+              false,
+              null,
+              "",
+              "",
+              null
+            ],
+            [
+              "decision",
+              "pg_catalog",
+              "text",
+              -1,
+              false,
+              "pg_catalog.C",
+              "",
+              "",
+              null
+            ],
+            [
+              "decider",
+              "pg_catalog",
+              "text",
+              -1,
+              false,
+              "pg_catalog.C",
+              "",
+              "",
+              null
+            ],
+            [
+              "decided_at",
+              "pg_catalog",
+              "timestamptz",
+              -1,
+              false,
+              null,
+              "",
+              "",
+              null
+            ],
+            [
+              "qualification_profile",
+              "pg_catalog",
+              "text",
+              -1,
+              false,
+              "pg_catalog.C",
+              "",
+              "",
+              null
+            ],
+            [
+              "evidence_digest",
+              "pg_catalog",
+              "text",
+              -1,
+              false,
+              "pg_catalog.C",
+              "",
+              "",
+              null
+            ]
+          ],
+          "constraints": [
+            [
+              "approval_binding_digest",
+              "c",
+              "CHECK (binding_digest ~ '^[a-f0-9]{64}$'::text)",
+              [
+                "binding_digest"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "approval_binding_object",
+              "c",
+              "CHECK (jsonb_typeof(binding) = 'object'::text)",
+              [
+                "binding"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "approval_binding_unique",
+              "u",
+              "UNIQUE (binding_digest)",
+              [
+                "binding_digest"
+              ],
+              false,
+              false,
+              true,
+              true,
+              true,
+              false,
+              "approval_binding_unique",
+              null,
+              null,
+              null
+            ],
+            [
+              "approval_decider",
+              "c",
+              "CHECK (decider <> ''::text)",
+              [
+                "decider"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "approval_decision",
+              "c",
+              "CHECK (decision = ANY (ARRAY['approved'::text, 'denied'::text]))",
+              [
+                "decision"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "approval_evidence_digest",
+              "c",
+              "CHECK (evidence_digest ~ '^[a-f0-9]{64}$'::text)",
+              [
+                "evidence_digest"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "approval_profile",
+              "c",
+              "CHECK (qualification_profile <> ''::text)",
+              [
+                "qualification_profile"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "umf_lifecycle_approvals_approval_id_not_null",
+              "n",
+              "NOT NULL approval_id",
+              [
+                "approval_id"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "umf_lifecycle_approvals_binding_digest_not_null",
+              "n",
+              "NOT NULL binding_digest",
+              [
+                "binding_digest"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "umf_lifecycle_approvals_binding_not_null",
+              "n",
+              "NOT NULL binding",
+              [
+                "binding"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "umf_lifecycle_approvals_decided_at_not_null",
+              "n",
+              "NOT NULL decided_at",
+              [
+                "decided_at"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "umf_lifecycle_approvals_decider_not_null",
+              "n",
+              "NOT NULL decider",
+              [
+                "decider"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "umf_lifecycle_approvals_decision_not_null",
+              "n",
+              "NOT NULL decision",
+              [
+                "decision"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "umf_lifecycle_approvals_evidence_digest_not_null",
+              "n",
+              "NOT NULL evidence_digest",
+              [
+                "evidence_digest"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              "umf_lifecycle_approvals_pkey",
+              "p",
+              "PRIMARY KEY (approval_id)",
+              [
+                "approval_id"
+              ],
+              false,
+              false,
+              true,
+              true,
+              true,
+              false,
+              "umf_lifecycle_approvals_pkey",
+              null,
+              null,
+              null
+            ],
+            [
+              "umf_lifecycle_approvals_qualification_profile_not_null",
+              "n",
+              "NOT NULL qualification_profile",
+              [
+                "qualification_profile"
+              ],
+              false,
+              false,
+              true,
+              true,
+              false,
+              false,
+              null,
+              null,
+              null,
+              null
+            ]
+          ],
+          "indexes": [
+            [
+              "approval_binding_unique",
+              1,
+              1,
+              true,
+              false,
+              false,
+              true,
+              true,
+              false,
+              true,
+              true,
+              false,
+              false,
+              [
+                "binding_digest"
+              ],
+              [
+                3126
+              ],
+              [
+                950
+              ],
+              [
+                0
+              ],
+              null,
+              null,
+              "btree",
+              "bthandler"
+            ],
+            [
+              "umf_lifecycle_approvals_pkey",
+              1,
+              1,
+              true,
+              true,
+              false,
+              true,
+              true,
+              false,
+              true,
+              true,
+              false,
+              false,
+              [
+                "approval_id"
+              ],
+              [
+                10065
+              ],
+              [
+                0
+              ],
+              [
+                0
+              ],
+              null,
+              null,
+              "btree",
+              "bthandler"
+            ]
+          ],
+          "state": [
+            "r",
+            "p",
+            "g03o_6bfebe910d",
+            false,
+            false,
+            false,
+            false,
+            false,
+            "d",
+            false,
+            false,
+            false,
+            40505,
+            40907,
+            2,
+            false
+          ],
+          "tableAcl": [
+            [
+              40505,
+              40505,
+              "DELETE",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "INSERT",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "MAINTAIN",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "REFERENCES",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "SELECT",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "TRIGGER",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "TRUNCATE",
+              false
+            ],
+            [
+              40505,
+              40505,
+              "UPDATE",
+              false
+            ]
+          ]
+        },
+        "referenceDigest": "8469f085cdd081b1d35a5c92d3a8a142e1281cac207db2595e88a6e28c66791d"
+      },
+      "commitResponsibility": "adapter"
+    },
+    "historicalRows": [
+      [
+        "a",
+        "Alice",
+        null
+      ],
+      [
+        "b",
+        "Bob",
+        2
+      ],
+      [
+        "c",
+        "Alice",
+        9
+      ]
+    ],
+    "futureWriteProbes": "run for selected integer/required/domain scenario; other selectors remain separate",
+    "cleanupVerification": {
+      "ownedDatabaseAbsent": true,
+      "ownedDatabaseRemaining": null,
+      "ownedRolesAbsent": true,
+      "remainingRoleIdentities": [],
+      "targetIdentityUnchanged": true,
+      "schemaAndTableAbsentByOwnedDatabaseRemoval": true
+    },
+    "cleanup": {
+      "createdDatabase": true,
+      "createdRoles": [
+        "g03o_6bfebe910d",
+        "g03p_6bfebe910d",
+        "g03b_6bfebe910d",
+        "g03a_6bfebe910d",
+        "g03z_6bfebe910d"
+      ],
+      "errors": [],
+      "status": "PASS"
+    }
+  },
+  "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN"
+}

@@ -1,0 +1,121 @@
+{
+  "schema": "umf.sdk057.local-linux-evidence-owner-result/1",
+  "status": "held",
+  "proposedRepositoryPath": "docs/helix/04-build/evidence/schema-migration-design-review/main-reconciliation-001/sdk-057-local-linux-e4299aff8/",
+  "releaseOrPublication": "not established",
+  "publicH": "not asserted",
+  "source": {
+    "commit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+    "tree": "8b98c0d895983ba2b7637dd3aea567dab0943883",
+    "dependencies": {
+      "core": "0.10.3",
+      "weft": "0.4.55"
+    }
+  },
+  "environment": {
+    "engine": "OrbStack Docker 29.8.2",
+    "hostArchitecture": "linux/aarch64",
+    "containerPlatform": "linux/amd64",
+    "hostKernel": "Linux 7.2.9-orbstack-00391-g2b298d05fbd4 x86_64 GNU/Linux",
+    "hostedActions": false,
+    "nativeX86_64Host": false,
+    "macOSRuntime": false
+  },
+  "sdkDistribution": {
+    "status": "passed-local-profile",
+    "attempt": "003",
+    "executionId": "local-sdk-20261028T202157Z-38d3c32d-05e2-4803-97e1-dd396aebcba1-attempt1",
+    "receipt": "sdk/attempt-003/sdk-producer-receipt.json",
+    "consumerCases": 139,
+    "artifact": {
+      "path": "sdk-distribution/umf-sdk.tgz",
+      "sizeBytes": 30834843,
+      "sha256": "cd851d3338b1b2af79197cbafaeefdd03a8aac3e02373a893ddd5d07a930ab26",
+      "payloadIncluded": false
+    },
+    "manifest": {
+      "path": "sdk-distribution/manifest.json",
+      "sizeBytes": 229540,
+      "sha256": "70e52b8e0425e1e3256f60d126196083b093fa0192c9ff85ba9ba2699c9be87a",
+      "included": true
+    },
+    "limitations": [
+      "Local Linux/amd64 container emulation on OrbStack linux/aarch64 host.",
+      "Not hosted CI, a native x86_64 host, publication, or public-consumer proof."
+    ]
+  },
+  "full18": {
+    "sourceAcquisitionAndAggregate": {
+      "status": "passed",
+      "attempt": "002",
+      "receipt": "full18/attempt-002/local-aggregate-producer-receipt.json",
+      "cells": [
+        "linux-x86_64-py311 / CPython 3.11.17",
+        "linux-x86_64-py314 / CPython 3.14.9"
+      ],
+      "aggregateIndexSha256": "fac25d7d5041983f1e3d464efbdda70e84df19f9fd7b70882990e4a05e69a634",
+      "unionLockSha256": "d72b1fe64f403fc52aaca586c6b73147feaea99c6a291767385e3caa351015ab",
+      "macInputsExecuted": false
+    },
+    "unionReplay": {
+      "status": "functional-only-not-accepted",
+      "continuation": "001",
+      "receipt": "full18/union-continuation-001/continuation-receipt.json",
+      "reportedCells": {
+        "linux-x86_64-py311": {
+          "status": "passed-functional",
+          "reportSha256": "5ff8e0b922e1e2330f8c8e1b1576bd27b02f49c93c81c06f2f948571383b3ab8"
+        },
+        "linux-x86_64-py314": {
+          "status": "passed-functional",
+          "reportSha256": "26e234aef5d014bcaeac2753c8892458fdee6743ea25d3d07a78106dc21898ab"
+        }
+      },
+      "notAcceptedBecause": "Continuation 001 omitted the accepted local 3600-second stage watchdog and used 4 CPU/8 GiB instead of the accepted 8 CPU/24 GiB settings.",
+      "originalFailurePreserved": "full18/attempt-002/logs/linux-x86_64-py311-union-replay.log",
+      "nextRequired": "Bounded two-cell continuation after quiet D5 completes, against unchanged source, aggregate, bootstrap, images, and probes."
+    }
+  },
+  "d5": {
+    "status": "not-accepted",
+    "priorAttempt": {
+      "attempt": "001",
+      "receipt": "d5/attempt-001/upload/d5-receipt.json",
+      "status": "FAIL_OR_UNKNOWN",
+      "failedCommand": "oracle-integer",
+      "rawExit": 124,
+      "durationMilliseconds": 180210,
+      "dateCommandDurationMilliseconds": 158140
+    },
+    "currentAttempt": {
+      "attempt": "002",
+      "status": "in-progress-owner-reported",
+      "partialCasesReportedPassed": [
+        "date",
+        "integer",
+        "decimal",
+        "text"
+      ],
+      "remainingMatrixRunning": true,
+      "terminalReceiptIncluded": false
+    }
+  },
+  "notClaimed": [
+    "G02-D5 acceptance",
+    "bounded full18 union acceptance",
+    "macOS runtime qualification",
+    "SDK publication or immutable release identity",
+    "public-H proof",
+    "G03-G11 support",
+    "managed-consumer acceptance",
+    "additional backends",
+    "Praxis changes"
+  ],
+  "evidenceStaging": {
+    "copiedReceiptAndReviewFiles": 71,
+    "copiedBytes": 8091058,
+    "excludedPayloadLedger": "excluded-payloads.json",
+    "custodyIndex": "custody-index.json",
+    "packetIsRepositoryAdopted": false
+  }
+}

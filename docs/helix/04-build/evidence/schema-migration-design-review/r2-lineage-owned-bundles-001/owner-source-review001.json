@@ -1,0 +1,14 @@
+{
+  "profile": "umf.r2-owned-lineage-bundle-owner-review/1",
+  "status": "SOURCE_ACCEPT_RUNTIME_UNRUN",
+  "sourcePins": {
+    "src/table-migration/inventory-r2-context.ts": "44114e50a0e6742ee7dca0f8024f658c8a48c232dad898e87f9ab550321f41f3",
+    "src/table-migration/inventory-verified-deployment.ts": "034c72c9a7e861a551807cf45e97d74919bb4fb94522e63b06b6574c771f8e2c",
+    "src/table-migration/inventory-history.ts": "5dd3c6086e3a1379d2aac08787e04d8026046b534f9ad1c78447617acc5d38f7",
+    "tests/lifecycle/table-inventory-api.test.ts": "a15835e98895e5dc6f43746d376b26be6d1d53d31c3c2c3cca8d99916cb94571"
+  },
+  "solReviewSha256": "007db3db20bd1abb79be9f08beccdb8b99d3fe2f5abf3a23d68a70076262b05a",
+  "rootReview": "Read whole4filedelta. Corrected ownerlookup falsely requiring rootmetadata on plan member and malformed fallback blocks before final freeze. Private exact plans association/value identity/frozen object precedes descriptor reading; digest only bucket index; fullchargedcanonical bytes match independently verified immutable bundle DATA. Missing ownership/cache/mismatch retains originalcopy+completeverifier. No runtimecycle/newregistrar/callerDTOcert or auxiliary escape.",
+  "pins": "96rows; adds only actual unchanged tables/deployment schema inputs used by corrected G04 fixture.",
+  "remaining": "Two generic current root bundle copies intentionally unchanged because history member ownership does not prove separate roots. Actual fullfixture fit unproven; originalcaps/deadlines retained."
+}

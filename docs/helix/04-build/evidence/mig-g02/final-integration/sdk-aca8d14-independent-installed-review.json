@@ -1,0 +1,36 @@
+{
+  "status": "independent-installed-sdk-parity-passed",
+  "sourceCommit": "aca8d14d615eb99a21201776fc941836f9828d65",
+  "sdkArchiveSha256": "a7d1887873600dad73626a96231621b94be68e37b15d843609b359f63a45ca1d",
+  "sdkVersion": "0.5.7",
+  "runtime": "Bun1.4.3",
+  "coreCases": 139,
+  "exactInstalledPythonPlanParity": 5,
+  "plans": [
+    {
+      "file": "temporal-birthday-date-coalesce.json",
+      "sha256": "74231c3aae5096de9c3f5d7719dd9c1b5c27739ed204d9558f4d97a6ef0c4ee9"
+    },
+    {
+      "file": "temporal-boolean-copy-coalesce.json",
+      "sha256": "bc336695dda63795b46316a2d444cb775e4d2d7f73488e2e408e48e3a3686022"
+    },
+    {
+      "file": "temporal-instant-copy-coalesce.json",
+      "sha256": "ba0f1f9e88b5174f74c0854bcf0e441d5b6b2afb7996f1de39a14e6d662ba4a2"
+    },
+    {
+      "file": "temporal-matched-null-date-rollback.json",
+      "sha256": "808939c34d492870eb1bf11dbba4493e9b1eb38b6aaa63fb098065e3eb465a20"
+    },
+    {
+      "file": "temporal-uuid-copy-coalesce.json",
+      "sha256": "8c080ca3ec8fe39d43560a6501ccdae294b4c456817f46a02d10b86f0d0811dc"
+    }
+  ],
+  "pythonCompilerWheelSha256": "8238d47da540e8f957117417fb32168b4ac322f84e37efa028482016ff81958e",
+  "coreCorpusSha256": "bb008a98b8448050748e65f867e7863475ccad9501a5b9229ae9e6d336691544",
+  "installedSourceImports": false,
+  "packageInstallation": "Isolatedmanual1754membertar extraction/noinstallscript/network",
+  "limits": "IndependentactualinstalledSDKprobe+Pythoncompilerparity only. No PostgreSQL, browser or finalrelease acceptance. Inventory/source-map audit separate; actualCIfinalSDKmaydifferbydeclaredbuilderandneedsfreshreview."
+}

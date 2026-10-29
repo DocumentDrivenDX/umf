@@ -1,0 +1,56 @@
+stage=install
+argv=timeout --signal=TERM --kill-after=20s 160s bun install --frozen-lockfile --ignore-scripts
+started_utc=2026-10-25T19:08:20Z
+ended_utc=2026-10-25T19:08:21Z
+exit=0
+duration_seconds=1
+log_bytes_before_cap=1056
+log_truncated=no
+stage=typecheck
+argv=timeout --signal=TERM --kill-after=20s 180s bun node_modules/typescript/bin/tsc --noEmit -p tsconfig.r2-metering-stageb.json
+started_utc=2026-10-25T19:08:21Z
+ended_utc=2026-10-25T19:08:22Z
+exit=0
+duration_seconds=1
+log_bytes_before_cap=0
+log_truncated=no
+stage=source-controls-and-parity
+argv=timeout --signal=TERM --kill-after=20s 180s bun test --timeout 15000 tests/metamodel/structural-accounting-source.test.ts tests/lifecycle/table-inventory-r2-context.test.ts tests/lifecycle/table-deployment-r2-accounting.test.ts tests/metamodel/structural-accounting-parity.test.ts
+started_utc=2026-10-25T19:08:22Z
+ended_utc=2026-10-25T19:08:26Z
+exit=0
+duration_seconds=4
+log_bytes_before_cap=4053
+log_truncated=no
+stage=reproduction
+argv=timeout --signal=TERM --kill-after=20s 120s bun scripts/qualification/r2-metering-generate.ts
+started_utc=2026-10-25T19:08:26Z
+ended_utc=2026-10-25T19:08:27Z
+exit=0
+duration_seconds=1
+log_bytes_before_cap=857
+log_truncated=no
+stage=reproduction-compare
+argv=cmp -- src/generated/core-validators-accounted.ts /home/runner/work/_temp/r2-metering-generated-40224512217-1-reproduction/core-validators-accounted.ts
+started_utc=2026-10-25T19:08:27Z
+ended_utc=2026-10-25T19:08:27Z
+exit=0
+duration_seconds=0
+log_bytes_before_cap=0
+log_truncated=no
+stage=browser-install
+argv=timeout --signal=TERM --kill-after=20s 180s bun node_modules/playwright/cli.js install chromium
+started_utc=2026-10-25T19:08:27Z
+ended_utc=2026-10-25T19:08:35Z
+exit=0
+duration_seconds=8
+log_bytes_before_cap=6811
+log_truncated=no
+stage=browser-parity
+argv=timeout --signal=TERM --kill-after=20s 180s bun scripts/r2-metering-browser.ts
+started_utc=2026-10-25T19:08:35Z
+ended_utc=2026-10-25T19:08:39Z
+exit=0
+duration_seconds=4
+log_bytes_before_cap=607
+log_truncated=no

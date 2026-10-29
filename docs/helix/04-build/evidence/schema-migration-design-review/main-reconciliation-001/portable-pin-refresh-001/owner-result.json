@@ -1,0 +1,36 @@
+{
+  "status": "EXACT_SOURCE_PINS_REVIEWED_QUALIFICATION_PENDING",
+  "sourceBase": "28666c2e8aa72bddcf8e18981ec5be987b65f6ce",
+  "manifestSha256": "d0806281e94a791320fb26920484585a11ef066e78309da25c91184481e39517",
+  "manifestRows": 97,
+  "updatedExistingRows": [
+    "scripts/metamodel/structural-accounting.ts",
+    "scripts/qualification/r2-metering-generate.ts",
+    "scripts/r2-metering-browser.ts",
+    "src/generated/core-validators-accounted.ts",
+    "src/index.ts",
+    "src/validation/document.ts",
+    "tests/metamodel/r2-metering-browser-entry.ts",
+    "tests/metamodel/structural-accounting-parity.test.ts",
+    "tests/lifecycle/g03-defaults-native.py",
+    "src/generated/core-validators.ts",
+    "spec/core/schema.json",
+    "spec/core/semantic-type-reference.schema.json",
+    "spec/core/extension-package.schema.json",
+    ".github/workflows/python.yml",
+    ".github/workflows/sql-containment.yml",
+    ".github/workflows/actions.yml",
+    ".github/workflows/rust-core.yml",
+    ".github/workflows/rust-spike.yml",
+    ".github/workflows/pypi.yml",
+    ".github/workflows/access-boundaries.yml",
+    ".github/workflows/combined-migration-qualification.yml"
+  ],
+  "addedRows": [
+    "fixtures/extension-kinds/conformance.json"
+  ],
+  "workflowSha256": "e233fad1bebfdfb11ab768d641919fbd0a802e118b2453a9b53c4c5c7bd2fb74",
+  "staticByteHashMismatches": 0,
+  "automaticApprovalReview": "Initial bulk and 20-row updates rejected for unrelated or unvalidated inputs. Replaced with finite source-provenance-reviewed allowlist; no check removed or waived.",
+  "scope": "Source identity only. Original portable/browser gates pending; native Core public dependency and native qualification remain held."
+}

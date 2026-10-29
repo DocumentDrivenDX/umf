@@ -1,0 +1,155 @@
+{
+  "artifactId": 12773824414,
+  "artifactName": "rust-production-core-ubuntu-latest-python-3.11.17",
+  "artifactZipBytes": 219595,
+  "artifactZipSha256": "8a2fcf53ace8299708610f5ffd3f2c14f38d58819da3d4efbb514fb139ed28e5",
+  "event": "pull_request",
+  "fixtureSha256": "bb008a98b8448050748e65f867e7863475ccad9501a5b9229ae9e6d336691544",
+  "jobConclusion": "success",
+  "jobId": 122464045682,
+  "producerSourceClosureSha256": "96279bca3060844dacc3b19240f1a0149743ca34fe7896ccb6a5b3705191f951",
+  "qualificationClaims": {
+    "browser": "real Chromium qualifies the default shipped WASM separately for 139 boundaries and the conformance-feature WASM for 94,056 shared Python regex outcomes plus 412 Python 3.14 profile outcomes and 139 core boundaries, with no external requests",
+    "cli": "native binary validated against the frozen 139 corpus with PATH empty",
+    "javascript": "npm-packed native addon installed outside checkout, tested under Node and Bun",
+    "python": "wheel install and wheel rebuilt from sdist, outside checkout; full public Python suite, frozen 139 and host controls, 9,282 schema admission decisions, official JSON Schema outcome controls, 2,586 Python numeric schema predecessor cases, 7,671 Python schema evaluation-order/reference/annotation/resource-scope/resource-identity/anchor/URI public method observations including the approved narrow legacy2019 additionalProperties correction, 263 error metadata/subject/path records, and 6 runtime TypeError observations with phase attribution",
+    "resourceProfile": "cooperative host controls exercised; HardIsolated remains refused before work"
+  },
+  "qualificationCount": 5,
+  "qualificationInputCount": 35,
+  "reportBytes": 2158093,
+  "reportMember": "umf-r3-qualification.json",
+  "reportSha256": "4d96ef013c20b64118ff9a07e4bd7243b6c382ee70b3dcdbcce6de4ac3afe38c",
+  "reportStatus": "pass",
+  "resultsCount": 22,
+  "runApiHeadSha": "7199c8409d0a67f3a99c1f1fd62ffc0f078d6eb2",
+  "runId": 40582138899,
+  "runtime": {
+    "bun": "1.4.3\n",
+    "node": "v26.12.0",
+    "python": "/home/runner/.local/share/uv/python/cpython-3.11.17-linux-x86_64-gnu/bin/python3.11",
+    "runner": "v26.3.0",
+    "rust": "cargo 1.90.0 (840b83a10 2025-07-30)"
+  },
+  "selectedObserved": {
+    "bun139": {
+      "cases": 139,
+      "copiedTextUnits": 6000000,
+      "engineVersion": "umf-core-r2",
+      "fixture": "/home/runner/work/umf/umf/docs/helix/04-build/evidence/rust-migration/r2/baseline-current-conformance.json",
+      "fixtureSha256": "bb008a98b8448050748e65f867e7863475ccad9501a5b9229ae9e6d336691544",
+      "hostControls": [
+        "meter",
+        "cancel",
+        "deadline",
+        "reentry"
+      ],
+      "inventoryExtensionDepth": {
+        "accepted": 122,
+        "refused": 123
+      },
+      "maxDocumentDepth": 128,
+      "orderedDiagnostics": true,
+      "runtime": "Bun 1.4.3",
+      "sourceTextUnits": 4000000,
+      "status": "pass"
+    },
+    "chromiumDefault139": {
+      "cases": 139,
+      "chromium": "153.0.8010.12",
+      "copiedTextUnits": 6000000,
+      "engineVersion": "umf-core-r2",
+      "externalRequests": 0,
+      "hostControls": [
+        "meter",
+        "cancel",
+        "deadline",
+        "reentry"
+      ],
+      "inventoryExtensionDepth": {
+        "accepted": 122,
+        "refused": 123
+      },
+      "jsonYamlRoundTrip": true,
+      "maxDocumentDepth": 128,
+      "rawSurrogateCallback": true,
+      "sourceTextUnits": 4000000,
+      "status": "pass",
+      "wasmQualification": "default-production"
+    },
+    "chromiumRegexFeature": {
+      "annotatedVisitorDepth128Accepted129Refused": true,
+      "cases": 139,
+      "chromium": "153.0.8010.12",
+      "copiedTextUnits": 6000000,
+      "engineVersion": "umf-core-r2",
+      "externalRequests": 0,
+      "hostControls": [
+        "meter",
+        "cancel",
+        "deadline",
+        "reentry"
+      ],
+      "inventoryExtensionDepth": {
+        "accepted": 122,
+        "refused": 123
+      },
+      "jsonYamlRoundTrip": true,
+      "maxDocumentDepth": 128,
+      "python314AppendixComparisons": 412,
+      "python314AppendixParserControls": 6,
+      "pythonRegexCasesPerProfile": 6372,
+      "pythonRegexComparisons": 25488,
+      "pythonRegexHexCasesPerProfile": 2022,
+      "pythonRegexHexComparisons": 8088,
+      "pythonRegexInfoCasesPerProfile": 15120,
+      "pythonRegexInfoComparisons": 60480,
+      "pythonRegexProfiles": [
+        11,
+        12,
+        13,
+        14
+      ],
+      "rawSurrogateCallback": true,
+      "regexOutcomeParserControls": 16,
+      "schemaDepth128Accepted129Refused": true,
+      "sourceTextUnits": 4000000,
+      "status": "pass",
+      "wasmQualification": "python-regex-feature",
+      "wideWorkCounter": "u64-portable-chunks-and-refusal"
+    },
+    "cli139": {
+      "cases": 139,
+      "executable": "/home/runner/work/umf/umf/target/release/umf",
+      "fixtureSha256": "bb008a98b8448050748e65f867e7863475ccad9501a5b9229ae9e6d336691544",
+      "orderedDiagnostics": true,
+      "path": "empty",
+      "sourceSha256": "acfa2dedc1ba72f989c903b048aabe38913b112de222cc27bf33304a94c66da4",
+      "status": "pass"
+    },
+    "node139": {
+      "cases": 139,
+      "copiedTextUnits": 6000000,
+      "engineVersion": "umf-core-r2",
+      "fixture": "/home/runner/work/umf/umf/docs/helix/04-build/evidence/rust-migration/r2/baseline-current-conformance.json",
+      "fixtureSha256": "bb008a98b8448050748e65f867e7863475ccad9501a5b9229ae9e6d336691544",
+      "hostControls": [
+        "meter",
+        "cancel",
+        "deadline",
+        "reentry"
+      ],
+      "inventoryExtensionDepth": {
+        "accepted": 122,
+        "refused": 123
+      },
+      "maxDocumentDepth": 128,
+      "orderedDiagnostics": true,
+      "runtime": "Node v26.12.0",
+      "sourceTextUnits": 4000000,
+      "status": "pass"
+    }
+  },
+  "sourceFileHashCount": 1348,
+  "syntheticCheckoutProducerSha": "06494602fe83d1af90f743243dad6afb7921206c"
+}

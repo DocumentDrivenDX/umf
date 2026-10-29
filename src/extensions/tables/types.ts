@@ -33,7 +33,7 @@ export type TableOperationBody=
  |{kind:'update';table:string;where:TableOperationPredicate;values:TableOperationAssignment[];returning:TableRef[];maxRows:number}
  |{kind:'delete';table:string;where:TableOperationPredicate;returning:TableRef[];maxRows:number}
  |{kind:'upsert';table:string;conflictKey:string;values:TableOperationAssignment[];onConflict:'ignore'|'update';updateFields:TableRef[];returning:TableRef[];maxRows:1};
-export interface TableOperation {
+export interface TableOperationV1 {
  version:'umf.table-operation/0.1';id:string;
  parameters:{id:string;field:TableRef}[];
  body:TableOperationBody;
@@ -41,3 +41,17 @@ export interface TableOperation {
  replay:'none'|'caller-key-required'|'caller-key-optional';
  batch?:{maxItems:number};
 }
+export type RowExpression=
+ |{op:'field';field:TableRef}
+ |{op:'literal';value:CoreLiteral}
+ |{op:'coalesce'|'concat';args:RowExpression[]}
+ |{op:'add'|'subtract'|'multiply';left:RowExpression;right:RowExpression}
+ |{op:'conditional';when:RowExpressionPredicate;then:RowExpression;else:RowExpression};
+export type RowExpressionLiteralValue={kind:'literal';value:CoreLiteral};
+export type RowExpressionPredicate={op:'all'}|{op:'and'|'or';args:RowExpressionPredicate[]}|{op:'not';arg:RowExpressionPredicate}|{op:'isNull';field:TableRef}|{op:'in';field:TableRef;values:RowExpressionLiteralValue[]}|{op:'eq'|'ne'|'lt'|'le'|'gt'|'ge'|'startsWith';field:TableRef;value:RowExpressionLiteralValue};
+export interface RowExpressionAssignment {field:TableRef;value:{kind:'rowExpression';expression:RowExpression}}
+export interface RowExpressionOperation {
+ version:'umf.table-operation/0.2';id:string;parameters:[];consistency:'transaction';replay:'caller-key-required';
+ body:{kind:'update';table:string;values:[RowExpressionAssignment];where:{op:'isNull';field:TableRef};returning:[];maxRows:number};
+}
+export type TableOperation=TableOperationV1|RowExpressionOperation;

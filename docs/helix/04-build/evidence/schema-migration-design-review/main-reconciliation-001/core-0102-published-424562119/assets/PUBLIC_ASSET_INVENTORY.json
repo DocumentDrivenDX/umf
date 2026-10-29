@@ -1,0 +1,58 @@
+{
+  "assets": [
+    {
+      "bytes": 3582082,
+      "filename": "umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl",
+      "sha256": "708f967747b0539b9ca7b6a5f39d1017eea8ddb1d07cd62f4f46592e088f6f39"
+    },
+    {
+      "bytes": 3294849,
+      "filename": "umf_core-0.10.2-cp311-abi3-macosx_11_0_arm64.whl",
+      "sha256": "99ff1d1250c613a7b65bdd4dc6cf3ee9fec647e02ec34f8dc5ffb84285b0ac59"
+    },
+    {
+      "bytes": 2652087,
+      "filename": "umf_core-0.10.2.tar.gz",
+      "sha256": "90a107aaa507930e1d71c0cf208b77182d06c0bf2a1b13681fd5f7b6ed74cb9d"
+    },
+    {
+      "bytes": 163526,
+      "filename": "umf-core-0.10.2-qualification-evidence.zip",
+      "sha256": "e873b3ce9c374607b516332fd990ee6c4121b9e78610fc8151859f2279c57e47"
+    },
+    {
+      "bytes": 7389,
+      "filename": "qualification.json",
+      "sha256": "44b72323ec0b343911c47477b5058f33fb64b070265f5be10ce0117b373d3718"
+    },
+    {
+      "bytes": 506,
+      "filename": "release-pins.json",
+      "sha256": "cece033ad163861f7319f3ec4ceb1260c911d20a9cce72e0aafea222a0dd083b"
+    },
+    {
+      "bytes": 2559,
+      "filename": "current-source-ci.json",
+      "sha256": "4d683bf58f24a65802bb94263cfc349d76b7f710380e359d893030c4c3f59fcb"
+    },
+    {
+      "bytes": 872,
+      "filename": "RELEASE_NOTES.md",
+      "sha256": "380673ee459d86cda058edccf2b7c61db0afd5c2abe20a2068ad7a028cea92bf"
+    }
+  ],
+  "checksums": {
+    "covers": "Every other top-level asset including this inventory; SHA256SUMS has no self-entry.",
+    "filename": "SHA256SUMS"
+  },
+  "commit": "6337b4b5f65144387ce5c0bbf9cbad955a921c8f",
+  "distribution": "umf-core",
+  "schema": "umf.core-public-asset-inventory/1",
+  "self": {
+    "digest": "listed-in-SHA256SUMS",
+    "filename": "PUBLIC_ASSET_INVENTORY.json",
+    "selfHashExcluded": true
+  },
+  "tag": "python-v0.10.2",
+  "version": "0.10.2"
+}

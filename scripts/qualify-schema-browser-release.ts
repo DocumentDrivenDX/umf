@@ -5,6 +5,7 @@ import {createHash} from 'node:crypto';
 import {copyFile,mkdir,readdir,writeFile} from 'node:fs/promises';
 import {join,resolve,dirname} from 'node:path';
 import {pathToFileURL} from 'node:url';
+import type {ConsoleMessage,Request} from 'playwright';
 
 type Hashes=Record<string,string>;
 const PACKAGE='@documentdrivendx/umf-schema-browser';
@@ -13,15 +14,15 @@ const SHA=/^[0-9a-f]{64}$/;
 const COMMIT=/^[0-9a-f]{40}$/;
 const bunVersion='1.4.2';
 const fail=(message:string):never=>{throw Error(message);};
-const assert=(condition:unknown,message:string):asserts condition=>{if(!condition)fail(message);};
+const assert:(condition:unknown,message:string)=>asserts condition=(condition,message)=>{if(!condition)fail(message);};
 const digest=(bytes:Uint8Array)=>createHash('sha256').update(bytes).digest('hex');
 const json=(value:unknown)=>JSON.stringify(value,null,2)+'\n';
 
 function options(argv:string[]):Record<string,string>{
  const result:Record<string,string>={};
  for(let i=0;i<argv.length;i++){
-  const key=argv[i];assert(key?.startsWith('--'),'Expected --name value arguments');
-  const value=argv[++i];assert(value!==undefined&&!value.startsWith('--'),`Missing value for ${key}`);
+  const key=argv[i];assert(typeof key==='string'&&key.startsWith('--'),'Expected --name value arguments');
+  const value=argv[++i];assert(typeof value==='string'&&!value.startsWith('--'),`Missing value for ${key}`);
   assert(!(key.slice(2) in result),`Duplicate argument ${key}`);result[key.slice(2)]=value;
  }
  return result;
@@ -83,7 +84,7 @@ async function qualify(args:Record<string,string>):Promise<void>{
  const root=resolve(args.repo??''),sourceSha=args['source-sha']??'',tag=args.tag??'',output=resolve(args.output??'');
  assert(root!==resolve('/')&&await Bun.file(join(root,'package.json')).exists(),'--repo must name the selected source checkout');
  assert(COMMIT.test(sourceSha),'--source-sha must be an exact 40-character commit');
- const match=TAG.exec(tag);assert(match,'--tag must be schema-browser-vX.Y.Z');
+ const match=TAG.exec(tag);assert(match&&match[1]!==undefined&&match[2]!==undefined&&match[3]!==undefined,'--tag must be schema-browser-vX.Y.Z');
  const version=match.slice(1).join('.');
  assert(Bun.version===bunVersion,`qualification requires Bun ${bunVersion}`);
  assert(output!==root&&!output.startsWith(root+'/'),'release output must be outside the source checkout');
@@ -135,7 +136,10 @@ async function qualify(args:Record<string,string>):Promise<void>{
   "const handle=mount(document.body,{assetsUrl:'/assets/',catalog});handle.focus();\n"+
   "renderRecordMap(document.body,{records:[],edges:[]});\n");
  const tsc=join(root,'node_modules/typescript/bin/tsc');
- for(const [label,module,moduleResolution] of [['types-bundler','ESNext','Bundler'],['types-nodenext','NodeNext','NodeNext']]){
+ const typeConfigurations:ReadonlyArray<readonly [string,string,string]>=[
+  ['types-bundler','ESNext','Bundler'],['types-nodenext','NodeNext','NodeNext'],
+ ];
+ for(const [label,module,moduleResolution] of typeConfigurations){
   await run([process.execPath,tsc,'--ignoreConfig','--noEmit','--strict','--target','ES2022','--module',module,
    '--moduleResolution',moduleResolution,join(typeConsumer,'consumer.mts')],label,typeConsumer,logs);
  }
@@ -153,9 +157,9 @@ async function qualify(args:Record<string,string>):Promise<void>{
  let browserProof:any;
  try{
   const page=await browser.newPage({viewport:{width:1280,height:960}});
-  page.on('pageerror',error=>errors.push(String(error)));
-  page.on('console',message=>{if(message.type()==='error')errors.push(message.text());});
-  page.on('request',request=>{const url=request.url();if(/^https?:/i.test(url)&&!url.startsWith(origin+'/'))external.push(url);});
+  page.on('pageerror',(error:Error)=>errors.push(String(error)));
+  page.on('console',(message:ConsoleMessage)=>{if(message.type()==='error')errors.push(message.text());});
+  page.on('request',(request:Request)=>{const url=request.url();if(/^https?:/i.test(url)&&!url.startsWith(origin+'/'))external.push(url);});
   await page.goto(origin+'/examples/index.html');
   await page.locator('#status').filter({hasText:'Selected customer-model'}).waitFor({timeout:30000});
   await page.locator('#select').click();
@@ -188,7 +192,7 @@ async function qualify(args:Record<string,string>):Promise<void>{
 
 async function verifyAssets(args:Record<string,string>):Promise<void>{
  const directory=resolve(args.assets??''),tag=args.tag??'',sourceSha=args['source-sha']??'';
- const match=TAG.exec(tag);assert(match,'--tag must be schema-browser-vX.Y.Z');
+ const match=TAG.exec(tag);assert(match&&match[1]!==undefined&&match[2]!==undefined&&match[3]!==undefined,'--tag must be schema-browser-vX.Y.Z');
  assert(COMMIT.test(sourceSha),'--source-sha must be an exact 40-character commit');
  const version=match.slice(1).join('.'),archiveName=`documentdrivendx-umf-schema-browser-${version}.tgz`;
  const entries=await readdir(directory,{withFileTypes:true});

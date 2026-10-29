@@ -1,0 +1,39 @@
+{
+  "adapterPurpose": "replace only GitHub event/ref identity with actual local Linux identity; retain D5 command/case/custody/finalizer checks; separate local whole-suite 3600-second resource policy with unchanged D5 semantic, child, log, evidence, and payload bounds",
+  "boundsPreserved": false,
+  "candidateExecutionPerformed": false,
+  "executionKind": "local_linux_diagnostic",
+  "hostedEvidenceClaim": false,
+  "nonTemporalBoundsPreserved": true,
+  "resourceProfile": "LOCAL_EMULATED_3600",
+  "resourceProfileSha256": "7ef1260d0bd61e7eef80c753091ef605979a376c3d2ab8e158fdecb6830d98fe",
+  "sourceSteps": {
+    "finalize.sh": {
+      "bytes": 33129,
+      "sha256": "8fda407e759bb4e67f8f8e0d5047af76ac22bd76882c2693cf92d67ecd1e6582"
+    },
+    "initialize.sh": {
+      "bytes": 839,
+      "sha256": "50582cf9adff0cc5c2fa0197f96bbb387da411f89939fda7382322a96ba7394b"
+    },
+    "replay.sh": {
+      "bytes": 31988,
+      "sha256": "33827347f78023e0a99c6a9b94c5ac053d503cc1226e0f6c3bb2b747fa78b4d2"
+    }
+  },
+  "sourceWorkflowSha256": "f0963d2df1e371112ba6e57999dbf69290796d711eb97ed46637d4ebc63918a1",
+  "stepCopies": {
+    "finalize.local.sh": {
+      "bytes": 34270,
+      "sha256": "80a80d88053249cd9d00982200ecd35cfb8e82767b43528fe6d02ce724f21564"
+    },
+    "initialize.local.sh": {
+      "bytes": 1321,
+      "sha256": "87d95f05fa68eaa49cb4541aab7e64c918d7ca096853fefb6fc29e378ffc98c6"
+    },
+    "replay.local.sh": {
+      "bytes": 32361,
+      "sha256": "03f778295575b364e5a78af45df4506a5eaf20e4248ae13af141beb45e540110"
+    }
+  }
+}

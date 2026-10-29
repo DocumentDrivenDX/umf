@@ -1,0 +1,80 @@
+{
+  "status": "passed-local-asset-verification",
+  "tag": "v0.4.53",
+  "mergeCommit": "726a840e956e25217d6aeea2674fdfcf3f342a24",
+  "packagingCommit": "7413c19d16ca5d8d8ce60b62d49ca0a3250544df",
+  "assetNames": [
+    "SHA256SUMS",
+    "local-macos-qualification.json",
+    "packaging-aarch64-apple-darwin.json",
+    "packaging-aarch64-unknown-linux-gnu.json",
+    "packaging-x86_64-unknown-linux-gnu.json",
+    "release-pins.json",
+    "weft_sql-0.4.53-cp39-abi3-macosx_11_0_arm64.whl",
+    "weft_sql-0.4.53-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+    "weft_sql-0.4.53-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+  ],
+  "wheelCount": 3,
+  "packagingReportCount": 3,
+  "qualificationSha256": "0c35f88d036a8c6cc7a16fc282d3ad51167cacaaa8d1274bc0ce0ad77c831802",
+  "notesSha256": "94449ddc909f942b2816bc2d6f5787864c9e889e2e5a8fb18f0723b7c03de1c8",
+  "packagingRunId": 40019944651,
+  "packagingRunSource": "7413c19d16ca5d8d8ce60b62d49ca0a3250544df",
+  "tagCommit": "726a840e956e25217d6aeea2674fdfcf3f342a24",
+  "assets": [
+    {
+      "name": "SHA256SUMS",
+      "size": 394,
+      "sha256": "b1785570c5995a52dfa276ed4964c309a96177da31884b97d32bf924487c2d26",
+      "apiAssetId": "RA_kwDOU9Mt-s4n978Y"
+    },
+    {
+      "name": "local-macos-qualification.json",
+      "size": 11451,
+      "sha256": "0c35f88d036a8c6cc7a16fc282d3ad51167cacaaa8d1274bc0ce0ad77c831802",
+      "apiAssetId": "RA_kwDOU9Mt-s4n978V"
+    },
+    {
+      "name": "packaging-aarch64-apple-darwin.json",
+      "size": 476,
+      "sha256": "9e0c35af826dc67e9dda43131052dffd4577284ccb68bbc0fa600402251e864b",
+      "apiAssetId": "RA_kwDOU9Mt-s4n978W"
+    },
+    {
+      "name": "packaging-aarch64-unknown-linux-gnu.json",
+      "size": 554,
+      "sha256": "b55792f4806458faa9403b050692a7454dc0dc881e7982b4cf4e34a3d68a0553",
+      "apiAssetId": "RA_kwDOU9Mt-s4n978Z"
+    },
+    {
+      "name": "packaging-x86_64-unknown-linux-gnu.json",
+      "size": 552,
+      "sha256": "7d29a0e36a8ca43da3b1741d4d6d898723f688ce7c8c065a714cdbc3c1a6d57a",
+      "apiAssetId": "RA_kwDOU9Mt-s4n978X"
+    },
+    {
+      "name": "release-pins.json",
+      "size": 14467,
+      "sha256": "b2530b7e3791b07ba4d48ca5f3e02dd2540ea7023b717655a10667dd98b1c5b0",
+      "apiAssetId": "RA_kwDOU9Mt-s4n978m"
+    },
+    {
+      "name": "weft_sql-0.4.53-cp39-abi3-macosx_11_0_arm64.whl",
+      "size": 10842336,
+      "sha256": "4c8281945b852af02cae8602747fb7b1b652ab3a1369d7650efce62ae6d35c6c",
+      "apiAssetId": "RA_kwDOU9Mt-s4n9782"
+    },
+    {
+      "name": "weft_sql-0.4.53-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "size": 12787292,
+      "sha256": "2bb5ebc1ae1ad64847bbc15cd01e6a33f87f43ea417df38b36fa6e46268ca5a9",
+      "apiAssetId": "RA_kwDOU9Mt-s4n978n"
+    },
+    {
+      "name": "weft_sql-0.4.53-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "size": 13987313,
+      "sha256": "db01c4cf6357d674f1591609a2b9c83a9322ad8f8937c345e5950cc1582b83d2",
+      "apiAssetId": "RA_kwDOU9Mt-s4n978z"
+    }
+  ]
+}

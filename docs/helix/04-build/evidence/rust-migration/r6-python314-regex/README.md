@@ -55,3 +55,9 @@ all 144,141 prior name-table rows retain identical codepoint/version values.
 | `crates/umf-core/tests/fixtures/cpython-re/outcomes-3.14.tsv` | `b1795db238445eeeafcbd7b370ae27a63ca914dc06ec33440fccd445a384de4a` |
 | `crates/umf-core/tests/python_regex_314.rs` | `ed7434741b3b1d97ddae176be044a9c9f6049d87ee2706d635e667ba614b67a8` |
 | CPython 3.14.8 executable | `1b5cb11d163e5ba34e2a05fc533c0ed89574d4425f9749a9d89405f651980e0d` |
+
+## Core 0.10.3 publication qualification
+
+Core 0.10.3 is merged and published with [complete bounded publication evidence](core-0103-dependency-plan/public-release-40547321010/README.md). Fresh Linux x86_64 Python 3.11/3.14 public installations each passed the original 254-test suite, byte/native correspondence and required probes. The original source-tree observations above retain their recorded scope.
+
+The built macOS arm64 artifact ships with retained Python 3.11 qualification; macOS Python 3.14 remains unqualified and no fresh macOS public installation proof is claimed. CI runs on Linux. Migration SDK and remaining migration backlog acceptance are separate.

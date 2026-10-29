@@ -1,0 +1,165 @@
+{
+  "profile": "umf.journal005-source-verification-readiness/0.1",
+  "state": "sealed source-only review request; NO_GO until coordinator exact ticket; no imports/tests/execution performed",
+  "candidateManifestSha256": "4c5fdf5d09bcb0f5ed468484caa7ec70a5aa4f858f985a655130a06501dc8841",
+  "sourceMembers": 265,
+  "closureSha256": "31f1d16121a652086295cc62921e74ee1f2823fd5cf5419e2548c65ad0989e27",
+  "commandsSha256": "372d20e6752ab825b130826002a384098733dbe3140ac57e5df033ed80bba86b",
+  "runtime": [
+    {
+      "path": "/Users/erik/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/bin/python3.12",
+      "sha256": "fe5e57e7f0dc374654e314d4e8f20cf2a345bda8a4e03032046f407027628a32"
+    },
+    {
+      "path": "/Users/erik/.cache/uv/archive-v0/CK8JiGH866FVBH6T/bin/ruff",
+      "sha256": "1cd36902264ba39d8eada510c026a44236ddb55f67937694d8a22b2708fdc0e0"
+    },
+    {
+      "path": "/private/tmp/g11-owner-authority-crypto-001/venv/lib/python3.12/site-packages/cryptography/__init__.py",
+      "sha256": "9ad86e52b4dde0544e0a9518ad322a863cfab3a4fd763019ad5ee7675a0c9b6a"
+    },
+    {
+      "path": "/private/tmp/umf056-public-wheel-verify/venv/lib/python3.12/site-packages/pydantic/__init__.py",
+      "sha256": "e5248cb9bbe293b3536dbed7fea54326dcdf3c03370ae5f03d794c58496ec01b"
+    },
+    {
+      "path": "/private/tmp/umf-g03-access-001/venv/lib/python3.11/site-packages/psycopg/__init__.py",
+      "sha256": "5f1607a193cb63e60a0c5687209d2bd0e3029760b9559e9968f31d6b5d82c778"
+    }
+  ],
+  "importRoots": [
+    "/private/tmp/g11-journal005-independent-review001/combined/snapshot/python/umf_access/src",
+    "/private/tmp/g11-journal005-independent-review001/combined/snapshot/python/umf_access/tests",
+    "/private/tmp/g11-owner-authority-crypto-001/venv/lib/python3.12/site-packages",
+    "/private/tmp/umf056-public-wheel-verify/venv/lib/python3.12/site-packages",
+    "/private/tmp/umf-g03-access-001/venv/lib/python3.11/site-packages"
+  ],
+  "expectedUnitTests": 207,
+  "overallBudgetSeconds": 60,
+  "excluded": [
+    "Bun",
+    "package scripts",
+    "Docker",
+    "PostgreSQL",
+    "native provider",
+    "network",
+    "build/browser"
+  ],
+  "custody": {
+    "reference": "/private/tmp/truss-lakebase-049-20261023/qualification/supervise_f37_native_cleanup_v3.py",
+    "referenceSha256": "471623ac9a5c2c97d2c2da11891ba8c187f887862fa16ee8dd77129bde03af26",
+    "supervisor": "/private/tmp/g11-journal005-independent-review001/supervise_journal005.py",
+    "supervisorSha256": "64aea2c95bea6cb87bbc77ba0b8c36f7db4e1141033679dea3aa865e712b954f",
+    "worker": "/private/tmp/g11-journal005-independent-review001/verify005_controller.py",
+    "workerSha256": "dde1a321799ce1418ac3302e651b3001851d190eba20675f8fb757a6ecd889de",
+    "diffSha256": "325e3a1dd5981e380983e7a8aade352018e55ae14da04919f67f4abd1e6c5096",
+    "supervisorPython": "/private/tmp/arras-public50-qualification-20261024/canonical-managed-hashed-venv/bin/python",
+    "supervisorPythonSha256": "5ebf120b62e8d02ab22485ca328da471db27fd278069df3de01c957cc02d9cd6",
+    "supervisorPsutil": "7.2.2 already-qualified by coordinator; not newly imported here",
+    "psutilFiles": [
+      {
+        "path": "/private/tmp/arras-public50-qualification-20261024/canonical-managed-hashed-venv/lib/python3.11/site-packages/psutil/__init__.py",
+        "sha256": "d138a5786b163b56ba86ea0b2d5589dfca37e1bcdf8de1057fe1e933d6ab808a"
+      },
+      {
+        "path": "/private/tmp/arras-public50-qualification-20261024/canonical-managed-hashed-venv/lib/python3.11/site-packages/psutil/_common.py",
+        "sha256": "1bbce9fd97e6f5439a0d385f28401f527c5a9d978d9d062593d7ef6fe215fc75"
+      },
+      {
+        "path": "/private/tmp/arras-public50-qualification-20261024/canonical-managed-hashed-venv/lib/python3.11/site-packages/psutil/_ntuples.py",
+        "sha256": "9b8e8b938abae2786a515f686f4d8132218be897eb6b459b9324ed17d88a31c7"
+      },
+      {
+        "path": "/private/tmp/arras-public50-qualification-20261024/canonical-managed-hashed-venv/lib/python3.11/site-packages/psutil/_psaix.py",
+        "sha256": "afe4038d5e1454559f17dac9e6c2c56ad8cf873d43880f6503e8549cc06a18ec"
+      },
+      {
+        "path": "/private/tmp/arras-public50-qualification-20261024/canonical-managed-hashed-venv/lib/python3.11/site-packages/psutil/_psbsd.py",
+        "sha256": "c1a8314a9640649c99197ff261dbeec1f0080175e4a3f6b5cb370a39332deb94"
+      },
+      {
+        "path": "/private/tmp/arras-public50-qualification-20261024/canonical-managed-hashed-venv/lib/python3.11/site-packages/psutil/_pslinux.py",
+        "sha256": "a8a09bab87848075b691c46112b00692745785a8c9d5a2c87037ae124b469749"
+      },
+      {
+        "path": "/private/tmp/arras-public50-qualification-20261024/canonical-managed-hashed-venv/lib/python3.11/site-packages/psutil/_psosx.py",
+        "sha256": "89f0ea0e9c1fe38f224b612792bf31d07c8880d79281806e5379c00514f6b3f2"
+      },
+      {
+        "path": "/private/tmp/arras-public50-qualification-20261024/canonical-managed-hashed-venv/lib/python3.11/site-packages/psutil/_psposix.py",
+        "sha256": "288887b58f5939e3b00e021f6e7b490c2f7f4852804a359918ab7d9c6fb39839"
+      },
+      {
+        "path": "/private/tmp/arras-public50-qualification-20261024/canonical-managed-hashed-venv/lib/python3.11/site-packages/psutil/_pssunos.py",
+        "sha256": "cc348442008a54cb6054299b2ecae0d9a123c07bb4ba1f8e14b319487f83cee5"
+      },
+      {
+        "path": "/private/tmp/arras-public50-qualification-20261024/canonical-managed-hashed-venv/lib/python3.11/site-packages/psutil/_psutil_osx.abi3.so",
+        "sha256": "ff4568b9187ca7b37c5134aaf614ffb061e7fedccebd84158343afb05991b8e2"
+      },
+      {
+        "path": "/private/tmp/arras-public50-qualification-20261024/canonical-managed-hashed-venv/lib/python3.11/site-packages/psutil/_pswindows.py",
+        "sha256": "580ad391de734c113682200ee9f4245e34737f5e26af0a73a4e8c9b4458de220"
+      }
+    ],
+    "launchArgv": [
+      "/private/tmp/arras-public50-qualification-20261024/canonical-managed-hashed-venv/bin/python",
+      "-I",
+      "-B",
+      "/private/tmp/g11-journal005-independent-review001/supervise_journal005.py"
+    ],
+    "noncePath": "/private/tmp/g11-journal005-independent-review001/journal005-verification-supervisor-consumed.safe.json",
+    "workSeconds": 45,
+    "cleanupSeconds": 15,
+    "preProductHandshake": "worker waits for SAME actual PID/PGID launch.safe.json with psutil start before any product command",
+    "terminal": "original reference finally TERM/KILL/reap/PGID absence and strict complete/exit0/timeout flags; original function bodies unchanged; constants only"
+  },
+  "preparedProbeFiles": [
+    {
+      "path": "probe.py",
+      "sha256": "ef08da976736acca666ae90eef78100e91c37487305d862371365a281e0b8693"
+    },
+    {
+      "path": "digest-association.py",
+      "sha256": "99b8e9f5d415e9c0723a7ef70ff1d287ce77b21f61a851ab63a2c8e39b9415b6"
+    },
+    {
+      "path": "legacy-probe.py",
+      "sha256": "34d3c2fbb224abe786acb25d753139ab856bd6363d63d609b99a6e3c18825739"
+    }
+  ],
+  "files": [
+    {
+      "path": "commands.json",
+      "sha256": "372d20e6752ab825b130826002a384098733dbe3140ac57e5df033ed80bba86b"
+    },
+    {
+      "path": "assembled-closure.json",
+      "sha256": "31f1d16121a652086295cc62921e74ee1f2823fd5cf5419e2548c65ad0989e27"
+    },
+    {
+      "path": "probe.py",
+      "sha256": "ef08da976736acca666ae90eef78100e91c37487305d862371365a281e0b8693"
+    },
+    {
+      "path": "digest-association.py",
+      "sha256": "99b8e9f5d415e9c0723a7ef70ff1d287ce77b21f61a851ab63a2c8e39b9415b6"
+    },
+    {
+      "path": "legacy-probe.py",
+      "sha256": "34d3c2fbb224abe786acb25d753139ab856bd6363d63d609b99a6e3c18825739"
+    },
+    {
+      "path": "verify005_controller.py",
+      "sha256": "dde1a321799ce1418ac3302e651b3001851d190eba20675f8fb757a6ecd889de"
+    },
+    {
+      "path": "supervise_journal005.py",
+      "sha256": "64aea2c95bea6cb87bbc77ba0b8c36f7db4e1141033679dea3aa865e712b954f"
+    },
+    {
+      "path": "custody-reference.diff",
+      "sha256": "325e3a1dd5981e380983e7a8aade352018e55ae14da04919f67f4abd1e6c5096"
+    }
+  ]
+}
