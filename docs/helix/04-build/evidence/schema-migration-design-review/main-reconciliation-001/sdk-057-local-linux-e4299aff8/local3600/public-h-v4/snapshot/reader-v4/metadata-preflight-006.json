@@ -1,0 +1,83 @@
+{
+  "aggregate": {
+    "assemblyReceiptSha256": "4375e0c4a0faf89f78056086225cd25352e8c7299966395006bdba809da2b064",
+    "attempt": 1,
+    "executionId": "umf-local-full18-20261028T201057Z-54247-attempt1",
+    "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+    "sourceTree": "8b98c0d895983ba2b7637dd3aea567dab0943883",
+    "verificationMode": "assembly-plus-bounded-continuation003"
+  },
+  "d5": {
+    "archiveMembersBound": 6,
+    "attempt": 1,
+    "cases": 37,
+    "commands": 30,
+    "executionId": "local-996d7b70b8bf497aa879304e5e2fa0bd",
+    "faultScenarios": 3,
+    "noDefaultChecks": 19,
+    "oracleGroups": 16,
+    "rawLogBytes": 97096,
+    "receiptSha256": "1f4aa6430ad655c5baa76ce8c10c4309959264858a081e7a3dad6d890c477528",
+    "replayFiles": 19,
+    "root": "/private/tmp/migration-d5-local-emulated3600-e4299aff8-001",
+    "selectedEvidenceReceiptSha256": "25e6e0f2fe088b5d9826ddd5b4127bb76a4cdf02a280d08f89ddf7e7a43b32b0",
+    "selectedMetadataBytes": 3508800,
+    "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+    "sourceTree": "8b98c0d895983ba2b7637dd3aea567dab0943883",
+    "successorSourceGzipPairs": 3
+  },
+  "packet": {
+    "attempt": 1,
+    "bytes": 8906,
+    "executionId": "local-4040da90-7637-405a-8b07-fcce6af3a73d",
+    "path": "/private/tmp/sdk-057-local3600-public-h-v4/local3600-public-h-inputs.006.ready.json",
+    "sha256": "af4fcc80ac2e5c82a4292cfc7b80e7dffbf2aa359ebc05dd50653a459613bed8",
+    "status": "READY"
+  },
+  "previousRefusalPreserved": {
+    "path": "/private/tmp/sdk-057-local3600-public-h-v3/metadata-preflight-005-refused.json",
+    "reason": "v3 input validator did not accept the actual SDK producer execution ID namespace.",
+    "sha256": "a713c4aefbc9b8acfd60f7dc10d35337f9c8b43ee3cc19edb8fdea8977bea695"
+  },
+  "qualificationClaim": null,
+  "reader": {
+    "bytes": 177035,
+    "path": "/private/tmp/sdk-057-local3600-public-h-v4/run-local3600-public-h.py",
+    "sha256": "7cd33c89e2511a581e321a5f64fff292187a7abaad54860d60f2bba16290c57f"
+  },
+  "release": {
+    "assets": {
+      "access": {
+        "filename": "umf_access-0.1.0.dev8-py3-none-any.whl",
+        "sha256": "1a21c1ddd59f6b23e9f0b33228280564af0e96bb4d13699b89616d5143e4fd23",
+        "sizeBytes": 580062
+      },
+      "codegen": {
+        "filename": "umf_codegen-0.1.0a5-py3-none-any.whl",
+        "sha256": "36a6f7e0ab92feb9cb20ed8842cc3c1f073cdd3ff2c4edff137c1fcbc3ace158",
+        "sizeBytes": 261296
+      },
+      "sdk": {
+        "filename": "umf-sdk.tgz",
+        "sha256": "cd851d3338b1b2af79197cbafaeefdd03a8aac3e02373a893ddd5d07a930ab26",
+        "sizeBytes": 30834843
+      }
+    },
+    "publicPackageFamilyBytes": 31676201,
+    "publishedAt": "2026-10-29T04:28:03Z",
+    "releaseCommitM": "dce9b430422242edd135e69a7a64620d0244784e",
+    "releaseId": 427466486,
+    "tag": "umf-v0.5.7"
+  },
+  "schema": "umf.sdk-057-local3600-public-h-v4-metadata-preflight/1",
+  "scope": "Direct local input, D5 profile/selected-evidence, and full18 continuation metadata validators only. No H workflow, public downloads, SDK consumer, or product oracle executed.",
+  "status": "PASS_METADATA_ONLY",
+  "unionContinuation": {
+    "attempt": 1,
+    "executionId": "umf-local-full18-union-continuation-20261028T210818Z-1e6e0d6f-5cde-48cb-8c16-e4b15d5552ab-attempt1",
+    "harnessSha256": "07904d34b782a07bad53cd29797eaca70e0f3c6cb20adc51b1084004b4084ea3",
+    "receiptSha256": "dcf11127fc5a3c5971218974fc46689f6df080518cac17170c0e6220bec88399",
+    "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+    "sourceTree": "8b98c0d895983ba2b7637dd3aea567dab0943883"
+  }
+}

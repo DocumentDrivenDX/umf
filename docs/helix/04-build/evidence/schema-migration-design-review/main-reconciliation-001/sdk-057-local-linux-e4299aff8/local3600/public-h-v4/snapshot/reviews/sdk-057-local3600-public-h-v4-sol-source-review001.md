@@ -1,0 +1,9 @@
+# Public-H v4 retained execution-ID parser — source closure
+
+ACCEPT SOURCE ONLY reader7cd33c89e2511a581e321a5f64fff292187a7abaad54860d60f2bba16290c57f at /private/tmp/sdk-057-local3600-public-h-v4/run-local3600-public-h.py. Diff from acceptedv3 is limited to datetime/uuid imports, one closed per-evidence-key execution-ID validator and its invocation instead of the incorrect generic producer regex.
+
+SDK, assembly and continuation namespaces now exactly follow their retained producers, with canonical valid UTC calendar timestamps, lowercase canonical UUIDs where applicable, positive PID for assembly and positive attempt suffix equal to the row's integer attempt. D5's original local UUID rule and H's own execution-ID rule are unchanged. Distinct evidence IDs and downstream physical receipt executionId/attempt/source equality remain required; actual receipt bytes and IDs are not rewritten or relabeled.
+
+Original seven H commands and LIMITS blocks are byte-identical to v3. Whole-function comparisons confirm continuation/profile/replay-custody validators unchanged. No SDK139/full18/D5/public three-asset/P-M-tag/physical payload/source/provenance or resource predicate changed. This resolves an input-parser integration defect without product or qualification reruns.
+
+READY packet006 SHAaf4fcc80ac2e5c82a4292cfc7b80e7dffbf2aa359ebc05dd50653a459613bed8 and metadata report9e6504db3302f15e944028107706390f7e0c3086f012c6d0e2fe5895632c4bf6 record actual receipt binding only, not H execution. Operator independent path/hash pin must update to this reader before the separately authorized actual H run. Final public-release acceptance still requires actual fresh public download/install proof. No candidate execution/imports/AST/YAML parsing/tests/Docker/Git mutation/Actions performed by this reviewer.

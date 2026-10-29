@@ -1,0 +1,173 @@
+{
+  "evidence": {
+    "aggregate": {
+      "assemblyReceiptPath": "local-aggregate-producer-receipt.json",
+      "assemblyReceiptSha256": "4375e0c4a0faf89f78056086225cd25352e8c7299966395006bdba809da2b064",
+      "attempt": 1,
+      "executionId": "umf-local-full18-20261028T201057Z-54247-attempt1",
+      "generatorCorpusPath": "aggregate/generator-corpus.json",
+      "harnessPath": "/private/tmp/sdk-057-local3600-public-h-v2/full18-harness/run-full18-linux.sh",
+      "harnessSha256": "ceea335b702b2128919051669597a8a1b9163e4fe628a585d111876116a5f08d",
+      "indexPath": "aggregate/aggregate.json",
+      "root": "/private/tmp/migration-full18-e4299aff8-002",
+      "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+      "sourceTree": "8b98c0d895983ba2b7637dd3aea567dab0943883",
+      "verificationMode": "assembly-plus-bounded-continuation003"
+    },
+    "d5": {
+      "attempt": 1,
+      "cohortLockPath": "d5-host/d5/evidence/cohort.lock.json",
+      "executionId": "local-996d7b70b8bf497aa879304e5e2fa0bd",
+      "mirrorManifestPath": "d5-host/d5/evidence/mirror-manifest.json",
+      "ownerManifestPath": "d5-host/d5/evidence/owner-artifacts.json",
+      "ownerManifestSha256": "a23053af3571b287b1d6dbe066479c8d9ba722c673e91f70bfeceb66a109e723",
+      "qualificationInputsPath": "d5-host/d5/evidence/qualification-inputs.json",
+      "qualificationInputsSha256": "3255b5210adc3ba21eea05a4dd141ad991456122e488109c63457b9353d94f3a",
+      "receiptPath": "d5-host/d5/upload/d5-receipt.json",
+      "receiptSha256": "1f4aa6430ad655c5baa76ce8c10c4309959264858a081e7a3dad6d890c477528",
+      "releasePayloadReceiptPath": "release-payload-receipt.json",
+      "releasePayloadReceiptSha256": "b5b4cb2db034f625bd351d968376d1080c60ba912699bf7835f1f987b8b2c2f8",
+      "releasePayloadRoot": "d5-host/d5/release-payload",
+      "resourceProfileEvidence": {
+        "operatorManifestPath": "/private/tmp/migration-d5-local-emulated-3600-proposal-001/local-adapter-manifest.json",
+        "operatorManifestSha256": "df67e09e6e326f02dd9fd3648a4640cba93a2f2673427ae70634737b8b942ce8",
+        "outerCapturePath": "outer-capture.json",
+        "outerCaptureSha256": "e27cf735729412b601beb52194f779092fc2889ec2e9ff152a04e9147209a6d8",
+        "profileName": "LOCAL_EMULATED_3600",
+        "profilePath": "/private/tmp/migration-d5-local-emulated-3600-proposal-001/resource-profile.json",
+        "profileSha256": "7ef1260d0bd61e7eef80c753091ef605979a376c3d2ab8e158fdecb6830d98fe",
+        "root": "/private/tmp/migration-d5-local-emulated3600-e4299aff8-001",
+        "roots": {
+          "attestation": "/private/tmp/migration-d5-local-emulated-3600-proposal-001",
+          "operator": "/private/tmp/migration-d5-local-emulated-3600-proposal-001",
+          "output": "/private/tmp/migration-d5-local-emulated3600-e4299aff8-001",
+          "source": "/private/tmp/migration-linux-candidate-267675510"
+        },
+        "selectedEvidenceReceiptPath": "selected-evidence-receipt.json",
+        "selectedEvidenceReceiptSha256": "25e6e0f2fe088b5d9826ddd5b4127bb76a4cdf02a280d08f89ddf7e7a43b32b0"
+      },
+      "root": "/private/tmp/migration-d5-local-emulated3600-e4299aff8-001",
+      "runContextPath": "local-docker-context.json",
+      "runContextSha256": "4f8aab03a268927da5a14b70454d2e79d94487e4f9ae475736ea1cb973679e49",
+      "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+      "sourceTree": "8b98c0d895983ba2b7637dd3aea567dab0943883",
+      "workflowSha256": "f0963d2df1e371112ba6e57999dbf69290796d711eb97ed46637d4ebc63918a1"
+    },
+    "sdkProducer": {
+      "archivePath": "migration-sdk-e4299aff8-003/sdk-distribution/umf-sdk.tgz",
+      "archiveSha256": "cd851d3338b1b2af79197cbafaeefdd03a8aac3e02373a893ddd5d07a930ab26",
+      "archiveSizeBytes": 30834843,
+      "attempt": 1,
+      "executionId": "local-sdk-20261028T202157Z-38d3c32d-05e2-4803-97e1-dd396aebcba1-attempt1",
+      "harnessPath": "migration-local-sdk-producer",
+      "harnessSha256": "3a8679d7e326059d1fd44662c7a9232ae13f41b7a59e13cf0835a2a25628a899",
+      "manifestPath": "migration-sdk-e4299aff8-003/sdk-distribution/manifest.json",
+      "manifestSha256": "70e52b8e0425e1e3256f60d126196083b093fa0192c9ff85ba9ba2699c9be87a",
+      "manifestSizeBytes": 229540,
+      "receiptPath": "migration-sdk-e4299aff8-003/sdk-producer-receipt.json",
+      "receiptSha256": "1bbd02f0db07fbc85a33242d691ed1daac93a9cfa884a1b7254934d0520adaac",
+      "root": "/private/tmp",
+      "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+      "sourceTree": "8b98c0d895983ba2b7637dd3aea567dab0943883"
+    },
+    "unionContinuation": {
+      "attempt": 1,
+      "bootstrapMetadataPath": "bootstrap/pypi-26.3.json",
+      "bootstrapMetadataSha256": "4f190d2f0b312b3086058cee64ab4333bf3ce67fb78b4c2bdb43899049b29f4d",
+      "bootstrapWheelPath": "bootstrap/packaging-26.3-py3-none-any.whl",
+      "bootstrapWheelSha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+      "executionId": "umf-local-full18-union-continuation-20261028T210818Z-1e6e0d6f-5cde-48cb-8c16-e4b15d5552ab-attempt1",
+      "harnessRoot": "/private/tmp/migration-full18-e4299aff8-union-continuation-003",
+      "harnessSha256": "07904d34b782a07bad53cd29797eaca70e0f3c6cb20adc51b1084004b4084ea3",
+      "receiptPath": "output/continuation-receipt.json",
+      "receiptSha256": "dcf11127fc5a3c5971218974fc46689f6df080518cac17170c0e6220bec88399",
+      "root": "/private/tmp/migration-full18-e4299aff8-union-continuation-003",
+      "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+      "sourceTree": "8b98c0d895983ba2b7637dd3aea567dab0943883"
+    }
+  },
+  "execution": {
+    "attempt": 1,
+    "emulatedGuest": true,
+    "executionId": "local-4040da90-7637-405a-8b07-fcce6af3a73d",
+    "hostedWorkflowSha256": "32d4b1361c7c3911f8b7f8f58964ec87c5bf60527e27efb6da2fe4f3fc53ef91",
+    "localAdapterSha256": "a8b496f65010551c5fc4bac368bebc95c1b1406cfc125c12aa733eaa726a7b15",
+    "runtimeEngine": "OrbStack",
+    "runtimeGuest": {
+      "architecture": "x86_64",
+      "distribution": "Ubuntu",
+      "os": "Linux",
+      "version": "24.04.5"
+    },
+    "runtimeHost": {
+      "architecture": "aarch64",
+      "os": "Darwin"
+    },
+    "runtimeImageDigest": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556"
+  },
+  "executionKind": "local_linux_diagnostic",
+  "fixedQualification": {
+    "accessVersion": "0.1.0.dev8",
+    "codegenVersion": "0.1.0a5",
+    "coreDistributionVersion": "0.10.3",
+    "coreLinuxNativeMember": "umf/_rust_core.abi3.so",
+    "coreLinuxNativeSha256": "c51b511a06bc1ccde6cc2208d33a4fb70ef66c67507ba8f2a6ea05fd2543cf57",
+    "coreLinuxWheelFilename": "umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl",
+    "coreLinuxWheelSha256": "cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75",
+    "coreLinuxWheelSizeBytes": 3612043,
+    "coreSemanticVersion": "0.10.0",
+    "pythonCell": "linux-x86_64-py311",
+    "pythonWheelCount": 18,
+    "sdkConformanceCases": 139,
+    "sdkVersion": "0.5.7",
+    "weftDistribution": "umf-weft",
+    "weftLinuxWheelFilename": "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+    "weftLinuxWheelSizeBytes": 14347375,
+    "weftProducerCommit": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+    "weftReleaseTag": "v0.4.55",
+    "weftVersion": "0.4.55",
+    "weftWheelDistribution": "umf-weft",
+    "weftWheelSha256": "b34ca17fa37412afa7b8e8bd86aac8ee67a3c895a9b253221e1d582b39073a85",
+    "weftWireProfile": "weft-sql/0.2.0"
+  },
+  "limits": {
+    "aggregateLogBytes": 1048576,
+    "aggregateSeconds": 1800,
+    "childSeconds": 180,
+    "evidenceReserveSeconds": 60,
+    "metadataArtifactBytes": 16777216,
+    "publicPackageFamilyBytes": 31676201,
+    "termGraceSeconds": 10
+  },
+  "profile": "umf.sdk-057-public-install-proof-local-inputs/1",
+  "release": {
+    "assets": {
+      "access": {
+        "filename": "umf_access-0.1.0.dev8-py3-none-any.whl",
+        "sha256": "1a21c1ddd59f6b23e9f0b33228280564af0e96bb4d13699b89616d5143e4fd23",
+        "sizeBytes": 580062
+      },
+      "codegen": {
+        "filename": "umf_codegen-0.1.0a5-py3-none-any.whl",
+        "sha256": "36a6f7e0ab92feb9cb20ed8842cc3c1f073cdd3ff2c4edff137c1fcbc3ace158",
+        "sizeBytes": 261296
+      },
+      "sdk": {
+        "filename": "umf-sdk.tgz",
+        "sha256": "cd851d3338b1b2af79197cbafaeefdd03a8aac3e02373a893ddd5d07a930ab26",
+        "sizeBytes": 30834843
+      }
+    },
+    "publishedAt": "2026-10-29T04:28:03Z",
+    "releaseCommitM": "dce9b430422242edd135e69a7a64620d0244784e",
+    "releaseId": 427466486,
+    "tag": "umf-v0.5.7"
+  },
+  "repository": "DocumentDrivenDX/umf",
+  "source": {
+    "producerCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+    "producerRoot": "/private/tmp/migration-linux-candidate-267675510",
+    "producerTree": "8b98c0d895983ba2b7637dd3aea567dab0943883"
+  },
+  "status": "READY"
+}

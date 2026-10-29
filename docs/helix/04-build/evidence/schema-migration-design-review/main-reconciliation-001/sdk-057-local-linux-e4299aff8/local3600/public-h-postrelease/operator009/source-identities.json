@@ -1,0 +1,77 @@
+{
+  "evidenceStorage": {
+    "evidenceVolumePrefix": "umf-public-h-evidence-",
+    "exportHelperNetwork": "none",
+    "exportHelperRootFilesystemReadOnly": true,
+    "exportRemovalRequiresVerifiedCopy": true,
+    "exportedEvidenceExcludes": [
+      "work/"
+    ],
+    "readerWritesToFreshOwnedVolume": true,
+    "sourceVolumeReadOnly": true
+  },
+  "inputPacket": {
+    "attempt": 6,
+    "executionId": "local-4040da90-7637-405a-8b07-fcce6af3a73d",
+    "onlyDifferenceFrom010": [
+      "execution.attempt",
+      "execution.localAdapterSha256"
+    ],
+    "path": "/private/tmp/sdk-057-local3600-public-h-v6-r2/local3600-public-h-inputs.011.ready.json",
+    "sha256": "d3d9424a5e0a7ca85dd67936f135646d41bff62692e146a0db05d7fa164ca195",
+    "status": "READY"
+  },
+  "outerLimits": {
+    "cpu": "4",
+    "memory": "8g",
+    "outerCaptureBytes": 262144,
+    "outerMetadataBytes": 1048576,
+    "outerStreamBytesEach": 131072,
+    "outerWallSeconds": 1800,
+    "pids": 8192,
+    "readerAggregateSeconds": 1800,
+    "readerChildSeconds": 180,
+    "readerLogBytes": 1048576,
+    "readerMetadataBytes": 16777216,
+    "readerReserveSeconds": 60,
+    "readerTerminationGraceSeconds": 10
+  },
+  "proposal": "umf.sdk-057-public-h-docker-operator/9-v6-index-paths",
+  "r2Change": "record full outer elapsed duration after export/cleanup and refuse LOCAL_DIAGNOSTIC_PASS when it exceeds 1800 seconds",
+  "reader": {
+    "path": "/private/tmp/sdk-057-local3600-public-h-v6-r2/run-local3600-public-h.py",
+    "reviewPath": "PENDING_SOL_REVIEW",
+    "reviewSha256": "PENDING_SOL_REVIEW",
+    "sha256": "94f944788ac2724935c3685d7f05c6f6952425916e73872896e0071a839bc4c8"
+  },
+  "runnerBytes": 49679,
+  "runnerSha256": "0361c3ad4de56d22dbc05e6fe934c7d0192570e729af2e430c7fc41f99f5553a",
+  "runtime": {
+    "claim": "local emulated Ubuntu 24.04.5 x86_64 guest on OrbStack Linux aarch64 engine and Darwin host; no hosted/native Linux claim",
+    "imageId": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+    "platform": "linux/amd64"
+  },
+  "source": {
+    "preparationReceipt": {
+      "commandsPath": "source-preparation/commands.json",
+      "commandsSha256": "7292c09b2ddf400300fa42317599093b9f8d2a67ac123a83e3b825f15e22be9e",
+      "path": "source-preparation/receipt.json",
+      "sha256": "71325466e457030594bc35879497a44fdb6990f84d425ff77b878173cce2ea3d"
+    },
+    "producerP": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+    "producerRoot": "/private/tmp/migration-linux-candidate-267675510",
+    "producerTree": "8b98c0d895983ba2b7637dd3aea567dab0943883",
+    "producerVolume": "umf-migration-source-267675510",
+    "publicOrigin": "https://github.com/DocumentDrivenDX/umf.git",
+    "releaseM": "dce9b430422242edd135e69a7a64620d0244784e",
+    "safeDirectoryConfig": {
+      "bytes": 69,
+      "containerPath": "/etc/gitconfig",
+      "path": "producer-safe.gitconfig",
+      "readOnly": true,
+      "sha256": "64600e84d3d6245e37d4095564a12e6a112afa33c61820b0f107a9b867a16672"
+    },
+    "tag": "umf-v0.5.7"
+  },
+  "status": "PREPARED_NOT_EXECUTED_SOURCE_REVIEW_PENDING"
+}

@@ -1,0 +1,103 @@
+--- v6-r2/run-local3600-public-h.py
++++ v7/run-local3600-public-h.py
+@@ -29,8 +29,9 @@
+ import urllib.parse
+ import urllib.request
+ 
+-PROFILE = 'umf.sdk-057-public-install-proof-local-inputs/1'
+-EVIDENCE_PROFILE = 'umf.sdk-057-public-install-proof-local/1'
++PROFILE = 'umf.sdk-057-public-install-proof-local-network-sdk-python-offline-inputs/1'
++EVIDENCE_PROFILE = 'umf.sdk-057-public-install-proof-local-network-sdk-python-offline/1'
++NETWORK_PROFILE = 'LOCAL_PUBLIC_SDK_NETWORK_PYTHON_OFFLINE'
+ REPOSITORY = 'DocumentDrivenDX/umf'
+ HOSTED_WORKFLOW_SHA256 = '32d4b1361c7c3911f8b7f8f58964ec87c5bf60527e27efb6da2fe4f3fc53ef91'
+ RUNTIME_IMAGE_DIGEST = 'sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556'
+@@ -930,8 +931,10 @@
+         fail('Local attempt must be a positive integer')
+     if re.fullmatch(r'sha256:[0-9a-f]{64}', str(execution.get('runtimeImageDigest',''))) is None:
+         fail('Runtime image digest is malformed')
+-    if set(execution) != {'executionId','attempt','localAdapterSha256','hostedWorkflowSha256','runtimeImageDigest','runtimeEngine','runtimeHost','runtimeGuest','emulatedGuest'}:
++    if set(execution) != {'executionId','attempt','localAdapterSha256','hostedWorkflowSha256','runtimeImageDigest','runtimeEngine','runtimeHost','runtimeGuest','emulatedGuest','networkProfile'}:
+         fail('Local execution identity has an unexpected field roster')
++    if execution.get('networkProfile') != NETWORK_PROFILE:
++        fail('Local network profile must explicitly allow SDK consumer networking and retain Python offline isolation')
+     if execution.get('runtimeEngine') != 'OrbStack':
+         fail('Local runtime engine must identify the observed OrbStack engine')
+     host = execution.get('runtimeHost'); guest = execution.get('runtimeGuest')
+@@ -1391,20 +1394,16 @@
+ 
+ def stage_sdk_consumer(packet: dict, work: pathlib.Path) -> dict:
+     producer=work/'producer'
+-    helper=producer/'scripts/python-package-mirror.py'
+-    spec=importlib.util.spec_from_file_location('sdk_public_h_package_mirror',helper)
+-    if spec is None or spec.loader is None:
+-        fail('Existing network-isolation helper cannot be loaded from exact P source')
+-    module=importlib.util.module_from_spec(spec)
+-    spec.loader.exec_module(module)
+-    prefix,isolation=module.network_isolation_prefix()
+     bun=shutil.which('bun')
+     if not bun:
+         fail('Pinned Bun executable is unavailable')
+-    result=subprocess.run(prefix+[bun,'scripts/test-sdk-install.ts'],cwd=producer,check=False)
++    result=subprocess.run([bun,'scripts/test-sdk-install.ts'],cwd=producer,check=False)
+     if result.returncode:
+-        fail('Installed public SDK consumer failed under '+str(isolation)[:120])
+-    output={'status':'passed','networkIsolation':isolation,'sdkAssetSha256':packet['release']['assets']['sdk']['sha256']}
++        fail('Installed public SDK consumer failed under the adopted network-enabled SDK consumer profile')
++    output={'status':'passed','networkProfile':NETWORK_PROFILE,
++            'sdkConsumerNetworkPolicy':'network-enabled for public package metadata resolution',
++            'pythonFull18NetworkPolicy':'network-isolated by the unchanged unshare --net helper',
++            'sdkAssetSha256':packet['release']['assets']['sdk']['sha256']}
+     report_dir=pathlib.Path(os.environ['EVIDENCE'])/'reports'; report_dir.mkdir(exist_ok=True)
+     (report_dir/'sdk-install.json').write_text(json.dumps(output,sort_keys=True,indent=2)+'\n')
+     return output
+@@ -2374,6 +2373,12 @@
+         fail('Pre-final local report roster is incomplete or contains unexpected JSON')
+     if {path.name for path in (work/'logs').glob('*.log')} != {name+'.log' for name in EXPECTED_COMMANDS}:
+         fail('Final local command-log roster is incomplete or contains unexpected logs')
++    sdk_policy = json_file(work/'reports/sdk-install.json',128*1024)
++    if (sdk_policy != {'status':'passed','networkProfile':NETWORK_PROFILE,
++                       'sdkConsumerNetworkPolicy':'network-enabled for public package metadata resolution',
++                       'pythonFull18NetworkPolicy':'network-isolated by the unchanged unshare --net helper',
++                       'sdkAssetSha256':packet['release']['assets']['sdk']['sha256']}):
++        fail('SDK install report does not attest the exact adopted network profile')
+     sdk_log = (work / 'logs/sdk-public-install-consumer-smoke.log').read_text(encoding='utf-8')
+     lines = [line for line in sdk_log.splitlines() if line.startswith('{')]
+     if not lines: fail('SDK consumer emitted no JSON result')
+@@ -2401,6 +2406,9 @@
+     if core.get('wheel') != fixed['coreLinuxWheelFilename'] or core.get('semanticCoreVersion') != fixed['coreSemanticVersion'] or core.get('distributionVersion') != fixed['coreDistributionVersion'] or core.get('memberSha256') != fixed['coreLinuxNativeSha256'] or core.get('installedSha256') != fixed['coreLinuxNativeSha256'] or core.get('wheelSha256') != fixed['coreLinuxWheelSha256']:
+         fail('Installed Core native member/semantic/distribution/wheel identity differs')
+     output = {'status':'passed','sdkConformanceCases':139,'pythonWheelCount':18,'pythonCell':'linux-x86_64-py311','versions':versions,
++              'networkProfile':NETWORK_PROFILE,
++              'sdkConsumerNetworkPolicy':sdk_policy['sdkConsumerNetworkPolicy'],
++              'pythonFull18NetworkPolicy':sdk_policy['pythonFull18NetworkPolicy'],
+               'operatorBootstrap':{'packagingVersion':bootstrap['packagingVersion'],
+                                    'wheelSha256':bootstrap['bootstrapWheelSha256'],
+                                    'wheelBytes':bootstrap['bootstrapWheelBytes'],
+@@ -2517,7 +2525,7 @@
+         selected=[evidence_arg/'input-packet.json',evidence_arg/'command-records.jsonl',*logs.glob('*.log'),*report_files]
+         selected=[p for p in selected if p.is_file() and not p.is_symlink()]
+         nonreceipt_total=sum(p.stat().st_size for p in selected)
+-        result={'profile':EVIDENCE_PROFILE,'status':status,'executionKind':'local_linux_diagnostic',
++        result={'profile':EVIDENCE_PROFILE,'networkProfile':NETWORK_PROFILE,'status':status,'executionKind':'local_linux_diagnostic',
+                 'executionId':packet_value['execution']['executionId'] if packet_value else None,
+                 'attempt':packet_value['execution']['attempt'] if packet_value else None,
+                 'localAdapterSha256':packet_value['execution'].get('localAdapterSha256') if packet_value else None,
+@@ -2533,7 +2541,7 @@
+                 'releaseTag':packet_value['release'].get('tag') if packet_value else None,
+                 'localEvidenceIds':{k:packet_value['evidence'][k]['executionId'] for k in ('sdkProducer','d5','aggregate','unionContinuation')} if packet_value else None,
+                 'commands':records,'commandCount':len(records),'aggregateElapsedNs':elapsed,'logBytes':log_total,
+-                'metadataArtifactBytes':0,'scope':'SDK 0.5.7 139-case consumer plus selected installed Linux x86_64 Python 3.11 full18 probe in Ubuntu 24.04.5 amd64 under emulation on an OrbStack Linux aarch64 engine and Darwin host; Mac inputs data-only, no Mac replay/runtime claim; hosted qualification not claimed.',
++                'metadataArtifactBytes':0,'scope':'SDK 0.5.7 139-case public-tarball consumer with registry networking enabled, plus selected installed Linux x86_64 Python 3.11 full18 probe under network isolation, in Ubuntu 24.04.5 amd64 under emulation on an OrbStack Linux aarch64 engine and Darwin host; Mac inputs data-only, no Mac replay/runtime claim; hosted qualification not claimed.',
+                 'failure':failure}
+         # Require the full seven-command sequence and successful bounded records for PASS.
+         if status == 'LOCAL_DIAGNOSTIC_PASS' and ([row.get('name') for row in records] != EXPECTED_COMMANDS or any(row.get('rawExit') != 0 or row.get('captureExit') != 0 or row.get('truncated') or row.get('timedOut') for row in records) or elapsed > (LIMITS['aggregateSeconds']-LIMITS['evidenceReserveSeconds'])*1_000_000_000 or log_total > LIMITS['aggregateLogBytes'] or nonreceipt_total >= LIMITS['metadataArtifactBytes']):
+@@ -2547,7 +2555,7 @@
+         if family_total>LIMITS['metadataArtifactBytes']:
+             result['status']='FAIL_OR_UNKNOWN'
+             result['failure']='metadata-cap-before-receipt'
+-            body=(json.dumps({'profile':EVIDENCE_PROFILE,'status':'FAIL_OR_UNKNOWN','executionKind':'local_linux_diagnostic','failure':'metadata-cap-before-receipt','commandCount':len(records)},sort_keys=True,indent=2)+'\n').encode()
++            body=(json.dumps({'profile':EVIDENCE_PROFILE,'networkProfile':NETWORK_PROFILE,'status':'FAIL_OR_UNKNOWN','executionKind':'local_linux_diagnostic','failure':'metadata-cap-before-receipt','commandCount':len(records)},sort_keys=True,indent=2)+'\n').encode()
+         receipt.write_bytes(body)
+     print(str(receipt))
+     return 0 if result['status']=='LOCAL_DIAGNOSTIC_PASS' else 1

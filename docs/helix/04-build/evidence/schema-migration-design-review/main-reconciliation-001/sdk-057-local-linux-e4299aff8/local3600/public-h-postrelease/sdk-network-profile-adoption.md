@@ -1,0 +1,7 @@
+# Local public installation profile adoption — 2026-10-29
+
+Root adopts `LOCAL_PUBLIC_SDK_NETWORK_PYTHON_OFFLINE` under the user instruction to adjust CI checks and perform qualification locally after Actions credits were exhausted. The adjacent Sol requirement classification (`sdk-057-public-h-sdk-network-sol-plan001.md`, SHA-256 `9520fdb403fadfad4bf7d568c03d29dcb11ac7385e404994d17e5d49b81e8952`) found that original H explicitly isolated the entire SDK installation. That original profile remains unqualified; attempt006 remains failed.
+
+The new profile permits network for the fresh public SDK tarball installation and its unchanged 139 checks. This matches normal dependency acquisition and makes no offline SDK installation claim. Python full18 installation and migration replay retain their network isolation. The seven command names/order, 180-second child and 1800-second aggregate bounds, reserve/grace, capture limits, clean source and merge/tag identity, public asset hashes, D5/SDK/full18 provenance, and resource cleanup remain required. No test work is moved outside the clock and no product code or public asset changes.
+
+A fresh complete attempt, reviewed frozen reader/operator and truthful SDK/final profile fields are required. No passing result is asserted by this adoption. GitHub Actions and macOS CI remain off. Historical built macOS dependency artifacts retain their recorded verification limits.

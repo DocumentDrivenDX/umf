@@ -1,0 +1,87 @@
+{
+  "files": [
+    {
+      "bytes": 4533,
+      "kind": "receipt",
+      "originalPath": "/private/tmp/migration-sdk-e4299aff8-003/sdk-producer-receipt.json",
+      "path": "sdk-producer-receipt.json",
+      "sha256": "1bbd02f0db07fbc85a33242d691ed1daac93a9cfa884a1b7254934d0520adaac"
+    },
+    {
+      "bytes": 1052,
+      "kind": "log",
+      "originalPath": "/private/tmp/migration-sdk-e4299aff8-003/bun-install-frozen.log",
+      "path": "bun-install-frozen.log",
+      "sha256": "c1833cd3f149952a838cef714bd9ef243813c90f5d2ad2002188205a6b37198c"
+    },
+    {
+      "bytes": 4163,
+      "kind": "log",
+      "originalPath": "/private/tmp/migration-sdk-e4299aff8-003/cargo-fetch-locked.log",
+      "path": "cargo-fetch-locked.log",
+      "sha256": "bd9c3d4706b9ee65f827dc4ebbccce9db1dce358c4bd5603dfeaa23295bc1749"
+    },
+    {
+      "bytes": 475,
+      "kind": "log",
+      "originalPath": "/private/tmp/migration-sdk-e4299aff8-003/sdk-build.log",
+      "path": "sdk-build.log",
+      "sha256": "cd368a0e7793e4940664a5d68702c68bb7e38cf3cc771d65a866a99a0b62fd60"
+    },
+    {
+      "bytes": 529,
+      "kind": "log",
+      "originalPath": "/private/tmp/migration-sdk-e4299aff8-003/sdk-test-install.log",
+      "path": "sdk-test-install.log",
+      "sha256": "a1a1580440b578fe98ff942ff1dd1c4d319d72007740f33992d3c8525dc5725d"
+    },
+    {
+      "bytes": 30834843,
+      "kind": "archive",
+      "originalPath": "/private/tmp/migration-sdk-e4299aff8-003/sdk-distribution/umf-sdk.tgz",
+      "path": "sdk-distribution/umf-sdk.tgz",
+      "sha256": "cd851d3338b1b2af79197cbafaeefdd03a8aac3e02373a893ddd5d07a930ab26"
+    },
+    {
+      "bytes": 229540,
+      "kind": "manifest",
+      "originalPath": "/private/tmp/migration-sdk-e4299aff8-003/sdk-distribution/manifest.json",
+      "path": "sdk-distribution/manifest.json",
+      "sha256": "70e52b8e0425e1e3256f60d126196083b093fa0192c9ff85ba9ba2699c9be87a"
+    },
+    {
+      "bytes": 12458,
+      "kind": "harness",
+      "originalPath": "/private/tmp/migration-local-sdk-producer-attempt003-frozen/inside-sdk-producer.py",
+      "path": "harness/inside-sdk-producer.py",
+      "sha256": "f2ecd67811e74e374936decd0ced25d790fda249299ffecca614dcb4e8ca0ff3"
+    },
+    {
+      "bytes": 1057,
+      "kind": "harness",
+      "originalPath": "/private/tmp/migration-local-sdk-producer-attempt003-frozen/capture-bounded-log.py",
+      "path": "harness/capture-bounded-log.py",
+      "sha256": "f3520d808d9d748be68a0bfced22e7970844c5916af65dbe7fdf519b7a8ffda5"
+    },
+    {
+      "bytes": 1917,
+      "kind": "harness",
+      "originalPath": "/private/tmp/migration-local-sdk-producer-attempt003-frozen/run-local-sdk.sh",
+      "path": "harness/run-local-sdk.sh",
+      "sha256": "9dc58b5b576e6888a1141652e5ad602e164a1e55a483866bb72cb4b3671b8d8c"
+    },
+    {
+      "bytes": 1038,
+      "kind": "harness",
+      "originalPath": "/private/tmp/migration-local-sdk-producer-attempt003-frozen/write-launch-failure.py",
+      "path": "harness/write-launch-failure.py",
+      "sha256": "663a24c8182185bda8967eec54c0975fe403cd036794e254769cad430d8ad68c"
+    }
+  ],
+  "harnessSha256": "3a8679d7e326059d1fd44662c7a9232ae13f41b7a59e13cf0835a2a25628a899",
+  "harnessSourceRoot": "/private/tmp/migration-local-sdk-producer-attempt003-frozen",
+  "metadataExcluded": true,
+  "schema": "umf.sdk-producer-input-wrapper-source-map/1",
+  "sourceReceiptPath": "/private/tmp/migration-sdk-e4299aff8-003/sdk-producer-receipt.json",
+  "sourceReceiptSha256": "1bbd02f0db07fbc85a33242d691ed1daac93a9cfa884a1b7254934d0520adaac"
+}

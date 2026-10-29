@@ -282,7 +282,7 @@ not a historical platform count.
 The user directed local execution after GitHub Actions credits were exhausted.
 D6's workflow execution is replaced by explicitly qualified local checks; no
 Actions dispatch or macOS CI is authorized by this checkpoint. Workflow
-definitions remain unchanged, with the three automatic entry points paused.
+jobs retain their existing checks, with the three automatic entry points paused.
 The [local evidence index](evidence/schema-migration-design-review/main-reconciliation-001/sdk-057-local-linux-e4299aff8/local3600/README.md)
 records the policy, separate fast functional checks and physical evidence.
 
@@ -298,10 +298,20 @@ client emulation on Darwin/arm64 and ARM64 PostgreSQL 18.6 do not establish
 native x86_64-host or hosted CI qualification. Historical built macOS artifacts
 retain their documented verification limits; macOS Python 3.14 is unqualified.
 
-The public-proof reader integration has independent source acceptance and
-metadata preflight; no public install has run. D7 remains open: normal merge,
-immutable SDK release and fresh public-download/install proof require their own actual
-identities and review. No G03–G11, managed-consumer or Praxis acceptance follows.
+PR #48 merged normally at M `dce9b430422242edd135e69a7a64620d0244784e`;
+immutable `umf-v0.5.7` published the exact SDK/Access/Codegen assets on
+2026-10-29T04:28:03Z. Product source retains P; M also carries the separately
+reviewed manual-only microsite workflow policy. The fresh public attempt008
+passed all seven commands in 83.568 seconds including export and cleanup:
+SDK139 and the exact18 Python 3.11.17 offline/native probe. The named
+`LOCAL_PUBLIC_SDK_NETWORK_PYTHON_OFFLINE` profile allows registry access for the
+fresh SDK install and checks; Python retains OS network isolation. Original
+offline-SDK H failures remain failed. Child180/aggregate1800 limits are unchanged.
+[Publication and immutable hashes](evidence/schema-migration-design-review/main-reconciliation-001/sdk-057-local-linux-e4299aff8/local3600/public-release/README.md)
+and [fresh public proof](evidence/schema-migration-design-review/main-reconciliation-001/sdk-057-local-linux-e4299aff8/local3600/public-h-postrelease/README.md)
+record the actual identities. Independent actual-evidence review accepted this
+selected G02 public proof; the normal metadata follow-up merge records D7 closure. No G03–G11, managed-consumer,
+additional-backend or Praxis acceptance follows; the broader goal stays active.
 
 #### Historical pre-reconciliation G02 integration checkpoint — Core 0.10.1
 

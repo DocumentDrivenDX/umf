@@ -1,0 +1,23 @@
+{
+  "assemblyIndexPath": "/private/tmp/migration-full18-e4299aff8-002/aggregate/aggregate.json",
+  "assemblyIndexSha256": "fac25d7d5041983f1e3d464efbdda70e84df19f9fd7b70882990e4a05e69a634",
+  "bootstrapMetadataPath": "/private/tmp/migration-full18-e4299aff8-union-continuation-003/bootstrap/pypi-26.3.json",
+  "bootstrapMetadataSha256": "4f190d2f0b312b3086058cee64ab4333bf3ce67fb78b4c2bdb43899049b29f4d",
+  "bootstrapWheelPath": "/private/tmp/migration-full18-e4299aff8-union-continuation-003/bootstrap/packaging-26.3-py3-none-any.whl",
+  "bootstrapWheelSha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+  "captureCorrection": "A preceding report script mistakenly treated the validator return value (evidence root) as the receipt path after the call succeeded. That capture error is preserved separately; the direct validator itself returned successfully.",
+  "continuationExecutionId": "umf-local-full18-union-continuation-20261028T210818Z-1e6e0d6f-5cde-48cb-8c16-e4b15d5552ab-attempt1",
+  "continuationReceiptPath": "/private/tmp/migration-full18-e4299aff8-union-continuation-003/output/continuation-receipt.json",
+  "continuationReceiptSha256": "dcf11127fc5a3c5971218974fc46689f6df080518cac17170c0e6220bec88399",
+  "continuationSchema": "umf.local-full18-union-continuation/2",
+  "inputCorrection": "Packet 002 binds harnessRoot to the absolute continuation package root; no receipt/evidence bytes changed.",
+  "inputPacketPath": "/private/tmp/sdk-057-local3600-public-h-v2/local3600-public-h-inputs.002.held.json",
+  "inputPacketSha256": "c65547061a6eba1bc471ef102b98a3ab222ed0a8efdb44d55e31bba45971a25e",
+  "priorHeldPacketPath": "/private/tmp/sdk-057-local3600-public-h-v2/local3600-public-h-inputs.held.json",
+  "priorHeldPacketSha256": "0b4732e008715b292390c6382ea5c80594462be5eed3262ac476a14e78493ffd",
+  "readerPath": "/private/tmp/sdk-057-local3600-public-h-v2/run-local3600-public-h.py",
+  "readerSha256": "5feed5ed5516b73838650b7c42e9121839e970cee130e49f1f7f479069f9938f",
+  "result": "PASS_METADATA_BINDING_ONLY",
+  "returnedEvidenceRoot": "/private/tmp/migration-full18-e4299aff8-union-continuation-003",
+  "scope": "Direct validate_union_continuation invocation only; no public-H workflow, SDK/D5 execution, public downloads, installs, oracle, or qualification."
+}

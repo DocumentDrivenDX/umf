@@ -1,0 +1,11 @@
+--- /private/tmp/sdk-057-local3600-public-h-v4/run-local3600-public-h.py
++++ /private/tmp/sdk-057-local3600-public-h-v5/run-local3600-public-h.py
+@@ -1240,7 +1240,7 @@
+         fail('Current public Git tag does not resolve to immutable release M')
+     target = work / 'producer'
+     target.mkdir(mode=0o700)
+-    archive = subprocess.Popen(['git', '-C', str(root), 'archive', '--format=tar', head], stdout=subprocess.PIPE)
++    archive = subprocess.Popen(['git', '-c', 'tar.umask=0022', '-C', str(root), 'archive', '--format=tar', head], stdout=subprocess.PIPE)
+     assert archive.stdout is not None
+     with tarfile.open(fileobj=archive.stdout, mode='r|') as tar:
+         for member in tar:

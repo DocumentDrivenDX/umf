@@ -1,0 +1,9 @@
+# Public-H SDK wrapper — actual input custody acceptance
+
+ACCEPT H5 INPUTS ONLY: /private/tmp/migration-sdk057-public-h-sdk-wrapper-001, source-map SHA9b3300714e9679c3ba024ad6fb5232c84dad54b6317a496b7df837f4238053d0. All11 payload files independently byte-equal their original files and match declared size/hash; payload total31,091,605bytes. The physical roster is exactly those11 files plus the explicitly separate source-map metadata, with no extra input files.
+
+Unmodified receipt0031bbd02f0db07fbc85a33242d691ed1daac93a9cfa884a1b7254934d0520adaac now resolves all four recorded basename log references and its exact sdk-distribution archive/manifest references beneath the wrapper root. Every such physical log/artifact size/hash independently matches its raw receipt. Composite of the four frozen harness files is3a8679d7e326059d1fd44662c7a9232ae13f41b7a59e13cf0835a2a25628a899. Archive30,834,843bytes remains cd851d3338b1b2af79197cbafaeefdd03a8aac3e02373a893ddd5d07a930ab26 and is input package content, not selected16MiB proof metadata. No package rebuild, new qualification or relabeling occurred.
+
+Independent recursive packet diff009→010 shows only attempt4→5 and five SDK root/relative path changes (root,receipt,archive,manifest,harness). READY010 SHA77837f7f5594f92d105dd1363505bb717b8a7e96c9f044205015ad23bf090c16 preserves H UUID, actual P/M/tag/release/assets, SDK source/execution receipt identity, limits and all other evidence. ReaderV5 and operator008 bytes are unchanged. Previous H4 acquisition failure is preserved; source/full archive success is not a full H pass.
+
+These inputs are ready for the separately authorized fresh full seven-command H5 run under existing180/1800/capture/custody bounds. Actual final public proof acceptance remains pending. No candidate execution/tests/imports/AST/YAML parsing/Docker/Git mutation/Actions performed by this reviewer.

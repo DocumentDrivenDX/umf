@@ -1,0 +1,54 @@
+--- /private/tmp/sdk-057-local3600-public-h-operator-proposal004/run_public_h_docker.py	2026-10-29 00:23:28
++++ /private/tmp/sdk-057-local3600-public-h-operator-proposal005/run_public_h_docker.py	2026-10-29 00:33:45
+@@ -5,8 +5,8 @@
+ 
+ IMAGE = 'sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556'
+ PLATFORM = 'linux/amd64'
+-READER = pathlib.Path('/private/tmp/sdk-057-local3600-public-h-v3/run-local3600-public-h.py')
+-READER_SHA256 = 'a8b496f65010551c5fc4bac368bebc95c1b1406cfc125c12aa733eaa726a7b15'
++READER = pathlib.Path('/private/tmp/sdk-057-local3600-public-h-v4/run-local3600-public-h.py')
++READER_SHA256 = '7cd33c89e2511a581e321a5f64fff292187a7abaad54860d60f2bba16290c57f'
+ HOST_ROOT = pathlib.Path('/private/tmp')
+ H_METADATA_LIMIT = 16 * 1024 * 1024
+ H_LOG_LIMIT = 1024 * 1024
+@@ -127,6 +127,28 @@
+     mount=p if p.is_dir() else p.parent
+     if mount==HOST_ROOT or HOST_ROOT not in mount.parents: fail(f'{label} resolves outside narrow evidence roots')
+     mounts.add(mount)
++
++
++def add_profile_relative_mount(mounts: set[pathlib.Path], profile_root_value: str, relative: object, label: str) -> None:
++    if not isinstance(relative, str) or not relative or '\x00' in relative or '\\' in relative:
++        fail(f'{label} relative path is malformed')
++    if any(part in {'.', '..'} for part in relative.split('/')):
++        fail(f'{label} relative path escapes its evidence root')
++    pure = pathlib.PurePosixPath(relative)
++    if pure.is_absolute() or '..' in pure.parts or '.' in pure.parts:
++        fail(f'{label} relative path escapes its evidence root')
++    profile_root = canonical_path(profile_root_value, 'D5 profile evidence root')
++    candidate = profile_root.joinpath(*pure.parts)
++    resolved_root = profile_root.resolve(strict=True)
++    resolved = candidate.resolve(strict=True)
++    if resolved != resolved_root and resolved_root not in resolved.parents:
++        fail(f'{label} resolves outside its declared root')
++    cursor = candidate
++    while cursor != profile_root:
++        if cursor.is_symlink(): fail(f'{label} traverses a symlink')
++        cursor = cursor.parent
++    if candidate.is_symlink(): fail(f'{label} is a symlink')
++    add_path_mount(mounts, str(resolved), label)
+ 
+ 
+ def input_mounts(packet: dict, packet_path: pathlib.Path) -> list[pathlib.Path]:
+@@ -138,8 +160,10 @@
+         add_path_mount(mounts,str(sdk_root/sdk[key]),f'SDK evidence {key}')
+     d5=evidence['d5']; add_path_mount(mounts,d5['root'],'D5 evidence root')
+     profile=d5.get('resourceProfileEvidence',{})
+-    for key in ('root','profilePath','operatorManifestPath','outerCapturePath','selectedEvidenceReceiptPath'):
++    for key in ('root','profilePath','operatorManifestPath'):
+         if key in profile: add_path_mount(mounts,profile[key],f'D5 profile {key}')
++    for key in ('outerCapturePath','selectedEvidenceReceiptPath'):
++        if key in profile: add_profile_relative_mount(mounts,profile['root'],profile[key],f'D5 profile {key}')
+     for key,path in profile.get('roots',{}).items(): add_path_mount(mounts,path,f'D5 profile roots.{key}')
+     aggregate=evidence['aggregate']; add_path_mount(mounts,aggregate['root'],'full18 aggregate root')
+     add_path_mount(mounts,aggregate['harnessPath'],'full18 harness')

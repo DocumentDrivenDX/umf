@@ -1,0 +1,112 @@
+bun add v1.4.3 (c6da4a4d3)
+Resolving dependencies
+Resolved, downloaded and extracted [175]
+error: DNSResolveFailed downloading package manifest @typespec/sse
+
+error: DNSResolveFailed downloading package manifest @typespec/streams
+
+error: DNSResolveFailed downloading package manifest @typespec/versioning
+
+error: DNSResolveFailed downloading package manifest ajv-draft-04
+
+error: DNSResolveFailed downloading package manifest apache-arrow
+
+error: DNSResolveFailed downloading package manifest avsc
+
+error: DNSResolveFailed downloading package manifest flatbuffers
+
+error: DNSResolveFailed downloading package manifest graphql
+
+error: DNSResolveFailed downloading package manifest jsonld
+
+error: DNSResolveFailed downloading package manifest rdf-literal
+
+error: DNSResolveFailed downloading package manifest rdf-validate-shacl
+
+error: DNSResolveFailed downloading package manifest util
+
+error: DNSResolveFailed downloading package manifest ajv
+
+error: DNSResolveFailed downloading package manifest @libpg-query/parser
+
+error: DNSResolveFailed downloading package manifest @typespec/compiler
+
+error: DNSResolveFailed downloading package manifest @typespec/emitter-framework
+
+error: DNSResolveFailed downloading package manifest buffer
+
+error: DNSResolveFailed downloading package manifest @typespec/graphql
+
+error: DNSResolveFailed downloading package manifest @typespec/http
+
+error: DNSResolveFailed downloading package manifest @typespec/json-schema
+
+error: DNSResolveFailed downloading package manifest n3
+
+error: DNSResolveFailed downloading package manifest @typespec/openapi
+
+error: DNSResolveFailed downloading package manifest @typespec/openapi3
+
+error: DNSResolveFailed downloading package manifest @typespec/protobuf
+
+error: DNSResolveFailed downloading package manifest yaml
+
+error: DNSResolveFailed downloading package manifest @typespec/rest
+
+error: DNSResolveFailed downloading package manifest @typespec/mutator-framework
+
+error: DNSResolveFailed downloading package manifest @typespec/events
+
+error: DNSResolveFailed downloading package manifest @bufbuild/protobuf
+error: @bufbuild/protobuf@2.15.0 failed to resolve
+error: @libpg-query/parser@17.6.10 failed to resolve
+error: @typespec/compiler@1.16.0 failed to resolve
+error: @typespec/emitter-framework@0.21.0 failed to resolve
+error: @typespec/events@0.86.0 failed to resolve
+error: @typespec/graphql@0.3.0 failed to resolve
+error: @typespec/http@1.16.0 failed to resolve
+error: @typespec/json-schema@1.16.0 failed to resolve
+error: @typespec/mutator-framework@0.17.1 failed to resolve
+error: @typespec/openapi@1.16.0 failed to resolve
+error: @typespec/openapi3@1.16.0 failed to resolve
+error: @typespec/protobuf@0.86.0 failed to resolve
+error: @typespec/rest@0.86.0 failed to resolve
+error: @typespec/sse@0.86.0 failed to resolve
+error: @typespec/streams@0.86.0 failed to resolve
+error: @typespec/versioning@0.86.0 failed to resolve
+error: ajv@8.20.0 failed to resolve
+error: ajv-draft-04@1.0.0 failed to resolve
+error: apache-arrow@21.2.0 failed to resolve
+error: avsc@5.7.9 failed to resolve
+error: buffer@6.0.3 failed to resolve
+error: flatbuffers@25.9.23 failed to resolve
+error: graphql@17.0.2 failed to resolve
+error: jsonld@9.0.0 failed to resolve
+error: n3@2.7.12 failed to resolve
+error: rdf-literal@2.0.0 failed to resolve
+error: rdf-validate-shacl@0.6.5 failed to resolve
+error: util@0.12.5 failed to resolve
+error: yaml@2.9.1 failed to resolve
+2 | import {checkCoreDistribution} from './check-core-authority';
+3 | import {mkdtemp,rm} from 'node:fs/promises';
+4 | import {tmpdir} from 'node:os';
+5 | import {join,resolve} from 'node:path';
+6 | const directory=await mkdtemp(join(tmpdir(),'umf-sdk-install-'));
+7 | async function run(command:string[]){const child=Bun.spawn(command,{cwd:directory,stdout:'inherit',stderr:'inherit'});if(await child.exited)throw Error('Installed SDK check failed: '+command[0]);}
+                                                                                                                                                      ^
+error: Installed SDK check failed: /usr/local/bun/bin/bun
+      at run (/h-evidence/evidence/work/producer/scripts/test-sdk-install.ts:7:147)
+
+Bun v1.4.3 (Linux x64)
+Traceback (most recent call last):
+  File "/private/tmp/sdk-057-local3600-public-h-v6-r2/run-local3600-public-h.py", line 2556, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/private/tmp/sdk-057-local3600-public-h-v6-r2/run-local3600-public-h.py", line 2442, in main
+    stage_sdk_consumer(packet, work); return 0
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/sdk-057-local3600-public-h-v6-r2/run-local3600-public-h.py", line 1406, in stage_sdk_consumer
+    fail('Installed public SDK consumer failed under '+str(isolation)[:120])
+  File "/private/tmp/sdk-057-local3600-public-h-v6-r2/run-local3600-public-h.py", line 126, in fail
+    raise ValueError(message)
+ValueError: Installed public SDK consumer failed under Linux network namespace (unshare --net)

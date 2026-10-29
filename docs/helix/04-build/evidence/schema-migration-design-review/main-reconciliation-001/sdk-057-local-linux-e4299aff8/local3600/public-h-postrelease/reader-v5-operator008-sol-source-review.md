@@ -1,0 +1,9 @@
+# Public-H V5/operator008 — archive mode producer closure
+
+ACCEPT SOURCE ONLY the exact pair: reader1a3f95edfed011cc4944474717220d156bd5ed405a0dda80cebfe1a938ee2cd5 at /private/tmp/sdk-057-local3600-public-h-v5/run-local3600-public-h.py and operator8beb2b8ad8e8c91eaa027e1415ca4f5851b40e20abbd218de451d5be09ebd670 at /private/tmp/sdk-057-local3600-public-h-operator-proposal008/run_public_h_docker.py.
+
+Independent full text diffs confirm one reader argv delta: git -c tar.umask=0022 -C <exactroot> archive --format=tar <exactP>. Strict0755directory/0644or0755file validation, safe extraction, complete P archive and all source/tag/ancestry checks remain unchanged. It corrects archive production to the existing mode contract rather than accepting loose modes. Operator differs from accepted007-r2 only in three literals: readerpath/hash and same-byte safeconfig copy path. Config remains64600e84d3d6245e37d4095564a12e6a112afa33c61820b0f107a9b867a16672,69bytes. All native-storage/export/cleanup/deadline/capture code is unchanged.
+
+READY009de37f31b61714864ddffcb5c4a391ccfb29853f11b8ee6e5709c7dd4c34165db is the same H UUID at attempt4, preserving all actual P/M/tag/release/public asset identities. Frozen executable hashes and config physically match the declared tuple. Preserve H3's mode refusal and successful failure-custody/export facts; no old attempt is relabeled. Original seven proof commands and1800/180/reserve/grace/log/evidence bounds remain. No SDK/full18/D5/product rerun is justified by this operator/reader correction.
+
+This source is ready for the separately authorized bounded H4 invocation; actual public proof acceptance still requires its complete result and physical evidence. No candidate execution/tests/imports/AST/YAML parsing/Docker/Git mutation/Actions performed by this reviewer.

@@ -1,0 +1,60 @@
+{
+  "attempt": 2,
+  "cleanup": {
+    "error": null,
+    "exactOwnedNameAbsent": true,
+    "removeExitCode": null
+  },
+  "dockerExitCode": 1,
+  "evidenceInventoryError": "RuntimeError: reader command logs do not match the exact seven-command roster",
+  "executionId": "local-4040da90-7637-405a-8b07-fcce6af3a73d",
+  "executionKind": "local_linux_diagnostic",
+  "failure": "docker client exited 1",
+  "outerCapture": {
+    "captureErrors": [],
+    "captureFailed": false,
+    "drainExpired": false,
+    "paths": [
+      "/private/tmp/migration-sdk057-public-h-postrelease-002/operator/docker.stdout.log",
+      "/private/tmp/migration-sdk057-public-h-postrelease-002/operator/docker.stderr.log"
+    ],
+    "rawSha256": [
+      "960c626dc4a1f2e8d5cae92bc73eb0c243c9818996a9a977eff9e42f185c3b9d",
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    ],
+    "retainedBytes": [
+      77,
+      0
+    ],
+    "timedOut": false,
+    "totalRetainedBytes": 77,
+    "truncated": [
+      false,
+      false
+    ]
+  },
+  "outerCapturePhysicalClosure": {
+    "errors": [],
+    "files": [
+      {
+        "path": "/private/tmp/migration-sdk057-public-h-postrelease-002/operator/docker.stdout.log",
+        "sha256": "960c626dc4a1f2e8d5cae92bc73eb0c243c9818996a9a977eff9e42f185c3b9d",
+        "sizeBytes": 77
+      },
+      {
+        "path": "/private/tmp/migration-sdk057-public-h-postrelease-002/operator/docker.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      }
+    ],
+    "verified": true
+  },
+  "profile": "umf.sdk-057-public-h-docker-operator/2",
+  "readerMetadataBytesMatchPhysicalFamily": false,
+  "readerReceiptPath": "/private/tmp/migration-sdk057-public-h-postrelease-002/evidence/receipt.json",
+  "readerReceiptSha256": "7ad9af9bdc3db76e2c5ade730e1821f262dc77a638f17d59c81efb91e070c836",
+  "readerStatus": null,
+  "selectedEvidenceBytes": 0,
+  "selectedEvidenceFiles": [],
+  "status": "FAIL_OR_UNKNOWN"
+}
