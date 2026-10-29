@@ -1,0 +1,5 @@
+# SDK public-H storage-backed local operator proposal 009
+
+Prepared for source review only. No Docker or H execution occurred. The operator pins the V6-r2 reader and READY packet011. The reader adds index-relative full18 aggregate reference resolution with distinct aggregate-root assembly custody, and assigns the index path in the installed probe branch; the SDK wrapper and public release inputs are unchanged.
+
+Reader: `/private/tmp/sdk-057-local3600-public-h-v6-r2/run-local3600-public-h.py` SHA-256 `94f944788ac2724935c3685d7f05c6f6952425916e73872896e0071a839bc4c8`. Packet011: `/private/tmp/sdk-057-local3600-public-h-v6-r2/local3600-public-h-inputs.011.ready.json` SHA-256 `d3d9424a5e0a7ca85dd67936f135646d41bff62692e146a0db05d7fa164ca195`, attempt 6. The operator runner retains proposal008 storage, cleanup, command, and resource limits; its only changes are reader path/hash and safe Git config copy path. See `runner-v008-v009.diff` and `packet010-to-011-delta.json`. No H proof or product execution is claimed.

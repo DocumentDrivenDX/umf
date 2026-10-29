@@ -1,0 +1,54 @@
+{
+  "checks": {
+    "cases": 37,
+    "childRawLogBytes": 94422,
+    "cleanupVerified": true,
+    "commandCount": 30,
+    "faultScenarios": 3,
+    "noDefaultChecks": 19,
+    "oracleGroups": 16,
+    "outerRawLogBytes": 2674,
+    "profile": "passed",
+    "rawLogBytes": 97096,
+    "replayCustody": {
+      "archiveSha256": "092b2db842101fe9aac485e05c8d79775b048602b671189a9c83e91467a64d86",
+      "gzipCount": 3,
+      "originalMemberCount": 6,
+      "successorCount": 3
+    },
+    "selectedEvidence": "passed",
+    "selectedMetadataBytes": 3508800,
+    "selectedMetadataLimitBytes": 16777216,
+    "uploadBytes": 2198659,
+    "uploadLimitBytes": 16777216
+  },
+  "d5": {
+    "attempt": 1,
+    "executionId": "local-996d7b70b8bf497aa879304e5e2fa0bd",
+    "receiptSha256": "1f4aa6430ad655c5baa76ce8c10c4309959264858a081e7a3dad6d890c477528",
+    "root": "/private/tmp/migration-d5-local-emulated3600-e4299aff8-001",
+    "selectedEvidenceReceiptSha256": "25e6e0f2fe088b5d9826ddd5b4127bb76a4cdf02a280d08f89ddf7e7a43b32b0",
+    "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+    "sourceTree": "8b98c0d895983ba2b7637dd3aea567dab0943883"
+  },
+  "packet": {
+    "bytes": 8608,
+    "path": "/private/tmp/sdk-057-local3600-public-h-v3/local3600-public-h-inputs.004.held.json",
+    "sha256": "2e70370da3718651b10abe9bfc269b8f8f3db40e387a1d03e9e0d0e00b4eebbe",
+    "status": "HELD"
+  },
+  "previousV2FailurePreserved": {
+    "path": "/private/tmp/sdk-057-local3600-public-h-v2/d5-metadata-preflight-003.json",
+    "reason": "v2 had a flat replay-file roster and did not accept the actual candidate-009/g01 subdirectories.",
+    "sha256": "1f09e6c7e593663e0b40d3ebc69f0d27cb455995ab5021340dbdb0c418a84fba"
+  },
+  "qualificationClaim": null,
+  "reader": {
+    "bytes": 175547,
+    "path": "/private/tmp/sdk-057-local3600-public-h-v3/run-local3600-public-h.py",
+    "sha256": "a8b496f65010551c5fc4bac368bebc95c1b1406cfc125c12aa733eaa726a7b15"
+  },
+  "schema": "umf.sdk-057-local3600-public-h-v3-metadata-preflight/1",
+  "scope": "Direct D5 profile and selected-evidence metadata validators only; no public-H execution, downloads, SDK consumer run, or product oracle.",
+  "status": "PASS_METADATA_ONLY"
+}

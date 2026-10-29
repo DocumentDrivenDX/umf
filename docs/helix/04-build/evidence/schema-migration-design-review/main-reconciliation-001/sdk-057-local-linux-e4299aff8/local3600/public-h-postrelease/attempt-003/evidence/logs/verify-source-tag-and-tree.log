@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/private/tmp/sdk-057-local3600-public-h-v4/run-local3600-public-h.py", line 2513, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/private/tmp/sdk-057-local3600-public-h-v4/run-local3600-public-h.py", line 2393, in main
+    stage_verify_source(packet, work); return 0
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/sdk-057-local3600-public-h-v4/run-local3600-public-h.py", line 1362, in stage_verify_source
+    producer, public_tag_commit = source_git(packet, work)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/sdk-057-local3600-public-h-v4/run-local3600-public-h.py", line 1253, in source_git
+    fail('Source archive directory has an unsupported mode')
+  File "/private/tmp/sdk-057-local3600-public-h-v4/run-local3600-public-h.py", line 126, in fail
+    raise ValueError(message)
+ValueError: Source archive directory has an unsupported mode

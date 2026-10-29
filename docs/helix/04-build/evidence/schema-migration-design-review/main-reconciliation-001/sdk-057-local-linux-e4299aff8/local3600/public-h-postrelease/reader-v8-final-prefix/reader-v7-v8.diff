@@ -1,0 +1,11 @@
+--- v7/run-local3600-public-h.py
++++ v8/run-local3600-public-h.py
+@@ -2393,7 +2393,7 @@
+             or bootstrap.get('bootstrapWheelSha256') != expected_continuation['bootstrapWheelSha256']
+             or bootstrap.get('defaultEnvironmentEqual') is not True
+             or bootstrap.get('acquisitionDefaultEnvironment') != bootstrap.get('replayDefaultEnvironment')
+-            or pathlib.Path(bootstrap.get('operatorPrefix','')).resolve() != (work/'operator-venv').resolve()
++            or pathlib.Path(bootstrap.get('operatorPrefix','')).resolve() != (work/'work'/'operator-venv').resolve()
+             or correspondence.get('operatorBootstrap',{}).get('receiptSha256') != expected_continuation['receiptSha256']
+             or correspondence.get('operatorBootstrap',{}).get('continuationExecutionId') != expected_continuation['executionId']
+             or correspondence.get('operatorBootstrap',{}).get('continuationAttempt') != expected_continuation['attempt']):

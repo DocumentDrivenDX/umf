@@ -1,0 +1,7 @@
+# Public-H final bootstrap prefix — narrow diagnosis and plan
+
+Actual H7 failed only final verification. The final-stage argv supplies evidence root /h-evidence/evidence, and verify_final's parameter named work reads its reports/logs. The bootstrap writer correctly records the separately created disposable prefix /h-evidence/evidence/work/operator-venv. Comparing it with (work/'operator-venv') is therefore a namespace error in the final reader.
+
+Approve only changing that expected prefix to (work/'work'/'operator-venv').resolve(), with a clarifying comment that the argument is evidence root. No missing python-installed.operatorBootstrap field is required or should be fabricated. Actual bootstrap Python3.11.17, packaging26.3, exact wheel digest, equal acquisition/replay marker environment and continuation receipt/execution/attempt all match. Subsequent actual Python18/status/cell/version/native fields and SDK139/API flags were independently inspected and match their strict expected values; no additional final-field discrepancy was found.
+
+Keep all strict prefix/hash/default-environment/source/public/custody predicates and seven commands/caps. Preserve H7 FAIL and its complete six-stage receipts; do not stitch them into a pass. Freeze a new source/operator pin/attempt8 and review the single guard delta before a fresh full H invocation. No product/SDK/full18/D5 change or rerun is warranted. Reviewer used text/JSON inspection only, no candidate execution/tests/Docker/Git mutation/Actions.

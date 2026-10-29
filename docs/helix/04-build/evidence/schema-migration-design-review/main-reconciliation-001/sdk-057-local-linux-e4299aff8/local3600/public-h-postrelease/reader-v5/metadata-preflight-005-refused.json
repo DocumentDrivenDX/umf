@@ -1,0 +1,33 @@
+{
+  "actualRelease": {
+    "assetCount": 3,
+    "publicPackageFamilyBytes": 31676201,
+    "publishedAt": "2026-10-29T04:28:03Z",
+    "releaseCommitM": "dce9b430422242edd135e69a7a64620d0244784e",
+    "releaseId": 427466486,
+    "tag": "umf-v0.5.7"
+  },
+  "disposition": "Actual SDK producer execution identity is preserved; no replacement identity was fabricated. Source review is required before the packet can be accepted by this reader.",
+  "firstRefusal": {
+    "actualReceiptExecutionId": "local-sdk-20261028T202157Z-38d3c32d-05e2-4803-97e1-dd396aebcba1-attempt1",
+    "actualReceiptPath": "/private/tmp/migration-sdk-e4299aff8-003/sdk-producer-receipt.json",
+    "exception": "ValueError",
+    "message": "sdkProducer evidence must carry a local execution identity",
+    "readerRule": "validate_inputs requires local-[a-f0-9-]{16,64} for sdkProducer evidence.executionId"
+  },
+  "freshExecutionIdentity": {
+    "attempt": 1,
+    "executionId": "local-4040da90-7637-405a-8b07-fcce6af3a73d"
+  },
+  "packetBytes": 8906,
+  "packetPath": "/private/tmp/sdk-057-local3600-public-h-v3/local3600-public-h-inputs.005.ready.json",
+  "packetSha256": "07cb707aeb2082946127111257ba87a4c1b0bad59526b4fe819ad9006c59bbe3",
+  "readerBytes": 175547,
+  "readerPath": "/private/tmp/sdk-057-local3600-public-h-v3/run-local3600-public-h.py",
+  "readerSha256": "a8b496f65010551c5fc4bac368bebc95c1b1406cfc125c12aa733eaa726a7b15",
+  "releaseApiPath": "/private/tmp/migration-sdk057-public-release-actual.json",
+  "releaseApiSha256": "4880e82784ca075a26eebf9cbc170484b76b07598dc3d786a9ec722bbf7de2a1",
+  "schema": "umf.sdk-057-local3600-public-h-input-preflight/1",
+  "scope": "Metadata-only validate_inputs call. No public-H command, downloads, SDK consumer run, or product oracle ran.",
+  "status": "REFUSED_SOURCE_SCHEMA"
+}

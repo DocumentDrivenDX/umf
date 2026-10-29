@@ -1,0 +1,22 @@
+--- /private/tmp/sdk-057-local3600-public-h-operator-proposal008/run_public_h_docker.py
++++ /private/tmp/sdk-057-local3600-public-h-operator-proposal009/run_public_h_docker.py
+@@ -5,8 +5,8 @@
+ 
+ IMAGE = 'sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556'
+ PLATFORM = 'linux/amd64'
+-READER = pathlib.Path('/private/tmp/sdk-057-local3600-public-h-v5/run-local3600-public-h.py')
+-READER_SHA256 = '1a3f95edfed011cc4944474717220d156bd5ed405a0dda80cebfe1a938ee2cd5'
++READER = pathlib.Path('/private/tmp/sdk-057-local3600-public-h-v6-r2/run-local3600-public-h.py')
++READER_SHA256 = '94f944788ac2724935c3685d7f05c6f6952425916e73872896e0071a839bc4c8'
+ HOST_ROOT = pathlib.Path('/private/tmp')
+ H_METADATA_LIMIT = 16 * 1024 * 1024
+ H_LOG_LIMIT = 1024 * 1024
+@@ -20,7 +20,7 @@
+ CPU_LIMIT, MEMORY_LIMIT, PIDS_LIMIT = '4', '8g', 8192
+ SOURCE_VOLUME = 'umf-migration-source-267675510'
+ SOURCE_ROOT = pathlib.Path('/private/tmp/migration-linux-candidate-267675510')
+-SOURCE_GIT_CONFIG = pathlib.Path('/private/tmp/sdk-057-local3600-public-h-operator-proposal008/producer-safe.gitconfig')
++SOURCE_GIT_CONFIG = pathlib.Path('/private/tmp/sdk-057-local3600-public-h-operator-proposal009/producer-safe.gitconfig')
+ SOURCE_GIT_CONFIG_SHA256 = '64600e84d3d6245e37d4095564a12e6a112afa33c61820b0f107a9b867a16672'
+ EVIDENCE_VOLUME_PREFIX = 'umf-public-h-evidence-'
+ EVIDENCE_MOUNT = pathlib.Path('/h-evidence')

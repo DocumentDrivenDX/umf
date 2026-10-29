@@ -1,0 +1,3 @@
+# Public-H attempt 3 — strict archive-mode refusal
+
+With the exact clean Linux source volume, source verification reached Git archive extraction in 2.0996 seconds and refused a directory mode outside its strict 0755 contract. The source snapshot was not accepted and later install commands did not run. The reader remains FAIL_OR_UNKNOWN. Its 15,957-byte selected failure family was exported byte-for-byte and independently rehashed by the operator; both owned containers and the evidence volume were verified absent afterward. Git's archive producer will be explicitly configured to use tar.umask=0022 rather than weakening the verifier's mode checks. No product source, public release bytes, tag or qualification limit changed.

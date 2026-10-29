@@ -1,0 +1,5 @@
+# SDK 0.5.7 publication checkpoint
+
+PR #48 merged normally at M `dce9b430422242edd135e69a7a64620d0244784e` on 2026-10-29T04:26:30Z. The tag `umf-v0.5.7` resolves to M. GitHub release 427466486 published on 2026-10-29T04:28:03Z with exactly the three reviewed package assets; the retained API response records their actual IDs, sizes and SHA-256 digests. Product source retains producer P; the separately reviewed main-branch microsite workflow delta removes automatic triggers only.
+
+Fresh public attempt008 passed all seven commands, SDK139 and the offline Python18 probe under the explicitly named SDK-network/Python-offline local profile; [actual proof and limits](../public-h-postrelease/README.md) retain the complete evidence. [Independent actual-evidence review](../public-h-postrelease/actual-sol-review.md) accepted the selected profile. No release bytes or tag will be replaced to add this later evidence. No Actions ran for M; the three automatic workflow entry points remain disabled under the local-only direction. Mac runtime limits and broader G03–G11 boundaries remain as published.

@@ -1,0 +1,3 @@
+# Public-H attempt 5 — aggregate-index path refusal
+
+Full source verification passed in 20.960 seconds, and the closed SDK wrapper's receipt/log/artifact checks passed. Acquisition then refused an aggregate Mac artifact-manifest reference because the reader expected an aggregate-root prefix while the actual index authored it relative to the index directory. All later index-authored path sites are being audited together. This is a failed proof; no installation or consumer result follows. Original index, receipts, artifact bytes and limits remain unchanged. Exported bounded evidence and owned-resource cleanup remain retained.

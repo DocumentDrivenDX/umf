@@ -1,0 +1,698 @@
+{
+  "attempt": 7,
+  "command": [
+    "docker",
+    "run",
+    "--name",
+    "umf-public-h-local-4040da90-7637-405a-8b07-fcce6af3-7",
+    "--rm",
+    "--pull=never",
+    "--platform=linux/amd64",
+    "--cpus=4",
+    "--memory=8g",
+    "--pids-limit=8192",
+    "--network=bridge",
+    "--cap-add=SYS_ADMIN",
+    "--security-opt=seccomp=unconfined",
+    "--read-only",
+    "--tmpfs",
+    "/tmp:rw,exec,size=1g",
+    "--tmpfs",
+    "/private/tmp:rw,exec,size=64m",
+    "--mount",
+    "type=volume,source=umf-migration-source-267675510,target=/private/tmp/migration-linux-candidate-267675510,readonly",
+    "--mount",
+    "type=volume,source=umf-public-h-evidence-d3bee7f855f8d2049200-7,target=/h-evidence",
+    "--mount",
+    "type=bind,src=/private/tmp/sdk-057-local3600-public-h-operator-proposal010/producer-safe.gitconfig,dst=/etc/gitconfig,readonly",
+    "--mount",
+    "type=bind,src=/private/tmp/migration-d5-local-emulated-3600-proposal-001,dst=/private/tmp/migration-d5-local-emulated-3600-proposal-001,readonly",
+    "--mount",
+    "type=bind,src=/private/tmp/migration-d5-local-emulated3600-e4299aff8-001,dst=/private/tmp/migration-d5-local-emulated3600-e4299aff8-001,readonly",
+    "--mount",
+    "type=bind,src=/private/tmp/migration-full18-e4299aff8-002,dst=/private/tmp/migration-full18-e4299aff8-002,readonly",
+    "--mount",
+    "type=bind,src=/private/tmp/migration-full18-e4299aff8-union-continuation-003,dst=/private/tmp/migration-full18-e4299aff8-union-continuation-003,readonly",
+    "--mount",
+    "type=bind,src=/private/tmp/migration-sdk057-public-h-sdk-wrapper-001,dst=/private/tmp/migration-sdk057-public-h-sdk-wrapper-001,readonly",
+    "--mount",
+    "type=bind,src=/private/tmp/sdk-057-local3600-public-h-v7-network-sdk,dst=/private/tmp/sdk-057-local3600-public-h-v7-network-sdk,readonly",
+    "--mount",
+    "type=bind,src=/private/tmp/sdk-057-local3600-public-h-v2/full18-harness,dst=/private/tmp/sdk-057-local3600-public-h-v2/full18-harness,readonly",
+    "--env",
+    "LOCAL_RUNTIME_IMAGE_DIGEST=sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+    "--env",
+    "GIT_OPTIONAL_LOCKS=0",
+    "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+    "python3",
+    "-I",
+    "/private/tmp/sdk-057-local3600-public-h-v7-network-sdk/run-local3600-public-h.py",
+    "run",
+    "/private/tmp/sdk-057-local3600-public-h-v7-network-sdk/local3600-public-h-inputs.012.ready.json",
+    "/h-evidence/evidence"
+  ],
+  "containerName": "umf-public-h-local-4040da90-7637-405a-8b07-fcce6af3-7",
+  "containerSecurity": {
+    "capAdd": [
+      "SYS_ADMIN"
+    ],
+    "dockerSocketMounted": false,
+    "hostNamespaces": false,
+    "privileged": false,
+    "purpose": "permit unchanged package-mirror unshare --net isolation",
+    "securityOpt": [
+      "seccomp=unconfined"
+    ]
+  },
+  "dockerEngineInfo": {
+    "Architecture": "aarch64",
+    "CDISpecDirs": [
+      "/etc/cdi",
+      "/var/run/cdi"
+    ],
+    "CPUSet": true,
+    "CPUShares": true,
+    "CgroupDriver": "cgroupfs",
+    "CgroupVersion": "2",
+    "ClientInfo": {
+      "Arch": "arm64",
+      "BuildTime": "Sun Oct 11 12:42:20 2026",
+      "Context": "orbstack",
+      "Debug": false,
+      "DefaultAPIVersion": "1.56",
+      "GitCommit": "7fc2dff",
+      "GoVersion": "go1.26.8",
+      "Os": "darwin",
+      "Plugins": [
+        {
+          "Name": "buildx",
+          "Path": "/Users/erik/.docker/cli-plugins/docker-buildx",
+          "SchemaVersion": "0.1.0",
+          "ShortDescription": "Docker Buildx",
+          "Vendor": "Docker Inc.",
+          "Version": "v0.37.2"
+        },
+        {
+          "Name": "compose",
+          "Path": "/Users/erik/.docker/cli-plugins/docker-compose",
+          "SchemaVersion": "0.1.0",
+          "ShortDescription": "Docker Compose",
+          "Vendor": "Docker Inc.",
+          "Version": "v5.5.0"
+        }
+      ],
+      "Version": "29.8.2",
+      "Warnings": null
+    },
+    "Containerd": {
+      "Address": "/var/run/docker/containerd/containerd.sock",
+      "Namespaces": {
+        "Containers": "moby",
+        "Plugins": "plugins.moby"
+      }
+    },
+    "ContainerdCommit": {
+      "ID": "ee2735368117d2eb259779949d5e75cdafec9761"
+    },
+    "Containers": 29,
+    "ContainersPaused": 0,
+    "ContainersRunning": 3,
+    "ContainersStopped": 26,
+    "CpuCfsPeriod": true,
+    "CpuCfsQuota": true,
+    "Debug": false,
+    "DefaultAddressPools": [
+      {
+        "Base": "192.168.97.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.107.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.117.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.147.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.148.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.155.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.156.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.158.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.163.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.164.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.165.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.166.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.167.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.171.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.172.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.181.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.183.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.186.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.207.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.214.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.215.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.216.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.223.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.227.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.228.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.229.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.237.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.239.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.242.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "192.168.247.0/24",
+        "Size": 24
+      },
+      {
+        "Base": "fd07:b51a:cc66:d000::/56",
+        "Size": 64
+      }
+    ],
+    "DefaultRuntime": "runc",
+    "DockerRootDir": "/var/lib/docker",
+    "Driver": "overlayfs",
+    "DriverStatus": [
+      [
+        "driver-type",
+        "io.containerd.snapshotter.v1"
+      ]
+    ],
+    "ExperimentalBuild": true,
+    "FirewallBackend": {
+      "Driver": "iptables",
+      "Info": [
+        [
+          "EnableUserlandProxy",
+          "true"
+        ],
+        [
+          "UserlandProxyPath",
+          "/opt/orbstack-guest/pstub"
+        ]
+      ]
+    },
+    "GenericResources": null,
+    "HttpProxy": "http://proxy.orb.internal:8305",
+    "HttpsProxy": "http://proxy.orb.internal:8305",
+    "ID": "000ee4dd-619b-4ac3-ac89-2032418cc33e",
+    "IPv4Forwarding": true,
+    "Images": 46,
+    "IndexServerAddress": "https://index.docker.io/v1/",
+    "InitBinary": "docker-init",
+    "InitCommit": {
+      "ID": "de40ad0"
+    },
+    "Isolation": "",
+    "KernelVersion": "7.2.9-orbstack-00391-g2b298d05fbd4",
+    "Labels": [],
+    "LiveRestoreEnabled": false,
+    "LoggingDriver": "json-file",
+    "MemTotal": 33670594560,
+    "MemoryLimit": true,
+    "NCPU": 16,
+    "NEventsListener": 2,
+    "NFd": 55,
+    "NGoroutines": 118,
+    "Name": "orbstack",
+    "NoProxy": "localhost,127.0.0.1,127.0.0.0/8,::1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,0.250.250.0/24,*.orb.internal,*.local,gateway.docker.internal,host.internal,host.docker.internal,host.lima.internal,docker.for.mac.localhost,docker.for.mac.host.internal",
+    "OSType": "linux",
+    "OSVersion": "",
+    "OomKillDisable": false,
+    "OperatingSystem": "OrbStack",
+    "PidsLimit": true,
+    "Plugins": {
+      "Authorization": null,
+      "Log": [
+        "awslogs",
+        "fluentd",
+        "gcplogs",
+        "gelf",
+        "journald",
+        "json-file",
+        "local",
+        "splunk",
+        "syslog"
+      ],
+      "Network": [
+        "bridge",
+        "host",
+        "ipvlan",
+        "macvlan",
+        "null",
+        "overlay"
+      ],
+      "Volume": [
+        "local"
+      ]
+    },
+    "ProductLicense": "Community Engine",
+    "RegistryConfig": {
+      "IndexConfigs": {
+        "docker.io": {
+          "Mirrors": [],
+          "Name": "docker.io",
+          "Official": true,
+          "Secure": true
+        }
+      },
+      "InsecureRegistryCIDRs": [
+        "127.0.0.0/8",
+        "::1/128"
+      ],
+      "Mirrors": []
+    },
+    "RuncCommit": {
+      "ID": "29dd3dc2b13b4123162e5fe132504bb4b15569f1"
+    },
+    "Runtimes": {
+      "io.containerd.runc.v2": {
+        "path": "runc",
+        "status": {
+          "org.opencontainers.runtime-spec.features": "{\"ociVersionMin\":\"1.0.0\",\"ociVersionMax\":\"1.3.0\",\"hooks\":[\"prestart\",\"createRuntime\",\"createContainer\",\"startContainer\",\"poststart\",\"poststop\"],\"mountOptions\":[\"async\",\"atime\",\"bind\",\"defaults\",\"dev\",\"diratime\",\"dirsync\",\"exec\",\"iversion\",\"lazytime\",\"loud\",\"mand\",\"noatime\",\"nodev\",\"nodiratime\",\"noexec\",\"noiversion\",\"nolazytime\",\"nomand\",\"norelatime\",\"nostrictatime\",\"nosuid\",\"nosymfollow\",\"private\",\"ratime\",\"rbind\",\"rdev\",\"rdiratime\",\"relatime\",\"remount\",\"rexec\",\"rnoatime\",\"rnodev\",\"rnodiratime\",\"rnoexec\",\"rnorelatime\",\"rnostrictatime\",\"rnosuid\",\"rnosymfollow\",\"ro\",\"rprivate\",\"rrelatime\",\"rro\",\"rrw\",\"rshared\",\"rslave\",\"rstrictatime\",\"rsuid\",\"rsymfollow\",\"runbindable\",\"rw\",\"shared\",\"silent\",\"slave\",\"strictatime\",\"suid\",\"symfollow\",\"sync\",\"tmpcopyup\",\"unbindable\"],\"linux\":{\"namespaces\":[\"cgroup\",\"ipc\",\"mount\",\"network\",\"pid\",\"time\",\"user\",\"uts\"],\"capabilities\":[\"CAP_CHOWN\",\"CAP_DAC_OVERRIDE\",\"CAP_DAC_READ_SEARCH\",\"CAP_FOWNER\",\"CAP_FSETID\",\"CAP_KILL\",\"CAP_SETGID\",\"CAP_SETUID\",\"CAP_SETPCAP\",\"CAP_LINUX_IMMUTABLE\",\"CAP_NET_BIND_SERVICE\",\"CAP_NET_BROADCAST\",\"CAP_NET_ADMIN\",\"CAP_NET_RAW\",\"CAP_IPC_LOCK\",\"CAP_IPC_OWNER\",\"CAP_SYS_MODULE\",\"CAP_SYS_RAWIO\",\"CAP_SYS_CHROOT\",\"CAP_SYS_PTRACE\",\"CAP_SYS_PACCT\",\"CAP_SYS_ADMIN\",\"CAP_SYS_BOOT\",\"CAP_SYS_NICE\",\"CAP_SYS_RESOURCE\",\"CAP_SYS_TIME\",\"CAP_SYS_TTY_CONFIG\",\"CAP_MKNOD\",\"CAP_LEASE\",\"CAP_AUDIT_WRITE\",\"CAP_AUDIT_CONTROL\",\"CAP_SETFCAP\",\"CAP_MAC_OVERRIDE\",\"CAP_MAC_ADMIN\",\"CAP_SYSLOG\",\"CAP_WAKE_ALARM\",\"CAP_BLOCK_SUSPEND\",\"CAP_AUDIT_READ\",\"CAP_PERFMON\",\"CAP_BPF\",\"CAP_CHECKPOINT_RESTORE\"],\"cgroup\":{\"v1\":true,\"v2\":true,\"systemd\":true,\"systemdUser\":true,\"rdma\":true},\"seccomp\":{\"enabled\":true,\"actions\":[\"SCMP_ACT_ALLOW\",\"SCMP_ACT_ERRNO\",\"SCMP_ACT_KILL\",\"SCMP_ACT_KILL_PROCESS\",\"SCMP_ACT_KILL_THREAD\",\"SCMP_ACT_LOG\",\"SCMP_ACT_NOTIFY\",\"SCMP_ACT_TRACE\",\"SCMP_ACT_TRAP\"],\"operators\":[\"SCMP_CMP_EQ\",\"SCMP_CMP_GE\",\"SCMP_CMP_GT\",\"SCMP_CMP_LE\",\"SCMP_CMP_LT\",\"SCMP_CMP_MASKED_EQ\",\"SCMP_CMP_NE\"],\"archs\":[\"SCMP_ARCH_AARCH64\",\"SCMP_ARCH_ARM\",\"SCMP_ARCH_LOONGARCH64\",\"SCMP_ARCH_MIPS\",\"SCMP_ARCH_MIPS64\",\"SCMP_ARCH_MIPS64N32\",\"SCMP_ARCH_MIPSEL\",\"SCMP_ARCH_MIPSEL64\",\"SCMP_ARCH_MIPSEL64N32\",\"SCMP_ARCH_PPC\",\"SCMP_ARCH_PPC64\",\"SCMP_ARCH_PPC64LE\",\"SCMP_ARCH_RISCV64\",\"SCMP_ARCH_S390\",\"SCMP_ARCH_S390X\",\"SCMP_ARCH_X32\",\"SCMP_ARCH_X86\",\"SCMP_ARCH_X86_64\"],\"knownFlags\":[\"SECCOMP_FILTER_FLAG_TSYNC\",\"SECCOMP_FILTER_FLAG_SPEC_ALLOW\",\"SECCOMP_FILTER_FLAG_LOG\",\"SECCOMP_FILTER_FLAG_WAIT_KILLABLE_RECV\"],\"supportedFlags\":[\"SECCOMP_FILTER_FLAG_TSYNC\",\"SECCOMP_FILTER_FLAG_SPEC_ALLOW\",\"SECCOMP_FILTER_FLAG_LOG\",\"SECCOMP_FILTER_FLAG_WAIT_KILLABLE_RECV\"]},\"apparmor\":{\"enabled\":true},\"selinux\":{\"enabled\":true},\"intelRdt\":{\"enabled\":true,\"schemata\":true,\"monitoring\":true},\"memoryPolicy\":{\"modes\":[\"MPOL_BIND\",\"MPOL_DEFAULT\",\"MPOL_INTERLEAVE\",\"MPOL_LOCAL\",\"MPOL_PREFERRED\",\"MPOL_PREFERRED_MANY\",\"MPOL_WEIGHTED_INTERLEAVE\"],\"flags\":[\"MPOL_F_NUMA_BALANCING\",\"MPOL_F_RELATIVE_NODES\",\"MPOL_F_STATIC_NODES\"]},\"mountExtensions\":{\"idmap\":{\"enabled\":true}},\"netDevices\":{\"enabled\":true}},\"annotations\":{\"com.cyphar.pathrs.libpathrs.version\":\"0.2.5\",\"io.github.seccomp.libseccomp.version\":\"2.6.0\",\"org.opencontainers.runc.checkpoint.enabled\":\"true\",\"org.opencontainers.runc.commit\":\"29dd3dc2b13b4123162e5fe132504bb4b15569f1\",\"org.opencontainers.runc.version\":\"1.5.2\"},\"potentiallyUnsafeConfigAnnotations\":[\"bundle\",\"org.systemd.property.\",\"org.criu.config\"]}"
+        }
+      },
+      "runc": {
+        "path": "runc",
+        "status": {
+          "org.opencontainers.runtime-spec.features": "{\"ociVersionMin\":\"1.0.0\",\"ociVersionMax\":\"1.3.0\",\"hooks\":[\"prestart\",\"createRuntime\",\"createContainer\",\"startContainer\",\"poststart\",\"poststop\"],\"mountOptions\":[\"async\",\"atime\",\"bind\",\"defaults\",\"dev\",\"diratime\",\"dirsync\",\"exec\",\"iversion\",\"lazytime\",\"loud\",\"mand\",\"noatime\",\"nodev\",\"nodiratime\",\"noexec\",\"noiversion\",\"nolazytime\",\"nomand\",\"norelatime\",\"nostrictatime\",\"nosuid\",\"nosymfollow\",\"private\",\"ratime\",\"rbind\",\"rdev\",\"rdiratime\",\"relatime\",\"remount\",\"rexec\",\"rnoatime\",\"rnodev\",\"rnodiratime\",\"rnoexec\",\"rnorelatime\",\"rnostrictatime\",\"rnosuid\",\"rnosymfollow\",\"ro\",\"rprivate\",\"rrelatime\",\"rro\",\"rrw\",\"rshared\",\"rslave\",\"rstrictatime\",\"rsuid\",\"rsymfollow\",\"runbindable\",\"rw\",\"shared\",\"silent\",\"slave\",\"strictatime\",\"suid\",\"symfollow\",\"sync\",\"tmpcopyup\",\"unbindable\"],\"linux\":{\"namespaces\":[\"cgroup\",\"ipc\",\"mount\",\"network\",\"pid\",\"time\",\"user\",\"uts\"],\"capabilities\":[\"CAP_CHOWN\",\"CAP_DAC_OVERRIDE\",\"CAP_DAC_READ_SEARCH\",\"CAP_FOWNER\",\"CAP_FSETID\",\"CAP_KILL\",\"CAP_SETGID\",\"CAP_SETUID\",\"CAP_SETPCAP\",\"CAP_LINUX_IMMUTABLE\",\"CAP_NET_BIND_SERVICE\",\"CAP_NET_BROADCAST\",\"CAP_NET_ADMIN\",\"CAP_NET_RAW\",\"CAP_IPC_LOCK\",\"CAP_IPC_OWNER\",\"CAP_SYS_MODULE\",\"CAP_SYS_RAWIO\",\"CAP_SYS_CHROOT\",\"CAP_SYS_PTRACE\",\"CAP_SYS_PACCT\",\"CAP_SYS_ADMIN\",\"CAP_SYS_BOOT\",\"CAP_SYS_NICE\",\"CAP_SYS_RESOURCE\",\"CAP_SYS_TIME\",\"CAP_SYS_TTY_CONFIG\",\"CAP_MKNOD\",\"CAP_LEASE\",\"CAP_AUDIT_WRITE\",\"CAP_AUDIT_CONTROL\",\"CAP_SETFCAP\",\"CAP_MAC_OVERRIDE\",\"CAP_MAC_ADMIN\",\"CAP_SYSLOG\",\"CAP_WAKE_ALARM\",\"CAP_BLOCK_SUSPEND\",\"CAP_AUDIT_READ\",\"CAP_PERFMON\",\"CAP_BPF\",\"CAP_CHECKPOINT_RESTORE\"],\"cgroup\":{\"v1\":true,\"v2\":true,\"systemd\":true,\"systemdUser\":true,\"rdma\":true},\"seccomp\":{\"enabled\":true,\"actions\":[\"SCMP_ACT_ALLOW\",\"SCMP_ACT_ERRNO\",\"SCMP_ACT_KILL\",\"SCMP_ACT_KILL_PROCESS\",\"SCMP_ACT_KILL_THREAD\",\"SCMP_ACT_LOG\",\"SCMP_ACT_NOTIFY\",\"SCMP_ACT_TRACE\",\"SCMP_ACT_TRAP\"],\"operators\":[\"SCMP_CMP_EQ\",\"SCMP_CMP_GE\",\"SCMP_CMP_GT\",\"SCMP_CMP_LE\",\"SCMP_CMP_LT\",\"SCMP_CMP_MASKED_EQ\",\"SCMP_CMP_NE\"],\"archs\":[\"SCMP_ARCH_AARCH64\",\"SCMP_ARCH_ARM\",\"SCMP_ARCH_LOONGARCH64\",\"SCMP_ARCH_MIPS\",\"SCMP_ARCH_MIPS64\",\"SCMP_ARCH_MIPS64N32\",\"SCMP_ARCH_MIPSEL\",\"SCMP_ARCH_MIPSEL64\",\"SCMP_ARCH_MIPSEL64N32\",\"SCMP_ARCH_PPC\",\"SCMP_ARCH_PPC64\",\"SCMP_ARCH_PPC64LE\",\"SCMP_ARCH_RISCV64\",\"SCMP_ARCH_S390\",\"SCMP_ARCH_S390X\",\"SCMP_ARCH_X32\",\"SCMP_ARCH_X86\",\"SCMP_ARCH_X86_64\"],\"knownFlags\":[\"SECCOMP_FILTER_FLAG_TSYNC\",\"SECCOMP_FILTER_FLAG_SPEC_ALLOW\",\"SECCOMP_FILTER_FLAG_LOG\",\"SECCOMP_FILTER_FLAG_WAIT_KILLABLE_RECV\"],\"supportedFlags\":[\"SECCOMP_FILTER_FLAG_TSYNC\",\"SECCOMP_FILTER_FLAG_SPEC_ALLOW\",\"SECCOMP_FILTER_FLAG_LOG\",\"SECCOMP_FILTER_FLAG_WAIT_KILLABLE_RECV\"]},\"apparmor\":{\"enabled\":true},\"selinux\":{\"enabled\":true},\"intelRdt\":{\"enabled\":true,\"schemata\":true,\"monitoring\":true},\"memoryPolicy\":{\"modes\":[\"MPOL_BIND\",\"MPOL_DEFAULT\",\"MPOL_INTERLEAVE\",\"MPOL_LOCAL\",\"MPOL_PREFERRED\",\"MPOL_PREFERRED_MANY\",\"MPOL_WEIGHTED_INTERLEAVE\"],\"flags\":[\"MPOL_F_NUMA_BALANCING\",\"MPOL_F_RELATIVE_NODES\",\"MPOL_F_STATIC_NODES\"]},\"mountExtensions\":{\"idmap\":{\"enabled\":true}},\"netDevices\":{\"enabled\":true}},\"annotations\":{\"com.cyphar.pathrs.libpathrs.version\":\"0.2.5\",\"io.github.seccomp.libseccomp.version\":\"2.6.0\",\"org.opencontainers.runc.checkpoint.enabled\":\"true\",\"org.opencontainers.runc.commit\":\"29dd3dc2b13b4123162e5fe132504bb4b15569f1\",\"org.opencontainers.runc.version\":\"1.5.2\"},\"potentiallyUnsafeConfigAnnotations\":[\"bundle\",\"org.systemd.property.\",\"org.criu.config\"]}"
+        }
+      }
+    },
+    "SecurityOptions": [
+      "name=seccomp,profile=builtin",
+      "name=cgroupns"
+    ],
+    "ServerVersion": "29.8.2",
+    "SwapLimit": true,
+    "Swarm": {
+      "ControlAvailable": false,
+      "Error": "",
+      "LocalNodeState": "inactive",
+      "NodeAddr": "",
+      "NodeID": "",
+      "RemoteManagers": null
+    },
+    "SystemTime": "2026-10-29T01:27:25.435899864-04:00",
+    "Warnings": [
+      "WARNING: DOCKER_INSECURE_NO_IPTABLES_RAW is set"
+    ]
+  },
+  "driverSha256": "fae2153afd7c1db3b01630615850d23c5276ab822b710d9f60aa8d26006526bf",
+  "evidenceExport": {
+    "capture": {
+      "captureErrors": [],
+      "captureFailed": false,
+      "drainExpired": false,
+      "paths": [
+        "/private/tmp/migration-sdk057-public-h-postrelease-007/operator/evidence-export.stdout.log",
+        "/private/tmp/migration-sdk057-public-h-postrelease-007/operator/evidence-export.stderr.log"
+      ],
+      "rawSha256": [
+        "a5b0ac5f9b3841b448cc63778eb09d10b0db3cd65421f6b94237e867462d17cd",
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      ],
+      "retainedBytes": [
+        2312,
+        0
+      ],
+      "timedOut": false,
+      "totalRetainedBytes": 2312,
+      "truncated": [
+        false,
+        false
+      ]
+    },
+    "capturePhysicalClosure": {
+      "errors": [],
+      "files": [
+        {
+          "path": "/private/tmp/migration-sdk057-public-h-postrelease-007/operator/evidence-export.stdout.log",
+          "sha256": "a5b0ac5f9b3841b448cc63778eb09d10b0db3cd65421f6b94237e867462d17cd",
+          "sizeBytes": 2312
+        },
+        {
+          "path": "/private/tmp/migration-sdk057-public-h-postrelease-007/operator/evidence-export.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "verified": true
+    },
+    "cleanup": {
+      "error": null,
+      "exactOwnedNameAbsent": true
+    },
+    "containerName": "umf-public-h-local-4040da90-7637-405a-8b07-fcce6af3-7-export",
+    "exitCode": 0,
+    "fullSuccessRoster": false,
+    "hostFiles": [
+      {
+        "path": "receipt.json",
+        "sha256": "0cbb88d42227a22c63afbf706a41b43b36aed657d0ca63b00090b34897ad57ab",
+        "sizeBytes": 8776
+      },
+      {
+        "path": "input-packet.json",
+        "sha256": "44ef9aa2ce8b3078b3644c058cb306567d5bb6246da793766a5704c29a5ef43d",
+        "sizeBytes": 8935
+      },
+      {
+        "path": "command-records.jsonl",
+        "sha256": "691f31d67dcbb85edd11e5633fd0efec403b54ff42d14597ec7347f2c54df508",
+        "sizeBytes": 5472
+      },
+      {
+        "path": "logs/acquire-and-verify-public-and-qualified-archives.log",
+        "sha256": "0a5c5eb20e9f1cbdc8fc566e38c08a13a632128d90fd8a5390a952c89a1f6a8a",
+        "sizeBytes": 195
+      },
+      {
+        "path": "logs/bun-install-locked-source-dependencies.log",
+        "sha256": "4a8fb620e4e6910d5c397706061b9b1e181af50484edf11215ea7e46b45287c2",
+        "sizeBytes": 1056
+      },
+      {
+        "path": "logs/python-public-install-and-migration-smoke.log",
+        "sha256": "b412ed6d42050f159cbec2bd6c26d07311ae0b91972268a533c36971b64e389c",
+        "sizeBytes": 711
+      },
+      {
+        "path": "logs/sdk-public-install-consumer-smoke.log",
+        "sha256": "791350c3743777a407728a4c6fa39aa37f73507be62086e839df527b855e8a22",
+        "sizeBytes": 548
+      },
+      {
+        "path": "logs/toolchain-identity.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      {
+        "path": "logs/verify-final-probe-fields.log",
+        "sha256": "e6012fb0d2138840a0908844863fecfd3a661b0de5da77e983c3edf201f3e821",
+        "sizeBytes": 1048
+      },
+      {
+        "path": "logs/verify-source-tag-and-tree.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      {
+        "path": "reports/packaging-bootstrap.json",
+        "sha256": "bb04b9f36a3bf0b83ac60c149ce275d44dd1afa2b3563c8fb9089b67b7b13d6d",
+        "sizeBytes": 1382
+      },
+      {
+        "path": "reports/public-byte-correspondence.json",
+        "sha256": "0c3625d39af746668a3737ee985cc993554a90f82c7135e0a77084cd9662e726",
+        "sizeBytes": 9158
+      },
+      {
+        "path": "reports/python-installed.json",
+        "sha256": "8d1c52312ec1ec691e1b3ad451c7d9132b53f9bdeea8813a13bb3566a431473e",
+        "sizeBytes": 3518
+      },
+      {
+        "path": "reports/sdk-install.json",
+        "sha256": "6000cb8eafd5e17a8416e5adcb9e19616419ab6df0321474656813011b1aa902",
+        "sizeBytes": 353
+      },
+      {
+        "path": "reports/source-identity.json",
+        "sha256": "664b5ae746297c61ab79b42fb98399734873c24b51bae521ddbad6a9c7856817",
+        "sizeBytes": 1280
+      },
+      {
+        "path": "reports/toolchain.json",
+        "sha256": "3529c7ea17e6819ff08a15d864f1ca5b15e77c43bf83d95b30f52dbb67f89aa1",
+        "sizeBytes": 965
+      }
+    ],
+    "hostInventoryError": null,
+    "manifest": {
+      "complete": false,
+      "files": [
+        {
+          "path": "command-records.jsonl",
+          "sha256": "691f31d67dcbb85edd11e5633fd0efec403b54ff42d14597ec7347f2c54df508",
+          "sizeBytes": 5472
+        },
+        {
+          "path": "input-packet.json",
+          "sha256": "44ef9aa2ce8b3078b3644c058cb306567d5bb6246da793766a5704c29a5ef43d",
+          "sizeBytes": 8935
+        },
+        {
+          "path": "receipt.json",
+          "sha256": "0cbb88d42227a22c63afbf706a41b43b36aed657d0ca63b00090b34897ad57ab",
+          "sizeBytes": 8776
+        },
+        {
+          "path": "logs/acquire-and-verify-public-and-qualified-archives.log",
+          "sha256": "0a5c5eb20e9f1cbdc8fc566e38c08a13a632128d90fd8a5390a952c89a1f6a8a",
+          "sizeBytes": 195
+        },
+        {
+          "path": "logs/bun-install-locked-source-dependencies.log",
+          "sha256": "4a8fb620e4e6910d5c397706061b9b1e181af50484edf11215ea7e46b45287c2",
+          "sizeBytes": 1056
+        },
+        {
+          "path": "logs/python-public-install-and-migration-smoke.log",
+          "sha256": "b412ed6d42050f159cbec2bd6c26d07311ae0b91972268a533c36971b64e389c",
+          "sizeBytes": 711
+        },
+        {
+          "path": "logs/sdk-public-install-consumer-smoke.log",
+          "sha256": "791350c3743777a407728a4c6fa39aa37f73507be62086e839df527b855e8a22",
+          "sizeBytes": 548
+        },
+        {
+          "path": "logs/toolchain-identity.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        },
+        {
+          "path": "logs/verify-final-probe-fields.log",
+          "sha256": "e6012fb0d2138840a0908844863fecfd3a661b0de5da77e983c3edf201f3e821",
+          "sizeBytes": 1048
+        },
+        {
+          "path": "logs/verify-source-tag-and-tree.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        },
+        {
+          "path": "reports/packaging-bootstrap.json",
+          "sha256": "bb04b9f36a3bf0b83ac60c149ce275d44dd1afa2b3563c8fb9089b67b7b13d6d",
+          "sizeBytes": 1382
+        },
+        {
+          "path": "reports/public-byte-correspondence.json",
+          "sha256": "0c3625d39af746668a3737ee985cc993554a90f82c7135e0a77084cd9662e726",
+          "sizeBytes": 9158
+        },
+        {
+          "path": "reports/python-installed.json",
+          "sha256": "8d1c52312ec1ec691e1b3ad451c7d9132b53f9bdeea8813a13bb3566a431473e",
+          "sizeBytes": 3518
+        },
+        {
+          "path": "reports/sdk-install.json",
+          "sha256": "6000cb8eafd5e17a8416e5adcb9e19616419ab6df0321474656813011b1aa902",
+          "sizeBytes": 353
+        },
+        {
+          "path": "reports/source-identity.json",
+          "sha256": "664b5ae746297c61ab79b42fb98399734873c24b51bae521ddbad6a9c7856817",
+          "sizeBytes": 1280
+        },
+        {
+          "path": "reports/toolchain.json",
+          "sha256": "3529c7ea17e6819ff08a15d864f1ca5b15e77c43bf83d95b30f52dbb67f89aa1",
+          "sizeBytes": 965
+        }
+      ],
+      "missing": [],
+      "readerStatus": "FAIL_OR_UNKNOWN",
+      "safe": true,
+      "selectedBytes": 43397,
+      "status": "copied"
+    },
+    "readerMetadataBytesMatchPhysicalFamily": true,
+    "readerStatus": "FAIL_OR_UNKNOWN",
+    "rowsMatch": true,
+    "verified": true
+  },
+  "evidenceVolume": {
+    "createdByThisRun": true,
+    "exportTarget": "/private/tmp/migration-sdk057-public-h-postrelease-007/evidence",
+    "inspect": {
+      "CreatedAt": "2026-10-29T01:27:25-04:00",
+      "Driver": "local",
+      "Labels": {
+        "org.umf.public-h.attempt": "7",
+        "org.umf.public-h.execution-id": "local-4040da90-7637-405a-8b07-fcce6af3a73d",
+        "org.umf.public-h.operator": "local-public-h-v7"
+      },
+      "Mountpoint": "/var/lib/docker/volumes/umf-public-h-evidence-d3bee7f855f8d2049200-7/_data",
+      "Name": "umf-public-h-evidence-d3bee7f855f8d2049200-7",
+      "Options": null,
+      "Scope": "local"
+    },
+    "name": "umf-public-h-evidence-d3bee7f855f8d2049200-7",
+    "target": "/h-evidence"
+  },
+  "evidenceVolumeCleanup": {
+    "absentAfterRun": true,
+    "createdByThisRun": true,
+    "error": null,
+    "name": "umf-public-h-evidence-d3bee7f855f8d2049200-7"
+  },
+  "executionId": "local-4040da90-7637-405a-8b07-fcce6af3a73d",
+  "executionKind": "local_linux_diagnostic",
+  "forwardedEnvironment": [
+    "LOCAL_RUNTIME_IMAGE_DIGEST",
+    "GIT_OPTIONAL_LOCKS=0"
+  ],
+  "inputPacketPath": "/private/tmp/sdk-057-local3600-public-h-v7-network-sdk/local3600-public-h-inputs.012.ready.json",
+  "inputPacketSha256": "44ef9aa2ce8b3078b3644c058cb306567d5bb6246da793766a5704c29a5ef43d",
+  "limits": {
+    "cpu": "4",
+    "memory": "8g",
+    "outerCaptureBytes": 262144,
+    "outerMetadataBytes": 1048576,
+    "outerStopGraceSeconds": 10,
+    "outerStreamBytesEach": 131072,
+    "outerWallSeconds": 1800,
+    "pids": 8192,
+    "readerAggregateLogBytes": 1048576,
+    "readerAggregateSeconds": 1800,
+    "readerChildSeconds": 180,
+    "readerEvidenceReserveSeconds": 60,
+    "readerMetadataArtifactBytes": 16777216,
+    "readerTermGraceSeconds": 10
+  },
+  "network": "bridge enabled only for this seven-command H invocation; public GitHub reads plus lockfile dependency install",
+  "outerDurationSeconds": 89.61443558299999,
+  "producerSafeDirectoryConfig": {
+    "containerPath": "/etc/gitconfig",
+    "hostPath": "/private/tmp/sdk-057-local3600-public-h-operator-proposal010/producer-safe.gitconfig",
+    "readOnly": true,
+    "sha256": "64600e84d3d6245e37d4095564a12e6a112afa33c61820b0f107a9b867a16672"
+  },
+  "producerSourceVolume": {
+    "inspect": {
+      "CreatedAt": "2026-10-28T15:52:05-04:00",
+      "Driver": "local",
+      "Labels": null,
+      "Mountpoint": "/var/lib/docker/volumes/umf-migration-source-267675510/_data",
+      "Name": "umf-migration-source-267675510",
+      "Options": null,
+      "Scope": "local"
+    },
+    "name": "umf-migration-source-267675510",
+    "readOnly": true,
+    "target": "/private/tmp/migration-linux-candidate-267675510"
+  },
+  "profile": "umf.sdk-057-public-h-docker-operator/3",
+  "readOnlyMounts": [
+    "/private/tmp/migration-d5-local-emulated-3600-proposal-001",
+    "/private/tmp/migration-d5-local-emulated3600-e4299aff8-001",
+    "/private/tmp/migration-full18-e4299aff8-002",
+    "/private/tmp/migration-full18-e4299aff8-union-continuation-003",
+    "/private/tmp/migration-sdk057-public-h-sdk-wrapper-001",
+    "/private/tmp/sdk-057-local3600-public-h-v7-network-sdk",
+    "/private/tmp/sdk-057-local3600-public-h-v2/full18-harness"
+  ],
+  "readWriteExportBind": {
+    "helperContainerPath": "/export",
+    "hostPath": "/private/tmp/migration-sdk057-public-h-postrelease-007/evidence-export",
+    "network": "none"
+  },
+  "readerPath": "/private/tmp/sdk-057-local3600-public-h-v7-network-sdk/run-local3600-public-h.py",
+  "readerSha256": "8a56635b35f214b9e53307033010a9f55639ce9b655f90c649d9f07f80cb9ecb",
+  "resultPath": "/private/tmp/migration-sdk057-public-h-postrelease-007/operator/operator-result.json",
+  "resultSha256": "338db0f2fa729bca145bb12f32ef668ddd31156183ab1b3d804273f271f586bf",
+  "runtimeImage": "sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556",
+  "runtimePlatform": "linux/amd64",
+  "status": "FAIL_OR_UNKNOWN"
+}

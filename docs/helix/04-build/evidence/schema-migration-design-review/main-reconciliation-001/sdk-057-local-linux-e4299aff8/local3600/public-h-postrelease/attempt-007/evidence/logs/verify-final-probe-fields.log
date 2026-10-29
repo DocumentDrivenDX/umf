@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/private/tmp/sdk-057-local3600-public-h-v7-network-sdk/run-local3600-public-h.py", line 2564, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/private/tmp/sdk-057-local3600-public-h-v7-network-sdk/run-local3600-public-h.py", line 2448, in main
+    stage_final_cli(packet, work); return 0
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/sdk-057-local3600-public-h-v7-network-sdk/run-local3600-public-h.py", line 1392, in stage_final_cli
+    return verify_final(work,packet)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/sdk-057-local3600-public-h-v7-network-sdk/run-local3600-public-h.py", line 2400, in verify_final
+    fail('Final public-H result does not retain exact current full18 operator-bootstrap provenance')
+  File "/private/tmp/sdk-057-local3600-public-h-v7-network-sdk/run-local3600-public-h.py", line 127, in fail
+    raise ValueError(message)
+ValueError: Final public-H result does not retain exact current full18 operator-bootstrap provenance
