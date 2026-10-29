@@ -1490,3 +1490,16 @@ executable default-route gaps, zero retirements, 101 accepted opt-in mappings,
 and zero promoted current-source installed binding routes. The [candidate
 evidence](../r8-avro-document-inspect-candidate-20261028/README.md) records
 its narrower source and temporary-native tests.
+
+## Installed-gate script census — 2026-10-28
+
+The new Avro document and Core Facets installed replay scripts, their focused
+tests, and the regenerated action-plan producer identity are included in the
+current SDK source closure. Regenerating the authority-bound
+[gap ledger](gap-ledger.json) changes its SHA-256 to
+`0fa352718761a2e90545abd75862fdb87189a4c7b8981ad75bb17c432cd9e3eb`.
+The symbol inventory remains at the SHA-256 above. The ledger still reports
+920 logical executable default-route gaps, zero retirements, 101 accepted
+opt-in mappings, and zero promoted current-source installed binding routes.
+Installed replay evidence is scoped to its named operations and hosts; it does
+not by itself retire those declarations.

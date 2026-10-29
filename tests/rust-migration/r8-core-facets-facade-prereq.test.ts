@@ -95,3 +95,48 @@ test('Core Facets facade validates a receipt before reflecting over current docu
 		path: '/facets',
 	});
 });
+
+test('Core Facets inspection copies source before identity and preserves copied extension content', () => {
+	const order: string[] = [];
+	const engine = {
+		inspectCoreFacets(source: Document, identity: unknown) {
+			order.push('inspect');
+			return {source, identity};
+		},
+	} as unknown as CoreFacetsRustEngine;
+	const api = bindCoreFacetsRust(engine);
+	const trace: string[] = [];
+	const sourceWithUnknown = document();
+	sourceWithUnknown.extensions = {future: {opaque: 'preserve-me'}};
+	const result = api.inspectCoreFacets(
+		observedObject(sourceWithUnknown, trace, 'source'),
+		observedObject({module: 'm', element: 'v'}, trace, 'identity'),
+	);
+
+	expect(order).toEqual(['inspect']);
+	expect(trace.some(event => event.startsWith('source:'))).toBe(true);
+	expect(trace.some(event => event.startsWith('identity:'))).toBe(true);
+	expect(trace).toContain('source:descriptor:extensions');
+	expect(trace.findIndex(event => event.startsWith('identity:'))).toBeGreaterThan(
+		trace.reduce((last, event, index) => event.startsWith('source:') ? index : last, -1),
+	);
+	expect(result.source).not.toBe(sourceWithUnknown);
+	expect(result.source.extensions).toEqual({future: {opaque: 'preserve-me'}});
+});
+
+test('Core Facets historical projection copies input before invoking Rust', () => {
+	const order: string[] = [];
+	const engine = {
+		historicalCoreFacetPatch(input: unknown) {
+			order.push('historical');
+			return input;
+		},
+	} as unknown as CoreFacetsRustEngine;
+	const api = bindCoreFacetsRust(engine);
+	const input = {integerWidth: {bits: 16, signed: true}};
+	const output = api.historicalCoreFacetPatch(input);
+
+	expect(order).toEqual(['historical']);
+	expect(output).toEqual(input);
+	expect(output).not.toBe(input);
+});

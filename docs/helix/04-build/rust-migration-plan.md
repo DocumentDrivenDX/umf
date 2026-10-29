@@ -10273,3 +10273,48 @@ environment, completing all 80 cases. The ledger still has **920 open logical
 executable default-route gaps, zero retirements, 101 accepted opt-in mappings,
 and zero promoted current-source installed binding routes**. This source
 candidate does not satisfy the full-port merge or release gate.
+
+### R8 Avro inspector and Core Facets current-source installed replay — 2026-10-28
+
+The [Avro document installed packet](evidence/rust-migration/r8-avro-document-installed-current-20261028/README.md)
+qualifies the opt-in `umf-r5-avro-document-inspect/0.1.0` structural subset
+through offline-installed native and WASM binding packages on Node 26.12.1,
+Bun 1.4.3, and Chromium 153.0.8010.12. It confirms source and unknown-content
+retention, admission/native separation, exact tarball lock integrity, real
+browser WASM loading, and native/WASM `RESOURCE_LIMIT` hook refusal. It does
+not select or retire the TypeScript `inspectAvro` default or claim broad Avro
+semantic parity.
+
+The [Core Facets current-source packet](evidence/rust-migration/r8-core-facets-installed-current-20261028/README.md)
+replays four source-selected Rust default operations against their frozen R5
+predecessor on Node, Bun, and Chromium. It checks exact errors, host-object
+ordering and refusal, detached output, unknown qualifiers, and browser WASM
+use. The replay uses an archive-extracted local package tree; dependency-
+resolved npm installation and broader parity remain open. The launcher checks
+archive and source-input hashes before and after the run. An independent Sol
+review found and resolved missing lockfile resolution, native resource, source
+drift, WASM-use, and ordering checks before the final installed replays.
+
+Both final packets use one private 1,820-member fixed-point SDK archive at
+`/private/tmp/umf-r8-current-avro-facets/umf-sdk.tgz`, SHA-256
+`0788cff4279ac0d42e59c83575933004eaa0706b6cab2b02076903b07d946300`.
+The captured and live source closure are both SHA-256
+`3e58c335b72cd5ea6c1c261e140fcc9fc1c3d035627cd8d0903b0b669f210e56`
+over 3,744 inputs and zero transforms. The refreshed authority-bound R8
+ledger is SHA-256
+`0fa352718761a2e90545abd75862fdb87189a4c7b8981ad75bb17c432cd9e3eb`;
+its inventory remains SHA-256
+`280c2d654781b06dadfba604b92644a6b22104211b5fb6a312da33c36ce8c709`.
+The 80/80 ledger suite, both generator `--check` gates, metamodel `--check`,
+typecheck, focused installed-gate tests, and Rust/access/unified-client
+boundaries passed. The Rust boundary scan found zero findings and zero V8
+debt across 808 source modules.
+
+The ledger still records **920 open logical executable default-route gaps,
+zero retirements, 101 accepted opt-in mappings, and zero promoted
+current-source installed binding routes**. Next, extend the installed gates
+to full predecessor parity and dependency-resolved default routes, then
+continue the remaining adapter and extension families. The full Node/Bun/
+browser/Python/Linux release matrix, complete independent review, merge,
+and release remain blocked until those gates and the remaining default routes
+are complete. No version or release asset is published by this packet.

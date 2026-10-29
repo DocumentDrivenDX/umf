@@ -1,0 +1,452 @@
+{
+  "format": "umf.r8.avro-document-inspector-installed/1",
+  "status": "pass",
+  "qualification": "Source-pinned private fixed-point SDK archive installed into local @umf/core-rust-native and @umf/core-rust-wasm packages. Replays only createAvroDocumentInspector with profile umf-r5-avro-document-inspect/0.1.0 on Node, Bun, and Chromium. No default-route parity or retirement claim.",
+  "archive": {
+    "path": "/private/tmp/umf-r8-current-avro-facets/umf-sdk.tgz",
+    "sha256": "0788cff4279ac0d42e59c83575933004eaa0706b6cab2b02076903b07d946300",
+    "bytes": 43982981,
+    "manifestSha256": "0fd32d3f1145997bd04d0f056834aa302bfb5ccd508753e8e753fbeecc7aaa07",
+    "memberCount": 1820
+  },
+  "sourceClosure": {
+    "sha256": "3e58c335b72cd5ea6c1c261e140fcc9fc1c3d035627cd8d0903b0b669f210e56",
+    "capturedLiveSha256": "3e58c335b72cd5ea6c1c261e140fcc9fc1c3d035627cd8d0903b0b669f210e56",
+    "fileCount": 3744,
+    "verifiedBeforeAndAfter": true,
+    "externalInputs": {
+      "node_modules/@libpg-query/parser/wasm/libpg-query.wasm": "21c450200169e2e884a9bcc40122f682304e83b14a4e677fc767b8e53c2f93c1"
+    }
+  },
+  "packages": {
+    "native": {
+      "name": "@umf/core-rust-native",
+      "version": "0.1.0",
+      "tarballSha256": "12658a0db577a74e45ab91b54b42a34b1adcb8982dc413fbb5fe3a0fe82fedce",
+      "lock": {
+        "key": "../../../../../../../private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r8-avro-document-installed-9nxMZX/consumer/node_modules/@umf/core-rust-native",
+        "integrity": "sha512-cblmi4WFIK2AGkfVL2w97WhO6LjnftN/S08WBQ/+7xe5ZlCJklRaV7jRe9vQYdqKtNTBsyBYc6QSf9wg4wYnWQ==",
+        "resolved": "file:../tarballs/umf-core-rust-native-0.1.0.tgz"
+      },
+      "addonSha256": "e337a393d45ad1f97ac7cc4f9b8beeecb4f229435fcc3ba04519b4dd80700aa3"
+    },
+    "wasm": {
+      "name": "@umf/core-rust-wasm",
+      "version": "0.1.0",
+      "tarballSha256": "6f675a27081535eef59979df491d56e6f72606867c0f80b693b5f90dcf52688a",
+      "lock": {
+        "key": "../../../../../../../private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r8-avro-document-installed-9nxMZX/consumer/node_modules/@umf/core-rust-wasm",
+        "integrity": "sha512-e17q9ynMyiqTa/ovkSOJQWJaHaUONJ1OaHkSeN+ko5O4aYR3M0DC+pZ2HVwnGIJte/mYv1LCzvGurbXkN2yHLw==",
+        "resolved": "file:../tarballs/umf-core-rust-wasm-0.1.0.tgz"
+      },
+      "wasmSha256": "0f71181ce1c6497285d45f96ec3ed56bdb3306bc1c55bbab4c834654c5a15cf1"
+    }
+  },
+  "offlineInstall": {
+    "status": "pass",
+    "mode": "npm install --offline --ignore-scripts",
+    "lockfileSha256": "d155f1d10dfd0cbcef7090a558d523e242f794c4e8dd2e4929fd3851aa135479"
+  },
+  "fixture": {
+    "path": "fixtures/avro/candidate-edits.json",
+    "sha256": "1f2c092908ed239890df44d795cb8eb4438ec0c0a0119e85768acad3c4856108"
+  },
+  "hosts": {
+    "node": {
+      "runtime": "Node v26.12.1",
+      "result": {
+        "profile": "umf-r5-avro-document-inspect/0.1.0",
+        "valid": {
+          "admission": {
+            "valid": true,
+            "complete": false,
+            "diagnostics": [
+              {
+                "code": "UNKNOWN_EXTENSION",
+                "path": "/vocabularies/example.future",
+                "message": "Exact extension version unavailable; content retained",
+                "severity": "warning"
+              },
+              {
+                "code": "SEMANTICS_UNCHECKED",
+                "path": "/modules/0/elements/0/extensions/umf.avro",
+                "message": "Structure checked; semantics not validated",
+                "severity": "warning"
+              },
+              {
+                "code": "UNKNOWN_CORE_FIELD",
+                "path": "/modules/1/elements/0/future.consumer",
+                "message": "Field retained without interpretation",
+                "severity": "warning"
+              }
+            ]
+          },
+          "nativeInspection": {
+            "status": "inspected",
+            "valid": true,
+            "complete": false,
+            "diagnostics": [
+              {
+                "code": "AVRO_LOGICAL_TYPE",
+                "path": "/fields/0/type",
+                "message": "Logical type is retained but not interpreted by this inspection profile",
+                "severity": "warning"
+              },
+              {
+                "code": "AVRO_LOGICAL_TYPE",
+                "path": "/fields/1/type",
+                "message": "Logical type is retained but not interpreted by this inspection profile",
+                "severity": "warning"
+              },
+              {
+                "code": "AVRO_DEFAULT_UNINSPECTED",
+                "path": "/fields/2",
+                "message": "Field default is retained but reader-resolution semantics are not interpreted",
+                "severity": "warning"
+              },
+              {
+                "code": "AVRO_PROFILE_LIMIT",
+                "path": "",
+                "message": "Inspection covers a bounded schema-structure subset; Avro 1.12 semantic validity is not certified",
+                "severity": "warning"
+              }
+            ]
+          }
+        },
+        "invalid": {
+          "admission": {
+            "valid": false,
+            "complete": false,
+            "diagnostics": [
+              {
+                "code": "SEMANTIC_TYPE_STRUCTURE",
+                "path": "",
+                "message": "must have required property 'umf'",
+                "severity": "error"
+              },
+              {
+                "code": "SEMANTIC_TYPE_STRUCTURE",
+                "path": "",
+                "message": "must have required property 'id'",
+                "severity": "error"
+              },
+              {
+                "code": "SEMANTIC_TYPE_STRUCTURE",
+                "path": "",
+                "message": "must have required property 'vocabularies'",
+                "severity": "error"
+              },
+              {
+                "code": "SEMANTIC_TYPE_STRUCTURE",
+                "path": "",
+                "message": "must have required property 'modules'",
+                "severity": "error"
+              }
+            ]
+          },
+          "nativeInspection": {
+            "status": "not-run"
+          }
+        },
+        "nonAvro": {
+          "admission": {
+            "valid": true,
+            "complete": false,
+            "diagnostics": [
+              {
+                "code": "UNKNOWN_EXTENSION",
+                "path": "/vocabularies/example.future",
+                "message": "Exact extension version unavailable; content retained",
+                "severity": "warning"
+              }
+            ]
+          },
+          "nativeInspection": {
+            "status": "not-run"
+          }
+        },
+        "controls": {
+          "meteredWork": 411739861,
+          "maxWorkRefused": true,
+          "positiveBudgetRefusedValidAvro": true,
+          "positiveBudget": 256,
+          "rawNativeRefusal": {
+            "status": "error",
+            "code": "RESOURCE_LIMIT",
+            "hookCalls": 1
+          }
+        },
+        "unknownContentRetained": true,
+        "sourceUnchanged": true
+      }
+    },
+    "bun": {
+      "runtime": "Bun 1.4.3",
+      "result": {
+        "profile": "umf-r5-avro-document-inspect/0.1.0",
+        "valid": {
+          "admission": {
+            "valid": true,
+            "complete": false,
+            "diagnostics": [
+              {
+                "code": "UNKNOWN_EXTENSION",
+                "path": "/vocabularies/example.future",
+                "message": "Exact extension version unavailable; content retained",
+                "severity": "warning"
+              },
+              {
+                "code": "SEMANTICS_UNCHECKED",
+                "path": "/modules/0/elements/0/extensions/umf.avro",
+                "message": "Structure checked; semantics not validated",
+                "severity": "warning"
+              },
+              {
+                "code": "UNKNOWN_CORE_FIELD",
+                "path": "/modules/1/elements/0/future.consumer",
+                "message": "Field retained without interpretation",
+                "severity": "warning"
+              }
+            ]
+          },
+          "nativeInspection": {
+            "status": "inspected",
+            "valid": true,
+            "complete": false,
+            "diagnostics": [
+              {
+                "code": "AVRO_LOGICAL_TYPE",
+                "path": "/fields/0/type",
+                "message": "Logical type is retained but not interpreted by this inspection profile",
+                "severity": "warning"
+              },
+              {
+                "code": "AVRO_LOGICAL_TYPE",
+                "path": "/fields/1/type",
+                "message": "Logical type is retained but not interpreted by this inspection profile",
+                "severity": "warning"
+              },
+              {
+                "code": "AVRO_DEFAULT_UNINSPECTED",
+                "path": "/fields/2",
+                "message": "Field default is retained but reader-resolution semantics are not interpreted",
+                "severity": "warning"
+              },
+              {
+                "code": "AVRO_PROFILE_LIMIT",
+                "path": "",
+                "message": "Inspection covers a bounded schema-structure subset; Avro 1.12 semantic validity is not certified",
+                "severity": "warning"
+              }
+            ]
+          }
+        },
+        "invalid": {
+          "admission": {
+            "valid": false,
+            "complete": false,
+            "diagnostics": [
+              {
+                "code": "SEMANTIC_TYPE_STRUCTURE",
+                "path": "",
+                "message": "must have required property 'umf'",
+                "severity": "error"
+              },
+              {
+                "code": "SEMANTIC_TYPE_STRUCTURE",
+                "path": "",
+                "message": "must have required property 'id'",
+                "severity": "error"
+              },
+              {
+                "code": "SEMANTIC_TYPE_STRUCTURE",
+                "path": "",
+                "message": "must have required property 'vocabularies'",
+                "severity": "error"
+              },
+              {
+                "code": "SEMANTIC_TYPE_STRUCTURE",
+                "path": "",
+                "message": "must have required property 'modules'",
+                "severity": "error"
+              }
+            ]
+          },
+          "nativeInspection": {
+            "status": "not-run"
+          }
+        },
+        "nonAvro": {
+          "admission": {
+            "valid": true,
+            "complete": false,
+            "diagnostics": [
+              {
+                "code": "UNKNOWN_EXTENSION",
+                "path": "/vocabularies/example.future",
+                "message": "Exact extension version unavailable; content retained",
+                "severity": "warning"
+              }
+            ]
+          },
+          "nativeInspection": {
+            "status": "not-run"
+          }
+        },
+        "controls": {
+          "meteredWork": 411739861,
+          "maxWorkRefused": true,
+          "positiveBudgetRefusedValidAvro": true,
+          "positiveBudget": 256,
+          "rawNativeRefusal": {
+            "status": "error",
+            "code": "RESOURCE_LIMIT",
+            "hookCalls": 1
+          }
+        },
+        "unknownContentRetained": true,
+        "sourceUnchanged": true
+      }
+    },
+    "chromium": {
+      "version": "153.0.8010.12",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+      "result": {
+        "profile": "umf-r5-avro-document-inspect/0.1.0",
+        "valid": {
+          "admission": {
+            "valid": true,
+            "complete": false,
+            "diagnostics": [
+              {
+                "code": "UNKNOWN_EXTENSION",
+                "path": "/vocabularies/example.future",
+                "message": "Exact extension version unavailable; content retained",
+                "severity": "warning"
+              },
+              {
+                "code": "SEMANTICS_UNCHECKED",
+                "path": "/modules/0/elements/0/extensions/umf.avro",
+                "message": "Structure checked; semantics not validated",
+                "severity": "warning"
+              },
+              {
+                "code": "UNKNOWN_CORE_FIELD",
+                "path": "/modules/1/elements/0/future.consumer",
+                "message": "Field retained without interpretation",
+                "severity": "warning"
+              }
+            ]
+          },
+          "nativeInspection": {
+            "status": "inspected",
+            "valid": true,
+            "complete": false,
+            "diagnostics": [
+              {
+                "code": "AVRO_LOGICAL_TYPE",
+                "path": "/fields/0/type",
+                "message": "Logical type is retained but not interpreted by this inspection profile",
+                "severity": "warning"
+              },
+              {
+                "code": "AVRO_LOGICAL_TYPE",
+                "path": "/fields/1/type",
+                "message": "Logical type is retained but not interpreted by this inspection profile",
+                "severity": "warning"
+              },
+              {
+                "code": "AVRO_DEFAULT_UNINSPECTED",
+                "path": "/fields/2",
+                "message": "Field default is retained but reader-resolution semantics are not interpreted",
+                "severity": "warning"
+              },
+              {
+                "code": "AVRO_PROFILE_LIMIT",
+                "path": "",
+                "message": "Inspection covers a bounded schema-structure subset; Avro 1.12 semantic validity is not certified",
+                "severity": "warning"
+              }
+            ]
+          }
+        },
+        "invalid": {
+          "admission": {
+            "valid": false,
+            "complete": false,
+            "diagnostics": [
+              {
+                "code": "SEMANTIC_TYPE_STRUCTURE",
+                "path": "",
+                "message": "must have required property 'umf'",
+                "severity": "error"
+              },
+              {
+                "code": "SEMANTIC_TYPE_STRUCTURE",
+                "path": "",
+                "message": "must have required property 'id'",
+                "severity": "error"
+              },
+              {
+                "code": "SEMANTIC_TYPE_STRUCTURE",
+                "path": "",
+                "message": "must have required property 'vocabularies'",
+                "severity": "error"
+              },
+              {
+                "code": "SEMANTIC_TYPE_STRUCTURE",
+                "path": "",
+                "message": "must have required property 'modules'",
+                "severity": "error"
+              }
+            ]
+          },
+          "nativeInspection": {
+            "status": "not-run"
+          }
+        },
+        "nonAvro": {
+          "admission": {
+            "valid": true,
+            "complete": false,
+            "diagnostics": [
+              {
+                "code": "UNKNOWN_EXTENSION",
+                "path": "/vocabularies/example.future",
+                "message": "Exact extension version unavailable; content retained",
+                "severity": "warning"
+              }
+            ]
+          },
+          "nativeInspection": {
+            "status": "not-run"
+          }
+        },
+        "controls": {
+          "meteredWork": 411739861,
+          "maxWorkRefused": true,
+          "positiveBudgetRefusedValidAvro": true,
+          "positiveBudget": 256,
+          "rawNativeRefusal": {
+            "status": "error",
+            "code": "RESOURCE_LIMIT",
+            "hookCalls": 1
+          }
+        },
+        "unknownContentRetained": true,
+        "sourceUnchanged": true
+      },
+      "wasmRequested": true,
+      "externalRequests": 0,
+      "pageErrors": 0
+    }
+  },
+  "harness": {
+    "orchestratorSha256": "c34a3333aef413ce89fb130f501b0c52d259400e13fad1d3623f74fc8eb4d1f0",
+    "probeSha256": "f7196083f37f5cf11773759c62bbb170be024a4b9a6a238600df01b166104fdb"
+  },
+  "retirement": {
+    "status": "not-authorized",
+    "reason": "This is bounded opt-in profile evidence and does not establish default adapter parity or retirement."
+  }
+}
