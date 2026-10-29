@@ -66,6 +66,33 @@ def _core_public_release_verifier():
     return module
 
 
+def test_parquet_capture_compile_time_resource_is_in_sdist_closure():
+    repository = Path(__file__).resolve().parents[2]
+    source = repository / "crates/umf-core/src/parquet_capture_inspection.rs"
+    source_text = source.read_text(encoding="utf-8")
+    includes = re.findall(r'include_(?:str|bytes)!\s*\(\s*"([^"\n]+)"', source_text)
+    resources = {
+        (source.parent / include).resolve().relative_to(repository).as_posix()
+        for include in includes
+        if "/spec/extensions/parquet/" in f"/{include}"
+    }
+    assert resources == {"spec/extensions/parquet/idl.json"}
+
+    build_hook = (repository / "python/hatch_build.py").read_text(encoding="utf-8")
+    assignments = ast.parse(build_hook)
+    sdist_files = next(
+        ast.literal_eval(node.value)
+        for node in assignments.body
+        if isinstance(node, ast.Assign)
+        and any(
+            isinstance(target, ast.Name) and target.id == "SDIST_SOURCE_FILES"
+            for target in node.targets
+        )
+    )
+
+    assert resources <= set(sdist_files)
+
+
 @pytest.mark.parametrize(
     ("raw", "repaired"),
     (

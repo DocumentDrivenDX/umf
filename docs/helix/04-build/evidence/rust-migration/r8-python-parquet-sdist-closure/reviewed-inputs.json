@@ -1,0 +1,12 @@
+{
+  "baseCommit": "d62d36b0f4ac6c3bd1e616aa78311c65e53e29fc",
+  "sha256": {
+    ".github/workflows/python-action-runtime.yml": "95ec4179556744b16668d03eb3a06c97ee148c316368d3a900f31a273bc9e996",
+    "python/hatch_build.py": "f25ba8ec8a3ac05a6c02a2285549fddcfd58797e2a423006e806cf375a1cd42d",
+    "python/tests/test_python_sdist.py": "11149749ac205c9633e98dc78f65791761bc571c9896d5c2fbf1c476e8165366",
+    "tools/_python_sdist.py": "7ec7b4883325438a344141da6c83db6d7903a5a0ee09e2da3a5e8b895c64468f",
+    "tools/verify_python_artifacts.py": "c54f4bb7eb9201f745f6f65b911b1502d2328dd3e89de65d11e2a431d37700fb",
+    "python/tests/test_distribution_artifact.py": "b9a82f7f0d63cf107e7d20883c66dd8b1988953bb2f79acb1aa22d6737086405"
+  },
+  "scope": "Python sdist closure fix; no installed release qualification"
+}

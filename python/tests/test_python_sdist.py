@@ -12,7 +12,7 @@ import pytest
 
 _HELPER_PATH = Path(__file__).resolve().parents[2] / "tools/_python_sdist.py"
 assert hashlib.sha256(_HELPER_PATH.read_bytes()).hexdigest() == (
-    "da91c581646a62b9dd0d01248df275e0d6f144129732d46394607ea27cc05731"
+    "7ec7b4883325438a344141da6c83db6d7903a5a0ee09e2da3a5e8b895c64468f"
 )
 _HELPER_SPEC = importlib.util.spec_from_file_location(
     "umf_test_python_sdist", _HELPER_PATH
@@ -35,6 +35,11 @@ ROOT_FILES = (
     "spec/extensions/arrow/integration-schema.json",
     "spec/extensions/avro/package.json",
     "spec/extensions/parquet/package.json",
+    "spec/extensions/parquet/idl.json",
+    "spec/domain-packs/public-company-intelligence/sources/scoped-submissions-0000004962.json",
+    "spec/domain-packs/public-company-intelligence/sources/scoped-companyfacts-0000004962.json",
+    "spec/loader-companion/1.0.0/loader.schema.json",
+    "spec/loader-companion/1.0.0/inventory.schema.json",
     "spec/extensions/json-schema/package.json",
     "spec/extensions/delta/package.json",
     "spec/extensions/delta/datatype-schema.json",

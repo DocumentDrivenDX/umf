@@ -10557,9 +10557,13 @@ archives remain failed evidence and no retirement is claimed.
 
 The real local Python pair producer passed 200 Rust CLI/codegen tests and
 created a source archive, then its wheel build exposed an omitted compile-time
-resource, `spec/extensions/parquet/idl.json`. The packaging fix must update both
-the producer closure and its independent expected membership, and pass an
-actual source-archive rebuild before the full interpreter matrix resumes.
+resource, `spec/extensions/parquet/idl.json`. The independently reviewed fix
+updates both the producer closure and its independent expected membership,
+preserves the full literal-include audit, and corrects the executable helper
+pins. A fresh source archive passes exact verification of all 1,165 files;
+all 134 integrated packaging tests pass, and the native wheel rebuild is running.
+[Closure review and artifact evidence](evidence/rust-migration/r8-python-parquet-sdist-closure/README.md)
+preserve the bounded scope before the full interpreter matrix resumes.
 Independent Sol review of the private Parquet page/body slice found a wasm32
 Snappy literal-length overflow and a malformed-header diagnostic mismatch;
 that slice remains unaccepted while Luna corrects and tests these defects.
