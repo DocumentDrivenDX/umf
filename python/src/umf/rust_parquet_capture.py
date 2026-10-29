@@ -111,6 +111,10 @@ def decode_levels(document: Any, **controls):
     return _call("decodeLevels", {"document": document}, **controls)
 
 
+def decode_physical(document: Any, **controls):
+    return _call("decodePhysical", {"document": document}, **controls)
+
+
 def inspect_logical_types(document: Any, **controls):
     return _call("inspectLogicalTypes", {"document": document}, **controls)
 

@@ -2,7 +2,6 @@
 //! Opt-in tagged-wire owner for the bounded Parquet source and footer views.
 
 use umf_core::{
-    Context, Utf16, Value,
     engine::{Capabilities, Engine, ResourceSet},
     error::{Diagnostic, EngineError},
     parquet_capture_inspection::{
@@ -10,11 +9,13 @@ use umf_core::{
         import_parquet_schema, inspect_parquet_containers, inspect_parquet_framing,
         inspect_parquet_logical_types, inspect_parquet_metadata, inspect_parquet_schema,
     },
+    parquet_edits::{append_key_value_metadata, rename_field},
     parquet_levels::decode_parquet_levels,
     parquet_pages::{decode_parquet_page_bodies, inspect_parquet_pages},
-    parquet_edits::{append_key_value_metadata, rename_field},
+    parquet_physical::decode_parquet_physical,
     registry::Registry,
     serialization::{self, Format},
+    Context, Utf16, Value,
 };
 
 use crate::{decode, encode, field, result_envelope, text_field};
@@ -103,7 +104,11 @@ fn decode_hex(source: &str) -> Result<Vec<u8>, EngineError> {
         .chunks_exact(2)
         .map(|pair| {
             let nibble = |b: u8| {
-                if b <= b'9' { b - b'0' } else { b - b'a' + 10 }
+                if b <= b'9' {
+                    b - b'0'
+                } else {
+                    b - b'a' + 10
+                }
             };
             Ok((nibble(pair[0]) << 4) | nibble(pair[1]))
         })
@@ -207,15 +212,38 @@ pub fn execute_wire_with_control(
             | "parquet.inspectPages"
             | "parquet.decodePageBodies"
             | "parquet.decodeLevels"
+            | "parquet.decodePhysical"
             | "parquet.appendKeyValueMetadata"
             | "parquet.renameField" => {
                 let document = field(&request, "document")
                     .ok_or_else(|| request_error("document is required"))?;
                 match operation.as_str() {
+                    "parquet.decodePhysical" => decode_parquet_physical(
+                        document,
+                        &resources.engine,
+                        &resources.registry,
+                        &mut capabilities,
+                        &mut ctx,
+                    )?,
                     "parquet.appendKeyValueMetadata" => append_key_value_metadata(
-                        document,field(&request,"entries").ok_or_else(||request_error("entries is required"))?,&resources.engine,&resources.registry,&mut capabilities,&mut ctx)?,
+                        document,
+                        field(&request, "entries")
+                            .ok_or_else(|| request_error("entries is required"))?,
+                        &resources.engine,
+                        &resources.registry,
+                        &mut capabilities,
+                        &mut ctx,
+                    )?,
                     "parquet.renameField" => rename_field(
-                        document,field(&request,"index").ok_or_else(||request_error("index is required"))?,field(&request,"name").ok_or_else(||request_error("name is required"))?,&resources.engine,&resources.registry,&mut capabilities,&mut ctx)?,
+                        document,
+                        field(&request, "index")
+                            .ok_or_else(|| request_error("index is required"))?,
+                        field(&request, "name").ok_or_else(|| request_error("name is required"))?,
+                        &resources.engine,
+                        &resources.registry,
+                        &mut capabilities,
+                        &mut ctx,
+                    )?,
                     "parquet.inspectFraming" => inspect_parquet_framing(
                         document,
                         &resources.engine,

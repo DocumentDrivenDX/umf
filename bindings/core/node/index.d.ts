@@ -523,6 +523,7 @@ export interface ParquetCaptureEngine {
   inspectParquetPages(document: unknown): unknown;
   decodeParquetPageBodies(document: unknown): unknown;
   decodeParquetLevels(document: unknown): unknown;
+  decodeParquetPhysical(document: unknown): unknown;
   inspectParquetLogicalTypes(document: unknown): unknown;
   inspectParquetContainers(document: unknown): unknown;
   getParquetFieldMetadata(document: unknown): unknown;
