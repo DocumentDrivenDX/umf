@@ -30,6 +30,8 @@ assert.equal(engine.inspectParquetFraming(captured).status, 'located');
 assert.equal(engine.decodeParquetFooter(captured).status, 'decoded');
 assert.equal(engine.inspectParquetMetadata(captured).status, 'mapped');
 assert.equal(engine.inspectParquetSchema(captured).status, 'checked');
+const levelsInput = new Uint8Array(await readFile(resolve(repo, 'fixtures/parquet/pages/negative/valid-v1.parquet')));
+assert.equal(engine.decodeParquetLevels(engine.captureParquet(levelsInput, {id: 'levels-node'})).status, 'decoded');
 const utf16Source = new Uint8Array(await readFile(resolve(repo, 'fixtures/parquet/rename/none.parquet')));
 const loneId = '\ud800k';
 const unknownKey = 'f\udfffuture';
@@ -71,4 +73,4 @@ for (const vector of frozen.cases.filter(({id}) => publicWireCases.has(id))) {
     }, `${vector.id} importParquetSchema refusal`);
   }
 }
-console.log(JSON.stringify({status: 'passed', host, profile: engine.profile, operations: 10, frozenCases: publicWireCases.size}));
+console.log(JSON.stringify({status: 'passed', host, profile: engine.profile, operations: 11, frozenCases: publicWireCases.size}));

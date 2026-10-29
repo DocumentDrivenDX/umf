@@ -8,7 +8,7 @@ from umf import _rust
 from umf import rust_parquet_capture as parquet
 
 
-def test_ten_parquet_operations_run_through_the_native_wire_binding():
+def test_parquet_operations_run_through_the_native_wire_binding():
     assert parquet.profile_version() == "umf-r8-parquet-capture-inspection/0.1.0"
     root = Path(__file__).resolve().parents[2]
     source = (root / "fixtures/parquet/rename/none.parquet").read_bytes()
@@ -28,6 +28,11 @@ def test_ten_parquet_operations_run_through_the_native_wire_binding():
     assert fields["fields"][0]["element"]["scalarType"] == "decimal"
     imported = parquet.import_schema(logical, "import-python")
     assert any(module["id"] == "parquet.fields" for module in imported["modules"])
+    level_source = (root / "fixtures/parquet/pages/negative/valid-v1.parquet").read_bytes()
+    levels = parquet.decode_levels(parquet.capture(level_source, "levels-python"))
+    assert levels["status"] == "decoded"
+    assert levels["complete"] is False
+    assert levels["pages"][0]["repetition"] == [0, 0, 0]
 
 
 def test_parquet_capture_is_opt_in_bounded_and_cooperatively_metered():

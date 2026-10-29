@@ -2,6 +2,7 @@
 //! Opt-in tagged-wire owner for the bounded Parquet source and footer views.
 
 use umf_core::{
+    Context, Utf16, Value,
     engine::{Capabilities, Engine, ResourceSet},
     error::{Diagnostic, EngineError},
     parquet_capture_inspection::{
@@ -9,10 +10,10 @@ use umf_core::{
         import_parquet_schema, inspect_parquet_containers, inspect_parquet_framing,
         inspect_parquet_logical_types, inspect_parquet_metadata, inspect_parquet_schema,
     },
+    parquet_levels::decode_parquet_levels,
     parquet_pages::{decode_parquet_page_bodies, inspect_parquet_pages},
     registry::Registry,
     serialization::{self, Format},
-    Context, Utf16, Value,
 };
 
 use crate::{decode, encode, field, result_envelope, text_field};
@@ -101,11 +102,7 @@ fn decode_hex(source: &str) -> Result<Vec<u8>, EngineError> {
         .chunks_exact(2)
         .map(|pair| {
             let nibble = |b: u8| {
-                if b <= b'9' {
-                    b - b'0'
-                } else {
-                    b - b'a' + 10
-                }
+                if b <= b'9' { b - b'0' } else { b - b'a' + 10 }
             };
             Ok((nibble(pair[0]) << 4) | nibble(pair[1]))
         })
@@ -144,7 +141,8 @@ pub fn execute_wire_with_control(
             }
         }
         if operation == "parquet.encodeWire" {
-            let value = field(&request, "value").ok_or_else(|| request_error("value is required"))?;
+            let value =
+                field(&request, "value").ok_or_else(|| request_error("value is required"))?;
             let bytes = umf_core::parquet_wire_encode::encode_parquet_wire(value, &mut ctx)?;
             return encode(&Value::string_utf8(encode_hex(&bytes)), &mut ctx);
         }
@@ -206,7 +204,8 @@ pub fn execute_wire_with_control(
             | "parquet.inspectContainers"
             | "parquet.getFieldMetadata"
             | "parquet.inspectPages"
-            | "parquet.decodePageBodies" => {
+            | "parquet.decodePageBodies"
+            | "parquet.decodeLevels" => {
                 let document = field(&request, "document")
                     .ok_or_else(|| request_error("document is required"))?;
                 match operation.as_str() {
@@ -266,6 +265,13 @@ pub fn execute_wire_with_control(
                         &mut capabilities,
                         &mut ctx,
                     )?,
+                    "parquet.decodeLevels" => decode_parquet_levels(
+                        document,
+                        &resources.engine,
+                        &resources.registry,
+                        &mut capabilities,
+                        &mut ctx,
+                    )?,
                     _ => inspect_parquet_schema(
                         document,
                         &resources.engine,
@@ -278,7 +284,7 @@ pub fn execute_wire_with_control(
             _ => {
                 return Err(request_error(
                     "Unknown Parquet capture inspection operation",
-                ))
+                ));
             }
         };
         encode(&result, &mut ctx)

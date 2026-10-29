@@ -85,7 +85,11 @@ fn parquet_cli_inspects_pages_and_decodes_bodies_in_the_actual_binary() {
             &[],
         ));
         if name == "valid-v1" {
-            for op in ["parquet.inspectPages", "parquet.decodePageBodies"] {
+            for op in [
+                "parquet.inspectPages",
+                "parquet.decodePageBodies",
+                "parquet.decodeLevels",
+            ] {
                 assert_eq!(
                     run(
                         &request(op, vec![("document", source.clone())]),
@@ -98,6 +102,14 @@ fn parquet_cli_inspects_pages_and_decodes_bodies_in_the_actual_binary() {
         for (op, expected) in [
             ("parquet.inspectPages", page_status),
             ("parquet.decodePageBodies", body_status),
+            (
+                "parquet.decodeLevels",
+                if name == "valid-v1" || name == "valid-v2" {
+                    "decoded"
+                } else {
+                    "blocked"
+                },
+            ),
         ] {
             let result = decode(&run(&request(op, vec![("document", source.clone())]), &[]));
             assert_eq!(status(&result).as_deref(), Some(expected), "{name} {op}");

@@ -49,6 +49,7 @@ export function createParquetCaptureOperations(call) {
     inspectParquetSchema(document) { return call('inspectSchema', {document}); },
     inspectParquetPages(document) { return call('inspectPages', {document}); },
     decodeParquetPageBodies(document) { return call('decodePageBodies', {document}); },
+    decodeParquetLevels(document) { return call('decodeLevels', {document}); },
     inspectParquetLogicalTypes(document) { return call('inspectLogicalTypes', {document}); },
     inspectParquetContainers(document) { return call('inspectContainers', {document}); },
     getParquetFieldMetadata(document) { return call('getFieldMetadata', {document}); },

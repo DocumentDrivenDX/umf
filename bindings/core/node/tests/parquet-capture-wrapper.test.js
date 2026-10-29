@@ -28,12 +28,15 @@ for (const [host, factory, ErrorType] of [['Node', createParquetCaptureOperation
       engine.decodeParquetFooter({});
       engine.inspectParquetMetadata({});
       engine.inspectParquetSchema({});
+      engine.inspectParquetPages({});
+      engine.decodeParquetPageBodies({});
+      engine.decodeParquetLevels({});
       engine.inspectParquetLogicalTypes({});
       engine.inspectParquetContainers({});
       engine.getParquetFieldMetadata({});
       expect(calls.map(([operation]) => operation)).toEqual([
         'capture', 'importSchema', 'export', 'export', 'inspectFraming', 'decodeFooter', 'inspectMetadata', 'inspectSchema',
-        'inspectLogicalTypes', 'inspectContainers', 'getFieldMetadata',
+        'inspectPages', 'decodePageBodies', 'decodeLevels', 'inspectLogicalTypes', 'inspectContainers', 'getFieldMetadata',
       ]);
       expect(engine.profile).toBe(PARQUET_CAPTURE_PROFILE);
       expect(engine.capabilities).toEqual({profile: PARQUET_CAPTURE_PROFILE, maxBytes: 1_000_000, exactSource: true, complete: false});
