@@ -1,0 +1,74 @@
+{
+  "commandRosterSha256": "b7aec71babdd385b16dddd2c15cfe0bd3aa4d8d47b9dbf26b3e9271f2331a860",
+  "files": [
+    {
+      "bytes": 3794,
+      "path": "README.md",
+      "sha256": "25a7ca5e9098468f64a26223ab0961d82772d0ca550cbe54f1c31399afd7f937"
+    },
+    {
+      "bytes": 59997,
+      "path": "run_source_guards.py",
+      "sha256": "68b58c7f4ff6b75e0a865299630a3de16400e89151e2ebf9c69dbc57fd9ab844"
+    },
+    {
+      "bytes": 2535,
+      "path": "release_metadata.py",
+      "sha256": "f6114924ca04450cca1fbfcd5962f7111d1d1dc5b902bfd5c2a6a92b615b831a"
+    },
+    {
+      "bytes": 247011,
+      "path": "jsdeps-manifest.json",
+      "sha256": "6a8efdcbca84b3f29b3364196d11c885d7ea5d1f6a64f384893d0d73d0242993"
+    },
+    {
+      "bytes": 865597440,
+      "path": "inputs/source-p56.tar",
+      "sha256": "8291da1e97ceb5ebd9cd29f0dab1ce233b14cd20651b1e840f7e3e59802ce77f"
+    }
+  ],
+  "javascriptDependencyManifest": {
+    "entryCount": 1228,
+    "fileBytes": 44271120,
+    "fileCount": 1081,
+    "path": "jsdeps-manifest.json",
+    "rosterSha256": "b4f2331b8c4d85dadaa2d361d2b1dd89a27a0ebfdee7885f94c94ba6af5fd5f7",
+    "sha256": "6a8efdcbca84b3f29b3364196d11c885d7ea5d1f6a64f384893d0d73d0242993",
+    "sourceBunLockSha256": "28b740f61429640ea5c005837d37b5bf7abf67b414c8139659cccc0daee6071a",
+    "sourcePackageJsonSha256": "dd22198e0de80eaab805fae19db057668fcf3c180a84c142d74318c541ad6455"
+  },
+  "priorFrozenManifest": {
+    "path": "/private/tmp/g03-local-source-package-guards-operator-002/operator-manifest.json",
+    "sha256": "3e652d3d9062f2e433fb1a64952a35b89cb944339ade7bc08650f74be920e910"
+  },
+  "producer": {
+    "head": "973d864c8d26b2bc173a411eac8368da5efc1ab3",
+    "tree": "8b20d1f01bea72ea08ed01fcaac97266ed3cb4ff"
+  },
+  "profile": "umf.g03-local-source-package-guards-operator/3",
+  "sealedSolReview": {
+    "path": "/private/tmp/g03-source-guards-operator002-sol-review001.md",
+    "sha256": "f4340e6c790263868bddec13b62ff32bbdb2b7b3ad2b7b7fb21894824b418960"
+  },
+  "state": "prepared-static-review-pending-not-executed",
+  "staticReview": {
+    "MacCIUsed": false,
+    "PraxisUsed": false,
+    "dockerExecuted": false,
+    "gitExecuted": false,
+    "jsonParse": "PASS",
+    "networkUsed": false,
+    "productCommandsExecuted": false,
+    "pythonAstParse": "PASS",
+    "remainingSolFinding": "corrected statically",
+    "rustcHostDiagnosticUsesSupportedVerboseOutput": "PASS",
+    "testsExecuted": false,
+    "toolchainNameMatchesObservedImage": "PASS"
+  },
+  "toolchainCorrection": {
+    "hostDiagnostic": "rustc -vV host field parsed with awk; exact x86_64-unknown-linux-gnu guard",
+    "toolchain": "1.90.0-x86_64-unknown-linux-gnu",
+    "toolchainEvidencePath": "/private/tmp/g03-linux-wasm-tool-feasibility-001.json",
+    "toolchainEvidenceSha256": "bd047351ae8b6d736931a718e4799669859f072b28e8cfa1dcee9d4deee20983"
+  }
+}

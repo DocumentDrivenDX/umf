@@ -374,6 +374,16 @@ repair measures the actual CLT bundle while retaining raw anomalies. Details
 and original failures are retained in the
 [local evidence packet](evidence/schema-migration-design-review/g03-module02-local-linux-001/README.md).
 
+All 20 local Linux source/package commands now have independent actual acceptance,
+with exact source/dependency pre/post closure and owned cleanup. The final native
+attempt007 executed all 19 scenarios and cleaned up, but its original campaign
+verdict remains FAIL_OR_UNKNOWN because of identified predicate interpretation
+mismatches; a separately reviewed metadata-only correction is in progress. Mac
+build002 produced a genuine new wheel, then failed its MH_BUNDLE-only static
+oracle against the actual Rust MH_DYLIB. Its audit-only continuation is in source
+review. These distinctions and raw receipts are retained in the
+[final local checkpoint](evidence/schema-migration-design-review/g03-final-056-local-qualification-001/README.md).
+
 Next: complete the final bounded native campaign, inherited installed/CLI/native/
 WASM/browser and source/package checks, macOS build/static-only artifact,
 independent review, normal merge, immutable successor publication and fresh public

@@ -1,0 +1,15 @@
+
+tests/distribution-manifest/schema.test.ts:
+(pass) closed schema and one exact initial candidate shape validate without mutation [64.49ms]
+(pass) every required top-level and nested custody member must exist [33.70ms]
+(pass) unknown properties and self-promoting trust or pass flags refuse [2.57ms]
+(pass) descriptor paths reject unsafe lexical forms and preserve relative Unicode file names [1.68ms]
+(pass) exact hash shapes and safe integer counts refuse malformed values [12.74ms]
+(pass) release target features argv and observed environment have a closed bounded shape [6.77ms]
+(pass) generic well-shaped candidates remain inert when exact realization/count equations differ [0.12ms]
+(pass) empty inventories and exact duplicate artifacts refuse but path-wise correspondence is external [3.45ms]
+
+ 8 pass
+ 0 fail
+ 105 expect() calls
+Ran 8 tests across 1 file. [3.19s]
