@@ -139,6 +139,7 @@ pub mod protobuf_source;
 pub mod record_members_inspection_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod record_type_binding;
+pub mod avro_cardinality_binding;
 pub mod rfc3339_exact_instant_binding;
 pub mod security_disclosure_literal_binding;
 pub mod security_domains_binding;

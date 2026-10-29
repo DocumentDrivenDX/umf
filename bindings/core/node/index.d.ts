@@ -604,3 +604,6 @@ export interface JsonSchemaStagedImportSessionEngine {
 }
 /** Create a private opt-in staged importer. The default JSON Schema route is unchanged. */
 export declare function createJsonSchemaStagedImportSessionEngine(): JsonSchemaStagedImportSessionEngine;
+
+export declare const AVRO_CARDINALITY_BINDING_PROFILE: 'umf.avro-cardinality-binding/1.0.0';
+export declare function executeAvroCardinalityBindingWire(wireJson: string, controlDispatcher?: (amount: number) => string | undefined): string;

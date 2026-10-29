@@ -704,6 +704,24 @@ pub fn record_type_binding_profile_version() -> String {
     umf_core_wire::record_type_binding::PROFILE.to_owned()
 }
 
+#[wasm_bindgen(js_name = executeAvroCardinalityWire)]
+pub fn execute_avro_cardinality_wire(
+    wire_json: &str,
+    control_dispatcher: Option<Function>,
+) -> String {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::avro_cardinality_binding::execute_wire_with_control(wire_json, &mut hook)
+    } else {
+        umf_core_wire::avro_cardinality_binding::execute_wire(wire_json)
+    }
+}
+#[wasm_bindgen(js_name = avroCardinalityBindingProfileVersion)]
+pub fn avro_cardinality_binding_profile_version() -> String {
+    umf_core_wire::avro_cardinality_binding::PROFILE.to_owned()
+}
+
 #[wasm_bindgen(js_name = avroFieldsProfileVersion)]
 pub fn avro_fields_profile_version() -> String {
     umf_core_wire::AVRO_FIELDS_PROFILE.to_owned()

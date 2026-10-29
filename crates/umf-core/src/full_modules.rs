@@ -15,6 +15,7 @@ pub mod arrow_ipc_capture;
 pub mod artifact_references;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_document;
+pub mod avro_cardinality;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_field_classifier;
 #[cfg(feature = "embedded-adapters")]

@@ -12,7 +12,7 @@ import pytest
 
 _HELPER_PATH = Path(__file__).resolve().parents[2] / "tools/_python_sdist.py"
 assert hashlib.sha256(_HELPER_PATH.read_bytes()).hexdigest() == (
-    "7ec7b4883325438a344141da6c83db6d7903a5a0ee09e2da3a5e8b895c64468f"
+    "d1c63acb0ca58db2ee52761d24d17c135d4fabb41305a29db1b800d051a9dfd8"
 )
 _HELPER_SPEC = importlib.util.spec_from_file_location(
     "umf_test_python_sdist", _HELPER_PATH
@@ -53,6 +53,9 @@ ROOT_FILES = (
     "spec/core/kind-operation-v6.schema.json",
     "spec/core/record-type-operation-v6.schema.json",
     "spec/core/avro-record-type-classification.schema.json",
+    "spec/core/avro-cardinality-classification.schema.json",
+    "spec/core/native-json.schema.json",
+    "spec/extensions/avro-cardinality/package.json",
     "spec/core/avro-record-classification.schema.json",
     "spec/core/avro-field-classification.schema.json",
     "spec/core/parquet-record-type-classification.schema.json",
@@ -118,6 +121,9 @@ FORCE_INCLUDE = {
     "../spec/core/extension-package.schema.json": "spec/core/extension-package.schema.json",
     "../spec/core/record-type-operation-v6.schema.json": "spec/core/record-type-operation-v6.schema.json",
     "../spec/core/avro-record-type-classification.schema.json": "spec/core/avro-record-type-classification.schema.json",
+    "../spec/core/avro-cardinality-classification.schema.json": "spec/core/avro-cardinality-classification.schema.json",
+    "../spec/core/native-json.schema.json": "spec/core/native-json.schema.json",
+    "../spec/extensions/avro-cardinality/package.json": "spec/extensions/avro-cardinality/package.json",
     "../spec/core/avro-record-classification.schema.json": "spec/core/avro-record-classification.schema.json",
     "../spec/core/avro-field-classification.schema.json": "spec/core/avro-field-classification.schema.json",
     "../spec/core/parquet-record-type-classification.schema.json": "spec/core/parquet-record-type-classification.schema.json",

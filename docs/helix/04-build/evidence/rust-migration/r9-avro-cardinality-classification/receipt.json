@@ -1,0 +1,61 @@
+{
+  "base": "4dc0d1daeaecd86ba9286e6cf93d7d5d041cee2d",
+  "profile": "umf.avro-cardinality-binding/1.0.0",
+  "cli": {
+    "path": "actual umf avro-cardinality --stdin-wire with empty PATH",
+    "frozenClassifications": 80,
+    "matchingClassifications": 80,
+    "additionalWireCases": 22,
+    "matchingAdditionalCases": 22
+  },
+  "node": {
+    "runtime": "node",
+    "profile": "umf.avro-cardinality-binding/1.0.0",
+    "classify": true,
+    "verify": true,
+    "recover": true,
+    "controlFailure": true
+  },
+  "bun": {
+    "runtime": "bun",
+    "profile": "umf.avro-cardinality-binding/1.0.0",
+    "classify": true,
+    "verify": true,
+    "recover": true,
+    "controlFailure": true
+  },
+  "python": {
+    "classify": true,
+    "verify": true,
+    "recover": true,
+    "abi": "abi3-py311",
+    "interpreter": "3.13.16"
+  },
+  "chromium": {
+    "browser": "153.0.8010.12",
+    "classify": true,
+    "verify": true,
+    "recover": true
+  },
+  "pythonSdistTests": "14 passed",
+  "typescriptReferenceTests": "3 passed; 503 assertions",
+  "sourceSha256": {
+    "src/core-ideals/cardinality-avro.ts": "433c55c02e83d87ae1328d4ddad02e1391a4aafbc79d9313e3283ec220d6e8a1",
+    "src/core-ideals/avro-cardinality-type.ts": "199d01f5c27a5a1bed9561ec992bbc83306bf47c7d0caf4729364d235952c91b",
+    "fixtures/avro/cardinality-cases.json": "8f045ddf36d2e26f9a1c061c6a46d08e8c6adaa75699780108add7cf66387733",
+    "spec/core/avro-cardinality-classification.schema.json": "473d2c03eeb3b247b77500020990631ebedc390b1718aba1f35cf02fbf8fa73e",
+    "spec/extensions/avro-cardinality/package.json": "c2ceda15755139a6d8761fdfeb637aeb05380c63e1d862e29f96bad77166315f",
+    "crates/umf-core/src/avro_cardinality.rs": "83ce8c4a51d2af9cdbebe0d1f624a3cb52041331cd4f2df0ba22eaefae5af84a",
+    "crates/umf-core-wire/src/avro_cardinality_binding.rs": "935bf86d44d2bad25a24fb47ece292704bd6a26cbcd9f72a17342ec9100b17fb",
+    "bindings/core/node/src/lib.rs": "2292b3bfa2009c04199411e5cde399963a94e0fad0a46a81d6c1d9870b6250f6",
+    "bindings/core/python/src/lib.rs": "1e347f674f9b5b8a8bae01af4c8875c5fc8ccd71791a64a1b53778db1e205b1a",
+    "bindings/core/wasm/src/lib.rs": "26d68c8af98954ad88218b29aac7954ae608a7b4125d0d890ed1a71006d253fc",
+    "crates/umf-cli/src/main.rs": "781c4d2ec5e70bdf8abca1f254d1b0fda47a6c2cc5b3c9f57d452059d00f9ad9"
+  },
+  "limitations": [
+    "not installed artifact qualification",
+    "not default-route retirement",
+    "not Apache Avro compiler or codec equivalence",
+    "not full resource/cancellation/deadline matrix"
+  ]
+}

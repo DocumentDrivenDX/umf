@@ -184,6 +184,12 @@ export const AVRO_FIELDS_PROFILE = 'umf-r5-avro-fields/0.1.0';
 export const AVRO_INSPECT_PROFILE = 'umf-r5-avro-inspect/0.1.0';
 export const AVRO_DOCUMENT_INSPECT_PROFILE = 'umf-r5-avro-document-inspect/0.1.0';
 export const AVRO_CANDIDATE_PROFILE = 'umf-r5-avro-candidate/0.1.0';
+export const AVRO_CARDINALITY_BINDING_PROFILE = 'umf.avro-cardinality-binding/1.0.0';
+export function executeAvroCardinalityBindingWire(wireJson, controlDispatcher) {
+  if (typeof addon.executeAvroCardinalityWire !== 'function' || typeof addon.avroCardinalityBindingProfileVersion !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
+  if (addon.avroCardinalityBindingProfileVersion() !== AVRO_CARDINALITY_BINDING_PROFILE) throw new Error('RUST_NODE_BINDING_PROFILE_MISMATCH');
+  return addon.executeAvroCardinalityWire(wireJson, controlDispatcher);
+}
 export const RECORD_TYPE_BINDING_PROFILE = 'umf.record-type-binding/1.0.0';
 export {JSON_SCHEMA_PROFILE};
 export {DOCUMENT_COMPARISON_PROFILE};

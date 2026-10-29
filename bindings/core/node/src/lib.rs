@@ -844,6 +844,31 @@ pub fn record_type_binding_profile_version() -> &'static str {
     umf_core_wire::record_type_binding::PROFILE
 }
 
+#[napi(js_name = "executeAvroCardinalityWire")]
+pub fn execute_avro_cardinality_wire(
+    env: Env,
+    wire_json: String,
+    control_dispatcher: Option<JsFunction>,
+) -> NapiResult<String> {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = NodeControl { env, dispatcher };
+        let mut hook = |amount| control.check(amount);
+        Ok(
+            umf_core_wire::avro_cardinality_binding::execute_wire_with_control(
+                &wire_json, &mut hook,
+            ),
+        )
+    } else {
+        Ok(umf_core_wire::avro_cardinality_binding::execute_wire(
+            &wire_json,
+        ))
+    }
+}
+#[napi(js_name = "avroCardinalityBindingProfileVersion")]
+pub fn avro_cardinality_binding_profile_version() -> &'static str {
+    umf_core_wire::avro_cardinality_binding::PROFILE
+}
+
 #[napi(js_name = "avroFieldsProfileVersion")]
 pub fn avro_fields_profile_version() -> &'static str {
     umf_core_wire::AVRO_FIELDS_PROFILE
