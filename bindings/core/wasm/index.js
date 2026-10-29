@@ -20,6 +20,7 @@ import {createDocumentComparisonOperations, DOCUMENT_COMPARISON_PROFILE} from '.
 import {schemaPropertiesHostInput, cardinalityHostInput, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse} from './src/host-json.js';
 import {createSemanticTypeRegistry as createSemanticTypeRegistryWithWire} from './src/semantic-value.js';
 import {createArrowIpcOperations, ARROW_IPC_PROFILE} from './src/arrow-ipc.js';
+import {createParquetCaptureOperations, PARQUET_CAPTURE_PROFILE} from './src/parquet-capture.js';
 import {createAccessRrfOperations, ACCESS_RRF_PROFILE} from './src/access-rrf.js';
 import {createAvroInspector as createAvroInspectorWire, createAvroDocumentInspector as createAvroDocumentInspectorWire, createAvroCandidateEditor as createAvroCandidateEditorWire, AVRO_INSPECT_PROFILE, AVRO_DOCUMENT_INSPECT_PROFILE, AVRO_CANDIDATE_PROFILE} from './src/avro.js';
 import {copyCoreJsonInput, createCoreBit128FieldOperation} from './src/core-bit128-field.js';
@@ -53,6 +54,7 @@ export const RFC3339_EXACT_INSTANT_MAXIMUM_BYTES = 1_048_576;
 export const ICEBERG_SCHEMA_PROFILE = 'umf-r5-iceberg-schema/0.1.0';
 export const ARROW_SCHEMA_PROFILE = 'umf-r8-arrow-schema/0.1.0';
 export {ARROW_IPC_PROFILE};
+export {PARQUET_CAPTURE_PROFILE};
 export {ACCESS_RRF_PROFILE};
 export const PROTOBUF_INSPECT_PROFILE = 'umf-r5-protobuf-inspect/0.1.0';
 export const PROTOBUF_DOCUMENT_PROFILE = 'umf-r8-protobuf-descriptor-document/0.1.0';
@@ -813,7 +815,7 @@ export async function initializeCoreModelRootKindNullabilityWasm(resources, load
   const module = await loader();
   if (typeof module.default === 'function') await module.default();
   const staged = await initializeCoreKindNullabilityHostInputWasm(resources, async () => module, host, options);
-  const model = createEngineInternal(module, resources, options, true, false, false, false, staged[CORE_KIND_NULLABILITY_RUNTIME], staged[CORE_KIND_NULLABILITY_PREPARED], staged[CORE_KIND_NULLABILITY_RUNTIME]);
+  const {encodeCoreKeyTuple, verifyCoreKeyTuple, ...model} = createEngineInternal(module, resources, options, true, true, true, false, staged[CORE_KIND_NULLABILITY_RUNTIME], staged[CORE_KIND_NULLABILITY_PREPARED], staged[CORE_KIND_NULLABILITY_RUNTIME]);
   const api = {...model};
   for (const name of ['inspectCoreElementKind','declareCoreElementKind','verifyCoreKindDeclaration','inspectCoreNullability','declareCoreNullability','verifyCoreNullabilityDeclaration']) api[name] = staged[name];
   return Object.freeze(api);
@@ -1136,6 +1138,25 @@ export function createArrowIpcEngine(module, options = {}) {
     const hostWork = admissionWork(controlBridge);
     hostWork?.(1);
     const responseText = module.executeArrowIpcWire(encodeRequestWire({op: `arrow.ipc.${operation}`, ...fields}, hostWork), controlBridge);
+    hostWork?.(responseText.length);
+    const envelope = JSON.parse(responseText);
+    const failure = resultError(envelope);
+    if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+    hostWork?.(envelope.wire.length);
+    return fromWire(JSON.parse(envelope.wire), hostWork);
+  });
+}
+
+/** Create the opt-in bounded Parquet capture/footer inspection engine over WASM. */
+export function createParquetCaptureEngine(module, options = {}) {
+  if (typeof module?.executeParquetCaptureWire !== 'function' || typeof module?.parquetCaptureProfileVersion !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  if (module.parquetCaptureProfileVersion() !== PARQUET_CAPTURE_PROFILE) throw new Error('RUST_WASM_BINDING_PROFILE_MISMATCH');
+  const {controls} = codegenOptions(options);
+  return createParquetCaptureOperations((operation, fields) => {
+    const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+    const hostWork = admissionWork(controlBridge);
+    hostWork?.(1);
+    const responseText = module.executeParquetCaptureWire(encodeRequestWire({op: `parquet.${operation}`, ...fields}, hostWork), controlBridge);
     hostWork?.(responseText.length);
     const envelope = JSON.parse(responseText);
     const failure = resultError(envelope);

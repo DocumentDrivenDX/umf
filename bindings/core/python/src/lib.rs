@@ -872,6 +872,47 @@ fn arrow_ipc_profile_version() -> &'static str {
 }
 
 #[pyfunction]
+fn parquet_capture_profile_version() -> &'static str {
+    umf_core_wire::PARQUET_CAPTURE_PROFILE
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, control=None))]
+fn execute_parquet_capture_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let Some(control) = control else {
+        return Ok(umf_core_wire::execute_parquet_capture_wire(wire_json));
+    };
+    let mut hook = |amount: usize| {
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        let mut error = EngineError::new(code, Utf16::from(path), Utf16::from(message));
+        error.python_message_origin = None;
+        Err(error)
+    };
+    Ok(umf_core_wire::execute_parquet_capture_wire_with_control(
+        wire_json, &mut hook,
+    ))
+}
+
+#[pyfunction]
 #[pyo3(signature = (wire_json, control=None))]
 fn execute_arrow_ipc_wire(
     py: Python<'_>,
@@ -6033,6 +6074,8 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(execute_arrow_schema_wire, module)?)?;
     module.add_function(wrap_pyfunction!(arrow_ipc_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_arrow_ipc_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(parquet_capture_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_parquet_capture_wire, module)?)?;
     module.add_function(wrap_pyfunction!(protobuf_inspect_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(avro_inspect_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_avro_inspect_wire, module)?)?;

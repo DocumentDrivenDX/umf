@@ -131,8 +131,11 @@ extensions:
                   value:
                     node:
                       var: we
-                    module:
-                      var: wm
+                    moduleId:
+                      op: get
+                      args:
+                        - var: wm
+                        - - id
                     path:
                       op: concat
                       args:
@@ -153,8 +156,7 @@ extensions:
                 - op: get
                   args:
                     - var: wi
-                    - - module
-                      - id
+                    - - moduleId
                 - op: get
                   args:
                     - var: wi

@@ -58,7 +58,9 @@ implementation-plan evidence remains scoped to the artifacts it actually tested.
 The Rust port is incomplete. R0–R3 have their recorded reviewed and merged
 checkpoints. R4 removed V8 from the authored Python production source boundary,
 but its coordinated wheel/sdist release matrix is still a nonpublishing
-candidate and needs a final source-coherent hosted receipt. R5 has growing
+candidate and needs final source-coherent qualification. Under the owner's
+2026-10-29 direction, run that qualification locally with explicit local custody;
+GitHub Actions execution is not a prerequisite. R5 has growing
 bounded opt-in Rust families and host bindings; it has not retired the broader
 TypeScript engine. R6 consumer bridges, R7 default package build qualification
 and complete tooling retirement, and R8 final integrated qualification remain
@@ -10438,3 +10440,105 @@ All CI and release qualification runs locally under the owner's explicit
 direction. GitHub Actions credit exhaustion is not a release dependency. Direct
 binary publication still requires the completed port, integrated local tests,
 independent review, and verification of the published bytes.
+
+### Local continuation: Parquet foundation and Facets corrections — 2026-10-29
+
+Integrated main `a6eb216a9` and Sol-reviewed Parquet commits `00ecb3b4`,
+`fbadf9f6`, and `8285cde7`. This bounded core/wire slice implements capture,
+export, framing inspection, footer decoding, metadata inspection, and schema
+inspection. Review corrected swallowed cancellation/work failures, field
+metadata consistency, known logical-annotation contradictions, and inherited
+framing diagnostics. Eleven focused Rust tests passed, including complete
+TypeScript golden envelopes and refusal cases. The following Sol-reviewed
+binding slice, private commit `3ae10b68`, exposes the same six-operation tagged
+wire profile through CLI, Python, Node/Bun, and WASM. The integrated CLI passes
+two real-binary tests with an empty PATH; four Node/WASM byte-wrapper tests
+also pass. Private source-built native/WASM/Python executions retain their
+captured scope. Default selection, installed distribution qualification, and
+the remaining Parquet operations are separate follow-on work.
+
+The first current-source Darwin/Linux SDK archives built successfully, but
+their installed Facets gates failed. The initial failure exposed a harness
+comparison between ordinary JSON fixture objects and copied null-prototype
+results. Nonqualifying Node/Bun diagnostics then found two production
+differences: ordering of unknown-facet warning paths and the prototype of the
+historical projection's nested `length` object. Sol reviewed both corrections;
+they are integrated with a full frozen inspection regression and a facade
+prototype regression. Fresh strict installed gates must compare actual
+default/reference prototypes as well as frozen data. Old archives and
+diagnostic runs establish no retirement or release eligibility.
+
+The bounded constraint-copy/model-wrapper optimization preserves measured
+TypeScript output but does not resolve the complete runtime cost. A private
+1,000/2,000-element profile charged approximately 255/544 million work units;
+concurrent wall times are explicitly unqualified. Instrumentation identified
+the per-module element-ID set's repeated linear scans as the dominant cost.
+Subsequent profiling identified repeated copies of the policy tree during
+nested literal-path lookups as the larger cost. The borrowed lookup now meters
+each UTF-16 key comparison, evaluates all path expressions before traversal,
+and charges fallible path storage. An ordered-entry map with an explicitly
+metered open-address index removes repeated ID scans; hashing, collisions,
+growth, and allocation remain controlled. Sol repaired three stale patch
+assembly errors and compiled the exact composed source in a fresh workspace:
+32 constraint tests pass, and fresh patch application matches the tested bytes.
+The integrated constraints source SHA-256 is
+`1da33e2e37ac981cf86d5b7ea0b0e5e46aa84b10a74d2dea7535db8017e847b9`.
+Before the last accounting additions, private 1,000/2,000-element runs matched
+TypeScript output and charged approximately 81/163 million work units. Those
+two observations do not establish a universal performance bound; concurrent
+wall times remain unqualified.
+
+The six Kind/Nullability candidate defaults share one retained engine with the
+existing KeyTuple slice. Sol reviewed their facade, error branding, public
+types, and strict import allowances. The installed replay's direct TypeScript
+preflight passes 11 successes, 13 refusals, seven host-order controls, and 14
+resource vectors, including symmetric completed-result limits and large unknown
+string retention. It records separate bounded evidence using the same offline
+consumer as Facets. The Facets acceptance profile remains unchanged. Integrated
+checks also pass 17 Facets/Kind/Nullability Rust integration tests, 30 Facets
+harness controls, TypeScript checks, and ownership boundaries across 861 source
+modules with zero findings and zero V8 debt. Fresh Darwin/Linux installed
+qualification, remaining Rust ownership, integration, and release gates stay
+open; no new retirement is claimed.
+
+The current-source inventory correction recognizes only the six exact
+Kind/Nullability V4 binding declarations and their existing Rust owners. Its
+negative controls reject changed source, syntax, factories, error imports,
+resource-error conversion, and TypeScript fallback. Canonical generation and
+resource checks pass. The regenerated ledger records 930 logical default-route
+gaps, 844 executable declarations without an accepted Rust mapping, and 92
+source-selected declarations per default root; all retirement gaps remain open.
+The integrated local facade/boundary suite passes 32 tests, the installed-gate
+and retirement-control suite passes 31 tests, and the Python distribution
+resource suite passes 119 tests. These checks do not qualify installed archives.
+The latest main check remains at `a6eb216a9`; no hosted job was dispatched or
+required.
+
+The next reviewed Parquet metadata slice is now integrated before the fresh
+archive build: logical-type inspection, container inspection, field metadata,
+and schema import join the six capture/inspection operations. Sol independently
+reviewed `13ddce7` and `a940e39`, and the primary Sol reviewed the `f846409`
+route-order accounting fix. All ten exact source identities have accepted Rust
+owners; the reference route remains explicit TypeScript. Logical ownership now
+counts any accepted default-condition mapping instead of the first row, giving
+111 mapped and 834 unmapped executable declarations. The 930 default-route
+retirement gaps remain open. The integrated checks pass 13 Parquet core tests
+(including 48 whole metadata envelopes and isolated UTF-16 retention), three
+actual CLI tests, four wrapper tests, and all 82 inventory-ledger controls.
+
+The broad local Rust core run passed 564 of 567 tests; its three failures were
+historical Dataset constraint-work snapshots after the reviewed authored rule
+program change. A fresh TypeScript evaluation matches Rust's 23,250 instruction
+count (historical 23,162), and both near-limit public outcomes remain exact.
+Historical packets remain unchanged. The compact `current-work-oracle.json`
+records current counters, exact predecessor hashes, and source/resource pins;
+its generator re-evaluates TypeScript and refuses changed public outcomes.
+All 11 Dataset work-ledger tests pass using those current counters. The local
+wire-protocol suite also passes all 75 tests. Canonical provenance must be
+regenerated after Rust source changes before fresh binary qualification.
+Independent Sol CLI review approved this compact oracle correction after
+checking all 1,504 recorded input hashes and immutable predecessor packets.
+The review and exact source hashes are recorded in
+`evidence/rust-migration/r8-current-oracle-review-20261029/`. The reviewer did
+not rerun tests. Queued workers did not resume, so the primary Sol prepared
+this correction directly and a separate Sol reviewed it.

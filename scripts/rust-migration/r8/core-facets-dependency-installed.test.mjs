@@ -145,7 +145,7 @@ function resourceEvidenceFixture(){
   const ops=expectedCoreFacetResourceRustOperations(id),integrity=successIntegrity[id]??null;
   const outcome=integrity?{status:'returned'}:{status:'threw',name:'UmfError',code:errors[id][0],message:errors[id][1],path:errors[id][2]};
   const fingerprint=integrity?'a'.repeat(64):null;
-  return {id,expectedRustOperations:ops,defaultRustOperations:ops,defaultRustCalls:ops.length,referenceRustOperations:[],referenceRustCalls:0,defaultOutcome:outcome,referenceOutcome:structuredClone(outcome),defaultResultSha256:fingerprint,referenceResultSha256:fingerprint,defaultIntegrity:integrity,referenceIntegrity:integrity};
+  return {id,expectedRustOperations:ops,defaultRustOperations:ops,defaultRustCalls:ops.length,referenceRustOperations:[],referenceRustCalls:0,defaultOutcome:outcome,referenceOutcome:structuredClone(outcome),defaultResultSha256:fingerprint,referenceResultSha256:fingerprint,defaultOwnShapeSha256:'a'.repeat(64),referenceOwnShapeSha256:'a'.repeat(64),defaultIntegrity:integrity,referenceIntegrity:integrity};
  });
 }
 
@@ -157,6 +157,10 @@ test('resource acceptance rejects matching refusals, missing Rust success dispat
  const missingDispatch=structuredClone(valid);const success=missingDispatch.find(item=>item.id==='inspect-near-value-limit-many-qualifiers');success.defaultRustOperations=[];success.defaultRustCalls=0;
  assert.throws(()=>validateCoreFacetResourceEvidence(missingDispatch,assert),/exact default Rust dispatch/);
  assert.throws(()=>validateCoreFacetResourceEvidence(valid.slice(1),assert),/exactly 14 cases/);
+ const missingShape=structuredClone(valid);delete missingShape.find(item=>item.id==='inspect-near-value-limit-many-qualifiers').defaultOwnShapeSha256;
+ assert.throws(()=>validateCoreFacetResourceEvidence(missingShape,assert),/default own-shape witness/);
+ const divergentShape=structuredClone(valid);divergentShape.find(item=>item.id==='inspect-near-value-limit-many-qualifiers').referenceOwnShapeSha256='b'.repeat(64);
+ assert.throws(()=>validateCoreFacetResourceEvidence(divergentShape,assert),/own-shape witness parity/);
 });
 
 function assetControlFixture(){

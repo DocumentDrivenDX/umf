@@ -100,6 +100,37 @@ test('the Core Semantic Types Rust facade grants exact type-only predecessor imp
 	expect(deniedTypes).toContain('rust-core-semantic-types-default.ts: value import from type-only module ../model/types');
 });
 
+test('the Core Kind/Nullability Rust facade has exact type-only model grants', () => {
+	const allowed = checkAccessSource(
+		'rust-kind-nullability-default.ts',
+		"import type {CoreKindDeclaration} from '../model/field-kind';\nimport type {CoreNullabilityDeclaration} from '../model/nullability';\nimport type {Document} from '../model/types';\nimport {UmfError} from '../model/errors';\n",
+	);
+	const deniedKind = checkAccessSource(
+		'rust-kind-nullability-default.ts',
+		"import {declareCoreElementKind} from '../model/field-kind';\n",
+	);
+	const deniedNullability = checkAccessSource(
+		'rust-kind-nullability-default.ts',
+		"import {declareCoreNullability} from '../model/nullability';\n",
+	);
+	const deniedTypes = checkAccessSource(
+		'rust-kind-nullability-default.ts',
+		"import {Document} from '../model/types';\n",
+	);
+	const deniedHost = checkAccessSource(
+		'rust-kind-nullability-default.ts',
+		"import {readFile} from 'node:fs';\n",
+	);
+
+	expect(allowed).toEqual([]);
+	expect(deniedKind).toContain('rust-kind-nullability-default.ts: value import from type-only module ../model/field-kind');
+	expect(deniedNullability).toContain('rust-kind-nullability-default.ts: value import from type-only module ../model/nullability');
+	expect(deniedTypes).toContain('rust-kind-nullability-default.ts: value import from type-only module ../model/types');
+	expect(deniedHost).toContain('rust-kind-nullability-default.ts: unapproved import node:fs');
+	expect(checkAccessSource('rust-kind-nullability-default.ts', "globalThis.fetch('https://example.invalid');\n"))
+		.toContain('rust-kind-nullability-default.ts: host or executable hook globalThis');
+});
+
 test('the Core Bit128 Field facade allows only its audited error adapter import', () => {
 	const allowed = checkAccessSource(
 		'rust-core-bit128-field-default.ts',

@@ -81,7 +81,7 @@ function assertBit128ProfileRouteInventory(rootRows) {
 // core evidence. No name similarity or candidate-family heuristic adds rows.
 const accepted = new Map();
 const accept = (source, exports, rustModule, rustSource, evidence, focusedTest) => {
-  const evidencePaths = evidence.map(file => /^(?:docs|scripts|crates|src|spec)\//.test(file)
+  const evidencePaths = evidence.map(file => /^(?:docs|scripts|crates|src|spec|tests|bindings|python)\//.test(file)
     ? file
     : `docs/helix/04-build/evidence/rust-migration/${file}`);
   for (const [exportName, rustSymbol] of exports) accepted.set(`${source}#${exportName}`, {
@@ -567,6 +567,63 @@ own(['inspectProtobuf'], { status: 'accepted-opt-in-subset', supportProfile: 'um
 own(['importProtobufSources', 'exportProtobufSources'], { status: 'partial-host-boundary', supportProfile: 'R5 Protobuf source prepare/finish; host callbacks required', rustOwner: 'umf_core::protobuf_source::{prepare_source_import,import_sources,prepare_source_export,finish_source_export}', sourcePaths: ['crates/umf-core/src/protobuf_source.rs'], wireOperation: null, bindingRoutes: [], evidencePaths: ['docs/helix/02-design/contracts/CONTRACT-003-protobuf.md', 'docs/helix/04-build/evidence/rust-migration/r5-protobuf-source/README.md', 'docs/helix/04-build/evidence/rust-migration/r5-protobuf-source/predecessor.json', 'docs/helix/04-build/evidence/rust-migration/r5-protobuf-source-export/README.md', 'docs/helix/04-build/evidence/rust-migration/r5-protobuf-source-export/predecessor.json'], predecessor: 'CONTRACT-003 source/compiler boundary; separate frozen import and export observations', nativeGate: 'Core preparation/finalization tests; compiler/printer equivalence remains unqualified', hostGate: 'Host compiler and source emitter callbacks remain required; no generic Node/WASM route', knownMismatches: ['Callback identity, compiler version, source layout and complete compiler semantics remain host-owned'] });
 own(['proposeProtobufDescriptorEdit'], { status: 'unported', supportProfile: null, rustOwner: null, sourcePaths: [], wireOperation: null, bindingRoutes: [], evidencePaths: protobufEvidence, predecessor: 'CONTRACT-003; no exact frozen operation mapping identified', nativeGate: 'No operation-specific native gate', hostGate: 'TypeScript default only; no Rust operation or binding route identified', knownMismatches: ['No exact Rust descriptor-edit proposal owner'] });
 own(['protobufRegistry', 'jsonSchemaRegistry'], { status: 'unported', supportProfile: null, rustOwner: null, sourcePaths: [], wireOperation: null, bindingRoutes: [], evidencePaths: [], predecessor: 'No frozen registry-wrapper operation packet identified', nativeGate: 'No operation-specific native gate', hostGate: 'TypeScript registry wrappers remain active; no equivalent Rust route established', knownMismatches: ['Do not infer registry parity from inspector or document operations'] });
+
+// Bounded, opt-in Parquet source-capture and inspection operations. This
+// mapping records the exact Rust/wire owners without implying adapter-wide
+// support or changing any TypeScript package-root route.
+const parquetOps = [
+  ['captureParquet', 'capture_parquet', 'parquet.capture', 'src/adapters/parquet/index.ts'],
+  ['exportParquetCapture', 'export_parquet_capture', 'parquet.export', 'src/adapters/parquet/index.ts'],
+  ['inspectParquetFraming', 'inspect_parquet_framing', 'parquet.inspectFraming', 'src/adapters/parquet/index.ts'],
+  ['decodeParquetFooter', 'decode_parquet_footer', 'parquet.decodeFooter', 'src/adapters/parquet/footer.ts'],
+  ['inspectParquetMetadata', 'inspect_parquet_metadata', 'parquet.inspectMetadata', 'src/adapters/parquet/metadata.ts'],
+  ['inspectParquetSchema', 'inspect_parquet_schema', 'parquet.inspectSchema', 'src/adapters/parquet/schema.ts'],
+  ['inspectParquetLogicalTypes', 'inspect_parquet_logical_types', 'parquet.inspectLogicalTypes', 'src/adapters/parquet/logical.ts'],
+  ['inspectParquetContainers', 'inspect_parquet_containers', 'parquet.inspectContainers', 'src/adapters/parquet/containers.ts'],
+  ['getParquetFieldMetadata', 'get_parquet_field_metadata', 'parquet.getFieldMetadata', 'src/adapters/parquet/field-metadata.ts'],
+  ['importParquetSchema', 'import_parquet_schema', 'parquet.importSchema', 'src/adapters/parquet/field-metadata.ts'],
+];
+const parquetEvidence = [
+  'docs/helix/02-design/contracts/CONTRACT-019-parquet.md',
+  'docs/helix/04-build/evidence/rust-migration/r8-parquet-metadata-operations/README.md',
+  'tests/rust-core/fixtures/parquet-metadata-ts-freeze.json',
+  'crates/umf-core/src/parquet_capture_inspection.rs',
+  'crates/umf-core-wire/src/parquet_capture_binding.rs',
+  'crates/umf-cli/tests/parquet_capture_cli.rs',
+  'bindings/core/node/tests/parquet-capture-current-source.mjs',
+  'bindings/core/wasm/tests/parquet-capture-current-source.mjs',
+  'python/tests/test_rust_parquet_capture.py',
+];
+for (const [name, owner, wire, source] of parquetOps) own([name], {
+  status: 'accepted-opt-in-subset',
+  supportProfile: 'umf-r8-parquet-capture-inspection/0.1.0; bounded tagged-wire Parquet source capture and inspection; opt-in',
+  rustOwner: `umf_core::parquet_capture_inspection::${owner}`,
+  sourcePaths: ['crates/umf-core/src/parquet_capture_inspection.rs', source],
+  wireOperation: wire,
+  bindingRoutes: ['CLI', 'Node native addon', 'WASM browser', 'Python binding'],
+  evidencePaths: parquetEvidence,
+  predecessor: 'CONTRACT-019 bounded source capture and inspection; complete public-envelope frozen TypeScript fixtures for the four metadata operations',
+  nativeGate: 'Rust core whole-envelope fixtures: 48 metadata cases across all four operations; CLI actual-binary fixture; Node and WASM current-source binding replays: 3 frozen cases across all ten operations',
+  hostGate: 'Explicit opt-in tagged-wire profile only; bytes use bounded lowercase hex; current-source binding checks do not establish installed-package parity or raw host-admission equivalence',
+  knownMismatches: ['Parquet operations outside these ten remain TypeScript-owned or unmapped', 'No default package-root route was switched or retired', 'ARROW:schema extraction and Arrow schema projection are outside this support profile'],
+});
+for (const [name, owner, _wire, source] of parquetOps) accept(
+  source,
+  [[name, owner]],
+  'umf_core::parquet_capture_inspection',
+  'crates/umf-core/src/parquet_capture_inspection.rs',
+  parquetEvidence,
+  [
+    'crates/umf-core/src/parquet_capture_inspection.rs',
+    'crates/umf-cli/tests/parquet_capture_cli.rs',
+    'bindings/core/node/tests/parquet-capture-current-source.mjs',
+    'bindings/core/wasm/tests/parquet-capture-current-source.mjs',
+    'python/tests/test_rust_parquet_capture.py',
+  ],
+);
+const parquetAcceptedExports = new Map(
+  parquetOps.map(([name, _owner, wire, source]) => [name, { wire, source }]),
+);
 own(['JSON_SCHEMA_DIALECT'], { status: 'data-or-constant', supportProfile: null, rustOwner: 'umf_core::json_schema_adapter::DIALECT_2020_12', sourcePaths: ['crates/umf-core/src/json_schema_adapter.rs'], wireOperation: null, bindingRoutes: [], evidencePaths: ['docs/helix/02-design/contracts/CONTRACT-002-json-schema.md'], predecessor: 'CONTRACT-002 dialect identifier; no executable operation packet', nativeGate: 'Constant equality requires direct source check, not host parity replay', hostGate: 'TypeScript root constant remains default', knownMismatches: [] });
 own(['JSON_SCHEMA_EXTENSION'], { status: 'data-or-constant', supportProfile: null, rustOwner: 'umf_core::json_schema_adapter::EXTENSION', sourcePaths: ['crates/umf-core/src/json_schema_adapter.rs'], wireOperation: null, bindingRoutes: [], evidencePaths: ['docs/helix/02-design/contracts/CONTRACT-002-json-schema.md'], predecessor: 'CONTRACT-002 extension identifier; no executable operation packet', nativeGate: 'Constant equality requires direct source check, not host parity replay', hostGate: 'TypeScript root constant remains default', knownMismatches: [] });
 own(['PROTOBUF_EXTENSION'], { status: 'data-or-constant', supportProfile: null, rustOwner: 'umf_core::protobuf_document::EXT', sourcePaths: ['crates/umf-core/src/protobuf_document.rs'], wireOperation: null, bindingRoutes: [], evidencePaths: ['docs/helix/02-design/contracts/CONTRACT-003-protobuf.md'], predecessor: 'CONTRACT-003 extension identifier; no executable operation packet', nativeGate: 'Constant equality requires direct source check, not host parity replay', hostGate: 'TypeScript root constant remains default', knownMismatches: [] });
@@ -591,7 +648,9 @@ function acceptedOperationEvidence(mapping, routeStatus = 'legacy-fixture') {
     rustSourceClosure: closure(mapping.rustSourcePaths),
     evidenceClosure: closure(mapping.evidencePaths),
     focusedTestClosure: closure(mapping.focusedTestPaths),
-    scopeRule: mapping.evidencePaths.some(file => file.includes('/r5-arrow-ipc-capture-bindings-current-source-20261027/'))
+    scopeRule: mapping.evidencePaths.some(file => file.includes('/r8-parquet-metadata-operations/'))
+      ? 'The linked CONTRACT-019 packet proves only ten opt-in capture/inspection operations under umf-r8-parquet-capture-inspection/0.1.0 for bounded tagged-wire bytes. Frozen complete-envelope cases cover the four metadata operations; local current-source bindings exercise three fixtures across the ten operation entry points. Other Parquet exports, installed-package parity, raw host admission, Arrow schema projection, and default-route retirement remain open.'
+      : mapping.evidencePaths.some(file => file.includes('/r5-arrow-ipc-capture-bindings-current-source-20261027/'))
       ? 'The linked CONTRACT-016 packet proves only exact-source Arrow IPC capture, export and incomplete inspection for 23 bounded byte cases and seven mutations on fresh local Rust CLI, installed Python wheel, Node/Bun NAPI and Chromium WASM. Raw JavaScript wrong-type and cross-realm admission remain unqualified. It excludes native IPC semantics, observation callbacks, cross-platform release qualification, and default-route retirement.'
       : mapping.evidencePaths.some(file => file.includes('/r8-json-value-serialization/'))
       ? 'The linked R8 packet defines the exact 24-case TypeScript serialization subset and current-source Node/Bun native, Node/Bun WASM, and Chromium WASM replays; installed package qualification, broader YAML behavior, arbitrary Proxy behavior, and default-route retirement remain open.'
@@ -829,6 +888,30 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
   ]);
   const domainPackProfileOwner = domainPackProfileOwnerByExport.get(exportName);
   const closure = paths => [...new Set(paths)].sort().map(file => ({ path: file, sha256: digest(read(file)) }));
+  if (coreKindNullabilityOperations.has(exportName)
+      && isExactCoreKindNullabilityV4RootSelection({
+        routeId, exportName, source, declaration,
+        rootText: read(defaultEntry).toString('utf8'),
+        binderSource: read('src/access/rust-kind-nullability-default.ts').toString('utf8'),
+      })) {
+    const { rustOwner, rustSource } = coreKindNullabilityOperations.get(exportName);
+    return {
+      status: 'candidate-source-selected',
+      rustOwner,
+      wireOperation: `model/${exportName}`,
+      bindingRoute: browser
+        ? 'V4 browser root -> public-error facade -> retained Core Model WASM engine -> Rust wire'
+        : 'V4 Node root -> public-error facade -> retained Core Model Node engine -> Rust wire',
+      sourceClosure: closure([
+        defaultEntry, 'src/access/rust-kind-nullability-default.ts', 'src/access/core-model-resources.ts',
+        'src/model/field-kind.ts', 'src/model/nullability.ts',
+        'bindings/core/node/index.js', 'bindings/core/node/src/core-model.js', 'bindings/core/node/src/lib.rs',
+        'bindings/core/wasm/index.js', 'bindings/core/wasm/src/core-model.js', 'bindings/core/wasm/src/lib.rs',
+        'crates/umf-core-wire/src/lib.rs', rustSource,
+      ]),
+      qualificationStatus: 'The exact V4 default selects this bounded Rust Core Kind/Nullability operation through the shared retained Core Model engine and public-error binder while preserving Core Key Tuple bindings. Only current-source selection is established here: installed Node/Bun/Chromium qualification is pending, the TypeScript reference remains available, and retirement remains open.',
+    };
+  }
   if (arrowIpcExports.has(exportName)
       && isExactArrowIpcV4RootSelection({ routeId, exportName, source, declaration })) {
     const operation = arrowIpcExports.get(exportName);
@@ -1822,6 +1905,84 @@ const protobufDescriptorExports = new Map([
   ['exportProtobufBundle', { source: 'src/adapters/protobuf/index.ts', rust: 'umf_core::protobuf_document::export_bundle', wire: 'protobuf.document.bundle' }],
 ]);
 
+const coreKindNullabilityOperations = new Map([
+  ['inspectCoreElementKind', {
+    rustOwner: 'umf_core::core_kind::inspect_core_kind',
+    rustSource: 'crates/umf-core/src/core_kind.rs',
+    referenceSource: 'src/model/field-kind.ts',
+  }],
+  ['declareCoreElementKind', {
+    rustOwner: 'umf_core::core_kind::declare_core_kind',
+    rustSource: 'crates/umf-core/src/core_kind.rs',
+    referenceSource: 'src/model/field-kind.ts',
+  }],
+  ['verifyCoreKindDeclaration', {
+    rustOwner: 'umf_core::core_kind::verify_core_kind_declaration',
+    rustSource: 'crates/umf-core/src/core_kind.rs',
+    referenceSource: 'src/model/field-kind.ts',
+  }],
+  ['inspectCoreNullability', {
+    rustOwner: 'umf_core::nullability::inspect_core_nullability',
+    rustSource: 'crates/umf-core/src/nullability.rs',
+    referenceSource: 'src/model/nullability.ts',
+  }],
+  ['declareCoreNullability', {
+    rustOwner: 'umf_core::nullability::declare_core_nullability',
+    rustSource: 'crates/umf-core/src/nullability.rs',
+    referenceSource: 'src/model/nullability.ts',
+  }],
+  ['verifyCoreNullabilityDeclaration', {
+    rustOwner: 'umf_core::nullability::verify_core_nullability_declaration',
+    rustSource: 'crates/umf-core/src/nullability.rs',
+    referenceSource: 'src/model/nullability.ts',
+  }],
+]);
+const coreKindNullabilityExportNames = new Set(coreKindNullabilityOperations.keys());
+
+export function isExactCoreKindNullabilityV4RootSelection({
+  routeId, exportName, source, declaration, rootText: rootTextOverride = null,
+  binderSource: binderSourceOverride = null,
+}) {
+  if (!coreKindNullabilityExportNames.has(exportName)
+      || !['package-root-node', 'package-root-browser'].includes(routeId)) return false;
+  const browser = routeId === 'package-root-browser';
+  const entry = browser ? 'src/index-browser-v4.ts' : 'src/index-node-v4.ts';
+  if (source !== entry
+      || declaration?.packageRoute !== '.'
+      || declaration.packageCondition !== (browser ? 'browser' : 'node')
+      || declaration.routeMode !== 'default'
+      || declaration.defaultRoute !== true
+      || declaration.declarationName !== exportName
+      || declaration.declarationKind !== 'BindingElement'
+      || declaration.declarationShape !== 'binding-element'
+      || declaration.initializerShape !== 'not-applicable'
+      || declaration.sourceSha256 !== digest(read(entry))) return false;
+  const names = [...coreKindNullabilityExportNames].join(',');
+  const compact = text => text.replace(/\s+/g, '');
+  const rootText = compact(rootTextOverride ?? read(entry).toString('utf8'));
+  const binder = compact(binderSourceOverride ?? read('src/access/rust-kind-nullability-default.ts').toString('utf8'));
+  const factory = browser
+    ? 'constmodel=awaitinitializeCoreModelRootKindNullabilityWasm(CORE_MODEL_RESOURCES,async()=>wasmModule,globalThis);'
+    : 'constmodel=createCoreModelRootKindNullabilityEngine(CORE_MODEL_RESOURCES);';
+  return rootText.includes("import{bindCoreKindNullabilityRust}from'./access/rust-kind-nullability-default';")
+    && rootText.includes(factory)
+    && rootText.includes('constkindNullability=bindCoreKindNullabilityRust(model,isHostJsonResponseError);')
+    && rootText.includes(`const{${names}}=kindNullability;`)
+    && rootText.includes(`export{${names},`)
+    && rootText.includes('constcoreKeyTuple=bindCoreKeyTupleDefault(model,isNativeUmfCoreError);')
+    && rootText.includes('const{readCoreKeyTupleBytes,prepareCoreKeyTuples}=coreKeyTuple;')
+    && binder.includes('exportfunctionbindCoreKindNullabilityRust(')
+    && binder.includes("importtype{CoreKindDeclaration,CoreKindIdentity,CoreKindInspection}from'../model/field-kind';")
+    && binder.includes("importtype{CoreNullabilityDeclaration,CoreNullabilityIdentity,CoreNullabilityInspection}from'../model/nullability';")
+    && binder.includes("import{UmfError}from'../model/errors';")
+    && [...coreKindNullabilityExportNames].every(name => binder.includes(`engine.${name}(`))
+    && !/\breference\b|\bfallback\b/i.test(binder)
+    && !/\breference\b|\bfallback\b/i.test(binder)
+    && binder.includes('isHostJsonResponseError(error)')
+    && binder.includes("value.code!=='RESOURCE_LIMIT'")
+    && binder.includes("thrownewUmfError(value.code,String(value.message??''),typeofvalue.path==='string'?value.path:'')");
+}
+
 function exactV4BindingSelection({ routeId, exportName, source, declaration, names, rootText, factoryLine, bindingLine, exportLine }) {
   const browser = routeId === 'package-root-browser';
   const defaultEntry = browser ? 'src/index-browser-v4.ts' : 'src/index-node-v4.ts';
@@ -1909,6 +2070,24 @@ export function isExactArrowSchemaV4RootSelection({
 }
 
 export function operationMapping(row) {
+  if (parquetAcceptedExports.has(row.exportName)) {
+    if (row.routeId === 'package-reference') return null;
+    if (['package-root-node', 'package-root-browser'].includes(row.routeId)) {
+      const mapping = parquetAcceptedExports.get(row.exportName);
+      if (row.source !== mapping.source
+          || row.declarationName !== row.exportName
+          || row.declarationKind !== 'FunctionDeclaration') return null;
+      return accepted.get(`${row.source}#${row.exportName}`) ?? null;
+    }
+  }
+  if (coreKindNullabilityExportNames.has(row.exportName)
+      && ['package-root-node', 'package-root-browser'].includes(row.routeId)) {
+    if (!isExactCoreKindNullabilityV4RootSelection({
+      routeId: row.routeId, exportName: row.exportName, source: row.source, declaration: row,
+    })) return null;
+    const referenceSource = coreKindNullabilityOperations.get(row.exportName).referenceSource;
+    return accepted.get(`${referenceSource}#${row.exportName}`) ?? null;
+  }
   if (arrowIpcExports.has(row.exportName)
       && ['package-root-node', 'package-root-browser'].includes(row.routeId)) {
     if (!isExactArrowIpcV4RootSelection({
@@ -3084,6 +3263,8 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
     const selectedBySource = sourceSelection !== null;
     const selectedCardinality = mapping && ['package-root-node', 'package-root-browser'].includes(row.routeId)
       && ['inspectCoreCardinality', 'declareCoreCardinality', 'verifyCoreCardinalityDeclaration'].includes(row.exportName);
+    const selectedCoreKindNullability = mapping && ['package-root-node', 'package-root-browser'].includes(row.routeId)
+      && coreKindNullabilityExportNames.has(row.exportName) && selectedBySource;
     const selectedSchemaProperties = mapping && ['package-root-node', 'package-root-browser'].includes(row.routeId)
       && ['declareCoreSchemaProperties', 'inspectCoreSchemaProperties', 'validateCoreFieldValue', 'resolveCoreDefault'].includes(row.exportName);
     const selectedBit128 = mapping && ['package-root-node', 'package-root-browser'].includes(row.routeId)
@@ -3112,6 +3293,7 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
           ? 'Rust V4 implementation selected by source route; installed qualification pending'
           : ['declareCoreRecordType', 'verifyCoreRecordTypeDeclaration'].includes(row.exportName) ? 'Rust Core Record Type v6 operation selected by V4 source route; separate private installed Node/Bun/Chromium archive receipt passed; broader parity and retirement open'
           : selectedCardinality ? 'Rust cardinality operation selected by source route; installed qualification pending'
+          : selectedCoreKindNullability ? 'Candidate Rust Core Kind/Nullability operation selected by exact V4 source route; installed qualification pending'
           : selectedSchemaProperties ? 'Rust Schema Properties operation selected by source route; separate same-archive private receipt passed; aggregate route gate pending'
           : ['inspectCoreFacets', 'declareCoreFacets', 'verifyCoreFacetDeclaration', 'historicalCoreFacetPatch'].includes(row.exportName) ? 'Rust facets operation selected by source route; installed qualification pending'
           : row.exportName === 'validateCoreDatasetValuesCompact' ? 'Rust compact Dataset validation selected by source route; installed qualification pending'
@@ -3141,6 +3323,7 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
           ? 'Rust V4 implementation selected by source route; installed qualification pending'
           : ['declareCoreRecordType', 'verifyCoreRecordTypeDeclaration'].includes(row.exportName) ? 'Rust Core Record Type v6 operation selected by V4 source route; separate private installed Node/Bun/Chromium archive receipt passed; broader parity and retirement open'
           : selectedCardinality ? 'Rust cardinality operation selected by source route; installed qualification pending'
+          : selectedCoreKindNullability ? 'Candidate Rust Core Kind/Nullability operation selected by exact V4 source route; installed qualification pending'
           : selectedSchemaProperties ? 'Rust Schema Properties operation selected by source route; separate same-archive private receipt passed; aggregate route gate pending'
           : ['inspectCoreFacets', 'declareCoreFacets', 'verifyCoreFacetDeclaration', 'historicalCoreFacetPatch'].includes(row.exportName) ? 'Rust facets operation selected by source route; installed qualification pending'
           : row.exportName === 'validateCoreDatasetValuesCompact' ? 'Rust compact Dataset validation selected by source route; installed qualification pending'
@@ -3187,6 +3370,8 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
             ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust Core Record Type v6 operation selected by V4 source route; separate same-archive Node/Bun/Chromium private receipt passed; aggregate gate excludes this family and retirement remains open`
           : selectedCardinality
             ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust cardinality operation selected by source route; installed qualification pending; retirement gap remains open`
+          : selectedCoreKindNullability
+            ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} candidate Rust Core Kind/Nullability operation selected by exact V4 source route; installed qualification pending; retirement gap remains open`
           : selectedSchemaProperties
             ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust Schema Properties operation selected by source route; separate same-archive Node/Bun/Chromium private receipt passed, while the aggregate five-family route gate excludes this family; retirement gap remains open`
           : ['inspectCoreFacets', 'declareCoreFacets', 'verifyCoreFacetDeclaration', 'historicalCoreFacetPatch'].includes(row.exportName) && ['package-root-node', 'package-root-browser'].includes(row.routeId)
@@ -3427,6 +3612,18 @@ function logicalDeclarationSignature(row) {
         : row.routeId === 'package-reference'
           ? row.source === 'src/model/key-tuple.ts' && row.declarationKind === 'FunctionDeclaration' && row.initializerShape === 'not-applicable'
           : false);
+  // Only the six exact Rust-bound Kind/Nullability V4 bindings normalize
+  // against their TypeScript reference declarations. Other same-family names
+  // and any changed source or syntax shape remain multiplicity-sensitive.
+  const coreKindNullabilityConditionShape = coreKindNullabilityExportNames.has(row.exportName)
+    && row.declarationName === row.exportName
+    && (row.routeId === 'package-root-node'
+      ? row.source === 'src/index-node-v4.ts' && row.declarationKind === 'BindingElement' && row.initializerShape === 'not-applicable'
+      : row.routeId === 'package-root-browser'
+        ? row.source === 'src/index-browser-v4.ts' && row.declarationKind === 'BindingElement' && row.initializerShape === 'not-applicable'
+        : row.routeId === 'package-reference'
+          ? row.source === coreKindNullabilityOperations.get(row.exportName)?.referenceSource && row.declarationKind === 'FunctionDeclaration' && row.initializerShape === 'not-applicable'
+          : false);
   const secProjectionConditionShape = ['projectSecSubmissions', 'projectSecCompanyFacts'].includes(row.exportName)
     && row.declarationName === row.exportName
     && (row.routeId === 'package-root-node'
@@ -3436,7 +3633,7 @@ function logicalDeclarationSignature(row) {
         : row.routeId === 'package-reference'
           ? row.source === 'src/domain-packs/public-company.ts' && row.declarationKind === 'FunctionDeclaration' && row.initializerShape === 'not-applicable'
           : false);
-  const kind = (conditionBoundExport || numericConditionShape || securityNotConditionShape || securityAndOrConditionShape || rawTableBindingConditionShape || relationshipConsumerConditionShape || newDefaultConditionShape || domainPackLoaderInspectionConditionShape || domainPackProfileInspectionConditionShape || keyTupleDefaultConditionShape || secProjectionConditionShape)
+  const kind = (conditionBoundExport || numericConditionShape || securityNotConditionShape || securityAndOrConditionShape || rawTableBindingConditionShape || relationshipConsumerConditionShape || newDefaultConditionShape || domainPackLoaderInspectionConditionShape || domainPackProfileInspectionConditionShape || keyTupleDefaultConditionShape || secProjectionConditionShape || coreKindNullabilityConditionShape)
     && ['package-root-node', 'package-root-browser', 'package-reference'].includes(row.routeId)
     ? 'condition-selected-root-binding'
     : row.declarationKind;
@@ -3531,6 +3728,18 @@ export function buildLedger({ inventory, packageJson, packageBytes = Buffer.from
     if (!logicalRows.has(key)) logicalRows.set(key, row);
   }
   const logical = [...logicalRows.values()];
+  // A logical declaration can have multiple condition rows. Reference rows
+  // deliberately have no Rust acceptance and may sort before the package
+  // routes, so derive logical acceptance from every non-reference route row
+  // instead of whichever row happened to be inserted first.
+  const executableLogicalKeys = new Set(logical
+    .filter(row => row.rowKind === 'executable')
+    .map(row => `${row.logicalDeclarationKey}\0${row.rowKind}`));
+  const mappedExecutableLogicalKeys = new Set(rows
+    .filter(row => row.rowKind === 'executable' && row.routeId !== 'package-reference' && row.acceptedRustOperation)
+    .map(row => `${row.logicalDeclarationKey}\0${row.rowKind}`));
+  const executableWithAcceptedOptInRustOperation = [...executableLogicalKeys]
+    .filter(key => mappedExecutableLogicalKeys.has(key)).length;
   const retirementSummary = summarizeDefaultRouteRetirement(rows);
   const routeCounts = Object.fromEntries(['package-root-node', 'package-root-browser', 'package-reference'].map(routeId => {
     const routeRows = rows.filter(row => row.routeId === routeId);
@@ -3573,8 +3782,8 @@ export function buildLedger({ inventory, packageJson, packageBytes = Buffer.from
     routeInertJsonScalarRows: rows.filter(row => row.rowKind === 'inert-json-scalar').length,
     immutableGeneratedDataRows: logical.filter(row => row.rowKind === 'immutable-generated-data').length,
     routeImmutableGeneratedDataRows: rows.filter(row => row.rowKind === 'immutable-generated-data').length,
-    executableWithAcceptedOptInRustOperation: logical.filter(row => row.rowKind === 'executable' && row.acceptedRustOperation).length,
-    executableWithoutAcceptedRustMapping: logical.filter(row => row.rowKind === 'executable' && !row.acceptedRustOperation).length,
+    executableWithAcceptedOptInRustOperation,
+    executableWithoutAcceptedRustMapping: executableLogicalKeys.size - executableWithAcceptedOptInRustOperation,
     executableDefaultRouteGaps: retirementSummary.logicalGaps,
     executableDefaultRouteGapDefinition: 'Unique logical executable export names for which at least one default Node/browser route remains open. A logical name is retired only when both default-root rows have an explicit retired disposition with evidence. ./reference is reported separately and may remain TypeScript.',
     executableDefaultRouteRetirementsByRoute: Object.fromEntries(['package-root-node', 'package-root-browser'].map(routeId => [routeId, routeCounts[routeId].retiredExecutableDeclarations])),

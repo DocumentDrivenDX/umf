@@ -1059,6 +1059,49 @@ mod compact_work_ledger_tests {
             .collect()
     }
 
+    fn current_work_oracle_case(name: &str, predecessor_text: &str) -> Value {
+        use sha2::{Digest, Sha256};
+        let digest = |text: &str| {
+            Sha256::digest(text.as_bytes())
+                .iter()
+                .map(|byte| format!("{byte:02x}"))
+                .collect::<String>()
+        };
+        let oracle = read_fixture(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact-default-cutover/current-work-oracle.json"));
+        assert_eq!(
+            string(get(&oracle, "format").unwrap()),
+            "umf.r8.compact-current-work-oracle/1"
+        );
+        let inputs = get(&oracle, "inputs").unwrap();
+        for (path, text) in [
+            (
+                "spec/metamodel/umf.yaml",
+                include_str!("../../../spec/metamodel/umf.yaml"),
+            ),
+            (
+                "spec/metamodel/generated/core-constraints.json",
+                include_str!("../../../spec/metamodel/generated/core-constraints.json"),
+            ),
+            (
+                "spec/metamodel/generated/domain-policy.json",
+                include_str!("../../../spec/metamodel/generated/domain-policy.json"),
+            ),
+        ] {
+            assert_eq!(
+                string(get(inputs, path).unwrap()),
+                digest(text),
+                "current oracle policy input {path}"
+            );
+        }
+        let case = get(get(&oracle, "cases").unwrap(), name).unwrap();
+        assert_eq!(
+            string(get(case, "predecessorSha256").unwrap()),
+            digest(predecessor_text),
+            "immutable predecessor {name}"
+        );
+        case.clone()
+    }
+
     fn set_field(value: &mut Value, name: &str, replacement: Value) {
         let Value::Object(members) = value else {
             panic!("expected object while setting {name}");
@@ -1142,7 +1185,11 @@ mod compact_work_ledger_tests {
             let receipt = get(&frozen, "receipt").expect("frozen receipt");
             let current = get(&frozen, "current").expect("frozen current");
             let expected_input = get(&frozen, "expectedInput").expect("frozen expectedInput");
-            let expected_work = get(&frozen, "work").expect("frozen work snapshot");
+            let oracle = current_work_oracle_case(
+                if accepted { "near-limit-accepted" } else { "near-limit-first-refused" },
+                frozen_text,
+            );
+            let expected_work = get(&oracle, "work").expect("current TypeScript work snapshot");
             let expected_categories =
                 work_categories(get(expected_work, "categories").expect("frozen categories"));
             let mut context = Context::ordinary();
@@ -1162,7 +1209,7 @@ mod compact_work_ledger_tests {
             let category_diffs = expected_categories
                 .iter()
                 .chain(ledger.categories.iter())
-                .map(|(category, expected)| {
+                .map(|(category, _expected)| {
                     let rust = ledger.categories.get(category).copied().unwrap_or(0);
                     let ts = expected_categories.get(category).copied().unwrap_or(0);
                     (category.clone(), rust, ts)
@@ -1290,7 +1337,8 @@ mod compact_work_ledger_tests {
             "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-commerce.json"
         ));
         let source = get(&frozen, "source").unwrap();
-        let expected = get(get(&frozen, "contextWork").unwrap(), "categories").unwrap();
+        let oracle = current_work_oracle_case("commerce", include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-commerce.json"));
+        let expected = get(get(&oracle, "contextWork").unwrap(), "categories").unwrap();
         let engine = fixture_engine();
         let mut ordinary_context = Context::ordinary();
         let ordinary = engine
@@ -1508,7 +1556,9 @@ mod compact_work_ledger_tests {
         .unwrap();
         let source = get(&frozen, "source").unwrap();
         let input = get(&frozen, "input").unwrap();
-        let expected_context = get(&frozen, "contextWork").expect("frozen context-stage ledger");
+        let oracle = current_work_oracle_case("commerce", include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-commerce.json"));
+        let expected_context =
+            get(&oracle, "contextWork").expect("current TypeScript context-stage ledger");
         let categories = get(expected_context, "categories").unwrap();
         let mut ledger = CompactWorkLedger::default();
 

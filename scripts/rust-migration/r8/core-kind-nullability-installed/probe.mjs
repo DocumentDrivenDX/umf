@@ -1,0 +1,10 @@
+import * as root from '@umf/core';
+import * as reference from '@umf/core/reference';
+import {readFile} from 'node:fs/promises';
+import {createRequire} from 'node:module';
+import {runSuite} from './suite.mjs';
+import {assertRuntimeParity} from './support.mjs';
+const fixture=JSON.parse(await readFile(process.argv[2],'utf8'));
+const result=await runSuite(root,reference,fixture,(route,id)=>globalThis.__kindNullabilityProgress={route,id,time:Date.now()});
+const nativeAddons=Object.keys(createRequire(import.meta.url).cache).filter(path=>path.endsWith('.node'));
+console.log(JSON.stringify({result,nativeAddons,routes:{root:import.meta.resolve('@umf/core'),reference:import.meta.resolve('@umf/core/reference')},runtime:process.versions.bun?'Bun '+process.versions.bun:'Node '+process.version,platform:process.platform,arch:process.arch}));

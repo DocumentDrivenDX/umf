@@ -634,6 +634,28 @@ pub fn arrow_ipc_profile_version() -> &'static str {
     umf_core_wire::ARROW_IPC_PROFILE
 }
 
+#[napi(js_name = "executeParquetCaptureWire")]
+pub fn execute_parquet_capture_wire(
+    env: Env,
+    wire_json: String,
+    control_dispatcher: Option<JsFunction>,
+) -> NapiResult<String> {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = NodeControl { env, dispatcher };
+        let mut hook = |amount| control.check(amount);
+        Ok(umf_core_wire::execute_parquet_capture_wire_with_control(
+            &wire_json, &mut hook,
+        ))
+    } else {
+        Ok(umf_core_wire::execute_parquet_capture_wire(&wire_json))
+    }
+}
+
+#[napi(js_name = "parquetCaptureProfileVersion")]
+pub fn parquet_capture_profile_version() -> &'static str {
+    umf_core_wire::PARQUET_CAPTURE_PROFILE
+}
+
 #[napi(js_name = "executeProtobufInspectWire")]
 pub fn execute_protobuf_inspect_wire(
     env: Env,

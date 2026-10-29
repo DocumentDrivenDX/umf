@@ -357,16 +357,37 @@ export function verifyHostReceipt(root, pin, op, packet, cohort, members, routeM
   const seen = new Set();
   for (const result of receipt.cases) {
     requireExactKeys(result, packet.coreFacets
-      ? ['id', 'defaultOutcome', 'defaultTrace', 'defaultRustCalls', 'defaultRustOperations', 'referenceOutcome', 'referenceTrace', 'referenceRustCalls']
+      ? ['id', 'defaultOutcome', 'defaultTrace', 'defaultRustCalls', 'defaultRustOperations', 'defaultOwnShapeSha256', 'referenceOutcome', 'referenceTrace', 'referenceRustCalls', 'referenceOwnShapeSha256']
       : ['id', 'defaultOutcome', 'defaultTrace', 'defaultRustCalls', 'referenceOutcome', 'referenceTrace', 'referenceRustCalls'], `${op.exportName}/${pin.runtime} case result`);
     const expected = packet.cases.get(result.id);
     if (!expected || seen.has(result.id)) throw new Error(`${op.exportName}/${pin.runtime} has an unknown or duplicate packet case`);
     seen.add(result.id);
     if (canonical(result.defaultOutcome) !== canonical(expected.expectedOutcome) || canonical(result.defaultTrace) !== canonical(expected.expectedTrace)) throw new Error(`${op.exportName}/${pin.runtime}/${result.id} default outcome/trace differs from frozen packet`);
     if (canonical(result.referenceOutcome) !== canonical(expected.expectedOutcome) || canonical(result.referenceTrace) !== canonical(expected.expectedTrace)) throw new Error(`${op.exportName}/${pin.runtime}/${result.id} reference outcome/trace differs from frozen packet`);
+    if (packet.coreFacets && (!hashPattern.test(result.defaultOwnShapeSha256 ?? '') || !hashPattern.test(result.referenceOwnShapeSha256 ?? '') || result.defaultOwnShapeSha256 !== result.referenceOwnShapeSha256)) throw new Error(`${op.exportName}/${pin.runtime}/${result.id} own-shape witness is missing, malformed, or differs between routes`);
     if (packet.coreFacets && canonical(result.defaultRustOperations) !== canonical(expected.expectedDefaultRustOperations)) throw new Error(`${op.exportName}/${pin.runtime}/${result.id} default Rust operation order differs from frozen packet`);
     if (!Number.isSafeInteger(result.defaultRustCalls) || (packet.allRust || packet.securityNot || packet.coreFacets ? result.defaultRustCalls !== expected.expectedDefaultRustCalls : (expected.expectsRust ? result.defaultRustCalls < 1 : result.defaultRustCalls !== 0)) || result.referenceRustCalls !== 0) throw new Error(`${op.exportName}/${pin.runtime}/${result.id} invocation trace violates the frozen Rust-call expectation or reference zero-Rust control`);
   }
+}
+
+export function verifyCoreFacetRetirementReceiptAgainstRaw(retirement, raw, operation, packet) {
+  if (!retirement || typeof retirement !== 'object') throw new Error(`${operation} derived retirement receipt is not an object`);
+  if (!packet || !packet.cases || typeof packet.cases.values !== 'function') throw new Error(`${operation} frozen packet cases are invalid`);
+  const defaults = raw?.observation?.packetEvidence?.default?.[operation];
+  const references = raw?.observation?.packetEvidence?.reference?.[operation];
+  const packetCases = [...packet.cases.values()];
+  if (!Array.isArray(defaults) || !Array.isArray(references) || defaults.length !== packetCases.length || references.length !== packetCases.length || !Array.isArray(retirement.cases) || retirement.cases.length !== packetCases.length) throw new Error(`${operation} raw packet observations are incomplete`);
+  for (let caseIndex=0;caseIndex<packetCases.length;caseIndex++) {
+    const expectedCase=packetCases[caseIndex], rawDefault=defaults[caseIndex], rawReference=references[caseIndex], derived=retirement.cases[caseIndex];
+    if (rawDefault?.id!==expectedCase.id || rawReference?.id!==expectedCase.id || derived?.id!==expectedCase.id ||
+        canonical(derived.defaultOutcome)!==canonical(rawDefault.outcome) || canonical(derived.defaultTrace)!==canonical(rawDefault.trace) ||
+        derived.defaultOwnShapeSha256!==rawDefault.ownShapeSha256 || canonical(derived.defaultRustOperations)!==canonical(rawDefault.rustOperations) ||
+        canonical(derived.referenceOutcome)!==canonical(rawReference.outcome) || canonical(derived.referenceTrace)!==canonical(rawReference.trace) ||
+        derived.referenceOwnShapeSha256!==rawReference.ownShapeSha256 || canonical(derived.referenceRustCalls)!==canonical(rawReference.rustOperations?.length) || canonical(derived.defaultRustCalls)!==canonical(rawDefault.rustOperations?.length)) {
+      throw new Error(`${operation}/${expectedCase.id} retirement receipt differs from pinned raw packet observation`);
+    }
+  }
+  return true;
 }
 
 const coreFacetsOperations = ['inspectCoreFacets', 'declareCoreFacets', 'verifyCoreFacetDeclaration', 'historicalCoreFacetPatch'];
@@ -514,7 +535,9 @@ function validateCoreFacetsAcceptanceCohort(root, pin, manifest, cohort, packetB
       if (!indexed || !manifestPin || indexed.caseCount !== packet.cases.size) throw new Error(`${cohort.id} ${op.exportName}/${runtime} receipt map is incomplete`);
       const expectedPath = path.posix.join(path.posix.dirname(pin.cohort.path), indexed.path);
       if (manifestPin.path !== expectedPath || manifestPin.sha256 !== indexed.sha256) throw new Error(`${cohort.id} ${op.exportName}/${runtime} receipt does not match the manifest pin`);
-      readCohortFile(root,pin.cohort.path,indexed.path,indexed.sha256,`${cohort.id} ${op.exportName}/${runtime} retirement receipt`);
+      const retirement = readCohortFile(root,pin.cohort.path,indexed.path,indexed.sha256,`${cohort.id} ${op.exportName}/${runtime} retirement receipt`,true).json;
+      const raw = hostEntries.get(runtime)?.raw;
+      verifyCoreFacetRetirementReceiptAgainstRaw(retirement, raw, op.exportName, packet);
     }
   }
   return { path: pin.cohort.path, sha256: pin.cohort.sha256 };

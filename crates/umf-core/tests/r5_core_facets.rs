@@ -192,6 +192,40 @@ fn inspect_declare_verify_and_json_yaml_roundtrip_preserve_unknowns() {
 }
 
 #[test]
+fn inspect_unknown_group_partial_matches_full_frozen_typescript_case() {
+    let packet = parse(include_str!(
+        "../../../scripts/rust-migration/r8/facets-retirement-packets/inspectCoreFacets.packet.json"
+    ));
+    let case = get(&packet, "cases")
+        .and_then(|cases| match cases {
+            Value::Array(cases) => cases
+                .iter()
+                .find(|case| get(case, "id") == Some(&Value::string_utf8("unknownGroupPartial"))),
+            _ => None,
+        })
+        .expect("frozen unknownGroupPartial case");
+    let args = get(get(case, "input").unwrap(), "args").unwrap();
+    let args = match args {
+        Value::Array(args) => args,
+        _ => panic!("packet args must be an array"),
+    };
+    let expected = get(get(case, "expectedOutcome").unwrap(), "value").unwrap();
+    let actual = inspect_core_facets(
+        &args[0],
+        &args[1],
+        &engine(),
+        &Registry::new(),
+        &mut NoCapabilities,
+        &mut Context::ordinary(),
+    )
+    .unwrap();
+    assert_eq!(
+        &actual, expected,
+        "full Rust outcome and ordered warning paths must match TypeScript"
+    );
+}
+
+#[test]
 fn direct_verify_reuses_receipt_admission_with_a_large_retained_value() {
     let e = engine();
     let mut caps = NoCapabilities;

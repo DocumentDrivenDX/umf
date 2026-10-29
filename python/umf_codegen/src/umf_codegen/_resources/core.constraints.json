@@ -45,8 +45,16 @@
                 "node": {
                   "var": "we"
                 },
-                "module": {
-                  "var": "wm"
+                "moduleId": {
+                  "op": "get",
+                  "args": [
+                    {
+                      "var": "wm"
+                    },
+                    [
+                      "id"
+                    ]
+                  ]
                 },
                 "path": {
                   "op": "concat",
@@ -88,8 +96,7 @@
                   "var": "wi"
                 },
                 [
-                  "module",
-                  "id"
+                  "moduleId"
                 ]
               ]
             },
@@ -6121,7 +6128,7 @@
     }
   ],
   "provenance": {
-    "modelSha256": "35b72a7f6aa86c98398192e5b67d5841d77127743c671c742dd871a7baee58ca",
-    "compilerSha256": "bb7bef40a96d1ed7ab04c42d8f08c8a68fe2c2774ff04845ca83448afb4037e5"
+    "modelSha256": "fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f",
+    "compilerSha256": "2d2256622d56094e04a0aeddf27234d85c0b3e8ddb08803768251e3af3f89cd7"
   }
 }

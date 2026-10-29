@@ -231,9 +231,14 @@ fn scrub_unknown_facets(
     source: &mut Value,
     ctx: &mut Context<'_>,
 ) -> Result<Vec<Utf16>, EngineError> {
-    let mut warnings = Vec::new();
+    // The metamodel has two authored passes: unknown groups and
+    // integer-width qualifiers are emitted while walking each element;
+    // length/collection/range qualifiers and units are emitted later in fixed
+    // group order. Preserve that phase and per-element ordering.
+    let mut first_phase_warnings = Vec::new();
+    let mut bounds_warnings = Vec::new();
     let Some(Value::Array(modules)) = get_mut(source, "modules") else {
-        return Ok(warnings);
+        return Ok(Vec::new());
     };
     for (mi, module) in modules.iter_mut().enumerate() {
         ctx.charge_work(1, k("/modules"))?;
@@ -241,6 +246,11 @@ fn scrub_unknown_facets(
             continue;
         };
         for (ei, element) in elements.iter_mut().enumerate() {
+            let mut element_groups = Vec::new();
+            let mut element_width_qualifiers = Vec::new();
+            let mut element_length_warnings = Vec::new();
+            let mut element_collection_warnings = Vec::new();
+            let mut element_range_warnings = Vec::new();
             ctx.charge_work(1, k("/elements"))?;
             let length_unit_fallback =
                 if string(get(element, "scalarType")).as_deref() == Some("binary") {
@@ -270,16 +280,13 @@ fn scrub_unknown_facets(
                     kept.push((name, value));
                     continue;
                 } else {
-                    reserve_input(&mut warnings, 1, ctx, base.clone(), "Facet warning")?;
-                    warnings.push(path);
+                    reserve_input(&mut element_groups, 1, ctx, base.clone(), "Facet warning")?;
+                    element_groups.push(path);
                     continue;
                 };
-                if name == k("length")
-                    && matches!(get(&value,"unit"),Some(Value::String(u)) if ![k("unicode-scalar"),k("byte")].contains(u))
-                {
-                    let warning = pointer_segment(&path, &k("unit"), ctx)?;
-                    reserve_input(&mut warnings, 1, ctx, path.clone(), "Facet warning")?;
-                    warnings.push(warning);
+                let unknown_length_unit = name == k("length")
+                    && matches!(get(&value,"unit"),Some(Value::String(u)) if ![k("unicode-scalar"),k("byte")].contains(u));
+                if unknown_length_unit {
                     if let Value::Object(length) = &mut value {
                         if let Some((_, old)) = length.iter_mut().find(|(key, _)| key == &k("unit"))
                         {
@@ -302,7 +309,16 @@ fn scrub_unknown_facets(
                         let keep = allowed.iter().any(|known| qualifier == k(known));
                         if !keep {
                             let warning = pointer_segment(&path, &qualifier, ctx)?;
-                            reserve_input(&mut warnings, 1, ctx, path.clone(), "Facet warning")?;
+                            let warnings = if name == k("integerWidth") {
+                                &mut element_width_qualifiers
+                            } else if name == k("length") {
+                                &mut element_length_warnings
+                            } else if name == k("collectionSize") {
+                                &mut element_collection_warnings
+                            } else {
+                                &mut element_range_warnings
+                            };
+                            reserve_input(warnings, 1, ctx, path.clone(), "Facet warning")?;
                             warnings.push(warning);
                         }
                         if keep {
@@ -311,11 +327,53 @@ fn scrub_unknown_facets(
                     }
                     *nested = retained;
                 }
+                if unknown_length_unit {
+                    let warning = pointer_segment(&path, &k("unit"), ctx)?;
+                    reserve_input(
+                        &mut element_length_warnings,
+                        1,
+                        ctx,
+                        path.clone(),
+                        "Facet warning",
+                    )?;
+                    element_length_warnings.push(warning);
+                }
                 kept.push((name, value));
             }
             *facets = kept;
+            reserve_input(
+                &mut first_phase_warnings,
+                element_groups.len() + element_width_qualifiers.len(),
+                ctx,
+                base,
+                "Facet warning",
+            )?;
+            first_phase_warnings.extend(element_groups);
+            first_phase_warnings.extend(element_width_qualifiers);
+            let bounds_count = element_length_warnings.len()
+                + element_collection_warnings.len()
+                + element_range_warnings.len();
+            reserve_input(
+                &mut bounds_warnings,
+                bounds_count,
+                ctx,
+                Utf16::default(),
+                "Facet warning",
+            )?;
+            bounds_warnings.extend(element_length_warnings);
+            bounds_warnings.extend(element_collection_warnings);
+            bounds_warnings.extend(element_range_warnings);
         }
     }
+    let mut warnings = first_phase_warnings;
+    reserve_input(
+        &mut warnings,
+        bounds_warnings.len(),
+        ctx,
+        Utf16::default(),
+        "Facet warning",
+    )?;
+    warnings.extend(bounds_warnings);
     Ok(warnings)
 }
 fn locate(
@@ -615,7 +673,7 @@ fn facet_meaning(
         if let Some(unit) = string(get(length, "unit")) {
             if ["unicode-scalar", "byte"].contains(&unit.as_str()) {
                 let mut bounds = vec![];
-                for name in ["min", "max"] {
+                for name in ["max", "min"] {
                     if let Some(v) = get(length, name) {
                         bounds.push((k(name), copy(v, ctx)?))
                     }
@@ -654,7 +712,6 @@ fn facet_meaning(
             interpreted.push((k(group), Value::Object(selected)))
         }
     }
-    interpreted.sort_by(|a, b| a.0.cmp(&b.0));
     let prefix = Utf16::from(format!("{path}/"));
     let mut uninterpreted = Vec::new();
     reserve_input(
@@ -1066,7 +1123,7 @@ pub fn historical_core_facet_patch(
 
 #[cfg(test)]
 mod resource_tests {
-    use super::reserve_input;
+    use super::{facet_meaning, reserve_input, scrub_unknown_facets};
     use crate::{
         context::{Context, Limits, ResourceProfile},
         error::EngineError,
@@ -1116,5 +1173,143 @@ mod resource_tests {
         assert_eq!(error.code, "RESOURCE_LIMIT");
         assert!(values.is_empty());
         assert_eq!(ctx.charged_work(), 1);
+    }
+
+    #[test]
+    fn unknown_facet_warning_order_follows_metamodel_phases() {
+        let element = |facets| super::obj(vec![("facets", super::obj(facets))]);
+        let mut source = super::obj(vec![(
+            "modules",
+            super::Value::Array(vec![super::obj(vec![(
+                "elements",
+                super::Value::Array(vec![
+                    element(vec![
+                        (
+                            "integerWidth",
+                            super::obj(vec![("comparison", super::t("opaque"))]),
+                        ),
+                        ("futureA", super::obj(vec![])),
+                        (
+                            "length",
+                            super::obj(vec![
+                                ("futureLength", super::t("x")),
+                                ("unit", super::t("futureUnit")),
+                            ]),
+                        ),
+                        (
+                            "collectionSize",
+                            super::obj(vec![("futureCollection", super::t("x"))]),
+                        ),
+                        ("range", super::obj(vec![("futureRange", super::t("x"))])),
+                    ]),
+                    element(vec![
+                        ("range", super::obj(vec![("futureRange", super::t("x"))])),
+                        ("futureB", super::obj(vec![])),
+                        (
+                            "length",
+                            super::obj(vec![
+                                ("unit", super::t("otherUnit")),
+                                ("futureLength", super::t("x")),
+                            ]),
+                        ),
+                        (
+                            "integerWidth",
+                            super::obj(vec![("comparison", super::t("opaque"))]),
+                        ),
+                        (
+                            "collectionSize",
+                            super::obj(vec![("futureCollection", super::t("x"))]),
+                        ),
+                    ]),
+                ]),
+            )])]),
+        )]);
+        let mut ctx = Context::ordinary();
+        let warnings = scrub_unknown_facets(&mut source, &mut ctx).unwrap();
+        assert_eq!(
+            warnings,
+            vec![
+                Utf16::from("/modules/0/elements/0/facets/futureA"),
+                Utf16::from("/modules/0/elements/0/facets/integerWidth/comparison"),
+                Utf16::from("/modules/0/elements/1/facets/futureB"),
+                Utf16::from("/modules/0/elements/1/facets/integerWidth/comparison"),
+                Utf16::from("/modules/0/elements/0/facets/length/futureLength"),
+                Utf16::from("/modules/0/elements/0/facets/length/unit"),
+                Utf16::from("/modules/0/elements/0/facets/collectionSize/futureCollection"),
+                Utf16::from("/modules/0/elements/0/facets/range/futureRange"),
+                Utf16::from("/modules/0/elements/1/facets/length/futureLength"),
+                Utf16::from("/modules/0/elements/1/facets/length/unit"),
+                Utf16::from("/modules/0/elements/1/facets/collectionSize/futureCollection"),
+                Utf16::from("/modules/0/elements/1/facets/range/futureRange"),
+            ]
+        );
+    }
+
+    #[test]
+    fn interpreted_facet_own_key_order_matches_typescript_predecessor() {
+        let facets = super::obj(vec![
+            (
+                "length",
+                super::obj(vec![
+                    ("max", super::Value::Number(9.0)),
+                    ("min", super::Value::Number(2.0)),
+                    ("unit", super::t("byte")),
+                ]),
+            ),
+            (
+                "integerWidth",
+                super::obj(vec![
+                    ("bits", super::Value::Number(16.0)),
+                    ("signed", super::Value::Bool(true)),
+                ]),
+            ),
+            ("precision", super::Value::Number(10.0)),
+            ("scale", super::Value::Number(2.0)),
+            (
+                "collectionSize",
+                super::obj(vec![
+                    ("max", super::Value::Number(8.0)),
+                    ("min", super::Value::Number(1.0)),
+                ]),
+            ),
+            (
+                "range",
+                super::obj(vec![
+                    ("max", super::Value::Number(8.0)),
+                    ("min", super::Value::Number(1.0)),
+                ]),
+            ),
+        ]);
+        let element = super::obj(vec![("facets", facets)]);
+        let mut ctx = Context::ordinary();
+        let meaning = facet_meaning(&element, "/modules/0/elements/0", &[], &mut ctx).unwrap();
+        let interpreted = super::get(&meaning, "interpreted").unwrap();
+        let keys = match interpreted {
+            super::Value::Object(members) => members
+                .iter()
+                .map(|(key, _)| key.to_utf8().unwrap())
+                .collect::<Vec<_>>(),
+            _ => panic!("interpreted facets must remain an object"),
+        };
+        assert_eq!(
+            keys,
+            [
+                "length",
+                "integerWidth",
+                "precision",
+                "scale",
+                "collectionSize",
+                "range"
+            ]
+        );
+        let length = super::get(interpreted, "length").unwrap();
+        let length_keys = match length {
+            super::Value::Object(members) => members
+                .iter()
+                .map(|(key, _)| key.to_utf8().unwrap())
+                .collect::<Vec<_>>(),
+            _ => panic!("length bounds must remain an object"),
+        };
+        assert_eq!(length_keys, ["max", "min", "unit"]);
     }
 }

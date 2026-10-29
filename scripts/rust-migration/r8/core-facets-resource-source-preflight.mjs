@@ -23,4 +23,5 @@ const canonical=value=>JSON.stringify(value,(key,item)=>item&&typeof item==='obj
 const run=new Function(resourceSuiteSource+'\nreturn runCoreFacetResourceSuite')();
 const cases=await run(api,api,operations,cap,normalized,assert,canonical);
 assert.deepEqual(cases.map(item=>item.id),coreFacetResourceCaseIds,'resource suite inventory');
-console.log(JSON.stringify({status:'pass',predecessor:'TypeScript source',caseCount:cases.length,cases:cases.map(({id,referenceOutcome,referenceMetrics,referenceIntegrity,referenceValueFingerprint})=>({id,referenceOutcome,referenceMetrics,referenceIntegrity,referenceValueFingerprint}))}));
+for(const item of cases){assert.match(item.referenceOwnShapeSha256,/^[a-f0-9]{64}$/,item.id+' TypeScript own-shape witness');assert.equal(item.defaultOwnShapeSha256,item.referenceOwnShapeSha256,item.id+' source-route own-shape parity')}
+console.log(JSON.stringify({status:'pass',predecessor:'TypeScript source',caseCount:cases.length,cases:cases.map(({id,referenceOutcome,referenceMetrics,referenceIntegrity,referenceValueFingerprint,defaultOwnShapeSha256,referenceOwnShapeSha256})=>({id,referenceOutcome,referenceMetrics,referenceIntegrity,referenceValueFingerprint,defaultOwnShapeSha256,referenceOwnShapeSha256}))}));

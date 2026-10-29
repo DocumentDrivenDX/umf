@@ -23,6 +23,7 @@ import {createDocumentComparisonOperations, DOCUMENT_COMPARISON_PROFILE} from '.
 import {declareCoreSchemaPropertiesHostInput, schemaPropertiesHostInput, cardinalityHostInput, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse} from './src/host-json.js';
 import {createSemanticTypeRegistry as createSemanticTypeRegistryEngine} from './src/semantic-value.js';
 import {createArrowIpcOperations, ARROW_IPC_PROFILE} from './src/arrow-ipc.js';
+import {createParquetCaptureOperations, PARQUET_CAPTURE_PROFILE} from './src/parquet-capture.js';
 import {createAccessRrfOperations, ACCESS_RRF_PROFILE} from './src/access-rrf.js';
 import {createAccessTemporalOperations, ACCESS_TEMPORAL_PROFILE} from './src/access-temporal.js';
 import {requireSchemaGraphProviders} from './src/schema-graph.js';
@@ -173,6 +174,7 @@ export const RFC3339_EXACT_INSTANT_MAXIMUM_BYTES = 1_048_576;
 export const ICEBERG_SCHEMA_PROFILE = 'umf-r5-iceberg-schema/0.1.0';
 export const ARROW_SCHEMA_PROFILE = 'umf-r8-arrow-schema/0.1.0';
 export {ARROW_IPC_PROFILE};
+export {PARQUET_CAPTURE_PROFILE};
 export {ACCESS_RRF_PROFILE};
 export {ACCESS_TEMPORAL_PROFILE};
 export const PROTOBUF_INSPECT_PROFILE = 'umf-r5-protobuf-inspect/0.1.0';
@@ -759,7 +761,7 @@ export function createCoreModelRootKeyTupleEngine(resources, options = {}) {
 /** Private opt-in retained model and Kind/Nullability dispatcher. */
 export function createCoreModelRootKindNullabilityEngine(resources, options = {}) {
   const staged = createCoreKindNullabilityHostInputEngine(resources, options);
-  const model = createEngineInternal(resources, options, true, true, false, false, false, false, staged[CORE_KIND_NULLABILITY_RUNTIME], staged[CORE_KIND_NULLABILITY_PREPARED], staged[CORE_KIND_NULLABILITY_RUNTIME]);
+  const {encodeCoreKeyTuple, verifyCoreKeyTuple, ...model} = createEngineInternal(resources, options, true, true, true, false, false, false, staged[CORE_KIND_NULLABILITY_RUNTIME], staged[CORE_KIND_NULLABILITY_PREPARED], staged[CORE_KIND_NULLABILITY_RUNTIME]);
   const api = {...model};
   for (const name of ['inspectCoreElementKind','declareCoreElementKind','verifyCoreKindDeclaration','inspectCoreNullability','declareCoreNullability','verifyCoreNullabilityDeclaration']) api[name] = staged[name];
   return Object.freeze(api);
@@ -1020,6 +1022,25 @@ export function createArrowIpcEngine(options = {}) {
     const hostWork = admissionWork(controlBridge);
     hostWork?.(1);
     const responseText = addon.executeArrowIpcWire(encodeRequestWire({op: `arrow.ipc.${operation}`, ...fields}, hostWork), controlBridge);
+    hostWork?.(responseText.length);
+    const envelope = JSON.parse(responseText);
+    const failure = resultError(envelope);
+    if (failure) throw nativeCoreError(failure);
+    hostWork?.(envelope.wire.length);
+    return fromWire(JSON.parse(envelope.wire), hostWork);
+  });
+}
+
+/** Create the opt-in bounded Parquet capture/footer inspection engine. */
+export function createParquetCaptureEngine(options = {}) {
+  if (typeof addon.executeParquetCaptureWire !== 'function' || typeof addon.parquetCaptureProfileVersion !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
+  if (addon.parquetCaptureProfileVersion() !== PARQUET_CAPTURE_PROFILE) throw new Error('RUST_NODE_BINDING_PROFILE_MISMATCH');
+  const {controls} = codegenOptions(options);
+  return createParquetCaptureOperations((operation, fields) => {
+    const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+    const hostWork = admissionWork(controlBridge);
+    hostWork?.(1);
+    const responseText = addon.executeParquetCaptureWire(encodeRequestWire({op: `parquet.${operation}`, ...fields}, hostWork), controlBridge);
     hostWork?.(responseText.length);
     const envelope = JSON.parse(responseText);
     const failure = resultError(envelope);

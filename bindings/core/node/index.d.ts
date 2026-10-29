@@ -345,7 +345,7 @@ export declare function createCoreRecordMembersEngine(resources: UmfCoreResource
 export declare function createCoreModelRootEngine(resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): UmfCoreEngine & UmfCoreRootModelEngine;
 export declare function createCoreModelRootKeyTupleEngine(resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): UmfCoreRootModelEngine & Pick<UmfCoreModelEngine, 'readCoreKeyTupleBytes' | 'prepareCoreKeyTuples'>;
 /** Private opt-in shared retained Engine for model and Kind/Nullability operations. */
-export declare function createCoreModelRootKindNullabilityEngine(resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): UmfCoreEngine & UmfCoreRootModelEngine & {
+export declare function createCoreModelRootKindNullabilityEngine(resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): UmfCoreEngine & UmfCoreRootModelEngine & Pick<UmfCoreModelEngine, 'readCoreKeyTupleBytes' | 'prepareCoreKeyTuples'> & {
   inspectCoreElementKind(source: unknown, identity: unknown): unknown;
   declareCoreElementKind(source: unknown, identity: unknown, kind: unknown): unknown;
   verifyCoreKindDeclaration(receipt: unknown, current: unknown): unknown;
@@ -379,6 +379,7 @@ export declare function createCoreKindNullabilityHostInputEngine(resources: UmfC
 export declare const ICEBERG_SCHEMA_PROFILE: 'umf-r5-iceberg-schema/0.1.0';
 export declare const ARROW_SCHEMA_PROFILE: 'umf-r8-arrow-schema/0.1.0';
 export declare const ARROW_IPC_PROFILE: 'umf-r8-arrow-ipc/0.1.0';
+export declare const PARQUET_CAPTURE_PROFILE: 'umf-r8-parquet-capture-inspection/0.1.0';
 export declare const PROTOBUF_INSPECT_PROFILE: 'umf-r5-protobuf-inspect/0.1.0';
 export declare const PROTOBUF_DOCUMENT_PROFILE: 'umf-r8-protobuf-descriptor-document/0.1.0';
 export declare const AVRO_FIELDS_PROFILE: 'umf-r5-avro-fields/0.1.0';
@@ -508,6 +509,20 @@ export interface ArrowIpcEngine {
   /** Validate capture representation and report incomplete interpretation. */
   inspectArrowIpcCapture(document: unknown): unknown;
 }
+export interface ParquetCaptureEngine {
+  readonly profile: typeof PARQUET_CAPTURE_PROFILE;
+  readonly capabilities: Readonly<{profile: typeof PARQUET_CAPTURE_PROFILE; maxBytes: 1_000_000; exactSource: true; complete: false}>;
+  captureParquet(bytes: Uint8Array, options: {id: string}): unknown;
+  importParquetSchema(bytes: Uint8Array, options: {id: string}): unknown;
+  exportParquetCapture(document: unknown): Uint8Array;
+  inspectParquetFraming(document: unknown): unknown;
+  decodeParquetFooter(document: unknown): unknown;
+  inspectParquetMetadata(document: unknown): unknown;
+  inspectParquetSchema(document: unknown): unknown;
+  inspectParquetLogicalTypes(document: unknown): unknown;
+  inspectParquetContainers(document: unknown): unknown;
+  getParquetFieldMetadata(document: unknown): unknown;
+}
 export declare const ACCESS_RRF_PROFILE: 'umf-r8-access-rrf/0.1.0';
 export interface AccessRrfRequest { constant: string; topK: number; keyCount: number; /** Identity indexes ordered by ascending complete key for tie breaking. */ keyOrder: number[]; legs: number[][] }
 export interface AccessRrfResult { ordered: {identity: number; score: number}[] }
@@ -526,6 +541,8 @@ export interface AccessTemporalEngine { readonly profile: typeof ACCESS_TEMPORAL
 export declare function createAccessTemporalEngine(): AccessTemporalEngine;
 /** Create the opt-in exact-source Arrow IPC capture engine; no default route is changed. */
 export declare function createArrowIpcEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): ArrowIpcEngine;
+/** Create the opt-in bounded Parquet capture/inspection engine; no default route is changed. */
+export declare function createParquetCaptureEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): ParquetCaptureEngine;
 
 export interface JsonSchemaResource {uri: string; source: string}
 export type JsonSchemaNativeJson = {kind: 'null'} | {kind: 'boolean'; value: boolean} | {kind: 'string'; value: string} | {kind: 'number'; value: string} | {kind: 'array'; items: JsonSchemaNativeJson[]} | {kind: 'object'; members: Record<string, JsonSchemaNativeJson>};

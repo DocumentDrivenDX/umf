@@ -158,12 +158,15 @@ BOOTSTRAP=$(mktemp -d /tmp/umf-core-facets-npm-bootstrap.XXXXXX)
 trap 'rm -rf "$BOOTSTRAP"' EXIT
 npm install --ignore-scripts --no-audit --no-fund --prefix "$BOOTSTRAP" "$BUILD/$ARCHIVE"
 
-echo 'Running the Core Facets installed dependency gate; its consumer install is --offline.'
-bun scripts/rust-migration/r8/core-facets-dependency-installed.mjs \
-  "$BUILD/$ARCHIVE" "$SOURCE_CLOSURE_SHA" /out/core-facets-dependency-installed
+# Preserve built bytes before qualification: a failed gate must remain
+# diagnosable after the disposable container exits. These files alone do not
+# establish a passing qualification; the cohort receipt remains required.
 cp "$BUILD/$ARCHIVE" /out/umf-sdk-linux-x86_64.tgz
 cp "$BUILD/dist/rust-default-manifest.json" /out/rust-default-manifest.json
 chmod -R a+rX /out
+echo 'Running the Core Facets installed dependency gate; its consumer install is --offline.'
+bun scripts/rust-migration/r8/core-facets-dependency-installed.mjs \
+  "$BUILD/$ARCHIVE" "$SOURCE_CLOSURE_SHA" /out/core-facets-dependency-installed --kind-nullability-sidecar
 CONTAINER
 
 test -s "$OUT/umf-sdk-linux-x86_64.tgz"

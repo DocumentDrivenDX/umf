@@ -42,6 +42,40 @@ export function createCoreFacetBrowserAssert(canonical = value => JSON.stringify
  assert.ok = (condition,message='browser assertion failed') => { if (!condition) throw new Error(message); };
  return assert;
 }
+
+export function coreFacetOutcomeShape(value) {
+ const active = new Set();
+ const walk = item => {
+  if (item === null) return ['null'];
+  const type = typeof item;
+  if (type === 'string' || type === 'boolean') return [type, item];
+  if (type === 'number') return ['number', Number.isNaN(item) ? 'NaN' : item === Infinity ? '+Infinity' : item === -Infinity ? '-Infinity' : Object.is(item, -0) ? '-0' : String(item)];
+  if (type !== 'object') throw new TypeError(`non-JSON outcome value: ${type}`);
+  if (active.has(item)) throw new TypeError('cyclic outcome is unsupported');
+  active.add(item);
+  try {
+   const proto = Object.getPrototypeOf(item), isArray = Array.isArray(item);
+   const kind = isArray ? (proto === Array.prototype ? 'array' : 'custom-array') : proto === null ? 'null-object' : proto === Object.prototype ? 'object' : 'custom-object';
+   if (kind === 'custom-object') throw new TypeError('custom outcome prototype is unsupported');
+   if (kind === 'custom-array') throw new TypeError('custom array prototype is unsupported');
+   const keys = Reflect.ownKeys(item);
+   if (keys.some(key => typeof key !== 'string')) throw new TypeError('symbol outcome keys are unsupported');
+   const entries = keys.map(key => {
+    const descriptor = Object.getOwnPropertyDescriptor(item, key);
+    if (!descriptor || !Object.hasOwn(descriptor, 'value')) throw new TypeError('outcome accessors are unsupported');
+    return [key, Boolean(descriptor.enumerable), Boolean(descriptor.writable), Boolean(descriptor.configurable), walk(descriptor.value)];
+   });
+   return [kind, entries];
+  } finally { active.delete(item); }
+ };
+ return JSON.stringify(walk(value));
+}
+export function assertCoreFacetOutcomeParity(actual, expected, canonical) {
+ if (canonical(actual) !== canonical(expected)) throw new Error('default/reference frozen data differs');
+ const actualShape = coreFacetOutcomeShape(actual), expectedShape = coreFacetOutcomeShape(expected);
+ if (actualShape !== expectedShape) throw new Error('default/reference prototype/own shape differs');
+ return actualShape;
+}
 export function assertResourceCaseExpectation(item,outcome,integrity,assert){
  const expectedStatus=item.expectedCode?'threw':'returned';
  assert.equal(outcome.status,expectedStatus,item.id+' explicit expected outcome status');
@@ -56,6 +90,7 @@ export function assertResourceCaseExpectation(item,outcome,integrity,assert){
  assert.deepEqual(integrity,item.expectedIntegrity,item.id+' exact preserved result integrity');
 }
 export const resourceSuiteSource = String.raw`
+const coreFacetOutcomeShape=${coreFacetOutcomeShape.toString()};
 const assertResourceCaseExpectation=${assertResourceCaseExpectation.toString()};
 const expectedCoreFacetResourceRustOperations=${expectedCoreFacetResourceRustOperations.toString()};
 const runCoreFacetResourceSuite=async(root,reference,operations,cap,normalized,assert,canonical)=>{
@@ -91,9 +126,10 @@ const runCoreFacetResourceSuite=async(root,reference,operations,cap,normalized,a
  const memory=()=>{if(typeof process!=='undefined'&&typeof process.memoryUsage==='function'){const used=process.memoryUsage(),resource=process.resourceUsage?.();return {source:'process.memoryUsage + process.resourceUsage',rssBytes:used.rss,heapUsedBytes:used.heapUsed,maxRssKilobytes:Number.isFinite(resource?.maxRSS)?resource.maxRSS:null}}const bytes=globalThis.performance?.memory?.usedJSHeapSize;return {source:'performance.memory.usedJSHeapSize (JavaScript heap only; excludes WASM and process RSS)',rssBytes:null,heapUsedBytes:Number.isFinite(bytes)?bytes:null,maxRssKilobytes:null}};
  const measure=(fn)=>{const before=memory(),start=performance.now(),result=fn(),durationMs=performance.now()-start,after=memory();return {result,metrics:{durationMs,memorySource:after.source,rssBeforeBytes:before.rssBytes,rssAfterBytes:after.rssBytes,heapBeforeBytes:before.heapUsedBytes,heapAfterBytes:after.heapUsedBytes,maxRssBeforeKilobytes:before.maxRssKilobytes,maxRssAfterKilobytes:after.maxRssKilobytes}}};
  const outcomeShape=result=>{const value=normalized(result);if(value.status==='threw')return value;return {status:'returned'}};
+const shapeOf=value=>coreFacetOutcomeShape(value);
  const sha256=async text=>{const digest=await globalThis.crypto.subtle.digest('SHA-256',new TextEncoder().encode(text));return [...new Uint8Array(digest)].map(byte=>byte.toString(16).padStart(2,'0')).join('')};
  const evidence=[];
- for(const item of cases){
+ for(const item of cases){const caseStartedAt=performance.now();
   const refArgs=item.args(),defaultArgs=item.args();globalThis.__r8ActiveCase='reference/resource/'+item.id;const referenceBefore=globalThis.__r8RustOperations?.length??0;
   const referenceRun=measure(()=>cap(()=>item.operation==='writeJsonValue'?reference.writeJsonValue(...refArgs):operations[item.operation](reference,...refArgs))),referenceOutcome=outcomeShape(referenceRun.result),referenceRustOperations=(globalThis.__r8RustOperations??[]).slice(referenceBefore);
   assert.deepEqual(referenceRustOperations,[],item.id+' reference route must not dispatch to Rust');
@@ -110,10 +146,12 @@ const runCoreFacetResourceSuite=async(root,reference,operations,cap,normalized,a
   assert.equal(defaultCanonical,referenceCanonical,item.id+' complete canonical result equality');
   const referenceResultSha256=referenceCanonical===null?null:await sha256(referenceCanonical),defaultResultSha256=defaultCanonical===null?null:await sha256(defaultCanonical);
   assert.equal(defaultResultSha256,referenceResultSha256,item.id+' complete result SHA-256');
+  const referenceOwnShapeSha256=await sha256(shapeOf(normalized(referenceRun.result))),defaultOwnShapeSha256=await sha256(shapeOf(normalized(defaultRun.result)));
+  assert.equal(defaultOwnShapeSha256,referenceOwnShapeSha256,item.id+' complete outcome own-shape SHA-256');
   const defaultRustOperations=(globalThis.__r8RustOperations??[]).slice(defaultBefore),expectedRustOperations=expectedCoreFacetResourceRustOperations(item.id);
   if(globalThis.__r8RustDispatchInstrumented===true&&typeof window==='undefined')assert.deepEqual(defaultRustOperations,expectedRustOperations,item.id+' exact default Rust dispatch sequence');
   assert.deepEqual(referenceRustOperations,[],item.id+' reference route must not dispatch to Rust');
-  evidence.push({id:item.id,operation:item.operation,expectedReferenceOutcome:referenceOutcome,defaultOutcome,defaultTrace:[],defaultRustCalls:defaultRustOperations.length,defaultRustOperations,expectedRustOperations,referenceOutcome,referenceTrace:[],referenceRustCalls:referenceRustOperations.length,referenceRustOperations,referenceMetrics:referenceRun.metrics,defaultMetrics:defaultRun.metrics,referenceResultSha256,defaultResultSha256,referenceIntegrity,defaultIntegrity});
+  evidence.push({id:item.id,operation:item.operation,expectedReferenceOutcome:referenceOutcome,defaultOutcome,defaultTrace:[],defaultRustCalls:defaultRustOperations.length,defaultRustOperations,expectedRustOperations,referenceOutcome,referenceTrace:[],referenceRustCalls:referenceRustOperations.length,referenceRustOperations,referenceMetrics:referenceRun.metrics,defaultMetrics:defaultRun.metrics,referenceResultSha256,defaultResultSha256,referenceOwnShapeSha256,defaultOwnShapeSha256,referenceIntegrity,defaultIntegrity});globalThis.__r8Progress={phase:'resource',caseId:item.id,elapsedMs:performance.now()-caseStartedAt};
  }
  globalThis.__r8ActiveCase=null;
  return evidence;
@@ -150,6 +188,9 @@ export function validateCoreFacetResourceEvidence(evidence, assert) {
   assert.deepEqual(row.referenceRustOperations,[],`${id} reference Rust dispatch`);
   assert.equal(row.referenceRustCalls,0,`${id} reference Rust call count`);
   assert.deepEqual(row.defaultOutcome,row.referenceOutcome,`${id} default/reference outcome parity`);
+  assert.match(row.defaultOwnShapeSha256??'',/^[a-f0-9]{64}$/,`${id} default own-shape witness`);
+  assert.match(row.referenceOwnShapeSha256??'',/^[a-f0-9]{64}$/,`${id} reference own-shape witness`);
+  assert.equal(row.defaultOwnShapeSha256,row.referenceOwnShapeSha256,`${id} default/reference own-shape witness parity`);
   const expectedError=resourceOutcomeProfiles[id];
   if(expectedError){
    assert.deepEqual(row.defaultOutcome,{status:'threw',name:'UmfError',...expectedError},`${id} exact expected refusal`);

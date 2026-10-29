@@ -9,7 +9,7 @@ import { gzipSync } from 'node:zlib';
 import { cp, mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { buildLedger, classifyBit128ProfileSource, collectPythonPackageAssets, collectPythonSourceFiles, isDomainPackLoaderInspectionRootSelection, isDomainPackProfileInspectionRootSelection, isDomainPackSchemaRootSelection, isExactAccessTemporalV4RootSelection, isExactArrowIpcV4RootSelection, isExactArrowSchemaV4RootSelection, isExactProtobufDescriptorV4RootSelection, operationMapping, summarizeDefaultRouteRetirement, validateCompactVerifierBuildBinding, validateDomainPackLoaderInspectorReceipt, validateSchemaGraphReceipt } from './gap-ledger.mjs';
+import { buildLedger, classifyBit128ProfileSource, collectPythonPackageAssets, collectPythonSourceFiles, isDomainPackLoaderInspectionRootSelection, isDomainPackProfileInspectionRootSelection, isDomainPackSchemaRootSelection, isExactAccessTemporalV4RootSelection, isExactArrowIpcV4RootSelection, isExactArrowSchemaV4RootSelection, isExactCoreKindNullabilityV4RootSelection, isExactProtobufDescriptorV4RootSelection, operationMapping, summarizeDefaultRouteRetirement, validateCompactVerifierBuildBinding, validateDomainPackLoaderInspectorReceipt, validateSchemaGraphReceipt } from './gap-ledger.mjs';
 import { CASES as LOADER_INSPECTOR_CASES, validateClaims as validateLoaderInspectorClaims, validatePacketSync as validateLoaderInspectorPacketSync } from './loader-inspector-route-evidence.mjs';
 import { requiredR8RouteFamilies, validateR8InstalledRouteEvidence } from './installed-route-evidence.mjs';
 import { normalizeR8RouteHostReceipt } from './installed-route-receipt-adapter.mjs';
@@ -44,7 +44,7 @@ test('only the pinned BIT128_PROFILE primitive is classified as inert JSON scala
   assert.ok(limitsRows.every(row => row.rowKind === 'executable' && row.defaultRouteRetirement.status !== 'not-applicable'));
   assert.equal(ledger.counts.inertJsonScalarRows, 1);
   assert.equal(ledger.counts.routeInertJsonScalarRows, 3);
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 930);
   assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 834);
 
   assert.equal(classifyBit128ProfileSource("export const BIT128_PROFILE = 'umf-128/1' as const;"), 'umf-128/1');
@@ -620,7 +620,7 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
     // operations, two SEC operations, three opt-in SEC/Protobuf candidates,
     // scalarTypesForVersion, the guarded temporal pair, five Arrow schema
     // operations, three Arrow IPC operations and seven Protobuf operations.
-    assert.equal(selection.directExportCount, 89 + 6 + 2 + 2 + 3 + 1 + 2 + 5 + 3 + 7);
+    assert.equal(selection.directExportCount, 89 + 6 + 2 + 2 + 3 + 1 + 2 + 5 + 3 + 7 + 6);
     assert.ok(expected.every(name => selection.directExports.includes(name)), `${routeId} misses an override`);
     assert.ok(['inspectCoreSemanticTypes','getCoreSemanticTypes','declareCoreSemanticTypes','verifyCoreSemanticTypeDeclaration',
       'validateCoreRecordValues','SemanticTypeRegistry','validateSemanticTypeValue','validateCoreSemanticTypeValue']
@@ -649,10 +649,10 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
   const reference = ledger.rows.filter(row => row.routeId === 'package-reference' && expected.includes(row.exportName));
   assert.equal(reference.length, expected.length);
   assert.ok(reference.every(row => row.sourceSelectedImplementation === null));
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
-  assert.equal(ledger.counts.sourceSelectedRustOverrides, 130 + 2 * 2 + 2 * 2 + 2 * 2 + 2 * 5 + 2 * 10);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 930);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 130 + 2 * 2 + 2 * 2 + 2 * 2 + 2 * 5 + 2 * 10 + 2 * 6);
   for (const routeId of ['package-root-node', 'package-root-browser']) {
-    assert.equal(ledger.counts.executableDefaultRouteGapsByRoute[routeId].rustSelectedSourceDeclarations, 65 + 4 + 2 + 5 + 10);
+    assert.equal(ledger.counts.executableDefaultRouteGapsByRoute[routeId].rustSelectedSourceDeclarations, 65 + 4 + 2 + 5 + 10 + 6);
   }
   const archivedGate = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/gate-result.json', 'utf8'));
   assert.equal(archivedGate.status, 'pass');
@@ -811,7 +811,7 @@ test('Arrow IPC and Protobuf descriptor/document source selections stay exact an
     assert.equal(reference.sourceSelectedImplementation, null);
     assert.equal(reference.defaultRouteRetirement.status, 'reference-only');
   }
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 930);
   assert.equal(ledger.counts.executableDefaultRouteRetirementsByRoute['package-root-node'], 0);
   assert.equal(ledger.counts.executableDefaultRouteRetirementsByRoute['package-root-browser'], 0);
 
@@ -955,8 +955,8 @@ test('V4 relationship consumer exports are hybrid bindings without Rust consumer
     assert.equal(rows[2].sourceSelectedImplementation, null);
     assert.equal(rows[2].defaultRouteRetirement.status, 'reference-only');
   }
-  assert.equal(ledger.counts.sourceSelectedRustOverrides, 130 + 2 * 2 + 2 * 2 + 2 * 2 + 2 * 5 + 2 * 10);
-  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 101);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 130 + 2 * 2 + 2 * 2 + 2 * 2 + 2 * 5 + 2 * 10 + 2 * 6);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 111);
   assert.deepEqual(ledger.counts.executableDefaultRouteRetirementsByRoute, { 'package-root-node': 0, 'package-root-browser': 0 });
 
   for (const row of [
@@ -994,17 +994,17 @@ test('relationship condition-shape normalization rejects alias, source, kind and
 test('retiring three paired logical names lowers the current default gap count by three only', () => {
   const open = currentGeneratedLedger();
   const names = ['inspectCoreScalarType', 'inspectCoreRecordMembers', 'inspectCoreReferenceLinks'];
-  assert.equal(open.counts.executableDefaultRouteGaps, 920);
+  assert.equal(open.counts.executableDefaultRouteGaps, 930);
   const pairedRows = open.rows.map(row => names.includes(row.exportName) && ['package-root-node', 'package-root-browser'].includes(row.routeId)
     ? { ...row, defaultRouteRetirement: { status: 'retired', evidence: [{ path: `synthetic/${row.routeId}/${row.exportName}.json`, sha256: '9'.repeat(64) }] } }
     : row);
   const summary = summarizeDefaultRouteRetirement(pairedRows);
-  assert.equal(summary.logicalGaps, 917);
-  assert.deepEqual(summary.byRoute['package-root-node'], { open: 917, retired: 3 });
-  assert.deepEqual(summary.byRoute['package-root-browser'], { open: 917, retired: 3 });
-  assert.equal(open.counts.executableDefaultRouteGapsByRoute['package-reference'].retainedReferenceExecutableRows, 917);
+  assert.equal(summary.logicalGaps, 927);
+  assert.deepEqual(summary.byRoute['package-root-node'], { open: 927, retired: 3 });
+  assert.deepEqual(summary.byRoute['package-root-browser'], { open: 927, retired: 3 });
+  assert.equal(open.counts.executableDefaultRouteGapsByRoute['package-reference'].retainedReferenceExecutableRows, 927);
   assert.equal(open.rows.filter(row => row.routeId === 'package-reference' && names.includes(row.exportName) && row.defaultRouteRetirement.status === 'reference-only').length, 3);
-  assert.equal(open.rows.filter(row => row.routeId === 'package-reference' && row.rowKind === 'executable').length, 917);
+  assert.equal(open.rows.filter(row => row.routeId === 'package-reference' && row.rowKind === 'executable').length, 927);
 });
 
 test('five JavaScript numeric root bindings retain exact Rust ownership without retiring gaps', () => {
@@ -1041,7 +1041,7 @@ test('five JavaScript numeric root bindings retain exact Rust ownership without 
       assert.throws(() => buildLedger({ ...args, inventory: { symbols: changed } }), /(declaration multiplicity differs|Node\/browser export names differ)/);
     }
   }
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 930);
 });
 
 test('securityNot normalizes only the exact V4 binding and TypeScript reference declaration shapes', () => {
@@ -1152,9 +1152,9 @@ test('Schema Properties source selections keep exact CONTRACT-049 mappings separ
     assert.equal(reference.sourceSelectedImplementation, null);
     assert.equal(reference.implementationStatus, 'TypeScript reference implementation remains explicit');
   }
-  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 101);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 111);
   assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 834);
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 930);
   const aggregate = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/aggregate.json', 'utf8'));
   const aggregateNames = Object.values(aggregate.families).flatMap(family => family.operations);
   assert.equal(Object.keys(aggregate.families).length, 5);
@@ -1262,7 +1262,7 @@ test('TableSpec Cardinality projection schema pins its direct Field base and pac
   assert.ok(row.resourceOwnership.routes.some(route => route.id === 'sdk-archive'
     && route.artifactPath === 'package/dist/spec/core/cardinality-tablespec-projection.schema.json'));
   assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 56);
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 930);
 });
 
 test('SQL Server Field and Cardinality projection schemas pin exact writer chains', () => {
@@ -1316,7 +1316,7 @@ test('SQL Server Field and Cardinality projection schemas pin exact writer chain
   const field = ledger.rows.find(item => item.source === 'spec/core/field-sqlserver-projection.schema.json');
   assert.equal(field.resourceOwnership.authority.status, 'generated-authority-known');
   assert.deepEqual(field.resourceOwnership.authority.generatorInputs, ['spec/core/field-postgresql-projection.schema.json']);
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 930);
   assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 56);
 });
 
@@ -1433,8 +1433,8 @@ test('five model vocabulary exports record generated-data versus executable disp
     JSON.parse(readFileSync('spec/metamodel/generated/manifest.json')).outputs['src/generated/core-model.ts'].sha256);
   assert.equal(ledger.counts.immutableGeneratedDataRows, 4);
   assert.equal(ledger.counts.routeImmutableGeneratedDataRows, 12);
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
-  assert.equal(ledger.counts.executableRows, 935);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 930);
+  assert.equal(ledger.counts.executableRows, 945);
   const rows = ledger.rows.filter(row => ['SCALAR_TYPES','ELEMENT_KINDS','NULLABILITIES','CARDINALITIES'].includes(row.exportName));
   assert.equal(rows.length, 12);
   assert.ok(rows.every(row => row.rowKind === 'immutable-generated-data' && row.source === 'src/model/types.ts'));
@@ -1533,7 +1533,7 @@ test('Parquet metadata schema outputs pin their exact multi-output writer and di
       && route.artifactPath === `package/dist/${resource}`));
   }
   assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 56);
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 930);
 });
 
 test('Parquet metadata multi-output --check rejects each stale output without rewriting either', async () => {
@@ -2934,15 +2934,25 @@ test('adapter ownership supplement maps exact operations without retirement or p
     ['protobufPackage', 'src/adapters/protobuf/index.ts'],
     ['protobufRegistry', 'src/adapters/protobuf/index.ts'],
     ['writeDescriptorSet', 'src/adapters/protobuf/descriptor.ts'],
+    ['captureParquet', 'src/adapters/parquet/index.ts'],
+    ['exportParquetCapture', 'src/adapters/parquet/index.ts'],
+    ['inspectParquetFraming', 'src/adapters/parquet/index.ts'],
+    ['decodeParquetFooter', 'src/adapters/parquet/footer.ts'],
+    ['inspectParquetMetadata', 'src/adapters/parquet/metadata.ts'],
+    ['inspectParquetSchema', 'src/adapters/parquet/schema.ts'],
+    ['inspectParquetLogicalTypes', 'src/adapters/parquet/logical.ts'],
+    ['inspectParquetContainers', 'src/adapters/parquet/containers.ts'],
+    ['getParquetFieldMetadata', 'src/adapters/parquet/field-metadata.ts'],
+    ['importParquetSchema', 'src/adapters/parquet/field-metadata.ts'],
   ].map(([exportName, source], index) => ({
     routeId: 'package-root', exportName, declarationName: exportName,
     declarationKind: 'FunctionDeclaration', source, line: index + 1, sourceSha256: 'f'.repeat(64),
   }));
   const ledger = buildLedger({ ...args, inventory: { symbols: adapterRows } });
   const byName = new Map(ledger.rows.map(row => [row.exportName, row.operationOwnership]));
-  assert.equal(ledger.rows.length, 26);
+  assert.equal(ledger.rows.length, 36);
   assert.deepEqual(ledger.counts.adapterOwnershipByStatus, {
-    'accepted-opt-in-subset': 4,
+    'accepted-opt-in-subset': 14,
     'candidate-core': 12,
     'partial-host-boundary': 2,
     unported: 3,
@@ -2970,6 +2980,29 @@ test('adapter ownership supplement maps exact operations without retirement or p
   assert.equal(byName.get('protobufRegistry').status, 'unported');
   assert.equal(byName.get('JSON_SCHEMA_DIALECT').status, 'data-or-constant');
   assert.equal(byName.get('protobufPackage').status, 'data-or-constant');
+  for (const [name, _, wire] of [
+    ['captureParquet', null, 'parquet.capture'],
+    ['exportParquetCapture', null, 'parquet.export'],
+    ['inspectParquetFraming', null, 'parquet.inspectFraming'],
+    ['decodeParquetFooter', null, 'parquet.decodeFooter'],
+    ['inspectParquetMetadata', null, 'parquet.inspectMetadata'],
+    ['inspectParquetSchema', null, 'parquet.inspectSchema'],
+    ['inspectParquetLogicalTypes', null, 'parquet.inspectLogicalTypes'],
+    ['inspectParquetContainers', null, 'parquet.inspectContainers'],
+    ['getParquetFieldMetadata', null, 'parquet.getFieldMetadata'],
+    ['importParquetSchema', null, 'parquet.importSchema'],
+  ]) {
+    const detail = byName.get(name);
+    const ledgerRow = ledger.rows.find(row => row.exportName === name);
+    assert.equal(detail.status, 'accepted-opt-in-subset', name);
+    assert.equal(detail.wireOperation, wire, name);
+    assert.match(detail.supportProfile, /opt-in/);
+    assert.deepEqual(detail.bindingRoutes, ['CLI', 'Node native addon', 'WASM browser', 'Python binding']);
+    assert.ok(detail.evidencePaths.includes('docs/helix/02-design/contracts/CONTRACT-019-parquet.md'));
+    assert.ok(detail.knownMismatches.some(item => /No default package-root route/.test(item)));
+    assert.equal(ledgerRow.acceptedRustOperation, detail.rustOwner, `${name} accepted Rust operation`);
+    assert.match(ledgerRow.acceptedOperationEvidence.scopeRule, /ten opt-in capture\/inspection operations/);
+  }
   for (const row of ledger.rows) {
     assert.equal(row.operationOwnership.defaultRouteStatus, 'TypeScript package-root export remains default; zero rows retired');
     assert.equal(row.operationOwnership.reviewStatus, 'Sol-approved mapping schema; row-level independent review pending');
@@ -3007,6 +3040,30 @@ test('JSON value serialization maps only the opt-in source-proved Rust profile',
     assert.match(row.acceptedOperationEvidence.scopeRule, /installed package qualification.*remain open/);
     assert.equal(row.disposition, 'opt-in Rust core operation exists; default TypeScript route remains TypeScript');
   }
+});
+
+test('logical Rust mapping counts are independent of condition-row order', () => {
+  const names = [
+    'captureParquet', 'exportParquetCapture', 'inspectParquetFraming',
+    'decodeParquetFooter', 'inspectParquetMetadata', 'inspectParquetSchema',
+    'inspectParquetLogicalTypes', 'inspectParquetContainers',
+    'getParquetFieldMetadata', 'importParquetSchema',
+  ];
+  const selected = currentGeneratedLedger().rows.filter(row => names.includes(row.exportName));
+  assert.equal(selected.length, names.length * 3);
+  const symbols = selected.map(({ routeId, exportName, declarationName, declarationKind, initializerShape, source, line, sourceSha256 }) => ({
+    routeId, exportName, declarationName, declarationKind, initializerShape, source, line, sourceSha256,
+  }));
+  const make = rows => buildLedger({ ...args, inventory: { symbols: rows } });
+  const referenceFirst = make(symbols.filter(row => row.routeId === 'package-reference')
+    .concat(symbols.filter(row => row.routeId !== 'package-reference')));
+  const defaultFirst = make(symbols.filter(row => row.routeId !== 'package-reference')
+    .concat(symbols.filter(row => row.routeId === 'package-reference')));
+  for (const ledger of [referenceFirst, defaultFirst]) {
+    assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 10);
+    assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 0);
+  }
+  assert.deepEqual(referenceFirst.counts, defaultFirst.counts);
 });
 
 test('reviewed R5 core operations map exact package-root declarations without retirement', () => {
@@ -3191,8 +3248,8 @@ test('security truth and composition map only their four reviewed opt-in operati
 
 test('securityAnd/securityOr V4 bindings normalize exactly and carry source-only replay evidence', () => {
   const ledger = currentGeneratedLedger();
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
-  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 101);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 930);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 111);
   assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 834);
   for (const name of ['securityAnd', 'securityOr']) {
     const rustSymbol = name === 'securityAnd' ? 'security_and' : 'security_or';
@@ -3758,7 +3815,7 @@ test('five schema graph public routes retain source selection while prior instal
     assert.equal(reference.sourceSelectedImplementation, null);
     assert.equal(reference.defaultRouteRetirement.status, 'reference-only');
   }
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 930);
   assert.equal(ledger.counts.executableDefaultRouteRetirementsByRoute['package-root-node'], 0);
   assert.equal(ledger.counts.executableDefaultRouteRetirementsByRoute['package-root-browser'], 0);
 });
@@ -3831,10 +3888,10 @@ test('domain-pack loader inspector selection requires its exact V4 wrapper shape
   assert.equal(reference.defaultRouteRetirement.status, 'reference-only');
   // The domain-profile pair and guarded temporal pair each add two selected
   // declarations per root.
-  assert.equal(ledger.counts.sourceSelectedRustOverrides, 130 + 2 * 2 + 2 * 2 + 2 * 2 + 2 * 5 + 2 * 10);
-  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-node'].rustSelectedSourceDeclarations, 65 + 4 + 2 + 5 + 10);
-  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-browser'].rustSelectedSourceDeclarations, 65 + 4 + 2 + 5 + 10);
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 920);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 130 + 2 * 2 + 2 * 2 + 2 * 2 + 2 * 5 + 2 * 10 + 2 * 6);
+  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-node'].rustSelectedSourceDeclarations, 65 + 4 + 2 + 5 + 10 + 6);
+  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-browser'].rustSelectedSourceDeclarations, 65 + 4 + 2 + 5 + 10 + 6);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 930);
 });
 
 test('domain-pack profile Rust selection requires the exact V4 binding and typed reference predecessor', () => {
@@ -4048,4 +4105,63 @@ test('schema graph receipt promotion rejects source drift and tampered claims', 
   assert.equal(validateSchemaGraphReceipt(forgedBrowser, evidenceDir), false, 'combined forged browser route claims are rejected');
   assert.equal(validateSchemaGraphReceipt({...receipt,evidenceSha256sums:{path:'../../outside/SHA256SUMS'}}, evidenceDir), false, 'unsafe evidence paths are refused');
   assert.equal(validateSchemaGraphReceipt({...receipt,status:'not-tested'}, evidenceDir), false, 'a passing status is required');
+});
+
+test('exact Core Kind and Nullability V4 bindings select the shared Rust model engine without qualifying retirement', () => {
+  const names = [
+    'inspectCoreElementKind', 'declareCoreElementKind', 'verifyCoreKindDeclaration',
+    'inspectCoreNullability', 'declareCoreNullability', 'verifyCoreNullabilityDeclaration',
+  ];
+  const current = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/inventory.json', 'utf8'));
+  const declarations = current.symbols.filter(row => names.includes(row.exportName)
+    && ['package-root-node', 'package-root-browser', 'package-reference'].includes(row.routeId));
+  assert.equal(declarations.length, 18);
+
+  const ledger = currentGeneratedLedger();
+  assert.ok(ledger.counts.executableDefaultRouteGaps >= 6, 'the selected operations remain open logical declaration gaps');
+  const ownerByName = new Map([
+    ['inspectCoreElementKind', 'umf_core::core_kind::inspect_core_kind'],
+    ['declareCoreElementKind', 'umf_core::core_kind::declare_core_kind'],
+    ['verifyCoreKindDeclaration', 'umf_core::core_kind::verify_core_kind_declaration'],
+    ['inspectCoreNullability', 'umf_core::nullability::inspect_core_nullability'],
+    ['declareCoreNullability', 'umf_core::nullability::declare_core_nullability'],
+    ['verifyCoreNullabilityDeclaration', 'umf_core::nullability::verify_core_nullability_declaration'],
+  ]);
+  for (const name of names) {
+    for (const routeId of ['package-root-node', 'package-root-browser']) {
+      const row = ledger.rows.find(item => item.routeId === routeId && item.exportName === name);
+      assert.equal(row.acceptedRustOperation, ownerByName.get(name));
+      assert.equal(row.sourceSelectedImplementation.status, 'candidate-source-selected');
+      assert.equal(row.sourceSelectedImplementation.rustOwner, ownerByName.get(name));
+      assert.match(row.sourceSelectedImplementation.qualificationStatus, /installed Node\/Bun\/Chromium qualification is pending/);
+      assert.ok(row.sourceSelectedImplementation.sourceClosure.some(item => item.path === 'src/access/rust-kind-nullability-default.ts'));
+      assert.equal(row.bindingRoute, null);
+      assert.equal(row.bindingRouteStatus, 'unproven');
+      assert.equal(row.defaultRouteRetirement.status, 'open');
+      const declaration = declarations.find(item => item.routeId === routeId && item.exportName === name);
+      assert.equal(operationMapping(declaration).rustOwner, ownerByName.get(name));
+    }
+    const reference = ledger.rows.find(item => item.routeId === 'package-reference' && item.exportName === name);
+    assert.equal(reference.sourceSelectedImplementation, null);
+    assert.equal(reference.defaultRouteRetirement.status, 'reference-only');
+  }
+
+  const node = declarations.find(row => row.routeId === 'package-root-node' && row.exportName === names[0]);
+  const browser = declarations.find(row => row.routeId === 'package-root-browser' && row.exportName === names[0]);
+  const rootNodeText = readFileSync('src/index-node-v4.ts', 'utf8');
+  const rootBrowserText = readFileSync('src/index-browser-v4.ts', 'utf8');
+  const binder = readFileSync('src/access/rust-kind-nullability-default.ts', 'utf8');
+  for (const [declaration, rootText] of [[node, rootNodeText], [browser, rootBrowserText]]) {
+    const args = { routeId: declaration.routeId, exportName: declaration.exportName, source: declaration.source, declaration, rootText, binderSource: binder };
+    assert.equal(isExactCoreKindNullabilityV4RootSelection(args), true);
+    assert.equal(isExactCoreKindNullabilityV4RootSelection({ ...args, source: 'src/model/field-kind.ts' }), false, 'wrong route source is rejected');
+    assert.equal(isExactCoreKindNullabilityV4RootSelection({ ...args, declaration: { ...declaration, declarationKind: 'FunctionDeclaration' } }), false, 'wrong binding shape is rejected');
+    assert.equal(isExactCoreKindNullabilityV4RootSelection({ ...args, rootText: rootText.replace('createCoreModelRootKindNullabilityEngine(CORE_MODEL_RESOURCES)', 'createCoreCardinalityHostInputEngine(CORE_MODEL_RESOURCES)').replace('initializeCoreModelRootKindNullabilityWasm(CORE_MODEL_RESOURCES,async()=>wasmModule,globalThis)', 'initializeCardinalityWasm(CORE_MODEL_RESOURCES,async()=>wasmModule,globalThis') }), false, 'wrong factory composition is rejected');
+    assert.equal(isExactCoreKindNullabilityV4RootSelection({ ...args, binderSource: binder.replace("from '../model/errors'", "from '../model/types'") }), false, 'wrong binder import is rejected');
+    assert.equal(isExactCoreKindNullabilityV4RootSelection({ ...args, binderSource: binder.replace('engine.inspectCoreElementKind(source,identity)', 'reference.inspectCoreElementKind(source,identity)') }), false, 'TypeScript host fallback is rejected');
+    assert.equal(isExactCoreKindNullabilityV4RootSelection({ ...args, binderSource: binder.replace('engine.inspectCoreElementKind(source,identity)', 'reference.inspectCoreElementKind(source,identity)') }), false, 'TypeScript host fallback is rejected');
+    assert.equal(isExactCoreKindNullabilityV4RootSelection({ ...args, binderSource: binder.replace("value.code!=='RESOURCE_LIMIT'", 'true') }), false, 'host resource-limit fallback is rejected');
+  }
+  const wrongName = { ...node, exportName: 'inspectCoreElementKindCandidate', declarationName: 'inspectCoreElementKindCandidate' };
+  assert.equal(operationMapping(wrongName), null, 'unrelated root bindings cannot borrow the family mapping');
 });

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect, setDefaultTimeout, test} from 'bun:test';
-import {createCoreKeyTupleEngine, createCoreModelEngine, createCoreModelRootEngine, createCoreModelRootKeyTupleEngine} from '../index.js';
+import {createCoreKeyTupleEngine, createCoreModelEngine, createCoreModelRootEngine, createCoreModelRootKeyTupleEngine, createCoreModelRootKindNullabilityEngine} from '../index.js';
 import {createRequire} from 'node:module';
 import coreSchema from '../../../../spec/core/schema.json' with {type: 'json'};
 import referenceSchema from '../../../../spec/core/semantic-type-reference.schema.json' with {type: 'json'};
@@ -8,6 +8,8 @@ import packageSchema from '../../../../spec/core/extension-package.schema.json' 
 import constraints from '../../../../spec/metamodel/generated/core-constraints.json' with {type: 'json'};
 import domainPolicy from '../../../../spec/metamodel/generated/domain-policy.json' with {type: 'json'};
 import frozen from '../../../../docs/helix/04-build/evidence/rust-migration/r5-core-key-tuple/frozen-typescript.json' with {type: 'json'};
+import kindSource from '../../../../scripts/rust-migration/r5/kind-nullability/input.json' with {type: 'json'};
+import kindFrozen from '../../../../scripts/rust-migration/r5/kind-nullability/frozen-typescript.json' with {type: 'json'};
 
 const resources = {coreSchema, referenceSchema, packageSchema, constraints, domainPolicy};
 const addon = createRequire(import.meta.url)('../umf_core_node.node');
@@ -82,6 +84,43 @@ test('default-root tuple slice exposes only Rust byte reads and prepared sources
   const maximumReceipt = prepared.encode(item.identity, [{string: 'x'.repeat(3_999_989)}]);
   expect(engine.readCoreKeyTupleBytes(maximumReceipt, item.source)).toHaveLength(4_000_000);
   expect(() => prepared.encode(item.identity, [{string: 'x'.repeat(3_999_990)}])).toThrow();
+});
+
+test('combined default-root Kind/Nullability and tuple slice shares one runtime', () => {
+  const OriginalKindNullabilityRuntime = addon.CoreKindNullabilityRuntime;
+  let runtimeConstructions = 0;
+  addon.CoreKindNullabilityRuntime = function(...args) {
+    runtimeConstructions++;
+    return new OriginalKindNullabilityRuntime(...args);
+  };
+  try {
+    const engine = createCoreModelRootKindNullabilityEngine(resources);
+    expect(runtimeConstructions).toBe(1);
+    expect(Object.hasOwn(engine, 'inspectCoreElementKind')).toBe(true);
+    expect(Object.hasOwn(engine, 'declareCoreNullability')).toBe(true);
+    expect(Object.hasOwn(engine, 'readCoreKeyTupleBytes')).toBe(true);
+    expect(Object.hasOwn(engine, 'prepareCoreKeyTuples')).toBe(true);
+    expect(Object.hasOwn(engine, 'encodeCoreKeyTuple')).toBe(false);
+    expect(Object.hasOwn(engine, 'verifyCoreKeyTuple')).toBe(false);
+
+    const kindReceipt = engine.declareCoreElementKind(kindSource, {module: 'm', element: 'missing'}, 'field');
+    const nullabilityReceipt = engine.declareCoreNullability(kindSource, {module: 'm', element: 'missing'}, 'absent-allowed');
+    expect(engine.inspectCoreElementKind(kindSource, {module: 'm', element: 'known'})).toEqual(kindFrozen.kind_inspect_known);
+    expect(kindReceipt).toEqual(kindFrozen.kind_declare);
+    expect(engine.verifyCoreKindDeclaration(kindReceipt, kindReceipt.target)).toEqual(kindFrozen.kind_verify);
+    expect(engine.inspectCoreNullability(kindSource, {module: 'm', element: 'missing'})).toEqual(kindFrozen.nullability_inspect_missing);
+    expect(engine.declareCoreNullability(kindSource, {module: 'm', element: 'missing'}, 'absent-allowed')).toEqual(kindFrozen.nullability_declare);
+    expect(engine.verifyCoreNullabilityDeclaration(nullabilityReceipt, nullabilityReceipt.target)).toEqual(kindFrozen.nullability_verify);
+
+    const receipt = frozen.outcomes['empty-string-present'].value;
+    expect(engine.readCoreKeyTupleBytes(receipt, item.source)).toEqual(Uint8Array.from(Buffer.from(receipt.bytesHex, 'hex')));
+    const prepared = engine.prepareCoreKeyTuples(item.source);
+    expect(Object.keys(prepared)).toEqual(['profile', 'source', 'encode', 'verify']);
+    expect(prepared.encode(item.identity, item.values)).toEqual(receipt);
+    expect(prepared.verify(receipt)).toEqual(receipt);
+  } finally {
+    addon.CoreKindNullabilityRuntime = OriginalKindNullabilityRuntime;
+  }
 });
 
 test('retained Core Key runtime snapshots resources and gives each call a fresh work ledger', () => {

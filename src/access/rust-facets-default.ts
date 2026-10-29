@@ -55,7 +55,10 @@ export function bindCoreFacetsRust(engine:CoreFacetsRustEngine) {
   historicalCoreFacetPatch(input:CoreFacetInterpreted) {
    const copiedInput=copyJson(input);
    const result=rustCall(()=>engine.historicalCoreFacetPatch(copiedInput as CoreFacetInterpreted)) as CoreFacetPatch;
-   return {...result};
+   return {
+    ...result,
+    ...(result.length?{length:{max:result.length.max,unit:result.length.unit}}:{}),
+   };
   },
  });
 }

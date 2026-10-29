@@ -133,12 +133,15 @@ test('Core Facets historical projection copies input before invoking Rust', () =
 		},
 	} as unknown as CoreFacetsRustEngine;
 	const api = bindCoreFacetsRust(engine);
-	const input = {integerWidth: {bits: 16, signed: true}};
+	const input = {length: {max: 8, unit: 'byte' as const}, integerWidth: {bits: 16, signed: true}};
 	const output = api.historicalCoreFacetPatch(input);
 
 	expect(order).toEqual(['historical']);
 	expect(output).toEqual(input);
 	expect(output).not.toBe(input);
+	expect(Object.getPrototypeOf(output)).toBe(Object.prototype);
+	expect(Object.getPrototypeOf(output.length)).toBe(Object.prototype);
+	expect(Object.getPrototypeOf(output.integerWidth)).toBeNull();
 });
 
 test('Core Facets preserves the public ordinary-limit error and distinct engine resource failures', () => {

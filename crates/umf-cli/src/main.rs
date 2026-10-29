@@ -19,6 +19,7 @@ const MAX_ARROW_SCHEMA_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 #[cfg(feature = "embedded-adapters")]
 // A 1 MB source becomes 2 MB of hex, then expands as tagged UTF-16 units.
 const MAX_ARROW_IPC_REQUEST_BYTES: usize = 12 * 1024 * 1024;
+const MAX_PARQUET_CAPTURE_REQUEST_BYTES: usize = 12 * 1024 * 1024;
 const MAX_PROTOBUF_INSPECT_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 #[cfg(feature = "embedded-adapters")]
 const MAX_AVRO_DOCUMENT_INSPECT_REQUEST_BYTES: usize = 32 * 1024 * 1024;
@@ -780,6 +781,9 @@ fn run(args: Vec<String>) -> Result<(), String> {
     #[cfg(feature = "embedded-adapters")]
     if args.first().map(String::as_str) == Some("arrow") {
         return arrow_run(&args[1..]);
+    }
+    if args.first().map(String::as_str) == Some("parquet-capture") {
+        return parquet_capture_run(&args[1..]);
     }
     #[cfg(feature = "embedded-adapters")]
     if args.first().map(String::as_str) == Some("protobuf") {
@@ -1588,6 +1592,84 @@ fn arrow_ipc_run(args: &[String]) -> Result<(), String> {
     println!(
         "{}",
         umf_core_wire::execute_arrow_ipc_wire_with_control(&wire, &mut control)
+    );
+    Ok(())
+}
+
+fn parquet_capture_run(args: &[String]) -> Result<(), String> {
+    if args == ["--version"] {
+        println!(
+            "{{\"profile\":\"{}\",\"version\":\"{}\"}}",
+            umf_core_wire::PARQUET_CAPTURE_PROFILE,
+            env!("CARGO_PKG_VERSION"),
+        );
+        return Ok(());
+    }
+    if args == ["--capabilities"] {
+        println!(
+            "{{\"profile\":\"{}\",\"operations\":[\"parquet.capture\",\"parquet.importSchema\",\"parquet.export\",\"parquet.inspectFraming\",\"parquet.decodeFooter\",\"parquet.inspectMetadata\",\"parquet.inspectSchema\",\"parquet.inspectLogicalTypes\",\"parquet.inspectContainers\",\"parquet.getFieldMetadata\"],\"resourceProfile\":\"cooperative\",\"maxSourceBytes\":1000000}}",
+            umf_core_wire::PARQUET_CAPTURE_PROFILE,
+        );
+        return Ok(());
+    }
+    let mut stdin_wire = false;
+    let mut max_work = None;
+    let mut timeout_ms = None;
+    let mut index = 0;
+    while index < args.len() {
+        match args[index].as_str() {
+            "--stdin-wire" if !stdin_wire => stdin_wire = true,
+            "--max-work" if max_work.is_none() => {
+                index += 1;
+                max_work = Some(
+                    args.get(index)
+                        .ok_or("--max-work requires a value")?
+                        .parse::<u64>()
+                        .map_err(|_| "--max-work requires a nonnegative integer")?,
+                );
+            }
+            "--timeout-ms" if timeout_ms.is_none() => {
+                index += 1;
+                timeout_ms = Some(
+                    args.get(index)
+                        .ok_or("--timeout-ms requires a value")?
+                        .parse::<u64>()
+                        .map_err(|_| "--timeout-ms requires a nonnegative integer")?,
+                );
+            }
+            _ => return Err("invalid Parquet capture option".into()),
+        }
+        index += 1;
+    }
+    if !stdin_wire {
+        return Err("usage: umf parquet-capture <--version|--capabilities|--stdin-wire [--max-work N] [--timeout-ms N]>".into());
+    }
+    let started = std::time::Instant::now();
+    let wire = String::from_utf8(read_limited(io::stdin(), MAX_PARQUET_CAPTURE_REQUEST_BYTES)?)
+        .map_err(|_| "Parquet capture wire request is not valid UTF-8".to_owned())?;
+    let mut remaining = max_work.unwrap_or(u64::MAX);
+    let mut control = |amount: usize| {
+        let amount = amount as u64;
+        if amount > remaining {
+            return Err(umf_core::EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Parquet capture work budget exhausted",
+            ));
+        }
+        remaining -= amount;
+        if timeout_ms.is_some_and(|limit| started.elapsed().as_millis() >= u128::from(limit)) {
+            return Err(umf_core::EngineError::new(
+                "DEADLINE",
+                Utf16::default(),
+                "Parquet capture deadline elapsed",
+            ));
+        }
+        Ok(())
+    };
+    println!(
+        "{}",
+        umf_core_wire::execute_parquet_capture_wire_with_control(&wire, &mut control)
     );
     Ok(())
 }
