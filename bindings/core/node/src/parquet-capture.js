@@ -41,6 +41,7 @@ export function createParquetCaptureOperations(call) {
       if (typeof id !== 'string') throw new UmfError('PARQUET_CAPTURE', 'Invalid Parquet capture envelope');
       return call('importSchema', {bytes: hex, id});
     },
+    encodeParquetWire(value) { return copyBytes(fromHex(call('encodeWire', {value}))); },
     exportParquetCapture(document) { return copyBytes(fromHex(call('export', {document}))); },
     inspectParquetFraming(document) { return call('inspectFraming', {document}); },
     decodeParquetFooter(document) { return call('decodeFooter', {document}); },

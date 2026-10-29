@@ -142,6 +142,11 @@ pub fn execute_wire_with_control(
                 return Err(request_error("Unsupported Parquet capture profile"));
             }
         }
+        if operation == "parquet.encodeWire" {
+            let value = field(&request, "value").ok_or_else(|| request_error("value is required"))?;
+            let bytes = umf_core::parquet_wire_encode::encode_parquet_wire(value, &mut ctx)?;
+            return encode(&Value::string_utf8(encode_hex(&bytes)), &mut ctx);
+        }
         let resources = Resources::new(&mut ctx)?;
         let mut capabilities = Accept;
         let result = match operation.as_str() {

@@ -489,6 +489,7 @@ export interface ParquetCaptureEngine {
   readonly capabilities: Readonly<{profile: typeof PARQUET_CAPTURE_PROFILE; maxBytes: 1_000_000; exactSource: true; complete: false}>;
   captureParquet(bytes: Uint8Array, options: {id: string}): unknown;
   importParquetSchema(bytes: Uint8Array, options: {id: string}): unknown;
+  encodeParquetWire(value: unknown): Uint8Array;
   exportParquetCapture(document: unknown): Uint8Array;
   inspectParquetFraming(document: unknown): unknown;
   decodeParquetFooter(document: unknown): unknown;

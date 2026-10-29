@@ -10578,6 +10578,13 @@ Further private malformed-header probes demonstrate seven additional Compact
 decoder diagnostic/ordering mismatches beyond the original varint example;
 the page/body slice remains unaccepted while Sol repairs the underlying prefix
 decoder. The wire encoder's Luna delivery used obsolete spike bindings and a
-JSON-text boundary; it was rejected, and Sol is implementing the production
-core/wire profile over raw UTF-16 values. A separate Luna worker is porting the
-three Avro Cardinality classification, verification, and recovery operations.
+JSON-text boundary; it was rejected, and Sol implemented the production
+core/wire profile over raw UTF-16 values. The Luna Avro Cardinality attempt
+stopped at a plan without implementation; the authorized Sol fallback is
+implementing its three classification, verification, and recovery operations.
+
+### Parquet Compact wire encoder owner candidate — 2026-10-29
+
+The `encodeParquetWire` production port from private commit `6d216e36d` is now integrated after independent Sol code review. Its exact Rust semantic owner is `crates/umf-core/src/parquet_wire_encode.rs:encode_parquet_wire`, reached through `crates/umf-core-wire/src/parquet_capture_binding.rs` operation `parquet.encodeWire`. The existing opt-in Parquet profile exposes that operation through CLI, Node/Bun, WASM and Python. This is one exact source-to-owner candidate for `src/adapters/parquet/encode.ts:encodeParquetWire`, with no default-route switch, installed archive qualification or retirement accounting change.
+
+The [source-bound acceptance record](evidence/rust-migration/r8-parquet-wire-encode/README.md) records 44 complete TypeScript-frozen byte/error comparisons, core limit and UTF-16 tests, empty-`PATH` CLI replay, actual Node/Bun/WASM/Python execution and Chromium browser evidence. Review corrected its stated transport admission limits to the actual request limits: depth 256 and `Number.MAX_SAFE_INTEGER` values, separately from the encoder's depth 64 and 50,000 wire nodes. Canonical regeneration, composed-source tests and owner-accounting review remain before acceptance of the combined Parquet slice.
