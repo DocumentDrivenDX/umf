@@ -10704,7 +10704,7 @@ default routing, retirement, installed qualification or full-port release gates.
 
 ### Parquet edit source review and Python transport — 2026-10-29
 
-Pending edit candidate `01d334a30` is retained at local ref
+Pending edit candidate `f749b43a6` is retained at local ref
 `codex/rust-parquet-edits-candidate`. Source review corrected row-group, column
 and column-path access through tagged Thrift list nodes, preserved caller member
 order in append results, retained diagnostic paths as UTF-16, and separated
