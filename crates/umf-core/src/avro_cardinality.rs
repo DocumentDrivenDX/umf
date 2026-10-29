@@ -4,7 +4,7 @@
 
 use crate::{
     avro_document,
-    avro_fields::{AvroDependency, derive_avro_fields},
+    avro_fields::{derive_avro_fields, AvroDependency},
     context::Context,
     engine::{Capabilities, Engine, ResourceSet, SemanticContext},
     error::{Diagnostic, EngineError},
@@ -12,7 +12,7 @@ use crate::{
     registry::Registry,
     schema::{CompiledSchema, SchemaResources},
     serialization::{self, Format},
-    value::{Utf16, Value, copy_json},
+    value::{copy_json, Utf16, Value},
 };
 use std::collections::{HashMap, HashSet};
 
@@ -83,7 +83,11 @@ fn member<'a>(n: &'a N, k: &str) -> Option<&'a N> {
     }
 }
 fn ns(n: &N) -> Option<&Utf16> {
-    if let N::String(s) = n { Some(s) } else { None }
+    if let N::String(s) = n {
+        Some(s)
+    } else {
+        None
+    }
 }
 fn qualified(name: &Utf16, namespace: &Utf16) -> Utf16 {
     if name.units().contains(&(b'.' as u16)) || namespace.is_empty() {
@@ -113,6 +117,21 @@ fn named(s: &Utf16) -> bool {
     ["record", "error", "enum", "fixed"]
         .iter()
         .any(|x| s == &u(x))
+}
+fn valid_avro_name(name: &Utf16, qualified: bool) -> bool {
+    let units = name.units();
+    !units.is_empty()
+        && units
+            .split(|unit| qualified && *unit == b'.' as u16)
+            .all(|part| {
+                !part.is_empty()
+                    && part.iter().enumerate().all(|(i, unit)| {
+                        (*unit == b'_' as u16)
+                            || (b'A' as u16..=b'Z' as u16).contains(unit)
+                            || (b'a' as u16..=b'z' as u16).contains(unit)
+                            || (i > 0 && (b'0' as u16..=b'9' as u16).contains(unit))
+                    })
+            })
 }
 fn parse_resource(src: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
     serialization::read_json_value(&src.encode_utf16().collect::<Vec<_>>(), Format::Json, ctx)
@@ -225,7 +244,6 @@ fn result_check(v: &Value, r: &Runtime, ctx: &mut Context<'_>) -> Result<(), Eng
             "AVRO_CARDINALITY_RESULT",
             &errors,
             false,
-            Some(v),
             ctx,
         )?)
     }
@@ -234,57 +252,12 @@ fn schema_error(
     code: &'static str,
     errors: &[crate::schema::StructuralError],
     request: bool,
-    input: Option<&Value>,
     ctx: &mut Context<'_>,
 ) -> Result<EngineError, EngineError> {
     let mut items = Vec::with_capacity(errors.len());
     for e in errors {
         let (params, message) = if request && e.keyword == "enum" {
             (obj(vec![]), u("must pass \"enum\" keyword validation"))
-        } else if request && e.keyword == "additionalProperties" {
-            let allowed: &[&str] = if e.instance_path == u("") {
-                &[
-                    "column",
-                    "nativeSource",
-                    "dependencies",
-                    "identity",
-                    "profile",
-                    "mode",
-                ]
-            } else if e.instance_path == u("/identity") {
-                &["module", "element"]
-            } else {
-                &["id", "schema"]
-            };
-            let mut at = input;
-            for segment in crate::native_json::native_pointer(&e.instance_path, ctx)? {
-                at = match at {
-                    Some(Value::Object(fields)) => fields
-                        .iter()
-                        .find(|(key, _)| key == &segment)
-                        .map(|(_, value)| value),
-                    Some(Value::Array(items)) => segment
-                        .to_utf8()
-                        .ok()
-                        .and_then(|index| index.parse::<usize>().ok())
-                        .and_then(|index| items.get(index)),
-                    _ => None,
-                };
-            }
-            let extra = match at {
-                Some(Value::Object(fields)) => fields
-                    .iter()
-                    .find(|(key, _)| !allowed.iter().any(|name| key == &u(name)))
-                    .map(|(key, _)| key.clone()),
-                _ => None,
-            };
-            (
-                extra.map_or_else(
-                    || obj(vec![]),
-                    |key| obj(vec![("additionalProperty", Value::String(key))]),
-                ),
-                e.message.clone(),
-            )
         } else {
             (copy(&e.params, ctx)?, e.message.clone())
         };
@@ -314,10 +287,112 @@ fn native_binding() -> Value {
     obj(vec![("id", t(EXT)), ("version", t("1.0.0"))])
 }
 
+fn allocation_failure() -> EngineError {
+    err("RESOURCE_LIMIT", "Avro type allocation failed").with_control_failure()
+}
+fn joined_text(
+    prefix: &str,
+    value: &Utf16,
+    suffix: &str,
+    ctx: &mut Context<'_>,
+) -> Result<Utf16, EngineError> {
+    let size = prefix
+        .len()
+        .checked_add(value.len())
+        .and_then(|n| n.checked_add(suffix.len()))
+        .ok_or_else(allocation_failure)?;
+    ctx.charge_work(size, u(""))?;
+    let mut units = Vec::new();
+    units
+        .try_reserve_exact(size)
+        .map_err(|_| allocation_failure())?;
+    units.extend(prefix.encode_utf16());
+    units.extend_from_slice(value.units());
+    units.extend(suffix.encode_utf16());
+    Ok(Utf16::new(units))
+}
+fn type_text_error(
+    prefix: &str,
+    value: &Utf16,
+    ctx: &mut Context<'_>,
+) -> Result<EngineError, EngineError> {
+    Ok(EngineError::new(
+        "AVRO_TYPE",
+        u(""),
+        joined_text(prefix, value, "", ctx)?,
+    ))
+}
+fn quoted_type_error(
+    prefix: &str,
+    value: &Utf16,
+    ctx: &mut Context<'_>,
+) -> Result<EngineError, EngineError> {
+    let quoted = serialization::stringify_compact_metered(&Value::String(value.clone()), ctx)?;
+    type_text_error(prefix, &quoted, ctx)
+}
+fn native_name(
+    name: &Utf16,
+    namespace: &Utf16,
+    ctx: &mut Context<'_>,
+) -> Result<Utf16, EngineError> {
+    ctx.charge_work(name.len().saturating_add(namespace.len()), u(""))?;
+    let tail = name
+        .units()
+        .rsplit(|c| *c == b'.' as u16)
+        .next()
+        .unwrap_or(&[]);
+    let short = Utf16::new(tail.to_vec());
+    // avsc keeps primitive references global even when they are qualified.
+    if primitive(&short) {
+        return Ok(short);
+    }
+    let full = if name.units().first() == Some(&(b'.' as u16)) {
+        Utf16::new(name.units()[1..].to_vec())
+    } else {
+        qualified(name, namespace)
+    };
+    if !valid_avro_name(&full, true) {
+        return Err(quoted_type_error("invalid name: ", &full, ctx)?);
+    }
+    Ok(full)
+}
+fn fixed_size(n: &N, ctx: &mut Context<'_>) -> Result<f64, EngineError> {
+    let Some(N::Number(size)) = member(n, "size") else {
+        return Err(err("AVRO_TYPE", "Expected fixed size"));
+    };
+    ctx.charge_work(size.len(), u(""))?;
+    let magnitude = size.strip_prefix('-').unwrap_or(size.as_str());
+    if magnitude.bytes().all(|byte| byte.is_ascii_digit())
+        && (magnitude.len() > 16 || magnitude.len() == 16 && magnitude > "9007199254740991")
+    {
+        return Err(err("AVRO_TYPE", "Integer exceeds exact JavaScript range"));
+    }
+    let parsed = serialization::read_json_value_typescript_order(
+        &size.encode_utf16().collect::<Vec<_>>(),
+        Format::Json,
+        ctx,
+    )
+    .map_err(|e| {
+        if !e.is_control_failure() && e.code == "NUMBER" {
+            EngineError::new("AVRO_TYPE", e.path, e.message)
+        } else {
+            e
+        }
+    })?;
+    let Value::Number(number) = parsed else {
+        return Err(err("AVRO_TYPE", "Unresolved fixed size"));
+    };
+    if !number.is_finite() || number < 1.0 || number.fract() != 0.0 {
+        return Err(err("AVRO_TYPE", "Unresolved fixed size"));
+    }
+    Ok(number)
+}
 struct Types {
     namespaces: HashMap<Loc, Utf16>,
     names: HashMap<Utf16, Loc>,
     seen: HashSet<Utf16>,
+    registered: HashSet<Utf16>,
+    fixed_sizes: HashMap<Loc, f64>,
 }
 impl Types {
     fn new() -> Self {
@@ -325,6 +400,8 @@ impl Types {
             namespaces: HashMap::new(),
             names: HashMap::new(),
             seen: HashSet::new(),
+            registered: HashSet::new(),
+            fixed_sizes: HashMap::new(),
         }
     }
     fn walk(
@@ -335,50 +412,43 @@ impl Types {
         depth: usize,
         ctx: &mut Context<'_>,
     ) -> Result<(), EngineError> {
+        // Match the two distinct predecessor stages. Its structural projection
+        // traverses the entire root before avsc validates references and unions.
+        self.index_structural(n, l, namespace, depth, ctx)?;
+        self.validate_native(n, l, namespace, depth, ctx)
+            .map(|_| ())
+    }
+    fn visit(l: &Loc, depth: usize, ctx: &mut Context<'_>) -> Result<(), EngineError> {
         ctx.charge_work(1 + l.1.len(), l.1.clone())?;
         if depth > ctx.limits().max_depth {
-            return Err(err("LIMIT", "Avro type depth exceeded"));
+            return Err(err("LIMIT", "Avro type depth exceeded").with_control_failure());
         }
+        Ok(())
+    }
+    fn index_structural(
+        &mut self,
+        n: &N,
+        l: &Loc,
+        namespace: &Utf16,
+        depth: usize,
+        ctx: &mut Context<'_>,
+    ) -> Result<(), EngineError> {
+        Self::visit(l, depth, ctx)?;
+        self.namespaces
+            .try_reserve(1)
+            .map_err(|_| allocation_failure())?;
         self.namespaces.insert(l.clone(), namespace.clone());
         match n {
-            N::String(s) => {
-                if !primitive(s) && !self.names.contains_key(&qualified(s, namespace)) {
-                    return Err(err(
-                        "AVRO_TYPE",
-                        format!(
-                            "undefined type name: {}",
-                            qualified(s, namespace).to_utf8().unwrap_or_default()
-                        ),
-                    ));
-                }
-            }
+            N::String(_) => {}
             N::Array(items) => {
-                if items.is_empty() {
-                    return Err(err("AVRO_TYPE", "Empty union"));
-                }
-                let mut branch_names = HashSet::new();
                 for (i, item) in items.iter().enumerate() {
-                    let branch_name = match item {
-                        N::String(s) => Some(s),
-                        N::Object(_) => member(item, "type").and_then(ns),
-                        _ => None,
-                    };
-                    if let Some(name) = branch_name {
-                        if primitive(name) && !branch_names.insert(name.clone()) {
-                            let quoted = serialization::stringify_compact_metered(
-                                &Value::String(name.clone()),
-                                ctx,
-                            )?;
-                            return Err(err(
-                                "AVRO_TYPE",
-                                format!(
-                                    "duplicate union branch name: {}",
-                                    quoted.to_utf8().unwrap_or_default()
-                                ),
-                            ));
-                        }
-                    }
-                    self.walk(item, &child(l, &format!("/{i}")), namespace, depth + 1, ctx)?;
+                    self.index_structural(
+                        item,
+                        &child(l, &format!("/{i}")),
+                        namespace,
+                        depth + 1,
+                        ctx,
+                    )?;
                 }
             }
             N::Object(_) => {
@@ -395,30 +465,35 @@ impl Types {
                         .transpose()?
                         .unwrap_or(namespace);
                     let full = qualified(name, declared);
+                    self.seen.try_reserve(1).map_err(|_| allocation_failure())?;
                     if !self.seen.insert(full.clone()) {
-                        return Err(err("AVRO_TYPE", "Duplicate native name"));
+                        return Err(type_text_error("Duplicate native name: ", &full, ctx)?);
                     }
+                    self.names
+                        .try_reserve(1)
+                        .map_err(|_| allocation_failure())?;
                     self.names.insert(full.clone(), l.clone());
                     local = namespace_of(&full);
-                    self.namespaces.insert(l.clone(), local.clone());
                 }
                 if typ == &u("record") || typ == &u("error") {
-                    let N::Array(fields) = member(n, "fields")
-                        .ok_or_else(|| err("AVRO_TYPE", "Expected record fields"))?
-                    else {
+                    let Some(N::Array(fields)) = member(n, "fields") else {
                         return Err(err("AVRO_TYPE", "Expected record fields"));
                     };
+                    ctx.charge_work(fields.len(), l.1.clone())?;
                     let mut field_names = HashSet::new();
-                    for (i, f) in fields.iter().enumerate() {
-                        let name = member(f, "name")
+                    field_names
+                        .try_reserve(fields.len())
+                        .map_err(|_| allocation_failure())?;
+                    for (i, field) in fields.iter().enumerate() {
+                        let ftype = member(field, "type")
+                            .ok_or_else(|| err("AVRO_TYPE", "Malformed record field"))?;
+                        let name = member(field, "name")
                             .and_then(ns)
-                            .ok_or_else(|| err("AVRO_TYPE", "Malformed record field"))?;
+                            .ok_or_else(|| err("AVRO_TYPE", "Expected native string"))?;
                         if !field_names.insert(name.clone()) {
-                            return Err(err("AVRO_TYPE", "Duplicate native field"));
+                            return Err(type_text_error("Duplicate native field: ", name, ctx)?);
                         }
-                        let ftype = member(f, "type")
-                            .ok_or_else(|| err("AVRO_TYPE", "Malformed record field"))?;
-                        self.walk(
+                        self.index_structural(
                             ftype,
                             &child(l, &format!("/fields/{i}/type")),
                             &local,
@@ -434,33 +509,213 @@ impl Types {
                     };
                     let item =
                         member(n, key).ok_or_else(|| err("AVRO_TYPE", format!("Missing {key}")))?;
-                    self.walk(item, &child(l, &format!("/{key}")), &local, depth + 1, ctx)?;
+                    self.index_structural(
+                        item,
+                        &child(l, &format!("/{key}")),
+                        &local,
+                        depth + 1,
+                        ctx,
+                    )?;
                 } else if typ == &u("enum") {
-                    if !matches!(member(n, "symbols"), Some(N::Array(_))) {
+                    let Some(N::Array(symbols)) = member(n, "symbols") else {
                         return Err(err("AVRO_TYPE", "Expected enum symbols"));
+                    };
+                    for symbol in symbols {
+                        ctx.charge_work(1, l.1.clone())?;
+                        if ns(symbol).is_none() {
+                            return Err(err("AVRO_TYPE", "Expected native string"));
+                        }
                     }
                 } else if typ == &u("fixed") {
-                    let Some(N::Number(size)) = member(n, "size") else {
-                        return Err(err("AVRO_TYPE", "Expected fixed size"));
-                    };
-                    if size.parse::<usize>().ok().filter(|n| *n > 0).is_none() {
-                        return Err(err("AVRO_TYPE", "Unresolved fixed size"));
-                    }
-                } else if !primitive(typ) && !self.names.contains_key(&qualified(typ, namespace)) {
-                    return Err(err(
-                        "AVRO_TYPE",
-                        format!(
-                            "undefined type name: {}",
-                            qualified(typ, namespace).to_utf8().unwrap_or_default()
-                        ),
-                    ));
+                    let size = fixed_size(n, ctx)?;
+                    self.fixed_sizes
+                        .try_reserve(1)
+                        .map_err(|_| allocation_failure())?;
+                    self.fixed_sizes.insert(l.clone(), size);
                 }
             }
             _ => return Err(err("AVRO_TYPE", "Expected type syntax")),
         }
         Ok(())
     }
+    fn validate_native(
+        &mut self,
+        n: &N,
+        l: &Loc,
+        namespace: &Utf16,
+        depth: usize,
+        ctx: &mut Context<'_>,
+    ) -> Result<Option<Utf16>, EngineError> {
+        Self::visit(l, depth, ctx)?;
+        match n {
+            N::String(name) => {
+                let full = native_name(name, namespace, ctx)?;
+                if !primitive(&full) && !self.registered.contains(&full) {
+                    return Err(type_text_error("undefined type name: ", &full, ctx)?);
+                }
+                Ok(Some(full))
+            }
+            N::Array(items) => {
+                if items.is_empty() {
+                    return Err(err("AVRO_TYPE", "empty union"));
+                }
+                ctx.charge_work(items.len(), l.1.clone())?;
+                let mut branches = Vec::new();
+                branches
+                    .try_reserve_exact(items.len())
+                    .map_err(|_| allocation_failure())?;
+                for (i, item) in items.iter().enumerate() {
+                    branches.push(self.validate_native(
+                        item,
+                        &child(l, &format!("/{i}")),
+                        namespace,
+                        depth + 1,
+                        ctx,
+                    )?);
+                }
+                let mut seen = HashSet::new();
+                seen.try_reserve(items.len())
+                    .map_err(|_| allocation_failure())?;
+                // avsc constructs every branch before checking nested unions or
+                // duplicate branch identities. A later child error takes priority.
+                for branch in branches {
+                    let Some(name) = branch else {
+                        return Err(err("AVRO_TYPE", "unions cannot be directly nested"));
+                    };
+                    if !seen.insert(name.clone()) {
+                        return Err(quoted_type_error(
+                            "duplicate union branch name: ",
+                            &name,
+                            ctx,
+                        )?);
+                    }
+                }
+                Ok(None)
+            }
+            N::Object(_) => {
+                let typ = member(n, "type")
+                    .and_then(ns)
+                    .ok_or_else(|| err("AVRO_TYPE", "Expected native string"))?;
+                if typ == &u("array") || typ == &u("map") {
+                    let key = if typ == &u("array") {
+                        "items"
+                    } else {
+                        "values"
+                    };
+                    self.validate_native(
+                        member(n, key).ok_or_else(|| err("AVRO_TYPE", format!("Missing {key}")))?,
+                        &child(l, &format!("/{key}")),
+                        namespace,
+                        depth + 1,
+                        ctx,
+                    )?;
+                    return Ok(Some(typ.clone()));
+                }
+                if !named(typ) {
+                    return self.validate_native(
+                        &N::String(typ.clone()),
+                        l,
+                        namespace,
+                        depth + 1,
+                        ctx,
+                    );
+                }
+                let name = member(n, "name")
+                    .and_then(ns)
+                    .ok_or_else(|| err("AVRO_TYPE", "Expected native string"))?;
+                let declared = member(n, "namespace").and_then(ns).unwrap_or(namespace);
+                let full = native_name(name, declared, ctx)?;
+                if primitive(&full) {
+                    return Err(quoted_type_error(
+                        "cannot rename primitive type: ",
+                        &full,
+                        ctx,
+                    )?);
+                }
+                self.registered
+                    .try_reserve(1)
+                    .map_err(|_| allocation_failure())?;
+                if !self.registered.insert(full.clone()) {
+                    return Err(type_text_error("duplicate type name: ", &full, ctx)?);
+                }
+                if typ == &u("record") || typ == &u("error") {
+                    let local = if let Some(declared) = member(n, "namespace").and_then(ns) {
+                        declared.clone()
+                    } else if name.units().contains(&(b'.' as u16)) {
+                        namespace_of(name)
+                    } else {
+                        namespace.clone()
+                    };
+                    let Some(N::Array(fields)) = member(n, "fields") else {
+                        return Err(err("AVRO_TYPE", "Expected record fields"));
+                    };
+                    for (i, field) in fields.iter().enumerate() {
+                        let name = member(field, "name")
+                            .and_then(ns)
+                            .ok_or_else(|| err("AVRO_TYPE", "Expected native string"))?;
+                        if !valid_avro_name(name, false) {
+                            return Err(type_text_error("invalid field name: ", name, ctx)?);
+                        }
+                        self.validate_native(
+                            member(field, "type")
+                                .ok_or_else(|| err("AVRO_TYPE", "Malformed record field"))?,
+                            &child(l, &format!("/fields/{i}/type")),
+                            &local,
+                            depth + 1,
+                            ctx,
+                        )?;
+                    }
+                } else if typ == &u("enum") {
+                    let Some(N::Array(symbols)) = member(n, "symbols") else {
+                        return Err(err("AVRO_TYPE", "Expected enum symbols"));
+                    };
+                    if symbols.is_empty() {
+                        return Err(err("AVRO_TYPE", "invalid enum symbols: []"));
+                    }
+                    let mut seen = HashSet::new();
+                    seen.try_reserve(symbols.len())
+                        .map_err(|_| allocation_failure())?;
+                    for symbol in symbols {
+                        ctx.charge_work(1, l.1.clone())?;
+                        let symbol =
+                            ns(symbol).ok_or_else(|| err("AVRO_TYPE", "Expected native string"))?;
+                        let quoted = serialization::stringify_compact_metered(
+                            &Value::String(symbol.clone()),
+                            ctx,
+                        )?;
+                        let prefix = if !valid_avro_name(symbol, false) {
+                            "invalid"
+                        } else if !seen.insert(symbol.clone()) {
+                            "duplicate"
+                        } else {
+                            continue;
+                        };
+                        let display =
+                            joined_text(&format!("{prefix} \""), &full, "\" symbol: ", ctx)?;
+                        return Err(EngineError::new(
+                            "AVRO_TYPE",
+                            u(""),
+                            joined_text(
+                                &display
+                                    .to_utf8()
+                                    .map_err(|_| err("AVRO_TYPE", "Invalid native name"))?,
+                                &quoted,
+                                "",
+                                ctx,
+                            )?,
+                        ));
+                    }
+                } else if self.fixed_sizes.get(l).copied().unwrap_or(0.0) > i32::MAX as f64 {
+                    let message = joined_text("invalid ", &full, " size", ctx)?;
+                    return Err(EngineError::new("AVRO_TYPE", u(""), message));
+                }
+                Ok(Some(full))
+            }
+            _ => Err(err("AVRO_TYPE", "Expected type syntax")),
+        }
+    }
 }
+
 struct Branch {
     shape: &'static str,
     definition: Option<Loc>,
@@ -498,21 +753,10 @@ fn branch(n: &N, l: &Loc, types: &Types, ctx: &mut Context<'_>) -> Result<Branch
         let full = qualified(typ, &namespace);
         (
             "one",
-            Some(
-                types
-                    .names
-                    .get(&full)
-                    .ok_or_else(|| {
-                        err(
-                            "AVRO_TYPE",
-                            format!(
-                                "undefined type name: {}",
-                                full.to_utf8().unwrap_or_default()
-                            ),
-                        )
-                    })?
-                    .clone(),
-            ),
+            Some(match types.names.get(&full) {
+                Some(found) => found.clone(),
+                None => return Err(type_text_error("Unresolved named type: ", &full, ctx)?),
+            }),
             None,
         )
     } else {
@@ -579,14 +823,14 @@ fn push_residual(
     residuals: &mut Vec<Value>,
     path: &Utf16,
     value: Value,
-    reason: String,
+    reason: Utf16,
     ctx: &mut Context<'_>,
 ) -> Result<(), EngineError> {
     ctx.charge_work(path.len() + reason.len(), path.clone())?;
     residuals.push(obj(vec![
         ("path", Value::String(path.clone())),
         ("value", value),
-        ("reason", t(&reason)),
+        ("reason", Value::String(reason)),
         ("recovery", t(RECOVERY)),
     ]));
     Ok(())
@@ -666,13 +910,12 @@ pub fn classify_avro_cardinality(
     let r = runtime(ctx)?;
     let source = copy(input, ctx)?;
     let request = copy(options, ctx)?;
-    let errors = r.request.validate(&request, ctx)?;
+    let errors = r.request.validate_codegen_errors(&request, ctx)?;
     if !errors.is_empty() {
         return Err(schema_error(
             "AVRO_CARDINALITY_REQUEST",
             &errors,
             true,
-            Some(&request),
             ctx,
         )?);
     }
@@ -742,7 +985,7 @@ pub fn classify_avro_cardinality(
         .chain(std::iter::once((None, &native_root)))
     {
         if let Err(e) = types.walk(tree.root(), &(id, u("")), &u(""), 0, ctx) {
-            if e.code != "AVRO_TYPE" {
+            if e.is_control_failure() || e.code != "AVRO_TYPE" {
                 return Err(e);
             }
             type_error = Some(e);
@@ -779,10 +1022,12 @@ pub fn classify_avro_cardinality(
                 &mut residuals,
                 &loc.1,
                 copy(&native, ctx)?,
-                format!(
-                    "Native structural type is unresolved: {}",
-                    e.message.to_utf8().unwrap_or_default()
-                ),
+                joined_text(
+                    "Native structural type is unresolved: ",
+                    &e.message,
+                    "",
+                    ctx,
+                )?,
                 ctx,
             )?;
         } else {
@@ -803,7 +1048,7 @@ pub fn classify_avro_cardinality(
                     }
                 }
                 Err(e) => {
-                    if e.code != "AVRO_TYPE" {
+                    if e.is_control_failure() || e.code != "AVRO_TYPE" {
                         return Err(e);
                     }
                     interpretation = "unsupported";
@@ -811,10 +1056,12 @@ pub fn classify_avro_cardinality(
                         &mut residuals,
                         &loc.1,
                         copy(&native, ctx)?,
-                        format!(
-                            "Native structural type is unresolved: {}",
-                            e.message.to_utf8().unwrap_or_default()
-                        ),
+                        joined_text(
+                            "Native structural type is unresolved: ",
+                            &e.message,
+                            "",
+                            ctx,
+                        )?,
                         ctx,
                     )?;
                 }
@@ -1090,4 +1337,198 @@ pub fn recover_avro_cardinality_bundle(
             )?,
         ),
     ]))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn walk(schema: &str) -> Result<(), EngineError> {
+        let mut ctx = Context::ordinary();
+        let tree =
+            NativeJsonTree::parse_json(&schema.encode_utf16().collect::<Vec<_>>(), &mut ctx)?;
+        Types::new().walk(tree.root(), &(None, u("")), &u(""), 0, &mut ctx)
+    }
+
+    #[test]
+    fn avro_registry_and_union_branch_names_follow_the_structural_profile() {
+        for schema in [
+            r#"{"type":"record","name":"n.R","fields":[{"name":"v","type":[{"type":"enum","name":"E","symbols":["A"]},"E"]}]}"#,
+            r#"{"type":"record","name":"n.R","fields":[{"name":"v","type":[{"type":"enum","name":"n.E","symbols":["A"]},"n.E"]}]}"#,
+            r#"[{"type":"array","items":"long"},{"type":"array","items":"string"}]"#,
+            r#"[{"type":"map","values":"long"},{"type":"map","values":"string"}]"#,
+            r#"{"type":"enum","name":"E","symbols":["A","A"]}"#,
+            r#"{"type":"enum","name":"E","symbols":["bad-name"]}"#,
+            r#"{"type":"fixed","name":"bad-name","size":1}"#,
+            r#"{"type":"record","name":"R","fields":[{"name":"bad-name","type":"long"}]}"#,
+            r#"["long",["int"]]"#,
+        ] {
+            assert_eq!(walk(schema).unwrap_err().code, "AVRO_TYPE", "{schema}");
+        }
+        assert!(walk(r#"{"type":"record","name":"n.R","fields":[{"name":"v","type":[{"type":"enum","name":"E","symbols":["A"]},"long"]}]}"#).is_ok());
+    }
+
+    #[test]
+    fn structural_projection_precedes_native_union_checks_without_admitting_forward_refs() {
+        for (schema, expected) in [
+            (
+                r#"["long","long","Missing"]"#,
+                "undefined type name: Missing",
+            ),
+            (r#"["long",["Missing"]]"#, "undefined type name: Missing"),
+            (
+                r#"["long","long",{"type":"fixed","name":"bad-name","size":0}]"#,
+                "Unresolved fixed size",
+            ),
+            (
+                r#"["long","long",{"type":"enum","name":"E","symbols":[]}]"#,
+                "invalid enum symbols: []",
+            ),
+            (
+                r#"{"type":"record","name":"R","fields":[{"name":"a","type":"Later"},{"name":"b","type":{"type":"enum","name":"Later","symbols":["A"]}}]}"#,
+                "undefined type name: Later",
+            ),
+        ] {
+            assert_eq!(walk(schema).unwrap_err().message, u(expected), "{schema}");
+        }
+    }
+
+    #[test]
+    fn structural_diagnostics_keep_isolated_utf16_through_the_residual() {
+        let failure =
+            walk(r#"{"type":"record","name":"R","fields":[{"name":"\ud800","type":"long"}]}"#)
+                .unwrap_err();
+        let mut expected = u("invalid field name: ").into_units();
+        expected.push(0xd800);
+        assert_eq!(failure.message.units(), expected);
+        let reference = walk(r#""\ud800""#).unwrap_err();
+        assert_eq!(reference.message, u(r#"invalid name: "\ud800""#));
+        let mut ctx = Context::ordinary();
+        let mut residuals = Vec::new();
+        let reason = joined_text(
+            "Native structural type is unresolved: ",
+            &failure.message,
+            "",
+            &mut ctx,
+        )
+        .unwrap();
+        push_residual(
+            &mut residuals,
+            &u("/type"),
+            Value::Null,
+            reason.clone(),
+            &mut ctx,
+        )
+        .unwrap();
+        assert_eq!(get(&residuals[0], "reason"), Some(&Value::String(reason)));
+    }
+
+    #[test]
+    fn fixed_size_uses_binary64_safe_integer_semantics() {
+        for size in [
+            "0",
+            "-1",
+            "1.5",
+            "9007199254740991",
+            "9007199254740992",
+            "9007199254740993",
+        ] {
+            let schema = format!(r#"{{"type":"fixed","name":"F","size":{size}}}"#);
+            assert_eq!(walk(&schema).unwrap_err().code, "AVRO_TYPE", "{size}");
+        }
+        for size in ["1", "1.0", "1e0", "2147483647"] {
+            let schema = format!(r#"{{"type":"fixed","name":"F","size":{size}}}"#);
+            assert!(walk(&schema).is_ok(), "{size}");
+        }
+    }
+
+    #[test]
+    fn type_walk_preserves_host_control_provenance() {
+        let mut parse_ctx = Context::ordinary();
+        let tree = NativeJsonTree::parse_json(
+            &r#"{"type":"fixed","name":"F","size":9007199254740993}"#
+                .encode_utf16()
+                .collect::<Vec<_>>(),
+            &mut parse_ctx,
+        )
+        .unwrap();
+        let mut meter = |_amount| Err(EngineError::new("RESOURCE_LIMIT", u(""), "host budget"));
+        let mut metered = Context::ordinary().with_meter(&mut meter);
+        let failure = Types::new()
+            .walk(tree.root(), &(None, u("")), &u(""), 0, &mut metered)
+            .unwrap_err();
+        assert_eq!(failure.code, "RESOURCE_LIMIT");
+        assert!(failure.is_control_failure());
+        let mut collision_meter = |_amount| {
+            Err(EngineError::new(
+                "AVRO_TYPE",
+                u(""),
+                "host control with a structural code",
+            ))
+        };
+        let mut collision = Context::ordinary().with_meter(&mut collision_meter);
+        let failure = Types::new()
+            .walk(tree.root(), &(None, u("")), &u(""), 0, &mut collision)
+            .unwrap_err();
+        assert_eq!(failure.code, "AVRO_TYPE");
+        assert!(failure.is_control_failure());
+        let mut cancel = || true;
+        let mut cancelled = Context::ordinary().with_cancellation(&mut cancel);
+        let failure = Types::new()
+            .walk(tree.root(), &(None, u("")), &u(""), 0, &mut cancelled)
+            .unwrap_err();
+        assert_eq!(failure.code, "CANCELLED");
+        assert!(failure.is_control_failure());
+    }
+
+    #[test]
+    fn request_errors_keep_every_extra_in_schema_keyword_order() {
+        let mut ctx = Context::ordinary();
+        let r = runtime(&mut ctx).unwrap();
+        let request = parse_resource(
+            r#"{"nativeSource":"{}","dependencies":[{"id":"d","schema":"{}","futureDependency":1,"laterDependency":2}],"identity":{"module":"m","element":"e","extraIdentity":1},"profile":"present-non-null-schema","mode":"future","future":1,"later":2}"#,
+            &mut ctx,
+        ).unwrap();
+        let errors = r
+            .request
+            .validate_codegen_errors(&request, &mut ctx)
+            .unwrap();
+        let message = schema_error("AVRO_CARDINALITY_REQUEST", &errors, true, &mut ctx)
+            .unwrap()
+            .message
+            .to_utf8()
+            .unwrap();
+        let diagnostic: serde_json::Value = serde_json::from_str(&message).unwrap();
+        let diagnostics = diagnostic.as_array().unwrap();
+        assert_eq!(
+            diagnostics
+                .iter()
+                .map(|e| e["keyword"].as_str().unwrap())
+                .collect::<Vec<_>>(),
+            [
+                "required",
+                "additionalProperties",
+                "additionalProperties",
+                "additionalProperties",
+                "additionalProperties",
+                "additionalProperties",
+                "enum"
+            ]
+        );
+        assert_eq!(
+            diagnostics
+                .iter()
+                .filter_map(|e| e["params"]["additionalProperty"].as_str())
+                .collect::<Vec<_>>(),
+            [
+                "future",
+                "later",
+                "futureDependency",
+                "laterDependency",
+                "extraIdentity"
+            ]
+        );
+        assert_eq!(diagnostics[0]["params"]["missingProperty"], "column");
+        assert_eq!(diagnostics[6]["instancePath"], "/mode");
+    }
 }
