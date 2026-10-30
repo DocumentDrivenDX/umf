@@ -68,17 +68,19 @@ OpenAPI's eight native tests pass. GraphQL's twelve native tests, three wire
 tests and two CLI tests pass, including edited AST round trips, exact metadata,
 closed request validation and resource controls.
 
-The full default Cargo suite compiles. Its core run passed 627 tests and failed
-three tests at the same obsolete source-hash gate, before reaching their work
-assertions. That test-only gate and its fixture custody metadata are removed;
-the numeric accounting and million-unit ceiling checks remain unchanged and
-await a focused rerun. Other compiled test targets are being run serially; a
-continuation skips completed targets and records executable paths to distinguish
-similarly named targets from different crates. Doctests run at the end.
+The full default Cargo suite compiles. The 630 core unit tests are covered and
+pass after the focused 11-test accounting rerun; original numeric work counts,
+outcomes and the million-unit ceiling are unchanged. Forty-six native
+targets completed successfully before the bounded run ended. The continuation
+runs unfinished targets and doctests, preserving completed results and checking
+that selected test filters execute their intended tests.
 
 Current source-policy checks pass (16 tests); the rewritten Python scanner tests
-pass with all 17 behavior vectors. Final generation and packaging checks remain
-pending after the native suite.
+pass with all 17 behavior vectors. Source-distribution tests (14), SDK packaging
+tests (9), descriptor generation and all 26 portable WASM source checks pass.
+Metamodel generation passes; regenerated code and schemas differ only in compiler
+provenance. Production source and host/WASM dependency inspection passes for 877
+modules with nine negative controls and no findings.
 
 ## Remaining Port Work
 
