@@ -24,9 +24,8 @@ from umf_access.rust_target_pin_host import matches as host_matches
 ROOT = Path(__file__).resolve().parents[3]
 PACKET = (
     ROOT
-    / "tests/rust-core/fixtures/target-pin-python-predecessor-20261028/packet.json"
+    / "tests/rust-core/fixtures/target-pin/cases.json"
 )
-PACKET_DUPLICATE_CASE = "duplicate-observed-name-misses-other-pinned-name"
 
 
 def load_candidate_library() -> None:
@@ -43,7 +42,7 @@ def load_candidate_library() -> None:
 
 
 def python_matches(pin: object, identity: object) -> bool:
-    """Frozen current Python behavior, including CONTRACT-072 uniqueness."""
+    """Current Python target-pin behavior, including duplicate-name rejection."""
     identity_fields = (
         identity.kind,
         identity.backend_id,
@@ -170,7 +169,7 @@ class RustTargetPinTests(unittest.TestCase):
         with self.assertRaisesRegex(TargetPinRustUnsupported, "exact tuples"):
             matches(malformed, identity)
 
-    def test_all_frozen_predecessor_cases_match_under_current_policy(self) -> None:
+    def test_all_current_target_pin_cases_match(self) -> None:
         packet = json.loads(PACKET.read_text(encoding="utf-8"))
         self.assertEqual(len(packet["cases"]), 13)
         for case in packet["cases"]:
@@ -185,12 +184,7 @@ class RustTargetPinTests(unittest.TestCase):
                     raw["binding_sha256"],
                     observed,
                 )
-                predecessor_expected = case["expected"]
-                expected = (
-                    False
-                    if case["name"] == PACKET_DUPLICATE_CASE
-                    else predecessor_expected
-                )
+                expected = case["expected"]
                 self.assertEqual(python_matches(self.pin, identity), expected)
                 self.assertEqual(matches(self.pin, identity), expected)
                 self.assertEqual(self.pin.matches(identity), expected)
@@ -209,9 +203,7 @@ class RustTargetPinTests(unittest.TestCase):
                     raw["binding_sha256"],
                     tuple(tuple(pair) for pair in raw["platform"]),
                 )
-                expected = (
-                    False if case["name"] == PACKET_DUPLICATE_CASE else case["expected"]
-                )
+                expected = case["expected"]
                 self.assertEqual(host_matches(self.pin, identity), expected)
                 self.assertEqual(self.pin.matches(identity), expected)
 
@@ -237,7 +229,7 @@ class RustTargetPinTests(unittest.TestCase):
                 (("driver", "3.2"),),
             )
 
-    def test_host_candidate_reads_live_fields_and_platforms_in_predecessor_order(
+    def test_host_candidate_reads_live_fields_and_platforms_in_defined_order(
         self,
     ) -> None:
         self.require_host_matcher()

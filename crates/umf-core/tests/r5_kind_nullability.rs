@@ -158,7 +158,6 @@ fn complete_envelopes_match_frozen_typescript_and_retain_opaque_content() {
     let e = engine();
     let r = Registry::new();
     let mut c = NoCapabilities;
-    let mut out = Vec::new();
     let inspect = umf_core::core_kind::inspect_core_kind(
         &s,
         &id("known"),
@@ -169,7 +168,6 @@ fn complete_envelopes_match_frozen_typescript_and_retain_opaque_content() {
     )
     .unwrap();
     assert_eq!(inspect, *get(&f, "kind_inspect_known").unwrap());
-    out.push((Utf16::from("kind_inspect_known"), inspect));
     let inspect = umf_core::core_kind::inspect_core_kind(
         &s,
         &id("kindless"),
@@ -180,7 +178,6 @@ fn complete_envelopes_match_frozen_typescript_and_retain_opaque_content() {
     )
     .unwrap();
     assert_eq!(inspect, *get(&f, "kind_inspect_unspecified").unwrap());
-    out.push((Utf16::from("kind_inspect_unspecified"), inspect));
     let declare = umf_core::core_kind::declare_core_kind(
         &s,
         &id("missing"),
@@ -202,8 +199,6 @@ fn complete_envelopes_match_frozen_typescript_and_retain_opaque_content() {
     )
     .unwrap();
     assert_eq!(verified, *get(&f, "kind_verify").unwrap());
-    out.push((Utf16::from("kind_verify"), verified));
-    out.push((Utf16::from("kind_declare"), declare));
     let inspect = umf_core::nullability::inspect_core_nullability(
         &s,
         &nul_id("missing"),
@@ -214,7 +209,6 @@ fn complete_envelopes_match_frozen_typescript_and_retain_opaque_content() {
     )
     .unwrap();
     assert_eq!(inspect, *get(&f, "nullability_inspect_missing").unwrap());
-    out.push((Utf16::from("nullability_inspect_missing"), inspect));
     let inspect = umf_core::nullability::inspect_core_nullability(
         &s,
         &nul_id("known"),
@@ -225,7 +219,6 @@ fn complete_envelopes_match_frozen_typescript_and_retain_opaque_content() {
     )
     .unwrap();
     assert_eq!(inspect, *get(&f, "nullability_inspect_known").unwrap());
-    out.push((Utf16::from("nullability_inspect_known"), inspect));
     let inspect = umf_core::nullability::inspect_core_nullability(
         &s,
         &nul_id("record"),
@@ -239,7 +232,6 @@ fn complete_envelopes_match_frozen_typescript_and_retain_opaque_content() {
         inspect,
         *get(&f, "nullability_inspect_inapplicable").unwrap()
     );
-    out.push((Utf16::from("nullability_inspect_inapplicable"), inspect));
     let declare = umf_core::nullability::declare_core_nullability(
         &s,
         &nul_id("missing"),
@@ -261,8 +253,6 @@ fn complete_envelopes_match_frozen_typescript_and_retain_opaque_content() {
     )
     .unwrap();
     assert_eq!(verified, *get(&f, "nullability_verify").unwrap());
-    out.push((Utf16::from("nullability_verify"), verified));
-    out.push((Utf16::from("nullability_declare"), declare));
     let raw_id = Utf16::new(vec![0xd800]);
     let raw_identity = umf_core::core_kind::Identity {
         module: raw_id.clone(),
@@ -282,7 +272,6 @@ fn complete_envelopes_match_frozen_typescript_and_retain_opaque_content() {
         inspect,
         *get(&f, "kind_surrogate_identity_inspect").unwrap()
     );
-    out.push((Utf16::from("kind_surrogate_identity_inspect"), inspect));
     let null_identity = umf_core::nullability::Identity {
         module: raw_id.clone(),
         element: raw_id,
@@ -300,21 +289,6 @@ fn complete_envelopes_match_frozen_typescript_and_retain_opaque_content() {
         inspect,
         *get(&f, "nullability_surrogate_identity_inspect").unwrap()
     );
-    out.push((
-        Utf16::from("nullability_surrogate_identity_inspect"),
-        inspect,
-    ));
-    if let Ok(path) = std::env::var("UMF_R5_CAPTURE") {
-        let json = umf_core::serialization::write_json_value(
-            &Value::Object(out),
-            Format::Json,
-            &mut Context::ordinary(),
-        )
-        .unwrap();
-        let path = std::path::PathBuf::from(path);
-        std::fs::create_dir_all(path.parent().unwrap()).unwrap();
-        std::fs::write(path, json.to_utf8().unwrap()).unwrap();
-    }
 }
 
 #[test]

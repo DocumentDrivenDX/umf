@@ -2,13 +2,13 @@
   "profile": "umf.metamodel.outputs/1",
   "provenance": {
     "modelSha256": "fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f",
-    "compilerSha256": "4e3773c6b3a1365706aa5641dfad5b4247349174551a43a8b14a9dc8ffac4aa4"
+    "compilerSha256": "550e0c963197083c83b1f9425dd8d9d24e6e7eb9bd6b715ee2e5873684477a37"
   },
   "sources": {
     "spec/metamodel/umf.yaml": "fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f",
     ".cargo/config.toml": "84fd4fa17fd967cae6006ba1b0dc430904239dec921c1441dd657387ee802d6c",
     "Cargo.lock": "61cffaa63b73d36d7845070cf69d45a3b250a982a959f5185f717d1c3f77aece",
-    "Cargo.toml": "d753a8abc24c50d10168d7a61a25549c7632a598d2ce47a5ca7df601b6a921fc",
+    "Cargo.toml": "298fb0038cf3b34c8ddd49c117faf53813faa32c76191ad034f515520687ad77",
     "crates/umf-core/Cargo.toml": "c6da5a4f929d32273632daf5c778a04c9f8e74c33da9ca8bb0cd33f869c8bb2a",
     "crates/umf-core/examples/gregorian_date_oracle.rs": "ac3f6c5b7134bbaeb9c99000eaa91daa5d4bf84ca82678d37a5fa48488c4fbc9",
     "crates/umf-core/examples/r5_cardinality_capture.rs": "e741987e2abb127dadc5eded3443c34be651568509b2192cdf37383c9b67840b",
@@ -206,17 +206,16 @@
     "crates/umf-core/tests/r5_core_relationships.rs": "257f4a68908ecae4a77387e164463ecf067833c1592ed65c277d0e9b0dae6c24",
     "crates/umf-core/tests/r5_core_semantic_types.rs": "9b98ae15c318ffac348b77691820d97bd2a25907b98b1c2871f34a8740f10d2b",
     "crates/umf-core/tests/r5_csv_boolean_lexical.rs": "bd93c027e45606c6bf807b589977936d9d298d5bb4480495974d3712e8355fe5",
-    "crates/umf-core/tests/r5_dataset_values.rs": "42366ed5035384a441d8efb76858522baf2df201fb61b78b3ed4aeb191ff77c6",
-    "crates/umf-core/tests/r5_dataset_values_compact.rs": "f0598d153729c355cacf5e5caf58ee5407c1171c1809d5e90ccd50bc3bd107e4",
-    "crates/umf-core/tests/r5_edit_extension.rs": "290a497abcd87daf71d3f10aafe55e3c0b585759426266a37433135907ebffc5",
+    "crates/umf-core/tests/r5_dataset_values.rs": "97795228577980485332e6d8e613ebfb2f9b831d1a7320f6a513f627b6412eef",
+    "crates/umf-core/tests/r5_dataset_values_compact.rs": "f68b28adc7fa417a652c1ff71fff2b1024cdd48ea11a83bd46673c26662c0873",
+    "crates/umf-core/tests/r5_edit_extension.rs": "6fc8b6a42cd11b5983b0c44cc4c44183e07eacee10e13bc39248e86c5eae7ae9",
     "crates/umf-core/tests/r5_field_value.rs": "58bfaaea29f6da491fe5a93ebef30e7f12b2295474b04f92d9f28f20b2768524",
     "crates/umf-core/tests/r5_json_schema_adapter.rs": "5702fa264d4fc69cbd4133892c576625dcb9beb36347b3bfac4d89eceb9cfd61",
     "crates/umf-core/tests/r5_json_schema_edit.rs": "de20ff806587ae8d784fac9fdb52b8026a0ad378da86a55c8bdde2a62e9348a7",
-    "crates/umf-core/tests/r5_json_schema_full_corpus.rs": "d7b6c9bfe46a8fa43e1288e4fa8b9be14e473b4e8928485b2b697b75e8db47a6",
     "crates/umf-core/tests/r5_json_schema_import_session.rs": "907d9307daf2b633af9c93543911d841fe524f2dbfb40acf499dde48df32ebf4",
-    "crates/umf-core/tests/r5_json_schema_inspect.rs": "eba965ce102c0223a52f5997805898e809eb0319584a7fe93aef83a2eb501f42",
+    "crates/umf-core/tests/r5_json_schema_inspect.rs": "693163d5d8ef2230341240f232e2d5ed0a5fe5e8c513d8e18d62b894262ecf55",
     "crates/umf-core/tests/r5_json_schema_operations.rs": "78bff1da2dceb45ccee0771a6405e6920a2751fad8bc03569f8f4f99b84134c4",
-    "crates/umf-core/tests/r5_kind_nullability.rs": "592a3ad200aeb4118047a959de2aceddd8f49c7c64bf1a58e1ca0e6c7acd621a",
+    "crates/umf-core/tests/r5_kind_nullability.rs": "80971d21a260416ecf890fd9d558d2915223549a30ef3040f863075dd8e247bb",
     "crates/umf-core/tests/r5_native_json.rs": "fa03f520d89def3fb0ac7ed37e7d58c3153af290210befaddda5f56b6d730746",
     "crates/umf-core/tests/r5_protobuf_document.rs": "799565fc95d8d51859c1665f07423d939cf6e8c3aca326f1cfb9db360f172409",
     "crates/umf-core/tests/r5_protobuf_inspect.rs": "561ebbb340530f793e6ebd23a7bcb19294dbf371659181fea894568a7d11523b",
@@ -229,7 +228,7 @@
     "crates/umf-core/tests/r5_security_literal.rs": "005e8fba5fc74d2bbaa20394c9f5c9c2795af6339636da16a9881e5e50ae5265",
     "crates/umf-core/tests/r5_selection.rs": "2ef43cc612655d61c227e9ed972056dc4bccdcb8c0417430b6a08ffdf2324206",
     "crates/umf-core/tests/r5_semantic_type_accessors.rs": "d0906ce93be20f15cddcd484a256a890656c4e2ae5402a3fd5a2de49d38dbb62",
-    "crates/umf-core/tests/r5_target_pin.rs": "afabbf67e228dbdb60d90fc663f3563dd5259f8db310a5dde0b444b318480404",
+    "crates/umf-core/tests/r5_target_pin.rs": "2cba8bb8ff53946e04f0ecb0a90119031257b7c2321cdaefa36bad7d4be44c3c",
     "crates/umf-core/tests/r8_bit128_field.rs": "741a2e5c211590845c54b591459bb1f90416fc4f2708e74479dc45ba1081bf10",
     "crates/umf-core/tests/r8_delta_schema.rs": "973fd41b40f5dc98a00c638a7db5499eb3876402b66646d7ac4dd395df62549b",
     "crates/umf-core/tests/r8_delta_table.rs": "c395ae2c29ab20a273416ef3eae43506a5e994b838751c17d8ff789d931043f6",
@@ -267,7 +266,9 @@
     "crates/umf-core/tools/unicode/NameAliases-16.0.0.txt": "bc5e89e5a6f2cf21b1d3976af13432bab3f0b406907d7c7ba9c0f4faf3fc5b44",
     "crates/umf-core/vendor/oxrdf/Cargo.toml": "330f8a76a018c013a9304c145bfbfd39de1c7c36c26e8a822a506f45474afc33",
     "crates/umf-core/vendor/oxrdf/Cargo.toml.orig": "502f7b4227881f5c49bb7864949a18a1436389d9f6b038a2a3f79dbb675f300c",
-    "crates/umf-core/vendor/oxrdf/PROVENANCE.md": "2b90f0b925feaffb9f642839cd2610b3e1fad1fa656d056b42cbaaa57ef8f481",
+    "crates/umf-core/vendor/oxrdf/LICENSE-APACHE": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2",
+    "crates/umf-core/vendor/oxrdf/LICENSE-MIT": "1f4f6736adc52ebfda18bb84947e0ef492bd86a408c0e83872efb75ed5e02838",
+    "crates/umf-core/vendor/oxrdf/PROVENANCE.md": "82ee4dc0d0a4b7c7875f09d0d428df90da20ad016e4962285b7892c9d9332816",
     "crates/umf-core/vendor/oxrdf/README.md": "8de6ff19f9b2cdfc444285fa4a791bbc9c8abb04a887743b7feb944aea0f9ff9",
     "crates/umf-core/vendor/oxrdf/src/blank_node.rs": "9581dafbeb77995a7053d41b65fa7bad8969af8023f197fc013c7901c66f0603",
     "crates/umf-core/vendor/oxrdf/src/dataset.rs": "692c68bea9a20db82a062311cd59bcfbc6138227c2cab4aa8f46810e7633eec9",
@@ -546,6 +547,7 @@
     "bindings/core/wasm/tests/record-members-retained.test.js": "07c52f44431ed7e9476516bedf75189ccca0651815f7c75f3f119c442bc81c2f",
     "bindings/core/wasm/tests/semantic-value-browser.mjs": "bcdd852502c739e1735f19430e7bdf82a7288be0d366eb6c923928217fb6b940",
     "bindings/core/wasm/tests/semantic-value-wrapper.test.js": "4c194fbcb81c4b2a0ff148e734c3e9e218bb3a10aa91d7e1788af0b790aaf43f",
+    "crates/README.md": "a4de9d761989580401cd92ce5fb422fdb452c5c1d1bdeb1e81f7b47d9bd41398",
     "crates/umf-cli/Cargo.toml": "a2d3c5ddb8ea1a6de4b405d665e8515c1f75e898dde46d46ddc115f551bc1399",
     "crates/umf-cli/src/allocator.rs": "a3e77591864120c7d1a8b0c39c530b67306840b27a2f5159a4873b7df47e525b",
     "crates/umf-cli/src/main.rs": "981e7ed8ceb6ca5b95c449fbac07122d09bd9c4094e64b0ac1aa3c58aab599ce",
@@ -712,9 +714,9 @@
     "crates/umf-graphql/src/graphql17_overlay.rs": "0a59d41604f18b912c6c46be844be96d165ec7082ef2ef49e15c8100accc18c1",
     "crates/umf-graphql/src/graphql_adapter.rs": "97b835364d96b1259fa20fb2a901bbe453bb9e6226407ac9c930f3128281a931",
     "crates/umf-graphql/src/lib.rs": "dd384a25225c56a77862ff4684afb200ad02c47c1b347b06f8450e4b1b0c4e6d",
-    "crates/umf-graphql/vendor/VENDOR-NOTES.md": "bd92ec2768b6af970f868468ce67dea68676b403f55e4e9c7b7ae786b6879d0f",
+    "crates/umf-graphql/vendor/VENDOR-NOTES.md": "b73d89819adeaa061da8ea490026e31477c786fbb20ea2db44e8b440eb12fee2",
     "crates/umf-graphql/vendor/apollo-compiler/CHANGELOG.md": "92d169cb3d091780dab18ef9cccc17d13d2fa19eb14f2d59d39f4d2494e2b0f7",
-    "crates/umf-graphql/vendor/apollo-compiler/Cargo.toml": "4c5b3a3444ef303a3130d85e7fb112d43f5afda52cddd7091f19ccdbec383e7b",
+    "crates/umf-graphql/vendor/apollo-compiler/Cargo.toml": "7f35849f5ebb4ae37a680f05e67182998749de549bf263d6b7425b45a609703b",
     "crates/umf-graphql/vendor/apollo-compiler/Cargo.toml.orig": "5ba974f6873067403728d7d05bf187baaba2a42f828fec3699e5396117053732",
     "crates/umf-graphql/vendor/apollo-compiler/LICENSE-APACHE": "9cff568488e9d56aae60f162404acdb15d8533a0202cf01f6eb0843b264f20ff",
     "crates/umf-graphql/vendor/apollo-compiler/LICENSE-MIT": "94949dd83279f3ca3d0ce42ce0fc154d0ed817444454ee2925e903eec93949b6",
@@ -1385,7 +1387,7 @@
   "compilerInputs": {
     ".cargo/config.toml": "84fd4fa17fd967cae6006ba1b0dc430904239dec921c1441dd657387ee802d6c",
     "Cargo.lock": "61cffaa63b73d36d7845070cf69d45a3b250a982a959f5185f717d1c3f77aece",
-    "Cargo.toml": "d753a8abc24c50d10168d7a61a25549c7632a598d2ce47a5ca7df601b6a921fc",
+    "Cargo.toml": "298fb0038cf3b34c8ddd49c117faf53813faa32c76191ad034f515520687ad77",
     "crates/umf-core/Cargo.toml": "c6da5a4f929d32273632daf5c778a04c9f8e74c33da9ca8bb0cd33f869c8bb2a",
     "crates/umf-core/examples/gregorian_date_oracle.rs": "ac3f6c5b7134bbaeb9c99000eaa91daa5d4bf84ca82678d37a5fa48488c4fbc9",
     "crates/umf-core/examples/r5_cardinality_capture.rs": "e741987e2abb127dadc5eded3443c34be651568509b2192cdf37383c9b67840b",
@@ -1583,17 +1585,16 @@
     "crates/umf-core/tests/r5_core_relationships.rs": "257f4a68908ecae4a77387e164463ecf067833c1592ed65c277d0e9b0dae6c24",
     "crates/umf-core/tests/r5_core_semantic_types.rs": "9b98ae15c318ffac348b77691820d97bd2a25907b98b1c2871f34a8740f10d2b",
     "crates/umf-core/tests/r5_csv_boolean_lexical.rs": "bd93c027e45606c6bf807b589977936d9d298d5bb4480495974d3712e8355fe5",
-    "crates/umf-core/tests/r5_dataset_values.rs": "42366ed5035384a441d8efb76858522baf2df201fb61b78b3ed4aeb191ff77c6",
-    "crates/umf-core/tests/r5_dataset_values_compact.rs": "f0598d153729c355cacf5e5caf58ee5407c1171c1809d5e90ccd50bc3bd107e4",
-    "crates/umf-core/tests/r5_edit_extension.rs": "290a497abcd87daf71d3f10aafe55e3c0b585759426266a37433135907ebffc5",
+    "crates/umf-core/tests/r5_dataset_values.rs": "97795228577980485332e6d8e613ebfb2f9b831d1a7320f6a513f627b6412eef",
+    "crates/umf-core/tests/r5_dataset_values_compact.rs": "f68b28adc7fa417a652c1ff71fff2b1024cdd48ea11a83bd46673c26662c0873",
+    "crates/umf-core/tests/r5_edit_extension.rs": "6fc8b6a42cd11b5983b0c44cc4c44183e07eacee10e13bc39248e86c5eae7ae9",
     "crates/umf-core/tests/r5_field_value.rs": "58bfaaea29f6da491fe5a93ebef30e7f12b2295474b04f92d9f28f20b2768524",
     "crates/umf-core/tests/r5_json_schema_adapter.rs": "5702fa264d4fc69cbd4133892c576625dcb9beb36347b3bfac4d89eceb9cfd61",
     "crates/umf-core/tests/r5_json_schema_edit.rs": "de20ff806587ae8d784fac9fdb52b8026a0ad378da86a55c8bdde2a62e9348a7",
-    "crates/umf-core/tests/r5_json_schema_full_corpus.rs": "d7b6c9bfe46a8fa43e1288e4fa8b9be14e473b4e8928485b2b697b75e8db47a6",
     "crates/umf-core/tests/r5_json_schema_import_session.rs": "907d9307daf2b633af9c93543911d841fe524f2dbfb40acf499dde48df32ebf4",
-    "crates/umf-core/tests/r5_json_schema_inspect.rs": "eba965ce102c0223a52f5997805898e809eb0319584a7fe93aef83a2eb501f42",
+    "crates/umf-core/tests/r5_json_schema_inspect.rs": "693163d5d8ef2230341240f232e2d5ed0a5fe5e8c513d8e18d62b894262ecf55",
     "crates/umf-core/tests/r5_json_schema_operations.rs": "78bff1da2dceb45ccee0771a6405e6920a2751fad8bc03569f8f4f99b84134c4",
-    "crates/umf-core/tests/r5_kind_nullability.rs": "592a3ad200aeb4118047a959de2aceddd8f49c7c64bf1a58e1ca0e6c7acd621a",
+    "crates/umf-core/tests/r5_kind_nullability.rs": "80971d21a260416ecf890fd9d558d2915223549a30ef3040f863075dd8e247bb",
     "crates/umf-core/tests/r5_native_json.rs": "fa03f520d89def3fb0ac7ed37e7d58c3153af290210befaddda5f56b6d730746",
     "crates/umf-core/tests/r5_protobuf_document.rs": "799565fc95d8d51859c1665f07423d939cf6e8c3aca326f1cfb9db360f172409",
     "crates/umf-core/tests/r5_protobuf_inspect.rs": "561ebbb340530f793e6ebd23a7bcb19294dbf371659181fea894568a7d11523b",
@@ -1606,7 +1607,7 @@
     "crates/umf-core/tests/r5_security_literal.rs": "005e8fba5fc74d2bbaa20394c9f5c9c2795af6339636da16a9881e5e50ae5265",
     "crates/umf-core/tests/r5_selection.rs": "2ef43cc612655d61c227e9ed972056dc4bccdcb8c0417430b6a08ffdf2324206",
     "crates/umf-core/tests/r5_semantic_type_accessors.rs": "d0906ce93be20f15cddcd484a256a890656c4e2ae5402a3fd5a2de49d38dbb62",
-    "crates/umf-core/tests/r5_target_pin.rs": "afabbf67e228dbdb60d90fc663f3563dd5259f8db310a5dde0b444b318480404",
+    "crates/umf-core/tests/r5_target_pin.rs": "2cba8bb8ff53946e04f0ecb0a90119031257b7c2321cdaefa36bad7d4be44c3c",
     "crates/umf-core/tests/r8_bit128_field.rs": "741a2e5c211590845c54b591459bb1f90416fc4f2708e74479dc45ba1081bf10",
     "crates/umf-core/tests/r8_delta_schema.rs": "973fd41b40f5dc98a00c638a7db5499eb3876402b66646d7ac4dd395df62549b",
     "crates/umf-core/tests/r8_delta_table.rs": "c395ae2c29ab20a273416ef3eae43506a5e994b838751c17d8ff789d931043f6",
@@ -1644,7 +1645,9 @@
     "crates/umf-core/tools/unicode/NameAliases-16.0.0.txt": "bc5e89e5a6f2cf21b1d3976af13432bab3f0b406907d7c7ba9c0f4faf3fc5b44",
     "crates/umf-core/vendor/oxrdf/Cargo.toml": "330f8a76a018c013a9304c145bfbfd39de1c7c36c26e8a822a506f45474afc33",
     "crates/umf-core/vendor/oxrdf/Cargo.toml.orig": "502f7b4227881f5c49bb7864949a18a1436389d9f6b038a2a3f79dbb675f300c",
-    "crates/umf-core/vendor/oxrdf/PROVENANCE.md": "2b90f0b925feaffb9f642839cd2610b3e1fad1fa656d056b42cbaaa57ef8f481",
+    "crates/umf-core/vendor/oxrdf/LICENSE-APACHE": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2",
+    "crates/umf-core/vendor/oxrdf/LICENSE-MIT": "1f4f6736adc52ebfda18bb84947e0ef492bd86a408c0e83872efb75ed5e02838",
+    "crates/umf-core/vendor/oxrdf/PROVENANCE.md": "82ee4dc0d0a4b7c7875f09d0d428df90da20ad016e4962285b7892c9d9332816",
     "crates/umf-core/vendor/oxrdf/README.md": "8de6ff19f9b2cdfc444285fa4a791bbc9c8abb04a887743b7feb944aea0f9ff9",
     "crates/umf-core/vendor/oxrdf/src/blank_node.rs": "9581dafbeb77995a7053d41b65fa7bad8969af8023f197fc013c7901c66f0603",
     "crates/umf-core/vendor/oxrdf/src/dataset.rs": "692c68bea9a20db82a062311cd59bcfbc6138227c2cab4aa8f46810e7633eec9",
@@ -1925,6 +1928,7 @@
     "bindings/core/wasm/tests/record-members-retained.test.js": "07c52f44431ed7e9476516bedf75189ccca0651815f7c75f3f119c442bc81c2f",
     "bindings/core/wasm/tests/semantic-value-browser.mjs": "bcdd852502c739e1735f19430e7bdf82a7288be0d366eb6c923928217fb6b940",
     "bindings/core/wasm/tests/semantic-value-wrapper.test.js": "4c194fbcb81c4b2a0ff148e734c3e9e218bb3a10aa91d7e1788af0b790aaf43f",
+    "crates/README.md": "a4de9d761989580401cd92ce5fb422fdb452c5c1d1bdeb1e81f7b47d9bd41398",
     "crates/umf-cli/Cargo.toml": "a2d3c5ddb8ea1a6de4b405d665e8515c1f75e898dde46d46ddc115f551bc1399",
     "crates/umf-cli/src/allocator.rs": "a3e77591864120c7d1a8b0c39c530b67306840b27a2f5159a4873b7df47e525b",
     "crates/umf-cli/src/main.rs": "981e7ed8ceb6ca5b95c449fbac07122d09bd9c4094e64b0ac1aa3c58aab599ce",
@@ -2091,9 +2095,9 @@
     "crates/umf-graphql/src/graphql17_overlay.rs": "0a59d41604f18b912c6c46be844be96d165ec7082ef2ef49e15c8100accc18c1",
     "crates/umf-graphql/src/graphql_adapter.rs": "97b835364d96b1259fa20fb2a901bbe453bb9e6226407ac9c930f3128281a931",
     "crates/umf-graphql/src/lib.rs": "dd384a25225c56a77862ff4684afb200ad02c47c1b347b06f8450e4b1b0c4e6d",
-    "crates/umf-graphql/vendor/VENDOR-NOTES.md": "bd92ec2768b6af970f868468ce67dea68676b403f55e4e9c7b7ae786b6879d0f",
+    "crates/umf-graphql/vendor/VENDOR-NOTES.md": "b73d89819adeaa061da8ea490026e31477c786fbb20ea2db44e8b440eb12fee2",
     "crates/umf-graphql/vendor/apollo-compiler/CHANGELOG.md": "92d169cb3d091780dab18ef9cccc17d13d2fa19eb14f2d59d39f4d2494e2b0f7",
-    "crates/umf-graphql/vendor/apollo-compiler/Cargo.toml": "4c5b3a3444ef303a3130d85e7fb112d43f5afda52cddd7091f19ccdbec383e7b",
+    "crates/umf-graphql/vendor/apollo-compiler/Cargo.toml": "7f35849f5ebb4ae37a680f05e67182998749de549bf263d6b7425b45a609703b",
     "crates/umf-graphql/vendor/apollo-compiler/Cargo.toml.orig": "5ba974f6873067403728d7d05bf187baaba2a42f828fec3699e5396117053732",
     "crates/umf-graphql/vendor/apollo-compiler/LICENSE-APACHE": "9cff568488e9d56aae60f162404acdb15d8533a0202cf01f6eb0843b264f20ff",
     "crates/umf-graphql/vendor/apollo-compiler/LICENSE-MIT": "94949dd83279f3ca3d0ce42ce0fc154d0ed817444454ee2925e903eec93949b6",
@@ -2770,15 +2774,15 @@
   },
   "outputs": {
     "spec/core/schema.json": {
-      "sha256": "0231028f0e203f044ef2cf45da059247b041335804ce4dcaff71b6e5da1165d5",
+      "sha256": "e670f29ae6955e2b76f84f1b8651094e06b07d098b0d38e03b5ab4c179d5d6ed",
       "bytes": 45342
     },
     "spec/core/semantic-type-reference.schema.json": {
-      "sha256": "f90d24f1b7d5443b81d6a2374031dac4796f88f9a0cd511d2640a6cf351daef1",
+      "sha256": "4f1e3c815af58f60ded935b796509cbeaca1113a5e608fabeaa5ffe036b23774",
       "bytes": 45463
     },
     "spec/core/extension-package.schema.json": {
-      "sha256": "46b5487129a7d7dbb904977faa0812f3c47d5b65025ed55a87b56e36b803a975",
+      "sha256": "41858aeee4ccd06982885605e4fb796716324805ee5c1c17fdf08c5d87bdda39",
       "bytes": 45001
     },
     "spec/metamodel/package.json": {
@@ -2786,23 +2790,23 @@
       "bytes": 1376
     },
     "spec/metamodel/generated/core-constraints.json": {
-      "sha256": "17d74ede58001e12ce55cf6e4c213b20428dd433918eb2d7a82e31600401b205",
+      "sha256": "363a43e136a6275cc87298d1ed700317b4ece69e2c1184ecd0b51a1c000d8c3e",
       "bytes": 190431
     },
     "spec/metamodel/generated/domain-policy.json": {
-      "sha256": "77dadd9fce2f54c069c9e9bde72bf5544c62ae8605e303999dea17f9eaff84ee",
+      "sha256": "241da72f2d38837cbb1b62eb8778e361a96a528065e0e242d1d9684145ab60fd",
       "bytes": 14827
     },
     "spec/metamodel/generated/python-shapes.json": {
-      "sha256": "34a2217837fdb2844ca7e06711aef0af824d21dfbf06c863c3feff11944132d0",
+      "sha256": "e622dda75322d9342b9cdee63f57d2e4ee8c2a118d9f207b23f51d83e2dfb659",
       "bytes": 98734
     },
     "python/umf_access/src/umf_access/generated_core.py": {
-      "sha256": "192bd7ccb4b575382da36209425255e23423400f209f95dbe9917a2e08b66fad",
+      "sha256": "16cb7778f824ae3ab13a98f63f72d88df80266c65c4d1b093ad9b15ff03a7603",
       "bytes": 360
     },
     "src/generated/core-model.ts": {
-      "sha256": "8cb1af58d8073d8ee2d73c2b62b3f29976558959dca04184bc58747f17d726c1",
+      "sha256": "30aa452f82b11fd51883a3404a85b38f9f76b33c21e4191b239865488b7aa3ae",
       "bytes": 6714
     },
     "spec/core/facet-operation-v3.schema.json": {
@@ -2830,11 +2834,11 @@
       "bytes": 1993
     },
     "src/generated/core-validators.ts": {
-      "sha256": "d1c193dcc48d4cbfec98691eeec4f1626945579c6077feea929f7df704b0834b",
+      "sha256": "dac558bea2feb99ff87e60bc2bfab165a4f6ed90d9bdda65b566147bfe3bcb61",
       "bytes": 305070
     },
     "src/generated/core-validators-accounted.ts": {
-      "sha256": "f9c9abbaa0ba4c3c50bd6ed0314fc71771169021150cc4812f52241dd263ae48",
+      "sha256": "28483ccdeca47247e23da8463ac62c37d80c05836954856a356f1a3dfbc8b12d",
       "bytes": 1525347
     }
   }

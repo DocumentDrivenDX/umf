@@ -74,8 +74,8 @@ fn identity_from_packet(value: &serde_json::Value) -> TargetIdentity {
 }
 
 #[test]
-fn matches_the_thirteen_frozen_python_predecessor_cases_under_current_policy() {
-    const PACKET: &str = include_str!("../../../tests/rust-core/fixtures/target-pin-python-predecessor-20261028/packet.json");
+fn matches_thirteen_current_target_identity_cases() {
+    const PACKET: &str = include_str!("../../../tests/rust-core/fixtures/target-pin/cases.json");
     const CASE_NAMES: &[&str] = &[
         "exact-identity",
         "identity-field-kind-differs",
@@ -91,15 +91,7 @@ fn matches_the_thirteen_frozen_python_predecessor_cases_under_current_policy() {
         "duplicate-observed-name-misses-other-pinned-name",
         "duplicate-observed-name-bad-version",
     ];
-    let packet: serde_json::Value = serde_json::from_str(PACKET).expect("frozen packet JSON");
-    assert_eq!(packet["format"], "umf-target-pin-python-predecessor/1");
-    assert_eq!(
-        packet["source_sha256"],
-        "188e816ccad9ed609c1382ea8090471a5ed1266f412742e69b7800d32ed455ec"
-    );
-    assert_eq!(packet["case_count"], CASE_NAMES.len());
-    assert_eq!(packet["pass_count"], CASE_NAMES.len());
-    assert_eq!(packet["mismatch_count"], 0);
+    let packet: serde_json::Value = serde_json::from_str(PACKET).expect("target-pin case JSON");
     let cases = packet["cases"].as_array().expect("packet cases");
     assert_eq!(cases.len(), CASE_NAMES.len());
     let pin = pin();
@@ -107,14 +99,7 @@ fn matches_the_thirteen_frozen_python_predecessor_cases_under_current_policy() {
         let name = case["name"].as_str().expect("case name");
         assert_eq!(name, *expected_name, "packet case inventory/order");
         let candidate = identity_from_packet(&case["identity"]);
-        let predecessor_expected = case["expected"].as_bool().expect("case expected bool");
-        // The frozen Python packet preserves the historical duplicate-name
-        // defect as `true`; CONTRACT-072 now requires unique observed names.
-        let expected = if name == "duplicate-observed-name-misses-other-pinned-name" {
-            false
-        } else {
-            predecessor_expected
-        };
+        let expected = case["expected"].as_bool().expect("case expected bool");
         assert_eq!(pin.matches(&candidate), expected, "case: {name}");
     }
 }

@@ -53,6 +53,10 @@ and explicit resource boundaries. Core is 0.10.0; the native Python candidate is
 4. Review changes with Sol, integrate current main, update PR #61, and merge only
    after the required current tests pass. Run all checks locally; do not wait for
    or launch GitHub Actions.
+5. Tag the tested integration commit `umf-rust-v0.1.0` and publish the complete
+   repository source. Build and smoke the native macOS ARM64 CLI locally if
+   attaching a binary. Rust Git dependencies use the tag; the packages are not
+   published to crates.io.
 
 Use the existing worktree. Luna handles implementation; Sol plans and reviews.
 Use one expensive build/test job at a time. Preserve user-owned `.tmp/`.
@@ -81,6 +85,12 @@ tests (9), descriptor generation and all 26 portable WASM source checks pass.
 Metamodel generation passes; regenerated code and schemas differ only in compiler
 provenance. Production source and host/WASM dependency inspection passes for 877
 modules with nine negative controls and no findings.
+
+The current target-pin fixture contains all 13 behavior cases directly, including
+duplicate-name rejection. Optional report-capture branches are removed; active
+regression assertions remain. The independent Ajv fixture check passes.
+Vendored parser dependencies resolve by explicit path for external Rust consumers;
+the independent consumer build and round trips are part of the final local gate.
 
 ## Remaining Port Work
 

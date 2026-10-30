@@ -19,8 +19,7 @@
           ]
         ]
       },
-      "expected": true,
-      "note": "All five identity fields and both platform pairs match."
+      "expected": true
     },
     {
       "name": "identity-field-kind-differs",
@@ -41,8 +40,7 @@
           ]
         ]
       },
-      "expected": false,
-      "note": "Only kind differs."
+      "expected": false
     },
     {
       "name": "identity-field-backend_id-differs",
@@ -63,8 +61,7 @@
           ]
         ]
       },
-      "expected": false,
-      "note": "Only backend_id differs."
+      "expected": false
     },
     {
       "name": "identity-field-backend_version-differs",
@@ -85,8 +82,7 @@
           ]
         ]
       },
-      "expected": false,
-      "note": "Only backend_version differs."
+      "expected": false
     },
     {
       "name": "identity-field-target_profile-differs",
@@ -107,8 +103,7 @@
           ]
         ]
       },
-      "expected": false,
-      "note": "Only target_profile differs."
+      "expected": false
     },
     {
       "name": "identity-field-binding_sha256-differs",
@@ -129,8 +124,7 @@
           ]
         ]
       },
-      "expected": false,
-      "note": "Only binding_sha256 differs."
+      "expected": false
     },
     {
       "name": "platform-version-alternative-in-qualified-set",
@@ -151,8 +145,7 @@
           ]
         ]
       },
-      "expected": true,
-      "note": "Any listed version for a named component is accepted."
+      "expected": true
     },
     {
       "name": "platform-version-outside-qualified-set",
@@ -173,8 +166,7 @@
           ]
         ]
       },
-      "expected": false,
-      "note": "An unlisted version is rejected."
+      "expected": false
     },
     {
       "name": "platform-cardinality-one-missing",
@@ -191,8 +183,7 @@
           ]
         ]
       },
-      "expected": false,
-      "note": "Different component counts are rejected."
+      "expected": false
     },
     {
       "name": "platform-cardinality-one-extra",
@@ -217,8 +208,7 @@
           ]
         ]
       },
-      "expected": false,
-      "note": "Different component counts are rejected."
+      "expected": false
     },
     {
       "name": "same-cardinality-name-absent-from-pin",
@@ -239,8 +229,7 @@
           ]
         ]
       },
-      "expected": false,
-      "note": "A name absent from the pin fails containment."
+      "expected": false
     },
     {
       "name": "duplicate-observed-name-misses-other-pinned-name",
@@ -261,8 +250,7 @@
           ]
         ]
       },
-      "expected": true,
-      "note": "Observed behavior: equal counts plus per-item containment accepts a duplicate name and does not require every pinned name to be observed."
+      "expected": false
     },
     {
       "name": "duplicate-observed-name-bad-version",
@@ -283,8 +271,7 @@
           ]
         ]
       },
-      "expected": false,
-      "note": "Every duplicate observed pair is still checked against the pinned version set."
+      "expected": false
     }
   ]
 }

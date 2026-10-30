@@ -701,8 +701,7 @@ fn from_serde(value: &serde_json::Value) -> Value {
 
 #[test]
 fn independent_upstream_type_vectors_match_the_native_rust_compiler() {
-    // This is a deliberately small upstream oracle sample, not the full
-    // 46-file / 384-case / 1,301-vector qualification profile.
+    // This sample exercises upstream type semantics through the public compiler.
     let cases: serde_json::Value = serde_json::from_str(include_str!(
         "../../../fixtures/json-schema/upstream/draft2020-12/type.json"
     ))

@@ -109,13 +109,6 @@ fn frozen_commerce_complete_envelope_matches_live_typescript() {
         canonical(&actual, expected),
         "complete Rust dataset receipt differs from frozen TypeScript envelope"
     );
-    if let Some(path) = std::env::var_os("UMF_R5_DATASET_VALUES_CAPTURE") {
-        let rendered = write_json_value(&actual, Format::Json, &mut Context::ordinary())
-            .unwrap()
-            .to_utf8()
-            .unwrap();
-        std::fs::write(path, rendered).expect("write opted-in Rust receipt capture");
-    }
 }
 
 #[test]

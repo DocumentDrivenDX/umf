@@ -138,13 +138,6 @@ fn updater_runs_once_on_isolated_payload_and_commits_a_valid_candidate() {
         string_array(get(&frozen, "validationTrace").unwrap())
     );
     assert_eq!(result, *get(&frozen, "success").unwrap());
-    if let Ok(path) = std::env::var("UMF_R5_EDIT_CAPTURE") {
-        let emitted = umf_core::serialization::stringify_compact(&result)
-            .unwrap()
-            .to_utf8()
-            .unwrap();
-        std::fs::write(path, emitted).unwrap();
-    }
     assert_eq!(original, source());
     let modules = match get(&result, "modules").unwrap() {
         Value::Array(v) => v,

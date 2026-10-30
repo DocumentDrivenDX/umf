@@ -27,6 +27,3 @@ members = [
   "crates/umf-cli",
   "crates/umf-graphql",
 ]
-
-[patch.crates-io]
-serde_json_bytes = { path = "crates/umf-graphql/vendor/serde_json_bytes" }

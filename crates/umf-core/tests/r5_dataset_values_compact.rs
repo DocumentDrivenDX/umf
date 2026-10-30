@@ -154,15 +154,6 @@ fn run(frozen: &str, engine: &Engine) -> (Value, Value, Value) {
     }
     let expected = get(&case, "result").unwrap();
     let actual = outcome.unwrap();
-    if text(get(&case, "id")) == "commerce" {
-        if let Ok(path) = std::env::var("UMF_R5_DATASET_VALUES_COMPACT_CAPTURE") {
-            let json = umf_core::serialization::stringify_compact(&actual)
-                .unwrap()
-                .to_utf8()
-                .unwrap();
-            std::fs::write(path, json).unwrap();
-        }
-    }
     assert_eq!(
         diff(&actual, expected, ""),
         None,
@@ -233,22 +224,19 @@ fn frozen_compact_dataset_envelopes_match_live_typescript() {
         ),
         &engine,
     );
-    if std::env::var_os("UMF_R5_DATASET_VALUES_COMPACT_CAPTURE").is_some() {
-        let receipt = get(&commerce_case, "result").unwrap();
-        let input = get(&commerce_case, "input").unwrap();
-        let verified = umf_core::dataset_values::verify_core_dataset_values_compact(
-            receipt,
-            &commerce_source,
-            input,
-            &engine,
-            &Registry::default(),
-            &mut NoCaps,
-            &mut Context::ordinary(),
-        )
-        .unwrap();
-        assert_eq!(diff(&verified, &commerce, ""), None);
-        return;
-    }
+    let receipt = get(&commerce_case, "result").unwrap();
+    let input = get(&commerce_case, "input").unwrap();
+    let verified = umf_core::dataset_values::verify_core_dataset_values_compact(
+        receipt,
+        &commerce_source,
+        input,
+        &engine,
+        &Registry::default(),
+        &mut NoCaps,
+        &mut Context::ordinary(),
+    )
+    .unwrap();
+    assert_eq!(diff(&verified, &commerce, ""), None);
     run(
         include_str!(
             "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-supply-chain.json"

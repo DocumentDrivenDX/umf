@@ -14,3 +14,6 @@ is disabled. Apollo's terminal-color diagnostic mode also renders without ANSI
 colors so output does not depend on terminal or environment state.
 `serde_json_bytes` keeps its `preserve_order` behavior and uses the same
 deterministic standard-library hasher for its index map.
+Apollo declares the vendored `serde_json_bytes` crate by relative path so
+consumers using this repository as a Git dependency do not rely on the
+workspace root's Cargo patch configuration.
