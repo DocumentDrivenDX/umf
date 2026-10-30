@@ -2,7 +2,7 @@
 name: Saga qualification
 on:
   pull_request:
-    paths: ['crates/**', 'bindings/**', 'src/**', 'python/**', 'scripts/**', 'tests/saga/**', 'fixtures/saga/**', 'spec/**', 'docs/helix/02-design/contracts/**', 'docs/helix/01-frame/user-stories/US-90[56]*', 'docs/helix/03-test/test-plans/STP-90[56]*', '.github/workflows/sagas.yml']
+    paths: ['crates/**', 'bindings/**', 'src/**', 'python/**', 'scripts/**', 'tools/**', 'tests/saga/**', 'fixtures/saga/**', 'spec/**', 'docs/helix/02-design/contracts/**', 'docs/helix/01-frame/user-stories/US-90[56]*', 'docs/helix/03-test/test-plans/STP-90[56]*', '.github/workflows/sagas.yml']
   workflow_dispatch:
 permissions:
   contents: read
@@ -51,6 +51,10 @@ jobs:
       - name: Native PostgreSQL protocol and independent oracle
         run: |
           set -o pipefail
+          handler_image="$(bun -e "import {referenceHandlerImage} from './scripts/actions-reference/sandbox'; console.log(referenceHandlerImage)")"
+          docker pull "$handler_image"
+          mkdir -p .cache/saga
+          docker image inspect "$handler_image" > .cache/saga/handler-image.json
           bun test tests/saga/*.test.ts 2>&1 | tee saga-native.log
       - name: Installed SDK and real Chromium
         run: |
@@ -60,9 +64,22 @@ jobs:
           bun scripts/saga-portable/browser.ts
           UMF_SAGA_CLI=target/release/umf bun scripts/saga-portable/other-hosts.ts cli
           UMF_SDK_INSTALL_RETAIN_DIR="$RUNNER_TEMP/saga-sdk-consumer" bun scripts/test-sdk-install.ts
-      - name: Installed Python wheel
+      - name: Build and qualify the publishable Linux wheel
         run: |
-          uv build --wheel --sdist --out-dir "$RUNNER_TEMP/saga-python-dist" python
+          saga_python_version="$(python -c 'import json; print(json.load(open("spec/release.json"))["pythonVersion"])')"
+          uv build --wheel --sdist --out-dir "$RUNNER_TEMP/saga-python-raw" python
+          python tools/core_python_qualification_runner.py fetch-wheels --lock qualification-inputs/core-0.10.3-wheel-input-lock.json --profile repair --cell linux-x86_64-py311 --output "$RUNNER_TEMP/saga-repair-tools"
+          python -m pip install --no-index --no-deps --only-binary=:all: "$RUNNER_TEMP/saga-repair-tools/"*.whl
+          auditwheel --version > "$RUNNER_TEMP/saga-auditwheel-version.txt"
+          patchelf --version > "$RUNNER_TEMP/saga-patchelf-version.txt"
+          raw_wheel="$(find "$RUNNER_TEMP/saga-python-raw" -name '*.whl' -type f)"
+          auditwheel show --json "$raw_wheel" > "$RUNNER_TEMP/saga-auditwheel-before.json"
+          auditwheel repair --plat auto --only-plat --wheel-dir "$RUNNER_TEMP/saga-repaired" "$raw_wheel"
+          selected_wheel="$(find "$RUNNER_TEMP/saga-repaired" -name '*.whl' -type f)"
+          auditwheel show --json "$selected_wheel" > "$RUNNER_TEMP/saga-auditwheel-after.json"
+          python tools/qualify_python_release_wheel.py --version "$saga_python_version" --platform linux --source-wheel "$raw_wheel" --selected-wheel "$selected_wheel" --before-report "$RUNNER_TEMP/saga-auditwheel-before.json" --after-report "$RUNNER_TEMP/saga-auditwheel-after.json" --tool-artifacts "$RUNNER_TEMP/saga-repair-tools" --tool-lock qualification-inputs/core-0.10.3-wheel-input-lock.json --auditwheel-version "$RUNNER_TEMP/saga-auditwheel-version.txt" --patchelf-version "$RUNNER_TEMP/saga-patchelf-version.txt" --sdist "$RUNNER_TEMP/saga-python-raw/umf_core-$saga_python_version.tar.gz" --output-wheel-directory "$RUNNER_TEMP/saga-python-dist" --receipt "$RUNNER_TEMP/saga-python-dist/selection.json"
+      - name: Installed selected Python wheel
+        run: |
           uv venv "$RUNNER_TEMP/saga-python-consumer"
           wheel_path="$(find "$RUNNER_TEMP/saga-python-dist" -name '*.whl' -type f)"
           uv pip install --python "$RUNNER_TEMP/saga-python-consumer/bin/python" "$wheel_path" pytest hatchling

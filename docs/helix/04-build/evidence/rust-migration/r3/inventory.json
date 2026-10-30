@@ -285,12 +285,12 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "95f7a408d736b340bf2b222686e51518884bf88e87d6324d827cd62837745222",
+    "sourceCohortSha256": "fa042807d9428ac51ceadc7b0c570c71588ae31cfc216086f07d3e9a990ada47",
     "typescriptApi": "5.9.3"
   },
   "counts": {
     "activeScriptFiles": 447,
-    "algorithmSymbols": 12797,
+    "algorithmSymbols": 12801,
     "pythonModules": 127,
     "rustBuildInputs": 79,
     "rustModules": 130,
@@ -9333,6 +9333,7 @@
         "_install_wheel",
         "_macho",
         "_native_platform_helper",
+        "_qualifier_sdist",
         "_release_wheel_qualifier",
         "_retained_installed_cell_receipt_fixture",
         "_retained_producer_api_fixture",
@@ -9352,6 +9353,8 @@
         "test_native_platform_target_is_explicit_and_rejects_unknown_hosts",
         "test_python_distribution_metadata_admits_only_declared_minors",
         "test_python_support_tests_install_the_hatch_build_backend",
+        "test_release_wheel_qualifier_cli_selects_explicit_version_without_changing_default",
+        "test_release_wheel_qualifier_keeps_historical_default_and_accepts_explicit_version",
         "test_repair_wheel_metadata_allows_only_tag_and_one_terminal_separator",
         "test_repair_wheel_metadata_refuses_any_other_framing_or_header_change",
         "test_retained_installed_cell_accepts_actual_posttest_receipt_shape",
@@ -9371,7 +9374,7 @@
         "test_sdist_licenses_have_one_declared_inclusion_route",
         "test_sdist_rebuild_accepts_distinct_native_bytes_without_claiming_identity",
         "test_sdist_rebuild_rejects_source_version_tag_or_metadata_drift",
-        "test_source_inventory_contains_all_nine_bound_runtime_resources",
+        "test_source_inventory_contains_all_ten_bound_runtime_resources",
         "test_wheel_metadata_pair_diagnostic_is_bounded_and_lossless_for_small_bytes",
         "test_wheel_metadata_pair_diagnostic_marks_oversize_bytes_unavailable",
         "test_wheel_verifier_rejects_unexpected_payload_or_claim",
@@ -9379,12 +9382,12 @@
         "test_workflow_independently_installs_and_qualifies_both_native_artifacts",
         "unexpected_payload_read"
       ],
-      "bytes": 65623,
+      "bytes": 68729,
       "disposition": "unreferenced-test-source",
       "language": "py",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "python/tests/test_distribution_artifact.py",
-      "sha256": "adb41a3524e679624bac89fa38a052cac1127c001d7ff4b792b9a656b37f93d3"
+      "sha256": "1350c4ed8b1cd786b15721286bcd9c2d2ea623986623425d205e09601f3068cb"
     },
     {
       "activationEvidence": [],
@@ -36431,12 +36434,12 @@
         "pythonReport",
         "retain"
       ],
-      "bytes": 4187,
+      "bytes": 4195,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/saga-portable/collect.ts",
-      "sha256": "a218c94a525a26be9e7139d23d467ef452fcb8008257e21196f2398e4385bc54"
+      "sha256": "568e8bb8744ae69c3d63bcd2661cccdb91f8349e6923d242010f91ef50f76747"
     },
     {
       "activationEvidence": [
@@ -53175,7 +53178,8 @@
     {
       "activationEvidence": [
         ".github/workflows/core-0.10.3-public-install-proof.yml",
-        ".github/workflows/python-action-runtime.yml"
+        ".github/workflows/python-action-runtime.yml",
+        ".github/workflows/sagas.yml"
       ],
       "active": true,
       "algorithmSymbols": [
@@ -53199,7 +53203,8 @@
     },
     {
       "activationEvidence": [
-        ".github/workflows/python-action-runtime.yml"
+        ".github/workflows/python-action-runtime.yml",
+        ".github/workflows/sagas.yml"
       ],
       "active": true,
       "algorithmSymbols": [
@@ -53213,17 +53218,18 @@
         "read_wheel",
         "record",
         "select_macos",
+        "validate_version",
         "verify_elf",
         "verify_python_range",
         "verify_repair",
         "verify_sdist"
       ],
-      "bytes": 22806,
+      "bytes": 23714,
       "disposition": "active-host-tooling-algorithm",
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "tools/qualify_python_release_wheel.py",
-      "sha256": "d1d099785b2086dcd0820a68c7e51985a01249f09cc9a1a3932b405f80d77652"
+      "sha256": "ee73ff35ab847e0c48bf97558a2c1494ca0f074686b4d791902c0e506cc24fa1"
     },
     {
       "activationEvidence": [],
@@ -58155,12 +58161,12 @@
         "main",
         "verify"
       ],
-      "bytes": 36449,
+      "bytes": 36559,
       "disposition": "active-host-tooling-algorithm",
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "tools/verify_python_artifacts.py",
-      "sha256": "628bc0ea00eabca17e976b537ba2534c00a6fe53b09acb46399f74f3c0c85fb3"
+      "sha256": "1cc71140ee41b47e0dec568ffdd50575e536451fa1afb1d26f30cf0fd2d42514"
     }
   ],
   "sourceModules": [

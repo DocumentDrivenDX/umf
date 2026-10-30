@@ -13,7 +13,7 @@ for(const host of ['native','browser','cli','python']){
  receipts[host]={sha256:await hash(path),report};
 }
 const child=Bun.spawn(['git','rev-parse','HEAD'],{stdout:'pipe',stderr:'inherit'}),commit=(await new Response(child.stdout).text()).trim();if(await child.exited||! /^[0-9a-f]{40}$/.test(commit))throw Error('Source identity unavailable');
-const status=Bun.spawn(['git','status','--porcelain','--','src','spec','crates','bindings','python','scripts','tests','fixtures','.github','docs/helix/02-design/contracts','package.json','Cargo.toml','Cargo.lock'],{stdout:'pipe',stderr:'inherit'});const dirty=(await new Response(status.stdout).text()).trim();if(await status.exited||dirty)throw Error('Release source differs from the committed qualification cohort: '+dirty);
+const status=Bun.spawn(['git','status','--porcelain','--','src','spec','crates','bindings','python','scripts','tools','tests','fixtures','.github','docs/helix/02-design/contracts','package.json','Cargo.toml','Cargo.lock'],{stdout:'pipe',stderr:'inherit'});const dirty=(await new Response(status.stdout).text()).trim();if(await status.exited||dirty)throw Error('Release source differs from the committed qualification cohort: '+dirty);
 const directory=process.env.UMF_SAGA_DIST;if(!directory)throw Error('Set UMF_SAGA_DIST to the qualified wheel/source archive directory');
 const consumer=process.env.UMF_SAGA_SDK_CONSUMER;if(!consumer)throw Error('Set UMF_SAGA_SDK_CONSUMER to the qualified SDK installation');
 const installed=await Bun.file(join(consumer,'g03-sdk-install-custody.json')).json();
