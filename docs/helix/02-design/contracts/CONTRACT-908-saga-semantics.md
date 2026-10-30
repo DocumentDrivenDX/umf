@@ -322,6 +322,72 @@ Closure accepts the recorded residual effects; it never claims restored state.
 Unknown custody refuses SAGA_PENDING; concurrent history change refuses SAGA_ORDER.
 A repeated close is recovered by the original control attempt, not a new close.
 
+### Original invocation finality beyond tx/1 replay
+
+Base tx/1 does not retain a business terminal outcome for failed native attempts.
+Its missing outcome row cannot prove that a delayed delivery will not execute.
+Every saga forward/compensation provider MUST therefore qualify durable original
+invocation custody in addition to tx/1 terminal-outcome replay.
+
+Before the first native attempt, the provider gateway registers the original
+ticket/key, exact target/revision/inputs and admission state under a boundary that
+serializes every delivery. Equal deliveries join that original invocation or
+return its original disposition; they cannot race an independent native attempt.
+A crash or missing native outcome leaves custody indeterminate until all original
+admitted attempts are reconciled. No lookup branch is execute-if-missing.
+
+A definitive failed/noncommit disposition requires evidence covering the ENTIRE
+logical invocation: every admitted native attempt has settled without effects,
+no in-flight attempt can still commit, and the original ticket is durably closed
+against further native admission. Persist that final control disposition under
+the gateway admission boundary before acknowledging it to the coordinator. If
+closing that boundary or persisting the disposition is uncertain, report unknown
+and retain the recovery reference. A per-attempt rollback, empty tx/1 outcome row,
+lease expiry or worker exit is insufficient. Failed compensation needs the same
+closure even though it stops automatic unwind.
+
+After definitive noncommit, every delayed delivery recovers that same final
+failed disposition and causes zero effects. The coordinator can then unwind the
+committed prefix without a delayed forward call racing its compensation. Provider
+refusal must similarly settle/fence original ticket custody before it is treated
+as definitive; changing policy later does not revive a settled refused ticket.
+These control dispositions do not fabricate a tx/1 committed/rejected/conflict
+business outcome. Existing tx/1 internal rollback retries may occur only inside
+the still-open original invocation, within their existing finite bound; none may
+survive its definitive closure. An indeterminate attempt is never retried as a
+known abort.
+
+Inspection emits a distinct recovery obligation for every forward invocation and
+every action compensation: `saga.invocation.finality/<ordinal>/<f|c>`, where
+ordinal is the canonical zero-based step position. Its path locates that step's
+action or action compensation, and its initial status is unchecked. Source and
+selected saga identity scope these IDs. Assessment requires exact supported
+claims/evidence for each obligation; plain tx/1 or caller-key support cannot waive
+them. Portable assessment still reports executionVerified:false. Native witnesses
+must establish gateway fencing, whole-invocation noncommit, durable recovery and
+absence of late effects under the exact provider cohort.
+
+### Stop arbitration and automatic work
+
+Latch stopCause at the first serialized coordinator stop decision: recording a
+forward failure, accepting cancellation, or stopping for an intervention reason.
+An earlier provider wall-clock event that has not yet been observed does not
+rewrite a cause already durably latched by that control boundary. Cancellation
+accepted while a forward ticket is unresolved still reconciles that ticket before
+unwind; later failure observations remain in history with the original cause.
+
+Elapsed budget, lookup counts, immutable ticket custody and the latched cause
+persist across crash, takeover and redelivery. Lookup limits count actual
+authoritative lookup attempts per original invocation; they are not reset by a
+new worker, transport retry or coordinator restart. A tighter admitted limit is
+pinned for that instance. Exhaustion stops automatic work and may retain unknown
+outcomes; it never manufactures failed or authorizes a replacement invocation.
+Already issued/native-admitted work may settle later under its original provider
+rules. Late original observations and authorized resolution can append history
+in intervention without restarting work. Retained read/recovery access does not
+replenish automatic admission/lookup budgets. Closure requires current operator
+authority and a review of the current history sequence after those observations.
+
 ### Deferred compensation reattempts
 
 After confirmed compensation noncommit, sequential/1 cannot finish that recovery

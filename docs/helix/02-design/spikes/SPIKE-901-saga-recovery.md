@@ -168,7 +168,7 @@ implementation. The evidence is conditional on explicit provider and admission
 assumptions and the configured state bounds. No arbitrary-size theorem, native
 execution claim or implementation refinement follows.
 
-Unmodeled areas remain: full reference/type validation, multiple tenants,
+The original Saga/Admission models leave these areas unmodeled: full reference/type validation, multiple tenants,
 current authorization and delegation, provider binding changes, retention expiry,
 retry/time budgets, irreversible or partial external effects, manual resolution,
 unbounded crashes, parallel composition and nested sagas. These remain governed
@@ -242,3 +242,26 @@ restart and redelivery. The provider atomic effect/outcome transaction remains
 an explicit assumption. This strengthens that one boundary and supplies no
 combined proof of CONTRACT-908. Native AC25–29 and full-protocol refinement remain
 unexecuted acceptance work; none is discharged by historical TLC counts.
+
+## Combined protocol completion follow-up
+
+The owner's follow-up request extends the analysis beyond the original spike.
+[Protocol.tla](../experiments/saga/formal/Protocol.tla) and its
+[coverage and assumptions](../experiments/saga/formal/protocol.md) include the
+previously omitted lifecycle, confirmed-noncommit, irreversible/no-effect, budget,
+resolution and closure transitions. Per-actor fairness and responsive-provider
+premises replace the original weakly fair whole-relation progress cut in this
+new model. The original three models and their narrower limits remain historical
+evidence; the current source-exact protocol report owns the new completion claim.
+
+A semantic mutant demonstrates why final noncommit needs stronger provider
+custody than base tx/1: a failed action has no business terminal outcome, so late
+same-key execution can create a new effect unless the original ticket is durably
+closed. CONTRACT-901/908 and the feature/story/native-test allocations now make
+that gateway qualification explicit. The model keeps original disposition apart
+from current transaction stage and tests the late-effect violation directly.
+
+Scope completion means all selected finite protocol configurations, invariants,
+progress checks, mutants and witnesses completed with recorded hashes and original
+traces. It is not an arbitrary-size theorem, a full value/policy/control-byte model,
+or an implementation/native refinement proof. Native acceptance remains required.

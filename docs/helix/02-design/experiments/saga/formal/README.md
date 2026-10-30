@@ -147,3 +147,11 @@ Run `run_delivery.py --java <java> --jar <pinned-jar>` for the three delivery ch
 Original main/admission logs are retained because their hashes and counterexample
 traces support review. They are historical scoped evidence, not current protocol
 certification; no log volume or passing count measures design completeness.
+
+## Completed combined protocol follow-up
+
+[Protocol model, coverage and reproduction](protocol.md) addresses the lifecycle,
+noncommit, barrier, budget and manual-control omissions described above. Its
+source-exact report and compressed original traces replace none of the historical
+inputs; they qualify a separate combined finite scope. Per-actor fairness is
+explicit and native gateway finality remains an implementation obligation.

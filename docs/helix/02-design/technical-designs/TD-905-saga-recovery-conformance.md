@@ -101,7 +101,7 @@ subset and observed environment.
 
 ## Testing
 
-US-905-AC1 through US-905-AC24 govern this slice; STP-905 maps all 24 ACs. Cover original submit/claim/cancel response loss as well
+US-905-AC1 through US-905-AC29 govern this slice; STP-905 maps all 29 ACs. Cover original submit/claim/cancel response loss as well
 as forward/compensation acknowledgement loss. Pin original action/binding custody
 through deployment and retirement. Test outcome/retention bounds without
 truncation and refuse unknown external-effect profiles. The independent oracle
@@ -110,8 +110,33 @@ an invocation or import an unrelated success as manual resolution.
 
 ## Formal Specification
 
-Chosen rigor is finite executable analysis for saga coordination, not an
-unbounded theorem or implementation refinement proof. `Saga.tla` models one
+Current rigor is completed finite executable analysis of the combined coordination
+model described in [protocol coverage](../experiments/saga/formal/protocol.md).
+`Protocol.tla` covers queued/running/reconciling/compensating and every terminal or
+intervention phase, confirmed noncommit, irreversible/no-effect dispositions,
+crash/cache loss, retirement/revocation, leases/takeover, elapsed/lookup budgets,
+manual original resolution and current-evidence closure. The pinned suite requires
+40 primary expectations: seven full safety/progress explorations, 17 exact
+semantic mutants and 16 reachability witnesses, plus three stronger composite
+witnesses over the same unchanged transitions. Completion requires the source-exact
+published report, not just the existence of model files. No unbounded theorem or
+implementation refinement follows.
+
+`ProviderFinality` and `NoncommitHasNoEffect` distinguish durable original custody
+from current provider transaction stage. The late-failed-delivery mutant creates
+an actual effect after a final noncommit; it must violate NoncommitHasNoEffect.
+This is the reason CONTRACT-908 now requires gateway closure beyond tx/1 replay.
+Native all-attempt settlement and closure are still unexecuted qualification.
+
+Stable liveness cuts separately weakly fair worker, native gateway, provider
+settlement and original observer. Faults/deadline expiry are disabled and responsive
+lookup is explicit. All-commit supported work reaches succeeded; the broader
+result domain reaches a terminal or intervention phase. No fairness of the whole
+Next relation is used. No liveness claim is made for indefinitely unavailable
+provider truth, authorization or a real deadline.
+
+The following older evidence is retained as scoped history, not substituted for
+the combined-model exploration. `Saga.tla` models one
 submission key, two intents, two/three ordered compensable steps, one crash and
 one takeover. It separates durable provider truth from coordinator observation.
 Safety has no fairness; stable-environment progress weakly fairs finite work.
@@ -167,3 +192,19 @@ response persistence. Inject concurrent late observation and history updates;
 stale expectedHistorySequence refuses. An unsettled ticket cannot be administratively
 closed. AC25–29/STP-905 allocate independent native witnesses. This amendment is
 not covered by the original Saga.tla model.
+
+## Combined-model correspondence
+
+| Formal property group | Governing obligation / planned native witness | Remaining implementation evidence |
+| --- | --- | --- |
+| OutcomesSound, ProviderFinality, NoncommitHasNoEffect, NoDuplicateEffects | CONTRACT-900/901/908; AC4/5/6/10/25 | Atomic provider effects/outcomes, gateway closure of all attempts, late delivery after noncommit |
+| ForwardOrdered, ReverseRecovery, FailureStartsUnwind, NoFalseRestoration | SAGA-05/09/10/11/13; AC3/9/16/25/28 | Independent actual forward/compensation histories and no-effect enforcement |
+| CausePinned, StopCausePresent, CancelledCause, CancelCut | CONTRACT-908 stop arbitration; AC11/26/27 | Coordinator control serialization and history immutability |
+| ExpiryCut, StoppedAdmission, NoAutomaticResume | Finite profile caps; AC8/26/29 | Persistent clocks/counters and no automatic restart under native failures |
+| TicketOwnership, NativeAdmission | Ticket/native cut and current authority; AC12/15/23/24 | Real lease, policy, revision and transaction serialization |
+| ClosedSettled, ClosedEvidence, HonestTermination | Original resolution and settled closure; AC1/2/18/26 | Scoped issuer verification, current authority and history-sequence race |
+| Per-actor EventuallyStopped / EventuallySucceeded | Conditional progress in protocol.md | Scheduling/provider responsiveness premises; no production liveness proof |
+
+The shared fixture requirements are not marked passed by the finite model. The
+provider gateway is still a planned host-owned enforcement mechanism; UMF portable
+analysis neither creates one nor grants native execution authority.

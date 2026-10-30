@@ -1,7 +1,14 @@
+[Saga protocol formal completion](04-build/evidence/saga-protocol-formal-completion.md)
+records 43 passing bounded checks for the combined lifecycle/recovery model and
+its specification findings, including provider ticket closure after noncommit.
+[Coverage and reproduction](02-design/experiments/saga/formal/protocol.md) state the
+finite bounds and per-actor progress assumptions. Native execution qualification
+remains separate.
+
 [UMF 0.10 alignment and saga review](04-build/evidence/umf-010-saga-review.md)
 keeps actions and saga semantics with UMF and records recovery/closure review
-decisions. SDK/version alignment and its build/CI checks are reviewed in a
-[separate PR #71](https://github.com/DocumentDrivenDX/umf/pull/71). Saga implementation,
+decisions. SDK/version alignment and its build/CI checks were delivered in
+[merged PR #71](https://github.com/DocumentDrivenDX/umf/pull/71). Saga implementation,
 new native qualification and release publication remain separate gates.
 
 # UMF project documentation
