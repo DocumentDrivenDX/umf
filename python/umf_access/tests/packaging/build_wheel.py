@@ -131,7 +131,7 @@ def validate_selected_profile(package: Path, profile: dict) -> None:
         raise ValueError("selected profile runtime pin differs from package source")
 
 
-def main() -> int:
+def main(*, command_runner=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out-dir", type=Path, required=True)
     parser.add_argument("--report", type=Path, required=True)
@@ -208,7 +208,8 @@ def main() -> int:
         ]
         # Cwd outside checkout avoids accidental top-level module resolution.
         with tempfile.TemporaryDirectory(prefix="umf-access-wheel-build-") as temporary:
-            result = subprocess.run(
+            runner = subprocess.run if command_runner is None else command_runner
+            result = runner(
                 command,
                 cwd=temporary,
                 env=env,
