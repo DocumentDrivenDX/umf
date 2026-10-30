@@ -60,11 +60,41 @@
     }
   },
   {
+    "path": "docs/helix/02-design/architecture.md",
+    "exit": 0,
+    "detail": {
+      "instance": "/Users/erik/.codex/worktrees/38b0/umf/docs/helix/02-design/architecture.md",
+      "type": "architecture",
+      "catalog": "/Users/erik/.codex/plugins/cache/helix/helix/0.20.0/workflows/activities",
+      "findings": [],
+      "summary": {
+        "blocking": 0,
+        "warning": 0,
+        "info": 0
+      }
+    }
+  },
+  {
     "path": "docs/helix/02-design/solution-designs/SD-901-saga-semantics.md",
     "exit": 0,
     "detail": {
       "instance": "/Users/erik/.codex/worktrees/38b0/umf/docs/helix/02-design/solution-designs/SD-901-saga-semantics.md",
       "type": "solution-design",
+      "catalog": "/Users/erik/.codex/plugins/cache/helix/helix/0.20.0/workflows/activities",
+      "findings": [],
+      "summary": {
+        "blocking": 0,
+        "warning": 0,
+        "info": 0
+      }
+    }
+  },
+  {
+    "path": "docs/helix/02-design/spikes/SPIKE-901-saga-recovery.md",
+    "exit": 0,
+    "detail": {
+      "instance": "/Users/erik/.codex/worktrees/38b0/umf/docs/helix/02-design/spikes/SPIKE-901-saga-recovery.md",
+      "type": "tech-spike",
       "catalog": "/Users/erik/.codex/plugins/cache/helix/helix/0.20.0/workflows/activities",
       "findings": [],
       "summary": {
@@ -125,213 +155,6 @@
     "detail": {
       "instance": "/Users/erik/.codex/worktrees/38b0/umf/docs/helix/03-test/test-plans/STP-906-author-and-assess-sagas.md",
       "type": "story-test-plan",
-      "catalog": "/Users/erik/.codex/plugins/cache/helix/helix/0.20.0/workflows/activities",
-      "findings": [],
-      "summary": {
-        "blocking": 0,
-        "warning": 0,
-        "info": 0
-      }
-    }
-  },
-  {
-    "path": "docs/helix/02-design/spikes/SPIKE-901-saga-recovery.md",
-    "exit": 0,
-    "detail": {
-      "instance": "/Users/erik/.codex/worktrees/38b0/umf/docs/helix/02-design/spikes/SPIKE-901-saga-recovery.md",
-      "type": "tech-spike",
-      "catalog": "/Users/erik/.codex/plugins/cache/helix/helix/0.20.0/workflows/activities",
-      "findings": [],
-      "summary": {
-        "blocking": 0,
-        "warning": 0,
-        "info": 0
-      }
-    }
-  },
-  {
-    "path": "docs/helix/02-design/contracts/CONTRACT-901-transactional-action-profile.md",
-    "exit": 0,
-    "detail": {
-      "instance": "/Users/erik/.codex/worktrees/38b0/umf/docs/helix/02-design/contracts/CONTRACT-901-transactional-action-profile.md",
-      "type": "contract",
-      "catalog": "/Users/erik/.codex/plugins/cache/helix/helix/0.20.0/workflows/activities",
-      "findings": [],
-      "summary": {
-        "blocking": 0,
-        "warning": 0,
-        "info": 0
-      }
-    }
-  },
-  {
-    "path": "docs/helix/02-design/contracts/CONTRACT-902-portable-action-plan.md",
-    "exit": 0,
-    "detail": {
-      "instance": "/Users/erik/.codex/worktrees/38b0/umf/docs/helix/02-design/contracts/CONTRACT-902-portable-action-plan.md",
-      "type": "contract",
-      "catalog": "/Users/erik/.codex/plugins/cache/helix/helix/0.20.0/workflows/activities",
-      "findings": [],
-      "summary": {
-        "blocking": 0,
-        "warning": 0,
-        "info": 0
-      }
-    }
-  },
-  {
-    "path": "docs/helix/02-design/contracts/CONTRACT-906-single-set-admission.md",
-    "exit": 0,
-    "detail": {
-      "instance": "/Users/erik/.codex/worktrees/38b0/umf/docs/helix/02-design/contracts/CONTRACT-906-single-set-admission.md",
-      "type": "contract",
-      "catalog": "/Users/erik/.codex/plugins/cache/helix/helix/0.20.0/workflows/activities",
-      "findings": [],
-      "summary": {
-        "blocking": 0,
-        "warning": 0,
-        "info": 0
-      }
-    }
-  },
-  {
-    "path": "docs/helix/01-frame/features/FEAT-900-declarative-actions.md",
-    "exit": 0,
-    "detail": {
-      "instance": "/Users/erik/.codex/worktrees/38b0/umf/docs/helix/01-frame/features/FEAT-900-declarative-actions.md",
-      "type": "feature-specification",
-      "catalog": "/Users/erik/.codex/plugins/cache/helix/helix/0.20.0/workflows/activities",
-      "findings": [],
-      "summary": {
-        "blocking": 0,
-        "warning": 0,
-        "info": 0
-      }
-    }
-  },
-  {
-    "path": "docs/helix/01-frame/user-stories/US-900-declarative-actions.md",
-    "exit": 1,
-    "detail": {
-      "instance": "/Users/erik/.codex/worktrees/38b0/umf/docs/helix/01-frame/user-stories/US-900-declarative-actions.md",
-      "type": "user-stories",
-      "catalog": "/Users/erik/.codex/plugins/cache/helix/helix/0.20.0/workflows/activities",
-      "findings": [
-        {
-          "severity": "blocking",
-          "check": "pattern_checks.2",
-          "message": "Story must name the value or outcome (pattern /\\*\\*So that\\*\\*/ matched 0, expected >=1)",
-          "line": null
-        }
-      ],
-      "summary": {
-        "blocking": 1,
-        "warning": 0,
-        "info": 0
-      }
-    },
-    "unchangedBaselineFindings": true
-  },
-  {
-    "path": "docs/helix/01-frame/user-stories/US-902-portable-action-plans.md",
-    "exit": 1,
-    "detail": {
-      "instance": "/Users/erik/.codex/worktrees/38b0/umf/docs/helix/01-frame/user-stories/US-902-portable-action-plans.md",
-      "type": "user-stories",
-      "catalog": "/Users/erik/.codex/plugins/cache/helix/helix/0.20.0/workflows/activities",
-      "findings": [
-        {
-          "severity": "blocking",
-          "check": "pattern_checks.0",
-          "message": "Story must name the persona (pattern /\\*\\*As a\\*\\*/ matched 0, expected >=1)",
-          "line": null
-        },
-        {
-          "severity": "blocking",
-          "check": "pattern_checks.1",
-          "message": "Story must name the user's goal (pattern /\\*\\*I want\\*\\*/ matched 0, expected >=1)",
-          "line": null
-        },
-        {
-          "severity": "blocking",
-          "check": "pattern_checks.2",
-          "message": "Story must name the value or outcome (pattern /\\*\\*So that\\*\\*/ matched 0, expected >=1)",
-          "line": null
-        }
-      ],
-      "summary": {
-        "blocking": 3,
-        "warning": 0,
-        "info": 0
-      }
-    },
-    "unchangedBaselineFindings": true
-  },
-  {
-    "path": "docs/helix/02-design/solution-designs/SD-900-declarative-actions.md",
-    "exit": 1,
-    "detail": {
-      "instance": "/Users/erik/.codex/worktrees/38b0/umf/docs/helix/02-design/solution-designs/SD-900-declarative-actions.md",
-      "type": "solution-design",
-      "catalog": "/Users/erik/.codex/plugins/cache/helix/helix/0.20.0/workflows/activities",
-      "findings": [
-        {
-          "severity": "blocking",
-          "check": "required_sections.traceability",
-          "message": "required section 'traceability' is not an H2 in the instance",
-          "line": null
-        },
-        {
-          "severity": "blocking",
-          "check": "pattern_checks.0",
-          "message": "Must use numbered SD naming (pattern /SD-\\d{3}-/ matched 0, expected >=1)",
-          "line": null
-        }
-      ],
-      "summary": {
-        "blocking": 2,
-        "warning": 0,
-        "info": 0
-      }
-    },
-    "unchangedBaselineFindings": true
-  },
-  {
-    "path": "docs/helix/02-design/technical-designs/TD-900-declarative-actions.md",
-    "exit": 0,
-    "detail": {
-      "instance": "/Users/erik/.codex/worktrees/38b0/umf/docs/helix/02-design/technical-designs/TD-900-declarative-actions.md",
-      "type": "technical-design",
-      "catalog": "/Users/erik/.codex/plugins/cache/helix/helix/0.20.0/workflows/activities",
-      "findings": [],
-      "summary": {
-        "blocking": 0,
-        "warning": 0,
-        "info": 0
-      }
-    }
-  },
-  {
-    "path": "docs/helix/03-test/test-plans/STP-900-declarative-actions.md",
-    "exit": 0,
-    "detail": {
-      "instance": "/Users/erik/.codex/worktrees/38b0/umf/docs/helix/03-test/test-plans/STP-900-declarative-actions.md",
-      "type": "story-test-plan",
-      "catalog": "/Users/erik/.codex/plugins/cache/helix/helix/0.20.0/workflows/activities",
-      "findings": [],
-      "summary": {
-        "blocking": 0,
-        "warning": 0,
-        "info": 0
-      }
-    }
-  },
-  {
-    "path": "docs/helix/02-design/architecture.md",
-    "exit": 0,
-    "detail": {
-      "instance": "/Users/erik/.codex/worktrees/38b0/umf/docs/helix/02-design/architecture.md",
-      "type": "architecture",
       "catalog": "/Users/erik/.codex/plugins/cache/helix/helix/0.20.0/workflows/activities",
       "findings": [],
       "summary": {

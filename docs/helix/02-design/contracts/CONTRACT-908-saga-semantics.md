@@ -235,6 +235,11 @@ namespace/instance use the runtime schema's restricted ASCII grammar; ordinal is
 canonical unsigned decimal, zero-based step position. The encoding is injective,
 within tx/1 key bounds and reserved against outside direct invocation. Internal
 keys do not confer authorization. Compensation has a distinct `c` identity.
+Every saga invocation MUST supply and durably retain that key. The base action
+declaration remains `idempotency:"caller-key-optional"`, its only actions 0.1.0
+form: it describes direct-call capability, not permission to omit a saga key.
+Saga admission requires independently qualified keyed execution and refuses a
+provider that cannot retain/recover the original keyed outcome.
 
 Issuing a ticket is the cancellation/ownership admission cut: a ticket issued
 before cancel/takeover is already in flight and may settle later; a stale worker
@@ -257,7 +262,9 @@ previous ticket must be reconciled before compensation. Cancel after a terminal
 phase refuses. Once failure-triggered unwind begins, including reconciliation
 during that unwind, cancel refuses with SAGA_ORDER and changes no controls.
 The original stopCause is latched under the control lock; cancellation cannot
-replace a prior failure or turn compensated termination into cancelled. If no step committed, settled cancellation becomes cancelled;
+replace a prior failure or turn compensated termination into cancelled.
+
+If no step committed, settled cancellation becomes cancelled;
 otherwise unwind, preserving all confirmed forward and recovery facts. An
 acknowledgement of cancellation never claims rollback or settled in-flight work.
 
@@ -271,8 +278,8 @@ native rollback maps to failed, not a fabricated business rejection. A definitiv
 forward noncommit starts reverse compensation of the committed prefix; when that
 prefix is empty, compensated means recovery completed with zero compensations.
 The original failed outcome remains visible. A failed compensation still requires
-intervention. A refusal
-before admission produces intervention with its original reason, not success.
+intervention. A refusal before admission produces intervention with its original
+reason, not success.
 
 This profile allows ONE logical forward invocation and ONE compensation per step,
 with zero automatic fresh business retries. Original-outcome lookup may retry
@@ -297,7 +304,8 @@ result as evidence of the original outcome. Append the actor/evidence and origin
 observation without rewriting confirmed facts. Contradictory evidence refuses.
 Resolution may enrich an intervention state but does not restart automatic work;
 this profile has no resume operation. Unresolved custody cannot be bypassed by
-closing the instance or expiring its retention.
+closing the instance or expiring its retention. Native reconciliation is a
+provider-owned installed capability, never a document-selected URL resolver.
 
 `close` is permitted only from intervention-required after EVERY original ticket
 has an authoritative settled disposition and pending is empty. It requires current
@@ -312,8 +320,19 @@ disposition, retain the original control response, then enter closed. No effect,
 compensation, fresh business key, rewritten outcome or automatic resume follows.
 Closure accepts the recorded residual effects; it never claims restored state.
 Unknown custody refuses SAGA_PENDING; concurrent history change refuses SAGA_ORDER.
-A repeated close is recovered by the original control attempt, not a new close. Native reconciliation is a
-provider-owned installed capability, never a document-selected URL resolver.
+A repeated close is recovered by the original control attempt, not a new close.
+
+### Deferred compensation reattempts
+
+After confirmed compensation noncommit, sequential/1 cannot finish that recovery
+inside the protocol. The operator must remediate under separately authorized
+out-of-band intent, then use settled close to accept the recorded residual
+disposition; close never records that remediation as the original compensation.
+A future profile may add a bounded, explicitly authorized compensation reattempt.
+It must define a fresh attempt identity and key encoding, preserve every original
+noncommit/outcome and immutable stop cause, recheck current independent authority,
+block all new attempts while any original outcome is unknown, and retain reverse
+order. No such control, fresh key or support claim is implied by this design.
 
 ### State and history
 
@@ -332,7 +351,6 @@ instance has queued phase, all forward states idle and no outcomes.
 | compensating → compensated | Failure-triggered unwind completes every required compensation, with no irreversible or unresolved work | Original failure and all effects remain in history. |
 | queued/running/compensating → cancelled | Cancellation won before failure-triggered unwind, all admitted work settled and its declared recovery obligations completed | Includes committed prefix; does not imply rollback. |
 | any nonterminal → intervention-required | Required action/provider/authority unavailable; compensation failure; irreversible barrier; budget exhausted | Record reason, confirmed prefix and remaining obligations. |
-
 | intervention-required → closed | All original tickets settled, current attributable acceptance of residual obligations and matching history sequence | Preserve stop cause and full disposition; perform no business work. |
 
 An intervention-required phase may retain pending unknown outcomes. Status must
@@ -342,7 +360,12 @@ attributable resolution append history while retaining that phase. Business
 terminal phases succeeded/compensated/cancelled/closed permit reads/recovery only.
 `compensated` explicitly includes an empty committed prefix; its failure stopCause
 and forward failed/rejected/conflict result distinguish it from successful work.
-Failure and cancellation stopCause are immutable once unwind begins.
+Every intervention-required and closed state MUST include stopCause. If failure
+or cancellation was already latched, preserve that exact cause through intervention
+and closure. Otherwise, latch `{kind:"intervention",code}` for the original
+coordination stop (for example SAGA_LIMIT or AUTHORIZATION); this is not a
+fabricated business failure or provider outcome. Missing cause is not an empty
+cause. Failure, cancellation and intervention causes are immutable after latching.
 Cancellation after intervention returns terminal refusal; existing original
 cancel-attempt recovery remains available.
 

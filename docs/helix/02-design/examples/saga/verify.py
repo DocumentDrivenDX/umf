@@ -87,11 +87,12 @@ def main():
     missing_evidence = copy.deepcopy(close)
     del missing_evidence["disposition"]["evidence"]
     check("close_requires_evidence_reference", protocol, missing_evidence, False)
-    closed = {**state, "phase": "closed", "disposition": close["disposition"]}
+    cause = {"kind": "failure", "step": "allocate", "code": "TRANSIENT_ABORT"}
+    closed = {**state, "phase": "closed", "stopCause": cause, "disposition": close["disposition"]}
     check("closed_disposition_structure", result("statusResult"), closed)
     pending_closed = {**closed, "pending": [{"step": "allocate", "direction": "forward"}]}
     check("closed_cannot_retain_pending", result("statusResult"), pending_closed, False)
-    without_disposition = {**state, "phase": "closed"}
+    without_disposition = {**state, "phase": "closed", "stopCause": cause}
     check("closed_requires_disposition", result("statusResult"), without_disposition, False)
     compensated = {**state, "phase": "compensated", "stopCause": {"kind": "failure", "code": "TRANSIENT_ABORT"}}
     check("empty_prefix_compensated_shape_retains_failure", result("statusResult"), compensated)
@@ -99,6 +100,34 @@ def main():
     check("unwind_requires_original_cause", result("statusResult"), compensated, False)
     check("closure_control_recovery_shape", result("recover-controlResult"),
           dict(status="recovered", operation="close", result=closed))
+    # Regression: closed-event guards must not replace outcome-event guards.
+    event = dict(sequence=1, kind="outcome", actor="worker_1",
+                 invocation={"step": "allocate", "direction": "forward"},
+                 result={"status": "rejected", "code": "CAPACITY"})
+    check("complete_original_outcome_event", result("event"), event)
+    for fields in [("invocation",), ("result",), ("invocation", "result")]:
+        malformed = copy.deepcopy(event)
+        for field in fields:
+            del malformed[field]
+        check("outcome_event_requires_" + "_and_".join(fields), result("event"), malformed, False)
+    closed_event = dict(sequence=2, kind="closed", actor="operator_1", stopCause=cause, disposition=close["disposition"])
+    check("closed_event_with_disposition", result("event"), closed_event)
+    missing_event_cause = copy.deepcopy(closed_event)
+    del missing_event_cause["stopCause"]
+    check("closed_event_retains_original_cause", result("event"), missing_event_cause, False)
+    del closed_event["disposition"]
+    check("closed_event_requires_disposition", result("event"), closed_event, False)
+    missing_cause = copy.deepcopy(closed)
+    del missing_cause["stopCause"]
+    check("closed_requires_original_stop_cause", result("statusResult"), missing_cause, False)
+    intervention = {**state, "phase": "intervention-required", "stopCause": cause}
+    check("intervention_preserves_failure_cause", result("statusResult"), intervention)
+    del intervention["stopCause"]
+    check("intervention_requires_stop_cause", result("statusResult"), intervention, False)
+    intervention["stopCause"] = {"kind": "intervention", "code": "SAGA_LIMIT"}
+    check("budget_intervention_has_coordination_cause", result("statusResult"), intervention)
+    del intervention["stopCause"]["code"]
+    check("coordination_stop_requires_code", result("statusResult"), intervention, False)
     report = dict(jsonschemaVersion=importlib.metadata.version("jsonschema"),
                   results=cases,
                   sources={str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()

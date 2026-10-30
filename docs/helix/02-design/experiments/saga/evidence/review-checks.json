@@ -1,14 +1,14 @@
 {
   "baseCommit": "efb4042719866888ad80c01cb2da694972eb2738",
-  "catalogArtifactsPassed": 17,
+  "catalogArtifactsPassed": 11,
   "storyCriteriaMapped": {
     "905": 29,
     "906": 16
   },
-  "localLinksResolved": 363,
+  "localLinksResolved": 418,
   "newArtifactIdsUnique": true,
   "schemaReferencesConsistent": true,
-  "structuralCasesPassed": 24,
+  "structuralCasesPassed": 36,
   "abstractFormalCasesPassed": 18,
   "admissionFormalCasesPassed": 7,
   "recordedInputOutputHashesVerified": true,
@@ -18,8 +18,11 @@
     "Original Saga/Admission models omit new closure, noncommit and budget states; no full-protocol refinement proof",
     "SDK 0.10.0 is a source candidate; installed-package/browser/native release qualification and publication remain pending"
   ],
-  "catalogArtifactsWithUnchangedBaselineFindings": 3,
+  "catalogArtifactsWithUnchangedBaselineFindings": 0,
   "deliveryFormalCasesPassed": 3,
   "actionRegressionTestsPassed": 109,
-  "releaseDriftTestsPassed": 6
+  "releaseDriftTestsPassed": 6,
+  "releaseAlignmentSplit": true,
+  "sagaDiffContainsOnlyDocsHelix": true,
+  "validationScope": "Current saga-only PR: catalog, schema examples/negative controls, acceptance allocation, links and unchanged formal evidence custody; action/release tests were verified in the earlier combined revision and the split release PR."
 }

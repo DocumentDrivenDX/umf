@@ -18,7 +18,10 @@ schemas, every extension dependency, action executor/plan pins and current actio
 contract prose. Build and fast PR checks run it. Mutation tests reject a stale
 SDK version, extension pin, plan schema, Python series and normative contract.
 
-This is a source/release-candidate change. Released SDK 0.5.8 bytes, release tags,
+Release source/CI changes are separated into
+[PR #71](https://github.com/DocumentDrivenDX/umf/pull/71). The saga
+PR contains design documents, proposal schemas, fixtures and formal experiments.
+This is a source/release-candidate change in that separate PR. Released SDK 0.5.8 bytes, release tags,
 archived receipts and original instance custody remain unchanged. The SDK 0.10.0
 archive has not been built, installed in independent consumers or published by
 this change. Its release still requires installed SDK/browser checks and exact
@@ -56,7 +59,7 @@ Saga and seven-case Admission models are unchanged and retain their original
 scoped results. Delivery.tla adds three separately reported finite checks; no
 composed/full-protocol proof follows.
 
-## Verification of this revision
+## Verification of the earlier combined revision
 
 - 109 existing portable action/plan/manifest/local-profile regressions passed
   across 13 test files (797 assertions); no native provider was exercised.
@@ -75,3 +78,31 @@ composed/full-protocol proof follows.
 
 Installed SDK distribution, Chromium and native saga execution remain unqualified
 for this candidate; the source regression checks do not imply those release gates.
+
+## PR comment corrections, 2026-10-29
+
+- Restored independent outcome and closed history-event guards. Outcome events
+  require invocation and full original result; closed events require disposition
+  and original stopCause. Missing-field negative controls verify both families.
+- Closed and intervention-required state projections require stopCause. Previously
+  latched failure/cancellation survives; a first coordination stop uses
+  intervention plus its protected-safe code instead of fabricating business failure.
+- Repaired the state-table row and separated cancellation/reconciliation prose.
+- Moved all 17 release-only paths to PR #71; its additional evidence record makes
+  18 files in that PR. PR #70 now changes only docs/helix design/schema/examples
+  and formal evidence. Merge #71 first to reconcile the existing stale action
+  contract baseline before integrating this core 0.10 saga design.
+- Recorded the deferred compensation-reattempt gap and the conditions a future
+  profile would need. Sequential/1 still requires out-of-band remediation and
+  settled closure after confirmed compensation failure; no resume is implied.
+- Renamed deallocate's write frame to deallocate-write. Kept the action schema's
+  sole caller-key-optional declaration and clarified mandatory durable keys for
+  every saga invocation, including compensation.
+
+Current saga-only verification: 36 structural cases, 11 catalog artifact checks,
+45 acceptance mappings, 418 local links, original/current formal and schema
+evidence hashes and git diff whitespace checks. The unchanged formal models were
+not rerun; their qualification scope is unchanged. The split release branch reran
+its six release tests, consistency and generated identity checks successfully.
+Native saga implementation, full protocol refinement and release qualification
+remain separate unexecuted gates.

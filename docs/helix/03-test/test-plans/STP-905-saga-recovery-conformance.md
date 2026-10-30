@@ -129,6 +129,11 @@ obligations as unverified. No production orchestrator or UI delivery is included
 | US-905-AC28 | `review_28` in `tests/saga/native-recovery.py`; `@covers US-905-AC28` | Irreversible boundary warning: Given an irreversible step preceding later work, when inspection or assessment runs, then SAGA_PIVOT identifies the barrier and later steps without claiming forward-only recovery support. |
 | US-905-AC29 | `review_29` in `tests/saga/native-recovery.py`; `@covers US-905-AC29` | Retention and time admission: Given a host requiring longer automatic execution or incompatible payload erasure, when this profile is selected, then admission refuses; tighter advertised limits persist across restart. |
 
+US-905-AC26 also requires the schema verifier to reject closed/intervention
+projections without stopCause and history outcome events missing invocation or
+result. Planned native tests must prove original cause immutability through
+intervention/closure; a structural guard alone cannot prove that history.
+
 These are unexecuted native acceptance requirements. Schema fixtures and finite
 models cannot mark them passed. AC28 also requires portable diagnostics in
 `tests/saga/assessment.test.ts` under STP-906.

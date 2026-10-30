@@ -26,6 +26,12 @@ allocation output. Release consumes the reservation output on inventory. The sam
 portable Key shape across the stores asserts no shared native entity. Each
 provider resolves and authorizes its original identity independently.
 
+All example actions retain the base actions 0.1.0 `caller-key-optional` declaration.
+Every forward and compensation invocation inside the saga supplies the mandatory
+durable saga key under CONTRACT-908; no provider/key custody is implied by this
+fixture. Changing that declaration to an invented caller-key-required value would
+violate the current action schema.
+
 ## Worked recovery timeline
 
 Consider a three-step variant: reserve, allocate, confirm. Each has an action

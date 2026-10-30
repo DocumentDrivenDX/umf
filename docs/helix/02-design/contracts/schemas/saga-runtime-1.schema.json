@@ -346,7 +346,9 @@
                 "enum": [
                   "compensating",
                   "compensated",
-                  "cancelled"
+                  "cancelled",
+                  "intervention-required",
+                  "closed"
                 ]
               }
             },
@@ -832,6 +834,9 @@
         },
         "disposition": {
           "$ref": "#/$defs/disposition"
+        },
+        "stopCause": {
+          "$ref": "#/$defs/stopCause"
         }
       },
       "required": [
@@ -845,6 +850,24 @@
           "if": {
             "properties": {
               "kind": {
+                "const": "outcome"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "invocation",
+              "result"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
                 "const": "closed"
               }
             },
@@ -854,7 +877,8 @@
           },
           "then": {
             "required": [
-              "disposition"
+              "disposition",
+              "stopCause"
             ]
           }
         }
@@ -1160,7 +1184,8 @@
         "kind": {
           "enum": [
             "failure",
-            "cancellation"
+            "cancellation",
+            "intervention"
           ]
         },
         "step": {
@@ -1177,7 +1202,26 @@
       "required": [
         "kind"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "intervention"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "code"
+            ]
+          }
+        }
+      ]
     }
   }
 }

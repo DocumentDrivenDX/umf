@@ -1,7 +1,7 @@
 [UMF 0.10 alignment and saga review](04-build/evidence/umf-010-saga-review.md)
-keeps actions and saga semantics with UMF, aligns the SDK candidate to 0.10.0 and
-current contracts to core 0.10.0, and records recovery/closure review decisions.
-Release consistency checks run before build and in fast PR CI. Saga implementation,
+keeps actions and saga semantics with UMF and records recovery/closure review
+decisions. SDK/version alignment and its build/CI checks are reviewed in a
+[separate PR #71](https://github.com/DocumentDrivenDX/umf/pull/71). Saga implementation,
 new native qualification and release publication remain separate gates.
 
 # UMF project documentation
