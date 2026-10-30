@@ -4,6 +4,8 @@
 pub mod dbt_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod rdf_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod graphql_binding;
 pub mod access_rrf_binding;
 pub mod access_temporal_binding;
 pub mod arrow_ipc_capture_binding {

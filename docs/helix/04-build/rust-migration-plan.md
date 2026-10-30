@@ -62,7 +62,9 @@ candidate is 0.10.4, with exact dependent-package pins.
 OpenAPI and LinkML/ODCS are integrated into the current Rust module graph;
 LinkML/ODCS runtime tests pass. GraphQL is integrated as `umf-graphql`, using
 the current core Engine, Registry, Value and Context types. OpenAPI and GraphQL
-still need successful runtime test runs after their latest source repairs.
+still need successful runtime test runs after their latest source repairs. The
+GraphQL wire transport and CLI now route six operations to that Rust library;
+functional wire and CLI tests are written and await execution.
 
 A current source audit identifies remaining Rust kernels in TypeSpec and Smithy,
 JSON-LD/SHACL/OWL, relational and TableSpec adapters, cross-format projections,

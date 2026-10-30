@@ -35,6 +35,8 @@ const PROTOBUF_DOCUMENT_EXPORT_CLI_PROFILE: &str = "umf.protobuf-document-export
 const MAX_AVRO_CANDIDATE_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 const MAX_JSON_SCHEMA_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 const MAX_CARDINALITY_REQUEST_BYTES: usize = 32 * 1024 * 1024;
+#[cfg(feature = "embedded-adapters")]
+const MAX_GRAPHQL_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 const MAX_CSV_BOOLEAN_LEXICAL_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 const MAX_FACETS_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 const MAX_ACCESS_RRF_REQUEST_BYTES: usize = 4 * 1024 * 1024;
@@ -766,6 +768,10 @@ fn run(args: Vec<String>) -> Result<(), String> {
         return dbt_run(&args[1..]);
     }
     #[cfg(feature = "embedded-adapters")]
+    if args.first().map(String::as_str) == Some("graphql") {
+        return graphql_run(&args[1..]);
+    }
+    #[cfg(feature = "embedded-adapters")]
     if args.first().map(String::as_str) == Some("rdf") {
         return rdf_run(&args[1..]);
     }
@@ -1327,6 +1333,47 @@ fn rdf_run(args: &[String]) -> Result<(), String> {
         "{}",
         umf_core_wire::rdf_binding::execute_wire_with_control(&wire, &mut control)
     );
+    Ok(())
+}
+
+#[cfg(feature = "embedded-adapters")]
+fn graphql_run(args: &[String]) -> Result<(), String> {
+    let profile = umf_core_wire::graphql_binding::PROFILE;
+    if args == ["--version"] {
+        println!("{{\"profile\":\"{profile}\",\"version\":\"{}\"}}", env!("CARGO_PKG_VERSION"));
+        return Ok(());
+    }
+    if args == ["--capabilities"] {
+        println!("{{\"profile\":\"{profile}\",\"operations\":[\"graphql.import\",\"graphql.validate\",\"graphql.export\",\"graphql.getAst\",\"graphql.exportBundle\",\"graphql.editAst\"],\"resourceProfile\":\"cooperative\"}}");
+        return Ok(());
+    }
+    let invalid = || "usage: umf graphql <--version|--capabilities|--stdin-wire [--max-work N] [--timeout-ms N]>".to_owned();
+    let mut stdin_wire = false;
+    let mut max_work = None;
+    let mut timeout_ms = None;
+    let mut index = 0;
+    while index < args.len() {
+        match args[index].as_str() {
+            "--stdin-wire" if !stdin_wire => stdin_wire = true,
+            "--max-work" if max_work.is_none() => { index += 1; max_work = Some(args.get(index).ok_or_else(invalid)?.parse::<u64>().map_err(|_| "--max-work requires a nonnegative integer".to_owned())?); }
+            "--timeout-ms" if timeout_ms.is_none() => { index += 1; timeout_ms = Some(args.get(index).ok_or_else(invalid)?.parse::<u64>().map_err(|_| "--timeout-ms requires a nonnegative integer".to_owned())?); }
+            _ => return Err(invalid()),
+        }
+        index += 1;
+    }
+    if !stdin_wire { return Err(invalid()); }
+    let wire = String::from_utf8(read_limited(io::stdin(), MAX_GRAPHQL_REQUEST_BYTES)?)
+        .map_err(|_| "wire input is not valid UTF-8".to_owned())?;
+    let start = std::time::Instant::now();
+    let mut left = max_work.unwrap_or(u64::MAX);
+    let mut control = |amount: usize| {
+        let amount = amount as u64;
+        if amount > left { return Err(umf_core::EngineError::new("RESOURCE_LIMIT", Utf16::default(), "Maximum work exceeded")); }
+        left -= amount;
+        if timeout_ms.is_some_and(|ms| start.elapsed() >= std::time::Duration::from_millis(ms)) { return Err(umf_core::EngineError::new("DEADLINE_EXCEEDED", Utf16::default(), "Deadline exceeded")); }
+        Ok(())
+    };
+    println!("{}", umf_core_wire::graphql_binding::execute_wire_with_control(&wire, &mut control));
     Ok(())
 }
 
