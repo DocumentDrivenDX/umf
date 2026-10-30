@@ -1,0 +1,41 @@
+{
+  "profile": "g03.access-dev8-current-public-metadata-observation/1",
+  "timestampUtc": "2026-10-30T00:27:57.313192+00:00",
+  "url": "https://pypi.org/pypi/umf-access/0.1.0.dev8/json",
+  "httpStatus": 200,
+  "finalUrl": "https://pypi.org/pypi/umf-access/0.1.0.dev8/json",
+  "elapsedSeconds": 0.443,
+  "headers": {
+    "Date": "Fri, 30 Oct 2026 00:27:57 GMT",
+    "Content-Type": "application/json",
+    "Content-Length": "2032",
+    "Age": null,
+    "Cache-Control": "max-age=900, public",
+    "X-Cache": "MISS, HIT, MISS",
+    "X-PyPI-Last-Serial": "42943546"
+  },
+  "response": {
+    "path": "/private/tmp/g03-access-dev8-pypi-current-metadata-001/response.json",
+    "sizeBytes": 2032,
+    "sha256": "4a1a453bea4a3118bce048b48514468740f2346b46284d04ce5c9c378e898f47"
+  },
+  "authUsed": false,
+  "mutationPerformed": false,
+  "wheelBytesDownloaded": false,
+  "infoName": "umf-access",
+  "infoVersion": "0.1.0.dev8",
+  "files": [
+    {
+      "filename": "umf_access-0.1.0.dev8-py3-none-any.whl",
+      "size": 580062,
+      "digests": {
+        "blake2b_256": "dfa2253e6ae631c8acc7954d5d0d82a96c4d079466361b3f8f5e85dab33723bb",
+        "md5": "05863f1b7bbab12c514380526bb21da4",
+        "sha256": "1a21c1ddd59f6b23e9f0b33228280564af0e96bb4d13699b89616d5143e4fd23"
+      },
+      "yanked": false,
+      "packagetype": "bdist_wheel",
+      "url": "https://files.pythonhosted.org/packages/df/a2/253e6ae631c8acc7954d5d0d82a96c4d079466361b3f8f5e85dab33723bb/umf_access-0.1.0.dev8-py3-none-any.whl"
+    }
+  ]
+}

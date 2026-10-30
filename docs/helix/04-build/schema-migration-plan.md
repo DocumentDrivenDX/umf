@@ -433,6 +433,12 @@ Normal [PR #69](https://github.com/DocumentDrivenDX/umf/pull/69) merged as M `ef
 
 Fresh public installed proof remains incomplete. Its first local Linux attempt timed out during actual-M Git status in source stage two, before artifact acquisition, SDK139 or the full18 Python cohort. The failure, safe partial export and exact container/volume cleanup are independently accepted evidence, not installed-package qualification. The finite continuation prepares complete Linux-native source views while preserving shallow boundaries and every source predicate; preparation and any subsequent proof require their separate admissions. Prior local139/SDK019/native evidence is unchanged. GitHub Actions and macOS CI remain off; macOS artifacts retain build/static-only limits. Access PyPI availability and consumer-distribution qualification remain separate owner gates. G03 delivery and G04–G11 remain open; this checkpoint adds no Praxis scope.
 
+#### Access availability and runtime identity follow-up — 2026-10-30 UTC
+
+The [Access dev8 availability packet](evidence/schema-migration-design-review/g03-access-dev8-public-availability-001/README.md) records the accepted point-in-time unauthenticated wheel-body hash and separate later custody audit. Original upload/read-only failures and the null original postcheck remain unchanged. This closes the scoped public-byte availability handoff only; it does not establish a public-index installation or consumer runtime qualification.
+
+Consumer qualification exposed an Access-owned identity defect: immutable dev8 distribution metadata says dev8 while its runtime identity still says dev0. The equality guard correctly refuses genuine dev8-generated models. Reviewed successor source commits `b9299935b3ff482c7ecb2f29952241bbdf9543fb` and harness-only `fdb27b875046d227e0cbb353ed90ab69f54ebdf3` select dev9 through one inert version authority. Actual Linux wheel/build/generated-model/compiler/catalog qualification, result review, merge, publication and public-byte proof remain pending. Existing SDK assets and frozen notes are unchanged. No CI or macOS runtime test is authorized by this checkpoint; G03, G04–G11 and managed/consumer acceptance remain open.
+
 #### Historical pre-reconciliation G02 integration checkpoint — Core 0.10.1
 
 This is a preserved pre-reconciliation checkpoint for the earlier Core 0.10.1
@@ -949,3 +955,9 @@ providers, durable ROOT/all-writer checkpoints, complete crash recovery,
 historical active-target upgrade, remaining G02–G11 work, independent native/
 managed/browser/installed acceptance, merge/release and fresh public-byte
 verification remain required. Null ingress/application families are unavailable.
+
+### G11 next native seam readiness — 2026-10-30
+
+The [targeted source readiness audit](evidence/schema-migration-design-review/g11-next-native-seam-readiness-001.md) and [copy custody](evidence/schema-migration-design-review/g11-next-native-seam-readiness-001.custody.json) identify the next seam after the adopted journal source cut: genuine committed ingress-store birth custody and its separately governed journal grammar, followed by native ROOT observation, issuer registration and all-writer checkpoints. Existing `create_original_store` creates and checks the native store but returns an OID; that is not a committed birth receipt. The upper generation-authority session calls concrete supervisor resolver/verifier methods that are not implemented at the inspected native boundary.
+
+Governing CONTRACT-081 checkpoints014–016 require a finite design amendment before implementing that positive native route. UMF Access owns the native receipt/provider/session integration; the host/operator owns original deployment, custodian, subject/schema birth authority and lease/signing inputs. Weft retains its compiler/catalog boundary. The exact new known family tuple, native origin provider, authority policy, compatibility cell and native allowance remain unselected. Preserve the old null-ingress definition and existing pure signed ROOT replay; neither may be relabeled as the missing native capability. Extend the existing journal, original-birth, lease, supervisor and generation-authority tests after design adoption. This is read-only source readiness, with no new profile, implementation, native test, release or G11 completion claim.

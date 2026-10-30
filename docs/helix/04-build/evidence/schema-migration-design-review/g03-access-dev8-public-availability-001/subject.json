@@ -1,0 +1,95 @@
+{
+  "profile": "g03.access-dev8-scoped-public-availability-custody/1",
+  "status": "ACCEPTED_PUBLIC_BODY_WITH_LATER_INDEPENDENT_CURRENT_CUSTODY",
+  "artifact": {
+    "project": "umf-access",
+    "version": "0.1.0.dev8",
+    "filename": "umf_access-0.1.0.dev8-py3-none-any.whl",
+    "sizeBytes": 580062,
+    "sha256": "1a21c1ddd59f6b23e9f0b33228280564af0e96bb4d13699b89616d5143e4fd23",
+    "sourceCommit": "e4299aff8e87e9d211f9d86df2f2013ab9c95945",
+    "publicURL": "https://files.pythonhosted.org/packages/df/a2/253e6ae631c8acc7954d5d0d82a96c4d079466361b3f8f5e85dab33723bb/umf_access-0.1.0.dev8-py3-none-any.whl"
+  },
+  "publicByteObservation": {
+    "authenticationUsed": false,
+    "bodyBytes": 580062,
+    "bodyPersisted": false,
+    "bodySha256": "1a21c1ddd59f6b23e9f0b33228280564af0e96bb4d13699b89616d5143e4fd23",
+    "completedElapsedSeconds": 0.943747,
+    "finalUrl": "https://files.pythonhosted.org/packages/df/a2/253e6ae631c8acc7954d5d0d82a96c4d079466361b3f8f5e85dab33723bb/umf_access-0.1.0.dev8-py3-none-any.whl",
+    "headers": {
+      "Cache-Control": "max-age=365000000, immutable, public",
+      "Content-Length": "580062",
+      "Content-Type": "application/octet-stream",
+      "Date": "Fri, 30 Oct 2026 01:21:09 GMT",
+      "ETag": "\"05863f1b7bbab12c514380526bb21da4\"",
+      "Last-Modified": "Fri, 30 Oct 2026 00:25:02 GMT"
+    },
+    "httpStatus": 200,
+    "mutationPerformed": false,
+    "observedAtUtc": "2026-10-30T01:21:10.089041+00:00",
+    "uploadInvoked": false,
+    "url": "https://files.pythonhosted.org/packages/df/a2/253e6ae631c8acc7954d5d0d82a96c4d079466361b3f8f5e85dab33723bb/umf_access-0.1.0.dev8-py3-none-any.whl"
+  },
+  "currentCustodyAuditInterval": {
+    "startedAt": "2026-10-30T01:28:25.350686+00:00",
+    "completedAt": "2026-10-30T01:29:13.488613+00:00"
+  },
+  "evidence": {
+    "canonicalPublicMetadataObservation": {
+      "path": "/private/tmp/g03-access-dev8-pypi-current-metadata-001/result.json",
+      "sizeBytes": 1508,
+      "sha256": "32686ff5a4411207ff83e143804df833337b192b10b86408070da32e57f3aad5"
+    },
+    "canonicalPublicMetadataBody": {
+      "path": "/private/tmp/g03-access-dev8-pypi-current-metadata-001/response.json",
+      "sizeBytes": 2032,
+      "sha256": "4a1a453bea4a3118bce048b48514468740f2346b46284d04ce5c9c378e898f47"
+    },
+    "originalUploadOwner": {
+      "path": "/private/tmp/g03-access-dev8-pypi-actual-006/owner-result.json",
+      "sizeBytes": 11394,
+      "sha256": "0bf749991be05320f00833ef6b678ed4dfd0f1b6d3487c329143b48e23a96c06"
+    },
+    "originalUploadIntent": {
+      "path": "/private/tmp/g03-access-dev8-pypi-actual-006/upload-intent.json",
+      "sizeBytes": 464,
+      "sha256": "92b460ed5ad0d8ddce3fba862711580b9598de1641f66e77daae30c116ae43e1"
+    },
+    "originalUploadOutcome": {
+      "path": "/private/tmp/g03-access-dev8-pypi-actual-006/upload-outcome.json",
+      "sizeBytes": 335,
+      "sha256": "bd0191346db8dff5ab37a835cdd3e5eeb2f3f0ac84c5f7a4e4d30d2ffdade39e"
+    },
+    "failedReadOnlyOwner": {
+      "path": "/private/tmp/g03-access-dev8-readonly-reconciliation-owner-actual-003/owner-result.json",
+      "sizeBytes": 22019,
+      "sha256": "53c8d7a3d2f4a91edaa44a49ac6273803a31bc3f4e2360f6d3c7958be5c53345"
+    },
+    "failedReadOnlyChecker": {
+      "path": "/private/tmp/g03-access-dev8-readonly-reconciliation-actual-002/reconciliation.json",
+      "sizeBytes": 17710,
+      "sha256": "a090dece59397945d989128eba7a5260f1b49e6bc2127ee6edf933c027cd8566"
+    },
+    "laterIndependentCurrentAudit": {
+      "path": "/private/tmp/g03-access-dev8-readonly-failed002-postcustody-sol-data001.json",
+      "sizeBytes": 254702,
+      "sha256": "bcd3fba5d6463b5eabf3852a0cebc387a61858b3b13bcf40d479826dd637b0b5"
+    },
+    "independentDisposition": {
+      "path": "/private/tmp/g03-access-dev8-readonly-owner003-checker002-sol-actual-custody-review001.md",
+      "sizeBytes": 10529,
+      "sha256": "611e3bc058cebcb2ffbfe37e0da22b7976557e2498a22802f80b4bb0034f7e93"
+    }
+  },
+  "preservedStatuses": {
+    "originalUploadReadback": "FAIL_OR_UNKNOWN",
+    "readOnlyOwner": "PUBLICATION_READONLY_CHECKER_NOT_COMPLETED",
+    "readOnlyChecker": "PUBLIC_BYTES_NOT_VERIFIED",
+    "originalReadOnlyInputCustodyPost": null
+  },
+  "scope": "point-in-time unauthenticated served bytes matching qualified wheel plus later current custody; not a completed original transaction, public-index install, consumer runtime, SDK058 or managed qualification",
+  "mutationReplayed": false,
+  "credentialsRequired": false,
+  "furtherHTTPRequired": false
+}
