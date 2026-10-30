@@ -3,7 +3,7 @@
   "primaryCases": 40,
   "supplementalWitnesses": 3,
   "allPassed": true,
-  "publishedUtc": "2026-10-30T02:09:25.592520+00:00",
+  "publishedUtc": "2026-10-30T15:17:40.886636+00:00",
   "modelSha256": "670483297836f5308c838069a49ad46cd7730a142def4681851663de68b1fa3e",
   "runnerSha256": "ec60feacc254b49b14c256af6f49cba32c1e051f0768b9909d58ece4211485f8",
   "witnessRunnerSha256": "a51a7565e43dc3b21208f4438e44497ac4f30b0aaa7b00afa76351922b400db5",
@@ -24,7 +24,7 @@
     "docs/helix/02-design/technical-designs/TD-906-author-and-assess-sagas.md": "18f806ab419faa0c6e2f737516449a8eff5fa2dc2f2675a12e09bf644884f90a",
     "docs/helix/03-test/test-plans/STP-905-saga-recovery-conformance.md": "3146cb89781afa0d36d5e741dd6c73ac9527f812916a1b38174736a0ceea6972",
     "docs/helix/03-test/test-plans/STP-906-author-and-assess-sagas.md": "c0382a6226b9b83d9fb18d42e398fad39d3e0c5b2fa8b2a1cd66458cadf10041",
-    "spec/core/schema.json": "c6004664eb93dcef28ce6e0583f91225b618aa0fb42967a892242402557cf71d",
+    "spec/core/schema.json": "6a3667acf84889ec4e7d5906b7c3dc1e3b38bfcdf1530c215b897f7066524f3b",
     "spec/extensions/actions/schema.json": "41eeb67807fc8a540785ffdd712caaa007bd3627a6a612e1adc2400d0ec5b382",
     "spec/extensions/actions/tx-results.schema.json": "20cf86b84be743cb9f0665b9096b33528d3c7f13ecf5b26f707843c8880afa68"
   },
@@ -82,8 +82,8 @@
       "configuration": "protocol-smoke.cfg",
       "configSha256": "103193e5d1a25bcf125afd735054fe1b0131e250ae9aaaa7b1633a8aae619ae1",
       "compressedLog": "smoke.log.gz",
-      "compressedLogSha256": "31bb5b60126fb2d1688b42fbb3c533f4c98c6f9b99fa80c38607f05090d46a8e",
-      "logSha256": "c8d2a2d0f4d924e9bd6e856a7a4dd26132b822bb869ac2f16c06c2277f30c58c"
+      "compressedLogSha256": "af796dcf6eb0f2f926cd23311add77a7b04c4ae5161e1a1f76ca75fe4537d5d8",
+      "logSha256": "1fd075e8883dc428684995674a39c4bd08d52f790965fef704f2ef0d6fa46708"
     },
     {
       "name": "safety-two",
@@ -117,8 +117,8 @@
       "configuration": "protocol-safety-two.cfg",
       "configSha256": "ef4522a55f303f1f379afe83da3c4d3fbf5b5ec60e20b6d61d4c7c7089135a56",
       "compressedLog": "safety-two.log.gz",
-      "compressedLogSha256": "85a749be474de300384e1852e7835315f9ae9f552b28d47f91922628f1220079",
-      "logSha256": "79eb3da7839b46c96ee36cf47013168cb8b7135210b9644fb69eb769ae605f0d"
+      "compressedLogSha256": "dc116da832e92f7789ffc030192d1a3d0febc28a2dc7bf163e514500eb9f04cb",
+      "logSha256": "160f1997ef1be7f0831dd62faf0320870f7797ac4e7199fe84ebc73106c83672"
     },
     {
       "name": "safety-three",
@@ -151,8 +151,8 @@
       "configuration": "protocol-safety-three.cfg",
       "configSha256": "34bef8e02ada04f25b601b58557b32799dd3374cc5eecc3a7abf1858e8054401",
       "compressedLog": "safety-three.log.gz",
-      "compressedLogSha256": "2751b6263ee121a9cd8d2266f3dc4d7ccd56857138f747cbff1136dd72f7337a",
-      "logSha256": "72284a4b2c6d80be0f1e72c0d6d662edd3f8f89ca1f1c3252ad127113fbaae28"
+      "compressedLogSha256": "39733c00cfffaa7fd673385ed631734d40055220b2f50cc63f51e658bf3fd33e",
+      "logSha256": "936d49d0cdafd89f9865adafc659fa793aaf9bfbeec7538fc77ca3802366613e"
     },
     {
       "name": "safety-irreversible",
@@ -186,8 +186,8 @@
       "configuration": "protocol-safety-irreversible.cfg",
       "configSha256": "3338640728002064c66f63b899fbcd14a6ef12174c90ffbd04bcd2e50cc2bbc0",
       "compressedLog": "safety-irreversible.log.gz",
-      "compressedLogSha256": "f956b7da0aae7ed092751f6685b050b203ffacd9ca6d31519b04783d751694eb",
-      "logSha256": "ed88f2d513f87572ad06c7880b020a12681e85bd67666af0fd782f5c5a874849"
+      "compressedLogSha256": "22d897eea2ea7f5117a1bfa09637befe002fdb293a2094292b6b01d4f91f60c4",
+      "logSha256": "2e73cfe54600dd3e76f861aa41b5d9aa721cf65ada49fef0b62ba25417d27717"
     },
     {
       "name": "safety-no-effect",
@@ -221,8 +221,8 @@
       "configuration": "protocol-safety-no-effect.cfg",
       "configSha256": "63be2aa5e7c7850be15f5eea297665f68cdfe0b40aef53bf04fa91aad4cdf7f8",
       "compressedLog": "safety-no-effect.log.gz",
-      "compressedLogSha256": "d9e5ee27fd5dbb14cef1401b00bc23c16d2d8f6e87a1f6eeaea6c1c39a2531b8",
-      "logSha256": "02a8fbf93e62d3c3127b5f598e79dcdb308be5b9b9eca027d61ceec18b3e0859"
+      "compressedLogSha256": "3d67cc82c58f3b5d373517928ecfbbf4f7fc09d0320313f68ed2359cbaaf4efc",
+      "logSha256": "dc22bffb24bda976a472beb5c7b325669f7401d26fad42f795f1468836dca833"
     },
     {
       "name": "progress-stable",
@@ -257,8 +257,8 @@
       "configuration": "protocol-progress-stable.cfg",
       "configSha256": "826b04dba07cdf1780599f05fe6326e61c94a35654071d2b578281d43e34897a",
       "compressedLog": "progress-stable.log.gz",
-      "compressedLogSha256": "f56311a0b8ac1b19fcfbdabd8fc9588898fb4e32fe0a00445e479f00dc7b1c66",
-      "logSha256": "522520cb166e8bace29642be3f000cd555f6e2cea575ef7398c15b67452045a3"
+      "compressedLogSha256": "24faa3096a60a858c8f617405ae744fdad870dd1c2225c843634ab7d1ce92d30",
+      "logSha256": "31b56bd8758ce9a04e5e79eccb8717899fa35498ccc4988ad4b9a783e88b1175"
     },
     {
       "name": "progress-success",
@@ -290,8 +290,8 @@
       "configuration": "protocol-progress-success.cfg",
       "configSha256": "c5afe361bc5a3a72a1d4b8a99a6b06787ceec3ceb87dcc798fe677ae1408d612",
       "compressedLog": "progress-success.log.gz",
-      "compressedLogSha256": "607d4143dc2b745d8f75610adcce322b95760df986f14e86128ca5f5a1240348",
-      "logSha256": "d488114b28cd42cb82ee6ec7fe4de7206795dc3cefa86b19d98f8963f99ef60d"
+      "compressedLogSha256": "74f83288da730cce4a9fb6c2f5fbf4e1261096551fc878eac5911b863a693290",
+      "logSha256": "29f4bedb2c2c6c4a2ec15ff21729e1117b770060a2bb41c835a469cdc14d59fc"
     },
     {
       "name": "mutant-failed-reinvoke",
@@ -325,8 +325,8 @@
       "configuration": "protocol-mutant-failed-reinvoke.cfg",
       "configSha256": "69b709ed416e660c068b5b4141532c80de9dc25903de768fc83489266146e407",
       "compressedLog": "mutant-failed-reinvoke.log.gz",
-      "compressedLogSha256": "1feca9eb3ed7c776d191bf6c0c2d58fc75a569b9faaaec23a42cff5091bbb78d",
-      "logSha256": "06ae9e5828794ef48bc147c5e4bd8f726ccc0b66d98e6e706ba72e34007a8b54"
+      "compressedLogSha256": "3ad55ffc7bacac5a7662cfa05ff8ba232c07861b0827bb3bf550ae24386b2eb1",
+      "logSha256": "a0c3bdcd5d855e6b66db8b84384f7ab5d2ae939f5b9402024a8080f4d5db92ab"
     },
     {
       "name": "mutant-resume",
@@ -360,8 +360,8 @@
       "configuration": "protocol-mutant-resume.cfg",
       "configSha256": "c426f4e8deb7f077e7708cedb0a18b35abdfd640931ba4d6e22317c769c1fc44",
       "compressedLog": "mutant-resume.log.gz",
-      "compressedLogSha256": "eaedc68853ec66985c9467c6e5646f0fe6083004903a29a7c4a1f525b8f24f2f",
-      "logSha256": "fd17c4275d426efced36601b73cc9504d2923512e4fec5907167f436915f5d64"
+      "compressedLogSha256": "fbe49f35a00f096b7966662a5016269abb83d140e28ecf107076dba70a68db0e",
+      "logSha256": "a8059edc4e8a6d3b3f03e023950e09133e3ec086a69744a142484a07b9060a02"
     },
     {
       "name": "mutant-changed-intent",
@@ -395,8 +395,8 @@
       "configuration": "protocol-mutant-changed-intent.cfg",
       "configSha256": "2bedaf9446710e34bfd7572f866d82bc8b0e27b5584e2e0cd4d90366ceb5040d",
       "compressedLog": "mutant-changed-intent.log.gz",
-      "compressedLogSha256": "6c2f8691a919fe75bc88ce5b17224a3eda254a480f082f47dba79b6187bd48b4",
-      "logSha256": "4b081cc837679690e0b64d10642b5ac3c0db88a82877fcc0ceef63ae872a8673"
+      "compressedLogSha256": "d57406d5fb56dd7e45e8b5d2a53c741a018f6fcb89ffb4ecd380b8174764c879",
+      "logSha256": "4c70b5817fee78672169d1a7e4114c7fc1d55bd07b073e940549a11009b44fc5"
     },
     {
       "name": "mutant-unknown-advance",
@@ -430,8 +430,8 @@
       "configuration": "protocol-mutant-unknown-advance.cfg",
       "configSha256": "8f4ac40655a304771ac21d5791205c2bb688632e2a075f3ee131e1766d9eb38b",
       "compressedLog": "mutant-unknown-advance.log.gz",
-      "compressedLogSha256": "06bfaa78849cbb72a7e07a92a167583f8afdf26dcd6da55ba9e9b7ce2f5ad386",
-      "logSha256": "4c7fb252213213aa66bcbbc260a264b9891dcf5e6bfa232f8f94227f4a11c775"
+      "compressedLogSha256": "eb0c3402121c48bcb4d124a199fa96c1b98375a5f4a2556d54c88a02babf4498",
+      "logSha256": "393262ffecf6938679725e906ce51b7a1616690b19dd50225f0d57649c48b72a"
     },
     {
       "name": "mutant-duplicate-effect",
@@ -465,8 +465,8 @@
       "configuration": "protocol-mutant-duplicate-effect.cfg",
       "configSha256": "cea5167239de543e87550cb2feba28c4b58c5bc08d5636bc9264a93907eb8dda",
       "compressedLog": "mutant-duplicate-effect.log.gz",
-      "compressedLogSha256": "e45275a43de19b6d88fd5e2134d852f1ce966ab13812f22654e316a5e284ac4f",
-      "logSha256": "263858d0a21281cb4694ecc20fc7365c7a461eb4deb358e5cb306ffc6342f5c6"
+      "compressedLogSha256": "2af46f81502861c20e729a08287961ef4c129c33e6f28254461009371854fe60",
+      "logSha256": "87cbe035457f179e0218d38e39e741c9e287dead4421434c30c9b564a9c3dac0"
     },
     {
       "name": "mutant-rollback-running",
@@ -500,8 +500,8 @@
       "configuration": "protocol-mutant-rollback-running.cfg",
       "configSha256": "a47229040f7585b05f5ffb48ab72f4aabbea1379a8099b6e646780c7d32dea8d",
       "compressedLog": "mutant-rollback-running.log.gz",
-      "compressedLogSha256": "63a4bf5c7e2cc0ca8f40a80625fa882d99fe080c61af46ee66c200715311c854",
-      "logSha256": "1277a2a4ed2a9a0962cfbf0ad34743bee25f160b716173a258143ea75a5d0edd"
+      "compressedLogSha256": "a7ec334f78f780a591b5ccef1783f69d5c16c88de9b138279e0d33ddecc77337",
+      "logSha256": "eabd9ffae560134cb2710787c204fccb169d1256421a94cc322221295fa94e44"
     },
     {
       "name": "mutant-late-cancel",
@@ -535,8 +535,8 @@
       "configuration": "protocol-mutant-late-cancel.cfg",
       "configSha256": "ac9b45d0f70a9c3041f99126326a6fce94deb4913605be3b1926e589e1951151",
       "compressedLog": "mutant-late-cancel.log.gz",
-      "compressedLogSha256": "c66c6f170935d22e56c05845df8c65b127ae9a1209820782bbf5542e07e03116",
-      "logSha256": "2c8aa531c27f230135d7519a59d34b47eb464ce1dd0be359394a5783ad776f4b"
+      "compressedLogSha256": "0e7337a5c9228c42c36c5e169624205a16c60cdbd9beb5da92a4fed5242d41ba",
+      "logSha256": "9335de23d088ec204d84a3c6c2392f8af8b750c8f8153ef3d90e5407287b094a"
     },
     {
       "name": "mutant-skip-barrier",
@@ -570,8 +570,8 @@
       "configuration": "protocol-mutant-skip-barrier.cfg",
       "configSha256": "49cfcc53baaee713f5a3a4c90192290e321f7a7c4337fa582f622637a34c6a22",
       "compressedLog": "mutant-skip-barrier.log.gz",
-      "compressedLogSha256": "241374f9bef5a7e305ad63206bd2b74d4c9cbfefc7c1c91bbc54b605187e4ccc",
-      "logSha256": "a984f1b5f60e42d0f8b466f74863cc71f00d1bbd689ab3da639f415430646180"
+      "compressedLogSha256": "1300a061ec19c2e99c2e45d73080ef231ed10070b2a22f95f58bb07967172973",
+      "logSha256": "9f93085876b7037c46edc3901582c0b73b371cd2bf35c8938171efbb585d9893"
     },
     {
       "name": "mutant-timeout-failure",
@@ -605,8 +605,8 @@
       "configuration": "protocol-mutant-timeout-failure.cfg",
       "configSha256": "a65ead343ecacc8446f14b13937229615ccac2b1e43eab36a2def90862a4741a",
       "compressedLog": "mutant-timeout-failure.log.gz",
-      "compressedLogSha256": "7978c88349c555ec254ddf60352fc75655761744b12c4f811bb9f4c79479b625",
-      "logSha256": "dccc4581383c030d005846fcba04bb81f7f7d3f3843bf0d775096106c9fc3993"
+      "compressedLogSha256": "d295be1ac5556278c3c2a712f10f15eb4483a27385e3d111fd3f0f1ccabf4fa7",
+      "logSha256": "7331cb45edba6ec7489e3810aabee49b17f78f851272737c39af7251ec30b272"
     },
     {
       "name": "mutant-budget-admit",
@@ -640,8 +640,8 @@
       "configuration": "protocol-mutant-budget-admit.cfg",
       "configSha256": "ef9ee52e8998c6ca7244b1be586f39b75d17f619e6babb4081ca22828625acdc",
       "compressedLog": "mutant-budget-admit.log.gz",
-      "compressedLogSha256": "f736189ca447f49cb5a79d73c133b0b7c71f0773370136b389c8c011ff878a6c",
-      "logSha256": "ef3c63c908e12742e1ad36c0c4b0d2be9c80719822d7b5354b8c0a230e0f9000"
+      "compressedLogSha256": "eaddc5c71613a260002d12ebef5d23350b44bb3f3ba9b392f9be2f77eec1f9be",
+      "logSha256": "32c5c5a5109783704712ec6aa06ecc9067806368b65a9cd75dd4fa1438d6d061"
     },
     {
       "name": "mutant-stale-owner",
@@ -675,8 +675,8 @@
       "configuration": "protocol-mutant-stale-owner.cfg",
       "configSha256": "4bd51f40d8e05e357fbf5fd1cc7b8f59376d5100bb959819059a7423eb596420",
       "compressedLog": "mutant-stale-owner.log.gz",
-      "compressedLogSha256": "b10aeed499121e7ae3d990b33b913d80999b4214d64f21fbd5c6cea77ac4c4f0",
-      "logSha256": "d43f8391c75f7a17211740522cd11d8f35a960dadb8487b09c807451727dbbf6"
+      "compressedLogSha256": "81eaa65b32e5485de1da83920c83fdcdd541a2e72c78af16292dfdf185cd0471",
+      "logSha256": "444efd9ad605bd9ab167003bc252dcfe0da0791e1e02412dd6402bd91089813e"
     },
     {
       "name": "mutant-retired-admit",
@@ -710,8 +710,8 @@
       "configuration": "protocol-mutant-retired-admit.cfg",
       "configSha256": "93626cb3c86a759e572a2eb5bd8cf29cd2cbf98ebc8ddf75c562ab978106f181",
       "compressedLog": "mutant-retired-admit.log.gz",
-      "compressedLogSha256": "0bb1ff70249aba5ccf79120a40a7206b05c4b76903431c1fb9387af411e1741f",
-      "logSha256": "4e4e80c22dd9cef4942b7a7b0dd1766be776f1b7985ef05087d2c98aa49dbbe7"
+      "compressedLogSha256": "3f26e972cd58abbf7395c0f084264d18a743bdf5d9ebae1a3486c6b5906c1d11",
+      "logSha256": "4e5499ec440b8fb10be8a4003cb949edc916f0201e43c1f21eab8cfa6bbb1493"
     },
     {
       "name": "mutant-fabricated-resolution",
@@ -745,8 +745,8 @@
       "configuration": "protocol-mutant-fabricated-resolution.cfg",
       "configSha256": "2ef6a15739e3cc7cfc1c637d726ee7f6cea1e4171405bfc361ca94607a4f8fad",
       "compressedLog": "mutant-fabricated-resolution.log.gz",
-      "compressedLogSha256": "ebc02007d86e1bab57290a62d1491bb7e280c135825c25683bebf7200f956582",
-      "logSha256": "1a6522416c0c8ddb2d3aa1328b9465ab61300f42f5b7bdf81122675e47f4c472"
+      "compressedLogSha256": "70df459a5b7deceddce4408903c40df0c2c828c985e13188edfbf7e1303a408e",
+      "logSha256": "63e7416eb9aa0176251bd391e5239cfdbbe198b7fd7e49db6b90a8bd6db45d28"
     },
     {
       "name": "mutant-close-pending",
@@ -780,8 +780,8 @@
       "configuration": "protocol-mutant-close-pending.cfg",
       "configSha256": "40c3cf0e1fb458d4a545ebe05b8ef23149a71d6cb19cb5e0befbe29a0b03ed3c",
       "compressedLog": "mutant-close-pending.log.gz",
-      "compressedLogSha256": "44f91cc25f9c770f5727decaa374e37c979a49dfc3c40f46db73b1d9996ee4cc",
-      "logSha256": "da16176563d4178bdd0dbb1be40afb6980d970142cb42f6e8bbc09bcb81fee6e"
+      "compressedLogSha256": "5b4be20009ffdaf52c220703f3af4f73a40798d851c346ee4c6eb3cbf29d3e8f",
+      "logSha256": "b92b4bea78276a581479d3760d739e7730938ae54d580caed8427b02790d54e5"
     },
     {
       "name": "mutant-close-stale",
@@ -815,8 +815,8 @@
       "configuration": "protocol-mutant-close-stale.cfg",
       "configSha256": "051475d1912f5f79624e3eb8a84d46a6d9b703909ce09480df47155785cf7ec8",
       "compressedLog": "mutant-close-stale.log.gz",
-      "compressedLogSha256": "c904317208ca0a9100f733d8f821b54e5010cb4ebeec72882375d4992e29e59c",
-      "logSha256": "eb13f5832fcf1b9970410c59bf1844253fb1224fa08e4b791ee4c996bca4c8a9"
+      "compressedLogSha256": "9580ec929083e8462eb1761a5bbef690e32a673f8c1cd0a23130011f4a68a705",
+      "logSha256": "ea4603e1becf95943ae278113436a8640dfa5c3fc747849cde5a181dccd593ad"
     },
     {
       "name": "mutant-close-foreign",
@@ -850,8 +850,8 @@
       "configuration": "protocol-mutant-close-foreign.cfg",
       "configSha256": "e712028992be9edb19b2f33c6c4e2e207d6fbe6f403729a8c28f0128405a2221",
       "compressedLog": "mutant-close-foreign.log.gz",
-      "compressedLogSha256": "a8747c2a4f8d7e73a43234c8c73b71e9b0a3b977058827a0a6de4c77af4a98b5",
-      "logSha256": "230acf64bf993b6309834e51d0e4d297693bd1de4af339a87e1ada5ddac04485"
+      "compressedLogSha256": "6ba5b1e88d4bd3ae7889f7da39565c674e3d8f91b4e8fc15f7e85f475911c8d8",
+      "logSha256": "8b68276aa4aecb527edb1912ffa19249f7fb28d22a05ced907cf7438e175c2eb"
     },
     {
       "name": "mutant-close-outsider",
@@ -885,8 +885,8 @@
       "configuration": "protocol-mutant-close-outsider.cfg",
       "configSha256": "f6284fac98991cb8b32da551d5d2de13a819683dcd32d3b46dd9005de4a42f30",
       "compressedLog": "mutant-close-outsider.log.gz",
-      "compressedLogSha256": "b835f9aadfff1ba501a6a4a582e825840b755e917581269160340f0762c5a60c",
-      "logSha256": "b06d67ced28d2593bae8a84ae18884aeaa040d0c41250be63b2fa0a328a53da1"
+      "compressedLogSha256": "b2ea1946e49f172c597e7035979de694c84952177b2a7427c3208a4f5ae2d894",
+      "logSha256": "9588060c8bc006ebe6ca0e9f015db4eada49bb01093d10aea44539e1c38ff9de"
     },
     {
       "name": "witness-NoQueuedWitness",
@@ -920,8 +920,8 @@
       "configuration": "protocol-witness-NoQueuedWitness.cfg",
       "configSha256": "24728ec2ea44577dd24fe278154368c8dd3b560a615cd806ce276c190d5ca162",
       "compressedLog": "witness-NoQueuedWitness.log.gz",
-      "compressedLogSha256": "6e2043dca8430fd88fd63c561d4a2a4f3104e67d9dc9ba1ef09d086231168e36",
-      "logSha256": "303d4c71a9784101b58a4128cad2baeb88d2313b68d007a2640c5b1bc2e73e76"
+      "compressedLogSha256": "fdf860197fcc9afc82dcd78ef1b1f802a9a50c7b8b613d778e0fdf05846ede6a",
+      "logSha256": "cc777efacfd6a5769880b13f8743d69f61c3bd215525b4afb475766f32f4df3f"
     },
     {
       "name": "witness-NoRunningWitness",
@@ -955,8 +955,8 @@
       "configuration": "protocol-witness-NoRunningWitness.cfg",
       "configSha256": "4a2c5bdaf38b6000a12cd6eaab74d4ca27cea4986e9155483813125d918ae6a7",
       "compressedLog": "witness-NoRunningWitness.log.gz",
-      "compressedLogSha256": "f70cbca7fe9fac2ef3201fac1e58db0da76f776d6be5cf6ad4745791acf1aefd",
-      "logSha256": "2d618fa18123e12bf87400050449a7d040bd0965235080a33c95d92e9318bd72"
+      "compressedLogSha256": "b12ca2710439607c1142f72cc918c958df4fd1ad2c2903bb721f49e1094674f5",
+      "logSha256": "c76fbcbf3aadeeb883d04cd5b6a4e37490bf4836372889e34c1e75bf7a101670"
     },
     {
       "name": "witness-NoReconcilingWitness",
@@ -990,8 +990,8 @@
       "configuration": "protocol-witness-NoReconcilingWitness.cfg",
       "configSha256": "01473acccbbd27892afb24e14b2c792588e553f3ece95127ded32aca1196afa7",
       "compressedLog": "witness-NoReconcilingWitness.log.gz",
-      "compressedLogSha256": "2c43c64738ea29a62765f6f6b6486ae62d0d67ab0a20632476b7cf6b608a738e",
-      "logSha256": "82c3b0dc2ecb95d5199e365212543d934c38f8d3c61b53a58b06123302967cfb"
+      "compressedLogSha256": "0811494ef3ee9848a4679b759d504f227600a108a02a2ca4ce596269f03984b8",
+      "logSha256": "d9c1f8be775a2715821b88cb849048922cd71f68bba35f24a33bbcd151045e4d"
     },
     {
       "name": "witness-NoCompensatingWitness",
@@ -1025,8 +1025,8 @@
       "configuration": "protocol-witness-NoCompensatingWitness.cfg",
       "configSha256": "b7d72706b58c4f96c250cbc2795702b5658e5ff847422db547f5656e0d8835b8",
       "compressedLog": "witness-NoCompensatingWitness.log.gz",
-      "compressedLogSha256": "c9225b3e6af28b355008df89cc5dc2c5aab800e86263271c252c05d151f1c233",
-      "logSha256": "564f6f252d1e00240a10246507b0cd5fcc3ff42d67a85e663fc4eeb37c7c7d25"
+      "compressedLogSha256": "921245ed8053a856e0e0ada1896a660beffca87619dab6e2531e02e91ed740b4",
+      "logSha256": "66006ba5e6c47b864bd027df00f8e10101b6b7daadb75ef33a5d518296b45d2b"
     },
     {
       "name": "witness-NoSucceededWitness",
@@ -1060,8 +1060,8 @@
       "configuration": "protocol-witness-NoSucceededWitness.cfg",
       "configSha256": "ed35c10b8e1e9f1e40f607c8eb229c834238a1834bdf6461dcfb02f1b5cf1fb1",
       "compressedLog": "witness-NoSucceededWitness.log.gz",
-      "compressedLogSha256": "06e1cf369fd111f38dbe8898b3d47575bde8d7897a2b0bb19dc0fa150c92215a",
-      "logSha256": "97acc7fa1a380a2df2bb5b2dd5d91fb0b88c9f028f0a8ce97fe5704eec69f6ef"
+      "compressedLogSha256": "ca4384259b095c921fd272e58772333a6def454f41363fac7d7348c9d6016a6b",
+      "logSha256": "9f91acc85c9b59bd59f0ac210dbfaa244fecec0b29eabd96e525edc3fc1bcab4"
     },
     {
       "name": "witness-NoCompensatedWitness",
@@ -1095,8 +1095,8 @@
       "configuration": "protocol-witness-NoCompensatedWitness.cfg",
       "configSha256": "4136344d85b2b9c52e118bd846bbb3714339db959650ae6e9eae75b5a4c6eae7",
       "compressedLog": "witness-NoCompensatedWitness.log.gz",
-      "compressedLogSha256": "55446c6a4876b58732bc1c5ba40157818818eedb1232578ed82f43f27a981fac",
-      "logSha256": "885d18c562a6391523af30d6145c61e336fc4fe55f09cfa0ab662b98e17bf856"
+      "compressedLogSha256": "0fe12988ef5bfa8253d1c3c56d3d2d7cb7665b451fa7e80177518b160b21e638",
+      "logSha256": "4dffd4cebf4cbdda6f6f1efbbe627722f4a115bdeb6baa8da0eebc6ac6c62544"
     },
     {
       "name": "witness-NoCancelledWitness",
@@ -1130,8 +1130,8 @@
       "configuration": "protocol-witness-NoCancelledWitness.cfg",
       "configSha256": "1393f92613a599b0aba0baed2d11ceb117c1556f3d64a2b1b53ed65a62ebda46",
       "compressedLog": "witness-NoCancelledWitness.log.gz",
-      "compressedLogSha256": "1fc3a0cbca3a381d0c7ca03690f929b32e6fd39cd6e4309a8ece27beb4c7e858",
-      "logSha256": "c1ffca0b882f10484a6b4982323cbf489e4660496da6cdf16e5a11d4cbc2a5f1"
+      "compressedLogSha256": "ea153a43f92088ad20e6a3406decb121028a7c51edd21618d4e980ceea7917f3",
+      "logSha256": "6dd98c2b69d13aeb6e2e0e40131a0c9295ea26554f2470147755c09890d03476"
     },
     {
       "name": "witness-NoInterventionWitness",
@@ -1165,8 +1165,8 @@
       "configuration": "protocol-witness-NoInterventionWitness.cfg",
       "configSha256": "adceb4194fbecfddb21a9bd08bbf8dbd11a0eefabc5efcfffafb057f4d06f3a2",
       "compressedLog": "witness-NoInterventionWitness.log.gz",
-      "compressedLogSha256": "71ecb7859e8720d92138e67bc18035be950c3cdd35ff6c91264d15be3e5f1329",
-      "logSha256": "8686ae865c624217d0cd4a35e4c41faa8db8a23777508e6c1407be4886ec85cb"
+      "compressedLogSha256": "12c20f5203e425eacda5aeaa696383993cd8ca3a82aa16ebb7ec3fbf98cce6ce",
+      "logSha256": "22c2ad52321516aa7af9fcd36262b7af402dff300a5edd8f5465f9df57603adb"
     },
     {
       "name": "witness-NoClosedWitness",
@@ -1200,8 +1200,8 @@
       "configuration": "protocol-witness-NoClosedWitness.cfg",
       "configSha256": "fb109fc40c708f4be6fa00ee187878582739bd3f376ee7be37a7c0c542c4c911",
       "compressedLog": "witness-NoClosedWitness.log.gz",
-      "compressedLogSha256": "72cbda5299b0a8034319b57b73d41f2323a8b83f598c62fe8d4f454647fd6dea",
-      "logSha256": "8ce2f12467e2ff056db0b09ad3cd503d2e0a1baed65278a35f42c5e1649a268f"
+      "compressedLogSha256": "13dc725a5bd66218cda03677a2b31c8f3106306b98c31d3da2510df2651cba04",
+      "logSha256": "14b5d8e6f3b5e7996010f6b660f57479688202fca1bbcfda8c78cc1b24f5ba65"
     },
     {
       "name": "witness-NoNoncommitUnwindWitness",
@@ -1235,8 +1235,8 @@
       "configuration": "protocol-witness-NoNoncommitUnwindWitness.cfg",
       "configSha256": "ee229215efc98c7bd1e56a65c30825b93e5da200c0bd28680b757c3737abaf8e",
       "compressedLog": "witness-NoNoncommitUnwindWitness.log.gz",
-      "compressedLogSha256": "912f34c30c21d1fc0c990b8ae8101bfccc4fcdd8fbc1620e5eeba8225c2c7bc2",
-      "logSha256": "42156aae02e38ffac7b3a9653fcae25efef81ed39d40bfd32e9a9241a8f945a9"
+      "compressedLogSha256": "123d2221bf2509575cda31017566639edd171624f186e754a4dd06a335d33b65",
+      "logSha256": "59e714d8b850b04d24f226321fb4e01aeb9db8d1cb5e72e0e110e380cbbbfd43"
     },
     {
       "name": "witness-NoUnknownInterventionWitness",
@@ -1270,8 +1270,8 @@
       "configuration": "protocol-witness-NoUnknownInterventionWitness.cfg",
       "configSha256": "08dcde5474ac1584cd43e5201554b716647b726e80d10484e541cf9ec22f4af0",
       "compressedLog": "witness-NoUnknownInterventionWitness.log.gz",
-      "compressedLogSha256": "d36211621f48dfea74ba17367bd096627f48d28afb55c751510be43767b5ae92",
-      "logSha256": "9c35a187511f6c021e026059e8b7a83f537a553670b898cbe9ffb2a4d27394f6"
+      "compressedLogSha256": "503491aef23027b07a4d9a892b8b2ca1a8baca68bfcc5d4cd3d3f7e1f4d76942",
+      "logSha256": "f29e75913b4703f8d65fcf176f339799c8f90fdcbee4796eb4b4b3d516489c08"
     },
     {
       "name": "witness-NoCrashRecoveryWitness",
@@ -1302,8 +1302,8 @@
       "configuration": "protocol-witness-NoCrashRecoveryWitness.cfg",
       "configSha256": "e0b1f007995fd141eb91b5b2db6900b882c6af3dd46fdc2034ccf33f820be923",
       "compressedLog": "witness-NoCrashRecoveryWitness.log.gz",
-      "compressedLogSha256": "613cb56e5cb69d00f6a28f3e65ddf4f67ebc4b09f2fb043d6a60c7b68b567a3f",
-      "logSha256": "517b2af7d779b329d0522b12116d24335ea7240459f6b0c2d115718ba3089392"
+      "compressedLogSha256": "b09d4b5d35f332a69073cc7e7cd6fd9d084f64f098f4de7cdcd3b1f28f5484af",
+      "logSha256": "f48c4dfd8cc5f4eeb39086c046850e0620bc789d56df0392d5c514606949b77f"
     },
     {
       "name": "witness-NoResidualClosureWitness",
@@ -1337,8 +1337,8 @@
       "configuration": "protocol-witness-NoResidualClosureWitness.cfg",
       "configSha256": "42e3f4a1ec2014ed6cc1e2f6a04916aab2dc05c6e8f2a7904c2d99637731c6ef",
       "compressedLog": "witness-NoResidualClosureWitness.log.gz",
-      "compressedLogSha256": "a461bcf96e059149a89e2a0df7ce4ef628c200452428649ec9a6c2ed917224a0",
-      "logSha256": "c7449be104f988b938d36a2096271b7e3a0b3ffb008adf9d842aa950280f528c"
+      "compressedLogSha256": "613bd229073d3104dfefd2f2c40e959aa72f91c321c2ba36364bf7fcf2a48b46",
+      "logSha256": "c16b4b2bb98ceee09e5b17f26cfaa801bac67df108b3aa14b9dc80a6a8725bfa"
     },
     {
       "name": "witness-NoBarrierWitness",
@@ -1372,8 +1372,8 @@
       "configuration": "protocol-witness-NoBarrierWitness.cfg",
       "configSha256": "ca7671d2a4b2ad6ec84ec934a9317644c4d5702fbb389d7241e2f30dc9b2b439",
       "compressedLog": "witness-NoBarrierWitness.log.gz",
-      "compressedLogSha256": "6b16ff319e7d0124eefccede3bd099e068c640d4380ce07595f36b4f8af5ff01",
-      "logSha256": "688316ba6ef6245e64f4b7dacbee2682ab603a979a90718382cc28acd8860a50"
+      "compressedLogSha256": "07668e1aa3209202a31287362087c814f9cfea9d7f4ee9f89f29ac78b2c759aa",
+      "logSha256": "37e620e65908c1a20650f61fba32657188d0bb6f228e54abe1a2e39e25e2c610"
     },
     {
       "name": "witness-NoLateFailedReplayWitness",
@@ -1407,8 +1407,8 @@
       "configuration": "protocol-witness-NoLateFailedReplayWitness.cfg",
       "configSha256": "cf438f0696ba8a8cfc6115ddcc631f1148f15bb2df542c29536d4af477b48954",
       "compressedLog": "witness-NoLateFailedReplayWitness.log.gz",
-      "compressedLogSha256": "c2aca78c8f9942c3c80667d824295f9b99ece1c65aafc8f673118d8b0fcb04c3",
-      "logSha256": "795d3af4f5626e8a6afe54ea3c7bf76ddf1da48583ab540344a3a8c89cf0d180"
+      "compressedLogSha256": "96e4844985b73b1428f531eb9a6e41337d53621c0f3c00ca22059bcaf6227684",
+      "logSha256": "a3ed26982290b8c201248968dbf60cbe4d5c41b3901cb30a1d53de693f8e15d4"
     },
     {
       "name": "witness-NoNoEffectWitness",
@@ -1442,8 +1442,8 @@
       "configuration": "protocol-witness-NoNoEffectWitness.cfg",
       "configSha256": "091e0e938b44046a26290e4ad423c93155a4ca62544174e3dcf0730d017118e3",
       "compressedLog": "witness-NoNoEffectWitness.log.gz",
-      "compressedLogSha256": "74f71a2bd8c13322eab19aff595b0b9684b96df910d6d45a1b1916111649f1f0",
-      "logSha256": "0f09cfd55bb1a3ce188edd0e91ae2fb9bc8f09b3b4ca0347010b9e8e3573bf64"
+      "compressedLogSha256": "0f2de893fb337620957a3f4e548f5cbec5abde647912015885af346ffb6440be",
+      "logSha256": "a09b440224e4f0145b803fa415d686006b46915745875223fe865361185d0e0e"
     },
     {
       "name": "witness-NoCommittedPrefixRollbackRecovery",
@@ -1475,8 +1475,8 @@
       "configuration": "protocol-witness-NoCommittedPrefixRollbackRecovery.cfg",
       "configSha256": "7354e6d6c4ae621d9bae3c7c460e1d3b804e30f7960b900a18816bcd1934167f",
       "compressedLog": "witness-NoCommittedPrefixRollbackRecovery.log.gz",
-      "compressedLogSha256": "bfda8e9e412db3d34e2a0e5b3ea43b1be7fb56996a15314ee2d27b07a72d0329",
-      "logSha256": "8e4e0d5428b776fdaf45f593e56f00c0277ad6d5a18376e959801af0e9d96db5"
+      "compressedLogSha256": "ffbf74af891dcb916b0a6e5f9f3d02eaf8d4baf6db7ad05b70122688de35402d",
+      "logSha256": "2465a42eb13f9c92271733d97f959bcf677e2103b41ce80e8b215d0fa5b053e1"
     },
     {
       "name": "witness-NoFailedCompensationClosure",
@@ -1508,8 +1508,8 @@
       "configuration": "protocol-witness-NoFailedCompensationClosure.cfg",
       "configSha256": "6958b17c27812ee7203b3f886caf6463a6638d93c50a3011b913a3ad1e6f8c62",
       "compressedLog": "witness-NoFailedCompensationClosure.log.gz",
-      "compressedLogSha256": "46b9fa22975b4c769aee8836aabffcde501b1d30ad34b08fa30beaed3f5f463d",
-      "logSha256": "b3662256aa6f3be806ae3bc735f2cea96712c0239dbdc4b91c440d96e3bf0699"
+      "compressedLogSha256": "829b9f285f56da6964447709419cd4cc494637df8c138f8455bbcf01bcabb92c",
+      "logSha256": "547e9833b73d2dece2e026ee67530e91f6513f5711e5776bd4673408dff30843"
     },
     {
       "name": "witness-NoCancelledCommittedPrefix",
@@ -1541,8 +1541,8 @@
       "configuration": "protocol-witness-NoCancelledCommittedPrefix.cfg",
       "configSha256": "1eaf9ebcffd754a9a2683841434d6b8c53fa1fc3565afebca254f3cf491ff18d",
       "compressedLog": "witness-NoCancelledCommittedPrefix.log.gz",
-      "compressedLogSha256": "f4136b0365a335771b6ee6725a8744508b972566bcb904f88d44c72df11a1ce9",
-      "logSha256": "134f203f2de58f49d873da871fffe1263fe595938386512f3b43a28d00237749"
+      "compressedLogSha256": "98129aa20cece662554394b33b9070c1b9843412efe6eaf9c4265d0ad46fe498",
+      "logSha256": "1d62e81de7ea340e1d0c78999eacd51f29ebd3f9ec89a69f67f657653830aa04"
     }
   ]
 }

@@ -52,6 +52,8 @@ jobs:
           python-version: '3.12'
       - name: Install locked JavaScript dependencies
         run: bun install --frozen-lockfile
+      - name: Check generated saga package
+        run: python3 scripts/build-saga-package.py --check
       - name: Check coupled UMF release versions
         run: |
           python3 scripts/check-release-versions.py

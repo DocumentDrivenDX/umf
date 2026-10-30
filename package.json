@@ -40,7 +40,7 @@
     "docs:example:rule": "bun scripts/actions-docs/rule-example.ts",
     "test:prepare": "bun run build && bun run build:postgresql && bun scripts/build-test-prerequisites.ts && bun scripts/prepare-action-tests.ts",
     "test:actions": "bun scripts/prepare-action-tests.ts && bun scripts/run-tests.ts tests/actions-reference",
-    "build:sdk": "bun run build && bun run build:postgresql && bun scripts/package-sdk.ts",
+    "build:sdk": "bun run build && bun run build:saga-runtime && bun run build:postgresql && bun scripts/package-sdk.ts",
     "test:sdk": "bun run build:sdk && bun scripts/test-sdk-install.ts",
     "test:access-e2e": "bun scripts/access-e2e.ts",
     "build:reference": "bun scripts/build-postgresql.ts && bun scripts/build-protobuf.ts && bun scripts/reference/build.ts",
@@ -54,7 +54,9 @@
     "check:unified-client-boundaries": "bun scripts/check-unified-client-boundaries.ts",
     "check:rust-boundaries": "python3 scripts/rust-inventory.py --check && python3 scripts/check-rust-boundaries.py && python3 tests/rust-inventory/test_boundaries.py && python3 tests/rust-inventory/test_inventory.py",
     "test:rust-core": "bun scripts/rust-core/conformance.ts",
-    "check:release-versions": "python3 scripts/check-release-versions.py"
+    "check:release-versions": "python3 scripts/check-release-versions.py",
+    "check:saga-package": "python3 scripts/build-saga-package.py --check",
+    "build:saga-runtime": "bun scripts/build-saga-runtime.ts"
   },
   "dependencies": {
     "@bufbuild/protobuf": "2.15.0",

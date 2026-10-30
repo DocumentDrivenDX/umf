@@ -51,11 +51,24 @@ function handlerLimitReason(error:unknown):HandlerLimitReason|undefined{
 }
 /** Native graph-write execution with bounded known-abort retries and explicit uncertain acknowledgement. */
 export class ReferenceActionExecutor {
+ #invocationNamespaces=new Map<string,{token:symbol;guarded:boolean;invoke:(storeName:string,credential:unknown,requestInput:unknown)=>ReturnType<ReferenceActionExecutor['invoke']>}>();
+ /** Trusted host construction only; artifact request fields cannot mint this lane. */
+ reserveInvocationNamespace(prefix:string,beforeCommit?:(result:ReferenceCommittedResult|{status:'rejected'|'conflict';code:string})=>void|Promise<void>){
+  if(!prefix)throw Error('An explicit reserved prefix is required');
+  for(const name of this.#invocationNamespaces.keys())if(name!==prefix&&(name.startsWith(prefix)||prefix.startsWith(name)))throw Error('Overlapping invocation namespace');
+  const existing=this.#invocationNamespaces.get(prefix);if(existing){if(beforeCommit&&!existing.guarded)throw Error('Reserved namespace has no required commit guard');return existing.invoke;}
+  const token=Symbol(prefix);
+  const invoke=(storeName:string,credential:unknown,requestInput:unknown)=>this.invokeOwned(storeName,credential,requestInput,token,beforeCommit);
+  this.#invocationNamespaces.set(prefix,{token,guarded:!!beforeCommit,invoke});return invoke;
+ }
  readonly admission:ReferenceActionAdmission;
  readonly outcomes:ReferenceActionOutcomes;
  constructor(readonly policy:ReferenceActionPolicy,handlers=new ReferenceHandlerRegistry(),readonly attempts:ReferenceAttemptSink=new ReferenceAttemptJournal(policy.store.url)){this.admission=new ReferenceActionAdmission(policy,handlers);this.outcomes=new ReferenceActionOutcomes(policy);}
  async preview(storeName:string,credential:unknown,requestInput:unknown):Promise<ReferencePreviewDecision>{return new ReferenceActionPreview(this.policy,this.admission.handlers).preview(storeName,credential,requestInput);}
  async invoke(storeName:string,credential:unknown,requestInput:unknown):Promise<ReferenceLookupDecision|{status:'failed';code:string}|{status:'indeterminate'}>{
+  return this.invokeOwned(storeName,credential,requestInput);
+ }
+ private async invokeOwned(storeName:string,credential:unknown,requestInput:unknown,reservation?:symbol,beforeCommit?:(result:ReferenceCommittedResult|{status:'rejected'|'conflict';code:string})=>void|Promise<void>):Promise<ReferenceLookupDecision|{status:'failed';code:string}|{status:'indeterminate'}>{
   let attemptId=randomUUID();
   const observe=async(phase:'started'|'observed',decision:string,code:string|undefined,metadata:any)=>{try{await this.attempts.append({attemptId,phase,decision,...(code?{code}:{}),metadata:copyJson(metadata)});}catch{/* Instrumentation cannot classify business outcomes or trigger retries. */}};
   const context:any={actor:null,requestedTarget:null,revision:null,deployment:null,policy:null,profile:{id:'umf.actions.tx',version:'1'},correlation:null};
@@ -67,6 +80,7 @@ export class ReferenceActionExecutor {
   if(request){context.requestedTarget=request.target;context.correlation=request.correlation??null;
    try{session=this.policy.issuer.authenticate(credential);context.actor={tenant:session!.tenant,principal:session!.principal,service:session!.service};}catch(error){if(error instanceof Error&&error.message==='AUTHENTICATION')refusal={status:'denied',code:'AUTHORIZATION'};else unexpected=error;}
   }
+  if(!refusal&&request?.key)for(const [prefix,token] of this.#invocationNamespaces)if(request.key.startsWith(prefix)&&reservation!==token.token){refusal={status:'unsupported',code:'KEY_NAMESPACE_RESERVED'};break;}
   await observe('started','pending',undefined,context);
   if(refusal){await observe('observed',refusal.status,refusal.code,context);return refusal;}
   if(unexpected||!request||!session){await observe('observed','host-error',undefined,context);throw unexpected??Error('Invocation admission unavailable');}
@@ -108,6 +122,7 @@ export class ReferenceActionExecutor {
     await retainReferenceReceipt(tx,control,sequence);
     result={status:'committed',revision:prepared.target,outputs,changes,version,receipt:{store:control.store,epoch:control.epoch,version},noOp:changes.length===0,verification:'effects' in candidate?{kind:'recipe',effects:candidate.effects,postconditions,frames:'enforced',constraints:'verified'}:{kind:'handler',deployment:prepared.deployment!,postconditions,frames:'enforced',constraints:'verified',outputs:'verified'}};
    }
+   await beforeCommit?.(result); // Bound custody before business writes/outcome are committed.
    if(request.key){const identity=encodeReferenceIdentity([session!.tenant,control.store,session!.principal,request.target.module,request.target.action,request.key]),fingerprint=referenceIntent(prepared.source,prepared.action,request);await tx`insert into action_outcome(store,identity,revision,fingerprint,original_intent,result) values (${control.id},${identity},${revision.id},${fingerprint},${encodeReferenceJson(request)},${encodeReferenceJson(result)})`;}
    await tx`insert into action_audit(store,expires_at,header,family,identity,revision,actor,deployment,policy_version,decision,correlation,details) values (${control.id},clock_timestamp()+make_interval(secs=>coalesce((select seconds from action_audit_retention where store=${control.id} and lookup=action_identity_lookup(${encodeReferenceIdentity([prepared.target.module,prepared.target.action])}) and identity=${encodeReferenceIdentity([prepared.target.module,prepared.target.action])}),2592000)),${encodeReferenceJson({attemptId,profile:{id:'umf.actions.tx',version:'1'},target:prepared.target})},${encodeReferenceIdentity([prepared.target.module,prepared.target.action])},${encodeReferenceIdentity(attemptId)},${revision.id},${encodeReferenceJson({principal:session!.principal,service:session!.service})},${encodeReferenceJson(prepared.deployment??null)},${control.policy_version.toString()},${result.status},${request.correlation?encodeReferenceJson(request.correlation):null},${encodeReferenceJson({attemptId,profile:{id:'umf.actions.tx',version:'1'},target:prepared.target,result})})`;
    return result;

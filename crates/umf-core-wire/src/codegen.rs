@@ -32,6 +32,19 @@ fn invoke(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     match operation {
+        "inspectSagas" => engine.inspect_sagas(field(request, "source").ok_or_else(missing_argument)?, ctx),
+        "declareSaga" => engine.declare_saga(
+            field(request, "source").ok_or_else(missing_argument)?,
+            match field(request, "module") { Some(Value::String(value)) => value, _ => return Err(missing_argument()) },
+            field(request, "definition").ok_or_else(missing_argument)?, ctx),
+        "editSaga" => engine.edit_saga(
+            field(request, "source").ok_or_else(missing_argument)?,
+            field(request, "identity").ok_or_else(missing_argument)?,
+            field(request, "replacement").ok_or_else(missing_argument)?, ctx),
+        "assessSaga" => engine.assess_saga(
+            field(request, "source").ok_or_else(missing_argument)?,
+            field(request, "identity").ok_or_else(missing_argument)?,
+            field(request, "capabilities").ok_or_else(missing_argument)?, ctx),
         "generatePythonClient" => engine.generate_python_client(request, ctx),
         "compileTableDeployment" => engine.compile_table_deployment(request, ctx),
         "verifyTableDeployment" => engine
@@ -185,7 +198,7 @@ pub(super) fn execute(
             })?,
             &mut catalog,
         )?;
-        CodegenResources::new(
+        let base = CodegenResources::new(
             core,
             tables,
             tables_schema,
@@ -194,7 +207,11 @@ pub(super) fn execute(
             binding,
             stable_binding,
             &mut catalog,
-        )?
+        )?;
+        if let Some(saga) = take_field(&mut raw, "sagaPackage") {
+            let schema = umf_core::copy_json(field(&saga, "schema").ok_or_else(missing_argument)?, &mut catalog)?;
+            base.with_sagas(saga, schema, &mut catalog)?
+        } else { base }
     };
     let payload = field(request, "request").ok_or_else(|| {
         EngineError::new("REQUEST", Utf16::default(), "Codegen request is required")

@@ -8,16 +8,19 @@ output = Path('.cache/sdk-distribution')
 # Only the two public entry bundles belong to the SDK; declarations, schemas
 # and optional backend resources retain their actual built directory inventory.
 entry_bundles = {'umf.js', 'umf.js.map', 'loader-contract.js'}
-export_directories = {'src', 'spec', 'postgresql', 'protobuf'}
+export_directories = {'src', 'spec', 'postgresql', 'protobuf', 'runtime'}
 def exported(path):
     relative = path.relative_to('dist')
     return relative.name in entry_bundles if len(relative.parts) == 1 else relative.parts[0] in export_directories
 files = sorted(p for p in Path('dist').rglob('*') if p.is_file() and not p.name.startswith('._') and exported(p))
 required = ['dist/umf.js', 'dist/src/index.d.ts', 'dist/spec/extensions/actions/package.json',
-            'dist/spec/extensions/actions/schema.json', 'dist/loader-contract.js']
+            'dist/spec/extensions/actions/schema.json', 'dist/loader-contract.js',
+            'dist/spec/extensions/saga/package.json', 'dist/spec/extensions/saga/runtime.schema.json',
+            'dist/runtime/wasm/index.js', 'dist/runtime/wasm/index.d.ts', 'dist/runtime/node/src/wire.js',
+            'dist/runtime/wasm/pkg/umf_core_wasm.js', 'dist/runtime/wasm/pkg/umf_core_wasm_bg.wasm']
 assert all(Path(p).is_file() for p in required), 'SDK build is incomplete'
 assert all(not p.is_symlink() for p in files), 'SDK must contain regular build outputs'
-manifest = {'profile': 'umf.sdk.distribution/1', 'bundledVocabularies': {'umf.actions': '0.1.0'},
+manifest = {'profile': 'umf.sdk.distribution/1', 'bundledVocabularies': {'umf.actions': '0.1.0', 'umf.actions.saga': '0.1.0'},
             'sha256': {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in files}}
 (output / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
 with (output / 'umf-sdk.tgz').open('wb') as raw:

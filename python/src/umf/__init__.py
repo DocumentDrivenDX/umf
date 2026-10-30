@@ -27,8 +27,11 @@ from .serialization import (
 )
 from .validation import inspect_extension_kinds, validate_document
 
-__version__ = "0.10.3"
+from .saga import SagaRuntime
+
+__version__ = "0.10.4"
 __all__ = [
+    "SagaRuntime",
     "CoreItemTypeReference",
     "CoreSemanticTypeReference",
     "Diagnostic",

@@ -31,6 +31,11 @@ pub struct CodegenResources {
     actions_compiled: CompiledSchema,
     actions_literal_compiled: CompiledSchema,
     actions_action_compiled: CompiledSchema,
+    saga_registry: Option<Registry>,
+    saga_package: Option<Value>,
+    saga_schema: Option<Value>,
+    saga_compiled: Option<CompiledSchema>,
+    saga_capabilities_compiled: Option<CompiledSchema>,
     operation_schema: Value,
     operation_compiled: CompiledSchema,
     schema_resources: SchemaResources,
@@ -187,6 +192,11 @@ impl CodegenResources {
             actions_compiled,
             actions_literal_compiled,
             actions_action_compiled,
+            saga_registry: None,
+            saga_package: None,
+            saga_schema: None,
+            saga_compiled: None,
+            saga_capabilities_compiled: None,
             operation_schema,
             operation_compiled,
             schema_resources,
@@ -250,6 +260,101 @@ impl CodegenResources {
     }
     pub fn schema_resources(&self) -> &SchemaResources {
         &self.schema_resources
+    }
+
+    /// Install the explicitly trusted saga declaration package. Saga support
+    /// is opt-in so existing engines do not silently acquire new semantics.
+    pub fn with_sagas(
+        mut self,
+        package: Value,
+        schema: Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Self, EngineError> {
+        let package = umf_core::copy_json(&package, ctx)?;
+        let schema = umf_core::copy_json(&schema, ctx)?;
+        let schema_id = crate::value::string_member(&schema, "$id")
+            .cloned()
+            .ok_or_else(invalid_package)?;
+        let package_id = crate::value::string_member(&package, "id").ok_or_else(invalid_package)?;
+        if package_id != &Utf16::from("umf.actions.saga")
+            || crate::value::string_member(&package, "version") != Some(&Utf16::from("0.1.0"))
+            || crate::value::member(&package, "schema") != Some(&schema)
+            || crate::value::string_member(&package, "coreVersion") != Some(&Utf16::from("0.10.0"))
+        {
+            return Err(invalid_package());
+        }
+        // The saga schema deliberately reuses the action package's parameter
+        // and profile definitions. Make that exact trusted schema available
+        // to the compiler before resolving the saga schema's external refs.
+        let actions_schema_id = crate::value::string_member(&self.actions_schema, "$id")
+            .cloned()
+            .ok_or_else(invalid_package)?;
+        let mut actions_schema_present = false;
+        for (id, existing) in &self.schema_resources.entries {
+            ctx.charge_work(id.len(), Utf16::default())?;
+            if id == &actions_schema_id {
+                actions_schema_present = true;
+                if existing != &self.actions_schema {
+                    return Err(invalid_package());
+                }
+            }
+        }
+        if !actions_schema_present {
+            self.schema_resources.entries.push((
+                actions_schema_id,
+                umf_core::copy_json(&self.actions_schema, ctx)?,
+            ));
+        }
+        let mut found = false;
+        for (id, _) in &self.schema_resources.entries {
+            ctx.charge_work(id.len(), Utf16::default())?;
+            found |= id == &schema_id;
+        }
+        if !found {
+            self.schema_resources
+                .entries
+                .push((schema_id, umf_core::copy_json(&schema, ctx)?));
+        }
+        let compiled = CompiledSchema::compile(&schema, &self.schema_resources, ctx)?;
+        let saga_defs = crate::value::member(&schema, "$defs").ok_or_else(invalid_package)?;
+        let capabilities_schema = Value::Object(vec![
+            (Utf16::from("$defs"), umf_core::copy_json(saga_defs, ctx)?),
+            (
+                Utf16::from("$ref"),
+                Value::String(Utf16::from("#/$defs/capabilities")),
+            ),
+        ]);
+        let capabilities_compiled =
+            CompiledSchema::compile(&capabilities_schema, &self.schema_resources, ctx)?;
+        let mut registry = Registry::new();
+        register_package(
+            &mut registry,
+            &self.engine,
+            &self.schema_resources,
+            &package,
+            &schema,
+            5,
+            ctx,
+        )?;
+        self.saga_registry = Some(registry);
+        self.saga_package = Some(package);
+        self.saga_schema = Some(schema);
+        self.saga_compiled = Some(compiled);
+        self.saga_capabilities_compiled = Some(capabilities_compiled);
+        Ok(self)
+    }
+
+    pub(crate) fn saga_registry(&self) -> Option<&Registry> {
+        self.saga_registry.as_ref()
+    }
+    pub(crate) fn saga_package(&self) -> Option<&Value> {
+        self.saga_package.as_ref()
+    }
+    pub(crate) fn saga_compiled(&self) -> Option<&CompiledSchema> {
+        self.saga_compiled.as_ref()
+    }
+    pub(crate) fn saga_capabilities_compiled(&self) -> Option<&CompiledSchema> {
+        self.saga_capabilities_compiled.as_ref()
     }
 }
 
