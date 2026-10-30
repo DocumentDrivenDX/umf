@@ -1,0 +1,259 @@
+{
+  "attempt": 1,
+  "cleanup": {
+    "error": null,
+    "evidenceVolumeAbsent": true,
+    "evidenceVolumeError": null,
+    "evidenceVolumeName": "umf-public-h-evidence-55583d3c6351e2a83330-1",
+    "exactOwnedNameAbsent": true,
+    "removeExitCode": null
+  },
+  "dockerExitCode": 1,
+  "evidenceExport": {
+    "capture": {
+      "captureErrors": [],
+      "captureFailed": false,
+      "drainExpired": false,
+      "paths": [
+        "/private/tmp/g03-sdk058-public-proof-actual-001/operator/evidence-export.stdout.log",
+        "/private/tmp/g03-sdk058-public-proof-actual-001/operator/evidence-export.stderr.log"
+      ],
+      "rawSha256": [
+        "ece14d4c3d1cfe1728aa8681686607e41c10a20243e90e0a30fcca1afe8a847b",
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      ],
+      "retainedBytes": [
+        888,
+        0
+      ],
+      "timedOut": false,
+      "totalRetainedBytes": 888,
+      "truncated": [
+        false,
+        false
+      ]
+    },
+    "capturePhysicalClosure": {
+      "errors": [],
+      "files": [
+        {
+          "path": "/private/tmp/g03-sdk058-public-proof-actual-001/operator/evidence-export.stdout.log",
+          "sha256": "ece14d4c3d1cfe1728aa8681686607e41c10a20243e90e0a30fcca1afe8a847b",
+          "sizeBytes": 888
+        },
+        {
+          "path": "/private/tmp/g03-sdk058-public-proof-actual-001/operator/evidence-export.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        }
+      ],
+      "verified": true
+    },
+    "cleanup": {
+      "error": null,
+      "exactOwnedNameAbsent": true
+    },
+    "containerName": "umf-public-h-local-5fbee735df4e49abb93de3ec13384da4-1-export",
+    "exitCode": 0,
+    "fullSuccessRoster": false,
+    "hostFiles": [
+      {
+        "path": "receipt.json",
+        "sha256": "a22ab0f8aef1cd414fe8642e3b17f457709fb5409707384c8f442207657294f9",
+        "sizeBytes": 2487
+      },
+      {
+        "path": "input-packet.json",
+        "sha256": "f5bc2f572c393385b4cc283775e426bda8992e5b62677d4a1c996d327683b136",
+        "sizeBytes": 27367
+      },
+      {
+        "path": "command-records.jsonl",
+        "sha256": "40ed0cb525519ba883d375e9114012b78c47ff1916e8233cc6e564eb78c451d7",
+        "sizeBytes": 1485
+      },
+      {
+        "path": "logs/toolchain-identity.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      {
+        "path": "logs/verify-source-tag-and-tree.log",
+        "sha256": "807ab62044b97097381186299ac4e2505140afaa694678ce80923a923a71c66b",
+        "sizeBytes": 245
+      },
+      {
+        "path": "reports/toolchain.json",
+        "sha256": "c41c2c403b9b01e186be099eb5a1427c07d76114e594ee1b2ac6ec2c6fe07dcc",
+        "sizeBytes": 1301
+      }
+    ],
+    "hostInventoryError": null,
+    "manifest": {
+      "complete": false,
+      "files": [
+        {
+          "path": "command-records.jsonl",
+          "sha256": "40ed0cb525519ba883d375e9114012b78c47ff1916e8233cc6e564eb78c451d7",
+          "sizeBytes": 1485
+        },
+        {
+          "path": "input-packet.json",
+          "sha256": "f5bc2f572c393385b4cc283775e426bda8992e5b62677d4a1c996d327683b136",
+          "sizeBytes": 27367
+        },
+        {
+          "path": "receipt.json",
+          "sha256": "a22ab0f8aef1cd414fe8642e3b17f457709fb5409707384c8f442207657294f9",
+          "sizeBytes": 2487
+        },
+        {
+          "path": "logs/toolchain-identity.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sizeBytes": 0
+        },
+        {
+          "path": "logs/verify-source-tag-and-tree.log",
+          "sha256": "807ab62044b97097381186299ac4e2505140afaa694678ce80923a923a71c66b",
+          "sizeBytes": 245
+        },
+        {
+          "path": "reports/toolchain.json",
+          "sha256": "c41c2c403b9b01e186be099eb5a1427c07d76114e594ee1b2ac6ec2c6fe07dcc",
+          "sizeBytes": 1301
+        }
+      ],
+      "missing": [],
+      "readerStatus": "FAIL_OR_UNKNOWN",
+      "safe": true,
+      "selectedBytes": 32885,
+      "status": "copied"
+    },
+    "readerMetadataBytesMatchPhysicalFamily": true,
+    "readerStatus": "FAIL_OR_UNKNOWN",
+    "rowsMatch": true,
+    "verified": true
+  },
+  "evidenceExportCapture": {
+    "captureErrors": [],
+    "captureFailed": false,
+    "drainExpired": false,
+    "paths": [
+      "/private/tmp/g03-sdk058-public-proof-actual-001/operator/evidence-export.stdout.log",
+      "/private/tmp/g03-sdk058-public-proof-actual-001/operator/evidence-export.stderr.log"
+    ],
+    "rawSha256": [
+      "ece14d4c3d1cfe1728aa8681686607e41c10a20243e90e0a30fcca1afe8a847b",
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    ],
+    "retainedBytes": [
+      888,
+      0
+    ],
+    "timedOut": false,
+    "totalRetainedBytes": 888,
+    "truncated": [
+      false,
+      false
+    ]
+  },
+  "evidenceExportCapturePhysicalClosure": {
+    "errors": [],
+    "files": [
+      {
+        "path": "/private/tmp/g03-sdk058-public-proof-actual-001/operator/evidence-export.stdout.log",
+        "sha256": "ece14d4c3d1cfe1728aa8681686607e41c10a20243e90e0a30fcca1afe8a847b",
+        "sizeBytes": 888
+      },
+      {
+        "path": "/private/tmp/g03-sdk058-public-proof-actual-001/operator/evidence-export.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      }
+    ],
+    "verified": true
+  },
+  "evidenceInventoryError": null,
+  "executionId": "local-5fbee735df4e49abb93de3ec13384da4",
+  "executionKind": "local_linux_diagnostic",
+  "failure": "docker client exited 1",
+  "outerCapture": {
+    "captureErrors": [],
+    "captureFailed": false,
+    "drainExpired": false,
+    "paths": [
+      "/private/tmp/g03-sdk058-public-proof-actual-001/operator/reader-docker.stdout.log",
+      "/private/tmp/g03-sdk058-public-proof-actual-001/operator/reader-docker.stderr.log"
+    ],
+    "rawSha256": [
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    ],
+    "retainedBytes": [
+      0,
+      0
+    ],
+    "timedOut": false,
+    "totalRetainedBytes": 0,
+    "truncated": [
+      false,
+      false
+    ]
+  },
+  "outerCapturePhysicalClosure": {
+    "errors": [],
+    "files": [
+      {
+        "path": "/private/tmp/g03-sdk058-public-proof-actual-001/operator/reader-docker.stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      },
+      {
+        "path": "/private/tmp/g03-sdk058-public-proof-actual-001/operator/reader-docker.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sizeBytes": 0
+      }
+    ],
+    "verified": true
+  },
+  "outerDurationSeconds": 205.7160974999424,
+  "profile": "umf.sdk-058-public-h-docker-operator/1",
+  "readerMetadataBytesMatchPhysicalFamily": true,
+  "readerReceiptPath": "/private/tmp/g03-sdk058-public-proof-actual-001/evidence/receipt.json",
+  "readerReceiptSha256": "a22ab0f8aef1cd414fe8642e3b17f457709fb5409707384c8f442207657294f9",
+  "readerStatus": "FAIL_OR_UNKNOWN",
+  "selectedEvidenceBytes": 32885,
+  "selectedEvidenceFiles": [
+    {
+      "path": "receipt.json",
+      "sha256": "a22ab0f8aef1cd414fe8642e3b17f457709fb5409707384c8f442207657294f9",
+      "sizeBytes": 2487
+    },
+    {
+      "path": "input-packet.json",
+      "sha256": "f5bc2f572c393385b4cc283775e426bda8992e5b62677d4a1c996d327683b136",
+      "sizeBytes": 27367
+    },
+    {
+      "path": "command-records.jsonl",
+      "sha256": "40ed0cb525519ba883d375e9114012b78c47ff1916e8233cc6e564eb78c451d7",
+      "sizeBytes": 1485
+    },
+    {
+      "path": "logs/toolchain-identity.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sizeBytes": 0
+    },
+    {
+      "path": "logs/verify-source-tag-and-tree.log",
+      "sha256": "807ab62044b97097381186299ac4e2505140afaa694678ce80923a923a71c66b",
+      "sizeBytes": 245
+    },
+    {
+      "path": "reports/toolchain.json",
+      "sha256": "c41c2c403b9b01e186be099eb5a1427c07d76114e594ee1b2ac6ec2c6fe07dcc",
+      "sizeBytes": 1301
+    }
+  ],
+  "status": "FAIL_OR_UNKNOWN"
+}
