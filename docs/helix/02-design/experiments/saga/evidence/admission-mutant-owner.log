@@ -1,0 +1,45 @@
+TLC2 Version 2.19 of 08 August 2024 (rev: 5a47802)
+Running breadth-first search Model-Checking with fp 0 and seed 908 with 1 worker on 18 cores with 491MB heap and 64MB offheap memory [pid: 25766] (Mac OS X 27.0.1 aarch64, Eclipse Adoptium 21.0.13 x86_64, MSBDiskFPSet, DiskStateQueue).
+Parsing file /Users/erik/.codex/worktrees/38b0/umf/docs/helix/02-design/experiments/saga/formal/Admission.tla
+Parsing file /private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/Naturals.tla
+Semantic processing of module Naturals
+Semantic processing of module Admission
+Starting... (2026-10-29 20:19:18)
+Computing initial states...
+Finished computing initial states: 1 distinct state generated at 2026-10-29 20:19:18.
+Error: Invariant TicketFence is violated.
+Error: The behavior up to this point is:
+State 1: <Initial predicate>
+/\ cancelled = FALSE
+/\ badTicket = FALSE
+/\ epoch = 0
+/\ cancelledInFlight = FALSE
+/\ active = TRUE
+/\ badNative = FALSE
+/\ retiredAfterAdmission = FALSE
+/\ stage = "idle"
+
+State 2: <Takeover line 33, col 2 to line 34, col 106 of module Admission>
+/\ cancelled = FALSE
+/\ badTicket = FALSE
+/\ epoch = 1
+/\ cancelledInFlight = FALSE
+/\ active = TRUE
+/\ badNative = FALSE
+/\ retiredAfterAdmission = FALSE
+/\ stage = "idle"
+
+State 3: <Next line 39, col 10 to line 39, col 37 of module Admission>
+/\ cancelled = FALSE
+/\ badTicket = TRUE
+/\ epoch = 1
+/\ cancelledInFlight = FALSE
+/\ active = TRUE
+/\ badNative = FALSE
+/\ retiredAfterAdmission = FALSE
+/\ stage = "issued"
+
+13 states generated, 12 distinct states found, 7 states left on queue.
+The depth of the complete state graph search is 3.
+The average outdegree of the complete state graph is 3 (minimum is 2, the maximum 4 and the 95th percentile is 4).
+Finished in 00s at (2026-10-29 20:19:18)

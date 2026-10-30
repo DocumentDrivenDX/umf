@@ -23,7 +23,7 @@ ddx:
 
 # CONTRACT-902: Portable action-plan profile
 
-**Version:** proposed `umf.actions.plan/1`, core 0.8.0 and `umf.actions` 0.1.0.
+**Version:** proposed `umf.actions.plan/1`, core 0.10.0 and `umf.actions` 0.1.0.
 **Status:** draft normative contract; scoped portable implementation evidence is retained under `docs/helix/04-build/evidence/bulk-update/`; no native execution or release qualification.
 
 ## Purpose
@@ -42,7 +42,7 @@ All objects retain unknown members. Known malformed members are invalid; unknown
 | --- | --- | --- |
 | Profile | `id:string, version:string` | Exact identity, no ranges or fallback |
 | Artifact | `mediaType:string, utf8:string, sha256:string` | Digest of actual UTF-8 bytes of utf8; source spelling retained; supplied artifacts only |
-| ModelPin | `documentId:string, revision:string, umfVersion:"0.8.0", sha256:string` | Original full document bytes, including unknown content; revision is source-owner identity |
+| ModelPin | `documentId:string, revision:string, umfVersion:"0.10.0", sha256:string` | Original full document bytes, including unknown content; revision is source-owner identity |
 | Plan | `protocol:"umf.actions.plan/1", model:ModelPin, source:Artifact, selection:Selection, action:ActionPin, target:KeyRef, inputs:InputTemplate, execution:ExecutionPolicy, limits:Limits` | All members required; optional annotations only |
 | Selection | `profile:Profile, artifact:Artifact, dependencies:FieldRef[]` | Inert typed selection program; dependencies unique and complete; each belongs to target Record |
 | ActionPin | `identity:{module:string,action:string}, documentSha256:string, invocation:Profile` | Portable logical identity plus complete declaration-document digest; no executor-assigned revision; invocation is `{id:"umf.actions.tx",version:"1"}` |
@@ -94,4 +94,4 @@ CONTRACT-905 adds exact local-owner actor/policy/invocation interpretation and c
 
 ## Separate capability-qualified single-SET binding — 2026-10-23
 
-CONTRACT-906 defines a separate single-set-prepared/1 branch for current core 0.10.0. It does not emit or widen plan-model/1, waive relevant unknowns, or convert an opaque host-policy obligation to checked. This contract's documented core 0.8.0 pin and current-core implementation mismatch remain an explicit compatibility gap for plan/1; the separate bridge does not relabel historical bytes or prove that older portable plan profile. See [CONTRACT-906](CONTRACT-906-single-set-admission.md).
+CONTRACT-906 defines a separate single-set-prepared/1 branch for current core 0.10.0. It does not emit or widen plan-model/1, waive relevant unknowns, or convert an opaque host-policy obligation to checked. The current plan/1 ModelPin is exactly core 0.10.0, matching its schema and implementation. Historical artifacts remain immutable; this alignment neither migrates them nor requalifies native executors. The separate bridge does not establish plan/manifest/bulk delivery. See [CONTRACT-906](CONTRACT-906-single-set-admission.md).

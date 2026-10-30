@@ -117,7 +117,7 @@ or additional exclusive slot is selected.
 
 ## Constraints and Assumptions
 
-First profile is core 0.8.0, local-only, explicit-key recipe creates and unconditional
+First profile is core 0.10.0, local-only, explicit-key recipe creates and unconditional
 recipe effects. Handlers may branch or perform a business no-op within the declared
 frame and postconditions; no arbitrary recipe branching language is introduced.
 Generated/computed keys, owned/undirected executable

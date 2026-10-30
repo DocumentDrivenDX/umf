@@ -44,7 +44,7 @@ from .rust_sec_projection import (
     project_sec_submissions,
 )
 
-__version__ = "0.11.0"
+__version__ = "0.10.4"
 __all__ = [
     "CoreItemTypeReference",
     "CoreSemanticTypeReference",

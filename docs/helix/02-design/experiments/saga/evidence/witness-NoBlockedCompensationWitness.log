@@ -1,0 +1,301 @@
+TLC2 Version 2.19 of 08 August 2024 (rev: 5a47802)
+Running breadth-first search Model-Checking with fp 0 and seed 901 with 1 worker on 18 cores with 981MB heap and 64MB offheap memory [pid: 95161] (Mac OS X 27.0.1 aarch64, Eclipse Adoptium 21.0.13 x86_64, MSBDiskFPSet, DiskStateQueue).
+Parsing file /Users/erik/.codex/worktrees/38b0/umf/docs/helix/02-design/experiments/saga/formal/Saga.tla
+Parsing file /private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/Naturals.tla
+Parsing file /private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/FiniteSets.tla
+Parsing file /private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/TLC.tla
+Parsing file /private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/Sequences.tla
+Semantic processing of module Naturals
+Semantic processing of module Sequences
+Semantic processing of module FiniteSets
+Semantic processing of module TLC
+Semantic processing of module Saga
+Starting... (2026-10-29 19:53:07)
+Computing initial states...
+Finished computing initial states: 1 distinct state generated at 2026-10-29 19:53:07.
+Error: Invariant NoBlockedCompensationWitness is violated.
+Error: The behavior up to this point is:
+State 1: <Initial predicate>
+/\ phase = "running"
+/\ epoch = 0
+/\ conflicted = FALSE
+/\ cancelled = FALSE
+/\ attempts = 0
+/\ provider = <<"none", "none">>
+/\ badExternal = FALSE
+/\ crashPending = {}
+/\ badCancel = FALSE
+/\ definitionActive = TRUE
+/\ compensationActive = 1..2
+/\ intent = "none"
+/\ redelivered = FALSE
+/\ pending = {}
+/\ acknowledged = FALSE
+/\ replayed = FALSE
+/\ originalIntent = "none"
+/\ releases = <<0, 0>>
+/\ compProvider = <<"none", "none">>
+/\ continued = FALSE
+/\ compKnown = <<"idle", "idle">>
+/\ crashes = 0
+/\ up = TRUE
+/\ known = <<"idle", "idle">>
+/\ badRetired = FALSE
+/\ badOrder = FALSE
+/\ badOwner = FALSE
+/\ compPending = {}
+/\ forwardActive = 1..2
+/\ admitted = 0
+/\ badUnknown = FALSE
+/\ recovered = FALSE
+/\ effects = <<0, 0>>
+
+State 2: <Submit line 32, col 2 to line 48, col 52 of module Saga>
+/\ phase = "running"
+/\ epoch = 0
+/\ conflicted = FALSE
+/\ cancelled = FALSE
+/\ attempts = 1
+/\ provider = <<"none", "none">>
+/\ badExternal = FALSE
+/\ crashPending = {}
+/\ badCancel = FALSE
+/\ definitionActive = TRUE
+/\ compensationActive = 1..2
+/\ intent = "a"
+/\ redelivered = FALSE
+/\ pending = {}
+/\ acknowledged = FALSE
+/\ replayed = FALSE
+/\ originalIntent = "a"
+/\ releases = <<0, 0>>
+/\ compProvider = <<"none", "none">>
+/\ continued = FALSE
+/\ compKnown = <<"idle", "idle">>
+/\ crashes = 0
+/\ up = TRUE
+/\ known = <<"idle", "idle">>
+/\ badRetired = FALSE
+/\ badOrder = FALSE
+/\ badOwner = FALSE
+/\ compPending = {}
+/\ forwardActive = 1..2
+/\ admitted = 1
+/\ badUnknown = FALSE
+/\ recovered = FALSE
+/\ effects = <<0, 0>>
+
+State 3: <Work line 191, col 10 to line 191, col 91 of module Saga>
+/\ phase = "running"
+/\ epoch = 0
+/\ conflicted = FALSE
+/\ cancelled = FALSE
+/\ attempts = 1
+/\ provider = <<"none", "none">>
+/\ badExternal = FALSE
+/\ crashPending = {}
+/\ badCancel = FALSE
+/\ definitionActive = TRUE
+/\ compensationActive = 1..2
+/\ intent = "a"
+/\ redelivered = FALSE
+/\ pending = {1}
+/\ acknowledged = FALSE
+/\ replayed = FALSE
+/\ originalIntent = "a"
+/\ releases = <<0, 0>>
+/\ compProvider = <<"none", "none">>
+/\ continued = FALSE
+/\ compKnown = <<"idle", "idle">>
+/\ crashes = 0
+/\ up = TRUE
+/\ known = <<"unknown", "idle">>
+/\ badRetired = FALSE
+/\ badOrder = FALSE
+/\ badOwner = FALSE
+/\ compPending = {}
+/\ forwardActive = 1..2
+/\ admitted = 1
+/\ badUnknown = FALSE
+/\ recovered = FALSE
+/\ effects = <<0, 0>>
+
+State 4: <SettleForward line 86, col 2 to line 94, col 52 of module Saga>
+/\ phase = "running"
+/\ epoch = 0
+/\ conflicted = FALSE
+/\ cancelled = FALSE
+/\ attempts = 1
+/\ provider = <<"committed", "none">>
+/\ badExternal = FALSE
+/\ crashPending = {}
+/\ badCancel = FALSE
+/\ definitionActive = TRUE
+/\ compensationActive = 1..2
+/\ intent = "a"
+/\ redelivered = FALSE
+/\ pending = {}
+/\ acknowledged = FALSE
+/\ replayed = FALSE
+/\ originalIntent = "a"
+/\ releases = <<0, 0>>
+/\ compProvider = <<"none", "none">>
+/\ continued = FALSE
+/\ compKnown = <<"idle", "idle">>
+/\ crashes = 0
+/\ up = TRUE
+/\ known = <<"unknown", "idle">>
+/\ badRetired = FALSE
+/\ badOrder = FALSE
+/\ badOwner = FALSE
+/\ compPending = {}
+/\ forwardActive = 1..2
+/\ admitted = 1
+/\ badUnknown = FALSE
+/\ recovered = FALSE
+/\ effects = <<1, 0>>
+
+State 5: <ObserveForward line 97, col 2 to line 105, col 41 of module Saga>
+/\ phase = "running"
+/\ epoch = 0
+/\ conflicted = FALSE
+/\ cancelled = FALSE
+/\ attempts = 1
+/\ provider = <<"committed", "none">>
+/\ badExternal = FALSE
+/\ crashPending = {}
+/\ badCancel = FALSE
+/\ definitionActive = TRUE
+/\ compensationActive = 1..2
+/\ intent = "a"
+/\ redelivered = FALSE
+/\ pending = {}
+/\ acknowledged = FALSE
+/\ replayed = FALSE
+/\ originalIntent = "a"
+/\ releases = <<0, 0>>
+/\ compProvider = <<"none", "none">>
+/\ continued = FALSE
+/\ compKnown = <<"idle", "idle">>
+/\ crashes = 0
+/\ up = TRUE
+/\ known = <<"committed", "idle">>
+/\ badRetired = FALSE
+/\ badOrder = FALSE
+/\ badOwner = FALSE
+/\ compPending = {}
+/\ forwardActive = 1..2
+/\ admitted = 1
+/\ badUnknown = FALSE
+/\ recovered = FALSE
+/\ effects = <<1, 0>>
+
+State 6: <Environment line 169, col 2 to line 189, col 38 of module Saga>
+/\ phase = "running"
+/\ epoch = 0
+/\ conflicted = FALSE
+/\ cancelled = FALSE
+/\ attempts = 1
+/\ provider = <<"committed", "none">>
+/\ badExternal = FALSE
+/\ crashPending = {}
+/\ badCancel = FALSE
+/\ definitionActive = TRUE
+/\ compensationActive = {2}
+/\ intent = "a"
+/\ redelivered = FALSE
+/\ pending = {}
+/\ acknowledged = FALSE
+/\ replayed = FALSE
+/\ originalIntent = "a"
+/\ releases = <<0, 0>>
+/\ compProvider = <<"none", "none">>
+/\ continued = FALSE
+/\ compKnown = <<"idle", "idle">>
+/\ crashes = 0
+/\ up = TRUE
+/\ known = <<"committed", "idle">>
+/\ badRetired = FALSE
+/\ badOrder = FALSE
+/\ badOwner = FALSE
+/\ compPending = {}
+/\ forwardActive = 1..2
+/\ admitted = 1
+/\ badUnknown = FALSE
+/\ recovered = FALSE
+/\ effects = <<1, 0>>
+
+State 7: <Environment line 169, col 2 to line 189, col 38 of module Saga>
+/\ phase = "running"
+/\ epoch = 0
+/\ conflicted = FALSE
+/\ cancelled = FALSE
+/\ attempts = 1
+/\ provider = <<"committed", "none">>
+/\ badExternal = FALSE
+/\ crashPending = {}
+/\ badCancel = FALSE
+/\ definitionActive = TRUE
+/\ compensationActive = {2}
+/\ intent = "a"
+/\ redelivered = FALSE
+/\ pending = {}
+/\ acknowledged = FALSE
+/\ replayed = FALSE
+/\ originalIntent = "a"
+/\ releases = <<0, 0>>
+/\ compProvider = <<"none", "none">>
+/\ continued = FALSE
+/\ compKnown = <<"idle", "idle">>
+/\ crashes = 0
+/\ up = TRUE
+/\ known = <<"committed", "idle">>
+/\ badRetired = FALSE
+/\ badOrder = FALSE
+/\ badOwner = FALSE
+/\ compPending = {}
+/\ forwardActive = {1}
+/\ admitted = 1
+/\ badUnknown = FALSE
+/\ recovered = FALSE
+/\ effects = <<1, 0>>
+
+State 8: <MovePhase line 147, col 2 to line 166, col 52 of module Saga>
+/\ phase = "intervention"
+/\ epoch = 0
+/\ conflicted = FALSE
+/\ cancelled = FALSE
+/\ attempts = 1
+/\ provider = <<"committed", "none">>
+/\ badExternal = FALSE
+/\ crashPending = {}
+/\ badCancel = FALSE
+/\ definitionActive = TRUE
+/\ compensationActive = {2}
+/\ intent = "a"
+/\ redelivered = FALSE
+/\ pending = {}
+/\ acknowledged = FALSE
+/\ replayed = FALSE
+/\ originalIntent = "a"
+/\ releases = <<0, 0>>
+/\ compProvider = <<"none", "none">>
+/\ continued = FALSE
+/\ compKnown = <<"idle", "idle">>
+/\ crashes = 0
+/\ up = TRUE
+/\ known = <<"committed", "idle">>
+/\ badRetired = FALSE
+/\ badOrder = FALSE
+/\ badOwner = FALSE
+/\ compPending = {}
+/\ forwardActive = {1}
+/\ admitted = 1
+/\ badUnknown = FALSE
+/\ recovered = FALSE
+/\ effects = <<1, 0>>
+
+51589 states generated, 11249 distinct states found, 6820 states left on queue.
+The depth of the complete state graph search is 8.
+The average outdegree of the complete state graph is 3 (minimum is 0, the maximum 12 and the 95th percentile is 7).
+Finished in 00s at (2026-10-29 19:53:07)

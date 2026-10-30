@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+const releaseCheck = Bun.spawn(['python3', 'scripts/check-release-versions.py'], {stdout: 'inherit', stderr: 'inherit'});
+if (await releaseCheck.exited) process.exit(1);
 // Build the TypeScript reference and the qualified Rust root routes from one
 // immutable source snapshot. The builder stages dist and swaps it only after
 // source rehash and asset validation succeed.

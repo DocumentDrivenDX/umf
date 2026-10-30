@@ -1,0 +1,147 @@
+{
+  "profile": "umf.g03-sdk058-public-release-custody/1",
+  "scope": "accepted distribution and read-only served-byte evidence; installed proof remains failed/incomplete",
+  "files": [
+    {
+      "path": "publication/original-failure.json",
+      "sourcePath": "/private/tmp/g03-sdk058-github-publication-actual-001/failure.json",
+      "sizeBytes": 53886,
+      "sha256": "92e4ffbfa6e9f1169e6b269faa6a08d63f3245dc89f5860235fee2f431f0e24d",
+      "role": "original successful mutation followed by failed public readback; preserved failure"
+    },
+    {
+      "path": "publication/attempt-context.json",
+      "sourcePath": "/private/tmp/g03-sdk058-github-publication-actual-001/attempt-context.json",
+      "sizeBytes": 433,
+      "sha256": "cb2372f775b3a672ed5f0fd026fe627785bca213998655e5a45623bc5dfc3dec",
+      "role": "original attempt ownership"
+    },
+    {
+      "path": "publication/independent-review.md",
+      "sourcePath": "/private/tmp/g03-sdk058-publication-actual001-sol-review001.md",
+      "sizeBytes": 3895,
+      "sha256": "573b63909ef045e43099b48ea6f91125103bcf96ba70e6f31e9d0d27213647b8",
+      "role": "independent original failure disposition"
+    },
+    {
+      "path": "reconciliation/result.json",
+      "sourcePath": "/private/tmp/g03-sdk058-readonly-reconciliation-actual-002/reconciliation.json",
+      "sizeBytes": 95303,
+      "sha256": "6d51ec35c1ca64a8ff668decd4c9d77533e93361969c75d1e287e5a914a1795c",
+      "role": "accepted read-only immutable publication and six exact-byte checks"
+    },
+    {
+      "path": "reconciliation/independent-review.md",
+      "sourcePath": "/private/tmp/g03-sdk058-readonly-reconciliation-actual002-sol-review001.md",
+      "sizeBytes": 7038,
+      "sha256": "ec87889d9e4c8c62ecc4004e794b672d50a5f5634ae46fb9b66aec5c02ff9ac0",
+      "role": "independent actual byte/custody acceptance"
+    },
+    {
+      "path": "public/release.json",
+      "sourcePath": "/private/tmp/g03-sdk058-readonly-reconciliation-actual-002/reconcile-public-release-api.json",
+      "sizeBytes": 17774,
+      "sha256": "39b9407dbd5aa8f1985c083d51308b26fac39413206f56976883fd3cc183fbc4",
+      "role": "actual unauthenticated full public release response"
+    },
+    {
+      "path": "public/tag.json",
+      "sourcePath": "/private/tmp/g03-sdk058-readonly-reconciliation-actual-002/reconcile-public-tag-api.json",
+      "sizeBytes": 355,
+      "sha256": "cb6c7aadbdc9fca3eaedc022f178b4a2d5d57a732e871897ba49e61633d52d4a",
+      "role": "actual unauthenticated tag response"
+    },
+    {
+      "path": "source/metadata-closure.json",
+      "sourcePath": "/private/tmp/g03-sdk058-actual-M-admission-001/metadata-closure-v2.json",
+      "sizeBytes": 487,
+      "sha256": "eda437200f4d33b0860fa2f390cdb22e7e3a5947a36e994d052ee712171a6396",
+      "role": "reviewed actual P-to-M wrapper"
+    },
+    {
+      "path": "source/partition-subject.json",
+      "sourcePath": "/private/tmp/g03-sdk058-actual-M-admission-001/source-partition-subject.json",
+      "sizeBytes": 2809,
+      "sha256": "688ee35c9e242d1e46dbb1923440ab412c4696aa43cc3f093584d07b0e5fa122",
+      "role": "exact actual merged source partition"
+    },
+    {
+      "path": "source/partition-review.json",
+      "sourcePath": "/private/tmp/g03-sdk058-actual-M-source-sol-review001.json",
+      "sizeBytes": 376,
+      "sha256": "57033eba1f97b237df8555877d2c42c07637b9f539b4fd213a808678f1ac2b2d",
+      "role": "independent source-partition acceptance"
+    },
+    {
+      "path": "source/partition-review.md",
+      "sourcePath": "/private/tmp/g03-sdk058-actual-M-source-sol-review001.md",
+      "sizeBytes": 3726,
+      "sha256": "b5dceb7c2d3b02d673ba179f6d7f3cdc8ea9cb46e849c66b6f69e9f74a984f0f",
+      "role": "independent source-partition review prose"
+    },
+    {
+      "path": "source/body-review.json",
+      "sourcePath": "/private/tmp/g03-sdk058-actual-M-body-sol-review001.json",
+      "sizeBytes": 636,
+      "sha256": "d780cfe01f9e6dd3c24f7b0c2ca4c3be10a4fecf90267a3ea2caa24a0a52648f",
+      "role": "independent rendered release body acceptance"
+    },
+    {
+      "path": "release/rendered-body.md",
+      "sourcePath": "/private/tmp/g03-sdk058-actual-M-admission-001/rendered-sdk-release-body.md",
+      "sizeBytes": 11558,
+      "sha256": "25e58984330e5e5dde085e1ae3258f45df54df8d6daa9542aea5a371c4c57a10",
+      "role": "exact published rendered body"
+    },
+    {
+      "path": "installed-attempt/operator-result.json",
+      "sourcePath": "/private/tmp/g03-sdk058-public-proof-actual-001/operator/operator-result.json",
+      "sizeBytes": 8322,
+      "sha256": "9e30550ff44a940ff9a0984ec6a54fc96afeac945b77f9b44de49ec1e2ddbe49",
+      "role": "failed installed-proof operator and exact cleanup"
+    },
+    {
+      "path": "installed-attempt/receipt.json",
+      "sourcePath": "/private/tmp/g03-sdk058-public-proof-actual-001/evidence/receipt.json",
+      "sizeBytes": 2487,
+      "sha256": "a22ab0f8aef1cd414fe8642e3b17f457709fb5409707384c8f442207657294f9",
+      "role": "partial installed-proof receipt; no package tests reached"
+    },
+    {
+      "path": "installed-attempt/source-status.log",
+      "sourcePath": "/private/tmp/g03-sdk058-public-proof-actual-001/evidence/logs/verify-source-tag-and-tree.log",
+      "sizeBytes": 245,
+      "sha256": "807ab62044b97097381186299ac4e2505140afaa694678ce80923a923a71c66b",
+      "role": "actual source-stage timeout log"
+    },
+    {
+      "path": "installed-attempt/independent-review.md",
+      "sourcePath": "/private/tmp/g03-sdk058-public-proof-actual001-sol-review001.md",
+      "sizeBytes": 3977,
+      "sha256": "d864e64ce13b0bef5d3e07393f291849a9c602238a2205e8410d6044e0d08ba9",
+      "role": "independent honest failure/capture/cleanup disposition"
+    },
+    {
+      "path": "installed-attempt/source-stage-plan.md",
+      "sourcePath": "/private/tmp/g03-sdk058-public-proof-source-stage-sol-finite-plan001.md",
+      "sizeBytes": 4651,
+      "sha256": "064112a0e3427867769076ae5dce1ca97e72f604f45163457f0576fcdbb114e8",
+      "role": "reviewed unfinished-proof source-orchestration repair plan"
+    },
+    {
+      "path": "installed-attempt/source-stage-addendum.md",
+      "sourcePath": "/private/tmp/g03-sdk058-public-proof-source-stage-sol-addendum002.md",
+      "sizeBytes": 3065,
+      "sha256": "1385daf015697eb5f706dca359e7853d54d81b05f1ca9dc9750fbbc53372ca79",
+      "role": "preserve existing shallow boundaries and all required source predicates"
+    }
+  ],
+  "copiedFiles": 19,
+  "copiedBytes": 221023,
+  "excluded": [
+    "README.md",
+    "custody.json",
+    "SHA256SUMS"
+  ],
+  "lowerLevelEvidence": "Original absolute references remain unmodified; lower-level source inventories, commands, tool installations and artifact bodies are not copied unless explicitly listed."
+}

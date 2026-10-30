@@ -1,0 +1,71 @@
+{
+  "profile": "umf.g03-sdk-current-main-source-partition/1",
+  "producerCommit": "855f6c48649496fc60b3303798790d0ddb55d38f",
+  "producerTree": "53f2bfffbc0c5780e79d76d8fd3d202239d088b2",
+  "releaseCommitM": "efb4042719866888ad80c01cb2da694972eb2738",
+  "releaseTree": "30f3fe701774a0b454ee3594741bfaff49e6c312",
+  "requiredMainCommit": "2ad9c23e5435178be9d2d4637c17ffad463f596f",
+  "changedPathsRoster": {
+    "path": "/private/tmp/g03-sdk058-actual-M-admission-001/P-to-M-paths.nul",
+    "sizeBytes": 306984,
+    "sha256": "2ea3292055f3492a5dc6d529a1a2d6e2b33fa91129985e06fd40d20ccb2c63bb"
+  },
+  "changedModeBlobs": {
+    "path": "/private/tmp/g03-sdk058-actual-M-admission-001/P-to-M-mode-blobs.nul",
+    "sizeBytes": 481224,
+    "sha256": "025d6e7aefd883305bf927381463c465580dd90fd0ead6654241f77f521906bf"
+  },
+  "changedPathsCount": 1760,
+  "changedPathsBytes": 306984,
+  "changedPathsSha256": "2ea3292055f3492a5dc6d529a1a2d6e2b33fa91129985e06fd40d20ccb2c63bb",
+  "changedModeBlobsCount": 1760,
+  "changedModeBlobsBytes": 481224,
+  "changedModeBlobsSha256": "025d6e7aefd883305bf927381463c465580dd90fd0ead6654241f77f521906bf",
+  "main68Changes": [
+    {
+      "path": "docs/helix/05-deploy/microsite/reference/definition-finder.ts",
+      "beforeMode": null,
+      "beforeBlob": null,
+      "afterMode": "100644",
+      "afterBlob": "042204c4fc51dd9266d7377346398533d74ce70b"
+    },
+    {
+      "path": "docs/helix/05-deploy/microsite/reference/ontology.ts",
+      "beforeMode": "100644",
+      "beforeBlob": "1a83b9a977dfe1b1ed6cc4c42fdabd1e50261913",
+      "afterMode": "100644",
+      "afterBlob": "d012a0d84681094ae52424dd19d6c472ba9d9987"
+    },
+    {
+      "path": "docs/helix/05-deploy/microsite/reference/style.css",
+      "beforeMode": "100644",
+      "beforeBlob": "d6097a984eeb3f0feb4cde28f7c960c385128c0b",
+      "afterMode": "100644",
+      "afterBlob": "e8b03f6d23356b5e4fe51939bbe8b39b32174007"
+    },
+    {
+      "path": "scripts/reference/ontology-browser.ts",
+      "beforeMode": "100644",
+      "beforeBlob": "e2f59f6a01b29bdad99b1fd657ed680858ef611f",
+      "afterMode": "100644",
+      "afterBlob": "9b45e6449fb577edda7b0154f345f97a363e3f56"
+    }
+  ],
+  "selectedInputsAudit": {
+    "path": "/private/tmp/g03-current-main-sdk-selected-inputs-sol-audit002.json",
+    "sizeBytes": 784857,
+    "sha256": "4f88f1bd499ff7ae1d1c27c77c9a506f65e593de3ddeaed6472d2bb221188053"
+  },
+  "selectedInputsReview": {
+    "path": "/private/tmp/g03-current-main-sdk-selected-inputs-sol-review001.md",
+    "sizeBytes": 7599,
+    "sha256": "60031412b0f401efbd7cdfe55d0f9f7c643e8f4bda881279d5426a1254eecc22"
+  },
+  "selectedInputFacts": {
+    "selectedCount": 2152,
+    "selectedBytes": 100395091,
+    "explicitDocsCount": 117,
+    "selectedChangedIntersection": [],
+    "packageVersion": "0.5.8"
+  }
+}

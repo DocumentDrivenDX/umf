@@ -943,3 +943,67 @@ Generated table/ontology clients retain the stdlib-only requirement of FR-56.
 single-source approach; the [migration plan](../04-build/rust-migration-plan.md)
 separates V8 removal from complete shared-engine migration. Implementation and
 release qualification require execution of their gates.
+
+## Declarative sagas — owner direction, 2026-10-29
+
+### Subsystem: Saga Composition and Recovery
+
+- **FR-57 — Declarative saga semantics (P0 within this capability).** Application
+  developers must be able to describe a finite composition of independently
+  committed actions with explicit typed data flow, compensation, irreversible
+  effects and recovery obligations. Consumers must be able to inspect and assess
+  that intent without executing it. Uncertain outcomes, failed compensation and
+  required intervention must remain distinguishable from successful completion.
+  Definitions must preserve exact dependencies and unfamiliar meaning without
+  widening existing transactional action guarantees. Runtime execution,
+  authorization, durable coordination and native qualification remain consumer-owned.
+
+Submission retries must recover one original instance under a trusted scoped
+submission identity; changed intent under that identity must conflict. Retiring a
+saga definition prevents new instances without granting fresh invocation rights
+to retired referenced actions. Blocked forward or compensation work must expose
+intervention, preserving confirmed outcomes and unresolved obligations.
+
+External effects require a separately versioned action declaration contract and
+qualified execution profile. The existing actions 0.1.0 single-store declaration
+cannot describe them merely by selecting another handler/profile. Until that
+contract exists, executable eligibility is limited to supported transactional
+actions, potentially coordinated across separately bound stores.
+
+The saga companion is separately versioned from existing action profiles.
+[FEAT-901](features/FEAT-901-saga-semantics.md) owns behavior;
+[US-906](user-stories/US-906-author-and-assess-sagas.md) and
+[US-905](user-stories/US-905-saga-recovery-conformance.md) own observable criteria.
+The initial proposed profile uses sequential orchestration and explicit reverse
+compensation. [CONTRACT-908](../02-design/contracts/CONTRACT-908-saga-semantics.md)
+defines the selected finite profile and host protocol; SD-901 and TD-906/905
+define its design. The first native qualification target is the existing bounded
+PostgreSQL reference consumer with isolated stores. Release order and production
+Batten runtime selection remain outside this semantic design.
+This extends UMF's semantic representation scope under the product vision;
+workflow execution remains outside UMF under NFR-50.
+
+### Acceptance Test Sketches — FR-57
+
+| Scenario | Input | Expected outcome |
+| --- | --- | --- |
+| Inspect intended recovery | Fabricated resource reservation followed by allocation, with an explicit release action | Inspector explains typed step dependencies and compensation without accessing a business system. |
+| Preserve partial completion | Reservation commits; allocation is definitively rejected; release commits | Qualified consumer history reports compensated termination with original forward and recovery outcomes. |
+| Resolve uncertain effects | Reservation acknowledgement is lost after remote commit | Consumer reconciles the original outcome before any safe redelivery, later work or compensation; no duplicate reservation. |
+| Recover submission | Host admits a saga but its reply is lost; caller resubmits the same scoped identity and intent | Same instance is recovered; changed intent conflicts, including after completion; expired identities cannot restart work. |
+| Retire a compensation action | Reservation commits, then its release action revision retires before release admission | Retained outcomes remain inspectable; fresh release is refused and recovery requires intervention. |
+| Admit limits honestly | Unknown relevant recovery semantics or a provider lacking outcome discovery | Content survives exchange; unsupported obligations block eligibility and metadata validity makes no execution claim. |
+
+### Risks and Open Questions — FR-57
+
+Compensation can fail or conflict with later business changes. Mitigation:
+require independent compensation contracts, current authority and explicit
+intervention outcomes. A coordinator can lose an acknowledgement after an
+external commit. Mitigation: require durable invocation identities and original
+outcome reconciliation instead of assuming timeout means noncommit.
+
+CONTRACT-908 selects local immutable reference packaging, zero automatic fresh
+business retries, finite recovery/custody caps and namespace-lifetime nonreuse.
+Native qualification must independently establish provider outcome/authority
+boundaries for its pinned sources and environment before any support claim.
+No workload service target or production host dependency follows from this design.

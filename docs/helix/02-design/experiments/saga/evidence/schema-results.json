@@ -1,0 +1,199 @@
+{
+  "jsonschemaVersion": "4.25.1",
+  "results": [
+    {
+      "name": "fabricated_local_actions",
+      "valid": true,
+      "expectedValid": true
+    },
+    {
+      "name": "fabricated_saga_declaration",
+      "valid": true,
+      "expectedValid": true
+    },
+    {
+      "name": "submit_request",
+      "valid": true,
+      "expectedValid": true
+    },
+    {
+      "name": "missing_disposition_is_malformed",
+      "valid": false,
+      "expectedValid": false
+    },
+    {
+      "name": "two_source_discriminators_refuse",
+      "valid": false,
+      "expectedValid": false
+    },
+    {
+      "name": "unknown_recovery_shape_retained_not_qualified",
+      "valid": true,
+      "expectedValid": true
+    },
+    {
+      "name": "unknown_attachment_member_retained_not_qualified",
+      "valid": true,
+      "expectedValid": true
+    },
+    {
+      "name": "step_count_limit",
+      "valid": false,
+      "expectedValid": false
+    },
+    {
+      "name": "runtime_principal_override_refuses",
+      "valid": false,
+      "expectedValid": false
+    },
+    {
+      "name": "unselected_resume_refuses",
+      "valid": false,
+      "expectedValid": false
+    },
+    {
+      "name": "protected_state_structure",
+      "valid": true,
+      "expectedValid": true
+    },
+    {
+      "name": "success_requires_outputs",
+      "valid": false,
+      "expectedValid": false
+    },
+    {
+      "name": "success_with_outputs_structure",
+      "valid": true,
+      "expectedValid": true
+    },
+    {
+      "name": "original_business_rejection_structure",
+      "valid": true,
+      "expectedValid": true
+    },
+    {
+      "name": "uncertainty_is_not_a_terminal_business_outcome",
+      "valid": false,
+      "expectedValid": false
+    },
+    {
+      "name": "namespace_encoding_is_strict",
+      "valid": false,
+      "expectedValid": false
+    },
+    {
+      "name": "settled_close_request_shape",
+      "valid": true,
+      "expectedValid": true
+    },
+    {
+      "name": "close_requires_evidence_reference",
+      "valid": false,
+      "expectedValid": false
+    },
+    {
+      "name": "closed_disposition_structure",
+      "valid": true,
+      "expectedValid": true
+    },
+    {
+      "name": "closed_cannot_retain_pending",
+      "valid": false,
+      "expectedValid": false
+    },
+    {
+      "name": "closed_requires_disposition",
+      "valid": false,
+      "expectedValid": false
+    },
+    {
+      "name": "empty_prefix_compensated_shape_retains_failure",
+      "valid": true,
+      "expectedValid": true
+    },
+    {
+      "name": "unwind_requires_original_cause",
+      "valid": false,
+      "expectedValid": false
+    },
+    {
+      "name": "closure_control_recovery_shape",
+      "valid": true,
+      "expectedValid": true
+    },
+    {
+      "name": "complete_original_outcome_event",
+      "valid": true,
+      "expectedValid": true
+    },
+    {
+      "name": "outcome_event_requires_invocation",
+      "valid": false,
+      "expectedValid": false
+    },
+    {
+      "name": "outcome_event_requires_result",
+      "valid": false,
+      "expectedValid": false
+    },
+    {
+      "name": "outcome_event_requires_invocation_and_result",
+      "valid": false,
+      "expectedValid": false
+    },
+    {
+      "name": "closed_event_with_disposition",
+      "valid": true,
+      "expectedValid": true
+    },
+    {
+      "name": "closed_event_retains_original_cause",
+      "valid": false,
+      "expectedValid": false
+    },
+    {
+      "name": "closed_event_requires_disposition",
+      "valid": false,
+      "expectedValid": false
+    },
+    {
+      "name": "closed_requires_original_stop_cause",
+      "valid": false,
+      "expectedValid": false
+    },
+    {
+      "name": "intervention_preserves_failure_cause",
+      "valid": true,
+      "expectedValid": true
+    },
+    {
+      "name": "intervention_requires_stop_cause",
+      "valid": false,
+      "expectedValid": false
+    },
+    {
+      "name": "budget_intervention_has_coordination_cause",
+      "valid": true,
+      "expectedValid": true
+    },
+    {
+      "name": "coordination_stop_requires_code",
+      "valid": false,
+      "expectedValid": false
+    }
+  ],
+  "sources": {
+    "spec/extensions/actions/schema.json": "41eeb67807fc8a540785ffdd712caaa007bd3627a6a612e1adc2400d0ec5b382",
+    "spec/extensions/actions/tx-results.schema.json": "20cf86b84be743cb9f0665b9096b33528d3c7f13ecf5b26f707843c8880afa68",
+    "docs/helix/02-design/contracts/schemas/saga-0.1.0.schema.json": "4e3d2fc34882602ac922ba187a97e511ecf495fc96b4a6f6f4d81dbe6a5313fa",
+    "docs/helix/02-design/contracts/schemas/saga-runtime-1.schema.json": "65d11a276e24badd9b1e34443918b9be8e1e07a1ed11727c2d3712a0f09cdb94",
+    "docs/helix/02-design/examples/saga/allocation.json": "5c970d14b3c4b2083f8cfb589926d350d8d4576b2f321ba5f23435c3b49bafff",
+    "docs/helix/02-design/examples/saga/submit.json": "f1add15549c065f3558e8af15dc6d6692026a74cf36066ea3897c7eda619b0fa",
+    "docs/helix/02-design/examples/saga/verify.py": "1d7fc7826ecca1d15b7dd356f1207c9b0fe6172d9e1c0ec79cf0883b163d4309"
+  },
+  "limits": [
+    "Structural shapes only; full core/Field/Key compatibility and availability are not checked",
+    "Unknown retained shapes are not qualified or eligible",
+    "No runtime, browser, provider, authorization or execution evidence is established"
+  ]
+}
