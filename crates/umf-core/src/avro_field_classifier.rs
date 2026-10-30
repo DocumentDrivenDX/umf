@@ -72,6 +72,26 @@ fn json_resource(source: &str, ctx: &mut Context<'_>) -> Result<Value, EngineErr
 
 fn operation_schemas(
     ctx: &mut Context<'_>,
+) -> Result<std::sync::Arc<(CompiledSchema, CompiledSchema)>, EngineError> {
+    use std::sync::{Arc, OnceLock};
+    static SCHEMAS: OnceLock<Arc<(CompiledSchema, CompiledSchema)>> = OnceLock::new();
+    ctx.charge_work(1, key(""))?;
+    let ordinary = ctx.profile() == crate::context::ResourceProfile::Cooperative
+        && ctx.limits() == crate::context::Limits::ordinary();
+    if ordinary {
+        if let Some(schemas) = SCHEMAS.get() {
+            return Ok(Arc::clone(schemas));
+        }
+    }
+    let schemas = Arc::new(build_operation_schemas(ctx)?);
+    if ordinary {
+        let _ = SCHEMAS.set(Arc::clone(&schemas));
+    }
+    Ok(schemas)
+}
+
+fn build_operation_schemas(
+    ctx: &mut Context<'_>,
 ) -> Result<(CompiledSchema, CompiledSchema), EngineError> {
     let operation_schema = json_resource(CLASSIFICATION_SCHEMA, ctx)?;
     let resources = SchemaResources {
@@ -104,7 +124,32 @@ fn operation_schemas(
     Ok((result_schema, request_schema))
 }
 
-fn engine(ctx: &mut Context<'_>) -> Result<(Engine, Registry), EngineError> {
+struct Runtime {
+    engine: Engine,
+    registry: Registry,
+}
+
+fn engine(ctx: &mut Context<'_>) -> Result<std::sync::Arc<Runtime>, EngineError> {
+    use std::sync::{Arc, OnceLock};
+    static RUNTIME: OnceLock<Arc<Runtime>> = OnceLock::new();
+    ctx.charge_work(1, key(""))?;
+    let ordinary = ctx.profile() == crate::context::ResourceProfile::Cooperative
+        && ctx.limits() == crate::context::Limits::ordinary();
+    if ordinary {
+        if let Some(runtime) = RUNTIME.get() {
+            return Ok(Arc::clone(runtime));
+        }
+    }
+    // Build under the invoking context. Only successful immutable runtime
+    // resources enter the ordinary-context cache.
+    let runtime = Arc::new(build_engine(ctx)?);
+    if ordinary {
+        let _ = RUNTIME.set(Arc::clone(&runtime));
+    }
+    Ok(runtime)
+}
+
+fn build_engine(ctx: &mut Context<'_>) -> Result<Runtime, EngineError> {
     let engine = Engine::new(
         ResourceSet::new(
             json_resource(CORE_SCHEMA, ctx)?,
@@ -134,7 +179,7 @@ fn engine(ctx: &mut Context<'_>) -> Result<(Engine, Registry), EngineError> {
     )?;
     let resources = engine.schema_resources_with_context(ctx)?;
     registry.register(&manifest, None, engine.package_schema(), &resources, ctx)?;
-    Ok((engine, registry))
+    Ok(Runtime { engine, registry })
 }
 
 fn validate_document(
@@ -224,7 +269,8 @@ pub fn classify_field(
 ) -> Result<Value, EngineError> {
     let source = copy_json(source, ctx)?;
     let request = copy_json(request, ctx)?;
-    let (result_schema, request_schema) = operation_schemas(ctx)?;
+    let schemas = operation_schemas(ctx)?;
+    let (result_schema, request_schema) = (&schemas.0, &schemas.1);
     let request_errors = request_schema.validate(&request, ctx)?;
     if let Some(first) = request_errors.first() {
         return Err(EngineError::new(
@@ -233,8 +279,8 @@ pub fn classify_field(
             first.message.clone(),
         ));
     }
-    let (engine, registry) = engine(ctx)?;
-    validate_document(&source, &engine, &registry, ctx)?;
+    let runtime = engine(ctx)?;
+    validate_document(&source, &runtime.engine, &runtime.registry, ctx)?;
     let column = str_value(
         get(&request, "column")
             .ok_or_else(|| err("AVRO_FIELD_REQUEST", "column is required", "/column"))?,
@@ -389,8 +435,8 @@ pub fn classify_field(
         match core_kind::verify_core_kind_declaration(
             author,
             &source,
-            &engine,
-            &registry,
+            &runtime.engine,
+            &runtime.registry,
             &mut callbacks,
             ctx,
         ) {
@@ -560,7 +606,7 @@ mod tests {
     #[test]
     fn authored_receipts_are_checked_in_strict_and_report_modes() {
         let source = source();
-        let (engine, registry) = engine(&mut Context::ordinary()).unwrap();
+        let runtime = engine(&mut Context::ordinary()).unwrap();
         let identity = core_kind::Identity {
             module: key("avro.fields"),
             element: key(r#"[null,"/fields/0"]"#),
@@ -570,8 +616,8 @@ mod tests {
             &source,
             &identity,
             "field",
-            &engine,
-            &registry,
+            &runtime.engine,
+            &runtime.registry,
             &mut callbacks,
             &mut Context::ordinary(),
         )
@@ -592,8 +638,8 @@ mod tests {
             &source,
             &identity,
             "record",
-            &engine,
-            &registry,
+            &runtime.engine,
+            &runtime.registry,
             &mut callbacks,
             &mut Context::ordinary(),
         )
@@ -636,8 +682,8 @@ mod tests {
             &source_with_two_fields,
             &other_identity,
             "field",
-            &engine,
-            &registry,
+            &runtime.engine,
+            &runtime.registry,
             &mut callbacks,
             &mut Context::ordinary(),
         )
@@ -650,5 +696,15 @@ mod tests {
         let blocked =
             classify_field(current, &wrong_identity_request, &mut Context::ordinary()).unwrap();
         assert_eq!(get(&blocked, "status"), Some(&text("blocked")));
+    }
+
+    #[test]
+    fn immutable_resources_are_shared_between_ordinary_contexts() {
+        let first_runtime = engine(&mut Context::ordinary()).unwrap();
+        let second_runtime = engine(&mut Context::ordinary()).unwrap();
+        assert!(std::sync::Arc::ptr_eq(&first_runtime, &second_runtime));
+        let first_schemas = operation_schemas(&mut Context::ordinary()).unwrap();
+        let second_schemas = operation_schemas(&mut Context::ordinary()).unwrap();
+        assert!(std::sync::Arc::ptr_eq(&first_schemas, &second_schemas));
     }
 }

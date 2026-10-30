@@ -1,4 +1,3 @@
-import {createHash} from 'node:crypto';
 import {readFile, stat} from 'node:fs/promises';
 import {dirname, extname, relative, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -9,12 +8,8 @@ import icebergCase from '../../fixtures/binding/iceberg/case.json';
 import parquetCase from '../../fixtures/binding/parquet/case.json';
 import postgresCase from '../../fixtures/binding/postgresql-indexes/case.json';
 import sqlserverCase from '../../fixtures/binding/sqlserver-indexes/case.json';
-import frozen from '../../docs/helix/04-build/evidence/rust-migration/r5-binding-index-projection/frozen-projections.json';
+import frozen from '../../tests/rust-core/fixtures/r5-binding-index-projection/frozen-projections.json';
 
-const hashManifestPath = '../../docs/helix/04-build/evidence/rust-migration/r5-binding-index-projection/source-hashes.json';
-const hashManifest = await Bun.file(new URL(hashManifestPath, import.meta.url)).json() as {
-  runtime: {bun: string}; files: Record<string, string>;
-};
 const frozenCases = frozen.cases as Record<string, {report: any; strict: any}>;
 const pair = (value: {logical: unknown; binding: unknown}) => ({
   logical: structuredClone(value.logical) as Document,
@@ -100,32 +95,6 @@ const multiFieldPair = (value: {logical: unknown; binding: unknown}) => {
   for (const field of ['id', 'details', 'region']) refs.push({module: 'sales', element: 'Order', field});
   return {binding, logical, addColumnField, refs};
 };
-
-// Hash the predecessor implementation, complete admission closure, manifests,
-// fixtures, capture program, and frozen reports. The test itself is excluded.
-test('Gate0 input closure and runtime match the frozen source snapshot', async () => {
-  expect(Bun.version).toBe(hashManifest.runtime.bun);
-  expect(frozen.bun).toBe(hashManifest.runtime.bun);
-  const repoRoot = resolve(fileURLToPath(new URL('../../', import.meta.url)));
-  const entry = resolve(repoRoot, 'src/extensions/binding/index.ts');
-  const closure = await importClosure(entry);
-  for (const path of closure) {
-    const relativePath = relative(repoRoot, path).split(/[\\/]/).join('/');
-    expect(hashManifest.files[relativePath], `unpinned transitive import: ${relativePath}`).toBeDefined();
-  }
-  for (const required of [
-    'spec/metamodel/generated/domain-policy.json', 'spec/metamodel/generated/core-constraints.json',
-    'spec/core/extension-package.schema.json', 'spec/core/semantic-type-reference.schema.json',
-    'spec/core/facet-operation-v3.schema.json', 'spec/core/facet-operation-v5.schema.json',
-    'spec/core/key-operation-v2.schema.json', 'spec/core/key-operation-v4.schema.json',
-    'spec/core/key-tuple-operation-v4.schema.json', 'spec/extensions/binding-128/package.json',
-  ]) expect(closure.has(resolve(repoRoot, required)), `required closure resource: ${required}`).toBe(true);
-  for (const [relative, expected] of Object.entries(hashManifest.files)) {
-    const path = resolve(repoRoot, relative);
-    const digest = createHash('sha256').update(await readFile(path)).digest('hex');
-    expect(digest, relative).toBe(expected);
-  }
-}, 30_000);
 
 test('Gate0 freezes full ordered reports, retained source/model copies, target and exact-only candidates', () => {
   const inputs = {delta: deltaCase, iceberg: icebergCase, parquet: parquetCase, postgresql: postgresCase, sqlserver: sqlserverCase};

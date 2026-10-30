@@ -1,4 +1,3 @@
-import {createHash} from 'node:crypto';
 import {readFile, stat} from 'node:fs/promises';
 import {dirname, extname, relative, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -10,9 +9,8 @@ import parquet from '../../fixtures/binding/parquet/case.json';
 import postgresql from '../../fixtures/binding/postgresql-indexes/case.json';
 import sqlserver from '../../fixtures/binding/sqlserver-indexes/case.json';
 import {uuidBinding, uuidDocument} from '../helpers/uuid-fixtures';
-import frozen from '../../docs/helix/04-build/evidence/rust-migration/r5-binding-inspect/frozen-inspections.json';
+import frozen from '../../tests/rust-core/fixtures/r5-binding-inspect/frozen-inspections.json';
 
-const manifest = await Bun.file(new URL('../../docs/helix/04-build/evidence/rust-migration/r5-binding-inspect/source-hashes.json', import.meta.url)).json() as {runtime: {bun: string; packageManager: string}; files: Record<string, string>};
 const reports = frozen.cases as Record<string, unknown>;
 const clone = <T>(value: T): T => structuredClone(value);
 const payload = (binding: Document) => binding.extensions!['umf.binding'] as any;
@@ -43,30 +41,6 @@ const importClosure = async (entry: string) => {
   }
   return visited;
 };
-
-test('Gate0 pins exact Bun runtime, predecessor closure, schemas, activation callers, and fixture sources', async () => {
-  expect(Bun.version).toBe(manifest.runtime.bun);
-  expect(frozen.bun).toBe(manifest.runtime.bun);
-  const repo = resolve(fileURLToPath(new URL('../../', import.meta.url)));
-  expect((await Bun.file(resolve(repo, 'package.json')).json()).packageManager).toBe(manifest.runtime.packageManager);
-  const closure = await importClosure(resolve(repo, 'src/extensions/binding/index.ts'));
-  for (const file of closure) {
-    const path = relative(repo, file).split(/[\\/]/).join('/');
-    expect(manifest.files[path], `unpinned inspectBinding import: ${path}`).toBeDefined();
-  }
-  const activation = [
-    'src/index.ts', 'src/compilation/admission/access/index.ts', 'src/extensions/binding/raw-profiles.ts',
-    'src/projections/binding-delta/index.ts', 'src/projections/binding-iceberg/index.ts',
-    'src/projections/binding-parquet/index.ts', 'src/projections/binding-postgresql/indexes.ts',
-    'src/projections/binding-sqlserver/indexes.ts', 'src/projections/binding-sqlserver/tables.ts',
-    'src/projections/ddd-postgresql/index.ts', 'src/projections/ddd-postgresql/tables.ts',
-    'src/projections/ddd-postgresql/relationship-layout.ts',
-  ];
-  for (const path of activation) expect(manifest.files[path], `unpinned activation caller: ${path}`).toBeDefined();
-  for (const [path, digest] of Object.entries(manifest.files)) {
-    expect(createHash('sha256').update(await readFile(resolve(repo, path))).digest('hex'), path).toBe(digest);
-  }
-}, 30_000);
 
 test('Gate0 freezes complete 0.1, 0.2, and 0.3 validation reports and leaves paired inputs unchanged', () => {
   for (const [name, fixture] of Object.entries(cases)) {

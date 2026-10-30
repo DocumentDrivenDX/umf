@@ -4,7 +4,7 @@ import {createBit128Engine} from '../bindings/core/node/index.js';
 import {createBit128Engine as createBit128EngineWithInvoke} from '../bindings/core/node/src/bit128.js';
 import {fromWire} from '../bindings/core/node/src/wire.js';
 import oracle from '../fixtures/validation/uuid/bit128-oracle.json';
-import frozen from '../scripts/rust-migration/r5/bit128/frozen-predecessor-edge-vectors.json';
+import frozen from './rust-core/fixtures/r5/bit128/frozen-predecessor-edge-vectors.json';
 
 function capture(run: () => unknown) {
   try { return {ok: true as const, value: run()}; }

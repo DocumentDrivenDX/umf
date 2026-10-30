@@ -4,6 +4,23 @@
 #![doc(html_favicon_url = "https://raw.githubusercontent.com/oxigraph/oxigraph/main/logo.svg")]
 #![doc(html_logo_url = "https://raw.githubusercontent.com/oxigraph/oxigraph/main/logo.svg")]
 
+#[cfg(feature = "umf-deterministic-hash")]
+pub(crate) type HashMap<K, V> = std::collections::HashMap<
+    K,
+    V,
+    std::hash::BuildHasherDefault<std::collections::hash_map::DefaultHasher>,
+>;
+#[cfg(not(feature = "umf-deterministic-hash"))]
+pub(crate) type HashMap<K, V> = std::collections::HashMap<K, V>;
+
+#[cfg(feature = "umf-deterministic-hash")]
+pub(crate) type HashSet<T> = std::collections::HashSet<
+    T,
+    std::hash::BuildHasherDefault<std::collections::hash_map::DefaultHasher>,
+>;
+#[cfg(not(feature = "umf-deterministic-hash"))]
+pub(crate) type HashSet<T> = std::collections::HashSet<T>;
+
 mod chunker;
 mod lexer;
 mod line_formats;

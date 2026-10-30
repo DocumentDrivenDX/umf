@@ -59,10 +59,17 @@ candidate is 0.10.4, with exact dependent-package pins.
 | Relocate executable regression inputs and delete qualification archives/tools | Identify current test dependencies | All referenced inputs resolve; Cargo tests compile |
 | Integrate the Rust library | Reviewed family implementations | Current library, wire, compiler and CLI tests pass |
 
-GraphQL and LinkML/ODCS implementations are currently scratch candidates. Their
-presence does not establish supported library APIs until they compile, pass tests
-and are integrated. Remaining adapter and projection code must be assessed by
-actual implementation, not old per-symbol retirement counts.
+OpenAPI and LinkML/ODCS are integrated into the current Rust module graph;
+LinkML/ODCS runtime tests pass. GraphQL is integrated as `umf-graphql`, using
+the current core Engine, Registry, Value and Context types. OpenAPI and GraphQL
+still need successful runtime test runs after their latest source repairs.
+
+A current source audit identifies remaining Rust kernels in TypeSpec and Smithy,
+JSON-LD/SHACL/OWL, relational and TableSpec adapters, cross-format projections,
+action/security/table control operations, and the unimplemented portions of
+Delta/Iceberg/Spark. These are implementation tasks, not historical certification
+requirements. Do not claim the entire port is complete while these kernels still
+execute only in TypeScript.
 
 ## Execution Contract
 
@@ -76,7 +83,7 @@ concerns current source and behavior, without historical qualification gates.
 
 Start with `cargo test --locked --offline -p umf-core --lib`. Then run the
 current core integration tests and the `umf-core-wire`, `umf-tagged-wire`,
-`umf-codegen`, `umf-metamodel`, `umf-metamodel-cli` and `umf-cli` tests. Fix compiler
+`umf-codegen`, `umf-metamodel`, `umf-metamodel-cli`, `umf-cli` and `umf-graphql` tests. Fix compiler
 errors and failing behavior. Use focused tests during repairs and a final current
 suite after integration. Do not refresh expected outputs merely to match Rust.
 
@@ -86,12 +93,31 @@ and release checks should validate actual current artifacts when performed.
 
 ## Continuation Evidence
 
-Main is merged through `056a31cd4`; integration commit is `2366000dc` on
-`codex/rust-full-port`, pushed to PR #61. The latest adapter corrections remain
-working changes. Current source review found no remaining actionable issue in
-the repaired RDF list ordering or Parquet host conversion paths. Runtime tests
-are still required. The current core unit suite needs a rerun after fixture relocation and Avro
-resource reuse. No passing-suite claim is made.
+Main is merged through `8fc91a8ae`. The current work is on PR #61. Historical
+Rust qualification archives, spike-only crates and receipt-based build gates are
+removed. Behavioral fixtures live under `tests/rust-core/fixtures`.
+
+Current passing checks:
+
+- Production boundary scan: 877 source modules, host and WASM dependency checks,
+  nine negative controls and no findings; 11 policy unit tests pass.
+- RDF integration: both tests pass, including all 759 corpus cases. Turtle/TriG
+  tests check exact terms, multiplicity, deterministic stored occurrences,
+  index-targeted edits and graph inventories. They do not require N3.js parser
+  scheduling. Direct N-Quads order and unchanged source bytes remain exact.
+- LinkML/ODCS: six native unit tests pass.
+- Metamodel generation passes with the accounted validator generated normally
+  from current schemas. Five structural accounting tests pass; source-hash
+  adoption receipts are removed.
+- SDK packaging validation: nine Python tests pass.
+
+The last full core unit run reached its deadline without an assertion failure.
+Repeated immutable Avro resources and the cardinality request schema are now
+cached; a complete current run is still required. OpenAPI's six tests failed
+while constructing the pinned schema resource set; the missing Draft 4 resource
+is added and awaits rerun. GraphQL's first build exposed a missing trait import
+in its vendored parser; that import is fixed and awaits rerun. These are current
+source failures being repaired, not reasons to restore historical gates.
 
 ## Risks and Rollbacks
 

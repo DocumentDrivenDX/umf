@@ -99,7 +99,7 @@ describe('clean source generation',()=>{
  beforeAll(async()=>{
   dir=await mkdtemp(join(tmpdir(),'umf-metamodel-clean-'));
   manifest=await Bun.file(join(root,'spec/metamodel/generated/manifest.json')).json();
-  const outputPaths=[...Object.keys(manifest.outputs),'spec/metamodel/generated/manifest.json'];
+  const outputPaths=[...Object.keys(manifest.outputs),'src/generated/core-validators-accounted.ts','spec/metamodel/generated/manifest.json'];
   const packageFiles=(await Promise.all(rustCompilePackages.map(packageSources))).flat();
   // A previously generated manifest can still list an output as a source.
   // Never copy such overlap into the clean fixture: generated outputs must be
@@ -127,7 +127,7 @@ describe('clean source generation',()=>{
   expect(Object.hasOwn(generatedManifest.sources,derivedResource)).toBe(false);
   expect(await readFile(join(dir,derivedResource),'utf8')).toBe(await readFile(join(root,derivedResource),'utf8'));
   for(const path of rustCompileResources){const bytes=await readFile(join(root,path));expect(generatedManifest.sources[path]).toBe(createHash('sha256').update(bytes).digest('hex'));}
-  const files=[...Object.keys(manifest.outputs),'spec/metamodel/generated/manifest.json'];
+  const files=[...Object.keys(generatedManifest.outputs),'spec/metamodel/generated/manifest.json'];
   const snapshots=await Promise.all(files.map(async path=>({path,text:await readFile(join(dir,path),'utf8'),mtime:(await stat(join(dir,path))).mtimeMs})));
   expect((await run(true)).status).toBe(0);
   for(const file of snapshots){expect(await readFile(join(dir,file.path),'utf8')).toBe(file.text);expect((await stat(join(dir,file.path))).mtimeMs).toBe(file.mtime);}
@@ -136,11 +136,11 @@ describe('clean source generation',()=>{
   await writeFile(join(dir,first.path),first.text);
   await rm(join(dir,first.path));expect((await run(true)).status).toBe(1);
   await writeFile(join(dir,first.path),first.text);
-  const companion=generatedManifest.separatelyOwned.accountedCompanion;
-  const companionBytes=await readFile(join(dir,companion.path));
-  await writeFile(join(dir,companion.path),Buffer.concat([companionBytes,Buffer.from('\n')]));
+  const accountedPath='src/generated/core-validators-accounted.ts';
+  const accountedBytes=await readFile(join(dir,accountedPath));
+  await writeFile(join(dir,accountedPath),Buffer.concat([accountedBytes,Buffer.from('\n')]));
   expect((await run(true)).status).toBe(1);
-  await writeFile(join(dir,companion.path),companionBytes);
+  await writeFile(join(dir,accountedPath),accountedBytes);
   expect((await run(true)).status).toBe(0);
   await writeFile(join(dir,'src/generated/unexpected.ts'),'export const surprise=true;');expect((await run(true)).status).toBe(1);
  },120_000);

@@ -1,0 +1,50 @@
+workspace = { members = ["fuzz"] }
+[package]
+name = "serde_json_bytes"
+version = "0.2.6"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+authors = ["Geoffroy Couprie <geoffroy@apollographql.com>"]
+description = "a JSON Value object with strings backed by Bytes, parsed by serde_json"
+repository = "https://github.com/apollographql/serde_json_bytes"
+keywords = ["json", "parser", "bytes"]
+categories = ["parsing"]
+
+[dependencies]
+serde = { version = "1.0.100", default-features = false, features = ["derive"] }
+indexmap = { version = "2.1", optional = true }
+serde_json = "1.0.73"
+bytes = "1.1.0"
+jsonpath-rust = "0.3.5"
+regex = "1.11.1"
+
+
+### FEATURES #################################################################
+
+[features]
+default = ["std"]
+
+std = ["serde/std"]
+
+# Provide integration for heap-allocated collections without depending on the
+# rest of the Rust standard library.
+# NOTE: Disabling both `std` *and* `alloc` features is not supported yet.
+# Available on Rust 1.36+.
+alloc = ["serde/alloc"]
+
+# Make serde_json::Map use a representation which maintains insertion order.
+# This allows data to be read into a Value and written back to a JSON string
+# while preserving the order of map keys in the input.
+preserve_order = ["indexmap"]
+
+# Use an arbitrary precision number representation for serde_json::Number. This
+# allows JSON numbers of arbitrary size/precision to be read into a Number and
+# written back to a JSON string without loss of precision.
+#
+# This feature makes JSON -> serde_json::Number -> JSON
+# produce output identical to the input.
+arbitrary_precision = ["serde_json/arbitrary_precision"]
+
+[lints.clippy]
+needless_doctest_main = "allow"
+result_large_err = "allow"

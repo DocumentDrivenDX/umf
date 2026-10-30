@@ -40,7 +40,6 @@ class PackageManifestTests(unittest.TestCase):
         external_path.write_bytes(b'locked external wasm fixture')
         manifest = {
             'format': sdk.FORMAT,
-            'releaseStatus': 'private-r7-default-route-qualification-not-publishable',
             'api': {'generator': 'synchronous'},
             'sourceClosure': {
                 'liveInputs': live, 'capturedLiveSha256': sdk.tree_hash(self.root, live),
@@ -95,6 +94,7 @@ class PackageManifestTests(unittest.TestCase):
             members = {member.name: archive.extractfile(member).read()
                        for member in archive.getmembers() if member.isfile()}
         archive_manifest = json.loads(members['package/manifest.json'])
+        self.assertNotIn('releaseStatus', archive_manifest)
         for name, digest in archive_manifest['sha256'].items():
             self.assertEqual(sdk.sha256(members['package/' + name]), digest)
     def test_dist_change_after_verify_refuses_before_archive(self):

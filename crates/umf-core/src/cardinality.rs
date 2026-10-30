@@ -182,7 +182,27 @@ fn validate_operation_schema(
     let message = schema_diagnostics(&errors, false, ctx)?;
     Err(EngineError::new(code, Utf16::default(), message))
 }
-fn validate_request_schema(value: &Value, ctx: &mut Context<'_>) -> Result<(), EngineError> {
+fn request_schema(ctx: &mut Context<'_>) -> Result<std::sync::Arc<CompiledSchema>, EngineError> {
+    use std::sync::{Arc, OnceLock};
+    static REQUEST_SCHEMA: OnceLock<Arc<CompiledSchema>> = OnceLock::new();
+    ctx.charge_work(1, Utf16::default())?;
+    let ordinary = ctx.profile() == crate::context::ResourceProfile::Cooperative
+        && ctx.limits() == crate::context::Limits::ordinary();
+    if ordinary {
+        if let Some(schema) = REQUEST_SCHEMA.get() {
+            return Ok(Arc::clone(schema));
+        }
+    }
+    // Compile under this invocation's limits, then cache only a fully built
+    // schema for ordinary cooperative contexts.
+    let schema = Arc::new(build_request_schema(ctx)?);
+    if ordinary {
+        let _ = REQUEST_SCHEMA.set(Arc::clone(&schema));
+    }
+    Ok(schema)
+}
+
+fn build_request_schema(ctx: &mut Context<'_>) -> Result<CompiledSchema, EngineError> {
     let schema = crate::serialization::read_json_value(
         &DECLARATION_SCHEMA.encode_utf16().collect::<Vec<_>>(),
         crate::serialization::Format::Json,
@@ -214,7 +234,11 @@ fn validate_request_schema(value: &Value, ctx: &mut Context<'_>) -> Result<(), E
         ("$defs", request_defs),
         ("$ref", text("#/$defs/request")),
     ]);
-    let compiled = CompiledSchema::compile(&wrapper, &SchemaResources::default(), ctx)?;
+    CompiledSchema::compile(&wrapper, &SchemaResources::default(), ctx)
+}
+
+fn validate_request_schema(value: &Value, ctx: &mut Context<'_>) -> Result<(), EngineError> {
+    let compiled = request_schema(ctx)?;
     let mut errors = compiled.validate_codegen_errors(value, ctx)?;
     if errors.is_empty() {
         return Ok(());
@@ -1793,6 +1817,16 @@ mod tests {
         .unwrap_err();
         assert_eq!(error.code, "CORE_CARDINALITY_REQUEST");
     }
+
+    #[test]
+    fn request_schema_cache_reuses_ordinary_context_resource() {
+        let first = request_schema(&mut Context::ordinary()).unwrap();
+        let second = request_schema(&mut Context::ordinary()).unwrap();
+        assert!(std::sync::Arc::ptr_eq(&first, &second));
+        let custom = request_schema(&mut Context::catalog()).unwrap();
+        assert!(!std::sync::Arc::ptr_eq(&first, &custom));
+    }
+
     #[test]
     fn frozen_typescript_vectors_match_rust_inspection_and_authorship() {
         let vectors = parse(include_str!(
@@ -2092,13 +2126,17 @@ mod tests {
                 ]),
             ),
         ];
+        // The matrix varies only request input. Reuse its immutable runtime
+        // resources rather than reconstructing the same Engine per case.
+        let engine = engine();
+        let registry = Registry::new();
         for (name, request) in requests {
             let actual = match declare_core_cardinality(
                 document,
                 &identity,
                 &request,
-                &engine(),
-                &Registry::new(),
+                &engine,
+                &registry,
                 &mut NoCapabilities,
                 &mut Context::ordinary(),
             ) {

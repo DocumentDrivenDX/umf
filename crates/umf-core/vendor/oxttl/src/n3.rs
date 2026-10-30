@@ -15,7 +15,7 @@ use oxrdf::vocab::{rdf, xsd};
 use oxrdf::{
     BlankNode, GraphName, Literal, NamedNode, NamedNodeRef, NamedOrBlankNode, Quad, Term, Variable,
 };
-use std::collections::HashMap;
+use crate::HashMap;
 use std::collections::hash_map::Iter;
 use std::fmt;
 use std::io::Read;

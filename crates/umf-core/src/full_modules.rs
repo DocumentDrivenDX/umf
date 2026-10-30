@@ -145,3 +145,5 @@ pub mod serialization;
 pub mod structural_diff;
 pub mod target_pin;
 pub mod value;
+pub mod native_contract_adapters;
+pub mod openapi_adapter;

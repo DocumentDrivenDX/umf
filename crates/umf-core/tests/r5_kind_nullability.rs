@@ -125,17 +125,17 @@ fn engine() -> Engine {
 }
 fn fixtures() -> Value {
     parse(include_str!(
-        "../../../scripts/rust-migration/r5/kind-nullability/frozen-typescript.json"
+        "../../../tests/rust-core/fixtures/r5/kind-nullability/frozen-typescript.json"
     ))
 }
 fn source() -> Value {
     parse(include_str!(
-        "../../../scripts/rust-migration/r5/kind-nullability/input.json"
+        "../../../tests/rust-core/fixtures/r5/kind-nullability/input.json"
     ))
 }
 fn surrogate_source() -> Value {
     parse(include_str!(
-        "../../../scripts/rust-migration/r5/kind-nullability/surrogate-input.json"
+        "../../../tests/rust-core/fixtures/r5/kind-nullability/surrogate-input.json"
     ))
 }
 fn id(element: &str) -> umf_core::core_kind::Identity {
@@ -320,7 +320,7 @@ fn complete_envelopes_match_frozen_typescript_and_retain_opaque_content() {
 #[test]
 fn refusal_envelopes_match_frozen_typescript_diagnostics_and_receipts() {
     let f = parse(include_str!(
-        "../../../scripts/rust-migration/r5/kind-nullability/frozen-refusals.json"
+        "../../../tests/rust-core/fixtures/r5/kind-nullability/frozen-refusals.json"
     ));
     let s = source();
     let e = engine();

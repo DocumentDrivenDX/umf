@@ -15,7 +15,8 @@ use oxrdf::{
 use std::borrow::Cow;
 use std::cmp::Reverse;
 use std::collections::hash_map::Iter;
-use std::collections::{BTreeMap, HashMap};
+use crate::HashMap;
+use std::collections::BTreeMap;
 use std::fmt;
 use std::io::{self, Read, Write};
 #[cfg(feature = "async-tokio")]

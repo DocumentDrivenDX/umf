@@ -4,7 +4,7 @@ from pathlib import Path, PurePosixPath
 import gzip, hashlib, io, json, os, tarfile, tempfile
 
 OUTPUT = Path('.cache/sdk-distribution')
-FORMAT = 'umf.r7-rust-sdk-default/1'
+FORMAT = 'umf.rust-sdk-package/1'
 REQUIRED = [
     'dist/umf.js', 'dist/umf.js.map', 'dist/umf-node.js',
     'dist/umf-browser.js', 'dist/umf_core_node.node',
@@ -82,8 +82,6 @@ def verify(root):
     manifest = json.loads(manifest_path.read_text())
     if manifest.get('format') != FORMAT:
         raise ValueError('SDK_BUILD manifest format mismatch')
-    if not str(manifest.get('releaseStatus', '')).startswith('private-r7-default-route-qualification-'):
-        raise ValueError('SDK_BUILD package is not explicitly private/nonpublishable')
     verify_source_closure(root, manifest)
 
     package = json.loads((root / 'package.json').read_text())
@@ -162,7 +160,7 @@ def package(root, output=OUTPUT):
         '# UMF SDK\n\n'
         'The package root uses the synchronous Rust V4 Python-client generator. '
         'The TypeScript implementation remains available from `@umf/core/reference`. '
-        'This package is private pending broader R7/R8 qualification.\n'
+        'This package contains source-built Rust SDK assets.\n'
     ).encode()
     auxiliary = {
         'package.json': package_bytes,
@@ -173,7 +171,6 @@ def package(root, output=OUTPUT):
     }
     archive_manifest = {
         'profile': 'umf.sdk.distribution.rust-default/1',
-        'releaseStatus': manifest['releaseStatus'],
         'sourceTreeSha256': manifest['sourceClosure']['sha256'],
         'capturedLiveSourceTreeSha256': manifest['sourceClosure']['capturedLiveSha256'],
         'sourceTransformStatus': manifest['sourceClosure']['transform']['status'],

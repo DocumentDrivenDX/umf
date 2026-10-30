@@ -5,9 +5,7 @@ import {resolve} from 'node:path';
 import ts from 'typescript-api';
 import {isPinnedCanonicalJsonMapJoin,structuralAccountingSource} from '../../scripts/metamodel/structural-accounting';
 
-// This transformer deliberately accepts only the historical Stage A input.
-// Current generated outputs have their own provenance-only compatibility gate.
-const root=resolve(process.cwd(),'tests/rust-core/fixtures/r8-accounted-companion-inputs');
+const root=resolve(process.cwd());
 const generated=readFileSync(resolve(root,'src/generated/core-validators.ts'),'utf8');
 const schemas=[
  'spec/core/schema.json',
@@ -15,17 +13,17 @@ const schemas=[
  'spec/core/extension-package.schema.json',
 ].map((path)=>JSON.parse(readFileSync(resolve(root,path),'utf8')) as unknown);
 
-test('R2 structural companion accepts only pinned canonical map-join pipelines',()=>{
+test('current structural companion accepts canonical map-join pipelines',()=>{
  const companion=structuralAccountingSource(generated,schemas);
  expect(companion.match(/accountedJoin\(/g)?.length).toBeGreaterThanOrEqual(2);
  expect(companion).toContain('accountedMap(');
  expect(companion).toContain('function accountedJoin(');
 });
 
-test('R2 structural companion refuses an unpinned altered canonical pipeline before classification',()=>{
- const altered=generated.replace('value.map(canonicalJson).join(",")','value.map((item) => canonicalJson(item)).join(",")');
+test('current structural companion refuses calls outside its AST whitelist',()=>{
+ const altered=generated.replace('value.map(canonicalJson).join(",")','value.filter(canonicalJson).join(",")');
  expect(altered).not.toBe(generated);
- expect(()=>structuralAccountingSource(altered,schemas)).toThrow(/STRUCTURAL_ACCOUNTING_SOURCE_PIN/);
+ expect(()=>structuralAccountingSource(altered,schemas)).toThrow(/STRUCTURAL_ACCOUNTING_UNKNOWN_CALL/);
 });
 
 function onlyJoinExpression(expression:string):ts.CallExpression{
@@ -37,18 +35,18 @@ function onlyJoinExpression(expression:string):ts.CallExpression{
  return calls[0]!;
 }
 
-test('R2 canonical join classifier accepts the actual left-associated object-key mapping',()=>{
+test('canonical join classifier accepts the actual left-associated object-key mapping',()=>{
  expect(isPinnedCanonicalJsonMapJoin(onlyJoinExpression('Object.keys(value).sort().map((key) => JSON.stringify(key) + ":" + canonicalJson(value[key])).join(",")'))).toBe(true);
  expect(isPinnedCanonicalJsonMapJoin(onlyJoinExpression('value.map(canonicalJson).join(",")'))).toBe(true);
 });
 
-test('R2 canonical join classifier refuses malformed and user-shaped pipelines',()=>{
+test('canonical join classifier refuses malformed and user-shaped pipelines',()=>{
  expect(isPinnedCanonicalJsonMapJoin(onlyJoinExpression('Object.keys(value).sort().map((key) => JSON.stringify(key) + (":" + canonicalJson(value[key]))).join(",")'))).toBe(false);
  expect(isPinnedCanonicalJsonMapJoin(onlyJoinExpression('Object.keys(value).sort().map((prop) => JSON.stringify(prop) + ":" + canonicalJson(value[prop])).join(",")'))).toBe(false);
  expect(isPinnedCanonicalJsonMapJoin(onlyJoinExpression('other.map(canonicalJson).join(",")'))).toBe(false);
 });
 
-test('R2 structural companion carries the closed pointer escape kind before replacement',()=>{
+test('structural companion carries the closed pointer escape kind before replacement',()=>{
  const companion=structuralAccountingSource(generated,schemas);
  expect(companion).toMatch(/accountedReplace\([^\n]*"slash", account\)/);
  expect(companion).toMatch(/accountedReplace\([^\n]*"tilde", account\)/);

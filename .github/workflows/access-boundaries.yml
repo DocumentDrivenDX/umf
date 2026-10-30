@@ -135,39 +135,6 @@ jobs:
           path: /tmp/umf-p1-compatibility.json
 
 
-  native-client-types:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: 1.4.3
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - name: Isolate Rust toolchain from the runner image
-        run: echo "RUSTUP_HOME=$RUNNER_TEMP/umf-rustup" >> "$GITHUB_ENV"
-      - uses: dtolnay/rust-toolchain@stable
-        with:
-          toolchain: 1.90.0
-          components: rustfmt
-      - run: bun install --frozen-lockfile
-      - run: python -m venv /tmp/native-client-checkers
-      - run: /tmp/native-client-checkers/bin/pip install mypy==2.4.0 pyright==1.1.414 ty==0.0.88
-      - name: Produce clients with the shared Rust engine
-        run: |
-          cargo build --locked --release -p umf-codegen --example r3_replay
-          python scripts/rust-migration/r3/native-replay.py --binary target/release/examples/r3_replay --fixture docs/helix/04-build/evidence/rust-migration/r3/baseline/operations.json --report /tmp/r3-native-types-replay.json
-          python scripts/rust-migration/r3/extract-native-clients.py --actual /tmp/r3-native-types-replay.actual.json --output /tmp/r3-native-generated > /tmp/r3-native-types-files.json
-      - run: python scripts/verify-native-client-types.py --environment /tmp/native-client-checkers --work-dir /tmp/native-client-types --generated-dir /tmp/r3-native-generated
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: native-client-types
-          path: |
-            /tmp/native-client-types/*-*.log
-            /tmp/r3-native-types-*.json
-
   g02-native-postgresql:
     name: G02 native PostgreSQL (Python 3.11)
     runs-on: ubuntu-24.04

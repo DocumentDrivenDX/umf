@@ -44,8 +44,10 @@ rustdoc-args = [
 
 [features]
 async-tokio = ["dep:tokio"]
-default = []
+default = ["random-blank-nodes"]
 rdf-12 = ["oxrdf/rdf-12"]
+random-blank-nodes = ["oxrdf/random-blank-nodes"]
+umf-deterministic-hash = []
 
 [lib]
 name = "oxttl"
@@ -62,6 +64,8 @@ version = "0.2.11"
 
 [dependencies.oxrdf]
 version = "=0.3.5"
+path = "../oxrdf"
+default-features = false
 
 [dependencies.thiserror]
 version = ">=1.0.50, <3.0"

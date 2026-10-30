@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createCoreModelEngine,isNativeUmfCoreError} from '../../bindings/core/node/index.js';
-import frozen from '../../docs/helix/04-build/evidence/rust-migration/r5-core-evolution/frozen-typescript-0.10.json';
+import frozen from '../../tests/rust-core/fixtures/r5-core-evolution/frozen-typescript-0.10.json';
 import {CORE_MODEL_RESOURCES} from '../../src/access/core-model-resources';
 import {bindCoreEvolutionRustCandidate} from '../../src/access/rust-core-evolution-candidate';
 import {inspectCoreEvolution as inspectTypeScriptCoreEvolution} from '../../src/model/evolution';

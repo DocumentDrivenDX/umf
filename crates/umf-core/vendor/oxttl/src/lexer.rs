@@ -9,7 +9,7 @@ use oxrdf::BaseDirection;
 use oxrdf::NamedNode;
 use std::borrow::Cow;
 use std::cmp::min;
-use std::collections::HashMap;
+use crate::HashMap;
 use std::ops::Range;
 use std::str;
 

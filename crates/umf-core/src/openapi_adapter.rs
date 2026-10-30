@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-//! Source-only OpenAPI adapter candidate for CONTRACT-011.
+//! OpenAPI native-tree operations for CONTRACT-011.
 //!
-//! This module intentionally is not part of the compiled module graph yet.
-//! It ports the lossless native-tree operations using the core JSON/YAML
+//! It uses the shared core JSON/YAML
 //! reader, Engine, Registry and schema evaluator. Official object schemas are
 //! embedded from the pinned upstream resources in `spec/extensions/openapi`.
 
@@ -127,9 +126,37 @@ impl OpenapiRuntime {
             ctx,
         )?;
         let package = read(include_str!("../../../spec/extensions/openapi/package.json"), ctx)?;
+        // Registry admission compiles every supplied resource strictly as a
+        // core package schema. Keep its resource set limited to core resources;
+        // the official OpenAPI schemas below use several JSON Schema dialects
+        // and are compiled separately by the consumer entry points.
+        let registry_schema_resources = engine.schema_resources_with_context(ctx)?;
         let mut schema_resources = engine.schema_resources_with_context(ctx)?;
         // Add the exact upstream dialect/meta resources used by the TS
         // adapter. These are fixed artifacts and are never fetched at runtime.
+        // OpenAPI 3.1/3.2 dialects inherit the JSON Schema Draft 2020-12
+        // metaschema. Reuse the same pinned resource corpus as the native
+        // JSON Schema adapter so every standard reference resolves within the
+        // closed resource set.
+        let standard_meta = read(include_str!("schema_metas.json"), ctx)?;
+        if let Some(Value::Array(resources)) = field(&standard_meta, "resources") {
+            for resource in resources {
+                let Some(Value::String(id)) = field(resource, "id") else {
+                    return Err(error("OPENAPI_META_RESOURCE", "Embedded meta-schema resource has no id"));
+                };
+                let id_text = id.to_utf8().map_err(|_| error("OPENAPI_META_RESOURCE", "Invalid embedded meta-schema id"))?;
+                if !id_text.starts_with("https://json-schema.org/draft/2020-12/")
+                    && id_text != "http://json-schema.org/draft-04/schema"
+                { continue; }
+                let Some(schema) = field(resource, "schema") else {
+                    return Err(error("OPENAPI_META_RESOURCE", "Embedded meta-schema resource has no schema"));
+                };
+                ctx.charge_work(id.len(), Utf16::default())?;
+                schema_resources.entries.push((id.clone(), copy_json(schema, ctx)?));
+            }
+        } else {
+            return Err(error("OPENAPI_META_RESOURCE", "Embedded JSON Schema meta-resource set is malformed"));
+        }
         for (standalone, source) in [
             (false, include_str!("../../../spec/extensions/openapi/upstream/2.0-schema.json")),
             (false, include_str!("../../../spec/extensions/openapi/upstream/3.0-schema.json")),
@@ -152,7 +179,7 @@ impl OpenapiRuntime {
             &package,
             Some(OPENAPI_TOKEN),
             engine.package_schema(),
-            &schema_resources,
+            &registry_schema_resources,
             ctx,
         )?;
         let schema = field(&package, "schema")

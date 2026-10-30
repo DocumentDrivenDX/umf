@@ -9,7 +9,7 @@ use oxrdf::vocab::{rdf, xsd};
 use oxrdf::Triple;
 use oxrdf::{BlankNode, GraphName, Literal, NamedNode, NamedOrBlankNode, Quad, Term};
 use std::collections::hash_map::Iter;
-use std::collections::{HashMap, HashSet};
+use crate::{HashMap, HashSet};
 
 pub struct TriGRecognizer {
     stack: Vec<TriGState>,
@@ -354,7 +354,6 @@ impl RuleRecognizer for TriGRecognizer {
                         self
                     } else {
                         let new = context.generated_blank_node();
-                        let rest_index = results.len();
                         results.push(Quad::new(
                             old,
                             rdf::REST,
@@ -368,14 +367,11 @@ impl RuleRecognizer for TriGRecognizer {
                             TriGState::ObjectCollectionPossibleEnd { nested_list_item: false }
                         });
                         self.stack.push(TriGState::Object);
-                        let next = self.recognize_next(TokenOrLineJump::Token(token), context, results, errors);
-                        if context.umf_blank_labels && results.len() > rest_index + 1 {
-                            // Parser::parse_next pops a result vector from the end.
-                            // The REST edge precedes any FIRST emitted by this token.
-                            let rest = results.remove(rest_index);
-                            results.push(rest);
-                        }
-                        next
+                        // Keep the REST quad below any quads emitted by the
+                        // recursively parsed next item. Parser::parse_next
+                        // pops from the end, so the item is returned before
+                        // this REST edge, matching the source traversal order.
+                        self.recognize_next(TokenOrLineJump::Token(token), context, results, errors)
                     }
                 }
                 // [5]  wrappedGraph  ::=  '{' triplesBlock? '}'
@@ -852,7 +848,6 @@ impl RuleRecognizer for TriGRecognizer {
                         self
                     } else {
                         let new = context.generated_blank_node();
-                        let rest_index = results.len();
                         results.push(Quad::new(
                             old,
                             rdf::REST,
@@ -862,12 +857,10 @@ impl RuleRecognizer for TriGRecognizer {
                         self.cur_subject.push(new.into());
                         self.stack.push(TriGState::ObjectCollectionPossibleEnd { nested_list_item });
                         self.stack.push(TriGState::Object);
-                        let next = self.recognize_next(TokenOrLineJump::Token(token), context, results, errors);
-                        if context.umf_blank_labels && results.len() > rest_index + 1 {
-                            let rest = results.remove(rest_index);
-                            results.push(rest);
-                        }
-                        next
+                        // The parser consumes queued quads LIFO. Leaving this
+                        // REST quad below quads produced by the next item
+                        // preserves collection source order.
+                        self.recognize_next(TokenOrLineJump::Token(token), context, results, errors)
                     }
                 }
                 TriGState::LiteralPossibleSuffix { value, emit } => match token {
@@ -1353,7 +1346,7 @@ impl TriGRecognizer {
                 umf_blank_labels,
                 next_generated_blank: 0,
                 declared_graphs: Vec::new(),
-                declared_graphs_seen: HashSet::new(),
+                declared_graphs_seen: HashSet::default(),
                 lexer_options: N3LexerOptions { base_iri },
             },
         )

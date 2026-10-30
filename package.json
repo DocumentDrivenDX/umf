@@ -83,7 +83,7 @@
     "check:unified-client-boundaries": "bun scripts/check-unified-client-boundaries.ts",
     "check:rust-boundaries": "python3 scripts/check-rust-boundaries.py",
     "check:rust-node-package-closure": "bun scripts/rust-migration/r7/node-package-closure.ts",
-    "test:rust-core": "cargo test --locked -p umf-core -p umf-core-wire -p umf-tagged-wire -p umf-codegen -p umf-metamodel -p umf-metamodel-cli -p umf-cli",
+    "test:rust-core": "cargo test --locked -p umf-core -p umf-core-wire -p umf-tagged-wire -p umf-codegen -p umf-metamodel -p umf-metamodel-cli -p umf-cli -p umf-graphql",
     "check:release-versions": "python3 scripts/check-release-versions.py"
   },
   "dependencies": {

@@ -24,5 +24,6 @@ jobs:
           -p umf-metamodel
           -p umf-metamodel-cli
           -p umf-cli
+          -p umf-graphql
       - name: Rust source boundaries
         run: python3 scripts/check-rust-boundaries.py

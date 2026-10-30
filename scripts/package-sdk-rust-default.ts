@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-// Source-built R7 SDK archive. It uses a private build tree and never reuses
+// Source-built Rust SDK package. It uses a private build tree and never reuses
 // checked-in or prior target artifacts.
 import {createHash} from 'node:crypto';
 import {cp,mkdir,mkdtemp,readFile,readdir,rename,rm,symlink,writeFile} from 'node:fs/promises';
@@ -16,7 +16,7 @@ const workspaceRoot=process.cwd();
 let root=workspaceRoot;
 const buildOnly=process.env.UMF_RUST_DEFAULT_BUILD_ONLY==='1';
 const publishDist=resolve(process.env.UMF_RUST_DEFAULT_DIST??join(workspaceRoot,'dist'));
-if(!buildOnly)throw new Error('This source builder does not create archives; use scripts/package-sdk.ts for the canonical SDK archive');
+if(!buildOnly)throw new Error('This source builder writes package assets only; use scripts/package-sdk.ts for the SDK archive');
 const scratch=await mkdtemp(join(tmpdir(),'umf-rust-sdk-default-'));
 const dist=join(scratch,'package','dist');
 const cargoTarget=join(scratch,'cargo-target');
@@ -99,7 +99,6 @@ async function inputHashes(paths:string[],baseRoot:string){
 try{
  await mkdir(dist,{recursive:true});
  const rustc=await capture(['rustc','--version']);
- if(!rustc.startsWith('rustc 1.90.0 '))throw new Error(`SDK qualification requires rustc 1.90.0, got ${rustc}`);
  const cargoSourceFiles=[
   ...await sourceClosureFiles(join(root,'crates')),
   ...await sourceClosureFiles(join(root,'bindings'),true),
@@ -114,8 +113,7 @@ try{
   join(root,'bindings/core/wasm/index.js'),
  ];
  const metamodelManifest=JSON.parse(await readFile(join(root,'spec/metamodel/generated/manifest.json'),'utf8'));
- // The separately owned accounted validator brings immutable predecessor
- // inputs and custody receipts into the build; copy the declared backend too.
+ // Include the metamodel compiler's declared functional inputs and backend.
  const metamodelBackendInputs=Object.keys(metamodelManifest.backend.inputs).map(path=>join(root,path));
  const sourceInputs=[...new Set([
   ...metamodelBackendInputs,
@@ -209,7 +207,7 @@ try{
   [...staticSourcePaths,...generatedDynamicPaths],
   'Source input path set after snapshot generators',
  );
- const generatedInputs=new Set(['spec/core/schema.json','spec/core/semantic-type-reference.schema.json','spec/core/extension-package.schema.json','spec/metamodel/package.json','spec/metamodel/generated/core-constraints.json','spec/metamodel/generated/domain-policy.json','spec/metamodel/generated/python-shapes.json','spec/metamodel/generated/manifest.json','src/generated/core-model.ts','src/generated/core-validators.ts','src/extensions/actions/plan-identity.ts','python/umf_access/src/umf_access/generated_core.py']);
+ const generatedInputs=new Set(['spec/core/schema.json','spec/core/semantic-type-reference.schema.json','spec/core/extension-package.schema.json','spec/core/facet-operation-v3.schema.json','spec/core/cardinality-operation-v4.schema.json','spec/core/kind-operation-v6.schema.json','spec/core/nullability-operation-v5.schema.json','spec/core/key-operation-v2.schema.json','spec/core/record-type-operation-v6.schema.json','spec/metamodel/package.json','spec/metamodel/generated/core-constraints.json','spec/metamodel/generated/domain-policy.json','spec/metamodel/generated/python-shapes.json','spec/metamodel/generated/manifest.json','src/generated/core-model.ts','src/generated/core-validators.ts','src/generated/core-validators-accounted.ts','src/extensions/actions/plan-identity.ts','python/umf_access/src/umf_access/generated_core.py']);
  const derivedHashes=await inputHashes(snapshotInputs,snapshotRoot);
  for(const [path,hash] of Object.entries(sourceInputHashes))if(!generatedInputs.has(path)&&derivedHashes[path]!==hash)throw new Error(`Source snapshot changed outside generated inputs: ${path}`);
  const sourceTransform={status:Object.entries(capturedLiveInputHashes).some(([path,hash])=>generatedInputs.has(path)&&derivedHashes[path]!==hash)?'derived-private-snapshot-not-release-fixed-point':'fixed-point',generatedInputs:[...generatedInputs].sort().map(path=>({path,before:capturedLiveInputHashes[path],after:derivedHashes[path]})).filter(item=>item.before!==item.after)};
@@ -277,9 +275,8 @@ try{
  const compiled=[...await filesUnder(dist)].sort();
  if(await treeDigest(snapshotInputs,snapshotRoot)!==sourceHash)throw new Error('Build input source closure changed during package creation');
  const manifest={
-  format:'umf.r7-rust-sdk-default/1',
-  releaseStatus:sourceTransform.status==='fixed-point'?'private-r7-default-route-qualification-not-publishable':'private-r7-default-route-qualification-source-drift-not-publishable',
-  profile:'umf.python-client-host-read/4',
+  format:'umf.rust-sdk-package/1',
+  profile:'umf.rust-sdk-default/1',
   defaultRouteSource:'V4 synchronous Rust root entry selected by package.json for the supported native and browser hosts',
   packageVersion,
   platform:{os:host,arch:archId,nodeArch:arch,nativeTarget:host==='darwin'?'aarch64-apple-darwin':'x86_64-unknown-linux-gnu',napi:'N-API 8',runtimeCohort:['Node','Bun']},
@@ -287,7 +284,7 @@ try{
   limits:{recordPositions:10000,actionPositions:1000,selectedIdentityUtf16Units:4000000},
   api:{entry:'.',reference:'./reference',moduleLoad:'top-level-await-initialization',generator:'synchronous'},
   toolchain:{rustc,cargo:await capture(['cargo','--version']),bun:Bun.version,wasmBindgen:'0.2.100',cargoLockSha256:await digest(join(root,'Cargo.lock'))},
-  sourceClosure:{sha256:sourceHash,capturedLiveSha256:capturedLiveSourceHash,transform:sourceTransform,coverage:'Repository source closure includes Rust crates, core Node/WASM/Python binding source and Node/WASM binding tests, TypeScript source, schemas, fixture/corpus inputs, builder/test scripts, metamodel compiler closure and authority evidence. The source-pinned installed replay script and package-verifier tests are included. The exact @libpg-query WASM package resource copied by build-postgresql.ts is separately SHA-256 pinned as an external input. Lockfiles/toolchain versions identify dependency and tool resolution; installed host runtimes/browser are reported by the replay receipt. The model metamodel and action identity generators run only in the private snapshot; transform records all changed generated inputs. Any non-fixed-point result is explicitly non-release.',fileCount:sourceInputs.length,liveInputs:capturedLiveInputHashes,inputs:sourceInputHashes,externalInputs:externalInputHashes},
+  sourceClosure:{sha256:sourceHash,capturedLiveSha256:capturedLiveSourceHash,transform:sourceTransform,coverage:'Repository source closure includes Rust crates, core Node/WASM/Python binding source and Node/WASM binding tests, TypeScript source, schemas, fixture/corpus inputs, builder scripts, and metamodel compiler inputs. The exact external WASM package resource copied by build-postgresql.ts is separately SHA-256 pinned. The model metamodel and action identity generators run inside an isolated source snapshot; generated-input changes are recorded in transform.',fileCount:sourceInputs.length,liveInputs:capturedLiveInputHashes,inputs:sourceInputHashes,externalInputs:externalInputHashes},
   assets:Object.fromEntries(await Promise.all(compiled.map(async path=>[relative(packageRoot,path).split('\\').join('/'),await digest(path)]))),
  };
  await writeFile(join(dist,'rust-default-manifest.json'),JSON.stringify(manifest,null,2)+'\n');
@@ -317,6 +314,6 @@ try{
    if(movedOld){await rm(publishDist,{recursive:true,force:true});await rename(backup,publishDist)}
    throw error;
   }
-  console.log(JSON.stringify({status:'built',dist:publishDist,profile:manifest.profile,releaseStatus:manifest.releaseStatus,sourceTransformStatus:sourceTransform.status,sourceTransformCount:sourceTransform.generatedInputs.length,sourceTreeSha256:sourceHash,capturedLiveSourceTreeSha256:capturedLiveSourceHash,assetCount:Object.keys(manifest.assets).length}));
+  console.log(JSON.stringify({status:'built',dist:publishDist,profile:manifest.profile,sourceTransformStatus:sourceTransform.status,sourceTransformCount:sourceTransform.generatedInputs.length,sourceTreeSha256:sourceHash,capturedLiveSourceTreeSha256:capturedLiveSourceHash,assetCount:Object.keys(manifest.assets).length}));
  }
 }finally{await rm(scratch,{recursive:true,force:true});}

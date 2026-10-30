@@ -7,7 +7,7 @@ import {copyJson} from '../../src/model/json';
 import {createCoreModelEngine,createCoreCardinalityHostInputEngine,isHostJsonResponseError} from '../../bindings/core/node/index.js';
 import {inspectCoreCardinality as referenceInspect,declareCoreCardinality as referenceDeclare,verifyCoreCardinalityDeclaration as referenceVerify} from '../../src/model/cardinality';
 
-const frozen=await Bun.file('docs/helix/04-build/evidence/rust-migration/r5-model-bindings/frozen-cardinality-typescript.json').json();
+const frozen=await Bun.file('tests/rust-core/fixtures/r5-model-bindings/frozen-cardinality-typescript.json').json();
 const api=bindCoreCardinalityRust(createCoreCardinalityHostInputEngine(CORE_MODEL_RESOURCES),isHostJsonResponseError);
 const genericApi=createCoreModelEngine(CORE_MODEL_RESOURCES);
 const canonical=(value:unknown):string=>Array.isArray(value)?`[${value.map(canonical).join(',')}]`:value!==null&&typeof value==='object'?`{${Object.keys(value).sort().map(key=>`${JSON.stringify(key)}:${canonical((value as Record<string,unknown>)[key])}`).join(',')}}`:JSON.stringify(value);

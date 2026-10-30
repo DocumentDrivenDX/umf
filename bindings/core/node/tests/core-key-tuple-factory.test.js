@@ -8,8 +8,8 @@ import packageSchema from '../../../../spec/core/extension-package.schema.json' 
 import constraints from '../../../../spec/metamodel/generated/core-constraints.json' with {type: 'json'};
 import domainPolicy from '../../../../spec/metamodel/generated/domain-policy.json' with {type: 'json'};
 import frozen from '../../../../tests/rust-core/fixtures/r5-core-key-tuple/frozen-typescript.json' with {type: 'json'};
-import kindSource from '../../../../scripts/rust-migration/r5/kind-nullability/input.json' with {type: 'json'};
-import kindFrozen from '../../../../scripts/rust-migration/r5/kind-nullability/frozen-typescript.json' with {type: 'json'};
+import kindSource from '../../../../tests/rust-core/fixtures/r5/kind-nullability/input.json' with {type: 'json'};
+import kindFrozen from '../../../../tests/rust-core/fixtures/r5/kind-nullability/frozen-typescript.json' with {type: 'json'};
 
 const resources = {coreSchema, referenceSchema, packageSchema, constraints, domainPolicy};
 const addon = createRequire(import.meta.url)('../umf_core_node.node');

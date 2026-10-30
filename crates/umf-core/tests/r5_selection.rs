@@ -325,7 +325,7 @@ fn supplied_registry_semantic_refusal_precedes_an_empty_selection() {
     )
     .unwrap_err();
     let expected = parse(include_str!(
-        "../../../scripts/rust-migration/r5/selection/frozen-refusals.json"
+        "../../../tests/rust-core/fixtures/r5/selection/frozen-refusals.json"
     ));
     assert_eq!(
         refusal(error),
@@ -350,7 +350,7 @@ fn every_malformed_query_branch_matches_the_predecessor_refusal_envelope() {
         r#"{"references":"none","extra":true}"#,
     ];
     let expected = parse(include_str!(
-        "../../../scripts/rust-migration/r5/selection/frozen-refusals.json"
+        "../../../tests/rust-core/fixtures/r5/selection/frozen-refusals.json"
     ));
     for raw in malformed {
         let query = parse(raw);
@@ -368,7 +368,7 @@ fn source_refusals_match_both_frozen_predecessor_envelopes() {
         "../../../fixtures/validation/core-selection.json"
     ));
     let expected = parse(include_str!(
-        "../../../scripts/rust-migration/r5/selection/frozen-refusals.json"
+        "../../../tests/rust-core/fixtures/r5/selection/frozen-refusals.json"
     ));
     let mut invalid_reference = get(&frozen, "source").unwrap().clone();
     let reference = index_mut(
@@ -446,7 +446,7 @@ fn copy_limit_refusal_matches_predecessor_descendant_path_and_message() {
     }
     let query = parse(r#"{"references":"none"}"#);
     let expected = parse(include_str!(
-        "../../../scripts/rust-migration/r5/selection/frozen-refusals.json"
+        "../../../tests/rust-core/fixtures/r5/selection/frozen-refusals.json"
     ));
     let got = refusal(run(&source, &query).unwrap_err());
     assert_eq!(got, *get(&expected, "large").unwrap());

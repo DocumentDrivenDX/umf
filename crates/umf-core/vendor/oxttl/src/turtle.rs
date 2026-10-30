@@ -12,7 +12,7 @@ use crate::trig::TokioAsyncWriterTriGSerializer;
 use crate::trig::{LowLevelTriGSerializer, TriGSerializer, WriterTriGSerializer};
 use oxiri::{Iri, IriParseError};
 use oxrdf::{GraphNameRef, Triple, TripleRef};
-use std::collections::HashMap;
+use crate::HashMap;
 use std::collections::hash_map::Iter;
 use std::io::{self, Read, Write};
 #[cfg(feature = "async-tokio")]

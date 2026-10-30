@@ -12,13 +12,15 @@ edition.workspace = true
 rust-version.workspace = true
 
 [features]
-default = []
-rdf-12 = ["oxrdf/rdf-12"]
+default = ["random-blank-nodes"]
 async-tokio = ["dep:tokio"]
+random-blank-nodes = ["oxrdf/random-blank-nodes"]
+umf-deterministic-hash = []
+rdf-12 = ["oxrdf/rdf-12"]
 
 [dependencies]
 memchr.workspace = true
-oxrdf.workspace = true
+oxrdf = { path = "../oxrdf", default-features = false }
 oxiri.workspace = true
 oxilangtag.workspace = true
 thiserror.workspace = true

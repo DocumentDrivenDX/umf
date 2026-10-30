@@ -3,7 +3,7 @@ import {expect,test} from 'bun:test';
 import {readFileSync} from 'node:fs';
 import {securityRefIdentity} from '../../src/extensions/security/types';
 
-const packet=JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-security-truth-logic/ref-identity-cases.json','utf8')) as {
+const packet=JSON.parse(readFileSync('tests/rust-core/fixtures/r8-security-truth-logic/ref-identity-cases.json','utf8')) as {
   cases:{name:string;ref:unknown;expected:string}[];
 };
 

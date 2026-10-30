@@ -39,7 +39,7 @@ fn source() -> Value {
 }
 fn fixture() -> Value {
     parse(include_str!(
-        "../../../scripts/rust-migration/r5/edit-extension/frozen.json"
+        "../../../tests/rust-core/fixtures/r5/edit-extension/frozen.json"
     ))
 }
 struct Callback {

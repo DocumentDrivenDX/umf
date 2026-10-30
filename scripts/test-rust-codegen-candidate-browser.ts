@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 
-const corpus=JSON.parse(await Bun.file('docs/helix/04-build/evidence/rust-migration/r3/baseline/operations.json').text());
+const corpus=JSON.parse(await Bun.file('tests/rust-core/fixtures/r3/baseline/operations.json').text());
 const candidate=Bun.file('dist/umf-rust-codegen-candidate-v2-browser.js');
 const wasm=Bun.file('dist/umf_core_wasm_bg.wasm');
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){

@@ -1,7 +1,7 @@
 import {expect, test} from 'bun:test';
 import {inspectBinding, type Document} from '../../src';
 import postgresql from '../../fixtures/binding/postgresql-indexes/case.json';
-import frozen from '../../docs/helix/04-build/evidence/rust-migration/r5-binding-inspect/rust-controls/review-controls.json';
+import frozen from '../../tests/rust-core/fixtures/r5-binding-inspect/rust-controls/review-controls.json';
 
 const clone = <T>(value: T): T => structuredClone(value);
 const payload = (binding: Document) => binding.extensions!['umf.binding'] as any;

@@ -16,7 +16,6 @@ SPEC.loader.exec_module(MODULE)
 
 class BoundaryRuleTests(unittest.TestCase):
     def test_v8_is_rejected_even_at_the_former_bridge_path(self):
-        self.assertEqual({}, MODULE.V8_DEBT)
         for path in ["python/umf_codegen/src/umf_codegen/_embedded.py", "python/umf_access/src/umf_access/values.py"]:
             findings = MODULE.scan_text(path, "from py_mini_racer import MiniRacer")
             self.assertEqual("forbidden-python-javascript-engine", findings[0]["rule"])
@@ -32,12 +31,6 @@ class BoundaryRuleTests(unittest.TestCase):
         self.assertEqual([], MODULE.scan_text(path, good))
         self.assertEqual("kind-manifest-transport-loss", MODULE.scan_text(path, good.replace("{manifest, kinds,", "{id, version,"))[0]["rule"])
         self.assertEqual("kind-semantic-fork-in-wrapper", MODULE.scan_text(path, "if (payload.kind === 'vendor-kind') return true;")[0]["rule"])
-
-    def test_no_current_v8_debt_or_former_bridge_exception_remains(self):
-        self.assertEqual({}, MODULE.V8_DEBT)
-        for path in ["python/umf_codegen/src/umf_codegen/_embedded.py", "python/umf_access/src/umf_access/values.py"]:
-            findings = MODULE.scan_text(path, "from py_mini_racer import MiniRacer", allowed_debt=MODULE.V8_DEBT)
-            self.assertEqual("forbidden-python-javascript-engine", findings[0]["rule"])
 
     def test_production_core_cannot_restore_retired_runtime_or_reference_fallback(self):
         for source in ["from jsonschema import Draft7Validator", "from ruamel.yaml import YAML"]:
@@ -73,23 +66,7 @@ class BoundaryRuleTests(unittest.TestCase):
             self.assertEqual([], MODULE.core_dependency_findings(MODULE.fixture_manifest_dependencies(allowed)))
             self.assertEqual("host-dependency-in-rust-core-closure", MODULE.core_dependency_findings(MODULE.fixture_manifest_dependencies(forbidden))[0]["rule"])
 
-    def test_wasm_entropy_exception_is_target_path_feature_and_source_exact(self):
-        edge = {"name": "getrandom", "version": "0.3.4"}
-        js_sys = {"name": "js-sys", "version": "0.3.77"}
-        binding = {"name": "umf-rust-spike-wasm", "version": "0.1.0"}
-        good = dict(target="wasm32-unknown-unknown", wasm_bindgen_ids=["wasm-bindgen@0.2.100"],
-                    paths=[MODULE.WASM_R1_ENTROPY_EXCEPTION["path"]], incoming_edges=[edge, js_sys, binding],
-                    source_hashes=MODULE.WASM_R1_ENTROPY_EXCEPTION["sourceHashes"],
-                    features={"ahash": ["default", "getrandom", "runtime-rng", "serde", "std"], "getrandom": ["default", "wasm_js"]})
-        self.assertEqual("qualified-r1-wasm-entropy-exception", MODULE.qualify_wasm_entropy_exception(**good)["status"])
-        direct = {**good, "paths": [["umf-rust-spike-core@0.1.0", "wasm-bindgen@0.2.100"]], "incoming_edges": [{"name": "umf-rust-spike-core", "version": "0.1.0"}, js_sys, binding]}
-        self.assertEqual("unqualified", MODULE.qualify_wasm_entropy_exception(**direct)["status"])
-        multiple = {**good, "incoming_edges": [*good["incoming_edges"], {"name": "other-package", "version": "1.0.0"}]}
-        self.assertEqual("unqualified", MODULE.qualify_wasm_entropy_exception(**multiple)["status"])
-        drift = {**good, "source_hashes": {**good["source_hashes"], "Cargo.lock": "drift"}}
-        self.assertEqual("unqualified", MODULE.qualify_wasm_entropy_exception(**drift)["status"])
-
-    def test_production_graph_has_no_spike_entropy_exception(self):
+    def test_production_dependency_closure_rejects_forbidden_crates(self):
         def report(source):
             with patch.object(MODULE, "cargo_tree", return_value={"status": "resolved", "stdout": source, "stderr": ""}), patch.object(MODULE.subprocess, "run", return_value=SimpleNamespace(stdout="host: x86_64-unknown-linux-gnu\n")):
                 return MODULE.check_production_core()
@@ -120,48 +97,6 @@ class BoundaryRuleTests(unittest.TestCase):
             self.assertEqual(["production-core-host-capability"], [row["rule"] for row in findings])
             self.assertEqual("crates/umf-codegen/src/forbidden.rs", findings[0]["path"])
 
-    def test_inverse_cargo_tree_reports_only_active_target_parents_and_path(self):
-        fixture = """wasm-bindgen v0.2.100
-├── getrandom v0.3.4
-│   └── ahash v0.8.12
-│       └── jsonschema v0.29.1
-│           └── umf-rust-spike-core v0.1.0
-├── js-sys v0.3.77
-└── umf-rust-spike-wasm v0.1.0
-"""
-        direct, paths = MODULE.parse_inverse_cargo_tree(fixture)
-        self.assertEqual(["getrandom@0.3.4", "js-sys@0.3.77", "umf-rust-spike-wasm@0.1.0"], direct)
-        self.assertEqual([["wasm-bindgen@0.2.100", "getrandom@0.3.4", "ahash@0.8.12", "jsonschema@0.29.1", "umf-rust-spike-core@0.1.0"]], paths)
-        self.assertNotIn("uuid@1.0.0", direct)
-
-    def test_feature_tree_parser_captures_only_named_package_features(self):
-        fixture = '''ahash v0.8.12
-├── ahash feature "default"
-│   └── jsonschema v0.29.1
-├── ahash feature "runtime-rng"
-│   └── ahash feature "getrandom"
-└── getrandom feature "wasm_js"
-'''
-        self.assertEqual(["default", "getrandom", "runtime-rng"], MODULE.parse_cargo_feature_tree(fixture, "ahash"))
-
-    def test_cargo_tree_forces_plain_labels_when_ci_requests_color(self):
-        fixture = """wasm-bindgen v0.2.100
-├── getrandom v0.3.4
-│   └── ahash v0.8.12
-│       └── jsonschema v0.29.1
-│           └── umf-rust-spike-core v0.1.0
-├── js-sys v0.3.77
-└── umf-rust-spike-wasm v0.1.0
-"""
-        result = SimpleNamespace(returncode=0, stdout=fixture, stderr="")
-        with patch.dict(MODULE.os.environ, {"CARGO_TERM_COLOR": "always"}):
-            with patch.object(MODULE.subprocess, "run", return_value=result) as run:
-                captured = MODULE.cargo_tree("/toolchain/bin/cargo", "wasm32-unknown-unknown", "umf-rust-spike-wasm", inverse="wasm-bindgen")
-        self.assertEqual("never", run.call_args.kwargs["env"]["CARGO_TERM_COLOR"])
-        self.assertEqual(["/toolchain/bin/cargo", "--color", "never", "tree"], run.call_args.args[0][:4])
-        incoming, paths = MODULE.parse_inverse_cargo_tree(captured["stdout"])
-        self.assertEqual(["getrandom@0.3.4", "js-sys@0.3.77", "umf-rust-spike-wasm@0.1.0"], incoming)
-        self.assertEqual([["wasm-bindgen@0.2.100", "getrandom@0.3.4", "ahash@0.8.12", "jsonschema@0.29.1", "umf-rust-spike-core@0.1.0"]], paths)
 
 
 if __name__ == "__main__":

@@ -17,8 +17,8 @@ import domainPolicy from '../../../../spec/metamodel/generated/domain-policy.jso
 const require = createRequire(import.meta.url);
 const addon = require(process.env.UMF_SELECTION_ADDON ?? '../umf_core_node.node');
 const resources = {coreSchema, referenceSchema, packageSchema, constraints, domainPolicy};
-const packet = JSON.parse(readFileSync(new URL('../../../../scripts/rust-migration/r5/selection/input.json', import.meta.url), 'utf8'));
-const frozen = JSON.parse(readFileSync(new URL('../../../../scripts/rust-migration/r5/selection/frozen-typescript.json', import.meta.url), 'utf8'));
+const packet = JSON.parse(readFileSync(new URL('../../../../tests/rust-core/fixtures/r5/selection/input.json', import.meta.url), 'utf8'));
+const frozen = JSON.parse(readFileSync(new URL('../../../../tests/rust-core/fixtures/r5/selection/frozen-typescript.json', import.meta.url), 'utf8'));
 setDefaultTimeout(30_000);
 
 test('private opaque return carrier preserves a host object result by identity', () => {

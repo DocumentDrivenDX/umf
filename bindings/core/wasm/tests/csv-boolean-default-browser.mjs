@@ -14,7 +14,7 @@ const repo=resolve(fileURLToPath(new URL('../../../..',import.meta.url)));
 const packageRoot=resolve(process.argv[2]??'');
 const receiptPath=process.argv[3]?resolve(process.argv[3]):null;
 if(!process.argv[2])throw new Error('Usage: bun bindings/core/wasm/tests/csv-boolean-default-browser.mjs <isolated-wasm-package> [receipt.json]');
-const packetPath=join(repo,'scripts/rust-migration/r5/csv-boolean-default-route/predecessor.json');
+const packetPath=join(repo,'tests/rust-core/fixtures/r5/csv-boolean-default-route/predecessor.json');
 const packet=JSON.parse(await readFile(packetPath,'utf8'));
 assert.equal(packet.format,'umf-r5-csv-boolean-default-route-predecessor/1');
 for(const [relative,expected] of Object.entries(packet.sourceHashes)){

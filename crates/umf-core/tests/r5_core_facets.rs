@@ -192,27 +192,15 @@ fn inspect_declare_verify_and_json_yaml_roundtrip_preserve_unknowns() {
 }
 
 #[test]
-fn inspect_unknown_group_partial_matches_full_frozen_typescript_case() {
-    let packet = parse(include_str!(
-        "../../../scripts/rust-migration/r8/facets-retirement-packets/inspectCoreFacets.packet.json"
+fn unknown_group_is_preserved_as_partial_facet_meaning_in_order() {
+    let fixture = parse(include_str!(
+        "../../../tests/rust-core/fixtures/current-core-facets/unknown-group-partial.json"
     ));
-    let case = get(&packet, "cases")
-        .and_then(|cases| match cases {
-            Value::Array(cases) => cases
-                .iter()
-                .find(|case| get(case, "id") == Some(&Value::string_utf8("unknownGroupPartial"))),
-            _ => None,
-        })
-        .expect("frozen unknownGroupPartial case");
-    let args = get(get(case, "input").unwrap(), "args").unwrap();
-    let args = match args {
-        Value::Array(args) => args,
-        _ => panic!("packet args must be an array"),
-    };
-    let expected = get(get(case, "expectedOutcome").unwrap(), "value").unwrap();
+    let input = get(&fixture, "input").unwrap();
+    let expected = get(&fixture, "expected").unwrap();
     let actual = inspect_core_facets(
-        &args[0],
-        &args[1],
+        get(input, "source").unwrap(),
+        get(input, "identity").unwrap(),
         &engine(),
         &Registry::new(),
         &mut NoCapabilities,
@@ -221,7 +209,7 @@ fn inspect_unknown_group_partial_matches_full_frozen_typescript_case() {
     .unwrap();
     assert_eq!(
         &actual, expected,
-        "full Rust outcome and ordered warning paths must match TypeScript"
+        "unknown facet groups and qualifier paths must be retained in source order"
     );
 }
 

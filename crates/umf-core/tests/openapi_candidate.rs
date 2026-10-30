@@ -1,28 +1,12 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-// Source-only candidate test. The module is intentionally not registered by
-// lib.rs until its pinned OpenAPI validation and adapter-family gates are met.
-// Re-export the shared crate modules at this harness crate root so the
-// unregistered candidate source is type-checked with its production paths.
-pub mod context { pub use umf_core::context::*; }
-pub mod engine { pub use umf_core::engine::*; }
-pub mod error { pub use umf_core::error::*; }
-pub mod native_json { pub use umf_core::native_json::*; }
-pub mod json_number { pub use umf_core::json_number::*; }
-pub mod registry { pub use umf_core::registry::*; }
-pub mod schema { pub use umf_core::schema::*; }
-pub mod serialization { pub use umf_core::serialization::*; }
-pub mod value { pub use umf_core::value::*; }
-
-#[path = "../src/openapi_adapter.rs"]
-mod openapi_adapter;
-
-use openapi_adapter::{
+// Tests the public Rust OpenAPI library operations.
+use umf_core::openapi_adapter::{
     export_openapi_document, extract_openapi_schema, get_openapi_node, import_openapi_document,
     index_openapi_schemas, lookup_openapi_resource, propose_openapi_edit,
     resolve_openapi_object_reference, resolve_openapi_schema_reference, OpenapiFormat,
     resolve_openapi_dynamic_reference, OpenapiResourceInput, OpenapiRuntime,
 };
-use umf_core::{context::Context, value::{Utf16, Value}};
+use umf_core::{context::Context, schema, serialization, value::{Utf16, Value}};
 
 fn runtime() -> (std::sync::Arc<OpenapiRuntime>, Context<'static>) {
     // Share only immutable compiled resources. Every operation retains its own
@@ -169,6 +153,71 @@ fn pinned_openapi_object_schema_rejects_missing_required_members() {
     let recursive_meta = Utf16::from(r##"{"openapi":"3.2.1","info":{"title":"Meta","version":"1"},"paths":{},"components":{"schemas":{"RecursiveMeta":{"$dynamicRef":"#meta"}}}}"##);
     let document=import_openapi_document(&recursive_meta,&Utf16::from("standalone-meta"),OpenapiFormat::Json,None,&[],&runtime,&mut ctx).unwrap();
     assert!(runtime.inspect_document(&document,&mut ctx).unwrap().valid);
+}
+
+#[test]
+fn pinned_legacy_and_current_openapi_schemas_execute_for_all_supported_versions() {
+    let (runtime, mut ctx) = runtime();
+    let cases = [
+        (
+            "Swagger 2.0",
+            r#"{"swagger":"2.0","info":{"title":"API","version":"1"},"paths":{}}"#,
+            r#"{"swagger":"2.0","paths":{}}"#,
+        ),
+        (
+            "OpenAPI 3.0.3",
+            r#"{"openapi":"3.0.3","info":{"title":"API","version":"1"},"paths":{}}"#,
+            r#"{"openapi":"3.0.3","paths":{}}"#,
+        ),
+        (
+            "OpenAPI 3.1.0",
+            r#"{"openapi":"3.1.0","info":{"title":"API","version":"1"},"paths":{}}"#,
+            r#"{"openapi":"3.1.0","paths":{}}"#,
+        ),
+        (
+            "OpenAPI 3.2.1",
+            r#"{"openapi":"3.2.1","info":{"title":"API","version":"1"},"paths":{}}"#,
+            r#"{"openapi":"3.2.1","paths":{}}"#,
+        ),
+    ];
+
+    for (label, source, missing_info) in cases {
+        let source = Utf16::from(source);
+        let document = import_openapi_document(
+            &source,
+            &Utf16::from("version-matrix"),
+            OpenapiFormat::Json,
+            None,
+            &[],
+            &runtime,
+            &mut ctx,
+        )
+        .unwrap_or_else(|error| panic!("{label} valid document rejected: {error:?}"));
+        assert_eq!(
+            export_openapi_document(&document, None, &runtime, &mut ctx)
+                .unwrap_or_else(|error| panic!("{label} export failed: {error:?}")),
+            source,
+            "{label} export must preserve the exact source text"
+        );
+
+        let invalid = Utf16::from(missing_info);
+        let error = import_openapi_document(
+            &invalid,
+            &Utf16::from("missing-info"),
+            OpenapiFormat::Json,
+            None,
+            &[],
+            &runtime,
+            &mut ctx,
+        )
+        .expect_err("the official version schema must require info");
+        assert_eq!(error.code, "OPENAPI_DOCUMENT", "{label}");
+        assert!(
+            error.message.to_utf8().unwrap().contains("OPENAPI_OBJECT_SCHEMA"),
+            "{label} should fail through official object-schema validation: {}",
+            error.message.to_utf8().unwrap()
+        );
+    }
 }
 
 #[test]

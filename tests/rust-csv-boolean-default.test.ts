@@ -7,7 +7,7 @@ import {bindCsvBooleanLexicalRust} from '../src/access/rust-csv-boolean-default'
 import {readDocument} from '../src/model/document';
 import {validateCsvBooleanLexical as referenceValidateCsvBooleanLexical,verifyCsvBooleanLexical as referenceVerifyCsvBooleanLexical} from '../src/model/csv-boolean-lexical';
 import type {CsvBooleanLexicalRequest} from '../src/model/csv-boolean-lexical';
-import packet from '../scripts/rust-migration/r5/csv-boolean-default-route/predecessor.json';
+import packet from './rust-core/fixtures/r5/csv-boolean-default-route/predecessor.json';
 
 const source=readDocument(await Bun.file('spec/domain-packs/medical/ontology.json').text(),'json');
 const route=bindCsvBooleanLexicalRust(createCoreModelEngine(CORE_MODEL_RESOURCES),isWireAdmissionError,isNativeUmfCoreError);

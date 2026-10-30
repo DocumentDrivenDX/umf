@@ -16,7 +16,7 @@ try{
  if(await unpack.exited)throw new Error('package extraction failed');
  for(const dependency of ['ajv','yaml'])await symlink(join(root,'node_modules',dependency),join(staging,'node_modules',dependency),'dir');
  await copyFile('tests/unified/commerce.json',join(staging,'commerce.json'));
- await copyFile('docs/helix/04-build/evidence/rust-migration/r3/baseline/operations.json',join(staging,'operations.json'));
+ await copyFile('tests/rust-core/fixtures/r3/baseline/operations.json',join(staging,'operations.json'));
  await writeFile(join(staging,'smoke.mjs'),`import {readFile} from 'node:fs/promises';
 import * as root from '@umf/core';
 import {createPythonClientRustCandidateV2} from '@umf/core/rust-codegen-candidate/v2';

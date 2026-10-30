@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import { expect, test } from 'bun:test';
 
-import cases from '../../docs/helix/04-build/evidence/rust-migration/r5-avro-candidate-wire/candidate-wire-cases.json';
+import cases from '../../tests/rust-core/fixtures/r5-avro-candidate-wire/candidate-wire-cases.json';
 
 const sourceFixturePath = cases.sourceFixture.path;
 const sourceFixtureBytes = await Bun.file(sourceFixturePath).arrayBuffer();

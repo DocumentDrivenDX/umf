@@ -96,7 +96,7 @@ fn independent_python_vectors_cover_every_operation_and_uuid_roundtrip() {
 #[test]
 fn frozen_typescript_predecessor_edge_refusals_match_exactly() {
     let corpus: serde_json::Value = serde_json::from_str(include_str!(
-        "../../../scripts/rust-migration/r5/bit128/frozen-predecessor-edge-vectors.json"
+        "../../../tests/rust-core/fixtures/r5/bit128/frozen-predecessor-edge-vectors.json"
     ))
     .unwrap();
     for case in corpus["cases"].as_array().unwrap() {

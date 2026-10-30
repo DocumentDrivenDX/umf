@@ -2620,6 +2620,20 @@ pub fn propose_generalized_rdf_quad_edit(
 #[cfg(test)]
 mod tests {
     use super::*;
+    fn serialized_occurrences(quads: &[Quad], ctx: &mut Context<'_>) -> Vec<String> {
+        serialize_nquads(quads, ctx)
+            .unwrap()
+            .lines()
+            .map(str::to_owned)
+            .collect()
+    }
+    fn assert_occurrences(actual: &[Quad], expected: &str, ctx: &mut Context<'_>) {
+        let mut actual = serialized_occurrences(actual, ctx);
+        let mut expected = expected.lines().map(str::to_owned).collect::<Vec<_>>();
+        actual.sort();
+        expected.sort();
+        assert_eq!(actual, expected);
+    }
     #[test]
     fn n3_line_writer_uses_ecmascript_utf16_escape_spelling() {
         assert_eq!(n3_escape("\u{7f}\u{80}\u{19}\u{1a}\u{1f}\u{10000}"), "\u{7f}\u{80}\\u0019\u{1a}\u{1f}\\U00010000");
@@ -2627,21 +2641,25 @@ mod tests {
     }
 
     #[test]
-    fn collection_quads_keep_n3_emission_order() {
+    fn collection_quads_keep_deterministic_storage_order() {
         let mut ctx = Context::ordinary();
         let source: Vec<u16> = "@prefix ex: <http://a.example/> . ex:s ex:p (1) .".encode_utf16().collect();
         let (values, _) = parse_rdf_source(&source, Syntax::Turtle, Some(&key("http://base.example/")), &mut Vec::new(), &mut ctx).unwrap();
         let quads = quads_from_value(&Value::Array(values)).unwrap();
-        assert_eq!(serialize_nquads(&quads, &mut ctx).unwrap(), "_:g_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> \"1\"^^<http://www.w3.org/2001/XMLSchema#integer> .\n_:g_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .\n<http://a.example/s> <http://a.example/p> _:g_0 .\n");
+        let (repeated, _) = parse_rdf_source(&source, Syntax::Turtle, Some(&key("http://base.example/")), &mut Vec::new(), &mut ctx).unwrap();
+        assert_eq!(quads_from_value(&Value::Array(repeated)).unwrap(), quads);
+        assert_occurrences(&quads, "_:g_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> \"1\"^^<http://www.w3.org/2001/XMLSchema#integer> .\n_:g_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .\n<http://a.example/s> <http://a.example/p> _:g_0 .\n", &mut ctx);
     }
 
     #[test]
-    fn nested_collection_quads_keep_n3_order_and_creation_labels() {
+    fn nested_collection_quads_keep_creation_labels_and_deterministic_order() {
         let mut ctx = Context::ordinary();
         let source: Vec<u16> = "@prefix ex: <http://a.example/> . ex:s ex:p ((1)) .".encode_utf16().collect();
         let (values, _) = parse_rdf_source(&source, Syntax::Turtle, Some(&key("http://base.example/")), &mut Vec::new(), &mut ctx).unwrap();
         let quads = quads_from_value(&Value::Array(values)).unwrap();
-        assert_eq!(serialize_nquads(&quads, &mut ctx).unwrap(), "_:g_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> \"1\"^^<http://www.w3.org/2001/XMLSchema#integer> .\n_:g_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:g_1 .\n_:g_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .\n_:g_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .\n<http://a.example/s> <http://a.example/p> _:g_0 .\n");
+        let (repeated, _) = parse_rdf_source(&source, Syntax::Turtle, Some(&key("http://base.example/")), &mut Vec::new(), &mut ctx).unwrap();
+        assert_eq!(quads_from_value(&Value::Array(repeated)).unwrap(), quads);
+        assert_occurrences(&quads, "_:g_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> \"1\"^^<http://www.w3.org/2001/XMLSchema#integer> .\n_:g_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:g_1 .\n_:g_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .\n_:g_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .\n<http://a.example/s> <http://a.example/p> _:g_0 .\n", &mut ctx);
     }
 
     #[test]
