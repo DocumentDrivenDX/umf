@@ -30,7 +30,7 @@ ddx:
 
 ## Scope and Objective
 
-Prove the local core 0.10.0 / `umf.actions` 0.1.0 declaration subset through public
+Prove the local core 0.8.0 / `umf.actions` 0.1.0 declaration subset through public
 APIs. Contract, assessment and preservation assertions carrying AC1–AC8 citations
 now pass; the scoped public-bundle corpus agrees in Chromium and Bun (AC9).
 [current evidence](../../04-build/evidence/actions-certification.md) records exact

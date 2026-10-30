@@ -206,7 +206,7 @@ Factory tests must prove installed-only resource availability, each missing/tamp
 
 ## Ratified consumer precision amendment — 2026-10-23
 
-- CONTRACT906 is the proposed governing home (unused identifier confirmed by coordinator) for pure current0.10.0 single-SET bridge profiles and exact API/shapes. Owner will author from installed HELIX template and Sol will review. Keep historical CONTRACT902/plan-model1 artifacts strict. The 2026-10-29 owner direction aligns current CONTRACT902 with core0.10.0 without claiming plan1 delivery or rewriting prior artifacts. Candidate implementation is authorized in the isolated checkout; acceptance/publication claims still require actual qualification and governance review.
+- CONTRACT906 is the proposed governing home (unused identifier confirmed by coordinator) for pure current0.10.0 single-SET bridge profiles and exact API/shapes. Owner will author from installed HELIX template and Sol will review. Keep historical CONTRACT902/plan-model1 artifacts strict; record its stale core0.8.0 discrepancy without claiming plan1 delivery. Candidate implementation is authorized in the isolated checkout; acceptance/publication claims still require actual qualification and governance review.
 - ModelPin.revision is a nonempty opaque SOURCE-PUBLISHER pin, at most256 UTF16 units. It is neither semantic version nor provider-issued opaque RevisionRef, grants no ordering and is not native action registration authority. The first consumer may use `'sha256:' + sourceSHA`; source replacement is unsupported in this first profile. Do not infer upgrade or migration semantics from this token.
 - Genuine generated Validate and Apply must both be frozen in vectors. Validate exactly omits idempotency_key; adding it, including null, refuses. Apply requires it. Same model/action/inputs yield the same logical inputSha256 across these two operations; neither causes native effects inside UMF. Validate remains advisory in Arras and cannot stand in for current authorization/existence checks at Apply.
 - Fixture IDs are authored underscores: module catalog; Record item; Key Field item_id; scalar label; action set_label; entity parameter item; value parameter label_value; write frame write_item. No aliasing or sanitization. The generated action identity is exact catalog.set_label.
@@ -218,8 +218,8 @@ CONTRACT-079 owns the unchanged generated transport. This contract adds one
 bounded bridge and MUST NOT widen those meanings or alter their envelopes.
 
 Existing `umf.actions.plan-model/1` remains the strict CONTRACT-902 branch.
-Its current normative pin is core 0.10.0, aligned with schema and implementation
-by owner direction on 2026-10-29. Previous artifacts are not relabeled or requalified. This separately versioned
+Its current documented core 0.8.0 pin and implementation current-core mismatch
+are not resolved by relabeling a previous artifact. This separately versioned
 core 0.10.0 bridge does not claim plan/manifest/bulk delivery. Opaque policy
 assessment here MUST NOT fabricate checked obligations or the historical
 plan-model producer/schema identity. CONTRACT-903/904 native guards, sealing,

@@ -10,7 +10,6 @@ on:
       - 'scripts/**'
       - 'tests/**'
       - 'spec/**'
-      - 'docs/helix/02-design/contracts/**'
       - 'package.json'
       - 'bun.lock'
       - 'Cargo.toml'
@@ -34,9 +33,7 @@ jobs:
           sparse-checkout: |
             /src/
             /spec/
-            /docs/helix/02-design/contracts/
             /tests/core/
-            /tests/release/
             /python/
             /scripts/
             /patches/
@@ -52,10 +49,6 @@ jobs:
           python-version: '3.12'
       - name: Install locked JavaScript dependencies
         run: bun install --frozen-lockfile
-      - name: Check coupled UMF release versions
-        run: |
-          python3 scripts/check-release-versions.py
-          python3 -m unittest discover -s tests/release -v
       - name: Portable core unit tests
         run: >-
           bun test

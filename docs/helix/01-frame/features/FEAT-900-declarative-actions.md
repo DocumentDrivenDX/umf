@@ -120,7 +120,7 @@ Retain existing concerns: ADR-002 TypeScript/Bun, fidelity, identity/composition
 portable bounded processing, conformance, composability and durable runtime
 separation. No new datastore, authentication provider or UI concern is selected:
 UMF is a library. Roles/person identifiers describe obligations, not an identity
-service. Initial references stay within one core 0.10.0 document.
+service. Initial references stay within one core 0.8.0 document.
 
 ## Dependencies
 
@@ -160,7 +160,7 @@ Governing requirement amendment: `umf.prd`, portable action plans section. Reuse
 
 ## Bulk UPDATE contract and story allocation — 2026-10-13
 
-Contracted first slice: `umf.actions.plan/1`, `umf.actions.manifest/1`, `umf.actions.bulk/1`, built against core0.10.0/actions0.1.0 and the existing tx/1 invocation. The first executable subset is required one-valued boolean/integer/string Fields; null/nullable, decimal and other scalar mutation domains are explicit refusals for this proof, not losses of preserved UMF meaning.
+Contracted first slice: `umf.actions.plan/1`, `umf.actions.manifest/1`, `umf.actions.bulk/1`, built against core0.8.0/actions0.1.0 and the existing tx/1 invocation. The first executable subset is required one-valued boolean/integer/string Fields; null/nullable, decimal and other scalar mutation domains are explicit refusals for this proof, not losses of preserved UMF meaning.
 
 | Story | Owned output | Design/test allocation |
 | --- | --- | --- |

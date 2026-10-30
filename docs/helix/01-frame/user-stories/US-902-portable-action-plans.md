@@ -60,7 +60,7 @@ Relevant unknown meaning and mismatched pins refuse; missing native evidence can
 
 ## Dependencies
 
-Existing core0.10.0 and actions0.1.0 semantic APIs; no runtime executor dependency. Parent solution design SD-900; contracts CONTRACT-900, CONTRACT-901, CONTRACT-902.
+Existing core0.8.0 and actions0.1.0 semantic APIs; no runtime executor dependency. Parent solution design SD-900; contracts CONTRACT-900, CONTRACT-901, CONTRACT-902.
 
 ## Out of Scope
 
