@@ -1,0 +1,90 @@
+TLC2 Version 2.19 of 08 August 2024 (rev: 5a47802)
+Running breadth-first search Model-Checking with fp 0 and seed 901 with 1 worker on 18 cores with 981MB heap and 64MB offheap memory [pid: 94436] (Mac OS X 27.0.1 aarch64, Eclipse Adoptium 21.0.13 x86_64, MSBDiskFPSet, DiskStateQueue).
+Parsing file /Users/erik/.codex/worktrees/38b0/umf/docs/helix/02-design/experiments/saga/formal/Saga.tla
+Parsing file /private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/Naturals.tla
+Parsing file /private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/FiniteSets.tla
+Parsing file /private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/TLC.tla
+Parsing file /private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/Sequences.tla
+Semantic processing of module Naturals
+Semantic processing of module Sequences
+Semantic processing of module FiniteSets
+Semantic processing of module TLC
+Semantic processing of module Saga
+Starting... (2026-10-29 19:52:57)
+Computing initial states...
+Finished computing initial states: 1 distinct state generated at 2026-10-29 19:52:57.
+Error: Invariant ExternalEligibility is violated.
+Error: The behavior up to this point is:
+State 1: <Initial predicate>
+/\ phase = "running"
+/\ epoch = 0
+/\ conflicted = FALSE
+/\ cancelled = FALSE
+/\ attempts = 0
+/\ provider = <<"none", "none">>
+/\ badExternal = FALSE
+/\ crashPending = {}
+/\ badCancel = FALSE
+/\ definitionActive = TRUE
+/\ compensationActive = 1..2
+/\ intent = "none"
+/\ redelivered = FALSE
+/\ pending = {}
+/\ acknowledged = FALSE
+/\ replayed = FALSE
+/\ originalIntent = "none"
+/\ releases = <<0, 0>>
+/\ compProvider = <<"none", "none">>
+/\ continued = FALSE
+/\ compKnown = <<"idle", "idle">>
+/\ crashes = 0
+/\ up = TRUE
+/\ known = <<"idle", "idle">>
+/\ badRetired = FALSE
+/\ badOrder = FALSE
+/\ badOwner = FALSE
+/\ compPending = {}
+/\ forwardActive = 1..2
+/\ admitted = 0
+/\ badUnknown = FALSE
+/\ recovered = FALSE
+/\ effects = <<0, 0>>
+
+State 2: <Submit line 32, col 2 to line 48, col 52 of module Saga>
+/\ phase = "running"
+/\ epoch = 0
+/\ conflicted = FALSE
+/\ cancelled = FALSE
+/\ attempts = 1
+/\ provider = <<"none", "none">>
+/\ badExternal = TRUE
+/\ crashPending = {}
+/\ badCancel = FALSE
+/\ definitionActive = TRUE
+/\ compensationActive = 1..2
+/\ intent = "a"
+/\ redelivered = FALSE
+/\ pending = {}
+/\ acknowledged = FALSE
+/\ replayed = FALSE
+/\ originalIntent = "a"
+/\ releases = <<0, 0>>
+/\ compProvider = <<"none", "none">>
+/\ continued = FALSE
+/\ compKnown = <<"idle", "idle">>
+/\ crashes = 0
+/\ up = TRUE
+/\ known = <<"idle", "idle">>
+/\ badRetired = FALSE
+/\ badOrder = FALSE
+/\ badOwner = FALSE
+/\ compPending = {}
+/\ forwardActive = 1..2
+/\ admitted = 1
+/\ badUnknown = FALSE
+/\ recovered = FALSE
+/\ effects = <<0, 0>>
+
+2 states generated, 2 distinct states found, 0 states left on queue.
+The depth of the complete state graph search is 2.
+Finished in 00s at (2026-10-29 19:52:57)

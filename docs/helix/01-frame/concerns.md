@@ -32,6 +32,13 @@ context, not a technology stack or another requirements layer.
 | Conformance and diagnostics | project-local; owner requirements | `area:validation`, `area:adapters`, `area:tooling` | NFR-20, NFR-21, NFR-22, NFR-38, NFR-39 | Keep validation layers and strictness visible; ground claims in executable evidence and specification authority. |
 | Review and composability | project-local; owner requirements | `area:model`, `area:tooling` | NFR-28, NFR-29, NFR-30, NFR-35, NFR-36, NFR-37 | Assess focused diffs, independent edits, inspectable semantics, programmatic access, and unattended multi-tool workflows. |
 | Durable adoption and runtime boundary | project-local; owner requirements | `area:extensions`, `area:tooling` | NFR-48, NFR-49, NFR-50 | Permit independent implementation and long-lived artifacts; keep business-system execution outside UMF. |
+| `formal-methods` | Owner-selected saga analysis | `area:extensions`, `area:tooling` | FEAT-901 submission, coordination and ticket/native admission | Finite TLA+/TLC safety/progress with explicit assumptions, mutations, witnesses and native correspondence; TD-905 owns scope. |
+
+The owner-selected saga `formal-methods` scope is FEAT-901 submission,
+coordination and ticket/native admission only. Use bounded TLA+/TLC safety and
+conditional progress analysis, exact model/configuration hashes, mutation
+counterexamples, positive witnesses and explicit native correspondence gaps.
+TD-905 owns that specification; unrelated UMF slices gain no analyzer obligation.
 
 ## Project Overrides
 

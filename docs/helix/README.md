@@ -1,5 +1,14 @@
 # UMF project documentation
 
+[Saga design packet](02-design/solution-designs/SD-901-saga-semantics.md) and
+[requirements](01-frame/features/FEAT-901-saga-semantics.md) define a proposed
+separately versioned action companion for sequential composition, submission
+recovery and explicit compensation. [FR-57](01-frame/prd.md#declarative-sagas--owner-direction-2026-10-29),
+[US-906](01-frame/user-stories/US-906-author-and-assess-sagas.md) and
+[US-905](01-frame/user-stories/US-905-saga-recovery-conformance.md) govern scope and
+acceptance. [Formal analysis](02-design/spikes/SPIKE-901-saga-recovery.md) checks
+a bounded model; runtime execution and native qualification remain consumer-owned.
+
 [Embedder completion plan](04-build/praxis-embedder-completion-plan.md) selects
 remaining upstream U4–U9 asks, atomic existing-column NULL fill before
 requiredness, domain/conversion fixtures and a consumer-owner handoff, followed

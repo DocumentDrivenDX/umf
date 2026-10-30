@@ -136,6 +136,10 @@ Storage/query execution, workflow orchestration, sagas, compensation, distribute
 transactions, native Palantir equivalence, automatic CRUD generation, new core
 scalar semantics, general constraint evaluation and authority/routing vocabulary.
 
+[FEAT-901](FEAT-901-saga-semantics.md) separately owns saga composition and
+compensation requirements under FR-57. Its companion semantics preserve this
+feature's action obligations and the independent tx/1 and bulk/1 boundaries.
+
 ## Decisions and Open Questions
 
 Design choice: an extension rather than core syntax; no useful native action

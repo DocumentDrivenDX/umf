@@ -3380,3 +3380,24 @@ independent disagreements and held native scopes explicit. Diagnostic, generated
 byte, hash-preimage and receipt-format differences require classified corrections
 and downstream verifier replay. The detailed migration gates remain in the build
 plan until R0/R1 freezes exact implementation commands and interfaces.
+
+
+## Saga composition and recovery allocation
+
+FEAT-901 and CONTRACT-908 introduce proposed sequential saga semantics. STP-906
+owns portable declaration/assessment criteria; STP-905 owns independent consumer
+recovery qualification. Exact AC mappings remain in those story test plans.
+The selected scope has no interactive UI; Batten presentation is separate.
+
+Validate proposal schema/examples through the adjacent design verifier. Shared
+semantic implementation requires Rust/Bun/actual-Chromium parity against an
+independent fixture oracle. Consumer completion additionally requires original
+native effect/outcome/control custody and independent provider observations at
+crash, cancellation, retirement, authority and capacity boundaries. Never infer
+native execution from coordinator-authored histories or metadata claims.
+
+The preserved 18-case abstract model and seven-case ticket/native boundary model
+supply bounded design evidence only. Recheck affected formal properties when
+admission, identity, ordering, recovery or fairness assumptions change; record
+native refinement gaps rather than marking those ACs complete. No production
+orchestrator, arbitrary external-effect support or release readiness is implied.

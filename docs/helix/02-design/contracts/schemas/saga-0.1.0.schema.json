@@ -1,0 +1,601 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:actions:saga:0.1.0",
+  "title": "Proposed UMF saga 0.1.0 declarations",
+  "type": "object",
+  "properties": {
+    "sagas": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/definition"
+      },
+      "minItems": 0,
+      "maxItems": 64
+    }
+  },
+  "required": [
+    "sagas"
+  ],
+  "additionalProperties": true,
+  "$defs": {
+    "identity": {
+      "type": "object",
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "saga": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "module",
+        "saga"
+      ],
+      "additionalProperties": false
+    },
+    "actionRef": {
+      "type": "object",
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "action": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "module",
+        "action"
+      ],
+      "additionalProperties": true
+    },
+    "source": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "required": [
+            "input"
+          ],
+          "additionalProperties": true,
+          "not": {
+            "required": [
+              "step"
+            ]
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "step": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "output": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "required": [
+            "step",
+            "output"
+          ],
+          "additionalProperties": true,
+          "not": {
+            "required": [
+              "input"
+            ]
+          }
+        }
+      ]
+    },
+    "mapping": {
+      "type": "object",
+      "properties": {
+        "parameter": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "from": {
+          "$ref": "#/$defs/source"
+        }
+      },
+      "required": [
+        "parameter",
+        "from"
+      ],
+      "additionalProperties": true
+    },
+    "compensation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "action"
+            },
+            "action": {
+              "$ref": "#/$defs/actionRef"
+            },
+            "binding": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "inputs": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/mapping"
+              },
+              "minItems": 0,
+              "maxItems": 32
+            }
+          },
+          "required": [
+            "kind",
+            "action",
+            "binding",
+            "inputs"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "unnecessary"
+            },
+            "profile": {
+              "$ref": "urn:umf:actions:0.1.0#/$defs/profile"
+            }
+          },
+          "required": [
+            "kind",
+            "profile"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "irreversible"
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "required": [
+            "kind",
+            "reason"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "minLength": 1,
+              "not": {
+                "enum": [
+                  "action",
+                  "unnecessary",
+                  "irreversible"
+                ]
+              }
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "additionalProperties": true
+        }
+      ]
+    },
+    "step": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "action": {
+          "$ref": "#/$defs/actionRef"
+        },
+        "binding": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/mapping"
+          },
+          "minItems": 0,
+          "maxItems": 32
+        },
+        "compensation": {
+          "$ref": "#/$defs/compensation"
+        }
+      },
+      "required": [
+        "id",
+        "action",
+        "binding",
+        "inputs",
+        "compensation"
+      ],
+      "additionalProperties": true
+    },
+    "definition": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "profile": {
+          "$ref": "urn:umf:actions:0.1.0#/$defs/profile"
+        },
+        "parameters": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:umf:actions:0.1.0#/$defs/parameter"
+          },
+          "minItems": 0,
+          "maxItems": 32
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:umf:actions:0.1.0#/$defs/parameter"
+          },
+          "minItems": 0,
+          "maxItems": 32
+        },
+        "outputBindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/mapping"
+          },
+          "minItems": 0,
+          "maxItems": 32
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/step"
+          },
+          "minItems": 1,
+          "maxItems": 32
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "profile",
+        "parameters",
+        "outputs",
+        "outputBindings",
+        "steps"
+      ],
+      "additionalProperties": true
+    },
+    "capabilities": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "coreVersion": {
+          "const": "0.10.0"
+        },
+        "sagaVersion": {
+          "const": "0.1.0"
+        },
+        "coordination": {
+          "enum": [
+            "supported",
+            "unsupported",
+            "unknown"
+          ]
+        },
+        "claims": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "obligation": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "status": {
+                "enum": [
+                  "supported",
+                  "unsupported",
+                  "unknown"
+                ]
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "minItems": 0,
+                "maxItems": 32
+              }
+            },
+            "required": [
+              "obligation",
+              "status",
+              "evidence"
+            ],
+            "additionalProperties": true
+          },
+          "minItems": 0,
+          "maxItems": 4096
+        },
+        "source": {
+          "type": "object"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "coreVersion",
+        "sagaVersion",
+        "coordination",
+        "claims",
+        "source",
+        "identity"
+      ],
+      "additionalProperties": false
+    },
+    "diagnostic": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "path": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "severity": {
+          "enum": [
+            "error",
+            "warning"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "code",
+        "path",
+        "severity",
+        "message"
+      ],
+      "additionalProperties": false
+    },
+    "obligation": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "path": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "kind": {
+          "enum": [
+            "model",
+            "binding",
+            "action",
+            "coordination",
+            "recovery",
+            "unknown"
+          ]
+        },
+        "status": {
+          "enum": [
+            "checked",
+            "unchecked"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "path",
+        "kind",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "assessment": {
+      "type": "object",
+      "properties": {
+        "valid": {
+          "type": "boolean"
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "declarationCompatible": {
+          "type": "boolean"
+        },
+        "executionVerified": {
+          "const": false
+        },
+        "coordination": {
+          "enum": [
+            "supported",
+            "unsupported",
+            "unknown"
+          ]
+        },
+        "outcomes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "obligation": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "status": {
+                "enum": [
+                  "supported",
+                  "unsupported",
+                  "unknown"
+                ]
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "minItems": 0,
+                "maxItems": 32
+              }
+            },
+            "required": [
+              "obligation",
+              "status",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0,
+          "maxItems": 4096
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/diagnostic"
+          },
+          "minItems": 0,
+          "maxItems": 4096
+        }
+      },
+      "required": [
+        "valid",
+        "complete",
+        "declarationCompatible",
+        "executionVerified",
+        "coordination",
+        "outcomes",
+        "diagnostics"
+      ],
+      "additionalProperties": false
+    },
+    "inspection": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "object"
+        },
+        "validation": {
+          "type": "object"
+        },
+        "entries": {
+          "type": "array",
+          "maxItems": 4096,
+          "items": {
+            "type": "object",
+            "properties": {
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "path": {
+                "type": "string"
+              },
+              "definition": {
+                "$ref": "#/$defs/definition"
+              },
+              "obligations": {
+                "type": "array",
+                "maxItems": 4096,
+                "items": {
+                  "$ref": "#/$defs/obligation"
+                }
+              }
+            },
+            "required": [
+              "module",
+              "path",
+              "definition",
+              "obligations"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "source",
+        "validation",
+        "entries"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
