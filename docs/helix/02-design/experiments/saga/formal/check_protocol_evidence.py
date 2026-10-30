@@ -13,16 +13,20 @@ def main():
     report=json.loads((OUT/'report.json').read_text())
     cases=[]
     with tempfile.TemporaryDirectory(prefix='umf-protocol-evidence-check-') as tmp:
-        root=Path(tmp);formal=root/'formal';evidence=root/'evidence'/'protocol'
-        formal.mkdir();evidence.mkdir(parents=True)
+        root=Path(tmp);formal=root/'docs/helix/02-design/experiments/saga/formal';evidence=formal.parent/'evidence/protocol'
+        formal.mkdir(parents=True);evidence.mkdir(parents=True)
         for path in [*BASE.glob('*.tla'),*BASE.glob('*.py'),*BASE.glob('protocol-*.cfg')]:
             shutil.copyfile(path,formal/path.name)
         for path in [OUT/'report.json',*OUT.glob('*.log.gz')]:
             shutil.copyfile(path,evidence/path.name)
+        for relative in report['specificationSources']:
+            target=root/relative;target.parent.mkdir(parents=True,exist_ok=True)
+            shutil.copyfile(BASE.parents[5]/relative,target)
         def verify():
             return subprocess.run([sys.executable,str(formal/'publish_protocol.py'),'--verify'],capture_output=True,text=True)
         baseline=verify();assert baseline.returncode==0,baseline.stderr
-        changes=[('model-bytes',formal/'Protocol.tla',lambda b:b+b'\n'),
+        changes=[('specification-bytes',root/'docs/helix/02-design/contracts/CONTRACT-908-saga-semantics.md',lambda b:b+b'\n'),
+                 ('model-bytes',formal/'Protocol.tla',lambda b:b+b'\n'),
                  ('configuration-bytes',formal/report['results'][0]['configuration'],lambda b:b+b'\n'),
                  ('original-log-custody',evidence/report['results'][0]['compressedLog'],lambda b:b+b'x')]
         for name,path,change in changes:

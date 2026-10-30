@@ -7,8 +7,8 @@ remains separate.
 
 [UMF 0.10 alignment and saga review](04-build/evidence/umf-010-saga-review.md)
 keeps actions and saga semantics with UMF and records recovery/closure review
-decisions. SDK/version alignment and its build/CI checks are reviewed in a
-[separate PR #71](https://github.com/DocumentDrivenDX/umf/pull/71). Saga implementation,
+decisions. SDK/version alignment and its build/CI checks were delivered in
+[merged PR #71](https://github.com/DocumentDrivenDX/umf/pull/71). Saga implementation,
 new native qualification and release publication remain separate gates.
 
 # UMF project documentation

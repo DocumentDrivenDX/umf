@@ -66,14 +66,20 @@ retained as narrower historical evidence, not relabeled as combined verification
 
 ## Evidence custody and review
 
-The report pins model/harness/publisher/tool/configuration sources. Compressed
+The report pins model/harness/publisher/tool/configuration sources and the exact
+governing specification/schema bytes. Compressed
 original logs retain full states; [compact action traces](../../02-design/experiments/saga/evidence/protocol/traces.md)
 make the counterexamples reviewable without thousands of raw log lines.
 `publish_protocol.py --verify` validates all 43 cases from tracked files alone.
 `check_protocol_evidence.py` checks an independent temporary copy and rejects
-changed model, configuration, original log, case bounds, missing case and tool pin.
+changed specification, model, configuration, original log, case bounds, missing
+case and tool pin.
 The evidence consistency checks prove no execution attestation or native behavior.
 
 Native saga implementation, installed bindings/browser conformance, real gateway
 finality and production execution remain unimplemented qualification work. No
 executor or release is deployed by this documentation/formal-analysis change.
+
+Final evidence verification accepted the portable tracked-file copy and rejected
+all seven tampering controls. Twelve artifact checks, 36 structural examples,
+45 acceptance mappings and the merged baseline release-consistency guard pass.

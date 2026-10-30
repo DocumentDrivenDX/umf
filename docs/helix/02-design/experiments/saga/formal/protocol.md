@@ -126,7 +126,8 @@ avoids treating an empty-prefix recovery witness as evidence for all three cases
 
 Use the pinned official TLC 1.7.4 jar, SHA-256
 936a262061c914694dfd669a543be24573c45d5aa0ff20a8b96b23d01e050e88.
-The report pins Java, model, runner, publisher, each complete configuration and
+The report pins Java, model, runner, publisher, governing requirements/contracts/
+designs/test plans and schema sources, each complete configuration and
 both compressed and original log bytes. Run from any directory:
 
 ```sh

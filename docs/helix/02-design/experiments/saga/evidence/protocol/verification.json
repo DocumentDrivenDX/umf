@@ -1,7 +1,11 @@
 {
   "baselineAccepted": true,
-  "negativeControlsRejected": 6,
+  "negativeControlsRejected": 7,
   "results": [
+    {
+      "name": "specification-bytes",
+      "rejected": true
+    },
     {
       "name": "model-bytes",
       "rejected": true
@@ -27,8 +31,8 @@
       "rejected": true
     }
   ],
-  "checkerSha256": "30370370f6d0ea8f42c930f366d70b18d5b9eb1f6c23f05252b84196fadbb419",
-  "reportSha256": "5e7525bb3d59c688b9f372500509339dba6f34f6e7410f58c2bef543ddcba1b0",
+  "checkerSha256": "3e15b311899a4fcdd51ebef4ccc910e8b5e38b56f7eab8e7462c57e032fffbef",
+  "reportSha256": "5b7f29675899da138f8dd4e2a861e68acb5a386e4a4a6f43aed157a686a2259b",
   "limits": [
     "Evidence consistency controls only; no execution attestation or native qualification"
   ]

@@ -106,3 +106,10 @@ not rerun; their qualification scope is unchanged. The split release branch rera
 its six release tests, consistency and generated identity checks successfully.
 Native saga implementation, full protocol refinement and release qualification
 remain separate unexecuted gates.
+
+## Subsequent formal completion
+
+After PRs #70/#71 merged, the [combined protocol follow-up](saga-protocol-formal-completion.md)
+completed the remaining bounded lifecycle analysis and refined provider finality.
+The earlier counts and omissions above describe their original source cohorts;
+the new source-exact report owns the extended scope.

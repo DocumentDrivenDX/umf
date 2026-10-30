@@ -10,6 +10,21 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
 OUT = BASE.parent / 'evidence' / 'protocol'
+ROOT = BASE.parents[5]
+SPEC_SOURCES = [
+ 'docs/helix/01-frame/features/FEAT-901-saga-semantics.md',
+ 'docs/helix/01-frame/user-stories/US-905-saga-recovery-conformance.md',
+ 'docs/helix/01-frame/user-stories/US-906-author-and-assess-sagas.md',
+ 'docs/helix/02-design/contracts/CONTRACT-901-transactional-action-profile.md',
+ 'docs/helix/02-design/contracts/CONTRACT-908-saga-semantics.md',
+ 'docs/helix/02-design/contracts/schemas/saga-0.1.0.schema.json',
+ 'docs/helix/02-design/contracts/schemas/saga-runtime-1.schema.json',
+ 'docs/helix/02-design/technical-designs/TD-905-saga-recovery-conformance.md',
+ 'docs/helix/02-design/technical-designs/TD-906-author-and-assess-sagas.md',
+ 'docs/helix/03-test/test-plans/STP-905-saga-recovery-conformance.md',
+ 'docs/helix/03-test/test-plans/STP-906-author-and-assess-sagas.md',
+ 'spec/core/schema.json', 'spec/extensions/actions/schema.json',
+ 'spec/extensions/actions/tx-results.schema.json']
 digest = lambda data: hashlib.sha256(data).hexdigest()
 file_digest = lambda path: digest(path.read_bytes())
 
@@ -37,6 +52,9 @@ def main():
         report = json.loads((OUT / 'report.json').read_text())
         assert report['allPassed'] and report['requiredCases'] == len(cases)
         assert report['jarSha256'] == runtime['JAR_SHA']
+        assert set(report['specificationSources']) == set(SPEC_SOURCES)
+        for path, expected in report['specificationSources'].items():
+            assert file_digest(ROOT / path) == expected, path
         assert report['modelSha256'] == file_digest(model)
         assert report['runnerSha256'] == file_digest(runner)
         assert report['witnessRunnerSha256'] == file_digest(witness_runner)
@@ -91,6 +109,7 @@ def main():
                   modelSha256=file_digest(model), runnerSha256=file_digest(runner), witnessRunnerSha256=file_digest(witness_runner), witnessModelSha256=file_digest(witness_model), publisherSha256=file_digest(Path(__file__).resolve()),
                   jarSha256=case['jarSha256'], javaVersion=java_version,
                   assurance='Completed bounded coordination checks; no unbounded theorem or implementation refinement',
+                  specificationSources={path:file_digest(ROOT/path) for path in SPEC_SOURCES},
                   bounds=['One trusted namespace, one immutable instance; two input labels',
                           'Two-step combined-fault profiles; three-step crash and stable progress cuts',
                           'One volatile-observation crash/restart, one lease takeover, one action retirement, one action-authority revocation, one operator revocation',
