@@ -1,3 +1,9 @@
+[Saga implementation and qualification](04-build/evidence/sagas/README.md)
+records the shared Rust authoring/assessment API, four runtime bindings and the
+PostgreSQL reference consumer. The [usage guide](05-deploy/sagas.md) explains
+explicit activation. [The execution plan](04-build/saga-implementation-plan.md)
+tracks frozen hosted qualification, merge and the coupled SDK/Python release.
+
 [Saga protocol formal completion](04-build/evidence/saga-protocol-formal-completion.md)
 records 43 passing bounded checks for the combined lifecycle/recovery model and
 its specification findings, including provider ticket closure after noncommit.
@@ -14,8 +20,8 @@ new native qualification and release publication remain separate gates.
 # UMF project documentation
 
 [Saga design packet](02-design/solution-designs/SD-901-saga-semantics.md) and
-[requirements](01-frame/features/FEAT-901-saga-semantics.md) define a proposed
-separately versioned action companion for sequential composition, submission
+[requirements](01-frame/features/FEAT-901-saga-semantics.md) define a
+separately versioned action vocabulary companion in the coupled UMF SDK for sequential composition, submission
 recovery and explicit compensation. [FR-57](01-frame/prd.md#declarative-sagas--owner-direction-2026-10-29),
 [US-906](01-frame/user-stories/US-906-author-and-assess-sagas.md) and
 [US-905](01-frame/user-stories/US-905-saga-recovery-conformance.md) govern scope and

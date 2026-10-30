@@ -169,3 +169,26 @@ revision; core 0.10.0 and action/saga vocabularies 0.1.0 retain their semantic
 identities. Already published SDK 0.5.8 and Python 0.10.3 must remain immutable.
 A dedicated PR qualification workflow covers PostgreSQL, native Rust, actual
 Chromium and installed SDK/Python artifacts. No released artifact is claimed yet.
+
+## Source review and frozen qualification — 2026-10-30
+
+[The implementation packet](evidence/sagas/README.md) records independent Sol
+review of all 29 native criteria, including explicitly composed proofs and the
+qualified reference profile. The combined native protocol/oracle/provider/capacity/component run passes
+43 tests with 711 assertions; native component tests pass 173 assertions; strict
+types pass. No blanket acceptance-status rewrite was performed. Earlier
+inventory/component records retain their unverified/partial status and scope.
+
+The reviewed source now persists namespace-derived original action keys before
+worker release, protects control custody atomically, stops automatic work on
+capacity/lookup/clock exhaustion and preserves original issuer facts/operator
+review. Missing legacy custody refuses instead of inventing replacement keys.
+All four final portable hosts pass the 19-vector corpus; installed SDK and Python
+candidates and the JavaScript-free source-archive rebuild pass their scoped checks.
+Rust codegen/wire regression passes 121 tests; native action regression passes
+125 tests/1,993 assertions. The full boundary gate passes with its negative controls.
+
+The first draft PR CI caught a one-byte source-inventory mismatch, before native
+qualification or publication. Final source inventory is being regenerated after
+all edits. PR #74 remains gated on frozen hosted qualification, Sol's final
+source/evidence verdict, merge and exact retained-byte publication verification.

@@ -23,8 +23,8 @@ export function sagaRuntimePlan(a:Awaited<ReturnType<typeof installSagaProvider>
  const binding=(provider:Awaited<ReturnType<typeof installSagaProvider>>,providerId:string)=>({provider:providerId,issuerId:provider.gateway.issuerId,storeName:provider.storeName,gateway:provider.gateway,credential:provider.credential,actionRevisions:Object.fromEntries(actionNames.map(action=>[action,'saga-r1']))});
  return {id:definition.id,module:'sales',revision:'saga-r1',document,definition,bindings:{inventory:binding(a,'provider-a'),allocation:binding(b,'provider-b')}} as SagaRuntimeDefinition;
 }
-export async function installSagaProvider(store:ReferenceActionStore,providerName:string,issuer=new ReferenceActionIssuer(),faults:SagaProviderFaults={}){
- const storeName='saga-'+providerName,tenant='tenant-a',source=sagaActionDocument();await store.create(storeName,tenant,'epoch-'+providerName);
+export async function installSagaProvider(store:ReferenceActionStore,providerName:string,issuer=new ReferenceActionIssuer(),faults:SagaProviderFaults={},tenant='tenant-a'){
+ const storeName='saga-'+providerName,source=sagaActionDocument();await store.create(storeName,tenant,'epoch-'+providerName);
  const policy=new ReferenceActionPolicy(store,issuer),executor=new ReferenceActionExecutor(policy),gateway=new SagaProviderGateway(store,storeName,executor,faults,providerName==='inventory'?'provider-a':providerName==='allocation'?'provider-b':storeName);await gateway.initialize();
  for(const name of actionNames){const target:RevisionReference={module:'sales',action:name,revision:'saga-r1'};await executor.admission.revisions.retain(storeName,target,source);await policy.replayDiscovery(storeName,'sales',name,['reader']);}
  await policy.membership(storeName,'worker','forward',true);await policy.membership(storeName,'worker','compensator',true);await policy.membership(storeName,'worker','reader',true);

@@ -30,7 +30,7 @@ test('a coordinator self-report cannot replace a missing native provider commit'
  const withoutCommit=providers.filter(item=>item.ticket!=='reserve-ticket');
  const result=verifyIndependentHistory(expected,history,withoutCommit);
  expect(result.passed).toBe(3);
- expect(result.checks[0]!.failures).toContain('no independently queried native action outcome');
+  expect(result.checks[0]!.failures).toContain('no independently queried native provider fact');
  const coordinatorOnly:ProviderObservation[]=[{ticket:'reserve-ticket',status:'committed',entityKey:'order-a',entityStatus:'reserved',source:'coordinator-only'}];
  expect(verifyIndependentHistory(expected.slice(0,1),history.slice(0,1),coordinatorOnly).checks[0]!.failures).toContain('no independently queried native action outcome');
 });

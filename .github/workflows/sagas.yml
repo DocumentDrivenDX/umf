@@ -64,7 +64,7 @@ jobs:
           uv build --wheel --sdist --out-dir "$RUNNER_TEMP/saga-python-dist" python
           uv venv "$RUNNER_TEMP/saga-python-consumer"
           wheel_path="$(find "$RUNNER_TEMP/saga-python-dist" -name '*.whl' -type f)"
-          uv pip install --python "$RUNNER_TEMP/saga-python-consumer/bin/python" "$wheel_path" pytest
+          uv pip install --python "$RUNNER_TEMP/saga-python-consumer/bin/python" "$wheel_path" pytest hatchling
           UMF_SAGA_PYTHON="$RUNNER_TEMP/saga-python-consumer/bin/python" UMF_SAGA_PYTHON_WHEEL="$wheel_path" bun scripts/saga-portable/other-hosts.ts python
           "$RUNNER_TEMP/saga-python-consumer/bin/python" -m pytest python/tests/test_action_runtime_resources.py
       - name: Rebuild and install the source archive without JavaScript tools

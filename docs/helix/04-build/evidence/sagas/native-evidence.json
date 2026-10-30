@@ -152,7 +152,7 @@
   "bun": "1.4.3",
   "platform": "darwin",
   "architecture": "arm64",
-  "container": "umf-saga-reference-0408e9c9-3085-453f-ba71-f50c1e45f9c7",
+  "container": "umf-saga-reference-8f551bb4-a9ef-4cf0-a1d1-a332de20d45e",
   "componentAssertions": [
     {
       "id": "US-905-AC1",
@@ -270,6 +270,11 @@
       "witness": "capacity refusal occurs before durable ticket admission"
     },
     {
+      "id": "native-claim-capacity",
+      "result": "pass",
+      "witness": "ticket reserve exhaustion durably latches SAGA_LIMIT before lease, ticket, or action admission"
+    },
+    {
       "id": "US-905-AC23",
       "result": "pass",
       "witness": "automatic-time limit latches intervention"
@@ -282,7 +287,7 @@
     {
       "id": "US-905-AC26",
       "result": "pass",
-      "witness": "retained provider evidence resolves original pending ticket"
+      "witness": "retained provider evidence resolves original pending ticket and retained-byte ledger covers exact input, binding, result, and evidence copies"
     },
     {
       "id": "US-905-AC27",
@@ -298,6 +303,21 @@
       "id": "US-905-AC29",
       "result": "pass",
       "witness": "evidence is counted separately and cannot resolve across tenant authority"
+    },
+    {
+      "id": "native-clock-rollback",
+      "result": "pass",
+      "witness": "retained elapsed time detects host-clock rollback across coordinator restart and durably stops automatic work"
+    },
+    {
+      "id": "native-unicode-namespace-key",
+      "result": "pass",
+      "witness": "Unicode/slash identity maps to persisted ASCII namespace and exact preissued provider key survives coordinator restart"
+    },
+    {
+      "id": "native-legacy-custody-refusal",
+      "result": "pass",
+      "witness": "startup refuses missing historical namespace/key custody without rewriting either persisted value"
     }
   ]
 }

@@ -285,12 +285,12 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "a3d1bd834c906978552091f91b088a66d2d67e2b97e910eb607cc7a2adb6c4eb",
+    "sourceCohortSha256": "95f7a408d736b340bf2b222686e51518884bf88e87d6324d827cd62837745222",
     "typescriptApi": "5.9.3"
   },
   "counts": {
     "activeScriptFiles": 447,
-    "algorithmSymbols": 12795,
+    "algorithmSymbols": 12797,
     "pythonModules": 127,
     "rustBuildInputs": 79,
     "rustModules": 130,
@@ -8961,7 +8961,7 @@
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "python/src/umf/action_runtime.py",
-      "sha256": "7e25407f9cfef0fde4a9202d8471347d02067733a99ce7fa69a09446e00a0336"
+      "sha256": "b6a269e713450179490279cea7a6785ba24fe6aa793f862256cccba991f9386a"
     },
     {
       "activationEvidence": [],
@@ -12858,7 +12858,7 @@
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "python/umf_access/src/umf_access/generated_core.py",
-      "sha256": "37cfae979651dee50e0182b51ac13150c39016e2a5c296a65e0433da1d10365a"
+      "sha256": "c669efc24b166ef27e82852f683e10b18a546528a0d070b04f7b94f6fe851117"
     },
     {
       "activationEvidence": [],
@@ -36431,12 +36431,12 @@
         "pythonReport",
         "retain"
       ],
-      "bytes": 4125,
+      "bytes": 4187,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/saga-portable/collect.ts",
-      "sha256": "bac7beabfa163a786cca88abd1199a491244b9df62f0c4871719d2e0c1ea4f2d"
+      "sha256": "a218c94a525a26be9e7139d23d467ef452fcb8008257e21196f2398e4385bc54"
     },
     {
       "activationEvidence": [
@@ -36503,14 +36503,16 @@
       "algorithmSymbols": [
         "exactJson",
         "fingerprint",
+        "sagaActionKey",
+        "sagaNamespaceFor",
         "ticketReservation"
       ],
-      "bytes": 44465,
+      "bytes": 50890,
       "disposition": "unreferenced-script-source",
       "language": "ts",
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "scripts/saga-reference/coordinator.ts",
-      "sha256": "4d5507b97edc8b77492cc83d6b8992ea39dff2cf4bd800e04223ed193f5c6a67"
+      "sha256": "581ec9d8798f45509a04d6004fdbd08ff26d85182733bcbeb92cae02b52b9373"
     },
     {
       "activationEvidence": [],
@@ -36521,12 +36523,12 @@
         "issueId",
         "snapshotActor"
       ],
-      "bytes": 46369,
+      "bytes": 46856,
       "disposition": "unreferenced-script-source",
       "language": "ts",
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "scripts/saga-reference/protocol.ts",
-      "sha256": "ccfbc1a24c496c15c57c1e4b375b861d10d3c562d2e14141371500095ea6099a"
+      "sha256": "d1f711a0a6e1d24e70f3a8957d33f93cd98a712d9d9bbfe254105f8091ee5c44"
     },
     {
       "activationEvidence": [],
@@ -36535,12 +36537,12 @@
         "digest",
         "snapshotRequest"
       ],
-      "bytes": 14778,
+      "bytes": 14777,
       "disposition": "unreferenced-script-source",
       "language": "ts",
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "scripts/saga-reference/provider.ts",
-      "sha256": "737028f84a35ca2691eaaccf12f451fc93adfd0bf3db12075cdf19c7e5750f35"
+      "sha256": "9dd9719eaacf5faa2210daf19e2aec4557ba4a43533be42d7ac4ddcd7a71fbc4"
     },
     {
       "activationEvidence": [],
@@ -48929,12 +48931,12 @@
       "algorithmSymbols": [
         "submit"
       ],
-      "bytes": 3979,
+      "bytes": 4067,
       "disposition": "unreferenced-test-source",
       "language": "ts",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "tests/saga/control-capacity.test.ts",
-      "sha256": "05a6d036ba3e2993007da1cf8c5e186db965576e2c2a0f01ed01e45eabddedc6"
+      "sha256": "b4bb2dd05f6e9c0173a20f2be49be0c63b76db928ecd78b03b5bf7287d190cd3"
     },
     {
       "activationEvidence": [],
@@ -48945,7 +48947,7 @@
       "language": "ts",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "tests/saga/history-oracle.test.ts",
-      "sha256": "0ad34852cbe7b7d3211aea7e25d11af7e762d9ebb00d59bd6cdbcfb3bfff3337"
+      "sha256": "475a07e3d751e4f3a222662c2932c3ef039e259078ce6d629c9869e127dc9c5c"
     },
     {
       "activationEvidence": [],
@@ -48991,12 +48993,12 @@
         "request",
         "submit"
       ],
-      "bytes": 38858,
+      "bytes": 45663,
       "disposition": "unreferenced-test-source",
       "language": "ts",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "tests/saga/native-recovery.test.ts",
-      "sha256": "5ef48f67f2e6fc04527e883b5b051f178d0bc83d45dd8c5eba8cab2fce983e5c"
+      "sha256": "2f6604b9d09b8d2a92ee0fb57a06fb09a274197e2bd2fe83f034ae503315dfcd"
     },
     {
       "activationEvidence": [],
@@ -49021,12 +49023,12 @@
         "submit",
         "withHistoryProtocol"
       ],
-      "bytes": 94970,
+      "bytes": 111723,
       "disposition": "unreferenced-test-source",
       "language": "ts",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "tests/saga/protocol.test.ts",
-      "sha256": "c15fc74d85968d5b1a6a4d4a46ef314a20635898a26224859fcd0dcb72945500"
+      "sha256": "a3d5a35d0eae9ecf54b2ea2e6b4ac0db96cdf500c56af1d38434721c53386201"
     },
     {
       "activationEvidence": [],
@@ -49055,7 +49057,7 @@
       "language": "ts",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "tests/saga/provider-fixture.ts",
-      "sha256": "d589ac71bc34382fbf50d7f8ba469e2b5ad37bb8eff18b5f0d7716db563c7b84"
+      "sha256": "830267aae6030b22b731181b2974d01b66100c3c778d662557ed1ee760eae7f7"
     },
     {
       "activationEvidence": [
@@ -58272,7 +58274,7 @@
         "prepare_single_set_action"
       ],
       "resolvedInternalImports": [],
-      "sha256": "7e25407f9cfef0fde4a9202d8471347d02067733a99ce7fa69a09446e00a0336"
+      "sha256": "b6a269e713450179490279cea7a6785ba24fe6aa793f862256cccba991f9386a"
     },
     {
       "bytes": 272,
@@ -59293,7 +59295,7 @@
       "path": "python/umf_access/src/umf_access/generated_core.py",
       "publicExports": [],
       "resolvedInternalImports": [],
-      "sha256": "37cfae979651dee50e0182b51ac13150c39016e2a5c296a65e0433da1d10365a"
+      "sha256": "c669efc24b166ef27e82852f683e10b18a546528a0d070b04f7b94f6fe851117"
     },
     {
       "bytes": 2518,
@@ -70644,7 +70646,7 @@
         "actionPlanProducerBuild"
       ],
       "resolvedImports": [],
-      "sha256": "ae04bc9eb02c6700316cdd161ab494e470a31acbb8972711c2bf1d58be70ff59"
+      "sha256": "f0af8d7ccaa5751167ffc800b3d6090c253ef2052daa3080165a6fcf4ac591b8"
     },
     {
       "bytes": 4286,
@@ -73241,7 +73243,7 @@
         "spec/metamodel/generated/core-constraints.json",
         "spec/metamodel/generated/domain-policy.json"
       ],
-      "sha256": "084d63b03d422112e7c1edb4e3ecb9a825975ede44c2392ab7ab5cb8076b2748"
+      "sha256": "23a6ca1381524d1abd3603e876ab5e43f534e8c5ec6f6a4cc8f2e6739969dc22"
     },
     {
       "bytes": 1525352,
@@ -73281,7 +73283,7 @@
       "resolvedImports": [
         "node_modules/ajv/dist/ajv.d.ts"
       ],
-      "sha256": "2caf4275041226cb144a1be529a29b4cb8d535f2d1adcb1ef767b311ca81c6ac"
+      "sha256": "ad82402b6f2d7595fb5f49831d5c1339dcbea768cd669cc0d5b91ea226820d66"
     },
     {
       "bytes": 32847,

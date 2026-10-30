@@ -24,7 +24,8 @@ test('control reservations are scoped, durable and serialized before mutation',a
   expect(await adapter.prepareControl(actor,{...request,instance:two.instance})).toBeString();
   await expect(adapter.prepareControl({...actor,principal:'outsider'},request)).rejects.toThrow('AUTHORIZATION');
   // Exhaust storage independently of count, allowing exactly one more promise.
-  const reserve=Number((await cluster.coordinator.sql`select retained_bytes from saga_control_capability where capability=${cap}`)[0]!.retained_bytes);
+  const probe=await adapter.prepareControl(actor,{...request,instance:two.instance});
+  const reserve=Number((await cluster.coordinator.sql`select retained_bytes from saga_control_capability where capability=${probe}`)[0]!.retained_bytes);
   await cluster.coordinator.sql`update saga_control_budget set attempts=1 where scope=${scope}`;
   await cluster.coordinator.sql`update saga_instance set max_retained_bytes=retained_bytes+${reserve} where id=${one.instance.id}`;
   const restarted=new SagaProtocolCoordinator(cluster.coordinator,plans,async()=>true);

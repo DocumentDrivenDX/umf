@@ -2,6 +2,7 @@ CREATE TABLE IF NOT EXISTS saga_instance (
   id text PRIMARY KEY,
   tenant text NOT NULL,
   owner text NOT NULL,
+  namespace text NOT NULL DEFAULT '',
   submit_key text NOT NULL,
   intent text NOT NULL,
   intent_digest text NOT NULL,
@@ -39,6 +40,7 @@ CREATE TABLE IF NOT EXISTS saga_ticket (
   direction text NOT NULL CHECK (direction IN ('f','c')),
   provider text NOT NULL,
   action_revision text NOT NULL,
+  action_key text NOT NULL DEFAULT '',
   binding_snapshot text NOT NULL,
   inputs text NOT NULL,
   original_result text,
@@ -100,6 +102,9 @@ CREATE TABLE IF NOT EXISTS saga_history_cursor (
  created_at timestamptz NOT NULL DEFAULT clock_timestamp()
 );
 CREATE INDEX IF NOT EXISTS saga_control_capability_scope ON saga_control_capability(tenant,principal,operation);
+
+ALTER TABLE saga_instance ADD COLUMN IF NOT EXISTS namespace text NOT NULL DEFAULT '';
+ALTER TABLE saga_ticket ADD COLUMN IF NOT EXISTS action_key text NOT NULL DEFAULT '';
 
 
 -- Reservations survive admission, recovery and host restart. The submission
