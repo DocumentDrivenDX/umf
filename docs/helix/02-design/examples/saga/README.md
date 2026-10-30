@@ -54,3 +54,18 @@ A definitive rollback at step 5 also unwinds this prefix while retaining failed
 as that invocation's outcome. Failure at the first step yields compensated with
 an empty prefix. Closed is reserved for attributable operator acceptance of
 settled residual effects, not successful compensation.
+
+## Definitive noncommit and late delivery
+
+If confirm's native attempt rolls back, that alone is not permission to unwind.
+The saga provider must first settle all original attempts and close confirm's
+ticket against any delayed native invocation, then retain its final failed
+disposition. Only after that original evidence is recorded may deallocate/release
+run. A delayed delivery of confirm then recovers failed and creates no effect.
+An empty tx/1 outcome row or an uncertain gateway-close write leaves the saga
+reconciling. The finality requirement is additional to the action declaration.
+
+A crash after an original lookup response but before durable observation loses
+that response, not the already consumed lookup attempt. With remaining admitted
+lookup budget it may reconcile again; after exhaustion it requires protected
+manual resolution without automatic resume. Neither branch resets the counter.

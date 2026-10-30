@@ -213,3 +213,18 @@ stateDiagram-v2
 reconciliation. Cancel during failure unwind refuses; resolve appends evidence
 without resuming work. Close performs no business effects. The contract's guards,
 not arrows alone, govern each transition. See the worked example timeline.
+
+## Combined formal validation and provider finality
+
+[Protocol coverage](../experiments/saga/formal/protocol.md) maps every lifecycle
+phase and the remaining recovery/budget/closure transitions to one finite model.
+Its per-actor progress cuts replace the older whole-relation fairness claim for
+this combined scope. The earlier models remain useful boundary evidence.
+
+The analysis makes an additional provider obligation explicit: tx/1's lack of a
+terminal outcome after failed attempts is not whole-invocation finality. A saga
+gateway must serialize deliveries and durably fence the original ticket after all
+admitted attempts settle, before definitive noncommit can trigger unwind. The
+portable library exposes that as an unchecked recovery obligation; native hosts
+must qualify it independently. This preserves existing action vocabulary/tx1
+meaning and the coupled UMF ownership boundary.

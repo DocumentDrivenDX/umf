@@ -109,3 +109,11 @@ US-905-AC28 additionally maps to planned `tests/saga/assessment.test.ts` with
 work emits SAGA_PIVOT with exact paths and preserved source; a terminal irreversible
 step emits no early-barrier warning. Native risk disclosure remains STP-905's
 separate obligation. These planned tests have not been executed.
+
+## Finality assessment allocation
+
+US-906-AC9's planned assessment cases require exact per-step/direction
+`saga.invocation.finality` obligations and evidence claims. Test missing, duplicate,
+wrong-source and bare-tx1 claims as unsupported/unknown. Complete declaration and
+host claims never set executionVerified:true. These portable library/browser tests
+remain implementation work; the finite model checks the coordination rule only.

@@ -137,3 +137,20 @@ intervention/closure; a structural guard alone cannot prove that history.
 These are unexecuted native acceptance requirements. Schema fixtures and finite
 models cannot mark them passed. AC28 also requires portable diagnostics in
 `tests/saga/assessment.test.ts` under STP-906.
+
+## Completed bounded protocol analysis
+
+The source-exact `Protocol.tla` suite, correspondence and reproduction are in
+[protocol coverage](../../02-design/experiments/saga/formal/protocol.md). It closes
+the earlier model's lifecycle-state gaps within explicit finite bounds. Native
+acceptance remains planned; the evidence report distinguishes full exploration,
+expected mutant counterexample and reachability witness.
+
+Extend AC25's planned native witness with an admitted rollback followed by durable
+whole-ticket closure, coordinator unwind, delayed delivery and a provider effect
+query. The late delivery must return the original noncommit with zero new effects.
+Also inject uncertainty while closing the gateway: it remains pending and cannot
+start unwind. Confirmed rollback of only one internal attempt is a negative case.
+AC8/29 require lookup/time counters to survive restart and takeover. AC26/27 must
+race late original resolution and review/closure with cancellation while retaining
+the first durable stop cause. No terminal projection can omit a pending ticket.

@@ -114,7 +114,9 @@ Consumers need shared, inspectable semantics for partial completion and recovery
   supported deduplication or noncommit evidence. No exactly-once claim follows
   from coordinator persistence or caller keys alone. A definitive forward
   noncommit must unwind previously committed work without fabricating rejection;
-  the first profile adds no automatic fresh business retry.
+  the first profile adds no automatic fresh business retry. Definitive noncommit
+  must close the entire original ticket against later native execution, including
+  delayed deliveries and all internal attempts; one attempt's rollback is insufficient.
 - **SAGA-11:** Compensation must have its own durable invocation, replay and
   reconciliation obligations. A compensation failure must remain visible. The
   initial profile must stop automatic unwinding at an unresolved or failed
