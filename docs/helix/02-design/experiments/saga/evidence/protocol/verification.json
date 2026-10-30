@@ -1,0 +1,35 @@
+{
+  "baselineAccepted": true,
+  "negativeControlsRejected": 6,
+  "results": [
+    {
+      "name": "model-bytes",
+      "rejected": true
+    },
+    {
+      "name": "configuration-bytes",
+      "rejected": true
+    },
+    {
+      "name": "original-log-custody",
+      "rejected": true
+    },
+    {
+      "name": "missing-case",
+      "rejected": true
+    },
+    {
+      "name": "wrong-case-bound",
+      "rejected": true
+    },
+    {
+      "name": "wrong-tool-pin",
+      "rejected": true
+    }
+  ],
+  "checkerSha256": "30370370f6d0ea8f42c930f366d70b18d5b9eb1f6c23f05252b84196fadbb419",
+  "reportSha256": "5e7525bb3d59c688b9f372500509339dba6f34f6e7410f58c2bef543ddcba1b0",
+  "limits": [
+    "Evidence consistency controls only; no execution attestation or native qualification"
+  ]
+}

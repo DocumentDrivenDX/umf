@@ -1,0 +1,6 @@
+# Per-case caches support resumed local runs. The published report and compressed
+# original logs are the reviewable evidence; regenerate caches with run_protocol.py.
+*.log
+*.json
+!report.json
+!verification.json

@@ -1,0 +1,1532 @@
+{
+  "requiredCases": 43,
+  "primaryCases": 40,
+  "supplementalWitnesses": 3,
+  "allPassed": true,
+  "publishedUtc": "2026-10-30T01:59:51.306906+00:00",
+  "modelSha256": "670483297836f5308c838069a49ad46cd7730a142def4681851663de68b1fa3e",
+  "runnerSha256": "ec60feacc254b49b14c256af6f49cba32c1e051f0768b9909d58ece4211485f8",
+  "witnessRunnerSha256": "a51a7565e43dc3b21208f4438e44497ac4f30b0aaa7b00afa76351922b400db5",
+  "witnessModelSha256": "a94219402e5553e5ab00272155d216148e7c48361316b620c2de24f74aa12226",
+  "publisherSha256": "1cab5c41bbfe68efcbc15c401b4d8441ed567e9c8ff5114b51cdcf1fa2c3b467",
+  "jarSha256": "936a262061c914694dfd669a543be24573c45d5aa0ff20a8b96b23d01e050e88",
+  "javaVersion": "openjdk version \"21.0.13\" 2026-10-20 LTS\nOpenJDK Runtime Environment Temurin-21.0.13+9 (build 21.0.13+9-LTS)\nOpenJDK 64-Bit Server VM Temurin-21.0.13+9 (build 21.0.13+9-LTS, mixed mode, sharing)",
+  "assurance": "Completed bounded coordination checks; no unbounded theorem or implementation refinement",
+  "bounds": [
+    "One trusted namespace, one immutable instance; two input labels",
+    "Two-step combined-fault profiles; three-step crash and stable progress cuts",
+    "One volatile-observation crash/restart, one lease takeover, one action retirement, one action-authority revocation, one operator revocation",
+    "Faults begin after durable submit; post-terminal control changes and retirement/revocation of settled slots omitted",
+    "Each invocation slot has a distinct fixed action/binding; shared-revision aliasing is outside these cases",
+    "One same-ticket redelivery; lookup limit one, or two in crash-recovery cuts; two abstract elapsed-budget ticks",
+    "Exact result classes committed/rejected/conflict/failed; three-step crash cut uses committed/failed",
+    "First step action/irreversible/qualified no-effect profiles; remaining steps action-compensated"
+  ],
+  "assumptions": [
+    "Atomic durable native effect and original disposition; closed-ticket custody is additional to base tx/1 replay",
+    "Policy revocation serializes with its qualified native transaction; admitted revisions may finish after retirement",
+    "Evidence and authenticated bindings have trusted issuer/scope predicates; no cryptographic or policy implementation proof",
+    "Stable liveness cuts disable faults, require responsive lookups and weak fairness separately for worker/gateway/provider/observer"
+  ],
+  "exclusions": [
+    "Wire parsing, full typed/reference admission and value domains are allocated to schema/library conformance",
+    "Submission/control replay byte equality, complete audit encoding and multi-tenant policy enforcement require separate native custody witnesses",
+    "Real elapsed clocks, all 32 steps, unbounded failures/concurrency, storage capacity and implementation refinement are not proved",
+    "No saga executor, installed browser binding or production provider is qualified by these checks"
+  ],
+  "results": [
+    {
+      "name": "smoke",
+      "n": 1,
+      "dispositions": [
+        "action"
+      ],
+      "faults": false,
+      "faultProfile": "all",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": true,
+      "lookupLimit": 1,
+      "variant": "good",
+      "expected": null,
+      "temporal": null,
+      "exitCode": 0,
+      "stateCounts": [
+        "95",
+        "71",
+        "0"
+      ],
+      "completeWithoutViolation": true,
+      "module": "Protocol",
+      "actualViolation": null,
+      "configuration": "protocol-smoke.cfg",
+      "configSha256": "103193e5d1a25bcf125afd735054fe1b0131e250ae9aaaa7b1633a8aae619ae1",
+      "compressedLog": "smoke.log.gz",
+      "compressedLogSha256": "31bb5b60126fb2d1688b42fbb3c533f4c98c6f9b99fa80c38607f05090d46a8e",
+      "logSha256": "c8d2a2d0f4d924e9bd6e856a7a4dd26132b822bb869ac2f16c06c2277f30c58c"
+    },
+    {
+      "name": "safety-two",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": true,
+      "faultProfile": "all",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "good",
+      "expected": null,
+      "temporal": null,
+      "exitCode": 0,
+      "stateCounts": [
+        "50701575",
+        "10189901",
+        "0"
+      ],
+      "completeWithoutViolation": true,
+      "module": "Protocol",
+      "actualViolation": null,
+      "configuration": "protocol-safety-two.cfg",
+      "configSha256": "ef4522a55f303f1f379afe83da3c4d3fbf5b5ec60e20b6d61d4c7c7089135a56",
+      "compressedLog": "safety-two.log.gz",
+      "compressedLogSha256": "85a749be474de300384e1852e7835315f9ae9f552b28d47f91922628f1220079",
+      "logSha256": "79eb3da7839b46c96ee36cf47013168cb8b7135210b9644fb69eb769ae605f0d"
+    },
+    {
+      "name": "safety-three",
+      "n": 3,
+      "dispositions": [
+        "action",
+        "action",
+        "action"
+      ],
+      "faults": true,
+      "faultProfile": "crash",
+      "results": [
+        "committed",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 2,
+      "variant": "good",
+      "expected": null,
+      "temporal": null,
+      "exitCode": 0,
+      "stateCounts": [
+        "106601",
+        "38201",
+        "0"
+      ],
+      "completeWithoutViolation": true,
+      "module": "Protocol",
+      "actualViolation": null,
+      "configuration": "protocol-safety-three.cfg",
+      "configSha256": "34bef8e02ada04f25b601b58557b32799dd3374cc5eecc3a7abf1858e8054401",
+      "compressedLog": "safety-three.log.gz",
+      "compressedLogSha256": "2751b6263ee121a9cd8d2266f3dc4d7ccd56857138f747cbff1136dd72f7337a",
+      "logSha256": "72284a4b2c6d80be0f1e72c0d6d662edd3f8f89ca1f1c3252ad127113fbaae28"
+    },
+    {
+      "name": "safety-irreversible",
+      "n": 2,
+      "dispositions": [
+        "irreversible",
+        "action"
+      ],
+      "faults": true,
+      "faultProfile": "all",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "good",
+      "expected": null,
+      "temporal": null,
+      "exitCode": 0,
+      "stateCounts": [
+        "18094815",
+        "3484581",
+        "0"
+      ],
+      "completeWithoutViolation": true,
+      "module": "Protocol",
+      "actualViolation": null,
+      "configuration": "protocol-safety-irreversible.cfg",
+      "configSha256": "3338640728002064c66f63b899fbcd14a6ef12174c90ffbd04bcd2e50cc2bbc0",
+      "compressedLog": "safety-irreversible.log.gz",
+      "compressedLogSha256": "f956b7da0aae7ed092751f6685b050b203ffacd9ca6d31519b04783d751694eb",
+      "logSha256": "ed88f2d513f87572ad06c7880b020a12681e85bd67666af0fd782f5c5a874849"
+    },
+    {
+      "name": "safety-no-effect",
+      "n": 2,
+      "dispositions": [
+        "unnecessary",
+        "action"
+      ],
+      "faults": true,
+      "faultProfile": "all",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "good",
+      "expected": null,
+      "temporal": null,
+      "exitCode": 0,
+      "stateCounts": [
+        "18030263",
+        "3491581",
+        "0"
+      ],
+      "completeWithoutViolation": true,
+      "module": "Protocol",
+      "actualViolation": null,
+      "configuration": "protocol-safety-no-effect.cfg",
+      "configSha256": "63be2aa5e7c7850be15f5eea297665f68cdfe0b40aef53bf04fa91aad4cdf7f8",
+      "compressedLog": "safety-no-effect.log.gz",
+      "compressedLogSha256": "d9e5ee27fd5dbb14cef1401b00bc23c16d2d8f6e87a1f6eeaea6c1c39a2531b8",
+      "logSha256": "02a8fbf93e62d3c3127b5f598e79dcdb308be5b9b9eca027d61ceec18b3e0859"
+    },
+    {
+      "name": "progress-stable",
+      "n": 3,
+      "dispositions": [
+        "action",
+        "action",
+        "action"
+      ],
+      "faults": false,
+      "faultProfile": "all",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": true,
+      "lookupLimit": 1,
+      "variant": "good",
+      "expected": null,
+      "temporal": "EventuallyStopped",
+      "exitCode": 0,
+      "stateCounts": [
+        "5177",
+        "2357",
+        "0"
+      ],
+      "completeWithoutViolation": true,
+      "module": "Protocol",
+      "actualViolation": null,
+      "configuration": "protocol-progress-stable.cfg",
+      "configSha256": "826b04dba07cdf1780599f05fe6326e61c94a35654071d2b578281d43e34897a",
+      "compressedLog": "progress-stable.log.gz",
+      "compressedLogSha256": "f56311a0b8ac1b19fcfbdabd8fc9588898fb4e32fe0a00445e479f00dc7b1c66",
+      "logSha256": "522520cb166e8bace29642be3f000cd555f6e2cea575ef7398c15b67452045a3"
+    },
+    {
+      "name": "progress-success",
+      "n": 3,
+      "dispositions": [
+        "action",
+        "action",
+        "action"
+      ],
+      "faults": false,
+      "faultProfile": "all",
+      "results": [
+        "committed"
+      ],
+      "responsive": true,
+      "lookupLimit": 1,
+      "variant": "good",
+      "expected": null,
+      "temporal": "EventuallySucceeded",
+      "exitCode": 0,
+      "stateCounts": [
+        "137",
+        "89",
+        "0"
+      ],
+      "completeWithoutViolation": true,
+      "module": "Protocol",
+      "actualViolation": null,
+      "configuration": "protocol-progress-success.cfg",
+      "configSha256": "c5afe361bc5a3a72a1d4b8a99a6b06787ceec3ceb87dcc798fe677ae1408d612",
+      "compressedLog": "progress-success.log.gz",
+      "compressedLogSha256": "607d4143dc2b745d8f75610adcce322b95760df986f14e86128ca5f5a1240348",
+      "logSha256": "d488114b28cd42cb82ee6ec7fe4de7206795dc3cefa86b19d98f8963f99ef60d"
+    },
+    {
+      "name": "mutant-failed-reinvoke",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": true,
+      "faultProfile": "all",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "failed-reinvoke",
+      "expected": "NoncommitHasNoEffect",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "2012",
+        "860",
+        "656"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "NoncommitHasNoEffect",
+      "configuration": "protocol-mutant-failed-reinvoke.cfg",
+      "configSha256": "69b709ed416e660c068b5b4141532c80de9dc25903de768fc83489266146e407",
+      "compressedLog": "mutant-failed-reinvoke.log.gz",
+      "compressedLogSha256": "1feca9eb3ed7c776d191bf6c0c2d58fc75a569b9faaaec23a42cff5091bbb78d",
+      "logSha256": "06ae9e5828794ef48bc147c5e4bd8f726ccc0b66d98e6e706ba72e34007a8b54"
+    },
+    {
+      "name": "mutant-resume",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": true,
+      "faultProfile": "all",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "resume",
+      "expected": "NoAutomaticResume",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "559",
+        "314",
+        "266"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "NoAutomaticResume",
+      "configuration": "protocol-mutant-resume.cfg",
+      "configSha256": "c426f4e8deb7f077e7708cedb0a18b35abdfd640931ba4d6e22317c769c1fc44",
+      "compressedLog": "mutant-resume.log.gz",
+      "compressedLogSha256": "eaedc68853ec66985c9467c6e5646f0fe6083004903a29a7c4a1f525b8f24f2f",
+      "logSha256": "fd17c4275d426efced36601b73cc9504d2923512e4fec5907167f436915f5d64"
+    },
+    {
+      "name": "mutant-changed-intent",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": true,
+      "faultProfile": "all",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "changed-intent",
+      "expected": "IntentPinned",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "18",
+        "18",
+        "15"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "IntentPinned",
+      "configuration": "protocol-mutant-changed-intent.cfg",
+      "configSha256": "2bedaf9446710e34bfd7572f866d82bc8b0e27b5584e2e0cd4d90366ceb5040d",
+      "compressedLog": "mutant-changed-intent.log.gz",
+      "compressedLogSha256": "6c2f8691a919fe75bc88ce5b17224a3eda254a480f082f47dba79b6187bd48b4",
+      "logSha256": "4b081cc837679690e0b64d10642b5ac3c0db88a82877fcc0ceef63ae872a8673"
+    },
+    {
+      "name": "mutant-unknown-advance",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": true,
+      "faultProfile": "all",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "unknown-advance",
+      "expected": "ForwardOrdered",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "2080",
+        "820",
+        "619"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "ForwardOrdered",
+      "configuration": "protocol-mutant-unknown-advance.cfg",
+      "configSha256": "8f4ac40655a304771ac21d5791205c2bb688632e2a075f3ee131e1766d9eb38b",
+      "compressedLog": "mutant-unknown-advance.log.gz",
+      "compressedLogSha256": "06bfaa78849cbb72a7e07a92a167583f8afdf26dcd6da55ba9e9b7ce2f5ad386",
+      "logSha256": "4c7fb252213213aa66bcbbc260a264b9891dcf5e6bfa232f8f94227f4a11c775"
+    },
+    {
+      "name": "mutant-duplicate-effect",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": true,
+      "faultProfile": "all",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "duplicate-effect",
+      "expected": "NoDuplicateEffects",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "1970",
+        "821",
+        "620"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "NoDuplicateEffects",
+      "configuration": "protocol-mutant-duplicate-effect.cfg",
+      "configSha256": "cea5167239de543e87550cb2feba28c4b58c5bc08d5636bc9264a93907eb8dda",
+      "compressedLog": "mutant-duplicate-effect.log.gz",
+      "compressedLogSha256": "e45275a43de19b6d88fd5e2134d852f1ce966ab13812f22654e316a5e284ac4f",
+      "logSha256": "263858d0a21281cb4694ecc20fc7365c7a461eb4deb358e5cb306ffc6342f5c6"
+    },
+    {
+      "name": "mutant-rollback-running",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": true,
+      "faultProfile": "all",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "rollback-running",
+      "expected": "FailureStartsUnwind",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "7406",
+        "2660",
+        "1826"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "FailureStartsUnwind",
+      "configuration": "protocol-mutant-rollback-running.cfg",
+      "configSha256": "a47229040f7585b05f5ffb48ab72f4aabbea1379a8099b6e646780c7d32dea8d",
+      "compressedLog": "mutant-rollback-running.log.gz",
+      "compressedLogSha256": "63a4bf5c7e2cc0ca8f40a80625fa882d99fe080c61af46ee66c200715311c854",
+      "logSha256": "1277a2a4ed2a9a0962cfbf0ad34743bee25f160b716173a258143ea75a5d0edd"
+    },
+    {
+      "name": "mutant-late-cancel",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": true,
+      "faultProfile": "all",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "late-cancel",
+      "expected": "CancelledCause",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "64503",
+        "17907",
+        "10633"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "CancelledCause",
+      "configuration": "protocol-mutant-late-cancel.cfg",
+      "configSha256": "ac9b45d0f70a9c3041f99126326a6fce94deb4913605be3b1926e589e1951151",
+      "compressedLog": "mutant-late-cancel.log.gz",
+      "compressedLogSha256": "c66c6f170935d22e56c05845df8c65b127ae9a1209820782bbf5542e07e03116",
+      "logSha256": "2c8aa531c27f230135d7519a59d34b47eb464ce1dd0be359394a5783ad776f4b"
+    },
+    {
+      "name": "mutant-skip-barrier",
+      "n": 2,
+      "dispositions": [
+        "irreversible",
+        "action"
+      ],
+      "faults": true,
+      "faultProfile": "all",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "skip-barrier",
+      "expected": "NoFalseRestoration",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "141622",
+        "38823",
+        "21656"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "NoFalseRestoration",
+      "configuration": "protocol-mutant-skip-barrier.cfg",
+      "configSha256": "49cfcc53baaee713f5a3a4c90192290e321f7a7c4337fa582f622637a34c6a22",
+      "compressedLog": "mutant-skip-barrier.log.gz",
+      "compressedLogSha256": "241374f9bef5a7e305ad63206bd2b74d4c9cbfefc7c1c91bbc54b605187e4ccc",
+      "logSha256": "a984f1b5f60e42d0f8b466f74863cc71f00d1bbd689ab3da639f415430646180"
+    },
+    {
+      "name": "mutant-timeout-failure",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": true,
+      "faultProfile": "all",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "timeout-failure",
+      "expected": "OutcomesSound",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "388",
+        "231",
+        "196"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "OutcomesSound",
+      "configuration": "protocol-mutant-timeout-failure.cfg",
+      "configSha256": "a65ead343ecacc8446f14b13937229615ccac2b1e43eab36a2def90862a4741a",
+      "compressedLog": "mutant-timeout-failure.log.gz",
+      "compressedLogSha256": "7978c88349c555ec254ddf60352fc75655761744b12c4f811bb9f4c79479b625",
+      "logSha256": "dccc4581383c030d005846fcba04bb81f7f7d3f3843bf0d775096106c9fc3993"
+    },
+    {
+      "name": "mutant-budget-admit",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": true,
+      "faultProfile": "all",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "budget-admit",
+      "expected": "ExpiryCut",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "570",
+        "301",
+        "253"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "ExpiryCut",
+      "configuration": "protocol-mutant-budget-admit.cfg",
+      "configSha256": "ef9ee52e8998c6ca7244b1be586f39b75d17f619e6babb4081ca22828625acdc",
+      "compressedLog": "mutant-budget-admit.log.gz",
+      "compressedLogSha256": "f736189ca447f49cb5a79d73c133b0b7c71f0773370136b389c8c011ff878a6c",
+      "logSha256": "ef3c63c908e12742e1ad36c0c4b0d2be9c80719822d7b5354b8c0a230e0f9000"
+    },
+    {
+      "name": "mutant-stale-owner",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": true,
+      "faultProfile": "all",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "stale-owner",
+      "expected": "TicketOwnership",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "728",
+        "371",
+        "310"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "TicketOwnership",
+      "configuration": "protocol-mutant-stale-owner.cfg",
+      "configSha256": "4bd51f40d8e05e357fbf5fd1cc7b8f59376d5100bb959819059a7423eb596420",
+      "compressedLog": "mutant-stale-owner.log.gz",
+      "compressedLogSha256": "b10aeed499121e7ae3d990b33b913d80999b4214d64f21fbd5c6cea77ac4c4f0",
+      "logSha256": "d43f8391c75f7a17211740522cd11d8f35a960dadb8487b09c807451727dbbf6"
+    },
+    {
+      "name": "mutant-retired-admit",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": true,
+      "faultProfile": "all",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "retired-admit",
+      "expected": "NativeAdmission",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "466",
+        "283",
+        "243"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "NativeAdmission",
+      "configuration": "protocol-mutant-retired-admit.cfg",
+      "configSha256": "93626cb3c86a759e572a2eb5bd8cf29cd2cbf98ebc8ddf75c562ab978106f181",
+      "compressedLog": "mutant-retired-admit.log.gz",
+      "compressedLogSha256": "0bb1ff70249aba5ccf79120a40a7206b05c4b76903431c1fb9387af411e1741f",
+      "logSha256": "4e4e80c22dd9cef4942b7a7b0dd1766be776f1b7985ef05087d2c98aa49dbbe7"
+    },
+    {
+      "name": "mutant-fabricated-resolution",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": true,
+      "faultProfile": "all",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "fabricated-resolution",
+      "expected": "OutcomesSound",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "2229",
+        "963",
+        "745"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "OutcomesSound",
+      "configuration": "protocol-mutant-fabricated-resolution.cfg",
+      "configSha256": "2ef6a15739e3cc7cfc1c637d726ee7f6cea1e4171405bfc361ca94607a4f8fad",
+      "compressedLog": "mutant-fabricated-resolution.log.gz",
+      "compressedLogSha256": "ebc02007d86e1bab57290a62d1491bb7e280c135825c25683bebf7200f956582",
+      "logSha256": "1a6522416c0c8ddb2d3aa1328b9465ab61300f42f5b7bdf81122675e47f4c472"
+    },
+    {
+      "name": "mutant-close-pending",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": true,
+      "faultProfile": "all",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "close-pending",
+      "expected": "ClosedSettled",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "9069",
+        "3289",
+        "2325"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "ClosedSettled",
+      "configuration": "protocol-mutant-close-pending.cfg",
+      "configSha256": "40c3cf0e1fb458d4a545ebe05b8ef23149a71d6cb19cb5e0befbe29a0b03ed3c",
+      "compressedLog": "mutant-close-pending.log.gz",
+      "compressedLogSha256": "44f91cc25f9c770f5727decaa374e37c979a49dfc3c40f46db73b1d9996ee4cc",
+      "logSha256": "da16176563d4178bdd0dbb1be40afb6980d970142cb42f6e8bbc09bcb81fee6e"
+    },
+    {
+      "name": "mutant-close-stale",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": true,
+      "faultProfile": "all",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "close-stale",
+      "expected": "ClosedEvidence",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "146366",
+        "39988",
+        "22329"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "ClosedEvidence",
+      "configuration": "protocol-mutant-close-stale.cfg",
+      "configSha256": "051475d1912f5f79624e3eb8a84d46a6d9b703909ce09480df47155785cf7ec8",
+      "compressedLog": "mutant-close-stale.log.gz",
+      "compressedLogSha256": "c904317208ca0a9100f733d8f821b54e5010cb4ebeec72882375d4992e29e59c",
+      "logSha256": "eb13f5832fcf1b9970410c59bf1844253fb1224fa08e4b791ee4c996bca4c8a9"
+    },
+    {
+      "name": "mutant-close-foreign",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": true,
+      "faultProfile": "all",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "close-foreign",
+      "expected": "ClosedEvidence",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "3245",
+        "1321",
+        "1007"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "ClosedEvidence",
+      "configuration": "protocol-mutant-close-foreign.cfg",
+      "configSha256": "e712028992be9edb19b2f33c6c4e2e207d6fbe6f403729a8c28f0128405a2221",
+      "compressedLog": "mutant-close-foreign.log.gz",
+      "compressedLogSha256": "a8747c2a4f8d7e73a43234c8c73b71e9b0a3b977058827a0a6de4c77af4a98b5",
+      "logSha256": "230acf64bf993b6309834e51d0e4d297693bd1de4af339a87e1ada5ddac04485"
+    },
+    {
+      "name": "mutant-close-outsider",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": true,
+      "faultProfile": "all",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "close-outsider",
+      "expected": "ClosedEvidence",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "12071",
+        "4151",
+        "2864"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "ClosedEvidence",
+      "configuration": "protocol-mutant-close-outsider.cfg",
+      "configSha256": "f6284fac98991cb8b32da551d5d2de13a819683dcd32d3b46dd9005de4a42f30",
+      "compressedLog": "mutant-close-outsider.log.gz",
+      "compressedLogSha256": "b835f9aadfff1ba501a6a4a582e825840b755e917581269160340f0762c5a60c",
+      "logSha256": "b06d67ced28d2593bae8a84ae18884aeaa040d0c41250be63b2fa0a328a53da1"
+    },
+    {
+      "name": "witness-NoQueuedWitness",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": false,
+      "faultProfile": "budget",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "good",
+      "expected": "NoQueuedWitness",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "2",
+        "2",
+        "0"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "NoQueuedWitness",
+      "configuration": "protocol-witness-NoQueuedWitness.cfg",
+      "configSha256": "24728ec2ea44577dd24fe278154368c8dd3b560a615cd806ce276c190d5ca162",
+      "compressedLog": "witness-NoQueuedWitness.log.gz",
+      "compressedLogSha256": "6e2043dca8430fd88fd63c561d4a2a4f3104e67d9dc9ba1ef09d086231168e36",
+      "logSha256": "303d4c71a9784101b58a4128cad2baeb88d2313b68d007a2640c5b1bc2e73e76"
+    },
+    {
+      "name": "witness-NoRunningWitness",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": false,
+      "faultProfile": "budget",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "good",
+      "expected": "NoRunningWitness",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "4",
+        "4",
+        "1"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "NoRunningWitness",
+      "configuration": "protocol-witness-NoRunningWitness.cfg",
+      "configSha256": "4a2c5bdaf38b6000a12cd6eaab74d4ca27cea4986e9155483813125d918ae6a7",
+      "compressedLog": "witness-NoRunningWitness.log.gz",
+      "compressedLogSha256": "f70cbca7fe9fac2ef3201fac1e58db0da76f776d6be5cf6ad4745791acf1aefd",
+      "logSha256": "2d618fa18123e12bf87400050449a7d040bd0965235080a33c95d92e9318bd72"
+    },
+    {
+      "name": "witness-NoReconcilingWitness",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": false,
+      "faultProfile": "budget",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "good",
+      "expected": "NoReconcilingWitness",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "7",
+        "7",
+        "2"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "NoReconcilingWitness",
+      "configuration": "protocol-witness-NoReconcilingWitness.cfg",
+      "configSha256": "01473acccbbd27892afb24e14b2c792588e553f3ece95127ded32aca1196afa7",
+      "compressedLog": "witness-NoReconcilingWitness.log.gz",
+      "compressedLogSha256": "2c43c64738ea29a62765f6f6b6486ae62d0d67ab0a20632476b7cf6b608a738e",
+      "logSha256": "82c3b0dc2ecb95d5199e365212543d934c38f8d3c61b53a58b06123302967cfb"
+    },
+    {
+      "name": "witness-NoCompensatingWitness",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": false,
+      "faultProfile": "budget",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "good",
+      "expected": "NoCompensatingWitness",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "68",
+        "54",
+        "29"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "NoCompensatingWitness",
+      "configuration": "protocol-witness-NoCompensatingWitness.cfg",
+      "configSha256": "b7d72706b58c4f96c250cbc2795702b5658e5ff847422db547f5656e0d8835b8",
+      "compressedLog": "witness-NoCompensatingWitness.log.gz",
+      "compressedLogSha256": "c9225b3e6af28b355008df89cc5dc2c5aab800e86263271c252c05d151f1c233",
+      "logSha256": "564f6f252d1e00240a10246507b0cd5fcc3ff42d67a85e663fc4eeb37c7c7d25"
+    },
+    {
+      "name": "witness-NoSucceededWitness",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": false,
+      "faultProfile": "budget",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "good",
+      "expected": "NoSucceededWitness",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "838",
+        "378",
+        "56"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "NoSucceededWitness",
+      "configuration": "protocol-witness-NoSucceededWitness.cfg",
+      "configSha256": "ed35c10b8e1e9f1e40f607c8eb229c834238a1834bdf6461dcfb02f1b5cf1fb1",
+      "compressedLog": "witness-NoSucceededWitness.log.gz",
+      "compressedLogSha256": "06e1cf369fd111f38dbe8898b3d47575bde8d7897a2b0bb19dc0fa150c92215a",
+      "logSha256": "97acc7fa1a380a2df2bb5b2dd5d91fb0b88c9f028f0a8ce97fe5704eec69f6ef"
+    },
+    {
+      "name": "witness-NoCompensatedWitness",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": false,
+      "faultProfile": "budget",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "good",
+      "expected": "NoCompensatedWitness",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "139",
+        "90",
+        "35"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "NoCompensatedWitness",
+      "configuration": "protocol-witness-NoCompensatedWitness.cfg",
+      "configSha256": "4136344d85b2b9c52e118bd846bbb3714339db959650ae6e9eae75b5a4c6eae7",
+      "compressedLog": "witness-NoCompensatedWitness.log.gz",
+      "compressedLogSha256": "55446c6a4876b58732bc1c5ba40157818818eedb1232578ed82f43f27a981fac",
+      "logSha256": "885d18c562a6391523af30d6145c61e336fc4fe55f09cfa0ab662b98e17bf856"
+    },
+    {
+      "name": "witness-NoCancelledWitness",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": true,
+      "faultProfile": "cancel",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "good",
+      "expected": "NoCancelledWitness",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "11",
+        "11",
+        "5"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "NoCancelledWitness",
+      "configuration": "protocol-witness-NoCancelledWitness.cfg",
+      "configSha256": "1393f92613a599b0aba0baed2d11ceb117c1556f3d64a2b1b53ed65a62ebda46",
+      "compressedLog": "witness-NoCancelledWitness.log.gz",
+      "compressedLogSha256": "1fc3a0cbca3a381d0c7ca03690f929b32e6fd39cd6e4309a8ece27beb4c7e858",
+      "logSha256": "c1ffca0b882f10484a6b4982323cbf489e4660496da6cdf16e5a11d4cbc2a5f1"
+    },
+    {
+      "name": "witness-NoInterventionWitness",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": false,
+      "faultProfile": "budget",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "good",
+      "expected": "NoInterventionWitness",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "15",
+        "15",
+        "7"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "NoInterventionWitness",
+      "configuration": "protocol-witness-NoInterventionWitness.cfg",
+      "configSha256": "adceb4194fbecfddb21a9bd08bbf8dbd11a0eefabc5efcfffafb057f4d06f3a2",
+      "compressedLog": "witness-NoInterventionWitness.log.gz",
+      "compressedLogSha256": "71ecb7859e8720d92138e67bc18035be950c3cdd35ff6c91264d15be3e5f1329",
+      "logSha256": "8686ae865c624217d0cd4a35e4c41faa8db8a23777508e6c1407be4886ec85cb"
+    },
+    {
+      "name": "witness-NoClosedWitness",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": false,
+      "faultProfile": "budget",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "good",
+      "expected": "NoClosedWitness",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "378",
+        "216",
+        "70"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "NoClosedWitness",
+      "configuration": "protocol-witness-NoClosedWitness.cfg",
+      "configSha256": "fb109fc40c708f4be6fa00ee187878582739bd3f376ee7be37a7c0c542c4c911",
+      "compressedLog": "witness-NoClosedWitness.log.gz",
+      "compressedLogSha256": "72cbda5299b0a8034319b57b73d41f2323a8b83f598c62fe8d4f454647fd6dea",
+      "logSha256": "8ce2f12467e2ff056db0b09ad3cd503d2e0a1baed65278a35f42c5e1649a268f"
+    },
+    {
+      "name": "witness-NoNoncommitUnwindWitness",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": false,
+      "faultProfile": "budget",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "good",
+      "expected": "NoNoncommitUnwindWitness",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "145",
+        "94",
+        "35"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "NoNoncommitUnwindWitness",
+      "configuration": "protocol-witness-NoNoncommitUnwindWitness.cfg",
+      "configSha256": "ee229215efc98c7bd1e56a65c30825b93e5da200c0bd28680b757c3737abaf8e",
+      "compressedLog": "witness-NoNoncommitUnwindWitness.log.gz",
+      "compressedLogSha256": "912f34c30c21d1fc0c990b8ae8101bfccc4fcdd8fbc1620e5eeba8225c2c7bc2",
+      "logSha256": "42156aae02e38ffac7b3a9653fcae25efef81ed39d40bfd32e9a9241a8f945a9"
+    },
+    {
+      "name": "witness-NoUnknownInterventionWitness",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": true,
+      "faultProfile": "budget",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "good",
+      "expected": "NoUnknownInterventionWitness",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "29",
+        "24",
+        "13"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "NoUnknownInterventionWitness",
+      "configuration": "protocol-witness-NoUnknownInterventionWitness.cfg",
+      "configSha256": "08dcde5474ac1584cd43e5201554b716647b726e80d10484e541cf9ec22f4af0",
+      "compressedLog": "witness-NoUnknownInterventionWitness.log.gz",
+      "compressedLogSha256": "d36211621f48dfea74ba17367bd096627f48d28afb55c751510be43767b5ae92",
+      "logSha256": "9c35a187511f6c021e026059e8b7a83f537a553670b898cbe9ffb2a4d27394f6"
+    },
+    {
+      "name": "witness-NoCrashRecoveryWitness",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": true,
+      "faultProfile": "crash",
+      "results": [
+        "committed"
+      ],
+      "responsive": false,
+      "lookupLimit": 2,
+      "variant": "good",
+      "expected": "NoCrashRecoveryWitness",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "1049",
+        "517",
+        "95"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "NoCrashRecoveryWitness",
+      "configuration": "protocol-witness-NoCrashRecoveryWitness.cfg",
+      "configSha256": "e0b1f007995fd141eb91b5b2db6900b882c6af3dd46fdc2034ccf33f820be923",
+      "compressedLog": "witness-NoCrashRecoveryWitness.log.gz",
+      "compressedLogSha256": "613cb56e5cb69d00f6a28f3e65ddf4f67ebc4b09f2fb043d6a60c7b68b567a3f",
+      "logSha256": "517b2af7d779b329d0522b12116d24335ea7240459f6b0c2d115718ba3089392"
+    },
+    {
+      "name": "witness-NoResidualClosureWitness",
+      "n": 2,
+      "dispositions": [
+        "irreversible",
+        "action"
+      ],
+      "faults": false,
+      "faultProfile": "budget",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "good",
+      "expected": "NoResidualClosureWitness",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "378",
+        "216",
+        "70"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "NoResidualClosureWitness",
+      "configuration": "protocol-witness-NoResidualClosureWitness.cfg",
+      "configSha256": "42e3f4a1ec2014ed6cc1e2f6a04916aab2dc05c6e8f2a7904c2d99637731c6ef",
+      "compressedLog": "witness-NoResidualClosureWitness.log.gz",
+      "compressedLogSha256": "a461bcf96e059149a89e2a0df7ce4ef628c200452428649ec9a6c2ed917224a0",
+      "logSha256": "c7449be104f988b938d36a2096271b7e3a0b3ffb008adf9d842aa950280f528c"
+    },
+    {
+      "name": "witness-NoBarrierWitness",
+      "n": 2,
+      "dispositions": [
+        "irreversible",
+        "action"
+      ],
+      "faults": false,
+      "faultProfile": "budget",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "good",
+      "expected": "NoBarrierWitness",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "842",
+        "380",
+        "56"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "NoBarrierWitness",
+      "configuration": "protocol-witness-NoBarrierWitness.cfg",
+      "configSha256": "ca7671d2a4b2ad6ec84ec934a9317644c4d5702fbb389d7241e2f30dc9b2b439",
+      "compressedLog": "witness-NoBarrierWitness.log.gz",
+      "compressedLogSha256": "6b16ff319e7d0124eefccede3bd099e068c640d4380ce07595f36b4f8af5ff01",
+      "logSha256": "688316ba6ef6245e64f4b7dacbee2682ab603a979a90718382cc28acd8860a50"
+    },
+    {
+      "name": "witness-NoLateFailedReplayWitness",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": false,
+      "faultProfile": "budget",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "good",
+      "expected": "NoLateFailedReplayWitness",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "232",
+        "141",
+        "46"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "NoLateFailedReplayWitness",
+      "configuration": "protocol-witness-NoLateFailedReplayWitness.cfg",
+      "configSha256": "cf438f0696ba8a8cfc6115ddcc631f1148f15bb2df542c29536d4af477b48954",
+      "compressedLog": "witness-NoLateFailedReplayWitness.log.gz",
+      "compressedLogSha256": "c2aca78c8f9942c3c80667d824295f9b99ece1c65aafc8f673118d8b0fcb04c3",
+      "logSha256": "795d3af4f5626e8a6afe54ea3c7bf76ddf1da48583ab540344a3a8c89cf0d180"
+    },
+    {
+      "name": "witness-NoNoEffectWitness",
+      "n": 2,
+      "dispositions": [
+        "unnecessary",
+        "action"
+      ],
+      "faults": false,
+      "faultProfile": "budget",
+      "results": [
+        "committed",
+        "rejected",
+        "conflict",
+        "failed"
+      ],
+      "responsive": false,
+      "lookupLimit": 1,
+      "variant": "good",
+      "expected": "NoNoEffectWitness",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "997",
+        "453",
+        "72"
+      ],
+      "completeWithoutViolation": false,
+      "module": "Protocol",
+      "actualViolation": "NoNoEffectWitness",
+      "configuration": "protocol-witness-NoNoEffectWitness.cfg",
+      "configSha256": "091e0e938b44046a26290e4ad423c93155a4ca62544174e3dcf0730d017118e3",
+      "compressedLog": "witness-NoNoEffectWitness.log.gz",
+      "compressedLogSha256": "74f71a2bd8c13322eab19aff595b0b9684b96df910d6d45a1b1916111649f1f0",
+      "logSha256": "0f09cfd55bb1a3ce188edd0e91ae2fb9bc8f09b3b4ca0347010b9e8e3573bf64"
+    },
+    {
+      "name": "witness-NoCommittedPrefixRollbackRecovery",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": false,
+      "faultProfile": "cancel",
+      "results": [
+        "committed",
+        "failed"
+      ],
+      "responsive": true,
+      "lookupLimit": 1,
+      "variant": "good",
+      "expected": "NoCommittedPrefixRollbackRecovery",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "204",
+        "138",
+        "15"
+      ],
+      "completeWithoutViolation": false,
+      "module": "ProtocolWitnesses",
+      "actualViolation": "NoCommittedPrefixRollbackRecovery",
+      "configuration": "protocol-witness-NoCommittedPrefixRollbackRecovery.cfg",
+      "configSha256": "7354e6d6c4ae621d9bae3c7c460e1d3b804e30f7960b900a18816bcd1934167f",
+      "compressedLog": "witness-NoCommittedPrefixRollbackRecovery.log.gz",
+      "compressedLogSha256": "bfda8e9e412db3d34e2a0e5b3ea43b1be7fb56996a15314ee2d27b07a72d0329",
+      "logSha256": "8e4e0d5428b776fdaf45f593e56f00c0277ad6d5a18376e959801af0e9d96db5"
+    },
+    {
+      "name": "witness-NoFailedCompensationClosure",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": false,
+      "faultProfile": "cancel",
+      "results": [
+        "committed",
+        "failed"
+      ],
+      "responsive": true,
+      "lookupLimit": 1,
+      "variant": "good",
+      "expected": "NoFailedCompensationClosure",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "247",
+        "161",
+        "19"
+      ],
+      "completeWithoutViolation": false,
+      "module": "ProtocolWitnesses",
+      "actualViolation": "NoFailedCompensationClosure",
+      "configuration": "protocol-witness-NoFailedCompensationClosure.cfg",
+      "configSha256": "6958b17c27812ee7203b3f886caf6463a6638d93c50a3011b913a3ad1e6f8c62",
+      "compressedLog": "witness-NoFailedCompensationClosure.log.gz",
+      "compressedLogSha256": "46b9fa22975b4c769aee8836aabffcde501b1d30ad34b08fa30beaed3f5f463d",
+      "logSha256": "b3662256aa6f3be806ae3bc735f2cea96712c0239dbdc4b91c440d96e3bf0699"
+    },
+    {
+      "name": "witness-NoCancelledCommittedPrefix",
+      "n": 2,
+      "dispositions": [
+        "action",
+        "action"
+      ],
+      "faults": true,
+      "faultProfile": "cancel",
+      "results": [
+        "committed",
+        "failed"
+      ],
+      "responsive": true,
+      "lookupLimit": 1,
+      "variant": "good",
+      "expected": "NoCancelledCommittedPrefix",
+      "temporal": null,
+      "exitCode": 12,
+      "stateCounts": [
+        "343",
+        "205",
+        "34"
+      ],
+      "completeWithoutViolation": false,
+      "module": "ProtocolWitnesses",
+      "actualViolation": "NoCancelledCommittedPrefix",
+      "configuration": "protocol-witness-NoCancelledCommittedPrefix.cfg",
+      "configSha256": "1eaf9ebcffd754a9a2683841434d6b8c53fa1fc3565afebca254f3cf491ff18d",
+      "compressedLog": "witness-NoCancelledCommittedPrefix.log.gz",
+      "compressedLogSha256": "f4136b0365a335771b6ee6725a8744508b972566bcb904f88d44c72df11a1ce9",
+      "logSha256": "134f203f2de58f49d873da871fffe1263fe595938386512f3b43a28d00237749"
+    }
+  ]
+}

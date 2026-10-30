@@ -72,7 +72,7 @@ histories produced solely by the coordinator being tested.
 - [ ] **US-905-AC23** — Given retirement of only the saga definition, when an existing instance continues, then supported active actions remain eligible under current authority, while a new submission with a fresh identity is refused.
 - [ ] **US-905-AC24** — Given a referenced forward or compensation action retires before its invocation is admitted, when fresh dispatch is requested, then it refuses and exposes intervention with pending obligations; original lookup/replay still works and an already admitted transaction may settle. No newer revision is substituted.
 
-- [ ] **US-905-AC25** — Given authoritative forward rollback after a committed prefix, when recovery runs, then it compensates that prefix in reverse order while retaining failed as the original result; first-step failure completes an empty unwind.
+- [ ] **US-905-AC25** — Given authoritative forward rollback after a committed prefix, when recovery runs, then it compensates that prefix in reverse order while retaining failed as the original result; first-step failure completes an empty unwind. Every delayed same-ticket delivery after definitive noncommit recovers that original disposition and produces no late effect; single-attempt rollback or a missing tx/1 outcome cannot establish finality.
 
 - [ ] **US-905-AC26** — Given a settled intervention, when an authorized operator closes it with scoped evidence and the current history sequence, then closed retains the actor, original cause and accepted residual effects without claiming compensation; pending, stale or fabricated evidence refuses.
 

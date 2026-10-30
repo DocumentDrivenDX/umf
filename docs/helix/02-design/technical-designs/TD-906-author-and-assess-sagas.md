@@ -147,3 +147,13 @@ its step path and later step identities. Retain the declaration and classify thi
 as a warning, not structural failure or executable pivot support. Test both a
 terminal irreversible step with no warning and an early irreversible step followed
 by action-compensated work. This is US-905-AC28's portable assessment allocation.
+
+## Provider finality obligations
+
+For US-906-AC9 emit CONTRACT-908's exact ordinal/direction recovery-obligation IDs
+for all forward and action-compensation invocations. A missing, duplicate,
+unsupported or wrong source/identity claim prevents compatible assessment. A bare
+tx/1 claim cannot cover whole-ticket closure after native rollback. Tests must
+include equal base action declarations with and without provider finality claims;
+both keep executionVerified:false. No new schema field or executable gateway is
+introduced into portable analysis.

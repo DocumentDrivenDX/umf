@@ -459,3 +459,14 @@ corresponding current native witnesses and complete core regression gates.
 ## Portable action plans and frozen-manifest UPDATE — owner direction, 2026-10-13
 
 The frozen-manifest bulk UPDATE proof composes qualified explicit-key invocations under CONTRACT-904, the new bulk coordination contract. This profile remains one action/one store with exact-key selectors; bulk selection, batch receipts, worker fencing and cancellation are not added to tx/1. A qualified Truss adapter must preserve original action revision/input/expected-version/replay/authorization semantics and independently establish whole-batch atomicity and durable outcome composition. Per-item invocation receipts alone do not establish the latter.
+
+## Saga provider custody qualification
+
+CONTRACT-908 composes this action profile with additional original-ticket custody.
+This profile's known rolled-back failed attempt still creates no business terminal
+outcome. An absent retained outcome therefore proves neither final noncommit of
+an entire saga invocation nor closure against another same-key delivery. A saga
+provider must independently qualify the admission gate, all-attempt settlement,
+durable final disposition and delayed-delivery fencing in CONTRACT-908 before
+claiming that support. No action vocabulary or tx/1 wire meaning changes here;
+ordinary tx/1 support alone is insufficient saga-provider qualification.
