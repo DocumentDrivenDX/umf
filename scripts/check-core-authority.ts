@@ -2,7 +2,6 @@
 /** Enforce current-core authority boundaries independently of generated output. */
 import ts from 'typescript-api';
 import {posix,resolve} from 'node:path';
-import {CURRENT_CORE_VERSION} from '../src/generated/core-model';
 
 export interface AuthoritySource {path:string;source:string}
 export const retiredCorePaths=[
@@ -34,17 +33,15 @@ export const retiredCorePaths=[
 ] as const;
 const retired=new Set<string>(retiredCorePaths);
 const oldCore=/^0\.[1-9]\.0$/;
-// Read-only retirement policy, not a runtime compatibility registry. The core
-// document URI is deliberately reused by the new canonical generated schema.
-const retiredSchemaUrns=new Set<string>();
-const retirement=await Bun.file(resolve(import.meta.dir,'../docs/helix/04-build/evidence/metamodel-authority/retirement-ledger.json')).json();
-for(const entry of retirement.entries){
- if(!entry.path.endsWith('.json')||!entry.archive||!retired.has(entry.path))continue;
- const bytes=await Bun.file(resolve(import.meta.dir,'..',entry.archive)).bytes();
- if(new Bun.CryptoHasher('sha256').update(bytes).digest('hex')!==entry.originalSha256)throw Error('RETIREMENT_ARCHIVE changed '+entry.archive);
- const id=JSON.parse(new TextDecoder().decode(bytes)).$id;
- if(typeof id==='string'&&id!=='urn:umf:core:'+CURRENT_CORE_VERSION)retiredSchemaUrns.add(id);
-}
+// These are exact inactive resource identities formerly read from retired
+// schema payloads. Keep the policy data-only; the checker never consults the archive.
+const coreAuthorityPolicy=await Bun.file(resolve(import.meta.dir,'core-authority-policy.json')).json();
+const policyUrns=coreAuthorityPolicy.retiredSchemaUrns;
+if(coreAuthorityPolicy.schema!=='umf.core-authority-policy/1'||!Array.isArray(policyUrns)||policyUrns.length!==53||
+ policyUrns.some((urn:unknown)=>typeof urn!=='string'||!/^urn:umf:core:[a-z0-9.-]+:[0-9]+\.[0-9]+\.[0-9]+$/.test(urn)&&!/^urn:umf:core:0\.[1-9]\.0$/.test(urn))||
+ new Set(policyUrns).size!==policyUrns.length||policyUrns.includes('urn:umf:core:0.10.0'))
+ throw Error('CORE_AUTHORITY_POLICY must contain 53 unique retired URNs and exclude current core 0.10.0');
+const retiredSchemaUrns=new Set<string>(policyUrns);
 const retiredUrn=(value:string)=>retiredSchemaUrns.has(value.split('#')[0]!);
 const historicalReceiptVerifiers=new Set(['tools/security/weft-admission-check.py','tools/security/weft_protocol_evidence.py']); // Original1598 proof identities only; see host-tools-migration.json.
 // Exact negative assertions are evidence controls, never producer exemptions.

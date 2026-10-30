@@ -40,6 +40,11 @@ describe('current-core authority boundaries',()=>{
   for(const path of ['scripts/example-schema.ts','tools/security/example.ts','docs/helix/05-deploy/microsite/demo.ts','docs/helix/05-deploy/reference/example.ts','docs/helix/05-deploy/schema-browser/example.ts'])for(const code of ["const p={coreVersion:'0.1.0'}","const schema={properties:{umf:{const:'0.8.0'}}}","const schema={properties:{coreVersion:{enum:['0.8.0']}}}","const p={coreVersions:['0.8.0']}","const schema={$id:'urn:umf:core:0.8.0'}","doc.umf==='0.8.0'"])expect(inspect(path,code).length).toBeGreaterThan(0);
   expect(inspect('scripts/example-schema.ts',"const p={version:'0.1.0',coreVersion:'0.10.0'}")).toEqual([]);
  });
+ test('retired operation resource identities reject while current core identity remains valid',()=>{
+  expect(inspect('spec/core/retired-operation.schema.json',JSON.stringify({$id:'urn:umf:core:kind-operation:7.0.0'})))
+   .toContain('spec/core/retired-operation.schema.json/$id: references retired core schema identity');
+  expect(inspect('spec/core/schema.json',JSON.stringify({$id:'urn:umf:core:0.10.0'}))).toEqual([]);
+ });
  test('explicit refusal controls cannot exempt unguarded or changed producers',()=>{
   const path='tools/security/record-type-journal-cases.ts';
   const source="const older={...structuredClone(f.base),umf:'0.6.0'} as unknown as Document;refuses('older envelope unavailable',()=>inspectCoreRecordTypeJournal(older,f.current,f.events),'CORE_TYPE_JOURNAL_SOURCE');";

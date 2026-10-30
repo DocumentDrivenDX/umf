@@ -94,8 +94,8 @@ and release checks should validate actual current artifacts when performed.
 ## Continuation Evidence
 
 Main is merged through `8fc91a8ae`. The current work is on PR #61. Historical
-Rust qualification archives, spike-only crates and receipt-based build gates are
-removed. Behavioral fixtures live under `tests/rust-core/fixtures`.
+Rust qualification archives, spike-only crates, the obsolete R2 generator and
+R4 qualification runner, and receipt-based build gates are removed. Behavioral fixtures live under `tests/rust-core/fixtures`.
 
 Current passing checks:
 
@@ -110,6 +110,9 @@ Current passing checks:
   from current schemas. Five structural accounting tests pass; source-hash
   adoption receipts are removed.
 - SDK packaging validation: nine Python tests pass.
+- Current authority policy: 18 tests and 181 assertions pass after removing
+  archive-backed startup checks. Both manual workflow files parse as YAML; the
+  generation workflow also passes its embedded Python and command-roster checks.
 
 The last full core unit run reached its deadline without an assertion failure.
 Repeated immutable Avro resources and the cardinality request schema are now
