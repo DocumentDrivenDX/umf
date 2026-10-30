@@ -33,9 +33,12 @@ def check(root):
     require(executor["coreVersion"]["const"] == core, "action executor core pin")
     require(executor["actionVersion"]["const"] == release["actionsVersion"], "action executor vocabulary pin")
     require(load("spec/extensions/actions/plan.schema.json")["$defs"]["model"]["properties"]["umfVersion"]["const"] == core, "action plan core pin")
+    require(load("spec/extensions/saga/package.json")["version"] == release["sagaVersion"], "saga vocabulary version")
     py = (root / "python/pyproject.toml").read_text()
     match = re.search(r'^version = "([^"]+)"', py, re.M)
     require(bool(match) and match[1].rsplit(".", 1)[0] == series, "Python core release series")
+    require(bool(match) and match[1] == release["pythonVersion"], "Python exact cohort version")
+    require(f'__version__ = "{release["pythonVersion"]}"' in (root / "python/src/umf/__init__.py").read_text(), "Python public version")
     for path in sorted((root / "docs/helix/02-design/contracts").glob("CONTRACT-90*.md")):
         text = path.read_text()
         require(not re.search(r'core(?:Version| version)?[ :]+["`]?0\.[89]\.0', text), str(path.relative_to(root)) + " stale normative core pin")

@@ -17,7 +17,7 @@ class ReleaseVersions(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
-        paths = [ROOT / p for p in ["package.json", "spec/release.json", "spec/core/schema.json", "src/generated/core-model.ts", "spec/metamodel/umf.yaml", "spec/metamodel/package.json", "python/pyproject.toml", "spec/extensions/actions/executor-profile.schema.json", "spec/extensions/actions/plan.schema.json", "docs/helix/02-design/contracts/CONTRACT-901-transactional-action-profile.md"]]
+        paths = [ROOT / p for p in ["package.json", "spec/release.json", "spec/core/schema.json", "src/generated/core-model.ts", "spec/metamodel/umf.yaml", "spec/metamodel/package.json", "python/pyproject.toml", "python/src/umf/__init__.py", "spec/extensions/actions/executor-profile.schema.json", "spec/extensions/actions/plan.schema.json", "docs/helix/02-design/contracts/CONTRACT-901-transactional-action-profile.md"]]
         paths += list((ROOT / "spec/extensions").glob("*/package.json"))
         for path in paths:
             target = self.root / path.relative_to(ROOT)
@@ -43,9 +43,16 @@ class ReleaseVersions(unittest.TestCase):
         path = self.root / "docs/helix/02-design/contracts/CONTRACT-901-transactional-action-profile.md"
         path.write_text(path.read_text().replace("core 0.10.0", "core 0.8.0"))
         self.assertTrue(any("stale normative core pin" in e for e in module.check(self.root)))
+    def test_python_patch_drift(self):
+        path = self.root / "python/pyproject.toml"
+        path.write_text(path.read_text().replace('version = "0.10.4"', 'version = "0.10.3"'))
+        self.assertIn("Python exact cohort version", module.check(self.root))
+    def test_saga_vocabulary_drift(self):
+        self.change("spec/extensions/saga/package.json", lambda d: d.update(version="0.1.1"))
+        self.assertIn("saga vocabulary version", module.check(self.root))
     def test_python_series_drift(self):
         path = self.root / "python/pyproject.toml"
-        path.write_text(path.read_text().replace('version = "0.10.3"', 'version = "0.9.3"'))
+        path.write_text(path.read_text().replace('version = "0.10.4"', 'version = "0.9.3"'))
         self.assertIn("Python core release series", module.check(self.root))
 
 if __name__ == "__main__":

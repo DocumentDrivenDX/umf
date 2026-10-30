@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 const releaseCheck=Bun.spawn(["python3","scripts/check-release-versions.py"],{stdout:"inherit",stderr:"inherit"});if(await releaseCheck.exited)process.exit(1);
+const sagaPackage=Bun.spawn(["python3","scripts/build-saga-package.py","--check"],{stdout:"inherit",stderr:"inherit"});if(await sagaPackage.exited)process.exit(1);
 const metamodel=Bun.spawn([process.execPath,'scripts/metamodel/build.ts'],{stdout:'inherit',stderr:'inherit'});if(await metamodel.exited)process.exit(1);
+const pythonResources=Bun.spawn(["python3","scripts/action-runtime-resources.py"],{stdout:"inherit",stderr:"inherit"});if(await pythonResources.exited)process.exit(1);
 const identity=Bun.spawn([process.execPath,'scripts/actions-plan-identity.ts'],{stdout:'inherit',stderr:'inherit'});if(await identity.exited)process.exit(1);
 import { rm, cp } from 'node:fs/promises';
 await rm('dist', {recursive:true,force:true});

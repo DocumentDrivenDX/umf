@@ -1,0 +1,12 @@
+{
+  "generator": "scripts/build-saga-package.py",
+  "sources": {
+    "docs/helix/02-design/contracts/schemas/saga-0.1.0.schema.json": "4e3d2fc34882602ac922ba187a97e511ecf495fc96b4a6f6f4d81dbe6a5313fa",
+    "docs/helix/02-design/contracts/schemas/saga-runtime-1.schema.json": "65d11a276e24badd9b1e34443918b9be8e1e07a1ed11727c2d3712a0f09cdb94"
+  },
+  "outputs": {
+    "schema.json": "4e3d2fc34882602ac922ba187a97e511ecf495fc96b4a6f6f4d81dbe6a5313fa",
+    "runtime.schema.json": "65d11a276e24badd9b1e34443918b9be8e1e07a1ed11727c2d3712a0f09cdb94",
+    "package.json": "4f42d73efe15041807f74031e12013c6df843d12556105a7aff357a0956a8940"
+  }
+}

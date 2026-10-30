@@ -4,6 +4,7 @@ import {resolve,dirname} from 'node:path';
 import {createHash} from 'node:crypto';
 import {rustMetamodel} from './rust';
 import {structuralSource} from './structural';
+import {admitAccountedInput} from './accounted-provenance';
 const root=resolve(import.meta.dir,'../..'),json=(v:any)=>JSON.stringify(v,null,2)+'\n',hash=(v:string|Uint8Array)=>createHash('sha256').update(v).digest('hex');
 const ACCOUNTED_COMPANION_PATH='src/generated/core-validators-accounted.ts';
 const ACCOUNTED_COMPANION_SHA256='5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29';
@@ -32,7 +33,7 @@ async function regularBytes(path:string):Promise<Uint8Array>{
  if(!info.isFile()||info.isSymbolicLink())throw Error('METAMODEL_CUSTODY_NOT_REGULAR '+path);
  return readFile(absolute);
 }
-async function accountedCompanionCustody(){
+async function accountedCompanionCustody(emitted?:Record<string,string>){
  const adoptedBytes=await regularBytes(ADOPTED_SOURCE_INPUTS);
  if(hash(adoptedBytes)!==ADOPTED_SOURCE_INPUTS_SHA256)throw Error('METAMODEL_COMPANION_ADOPTION_RECEIPT');
  const adopted=JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(adoptedBytes));
@@ -55,16 +56,16 @@ async function accountedCompanionCustody(){
    ||owner.status!=='GENERATION_PASS_SOURCE_OUTPUT_ADOPTED'||owner.artifactId!==custody.artifactId||owner.artifactSha256!==custody.artifactSha256
    ||owner.outputSourceReviewSha256!==custody.sourceOutputReviewSha256||owner.adoptionTarget!==ACCOUNTED_COMPANION_PATH)throw Error('METAMODEL_COMPANION_STAGE_A_RECEIPT');
  const inputRows=new Map((Array.isArray(manifest.inputs)?manifest.inputs:[]).map((row:any)=>[row.path,row]));
- const inputBindings:Record<string,{sha256:string;bytes:number}>={};
+ const inputBindings:Record<string,ReturnType<typeof admitAccountedInput>>={};
  for(const [path,expected] of Object.entries(ACCOUNTED_INPUTS)){
-  const bytes=await regularBytes(path),row=inputRows.get(path) as any;
-  if(hash(bytes)!==expected||!row||row.sha256!==expected||row.bytes!==bytes.byteLength)throw Error('METAMODEL_COMPANION_INPUT_DRIFT '+path);
-  inputBindings[path]={sha256:expected,bytes:bytes.byteLength};
+  const bytes=emitted&&Object.hasOwn(emitted,path)?new TextEncoder().encode(emitted[path]!):await regularBytes(path),row=inputRows.get(path) as any;
+  if(!row||row.sha256!==expected)throw Error('METAMODEL_COMPANION_INPUT_DRIFT '+path);
+  inputBindings[path]=admitAccountedInput(path,bytes,expected,row.bytes);
  }
  const adoptedRows=new Map((Array.isArray(adopted.pinnedSourceInputs)?adopted.pinnedSourceInputs:[]).map((row:any)=>[row.path,row]));
  for(const [path,expected] of Object.entries(ACCOUNTED_INPUTS)){
   const row=adoptedRows.get(path) as any;
-  if(!row||row.sha256!==expected||row.bytes!==(await regularBytes(path)).byteLength)throw Error('METAMODEL_COMPANION_ADOPTED_INPUT_BINDING '+path);
+  if(!row||row.sha256!==expected||row.bytes!==inputBindings[path]!.bytes)throw Error('METAMODEL_COMPANION_ADOPTED_INPUT_BINDING '+path);
  }
  const companionBytes=await regularBytes(ACCOUNTED_COMPANION_PATH);
  if(companionBytes.byteLength!==ACCOUNTED_COMPANION_BYTES||hash(companionBytes)!==ACCOUNTED_COMPANION_SHA256)throw Error('METAMODEL_COMPANION_BYTES');
@@ -104,9 +105,9 @@ async function workspaceClosure():Promise<string[]>{
  return files.sort();
 }
 export async function generate(options:{check?:boolean;outputRoot?:string}={}){
- const companion=await accountedCompanionCustody();
+ await accountedCompanionCustody(); // Admit the existing source before generating any replacement.
  const compilerFiles=await compilerClosure(),workspaceFiles=(await workspaceClosure()).filter(path=>!compilerFiles.includes(path));
- const backendFiles=['scripts/metamodel/build.ts','scripts/metamodel/rust.ts','scripts/metamodel/structural.ts','src/validation/json-equality.ts','bindings/core/node/src/wire.js','package.json','bun.lock',...stageAEvidence];
+ const backendFiles=['scripts/metamodel/build.ts','scripts/metamodel/rust.ts','scripts/metamodel/structural.ts','scripts/metamodel/accounted-provenance.ts','src/validation/json-equality.ts','bindings/core/node/src/wire.js','package.json','bun.lock',...stageAEvidence];
  const sources=Object.fromEntries(await Promise.all(['spec/metamodel/umf.yaml',...compilerFiles,...workspaceFiles,...backendFiles].map(async p=>[p,hash(await readFile(resolve(root,p)))])));
  const provenance={modelSha256:sources['spec/metamodel/umf.yaml'],compilerSha256:hash(json(Object.fromEntries(compilerFiles.map(p=>[p,sources[p]]))))};
  const compiled=rustMetamodel(['outputs','--input','spec/metamodel/umf.yaml','--compiler-sha256',provenance.compilerSha256],undefined,{sourceBound:true});
@@ -119,6 +120,7 @@ export async function generate(options:{check?:boolean;outputRoot?:string}={}){
  if(portablePaths.size)throw Error('METAMODEL_MISSING_RUST_OUTPUT '+[...portablePaths].join(','));
  const core=JSON.parse(outputs['spec/core/schema.json']!),reference=JSON.parse(outputs['spec/core/semantic-type-reference.schema.json']!),pkg=JSON.parse(outputs['spec/core/extension-package.schema.json']!);
  outputs['src/generated/core-validators.ts']=structuralSource([core,reference,pkg]);
+ const companion=await accountedCompanionCustody(outputs); // Bind the receipt to the exact emitted cohort.
  const result={...compiled.result,core,reference,pkg,language:compiled.language,constraints:JSON.parse(outputs['spec/metamodel/generated/core-constraints.json']!),domains:JSON.parse(outputs['spec/metamodel/generated/domain-policy.json']!)};
  const manifest={profile:'umf.metamodel.outputs/1',provenance,sources,compilerInputs:Object.fromEntries(compilerFiles.map(p=>[p,sources[p]])),workspaceInputs:Object.fromEntries(workspaceFiles.map(p=>[p,sources[p]])),backend:{name:'Ajv standalone',ownership:'explicit third-party build-time JavaScript backend; Rust owns portable metamodel outputs',inputs:Object.fromEntries(backendFiles.map(p=>[p,sources[p]]))},separatelyOwned:{accountedCompanion:companion},outputs:Object.fromEntries(Object.entries(outputs).map(([p,v])=>[p,{sha256:hash(v),bytes:Buffer.byteLength(v)}]))};outputs['spec/metamodel/generated/manifest.json']=json(manifest);
  // Check the whole declared source set after compilation/backend emission and

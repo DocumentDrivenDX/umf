@@ -280,6 +280,79 @@ def _wheel(
     return path
 
 
+def _qualifier_sdist(path, version):
+    metadata = (
+        f"Metadata-Version: 2.1\nName: umf-core\nVersion: {version}\n"
+        "Requires-Python: >=3.11,<3.15\n\n"
+    ).encode()
+    with tarfile.open(path, "w:gz") as archive:
+        member = tarfile.TarInfo(f"umf_core-{version}/PKG-INFO")
+        member.size = len(metadata)
+        archive.addfile(member, io.BytesIO(metadata))
+    return path
+
+
+def test_release_wheel_qualifier_keeps_historical_default_and_accepts_explicit_version(tmp_path):
+    qualifier = _release_wheel_qualifier()
+    historical = _wheel(
+        tmp_path / "umf_core-0.10.3-cp311-abi3-macosx_11_0_arm64.whl",
+        {"umf/__init__.py": b"version fixture"},
+        version="0.10.3",
+        tag="cp311-abi3-macosx_11_0_arm64",
+    )
+    current = _wheel(
+        tmp_path / "umf_core-0.10.4-cp311-abi3-macosx_11_0_arm64.whl",
+        {"umf/__init__.py": b"version fixture"},
+        version="0.10.4",
+        tag="cp311-abi3-macosx_11_0_arm64",
+    )
+    assert qualifier.VERSION == "0.10.3"
+    assert qualifier.select_macos(historical)["selectedWheel"]["filename"] == historical.name
+    with pytest.raises(ValueError, match="dist-info version"):
+        qualifier.select_macos(current)
+    assert qualifier.select_macos(current, "0.10.4")["selectedWheel"]["filename"] == current.name
+    with pytest.raises(ValueError, match="numeric MAJOR.MINOR.PATCH"):
+        qualifier.select_macos(current, "0.10.4/../../other")
+
+
+def test_release_wheel_qualifier_cli_selects_explicit_version_without_changing_default(tmp_path):
+    script = Path(__file__).resolve().parents[2] / "tools/qualify_python_release_wheel.py"
+    current = _wheel(
+        tmp_path / "umf_core-0.10.4-cp311-abi3-macosx_11_0_arm64.whl",
+        {"umf/__init__.py": b"version fixture"},
+        version="0.10.4",
+        tag="cp311-abi3-macosx_11_0_arm64",
+    )
+    sdist = _qualifier_sdist(tmp_path / "umf_core-0.10.4.tar.gz", "0.10.4")
+    output = tmp_path / "selected"
+    receipt = output / "selection.json"
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(script),
+            "--platform",
+            "macos",
+            "--version",
+            "0.10.4",
+            "--source-wheel",
+            str(current),
+            "--sdist",
+            str(sdist),
+            "--output-wheel-directory",
+            str(output),
+            "--receipt",
+            str(receipt),
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr
+    selected = json.loads(receipt.read_text(encoding="utf-8"))
+    assert selected["selectedWheel"]["filename"] == current.name
+    assert selected["sdist"]["filename"] == sdist.name
+
+
 def _install_wheel(wheel_path, destination, *, extra_files=None):
     extra_files = extra_files or {}
     with zipfile.ZipFile(wheel_path) as archive:
@@ -341,17 +414,29 @@ def _rewrite_installed_record(destination):
     (dist_info / "RECORD").write_text(output.getvalue(), encoding="utf-8")
 
 
-def test_source_inventory_contains_all_nine_bound_runtime_resources():
+def test_source_inventory_contains_all_ten_bound_runtime_resources():
     verifier = _verifier()
     repository = Path(__file__).resolve().parents[2]
     payloads, resources = verifier._source_payloads(repository)
-    assert len(resources) == 9
-    assert set(resources) == verifier.EXPECTED_RUNTIME_FILES
+    expected_resources = {
+        "actionsPackage.json",
+        "bindingPackage.json",
+        "constraints.json",
+        "coreSchema.json",
+        "domainPolicy.json",
+        "packageSchema.json",
+        "referenceSchema.json",
+        "sagaPackage.json",
+        "stableBindingPackage.json",
+        "tablesPackage.json",
+    }
+    assert len(resources) == 10
+    assert verifier.EXPECTED_RUNTIME_FILES == expected_resources
+    assert set(resources) == expected_resources
     assert {
         name for name in payloads if name.startswith("umf/action_runtime_resources/")
     } == {
-        f"umf/action_runtime_resources/{name}"
-        for name in verifier.EXPECTED_RUNTIME_FILES
+        f"umf/action_runtime_resources/{name}" for name in expected_resources
     }
 
 
