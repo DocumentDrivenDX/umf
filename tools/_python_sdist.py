@@ -100,15 +100,21 @@ _EXPECTED_ROOT_FILES = {
     "spec/metamodel/umf.yaml",
     "spec/extensions/iceberg/package.json",
     "spec/extensions/iceberg/datatype-schema.json",
+    "spec/extensions/graphql/package.json",
+    "spec/extensions/linkml/package.json",
+    "spec/extensions/linkml/native-schema.json",
+    "spec/extensions/odcs/package.json",
+    "spec/extensions/odcs/native-3.0.0.json",
+    "spec/extensions/odcs/native-3.0.1.json",
+    "spec/extensions/odcs/native-3.0.2.json",
+    "spec/extensions/odcs/native-3.1.0.json",
+    "spec/extensions/odcs/native-3.2.0.json",
 }
 _EXPECTED_ROOT_TREES = {
     "crates",
     "bindings/core/python",
     "bindings/core/node",
     "bindings/core/wasm",
-    "bindings/rust-spike/python",
-    "bindings/rust-spike/node",
-    "bindings/rust-spike/wasm",
 }
 _EXPECTED_EXCLUDED_DIRS = {
     ".git",

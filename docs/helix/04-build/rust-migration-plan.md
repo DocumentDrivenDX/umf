@@ -111,7 +111,9 @@ Current passing checks:
 - Metamodel generation passes with the accounted validator generated normally
   from current schemas. Five structural accounting tests pass; source-hash
   adoption receipts are removed.
-- SDK packaging validation: nine Python tests pass.
+- SDK packaging validation: nine Python tests pass. Python sdist closure tests
+  also pass (14 tests) with current GraphQL/LinkML/ODCS resources and no spike
+  directory or archived-helper hash requirement.
 - Current authority policy: 18 tests and 181 assertions pass after removing
   archive-backed startup checks. Both manual workflow files parse as YAML; the
   generation workflow also passes its embedded Python and command-roster checks.

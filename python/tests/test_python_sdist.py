@@ -11,9 +11,6 @@ from typing import Any
 import pytest
 
 _HELPER_PATH = Path(__file__).resolve().parents[2] / "tools/_python_sdist.py"
-assert hashlib.sha256(_HELPER_PATH.read_bytes()).hexdigest() == (
-    "225a06eb6d0bc1307da1fb7acb68f234ff8e9270392bb0d50adb93d62beec184"
-)
 _HELPER_SPEC = importlib.util.spec_from_file_location(
     "umf_test_python_sdist", _HELPER_PATH
 )
@@ -107,15 +104,21 @@ ROOT_FILES = (
     "spec/metamodel/umf.yaml",
     "spec/extensions/iceberg/package.json",
     "spec/extensions/iceberg/datatype-schema.json",
+    "spec/extensions/graphql/package.json",
+    "spec/extensions/linkml/package.json",
+    "spec/extensions/linkml/native-schema.json",
+    "spec/extensions/odcs/package.json",
+    "spec/extensions/odcs/native-3.0.0.json",
+    "spec/extensions/odcs/native-3.0.1.json",
+    "spec/extensions/odcs/native-3.0.2.json",
+    "spec/extensions/odcs/native-3.1.0.json",
+    "spec/extensions/odcs/native-3.2.0.json",
 )
 ROOT_TREES = (
     "crates",
     "bindings/core/python",
     "bindings/core/node",
     "bindings/core/wasm",
-    "bindings/rust-spike/python",
-    "bindings/rust-spike/node",
-    "bindings/rust-spike/wasm",
 )
 RESOURCES = (
     ("actionsPackage.json", "spec/extensions/actions/package.json"),

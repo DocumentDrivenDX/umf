@@ -58,7 +58,7 @@ async function sourceClosureFiles(dir:string,bindings=false):Promise<string[]>{
 }
 const dynamicSourceRoots=[
  'crates','bindings','src','scripts/metamodel','tests/rust-core/fixtures',
- 'docs/helix/04-build/evidence/metamodel-authority','spec','native/postgresql',
+ 'spec','native/postgresql',
  'native/tablespec',
  'bindings/core/node/src','bindings/core/node/tests','bindings/core/wasm/src','bindings/core/wasm/tests',
 ];
@@ -76,7 +76,6 @@ async function collectDynamicSourceInputs(baseRoot:string):Promise<string[]>{
   ...await filesUnder(join(baseRoot,'bindings/core/wasm/src')),
   ...await filesUnder(join(baseRoot,'bindings/core/wasm/tests')),
   ...await filesUnder(join(baseRoot,'scripts/metamodel')),
-  ...await filesUnder(join(baseRoot,'docs/helix/04-build/evidence/metamodel-authority')),
   ...await filesUnder(join(baseRoot,'spec')),
   ...await filesUnder(join(baseRoot,'native/postgresql')),
   ...await filesUnder(join(baseRoot,'tests/rust-core/fixtures')),
@@ -128,6 +127,8 @@ try{
   join(root,'bindings/core/node/package.json'),join(root,'bindings/core/wasm/package.json'),
   join(root,'.cargo/config.toml'),
   join(root,'scripts/package-sdk-rust-default.ts'),
+  join(root,'scripts/check-core-authority.ts'),
+  join(root,'scripts/core-authority-policy.json'),
   join(root,'scripts/check-unified-client-boundaries.ts'),
   join(root,'tests/unified-client-boundaries.test.ts'),
   join(root,'scripts/rust-migration/r8/copy-source-snapshot.ts'),
