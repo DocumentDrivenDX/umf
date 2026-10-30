@@ -1,0 +1,24 @@
+{
+  "protocol": "umf.actions.saga/1",
+  "operation": "submit",
+  "key": "equipment-request-001",
+  "target": {
+    "module": "equipment",
+    "saga": "allocate-equipment",
+    "revision": "host-issued-example-revision"
+  },
+  "inputs": {
+    "resource": {
+      "key": {
+        "module": "equipment",
+        "element": "resource",
+        "key": "pk"
+      },
+      "components": [
+        {
+          "string": "equipment-17"
+        }
+      ]
+    }
+  }
+}

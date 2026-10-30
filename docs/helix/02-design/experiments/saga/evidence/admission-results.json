@@ -1,0 +1,115 @@
+{
+  "jarSha256": "936a262061c914694dfd669a543be24573c45d5aa0ff20a8b96b23d01e050e88",
+  "javaVersion": "openjdk version \"21.0.13\" 2026-10-20 LTS\nOpenJDK Runtime Environment Temurin-21.0.13+9 (build 21.0.13+9-LTS)\nOpenJDK 64-Bit Server VM Temurin-21.0.13+9 (build 21.0.13+9-LTS, mixed mode, sharing)",
+  "tlcVersion": "TLC2 Version 2.19 of 08 August 2024 (rev: 5a47802)",
+  "sources": {
+    "Admission.tla": "310b02c1112d8eb36e67d8a48cfd08013676219ee6f05f565f8bfe69d9c70288",
+    "run_admission.py": "32d6ddc24cbf7f43b9fd4b4b1c4af8796e24b36106ecf59e24416925606b8944"
+  },
+  "assumptions": [
+    "One original ticket, one native transaction, two owner epochs",
+    "Atomic coordinator ticket issue, independent atomic native admission/commit",
+    "No authorization revocation, transport, loss, retry or provider storage model",
+    "Safety only; no fairness or liveness claim; separate from Saga.tla state space"
+  ],
+  "results": [
+    {
+      "name": "admission-safety",
+      "expectedViolation": null,
+      "actualViolation": null,
+      "exitCode": 0,
+      "passed": true,
+      "stateCounts": [
+        "91",
+        "52",
+        "0"
+      ],
+      "configurationSha256": "d37801ce5cb83615439862129ca868225fcae19065a9edce3f50cec436f33fb3",
+      "logSha256": "dd11f2570e56f5884769f0a114f4efceae0f87ae41781fa2296dbcd7cb8dedba"
+    },
+    {
+      "name": "admission-mutant-cancel",
+      "expectedViolation": "TicketFence",
+      "actualViolation": "TicketFence",
+      "exitCode": 12,
+      "passed": true,
+      "stateCounts": [
+        "11",
+        "10",
+        "6"
+      ],
+      "configurationSha256": "2f09e71a88ab36207d4e8a4914f554932c590efbddf6713527f54a87297d2b2d",
+      "logSha256": "dcf4d02397a900116574483cb8966b466ecd4f9e389f82699de5d894c8cca48c"
+    },
+    {
+      "name": "admission-mutant-owner",
+      "expectedViolation": "TicketFence",
+      "actualViolation": "TicketFence",
+      "exitCode": 12,
+      "passed": true,
+      "stateCounts": [
+        "13",
+        "12",
+        "7"
+      ],
+      "configurationSha256": "5ada59c8ca857f5b816726c41da2da6bca4f7181d171855c81fc74a1967d902b",
+      "logSha256": "f1575b6cc799e72cf41e06b8e9acaf4910d7a914557a6dd3703401faac3e1dce"
+    },
+    {
+      "name": "admission-mutant-retired",
+      "expectedViolation": "NativeRetirementFence",
+      "actualViolation": "NativeRetirementFence",
+      "exitCode": 12,
+      "passed": true,
+      "stateCounts": [
+        "31",
+        "21",
+        "11"
+      ],
+      "configurationSha256": "d0d8be4a7e8c36893b3f85ed54a3418ba889de8325f3cd07cb81b0b59971729d",
+      "logSha256": "8138862e5ce886a001182fd43a663a3e55143636376a747ba5e7c8c08c8ca8eb"
+    },
+    {
+      "name": "admission-witness-NoInflightCancelWitness",
+      "expectedViolation": "NoInflightCancelWitness",
+      "actualViolation": "NoInflightCancelWitness",
+      "exitCode": 12,
+      "passed": true,
+      "stateCounts": [
+        "47",
+        "30",
+        "12"
+      ],
+      "configurationSha256": "169c3b356d634951b2c4b1edac8b0902cc519eab553e2a847151675b7d1dedcc",
+      "logSha256": "7e1cf0b761a02d95044525717cba19555278a1dee2f27ce7a4cc1fd825a9d837"
+    },
+    {
+      "name": "admission-witness-NoAdmittedRetirementWitness",
+      "expectedViolation": "NoAdmittedRetirementWitness",
+      "actualViolation": "NoAdmittedRetirementWitness",
+      "exitCode": 12,
+      "passed": true,
+      "stateCounts": [
+        "44",
+        "29",
+        "12"
+      ],
+      "configurationSha256": "706217824250f2d59252218682e3e475be8bde269e69692b581dbd9fa50fae99",
+      "logSha256": "00f8c4cdee2bbc1e8693a21dea1e6b7a6ac6bb4e83c83583a8236ac1d9870054"
+    },
+    {
+      "name": "admission-witness-NoQueuedRetirementWitness",
+      "expectedViolation": "NoQueuedRetirementWitness",
+      "actualViolation": "NoQueuedRetirementWitness",
+      "exitCode": 12,
+      "passed": true,
+      "stateCounts": [
+        "28",
+        "21",
+        "11"
+      ],
+      "configurationSha256": "4cd7ab69bef2ee8ec0547d47d4ed7ddfaa86073b55fdf8992a908f8dcbeb4070",
+      "logSha256": "c6ea46e81efcb0a75271ea581028b367ffe05c4675794c633591ee239eb2c821"
+    }
+  ]
+}

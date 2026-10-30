@@ -665,6 +665,34 @@ direct expression composition and optional backend preparation.
 
 ## Module Boundaries
 
+### Saga analysis and consumer coordination (proposed)
+
+Owner direction on 2026-10-29 keeps actions and saga semantics in this UMF
+repository with shared generated types, core 0.10.0 schemas and one semantic
+engine. The SDK candidate joins the 0.10 release series; no independent
+umf-actions repository/package lifecycle is selected. Vocabulary and protocol
+identities retain their distinct meanings and qualification requirements.
+
+[SD-901](solution-designs/SD-901-saga-semantics.md) and
+[CONTRACT-908](contracts/CONTRACT-908-saga-semantics.md) add independently versioned
+composition semantics without moving durable execution into UMF. The new shared
+operation family follows ADR-006; TypeScript/Bun wrappers and browser WASM retain
+ADR-002's actual-browser qualification boundary.
+
+| Module | Owns | Allowed | Forbidden |
+| --- | --- | --- | --- |
+| `crates/umf-codegen/src/actions/saga/` (planned) | Immutable declaration/reference/type/obligation analysis and safe copy/edit | Parent Rust action inspection, core values and generated package data | Native drivers, scheduler, authority queries, network, process or artifact-driven code loading |
+| `src/extensions/actions/saga.ts`, core bindings (planned) | Typed host-value/wire presentation of shared Rust operations | Public shared engine and existing exact-admission/wire conventions | Separate TS/Python saga semantic implementation; provider runtime types |
+| Trusted consumer coordinator (consumer-owned) | Scoped original submit/control custody, ticket admission, cancellation, fences and protected history | Explicit installed provider and authority dependencies | Import into portable library; document-selected physical resources or credentials |
+| Qualified provider gateway (consumer-owned) | Current tx/1 native admission and atomic effect/original outcome | Native store/authority/custody adapters | Inferring native admission from a coordinator ticket or widening action atomicity |
+
+Construction remains host-owned. The parent action inspection interface must be
+promoted narrowly without exposing generator internals or duplicating its rules.
+Before source implementation qualifies, extend `bun run check:rust-boundaries`
+with negative controls for the new family and wrapper semantic forks. Current
+checker success does not prove those planned controls exist. No runtime service
+or architecture-model implementation evidence is claimed by this proposed map.
+
 ### Extension-defined kinds (proposed)
 
 [CONTRACT-907](contracts/CONTRACT-907-extension-defined-kinds.md) defines

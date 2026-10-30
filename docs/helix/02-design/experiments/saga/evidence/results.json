@@ -1,0 +1,383 @@
+{
+  "release": "tlaplus v1.7.4",
+  "jarSha256": "936a262061c914694dfd669a543be24573c45d5aa0ff20a8b96b23d01e050e88",
+  "tlcVersion": "TLC2 Version 2.19 of 08 August 2024 (rev: 5a47802)",
+  "javaVersion": "openjdk version \"21.0.13\" 2026-10-20 LTS\nOpenJDK Runtime Environment Temurin-21.0.13+9 (build 21.0.13+9-LTS)\nOpenJDK 64-Bit Server VM Temurin-21.0.13+9 (build 21.0.13+9-LTS, mixed mode, sharing)",
+  "assumptions": [
+    "One trusted submission namespace; two intent values; at most two submissions",
+    "Two/three sequential fully compensable steps; one crash/restart and takeover epoch",
+    "Provider commit/reject is atomic and durable under stable invocation identity",
+    "Provider truth is separate from coordinator observation; observation may remain unavailable forever",
+    "Retirement/current-fence checks and invocation admission are one atomic boundary",
+    "Safety has no fairness; progress fixes availability/authority and weakly fairs ProgressNext",
+    "No real provider, database, transport, type checker, policy engine or production implementation is verified"
+  ],
+  "results": [
+    {
+      "name": "safety-2",
+      "stepCount": 2,
+      "variant": "good",
+      "external": false,
+      "startedUtc": "2026-10-29T23:49:46.595440+00:00",
+      "exitCode": 0,
+      "passed": true,
+      "completeWithoutViolation": true,
+      "expectedViolation": null,
+      "actualViolation": null,
+      "reachabilityWitness": null,
+      "stateCounts": [
+        "5109921",
+        "759552",
+        "0"
+      ],
+      "logSha256": "0b57d077db40e9b9a1353bc92fca063c29997470f2698c85792f785bca30dd21"
+    },
+    {
+      "name": "safety-3",
+      "stepCount": 3,
+      "variant": "good",
+      "external": false,
+      "startedUtc": "2026-10-29T23:50:01.562255+00:00",
+      "exitCode": 0,
+      "passed": true,
+      "completeWithoutViolation": true,
+      "expectedViolation": null,
+      "actualViolation": null,
+      "reachabilityWitness": null,
+      "stateCounts": [
+        "61096833",
+        "6677760",
+        "0"
+      ],
+      "logSha256": "04e545ead82ae3229dd3f81f02b793548453b7d44d42e7e826543957adf1c707"
+    },
+    {
+      "name": "external-refusal",
+      "stepCount": 2,
+      "variant": "good",
+      "external": true,
+      "startedUtc": "2026-10-29T23:52:46.854694+00:00",
+      "exitCode": 0,
+      "passed": true,
+      "completeWithoutViolation": true,
+      "expectedViolation": null,
+      "actualViolation": null,
+      "reachabilityWitness": null,
+      "stateCounts": [
+        "1025",
+        "192",
+        "0"
+      ],
+      "logSha256": "4f5165d951036a58226f64fc2a81006c4ef5ed57f75e7ca6d49cdd1895faf7a2"
+    },
+    {
+      "name": "progress-stable",
+      "stepCount": 3,
+      "variant": "good",
+      "external": false,
+      "startedUtc": "2026-10-29T23:52:48.231687+00:00",
+      "exitCode": 0,
+      "passed": true,
+      "completeWithoutViolation": true,
+      "expectedViolation": null,
+      "actualViolation": null,
+      "reachabilityWitness": null,
+      "stateCounts": [
+        "123",
+        "83",
+        "0"
+      ],
+      "logSha256": "52581575860924193445befb3faa0af0fe79fd50d4bb29117f9deb9ee075efe9"
+    },
+    {
+      "name": "mutant-duplicate-submit",
+      "stepCount": 2,
+      "variant": "duplicate-submit",
+      "external": false,
+      "startedUtc": "2026-10-29T23:52:49.463050+00:00",
+      "exitCode": 12,
+      "passed": true,
+      "completeWithoutViolation": false,
+      "expectedViolation": "OneSubmission",
+      "actualViolation": "OneSubmission",
+      "reachabilityWitness": null,
+      "stateCounts": [
+        "14",
+        "11",
+        "8"
+      ],
+      "logSha256": "500a9c6ad4f4b2ba15a6020c4582d77ddfb7f67ce5c27d9df5d8b349f81b482d"
+    },
+    {
+      "name": "mutant-changed-intent",
+      "stepCount": 2,
+      "variant": "changed-intent",
+      "external": false,
+      "startedUtc": "2026-10-29T23:52:50.324246+00:00",
+      "exitCode": 12,
+      "passed": true,
+      "completeWithoutViolation": false,
+      "expectedViolation": "IntentPinned",
+      "actualViolation": "IntentPinned",
+      "reachabilityWitness": null,
+      "stateCounts": [
+        "15",
+        "12",
+        "9"
+      ],
+      "logSha256": "b705baf7a76942dcbafe642e3bb2ea1b53c43056e766e01763dbbdfefeb2773b"
+    },
+    {
+      "name": "mutant-unknown",
+      "stepCount": 2,
+      "variant": "unknown",
+      "external": false,
+      "startedUtc": "2026-10-29T23:52:51.191172+00:00",
+      "exitCode": 12,
+      "passed": true,
+      "completeWithoutViolation": false,
+      "expectedViolation": "NoUnknownAdvance",
+      "actualViolation": "NoUnknownAdvance",
+      "reachabilityWitness": null,
+      "stateCounts": [
+        "1063",
+        "400",
+        "312"
+      ],
+      "logSha256": "fcfafa1cbe0ad69c787ddde1f492ec896fab33aa9aa590c51e5bc65b9a83b6a6"
+    },
+    {
+      "name": "mutant-retired",
+      "stepCount": 2,
+      "variant": "retired",
+      "external": false,
+      "startedUtc": "2026-10-29T23:52:52.192972+00:00",
+      "exitCode": 12,
+      "passed": true,
+      "completeWithoutViolation": false,
+      "expectedViolation": "RetirementFence",
+      "actualViolation": "RetirementFence",
+      "reachabilityWitness": null,
+      "stateCounts": [
+        "217",
+        "113",
+        "95"
+      ],
+      "logSha256": "ee19201778291ae3be17fb5d629d4c110d1d5b74c73d7afc3a2681beaa0f16ea"
+    },
+    {
+      "name": "mutant-stale-owner",
+      "stepCount": 2,
+      "variant": "stale-owner",
+      "external": false,
+      "startedUtc": "2026-10-29T23:52:52.998191+00:00",
+      "exitCode": 12,
+      "passed": true,
+      "completeWithoutViolation": false,
+      "expectedViolation": "OwnershipFence",
+      "actualViolation": "OwnershipFence",
+      "reachabilityWitness": null,
+      "stateCounts": [
+        "248",
+        "123",
+        "103"
+      ],
+      "logSha256": "c90d28e1d2773413cd113b5f88903c311a7b1c714c7133247d87047006f259e7"
+    },
+    {
+      "name": "mutant-cancel",
+      "stepCount": 2,
+      "variant": "cancel",
+      "external": false,
+      "startedUtc": "2026-10-29T23:52:53.919844+00:00",
+      "exitCode": 12,
+      "passed": true,
+      "completeWithoutViolation": false,
+      "expectedViolation": "CancellationFence",
+      "actualViolation": "CancellationFence",
+      "reachabilityWitness": null,
+      "stateCounts": [
+        "188",
+        "98",
+        "82"
+      ],
+      "logSha256": "174e10060aba67471e73e9ab3d21431081d3209924c0610c94f670b8f4e1a488"
+    },
+    {
+      "name": "mutant-order",
+      "stepCount": 2,
+      "variant": "order",
+      "external": false,
+      "startedUtc": "2026-10-29T23:52:54.900221+00:00",
+      "exitCode": 12,
+      "passed": true,
+      "completeWithoutViolation": false,
+      "expectedViolation": "ReverseCompensation",
+      "actualViolation": "ReverseCompensation",
+      "reachabilityWitness": null,
+      "stateCounts": [
+        "447263",
+        "75630",
+        "30498"
+      ],
+      "logSha256": "73526964de3f2b009caea3158899c328f042301c4d3fa8415e36595fff8c1610"
+    },
+    {
+      "name": "mutant-external",
+      "stepCount": 2,
+      "variant": "external",
+      "external": true,
+      "startedUtc": "2026-10-29T23:52:57.285930+00:00",
+      "exitCode": 12,
+      "passed": true,
+      "completeWithoutViolation": false,
+      "expectedViolation": "ExternalEligibility",
+      "actualViolation": "ExternalEligibility",
+      "reachabilityWitness": null,
+      "stateCounts": [
+        "2",
+        "2",
+        "0"
+      ],
+      "logSha256": "79d168b1b9626e02d1fce38595393eb2889dc031b00fed79a57d0a7892cb6609"
+    },
+    {
+      "name": "witness-NoSuccessWitness",
+      "stepCount": 2,
+      "variant": "good",
+      "external": false,
+      "startedUtc": "2026-10-29T23:52:58.381879+00:00",
+      "exitCode": 12,
+      "passed": true,
+      "completeWithoutViolation": false,
+      "expectedViolation": "NoSuccessWitness",
+      "actualViolation": "NoSuccessWitness",
+      "reachabilityWitness": "NoSuccessWitness",
+      "stateCounts": [
+        "123148",
+        "24003",
+        "12886"
+      ],
+      "logSha256": "c866772b6562203871511ea691c3ab1f41478f48eaf793dd6f50199004c387e8"
+    },
+    {
+      "name": "witness-NoRecoveryWitness",
+      "stepCount": 2,
+      "variant": "good",
+      "external": false,
+      "startedUtc": "2026-10-29T23:52:59.667496+00:00",
+      "exitCode": 12,
+      "passed": true,
+      "completeWithoutViolation": false,
+      "expectedViolation": "NoRecoveryWitness",
+      "actualViolation": "NoRecoveryWitness",
+      "reachabilityWitness": "NoRecoveryWitness",
+      "stateCounts": [
+        "1725400",
+        "265552",
+        "61969"
+      ],
+      "logSha256": "5b70489e08e955f2bafde87f31d4f59c2cd176197edbf69f09e4d0a94be50042"
+    },
+    {
+      "name": "witness-NoInterventionWitness",
+      "stepCount": 2,
+      "variant": "good",
+      "external": false,
+      "startedUtc": "2026-10-29T23:53:04.434525+00:00",
+      "exitCode": 12,
+      "passed": true,
+      "completeWithoutViolation": false,
+      "expectedViolation": "NoInterventionWitness",
+      "actualViolation": "NoInterventionWitness",
+      "reachabilityWitness": "NoInterventionWitness",
+      "stateCounts": [
+        "211",
+        "113",
+        "95"
+      ],
+      "logSha256": "3493ea4fe56201b5e81bd15527651cd3213df5782094ff91a2cdb81c793f2197"
+    },
+    {
+      "name": "witness-NoRetiredDefinitionContinuationWitness",
+      "stepCount": 2,
+      "variant": "good",
+      "external": false,
+      "startedUtc": "2026-10-29T23:53:05.325090+00:00",
+      "exitCode": 12,
+      "passed": true,
+      "completeWithoutViolation": false,
+      "expectedViolation": "NoRetiredDefinitionContinuationWitness",
+      "actualViolation": "NoRetiredDefinitionContinuationWitness",
+      "reachabilityWitness": "NoRetiredDefinitionContinuationWitness",
+      "stateCounts": [
+        "254995",
+        "45736",
+        "21463"
+      ],
+      "logSha256": "470fa2c6ce826232f13243575f719c4e66db12b873ded73af3dadb33c0bd5c9c"
+    },
+    {
+      "name": "witness-NoBlockedCompensationWitness",
+      "stepCount": 2,
+      "variant": "good",
+      "external": false,
+      "startedUtc": "2026-10-29T23:53:06.981730+00:00",
+      "exitCode": 12,
+      "passed": true,
+      "completeWithoutViolation": false,
+      "expectedViolation": "NoBlockedCompensationWitness",
+      "actualViolation": "NoBlockedCompensationWitness",
+      "reachabilityWitness": "NoBlockedCompensationWitness",
+      "stateCounts": [
+        "51589",
+        "11249",
+        "6820"
+      ],
+      "logSha256": "fb4f67360e4afa8e3165907b41cb65f070467be7a8d2916dc50b40d725f49f73"
+    },
+    {
+      "name": "witness-NoConflictWitness",
+      "stepCount": 2,
+      "variant": "good",
+      "external": false,
+      "startedUtc": "2026-10-29T23:53:08.005346+00:00",
+      "exitCode": 12,
+      "passed": true,
+      "completeWithoutViolation": false,
+      "expectedViolation": "NoConflictWitness",
+      "actualViolation": "NoConflictWitness",
+      "reachabilityWitness": "NoConflictWitness",
+      "stateCounts": [
+        "15",
+        "12",
+        "9"
+      ],
+      "logSha256": "bd1f63246cda76d6220d7d77f2355fff99acc24b64b6844b9ef927b16e511970"
+    }
+  ],
+  "sources": {
+    "Saga.tla": "f2bdb47e3bde48c82037fee0d537af40bdaf1726cfb4d89ef4ccd7fef2276bf4",
+    "run_tlc.py": "6e93665945ea35e9ed23e60ed8061f69b8eea08b8adab2ec4cd289d7035c5fba"
+  },
+  "configurations": {
+    "external-refusal.cfg": "c1c2a8052cc4f440e67e84c7e77de54ea72f6f25ef101fcb502a5484c7548bcd",
+    "mutant-cancel.cfg": "a4522ac1fd0a6c9c1d3d9a34a715cb83b7a2b5518c7afbebd18408cf180d904f",
+    "mutant-changed-intent.cfg": "62db39b8814bcbba7a2eb74eaee264f0fceafd4626a9e45e8b9bf9f38ccc1f3f",
+    "mutant-duplicate-submit.cfg": "c5855f92635bd599b74a2dcca4db1a9ae463742ab5a10f43d435d50f014aeb22",
+    "mutant-external.cfg": "13eb9eca1cb063bde13b663183579233b210f7d8ccce5209bbd19d779d633345",
+    "mutant-order.cfg": "9ce9731b796539adeba822b2002b99c2703287c51ab64de0beb5ee06bb06eceb",
+    "mutant-retired.cfg": "64cd955d29ea34082c3b9efa9747e7428fb8a59505f7f8f4e7ee0fdb14c7c80e",
+    "mutant-stale-owner.cfg": "9807ae92ca897433539e509e8b553aee30993a5e2c2ff011a339b04c6f5cc7d2",
+    "mutant-unknown.cfg": "0dff5bcd7365d8244a0c2a5620857e0f94e163b2f7f80dd1e0aee8fe9ab02eb8",
+    "progress-stable.cfg": "ca367a14f44f1d28766d171a90977eaf104c8623c467c93453df79dae29c894b",
+    "safety-2.cfg": "eb2e8f5885dbc83c8c8eaee2943d473f32b487eaa9e988bdb69ec7ab6e1e4298",
+    "safety-3.cfg": "fadde34c31e79fca3dcd885918509b43d9b559731fc6a54d392608f71c8a5d2c",
+    "witness-NoBlockedCompensationWitness.cfg": "5ff58533f317445f955955b31d7b586cf27ed692298091139fd2a684b0775d77",
+    "witness-NoConflictWitness.cfg": "4e362178e83998600fa317733f619842f9b5ada4a96e52b5f9f622c2316dd283",
+    "witness-NoInterventionWitness.cfg": "b98690d4fa21046bed85bef4e6988fadb0434e7e9e3a9cba4f9d426e0d8a6b6c",
+    "witness-NoRecoveryWitness.cfg": "9bcee503bdd20efb9f8085b43e9e35e1bef56e52c5bd9912748ce179fabd2ab5",
+    "witness-NoRetiredDefinitionContinuationWitness.cfg": "b63fc911aa45b8a0735265d5ecfca0ffaadf66d9e8b0d911cc9f9ed58638cfbd",
+    "witness-NoSuccessWitness.cfg": "c983100836d45b7849e44d78d01d22aa7afe3a7377818483bc2385455fa15c8e"
+  }
+}
