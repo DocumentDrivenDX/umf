@@ -1,0 +1,86 @@
+{
+  "schema": "umf.saga.completed-release/1",
+  "status": "completed",
+  "date": "2026-10-30",
+  "repository": "DocumentDrivenDX/umf",
+  "qualifiedSourceSha": "96230e0eef44b255d33575ba496402555b76800e",
+  "mergeSha": "0bc7cb890ddf4c7636adbf26826194c40bbe7529",
+  "mergedTreeEqualsQualifiedSource": true,
+  "implementationPr": "https://github.com/DocumentDrivenDX/umf/pull/74",
+  "qualification": {
+    "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/41091819731",
+    "conclusion": "success",
+    "nativeTests": 43,
+    "nativeAssertions": 711,
+    "portableCasesPerHost": 19,
+    "sdkConformanceCases": 139,
+    "pythonResourceTests": 35,
+    "artifactVerifierTests": 119,
+    "tlaBoundedCases": 43,
+    "tlaScope": "bounded abstract checks, not implementation proof",
+    "nativeScope": "Bun 1.4.3 / PostgreSQL 17.9 qualification reference consumer; not a production hosting service"
+  },
+  "sdk": {
+    "url": "https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.10.0",
+    "version": "0.10.0",
+    "publicDownloadVerification": {
+      "status": "passed",
+      "tag": "umf-v0.10.0",
+      "commit": "96230e0eef44b255d33575ba496402555b76800e",
+      "files": {
+        "linux-custody.json": "e059e1842f500a891f300d5f6d1bab9ea75412570df79d0403d1b37fe1b97bcf",
+        "macos-custody.json": "233b2c4eab0fa22a6c75e4a8e87c5ed8e0282735fe16b429b248bd7bbff33b41",
+        "release-pins.json": "57781ebdad87c676456ece10fd9e844053c3f45ebd28ea4cd073d862b707ac2a",
+        "RELEASE_NOTES.md": "42e043be9bbe51d2446e0281d387ac9cd8aae1cd3659819da166af43bb8a5d4a",
+        "sdk-installed-custody.json": "716a4a3e9f0124b3aaef670ecd9f21defc334c74f0f6862b6fddf566a75bdf56",
+        "sdk-manifest.json": "3cba308aba62ee2771e3a72d9f8c006e92d898ee3fe0f6965893983409db9f55",
+        "SHA256SUMS": "021821aab082c74d35027ad8ecbf76224348f217f9c6b2a42b1d9e7261c453fa",
+        "umf-darwin-arm64": "4cc6a82bdcb78c40498707aa9038666f342ed9685dd38bec2d72b7c07d089a01",
+        "umf-linux-x64": "f6747075a100e3d51ccb63b37393dbbdffd5612dc9c3385dac000705489cbb22",
+        "umf-sdk.tgz": "2fb63dea5ca85b32c6bad823703de526875ac79490234dbfea4a8863c7d5fe6c"
+      }
+    },
+    "publicConsumer": {
+      "conformanceCases": 139,
+      "sagaCases": 19,
+      "passed": true,
+      "archiveSha256": "2fb63dea5ca85b32c6bad823703de526875ac79490234dbfea4a8863c7d5fe6c"
+    }
+  },
+  "python": {
+    "url": "https://github.com/DocumentDrivenDX/umf/releases/tag/python-v0.10.4",
+    "registryUrl": "https://pypi.org/project/umf-core/0.10.4/",
+    "version": "0.10.4",
+    "publisherRun": "https://github.com/DocumentDrivenDX/umf/actions/runs/41094344167",
+    "publisherConclusion": "success",
+    "publicationReceipt": {
+      "distribution": "umf-core",
+      "files": {
+        "umf_core-0.10.4-cp311-abi3-macosx_11_0_arm64.whl": "a3a4a68fcc4dfb637d7e9229ac7f6cbf029e464442304e6e49f8fc0c2467845e",
+        "umf_core-0.10.4-cp311-abi3-manylinux_2_34_x86_64.whl": "5f73e20aa2f5d5002bf33706eda7fba4dd37789c55ca912c7de0c1557b40209c",
+        "umf_core-0.10.4.tar.gz": "725c4ea02cccf54f6071773ea9916688ec80d862a35f6169c41fc4cfc4ae462b"
+      },
+      "oidc_trusted_publisher": true,
+      "publication_mode": "oidc_upload",
+      "registry": "pypi",
+      "registry_bytes_verified": true,
+      "schema": "pypi-publication-receipt.v1",
+      "source_sha": "96230e0eef44b255d33575ba496402555b76800e",
+      "status": "passed",
+      "tag": "python-v0.10.4",
+      "version": "0.10.4"
+    },
+    "independentRegistryBytes": "matching",
+    "publicConsumer": {
+      "macos-arm64-python-3.13.16": {
+        "sagaCases": 19,
+        "passed": 19,
+        "registryInstall": true
+      },
+      "linux-x86_64-python-3.11": {
+        "publisherInstalledConsumer": "passed"
+      }
+    }
+  },
+  "releaseSourcePolicy": "Both tags resolve to the exact qualified source SHA, now an ancestor of main. Published archives were copied from retained qualification outputs without rebuilding. Earlier releases remain unchanged."
+}

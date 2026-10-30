@@ -14,9 +14,12 @@ ddx:
 
 Sagas are an explicit opt-in companion to actions in the UMF repository and SDK.
 The sequential declaration vocabulary is `umf.actions.saga` 0.1.0, with core
-0.10.0 and actions 0.1.0. The SDK candidate is 0.10.0; the Python candidate is
-`umf-core` 0.10.4. Release publication is tracked separately in the implementation
-plan. Do not replace an older published wheel with new bytes under its old version.
+0.10.0 and actions 0.1.0. The public SDK release is
+[0.10.0](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.10.0);
+the public Python package is [`umf-core` 0.10.4](https://pypi.org/project/umf-core/0.10.4/).
+The implementation plan and [saga qualification packet](../04-build/evidence/sagas/README.md)
+record source, CI, consumer and artifact-hash evidence. Do not replace an older
+published wheel with new bytes under its old version.
 
 The shared Rust engine implements `inspectSagas`, `declareSaga`, `editSaga` and
 `assessSaga`. It is available through the native binding, native CLI wire

@@ -3,7 +3,7 @@ ddx:
   id: umf.saga-implementation-plan
   type: implementation-plan
   activity: build
-  status: active
+  status: complete
   authoring:
     home: repo
   links:
@@ -189,6 +189,23 @@ Rust codegen/wire regression passes 121 tests; native action regression passes
 125 tests/1,993 assertions. The full boundary gate passes with its negative controls.
 
 The first draft PR CI caught a one-byte source-inventory mismatch, before native
-qualification or publication. Final source inventory is being regenerated after
-all edits. PR #74 remains gated on frozen hosted qualification, Sol's final
-source/evidence verdict, merge and exact retained-byte publication verification.
+qualification or publication. That mismatch was corrected before the final
+source freeze; the draft failure remains historical evidence and is not the
+qualification result. The final PR qualification and source/evidence review
+passed, PR #74 was merged, and SDK 0.10.0 plus Python 0.10.4 were published with
+independent public-byte verification. The public PyPI installed-consumer macOS
+run also passed all 19 vectors, and the publisher workflow completed
+successfully. The release receipt records its run identity and results.
+
+## Continuation — merged release candidate, 2026-10-30
+
+PR #74 merged at `0bc7cb890ddf4c7636adbf26826194c40bbe7529`; the qualified
+candidate source was `96230e0eef44b255d33575ba496402555b76800e`. Frozen CI run
+41091819731 passed all 43 native tests/711 assertions, all-host 19-vector saga
+corpus, installed SDK 139-consumer regression, and required build/check gates.
+The SDK `umf-v0.10.0` and Python `python-v0.10.4` releases are public. The
+public-PyPI Linux and macOS consumers passed, including 19/19 vectors on the
+freshly installed macOS package; independent checks of all three distribution archives passed.
+Publisher workflow 41094344167 completed successfully. The exact release, run
+and hash evidence is recorded in `evidence/sagas/release.json`; Sol confirmed the
+final evidence allocation. All planned slices and release gates are complete.

@@ -3,8 +3,10 @@
 This packet accompanies [PR #74](https://github.com/DocumentDrivenDX/umf/pull/74)
 and the [implementation plan](../../saga-implementation-plan.md). It records
 portable implementation, native reference-consumer observations and independent
-Sol review. Source review is complete; final hosted qualification and publication
-are separate gates. It does not qualify a production hosting service.
+Sol review. PR #74 is merged and the SDK/Python releases are public. Frozen CI,
+public-byte verification and both public PyPI installed-consumer runs passed.
+The release receipt records the exact run and artifact identities. This evidence
+does not qualify a production hosting service.
 
 ## Portable and installed artifacts
 
@@ -15,12 +17,15 @@ content; returned-source mutation does not change the caller or later inspection
 All operations share the Rust implementation; no TypeScript semantic evaluator
 was added. Assessment always returns `executionVerified:false`.
 
-The final local SDK archive passes the existing 139 consumer cases and all 19
+The public SDK 0.10.0 archive passes the existing 139 consumer cases and all 19
 saga vectors through its installed public facade and bundled WASM. The Python
-0.10.4 candidate passes all 19 vectors and 35 resource-integrity tests. Its source
-archive rebuilds with node, bun, npm and npx explicitly blocked; that installed
+0.10.4 wheel selected for publication passed all 19 vectors and 35
+resource-integrity tests in Linux CI. Its source archive rebuilds with node, bun, npm and npx explicitly blocked; that installed
 rebuilt wheel also passes the 19 vectors. SDK 0.10.0, Python 0.10.4, core 0.10.0
 and action/saga vocabularies 0.1.0 remain coupled by `spec/release.json`.
+Independent comparison confirms the three published PyPI distribution bytes
+match the reviewed build. The public PyPI macOS installed-consumer run passed all
+19 vectors on a fresh package installation.
 
 Shared-codegen and wire regression passes 121 Rust tests. Existing native action
 regression passes 125 tests and 1,993 assertions; the portable action regression
@@ -41,10 +46,12 @@ protocol, independent oracle, inventory, provider, capacity and component cases.
 The individual native component run passes 173 assertions, including
 monotonic elapsed-time checks and refusal to invent missing legacy custody. The
 provider/capacity boundary run passes five tests with 42 assertions. Hosted CI
-repeats the complete native suite and retains its raw log with the built artifacts.
+run 41091819731 repeated the complete native suite and retained its raw log with
+the built artifacts. It passed 43 native tests/711 assertions, the all-host
+portable corpus, installed SDK regression and required release checks.
 
 Sol reviewed each acceptance criterion against actual source assertions. The
-following is a fresh review allocation, conditional on the frozen hosted run. It
+following is a fresh review allocation against the frozen hosted run. It
 does not rewrite the older inventory-only `tests/saga/protocol-coverage.json` or
 promote the component receipt's unverified story rows. Those records preserve
 their original, narrower purposes.
@@ -115,9 +122,12 @@ model and transition semantics did not change; source pins were repackaged, not
 reinterpreted as new native proof. Historical accounted companion bytes/pins stay
 unchanged. The narrowly scoped provenance normalization rejects semantic changes.
 
-`Saga qualification` CI checks the exact PR head, runs the frozen native suite,
-builds native/WASM/SDK/Python artifacts, tests installed consumers and rebuilds
+`Saga qualification` CI checked the exact PR head, ran the frozen native suite,
+built native/WASM/SDK/Python artifacts, tested installed consumers and rebuilt
 the source archive without JavaScript tools. Its collector refuses dirty source,
 stale corpus reports, mismatched SDK installation custody or a different installed
-wheel. Retained archives and hashes are the publication inputs. Publication and
-fresh public-download verification must be recorded before marking the plan done.
+wheel. Retained archives and hashes were the publication inputs; SDK 0.10.0 and
+Python 0.10.4 are now public and their downloaded bytes were independently
+verified. The public PyPI macOS 19-vector consumer run and publisher workflow
+41094344167 passed. The run, release and hash evidence is recorded in
+`release.json`, and Sol confirmed the final evidence allocation.
