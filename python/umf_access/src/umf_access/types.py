@@ -16,10 +16,11 @@ else:
         from pydantic.experimental.missing_sentinel import MISSING as MISSING  # noqa: PLC0414 -- explicit public re-export for static consumers
 from pydantic import BaseModel, ConfigDict
 
+from ._version import __version__
 from .generated_core import CURRENT_CORE_VERSION, CoreVersion
 
 RUNTIME_ABI = "umf-access-runtime/0.1"
-RUNTIME_IDENTITY = ("umf_access", "0.1.0.dev0", "umf-access-runtime/0.1")
+RUNTIME_IDENTITY = ("umf_access", __version__, RUNTIME_ABI)
 
 Vector: TypeAlias = tuple[float, ...]
 

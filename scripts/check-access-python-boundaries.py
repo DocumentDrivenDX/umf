@@ -72,7 +72,7 @@ def check(root: Path) -> int:
                "build": {"dsl", "runtime", "foundation"}, "runtime": {"dsl", "foundation"},
                "targets": {"runtime", "dsl", "foundation"}, "conformance": {"runtime", "foundation"},
                "facade": {"dsl", "runtime", "foundation"}}
-    helpers = {"canonical": "foundation", "types": "foundation", "values": "foundation", "codec_support": "foundation", "generated_core": "foundation",
+    helpers = {"canonical": "foundation", "types": "foundation", "_version": "foundation", "values": "foundation", "codec_support": "foundation", "generated_core": "foundation",
                "related_keys": "runtime", "verification": "targets", "managed_delta": "targets", "managed_actions": "targets", "managed_bulk": "targets", "managed_support": "targets", "delta_read": "targets", "postgres_search": "targets", "unity_search": "targets", "search_catalog": "runtime", "commands": "runtime", "manifest_commands": "runtime", "bulk": "runtime", "postgres_bulk": "targets", "native_program": "runtime", "native_actions": "targets", "catalog": "runtime", "reviewed": "runtime", "postgres_read": "targets", "capture": "dsl", "protocols": "runtime", "pages": "runtime", "adoption": "runtime", "engine_catalog": "runtime", "unified": "targets"}
     # Keep the administrative host, approval and optional parser adapters
     # explicit in the module map. They remain within the lifecycle owner.

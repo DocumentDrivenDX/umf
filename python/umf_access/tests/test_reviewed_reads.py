@@ -875,7 +875,7 @@ class Native(unittest.TestCase):
                 ("UMF_BUNDLE_INPUT_DIGEST", "0" * 64),
                 (
                     "UMF_RUNTIME_ABI",
-                    ("umf_access", "different", "umf-access-runtime/0.1"),
+                    ("umf_access", "0.1.0.dev0", "umf-access-runtime/0.1"),
                 ),
             ):
                 setattr(OrderCustomer, name, value)
