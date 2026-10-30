@@ -171,7 +171,18 @@
                   "required": true
                 }
               ],
-              "outputs": [],
+              "outputs": [
+                {
+                  "id": "allocation",
+                  "kind": "entity",
+                  "target": {
+                    "module": "equipment",
+                    "element": "resource",
+                    "key": "pk"
+                  },
+                  "required": true
+                }
+              ],
               "preconditions": [],
               "postconditions": [],
               "failures": [],
@@ -318,6 +329,88 @@
                 "version": "store-opaque",
                 "receipt": "read-at-least"
               }
+            },
+            {
+              "id": "deallocate",
+              "name": "Deallocate",
+              "description": "Release the allocation identified by the original allocate result; current guards and independent authority still apply.",
+              "parameters": [
+                {
+                  "id": "resource",
+                  "kind": "entity",
+                  "target": {
+                    "module": "equipment",
+                    "element": "resource",
+                    "key": "pk"
+                  },
+                  "required": true
+                }
+              ],
+              "outputs": [],
+              "preconditions": [],
+              "postconditions": [],
+              "failures": [],
+              "reads": [],
+              "writes": [
+                {
+                  "id": "order-write",
+                  "record": {
+                    "module": "equipment",
+                    "element": "resource"
+                  },
+                  "selector": {
+                    "language": "umf.actions.keys",
+                    "version": "1",
+                    "expression": "{\"entity\":\"resource\"}",
+                    "references": [
+                      {
+                        "parameter": "resource"
+                      }
+                    ]
+                  },
+                  "maxEntities": 1,
+                  "fields": [
+                    {
+                      "module": "equipment",
+                      "element": "status"
+                    }
+                  ],
+                  "relationships": [],
+                  "create": false,
+                  "delete": false
+                }
+              ],
+              "binding": {
+                "kind": "handler",
+                "profile": {
+                  "id": "umf.fixture.resource-state",
+                  "version": "1"
+                },
+                "handler": {
+                  "id": "deallocate",
+                  "version": "1"
+                }
+              },
+              "authorization": {
+                "kind": "roles",
+                "profile": {
+                  "id": "reference-roles",
+                  "version": "1"
+                },
+                "roles": [
+                  "approver"
+                ]
+              },
+              "attribution": {
+                "subject": "person-required"
+              },
+              "atomicity": "single-store",
+              "idempotency": "caller-key-optional",
+              "result": {
+                "identities": "created-and-changed",
+                "version": "store-opaque",
+                "receipt": "read-at-least"
+              }
             }
           ]
         },
@@ -418,15 +511,15 @@
                     "kind": "action",
                     "action": {
                       "module": "equipment",
-                      "action": "release"
+                      "action": "deallocate"
                     },
                     "binding": "allocation",
                     "inputs": [
                       {
                         "parameter": "resource",
                         "from": {
-                          "step": "reserve",
-                          "output": "reservation"
+                          "step": "allocate",
+                          "output": "allocation"
                         }
                       }
                     ]

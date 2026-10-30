@@ -176,3 +176,40 @@ Current main already assigns US-904 to extension-defined kinds. This packet
 explicitly migrates the saga story and all its AC citations to US-906, preserving
 its content, other frontmatter and historical source hashes. US-905 remains the
 recovery story. CONTRACT-908 avoids current main's CONTRACT-906/907 allocations.
+
+## Coupled ownership and release baseline
+
+Owner direction on 2026-10-29 keeps action and saga declarations, public types,
+authored schemas, shared engine and conformance in the UMF repository. No separate
+umf-actions repository or package release is selected. Both reuse core 0.10.0;
+the JavaScript SDK joins the 0.10 release series alongside the existing Python
+0.10 series. Existing vocabulary 0.1.0 and protocol /1 identifiers describe wire
+meaning and are not renamed to resemble the SDK. Native qualification remains
+specific to the exact source, schema and provider cohort. The release check
+blocks mismatched core dependencies, action pins and stale normative contracts.
+
+## Recovery state projection
+
+```mermaid
+stateDiagram-v2
+    queued --> running: first ticket
+    running --> reconciling: unknown outcome
+    reconciling --> running: original forward commit
+    running --> compensating: rejection, conflict, confirmed noncommit, or cancel
+    reconciling --> compensating: original failure or settled cancel
+    running --> succeeded: every forward commit
+    compensating --> reconciling: unknown compensation
+    reconciling --> compensating: original compensation commit
+    compensating --> compensated: failure unwind complete, including empty prefix
+    compensating --> cancelled: cancel-triggered unwind complete
+    queued --> cancelled: settled cancel, no committed work
+    running --> intervention: unavailable custody or authority, barrier, budget
+    reconciling --> intervention: automatic budget exhausted, pending retained
+    compensating --> intervention: failed compensation or irreversible barrier
+    intervention --> closed: settled custody and authorized residual disposition
+```
+
+`intervention` abbreviates intervention-required. The latched stopCause survives
+reconciliation. Cancel during failure unwind refuses; resolve appends evidence
+without resuming work. Close performs no business effects. The contract's guards,
+not arrows alone, govern each transition. See the worked example timeline.

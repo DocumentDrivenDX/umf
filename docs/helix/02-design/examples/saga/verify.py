@@ -80,6 +80,25 @@ def main():
     bad_namespace = dict(protocol="umf.actions.saga/1", operation="status",
                          instance={"namespace": "bad\n", "id": "instance_1"})
     check("namespace_encoding_is_strict", protocol, bad_namespace, False)
+    close = dict(protocol="umf.actions.saga/1", operation="close", instance=instance,
+                 expectedHistorySequence=7,
+                 disposition=dict(kind="accepted-residual-effects", reason="Reviewed residual allocation", evidence="review_7"))
+    check("settled_close_request_shape", protocol, close)
+    missing_evidence = copy.deepcopy(close)
+    del missing_evidence["disposition"]["evidence"]
+    check("close_requires_evidence_reference", protocol, missing_evidence, False)
+    closed = {**state, "phase": "closed", "disposition": close["disposition"]}
+    check("closed_disposition_structure", result("statusResult"), closed)
+    pending_closed = {**closed, "pending": [{"step": "allocate", "direction": "forward"}]}
+    check("closed_cannot_retain_pending", result("statusResult"), pending_closed, False)
+    without_disposition = {**state, "phase": "closed"}
+    check("closed_requires_disposition", result("statusResult"), without_disposition, False)
+    compensated = {**state, "phase": "compensated", "stopCause": {"kind": "failure", "code": "TRANSIENT_ABORT"}}
+    check("empty_prefix_compensated_shape_retains_failure", result("statusResult"), compensated)
+    del compensated["stopCause"]
+    check("unwind_requires_original_cause", result("statusResult"), compensated, False)
+    check("closure_control_recovery_shape", result("recover-controlResult"),
+          dict(status="recovered", operation="close", result=closed))
     report = dict(jsonschemaVersion=importlib.metadata.version("jsonschema"),
                   results=cases,
                   sources={str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()

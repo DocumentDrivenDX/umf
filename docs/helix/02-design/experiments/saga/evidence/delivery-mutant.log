@@ -1,0 +1,51 @@
+TLC2 Version 2.19 of 08 August 2024 (rev: 5a47802)
+Running breadth-first search Model-Checking with fp 0 and seed 901 with 1 worker on 18 cores with 981MB heap and 64MB offheap memory [pid: 60892] (Mac OS X 27.0.1 aarch64, Eclipse Adoptium 21.0.13 x86_64, MSBDiskFPSet, DiskStateQueue).
+Parsing file /Users/erik/.codex/worktrees/38b0/umf/docs/helix/02-design/experiments/saga/formal/Delivery.tla
+Parsing file /private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/Naturals.tla
+Parsing file /private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/TLC.tla
+Parsing file /private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/Sequences.tla
+Parsing file /private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/FiniteSets.tla
+Semantic processing of module Naturals
+Semantic processing of module Sequences
+Semantic processing of module FiniteSets
+Semantic processing of module TLC
+Semantic processing of module Delivery
+Starting... (2026-10-29 20:52:12)
+Computing initial states...
+Finished computing initial states: 1 distinct state generated at 2026-10-29 20:52:12.
+Error: Invariant NoDuplicateEffects is violated.
+Error: The behavior up to this point is:
+State 1: <Initial predicate>
+/\ deliveries = 0
+/\ effects = 0
+/\ provider = "none"
+/\ crashes = 0
+/\ cached = "none"
+/\ up = TRUE
+/\ known = "none"
+/\ recovered = FALSE
+
+State 2: <Deliver line 11, col 12 to line 15, col 65 of module Delivery>
+/\ deliveries = 1
+/\ effects = 1
+/\ provider = "committed"
+/\ crashes = 0
+/\ cached = "none"
+/\ up = TRUE
+/\ known = "none"
+/\ recovered = FALSE
+
+State 3: <Deliver line 11, col 12 to line 15, col 65 of module Delivery>
+/\ deliveries = 2
+/\ effects = 2
+/\ provider = "committed"
+/\ crashes = 0
+/\ cached = "none"
+/\ up = TRUE
+/\ known = "none"
+/\ recovered = FALSE
+
+3 states generated, 3 distinct states found, 0 states left on queue.
+The depth of the complete state graph search is 3.
+The average outdegree of the complete state graph is 1 (minimum is 1, the maximum 1 and the 95th percentile is 1).
+Finished in 00s at (2026-10-29 20:52:12)

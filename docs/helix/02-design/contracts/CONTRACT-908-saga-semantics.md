@@ -144,6 +144,11 @@ earlier compensation. Compensation may fail against concurrent legitimate state.
 ### Portable library boundary
 
 These are planned public operations, not currently exported implementations.
+Inspection and assessment MUST report SAGA_PIVOT when an irreversible step
+precedes later work, including compensable steps. The warning does not make the
+definition malformed or assert a pivot transaction; supported hosts must expose
+its intervention risk before admission. Forward-only recovery and fresh
+compensation retries remain outside sequential/1.
 Existing `Document`, `Registry` and `Diagnostic` types retain their contracts.
 Schema `$defs` own the new payload/result types referenced below.
 
@@ -179,6 +184,7 @@ unknown members. Person/service attribution preserves tx/1 meaning.
 | cancel | cancelled, refusal, unknown, failure | Serialize cancellation against further forward admission. |
 | reconcile | state, refusal, unknown, failure | Observe original custody/outcomes only; no new business dispatch. |
 | resolve | state, refusal, unknown, failure | Import an attributable issuer-verified original outcome; no invented truth. |
+| close | state, refusal, unknown, failure | Close settled intervention with an authorized disposition accepting residual effects. |
 | recover-control | recovered, refusal, unknown | Recover the complete original result of its matching control attempt. |
 | history | page, refusal | Protected immutable sequence, bounded page and instance-bound cursor. |
 
@@ -209,7 +215,7 @@ Unknown admission is reconciled before another attempt; never mint a new key
 as automatic recovery. Expiry disables admission/disclosure but retains a
 nonreuse tombstone and unresolved obligations for the namespace's lifetime.
 
-Claim/cancel/reconcile/resolve retain their complete original response atomically
+Claim/cancel/reconcile/resolve/close retain their complete original response atomically
 with control changes. Equal control-attempt recovery returns that original
 response, not a later status or renewed lease. A claim is not permanent authority.
 All controls recheck current protected-operation authorization before lookup.
@@ -248,7 +254,10 @@ invocation. Already admitted native transactions may finish after retirement.
 
 Cancel winning the coordinator lock prevents subsequent forward tickets. A
 previous ticket must be reconciled before compensation. Cancel after a terminal
-phase refuses. If no step committed, settled cancellation becomes cancelled;
+phase refuses. Once failure-triggered unwind begins, including reconciliation
+during that unwind, cancel refuses with SAGA_ORDER and changes no controls.
+The original stopCause is latched under the control lock; cancellation cannot
+replace a prior failure or turn compensated termination into cancelled. If no step committed, settled cancellation becomes cancelled;
 otherwise unwind, preserving all confirmed forward and recovery facts. An
 acknowledgement of cancellation never claims rollback or settled in-flight work.
 
@@ -258,7 +267,11 @@ Unknown provider outcome blocks later forward and ALL compensation admission.
 `lookup` missing, HTTP success, local outbox, worker death and timeout are not
 business outcomes. Reconcile reads original registered provider custody. An
 original committed/rejected/conflict result is retained unchanged. A confirmed
-native rollback maps to failed, not a fabricated business rejection. A refusal
+native rollback maps to failed, not a fabricated business rejection. A definitive
+forward noncommit starts reverse compensation of the committed prefix; when that
+prefix is empty, compensated means recovery completed with zero compensations.
+The original failed outcome remains visible. A failed compensation still requires
+intervention. A refusal
 before admission produces intervention with its original reason, not success.
 
 This profile allows ONE logical forward invocation and ONE compensation per step,
@@ -284,7 +297,22 @@ result as evidence of the original outcome. Append the actor/evidence and origin
 observation without rewriting confirmed facts. Contradictory evidence refuses.
 Resolution may enrich an intervention state but does not restart automatic work;
 this profile has no resume operation. Unresolved custody cannot be bypassed by
-closing the instance or expiring its retention. Native reconciliation is a
+closing the instance or expiring its retention.
+
+`close` is permitted only from intervention-required after EVERY original ticket
+has an authoritative settled disposition and pending is empty. It requires current
+independent operator authority, an expectedHistorySequence matching the latest
+event, and a disposition `{kind:"accepted-residual-effects",reason,evidence}`.
+Evidence identifies trusted issuer-retained review of the complete remaining
+obligations and residual effects; reason is protected-safe text. The host verifies
+evidence scope, current facts and explicit authority to accept each remaining
+obligation. Reject missing, contradictory, stale or caller-fabricated evidence.
+Under the instance control lock append actor, original stopCause, evidence and
+disposition, retain the original control response, then enter closed. No effect,
+compensation, fresh business key, rewritten outcome or automatic resume follows.
+Closure accepts the recorded residual effects; it never claims restored state.
+Unknown custody refuses SAGA_PENDING; concurrent history change refuses SAGA_ORDER.
+A repeated close is recovered by the original control attempt, not a new close. Native reconciliation is a
 provider-owned installed capability, never a document-selected URL resolver.
 
 ### State and history
@@ -300,16 +328,21 @@ instance has queued phase, all forward states idle and no outcomes.
 | running/compensating → reconciling | An admitted invocation has unresolved custody | No later business admission. |
 | reconciling → running/compensating | Authoritative original result resolves the pending invocation and automatic budget remains | Continue only the original order under current authority. |
 | running → succeeded | All required forward results independently confirmed committed; no cancellation won first | Output bindings resolve original committed values. |
-| running → compensating | Definitive forward rejection/conflict, or settled cancellation with committed work | Preserve original stop cause and prefix. |
+| running → compensating | Definitive forward rejection/conflict/confirmed noncommit, or settled cancellation with committed work | Preserve original stop cause and prefix. |
 | compensating → compensated | Failure-triggered unwind completes every required compensation, with no irreversible or unresolved work | Original failure and all effects remain in history. |
-| queued/running/compensating → cancelled | Cancellation won, all admitted work settled and its declared recovery obligations completed | Includes committed prefix; does not imply rollback. |
-| any nonterminal → intervention-required | Required action/provider/authority unavailable; known execution or compensation failure; irreversible barrier; budget exhausted | Record reason, confirmed prefix and remaining obligations. |
+| queued/running/compensating → cancelled | Cancellation won before failure-triggered unwind, all admitted work settled and its declared recovery obligations completed | Includes committed prefix; does not imply rollback. |
+| any nonterminal → intervention-required | Required action/provider/authority unavailable; compensation failure; irreversible barrier; budget exhausted | Record reason, confirmed prefix and remaining obligations. |
+
+| intervention-required → closed | All original tickets settled, current attributable acceptance of residual obligations and matching history sequence | Preserve stop cause and full disposition; perform no business work. |
 
 An intervention-required phase may retain pending unknown outcomes. Status must
 not claim that provider execution has terminated merely because automatic work
 stopped. No automatic admissions occur from intervention. Late observations and
 attributable resolution append history while retaining that phase. Business
-terminal phases succeeded/compensated/cancelled permit reads/recovery only.
+terminal phases succeeded/compensated/cancelled/closed permit reads/recovery only.
+`compensated` explicitly includes an empty committed prefix; its failure stopCause
+and forward failed/rejected/conflict result distinguish it from successful work.
+Failure and cancellation stopCause are immutable once unwind begins.
 Cancellation after intervention returns terminal refusal; existing original
 cancel-attempt recovery remains available.
 
@@ -329,7 +362,11 @@ cursors refuse. Pagination and status perform no business execution.
 
 ### Finite profile limits
 
-These are protocol safety caps, not measured throughput or latency promises.
+The sequential/1 profile is a short-running profile with a 15-minute maximum
+automatic duration. These are protocol safety caps, not measured throughput or latency promises.
+A host may advertise tighter limits before admission and pin them with the
+instance; it cannot extend these caps. Longer-running or configurable-ceiling
+profiles require a distinct qualified profile identity.
 The action/provider qualification must demonstrate them BEFORE eligibility.
 
 | Resource | Bound and exhaustion rule |
@@ -366,6 +403,12 @@ conservatively; it cannot declare rollback or extend an expired claim implicitly
 All originals, required interpretations and nonreuse protections are retained
 for the trusted namespace's lifetime in this first profile. Bounded per-instance
 storage does not claim bounded total tenant storage or an operational retention SLO.
+This profile does not support payload erasure during that lifetime. Hosts MUST
+refuse admission if required retention/erasure policy cannot honor original
+outcome recovery. Namespace expiry is not permission to erase unresolved custody.
+A future retention profile must separate nonreuse tombstones from erasable payload
+and specify which recovery/disclosure guarantees expire; it cannot inherit this
+profile's lifetime recovery claim. No legal-policy compatibility is inferred.
 
 ## Precedence and Compatibility
 
@@ -395,6 +438,8 @@ Runtime refusal `code` is protected-safe and never embeds original values.
 | Ambiguous/missing/late reference | SAGA_REFERENCE, error | Supply complete local package/correct order. |
 | Field/Key identity or presence mismatch | SAGA_TYPE, error | Correct mapping; no coercion. |
 | Relevant unfamiliar meaning | SAGA_UNCHECKED, warning/unsupported | Retain source; install exact trusted interpretation. |
+| Irreversible step before remaining forward work | SAGA_PIVOT, warning | Retain and report the exact barrier and later steps. This profile has no forward-recovery/pivot mode; downstream failure may require intervention. |
+| Unsettled close | SAGA_PENDING, unsupported | Reconcile every original ticket before accepting residual obligations. |
 | Missing profile/provider proof | SAGA_PROFILE, unsupported | No eligibility inferred from metadata. |
 | Resource limit | SAGA_LIMIT, error/unsupported | No truncation or dropping prior obligations. |
 | Scoped key with changed intent | TOKEN_REUSE, conflict | Recover original; never overwrite it. |

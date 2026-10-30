@@ -667,6 +667,12 @@ direct expression composition and optional backend preparation.
 
 ### Saga analysis and consumer coordination (proposed)
 
+Owner direction on 2026-10-29 keeps actions and saga semantics in this UMF
+repository with shared generated types, core 0.10.0 schemas and one semantic
+engine. The SDK candidate joins the 0.10 release series; no independent
+umf-actions repository/package lifecycle is selected. Vocabulary and protocol
+identities retain their distinct meanings and qualification requirements.
+
 [SD-901](solution-designs/SD-901-saga-semantics.md) and
 [CONTRACT-908](contracts/CONTRACT-908-saga-semantics.md) add independently versioned
 composition semantics without moving durable execution into UMF. The new shared

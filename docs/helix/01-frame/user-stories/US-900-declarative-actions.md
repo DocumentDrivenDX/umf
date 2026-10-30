@@ -96,7 +96,7 @@ can distinguish links sharing endpoints. Report mode cannot waive obligations.
 
 ## Dependencies
 
-FEAT-900, CONTRACT-900, SD-900, TD-900, STP-900; core 0.8.0 and existing registry
+FEAT-900, CONTRACT-900, SD-900, TD-900, STP-900; core 0.10.0 and existing registry
 and serialization. US-050 is not required for this local-only slice. Planned
 STP-900 tests are not executed evidence.
 

@@ -139,3 +139,11 @@ The existing shared Rust action inspector is generator-internal. Promote only
 its narrow immutable declaration/obligation interface needed by saga analysis;
 do not expose generator internals or fork its rules. Native wrappers need new
 operation-family qualification rather than inheriting unrelated engine evidence.
+
+## Irreversible boundary diagnostic
+
+Emit SAGA_PIVOT for each irreversible step followed by later forward work; include
+its step path and later step identities. Retain the declaration and classify this
+as a warning, not structural failure or executable pivot support. Test both a
+terminal irreversible step with no warning and an early irreversible step followed
+by action-compensated work. This is US-905-AC28's portable assessment allocation.

@@ -149,8 +149,9 @@ The revised requirements support a bounded sequential safety model without
 changing core, actions 0.1.0, tx/1 or bulk/1. Formal modeling complements the
 existing declaration and consumer acceptance stories. It does not replace them.
 
-History instrumentation records unsafe admission preconditions independently of
-the dispatch guards. Removed guards must produce counterexamples, and positive
+History instrumentation records unsafe admission preconditions at dispatch;
+these guard mutants check that boundary rather than independently proving business
+consequences. Removed guards must produce counterexamples, and positive
 witnesses prevent claiming success solely because useful execution is unreachable.
 The original reviewed packet was imported into this worktree from the
 Batten Helix worktree; its pre-edit hashes are recorded in
@@ -206,3 +207,38 @@ No runtime, datastore, queue or new concern selection follows from this spike.
 - [Feature requirements](../../01-frame/features/FEAT-901-saga-semantics.md),
   [authoring criteria](../../01-frame/user-stories/US-906-author-and-assess-sagas.md)
   and [recovery criteria](../../01-frame/user-stories/US-905-saga-recovery-conformance.md).
+
+## Formal evidence limits identified in review
+
+The 18 expectations are results for the original finite abstraction. Five guard
+properties use history flags set on the corresponding dispatch guard violation;
+their mutants demonstrate detection of a forbidden admission, not downstream
+business harm. Duplicate submission counts admitted instances without executing
+a second complete instance. NoDuplicateEffects in Saga.tla is structural: settle
+requires no previous provider outcome and redeliver only changes a witness flag.
+It does not independently test delivery deduplication.
+
+Crash preserves the modeled durable known/pending/acknowledged state. The gap
+between provider commit and durable coordinator observation is represented by
+unknown, but loss of a volatile coordinator observation is not represented there.
+The finite model uses running/unwinding/success/compensated/intervention; queued,
+reconciling, cancelled, irreversible barriers, budgets, confirmed noncommit,
+resolve and close are not protocol states it explores. MovePhase forbids unknown
+intervention even though the contract permits budget exhaustion with pending
+custody. Admission.tla is also a guard/in-flight boundary check, not a native
+provider or composed protocol proof.
+
+ProgressSpec weakly fairs the whole finite ProgressNext relation in a stable
+environment without crashes or revocations. Finite remaining work forces terminal
+progress; this is close to proving absence of a nonterminal dead end under those
+premises. It establishes neither independent provider fairness, real-world
+availability, deadlines nor termination under indeterminate outcomes.
+
+Delivery.tla adds an independent, small provider-delivery abstraction. A real
+redelivery transition can execute again under its broken-deduplication mutation,
+which must violate NoDuplicateEffects. Crash discards a volatile observation,
+leaving provider outcome durable, and a witness requires original recovery after
+restart and redelivery. The provider atomic effect/outcome transaction remains
+an explicit assumption. This strengthens that one boundary and supplies no
+combined proof of CONTRACT-908. Native AC25–29 and full-protocol refinement remain
+unexecuted acceptance work; none is discharged by historical TLC counts.

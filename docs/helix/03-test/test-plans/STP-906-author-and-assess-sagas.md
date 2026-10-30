@@ -101,3 +101,11 @@ assertions and actual host/binding integration. Extend boundary checks and add
 negative controls before claiming new source-family support. Require passing
 per-AC results and exact installed versions for completion; retain untested
 obligations as unverified. No production orchestrator or UI delivery is included.
+
+## Irreversible barrier review control
+
+US-905-AC28 additionally maps to planned `tests/saga/assessment.test.ts` with
+`@covers US-905-AC28`: an early irreversible step followed by action-compensated
+work emits SAGA_PIVOT with exact paths and preserved source; a terminal irreversible
+step emits no early-barrier warning. Native risk disclosure remains STP-905's
+separate obligation. These planned tests have not been executed.

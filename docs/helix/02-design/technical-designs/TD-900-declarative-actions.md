@@ -135,7 +135,7 @@ Consumers stop action use before removing its supported package/profile.
 4. Export/build and run the Chromium corpus for AC9, then traceability and scoped
    regression. Record source/runtime versions, failures/reruns and subset evidence.
 
-Prerequisites: requirements/contract review and current core 0.8.0 acceptance
+Prerequisites: requirements/contract review and current core 0.10.0 acceptance
 qualification. Existing release qualification failures are not waived. US-050
 and consumer executors are not required to implement local declaration tooling.
 

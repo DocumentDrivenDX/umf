@@ -29,6 +29,9 @@
     },
     {
       "$ref": "#/$defs/historyRequest"
+    },
+    {
+      "$ref": "#/$defs/closeRequest"
     }
   ],
   "$defs": {
@@ -96,7 +99,8 @@
             "execute",
             "cancel",
             "reconcile",
-            "resolve"
+            "resolve",
+            "close"
           ]
         }
       },
@@ -224,7 +228,8 @@
             "succeeded",
             "compensated",
             "cancelled",
-            "intervention-required"
+            "intervention-required",
+            "closed"
           ]
         },
         "cancelRequested": {
@@ -261,6 +266,12 @@
         },
         "outputs": {
           "$ref": "#/$defs/values"
+        },
+        "disposition": {
+          "$ref": "#/$defs/disposition"
+        },
+        "stopCause": {
+          "$ref": "#/$defs/stopCause"
         }
       },
       "required": [
@@ -297,6 +308,56 @@
                 "outputs"
               ]
             }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "closed"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "required": [
+              "disposition"
+            ],
+            "properties": {
+              "pending": {
+                "maxItems": 0
+              }
+            }
+          },
+          "else": {
+            "not": {
+              "required": [
+                "disposition"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "enum": [
+                  "compensating",
+                  "compensated",
+                  "cancelled"
+                ]
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "required": [
+              "stopCause"
+            ]
           }
         }
       ]
@@ -742,7 +803,8 @@
             "authority-denied",
             "intervention",
             "resolved",
-            "completed"
+            "completed",
+            "closed"
           ]
         },
         "invocation": {
@@ -767,6 +829,9 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 256
+        },
+        "disposition": {
+          "$ref": "#/$defs/disposition"
         }
       },
       "required": [
@@ -780,7 +845,7 @@
           "if": {
             "properties": {
               "kind": {
-                "const": "outcome"
+                "const": "closed"
               }
             },
             "required": [
@@ -789,8 +854,7 @@
           },
           "then": {
             "required": [
-              "invocation",
-              "result"
+              "disposition"
             ]
           }
         }
@@ -847,7 +911,8 @@
             "execute",
             "cancel",
             "reconcile",
-            "resolve"
+            "resolve",
+            "close"
           ]
         },
         "result": {
@@ -1017,6 +1082,102 @@
           "$ref": "#/$defs/refusal"
         }
       ]
+    },
+    "disposition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "accepted-residual-effects"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[A-Za-z0-9_-]+$(?![\\s\\S])"
+        }
+      },
+      "required": [
+        "kind",
+        "reason",
+        "evidence"
+      ],
+      "additionalProperties": false
+    },
+    "closeRequest": {
+      "type": "object",
+      "properties": {
+        "protocol": {
+          "const": "umf.actions.saga/1"
+        },
+        "operation": {
+          "const": "close"
+        },
+        "instance": {
+          "$ref": "#/$defs/instance"
+        },
+        "expectedHistorySequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8192
+        },
+        "disposition": {
+          "$ref": "#/$defs/disposition"
+        }
+      },
+      "required": [
+        "protocol",
+        "operation",
+        "instance",
+        "expectedHistorySequence",
+        "disposition"
+      ],
+      "additionalProperties": false
+    },
+    "closeResult": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/state"
+        },
+        {
+          "$ref": "#/$defs/refusal"
+        },
+        {
+          "$ref": "#/$defs/unknown"
+        },
+        {
+          "$ref": "#/$defs/failure"
+        }
+      ]
+    },
+    "stopCause": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "failure",
+            "cancellation"
+          ]
+        },
+        "step": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false
     }
   }
 }

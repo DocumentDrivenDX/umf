@@ -157,3 +157,13 @@ The coordinator's transactional lock cannot make a separate provider store atomi
 Durable tickets and provider outcomes bridge that gap through reconciliation,
 not a distributed commit claim. A successful model or schema run does not prove
 that any planned consumer or native witness already exists.
+
+## Recovery and closure review amendment
+
+Implement CONTRACT-908's noncommit-to-unwind transition, immutable stopCause and
+settled close control under the instance control transaction. Close must share
+history, evidence, pending-ticket and current-authority checks with its original
+response persistence. Inject concurrent late observation and history updates;
+stale expectedHistorySequence refuses. An unsettled ticket cannot be administratively
+closed. AC25–29/STP-905 allocate independent native witnesses. This amendment is
+not covered by the original Saga.tla model.

@@ -1,0 +1,38 @@
+{
+  "jarSha256": "936a262061c914694dfd669a543be24573c45d5aa0ff20a8b96b23d01e050e88",
+  "sources": {
+    "Delivery.tla": "b5f5b11526f36544f3a9ae673b17be7826111076db063cd2773db1bfef08806e",
+    "run_delivery.py": "890ac9f25448d53a8236643bca48320d1a2248429f5d349c9669f85c1acca307"
+  },
+  "results": [
+    {
+      "name": "delivery-safety",
+      "passed": true,
+      "expectedViolation": null,
+      "actualViolation": null,
+      "logSha256": "8f465893d7bd361d9cc1026ba97ae910547302766280b4c073e218707cd79f60",
+      "configuration": "CONSTANT BrokenDedup = FALSE\nSPECIFICATION Spec\nCHECK_DEADLOCK FALSE\nINVARIANTS TypeOK NoDuplicateEffects OutcomesSound\n"
+    },
+    {
+      "name": "delivery-mutant",
+      "passed": true,
+      "expectedViolation": "NoDuplicateEffects",
+      "actualViolation": "NoDuplicateEffects",
+      "logSha256": "f76b726d4f2c6db0cd6f5852636b8f8ce9ee5bb973aad8d9862254a842b3ed6a",
+      "configuration": "CONSTANT BrokenDedup = TRUE\nSPECIFICATION Spec\nCHECK_DEADLOCK FALSE\nINVARIANTS TypeOK NoDuplicateEffects OutcomesSound\n"
+    },
+    {
+      "name": "delivery-recovery-witness",
+      "passed": true,
+      "expectedViolation": "NoRecoveryWitness",
+      "actualViolation": "NoRecoveryWitness",
+      "logSha256": "ccf6425ac116b53831550b3ca2de5335236a6188492249b649428dd648bd7777",
+      "configuration": "CONSTANT BrokenDedup = FALSE\nSPECIFICATION Spec\nCHECK_DEADLOCK FALSE\nINVARIANTS NoRecoveryWitness\n"
+    }
+  ],
+  "limits": [
+    "One stable ticket, two deliveries, one crash after volatile observation",
+    "Atomic durable native provider outcome/effect is assumed",
+    "No full-protocol refinement or native implementation qualification"
+  ]
+}

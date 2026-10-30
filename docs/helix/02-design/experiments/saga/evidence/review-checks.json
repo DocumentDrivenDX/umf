@@ -1,19 +1,25 @@
 {
   "baseCommit": "efb4042719866888ad80c01cb2da694972eb2738",
-  "catalogArtifactsPassed": 10,
+  "catalogArtifactsPassed": 17,
   "storyCriteriaMapped": {
-    "905": 24,
+    "905": 29,
     "906": 16
   },
-  "localLinksResolved": 26,
+  "localLinksResolved": 363,
   "newArtifactIdsUnique": true,
   "schemaReferencesConsistent": true,
-  "structuralCasesPassed": 16,
+  "structuralCasesPassed": 24,
   "abstractFormalCasesPassed": 18,
   "admissionFormalCasesPassed": 7,
   "recordedInputOutputHashesVerified": true,
   "limitations": [
-    "No runtime implementation, browser implementation or native executor acceptance is claimed",
-    "All AC matrix tests are explicitly planned; formal and structural evidence covers only its recorded subset"
-  ]
+    "No saga runtime implementation, browser implementation or native executor acceptance is claimed",
+    "All AC matrix tests are planned; schema and finite-model checks cover only their recorded subsets",
+    "Original Saga/Admission models omit new closure, noncommit and budget states; no full-protocol refinement proof",
+    "SDK 0.10.0 is a source candidate; installed-package/browser/native release qualification and publication remain pending"
+  ],
+  "catalogArtifactsWithUnchangedBaselineFindings": 3,
+  "deliveryFormalCasesPassed": 3,
+  "actionRegressionTestsPassed": 109,
+  "releaseDriftTestsPassed": 6
 }

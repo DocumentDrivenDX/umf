@@ -112,7 +112,9 @@ Consumers need shared, inspectable semantics for partial completion and recovery
   redelivery of the same logical invocation, and a newly authorized business
   attempt. Profiles must require explicit finite retry/time budgets and
   supported deduplication or noncommit evidence. No exactly-once claim follows
-  from coordinator persistence or caller keys alone.
+  from coordinator persistence or caller keys alone. A definitive forward
+  noncommit must unwind previously committed work without fabricating rejection;
+  the first profile adds no automatic fresh business retry.
 - **SAGA-11:** Compensation must have its own durable invocation, replay and
   reconciliation obligations. A compensation failure must remain visible. The
   initial profile must stop automatic unwinding at an unresolved or failed
@@ -120,10 +122,14 @@ Consumers need shared, inspectable semantics for partial completion and recovery
 - **SAGA-12:** Cancellation must fence admission of subsequent forward work and
   reconcile in-flight effects before applying declared compensation policy.
   A cancellation acknowledgement must not claim rollback or completed recovery.
+  Once failure-triggered unwind starts, cancellation must refuse without changing
+  its original cause or terminal classification.
 - **SAGA-13:** Irreversible effects and exhausted recovery budgets must permit an
   explicit intervention-required outcome carrying the confirmed completed prefix
   and unresolved obligations. Resolution must be attributable and evidence-based;
-  an operator must not fabricate a successful external outcome.
+  an operator must not fabricate a successful external outcome. Authorized closure
+  of a settled intervention may accept residual effects with attributable evidence;
+  unresolved custody must prevent closure and closure must never imply compensation.
 - **SAGA-14:** Current authority must independently govern submission, forward
   steps, compensation, cancellation, protected history and intervention. Queued
   work must retain authenticated initiator/service/delegation meaning. Revoked
@@ -263,12 +269,18 @@ choosing Batten's runtime, ux-builder screens or another consumer's deployment.
 - **Initial profile:** sequential orchestration, reverse compensation and a stop
   on failed/uncertain compensation or an irreversible barrier. No automatic
   fresh business retries or automatic resume from intervention.
+- **Repository/release:** actions and saga semantics remain in UMF with its shared
+  types, generated schemas and engine. The SDK joins the 0.10 release series;
+  vocabulary/protocol identities retain their distinct meanings.
 - **Packaging:** one supplied immutable core 0.10.0 Document with local model and
   action references; host aliases select only already installed trusted bindings.
 - **External effects:** ineligible under actions 0.1.0. A future compatible
   declaration contract and independently qualified provider profile are required.
 - **Recovery policy:** CONTRACT-908 fixes lookup/time/custody caps and namespace-
-  lifetime original retention/nonreuse. Limits are safety caps, not service SLOs.
+  lifetime original retention/nonreuse. The sequential/1 profile is explicitly a
+  short-running, at-most-15-minute automatic profile. Payload erasure during the
+  namespace lifetime is unsupported; admission must refuse incompatible retention
+  requirements. Limits are safety caps, not service SLOs.
 - **First qualification target:** the existing bounded PostgreSQL reference
   consumer with isolated coordinator and two target stores. Exact sources,
   binary/driver/build and installed profile digests are required in the eventual

@@ -107,3 +107,43 @@ admitted before retirement may finish, and a queued retired action refuses.
 Results are in `../evidence/admission-results.json` and adjacent logs. This is
 an independent focused safety model, not a combined state-space proof with
 Saga.tla or a model of real storage/authority enforcement.
+
+## Formal evidence limits identified in review
+
+The 18 expectations are results for the original finite abstraction. Five guard
+properties use history flags set on the corresponding dispatch guard violation;
+their mutants demonstrate detection of a forbidden admission, not downstream
+business harm. Duplicate submission counts admitted instances without executing
+a second complete instance. NoDuplicateEffects in Saga.tla is structural: settle
+requires no previous provider outcome and redeliver only changes a witness flag.
+It does not independently test delivery deduplication.
+
+Crash preserves the modeled durable known/pending/acknowledged state. The gap
+between provider commit and durable coordinator observation is represented by
+unknown, but loss of a volatile coordinator observation is not represented there.
+The finite model uses running/unwinding/success/compensated/intervention; queued,
+reconciling, cancelled, irreversible barriers, budgets, confirmed noncommit,
+resolve and close are not protocol states it explores. MovePhase forbids unknown
+intervention even though the contract permits budget exhaustion with pending
+custody. Admission.tla is also a guard/in-flight boundary check, not a native
+provider or composed protocol proof.
+
+ProgressSpec weakly fairs the whole finite ProgressNext relation in a stable
+environment without crashes or revocations. Finite remaining work forces terminal
+progress; this is close to proving absence of a nonterminal dead end under those
+premises. It establishes neither independent provider fairness, real-world
+availability, deadlines nor termination under indeterminate outcomes.
+
+Delivery.tla adds an independent, small provider-delivery abstraction. A real
+redelivery transition can execute again under its broken-deduplication mutation,
+which must violate NoDuplicateEffects. Crash discards a volatile observation,
+leaving provider outcome durable, and a witness requires original recovery after
+restart and redelivery. The provider atomic effect/outcome transaction remains
+an explicit assumption. This strengthens that one boundary and supplies no
+combined proof of CONTRACT-908. Native AC25–29 and full-protocol refinement remain
+unexecuted acceptance work; none is discharged by historical TLC counts.
+
+Run `run_delivery.py --java <java> --jar <pinned-jar>` for the three delivery checks.
+Original main/admission logs are retained because their hashes and counterexample
+traces support review. They are historical scoped evidence, not current protocol
+certification; no log volume or passing count measures design completeness.

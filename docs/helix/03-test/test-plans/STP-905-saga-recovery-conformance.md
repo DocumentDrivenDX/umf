@@ -118,3 +118,17 @@ assertions and actual host/binding integration. Extend boundary checks and add
 negative controls before claiming new source-family support. Require passing
 per-AC results and exact installed versions for completion; retain untested
 obligations as unverified. No production orchestrator or UI delivery is included.
+
+## Review acceptance allocation
+
+| Criterion | Planned independent test | Required witness |
+| --- | --- | --- |
+| US-905-AC25 | `review_25` in `tests/saga/native-recovery.py`; `@covers US-905-AC25` | Confirmed forward noncommit: Given authoritative forward rollback after a committed prefix, when recovery runs, then it compensates that prefix in reverse order while retaining failed as the original result; first-step failure completes an empty unwind. |
+| US-905-AC26 | `review_26` in `tests/saga/native-recovery.py`; `@covers US-905-AC26` | Settled intervention closure: Given a settled intervention, when an authorized operator closes it with scoped evidence and the current history sequence, then closed retains the actor, original cause and accepted residual effects without claiming compensation; pending, stale or fabricated evidence refuses. |
+| US-905-AC27 | `review_27` in `tests/saga/native-recovery.py`; `@covers US-905-AC27` | Cancellation during unwind: Given failure-triggered unwind including its reconciliation, when cancel arrives, then it refuses without changing the latched cause or terminal classification. |
+| US-905-AC28 | `review_28` in `tests/saga/native-recovery.py`; `@covers US-905-AC28` | Irreversible boundary warning: Given an irreversible step preceding later work, when inspection or assessment runs, then SAGA_PIVOT identifies the barrier and later steps without claiming forward-only recovery support. |
+| US-905-AC29 | `review_29` in `tests/saga/native-recovery.py`; `@covers US-905-AC29` | Retention and time admission: Given a host requiring longer automatic execution or incompatible payload erasure, when this profile is selected, then admission refuses; tighter advertised limits persist across restart. |
+
+These are unexecuted native acceptance requirements. Schema fixtures and finite
+models cannot mark them passed. AC28 also requires portable diagnostics in
+`tests/saga/assessment.test.ts` under STP-906.
