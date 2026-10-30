@@ -34,6 +34,7 @@ jobs:
           targets: wasm32-unknown-unknown
       - run: bun install --frozen-lockfile
       - run: cargo install wasm-bindgen-cli --version 0.2.100 --locked
+      - run: cargo fetch --locked
       - name: Package and boundary checks
         run: |
           python3 scripts/build-saga-package.py --check
