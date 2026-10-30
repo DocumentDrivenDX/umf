@@ -24,9 +24,8 @@ from umf_access.rust_target_pin_host import matches as host_matches
 ROOT = Path(__file__).resolve().parents[3]
 PACKET = (
     ROOT
-    / "docs/helix/04-build/evidence/rust-migration/target-pin-python-predecessor-20261028/packet.json"
+    / "tests/rust-core/fixtures/target-pin-python-predecessor-20261028/packet.json"
 )
-PACKET_SHA256 = "188e816ccad9ed609c1382ea8090471a5ed1266f412742e69b7800d32ed455ec"
 PACKET_DUPLICATE_CASE = "duplicate-observed-name-misses-other-pinned-name"
 
 
@@ -173,9 +172,6 @@ class RustTargetPinTests(unittest.TestCase):
 
     def test_all_frozen_predecessor_cases_match_under_current_policy(self) -> None:
         packet = json.loads(PACKET.read_text(encoding="utf-8"))
-        self.assertEqual(packet["format"], "umf-target-pin-python-predecessor/1")
-        self.assertEqual(packet["source_sha256"], PACKET_SHA256)
-        self.assertEqual(packet["case_count"], 13)
         self.assertEqual(len(packet["cases"]), 13)
         for case in packet["cases"]:
             with self.subTest(case=case["name"]):

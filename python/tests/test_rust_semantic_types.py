@@ -173,7 +173,7 @@ def test_frame_limit_cancellation_utf16_and_aggregate_order():
     import json
     from pathlib import Path
 
-    packet = json.loads(Path("docs/helix/04-build/evidence/rust-migration/r5-core-semantic-types/frozen-typescript.json").read_text())
+    packet = json.loads(Path("tests/rust-core/fixtures/r5-core-semantic-types/frozen-typescript.json").read_text())
     source = packet["cases"]["inspect"]["value"]["source"]
     source["modules"][0]["elements"][0]["semanticTypes"][0].pop("qualifier")
     identity = packet["cases"]["inspect"]["value"]["identity"]

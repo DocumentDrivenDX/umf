@@ -14,7 +14,7 @@ from umf_access.values import validate_range
 ROOT = Path(__file__).parents[3]
 FROZEN = (
     ROOT
-    / "docs/helix/04-build/evidence/rust-migration/r6-numeric-range/frozen-predecessor.json"
+    / "tests/rust-core/fixtures/r6-numeric-range/frozen-predecessor.json"
 )
 
 

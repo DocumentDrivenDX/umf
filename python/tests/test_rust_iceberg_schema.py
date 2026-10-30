@@ -9,7 +9,7 @@ from umf import _rust
 from umf import rust_iceberg_schema as iceberg
 
 ROOT = Path(__file__).resolve().parents[2]
-BASELINE = ROOT / "docs/helix/04-build/evidence/rust-migration/r5-iceberg-schema/baseline.json"
+BASELINE = ROOT / "tests/rust-core/fixtures/r5-iceberg-schema/baseline.json"
 
 
 def _pointer(value, pointer):

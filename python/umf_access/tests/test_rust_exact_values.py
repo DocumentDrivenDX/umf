@@ -12,7 +12,7 @@ from umf_access.types import ValueRuleError
 from umf_access.values import validate_decimal, validate_integer
 
 ROOT = Path(__file__).parents[3]
-FROZEN = ROOT / "docs/helix/04-build/evidence/rust-migration/r6-exact-values/frozen-predecessor.json"
+FROZEN = ROOT / "tests/rust-core/fixtures/r6-exact-values/frozen-predecessor.json"
 
 
 def _integer(spec: object) -> int:

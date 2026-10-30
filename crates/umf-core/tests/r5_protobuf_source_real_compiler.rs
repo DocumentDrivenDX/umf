@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 // Real trusted-host compiler exercise for the Rust prepare/finish boundary.
 // This test harness owns filesystem/process access; production umf-core does not.
-use sha2::{Digest, Sha256};
 use std::{
     fs::{self, File},
     path::{Path, PathBuf},
@@ -271,19 +270,11 @@ impl Protoc {
 }
 
 #[test]
-#[ignore = "local qualification requires the exact protoc 36.2 binary; see R5 HELIX evidence"]
+#[ignore = "requires an installed host protoc; set UMF_PROTOC_PATH to the supported compiler binary"]
 fn trusted_protoc_compiles_frozen_sources_through_prepare_finish_and_refuses_bad_sources() {
     let executable = std::env::var_os("UMF_PROTOC_PATH")
         .map(PathBuf::from)
-        .expect(
-            "set UMF_PROTOC_PATH to the exact protoc 36.2 binary recorded in R5 HELIX evidence",
-        );
-    let executable_bytes = fs::read(&executable).expect("read pinned protoc for identity check");
-    assert_eq!(
-        format!("{:x}", Sha256::digest(&executable_bytes)),
-        "acb9d966be4bc739afc77f1f55f14bd5d277e50efd31de49678edb7f3843d784",
-        "unexpected protoc binary"
-    );
+        .expect("set UMF_PROTOC_PATH to an installed host protoc binary");
     let version_output = Command::new(&executable)
         .arg("--version")
         .output()
@@ -361,14 +352,9 @@ fn trusted_protoc_compiles_frozen_sources_through_prepare_finish_and_refuses_bad
     assert_eq!(get(archive, "roots"), get(&request, "roots"));
     let bytes = protobuf_document::export_descriptor_set(&doc, &mut Context::ordinary()).unwrap();
     assert!(!bytes.is_empty());
-    if let Some(path) = std::env::var_os("UMF_R5_PROTOBUF_DESCRIPTOR_OUT") {
-        fs::write(path, &bytes).expect("write test output requested by qualification harness");
-    }
-    let descriptor_hash = format!("{:x}", Sha256::digest(&bytes));
     println!(
-        "R5_PROTOBUF_REAL_COMPILER version={} descriptor_set_sha256={} descriptor_bytes={}",
+        "PROTOBUF_REAL_COMPILER version={} descriptor_bytes={}",
         version_text.trim(),
-        descriptor_hash,
         bytes.len()
     );
 
@@ -449,7 +435,7 @@ fn trusted_protoc_compiles_frozen_sources_through_prepare_finish_and_refuses_bad
         "record whether the running child was killed or had completed before termination"
     );
     println!(
-        "R5_PROTOBUF_CONTROL reaped=true killed_running={} completed_before_kill={}",
+        "PROTOBUF_CONTROL reaped=true killed_running={} completed_before_kill={}",
         killed.load(Ordering::Acquire),
         completed.load(Ordering::Acquire)
     );

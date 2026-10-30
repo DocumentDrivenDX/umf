@@ -15,7 +15,7 @@ await run([process.execPath,resolve('node_modules/typescript/bin/tsc'),'--ignore
 await cp(installed,join(directory,'browser'),{recursive:true});
 for(const variant of ['missing','invalid'] as const){const target=join(directory,`browser-${variant}`);await cp(installed,target,{recursive:true});for(const asset of ['umf_core_wasm_bg.wasm','assets/umf_core_wasm_bg.wasm']){const path=join(target,asset);if(variant==='missing')await unlink(path);else await writeFile(path,new Uint8Array([0,1,2]));}}
 const catalog=await Bun.file('docs/helix/05-deploy/microsite/dist/schema-catalog.json').json();
-const frozen=await Bun.file('docs/helix/04-build/evidence/rust-migration/r7-schema-comparison/predecessor-cases.json').json();
+const frozen=await Bun.file('tests/rust-core/fixtures/r7-schema-comparison/predecessor-cases.json').json();
 const ids=['schema:medical-carrier@1.2.0:claims','schema:archaeology@1.0.0:ontology','pack:public-company-intelligence@1.1.0','artifact:public-company-intelligence@1.1.0:sec-snapshots'];
 const entries=catalog.entries.filter((e:{id:string})=>ids.includes(e.id));if(entries.length!==4)throw Error('Package fixtures missing');
 await Bun.write(join(directory,'catalog.json'),JSON.stringify({version:1,entries}));

@@ -127,7 +127,7 @@ fn seq(t: &[Token], i: usize, w: &[&str]) -> bool {
 fn next_token(t: &[Token], end: usize) -> usize {
     t.iter().position(|x| x.start >= end).unwrap_or(t.len())
 }
-fn statement_end(t: &[Token], i: usize, source_len: usize) -> usize {
+fn statement_end(t: &[Token], i: usize, _source_len: usize) -> usize {
     let mut j = i + 1;
     let mut parens = 0i32;
     while j < t.len() {
@@ -142,11 +142,7 @@ fn statement_end(t: &[Token], i: usize, source_len: usize) -> usize {
         }
         j += 1;
     }
-    if j < t.len() {
-        t[j].start
-    } else {
-        source_len
-    }
+    t.get(j.saturating_sub(1)).map(|token| token.end).unwrap_or(0)
 }
 fn top_start(t: &[Token], i: usize) -> bool {
     if i > 0
@@ -178,7 +174,7 @@ fn top_start(t: &[Token], i: usize) -> bool {
             | "extend"
     )
 }
-fn directive_apps_end(t: &[Token], i: usize, source_len: usize) -> usize {
+fn directive_apps_end(t: &[Token], i: usize, _source_len: usize) -> usize {
     let mut j = i;
     let mut parens = 0i32;
     while j < t.len() {
@@ -193,11 +189,7 @@ fn directive_apps_end(t: &[Token], i: usize, source_len: usize) -> usize {
         }
         j += 1;
     }
-    if j < t.len() {
-        t[j].start
-    } else {
-        source_len
-    }
+    t.get(j.saturating_sub(1)).map(|token| token.end).unwrap_or(0)
 }
 fn lex(s: &str, limit: usize, max_depth: usize) -> Result<Vec<Token>, String> {
     let b = s.as_bytes();
@@ -498,7 +490,7 @@ pub fn validate_profile_with_limits(
                         .unwrap_or("<unknown>");
                     let non_null = f
                         .get("type")
-                        .and_then(Value::get("kind"))
+                        .and_then(|value| value.get("kind"))
                         .and_then(Value::as_str)
                         == Some("NonNullType");
                     if non_null {

@@ -184,13 +184,13 @@ fn find_payload_mut(doc: &mut Value) -> Option<&mut Value> {
     let ms = member_mut(doc, "modules")?;
     let Value::Array(ms) = ms else { return None };
     for m in ms {
-        if text(member(m, "id")?)?.as_deref() == Some("schema") {
+        if text(member(m, "id")?)? == "schema" {
             let Some(es) = member_mut(m, "elements") else {
                 continue;
             };
             let Value::Array(es) = es else { continue };
             for e in es {
-                if text(member(e, "id")?)?.as_deref() == Some("schema") {
+                if text(member(e, "id")?)? == "schema" {
                     if let Some(p) = member_mut(member_mut(e, "extensions")?, EXT) {
                         return Some(p);
                     }

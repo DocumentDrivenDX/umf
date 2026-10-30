@@ -49,7 +49,7 @@ def main() -> None:
 
     from umf import rust_iceberg_schema as api
 
-    packet_path = ROOT / "docs/helix/04-build/evidence/rust-migration/r5-iceberg-schema/baseline.json"
+    packet_path = ROOT / "tests/rust-core/fixtures/r5-iceberg-schema/baseline.json"
     baseline = json.loads(packet_path.read_text())
     authored_imported = authored_rejected = 0
     for case in baseline["authoredCases"]:

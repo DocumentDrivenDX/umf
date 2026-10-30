@@ -11,7 +11,7 @@ from umf import rust_avro_fields
 
 PACKET = (
     Path(__file__).parents[2]
-    / "docs/helix/04-build/evidence/rust-migration/r5-avro-fields/predecessor.json"
+    / "tests/rust-core/fixtures/r5-avro-fields/predecessor.json"
 )
 CASES = json.loads(PACKET.read_text(encoding="utf-8"))["cases"]
 

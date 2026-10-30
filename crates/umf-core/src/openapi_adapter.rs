@@ -12,6 +12,7 @@ use crate::{
     native_json::{NativeJsonNode, NativeJsonTree},
     registry::Registry,
     serialization::{self, Format},
+    schema::SchemaResources,
     value::{copy_json, Utf16, Value},
 };
 use std::collections::BTreeSet;
@@ -131,7 +132,8 @@ impl OpenapiRuntime {
         // the official OpenAPI schemas below use several JSON Schema dialects
         // and are compiled separately by the consumer entry points.
         let registry_schema_resources = engine.schema_resources_with_context(ctx)?;
-        let mut schema_resources = engine.schema_resources_with_context(ctx)?;
+        let mut draft4_resources = SchemaResources::default();
+        let mut modern_resources = engine.schema_resources_with_context(ctx)?;
         // Add the exact upstream dialect/meta resources used by the TS
         // adapter. These are fixed artifacts and are never fetched at runtime.
         // OpenAPI 3.1/3.2 dialects inherit the JSON Schema Draft 2020-12
@@ -145,33 +147,43 @@ impl OpenapiRuntime {
                     return Err(error("OPENAPI_META_RESOURCE", "Embedded meta-schema resource has no id"));
                 };
                 let id_text = id.to_utf8().map_err(|_| error("OPENAPI_META_RESOURCE", "Invalid embedded meta-schema id"))?;
-                if !id_text.starts_with("https://json-schema.org/draft/2020-12/")
-                    && id_text != "http://json-schema.org/draft-04/schema"
-                { continue; }
                 let Some(schema) = field(resource, "schema") else {
                     return Err(error("OPENAPI_META_RESOURCE", "Embedded meta-schema resource has no schema"));
                 };
+                let target = if id_text.starts_with("https://json-schema.org/draft/2020-12/") {
+                    &mut modern_resources
+                } else if id_text == "http://json-schema.org/draft-04/schema" {
+                    &mut draft4_resources
+                } else {
+                    continue;
+                };
                 ctx.charge_work(id.len(), Utf16::default())?;
-                schema_resources.entries.push((id.clone(), copy_json(schema, ctx)?));
+                let mut schema = copy_json(schema, ctx)?;
+                if id_text == "http://json-schema.org/draft-04/schema" {
+                    normalize_draft4_empty_fragment_id(&mut schema, ctx)?;
+                }
+                target.entries.push((id.clone(), schema));
             }
         } else {
             return Err(error("OPENAPI_META_RESOURCE", "Embedded JSON Schema meta-resource set is malformed"));
         }
-        for (standalone, source) in [
-            (false, include_str!("../../../spec/extensions/openapi/upstream/2.0-schema.json")),
-            (false, include_str!("../../../spec/extensions/openapi/upstream/3.0-schema.json")),
-            (true, include_str!("../../../spec/extensions/openapi/upstream/3.1-schema.json")),
-            (true, include_str!("../../../spec/extensions/openapi/upstream/3.2-schema.json")),
-            (false, include_str!("../../../spec/extensions/openapi/upstream/3.1-meta.json")),
-            (false, include_str!("../../../spec/extensions/openapi/upstream/3.2-meta.json")),
-            (false, include_str!("../../../spec/extensions/openapi/upstream/3.1-dialect.json")),
-            (false, include_str!("../../../spec/extensions/openapi/upstream/3.2-dialect.json")),
+        for (draft4, standalone, source) in [
+            (true, false, include_str!("../../../spec/extensions/openapi/upstream/2.0-schema.json")),
+            (true, false, include_str!("../../../spec/extensions/openapi/upstream/3.0-schema.json")),
+            (false, true, include_str!("../../../spec/extensions/openapi/upstream/3.1-schema.json")),
+            (false, true, include_str!("../../../spec/extensions/openapi/upstream/3.2-schema.json")),
+            (false, false, include_str!("../../../spec/extensions/openapi/upstream/3.1-meta.json")),
+            (false, false, include_str!("../../../spec/extensions/openapi/upstream/3.2-meta.json")),
+            (false, false, include_str!("../../../spec/extensions/openapi/upstream/3.1-dialect.json")),
+            (false, false, include_str!("../../../spec/extensions/openapi/upstream/3.2-dialect.json")),
         ] {
             let mut resource = read(source, ctx)?;
             if standalone { rewrite_standalone_dynamic_meta(&mut resource, ctx)?; }
+            if draft4 { normalize_draft4_empty_fragment_id(&mut resource, ctx)?; }
             if let Some(Value::String(id)) = field(&resource, "$id").or_else(|| field(&resource, "id")) {
                 ctx.charge_work(id.len(), Utf16::default())?;
-                schema_resources.entries.push((id.clone(), copy_json(&resource, ctx)?));
+                let target = if draft4 { &mut draft4_resources } else { &mut modern_resources };
+                target.entries.push((id.clone(), copy_json(&resource, ctx)?));
             }
         }
         let mut registry = Registry::new();
@@ -186,7 +198,7 @@ impl OpenapiRuntime {
             .ok_or_else(|| error("OPENAPI_PACKAGE", "OpenAPI package has no schema"))?;
         let package_schema = crate::schema::CompiledSchema::compile_consumer(
             schema,
-            &schema_resources,
+            &modern_resources,
             false,
             ctx,
         )?;
@@ -198,10 +210,16 @@ impl OpenapiRuntime {
             ("3.2", include_str!("../../../spec/extensions/openapi/upstream/3.2-schema.json")),
         ] {
             let mut schema = read(source, ctx)?;
+            if matches!(version, "2.0" | "3.0") {
+                normalize_draft4_empty_fragment_id(&mut schema, ctx)?;
+            }
             if matches!(version, "3.1" | "3.2") { rewrite_standalone_dynamic_meta(&mut schema, ctx)?; }
-            let compiled = crate::schema::CompiledSchema::compile_consumer(
-                &schema, &schema_resources, false, ctx,
-            )?;
+            let resources = if matches!(version, "2.0" | "3.0") {
+                &draft4_resources
+            } else {
+                &modern_resources
+            };
+            let compiled = crate::schema::CompiledSchema::compile_consumer(&schema, resources, false, ctx)?;
             object_schemas.push((version.to_owned(), compiled));
         }
         let mut meta_schemas = Vec::new();
@@ -211,7 +229,7 @@ impl OpenapiRuntime {
         ] {
             let schema = read(source, ctx)?;
             let compiled = crate::schema::CompiledSchema::compile_consumer(
-                &schema, &schema_resources, false, ctx,
+                &schema, &modern_resources, false, ctx,
             )?;
             meta_schemas.push((version.to_owned(), compiled));
         }
@@ -226,7 +244,7 @@ impl OpenapiRuntime {
                 let reference = format!("{schema_id}#/$defs/{role}");
                 let schema = Value::Object(vec![(key("$ref"), Value::String(Utf16::from(reference)))]);
                 let compiled = crate::schema::CompiledSchema::compile_consumer(
-                    &schema, &schema_resources, false, ctx,
+                    &schema, &modern_resources, false, ctx,
                 )?;
                 reference_schemas.push((version.to_owned(), role.to_owned(), compiled));
             }
@@ -890,6 +908,23 @@ fn rewrite_standalone_dynamic_meta(value: &mut Value, ctx: &mut Context<'_>) -> 
         _ => {}
     }
     Ok(())
+}
+
+/// Draft 4 treats a trailing empty fragment on `id` as the resource URI
+/// without a fragment. Canonicalize the two pinned legacy roots in memory so
+/// local fragment references and the closed-resource lookup use that same URI.
+fn normalize_draft4_empty_fragment_id(value: &mut Value, ctx: &mut Context<'_>) -> Result<(), EngineError> {
+    let Some(Value::String(id)) = field(value, "id") else {
+        return Ok(());
+    };
+    let Some(text) = id.to_utf8().ok() else {
+        return Ok(());
+    };
+    let Some(canonical) = text.strip_suffix('#') else {
+        return Ok(());
+    };
+    ctx.charge_work(id.len(), Utf16::default())?;
+    set_object_field(value, "id", Value::String(Utf16::from(canonical)))
 }
 
 #[derive(Clone, Debug, PartialEq)]

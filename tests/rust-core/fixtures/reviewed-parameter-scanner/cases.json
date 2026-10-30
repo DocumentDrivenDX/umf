@@ -1,0 +1,230 @@
+{
+  "cases": [
+    {
+      "id": "plain_repeated",
+      "sql": "select $1, $2, $1",
+      "spans": [
+        [
+          7,
+          9,
+          "0"
+        ],
+        [
+          11,
+          13,
+          "1"
+        ],
+        [
+          15,
+          17,
+          "0"
+        ]
+      ]
+    },
+    {
+      "id": "unicode_codepoint_span",
+      "sql": "\ud83d\ude00 SELECT $1",
+      "spans": [
+        [
+          9,
+          11,
+          "0"
+        ]
+      ]
+    },
+    {
+      "id": "nested_block_comment",
+      "sql": "/* $1 /* $2 */ $3 */ SELECT $4",
+      "spans": [
+        [
+          28,
+          30,
+          "3"
+        ]
+      ]
+    },
+    {
+      "id": "line_comment_newline",
+      "sql": "SELECT $1 -- $2\n, $3",
+      "spans": [
+        [
+          7,
+          9,
+          "0"
+        ],
+        [
+          18,
+          20,
+          "2"
+        ]
+      ]
+    },
+    {
+      "id": "line_comment_eof",
+      "sql": "SELECT $1 -- $2",
+      "spans": [
+        [
+          7,
+          9,
+          "0"
+        ]
+      ]
+    },
+    {
+      "id": "quoted_regions",
+      "sql": "SELECT '$1'' $2', \"$3\", $4",
+      "spans": [
+        [
+          24,
+          26,
+          "3"
+        ]
+      ]
+    },
+    {
+      "id": "e_string_escape",
+      "sql": "SELECT E'foo\\' $1', $2",
+      "spans": [
+        [
+          20,
+          22,
+          "1"
+        ]
+      ]
+    },
+    {
+      "id": "unicode_alnum_e_prefix_boundary",
+      "sql": "SELECT \u00e9E'foo\\' || $1 || 'bar'",
+      "spans": [
+        [
+          19,
+          21,
+          "0"
+        ]
+      ]
+    },
+    {
+      "id": "underscore_e_prefix_boundary",
+      "sql": "SELECT x_E'foo\\' || $1 || 'bar'",
+      "spans": [
+        [
+          20,
+          22,
+          "0"
+        ]
+      ]
+    },
+    {
+      "id": "dollar_quotes",
+      "sql": "SELECT $$ $1 $$, $body$ $2 $body$, $3",
+      "spans": [
+        [
+          35,
+          37,
+          "2"
+        ]
+      ]
+    },
+    {
+      "id": "malformed_markers",
+      "sql": "SELECT $0, $01, $x, $1foo",
+      "spans": [
+        [
+          20,
+          22,
+          "0"
+        ]
+      ]
+    },
+    {
+      "id": "large_ordinal",
+      "sql": "SELECT $9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999",
+      "spans": [
+        [
+          7,
+          108,
+          "9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999998"
+        ]
+      ]
+    },
+    {
+      "id": "lone_surrogate_codepoint_span",
+      "sql": "x\ud800$1",
+      "spans": [
+        [
+          2,
+          4,
+          "0"
+        ]
+      ]
+    },
+    {
+      "id": "explicit_surrogate_pair_codepoint_span",
+      "codepoints": [
+        55357,
+        56832,
+        36,
+        49
+      ],
+      "spans": [
+        [
+          2,
+          4,
+          "0"
+        ]
+      ]
+    },
+    {
+      "id": "unclosed_block_comment",
+      "sql": "SELECT $1 /* $2",
+      "error": {
+        "type": "ReadBuildError",
+        "message": "unterminated compiler SQL comment"
+      }
+    },
+    {
+      "id": "unclosed_quote",
+      "sql": "SELECT $1, 'unterminated $2",
+      "error": {
+        "type": "ReadBuildError",
+        "message": "unterminated compiler SQL quote"
+      }
+    },
+    {
+      "id": "unclosed_dollar_quote",
+      "sql": "SELECT $tag$ $1",
+      "error": {
+        "type": "ReadBuildError",
+        "message": "unterminated compiler SQL dollar quote"
+      }
+    }
+  ],
+  "versioned_cases": [
+    {
+      "id": "unicode_alnum_profile_difference_u1c89",
+      "sql": "\u1c89E'foo\\' $1'bar' $2 'tail'",
+      "expected_by_cpython": {
+        "3.11": {
+          "error": {
+            "type": "ReadBuildError",
+            "message": "unterminated compiler SQL quote"
+          }
+        },
+        "3.14": {
+          "spans": [
+            [
+              9,
+              11,
+              "0"
+            ],
+            [
+              17,
+              19,
+              "1"
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}

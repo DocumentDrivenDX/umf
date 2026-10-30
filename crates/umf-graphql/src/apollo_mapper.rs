@@ -23,10 +23,10 @@ pub fn validate_schema(source: &str) -> Result<(), Vec<String>> {
         .map_err(|e| vec![e.to_string()])
 }
 
-fn name(n: &g::Name) -> Value {
+fn name(n: &apollo_compiler::Name) -> Value {
     json!({"kind":"Name","value":n.as_str()})
 }
-fn named(n: &g::Name) -> Value {
+fn named(n: &apollo_compiler::Name) -> Value {
     json!({"kind":"NamedType","name":name(n)})
 }
 fn block_from_span(node: &apollo_compiler::Node<str>, source: &str) -> bool {
@@ -206,14 +206,14 @@ pub fn print_umf_ast(ast: &Value) -> Result<String, String> {
 fn get<'a>(v: &'a Value, k: &str) -> Option<&'a Value> {
     v.get(k)
 }
-fn arr(v: &Value, k: &str) -> Result<&[Value], String> {
+fn arr<'a>(v: &'a Value, k: &str) -> Result<&'a [Value], String> {
     get(v, k)
         .and_then(Value::as_array)
         .map(Vec::as_slice)
         .ok_or_else(|| format!("{k} must be an array"))
 }
 fn sval(v: &Value) -> Result<&str, String> {
-    v.as_str().ok_or("expected string")
+    v.as_str().ok_or_else(|| "expected string".to_owned())
 }
 fn nm(v: &Value) -> Result<String, String> {
     Ok(sval(v.get("value").ok_or("missing Name.value")?)?.to_owned())
@@ -326,7 +326,7 @@ fn print_directives(v: &Value) -> Result<String, String> {
 fn input_def(v: &Value) -> Result<String, String> {
     let name = nm(v.get("name").ok_or("missing input name")?)?;
     let ty = print_type(v.get("type").ok_or("missing input type")?)?;
-    let desc = desc_print(v, 1)?;
+    let desc = desc_print(v, 0)?;
     let default = get(v, "defaultValue")
         .map(|x| print_value(x).map(|s| format!(" = {s}")))
         .transpose()?
@@ -351,7 +351,7 @@ fn field_def(v: &Value) -> Result<String, String> {
     };
     Ok(format!(
         "{}{}{}: {}{}",
-        desc_print(v, 1)?,
+        desc_print(v, 0)?,
         nm(v.get("name").ok_or("missing field name")?)?,
         args,
         print_type(v.get("type").ok_or("missing field type")?)?,
@@ -414,7 +414,7 @@ fn print_definition(v: &Value) -> Result<String, String> {
             };
             let ifaces = arr(v, "interfaces")?
                 .iter()
-                .map(|x| x.get("name").ok_or("interface name").and_then(nm))
+                .map(|x| x.get("name").ok_or_else(|| "interface name".to_owned()).and_then(nm))
                 .collect::<Result<Vec<_>, _>>()?;
             let impls = if ifaces.is_empty() {
                 String::new()
@@ -425,20 +425,20 @@ fn print_definition(v: &Value) -> Result<String, String> {
                 .iter()
                 .map(field_def)
                 .collect::<Result<Vec<_>, _>>()?;
+            let prefix = if ext {
+                format!("extend {head}")
+            } else {
+                head.to_owned()
+            };
             format!(
-                "{desc}{}{head} {name}{impls}{dirs}{}",
-                if ext { "extend " } else { "" },
-                if fields.is_empty() {
-                    String::new()
-                } else {
-                    format!(" {{\n{}\n}}", fields.join("\n"))
-                }
+                "{desc}{}",
+                block(&prefix, &name, &format!("{impls}{dirs}"), fields)
             )
         }
         "UnionTypeDefinition" | "UnionTypeExtension" => {
             let types = arr(v, "types")?
                 .iter()
-                .map(|x| x.get("name").ok_or("union type name").and_then(nm))
+                .map(|x| x.get("name").ok_or_else(|| "union type name".to_owned()).and_then(nm))
                 .collect::<Result<Vec<_>, _>>()?;
             format!(
                 "{desc}{}union {name}{dirs}{}",
@@ -460,44 +460,30 @@ fn print_definition(v: &Value) -> Result<String, String> {
                 .map(|x| {
                     Ok(format!(
                         "{}{}{}",
-                        desc_print(x, 1)?,
+                        desc_print(x, 0)?,
                         nm(x.get("name").ok_or("enum value name")?)?,
                         print_directives(x)?
                     ))
                 })
                 .collect::<Result<Vec<_>, String>>()?;
-            format!(
-                "{desc}{}enum {name}{dirs}{}",
-                if kind.ends_with("Extension") {
-                    "extend "
-                } else {
-                    ""
-                },
-                if values.is_empty() {
-                    String::new()
-                } else {
-                    format!(" {{\n{}\n}}", values.join("\n"))
-                }
-            )
+            let prefix = if kind.ends_with("Extension") {
+                "extend enum"
+            } else {
+                "enum"
+            };
+            format!("{desc}{}", block(prefix, &name, &dirs, values))
         }
         "InputObjectTypeDefinition" | "InputObjectTypeExtension" => {
             let fields = arr(v, "fields")?
                 .iter()
                 .map(input_def)
                 .collect::<Result<Vec<_>, _>>()?;
-            format!(
-                "{desc}{}input {name}{dirs}{}",
-                if kind.ends_with("Extension") {
-                    "extend "
-                } else {
-                    ""
-                },
-                if fields.is_empty() {
-                    String::new()
-                } else {
-                    format!(" {{\n{}\n}}", fields.join("\n"))
-                }
-            )
+            let prefix = if kind.ends_with("Extension") {
+                "extend input"
+            } else {
+                "input"
+            };
+            format!("{desc}{}", block(prefix, &name, &dirs, fields))
         }
         "DirectiveDefinition" => {
             let args = arr(v, "arguments")?

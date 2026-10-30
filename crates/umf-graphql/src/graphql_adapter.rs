@@ -311,7 +311,7 @@ pub fn inspect_with_limits(
         Err(e) => out.push(err("GRAPHQL_SOURCE_ARCHIVE", "/originalSource", e)),
     };
     let validation_source =
-        graphql17_overlay::print_umf_ast(ast).unwrap_or_else(|_| source.to_owned());
+        apollo_mapper::print_umf_ast(ast).unwrap_or_else(|_| source.to_owned());
     out.extend(profile_issues_with_limits(
         &validation_source,
         ast,
@@ -319,7 +319,7 @@ pub fn inspect_with_limits(
         max_tokens,
         max_depth,
     ));
-    if let Ok(printed) = graphql17_overlay::print_umf_ast(ast) {
+    if let Ok(printed) = apollo_mapper::print_umf_ast(ast) {
         match source_ast_limit(&printed, max_tokens, max_depth) {
             Ok(back) if canonical(&back) == canonical(ast) => {}
             Ok(_) => out.push(warn(
@@ -397,7 +397,7 @@ pub fn export_with_limits(
     if canonical(&parsed) == canonical(ast) {
         return Ok(source.into());
     }
-    graphql17_overlay::print_umf_ast(ast).map_err(|e| vec![err("GRAPHQL_PRINT", "/ast", e)])
+    apollo_mapper::print_umf_ast(ast).map_err(|e| vec![err("GRAPHQL_PRINT", "/ast", e)])
 }
 
 /// Callback mutates a detached AST copy. Source document is committed only when

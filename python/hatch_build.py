@@ -374,7 +374,7 @@ class CustomBuildHook(BuildHookInterface):
             cargo_command.extend(["--target", native_target])
             # Apple ld 27 can emit a dyld-invalid LINKEDIT string-pool offset
             # when release symbols are stripped. Keep the actual extension
-            # unstripped on macOS; qualification imports this artifact.
+            # unstripped on macOS; the installed-artifact smoke test imports it.
             build_env["CARGO_PROFILE_RELEASE_STRIP"] = "none"
             flags = build_env.get("RUSTFLAGS", "")
             for flag in ("-C debuginfo=2", "-C strip=none"):

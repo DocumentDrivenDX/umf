@@ -22,7 +22,7 @@ def _packet(relative):
 
 
 def test_core_semantic_reference_operations_match_frozen_predecessor():
-    frozen = _packet("docs/helix/04-build/evidence/rust-migration/r5-core-semantic-types/frozen-typescript.json")
+    frozen = _packet("tests/rust-core/fixtures/r5-core-semantic-types/frozen-typescript.json")
     source = frozen["cases"]["inspect"]["value"]["source"]
     identity = frozen["cases"]["inspect"]["value"]["identity"]
     assert inspect_core_semantic_types(source, identity) == frozen["cases"]["inspect"]["value"]
@@ -42,7 +42,7 @@ def test_core_semantic_reference_operations_match_frozen_predecessor():
 
 
 def test_interim_accessors_copy_and_preserve_unknown_content():
-    frozen = _packet("docs/helix/04-build/evidence/rust-migration/r5-semantic-type-accessors/frozen-typescript.json")
+    frozen = _packet("tests/rust-core/fixtures/r5-semantic-type-accessors/frozen-typescript.json")
     inputs = frozen["caseInputs"]
     document = inputs["document"]
     annotation = get_semantic_types(document, "m", "e")

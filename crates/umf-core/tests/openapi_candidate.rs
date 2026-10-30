@@ -221,6 +221,57 @@ fn pinned_legacy_and_current_openapi_schemas_execute_for_all_supported_versions(
 }
 
 #[test]
+fn openapi_schema_keywords_follow_their_declared_dialect() {
+    let (runtime, mut ctx) = runtime();
+    let cases = [
+        (
+            "Swagger 2.0 Draft 4 boolean",
+            r#"{"swagger":"2.0","info":{"title":"API","version":"1"},"paths":{},"definitions":{"N":{"type":"number","minimum":1,"exclusiveMinimum":true}}}"#,
+            r#"{"swagger":"2.0","info":{"title":"API","version":"1"},"paths":{},"definitions":{"N":{"type":"number","minimum":1,"exclusiveMinimum":"true"}}}"#,
+        ),
+        (
+            "OpenAPI 3.0 Draft 4 boolean",
+            r#"{"openapi":"3.0.3","info":{"title":"API","version":"1"},"paths":{},"components":{"schemas":{"N":{"type":"number","minimum":1,"exclusiveMinimum":true}}}}"#,
+            r#"{"openapi":"3.0.3","info":{"title":"API","version":"1"},"paths":{},"components":{"schemas":{"N":{"type":"number","minimum":1,"exclusiveMinimum":"true"}}}}"#,
+        ),
+        (
+            "OpenAPI 3.1 numeric exclusiveMinimum",
+            r#"{"openapi":"3.1.0","info":{"title":"API","version":"1"},"paths":{},"components":{"schemas":{"N":{"type":"number","exclusiveMinimum":1}}}}"#,
+            r#"{"openapi":"3.1.0","info":{"title":"API","version":"1"},"paths":{},"components":{"schemas":{"N":{"type":"number","exclusiveMinimum":true}}}}"#,
+        ),
+        (
+            "OpenAPI 3.2 numeric exclusiveMinimum",
+            r#"{"openapi":"3.2.1","info":{"title":"API","version":"1"},"paths":{},"components":{"schemas":{"N":{"type":"number","exclusiveMinimum":1}}}}"#,
+            r#"{"openapi":"3.2.1","info":{"title":"API","version":"1"},"paths":{},"components":{"schemas":{"N":{"type":"number","exclusiveMinimum":true}}}}"#,
+        ),
+    ];
+
+    for (label, accepted, rejected) in cases {
+        import_openapi_document(
+            &Utf16::from(accepted),
+            &Utf16::from("dialect-keyword"),
+            OpenapiFormat::Json,
+            None,
+            &[],
+            &runtime,
+            &mut ctx,
+        )
+        .unwrap_or_else(|error| panic!("{label} valid schema rejected: {error:?}"));
+        let error = import_openapi_document(
+            &Utf16::from(rejected),
+            &Utf16::from("dialect-keyword-invalid"),
+            OpenapiFormat::Json,
+            None,
+            &[],
+            &runtime,
+            &mut ctx,
+        )
+        .expect_err("schema keyword with the wrong dialect type must be rejected");
+        assert_eq!(error.code, "OPENAPI_DOCUMENT", "{label}");
+    }
+}
+
+#[test]
 fn schema_context_extraction_static_index_and_reference_role_resolution() {
     let (runtime, mut ctx) = runtime();
     let source = Utf16::from(include_str!("../../../fixtures/openapi/orders-3.2.json"));
@@ -332,10 +383,14 @@ fn exact_numbers_warn_and_unrelated_document_metadata_survives_edits() {
 #[test]
 fn schema_position_pointers_preserve_unpaired_utf16_code_units() {
     let (runtime, mut ctx) = runtime();
-    let source = Utf16::from(r#"{"openapi":"3.2.1","info":{"title":"UTF16","version":"1"},"paths":{},"components":{"schemas":{"\ud800":{"type":"string"}}}}"#);
+    // Component schema names follow OAS's ASCII pattern; use a valid component
+    // name and place the unpaired code unit in JSON Schema's unrestricted
+    // `properties` map to exercise UTF-16 pointer preservation.
+    let source = Utf16::from(r#"{"openapi":"3.2.1","info":{"title":"UTF16","version":"1"},"paths":{"/\ud800":{"get":{"responses":{"200":{"description":"ok","content":{"application/json":{"schema":{"type":"string"}}}}}}}}}"#);
     let document=import_openapi_document(&source,&Utf16::from("utf16-pointer"),OpenapiFormat::Json,None,&[],&runtime,&mut ctx).unwrap();
-    let mut pointer="/components/schemas/".encode_utf16().collect::<Vec<_>>();
+    let mut pointer="/paths/~1".encode_utf16().collect::<Vec<_>>();
     pointer.push(0xd800);
+    pointer.extend("/get/responses/200/content/application~1json/schema".encode_utf16());
     let schema=extract_openapi_schema(&document,&Utf16::new(pointer),None,&runtime,&mut ctx).unwrap();
     assert_eq!(schema.schema.render_compact(&mut ctx).unwrap(),Utf16::from(r#"{"type":"string"}"#));
 }

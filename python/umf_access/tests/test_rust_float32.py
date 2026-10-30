@@ -14,7 +14,7 @@ from umf_access.types import ValueRuleError
 from umf_access.values import FieldValidator, validate_float32, validate_vector
 
 ROOT = Path(__file__).parents[3]
-FROZEN = ROOT / "docs/helix/04-build/evidence/rust-migration/r6-exact-values/float32-frozen-predecessor.json"
+FROZEN = ROOT / "tests/rust-core/fixtures/r6-exact-values/float32-frozen-predecessor.json"
 
 
 def _case_value(expression: str) -> object:

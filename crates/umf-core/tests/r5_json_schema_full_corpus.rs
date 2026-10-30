@@ -1,7 +1,6 @@
 #![cfg(feature = "embedded-adapters")]
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Source-bound Rust evaluator capture for the pinned JSON Schema upstream suite.
-//! Run through scripts/rust-migration/r5/json-schema/upstream-oracle.ts.
 use std::{collections::BTreeMap, fs, path::PathBuf};
 use umf_core::{
     json_schema_adapter::{self},
@@ -107,7 +106,7 @@ fn schema_json_id(schema: &serde_json::Value) -> Option<String> {
 }
 
 #[test]
-#[ignore = "run through scripts/rust-migration/r5/json-schema/upstream-oracle.ts with a fresh report path"]
+#[ignore = "optional upstream corpus capture; set UMF_R5_JSON_SCHEMA_REPORT to an output path to run"]
 fn capture_pinned_upstream_rust_and_native_adapter_results() {
     let out = std::env::var("UMF_R5_JSON_SCHEMA_REPORT").expect("wrapper must set report path");
     let root =

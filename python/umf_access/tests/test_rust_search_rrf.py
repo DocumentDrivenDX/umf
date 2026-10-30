@@ -17,7 +17,7 @@ from umf_access.rust_search_rrf import PROFILE, finish_rrf_rust
 
 ROOT = Path(__file__).resolve().parents[3]
 PACKET = (
-    ROOT / "docs/helix/04-build/evidence/rust-migration/"
+    ROOT / "tests/rust-core/fixtures/"
     "r8-postgres-search-rrf-20261027/predecessor.json"
 )
 

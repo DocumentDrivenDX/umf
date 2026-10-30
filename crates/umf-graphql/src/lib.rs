@@ -68,6 +68,53 @@ mod tests {
             "type Query {\n  new: String\n}\n"
         );
     }
+
+    #[test]
+    fn edited_ast_printing_preserves_indented_block_descriptions_across_definition_kinds() {
+        let source = r#"
+"""Query description"""
+type Query { """Old query field""" old: String }
+
+"""Node description"""
+interface Node { """Identifier field""" id: ID! }
+
+"""Status description"""
+enum Status { """Active status""" ACTIVE }
+
+"""Choice description"""
+input Choice { """Choice text""" text: String }
+"#;
+        let doc = graphql_adapter::import(source, "described-schema", Some("schema")).unwrap();
+        let edited = graphql_adapter::edit(&doc, |ast| {
+            *ast.pointer_mut("/definitions/0/fields/0/name/value").unwrap() =
+                Value::String("renamed".into());
+            *ast.pointer_mut("/definitions/2/values/0/name/value").unwrap() =
+                Value::String("READY".into());
+            Ok(())
+        })
+        .unwrap();
+        let printed = graphql_adapter::export(&edited).unwrap();
+        assert_eq!(
+            printed,
+            "\"\"\"Query description\"\"\"\ntype Query {\n  \"\"\"Old query field\"\"\"\n  renamed: String\n}\n\n\"\"\"Node description\"\"\"\ninterface Node {\n  \"\"\"Identifier field\"\"\"\n  id: ID!\n}\n\n\"\"\"Status description\"\"\"\nenum Status {\n  \"\"\"Active status\"\"\"\n  READY\n}\n\n\"\"\"Choice description\"\"\"\ninput Choice {\n  \"\"\"Choice text\"\"\"\n  text: String\n}\n"
+        );
+        let reparsed = graphql_adapter::import(&printed, "round-trip", Some("schema")).unwrap();
+        let ast = reparsed
+            .pointer("/modules/0/elements/0/extensions/umf.graphql/ast")
+            .unwrap();
+        assert_eq!(ast["definitions"][0]["name"]["value"], "Query");
+        assert_eq!(ast["definitions"][0]["description"]["value"], "Query description");
+        assert_eq!(ast["definitions"][0]["description"]["block"], true);
+        assert_eq!(ast["definitions"][0]["fields"][0]["name"]["value"], "renamed");
+        assert_eq!(ast["definitions"][0]["fields"][0]["description"]["value"], "Old query field");
+        assert_eq!(ast["definitions"][0]["fields"][0]["description"]["block"], true);
+        assert_eq!(ast["definitions"][1]["description"]["value"], "Node description");
+        assert_eq!(ast["definitions"][1]["fields"][0]["description"]["value"], "Identifier field");
+        assert_eq!(ast["definitions"][2]["values"][0]["name"]["value"], "READY");
+        assert_eq!(ast["definitions"][2]["values"][0]["description"]["value"], "Active status");
+        assert_eq!(ast["definitions"][3]["fields"][0]["description"]["value"], "Choice text");
+        assert_eq!(ast["definitions"][3]["fields"][0]["description"]["block"], true);
+    }
 }
 
 #[cfg(test)]

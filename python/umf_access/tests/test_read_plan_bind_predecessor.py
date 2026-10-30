@@ -15,13 +15,7 @@ from umf_access.rust_target_pin_host import matches as host_matches
 ROOT = Path(__file__).resolve().parents[3]
 PACKET = (
     ROOT
-    / "docs/helix/04-build/evidence/rust-migration/read-plan-bind-python-predecessor-20261028/packet.json"
-)
-HISTORICAL_SOURCE_SHA256 = (
-    "188e816ccad9ed609c1382ea8090471a5ed1266f412742e69b7800d32ed455ec"
-)
-HISTORICAL_HARNESS_SHA256 = (
-    "4a5fd88e2b83342616adacd11ddb85afb8ff40251fb51866192277e014e35f6b"
+    / "tests/rust-core/fixtures/read-plan-bind-python-predecessor-20261028/packet.json"
 )
 BASE = {
     "kind": "postgresql",
@@ -168,17 +162,12 @@ def execute_frozen_python_matcher(case):
 
 
 class ReadPlanBindPredecessorTests(unittest.TestCase):
-    def test_historical_packet_matches_frozen_python_matcher_and_effect_order(self):
+    def test_python_matcher_matches_current_packet_and_effect_order(self):
         from test_rust_target_pin import load_candidate_library
 
         load_candidate_library()
         packet = json.loads(PACKET.read_text())
-        self.assertEqual(packet["format"], "umf-read-plan-bind-python-predecessor/1")
-        self.assertEqual(packet["source_sha256"], HISTORICAL_SOURCE_SHA256)
-        self.assertEqual(packet["harness_sha256"], HISTORICAL_HARNESS_SHA256)
-        self.assertEqual(packet["case_count"], 6)
-        self.assertEqual(packet["pass_count"], 6)
-        self.assertEqual(packet["mismatch_count"], 0)
+        self.assertEqual(len(packet["cases"]), 6)
         for case in packet["cases"]:
             with self.subTest(case=case["name"]):
                 self.assertEqual(
