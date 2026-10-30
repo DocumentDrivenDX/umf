@@ -1,0 +1,76 @@
+{
+  "aggregateLogBytes": 245,
+  "attempt": 1,
+  "commandCount": 2,
+  "commands": [
+    {
+      "appliedLimitSeconds": 180,
+      "argv": [
+        "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3",
+        "-B",
+        "-I",
+        "/private/tmp/g03-sdk058-public-proof-proposal-010/run-local-public-h.py",
+        "stage",
+        "toolchain-identity",
+        "/private/tmp/g03-sdk058-public-proof-readiness-001/packet-ready-for-review.json",
+        "/h-evidence/evidence"
+      ],
+      "captureExit": 0,
+      "drainExpired": false,
+      "logBytes": 0,
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "monotonicDurationNs": 355269387,
+      "monotonicEndNs": 1026516172209818,
+      "monotonicStartNs": 1026515816940431,
+      "name": "toolchain-identity",
+      "rawExit": 0,
+      "stage": "toolchain-identity",
+      "termGraceSeconds": 10,
+      "timedOut": false,
+      "truncated": false,
+      "truncationMarker": null
+    },
+    {
+      "appliedLimitSeconds": 180,
+      "argv": [
+        "/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3",
+        "-B",
+        "-I",
+        "/private/tmp/g03-sdk058-public-proof-proposal-010/run-local-public-h.py",
+        "stage",
+        "verify-source-tag-and-tree",
+        "/private/tmp/g03-sdk058-public-proof-readiness-001/packet-ready-for-review.json",
+        "/h-evidence/evidence"
+      ],
+      "captureExit": 75,
+      "drainExpired": false,
+      "logBytes": 245,
+      "logSha256": "807ab62044b97097381186299ac4e2505140afaa694678ce80923a923a71c66b",
+      "monotonicDurationNs": 180123410556,
+      "monotonicEndNs": 1026696297871942,
+      "monotonicStartNs": 1026516174461386,
+      "name": "verify-source-tag-and-tree",
+      "rawExit": 2,
+      "stage": "verify-source-tag-and-tree",
+      "termGraceSeconds": 10,
+      "timedOut": true,
+      "truncated": false,
+      "truncationMarker": null
+    }
+  ],
+  "elapsedNs": 180488621558,
+  "executionId": "local-5fbee735df4e49abb93de3ec13384da4",
+  "executionKind": "local_linux_diagnostic",
+  "failure": "RuntimeError: stage failed or capture incomplete: verify-source-tag-and-tree",
+  "limits": {
+    "aggregateLogBytes": 1048576,
+    "aggregateSeconds": 1800,
+    "childSeconds": 180,
+    "evidenceReserveSeconds": 60,
+    "metadataArtifactBytes": 16777216,
+    "termGraceSeconds": 10
+  },
+  "metadataArtifactBytes": 32885,
+  "profile": "umf.sdk-058-public-install-proof-local/1",
+  "status": "FAIL_OR_UNKNOWN"
+}
