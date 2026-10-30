@@ -762,6 +762,13 @@ fn run(args: Vec<String>) -> Result<(), String> {
         print!("{output}");
         return Ok(());
     }
+    if args.first().map(String::as_str) == Some("dbt") {
+        return dbt_run(&args[1..]);
+    }
+    #[cfg(feature = "embedded-adapters")]
+    if args.first().map(String::as_str) == Some("rdf") {
+        return rdf_run(&args[1..]);
+    }
     if args.first().map(String::as_str) == Some("avro-cardinality") {
         return avro_cardinality_run(&args[1..]);
     }
@@ -1160,6 +1167,165 @@ fn avro_cardinality_run(args: &[String]) -> Result<(), String> {
     println!(
         "{}",
         umf_core_wire::avro_cardinality_binding::execute_wire_with_control(&wire, &mut control)
+    );
+    Ok(())
+}
+
+fn dbt_run(args: &[String]) -> Result<(), String> {
+    let profile = umf_core_wire::dbt_binding::PROFILE;
+    if args == ["--version"] {
+        println!(
+            "{{\"profile\":\"{profile}\",\"version\":\"{}\"}}",
+            env!("CARGO_PKG_VERSION")
+        );
+        return Ok(());
+    }
+    if args == ["--capabilities"] {
+        println!(
+            "{{\"profile\":\"{profile}\",\"operations\":[\"dbt.importManifest\",\"dbt.exportManifest\",\"dbt.inspectManifest\",\"dbt.getManifestNode\",\"dbt.editManifest\",\"dbt.importArtifact\",\"dbt.exportArtifact\",\"dbt.inspectArtifact\",\"dbt.getArtifactNode\",\"dbt.editArtifact\",\"dbt.importSemanticManifest\",\"dbt.exportSemanticManifest\",\"dbt.inspectSemanticManifest\",\"dbt.getSemanticManifestNode\",\"dbt.editSemanticManifest\",\"dbt.inspectManifestGraph\",\"dbt.selectManifestDependencies\"],\"resourceProfile\":\"cooperative\"}}"
+        );
+        return Ok(());
+    }
+    let mut stdin_wire = false;
+    let mut max_work = None;
+    let mut timeout_ms = None;
+    let mut i = 0;
+    while i < args.len() {
+        match args[i].as_str() {
+            "--stdin-wire" if !stdin_wire => stdin_wire = true,
+            "--max-work" if max_work.is_none() => {
+                i += 1;
+                max_work = Some(
+                    args.get(i)
+                        .ok_or("--max-work requires a value")?
+                        .parse::<u64>()
+                        .map_err(|_| "--max-work requires a nonnegative integer")?,
+                );
+            }
+            "--timeout-ms" if timeout_ms.is_none() => {
+                i += 1;
+                timeout_ms = Some(
+                    args.get(i)
+                        .ok_or("--timeout-ms requires a value")?
+                        .parse::<u64>()
+                        .map_err(|_| "--timeout-ms requires a nonnegative integer")?,
+                );
+            }
+            _ => return Err("usage: umf dbt <--version|--capabilities|--stdin-wire [--max-work N] [--timeout-ms N]>".into()),
+        }
+        i += 1;
+    }
+    if !stdin_wire {
+        return Err("--stdin-wire is required".into());
+    }
+    let wire = String::from_utf8(read_limited(io::stdin(), MAX_CARDINALITY_REQUEST_BYTES)?)
+        .map_err(|_| "wire input is not valid UTF-8".to_owned())?;
+    let start = std::time::Instant::now();
+    let mut left = max_work.unwrap_or(u64::MAX);
+    let mut control = |n: usize| {
+        let n = n as u64;
+        if n > left {
+            return Err(umf_core::EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Maximum work exceeded",
+            ));
+        }
+        left -= n;
+        if timeout_ms.is_some_and(|ms| start.elapsed() >= std::time::Duration::from_millis(ms)) {
+            return Err(umf_core::EngineError::new(
+                "DEADLINE_EXCEEDED",
+                Utf16::default(),
+                "Deadline exceeded",
+            ));
+        }
+        Ok(())
+    };
+    println!(
+        "{}",
+        umf_core_wire::dbt_binding::execute_wire_with_control(&wire, &mut control)
+    );
+    Ok(())
+}
+
+#[cfg(feature = "embedded-adapters")]
+fn rdf_run(args: &[String]) -> Result<(), String> {
+    let profile = umf_core_wire::rdf_binding::PROFILE;
+    if args == ["--version"] {
+        println!(
+            "{{\"profile\":\"{profile}\",\"version\":\"{}\"}}",
+            env!("CARGO_PKG_VERSION")
+        );
+        return Ok(());
+    }
+    if args == ["--capabilities"] {
+        println!(
+            "{{\"profile\":\"{profile}\",\"operations\":[\"rdf.importNQuads\",\"rdf.exportNQuads\",\"rdf.inspect\",\"rdf.getQuads\",\"rdf.editQuad\",\"rdf.renameIri\",\"rdf.importTurtle\",\"rdf.exportTurtle\",\"rdf.getNamedGraphs\",\"rdf.importTriG\",\"rdf.exportTriG\",\"rdf.mergeDatasets\",\"rdf.inspectGeneralized\",\"rdf.importGeneralizedDataset\",\"rdf.exportGeneralizedDataset\",\"rdf.getGeneralizedQuads\",\"rdf.editGeneralizedQuad\"],\"resourceProfile\":\"cooperative\"}}"
+        );
+        return Ok(());
+    }
+    let invalid = || {
+        "usage: umf rdf <--version|--capabilities|--stdin-wire [--max-work N] [--timeout-ms N]>"
+            .to_owned()
+    };
+    let mut stdin_wire = false;
+    let mut max_work = None;
+    let mut timeout_ms = None;
+    let mut index = 0;
+    while index < args.len() {
+        match args[index].as_str() {
+            "--stdin-wire" if !stdin_wire => stdin_wire = true,
+            "--max-work" if max_work.is_none() => {
+                index += 1;
+                max_work = Some(
+                    args.get(index)
+                        .ok_or_else(invalid)?
+                        .parse::<u64>()
+                        .map_err(|_| "--max-work requires a nonnegative integer".to_owned())?,
+                );
+            }
+            "--timeout-ms" if timeout_ms.is_none() => {
+                index += 1;
+                timeout_ms = Some(
+                    args.get(index)
+                        .ok_or_else(invalid)?
+                        .parse::<u64>()
+                        .map_err(|_| "--timeout-ms requires a nonnegative integer".to_owned())?,
+                );
+            }
+            _ => return Err(invalid()),
+        }
+        index += 1;
+    }
+    if !stdin_wire {
+        return Err(invalid());
+    }
+    let wire = String::from_utf8(read_limited(io::stdin(), MAX_CARDINALITY_REQUEST_BYTES)?)
+        .map_err(|_| "wire input is not valid UTF-8".to_owned())?;
+    let start = std::time::Instant::now();
+    let mut left = max_work.unwrap_or(u64::MAX);
+    let mut control = |amount: usize| {
+        let amount = amount as u64;
+        if amount > left {
+            return Err(umf_core::EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Maximum work exceeded",
+            ));
+        }
+        left -= amount;
+        if timeout_ms.is_some_and(|ms| start.elapsed() >= std::time::Duration::from_millis(ms)) {
+            return Err(umf_core::EngineError::new(
+                "DEADLINE_EXCEEDED",
+                Utf16::default(),
+                "Deadline exceeded",
+            ));
+        }
+        Ok(())
+    };
+    println!(
+        "{}",
+        umf_core_wire::rdf_binding::execute_wire_with_control(&wire, &mut control)
     );
     Ok(())
 }
@@ -1687,7 +1853,7 @@ fn parquet_capture_run(args: &[String]) -> Result<(), String> {
     }
     if args == ["--capabilities"] {
         println!(
-            "{{\"profile\":\"{}\",\"operations\":[\"parquet.capture\",\"parquet.importSchema\",\"parquet.export\",\"parquet.inspectFraming\",\"parquet.decodeFooter\",\"parquet.inspectMetadata\",\"parquet.inspectSchema\",\"parquet.inspectLogicalTypes\",\"parquet.inspectContainers\",\"parquet.getFieldMetadata\",\"parquet.encodeWire\",\"parquet.inspectPages\",\"parquet.decodePageBodies\",\"parquet.decodeLevels\",\"parquet.decodePhysical\",\"parquet.appendKeyValueMetadata\",\"parquet.renameField\"],\"resourceProfile\":\"cooperative\",\"maxSourceBytes\":1000000}}",
+            "{{\"profile\":\"{}\",\"operations\":[\"parquet.capture\",\"parquet.importSchema\",\"parquet.export\",\"parquet.inspectFraming\",\"parquet.decodeFooter\",\"parquet.inspectMetadata\",\"parquet.inspectSchema\",\"parquet.inspectLogicalTypes\",\"parquet.inspectContainers\",\"parquet.getFieldMetadata\",\"parquet.encodeWire\",\"parquet.inspectPages\",\"parquet.decodePageBodies\",\"parquet.decodeLevels\",\"parquet.decodePhysical\",\"parquet.decodeValues\",\"parquet.assembleRows\",\"parquet.repairDictionaryOffsets\",\"parquet.appendKeyValueMetadata\",\"parquet.renameField\"],\"resourceProfile\":\"cooperative\",\"maxSourceBytes\":1000000}}",
             umf_core_wire::PARQUET_CAPTURE_PROFILE,
         );
         return Ok(());

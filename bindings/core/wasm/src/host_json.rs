@@ -1,20 +1,22 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Private `umf.host-json/1` WASM adapter for logical record values.
+use crate::core_key_verification::PreparedCoreKeyVerificationHandle;
 use js_sys::{Error, Function};
 use std::collections::BTreeMap;
-use std::sync::Arc;
 use std::fmt::Write as _;
+use std::sync::Arc;
 use umf_core::{
+    cardinality_host_json,
     context::Context,
     host_json::{
-        HostDescriptorSnapshot, HostDescriptorValue, HostDiagnosticArrayItem, HostHandle, HostInvokeValue, HostJsonEvent,
-        HostJsonKind, HostJsonReflection, HostJsonReply, HostOpaqueKey, HostOpaqueValue,
-        HostPropertyDescriptor, HostPrototype, HostSpreadFailureTarget, HostStringRef,
+        HostDescriptorSnapshot, HostDescriptorValue, HostDiagnosticArrayItem, HostHandle,
+        HostInvokeValue, HostJsonEvent, HostJsonKind, HostJsonReflection, HostJsonReply,
+        HostOpaqueKey, HostOpaqueValue, HostPropertyDescriptor, HostPrototype,
+        HostSpreadFailureTarget, HostStringRef,
     },
-    cardinality_host_json, record_values, Engine, EngineError, ResourceSet, Utf16, Value,
+    record_values, Engine, EngineError, ResourceSet, Utf16, Value,
 };
 use umf_core_wire::core_key_verification_binding::CoreKeyVerificationRuntime;
-use crate::core_key_verification::PreparedCoreKeyVerificationHandle;
 use wasm_bindgen::prelude::*;
 
 fn kind_nullability_operation(
@@ -29,6 +31,8 @@ fn kind_nullability_operation(
         "inspectCoreNullability" => Ok(Op::InspectNullability),
         "declareCoreNullability" => Ok(Op::DeclareNullability),
         "verifyCoreNullabilityDeclaration" => Ok(Op::VerifyNullability),
+        "getSemanticTypes" => Ok(Op::GetSemanticTypes),
+        "setSemanticTypes" => Ok(Op::SetSemanticTypes),
         _ => Err(EngineError::new(
             "REQUEST",
             Utf16::default(),
@@ -74,9 +78,15 @@ impl CoreKindNullabilityRuntime {
                     )
                 })?;
                 let kind_schemas = umf_core::core_kind::prepare_operation_schemas(&mut ctx)?;
-                let nullability_schemas = umf_core::nullability::prepare_operation_schemas(&mut ctx)?;
+                let nullability_schemas =
+                    umf_core::nullability::prepare_operation_schemas(&mut ctx)?;
                 let registry = ctx.with_catalog_value_limit(|catalog| engine.registry(catalog))?;
-                Ok((Arc::new(engine), registry, kind_schemas, nullability_schemas))
+                Ok((
+                    Arc::new(engine),
+                    registry,
+                    kind_schemas,
+                    nullability_schemas,
+                ))
             })
         } else {
             let mut ctx = Context::ordinary();
@@ -96,18 +106,29 @@ impl CoreKindNullabilityRuntime {
                     )
                 })?;
                 let kind_schemas = umf_core::core_kind::prepare_operation_schemas(&mut ctx)?;
-                let nullability_schemas = umf_core::nullability::prepare_operation_schemas(&mut ctx)?;
+                let nullability_schemas =
+                    umf_core::nullability::prepare_operation_schemas(&mut ctx)?;
                 let registry = ctx.with_catalog_value_limit(|catalog| engine.registry(catalog))?;
-                Ok((Arc::new(engine), registry, kind_schemas, nullability_schemas))
+                Ok((
+                    Arc::new(engine),
+                    registry,
+                    kind_schemas,
+                    nullability_schemas,
+                ))
             })
         };
         result
-            .map(|(engine, registry, kind_schemas, nullability_schemas)| Self {
-                key_verification: CoreKeyVerificationRuntime::from_shared(engine.clone(), Arc::new(registry)),
-                engine,
-                kind_schemas,
-                nullability_schemas,
-            })
+            .map(
+                |(engine, registry, kind_schemas, nullability_schemas)| Self {
+                    key_verification: CoreKeyVerificationRuntime::from_shared(
+                        engine.clone(),
+                        Arc::new(registry),
+                    ),
+                    engine,
+                    kind_schemas,
+                    nullability_schemas,
+                },
+            )
             .map_err(|error| Error::new(&umf_core_wire::error_envelope(error)).into())
     }
 
@@ -125,7 +146,8 @@ impl CoreKindNullabilityRuntime {
             let mut ctx = Context::ordinary().with_host_control(&mut hook);
             usage.seed(&mut ctx);
             let result = (|| {
-                let receipt = ctx.with_tagged_transport_limit(|ctx| umf_core_wire::decode(receipt_wire, ctx))?;
+                let receipt = ctx
+                    .with_tagged_transport_limit(|ctx| umf_core_wire::decode(receipt_wire, ctx))?;
                 self.key_verification.prepare(&receipt, &mut ctx)
             })();
             usage.capture(&ctx);
@@ -134,13 +156,18 @@ impl CoreKindNullabilityRuntime {
             let mut ctx = Context::ordinary();
             usage.seed(&mut ctx);
             let result = (|| {
-                let receipt = ctx.with_tagged_transport_limit(|ctx| umf_core_wire::decode(receipt_wire, ctx))?;
+                let receipt = ctx
+                    .with_tagged_transport_limit(|ctx| umf_core_wire::decode(receipt_wire, ctx))?;
                 self.key_verification.prepare(&receipt, &mut ctx)
             })();
             usage.capture(&ctx);
             result
         };
-        result.map(|inner| PreparedCoreKeyVerificationHandle { inner: Some(inner), usage: Some(usage) })
+        result
+            .map(|inner| PreparedCoreKeyVerificationHandle {
+                inner: Some(inner),
+                usage: Some(usage),
+            })
             .map_err(|error| Error::new(&umf_core_wire::error_envelope(error)).into())
     }
 
@@ -154,8 +181,11 @@ impl CoreKindNullabilityRuntime {
     ) -> Result<String, JsValue> {
         let (Some(stage), Some(mut usage)) = (handle.inner.take(), handle.usage.take()) else {
             return Err(Error::new(&umf_core_wire::error_envelope(EngineError::new(
-                "CORE_KEY_STAGE", Utf16::default(), "Prepared verification stage was already consumed",
-            ))).into());
+                "CORE_KEY_STAGE",
+                Utf16::default(),
+                "Prepared verification stage was already consumed",
+            )))
+            .into());
         };
         let result = if let Some(dispatcher) = dispatcher {
             let mut control = super::WasmControl { dispatcher };
@@ -163,9 +193,12 @@ impl CoreKindNullabilityRuntime {
             let mut ctx = Context::ordinary().with_host_control(&mut hook);
             usage.seed(&mut ctx);
             let result = (|| {
-                let current = ctx.with_tagged_transport_limit(|ctx| umf_core_wire::decode(current_wire, ctx))?;
+                let current = ctx
+                    .with_tagged_transport_limit(|ctx| umf_core_wire::decode(current_wire, ctx))?;
                 let verified = self.key_verification.finish(stage, &current, &mut ctx);
-                let encoded = verified.and_then(|value| ctx.with_tagged_transport_limit(|ctx| umf_core_wire::encode(&value, ctx)));
+                let encoded = verified.and_then(|value| {
+                    ctx.with_tagged_transport_limit(|ctx| umf_core_wire::encode(&value, ctx))
+                });
                 Ok::<_, EngineError>(umf_core_wire::result_envelope(encoded))
             })();
             usage.capture(&ctx);
@@ -174,9 +207,12 @@ impl CoreKindNullabilityRuntime {
             let mut ctx = Context::ordinary();
             usage.seed(&mut ctx);
             let result = (|| {
-                let current = ctx.with_tagged_transport_limit(|ctx| umf_core_wire::decode(current_wire, ctx))?;
+                let current = ctx
+                    .with_tagged_transport_limit(|ctx| umf_core_wire::decode(current_wire, ctx))?;
                 let verified = self.key_verification.finish(stage, &current, &mut ctx);
-                let encoded = verified.and_then(|value| ctx.with_tagged_transport_limit(|ctx| umf_core_wire::encode(&value, ctx)));
+                let encoded = verified.and_then(|value| {
+                    ctx.with_tagged_transport_limit(|ctx| umf_core_wire::encode(&value, ctx))
+                });
                 Ok::<_, EngineError>(umf_core_wire::result_envelope(encoded))
             })();
             usage.capture(&ctx);
@@ -192,10 +228,15 @@ impl CoreKindNullabilityRuntime {
     ) -> Result<(), JsValue> {
         let (Some(stage), Some(_usage)) = (handle.inner.take(), handle.usage.take()) else {
             return Err(Error::new(&umf_core_wire::error_envelope(EngineError::new(
-                "CORE_KEY_STAGE", Utf16::default(), "Prepared verification stage was already consumed",
-            ))).into());
+                "CORE_KEY_STAGE",
+                Utf16::default(),
+                "Prepared verification stage was already consumed",
+            )))
+            .into());
         };
-        self.key_verification.discard(stage).map_err(|error| Error::new(&umf_core_wire::error_envelope(error)).into())
+        self.key_verification
+            .discard(stage)
+            .map_err(|error| Error::new(&umf_core_wire::error_envelope(error)).into())
     }
 
     #[wasm_bindgen(js_name = executeModelRequestWire)]
@@ -209,19 +250,33 @@ impl CoreKindNullabilityRuntime {
         let profile = match profile {
             "cooperative" => umf_core::ResourceProfile::Cooperative,
             "hard-isolated" => umf_core::ResourceProfile::HardIsolated,
-            _ => return umf_core_wire::error_envelope(EngineError::new("RESOURCE_PROFILE", Utf16::default(), "Unknown resource profile")),
+            _ => {
+                return umf_core_wire::error_envelope(EngineError::new(
+                    "RESOURCE_PROFILE",
+                    Utf16::default(),
+                    "Unknown resource profile",
+                ))
+            }
         };
         let mut capabilities = super::WasmCapabilities { dispatcher };
         if let Some(dispatcher) = control_dispatcher {
             let mut control = super::WasmControl { dispatcher };
             let mut hook = |amount| control.check(amount);
             umf_core_wire::execute_request_with_engine_and_control(
-                wire_json, profile, &mut capabilities, &mut hook, Some(&self.engine),
+                wire_json,
+                profile,
+                &mut capabilities,
+                &mut hook,
+                Some(&self.engine),
             )
         } else {
             let mut hook = |_amount| Ok(());
             umf_core_wire::execute_request_with_engine_and_control(
-                wire_json, profile, &mut capabilities, &mut hook, Some(&self.engine),
+                wire_json,
+                profile,
+                &mut capabilities,
+                &mut hook,
+                Some(&self.engine),
             )
         }
     }
@@ -233,6 +288,7 @@ impl CoreKindNullabilityRuntime {
         first: u32,
         second: u32,
         third: u32,
+        fourth: u32,
         dispatcher: &Function,
         control_dispatcher: Option<Function>,
     ) -> String {
@@ -240,7 +296,7 @@ impl CoreKindNullabilityRuntime {
             Ok(operation) => operation,
             Err(error) => return umf_core_wire::result_envelope(Err(error)),
         };
-        let handles: Vec<_> = [first, second, third]
+        let handles: Vec<_> = [first, second, third, fourth]
             .into_iter()
             .filter(|handle| *handle != 0)
             .map(|handle| handle as HostHandle)
@@ -287,12 +343,13 @@ pub fn execute_core_kind_nullability_host_json(
     first: u32,
     second: u32,
     third: u32,
+    fourth: u32,
     dispatcher: &Function,
     control_dispatcher: Option<Function>,
 ) -> String {
     let result = (|| -> Result<String, EngineError> {
         let operation = kind_nullability_operation(operation)?;
-        let handles: Vec<_> = [first, second, third]
+        let handles: Vec<_> = [first, second, third, fourth]
             .into_iter()
             .filter(|handle| *handle != 0)
             .map(|handle| handle as HostHandle)
@@ -416,7 +473,8 @@ impl HostJsonReflection for WasmHostJson {
                 &wire.encode_utf16().collect::<Vec<_>>(),
                 umf_core::serialization::Format::Json,
                 &mut Context::ordinary(),
-            ).map_err(|_| protocol_error())?
+            )
+            .map_err(|_| protocol_error())?
         } else {
             umf_core_wire::decode(&wire, &mut umf_core_wire::transport_context())
                 .map_err(|_| protocol_error())?
@@ -429,32 +487,58 @@ impl HostJsonReflection for WasmHostJson {
 /// Opt-in general JSON admission over opaque host handles. Reflection order,
 /// cycles, limits and the copied value are owned by the shared Rust core.
 #[wasm_bindgen(js_name = executeCopyJsonHostJson)]
-pub fn execute_copy_json_host_json(value_handle: u32, dispatcher: &Function) -> String {
-    let result = (|| -> Result<String, EngineError> {
+pub fn execute_copy_json_host_json(
+    value_handle: u32,
+    dispatcher: &Function,
+    control_dispatcher: Option<Function>,
+) -> String {
+    let mut perform = |ctx: &mut Context<'_>| -> Result<String, EngineError> {
         let mut host = WasmHostJson {
             dispatcher: dispatcher.clone(),
             string_lengths: BTreeMap::new(),
         };
-        let mut ctx = Context::ordinary();
         let copied = umf_core::host_json::copy_host_json_with_sparse_holes(
             value_handle as HostHandle,
             &mut host,
-            &mut ctx,
+            ctx,
         )?;
-        let holes = copied.sparse_arrays.into_iter().map(|sparse| {
-            umf_core::Value::Object(vec![
-                (umf_core::Utf16::from("path"), umf_core::Value::String(sparse.path)),
-                (umf_core::Utf16::from("holes"), umf_core::Value::Array(
-                    sparse.holes.into_iter().map(|index| umf_core::Value::Number(index as f64)).collect()
-                )),
-            ])
-        }).collect();
-        let value_wire = umf_core_wire::encode(&copied.value, &mut ctx)?;
-        let holes_wire = umf_core_wire::encode(&umf_core::Value::Array(holes), &mut Context::ordinary())?;
+        let holes = copied
+            .sparse_arrays
+            .into_iter()
+            .map(|sparse| {
+                umf_core::Value::Object(vec![
+                    (
+                        umf_core::Utf16::from("path"),
+                        umf_core::Value::String(sparse.path),
+                    ),
+                    (
+                        umf_core::Utf16::from("holes"),
+                        umf_core::Value::Array(
+                            sparse
+                                .holes
+                                .into_iter()
+                                .map(|index| umf_core::Value::Number(index as f64))
+                                .collect(),
+                        ),
+                    ),
+                ])
+            })
+            .collect();
+        let value_wire = umf_core_wire::encode(&copied.value, ctx)?;
+        let holes_wire =
+            umf_core_wire::encode(&umf_core::Value::Array(holes), ctx)?;
         Ok(format!(
             r#"{{"kind":"object","members":[{{"key":[95,95,117,109,102,95,99,111,112,121,95,106,115,111,110,95,104,111,115,116,95,105,110,112,117,116,95,118,49],"value":{{"kind":"boolean","value":true}}}},{{"key":[118,97,108,117,101],"value":{value_wire}}},{{"key":[115,112,97,114,115,101,65,114,114,97,121,115],"value":{holes_wire}}}]}}"#
         ))
-    })();
+    };
+    let result = if let Some(dispatcher) = control_dispatcher {
+        let mut control = super::WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        let mut ctx = Context::ordinary().with_host_control(&mut hook);
+        perform(&mut ctx)
+    } else {
+        perform(&mut Context::ordinary())
+    };
     umf_core_wire::result_envelope(result)
 }
 
@@ -535,23 +619,43 @@ pub fn execute_core_schema_properties_host_json(
     dispatcher: &Function,
 ) -> String {
     let result = (|| -> Result<String, EngineError> {
-        let resources = umf_core_wire::decode(resources_wire, &mut umf_core_wire::transport_context())?;
-        let resource = |name: &str| field(&resources, name).cloned().ok_or_else(|| {
-            EngineError::new("REQUEST", Utf16::from(name), "Explicit resource is required")
-        });
+        let resources =
+            umf_core_wire::decode(resources_wire, &mut umf_core_wire::transport_context())?;
+        let resource = |name: &str| {
+            field(&resources, name).cloned().ok_or_else(|| {
+                EngineError::new(
+                    "REQUEST",
+                    Utf16::from(name),
+                    "Explicit resource is required",
+                )
+            })
+        };
         let engine = {
             let mut catalog = Context::catalog();
-            Engine::new(ResourceSet::new(
-                resource("coreSchema")?, resource("referenceSchema")?,
-                resource("packageSchema")?, resource("constraints")?,
-                resource("domainPolicy")?,
-            ), &mut catalog)?
+            Engine::new(
+                ResourceSet::new(
+                    resource("coreSchema")?,
+                    resource("referenceSchema")?,
+                    resource("packageSchema")?,
+                    resource("constraints")?,
+                    resource("domainPolicy")?,
+                ),
+                &mut catalog,
+            )?
         };
-        let mut host = WasmHostJson { dispatcher: dispatcher.clone(), string_lengths: BTreeMap::new() };
+        let mut host = WasmHostJson {
+            dispatcher: dispatcher.clone(),
+            string_lengths: BTreeMap::new(),
+        };
         let mut ctx = Context::ordinary();
         let value = umf_core::schema_properties_host_json::execute(
-            operation, source_handle as HostHandle, identity_handle as HostHandle,
-            third_handle as HostHandle, &mut host, &engine, &mut ctx,
+            operation,
+            source_handle as HostHandle,
+            identity_handle as HostHandle,
+            third_handle as HostHandle,
+            &mut host,
+            &engine,
+            &mut ctx,
         )?;
         umf_core_wire::encode(&value, &mut ctx)
     })();
@@ -569,23 +673,42 @@ pub fn execute_core_cardinality_host_json(
     dispatcher: &Function,
 ) -> String {
     let result = (|| -> Result<String, EngineError> {
-        let resources = umf_core_wire::decode(resources_wire, &mut umf_core_wire::transport_context())?;
-        let resource = |name: &str| field(&resources, name).cloned().ok_or_else(|| {
-            EngineError::new("REQUEST", Utf16::from(name), "Explicit resource is required")
-        });
+        let resources =
+            umf_core_wire::decode(resources_wire, &mut umf_core_wire::transport_context())?;
+        let resource = |name: &str| {
+            field(&resources, name).cloned().ok_or_else(|| {
+                EngineError::new(
+                    "REQUEST",
+                    Utf16::from(name),
+                    "Explicit resource is required",
+                )
+            })
+        };
         let engine = {
             let mut catalog = Context::catalog();
-            Engine::new(ResourceSet::new(
-                resource("coreSchema")?, resource("referenceSchema")?,
-                resource("packageSchema")?, resource("constraints")?,
-                resource("domainPolicy")?,
-            ), &mut catalog)?
+            Engine::new(
+                ResourceSet::new(
+                    resource("coreSchema")?,
+                    resource("referenceSchema")?,
+                    resource("packageSchema")?,
+                    resource("constraints")?,
+                    resource("domainPolicy")?,
+                ),
+                &mut catalog,
+            )?
         };
-        let mut host = WasmHostJson { dispatcher: dispatcher.clone(), string_lengths: BTreeMap::new() };
+        let mut host = WasmHostJson {
+            dispatcher: dispatcher.clone(),
+            string_lengths: BTreeMap::new(),
+        };
         let mut ctx = Context::ordinary();
         let value = cardinality_host_json::execute(
             operation,
-            &[source_handle as HostHandle, identity_handle as HostHandle, third_handle as HostHandle],
+            &[
+                source_handle as HostHandle,
+                identity_handle as HostHandle,
+                third_handle as HostHandle,
+            ],
             &mut host,
             &engine,
             &mut ctx,
@@ -606,24 +729,42 @@ pub fn execute_core_element_selection_host_json(
     dispatcher: &Function,
 ) -> String {
     let result = (|| -> Result<String, EngineError> {
-        let resources = umf_core_wire::decode(resources_wire, &mut umf_core_wire::transport_context())?;
-        let resource = |name: &str| field(&resources, name).cloned().ok_or_else(|| {
-            EngineError::new("REQUEST", Utf16::from(name), "Explicit resource is required")
-        });
+        let resources =
+            umf_core_wire::decode(resources_wire, &mut umf_core_wire::transport_context())?;
+        let resource = |name: &str| {
+            field(&resources, name).cloned().ok_or_else(|| {
+                EngineError::new(
+                    "REQUEST",
+                    Utf16::from(name),
+                    "Explicit resource is required",
+                )
+            })
+        };
         let engine = {
             let mut catalog = Context::catalog();
-            Engine::new(ResourceSet::new(
-                resource("coreSchema")?, resource("referenceSchema")?,
-                resource("packageSchema")?, resource("constraints")?,
-                resource("domainPolicy")?,
-            ), &mut catalog)?
+            Engine::new(
+                ResourceSet::new(
+                    resource("coreSchema")?,
+                    resource("referenceSchema")?,
+                    resource("packageSchema")?,
+                    resource("constraints")?,
+                    resource("domainPolicy")?,
+                ),
+                &mut catalog,
+            )?
         };
-        let mut host = WasmHostJson { dispatcher: dispatcher.clone(), string_lengths: BTreeMap::new() };
+        let mut host = WasmHostJson {
+            dispatcher: dispatcher.clone(),
+            string_lengths: BTreeMap::new(),
+        };
         let mut ctx = Context::ordinary();
         let value = umf_core::selection_host_json::execute(
-            source_handle as HostHandle, query_handle as HostHandle,
+            source_handle as HostHandle,
+            query_handle as HostHandle,
             has_registry.then_some(registry_handle as HostHandle),
-            &mut host, &engine, &mut ctx,
+            &mut host,
+            &engine,
+            &mut ctx,
         )?;
         umf_core_wire::encode(&value, &mut ctx)
     })();
@@ -639,7 +780,10 @@ pub fn execute_core_opaque_return_host_json(
     dispatcher: &Function,
 ) -> String {
     let result = (|| -> Result<String, EngineError> {
-        let mut host = WasmHostJson { dispatcher: dispatcher.clone(), string_lengths: BTreeMap::new() };
+        let mut host = WasmHostJson {
+            dispatcher: dispatcher.clone(),
+            string_lengths: BTreeMap::new(),
+        };
         let mut ctx = Context::ordinary();
         let value = umf_core::selection_host_json::invoke_opaque_object_return(
             function_handle as HostHandle,
@@ -663,10 +807,16 @@ pub fn execute_core_kind_runtime_validation_host_json(
 ) -> String {
     let result = (|| -> Result<String, EngineError> {
         if !has_registry {
-            return Err(EngineError::new("HOST_JSON_UNSUPPORTED", Utf16::default(),
-                "Caller Registry is required for kindRuntime validation delegation"));
+            return Err(EngineError::new(
+                "HOST_JSON_UNSUPPORTED",
+                Utf16::default(),
+                "Caller Registry is required for kindRuntime validation delegation",
+            ));
         }
-        let mut host = WasmHostJson { dispatcher: dispatcher.clone(), string_lengths: BTreeMap::new() };
+        let mut host = WasmHostJson {
+            dispatcher: dispatcher.clone(),
+            string_lengths: BTreeMap::new(),
+        };
         let mut ctx = Context::ordinary();
         let value = umf_core::selection_host_json::execute_kind_runtime_validate_document(
             source_handle as HostHandle,
@@ -685,18 +835,38 @@ fn event_json(event: &HostJsonEvent) -> String {
             r#"{{"event":"unicode-count","carrier":{}}}"#,
             rust_value_wire_json(value)
         ),
-        HostJsonEvent::GetOpaqueProperty { receiver, key, semantic_catch } => {
+        HostJsonEvent::GetOpaqueProperty {
+            receiver,
+            key,
+            semantic_catch,
+        } => {
             let key = match key {
                 HostOpaqueKey::String(units) => format!(
                     r#"{{"kind":"string","units":[{}]}}"#,
-                    units.iter().map(u16::to_string).collect::<Vec<_>>().join(",")
+                    units
+                        .iter()
+                        .map(u16::to_string)
+                        .collect::<Vec<_>>()
+                        .join(",")
                 ),
                 HostOpaqueKey::IteratorSymbol => r#"{"kind":"iterator-symbol"}"#.to_owned(),
             };
-            format!(r#"{{"event":"get-opaque-property","receiver":{},"key":{key},"semanticCatch":{semantic_catch}}}"#, host_invoke_value_wire_json(receiver))
+            format!(
+                r#"{{"event":"get-opaque-property","receiver":{},"key":{key},"semanticCatch":{semantic_catch}}}"#,
+                host_invoke_value_wire_json(receiver)
+            )
         }
-        HostJsonEvent::InvokeOpaque { function, receiver, args, semantic_catch } => {
-            let args = args.iter().map(host_invoke_value_wire_json).collect::<Vec<_>>().join(",");
+        HostJsonEvent::InvokeOpaque {
+            function,
+            receiver,
+            args,
+            semantic_catch,
+        } => {
+            let args = args
+                .iter()
+                .map(host_invoke_value_wire_json)
+                .collect::<Vec<_>>()
+                .join(",");
             format!(
                 r#"{{"event":"invoke-opaque","function":{function},"receiver":{},"args":[{args}],"semanticCatch":{semantic_catch}}}"#,
                 host_invoke_value_wire_json(receiver)
@@ -704,7 +874,11 @@ fn event_json(event: &HostJsonEvent) -> String {
         }
         HostJsonEvent::StringConcat { prefix, value } => format!(
             r#"{{"event":"string-concat","prefix":[{}],"value":{}}}"#,
-            prefix.iter().map(u16::to_string).collect::<Vec<_>>().join(","),
+            prefix
+                .iter()
+                .map(u16::to_string)
+                .collect::<Vec<_>>()
+                .join(","),
             host_invoke_value_wire_json(value),
         ),
         HostJsonEvent::StringifyDiagnosticArray { items } => {
@@ -734,19 +908,34 @@ fn event_json(event: &HostJsonEvent) -> String {
             r#"{{"event":"construct-error-carrier","value":{}}}"#,
             host_invoke_value_wire_json(value),
         ),
-        HostJsonEvent::CloseOpaqueIterator { iterator } => format!(
-            r#"{{"event":"close-opaque-iterator","iterator":{iterator}}}"#,
-        ),
+        HostJsonEvent::CloseOpaqueIterator { iterator } => {
+            format!(r#"{{"event":"close-opaque-iterator","iterator":{iterator}}}"#,)
+        }
         HostJsonEvent::MaterializeSpreadFailure { target } => {
             let target = match target {
-                HostSpreadFailureTarget::Nullish(value) => format!(r#"{{"kind":"nullish","value":{}}}"#, host_invoke_value_wire_json(value)),
-                HostSpreadFailureTarget::IteratorMethod(value) => format!(r#"{{"kind":"iterator-method","value":{}}}"#, host_invoke_value_wire_json(value)),
-                HostSpreadFailureTarget::IteratorResultPrimitive(value) => format!(r#"{{"kind":"iterator-result-primitive","value":{}}}"#, host_invoke_value_wire_json(value)),
-                HostSpreadFailureTarget::IteratorNextMethod(value) => format!(r#"{{"kind":"iterator-next-method","value":{}}}"#, host_invoke_value_wire_json(value)),
-                HostSpreadFailureTarget::IteratorStepPrimitive(value) => format!(r#"{{"kind":"iterator-step-primitive","value":{}}}"#, host_invoke_value_wire_json(value)),
+                HostSpreadFailureTarget::Nullish(value) => format!(
+                    r#"{{"kind":"nullish","value":{}}}"#,
+                    host_invoke_value_wire_json(value)
+                ),
+                HostSpreadFailureTarget::IteratorMethod(value) => format!(
+                    r#"{{"kind":"iterator-method","value":{}}}"#,
+                    host_invoke_value_wire_json(value)
+                ),
+                HostSpreadFailureTarget::IteratorResultPrimitive(value) => format!(
+                    r#"{{"kind":"iterator-result-primitive","value":{}}}"#,
+                    host_invoke_value_wire_json(value)
+                ),
+                HostSpreadFailureTarget::IteratorNextMethod(value) => format!(
+                    r#"{{"kind":"iterator-next-method","value":{}}}"#,
+                    host_invoke_value_wire_json(value)
+                ),
+                HostSpreadFailureTarget::IteratorStepPrimitive(value) => format!(
+                    r#"{{"kind":"iterator-step-primitive","value":{}}}"#,
+                    host_invoke_value_wire_json(value)
+                ),
             };
             format!(r#"{{"event":"materialize-spread-failure","target":{target}}}"#)
-        },
+        }
         HostJsonEvent::ReadProperty { handle, key } => {
             let units = key.iter().map(u16::to_string).collect::<Vec<_>>().join(",");
             format!(r#"{{"event":"read-property","handle":{handle},"keyUnits":[{units}]}}"#)
@@ -812,7 +1001,11 @@ fn write_rust_value_wire_json(value: &Value, output: &mut String) {
             let _ = write!(output, r#"{{"kind":"boolean","value":{value}}}"#);
         }
         Value::Number(value) => {
-            let _ = write!(output, r#"{{"kind":"number","bits":"{:016x}"}}"#, value.to_bits());
+            let _ = write!(
+                output,
+                r#"{{"kind":"number","bits":"{:016x}"}}"#,
+                value.to_bits()
+            );
         }
         Value::String(value) => {
             output.push_str(r#"{"kind":"string","units":["#);
@@ -822,7 +1015,9 @@ fn write_rust_value_wire_json(value: &Value, output: &mut String) {
         Value::Array(values) => {
             output.push_str(r#"{"kind":"array","items":["#);
             for (index, item) in values.iter().enumerate() {
-                if index != 0 { output.push(','); }
+                if index != 0 {
+                    output.push(',');
+                }
                 write_rust_value_wire_json(item, output);
             }
             output.push_str("]}");
@@ -830,7 +1025,9 @@ fn write_rust_value_wire_json(value: &Value, output: &mut String) {
         Value::Object(members) => {
             output.push_str(r#"{"kind":"object","members":["#);
             for (index, (key, value)) in members.iter().enumerate() {
-                if index != 0 { output.push(','); }
+                if index != 0 {
+                    output.push(',');
+                }
                 output.push_str(r#"{"key":["#);
                 write_utf16_units(key.units(), output);
                 output.push_str("],\"value\":");
@@ -844,7 +1041,9 @@ fn write_rust_value_wire_json(value: &Value, output: &mut String) {
 
 fn write_utf16_units(units: &[u16], output: &mut String) {
     for (index, unit) in units.iter().enumerate() {
-        if index != 0 { output.push(','); }
+        if index != 0 {
+            output.push(',');
+        }
         let _ = write!(output, "{unit}");
     }
 }
@@ -877,7 +1076,10 @@ fn decode_reply(
             matches!(kind.as_str(), "descriptor" | "host-exception")
         }
         HostJsonEvent::ReadUtf16Chunk { .. } => {
-            matches!(kind.as_str(), "utf16-chunk" | "utf16-text-chunk" | "host-exception")
+            matches!(
+                kind.as_str(),
+                "utf16-chunk" | "utf16-text-chunk" | "host-exception"
+            )
         }
         HostJsonEvent::UnicodeCount { .. } => matches!(kind.as_str(), "count" | "host-exception"),
         HostJsonEvent::GetOpaqueProperty { semantic_catch, .. } => {
@@ -891,7 +1093,9 @@ fn decode_reply(
         HostJsonEvent::StringConcat { .. }
         | HostJsonEvent::StringifyDiagnosticArray { .. }
         | HostJsonEvent::StringifyOpaqueValue { .. }
-        | HostJsonEvent::ConstructErrorCarrier { .. } => matches!(kind.as_str(), "opaque-value" | "host-exception"),
+        | HostJsonEvent::ConstructErrorCarrier { .. } => {
+            matches!(kind.as_str(), "opaque-value" | "host-exception")
+        }
         HostJsonEvent::CloseOpaqueIterator { .. } => kind == "iterator-closed",
         HostJsonEvent::MaterializeSpreadFailure { .. } => kind == "spread-failure",
     };
@@ -925,7 +1129,10 @@ fn decode_reply(
     }
     Ok(match kind.as_str() {
         "iterator-closed" => HostJsonReply::IteratorClosed,
-        "spread-failure" => HostJsonReply::SpreadFailure(string_ref(field(&value, "message").ok_or_else(protocol_error)?, lengths)?),
+        "spread-failure" => HostJsonReply::SpreadFailure(string_ref(
+            field(&value, "message").ok_or_else(protocol_error)?,
+            lengths,
+        )?),
         "null" => HostJsonReply::Kind(HostJsonKind::Null),
         "boolean" => {
             let value = boolean(&value, "value").ok_or_else(protocol_error)?;
@@ -1001,13 +1208,23 @@ fn decode_reply(
             let Value::String(text) = field(&value, "text").ok_or_else(protocol_error)? else {
                 return Err(protocol_error());
             };
-            let HostJsonEvent::ReadUtf16Chunk { token, offset: requested, max_units } = event else { return Err(protocol_error()); };
+            let HostJsonEvent::ReadUtf16Chunk {
+                token,
+                offset: requested,
+                max_units,
+            } = event
+            else {
+                return Err(protocol_error());
+            };
             let length = *lengths.get(token).ok_or_else(protocol_error)?;
             let expected = (length.saturating_sub(*requested)).min(*max_units);
             if offset != *requested || *max_units != 8192 || text.units().len() != expected {
                 return Err(protocol_error());
             }
-            HostJsonReply::Utf16Chunk { offset, units: text.units().to_vec() }
+            HostJsonReply::Utf16Chunk {
+                offset,
+                units: text.units().to_vec(),
+            }
         }
         "utf16-chunk" => {
             let offset = unsigned(&value, "offset").ok_or_else(protocol_error)? as usize;
@@ -1047,7 +1264,10 @@ fn decode_opaque_value(
     value: &Value,
     lengths: &mut BTreeMap<u64, usize>,
 ) -> Result<HostOpaqueValue, EngineError> {
-    match text(value, "kind").and_then(|value| value.to_utf8().ok()).as_deref() {
+    match text(value, "kind")
+        .and_then(|value| value.to_utf8().ok())
+        .as_deref()
+    {
         Some("undefined") => Ok(HostOpaqueValue::Undefined),
         Some("null") => Ok(HostOpaqueValue::Null),
         Some("boolean") => Ok(HostOpaqueValue::Boolean(
@@ -1059,7 +1279,10 @@ fn decode_opaque_value(
         Some("string") => Ok(HostOpaqueValue::String(string_ref(value, lengths)?)),
         Some("opaque") => Ok(HostOpaqueValue::Opaque {
             handle: unsigned(value, "handle").ok_or_else(protocol_error)?,
-            opaque_type: match text(value, "opaqueType").and_then(|value| value.to_utf8().ok()).as_deref() {
+            opaque_type: match text(value, "opaqueType")
+                .and_then(|value| value.to_utf8().ok())
+                .as_deref()
+            {
                 Some("object") => umf_core::host_json::HostOpaqueType::Object,
                 Some("function") => umf_core::host_json::HostOpaqueType::Function,
                 Some("symbol") => umf_core::host_json::HostOpaqueType::Symbol,
@@ -1314,29 +1537,49 @@ mod opaque_reply_tests {
             (Utf16::from("handle"), Value::Number(1.0)),
         ];
         if let Some(opaque_type) = opaque_type {
-            members.push((Utf16::from("opaqueType"), Value::String(Utf16::from(opaque_type))));
+            members.push((
+                Utf16::from("opaqueType"),
+                Value::String(Utf16::from(opaque_type)),
+            ));
         }
         Value::Object(members)
     }
 
     #[test]
     fn utf16_text_chunk_reply_preserves_surrogates_and_checks_bounds() {
-        let event = HostJsonEvent::ReadUtf16Chunk { token: 7, offset: 0, max_units: 8192 };
+        let event = HostJsonEvent::ReadUtf16Chunk {
+            token: 7,
+            offset: 0,
+            max_units: 8192,
+        };
         let frame = Value::Object(vec![
-            (Utf16::from("kind"), Value::String(Utf16::from("utf16-text-chunk"))),
+            (
+                Utf16::from("kind"),
+                Value::String(Utf16::from("utf16-text-chunk")),
+            ),
             (Utf16::from("offset"), Value::Number(0.0)),
-            (Utf16::from("text"), Value::String(Utf16::new(vec![0xd800, 0xdc00]))),
+            (
+                Utf16::from("text"),
+                Value::String(Utf16::new(vec![0xd800, 0xdc00])),
+            ),
         ]);
         let lengths = BTreeMap::from([(7, 2)]);
         assert_eq!(
             decode_reply(&event, frame.clone(), &mut lengths.clone()).unwrap(),
-            HostJsonReply::Utf16Chunk { offset: 0, units: vec![0xd800, 0xdc00] },
+            HostJsonReply::Utf16Chunk {
+                offset: 0,
+                units: vec![0xd800, 0xdc00]
+            },
         );
         let mut wrong_offset = frame.clone();
-        if let Value::Object(fields) = &mut wrong_offset { fields[1].1 = Value::Number(1.0); }
+        if let Value::Object(fields) = &mut wrong_offset {
+            fields[1].1 = Value::Number(1.0);
+        }
         assert!(decode_reply(&event, wrong_offset, &mut lengths.clone()).is_err());
         let mut short_text = frame;
-        if let Value::Object(fields) = &mut short_text { fields[2].1 = Value::String(Utf16::new(vec![0xd800])); }
+        if let Value::Object(fields) = &mut short_text {
+            fields[2].1 = Value::String(Utf16::new(vec![0xd800]));
+        }
         assert!(decode_reply(&event, short_text, &mut lengths.clone()).is_err());
     }
 
@@ -1349,7 +1592,10 @@ mod opaque_reply_tests {
         ] {
             assert_eq!(
                 decode_opaque_value(&opaque_reply(Some(tag)), &mut BTreeMap::new()).unwrap(),
-                HostOpaqueValue::Opaque { handle: 1, opaque_type: expected },
+                HostOpaqueValue::Opaque {
+                    handle: 1,
+                    opaque_type: expected
+                },
             );
         }
         assert!(decode_opaque_value(&opaque_reply(None), &mut BTreeMap::new()).is_err());
@@ -1373,7 +1619,10 @@ mod opaque_reply_tests {
             items: vec![
                 HostDiagnosticArrayItem::Static(Value::Object(vec![
                     (Utf16::from("code"), Value::String(Utf16::from("STATIC"))),
-                    (Utf16::from("severity"), Value::String(Utf16::from("warning"))),
+                    (
+                        Utf16::from("severity"),
+                        Value::String(Utf16::from("warning")),
+                    ),
                 ])),
                 HostDiagnosticArrayItem::Opaque(77),
             ],
@@ -1387,7 +1636,10 @@ mod opaque_reply_tests {
                 items: vec![HostDiagnosticArrayItem::Structure {
                     code: Utf16::from("CODE"),
                     path: Utf16::from("/x"),
-                    message: HostStringRef { token: 19, units: 5 },
+                    message: HostStringRef {
+                        token: 19,
+                        units: 5
+                    },
                     severity: Utf16::from("error"),
                 }],
             }),
@@ -1403,35 +1655,96 @@ mod opaque_reply_tests {
 
     #[test]
     fn native_spread_failure_codec_preserves_target_kind() {
-        let nullish = HostJsonEvent::MaterializeSpreadFailure { target: HostSpreadFailureTarget::Nullish(HostInvokeValue::Undefined) };
-        assert_eq!(event_json(&nullish), r#"{"event":"materialize-spread-failure","target":{"kind":"nullish","value":{"kind":"undefined"}}}"#);
-        let method = HostJsonEvent::MaterializeSpreadFailure { target: HostSpreadFailureTarget::IteratorMethod(HostInvokeValue::Json(Value::Bool(false))) };
-        assert_eq!(event_json(&method), r#"{"event":"materialize-spread-failure","target":{"kind":"iterator-method","value":{"kind":"json","value":{"kind":"boolean","value":false}}}}"#);
-        let primitive_iterator = HostJsonEvent::MaterializeSpreadFailure { target: HostSpreadFailureTarget::IteratorResultPrimitive(HostInvokeValue::Json(Value::Number(17.0))) };
-        assert_eq!(event_json(&primitive_iterator), r#"{"event":"materialize-spread-failure","target":{"kind":"iterator-result-primitive","value":{"kind":"json","value":{"kind":"number","bits":"4031000000000000"}}}}"#);
-        let next_method = HostJsonEvent::MaterializeSpreadFailure { target: HostSpreadFailureTarget::IteratorNextMethod(HostInvokeValue::Json(Value::Number(17.0))) };
-        assert_eq!(event_json(&next_method), r#"{"event":"materialize-spread-failure","target":{"kind":"iterator-next-method","value":{"kind":"json","value":{"kind":"number","bits":"4031000000000000"}}}}"#);
-        let step_primitive = HostJsonEvent::MaterializeSpreadFailure { target: HostSpreadFailureTarget::IteratorStepPrimitive(HostInvokeValue::Undefined) };
-        assert_eq!(event_json(&step_primitive), r#"{"event":"materialize-spread-failure","target":{"kind":"iterator-step-primitive","value":{"kind":"undefined"}}}"#);
-        let reply = Value::Object(vec![(Utf16::from("kind"), Value::String(Utf16::from("spread-failure"))), (Utf16::from("message"), Value::Object(vec![(Utf16::from("token"), Value::Number(1.0)), (Utf16::from("units"), Value::Number(4.0))]))]);
+        let nullish = HostJsonEvent::MaterializeSpreadFailure {
+            target: HostSpreadFailureTarget::Nullish(HostInvokeValue::Undefined),
+        };
+        assert_eq!(
+            event_json(&nullish),
+            r#"{"event":"materialize-spread-failure","target":{"kind":"nullish","value":{"kind":"undefined"}}}"#
+        );
+        let method = HostJsonEvent::MaterializeSpreadFailure {
+            target: HostSpreadFailureTarget::IteratorMethod(HostInvokeValue::Json(Value::Bool(
+                false,
+            ))),
+        };
+        assert_eq!(
+            event_json(&method),
+            r#"{"event":"materialize-spread-failure","target":{"kind":"iterator-method","value":{"kind":"json","value":{"kind":"boolean","value":false}}}}"#
+        );
+        let primitive_iterator = HostJsonEvent::MaterializeSpreadFailure {
+            target: HostSpreadFailureTarget::IteratorResultPrimitive(HostInvokeValue::Json(
+                Value::Number(17.0),
+            )),
+        };
+        assert_eq!(
+            event_json(&primitive_iterator),
+            r#"{"event":"materialize-spread-failure","target":{"kind":"iterator-result-primitive","value":{"kind":"json","value":{"kind":"number","bits":"4031000000000000"}}}}"#
+        );
+        let next_method = HostJsonEvent::MaterializeSpreadFailure {
+            target: HostSpreadFailureTarget::IteratorNextMethod(HostInvokeValue::Json(
+                Value::Number(17.0),
+            )),
+        };
+        assert_eq!(
+            event_json(&next_method),
+            r#"{"event":"materialize-spread-failure","target":{"kind":"iterator-next-method","value":{"kind":"json","value":{"kind":"number","bits":"4031000000000000"}}}}"#
+        );
+        let step_primitive = HostJsonEvent::MaterializeSpreadFailure {
+            target: HostSpreadFailureTarget::IteratorStepPrimitive(HostInvokeValue::Undefined),
+        };
+        assert_eq!(
+            event_json(&step_primitive),
+            r#"{"event":"materialize-spread-failure","target":{"kind":"iterator-step-primitive","value":{"kind":"undefined"}}}"#
+        );
+        let reply = Value::Object(vec![
+            (
+                Utf16::from("kind"),
+                Value::String(Utf16::from("spread-failure")),
+            ),
+            (
+                Utf16::from("message"),
+                Value::Object(vec![
+                    (Utf16::from("token"), Value::Number(1.0)),
+                    (Utf16::from("units"), Value::Number(4.0)),
+                ]),
+            ),
+        ]);
         assert!(decode_reply(&nullish, reply, &mut BTreeMap::new()).is_ok());
-        let malformed = Value::Object(vec![(Utf16::from("kind"), Value::String(Utf16::from("iterator-closed")))]);
+        let malformed = Value::Object(vec![(
+            Utf16::from("kind"),
+            Value::String(Utf16::from("iterator-closed")),
+        )]);
         assert!(decode_reply(&nullish, malformed, &mut BTreeMap::new()).is_err());
     }
 
     #[test]
     fn iterator_close_event_codec_is_closed() {
         let event = HostJsonEvent::CloseOpaqueIterator { iterator: 23 };
-        assert_eq!(event_json(&event), r#"{"event":"close-opaque-iterator","iterator":23}"#);
-        let reply = Value::Object(vec![(Utf16::from("kind"), Value::String(Utf16::from("iterator-closed")))]);
-        assert_eq!(decode_reply(&event, reply, &mut BTreeMap::new()).unwrap(), HostJsonReply::IteratorClosed);
-        let malformed = Value::Object(vec![(Utf16::from("kind"), Value::String(Utf16::from("opaque-value")))]);
+        assert_eq!(
+            event_json(&event),
+            r#"{"event":"close-opaque-iterator","iterator":23}"#
+        );
+        let reply = Value::Object(vec![(
+            Utf16::from("kind"),
+            Value::String(Utf16::from("iterator-closed")),
+        )]);
+        assert_eq!(
+            decode_reply(&event, reply, &mut BTreeMap::new()).unwrap(),
+            HostJsonReply::IteratorClosed
+        );
+        let malformed = Value::Object(vec![(
+            Utf16::from("kind"),
+            Value::String(Utf16::from("opaque-value")),
+        )]);
         assert!(decode_reply(&event, malformed, &mut BTreeMap::new()).is_err());
     }
 
     #[test]
     fn semantic_throw_reply_is_rejected_when_catch_is_disabled() {
-        let reply = Value::Object(vec![(Utf16::from("kind"), Value::String(Utf16::from("semantic-throw")))]);
+        let reply = Value::Object(vec![(
+            Utf16::from("kind"),
+            Value::String(Utf16::from("semantic-throw")),
+        )]);
         let get_event = HostJsonEvent::GetOpaqueProperty {
             receiver: HostInvokeValue::Undefined,
             key: HostOpaqueKey::IteratorSymbol,

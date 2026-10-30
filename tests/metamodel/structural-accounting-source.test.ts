@@ -7,7 +7,7 @@ import {isPinnedCanonicalJsonMapJoin,structuralAccountingSource} from '../../scr
 
 // This transformer deliberately accepts only the historical Stage A input.
 // Current generated outputs have their own provenance-only compatibility gate.
-const root=resolve(process.cwd(),'docs/helix/04-build/evidence/rust-migration/r8-accounted-companion-inputs');
+const root=resolve(process.cwd(),'tests/rust-core/fixtures/r8-accounted-companion-inputs');
 const generated=readFileSync(resolve(root,'src/generated/core-validators.ts'),'utf8');
 const schemas=[
  'spec/core/schema.json',

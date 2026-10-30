@@ -6,7 +6,7 @@ use umf_core::{
 use umf_core_wire::{decode, encode, execute_request, transport_context};
 
 const PACKET: &str = include_str!(
-    "../../../docs/helix/04-build/evidence/rust-migration/r5-core-relationship-selection/frozen-typescript.json"
+    "../../../tests/rust-core/fixtures/r5-core-relationship-selection/frozen-typescript.json"
 );
 
 struct NoCapabilities;

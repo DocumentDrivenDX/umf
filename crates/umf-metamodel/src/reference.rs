@@ -921,11 +921,11 @@ mod tests {
     use super::*;
     use umf_core::serialization::{read_json_value, stringify_compact, Format};
 
-    const SOURCE: &[u8] = include_bytes!("../../../docs/helix/04-build/evidence/rust-migration/r7-self-model-admission/frozen/umf.yaml");
-    const MANIFEST: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r7-self-model-admission/frozen/manifest.json");
-    const CATALOG: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r7-self-model-admission/frozen/catalog.canonical.json");
-    const GRAPH: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r7-self-model-admission/frozen/graph.canonical.json");
-    const OUTCOMES: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r7-self-model-admission/frozen/outcomes.json");
+    const SOURCE: &[u8] = include_bytes!("../../../tests/rust-core/fixtures/r7-self-model-admission/frozen/umf.yaml");
+    const MANIFEST: &str = include_str!("../../../tests/rust-core/fixtures/r7-self-model-admission/frozen/manifest.json");
+    const CATALOG: &str = include_str!("../../../tests/rust-core/fixtures/r7-self-model-admission/frozen/catalog.canonical.json");
+    const GRAPH: &str = include_str!("../../../tests/rust-core/fixtures/r7-self-model-admission/frozen/graph.canonical.json");
+    const OUTCOMES: &str = include_str!("../../../tests/rust-core/fixtures/r7-self-model-admission/frozen/outcomes.json");
 
     fn parse_json(source: &str) -> Value {
         read_json_value(

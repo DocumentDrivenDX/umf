@@ -1,5 +1,0 @@
-Source UMF e0487691e34be22de9e63d8ead5f1c9db21fee13/tree ee0c192c9e9929c31700a05ab16b510ad0234d67; pre-run SDK closure 1355bf21b58ad9e422fa8998c1ce5325b8643bb1eefbc6a1b6a127babc52b5d7.
-Avro deps Apache Avro 1.12.0, fastavro 1.12.2 (disposable Python venv); Python 3.12.15; Bun 1.4.3; Chromium 153.0.8010.12; Java 21.0.13.0.2.
-Commands: bun scripts/core-ideals/cardinality-avro-oracle.ts (exit 0), bun scripts/core-ideals/cardinality-avro-browser.ts (first attempt sandbox loopback denied, retry escalated exit 0).
-Native outcomes: cross-codec 208; float narrowings 12. Browser outcomes: profile 20; classification 80 cases, 58 classified, 22 blocked, 116 recoveries, 58 forged refusals; projection 78 cases, 52 projected, 26 blocked, 104 recoveries, 52 forged refusals.
-Scope: current E048-source bounded Avro replay; not binding acceptance and not full Cardinality acceptance. Pre-run source closure is separate from generated fixture outputs, which are path/hash inventoried.

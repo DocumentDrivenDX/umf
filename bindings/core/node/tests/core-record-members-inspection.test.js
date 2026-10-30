@@ -8,7 +8,7 @@ import packageSchema from '../../../../spec/core/extension-package.schema.json' 
 import constraints from '../../../../spec/metamodel/generated/core-constraints.json' with {type:'json'};
 import domainPolicy from '../../../../spec/metamodel/generated/domain-policy.json' with {type:'json'};
 
-const packet=JSON.parse(readFileSync(new URL('../../../../docs/helix/04-build/evidence/rust-migration/r5-record-members-inspection/frozen-typescript.json',import.meta.url),'utf8'));
+const packet=JSON.parse(readFileSync(new URL('../../../../../../../../tests/rust-core/fixtures/r5-record-members-inspection/frozen-typescript.json',import.meta.url),'utf8'));
 const packageRoot=process.env.UMF_R5_RECORD_MEMBERS_NODE_PACKAGE;
 const {createCoreRecordMembersEngine}=packageRoot
   ? await import(pathToFileURL(resolve(packageRoot,'index.js')).href)

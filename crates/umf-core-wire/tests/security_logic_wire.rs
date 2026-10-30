@@ -67,7 +67,7 @@ fn truth_rank(value: &str) -> u8 {
 #[test]
 fn wire_truth_operators_match_frozen_predecessor_and_hand_enumerated_oracle() {
     let packet = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r8-security-truth-logic/frozen-typescript.json"
+        "../../../tests/rust-core/fixtures/r8-security-truth-logic/frozen-typescript.json"
     ));
     let truths = match get(&packet, "truths").unwrap() {
         Value::Array(values) => values,
@@ -145,7 +145,7 @@ fn wire_truth_operators_match_frozen_predecessor_and_hand_enumerated_oracle() {
 #[test]
 fn wire_truth_operators_preserve_predecessor_boundary_refusals() {
     let packet = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r8-security-truth-logic/frozen-typescript.json"
+        "../../../tests/rust-core/fixtures/r8-security-truth-logic/frozen-typescript.json"
     ));
     let Value::Array(cases) = get(&packet, "refusals").unwrap() else {
         panic!("refusal packet")
@@ -312,7 +312,7 @@ fn direct_security_not_keeps_rust_truth_and_host_control() {
 #[test]
 fn wire_composition_matches_frozen_predecessor_and_hand_oracle() {
     let packet = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r8-security-truth-logic/compose-cases.json"
+        "../../../tests/rust-core/fixtures/r8-security-truth-logic/compose-cases.json"
     ));
     let Value::Array(cases) = get(&packet, "cases").unwrap() else {
         panic!("composition cases")

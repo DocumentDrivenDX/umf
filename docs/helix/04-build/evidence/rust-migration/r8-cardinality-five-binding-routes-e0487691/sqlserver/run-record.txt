@@ -1,5 +1,0 @@
-Source UMF e0487691e34be22de9e63d8ead5f1c9db21fee13/tree ee0c192c9e9929c31700a05ab16b510ad0234d67; pre-run SDK closure 1355bf21b58ad9e422fa8998c1ce5325b8643bb1eefbc6a1b6a127babc52b5d7.
-SQL Server 2022 version 16.0.4295.3 in pinned docker image, forced linux/amd64 under OrbStack/Apple Silicon emulation; Bun 1.4.3; Chromium 153.0.8010.12.
-Commands: bun scripts/core-ideals/cardinality-sqlserver-oracle.ts (exit 0), bun scripts/core-ideals/cardinality-sqlserver-browser.ts (exit 0), socket/Docker-enabled escalation.
-Native profile 82 cases/27 rejections/7 columns; projection 104 cases, 68 executed, 36 blocked, 68 native/ideal recoveries. Browser classification 36 classified, 20 blocked, 72 recoveries; projection 104 cases, 36 blocked, 136 recoveries, 68 forged refusals, 6 identifier refusals.
-Scope: E048-source bounded SQL Server route, emulated Linux/amd64; not binding acceptance or full Cardinality acceptance. Input SDK closure separate from generated evidence outputs.

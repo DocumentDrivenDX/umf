@@ -238,6 +238,13 @@ export function toWire(value, limits = {}) {
     values++;
     if (values > (limits.maxValues ?? 100_000)) fail('RESOURCE_LIMIT', 'JSON value count exceeds the admission limit', path);
     if (depth > maxDepth) fail('RESOURCE_LIMIT', 'JSON nesting exceeds the admission limit', path);
+    // Parquet's tagged encoder classifies malformed data values through its
+    // Rust admission rules. Null preserves each member name as a transport
+    // carrier so Rust can issue the operation-specific error.
+    if (limits.unsupportedValuesAsNull && (item === undefined || typeof item === 'function' || typeof item === 'symbol' || typeof item === 'bigint')) {
+      if (item === undefined) limits.undefinedPaths?.push(path);
+      return {kind: 'null'};
+    }
     if (item === null) return {kind: 'null'};
     if (typeof item === 'boolean') return {kind: 'boolean', value: item};
     if (typeof item === 'number') return {kind: 'number', bits: numberBits(item)};
@@ -266,8 +273,19 @@ export function encodeWire(value, limits) {
   return JSON.stringify(toWire(value, limits));
 }
 
-export function encodeRequestWire(value, work) {
-  return encodeWire(value, {...REQUEST_LIMITS, work});
+export function encodeRequestWire(value, work, {unsupportedValuesAsNull = false} = {}) {
+  if (!unsupportedValuesAsNull) return encodeWire(value, {...REQUEST_LIMITS, work});
+  const undefinedPaths = [];
+  const wire = toWire(value, {...REQUEST_LIMITS, work, unsupportedValuesAsNull, undefinedPaths});
+  if (undefinedPaths.length) {
+    const items = [];
+    for (const path of undefinedPaths) {
+      work?.(path.length + 1);
+      items.push({kind: 'string', units: units(path)});
+    }
+    wire.members.push({key: units('__umfUndefinedPaths'), value: {kind: 'array', items}});
+  }
+  return JSON.stringify(wire);
 }
 
 export function fromWire(wire, work) {

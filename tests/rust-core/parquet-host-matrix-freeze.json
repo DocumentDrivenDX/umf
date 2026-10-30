@@ -1,0 +1,19 @@
+{
+  "source": "src/adapters/parquet/{transform,rename,encode}.ts",
+  "outcomes": [
+    {"label":"append-undefined","result":{"status":"blocked","diagnostic":{"code":"PARQUET_METADATA_EDIT_BLOCKED","path":"","severity":"error","message":"Value is not JSON-compatible"}},"prototypes":{"result":true,"source":true}},
+    {"label":"append-nested-undefined","result":{"status":"blocked","diagnostic":{"code":"PARQUET_METADATA_EDIT_BLOCKED","path":"","severity":"error","message":"Value is not JSON-compatible"}},"prototypes":{"result":true,"source":true}},
+    {"label":"append-symbol","result":{"status":"blocked","diagnostic":{"code":"PARQUET_METADATA_EDIT_BLOCKED","path":"","severity":"error","message":"Value is not JSON-compatible"}},"prototypes":{"result":true,"source":true}},
+    {"label":"append-function","result":{"status":"blocked","diagnostic":{"code":"PARQUET_METADATA_EDIT_BLOCKED","path":"","severity":"error","message":"Value is not JSON-compatible"}},"prototypes":{"result":true,"source":true}},
+    {"label":"append-cycle","result":{"status":"blocked","diagnostic":{"code":"PARQUET_METADATA_EDIT_BLOCKED","path":"","severity":"error","message":"Cyclic value"}},"prototypes":{"result":true,"source":true}},
+    {"label":"append-accessor","result":{"status":"blocked","diagnostic":{"code":"PARQUET_METADATA_EDIT_BLOCKED","path":"","severity":"error","message":"Hidden fields and accessors cannot be serialized faithfully"}},"prototypes":{"result":true,"source":true}},
+    {"label":"rename-undefined-name","result":{"status":"blocked","diagnostic":{"code":"PARQUET_RENAME_BLOCKED","path":"/schema/1","severity":"error","message":"Expected a nonempty lossless UTF-8 name up to 100000 UTF-16 units"}},"prototypes":{"result":true,"source":true}},
+    {"label":"rename-symbol-name","result":{"status":"blocked","diagnostic":{"code":"PARQUET_RENAME_BLOCKED","path":"/schema/1","severity":"error","message":"Expected a nonempty lossless UTF-8 name up to 100000 UTF-16 units"}},"prototypes":{"result":true,"source":true}},
+    {"label":"rename-function-name","result":{"status":"blocked","diagnostic":{"code":"PARQUET_RENAME_BLOCKED","path":"/schema/1","severity":"error","message":"Expected a nonempty lossless UTF-8 name up to 100000 UTF-16 units"}},"prototypes":{"result":true,"source":true}},
+    {"label":"encode-binary-undefined-hex","error":{"name":"UmfError","code":"PARQUET_WIRE_ENCODE","path":"","message":"Binary length exceeds limit"}},
+    {"label":"encode-uuid-undefined-hex","error":{"name":"UmfError","code":"PARQUET_WIRE_ENCODE","path":"","message":"Invalid exact byte encoding"}},
+    {"label":"encode-binary-symbol-hex","error":{"name":"UmfError","code":"PARQUET_WIRE_ENCODE","path":"","message":"Binary length exceeds limit"}},
+    {"label":"encode-uuid-function-hex","error":{"name":"UmfError","code":"PARQUET_WIRE_ENCODE","path":"","message":"Invalid exact byte encoding"}},
+    {"label":"encode-unknown-undefined-field","error":{"name":"UmfError","code":"PARQUET_WIRE_ENCODE","path":"","message":"Unknown wire representation fields cannot be discarded"}}
+  ]
+}

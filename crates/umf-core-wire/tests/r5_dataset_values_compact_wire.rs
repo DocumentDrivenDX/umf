@@ -217,7 +217,7 @@ fn validate_case(case_json: &str, name: &str) -> (Value, Value, Value) {
 fn compact_dataset_wire_structural_limit_case_reaches_predecessor_refusal() {
     let (_, _, _) = validate_case(
         include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-structural-limit.json"
+            "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-structural-limit.json"
         ),
         "structural-limit",
     );
@@ -229,85 +229,85 @@ fn compact_dataset_wire_matches_all_frozen_envelopes_and_refusals() {
         (
             "commerce",
             include_str!(
-                "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-commerce.json"
+                "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-commerce.json"
             ),
         ),
         (
             "supply-chain",
             include_str!(
-                "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-supply-chain.json"
+                "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-supply-chain.json"
             ),
         ),
         (
             "archaeology",
             include_str!(
-                "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-archaeology.json"
+                "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-archaeology.json"
             ),
         ),
         (
             "ecology",
             include_str!(
-                "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-ecology.json"
+                "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-ecology.json"
             ),
         ),
         (
             "unknown-and-residual",
             include_str!(
-                "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-unknown-and-residual.json"
+                "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-unknown-and-residual.json"
             ),
         ),
         (
             "absent-state",
             include_str!(
-                "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-absent-state.json"
+                "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-absent-state.json"
             ),
         ),
         (
             "present-null",
             include_str!(
-                "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-present-null.json"
+                "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-present-null.json"
             ),
         ),
         (
             "exact-decimal-token",
             include_str!(
-                "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-exact-decimal-token.json"
+                "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-exact-decimal-token.json"
             ),
         ),
         (
             "duplicate-key",
             include_str!(
-                "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-duplicate-key.json"
+                "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-duplicate-key.json"
             ),
         ),
         (
             "duplicate-locator",
             include_str!(
-                "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-duplicate-locator.json"
+                "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-duplicate-locator.json"
             ),
         ),
         (
             "missing-links",
             include_str!(
-                "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-missing-links.json"
+                "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-missing-links.json"
             ),
         ),
         (
             "parallel-links",
             include_str!(
-                "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-parallel-links.json"
+                "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-parallel-links.json"
             ),
         ),
         (
             "structural-limit",
             include_str!(
-                "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-structural-limit.json"
+                "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-structural-limit.json"
             ),
         ),
         (
             "work-limit",
             include_str!(
-                "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-work-limit.json"
+                "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-work-limit.json"
             ),
         ),
     ];
@@ -357,7 +357,7 @@ fn compact_dataset_wire_matches_all_frozen_envelopes_and_refusals() {
     }
 
     let forged = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-forged-receipt.json"
+        "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-forged-receipt.json"
     ));
     let encoded = request(
         "model/verifyCoreDatasetValuesCompact",
@@ -391,7 +391,7 @@ fn compact_dataset_wire_matches_all_frozen_envelopes_and_refusals() {
 #[test]
 fn compact_dataset_wire_preserves_349_350_limit_and_host_cancellation() {
     let accepted = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-near-threshold-accepted.json"
+        "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-near-threshold-accepted.json"
     ));
     let accepted_request = request(
         "model/validateCoreDatasetValuesCompact",
@@ -418,7 +418,7 @@ fn compact_dataset_wire_preserves_349_350_limit_and_host_cancellation() {
     );
 
     let refused = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-near-threshold-first-refused.json"
+        "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-near-threshold-first-refused.json"
     ));
     let refused_request = request(
         "model/validateCoreDatasetValuesCompact",
@@ -445,7 +445,7 @@ fn compact_dataset_wire_preserves_349_350_limit_and_host_cancellation() {
     );
 
     let commerce = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-commerce.json"
+        "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-commerce.json"
     ));
     let cancelled_request = request(
         "model/validateCoreDatasetValuesCompact",

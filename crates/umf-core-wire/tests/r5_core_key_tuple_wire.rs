@@ -64,7 +64,7 @@ fn resources() -> Value {
 
 #[test]
 fn retained_binding_preserves_unknown_extension_payload_without_a_callback() {
-    let packet = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-core-key-tuple/frozen-typescript.json"));
+    let packet = parse(include_str!("../../../tests/rust-core/fixtures/r5-core-key-tuple/frozen-typescript.json"));
     let cases = get(&packet, "cases").unwrap();
     let case = get(cases, "decimal-scale-2-short-lexical").unwrap();
     let source = get(case, "source").unwrap();
@@ -78,7 +78,7 @@ fn retained_binding_preserves_unknown_extension_payload_without_a_callback() {
 
 #[test]
 fn retained_source_snapshot_uses_tagged_transport_scope_for_large_text() {
-    let packet = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-core-key-tuple/frozen-typescript.json"));
+    let packet = parse(include_str!("../../../tests/rust-core/fixtures/r5-core-key-tuple/frozen-typescript.json"));
     let case = get(get(&packet, "cases").unwrap(), "decimal-scale-2-short-lexical").unwrap();
     let mut source = get(case, "source").unwrap().clone();
     let Value::Object(root) = &mut source else { panic!("source object") };
@@ -101,7 +101,7 @@ fn retained_source_snapshot_uses_tagged_transport_scope_for_large_text() {
 
 #[test]
 fn retained_binding_reads_bytes_above_tagged_array_limit_and_honors_core_ceiling() {
-    let packet = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-core-key-tuple/frozen-typescript.json"));
+    let packet = parse(include_str!("../../../tests/rust-core/fixtures/r5-core-key-tuple/frozen-typescript.json"));
     let case = get(get(&packet, "cases").unwrap(), "empty-string-present").unwrap();
     let source = get(case, "source").unwrap();
     let identity = get(case, "identity").unwrap();
@@ -234,7 +234,7 @@ fn assert_expected(response: &serde_json::Value, actual: Option<Value>, expected
 
 #[test]
 fn wire_key_tuple_operations_match_the_frozen_encoder_and_verifier_packet() {
-    let frozen = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-core-key-tuple/frozen-typescript.json"));
+    let frozen = parse(include_str!("../../../tests/rust-core/fixtures/r5-core-key-tuple/frozen-typescript.json"));
     let cases = get(&frozen, "cases").unwrap();
     let outcomes = get(&frozen, "outcomes").unwrap();
     let Value::Object(rows) = cases else { panic!("frozen cases") };
@@ -282,7 +282,7 @@ fn wire_key_tuple_operations_match_the_frozen_encoder_and_verifier_packet() {
 
 #[test]
 fn prepared_tuple_operations_retain_and_verify_the_source() {
-    let frozen = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-core-key-tuple/frozen-typescript.json"));
+    let frozen = parse(include_str!("../../../tests/rust-core/fixtures/r5-core-key-tuple/frozen-typescript.json"));
     let case = get(get(&frozen, "cases").unwrap(), "decimal-scale-2-short-lexical").unwrap();
     let source = get(case, "source").unwrap();
     let (response, prepared_source) = run("model/prepareCoreKeyTuples", &[("source", source)]);
@@ -307,7 +307,7 @@ fn prepared_tuple_operations_retain_and_verify_the_source() {
 
 #[test]
 fn prepared_source_and_byte_result_are_metered_before_wire_output_allocation() {
-    let frozen = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-core-key-tuple/frozen-typescript.json"));
+    let frozen = parse(include_str!("../../../tests/rust-core/fixtures/r5-core-key-tuple/frozen-typescript.json"));
     let case = get(get(&frozen, "cases").unwrap(), "decimal-scale-2-short-lexical").unwrap();
     let source = get(case, "source").unwrap();
     let (prepared_response, _) = run_with_control("model/prepareCoreKeyTuples", &[("source", source)], Some(0));

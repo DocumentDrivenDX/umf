@@ -16,10 +16,10 @@ pub fn test_parquet_snappy_vector(input: Vec<u8>, expected: usize) -> Result<Vec
         .map_err(|error| JsValue::from_str(&error.message.to_utf8().unwrap_or_default()))
 }
 
+mod avro;
 mod core_key_tuple;
 mod core_key_verification;
 mod core_record_type_verification;
-mod avro;
 mod host_json;
 mod javascript_numeric_runtime;
 mod json_schema_import_session;
@@ -523,21 +523,33 @@ pub fn execute_core_bit128_field_request_wire(
     let profile = match profile {
         "cooperative" => ResourceProfile::Cooperative,
         "hard-isolated" => ResourceProfile::HardIsolated,
-        _ => return umf_core_wire::error_envelope(EngineError::new(
-            "RESOURCE_PROFILE", Utf16::default(), "Unknown resource profile",
-        )),
+        _ => {
+            return umf_core_wire::error_envelope(EngineError::new(
+                "RESOURCE_PROFILE",
+                Utf16::default(),
+                "Unknown resource profile",
+            ))
+        }
     };
-    let mut capabilities = WasmCapabilities { dispatcher: dispatcher.clone() };
+    let mut capabilities = WasmCapabilities {
+        dispatcher: dispatcher.clone(),
+    };
     if let Some(dispatcher) = control_dispatcher {
         let mut control = WasmControl { dispatcher };
         let mut hook = |amount| control.check(amount);
         umf_core_wire::execute_core_bit128_field_request_with_control(
-            wire_json, profile, &mut capabilities, &mut hook,
+            wire_json,
+            profile,
+            &mut capabilities,
+            &mut hook,
         )
     } else {
         let mut no_control = |_amount| Ok(());
         umf_core_wire::execute_core_bit128_field_request_with_control(
-            wire_json, profile, &mut capabilities, &mut no_control,
+            wire_json,
+            profile,
+            &mut capabilities,
+            &mut no_control,
         )
     }
 }
@@ -720,6 +732,36 @@ pub fn execute_avro_cardinality_wire(
 #[wasm_bindgen(js_name = avroCardinalityBindingProfileVersion)]
 pub fn avro_cardinality_binding_profile_version() -> String {
     umf_core_wire::avro_cardinality_binding::PROFILE.to_owned()
+}
+
+#[wasm_bindgen(js_name = executeDbtWire)]
+pub fn execute_dbt_wire(wire_json: &str, control_dispatcher: Option<Function>) -> String {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::dbt_binding::execute_wire_with_control(wire_json, &mut hook)
+    } else {
+        umf_core_wire::dbt_binding::execute_wire(wire_json)
+    }
+}
+#[wasm_bindgen(js_name = dbtProfileVersion)]
+pub fn dbt_profile_version() -> String {
+    umf_core_wire::dbt_binding::PROFILE.to_owned()
+}
+
+#[wasm_bindgen(js_name = executeRdfWire)]
+pub fn execute_rdf_wire(wire_json: &str, control_dispatcher: Option<Function>) -> String {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::rdf_binding::execute_wire_with_control(wire_json, &mut hook)
+    } else {
+        umf_core_wire::rdf_binding::execute_wire(wire_json)
+    }
+}
+#[wasm_bindgen(js_name = rdfProfileVersion)]
+pub fn rdf_profile_version() -> String {
+    umf_core_wire::rdf_binding::PROFILE.to_owned()
 }
 
 #[wasm_bindgen(js_name = avroFieldsProfileVersion)]

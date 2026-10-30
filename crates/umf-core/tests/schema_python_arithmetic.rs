@@ -3,8 +3,8 @@ use num_bigint::BigInt;
 use serde_json::Value as Json;
 use umf_core::{Context, PyText, PythonConsumerValue as Py, PythonReVersion};
 
-const ARITHMETIC: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-arithmetic-predecessor.json");
-const EDGES: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-schema-arithmetic-edges-predecessor.json");
+const ARITHMETIC: &str = include_str!("../../../tests/rust-core/fixtures/r2/sol-python-schema-arithmetic-predecessor.json");
+const EDGES: &str = include_str!("../../../tests/rust-core/fixtures/r2/sol-python-schema-arithmetic-edges-predecessor.json");
 
 fn py(value: &Json) -> Py {
     match value {

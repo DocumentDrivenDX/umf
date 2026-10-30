@@ -41,7 +41,7 @@ fn member<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
 
 #[test]
 fn every_frozen_predecessor_case_matches_complete_ordered_output() {
-    let source = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r7-schema-comparison/predecessor-cases.json");
+    let source = include_str!("../../../tests/rust-core/fixtures/r7-schema-comparison/predecessor-cases.json");
     let utf16 = source.encode_utf16().collect::<Vec<_>>();
     let fixture = umf_core::serialization::read_json_value(
         &utf16,

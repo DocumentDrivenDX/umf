@@ -9,7 +9,7 @@ import {prepareRrfReplayCases} from '../../node/tests/access-rrf-replay.js';
 
 const root = resolve(import.meta.dirname, '../../../..');
 const packageRoot = resolve(process.argv[2] ?? resolve(root, 'bindings/core/wasm/pkg'));
-const packetPath = resolve(root, 'docs/helix/04-build/evidence/rust-migration/r8-postgres-search-rrf-20261027/predecessor.json');
+const packetPath = resolve(root, 'tests/rust-core/fixtures/r8-postgres-search-rrf-20261027/predecessor.json');
 const packetBytes = await readFile(packetPath);
 const packet = JSON.parse(packetBytes);
 const cases = prepareRrfReplayCases(packet);

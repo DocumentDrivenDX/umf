@@ -66,7 +66,7 @@ fn diagnostic_rows(value: &Value) -> Vec<serde_json::Value> {
 
 #[test]
 fn schema_and_table_inspect_wire_match_source_frozen_warning_receipts() {
-    let schema_receipt: serde_json::Value = serde_json::from_str(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r8-delta-spark-hash/delta-warning-predecessor.json")).unwrap();
+    let schema_receipt: serde_json::Value = serde_json::from_str(include_str!("../../../tests/rust-core/fixtures/r8-delta-spark-hash/delta-warning-predecessor.json")).unwrap();
     let mut schema_ctx = Context::ordinary();
     let schema_resources =
         umf_core::delta_schema::DeltaSchemaResources::new(&mut schema_ctx).unwrap();
@@ -92,7 +92,7 @@ fn schema_and_table_inspect_wire_match_source_frozen_warning_receipts() {
         );
     }
 
-    let table_receipt: serde_json::Value = serde_json::from_str(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r8-delta-spark-hash/delta-table-warning-predecessor.json")).unwrap();
+    let table_receipt: serde_json::Value = serde_json::from_str(include_str!("../../../tests/rust-core/fixtures/r8-delta-spark-hash/delta-table-warning-predecessor.json")).unwrap();
     let selected = [
         "embeddedSchemaAndPartitions",
         "mappingPartialState",

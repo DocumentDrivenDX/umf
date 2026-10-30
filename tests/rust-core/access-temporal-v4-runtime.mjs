@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import * as root from '../../dist/umf-node.js';
 
-const packet = JSON.parse(readFileSync(new URL('../../docs/helix/04-build/evidence/rust-migration/r8-access-temporal/reference-packet.json', import.meta.url), 'utf8'));
+const packet = JSON.parse(readFileSync(new URL('../../fixtures/r8-access-temporal/reference-packet.json', import.meta.url), 'utf8'));
 assert.equal(root.ACCESS_TEMPORAL_PROFILE, 'umf-access-temporal/0.1.0');
 for (const candidate of packet.cases) {
   let actual;

@@ -40,7 +40,7 @@ fn json(v: &Value) -> serde_json::Value {
 
 #[test]
 fn action_inspection_matches_frozen_typescript_diagnostics_and_retains_sources() {
-    let packet:serde_json::Value=serde_json::from_str(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r8-delta-spark-hash/delta-actions-predecessor.json")).unwrap();
+    let packet:serde_json::Value=serde_json::from_str(include_str!("../../../tests/rust-core/fixtures/r8-delta-spark-hash/delta-actions-predecessor.json")).unwrap();
     for case in packet["cases"].as_array().unwrap() {
         let id = case["id"].as_str().unwrap();
         let source = case["text"].as_str().unwrap();

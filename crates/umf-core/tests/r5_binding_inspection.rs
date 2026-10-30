@@ -78,19 +78,19 @@ fn actual(validation: &umf_core::Validation) -> serde_json::Value {
 }
 fn frozen_gate0() -> serde_json::Value {
     serde_json::from_str(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-binding-inspect/frozen-inspections.json"
+        "../../../tests/rust-core/fixtures/r5-binding-inspect/frozen-inspections.json"
     ))
     .unwrap()
 }
 fn frozen_controls() -> serde_json::Value {
     serde_json::from_str(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-binding-inspect/rust-controls/frozen-controls.json"
+        "../../../tests/rust-core/fixtures/r5-binding-inspect/rust-controls/frozen-controls.json"
     ))
     .unwrap()
 }
 fn frozen_review_controls() -> serde_json::Value {
     serde_json::from_str(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-binding-inspect/rust-controls/review-controls.json"
+        "../../../tests/rust-core/fixtures/r5-binding-inspect/rust-controls/review-controls.json"
     ))
     .unwrap()
 }
@@ -175,7 +175,7 @@ fn frozen_profiles_unknowns_precedence_and_reference_controls_match() {
         Value::string_utf8("0.3.0"),
     );
     let unsupported_expected: serde_json::Value = serde_json::from_str(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-binding-inspect/rust-controls/rust-profile.json"
+        "../../../tests/rust-core/fixtures/r5-binding-inspect/rust-controls/rust-profile.json"
     ))
     .unwrap();
     assert_eq!(

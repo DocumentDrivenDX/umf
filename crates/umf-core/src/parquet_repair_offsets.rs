@@ -11,15 +11,15 @@ use crate::{
     engine::{Capabilities, Engine},
     error::EngineError,
     parquet_capture_inspection::{
-        IDL, decode_parquet_footer, diagnostic, export_parquet_capture, inspect_parquet_framing,
-        inspect_parquet_schema, map_idl_value, to_json,
+        decode_parquet_footer, diagnostic, export_parquet_capture, inspect_parquet_framing,
+        inspect_parquet_schema, map_idl_value, to_json, IDL,
     },
     parquet_pages::inspect_parquet_pages,
     parquet_schema_decode::decode_compact_struct_prefix,
     parquet_values::decode_parquet_values,
     parquet_wire_encode::encode_parquet_wire,
     registry::Registry,
-    value::{Utf16, Value, copy_json},
+    value::{copy_json, Utf16, Value},
 };
 use serde_json::{Map, Value as Json};
 
@@ -274,9 +274,10 @@ pub fn repair_parquet_dictionary_offsets(
         ("source", inspected_source),
         ("status", Value::string_utf8("blocked")),
         ("complete", Value::Bool(false)),
+        ("diagnostics", Value::Array(Vec::new())),
     ];
     if text(member(&inspected, "status").unwrap_or(&Value::Null)).as_deref() != Some("checked") {
-        result.push(("diagnostics", Value::Array(diagnostics)));
+        result[3].1 = Value::Array(diagnostics);
         return Ok(Value::Object(
             result
                 .into_iter()
@@ -582,7 +583,23 @@ pub fn repair_parquet_dictionary_offsets(
         Ok((
             output,
             footer_offset,
-            repairs.into_iter().map(from_json_value).collect(),
+            repairs
+                .into_iter()
+                .map(|repair| {
+                    Value::Object(
+                        [
+                            "rowGroup",
+                            "column",
+                            "oldDataOffset",
+                            "dataOffset",
+                            "dictionaryOffset",
+                        ]
+                        .into_iter()
+                        .map(|key| (Utf16::from(key), from_json_value(repair[key].clone())))
+                        .collect(),
+                    )
+                })
+                .collect(),
         ))
     })();
 
@@ -613,7 +630,7 @@ pub fn repair_parquet_dictionary_offsets(
                 .unwrap_or_else(|_| "Repair failed".into()),
         )),
     }
-    result.push(("diagnostics", Value::Array(diagnostics)));
+    result[3].1 = Value::Array(diagnostics);
     Ok(Value::Object(
         result
             .into_iter()

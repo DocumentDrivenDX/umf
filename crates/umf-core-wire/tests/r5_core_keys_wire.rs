@@ -106,7 +106,7 @@ fn utf16_units(value: &Value) -> serde_json::Value {
 #[test]
 fn tagged_key_operations_match_all_frozen_predecessor_cases() {
     let frozen = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-core-keys/frozen-typescript.json"
+        "../../../tests/rust-core/fixtures/r5-core-keys/frozen-typescript.json"
     ));
     let cases = get(&frozen, "cases").unwrap();
     let outcomes = get(&frozen, "outcomes").unwrap();
@@ -201,7 +201,7 @@ fn tagged_key_operations_match_all_frozen_predecessor_cases() {
 #[test]
 fn key_preflight_and_receipt_prepare_operations_are_available_on_tagged_wire() {
     let frozen = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-core-keys/frozen-typescript.json"
+        "../../../tests/rust-core/fixtures/r5-core-keys/frozen-typescript.json"
     ));
     let cases = get(&frozen, "cases").unwrap();
     let outcomes = get(&frozen, "outcomes").unwrap();
@@ -242,7 +242,7 @@ fn key_preflight_and_receipt_prepare_operations_are_available_on_tagged_wire() {
 #[test]
 fn tagged_key_operations_propagate_host_resource_and_cancellation_controls() {
     let frozen = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-core-keys/frozen-typescript.json"
+        "../../../tests/rust-core/fixtures/r5-core-keys/frozen-typescript.json"
     ));
     let case = get(get(&frozen, "cases").unwrap(), "inspect_known").unwrap();
     let mut fields = vec![

@@ -118,7 +118,7 @@ fn predecessor_fixture_roundtrips_ordered_dependencies_metadata_and_detached_sou
         bundle.dependencies[0].1.to_utf8().unwrap(),
         format!("{DEPENDENCY}\n")
     );
-    let frozen: serde_json::Value = serde_json::from_str(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-avro-full-predecessor/outcomes.json")).unwrap();
+    let frozen: serde_json::Value = serde_json::from_str(include_str!("../../../tests/rust-core/fixtures/r5-avro-full-predecessor/outcomes.json")).unwrap();
     let root = get_node(&document, &Utf16::default(), None, &mut Context::ordinary()).unwrap();
     let actual: serde_json::Value = serde_json::from_str(
         &root

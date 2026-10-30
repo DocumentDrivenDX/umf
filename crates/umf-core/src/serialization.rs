@@ -4587,7 +4587,7 @@ mod tests {
     #[test]
     fn r8_frozen_json_value_read_error_inventory() {
         let packet: serde_json::Value = serde_json::from_str(include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r8-json-value-serialization/predecessor.json"
+            "../../../tests/rust-core/fixtures/r8-json-value-serialization/predecessor.json"
         ))
         .unwrap();
         for case in packet["cases"].as_array().unwrap() {
@@ -4976,7 +4976,7 @@ mod tests {
     #[test]
     fn python_unknown_directives_match_the_frozen_174_case_oracle() {
         const RECEIPT: &str = include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-yaml-directive-predecessor.json"
+            "../../../tests/rust-core/fixtures/r2/sol-python-yaml-directive-predecessor.json"
         );
         let receipt: serde_json::Value = serde_json::from_str(RECEIPT).unwrap();
         assert_eq!(
@@ -5021,7 +5021,7 @@ mod tests {
     #[test]
     fn python_unknown_directive_tails_match_the_frozen_48_observations() {
         const RECEIPT: &str = include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-yaml-directive-tail-predecessor.json"
+            "../../../tests/rust-core/fixtures/r2/sol-python-yaml-directive-tail-predecessor.json"
         );
         let receipt: serde_json::Value = serde_json::from_str(RECEIPT).unwrap();
         assert_eq!(

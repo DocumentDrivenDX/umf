@@ -9,7 +9,7 @@ import {pathToFileURL} from 'node:url';
 const repo = resolve(import.meta.dirname, '../../../..');
 const packageRoot = process.env.UMF_ARROW_IPC_NODE_PACKAGE;
 if (!packageRoot) throw new Error('Set UMF_ARROW_IPC_NODE_PACKAGE to the isolated fresh Node package');
-const packetPath = resolve(repo, 'docs/helix/04-build/evidence/rust-migration/r5-arrow-ipc-capture-predecessor-20261027/typescript-arrow-ipc-capture.json.gz');
+const packetPath = resolve(repo, 'tests/rust-core/fixtures/r5-arrow-ipc-capture-predecessor-20261027/typescript-arrow-ipc-capture.json.gz');
 const packet = JSON.parse(gunzipSync(await readFile(packetPath)));
 const binding = await import(pathToFileURL(join(packageRoot, 'index.js')).href);
 let metered = 0;

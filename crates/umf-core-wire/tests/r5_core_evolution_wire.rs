@@ -119,7 +119,7 @@ fn run(op: &str, args: &[(&str, &Value)]) -> (serde_json::Value, Option<Value>) 
 
 #[test]
 fn tagged_inspection_matches_all_current_010_frozen_outcomes() {
-    let packet = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-core-evolution/frozen-typescript-0.10.json"));
+    let packet = parse(include_str!("../../../tests/rust-core/fixtures/r5-core-evolution/frozen-typescript-0.10.json"));
     let cases = get(&packet, "cases").unwrap();
     let outcomes = get(&packet, "outcomes").unwrap();
     let Value::Object(cases) = cases else {
@@ -165,7 +165,7 @@ fn tagged_inspection_matches_all_current_010_frozen_outcomes() {
 
 #[test]
 fn tagged_verifier_checks_closed_receipt_and_independent_inputs() {
-    let packet = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-core-evolution/frozen-typescript-0.10.json"));
+    let packet = parse(include_str!("../../../tests/rust-core/fixtures/r5-core-evolution/frozen-typescript-0.10.json"));
     let case = get(
         get(&packet, "cases").unwrap(),
         "accepted_absent_string_addition",
@@ -210,7 +210,7 @@ fn tagged_verifier_checks_closed_receipt_and_independent_inputs() {
 
 #[test]
 fn tagged_operation_observes_host_meter_refusal() {
-    let packet = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-core-evolution/frozen-typescript-0.10.json"));
+    let packet = parse(include_str!("../../../tests/rust-core/fixtures/r5-core-evolution/frozen-typescript-0.10.json"));
     let case = get(get(&packet, "cases").unwrap(), "unchanged").unwrap();
     let wire = request(
         "model/inspectCoreEvolution",

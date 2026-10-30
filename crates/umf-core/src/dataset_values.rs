@@ -1067,7 +1067,7 @@ mod compact_work_ledger_tests {
                 .map(|byte| format!("{byte:02x}"))
                 .collect::<String>()
         };
-        let oracle = read_fixture(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact-default-cutover/current-work-oracle.json"));
+        let oracle = read_fixture(include_str!("../../../tests/rust-core/fixtures/r5-dataset-values-compact-default-cutover/current-work-oracle.json"));
         assert_eq!(
             string(get(&oracle, "format").unwrap()),
             "umf.r8.compact-current-work-oracle/1"
@@ -1132,7 +1132,7 @@ mod compact_work_ledger_tests {
     #[test]
     fn fallible_constraint_observer_refuses_at_the_crossing_charge() {
         let frozen = read_fixture(include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-commerce.json"
+            "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-commerce.json"
         ));
         let source = get(&frozen, "source").unwrap();
         let source_nodes = tree_values(source);
@@ -1165,20 +1165,20 @@ mod compact_work_ledger_tests {
     fn frozen_verify_near_limit_pair_matches_shared_valuework_ledger() {
         for (filename, accepted) in [
             (
-                "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact-verify/frozen-near-limit-accepted.json",
+                "../../../tests/rust-core/fixtures/r5-dataset-values-compact-verify/frozen-near-limit-accepted.json",
                 true,
             ),
             (
-                "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact-verify/frozen-near-limit-first-refused.json",
+                "../../../tests/rust-core/fixtures/r5-dataset-values-compact-verify/frozen-near-limit-first-refused.json",
                 false,
             ),
         ] {
             let frozen_text = match filename {
                 path if path.ends_with("accepted.json") => include_str!(
-                    "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact-verify/frozen-near-limit-accepted.json"
+                    "../../../tests/rust-core/fixtures/r5-dataset-values-compact-verify/frozen-near-limit-accepted.json"
                 ),
                 _ => include_str!(
-                    "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact-verify/frozen-near-limit-first-refused.json"
+                    "../../../tests/rust-core/fixtures/r5-dataset-values-compact-verify/frozen-near-limit-first-refused.json"
                 ),
             };
             let frozen = read_fixture(frozen_text);
@@ -1245,7 +1245,7 @@ mod compact_work_ledger_tests {
     #[test]
     fn verify_carries_one_fail_fast_valuework_budget_through_recompute_and_receipt_compare() {
         let frozen = read_fixture(include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact-verify/frozen-near-limit-accepted.json"
+            "../../../tests/rust-core/fixtures/r5-dataset-values-compact-verify/frozen-near-limit-accepted.json"
         ));
         let mut receipt = get(&frozen, "receipt").unwrap().clone();
         let current = get(&frozen, "current").unwrap().clone();
@@ -1334,10 +1334,10 @@ mod compact_work_ledger_tests {
     #[test]
     fn constraint_observer_is_category_accurate_and_does_not_change_context_charges() {
         let frozen = read_fixture(include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-commerce.json"
+            "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-commerce.json"
         ));
         let source = get(&frozen, "source").unwrap();
-        let oracle = current_work_oracle_case("commerce", include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-commerce.json"));
+        let oracle = current_work_oracle_case("commerce", include_str!("../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-commerce.json"));
         let expected = get(get(&oracle, "contextWork").unwrap(), "categories").unwrap();
         let engine = fixture_engine();
         let mut ordinary_context = Context::ordinary();
@@ -1547,7 +1547,7 @@ mod compact_work_ledger_tests {
     #[test]
     fn frozen_context_copy_count_and_byte_traversal_categories_match_typescript() {
         let frozen = crate::serialization::read_json_value(
-            &include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-commerce.json")
+            &include_str!("../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-commerce.json")
                 .encode_utf16()
                 .collect::<Vec<_>>(),
             crate::serialization::Format::Json,
@@ -1556,7 +1556,7 @@ mod compact_work_ledger_tests {
         .unwrap();
         let source = get(&frozen, "source").unwrap();
         let input = get(&frozen, "input").unwrap();
-        let oracle = current_work_oracle_case("commerce", include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-commerce.json"));
+        let oracle = current_work_oracle_case("commerce", include_str!("../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-commerce.json"));
         let expected_context =
             get(&oracle, "contextWork").expect("current TypeScript context-stage ledger");
         let categories = get(expected_context, "categories").unwrap();

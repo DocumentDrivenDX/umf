@@ -47,7 +47,7 @@ fn engine() -> Engine {
 }
 #[test]
 fn frozen_typescript_vectors_match_rust_operation_and_error_order() {
-    let packet=parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-record-values/frozen-typescript.json"));
+    let packet=parse(include_str!("../../../tests/rust-core/fixtures/r5-record-values/frozen-typescript.json"));
     let Value::Array(cases) = get(&packet, "cases").unwrap() else {
         panic!("cases")
     };

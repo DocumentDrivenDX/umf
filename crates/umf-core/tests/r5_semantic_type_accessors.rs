@@ -9,7 +9,7 @@ use umf_core::{
     Engine, ResourceSet, Utf16, Value,
 };
 
-const PACKET: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-semantic-type-accessors/frozen-typescript.json");
+const PACKET: &str = include_str!("../../../tests/rust-core/fixtures/r5-semantic-type-accessors/frozen-typescript.json");
 
 fn parse(source: &str) -> Value {
     read_json_value(

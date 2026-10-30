@@ -38,7 +38,7 @@ fn json(v: &Value) -> serde_json::Value {
 }
 #[test]
 fn reconciliation_matches_frozen_typescript_reports_and_preserves_sources() {
-    let packet:serde_json::Value=serde_json::from_str(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r8-delta-spark-hash/delta-reconcile-predecessor.json")).unwrap();
+    let packet:serde_json::Value=serde_json::from_str(include_str!("../../../tests/rust-core/fixtures/r8-delta-spark-hash/delta-reconcile-predecessor.json")).unwrap();
     for case in packet["cases"].as_array().unwrap() {
         let mut commits = Vec::new();
         for c in case["commits"].as_array().unwrap() {

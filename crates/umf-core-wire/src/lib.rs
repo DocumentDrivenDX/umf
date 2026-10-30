@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Private `umf.core-wire/1` transport shared by native language bindings.
+#[cfg(feature = "embedded-adapters")]
+pub mod dbt_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod rdf_binding;
 pub mod access_rrf_binding;
 pub mod access_temporal_binding;
 pub mod arrow_ipc_capture_binding {
@@ -885,6 +889,33 @@ fn execute_json_schema_wire_inner(
 /// Exact opt-in capability identity shared by CLI, Node/Bun, WASM and Python.
 pub const ICEBERG_SCHEMA_PROFILE: &str = "umf-r5-iceberg-schema/0.1.0";
 
+#[cfg(feature = "embedded-adapters")]
+fn shared_iceberg_schema_resources(
+    ctx: &mut Context<'_>,
+) -> Result<std::sync::Arc<umf_core::iceberg_schema::IcebergSchemaResources>, EngineError> {
+    use std::sync::{Arc, OnceLock};
+    use umf_core::iceberg_schema::IcebergSchemaResources;
+
+    static RESOURCES: OnceLock<Arc<IcebergSchemaResources>> = OnceLock::new();
+    // A warm immutable resource lookup still participates in this operation's
+    // control budget. The cache never retains callbacks or user input.
+    ctx.charge_work(1, Utf16::default())?;
+    let ordinary = ctx.profile() == umf_core::context::ResourceProfile::Cooperative
+        && ctx.limits() == umf_core::context::Limits::ordinary();
+    if ordinary {
+        if let Some(resources) = RESOURCES.get() {
+            return Ok(Arc::clone(resources));
+        }
+    }
+    // Do not invoke host controls from inside OnceLock initialization: a
+    // callback may reenter the binding while resource construction is active.
+    let resources = Arc::new(IcebergSchemaResources::new(ctx)?);
+    if ordinary {
+        let _ = RESOURCES.set(Arc::clone(&resources));
+    }
+    Ok(resources)
+}
+
 /// Execute the standalone Iceberg 1.11 schema subset through pinned Rust
 /// resources. The tagged wire carries UTF-16 strings and lossless document
 /// values; host bindings never parse the native schema or replacement JSON.
@@ -894,8 +925,9 @@ pub fn execute_iceberg_wire(wire_json: &str) -> String {
     execute_iceberg_wire_with_control(wire_json, &mut no_control)
 }
 
-/// The caller's work hook covers wire admission, resource construction, the
-/// selected operation, and result encoding under one fresh ordinary Context.
+/// The caller's work hook covers wire admission, resource lookup or
+/// construction, the selected operation, and result encoding under one fresh
+/// ordinary Context.
 #[cfg(feature = "embedded-adapters")]
 pub fn execute_iceberg_wire_with_control(
     wire_json: &str,
@@ -904,7 +936,7 @@ pub fn execute_iceberg_wire_with_control(
     let result = (|| {
         use umf_core::iceberg_schema::{
             export_iceberg_schema, get_iceberg_node, import_iceberg_schema, inspect_iceberg,
-            propose_iceberg_node_edit, IcebergSchemaResources,
+            propose_iceberg_node_edit,
         };
 
         let mut ctx = Context::ordinary().with_host_control(control);
@@ -923,7 +955,7 @@ pub fn execute_iceberg_wire_with_control(
         ) {
             return Err(fail("REQUEST", "Unknown Iceberg schema operation"));
         }
-        let resources = IcebergSchemaResources::new(&mut ctx)?;
+        let resources = shared_iceberg_schema_resources(&mut ctx)?;
         let text = |name: &str| {
             field(&request, name)
                 .and_then(as_utf16)
@@ -941,7 +973,7 @@ pub fn execute_iceberg_wire_with_control(
                 Value::String(export_iceberg_schema(document()?, &resources, &mut ctx)?)
             }
             "iceberg.schema.inspect" => {
-                validation_value(inspect_iceberg(document()?, &resources, &mut ctx)?)
+                iceberg_validation_value(inspect_iceberg(document()?, &resources, &mut ctx)?)
             }
             "iceberg.schema.getNode" => {
                 get_iceberg_node(document()?, text("pointer")?, &resources, &mut ctx)?
@@ -957,7 +989,7 @@ pub fn execute_iceberg_wire_with_control(
                 )?;
                 object(vec![
                     ("document", candidate),
-                    ("validation", validation_value(validation)),
+                    ("validation", iceberg_validation_value(validation)),
                 ])
             }
             _ => unreachable!("Iceberg operation was checked above"),
@@ -3322,6 +3354,46 @@ fn validation_value(validation: umf_core::Validation) -> Value {
         ),
     ])
 }
+#[cfg(feature = "embedded-adapters")]
+fn iceberg_validation_value(validation: umf_core::Validation) -> Value {
+    Value::Object(vec![
+        (Utf16::from("valid"), Value::Bool(validation.valid)),
+        (Utf16::from("complete"), Value::Bool(validation.complete)),
+        (
+            Utf16::from("diagnostics"),
+            Value::Array(
+                validation
+                    .diagnostics
+                    .into_iter()
+                    .map(iceberg_diagnostic_value)
+                    .collect(),
+            ),
+        ),
+    ])
+}
+#[cfg(feature = "embedded-adapters")]
+fn iceberg_diagnostic_value(item: Diagnostic) -> Value {
+    // The predecessor writes its initial context warning with severity before
+    // message; other Iceberg diagnostics are created by `add` as message then
+    // severity. Preserve that per-diagnostic source order without affecting
+    // generic diagnostics or unrelated adapters.
+    if item.code != Utf16::from("ICEBERG_CONTEXT_UNVERIFIED") {
+        return diagnostic_value(item);
+    }
+    Value::Object(vec![
+        (Utf16::from("code"), Value::String(item.code)),
+        (Utf16::from("path"), Value::String(item.path)),
+        (
+            Utf16::from("severity"),
+            Value::string_utf8(if item.severity == Severity::Warning {
+                "warning"
+            } else {
+                "error"
+            }),
+        ),
+        (Utf16::from("message"), Value::String(item.message)),
+    ])
+}
 fn diagnostic_value(item: Diagnostic) -> Value {
     Value::Object(vec![
         (Utf16::from("code"), Value::String(item.code)),
@@ -3351,7 +3423,7 @@ mod tests {
     #[test]
     fn opt_in_native_yaml_matches_frozen_typescript_12_trees_and_error_codes() {
         let fixture: serde_json::Value = serde_json::from_str(include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r8-native-yaml/predecessor.json"
+            "../../../tests/rust-core/fixtures/r8-native-yaml/predecessor.json"
         ))
         .unwrap();
         for case in fixture["cases"].as_array().unwrap() {
@@ -3439,7 +3511,7 @@ mod tests {
     #[test]
     fn opt_in_native_yaml_matches_frozen_option_profiles_and_precedence() {
         let fixture: serde_json::Value = serde_json::from_str(include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r8-native-yaml/options-predecessor.json"
+            "../../../tests/rust-core/fixtures/r8-native-yaml/options-predecessor.json"
         )).unwrap();
         for case in fixture["cases"].as_array().unwrap() {
             let id = case["id"].as_str().unwrap();
@@ -3939,7 +4011,7 @@ mod tests {
         let mut catalog = Context::catalog();
         let fixture = parse_wire_source(
             include_str!(
-                "../../../docs/helix/04-build/evidence/rust-migration/r2/baseline-current-conformance.json"
+                "../../../tests/rust-core/fixtures/r2/baseline-current-conformance.json"
             ),
             &mut catalog,
         );

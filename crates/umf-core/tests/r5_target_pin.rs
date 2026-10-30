@@ -75,7 +75,7 @@ fn identity_from_packet(value: &serde_json::Value) -> TargetIdentity {
 
 #[test]
 fn matches_the_thirteen_frozen_python_predecessor_cases_under_current_policy() {
-    const PACKET: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/target-pin-python-predecessor-20261028/packet.json");
+    const PACKET: &str = include_str!("../../../tests/rust-core/fixtures/target-pin-python-predecessor-20261028/packet.json");
     const CASE_NAMES: &[&str] = &[
         "exact-identity",
         "identity-field-kind-differs",

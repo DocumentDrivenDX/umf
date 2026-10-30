@@ -215,11 +215,11 @@ fn verify_frozen_compact_case(frozen: &str, engine: &Engine) {
 fn frozen_compact_verify_near_limit_pair_matches_cumulative_value_work() {
     let engine = engine();
     verify_frozen_compact_case(
-        include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact-verify/frozen-near-limit-accepted.json"),
+        include_str!("../../../tests/rust-core/fixtures/r5-dataset-values-compact-verify/frozen-near-limit-accepted.json"),
         &engine,
     );
     verify_frozen_compact_case(
-        include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact-verify/frozen-near-limit-first-refused.json"),
+        include_str!("../../../tests/rust-core/fixtures/r5-dataset-values-compact-verify/frozen-near-limit-first-refused.json"),
         &engine,
     );
 }
@@ -229,7 +229,7 @@ fn frozen_compact_dataset_envelopes_match_live_typescript() {
     let engine = engine();
     let (commerce_case, commerce, commerce_source) = run(
         include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-commerce.json"
+            "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-commerce.json"
         ),
         &engine,
     );
@@ -251,79 +251,79 @@ fn frozen_compact_dataset_envelopes_match_live_typescript() {
     }
     run(
         include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-supply-chain.json"
+            "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-supply-chain.json"
         ),
         &engine,
     );
     run(
         include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-archaeology.json"
+            "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-archaeology.json"
         ),
         &engine,
     );
     run(
         include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-ecology.json"
+            "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-ecology.json"
         ),
         &engine,
     );
     run(
         include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-unknown-and-residual.json"
+            "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-unknown-and-residual.json"
         ),
         &engine,
     );
     run(
         include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-absent-state.json"
+            "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-absent-state.json"
         ),
         &engine,
     );
     run(
         include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-parallel-links.json"
+            "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-parallel-links.json"
         ),
         &engine,
     );
     run(
         include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-duplicate-key.json"
+            "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-duplicate-key.json"
         ),
         &engine,
     );
     run(
         include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-missing-links.json"
+            "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-missing-links.json"
         ),
         &engine,
     );
     run(
         include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-duplicate-locator.json"
+            "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-duplicate-locator.json"
         ),
         &engine,
     );
     run(
         include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-structural-limit.json"
+            "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-structural-limit.json"
         ),
         &engine,
     );
     run(
         include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-work-limit.json"
+            "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-work-limit.json"
         ),
         &engine,
     );
     run(
         include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-present-null.json"
+            "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-present-null.json"
         ),
         &engine,
     );
     run(
         include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-exact-decimal-token.json"
+            "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-exact-decimal-token.json"
         ),
         &engine,
     );
@@ -343,7 +343,7 @@ fn frozen_compact_dataset_envelopes_match_live_typescript() {
     assert_eq!(diff(&verified, &commerce, ""), None);
 
     let forged = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-forged-receipt.json"
+        "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-forged-receipt.json"
     ));
     let error = umf_core::dataset_values::verify_core_dataset_values_compact(
         get(&forged, "receipt").unwrap(),
@@ -376,7 +376,7 @@ fn frozen_compact_dataset_envelopes_match_live_typescript() {
 fn compact_record_fragment_member_order_matches_public_typescript() {
     let engine = engine();
     let (case, actual, _) = run(
-        include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact-default-cutover/frozen-commerce.json"),
+        include_str!("../../../tests/rust-core/fixtures/r5-dataset-values-compact-default-cutover/frozen-commerce.json"),
         &engine,
     );
     let expected = get(&case, "result").unwrap();
@@ -421,9 +421,9 @@ fn frozen_source_input_refusal_precedence_matches_typescript() {
         ),
     ] {
         let source = match name {
-            "frozen-invalid-source-only.json" => include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact-default-cutover/frozen-invalid-source-only.json"),
-            "frozen-invalid-input-only.json" => include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact-default-cutover/frozen-invalid-input-only.json"),
-            _ => include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact-default-cutover/frozen-crossed-invalid-source-input.json"),
+            "frozen-invalid-source-only.json" => include_str!("../../../tests/rust-core/fixtures/r5-dataset-values-compact-default-cutover/frozen-invalid-source-only.json"),
+            "frozen-invalid-input-only.json" => include_str!("../../../tests/rust-core/fixtures/r5-dataset-values-compact-default-cutover/frozen-invalid-input-only.json"),
+            _ => include_str!("../../../tests/rust-core/fixtures/r5-dataset-values-compact-default-cutover/frozen-crossed-invalid-source-input.json"),
         };
         let case = parse(source);
         let error = umf_core::dataset_values::validate_core_dataset_values_compact(
@@ -454,7 +454,7 @@ fn frozen_source_input_refusal_precedence_matches_typescript() {
 #[test]
 fn staged_compact_verification_receipt_prefix_matches_full_verifier() {
     let engine = engine();
-    let case = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact-default-cutover/frozen-commerce.json"));
+    let case = parse(include_str!("../../../tests/rust-core/fixtures/r5-dataset-values-compact-default-cutover/frozen-commerce.json"));
     let receipt = get(&case, "result").unwrap();
     let current = get(&case, "source").unwrap();
     let expected_input = get(&case, "input").unwrap();
@@ -489,7 +489,7 @@ fn staged_compact_verification_receipt_prefix_matches_full_verifier() {
 #[test]
 fn compact_verify_copies_expected_input_before_stale_current_refusal() {
     let engine = engine();
-    let case = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact-default-cutover/frozen-commerce.json"));
+    let case = parse(include_str!("../../../tests/rust-core/fixtures/r5-dataset-values-compact-default-cutover/frozen-commerce.json"));
     let receipt = get(&case, "result").unwrap();
     let stale_current = Value::Object(Vec::new());
     let expected_input = Value::Object(vec![(
@@ -521,7 +521,7 @@ fn compact_verify_copies_expected_input_before_stale_current_refusal() {
 #[test]
 fn compact_verify_recomputes_from_canonically_equal_host_order() {
     let engine = engine();
-    let case = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact-default-cutover/frozen-commerce.json"));
+    let case = parse(include_str!("../../../tests/rust-core/fixtures/r5-dataset-values-compact-default-cutover/frozen-commerce.json"));
     let receipt = get(&case, "result").unwrap();
     let mut current = get(&case, "source").unwrap().clone();
     let mut expected_input = get(&case, "input").unwrap().clone();
@@ -554,10 +554,10 @@ fn compact_verify_recomputes_from_canonically_equal_host_order() {
 #[test]
 fn frozen_typescript_near_threshold_controls_are_adjacent_and_source_bound() {
     let accepted = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-near-threshold-accepted.json"
+        "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-near-threshold-accepted.json"
     ));
     let refused = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-near-threshold-first-refused.json"
+        "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-near-threshold-first-refused.json"
     ));
     let accepted_count = match get(get(&accepted, "input").unwrap(), "records").unwrap() {
         Value::Array(records) => records.len(),
@@ -587,12 +587,12 @@ fn production_compact_work_ledger_matches_near_threshold_admission() {
     let engine = engine();
     run(
         include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-near-threshold-accepted.json"
+            "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-near-threshold-accepted.json"
         ),
         &engine,
     );
     let refused = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-near-threshold-first-refused.json"
+        "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-near-threshold-first-refused.json"
     ));
     let outcome = umf_core::dataset_values::validate_core_dataset_values_compact(
         get(&refused, "source").unwrap(),
@@ -647,7 +647,7 @@ fn direct_compact_api_bounds_caller_owned_tree_depth_without_recursing() {
     }
 
     let case = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-commerce.json"
+        "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-commerce.json"
     ));
     let source = get(&case, "source").unwrap();
     let input = get(&case, "input").unwrap();

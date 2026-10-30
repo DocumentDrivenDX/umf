@@ -9,7 +9,7 @@ import {chromium} from 'playwright';
 
 const root = resolve(import.meta.dirname, '../../../..');
 const packageRoot = resolve(process.argv[2] ?? '/private/tmp/umf-arrow-ipc-wasm-pkg');
-const packetPath = resolve(root, 'docs/helix/04-build/evidence/rust-migration/r5-arrow-ipc-capture-predecessor-20261027/typescript-arrow-ipc-capture.json.gz');
+const packetPath = resolve(root, 'tests/rust-core/fixtures/r5-arrow-ipc-capture-predecessor-20261027/typescript-arrow-ipc-capture.json.gz');
 const packetBytes = await readFile(packetPath);
 const packet = JSON.parse(gunzipSync(packetBytes));
 const wasmGlue = await readFile(resolve(packageRoot, 'umf_core_wasm.js'));

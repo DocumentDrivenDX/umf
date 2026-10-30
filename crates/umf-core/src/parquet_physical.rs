@@ -640,9 +640,14 @@ mod tests {
             json!([{"type":"FLOAT","hex":"0000c07f"}])
         );
         let mut ctx = Context::ordinary();
-        let values =
-            decode_parquet_plain(&[0x02, 0x00, 0xff, 0x00], "BYTE_ARRAY", 1, None, &mut ctx)
-                .unwrap();
+        let values = decode_parquet_plain(
+            &[0x02, 0x00, 0x00, 0x00, 0x00, 0xff],
+            "BYTE_ARRAY",
+            1,
+            None,
+            &mut ctx,
+        )
+        .unwrap();
         assert_eq!(
             json(&Value::Array(values)),
             json!([{"type":"BYTE_ARRAY","hex":"00ff"}])

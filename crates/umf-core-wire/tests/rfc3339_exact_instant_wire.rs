@@ -55,7 +55,7 @@ fn read_value(source: &str) -> Value {
 
 #[test]
 fn all_frozen_bun_predecessor_vectors_replay_at_tagged_boundary() {
-    let packet = read_value(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-rfc3339-exact-instant-wire/predecessor.json"));
+    let packet = read_value(include_str!("../../../tests/rust-core/fixtures/r5-rfc3339-exact-instant-wire/predecessor.json"));
     let Value::Array(cases) = field(&packet, "cases").unwrap() else {
         panic!("cases")
     };

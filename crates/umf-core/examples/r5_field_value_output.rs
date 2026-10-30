@@ -48,7 +48,7 @@ fn main() {
         &mut Context::ordinary(),
     )
     .expect("engine");
-    let fixture = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-field-value/frozen-typescript.json"));
+    let fixture = parse(include_str!("../../../tests/rust-core/fixtures/r5-field-value/frozen-typescript.json"));
     let mut outputs = Vec::new();
     let Value::Array(cases) = get(&fixture, "cases") else {
         panic!("cases")

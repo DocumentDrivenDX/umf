@@ -90,21 +90,6 @@ jobs:
           EVIDENCE="$EVIDENCE_DIR"
           DEADLINE_MS="$(cat "$EVIDENCE/monotonic-deadline-ms")"
           : > "$EVIDENCE/command-records.jsonl"
-          cat > "$RUNNER_TEMP/core-python314-r3-inventory-diagnostic.py" <<'PY'
-          import faulthandler
-          import runpy
-          import sys
-          from pathlib import Path
-
-          script = "scripts/rust-inventory.py"
-          faulthandler.dump_traceback_later(90, repeat=False, file=sys.stderr, exit=False)
-          try:
-              sys.argv[:] = [script]
-              sys.path[0] = str(Path(script).resolve().parent)
-              runpy.run_path(script, run_name="__main__")
-          finally:
-              faulthandler.cancel_dump_traceback_later()
-          PY
           cat > "$RUNNER_TEMP/core-python314-work.sh" <<'WORK'
           set -euo pipefail
           EVIDENCE="$EVIDENCE_DIR"
@@ -506,12 +491,7 @@ jobs:
           run_bounded check-metamodel-self-and-root 180 bun run check:metamodel
           run_bounded regenerate-action-plan-identity 180 bash -euo pipefail -c 'bun scripts/actions-plan-identity.ts && bun scripts/actions-plan-identity.ts --check'
           run_bounded regenerate-codegen-and-check 180 bash -euo pipefail -c 'bun scripts/build-codegen.ts && bun scripts/build-codegen.ts --check'
-          run_bounded regenerate-r3-inventory-and-boundaries 180 bash -euo pipefail -c 'echo "R3_DIAGNOSTIC inventory:start" >&2
-          python "$RUNNER_TEMP/core-python314-r3-inventory-diagnostic.py"
-          echo "R3_DIAGNOSTIC inventory:passed" >&2
-          echo "R3_DIAGNOSTIC boundaries:start" >&2
-          bun run check:rust-boundaries
-          echo "R3_DIAGNOSTIC boundaries:passed" >&2'
+          run_bounded check-rust-boundaries 180 bun run check:rust-boundaries
           fi
 
           run_bounded prepare-output-archive 180 python -I - "$RUNNER_TEMP/core-python314-success" "$EVIDENCE" "$RUNNER_TEMP/core-python314-metamodel-stage" <<'PY'
@@ -528,7 +508,7 @@ jobs:
           if phase=="regex-artifacts": paths=regex_paths
           elif phase=="metamodel-artifacts": paths=metamodel_paths
           elif phase=="dependent-artifacts":
-              paths=["src/extensions/actions/plan-identity.ts","docs/helix/04-build/evidence/rust-migration/r3/inventory.json"]
+              paths=["src/extensions/actions/plan-identity.ts"]
               assets_root=root/"python/umf_codegen/src/umf_codegen/_assets"
               if assets_root.is_symlink() or not assets_root.is_dir(): raise SystemExit("Codegen asset root is missing or unsafe")
               codegen_manifest=assets_root/"manifest.json"
@@ -682,7 +662,7 @@ jobs:
                       row=command_rows[-1]; keys=("name","stage","argv","rawExit","captureExit","monotonicStartMs","monotonicEndMs","monotonicDurationMs","startedAtUtc","endedAtUtc","limitSeconds","logBytes","logSha256","truncated")
                       if isinstance(row,dict): last_command={key:row[key] for key in keys if key in row}; last_command_row=row
               except (OSError,UnicodeDecodeError,json.JSONDecodeError): last_command=None; last_command_row=None; command_rows=[]
-          fixed_command_names={"fetch-pinned-main-preimage","source-preflight","install-locked-bun-dependencies","fetch-locked-cargo-dependencies","download-cpython314","inspect-extract-cpython314","verify-cpython314-runtime","generate-regex-table-profile","generate-independent-boundaries-314","generate-independent-hex-314","generate-independent-info-314","generate-metamodel-11-outputs","check-metamodel-self-and-root","regenerate-action-plan-identity","regenerate-codegen-and-check","regenerate-r3-inventory-and-boundaries","prepare-output-archive"}
+          fixed_command_names={"fetch-pinned-main-preimage","source-preflight","install-locked-bun-dependencies","fetch-locked-cargo-dependencies","download-cpython314","inspect-extract-cpython314","verify-cpython314-runtime","generate-regex-table-profile","generate-independent-boundaries-314","generate-independent-hex-314","generate-independent-info-314","generate-metamodel-11-outputs","check-metamodel-self-and-root","regenerate-action-plan-identity","regenerate-codegen-and-check","check-rust-boundaries","prepare-output-archive"}
           predecessor_summary={"status":"UNAVAILABLE","reason":"COMMAND_RECORDS_UNAVAILABLE","commands":[]}
           if command_rows:
               if len(command_rows)>32:
@@ -787,7 +767,7 @@ jobs:
                   for chunk in iter(lambda:stream.read(65536),b""): digest.update(chunk)
               return digest.hexdigest()
           def retain_selected_failure():
-              allowed_names={"generate-regex-table-profile","generate-independent-boundaries-314","generate-independent-hex-314","generate-independent-info-314","generate-metamodel-11-outputs","check-metamodel-self-and-root","regenerate-action-plan-identity","regenerate-codegen-and-check","regenerate-r3-inventory-and-boundaries"}
+              allowed_names={"generate-regex-table-profile","generate-independent-boundaries-314","generate-independent-hex-314","generate-independent-info-314","generate-metamodel-11-outputs","check-metamodel-self-and-root","regenerate-action-plan-identity","regenerate-codegen-and-check","check-rust-boundaries"}
               if not isinstance(last_command_row,dict): return not_retained("COMMAND_RECORD_UNAVAILABLE")
               row=last_command_row; name=row.get("name")
               if not isinstance(name,str) or name not in allowed_names: return not_retained("COMMAND_NOT_ALLOWLISTED")
@@ -800,7 +780,7 @@ jobs:
                   "generate-independent-info-314":["env","LD_LIBRARY_PATH=/opt/hostedtoolcache/Python/3.14.8/x64/lib","python","-I","crates/umf-core/tools/generate_independent_python_re_info.py","--python314","/opt/hostedtoolcache/Python/3.14.8/x64/bin/python3.14"],
                   "regenerate-action-plan-identity":["bash","-euo","pipefail","-c","bun scripts/actions-plan-identity.ts && bun scripts/actions-plan-identity.ts --check"],
                   "regenerate-codegen-and-check":["bash","-euo","pipefail","-c","bun scripts/build-codegen.ts && bun scripts/build-codegen.ts --check"],
-                  "regenerate-r3-inventory-and-boundaries":["bash","-euo","pipefail","-c","echo \"R3_DIAGNOSTIC inventory:start\" >&2\npython \"$RUNNER_TEMP/core-python314-r3-inventory-diagnostic.py\"\necho \"R3_DIAGNOSTIC inventory:passed\" >&2\necho \"R3_DIAGNOSTIC boundaries:start\" >&2\nbun run check:rust-boundaries\necho \"R3_DIAGNOSTIC boundaries:passed\" >&2"],
+                  "check-rust-boundaries":["bun","run","check:rust-boundaries"],
               }
               if name not in fixed_argv or row.get("stage")!=name or row.get("argv")!=fixed_argv[name]: return not_retained("COMMAND_ARGUMENTS_NOT_RECOGNIZED")
               expected_keys={"name","stage","argv","rawExit","captureExit","monotonicStartMs","monotonicEndMs","monotonicDurationMs","startedAtUtc","endedAtUtc","limitSeconds","logBytes","logSha256","truncated"}

@@ -78,9 +78,36 @@ impl Capabilities for NoCallbacks {
     }
 }
 
-fn runtime(
+struct Runtime {
+    engine: Engine,
+    registry: Registry,
+    result_schema: CompiledSchema,
+    request_schema: CompiledSchema,
+}
+
+fn runtime(ctx: &mut Context<'_>) -> Result<std::sync::Arc<Runtime>, EngineError> {
+    use std::sync::{Arc, OnceLock};
+    static RESOURCES: OnceLock<Arc<Runtime>> = OnceLock::new();
+    ctx.charge_work(1, k(""))?;
+    let ordinary = ctx.profile() == crate::context::ResourceProfile::Cooperative
+        && ctx.limits() == crate::context::Limits::ordinary();
+    if ordinary {
+        if let Some(resources) = RESOURCES.get() {
+            return Ok(Arc::clone(resources));
+        }
+    }
+    // Build under the caller's controls and outside OnceLock initialization:
+    // validation may invoke host callbacks, and failed builds are never cached.
+    let resources = Arc::new(build_runtime(ctx)?);
+    if ordinary {
+        let _ = RESOURCES.set(Arc::clone(&resources));
+    }
+    Ok(resources)
+}
+
+fn build_runtime(
     ctx: &mut Context<'_>,
-) -> Result<(Engine, Registry, CompiledSchema, CompiledSchema), EngineError> {
+) -> Result<Runtime, EngineError> {
     let engine = Engine::new(
         ResourceSet::new(
             parse_json(CORE_SCHEMA, ctx)?,
@@ -138,7 +165,7 @@ fn runtime(
         ctx,
     )?;
     let request = CompiledSchema::compile(&request_schema_value, &resources, ctx)?;
-    Ok((engine, registry, full, request))
+    Ok(Runtime { engine, registry, result_schema: full, request_schema: request })
 }
 
 fn validate_document(
@@ -324,15 +351,15 @@ pub fn classify_avro_record(
 ) -> Result<Value, EngineError> {
     let source = copy_json(source, ctx)?;
     let request = copy_json(request, ctx)?;
-    let (engine, registry, result_schema, request_schema) = runtime(ctx)?;
-    if let Some(first) = request_schema.validate(&request, ctx)?.first() {
+    let runtime = runtime(ctx)?;
+    if let Some(first) = runtime.request_schema.validate(&request, ctx)?.first() {
         return Err(err(
             "AVRO_RECORD_REQUEST",
             &first.instance_path.to_utf8().unwrap_or_default(),
             first.message.to_utf8().unwrap_or_default(),
         ));
     }
-    validate_document(&source, &engine, &registry, ctx)?;
+    validate_document(&source, &runtime.engine, &runtime.registry, ctx)?;
     let native_source = string(get(&request, "nativeSource").unwrap()).unwrap();
     let bundle = avro_document::export_bundle(&source, ctx)?;
     let root = NativeJsonTree::parse_json(native_source.units(), ctx)?;
@@ -437,8 +464,8 @@ pub fn classify_avro_record(
             let valid = core_kind::verify_core_kind_declaration(
                 author,
                 &source,
-                &engine,
-                &registry,
+                &runtime.engine,
+                &runtime.registry,
                 &mut callbacks,
                 ctx,
             );
@@ -560,7 +587,7 @@ pub fn classify_avro_record(
             request,
             mappings,
             reasons,
-            &result_schema,
+            &runtime.result_schema,
             ctx,
         );
     }
@@ -586,9 +613,9 @@ pub fn classify_avro_record(
         set_kind(&mut target, mi, ei, "field", ctx)?;
     }
     append_record_module(&mut target, &request, declaration, field_ref_values, ctx)?;
-    validate_document(&target, &engine, &registry, ctx)?;
+    validate_document(&target, &runtime.engine, &runtime.registry, ctx)?;
     let output = obj(vec![("operation", t("classify-avro-record")), ("version", t("1.0.0")), ("status", t("classified")), ("source", source), ("target", target), ("request", request), ("binding", obj(vec![("id", t("umf.avro.record")), ("version", t("1.0.0")), ("nativeVersion", t("1.12.0")), ("subset", t("Declared record/error with ordered fields and dependency-qualified identity; no value-domain or logical-type equivalence"))])), ("mappings", Value::Array(mappings)), ("residuals", Value::Array(Vec::new())), ("diagnostics", Value::Array(Vec::new()))]);
-    let errors = result_schema.validate(&output, ctx)?;
+    let errors = runtime.result_schema.validate(&output, ctx)?;
     if let Some(first) = errors.first() {
         return Err(err(
             "AVRO_RECORD_RESULT",
@@ -734,7 +761,7 @@ mod tests {
         let schema = r#"{"type":"record","name":"R","namespace":"sales","fields":[{"name":"id","type":"long"},{"name":"nested","type":{"type":"record","name":"N","fields":[{"name":"x","type":"string"}]}}]}"#;
         let source = source(schema);
         let field_id = k(r#"[null,"/fields/1"]"#);
-        let (engine, registry, _, _) = runtime(&mut Context::ordinary()).unwrap();
+        let runtime = runtime(&mut Context::ordinary()).unwrap();
         let mut callbacks = NoCallbacks;
         let author = core_kind::declare_core_kind(
             &source,
@@ -743,8 +770,8 @@ mod tests {
                 element: field_id,
             },
             "record",
-            &engine,
-            &registry,
+            &runtime.engine,
+            &runtime.registry,
             &mut callbacks,
             &mut Context::ordinary(),
         )

@@ -124,7 +124,7 @@ mod tests {
     #[test]
     fn tagged_wire_replays_every_frozen_source_case_exactly() {
         let packet = parse(include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r8-security-protection-resolution/predecessor.json"
+            "../../../tests/rust-core/fixtures/r8-security-protection-resolution/predecessor.json"
         ));
         let Value::Array(cases) = member(&packet, "cases").unwrap() else {
             panic!("cases")

@@ -7,7 +7,7 @@ use umf_core_wire::{
     decode, encode, execute_core_bit128_field_request_with_control, transport_context,
 };
 
-const FROZEN: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r8-bit128-field-candidate-20261028/frozen-typescript.json");
+const FROZEN: &str = include_str!("../../../tests/rust-core/fixtures/r8-bit128-field-candidate-20261028/frozen-typescript.json");
 
 struct NoCapabilities;
 impl Capabilities for NoCapabilities {

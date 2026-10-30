@@ -1040,6 +1040,90 @@ fn execute_avro_cardinality_wire(
 }
 
 #[pyfunction]
+fn dbt_profile_version() -> &'static str {
+    umf_core_wire::dbt_binding::PROFILE
+}
+#[pyfunction]
+#[pyo3(signature = (wire_json, control=None))]
+fn execute_dbt_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let Some(control) = control else {
+        return Ok(umf_core_wire::dbt_binding::execute_wire(wire_json));
+    };
+    let mut hook = |amount: usize| {
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        Err(EngineError::new(
+            code,
+            Utf16::from(path),
+            Utf16::from(message),
+        ))
+    };
+    Ok(umf_core_wire::dbt_binding::execute_wire_with_control(
+        wire_json, &mut hook,
+    ))
+}
+
+#[pyfunction]
+fn rdf_profile_version() -> &'static str {
+    umf_core_wire::rdf_binding::PROFILE
+}
+#[pyfunction]
+#[pyo3(signature = (wire_json, control=None))]
+fn execute_rdf_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let Some(control) = control else {
+        return Ok(umf_core_wire::rdf_binding::execute_wire(wire_json));
+    };
+    let mut hook = |amount: usize| {
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        Err(EngineError::new(
+            code,
+            Utf16::from(path),
+            Utf16::from(message),
+        ))
+    };
+    Ok(umf_core_wire::rdf_binding::execute_wire_with_control(
+        wire_json, &mut hook,
+    ))
+}
+
+#[pyfunction]
 fn avro_candidate_profile_version() -> &'static str {
     umf_core_wire::AVRO_CANDIDATE_PROFILE
 }
@@ -6129,8 +6213,15 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
         execute_avro_document_inspect_wire,
         module
     )?)?;
-    module.add_function(wrap_pyfunction!(avro_cardinality_binding_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        avro_cardinality_binding_profile_version,
+        module
+    )?)?;
     module.add_function(wrap_pyfunction!(execute_avro_cardinality_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(dbt_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_dbt_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(rdf_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_rdf_wire, module)?)?;
     module.add_function(wrap_pyfunction!(avro_candidate_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_avro_candidate_wire, module)?)?;
     module.add_function(wrap_pyfunction!(execute_protobuf_inspect_wire, module)?)?;

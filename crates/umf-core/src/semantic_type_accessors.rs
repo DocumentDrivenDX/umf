@@ -7,8 +7,8 @@ use crate::{
     engine::{Capabilities, CapabilityError, Engine, SemanticContext},
     error::{Diagnostic, EngineError, Severity},
     registry::Registry,
-    serialization::{Format, read_json_value, stringify_compact_metered},
-    value::{Utf16, Value, copy_json},
+    serialization::{read_json_value, stringify_compact_metered, Format},
+    value::{copy_json, Utf16, Value},
 };
 
 const EXTENSION_ID: &str = "umf.semantic-types";
@@ -48,6 +48,9 @@ fn charge_fields(value: &Value, ctx: &mut Context<'_>) -> Result<(), EngineError
 }
 fn err(code: &str, message: impl Into<Utf16>) -> EngineError {
     EngineError::new(code, Utf16::default(), message)
+}
+fn type_error(message: &str) -> EngineError {
+    err("TYPE_ERROR", message)
 }
 fn property_mut_or_insert<'a>(value: &'a mut Value, name: &str) -> Option<&'a mut Value> {
     let Value::Object(fields) = value else {
@@ -358,10 +361,9 @@ fn locate_element_mut<'a>(
     Ok(None)
 }
 
-fn locate_element<'a>(
+fn locate_module<'a>(
     source: &'a Value,
     module_id: &Utf16,
-    element_id: &Utf16,
     ctx: &mut Context<'_>,
 ) -> Result<Option<&'a Value>, EngineError> {
     charge_fields(source, ctx)?;
@@ -384,9 +386,14 @@ fn locate_element<'a>(
             }
         }
     }
-    let Some(module) = found_module else {
-        return Ok(None);
-    };
+    Ok(found_module)
+}
+
+fn locate_element_in_module<'a>(
+    module: &'a Value,
+    element_id: &Utf16,
+    ctx: &mut Context<'_>,
+) -> Result<Option<&'a Value>, EngineError> {
     let Some(elements_value) = get(module, "elements") else {
         return Ok(None);
     };
@@ -435,21 +442,59 @@ pub fn get_semantic_types_units(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let source = copy_json(document, ctx)?;
+    get_semantic_types_copied_with_identity(
+        source,
+        engine,
+        ctx,
+        |_| Ok(Some(module.clone())),
+        |_| Ok(Some(element.clone())),
+    )
+}
+
+/// Get the retained extension annotation from a document already copied at
+/// the host boundary. `resolve_identity` runs after profile and document
+/// validation, matching the TypeScript predecessor's argument-observation
+/// order. Non-string identifiers are represented as `None` and never coerced.
+pub fn get_semantic_types_copied_with_identity<F, G>(
+    source: Value,
+    engine: &Engine,
+    ctx: &mut Context<'_>,
+    resolve_module: F,
+    resolve_element: G,
+) -> Result<Value, EngineError>
+where
+    F: FnOnce(&mut Context<'_>) -> Result<Option<Utf16>, EngineError>,
+    G: FnOnce(&mut Context<'_>) -> Result<Option<Utf16>, EngineError>,
+{
     require_profile(&source, "Expected umf.semantic-types 0.1.0", ctx)?;
     let validation = validate(&source, engine, ctx)?;
     if !validation.valid {
         return Err(document_error(&validation, ctx)?);
     }
-    ctx.charge_work(module.len().saturating_add(element.len()), Utf16::default())?;
-    let Some(payload) = locate_element(&source, module, element, ctx)?
+    let Some(module) = resolve_module(ctx)? else {
+        return Err(missing_annotation_error());
+    };
+    ctx.charge_work(module.len(), Utf16::default())?;
+    let Some(module_value) = locate_module(&source, &module, ctx)? else {
+        return Err(missing_annotation_error());
+    };
+    let Some(element) = resolve_element(ctx)? else {
+        return Err(missing_annotation_error());
+    };
+    ctx.charge_work(element.len(), Utf16::default())?;
+    let Some(payload) = locate_element_in_module(module_value, &element, ctx)?
         .and_then(|element| get(get(element, "extensions")?, EXTENSION_ID))
     else {
-        return Err(err(
-            "SEMANTIC_TYPE_PROFILE",
-            "Missing semantic type annotation at requested element",
-        ));
+        return Err(missing_annotation_error());
     };
     copy_json(payload, ctx)
+}
+
+fn missing_annotation_error() -> EngineError {
+    err(
+        "SEMANTIC_TYPE_PROFILE",
+        "Missing semantic type annotation at requested element",
+    )
 }
 
 /// Copy-on-write authoring of the prototype annotation, preserving unrelated
@@ -496,7 +541,11 @@ pub fn set_semantic_types_units_optional(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     set_semantic_types_units_optional_with_annotation(
-        document, module, element, engine, ctx,
+        document,
+        module,
+        element,
+        engine,
+        ctx,
         |ctx| annotation.map(|value| copy_json(value, ctx)).transpose(),
     )
 }
@@ -514,15 +563,52 @@ pub fn set_semantic_types_units_optional_with_annotation<F>(
 where
     F: FnOnce(&mut Context<'_>) -> Result<Option<Value>, EngineError>,
 {
-    let mut candidate = copy_json(document, ctx)?;
-    charge_fields(&candidate, ctx)?;
-    if let Some(vocabularies) = get(&candidate, "vocabularies") {
-        charge_fields(vocabularies, ctx)?;
+    let candidate = copy_json(document, ctx)?;
+    set_semantic_types_copied_with_identity_and_annotation(
+        candidate,
+        engine,
+        ctx,
+        |_| Ok(Some(module.clone())),
+        |_| Ok(Some(element.clone())),
+        |ctx| match admit_annotation(ctx)? {
+            Some(value) => Ok(value),
+            None => Err(err("NON_JSON", "Value is not JSON-compatible")),
+        },
+    )
+}
+
+/// Set the retained extension annotation on a document already copied at the
+/// host boundary. Identity resolution is deferred until after profile
+/// precedence; annotation admission is deferred until after target lookup.
+pub fn set_semantic_types_copied_with_identity_and_annotation<F, G, A>(
+    mut candidate: Value,
+    engine: &Engine,
+    ctx: &mut Context<'_>,
+    resolve_module: F,
+    resolve_element: G,
+    admit_annotation: A,
+) -> Result<Value, EngineError>
+where
+    F: FnOnce(&mut Context<'_>) -> Result<Option<Utf16>, EngineError>,
+    G: FnOnce(&mut Context<'_>) -> Result<Option<Utf16>, EngineError>,
+    A: FnOnce(&mut Context<'_>) -> Result<Value, EngineError>,
+{
+    if !matches!(&candidate, Value::Object(_)) {
+        return Err(type_error(
+            "Cannot read semantic type profile from a non-object document",
+        ));
     }
-    let existing = get(
-        get(&candidate, "vocabularies").unwrap_or(&Value::Null),
-        EXTENSION_ID,
-    );
+    charge_fields(&candidate, ctx)?;
+    let vocabularies = get(&candidate, "vocabularies").ok_or_else(|| {
+        type_error("Cannot read semantic type profile from undefined vocabularies")
+    })?;
+    if matches!(vocabularies, Value::Null) {
+        return Err(type_error(
+            "Cannot read semantic type profile from null vocabularies",
+        ));
+    }
+    charge_fields(vocabularies, ctx)?;
+    let existing = get(vocabularies, EXTENSION_ID);
     if existing.is_some()
         && text(get(existing.unwrap(), "version")).as_ref() != Some(&key(PROFILE_VERSION))
     {
@@ -531,16 +617,22 @@ where
             "Cannot overwrite a different semantic type profile",
         ));
     }
-    ctx.charge_work(module.len().saturating_add(element.len()), Utf16::default())?;
-    if locate_element(&candidate, module, element, ctx)?.is_none() {
+    let Some(module) = resolve_module(ctx)? else {
+        return Err(err("SEMANTIC_TYPE_PROFILE", "Missing requested element"));
+    };
+    ctx.charge_work(module.len(), Utf16::default())?;
+    let Some(module_value) = locate_set_module(&candidate, &module, ctx)? else {
+        return Err(err("SEMANTIC_TYPE_PROFILE", "Missing requested element"));
+    };
+    let Some(element) = resolve_element(ctx)? else {
+        return Err(err("SEMANTIC_TYPE_PROFILE", "Missing requested element"));
+    };
+    ctx.charge_work(element.len(), Utf16::default())?;
+    if !set_element_exists(module_value, &element, ctx)? {
         return Err(err("SEMANTIC_TYPE_PROFILE", "Missing requested element"));
     }
-    let vocabularies = property_mut_or_insert(&mut candidate, "vocabularies").ok_or_else(|| {
-        err(
-            "SEMANTIC_TYPE_PROFILE",
-            "Expected semantic type profile map",
-        )
-    })?;
+    let vocabularies = property_mut_or_insert(&mut candidate, "vocabularies")
+        .ok_or_else(|| type_error("Cannot assign the semantic type profile on vocabularies"))?;
     if get(vocabularies, EXTENSION_ID).is_none() {
         set_member(
             vocabularies,
@@ -548,19 +640,77 @@ where
             Value::Object(vec![(key("version"), Value::string_utf8(PROFILE_VERSION))]),
         );
     }
-    let annotation = match admit_annotation(ctx)? {
-        Some(annotation) => annotation,
-        None => return Err(err("NON_JSON", "Value is not JSON-compatible")),
-    };
-    let Some(target) = locate_element_mut(&mut candidate, module, element, ctx)? else {
+    let annotation = admit_annotation(ctx)?;
+    let Some(target) = locate_element_mut(&mut candidate, &module, &element, ctx)? else {
         return Err(err("SEMANTIC_TYPE_PROFILE", "Missing requested element"));
     };
     let extension_map = property_mut_or_insert(target, "extensions")
         .ok_or_else(|| err("SEMANTIC_TYPE_PROFILE", "Missing requested element"))?;
     set_member(extension_map, EXTENSION_ID, annotation);
     // Match TS ordering: write the profile and payload before getter validation.
-    get_semantic_types_units(&candidate, module, element, engine, ctx)?;
+    let read_candidate = copy_json(&candidate, ctx)?;
+    get_semantic_types_copied_with_identity(
+        read_candidate,
+        engine,
+        ctx,
+        |_| Ok(Some(module)),
+        |_| Ok(Some(element)),
+    )?;
     Ok(candidate)
+}
+
+/// Match the predecessor's direct `.modules.find(... )?.elements.find(...)`
+/// checkpoint for setters. Unlike getter access, this path intentionally does
+/// not validate the document first, so malformed nullish/non-array containers
+/// produce native TypeError semantics before annotation admission.
+fn locate_set_module<'a>(
+    candidate: &'a Value,
+    module_id: &Utf16,
+    ctx: &mut Context<'_>,
+) -> Result<Option<&'a Value>, EngineError> {
+    let modules_value = get(candidate, "modules")
+        .ok_or_else(|| type_error("Cannot read property 'find' of undefined modules"))?;
+    let Value::Array(modules) = modules_value else {
+        return Err(type_error("candidate.modules.find is not a function"));
+    };
+    for module in modules {
+        ctx.charge_work(1, Utf16::default())?;
+        if matches!(module, Value::Null) {
+            return Err(type_error("Cannot read property 'id' of null module"));
+        }
+        if let Some(Value::String(id)) = get(module, "id") {
+            ctx.charge_work(id.len(), Utf16::default())?;
+            if id == module_id {
+                return Ok(Some(module));
+            }
+        }
+    }
+    Ok(None)
+}
+
+fn set_element_exists(
+    module: &Value,
+    element_id: &Utf16,
+    ctx: &mut Context<'_>,
+) -> Result<bool, EngineError> {
+    let elements_value = get(module, "elements")
+        .ok_or_else(|| type_error("Cannot read property 'find' of undefined elements"))?;
+    let Value::Array(elements) = elements_value else {
+        return Err(type_error("module.elements.find is not a function"));
+    };
+    for element in elements {
+        ctx.charge_work(1, Utf16::default())?;
+        if matches!(element, Value::Null) {
+            return Err(type_error("Cannot read property 'id' of null element"));
+        }
+        if let Some(Value::String(id)) = get(element, "id") {
+            ctx.charge_work(id.len(), Utf16::default())?;
+            if id == element_id {
+                return Ok(true);
+            }
+        }
+    }
+    Ok(false)
 }
 
 fn set_member(value: &mut Value, name: &str, next: Value) {

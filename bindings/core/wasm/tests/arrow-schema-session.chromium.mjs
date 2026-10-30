@@ -12,7 +12,7 @@ import {chromium} from 'playwright';
 const root = resolve(import.meta.dir, '../../../..');
 const started = performance.now();
 const packageDir = resolve(process.argv[2] ?? '/private/tmp/umf-arrow-wasm-session/pkg');
-const packetPath = resolve(process.argv[3] ?? `${root}/docs/helix/04-build/evidence/rust-migration/r5-arrow-typescript-predecessor-20261027/typescript-arrow-schema-outcomes.json.gz`);
+const packetPath = resolve(process.argv[3] ?? `${root}/tests/rust-core/fixtures/r5-arrow-typescript-predecessor-20261027/typescript-arrow-schema-outcomes.json.gz`);
 const packetBytes = await readFile(packetPath);
 const packet = JSON.parse(gunzipSync(packetBytes).toString('utf8'));
 assert.equal(packet.corpus.length, 52);

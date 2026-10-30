@@ -6,6 +6,8 @@
 #[cfg(not(all(feature = "metamodel-compiler", not(feature = "full-core"))))]
 include!("full_modules.rs");
 pub mod read_json_value_host;
+#[cfg(not(all(feature = "metamodel-compiler", not(feature = "full-core"))))]
+pub mod semantic_type_accessors_host_json;
 
 // Source-bound metamodel compiler closure. Keep this list deliberately
 // independent of adapters and runtime services, whose compile-time resources

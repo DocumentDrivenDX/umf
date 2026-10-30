@@ -4295,7 +4295,7 @@ mod private_conformance_tests {
         let engine = CodegenEngine::new(&resources);
         let corpus = parse(
             &fs::read_to_string(
-                root.join("docs/helix/04-build/evidence/rust-migration/r3/baseline/stage-one.json"),
+                root.join("tests/rust-core/fixtures/r3/baseline/stage-one.json"),
             )
             .unwrap(),
         );
@@ -4445,7 +4445,7 @@ mod private_conformance_tests {
         for corpus in corpora {
             let fixture = load(
                 &root,
-                &format!("docs/helix/04-build/evidence/rust-migration/r3/{corpus}"),
+                &format!("tests/rust-core/fixtures/r3/{corpus}"),
             );
             for case in crate::value::array_items(field(&fixture, "cases")).unwrap() {
                 let input = field(case, "request");

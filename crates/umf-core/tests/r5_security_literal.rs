@@ -56,7 +56,7 @@ fn engine() -> Engine {
 #[test]
 fn direct_literal_check_matches_all_frozen_typescript_admission_cases() {
     let packet = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r8-security-literal/predecessor.json"
+        "../../../tests/rust-core/fixtures/r8-security-literal/predecessor.json"
     ));
     let Value::Array(cases) = get(&packet, "cases").unwrap() else {
         panic!("cases")
@@ -93,7 +93,7 @@ fn direct_literal_check_matches_all_frozen_typescript_admission_cases() {
 #[test]
 fn literal_checker_obeys_caller_work_meter_before_materializing_result() {
     let packet = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r8-security-literal/predecessor.json"
+        "../../../tests/rust-core/fixtures/r8-security-literal/predecessor.json"
     ));
     let Value::Array(cases) = get(&packet, "cases").unwrap() else {
         panic!("cases")

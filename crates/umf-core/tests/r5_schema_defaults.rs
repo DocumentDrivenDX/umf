@@ -61,7 +61,7 @@ fn engine() -> Engine {
 
 #[test]
 fn frozen_typescript_resolve_core_default_outcomes_match() {
-    let frozen = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-schema-defaults/frozen-typescript.json"));
+    let frozen = parse(include_str!("../../../tests/rust-core/fixtures/r5-schema-defaults/frozen-typescript.json"));
     let source = get(&frozen, "source").unwrap();
     let cases = match get(&frozen, "outcomes").unwrap() {
         Value::Array(values) => values,
@@ -97,7 +97,7 @@ fn frozen_typescript_resolve_core_default_outcomes_match() {
 
 #[test]
 fn large_unknown_default_qualifier_is_metered_before_refusal_output() {
-    let frozen = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-schema-defaults/frozen-typescript.json"));
+    let frozen = parse(include_str!("../../../tests/rust-core/fixtures/r5-schema-defaults/frozen-typescript.json"));
     let mut source = get(&frozen, "source").unwrap().clone();
     let Value::Array(modules) = get_mut(&mut source, "modules").unwrap() else {
         panic!("expected modules")

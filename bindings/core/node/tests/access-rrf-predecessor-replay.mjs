@@ -8,13 +8,13 @@ import {createAccessRrfEngine} from '../index.js';
 import {compareRrfReplay, prepareRrfReplayCases} from './access-rrf-replay.js';
 
 const root = resolve(import.meta.dirname, '../../../..');
-const packet = JSON.parse(await readFile(resolve(root, 'docs/helix/04-build/evidence/rust-migration/r8-postgres-search-rrf-20261027/predecessor.json'), 'utf8'));
+const packet = JSON.parse(await readFile(resolve(root, 'tests/rust-core/fixtures/r8-postgres-search-rrf-20261027/predecessor.json'), 'utf8'));
 const cases = prepareRrfReplayCases(packet);
 const engine = createAccessRrfEngine({controls: {maxWork: 100_000}});
 const result = compareRrfReplay(engine, cases);
 const host = typeof Bun === 'undefined' ? 'node' : 'bun';
 const runtime = host === 'bun' ? `Bun ${Bun.version}` : `Node ${process.version}`;
-const packetSha256 = createHash('sha256').update(await readFile(resolve(root, 'docs/helix/04-build/evidence/rust-migration/r8-postgres-search-rrf-20261027/predecessor.json'))).digest('hex');
+const packetSha256 = createHash('sha256').update(await readFile(resolve(root, 'tests/rust-core/fixtures/r8-postgres-search-rrf-20261027/predecessor.json'))).digest('hex');
 const addonPath = createRequire(import.meta.url).resolve('../umf_core_node.node');
 const nodeAddonSha256 = createHash('sha256').update(await readFile(addonPath)).digest('hex');
 console.log(JSON.stringify({format: 'umf-r8-access-rrf-node-current-source/1', host, runtime, profile: engine.profile, packetSha256, nodeAddonSha256, ...result}));

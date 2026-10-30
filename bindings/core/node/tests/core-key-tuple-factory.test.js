@@ -7,7 +7,7 @@ import referenceSchema from '../../../../spec/core/semantic-type-reference.schem
 import packageSchema from '../../../../spec/core/extension-package.schema.json' with {type: 'json'};
 import constraints from '../../../../spec/metamodel/generated/core-constraints.json' with {type: 'json'};
 import domainPolicy from '../../../../spec/metamodel/generated/domain-policy.json' with {type: 'json'};
-import frozen from '../../../../docs/helix/04-build/evidence/rust-migration/r5-core-key-tuple/frozen-typescript.json' with {type: 'json'};
+import frozen from '../../../../tests/rust-core/fixtures/r5-core-key-tuple/frozen-typescript.json' with {type: 'json'};
 import kindSource from '../../../../scripts/rust-migration/r5/kind-nullability/input.json' with {type: 'json'};
 import kindFrozen from '../../../../scripts/rust-migration/r5/kind-nullability/frozen-typescript.json' with {type: 'json'};
 

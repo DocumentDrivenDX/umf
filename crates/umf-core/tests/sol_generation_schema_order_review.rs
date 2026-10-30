@@ -28,7 +28,7 @@ fn text(v: &Value) -> String {
 }
 #[test]
 fn compiler_diagnostic_order_matches_numeric_schema_and_instance_own_keys() {
-    let root=parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r3/sol-generation-schema-order-review/source.json"));
+    let root=parse(include_str!("../../../tests/rust-core/fixtures/r3/sol-generation-schema-order-review/source.json"));
     let Value::Array(cases) = get(&root, "cases") else {
         panic!("cases")
     };

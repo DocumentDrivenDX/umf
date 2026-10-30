@@ -200,7 +200,7 @@ fn exact_decimal_qualifiers_reject_unsafe_and_negative_zero_tokens() {
 #[test]
 fn all_frozen_predecessor_fields_match_structurally() {
     let capture: Json = serde_json::from_str(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-avro-fields/predecessor.json"
+        "../../../tests/rust-core/fixtures/r5-avro-fields/predecessor.json"
     ))
     .unwrap();
     let cases = capture["cases"].as_array().unwrap();
@@ -296,7 +296,7 @@ fn wasm_width_bounds_reject_large_fixed_size_and_precision_without_wrapping() {
 #[test]
 fn additive_bun_controls_match_the_supplemental_frozen_observations() {
     let capture: Json = serde_json::from_str(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-avro-fields/supplemental.json"
+        "../../../tests/rust-core/fixtures/r5-avro-fields/supplemental.json"
     ))
     .unwrap();
     assert_eq!(capture["observations"].as_array().unwrap().len(), 5);

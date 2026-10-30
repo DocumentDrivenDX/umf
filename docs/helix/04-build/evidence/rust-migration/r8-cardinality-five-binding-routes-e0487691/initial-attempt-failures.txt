@@ -1,3 +1,0 @@
-E048 TableSpec first sandboxed attempt exited 1: PySpark's Java gateway failed to bind 127.0.0.1 with java.net.SocketException: Operation not permitted; PySparkRuntimeError [JAVA_GATEWAY_EXITED]. Exact source/dependency checks passed; retry with loopback permission passed native and browser.
-E048 Avro browser first sandboxed attempt exited 1: Bun.serve local test server could not bind port 0 (EADDRINUSE in sandbox); retry with loopback permission passed profile/classification/projection browser routes.
-Other native/browser route pairs ran with Docker/loopback escalation and passed.

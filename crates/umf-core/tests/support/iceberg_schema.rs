@@ -482,7 +482,7 @@ fn tagged_unknown_survives_edit_and_blocks_native_export() {
 #[test]
 fn replay_frozen_authored_and_upstream_baselines() {
     let baseline: serde_json::Value = serde_json::from_str(include_str!(
-        "../../../../docs/helix/04-build/evidence/rust-migration/r5-iceberg-schema/baseline.json"
+        "../../../../tests/rust-core/fixtures/r5-iceberg-schema/baseline.json"
     ))
     .unwrap();
     let mut resource_context = Context::ordinary();
@@ -519,7 +519,7 @@ fn replay_frozen_authored_and_upstream_baselines() {
 #[test]
 fn replay_additive_exact_id_pointer_and_unknown_controls() {
     let controls: serde_json::Value = serde_json::from_str(include_str!(
-        "../../../../docs/helix/04-build/evidence/rust-migration/r5-iceberg-schema/controls.json"
+        "../../../../tests/rust-core/fixtures/r5-iceberg-schema/controls.json"
     ))
     .unwrap();
     let mut resource_context = Context::ordinary();

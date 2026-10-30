@@ -93,7 +93,7 @@ fn outcome(result: Result<Value, umf_core::error::EngineError>) -> Value {
 }
 #[test]
 fn frozen_type_script_tuple_cases_match_complete_receipts_and_refusals() {
-    let packet=parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-core-key-tuple/frozen-typescript.json"));
+    let packet=parse(include_str!("../../../tests/rust-core/fixtures/r5-core-key-tuple/frozen-typescript.json"));
     let e = engine();
     let r = Registry::new();
     let mut c = NoCapabilities;
@@ -143,7 +143,7 @@ fn frozen_type_script_tuple_cases_match_complete_receipts_and_refusals() {
 }
 #[test]
 fn verification_bytes_round_trips_and_prepared_scope_keep_explicit_profile() {
-    let packet=parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-core-key-tuple/frozen-typescript.json"));
+    let packet=parse(include_str!("../../../tests/rust-core/fixtures/r5-core-key-tuple/frozen-typescript.json"));
     let cases = get(&packet, "cases").unwrap();
     let input = get(cases, "profile-v2-uuid").unwrap();
     let e = engine();
@@ -231,7 +231,7 @@ fn verification_bytes_round_trips_and_prepared_scope_keep_explicit_profile() {
 }
 #[test]
 fn frozen_receipt_malformed_and_stale_cases_match_full_predecessor_refusals() {
-    let packet=parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-core-key-tuple/frozen-typescript.json"));
+    let packet=parse(include_str!("../../../tests/rust-core/fixtures/r5-core-key-tuple/frozen-typescript.json"));
     let e = engine();
     let r = Registry::new();
     let mut c = NoCapabilities;
@@ -263,7 +263,7 @@ fn frozen_receipt_malformed_and_stale_cases_match_full_predecessor_refusals() {
 }
 #[test]
 fn tuple_work_is_metered_and_cancellation_is_cooperative() {
-    let packet=parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-core-key-tuple/frozen-typescript.json"));
+    let packet=parse(include_str!("../../../tests/rust-core/fixtures/r5-core-key-tuple/frozen-typescript.json"));
     let input = get(get(&packet, "cases").unwrap(), "profile-v2-uuid").unwrap();
     let e = engine();
     let r = Registry::new();
@@ -307,7 +307,7 @@ fn tuple_work_is_metered_and_cancellation_is_cooperative() {
 
 #[test]
 fn prepared_integer_control_failure_is_not_rewritten_as_a_token_error() {
-    let packet=parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-core-key-tuple/frozen-typescript.json"));
+    let packet=parse(include_str!("../../../tests/rust-core/fixtures/r5-core-key-tuple/frozen-typescript.json"));
     let input = get(get(&packet, "cases").unwrap(), "integer-exponent").unwrap();
     let e = engine();
     let r = Registry::new();

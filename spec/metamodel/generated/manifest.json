@@ -668,10 +668,10 @@
     "docs/helix/04-build/evidence/schema-migration-design-review/main-reconciliation-001/stage-a-40556187661/SHA256SUMS": "20f40afc2ea8d1bc6fe44e32327697eb31e8953ef08835c3ba9ab53015f6eb94",
     "docs/helix/04-build/evidence/schema-migration-design-review/main-reconciliation-001/stage-a-40556187661/adopted-source-inputs.json": "628b8ddf065adbdc7f9251390fcf240b58d1b717d6c8ad1146f11b9d60e7a501",
     "src/generated/core-validators-accounted.ts": "5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29",
-    "docs/helix/04-build/evidence/rust-migration/r8-accounted-companion-inputs/src/generated/core-validators.ts": "563602e0f21f6d6b0efd1ae069dbda28926e085585b4bf0430347b65ff2bd0ff",
-    "docs/helix/04-build/evidence/rust-migration/r8-accounted-companion-inputs/spec/core/schema.json": "c6004664eb93dcef28ce6e0583f91225b618aa0fb42967a892242402557cf71d",
-    "docs/helix/04-build/evidence/rust-migration/r8-accounted-companion-inputs/spec/core/semantic-type-reference.schema.json": "207abbad54ebf8c660a958e2deda072a5a3236b5b8df5af8a8656f90c3e46ba9",
-    "docs/helix/04-build/evidence/rust-migration/r8-accounted-companion-inputs/spec/core/extension-package.schema.json": "4df3c8f92c5baa2c52f965d83b681ff306392bf9ba333bd39213a8f1065ac766"
+    "tests/rust-core/fixtures/r8-accounted-companion-inputs/src/generated/core-validators.ts": "563602e0f21f6d6b0efd1ae069dbda28926e085585b4bf0430347b65ff2bd0ff",
+    "tests/rust-core/fixtures/r8-accounted-companion-inputs/spec/core/schema.json": "c6004664eb93dcef28ce6e0583f91225b618aa0fb42967a892242402557cf71d",
+    "tests/rust-core/fixtures/r8-accounted-companion-inputs/spec/core/semantic-type-reference.schema.json": "207abbad54ebf8c660a958e2deda072a5a3236b5b8df5af8a8656f90c3e46ba9",
+    "tests/rust-core/fixtures/r8-accounted-companion-inputs/spec/core/extension-package.schema.json": "4df3c8f92c5baa2c52f965d83b681ff306392bf9ba333bd39213a8f1065ac766"
   },
   "compilerInputs": {
     ".cargo/config.toml": "84fd4fa17fd967cae6006ba1b0dc430904239dec921c1441dd657387ee802d6c",
@@ -1344,10 +1344,10 @@
       "docs/helix/04-build/evidence/schema-migration-design-review/main-reconciliation-001/stage-a-40556187661/SHA256SUMS": "20f40afc2ea8d1bc6fe44e32327697eb31e8953ef08835c3ba9ab53015f6eb94",
       "docs/helix/04-build/evidence/schema-migration-design-review/main-reconciliation-001/stage-a-40556187661/adopted-source-inputs.json": "628b8ddf065adbdc7f9251390fcf240b58d1b717d6c8ad1146f11b9d60e7a501",
       "src/generated/core-validators-accounted.ts": "5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29",
-      "docs/helix/04-build/evidence/rust-migration/r8-accounted-companion-inputs/src/generated/core-validators.ts": "563602e0f21f6d6b0efd1ae069dbda28926e085585b4bf0430347b65ff2bd0ff",
-      "docs/helix/04-build/evidence/rust-migration/r8-accounted-companion-inputs/spec/core/schema.json": "c6004664eb93dcef28ce6e0583f91225b618aa0fb42967a892242402557cf71d",
-      "docs/helix/04-build/evidence/rust-migration/r8-accounted-companion-inputs/spec/core/semantic-type-reference.schema.json": "207abbad54ebf8c660a958e2deda072a5a3236b5b8df5af8a8656f90c3e46ba9",
-      "docs/helix/04-build/evidence/rust-migration/r8-accounted-companion-inputs/spec/core/extension-package.schema.json": "4df3c8f92c5baa2c52f965d83b681ff306392bf9ba333bd39213a8f1065ac766"
+      "tests/rust-core/fixtures/r8-accounted-companion-inputs/src/generated/core-validators.ts": "563602e0f21f6d6b0efd1ae069dbda28926e085585b4bf0430347b65ff2bd0ff",
+      "tests/rust-core/fixtures/r8-accounted-companion-inputs/spec/core/schema.json": "c6004664eb93dcef28ce6e0583f91225b618aa0fb42967a892242402557cf71d",
+      "tests/rust-core/fixtures/r8-accounted-companion-inputs/spec/core/semantic-type-reference.schema.json": "207abbad54ebf8c660a958e2deda072a5a3236b5b8df5af8a8656f90c3e46ba9",
+      "tests/rust-core/fixtures/r8-accounted-companion-inputs/spec/core/extension-package.schema.json": "4df3c8f92c5baa2c52f965d83b681ff306392bf9ba333bd39213a8f1065ac766"
     }
   },
   "separatelyOwned": {
@@ -1386,7 +1386,7 @@
           "bytes": 45001
         }
       },
-      "inputBase": "docs/helix/04-build/evidence/rust-migration/r8-accounted-companion-inputs",
+      "inputBase": "tests/rust-core/fixtures/r8-accounted-companion-inputs",
       "compatibility": {
         "profile": "umf.metamodel.accounted-companion-provenance-compatibility/1",
         "scope": "root-schema-provenance-only",

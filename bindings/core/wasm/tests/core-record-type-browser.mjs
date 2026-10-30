@@ -28,7 +28,7 @@ const resourcePaths = {
 };
 const [resources, packet] = await Promise.all([
   Promise.all(Object.entries(resourcePaths).map(async ([key, path]) => [key, JSON.parse(await readFile(join(root, path), 'utf8'))])).then(Object.fromEntries),
-  readFile(join(root, 'docs/helix/04-build/evidence/rust-migration/r5-core-record-type/frozen-typescript.json'), 'utf8').then(JSON.parse),
+  readFile(join(root, 'tests/rust-core/fixtures/r5-core-record-type/frozen-typescript.json'), 'utf8').then(JSON.parse),
 ]);
 await writeFile(join(host, 'input.json'), JSON.stringify({resources, packet}));
 const mime = {'.js': 'text/javascript', '.json': 'application/json', '.wasm': 'application/wasm', '.d.ts': 'text/plain'};

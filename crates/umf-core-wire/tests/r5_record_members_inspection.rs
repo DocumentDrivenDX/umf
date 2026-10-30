@@ -101,7 +101,7 @@ fn units(value: &str) -> serde_json::Value {
 
 #[test]
 fn complete_wire_results_match_frozen_typescript_packet() {
-    let frozen = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-record-members-inspection/frozen-typescript.json"));
+    let frozen = parse(include_str!("../../../tests/rust-core/fixtures/r5-record-members-inspection/frozen-typescript.json"));
     let Value::Object(cases) = get(&frozen, "cases").unwrap() else {
         panic!("cases")
     };

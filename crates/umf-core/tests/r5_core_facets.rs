@@ -113,7 +113,7 @@ fn assert_error(actual: Result<Value, umf_core::error::EngineError>, expected: &
 }
 #[test]
 fn inspect_declare_verify_and_json_yaml_roundtrip_preserve_unknowns() {
-    let frozen=parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-core-facets/frozen-typescript.json"));
+    let frozen=parse(include_str!("../../../tests/rust-core/fixtures/r5-core-facets/frozen-typescript.json"));
     let e = engine();
     let mut caps = NoCapabilities;
     let reg = Registry::new();
@@ -307,7 +307,7 @@ fn declaration_output_copy_reports_first_over_limit_pointer() {
     let e = engine();
     let mut caps = NoCapabilities;
     let reg = Registry::new();
-    let frozen = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-core-facets/frozen-typescript.json"));
+    let frozen = parse(include_str!("../../../tests/rust-core/fixtures/r5-core-facets/frozen-typescript.json"));
     let mut src = get(&frozen, "source").unwrap().clone();
     let identity = get(&frozen, "identity").unwrap().clone();
     let request = get(&frozen, "request").unwrap().clone();
@@ -416,7 +416,7 @@ fn unknown_nested_qualifier_is_reported_and_blocks_overwrite_in_source_order() {
 #[test]
 fn range_collection_size_and_historical_projection_match_predecessor() {
     let frozen = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-core-facets/meaning-cases.json"
+        "../../../tests/rust-core/fixtures/r5-core-facets/meaning-cases.json"
     ));
     let source = get(&frozen, "source").unwrap();
     let expected = get(&frozen, "inspections").unwrap();
@@ -501,7 +501,7 @@ fn range_collection_size_and_historical_projection_match_predecessor() {
 #[test]
 fn review_regressions_match_complete_frozen_typescript_outcomes() {
     let frozen = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-core-facets/regression-cases.json"
+        "../../../tests/rust-core/fixtures/r5-core-facets/regression-cases.json"
     ));
     let cases = get(&frozen, "cases").unwrap();
     let e = engine();
@@ -619,7 +619,7 @@ fn receipt_target(v: &Value) -> Value {
 #[test]
 fn exact_frozen_refusal_triples_and_precedence_match_typescript() {
     let frozen = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-core-facets/exact-errors.json"
+        "../../../tests/rust-core/fixtures/r5-core-facets/exact-errors.json"
     ));
     let cases = get(&frozen, "cases").unwrap();
     let e = engine();

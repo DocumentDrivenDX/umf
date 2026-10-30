@@ -63,6 +63,10 @@ pub mod delta_reconcile;
 pub mod delta_schema;
 pub mod delta_spark_hash;
 pub mod delta_table;
+#[cfg(feature = "embedded-adapters")]
+pub mod dbt;
+#[cfg(feature = "embedded-adapters")]
+pub mod rdf;
 pub mod document;
 pub mod domain_pack_loader_inspection;
 pub mod domain_pack_profile_inspection;

@@ -13,6 +13,9 @@ use umf_core::{
     parquet_levels::decode_parquet_levels,
     parquet_pages::{decode_parquet_page_bodies, inspect_parquet_pages},
     parquet_physical::decode_parquet_physical,
+    parquet_repair_offsets::repair_parquet_dictionary_offsets,
+    parquet_rows::assemble_parquet_rows,
+    parquet_values::decode_parquet_values,
     registry::Registry,
     serialization::{self, Format},
     Context, Utf16, Value,
@@ -40,6 +43,25 @@ struct Resources {
     registry: Registry,
 }
 impl Resources {
+    fn shared(ctx: &mut Context<'_>) -> Result<std::sync::Arc<Self>, EngineError> {
+        use std::sync::{Arc, OnceLock};
+        static RESOURCES: OnceLock<Arc<Resources>> = OnceLock::new();
+        ctx.charge_work(1, Utf16::default())?;
+        let ordinary = ctx.profile() == umf_core::context::ResourceProfile::Cooperative
+            && ctx.limits() == umf_core::context::Limits::ordinary();
+        if ordinary {
+            if let Some(resources) = RESOURCES.get() {
+                return Ok(Arc::clone(resources));
+            }
+        }
+        // Construct outside an initialization lock: host controls may reenter.
+        // Cache only successful immutable embedded resource construction.
+        let resources = Arc::new(Self::new(ctx)?);
+        if ordinary {
+            let _ = RESOURCES.set(Arc::clone(&resources));
+        }
+        Ok(resources)
+    }
     fn new(ctx: &mut Context<'_>) -> Result<Self, EngineError> {
         fn read(source: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
             serialization::read_json_value(
@@ -147,12 +169,23 @@ pub fn execute_wire_with_control(
             }
         }
         if operation == "parquet.encodeWire" {
-            let value =
-                field(&request, "value").ok_or_else(|| request_error("value is required"))?;
-            let bytes = umf_core::parquet_wire_encode::encode_parquet_wire(value, &mut ctx)?;
+            let mut value = field(&request, "value")
+                .ok_or_else(|| request_error("value is required"))?.clone();
+            if let Some(Value::Array(paths)) = field(&request, "__umfUndefinedPaths") {
+                for path in paths {
+                    let Value::String(path) = path else { return Err(request_error("Invalid undefined-field marker")); };
+                    let mut segments = parse_transport_path(path)?;
+                    if segments.first().is_some_and(|segment| segment == "value") { segments.remove(0); }
+                    if !matches!(segments.last().map(String::as_str), Some("keyType" | "valueType")) {
+                        continue;
+                    }
+                    remove_undefined_map_type(&mut value, &segments, &mut ctx)?;
+                }
+            }
+            let bytes = umf_core::parquet_wire_encode::encode_parquet_wire(&value, &mut ctx)?;
             return encode(&Value::string_utf8(encode_hex(&bytes)), &mut ctx);
         }
-        let resources = Resources::new(&mut ctx)?;
+        let resources = Resources::shared(&mut ctx)?;
         let mut capabilities = Accept;
         let result = match operation.as_str() {
             "parquet.capture" => {
@@ -213,11 +246,35 @@ pub fn execute_wire_with_control(
             | "parquet.decodePageBodies"
             | "parquet.decodeLevels"
             | "parquet.decodePhysical"
+            | "parquet.decodeValues"
+            | "parquet.assembleRows"
+            | "parquet.repairDictionaryOffsets"
             | "parquet.appendKeyValueMetadata"
             | "parquet.renameField" => {
                 let document = field(&request, "document")
                     .ok_or_else(|| request_error("document is required"))?;
                 match operation.as_str() {
+                    "parquet.repairDictionaryOffsets" => repair_parquet_dictionary_offsets(
+                        document,
+                        &resources.engine,
+                        &resources.registry,
+                        &mut capabilities,
+                        &mut ctx,
+                    )?,
+                    "parquet.decodeValues" => decode_parquet_values(
+                        document,
+                        &resources.engine,
+                        &resources.registry,
+                        &mut capabilities,
+                        &mut ctx,
+                    )?,
+                    "parquet.assembleRows" => assemble_parquet_rows(
+                        document,
+                        &resources.engine,
+                        &resources.registry,
+                        &mut capabilities,
+                        &mut ctx,
+                    )?,
                     "parquet.decodePhysical" => decode_parquet_physical(
                         document,
                         &resources.engine,
@@ -327,6 +384,49 @@ pub fn execute_wire_with_control(
     result_envelope(result)
 }
 
+fn parse_transport_path(path: &Utf16) -> Result<Vec<String>, EngineError> {
+    let text = path.to_utf8().map_err(|_| request_error("Invalid undefined-field marker"))?;
+    if !text.starts_with('/') { return Err(request_error("Invalid undefined-field marker")); }
+    text[1..].split('/').map(|segment| {
+        let mut out = String::new();
+        let mut chars = segment.chars();
+        while let Some(ch) = chars.next() {
+            if ch == '~' {
+                match chars.next() { Some('0') => out.push('~'), Some('1') => out.push('/'), _ => return Err(request_error("Invalid undefined-field marker")) }
+            } else { out.push(ch); }
+        }
+        Ok(out)
+    }).collect()
+}
+
+fn remove_undefined_map_type(value: &mut Value, path: &[String], ctx: &mut Context<'_>) -> Result<(), EngineError> {
+    ctx.charge_work(1, Utf16::default())?;
+    if path.is_empty() { return Ok(()); }
+    let segment = &path[0];
+    if path.len() == 1 {
+        let Value::Object(fields) = value else { return Ok(()); };
+        let is_map = fields.iter().any(|(key, value)| key == &Utf16::from("kind") && matches!(value, Value::String(kind) if kind == &Utf16::from("map")));
+        if is_map && matches!(segment.as_str(), "keyType" | "valueType") {
+            fields.retain(|(key, _)| key != &Utf16::from(segment.as_str()));
+        }
+        return Ok(());
+    }
+    match value {
+        Value::Object(fields) => {
+            if let Some((_, child)) = fields.iter_mut().find(|(key, _)| key == &Utf16::from(segment.as_str())) {
+                remove_undefined_map_type(child, &path[1..], ctx)?;
+            }
+        }
+        Value::Array(items) => {
+            if let Ok(index) = segment.parse::<usize>() {
+                if let Some(child) = items.get_mut(index) { remove_undefined_map_type(child, &path[1..], ctx)?; }
+            }
+        }
+        _ => {}
+    }
+    Ok(())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -339,6 +439,29 @@ mod tests {
                 .collect(),
         );
         encode(&value, &mut Context::ordinary()).unwrap()
+    }
+
+    #[test]
+    fn shared_resources_keep_warm_controls_and_custom_limits() {
+        let first = Resources::shared(&mut Context::ordinary()).unwrap();
+        let second = Resources::shared(&mut Context::ordinary()).unwrap();
+        assert!(std::sync::Arc::ptr_eq(&first, &second));
+        let mut failed = |_: usize| {
+            Err(EngineError::new(
+                "CANCELLED",
+                Utf16::default(),
+                "warm control",
+            ))
+        };
+        let result = Resources::shared(&mut Context::ordinary().with_host_control(&mut failed));
+        assert!(result.err().unwrap().is_control_failure());
+        let mut limits = umf_core::context::Limits::ordinary();
+        limits.max_text_units = 8;
+        assert!(Resources::shared(
+            &mut Context::with_limits(umf_core::context::ResourceProfile::Cooperative, limits)
+                .unwrap()
+        )
+        .is_err());
     }
 
     #[test]

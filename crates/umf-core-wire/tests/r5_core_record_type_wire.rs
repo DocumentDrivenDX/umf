@@ -181,7 +181,7 @@ fn assert_error(response: &serde_json::Value, expected: &Value) {
 #[test]
 fn frozen_record_type_declare_verify_and_refusals() {
     let packet = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-core-record-type/frozen-typescript.json"
+        "../../../tests/rust-core/fixtures/r5-core-record-type/frozen-typescript.json"
     ));
     let successes = get(&packet, "successes").unwrap();
     for variant in ["nested", "recursive", "qualified"] {

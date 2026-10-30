@@ -8,7 +8,7 @@ use umf_core::{
 };
 
 const FROZEN: &str = include_str!(
-    "../../../docs/helix/04-build/evidence/rust-migration/r5-core-evolution/frozen-typescript-0.10.json"
+    "../../../tests/rust-core/fixtures/r5-core-evolution/frozen-typescript-0.10.json"
 );
 
 fn parse(input: &str) -> Value {

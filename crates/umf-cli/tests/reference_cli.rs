@@ -6,10 +6,10 @@ use umf_core::serialization::{read_json_value, stringify_compact, Format};
 use umf_core::{Context, Utf16, Value};
 
 const SOURCE: &[u8] = include_bytes!(
-    "../../../docs/helix/04-build/evidence/rust-migration/r7-self-model-admission/frozen/umf.yaml"
+    "../../../tests/rust-core/fixtures/r7-self-model-admission/frozen/umf.yaml"
 );
-const MANIFEST: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r7-self-model-admission/frozen/manifest.json");
-const CATALOG: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r7-self-model-admission/frozen/catalog.canonical.json");
+const MANIFEST: &str = include_str!("../../../tests/rust-core/fixtures/r7-self-model-admission/frozen/manifest.json");
+const CATALOG: &str = include_str!("../../../tests/rust-core/fixtures/r7-self-model-admission/frozen/catalog.canonical.json");
 
 fn parse_json(source: &str) -> Value {
     read_json_value(

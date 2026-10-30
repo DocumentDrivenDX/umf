@@ -258,7 +258,7 @@ macro_rules! frozen_validate_test {
         fn $test_name() {
             validate_case(
                 include_str!(concat!(
-                    "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/",
+                    "../../../tests/rust-core/fixtures/r5-dataset-values/",
                     $frozen
                 )),
                 $case_name,
@@ -308,19 +308,19 @@ fn frozen_full_dataset_verify_results_and_refusals_match_typescript() {
     for (name, frozen) in [
         (
             "valid_commerce",
-            include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-verify-valid_commerce.json"),
+            include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-verify-valid_commerce.json"),
         ),
         (
             "stale_source",
-            include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-verify-stale_source.json"),
+            include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-verify-stale_source.json"),
         ),
         (
             "stale_input",
-            include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-verify-stale_input.json"),
+            include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-verify-stale_input.json"),
         ),
         (
             "forged_result",
-            include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-verify-forged_result.json"),
+            include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-verify-forged_result.json"),
         ),
     ] {
         verify_case(frozen, name);
@@ -330,7 +330,7 @@ fn frozen_full_dataset_verify_results_and_refusals_match_typescript() {
 #[test]
 fn full_dataset_operation_preserves_host_cancellation() {
     let case = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-commerce.json"
+        "../../../tests/rust-core/fixtures/r5-dataset-values/frozen-commerce.json"
     ));
     let wire = request(
         "model/validateCoreDatasetValues",

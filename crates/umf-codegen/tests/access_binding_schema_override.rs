@@ -73,7 +73,7 @@ fn resources(mut binding: Value, mut stable: Value) -> CodegenResources {
 #[test]
 fn trusted_binding_schema_override_is_used_for_access_binding_admission() {
     let corpus =
-        load("docs/helix/04-build/evidence/rust-migration/r3/binding-admission-review/frozen.json");
+        load("tests/rust-core/fixtures/r3/binding-admission-review/frozen.json");
     let cases = umf_codegen::value::array_items(member(&corpus, "cases")).unwrap();
     let resources = resources(
         load("spec/extensions/binding/package.json"),

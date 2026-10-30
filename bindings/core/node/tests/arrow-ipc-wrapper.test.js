@@ -87,7 +87,7 @@ for (const [host, factory, ErrorType] of [['Node', createNodeOperations, UmfErro
 
     test('replays the predecessor corpus native source bytes through copied wrapper buffers', async () => {
       const root = resolve(import.meta.dir, '../../../../');
-      const evidencePath = resolve(root, 'docs/helix/04-build/evidence/rust-migration/r5-arrow-ipc-capture-predecessor-20261027/typescript-arrow-ipc-capture.json.gz');
+      const evidencePath = resolve(root, 'tests/rust-core/fixtures/r5-arrow-ipc-capture-predecessor-20261027/typescript-arrow-ipc-capture.json.gz');
       const packet = JSON.parse(gunzipSync(await readFile(evidencePath)).toString('utf8'));
       const corpusCases = packet.cases.filter(row => row.file);
       expect(corpusCases).toHaveLength(18);

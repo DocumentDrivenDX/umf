@@ -44,7 +44,7 @@ fn fields(value: &Value) -> Vec<(Utf16, Value)> {
 fn packet(name: &str) -> Value {
     let path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
         .join(
-            "../../docs/helix/04-build/evidence/rust-migration/r9-avro-cardinality-classification",
+            "../../tests/rust-core/fixtures/r9-avro-cardinality-classification",
         )
         .join(name);
     let text = fs::read_to_string(path).unwrap();

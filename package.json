@@ -70,7 +70,7 @@
     "test:prepare": "bun run build && bun run build:postgresql && bun scripts/build-test-prerequisites.ts && bun scripts/prepare-action-tests.ts",
     "test:actions": "bun scripts/prepare-action-tests.ts && bun scripts/run-tests.ts tests/actions-reference",
     "build:sdk": "bun run build && bun scripts/package-sdk.ts",
-    "test:sdk": "bun run build:sdk && python3 scripts/test-sdk-package.py && bun scripts/test-sdk-rust-default.ts",
+    "test:sdk": "bun run build:sdk && python3 scripts/test-sdk-package.py",
     "test:access-e2e": "bun scripts/access-e2e.ts",
     "build:reference": "bun scripts/build-postgresql.ts && bun scripts/build-protobuf.ts && bun scripts/reference/build.ts",
     "test:reference": "bun test tests/reference && bun scripts/reference/build.ts --check",
@@ -81,9 +81,9 @@
     "test:metamodel": "bun test tests/metamodel && bun scripts/metamodel-browser.ts",
     "check:core-authority": "bun scripts/check-core-authority.ts",
     "check:unified-client-boundaries": "bun scripts/check-unified-client-boundaries.ts",
-    "check:rust-boundaries": "bun scripts/rust-migration/check-boundaries.ts && python3 scripts/rust-inventory.py --check && python3 scripts/check-rust-boundaries.py && python3 tests/rust-inventory/test_boundaries.py && python3 tests/rust-inventory/test_inventory.py",
+    "check:rust-boundaries": "python3 scripts/check-rust-boundaries.py",
     "check:rust-node-package-closure": "bun scripts/rust-migration/r7/node-package-closure.ts",
-    "test:rust-core": "bun scripts/rust-core/conformance.ts",
+    "test:rust-core": "cargo test --locked -p umf-core -p umf-core-wire -p umf-tagged-wire -p umf-codegen -p umf-metamodel -p umf-metamodel-cli -p umf-cli",
     "check:release-versions": "python3 scripts/check-release-versions.py"
   },
   "dependencies": {

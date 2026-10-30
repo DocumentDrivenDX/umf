@@ -425,7 +425,7 @@ mod direct_runtime_tests {
 
     fn packet() -> Value {
         value(include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r5-core-key-tuple/frozen-typescript.json"
+            "../../../tests/rust-core/fixtures/r5-core-key-tuple/frozen-typescript.json"
         ))
     }
 

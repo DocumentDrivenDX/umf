@@ -201,7 +201,7 @@ fn version_reports_cli_protocol_version_and_resource_digest() {
 #[test]
 fn public_cli_dispatch_matches_the_seven_codegen_operation_shapes() {
     let migration_fixture = parse_json(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r3/sol-implementation-closure/frozen.json"
+        "../../../tests/rust-core/fixtures/r3/sol-implementation-closure/frozen.json"
     ));
     let cases = member(&migration_fixture, "cases");
     let Value::Array(cases) = cases else {
@@ -213,7 +213,7 @@ fn public_cli_dispatch_matches_the_seven_codegen_operation_shapes() {
     let next = member(&migration_request, "next").clone();
 
     let generation_fixture = parse_json(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r3/generation-unified-names-review/frozen.json"
+        "../../../tests/rust-core/fixtures/r3/generation-unified-names-review/frozen.json"
     ));
     let generation_case = &match member(&generation_fixture, "cases") {
         Value::Array(cases) => cases,
@@ -234,7 +234,7 @@ fn public_cli_dispatch_matches_the_seven_codegen_operation_shapes() {
     assert!(!generation_error.contains("messageUnits"));
 
     let deployment_fixture = parse_json(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r3/sol-second-numeric-keys-review/frozen.json"
+        "../../../tests/rust-core/fixtures/r3/sol-second-numeric-keys-review/frozen.json"
     ));
     let deployment_case = &match member(&deployment_fixture, "cases") {
         Value::Array(cases) => cases,

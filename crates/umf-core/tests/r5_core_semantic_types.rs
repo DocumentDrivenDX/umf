@@ -7,10 +7,10 @@ use umf_core::{
     Diagnostic, Utf16, Value,
 };
 
-const PACKET:&str=include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-core-semantic-types/frozen-typescript.json");
-const REGISTRY_PACKET:&str=include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-semantic-type-registry/frozen-typescript.json");
+const PACKET:&str=include_str!("../../../tests/rust-core/fixtures/r5-core-semantic-types/frozen-typescript.json");
+const REGISTRY_PACKET:&str=include_str!("../../../tests/rust-core/fixtures/r5-semantic-type-registry/frozen-typescript.json");
 const VALUE_PACKET: &str = include_str!(
-    "../../../docs/helix/04-build/evidence/rust-migration/r5-semantic-value/frozen-typescript.json"
+    "../../../tests/rust-core/fixtures/r5-semantic-value/frozen-typescript.json"
 );
 struct NoCapabilities;
 impl Capabilities for NoCapabilities {

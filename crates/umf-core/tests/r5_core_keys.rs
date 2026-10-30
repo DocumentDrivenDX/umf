@@ -236,7 +236,7 @@ fn authored_members_and_key_round_trip_by_explicit_stable_identity() {
         "CORE_KEY_STALE"
     );
     let packet = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-core-keys/frozen-typescript.json"
+        "../../../tests/rust-core/fixtures/r5-core-keys/frozen-typescript.json"
     ));
     let expected = get(get(&packet, "outcomes").unwrap(), "verify_stale_document").unwrap();
     let actual = operation_outcome(verify_core_key_operation(
@@ -501,7 +501,7 @@ fn request_identity_and_receipt_preflights_match_public_refusal_codes() {
 #[test]
 fn frozen_typescript_cases_match_complete_rust_envelopes_and_refusals() {
     let packet = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-core-keys/frozen-typescript.json"
+        "../../../tests/rust-core/fixtures/r5-core-keys/frozen-typescript.json"
     ));
     let cases = get(&packet, "cases").unwrap();
     let outcomes = get(&packet, "outcomes").unwrap();

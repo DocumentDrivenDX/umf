@@ -123,8 +123,8 @@ function cardinalityHostInput(addon, resources, operation, inputs, ErrorType = E
   return executeHostInput(addon, resources, 'executeCoreCardinalityHostJson', inputs, ErrorType, undefined, [operation]);
 }
 
-function copyJsonHostInput(addon, value, ErrorType = Error) {
-  return executeHostInput(addon, undefined, 'executeCopyJsonHostJson', [value], ErrorType, undefined, [], undefined, true, false,
+function copyJsonHostInput(addon, value, ErrorType = Error, controlBridge) {
+  return executeHostInput(addon, undefined, 'executeCopyJsonHostJson', [value], ErrorType, controlBridge, [], undefined, true, false,
     carrier => projectCopyJsonHostInput(fromRustWire(carrier)), false, false, true);
 }
 
@@ -222,7 +222,13 @@ function validateCoreRecordValuesHostInput(addon, resources, source, identity, v
 }
 
 function coreKindNullabilityHostInput(runtime, operation, inputs, ErrorType = Error, controlBridge) {
-  return executeHostInput(runtime, undefined, 'execute', inputs, ErrorType, controlBridge, [operation], undefined, true);
+  const ResponseError = function(code, message, path) {
+    if (code === 'TYPE_ERROR' && (operation === 'getSemanticTypes' || operation === 'setSemanticTypes')) {
+      return new NativeTypeError(message);
+    }
+    return new ErrorType(code, message, path);
+  };
+  return executeHostInput(runtime, undefined, 'execute', inputs, ResponseError, controlBridge, [operation], undefined, true);
 }
 
 function coreDatasetValuesHostInput(runtime, operation, inputs, ErrorType = Error, controlBridge) {

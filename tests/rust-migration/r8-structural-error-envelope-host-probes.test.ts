@@ -9,7 +9,7 @@ import {CORE_MODEL_RESOURCES} from '../../src/access/core-model-resources';
 // The ignored Node addon may predate this worktree. These probes use it only
 // to exercise installed Node bindings; both hostile failures happen in JS
 // host admission before a native request is sent.
-const datasetFixture=await Bun.file('docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-commerce.json').json();
+const datasetFixture=await Bun.file('tests/rust-core/fixtures/r5-dataset-values-compact/frozen-commerce.json').json();
 
 test('compact Dataset facade preserves the caller Proxy trap error by identity',()=>{
  const sentinel=Object.assign(new Error('caller proxy failure'),{

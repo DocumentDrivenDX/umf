@@ -2,7 +2,7 @@ import {expect, test} from 'bun:test';
 import {readFileSync} from 'node:fs';
 import {verifyCoreDatasetValuesCompact} from '../src/model/dataset-values-compact';
 
-const fixture=JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact-default-cutover/frozen-commerce.json','utf8')) as {
+const fixture=JSON.parse(readFileSync('tests/rust-core/fixtures/r5-dataset-values-compact-default-cutover/frozen-commerce.json','utf8')) as {
  result:unknown;source:Record<string,unknown>;input:Record<string,unknown>;
 };
 

@@ -60,7 +60,7 @@ fn invoke(kind: Value, token: Value) -> (serde_json::Value, Option<Value>) {
 #[test]
 fn tagged_parse_matches_every_frozen_non_host_vector() {
     let packet = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-access-temporal/predecessor.json"
+        "../../../tests/rust-core/fixtures/r5-access-temporal/predecessor.json"
     ));
     let Value::Array(cases) = field(&packet, "cases").unwrap() else {
         panic!("cases")

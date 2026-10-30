@@ -6,7 +6,7 @@ import {verifyCompanionCompatibility} from '../../scripts/metamodel/companion-co
 import {structuralSource} from '../../scripts/metamodel/structural';
 
 const paths=['spec/core/schema.json','spec/core/semantic-type-reference.schema.json','spec/core/extension-package.schema.json','src/generated/core-validators.ts'];
-const root=resolve(import.meta.dir,'../../docs/helix/04-build/evidence/rust-migration/r8-accounted-companion-inputs');
+const root=resolve(import.meta.dir,'../../tests/rust-core/fixtures/r8-accounted-companion-inputs');
 const archived=Object.fromEntries(await Promise.all(paths.map(async path=>[path,await readFile(resolve(root,path),'utf8')])));
 function successor(){
  const result={...archived};

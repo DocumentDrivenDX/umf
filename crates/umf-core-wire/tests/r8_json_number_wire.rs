@@ -9,7 +9,7 @@ use umf_core_wire::json_number_binding::{
 
 fn packet() -> Json {
     let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(
-        "../../docs/helix/04-build/evidence/rust-migration/r8-json-number-predecessor/typescript-predecessor.json",
+        "../../tests/rust-core/fixtures/r8-json-number-predecessor/typescript-predecessor.json",
     );
     serde_json::from_str(&fs::read_to_string(path).unwrap()).unwrap()
 }

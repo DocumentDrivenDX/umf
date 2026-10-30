@@ -12,7 +12,7 @@ const plain = value => JSON.parse(JSON.stringify(value));
 
 test('public Node factory replays frozen truth tables and refusal vectors', () => {
   assert.equal(SECURITY_LOGIC_PROFILE, 'umf.security-logic/1.0.0');
-  const packetPath = 'docs/helix/04-build/evidence/rust-migration/r8-security-truth-logic/frozen-typescript.json';
+  const packetPath = 'tests/rust-core/fixtures/r8-security-truth-logic/frozen-typescript.json';
   const packet = JSON.parse(read(packetPath));
   for (const [path, expected] of [[packet.predecessor.source, packet.predecessor.sourceSha256],
     [packet.predecessor.testSource, packet.predecessor.testSourceSha256],
@@ -30,7 +30,7 @@ test('public Node factory replays frozen truth tables and refusal vectors', () =
 });
 
 test('public Node factory replays frozen composition outcomes and refusals', () => {
-  const packetPath = 'docs/helix/04-build/evidence/rust-migration/r8-security-truth-logic/compose-cases.json';
+  const packetPath = 'tests/rust-core/fixtures/r8-security-truth-logic/compose-cases.json';
   const packet = JSON.parse(read(packetPath));
   for (const [path, expected] of [[packet.predecessor.source, packet.predecessor.sourceSha256],
     [packet.predecessor.testSource, packet.predecessor.testSourceSha256],

@@ -214,7 +214,7 @@ mod tests {
 
     fn receipt() -> Value {
         let packet = parse(include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r5-core-record-type/frozen-typescript.json"
+            "../../../tests/rust-core/fixtures/r5-core-record-type/frozen-typescript.json"
         ));
         let Value::Object(fields) = packet else {
             panic!("packet object")

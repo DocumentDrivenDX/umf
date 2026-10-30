@@ -5,7 +5,7 @@ import {chromium} from 'playwright';
 const repoRoot=resolve(import.meta.dir,'../../../..');
 const root=process.env.UMF_SEMANTIC_VALUE_WASM_PACKAGE;
 if(!root) throw new Error('Set UMF_SEMANTIC_VALUE_WASM_PACKAGE to the built wasm-bindgen package directory');
-const frozenPath=resolve(repoRoot,'docs/helix/04-build/evidence/rust-migration/r5-semantic-value/frozen-typescript.json');
+const frozenPath=resolve(repoRoot,'tests/rust-core/fixtures/r5-semantic-value/frozen-typescript.json');
 const resourceFiles={coreSchema:'spec/core/schema.json',referenceSchema:'spec/core/semantic-type-reference.schema.json',packageSchema:'spec/core/extension-package.schema.json',constraints:'spec/metamodel/generated/core-constraints.json',domainPolicy:'spec/metamodel/generated/domain-policy.json'};
 const resources=Object.fromEntries(await Promise.all(Object.entries(resourceFiles).map(async([key,path])=>[key,JSON.parse(await readFile(resolve(repoRoot,path),'utf8'))])));
 const server=createServer(async (req,res)=>{

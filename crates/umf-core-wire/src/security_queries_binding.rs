@@ -143,7 +143,7 @@ mod tests {
     }
     #[test]
     fn replays_frozen_predecessor_cases_from_each_exact_operation_input() {
-        let packet=parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r8-security-protection-query-properties/predecessor.json"));
+        let packet=parse(include_str!("../../../tests/rust-core/fixtures/r8-security-protection-query-properties/predecessor.json"));
         let cases = member(&packet, "cases")
             .and_then(|v| match v {
                 Value::Array(xs) => Some(xs),
@@ -261,7 +261,7 @@ mod tests {
 
     #[test]
     fn authored_range_is_refused_and_retained_in_snapshot() {
-        let packet=parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r8-security-protection-query-properties/predecessor.json"));
+        let packet=parse(include_str!("../../../tests/rust-core/fixtures/r8-security-protection-query-properties/predecessor.json"));
         let case = &member(&packet, "cases")
             .and_then(|v| match v {
                 Value::Array(xs) => Some(xs),

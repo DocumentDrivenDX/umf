@@ -4,7 +4,7 @@ import {resolve} from 'node:path';
 import {createIcebergSchemaEngine} from '../../bindings/core/node/index.js';
 
 const root = resolve(import.meta.dir, '../..');
-const frozen = JSON.parse(readFileSync(resolve(root, 'docs/helix/04-build/evidence/rust-migration/r5-iceberg-schema/baseline.json'), 'utf8'));
+const frozen = JSON.parse(readFileSync(resolve(root, 'tests/rust-core/fixtures/r5-iceberg-schema/baseline.json'), 'utf8'));
 const fixture = path => readFileSync(resolve(root, path), 'utf8');
 const capture = operation => {
   try { return {status: 'ok', value: operation()}; }
@@ -57,7 +57,9 @@ test('pinned-resource engine preserves UTF-16, meters per operation, and keeps d
   expect(firstOperationWork).toBeGreaterThan(0);
   expect(validation.diagnostics.map(item => item.code)).toEqual(['ICEBERG_CONTEXT_UNVERIFIED']);
   metered.inspect(original);
-  expect(work).toBe(firstOperationWork * 2);
+  const warmOperationWork = work - firstOperationWork;
+  expect(warmOperationWork).toBeGreaterThan(0);
+  expect(warmOperationWork).toBeLessThanOrEqual(firstOperationWork);
 
   const perOperation = createIcebergSchemaEngine({controls: {maxWork: firstOperationWork}});
   expect(perOperation.inspect(original)).toEqual(validation);

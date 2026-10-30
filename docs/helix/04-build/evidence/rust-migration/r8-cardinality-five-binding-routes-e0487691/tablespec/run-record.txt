@@ -1,6 +1,0 @@
-source=UMF e0487691e34be22de9e63d8ead5f1c9db21fee13 tree ee0c192c9e9929c31700a05ab16b510ad0234d67 pre-run SDK input closure 1355bf21b58ad9e422fa8998c1ce5325b8643bb1eefbc6a1b6a127babc52b5d7 (fixed point before generated evidence)
-TableSpec source=647e8e566ad78b864282ec65c0b0b2237aa63084; tree f6d419cef7e482684a795147d68130ac0cd39d0e; type_mappings.py SHA256 eaa36bcbd96d2b09d22161c5200a2be6a0788d7fd5ee46292d62428bb24cbbe7; derived version 0.0.3.post2.dev0+647e8e5
-Python=3.12.15; PySpark=4.0.1; Java=21.0.13.0.2; Bun=1.4.3; Chromium=153.0.8010.12
-First attempt exit=1 because sandbox denied loopback Py4J; log is /private/tmp/umf-cardinality-e048-tablespec-native.log before retry overwritten; failure was recorded in parent message. Escalated retry: native exit=0, browser exit=0.
-Commands: bun scripts/core-ideals/cardinality-tablespec-oracle.ts ; bun scripts/core-ideals/cardinality-tablespec-browser.ts
-Scope: exact historical pinned TableSpec reference replay on E048 UMF source. Not current TableSpec qualification or full binding acceptance. E048 source tree/SDK closure refers to immutable pre-run input; after oracle execution generated fixtures changed source-clone working tree. Generated paths and hashes are separately recorded.

@@ -1,6 +1,0 @@
-{
-  "supersedes": "predecessor/typescript-source-closure.tar.gz",
-  "superseded_sha256": "5f037400eeff2847cba2b6063ec459a2dfc155b7d406f7e02293a2c80122259a",
-  "finding": "Standalone extraction lacked spec/metamodel/generated/core-constraints.json, imported by the frozen TypeScript validation closure.",
-  "disposition": "Preserved the first archive unchanged and expanded this successor with src/registry and spec/metamodel/generated."
-}

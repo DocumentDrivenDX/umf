@@ -429,6 +429,26 @@ pub(crate) fn map_idl_value(
     diagnostics: &mut Vec<Value>,
     path: &str,
 ) -> Result<Json, String> {
+    let before = diagnostics.len();
+    let result = map_idl_value_inner(value, ty, defs, diagnostics, path);
+    if let Err(message) = &result {
+        if !diagnostics[before..]
+            .iter()
+            .any(|item| text_member(item, "code").as_deref() == Some("PARQUET_METADATA_SHAPE"))
+        {
+            diagnostics.push(diagnostic("PARQUET_METADATA_SHAPE", path, "error", message));
+        }
+    }
+    result
+}
+
+fn map_idl_value_inner(
+    value: &NativeWireValue,
+    ty: &Json,
+    defs: &Map<String, Json>,
+    diagnostics: &mut Vec<Value>,
+    path: &str,
+) -> Result<Json, String> {
     if let Some(reference) = ty.get("ref").and_then(Json::as_str) {
         let definition = defs
             .get(reference)
@@ -504,7 +524,13 @@ pub(crate) fn map_idl_value(
             let id = desc.get("id").and_then(Json::as_i64).unwrap_or_default() as i16;
             if desc.get("required").and_then(Json::as_bool) == Some(true) && !seen.contains(&id) {
                 let name = desc.get("name").and_then(Json::as_str).unwrap_or("");
-                return Err(format!("Missing required IDL field {name}"));
+                diagnostics.push(diagnostic(
+                    "PARQUET_METADATA_SHAPE",
+                    &format!("{path}/{name}"),
+                    "error",
+                    "Missing required IDL field",
+                ));
+                return Err("Missing required IDL field".into());
             }
         }
         if !unknown.is_empty() {
@@ -567,7 +593,17 @@ pub(crate) fn map_idl_value(
             }
             entries.iter().enumerate().map(|(i,(key,value))| Ok(serde_json::json!({"key":map_idl_value(key,key_ty,defs,diagnostics,&format!("{path}/{i}/key"))?,"value":map_idl_value(value,value_ty,defs,diagnostics,&format!("{path}/{i}/value"))?}))).collect::<Result<Vec<_>,String>>().map(Json::Array)
         }
-        _ => Err(format!("Expected {kind} wire value")),
+        _ => Err(match kind {
+            "string" => "Expected string wire bytes",
+            "binary" => "Expected binary wire value",
+            "bool" => "Expected boolean",
+            "i8" | "i16" | "i32" | "i64" => "Integer width does not match IDL",
+            "double" => "Expected double",
+            "list" | "set" => "Collection kind does not match IDL",
+            "map" => "Expected map",
+            _ => "Unsupported IDL descriptor",
+        }
+        .into()),
     }
 }
 
@@ -946,7 +982,12 @@ fn metadata_parts(
             ))
         }
         Err(message) => {
-            ds.push(diagnostic("PARQUET_METADATA_SHAPE", "", "error", &message));
+            if !ds
+                .iter()
+                .any(|item| text_member(item, "code").as_deref() == Some("PARQUET_METADATA_SHAPE"))
+            {
+                ds.push(diagnostic("PARQUET_METADATA_SHAPE", "", "error", &message));
+            }
             Ok((
                 Some(decoded),
                 Some(serde_json::json!({"wire":tree})),

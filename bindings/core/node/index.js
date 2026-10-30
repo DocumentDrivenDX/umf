@@ -1,3 +1,5 @@
+import {createDbtOperations, DBT_PROFILE, isDbtHostError} from './src/dbt.js';
+import {createRdfOperations, RDF_PROFILE} from './src/rdf.js';
 import {createRequire} from 'node:module';
 import {createHostReadResponseFrames, encodeRequestWire, encodeWire, fromWire, resultError, toWire} from './src/wire.js';
 import {createJavascriptNumericEngine as createNumericEngine, JAVASCRIPT_NUMERIC_PROFILE} from './src/javascript-numeric.js';
@@ -20,7 +22,7 @@ import {createBit128Engine as createBit128EngineWithWire, isBit128EngineError, B
 import {createJsonNumberEngine as createJsonNumberEngineWithWire, JSON_NUMBER_PROFILE} from './src/json-number.js';
 import {createJsonSchemaOperations, JSON_SCHEMA_PROFILE, UmfError as JsonSchemaUmfError, jsonSchemaFailureError} from './src/json-schema.js';
 import {createDocumentComparisonOperations, DOCUMENT_COMPARISON_PROFILE} from './src/document-comparison.js';
-import {declareCoreSchemaPropertiesHostInput, schemaPropertiesHostInput, cardinalityHostInput, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse} from './src/host-json.js';
+import {declareCoreSchemaPropertiesHostInput, schemaPropertiesHostInput, cardinalityHostInput, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse, copyJsonHostInput, isHostJsonResponseError} from './src/host-json.js';
 import {createSemanticTypeRegistry as createSemanticTypeRegistryEngine} from './src/semantic-value.js';
 import {createArrowIpcOperations, ARROW_IPC_PROFILE} from './src/arrow-ipc.js';
 import {createParquetCaptureOperations, PARQUET_CAPTURE_PROFILE} from './src/parquet-capture.js';
@@ -769,7 +771,7 @@ export function createCoreModelRootKindNullabilityEngine(resources, options = {}
   const staged = createCoreKindNullabilityHostInputEngine(resources, options);
   const {encodeCoreKeyTuple, verifyCoreKeyTuple, ...model} = createEngineInternal(resources, options, true, true, true, false, false, false, staged[CORE_KIND_NULLABILITY_RUNTIME], staged[CORE_KIND_NULLABILITY_PREPARED], staged[CORE_KIND_NULLABILITY_RUNTIME]);
   const api = {...model};
-  for (const name of ['inspectCoreElementKind','declareCoreElementKind','verifyCoreKindDeclaration','inspectCoreNullability','declareCoreNullability','verifyCoreNullabilityDeclaration']) api[name] = staged[name];
+  for (const name of ['inspectCoreElementKind','declareCoreElementKind','verifyCoreKindDeclaration','inspectCoreNullability','declareCoreNullability','verifyCoreNullabilityDeclaration','getSemanticTypes','setSemanticTypes']) api[name] = staged[name];
   return Object.freeze(api);
 }
 
@@ -896,12 +898,14 @@ export function createCoreKindNullabilityHostInputEngine(resources, options = {}
   return Object.freeze({
     [CORE_KIND_NULLABILITY_RUNTIME]: runtime,
     [CORE_KIND_NULLABILITY_PREPARED]: {fixedResources, resourcesWire, resourceBridge: initializeBridge, hostWork: initializeWork, profile, controls},
-    inspectCoreElementKind(source, identity) { return call('inspectCoreKind', [source, identity, undefined]); },
-    declareCoreElementKind(source, identity, kind) { return call('declareCoreKind', [source, identity, kind]); },
-    verifyCoreKindDeclaration(receipt, current) { return call('verifyCoreKindDeclaration', [receipt, current, undefined]); },
-    inspectCoreNullability(source, identity) { return call('inspectCoreNullability', [source, identity, undefined]); },
-    declareCoreNullability(source, identity, nullability) { return call('declareCoreNullability', [source, identity, nullability]); },
-    verifyCoreNullabilityDeclaration(receipt, current) { return call('verifyCoreNullabilityDeclaration', [receipt, current, undefined]); },
+    inspectCoreElementKind(source, identity) { return call('inspectCoreKind', [source, identity, undefined, undefined]); },
+    declareCoreElementKind(source, identity, kind) { return call('declareCoreKind', [source, identity, kind, undefined]); },
+    verifyCoreKindDeclaration(receipt, current) { return call('verifyCoreKindDeclaration', [receipt, current, undefined, undefined]); },
+    inspectCoreNullability(source, identity) { return call('inspectCoreNullability', [source, identity, undefined, undefined]); },
+    declareCoreNullability(source, identity, nullability) { return call('declareCoreNullability', [source, identity, nullability, undefined]); },
+    verifyCoreNullabilityDeclaration(receipt, current) { return call('verifyCoreNullabilityDeclaration', [receipt, current, undefined, undefined]); },
+    getSemanticTypes(document, module, element) { return call('getSemanticTypes', [document, module, element, undefined]); },
+    setSemanticTypes(document, module, element, annotation) { return call('setSemanticTypes', [document, module, element, annotation]); },
   });
 }
 
@@ -1042,11 +1046,70 @@ export function createParquetCaptureEngine(options = {}) {
   if (typeof addon.executeParquetCaptureWire !== 'function' || typeof addon.parquetCaptureProfileVersion !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
   if (addon.parquetCaptureProfileVersion() !== PARQUET_CAPTURE_PROFILE) throw new Error('RUST_NODE_BINDING_PROFILE_MISMATCH');
   const {controls} = codegenOptions(options);
-  return createParquetCaptureOperations((operation, fields) => {
+  const prepareTransaction = transaction => {
+    transaction.controlBridge ??= hasControls(controls) ? createControlBridge(controls) : undefined;
+    transaction.hostWork ??= admissionWork(transaction.controlBridge);
+    transaction.materializeWork ??= transaction.hostWork;
+    return transaction;
+  };
+  return createParquetCaptureOperations((operation, fields, transaction = {}) => {
+    prepareTransaction(transaction);
+    const {controlBridge, hostWork} = transaction;
+    hostWork?.(1);
+    const responseText = addon.executeParquetCaptureWire(encodeRequestWire({op: `parquet.${operation}`, ...fields}, hostWork, {unsupportedValuesAsNull: operation === 'encodeWire'}), controlBridge);
+    hostWork?.(responseText.length);
+    const envelope = JSON.parse(responseText);
+    const failure = resultError(envelope);
+    if (failure) throw nativeCoreError(failure);
+    hostWork?.(envelope.wire.length);
+    return fromWire(JSON.parse(envelope.wire), hostWork);
+  }, {
+    prepareTransaction,
+    copyJson: (value, transaction) => { prepareTransaction(transaction); return copyJsonHostInput(addon, value, UmfCoreError, transaction.controlBridge); },
+    isHostJsonResponseError,
+  });
+}
+
+export {DBT_PROFILE};
+export {isDbtHostError};
+export function createDbtEngine(options = {}) {
+  if (typeof addon.executeDbtWire !== 'function' || typeof addon.dbtProfileVersion !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
+  if (addon.dbtProfileVersion() !== DBT_PROFILE) throw new Error('RUST_NODE_BINDING_PROFILE_MISMATCH');
+  const {controls} = codegenOptions(options);
+  const prepareTransaction = transaction => {
+    transaction.controlBridge ??= hasControls(controls) ? createControlBridge(controls) : undefined;
+    transaction.hostWork ??= admissionWork(transaction.controlBridge);
+    transaction.materializeWork ??= transaction.hostWork;
+  };
+  return createDbtOperations((operation, fields, transaction = {}) => {
+    prepareTransaction(transaction);
+    const {controlBridge, hostWork} = transaction;
+    hostWork?.(1);
+    const responseText = addon.executeDbtWire(encodeRequestWire({profile: DBT_PROFILE, op: `dbt.${operation}`, ...fields}, hostWork), controlBridge);
+    hostWork?.(responseText.length);
+    const envelope = JSON.parse(responseText);
+    const failure = resultError(envelope);
+    if (failure) throw nativeCoreError(failure);
+    hostWork?.(envelope.wire.length);
+    return fromWire(JSON.parse(envelope.wire), hostWork);
+  }, {
+    prepareTransaction,
+    copyJson: (value, transaction) => copyJsonHostInput(addon, value, UmfCoreError, transaction?.controlBridge),
+    isHostJsonResponseError,
+  });
+}
+
+export {RDF_PROFILE};
+/** Create the opt-in Rust RDF 1.1 and generalized-dataset engine. */
+export function createRdfEngine(options = {}) {
+  if (typeof addon.executeRdfWire !== 'function' || typeof addon.rdfProfileVersion !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
+  if (addon.rdfProfileVersion() !== RDF_PROFILE) throw new Error('RUST_NODE_BINDING_PROFILE_MISMATCH');
+  const {controls} = codegenOptions(options);
+  return createRdfOperations((operation, fields) => {
     const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
     const hostWork = admissionWork(controlBridge);
     hostWork?.(1);
-    const responseText = addon.executeParquetCaptureWire(encodeRequestWire({op: `parquet.${operation}`, ...fields}, hostWork), controlBridge);
+    const responseText = addon.executeRdfWire(encodeRequestWire({profile: RDF_PROFILE, op: `rdf.${operation}`, ...fields}, hostWork), controlBridge);
     hostWork?.(responseText.length);
     const envelope = JSON.parse(responseText);
     const failure = resultError(envelope);

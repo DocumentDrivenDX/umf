@@ -10,7 +10,7 @@ use crate::{
     registry::Registry,
     value::{Utf16, Value},
 };
-use serde_json::{json, Value as Json};
+use serde_json::Value as Json;
 use std::collections::BTreeMap;
 
 pub const PARQUET_ROW_NODE_LIMIT: usize = 100_000;
@@ -82,14 +82,44 @@ fn physical_value(value: &Json, nodes: &mut usize) -> Result<Slot, EngineError> 
     new_slot(Slot::Physical(value.clone()), nodes)
 }
 
-fn finish(slot: &Slot, node: &Json) -> Result<Json, EngineError> {
+pub(crate) fn physical_carrier(value: &Json) -> Value {
+    let mut fields = vec![(Utf16::from("type"), from_json(value["type"].clone()))];
+    for key in ["value", "hex"] {
+        if let Some(value) = value.get(key) {
+            fields.push((Utf16::from(key), from_json(value.clone())));
+        }
+    }
+    Value::Object(fields)
+}
+
+fn object(fields: impl IntoIterator<Item = (&'static str, Value)>) -> Value {
+    Value::Object(
+        fields
+            .into_iter()
+            .map(|(key, value)| (Utf16::from(key), value))
+            .collect(),
+    )
+}
+
+fn finish(slot: &Slot, node: &Json) -> Result<Value, EngineError> {
     match slot {
-        Slot::Null => Ok(Json::Null),
-        Slot::Physical(value) => Ok(json!({"kind":"physical","value":value})),
-        Slot::Repeated { items, .. } => Ok(json!({
-            "kind":"repeated",
-            "items":items.iter().map(|item| finish(item, node)).collect::<Result<Vec<_>,_>>()?
-        })),
+        Slot::Null => Ok(Value::Null),
+        Slot::Physical(value) => Ok(object([
+            ("kind", Value::string_utf8("physical")),
+            ("value", physical_carrier(value)),
+        ])),
+        Slot::Repeated { items, .. } => Ok(object([
+            ("kind", Value::string_utf8("repeated")),
+            (
+                "items",
+                Value::Array(
+                    items
+                        .iter()
+                        .map(|item| finish(item, node))
+                        .collect::<Result<Vec<_>, _>>()?,
+                ),
+            ),
+        ])),
         Slot::Record(fields) => {
             let children = node["children"]
                 .as_array()
@@ -103,13 +133,16 @@ fn finish(slot: &Slot, node: &Json) -> Result<Json, EngineError> {
                 let value = fields.get(&index).ok_or_else(|| {
                     error("Columns disagree on repeated cardinality or shared structure")
                 })?;
-                output.push(json!({
-                    "index":index,
-                    "name":child["name"],
-                    "value":finish(value,child)?
-                }));
+                output.push(object([
+                    ("index", Value::Number(index as f64)),
+                    ("name", from_json(child["name"].clone())),
+                    ("value", finish(value, child)?),
+                ]));
             }
-            Ok(json!({"kind":"record","fields":output}))
+            Ok(object([
+                ("kind", Value::string_utf8("record")),
+                ("fields", Value::Array(output)),
+            ]))
         }
     }
 }
@@ -153,11 +186,13 @@ pub fn assemble_parquet_rows(
         to_json(member(&inspected, "tree").ok_or_else(|| error("Schema tree unavailable"))?)?;
     let leaves =
         to_json(member(&inspected, "leaves").ok_or_else(|| error("Schema leaves unavailable"))?)?;
-    let pages =
-        array(member(&physical, "pages").ok_or_else(|| error("Physical pages unavailable"))?)
-            .ok_or_else(|| error("Physical pages unavailable"))?;
+    let page_values =
+        to_json(member(&physical, "pages").ok_or_else(|| error("Physical pages unavailable"))?)?;
+    let pages = page_values
+        .as_array()
+        .ok_or_else(|| error("Physical pages unavailable"))?;
 
-    let assembled = (|| -> Result<Vec<Json>, EngineError> {
+    let assembled = (|| -> Result<Vec<Value>, EngineError> {
         let schema_elements = schema["schema"]
             .as_array()
             .ok_or_else(|| error("Schema elements unavailable"))?;
@@ -213,7 +248,7 @@ pub fn assemble_parquet_rows(
         }
         collect_nodes(&tree, &mut tree_nodes)?;
 
-        let mut all_rows = Vec::<Json>::new();
+        let mut all_rows = Vec::<Value>::new();
         for (group_index, group) in row_groups.iter().enumerate() {
             let row_count = number(&group["num_rows"], "Row count")?;
             if row_count > PARQUET_ROW_NODE_LIMIT.saturating_sub(nodes) {
@@ -239,6 +274,8 @@ pub fn assemble_parquet_rows(
                 let mut row = -1isize;
                 let mut positions = Vec::<Option<usize>>::new();
                 for page in pages {
+                    // Every comparison is work, including nonmatching pages.
+                    ctx.charge_work(1, Utf16::default())?;
                     if page["kind"] != "data"
                         || number(&page["rowGroup"], "Row group")? != group_index
                         || number(&page["column"], "Column")? != column
@@ -439,7 +476,7 @@ pub fn assemble_parquet_rows(
             ));
             let mut result = public_result(source, "assembled", diagnostics);
             if let Value::Object(fields) = &mut result {
-                fields.push((Utf16::from("rows"), from_json(Json::Array(rows))));
+                fields.push((Utf16::from("rows"), Value::Array(rows)));
             }
             Ok(result)
         }
@@ -606,7 +643,7 @@ mod tests {
             if case["status"] == "assembled" {
                 let rows = public["rows"].as_array().unwrap();
                 let native_rows = rows.iter().map(native).collect::<Vec<_>>();
-                assert_eq!(native_rows, case["nativeRows"], "{id}");
+                assert_eq!(Json::Array(native_rows), case["nativeRows"], "{id}");
             } else {
                 assert!(public.get("rows").is_none(), "{id}");
                 assert_eq!(
@@ -650,10 +687,15 @@ mod tests {
             assert_eq!(public["status"], case["status"], "{id}");
             assert_eq!(public["complete"], false, "{id}");
             if case["status"] == "assembled" {
-                let expected: Json =
-                    serde_json::from_slice(&fixture(&format!("fixtures/parquet/rows/{id}.json")))
-                        .unwrap();
-                assert_eq!(public["rows"], expected, "{id}");
+                let expected = parse_value(
+                    std::str::from_utf8(&fixture(&format!("fixtures/parquet/rows/{id}.json")))
+                        .unwrap(),
+                );
+                assert_eq!(
+                    member(&result, "rows"),
+                    Some(&expected),
+                    "{id}: complete ordered rows"
+                );
             } else {
                 assert!(public.get("rows").is_none(), "{id}");
             }

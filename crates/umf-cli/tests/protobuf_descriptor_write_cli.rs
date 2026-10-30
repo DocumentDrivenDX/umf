@@ -69,7 +69,7 @@ fn descriptor_write_has_an_explicit_capability_profile() {
 fn descriptor_write_matches_frozen_predecessor_bytes_and_unknown_payload() {
     // Compare the native CLI bytes with the independent TypeScript predecessor
     // vector `authored.pb-roundtrip-bytes` in
-    // docs/helix/04-build/evidence/rust-migration/r5-protobuf-descriptor-codec/predecessor.json
+    // tests/rust-core/fixtures/r5-protobuf-descriptor-codec/predecessor.json
     // (Buf 2.15.0 / Bun 1.4.3; SHA-256 pinned below).
     let authored = include_bytes!("../../../fixtures/protobuf/authored.pb");
     let descriptor =

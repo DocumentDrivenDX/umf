@@ -12,7 +12,7 @@ import pytest
 
 _HELPER_PATH = Path(__file__).resolve().parents[2] / "tools/_python_sdist.py"
 assert hashlib.sha256(_HELPER_PATH.read_bytes()).hexdigest() == (
-    "d1c63acb0ca58db2ee52761d24d17c135d4fabb41305a29db1b800d051a9dfd8"
+    "225a06eb6d0bc1307da1fb7acb68f234ff8e9270392bb0d50adb93d62beec184"
 )
 _HELPER_SPEC = importlib.util.spec_from_file_location(
     "umf_test_python_sdist", _HELPER_PATH
@@ -36,6 +36,27 @@ ROOT_FILES = (
     "spec/extensions/avro/package.json",
     "spec/extensions/parquet/package.json",
     "spec/extensions/parquet/idl.json",
+    "spec/extensions/dbt-manifest/package.json",
+    "spec/extensions/dbt-artifact/package.json",
+    "spec/extensions/dbt-semantic/package.json",
+    "spec/extensions/dbt-manifest/native-schema.json",
+    "spec/extensions/dbt-artifact/run-results-v6-schema.json",
+    "spec/extensions/dbt-artifact/catalog-v1-schema.json",
+    "spec/extensions/dbt-artifact/sources-v3-schema.json",
+    "spec/extensions/dbt-semantic/native-schema.json",
+    "spec/extensions/rdf/package.json",
+    "spec/extensions/generalized-rdf/package.json",
+    "spec/extensions/rdf/schema.json",
+    "spec/extensions/generalized-rdf/dataset-schema.json",
+    "spec/extensions/openapi/package.json",
+    "spec/extensions/openapi/upstream/2.0-schema.json",
+    "spec/extensions/openapi/upstream/3.0-schema.json",
+    "spec/extensions/openapi/upstream/3.1-schema.json",
+    "spec/extensions/openapi/upstream/3.2-schema.json",
+    "spec/extensions/openapi/upstream/3.1-meta.json",
+    "spec/extensions/openapi/upstream/3.2-meta.json",
+    "spec/extensions/openapi/upstream/3.1-dialect.json",
+    "spec/extensions/openapi/upstream/3.2-dialect.json",
     "spec/domain-packs/public-company-intelligence/sources/scoped-submissions-0000004962.json",
     "spec/domain-packs/public-company-intelligence/sources/scoped-companyfacts-0000004962.json",
     "spec/loader-companion/1.0.0/loader.schema.json",
@@ -124,6 +145,27 @@ FORCE_INCLUDE = {
     "../spec/core/avro-cardinality-classification.schema.json": "spec/core/avro-cardinality-classification.schema.json",
     "../spec/core/native-json.schema.json": "spec/core/native-json.schema.json",
     "../spec/extensions/avro-cardinality/package.json": "spec/extensions/avro-cardinality/package.json",
+    "../spec/extensions/dbt-manifest/package.json": "spec/extensions/dbt-manifest/package.json",
+    "../spec/extensions/dbt-artifact/package.json": "spec/extensions/dbt-artifact/package.json",
+    "../spec/extensions/dbt-semantic/package.json": "spec/extensions/dbt-semantic/package.json",
+    "../spec/extensions/dbt-manifest/native-schema.json": "spec/extensions/dbt-manifest/native-schema.json",
+    "../spec/extensions/dbt-artifact/run-results-v6-schema.json": "spec/extensions/dbt-artifact/run-results-v6-schema.json",
+    "../spec/extensions/dbt-artifact/catalog-v1-schema.json": "spec/extensions/dbt-artifact/catalog-v1-schema.json",
+    "../spec/extensions/dbt-artifact/sources-v3-schema.json": "spec/extensions/dbt-artifact/sources-v3-schema.json",
+    "../spec/extensions/dbt-semantic/native-schema.json": "spec/extensions/dbt-semantic/native-schema.json",
+    "../spec/extensions/rdf/package.json": "spec/extensions/rdf/package.json",
+    "../spec/extensions/generalized-rdf/package.json": "spec/extensions/generalized-rdf/package.json",
+    "../spec/extensions/rdf/schema.json": "spec/extensions/rdf/schema.json",
+    "../spec/extensions/generalized-rdf/dataset-schema.json": "spec/extensions/generalized-rdf/dataset-schema.json",
+    "../spec/extensions/openapi/package.json": "spec/extensions/openapi/package.json",
+    "../spec/extensions/openapi/upstream/2.0-schema.json": "spec/extensions/openapi/upstream/2.0-schema.json",
+    "../spec/extensions/openapi/upstream/3.0-schema.json": "spec/extensions/openapi/upstream/3.0-schema.json",
+    "../spec/extensions/openapi/upstream/3.1-schema.json": "spec/extensions/openapi/upstream/3.1-schema.json",
+    "../spec/extensions/openapi/upstream/3.2-schema.json": "spec/extensions/openapi/upstream/3.2-schema.json",
+    "../spec/extensions/openapi/upstream/3.1-meta.json": "spec/extensions/openapi/upstream/3.1-meta.json",
+    "../spec/extensions/openapi/upstream/3.2-meta.json": "spec/extensions/openapi/upstream/3.2-meta.json",
+    "../spec/extensions/openapi/upstream/3.1-dialect.json": "spec/extensions/openapi/upstream/3.1-dialect.json",
+    "../spec/extensions/openapi/upstream/3.2-dialect.json": "spec/extensions/openapi/upstream/3.2-dialect.json",
     "../spec/core/avro-record-classification.schema.json": "spec/core/avro-record-classification.schema.json",
     "../spec/core/avro-field-classification.schema.json": "spec/core/avro-field-classification.schema.json",
     "../spec/core/parquet-record-type-classification.schema.json": "spec/core/parquet-record-type-classification.schema.json",
@@ -197,6 +239,8 @@ def _make_checkout(root: Path) -> dict[str, bytes]:
         files[f"python/{name}"] = f"license:{name}\n".encode()
     files["python/src/umf/__init__.py"] = b""
     files["python/src/umf/_rust.py"] = b"native helper\n"
+    files["python/src/umf/rust_rdf.py"] = b"rdf facade\n"
+    files["python/src/umf/rust_dbt.py"] = b"dbt facade\n"
     files["python/src/umf/action_runtime.py"] = b"runtime\n"
     helper_rows = tuple(
         (Path(filename).stem, filename, source) for filename, source in RESOURCES

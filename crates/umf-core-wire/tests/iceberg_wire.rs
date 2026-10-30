@@ -121,7 +121,7 @@ fn iceberg_wire_work_control_covers_request_before_resource_build() {
 #[test]
 fn iceberg_wire_import_replays_all_frozen_authored_and_upstream_cases() {
     let baseline: serde_json::Value = serde_json::from_str(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-iceberg-schema/baseline.json"
+        "../../../tests/rust-core/fixtures/r5-iceberg-schema/baseline.json"
     ))
     .unwrap();
     let root = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../..");

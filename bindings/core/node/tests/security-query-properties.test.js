@@ -5,7 +5,7 @@ import {createSecurityQueryPropertiesEngine, SECURITY_QUERY_PROPERTIES_PROFILE} 
 import {createSecurityQueryPropertiesEngine as createWithWire} from '../src/security-query-properties.js';
 import {encodeWire} from '../src/wire.js';
 
-const packet = JSON.parse(readFileSync(new URL('../../../../docs/helix/04-build/evidence/rust-migration/r8-security-protection-query-properties/predecessor.json', import.meta.url), 'utf8'));
+const packet = JSON.parse(readFileSync(new URL('../../../../../../../../tests/rust-core/fixtures/r8-security-protection-query-properties/predecessor.json', import.meta.url), 'utf8'));
 const exclusions = new Set(['query.range-identity-canonical-numeric', 'query.range-identity-distinct-field', 'query.range-unknown-field-refused']);
 const operations = packet.cases.flatMap(row => row.operations.map(operation => ({id: row.id, ...operation})));
 const canonical = value => JSON.stringify(value, (_key, item) => item && typeof item === 'object' && !Array.isArray(item)

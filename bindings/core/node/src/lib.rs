@@ -869,6 +869,48 @@ pub fn avro_cardinality_binding_profile_version() -> &'static str {
     umf_core_wire::avro_cardinality_binding::PROFILE
 }
 
+#[napi(js_name = "executeDbtWire")]
+pub fn execute_dbt_wire(
+    env: Env,
+    wire_json: String,
+    control_dispatcher: Option<JsFunction>,
+) -> NapiResult<String> {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = NodeControl { env, dispatcher };
+        let mut hook = |amount| control.check(amount);
+        Ok(umf_core_wire::dbt_binding::execute_wire_with_control(
+            &wire_json, &mut hook,
+        ))
+    } else {
+        Ok(umf_core_wire::dbt_binding::execute_wire(&wire_json))
+    }
+}
+#[napi(js_name = "dbtProfileVersion")]
+pub fn dbt_profile_version() -> &'static str {
+    umf_core_wire::dbt_binding::PROFILE
+}
+
+#[napi(js_name = "executeRdfWire")]
+pub fn execute_rdf_wire(
+    env: Env,
+    wire_json: String,
+    control_dispatcher: Option<JsFunction>,
+) -> NapiResult<String> {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = NodeControl { env, dispatcher };
+        let mut hook = |amount| control.check(amount);
+        Ok(umf_core_wire::rdf_binding::execute_wire_with_control(
+            &wire_json, &mut hook,
+        ))
+    } else {
+        Ok(umf_core_wire::rdf_binding::execute_wire(&wire_json))
+    }
+}
+#[napi(js_name = "rdfProfileVersion")]
+pub fn rdf_profile_version() -> &'static str {
+    umf_core_wire::rdf_binding::PROFILE
+}
+
 #[napi(js_name = "avroFieldsProfileVersion")]
 pub fn avro_fields_profile_version() -> &'static str {
     umf_core_wire::AVRO_FIELDS_PROFILE

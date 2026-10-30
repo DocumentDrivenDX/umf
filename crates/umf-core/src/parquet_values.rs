@@ -64,6 +64,78 @@ fn public_result(source: Value, status: &str, diagnostics: Vec<Value>) -> Value 
     ])
 }
 
+// The internal JSON maps are lookup structures. Reconstruct only the known
+// public carrier shapes in their specified member order; opaque parameters
+// retain the original ordered core Value from logical inspection.
+fn ordered_projection(
+    value: Json,
+    parameters: &BTreeMap<usize, &Value>,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    ctx.charge_work(1, Utf16::default())?;
+    Ok(match value {
+        Json::Array(values) => {
+            ctx.charge_work(values.len(), Utf16::default())?;
+            Value::Array(
+                values
+                    .into_iter()
+                    .map(|v| ordered_projection(v, parameters, ctx))
+                    .collect::<Result<_, _>>()?,
+            )
+        }
+        Json::Object(mut fields) => {
+            ctx.charge_work(fields.len(), Utf16::default())?;
+            let index = fields
+                .remove("__schemaIndex")
+                .and_then(|v| v.as_u64())
+                .map(|v| v as usize);
+            let keys: &[&str] = if fields.contains_key("type") {
+                &["type", "value", "hex"]
+            } else if fields.contains_key("index") && fields.contains_key("name") {
+                &["index", "name", "value"]
+            } else if fields.contains_key("key") {
+                &["key", "value"]
+            } else {
+                match fields.get("kind").and_then(Json::as_str) {
+                    Some("record" | "struct") => &["kind", "fields"],
+                    Some("list" | "repeated") => &["kind", "items"],
+                    Some("map") => &["kind", "duplicateKeys", "entries"],
+                    Some("opaque") => &["kind", "annotation", "parameters", "physical"],
+                    Some("time" | "timestamp") => {
+                        &["kind", "unit", "isAdjustedToUTC", "value", "physical"]
+                    }
+                    Some("int" | "uint" | "float") => &["kind", "bits", "value", "physical"],
+                    Some("physical") => &["kind", "value"],
+                    _ => &["kind", "value", "physical"],
+                }
+            };
+            let mut ordered = Vec::new();
+            for key in keys {
+                if let Some(value) = fields.remove(*key) {
+                    let value = if *key == "parameters" {
+                        if let Some(original) = index.and_then(|i| parameters.get(&i)) {
+                            crate::value::copy_json(original, ctx)?
+                        } else {
+                            ordered_projection(value, parameters, ctx)?
+                        }
+                    } else {
+                        ordered_projection(value, parameters, ctx)?
+                    };
+                    ctx.charge_work(key.len(), Utf16::default())?;
+                    ordered.push((Utf16::from(*key), value));
+                }
+            }
+            debug_assert!(fields.is_empty(), "unexpected internal projection fields");
+            Value::Object(ordered)
+        }
+        Json::String(text) => {
+            ctx.charge_work(text.encode_utf16().count(), Utf16::default())?;
+            Value::string_utf8(text)
+        }
+        scalar => from_json(scalar),
+    })
+}
+
 struct Projector<'a, 'ctx> {
     annotations: BTreeMap<usize, Json>,
     containers: BTreeMap<usize, Json>,
@@ -85,7 +157,7 @@ impl Projector<'_, '_> {
         Ok(value)
     }
 
-    fn physical(&self, value: &Json) -> Result<&Json, EngineError> {
+    fn physical<'value>(&self, value: &'value Json) -> Result<&'value Json, EngineError> {
         (value["kind"] == "physical")
             .then_some(&value["value"])
             .ok_or_else(|| error("Expected physical carrier"))
@@ -143,6 +215,7 @@ impl Projector<'_, '_> {
             ));
         }
         json!({
+            "__schemaIndex":index,
             "kind":"opaque",
             "annotation":annotation["name"],
             "parameters":annotation["parameters"],
@@ -156,6 +229,7 @@ impl Projector<'_, '_> {
         raw: &Json,
         in_repeated: bool,
     ) -> Result<Json, EngineError> {
+        self.ctx.charge_work(1, Utf16::default())?;
         if raw.is_null() {
             return Ok(Json::Null);
         }
@@ -211,13 +285,14 @@ impl Projector<'_, '_> {
                 .map_err(|_| allocation_error())?;
             for item in items {
                 let key = row_field(item, key_index)?;
+                let key = self.project(key_index, key, false)?;
                 let value = if let Some(index) = value_index {
                     self.project(index, row_field(item, index)?, false)?
                 } else {
                     Json::Null
                 };
                 entries.push(json!({
-                    "key":self.project(key_index,key,false)?,
+                    "key":key,
                     "value":value
                 }));
             }
@@ -775,6 +850,17 @@ pub fn decode_parquet_values(
         return Ok(public_result(source, "blocked", diagnostics));
     }
 
+    let parameter_values: BTreeMap<usize, &Value> =
+        array(member(&view, "annotations").unwrap_or(&Value::Null))
+            .unwrap_or(&[])
+            .iter()
+            .filter_map(|annotation| {
+                let Value::Number(index) = member(annotation, "index")? else {
+                    return None;
+                };
+                Some((*index as usize, member(annotation, "parameters")?))
+            })
+            .collect();
     let annotations = to_json(member(&view, "annotations").unwrap_or(&Value::Array(Vec::new())))?;
     let containers = to_json(member(&view, "containers").unwrap_or(&Value::Array(Vec::new())))?;
     let rows =
@@ -826,7 +912,10 @@ pub fn decode_parquet_values(
             ));
             let mut result = public_result(source, "projected", diagnostics);
             if let Value::Object(fields) = &mut result {
-                fields.push((Utf16::from("rows"), from_json(Json::Array(rows))));
+                fields.push((
+                    Utf16::from("rows"),
+                    ordered_projection(Json::Array(rows), &parameter_values, ctx)?,
+                ));
             }
             Ok(result)
         }
@@ -905,6 +994,94 @@ mod tests {
                 .join(path),
         )
         .unwrap()
+    }
+
+    #[test]
+    fn ordered_output_checks_controls_before_copying_opaque_parameters() {
+        let opaque = Value::Object(vec![
+            (Utf16::from("z"), Value::string_utf8("x".repeat(10_000))),
+            (Utf16::from("a"), Value::Bool(true)),
+        ]);
+        let parameters = BTreeMap::from([(7, &opaque)]);
+        let projection = json!({"kind":"opaque","annotation":"future","parameters":{},"__schemaIndex":7,
+            "physical":{"type":"INT32","value":"1"}});
+        let output =
+            ordered_projection(projection.clone(), &parameters, &mut Context::ordinary()).unwrap();
+        assert_eq!(member(&output, "parameters"), Some(&opaque));
+        let mut meter = |amount: usize| {
+            if amount >= 10_000 {
+                Err(EngineError::new(
+                    "TEST_STOP",
+                    Utf16::default(),
+                    "stop before opaque string clone",
+                ))
+            } else {
+                Ok(())
+            }
+        };
+        let failure = ordered_projection(
+            projection,
+            &parameters,
+            &mut Context::ordinary().with_meter(&mut meter),
+        )
+        .unwrap_err();
+        assert_eq!(failure.code, "TEST_STOP");
+        assert!(failure.is_control_failure());
+    }
+
+    #[test]
+    fn map_projection_observes_key_before_value_failure_and_warning_order() {
+        let raw = json!({"kind":"record","fields":[{"index":3,"name":"entry","value":{"kind":"repeated","items":[{"kind":"record","fields":[
+            {"index":1,"name":"key","value":{"kind":"physical","value":{"type":"INT32","value":"12"}}},
+            {"index":2,"name":"value","value":{"kind":"physical","value":{"type":"BYTE_ARRAY","hex":"ff"}}}
+        ]}]}}]});
+        let containers = BTreeMap::from([(
+            0,
+            json!({"kind":"map","repeatedIndex":3,"keyIndex":1,"valueIndex":2}),
+        )]);
+        let mut ctx = Context::ordinary();
+        let mut projector = Projector {
+            annotations: BTreeMap::from([
+                (
+                    1,
+                    json!({"name":"DECIMAL","parameters":{"precision":"1","scale":"0"}}),
+                ),
+                (2, json!({"name":"STRING","parameters":{}})),
+            ]),
+            containers: containers.clone(),
+            opaque_reported: BTreeSet::new(),
+            diagnostics: Vec::new(),
+            text_units: 0,
+            ctx: &mut ctx,
+        };
+        assert_eq!(
+            projector
+                .project(0, &raw, false)
+                .unwrap_err()
+                .message
+                .to_utf8()
+                .unwrap(),
+            "Decimal value exceeds declared precision"
+        );
+        let mut ctx = Context::ordinary();
+        let mut projector = Projector {
+            annotations: BTreeMap::from([
+                (1, json!({"name":"KEY_FUTURE","parameters":{}})),
+                (2, json!({"name":"VALUE_FUTURE","parameters":{}})),
+            ]),
+            containers,
+            opaque_reported: BTreeSet::new(),
+            diagnostics: Vec::new(),
+            text_units: 0,
+            ctx: &mut ctx,
+        };
+        projector.project(0, &raw, false).unwrap();
+        let paths: Vec<_> = projector
+            .diagnostics
+            .iter()
+            .map(|d| text(member(d, "path").unwrap()).unwrap())
+            .collect();
+        assert_eq!(paths, ["/schema/1", "/schema/2"]);
     }
 
     #[test]
@@ -992,10 +1169,15 @@ mod tests {
             assert_eq!(public["status"], case["status"], "{id}");
             assert_eq!(public["complete"], false, "{id}");
             if case["status"] == "projected" {
-                let expected: Json =
-                    serde_json::from_slice(&fixture(&format!("fixtures/parquet/values/{id}.json")))
-                        .unwrap();
-                assert_eq!(public["rows"], expected, "{id}");
+                let expected = parse_value(
+                    std::str::from_utf8(&fixture(&format!("fixtures/parquet/values/{id}.json")))
+                        .unwrap(),
+                );
+                assert_eq!(
+                    member(&result, "rows"),
+                    Some(&expected),
+                    "{id}: complete ordered rows"
+                );
             } else {
                 assert!(public.get("rows").is_none(), "{id}");
             }

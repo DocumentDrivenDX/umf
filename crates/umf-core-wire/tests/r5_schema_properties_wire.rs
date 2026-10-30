@@ -98,7 +98,7 @@ fn ok_value(response: &serde_json::Value) -> Value {
 
 #[test]
 fn inspect_declare_preserve_copy_and_unknown_groups() {
-    let frozen=parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-schema-properties/frozen-typescript.json"));
+    let frozen=parse(include_str!("../../../tests/rust-core/fixtures/r5-schema-properties/frozen-typescript.json"));
     let inputs = get(&frozen, "inputs").unwrap();
     let original = get(inputs, "source").unwrap().clone();
     let identity = get(inputs, "identity").unwrap().clone();
@@ -175,7 +175,7 @@ fn inspect_declare_preserve_copy_and_unknown_groups() {
 
 #[test]
 fn request_refusal_precedes_source_and_source_precedes_lookup() {
-    let frozen=parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-schema-properties/frozen-typescript.json"));
+    let frozen=parse(include_str!("../../../tests/rust-core/fixtures/r5-schema-properties/frozen-typescript.json"));
     let inputs = get(&frozen, "inputs").unwrap();
     let unknown = get(inputs, "unknownPatch").unwrap();
     let response = run(
@@ -237,7 +237,7 @@ fn request_refusal_precedes_source_and_source_precedes_lookup() {
 
 #[test]
 fn declaration_literal_refusals_match_predecessor_diagnostics() {
-    let frozen = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-schema-properties/frozen-typescript.json"));
+    let frozen = parse(include_str!("../../../tests/rust-core/fixtures/r5-schema-properties/frozen-typescript.json"));
     let inputs = get(&frozen, "inputs").unwrap();
     let source = get(inputs, "source").unwrap().clone();
     let identity = get(inputs, "identity").unwrap().clone();
@@ -266,7 +266,7 @@ fn declaration_literal_refusals_match_predecessor_diagnostics() {
 
 #[test]
 fn source_order_unknown_key_path_and_post_edit_diagnostics_are_preserved() {
-    let frozen = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-schema-properties/frozen-typescript.json"));
+    let frozen = parse(include_str!("../../../tests/rust-core/fixtures/r5-schema-properties/frozen-typescript.json"));
     let inputs = get(&frozen, "inputs").unwrap();
     let source = get(inputs, "source").unwrap().clone();
 
@@ -336,7 +336,7 @@ fn source_order_unknown_key_path_and_post_edit_diagnostics_are_preserved() {
 
 #[test]
 fn invalid_identity_reports_first_unknown_member_before_generic_scope_error() {
-    let frozen = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-schema-properties/frozen-typescript.json"));
+    let frozen = parse(include_str!("../../../tests/rust-core/fixtures/r5-schema-properties/frozen-typescript.json"));
     let source = get(get(&frozen, "inputs").unwrap(), "source").unwrap().clone();
     for (identity, key) in [
         (r#"{"scope":"nonsense","future":true}"#, "scope"),

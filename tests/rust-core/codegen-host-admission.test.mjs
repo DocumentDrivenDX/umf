@@ -65,7 +65,7 @@ test('R3 installed Node operations stop after work begins and retain independent
   const load=path=>JSON.parse(readFileSync(new URL('../../'+path,import.meta.url),'utf8'));
   const paths={coreSchema:'spec/core/schema.json',referenceSchema:'spec/core/semantic-type-reference.schema.json',packageSchema:'spec/core/extension-package.schema.json',constraints:'spec/metamodel/generated/core-constraints.json',domainPolicy:'spec/metamodel/generated/domain-policy.json',tablesPackage:'spec/extensions/tables/package.json',actionsPackage:'spec/extensions/actions/package.json',bindingPackage:'spec/extensions/binding/package.json',stableBindingPackage:'spec/extensions/binding-stable/package.json'};
   const catalogs=Object.fromEntries(Object.entries(paths).map(([key,path])=>[key,load(path)]));
-  const corpus=load('docs/helix/04-build/evidence/rust-migration/r3/baseline/operations.json');
+  const corpus=load('tests/rust-core/fixtures/r3/baseline/operations.json');
   for(const operation of ['generatePythonClient','compileTableDeployment','compileTableMigration']){
     const row=corpus.cases.find(row=>row.operation===operation&&row.expected.ok);
     assert.ok(row,operation+' success fixture');
@@ -92,7 +92,7 @@ test('retained Node codegen is opt-in, snapshots resources, and resets controls 
   const load=path=>JSON.parse(readFileSync(new URL('../../'+path,import.meta.url),'utf8'));
   const paths={coreSchema:'spec/core/schema.json',referenceSchema:'spec/core/semantic-type-reference.schema.json',packageSchema:'spec/core/extension-package.schema.json',constraints:'spec/metamodel/generated/core-constraints.json',domainPolicy:'spec/metamodel/generated/domain-policy.json',tablesPackage:'spec/extensions/tables/package.json',actionsPackage:'spec/extensions/actions/package.json',bindingPackage:'spec/extensions/binding/package.json',stableBindingPackage:'spec/extensions/binding-stable/package.json'};
   const catalogs=Object.fromEntries(Object.entries(paths).map(([key,path])=>[key,load(path)]));
-  const corpus=load('docs/helix/04-build/evidence/rust-migration/r3/baseline/operations.json');
+  const corpus=load('tests/rust-core/fixtures/r3/baseline/operations.json');
   const row=corpus.cases.find(item=>item.operation==='generatePythonClient'&&item.expected.ok);
   assert.ok(row,'frozen successful generator case');
   const defaultEngine=createCodegenEngine(catalogs);
@@ -109,8 +109,8 @@ test('retained Node codegen is opt-in, snapshots resources, and resets controls 
   assert.deepEqual(first,expected,'retained output matches stateless frozen case');
   const total=charged;
   charged=0;
-  const generationCase=load('docs/helix/04-build/evidence/rust-migration/r3/sol-generation-binding-module-boundary-review/frozen.json').cases[0];
-  const diffCase=load('docs/helix/04-build/evidence/rust-migration/r3/sol-final-access-diff-utf16-review/frozen.json').cases[0];
+  const generationCase=load('tests/rust-core/fixtures/r3/sol-generation-binding-module-boundary-review/frozen.json').cases[0];
+  const diffCase=load('tests/rust-core/fixtures/r3/sol-final-access-diff-utf16-review/frozen.json').cases[0];
   assert.equal(JSON.stringify(retained.generateAccessPackage(generationCase.request.request,generationCase.request.profile)),JSON.stringify(generationCase.expected.result),'retained generateAccessPackage matches frozen output');
   assert.equal(JSON.stringify(retained.diffAccessPackages(diffCase.request.before,diffCase.request.after)),JSON.stringify(diffCase.expected.result),'retained diffAccessPackages matches frozen output');
   assert.ok(total>1000,'invocation work is metered independently');

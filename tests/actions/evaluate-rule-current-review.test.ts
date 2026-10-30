@@ -2,9 +2,9 @@
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
 import {readFileSync} from 'node:fs';
-import casesPacket from '../../docs/helix/04-build/evidence/rust-migration/r5-actions/evaluate-action-rule/current-source-review-cases.json';
-import results from '../../docs/helix/04-build/evidence/rust-migration/r5-actions/evaluate-action-rule/current-source-review-results.json';
-import sourceHashes from '../../docs/helix/04-build/evidence/rust-migration/r5-actions/evaluate-action-rule/current-source-review-hashes.json';
+import casesPacket from '../../tests/rust-core/fixtures/r5-actions/evaluate-action-rule/current-source-review-cases.json';
+import results from '../../tests/rust-core/fixtures/r5-actions/evaluate-action-rule/current-source-review-results.json';
+import sourceHashes from '../../tests/rust-core/fixtures/r5-actions/evaluate-action-rule/current-source-review-hashes.json';
 import {capture,cases} from './evaluate-rule-current-review';
 
 test('current-source evaluator review cases retain exact refusal envelopes',()=>{

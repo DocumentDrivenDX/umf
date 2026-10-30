@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createAccessTemporalEngine, ACCESS_TEMPORAL_PROFILE} from '../index.js';
 
-const packet = JSON.parse(readFileSync(new URL('../../../../docs/helix/04-build/evidence/rust-migration/r8-access-temporal/reference-packet.json', import.meta.url), 'utf8'));
+const packet = JSON.parse(readFileSync(new URL('../../../../../../../../tests/rust-core/fixtures/r8-access-temporal/reference-packet.json', import.meta.url), 'utf8'));
 assert.equal(packet.profile, ACCESS_TEMPORAL_PROFILE);
 assert.equal(packet.operation, 'parseAccessTemporal');
 const engine = createAccessTemporalEngine();

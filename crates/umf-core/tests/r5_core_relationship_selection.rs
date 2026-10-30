@@ -7,7 +7,7 @@ use umf_core::{
     Diagnostic, EngineError, Utf16, Value,
 };
 
-const PACKET: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-core-relationship-selection/frozen-typescript.json");
+const PACKET: &str = include_str!("../../../tests/rust-core/fixtures/r5-core-relationship-selection/frozen-typescript.json");
 struct NoCapabilities;
 impl Capabilities for NoCapabilities {
     fn validate_extension(

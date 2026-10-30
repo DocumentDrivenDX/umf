@@ -42,7 +42,7 @@ fn value(v: &Value) -> serde_json::Value {
 
 #[test]
 fn mapped_rename_matches_frozen_typescript_data_and_refusal_order() {
-    let packet: serde_json::Value = serde_json::from_str(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r8-delta-spark-hash/delta-rename-predecessor.json")).unwrap();
+    let packet: serde_json::Value = serde_json::from_str(include_str!("../../../tests/rust-core/fixtures/r8-delta-spark-hash/delta-rename-predecessor.json")).unwrap();
     for case in packet["cases"].as_array().unwrap() {
         let source = case["text"].as_str().unwrap();
         let id = case["tableId"].as_str().unwrap();
@@ -88,7 +88,7 @@ fn mapped_rename_matches_frozen_typescript_data_and_refusal_order() {
 
 #[test]
 fn malformed_utf16_pointer_segment_is_refused_without_replacement() {
-    let packet: serde_json::Value = serde_json::from_str(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r8-delta-spark-hash/delta-rename-predecessor.json")).unwrap();
+    let packet: serde_json::Value = serde_json::from_str(include_str!("../../../tests/rust-core/fixtures/r8-delta-spark-hash/delta-rename-predecessor.json")).unwrap();
     let case = &packet["cases"][0];
     let imported = raw(&execute_json(&request(
         "delta/table.import",

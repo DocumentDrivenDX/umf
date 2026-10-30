@@ -19,7 +19,7 @@ const ACCOUNTED_INPUTS={
  'spec/core/semantic-type-reference.schema.json':'207abbad54ebf8c660a958e2deda072a5a3236b5b8df5af8a8656f90c3e46ba9',
  'spec/core/extension-package.schema.json':'4df3c8f92c5baa2c52f965d83b681ff306392bf9ba333bd39213a8f1065ac766',
 } as const;
-const COMPANION_INPUT_BASE='docs/helix/04-build/evidence/rust-migration/r8-accounted-companion-inputs';
+const COMPANION_INPUT_BASE='tests/rust-core/fixtures/r8-accounted-companion-inputs';
 const OUTPUT_PATHS=[
  'spec/core/schema.json','spec/core/semantic-type-reference.schema.json','spec/core/extension-package.schema.json',
  'spec/metamodel/package.json','spec/metamodel/generated/core-constraints.json','spec/metamodel/generated/domain-policy.json',

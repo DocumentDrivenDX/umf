@@ -36,7 +36,7 @@ fn get<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
 
 #[test]
 fn wire_resolves_defaults_and_transports_refusals() {
-    let fixture = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-schema-defaults/frozen-typescript.json"));
+    let fixture = parse(include_str!("../../../tests/rust-core/fixtures/r5-schema-defaults/frozen-typescript.json"));
     let source = get(&fixture, "source").unwrap();
     let resources = Value::Object(vec![
         (

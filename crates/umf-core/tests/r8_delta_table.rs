@@ -15,7 +15,7 @@ fn setup() -> (DeltaTableResources, Context<'static>) {
 #[test]
 fn table_semantic_warnings_match_frozen_typescript_order_code_path_and_message() {
     let receipt: serde_json::Value = serde_json::from_str(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r8-delta-spark-hash/delta-table-warning-predecessor.json"
+        "../../../tests/rust-core/fixtures/r8-delta-spark-hash/delta-table-warning-predecessor.json"
     )).unwrap();
     let cases = receipt["cases"].as_array().unwrap();
     let (resources, mut ctx) = setup();

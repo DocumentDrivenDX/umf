@@ -1011,7 +1011,7 @@ mod tests {
     #[test]
     fn blocked_three_element_and_map_families_retain_unknown_mappings_and_diagnostics() {
         let frozen: serde_json::Value = serde_json::from_str(include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r8-parquet-record-type/typescript-predecessor.json"
+            "../../../tests/rust-core/fixtures/r8-parquet-record-type/typescript-predecessor.json"
         ))
         .unwrap();
         let fixtures: [(&[u8], bool, &str); 2] = [

@@ -163,7 +163,7 @@ mod tests {
 
     fn frozen() -> Value {
         parse(include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r5-record-members-inspection/frozen-typescript.json"
+            "../../../tests/rust-core/fixtures/r5-record-members-inspection/frozen-typescript.json"
         ))
     }
 

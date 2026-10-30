@@ -112,7 +112,7 @@ describe('opt-in Rust semantic value registry',()=>{
   });
 
   test('aggregates current core declarations using the same invocation registry',()=>{
-    const packet=JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r5-core-semantic-types/frozen-typescript.json','utf8'));
+    const packet=JSON.parse(readFileSync('tests/rust-core/fixtures/r5-core-semantic-types/frozen-typescript.json','utf8'));
     const source=structuredClone(packet.cases.inspect.value.source);
     delete source.modules[0].elements[0].semanticTypes[0].qualifier;
     const resources={

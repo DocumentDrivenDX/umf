@@ -1,6 +1,7 @@
 export declare class UmfCoreError extends Error { readonly code: string; readonly path: string }
 export declare function isWireAdmissionError(error: unknown): boolean;
 export declare function isNativeUmfCoreError(error: unknown): boolean;
+export declare function isDbtHostError(error: unknown): boolean;
 export declare function isCoreBit128FieldBindingError(error: unknown): boolean;
 export interface SemanticTypeReference { vocabulary: string; version: string; term: string; [key: string]: unknown }
 export interface SemanticTypeCheck { status: 'valid'|'invalid'|'unknown'; complete: boolean; issues: string[] }
@@ -352,6 +353,8 @@ export declare function createCoreModelRootKindNullabilityEngine(resources: UmfC
   inspectCoreNullability(source: unknown, identity: unknown): unknown;
   declareCoreNullability(source: unknown, identity: unknown, nullability: unknown): unknown;
   verifyCoreNullabilityDeclaration(receipt: unknown, current: unknown): unknown;
+  getSemanticTypes(document: unknown, module: unknown, element: unknown): unknown;
+  setSemanticTypes(document: unknown, module: unknown, element: unknown, annotation: unknown): unknown;
 };
 export declare function createCoreKeyTupleEngine(resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): Pick<UmfCoreModelEngine, 'encodeCoreKeyTuple' | 'verifyCoreKeyTuple' | 'readCoreKeyTupleBytes' | 'prepareCoreKeyTuples'>;
 /** Create the opt-in Rust-owned umf.host-json/1 schema-property declaration route. */
@@ -524,6 +527,9 @@ export interface ParquetCaptureEngine {
   decodeParquetPageBodies(document: unknown): unknown;
   decodeParquetLevels(document: unknown): unknown;
   decodeParquetPhysical(document: unknown): unknown;
+  decodeParquetValues(document: unknown): unknown;
+  assembleParquetRows(document: unknown): unknown;
+  repairParquetDictionaryOffsets(document: unknown): unknown;
   inspectParquetLogicalTypes(document: unknown): unknown;
   inspectParquetContainers(document: unknown): unknown;
   getParquetFieldMetadata(document: unknown): unknown;
@@ -607,3 +613,51 @@ export declare function createJsonSchemaStagedImportSessionEngine(): JsonSchemaS
 
 export declare const AVRO_CARDINALITY_BINDING_PROFILE: 'umf.avro-cardinality-binding/1.0.0';
 export declare function executeAvroCardinalityBindingWire(wireJson: string, controlDispatcher?: (amount: number) => string | undefined): string;
+
+export declare const DBT_PROFILE: 'umf-r9-dbt-preservation/0.1.0';
+export interface DbtEngine {
+ readonly profile: typeof DBT_PROFILE;
+ readonly capabilities: Readonly<{profile: typeof DBT_PROFILE; nativeJson: true; complete: false}>;
+ importDbtManifest(text: string, options: {id: string}): unknown;
+ exportDbtManifest(document: unknown): string;
+ inspectDbtManifest(document: unknown): unknown;
+ getDbtManifestNode(document: unknown, path: string): unknown;
+ proposeDbtManifestNodeEdit(document: unknown, path: string, text: string): unknown;
+ importDbtArtifact(text: string, options: {id: string}): unknown;
+ exportDbtArtifact(document: unknown): string;
+ inspectDbtArtifact(document: unknown): unknown;
+ getDbtArtifactNode(document: unknown, path: string): unknown;
+ proposeDbtArtifactNodeEdit(document: unknown, path: string, text: string): unknown;
+ importDbtSemanticManifest(text: string, options: {id: string}): unknown;
+ exportDbtSemanticManifest(document: unknown): string;
+ inspectDbtSemanticManifest(document: unknown): unknown;
+ getDbtSemanticManifestNode(document: unknown, path: string): unknown;
+ proposeDbtSemanticManifestNodeEdit(document: unknown, path: string, text: string): unknown;
+ inspectDbtManifestGraph(document: unknown): unknown;
+ selectDbtManifestDependencies(document: unknown, options: {roots: string[]; includeMacros?: boolean; maxDepth?: number; maxNodes?: number}): unknown;
+}
+export declare function createDbtEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): DbtEngine;
+
+export declare const RDF_PROFILE: 'umf-r9-rdf-preservation/0.1.0';
+export interface RdfEngine {
+ readonly profile: typeof RDF_PROFILE;
+ readonly capabilities: Readonly<{profile: typeof RDF_PROFILE; rdf11: true; generalizedJson: true; complete: false}>;
+ inspectRdfDocument(document: unknown): unknown;
+ importRdfNQuads(source: string, options: {id: string; blankNodeScope?: string}): unknown;
+ getRdfQuads(document: unknown): unknown[];
+ exportRdfNQuads(document: unknown, options?: {preserveSource?: boolean}): string;
+ proposeRdfQuadEdit(document: unknown, index: number, replacement: unknown): unknown;
+ proposeRdfIriRename(document: unknown, options: {from: string; to: string}): unknown;
+ importRdfTurtle(source: string, options: {id: string; baseIRI: string; blankNodeScope?: string}): unknown;
+ exportRdfTurtle(document: unknown): string;
+ getRdfNamedGraphs(document: unknown): unknown[];
+ importRdfTriG(source: string, options: {id: string; baseIRI: string; blankNodeScope?: string}): unknown;
+ exportRdfTriG(document: unknown): string;
+ proposeRdfDatasetMerge(documents: unknown[], options: {id: string; graphPolicy: 'union-by-name'; blankNodePolicy: 'disjoint-inputs'}): unknown;
+ inspectGeneralizedRdfDocument(document: unknown): unknown;
+ importGeneralizedRdfDataset(source: string, options: {id: string; blankNodeScope?: string}): unknown;
+ exportGeneralizedRdfDataset(document: unknown): string;
+ getGeneralizedRdfQuads(document: unknown): unknown[];
+ proposeGeneralizedRdfQuadEdit(document: unknown, index: number, replacement: unknown): unknown;
+}
+export declare function createRdfEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): RdfEngine;

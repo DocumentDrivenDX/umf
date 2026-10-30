@@ -67,7 +67,7 @@ fn text(value: &Value) -> String {
 
 #[test]
 fn tagged_reference_identity_matches_frozen_bun_predecessor() {
-    let packet = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r8-security-truth-logic/ref-identity-cases.json"));
+    let packet = parse(include_str!("../../../tests/rust-core/fixtures/r8-security-truth-logic/ref-identity-cases.json"));
     let Value::Array(cases) = get(&packet, "cases").unwrap() else {
         panic!("identity cases")
     };

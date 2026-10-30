@@ -15,8 +15,8 @@ function executeRecordTypeBindingWire(wireJson, controlDispatcher) {
   return addon.executeRecordTypeWire(wireJson, controlDispatcher);
 }
 
-const avroPacket = JSON.parse(readFileSync(new URL('../../../../docs/helix/04-build/evidence/rust-migration/r8-avro-record-type/typescript-predecessor.json', import.meta.url), 'utf8'));
-const parquetPacket = JSON.parse(readFileSync(new URL('../../../../docs/helix/04-build/evidence/rust-migration/r8-parquet-record-type/typescript-predecessor.json', import.meta.url), 'utf8'));
+const avroPacket = JSON.parse(readFileSync(new URL('../../../../../../../../tests/rust-core/fixtures/r8-avro-record-type/typescript-predecessor.json', import.meta.url), 'utf8'));
+const parquetPacket = JSON.parse(readFileSync(new URL('../../../../../../../../tests/rust-core/fixtures/r8-parquet-record-type/typescript-predecessor.json', import.meta.url), 'utf8'));
 
 function call(op, fields, control) {
   const text = executeRecordTypeBindingWire(encodeRequestWire({profile: RECORD_TYPE_BINDING_PROFILE, op, ...fields}), control);

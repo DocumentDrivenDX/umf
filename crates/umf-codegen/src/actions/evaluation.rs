@@ -1080,7 +1080,7 @@ mod tests {
     #[test]
     fn current_source_review_cases_match_exact_refusals() {
         let packet = parse(include_str!(
-            "../../../../docs/helix/04-build/evidence/rust-migration/r5-actions/evaluate-action-rule/current-source-review-results.json"
+            "../../../../tests/rust-core/fixtures/r5-actions/evaluate-action-rule/current-source-review-results.json"
         ));
         let expected = value::array(value::get(&packet, "cases").unwrap()).unwrap();
         let (resources, mut document, mut action) = fixture();
@@ -1432,10 +1432,10 @@ mod tests {
     #[test]
     fn frozen_r5_packet_matches_for_every_rust_representable_case() {
         let cases = parse(include_str!(
-            "../../../../docs/helix/04-build/evidence/rust-migration/r5-actions/evaluate-action-rule/predecessor-cases.json"
+            "../../../../tests/rust-core/fixtures/r5-actions/evaluate-action-rule/predecessor-cases.json"
         ));
         let expected = parse(include_str!(
-            "../../../../docs/helix/04-build/evidence/rust-migration/r5-actions/evaluate-action-rule/predecessor-results.json"
+            "../../../../tests/rust-core/fixtures/r5-actions/evaluate-action-rule/predecessor-results.json"
         ));
         let cases = value::array(value::get(&cases, "cases").unwrap()).unwrap();
         let expected = value::array(value::get(&expected, "cases").unwrap()).unwrap();
@@ -1461,10 +1461,10 @@ mod tests {
     #[test]
     fn current_numeric_review_packet_matches_all_predecessor_controls() {
         let cases = parse(include_str!(
-            "../../../../docs/helix/04-build/evidence/rust-migration/r5-actions/evaluate-action-rule/numeric-source-review-cases.json"
+            "../../../../tests/rust-core/fixtures/r5-actions/evaluate-action-rule/numeric-source-review-cases.json"
         ));
         let expected = parse(include_str!(
-            "../../../../docs/helix/04-build/evidence/rust-migration/r5-actions/evaluate-action-rule/numeric-source-review-results.json"
+            "../../../../tests/rust-core/fixtures/r5-actions/evaluate-action-rule/numeric-source-review-results.json"
         ));
         let cases = value::array(value::get(&cases, "cases").unwrap()).unwrap();
         let expected = value::array(value::get(&expected, "cases").unwrap()).unwrap();

@@ -218,7 +218,7 @@ mod tests {
     }
     fn receipt() -> Value {
         let frozen = parse(include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r5-core-keys/frozen-typescript.json"
+            "../../../tests/rust-core/fixtures/r5-core-keys/frozen-typescript.json"
         ));
         let outcomes = get(&frozen, "outcomes");
         get(get(outcomes, "declare_key_explicit_primary"), "value").clone()

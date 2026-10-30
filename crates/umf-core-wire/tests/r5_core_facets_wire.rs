@@ -95,7 +95,7 @@ fn run(op: &str, args: &[(&str, &Value)]) -> (serde_json::Value, Option<Value>) 
 #[test]
 fn tagged_facet_operations_match_frozen_predecessor_and_regressions() {
     let frozen = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-core-facets/frozen-typescript.json"
+        "../../../tests/rust-core/fixtures/r5-core-facets/frozen-typescript.json"
     ));
     let (_, receipt) = run(
         "model/declareCoreFacets",
@@ -179,7 +179,7 @@ fn tagged_facet_operations_match_frozen_predecessor_and_regressions() {
     assert_eq!(forged_response["code"], "CORE_FACET_RECEIPT");
 
     let regression = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-core-facets/regression-cases.json"
+        "../../../tests/rust-core/fixtures/r5-core-facets/regression-cases.json"
     ));
     let cases = get(&regression, "cases").unwrap();
     let length = get(cases, "lengthMerge").unwrap();

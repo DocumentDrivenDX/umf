@@ -88,7 +88,7 @@ fn request_from_json(value: &serde_json::Value) -> String {
 
 fn fixture_request(case: &serde_json::Value) -> Option<String> {
     let fixture: serde_json::Value = serde_json::from_str(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-avro-candidate-wire/candidate-wire-cases.json"
+        "../../../tests/rust-core/fixtures/r5-avro-candidate-wire/candidate-wire-cases.json"
     ))
     .unwrap();
     let request = case["requestValue"].as_object()?;
@@ -247,7 +247,7 @@ fn request_refusal_order_and_host_control_are_preserved() {
 #[test]
 fn all_frozen_candidate_wire_cases_match_their_first_outcome() {
     let fixture: serde_json::Value = serde_json::from_str(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-avro-candidate-wire/candidate-wire-cases.json"
+        "../../../tests/rust-core/fixtures/r5-avro-candidate-wire/candidate-wire-cases.json"
     ))
     .unwrap();
     let cases = fixture["cases"].as_array().unwrap();

@@ -204,7 +204,7 @@ jobs:
             "python/pyproject.toml","python/src/umf/__init__.py","python/src/umf/schemas.py",
             "python/src/umf/generated_resources.py","python/src/umf/action_runtime_resource_manifest.json",
             "python/tests/test_python_artifact_version.py",
-            "scripts/rust-inventory.py","scripts/rust-inventory-typescript.ts","scripts/check-rust-boundaries.py",
+            "scripts/check-rust-boundaries.py",
             "Cargo.toml","Cargo.lock"
           ]
           rows=[]
@@ -271,10 +271,7 @@ jobs:
                            "ownerResultPath":owner_rel.as_posix(),"ownerResultSha256":sha(owner_path),
                            "sourcePinsSha256":expected_stage_pins_sha,
                            "sourceOutputReviewPath":review_rel.as_posix(),"sourceOutputReviewSha256":expected_review_sha},
-                         "pinnedSourceInputs":rows,
-                         "historicalGeneratedOutputsAreCurrentQualificationEvidence":False,
-                         "historicalInventorySeed":{"path":"docs/helix/04-build/evidence/rust-migration/r3/inventory.json",
-                           "role":"Core 0.10.2 historical generation seed; exact bytes and SHA256 are retained in historical-placeholder-inputs.json"}}
+                         "pinnedSourceInputs":rows}
           (evidence/"source-inputs.json").write_text(json.dumps(source_inputs,indent=2,sort_keys=True)+"\n")
           PY
 
@@ -463,7 +460,6 @@ jobs:
             "python/umf_codegen/src/umf_codegen/_release.py",
             "python/umf_codegen/src/umf_codegen/_assets/manifest.json",
             "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz",
-            "docs/helix/04-build/evidence/rust-migration/r3/inventory.json",
             "docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json",
           ]
           rows=[]
@@ -552,7 +548,6 @@ jobs:
             run_bounded codegen-assets 600 bun scripts/build-codegen.ts
             run_bounded action-plan-identity-check 180 bun scripts/actions-plan-identity.ts --check
             run_bounded codegen-assets-check 180 bun scripts/build-codegen.ts --check
-            run_bounded r3-inventory 600 python -I scripts/rust-inventory.py
             run_bounded r3-boundary-check 900 python -I scripts/check-rust-boundaries.py
           fi
           BOUNDED_GENERATION_WORK
@@ -687,7 +682,6 @@ jobs:
           sources={"src/extensions/actions/plan-identity.ts":"outputs/src/extensions/actions/plan-identity.ts",
             "python/umf_codegen/src/umf_codegen/_release.py":"outputs/python/umf_codegen/src/umf_codegen/_release.py",
             "python/umf_codegen/src/umf_codegen/_assets/manifest.json":"outputs/python/umf_codegen/src/umf_codegen/_assets/manifest.json",
-            "docs/helix/04-build/evidence/rust-migration/r3/inventory.json":"outputs/docs/helix/04-build/evidence/rust-migration/r3/inventory.json",
             "docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json":"outputs/docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json"}
           sources.update({path:"outputs/"+path for path in metamodel_paths})
           receipt={"profile":"umf.merged-source-generation/1","status":"FAIL_OR_UNKNOWN","qualifiesMergedSource":False,
@@ -759,9 +753,7 @@ jobs:
               plan=(root/"src/extensions/actions/plan-identity.ts").read_text()
               if not re.search(r'export const actionPlanProducerBuild = "sha256:[0-9a-f]{64}";',plan): raise ValueError("action plan producer build identity is malformed")
               if not re.search(r'export const actionPlanModelSchemaDigest = "[0-9a-f]{64}";',plan): raise ValueError("action plan model schema identity is malformed")
-              inventory=json.loads((root/"docs/helix/04-build/evidence/rust-migration/r3/inventory.json").read_bytes())
               boundary=json.loads((root/"docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json").read_bytes())
-              if inventory.get("schema")!="umf.rust-migration-inventory/0.2" or not inventory.get("capture",{}).get("sourceCohortSha256"): raise ValueError("R3 inventory does not identify current source cohort")
               if boundary.get("schema")!="umf.rust-boundary-check/0.1": raise ValueError("R3 boundary output schema mismatch")
               receipt["r3BoundaryStatus"]=boundary.get("status")
               source_inputs=evidence/"source-inputs.json"

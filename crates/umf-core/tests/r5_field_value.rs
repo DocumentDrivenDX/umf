@@ -66,7 +66,7 @@ fn engine() -> Engine {
 
 #[test]
 fn frozen_public_typescript_results_match_exactly() {
-    let frozen = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-field-value/frozen-typescript.json"));
+    let frozen = parse(include_str!("../../../tests/rust-core/fixtures/r5-field-value/frozen-typescript.json"));
     let source = get(&frozen, "source").unwrap();
     let operation = engine();
     let Value::Array(cases) = get(&frozen, "cases").unwrap() else {
@@ -131,7 +131,7 @@ fn frozen_public_typescript_results_match_exactly() {
 
 #[test]
 fn malformed_string_carrier_observes_before_length_refinement() {
-    let frozen = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-field-value/frozen-typescript.json"));
+    let frozen = parse(include_str!("../../../tests/rust-core/fixtures/r5-field-value/frozen-typescript.json"));
     let mut source = get(&frozen, "source").unwrap().clone();
     let modules = match get_mut(&mut source, "modules") {
         Some(Value::Array(modules)) => modules,
@@ -257,7 +257,7 @@ fn malformed_string_carrier_observes_before_length_refinement() {
 
 #[test]
 fn identity_copy_limit_remains_an_operation_error() {
-    let frozen = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-field-value/frozen-typescript.json"));
+    let frozen = parse(include_str!("../../../tests/rust-core/fixtures/r5-field-value/frozen-typescript.json"));
     let Value::Array(cases) = get(&frozen, "cases").unwrap() else {
         panic!("cases")
     };

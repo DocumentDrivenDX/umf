@@ -3,7 +3,7 @@
     {
       "source": "bindings/core/node/src/wire.js",
       "generated": "bindings/core/wasm/src/wire.js",
-      "sha256": "5a59889a7484b69554b628aa45c58bad6f71bb4c47679ae63d72f2e8a8e0daea"
+      "sha256": "affd43c822f69037c8792990f62179d06a9bb23f0779feefda650df13353f97a"
     },
     {
       "source": "bindings/core/node/src/arrow-ipc.js",
@@ -13,7 +13,17 @@
     {
       "source": "bindings/core/node/src/parquet-capture.js",
       "generated": "bindings/core/wasm/src/parquet-capture.js",
-      "sha256": "0ef66ea8246bd56a7bd4f01717a0419d1f04a97919afe95457743565a92197e7"
+      "sha256": "16e4d5e9681643198ebc1bce825a48dd5214360e619d57849efa50fd817ae3f8"
+    },
+    {
+      "source": "bindings/core/node/src/dbt.js",
+      "generated": "bindings/core/wasm/src/dbt.js",
+      "sha256": "b1d11623d233d6c73d09784976b672bfe677c790c68fd3ecf26a7910065d3fac"
+    },
+    {
+      "source": "bindings/core/node/src/rdf.js",
+      "generated": "bindings/core/wasm/src/rdf.js",
+      "sha256": "1495ce6a5a75d090498c1f3ab14c4ef0215d30122ff704eaf009dc07ce1ec443"
     },
     {
       "source": "bindings/core/node/src/access-rrf.js",
@@ -113,7 +123,7 @@
     {
       "source": "bindings/core/node/src/host-json.js",
       "generated": "bindings/core/wasm/src/host-json.js",
-      "sha256": "a0f31aa39919ccb2eabf958f0306e406b00734654a011a6f73fea6148956c9fa"
+      "sha256": "7c108a60bd401c92a5e9603f3d8ef6647be5c852b9720f62480a41e92ddd302a"
     }
   ]
 }

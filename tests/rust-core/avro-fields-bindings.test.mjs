@@ -7,7 +7,7 @@ const nodeBindingEntry = process.env.UMF_NODE_BINDING_DIR
   ? pathToFileURL(resolve(process.env.UMF_NODE_BINDING_DIR, 'index.js')).href
   : new URL('../../bindings/core/node/index.js', import.meta.url).href;
 const {createAvroFieldsEngine, AVRO_FIELDS_PROFILE} = await import(nodeBindingEntry);
-const packet = JSON.parse(readFileSync(resolve(import.meta.dir, '../../docs/helix/04-build/evidence/rust-migration/r5-avro-fields/predecessor.json'), 'utf8'));
+const packet = JSON.parse(readFileSync(resolve(import.meta.dir, '../../tests/rust-core/fixtures/r5-avro-fields/predecessor.json'), 'utf8'));
 const engine = createAvroFieldsEngine();
 const canonical = value => value === null || typeof value !== 'object' ? JSON.stringify(value) : Array.isArray(value) ? `[${value.map(canonical).join(',')}]` : `{${Object.keys(value).sort().map(key => `${JSON.stringify(key)}:${canonical(value[key])}`).join(',')}}`;
 const capture = fn => { try { return {status: 'ok', value: fn()}; } catch (error) { return {status: 'error', code: error.code, message: error.message, path: error.path}; } };

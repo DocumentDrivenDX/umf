@@ -9,6 +9,8 @@ const pairs = [
   ['bindings/core/node/src/wire.js', 'bindings/core/wasm/src/wire.js'],
   ['bindings/core/node/src/arrow-ipc.js', 'bindings/core/wasm/src/arrow-ipc.js'],
   ['bindings/core/node/src/parquet-capture.js', 'bindings/core/wasm/src/parquet-capture.js'],
+  ['bindings/core/node/src/dbt.js', 'bindings/core/wasm/src/dbt.js'],
+  ['bindings/core/node/src/rdf.js', 'bindings/core/wasm/src/rdf.js'],
   ['bindings/core/node/src/access-rrf.js', 'bindings/core/wasm/src/access-rrf.js'],
   ['bindings/core/node/src/javascript-numeric.js', 'bindings/core/wasm/src/javascript-numeric.js'],
   ['bindings/core/node/src/security-logic.js', 'bindings/core/wasm/src/security-logic.js'],

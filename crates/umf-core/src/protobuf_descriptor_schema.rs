@@ -2,7 +2,7 @@
 // Source: fixtures/protobuf/upstream/google/protobuf/descriptor.proto
 // SHA-256: c96db5406336ebcc82523c1dfb122721986a1f43c4aaed45a4a4ad6996efacc2
 
-// Buf receipt: docs/helix/04-build/evidence/rust-migration/r5-protobuf-descriptor-codec/predecessor.json
+// Buf receipt: tests/rust-core/fixtures/r5-protobuf-descriptor-codec/predecessor.json
 // Buf 2.15 closure SHA-256: f8af62dda87923b9d6cf785bcd18843fd38aaa87ddac1922990a5b37a7f5b943
 pub(super) const DESCRIPTOR_PROTO_SHA256: &str = "c96db5406336ebcc82523c1dfb122721986a1f43c4aaed45a4a4ad6996efacc2";
 pub(super) const BUF_PACKAGE_CLOSURE_SHA256: &str = "f8af62dda87923b9d6cf785bcd18843fd38aaa87ddac1922990a5b37a7f5b943";

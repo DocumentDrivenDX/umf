@@ -103,7 +103,7 @@ fn run(op: &str, args: &[(&str, &Value)]) -> (serde_json::Value, Option<Value>) 
 
 #[test]
 fn tagged_semantic_type_routes_match_frozen_predecessors_and_undefined_sentinel() {
-    let frozen = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-core-semantic-types/frozen-typescript.json"));
+    let frozen = parse(include_str!("../../../tests/rust-core/fixtures/r5-core-semantic-types/frozen-typescript.json"));
     let cases = get(&frozen, "cases").unwrap();
     let inspect_expected = get(cases, "inspect").and_then(|v| get(v, "value")).unwrap();
     let source = get(inspect_expected, "source").unwrap();
@@ -176,7 +176,7 @@ fn tagged_semantic_type_routes_match_frozen_predecessors_and_undefined_sentinel(
 
 #[test]
 fn extension_semantic_type_getter_preserves_frozen_annotation_and_utf16_request() {
-    let frozen = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-semantic-type-accessors/frozen-typescript.json"));
+    let frozen = parse(include_str!("../../../tests/rust-core/fixtures/r5-semantic-type-accessors/frozen-typescript.json"));
     let document = get(get(&frozen, "caseInputs").unwrap(), "document").unwrap();
     let (_, got) = run(
         "extensions/getSemanticTypes",

@@ -24,7 +24,7 @@ impl umf_core::Capabilities for EmptyCaps {
 
 #[test]
 fn tagged_operation_matches_frozen_success_refusal_and_utf16_cases() {
-    let packet = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-record-values/frozen-typescript.json"));
+    let packet = parse(include_str!("../../../tests/rust-core/fixtures/r5-record-values/frozen-typescript.json"));
     let wire_cases = ["valid-present", "invalid-source-version", "sol-surrogate-present", "sol-array-record-identity"];
     for case in array(get(&packet, "cases").unwrap()).iter().filter(|case| {
         let id = match get(case, "id").unwrap() { Value::String(s) => s.to_utf8().unwrap(), _ => String::new() };

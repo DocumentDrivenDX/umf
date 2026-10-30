@@ -192,7 +192,7 @@ mod tests {
     #[test]
     fn wire_replays_all_frozen_typescript_literal_cases() {
         let packet = parse_json(include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r8-security-literal/predecessor.json"
+            "../../../tests/rust-core/fixtures/r8-security-literal/predecessor.json"
         ));
         let Value::Array(cases) = member(&packet, "cases").unwrap() else {
             panic!("cases")
@@ -259,7 +259,7 @@ mod tests {
     #[test]
     fn host_control_can_refuse_before_result_encoding() {
         let packet = parse_json(include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r8-security-literal/predecessor.json"
+            "../../../tests/rust-core/fixtures/r8-security-literal/predecessor.json"
         ));
         let Value::Array(cases) = member(&packet, "cases").unwrap() else {
             panic!("cases")

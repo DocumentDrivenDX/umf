@@ -60,7 +60,7 @@ fn invoke(kind: Value, token: Value) -> (serde_json::Value, Option<Value>) {
 #[test]
 fn opt_in_rust_operation_matches_the_frozen_r8_typescript_reference() {
     let packet = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r8-access-temporal/reference-packet.json"
+        "../../../tests/rust-core/fixtures/r8-access-temporal/reference-packet.json"
     ));
     assert_eq!(
         text(field(&packet, "profile").unwrap()),

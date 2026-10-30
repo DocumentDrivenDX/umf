@@ -1796,7 +1796,7 @@ mod tests {
     #[test]
     fn frozen_typescript_vectors_match_rust_inspection_and_authorship() {
         let vectors = parse(include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r5-cardinality/vectors.json"
+            "../../../tests/rust-core/fixtures/r5-cardinality/vectors.json"
         ));
         let identity_value = get(&vectors, "identity").unwrap();
         let identity = Identity {
@@ -1927,7 +1927,7 @@ mod tests {
     #[test]
     fn frozen_typescript_request_matrix_matches_rust_declaration() {
         let packet = parse(include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r5-model-bindings/frozen-cardinality-typescript.json"
+            "../../../tests/rust-core/fixtures/r5-model-bindings/frozen-cardinality-typescript.json"
         ));
         let controls = get(
             get(&packet, "hostAdmissionControls").unwrap(),

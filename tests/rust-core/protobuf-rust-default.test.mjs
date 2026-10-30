@@ -13,7 +13,7 @@ const predecessor = await import('../../src/adapters/protobuf/index.ts');
 const root = resolve(import.meta.dir, '../..');
 const authored = new Uint8Array(readFileSync(resolve(root, 'fixtures/protobuf/authored.pb')));
 const unknown = new Uint8Array([0x82, 0xb5, 0x18, 0x04, 0x00, 0x01, 0x02, 0xff]);
-const packet = JSON.parse(readFileSync(resolve(root, 'docs/helix/04-build/evidence/rust-migration/r8-protobuf-descriptor-predecessor/predecessor.json'), 'utf8'));
+const packet = JSON.parse(readFileSync(resolve(root, 'tests/rust-core/fixtures/r8-protobuf-descriptor-predecessor/predecessor.json'), 'utf8'));
 const json = value => JSON.parse(JSON.stringify(value));
 let suppliedErrorType;
 const api = createProtobufDescriptorDocumentRustDefault(options => {

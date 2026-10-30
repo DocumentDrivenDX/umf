@@ -10,7 +10,7 @@ const nodeBindingEntry = process.env.UMF_NODE_BINDING_DIR
 const {createProtobufInspector, PROTOBUF_INSPECT_PROFILE} = await import(nodeBindingEntry);
 
 const root = resolve(import.meta.dir, '../..');
-const predecessor = JSON.parse(readFileSync(resolve(root, 'docs/helix/04-build/evidence/rust-migration/r5-protobuf-descriptor-codec/inspector-predecessor.json'), 'utf8'));
+const predecessor = JSON.parse(readFileSync(resolve(root, 'tests/rust-core/fixtures/r5-protobuf-descriptor-codec/inspector-predecessor.json'), 'utf8'));
 const frozen = label => predecessor.observations.find(row => row.label === label).value;
 const canonical = value => value === null || typeof value !== 'object' ? JSON.stringify(value) : Array.isArray(value) ? `[${value.map(canonical).join(',')}]` : `{${Object.keys(value).sort().map(key => `${JSON.stringify(key)}:${canonical(value[key])}`).join(',')}}`;
 const capture = operation => { try { return {status: 'ok', value: operation()}; } catch (error) { return {status: 'error', code: error.code, message: error.message, path: error.path}; } };

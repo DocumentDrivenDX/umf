@@ -77,7 +77,32 @@ fn parse(source: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
         ctx,
     )
 }
-fn result_schemas(ctx: &mut Context<'_>) -> Result<(CompiledSchema, CompiledSchema), EngineError> {
+struct ResultSchemas {
+    result: CompiledSchema,
+    request: CompiledSchema,
+}
+
+fn result_schemas(ctx: &mut Context<'_>) -> Result<std::sync::Arc<ResultSchemas>, EngineError> {
+    use std::sync::{Arc, OnceLock};
+    static RESOURCES: OnceLock<Arc<ResultSchemas>> = OnceLock::new();
+    ctx.charge_work(1, Utf16::default())?;
+    let ordinary = ctx.profile() == crate::context::ResourceProfile::Cooperative
+        && ctx.limits() == crate::context::Limits::ordinary();
+    if ordinary {
+        if let Some(resources) = RESOURCES.get() {
+            return Ok(Arc::clone(resources));
+        }
+    }
+    // Construct with this invocation's controls and outside OnceLock so
+    // callbacks can reenter. A failed or cancelled build is never cached.
+    let resources = Arc::new(build_result_schemas(ctx)?);
+    if ordinary {
+        let _ = RESOURCES.set(Arc::clone(&resources));
+    }
+    Ok(resources)
+}
+
+fn build_result_schemas(ctx: &mut Context<'_>) -> Result<ResultSchemas, EngineError> {
     let schema = parse(RESULT_SCHEMA, ctx)?;
     let resources = SchemaResources {
         entries: vec![
@@ -113,7 +138,54 @@ fn result_schemas(ctx: &mut Context<'_>) -> Result<(CompiledSchema, CompiledSche
             "Result schema has no request schema",
         )
     })?;
-    Ok((result, CompiledSchema::compile(request, &resources, ctx)?))
+    let request = CompiledSchema::compile(request, &resources, ctx)?;
+    Ok(ResultSchemas { result, request })
+}
+
+struct ValidationRuntime {
+    engine: Engine,
+    registry: Registry,
+}
+
+fn validation_runtime(ctx: &mut Context<'_>) -> Result<std::sync::Arc<ValidationRuntime>, EngineError> {
+    use std::sync::{Arc, OnceLock};
+    static RESOURCES: OnceLock<Arc<ValidationRuntime>> = OnceLock::new();
+    ctx.charge_work(1, Utf16::default())?;
+    let ordinary = ctx.profile() == crate::context::ResourceProfile::Cooperative
+        && ctx.limits() == crate::context::Limits::ordinary();
+    if ordinary {
+        if let Some(resources) = RESOURCES.get() {
+            return Ok(Arc::clone(resources));
+        }
+    }
+    let resources = Arc::new(build_validation_runtime(ctx)?);
+    if ordinary {
+        let _ = RESOURCES.set(Arc::clone(&resources));
+    }
+    Ok(resources)
+}
+
+fn build_validation_runtime(ctx: &mut Context<'_>) -> Result<ValidationRuntime, EngineError> {
+    let engine = Engine::new(
+        ResourceSet::new(
+            parse(include_str!("../../../spec/core/schema.json"), ctx)?,
+            parse(include_str!("../../../spec/core/semantic-type-reference.schema.json"), ctx)?,
+            parse(include_str!("../../../spec/core/extension-package.schema.json"), ctx)?,
+            parse(include_str!("../../../spec/metamodel/generated/core-constraints.json"), ctx)?,
+            parse(include_str!("../../../spec/metamodel/generated/domain-policy.json"), ctx)?,
+        ),
+        ctx,
+    )?;
+    let mut registry = Registry::new();
+    let engine_resources = engine.schema_resources_with_context(ctx)?;
+    registry.register(
+        &parse(include_str!("../../../spec/extensions/avro/package.json"), ctx)?,
+        None,
+        engine.package_schema(),
+        &engine_resources,
+        ctx,
+    )?;
+    Ok(ValidationRuntime { engine, registry })
 }
 struct NoCallbacks;
 impl Capabilities for NoCallbacks {
@@ -127,43 +199,10 @@ impl Capabilities for NoCallbacks {
     }
 }
 fn validate_target(target: &Value, ctx: &mut Context<'_>) -> Result<(), EngineError> {
-    let engine = Engine::new(
-        ResourceSet::new(
-            parse(include_str!("../../../spec/core/schema.json"), ctx)?,
-            parse(
-                include_str!("../../../spec/core/semantic-type-reference.schema.json"),
-                ctx,
-            )?,
-            parse(
-                include_str!("../../../spec/core/extension-package.schema.json"),
-                ctx,
-            )?,
-            parse(
-                include_str!("../../../spec/metamodel/generated/core-constraints.json"),
-                ctx,
-            )?,
-            parse(
-                include_str!("../../../spec/metamodel/generated/domain-policy.json"),
-                ctx,
-            )?,
-        ),
-        ctx,
-    )?;
-    let mut registry = Registry::new();
-    let resources = engine.schema_resources_with_context(ctx)?;
-    registry.register(
-        &parse(
-            include_str!("../../../spec/extensions/avro/package.json"),
-            ctx,
-        )?,
-        None,
-        engine.package_schema(),
-        &resources,
-        ctx,
-    )?;
+    let runtime = validation_runtime(ctx)?;
     let mut callbacks = NoCallbacks;
-    if engine
-        .validate_document(target, &registry, &mut callbacks, ctx)?
+    if runtime.engine
+        .validate_document(target, &runtime.registry, &mut callbacks, ctx)?
         .valid
     {
         Ok(())
@@ -180,42 +219,9 @@ fn verify_author(
     current: &Value,
     ctx: &mut Context<'_>,
 ) -> Result<(), EngineError> {
-    let engine = Engine::new(
-        ResourceSet::new(
-            parse(include_str!("../../../spec/core/schema.json"), ctx)?,
-            parse(
-                include_str!("../../../spec/core/semantic-type-reference.schema.json"),
-                ctx,
-            )?,
-            parse(
-                include_str!("../../../spec/core/extension-package.schema.json"),
-                ctx,
-            )?,
-            parse(
-                include_str!("../../../spec/metamodel/generated/core-constraints.json"),
-                ctx,
-            )?,
-            parse(
-                include_str!("../../../spec/metamodel/generated/domain-policy.json"),
-                ctx,
-            )?,
-        ),
-        ctx,
-    )?;
-    let mut registry = Registry::new();
-    let resources = engine.schema_resources_with_context(ctx)?;
-    registry.register(
-        &parse(
-            include_str!("../../../spec/extensions/avro/package.json"),
-            ctx,
-        )?,
-        None,
-        engine.package_schema(),
-        &resources,
-        ctx,
-    )?;
+    let runtime = validation_runtime(ctx)?;
     let mut callbacks = NoCallbacks;
-    crate::core_kind::verify_core_kind_receipt(author, &engine, &registry, &mut callbacks, ctx)?;
+    crate::core_kind::verify_core_kind_receipt(author, &runtime.engine, &runtime.registry, &mut callbacks, ctx)?;
     crate::core_kind::finish_core_kind_verification(
         copy_json(author, ctx)?,
         copy_json(current, ctx)?,
@@ -287,8 +293,8 @@ pub fn classify_avro_record_type(
 ) -> Result<Value, EngineError> {
     let source = copy_json(source, ctx)?;
     let request = copy_json(request, ctx)?;
-    let (result_schema, request_schema) = result_schemas(ctx)?;
-    if let Some(issue) = request_schema.validate(&request, ctx)?.first() {
+    let schemas = result_schemas(ctx)?;
+    if let Some(issue) = schemas.request.validate(&request, ctx)?.first() {
         return Err(EngineError::new(
             "AVRO_RECORD_TYPE_REQUEST",
             issue.instance_path.clone(),
@@ -775,7 +781,7 @@ pub fn classify_avro_record_type(
         ("residuals", Value::Array(Vec::new())),
         ("diagnostics", Value::Array(Vec::new())),
     ]);
-    if let Some(issue) = result_schema.validate(&result, ctx)?.first() {
+    if let Some(issue) = schemas.result.validate(&result, ctx)?.first() {
         return Err(EngineError::new(
             "AVRO_RECORD_TYPE_RESULT",
             issue.instance_path.clone(),
@@ -1111,8 +1117,8 @@ fn blocked_unresolved_type(
         ("residuals", Value::Array(residuals)),
         ("diagnostics", Value::Array(diagnostics)),
     ]);
-    let (schema, _) = result_schemas(ctx)?;
-    if let Some(issue) = schema.validate(&output, ctx)?.first() {
+    let schemas = result_schemas(ctx)?;
+    if let Some(issue) = schemas.result.validate(&output, ctx)?.first() {
         return Err(EngineError::new(
             "AVRO_RECORD_TYPE_RESULT",
             issue.instance_path.clone(),
@@ -1179,8 +1185,8 @@ fn blocked_with_mappings(
             ])]),
         ),
     ]);
-    let (result_schema, _) = result_schemas(ctx)?;
-    if let Some(issue) = result_schema.validate(&output, ctx)?.first() {
+    let schemas = result_schemas(ctx)?;
+    if let Some(issue) = schemas.result.validate(&output, ctx)?.first() {
         return Err(EngineError::new(
             "AVRO_RECORD_TYPE_RESULT",
             issue.instance_path.clone(),
@@ -1572,7 +1578,7 @@ mod tests {
         }
         let mut ctx = Context::ordinary();
         let packet = parse(
-            include_str!("../../../docs/helix/04-build/evidence/rust-migration/r8-avro-record-type/typescript-predecessor.json"),
+            include_str!("../../../tests/rust-core/fixtures/r8-avro-record-type/typescript-predecessor.json"),
             &mut ctx,
         )
         .unwrap();
@@ -1727,7 +1733,7 @@ mod tests {
         }
         let mut ctx = Context::ordinary();
         let packet = parse(
-            include_str!("../../../docs/helix/04-build/evidence/rust-migration/r8-avro-record-type/typescript-predecessor.json"),
+            include_str!("../../../tests/rust-core/fixtures/r8-avro-record-type/typescript-predecessor.json"),
             &mut ctx,
         )
         .unwrap();
@@ -1786,7 +1792,7 @@ mod tests {
     fn frozen_matrix_mapping_arrays_match_predecessor_exactly() {
         let mut ctx = Context::ordinary();
         let packet = parse(
-            include_str!("../../../docs/helix/04-build/evidence/rust-migration/r8-avro-record-type/typescript-predecessor.json"),
+            include_str!("../../../tests/rust-core/fixtures/r8-avro-record-type/typescript-predecessor.json"),
             &mut ctx,
         )
         .unwrap();

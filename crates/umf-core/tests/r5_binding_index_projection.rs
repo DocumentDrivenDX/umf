@@ -56,7 +56,7 @@ fn actual_json(value: &Value) -> serde_json::Value {
     serde_json::from_str(&stringify_compact(value).unwrap().to_utf8().unwrap()).unwrap()
 }
 fn frozen() -> serde_json::Value {
-    serde_json::from_str(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-binding-index-projection/frozen-projections.json")).unwrap()
+    serde_json::from_str(include_str!("../../../tests/rust-core/fixtures/r5-binding-index-projection/frozen-projections.json")).unwrap()
 }
 fn pair(source: &str) -> (Value, Value) {
     let input = parse(source);

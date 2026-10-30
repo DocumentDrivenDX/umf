@@ -233,7 +233,7 @@ fn assert_expected(
 #[test]
 fn tagged_relationship_operations_match_all_frozen_predecessor_cases() {
     let frozen = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-core-relationships/frozen-typescript.json"
+        "../../../tests/rust-core/fixtures/r5-core-relationships/frozen-typescript.json"
     ));
     let cases = get(&frozen, "cases").unwrap();
     let outcomes = get(&frozen, "outcomes").unwrap();
@@ -298,7 +298,7 @@ fn tagged_relationship_operations_match_all_frozen_predecessor_cases() {
 #[test]
 fn tagged_relationship_receipts_limits_copy_and_controls_are_preserved() {
     let frozen = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-core-relationships/frozen-typescript.json"
+        "../../../tests/rust-core/fixtures/r5-core-relationships/frozen-typescript.json"
     ));
     let cases = get(&frozen, "cases").unwrap();
     let outcomes = get(&frozen, "outcomes").unwrap();

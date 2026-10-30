@@ -1,3 +1,5 @@
+import {createDbtOperations, DBT_PROFILE, isDbtHostError} from './src/dbt.js';
+import {createRdfOperations, RDF_PROFILE} from './src/rdf.js';
 import {createHostReadResponseFrames, encodeRequestWire, encodeWire, fromWire, resultError, toWire} from './src/wire.js';
 import {createJavascriptNumericEngine as createNumericEngine, JAVASCRIPT_NUMERIC_PROFILE} from './src/javascript-numeric.js';
 import {createSecurityLogicEngine as createSecurityLogicEngineWithWire, SECURITY_LOGIC_PROFILE} from './src/security-logic.js';
@@ -17,7 +19,7 @@ import {createBit128Engine as createBit128EngineWithWire, isBit128EngineError, B
 import {createJsonNumberEngine as createJsonNumberEngineWithWire, JSON_NUMBER_PROFILE} from './src/json-number.js';
 import {createJsonSchemaOperations, JSON_SCHEMA_PROFILE, UmfError as JsonSchemaUmfError, jsonSchemaFailureError} from './src/json-schema.js';
 import {createDocumentComparisonOperations, DOCUMENT_COMPARISON_PROFILE} from './src/document-comparison.js';
-import {schemaPropertiesHostInput, cardinalityHostInput, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse} from './src/host-json.js';
+import {schemaPropertiesHostInput, cardinalityHostInput, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse, copyJsonHostInput, isHostJsonResponseError} from './src/host-json.js';
 import {createSemanticTypeRegistry as createSemanticTypeRegistryWithWire} from './src/semantic-value.js';
 import {createArrowIpcOperations, ARROW_IPC_PROFILE} from './src/arrow-ipc.js';
 import {createParquetCaptureOperations, PARQUET_CAPTURE_PROFILE} from './src/parquet-capture.js';
@@ -321,12 +323,14 @@ export async function initializeCoreKindNullabilityHostInputWasm(resources, load
   return Object.freeze({
     [CORE_KIND_NULLABILITY_RUNTIME]: runtime,
     [CORE_KIND_NULLABILITY_PREPARED]: {fixedResources, resourcesWire, resourceBridge: initializeBridge, hostWork: initializeWork, profile, controls},
-    inspectCoreElementKind(source, identity) { return call('inspectCoreKind', [source, identity, undefined]); },
-    declareCoreElementKind(source, identity, kind) { return call('declareCoreKind', [source, identity, kind]); },
-    verifyCoreKindDeclaration(receipt, current) { return call('verifyCoreKindDeclaration', [receipt, current, undefined]); },
-    inspectCoreNullability(source, identity) { return call('inspectCoreNullability', [source, identity, undefined]); },
-    declareCoreNullability(source, identity, nullability) { return call('declareCoreNullability', [source, identity, nullability]); },
-    verifyCoreNullabilityDeclaration(receipt, current) { return call('verifyCoreNullabilityDeclaration', [receipt, current, undefined]); },
+    inspectCoreElementKind(source, identity) { return call('inspectCoreKind', [source, identity, undefined, undefined]); },
+    declareCoreElementKind(source, identity, kind) { return call('declareCoreKind', [source, identity, kind, undefined]); },
+    verifyCoreKindDeclaration(receipt, current) { return call('verifyCoreKindDeclaration', [receipt, current, undefined, undefined]); },
+    inspectCoreNullability(source, identity) { return call('inspectCoreNullability', [source, identity, undefined, undefined]); },
+    declareCoreNullability(source, identity, nullability) { return call('declareCoreNullability', [source, identity, nullability, undefined]); },
+    verifyCoreNullabilityDeclaration(receipt, current) { return call('verifyCoreNullabilityDeclaration', [receipt, current, undefined, undefined]); },
+    getSemanticTypes(document, module, element) { return call('getSemanticTypes', [document, module, element, undefined]); },
+    setSemanticTypes(document, module, element, annotation) { return call('setSemanticTypes', [document, module, element, annotation]); },
   });
 }
 
@@ -817,7 +821,7 @@ export async function initializeCoreModelRootKindNullabilityWasm(resources, load
   const staged = await initializeCoreKindNullabilityHostInputWasm(resources, async () => module, host, options);
   const {encodeCoreKeyTuple, verifyCoreKeyTuple, ...model} = createEngineInternal(module, resources, options, true, true, true, false, staged[CORE_KIND_NULLABILITY_RUNTIME], staged[CORE_KIND_NULLABILITY_PREPARED], staged[CORE_KIND_NULLABILITY_RUNTIME]);
   const api = {...model};
-  for (const name of ['inspectCoreElementKind','declareCoreElementKind','verifyCoreKindDeclaration','inspectCoreNullability','declareCoreNullability','verifyCoreNullabilityDeclaration']) api[name] = staged[name];
+  for (const name of ['inspectCoreElementKind','declareCoreElementKind','verifyCoreKindDeclaration','inspectCoreNullability','declareCoreNullability','verifyCoreNullabilityDeclaration','getSemanticTypes','setSemanticTypes']) api[name] = staged[name];
   return Object.freeze(api);
 }
 
@@ -1152,11 +1156,70 @@ export function createParquetCaptureEngine(module, options = {}) {
   if (typeof module?.executeParquetCaptureWire !== 'function' || typeof module?.parquetCaptureProfileVersion !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
   if (module.parquetCaptureProfileVersion() !== PARQUET_CAPTURE_PROFILE) throw new Error('RUST_WASM_BINDING_PROFILE_MISMATCH');
   const {controls} = codegenOptions(options);
-  return createParquetCaptureOperations((operation, fields) => {
+  const prepareTransaction = transaction => {
+    transaction.controlBridge ??= hasControls(controls) ? createControlBridge(controls) : undefined;
+    transaction.hostWork ??= admissionWork(transaction.controlBridge);
+    transaction.materializeWork ??= transaction.hostWork;
+    return transaction;
+  };
+  return createParquetCaptureOperations((operation, fields, transaction = {}) => {
+    prepareTransaction(transaction);
+    const {controlBridge, hostWork} = transaction;
+    hostWork?.(1);
+    const responseText = module.executeParquetCaptureWire(encodeRequestWire({op: `parquet.${operation}`, ...fields}, hostWork, {unsupportedValuesAsNull: operation === 'encodeWire'}), controlBridge);
+    hostWork?.(responseText.length);
+    const envelope = JSON.parse(responseText);
+    const failure = resultError(envelope);
+    if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+    hostWork?.(envelope.wire.length);
+    return fromWire(JSON.parse(envelope.wire), hostWork);
+  }, {
+    prepareTransaction,
+    copyJson: (value, transaction) => { prepareTransaction(transaction); return copyJsonHostInput(module, value, UmfCoreError, transaction.controlBridge); },
+    isHostJsonResponseError,
+  });
+}
+
+export {DBT_PROFILE};
+export {isDbtHostError};
+export function createDbtEngine(module, options = {}) {
+  if (typeof module?.executeDbtWire !== 'function' || typeof module?.dbtProfileVersion !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  if (module.dbtProfileVersion() !== DBT_PROFILE) throw new Error('RUST_WASM_BINDING_PROFILE_MISMATCH');
+  const {controls} = codegenOptions(options);
+  const prepareTransaction = transaction => {
+    transaction.controlBridge ??= hasControls(controls) ? createControlBridge(controls) : undefined;
+    transaction.hostWork ??= admissionWork(transaction.controlBridge);
+    transaction.materializeWork ??= transaction.hostWork;
+  };
+  return createDbtOperations((operation, fields, transaction = {}) => {
+    prepareTransaction(transaction);
+    const {controlBridge, hostWork} = transaction;
+    hostWork?.(1);
+    const responseText = module.executeDbtWire(encodeRequestWire({profile: DBT_PROFILE, op: `dbt.${operation}`, ...fields}, hostWork), controlBridge);
+    hostWork?.(responseText.length);
+    const envelope = JSON.parse(responseText);
+    const failure = resultError(envelope);
+    if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+    hostWork?.(envelope.wire.length);
+    return fromWire(JSON.parse(envelope.wire), hostWork);
+  }, {
+    prepareTransaction,
+    copyJson: (value, transaction) => { prepareTransaction(transaction); return copyJsonHostInput(module, value, UmfCoreError, transaction.controlBridge); },
+    isHostJsonResponseError,
+  });
+}
+
+export {RDF_PROFILE};
+/** Create the opt-in Rust RDF 1.1 and generalized-dataset engine over WASM. */
+export function createRdfEngine(module, options = {}) {
+  if (typeof module?.executeRdfWire !== 'function' || typeof module?.rdfProfileVersion !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  if (module.rdfProfileVersion() !== RDF_PROFILE) throw new Error('RUST_WASM_BINDING_PROFILE_MISMATCH');
+  const {controls} = codegenOptions(options);
+  return createRdfOperations((operation, fields) => {
     const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
     const hostWork = admissionWork(controlBridge);
     hostWork?.(1);
-    const responseText = module.executeParquetCaptureWire(encodeRequestWire({op: `parquet.${operation}`, ...fields}, hostWork), controlBridge);
+    const responseText = module.executeRdfWire(encodeRequestWire({profile: RDF_PROFILE, op: `rdf.${operation}`, ...fields}, hostWork), controlBridge);
     hostWork?.(responseText.length);
     const envelope = JSON.parse(responseText);
     const failure = resultError(envelope);

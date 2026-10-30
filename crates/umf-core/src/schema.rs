@@ -4,10 +4,10 @@ use crate::{
     error::{EngineError, PythonSchemaTerminal},
     python_regex::{PythonReVersion, PythonRegex},
     python_value::{
-        InstanceKind, InstanceNumber, InstanceText, InstanceView, instances_equal,
-        value_equals_instance,
+        instances_equal, value_equals_instance, InstanceKind, InstanceNumber, InstanceText,
+        InstanceView,
     },
-    value::{Utf16, Value, copy_json},
+    value::{copy_json, Utf16, Value},
 };
 use num_traits::ToPrimitive;
 use std::{
@@ -1628,13 +1628,39 @@ impl CompiledSchema {
         } else {
             copy_schema_json(value, ctx, false)?
         };
+        self.evaluate_admitted_codegen_value(&value, codegen_errors, ctx)
+    }
+    /// Internal JSON.parse projection of an already admitted NativeJsonTree.
+    /// Native JSON tokens may overflow binary64; AJV with strict=false sees
+    /// those as infinities. Public schema/carrier admission stays finite-only.
+    pub(crate) fn validate_native_json_codegen_errors(
+        &self,
+        value: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Vec<StructuralError>, EngineError> {
+        if !matches!(self.regex_profile, RegexProfile::Ecma262Unicode) {
+            return Err(EngineError::new(
+                "SCHEMA_PROFILE",
+                Utf16::default(),
+                "Native JSON diagnostics require the ECMAScript schema profile",
+            ));
+        }
+        self.evaluate_admitted_codegen_value(value, true, ctx)
+    }
+    fn evaluate_admitted_codegen_value(
+        &self,
+        value: &Value,
+        codegen_errors: bool,
+        ctx: &mut Context<'_>,
+    ) -> Result<Vec<StructuralError>, EngineError> {
+        ctx.charge_work(1, Utf16::default())?;
         let mut errors = Vec::new();
         let mut evaluated = Evaluated::default();
         evaluated.codegen_errors = codegen_errors;
         evaluated.keyword_policy = self.root_keyword_policy;
         self.eval(
             &self.schema,
-            &value,
+            value,
             &Utf16::default(),
             &Utf16::from("#"),
             0,
@@ -9884,12 +9910,10 @@ mod finite_binary64_schema_admission_tests {
         )
         .unwrap();
         let huge_finite = Value::Number(1e308);
-        assert!(
-            !compiled
-                .validate(&huge_finite, &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
+        assert!(!compiled
+            .validate(&huge_finite, &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
         let nonfinite = Value::Number(f64::INFINITY);
         assert_eq!(
             compiled
@@ -9988,18 +10012,14 @@ mod custom_vocabulary_policy_tests {
         let compiled =
             CompiledSchema::compile_consumer(&schema, &resources(), true, &mut Context::ordinary())
                 .unwrap();
-        assert!(
-            compiled
-                .validate(&parsed("5"), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
-        assert!(
-            !compiled
-                .validate(&parsed(r#"{"blocked":true}"#), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
+        assert!(compiled
+            .validate(&parsed("5"), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+        assert!(!compiled
+            .validate(&parsed(r#"{"blocked":true}"#), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
     }
 
     #[test]
@@ -10014,18 +10034,14 @@ mod custom_vocabulary_policy_tests {
             &mut Context::ordinary(),
         )
         .unwrap();
-        assert!(
-            !compiled
-                .validate(&parsed(r#"{"x":5}"#), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
-        assert!(
-            compiled
-                .validate(&parsed(r#"{"x":12}"#), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
+        assert!(!compiled
+            .validate(&parsed(r#"{"x":5}"#), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+        assert!(compiled
+            .validate(&parsed(r#"{"x":12}"#), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
     }
 
     #[test]
@@ -10040,12 +10056,10 @@ mod custom_vocabulary_policy_tests {
             &mut Context::ordinary(),
         )
         .unwrap();
-        assert!(
-            compiled
-                .validate(&parsed(r#"{"x":5}"#), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
+        assert!(compiled
+            .validate(&parsed(r#"{"x":5}"#), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
     }
 
     #[test]
@@ -10060,12 +10074,10 @@ mod custom_vocabulary_policy_tests {
             &mut Context::ordinary(),
         )
         .unwrap();
-        assert!(
-            !compiled
-                .validate(&parsed("5"), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
+        assert!(!compiled
+            .validate(&parsed("5"), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
     }
 
     #[test]
@@ -10080,12 +10092,10 @@ mod custom_vocabulary_policy_tests {
             &mut Context::ordinary(),
         )
         .unwrap();
-        assert!(
-            compiled
-                .validate(&parsed("5"), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
+        assert!(compiled
+            .validate(&parsed("5"), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
     }
 
     #[test]
@@ -10100,12 +10110,10 @@ mod custom_vocabulary_policy_tests {
         let compiled =
             CompiledSchema::compile_consumer(&schema, &resources, true, &mut Context::ordinary())
                 .unwrap();
-        assert!(
-            compiled
-                .validate(&parsed(r#"{"x":1,"extra":2}"#), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
+        assert!(compiled
+            .validate(&parsed(r#"{"x":1,"extra":2}"#), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
     }
 
     #[test]
@@ -10208,18 +10216,14 @@ mod custom_vocabulary_policy_tests {
         };
         let mut meter: &mut WorkMeter<'_> = &mut meter;
         let mut ctx = Context::ordinary().with_meter(&mut meter);
-        assert!(
-            compiled
-                .validate(&parsed("null"), &mut ctx)
-                .unwrap()
-                .is_empty()
-        );
-        assert!(
-            compiled
-                .validate(&parsed("null"), &mut ctx)
-                .unwrap()
-                .is_empty()
-        );
+        assert!(compiled
+            .validate(&parsed("null"), &mut ctx)
+            .unwrap()
+            .is_empty());
+        assert!(compiled
+            .validate(&parsed("null"), &mut ctx)
+            .unwrap()
+            .is_empty());
         assert!(observed >= 2 * unknown_uri.encode_utf16().count());
     }
 
@@ -10254,18 +10258,14 @@ mod custom_vocabulary_policy_tests {
         };
         let mut meter: &mut WorkMeter<'_> = &mut meter;
         let mut ctx = Context::ordinary().with_meter(&mut meter);
-        assert!(
-            compiled
-                .validate(&parsed("null"), &mut ctx)
-                .unwrap()
-                .is_empty()
-        );
-        assert!(
-            compiled
-                .validate(&parsed("null"), &mut ctx)
-                .unwrap()
-                .is_empty()
-        );
+        assert!(compiled
+            .validate(&parsed("null"), &mut ctx)
+            .unwrap()
+            .is_empty());
+        assert!(compiled
+            .validate(&parsed("null"), &mut ctx)
+            .unwrap()
+            .is_empty());
         assert!(
             observed
                 >= 2 * (unrelated_uri.encode_utf16().count() + unrelated_id.encode_utf16().count())
@@ -10296,18 +10296,14 @@ mod custom_vocabulary_policy_tests {
         };
         let mut meter: &mut WorkMeter<'_> = &mut meter;
         let mut ctx = Context::ordinary().with_meter(&mut meter);
-        assert!(
-            compiled
-                .validate(&parsed("null"), &mut ctx)
-                .unwrap()
-                .is_empty()
-        );
-        assert!(
-            compiled
-                .validate(&parsed("null"), &mut ctx)
-                .unwrap()
-                .is_empty()
-        );
+        assert!(compiled
+            .validate(&parsed("null"), &mut ctx)
+            .unwrap()
+            .is_empty());
+        assert!(compiled
+            .validate(&parsed("null"), &mut ctx)
+            .unwrap()
+            .is_empty());
         assert!(observed >= 2 * 10_000);
     }
 
@@ -10329,18 +10325,14 @@ mod custom_vocabulary_policy_tests {
         };
         let mut meter: &mut WorkMeter<'_> = &mut meter;
         let mut ctx = Context::ordinary().with_meter(&mut meter);
-        assert!(
-            compiled
-                .validate(&parsed("null"), &mut ctx)
-                .unwrap()
-                .is_empty()
-        );
-        assert!(
-            compiled
-                .validate(&parsed("null"), &mut ctx)
-                .unwrap()
-                .is_empty()
-        );
+        assert!(compiled
+            .validate(&parsed("null"), &mut ctx)
+            .unwrap()
+            .is_empty());
+        assert!(compiled
+            .validate(&parsed("null"), &mut ctx)
+            .unwrap()
+            .is_empty());
         assert!(observed >= 2 * 10_000);
     }
 }
@@ -10352,7 +10344,7 @@ mod python_resource_work_tests {
 
     #[test]
     fn native_uri_operation_families_match_frozen_cpython_profiles() {
-        let receipt: serde_json::Value = serde_json::from_str(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-resource-uri-operations-predecessor.json")).unwrap();
+        let receipt: serde_json::Value = serde_json::from_str(include_str!("../../../tests/rust-core/fixtures/r2/sol-python-resource-uri-operations-predecessor.json")).unwrap();
         let cases = receipt["uriOperations"].as_array().unwrap();
         assert_eq!(cases.len(), 140);
         let points = |value: &serde_json::Value| {
@@ -10501,25 +10493,21 @@ mod static_reference_resolution_tests {
             &mut Context::ordinary(),
         )
         .unwrap();
-        assert!(
-            compiled
-                .validate(&value("1"), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
+        assert!(compiled
+            .validate(&value("1"), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
 
         let nested = value(
             r##"{"$schema":"http://json-schema.org/draft-07/schema#","$id":"https://example.test/root.json","properties":{"x":{"$id":"https://example.test/child.json","definitions":{"target":{"type":"integer"}},"$ref":"#/definitions/target"}}}"##,
         );
-        assert!(
-            CompiledSchema::compile_consumer(
-                &nested,
-                &SchemaResources { entries: vec![] },
-                false,
-                &mut Context::ordinary(),
-            )
-            .is_ok()
-        );
+        assert!(CompiledSchema::compile_consumer(
+            &nested,
+            &SchemaResources { entries: vec![] },
+            false,
+            &mut Context::ordinary(),
+        )
+        .is_ok());
     }
 
     #[test]
@@ -10542,25 +10530,21 @@ mod static_reference_resolution_tests {
     #[test]
     fn then_else_are_schema_positions_and_cycles_are_bounded() {
         let schema = r#"{"$id":"https://example.test/root","if":{},"then":{"$ref":"https://example.test/then"},"else":{"$ref":"https://example.test/else"}}"#;
-        assert!(
-            compile(
-                schema,
-                vec![
-                    ("https://example.test/then", "true"),
-                    ("https://example.test/else", "false"),
-                ],
-            )
-            .is_ok()
-        );
+        assert!(compile(
+            schema,
+            vec![
+                ("https://example.test/then", "true"),
+                ("https://example.test/else", "false"),
+            ],
+        )
+        .is_ok());
         let missing_else = compile(schema, vec![("https://example.test/then", "true")]);
         assert_eq!(missing_else.unwrap_err().code, "SCHEMA_REF_UNRESOLVED");
-        assert!(
-            compile(
-                r##"{"$id":"https://example.test/cycle","$ref":"#"}"##,
-                vec![]
-            )
-            .is_ok()
-        );
+        assert!(compile(
+            r##"{"$id":"https://example.test/cycle","$ref":"#"}"##,
+            vec![]
+        )
+        .is_ok());
     }
 
     #[test]
@@ -10580,18 +10564,14 @@ mod static_reference_resolution_tests {
     fn static_and_dynamic_refs_resolve_anchors_in_schema_positions() {
         let schema = r##"{"$id":"https://example.test/root","$defs":{"target":{"$anchor":"plain","type":"integer"}},"$ref":"#plain"}"##;
         let compiled = compile(schema, vec![]).unwrap();
-        assert!(
-            compiled
-                .validate(&value("1"), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
-        assert!(
-            !compiled
-                .validate(&value("\"no\""), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
+        assert!(compiled
+            .validate(&value("1"), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+        assert!(!compiled
+            .validate(&value("\"no\""), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
 
         let dynamic_fallback = r##"{"$id":"https://example.test/root","$defs":{"target":{"$anchor":"plain","type":"integer"}},"$dynamicRef":"#plain"}"##;
         assert!(compile(dynamic_fallback, vec![]).is_ok());
@@ -10604,18 +10584,14 @@ mod static_reference_resolution_tests {
                 r#"{{"$schema":"https://json-schema.org/draft/2020-12/schema","$ref":"http://example.com/ref/{keyword}","{keyword}":{{"$id":"http://example.com/ref/{keyword}","type":"integer"}}}}"#
             );
             let compiled = compile(&schema, vec![]).unwrap();
-            assert!(
-                compiled
-                    .validate(&value("12"), &mut Context::ordinary())
-                    .unwrap()
-                    .is_empty()
-            );
-            assert!(
-                !compiled
-                    .validate(&value("\"no\""), &mut Context::ordinary())
-                    .unwrap()
-                    .is_empty()
-            );
+            assert!(compiled
+                .validate(&value("12"), &mut Context::ordinary())
+                .unwrap()
+                .is_empty());
+            assert!(!compiled
+                .validate(&value("\"no\""), &mut Context::ordinary())
+                .unwrap()
+                .is_empty());
         }
     }
 
@@ -10623,36 +10599,28 @@ mod static_reference_resolution_tests {
     fn anchor_resolution_skips_nested_resources_with_the_same_anchor() {
         let schema = r##"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"http://localhost:1234/draft2020-12/foobar","$defs":{"A":{"$id":"child1","allOf":[{"$id":"child2","$anchor":"my_anchor","type":"number"},{"$anchor":"my_anchor","type":"string"}]}},"$ref":"child1#my_anchor"}"##;
         let compiled = compile(schema, vec![]).unwrap();
-        assert!(
-            compiled
-                .validate(&value("\"a\""), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
-        assert!(
-            !compiled
-                .validate(&value("1"), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
+        assert!(compiled
+            .validate(&value("\"a\""), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+        assert!(!compiled
+            .validate(&value("1"), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
     }
 
     #[test]
     fn referenced_relative_id_resource_is_not_rebased_a_second_time() {
         let embedded = r##"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://example.com/draft2020-12/ref-and-id3/base.json","$ref":"nested/foo.json","$defs":{"foo":{"$id":"nested/foo.json","$ref":"./bar.json"},"bar":{"$id":"nested/bar.json","type":"number"}}}"##;
         let compiled = compile(embedded, vec![]).unwrap();
-        assert!(
-            compiled
-                .validate(&value("5"), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
-        assert!(
-            !compiled
-                .validate(&value("\"a\""), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
+        assert!(compiled
+            .validate(&value("5"), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+        assert!(!compiled
+            .validate(&value("\"a\""), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
 
         let changed_folder = r##"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"http://localhost:1234/draft2020-12/scope_change_defs1.json","type":"object","properties":{"list":{"$ref":"baseUriChangeFolder/"}},"$defs":{"baz":{"$id":"baseUriChangeFolder/","type":"array","items":{"$ref":"folderInteger.json"}}}}"##;
         let compiled = compile(
@@ -10663,18 +10631,14 @@ mod static_reference_resolution_tests {
             )],
         )
         .unwrap();
-        assert!(
-            compiled
-                .validate(&value(r#"{"list":[1]}"#), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
-        assert!(
-            !compiled
-                .validate(&value(r#"{"list":["a"]}"#), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
+        assert!(compiled
+            .validate(&value(r#"{"list":[1]}"#), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+        assert!(!compiled
+            .validate(&value(r#"{"list":["a"]}"#), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
     }
 
     #[test]
@@ -10694,12 +10658,10 @@ mod static_reference_resolution_tests {
             ],
         )
         .unwrap();
-        assert!(
-            compiled
-                .validate(&value(r#"{"x":"ok"}"#), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
+        assert!(compiled
+            .validate(&value(r#"{"x":"ok"}"#), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
     }
 
     #[test]
@@ -10716,30 +10678,24 @@ mod static_reference_resolution_tests {
             ],
         )
         .unwrap();
-        assert!(
-            compiled
-                .validate(&value(r#"{"x":{"y":"ok"}}"#), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
+        assert!(compiled
+            .validate(&value(r#"{"x":{"y":"ok"}}"#), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
     }
 
     #[test]
     fn anchored_resource_root_does_not_reapply_its_identifier() {
         let schema = r##"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://example.test/root.json","$defs":{"resource":{"$id":"foo/","$anchor":"a","type":"string"}},"$ref":"foo/#a"}"##;
         let compiled = compile(schema, vec![]).unwrap();
-        assert!(
-            compiled
-                .validate(&value("\"ok\""), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
-        assert!(
-            !compiled
-                .validate(&value("1"), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
+        assert!(compiled
+            .validate(&value("\"ok\""), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+        assert!(!compiled
+            .validate(&value("1"), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
     }
 
     #[test]
@@ -10751,18 +10707,14 @@ mod static_reference_resolution_tests {
             vec![("https://example.test/external/root.json", external)],
         )
         .unwrap();
-        assert!(
-            compiled
-                .validate(&value("\"ok\""), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
-        assert!(
-            !compiled
-                .validate(&value("1"), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
+        assert!(compiled
+            .validate(&value("\"ok\""), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+        assert!(!compiled
+            .validate(&value("1"), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
     }
 
     #[test]
@@ -10779,30 +10731,24 @@ mod static_reference_resolution_tests {
             ],
         )
         .unwrap();
-        assert!(
-            compiled
-                .validate(&value(r#"{"x":"ok"}"#), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
-        assert!(
-            !compiled
-                .validate(&value(r#"{"x":1}"#), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
+        assert!(compiled
+            .validate(&value(r#"{"x":"ok"}"#), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+        assert!(!compiled
+            .validate(&value(r#"{"x":1}"#), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
     }
 
     #[test]
     fn pointer_entered_dynamic_resource_resets_pointer_scope_at_resource_root() {
         let schema = r##"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://example.test/root.json","$defs":{"resource":{"$id":"foo/","$dynamicAnchor":"a","type":"object","properties":{"y":{"$dynamicRef":"#a"}}}},"properties":{"x":{"$ref":"#/$defs/resource"}}}"##;
         let compiled = compile(schema, vec![]).unwrap();
-        assert!(
-            compiled
-                .validate(&value(r#"{"x":{"y":{}}}"#), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
+        assert!(compiled
+            .validate(&value(r#"{"x":{"y":{}}}"#), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
     }
 }
 
@@ -10931,12 +10877,10 @@ mod draft2020_dynamic_annotation_regressions {
         // The prefix item itself is a valid object. Its anchor also participates
         // in the outer resource scope and is applied to the root array by the
         // reference in the base resource, making that array invalid.
-        assert!(
-            !compiled
-                .validate(&value(r#"[{}]"#), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
+        assert!(!compiled
+            .validate(&value(r#"[{}]"#), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
     }
 
     #[test]
@@ -10951,12 +10895,10 @@ mod draft2020_dynamic_annotation_regressions {
             &mut Context::ordinary(),
         )
         .unwrap();
-        assert!(
-            compiled
-                .validate(&value(r#"{"x":42}"#), &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
+        assert!(compiled
+            .validate(&value(r#"{"x":42}"#), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
     }
 
     #[test]
@@ -10975,12 +10917,10 @@ mod draft2020_dynamic_annotation_regressions {
         let mut first = Context::ordinary();
         assert!(compiled.validate(&instance, &mut first).unwrap().is_empty());
         let mut second = Context::ordinary();
-        assert!(
-            compiled
-                .validate(&instance, &mut second)
-                .unwrap()
-                .is_empty()
-        );
+        assert!(compiled
+            .validate(&instance, &mut second)
+            .unwrap()
+            .is_empty());
         assert!(
             second.charged_work() < first.charged_work(),
             "cached empty discovery should avoid traversing the immutable resource again: first={}, second={}",
@@ -11011,11 +10951,9 @@ mod draft2020_dynamic_annotation_regressions {
             Ok(())
         };
         let mut cold_context = Context::ordinary().with_meter(&mut cold_meter);
-        assert!(
-            cold_compiled
-                .validate(&instance, &mut cold_context)
-                .is_err()
-        );
+        assert!(cold_compiled
+            .validate(&instance, &mut cold_context)
+            .is_err());
         assert!(cold_context.charged_work() > ceiling);
 
         let mut warm_used = 0u64;
@@ -11031,12 +10969,10 @@ mod draft2020_dynamic_annotation_regressions {
             Ok(())
         };
         let mut warm_context = Context::ordinary().with_meter(&mut warm_meter);
-        assert!(
-            compiled
-                .validate(&instance, &mut warm_context)
-                .unwrap()
-                .is_empty()
-        );
+        assert!(compiled
+            .validate(&instance, &mut warm_context)
+            .unwrap()
+            .is_empty());
         assert!(warm_context.charged_work() <= ceiling);
     }
 
@@ -11053,12 +10989,10 @@ mod draft2020_dynamic_annotation_regressions {
         )
         .unwrap();
         let instance = value(r#"{"x":1}"#);
-        assert!(
-            compiled
-                .validate(&instance, &mut Context::ordinary())
-                .unwrap()
-                .is_empty()
-        );
+        assert!(compiled
+            .validate(&instance, &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
 
         // Run the nested validation from the cached anchor materialization
         // callback, after cache lookup and with the exact discovered path cost.
@@ -11081,22 +11015,18 @@ mod draft2020_dynamic_annotation_regressions {
                 saw_cached_anchor_charge = true;
                 cache_lock_was_free = compiled.dynamic_anchor_cache.try_lock().is_ok();
                 let mut nested_context = Context::ordinary();
-                assert!(
-                    compiled
-                        .validate(&instance, &mut nested_context)
-                        .unwrap()
-                        .is_empty()
-                );
+                assert!(compiled
+                    .validate(&instance, &mut nested_context)
+                    .unwrap()
+                    .is_empty());
             }
             Ok(())
         };
         let mut context = Context::ordinary().with_meter(&mut meter);
-        assert!(
-            compiled
-                .validate(&instance, &mut context)
-                .unwrap()
-                .is_empty()
-        );
+        assert!(compiled
+            .validate(&instance, &mut context)
+            .unwrap()
+            .is_empty());
         assert!(
             saw_cached_anchor_charge,
             "the cached anchor materialization charge reached the host meter"

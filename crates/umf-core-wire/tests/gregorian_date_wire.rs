@@ -61,7 +61,7 @@ fn text(value: &Value) -> String {
 #[test]
 fn tagged_parse_matches_profile_components_and_original_text() {
     let packet = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-gregorian-date-wire/cases.json"
+        "../../../tests/rust-core/fixtures/r5-gregorian-date-wire/cases.json"
     ));
     let cases = field(&packet, "cases").unwrap();
     let Value::Array(cases) = cases else {
@@ -97,7 +97,7 @@ fn tagged_parse_matches_profile_components_and_original_text() {
 #[test]
 fn tagged_truncation_matches_all_frozen_cases() {
     let packet = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-gregorian-date-wire/cases.json"
+        "../../../tests/rust-core/fixtures/r5-gregorian-date-wire/cases.json"
     ));
     let Value::Array(cases) = field(&packet, "cases").unwrap() else {
         panic!("cases")
@@ -184,7 +184,7 @@ fn tagged_refusal_taxonomy_and_date_before_unit_order() {
 #[test]
 fn all_frozen_invalid_tokens_preserve_type_vs_range_class() {
     let packet = parse(include_str!(
-        "../../../docs/helix/04-build/evidence/rust-migration/r5-gregorian-date-wire/cases.json"
+        "../../../tests/rust-core/fixtures/r5-gregorian-date-wire/cases.json"
     ));
     let Value::Array(cases) = field(&packet, "cases").unwrap() else {
         panic!("cases")

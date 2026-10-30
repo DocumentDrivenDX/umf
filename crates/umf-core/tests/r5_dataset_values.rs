@@ -91,7 +91,7 @@ fn engine() -> Engine {
 
 #[test]
 fn frozen_commerce_complete_envelope_matches_live_typescript() {
-    let input_case=parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-commerce.json"));
+    let input_case=parse(include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-commerce.json"));
     let source = get(&input_case, "source").unwrap();
     let input = get(&input_case, "input").unwrap();
     let expected = get(get(&input_case, "outcome").unwrap(), "value").unwrap();
@@ -137,14 +137,14 @@ fn frozen_mutation_controls_match_complete_typescript_envelopes() {
             continue;
         }
         let packet = match id {
-            "duplicate_locator_first_wins" => include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-duplicate_locator_first_wins.json"),
-            "unknown_relationship_declaration" => include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-unknown_relationship_declaration.json"),
-            "surrogate_unknown_path" => include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-surrogate_unknown_path.json"),
-            "duplicate_key_path" => include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-duplicate_key_path.json"),
-            "unknown_key_residual" => include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-unknown_key_residual.json"),
-            "unsupported_relationship_order" => include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-unsupported_relationship_order.json"),
-            "invalid_target_key_updates_key_obligation" => include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-invalid_target_key_updates_key_obligation.json"),
-            _ => include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-unknown_target_key_updates_key_obligation.json"),
+            "duplicate_locator_first_wins" => include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-duplicate_locator_first_wins.json"),
+            "unknown_relationship_declaration" => include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-unknown_relationship_declaration.json"),
+            "surrogate_unknown_path" => include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-surrogate_unknown_path.json"),
+            "duplicate_key_path" => include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-duplicate_key_path.json"),
+            "unknown_key_residual" => include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-unknown_key_residual.json"),
+            "unsupported_relationship_order" => include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-unsupported_relationship_order.json"),
+            "invalid_target_key_updates_key_obligation" => include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-invalid_target_key_updates_key_obligation.json"),
+            _ => include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-unknown_target_key_updates_key_obligation.json"),
         };
         let frozen = parse(packet);
         let expected = get(get(&frozen, "outcome").unwrap(), "value").unwrap();
@@ -176,7 +176,7 @@ fn frozen_mutation_controls_match_complete_typescript_envelopes() {
 
 #[test]
 fn nested_key_limit_controls_escape_both_receipt_catches() {
-    let frozen = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-nested_key_control.json"));
+    let frozen = parse(include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-nested_key_control.json"));
     let e = engine();
     let validator = CoreDatasetValueValidator::new(&e, &mut Context::ordinary()).unwrap();
     for key_call in [1usize, 2] {
@@ -232,7 +232,7 @@ fn nested_key_limit_controls_escape_both_receipt_catches() {
 
 #[test]
 fn wrong_version_is_document_validated_before_source_refusal() {
-    let frozen = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-wrong_version_document_validation_order.json"));
+    let frozen = parse(include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-wrong_version_document_validation_order.json"));
     let e = engine();
     let source = get(&frozen, "source").unwrap();
     let input = get(&frozen, "input").unwrap();
@@ -298,10 +298,10 @@ fn frozen_full_dataset_verification_matches_typescript() {
         "forged_result",
     ] {
         let packet = match id {
-            "valid_commerce" => include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-verify-valid_commerce.json"),
-            "stale_source" => include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-verify-stale_source.json"),
-            "stale_input" => include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-verify-stale_input.json"),
-            _ => include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-verify-forged_result.json"),
+            "valid_commerce" => include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-verify-valid_commerce.json"),
+            "stale_source" => include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-verify-stale_source.json"),
+            "stale_input" => include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-verify-stale_input.json"),
+            _ => include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-verify-forged_result.json"),
         };
         let frozen = parse(packet);
         let outcome = get(&frozen, "outcome").unwrap();
@@ -344,7 +344,7 @@ fn frozen_full_dataset_verification_matches_typescript() {
 
 #[test]
 fn frozen_schema_refusals_preserve_the_typescript_error_code() {
-    let input_case=parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-closed_scope.json"));
+    let input_case=parse(include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-closed_scope.json"));
     let outcome = get(&input_case, "outcome").unwrap();
     let mut no_caps = NoCapabilities;
     let error = validate_core_dataset_values(
@@ -369,10 +369,10 @@ fn frozen_closed_unknown_and_resource_refusals_match_code_and_message() {
     let e = engine();
     let validator = CoreDatasetValueValidator::new(&e, &mut Context::ordinary()).unwrap();
     for packet in [
-  include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-closed_scope.json"),
-  include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-unknown_input_member.json"),
-  include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-oversized.json"),
-  include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-unknown_source_value_count.json"),
+  include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-closed_scope.json"),
+  include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-unknown_input_member.json"),
+  include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-oversized.json"),
+  include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-unknown_source_value_count.json"),
  ] {
   let frozen=parse(packet);let expected=get(&frozen,"outcome").and_then(|v|get(v,"error")).unwrap();let mut no_caps=NoCapabilities;
         let error=validator.validate(get(&frozen,"source").unwrap(),get(&frozen,"input").unwrap(),&e,&Registry::default(),&mut no_caps,&mut Context::ordinary()).unwrap_err();
@@ -386,9 +386,9 @@ fn frozen_unknown_source_and_utf16_envelopes_match_without_losing_content() {
     let e = engine();
     let validator = CoreDatasetValueValidator::new(&e, &mut Context::ordinary()).unwrap();
     for packet in [
-  include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-unknown_source_meaning.json"),
-  include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-supplementary_and_surrogate.json"),
-        include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-unsupported_lifecycle.json"),
+  include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-unknown_source_meaning.json"),
+  include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-supplementary_and_surrogate.json"),
+        include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-unsupported_lifecycle.json"),
  ] {
   let frozen=parse(packet);let expected=get(&frozen,"outcome").and_then(|v|get(v,"value")).unwrap();let mut no_caps=NoCapabilities;
         let actual=validator.validate(get(&frozen,"source").unwrap(),get(&frozen,"input").unwrap(),&e,&Registry::default(),&mut no_caps,&mut Context::ordinary()).unwrap();
@@ -398,7 +398,7 @@ fn frozen_unknown_source_and_utf16_envelopes_match_without_losing_content() {
 
 #[test]
 fn frozen_duplicate_locator_returns_the_complete_invalid_receipt() {
-    let frozen=parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values/frozen-duplicate_instance.json"));
+    let frozen=parse(include_str!("../../../tests/rust-core/fixtures/r5-dataset-values/frozen-duplicate_instance.json"));
     let expected = get(&frozen, "outcome")
         .and_then(|v| get(v, "value"))
         .unwrap();

@@ -83,7 +83,7 @@ fn captures_exports_and_inspects_utf16_jsonl_source_without_normalizing_it() {
 
 #[test]
 fn inspection_matches_the_frozen_typescript_predecessor_cases() {
-    let packet:serde_json::Value=serde_json::from_str(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r8-delta-spark-hash/delta-log-predecessor.json")).unwrap();
+    let packet:serde_json::Value=serde_json::from_str(include_str!("../../../tests/rust-core/fixtures/r8-delta-spark-hash/delta-log-predecessor.json")).unwrap();
     for case in packet["cases"].as_array().unwrap() {
         let id = case["id"].as_str().unwrap();
         let source = case["text"].as_str().unwrap();

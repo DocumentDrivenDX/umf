@@ -4,7 +4,7 @@ import {generatePythonClient as directReference} from '../src/access';
 import {CODEGEN_RESOURCES} from '../src/access/codegen-resources';
 import {UmfError} from '../src/model/errors';
 
-const corpusPath=new URL('../docs/helix/04-build/evidence/rust-migration/r3/baseline/operations.json',import.meta.url);
+const corpusPath=new URL('../rust-core/fixtures/r3/baseline/operations.json',import.meta.url);
 const corpus=JSON.parse(await Bun.file(corpusPath).text()) as {cases:{id:string;operation:string;request:PythonClientRequest;expected:any}[]};
 const source=await Bun.file(new URL('./unified/commerce.json',import.meta.url)).text();
 const rustGenerate=await createPythonClientRustCandidateV2();

@@ -622,7 +622,7 @@ mod tests {
     #[test]
     fn replays_every_frozen_tagged_domain_case() {
         let packet = parse(include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r8-security-protection-resolution/predecessor.json"
+            "../../../tests/rust-core/fixtures/r8-security-protection-resolution/predecessor.json"
         ));
         let Value::Array(cases) = member(&packet, "cases").unwrap() else {
             panic!("cases")

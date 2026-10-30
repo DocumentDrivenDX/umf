@@ -51,7 +51,7 @@ fn resources() -> CodegenResources {
 #[test]
 fn raw_deployment_group_aliases_use_numeric_ownkey_order() {
     let fixture = load(
-        "docs/helix/04-build/evidence/rust-migration/r3/sol-second-numeric-keys-review/frozen.json",
+        "tests/rust-core/fixtures/r3/sol-second-numeric-keys-review/frozen.json",
     );
     let Value::Array(cases) = get(&fixture, "cases") else {
         panic!("cases")
@@ -87,7 +87,7 @@ fn raw_deployment_group_aliases_use_numeric_ownkey_order() {
 #[test]
 fn table_schema_hop_adapter_preserves_invocation_constraint_budget() {
     let fixture =
-        load("docs/helix/04-build/evidence/rust-migration/r3/sol-second-shared-review/frozen.json");
+        load("tests/rust-core/fixtures/r3/sol-second-shared-review/frozen.json");
     let Value::Array(cases) = get(&fixture, "cases") else {
         panic!("cases")
     };

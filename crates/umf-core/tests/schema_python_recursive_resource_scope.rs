@@ -7,7 +7,7 @@ use umf_core::{
     PythonSchemaResources,
 };
 
-const RECEIPT: &str = include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-recursive-resource-scope-predecessor.json");
+const RECEIPT: &str = include_str!("../../../tests/rust-core/fixtures/r2/sol-python-recursive-resource-scope-predecessor.json");
 
 fn recipe(value: &Json) -> Py {
     match value["kind"].as_str().expect("recipe kind") {
@@ -322,7 +322,7 @@ fn reached_reference_inside_opaque_member_keeps_raw_python_key_identity() {
 
 #[test]
 fn resource_identity_companion_matches_exact_native_profiles() {
-    let receipt: Json = serde_json::from_str(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-resource-identity-companion-predecessor.json")).unwrap();
+    let receipt: Json = serde_json::from_str(include_str!("../../../tests/rust-core/fixtures/r2/sol-python-resource-identity-companion-predecessor.json")).unwrap();
     assert_eq!(
         receipt["profile"],
         "umf.r2-sol-python-resource-identity-companion/1"
@@ -348,7 +348,7 @@ fn resource_identity_companion_matches_exact_native_profiles() {
 
 #[test]
 fn resource_anchor_companion_uses_source_identity() {
-    let receipt: Json = serde_json::from_str(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-resource-anchor-companion-predecessor.json")).unwrap();
+    let receipt: Json = serde_json::from_str(include_str!("../../../tests/rust-core/fixtures/r2/sol-python-resource-anchor-companion-predecessor.json")).unwrap();
     assert_eq!(receipt["cases"].as_array().unwrap().len(), 24);
     for case in receipt["cases"].as_array().unwrap() {
         let id = case["id"].as_str().unwrap();
@@ -366,7 +366,7 @@ fn resource_anchor_companion_uses_source_identity() {
 
 #[test]
 fn native_resource_container_dialects_match_frozen_profiles() {
-    let receipt: Json = serde_json::from_str(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r2/sol-python-resource-uri-operations-predecessor.json")).unwrap();
+    let receipt: Json = serde_json::from_str(include_str!("../../../tests/rust-core/fixtures/r2/sol-python-resource-uri-operations-predecessor.json")).unwrap();
     assert_eq!(receipt["cases"].as_array().unwrap().len(), 24);
     for case in receipt["cases"].as_array().unwrap() {
         let id = case["id"].as_str().unwrap();

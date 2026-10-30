@@ -2,7 +2,7 @@ import {readFileSync} from 'node:fs';
 import {expect, test} from 'bun:test';
 import {createEngine, UmfCoreError, UmfError} from '../index.js';
 
-const packet = JSON.parse(readFileSync(new URL('../../../../docs/helix/04-build/evidence/rust-migration/r8-json-value-serialization/predecessor.json', import.meta.url), 'utf8'));
+const packet = JSON.parse(readFileSync(new URL('../../../../../../../../tests/rust-core/fixtures/r8-json-value-serialization/predecessor.json', import.meta.url), 'utf8'));
 const engine = createEngine({coreSchema: null, referenceSchema: null, packageSchema: null, constraints: null, domainPolicy: null});
 
 function sourceFor(input) {

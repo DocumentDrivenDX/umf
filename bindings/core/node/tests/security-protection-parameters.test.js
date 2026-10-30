@@ -3,7 +3,7 @@ import {readFileSync} from 'node:fs';
 import test from 'node:test';
 import {createSecurityProtectionParametersEngine, SECURITY_PROTECTION_PARAMETERS_PROFILE} from '../index.js';
 
-const packet = JSON.parse(readFileSync(new URL('../../../../docs/helix/04-build/evidence/rust-migration/r8-security-protection-parameters/predecessor.json', import.meta.url), 'utf8'));
+const packet = JSON.parse(readFileSync(new URL('../../../../../../../../tests/rust-core/fixtures/r8-security-protection-parameters/predecessor.json', import.meta.url), 'utf8'));
 const engine = createSecurityProtectionParametersEngine();
 const canonical = value => JSON.stringify(value, (_key, item) => item && typeof item === 'object' && !Array.isArray(item)
   ? Object.fromEntries(Object.keys(item).sort().map(key => [key, item[key]])) : item);

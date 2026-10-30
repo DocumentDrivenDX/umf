@@ -116,7 +116,7 @@ mod tests {
     #[test]
     fn tagged_wire_replays_all_representable_frozen_parameter_cases() {
         let packet = parse(include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r8-security-protection-parameters/predecessor.json"
+            "../../../tests/rust-core/fixtures/r8-security-protection-parameters/predecessor.json"
         ));
         let Value::Array(cases) = member(&packet, "cases").unwrap() else {
             panic!("cases")
@@ -204,7 +204,7 @@ mod tests {
     #[test]
     fn tagged_wire_replays_cumulative_normalized_text_boundary() {
         let packet = parse(include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r8-security-protection-parameters/budget-boundary.json"
+            "../../../tests/rust-core/fixtures/r8-security-protection-parameters/budget-boundary.json"
         ));
         let case = member(&packet, "case").unwrap();
         let sources = member(case, "sources").unwrap();
@@ -242,7 +242,7 @@ mod tests {
     #[test]
     fn tagged_wire_preserves_predecessor_order_across_later_transform_unknowns() {
         let packet = parse(include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r8-security-protection-parameters/diagnostic-order.json"
+            "../../../tests/rust-core/fixtures/r8-security-protection-parameters/diagnostic-order.json"
         ));
         let case = &member(&packet, "cases")
             .and_then(|value| match value {
@@ -285,7 +285,7 @@ mod tests {
     #[test]
     fn host_control_can_refuse_tagged_work_before_admission() {
         let packet = parse(include_str!(
-            "../../../docs/helix/04-build/evidence/rust-migration/r8-security-protection-parameters/predecessor.json"
+            "../../../tests/rust-core/fixtures/r8-security-protection-parameters/predecessor.json"
         ));
         let Value::Array(cases) = member(&packet, "cases").unwrap() else {
             panic!("cases")

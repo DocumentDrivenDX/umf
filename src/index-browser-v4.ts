@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createPythonClientRustCandidateV4} from './browser-v4';
 import {initializePythonClientRustDefaultV4} from './access/rust-default-v4';
-import {initializeCoreModelRootKindNullabilityWasm,initializeCoreRecordValuesHostInputWasm,createDefaultSemanticTypeRegistry,createCoreCardinalityHostInputEngine,createCoreRecordTypeEngine,createSecurityLogicEngine,createJavascriptNumericEngine,createArrowSchemaEngine,createArrowIpcEngine,UmfError as BindingUmfError,initializeProtobufDescriptorDocumentWasm,initializeBit128Wasm,initializeTemporalWasm,createAccessTemporalEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,ACCESS_TEMPORAL_PROFILE as ACCESS_TEMPORAL_PROFILE_RUST} from '../bindings/core/wasm/index.js';
+import {initializeCoreModelRootKindNullabilityWasm,initializeCoreRecordValuesHostInputWasm,createDefaultSemanticTypeRegistry,createCoreCardinalityHostInputEngine,createCoreRecordTypeEngine,createSecurityLogicEngine,createJavascriptNumericEngine,createArrowSchemaEngine,createArrowIpcEngine,createDbtEngine,UmfError as BindingUmfError,initializeProtobufDescriptorDocumentWasm,initializeBit128Wasm,initializeTemporalWasm,createAccessTemporalEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,isDbtHostError,ACCESS_TEMPORAL_PROFILE as ACCESS_TEMPORAL_PROFILE_RUST} from '../bindings/core/wasm/index.js';
 import {CORE_MODEL_RESOURCES} from './access/core-model-resources';
 import {bindCoreCardinalityRust} from './access/rust-cardinality-default';
 import {bindCoreKindNullabilityRust} from './access/rust-kind-nullability-default';
@@ -19,6 +19,7 @@ import {bindCoreRecordValuesRust} from './access/rust-record-values-default';
 import {bindCoreKeyTupleDefault} from './access/rust-key-tuple-default';
 import {bindSemanticTypesRust} from './access/rust-semantic-types-default';
 import {bindCoreSemanticTypesRust} from './access/rust-core-semantic-types-default';
+import {bindSemanticTypeAccessorsRust} from './model/rust-semantic-type-accessors-default';
 import {bindScalarTypesForVersionRust} from './access/rust-scalar-types-for-version-default';
 import {createSecurityNotRustAdapter} from './extensions/security/rust-not-adapter';
 import {createSecurityLogicRustAdapter} from './extensions/security/rust-logic-adapter';
@@ -38,6 +39,7 @@ import {createProtobufDescriptorDocumentRustDefault} from './adapters/protobuf/r
 import type {ProtobufDescriptorDocumentRustEngine} from './adapters/protobuf/rust-default';
 import {bindArrowSchemaRust} from './adapters/arrow/rust-default';
 import {bindArrowIpcRust} from './adapters/arrow/rust-ipc-default';
+import {bindDbtRust} from './adapters/dbt/rust-default';
 import type {generateDatasetSourceSchema as DatasetSourceSchemaReference} from './domain-packs/source-schema';
 import type {generateDomainPackSchema as DomainPackSchemaReference} from './domain-packs/schema';
 import type {generateArtifactCollectionSchema as ArtifactCollectionSchemaReference} from './domain-packs/artifacts';
@@ -96,6 +98,7 @@ const protobufDescriptorDocument=createProtobufDescriptorDocumentRustDefault(opt
 const {readDescriptorSet,writeDescriptorSet,importProtobufDescriptorSet,exportProtobufDescriptorSet,getProtobufDescriptorSet,inspectProtobuf,exportProtobufBundle}=protobufDescriptorDocument;
 const readDescriptorSetRustCandidate=createReadDescriptorSetRustCandidate(protobufDescriptorEngine,isNativeUmfCoreError);
 const {inspectCoreSemanticTypes,getCoreSemanticTypes,declareCoreSemanticTypes,verifyCoreSemanticTypeDeclaration}=bindCoreSemanticTypesRust(model,isNativeUmfCoreError);
+const {getSemanticTypes,setSemanticTypes}=bindSemanticTypeAccessorsRust(model,isHostJsonResponseError);
 const recordValuesHost=await initializeCoreRecordValuesHostInputWasm(CORE_MODEL_RESOURCES,async()=>wasmModule);
 const validateCoreRecordValues=bindCoreRecordValuesRust(recordValuesHost);
 const {SemanticTypeRegistry,validateSemanticTypeValue,validateCoreSemanticTypeValue}=bindSemanticTypesRust(()=>createDefaultSemanticTypeRegistry(wasmModule),CORE_MODEL_RESOURCES);
@@ -130,9 +133,13 @@ const {projectRelationshipsToPostgresql,verifyRelationshipPostgresqlProjection,r
 const {parseBits128,parseUuid,bits128FromBytes,bits128ToBytes,uuidFromBits128,uuidToBits128,compareBits128,bits128ToWords,bits128FromWords,bits128ToInteger,bits128FromInteger}=bindBit128Rust(await initializeBit128Wasm(),isBit128EngineError);
 const {importArrowSchema,inspectArrow,exportArrowSchema,getArrowNode,proposeArrowNodeEdit}=bindArrowSchemaRust(createArrowSchemaEngine(wasmModule),isNativeUmfCoreError);
 const {captureArrowIpc,exportArrowIpcCapture,inspectArrowIpcCapture}=bindArrowIpcRust(createArrowIpcEngine(wasmModule),isNativeUmfCoreError,error=>error instanceof BindingUmfError);
+const dbt=bindDbtRust(createDbtEngine(wasmModule),isNativeUmfCoreError,isHostJsonResponseError,isDbtHostError);
+const {importDbtManifest,exportDbtManifest,inspectDbtManifest,getDbtManifestNode,proposeDbtManifestNodeEdit,importDbtArtifact,exportDbtArtifact,inspectDbtArtifact,getDbtArtifactNode,proposeDbtArtifactNodeEdit,importDbtSemanticManifest,exportDbtSemanticManifest,inspectDbtSemanticManifest,getDbtSemanticManifestNode,proposeDbtSemanticManifestNodeEdit,inspectDbtManifestGraph,selectDbtManifestDependencies}=dbt;
 export * from './index-v4-default';
+export {getSemanticTypes,setSemanticTypes};
 export {importArrowSchema,inspectArrow,exportArrowSchema,getArrowNode,proposeArrowNodeEdit};
 export {captureArrowIpc,exportArrowIpcCapture,inspectArrowIpcCapture};
+export {importDbtManifest,exportDbtManifest,inspectDbtManifest,getDbtManifestNode,proposeDbtManifestNodeEdit,importDbtArtifact,exportDbtArtifact,inspectDbtArtifact,getDbtArtifactNode,proposeDbtArtifactNodeEdit,importDbtSemanticManifest,exportDbtSemanticManifest,inspectDbtSemanticManifest,getDbtSemanticManifestNode,proposeDbtSemanticManifestNodeEdit,inspectDbtManifestGraph,selectDbtManifestDependencies};
 export {scalarTypesForVersion};
 export {readCoreKeyTupleBytes,prepareCoreKeyTuples};
 export {inspectDomainPackLoaderOperation as inspectDomainPackLoader,inspectDomainPack,requireDomainPackProfile};

@@ -15,6 +15,7 @@ import {bindCoreRecordTypeRust} from './access/rust-record-type-default';
 import {bindCoreRecordValuesRust} from './access/rust-record-values-default';
 import {bindCoreKeyTupleDefault} from './access/rust-key-tuple-default';
 import {bindSemanticTypesRust} from './access/rust-semantic-types-default';
+import {bindSemanticTypeAccessorsRust} from './model/rust-semantic-type-accessors-default';
 import {bindCoreSemanticTypesRust} from './access/rust-core-semantic-types-default';
 import {bindScalarTypesForVersionRust} from './access/rust-scalar-types-for-version-default';
 import {createSecurityNotRustAdapter} from './extensions/security/rust-not-adapter';
@@ -35,6 +36,7 @@ import {createProtobufDescriptorDocumentRustDefault} from './adapters/protobuf/r
 import type {ProtobufDescriptorDocumentRustEngine} from './adapters/protobuf/rust-default';
 import {bindArrowSchemaRust} from './adapters/arrow/rust-default';
 import {bindArrowIpcRust} from './adapters/arrow/rust-ipc-default';
+import {bindDbtRust} from './adapters/dbt/rust-default';
 import type {generateDatasetSourceSchema as DatasetSourceSchemaReference} from './domain-packs/source-schema';
 import type {generateDomainPackSchema as DomainPackSchemaReference} from './domain-packs/schema';
 import type {generateArtifactCollectionSchema as ArtifactCollectionSchemaReference} from './domain-packs/artifacts';
@@ -46,7 +48,7 @@ import {CURRENT_CORE_VERSION,SCALAR_TYPES} from './model/types';
 // Module import resolves only after the native engine is ready. The function
 // exported below remains synchronous and never falls back to TypeScript.
 assertPythonClientRustPlatformV4(process.platform,process.arch);
-const [{createCoreModelRootKindNullabilityEngine,createCoreCardinalityHostInputEngine,createCoreRecordValuesHostInputEngine,createDefaultSemanticTypeRegistry,createCoreRecordTypeEngine,createBit128Engine,createTemporalEngine,createAccessTemporalEngine,ACCESS_TEMPORAL_PROFILE:ACCESS_TEMPORAL_PROFILE_RUST,createSecurityLogicEngine,createJavascriptNumericEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,createProtobufDescriptorDocumentEngine,createArrowSchemaEngine,createArrowIpcEngine,UmfError:BindingUmfError,domainPackSchemaGraphJson,datasetSourceSchemaGraphJson,artifactCollectionSchemaGraphJson,domainPackLoaderSchemaGraphJson,loaderInventorySchemaGraphJson,inspectDomainPackLoaderWire,inspectDomainPackProfileWire,projectSecSubmissionsUtf16Wire,projectSecCompanyFactsUtf16Wire},{CORE_MODEL_RESOURCES},{createPythonClientRustCandidateV4}]=await Promise.all([
+const [{createCoreModelRootKindNullabilityEngine,createCoreCardinalityHostInputEngine,createCoreRecordValuesHostInputEngine,createDefaultSemanticTypeRegistry,createCoreRecordTypeEngine,createBit128Engine,createTemporalEngine,createAccessTemporalEngine,ACCESS_TEMPORAL_PROFILE:ACCESS_TEMPORAL_PROFILE_RUST,createSecurityLogicEngine,createJavascriptNumericEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,isDbtHostError,createProtobufDescriptorDocumentEngine,createArrowSchemaEngine,createArrowIpcEngine,createDbtEngine,UmfError:BindingUmfError,domainPackSchemaGraphJson,datasetSourceSchemaGraphJson,artifactCollectionSchemaGraphJson,domainPackLoaderSchemaGraphJson,loaderInventorySchemaGraphJson,inspectDomainPackLoaderWire,inspectDomainPackProfileWire,projectSecSubmissionsUtf16Wire,projectSecCompanyFactsUtf16Wire},{CORE_MODEL_RESOURCES},{createPythonClientRustCandidateV4}]=await Promise.all([
  import('../bindings/core/node/index.js'),
  import('./access/core-model-resources'),
  import('./node-v4'),
@@ -85,6 +87,7 @@ const scalarTypesForVersion=bindScalarTypesForVersionRust(model as typeof model 
 const coreKeyTuple=bindCoreKeyTupleDefault(model,isNativeUmfCoreError);
 const {readCoreKeyTupleBytes,prepareCoreKeyTuples}=coreKeyTuple;
 const {inspectCoreSemanticTypes,getCoreSemanticTypes,declareCoreSemanticTypes,verifyCoreSemanticTypeDeclaration}=bindCoreSemanticTypesRust(model,isNativeUmfCoreError);
+const {getSemanticTypes,setSemanticTypes}=bindSemanticTypeAccessorsRust(model,isHostJsonResponseError);
 const validateCoreRecordValues=bindCoreRecordValuesRust(createCoreRecordValuesHostInputEngine(CORE_MODEL_RESOURCES));
 const {SemanticTypeRegistry,validateSemanticTypeValue,validateCoreSemanticTypeValue}=bindSemanticTypesRust(()=>createDefaultSemanticTypeRegistry(),CORE_MODEL_RESOURCES);
 type SemanticTypeRegistry=InstanceType<typeof SemanticTypeRegistry>;
@@ -123,10 +126,14 @@ const {projectRelationshipsToPostgresql,verifyRelationshipPostgresqlProjection,r
 const {parseBits128,parseUuid,bits128FromBytes,bits128ToBytes,uuidFromBits128,uuidToBits128,compareBits128,bits128ToWords,bits128FromWords,bits128ToInteger,bits128FromInteger}=bindBit128Rust(createBit128Engine(),isBit128EngineError);
 const {importArrowSchema,inspectArrow,exportArrowSchema,getArrowNode,proposeArrowNodeEdit}=bindArrowSchemaRust(createArrowSchemaEngine(),isNativeUmfCoreError);
 const {captureArrowIpc,exportArrowIpcCapture,inspectArrowIpcCapture}=bindArrowIpcRust(createArrowIpcEngine(),isNativeUmfCoreError,error=>error instanceof BindingUmfError);
+const dbt=bindDbtRust(createDbtEngine(),isNativeUmfCoreError,isHostJsonResponseError,isDbtHostError);
+const {importDbtManifest,exportDbtManifest,inspectDbtManifest,getDbtManifestNode,proposeDbtManifestNodeEdit,importDbtArtifact,exportDbtArtifact,inspectDbtArtifact,getDbtArtifactNode,proposeDbtArtifactNodeEdit,importDbtSemanticManifest,exportDbtSemanticManifest,inspectDbtSemanticManifest,getDbtSemanticManifestNode,proposeDbtSemanticManifestNodeEdit,inspectDbtManifestGraph,selectDbtManifestDependencies}=dbt;
 export * from './index-v4-default';
+export {getSemanticTypes,setSemanticTypes};
 export {scalarTypesForVersion};
 export {importArrowSchema,inspectArrow,exportArrowSchema,getArrowNode,proposeArrowNodeEdit};
 export {captureArrowIpc,exportArrowIpcCapture,inspectArrowIpcCapture};
+export {importDbtManifest,exportDbtManifest,inspectDbtManifest,getDbtManifestNode,proposeDbtManifestNodeEdit,importDbtArtifact,exportDbtArtifact,inspectDbtArtifact,getDbtArtifactNode,proposeDbtArtifactNodeEdit,importDbtSemanticManifest,exportDbtSemanticManifest,inspectDbtSemanticManifest,getDbtSemanticManifestNode,proposeDbtSemanticManifestNodeEdit,inspectDbtManifestGraph,selectDbtManifestDependencies};
 export {readCoreKeyTupleBytes,prepareCoreKeyTuples};
 export {inspectDomainPackLoaderOperation as inspectDomainPackLoader,inspectDomainPack,requireDomainPackProfile};
 export {inspectCoreElementKind,declareCoreElementKind,verifyCoreKindDeclaration,inspectCoreNullability,declareCoreNullability,verifyCoreNullabilityDeclaration,generatePythonClient,generateDomainPackSchema,generateDatasetSourceSchema,generateArtifactCollectionSchema,exactDecimal,integerFromBigInt,integerToBigInt,admitJavascriptNumber,numericToNumberLossless,inspectCoreCardinality,declareCoreCardinality,verifyCoreCardinalityDeclaration,validateCoreDatasetValuesCompact,verifyCoreDatasetValuesCompact,inspectCoreFacets,declareCoreFacets,verifyCoreFacetDeclaration,historicalCoreFacetPatch,inspectCoreKeys,lookupCoreKey,declareCoreRecordMembers,declareCoreKey,verifyCoreKeyOperation,inspectCoreRelationships,lookupCoreRelationship,declareCoreRelationship,verifyCoreRelationshipOperation,inspectCoreScalarType,inspectCoreRecordMembers,inspectCoreReferenceLinks,inspectCoreSemanticTypes,getCoreSemanticTypes,declareCoreSemanticTypes,verifyCoreSemanticTypeDeclaration,inspectRawTableBinding,inspectCoreSchemaProperties,declareCoreSchemaProperties,validateCoreFieldValue,resolveCoreDefault,validateCoreRecordValues,SemanticTypeRegistry,validateSemanticTypeValue,validateCoreSemanticTypeValue,declareCoreRecordType,verifyCoreRecordTypeDeclaration,parseBits128,parseUuid,bits128FromBytes,bits128ToBytes,uuidFromBits128,uuidToBits128,compareBits128,bits128ToWords,bits128FromWords,bits128ToInteger,bits128FromInteger,validateCsvBooleanLexical,verifyCsvBooleanLexical,parseGregorianDate,truncateGregorianDate,parseRfc3339ExactInstant,sameRfc3339ExactInstant,securityNot,securityAnd,securityOr};
