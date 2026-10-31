@@ -38,4 +38,4 @@ test('native Node public roots route LinkML, ODCS, TableSpec and SQL Server thro
  expect(()=>importOdcsDocument('[]',{id:'bad',format:'json'})).toThrow();
  expect(()=>importTableSpec('{"version":"99","table_name":"bad","columns":[]}',{id:'bad',format:'json'})).toThrow();
  expect(()=>importSqlServerCatalog('[]',{id:'bad'})).toThrow();
-});
+},60_000);

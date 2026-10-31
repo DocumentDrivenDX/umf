@@ -18,7 +18,7 @@ import type {OdcsRenameResult,proposeOdcsElementRename} from './odcs/rename';
 export interface LinkmlOdcsNativeFamilyEngine {
  linkml:{
   import(fields:{source:string;id:string;format:'json'|'yaml';metamodelVersion?:string}):unknown;
-  inspectPayload(fields:{payload:Json}):Diagnostic[];
+  inspectPayload(fields:{payload:Json}):unknown;
   inspect(fields:{document:Document}):unknown; export(fields:{document:Document;format?:'json'|'yaml'}):unknown;
   getNode(fields:{document:Document;pointer:string}):unknown; editNode(fields:{document:Document;pointer:string;jsonText:string}):unknown;
   classSlots(fields:{document:Document;className:string}):unknown; slotValues(fields:{document:Document;className:string;slotName:string}):unknown;
@@ -26,7 +26,7 @@ export interface LinkmlOdcsNativeFamilyEngine {
  };
  odcs:{
   import(fields:{source:string;id:string;format:'json'|'yaml'}):unknown;
-  inspectPayload(fields:{payload:Json}):Diagnostic[];
+  inspectPayload(fields:{payload:Json}):unknown;
   inspect(fields:{document:Document}):unknown; export(fields:{document:Document;format?:'json'|'yaml'}):unknown;
   getNode(fields:{document:Document;pointer:string}):unknown; editNode(fields:{document:Document;pointer:string;jsonText:string}):unknown;
   resolveReference(fields:{document:Document;reference:string;usage:'element'|'foreignKey'}):unknown;
@@ -45,13 +45,13 @@ export function createLinkmlOdcsRustDefault(engine:LinkmlOdcsNativeFamilyEngine,
   catch(error){
    if(!isNativeUmfCoreError(error)||CONTROL_CODES.has((error as {code?:string})?.code??''))throw error;
    const native=error as {code?:unknown;message?:unknown;path?:unknown};
-   if(typeof native.code==='string'&&(native.code.startsWith('LINKML_')||native.code.startsWith('ODCS_')||native.code==='REQUEST'))
+   if(typeof native.code==='string'&&(native.code.startsWith('LINKML_')||native.code.startsWith('ODCS_')||native.code==='REQUEST'||native.code==='JSON_SCHEMA_SYNTAX'||native.code==='JSON_SCHEMA_POINTER'||native.code.startsWith('NATIVE_YAML_')))
     throw new UmfError(native.code,String(native.message??''),typeof native.path==='string'?native.path:'');
    throw error;
   }
  };
  return Object.freeze({
-  linkmlRegistry():Registry{return new Registry().register(linkmlManifest as unknown as ExtensionPackage,(payload)=>call(()=>engine.linkml.inspectPayload({payload})));},
+  linkmlRegistry():Registry{return new Registry().register(linkmlManifest as unknown as ExtensionPackage,(payload)=>call<Diagnostic[]>(()=>engine.linkml.inspectPayload({payload})));},
   importLinkmlDocument(text:string,options:Parameters<typeof importLinkmlDocument>[1]):ReturnType<typeof importLinkmlDocument>{const {id,format,metamodelVersion}=options;return call(()=>engine.linkml.import({source:text,id,format,...(metamodelVersion===undefined?{}:{metamodelVersion})}) as ReturnType<typeof importLinkmlDocument>);},
   inspectLinkmlDocument(document:Parameters<typeof inspectLinkmlDocument>[0]):ReturnType<typeof inspectLinkmlDocument>{return call(()=>engine.linkml.inspect({document}) as ReturnType<typeof inspectLinkmlDocument>);},
   exportLinkmlDocument(document:Parameters<typeof exportLinkmlDocument>[0],format?:Parameters<typeof exportLinkmlDocument>[1]):ReturnType<typeof exportLinkmlDocument>{return call(()=>engine.linkml.export({document,...(format===undefined?{}:{format})}) as ReturnType<typeof exportLinkmlDocument>);},
@@ -62,7 +62,7 @@ export function createLinkmlOdcsRustDefault(engine:LinkmlOdcsNativeFamilyEngine,
   inspectLinkmlClassSlots(document:Parameters<typeof inspectLinkmlClassSlots>[0],className:string):LinkmlClassSlotsReport{return call(()=>engine.linkml.classSlots({document,className}) as LinkmlClassSlotsReport);},
   inspectLinkmlSlotValues(document:Parameters<typeof inspectLinkmlSlotValues>[0],className:string,slotName:string):LinkmlSlotValuesReport{return call(()=>engine.linkml.slotValues({document,className,slotName}) as LinkmlSlotValuesReport);},
   importOdcsDocument(text:string,options:Parameters<typeof importOdcsDocument>[1]):ReturnType<typeof importOdcsDocument>{const {id,format}=options;return call(()=>engine.odcs.import({source:text,id,format}) as ReturnType<typeof importOdcsDocument>);},
-  odcsRegistry():Registry{return new Registry().register(odcsManifest as unknown as ExtensionPackage,(payload)=>call(()=>engine.odcs.inspectPayload({payload})));},
+  odcsRegistry():Registry{return new Registry().register(odcsManifest as unknown as ExtensionPackage,(payload)=>call<Diagnostic[]>(()=>engine.odcs.inspectPayload({payload})));},
   inspectOdcsDocument(document:Parameters<typeof inspectOdcsDocument>[0]):ReturnType<typeof inspectOdcsDocument>{return call(()=>engine.odcs.inspect({document}) as ReturnType<typeof inspectOdcsDocument>);},
   exportOdcsDocument(document:Parameters<typeof exportOdcsDocument>[0],format?:Parameters<typeof exportOdcsDocument>[1]):ReturnType<typeof exportOdcsDocument>{return call(()=>engine.odcs.export({document,...(format===undefined?{}:{format})}) as ReturnType<typeof exportOdcsDocument>);},
   getOdcsDocumentNode(document:Parameters<typeof getOdcsDocumentNode>[0],path:Parameters<typeof getOdcsDocumentNode>[1]):ReturnType<typeof getOdcsDocumentNode>{return call(()=>engine.odcs.getNode({document,pointer:path}) as NativeJson as ReturnType<typeof getOdcsDocumentNode>);},

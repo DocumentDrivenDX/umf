@@ -83,30 +83,37 @@ The focused Rust wire and CLI checks now pass for OpenAPI, JSON-LD, TableSpec,
 SQL Server and the shared adapter routes. The corrected JSON-LD RDF direction
 and TableSpec opaque-extension core baselines also pass. A built Node addon
 passed the GraphQL callback edit and OpenAPI public-facade flows; the Python
-native-family transport passed two cases. The corrected LinkML/ODCS payload-inspector tests and the ordinary Python
-GraphQL roundtrip now pass. The current WASM target check also passes with the
-JSON-LD dependency graph. The actual Node public-root flows for LinkML, ODCS, TableSpec and SQL Server
-now pass, as do the static package exports and generated default-facade check.
+native-family transport passed two cases. The corrected LinkML/ODCS
+payload-inspector tests and ordinary Python GraphQL roundtrip now pass. The
+current WASM target check passes with the JSON-LD dependency graph. Actual
+Node public-root flows pass for LinkML, ODCS, TableSpec and SQL Server, as do
+static package exports and the generated default-facade check. An optimized
+development WASM build passed the JSON-LD import, frame, export and refusal
+baseline in real Chromium. A fresh Node addon passed JSON-LD public-root
+import, get, edit, frame, export and malformed-JSON refusal; a fresh Python
+extension passed JSON-LD import, frame and export without PATH tools, and the
+CLI advertised frame and generalized RDF input. A release-profile browser
+build is still pending.
 
 | Capability | Present source and checked behavior | Next action |
 | --- | --- | --- |
-| OpenAPI, LinkML and ODCS | Rust wire and CLI routes are integrated; OpenAPI wire, native payload inspector and actual Node facade flows pass. LinkML/ODCS wire and CLI flows pass. | Actual Node public-root flow passes; complete shared Registry structural ownership and browser activation. |
+| OpenAPI, LinkML and ODCS | Rust wire and CLI routes, payload inspectors and actual Node public-root flows pass. | Complete shared Registry structural ownership and browser activation. |
 | GraphQL | Rust pre/post-validation host callback and Node/WASM default route are integrated; the actual Node callback edit/export and prevalidation refusal pass. | Continue browser host integration. |
-| JSON-LD | Source operations, expand, flatten, compact and both ordinary RDF conversions are wired; corrected RDF direction and current wire/CLI baselines pass. | Activate and test the prepared compound-literal, generalized-input and framing operations; complete remaining processing semantics. |
-| TableSpec | All nine public operations are wired; corrected getter/edit preservation and split-bundle wire roundtrip pass. | Actual Node public-root flow passes; complete browser activation. |
-| SQL Server | Catalog and three facet kernels and wire/CLI routes are integrated; focused catalog, facet and payload-inspector checks pass. | Actual Node public-root flow passes; complete remaining host activation. |
-| Python native transport | Shared family dispatch passes two actual extension cases. | Ordinary GraphQL wire roundtrip passes; continue public Python activation as remaining families land. |
+| JSON-LD | Source operations, expand, flatten, compact, ordinary RDF conversion, compound-literal decoding, generalized RDF input, framing and native payload inspection are wired. Four new public wire tests pass. The optimized development WASM build passed a real Chromium import, frame, export and refusal flow; fresh Node public-root, Python extension and CLI checks pass. | Implement framing options still explicitly refused by the current subset, then verify the release-profile browser build. |
+| TableSpec | All nine public operations are wired; corrected getter/edit preservation, split-bundle wire roundtrip and actual Node public-root flow pass. | Complete browser activation. |
+| SQL Server | Catalog and three facet kernels and wire/CLI routes are integrated; focused wire, payload-inspector and actual Node public-root flows pass. | Complete remaining host activation. |
+| Python native transport | Shared family dispatch passes two actual extension cases; ordinary GraphQL wire roundtrip passes. | Continue public Python activation as remaining families land. |
 | Saga browser SDK subpath | Runtime source and default SDK asset integration are present. | Run one representative host baseline at the next host integration point. |
 
 ## Remaining Port Work
 
 The current library is not the entire TypeScript port. Remaining kernels include
-TypeSpec and Smithy; the remaining JSON-LD conversions and framing, SHACL and
-OWL; other relational adapters; cross-format projections;
+TypeSpec and Smithy; the remaining JSON-LD framing options, SHACL and OWL;
+PostgreSQL and other relational adapters; cross-format projections;
 action/security/table control operations; and portions of Delta/Iceberg/Spark.
 The remaining implementation tasks need Python, Node/Bun and browser WASM
-activation through the public defaults. Existing source and wire candidates must pass their
-own baseline operations before they are counted as implemented.
+activation through the public defaults. Existing source and wire candidates must
+pass their own baseline operations before they are counted as implemented.
 
 ## Acceptance
 

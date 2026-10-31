@@ -62,7 +62,7 @@ export function bindDbtRust(engine:DbtRustEngine,isNativeUmfCoreError:NativeCore
    if(!(native||host||binding)||CONTROL_ERROR_CODES.has((error as {code?:string})?.code??''))throw error;
    if(!code)throw error;
    const candidate=error as {code?:unknown;message?:unknown;path?:unknown};
-   throw new UmfError(candidate.code,String(candidate.message??''),typeof candidate.path==='string'?candidate.path:'');
+   throw new UmfError(code,String(candidate.message??''),typeof candidate.path==='string'?candidate.path:'');
   }
  };
  return Object.freeze({

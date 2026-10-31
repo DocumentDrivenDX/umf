@@ -12,7 +12,7 @@ import type {SqlServerFacetConstraintsInspection,inspectSqlServerFacetConstraint
 export interface SqlServerNativeFamilyEngine {
  sqlserver:{
   import(fields:{source:string;id:string}):unknown;
-  inspectPayload(fields:{payload:unknown}):Diagnostic[];
+  inspectPayload(fields:{payload:unknown}):unknown;
   inspect(fields:{document:Document}):unknown;
   export(fields:{document:Document}):unknown;
   columns(fields:{document:Document}):unknown;
@@ -35,12 +35,12 @@ export function createSqlServerRustDefault(engine:SqlServerNativeFamilyEngine,is
   catch(error){
    if(!isNativeUmfCoreError(error)||CONTROL_CODES.has((error as {code?:string})?.code??''))throw error;
    const native=error as {code?:unknown;message?:unknown;path?:unknown};
-   if(typeof native.code==='string'&&(native.code.startsWith('SQLSERVER_')||native.code==='REQUEST'))throw new UmfError(native.code,String(native.message??''),typeof native.path==='string'?native.path:'');
+   if(typeof native.code==='string'&&(native.code.startsWith('SQLSERVER_')||native.code==='REQUEST'||native.code==='JSON_SCHEMA_SYNTAX'||native.code==='JSON_SCHEMA_POINTER'||native.code.startsWith('NATIVE_YAML_')))throw new UmfError(native.code,String(native.message??''),typeof native.path==='string'?native.path:'');
    throw error;
   }
  };
  return Object.freeze({
-  sqlserverRegistry():Registry{return new Registry().register(manifest as unknown as ExtensionPackage,(payload)=>call(()=>engine.sqlserver.inspectPayload({payload})));},
+  sqlserverRegistry():Registry{return new Registry().register(manifest as unknown as ExtensionPackage,(payload)=>call<Diagnostic[]>(()=>engine.sqlserver.inspectPayload({payload})));},
   importSqlServerCatalog(text:string,options:Parameters<typeof importSqlServerCatalog>[1]):ReturnType<typeof importSqlServerCatalog>{return call(()=>engine.sqlserver.import({source:text,id:options.id}) as ReturnType<typeof importSqlServerCatalog>);},
   inspectSqlServer(document:Parameters<typeof inspectSqlServer>[0]):ReturnType<typeof inspectSqlServer>{return call(()=>engine.sqlserver.inspect({document}) as ReturnType<typeof inspectSqlServer>);},
   exportSqlServerCatalog(document:Parameters<typeof exportSqlServerCatalog>[0]):ReturnType<typeof exportSqlServerCatalog>{return call(()=>engine.sqlserver.export({document}) as ReturnType<typeof exportSqlServerCatalog>);},

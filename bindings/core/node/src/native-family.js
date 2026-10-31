@@ -8,7 +8,7 @@ const FAMILIES=Object.freeze({
  linkml:{profile:'umf.native-contract-wire/1',operations:['import','inspect','inspectPayload','export','getNode','editNode','classSlots','slotValues','importContext','importMerge']},
  odcs:{profile:'umf.native-contract-wire/1',operations:['import','inspect','inspectPayload','export','getNode','editNode','resolveReference','relationships','renameElement']},
  tablespec:{profile:'umf.tablespec-wire/1',operations:['importTableSpec','inspectTableSpec','exportTableSpec','getTableSpecTable','getTableSpecColumn','editTableSpecTable','editTableSpecColumn','importTableSpecBundle','exportTableSpecBundle']},
- jsonld:{profile:'umf.jsonld-wire/1',operations:['import','validate','export','getNode','editNode','expand','flatten','compact','toRdf','fromRdf']},
+ jsonld:{profile:'umf.jsonld-wire/1',operations:['import','inspectPayload','validate','export','getNode','editNode','expand','flatten','compact','toRdf','fromRdf','fromGeneralizedRdf','frame']},
  sqlserver:{profile:'umf.sqlserver-wire/1',operations:['import','inspect','inspectPayload','export','columns','constraints','indexes','edit','facetType','facetPredicate','facetConstraints']},
 });
 

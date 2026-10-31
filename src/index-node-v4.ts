@@ -38,6 +38,7 @@ import {bindArrowSchemaRust} from './adapters/arrow/rust-default';
 import {bindArrowIpcRust} from './adapters/arrow/rust-ipc-default';
 import {bindDbtRust} from './adapters/dbt/rust-default';
 import {createGraphqlRustDefault} from './adapters/graphql/rust-default';
+import {createJsonLdRustDefault} from './adapters/jsonld/rust-default';
 import {createOpenapiRustDefault} from './adapters/openapi/rust-default';
 import {createLinkmlOdcsRustDefault} from './adapters/linkml-odcs-rust-default';
 import {createTableSpecRustDefault} from './adapters/tablespec/rust-default';
@@ -67,6 +68,8 @@ const protobufDescriptorDocument=createProtobufDescriptorDocumentRustDefault(opt
 const graphql=createGraphqlRustDefault(createGraphqlEngine(),isNativeUmfCoreError);
 const {graphqlRegistry,importGraphqlSchema,inspectGraphql,exportGraphqlSchema,getGraphqlAst,editGraphqlAst,exportGraphqlBundle}=graphql;
 const nativeFamilyDispatcher=createNativeFamilyDispatcher();
+const jsonld=createJsonLdRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
+const {jsonldRegistry,importJsonLdDocument,inspectJsonLdDocument,exportJsonLdDocument,getJsonLdNode,proposeJsonLdNodeEdit,proposeJsonLdExpansion,proposeJsonLdFlatten,proposeJsonLdCompaction,proposeJsonLdFraming,proposeJsonLdToRdf,proposeRdfToJsonLd,proposeGeneralizedRdfToJsonLd}=jsonld;
 const openapi=createOpenapiRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
 const {openapiRegistry,importOpenapiDocument,inspectOpenapi,exportOpenapiDocument,getOpenapiNode,lookupOpenapiResource,extractOpenapiSchema,indexOpenapiSchemas,resolveOpenapiSchemaReference,resolveOpenapiDynamicReference,resolveOpenapiObjectReference,exportOpenapiBundle,proposeOpenapiEdit}=openapi;
 const linkmlOdcs=createLinkmlOdcsRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
@@ -159,6 +162,7 @@ export {projectSecSubmissions as projectSecSubmissionsRustCandidate,projectSecCo
 export {readDescriptorSetRustCandidate};
 export {readDescriptorSet,writeDescriptorSet,importProtobufDescriptorSet,exportProtobufDescriptorSet,getProtobufDescriptorSet,inspectProtobuf,exportProtobufBundle};
 export {graphqlRegistry,importGraphqlSchema,inspectGraphql,exportGraphqlSchema,getGraphqlAst,editGraphqlAst,exportGraphqlBundle};
+export {jsonldRegistry,importJsonLdDocument,inspectJsonLdDocument,exportJsonLdDocument,getJsonLdNode,proposeJsonLdNodeEdit,proposeJsonLdExpansion,proposeJsonLdFlatten,proposeJsonLdCompaction,proposeJsonLdFraming,proposeJsonLdToRdf,proposeRdfToJsonLd,proposeGeneralizedRdfToJsonLd};
 export {openapiRegistry,importOpenapiDocument,inspectOpenapi,exportOpenapiDocument,getOpenapiNode,lookupOpenapiResource,extractOpenapiSchema,indexOpenapiSchemas,resolveOpenapiSchemaReference,resolveOpenapiDynamicReference,resolveOpenapiObjectReference,exportOpenapiBundle,proposeOpenapiEdit};
 export {linkmlRegistry,importLinkmlDocument,inspectLinkmlDocument,exportLinkmlDocument,getLinkmlDocumentNode,proposeLinkmlDocumentNodeEdit,inspectLinkmlImportContext,proposeLinkmlImportMerge,inspectLinkmlClassSlots,inspectLinkmlSlotValues,odcsRegistry,importOdcsDocument,inspectOdcsDocument,exportOdcsDocument,getOdcsDocumentNode,proposeOdcsDocumentNodeEdit,resolveOdcsReference,inspectOdcsRelationships,proposeOdcsElementRename};
 export {importTableSpec,inspectTableSpec,exportTableSpec,getTableSpecTable,getTableSpecColumn,editTableSpecTable,editTableSpecColumn,importTableSpecBundle,exportTableSpecBundle};

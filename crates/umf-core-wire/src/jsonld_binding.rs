@@ -12,6 +12,7 @@ use crate::{decode, encode, field, result_envelope};
 pub const PROFILE: &str = "umf.jsonld-wire/1";
 pub const OPERATIONS: &[&str] = &[
     "jsonld.import",
+    "jsonld.inspectPayload",
     "jsonld.validate",
     "jsonld.export",
     "jsonld.getNode",
@@ -21,6 +22,8 @@ pub const OPERATIONS: &[&str] = &[
     "jsonld.compact",
     "jsonld.toRdf",
     "jsonld.fromRdf",
+    "jsonld.fromGeneralizedRdf",
+    "jsonld.frame",
 ];
 
 fn request(message: &str) -> EngineError {
@@ -67,6 +70,7 @@ fn allowed(op: &str) -> Option<&'static [&'static str]> {
             "expandContext",
         ],
         "jsonld.validate" | "jsonld.export" => &["profile", "op", "document"],
+        "jsonld.inspectPayload" => &["profile", "op", "payload"],
         "jsonld.expand" => &["profile", "op", "document", "lossPolicy"],
         "jsonld.flatten" => &[
             "profile",
@@ -106,6 +110,32 @@ fn allowed(op: &str) -> Option<&'static [&'static str]> {
             "useNativeTypes",
             "useRdfType",
             "rdfDirection",
+        ],
+        "jsonld.fromGeneralizedRdf" => &[
+            "profile",
+            "op",
+            "document",
+            "id",
+            "baseIRI",
+            "processingMode",
+            "lossPolicy",
+        ],
+        "jsonld.frame" => &[
+            "profile",
+            "op",
+            "document",
+            "frame",
+            "lossPolicy",
+            "embed",
+            "explicit",
+            "requireAll",
+            "omitDefault",
+            "omitGraph",
+            "pruneBlankNodeIdentifiers",
+            "frameDefault",
+            "ordered",
+            "compactArrays",
+            "compactToRelative",
         ],
         "jsonld.getNode" => &["profile", "op", "document", "pointer"],
         "jsonld.editNode" => &["profile", "op", "document", "pointer", "replacementJson"],
@@ -222,18 +252,35 @@ fn validate_operation(
                 }
             }
         }
-        "jsonld.validate" | "jsonld.export" | "jsonld.expand" | "jsonld.flatten"
-        | "jsonld.compact" | "jsonld.toRdf" | "jsonld.fromRdf" => {
+        "jsonld.validate"
+        | "jsonld.export"
+        | "jsonld.expand"
+        | "jsonld.flatten"
+        | "jsonld.compact"
+        | "jsonld.toRdf"
+        | "jsonld.fromRdf"
+        | "jsonld.fromGeneralizedRdf"
+        | "jsonld.frame" => {
             let document =
                 field(request_value, "document").ok_or_else(|| request("document is required"))?;
-            if matches!(op, "jsonld.toRdf" | "jsonld.fromRdf") {
+            if matches!(
+                op,
+                "jsonld.toRdf" | "jsonld.fromRdf" | "jsonld.fromGeneralizedRdf"
+            ) {
                 if let Value::Object(members) = document {
                     ctx.charge_work(members.len(), Utf16::default())?;
                 } else {
                     return Err(request("document must be an object"));
                 }
             }
-            if matches!(op, "jsonld.expand" | "jsonld.flatten" | "jsonld.compact") {
+            if matches!(
+                op,
+                "jsonld.expand"
+                    | "jsonld.flatten"
+                    | "jsonld.compact"
+                    | "jsonld.frame"
+                    | "jsonld.fromGeneralizedRdf"
+            ) {
                 match field(request_value, "lossPolicy") {
                     Some(Value::String(value))
                         if ascii(value, "report") || ascii(value, "reject") => {}
@@ -274,6 +321,32 @@ fn validate_operation(
                     }
                 }
             }
+            if op == "jsonld.fromGeneralizedRdf" {
+                let id = text(field(request_value, "id"), "id")?;
+                let base = text(field(request_value, "baseIRI"), "baseIRI")?;
+                if id.is_empty() || !valid_utf16(base) || base.to_utf8().is_err() {
+                    return Err(request(
+                        "fromGeneralizedRdf requires a non-empty id and well-formed baseIRI",
+                    ));
+                }
+                for value in [id, base] {
+                    if value.len() > ctx.limits().max_text_units {
+                        return Err(EngineError::new(
+                            "RESOURCE_LIMIT",
+                            Utf16::default(),
+                            "fromGeneralizedRdf text input exceeds the text limit",
+                        ));
+                    }
+                    ctx.charge_text(value.len(), Utf16::default())?;
+                }
+                let mode = text(field(request_value, "processingMode"), "processingMode")?;
+                if !ascii(mode, "json-ld-1.0") && !ascii(mode, "json-ld-1.1") {
+                    return Err(request("processingMode must be json-ld-1.0 or json-ld-1.1"));
+                }
+                ctx.charge_text(mode.len(), Utf16::default())?;
+                let loss = text(field(request_value, "lossPolicy"), "lossPolicy")?;
+                ctx.charge_text(loss.len(), Utf16::default())?;
+            }
             if op == "jsonld.fromRdf" {
                 let id = text(field(request_value, "id"), "id")?;
                 let base = text(field(request_value, "baseIRI"), "baseIRI")?;
@@ -311,14 +384,59 @@ fn validate_operation(
                             "rdfDirection must be i18n-datatype or compound-literal",
                         ));
                     }
-                    if ascii(direction, "compound-literal") {
-                        return Err(request(
-                            "compound-literal direction decoding is not supported by this profile",
-                        ));
-                    }
                     if matches!(field(request_value, "processingMode"), Some(Value::String(mode)) if ascii(mode, "json-ld-1.0"))
                     {
                         return Err(request("rdfDirection conversion requires JSON-LD 1.1"));
+                    }
+                }
+            }
+            if op == "jsonld.frame" {
+                let frame = text(field(request_value, "frame"), "frame")?;
+                if frame.len() > ctx.limits().max_text_units {
+                    return Err(EngineError::new(
+                        "RESOURCE_LIMIT",
+                        Utf16::default(),
+                        "frame exceeds the text limit",
+                    ));
+                }
+                ctx.charge_text(frame.len(), Utf16::default())?;
+                match field(request_value, "lossPolicy") {
+                    Some(Value::String(value))
+                        if ascii(value, "report") || ascii(value, "reject") => {}
+                    _ => return Err(request("lossPolicy must be report or reject")),
+                }
+                if let Some(embed) = field(request_value, "embed") {
+                    match embed {
+                        Value::Bool(_) => (),
+                        Value::String(value)
+                            if ["@once", "@always", "@never", "@first", "@last"]
+                                .iter()
+                                .any(|x| ascii(value, x)) =>
+                        {
+                            ()
+                        }
+                        _ => {
+                            return Err(request(
+                                "embed must be a supported framing mode or boolean",
+                            ))
+                        }
+                    }
+                }
+                for option in [
+                    "explicit",
+                    "requireAll",
+                    "omitDefault",
+                    "omitGraph",
+                    "pruneBlankNodeIdentifiers",
+                    "frameDefault",
+                    "ordered",
+                    "compactArrays",
+                    "compactToRelative",
+                ] {
+                    if field(request_value, option)
+                        .is_some_and(|value| !matches!(value, Value::Bool(_)))
+                    {
+                        return Err(request("framing options must be booleans"));
                     }
                 }
             }
@@ -361,6 +479,9 @@ fn validate_operation(
         "jsonld.getNode" => {
             field(request_value, "document").ok_or_else(|| request("document is required"))?;
             text(field(request_value, "pointer"), "pointer")?;
+        }
+        "jsonld.inspectPayload" => {
+            field(request_value, "payload").ok_or_else(|| request("payload is required"))?;
         }
         "jsonld.editNode" => {
             field(request_value, "document").ok_or_else(|| request("document is required"))?;
@@ -428,6 +549,15 @@ fn execute(request_value: &Value, ctx: &mut Context<'_>) -> Result<Value, Engine
     }
     validate_members(request_value, allowed(op).unwrap(), ctx)?;
     validate_operation(op, request_value, ctx)?;
+
+    if op == "jsonld.inspectPayload" {
+        let diagnostics =
+            jsonld::inspect_jsonld_payload(field(request_value, "payload").unwrap(), ctx)?;
+        ctx.charge_work(diagnostics.len(), Utf16::default())?;
+        return Ok(Value::Array(
+            diagnostics.into_iter().map(diagnostic_value).collect(),
+        ));
+    }
 
     let runtime = JsonLdRuntime::new(ctx)?;
     match op {
@@ -575,6 +705,47 @@ fn execute(request_value: &Value, ctx: &mut Context<'_>) -> Result<Value, Engine
                 ctx,
             )
         }
+        "jsonld.fromGeneralizedRdf" => {
+            let rdf_runtime = umf_core::rdf::RdfRuntime::new(ctx)?;
+            let processing_mode = text(field(request_value, "processingMode"), "processingMode")?;
+            jsonld::propose_generalized_rdf_to_jsonld(
+                field(request_value, "document").unwrap(),
+                text(field(request_value, "id"), "id")?,
+                text(field(request_value, "baseIRI"), "baseIRI")?,
+                processing_mode,
+                text(field(request_value, "lossPolicy"), "lossPolicy")?,
+                &rdf_runtime,
+                &runtime,
+                ctx,
+            )
+        }
+        "jsonld.frame" => {
+            let default_embed = Utf16::from("@once");
+            let never_embed = Utf16::from("@never");
+            let embed = match field(request_value, "embed") {
+                Some(Value::Bool(true)) => &default_embed,
+                Some(Value::Bool(false)) => &never_embed,
+                Some(Value::String(value)) => value,
+                _ => &default_embed,
+            };
+            jsonld::propose_jsonld_framing(
+                field(request_value, "document").unwrap(),
+                text(field(request_value, "frame"), "frame")?,
+                text(field(request_value, "lossPolicy"), "lossPolicy")?,
+                bool_option(request_value, "explicit", false),
+                bool_option(request_value, "requireAll", false),
+                bool_option(request_value, "omitDefault", false),
+                bool_option(request_value, "ordered", false),
+                bool_option(request_value, "omitGraph", false),
+                bool_option(request_value, "pruneBlankNodeIdentifiers", false),
+                bool_option(request_value, "frameDefault", false),
+                bool_option(request_value, "compactArrays", true),
+                bool_option(request_value, "compactToRelative", true),
+                embed,
+                &runtime,
+                ctx,
+            )
+        }
         "jsonld.getNode" => jsonld::get_jsonld_node(
             field(request_value, "document").unwrap(),
             text(field(request_value, "pointer"), "pointer")?,
@@ -599,6 +770,13 @@ fn execute(request_value: &Value, ctx: &mut Context<'_>) -> Result<Value, Engine
             ]))
         }
         _ => Err(request("Unknown JSON-LD operation")),
+    }
+}
+
+fn bool_option(value: &Value, name: &str, default: bool) -> bool {
+    match field(value, name) {
+        Some(Value::Bool(value)) => *value,
+        _ => default,
     }
 }
 

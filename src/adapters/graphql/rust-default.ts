@@ -10,7 +10,7 @@ export interface GraphqlRustEngine {
   inspectGraphql(document:Document):{valid:boolean;complete:boolean;diagnostics:Diagnostic[]};
   exportGraphqlSchema(document:Document):string;
   getGraphqlAst(document:Document):GraphqlPayload['ast'];
-  editGraphqlAst(document:Document,edit:(ast:GraphqlPayload['ast'])=>GraphqlPayload['ast']):Document;
+  editGraphqlAst(document:Document,edit:(ast:GraphqlPayload['ast'])=>GraphqlPayload['ast']):unknown;
   exportGraphqlBundle(document:Document):{schema:string;source:Document;diagnostics:Diagnostic[]};
   inspectGraphqlPayload(payload:Json):Diagnostic[];
 }
@@ -30,7 +30,7 @@ export function createGraphqlRustDefault(engine:GraphqlRustEngine,isNativeUmfCor
     editGraphqlAst:(document:Document,edit:(ast:GraphqlPayload['ast'])=>GraphqlPayload['ast'])=>{
       const callbackFailure:{value:unknown;thrown:boolean}={value:undefined,thrown:false};
       const wrapped=(ast:GraphqlPayload['ast'])=>{try{return edit(ast);}catch(error){callbackFailure.value=error;callbackFailure.thrown=true;throw error;}};
-      return invoke(()=>engine.editGraphqlAst(document,wrapped),callbackFailure);
+      return invoke(()=>engine.editGraphqlAst(document,wrapped) as Document,callbackFailure);
     },
     exportGraphqlBundle:(document:Document)=>invoke(()=>engine.exportGraphqlBundle(document)),
   });

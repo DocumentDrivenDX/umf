@@ -15,7 +15,7 @@ import type {resolveOpenapiObjectReference} from './references';
 export interface OpenapiNativeFamilyEngine {
  openapi: {
   import(fields:{source:string;id:string;format:'json'|'yaml';baseUri?:string;resources?:{uri:string;text:string;format:'json'|'yaml'}[]}):unknown;
-  inspectPayload(fields:{payload:Json}):Diagnostic[];
+  inspectPayload(fields:{payload:Json}):unknown;
   validate(fields:{document:Document}):unknown;
   export(fields:{document:Document;format?:'json'|'yaml'}):unknown;
   exportBundle(fields:{document:Document}):unknown;
@@ -40,14 +40,14 @@ export function createOpenapiRustDefault(engine:OpenapiNativeFamilyEngine,isNati
   catch(error){
    if(!isNativeUmfCoreError(error)||CONTROL_CODES.has((error as {code?:string})?.code??''))throw error;
    const native=error as {code?:unknown;message?:unknown;path?:unknown};
-   if(typeof native.code==='string'&&(native.code.startsWith('OPENAPI_')||native.code==='REQUEST'))
+   if(typeof native.code==='string'&&(native.code.startsWith('OPENAPI_')||native.code==='REQUEST'||native.code==='JSON_SCHEMA_SYNTAX'||native.code==='JSON_SCHEMA_POINTER'||native.code.startsWith('NATIVE_YAML_')))
     throw new UmfError(native.code,String(native.message??''),typeof native.path==='string'?native.path:'');
    throw error;
   }
  };
  return Object.freeze({
   openapiRegistry():Registry{
-   return new Registry().register(manifest as unknown as ExtensionPackage,(payload)=>call(()=>engine.openapi.inspectPayload({payload})));
+   return new Registry().register(manifest as unknown as ExtensionPackage,(payload)=>call<Diagnostic[]>(()=>engine.openapi.inspectPayload({payload})));
   },
   importOpenapiDocument(text:string,options:Parameters<typeof importOpenapiDocument>[1]):ReturnType<typeof importOpenapiDocument>{
    const {id,format,baseUri,resources}=options;

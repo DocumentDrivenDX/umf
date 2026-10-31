@@ -1419,7 +1419,7 @@ fn jsonld_run(args: &[String]) -> Result<(), String> {
     native_adapter_run(
         "jsonld",
         umf_core_wire::jsonld_binding::PROFILE,
-        "[\"jsonld.import\",\"jsonld.validate\",\"jsonld.export\",\"jsonld.getNode\",\"jsonld.editNode\",\"jsonld.expand\",\"jsonld.flatten\",\"jsonld.compact\",\"jsonld.toRdf\",\"jsonld.fromRdf\"]",
+        "[\"jsonld.import\",\"jsonld.validate\",\"jsonld.export\",\"jsonld.getNode\",\"jsonld.editNode\",\"jsonld.expand\",\"jsonld.flatten\",\"jsonld.compact\",\"jsonld.toRdf\",\"jsonld.fromRdf\",\"jsonld.fromGeneralizedRdf\",\"jsonld.frame\"]",
         umf_core_wire::jsonld_binding::execute_wire_with_control,
         args,
     )

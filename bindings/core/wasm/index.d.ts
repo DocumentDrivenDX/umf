@@ -632,8 +632,26 @@ export interface NativeFamilyOperations {
  readonly openapi: Readonly<Record<'import'|'validate'|'inspectPayload'|'export'|'exportBundle'|'getNode'|'lookupResource'|'extractSchema'|'indexSchemas'|'resolveSchemaReference'|'resolveDynamicReference'|'resolveObjectReference'|'edit', NativeFamilyOperation>>;
  readonly linkml: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getNode'|'editNode'|'classSlots'|'slotValues'|'importContext'|'importMerge', NativeFamilyOperation>>;
  readonly odcs: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getNode'|'editNode'|'resolveReference'|'relationships'|'renameElement', NativeFamilyOperation>>;
- readonly tablespec: Readonly<Record<string, NativeFamilyOperation>>;
- readonly jsonld: Readonly<Record<string, NativeFamilyOperation>>;
+ readonly tablespec: Readonly<Record<'importTableSpec'|'inspectTableSpec'|'exportTableSpec'|'getTableSpecTable'|'getTableSpecColumn'|'editTableSpecTable'|'editTableSpecColumn'|'importTableSpecBundle'|'exportTableSpecBundle', NativeFamilyOperation>>;
+ readonly jsonld: Readonly<Record<'import'|'inspectPayload'|'validate'|'export'|'getNode'|'editNode'|'expand'|'flatten'|'compact'|'toRdf'|'fromRdf'|'fromGeneralizedRdf'|'frame', NativeFamilyOperation>>;
  readonly sqlserver: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'columns'|'constraints'|'indexes'|'edit'|'facetType'|'facetPredicate'|'facetConstraints', NativeFamilyOperation>>;
 }
 export declare function createNativeFamilyDispatcher(module: any, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): NativeFamilyOperations;
+export declare const JSONLD_PROFILE: 'umf.jsonld-wire/1';
+export interface JsonLdOperations {
+ readonly profile: typeof JSONLD_PROFILE;
+ readonly capabilities: Readonly<{profile: typeof JSONLD_PROFILE; source: true; transformations: true; complete: false}>;
+ importJsonLdDocument(source: string, options: Record<string, unknown>): unknown;
+ inspectJsonLdDocument(document: unknown): unknown;
+ exportJsonLdDocument(document: unknown): string;
+ getJsonLdNode(document: unknown, path: string): unknown;
+ proposeJsonLdNodeEdit(document: unknown, path: string, replacementJson: string): unknown;
+ proposeJsonLdExpansion(document: unknown, options: Record<string, unknown>): Promise<unknown>;
+ proposeJsonLdFlatten(document: unknown, options: Record<string, unknown>): Promise<unknown>;
+ proposeJsonLdCompaction(document: unknown, options: Record<string, unknown>): Promise<unknown>;
+ proposeJsonLdFraming(document: unknown, options: Record<string, unknown>): Promise<unknown>;
+ proposeJsonLdToRdf(document: unknown, options: Record<string, unknown>): Promise<unknown>;
+ proposeRdfToJsonLd(document: unknown, options: Record<string, unknown>): Promise<unknown>;
+ proposeGeneralizedRdfToJsonLd(document: unknown, options: Record<string, unknown>): Promise<unknown>;
+}
+export declare function createJsonLdEngine(module: any, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): JsonLdOperations;

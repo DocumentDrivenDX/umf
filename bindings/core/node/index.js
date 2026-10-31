@@ -2,6 +2,7 @@ import {createDbtOperations, DBT_PROFILE, isDbtHostError} from './src/dbt.js';
 import {createRdfOperations, RDF_PROFILE} from './src/rdf.js';
 import {createGraphqlOperations, GRAPHQL_PROFILE} from './src/graphql.js';
 import {createNativeFamilyOperations, NATIVE_FAMILY_PROFILE} from './src/native-family.js';
+import {createJsonLdOperations, JSONLD_PROFILE} from './src/jsonld.js';
 export {NATIVE_FAMILY_PROFILE};
 import {createRequire} from 'node:module';
 import {createHostReadResponseFrames, encodeRequestWire, encodeWire, fromWire, resultError, toWire} from './src/wire.js';
@@ -1146,6 +1147,13 @@ export function createNativeFamilyDispatcher(options = {}) {
     hostWork,
     nativeCoreError,
   );
+}
+
+export {JSONLD_PROFILE};
+/** Create the public JSON-LD API over the closed Rust native-family dispatcher. */
+export function createJsonLdEngine(options = {}) {
+  const operations = createNativeFamilyDispatcher(options).jsonld;
+  return createJsonLdOperations((operation, fields) => operations[operation](fields));
 }
 
 /** Create the opt-in pure reciprocal-rank fusion scorer. */
