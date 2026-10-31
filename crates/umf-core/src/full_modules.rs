@@ -82,6 +82,8 @@ pub(crate) mod host_diagnostic;
 #[cfg(feature = "embedded-adapters")]
 pub mod iceberg_schema;
 pub mod javascript_numeric;
+#[cfg(feature = "embedded-adapters")]
+pub mod jsonld_source;
 pub mod json_number;
 #[cfg(feature = "embedded-adapters")]
 pub mod json_schema_adapter;
@@ -144,6 +146,7 @@ pub mod semantic_type_accessors;
 pub mod serialization;
 pub mod structural_diff;
 pub mod target_pin;
+pub mod tablespec_adapter;
 pub mod value;
 pub mod native_contract_adapters;
 pub mod openapi_adapter;

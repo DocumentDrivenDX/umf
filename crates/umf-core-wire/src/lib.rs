@@ -10,6 +10,10 @@ pub mod graphql_binding;
 pub mod openapi_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod native_contract_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod jsonld_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod tablespec_binding;
 pub mod access_rrf_binding;
 pub mod access_temporal_binding;
 pub mod arrow_ipc_capture_binding {

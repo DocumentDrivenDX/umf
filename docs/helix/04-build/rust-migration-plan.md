@@ -49,9 +49,9 @@ and explicit resource boundaries. Core is 0.10.0; the native Python candidate is
 1. Complete the current Rust foundation. Run the default Cargo library and CLI
    suite under the stable test profile (`opt-level = 1`, debug assertions and
    overflow checks enabled), check production boundaries and generated metamodel
-   outputs, and verify source packaging and an independent Rust consumer. Merge
-   PR #61 after the current suite passes. The source tag `umf-rust-v0.1.0` is a
-   usable milestone; it does not imply that every public adapter is ported.
+   outputs, and verify source packaging and an independent Rust consumer. Use
+   this evidence to support the following kernel and host-activation work; the
+   complete port and release remain the objective.
 2. Activate existing native kernels through tagged wire and CLI routes, starting
    with OpenAPI and LinkML/ODCS. Keep exact UTF-16/value transport, unknown
    content and caller controls. For each new route, run one end-to-end operation
@@ -79,7 +79,7 @@ Use one expensive build/test job at a time. Preserve user-owned `.tmp/`.
 
 ## Current State
 
-Main is integrated through `8fc91a8ae`. RDF's two integration tests pass, including
+Main is integrated through `1eeb50b00` at merge commit `fdb5ebf12`. RDF's two integration tests pass, including
 759 corpus cases. LinkML/ODCS's six native tests pass. Production boundary checks,
 authority-policy tests, metamodel generation, SDK packaging tests and Python sdist
 closure tests pass.
@@ -88,13 +88,15 @@ OpenAPI's eight native tests pass. GraphQL's twelve native tests, three wire
 tests and two CLI tests pass, including edited AST round trips, exact metadata,
 closed request validation and resource controls.
 
-The full default Cargo suite compiles. A fresh full run under the stable optimized
-test profile remains required; earlier partial runs and reused test binaries do not
-count toward completion.
+The full default Cargo suite compiles. The optimized test-profile continuation
+has 153 passing targets and no failures; 15 targets remain. The focused OpenAPI,
+LinkML/ODCS and CLI wire run found an OpenAPI binding compile type mismatch;
+its source fix is prepared and the baseline will resume when the shared test slot returns.
+Earlier partial runs and reused test binaries do not count toward completion.
 
 Current source-policy checks pass (16 tests); the rewritten Python scanner tests
 pass with all 17 behavior vectors. Source-distribution tests (14), SDK packaging
-tests (9), descriptor generation and all 26 portable WASM source checks pass.
+tests (11), descriptor generation and all 26 portable WASM source checks pass.
 Metamodel generation passes; regenerated code and schemas differ only in compiler
 provenance. Production source and host/WASM dependency inspection passes for 877
 modules with nine negative controls and no findings.
@@ -104,6 +106,14 @@ duplicate-name rejection. Optional report-capture branches are removed; active
 regression assertions remain. The independent Ajv fixture check passes.
 Vendored parser dependencies resolve by explicit path for external Rust consumers;
 the independent consumer build and round trips are part of the final local gate.
+
+| Capability | Present source | Next action |
+| --- | --- | --- |
+| OpenAPI, LinkML and ODCS Rust wire and CLI | Integrated | Finish the focused operation and refusal baseline; repair only actual failures. |
+| GraphQL host edit callback | Native kernel and wire present | Add a host bridge that invokes the callback after Rust edit prevalidation. |
+| JSON-LD | Native source kernel and wire source in the worktree, registration and baseline pending | Implement expansion with a fresh supplied-context processor, then flatten, compact, frame and RDF operations. |
+| TableSpec | Seven native monolithic operations drafted, registration and baseline pending | Integrate import, inspect, export, getters and edits; implement split-bundle operations next. |
+| Saga browser SDK subpath | Runtime source present | Include the fresh Rust/WASM host and its dependencies in the default SDK asset manifest before sealing it; run one representative host baseline. |
 
 ## Remaining Port Work
 

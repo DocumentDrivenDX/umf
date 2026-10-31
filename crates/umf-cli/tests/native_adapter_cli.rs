@@ -33,6 +33,7 @@ fn new_native_cli_routes_import_sources() {
         ("openapi", umf_core_wire::openapi_binding::PROFILE, "openapi.import", r#"{"openapi":"3.1.0","info":{"title":"Wire","version":"1"},"paths":{}}"#, "json"),
         ("linkml", umf_core_wire::native_contract_binding::PROFILE, "linkml.import", "id: schema\nname: schema\nmetamodel_version: 1.11.0\nfuture: 123456789012345678901234567890\n", "yaml"),
         ("odcs", umf_core_wire::native_contract_binding::PROFILE, "odcs.import", r#"{"apiVersion":"v3.2.0","kind":"DataContract","id":"dc","name":"Customer","version":"1.0.0","schema":[{"id":"customers","name":"customers","properties":[{"id":"customer_id","name":"customer_id","logicalType":"string"}],"relationships":[]}]}"#, "json"),
+        ("tablespec", umf_core_wire::tablespec_binding::PROFILE, "importTableSpec", r#"{"version":"1.0","table_name":"orders","columns":[{"name":"id","data_type":"INTEGER"}]}"#, "json"),
     ];
     for (family, profile, op, source, format) in cases {
         let capabilities = Command::new(env!("CARGO_BIN_EXE_umf"))
@@ -56,4 +57,40 @@ fn linkml_cli_refuses_odcs_operation() {
     let response = run("linkml", &wire);
     assert_eq!(response["status"], "error");
     assert_eq!(response["code"], "REQUEST");
+}
+
+#[test]
+fn jsonld_cli_imports_and_expands_with_declared_capabilities() {
+    let family = "jsonld";
+    let capabilities = Command::new(env!("CARGO_BIN_EXE_umf"))
+        .args([family, "--capabilities"])
+        .env("PATH", "")
+        .output().unwrap();
+    assert!(capabilities.status.success());
+    let capabilities: serde_json::Value = serde_json::from_slice(&capabilities.stdout).unwrap();
+    let operations = capabilities["operations"].as_array().unwrap();
+    assert_eq!(operations.len(), umf_core_wire::jsonld_binding::OPERATIONS.len());
+    assert!(operations.contains(&serde_json::Value::String("jsonld.import".to_owned())));
+    assert!(operations.contains(&serde_json::Value::String("jsonld.expand".to_owned())));
+    assert!(!operations.contains(&serde_json::Value::String("jsonld.compact".to_owned())));
+    let wire = umf_core_wire::encode(&Value::Object(vec![
+        (Utf16::from("profile"), Value::string_utf8(umf_core_wire::jsonld_binding::PROFILE)),
+        (Utf16::from("op"), Value::string_utf8("jsonld.import")),
+        (Utf16::from("id"), Value::string_utf8("cli")),
+        (Utf16::from("source"), Value::string_utf8(r#"{"@context":{"name":"https://example.test/name"},"name":"old"}"#)),
+        (Utf16::from("baseIRI"), Value::string_utf8("https://example.test/")),
+    ]), &mut Context::ordinary()).unwrap();
+    let imported = run(family, &wire);
+    assert_eq!(imported["status"], "ok");
+    let document = umf_core_wire::decode(imported["wire"].as_str().unwrap(), &mut Context::ordinary()).unwrap();
+    let expansion_wire = umf_core_wire::encode(&Value::Object(vec![
+        (Utf16::from("profile"), Value::string_utf8(umf_core_wire::jsonld_binding::PROFILE)),
+        (Utf16::from("op"), Value::string_utf8("jsonld.expand")),
+        (Utf16::from("document"), document),
+        (Utf16::from("lossPolicy"), Value::string_utf8("report")),
+    ]), &mut Context::ordinary()).unwrap();
+    let expansion = run(family, &expansion_wire);
+    assert_eq!(expansion["status"], "ok");
+    let report = umf_core_wire::decode(expansion["wire"].as_str().unwrap(), &mut Context::ordinary()).unwrap();
+    assert!(matches!(report, Value::Object(ref fields) if fields.iter().any(|(key, value)| key == &Utf16::from("status") && value == &Value::string_utf8("candidate"))));
 }
