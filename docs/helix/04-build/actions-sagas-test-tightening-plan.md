@@ -3,7 +3,7 @@ ddx:
   id: umf.actions-sagas-test-tightening-plan
   type: implementation-plan
   activity: build
-  status: active
+  status: complete
   authoring:
     home: repo
   links:
@@ -196,42 +196,53 @@ remaining-work disposition, never an unverified completion claim.
 
 ## Continuation Evidence
 
-Revision 1: six findings allocated; engine Luna owns T1 then T3, native Luna owns
-T2 then T4, Sol owns T5 documentation/review, root owns execution/integration.
-T1's focused source review accepts complete independent diagnostic tuples,
-requested-edit/full-source assertions and representative complete action/saga
-obligation inventories. Root observed 63 portable action tests/513 assertions
-and three oracle-sensitivity tests/12 assertions passing in the tightening run;
-the final all-host/integration gate remains pending. These observations are
-invalidated by changes to their verification inputs, not unrelated documentation.
-T2 source review accepts the shared native observer, duplicate/disposition
-controls, reviewed component-removal map, and combined five-step original-output
-unwind using one completed immutable Document installed in both providers.
-Its final native run remains required. T4 source review accepts the actual-path
-impact closure and separately named conditional gates; nine selector controls
-are reported passing. Package qualification deliberately also runs both native
-suites once; native-only saga changes avoid wheel builds. T3 remains in progress:
-producer start/end input/artifact stability and the actual collector integration
-must pass before exact-cohort custody is accepted. T5's current STP mappings are
-drafted; final source/evidence review remains pending.
-Root also observed 125 native action tests/1,990 assertions across 41 isolated
-files and 45 native saga tests/697 assertions across six files passing locally.
-Those campaigns preceded the final verification-input freeze and are integration
-feedback, not the final source-bound qualification. The frozen hosted CI run is
-the authoritative integration gate for this change.
-On continuation reconcile actual diffs, named test results and retained-witness
-map before advancing claims.
+Revision 3: complete. All T0–T5 slices and F1–F6 findings are implemented,
+independently reviewed and qualified. Engine Luna owned T1/T3, native Luna owned
+T2/T4, Sol owned T5 planning/documentation/review, and root owned execution,
+integration and git. No release version changes or new publication are part of
+this work.
+
+| Slice | Completed evidence |
+| --- | --- |
+| T0 | Qualified baseline preserved; final hosted inventory has 627 source modules /453 active scripts. Boundary gate checked 636 source modules, with production core pass, zero findings, nine boundary controls and 16 +13 boundary/inventory unit tests passing. Historical packets are unchanged. |
+| T1 / F1–F2 | Exact diagnostic, requested-edit, inherited-obligation and unknown-recovery mutants fail. Complete representative action/saga inventories and claims are independently expected. Hosted portable actions pass 63 tests/513 assertions; the saga glob also passes the new oracle/custody controls. |
+| T2 / F5 | Independent native outcome/pending/missing/noncommit and identity checks pass. One completed immutable Document feeds both providers in the original-output reverse unwind. Eleven duplicate component flows were removed using the reviewed retained-witness map. Final hosted native actions pass 125 tests/1,997 assertions; the saga glob passes 59 tests/743 assertions across eight files, including unit controls. Composed in-flight retirement witnesses pass. |
+| T3 / F4 | Five hosted receipt roles each pass 19/19, installed SDK passes 139+19, exact Python installed-wheel/native proof and seven consumed SDK members are independently verified. All 42 input hashes, 23 retained-file hashes and 24 checksum rows match. Seven actual local mutation controls refuse and restoration succeeds; these remain separate from the hosted fresh-build acceptance. |
+| T4 / F3 | Three table-driven selector tests (20-row primary matrix plus negative/manual controls) and the separate workflow guard pass. Shared/root/package changes select the required native/installed lanes. Hosted selected Python checks pass 35 resource +4 helper/version +6 exact-installed-payload cases. |
+| T5 / F6 | STP-905/906 name current executable witnesses with composed-proof/profile limits. Source and final hosted artifact review are accepted; successor evidence records exact source/run/hash identities without changing historical release/formal/component evidence. |
+
+[PR #76](https://github.com/DocumentDrivenDX/umf/pull/76) merged at
+[fde8d981208807a9a65be129935801be6c7eae91](https://github.com/DocumentDrivenDX/umf/commit/fde8d981208807a9a65be129935801be6c7eae91),
+preserving the qualified source tree at d5fdfd606660accc9986c7c1c7c7d3929ed5b732.
+[Run 41228219639](https://github.com/DocumentDrivenDX/umf/actions/runs/41228219639)
+passed. Root and Sol independently accepted artifact 13053411948: ZIP SHA-256
+23f426eeabf44a99e4397d2737405e5a37b95c9bcc8758077ab106a77b2000e7.
+The [completed tightening evidence](evidence/actions-sagas-test-tightening.md)
+records custody/checksum digests, actual runtimes, all seven local refusal
+controls, exact hosted results and preservation of historical packets.
+
+Earlier local native action 125/1,990 and six-file saga 45/697 campaigns remain
+pre-freeze integration feedback. They are not substituted for the final hosted
+125/1,997 and eight-file 59/743 observations. Local selected artifacts included
+released production binaries; the hosted fresh-build/installed-artifact campaign
+is the authoritative result. No new production host or broader provider support
+is inferred.
+
+This documentation-only closeout changes no verification dependency and needs no
+repeat heavy campaign. Aggregate token usage remains unavailable; no enforced
+meter or measured budget compliance is claimed. Any later source/verification
+change requires the affected gates rather than reusing these results unchanged.
 
 ## Exit Criteria
 
-- All F1–F6 changes exist with passing positive and named refusal/mutant controls.
-- Independent expected action/saga obligations and native output-consuming
+- [x] All F1–F6 changes exist with passing positive and named refusal/mutant controls.
+- [x] Independent expected action/saga obligations and native output-consuming
   reverse unwind are exercised, not inferred from annotations or test totals.
-- Consolidation preserves every required AC witness and distinct boundary cut.
-- Changed-source CI executes the shared action/saga regression and exact-artifact
+- [x] Consolidation preserves every required AC witness and distinct boundary cut.
+- [x] Changed-source CI executes the shared action/saga regression and exact-artifact
   custody checks; final required integration gates pass without skips.
-- STP-905/906 name actual retained executable witnesses with honest limitations;
+- [x] STP-905/906 name actual retained executable witnesses with honest limitations;
   independent source/evidence review is complete and results are recorded here.
-- Historical saga release, formal and component evidence packets remain byte
+- [x] Historical saga release, formal and component evidence packets remain byte
   unchanged; new runtime observations write to ignored cache output rather than
   overwriting tracked historical receipts. The final diff explicitly checks this.
