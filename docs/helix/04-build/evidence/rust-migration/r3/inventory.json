@@ -288,12 +288,12 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "cec58fe84b8cd653a5e2485b723caa35f6e8e2d76da3a78f3287a073b85e30d8",
+    "sourceCohortSha256": "3bc3b6e08c69de926de06c3fe8f891ef67d32774e1bbcf0874f232e37f4d1853",
     "typescriptApi": "5.9.3"
   },
   "counts": {
     "activeScriptFiles": 452,
-    "algorithmSymbols": 12822,
+    "algorithmSymbols": 12826,
     "pythonModules": 127,
     "rustBuildInputs": 79,
     "rustModules": 130,
@@ -9450,18 +9450,21 @@
       "active": true,
       "algorithmSymbols": [
         "ExpectedVersionTests",
+        "_make_installed_wheel",
         "make_repo",
         "make_wheel",
+        "record_bytes",
         "test_cli_source_mode_forwards_selected_version",
         "test_installed_mode_enforces_explicit_version_before_payload_check",
+        "test_installed_verifier_allows_exact_uv_cache_metadata_but_rejects_other_extras",
         "test_verify_defaults_to_historical_profile_and_explicit_version_is_propagated"
       ],
-      "bytes": 3740,
+      "bytes": 6358,
       "disposition": "test-oracle-fixture-algorithm",
       "language": "py",
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "python/tests/test_python_artifact_version.py",
-      "sha256": "d3a9c59e90faebcab133511e5aad3c1d649f97896406ed41ea44a3cd902f08a1"
+      "sha256": "4d2b9b8822dd0103ce22118a6885d474f23f4b4afe88c01a5f985796c20740ca"
     },
     {
       "activationEvidence": [],
@@ -36453,12 +36456,12 @@
         "archiveMember",
         "retain"
       ],
-      "bytes": 11612,
+      "bytes": 11885,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/saga-portable/collect.ts",
-      "sha256": "4b218cd36a0ab2b982798e37264eecea921ee80a43de99c1dd9284ae91bfa9e2"
+      "sha256": "b6d9772d70d88a385154e77383cb6b93e4605ceda1b8bd61f153d91ce998e773"
     },
     {
       "activationEvidence": [
@@ -36482,12 +36485,12 @@
         "verifyPortableProducerSnapshot",
         "verifyPortableResult"
       ],
-      "bytes": 9054,
+      "bytes": 10602,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/saga-portable/custody.ts",
-      "sha256": "c2f829589572ec2be070d438376cef821a41af4e2ba384780ab00c8df6299b30"
+      "sha256": "760f1f1549cf7ab4ddf1e56cd58eeab5eb2717d69d4b675a4b41ca8a5e2b28f6"
     },
     {
       "activationEvidence": [
@@ -36508,14 +36511,15 @@
       ],
       "active": true,
       "algorithmSymbols": [
-        "invoke"
+        "invoke",
+        "verifyInstalledPythonBinding"
       ],
-      "bytes": 4809,
+      "bytes": 6682,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/saga-portable/other-hosts.ts",
-      "sha256": "71511fd213bc3a02afaeec704829901855e1defc8d4f460d173311949dcfdc54"
+      "sha256": "b96a7919ad992ee11702d63f947a1e4f1155883cc6461efbf14a65abf0ba3536"
     },
     {
       "activationEvidence": [],
@@ -38064,12 +38068,12 @@
         "run",
         "sha256"
       ],
-      "bytes": 10306,
+      "bytes": 10239,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/test-sdk-install.ts",
-      "sha256": "527ea8ce3a0c7b2263d28cda72b17e825b10a2b3205506e3ab21ac9256115085"
+      "sha256": "914164dd04cd46371ac51d806169ba6058aca2e04794e2df0aae14f92b6911e1"
     },
     {
       "activationEvidence": [],
@@ -49045,12 +49049,12 @@
       "algorithmSymbols": [
         "makeCohort"
       ],
-      "bytes": 9668,
+      "bytes": 10711,
       "disposition": "unreferenced-test-source",
       "language": "ts",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "tests/saga/custody.test.ts",
-      "sha256": "c49774baf7ae36c970e1bd00a865951af0929e86251c4ae394de792e4f473e75"
+      "sha256": "f441755db8f3cd8f33cd6ce2c729e17c9ee8ea3fa3154e9d6e2454adea97a519"
     },
     {
       "activationEvidence": [],
@@ -58295,12 +58299,12 @@
         "main",
         "verify"
       ],
-      "bytes": 36559,
+      "bytes": 36601,
       "disposition": "active-host-tooling-algorithm",
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "tools/verify_python_artifacts.py",
-      "sha256": "1cc71140ee41b47e0dec568ffdd50575e536451fa1afb1d26f30cf0fd2d42514"
+      "sha256": "5ce797ba8e4304bd51bd0077c197dd3327d26fb45d5dce860ae662e705883f3a"
     }
   ],
   "sourceModules": [

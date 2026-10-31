@@ -3,7 +3,7 @@
 import {createHash} from 'node:crypto';
 import {mkdir,mkdtemp,readdir,readFile,rename,rm,rmdir} from 'node:fs/promises';
 import {basename,dirname,join,resolve} from 'node:path';
-import {hashInputFiles,retainVerifiedFile,sha256File,SAGA_QUALIFICATION_INPUTS,validatePortableCaseRoster,verifyPortableCohort,verifyPortableResult,type PortableCase,type PortableHostReport} from './custody';
+import {hashInputFiles,retainVerifiedFile,sha256File,SAGA_QUALIFICATION_INPUTS,SDK_SAGA_MEMBERS,validatePortableCaseRoster,verifyPortableCohort,verifyPortableResult,type PortableCase,type PortableHostReport} from './custody';
 
 const root=resolve('.'),corpusPath='fixtures/saga/portable.json',corpus=await Bun.file(corpusPath).json();
 validatePortableCaseRoster(corpus.cases);
@@ -32,7 +32,9 @@ await verifyPortableCohort({root,cases,inputPaths:SAGA_QUALIFICATION_INPUTS,repo
 const dist=process.env.UMF_SAGA_DIST;if(!dist)throw Error('Set UMF_SAGA_DIST to the selected Python wheel/sdist/selection receipt directory');
 const consumer=process.env.UMF_SAGA_SDK_CONSUMER;if(!consumer)throw Error('Set UMF_SAGA_SDK_CONSUMER to the tested installed SDK consumer');
 const sdkArchive=resolve('.cache/sdk-distribution/umf-sdk.tgz'),sdkManifestPath='.cache/sdk-distribution/manifest.json';
-const installed=await Bun.file(join(consumer,'g03-sdk-install-custody.json')).json();
+const installReceiptPath=join(consumer,'g03-sdk-install-custody.json'),installReceiptBytes=await readFile(installReceiptPath);
+const installed=JSON.parse(installReceiptBytes.toString('utf8'));
+const installReceiptHash=createHash('sha256').update(installReceiptBytes).digest('hex');
 if(installed.profile!=='umf.sdk-installed-archive-custody/2')throw Error('Unsupported installed SDK receipt profile');
 if(installed.archiveSha256!==await sha256File(sdkArchive)||installed.sagaCorpusSha256!==corpusHash)throw Error('SDK install receipt is not bound to this archive and portable corpus');
 if(JSON.stringify(installed.sagaQualificationInputs)!==JSON.stringify(inputHashes))throw Error('SDK install receipt has stale or substituted qualification inputs');
@@ -44,9 +46,10 @@ const manifestBytes=await readFile(sdkManifestPath),manifest=JSON.parse(manifest
 if(installed.sdkManifestSha256!==createHash('sha256').update(manifestBytes).digest('hex'))throw Error('SDK installed receipt manifest digest mismatch');
 if(manifest.sha256?.['dist/umf.js']!==installed.publicEntryManifestSha256)throw Error('SDK manifest does not bind the tested public entry');
 const packageRoot=resolve(installed.installedPackageRoot);
-for(const member of ['package.json','manifest.json','dist/umf.js']){
+for(const member of SDK_SAGA_MEMBERS){
  const key=`package/${member}`,archiveExpected=installed.exactArchiveMembers?.[key],installedExpected=installed.installedMembers?.[key];
  if(!archiveExpected||!installedExpected||archiveExpected.sha256!==installedExpected.sha256||archiveExpected.size!==installedExpected.size)throw Error(`SDK archive/install member receipt mismatch: ${key}`);
+ if(member.startsWith('dist/')&&manifest.sha256?.[member]!==installedExpected.sha256)throw Error(`SDK manifest does not bind consumed runtime member: ${member}`);
  const actual=await readFile(join(packageRoot,member));if(actual.length!==installedExpected.size||createHash('sha256').update(actual).digest('hex')!==installedExpected.sha256)throw Error(`Installed SDK member bytes differ: ${member}`);
 }
 const archiveMember=async(member:string)=>{
@@ -54,14 +57,14 @@ const archiveMember=async(member:string)=>{
  const [status,bytes,error]=await Promise.all([child.exited,new Response(child.stdout).arrayBuffer(),new Response(child.stderr).text()]);
  if(status!==0)throw Error(`Cannot read SDK archive member ${member}: ${error}`);return new Uint8Array(bytes);
 };
-for(const member of ['package.json','manifest.json','dist/umf.js']){
+for(const member of SDK_SAGA_MEMBERS){
  const actual=await archiveMember(member),expected=installed.exactArchiveMembers[`package/${member}`];
  if(actual.length!==expected.size||createHash('sha256').update(actual).digest('hex')!==expected.sha256)throw Error(`SDK archive member bytes differ from install receipt: ${member}`);
 }
 if(createHash('sha256').update(await archiveMember('manifest.json')).digest('hex')!==installed.sdkManifestSha256)throw Error('SDK archive manifest differs from installed manifest');
 
-const selectionPath=join(dist,'selection.json'),selection=await Bun.file(selectionPath).json();
-const selectionHash=await sha256File(selectionPath),installReceiptPath=join(consumer,'g03-sdk-install-custody.json'),installReceiptHash=await sha256File(installReceiptPath);
+const selectionPath=join(dist,'selection.json'),selectionBytes=await readFile(selectionPath),selection=JSON.parse(selectionBytes.toString('utf8'));
+const selectionHash=createHash('sha256').update(selectionBytes).digest('hex');
 const selectedWheel=join(dist,selection.selectedWheel?.filename??''),sdist=join(dist,selection.sdist?.filename??'');
 if(selection.status!=='passed'||!['linux','macos'].includes(selection.cohort))throw Error('Python selection receipt is not a passed supported cohort');
 if(resolve(selectedWheel)!==wheelPath||selection.selectedWheel?.sha256!==await sha256File(wheelPath))throw Error('Python selected wheel receipt differs from the installed and tested wheel');

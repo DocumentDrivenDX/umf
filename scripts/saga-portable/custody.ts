@@ -8,7 +8,9 @@ export const SAGA_QUALIFICATION_INPUTS=[
  'scripts/saga-portable/verify.ts','scripts/saga-portable/custody.ts','scripts/saga-portable/collect.ts','scripts/saga-portable/native.ts','scripts/saga-portable/browser.ts',
  'scripts/saga-portable/other-hosts.ts','scripts/saga-portable/python-probe.py','scripts/test-sdk-install.ts',
  'scripts/check-core-authority.ts',
+ 'tools/verify_python_artifacts.py',
  'tests/saga/portable-oracle.test.ts','tests/saga/custody.test.ts','tests/actions/assessment.test.ts','package.json','spec/release.json',
+ 'python/tests/test_python_artifact_version.py',
  'fixtures/saga/portable.json','src/extensions/actions/saga.ts','src/extensions/actions/saga-resources.ts','src/registry/registry.ts',
  'crates/umf-codegen/src/actions/saga/mod.rs','crates/umf-codegen/src/actions/saga/tests.rs',
  'bindings/core/node/index.js','bindings/core/node/src/wire.js','python/src/umf/saga.py','python/pyproject.toml','python/hatch_build.py','python/umf_codegen/pyproject.toml','python/umf_codegen/hatch_build.py',
@@ -17,10 +19,15 @@ export const SAGA_QUALIFICATION_INPUTS=[
  'spec/extensions/tables/package.json','spec/extensions/actions/package.json','spec/extensions/actions/schema.json','spec/extensions/binding/package.json',
  'spec/extensions/binding-stable/package.json','spec/extensions/saga/package.json','spec/extensions/saga/schema.json','spec/extensions/saga/runtime.schema.json'
 ] as const;
+export const SDK_SAGA_MEMBERS=[
+ 'package.json','manifest.json','dist/umf.js','dist/loader-contract.js','dist/runtime/wasm/index.js',
+ 'dist/runtime/wasm/pkg/umf_core_wasm.js','dist/runtime/wasm/pkg/umf_core_wasm_bg.wasm'
+] as const;
 export type PortableCase={id:string;covers:number[]};
 export type PortableArtifact={path:string;sha256:string};
 export type PortableProducerSnapshot={qualificationInputs:Record<string,string>;artifacts:Record<string,string>};
-export type PortableHostReport={profile?:string;hostId?:string;host?:string;cases?:number;passed?:number;results?:{id:string;covers:number[];passed:boolean}[];corpusSha256?:string;qualificationInputs?:Record<string,string>;artifacts?:Record<string,PortableArtifact>;runtime?:unknown};
+export type PortableInstalledBinding={status:'passed';wheelSha256:string;beforeNativeSha256:string;afterNativeSha256:string;beforeInstalledFileCount:number;afterInstalledFileCount:number;beforePackageFileCount:number;afterPackageFileCount:number};
+export type PortableHostReport={profile?:string;hostId?:string;host?:string;cases?:number;passed?:number;results?:{id:string;covers:number[];passed:boolean}[];corpusSha256?:string;qualificationInputs?:Record<string,string>;artifacts?:Record<string,PortableArtifact>;installedBinding?:PortableInstalledBinding;runtime?:unknown};
 export type PortableRuntimeExpectation={host:string;fields:readonly string[]};
 export type PortableCohortExpectation={root:string;cases:PortableCase[];inputPaths:readonly string[];reports:Record<string,PortableHostReport>;artifacts:Record<string,Record<string,string>>;runtime:Record<string,PortableRuntimeExpectation>;expectedHosts:readonly string[]};
 const sha=(bytes:Uint8Array)=>createHash('sha256').update(bytes).digest('hex');
@@ -97,6 +104,14 @@ export async function verifyPortableCohort(expect:PortableCohortExpectation):Pro
    const artifact=report.artifacts![name]!;
    insist(artifact.path===path,`${hostId}/${name} receipt points at a substituted artifact path`);
    insist(artifact.sha256===await sha256File(resolve(expect.root,path)),`${hostId}/${name} artifact bytes differ from the tested bytes`);
+  }
+  if(hostId==='python'||hostId==='python-rebuilt'){
+   const binding=report.installedBinding;
+   insist(binding?.status==='passed',`${hostId} receipt has no verified installed-wheel binding`);
+   insist(binding.wheelSha256===report.artifacts?.pythonWheel?.sha256,`${hostId} installed binding does not match the tested wheel bytes`);
+   insist(/^[0-9a-f]{64}$/.test(binding.beforeNativeSha256)&&binding.beforeNativeSha256===binding.afterNativeSha256,`${hostId} installed native binding changed during vector verification`);
+   insist(Number.isInteger(binding.beforeInstalledFileCount)&&binding.beforeInstalledFileCount===binding.afterInstalledFileCount,`${hostId} installed package inventory changed during vector verification`);
+   insist(Number.isInteger(binding.beforePackageFileCount)&&binding.beforePackageFileCount===binding.afterPackageFileCount,`${hostId} installed package payload count changed during vector verification`);
   }
  }
 }

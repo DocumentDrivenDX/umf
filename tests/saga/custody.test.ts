@@ -13,12 +13,13 @@ async function makeCohort(){
   await writeFile(join(root,'fixtures/saga/portable.json'),JSON.stringify(cases));await writeFile(join(root,'inputs/oracle.ts'),'oracle bytes v1');
   for(const [name,body] of Object.entries({'native.node':'native binary v1','wasm.bin':'wasm bytes v1','cli':'cli binary v1','python.whl':'selected wheel v1','rebuilt.whl':'rebuilt wheel v1','source.tar.gz':'source archive v1'}))await writeFile(join(root,'artifacts',name),body);
   const inputPaths=['fixtures/saga/portable.json','inputs/oracle.ts'],qualificationInputs=await hashInputFiles(root,inputPaths),corpusSha256=qualificationInputs['fixtures/saga/portable.json']!;
-  const hosts={native:{host:'Bun N-API',runtime:{bun:'1.4.2',platform:'test',arch:'test'},files:{addon:'artifacts/native.node'}},browser:{host:'Chromium WASM',runtime:{browser:'Chromium',platform:'test',arch:'test'},files:{wasm:'artifacts/wasm.bin'}},cli:{host:'cli',runtime:{platform:'test',arch:'test'},files:{binary:'artifacts/cli'}},python:{host:'python',runtime:{python:'3.13',platform:'test',arch:'test'},files:{wheel:'artifacts/python.whl'}},'python-rebuilt':{host:'python',runtime:{python:'3.13',platform:'test',arch:'test'},files:{wheel:'artifacts/rebuilt.whl',source:'artifacts/source.tar.gz'}}} as const;
+  const hosts={native:{host:'Bun N-API',runtime:{bun:'1.4.2',platform:'test',arch:'test'},files:{addon:'artifacts/native.node'}},browser:{host:'Chromium WASM',runtime:{browser:'Chromium',platform:'test',arch:'test'},files:{wasm:'artifacts/wasm.bin'}},cli:{host:'cli',runtime:{platform:'test',arch:'test'},files:{binary:'artifacts/cli'}},python:{host:'python',runtime:{python:'3.13',platform:'test',arch:'test'},files:{pythonWheel:'artifacts/python.whl'}},'python-rebuilt':{host:'python',runtime:{python:'3.13',platform:'test',arch:'test'},files:{pythonWheel:'artifacts/rebuilt.whl',pythonSourceArchive:'artifacts/source.tar.gz'}}} as const;
   const reports:Record<string,PortableHostReport>={},artifacts:Record<string,Record<string,string>>={},runtime:Record<string,{host:string;fields:string[]}>= {};
   for(const [hostId,host] of Object.entries(hosts)){
    const entries=Object.entries(host.files);artifacts[hostId]=Object.fromEntries(entries);runtime[hostId]={host:host.host,fields:Object.keys(host.runtime)};
    const fileArtifacts=Object.fromEntries(await Promise.all(entries.map(async([name,path])=>[name,{path,sha256:await sha256File(join(root,path))}])));
-   reports[hostId]={profile:'umf.saga.portable-host-receipt/2',hostId,host:host.host,runtime:host.runtime,cases:cases.length,passed:cases.length,results:cases.map(c=>({...c,passed:true})),corpusSha256,qualificationInputs,artifacts:fileArtifacts};
+   const installedBinding=hostId==='python'||hostId==='python-rebuilt'?{status:'passed' as const,wheelSha256:(fileArtifacts.pythonWheel as {sha256:string}).sha256,beforeNativeSha256:'a'.repeat(64),afterNativeSha256:'a'.repeat(64),beforeInstalledFileCount:8,afterInstalledFileCount:8,beforePackageFileCount:6,afterPackageFileCount:6}:undefined;
+   reports[hostId]={profile:'umf.saga.portable-host-receipt/2',hostId,host:host.host,runtime:host.runtime,cases:cases.length,passed:cases.length,results:cases.map(c=>({...c,passed:true})),corpusSha256,qualificationInputs,artifacts:fileArtifacts,...(installedBinding?{installedBinding}:{})};
   }
   const expectCohort={root,cases,inputPaths,reports,artifacts,runtime,expectedHosts:Object.keys(hosts)};
   return {root,reports,expectCohort};
@@ -61,8 +62,19 @@ test('custody refuses host labels or runtime identities that do not identify the
 });
 
 test('custody requires the rebuilt Python wheel and source archive that the cohort claims to qualify',async()=>{
- const missing=await makeCohort();try{delete missing.reports['python-rebuilt']!.artifacts!.source;await expect(verifyPortableCohort(missing.expectCohort)).rejects.toThrow('artifact roster is missing');}finally{await rm(missing.root,{recursive:true,force:true});}
+ const missing=await makeCohort();try{delete missing.reports['python-rebuilt']!.artifacts!.pythonSourceArchive;await expect(verifyPortableCohort(missing.expectCohort)).rejects.toThrow('artifact roster is missing');}finally{await rm(missing.root,{recursive:true,force:true});}
  const substituted=await makeCohort();try{await writeFile(join(substituted.root,'artifacts/rebuilt.whl'),'different rebuilt wheel');await expect(verifyPortableCohort(substituted.expectCohort)).rejects.toThrow('artifact bytes differ from the tested bytes');}finally{await rm(substituted.root,{recursive:true,force:true});}
+});
+
+test('custody binds Python reports to the installed wheel and stable native payload',async()=>{
+ for(const mutate of [
+  (c:any)=>{delete c.reports.python.installedBinding;},
+  (c:any)=>{c.reports.python.installedBinding.wheelSha256='0'.repeat(64);},
+  (c:any)=>{c.reports['python-rebuilt'].installedBinding.afterNativeSha256='b'.repeat(64);},
+  (c:any)=>{c.reports.python.installedBinding.afterPackageFileCount++;}
+ ]){
+  const cohort=await makeCohort();try{mutate(cohort);await expect(verifyPortableCohort(cohort.expectCohort)).rejects.toThrow();}finally{await rm(cohort.root,{recursive:true,force:true});}
+ }
 });
 
 test('corpus case IDs and contract coverage are unique, complete and bounded',()=>{
