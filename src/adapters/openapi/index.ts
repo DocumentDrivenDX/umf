@@ -13,10 +13,10 @@ import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
 import {copyJson,LIMITS} from '../../model/json';
 import {readJsonValue} from '../../model/serialization';
-import {UmfError,pointer,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../../model/types';
+import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../../model/types';
 import {parseNativeJson,parseNativeYaml,renderTree,cloneTree,nativePointer,treeChild,type NativeJson} from '../../model/native-json';
-export const OPENAPI_EXTENSION='umf.openapi';
-export const openapiPackage=manifest as unknown as ExtensionPackage;
+import { OPENAPI_EXTENSION, openapiPackage } from './package';
+export { OPENAPI_EXTENSION, openapiPackage };
 export interface OpenapiResource {uri:string;root:NativeJson;originalSource:string;originalFormat:'json'|'yaml';}
 export interface OpenapiPayload {baseUri?:string;resources?:OpenapiResource[];profile:'openapi-json-yaml-0.1';root:NativeJson;originalSource:string;originalFormat:'json'|'yaml';}
 const structure=createValidator().compile(manifest.schema);

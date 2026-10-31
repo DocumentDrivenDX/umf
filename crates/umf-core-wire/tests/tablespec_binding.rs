@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 use serde_json::Value as Json;
 use umf_core::{Context, Utf16, Value};
-use umf_core_wire::tablespec_binding::{PROFILE, execute_wire};
+use umf_core_wire::tablespec_binding::{execute_wire, PROFILE};
 
 fn request(op: &str, fields: impl IntoIterator<Item = (&'static str, Value)>) -> String {
     let mut request = vec![
@@ -91,10 +91,10 @@ fn monolithic_import_get_edit_inspect_and_export_keep_current_metadata() {
     );
     assert_eq!(
         call("exportTableSpec", [("document", edited)]),
-        Value::string_utf8(
-            r#"{"version":"1.0","table_name":"orders","future":{"exact":9007199254740993},"columns":[{"name":"id","data_type":"INTEGER","future":"keep","description":"identifier"}]}"#
-                + "\n"
-        )
+        Value::string_utf8(concat!(
+            r#"{"version":"1.0","table_name":"orders","future":{"exact":9007199254740993},"columns":[{"name":"id","data_type":"INTEGER","future":"keep","description":"identifier"}]}"#,
+            "\n"
+        ))
     );
 }
 

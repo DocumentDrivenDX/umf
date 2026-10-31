@@ -1,6 +1,8 @@
 import {createDbtOperations, DBT_PROFILE, isDbtHostError} from './src/dbt.js';
 import {createRdfOperations, RDF_PROFILE} from './src/rdf.js';
 import {createGraphqlOperations, GRAPHQL_PROFILE} from './src/graphql.js';
+import {createNativeFamilyOperations, NATIVE_FAMILY_PROFILE} from './src/native-family.js';
+export {NATIVE_FAMILY_PROFILE};
 import {createRequire} from 'node:module';
 import {createHostReadResponseFrames, encodeRequestWire, encodeWire, fromWire, resultError, toWire} from './src/wire.js';
 import {createJavascriptNumericEngine as createNumericEngine, JAVASCRIPT_NUMERIC_PROFILE} from './src/javascript-numeric.js';
@@ -1129,6 +1131,21 @@ export function createGraphqlEngine(options = {}) {
   const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
   const hostWork = admissionWork(controlBridge);
   return createGraphqlOperations(addon, UmfCoreError, controlBridge, hostWork, nativeCoreError);
+}
+
+/** Create the shared closed-family Rust adapter dispatcher. */
+export function createNativeFamilyDispatcher(options = {}) {
+  if (typeof addon.executeNativeFamilyWire !== 'function' || typeof addon.nativeFamilyDispatcherProfileVersion !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
+  if (addon.nativeFamilyDispatcherProfileVersion() !== NATIVE_FAMILY_PROFILE) throw new Error('RUST_NODE_BINDING_PROFILE_MISMATCH');
+  const {controls} = codegenOptions(options);
+  const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+  const hostWork = admissionWork(controlBridge);
+  return createNativeFamilyOperations(
+    (family, wire, control) => addon.executeNativeFamilyWire(family, wire, control),
+    controlBridge,
+    hostWork,
+    nativeCoreError,
+  );
 }
 
 /** Create the opt-in pure reciprocal-rank fusion scorer. */

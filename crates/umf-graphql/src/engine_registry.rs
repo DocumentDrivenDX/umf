@@ -306,7 +306,7 @@ impl Capabilities for GraphqlCallbacks {
         }
         let ds = inspect_payload_with_context(payload, ctx).map_err(CapabilityError::Engine)?;
         let _ = context;
-        Ok(std::mem::take(&mut ds))
+        Ok(ds)
     }
 }
 pub fn validate_document(

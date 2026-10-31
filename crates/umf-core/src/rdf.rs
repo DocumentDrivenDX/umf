@@ -1721,6 +1721,23 @@ fn serialize_nquads(quads: &[Quad], ctx: &mut Context<'_>) -> Result<String, Eng
     Ok(output)
 }
 
+/// Serialize already-admitted RDF quad values using the core N-Quads writer.
+/// JSON-LD's indexed RDF formatter is not an N-Quads serializer: in particular,
+/// it can render datatype IRIs without the required angle brackets.
+pub(crate) fn serialize_nquads_values(
+    value: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Utf16, EngineError> {
+    let Some(items) = array(Some(value)) else {
+        return Err(error("RDF_PAYLOAD", "Expected quad array"));
+    };
+    ctx.charge_work(items.len(), Utf16::default())?;
+    let quads = quads_from_value(value)?;
+    let output = serialize_nquads(&quads, ctx)?;
+    ctx.charge_text(output.encode_utf16().count(), Utf16::default())?;
+    Ok(Utf16::from(output))
+}
+
 // Match N3Writer's line-mode escaping, including lowercase hexadecimal and
 // supplementary Unicode scalar escapes. DEL remains literal in N3Writer.
 fn n3_escape(value: &str) -> String {

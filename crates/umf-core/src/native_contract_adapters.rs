@@ -205,6 +205,26 @@ pub fn odcs_registry(runtime: &ContractRuntime) -> &Registry {
     runtime.registry(ContractKind::Odcs)
 }
 
+/// Inspect only a LinkML extension payload using the same pinned semantic
+/// checks as the registry capability, without a structural Registry pass.
+pub fn inspect_linkml_payload(
+    payload: &Value,
+    runtime: &ContractRuntime,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<Diagnostic>, EngineError> {
+    inspect_payload(runtime, payload, ContractKind::Linkml, ctx)
+}
+
+/// Inspect only an ODCS extension payload using the same pinned semantic
+/// checks as the registry capability, without a structural Registry pass.
+pub fn inspect_odcs_payload(
+    payload: &Value,
+    runtime: &ContractRuntime,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<Diagnostic>, EngineError> {
+    inspect_payload(runtime, payload, ContractKind::Odcs, ctx)
+}
+
 struct ContractCapabilities<'a> {
     runtime: &'a ContractRuntime,
 }

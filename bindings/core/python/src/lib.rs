@@ -1085,6 +1085,55 @@ fn execute_dbt_wire(
 fn rdf_profile_version() -> &'static str {
     umf_core_wire::rdf_binding::PROFILE
 }
+
+#[pyfunction]
+fn native_family_profile_version() -> &'static str {
+    umf_core_wire::native_family_binding::PROFILE
+}
+
+#[pyfunction]
+#[pyo3(signature = (family, wire_json, control=None))]
+fn execute_native_family_wire(
+    py: Python<'_>,
+    family: &str,
+    wire_json: &str,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let Some(control) = control else {
+        return Ok(umf_core_wire::native_family_binding::execute_wire(
+            family, wire_json,
+        ));
+    };
+    let mut hook = |amount: usize| {
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        Err(EngineError::new(
+            code,
+            Utf16::from(path),
+            Utf16::from(message),
+        ))
+    };
+    Ok(
+        umf_core_wire::native_family_binding::execute_wire_with_control(
+            family, wire_json, &mut hook,
+        ),
+    )
+}
+
 #[pyfunction]
 #[pyo3(signature = (wire_json, control=None))]
 fn execute_rdf_wire(
@@ -1129,6 +1178,44 @@ fn graphql_profile_version() -> &'static str {
 }
 
 #[pyfunction]
+#[pyo3(signature = (wire_json, control=None))]
+fn execute_graphql_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let Some(control) = control else {
+        return Ok(umf_core_wire::graphql_binding::execute_wire(wire_json));
+    };
+    let mut hook = |amount: usize| {
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        Err(EngineError::new(
+            code,
+            Utf16::from(path),
+            Utf16::from(message),
+        ))
+    };
+    Ok(umf_core_wire::graphql_binding::execute_wire_with_control(
+        wire_json, &mut hook,
+    ))
+}
+
+#[pyfunction]
 #[pyo3(signature = (wire_json, editor, control=None))]
 fn execute_graphql_edit_wire(
     py: Python<'_>,
@@ -1161,7 +1248,7 @@ fn execute_graphql_edit_wire(
             }
         };
         let value = value.downcast::<PyString>().map_err(|error| {
-            py_exception_engine_error(py, "GRAPHQL_CALLBACK", error)
+            py_exception_engine_error(py, "GRAPHQL_CALLBACK", error.into())
         })?;
         let output = value.to_str().map_err(|error| {
             py_exception_engine_error(py, "GRAPHQL_CALLBACK", error)
@@ -6308,7 +6395,10 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(execute_dbt_wire, module)?)?;
     module.add_function(wrap_pyfunction!(rdf_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_rdf_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(native_family_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_native_family_wire, module)?)?;
     module.add_function(wrap_pyfunction!(graphql_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_graphql_wire, module)?)?;
     module.add_function(wrap_pyfunction!(execute_graphql_edit_wire, module)?)?;
     module.add_function(wrap_pyfunction!(avro_candidate_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_avro_candidate_wire, module)?)?;

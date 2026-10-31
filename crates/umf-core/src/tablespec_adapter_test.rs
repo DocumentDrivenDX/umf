@@ -84,6 +84,12 @@ fn current_native_getters_and_copy_edits_preserve_unmodified_source_values() {
             &mut ctx,
         )
         .unwrap();
+    let vocabularies = object_field_mut(&mut document, "vocabularies").unwrap();
+    insert_field(
+        vocabularies,
+        "vendor.note",
+        Value::Object(vec![(k("version"), Value::string_utf8("1.0.0"))]),
+    );
     let module = object_field_mut(&mut document, "modules")
         .and_then(|modules| match modules {
             Value::Array(items) => items.get_mut(0),
@@ -96,9 +102,15 @@ fn current_native_getters_and_copy_edits_preserve_unmodified_source_values() {
             _ => None,
         })
         .unwrap();
-    insert_field(element, "futureCore", Value::string_utf8("keep"));
     let extensions = object_field_mut(element, "extensions").unwrap();
-    insert_field(extensions, "vendor.note", Value::string_utf8("keep"));
+    insert_field(
+        extensions,
+        "vendor.note",
+        Value::Object(vec![(k("opaque"), Value::string_utf8("retain"))]),
+    );
+    let validation = runtime.inspect(&document, &mut ctx).unwrap();
+    assert!(validation.valid, "{validation:?}");
+    assert!(!validation.complete);
     let table = runtime.get_table(&document, &mut ctx).unwrap();
     let column = runtime.get_column(&document, 0, &mut ctx).unwrap();
     assert!(matches!(column, Value::Object(_)));
@@ -118,14 +130,12 @@ fn current_native_getters_and_copy_edits_preserve_unmodified_source_values() {
         Some(Utf16::from("identifier"))
     );
     assert_eq!(runtime.get_table(&document, &mut ctx).unwrap(), table);
-    assert!(
-        runtime
-            .export(&edited_column, &mut ctx)
-            .unwrap()
-            .to_utf8()
-            .unwrap()
-            .contains("identifier")
-    );
+    assert!(runtime
+        .export(&edited_column, &mut ctx)
+        .unwrap()
+        .to_utf8()
+        .unwrap()
+        .contains("identifier"));
     let edited_element = object_field(&edited_column, "modules")
         .and_then(|modules| match modules {
             Value::Array(items) => items.first(),
@@ -138,30 +148,26 @@ fn current_native_getters_and_copy_edits_preserve_unmodified_source_values() {
         })
         .unwrap();
     assert_eq!(
-        string_field(edited_element, "futureCore"),
-        Some(&Utf16::from("keep"))
-    );
-    assert_eq!(
         string_field(edited_element, "description"),
         Some(&Utf16::from("identifier"))
     );
     assert_eq!(
-        object_field(edited_element, "extensions").and_then(|v| string_field(v, "vendor.note")),
-        Some(&Utf16::from("keep"))
+        object_field(edited_element, "extensions")
+            .and_then(|v| object_field(v, "vendor.note"))
+            .and_then(|v| string_field(v, "opaque")),
+        Some(&Utf16::from("retain"))
     );
 
     let table_changes = Value::Object(vec![(k("table_name"), tagged_string("purchases"))]);
     let edited_table = runtime
         .edit_table(&document, &table_changes, &mut ctx)
         .unwrap();
-    assert!(
-        runtime
-            .export(&edited_table, &mut ctx)
-            .unwrap()
-            .to_utf8()
-            .unwrap()
-            .contains("purchases")
-    );
+    assert!(runtime
+        .export(&edited_table, &mut ctx)
+        .unwrap()
+        .to_utf8()
+        .unwrap()
+        .contains("purchases"));
     assert_eq!(runtime.export(&document, &mut ctx).unwrap(), source);
 }
 
@@ -229,7 +235,7 @@ fn object_field_mut<'a>(value: &'a mut Value, name: &str) -> Option<&'a mut Valu
     }
 }
 
-fn string_field(value: &Value, name: &str) -> Option<&Utf16> {
+fn string_field<'a>(value: &'a Value, name: &str) -> Option<&'a Utf16> {
     match object_field(value, name) {
         Some(Value::String(value)) => Some(value),
         _ => None,

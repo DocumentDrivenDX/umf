@@ -680,3 +680,15 @@ export interface GraphqlEngine {
  inspectGraphqlPayload(payload: unknown): any[];
 }
 export declare function createGraphqlEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): GraphqlEngine;
+
+export declare const NATIVE_FAMILY_PROFILE: 'umf.native-family-dispatch/1';
+export type NativeFamilyOperation = (fields?: Record<string, unknown>) => unknown;
+export interface NativeFamilyOperations {
+ readonly openapi: Readonly<Record<'import'|'validate'|'inspectPayload'|'export'|'exportBundle'|'getNode'|'lookupResource'|'extractSchema'|'indexSchemas'|'resolveSchemaReference'|'resolveDynamicReference'|'resolveObjectReference'|'edit', NativeFamilyOperation>>;
+ readonly linkml: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getNode'|'editNode'|'classSlots'|'slotValues'|'importContext'|'importMerge', NativeFamilyOperation>>;
+ readonly odcs: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getNode'|'editNode'|'resolveReference'|'relationships'|'renameElement', NativeFamilyOperation>>;
+ readonly tablespec: Readonly<Record<string, NativeFamilyOperation>>;
+ readonly jsonld: Readonly<Record<string, NativeFamilyOperation>>;
+ readonly sqlserver: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'columns'|'constraints'|'indexes'|'edit'|'facetType'|'facetPredicate'|'facetConstraints', NativeFamilyOperation>>;
+}
+export declare function createNativeFamilyDispatcher(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): NativeFamilyOperations;

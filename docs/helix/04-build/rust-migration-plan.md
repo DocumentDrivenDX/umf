@@ -79,51 +79,34 @@ Use one expensive build/test job at a time. Preserve user-owned `.tmp/`.
 
 ## Current State
 
-Main is integrated through `1eeb50b00` at merge commit `fdb5ebf12`. RDF's two integration tests pass, including
-759 corpus cases. LinkML/ODCS's six native tests pass. Production boundary checks,
-authority-policy tests, metamodel generation, SDK packaging tests and Python sdist
-closure tests pass.
+The focused Rust wire and CLI checks now pass for OpenAPI, JSON-LD, TableSpec,
+SQL Server and the shared adapter routes. The corrected JSON-LD RDF direction
+and TableSpec opaque-extension core baselines also pass. A built Node addon
+passed the GraphQL callback edit and OpenAPI public-facade flows; the Python
+native-family transport passed two cases. The corrected LinkML/ODCS payload-inspector tests and the ordinary Python
+GraphQL roundtrip now pass. The current WASM target check also passes with the
+JSON-LD dependency graph. The actual Node public-root flows for LinkML, ODCS, TableSpec and SQL Server
+now pass, as do the static package exports and generated default-facade check.
 
-OpenAPI's eight native tests pass. GraphQL's twelve native tests, three wire
-tests and two CLI tests pass, including edited AST round trips, exact metadata,
-closed request validation and resource controls.
-
-The full default Cargo suite compiles. The optimized test-profile continuation
-has 153 passing targets and no failures; 15 targets remain. The focused OpenAPI,
-LinkML/ODCS and CLI wire run found an OpenAPI binding compile type mismatch;
-its source fix is prepared and the baseline will resume when the shared test slot returns.
-Earlier partial runs and reused test binaries do not count toward completion.
-
-Current source-policy checks pass (16 tests); the rewritten Python scanner tests
-pass with all 17 behavior vectors. Source-distribution tests (14), SDK packaging
-tests (11), descriptor generation and all 26 portable WASM source checks pass.
-Metamodel generation passes; regenerated code and schemas differ only in compiler
-provenance. Production source and host/WASM dependency inspection passes for 877
-modules with nine negative controls and no findings.
-
-The current target-pin fixture contains all 13 behavior cases directly, including
-duplicate-name rejection. Optional report-capture branches are removed; active
-regression assertions remain. The independent Ajv fixture check passes.
-Vendored parser dependencies resolve by explicit path for external Rust consumers;
-the independent consumer build and round trips are part of the final local gate.
-
-| Capability | Present source | Next action |
+| Capability | Present source and checked behavior | Next action |
 | --- | --- | --- |
-| OpenAPI, LinkML and ODCS Rust wire and CLI | Integrated | Finish the focused operation and refusal baseline; repair only actual failures. |
-| GraphQL host edit callback | Native kernel and wire present | Add a host bridge that invokes the callback after Rust edit prevalidation. |
-| JSON-LD | Native source kernel and wire source in the worktree, registration and baseline pending | Implement expansion with a fresh supplied-context processor, then flatten, compact, frame and RDF operations. |
-| TableSpec | Seven native monolithic operations drafted, registration and baseline pending | Integrate import, inspect, export, getters and edits; implement split-bundle operations next. |
-| Saga browser SDK subpath | Runtime source present | Include the fresh Rust/WASM host and its dependencies in the default SDK asset manifest before sealing it; run one representative host baseline. |
+| OpenAPI, LinkML and ODCS | Rust wire and CLI routes are integrated; OpenAPI wire, native payload inspector and actual Node facade flows pass. LinkML/ODCS wire and CLI flows pass. | Actual Node public-root flow passes; complete shared Registry structural ownership and browser activation. |
+| GraphQL | Rust pre/post-validation host callback and Node/WASM default route are integrated; the actual Node callback edit/export and prevalidation refusal pass. | Continue browser host integration. |
+| JSON-LD | Source operations, expand, flatten, compact and both ordinary RDF conversions are wired; corrected RDF direction and current wire/CLI baselines pass. | Activate and test the prepared compound-literal, generalized-input and framing operations; complete remaining processing semantics. |
+| TableSpec | All nine public operations are wired; corrected getter/edit preservation and split-bundle wire roundtrip pass. | Actual Node public-root flow passes; complete browser activation. |
+| SQL Server | Catalog and three facet kernels and wire/CLI routes are integrated; focused catalog, facet and payload-inspector checks pass. | Actual Node public-root flow passes; complete remaining host activation. |
+| Python native transport | Shared family dispatch passes two actual extension cases. | Ordinary GraphQL wire roundtrip passes; continue public Python activation as remaining families land. |
+| Saga browser SDK subpath | Runtime source and default SDK asset integration are present. | Run one representative host baseline at the next host integration point. |
 
 ## Remaining Port Work
 
 The current library is not the entire TypeScript port. Remaining kernels include
-TypeSpec and Smithy; JSON-LD/SHACL/OWL; relational and TableSpec adapters;
-cross-format projections; action/security/table control operations; and portions
-of Delta/Iceberg/Spark. GraphQL's host-default activation is also unfinished.
-These are implementation tasks, followed by Python, Node/Bun and browser WASM
-activation. Existing source and wire candidates must pass their own baseline
-operations before they are counted as implemented.
+TypeSpec and Smithy; the remaining JSON-LD conversions and framing, SHACL and
+OWL; other relational adapters; cross-format projections;
+action/security/table control operations; and portions of Delta/Iceberg/Spark.
+The remaining implementation tasks need Python, Node/Bun and browser WASM
+activation through the public defaults. Existing source and wire candidates must pass their
+own baseline operations before they are counted as implemented.
 
 ## Acceptance
 

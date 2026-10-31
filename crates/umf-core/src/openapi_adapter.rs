@@ -276,6 +276,21 @@ impl OpenapiRuntime {
         )
     }
 
+    /// Inspect an OpenAPI extension payload with the same object/meta-schema
+    /// semantics used by document validation, without requiring a full UMF
+    /// document envelope.
+    pub fn inspect_payload_with_context(
+        &self,
+        payload: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Vec<Diagnostic>, EngineError> {
+        let structural_errors = self.package_schema.validate(payload, ctx)?;
+        if !structural_errors.is_empty() {
+            return Err(error("OPENAPI_PAYLOAD", "Invalid OpenAPI payload structure"));
+        }
+        inspect_payload(payload, &self.object_schemas, &self.meta_schemas, ctx)
+    }
+
     pub fn package_schema(&self) -> &crate::schema::CompiledSchema {
         &self.package_schema
     }

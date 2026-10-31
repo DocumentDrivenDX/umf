@@ -47,6 +47,31 @@ pub fn graphql_profile_version() -> String {
     umf_core_wire::graphql_binding::PROFILE.to_owned()
 }
 
+#[napi(js_name = "nativeFamilyDispatcherProfileVersion")]
+pub fn native_family_dispatcher_profile_version() -> String {
+    umf_core_wire::native_family_binding::PROFILE.to_owned()
+}
+
+#[napi(js_name = "executeNativeFamilyWire")]
+pub fn execute_native_family_wire(
+    env: Env,
+    family: String,
+    wire_json: String,
+    control_dispatcher: Option<JsFunction>,
+) -> String {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = NodeControl { env, dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::native_family_binding::execute_wire_with_control(
+            &family,
+            &wire_json,
+            &mut hook,
+        )
+    } else {
+        umf_core_wire::native_family_binding::execute_wire(&family, &wire_json)
+    }
+}
+
 #[napi(js_name = "executeGraphqlWire")]
 pub fn execute_graphql_wire(
     env: Env,

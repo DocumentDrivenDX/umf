@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
-import manifest from '../../../spec/extensions/linkml/package.json';
 import Ajv2019 from 'ajv/dist/2019';
 import {installJsonEquality} from '../../validation/schema';
 import grammar from '../../../spec/extensions/linkml/native-schema.json';
@@ -9,9 +8,9 @@ import {validateDocument} from '../../validation/document';
 import {createValidator} from '../../validation/schema';
 import {copyJson} from '../../model/json';
 import {parseNativeJson,parseNativeYaml,renderTree,nativePointer,treeChild,type NativeJson} from '../../model/native-json';
-import {UmfError,pointer,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../../model/types';
-export const LINKML_EXTENSION='umf.linkml';
-export const linkmlPackage=manifest as unknown as ExtensionPackage;
+import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../../model/types';
+import { LINKML_EXTENSION, linkmlPackage } from './package';
+export { LINKML_EXTENSION, linkmlPackage };
 type Payload={profile:'linkml-json-yaml';metamodelVersion:string;root:NativeJson;originalSource:string;originalFormat:'json'|'yaml'};
 const parse=(text:string,format:'json'|'yaml')=>format==='json'?parseNativeJson(text):parseNativeYaml(text,{version:'1.1',dateOnly:'string',booleanLexicon:'pyyaml'});
 const checks=new Map<string,ReturnType<ReturnType<typeof createValidator>['compile']>>();

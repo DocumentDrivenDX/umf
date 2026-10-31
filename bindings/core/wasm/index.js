@@ -1,6 +1,8 @@
 import {createDbtOperations, DBT_PROFILE, isDbtHostError} from './src/dbt.js';
 import {createRdfOperations, RDF_PROFILE} from './src/rdf.js';
 import {createGraphqlOperations, GRAPHQL_PROFILE} from './src/graphql.js';
+import {createNativeFamilyOperations, NATIVE_FAMILY_PROFILE} from './src/native-family.js';
+export {NATIVE_FAMILY_PROFILE};
 import {createHostReadResponseFrames, encodeRequestWire, encodeWire, fromWire, resultError, toWire} from './src/wire.js';
 import {createJavascriptNumericEngine as createNumericEngine, JAVASCRIPT_NUMERIC_PROFILE} from './src/javascript-numeric.js';
 import {createSecurityLogicEngine as createSecurityLogicEngineWithWire, SECURITY_LOGIC_PROFILE} from './src/security-logic.js';
@@ -1239,6 +1241,21 @@ export function createGraphqlEngine(module, options = {}) {
   const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
   const hostWork = admissionWork(controlBridge);
   return createGraphqlOperations(module, UmfCoreError, controlBridge, hostWork, nativeCoreError);
+}
+
+/** Create the shared closed-family Rust adapter dispatcher over WASM. */
+export function createNativeFamilyDispatcher(module, options = {}) {
+  if (typeof module?.executeNativeFamilyWire !== 'function' || typeof module?.nativeFamilyDispatcherProfileVersion !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  if (module.nativeFamilyDispatcherProfileVersion() !== NATIVE_FAMILY_PROFILE) throw new Error('RUST_WASM_BINDING_PROFILE_MISMATCH');
+  const {controls} = codegenOptions(options);
+  const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+  const hostWork = admissionWork(controlBridge);
+  return createNativeFamilyOperations(
+    (family, wire, control) => module.executeNativeFamilyWire(family, wire, control),
+    controlBridge,
+    hostWork,
+    nativeCoreError,
+  );
 }
 
 /** Create the opt-in pure reciprocal-rank fusion scorer over WASM. */

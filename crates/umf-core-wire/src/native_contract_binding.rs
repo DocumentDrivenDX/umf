@@ -2,7 +2,7 @@
 //! Tagged-wire adapter for LinkML source interchange (CONTRACT-024)
 //! and ODCS source contracts (CONTRACT-023). No URI or network resolution.
 use umf_core::{
-    native_contract_adapters as contracts, Context, EngineError, Severity, Utf16, Value,
+    native_contract_adapters as contracts, Context, Diagnostic, EngineError, Severity, Utf16, Value,
 };
 use crate::{decode, encode, field, result_envelope};
 
@@ -39,6 +39,7 @@ fn allowed(op: &str) -> Option<&'static [&'static str]> {
         "linkml.import" => &["profile", "op", "source", "id", "format", "metamodelVersion"],
         "odcs.import" => &["profile", "op", "source", "id", "format"],
         "linkml.inspect" | "odcs.inspect" => &["profile", "op", "document"],
+        "linkml.inspectPayload" | "odcs.inspectPayload" => &["profile", "op", "payload"],
         "linkml.export" | "odcs.export" => &["profile", "op", "document", "format"],
         "linkml.getNode" | "odcs.getNode" => &["profile", "op", "document", "pointer"],
         "linkml.editNode" | "odcs.editNode" => {
@@ -79,6 +80,16 @@ fn validation_value(v: umf_core::Validation, ctx: &mut Context<'_>) -> Result<Va
         ])).collect())),
     ]))
 }
+fn diagnostic_array(diagnostics: Vec<Diagnostic>, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+    ctx.charge_work(diagnostics.len(), Utf16::default())?;
+    ctx.charge_work(diagnostics.len().saturating_mul(4), Utf16::default())?;
+    Ok(Value::Array(diagnostics.into_iter().map(|d| Value::Object(vec![
+        (Utf16::from("code"), Value::String(d.code)),
+        (Utf16::from("path"), Value::String(d.path)),
+        (Utf16::from("message"), Value::String(d.message)),
+        (Utf16::from("severity"), Value::string_utf8(if d.severity == Severity::Error { "error" } else { "warning" })),
+    ])).collect()))
+}
 fn validate_inputs(op: &str, request: &Value) -> Result<(), EngineError> {
     match op {
         "linkml.import" | "odcs.import" => {
@@ -92,6 +103,7 @@ fn validate_inputs(op: &str, request: &Value) -> Result<(), EngineError> {
             }
         }
         "linkml.inspect" | "odcs.inspect" => { required_value(request, "document")?; }
+        "linkml.inspectPayload" | "odcs.inspectPayload" => { required_value(request, "payload")?; }
         "linkml.export" | "odcs.export" => { required_value(request, "document")?; optional_format(request)?; }
         "linkml.getNode" | "odcs.getNode" => { required_value(request, "document")?; required_string(request, "pointer")?; }
         "linkml.editNode" | "odcs.editNode" => {
@@ -135,7 +147,7 @@ fn execute(request: &Value, ctx: &mut Context<'_>, family: Option<&str>) -> Resu
     if !is_ascii(profile, PROFILE) { return Err(request_error("native-contract wire profile is required")); }
     let op = required_string(request, "op")?;
     let op_name = [
-        "linkml.import", "odcs.import", "linkml.inspect", "odcs.inspect", "linkml.export", "odcs.export",
+        "linkml.import", "odcs.import", "linkml.inspect", "odcs.inspect", "linkml.inspectPayload", "odcs.inspectPayload", "linkml.export", "odcs.export",
         "linkml.getNode", "odcs.getNode", "linkml.editNode", "odcs.editNode", "linkml.classSlots",
         "linkml.slotValues", "linkml.importContext", "linkml.importMerge", "odcs.resolveReference",
         "odcs.relationships", "odcs.renameElement",
@@ -168,6 +180,8 @@ fn execute(request: &Value, ctx: &mut Context<'_>, family: Option<&str>) -> Resu
         )?,
         "linkml.inspect" => validation_value(contracts::inspect_linkml_document(required_value(request, "document")?, &runtime, ctx)?, ctx)?,
         "odcs.inspect" => validation_value(contracts::inspect_odcs_document(required_value(request, "document")?, &runtime, ctx)?, ctx)?,
+        "linkml.inspectPayload" => diagnostic_array(contracts::inspect_linkml_payload(required_value(request, "payload")?, &runtime, ctx)?, ctx)?,
+        "odcs.inspectPayload" => diagnostic_array(contracts::inspect_odcs_payload(required_value(request, "payload")?, &runtime, ctx)?, ctx)?,
         "linkml.export" => Value::String(contracts::export_linkml_document(required_value(request, "document")?, optional_format(request)?, &runtime, ctx)?),
         "odcs.export" => Value::String(contracts::export_odcs_document(required_value(request, "document")?, optional_format(request)?, &runtime, ctx)?),
         "linkml.getNode" | "odcs.getNode" => {

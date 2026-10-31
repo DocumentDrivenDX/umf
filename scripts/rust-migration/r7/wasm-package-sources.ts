@@ -12,6 +12,7 @@ const pairs = [
   ['bindings/core/node/src/dbt.js', 'bindings/core/wasm/src/dbt.js'],
   ['bindings/core/node/src/rdf.js', 'bindings/core/wasm/src/rdf.js'],
   ['bindings/core/node/src/graphql.js', 'bindings/core/wasm/src/graphql.js'],
+  ['bindings/core/node/src/native-family.js', 'bindings/core/wasm/src/native-family.js'],
   ['bindings/core/node/src/access-rrf.js', 'bindings/core/wasm/src/access-rrf.js'],
   ['bindings/core/node/src/javascript-numeric.js', 'bindings/core/wasm/src/javascript-numeric.js'],
   ['bindings/core/node/src/security-logic.js', 'bindings/core/wasm/src/security-logic.js'],

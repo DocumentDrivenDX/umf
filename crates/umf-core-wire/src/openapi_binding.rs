@@ -51,6 +51,7 @@ fn allowed(op: &str) -> Option<&'static [&'static str]> {
             "resources",
         ],
         "openapi.validate" | "openapi.exportBundle" => &["profile", "op", "document"],
+        "openapi.inspectPayload" => &["profile", "op", "payload"],
         "openapi.export" => &["profile", "op", "document", "format"],
         "openapi.getNode" => &["profile", "op", "document", "pointer", "resourceUri"],
         "openapi.lookupResource" => &["profile", "op", "document", "reference", "fromUri"],
@@ -209,6 +210,7 @@ fn execute(request_value: &Value, ctx: &mut Context<'_>) -> Result<Value, Engine
     let op = [
         "openapi.import",
         "openapi.validate",
+        "openapi.inspectPayload",
         "openapi.export",
         "openapi.exportBundle",
         "openapi.getNode",
@@ -235,6 +237,20 @@ fn execute(request_value: &Value, ctx: &mut Context<'_>) -> Result<Value, Engine
     let document =
         || field(request_value, "document").ok_or_else(|| request("document is required"));
     match op {
+        "openapi.inspectPayload" => {
+            let payload = field(request_value, "payload")
+                .ok_or_else(|| request("payload is required"))?;
+            let diagnostics = runtime.inspect_payload_with_context(payload, ctx)?;
+            ctx.charge_work(diagnostics.len(), Utf16::default())?;
+            let mut output = Vec::with_capacity(diagnostics.len());
+            for diagnostic in diagnostics {
+                ctx.charge_text(diagnostic.code.len(), Utf16::default())?;
+                ctx.charge_text(diagnostic.path.len(), Utf16::default())?;
+                ctx.charge_text(diagnostic.message.len(), Utf16::default())?;
+                output.push(diagnostic_value(diagnostic));
+            }
+            Ok(Value::Array(output))
+        }
         "openapi.import" => {
             let id = as_text(field(request_value, "id"), "id must be a string")?;
             let source = as_text(field(request_value, "source"), "source must be a string")?;
@@ -568,11 +584,22 @@ fn validate_operation_input(
         }
     }
     for name in ["document"] {
-        if !matches!(op, "openapi.import") && field(req, name).is_none() {
+        if !matches!(op, "openapi.import" | "openapi.inspectPayload")
+            && field(req, name).is_none()
+        {
             return Err(request("document is required"));
         }
     }
     match op {
+        "openapi.validate" | "openapi.exportBundle" => Ok(prepared),
+        "openapi.inspectPayload" => {
+            match field(req, "payload") {
+                Some(Value::Object(_)) => {}
+                Some(_) => return Err(request("payload must be an object")),
+                None => return Err(request("payload is required")),
+            }
+            Ok(prepared)
+        }
         "openapi.import" => {
             let _ = as_text(field(req, "id"), "id must be a string")?;
             let _ = as_text(field(req, "source"), "source must be a string")?;
@@ -759,7 +786,7 @@ mod tests {
         let outer: serde_json::Value =
             serde_json::from_str(&envelope).map_err(|e| e.to_string())?;
         if outer["status"] != "ok" {
-            return Err(format!("{}", outer["code"]));
+            return Err(format!("{}: {}", outer["code"], outer["message"]));
         }
         let response = outer["wire"].as_str().ok_or("missing wire")?;
         let mut ctx = Context::ordinary();
@@ -768,6 +795,17 @@ mod tests {
     }
     fn field_value<'a>(value: &'a Value, key: &str) -> &'a Value {
         field(value, key).unwrap_or_else(|| panic!("missing {key}"))
+    }
+    fn extension_payload(document: &Value) -> Value {
+        let module = match field_value(document, "modules") {
+            Value::Array(items) => items.first().expect("module"),
+            _ => panic!("modules"),
+        };
+        let element = match field_value(module, "elements") {
+            Value::Array(items) => items.first().expect("element"),
+            _ => panic!("elements"),
+        };
+        field_value(field_value(element, "extensions"), "umf.openapi").clone()
     }
     fn sample_document() -> String {
         r##"{"openapi":"3.1.0","info":{"title":"Wire","version":"1"},"paths":{},"components":{"schemas":{"Pet":{"$id":"https://example.test/pet","$defs":{"Name":{"type":"string"}},"type":"object","properties":{"name":{"$ref":"#/$defs/Name"}}},"DynamicRoot":{"$id":"https://example.test/dynamic","$dynamicAnchor":"node","type":"object","properties":{"child":{"$dynamicRef":"#node"}}}},"parameters":{"Target":{"name":"limit","in":"query","schema":{"type":"string"}},"Alias":{"$ref":"#/components/parameters/Target"}}}}"##.to_owned()
@@ -982,6 +1020,26 @@ mod tests {
         assert!(value_text(field_value(&original_again, "schema"))
             .unwrap()
             .contains("\"title\":\"Wire\""));
+    }
+
+    #[test]
+    fn openapi_payload_inspector_accepts_a_current_imported_payload() {
+        let document = call(wire_request(
+            "openapi.import",
+            vec![
+                ("id", Value::string_utf8("inspect-payload")),
+                ("source", Value::string_utf8(r#"{"openapi":"3.2.1","info":{"title":"API","version":"1"},"paths":{}}"#)),
+                ("format", Value::string_utf8("json")),
+            ],
+        )).expect("valid document import");
+        let diagnostics = call(wire_request(
+            "openapi.inspectPayload",
+            vec![("payload", extension_payload(&document))],
+        )).expect("payload inspection");
+        let Value::Array(diagnostics) = diagnostics else { panic!("diagnostic array") };
+        assert!(diagnostics.iter().all(|diagnostic| {
+            field_value(diagnostic, "severity") != &Value::string_utf8("error")
+        }));
     }
 
     #[test]

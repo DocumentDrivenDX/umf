@@ -75,3 +75,80 @@ fn wrong_family_operation_is_rejected_before_dispatch() {
     assert_eq!(envelope["status"], "error");
     assert_eq!(envelope["code"], "REQUEST");
 }
+
+#[test]
+fn linkml_registry_payload_inspector_accepts_a_valid_import_payload() {
+    let document = call(
+        execute_linkml_wire,
+        "linkml.import",
+        [
+            ("source", Value::string_utf8("id: schema\nname: schema\n")),
+            ("id", Value::string_utf8("linkml-registry")),
+            ("format", Value::string_utf8("yaml")),
+        ],
+    );
+    let payload = first_payload(&document, "umf.linkml");
+    let diagnostics = call(
+        execute_linkml_wire,
+        "linkml.inspectPayload",
+        [("payload", payload)],
+    );
+    let Value::Array(diagnostics) = diagnostics else {
+        panic!("LinkML payload diagnostics")
+    };
+    assert!(diagnostics
+        .iter()
+        .any(|item| { member(item, "code") == &Value::string_utf8("LINKML_CONTEXT") }));
+}
+
+#[test]
+fn odcs_registry_payload_inspector_accepts_a_valid_import_payload() {
+    let document = call(
+        execute_odcs_wire,
+        "odcs.import",
+        [
+            (
+                "source",
+                Value::string_utf8(
+                    r#"{"apiVersion":"v3.2.0","kind":"DataContract","id":"dc","name":"Customer","version":"1.0.0","schema":[]}"#,
+                ),
+            ),
+            ("id", Value::string_utf8("odcs-registry")),
+            ("format", Value::string_utf8("json")),
+        ],
+    );
+    let payload = first_payload(&document, "umf.odcs");
+    let diagnostics = call(
+        execute_odcs_wire,
+        "odcs.inspectPayload",
+        [("payload", payload)],
+    );
+    let Value::Array(diagnostics) = diagnostics else {
+        panic!("ODCS payload diagnostics")
+    };
+    assert!(diagnostics
+        .iter()
+        .any(|item| { member(item, "code") == &Value::string_utf8("ODCS_CONTEXT") }));
+}
+
+
+fn first_payload(document: &Value, extension: &str) -> Value {
+    let Value::Array(modules) = member(document, "modules") else {
+        panic!("expected modules")
+    };
+    let Value::Array(elements) = member(modules.first().expect("first module"), "elements") else {
+        panic!("expected elements")
+    };
+    member(member(elements.first().expect("first element"), "extensions"), extension).clone()
+}
+
+fn member<'a>(value: &'a Value, name: &str) -> &'a Value {
+    let Value::Object(fields) = value else {
+        panic!("expected object")
+    };
+    fields
+        .iter()
+        .find(|(key, _)| key == &Utf16::from(name))
+        .map(|(_, value)| value)
+        .unwrap()
+}

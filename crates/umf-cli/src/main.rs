@@ -786,6 +786,10 @@ fn run(args: Vec<String>) -> Result<(), String> {
         return tablespec_run(&args[1..]);
     }
     #[cfg(feature = "embedded-adapters")]
+    if args.first().map(String::as_str) == Some("sqlserver") {
+        return sqlserver_run(&args[1..]);
+    }
+    #[cfg(feature = "embedded-adapters")]
     if args.first().map(String::as_str) == Some("linkml") {
         return linkml_run(&args[1..]);
     }
@@ -1428,6 +1432,17 @@ fn tablespec_run(args: &[String]) -> Result<(), String> {
         umf_core_wire::tablespec_binding::PROFILE,
         "[\"importTableSpec\",\"inspectTableSpec\",\"exportTableSpec\",\"getTableSpecTable\",\"getTableSpecColumn\",\"editTableSpecTable\",\"editTableSpecColumn\",\"importTableSpecBundle\",\"exportTableSpecBundle\"]",
         umf_core_wire::tablespec_binding::execute_wire_with_control,
+        args,
+    )
+}
+
+#[cfg(feature = "embedded-adapters")]
+fn sqlserver_run(args: &[String]) -> Result<(), String> {
+    native_adapter_run(
+        "sqlserver",
+        umf_core_wire::sqlserver_binding::PROFILE,
+        "[\"sqlserver.import\",\"sqlserver.inspect\",\"sqlserver.export\",\"sqlserver.columns\",\"sqlserver.constraints\",\"sqlserver.indexes\",\"sqlserver.edit\",\"sqlserver.facetType\",\"sqlserver.facetPredicate\",\"sqlserver.facetConstraints\"]",
+        umf_core_wire::sqlserver_binding::execute_wire_with_control,
         args,
     )
 }

@@ -96,3 +96,27 @@ fn jsonld_cli_imports_and_expands_with_declared_capabilities() {
     let report = umf_core_wire::decode(expansion["wire"].as_str().unwrap(), &mut Context::ordinary()).unwrap();
     assert!(matches!(report, Value::Object(ref fields) if fields.iter().any(|(key, value)| key == &Utf16::from("status") && value == &Value::string_utf8("candidate"))));
 }
+
+#[test]
+fn sqlserver_cli_imports_current_catalog() {
+    let capabilities = Command::new(env!("CARGO_BIN_EXE_umf"))
+        .args(["sqlserver", "--capabilities"])
+        .env("PATH", "")
+        .output()
+        .unwrap();
+    assert!(capabilities.status.success());
+    let capabilities: serde_json::Value = serde_json::from_slice(&capabilities.stdout).unwrap();
+    assert!(capabilities["operations"].as_array().unwrap().contains(
+        &serde_json::Value::String("sqlserver.import".to_owned())
+    ));
+    let wire = umf_core_wire::encode(
+        &Value::Object(vec![
+            (Utf16::from("profile"), Value::string_utf8(umf_core_wire::sqlserver_binding::PROFILE)),
+            (Utf16::from("op"), Value::string_utf8("sqlserver.import")),
+            (Utf16::from("source"), Value::string_utf8(include_str!("../../../fixtures/sqlserver/catalog.json"))),
+            (Utf16::from("id"), Value::string_utf8("cli-catalog")),
+        ]),
+        &mut Context::ordinary(),
+    ).unwrap();
+    assert_eq!(run("sqlserver", &wire)["status"], "ok");
+}

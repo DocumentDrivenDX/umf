@@ -104,6 +104,30 @@ pub fn graphql_profile_version() -> String {
     umf_core_wire::graphql_binding::PROFILE.to_owned()
 }
 
+#[wasm_bindgen(js_name = nativeFamilyDispatcherProfileVersion)]
+pub fn native_family_dispatcher_profile_version() -> String {
+    umf_core_wire::native_family_binding::PROFILE.to_owned()
+}
+
+#[wasm_bindgen(js_name = executeNativeFamilyWire)]
+pub fn execute_native_family_wire(
+    family: &str,
+    wire_json: &str,
+    control_dispatcher: Option<Function>,
+) -> String {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::native_family_binding::execute_wire_with_control(
+            family,
+            wire_json,
+            &mut hook,
+        )
+    } else {
+        umf_core_wire::native_family_binding::execute_wire(family, wire_json)
+    }
+}
+
 #[wasm_bindgen(js_name = executeGraphqlWire)]
 pub fn execute_graphql_wire(wire_json: &str, control_dispatcher: Option<Function>) -> String {
     if let Some(dispatcher) = control_dispatcher {

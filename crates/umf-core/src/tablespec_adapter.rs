@@ -4,7 +4,7 @@
 use crate::{
     context::Context,
     engine::{Capabilities, Engine, ResourceSet},
-    error::{Diagnostic, EngineError, Severity, Validation},
+    error::{Diagnostic, EngineError, Validation},
     native_json::{NativeJsonNode, NativeJsonTree},
     registry::Registry,
     serialization::{self, Format},
@@ -577,7 +577,7 @@ impl TableSpecRuntime {
         let column = columns
             .get_mut(index)
             .ok_or_else(|| err("TABLESPEC_COLUMN", "Column index does not exist"))?;
-        let Value::Object(members) = value_field_mut(column, "members")
+        let Value::Object(members) = object_field_mut(column, "members")
             .ok_or_else(|| err("TABLESPEC_COLUMN", "Expected a column object"))?
         else {
             return Err(err("TABLESPEC_COLUMN", "Expected a column object"));
@@ -631,7 +631,7 @@ impl TableSpecRuntime {
         }
         let mut candidate = copy_json(document, ctx)?;
         let root = extension_root_mut(&mut candidate)?;
-        let Value::Object(members) = value_field_mut(root, "members")
+        let Value::Object(members) = object_field_mut(root, "members")
             .ok_or_else(|| err("TABLESPEC_TABLE", "Expected a table object"))?
         else {
             return Err(err("TABLESPEC_TABLE", "Expected a table object"));
@@ -687,7 +687,7 @@ impl Capabilities for StructuralOnly {
         &mut self,
         _token: u64,
         _payload: &Value,
-        _context: &umf_core::engine::SemanticContext,
+        _context: &crate::engine::SemanticContext,
     ) -> Result<Vec<Diagnostic>, Utf16> {
         Ok(Vec::new())
     }
@@ -775,7 +775,7 @@ fn split_view(files: &Value, ctx: &mut Context<'_>) -> Result<SplitView, EngineE
                 "Expected column mapping in split source",
             ));
         }
-        if !matches!(tagged_member(&column_tag, "kind"), Some(Value::String(kind)) if kind == &Utf16::from("object"))
+        if !matches!(object_field(&column_tag, "kind"), Some(Value::String(kind)) if kind == &Utf16::from("object"))
         {
             return Err(err(
                 "TABLESPEC_COLUMN",
@@ -784,7 +784,7 @@ fn split_view(files: &Value, ctx: &mut Context<'_>) -> Result<SplitView, EngineE
         }
         if let Some(sibling_derivation) = tagged_member(&source_tag, "derivation") {
             let copied = copy_json(sibling_derivation, ctx)?;
-            let members = tagged_member_mut(&mut column_tag, "members").ok_or_else(|| {
+            let members = object_field_mut(&mut column_tag, "members").ok_or_else(|| {
                 err(
                     "TABLESPEC_COLUMN",
                     "Expected column mapping in split source",
@@ -818,7 +818,7 @@ fn split_view(files: &Value, ctx: &mut Context<'_>) -> Result<SplitView, EngineE
         (key("kind"), Value::string_utf8("array")),
         (key("items"), Value::Array(columns)),
     ]);
-    let root_members = tagged_member_mut(&mut root_tag, "members")
+    let root_members = object_field_mut(&mut root_tag, "members")
         .ok_or_else(|| err("TABLESPEC_TABLE", "Expected table.yaml mapping"))?;
     let Value::Object(root_members) = root_members else {
         return Err(err("TABLESPEC_TABLE", "Expected table.yaml mapping"));
@@ -917,7 +917,7 @@ fn tagged_member_mut<'a>(value: &'a mut Value, name: &str) -> Option<&'a mut Val
     object_field_mut(members, name)
 }
 fn set_native_member(value: &mut Value, name: &str, replacement: Value) -> Result<(), EngineError> {
-    let members = tagged_member_mut(value, "members")
+    let members = object_field_mut(value, "members")
         .ok_or_else(|| err("TABLESPEC_ENCODING", "Expected tagged object members"))?;
     let Value::Object(fields) = members else {
         return Err(err("TABLESPEC_ENCODING", "Expected tagged object members"));
@@ -926,7 +926,7 @@ fn set_native_member(value: &mut Value, name: &str, replacement: Value) -> Resul
     Ok(())
 }
 fn remove_native_member(value: &mut Value, name: &str) -> Result<(), EngineError> {
-    let members = tagged_member_mut(value, "members")
+    let members = object_field_mut(value, "members")
         .ok_or_else(|| err("TABLESPEC_ENCODING", "Expected tagged object members"))?;
     let Value::Object(fields) = members else {
         return Err(err("TABLESPEC_ENCODING", "Expected tagged object members"));
@@ -940,12 +940,12 @@ fn sync_tagged_native_members(
     skip_columns: bool,
     ctx: &mut Context<'_>,
 ) -> Result<(), EngineError> {
-    let current_members = tagged_member(current, "members")
+    let current_members = object_field(current, "members")
         .ok_or_else(|| err("TABLESPEC_TABLE", "Expected table object"))?;
     let Value::Object(current_fields) = current_members else {
         return Err(err("TABLESPEC_TABLE", "Expected table object"));
     };
-    let target_members = tagged_member_mut(target, "members")
+    let target_members = object_field_mut(target, "members")
         .ok_or_else(|| err("TABLESPEC_TABLE", "Expected table object"))?;
     let Value::Object(target_fields) = target_members else {
         return Err(err("TABLESPEC_TABLE", "Expected table object"));
@@ -1075,10 +1075,10 @@ fn set_utf16_field(fields: &mut Vec<(Utf16, Value)>, name: Utf16, value: Value) 
     }
 }
 
-fn table_columns(
-    root: &NativeJsonNode,
+fn table_columns<'a>(
+    root: &'a NativeJsonNode,
     ctx: &mut Context<'_>,
-) -> Result<(Utf16, &[NativeJsonNode]), EngineError> {
+) -> Result<(Utf16, &'a [NativeJsonNode]), EngineError> {
     let members =
         object_members(root).ok_or_else(|| err("TABLESPEC_TABLE", "Expected table mapping"))?;
     let table_name = match native_field(members, "table_name") {
@@ -1246,7 +1246,7 @@ fn string_field<'a>(value: &'a Value, name: &str) -> Option<&'a Utf16> {
         _ => None,
     }
 }
-fn array_field(value: &Value, name: &str) -> Option<&Vec<Value>> {
+fn array_field<'a>(value: &'a Value, name: &str) -> Option<&'a Vec<Value>> {
     match object_field(value, name) {
         Some(Value::Array(items)) => Some(items),
         _ => None,
@@ -1261,12 +1261,6 @@ fn object_field_mut<'a>(value: &'a mut Value, name: &str) -> Option<&'a mut Valu
     } else {
         None
     }
-}
-fn value_field_mut<'a>(fields: &'a mut [(Utf16, Value)], name: &str) -> Option<&'a mut Value> {
-    fields
-        .iter_mut()
-        .find(|(k, _)| k == &key(name))
-        .map(|(_, v)| v)
 }
 fn extension_root_mut(document: &mut Value) -> Result<&mut Value, EngineError> {
     object_field_mut(document, "extensions")

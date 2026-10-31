@@ -86,6 +86,8 @@ pub mod javascript_numeric;
 pub mod jsonld_source;
 pub mod json_number;
 #[cfg(feature = "embedded-adapters")]
+pub mod sqlserver_adapter;
+#[cfg(feature = "embedded-adapters")]
 pub mod json_schema_adapter;
 #[cfg(feature = "embedded-adapters")]
 pub mod json_schema_inspect;
