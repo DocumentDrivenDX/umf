@@ -361,6 +361,7 @@ def _validate_installed_wheel(
             f"{dist_info}/INSTALLER",
             f"{dist_info}/REQUESTED",
             f"{dist_info}/direct_url.json",
+            f"{dist_info}/uv_cache.json",
         }
         installer_files = set(installed_entries) - names
         if not installer_files <= allowed_installer_files:

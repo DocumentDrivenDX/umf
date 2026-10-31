@@ -560,7 +560,8 @@
           "saga.invocation.finality/1/f",
           "saga.invocation.finality/1/c"
         ],
-        "compatible": true
+        "sagaDiagnostics": [],
+        "actionDiagnosticProfile": "inert-handler-actions"
       }
     },
     {
@@ -1106,7 +1107,15 @@
       "expected": {
         "valid": false,
         "code": "SAGA_REFERENCE",
-        "at": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/1/inputs/0/from"
+        "at": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/1/inputs/0/from",
+        "sagaDiagnostics": [
+          {
+            "code": "SAGA_REFERENCE",
+            "path": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/1/inputs/0/from",
+            "severity": "error"
+          }
+        ],
+        "actionDiagnosticProfile": "inert-handler-actions"
       }
     },
     {
@@ -1653,7 +1662,20 @@
       "expected": {
         "valid": false,
         "code": "SAGA_REFERENCE",
-        "at": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/0/inputs/0/from"
+        "at": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/0/inputs/0/from",
+        "sagaDiagnostics": [
+          {
+            "code": "SAGA_REFERENCE",
+            "path": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/0/inputs/0/from",
+            "severity": "error"
+          },
+          {
+            "code": "SAGA_REFERENCE",
+            "path": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/0/inputs/0/from",
+            "severity": "error"
+          }
+        ],
+        "actionDiagnosticProfile": "inert-handler-actions"
       }
     },
     {
@@ -2199,7 +2221,20 @@
       "expected": {
         "valid": false,
         "code": "SAGA_REFERENCE",
-        "at": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/0/compensation/inputs/0/from"
+        "at": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/0/compensation/inputs/0/from",
+        "sagaDiagnostics": [
+          {
+            "code": "SAGA_REFERENCE",
+            "path": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/0/compensation/inputs/0/from",
+            "severity": "error"
+          },
+          {
+            "code": "SAGA_REFERENCE",
+            "path": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/0/compensation/inputs/0/from",
+            "severity": "error"
+          }
+        ],
+        "actionDiagnosticProfile": "inert-handler-actions"
       }
     },
     {
@@ -2731,7 +2766,9 @@
       },
       "expected": {
         "valid": true,
-        "noCode": "SAGA_PIVOT"
+        "noCode": "SAGA_PIVOT",
+        "sagaDiagnostics": [],
+        "actionDiagnosticProfile": "inert-handler-actions"
       }
     },
     {
@@ -3264,7 +3301,15 @@
       "expected": {
         "valid": true,
         "code": "SAGA_PIVOT",
-        "at": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/0/compensation"
+        "at": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/0/compensation",
+        "sagaDiagnostics": [
+          {
+            "code": "SAGA_PIVOT",
+            "path": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/0/compensation",
+            "severity": "warning"
+          }
+        ],
+        "actionDiagnosticProfile": "inert-handler-actions"
       }
     },
     {
@@ -3792,7 +3837,15 @@
       },
       "expected": {
         "valid": false,
-        "code": "SAGA_STRUCTURE"
+        "code": "SAGA_STRUCTURE",
+        "sagaDiagnostics": [
+          {
+            "code": "SAGA_STRUCTURE",
+            "path": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/0",
+            "severity": "error"
+          }
+        ],
+        "actionDiagnosticProfile": "inert-handler-actions"
       }
     },
     {
@@ -4362,8 +4415,17 @@
       "expected": {
         "valid": true,
         "complete": false,
+        "compatible": false,
         "unknown": true,
-        "editRefused": true
+        "editRefused": true,
+        "sagaDiagnostics": [
+          {
+            "code": "SAGA_UNCHECKED",
+            "path": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/0/compensation/futureRecovery",
+            "severity": "warning"
+          }
+        ],
+        "actionDiagnosticProfile": "unknown-native-and-inert-actions"
       }
     },
     {
@@ -4908,7 +4970,25 @@
       },
       "expected": {
         "valid": false,
-        "code": "SAGA_REFERENCE"
+        "code": "SAGA_REFERENCE",
+        "sagaDiagnostics": [
+          {
+            "code": "SAGA_REFERENCE",
+            "path": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/1/id",
+            "severity": "error"
+          },
+          {
+            "code": "SAGA_REFERENCE",
+            "path": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/1/compensation/inputs/0/from",
+            "severity": "error"
+          },
+          {
+            "code": "SAGA_TYPE",
+            "path": "/modules/0/extensions/umf.actions.saga/sagas/0/outputBindings/0/from",
+            "severity": "error"
+          }
+        ],
+        "actionDiagnosticProfile": "inert-handler-actions"
       }
     },
     {
@@ -5455,7 +5535,15 @@
       "expected": {
         "valid": true,
         "complete": false,
-        "compatible": false
+        "compatible": false,
+        "sagaDiagnostics": [
+          {
+            "code": "SAGA_UNCHECKED",
+            "path": "/modules/0/extensions/umf.actions.saga/sagas/0/profile",
+            "severity": "warning"
+          }
+        ],
+        "actionDiagnosticProfile": "inert-handler-actions"
       }
     },
     {
@@ -5963,7 +6051,15 @@
       "expected": {
         "valid": true,
         "complete": false,
-        "compatible": false
+        "compatible": false,
+        "sagaDiagnostics": [
+          {
+            "code": "SAGA_UNCHECKED",
+            "path": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/0/compensation",
+            "severity": "warning"
+          }
+        ],
+        "actionDiagnosticProfile": "inert-handler-actions"
       }
     },
     {
@@ -6500,7 +6596,15 @@
       },
       "expected": {
         "valid": false,
-        "code": "SAGA_REFERENCE"
+        "code": "SAGA_REFERENCE",
+        "sagaDiagnostics": [
+          {
+            "code": "SAGA_REFERENCE",
+            "path": "/modules/0/extensions/umf.actions.saga/sagas/0/outputBindings",
+            "severity": "error"
+          }
+        ],
+        "actionDiagnosticProfile": "inert-handler-actions"
       }
     },
     {
@@ -8014,7 +8118,9 @@
         ]
       },
       "expected": {
-        "valid": true
+        "valid": true,
+        "sagaDiagnostics": [],
+        "actionDiagnosticProfile": "inert-handler-actions"
       }
     },
     {
@@ -9562,7 +9668,15 @@
       },
       "expected": {
         "valid": false,
-        "limit": true
+        "limit": true,
+        "sagaDiagnostics": [
+          {
+            "code": "SAGA_LIMIT",
+            "path": "/modules/0/extensions/umf.actions.saga/sagas/0/steps",
+            "severity": "error"
+          }
+        ],
+        "actionDiagnosticProfile": "inert-handler-actions"
       }
     },
     {
@@ -10118,7 +10232,15 @@
       },
       "expected": {
         "valid": false,
-        "code": "SAGA_TYPE"
+        "code": "SAGA_TYPE",
+        "sagaDiagnostics": [
+          {
+            "code": "SAGA_TYPE",
+            "path": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/1/inputs/0/from",
+            "severity": "error"
+          }
+        ],
+        "actionDiagnosticProfile": "different-key-action-errors"
       }
     },
     {
@@ -10350,7 +10472,125 @@
         "noCode": "SAGA_PROFILE",
         "complete": true,
         "authoring": true,
-        "compatible": true
+        "compatible": true,
+        "sagaDiagnostics": [],
+        "obligations": [
+          {
+            "id": "coordination:sequential/1",
+            "path": "/modules/0/extensions/umf.actions.saga/sagas/0",
+            "kind": "coordination",
+            "status": "unchecked"
+          },
+          {
+            "id": "binding:0",
+            "path": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/0/binding",
+            "kind": "binding",
+            "status": "unchecked"
+          },
+          {
+            "id": "action:approve:/modules/0/extensions/umf.actions/actions/0/parameters/0",
+            "path": "/modules/0/extensions/umf.actions/actions/0/parameters/0",
+            "kind": "key",
+            "status": "checked"
+          },
+          {
+            "id": "action:approve:/modules/0/elements/2",
+            "path": "/modules/0/elements/2",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "action:approve:/modules/0/elements/0",
+            "path": "/modules/0/elements/0",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "action:approve:/modules/0/elements/1",
+            "path": "/modules/0/elements/1",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "action:approve:/modules/0/elements/2/keys/0",
+            "path": "/modules/0/elements/2/keys/0",
+            "kind": "key",
+            "status": "checked"
+          },
+          {
+            "id": "action:approve:/modules/0/extensions/umf.actions/actions/0/writes/0",
+            "path": "/modules/0/extensions/umf.actions/actions/0/writes/0",
+            "kind": "frame",
+            "status": "checked"
+          },
+          {
+            "id": "action:approve:/modules/0/extensions/umf.actions/actions/0/writes/0/selector",
+            "path": "/modules/0/extensions/umf.actions/actions/0/writes/0/selector",
+            "kind": "selector",
+            "status": "checked"
+          },
+          {
+            "id": "action:approve:/modules/0/extensions/umf.actions/actions/0/authorization",
+            "path": "/modules/0/extensions/umf.actions/actions/0/authorization",
+            "kind": "authorization",
+            "status": "checked"
+          },
+          {
+            "id": "action:approve:/modules/0/extensions/umf.actions/actions/0/attribution",
+            "path": "/modules/0/extensions/umf.actions/actions/0/attribution",
+            "kind": "attribution",
+            "status": "checked"
+          },
+          {
+            "id": "action:approve:/modules/0/extensions/umf.actions/actions/0/atomicity",
+            "path": "/modules/0/extensions/umf.actions/actions/0/atomicity",
+            "kind": "atomicity",
+            "status": "checked"
+          },
+          {
+            "id": "action:approve:/modules/0/extensions/umf.actions/actions/0/idempotency",
+            "path": "/modules/0/extensions/umf.actions/actions/0/idempotency",
+            "kind": "idempotency",
+            "status": "checked"
+          },
+          {
+            "id": "action:approve:/modules/0/extensions/umf.actions/actions/0/result",
+            "path": "/modules/0/extensions/umf.actions/actions/0/result",
+            "kind": "result",
+            "status": "checked"
+          },
+          {
+            "id": "action:approve:/modules/0/extensions/umf.actions/actions/0/binding",
+            "path": "/modules/0/extensions/umf.actions/actions/0/binding",
+            "kind": "binding",
+            "status": "checked"
+          },
+          {
+            "id": "action:approve:/modules/0/extensions/umf.actions/actions/0/binding/effects/0",
+            "path": "/modules/0/extensions/umf.actions/actions/0/binding/effects/0",
+            "kind": "effect",
+            "status": "checked"
+          },
+          {
+            "id": "recovery:0:irreversible",
+            "path": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/0/compensation",
+            "kind": "recovery",
+            "status": "unchecked"
+          },
+          {
+            "id": "action:approve/approve",
+            "path": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/0/action",
+            "kind": "action",
+            "status": "unchecked"
+          },
+          {
+            "id": "saga.invocation.finality/0/f",
+            "path": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/0/action",
+            "kind": "recovery",
+            "status": "unchecked"
+          }
+        ],
+        "actionDiagnosticProfile": "recipe-action"
       }
     },
     {
@@ -10896,7 +11136,9 @@
       "expected": {
         "valid": true,
         "complete": false,
-        "noHostCalls": true
+        "noHostCalls": true,
+        "sagaDiagnostics": [],
+        "actionDiagnosticProfile": "inert-handler-actions"
       }
     },
     {
@@ -11447,7 +11689,9 @@
       "expected": {
         "valid": true,
         "complete": false,
-        "compatible": false
+        "compatible": false,
+        "sagaDiagnostics": [],
+        "actionDiagnosticProfile": "external-action-meaning"
       }
     },
     {
@@ -11699,7 +11943,20 @@
       "expected": {
         "valid": false,
         "code": "SAGA_REFERENCE",
-        "at": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/1/inputs/0/from"
+        "at": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/1/inputs/0/from",
+        "sagaDiagnostics": [
+          {
+            "code": "SAGA_REFERENCE",
+            "path": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/1/inputs/0/from",
+            "severity": "error"
+          },
+          {
+            "code": "SAGA_PIVOT",
+            "path": "/modules/0/extensions/umf.actions.saga/sagas/0/steps/0/compensation",
+            "severity": "warning"
+          }
+        ],
+        "actionDiagnosticProfile": "recipe-action"
       }
     }
   ]

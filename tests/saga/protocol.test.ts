@@ -7,6 +7,7 @@ import {installSagaProvider,sagaRuntimePlan} from './provider-fixture';
 import {decodeReferenceJson,encodeReferenceIdentity,encodeReferenceJson} from '../../scripts/actions-reference/codec';
 import type {ReferenceInvokeRequest} from '../../scripts/actions-reference/protocol';
 import {verifyIndependentHistory,type ExpectedProviderFact,type ProviderObservation,type HistoryObservation} from './history-oracle';
+import {observeNativeProvider} from './native-observation';
 import {referenceHandlerBuild} from '../../scripts/actions-reference/sandbox';
 
 test('the native adapter validates and dispatches the closed ten-operation protocol',async()=>{
@@ -260,18 +261,8 @@ test('public success history agrees with independently queried native provider o
    const row=ticketRows.find((item:any)=>Number(item.ordinal)===ordinal&&item.direction==='f'),event=historyOutcomes.find(item=>item.invocation.step===step.id&&item.invocation.direction==='forward');
    return {ticket:row?.ticket??`missing-ticket-${ordinal}`,status:event?.result?.status??'missing'};
   });
-  const expected:ExpectedProviderFact[]=definition.definition.steps.map((step,ordinal)=>({ticket:String(ticketRows.find((item:any)=>Number(item.ordinal)===ordinal&&item.direction==='f')?.ticket??`missing-ticket-${ordinal}`),status:'committed',provider:ordinal===0?'provider-a':'provider-b',tenant:'tenant-a',storeEpoch:ordinal===0?'epoch-history-oracle-a':'epoch-history-oracle-b',actionRevision:'saga-r1',originalTicket:String(ticketRows.find((item:any)=>Number(item.ordinal)===ordinal&&item.direction==='f')?.ticket??`missing-ticket-${ordinal}`),key:`saga1/${submitted.instance.namespace}/${submitted.instance.id}/${ordinal}/f`,gatewayClosed:true,attemptsTerminal:true,outcomeCount:1,entity:{key,status:ordinal===0?'reserve':'allocate'}}));
-  const providers:ProviderObservation[]=[];
-  for(const fact of expected){
-   const ordinal=Number(fact.key!.split('/').at(-2)),provider=ordinal===0?inventory:allocation;
-   const [gatewayRows,attemptRows]=await Promise.all([provider.gateway.sql`select tenant,store_name,epoch,intent,state,final_disposition from saga_provider_ticket where ticket=${fact.ticket}`,provider.gateway.sql`select state from saga_provider_attempt where ticket=${fact.ticket} order by attempt`]);
-   const ticket=gatewayRows[0];if(!ticket)continue;
-   const intent=decodeReferenceJson(ticket.intent) as any,actionIdentity=encodeReferenceIdentity([fact.tenant,ticket.store_name,'worker','sales',intent.target.action,intent.key]);
-   const outcomeRows=await provider.store.transaction(provider.storeName,async(tx,control)=>tx`select original_intent,result from action_outcome where store=${control.id} and identity=${actionIdentity}`);
-   const entityRows=await provider.store.transaction(provider.storeName,async(tx,control)=>tx`select fields from action_entity where store=${control.id}`),entity=entityRows.map((row:any)=>decodeReferenceJson(row.fields)).find((fields:any)=>fields['["sales","id"]']?.string===fact.entity!.key);
-   const result=outcomeRows[0]?decodeReferenceJson(outcomeRows[0].result) as any:undefined,original=outcomeRows[0]?decodeReferenceJson(outcomeRows[0].original_intent) as any:undefined;
-   providers.push({ticket:fact.ticket,status:result?.status??'missing',provider:fact.provider!,tenant:String(ticket.tenant),storeEpoch:String(ticket.epoch),actionRevision:original?.target?.revision,originalTicket:original?.correlation,key:original?.key,gatewayClosed:ticket.state==='closed',attemptsTerminal:attemptRows.length>0&&attemptRows.every((row:any)=>row.state!=='admitted'),outcomeCount:outcomeRows.length,entityKey:entity?.['["sales","id"]']?.string??'missing',entityStatus:entity?.['["sales","status"]']?.string??'missing',source:'native-action-outcome'});
-  }
+  const expected:ExpectedProviderFact[]=definition.definition.steps.map((step,ordinal)=>({ticket:String(ticketRows.find((item:any)=>Number(item.ordinal)===ordinal&&item.direction==='f')?.ticket??`missing-ticket-${ordinal}`),status:'committed',provider:ordinal===0?inventory.gateway.issuerId:allocation.gateway.issuerId,tenant:'tenant-a',storeEpoch:ordinal===0?'epoch-history-oracle-a':'epoch-history-oracle-b',actionRevision:'saga-r1',originalTicket:String(ticketRows.find((item:any)=>Number(item.ordinal)===ordinal&&item.direction==='f')?.ticket??`missing-ticket-${ordinal}`),key:`saga1/${submitted.instance.namespace}/${submitted.instance.id}/${ordinal}/f`,gatewayClosed:true,attemptsTerminal:true,outcomeCount:1,entity:{key,status:ordinal===0?'reserve':'allocate'}}));
+  const providers:ProviderObservation[]=await Promise.all(expected.map((fact,index)=>observeNativeProvider(index===0?inventory:allocation,fact.ticket,fact.entity!.key)));
   const check=verifyIndependentHistory(expected,history,providers);expect(check.passed).toBe(expected.length);expect(historyOutcomes.map(event=>event.invocation.step)).toEqual(['reserve','allocate']);
  });
 },{timeout:30_000});
@@ -346,6 +337,8 @@ test('a rejected allocation unwinds with the original typed output from its prio
   expect(rows).toHaveLength(1);expect((decodeReferenceJson(rows[0]!.original_intent) as any).inputs.nonce).toEqual(nonce);
   const state=await adapter.handle(actor,{protocol,operation:'status',instance:submitted.instance}) as any;expect(state.phase).toBe('compensated');expect(state.forward.map((item:any)=>item.state)).toEqual(['committed','rejected']);expect(state.compensations.map((item:any)=>item.state)).toEqual(['committed','idle']);
   const history=await adapter.handle(actor,{protocol,operation:'history',instance:submitted.instance,limit:64}) as any;expect(history.events.filter((event:any)=>event.kind==='outcome').map((event:any)=>event.result.status)).toEqual(['committed','rejected','committed']);
+  const tickets=await cluster.coordinator.sql`select ticket,ordinal,direction from saga_ticket where instance_id=${submitted.instance.id} order by ordinal,direction`,expected:ExpectedProviderFact[]=tickets.map((row:any)=>{const ordinal=Number(row.ordinal),direction=String(row.direction),provider=ordinal===1?allocation:inventory,status=ordinal===1?'rejected':'committed';return {ticket:String(row.ticket),status,provider:provider.gateway.issuerId,tenant:'tenant-a',storeEpoch:ordinal===1?'epoch-rejected-unwind-b':'epoch-rejected-unwind-a',actionRevision:'saga-r2',originalTicket:String(row.ticket),key:`saga1/${submitted.instance.namespace}/${submitted.instance.id}/${ordinal}/${direction}`,gatewayClosed:true,attemptsTerminal:true,outcomeCount:1,entity:{key,status:ordinal===1?'pending':'release'}};}),coordinatorSnapshot=await cluster.coordinator.status(submitted.instance.id,actor),historyFacts:HistoryObservation[]=coordinatorSnapshot.history.filter((event:any)=>event.kind==='outcome').map((event:any)=>({ticket:event.ticket,status:event.result.status})),providerFacts=await Promise.all(expected.map(fact=>observeNativeProvider(fact.storeEpoch?.endsWith('-a')?inventory:allocation,fact.ticket,key))),oracle=verifyIndependentHistory(expected,historyFacts,providerFacts);
+  expect(oracle.passed).toBe(3);expect(oracle.checks.flatMap(item=>item.failures)).toEqual([]);
  });
 },{timeout:60_000});
 
@@ -494,17 +487,31 @@ test('retained issuer evidence resolves after automatic lookup exhaustion withou
 
 test('five-step recovery compensates the committed prefix in exact reverse order',async()=>{
  await withSagaNativeCluster(async cluster=>{
-  const [inventory,allocation]=await Promise.all([installSagaProvider(cluster.providers[0],'reverse-five-a'),installSagaProvider(cluster.providers[1],'reverse-five-b')]);
+  let loseFirstAck=true;
+  const [inventory,allocation]=await Promise.all([installSagaProvider(cluster.providers[0],'reverse-five-a',undefined,{afterFinality:async(_ticket,result)=>{if(loseFirstAck&&result.status==='committed'){loseFirstAck=false;throw Error('five-step committed output acknowledgement lost');}}}),installSagaProvider(cluster.providers[1],'reverse-five-b')]);
   const definition=sagaRuntimePlan(inventory,allocation),actions=['reserve','allocate','reserve','allocate','reserve'],base=structuredClone(definition.definition.steps[0]) as any;
-  definition.definition.steps=actions.map((action,index)=>({...structuredClone(base),id:`step-${index}`,action:{module:'sales',action},binding:action==='reserve'?'inventory':'allocation',compensation:{kind:'action',action:{module:'sales',action:'release'},binding:action==='reserve'?'inventory':'allocation',inputs:structuredClone(base.inputs)}}));
-  const sagaDoc=(definition as any).document.modules[0].extensions['umf.actions.saga'];sagaDoc.sagas[0]=definition.definition;
+  const source=structuredClone(definition.document) as any,actionDefs=source.modules[0].extensions['umf.actions'].actions,handlerSources=new Map<string,string>(),handlerIds=new Map<string,string>();
+  for(const actionName of ['reserve','allocate']){const action=actionDefs.find((item:any)=>item.id===actionName),handlerSource=`gateway.set('order-write',[{field:{module:'sales',element:'status'},value:{string:'${actionName}'}}]); return {nonce: {string: Math.random().toString(36).slice(2)}};`,handlerId=`reverse-five-${actionName}`;action.outputs=[{id:'nonce',kind:'value',field:{module:'sales',element:'id'},required:true}];action.binding={kind:'handler',profile:{id:'umf.actions.container',version:'1'},handler:{id:handlerId,version:'1'}};handlerSources.set(actionName,handlerSource);handlerIds.set(actionName,handlerId);}
+  const release=actionDefs.find((item:any)=>item.id==='release');release.parameters.push({id:'nonce',kind:'value',field:{module:'sales',element:'id'},required:true});
+  definition.definition.steps=actions.map((action,index)=>({...structuredClone(base),id:`step-${index}`,action:{module:'sales',action},binding:action==='reserve'?'inventory':'allocation',...(index<4?{inputs:[{parameter:'order',from:{input:'order'}}]}:{}),compensation:{kind:'action',action:{module:'sales',action:'release'},binding:action==='reserve'?'inventory':'allocation',inputs:[{parameter:'order',from:{input:'order'}},{parameter:'nonce',from:{step:`step-${index}`,output:'nonce'}}]}}));
+  source.modules[0].extensions['umf.actions.saga'].sagas[0]=definition.definition;definition.document=source;
+  for(const provider of [inventory,allocation]){
+   for(const actionName of ['reserve','allocate']){const handlerSource=handlerSources.get(actionName)!,deployment=provider.executor.admission.handlers.install({id:handlerIds.get(actionName)!,version:'1',build:referenceHandlerBuild(handlerSource),source:handlerSource});await provider.executor.admission.revisions.retain(provider.storeName,{module:'sales',action:actionName,revision:'saga-r2'},source,deployment);await provider.policy.replayDiscovery(provider.storeName,'sales',actionName,['reader']);}
+   await provider.executor.admission.revisions.retain(provider.storeName,{module:'sales',action:'release',revision:'saga-r2'},source);await provider.policy.replayDiscovery(provider.storeName,'sales','release',['reader']);
+   for(const actionName of ['reserve','allocate','release'])provider.executor.admission.revisions.lifecycle(provider.storeName,{module:'sales',action:actionName,revision:'saga-r2'},'active');
+  }
+  definition.bindings.inventory!.actionRevisions={reserve:'saga-r2',allocate:'saga-r2',release:'saga-r2'};definition.bindings.allocation!.actionRevisions={reserve:'saga-r2',allocate:'saga-r2',release:'saga-r2'};
   const target={module:definition.module,saga:definition.id,revision:definition.revision},directory=new Map([[JSON.stringify([target.module,target.saga,target.revision]),definition]]),protocol='umf.actions.saga/1',actor={tenant:'tenant-a',principal:'reverse-worker',service:'saga-test-worker',worker:'reverse-worker'},authorize=async(a:any)=>a.tenant==='tenant-a';
-  const adapter=new SagaProtocolCoordinator(cluster.coordinator,directory,authorize),key='reverse-five-order';await Promise.all([inventory.seed('reserve',key),allocation.seed('allocate',key)]);
+  let coordinator=cluster.coordinator,adapter=new SagaProtocolCoordinator(coordinator,directory,authorize);const key='reverse-five-order';await Promise.all([inventory.seed('reserve',key),allocation.seed('allocate',key)]);
   const submitted=await adapter.invoke(actor,{protocol,operation:'submit',key:'reverse-five-submit',target,inputs:{order:inventory.request('reserve',key).inputs.order}}) as any;
-  const forward:string[]=[];
+  const forward:string[]=[],retainedOutputs=new Map<number,{string:string}>();
   for(let i=0;i<4;i++){
    const claim=await adapter.invoke(actor,{protocol,operation:'claim',instance:submitted.instance}) as any;expect(claim.invocation).toEqual({step:`step-${i}`,direction:'forward'});forward.push(claim.invocation.step);
-   const outcome=await adapter.invoke(actor,{protocol,operation:'execute',instance:submitted.instance,invocation:claim.invocation,fence:claim.fence}) as any;if(outcome.result.status!=='committed')throw Error(`forward ${i} failed: ${JSON.stringify(outcome)}`);expect(outcome.result.status).toBe('committed');
+   const execute={protocol,operation:'execute',instance:submitted.instance,invocation:claim.invocation,fence:claim.fence},cap=await adapter.prepareControl(actor,execute);
+   if(i===0){await expect(adapter.handle(actor,execute,cap)).rejects.toThrow('five-step committed output acknowledgement lost');coordinator=new SagaCoordinator(coordinator.url);await coordinator.initialize();adapter=new SagaProtocolCoordinator(coordinator,directory,authorize);const recovered=await adapter.handle(actor,{protocol,operation:'recover-control',recovery:{id:cap,operation:'execute'}}) as any;expect(recovered.status).toBe('recovered');expect(recovered.result.result.status).toBe('committed');retainedOutputs.set(i,recovered.result.result.outputs.nonce);}
+   else {const outcome=await adapter.handle(actor,execute,cap) as any;if(outcome.result.status!=='committed')throw Error(`forward ${i} failed: ${JSON.stringify(outcome)}`);expect(outcome.result.status).toBe('committed');retainedOutputs.set(i,outcome.result.outputs.nonce);}
+   expect(retainedOutputs.get(i)?.string).toMatch(/^[a-z0-9]+$/);
+   const forwardProvider=i%2===0?inventory:allocation,forwardKey=`saga1/${submitted.instance.namespace}/${submitted.instance.id}/${i}/f`,forwardIdentity=encodeReferenceIdentity(['tenant-a',forwardProvider.storeName,'worker','sales',actions[i],forwardKey]),forwardRows=await forwardProvider.store.transaction(forwardProvider.storeName,async(tx,control)=>tx`select result from action_outcome where store=${control.id} and identity=${forwardIdentity}`);expect(forwardRows).toHaveLength(1);expect((decodeReferenceJson(forwardRows[0]!.result) as any).outputs.nonce).toEqual(retainedOutputs.get(i));
   }
   await inventory.store.sql.unsafe("CREATE FUNCTION saga_reverse_failure() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN RAISE EXCEPTION 'five-step forward rollback witness' USING ERRCODE='40001'; END $$; CREATE TRIGGER saga_reverse_failure BEFORE INSERT ON action_outcome FOR EACH ROW EXECUTE FUNCTION saga_reverse_failure()").simple();
   const failedClaim=await adapter.invoke(actor,{protocol,operation:'claim',instance:submitted.instance}) as any;expect(failedClaim.invocation).toEqual({step:'step-4',direction:'forward'});
@@ -514,9 +521,11 @@ test('five-step recovery compensates the committed prefix in exact reverse order
   for(let i=3;i>=0;i--){
    const claim=await adapter.invoke(actor,{protocol,operation:'claim',instance:submitted.instance}) as any;if(!claim.invocation)throw Error(`compensation claim ${i} refused: ${JSON.stringify(claim)}`);expect(claim.invocation).toEqual({step:`step-${i}`,direction:'compensation'});compensation.push(claim.invocation.step);
    const outcome=await adapter.invoke(actor,{protocol,operation:'execute',instance:submitted.instance,invocation:claim.invocation,fence:claim.fence}) as any;expect(outcome.result.status).toBe('committed');
+   const provider=i%2===0?inventory:allocation,releaseKey=`saga1/${submitted.instance.namespace}/${submitted.instance.id}/${i}/c`,identity=encodeReferenceIdentity(['tenant-a',provider.storeName,'worker','sales','release',releaseKey]),rows=await provider.store.transaction(provider.storeName,async(tx,control)=>tx`select original_intent,result from action_outcome where store=${control.id} and identity=${identity}`);expect(rows).toHaveLength(1);const original=decodeReferenceJson(rows[0]!.original_intent) as any;expect(original.inputs.nonce).toEqual(retainedOutputs.get(i));
   }
   expect(forward).toEqual(['step-0','step-1','step-2','step-3']);expect(compensation).toEqual(['step-3','step-2','step-1','step-0']);
   const state=await adapter.handle(actor,{protocol,operation:'status',instance:submitted.instance}) as any;expect(state.status).toBe('state');expect(state.phase).toBe('compensated');
+  await coordinator.close();
  });
 },{timeout:60_000});
 

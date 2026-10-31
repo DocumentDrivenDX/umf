@@ -9,10 +9,23 @@ import type {ActionExecutorProfile} from '../../src/extensions/actions';
 const source=()=>structuredClone(fixture) as unknown as Document;
 const registry=()=>registerActions(new Registry());
 const identity={module:'sales',action:'create-order'};
-function profile(document:Document):ActionExecutorProfile {return {id:'bounded-reference',version:'1',actionVersion:'0.1.0',coreVersion:CURRENT_CORE_VERSION,source:document,identity,claims:inspectActions(document,registry()).actions[0]!.obligations.map(o=>({obligation:o.id,status:'supported',evidence:['inert://not-authenticated-runtime-proof']}))};}
+const expectedObligationIds=[
+ '/modules/0/extensions/umf.actions/actions/0/parameters/0','/modules/0/elements/0',
+ '/modules/0/extensions/umf.actions/actions/0/parameters/1','/modules/0/elements/4','/modules/0/elements/3','/modules/0/elements/4/keys/0',
+ '/modules/0/extensions/umf.actions/actions/0/parameters/2','/modules/0/elements/6','/modules/0/elements/5','/modules/0/elements/6/keys/0',
+ '/modules/0/extensions/umf.actions/actions/0/writes/0','/modules/0/elements/2','/modules/0/elements/1','/modules/0/elements/2/keys/0','/modules/0/extensions/umf.actions/actions/0/writes/0/selector',
+ '/modules/0/relationships/0','/modules/0/relationships/1','/modules/0/extensions/umf.actions/actions/0/writes/1','/modules/0/extensions/umf.actions/actions/0/writes/1/selector','/modules/0/extensions/umf.actions/actions/0/writes/2','/modules/0/extensions/umf.actions/actions/0/writes/2/selector',
+ '/modules/0/extensions/umf.actions/actions/0/authorization','/modules/0/extensions/umf.actions/actions/0/attribution','/modules/0/extensions/umf.actions/actions/0/atomicity','/modules/0/extensions/umf.actions/actions/0/idempotency','/modules/0/extensions/umf.actions/actions/0/result','/modules/0/extensions/umf.actions/actions/0/binding',
+ '/modules/0/extensions/umf.actions/actions/0/binding/effects/0','/modules/0/extensions/umf.actions/actions/0/binding/effects/1','/modules/0/extensions/umf.actions/actions/0/binding/effects/2'
+];
+const expectedObligationKinds=['value','model','key','model','model','key','key','model','model','key','frame','model','model','key','selector','model','model','frame','selector','frame','selector','authorization','attribution','atomicity','idempotency','result','binding','effect','effect','effect'] as const;
+const expectedObligations=expectedObligationIds.map((id,index)=>({id,path:id,kind:expectedObligationKinds[index]!,status:'checked' as const}));
+function profile(document:Document):ActionExecutorProfile {return {id:'bounded-reference',version:'1',actionVersion:'0.1.0',coreVersion:CURRENT_CORE_VERSION,source:document,identity,claims:expectedObligationIds.map(obligation=>({obligation,status:'supported',evidence:['inert://not-authenticated-runtime-proof']}))};}
 test('@covers US-900-AC5: complete exact snapshot comparison never proves execution',()=>{
- const document=source(),p=profile(document),result=assessAction(document,identity,p,registry());expect(result.declaredCompatible).toBe(true);expect(result.executionVerified).toBe(false);
- expect(result.outcomes).toHaveLength(inspectActions(document,registry()).actions[0]!.obligations.length);expect(result.outcomes.every(o=>o.status==='supported')).toBe(true);
+ const document=source(),inspection=inspectActions(document,registry()),p=profile(document),result=assessAction(document,identity,p,registry());
+ expect(inspection.actions[0]!.obligations.map(({id,path,kind,status})=>({id,path,kind,status}))).toEqual(expectedObligations);
+ expect(result.declaredCompatible).toBe(true);expect(result.executionVerified).toBe(false);
+ expect(result.outcomes.map(o=>o.obligation)).toEqual(expectedObligationIds);expect(result.outcomes.every(o=>o.status==='supported')).toBe(true);
  // Object member order is not semantic, array order is.
  p.source={modules:p.source.modules,vocabularies:p.source.vocabularies,id:p.source.id,umf:p.source.umf};expect(assessAction(document,identity,p,registry()).declaredCompatible).toBe(true);
  p.source=structuredClone(document);p.source.modules[0]!.elements.reverse();expect(()=>assessAction(document,identity,p,registry())).toThrow();

@@ -1,17 +1,19 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {checkCoreDistribution} from './check-core-authority';
 import {mkdir,mkdtemp,readFile,rm} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {tmpdir} from 'node:os';
 import {join,resolve} from 'node:path';
+import {capturePortableProducerSnapshot,sha256File,SDK_SAGA_MEMBERS,verifyPortableProducerSnapshot} from './saga-portable/custody';
 // Set UMF_SDK_INSTALL_RETAIN_DIR only when a later installed-entry probe needs
 // this exact consumer and its archive-to-installed-member custody receipt.
 const retainedDirectory=process.env.UMF_SDK_INSTALL_RETAIN_DIR?resolve(process.env.UMF_SDK_INSTALL_RETAIN_DIR):undefined;
 const archive=resolve('.cache/sdk-distribution/umf-sdk.tgz');
+const sourceSnapshot=await capturePortableProducerSnapshot('.',{sdkArchive:archive});
+const {checkCoreDistribution}=await import('./check-core-authority');
 const sha256=(bytes:Uint8Array)=>createHash('sha256').update(bytes).digest('hex');
-const installerSourceSha256=sha256(await readFile('scripts/test-sdk-install.ts'));
+const installerSourceSha256=sourceSnapshot.qualificationInputs['scripts/test-sdk-install.ts']!;
 const archiveMemberProbe=`import hashlib,json,sys,tarfile
-names=['package/package.json','package/manifest.json','package/dist/umf.js']
+names=${JSON.stringify(SDK_SAGA_MEMBERS.map(member=>`package/${member}`))}
 with tarfile.open(sys.argv[1],mode='r:gz') as archive:
  members=archive.getmembers()
  result={}
@@ -29,7 +31,6 @@ const [memberStatus,memberStdout,memberStderr]=await Promise.all([
 ]);
 if(memberStatus!==0)throw Error('SDK archive member verification failed: '+memberStderr);
 const archiveMembers=JSON.parse(memberStdout) as Record<string,{size:number;sha256:string}>;
-const archiveBytes=await readFile(archive),archiveSha256=sha256(archiveBytes);
 const directory=retainedDirectory??await mkdtemp(join(tmpdir(),'umf-sdk-install-'));
 if(retainedDirectory)await mkdir(directory,{recursive:false});
 async function run(command:string[]){const child=Bun.spawn(command,{cwd:directory,stdout:'inherit',stderr:'inherit'});if(await child.exited)throw Error('Installed SDK check failed: '+command[0]);}
@@ -40,20 +41,19 @@ try{
  const packageRoot=join(directory,'node_modules/@umf/core');
  const installedPackageBytes=await readFile(join(packageRoot,'package.json'));
  const installedManifestBytes=await readFile(join(packageRoot,'manifest.json'));
- const installedEntryBytes=await readFile(join(packageRoot,'dist/umf.js'));
  const installedMetadata=JSON.parse(installedPackageBytes.toString('utf8'));
  if(installedMetadata.version!==expectedVersion)throw Error('Installed SDK release version differs from source package');
- const installedDigests={
-  'package/package.json':{size:installedPackageBytes.length,sha256:sha256(installedPackageBytes)},
-  'package/manifest.json':{size:installedManifestBytes.length,sha256:sha256(installedManifestBytes)},
-  'package/dist/umf.js':{size:installedEntryBytes.length,sha256:sha256(installedEntryBytes)},
- };
- for(const [name,actual] of Object.entries(installedDigests)){
+ const installedDigests=Object.fromEntries(await Promise.all(SDK_SAGA_MEMBERS.map(async member=>{
+  const bytes=await readFile(join(packageRoot,member));return [`package/${member}`,{size:bytes.length,sha256:sha256(bytes)}];
+ })));
+ const installedMemberPaths=Object.fromEntries(Object.keys(installedDigests).map(name=>[name,join(packageRoot,name.replace(/^package\//,''))]));
+ const installedManifest=JSON.parse(installedManifestBytes.toString('utf8'));
+ for(const [name,actual] of Object.entries(installedDigests) as [string,{size:number;sha256:string}][]){
   const expected=archiveMembers[name];
   if(!expected||actual.size!==expected.size||actual.sha256!==expected.sha256)throw Error('Installed SDK member differs from exact candidate archive: '+name);
+  const member=name.replace(/^package\//,'');
+  if(member.startsWith('dist/')&&installedManifest.sha256?.[member]!==actual.sha256)throw Error('Installed SDK runtime member differs from its distribution manifest: '+member);
  }
- const installedManifest=JSON.parse(installedManifestBytes.toString('utf8'));
- if(installedManifest.sha256?.['dist/umf.js']!==installedDigests['package/dist/umf.js'].sha256)throw Error('Installed SDK public entry differs from its distribution manifest');
  const distribution=await checkCoreDistribution(packageRoot);console.log(JSON.stringify({installedCoreDistribution:distribution}));
  await Bun.write(join(directory,'current-conformance.json'),await Bun.file('fixtures/metamodel/current-conformance.json').text());
  await Bun.write(join(directory,'approve.json'),await Bun.file('fixtures/actions/approve.json').text());
@@ -90,11 +90,19 @@ console.log(JSON.stringify({installedSagaRuntime:true,sharedWasm:true,publicFaca
 `);
  await run([process.execPath,'saga-probe.ts']);
 
+ await verifyPortableProducerSnapshot('.',{sdkArchive:archive},sourceSnapshot);
+ for(const [name,path] of Object.entries(installedMemberPaths))if(await sha256File(path)!==installedDigests[name as keyof typeof installedDigests]!.sha256)throw Error('Installed SDK member changed during conformance: '+name);
+
  if(retainedDirectory){
-  const receipt={profile:'umf.sdk-installed-archive-custody/1',archivePath:archive,archiveSha256,
+  const receipt={profile:'umf.sdk-installed-archive-custody/2',archivePath:archive,archiveSha256:sourceSnapshot.artifacts.sdkArchive,
    installCommand:[process.execPath,'install','--ignore-scripts',archive],installedPackageRoot:packageRoot,
    exactArchiveMembers:archiveMembers,installedMembers:installedDigests,publicEntryManifestSha256:installedManifest.sha256['dist/umf.js'],
-   installerSourceSha256,sagaCorpusSha256:sha256(await readFile(join(directory,'saga-vectors.json'))),sagaResult:JSON.parse(await readFile(join(directory,'saga-result.json'),'utf8')),distributionFiles:distribution.files,existing139ConsumerChecks:'passed'};
+   sdkManifestSha256:sha256(installedManifestBytes),installerSourceSha256,
+   sagaCorpusSha256:sha256(await readFile(join(directory,'saga-vectors.json'))),
+   sagaOracleSha256:sha256(await readFile(join(directory,'saga-oracle.js'))),
+   sagaQualificationInputs:sourceSnapshot.qualificationInputs,
+   sagaResult:JSON.parse(await readFile(join(directory,'saga-result.json'),'utf8')),
+   runtime:{bun:Bun.version,platform:process.platform,arch:process.arch},distributionFiles:distribution.files,existing139ConsumerChecks:'passed'};
   await Bun.write(join(directory,'g03-sdk-install-custody.json'),JSON.stringify(receipt,null,2)+'\n');
  }
 }finally{if(!retainedDirectory)await rm(directory,{recursive:true,force:true});}
