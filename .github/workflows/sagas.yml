@@ -140,7 +140,9 @@ jobs:
           echo "UMF_SAGA_PYTHON_SOURCE_ARCHIVE=$RUNNER_TEMP/saga-python-dist/umf_core-$(python -c 'import json; print(json.load(open("spec/release.json"))["pythonVersion"])').tar.gz" >> "$GITHUB_ENV"
           uv pip install --python "$RUNNER_TEMP/saga-python-consumer/bin/python" "$wheel_path" pytest hatchling
           UMF_SAGA_PYTHON="$RUNNER_TEMP/saga-python-consumer/bin/python" UMF_SAGA_PYTHON_WHEEL="$wheel_path" bun scripts/saga-portable/other-hosts.ts python
-          "$RUNNER_TEMP/saga-python-consumer/bin/python" -m pytest python/tests/test_action_runtime_resources.py
+          "$RUNNER_TEMP/saga-python-consumer/bin/python" -I -B -m pytest python/tests/test_action_runtime_resources.py
+          "$RUNNER_TEMP/saga-python-consumer/bin/python" -I -B -m pytest python/tests/test_python_artifact_version.py
+          "$RUNNER_TEMP/saga-python-consumer/bin/python" -I -B -m pytest python/tests/test_distribution_artifact.py::test_installed_wheel_payload_and_record_match_the_exact_archive python/tests/test_distribution_artifact.py::test_installed_wheel_verification_rejects_changed_or_escaped_files
       - name: Rebuild and install the source archive without JavaScript tools
         if: needs.impact.outputs.packages == 'true'
         run: |

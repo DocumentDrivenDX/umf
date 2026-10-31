@@ -19,6 +19,7 @@
       "python/tests/test_action_runtime_generated_client.py",
       "python/tests/test_action_runtime_resources.py",
       "python/tests/test_core.py",
+      "python/tests/test_distribution_artifact.py",
       "python/tests/test_extension_kinds.py",
       "python/tests/test_python_artifact_version.py",
       "python/tests/test_rust_core.py",
@@ -292,7 +293,7 @@
     "typescriptApi": "5.9.3"
   },
   "counts": {
-    "activeScriptFiles": 452,
+    "activeScriptFiles": 453,
     "algorithmSymbols": 12826,
     "pythonModules": 127,
     "rustBuildInputs": 79,
@@ -9325,8 +9326,10 @@
       "sha256": "f9cdc2cd406a2c413b4d4531333ea76e9a393ef5a05760ea63bc8438750dd651"
     },
     {
-      "activationEvidence": [],
-      "active": false,
+      "activationEvidence": [
+        "transitive-import-closure"
+      ],
+      "active": true,
       "algorithmSymbols": [
         "_core_public_producer_verifier",
         "_core_public_release_verifier",
@@ -9384,9 +9387,9 @@
         "unexpected_payload_read"
       ],
       "bytes": 68729,
-      "disposition": "unreferenced-test-source",
+      "disposition": "test-oracle-fixture-algorithm",
       "language": "py",
-      "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
+      "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "python/tests/test_distribution_artifact.py",
       "sha256": "1350c4ed8b1cd786b15721286bcd9c2d2ea623986623425d205e09601f3068cb"
     },
@@ -9445,7 +9448,8 @@
     {
       "activationEvidence": [
         ".github/workflows/merged-source-generation.yml",
-        ".github/workflows/python-action-runtime.yml"
+        ".github/workflows/python-action-runtime.yml",
+        ".github/workflows/sagas.yml"
       ],
       "active": true,
       "algorithmSymbols": [
