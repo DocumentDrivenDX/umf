@@ -2302,7 +2302,35 @@ fn execute_request_inner(
             .expect("engine selected");
         let mut registry = engine.registry(catalog)?;
         if let Some(Value::Array(extensions)) = registry_value {
-            let schema_resources = engine.schema_resources_with_context(catalog)?;
+            let mut schema_resources = engine.schema_resources_with_context(catalog)?;
+            // Explicitly installed packages form one immutable local schema catalog.
+            // Collect before compilation so forward references do not depend on
+            // registration order. Artifact data never adds a remote resolver.
+            for extension in &extensions {
+                catalog.charge_work(1, Utf16::default())?;
+                let owner = field(extension, "manifest").unwrap_or(extension);
+                if let Some(schema) = field(owner, "schema") {
+                    let schema = copy_json(schema, catalog)?;
+                    if let Some(Value::String(id)) = field(&schema, "$id") {
+                        let mut found = false;
+                        for (old_id, old_schema) in &schema_resources.entries {
+                            catalog.charge_work(old_id.len(), Utf16::default())?;
+                            if old_id == id {
+                                if old_schema != &schema {
+                                    return Err(fail(
+                                        "SCHEMA_RESOURCE_CONFLICT",
+                                        "Conflicting explicitly installed schema identity",
+                                    ));
+                                }
+                                found = true;
+                            }
+                        }
+                        if !found {
+                            schema_resources.entries.push((id.clone(), schema));
+                        }
+                    }
+                }
+            }
             for (index, mut extension) in extensions.into_iter().enumerate() {
                 if let Some(manifest) = take_field(&mut extension, "manifest") {
                     if let Value::Object(fields) = &extension {

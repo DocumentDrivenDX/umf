@@ -29,6 +29,12 @@ MAX_ARCHIVE_MEMBERS = 100_000
 MAX_PKG_INFO_BYTES = 1_048_576
 MAX_WHEEL_METADATA_DIAGNOSTIC_BYTES = 16 * 1024
 MAX_WHEEL_METADATA_INLINE_BYTES = 4 * 1024
+RELEASE_VERSION_RE = re.compile(r"(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\Z")
+
+def validate_version(version: str) -> str:
+    if not isinstance(version, str) or len(version) > 32 or not RELEASE_VERSION_RE.fullmatch(version):
+        raise ValueError("Release version must be a bounded numeric MAJOR.MINOR.PATCH value")
+    return version
 
 
 def digest(payload: bytes) -> str:
@@ -51,7 +57,8 @@ def verify_python_range(metadata: str, artifact: str) -> None:
         raise ValueError(f"{artifact} Python support range differs from >=3.11,<3.15")
 
 
-def verify_sdist(path: Path) -> None:
+def verify_sdist(path: Path, version: str = VERSION) -> None:
+    version = validate_version(version)
     _bounded_regular(path)
     seen: set[str] = set()
     roots: set[str] = set()
@@ -100,13 +107,14 @@ def verify_sdist(path: Path) -> None:
         raise ValueError("Source archive must have one project root and exactly one PKG-INFO")
     metadata_text = metadata.decode("utf-8")
     if not re.search(r"(?m)^Name: umf-core\s*$", metadata_text) or not re.search(
-        rf"(?m)^Version: {re.escape(VERSION)}\s*$", metadata_text
+        rf"(?m)^Version: {re.escape(version)}\s*$", metadata_text
     ):
         raise ValueError("Source archive package identity differs from the release")
     verify_python_range(metadata_text, "Source archive")
 
 
-def read_wheel(path: Path) -> tuple[dict[str, bytes], str, str]:
+def read_wheel(path: Path, version: str = VERSION) -> tuple[dict[str, bytes], str, str]:
+    version = validate_version(version)
     _bounded_regular(path)
     with zipfile.ZipFile(path) as archive:
         entries = [entry for entry in archive.infolist() if not entry.is_dir()]
@@ -135,11 +143,11 @@ def read_wheel(path: Path) -> tuple[dict[str, bytes], str, str]:
     if len(set(dist_info)) != 1:
         raise ValueError("Wheel must have exactly one dist-info directory")
     root = dist_info[0]
-    if root != f"umf_core-{VERSION}.dist-info":
+    if root != f"umf_core-{version}.dist-info":
         raise ValueError("Wheel dist-info version differs from the release")
     metadata = files[f"{root}/METADATA"].decode("utf-8")
     if not re.search(r"(?m)^Name: umf-core\s*$", metadata) or not re.search(
-        rf"(?m)^Version: {re.escape(VERSION)}\s*$", metadata
+        rf"(?m)^Version: {re.escape(version)}\s*$", metadata
     ):
         raise ValueError("Wheel METADATA identity differs from the release")
     verify_python_range(metadata, "Wheel")
@@ -301,14 +309,15 @@ def verify_elf(payload: bytes) -> None:
         raise ValueError("Linux native extension is not x86_64 ELF")
 
 
-def verify_repair(raw: Path, repaired: Path, before_report: Path, after_report: Path) -> dict:
-    raw_files, raw_tag, raw_root = read_wheel(raw)
-    repaired_files, repaired_tag, repaired_root = read_wheel(repaired)
+def verify_repair(raw: Path, repaired: Path, before_report: Path, after_report: Path, version: str = VERSION) -> dict:
+    version = validate_version(version)
+    raw_files, raw_tag, raw_root = read_wheel(raw, version)
+    repaired_files, repaired_tag, repaired_root = read_wheel(repaired, version)
     _bounded_regular(before_report, MAX_REPORT_BYTES)
     _bounded_regular(after_report, MAX_REPORT_BYTES)
     before = json.loads(before_report.read_text(encoding="utf-8"))
     after = json.loads(after_report.read_text(encoding="utf-8"))
-    expected_raw = f"umf_core-{VERSION}-cp311-abi3-linux_x86_64.whl"
+    expected_raw = f"umf_core-{version}-cp311-abi3-linux_x86_64.whl"
     if raw.name != expected_raw or before.get("version") != 1 or before.get("wheel") != raw.name:
         raise ValueError("Raw wheel or auditwheel source receipt identity is unexpected")
     if before.get("pure") is not False:
@@ -317,7 +326,7 @@ def verify_repair(raw: Path, repaired: Path, before_report: Path, after_report: 
     if not isinstance(platform_tag, str) or not re.fullmatch(r"manylinux_2_[0-9]+_x86_64", platform_tag):
         raise ValueError("Auditwheel did not select a concrete manylinux x86_64 policy")
     expected_tag = f"cp311-abi3-{platform_tag}"
-    expected_filename = f"umf_core-{VERSION}-{expected_tag}.whl"
+    expected_filename = f"umf_core-{version}-{expected_tag}.whl"
     if repaired.name != expected_filename or repaired_tag != expected_tag:
         raise ValueError("Repaired filename and WHEEL tag do not match auditwheel's selected policy")
     if after.get("version") != 1 or after.get("wheel") != repaired.name or after.get("overall_tag") != platform_tag:
@@ -371,10 +380,11 @@ def verify_repair(raw: Path, repaired: Path, before_report: Path, after_report: 
     }
 
 
-def select_macos(wheel: Path) -> dict:
-    files, tag, _root = read_wheel(wheel)
+def select_macos(wheel: Path, version: str = VERSION) -> dict:
+    version = validate_version(version)
+    files, tag, _root = read_wheel(wheel, version)
     expected = f"cp311-abi3-macosx_11_0_arm64"
-    if tag != expected or wheel.name != f"umf_core-{VERSION}-{expected}.whl":
+    if tag != expected or wheel.name != f"umf_core-{version}-{expected}.whl":
         raise ValueError("macOS wheel filename and WHEEL tag differ from the exact arm64 profile")
     return {
         "status": "passed",
@@ -392,6 +402,7 @@ def select_macos(wheel: Path) -> dict:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--platform", choices=("linux", "macos"), required=True)
+    parser.add_argument("--version", default=VERSION, help="exact package release version (default: historical 0.10.3)")
     parser.add_argument("--source-wheel", type=Path, required=True)
     parser.add_argument("--selected-wheel", type=Path)
     parser.add_argument("--before-report", type=Path)
@@ -404,12 +415,16 @@ def main() -> int:
     parser.add_argument("--output-wheel-directory", type=Path, required=True)
     parser.add_argument("--receipt", type=Path, required=True)
     args = parser.parse_args()
+    try:
+        version = validate_version(args.version)
+    except ValueError as error:
+        parser.error(str(error))
 
     if args.platform == "linux":
         if not all((args.selected_wheel, args.before_report, args.after_report, args.tool_artifacts, args.auditwheel_version, args.patchelf_version)):
             parser.error("Linux selection requires repaired wheel, reports, tool artifacts, and tool version records")
         selected = args.selected_wheel
-        result = verify_repair(args.source_wheel, selected, args.before_report, args.after_report)
+        result = verify_repair(args.source_wheel, selected, args.before_report, args.after_report, version)
         if args.tool_lock is None:
             raise ValueError("Linux repair requires the frozen exact wheel input lock")
         lock = json.loads(args.tool_lock.read_text(encoding="utf-8"))
@@ -442,13 +457,13 @@ def main() -> int:
         if args.selected_wheel is not None:
             parser.error("macOS selected wheel must be the exact direct wheel")
         selected = args.source_wheel
-        result = select_macos(selected)
+        result = select_macos(selected, version)
 
-    if args.sdist.name != f"umf_core-{VERSION}.tar.gz":
+    if args.sdist.name != f"umf_core-{version}.tar.gz":
         raise ValueError("Common source distribution filename is unexpected")
     source_size = _bounded_regular(args.source_wheel)
     sdist_size = _bounded_regular(args.sdist)
-    verify_sdist(args.sdist)
+    verify_sdist(args.sdist, version)
     selected_size = _bounded_regular(selected)
     output_wheel_bytes = selected.read_bytes()
     output_sdist_bytes = args.sdist.read_bytes()

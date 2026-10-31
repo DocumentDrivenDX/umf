@@ -71,6 +71,8 @@
     "test:actions": "bun scripts/prepare-action-tests.ts && bun scripts/run-tests.ts tests/actions-reference",
     "build:sdk": "bun run build && bun scripts/package-sdk.ts",
     "test:sdk": "bun run build:sdk && python3 scripts/test-sdk-package.py",
+    "check:saga-package": "python3 scripts/build-saga-package.py --check",
+    "build:saga-runtime": "bun scripts/build-saga-runtime.ts",
     "test:access-e2e": "bun scripts/access-e2e.ts",
     "build:reference": "bun scripts/build-postgresql.ts && bun scripts/build-protobuf.ts && bun scripts/reference/build.ts",
     "test:reference": "bun test tests/reference && bun scripts/reference/build.ts --check",
@@ -82,7 +84,6 @@
     "check:core-authority": "bun scripts/check-core-authority.ts",
     "check:unified-client-boundaries": "bun scripts/check-unified-client-boundaries.ts",
     "check:rust-boundaries": "python3 scripts/check-rust-boundaries.py",
-    "check:rust-node-package-closure": "bun scripts/rust-migration/r7/node-package-closure.ts",
     "test:rust-core": "cargo test --locked -p umf-core -p umf-core-wire -p umf-tagged-wire -p umf-codegen -p umf-metamodel -p umf-metamodel-cli -p umf-cli -p umf-graphql",
     "check:release-versions": "python3 scripts/check-release-versions.py"
   },

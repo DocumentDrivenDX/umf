@@ -3,7 +3,7 @@
   "resources": {
     "actionsPackage": {
       "file": "actionsPackage.json",
-      "sha256": "b77e7cee2ac6ad9d482122a63d0ab6044c341b2757135a0c896213c3fa596d62",
+      "sha256": "5a787363df77b93d22a785fb3bec711e2bf1ecd25e17e2155c2ce6e80ac4e181",
       "source": "spec/extensions/actions/package.json"
     },
     "bindingPackage": {
@@ -13,28 +13,33 @@
     },
     "constraints": {
       "file": "constraints.json",
-      "sha256": "616ec8557438230b6d3f13881e0d5ffbf2330a94a705e0bd5b27f12c91c7d77d",
+      "sha256": "25987ca5250f733e024cc69efba0038a964d121c74c6b59aa95cc0d6802bd31c",
       "source": "spec/metamodel/generated/core-constraints.json"
     },
     "coreSchema": {
       "file": "coreSchema.json",
-      "sha256": "017d03c5718bb37951d453f91e3ed06dcdde09fc273a97269dbac696d96ecc52",
+      "sha256": "789e943e70d666ae0ab6a9ba0d7aeada3edda512c03e66211f431db4cc180a23",
       "source": "spec/core/schema.json"
     },
     "domainPolicy": {
       "file": "domainPolicy.json",
-      "sha256": "091f895c7f750d3265b28bff599689d7c8bbca0a7c0cf7f52b7d4566e13fed5e",
+      "sha256": "4a9db271fddaf879f70253fba4cf438515964937ebe9dc7b1144f937ba0d710d",
       "source": "spec/metamodel/generated/domain-policy.json"
     },
     "packageSchema": {
       "file": "packageSchema.json",
-      "sha256": "680e151ec693fdffa89fe6c1909348d67ef0b3e8a44b31dc1acc49c107bc719f",
+      "sha256": "3ad7d47c2480cfc64fcc16e54d3821c19081b39bcd549f0c58723b545c0f06ed",
       "source": "spec/core/extension-package.schema.json"
     },
     "referenceSchema": {
       "file": "referenceSchema.json",
-      "sha256": "3febf9917f01d19e92ad1f6b65fa0894725dd100d7f95503e2a542f9dc5c3357",
+      "sha256": "a993f2054bb12e2ce74533865d015d0977d381a0e243fdb0ff6dbf6324b11ce1",
       "source": "spec/core/semantic-type-reference.schema.json"
+    },
+    "sagaPackage": {
+      "file": "sagaPackage.json",
+      "sha256": "4f42d73efe15041807f74031e12013c6df843d12556105a7aff357a0956a8940",
+      "source": "spec/extensions/saga/package.json"
     },
     "stableBindingPackage": {
       "file": "stableBindingPackage.json",

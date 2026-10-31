@@ -51,12 +51,14 @@ class CodegenEngine:
             raise TypeError("Engine resources must be a plain dict")
         names = ("coreSchema", "referenceSchema", "packageSchema", "constraints", "domainPolicy", "tablesPackage", "actionsPackage", "bindingPackage", "stableBindingPackage")
         work(1)
-        if any(type(name) is not str or name not in names for name in resources):
+        if any(type(name) is not str or name not in names + ("sagaPackage",) for name in resources):
             raise TypeError("Unknown explicit codegen resource")
         for name in names:
             if name not in resources:
                 raise TypeError(f"Missing explicit codegen resource {name}")
         snapshot = {name: _from_wire(_wire(resources[name], max_depth=128, max_values=1_000_000, work=work), work) for name in names}
+        if "sagaPackage" in resources:
+            snapshot["sagaPackage"] = _from_wire(_wire(resources["sagaPackage"], max_depth=128, max_values=1_000_000, work=work), work)
         self._resources = _wire(snapshot, max_depth=256, max_values=sys.maxsize, work=work)
         self._resource_serialization_work = _serialization_bound(self._resources, work)
         self._controls = (profile, max_work, meter, is_cancelled, now, deadline_ms)
@@ -99,6 +101,18 @@ class CodegenEngine:
         if not response["ok"]:
             raise UmfCodegenError(response["error"])
         return response["result"]
+
+    def inspect_sagas(self, source: Any) -> Any:
+        return self._result("inspectSagas", {"source": source})
+
+    def declare_saga(self, source: Any, module: str, definition: Any) -> Any:
+        return self._result("declareSaga", {"source": source, "module": module, "definition": definition})
+
+    def edit_saga(self, source: Any, identity: Any, replacement: Any) -> Any:
+        return self._result("editSaga", {"source": source, "identity": identity, "replacement": replacement})
+
+    def assess_saga(self, source: Any, identity: Any, capabilities: Any) -> Any:
+        return self._result("assessSaga", {"source": source, "identity": identity, "capabilities": capabilities})
 
     def generate_python_client(self, request: Any) -> Any:
         return self._result("generatePythonClient", request)

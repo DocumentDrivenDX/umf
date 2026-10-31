@@ -48,14 +48,14 @@ def _package_copy(destination: Path) -> Path:
     return package
 
 
-def test_fixed_inventory_loads_all_nine_official_resources(monkeypatch, tmp_path):
+def test_fixed_inventory_loads_all_ten_official_resources(monkeypatch, tmp_path):
     package = _package_copy(tmp_path)
     monkeypatch.setattr(action_runtime, "files", lambda _name: package)
 
     loaded = action_runtime._load_resources()
 
     assert set(loaded) == set(action_runtime._RESOURCE_FILES)
-    assert len(loaded) == 9
+    assert len(loaded) == 10
     for name, (_filename, source) in action_runtime._RESOURCE_FILES.items():
         expected = json.loads((_repository_root() / source).read_text(encoding="utf-8"))
         assert loaded[name] == expected

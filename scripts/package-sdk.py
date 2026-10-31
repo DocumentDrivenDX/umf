@@ -11,6 +11,8 @@ REQUIRED = [
     'dist/umf_core_wasm_bg.wasm', 'dist/rust-default-manifest.json',
     'dist/src/index.d.ts', 'dist/spec/extensions/actions/package.json',
     'dist/spec/extensions/actions/schema.json', 'dist/loader-contract.js',
+    'dist/spec/extensions/saga/package.json', 'dist/spec/extensions/saga/schema.json',
+    'dist/spec/extensions/saga/runtime.schema.json',
     'dist/postgresql/runtime.js', 'dist/postgresql/libpg-query.wasm',
 ]
 

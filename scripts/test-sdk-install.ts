@@ -71,11 +71,30 @@ if(client.description.umf!==CURRENT_CORE_VERSION||client.files.length!==7||!clie
 console.log(JSON.stringify({unifiedGenerator:true,conformanceCases:corpus.cases.length,singleInstall:true,bundledActions:true,loaderEntrypoint:true,opaqueMeaningRemainsUnchecked:true}));
 `);
  await run([process.execPath,'probe.ts']);
+ await Bun.write(join(directory,'saga-vectors.json'),await Bun.file('fixtures/saga/portable.json').text());
+ const oracle=await Bun.build({entrypoints:['scripts/saga-portable/verify.ts'],target:'browser',format:'esm'});
+ if(!oracle.success)throw Error('Installed saga oracle build failed');
+ await Bun.write(join(directory,'saga-oracle.js'),oracle.outputs[0]!);
+ await Bun.write(join(directory,'saga-probe.ts'),`import {Registry,registerSagas,inspectSagas,declareSaga,editSaga,assessSaga,createSagaResources} from '@umf/core';
+import {initializeCodegenWasm,initializeWasm} from '@umf/core/runtime/wasm';
+import {verifySagaVectors,verifySagaExchange} from './saga-oracle.js';
+const packageRoot=import.meta.resolve('@umf/core').replace(/\\/dist\\/umf\\.js$/,'');
+const loader=async()=>{const module=await import(packageRoot+'/dist/runtime/wasm/pkg/umf_core_wasm.js');await module.default({module_or_path:new Uint8Array(await Bun.file(new URL(packageRoot+'/dist/runtime/wasm/pkg/umf_core_wasm_bg.wasm')).arrayBuffer())});return module;};
+const resources=createSagaResources(),engine=await initializeCodegenWasm(loader,globalThis,resources),core=await initializeWasm(loader,globalThis,resources);
+const registry=registerSagas(new Registry(core),engine),vectors=await Bun.file('saga-vectors.json').json();
+const subject={inspectSagas:source=>inspectSagas(source,registry),declareSaga:(source,module,definition)=>declareSaga(source,module,definition,registry),editSaga:(source,identity,replacement)=>editSaga(source,identity,replacement,registry),assessSaga:(source,identity,capabilities)=>assessSaga(source,identity,capabilities,registry)};
+verifySagaExchange(core,subject,vectors.cases.find(v=>v.expected.unknown).source);
+const result=verifySagaVectors(subject,vectors.cases);if(result.passed!==result.cases)throw Error(JSON.stringify(result));
+await Bun.write('saga-result.json',JSON.stringify(result));
+console.log(JSON.stringify({installedSagaRuntime:true,sharedWasm:true,publicFacade:true,cases:result.cases,passed:result.passed}));
+`);
+ await run([process.execPath,'saga-probe.ts']);
+
  if(retainedDirectory){
   const receipt={profile:'umf.sdk-installed-archive-custody/1',archivePath:archive,archiveSha256,
    installCommand:[process.execPath,'install','--ignore-scripts',archive],installedPackageRoot:packageRoot,
    exactArchiveMembers:archiveMembers,installedMembers:installedDigests,publicEntryManifestSha256:installedManifest.sha256['dist/umf.js'],
-   installerSourceSha256,distributionFiles:distribution.files,existing139ConsumerChecks:'passed'};
+   installerSourceSha256,sagaCorpusSha256:sha256(await readFile(join(directory,'saga-vectors.json'))),sagaResult:JSON.parse(await readFile(join(directory,'saga-result.json'),'utf8')),distributionFiles:distribution.files,existing139ConsumerChecks:'passed'};
   await Bun.write(join(directory,'g03-sdk-install-custody.json'),JSON.stringify(receipt,null,2)+'\n');
  }
 }finally{if(!retainedDirectory)await rm(directory,{recursive:true,force:true});}

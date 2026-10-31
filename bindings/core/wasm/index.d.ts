@@ -534,12 +534,17 @@ export declare function initializeJsonSchemaWasm(loader?: () => Promise<any>, ho
 /** Initialize the opt-in standalone Iceberg schema JSON engine in a browser. */
 export declare function initializeIcebergSchemaWasm(loader?: () => Promise<any>, host?: typeof globalThis, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): Promise<IcebergSchemaEngine>;
 
-export interface UmfCodegenResources extends UmfCoreResources {tablesPackage: unknown; actionsPackage: unknown; bindingPackage: unknown; stableBindingPackage: unknown}
-export type UmfCodegenOperation = 'generatePythonClient' | 'compileTableDeployment' | 'verifyTableDeployment' | 'compileTableMigration' | 'verifyTableMigration' | 'discoverTableMigrationChanges' | 'normalizeRowScope' | 'generateAccessPackage' | 'diffAccessPackages';
+export interface UmfCodegenResources extends UmfCoreResources {tablesPackage: unknown; actionsPackage: unknown; bindingPackage: unknown; stableBindingPackage: unknown; sagaPackage?: unknown}
+export type UmfCodegenOperation = 'inspectSagas' | 'declareSaga' | 'editSaga' | 'assessSaga' | 'generatePythonClient' | 'compileTableDeployment' | 'verifyTableDeployment' | 'compileTableMigration' | 'verifyTableMigration' | 'discoverTableMigrationChanges' | 'normalizeRowScope' | 'generateAccessPackage' | 'diffAccessPackages';
 export type UmfCodegenOutcome = {ok: true; result: unknown} | {ok: false; error: {code: string; message: string; path?: string; pointer?: string}};
 export type UmfCodegenHostReadEventV3 = 'InitialPackage' | 'ParseText' | 'ParseFormat' | 'DigestText' | 'SelectRecords' | 'NativeFormat' | 'SelectActions' | 'OutputPackageSuffix' | 'OutputSourceText';
 export interface UmfCodegenEngine {
   call(operation: UmfCodegenOperation, request: unknown): UmfCodegenOutcome;
+  sagaRegistryProfile(): {actionsPackage: unknown; sagaPackage: unknown};
+  inspectSagas(source: unknown): unknown;
+  declareSaga(source: unknown, module: string, definition: unknown): unknown;
+  editSaga(source: unknown, identity: unknown, replacement: unknown): unknown;
+  assessSaga(source: unknown, identity: unknown, capabilities: unknown): unknown;
   generatePythonClient(request: unknown): unknown;
   generatePythonClientWithHost(readHost: (event: UmfCodegenHostReadEventV3, argument?: string) => unknown): unknown;
   compileTableDeployment(request: unknown): unknown;

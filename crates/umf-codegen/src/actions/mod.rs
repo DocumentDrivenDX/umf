@@ -2,6 +2,7 @@
 //! Declarative action inspection used by portable generators.
 
 pub mod evaluation;
+pub mod saga;
 pub mod single_set;
 
 use std::collections::{BTreeMap, BTreeSet};

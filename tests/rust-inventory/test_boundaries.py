@@ -20,6 +20,17 @@ class BoundaryRuleTests(unittest.TestCase):
             findings = MODULE.scan_text(path, "from py_mini_racer import MiniRacer")
             self.assertEqual("forbidden-python-javascript-engine", findings[0]["rule"])
 
+    def test_saga_boundaries_use_actual_checker(self):
+        rust = "crates/umf-codegen/src/actions/saga/references.rs"
+        wrapper = "src/extensions/actions/saga.ts"
+        self.assertEqual([], MODULE.scan_text(rust, "use umf_core::{Context, Value}; use super::structure;"))
+        self.assertEqual("saga-host-capability", MODULE.scan_text(rust, "use std::net::TcpStream;")[0]["rule"])
+        self.assertEqual("saga-native-dependency", MODULE.scan_text(wrapper, "import {db} from '../../../scripts/saga-reference/store';")[0]["rule"])
+        self.assertEqual("saga-wrapper-semantic-fork", MODULE.scan_text(wrapper, "if (compensation.kind === 'action') return true;")[0]["rule"])
+        self.assertEqual([], MODULE.scan_text(wrapper, "export const inspectSagas = (source, registry) => engine.inspectSagas(source, registry);"))
+        for path, source in [("bindings/core/node/index.js", "import {db} from '../../../scripts/saga-reference/store';"), ("crates/umf-core-wire/src/saga.rs", "use saga_reference::store;"), ("bindings/core/python/src/lib.rs", "use actions_reference::gateway;")]:
+            self.assertEqual("saga-native-dependency", MODULE.scan_text(path, source)[0]["rule"])
+
     def test_generic_kinds_keep_ecosystem_semantics_out_of_core(self):
         self.assertEqual([], MODULE.scan_text("crates/umf-core/src/kinds.rs", 'let tag = get(payload, "kind");'))
         self.assertEqual("ecosystem-kind-in-generic-core", MODULE.scan_text("crates/umf-core/src/kinds.rs", 'if tag == "dashboard" {}')[0]["rule"])

@@ -37,6 +37,7 @@ EXPECTED_RUNTIME_FILES = {
     "domainPolicy.json",
     "packageSchema.json",
     "referenceSchema.json",
+    "sagaPackage.json",
     "stableBindingPackage.json",
     "tablesPackage.json",
 }
@@ -48,6 +49,7 @@ EXPECTED_RUNTIME_SOURCES = {
     "domainPolicy.json": "spec/metamodel/generated/domain-policy.json",
     "packageSchema.json": "spec/core/extension-package.schema.json",
     "referenceSchema.json": "spec/core/semantic-type-reference.schema.json",
+    "sagaPackage.json": "spec/extensions/saga/package.json",
     "stableBindingPackage.json": "spec/extensions/binding-stable/package.json",
     "tablesPackage.json": "spec/extensions/tables/package.json",
 }
@@ -182,12 +184,13 @@ def _source_payloads(repository: Path) -> tuple[dict[str, bytes], dict[str, str]
             "domainPolicy",
             "packageSchema",
             "referenceSchema",
+            "sagaPackage",
             "stableBindingPackage",
             "tablesPackage",
         }
     ):
         raise ValueError(
-            "Action runtime inventory does not name the fixed nine resources"
+            "Action runtime inventory does not name the fixed ten resources"
         )
 
     resource_hashes: dict[str, str] = {}
@@ -219,7 +222,7 @@ def _source_payloads(repository: Path) -> tuple[dict[str, bytes], dict[str, str]
         set(resource_hashes) != EXPECTED_RUNTIME_FILES
         or set(EXPECTED_RUNTIME_SOURCES) != EXPECTED_RUNTIME_FILES
     ):
-        raise ValueError("Action runtime inventory does not cover the exact nine files")
+        raise ValueError("Action runtime inventory does not cover the exact ten files")
 
     for filename in (
         "schema.json",

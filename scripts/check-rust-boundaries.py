@@ -62,6 +62,15 @@ def scan_text(path: str, source: str, *, allowed_debt: dict[str, dict[str, objec
         if "const manifest =" in source and "'manifest', false)" in source and not re.search(r"return\s*\{\s*manifest\s*,\s*kinds\s*,", source):
             findings.append({"rule": "kind-manifest-transport-loss", "path": path,
                              "message": "Full-manifest registration does not forward its manifest and explicit kind opt-in"})
+    saga_rust = path.startswith("crates/umf-codegen/src/actions/saga/")
+    saga_wrapper = path in {"src/extensions/actions/saga.ts", "python/src/umf/saga.py"}
+    if saga_rust and re.search(r"\b(?:std::(?:fs|net|process|thread|time|env)|tokio::|postgres::|sqlx::|reqwest::|pyo3::|napi::|wasm_bindgen::)", source):
+        findings.append({"rule": "saga-host-capability", "path": path, "message": "Portable saga semantics import a host or native provider capability"})
+    portable_saga_boundary = saga_rust or saga_wrapper or path.startswith(("bindings/core/", "crates/umf-core-wire/"))
+    if portable_saga_boundary and re.search(r"(?:tests[/.]saga|(?:actions|saga)[_-]reference|psycopg|bun:sqlite)", source):
+        findings.append({"rule": "saga-native-dependency", "path": path, "message": "Portable saga implementation depends on native reference consumer"})
+    if saga_wrapper and re.search(r"\b(?:function|def)\s+(?:analyze|resolveMapping|compareParameter|settleTicket|advanceSaga)|\b(?:if|switch|match)\b[^\n]*(?:compensation\.kind|step\.action|mapping\.from)", source):
+        findings.append({"rule": "saga-wrapper-semantic-fork", "path": path, "message": "Saga presentation wrapper contains semantic interpretation; shared Rust owns it"})
     is_engine_source = path.startswith("src/") or path.startswith("python/src/") or path.startswith("python/umf_access/src/") or path.startswith("python/umf_codegen/src/") or path.startswith("bindings/")
     if path.startswith("python/src/umf/") and path.endswith(".py") and RETIRED_CORE_RUNTIME_IMPORTS.search(source):
         findings.append({"rule": "retired-python-core-runtime", "path": path, "message": "Production Python core imports a retired schema/YAML semantic runtime"})

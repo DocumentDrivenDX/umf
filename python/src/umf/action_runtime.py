@@ -12,11 +12,45 @@ from importlib.resources import files
 from pathlib import Path
 from typing import Any
 
-from ._action_runtime_manifest import RESOURCES as _RESOURCE_ENTRIES
 from .rust_codegen import CodegenEngine, UmfCodegenError
 
-_MANIFEST_SHA256 = "e70fbe90a5bd8d842f78e19063b7eb09cd6e0ecabe87bb7f0b90d0ef54a536db"
-_RESOURCE_FILES = {key: (filename, source) for key, filename, source in _RESOURCE_ENTRIES}
+_MANIFEST_SHA256 = "84804e92a6e2fffd5cff13d232d60a1eb608697057fe2e429c58ef4031628e47"
+_RESOURCE_FILES = {
+    "coreSchema": ("coreSchema.json", "spec/core/schema.json"),
+    "referenceSchema": (
+        "referenceSchema.json",
+        "spec/core/semantic-type-reference.schema.json",
+    ),
+    "packageSchema": (
+        "packageSchema.json",
+        "spec/core/extension-package.schema.json",
+    ),
+    "constraints": (
+        "constraints.json",
+        "spec/metamodel/generated/core-constraints.json",
+    ),
+    "domainPolicy": (
+        "domainPolicy.json",
+        "spec/metamodel/generated/domain-policy.json",
+    ),
+    "tablesPackage": (
+        "tablesPackage.json",
+        "spec/extensions/tables/package.json",
+    ),
+    "actionsPackage": (
+        "actionsPackage.json",
+        "spec/extensions/actions/package.json",
+    ),
+    "bindingPackage": (
+        "bindingPackage.json",
+        "spec/extensions/binding/package.json",
+    ),
+    "sagaPackage": ("sagaPackage.json", "spec/extensions/saga/package.json"),
+    "stableBindingPackage": (
+        "stableBindingPackage.json",
+        "spec/extensions/binding-stable/package.json",
+    ),
+}
 _RESOURCE_ROOT = "action_runtime_resources"
 _MANIFEST_NAME = "action_runtime_resource_manifest.json"
 _MAX_MANIFEST_BYTES = 65_536

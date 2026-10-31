@@ -38,6 +38,7 @@ from .serialization import (
     write_json_value,
 )
 from .validation import inspect_extension_kinds, validate_document
+from .saga import SagaRuntime
 from .rust_sec_projection import (
     SecProjectionError,
     project_sec_company_facts,
@@ -46,6 +47,7 @@ from .rust_sec_projection import (
 
 __version__ = "0.10.4"
 __all__ = [
+    "SagaRuntime",
     "CoreItemTypeReference",
     "CoreSemanticTypeReference",
     "Diagnostic",

@@ -77,6 +77,9 @@ packages = ["src/umf"]
 "../spec/extensions/dataset-source" = "spec/extensions/dataset-source"
 "../fixtures/metamodel/current-conformance.json" = "fixtures/metamodel/current-conformance.json"
 "../fixtures/actions-binding" = "fixtures/actions-binding"
+"../spec/extensions/saga" = "spec/extensions/saga"
+"../spec/release.json" = "spec/release.json"
+"../docs/helix/02-design/examples/saga/allocation.json" = "docs/helix/02-design/examples/saga/allocation.json"
 
 [dependency-groups]
 dev = ["pytest>=8.4,<10", "ruff>=0.13", "hatchling>=1.27,<2"]

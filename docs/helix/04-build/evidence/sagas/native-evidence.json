@@ -1,0 +1,323 @@
+{
+  "profile": "umf-actions-saga-reference-native-1",
+  "qualification": "component-exercises-only",
+  "storyAcceptance": [
+    {
+      "id": "US-905-AC1",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC2",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC3",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC4",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC5",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC6",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC7",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC8",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC9",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC10",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC11",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC12",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC13",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC14",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC15",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC16",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC17",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC18",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC19",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC20",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC21",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC22",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC23",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC24",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC25",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC26",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC27",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC28",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    },
+    {
+      "id": "US-905-AC29",
+      "status": "unverified",
+      "reason": "canonical protocol acceptance remains independently audited; this component case is not acceptance evidence"
+    }
+  ],
+  "postgres": "17.9",
+  "bun": "1.4.3",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "container": "umf-saga-reference-8f551bb4-a9ef-4cf0-a1d1-a332de20d45e",
+  "componentAssertions": [
+    {
+      "id": "US-905-AC1",
+      "result": "pass",
+      "witness": "fixture-authored expected status/entity facts match coordinator history and separately queried native outcomes/entities"
+    },
+    {
+      "id": "US-905-AC2",
+      "result": "pass",
+      "witness": "reserve, allocation failed/no-effect and release observed as separate native results"
+    },
+    {
+      "id": "component-reverse-order",
+      "result": "pass",
+      "witness": "component cancellation triggers two native tx/1 release commits in reverse ordinal order and settles cancelled"
+    },
+    {
+      "id": "US-905-AC4",
+      "result": "pass",
+      "witness": "provider original tx/1 outcome survives coordinator object restart and is recovered before dependent admission"
+    },
+    {
+      "id": "US-905-AC5",
+      "result": "pass",
+      "witness": "provider not-found preserves indeterminate ticket; dependent ticket admission is fenced"
+    },
+    {
+      "id": "US-905-AC6",
+      "result": "pass",
+      "witness": "duplicate delivery retains original effect; current protected lookup authorization is checked before cached disclosure"
+    },
+    {
+      "id": "US-905-AC7",
+      "result": "pass",
+      "witness": "unresolved admitted delivery remains pending with zero new native effects and ticket stays durably open"
+    },
+    {
+      "id": "US-905-AC8",
+      "result": "pass",
+      "witness": "native lookup admission budget survives coordinator restart and does not fabricate a result"
+    },
+    {
+      "id": "US-905-AC9",
+      "result": "pass",
+      "witness": "native qualified forward failure latches failure; release is admitted in reverse order, native rollback is durably closed, and failed compensation escalates to intervention"
+    },
+    {
+      "id": "US-905-AC10",
+      "result": "pass",
+      "witness": "component-level cancellation of committed prefix admits original compensation ticket; result reconciles and replays without another native transaction"
+    },
+    {
+      "id": "US-905-AC11",
+      "result": "pass",
+      "witness": "cancel latches while admitted ticket reconciles; late committed prefix is compensated before cancelled finality and forward admission remains fenced"
+    },
+    {
+      "id": "component-compensation-authority",
+      "result": "pass",
+      "witness": "a real failed forward prefix makes compensation eligible; revoked compensation role refuses native action while retained entity effect remains"
+    },
+    {
+      "id": "US-905-AC13",
+      "result": "pass",
+      "witness": "cross-tenant status/history and control requests refuse without changing owner state"
+    },
+    {
+      "id": "US-905-AC14",
+      "result": "pass",
+      "witness": "retired pinned action refuses with no exact native action_outcome; lifecycle restored for independent cases"
+    },
+    {
+      "id": "US-905-AC15",
+      "result": "pass",
+      "witness": "takeover advances a persisted exact decimal fence and rejects stale worker ticket issue"
+    },
+    {
+      "id": "US-905-AC16",
+      "result": "pass",
+      "witness": "native irreversible-prefix effect remains in history under intervention; no rollback is claimed"
+    },
+    {
+      "id": "US-905-AC17",
+      "result": "pass",
+      "witness": "original non-deterministic output persists across coordinator re-open and refuses replacement"
+    },
+    {
+      "id": "US-905-AC25",
+      "result": "pass",
+      "witness": "while executor retry is live gateway stays pending; after all three native 40001 rollbacks provider closes whole ticket, compensates prefix, and late delivery returns original failure without effect"
+    },
+    {
+      "id": "US-905-AC18",
+      "result": "pass",
+      "witness": "submission key replays original response and rejects changed intent"
+    },
+    {
+      "id": "US-905-AC19",
+      "result": "pass",
+      "witness": "control capability replays original response and rejects changed request"
+    },
+    {
+      "id": "US-905-AC20",
+      "result": "pass",
+      "witness": "expired idempotency record does not create replacement instance"
+    },
+    {
+      "id": "US-905-AC21",
+      "result": "pass",
+      "witness": "persisted lookup counter enforces configured limit"
+    },
+    {
+      "id": "US-905-AC22",
+      "result": "pass",
+      "witness": "capacity refusal occurs before durable ticket admission"
+    },
+    {
+      "id": "native-claim-capacity",
+      "result": "pass",
+      "witness": "ticket reserve exhaustion durably latches SAGA_LIMIT before lease, ticket, or action admission"
+    },
+    {
+      "id": "US-905-AC23",
+      "result": "pass",
+      "witness": "automatic-time limit latches intervention"
+    },
+    {
+      "id": "US-905-AC24",
+      "result": "pass",
+      "witness": "unsupported payload-erasure request is refused at admission before any intent is accepted"
+    },
+    {
+      "id": "US-905-AC26",
+      "result": "pass",
+      "witness": "retained provider evidence resolves original pending ticket and retained-byte ledger covers exact input, binding, result, and evidence copies"
+    },
+    {
+      "id": "US-905-AC27",
+      "result": "pass",
+      "witness": "intervention closure refuses while original provider ticket remains pending"
+    },
+    {
+      "id": "US-905-AC28",
+      "result": "pass",
+      "witness": "independent entity query confirms native action effect and provider evidence"
+    },
+    {
+      "id": "US-905-AC29",
+      "result": "pass",
+      "witness": "evidence is counted separately and cannot resolve across tenant authority"
+    },
+    {
+      "id": "native-clock-rollback",
+      "result": "pass",
+      "witness": "retained elapsed time detects host-clock rollback across coordinator restart and durably stops automatic work"
+    },
+    {
+      "id": "native-unicode-namespace-key",
+      "result": "pass",
+      "witness": "Unicode/slash identity maps to persisted ASCII namespace and exact preissued provider key survives coordinator restart"
+    },
+    {
+      "id": "native-legacy-custody-refusal",
+      "result": "pass",
+      "witness": "startup refuses missing historical namespace/key custody without rewriting either persisted value"
+    }
+  ]
+}

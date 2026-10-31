@@ -41,6 +41,7 @@ ACTION_RUNTIME_RESOURCES = (
     ("domainPolicy.json", "spec/metamodel/generated/domain-policy.json"),
     ("tablesPackage.json", "spec/extensions/tables/package.json"),
     ("actionsPackage.json", "spec/extensions/actions/package.json"),
+    ("sagaPackage.json", "spec/extensions/saga/package.json"),
     ("bindingPackage.json", "spec/extensions/binding/package.json"),
     ("stableBindingPackage.json", "spec/extensions/binding-stable/package.json"),
 )

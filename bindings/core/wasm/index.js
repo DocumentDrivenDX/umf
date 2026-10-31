@@ -1844,7 +1844,7 @@ export function createCodegenEngine(module, resources, options = {}) {
   const names = ['coreSchema', 'referenceSchema', 'packageSchema', 'constraints', 'domainPolicy', 'tablesPackage', 'actionsPackage', 'bindingPackage', 'stableBindingPackage'];
   work?.(1);
   for (const key of Reflect.ownKeys(resources)) {
-    if (typeof key !== 'string' || !names.includes(key)) throw new TypeError('Unknown explicit codegen resource');
+    if (typeof key !== 'string' || !names.includes(key) && key !== 'sagaPackage') throw new TypeError('Unknown explicit codegen resource');
   }
   const fixedResources = Object.create(null);
   for (const name of names) {
@@ -1853,6 +1853,8 @@ export function createCodegenEngine(module, resources, options = {}) {
     // nine-resource wrapper is not one semantic resource tree.
     fixedResources[name] = fromWire(toWire(resource, {maxDepth: 128, maxValues: 1_000_000, work}), work);
   }
+  const sagaPackage = descriptor(resources, 'sagaPackage', false);
+  if (sagaPackage !== undefined) fixedResources.sagaPackage = fromWire(toWire(sagaPackage, {maxDepth: 128, maxValues: 1_000_000, work}), work);
   function call(operation, request) {
     if (typeof operation !== 'string') throw new TypeError('Codegen operation must be a string');
     return invoke(module, {op: `codegen/${operation}`, resources: fixedResources, request}, new Map(), profile, controls, true);
@@ -1897,6 +1899,11 @@ export function createCodegenEngine(module, resources, options = {}) {
   }
   return Object.freeze({
     call,
+    sagaRegistryProfile() { return fromWire(toWire({actionsPackage: fixedResources.actionsPackage, sagaPackage: fixedResources.sagaPackage})); },
+    inspectSagas(source) { return result('inspectSagas', {source}); },
+    declareSaga(source, module, definition) { return result('declareSaga', {source, module, definition}); },
+    editSaga(source, identity, replacement) { return result('editSaga', {source, identity, replacement}); },
+    assessSaga(source, identity, capabilities) { return result('assessSaga', {source, identity, capabilities}); },
     generatePythonClient(request) { return result('generatePythonClient', request); },
     generatePythonClientWithHost(readHost, hostReadProfile) { return resultWithHostReads(readHost, hostReadProfile); },
     compileTableDeployment(request) { return result('compileTableDeployment', request); },
