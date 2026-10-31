@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "alwaysAll": [
+    ".github/workflows/sagas.yml",
+    "scripts/qualification/sagas-impact.json",
+    "scripts/qualification/sagas-impact.py",
+    "tests/qualification/test_sagas_impact.py",
+    "tests/qualification/sagas-workflow.test.ts"
+  ],
+  "actions": {
+    "prefixes": [
+      "crates/",
+      "bindings/",
+      "src/model/",
+      "src/validation/",
+      "src/generated/",
+      "src/registry/",
+      "src/extensions/actions/",
+      "python/umf_codegen/",
+      "fixtures/actions/",
+      "fixtures/actions-binding/",
+      "tests/actions/",
+      "tests/actions-reference/",
+      "scripts/actions-reference/",
+      "spec/",
+      "tests/native/",
+      "docs/helix/02-design/contracts/CONTRACT-900",
+      "docs/helix/02-design/contracts/CONTRACT-901",
+      "docs/helix/01-frame/user-stories/US-900",
+      "docs/helix/01-frame/user-stories/US-901",
+      "docs/helix/03-test/test-plans/STP-900",
+      "docs/helix/03-test/test-plans/STP-901"
+    ],
+    "exact": [
+      "python/src/umf/action_runtime.py",
+      "python/src/umf/generated_resources.py",
+      "scripts/actions-browser.ts",
+      "scripts/actions-plan-browser.ts",
+      "Cargo.toml",
+      "Cargo.lock",
+      "package.json",
+      "bun.lock"
+    ]
+  },
+  "saga": {
+    "prefixes": [
+      "crates/",
+      "bindings/",
+      "src/model/",
+      "src/validation/",
+      "src/generated/",
+      "src/registry/",
+      "src/extensions/actions/",
+      "python/umf_codegen/",
+      "tests/saga/",
+      "tests/native/",
+      "fixtures/saga/",
+      "fixtures/actions/",
+      "fixtures/actions-binding/",
+      "scripts/saga-reference/",
+      "scripts/actions-reference/",
+      "scripts/saga-portable/",
+      "spec/",
+      "docs/helix/02-design/contracts/CONTRACT-908",
+      "docs/helix/01-frame/user-stories/US-905",
+      "docs/helix/01-frame/user-stories/US-906",
+      "docs/helix/03-test/test-plans/STP-905",
+      "docs/helix/03-test/test-plans/STP-906"
+    ],
+    "exact": [
+      "python/src/umf/generated_resources.py",
+      "Cargo.toml",
+      "Cargo.lock",
+      "package.json",
+      "bun.lock",
+      "tests/actions-reference/handler-executor.test.ts"
+    ]
+  },
+  "packages": {
+    "prefixes": [
+      "crates/",
+      "bindings/",
+      "src/",
+      "python/",
+      "spec/",
+      "tools/",
+      "qualification-inputs/",
+      "scripts/qualification/",
+      "scripts/saga-portable/",
+      "scripts/build-saga-",
+      "tests/saga/registry-resources.test.mjs",
+      "tests/saga/custody.test.ts"
+    ],
+    "exact": [
+      "Cargo.toml",
+      "Cargo.lock",
+      "package.json",
+      "bun.lock",
+      "rust-toolchain.toml",
+      "scripts/build-saga-runtime.ts",
+      "scripts/build-saga-package.py",
+      "scripts/package-sdk.ts",
+      "scripts/package-sdk.py",
+      "scripts/test-sdk-install.ts",
+      "fixtures/saga/portable.json"
+    ]
+  }
+}
