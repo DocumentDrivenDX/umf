@@ -26,131 +26,129 @@ ddx:
 
 ## Scope and Objective
 
-Prove the selected story against CONTRACT-908. Every row below is a planned
-implementation test, not a completion claim. Existing structural/TLC evidence
-supports only its recorded subset. No product semantic, browser or native case
-is marked passed merely because a model or proposal schema passed.
-
-**Blocking gate:** all story rows need source with canonical citations,
-independent expected outcomes and recorded results before implementation completion.
-Native execution requires isolated coordinator and two provider stores, original effect/outcome custody, current authority and independent observer access.
+Prove the selected sequential profile against CONTRACT-908 using an isolated
+coordinator and two native provider stores, original effect/outcome custody,
+current authority and independent provider observations. This allocation names
+actual executable witnesses; test counts and coverage annotations alone do not
+prove an acceptance criterion. The [completed release packet](../../04-build/evidence/sagas/README.md)
+remains source-bound historical evidence. The successor
+[test-tightening plan](../../04-build/actions-sagas-test-tightening-plan.md)
+owns oracle sensitivity, current mappings and test consolidation.
 
 ## Acceptance Criteria Test Mapping
 
-| AC ID | Planned test | Asserted behavior | Canonical citation | Level | Planned file |
-| --- | --- | --- | --- | --- | --- |
-| US-905-AC1 | `confirmed_success` (planned) | Retain original independently observed successful outcomes. | `@covers US-905-AC1` (required in planned source) | Native + independent oracle | `tests/saga/native-recovery.py` |
-| US-905-AC2 | `failed_allocation_then_release` (planned) | Retain reserve, rejection and release as separate original results. | `@covers US-905-AC2` (required in planned source) | Native + independent oracle | `tests/saga/native-recovery.py` |
-| US-905-AC3 | `reverse_multi_step_unwind` (planned) | Several committed steps compensate in reverse completion order using original outputs. | `@covers US-905-AC3` (required in planned source) | Native + independent oracle | `tests/saga/native-recovery.py` |
-| US-905-AC4 | `crash_after_provider_commit` (planned) | Recover original invocation after remote commit/local acknowledgement loss before dependent work. | `@covers US-905-AC4` (required in planned source) | Native + independent oracle | `tests/saga/native-recovery.py` |
-| US-905-AC5 | `unknown_provider_stays_blocked` (planned) | Unavailable authoritative lookup leaves uncertainty and blocks all later work. | `@covers US-905-AC5` (required in planned source) | Native + independent oracle | `tests/saga/native-recovery.py` |
-| US-905-AC6 | `redelivery_keeps_original_effect` (planned) | Duplicate delivery under qualified original key produces no extra provider effect. | `@covers US-905-AC6` (required in planned source) | Native + independent oracle | `tests/saga/native-recovery.py` |
-| US-905-AC7 | `unsafe_retry_refuses` (planned) | Unknown original lacking deduplication cannot start a fresh business attempt. | `@covers US-905-AC7` (required in planned source) | Native + independent oracle | `tests/saga/native-recovery.py` |
-| US-905-AC8 | `budget_exhaustion_retains_obligations` (planned) | Automatic work stops at count/time budget without inventing noncommit. | `@covers US-905-AC8` (required in planned source) | Native + independent oracle | `tests/saga/native-recovery.py` |
-| US-905-AC9 | `failed_compensation_stops_unwind` (planned) | A failed release blocks earlier compensation and retains remaining obligations. | `@covers US-905-AC9` (required in planned source) | Native + independent oracle | `tests/saga/native-recovery.py` |
-| US-905-AC10 | `compensation_acknowledgement_loss` (planned) | Reconcile original release after lost acknowledgement before redelivery. | `@covers US-905-AC10` (required in planned source) | Native + independent oracle | `tests/saga/native-recovery.py` |
-| US-905-AC11 | `cancel_ticket_race` (planned) | Cancel fences subsequent tickets; previously issued invocation is reconciled before unwind. | `@covers US-905-AC11` (required in planned source) | Native + independent oracle | `tests/saga/native-recovery.py` |
-| US-905-AC12 | `independent_compensation_authority` (planned) | Revoked forward grant does not grant release; denial retains intervention. | `@covers US-905-AC12` (required in planned source) | Native + independent oracle | `tests/saga/native-recovery.py` |
-| US-905-AC13 | `cross_tenant_history_and_controls` (planned) | Cross-scope references cannot read or change original custody. | `@covers US-905-AC13` (required in planned source) | Native + independent oracle | `tests/saga/native-recovery.py` |
-| US-905-AC14 | `retired_definition_and_original_custody` (planned) | Original interpretations remain pinned; unavailable custody blocks unsafe continuation. | `@covers US-905-AC14` (required in planned source) | Native + independent oracle | `tests/saga/native-recovery.py` |
-| US-905-AC15 | `superseded_worker_cannot_admit` (planned) | Old claimant cannot issue a new ticket or alter valid instance controls. | `@covers US-905-AC15` (required in planned source) | Native + independent oracle | `tests/saga/native-recovery.py` |
-| US-905-AC16 | `irreversible_effect_is_retained` (planned) | Delivered irreversible notification remains visible and prevents rollback claims. | `@covers US-905-AC16` (required in planned source) | Native + independent oracle | `tests/saga/native-recovery.py` |
-| US-905-AC17 | `nondeterministic_output_is_retained` (planned) | Restart uses the original retained output rather than rerunning an agent. | `@covers US-905-AC17` (required in planned source) | Native + independent oracle | `tests/saga/native-recovery.py` |
-| US-905-AC18 | `issuer_verified_manual_resolution` (planned) | Resolution imports only original issuer-proved outcome, appends attribution and never rewrites facts. | `@covers US-905-AC18` (required in planned source) | Native + independent oracle | `tests/saga/native-recovery.py` |
-| US-905-AC19 | `expired_identity_is_not_reused` (planned) | Expired original instance/submission identities cannot create new effects. | `@covers US-905-AC19` (required in planned source) | Native + independent oracle | `tests/saga/native-recovery.py` |
-| US-905-AC20 | `coordinator_self_report_is_unverified` (planned) | Histories without independent provider witnesses cannot qualify native execution. | `@covers US-905-AC20` (required in planned source) | Native + independent oracle | `tests/saga/native-recovery.py` |
-| US-905-AC21 | `submit_acknowledgement_loss` (planned) | Concurrent equal submit/retry returns one instance and original submitted response. | `@covers US-905-AC21` (required in planned source) | Native + independent oracle | `tests/saga/native-recovery.py` |
-| US-905-AC22 | `changed_intent_conflicts` (planned) | Changed revision/inputs/bindings conflict before and after completion; expiry preserves nonreuse. | `@covers US-905-AC22` (required in planned source) | Native + independent oracle | `tests/saga/native-recovery.py` |
-| US-905-AC23 | `definition_retirement_vs_active_instance` (planned) | New instances refuse; active instance can use active pinned action revisions. | `@covers US-905-AC23` (required in planned source) | Native + independent oracle | `tests/saga/native-recovery.py` |
-| US-905-AC24 | `retirement_between_ticket_and_native_admission` (planned) | Retired forward/compensation revision refuses fresh native admission; accepted transaction may finish; lookup survives. | `@covers US-905-AC24` (required in planned source) | Native + independent oracle | `tests/saga/native-recovery.py` |
+Unless explicitly named otherwise, titles below are exact tests in
+tests/saga/protocol.test.ts. Public tests own lifecycle composition;
+tests/saga/native-recovery.test.ts retains distinct lower-boundary custody
+witnesses, not an all-29-criteria certificate. The table is a required assertion
+allocation; passing observations require a fresh source/runtime-bound result.
 
-## Executable Proof
-
-The schema/example verifier is available at
-`docs/helix/02-design/examples/saga/verify.py`; it validates structures and negative
-shape controls only. The 18-case abstract coordination run and seven-case
-admission-boundary run live under `02-design/experiments/saga`; their source/config
-hashes must match. Neither test set closes any whole native or browser AC row.
-
-### Planned Commands
-
-`python3 tests/saga/native-recovery.py` and
-`python3 tests/saga/history-oracle.py` must exercise the selected installed
-consumer, original native custody and independent observer facts. Also require
-`bun test tests/saga/protocol.test.ts` for closed transport unions.
-
-These files/commands are build handoff targets and are not claimed to exist in
-this design PR. Implementers must retain failures, exact versions and source
-hashes with their observed results; fixture availability alone is not execution.
-
-## Data and Setup
-
-Use the fabricated equipment allocation Document and closed submit request in
-`docs/helix/02-design/examples/saga/`. Include malformed known declarations,
-relevant and unrelated unknown metadata, literal/Key/presence boundaries and
-capacity overflows. Pin installed handler, action and provider profiles separately.
-
-Add native fault cuts before/after control commit, ticket issue, provider
-admission, provider effect/outcome commit and coordinator observation. Distinguish
-original response replay from current status and test duplicate claim/cancel
-control delivery as well as submit. Use independently authenticated initiator,
-worker, compensation actor, outsider and read-only observer. Confirm originals
-through native provider facts, not coordinator-generated success histories.
-
-Retirement/cancellation fixtures include a ticket already issued but not yet
-admitted by its provider. Test provider-bound result limit violation before
-commit and host capacity reservation before ticket issue. Clock changes,
-expired lease, partial control failures and unavailable evidence must never
-invent noncommit. Test resolution with forged, contradictory and foreign evidence.
-
-## Edge Cases and Failure Modes
-
-Unknown interpretation, stale provider custody, oversize values and lost original
-results refuse unsafe work while preserving source/outcome obligations. Reordering
-an unordered display does not change authored step order. Missing observations
-are not negative evidence. No unsupported external profile becomes eligible by
-changing an inert handler name.
-
-## Build Handoff
-
-Implement the contract-owned pure interfaces first, then story-specific fixture
-assertions and actual host/binding integration. Extend boundary checks and add
-negative controls before claiming new source-family support. Require passing
-per-AC results and exact installed versions for completion; retain untested
-obligations as unverified. No production orchestrator or UI delivery is included.
-
-## Review acceptance allocation
-
-| Criterion | Planned independent test | Required witness |
+| AC | Retained executable witness | Required assertion / scope |
 | --- | --- | --- |
-| US-905-AC25 | `review_25` in `tests/saga/native-recovery.py`; `@covers US-905-AC25` | Confirmed forward noncommit: Given authoritative forward rollback after a committed prefix, when recovery runs, then it compensates that prefix in reverse order while retaining failed as the original result; first-step failure completes an empty unwind. |
-| US-905-AC26 | `review_26` in `tests/saga/native-recovery.py`; `@covers US-905-AC26` | Settled intervention closure: Given a settled intervention, when an authorized operator closes it with scoped evidence and the current history sequence, then closed retains the actor, original cause and accepted residual effects without claiming compensation; pending, stale or fabricated evidence refuses. |
-| US-905-AC27 | `review_27` in `tests/saga/native-recovery.py`; `@covers US-905-AC27` | Cancellation during unwind: Given failure-triggered unwind including its reconciliation, when cancel arrives, then it refuses without changing the latched cause or terminal classification. |
-| US-905-AC28 | `review_28` in `tests/saga/native-recovery.py`; `@covers US-905-AC28` | Irreversible boundary warning: Given an irreversible step preceding later work, when inspection or assessment runs, then SAGA_PIVOT identifies the barrier and later steps without claiming forward-only recovery support. |
-| US-905-AC29 | `review_29` in `tests/saga/native-recovery.py`; `@covers US-905-AC29` | Retention and time admission: Given a host requiring longer automatic execution or incompatible payload erasure, when this profile is selected, then admission refuses; tighter advertised limits persist across restart. |
+| US-905-AC1 | public success history agrees with independently queried native provider outcomes | Provider result/identity, entity state, ticket and public history agree. |
+| US-905-AC2 | a rejected allocation unwinds with the original typed output from its prior commit | Committed reserve, actual business rejection and committed release remain separate original results. |
+| US-905-AC3 | five-step recovery compensates the committed prefix in exact reverse order | One combined multi-step unwind must assert reverse order AND each compensation's exact original typed output, independently queried from native custody. |
+| US-905-AC4 | an execute crash after provider finality recovers the original outcome without a second effect; live pending case in the ten-operation test | Lost acknowledgement/restart retains original result; dependent admission remains blocked until that original settles. |
+| US-905-AC5 | the native adapter validates and dispatches the closed ten-operation protocol; retained issuer evidence resolves after automatic lookup exhaustion without resuming work | Live authoritative pending ticket survives restart; no fabricated noncommit or later dispatch. |
+| US-905-AC6 | provider-boundary.test.ts: saga gateway reserves native keys against direct caller execution; native component duplicate delivery witness | Same original key/result, no extra native outcome or effect. |
+| US-905-AC7 | live pending case in the ten-operation test; native component unresolved-ticket barrier | No fresh business attempt or later forward/compensation ticket while original finality is unknown. |
+| US-905-AC8 | reconciliation consumes the bounded lookup budget across coordinator restart; automatic work expires against a host clock across coordinator restart | Count/time exhaustion stops work and retains unresolved original obligations across restart. |
+| US-905-AC9 | a failed compensation stops before earlier committed work is compensated | Failed release latches intervention and prevents earlier unwind. |
+| US-905-AC10 | a lost compensation acknowledgement recovers the original release result after coordinator restart | Original release result, exact key and independent outcome/entity count survive lost acknowledgement; no duplicate effect. |
+| US-905-AC11 | cancellation during an admitted forward invocation waits for its original result before compensation | Cancellation fences later tickets; admitted original settles before unwind. |
+| US-905-AC12 | forward authorization does not imply independent compensation authority | Independently revoked forward and compensation grants do not authorize release; native entity remains unreleased. |
+| US-905-AC13 | history pages require current authorization; history cursors are bound to their original instance; ten-operation outsider controls | Tenant/owner/current permission and instance-bound cursor checks refuse disclosure/mutation. |
+| US-905-AC14 | an admitted instance keeps its original immutable action binding after host directory replacement | Original binding/interpretation stays pinned; unavailable required custody durably intervenes rather than rebinding. |
+| US-905-AC15 | a control-operation crash recovers the exact original claim without renewing its lease; native component stale-fence witness | Takeover advances fence; stale workers cannot admit new work; recovery does not renew original lease. |
+| US-905-AC16 | an irreversible committed step remains visible as residual when later work fails | Native irreversible effect/residual remains visible; no complete rollback claim. External notification adapters remain outside actions 0.1.0. |
+| US-905-AC17 | a nondeterministic declared output survives execute acknowledgement loss and replay | Original random typed output is retained once, recovered and consumed by later work rather than regenerated. |
+| US-905-AC18 | the native adapter validates and dispatches the closed ten-operation protocol; retained issuer evidence resolves after automatic lookup exhaustion without resuming work | Only original issuer-scoped facts resolve; raw history retains actor/service/issuer and original result without rewriting facts or resuming automatic work. |
+| US-905-AC19 | expired submission identities remain nonreusable after coordinator restart | Expired identity cannot create a new instance/effect. |
+| US-905-AC20 | public success history agrees with independently queried native provider outcomes; history-oracle.test.ts | Independent native observations are mandatory; invented/omitted/duplicate/foreign effects and duplicate expectations fail. |
+| US-905-AC21 | a submit acknowledgement lost after durable admission recovers the original response; ten-operation equivalent-submit case | Equal concurrent/retried submit retains one instance and original response across lost acknowledgement/restart. |
+| US-905-AC22 | changed revision or trusted binding conflicts after terminal completion; ten-operation changed-input case | Changed intent conflicts before/after terminal state; original nonreuse remains. |
+| US-905-AC23 | definition retirement rejects fresh submissions while an admitted instance continues on its snapshot | Fresh refuses while admitted original uses retained active interpretations. |
+| US-905-AC24 | retiring an action at the native admission cut prevents a fresh effect; composed native handler retirement tests below | Retired fresh invocation intervenes; an actually admitted transaction may settle, with retained original lookup/replay. |
+| US-905-AC25 | a first-step rollback unwinds empty and late delivery returns its original failure without effects; rejected-allocation and five-step tests | Closed whole-ticket noncommit, empty or committed-prefix unwind, and delayed same-ticket delivery yield no fresh effect. |
+| US-905-AC26 | operator closure rejects finality evidence for another provider, revision, epoch, or action key; ten-operation close case | Pending/stale/foreign/fabricated evidence refuses; accepted close retains current actor, sequence, first cause, disposition and review ID/digest. |
+| US-905-AC27 | cancel is refused during failure unwind without replacing the first cause | Cancel during pending compensation refuses; first failure and compensated classification remain. Source cause guard also applies during reconciliation. |
+| US-905-AC28 | irreversible residual test; STP-906 early/terminal irreversible vectors and Rust pivot test | Exact SAGA_PIVOT barrier/later-step diagnostics plus native residual disclosure; no forward-recovery inference. |
+| US-905-AC29 | incompatible automatic limits refuse admission and tighter limits persist across restart; lookup/clock tests; control-capacity.test.ts and provider-boundary.test.ts | Incompatible duration/erasure refuses; tighter persisted limits, retained count/bytes and oversized result/input refusal remain explicit. |
 
-US-905-AC26 also requires the schema verifier to reject closed/intervention
-projections without stopCause and history outcome events missing invocation or
-result. Planned native tests must prove original cause immutability through
-intervention/closure; a structural guard alone cannot prove that history.
+AC24's composed admitted-transaction witnesses are
+tests/actions-reference/handler-executor.test.ts tests titled
+“retirement during an admitted native handler pins its accepted build and fences subsequent fresh admission”
+and “native catalog retirement waits for admitted handler commit then refuses fresh work”.
+They exercise the same executor/store-lock boundary used by saga providers.
+An afterInvoke pause occurs after executor commit and is not a substitute for
+those in-flight transaction witnesses.
 
-These are unexecuted native acceptance requirements. Schema fixtures and finite
-models cannot mark them passed. AC28 also requires portable diagnostics in
-`tests/saga/assessment.test.ts` under STP-906.
+## Independent Oracle and Consolidation Controls
 
-## Completed bounded protocol analysis
+tests/saga/native-observation.ts queries provider tickets/attempts and native
+action outcomes/entity state separately from coordinator history. Missing,
+pending, failed and duplicate facts remain explicit; they never default to
+committed. Outcome-backed revision/key/correlation come from native original
+intent, not substituted gateway declarations. Closed whole-ticket noncommit
+requires independent final disposition, zero business outcomes, no live attempts
+and the expected unchanged entity state.
 
-The source-exact `Protocol.tla` suite, correspondence and reproduction are in
-[protocol coverage](../../02-design/experiments/saga/formal/protocol.md). It closes
-the earlier model's lifecycle-state gaps within explicit finite bounds. Native
-acceptance remains planned; the evidence report distinguishes full exploration,
-expected mutant counterexample and reachability witness.
+tests/saga/history-oracle.test.ts must reject missing/duplicate/invented provider
+facts, wrong identity/tenant/provider/epoch/revision/key, duplicate fixture ticket
+expectations, changed first cause and hidden pending originals. One observation
+cannot satisfy duplicate expected tickets. Keep fixture expectations independent
+of observation queries and production projections.
 
-Extend AC25's planned native witness with an admitted rollback followed by durable
-whole-ticket closure, coordinator unwind, delayed delivery and a provider effect
-query. The late delivery must return the original noncommit with zero new effects.
-Also inject uncertainty while closing the gateway: it remains pending and cannot
-start unwind. Confirmed rollback of only one internal attempt is a negative case.
-AC8/29 require lookup/time counters to survive restart and takeover. AC26/27 must
-race late original resolution and review/closure with cancellation while retaining
-the first durable stop cause. No terminal projection can omit a pending ticket.
+Before deleting an overlapping component flow, name its unique invariant/fault
+cut and retained public or lower-boundary witness. Preserve distinct reserved-key,
+whole-ticket finality, authority, bounds and actual native admission witnesses.
+Remove misleading component-wide all-AC citations; smaller component evidence
+does not become full-story proof merely because its suite passes.
+
+## Executable Proof and Setup
+
+Current commands are:
+
+~~~sh
+bun run check:rust-boundaries
+bun test tests/saga/history-oracle.test.ts
+bun test tests/saga/*.test.ts
+bun run test:actions
+~~~
+
+Build the shared engine/addon first; prepare the pinned PostgreSQL 17.9 and
+digest-pinned handler runtime before native execution. Invocation retains
+pull-never behavior. The native harness verifies the actual server profile and
+cleans up owned sessions/containers. Shared setup may be reused; test state and
+trusted actors remain isolated. Use real SQL sessions and barriers for races,
+not sleep timing alone.
+
+The integrated saga workflow must select shared executor changes, root manifests
+and dependency locks, repair inputs and composed action-test dependencies.
+A saga-only change must retain the composed admitted-action retirement witness;
+shared executor changes require full native action+saga regression. Keep explicit
+action/saga failure attribution even when preparation is shared. Record actual
+source/runtime/artifact digests, raw failures and capture limits.
+
+## Formal Evidence and Interpretation Limits
+
+The schema verifier at docs/helix/02-design/examples/saga/verify.py proves
+structure only. The source-exact bounded Protocol.tla suite, earlier coordination
+and admission models, correspondence and reproduction live under
+02-design/experiments/saga. Keep exact model/configuration/tool hashes and
+distinguish exploration, expected mutant counterexample and reachability witness.
+No model or schema run substitutes for a native AC. Rerun formal analysis for
+TD-905 transition/assumption changes; rerun native correspondence for changed
+provider/driver/authority/custody code.
+
+This STP's current allocation bytes differ from the historical formal packet's
+hashed specification context. Its 43 checks remain evidence at that captured
+context; the unchanged verifier must not be described as passing against the
+new full context. The test-tightening plan records the original-context
+verification disposition without overwriting reports or reinterpreting traces
+as a new model run.
+
+All original tickets, first cause and residual obligations survive automatic
+stops. Operator resolution/closure imports scoped retained evidence without
+renewing automatic budgets or executing business work. The selected qualification
+consumer is not a production hosting service or a public portable execution API.

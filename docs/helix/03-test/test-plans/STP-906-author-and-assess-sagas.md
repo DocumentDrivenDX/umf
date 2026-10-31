@@ -26,35 +26,56 @@ ddx:
 
 ## Scope and Objective
 
-Prove the selected story against CONTRACT-908. Every row below is a planned
-implementation test, not a completion claim. Existing structural/TLC evidence
-supports only its recorded subset. No product semantic, browser or native case
-is marked passed merely because a model or proposal schema passed.
+Prove the selected story against CONTRACT-908 through the shared Rust operations
+and actual host bindings. The current allocation below names executable fixture
+IDs in place of the original design-only handoff filenames.
+Qualification belongs to the exact source-bound evidence packet, not this plan.
+Structural/TLC evidence cannot establish product, browser or native execution.
 
 **Blocking gate:** all story rows need source with canonical citations,
 independent expected outcomes and recorded results before implementation completion.
 Portable completion requires the shared Rust operation family and actual Chromium, not a TypeScript-only semantic fork.
 
-## Acceptance Criteria Test Mapping
+## Current Acceptance Criteria Test Mapping
 
-| AC ID | Planned test | Asserted behavior | Canonical citation | Level | Planned file |
-| --- | --- | --- | --- | --- | --- |
-| US-906-AC1 | `identities_in_declared_order` (planned) | Inspect exact identities and array order, independently of names. | `@covers US-906-AC1` (required in planned source) | Rust + Bun; browser for AC13 | `tests/saga/declarations.test.ts` |
-| US-906-AC2 | `earlier_output_type_and_presence` (planned) | Accept exact earlier output; refuse wrong identity, later or absent required source. | `@covers US-906-AC2` (required in planned source) | Rust + Bun; browser for AC13 | `tests/saga/declarations.test.ts` |
-| US-906-AC3 | `missing_and_cyclic_references` (planned) | Locate missing/cyclic references and refuse eligible partial output. | `@covers US-906-AC3` (required in planned source) | Rust + Bun; browser for AC13 | `tests/saga/declarations.test.ts` |
-| US-906-AC4 | `original_compensation_inputs` (planned) | Retain original typed input bindings and reverse recovery order. | `@covers US-906-AC4` (required in planned source) | Rust + Bun; browser for AC13 | `tests/saga/declarations.test.ts` |
-| US-906-AC5 | `irreversible_disposition` (planned) | Expose irreversible effect without inferring an inverse action. | `@covers US-906-AC5` (required in planned source) | Rust + Bun; browser for AC13 | `tests/saga/declarations.test.ts` |
-| US-906-AC6 | `missing_disposition_refuses` (planned) | Missing compensation disposition prevents eligibility. | `@covers US-906-AC6` (required in planned source) | Rust + Bun; browser for AC13 | `tests/saga/declarations.test.ts` |
-| US-906-AC7 | `unknown_native_roundtrip` (planned) | JSON/YAML retain unknown recovery and unrelated native payloads. | `@covers US-906-AC7` (required in planned source) | Rust + Bun; browser for AC13 | `tests/saga/declarations.test.ts` |
-| US-906-AC8 | `unknown_edit_and_execution_refuse` (planned) | Dependent edits and eligibility refuse while original stays unchanged. | `@covers US-906-AC8` (required in planned source) | Rust + Bun; browser for AC13 | `tests/saga/declarations.test.ts` |
-| US-906-AC9 | `action_support_is_not_coordination` (planned) | tx-only claims do not establish saga support or execution verification. | `@covers US-906-AC9` (required in planned source) | Rust + Bun; browser for AC13 | `tests/saga/declarations.test.ts` |
-| US-906-AC10 | `external_profile_cannot_widen_tx` (planned) | Single-store profile cannot qualify external-effect steps. | `@covers US-906-AC10` (required in planned source) | Rust + Bun; browser for AC13 | `tests/saga/declarations.test.ts` |
-| US-906-AC11 | `inspection_has_no_host_effects` (planned) | Artifact code/resource names trigger no process, import, fetch or business effect. | `@covers US-906-AC11` (required in planned source) | Rust + Bun; browser for AC13 | `tests/saga/declarations.test.ts` |
-| US-906-AC12 | `finite_limits_refuse_completely` (planned) | At-limit input works; above-limit analysis refuses without eligible truncation. | `@covers US-906-AC12` (required in planned source) | Rust + Bun; browser for AC13 | `tests/saga/declarations.test.ts` |
-| US-906-AC13 | `bun_chromium_independent_oracle` (planned) | Bun and real Chromium match independent expected diagnostics for the same source. | `@covers US-906-AC13` (required in planned source) | Rust + Bun; browser for AC13 | `tests/saga/declarations.test.ts` |
-| US-906-AC14 | `completion_meanings_are_distinct` (planned) | Success and compensated termination remain distinct; neither asserts distributed atomicity. | `@covers US-906-AC14` (required in planned source) | Rust + Bun; browser for AC13 | `tests/saga/declarations.test.ts` |
-| US-906-AC15 | `external_declaration_version_gate` (planned) | Another handler/profile on actions 0.1.0 does not enable external effects. | `@covers US-906-AC15` (required in planned source) | Rust + Bun; browser for AC13 | `tests/saga/declarations.test.ts` |
-| US-906-AC16 | `recipe_binding_is_not_disqualified` (planned) | Supported recipe actions are considered; unavailable outputs remain separate errors. | `@covers US-906-AC16` (required in planned source) | Rust + Bun; browser for AC13 | `tests/saga/declarations.test.ts` |
+The exact fixture IDs below live in `fixtures/saga/portable.json` and run through
+`scripts/saga-portable/verify.ts` on N-API, actual Chromium WASM, CLI and installed
+Python. Focused Rust checks live in `crates/umf-codegen/src/actions/saga/tests.rs`.
+
+| AC | Current fixture / witness | Required assertion |
+| --- | --- | --- |
+| US-906-AC1 | `ordered-baseline`, `duplicate-step` | Exact identity/order; duplicate IDs refuse. |
+| US-906-AC2 | `missing-output`, `missing-required-output`, `different-key-identity`, `recipe-missing-output` | Earlier output type/presence and exact Key identity; wrong/missing mappings diagnose. |
+| US-906-AC3 | `forward-later` | Invalid dependency order refuses with located reference diagnosis and no eligible partial output. |
+| US-906-AC4 | `ordered-baseline`, `compensation-later` | Original compensation mappings retained; later-output mapping refuses. Native unwind is STP-905. |
+| US-906-AC5 | `terminal-irreversible`, `early-irreversible` | Explicit irreversible disposition; exact early SAGA_PIVOT location; no inferred inverse. |
+| US-906-AC6 | `missing-compensation`, `no-inferred-compensation` | Missing disposition prevents eligibility. |
+| US-906-AC7 | `unknown-recovery` plus `verifySagaExchange` | Real JSON/YAML exchange retains unknown/native data exactly. |
+| US-906-AC8 | `unknown-recovery` | Unknown obligations remain unchecked; dependent edit refuses without source mutation. |
+| US-906-AC9 | `recipe-declaration` independent complete positive claim inventory; `ordered-baseline` incomplete declaration | Separate exact action/binding/finality obligations; tx-only, missing, duplicate and wrong-source claims do not qualify. |
+| US-906-AC10 | `unknown-external-profile`, `external-action-meaning` | Profile metadata cannot widen actions 0.1.0 atomicity. |
+| US-906-AC11 | `inert-handler-url`, native/browser fetch traps | Artifact names cause no host lookup/effect; Rust remains the shared semantic owner. |
+| US-906-AC12 | `at-32-steps`, `over-32-steps`, focused Rust limits | At-limit succeeds; explicit overflow refusal, never eligible truncation. |
+| US-906-AC13 | Entire static corpus via native/browser runners | Actual N-API and Chromium satisfy independent expected outcomes and exact diagnostics. |
+| US-906-AC14 | `ordered-baseline` assessment | Compatibility/coordination claims remain distinct from runtime completion; executionVerified is false. |
+| US-906-AC15 | `unknown-external-profile`, `external-action-meaning` | An inert handler/profile annotation does not enable external effects. |
+| US-906-AC16 | `recipe-declaration`, `recipe-missing-output` | Recipe binding is considered; unavailable output remains a separate error. |
+
+This allocation is not a test-total completion claim. The source-bound
+[released packet](../../04-build/evidence/sagas/README.md) remains historical;
+the [test-tightening plan](../../04-build/actions-sagas-test-tightening-plan.md)
+governs new oracle/custody controls. Static expected diagnostic code/severity/path
+tuples and representative complete obligation inventories are authored from the
+contract and fixture, never generated from the inspected result under test.
+
+`tests/saga/portable-oracle.test.ts` exercises the real verifier with a no-op edit,
+wrong diagnostic path/severity, unexpected diagnostics and omitted inherited
+obligations. Each mutant must fail a named assertion. Successful edits assert the
+requested field change, stable identity, unchanged unrelated content and caller
+preservation. Returned-source mutation must not poison later inspection. Support
+claims use independent expected obligations; missing/duplicate/unsupported or
+wrong-source/identity claims refuse and executionVerified never becomes true.
+
 
 ## Executable Proof
 
@@ -64,15 +85,30 @@ shape controls only. The 18-case abstract coordination run and seven-case
 admission-boundary run live under `02-design/experiments/saga`; their source/config
 hashes must match. Neither test set closes any whole native or browser AC row.
 
-### Planned Commands
+### Current Commands
 
-`cargo test -p umf-codegen saga`, `bun test tests/saga/declarations.test.ts`
-and `bun scripts/saga-browser.ts` are planned semantic/parity gates.
-The browser command must record actual Chromium and binding/WASM digests.
+`cargo test --locked -p umf-codegen saga`,
+`bun test tests/saga/portable-oracle.test.ts`,
+`bun scripts/saga-portable/native.ts` and
+`bun scripts/saga-portable/browser.ts` are semantic/parity gates.
+After building matching artifacts, run `scripts/saga-portable/other-hosts.ts`
+with `cli` or `python`, setting UMF_SAGA_CLI or the exact UMF_SAGA_PYTHON and
+UMF_SAGA_PYTHON_WHEEL. Run `scripts/test-sdk-install.ts` for the installed public
+facade/bundled WASM. The browser records actual Chromium and binding/WASM digests.
 
-These files/commands are build handoff targets and are not claimed to exist in
-this design PR. Implementers must retain failures, exact versions and source
-hashes with their observed results; fixture availability alone is not execution.
+Retain failures, exact versions and source/resource/binary hashes with observed
+results; fixture availability alone is not execution. The collector must refuse
+substituted or stale host artifacts even when the corpus is unchanged.
+
+`tests/saga/custody.test.ts` exercises new receipt validation separately from the
+historical release packet. The exact host roster is native, browser, CLI, selected
+Python wheel and source-rebuilt Python wheel. Every report must match the
+authoritative corpus's unique IDs/coverage and hash its relevant verifier,
+resource and artifact inputs. No second manually maintained case roster is needed.
+The collector verifies selected wheel/sdist and SDK archive/manifest/install
+custody, hashes the copied destination against the validated expected bytes and
+rechecks input stability before publishing a fresh atomic cohort directory.
+Missing/replaced host, binary, resource, result or rebuild evidence must refuse.
 
 ## Data and Setup
 
@@ -104,16 +140,16 @@ obligations as unverified. No production orchestrator or UI delivery is included
 
 ## Irreversible barrier review control
 
-US-905-AC28 additionally maps to planned `tests/saga/assessment.test.ts` with
-`@covers US-905-AC28`: an early irreversible step followed by action-compensated
+US-905-AC28 additionally maps to `early-irreversible`, `terminal-irreversible`
+and Rust `pivot_warning_is_located_and_wrong_source_claims_refuse`: an early irreversible step followed by action-compensated
 work emits SAGA_PIVOT with exact paths and preserved source; a terminal irreversible
 step emits no early-barrier warning. Native risk disclosure remains STP-905's
-separate obligation. These planned tests have not been executed.
+separate obligation. Actual results remain scoped by their evidence receipt.
 
 ## Finality assessment allocation
 
-US-906-AC9's planned assessment cases require exact per-step/direction
+US-906-AC9's assessment cases require exact per-step/direction
 `saga.invocation.finality` obligations and evidence claims. Test missing, duplicate,
 wrong-source and bare-tx1 claims as unsupported/unknown. Complete declaration and
-host claims never set executionVerified:true. These portable library/browser tests
-remain implementation work; the finite model checks the coordination rule only.
+host claims never set executionVerified:true. The finite model checks the
+coordination rule only; it does not replace the portable/library/browser cases.

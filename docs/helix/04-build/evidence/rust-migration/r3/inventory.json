@@ -105,6 +105,7 @@
       "scripts/prepare-action-tests.ts",
       "scripts/publish_core_pypi_release.py",
       "scripts/qualification/r2-metering-generate.ts",
+      "scripts/qualification/sagas-impact.py",
       "scripts/qualify-schema-browser-release.ts",
       "scripts/r2-metering-browser.ts",
       "scripts/reference/browser.ts",
@@ -241,6 +242,8 @@
       "tests/metamodel/r2-metering-browser-entry.ts",
       "tests/metamodel/structural-accounting-parity.test.ts",
       "tests/metamodel/structural-accounting-source.test.ts",
+      "tests/qualification/sagas-workflow.test.ts",
+      "tests/qualification/test_sagas_impact.py",
       "tests/reference/microsite-current-source.test.ts",
       "tests/reference/reader.test.ts",
       "tests/reference/reference.test.ts",
@@ -285,16 +288,16 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "fa042807d9428ac51ceadc7b0c570c71588ae31cfc216086f07d3e9a990ada47",
+    "sourceCohortSha256": "cec58fe84b8cd653a5e2485b723caa35f6e8e2d76da3a78f3287a073b85e30d8",
     "typescriptApi": "5.9.3"
   },
   "counts": {
-    "activeScriptFiles": 447,
-    "algorithmSymbols": 12801,
+    "activeScriptFiles": 452,
+    "algorithmSymbols": 12822,
     "pythonModules": 127,
     "rustBuildInputs": 79,
     "rustModules": 130,
-    "scriptFiles": 3084,
+    "scriptFiles": 3092,
     "sourceModules": 627,
     "typescriptModules": 500
   },
@@ -8368,7 +8371,6 @@
   "scripts": [
     {
       "activationEvidence": [
-        "scripts/saga-portable/native.ts",
         "transitive-import-closure"
       ],
       "active": true,
@@ -8412,7 +8414,6 @@
     {
       "activationEvidence": [
         "scripts/metamodel/rust.ts",
-        "scripts/saga-portable/other-hosts.ts",
         "transitive-import-closure"
       ],
       "active": true,
@@ -34123,6 +34124,7 @@
     },
     {
       "activationEvidence": [
+        ".github/workflows/sagas.yml",
         "package.json"
       ],
       "active": true,
@@ -34598,6 +34600,24 @@
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/qualification/r2-metering-generate.ts",
       "sha256": "e865dffcdedec0b996b6345a38c7a010d780dfb93b33eb8712b88914e7c0add5"
+    },
+    {
+      "activationEvidence": [
+        ".github/workflows/sagas.yml"
+      ],
+      "active": true,
+      "algorithmSymbols": [
+        "changed_paths",
+        "main",
+        "matches",
+        "select"
+      ],
+      "bytes": 2369,
+      "disposition": "active-host-tooling-algorithm",
+      "language": "py",
+      "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
+      "path": "scripts/qualification/sagas-impact.py",
+      "sha256": "18718cf9cccbbc1f2b5e5b6b987bd3b921e50ad1607f524e5e7b655ad429f6ab"
     },
     {
       "activationEvidence": [],
@@ -35748,6 +35768,7 @@
     {
       "activationEvidence": [
         ".github/workflows/actions.yml",
+        ".github/workflows/sagas.yml",
         "package.json"
       ],
       "active": true,
@@ -36417,12 +36438,12 @@
       ],
       "active": true,
       "algorithmSymbols": [],
-      "bytes": 3531,
+      "bytes": 4067,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/saga-portable/browser.ts",
-      "sha256": "ec4b9a1a1202c234fc9a8897071837bde186a9325605e4874f1539ac62012cf6"
+      "sha256": "5426ef74e273ca40367d213b707ca831a5775aa8bc10528d5e674fd2e53333f6"
     },
     {
       "activationEvidence": [
@@ -36430,16 +36451,44 @@
       ],
       "active": true,
       "algorithmSymbols": [
-        "hash",
-        "pythonReport",
+        "archiveMember",
         "retain"
       ],
-      "bytes": 4195,
+      "bytes": 11612,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/saga-portable/collect.ts",
-      "sha256": "568e8bb8744ae69c3d63bcd2661cccdb91f8349e6923d242010f91ef50f76747"
+      "sha256": "4b218cd36a0ab2b982798e37264eecea921ee80a43de99c1dd9284ae91bfa9e2"
+    },
+    {
+      "activationEvidence": [
+        "scripts/saga-portable/browser.ts",
+        "scripts/saga-portable/collect.ts",
+        "scripts/saga-portable/native.ts",
+        "scripts/saga-portable/other-hosts.ts",
+        "scripts/test-sdk-install.ts",
+        "transitive-import-closure"
+      ],
+      "active": true,
+      "algorithmSymbols": [
+        "capturePortableProducerSnapshot",
+        "hashInputFiles",
+        "retainVerifiedFile",
+        "same",
+        "sha",
+        "sha256File",
+        "validatePortableCaseRoster",
+        "verifyPortableCohort",
+        "verifyPortableProducerSnapshot",
+        "verifyPortableResult"
+      ],
+      "bytes": 9054,
+      "disposition": "active-host-tooling-algorithm",
+      "language": "ts",
+      "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
+      "path": "scripts/saga-portable/custody.ts",
+      "sha256": "c2f829589572ec2be070d438376cef821a41af4e2ba384780ab00c8df6299b30"
     },
     {
       "activationEvidence": [
@@ -36447,12 +36496,12 @@
       ],
       "active": true,
       "algorithmSymbols": [],
-      "bytes": 2833,
+      "bytes": 3164,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/saga-portable/native.ts",
-      "sha256": "93f63a43b2d50301be0099f524ec783a46939aaf3995f4adc4216533b7edd846"
+      "sha256": "b9dbec6f300f648d68fa3de9440d61702e9f3847fcfb5a681569b25f960d9ea9"
     },
     {
       "activationEvidence": [
@@ -36462,43 +36511,43 @@
       "algorithmSymbols": [
         "invoke"
       ],
-      "bytes": 3507,
+      "bytes": 4809,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/saga-portable/other-hosts.ts",
-      "sha256": "eecb7d0825a5d00b42aa16f5bfa012576cc9d2537ba876a2c10d8f906996418a"
+      "sha256": "71511fd213bc3a02afaeec704829901855e1defc8d4f460d173311949dcfdc54"
     },
     {
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [],
-      "bytes": 560,
+      "bytes": 685,
       "disposition": "unreferenced-script-source",
       "language": "py",
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "scripts/saga-portable/python-probe.py",
-      "sha256": "14f3ecd59058ae1049df1bcfdef8b1ff3142157056e705cc9f34030dfef2f50f"
+      "sha256": "82a5f20917cd7ffca700be90ddeaf5426841a4375ab0a7d7c2056c653e49f083"
     },
     {
       "activationEvidence": [
-        "scripts/saga-portable/native.ts",
         "scripts/saga-portable/other-hosts.ts",
         "transitive-import-closure"
       ],
       "active": true,
       "algorithmSymbols": [
+        "actionWarnings",
         "equal",
         "insist",
         "verifySagaExchange",
         "verifySagaVectors"
       ],
-      "bytes": 8002,
+      "bytes": 11480,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/saga-portable/verify.ts",
-      "sha256": "9a24d34507b63474d22352f9d520ba5bb5b64bf99af3d2b228247c93f355144b"
+      "sha256": "d0b8d7b2614de6b348b9ddc69996254907f94b413cee2d5f86a3942dd1aaab14"
     },
     {
       "activationEvidence": [],
@@ -38016,12 +38065,12 @@
         "run",
         "sha256"
       ],
-      "bytes": 9403,
+      "bytes": 10306,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/test-sdk-install.ts",
-      "sha256": "ef10cf29ceece6814d3eaddb2988ad325eed16af34f8d1cd9104bc4947a4c6fe"
+      "sha256": "527ea8ce3a0c7b2263d28cda72b17e825b10a2b3205506e3ab21ac9256115085"
     },
     {
       "activationEvidence": [],
@@ -39161,12 +39210,12 @@
         "registry",
         "source"
       ],
-      "bytes": 4280,
+      "bytes": 6279,
       "disposition": "unreferenced-test-source",
       "language": "ts",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "tests/actions/assessment.test.ts",
-      "sha256": "6bfb27266b45bc393d2051ab6b6333a07390407127602ad15443d7aed0f194c5"
+      "sha256": "c86b0cedadf8b5d420fb95c38a3cad954a19e346325338af43baaaf7c638d174"
     },
     {
       "activationEvidence": [
@@ -39766,15 +39815,14 @@
       ],
       "active": true,
       "algorithmSymbols": [
-        "docker",
         "withReferenceStore"
       ],
-      "bytes": 2020,
+      "bytes": 731,
       "disposition": "test-oracle-fixture-algorithm",
       "language": "ts",
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/actions-reference/native-harness.ts",
-      "sha256": "581b7ab0af2f596e89427d6f437bfbf818abba342fe13f17fda537db0f1f2818"
+      "sha256": "56f26300de2ea5e23c27c181d9ea3d8acbcd672f859ef66abe4149fc08778a6a"
     },
     {
       "activationEvidence": [],
@@ -47694,6 +47742,24 @@
       "sha256": "cf27f16b5aee79f83c600e043f8dff0ef0c1332ea59b54d7f4b7235635952f34"
     },
     {
+      "activationEvidence": [
+        "tests/actions-reference/native-harness.ts",
+        "transitive-import-closure"
+      ],
+      "active": true,
+      "algorithmSymbols": [
+        "databaseUrl",
+        "docker",
+        "withOwnedPostgres"
+      ],
+      "bytes": 2992,
+      "disposition": "test-oracle-fixture-algorithm",
+      "language": "ts",
+      "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
+      "path": "tests/native/postgres-fixture.ts",
+      "sha256": "64c3ce53cb9f48f237aa96a1fe987948ba30089c74a96fbf36a470ffea253d88"
+    },
+    {
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [
@@ -48504,6 +48570,39 @@
       "sha256": "71b7c141548ece0ff592173ecea7b2db878bd26f98e8af8e4f94e8e660a1a87c"
     },
     {
+      "activationEvidence": [
+        ".github/workflows/sagas.yml"
+      ],
+      "active": true,
+      "algorithmSymbols": [
+        "step"
+      ],
+      "bytes": 2272,
+      "disposition": "test-oracle-fixture-algorithm",
+      "language": "ts",
+      "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
+      "path": "tests/qualification/sagas-workflow.test.ts",
+      "sha256": "dea2862a2345b233c8194ebb2dae808a022b85da66ddf545093a48e74954dfd2"
+    },
+    {
+      "activationEvidence": [
+        ".github/workflows/sagas.yml"
+      ],
+      "active": true,
+      "algorithmSymbols": [
+        "SagaImpactTests",
+        "test_critical_paths_have_exact_flags_and_exist",
+        "test_docs_and_unrelated_scripts_do_not_start_heavy_jobs",
+        "test_workflow_change_and_manual_dispatch_select_all_lanes"
+      ],
+      "bytes": 3334,
+      "disposition": "test-oracle-fixture-algorithm",
+      "language": "py",
+      "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
+      "path": "tests/qualification/test_sagas_impact.py",
+      "sha256": "383d917f942653e1e415bf07bc77310370b3e40ce60990f60a1ac58ad0910e09"
+    },
+    {
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [],
@@ -48944,13 +49043,26 @@
     {
       "activationEvidence": [],
       "active": false,
+      "algorithmSymbols": [
+        "makeCohort"
+      ],
+      "bytes": 9668,
+      "disposition": "unreferenced-test-source",
+      "language": "ts",
+      "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
+      "path": "tests/saga/custody.test.ts",
+      "sha256": "c49774baf7ae36c970e1bd00a865951af0929e86251c4ae394de792e4f473e75"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
       "algorithmSymbols": [],
-      "bytes": 6422,
+      "bytes": 9493,
       "disposition": "unreferenced-test-source",
       "language": "ts",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "tests/saga/history-oracle.test.ts",
-      "sha256": "475a07e3d751e4f3a222662c2932c3ef039e259078ce6d629c9869e127dc9c5c"
+      "sha256": "25b725a8aad1ec03d5087ec1756961aafc0ac0158e92f164104fb0f88b7c2abb"
     },
     {
       "activationEvidence": [],
@@ -48958,28 +49070,39 @@
       "algorithmSymbols": [
         "verifyIndependentHistory"
       ],
-      "bytes": 6060,
+      "bytes": 8366,
       "disposition": "unreferenced-test-source",
       "language": "ts",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "tests/saga/history-oracle.ts",
-      "sha256": "ec7916dfc865d68cfc9b293fcfb8614e1dfcbd0a186a04542ef10b5dfd1bd83d"
+      "sha256": "13523ad013aea544d9a50180581d7a5d6393da761b93daf0799e85b267efed18"
     },
     {
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [
-        "docker",
         "recordProviderPlatform",
-        "url",
         "withSagaNativeCluster"
       ],
-      "bytes": 4826,
+      "bytes": 2901,
       "disposition": "unreferenced-test-source",
       "language": "ts",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "tests/saga/native-harness.ts",
-      "sha256": "0b5ac138d65eac001f8c04553f16c6df4e36f82e595d03038e2305e4f4956407"
+      "sha256": "bf5ddd47faf09edfd77f1dc8dc77da7c50d595e0e68a86fab2c7cc4be5e8f0de"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
+      "algorithmSymbols": [
+        "observeNativeProvider"
+      ],
+      "bytes": 4129,
+      "disposition": "unreferenced-test-source",
+      "language": "ts",
+      "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
+      "path": "tests/saga/native-observation.ts",
+      "sha256": "e05f086e476f08eb6153be687a0daa153a5cfe1ff3e362b74dc3dcaf95c1747e"
     },
     {
       "activationEvidence": [],
@@ -48987,21 +49110,33 @@
       "algorithmSymbols": [
         "businessRows",
         "dispatch",
-        "entity",
         "mustTicket",
-        "nativeObservation",
         "outcomeCount",
         "outcomes",
         "record",
         "request",
         "submit"
       ],
-      "bytes": 45663,
+      "bytes": 36299,
       "disposition": "unreferenced-test-source",
       "language": "ts",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "tests/saga/native-recovery.test.ts",
-      "sha256": "2f6604b9d09b8d2a92ee0fb57a06fb09a274197e2bd2fe83f034ae503315dfcd"
+      "sha256": "5c594c2ce084faa7952f14a7e0aa69a36f0e529fdd837ce84b62ab019125bac8"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
+      "algorithmSymbols": [
+        "result",
+        "vector"
+      ],
+      "bytes": 3756,
+      "disposition": "unreferenced-test-source",
+      "language": "ts",
+      "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
+      "path": "tests/saga/portable-oracle.test.ts",
+      "sha256": "b77a02d2b946daa457082b2689cc322e242023adb904c376b68d19b50b443003"
     },
     {
       "activationEvidence": [],
@@ -49026,12 +49161,12 @@
         "submit",
         "withHistoryProtocol"
       ],
-      "bytes": 111723,
+      "bytes": 115951,
       "disposition": "unreferenced-test-source",
       "language": "ts",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "tests/saga/protocol.test.ts",
-      "sha256": "a3d5a35d0eae9ecf54b2ea2e6b4ac0db96cdf500c56af1d38434721c53386201"
+      "sha256": "36ac27477ea72b1d83fe662034c679b67a6cd5682d4e81d117a0b67f19c96808"
     },
     {
       "activationEvidence": [],

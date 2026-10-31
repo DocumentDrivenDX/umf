@@ -2,7 +2,6 @@
 name: Saga qualification
 on:
   pull_request:
-    paths: ['crates/**', 'bindings/**', 'src/**', 'python/**', 'scripts/**', 'tools/**', 'tests/saga/**', 'fixtures/saga/**', 'spec/**', 'docs/helix/02-design/contracts/**', 'docs/helix/01-frame/user-stories/US-90[56]*', 'docs/helix/03-test/test-plans/STP-90[56]*', '.github/workflows/sagas.yml']
   workflow_dispatch:
 permissions:
   contents: read
@@ -10,9 +9,40 @@ concurrency:
   group: saga-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
-  qualify:
+  impact:
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    outputs:
+      actions: ${{ steps.select.outputs.actions }}
+      saga: ${{ steps.select.outputs.saga }}
+      packages: ${{ steps.select.outputs.packages }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Select qualification from the checked-in impact roster
+        id: select
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT_NAME" = workflow_dispatch ]; then
+            python3 scripts/qualification/sagas-impact.py --all
+          else
+            python3 scripts/qualification/sagas-impact.py --base "$BASE_SHA" --head "$HEAD_SHA"
+          fi
+          python3 -m unittest tests/qualification/test_sagas_impact.py -v
+
+  qualify:
+    needs: impact
+    if: needs.impact.outputs.actions == 'true' || needs.impact.outputs.saga == 'true' || needs.impact.outputs.packages == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
     steps:
       - uses: actions/checkout@v4
         with:
@@ -33,30 +63,52 @@ jobs:
           toolchain: 1.90.0
           targets: wasm32-unknown-unknown
       - run: bun install --frozen-lockfile
-      - run: cargo install wasm-bindgen-cli --version 0.2.100 --locked
-      - run: cargo fetch --locked
+      - name: Check workflow impact gates
+        run: bun test tests/qualification/sagas-workflow.test.ts
+      - if: needs.impact.outputs.saga == 'true' || needs.impact.outputs.packages == 'true'
+        run: cargo install wasm-bindgen-cli --version 0.2.100 --locked
+      - if: needs.impact.outputs.actions == 'true' || needs.impact.outputs.saga == 'true' || needs.impact.outputs.packages == 'true'
+        run: cargo fetch --locked
       - name: Package and boundary checks
         run: |
           python3 scripts/build-saga-package.py --check
           python3 scripts/check-release-versions.py
           bun run check:rust-boundaries
           python3 -m unittest discover -s tests/saga -p 'test_*.py' -v
-      - name: Build and test shared engine
+      - name: Build shared engine and test resources
+        if: needs.impact.outputs.actions == 'true' || needs.impact.outputs.saga == 'true' || needs.impact.outputs.packages == 'true'
         run: |
           cargo test --locked -p umf-codegen saga
           cargo build --locked --release -p umf-core-node -p umf-cli
           cp target/release/libumf_core_node.so bindings/core/node/umf_core_node.node
           bun run typecheck
           bun test tests/saga/registry-resources.test.mjs tests/metamodel/accounted-provenance.test.ts
-      - name: Native PostgreSQL protocol and independent oracle
+      - name: Prepare native test resources once
+        if: needs.impact.outputs.actions == 'true' || needs.impact.outputs.saga == 'true' || needs.impact.outputs.packages == 'true'
         run: |
-          set -o pipefail
+          bun scripts/prepare-action-tests.ts
           handler_image="$(bun -e "import {referenceHandlerImage} from './scripts/actions-reference/sandbox'; console.log(referenceHandlerImage)")"
-          docker pull "$handler_image"
           mkdir -p .cache/saga
           docker image inspect "$handler_image" > .cache/saga/handler-image.json
+          docker image inspect postgres:17.9 > .cache/saga/postgres-image.json
+      - name: Native action reference qualification
+        if: needs.impact.outputs.actions == 'true' || needs.impact.outputs.packages == 'true'
+        run: |
+          set -o pipefail
+          bun scripts/run-tests.ts tests/actions-reference 2>&1 | tee action-native.log
+      - name: Portable action qualification
+        if: needs.impact.outputs.actions == 'true' || needs.impact.outputs.packages == 'true'
+        run: |
+          set -o pipefail
+          bun scripts/run-tests.ts tests/actions 2>&1 | tee action-portable.log
+      - name: Native Saga protocol and independent oracle
+        if: needs.impact.outputs.saga == 'true' || needs.impact.outputs.packages == 'true'
+        run: |
+          set -o pipefail
+          mkdir -p .cache/saga
           bun test tests/saga/*.test.ts 2>&1 | tee saga-native.log
-      - name: Installed SDK and real Chromium
+      - name: Install SDK and qualify portable Saga hosts
+        if: needs.impact.outputs.packages == 'true'
         run: |
           bunx playwright install --with-deps chromium
           bun run build:sdk
@@ -65,6 +117,7 @@ jobs:
           UMF_SAGA_CLI=target/release/umf bun scripts/saga-portable/other-hosts.ts cli
           UMF_SDK_INSTALL_RETAIN_DIR="$RUNNER_TEMP/saga-sdk-consumer" bun scripts/test-sdk-install.ts
       - name: Build and qualify the publishable Linux wheel
+        if: needs.impact.outputs.packages == 'true'
         run: |
           saga_python_version="$(python -c 'import json; print(json.load(open("spec/release.json"))["pythonVersion"])')"
           uv build --wheel --sdist --out-dir "$RUNNER_TEMP/saga-python-raw" python
@@ -78,14 +131,18 @@ jobs:
           selected_wheel="$(find "$RUNNER_TEMP/saga-repaired" -name '*.whl' -type f)"
           auditwheel show --json "$selected_wheel" > "$RUNNER_TEMP/saga-auditwheel-after.json"
           python tools/qualify_python_release_wheel.py --version "$saga_python_version" --platform linux --source-wheel "$raw_wheel" --selected-wheel "$selected_wheel" --before-report "$RUNNER_TEMP/saga-auditwheel-before.json" --after-report "$RUNNER_TEMP/saga-auditwheel-after.json" --tool-artifacts "$RUNNER_TEMP/saga-repair-tools" --tool-lock qualification-inputs/core-0.10.3-wheel-input-lock.json --auditwheel-version "$RUNNER_TEMP/saga-auditwheel-version.txt" --patchelf-version "$RUNNER_TEMP/saga-patchelf-version.txt" --sdist "$RUNNER_TEMP/saga-python-raw/umf_core-$saga_python_version.tar.gz" --output-wheel-directory "$RUNNER_TEMP/saga-python-dist" --receipt "$RUNNER_TEMP/saga-python-dist/selection.json"
-      - name: Installed selected Python wheel
+      - name: Install selected Python wheel
+        if: needs.impact.outputs.packages == 'true'
         run: |
           uv venv "$RUNNER_TEMP/saga-python-consumer"
           wheel_path="$(find "$RUNNER_TEMP/saga-python-dist" -name '*.whl' -type f)"
+          echo "UMF_SAGA_PYTHON_WHEEL=$wheel_path" >> "$GITHUB_ENV"
+          echo "UMF_SAGA_PYTHON_SOURCE_ARCHIVE=$RUNNER_TEMP/saga-python-dist/umf_core-$(python -c 'import json; print(json.load(open("spec/release.json"))["pythonVersion"])').tar.gz" >> "$GITHUB_ENV"
           uv pip install --python "$RUNNER_TEMP/saga-python-consumer/bin/python" "$wheel_path" pytest hatchling
           UMF_SAGA_PYTHON="$RUNNER_TEMP/saga-python-consumer/bin/python" UMF_SAGA_PYTHON_WHEEL="$wheel_path" bun scripts/saga-portable/other-hosts.ts python
           "$RUNNER_TEMP/saga-python-consumer/bin/python" -m pytest python/tests/test_action_runtime_resources.py
       - name: Rebuild and install the source archive without JavaScript tools
+        if: needs.impact.outputs.packages == 'true'
         run: |
           archive_path="$(find "$RUNNER_TEMP/saga-python-dist" -name '*.tar.gz' -type f)"
           mkdir -p "$RUNNER_TEMP/saga-no-js"
@@ -96,10 +153,16 @@ jobs:
           PATH="$RUNNER_TEMP/saga-no-js:$PATH" uv build --wheel --out-dir "$RUNNER_TEMP/saga-sdist-rebuilt" "$archive_path"
           uv venv "$RUNNER_TEMP/saga-sdist-consumer"
           rebuilt_wheel="$(find "$RUNNER_TEMP/saga-sdist-rebuilt" -name '*.whl' -type f)"
+          echo "UMF_SAGA_PYTHON_REBUILT_WHEEL=$rebuilt_wheel" >> "$GITHUB_ENV"
           uv pip install --python "$RUNNER_TEMP/saga-sdist-consumer/bin/python" "$rebuilt_wheel"
-          UMF_SAGA_RESULT_PATH=.cache/saga/portable-python-rebuilt.json UMF_SAGA_PYTHON="$RUNNER_TEMP/saga-sdist-consumer/bin/python" UMF_SAGA_PYTHON_WHEEL="$rebuilt_wheel" bun scripts/saga-portable/other-hosts.ts python
+          UMF_SAGA_HOST_ID=python-rebuilt UMF_SAGA_RESULT_PATH=.cache/saga/portable-python-rebuilt.json UMF_SAGA_PYTHON="$RUNNER_TEMP/saga-sdist-consumer/bin/python" UMF_SAGA_PYTHON_WHEEL="$rebuilt_wheel" bun scripts/saga-portable/other-hosts.ts python
       - name: Bind retained artifacts to the qualified source
-        run: UMF_SAGA_SDK_CONSUMER="${{ runner.temp }}/saga-sdk-consumer" UMF_SAGA_DIST="$RUNNER_TEMP/saga-python-dist" UMF_SAGA_CLI=target/release/umf bun scripts/saga-portable/collect.ts
+        if: needs.impact.outputs.packages == 'true'
+        env:
+          UMF_SAGA_SDK_CONSUMER: ${{ runner.temp }}/saga-sdk-consumer
+          UMF_SAGA_DIST: ${{ runner.temp }}/saga-python-dist
+          UMF_SAGA_CLI: target/release/umf
+        run: bun scripts/saga-portable/collect.ts
       - name: Preserve exact qualification artifacts
         if: always()
         uses: actions/upload-artifact@v4
@@ -108,6 +171,8 @@ jobs:
           include-hidden-files: true
           path: |
             saga-native.log
+            action-native.log
+            action-portable.log
             .cache/saga/
             .cache/sdk-distribution/
             ${{ runner.temp }}/saga-python-dist/
