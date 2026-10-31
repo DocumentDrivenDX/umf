@@ -101,6 +101,76 @@ _:p <http://www.w3.org/ns/shacl#path> <https://example.test/name> ; <http://www.
 }
 
 #[test]
+fn shacl_wire_language_in_supports_ranges_wildcards_and_reports_violation() {
+    let shapes = call(
+        "shacl",
+        shacl_owl_binding::SHACL_PROFILE,
+        "shacl.import",
+        [
+            ("id", Value::string_utf8("language-wire-shapes")),
+            ("baseIRI", Value::string_utf8("https://example.test/")),
+            (
+                "source",
+                Value::string_utf8(
+                    r#"
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix ex: <https://example.test/> .
+ex:english a sh:NodeShape ; sh:targetNode ex:alice ;
+  sh:property [ sh:path ex:name ; sh:languageIn ( "en" ) ] .
+ex:anyLanguage a sh:NodeShape ; sh:targetNode ex:bob ;
+  sh:property [ sh:path ex:name ; sh:languageIn ( "*" ) ] .
+"#,
+                ),
+            ),
+        ],
+    )
+    .unwrap();
+    let report = |data: Value, id: &'static str| {
+        call(
+            "shacl",
+            shacl_owl_binding::SHACL_PROFILE,
+            "shacl.validate",
+            [
+                ("shapes", shapes.clone()),
+                ("data", data),
+                ("id", Value::string_utf8(id)),
+                ("blankNodePolicy", Value::string_utf8("disjoint-inputs")),
+            ],
+        )
+        .unwrap()
+    };
+    let valid = report(
+        rdf_document(
+            "language-wire-valid",
+            r#"@prefix ex: <https://example.test/> . ex:alice ex:name "Hello"@en-US . ex:bob ex:name "Bonjour"@fr ."#,
+        ),
+        "language-wire-valid-report",
+    );
+    assert_eq!(field(&valid, "engineConforms"), Some(&Value::Bool(true)));
+
+    let invalid = report(
+        rdf_document(
+            "language-wire-invalid",
+            r#"@prefix ex: <https://example.test/> . ex:alice ex:name "Hola"@es . ex:bob ex:name "Bonjour"@fr ."#,
+        ),
+        "language-wire-invalid-report",
+    );
+    assert_eq!(field(&invalid, "engineConforms"), Some(&Value::Bool(false)));
+    let report_doc = field(&invalid, "report").unwrap();
+    let mut ctx = Context::ordinary();
+    let runtime = RdfRuntime::new(&mut ctx).unwrap();
+    let quads = rdf::get_rdf_quads(&runtime, report_doc, &mut ctx).unwrap();
+    assert!(
+        matches!(quads, Value::Array(ref rows) if rows.iter().any(|quad| {
+            field(field(quad, "predicate").unwrap(), "value")
+                == Some(&Value::string_utf8("http://www.w3.org/ns/shacl#sourceConstraintComponent"))
+                && field(field(quad, "object").unwrap(), "value")
+                    == Some(&Value::string_utf8("http://www.w3.org/ns/shacl#LanguageInConstraintComponent"))
+        }))
+    );
+}
+
+#[test]
 fn owl_wire_imports_views_and_refuses_unknown_members() {
     let document = call("owl", shacl_owl_binding::OWL_PROFILE, "owl.import", [
         ("id", Value::string_utf8("wire-owl")),

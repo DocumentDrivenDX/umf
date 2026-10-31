@@ -40,6 +40,7 @@ from .serialization import (
 )
 from .validation import inspect_extension_kinds, validate_document
 from .saga import SagaRuntime
+from .postgresql_sql import PostgresqlSqlEngine, create_postgresql_sql_engine
 from .rust_sec_projection import (
     SecProjectionError,
     project_sec_company_facts,
@@ -58,6 +59,7 @@ __all__ = [
     "Element",
     "Extension",
     "Module",
+    "PostgresqlSqlEngine",
     "Reference",
     "Registry",
     "SemanticTypeRegistry",
@@ -67,6 +69,7 @@ __all__ = [
     "Vocabulary",
     "core_schema",
     "current_core_version",
+    "create_postgresql_sql_engine",
     "dataset_source_schema",
     "declare_core_semantic_types",
     "domain_pack_schema",

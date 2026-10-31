@@ -11,6 +11,11 @@ use crate::{Context, EngineError, Utf16, Value};
 use std::collections::BTreeMap;
 
 pub const PARSER_BACKEND_IDENTITY: &str = "@libpg-query/parser@17.6.10";
+/// Identity of the host-only bundled C backend. This is a distinct artifact
+/// identity from the browser WASM package and is admitted only with the
+/// `native-postgresql` feature enabled.
+#[cfg(feature = "native-postgresql")]
+pub const NATIVE_PARSER_BACKEND_IDENTITY: &str = "libpg_query@17-6.1.0";
 pub const PARSER_AST_VERSION: u32 = 170004;
 pub const PARSER_PROTOCOL: &str = "umf.postgresql-parser/1";
 pub const MAX_PARSER_TEXT_UNITS: usize = 4_000_000;

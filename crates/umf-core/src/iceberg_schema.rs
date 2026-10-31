@@ -115,76 +115,7 @@ impl Capabilities for IcebergCapabilities<'_> {
         if token != TOKEN {
             return Ok(Vec::new());
         }
-        let mut diagnostics = vec![diagnostic(
-            "ICEBERG_CONTEXT_UNVERIFIED",
-            "",
-            "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support",
-            Severity::Warning,
-        )];
-        let fields = object(payload).ok_or_else(|| {
-            CapabilityError::Engine(err("ICEBERG_PAYLOAD", "Iceberg payload must be an object"))
-        })?;
-        let profile = field(fields, "profile");
-        if !matches!(profile, Some(Value::String(v)) if v == &Utf16::from(PROFILE)) {
-            return Ok(vec![diagnostic(
-                "ICEBERG_PAYLOAD",
-                "",
-                "Expected pinned Iceberg schema payload",
-                Severity::Error,
-            )]);
-        }
-        let root_value = field(fields, "root").ok_or_else(|| {
-            CapabilityError::Engine(err("ICEBERG_PAYLOAD", "Iceberg payload root is missing"))
-        })?;
-        // The tagged representation schema is also checked by the registered
-        // envelope. NativeJson admission preserves extension fields for edits.
-        let native =
-            NativeJsonTree::from_tagged_value(root_value, ctx).map_err(CapabilityError::Engine)?;
-        if let Some(Value::Object(members)) = Some(payload) {
-            for (key, _) in members {
-                if !["profile", "root"]
-                    .iter()
-                    .any(|known| key == &Utf16::from(*known))
-                {
-                    diagnostics.push(diagnostic(
-                        "ICEBERG_REPRESENTATION",
-                        "",
-                        "Unknown representation fields must remain in UMF",
-                        Severity::Warning,
-                    ));
-                }
-            }
-        }
-        if native.has_representation_extras() {
-            diagnostics.push(diagnostic(
-                "ICEBERG_REPRESENTATION",
-                "/root",
-                "Unknown tagged-tree fields must remain in UMF",
-                Severity::Warning,
-            ));
-        }
-        let mut numeric_ordinal = 0;
-        let view = native_to_shape_value(native.root(), ctx, &mut numeric_ordinal)
-            .map_err(CapabilityError::Engine)?;
-        let grammar_errors = self
-            .datatype
-            .validate(&view, ctx)
-            .map_err(CapabilityError::Engine)?;
-        for issue in grammar_errors {
-            diagnostics.push(Diagnostic {
-                code: Utf16::from("ICEBERG_STRUCTURE"),
-                path: issue.instance_path,
-                python_source_path: false,
-                message: issue.message,
-                severity: Severity::Error,
-                python_text_origin: None,
-            });
-        }
-        if diagnostics.iter().any(|d| d.severity == Severity::Error) {
-            return Ok(diagnostics);
-        }
-        inspect_native(native.root(), &mut diagnostics, ctx).map_err(CapabilityError::Engine)?;
-        Ok(diagnostics)
+        inspect_payload_diagnostics(payload, self.datatype, ctx).map_err(CapabilityError::Engine)
     }
 }
 
@@ -203,6 +134,86 @@ pub fn inspect_iceberg(
     resources
         .engine
         .validate_document(document, &resources.registry, &mut capabilities, ctx)
+}
+
+/// Inspect an extension payload through the same semantic checks used by the
+/// registered package callback. Structural validation remains owned by Registry.
+pub fn inspect_iceberg_payload(
+    payload: &Value,
+    resources: &IcebergSchemaResources,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<Diagnostic>, EngineError> {
+    inspect_payload_diagnostics(payload, &resources.datatype, ctx)
+}
+
+fn inspect_payload_diagnostics(
+    payload: &Value,
+    datatype: &CompiledSchema,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<Diagnostic>, EngineError> {
+    let mut diagnostics = vec![diagnostic(
+        "ICEBERG_CONTEXT_UNVERIFIED",
+        "",
+        "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support",
+        Severity::Warning,
+    )];
+    let fields = object(payload)
+        .ok_or_else(|| err("ICEBERG_PAYLOAD", "Iceberg payload must be an object"))?;
+    let profile = field(fields, "profile");
+    if !matches!(profile, Some(Value::String(v)) if v == &Utf16::from(PROFILE)) {
+        return Ok(vec![diagnostic(
+            "ICEBERG_PAYLOAD",
+            "",
+            "Expected pinned Iceberg schema payload",
+            Severity::Error,
+        )]);
+    }
+    let root_value = field(fields, "root")
+        .ok_or_else(|| err("ICEBERG_PAYLOAD", "Iceberg payload root is missing"))?;
+    // The tagged representation schema is also checked by the registered
+    // envelope. NativeJson admission preserves extension fields for edits.
+    let native = NativeJsonTree::from_tagged_value(root_value, ctx)?;
+    if let Value::Object(members) = payload {
+        for (key, _) in members {
+            if !["profile", "root"]
+                .iter()
+                .any(|known| key == &Utf16::from(*known))
+            {
+                diagnostics.push(diagnostic(
+                    "ICEBERG_REPRESENTATION",
+                    "",
+                    "Unknown representation fields must remain in UMF",
+                    Severity::Warning,
+                ));
+            }
+        }
+    }
+    if native.has_representation_extras() {
+        diagnostics.push(diagnostic(
+            "ICEBERG_REPRESENTATION",
+            "/root",
+            "Unknown tagged-tree fields must remain in UMF",
+            Severity::Warning,
+        ));
+    }
+    let mut numeric_ordinal = 0;
+    let view = native_to_shape_value(native.root(), ctx, &mut numeric_ordinal)?;
+    let grammar_errors = datatype.validate(&view, ctx)?;
+    for issue in grammar_errors {
+        diagnostics.push(Diagnostic {
+            code: Utf16::from("ICEBERG_STRUCTURE"),
+            path: issue.instance_path,
+            python_source_path: false,
+            message: issue.message,
+            severity: Severity::Error,
+            python_text_origin: None,
+        });
+    }
+    if diagnostics.iter().any(|d| d.severity == Severity::Error) {
+        return Ok(diagnostics);
+    }
+    inspect_native(native.root(), &mut diagnostics, ctx)?;
+    Ok(diagnostics)
 }
 
 pub fn import_iceberg_schema(

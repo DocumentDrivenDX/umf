@@ -736,8 +736,8 @@ fn execute(request_value: &Value, ctx: &mut Context<'_>) -> Result<Value, Engine
                 bool_option(request_value, "requireAll", false),
                 bool_option(request_value, "omitDefault", false),
                 bool_option(request_value, "ordered", false),
-                bool_option(request_value, "omitGraph", false),
-                bool_option(request_value, "pruneBlankNodeIdentifiers", false),
+                optional_bool(request_value, "omitGraph"),
+                optional_bool(request_value, "pruneBlankNodeIdentifiers"),
                 bool_option(request_value, "frameDefault", false),
                 bool_option(request_value, "compactArrays", true),
                 bool_option(request_value, "compactToRelative", true),
@@ -777,6 +777,13 @@ fn bool_option(value: &Value, name: &str, default: bool) -> bool {
     match field(value, name) {
         Some(Value::Bool(value)) => *value,
         _ => default,
+    }
+}
+
+fn optional_bool(value: &Value, name: &str) -> Option<bool> {
+    match field(value, name) {
+        Some(Value::Bool(value)) => Some(*value),
+        _ => None,
     }
 }
 

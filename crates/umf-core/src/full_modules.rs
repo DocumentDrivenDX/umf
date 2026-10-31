@@ -95,6 +95,10 @@ pub mod postgresql_catalog;
 pub mod parser_backend_protocol;
 #[cfg(feature = "embedded-adapters")]
 pub mod postgresql_sql_runtime;
+#[cfg(feature = "native-postgresql")]
+mod postgresql_proto_json;
+#[cfg(feature = "native-postgresql")]
+pub mod pg_query_native_ffi;
 #[cfg(feature = "embedded-adapters")]
 pub mod json_schema_adapter;
 #[cfg(feature = "embedded-adapters")]

@@ -420,7 +420,7 @@ jobs:
       - run: python -m pip install /tmp/r3-core-runtime/*.whl /tmp/r3-access-runtime/*.whl pydantic==2.14.1
       - name: Build the shared Rust compiler binding
         run: |
-          cargo build --locked --release -p umf-core-node
+          cargo build --locked --release -p umf-core-node --features umf-core-node/native-postgresql
           cp target/release/libumf_core_node.so bindings/core/node/umf_core_node.node
       - name: Exercise generated Python creation and codecs with the installed runtime
         env:

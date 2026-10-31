@@ -101,7 +101,7 @@ fn generalized_dataset(source: &str) -> Value {
 }
 
 #[test]
-fn frame_is_callable_and_refuses_unsupported_semantics() {
+fn frame_is_callable_and_applies_supported_options() {
     let document = imported_jsonld();
     let report = call(
         "jsonld.frame",
@@ -129,27 +129,66 @@ fn frame_is_callable_and_refuses_unsupported_semantics() {
     );
     assert_eq!(field(&report, "source"), Some(&document));
 
-    assert!(call(
+    let with_options = call(
+        "jsonld.frame",
+        [
+            ("document", document.clone()),
+            ("frame", Value::string_utf8(r#"{"@context":{"name":"https://schema.org/name","nickname":"https://schema.org/nickname"},"name":{},"nickname":{"@default":"Ada Lovelace"}}"#)),
+            ("lossPolicy", Value::string_utf8("report")),
+            ("omitGraph", Value::Bool(true)),
+            ("pruneBlankNodeIdentifiers", Value::Bool(true)),
+            ("frameDefault", Value::Bool(true)),
+            ("compactArrays", Value::Bool(false)),
+            ("compactToRelative", Value::Bool(false)),
+        ]
+    ).unwrap();
+    assert_eq!(
+        field(&with_options, "status"),
+        Some(&Value::string_utf8("candidate"))
+    );
+    let with_default = call(
+        "jsonld.export",
+        [(
+            "document",
+            field(&with_options, "candidate").unwrap().clone(),
+        )],
+    )
+    .unwrap();
+    assert!(
+        matches!(with_default, Value::String(ref text) if text.to_utf8().unwrap().contains("Ada Lovelace"))
+    );
+
+    let omit_default = call(
         "jsonld.frame",
         [
             ("document", document),
-            ("frame", Value::string_utf8("{}")),
+            ("frame", Value::string_utf8(r#"{"@context":{"name":"https://schema.org/name","nickname":"https://schema.org/nickname"},"name":{},"nickname":{"@default":"Ada Lovelace"}}"#)),
             ("lossPolicy", Value::string_utf8("report")),
             ("omitDefault", Value::Bool(true)),
-        ]
+        ],
+    ).unwrap();
+    let without_default = call(
+        "jsonld.export",
+        [(
+            "document",
+            field(&omit_default, "candidate").unwrap().clone(),
+        )],
     )
-    .is_err());
+    .unwrap();
+    assert!(
+        matches!(without_default, Value::String(ref text) if !text.to_utf8().unwrap().contains("Ada Lovelace"))
+    );
 
-    let graph_preservation = call(
+    // Structured defaults need JSON-LD value-object expansion and are refused
+    // explicitly until that representation is implemented.
+    assert!(call(
         "jsonld.frame",
         [
             ("document", imported_jsonld()),
-            ("frame", Value::string_utf8("{}")),
+            ("frame", Value::string_utf8(r#"{"@context":{"name":"https://schema.org/name"},"name":{"@default":{"nested":true}}}"#)),
             ("lossPolicy", Value::string_utf8("report")),
-            ("omitGraph", Value::Bool(true)),
         ],
-    );
-    assert!(graph_preservation.is_err());
+    ).is_err());
 }
 
 #[test]

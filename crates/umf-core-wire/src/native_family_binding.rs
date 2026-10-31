@@ -7,6 +7,7 @@ use umf_core::{Context, EngineError, Utf16, Value};
 
 pub const PROFILE: &str = "umf.native-family-dispatch/1";
 pub const FAMILIES: &[&str] = &[
+    "avro",
     "openapi",
     "linkml",
     "odcs",
@@ -15,6 +16,7 @@ pub const FAMILIES: &[&str] = &[
     "sqlserver",
     "shacl",
     "owl",
+    "rdf",
 ];
 
 fn bad_family() -> String {
@@ -28,6 +30,20 @@ fn bad_family() -> String {
 /// Describe callable family operations without a host-owned profile table.
 pub fn metadata_wire(family: &str) -> String {
     let (profile, operations): (&str, &[&str]) = match family {
+        "avro" => (
+            crate::avro_binding::PROFILE,
+            &[
+                "import",
+                "inspect",
+                "inspectPayload",
+                "fields",
+                "export",
+                "exportBundle",
+                "getNode",
+                "editNode",
+                "proposeNodeEdit",
+            ],
+        ),
         "openapi" => (
             crate::openapi_binding::PROFILE,
             &[
@@ -156,6 +172,29 @@ pub fn metadata_wire(family: &str) -> String {
                 "getDeclarations",
             ],
         ),
+        "rdf" => (
+            crate::rdf_binding::PROFILE,
+            &[
+                "importNQuads",
+                "importTurtle",
+                "importTriG",
+                "inspect",
+                "getQuads",
+                "exportNQuads",
+                "exportTurtle",
+                "exportTriG",
+                "getNamedGraphs",
+                "editQuad",
+                "renameIri",
+                "mergeDatasets",
+                "inspectGeneralized",
+                "importGeneralizedDataset",
+                "exportGeneralizedDataset",
+                "getGeneralizedQuads",
+                "editGeneralizedQuad",
+                "inspectPayload",
+            ],
+        ),
         _ => return bad_family(),
     };
     let operations = operations
@@ -188,6 +227,7 @@ pub fn execute_wire_with_control(
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
     match family {
+        "avro" => crate::avro_binding::execute_wire_with_control(wire, control),
         "openapi" => crate::openapi_binding::execute_wire_with_control(wire, control),
         "linkml" => crate::native_contract_binding::execute_linkml_wire_with_control(wire, control),
         "odcs" => crate::native_contract_binding::execute_odcs_wire_with_control(wire, control),
@@ -196,6 +236,7 @@ pub fn execute_wire_with_control(
         "sqlserver" => crate::sqlserver_binding::execute_wire_with_control(wire, control),
         "shacl" => crate::shacl_owl_binding::execute_shacl_wire_with_control(wire, control),
         "owl" => crate::shacl_owl_binding::execute_owl_wire_with_control(wire, control),
+        "rdf" => crate::rdf_binding::execute_wire_with_control(wire, control),
         _ => bad_family(),
     }
 }

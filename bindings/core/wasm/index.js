@@ -1073,7 +1073,7 @@ export function createIcebergSchemaEngine(module, options = {}) {
     hostWork?.(responseText.length);
     const envelope = JSON.parse(responseText);
     const failure = resultError(envelope);
-    if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+    if (failure) throw nativeCoreError(failure);
     hostWork?.(envelope.wire.length);
     return fromWire(JSON.parse(envelope.wire), hostWork);
   };
@@ -1081,6 +1081,7 @@ export function createIcebergSchemaEngine(module, options = {}) {
     importSchema(source, id) { return call('import', {source, id}); },
     exportSchema(document) { return call('export', {document}); },
     inspect(document) { return call('inspect', {document}); },
+    inspectPayload(payload) { return call('inspectPayload', {payload}); },
     getNode(document, pointer) { return call('getNode', {document, pointer}); },
     proposeNodeEdit(document, pointer, replacement) { return call('proposeNodeEdit', {document, pointer, replacement}); },
   });

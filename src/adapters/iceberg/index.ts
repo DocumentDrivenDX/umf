@@ -1,15 +1,14 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
-import manifest from '../../../spec/extensions/iceberg/package.json';
+import {ICEBERG_EXTENSION, icebergPackage} from './package';
+export {ICEBERG_EXTENSION, icebergPackage} from './package';
 import grammar from '../../../spec/extensions/iceberg/datatype-schema.json';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
 import {createValidator} from '../../validation/schema';
 import {copyJson} from '../../model/json';
 import {parseNativeJson,renderTree,nativePointer,treeChild,type NativeJson} from '../../model/native-json';
-import {UmfError,pointer,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../../model/types';
-export const ICEBERG_EXTENSION='umf.iceberg';
-export const icebergPackage=manifest as unknown as ExtensionPackage;
+import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../../model/types';
 type Payload={profile:'iceberg-schema-json';root:NativeJson};
 let check:ReturnType<ReturnType<typeof createValidator>['compile']>|undefined;
 function inspect(value:Json):Diagnostic[]{

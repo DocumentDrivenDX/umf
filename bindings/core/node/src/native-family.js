@@ -4,6 +4,7 @@ import {encodeRequestWire,fromWire,resultError} from './wire.js';
 export const NATIVE_FAMILY_PROFILE='umf.native-family-dispatch/1';
 
 const FAMILIES=Object.freeze({
+ avro:{profile:'umf.avro-wire/1',operations:['import','inspect','inspectPayload','fields','export','exportBundle','getNode','editNode','proposeNodeEdit']},
  openapi:{profile:'umf.openapi-wire/1',operations:['import','validate','inspectPayload','export','exportBundle','getNode','lookupResource','extractSchema','indexSchemas','resolveSchemaReference','resolveDynamicReference','resolveObjectReference','edit']},
  linkml:{profile:'umf.native-contract-wire/1',operations:['import','inspect','inspectPayload','export','getNode','editNode','classSlots','slotValues','importContext','importMerge']},
  odcs:{profile:'umf.native-contract-wire/1',operations:['import','inspect','inspectPayload','export','getNode','editNode','resolveReference','relationships','renameElement']},

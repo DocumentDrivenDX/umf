@@ -24,8 +24,12 @@ pub mod postgresql_catalog_binding;
 pub mod postgresql_sql_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod postgresql_parser_binding;
+#[cfg(feature = "native-postgresql")]
+pub mod postgresql_native_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod native_family_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod avro_binding;
 pub mod access_rrf_binding;
 pub mod access_temporal_binding;
 pub mod arrow_ipc_capture_binding {
@@ -1000,7 +1004,7 @@ pub fn execute_iceberg_wire_with_control(
     let result = (|| {
         use umf_core::iceberg_schema::{
             export_iceberg_schema, get_iceberg_node, import_iceberg_schema, inspect_iceberg,
-            propose_iceberg_node_edit,
+            inspect_iceberg_payload, propose_iceberg_node_edit,
         };
 
         let mut ctx = Context::ordinary().with_host_control(control);
@@ -1016,6 +1020,7 @@ pub fn execute_iceberg_wire_with_control(
                 | "iceberg.schema.inspect"
                 | "iceberg.schema.getNode"
                 | "iceberg.schema.proposeNodeEdit"
+                | "iceberg.schema.inspectPayload"
         ) {
             return Err(fail("REQUEST", "Unknown Iceberg schema operation"));
         }
@@ -1029,6 +1034,10 @@ pub fn execute_iceberg_wire_with_control(
             field(&request, "document")
                 .ok_or_else(|| fail("REQUEST", "Iceberg document is required"))
         };
+        let payload = || {
+            field(&request, "payload")
+                .ok_or_else(|| fail("REQUEST", "Iceberg payload is required"))
+        };
         let value = match op.as_str() {
             "iceberg.schema.import" => {
                 import_iceberg_schema(text("source")?.units(), text("id")?, &resources, &mut ctx)?
@@ -1039,6 +1048,12 @@ pub fn execute_iceberg_wire_with_control(
             "iceberg.schema.inspect" => {
                 iceberg_validation_value(inspect_iceberg(document()?, &resources, &mut ctx)?)
             }
+            "iceberg.schema.inspectPayload" => Value::Array(
+                inspect_iceberg_payload(payload()?, &resources, &mut ctx)?
+                    .into_iter()
+                    .map(iceberg_diagnostic_value)
+                    .collect(),
+            ),
             "iceberg.schema.getNode" => {
                 get_iceberg_node(document()?, text("pointer")?, &resources, &mut ctx)?
                     .tagged_value_preserving_extras(&mut ctx)?

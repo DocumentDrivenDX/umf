@@ -611,13 +611,24 @@ fn field_mut<'a>(value: &'a mut Value, name: &str) -> Option<&'a mut Value> {
 }
 
 fn check_backend(backend: &dyn PostgresqlParserBackend) -> Result<(), EngineError> {
-    if backend.identity() != PARSER_BACKEND_IDENTITY {
+    if !backend_identity_is_admitted(backend.identity()) {
         return Err(fail(
             "POSTGRESQL_BACKEND",
             "Expected the explicitly admitted pinned parser backend",
         ));
     }
     Ok(())
+}
+
+fn backend_identity_is_admitted(identity: &str) -> bool {
+    if identity == PARSER_BACKEND_IDENTITY {
+        return true;
+    }
+    #[cfg(feature = "native-postgresql")]
+    if identity == crate::parser_backend_protocol::NATIVE_PARSER_BACKEND_IDENTITY {
+        return true;
+    }
+    false
 }
 
 fn object(fields: Vec<(&str, Value)>) -> Value {
@@ -644,7 +655,7 @@ pub fn edit_sql_round_trip(
     backend: &dyn PostgresqlParserBackend,
     ctx: &mut Context<'_>,
 ) -> Result<SqlEditRoundTrip, EngineError> {
-    if backend.identity() != PARSER_BACKEND_IDENTITY {
+    if !backend_identity_is_admitted(backend.identity()) {
         return Err(fail(
             "POSTGRESQL_BACKEND",
             "Expected the admitted PostgreSQL parser backend",

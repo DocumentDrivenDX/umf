@@ -1483,11 +1483,32 @@ fn sqlserver_run(args: &[String]) -> Result<(), String> {
 
 #[cfg(feature = "embedded-adapters")]
 fn postgresql_run(args: &[String]) -> Result<(), String> {
+    if args.first().map(String::as_str) == Some("sql") {
+        #[cfg(feature = "native-postgresql")]
+        {
+            return postgresql_sql_run(&args[1..]);
+        }
+        #[cfg(not(feature = "native-postgresql"))]
+        {
+            return Err("PostgreSQL SQL parsing requires the native-postgresql feature".to_owned());
+        }
+    }
     native_adapter_run(
         "postgresql",
         umf_core_wire::postgresql_catalog_binding::PROFILE,
         "[\"postgresql.import\",\"postgresql.inspect\",\"postgresql.export\",\"postgresql.columns\",\"postgresql.getNode\",\"postgresql.findRelation\",\"postgresql.edit\",\"postgresql.reconstruction\",\"postgresql.dependencies\",\"postgresql.facetType\",\"postgresql.facetPredicate\",\"postgresql.facetCatalog\",\"postgresql.cardinalityCatalog\",\"postgresql.cardinalityType\",\"postgresql.keyCatalog\",\"postgresql.resolvedPredicate\",\"postgresql.cardinalityCorrelate\",\"postgresql.facetCorrelate\"]",
         umf_core_wire::postgresql_catalog_binding::execute_wire_with_control,
+        args,
+    )
+}
+
+#[cfg(feature = "native-postgresql")]
+fn postgresql_sql_run(args: &[String]) -> Result<(), String> {
+    native_adapter_run(
+        "postgresql-sql",
+        umf_core_wire::postgresql_native_binding::PROFILE,
+        "[\"postgresql-sql.import\",\"postgresql-sql.inspect\",\"postgresql-sql.export\",\"postgresql-sql.getSource\",\"postgresql-sql.getNode\",\"postgresql-sql.editNode\",\"postgresql-sql.inspectPayload\",\"postgresql-sql.validateAst\"]",
+        umf_core_wire::postgresql_native_binding::execute_wire_with_control,
         args,
     )
 }

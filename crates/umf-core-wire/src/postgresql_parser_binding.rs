@@ -216,7 +216,22 @@ pub fn complete_sql_export(
         ctx,
     )?;
     match (phase.as_str(), response) {
-        ("codec", ParserResponse::CodecRoundTripped { .. }) => {
+        (
+            "codec",
+            ParserResponse::CodecRoundTripped {
+                tree: round_tripped,
+            },
+        ) => {
+            umf_core::postgresql_sql_runtime::validate_ast(&round_tripped, ctx)?;
+            let expected = umf_core::postgresql_sql_runtime::canonical(&tree, false, ctx)?;
+            let actual = umf_core::postgresql_sql_runtime::canonical(&round_tripped, false, ctx)?;
+            if actual != expected {
+                return Err(EngineError::new(
+                    "POSTGRESQL_CODEC_LOSS",
+                    Utf16::default(),
+                    "Native Protobuf conversion changed PostgreSQL AST content",
+                ));
+            }
             let next_tree = umf_core::copy_json(&tree, ctx)?;
             let next = object(vec![
                 ("kind", Value::string_utf8("sql-export")),

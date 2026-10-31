@@ -27,5 +27,33 @@ class NativeAdapterBaseline(unittest.TestCase):
         self.assertEqual(limited.exception.code, "RESOURCE_LIMIT")
 
 
+    def test_public_rdf_edit_export_and_refusal(self):
+        self.assertIn("importGeneralizedDataset", adapter_info("rdf")["operations"])
+        source = '<https://example.test/s> <https://example.test/p> "before" .\n'
+        document = execute_adapter("rdf", "importNQuads", source=source,
+                                   options={"id": "python-rdf"})
+        payload = document["modules"][0]["elements"][0]["extensions"]["umf.rdf"]
+        diagnostics = execute_adapter("rdf", "inspectPayload",
+                                      family="rdf", payload=payload)
+        self.assertIn("RDF_CONTEXT", [item["code"] for item in diagnostics])
+        self.assertTrue(all(item["severity"] != "error" for item in diagnostics))
+        quads = execute_adapter("rdf", "getQuads", document=document)
+        self.assertEqual(len(quads), 1)
+        replacement = {**quads[0], "object": {
+            "kind": "literal", "value": "after",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string",
+        }}
+        proposal = execute_adapter("rdf", "editQuad", document=document,
+                                   index=0, replacement=replacement)
+        self.assertTrue(proposal["validation"]["valid"])
+        self.assertIn('"after"', execute_adapter(
+            "rdf", "exportNQuads", document=proposal["document"]))
+        self.assertEqual(execute_adapter("rdf", "exportNQuads", document=document), source)
+        with self.assertRaises(UmfCoreError) as refused:
+            execute_adapter("rdf", "importNQuads", source="invalid nquads",
+                            options={"id": "invalid"})
+        self.assertEqual(refused.exception.code, "RDF_SYNTAX")
+
+
 if __name__ == "__main__":
     unittest.main()

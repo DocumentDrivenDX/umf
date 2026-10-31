@@ -875,6 +875,46 @@ fn opaque_parser_session_runs_three_host_steps_for_sql_edit() {
 }
 
 #[test]
+fn parser_session_export_refuses_lossy_codec_response() {
+    use umf_core::context::TransportUsage;
+    use umf_core::parser_backend_protocol::ParserResponse;
+
+    let mut ctx = Context::ordinary();
+    let ast_json: serde_json::Value = serde_json::from_str(include_str!(
+        "../../../fixtures/postgresql/select-one-ast.json"
+    ))
+    .unwrap();
+    let document = umf_core::postgresql_sql_runtime::document_from_ast(
+        &Utf16::from("SELECT 1"),
+        &Utf16::from("lossy-codec"),
+        &json_to_value(ast_json.clone()),
+        &mut ctx,
+    )
+    .unwrap();
+    let mut session = umf_core::parser_backend_protocol::ParserSession::default();
+    let request = umf_core_wire::postgresql_parser_binding::prepare_sql_export(
+        &mut session,
+        &document,
+        TransportUsage::default(),
+        &mut ctx,
+    )
+    .unwrap();
+    let mut lossy_ast = ast_json;
+    lossy_ast["stmts"][0]["stmt"]["SelectStmt"]["targetList"][0]["ResTarget"]["val"]["A_Const"]
+        ["ival"]["ival"] = serde_json::json!(2);
+    let error = umf_core_wire::postgresql_parser_binding::complete_sql_export(
+        &mut session,
+        as_string(member(&request, "token")),
+        ParserResponse::CodecRoundTripped {
+            tree: json_to_value(lossy_ast),
+        },
+        &mut ctx,
+    )
+    .unwrap_err();
+    assert_eq!(error.code, "POSTGRESQL_CODEC_LOSS");
+}
+
+#[test]
 fn parser_session_import_and_export_keep_state_across_host_boundary() {
     use umf_core::context::TransportUsage;
     use umf_core::parser_backend_protocol::ParserResponse;

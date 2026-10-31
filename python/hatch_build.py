@@ -377,6 +377,8 @@ class CustomBuildHook(BuildHookInterface):
             "umf-core-python",
             "-p",
             "umf-cli",
+            "--features",
+            "umf-core-python/native-postgresql,umf-cli/native-postgresql",
         ]
         native_target = None
         platform_tag = sysconfig.get_platform().replace("-", "_").replace(".", "_")

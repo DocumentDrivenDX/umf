@@ -24,6 +24,7 @@ optional = true
 default = ["codegen", "embedded-adapters"]
 codegen = ["dep:umf-codegen", "umf-core-wire/codegen"]
 embedded-adapters = ["umf-core/embedded-adapters", "umf-core-wire/embedded-adapters"]
+native-postgresql = ["embedded-adapters", "umf-core/native-postgresql", "umf-core-wire/native-postgresql"]
 # Enables a disposable child-process probe for allocator tests. Never enable in published binaries.
 allocator-test = ["codegen"]
 

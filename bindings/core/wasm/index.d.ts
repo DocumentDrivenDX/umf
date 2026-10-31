@@ -441,6 +441,8 @@ export interface IcebergSchemaEngine {
   exportSchema(document: unknown): string;
   /** Inspect the pinned standalone schema subset; completeness remains false. */
   inspect(document: unknown): IcebergSchemaValidation;
+  /** Inspect an Iceberg payload through the native package validator for Registry use. */
+  inspectPayload(payload: unknown): {code: string; path: string; message: string; severity: 'error' | 'warning'}[];
   /** Return a copied tagged native JSON node at an RFC 6901 pointer. */
   getNode(document: unknown, pointer: string): unknown;
   /** Return a validated candidate document; this does not commit or mutate input. */
@@ -631,6 +633,7 @@ export declare function createGraphqlEngine(module: any, options?: {profile?: 'c
 export declare const NATIVE_FAMILY_PROFILE: 'umf.native-family-dispatch/1';
 export type NativeFamilyOperation = (fields?: Record<string, unknown>) => unknown;
 export interface NativeFamilyOperations {
+ readonly avro: Readonly<Record<'import'|'inspect'|'inspectPayload'|'fields'|'export'|'exportBundle'|'getNode'|'editNode'|'proposeNodeEdit', NativeFamilyOperation>>;
  readonly openapi: Readonly<Record<'import'|'validate'|'inspectPayload'|'export'|'exportBundle'|'getNode'|'lookupResource'|'extractSchema'|'indexSchemas'|'resolveSchemaReference'|'resolveDynamicReference'|'resolveObjectReference'|'edit', NativeFamilyOperation>>;
  readonly linkml: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getNode'|'editNode'|'classSlots'|'slotValues'|'importContext'|'importMerge', NativeFamilyOperation>>;
  readonly odcs: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getNode'|'editNode'|'resolveReference'|'relationships'|'renameElement', NativeFamilyOperation>>;

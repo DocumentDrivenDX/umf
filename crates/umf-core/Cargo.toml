@@ -18,6 +18,7 @@ full-core = []
 # graph, including when default features are disabled.
 metamodel-compiler = []
 parquet-test-hooks = []
+native-postgresql = ["embedded-adapters", "dep:pg_query"]
 
 [dependencies]
 num-bigint = "=0.4.8"
@@ -34,6 +35,7 @@ json-ld = { version = "=0.21.4", optional = true }
 futures = { version = "=0.3.34", optional = true }
 contextual = { version = "=0.1.6", optional = true }
 regex = { version = "=1.13.1", optional = true }
+pg_query = { version = "=6.1.1", optional = true }
 
 oxttl = { version = "=0.2.5", path = "vendor/oxttl", default-features = false, optional = true }
 oxrdf = { version = "=0.3.5", path = "vendor/oxrdf", default-features = false, optional = true }

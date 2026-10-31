@@ -11,7 +11,7 @@ if(process.platform==='darwin'){
   env.CARGO_PROFILE_RELEASE_STRIP='none';
   env.RUSTFLAGS=[env.RUSTFLAGS??'','-C debuginfo=2','-C strip=none'].join(' ').trim();
 }
-const child=Bun.spawn([cargo,'build','--locked','--offline','--release','-p','umf-core-node'],{
+const child=Bun.spawn([cargo,'build','--locked','--offline','--release','-p','umf-core-node','--features','native-postgresql'],{
   cwd:root,env,
   stdout:'inherit',stderr:'inherit',
 });

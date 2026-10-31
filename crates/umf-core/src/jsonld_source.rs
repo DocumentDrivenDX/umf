@@ -1947,6 +1947,204 @@ fn frame_context_iri<'a>(frame: &'a NativeJsonNode, term: &Utf16) -> Option<&'a 
     }
 }
 
+fn frame_has_default(pattern: &NativeJsonNode) -> bool {
+    matches!(
+        pattern,
+        NativeJsonNode::Object(fields)
+            if fields.iter().any(|(key, _)| key == &Utf16::from("@default"))
+    )
+}
+
+fn frame_default_value(pattern: &NativeJsonNode) -> Option<&NativeJsonNode> {
+    let NativeJsonNode::Object(fields) = pattern else {
+        return None;
+    };
+    fields
+        .iter()
+        .find(|(key, _)| key == &Utf16::from("@default"))
+        .map(|(_, value)| value)
+}
+
+fn validate_supported_frame_defaults(
+    node: &NativeJsonNode,
+    depth: usize,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    if depth > ctx.limits().max_depth {
+        return Err(error("LIMIT", "Frame depth limit exceeded"));
+    }
+    ctx.charge_work(1, Utf16::default())?;
+    match node {
+        NativeJsonNode::Object(fields) => {
+            for (key, value) in fields {
+                ctx.charge_work(1, Utf16::default())?;
+                if key == &Utf16::from("@context") {
+                    continue;
+                }
+                if key == &Utf16::from("@default")
+                    && !matches!(
+                        value,
+                        NativeJsonNode::Null
+                            | NativeJsonNode::Boolean(_)
+                            | NativeJsonNode::String(_)
+                            | NativeJsonNode::Number(_)
+                    )
+                {
+                    return Err(error(
+                        "JSONLD_OPTIONS",
+                        "Structured @default values are not supported by this framing profile",
+                    ));
+                }
+                validate_supported_frame_defaults(value, depth + 1, ctx)?;
+            }
+        }
+        NativeJsonNode::Array(items) => {
+            for item in items {
+                validate_supported_frame_defaults(item, depth + 1, ctx)?;
+            }
+        }
+        _ => {}
+    }
+    Ok(())
+}
+
+fn add_frame_defaults(
+    node: &mut NativeJsonNode,
+    frame: &NativeJsonNode,
+    omit_default: bool,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    if omit_default {
+        return Ok(());
+    }
+    let (NativeJsonNode::Object(node_fields), NativeJsonNode::Object(frame_fields)) = (node, frame)
+    else {
+        return Ok(());
+    };
+    let mut additions = Vec::new();
+    for (key, pattern) in frame_fields {
+        if key.units().starts_with(Utf16::from("@").units()) {
+            continue;
+        }
+        let Some(default) = frame_default_value(pattern) else {
+            continue;
+        };
+        let expanded_key = frame_context_iri(frame, key).unwrap_or(key);
+        if node_fields.iter().any(|(name, _)| name == expanded_key) {
+            continue;
+        }
+        // JSON-LD defaults are value objects. Restrict this implementation to
+        // scalar defaults so a frame cannot silently turn a structured value
+        // into a different expanded representation.
+        if !matches!(
+            default,
+            NativeJsonNode::Null
+                | NativeJsonNode::Boolean(_)
+                | NativeJsonNode::String(_)
+                | NativeJsonNode::Number(_)
+        ) {
+            return Err(error(
+                "JSONLD_OPTIONS",
+                "Structured @default values are not supported by this framing profile",
+            ));
+        }
+        let mut value = clone_native_node(default, ctx)?;
+        // A default of null is represented as a native JSON null value object.
+        let value_object = NativeJsonNode::Object(vec![(Utf16::from("@value"), value)]);
+        let key = clone_text(expanded_key, ctx)?;
+        ctx.charge_work(1, Utf16::default())?;
+        additions.push((key, NativeJsonNode::Array(vec![value_object])));
+    }
+    node_fields.extend(additions);
+    Ok(())
+}
+
+fn collect_blank_frame_counts(
+    node: &NativeJsonNode,
+    counts: &mut BTreeMap<Utf16, usize>,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    match node {
+        NativeJsonNode::Object(fields) => {
+            let reference_only = fields.len() == 1 && fields[0].0 == Utf16::from("@id");
+            if let Some(NativeJsonNode::String(id)) = native_member(node, "@id") {
+                if id.units().starts_with(Utf16::from("_").units()) {
+                    ctx.charge_text(id.len(), Utf16::default())?;
+                    ctx.charge_work(1, Utf16::default())?;
+                    *counts.entry(id.clone()).or_default() += 1;
+                }
+            }
+            if !reference_only {
+                if let Some(types) = native_member(node, "@type") {
+                    let mut add_type = |id: &Utf16| -> Result<(), EngineError> {
+                        if id.units().starts_with(Utf16::from("_").units()) {
+                            ctx.charge_text(id.len(), Utf16::default())?;
+                            ctx.charge_work(1, Utf16::default())?;
+                            *counts.entry(id.clone()).or_default() += 1;
+                        }
+                        Ok(())
+                    };
+                    match types {
+                        NativeJsonNode::String(id) => add_type(id)?,
+                        NativeJsonNode::Array(items) => {
+                            for item in items {
+                                if let NativeJsonNode::String(id) = item {
+                                    add_type(id)?;
+                                }
+                            }
+                        }
+                        _ => {}
+                    }
+                }
+            }
+            for (_, value) in fields {
+                collect_blank_frame_counts(value, counts, ctx)?;
+            }
+        }
+        NativeJsonNode::Array(values) => {
+            for value in values {
+                collect_blank_frame_counts(value, counts, ctx)?;
+            }
+        }
+        _ => {}
+    }
+    Ok(())
+}
+
+fn prune_singleton_blank_identifiers(
+    node: &mut NativeJsonNode,
+    counts: &BTreeMap<Utf16, usize>,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    match node {
+        NativeJsonNode::Object(fields) => {
+            let reference_only = fields.len() == 1 && fields[0].0 == Utf16::from("@id");
+            if !reference_only {
+                let remove = fields.iter().any(|(key, value)| {
+                    key == &Utf16::from("@id")
+                        && matches!(value, NativeJsonNode::String(id)
+                            if id.units().starts_with(Utf16::from("_").units())
+                                && counts.get(id).copied().unwrap_or(0) == 1)
+                });
+                if remove {
+                    ctx.charge_work(fields.len(), Utf16::default())?;
+                    fields.retain(|(key, _)| key != &Utf16::from("@id"));
+                }
+            }
+            for (_, value) in fields {
+                prune_singleton_blank_identifiers(value, counts, ctx)?;
+            }
+        }
+        NativeJsonNode::Array(values) => {
+            for value in values {
+                prune_singleton_blank_identifiers(value, counts, ctx)?;
+            }
+        }
+        _ => {}
+    }
+    Ok(())
+}
+
 fn frame_matches(node: &NativeJsonNode, frame: &NativeJsonNode, require_all: bool) -> bool {
     let NativeJsonNode::Object(criteria) = frame else {
         return false;
@@ -1989,10 +2187,13 @@ fn frame_matches(node: &NativeJsonNode, frame: &NativeJsonNode, require_all: boo
             );
         } else {
             let expanded_key = frame_context_iri(frame, key).unwrap_or(key);
-            tests.push(matches!(
-                node,
-                NativeJsonNode::Object(fields) if fields.iter().any(|(name, _)| name == expanded_key)
-            ));
+            tests.push(
+                frame_has_default(pattern)
+                    || matches!(
+                        node,
+                        NativeJsonNode::Object(fields) if fields.iter().any(|(name, _)| name == expanded_key)
+                    ),
+            );
         }
     }
     if tests.is_empty() {
@@ -2005,6 +2206,50 @@ fn frame_matches(node: &NativeJsonNode, frame: &NativeJsonNode, require_all: boo
     }
 }
 
+#[derive(Clone, Copy)]
+struct FrameCandidateRef<'a> {
+    node: &'a NativeJsonNode,
+    graph_id: Option<&'a Utf16>,
+}
+
+fn collect_merged_frame_candidates<'a>(
+    node: &'a NativeJsonNode,
+    graph_id: Option<&'a Utf16>,
+    out: &mut Vec<FrameCandidateRef<'a>>,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    match node {
+        NativeJsonNode::Array(items) => {
+            for item in items {
+                collect_merged_frame_candidates(item, graph_id, out, ctx)?;
+            }
+        }
+        NativeJsonNode::Object(fields) => {
+            if let Some(NativeJsonNode::Array(graph)) = native_member(node, "@graph") {
+                if graph_id.is_some()
+                    || fields
+                        .iter()
+                        .any(|(key, _)| key != &Utf16::from("@id") && key != &Utf16::from("@graph"))
+                {
+                    return Err(error(
+                        "JSONLD_OPTIONS",
+                        "Nested or annotated named graph containers are not supported by this framing profile",
+                    ));
+                }
+                let nested_graph_id = native_string(native_member(node, "@id")).or(graph_id);
+                for item in graph {
+                    collect_merged_frame_candidates(item, nested_graph_id, out, ctx)?;
+                }
+            } else {
+                ctx.charge_work(1, Utf16::default())?;
+                out.push(FrameCandidateRef { node, graph_id });
+            }
+        }
+        _ => {}
+    }
+    Ok(())
+}
+
 /// Source proposal for the JSON-LD framing subset expressed by the explicit
 /// frame identity/type/property selectors. It preserves native number tokens.
 pub fn propose_jsonld_framing(
@@ -2015,8 +2260,8 @@ pub fn propose_jsonld_framing(
     require_all: bool,
     omit_default: bool,
     ordered: bool,
-    omit_graph: bool,
-    prune_blank_node_identifiers: bool,
+    omit_graph: Option<bool>,
+    prune_blank_node_identifiers: Option<bool>,
     frame_default: bool,
     compact_arrays: bool,
     compact_to_relative: bool,
@@ -2027,18 +2272,6 @@ pub fn propose_jsonld_framing(
     if loss_policy != &Utf16::from("report") && loss_policy != &Utf16::from("reject") {
         return Err(error("JSONLD_OPTIONS", "Invalid framing loss policy"));
     }
-    if omit_default || frame_default || !compact_arrays || !compact_to_relative {
-        return Err(error(
-            "JSONLD_OPTIONS",
-            "This framing subset supports only omitDefault=false, frameDefault=false, compactArrays=true, and compactToRelative=true",
-        ));
-    }
-    if omit_graph || prune_blank_node_identifiers {
-        return Err(error(
-            "JSONLD_OPTIONS",
-            "This framing subset refuses omitGraph and pruneBlankNodeIdentifiers because it cannot preserve their identity and graph semantics",
-        ));
-    }
     if !["@once", "@always", "@never", "@first", "@last"]
         .iter()
         .any(|valid| embed == &Utf16::from(*valid))
@@ -2046,9 +2279,12 @@ pub fn propose_jsonld_framing(
         return Err(error("JSONLD_OPTIONS", "Invalid @embed option"));
     }
     let frame_tree = NativeJsonTree::parse_json(frame_source.units(), ctx)?;
+    let omit_graph_value = omit_graph.unwrap_or(false);
+    let prune_blank_node_identifiers_value = prune_blank_node_identifiers.unwrap_or(false);
     let NativeJsonNode::Object(frame_fields) = frame_tree.root() else {
         return Err(error("JSONLD_OPTIONS", "A JSON-LD frame must be an object"));
     };
+    validate_supported_frame_defaults(frame_tree.root(), 0, ctx)?;
     let source = copy_json(document, ctx)?;
     let expanded = propose_jsonld_expansion(document, loss_policy, jsonld_runtime, ctx)?;
     let mut report = Value::Object(vec![
@@ -2064,11 +2300,6 @@ pub fn propose_jsonld_framing(
                 (Utf16::from("explicit"), Value::Bool(explicit)),
                 (Utf16::from("requireAll"), Value::Bool(require_all)),
                 (Utf16::from("omitDefault"), Value::Bool(omit_default)),
-                (Utf16::from("omitGraph"), Value::Bool(omit_graph)),
-                (
-                    Utf16::from("pruneBlankNodeIdentifiers"),
-                    Value::Bool(prune_blank_node_identifiers),
-                ),
                 (Utf16::from("frameDefault"), Value::Bool(frame_default)),
                 (Utf16::from("ordered"), Value::Bool(ordered)),
                 (Utf16::from("compactArrays"), Value::Bool(compact_arrays)),
@@ -2109,18 +2340,56 @@ pub fn propose_jsonld_framing(
             },
         ),
     ]);
+    if let Value::Object(report_fields) = &mut report {
+        if let Some((_, Value::Object(options))) = report_fields
+            .iter_mut()
+            .find(|(key, _)| key == &Utf16::from("framingOptions"))
+        {
+            if let Some(value) = omit_graph {
+                options.push((Utf16::from("omitGraph"), Value::Bool(value)));
+            }
+            if let Some(value) = prune_blank_node_identifiers {
+                options.push((Utf16::from("pruneBlankNodeIdentifiers"), Value::Bool(value)));
+            }
+        }
+    }
     let Some(candidate) = field(&expanded, "candidate") else {
         return Ok(report);
     };
     let payload = payload_from_valid_document(candidate, ctx)?;
-    let mut selected = match payload.root.root() {
-        NativeJsonNode::Array(items) => items
-            .iter()
-            .filter(|item| frame_matches(item, frame_tree.root(), require_all))
-            .map(|item| clone_native_node(item, ctx))
-            .collect::<Result<Vec<_>, _>>()?,
-        _ => return Err(error("JSONLD_FRAME", "Expanded source is not an array")),
+    let NativeJsonNode::Array(root_items) = payload.root.root() else {
+        return Err(error("JSONLD_FRAME", "Expanded source is not an array"));
     };
+    let mut frame_candidates = Vec::new();
+    if frame_default {
+        for item in root_items {
+            ctx.charge_work(1, Utf16::default())?;
+            frame_candidates.push(FrameCandidateRef {
+                node: item,
+                graph_id: None,
+            });
+        }
+    } else {
+        for item in root_items {
+            collect_merged_frame_candidates(item, None, &mut frame_candidates, ctx)?;
+        }
+    }
+    let mut selected = Vec::new();
+    let mut selected_graph_ids = Vec::new();
+    for candidate in frame_candidates {
+        if frame_matches(candidate.node, frame_tree.root(), require_all) {
+            selected.push(clone_native_node(candidate.node, ctx)?);
+            selected_graph_ids.push(
+                candidate
+                    .graph_id
+                    .map(|id| clone_text(id, ctx))
+                    .transpose()?,
+            );
+        }
+    }
+    for node in &mut selected {
+        add_frame_defaults(node, frame_tree.root(), omit_default, ctx)?;
+    }
     if explicit {
         let mut keep = frame_fields
             .iter()
@@ -2168,27 +2437,24 @@ pub fn propose_jsonld_framing(
             )?;
         }
     }
-    if omit_graph {
-        for node in &mut selected {
-            if let NativeJsonNode::Object(fields) = node {
-                fields.retain(|(key, _)| key != &Utf16::from("@graph"));
-            }
+    if prune_blank_node_identifiers_value {
+        let mut counts = BTreeMap::new();
+        for node in &selected {
+            collect_blank_frame_counts(node, &mut counts, ctx)?;
         }
-    }
-    if prune_blank_node_identifiers {
         for node in &mut selected {
-            if let NativeJsonNode::Object(fields) = node {
-                fields.retain(|(key, value)| {
-                    !(key == &Utf16::from("@id")
-                        && matches!(value, NativeJsonNode::String(id) if id.units().starts_with(Utf16::from("_:").units())))
-                });
-            }
+            prune_singleton_blank_identifiers(node, &counts, ctx)?;
         }
     }
     if ordered {
-        selected.sort_by(|a, b| {
+        let mut pairs = selected
+            .into_iter()
+            .zip(selected_graph_ids)
+            .collect::<Vec<_>>();
+        pairs.sort_by(|(a, _), (b, _)| {
             native_string(native_member(a, "@id")).cmp(&native_string(native_member(b, "@id")))
         });
+        (selected, selected_graph_ids) = pairs.into_iter().unzip();
     }
     let base = payload_from_valid_document(document, ctx)?;
     let document_id = string(field(document, "id"))
@@ -2200,12 +2466,39 @@ pub fn propose_jsonld_framing(
         .transpose()?;
     let mut text = String::new();
     let mut output_units = 0;
-    write_native_node(
-        &NativeJsonNode::Array(selected),
-        &mut text,
-        &mut output_units,
-        ctx,
-    )?;
+    let mut framed_items = Vec::new();
+    let mut named_graphs: Vec<(Utf16, Vec<NativeJsonNode>)> = Vec::new();
+    for (node, graph_id) in selected.into_iter().zip(selected_graph_ids) {
+        if let Some(graph_id) = graph_id {
+            if let Some((_, nodes)) = named_graphs
+                .iter_mut()
+                .find(|(existing, _)| existing == &graph_id)
+            {
+                nodes.push(node);
+            } else {
+                ctx.charge_text(graph_id.len(), Utf16::default())?;
+                ctx.charge_work(1, Utf16::default())?;
+                named_graphs.push((graph_id, vec![node]));
+            }
+        } else {
+            framed_items.push(node);
+        }
+    }
+    for (id, nodes) in named_graphs {
+        framed_items.push(NativeJsonNode::Object(vec![
+            (Utf16::from("@id"), NativeJsonNode::String(id)),
+            (Utf16::from("@graph"), NativeJsonNode::Array(nodes)),
+        ]));
+    }
+    let framed_root = if omit_graph_value {
+        NativeJsonNode::Array(framed_items)
+    } else {
+        NativeJsonNode::Object(vec![(
+            Utf16::from("@graph"),
+            NativeJsonNode::Array(framed_items),
+        )])
+    };
+    write_native_node(&framed_root, &mut text, &mut output_units, ctx)?;
     ctx.charge_text(1, Utf16::default())?;
     text.try_reserve(1)
         .map_err(|_| error("LIMIT", "JSON-LD frame output allocation failed"))?;
@@ -5105,8 +5398,8 @@ mod jsonld_rdf_projection_tests {
             true,
             false,
             true,
-            false,
-            false,
+            Some(false),
+            Some(false),
             false,
             true,
             true,
@@ -5131,18 +5424,41 @@ mod jsonld_rdf_projection_tests {
         assert!(rendered.contains("Person"));
         assert!(rendered.contains("name"));
         assert!(rendered.contains("9007199254740993"));
+        assert!(field(field(&report, "framingOptions").unwrap(), "omitGraph").is_some());
+        let omitted_options = propose_jsonld_framing(
+            &document,
+            &Utf16::from(r#"{"@context":{"name":"https://schema.org/name"},"name":{}}"#),
+            &Utf16::from("report"),
+            false,
+            false,
+            false,
+            false,
+            None,
+            None,
+            false,
+            true,
+            true,
+            &Utf16::from("@once"),
+            &runtime,
+            &mut ctx,
+        )
+        .unwrap();
+        assert!(field(
+            field(&omitted_options, "framingOptions").unwrap(),
+            "omitGraph"
+        )
+        .is_none());
         let refused_option = propose_jsonld_framing(
             &document,
-            &Utf16::from(
-                r#"{"@context":{"Person":"https://schema.org/Person","name":"https://schema.org/name"},"@type":"Person","name":{}}"#,
-            ),
+            &Utf16::from(r#"{"@context":["https://example.test/context"],"name":{}}"#),
             &Utf16::from("report"),
             true,
             true,
-            true,
             false,
             false,
-            true,
+            Some(true),
+            Some(false),
+            false,
             true,
             true,
             &Utf16::from("@once"),
@@ -5151,6 +5467,186 @@ mod jsonld_rdf_projection_tests {
         )
         .unwrap_err();
         assert_eq!(refused_option.code, "JSONLD_OPTIONS");
+    }
+
+    #[test]
+    fn framing_applies_default_graph_defaults_pruning_and_compaction_options() {
+        let mut ctx = Context::ordinary();
+        let runtime = JsonLdRuntime::new(&mut ctx).unwrap();
+        let source =
+            Utf16::from(r#"[{"@id":"_:person","https://schema.org/name":[{"@value":"Ada"}]}]"#);
+        let document = import_jsonld_document(
+            &source,
+            &Utf16::from("framing-options"),
+            &Utf16::from("https://example.test/"),
+            None,
+            &[],
+            None,
+            &runtime,
+            &mut ctx,
+        )
+        .unwrap();
+        let frame = Utf16::from(
+            r#"{"@context":{"name":"https://schema.org/name","nickname":"https://schema.org/nickname"},"name":{},"nickname":{"@default":"Ada Lovelace"}}"#,
+        );
+        let report = propose_jsonld_framing(
+            &document,
+            &frame,
+            &Utf16::from("report"),
+            false,
+            false,
+            false,
+            false,
+            Some(true),
+            Some(true),
+            true,
+            false,
+            false,
+            &Utf16::from("@once"),
+            &runtime,
+            &mut ctx,
+        )
+        .unwrap();
+        assert_eq!(
+            string(field(&report, "status")),
+            Some(&Utf16::from("candidate"))
+        );
+        let candidate = field(&report, "candidate").unwrap();
+        let projected = payload_from_valid_document(candidate, &mut ctx).unwrap();
+        let NativeJsonNode::Array(nodes) = projected.root.root() else {
+            panic!("framing should preserve an array with compactArrays=false");
+        };
+        assert_eq!(nodes.len(), 1);
+        assert!(native_member(&nodes[0], "@id").is_none());
+        assert!(native_member(&nodes[0], "https://schema.org/nickname").is_some());
+        let output = export_jsonld_document(candidate, &runtime, &mut ctx)
+            .unwrap()
+            .to_utf8()
+            .unwrap();
+        assert!(output.contains("Ada Lovelace"));
+        assert!(!output.contains("_:person"));
+
+        // omitDefault removes the injected value while retaining the selected node.
+        let without_default = propose_jsonld_framing(
+            &document,
+            &frame,
+            &Utf16::from("report"),
+            false,
+            false,
+            true,
+            false,
+            Some(true),
+            Some(false),
+            true,
+            false,
+            false,
+            &Utf16::from("@once"),
+            &runtime,
+            &mut ctx,
+        )
+        .unwrap();
+        let result = field(&without_default, "candidate").unwrap();
+        let payload = payload_from_valid_document(result, &mut ctx).unwrap();
+        let NativeJsonNode::Array(nodes) = payload.root.root() else {
+            panic!("omitGraph should produce the selected array");
+        };
+        assert!(native_member(&nodes[0], "https://schema.org/nickname").is_none());
+
+        let graph_source = Utf16::from(
+            r#"{"@context":{"name":"https://schema.org/name"},"@id":"https://example.test/graph","@graph":[{"@id":"https://example.test/person","name":"Ada"}]}"#,
+        );
+        let graph_document = import_jsonld_document(
+            &graph_source,
+            &Utf16::from("named-graph-frame"),
+            &Utf16::from("https://example.test/"),
+            None,
+            &[],
+            None,
+            &runtime,
+            &mut ctx,
+        )
+        .unwrap();
+        let graph_report = propose_jsonld_framing(
+            &graph_document,
+            &Utf16::from(r#"{"@context":{"name":"https://schema.org/name"},"name":{}}"#),
+            &Utf16::from("report"),
+            false,
+            false,
+            false,
+            false,
+            Some(false),
+            Some(false),
+            false,
+            true,
+            true,
+            &Utf16::from("@once"),
+            &runtime,
+            &mut ctx,
+        )
+        .unwrap();
+        assert_eq!(
+            string(field(&graph_report, "status")),
+            Some(&Utf16::from("candidate"))
+        );
+        let graph_payload =
+            payload_from_valid_document(field(&graph_report, "candidate").unwrap(), &mut ctx)
+                .unwrap();
+        let Some(NativeJsonNode::Array(graph_nodes)) =
+            native_member(graph_payload.root.root(), "@graph")
+        else {
+            panic!("framed output should preserve the graph wrapper");
+        };
+        assert!(graph_nodes.iter().any(|node| {
+            native_member(node, "@id")
+                == Some(&NativeJsonNode::String(Utf16::from(
+                    "https://example.test/graph",
+                )))
+                && native_member(node, "@graph").is_some()
+        }));
+
+        let referenced_source = Utf16::from(
+            r#"[{"@id":"https://example.test/parent","https://schema.org/knows":[{"@id":"_:person"}]},{"@id":"_:person","https://schema.org/name":[{"@value":"Ada"}]}]"#,
+        );
+        let referenced_document = import_jsonld_document(
+            &referenced_source,
+            &Utf16::from("referenced-blank-frame"),
+            &Utf16::from("https://example.test/"),
+            None,
+            &[],
+            None,
+            &runtime,
+            &mut ctx,
+        )
+        .unwrap();
+        let referenced_report = propose_jsonld_framing(
+            &referenced_document,
+            &Utf16::from(
+                r#"{"@context":{"knows":"https://schema.org/knows","name":"https://schema.org/name"},"knows":{},"name":{}}"#,
+            ),
+            &Utf16::from("report"),
+            false,
+            false,
+            false,
+            false,
+            Some(true),
+            Some(true),
+            false,
+            true,
+            true,
+            &Utf16::from("@never"),
+            &runtime,
+            &mut ctx,
+        )
+        .unwrap();
+        let referenced_text = export_jsonld_document(
+            field(&referenced_report, "candidate").unwrap(),
+            &runtime,
+            &mut ctx,
+        )
+        .unwrap()
+        .to_utf8()
+        .unwrap();
+        assert!(referenced_text.contains("_:person"));
     }
 
     #[test]

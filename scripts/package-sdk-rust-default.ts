@@ -259,7 +259,7 @@ try{
  const host=process.platform==='darwin'?'darwin':process.platform;
  const arch=process.arch;
  if(!((host==='darwin'&&arch==='arm64')||(host==='linux'&&arch==='x64')))throw new Error(`Unsupported SDK native cohort: ${host}-${arch}`);
- await run(['cargo','build','--release','--locked','--manifest-path','bindings/core/node/Cargo.toml'],{env:cargoEnv});
+ await run(['cargo','build','--release','--locked','--manifest-path','bindings/core/node/Cargo.toml','--features','native-postgresql'],{env:cargoEnv});
  const archId=arch==='x64'?'x86_64':arch==='arm64'?'aarch64':arch;
  const packageVersion=(JSON.parse(await readFile(join(root,'package.json'),'utf8')) as {version:string}).version;
  const targetDir=join(cargoTarget,'release');

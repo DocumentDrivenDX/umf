@@ -21,6 +21,7 @@ def adapter_info(family: str) -> dict[str, Any]:
 def execute_adapter(
     family: str,
     operation: str,
+    /,
     *,
     max_work=None,
     meter=None,
@@ -31,6 +32,7 @@ def execute_adapter(
 ) -> Any:
     """Run a Rust adapter operation with optional cumulative host controls.
 
+    Family and operation are positional-only so request fields may use those names.
     Use ``adapter_info(family)["operations"]`` for available operation names.
     Request fields use the shared API's names; source text is passed unchanged.
     """

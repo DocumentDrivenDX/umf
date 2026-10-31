@@ -72,6 +72,31 @@ pub fn execute_native_family_wire(
     }
 }
 
+#[cfg(feature = "native-postgresql")]
+#[napi(js_name = "postgresqlNativeSqlProfileVersion")]
+pub fn postgresql_native_sql_profile_version() -> String {
+    umf_core_wire::postgresql_native_binding::PROFILE.to_owned()
+}
+
+#[cfg(feature = "native-postgresql")]
+#[napi(js_name = "executePostgresqlNativeSqlWire")]
+pub fn execute_postgresql_native_sql_wire(
+    env: Env,
+    wire_json: String,
+    control_dispatcher: Option<JsFunction>,
+) -> String {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = NodeControl { env, dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::postgresql_native_binding::execute_wire_with_control(
+            &wire_json,
+            &mut hook,
+        )
+    } else {
+        umf_core_wire::postgresql_native_binding::execute_wire(&wire_json)
+    }
+}
+
 #[napi(js_name = "executeGraphqlWire")]
 pub fn execute_graphql_wire(
     env: Env,

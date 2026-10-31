@@ -964,7 +964,7 @@ export function createIcebergSchemaEngine(options = {}) {
     hostWork?.(responseText.length);
     const envelope = JSON.parse(responseText);
     const failure = resultError(envelope);
-    if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+    if (failure) throw nativeCoreError(failure);
     hostWork?.(envelope.wire.length);
     return fromWire(JSON.parse(envelope.wire), hostWork);
   };
@@ -972,6 +972,7 @@ export function createIcebergSchemaEngine(options = {}) {
     importSchema(source, id) { return call('import', {source, id}); },
     exportSchema(document) { return call('export', {document}); },
     inspect(document) { return call('inspect', {document}); },
+    inspectPayload(payload) { return call('inspectPayload', {payload}); },
     getNode(document, pointer) { return call('getNode', {document, pointer}); },
     proposeNodeEdit(document, pointer, replacement) { return call('proposeNodeEdit', {document, pointer, replacement}); },
   });
@@ -1147,6 +1148,44 @@ export function createNativeFamilyDispatcher(options = {}) {
     hostWork,
     nativeCoreError,
   );
+}
+
+/** Create the feature-gated native libpg_query raw-SQL engine. */
+export function createPostgresqlSqlEngine(options = {}) {
+  if (typeof addon.executePostgresqlNativeSqlWire !== 'function' || typeof addon.postgresqlNativeSqlProfileVersion !== 'function') throw new Error('RUST_POSTGRESQL_NATIVE_BINDING_MISSING');
+  const profile = 'umf.postgresql-sql-wire/1';
+  if (addon.postgresqlNativeSqlProfileVersion() !== profile) throw new Error('RUST_NODE_BINDING_PROFILE_MISMATCH');
+  const {controls} = codegenOptions(options);
+  const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+  const hostWork = admissionWork(controlBridge);
+  const call = (operation, fields = {}) => {
+    if (fields === null || typeof fields !== 'object' || Array.isArray(fields)) throw new TypeError('PostgreSQL SQL arguments must be an object');
+    const request = Object.create(null);
+    for (const key of Object.keys(fields)) {
+      const descriptor = Object.getOwnPropertyDescriptor(fields, key);
+      if (!descriptor || !Object.hasOwn(descriptor, 'value')) throw new TypeError('PostgreSQL SQL arguments must be data properties');
+      Object.defineProperty(request, key, {value: descriptor.value, enumerable: true, writable: true, configurable: true});
+    }
+    request.profile = profile;
+    request.op = `postgresql-sql.${operation}`;
+    hostWork?.(1);
+    const responseText = addon.executePostgresqlNativeSqlWire(encodeRequestWire(request, hostWork), controlBridge);
+    hostWork?.(responseText.length);
+    const response = JSON.parse(responseText), failure = resultError(response);
+    if (failure) throw nativeCoreError(failure);
+    hostWork?.(response.wire.length);
+    return fromWire(JSON.parse(response.wire), hostWork);
+  };
+  return Object.freeze({
+    importSql: (source, id) => call('import', {source, id}),
+    inspect: document => call('inspect', {document}),
+    exportSql: document => call('export', {document}),
+    getSource: document => call('getSource', {document}),
+    getNode: (document, pointer) => call('getNode', {document, pointer}),
+    editNode: (document, pointer, text) => call('editNode', {document, pointer, text}),
+    inspectPayload: payload => call('inspectPayload', {payload}),
+    validateAst: ast => call('validateAst', {ast}),
+  });
 }
 
 export {JSONLD_PROFILE};

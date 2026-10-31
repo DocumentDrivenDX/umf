@@ -2759,6 +2759,29 @@ fn shacl_nested_shape_conforms(
     Ok(violations.is_empty())
 }
 
+fn shacl_basic_language_range(range: &str) -> bool {
+    if range == "*" {
+        return true;
+    }
+    let mut subtags = range.split('-');
+    let Some(primary) = subtags.next() else {
+        return false;
+    };
+    (1..=8).contains(&primary.len())
+        && primary.bytes().all(|byte| byte.is_ascii_alphabetic())
+        && subtags.all(|part| {
+            (1..=8).contains(&part.len()) && part.bytes().all(|byte| byte.is_ascii_alphanumeric())
+        })
+}
+
+fn shacl_language_range_matches(range: &str, language: &str) -> bool {
+    range == "*"
+        || language == range
+        || language
+            .strip_prefix(range)
+            .is_some_and(|remainder| remainder.starts_with('-'))
+}
+
 fn evaluate_shacl_constraints(
     qs: &[Value],
     data: &[Value],
@@ -3688,6 +3711,16 @@ fn evaluate_shacl_constraints(
                 let allowed = shacl_list_values(qs, parameter, ctx)?
                     .into_iter()
                     .map(|value| {
+                        if text(member(&value, "kind")) != Some(&u("literal"))
+                            || text(member(&value, "datatype"))
+                                != Some(&u("http://www.w3.org/2001/XMLSchema#string"))
+                        {
+                            return Err(EngineError::new(
+                                "SHACL_ENGINE_UNSUPPORTED",
+                                Utf16::default(),
+                                "sh:languageIn entries must be xsd:string literals",
+                            ));
+                        }
                         let lexical = text(member(&value, "value")).ok_or_else(|| {
                             EngineError::new(
                                 "SHACL_ENGINE_UNSUPPORTED",
@@ -3696,18 +3729,26 @@ fn evaluate_shacl_constraints(
                             )
                         })?;
                         ctx.charge_text(lexical.len(), Utf16::default())?;
-                        Ok(lexical
+                        let range = lexical
                             .to_utf8()
                             .map_err(|_| {
                                 EngineError::new(
                                     "SHACL_ENGINE_UNSUPPORTED",
                                     Utf16::default(),
-                                    "Language tag is malformed UTF-16",
+                                    "Language range is malformed UTF-16",
                                 )
                             })?
-                            .to_ascii_lowercase())
+                            .to_ascii_lowercase();
+                        if !shacl_basic_language_range(&range) {
+                            return Err(EngineError::new(
+                                "SHACL_ENGINE_UNSUPPORTED",
+                                Utf16::default(),
+                                "sh:languageIn supports basic language ranges only",
+                            ));
+                        }
+                        Ok(range)
                     })
-                    .collect::<Result<BTreeSet<_>, EngineError>>()?;
+                    .collect::<Result<Vec<_>, EngineError>>()?;
                 for value in value_nodes {
                     let language = text(member(value, "language"))
                         .map(|tag| {
@@ -3721,7 +3762,11 @@ fn evaluate_shacl_constraints(
                             })
                         })
                         .transpose()?;
-                    if language.as_ref().is_none_or(|tag| !allowed.contains(tag)) {
+                    if language.as_ref().is_none_or(|tag| {
+                        !allowed
+                            .iter()
+                            .any(|range| shacl_language_range_matches(range, tag))
+                    }) {
                         push_shacl_violation(
                             out,
                             focus,

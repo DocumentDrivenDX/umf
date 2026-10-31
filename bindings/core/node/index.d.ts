@@ -474,6 +474,8 @@ export interface IcebergSchemaEngine {
   exportSchema(document: unknown): string;
   /** Inspect the pinned standalone schema subset; completeness remains false. */
   inspect(document: unknown): IcebergSchemaValidation;
+  /** Inspect an Iceberg payload through the native package validator for Registry use. */
+  inspectPayload(payload: unknown): {code: string; path: string; message: string; severity: 'error' | 'warning'}[];
   /** Return a copied tagged native JSON node at an RFC 6901 pointer. */
   getNode(document: unknown, pointer: string): unknown;
   /** Return a validated candidate document; this does not commit or mutate input. */
@@ -686,6 +688,7 @@ export declare function createGraphqlEngine(options?: {profile?: 'cooperative' |
 export declare const NATIVE_FAMILY_PROFILE: 'umf.native-family-dispatch/1';
 export type NativeFamilyOperation = (fields?: Record<string, unknown>) => unknown;
 export interface NativeFamilyOperations {
+ readonly avro: Readonly<Record<'import'|'inspect'|'inspectPayload'|'fields'|'export'|'exportBundle'|'getNode'|'editNode'|'proposeNodeEdit', NativeFamilyOperation>>;
  readonly openapi: Readonly<Record<'import'|'validate'|'inspectPayload'|'export'|'exportBundle'|'getNode'|'lookupResource'|'extractSchema'|'indexSchemas'|'resolveSchemaReference'|'resolveDynamicReference'|'resolveObjectReference'|'edit', NativeFamilyOperation>>;
  readonly linkml: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getNode'|'editNode'|'classSlots'|'slotValues'|'importContext'|'importMerge', NativeFamilyOperation>>;
  readonly odcs: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getNode'|'editNode'|'resolveReference'|'relationships'|'renameElement', NativeFamilyOperation>>;
@@ -696,6 +699,18 @@ export interface NativeFamilyOperations {
  readonly owl: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getQuads'|'editQuad'|'getOntologyHeaders'|'getExpressionView'|'getListAxioms'|'getSpecialAxioms'|'getAxiomAnnotations'|'getDeclarations', NativeFamilyOperation>>;
 }
 export declare function createNativeFamilyDispatcher(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): NativeFamilyOperations;
+export interface PostgresqlSqlEngine {
+  importSql(source: string, id: string): unknown;
+  inspect(document: unknown): unknown;
+  exportSql(document: unknown): string;
+  getSource(document: unknown): string;
+  getNode(document: unknown, pointer: string): unknown;
+  editNode(document: unknown, pointer: string, text: string): unknown;
+  inspectPayload(payload: unknown): readonly unknown[];
+  validateAst(ast: unknown): unknown;
+}
+/** Requires the Node addon to be built with `native-postgresql`. */
+export declare function createPostgresqlSqlEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): PostgresqlSqlEngine;
 export declare const JSONLD_PROFILE: 'umf.jsonld-wire/1';
 export interface JsonLdOperations {
  readonly profile: typeof JSONLD_PROFILE;

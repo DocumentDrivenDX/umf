@@ -23,10 +23,12 @@ const report=native.jsonld.frame({document,frame:JSON.stringify(frame),lossPolic
 if(report.status!=='candidate'||report.complete!==false)throw Error('frame candidate/status mismatch');
 const candidate=native.jsonld.export({document:report.candidate});
 if(typeof candidate!=='string'||!candidate.includes('Ada'))throw Error('native frame export did not retain the selected value');
+const omitted=native.jsonld.frame({document,frame:JSON.stringify(frame),lossPolicy:'report',omitGraph:true});
+if(omitted.status!=='candidate')throw Error('explicit omitGraph did not produce a candidate');
 let refusal;
-try{native.jsonld.frame({document,frame:JSON.stringify(frame),lossPolicy:'report',omitGraph:true});}
+try{native.jsonld.import({id:'invalid-browser-jsonld',source:'{',baseIRI:'https://example.test/'});}
 catch(error){refusal={code:error.code??null,message:String(error.message??error)};}
-if(!refusal||refusal.code!=='JSONLD_OPTIONS')throw Error('unsupported omitGraph option was not refused');
+if(!refusal||refusal.code!=='JSON_SCHEMA_SYNTAX')throw Error('invalid JSON was not refused');
 if(typeof process!=='undefined'||typeof Buffer!=='undefined')throw Error('Node globals leaked into Chromium');
 window.jsonldNative={status:'pass',operations:['import','frame','export'],refusal};`;
 const modules = new Map([
@@ -76,7 +78,7 @@ try {
   const result = await page.evaluate(() => window.jsonldNative);
   assert.deepEqual(errors, []);
   assert.deepEqual(result.operations, ['import', 'frame', 'export']);
-  assert.equal(result.refusal.code, 'JSONLD_OPTIONS');
+  assert.equal(result.refusal.code, 'JSON_SCHEMA_SYNTAX');
   console.log(JSON.stringify({format: 'umf-jsonld-wasm-chromium-current-source/1', browser: browser.version(), userAgent: await page.evaluate(() => navigator.userAgent), ...result}));
 } finally {
   try { await browser?.close(); }

@@ -79,27 +79,58 @@ Use one expensive build/test job at a time. Preserve user-owned `.tmp/`.
 
 ## Current State
 
-The current Rust adapter checkpoint passes its focused new wire tests: SHACL/OWL
-2/2 and PostgreSQL catalog/raw-SQL 12/12. The tests use the present default
-Rust graph; PostgreSQL's pinned native C parser is not yet enabled. Fresh Node
-public-root tests pass for the retained-model Registry, document read/write,
-SHACL validation and OWL views, and RDF import/edit/export with its native
-payload inspector. A public `umf.adapters` Python test passes from a staged
-package and fresh extension with no PATH tools; the fresh CLI advertises the
-SHACL, OWL and PostgreSQL routes. These are current capability baselines, not
-a release wheel or release-profile browser build.
+The focused native adapter checkpoint now passes SHACL/OWL 2/2,
+PostgreSQL catalog/raw-SQL 12/12, and five new native capability cases: pinned
+PostgreSQL C parse/edit/deparse/reparse and version refusal, JSON-LD frame
+options, Avro source operations, and parser-session codec-loss refusal. Fresh
+Node public-root tests pass for the retained-model Registry, document
+read/write, SHACL validation and OWL views, and RDF import/edit/export with its
+native payload inspector. A public `umf.adapters` Python test passes from a
+staged package and fresh extension with no PATH tools; the fresh CLI advertises
+SHACL, OWL and PostgreSQL routes. The new PostgreSQL/Avro/Protobuf host flows
+now pass in a fresh Node build: PostgreSQL native SQL, Avro, Iceberg schema and
+Protobuf source callbacks. Python PostgreSQL native SQL and the public RDF
+edit/export/payload-inspector flow pass with no PATH tools. The SHACL
+language-range wire case passes.
+These results do not establish a release wheel or release-profile browser build.
 
 | Capability | Present source and checked behavior | Next implementation |
 | --- | --- | --- |
 | OpenAPI, LinkML, ODCS, TableSpec and SQL Server | Rust wire/CLI routes and actual Node public-root flows pass. TableSpec's nine operations and SQL Server's catalog/facet routes are callable. | Finish browser and Python public activation for the remaining operations. |
 | Shared Registry and documents | Default Registry admits packages and validates extension structure through the retained Rust model; native read/write keeps the public YAML default. Actual Node public-root validation, callbacks, YAML roundtrip and refusal pass. | Exercise the same default path in the final browser and package integration. |
 | GraphQL | Rust pre/post-validation host callback and Node/WASM default routes are integrated; actual Node callback edit/export and prevalidation refusal pass. | Complete browser host integration. |
-| JSON-LD | Source, expansion, flattening, compaction, RDF conversion, compound literals, generalized input, framing and payload inspection are wired. Focused wire, Node public-root, Python extension, CLI and development WASM Chromium baselines pass. | Implement the remaining frame option semantics without losing graph identity, then check the release-profile browser build. |
-| RDF and generalized RDF | Seventeen existing Rust operations now drive the Node/browser default roots. Actual Node import/edit/export, native Registry inspection and refusal pass. | Verify the browser public root and complete Python public activation. |
-| SHACL and OWL | New Rust wire tests pass 2/2; actual Node public-root SHACL validation, OWL view and refusal pass. SHACL reports its real `umf-shacl-native-subset/2` identity and incomplete evidence for unsupported constraints. | Continue supported SHACL semantics and complete browser/Python activation. |
-| PostgreSQL | Catalog capture, supplement inspectors, resolved predicates and parser-session raw SQL routes pass 12/12 new wire tests; CLI catalog route is present. | Integrate and test the pinned native C parser behind a host-only feature, then activate public Node/Python raw SQL paths. |
+| JSON-LD | Source, expansion, flattening, compaction, RDF conversion, compound literals, generalized input, framing and payload inspection are wired. Focused wire, Node public-root, Python extension, CLI and development WASM Chromium baselines pass. The new scalar-default, graph, pruning and compact-option frame wire case passes. | Implement structured `@default` and remaining frame semantics; the current Rust route explicitly refuses unsupported structures. Check the release-profile browser build at integration. |
+| RDF and generalized RDF | Seventeen existing Rust operations now drive the Node/browser default roots. Actual Node import/edit/export, native Registry inspection and refusal pass; the public Python RDF edit/export/payload-inspector and refusal flow also passes. | Verify the browser public root and the remaining Python generalized-RDF operations. |
+| SHACL and OWL | Rust wire tests pass 2/2; actual Node public-root SHACL validation, OWL view and refusal pass. SHACL reports its real `umf-shacl-native-subset/2` identity and incomplete evidence for unsupported constraints. Basic `languageIn` range/wildcard support also passes its focused wire case. | Complete remaining supported constraint semantics and browser/Python activation. |
+| PostgreSQL | Catalog capture, supplement inspectors, resolved predicates and parser-session raw SQL routes pass 12/12 focused wire tests. The host-only `pg_query` 6.1.1 C path passes import→AST edit→deparse→reparse and unsupported-version refusal; codec-loss refusal also passes. Fresh Node and Python public native SQL flows pass. | Finish the caller-supplied parser's Rust-owned session FFI and default-root Registry bridge. |
+| Avro | The existing Rust document kernel is exposed through new import/inspect/metadata/get/edit/export/bundle wire routes; its focused source roundtrip/dependency refusal and fresh Node public-root flow pass. | Activate and verify browser/Python public entry points. |
+| Iceberg schema and table | The standalone schema Rust kernel drives default Node/browser wrappers for import/inspect/export/get/edit and a native Registry payload inspector; the fresh Node public-root import/edit/export and refusal cases pass. Iceberg table operations remain TypeScript-owned. | Implement native table source operations, then context, transforms, rename and promotion. |
+| Protobuf sources | Existing Rust source sessions now back the Node/browser default `importProtobufSources` and `exportProtobufSources` Promise APIs; a fresh Node public-root tiny Go compile→descriptor edit→emit case passes. | Verify the browser callback flow. |
 | Python native transport | The public `umf.adapters` family dispatcher passes a staged-package roundtrip, refusal and resource-limit baseline with a fresh extension. | Include new adapter resources and verify the final wheel/sdist. |
 | Saga browser SDK subpath | Runtime source and default SDK asset integration are present. | Run one representative host baseline at the next SDK integration point. |
+
+## Active implementation queue
+
+1. Carry the newly activated adapter roots into the next browser/package
+   integration, including Iceberg schema and public RDF/SHACL paths.
+   Retain the already green Node and Python cases without rerunning them.
+2. Make the caller-supplied PostgreSQL `importPostgresqlSql` and
+   `exportPostgresqlSql` default APIs use a per-instance Rust ParserSession
+   through Node/WASM, with Rust `inspectPayload` for `postgresqlRegistry`.
+   Keep opaque one-shot continuations and exact callback error identity; test
+   one import→edit→export and a lossy-codec refusal.
+3. Port the current Iceberg table APIs: `importIcebergTable`, `inspectIcebergTable`,
+   `exportIcebergTable`, `getIcebergTableNode`, `proposeIcebergTableNodeEdit`,
+   context, transforms, rename and promotion. The table kernel is still missing.
+4. Complete the public JSON-LD framing semantics still explicitly refused,
+   including structured `@default`, and continue SHACL Core constraint support
+   with real RDF report rows. Use focused wire/public cases for each new
+   operation, then verify browser and Python routes at integration.
+5. Port the still-JavaScript TypeSpec and Smithy compiler/assembly entry points
+   (`compileTypeSpecDocument`, `emitTypeSpecJsonSchema`,
+   `assembleSmithyDocument`, `selectSmithyShapes`) through explicit compiler
+   capabilities while Rust retains UMF source/document semantics. A retained
+   source archive alone does not satisfy these operations.
 
 ## Remaining Port Work
 
@@ -116,9 +147,11 @@ implemented only after its callable operation passes a current baseline.
 The full port is complete when every UMF-owned shared semantic operation in the
 public TypeScript and Python surfaces has a Rust owner, its native behavior and
 loss boundaries are tested, and supported Rust CLI, Python, Node/Bun and browser
-WASM entry points invoke that owner. The complete current Cargo, binding,
-packaging and real-browser suites pass, and the released artifacts execute
-without a hidden JavaScript or Python engine. A passing library milestone alone
+WASM entry points invoke that owner. The published `./reference` export and
+legacy `dist/umf.js` surface must also redirect or retire their executable
+TypeScript semantics. The complete current Cargo, binding, packaging and
+real-browser suites pass, and the released artifacts execute without a hidden
+JavaScript or Python engine. A passing library milestone alone
 does not satisfy this acceptance. No archived certificate, historical source
 hash or retirement ledger is a prerequisite. Keep actual functional receipt
 types and integrity checks required by public operations.

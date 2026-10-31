@@ -17,3 +17,9 @@ umf-graphql = { path = "../umf-graphql", optional = true }
 default = ["codegen", "embedded-adapters"]
 codegen = ["dep:umf-codegen"]
 embedded-adapters = ["umf-core/embedded-adapters", "dep:umf-graphql"]
+native-postgresql = ["embedded-adapters", "umf-core/native-postgresql"]
+
+[[test]]
+name = "postgresql_native_binding"
+path = "tests/postgresql_native_binding.rs"
+required-features = ["native-postgresql"]

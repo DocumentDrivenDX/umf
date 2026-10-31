@@ -15,5 +15,9 @@ num-bigint = "=0.4.8"
 umf-core = { path = "../../../crates/umf-core" }
 umf-core-wire = { path = "../../../crates/umf-core-wire" }
 
+[features]
+default = []
+native-postgresql = ["umf-core/native-postgresql", "umf-core-wire/native-postgresql"]
+
 [build-dependencies]
 pyo3-build-config = "=0.23.5"
