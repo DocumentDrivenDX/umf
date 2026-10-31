@@ -83,6 +83,8 @@ pub mod host_json;
 pub(crate) mod host_diagnostic;
 #[cfg(feature = "embedded-adapters")]
 pub mod iceberg_schema;
+#[cfg(feature = "embedded-adapters")]
+pub mod iceberg_table;
 pub mod javascript_numeric;
 #[cfg(feature = "embedded-adapters")]
 pub mod jsonld_source;

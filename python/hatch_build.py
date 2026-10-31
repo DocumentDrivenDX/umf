@@ -138,6 +138,8 @@ SDIST_SOURCE_FILES = (
     "spec/metamodel/umf.yaml",
     "spec/extensions/iceberg/package.json",
     "spec/extensions/iceberg/datatype-schema.json",
+    "spec/extensions/iceberg-table/package.json",
+    "spec/extensions/iceberg-table/datatype-schema.json",
     "spec/extensions/graphql/package.json",
     "spec/extensions/jsonld/package.json",
     "spec/extensions/shacl/package.json",

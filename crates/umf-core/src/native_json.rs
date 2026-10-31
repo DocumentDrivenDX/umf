@@ -385,6 +385,71 @@ impl NativeJsonTree {
             .retain(|extra| !extra.parent.starts_with(segments.as_slice()));
         Ok(candidate)
     }
+
+    /// Return a copied tree with one item appended to an existing array.
+    /// Representation extras on the source array and item remain attached to
+    /// their corresponding paths in the new tree.
+    pub fn append_array_item(
+        &self,
+        pointer: &Utf16,
+        item: &NativeJsonTree,
+        ctx: &mut Context<'_>,
+    ) -> Result<Self, EngineError> {
+        let segments = native_pointer(pointer, ctx)?;
+        let selected = self.child(pointer, ctx)?;
+        let NativeJsonNode::Array(items) = selected else {
+            return Err(pointer_missing());
+        };
+        let index = items.len();
+        ctx.charge_work(index.saturating_add(1), pointer.clone())?;
+        let index_segment = Utf16::from(index.to_string());
+        let mut item_copy = item.clone_tree(ctx)?;
+        let mut candidate = self.clone_tree(ctx)?;
+        fn array_at_mut<'a>(
+            node: &'a mut NativeJsonNode,
+            path: &[Utf16],
+        ) -> Option<&'a mut Vec<NativeJsonNode>> {
+            if path.is_empty() {
+                return match node {
+                    NativeJsonNode::Array(items) => Some(items),
+                    _ => None,
+                };
+            }
+            let child = match node {
+                NativeJsonNode::Object(members) => members
+                    .iter_mut()
+                    .find(|(key, _)| key == &path[0])
+                    .map(|(_, value)| value)?,
+                NativeJsonNode::Array(items) => items.get_mut(array_index(&path[0])?)?,
+                _ => return None,
+            };
+            array_at_mut(child, &path[1..])
+        }
+        let target = array_at_mut(&mut candidate.root, &segments).ok_or_else(pointer_missing)?;
+        target.reserve(1);
+        target.push(item_copy.root);
+        let extra_count = item_copy.representation_extras.len();
+        let extra_path_work =
+            item_copy
+                .representation_extras
+                .iter()
+                .fold(0usize, |total, extra| {
+                    total
+                        .saturating_add(segments.len())
+                        .saturating_add(extra.parent.len())
+                        .saturating_add(1)
+                });
+        ctx.charge_work(extra_count.saturating_add(extra_path_work), pointer.clone())?;
+        candidate.representation_extras.reserve(extra_count);
+        for mut extra in item_copy.representation_extras.drain(..) {
+            let mut parent = segments.clone();
+            parent.push(index_segment.clone());
+            parent.extend(extra.parent);
+            extra.parent = parent;
+            candidate.representation_extras.push(extra);
+        }
+        Ok(candidate)
+    }
 }
 
 fn tagged_value(node: &NativeJsonNode, ctx: &mut Context<'_>) -> Result<Value, EngineError> {

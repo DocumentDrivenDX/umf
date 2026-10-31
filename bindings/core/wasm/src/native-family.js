@@ -13,6 +13,7 @@ const FAMILIES=Object.freeze({
  sqlserver:{profile:'umf.sqlserver-wire/1',operations:['import','inspect','inspectPayload','export','columns','constraints','indexes','edit','facetType','facetPredicate','facetConstraints']},
  shacl:{profile:'umf.shacl-wire/1',operations:['import','inspect','inspectPayload','export','getQuads','editQuad','getPropertyPath','evaluatePropertyPath','getTargetNodes','getShapeMetadata','validate']},
  owl:{profile:'umf.owl-wire/1',operations:['import','inspect','inspectPayload','export','getQuads','editQuad','getOntologyHeaders','getExpressionView','getListAxioms','getSpecialAxioms','getAxiomAnnotations','getDeclarations']},
+ 'iceberg-table':{profile:'umf.iceberg-table-wire/1',operations:['import','inspect','inspectPayload','export','getNode','editNode','inspectContext','inspectTransforms','inspectTransformType','proposeRename','proposePromotion']},
 });
 
 /** Route a closed adapter family and operation to Rust without reinterpreting its payload. */
@@ -31,7 +32,7 @@ export function createNativeFamilyOperations(executeNativeFamilyWire,controlDisp
    Object.defineProperty(request,key,{value:descriptor.value,enumerable:true,writable:true,configurable:true});
   }
   request.profile=spec.profile;
-  request.op=family==='tablespec'?operation:`${family}.${operation}`;
+  request.op=family==='tablespec'?operation:family==='iceberg-table'?`iceberg.table.${operation}`:`${family}.${operation}`;
   hostWork?.(1);
   const requestWire=encodeRequestWire(request,hostWork);
   const responseText=executeNativeFamilyWire(family,requestWire,controlDispatcher);

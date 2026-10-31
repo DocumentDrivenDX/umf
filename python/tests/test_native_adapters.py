@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 """One public adapter capability baseline against the built Rust extension."""
 import json
+from pathlib import Path
 import unittest
 
 from umf import adapter_info, execute_adapter
@@ -53,6 +54,23 @@ class NativeAdapterBaseline(unittest.TestCase):
             execute_adapter("rdf", "importNQuads", source="invalid nquads",
                             options={"id": "invalid"})
         self.assertEqual(refused.exception.code, "RDF_SYNTAX")
+
+
+    def test_public_iceberg_table_edit_export_and_refusal(self):
+        self.assertIn("editNode", adapter_info("iceberg-table")["operations"])
+        fixture = Path(__file__).resolve().parents[2] / "fixtures/iceberg/table/TableMetadataV2ValidMinimal.json.json"
+        source = fixture.read_text()
+        document = execute_adapter("iceberg-table", "import", source=source,
+                                   id="python-iceberg-table")
+        proposal = execute_adapter("iceberg-table", "editNode", document=document,
+                                   path="/location", replacementJson='"s3://bucket/python-edited"')
+        self.assertTrue(proposal["validation"]["valid"])
+        exported = execute_adapter("iceberg-table", "export", document=proposal["document"])
+        self.assertEqual(json.loads(exported)["location"], "s3://bucket/python-edited")
+        self.assertEqual(execute_adapter("iceberg-table", "export", document=document), source)
+        with self.assertRaises(UmfCoreError) as refused:
+            execute_adapter("iceberg-table", "import", source="{}", id="invalid")
+        self.assertEqual(refused.exception.code, "ICEBERG_TABLE_DOCUMENT")
 
 
 if __name__ == "__main__":

@@ -2,8 +2,10 @@ import {createDbtOperations, DBT_PROFILE, isDbtHostError} from './src/dbt.js';
 import {createRdfOperations, RDF_PROFILE} from './src/rdf.js';
 import {createGraphqlOperations, GRAPHQL_PROFILE} from './src/graphql.js';
 import {createNativeFamilyOperations, NATIVE_FAMILY_PROFILE} from './src/native-family.js';
+import {createPostgresqlParserSessionOperations, POSTGRESQL_PARSER_PROFILE} from './src/postgresql-parser-session.js';
 import {createJsonLdOperations, JSONLD_PROFILE} from './src/jsonld.js';
 export {NATIVE_FAMILY_PROFILE};
+export {POSTGRESQL_PARSER_PROFILE};
 import {createHostReadResponseFrames, encodeRequestWire, encodeWire, fromWire, resultError, toWire} from './src/wire.js';
 import {createJavascriptNumericEngine as createNumericEngine, JAVASCRIPT_NUMERIC_PROFILE} from './src/javascript-numeric.js';
 import {createSecurityLogicEngine as createSecurityLogicEngineWithWire, SECURITY_LOGIC_PROFILE} from './src/security-logic.js';
@@ -58,6 +60,7 @@ export const GREGORIAN_DATE_PROFILE = 'umf-gregorian-date/1.0.0';
 export const RFC3339_EXACT_INSTANT_PROFILE = 'umf-rfc3339-exact-instant/1.0.0';
 export const RFC3339_EXACT_INSTANT_MAXIMUM_BYTES = 1_048_576;
 export const ICEBERG_SCHEMA_PROFILE = 'umf-r5-iceberg-schema/0.1.0';
+export const ICEBERG_TABLE_PROFILE = 'umf.iceberg-table-wire/1';
 export const ARROW_SCHEMA_PROFILE = 'umf-r8-arrow-schema/0.1.0';
 export {ARROW_IPC_PROFILE};
 export {PARQUET_CAPTURE_PROFILE};
@@ -1087,6 +1090,39 @@ export function createIcebergSchemaEngine(module, options = {}) {
   });
 }
 
+/** Create the opt-in Iceberg table engine over the closed Rust table wire. */
+export function createIcebergTableEngine(module, options = {}) {
+  if (typeof module?.executeIcebergTableWire !== 'function' || typeof module?.icebergTableProfileVersion !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  if (module.icebergTableProfileVersion() !== ICEBERG_TABLE_PROFILE) throw new Error('RUST_WASM_BINDING_PROFILE_MISMATCH');
+  const {controls} = codegenOptions(options);
+  const call = (operation, fields) => {
+    const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+    const hostWork = admissionWork(controlBridge);
+    hostWork?.(1);
+    const request = {...fields, profile: ICEBERG_TABLE_PROFILE, op: `iceberg.table.${operation}`};
+    const responseText = module.executeIcebergTableWire(encodeRequestWire(request, hostWork), controlBridge);
+    hostWork?.(responseText.length);
+    const envelope = JSON.parse(responseText);
+    const failure = resultError(envelope);
+    if (failure) throw nativeCoreError(failure);
+    hostWork?.(envelope.wire.length);
+    return fromWire(JSON.parse(envelope.wire), hostWork);
+  };
+  return Object.freeze({
+    importTable(source, id) { return call('import', {source, id}); },
+    inspect(document) { return call('inspect', {document}); },
+    inspectPayload(payload) { return call('inspectPayload', {payload}); },
+    exportTable(document) { return call('export', {document}); },
+    getNode(document, path) { return call('getNode', {document, path}); },
+    editNode(document, path, replacementJson) { return call('editNode', {document, path, replacementJson}); },
+    inspectContext(document) { return call('inspectContext', {document}); },
+    inspectTransforms(document) { return call('inspectTransforms', {document}); },
+    inspectTransformType(sourceType, transform) { return call('inspectTransformType', {sourceType, transform}); },
+    proposeRename(document, fieldId, newName, nextSchemaId) { return call('proposeRename', {document, fieldId, newName, nextSchemaId}); },
+    proposePromotion(document, fieldId, targetType, nextSchemaId) { return call('proposePromotion', {document, fieldId, targetType, nextSchemaId}); },
+  });
+}
+
 /** Create the opt-in Arrow integration-schema JSON preservation engine. */
 export function createArrowSchemaEngine(module, options = {}) {
   if (typeof module?.ArrowSchemaResourcesRuntime !== 'function' || typeof module?.arrowSchemaProfileVersion !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
@@ -1265,6 +1301,22 @@ export {JSONLD_PROFILE};
 export function createJsonLdEngine(module, options = {}) {
   const operations = createNativeFamilyDispatcher(module, options).jsonld;
   return createJsonLdOperations((operation, fields) => operations[operation](fields));
+}
+
+/** Create one Rust-owned parser continuation session for an explicitly supplied host backend. */
+export function createPostgresqlParserSessionEngine(module, options = {}) {
+  if (typeof module?.PostgresqlParserSession !== 'function') throw new Error('RUST_POSTGRESQL_PARSER_SESSION_MISSING');
+  const {controls} = codegenOptions(options);
+  const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+  const hostWork = admissionWork(controlBridge);
+  const session = new module.PostgresqlParserSession();
+  if (typeof session.executePostgresqlParserSessionWire !== 'function' || session.profileVersion() !== POSTGRESQL_PARSER_PROFILE) throw new Error('RUST_POSTGRESQL_PARSER_SESSION_PROFILE_MISMATCH');
+  return createPostgresqlParserSessionOperations(
+    (wire, control) => session.executePostgresqlParserSessionWire(wire, control),
+    controlBridge,
+    hostWork,
+    nativeCoreError,
+  );
 }
 
 /** Create the opt-in pure reciprocal-rank fusion scorer over WASM. */

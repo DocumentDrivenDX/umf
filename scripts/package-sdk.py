@@ -11,6 +11,13 @@ REQUIRED = [
     'dist/umf-browser.js', 'dist/umf_core_node.node',
     'dist/umf_core_wasm_bg.wasm', 'dist/rust-default-manifest.json',
     'dist/src/index.d.ts', 'dist/spec/extensions/actions/package.json',
+    'dist/bindings/core/node/index.d.ts',
+    'dist/bindings/core/node/copy-json-host-input.d.ts',
+    'dist/bindings/core/node/src/wire.d.ts',
+    'dist/bindings/core/wasm/index.d.ts',
+    'dist/bindings/core/wasm/copy-json-host-input.d.ts',
+    'dist/bindings/core/wasm/src/wire.d.ts',
+    'dist/bindings/core/wasm/pkg/umf_core_wasm.d.ts',
     'dist/spec/extensions/actions/schema.json', 'dist/loader-contract.js',
     'dist/spec/extensions/saga/package.json', 'dist/spec/extensions/saga/schema.json',
     'dist/spec/extensions/saga/runtime.schema.json',
@@ -109,12 +116,15 @@ def verify(root):
     package = json.loads((root / 'package.json').read_text())
     exports = package.get('exports') or {}
     root_export = exports.get('.') or {}
+    root_types = root_export.get('types') or {}
     reference = exports.get('./reference') or {}
     saga_runtime = exports.get('./runtime/wasm') or {}
     if (root_export.get('node') != './dist/umf-node.js'
             or root_export.get('browser') != './dist/umf-browser.js'
             or root_export.get('import') != './dist/umf-browser.js'
             or root_export.get('default') != './dist/umf-browser.js'
+            or root_types.get('node') != './dist/src/index-node-v4.d.ts'
+            or root_types.get('default') != './dist/src/index-browser-v4.d.ts'
             or reference.get('import') != './dist/umf.js'
             or saga_runtime.get('types') != './dist/runtime/wasm/index.d.ts'
             or saga_runtime.get('import') != './dist/runtime/wasm/index.js'):

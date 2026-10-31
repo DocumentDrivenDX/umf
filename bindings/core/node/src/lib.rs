@@ -2,12 +2,12 @@ use napi::{Env, Error, JsFunction, JsString, JsUnknown, Result as NapiResult, Va
 use napi_derive::napi;
 use std::{cell::RefCell, rc::Rc};
 use umf_core::{
+    Capabilities, CapabilityError, Context, Diagnostic, EngineError, ResourceProfile,
+    SemanticContext, Severity, Utf16, Value,
     context::TransportUsage,
     copy_json,
     gregorian_date::{parse_gregorian_date, truncate_gregorian_date},
     rfc3339_exact_instant::parse_rfc3339_exact_instant,
-    Capabilities, CapabilityError, Context, Diagnostic, EngineError, ResourceProfile,
-    SemanticContext, Severity, Utf16, Value,
 };
 
 mod core_key_tuple;
@@ -47,6 +47,56 @@ pub fn graphql_profile_version() -> String {
     umf_core_wire::graphql_binding::PROFILE.to_owned()
 }
 
+const POSTGRESQL_PARSER_SESSION_PROFILE: &str = "umf.postgresql-parser-wire/1";
+
+#[napi]
+pub struct PostgresqlParserSession {
+    inner: std::sync::Mutex<umf_core::parser_backend_protocol::ParserSession>,
+}
+
+#[napi]
+impl PostgresqlParserSession {
+    #[napi(constructor)]
+    pub fn new() -> Self {
+        Self {
+            inner: std::sync::Mutex::new(
+                umf_core::parser_backend_protocol::ParserSession::default(),
+            ),
+        }
+    }
+
+    #[napi(js_name = "profileVersion")]
+    pub fn profile_version(&self) -> String {
+        POSTGRESQL_PARSER_SESSION_PROFILE.to_owned()
+    }
+
+    #[napi(js_name = "executePostgresqlParserSessionWire")]
+    pub fn execute_wire(
+        &self,
+        env: Env,
+        wire_json: String,
+        control_dispatcher: Option<JsFunction>,
+    ) -> String {
+        let Ok(mut inner) = self.inner.try_lock() else {
+            return umf_core_wire::postgresql_parser_binding::busy_session_envelope();
+        };
+        if let Some(dispatcher) = control_dispatcher {
+            let mut control = NodeControl { env, dispatcher };
+            let mut hook = |amount| control.check(amount);
+            umf_core_wire::postgresql_parser_binding::execute_wire_with_session(
+                &mut inner, &wire_json, &mut hook,
+            )
+        } else {
+            let mut no_control = |_amount| Ok(());
+            umf_core_wire::postgresql_parser_binding::execute_wire_with_session(
+                &mut inner,
+                &wire_json,
+                &mut no_control,
+            )
+        }
+    }
+}
+
 #[napi(js_name = "nativeFamilyDispatcherProfileVersion")]
 pub fn native_family_dispatcher_profile_version() -> String {
     umf_core_wire::native_family_binding::PROFILE.to_owned()
@@ -63,9 +113,7 @@ pub fn execute_native_family_wire(
         let mut control = NodeControl { env, dispatcher };
         let mut hook = |amount| control.check(amount);
         umf_core_wire::native_family_binding::execute_wire_with_control(
-            &family,
-            &wire_json,
-            &mut hook,
+            &family, &wire_json, &mut hook,
         )
     } else {
         umf_core_wire::native_family_binding::execute_wire(&family, &wire_json)
@@ -88,10 +136,7 @@ pub fn execute_postgresql_native_sql_wire(
     if let Some(dispatcher) = control_dispatcher {
         let mut control = NodeControl { env, dispatcher };
         let mut hook = |amount| control.check(amount);
-        umf_core_wire::postgresql_native_binding::execute_wire_with_control(
-            &wire_json,
-            &mut hook,
-        )
+        umf_core_wire::postgresql_native_binding::execute_wire_with_control(&wire_json, &mut hook)
     } else {
         umf_core_wire::postgresql_native_binding::execute_wire(&wire_json)
     }
@@ -126,14 +171,27 @@ pub fn execute_graphql_edit_wire(
     let mut editor_hook = |ast: &mut Value, ctx: &mut Context<'_>| {
         let input = umf_core_wire::encode_host_callback_value(ast, ctx)?;
         let argument = callback_env.create_string(&input).map_err(|_| {
-            EngineError::new("GRAPHQL_CALLBACK", Utf16::default(), "GraphQL callback bridge failed")
+            EngineError::new(
+                "GRAPHQL_CALLBACK",
+                Utf16::default(),
+                "GraphQL callback bridge failed",
+            )
         })?;
         let output = editor.call(None, &[argument.into_unknown()]).map_err(|_| {
-            EngineError::new("GRAPHQL_CALLBACK", Utf16::default(), "GraphQL host callback threw")
+            EngineError::new(
+                "GRAPHQL_CALLBACK",
+                Utf16::default(),
+                "GraphQL host callback threw",
+            )
         })?;
         if output.get_type().map_err(|_| {
-            EngineError::new("GRAPHQL_CALLBACK", Utf16::default(), "GraphQL callback bridge failed")
-        })? != ValueType::String {
+            EngineError::new(
+                "GRAPHQL_CALLBACK",
+                Utf16::default(),
+                "GraphQL callback bridge failed",
+            )
+        })? != ValueType::String
+        {
             return Err(EngineError::new(
                 "GRAPHQL_CALLBACK",
                 Utf16::default(),
@@ -142,10 +200,18 @@ pub fn execute_graphql_edit_wire(
         }
         let output: JsString = unsafe { output.cast() };
         let output_units = output.utf16_len().map_err(|_| {
-            EngineError::new("GRAPHQL_CALLBACK", Utf16::default(), "GraphQL callback returned invalid text")
+            EngineError::new(
+                "GRAPHQL_CALLBACK",
+                Utf16::default(),
+                "GraphQL callback returned invalid text",
+            )
         })?;
         let output_bytes = output.utf8_len().map_err(|_| {
-            EngineError::new("GRAPHQL_CALLBACK", Utf16::default(), "GraphQL callback returned invalid text")
+            EngineError::new(
+                "GRAPHQL_CALLBACK",
+                Utf16::default(),
+                "GraphQL callback returned invalid text",
+            )
         })?;
         if output_units > 32 * 1024 * 1024 || output_bytes > 32 * 1024 * 1024 {
             return Err(EngineError::new(
@@ -156,10 +222,18 @@ pub fn execute_graphql_edit_wire(
         }
         ctx.charge_work(output_units, Utf16::default())?;
         let output = output.into_utf8().map_err(|_| {
-            EngineError::new("GRAPHQL_CALLBACK", Utf16::default(), "GraphQL callback returned invalid text")
+            EngineError::new(
+                "GRAPHQL_CALLBACK",
+                Utf16::default(),
+                "GraphQL callback returned invalid text",
+            )
         })?;
         let output = output.as_str().map_err(|_| {
-            EngineError::new("GRAPHQL_CALLBACK", Utf16::default(), "GraphQL callback returned invalid text")
+            EngineError::new(
+                "GRAPHQL_CALLBACK",
+                Utf16::default(),
+                "GraphQL callback returned invalid text",
+            )
         })?;
         *ast = ctx.with_tagged_transport_limit(|ctx| umf_core_wire::decode(output, ctx))?;
         Ok(())
@@ -561,7 +635,7 @@ pub fn execute_core_bit128_field_request_wire(
                 "RESOURCE_PROFILE",
                 Utf16::default(),
                 "Unknown resource profile",
-            )))
+            )));
         }
     };
     let mut capabilities = NodeCapabilities { env, dispatcher };
@@ -660,7 +734,7 @@ impl umf_core::core_semantic_types::SemanticTypeValidator for NodeSemanticTypeVa
                     "HOST_CONTROL",
                     Utf16::default(),
                     "Invalid semantic validator reported work",
-                )))
+                )));
             }
         };
         ctx.charge_work(reported_work, Utf16::default())
@@ -717,6 +791,28 @@ pub fn execute_iceberg_wire(
     } else {
         Ok(umf_core_wire::execute_iceberg_wire(&wire_json))
     }
+}
+
+#[napi(js_name = "executeIcebergTableWire")]
+pub fn execute_iceberg_table_wire(
+    env: Env,
+    wire_json: String,
+    control_dispatcher: Option<JsFunction>,
+) -> NapiResult<String> {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = NodeControl { env, dispatcher };
+        let mut hook = |amount| control.check(amount);
+        Ok(umf_core_wire::iceberg_table_binding::execute_wire_with_control(
+            &wire_json, &mut hook,
+        ))
+    } else {
+        Ok(umf_core_wire::iceberg_table_binding::execute_wire(&wire_json))
+    }
+}
+
+#[napi(js_name = "icebergTableProfileVersion")]
+pub fn iceberg_table_profile_version() -> &'static str {
+    umf_core_wire::iceberg_table_binding::PROFILE
 }
 
 #[napi(js_name = "icebergSchemaProfileVersion")]
@@ -1140,26 +1236,59 @@ struct GraphqlNodeControl {
 impl GraphqlNodeControl {
     fn check(&mut self, amount: usize) -> Result<(), EngineError> {
         let amount = self.env.create_double(amount as f64).map_err(|_| {
-            EngineError::new("HOST_CONTROL", Utf16::default(), "Node host control bridge failed")
+            EngineError::new(
+                "HOST_CONTROL",
+                Utf16::default(),
+                "Node host control bridge failed",
+            )
         })?;
-        let response = self.dispatcher.call(None, &[amount.into_unknown()]).map_err(|_| {
-            EngineError::new("HOST_CONTROL", Utf16::default(), "Node host control bridge failed")
-        })?;
-        let response = response.coerce_to_string()
+        let response = self
+            .dispatcher
+            .call(None, &[amount.into_unknown()])
+            .map_err(|_| {
+                EngineError::new(
+                    "HOST_CONTROL",
+                    Utf16::default(),
+                    "Node host control bridge failed",
+                )
+            })?;
+        let response = response
+            .coerce_to_string()
             .and_then(|value| value.into_utf8())
             .and_then(|value| value.as_str().map(str::to_owned))
-            .map_err(|_| EngineError::new("HOST_CONTROL", Utf16::default(), "Node host control bridge failed"))?;
-        if response.is_empty() { return Ok(()); }
+            .map_err(|_| {
+                EngineError::new(
+                    "HOST_CONTROL",
+                    Utf16::default(),
+                    "Node host control bridge failed",
+                )
+            })?;
+        if response.is_empty() {
+            return Ok(());
+        }
         let result = umf_core_wire::decode(&response, &mut umf_core_wire::transport_context())
-            .map_err(|_| EngineError::new("HOST_CONTROL", Utf16::default(), "Malformed Node host control result"))?;
-        if matches!(value_field(&result, "ok"), Some(Value::Bool(true))) { return Ok(()); }
+            .map_err(|_| {
+                EngineError::new(
+                    "HOST_CONTROL",
+                    Utf16::default(),
+                    "Malformed Node host control result",
+                )
+            })?;
+        if matches!(value_field(&result, "ok"), Some(Value::Bool(true))) {
+            return Ok(());
+        }
         let code = value_field(&result, "code")
             .and_then(value_text)
             .and_then(|text| text.to_utf8().ok())
             .unwrap_or_else(|| "HOST_CONTROL".to_owned());
-        let message = value_field(&result, "message").and_then(value_text).cloned()
+        let message = value_field(&result, "message")
+            .and_then(value_text)
+            .cloned()
             .unwrap_or_else(|| Utf16::from("Host control rejected the operation"));
-        let path = value_field(&result, "path").and_then(value_text).cloned().unwrap_or_default();
+        let path = value_field(&result, "path")
+            .and_then(value_text)
+            .cloned()
+            .unwrap_or_default();
         Err(EngineError::new(code, path, message))
     }
 }

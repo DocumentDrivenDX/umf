@@ -30,6 +30,8 @@ pub mod postgresql_native_binding;
 pub mod native_family_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod iceberg_table_binding;
 pub mod access_rrf_binding;
 pub mod access_temporal_binding;
 pub mod arrow_ipc_capture_binding {

@@ -65,7 +65,7 @@ export interface ParquetCaptureRustEngine {
 
 function publicError(error:unknown,isNativeError:ErrorGuard,isBindingError:ErrorGuard):never {
  const candidate=error as {name?:unknown;code?:unknown;message?:unknown;path?:unknown}|null;
- if(isNativeError(error)&&candidate?.name==='UmfCoreError'&&typeof candidate.code==='string'&&candidate.code.startsWith('PARQUET_'))
+ if(isNativeError(error)&&candidate?.name==='UmfCoreError'&&typeof candidate.code==='string'&&(candidate.code.startsWith('PARQUET_')||candidate.code==='REQUEST'||candidate.code==='JSON_SCHEMA_SYNTAX'))
   throw new UmfError(candidate.code,String(candidate.message??''),typeof candidate.path==='string'?candidate.path:'');
  if(isBindingError(error)&&candidate?.name==='UmfError'&&typeof candidate.code==='string')
   throw new UmfError(candidate.code,String(candidate.message??''),typeof candidate.path==='string'?candidate.path:'');

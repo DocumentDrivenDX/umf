@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {createPostgresqlSqlEngine,isNativeUmfCoreError} from '../../bindings/core/node/index.js';
+import {createPostgresqlSqlEngine} from '../../src/index-node-v4';
+import {isNativeUmfCoreError} from '../../bindings/core/node/index.js';
 
 // This test requires the production native-postgresql host feature.
 test('native PostgreSQL Node engine edits SQL through the bundled parser',()=>{

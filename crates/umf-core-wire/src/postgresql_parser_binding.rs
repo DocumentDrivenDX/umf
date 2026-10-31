@@ -457,3 +457,227 @@ fn object(fields: Vec<(&str, Value)>) -> Value {
 fn error(message: &str) -> EngineError {
     EngineError::new("POSTGRESQL_BACKEND", Utf16::default(), message)
 }
+
+/// Execute one closed Rust-owned parser-session action. The `ParserSession`
+/// belongs to the binding handle and survives across these synchronous calls.
+pub fn execute_wire_with_session(
+    session: &mut ParserSession,
+    wire: &str,
+    control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+) -> String {
+    let result = (|| {
+        let mut ctx = Context::ordinary().with_host_control(control);
+        let request = ctx.with_tagged_transport_limit(|ctx| crate::decode(wire, ctx))?;
+        let output = execute_session_action(session, &request, &mut ctx)?;
+        match crate::encode(&output, &mut ctx) {
+            Ok(encoded) => Ok(encoded),
+            Err(error) => {
+                // A prepare action or intermediate export response can create
+                // a continuation before its output is serialized. If that
+                // serialization fails, the host never receives its token.
+                let token =
+                    field(&output, "token").or_else(|| field(field(&output, "request")?, "token"));
+                if let Some(Value::String(token)) = token {
+                    if let Ok(token) = parse_token(token) {
+                        session.cancel(token);
+                    }
+                }
+                Err(error)
+            }
+        }
+    })();
+    crate::result_envelope(result)
+}
+
+/// Return the normal wire envelope when a binding's session is already in use.
+pub fn busy_session_envelope() -> String {
+    crate::result_envelope(Err(EngineError::new(
+        "POSTGRESQL_SESSION_BUSY",
+        Utf16::default(),
+        "PostgreSQL parser session is already processing an operation",
+    )))
+}
+
+fn execute_session_action(
+    session: &mut ParserSession,
+    request: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let Value::Object(fields) = request else {
+        return Err(error("PostgreSQL parser request must be an object"));
+    };
+    if field(request, "profile") != Some(&Value::string_utf8(PROFILE)) {
+        return Err(error("PostgreSQL parser-session profile is required"));
+    }
+    let op = match field(request, "op") {
+        Some(Value::String(name)) => name
+            .to_utf8()
+            .map_err(|_| error("Operation must be ASCII"))?,
+        _ => return Err(error("PostgreSQL parser-session operation is required")),
+    };
+    let allowed: &[&str] = match op.as_str() {
+        "postgresql-parser.prepareImport" => &["profile", "op", "source", "id"],
+        "postgresql-parser.cancel" => &["profile", "op", "token"],
+        "postgresql-parser.completeImport" => &["profile", "op", "token", "response"],
+        "postgresql-parser.prepareExport" => &["profile", "op", "document"],
+        "postgresql-parser.completeExport" => &["profile", "op", "token", "response"],
+        "postgresql-parser.editNode" => &["profile", "op", "document", "pointer", "text"],
+        "postgresql-parser.inspect" => &["profile", "op", "document"],
+        "postgresql-parser.getSource" => &["profile", "op", "document"],
+        "postgresql-parser.getNode" => &["profile", "op", "document", "pointer"],
+        "postgresql-parser.inspectPayload" => &["profile", "op", "payload"],
+        "postgresql-parser.validateAst" => &["profile", "op", "ast"],
+        _ => return Err(error("Unknown PostgreSQL parser-session operation")),
+    };
+    let mut seen = std::collections::BTreeSet::new();
+    for (key, _) in fields {
+        ctx.charge_work(key.len().saturating_add(1), Utf16::default())?;
+        if !seen.insert(key)
+            || !allowed
+                .iter()
+                .any(|candidate| key == &Utf16::from(*candidate))
+        {
+            return Err(error(
+                "PostgreSQL parser request has unknown or duplicate members",
+            ));
+        }
+    }
+    match op.as_str() {
+        "postgresql-parser.cancel" => {
+            let token = parse_token(string(request, "token")?)?;
+            Ok(Value::Bool(session.cancel(token)))
+        }
+        "postgresql-parser.prepareImport" => {
+            let source = match umf_core::copy_json(required_field(request, "source")?, ctx)? {
+                Value::String(value) => value,
+                _ => return Err(error("source must be a string")),
+            };
+            let id = match umf_core::copy_json(required_field(request, "id")?, ctx)? {
+                Value::String(value) => value,
+                _ => return Err(error("id must be a string")),
+            };
+            let mut usage = TransportUsage::default();
+            usage.capture(ctx);
+            prepare_sql_import(session, source, id, usage, ctx)
+        }
+        "postgresql-parser.completeImport" => {
+            let token = string(request, "token")?;
+            let response = parsed_response(required_field(request, "response")?, ctx)?;
+            complete_sql_import(session, token, response, ctx)
+        }
+        "postgresql-parser.prepareExport" => {
+            let doc = required_field(request, "document")?;
+            let mut usage = TransportUsage::default();
+            usage.capture(ctx);
+            prepare_sql_export(session, doc, usage, ctx)
+        }
+        "postgresql-parser.completeExport" => {
+            let token = string(request, "token")?;
+            let response = parser_response(required_field(request, "response")?, ctx)?;
+            complete_sql_export(session, token, response, ctx)
+        }
+        "postgresql-parser.editNode" => umf_core::postgresql_sql_runtime::edit_postgresql_node(
+            required_field(request, "document")?,
+            string(request, "pointer")?,
+            string(request, "text")?,
+            ctx,
+        ),
+        "postgresql-parser.inspect" => umf_core::postgresql_sql_runtime::inspect_postgresql_sql(
+            required_field(request, "document")?,
+            ctx,
+        ),
+        "postgresql-parser.getSource" => umf_core::postgresql_sql_runtime::get_postgresql_source(
+            required_field(request, "document")?,
+            ctx,
+        ),
+        "postgresql-parser.getNode" => umf_core::postgresql_sql_runtime::get_postgresql_node(
+            required_field(request, "document")?,
+            string(request, "pointer")?,
+            ctx,
+        ),
+        "postgresql-parser.inspectPayload" => Ok(Value::Array(
+            umf_core::postgresql_sql_runtime::inspect_postgresql_sql_payload(
+                required_field(request, "payload")?,
+                ctx,
+            )?,
+        )),
+        "postgresql-parser.validateAst" => {
+            umf_core::postgresql_sql_runtime::validate_postgresql_ast(
+                required_field(request, "ast")?,
+                ctx,
+            )
+        }
+        _ => Err(error("Unknown PostgreSQL parser-session operation")),
+    }
+}
+
+fn required_field<'a>(value: &'a Value, name: &str) -> Result<&'a Value, EngineError> {
+    field(value, name).ok_or_else(|| error(&format!("{name} is required")))
+}
+
+fn string<'a>(value: &'a Value, name: &str) -> Result<&'a Utf16, EngineError> {
+    match field(value, name) {
+        Some(Value::String(text)) => Ok(text),
+        _ => Err(error(&format!("{name} must be a string"))),
+    }
+}
+
+fn parser_response(value: &Value, ctx: &mut Context<'_>) -> Result<ParserResponse, EngineError> {
+    let kind = string(value, "kind")?
+        .to_utf8()
+        .map_err(|_| error("Parser response kind must be ASCII"))?;
+    match kind.as_str() {
+        "parsed" => {
+            validate_response_members(value, &["kind", "tree"], ctx)?;
+            Ok(ParserResponse::Parsed {
+                tree: umf_core::copy_json(required_field(value, "tree")?, ctx)?,
+            })
+        }
+        "deparsed" => {
+            validate_response_members(value, &["kind", "sql"], ctx)?;
+            let sql = string(value, "sql")?;
+            ctx.charge_text(sql.len(), Utf16::default())?;
+            Ok(ParserResponse::Deparsed { sql: sql.clone() })
+        }
+        "codecRoundTripped" => {
+            validate_response_members(value, &["kind", "tree"], ctx)?;
+            Ok(ParserResponse::CodecRoundTripped {
+                tree: umf_core::copy_json(required_field(value, "tree")?, ctx)?,
+            })
+        }
+        _ => Err(error("Unknown PostgreSQL parser response kind")),
+    }
+}
+
+fn parsed_response(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+    validate_response_members(value, &["kind", "tree"], ctx)?;
+    let kind = string(value, "kind")?
+        .to_utf8()
+        .map_err(|_| error("Parser response kind must be ASCII"))?;
+    if kind != "parsed" {
+        return Err(error("Parser response kind does not match import"));
+    }
+    Ok(umf_core::copy_json(required_field(value, "tree")?, ctx)?)
+}
+
+fn validate_response_members(
+    value: &Value,
+    allowed: &[&str],
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    let Value::Object(fields) = value else {
+        return Err(error("Parser response must be an object"));
+    };
+    let mut seen = std::collections::BTreeSet::new();
+    for (key, _) in fields {
+        ctx.charge_work(key.len().saturating_add(1), Utf16::default())?;
+        if !seen.insert(key)
+            || !allowed
+                .iter()
+                .any(|candidate| key == &Utf16::from(*candidate))
+        {
+            return Err(error("Parser response has unknown or duplicate members"));
+        }
+    }
+    Ok(())
+}

@@ -87,6 +87,12 @@ impl TransportUsage {
     pub fn constraint_steps(&self) -> usize {
         self.constraint_steps
     }
+
+    /// Add metered work from another transport transition to this operation.
+    pub fn add_usage(&mut self, charged_work: u64, constraint_steps: usize) {
+        self.charged_work = self.charged_work.saturating_add(charged_work);
+        self.constraint_steps = self.constraint_steps.saturating_add(constraint_steps);
+    }
 }
 
 /// Restores a temporary trusted schema traversal allowance on both normal

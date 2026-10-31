@@ -210,12 +210,19 @@ impl ParserSession {
         response: ParserResponse,
         ctx: &mut Context<'_>,
     ) -> Result<ParserCompletion, EngineError> {
-        let continuation = self.pending.remove(&token).ok_or_else(|| {
+        let mut continuation = self.pending.remove(&token).ok_or_else(|| {
             parser_error(
                 "POSTGRESQL_PARSER_TOKEN",
                 "Unknown or completed parser token",
             )
         })?;
+        // The binding decoded and metered this completion envelope in the
+        // current Context. Carry those charges into the retained operation
+        // before restoring its cumulative usage.
+        let decoded_work = ctx.charged_work();
+        let decoded_steps = ctx.constraint_steps();
+        continuation.usage.add_usage(decoded_work, decoded_steps);
+        continuation.usage.seed(ctx);
         let (operation, response, usage) = admit_response(continuation, response, ctx)?;
         Ok(ParserCompletion {
             operation,

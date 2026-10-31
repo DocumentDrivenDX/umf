@@ -1378,14 +1378,20 @@ fn rdf_run(args: &[String]) -> Result<(), String> {
 fn graphql_run(args: &[String]) -> Result<(), String> {
     let profile = umf_core_wire::graphql_binding::PROFILE;
     if args == ["--version"] {
-        println!("{{\"profile\":\"{profile}\",\"version\":\"{}\"}}", env!("CARGO_PKG_VERSION"));
+        println!(
+            "{{\"profile\":\"{profile}\",\"version\":\"{}\"}}",
+            env!("CARGO_PKG_VERSION")
+        );
         return Ok(());
     }
     if args == ["--capabilities"] {
         println!("{{\"profile\":\"{profile}\",\"operations\":[\"graphql.import\",\"graphql.validate\",\"graphql.export\",\"graphql.getAst\",\"graphql.exportBundle\",\"graphql.editAst\"],\"resourceProfile\":\"cooperative\"}}");
         return Ok(());
     }
-    let invalid = || "usage: umf graphql <--version|--capabilities|--stdin-wire [--max-work N] [--timeout-ms N]>".to_owned();
+    let invalid = || {
+        "usage: umf graphql <--version|--capabilities|--stdin-wire [--max-work N] [--timeout-ms N]>"
+            .to_owned()
+    };
     let mut stdin_wire = false;
     let mut max_work = None;
     let mut timeout_ms = None;
@@ -1393,25 +1399,58 @@ fn graphql_run(args: &[String]) -> Result<(), String> {
     while index < args.len() {
         match args[index].as_str() {
             "--stdin-wire" if !stdin_wire => stdin_wire = true,
-            "--max-work" if max_work.is_none() => { index += 1; max_work = Some(args.get(index).ok_or_else(invalid)?.parse::<u64>().map_err(|_| "--max-work requires a nonnegative integer".to_owned())?); }
-            "--timeout-ms" if timeout_ms.is_none() => { index += 1; timeout_ms = Some(args.get(index).ok_or_else(invalid)?.parse::<u64>().map_err(|_| "--timeout-ms requires a nonnegative integer".to_owned())?); }
+            "--max-work" if max_work.is_none() => {
+                index += 1;
+                max_work = Some(
+                    args.get(index)
+                        .ok_or_else(invalid)?
+                        .parse::<u64>()
+                        .map_err(|_| "--max-work requires a nonnegative integer".to_owned())?,
+                );
+            }
+            "--timeout-ms" if timeout_ms.is_none() => {
+                index += 1;
+                timeout_ms = Some(
+                    args.get(index)
+                        .ok_or_else(invalid)?
+                        .parse::<u64>()
+                        .map_err(|_| "--timeout-ms requires a nonnegative integer".to_owned())?,
+                );
+            }
             _ => return Err(invalid()),
         }
         index += 1;
     }
-    if !stdin_wire { return Err(invalid()); }
+    if !stdin_wire {
+        return Err(invalid());
+    }
     let wire = String::from_utf8(read_limited(io::stdin(), MAX_GRAPHQL_REQUEST_BYTES)?)
         .map_err(|_| "wire input is not valid UTF-8".to_owned())?;
     let start = std::time::Instant::now();
     let mut left = max_work.unwrap_or(u64::MAX);
     let mut control = |amount: usize| {
         let amount = amount as u64;
-        if amount > left { return Err(umf_core::EngineError::new("RESOURCE_LIMIT", Utf16::default(), "Maximum work exceeded")); }
+        if amount > left {
+            return Err(umf_core::EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Maximum work exceeded",
+            ));
+        }
         left -= amount;
-        if timeout_ms.is_some_and(|ms| start.elapsed() >= std::time::Duration::from_millis(ms)) { return Err(umf_core::EngineError::new("DEADLINE_EXCEEDED", Utf16::default(), "Deadline exceeded")); }
+        if timeout_ms.is_some_and(|ms| start.elapsed() >= std::time::Duration::from_millis(ms)) {
+            return Err(umf_core::EngineError::new(
+                "DEADLINE_EXCEEDED",
+                Utf16::default(),
+                "Deadline exceeded",
+            ));
+        }
         Ok(())
     };
-    println!("{}", umf_core_wire::graphql_binding::execute_wire_with_control(&wire, &mut control));
+    println!(
+        "{}",
+        umf_core_wire::graphql_binding::execute_wire_with_control(&wire, &mut control)
+    );
     Ok(())
 }
 
@@ -1544,14 +1583,19 @@ fn native_adapter_run(
     args: &[String],
 ) -> Result<(), String> {
     if args == ["--version"] {
-        println!("{{\"profile\":\"{profile}\",\"version\":\"{}\"}}", env!("CARGO_PKG_VERSION"));
+        println!(
+            "{{\"profile\":\"{profile}\",\"version\":\"{}\"}}",
+            env!("CARGO_PKG_VERSION")
+        );
         return Ok(());
     }
     if args == ["--capabilities"] {
         println!("{{\"profile\":\"{profile}\",\"operations\":{operations},\"resourceProfile\":\"cooperative\",\"networkResolution\":false}}");
         return Ok(());
     }
-    let invalid = || format!("usage: umf {family} <--version|--capabilities|--stdin-wire [--max-work N] [--timeout-ms N]>");
+    let invalid = || {
+        format!("usage: umf {family} <--version|--capabilities|--stdin-wire [--max-work N] [--timeout-ms N]>")
+    };
     let mut stdin_wire = false;
     let mut max_work = None;
     let mut timeout_ms = None;
@@ -1561,19 +1605,29 @@ fn native_adapter_run(
             "--stdin-wire" if !stdin_wire => stdin_wire = true,
             "--max-work" if max_work.is_none() => {
                 index += 1;
-                max_work = Some(args.get(index).ok_or_else(invalid)?.parse::<u64>()
-                    .map_err(|_| "--max-work requires a nonnegative integer".to_owned())?);
+                max_work = Some(
+                    args.get(index)
+                        .ok_or_else(invalid)?
+                        .parse::<u64>()
+                        .map_err(|_| "--max-work requires a nonnegative integer".to_owned())?,
+                );
             }
             "--timeout-ms" if timeout_ms.is_none() => {
                 index += 1;
-                timeout_ms = Some(args.get(index).ok_or_else(invalid)?.parse::<u64>()
-                    .map_err(|_| "--timeout-ms requires a nonnegative integer".to_owned())?);
+                timeout_ms = Some(
+                    args.get(index)
+                        .ok_or_else(invalid)?
+                        .parse::<u64>()
+                        .map_err(|_| "--timeout-ms requires a nonnegative integer".to_owned())?,
+                );
             }
             _ => return Err(invalid()),
         }
         index += 1;
     }
-    if !stdin_wire { return Err(invalid()); }
+    if !stdin_wire {
+        return Err(invalid());
+    }
     let wire = String::from_utf8(read_limited(io::stdin(), MAX_NATIVE_ADAPTER_REQUEST_BYTES)?)
         .map_err(|_| "wire input is not valid UTF-8".to_owned())?;
     let start = std::time::Instant::now();
@@ -1581,11 +1635,19 @@ fn native_adapter_run(
     let mut control = |amount: usize| {
         let amount = amount as u64;
         if amount > left {
-            return Err(umf_core::EngineError::new("RESOURCE_LIMIT", Utf16::default(), "Maximum work exceeded"));
+            return Err(umf_core::EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Maximum work exceeded",
+            ));
         }
         left -= amount;
         if timeout_ms.is_some_and(|ms| start.elapsed() >= std::time::Duration::from_millis(ms)) {
-            return Err(umf_core::EngineError::new("DEADLINE_EXCEEDED", Utf16::default(), "Deadline exceeded"));
+            return Err(umf_core::EngineError::new(
+                "DEADLINE_EXCEEDED",
+                Utf16::default(),
+                "Deadline exceeded",
+            ));
         }
         Ok(())
     };
@@ -1861,6 +1923,9 @@ fn facets_run(args: &[String]) -> Result<(), String> {
 
 #[cfg(feature = "embedded-adapters")]
 fn iceberg_run(args: &[String]) -> Result<(), String> {
+    if args.first().map(String::as_str) == Some("table") {
+        return iceberg_table_run(&args[1..]);
+    }
     if args == ["schema", "--version"] {
         println!(
             "{{\"profile\":\"{}\",\"version\":\"{}\"}}",
@@ -1937,6 +2002,89 @@ fn iceberg_run(args: &[String]) -> Result<(), String> {
     println!(
         "{}",
         umf_core_wire::execute_iceberg_wire_with_control(&wire, &mut control)
+    );
+    Ok(())
+}
+
+#[cfg(feature = "embedded-adapters")]
+fn iceberg_table_run(args: &[String]) -> Result<(), String> {
+    if args == ["--version"] {
+        println!(
+            "{{\"profile\":\"{}\",\"version\":\"{}\"}}",
+            umf_core_wire::iceberg_table_binding::PROFILE,
+            env!("CARGO_PKG_VERSION"),
+        );
+        return Ok(());
+    }
+    if args == ["--capabilities"] {
+        println!(
+            "{}",
+            serde_json::json!({
+                "profile": umf_core_wire::iceberg_table_binding::PROFILE,
+                "operations": umf_core_wire::iceberg_table_binding::OPERATIONS,
+                "resourceProfile": "cooperative",
+            })
+        );
+        return Ok(());
+    }
+    let mut stdin_wire = false;
+    let mut max_work = None;
+    let mut timeout_ms = None;
+    let mut index = 0;
+    while index < args.len() {
+        match args[index].as_str() {
+            "--stdin-wire" if !stdin_wire => stdin_wire = true,
+            "--max-work" if max_work.is_none() => {
+                index += 1;
+                max_work = Some(
+                    args.get(index)
+                        .ok_or("--max-work requires a value")?
+                        .parse::<u64>()
+                        .map_err(|_| "--max-work requires a nonnegative integer")?,
+                );
+            }
+            "--timeout-ms" if timeout_ms.is_none() => {
+                index += 1;
+                timeout_ms = Some(
+                    args.get(index)
+                        .ok_or("--timeout-ms requires a value")?
+                        .parse::<u64>()
+                        .map_err(|_| "--timeout-ms requires a nonnegative integer")?,
+                );
+            }
+            _ => return Err("invalid Iceberg table option".into()),
+        }
+        index += 1;
+    }
+    if !stdin_wire {
+        return Err("usage: umf iceberg table <--version|--capabilities|--stdin-wire [--max-work N] [--timeout-ms N]>".into());
+    }
+    let started = std::time::Instant::now();
+    let wire = String::from_utf8(read_limited(io::stdin(), MAX_ICEBERG_REQUEST_BYTES)?)
+        .map_err(|_| "Iceberg table wire request is not valid UTF-8".to_owned())?;
+    let mut remaining = max_work.unwrap_or(u64::MAX);
+    let mut control = |amount: usize| {
+        let amount = amount as u64;
+        if amount > remaining {
+            return Err(umf_core::EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Iceberg table work budget exhausted",
+            ));
+        }
+        remaining -= amount;
+        if timeout_ms.is_some_and(|limit| started.elapsed().as_millis() >= u128::from(limit)) {
+            return Err(umf_core::EngineError::new(
+                "DEADLINE",
+                Utf16::default(),
+                "Iceberg table deadline elapsed",
+            ));
+        }
+        Ok(())
+    };
+    println!(
+        "{}",
+        umf_core_wire::iceberg_table_binding::execute_wire_with_control(&wire, &mut control)
     );
     Ok(())
 }
@@ -2154,8 +2302,11 @@ fn parquet_capture_run(args: &[String]) -> Result<(), String> {
         return Err("usage: umf parquet-capture <--version|--capabilities|--stdin-wire [--max-work N] [--timeout-ms N]>".into());
     }
     let started = std::time::Instant::now();
-    let wire = String::from_utf8(read_limited(io::stdin(), MAX_PARQUET_CAPTURE_REQUEST_BYTES)?)
-        .map_err(|_| "Parquet capture wire request is not valid UTF-8".to_owned())?;
+    let wire = String::from_utf8(read_limited(
+        io::stdin(),
+        MAX_PARQUET_CAPTURE_REQUEST_BYTES,
+    )?)
+    .map_err(|_| "Parquet capture wire request is not valid UTF-8".to_owned())?;
     let mut remaining = max_work.unwrap_or(u64::MAX);
     let mut control = |amount: usize| {
         let amount = amount as u64;

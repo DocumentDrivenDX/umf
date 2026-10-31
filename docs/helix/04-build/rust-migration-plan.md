@@ -87,9 +87,9 @@ Node public-root tests pass for the retained-model Registry, document
 read/write, SHACL validation and OWL views, and RDF import/edit/export with its
 native payload inspector. A public `umf.adapters` Python test passes from a
 staged package and fresh extension with no PATH tools; the fresh CLI advertises
-SHACL, OWL and PostgreSQL routes. The new PostgreSQL/Avro/Protobuf host flows
-now pass in a fresh Node build: PostgreSQL native SQL, Avro, Iceberg schema and
-Protobuf source callbacks. Python PostgreSQL native SQL and the public RDF
+SHACL, OWL and PostgreSQL routes. A fresh Node build passes the new PostgreSQL
+native SQL, Avro, Iceberg schema and Protobuf source callback flows. Python
+PostgreSQL native SQL and the public RDF
 edit/export/payload-inspector flow pass with no PATH tools. The SHACL
 language-range wire case passes.
 These results do not establish a release wheel or release-profile browser build.
@@ -102,41 +102,44 @@ These results do not establish a release wheel or release-profile browser build.
 | JSON-LD | Source, expansion, flattening, compaction, RDF conversion, compound literals, generalized input, framing and payload inspection are wired. Focused wire, Node public-root, Python extension, CLI and development WASM Chromium baselines pass. The new scalar-default, graph, pruning and compact-option frame wire case passes. | Implement structured `@default` and remaining frame semantics; the current Rust route explicitly refuses unsupported structures. Check the release-profile browser build at integration. |
 | RDF and generalized RDF | Seventeen existing Rust operations now drive the Node/browser default roots. Actual Node import/edit/export, native Registry inspection and refusal pass; the public Python RDF edit/export/payload-inspector and refusal flow also passes. | Verify the browser public root and the remaining Python generalized-RDF operations. |
 | SHACL and OWL | Rust wire tests pass 2/2; actual Node public-root SHACL validation, OWL view and refusal pass. SHACL reports its real `umf-shacl-native-subset/2` identity and incomplete evidence for unsupported constraints. Basic `languageIn` range/wildcard support also passes its focused wire case. | Complete remaining supported constraint semantics and browser/Python activation. |
-| PostgreSQL | Catalog capture, supplement inspectors, resolved predicates and parser-session raw SQL routes pass 12/12 focused wire tests. The host-only `pg_query` 6.1.1 C path passes import→AST edit→deparse→reparse and unsupported-version refusal; codec-loss refusal also passes. Fresh Node and Python public native SQL flows pass. | Finish the caller-supplied parser's Rust-owned session FFI and default-root Registry bridge. |
+| PostgreSQL | Catalog capture, supplement inspectors, resolved predicates and parser-session raw SQL routes pass 12/12 focused wire tests. The host-only `pg_query` 6.1.1 C path passes import→AST edit→deparse→reparse and unsupported-version refusal; codec-loss refusal also passes. Fresh Node and Python public native SQL flows pass. The caller-supplied parser's Rust-owned session wire and actual Node callback-failure→retry flows pass through the public root. | Verify the caller-supplied browser host route and published package declarations. |
 | Avro | The existing Rust document kernel is exposed through new import/inspect/metadata/get/edit/export/bundle wire routes; its focused source roundtrip/dependency refusal and fresh Node public-root flow pass. | Activate and verify browser/Python public entry points. |
-| Iceberg schema and table | The standalone schema Rust kernel drives default Node/browser wrappers for import/inspect/export/get/edit and a native Registry payload inspector; the fresh Node public-root import/edit/export and refusal cases pass. Iceberg table operations remain TypeScript-owned. | Implement native table source operations, then context, transforms, rename and promotion. |
+| Iceberg schema and table | The standalone schema Rust kernel drives default Node/browser wrappers for import/inspect/export/get/edit and a native Registry payload inspector; its fresh Node public-root import/edit/export and refusal cases pass. Table core/wire/CLI source, context, transform, rename and promotion operations pass seven focused wire cases; fresh Node import→rename/promotion→export, native Registry validation and exact branded refusal pass, as does public Python edit/export. | Verify the browser public table route. |
+| Parquet | The existing Rust capture, footer, schema, page, value and metadata-edit operations drive both default roots. The fresh Node public-root fixture capture→metadata append→export and oversized-source refusal pass. | Activate and verify browser and Python public routes. |
 | Protobuf sources | Existing Rust source sessions now back the Node/browser default `importProtobufSources` and `exportProtobufSources` Promise APIs; a fresh Node public-root tiny Go compile→descriptor edit→emit case passes. | Verify the browser callback flow. |
 | Python native transport | The public `umf.adapters` family dispatcher passes a staged-package roundtrip, refusal and resource-limit baseline with a fresh extension. | Include new adapter resources and verify the final wheel/sdist. |
 | Saga browser SDK subpath | Runtime source and default SDK asset integration are present. | Run one representative host baseline at the next SDK integration point. |
 
 ## Active implementation queue
 
-1. Carry the newly activated adapter roots into the next browser/package
-   integration, including Iceberg schema and public RDF/SHACL paths.
-   Retain the already green Node and Python cases without rerunning them.
-2. Make the caller-supplied PostgreSQL `importPostgresqlSql` and
-   `exportPostgresqlSql` default APIs use a per-instance Rust ParserSession
-   through Node/WASM, with Rust `inspectPayload` for `postgresqlRegistry`.
-   Keep opaque one-shot continuations and exact callback error identity; test
-   one import→edit→export and a lossy-codec refusal.
-3. Port the current Iceberg table APIs: `importIcebergTable`, `inspectIcebergTable`,
-   `exportIcebergTable`, `getIcebergTableNode`, `proposeIcebergTableNodeEdit`,
-   context, transforms, rename and promotion. The table kernel is still missing.
-4. Complete the public JSON-LD framing semantics still explicitly refused,
-   including structured `@default`, and continue SHACL Core constraint support
-   with real RDF report rows. Use focused wire/public cases for each new
-   operation, then verify browser and Python routes at integration.
-5. Port the still-JavaScript TypeSpec and Smithy compiler/assembly entry points
-   (`compileTypeSpecDocument`, `emitTypeSpecJsonSchema`,
-   `assembleSmithyDocument`, `selectSmithyShapes`) through explicit compiler
-   capabilities while Rust retains UMF source/document semantics. A retained
-   source archive alone does not satisfy these operations.
+Each row identifies a current public surface that still needs a Rust-owned
+semantic path or a verified default entry point. Focused tests exercise new
+behavior; already green targets are excluded from routine reruns.
+
+| Public capability | Work type and owner | Next baseline and done criterion |
+| --- | --- | --- |
+| Caller-supplied PostgreSQL SQL backend | Existing session and Node/WASM default bridge are wired; Rust wire and actual Node callback retry pass. | Verify the same supplied-backend route in Chromium and the published Node types. Exact backend identity, one-shot tokens, cumulative controls and public Registry inspection must hold. |
+| Iceberg table source and evolution | Existing table kernel, Node/WASM FFI, native-family route and default facade are wired; Rust wire, Node normal/refusal and Python public flows pass. | Verify Chromium table import→rename/promotion→export. Preserve historical schemas, unknown fields and exact native numbers. |
+| Parquet capture and edit | Existing kernel drives both default roots; actual Node capture/edit/export and refusal pass. | Verify public browser and Python routes for the same operations. |
+| TypeSpec compiler and emit | New Rust document/session kernel; `prune_history` owns `compileTypeSpecDocument`, semantic graph and `emitTypeSpecJsonSchema` around the explicit pinned compiler capability. | Tiny source compile→graph/emit and compiler refusal through the public API, including a browser-compatible host boundary. |
+| Smithy assembly and selection | New Rust document/session kernel; `prune_history` follows TypeSpec with `assembleSmithyDocument` and `selectSmithyShapes` around the supplied backend. | Tiny source assembly→shape selection and an invalid-selection refusal through the public API. |
+| Delta log and checkpoint | Existing kernel activation; next adapter lane maps capture, export, action inspection, commit reconciliation and sidecars to the public defaults. | One public log capture→inspect/reconcile→export and one malformed-log refusal. |
+| Delta schema and table | Existing kernel activation for import/get/edit/export; next adapter lane checks mapped rename separately against its current TypeScript behavior. | One public table/schema edit→export with preserved unknown content and an invalid-schema refusal; add rename only once its Rust semantics are callable. |
+| Delta definition, DDL and Spark realization | New Rust semantics; next adapter lane ports the current definition, DDL bundle and realization exports. | One definition→DDL bundle workflow with an explicit unsupported-meaning refusal. |
+| Spark schema and metadata | New Rust semantics; next adapter lane ports import/inspect/export/get/edit, metadata/collation/parameter diagnostics and rename. | One public schema edit→export/inspect and one invalid-schema refusal. |
+| Action evaluation and planning | `evaluateActionRule` has a Rust codegen kernel but lacks a public wire/default route; `assessActionPlan` still needs a Rust implementation. Assign the next freed adapter lane. | A public rule evaluation and plan assessment use Rust results, with one invalid-rule refusal. |
+| Protection-value assessment | Existing Rust security kernels need public default activation for `evaluateProtectionValue`; assign the next freed adapter lane. | One public protection-value assessment and one rejected invalid input through the native route. |
+| Avro-to-JSON-Schema projection | `projectAvroToJsonSchema` is still a TypeScript projection and needs a Rust kernel and public route; assign the next freed adapter lane. | A public Avro schema projects to JSON Schema with the current loss report and one unsupported-meaning refusal. |
+| JSON-LD framing | Extend existing kernel after larger missing family cuts: structured `@default` and still-refused current frame options. | One public structured-default selection plus a malformed-frame refusal, preserving graph identity and unknown metadata. |
+| SHACL Core validation | Extend existing kernel with remaining current constraint/path semantics and real RDF result rows. | One conforming and one violating public shape for each new coherent constraint group, then browser/Python validation routes. |
+| Browser and Python default adapter surfaces | Host activation; Root integrates public routes for newly callable Rust kernels. | Fresh Chromium public-root and staged Python package workflows for each newly exposed host boundary; do not replay green Node cases. |
+| Published reference and release package | Published-surface integration; Root redirects or retires shipped TypeScript semantic entry points, including `./reference`, legacy `dist/umf.js`, and the V2/V3 candidate subpaths after replacements are callable. | Published-package consumer test, release-profile browser build, and wheel/sdist source closure show that executable public semantics run through Rust. |
 
 ## Remaining Port Work
 
 The current library is not the entire TypeScript port. Remaining work includes
 TypeSpec and Smithy; JSON-LD frame options; SHACL constraint coverage; the
-PostgreSQL native parser and other relational adapters; cross-format
+caller-supplied PostgreSQL parser-session activation and other relational adapters; cross-format
 projections; action/security/table control operations; and portions of
 Delta/Iceberg/Spark. New kernels also need Python, Node/Bun and browser WASM
 activation through the public defaults. A source or wire draft counts as

@@ -121,6 +121,8 @@ try{
   ...await filesUnder(join(root,'tests/rust-core')),
   ...await filesUnder(join(root,'scripts/rust-core')),
   ...await filesUnder(join(root,'tests/rust-core/fixtures')),
+  join(root,'tests/adapters/postgresql-custom-backend-host.test.ts'),
+  join(root,'tests/adapters/parquet-native-public-root.test.ts'),
   join(root,'Cargo.lock'),join(root,'Cargo.toml'),join(root,'rust-toolchain.toml'),join(root,'package.json'),join(root,'bun.lock'),join(root,'tsconfig.json'),
   join(root,'bindings/core/node/index.js'),join(root,'bindings/core/wasm/index.js'),
   join(root,'bindings/core/node/index.d.ts'),join(root,'bindings/core/wasm/index.d.ts'),
@@ -247,6 +249,17 @@ try{
   await cp(join(root,'bindings/core/node/src',name),join(sagaNodeWire,name));
  await run([process.execPath,'scripts/build-postgresql.ts']);
  await run([process.execPath,'node_modules/typescript/bin/tsc','--emitDeclarationOnly','--outDir',dist]);
+ // TypeScript does not copy input .d.ts files. Public root declarations
+ // reference the host bindings, so ship those inputs at their original paths.
+ for(const host of ['node','wasm']){
+  const bindingRoot=join(root,'bindings/core',host);
+  for(const source of await filesUnder(bindingRoot)){
+   if(!source.endsWith('.d.ts'))continue;
+   const target=join(dist,relative(root,source));
+   await mkdir(join(target,'..'),{recursive:true});
+   await cp(source,target);
+  }
+ }
  await cp(join(root,'spec'),join(dist,'spec'),{recursive:true});
  await cp(join(root,'dist/postgresql'),join(dist,'postgresql'),{recursive:true});
  await cp(join(wasmOut,'umf_core_wasm.js'),join(dist,'umf_core_wasm.js'));

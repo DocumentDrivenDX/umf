@@ -8,6 +8,10 @@ import ts from 'typescript-api';
 const root = path.resolve(import.meta.dirname, '../../..');
 const output = path.join(root, 'src/index-v4-default.ts');
 const entries = ['src/index-node-v4.ts', 'src/index-browser-v4.ts'];
+// This native C factory is intentionally absent from the browser root.
+const platformOnlyLocalExports = new Map([
+  ['src/index-node-v4.ts', new Set(['createPostgresqlSqlEngine'])],
+]);
 const reference = 'src/index.ts';
 const aggregatorFiles = new Set([
   'src/index.ts', 'src/index-node-v4.ts', 'src/index-browser-v4.ts',
@@ -52,7 +56,8 @@ export function generateFacade(program = buildProgram()) {
   const rootExports = entries.map(file => ({ file, ...source(file) }));
   const localOverrides = new Set();
   for (const { file, node, exports } of rootExports) {
-    const direct = exports.filter(exported => resolved(checker, exported).getDeclarations()?.some(declaration => declaration.getSourceFile() === node));
+    const direct = exports.filter(exported => resolved(checker, exported).getDeclarations()?.some(declaration => declaration.getSourceFile() === node))
+      .filter(exported => !platformOnlyLocalExports.get(file)?.has(exported.getName()));
     if (!localOverrides.size) for (const exported of direct) localOverrides.add(exported.getName());
     else {
       const names = new Set(direct.map(exported => exported.getName()));

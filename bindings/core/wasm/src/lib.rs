@@ -104,6 +104,51 @@ pub fn graphql_profile_version() -> String {
     umf_core_wire::graphql_binding::PROFILE.to_owned()
 }
 
+const POSTGRESQL_PARSER_SESSION_PROFILE: &str = "umf.postgresql-parser-wire/1";
+
+#[wasm_bindgen]
+pub struct PostgresqlParserSession {
+    inner: std::sync::Mutex<umf_core::parser_backend_protocol::ParserSession>,
+}
+
+#[wasm_bindgen]
+impl PostgresqlParserSession {
+    #[wasm_bindgen(constructor)]
+    pub fn new() -> Self {
+        Self {
+            inner: std::sync::Mutex::new(
+                umf_core::parser_backend_protocol::ParserSession::default(),
+            ),
+        }
+    }
+
+    #[wasm_bindgen(js_name = profileVersion)]
+    pub fn profile_version(&self) -> String {
+        POSTGRESQL_PARSER_SESSION_PROFILE.to_owned()
+    }
+
+    #[wasm_bindgen(js_name = executePostgresqlParserSessionWire)]
+    pub fn execute_wire(&self, wire_json: &str, control_dispatcher: Option<Function>) -> String {
+        let Ok(mut inner) = self.inner.try_lock() else {
+            return umf_core_wire::postgresql_parser_binding::busy_session_envelope();
+        };
+        if let Some(dispatcher) = control_dispatcher {
+            let mut control = WasmControl { dispatcher };
+            let mut hook = |amount| control.check(amount);
+            umf_core_wire::postgresql_parser_binding::execute_wire_with_session(
+                &mut inner, wire_json, &mut hook,
+            )
+        } else {
+            let mut no_control = |_amount| Ok(());
+            umf_core_wire::postgresql_parser_binding::execute_wire_with_session(
+                &mut inner,
+                wire_json,
+                &mut no_control,
+            )
+        }
+    }
+}
+
 #[wasm_bindgen(js_name = nativeFamilyDispatcherProfileVersion)]
 pub fn native_family_dispatcher_profile_version() -> String {
     umf_core_wire::native_family_binding::PROFILE.to_owned()
@@ -119,9 +164,7 @@ pub fn execute_native_family_wire(
         let mut control = WasmControl { dispatcher };
         let mut hook = |amount| control.check(amount);
         umf_core_wire::native_family_binding::execute_wire_with_control(
-            family,
-            wire_json,
-            &mut hook,
+            family, wire_json, &mut hook,
         )
     } else {
         umf_core_wire::native_family_binding::execute_wire(family, wire_json)
@@ -173,8 +216,13 @@ pub fn execute_graphql_edit_wire(
             let (width, step) = match unit {
                 0x0000..=0x007f => (1, 1),
                 0x0080..=0x07ff => (2, 1),
-                0xd800..=0xdbff if index + 1 < units
-                    && (0xdc00..=0xdfff).contains(&(output.char_code_at((index + 1) as u32) as u16)) => (4, 2),
+                0xd800..=0xdbff
+                    if index + 1 < units
+                        && (0xdc00..=0xdfff)
+                            .contains(&(output.char_code_at((index + 1) as u32) as u16)) =>
+                {
+                    (4, 2)
+                }
                 _ => (3, 1),
             };
             bytes = bytes.saturating_add(width);
@@ -196,12 +244,12 @@ pub fn execute_graphql_edit_wire(
         }
         ctx.charge_work(units, Utf16::default())?;
         let output = JsValue::from(output).as_string().ok_or_else(|| {
-                EngineError::new(
-                    "GRAPHQL_CALLBACK",
-                    Utf16::default(),
-                    "GraphQL host callback must return tagged wire text",
-                )
-            })?;
+            EngineError::new(
+                "GRAPHQL_CALLBACK",
+                Utf16::default(),
+                "GraphQL host callback must return tagged wire text",
+            )
+        })?;
         *ast = ctx.with_tagged_transport_limit(|ctx| umf_core_wire::decode(&output, ctx))?;
         Ok(())
     };
@@ -407,7 +455,7 @@ impl umf_core::core_semantic_types::SemanticTypeValidator for WasmSemanticTypeVa
                     "HOST_CONTROL",
                     Utf16::default(),
                     "Invalid semantic validator reported work",
-                )))
+                )));
             }
         };
         ctx.charge_work_u64(reported_work, Utf16::default())
@@ -646,7 +694,7 @@ pub fn execute_core_bit128_field_request_wire(
                 "RESOURCE_PROFILE",
                 Utf16::default(),
                 "Unknown resource profile",
-            ))
+            ));
         }
     };
     let mut capabilities = WasmCapabilities {
@@ -681,6 +729,22 @@ pub fn execute_iceberg_wire(wire_json: &str, control_dispatcher: Option<Function
     } else {
         umf_core_wire::execute_iceberg_wire(wire_json)
     }
+}
+
+#[wasm_bindgen(js_name = executeIcebergTableWire)]
+pub fn execute_iceberg_table_wire(wire_json: &str, control_dispatcher: Option<Function>) -> String {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::iceberg_table_binding::execute_wire_with_control(wire_json, &mut hook)
+    } else {
+        umf_core_wire::iceberg_table_binding::execute_wire(wire_json)
+    }
+}
+
+#[wasm_bindgen(js_name = icebergTableProfileVersion)]
+pub fn iceberg_table_profile_version() -> String {
+    umf_core_wire::iceberg_table_binding::PROFILE.to_owned()
 }
 
 #[wasm_bindgen(js_name = icebergSchemaProfileVersion)]

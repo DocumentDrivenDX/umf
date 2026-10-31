@@ -26,7 +26,9 @@ class PackageManifestTests(unittest.TestCase):
             'name': '@umf/core', 'version': '0.5.6', 'private': True,
             'type': 'module', 'license': 'MIT OR Apache-2.0',
             'exports': {
-                '.': {'node': './dist/umf-node.js', 'browser': './dist/umf-browser.js',
+                '.': {'types': {'node': './dist/src/index-node-v4.d.ts',
+                                  'default': './dist/src/index-browser-v4.d.ts'},
+                      'node': './dist/umf-node.js', 'browser': './dist/umf-browser.js',
                       'import': './dist/umf-browser.js', 'default': './dist/umf-browser.js'},
                 './reference': {'import': './dist/umf.js'},
                 './runtime/wasm': {'types': './dist/runtime/wasm/index.d.ts',

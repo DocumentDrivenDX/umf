@@ -82,9 +82,21 @@ document = execute_adapter(
 restored = execute_adapter("openapi", "export", document=document, format="json")
 ```
 
-Request fields use the shared API's names. Calls accept `max_work`, `meter`,
+Pass the adapter family and operation positionally; request fields use the
+shared API's names, including `family` when an operation needs it. Calls accept
+`max_work`, `meter`,
 `is_cancelled`, `now` and `deadline_ms` controls. Existing typed convenience
 modules remain available.
+
+The native PostgreSQL engine uses the bundled parser:
+
+```python
+from umf import create_postgresql_sql_engine
+
+engine = create_postgresql_sql_engine()
+sql_document = engine.import_sql("SELECT 1 AS value", "query")
+restored_sql = engine.export_sql(sql_document)
+```
 
 The Rust compiler is available as `from umf.rust_codegen import CodegenEngine`.
 Construct it with the nine explicit trusted resources described in the binding

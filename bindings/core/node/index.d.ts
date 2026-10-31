@@ -381,6 +381,21 @@ export declare function createCoreKindNullabilityHostInputEngine(resources: UmfC
   verifyCoreNullabilityDeclaration(receipt: unknown, current: unknown): unknown;
 };
 export declare const ICEBERG_SCHEMA_PROFILE: 'umf-r5-iceberg-schema/0.1.0';
+export declare const ICEBERG_TABLE_PROFILE: 'umf.iceberg-table-wire/1';
+export declare function createIcebergTableEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): IcebergTableEngine;
+export interface IcebergTableEngine {
+  importTable(source: string, id: string): any;
+  inspect(document: unknown): any;
+  inspectPayload(payload: unknown): any;
+  exportTable(document: unknown): string;
+  getNode(document: unknown, path: string): any;
+  editNode(document: unknown, path: string, replacementJson: string): any;
+  inspectContext(document: unknown): any;
+  inspectTransforms(document: unknown): any;
+  inspectTransformType(sourceType: string, transform: string): any;
+  proposeRename(document: unknown, fieldId: number, newName: string, nextSchemaId: number): any;
+  proposePromotion(document: unknown, fieldId: number, targetType: string, nextSchemaId: number): any;
+}
 export declare const ARROW_SCHEMA_PROFILE: 'umf-r8-arrow-schema/0.1.0';
 export declare const ARROW_IPC_PROFILE: 'umf-r8-arrow-ipc/0.1.0';
 export declare const PARQUET_CAPTURE_PROFILE: 'umf-r8-parquet-capture-inspection/0.1.0';
@@ -699,6 +714,21 @@ export interface NativeFamilyOperations {
  readonly owl: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getQuads'|'editQuad'|'getOntologyHeaders'|'getExpressionView'|'getListAxioms'|'getSpecialAxioms'|'getAxiomAnnotations'|'getDeclarations', NativeFamilyOperation>>;
 }
 export declare function createNativeFamilyDispatcher(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): NativeFamilyOperations;
+export type PostgresqlParserRequest = {token: string; backend: '@libpg-query/parser@17.6.10'; astVersion: 170004; work: 'parse'|'deparse'|'codecRoundTrip'; sql?: string; tree?: unknown};
+export type PostgresqlParserResponse = {kind:'parsed';tree:unknown}|{kind:'deparsed';sql:string}|{kind:'codecRoundTripped';tree:unknown};
+export interface PostgresqlParserSessionEngine {
+  prepareImport(input:{source:string;id:string}):PostgresqlParserRequest;
+  cancel(input:{token:string}):boolean;
+  completeImport(input:{token:string;tree:unknown}):{done:true;document:unknown};
+  prepareExport(input:{document:unknown}):PostgresqlParserRequest;
+  completeExport(input:{token:string;response:PostgresqlParserResponse}):{done:false;request:PostgresqlParserRequest}|{done:true;sql:string};
+  editNode(input:{document:unknown;pointer:string;text:string}):unknown;
+  inspect(input:{document:unknown}):unknown; getSource(input:{document:unknown}):string;
+  getNode(input:{document:unknown;pointer:string}):unknown; inspectPayload(input:{payload:unknown}):unknown[];
+  validateAst(input:{ast:unknown}):unknown;
+}
+export declare const POSTGRESQL_PARSER_PROFILE:'umf.postgresql-parser-wire/1';
+export declare function createPostgresqlParserSessionEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): PostgresqlParserSessionEngine;
 export interface PostgresqlSqlEngine {
   importSql(source: string, id: string): unknown;
   inspect(document: unknown): unknown;

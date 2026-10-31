@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createPythonClientRustCandidateV4} from './browser-v4';
 import {initializePythonClientRustDefaultV4} from './access/rust-default-v4';
-import {initializeCoreModelRootKindNullabilityWasm,initializeCoreRecordValuesHostInputWasm,createDefaultSemanticTypeRegistry,createCoreCardinalityHostInputEngine,createCoreRecordTypeEngine,createSecurityLogicEngine,createJavascriptNumericEngine,createArrowSchemaEngine,createArrowIpcEngine,createDbtEngine,createGraphqlEngine,createRdfEngine,createNativeFamilyDispatcher,createIcebergSchemaEngine,createProtobufSourceImportEngine,createProtobufSourceExportEngine,UmfError as BindingUmfError,initializeProtobufDescriptorDocumentWasm,initializeBit128Wasm,initializeTemporalWasm,createAccessTemporalEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,isDbtHostError,ACCESS_TEMPORAL_PROFILE as ACCESS_TEMPORAL_PROFILE_RUST} from '../bindings/core/wasm/index.js';
+import {initializeCoreModelRootKindNullabilityWasm,initializeCoreRecordValuesHostInputWasm,createDefaultSemanticTypeRegistry,createCoreCardinalityHostInputEngine,createCoreRecordTypeEngine,createSecurityLogicEngine,createJavascriptNumericEngine,createArrowSchemaEngine,createArrowIpcEngine,createDbtEngine,createGraphqlEngine,createRdfEngine,createNativeFamilyDispatcher,createIcebergSchemaEngine,createIcebergTableEngine,createPostgresqlParserSessionEngine,createParquetCaptureEngine,createProtobufSourceImportEngine,createProtobufSourceExportEngine,UmfError as BindingUmfError,initializeProtobufDescriptorDocumentWasm,initializeBit128Wasm,initializeTemporalWasm,createAccessTemporalEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,isDbtHostError,ACCESS_TEMPORAL_PROFILE as ACCESS_TEMPORAL_PROFILE_RUST} from '../bindings/core/wasm/index.js';
 import {CORE_MODEL_RESOURCES} from './access/core-model-resources';
 import {bindCoreCardinalityRust} from './access/rust-cardinality-default';
 import {bindCoreKindNullabilityRust} from './access/rust-kind-nullability-default';
@@ -51,7 +51,12 @@ import {createShaclRustDefault} from './adapters/shacl/rust-default';
 import {createOwlRustDefault} from './adapters/owl/rust-default';
 import {createRdfRustDefault} from './adapters/rdf/rust-default';
 import {createAvroRustDefault} from './adapters/avro/rust-default';
+import {createPostgresqlRustDefault} from './adapters/postgresql/rust-default';
+import {bindParquetCaptureRust} from './adapters/parquet/rust-capture-default';
+import {PARQUET_EXTENSION,PARQUET_MAX_BYTES,parquetPackage} from './adapters/parquet/package';
 import {createIcebergSchemaRustDefault} from './adapters/iceberg/rust-default';
+import {createIcebergTableRustDefault} from './adapters/iceberg/table-rust-default';
+import {ICEBERG_TABLE_EXTENSION,icebergTablePackage} from './adapters/iceberg/table-package';
 import {ICEBERG_EXTENSION,icebergPackage} from './adapters/iceberg/package';
 import {createProtobufSourceRustDefault} from './adapters/protobuf/source-rust-default';
 import type {generateDatasetSourceSchema as DatasetSourceSchemaReference} from './domain-packs/source-schema';
@@ -73,8 +78,15 @@ const {graphqlRegistry,importGraphqlSchema,inspectGraphql,exportGraphqlSchema,ge
 const nativeFamilyDispatcher=createNativeFamilyDispatcher(wasmModule);
 const icebergSchema=createIcebergSchemaRustDefault(createIcebergSchemaEngine(wasmModule),error=>isNativeUmfCoreError(error)||error instanceof BindingUmfError,()=>new Registry());
 const {icebergRegistry,inspectIceberg,importIcebergSchema,exportIcebergSchema,getIcebergNode,proposeIcebergNodeEdit}=icebergSchema;
+const icebergTable=createIcebergTableRustDefault(createIcebergTableEngine(wasmModule),error=>isNativeUmfCoreError(error)||error instanceof BindingUmfError,()=>new Registry());
+const {icebergTableRegistry,inspectIcebergTable,importIcebergTable,exportIcebergTable,getIcebergTableNode,proposeIcebergTableNodeEdit,inspectIcebergTableContext,inspectIcebergTableTransforms,inspectIcebergTransformType,proposeIcebergTableRename,proposeIcebergTablePromotion}=icebergTable;
 const avro=createAvroRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError,()=>new Registry());
 const {avroRegistry,inspectAvro,importAvroSchema,getAvroFieldMetadata,exportAvroSchema,exportAvroBundle,getAvroNode,editAvroNode,proposeAvroNodeEdit}=avro;
+const parquet=bindParquetCaptureRust(createParquetCaptureEngine(wasmModule),isNativeUmfCoreError,error=>error instanceof BindingUmfError);
+const {captureParquet,importParquetSchema,encodeParquetWire,exportParquetCapture,inspectParquetFraming,decodeParquetFooter,inspectParquetMetadata,inspectParquetSchema,inspectParquetPages,decodeParquetPageBodies,decodeParquetLevels,decodeParquetPhysical,decodeParquetValues,assembleParquetRows,repairParquetDictionaryOffsets,inspectParquetLogicalTypes,inspectParquetContainers,getParquetFieldMetadata,appendParquetKeyValueMetadata,renameParquetField}=parquet;
+function parquetRegistry():Registry{return new Registry().register(parquetPackage);}
+const postgresql=createPostgresqlRustDefault(createPostgresqlParserSessionEngine(wasmModule),isNativeUmfCoreError,()=>new Registry());
+const {postgresqlRegistry,validatePostgresqlAst,inspectPostgresql,importPostgresqlSql,exportPostgresqlSql,getPostgresqlSource,getPostgresqlNode,proposePostgresqlNodeEdit}=postgresql;
 const jsonld=createJsonLdRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError,()=>new Registry());
 const {jsonldRegistry,importJsonLdDocument,inspectJsonLdDocument,exportJsonLdDocument,getJsonLdNode,proposeJsonLdNodeEdit,proposeJsonLdExpansion,proposeJsonLdFlatten,proposeJsonLdCompaction,proposeJsonLdFraming,proposeJsonLdToRdf,proposeRdfToJsonLd,proposeGeneralizedRdfToJsonLd}=jsonld;
 const openapi=createOpenapiRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError,()=>new Registry());
@@ -200,7 +212,11 @@ export {graphqlRegistry,importGraphqlSchema,inspectGraphql,exportGraphqlSchema,g
 export {rdfRegistry,inspectRdfDocument,importRdfNQuads,getRdfQuads,exportRdfNQuads,proposeRdfQuadEdit,proposeRdfIriRename,importRdfTurtle,exportRdfTurtle,getRdfNamedGraphs,importRdfTriG,exportRdfTriG,proposeRdfDatasetMerge,generalizedRdfRegistry,inspectGeneralizedRdfDocument,importGeneralizedRdfDataset,exportGeneralizedRdfDataset,getGeneralizedRdfQuads,proposeGeneralizedRdfQuadEdit};
 export {jsonldRegistry,importJsonLdDocument,inspectJsonLdDocument,exportJsonLdDocument,getJsonLdNode,proposeJsonLdNodeEdit,proposeJsonLdExpansion,proposeJsonLdFlatten,proposeJsonLdCompaction,proposeJsonLdFraming,proposeJsonLdToRdf,proposeRdfToJsonLd,proposeGeneralizedRdfToJsonLd};
 export {ICEBERG_EXTENSION,icebergPackage,icebergRegistry,inspectIceberg,importIcebergSchema,exportIcebergSchema,getIcebergNode,proposeIcebergNodeEdit};
+export {ICEBERG_TABLE_EXTENSION,icebergTablePackage,icebergTableRegistry,inspectIcebergTable,importIcebergTable,exportIcebergTable,getIcebergTableNode,proposeIcebergTableNodeEdit,inspectIcebergTableContext,inspectIcebergTableTransforms,inspectIcebergTransformType,proposeIcebergTableRename,proposeIcebergTablePromotion};
+export {postgresqlRegistry,validatePostgresqlAst,inspectPostgresql,importPostgresqlSql,exportPostgresqlSql,getPostgresqlSource,getPostgresqlNode,proposePostgresqlNodeEdit};
+export type {PostgresqlBackend} from './adapters/postgresql/index';
 export {avroRegistry,inspectAvro,importAvroSchema,getAvroFieldMetadata,exportAvroSchema,exportAvroBundle,getAvroNode,editAvroNode,proposeAvroNodeEdit};
+export {PARQUET_EXTENSION,PARQUET_MAX_BYTES,parquetPackage,parquetRegistry,captureParquet,importParquetSchema,encodeParquetWire,exportParquetCapture,inspectParquetFraming,decodeParquetFooter,inspectParquetMetadata,inspectParquetSchema,inspectParquetPages,decodeParquetPageBodies,decodeParquetLevels,decodeParquetPhysical,decodeParquetValues,assembleParquetRows,repairParquetDictionaryOffsets,inspectParquetLogicalTypes,inspectParquetContainers,getParquetFieldMetadata,appendParquetKeyValueMetadata,renameParquetField};
 export {openapiRegistry,importOpenapiDocument,inspectOpenapi,exportOpenapiDocument,getOpenapiNode,lookupOpenapiResource,extractOpenapiSchema,indexOpenapiSchemas,resolveOpenapiSchemaReference,resolveOpenapiDynamicReference,resolveOpenapiObjectReference,exportOpenapiBundle,proposeOpenapiEdit};
 export {linkmlRegistry,importLinkmlDocument,inspectLinkmlDocument,exportLinkmlDocument,getLinkmlDocumentNode,proposeLinkmlDocumentNodeEdit,inspectLinkmlImportContext,proposeLinkmlImportMerge,inspectLinkmlClassSlots,inspectLinkmlSlotValues,odcsRegistry,importOdcsDocument,inspectOdcsDocument,exportOdcsDocument,getOdcsDocumentNode,proposeOdcsDocumentNodeEdit,resolveOdcsReference,inspectOdcsRelationships,proposeOdcsElementRename};
 export {importTableSpec,inspectTableSpec,exportTableSpec,getTableSpecTable,getTableSpecColumn,editTableSpecTable,editTableSpecColumn,importTableSpecBundle,exportTableSpecBundle};

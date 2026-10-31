@@ -17,6 +17,7 @@ pub const FAMILIES: &[&str] = &[
     "shacl",
     "owl",
     "rdf",
+    "iceberg-table",
 ];
 
 fn bad_family() -> String {
@@ -172,6 +173,22 @@ pub fn metadata_wire(family: &str) -> String {
                 "getDeclarations",
             ],
         ),
+        "iceberg-table" => (
+            crate::iceberg_table_binding::PROFILE,
+            &[
+                "import",
+                "inspect",
+                "inspectPayload",
+                "export",
+                "getNode",
+                "editNode",
+                "inspectContext",
+                "inspectTransforms",
+                "inspectTransformType",
+                "proposeRename",
+                "proposePromotion",
+            ],
+        ),
         "rdf" => (
             crate::rdf_binding::PROFILE,
             &[
@@ -202,6 +219,8 @@ pub fn metadata_wire(family: &str) -> String {
         .map(|operation| {
             let wire_operation = if family == "tablespec" {
                 (*operation).to_owned()
+            } else if family == "iceberg-table" {
+                format!("iceberg.table.{operation}")
             } else {
                 format!("{family}.{operation}")
             };
@@ -237,6 +256,7 @@ pub fn execute_wire_with_control(
         "shacl" => crate::shacl_owl_binding::execute_shacl_wire_with_control(wire, control),
         "owl" => crate::shacl_owl_binding::execute_owl_wire_with_control(wire, control),
         "rdf" => crate::rdf_binding::execute_wire_with_control(wire, control),
+        "iceberg-table" => crate::iceberg_table_binding::execute_wire_with_control(wire, control),
         _ => bad_family(),
     }
 }
