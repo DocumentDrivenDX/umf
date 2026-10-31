@@ -1,5 +1,6 @@
 import {createDbtOperations, DBT_PROFILE, isDbtHostError} from './src/dbt.js';
 import {createRdfOperations, RDF_PROFILE} from './src/rdf.js';
+import {createGraphqlOperations, GRAPHQL_PROFILE} from './src/graphql.js';
 import {createHostReadResponseFrames, encodeRequestWire, encodeWire, fromWire, resultError, toWire} from './src/wire.js';
 import {createJavascriptNumericEngine as createNumericEngine, JAVASCRIPT_NUMERIC_PROFILE} from './src/javascript-numeric.js';
 import {createSecurityLogicEngine as createSecurityLogicEngineWithWire, SECURITY_LOGIC_PROFILE} from './src/security-logic.js';
@@ -1227,6 +1228,17 @@ export function createRdfEngine(module, options = {}) {
     hostWork?.(envelope.wire.length);
     return fromWire(JSON.parse(envelope.wire), hostWork);
   });
+}
+
+export {GRAPHQL_PROFILE};
+/** Create the Rust GraphQL SDL engine with callback edits inside Rust validation. */
+export function createGraphqlEngine(module, options = {}) {
+  if (typeof module?.executeGraphqlWire !== 'function' || typeof module?.executeGraphqlEditWire !== 'function' || typeof module?.graphqlProfileVersion !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  if (module.graphqlProfileVersion() !== GRAPHQL_PROFILE) throw new Error('RUST_WASM_BINDING_PROFILE_MISMATCH');
+  const {controls} = codegenOptions(options);
+  const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+  const hostWork = admissionWork(controlBridge);
+  return createGraphqlOperations(module, UmfCoreError, controlBridge, hostWork);
 }
 
 /** Create the opt-in pure reciprocal-rank fusion scorer over WASM. */

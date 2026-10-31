@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createPythonClientRustCandidateV4} from './browser-v4';
 import {initializePythonClientRustDefaultV4} from './access/rust-default-v4';
-import {initializeCoreModelRootKindNullabilityWasm,initializeCoreRecordValuesHostInputWasm,createDefaultSemanticTypeRegistry,createCoreCardinalityHostInputEngine,createCoreRecordTypeEngine,createSecurityLogicEngine,createJavascriptNumericEngine,createArrowSchemaEngine,createArrowIpcEngine,createDbtEngine,UmfError as BindingUmfError,initializeProtobufDescriptorDocumentWasm,initializeBit128Wasm,initializeTemporalWasm,createAccessTemporalEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,isDbtHostError,ACCESS_TEMPORAL_PROFILE as ACCESS_TEMPORAL_PROFILE_RUST} from '../bindings/core/wasm/index.js';
+import {initializeCoreModelRootKindNullabilityWasm,initializeCoreRecordValuesHostInputWasm,createDefaultSemanticTypeRegistry,createCoreCardinalityHostInputEngine,createCoreRecordTypeEngine,createSecurityLogicEngine,createJavascriptNumericEngine,createArrowSchemaEngine,createArrowIpcEngine,createDbtEngine,createGraphqlEngine,UmfError as BindingUmfError,initializeProtobufDescriptorDocumentWasm,initializeBit128Wasm,initializeTemporalWasm,createAccessTemporalEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,isDbtHostError,ACCESS_TEMPORAL_PROFILE as ACCESS_TEMPORAL_PROFILE_RUST} from '../bindings/core/wasm/index.js';
 import {CORE_MODEL_RESOURCES} from './access/core-model-resources';
 import {bindCoreCardinalityRust} from './access/rust-cardinality-default';
 import {bindCoreKindNullabilityRust} from './access/rust-kind-nullability-default';
@@ -40,6 +40,7 @@ import type {ProtobufDescriptorDocumentRustEngine} from './adapters/protobuf/rus
 import {bindArrowSchemaRust} from './adapters/arrow/rust-default';
 import {bindArrowIpcRust} from './adapters/arrow/rust-ipc-default';
 import {bindDbtRust} from './adapters/dbt/rust-default';
+import {createGraphqlRustDefault} from './adapters/graphql/rust-default';
 import type {generateDatasetSourceSchema as DatasetSourceSchemaReference} from './domain-packs/source-schema';
 import type {generateDomainPackSchema as DomainPackSchemaReference} from './domain-packs/schema';
 import type {generateArtifactCollectionSchema as ArtifactCollectionSchemaReference} from './domain-packs/artifacts';
@@ -52,6 +53,8 @@ import {CURRENT_CORE_VERSION,SCALAR_TYPES,UmfError} from './model/types';
 // function exported below remains synchronous and never falls back to TypeScript.
 const generatePythonClient=await initializePythonClientRustDefaultV4(()=>createPythonClientRustCandidateV4());
 const wasmModule=await import('../bindings/core/wasm/pkg/umf_core_wasm.js');
+const graphql=createGraphqlRustDefault(createGraphqlEngine(wasmModule));
+const {graphqlRegistry,importGraphqlSchema,inspectGraphql,exportGraphqlSchema,getGraphqlAst,editGraphqlAst,exportGraphqlBundle}=graphql;
 const accessTemporal=createAccessTemporalEngine(wasmModule);
 export const ACCESS_TEMPORAL_PROFILE=ACCESS_TEMPORAL_PROFILE_RUST;
 export function parseAccessTemporal(kind:AccessTemporalKind,token:string):AccessTemporal {
@@ -150,4 +153,5 @@ export {projectSecSubmissions,projectSecCompanyFacts};
 export {projectSecSubmissions as projectSecSubmissionsRustCandidate,projectSecCompanyFacts as projectSecCompanyFactsRustCandidate};
 export {readDescriptorSetRustCandidate};
 export {readDescriptorSet,writeDescriptorSet,importProtobufDescriptorSet,exportProtobufDescriptorSet,getProtobufDescriptorSet,inspectProtobuf,exportProtobufBundle};
+export {graphqlRegistry,importGraphqlSchema,inspectGraphql,exportGraphqlSchema,getGraphqlAst,editGraphqlAst,exportGraphqlBundle};
 export {projectRelationshipToAvro,verifyRelationshipAvroProjection,recoverRelationshipAvroIdeal,recoverRelationshipAvroNative,projectRelationshipToTableSpec,verifyRelationshipTableSpecProjection,recoverRelationshipTableSpecIdeal,recoverRelationshipTableSpecNativeSources,projectRelationshipToSqlServer,verifyRelationshipSqlServerProjection,recoverRelationshipSqlServerIdeal,recoverRelationshipSqlServerBinding,recoverRelationshipSqlServerNative,projectRelationshipToParquet,verifyRelationshipParquetProjection,recoverRelationshipParquetIdeal,recoverRelationshipParquetNative,projectRelationshipToExtra,verifyRelationshipExtra,recoverRelationshipExtraIdeal,recoverRelationshipExtraNative,projectRelationshipsToPostgresql,verifyRelationshipPostgresqlProjection,recoverRelationshipPostgresqlIdeal,recoverRelationshipPostgresqlNative};

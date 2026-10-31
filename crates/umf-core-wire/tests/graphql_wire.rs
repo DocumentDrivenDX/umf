@@ -89,6 +89,27 @@ fn graphql_wire_import_inspect_export_ast_and_atomic_edit_preserve_metadata() {
     assert!(matches!(member(&bundle, "source"), Value::Object(_)));
 }
 
+#[test]
+fn graphql_payload_inspector_uses_the_native_extension_semantics() {
+    let document = call(
+        "graphql.import",
+        [
+            ("source", Value::string_utf8("type Query { hello: String }")),
+            ("id", Value::string_utf8("payload-inspection")),
+        ],
+    );
+    let Value::Array(modules) = member(&document, "modules") else {
+        panic!("modules array")
+    };
+    let Value::Array(elements) = member(&modules[0], "elements") else {
+        panic!("elements array")
+    };
+    let element = &elements[0];
+    let payload = member(member(element, "extensions"), "umf.graphql").clone();
+    let diagnostics = call("graphql.inspectPayload", [("payload", payload)]);
+    assert_eq!(diagnostics, Value::Array(Vec::new()));
+}
+
 fn add_title(mut document: Value, title: Value) -> Value {
     let Value::Object(fields) = &mut document else {
         panic!("document object")
@@ -226,4 +247,103 @@ fn graphql_wire_charges_controls_and_rejects_invalid_candidates_atomically() {
     )
     .unwrap();
     assert_eq!(envelope["code"], "TEST_CONTROL");
+}
+
+#[test]
+fn graphql_host_callback_edits_inside_validation_and_refuses_before_calling() {
+    let document = call(
+        "graphql.import",
+        [
+            ("source", Value::string_utf8("type Query { old: String }")),
+            ("id", Value::string_utf8("host-edit")),
+        ],
+    );
+    let request = request_wire("graphql.editAstHost", [("document", document.clone())]);
+    let mut invoked = false;
+    let mut editor = |ast: &mut Value, _ctx: &mut Context<'_>| {
+        invoked = true;
+        *ast = replace_query_field_name(ast.clone(), "hostEdited");
+        Ok(())
+    };
+    let mut control = |_| Ok(());
+    let envelope: Json = serde_json::from_str(
+        &umf_core_wire::graphql_binding::execute_wire_with_editor(
+            &request,
+            &mut editor,
+            &mut control,
+        ),
+    )
+    .unwrap();
+    assert!(invoked);
+    assert_eq!(envelope["status"], "ok");
+    let edited = umf_core_wire::decode(envelope["wire"].as_str().unwrap(), &mut Context::ordinary())
+        .unwrap();
+    assert_eq!(
+        call("graphql.export", [("document", edited)]),
+        Value::string_utf8("type Query {\n  hostEdited: String\n}\n")
+    );
+
+    let fragment = call(
+        "graphql.import",
+        [
+            (
+                "source",
+                Value::string_utf8("extend type Query { next: Product }"),
+            ),
+            ("id", Value::string_utf8("host-fragment")),
+            ("mode", Value::string_utf8("fragment")),
+        ],
+    );
+    let request = request_wire("graphql.editAstHost", [("document", fragment)]);
+    let mut invoked = false;
+    let mut editor = |_: &mut Value, _: &mut Context<'_>| {
+        invoked = true;
+        Ok(())
+    };
+    let mut control = |_| Ok(());
+    let envelope: Json = serde_json::from_str(
+        &umf_core_wire::graphql_binding::execute_wire_with_editor(
+            &request,
+            &mut editor,
+            &mut control,
+        ),
+    )
+    .unwrap();
+    assert_eq!(envelope["status"], "error");
+    assert!(!invoked, "prevalidation must refuse before the host callback");
+}
+
+#[test]
+fn graphql_host_callback_error_returns_without_mutating_original_document() {
+    let document = call(
+        "graphql.import",
+        [
+            ("source", Value::string_utf8("type Query { old: String }")),
+            ("id", Value::string_utf8("host-throw")),
+        ],
+    );
+    let original = call("graphql.export", [("document", document.clone())]);
+    let request = request_wire("graphql.editAstHost", [("document", document.clone())]);
+    let mut editor = |_: &mut Value, _: &mut Context<'_>| {
+        Err(umf_core::EngineError::new(
+            "HOST_CALLBACK",
+            Utf16::default(),
+            "host exception",
+        ))
+    };
+    let mut control = |_| Ok(());
+    let envelope: Json = serde_json::from_str(
+        &umf_core_wire::graphql_binding::execute_wire_with_editor(
+            &request,
+            &mut editor,
+            &mut control,
+        ),
+    )
+    .unwrap();
+    assert_eq!(envelope["status"], "error");
+    assert_eq!(envelope["code"], "HOST_CALLBACK");
+    assert_eq!(
+        call("graphql.export", [("document", document)]),
+        original
+    );
 }

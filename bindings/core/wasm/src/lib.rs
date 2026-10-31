@@ -98,6 +98,100 @@ pub fn access_temporal_profile_version() -> String {
 pub fn execute_access_temporal_wire(wire_json: &str) -> String {
     umf_core_wire::access_temporal_binding::execute_access_temporal_wire(wire_json)
 }
+
+#[wasm_bindgen(js_name = graphqlProfileVersion)]
+pub fn graphql_profile_version() -> String {
+    umf_core_wire::graphql_binding::PROFILE.to_owned()
+}
+
+#[wasm_bindgen(js_name = executeGraphqlWire)]
+pub fn execute_graphql_wire(wire_json: &str, control_dispatcher: Option<Function>) -> String {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::graphql_binding::execute_wire_with_control(wire_json, &mut hook)
+    } else {
+        umf_core_wire::graphql_binding::execute_wire(wire_json)
+    }
+}
+
+/// Run the native GraphQL editor with a synchronous tagged-wire host callback.
+#[wasm_bindgen(js_name = executeGraphqlEditWire)]
+pub fn execute_graphql_edit_wire(
+    wire_json: &str,
+    editor: Function,
+    control_dispatcher: Option<Function>,
+) -> String {
+    let mut editor_hook = |ast: &mut Value, ctx: &mut Context<'_>| {
+        let input = umf_core_wire::encode_host_callback_value(ast, ctx)?;
+        let output = editor
+            .call1(&JsValue::NULL, &JsValue::from_str(&input))
+            .map_err(|_| {
+                EngineError::new(
+                    "GRAPHQL_CALLBACK",
+                    Utf16::default(),
+                    "GraphQL host callback threw",
+                )
+            })?;
+        if !output.is_string() {
+            return Err(EngineError::new(
+                "GRAPHQL_CALLBACK",
+                Utf16::default(),
+                "GraphQL host callback must return tagged wire text",
+            ));
+        }
+        let output: js_sys::JsString = output.unchecked_into();
+        let units = output.length() as usize;
+        let mut bytes = 0usize;
+        let mut index = 0;
+        while index < units {
+            let unit = output.char_code_at(index as u32) as u16;
+            let (width, step) = match unit {
+                0x0000..=0x007f => (1, 1),
+                0x0080..=0x07ff => (2, 1),
+                0xd800..=0xdbff if index + 1 < units
+                    && (0xdc00..=0xdfff).contains(&(output.char_code_at((index + 1) as u32) as u16)) => (4, 2),
+                _ => (3, 1),
+            };
+            bytes = bytes.saturating_add(width);
+            index += step;
+            if bytes > 32 * 1024 * 1024 {
+                return Err(EngineError::new(
+                    "RESOURCE_LIMIT",
+                    Utf16::default(),
+                    "GraphQL callback wire exceeds the transport limit",
+                ));
+            }
+        }
+        if units > 32 * 1024 * 1024 || bytes > 32 * 1024 * 1024 {
+            return Err(EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "GraphQL callback wire exceeds the transport limit",
+            ));
+        }
+        ctx.charge_work(units, Utf16::default())?;
+        let output = JsValue::from(output).as_string().ok_or_else(|| {
+                EngineError::new(
+                    "GRAPHQL_CALLBACK",
+                    Utf16::default(),
+                    "GraphQL host callback must return tagged wire text",
+                )
+            })?;
+        *ast = ctx.with_tagged_transport_limit(|ctx| umf_core_wire::decode(&output, ctx))?;
+        Ok(())
+    };
+    let mut control = control_dispatcher.map(|dispatcher| WasmControl { dispatcher });
+    let mut control_hook = |amount| match control.as_mut() {
+        Some(control) => control.check(amount),
+        None => Ok(()),
+    };
+    umf_core_wire::graphql_binding::execute_wire_with_editor(
+        wire_json,
+        &mut editor_hook,
+        &mut control_hook,
+    )
+}
 #[wasm_bindgen(js_name = executeAccessRrfWire)]
 pub fn execute_access_rrf_wire(wire_json: &str, control_dispatcher: Option<Function>) -> String {
     if let Some(dispatcher) = control_dispatcher {

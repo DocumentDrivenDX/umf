@@ -235,6 +235,37 @@ fn unknown_payload_diagnostics(payload: &Value) -> Vec<Diagnostic> {
     };
     fields.iter().filter_map(|(k,_)|{if ["profile","mode","ast","originalSource"].iter().any(|x|k==&key(x)){return None}Some(Diagnostic{code:key("GRAPHQL_REPRESENTATION"),path:key("/payload"),python_source_path:false,message:key("Unknown GraphQL payload field has no SDL destination; native export is blocked"),severity:Severity::Warning,python_text_origin:None})}).collect()
 }
+
+/// Inspect an extension payload using the same bounded native semantics as
+/// document validation, without constructing a full engine registry.
+pub fn inspect_payload_with_context(
+    payload: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<Diagnostic>, EngineError> {
+    preflight_payload(payload, ctx)?;
+    let projected = match project_payload(payload) {
+        Ok(value) => value,
+        Err(error) => {
+            return Ok(vec![Diagnostic {
+                code: key("GRAPHQL_REPRESENTATION"),
+                path: key("/ast"),
+                python_source_path: false,
+                message: Utf16::from(error),
+                severity: Severity::Warning,
+                python_text_origin: None,
+            }]);
+        }
+    };
+    let mut diagnostics = issues_diags(crate::graphql_adapter::inspect_payload_with_limits(
+        &projected,
+        ctx.limits().max_values,
+        ctx.limits().max_text_units,
+        ctx.limits().max_depth,
+    ));
+    diagnostics.extend(unknown_payload_diagnostics(payload));
+    Ok(diagnostics)
+}
+
 struct GraphqlCallbacks;
 impl Capabilities for GraphqlCallbacks {
     fn validate_extension(
@@ -273,27 +304,7 @@ impl Capabilities for GraphqlCallbacks {
         if token != TOKEN {
             return Ok(vec![]);
         }
-        preflight_payload(payload, ctx).map_err(CapabilityError::Engine)?;
-        let serde = match project_payload(payload) {
-            Ok(v) => v,
-            Err(e) => {
-                return Ok(vec![Diagnostic {
-                    code: key("GRAPHQL_REPRESENTATION"),
-                    path: key("/ast"),
-                    python_source_path: false,
-                    message: Utf16::from(e),
-                    severity: Severity::Warning,
-                    python_text_origin: None,
-                }])
-            }
-        };
-        let mut ds = issues_diags(crate::graphql_adapter::inspect_payload_with_limits(
-            &serde,
-            ctx.limits().max_values,
-            ctx.limits().max_text_units,
-            ctx.limits().max_depth,
-        ));
-        ds.extend(unknown_payload_diagnostics(payload));
+        let ds = inspect_payload_with_context(payload, ctx).map_err(CapabilityError::Engine)?;
         let _ = context;
         Ok(std::mem::take(&mut ds))
     }
@@ -410,6 +421,26 @@ pub fn edit_ast<F>(
 where
     F: FnOnce(&mut Value) -> Result<(), String>,
 {
+    edit_ast_with_context(
+        r,
+        d,
+        |ast, _ctx| callback(ast).map_err(|message| err("GRAPHQL_EDIT", &message)),
+        ctx,
+    )
+}
+
+/// Apply a host edit after GraphQL prevalidation and validate the candidate using
+/// the same cumulative resource context. The document is copied before the callback,
+/// so a callback error or failed postvalidation never mutates the caller's input.
+pub fn edit_ast_with_context<F>(
+    r: &mut GraphqlResources,
+    d: &Value,
+    callback: F,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError>
+where
+    F: FnOnce(&mut Value, &mut Context<'_>) -> Result<(), EngineError>,
+{
     let pre = validate_document(r, d, ctx)?;
     if !pre.valid
         || !pre.complete
@@ -455,7 +486,7 @@ where
     let p = find_payload_mut(&mut candidate)
         .ok_or_else(|| err("GRAPHQL_PAYLOAD", "Missing GraphQL schema payload"))?;
     let ast = member_mut(p, "ast").ok_or_else(|| err("GRAPHQL_AST", "Missing GraphQL AST"))?;
-    callback(ast).map_err(|e| err("GRAPHQL_EDIT", &e))?;
+    callback(ast, ctx)?;
     let post = validate_document(r, &candidate, ctx)?;
     if !post.valid || !post.complete {
         return Err(err(

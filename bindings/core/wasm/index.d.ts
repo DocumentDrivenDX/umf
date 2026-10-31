@@ -611,3 +611,17 @@ export interface RdfEngine {
  proposeGeneralizedRdfQuadEdit(document: unknown, index: number, replacement: unknown): unknown;
 }
 export declare function createRdfEngine(module: any, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): RdfEngine;
+
+export declare const GRAPHQL_PROFILE: 'umf.graphql-wire/1';
+export interface GraphqlEngine {
+ readonly profile: typeof GRAPHQL_PROFILE;
+ readonly capabilities: Readonly<{profile: typeof GRAPHQL_PROFILE; sdl: true; ast: true; callbackEdits: true; complete: false}>;
+ importGraphqlSchema(source: string, options: {id: string; mode?: 'schema' | 'fragment'}): any;
+ inspectGraphql(document: unknown): {valid: boolean; complete: boolean; diagnostics: any[]};
+ exportGraphqlSchema(document: unknown): string;
+ getGraphqlAst(document: unknown): any;
+ editGraphqlAst(document: unknown, edit: (ast: any) => any): unknown;
+ exportGraphqlBundle(document: unknown): {schema: string; source: any; diagnostics: any[]};
+ inspectGraphqlPayload(payload: unknown): any[];
+}
+export declare function createGraphqlEngine(module: any, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): GraphqlEngine;

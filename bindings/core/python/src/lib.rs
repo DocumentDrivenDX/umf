@@ -1124,6 +1124,92 @@ fn execute_rdf_wire(
 }
 
 #[pyfunction]
+fn graphql_profile_version() -> &'static str {
+    umf_core_wire::graphql_binding::PROFILE
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, editor, control=None))]
+fn execute_graphql_edit_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    editor: PyObject,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if !editor.bind(py).is_callable() {
+        return Err(PyValueError::new_err("editor must be callable"));
+    }
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let callback_error = std::cell::RefCell::new(None);
+    let mut editor_hook = |ast: &mut Value, ctx: &mut Context<'_>| {
+        let input = umf_core_wire::encode_host_callback_value(ast, ctx)?;
+        let result = editor.bind(py).call1((input,));
+        let value = match result {
+            Ok(value) => value,
+            Err(error) => {
+                *callback_error.borrow_mut() = Some(error);
+                return Err(EngineError::new(
+                    "GRAPHQL_CALLBACK",
+                    Utf16::default(),
+                    "GraphQL host callback threw",
+                ));
+            }
+        };
+        let value = value.downcast::<PyString>().map_err(|error| {
+            py_exception_engine_error(py, "GRAPHQL_CALLBACK", error)
+        })?;
+        let output = value.to_str().map_err(|error| {
+            py_exception_engine_error(py, "GRAPHQL_CALLBACK", error)
+        })?;
+        let units = output.encode_utf16().count();
+        if units > 32 * 1024 * 1024 || output.len() > 32 * 1024 * 1024 {
+            return Err(EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "GraphQL callback wire exceeds the transport limit",
+            ));
+        }
+        ctx.charge_work(units, Utf16::default())?;
+        *ast = ctx.with_tagged_transport_limit(|ctx| umf_core_wire::decode(output, ctx))?;
+        Ok(())
+    };
+    let mut hook = |amount: usize| {
+        let Some(control) = control.as_ref() else {
+            return Ok(());
+        };
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        Err(EngineError::new(
+            code,
+            Utf16::from(path),
+            Utf16::from(message),
+        ))
+    };
+    let response = umf_core_wire::graphql_binding::execute_wire_with_editor(
+        wire_json,
+        &mut editor_hook,
+        &mut hook,
+    );
+    if let Some(error) = callback_error.into_inner() {
+        return Err(error);
+    }
+    Ok(response)
+}
+
+#[pyfunction]
 fn avro_candidate_profile_version() -> &'static str {
     umf_core_wire::AVRO_CANDIDATE_PROFILE
 }
@@ -6222,6 +6308,8 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(execute_dbt_wire, module)?)?;
     module.add_function(wrap_pyfunction!(rdf_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_rdf_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(graphql_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_graphql_edit_wire, module)?)?;
     module.add_function(wrap_pyfunction!(avro_candidate_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_avro_candidate_wire, module)?)?;
     module.add_function(wrap_pyfunction!(execute_protobuf_inspect_wire, module)?)?;

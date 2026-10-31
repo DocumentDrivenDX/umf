@@ -69,6 +69,8 @@ fn allowed(op: &str) -> Option<&'static [&'static str]> {
             &["profile", "op", "document"]
         }
         "graphql.editAst" => &["profile", "op", "document", "candidateAst"],
+        "graphql.editAstHost" => &["profile", "op", "document"],
+        "graphql.inspectPayload" => &["profile", "op", "payload"],
         _ => return None,
     })
 }
@@ -138,12 +140,25 @@ fn validate_operation_input(
             field(request, "candidateAst")
                 .ok_or_else(|| request_error("candidateAst is required"))?;
         }
+        "graphql.editAstHost" => {
+            field(request, "document").ok_or_else(|| request_error("document is required"))?;
+        }
+        "graphql.inspectPayload" => {
+            field(request, "payload").ok_or_else(|| request_error("payload is required"))?;
+        }
         _ => return Err(request_error("Unknown GraphQL operation")),
     }
     Ok(())
 }
 
-fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+pub type GraphqlAstEditor<'a> =
+    dyn for<'ctx> FnMut(&mut Value, &mut Context<'ctx>) -> Result<(), EngineError> + 'a;
+
+fn execute(
+    request: &Value,
+    ctx: &mut Context<'_>,
+    mut ast_editor: Option<&mut GraphqlAstEditor<'_>>,
+) -> Result<Value, EngineError> {
     let op = required_string(request, "op")?;
     if op.units().len() > 32 || !valid_utf16(op) {
         return Err(request_error("op is not a valid GraphQL wire operation"));
@@ -158,12 +173,27 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
         "graphql.getAst",
         "graphql.exportBundle",
         "graphql.editAst",
+        "graphql.editAstHost",
+        "graphql.inspectPayload",
     ]
     .into_iter()
     .find(|candidate| is_ascii(op, candidate))
     .ok_or_else(|| request_error("Unknown GraphQL operation"))?;
     validate_members(request, allowed(op).unwrap(), ctx)?;
     validate_operation_input(op, request, ctx)?;
+    if op == "graphql.inspectPayload" {
+        let payload = field(request, "payload").ok_or_else(|| request_error("payload is required"))?;
+        let diagnostics = engine_registry::inspect_payload_with_context(payload, ctx)?;
+        ctx.charge_work(diagnostics.len(), Utf16::default())?;
+        let mut output = Vec::with_capacity(diagnostics.len());
+        for diagnostic in diagnostics {
+            ctx.charge_text(diagnostic.code.len(), Utf16::default())?;
+            ctx.charge_text(diagnostic.path.len(), Utf16::default())?;
+            ctx.charge_text(diagnostic.message.len(), Utf16::default())?;
+            output.push(diagnostic_value(diagnostic));
+        }
+        return Ok(Value::Array(output));
+    }
     let mut resources = GraphqlResources::new(ctx)?;
     let result = match op {
         "graphql.import" => {
@@ -253,6 +283,18 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
                 ctx,
             )?
         }
+        "graphql.editAstHost" => {
+            let editor = ast_editor
+                .as_deref_mut()
+                .ok_or_else(|| request_error("GraphQL host AST editor is required"))?;
+            engine_registry::edit_ast_with_context(
+                &mut resources,
+                field(request, "document")
+                    .ok_or_else(|| request_error("document is required"))?,
+                |ast, ctx| editor(ast, ctx),
+                ctx,
+            )?
+        }
         _ => return Err(request_error("Unknown GraphQL operation")),
     };
     Ok(result)
@@ -270,7 +312,24 @@ pub fn execute_wire_with_control(
     let result = (|| {
         let mut ctx = Context::ordinary().with_host_control(control);
         let request = ctx.with_tagged_transport_limit(|ctx| decode(wire, ctx))?;
-        let value = execute(&request, &mut ctx)?;
+        let value = execute(&request, &mut ctx, None)?;
+        encode(&value, &mut ctx)
+    })();
+    result_envelope(result)
+}
+
+/// Execute a GraphQL request with a host callback for `graphql.editAstHost`.
+/// The editor receives a borrowed AST only after Rust prevalidation and shares
+/// the operation's cumulative Context for all host value copies and checks.
+pub fn execute_wire_with_editor(
+    wire: &str,
+    editor: &mut GraphqlAstEditor<'_>,
+    control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+) -> String {
+    let result = (|| {
+        let mut ctx = Context::ordinary().with_host_control(control);
+        let request = ctx.with_tagged_transport_limit(|ctx| decode(wire, ctx))?;
+        let value = execute(&request, &mut ctx, Some(editor))?;
         encode(&value, &mut ctx)
     })();
     result_envelope(result)

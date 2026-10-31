@@ -245,6 +245,48 @@ use umf_core::{
 pub use umf_tagged_wire::{decode, encode, transport_context};
 use umf_tagged_wire::{encode_owned, units_wire_size, wire_size, write_units, write_wire};
 
+const HOST_CALLBACK_WIRE_LIMIT: usize = 32 * 1024 * 1024;
+
+/// Encode a callback value under ordinary semantic limits, with an independent
+/// bound on the larger tagged-wire representation.
+pub fn encode_host_callback_value(
+    value: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<String, EngineError> {
+    let value = copy_json(value, ctx)?;
+    let size = wire_size(&value, ctx)?;
+    if size > HOST_CALLBACK_WIRE_LIMIT {
+        return Err(EngineError::new(
+            "RESOURCE_LIMIT",
+            Utf16::default(),
+            "GraphQL callback wire exceeds the transport limit",
+        ));
+    }
+    ctx.charge_work(size, Utf16::default())?;
+    let mut output = String::with_capacity(size);
+    write_wire(&value, &mut output);
+    debug_assert_eq!(output.len(), size);
+    Ok(output)
+}
+
+/// Bound and meter a host callback's tagged value before parsing it in the
+/// same operation Context's independent transport scope.
+pub fn decode_host_callback_value(
+    wire: &str,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let size = wire.encode_utf16().count();
+    if size > HOST_CALLBACK_WIRE_LIMIT {
+        return Err(EngineError::new(
+            "RESOURCE_LIMIT",
+            Utf16::default(),
+            "GraphQL callback wire exceeds the transport limit",
+        ));
+    }
+    ctx.charge_work(size, Utf16::default())?;
+    ctx.with_tagged_transport_limit(|ctx| decode(wire, ctx))
+}
+
 pub fn encode_callback_request(
     payload: &Value,
     document: &Value,
