@@ -9,6 +9,47 @@ from umf._rust import UmfCoreError
 
 
 class NativeAdapterBaseline(unittest.TestCase):
+    def test_public_delta_checkpoint_recovery_and_unresolved_sidecar(self):
+        from umf.rust_parquet_capture import capture
+        root = Path(__file__).resolve().parents[2]
+        source = capture((root / "fixtures/delta/parquet-checkpoint/v1.parquet").read_bytes(),
+                         "python-v1-checkpoint")
+        recovered = execute_adapter("delta-parquet", "reconcileCheckpoint",
+            checkpoint={"version": "10", "source": source}, commits=[], spec="v1", sidecars=[])
+        self.assertEqual(recovered["status"], "reconciled")
+        self.assertEqual(recovered["recovery"]["state"]["version"], "10")
+        unresolved = capture((root / "fixtures/delta/parquet-checkpoint/v2-sidecars.parquet").read_bytes(),
+                             "python-unresolved-sidecars")
+        blocked = execute_adapter("delta-parquet", "reconcileCheckpoint",
+            checkpoint={"version": "10", "source": unresolved}, commits=[], spec="v2", sidecars=[])
+        self.assertEqual(blocked["status"], "blocked")
+        self.assertNotIn("recovery", blocked)
+        self.assertTrue(any(item["code"] == "DELTA_SIDECAR_BINDING" for item in blocked["diagnostics"]))
+
+
+    def test_public_delta_parquet_action_projection_and_refusal(self):
+        from umf.rust_parquet_capture import capture, export as export_parquet
+        root = Path(__file__).resolve().parents[2]
+        parquet = (root / "fixtures/delta/parquet-actions/authored/typed-statistics.parquet").read_bytes()
+        document = capture(parquet, "python-typed-statistics")
+        result = execute_adapter("delta-parquet", "projectActions", document=document)
+        self.assertEqual(result["status"], "projected")
+        self.assertEqual(export_parquet(result["source"]), parquet)
+        self.assertEqual([item["action"] for item in result["actions"]], ["add"])
+        self.assertEqual(execute_adapter("delta-log", "export", document=result["log"]),
+                         (root / "fixtures/delta/parquet-actions/typed-statistics.jsonl").read_text())
+        self.assertEqual(len(result["scalarConversions"]), 5)
+        unsupported = (root / "fixtures/delta/parquet-actions/authored/float-needs-policy.parquet").read_bytes()
+        blocked = execute_adapter("delta-parquet", "projectActions",
+                                  document=capture(unsupported, "python-unsupported-float"))
+        self.assertEqual(blocked["status"], "blocked")
+        self.assertEqual(export_parquet(blocked["source"]), unsupported)
+        self.assertNotIn("log", blocked)
+        self.assertNotIn("actions", blocked)
+        self.assertTrue(any(item["code"] == "DELTA_PARQUET_CONVERSION" and item["severity"] == "error"
+                            for item in blocked["diagnostics"]))
+
+
     def test_public_delta_spark_bundle_and_refusal(self):
         source = '{"type":"struct","fields":[{"name":"id","type":"long","nullable":false,"metadata":{}}]}'
         definition = {"profile": "databricks-managed-delta/0.1",

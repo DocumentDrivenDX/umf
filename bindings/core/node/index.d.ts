@@ -723,7 +723,7 @@ export interface NativeFamilyOperations {
  readonly shacl: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getQuads'|'editQuad'|'getPropertyPath'|'evaluatePropertyPath'|'getTargetNodes'|'getShapeMetadata'|'validate', NativeFamilyOperation>>;
  readonly owl: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getQuads'|'editQuad'|'getOntologyHeaders'|'getExpressionView'|'getListAxioms'|'getSpecialAxioms'|'getAxiomAnnotations'|'getDeclarations', NativeFamilyOperation>>;
  readonly ['delta-ddl']: Readonly<Record<'defineTable'|'generate'|'generateBundle'|'realizeSparkDelta4'|'inspectPayload', NativeFamilyOperation>>;
- readonly ['delta-parquet']: Readonly<Record<'projectActions', NativeFamilyOperation>>;
+ readonly ['delta-parquet']: Readonly<Record<'projectActions'|'reconcileCheckpoint', NativeFamilyOperation>>;
 }
 export declare function createNativeFamilyDispatcher(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): NativeFamilyOperations;
 export type PostgresqlParserRequest = {token: string; backend: '@libpg-query/parser@17.6.10'; astVersion: 170004; work: 'parse'|'deparse'|'codecRoundTrip'; sql?: string; tree?: unknown};
@@ -781,3 +781,13 @@ export interface TypeSpecSessionOperations {
  emitTypeSpecJsonSchema(document:unknown,input:unknown):Promise<unknown>;
 }
 export declare function createTypeSpecSessionEngine(options:{executeCompilerRequest:(request:never)=>Promise<unknown>;executeParserRequest:(request:never)=>unknown;profile?:'cooperative'|'hard-isolated';controls?:UmfCoreControls}):TypeSpecSessionOperations;
+
+export declare const SMITHY_SESSION_PROFILE: 'umf.smithy-native-wire/1';
+export interface SmithySessionOperations {
+ inspect(fields:{document:unknown}):unknown; inspectPayload(fields:{payload:unknown}):unknown[];
+ importJson(fields:{source:string;id:string;dependencies?:{id:string;schema:string}[]}):unknown; importSources(fields:{files:Record<string,string>;id:string}):unknown;
+ exportJson(fields:{document:unknown}):string; exportSources(fields:{document:unknown}):unknown; exportBundle(fields:{document:unknown}):unknown;
+ getNode(fields:{document:unknown;path:string;dependencyId?:string}):unknown; editNode(fields:{document:unknown;path:string;replacement:string;dependencyId?:string}):unknown; editSource(fields:{document:unknown;path:string;source:string}):unknown;
+ assembleSmithyDocument(document:unknown,backend:unknown,options:{id:string;signal?:AbortSignal}):Promise<unknown>; selectSmithyShapes(document:unknown,backend:unknown,selector:string,options:{id:string;signal?:AbortSignal}):Promise<unknown>;
+}
+export declare function createSmithySessionEngine(options?:{profile?:'cooperative'|'hard-isolated';controls?:UmfCoreControls}):SmithySessionOperations;

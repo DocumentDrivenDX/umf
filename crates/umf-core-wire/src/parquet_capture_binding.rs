@@ -5,6 +5,7 @@ use umf_core::{
     delta_actions::DeltaActionResources,
     delta_log::DeltaLogResources,
     delta_parquet_actions::project_delta_parquet_actions,
+    delta_parquet_checkpoint::reconcile_delta_parquet_checkpoint,
     engine::{Capabilities, Engine, ResourceSet},
     error::{Diagnostic, EngineError},
     parquet_capture_inspection::{
@@ -190,6 +191,31 @@ pub fn execute_wire_with_control(
         }
         let resources = Resources::shared(&mut ctx)?;
         let mut capabilities = Accept;
+        if operation == "delta.parquet.reconcileCheckpoint" {
+            let checkpoint = field(&request, "checkpoint")
+                .ok_or_else(|| request_error("checkpoint is required"))?;
+            let commits =
+                field(&request, "commits").ok_or_else(|| request_error("commits is required"))?;
+            let spec = text_field(&request, "spec")
+                .ok_or_else(|| request_error("spec is required"))?;
+            let empty_sidecars = Value::Array(Vec::new());
+            let sidecars = field(&request, "sidecars").unwrap_or(&empty_sidecars);
+            let log_resources = DeltaLogResources::new(&mut ctx)?;
+            let action_resources = DeltaActionResources::new(&mut ctx)?;
+            let recovered = reconcile_delta_parquet_checkpoint(
+                checkpoint,
+                commits,
+                &spec,
+                sidecars,
+                &resources.engine,
+                &resources.registry,
+                &mut capabilities,
+                &log_resources,
+                &action_resources,
+                &mut ctx,
+            )?;
+            return encode(&recovered, &mut ctx);
+        }
         let result = match operation.as_str() {
             "parquet.capture" => {
                 let bytes = decode_hex(

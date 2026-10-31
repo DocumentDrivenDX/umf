@@ -33,7 +33,7 @@
     {
       "source": "bindings/core/node/src/native-family.js",
       "generated": "bindings/core/wasm/src/native-family.js",
-      "sha256": "0201caa652408436163b52f669fbd3c0a877a79cff8b67547c4d432335c4dafe"
+      "sha256": "c85ddf39a881f83918860cba8b408107e1b5d4f4545574bbdfaee65657a3b37d"
     },
     {
       "source": "bindings/core/node/src/postgresql-parser-session.js",
@@ -44,6 +44,11 @@
       "source": "bindings/core/node/src/typespec-session.js",
       "generated": "bindings/core/wasm/src/typespec-session.js",
       "sha256": "c66623085b2396cdb095ea147e2ce1962e940e0e08e5cb7e1324c9694b7e61cc"
+    },
+    {
+      "source": "bindings/core/node/src/smithy-session.js",
+      "generated": "bindings/core/wasm/src/smithy-session.js",
+      "sha256": "49d32751b8803ff99eb5767cf66d2bed09558b2f060c0a0cf5ba83493e6279e6"
     },
     {
       "source": "bindings/core/node/src/jsonld.js",

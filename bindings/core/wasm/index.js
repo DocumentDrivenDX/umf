@@ -4,10 +4,12 @@ import {createGraphqlOperations, GRAPHQL_PROFILE} from './src/graphql.js';
 import {createNativeFamilyOperations, NATIVE_FAMILY_PROFILE} from './src/native-family.js';
 import {createPostgresqlParserSessionOperations, POSTGRESQL_PARSER_PROFILE} from './src/postgresql-parser-session.js';
 import {createTypeSpecSessionOperations, TYPESPEC_SESSION_PROFILE} from './src/typespec-session.js';
+import {createSmithySessionOperations, SMITHY_SESSION_PROFILE} from './src/smithy-session.js';
 import {createJsonLdOperations, JSONLD_PROFILE} from './src/jsonld.js';
 export {NATIVE_FAMILY_PROFILE};
 export {POSTGRESQL_PARSER_PROFILE};
 export {TYPESPEC_SESSION_PROFILE};
+export {SMITHY_SESSION_PROFILE};
 import {createHostReadResponseFrames, encodeRequestWire, encodeWire, fromWire, resultError, toWire} from './src/wire.js';
 import {createJavascriptNumericEngine as createNumericEngine, JAVASCRIPT_NUMERIC_PROFILE} from './src/javascript-numeric.js';
 import {createSecurityLogicEngine as createSecurityLogicEngineWithWire, SECURITY_LOGIC_PROFILE} from './src/security-logic.js';
@@ -1381,6 +1383,17 @@ export function createTypeSpecSessionEngine(module, {executeCompilerRequest, exe
     hostWork,
     nativeCoreError,
   );
+}
+
+/** Create one Rust-owned Smithy session for explicit caller-supplied host backends. */
+export function createSmithySessionEngine(module, options = {}) {
+  if (typeof module?.SmithySession !== 'function') throw new Error('RUST_SMITHY_SESSION_MISSING');
+  const {controls} = codegenOptions(options);
+  const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+  const hostWork = admissionWork(controlBridge);
+  const session = new module.SmithySession();
+  if (typeof session.executeSmithySessionWire !== 'function' || session.profileVersion() !== SMITHY_SESSION_PROFILE) throw new Error('RUST_SMITHY_SESSION_PROFILE_MISMATCH');
+  return createSmithySessionOperations((wire, control) => session.executeSmithySessionWire(wire, control), hostWork, nativeCoreError);
 }
 
 /** Create the opt-in pure reciprocal-rank fusion scorer over WASM. */

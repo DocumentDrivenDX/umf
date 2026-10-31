@@ -214,7 +214,7 @@ pub fn metadata_wire(family: &str) -> String {
         ),
         "delta-parquet" => (
             crate::parquet_capture_binding::PROFILE,
-            &["projectActions"],
+            &["projectActions", "reconcileCheckpoint"],
         ),
         "delta-log" => (
             crate::delta_log_binding::PROFILE,

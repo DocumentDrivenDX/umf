@@ -60,6 +60,10 @@ import {createIcebergSchemaRustDefault} from './adapters/iceberg/rust-default';
 import {createIcebergTableRustDefault} from './adapters/iceberg/table-rust-default';
 import {createDeltaRustDefault} from './adapters/delta/rust-default';
 import {createTypeSpecRustDefault} from './adapters/typespec/rust-default';
+import {createSmithyRustDefault} from './adapters/smithy/rust-default';
+import type {SmithyNativeOperations} from './adapters/smithy/rust-default';
+import {createSmithyJavaScriptBackend,createSmithyJavaScriptSelectionBackend,createSmithyWorkerBackend} from './adapters/smithy/host-backends';
+import {SMITHY_EXTENSION,smithyPackage} from './adapters/smithy/package';
 import type {TypeSpecOperations} from './adapters/typespec/rust-default';
 import {executeTypeSpecHostRequest} from './adapters/typespec/host-runtime';
 import {executeTypeSpecParserRequest} from './adapters/typespec/typespec-host-parser';
@@ -78,7 +82,7 @@ import {CURRENT_CORE_VERSION,SCALAR_TYPES} from './model/types';
 // Module import resolves only after the native engine is ready. The function
 // exported below remains synchronous and never falls back to TypeScript.
 assertPythonClientRustPlatformV4(process.platform,process.arch);
-const [{createCoreModelRootKindNullabilityEngine,createCoreCardinalityHostInputEngine,createCoreRecordValuesHostInputEngine,createDefaultSemanticTypeRegistry,createCoreRecordTypeEngine,createBit128Engine,createTemporalEngine,createAccessTemporalEngine,ACCESS_TEMPORAL_PROFILE:ACCESS_TEMPORAL_PROFILE_RUST,createSecurityLogicEngine,createSecurityFunctionsEngine,createSecurityQueryPropertiesEngine,createJavascriptNumericEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,isDbtHostError,createProtobufDescriptorDocumentEngine,createProtobufSourceImportEngine,createProtobufSourceExportEngine,createGraphqlEngine,createRdfEngine,createNativeFamilyDispatcher,createCodegenEngine,createIcebergSchemaEngine,createIcebergTableEngine,createDeltaSchemaTableEngine,createDeltaLogEngine,createPostgresqlParserSessionEngine,createPostgresqlSqlEngine,createTypeSpecSessionEngine,createParquetCaptureEngine,createArrowSchemaEngine,createArrowIpcEngine,createDbtEngine,UmfError:BindingUmfError,domainPackSchemaGraphJson,datasetSourceSchemaGraphJson,artifactCollectionSchemaGraphJson,domainPackLoaderSchemaGraphJson,loaderInventorySchemaGraphJson,inspectDomainPackLoaderWire,inspectDomainPackProfileWire,projectSecSubmissionsUtf16Wire,projectSecCompanyFactsUtf16Wire},{CORE_MODEL_RESOURCES},{createPythonClientRustCandidateV4}]=await Promise.all([
+const [{createCoreModelRootKindNullabilityEngine,createCoreCardinalityHostInputEngine,createCoreRecordValuesHostInputEngine,createDefaultSemanticTypeRegistry,createCoreRecordTypeEngine,createBit128Engine,createTemporalEngine,createAccessTemporalEngine,ACCESS_TEMPORAL_PROFILE:ACCESS_TEMPORAL_PROFILE_RUST,createSecurityLogicEngine,createSecurityFunctionsEngine,createSecurityQueryPropertiesEngine,createJavascriptNumericEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,isDbtHostError,createProtobufDescriptorDocumentEngine,createProtobufSourceImportEngine,createProtobufSourceExportEngine,createGraphqlEngine,createRdfEngine,createNativeFamilyDispatcher,createCodegenEngine,createIcebergSchemaEngine,createIcebergTableEngine,createDeltaSchemaTableEngine,createDeltaLogEngine,createPostgresqlParserSessionEngine,createPostgresqlSqlEngine,createTypeSpecSessionEngine,createSmithySessionEngine,createParquetCaptureEngine,createArrowSchemaEngine,createArrowIpcEngine,createDbtEngine,UmfError:BindingUmfError,domainPackSchemaGraphJson,datasetSourceSchemaGraphJson,artifactCollectionSchemaGraphJson,domainPackLoaderSchemaGraphJson,loaderInventorySchemaGraphJson,inspectDomainPackLoaderWire,inspectDomainPackProfileWire,projectSecSubmissionsUtf16Wire,projectSecCompanyFactsUtf16Wire},{CORE_MODEL_RESOURCES},{createPythonClientRustCandidateV4}]=await Promise.all([
  import('../bindings/core/node/index.js'),
  import('./access/core-model-resources'),
  import('./node-v4'),
@@ -108,9 +112,10 @@ const deltaEngine=Object.assign({},createDeltaSchemaTableEngine(),createDeltaLog
   generateDdlBundle:(documents:readonly Document[])=>deltaDdlOperations.generateBundle({documents}) as ReturnType<typeof import('./adapters/delta/ddl').generateDeltaDDLBundle>,
   realizeSparkDelta4:(document:Document,target:Parameters<typeof import('./adapters/delta/ddl').realizeSparkDelta4DDL>[1])=>deltaDdlOperations.realizeSparkDelta4({document,target}) as ReturnType<typeof import('./adapters/delta/ddl').realizeSparkDelta4DDL>,
   projectParquetActions:(document:Document)=>deltaParquetOperations.projectActions({document}) as ReturnType<typeof import('./adapters/delta/parquet').projectDeltaParquetActions>,
+  reconcileParquetCheckpoint:(checkpoint:import('./adapters/delta/reconcile').DeltaCommit,commits:import('./adapters/delta/reconcile').DeltaCommit[],spec:'v1'|'v2',sidecars:import('./adapters/delta/sidecars').DeltaSidecar[])=>deltaParquetOperations.reconcileCheckpoint({checkpoint,commits,spec,sidecars}) as ReturnType<typeof import('./adapters/delta/parquet-checkpoint').reconcileDeltaParquetCheckpoint>,
 });
 const delta=createDeltaRustDefault(deltaEngine,error=>isNativeUmfCoreError(error)||error instanceof BindingUmfError,()=>new Registry());
-const {deltaRegistry,deltaTableRegistry,deltaLogRegistry,inspectDelta,importDeltaSchema,exportDeltaSchema,getDeltaNode,proposeDeltaNodeEdit,inspectDeltaTable,importDeltaTable,exportDeltaTable,getDeltaTableNode,proposeDeltaTableNodeEdit,renameDeltaMappedField,getDeltaTableSchema,captureDeltaLog,exportDeltaLog,inspectDeltaLog,inspectDeltaActions,reconcileDeltaCommits,defineDeltaTable,generateDeltaDDL,generateDeltaDDLBundle,realizeSparkDelta4DDL,projectDeltaParquetActions}=delta;
+const {deltaRegistry,deltaTableRegistry,deltaLogRegistry,inspectDelta,importDeltaSchema,exportDeltaSchema,getDeltaNode,proposeDeltaNodeEdit,inspectDeltaTable,importDeltaTable,exportDeltaTable,getDeltaTableNode,proposeDeltaTableNodeEdit,renameDeltaMappedField,getDeltaTableSchema,captureDeltaLog,exportDeltaLog,inspectDeltaLog,inspectDeltaActions,reconcileDeltaCommits,defineDeltaTable,generateDeltaDDL,generateDeltaDDLBundle,realizeSparkDelta4DDL,projectDeltaParquetActions,reconcileDeltaParquetCheckpoint}=delta;
 const icebergSchema=createIcebergSchemaRustDefault(createIcebergSchemaEngine(),error=>isNativeUmfCoreError(error)||error instanceof BindingUmfError,()=>new Registry());
 const {icebergRegistry,inspectIceberg,importIcebergSchema,exportIcebergSchema,getIcebergNode,proposeIcebergNodeEdit}=icebergSchema;
 const icebergTable=createIcebergTableRustDefault(createIcebergTableEngine(),error=>isNativeUmfCoreError(error)||error instanceof BindingUmfError,()=>new Registry());
@@ -136,6 +141,23 @@ const typespecOperations:TypeSpecOperations={
 };
 const typespec=createTypeSpecRustDefault(typespecOperations,isNativeUmfCoreError,()=>new Registry());
 const {TYPESPEC_EXTENSION,typespecPackage,typespecRegistry,inspectTypeSpec,importTypeSpecSources,exportTypeSpecSources,compileTypeSpecDocument,getTypeSpecSyntax,getTypeSpecSemanticGraph,emitTypeSpecJsonSchema,proposeTypeSpecSourceEdit}=typespec;
+const rawSmithySession=createSmithySessionEngine();
+const smithyOperations:SmithyNativeOperations={
+ inspect:({document})=>rawSmithySession.inspect({document}) as ReturnType<SmithyNativeOperations['inspect']>,
+ inspectPayload:({payload})=>rawSmithySession.inspectPayload({payload}) as ReturnType<SmithyNativeOperations['inspectPayload']>,
+ importJson:({source,id,dependencies})=>rawSmithySession.importJson({source,id,...(dependencies?{dependencies}:{})}) as ReturnType<SmithyNativeOperations['importJson']>,
+ importSources:({files,id})=>rawSmithySession.importSources({files,id}) as ReturnType<SmithyNativeOperations['importSources']>,
+ exportJson:({document})=>rawSmithySession.exportJson({document}) as ReturnType<SmithyNativeOperations['exportJson']>,
+ exportSources:({document})=>rawSmithySession.exportSources({document}) as ReturnType<SmithyNativeOperations['exportSources']>,
+ exportBundle:({document})=>rawSmithySession.exportBundle({document}) as ReturnType<SmithyNativeOperations['exportBundle']>,
+ getNode:({document,path,dependencyId})=>rawSmithySession.getNode({document,path,...(dependencyId===undefined?{}:{dependencyId})}) as ReturnType<SmithyNativeOperations['getNode']>,
+ editNode:({document,path,replacement,dependencyId})=>rawSmithySession.editNode({document,path,replacement,...(dependencyId===undefined?{}:{dependencyId})}) as ReturnType<SmithyNativeOperations['editNode']>,
+ editSource:({document,path,source})=>rawSmithySession.editSource({document,path,source}) as ReturnType<SmithyNativeOperations['editSource']>,
+ assembleSmithyDocument:(document,backend,options)=>rawSmithySession.assembleSmithyDocument(document,backend,options) as ReturnType<SmithyNativeOperations['assembleSmithyDocument']>,
+ selectSmithyShapes:(document,backend,selector,options)=>rawSmithySession.selectSmithyShapes(document,backend,selector,options) as ReturnType<SmithyNativeOperations['selectSmithyShapes']>,
+};
+const smithy=createSmithyRustDefault(smithyOperations,isNativeUmfCoreError,()=>new Registry());
+const {smithyRegistry,inspectSmithy,importSmithyJson,importSmithySources,exportSmithyJson,exportSmithySources,exportSmithyBundle,getSmithyNode,proposeSmithyNodeEdit,proposeSmithySourceEdit,assembleSmithyDocument,selectSmithyShapes}=smithy;
 const jsonld=createJsonLdRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError,()=>new Registry());
 const {jsonldRegistry,importJsonLdDocument,inspectJsonLdDocument,exportJsonLdDocument,getJsonLdNode,proposeJsonLdNodeEdit,proposeJsonLdExpansion,proposeJsonLdFlatten,proposeJsonLdCompaction,proposeJsonLdFraming,proposeJsonLdToRdf,proposeRdfToJsonLd,proposeGeneralizedRdfToJsonLd}=jsonld;
 const openapi=createOpenapiRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError,()=>new Registry());
@@ -253,9 +275,14 @@ export {createPostgresqlSqlEngine};
 export {avroRegistry,inspectAvro,importAvroSchema,getAvroFieldMetadata,exportAvroSchema,exportAvroBundle,getAvroNode,editAvroNode,proposeAvroNodeEdit};
 export {PARQUET_EXTENSION,PARQUET_MAX_BYTES,parquetPackage,parquetRegistry,captureParquet,importParquetSchema,encodeParquetWire,exportParquetCapture,inspectParquetFraming,decodeParquetFooter,inspectParquetMetadata,inspectParquetSchema,inspectParquetPages,decodeParquetPageBodies,decodeParquetLevels,decodeParquetPhysical,decodeParquetValues,assembleParquetRows,repairParquetDictionaryOffsets,inspectParquetLogicalTypes,inspectParquetContainers,getParquetFieldMetadata,appendParquetKeyValueMetadata,renameParquetField};
 export {openapiRegistry,importOpenapiDocument,inspectOpenapi,exportOpenapiDocument,getOpenapiNode,lookupOpenapiResource,extractOpenapiSchema,indexOpenapiSchemas,resolveOpenapiSchemaReference,resolveOpenapiDynamicReference,resolveOpenapiObjectReference,exportOpenapiBundle,proposeOpenapiEdit};
+export {createSmithyJavaScriptBackend,createSmithyJavaScriptSelectionBackend,createSmithyWorkerBackend};
+export {SMITHY_EXTENSION,smithyPackage,smithyRegistry,inspectSmithy,importSmithyJson,importSmithySources,exportSmithyJson,exportSmithySources,exportSmithyBundle,getSmithyNode,proposeSmithyNodeEdit,proposeSmithySourceEdit,assembleSmithyDocument,selectSmithyShapes};
 export {TYPESPEC_EXTENSION,typespecPackage,typespecRegistry,inspectTypeSpec,importTypeSpecSources,exportTypeSpecSources,compileTypeSpecDocument,getTypeSpecSyntax,getTypeSpecSemanticGraph,emitTypeSpecJsonSchema,proposeTypeSpecSourceEdit};
 export type {TypeSpecPayload} from './adapters/typespec/package';
 export type {TypeSpecCompilerReport,TypeSpecGraphReport,TypeSpecJsonSchemaEmission} from './adapters/typespec/report-types';
+export type {SmithySourcePayload} from './adapters/smithy/source-profile';
+export type {SmithyAssemblyBackend,SmithyAssemblyEvent,SmithyAssemblyResult} from './adapters/smithy/assembly';
+export type {SmithySelectionBackend,SmithySelectionResult} from './adapters/smithy/selection';
 export {linkmlRegistry,importLinkmlDocument,inspectLinkmlDocument,exportLinkmlDocument,getLinkmlDocumentNode,proposeLinkmlDocumentNodeEdit,inspectLinkmlImportContext,proposeLinkmlImportMerge,inspectLinkmlClassSlots,inspectLinkmlSlotValues,odcsRegistry,importOdcsDocument,inspectOdcsDocument,exportOdcsDocument,getOdcsDocumentNode,proposeOdcsDocumentNodeEdit,resolveOdcsReference,inspectOdcsRelationships,proposeOdcsElementRename};
 export {importTableSpec,inspectTableSpec,exportTableSpec,getTableSpecTable,getTableSpecColumn,editTableSpecTable,editTableSpecColumn,importTableSpecBundle,exportTableSpecBundle};
 export {sqlserverRegistry,importSqlServerCatalog,inspectSqlServer,exportSqlServerCatalog,getSqlServerColumnMetadata,getSqlServerConstraintMetadata,getSqlServerIndexMetadata,proposeSqlServerCatalogEdit,inspectSqlServerFacetType,inspectSqlServerFacetPredicate,inspectSqlServerFacetConstraints};
@@ -277,7 +304,7 @@ export { deltaTablePackage };
 
 export { deltaLogPackage };
 
-export {deltaRegistry,deltaTableRegistry,deltaLogRegistry,inspectDelta,importDeltaSchema,exportDeltaSchema,getDeltaNode,proposeDeltaNodeEdit,inspectDeltaTable,importDeltaTable,exportDeltaTable,getDeltaTableNode,proposeDeltaTableNodeEdit,renameDeltaMappedField,getDeltaTableSchema,captureDeltaLog,exportDeltaLog,inspectDeltaLog,inspectDeltaActions,reconcileDeltaCommits,defineDeltaTable,generateDeltaDDL,generateDeltaDDLBundle,realizeSparkDelta4DDL,projectDeltaParquetActions};
+export {deltaRegistry,deltaTableRegistry,deltaLogRegistry,inspectDelta,importDeltaSchema,exportDeltaSchema,getDeltaNode,proposeDeltaNodeEdit,inspectDeltaTable,importDeltaTable,exportDeltaTable,getDeltaTableNode,proposeDeltaTableNodeEdit,renameDeltaMappedField,getDeltaTableSchema,captureDeltaLog,exportDeltaLog,inspectDeltaLog,inspectDeltaActions,reconcileDeltaCommits,defineDeltaTable,generateDeltaDDL,generateDeltaDDLBundle,realizeSparkDelta4DDL,projectDeltaParquetActions,reconcileDeltaParquetCheckpoint};
 
 export {evaluateActionRule,compileTableDeployment,verifyTableDeployment};
 

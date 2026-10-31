@@ -3,6 +3,7 @@
 
 from .adapters import adapter_info, execute_adapter
 from .typespec import TypeSpecSession
+from .smithy import SmithySession
 from .models import (
     CoreItemTypeReference,
     CoreSemanticTypeReference,
@@ -51,6 +52,7 @@ from .rust_sec_projection import (
 __version__ = "0.10.4"
 __all__ = [
     "TypeSpecSession",
+    "SmithySession",
     "adapter_info",
     "execute_adapter",
     "SagaRuntime",

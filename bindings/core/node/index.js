@@ -4,10 +4,12 @@ import {createGraphqlOperations, GRAPHQL_PROFILE} from './src/graphql.js';
 import {createNativeFamilyOperations, NATIVE_FAMILY_PROFILE} from './src/native-family.js';
 import {createPostgresqlParserSessionOperations, POSTGRESQL_PARSER_PROFILE} from './src/postgresql-parser-session.js';
 import {createTypeSpecSessionOperations, TYPESPEC_SESSION_PROFILE} from './src/typespec-session.js';
+import {createSmithySessionOperations, SMITHY_SESSION_PROFILE} from './src/smithy-session.js';
 import {createJsonLdOperations, JSONLD_PROFILE} from './src/jsonld.js';
 export {NATIVE_FAMILY_PROFILE};
 export {POSTGRESQL_PARSER_PROFILE};
 export {TYPESPEC_SESSION_PROFILE};
+export {SMITHY_SESSION_PROFILE};
 import {createRequire} from 'node:module';
 import {createHostReadResponseFrames, encodeRequestWire, encodeWire, fromWire, resultError, toWire} from './src/wire.js';
 import {createJavascriptNumericEngine as createNumericEngine, JAVASCRIPT_NUMERIC_PROFILE} from './src/javascript-numeric.js';
@@ -1264,6 +1266,17 @@ export function createTypeSpecSessionEngine({executeCompilerRequest, executePars
     hostWork,
     nativeCoreError,
   );
+}
+
+/** Create one Rust-owned Smithy session for explicit caller-supplied host backends. */
+export function createSmithySessionEngine(options = {}) {
+  if (typeof addon.SmithySession !== 'function') throw new Error('RUST_SMITHY_SESSION_MISSING');
+  const {controls} = codegenOptions(options);
+  const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+  const hostWork = admissionWork(controlBridge);
+  const session = new addon.SmithySession();
+  if (typeof session.executeSmithySessionWire !== 'function' || session.profileVersion() !== SMITHY_SESSION_PROFILE) throw new Error('RUST_SMITHY_SESSION_PROFILE_MISMATCH');
+  return createSmithySessionOperations((wire, control) => session.executeSmithySessionWire(wire, control), hostWork, nativeCoreError);
 }
 
 /** Create the feature-gated native libpg_query raw-SQL engine. */

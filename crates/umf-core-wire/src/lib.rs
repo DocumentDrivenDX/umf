@@ -34,6 +34,8 @@ pub mod avro_binding;
 pub mod iceberg_table_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod typespec_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod smithy_binding;
 pub mod access_rrf_binding;
 pub mod access_temporal_binding;
 pub mod arrow_ipc_capture_binding {

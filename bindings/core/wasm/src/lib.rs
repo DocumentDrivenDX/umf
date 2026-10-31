@@ -1,11 +1,11 @@
 use js_sys::Function;
 use umf_core::{
-    Capabilities, CapabilityError, Context, Diagnostic, EngineError, ResourceProfile,
-    SemanticContext, Severity, Utf16, Value,
     context::TransportUsage,
     copy_json,
     gregorian_date::{parse_gregorian_date, truncate_gregorian_date},
     rfc3339_exact_instant::parse_rfc3339_exact_instant,
+    Capabilities, CapabilityError, Context, Diagnostic, EngineError, ResourceProfile,
+    SemanticContext, Severity, Utf16, Value,
 };
 use wasm_bindgen::prelude::*;
 
@@ -1776,6 +1776,47 @@ impl TypeSpecSession {
         } else {
             let mut no_control = |_amount| Ok(());
             umf_core_wire::typespec_binding::execute_wire_with_session(
+                &mut inner,
+                wire_json,
+                &mut no_control,
+            )
+        }
+    }
+}
+
+const SMITHY_SESSION_PROFILE: &str = "umf.smithy-native-wire/1";
+
+#[wasm_bindgen]
+pub struct SmithySession {
+    inner: std::sync::Mutex<umf_core_wire::smithy_binding::Session>,
+}
+
+#[wasm_bindgen]
+impl SmithySession {
+    #[wasm_bindgen(constructor)]
+    pub fn new() -> Self {
+        Self {
+            inner: std::sync::Mutex::new(umf_core_wire::smithy_binding::Session::new()),
+        }
+    }
+    #[wasm_bindgen(js_name = profileVersion)]
+    pub fn profile_version(&self) -> String {
+        SMITHY_SESSION_PROFILE.to_owned()
+    }
+    #[wasm_bindgen(js_name = executeSmithySessionWire)]
+    pub fn execute_wire(&self, wire_json: &str, control_dispatcher: Option<Function>) -> String {
+        let Ok(mut inner) = self.inner.try_lock() else {
+            return umf_core_wire::smithy_binding::busy_session_envelope();
+        };
+        if let Some(dispatcher) = control_dispatcher {
+            let mut control = WasmControl { dispatcher };
+            let mut hook = |amount| control.check(amount);
+            umf_core_wire::smithy_binding::execute_wire_with_session(
+                &mut inner, wire_json, &mut hook,
+            )
+        } else {
+            let mut no_control = |_amount| Ok(());
+            umf_core_wire::smithy_binding::execute_wire_with_session(
                 &mut inner,
                 wire_json,
                 &mut no_control,

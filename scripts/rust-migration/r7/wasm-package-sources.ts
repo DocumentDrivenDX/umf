@@ -15,6 +15,7 @@ const pairs = [
   ['bindings/core/node/src/native-family.js', 'bindings/core/wasm/src/native-family.js'],
   ['bindings/core/node/src/postgresql-parser-session.js', 'bindings/core/wasm/src/postgresql-parser-session.js'],
   ['bindings/core/node/src/typespec-session.js', 'bindings/core/wasm/src/typespec-session.js'],
+  ['bindings/core/node/src/smithy-session.js', 'bindings/core/wasm/src/smithy-session.js'],
   ['bindings/core/node/src/jsonld.js', 'bindings/core/wasm/src/jsonld.js'],
   ['bindings/core/node/src/access-rrf.js', 'bindings/core/wasm/src/access-rrf.js'],
   ['bindings/core/node/src/javascript-numeric.js', 'bindings/core/wasm/src/javascript-numeric.js'],

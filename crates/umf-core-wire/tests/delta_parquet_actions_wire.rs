@@ -155,3 +155,143 @@ fn unsupported_typed_checkpoint_column_blocks_without_partial_log_or_actions() {
         matches!(field(&projected, "diagnostics"), Some(Value::Array(rows)) if rows.iter().any(|d| string(field(d,"severity")).as_deref()==Some("error")))
     );
 }
+
+fn recovered(bytes: &[u8], id: &str, version: &str, spec: &str, sidecars: Value) -> Value {
+    let checkpoint = object(vec![
+        ("version", text(version)),
+        ("source", captured(bytes, id)),
+    ]);
+    result(&parquet_capture_binding::execute_wire(&request(
+        "delta.parquet.reconcileCheckpoint",
+        vec![
+            ("checkpoint", checkpoint),
+            ("commits", Value::Array(Vec::new())),
+            ("spec", text(spec)),
+            ("sidecars", sidecars),
+        ],
+    )))
+    .unwrap()
+}
+
+fn recovered_with_sidecars(
+    bytes: &[u8],
+    id: &str,
+    version: &str,
+    spec: &str,
+    sidecars: Value,
+) -> Value {
+    let checkpoint = object(vec![
+        ("version", text(version)),
+        ("source", captured(bytes, id)),
+    ]);
+    result(&parquet_capture_binding::execute_wire(&request(
+        "delta.parquet.reconcileCheckpoint",
+        vec![
+            ("checkpoint", checkpoint),
+            ("commits", Value::Array(Vec::new())),
+            ("spec", text(spec)),
+            ("sidecars", sidecars),
+        ],
+    )))
+    .unwrap()
+}
+
+#[test]
+fn nonzero_v1_parquet_checkpoint_replays_into_native_action_state() {
+    let output = recovered(
+        include_bytes!("../../../fixtures/delta/parquet-checkpoint/v1.parquet"),
+        "v1-checkpoint",
+        "10",
+        "v1",
+        Value::Array(Vec::new()),
+    );
+    assert_eq!(
+        string(field(&output, "status")).as_deref(),
+        Some("reconciled")
+    );
+    assert_eq!(string(field(&output, "spec")).as_deref(), Some("v1"));
+    assert_eq!(
+        string(field(field(&output, "recovery").unwrap(), "status")).as_deref(),
+        Some("reconciled")
+    );
+    assert_eq!(
+        string(field(
+            field(field(&output, "recovery").unwrap(), "state").unwrap(),
+            "version"
+        ))
+        .as_deref(),
+        Some("10")
+    );
+}
+
+#[test]
+fn v2_embedded_and_sidecar_checkpoints_replay_only_after_exact_resolution() {
+    let embedded = recovered(
+        include_bytes!("../../../fixtures/delta/parquet-checkpoint/v2-embedded.parquet"),
+        "v2-embedded",
+        "10",
+        "v2",
+        Value::Array(Vec::new()),
+    );
+    assert_eq!(
+        string(field(&embedded, "status")).as_deref(),
+        Some("reconciled")
+    );
+    assert_eq!(string(field(&embedded, "spec")).as_deref(), Some("v2"));
+
+    let unresolved = recovered(
+        include_bytes!("../../../fixtures/delta/parquet-checkpoint/v2-sidecars.parquet"),
+        "v2-sidecars",
+        "10",
+        "v2",
+        Value::Array(Vec::new()),
+    );
+    assert_eq!(
+        string(field(&unresolved, "status")).as_deref(),
+        Some("blocked")
+    );
+    assert!(field(&unresolved, "recovery").is_none());
+    assert!(
+        matches!(field(&unresolved, "diagnostics"), Some(Value::Array(rows)) if rows.iter().any(|d| string(field(d,"code")).as_deref()==Some("DELTA_SIDECAR_BINDING")))
+    );
+
+    let sidecars = Value::Array(vec![
+        object(vec![
+            ("path", text("part-0.parquet")),
+            (
+                "source",
+                captured(
+                    include_bytes!("../../../fixtures/delta/sidecars/part-0.parquet"),
+                    "part-0",
+                ),
+            ),
+        ]),
+        object(vec![
+            ("path", text("part-1.parquet")),
+            (
+                "source",
+                captured(
+                    include_bytes!("../../../fixtures/delta/sidecars/part-1.parquet"),
+                    "part-1",
+                ),
+            ),
+        ]),
+    ]);
+    let resolved = recovered_with_sidecars(
+        include_bytes!("../../../fixtures/delta/parquet-checkpoint/v2-sidecars.parquet"),
+        "v2-sidecars",
+        "10",
+        "v2",
+        sidecars,
+    );
+    assert_eq!(
+        string(field(&resolved, "status")).as_deref(),
+        Some("reconciled")
+    );
+    let recovery = field(&resolved, "recovery").unwrap();
+    assert!(field(recovery, "derivedCheckpoint").is_some());
+    assert!(matches!(field(recovery, "origins"), Some(Value::Array(rows)) if rows.len() == 8));
+    assert!(
+        matches!(field(recovery, "origins"), Some(Value::Array(rows)) if rows.iter().any(|row| field(row,"sidecar")==Some(&Value::Number(0.0)) && field(row,"row")==Some(&Value::Number(1.0))))
+    );
+}

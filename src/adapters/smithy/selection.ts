@@ -2,16 +2,13 @@
 import {copyJson,LIMITS} from '../../model/json';
 import {UmfError,type Document,type Diagnostic} from '../../model/types';
 import {createValidator} from '../../validation/schema';
-import {assembleSmithyDocument,createSmithyJavaScriptBackend,type SmithyAssemblyBackend,type SmithyAssemblyResult} from './assembly';
+import {assembleSmithyDocument,type SmithyAssemblyBackend,type SmithyAssemblyResult} from './assembly';
+export {createSmithyJavaScriptSelectionBackend} from './host-backends';
 import reportSchema from '../../../spec/extensions/smithy/native-selection.schema.json';
 export interface SmithySelectionBackend extends SmithyAssemblyBackend {select(modelJson:string,selector:string,control?:{signal?:AbortSignal}):string|Promise<string>;}
 export interface SmithySelectionResult {status:'selected'|'blocked';selector:string;assembly:SmithyAssemblyResult;shapeIds?:string[];issues:Diagnostic[];complete:false;}
 const check=createValidator(false).compile(reportSchema);
 /** Explicit native shape-set query. Variable environments are not returned by this API. */
-export function createSmithyJavaScriptSelectionBackend(module:{assemble(sourcesJson:string):string;select(modelJson:string,selector:string,control?:{signal?:AbortSignal}):string}):SmithySelectionBackend{
- if(typeof module?.select!=='function')throw new UmfError('SMITHY_RUNTIME','Expected the installed Smithy selector runtime');
- return {...createSmithyJavaScriptBackend(module),select:(model,selector)=>module.select(model,selector)};
-}
 export async function selectSmithyShapes(document:Document,backend:SmithySelectionBackend,selector:string,options:{id:string;signal?:AbortSignal}):Promise<SmithySelectionResult>{
  if(typeof selector!=='string'||!selector.trim()||selector.length>LIMITS.maxTextLength||typeof backend?.select!=='function')throw new UmfError('SMITHY_SELECTION_OPTIONS','A nonempty bounded selector and trusted selector backend are required');
  const assembly=await assembleSmithyDocument(document,backend,options);

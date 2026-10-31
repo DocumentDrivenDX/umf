@@ -770,6 +770,10 @@ fn run(args: Vec<String>) -> Result<(), String> {
     if args.first().map(String::as_str) == Some("typespec") {
         return typespec_session_run(&args[1..]);
     }
+    #[cfg(feature = "embedded-adapters")]
+    if args.first().map(String::as_str) == Some("smithy") {
+        return smithy_session_run(&args[1..]);
+    }
 
     if args.first().map(String::as_str) == Some("domain-pack") {
         let output = domain_pack_schema_output(&args[1..])?;
@@ -1603,16 +1607,44 @@ fn delta_ddl_run(args: &[String]) -> Result<(), String> {
 /// by the caller. Each input line is a tagged wire request, each output an envelope.
 #[cfg(feature = "embedded-adapters")]
 fn typespec_session_run(args: &[String]) -> Result<(), String> {
+    let mut session = umf_core_wire::typespec_binding::Session::new();
+    compiler_session_run(
+        args,
+        umf_core_wire::typespec_binding::PROFILE,
+        |wire, control| {
+            umf_core_wire::typespec_binding::execute_wire_with_session(&mut session, wire, control)
+        },
+    )
+}
+
+#[cfg(feature = "embedded-adapters")]
+fn smithy_session_run(args: &[String]) -> Result<(), String> {
+    let mut session = umf_core_wire::smithy_binding::Session::new();
+    compiler_session_run(
+        args,
+        umf_core_wire::smithy_binding::PROFILE,
+        |wire, control| {
+            umf_core_wire::smithy_binding::execute_wire_with_session(&mut session, wire, control)
+        },
+    )
+}
+
+#[cfg(feature = "embedded-adapters")]
+fn compiler_session_run(
+    args: &[String],
+    profile: &str,
+    mut execute: impl FnMut(&str, &mut dyn FnMut(usize) -> Result<(), umf_core::EngineError>) -> String,
+) -> Result<(), String> {
     use std::io::Write;
     if args == ["--version"] {
         println!(
             "{{\"profile\":\"{}\",\"version\":\"{}\"}}",
-            umf_core_wire::typespec_binding::PROFILE,
+            profile,
             env!("CARGO_PKG_VERSION")
         );
         return Ok(());
     }
-    let usage = "usage: umf typespec --stdin-session [--max-work N] [--timeout-ms N]";
+    let usage = "usage: umf <typespec|smithy> --stdin-session [--max-work N] [--timeout-ms N]";
     if args.first().map(String::as_str) != Some("--stdin-session") {
         return Err(usage.into());
     }
@@ -1655,7 +1687,6 @@ fn typespec_session_run(args: &[String]) -> Result<(), String> {
         }
         Ok(())
     };
-    let mut session = umf_core_wire::typespec_binding::Session::new();
     let mut input = io::stdin().lock();
     let mut output = io::stdout().lock();
     loop {
@@ -1670,14 +1701,10 @@ fn typespec_session_run(args: &[String]) -> Result<(), String> {
             break;
         }
         if line.len() > MAX_NATIVE_ADAPTER_REQUEST_BYTES {
-            return Err("TypeSpec session request exceeds the input limit".into());
+            return Err("Compiler session request exceeds the input limit".into());
         }
         let wire = std::str::from_utf8(&line).map_err(|_| "wire input is not valid UTF-8")?;
-        let response = umf_core_wire::typespec_binding::execute_wire_with_session(
-            &mut session,
-            wire,
-            &mut control,
-        );
+        let response = execute(wire, &mut control);
         writeln!(output, "{response}").map_err(|error| error.to_string())?;
         output.flush().map_err(|error| error.to_string())?;
     }

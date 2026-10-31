@@ -23,6 +23,27 @@ pub fn reconcile_delta_commits(
     actions: &DeltaActionResources,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
+    reconcile_delta_commits_inner(commits, logs, actions, ctx, false)
+}
+
+/// Checkpoint replay uses the checkpoint's full remove identity so two
+/// deletion-vector tombstones for the same path remain distinct occurrences.
+pub fn reconcile_delta_checkpoint_commits(
+    commits: &Value,
+    logs: &DeltaLogResources,
+    actions: &DeltaActionResources,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    reconcile_delta_commits_inner(commits, logs, actions, ctx, true)
+}
+
+fn reconcile_delta_commits_inner(
+    commits: &Value,
+    logs: &DeltaLogResources,
+    actions: &DeltaActionResources,
+    ctx: &mut Context<'_>,
+    checkpoint_first: bool,
+) -> Result<Value, EngineError> {
     let input = match commits {
         Value::Array(v) => v,
         _ => return Err(fail("DELTA_HISTORY_INPUT", "Expected an array of commits")),
@@ -155,6 +176,8 @@ pub fn reconcile_delta_commits(
             }
             let key = if ["protocol", "metaData"].contains(&a.name.as_str()) {
                 Some(a.name.clone())
+            } else if checkpoint_first && i == 0 && a.name == "remove" {
+                Some(format!("remove:{}", file_identity(&a.value)))
             } else {
                 let field_name = match a.name.as_str() {
                     "add" | "remove" => "path",
