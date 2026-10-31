@@ -1851,3 +1851,1137 @@ mod tests {
         assert!(exported.contains("https://schema.org/number"));
     }
 }
+/// Proposes an ordinary RDF dataset projection while keeping the original
+/// JSON-LD document in the report. This does not claim lossless replacement.
+pub fn propose_jsonld_to_rdf(
+    document: &Value,
+    id: &Utf16,
+    produce_generalized_rdf: bool,
+    numeric_policy: &Utf16,
+    loss_policy: &Utf16,
+    rdf_direction: Option<&Utf16>,
+    runtime: &JsonLdRuntime,
+    rdf_runtime: &crate::rdf::RdfRuntime,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    if loss_policy != &Utf16::from("report") && loss_policy != &Utf16::from("reject") {
+        return Err(error(
+            "JSONLD_OPTIONS",
+            "Expected explicit report or reject loss policy",
+        ));
+    }
+    if numeric_policy != &Utf16::from("strict") && numeric_policy != &Utf16::from("binary64") {
+        return Err(error(
+            "JSONLD_OPTIONS",
+            "numericPolicy must be strict or binary64",
+        ));
+    }
+    if rdf_direction.is_some_and(|direction| {
+        direction != &Utf16::from("i18n-datatype") && direction != &Utf16::from("compound-literal")
+    }) {
+        return Err(error(
+            "JSONLD_RDF_OPTIONS",
+            "rdfDirection must be null, i18n-datatype, or compound-literal",
+        ));
+    }
+    let source_copy = copy_json(document, ctx)?;
+    let rdf_direction_value = rdf_direction
+        .map(|value| clone_text(value, ctx).map(Value::String))
+        .transpose()?
+        .unwrap_or(Value::Null);
+    let mut report = Value::Object(vec![
+        (Utf16::from("source"), source_copy),
+        (Utf16::from("id"), Value::String(clone_text(id, ctx)?)),
+        (
+            Utf16::from("produceGeneralizedRdf"),
+            Value::Bool(produce_generalized_rdf),
+        ),
+        (
+            Utf16::from("numericPolicy"),
+            Value::String(clone_text(numeric_policy, ctx)?),
+        ),
+        (
+            Utf16::from("lossPolicy"),
+            Value::String(clone_text(loss_policy, ctx)?),
+        ),
+        (Utf16::from("rdfDirection"), rdf_direction_value),
+        (Utf16::from("status"), Value::string_utf8("blocked")),
+        (Utf16::from("complete"), Value::Bool(false)),
+        (Utf16::from("resourcesUsed"), Value::Array(Vec::new())),
+        (Utf16::from("diagnostics"), Value::Array(Vec::new())),
+    ]);
+    let expansion = propose_jsonld_expansion(document, loss_policy, runtime, ctx)?;
+    let Some(expanded_doc) = field(&expansion, "candidate") else {
+        let diagnostics = match field(&expansion, "diagnostics") {
+            Some(Value::Array(ds)) => {
+                ctx.charge_work(ds.len(), Utf16::default())?;
+                let mut copied = Vec::with_capacity(ds.len());
+                for diagnostic in ds {
+                    copied.push(copy_json(diagnostic, ctx)?);
+                }
+                Value::Array(copied)
+            }
+            _ => Value::Array(Vec::new()),
+        };
+        set_field(&mut report, "diagnostics", diagnostics)?;
+        return Ok(report);
+    };
+    let payload = payload_from_document(expanded_doc, runtime, ctx)?;
+    if payload.processing_mode == Utf16::from("json-ld-1.0") && rdf_direction.is_some() {
+        set_field(
+            &mut report,
+            "diagnostics",
+            Value::Array(vec![report_diagnostic(
+                "JSONLD_OPTIONS",
+                "rdfDirection conversion requires JSON-LD 1.1; source retained.",
+                "error",
+            )]),
+        )?;
+        return Ok(report);
+    }
+    fn has_inexact_number(node: &crate::native_json::NativeJsonNode) -> bool {
+        use crate::native_json::NativeJsonNode as N;
+        match node {
+            N::Number(token) => token
+                .parse::<f64>()
+                .ok()
+                .filter(|n| n.is_finite())
+                .is_none_or(|n| {
+                    (n.fract() == 0.0 && n.abs() > 9_007_199_254_740_991.0)
+                        || crate::serialization::decimal_canonical(token)
+                            != crate::serialization::decimal_canonical(
+                                &crate::ecma_number_to_string(n),
+                            )
+                }),
+            N::Array(items) => items.iter().any(has_inexact_number),
+            N::Object(members) => members.iter().any(|(_, value)| has_inexact_number(value)),
+            _ => false,
+        }
+    }
+    let inexact_numbers = has_inexact_number(payload.root.root());
+    if inexact_numbers && numeric_policy == &Utf16::from("strict") {
+        set_field(&mut report, "diagnostics", Value::Array(vec![report_diagnostic(
+                "JSONLD_RDF_NUMBER",
+                "Exact JSON number cannot be represented by RDF numeric conversion; source retained.",
+                "error",
+            )]))?;
+        return Ok(report);
+    }
+    if inexact_numbers && loss_policy == &Utf16::from("reject") {
+        set_field(&mut report, "diagnostics", Value::Array(vec![report_diagnostic(
+            "JSONLD_RDF_NUMBER_LOSS",
+            "At least one exact JSON number would be converted through binary64 for RDF; original JSON-LD source is retained.",
+            "warning",
+        )]))?;
+        return Ok(report);
+    }
+    let json = payload.root.render_compact(ctx)?;
+    ctx.charge_text(json.len(), Utf16::default())?;
+    let json = json
+        .to_utf8()
+        .map_err(|_| error("JSONLD_SOURCE", "Expanded JSON is not well-formed UTF-16"))?;
+    let parsed = json_ld::syntax::Value::parse_str(&json)
+        .map_err(|e| error_owned("JSONLD_SOURCE", e.to_string()))?
+        .0;
+    let base_text = payload
+        .base_iri
+        .to_utf8()
+        .map_err(|_| error("JSONLD_IRI", "baseIRI is not well-formed UTF-16"))?;
+    let base =
+        json_ld::IriBuf::new(base_text).map_err(|_| error("JSONLD_IRI", "baseIRI is invalid"))?;
+    let mut options = json_ld::Options::default();
+    options.base = Some(base.clone());
+    options.processing_mode = if payload.processing_mode == Utf16::from("json-ld-1.0") {
+        json_ld::ProcessingMode::JsonLd1_0
+    } else {
+        json_ld::ProcessingMode::JsonLd1_1
+    };
+    options.rdf_direction = rdf_direction.map(|direction| {
+        if direction == &Utf16::from("i18n-datatype") {
+            json_ld::RdfDirection::I18nDatatype
+        } else {
+            json_ld::RdfDirection::CompoundLiteral
+        }
+    });
+    options.produce_generalized_rdf = produce_generalized_rdf;
+    let input = json_ld::RemoteDocument::new(Some(base), None, parsed);
+    use json_ld::JsonLdProcessor;
+    let mut vocabulary = json_ld::rdf_types::vocabulary::IndexVocabulary::new();
+    let mut warnings = ProcessorWarnings::default();
+    let rdf_result = futures::executor::block_on(input.to_rdf_full(
+        &mut vocabulary,
+        json_ld::rdf_types::generator::Blank::new(),
+        &json_ld::NoLoader,
+        options,
+        &mut warnings,
+    ));
+    if loss_policy == &Utf16::from("reject") && !warnings.messages.is_empty() {
+        ctx.charge_work(warnings.messages.len(), Utf16::default())?;
+        let messages = warnings
+            .messages
+            .iter()
+            .map(|message| report_diagnostic("JSONLD_RDF_EVENT", message, "warning"))
+            .collect();
+        set_field(&mut report, "diagnostics", Value::Array(messages))?;
+        return Ok(report);
+    }
+    let (rendered_quads, vocabulary) = match rdf_result {
+        Ok(rdf) => {
+            let mut quads = Vec::new();
+            for quad in rdf.cloned_quads() {
+                ctx.charge_work(1, Utf16::default())?;
+                quads.push(quad);
+            }
+            (quads, rdf.into_vocabulary())
+        }
+        Err(failure) => {
+            set_field(
+                &mut report,
+                "diagnostics",
+                Value::Array(vec![report_diagnostic(
+                    "JSONLD_TO_RDF_BLOCKED",
+                    &failure.to_string(),
+                    "error",
+                )]),
+            )?;
+            return Ok(report);
+        }
+    };
+    let candidate = if produce_generalized_rdf {
+        let mut quads = Vec::with_capacity(rendered_quads.len());
+        for quad in rendered_quads {
+            ctx.charge_work(1, Utf16::default())?;
+            quads.push(generalized_quad_value(quad, &vocabulary, ctx)?);
+        }
+        let encoded = serialization::write_json_value(&Value::Array(quads), Format::Json, ctx)?;
+        crate::rdf::import_generalized_rdf_dataset(rdf_runtime, encoded.units(), id, None, ctx)?
+    } else {
+        let mut output = BoundedJsonWriter {
+            output: String::new(),
+            units: 0,
+            ctx,
+            failure: None,
+        };
+        use contextual::WithContext;
+        for quad in rendered_quads {
+            let result = write!(&mut output, "{} .\n", quad.with(&vocabulary));
+            if let Some(failure) = output.failure.take() {
+                return Err(failure);
+            }
+            if result.is_err() {
+                return Err(error("JSONLD_RDF_PRINT", "Unable to serialize RDF quad"));
+            }
+        }
+        output.ctx.charge_text(output.units, Utf16::default())?;
+        let rdf_source: Vec<u16> = output.output.encode_utf16().collect();
+        crate::rdf::import_rdf_nquads(rdf_runtime, &rdf_source, id, None, output.ctx)?
+    };
+    set_field(&mut report, "candidate", candidate)?;
+    set_field(&mut report, "status", Value::string_utf8("candidate"))?;
+    let resources_used = field(&expansion, "resourcesUsed")
+        .map(|value| copy_json(value, ctx))
+        .transpose()?
+        .unwrap_or(Value::Array(Vec::new()));
+    set_field(&mut report, "resourcesUsed", resources_used)?;
+    ctx.charge_work(warnings.messages.len(), Utf16::default())?;
+    let expansion_diagnostics = match field(&expansion, "diagnostics") {
+        Some(Value::Array(items)) => items.as_slice(),
+        _ => &[],
+    };
+    ctx.charge_work(expansion_diagnostics.len(), Utf16::default())?;
+    let mut diagnostics = Vec::with_capacity(
+        expansion_diagnostics
+            .len()
+            .saturating_add(warnings.messages.len())
+            .saturating_add(2),
+    );
+    for diagnostic in expansion_diagnostics {
+        if string(field(diagnostic, "code")) == Some(&Utf16::from("JSONLD_EXPANSION")) {
+            continue;
+        }
+        diagnostics.push(copy_json(diagnostic, ctx)?);
+    }
+    for message in &warnings.messages {
+        ctx.charge_text(message.encode_utf16().count(), Utf16::default())?;
+        diagnostics.push(report_diagnostic("JSONLD_RDF_EVENT", message, "warning"));
+    }
+    if inexact_numbers {
+        diagnostics.push(report_diagnostic(
+            "JSONLD_RDF_NUMBER_LOSS",
+            "At least one exact JSON number was converted through binary64 for RDF; original JSON-LD source is retained.",
+            "warning",
+        ));
+    }
+    diagnostics.push(report_diagnostic(
+        "JSONLD_TO_RDF",
+        "RDF projection is a derived dataset; the JSON-LD source and context archives remain authoritative in this report.",
+        "warning",
+    ));
+    set_field(&mut report, "diagnostics", Value::Array(diagnostics))?;
+    Ok(report)
+}
+type RdfResource = json_ld::rdf_types::Term<
+    json_ld::rdf_types::Id<
+        json_ld::rdf_types::vocabulary::IriIndex,
+        json_ld::rdf_types::vocabulary::BlankIdIndex,
+    >,
+    json_ld::rdf_types::vocabulary::LiteralIndex,
+>;
+
+fn generalized_id_value(
+    id: json_ld::rdf_types::Id<
+        json_ld::rdf_types::vocabulary::IriIndex,
+        json_ld::rdf_types::vocabulary::BlankIdIndex,
+    >,
+    vocabulary: &json_ld::rdf_types::vocabulary::IndexVocabulary,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    use json_ld::rdf_types::vocabulary::{BlankIdVocabulary, IriVocabulary};
+    let (term_type, value) = match id {
+        json_ld::rdf_types::Id::Iri(index) => (
+            "NamedNode",
+            vocabulary
+                .iri(&index)
+                .ok_or_else(|| error("JSONLD_RDF_TERM", "Missing generated RDF IRI"))?
+                .as_str(),
+        ),
+        json_ld::rdf_types::Id::Blank(index) => (
+            "BlankNode",
+            vocabulary
+                .blank_id(&index)
+                .ok_or_else(|| error("JSONLD_RDF_TERM", "Missing generated blank identifier"))?
+                .suffix(),
+        ),
+    };
+    ctx.charge_text(value.encode_utf16().count(), Utf16::default())?;
+    Ok(Value::Object(vec![
+        (Utf16::from("termType"), Value::string_utf8(term_type)),
+        (Utf16::from("value"), Value::string_utf8(value)),
+    ]))
+}
+
+fn generalized_quad_value(
+    quad: json_ld::rdf_types::Quad<
+        json_ld::rdf_types::Id<
+            json_ld::rdf_types::vocabulary::IriIndex,
+            json_ld::rdf_types::vocabulary::BlankIdIndex,
+        >,
+        json_ld::rdf_types::Id<
+            json_ld::rdf_types::vocabulary::IriIndex,
+            json_ld::rdf_types::vocabulary::BlankIdIndex,
+        >,
+        json_ld::rdf_types::Term<
+            json_ld::rdf_types::Id<
+                json_ld::rdf_types::vocabulary::IriIndex,
+                json_ld::rdf_types::vocabulary::BlankIdIndex,
+            >,
+            json_ld::rdf_types::vocabulary::LiteralIndex,
+        >,
+        json_ld::rdf_types::Id<
+            json_ld::rdf_types::vocabulary::IriIndex,
+            json_ld::rdf_types::vocabulary::BlankIdIndex,
+        >,
+    >,
+    vocabulary: &json_ld::rdf_types::vocabulary::IndexVocabulary,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    use json_ld::rdf_types::vocabulary::{IriVocabulary, LiteralVocabulary};
+    let json_ld::rdf_types::Quad(subject, predicate, object, graph) = quad;
+    let object = match object {
+        json_ld::rdf_types::Term::Id(id) => generalized_id_value(id, vocabulary, ctx)?,
+        json_ld::rdf_types::Term::Literal(index) => {
+            let literal = vocabulary
+                .literal(&index)
+                .ok_or_else(|| error("JSONLD_RDF_TERM", "Missing generated RDF literal"))?;
+            ctx.charge_text(literal.value.encode_utf16().count(), Utf16::default())?;
+            let (datatype, language) = match &literal.type_ {
+                json_ld::rdf_types::LiteralType::Any(index) => (
+                    vocabulary
+                        .iri(index)
+                        .ok_or_else(|| error("JSONLD_RDF_TERM", "Missing literal datatype IRI"))?
+                        .as_str(),
+                    None,
+                ),
+                json_ld::rdf_types::LiteralType::LangString(language) => (
+                    "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+                    Some(language.as_str()),
+                ),
+            };
+            let mut fields = vec![
+                (Utf16::from("termType"), Value::string_utf8("Literal")),
+                (Utf16::from("value"), Value::string_utf8(&literal.value)),
+                (
+                    Utf16::from("datatype"),
+                    Value::Object(vec![
+                        (Utf16::from("termType"), Value::string_utf8("NamedNode")),
+                        (Utf16::from("value"), {
+                            ctx.charge_text(datatype.encode_utf16().count(), Utf16::default())?;
+                            Value::string_utf8(datatype)
+                        }),
+                    ]),
+                ),
+            ];
+            if let Some(language) = language {
+                ctx.charge_text(language.encode_utf16().count(), Utf16::default())?;
+                fields.push((Utf16::from("language"), Value::string_utf8(language)));
+            }
+            Value::Object(fields)
+        }
+    };
+    let graph = match graph {
+        Some(graph) => generalized_id_value(graph, vocabulary, ctx)?,
+        None => Value::Object(vec![
+            (Utf16::from("termType"), Value::string_utf8("DefaultGraph")),
+            (Utf16::from("value"), Value::String(Utf16::default())),
+        ]),
+    };
+    Ok(Value::Object(vec![
+        (
+            Utf16::from("subject"),
+            generalized_id_value(subject, vocabulary, ctx)?,
+        ),
+        (
+            Utf16::from("predicate"),
+            generalized_id_value(predicate, vocabulary, ctx)?,
+        ),
+        (Utf16::from("object"), object),
+        (Utf16::from("graph"), graph),
+    ]))
+}
+
+fn apply_from_rdf_options(
+    value: &mut Value,
+    use_native_types: bool,
+    use_rdf_type: bool,
+    i18n_direction: bool,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    const RDF_TYPE: &str = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
+    match value {
+        Value::Array(items) => {
+            for item in items {
+                ctx.charge_work(1, Utf16::default())?;
+                apply_from_rdf_options(item, use_native_types, use_rdf_type, i18n_direction, ctx)?;
+            }
+        }
+        Value::Object(fields) => {
+            ctx.charge_work(fields.len(), Utf16::default())?;
+            for (_, child) in fields.iter_mut() {
+                apply_from_rdf_options(child, use_native_types, use_rdf_type, i18n_direction, ctx)?;
+            }
+            let value_index = fields
+                .iter()
+                .position(|(name, _)| name == &Utf16::from("@value"));
+            let type_index = fields
+                .iter()
+                .position(|(name, _)| name == &Utf16::from("@type"));
+            if let (Some(value_index), Some(type_index)) = (value_index, type_index) {
+                let lexical = match &fields[value_index].1 {
+                    Value::String(text) => {
+                        ctx.charge_text(text.len(), Utf16::default())?;
+                        Some(text.clone())
+                    }
+                    _ => None,
+                };
+                let type_iri = match &fields[type_index].1 {
+                    Value::String(text) => {
+                        ctx.charge_text(text.len(), Utf16::default())?;
+                        text.to_utf8().ok()
+                    }
+                    _ => None,
+                };
+                if let (Some(lexical), Some(type_iri)) = (lexical, type_iri) {
+                    let mut remove_type = false;
+                    if i18n_direction && type_iri.starts_with("https://www.w3.org/ns/i18n#") {
+                        let encoded = &type_iri["https://www.w3.org/ns/i18n#".len()..];
+                        let Some((language, direction)) = encoded.rsplit_once('_') else {
+                            return Err(error(
+                                "JSONLD_RDF_DIRECTION",
+                                "Malformed i18n datatype; expected <language>_<ltr|rtl>",
+                            ));
+                        };
+                        if language.contains('_')
+                            || language.contains('#')
+                            || !matches!(direction, "ltr" | "rtl")
+                        {
+                            return Err(error(
+                                "JSONLD_RDF_DIRECTION",
+                                "Malformed i18n datatype; expected one <language>_<ltr|rtl>",
+                            ));
+                        }
+                        remove_type = true;
+                        if !language.is_empty() {
+                            ctx.charge_text(language.encode_utf16().count(), Utf16::default())?;
+                            fields.push((Utf16::from("@language"), Value::string_utf8(language)));
+                        }
+                        fields.push((Utf16::from("@direction"), Value::string_utf8(direction)));
+                    }
+                    if use_native_types && !remove_type {
+                        let native = if type_iri == "http://www.w3.org/2001/XMLSchema#string" {
+                            Some(Value::String(lexical.clone()))
+                        } else if type_iri == "http://www.w3.org/2001/XMLSchema#boolean" {
+                            match lexical.to_utf8().ok().as_deref() {
+                                Some("true" | "1") => Some(Value::Bool(true)),
+                                Some("false" | "0") => Some(Value::Bool(false)),
+                                _ => None,
+                            }
+                        } else if type_iri == "http://www.w3.org/2001/XMLSchema#integer"
+                            || type_iri == "http://www.w3.org/2001/XMLSchema#double"
+                        {
+                            lexical.to_utf8().ok().and_then(|token| {
+                                let number = token.parse::<f64>().ok()?;
+                                (number.is_finite()
+                                    && (type_iri.ends_with("#double") || number.fract() == 0.0)
+                                    && number.abs() <= 9_007_199_254_740_991.0
+                                    && crate::serialization::decimal_canonical(&token)
+                                        == crate::serialization::decimal_canonical(
+                                            &crate::ecma_number_to_string(number),
+                                        ))
+                                .then_some(Value::Number(number))
+                            })
+                        } else {
+                            None
+                        };
+                        if let Some(native) = native {
+                            fields[value_index].1 = native;
+                            remove_type = true;
+                        }
+                    }
+                    if remove_type {
+                        fields.remove(type_index);
+                    }
+                }
+            }
+            if use_rdf_type
+                && !fields
+                    .iter()
+                    .any(|(name, _)| name == &Utf16::from("@value"))
+            {
+                if let Some(index) = fields
+                    .iter()
+                    .position(|(name, _)| name == &Utf16::from("@type"))
+                {
+                    let types = fields.remove(index).1;
+                    let mut ids = Vec::new();
+                    match types {
+                        Value::String(id) => ids.push(id),
+                        Value::Array(values) => {
+                            for value in values {
+                                if let Value::String(id) = value {
+                                    ids.push(id);
+                                }
+                            }
+                        }
+                        _ => (),
+                    }
+                    if !ids.is_empty() {
+                        let mut nodes = Vec::with_capacity(ids.len());
+                        for id in ids {
+                            ctx.charge_text(id.len(), Utf16::default())?;
+                            nodes
+                                .push(Value::Object(vec![(Utf16::from("@id"), Value::String(id))]));
+                        }
+                        fields.push((Utf16::from(RDF_TYPE), Value::Array(nodes)));
+                    }
+                }
+            }
+        }
+        _ => (),
+    }
+    Ok(())
+}
+
+fn iri_resource(
+    value: &Value,
+    vocabulary: &mut json_ld::rdf_types::vocabulary::IndexVocabulary,
+    ctx: &mut Context<'_>,
+) -> Result<RdfResource, EngineError> {
+    use json_ld::rdf_types::vocabulary::{BlankIdVocabularyMut, IriVocabularyMut};
+    let kind = string(field(value, "kind"))
+        .ok_or_else(|| error("JSONLD_RDF_TERM", "RDF term kind is missing"))?;
+    let text = string(field(value, "value"))
+        .ok_or_else(|| error("JSONLD_RDF_TERM", "RDF term value is missing"))?;
+    ctx.charge_text(text.len(), Utf16::default())?;
+    let text = text
+        .to_utf8()
+        .map_err(|_| error("JSONLD_RDF_TERM", "RDF term is not well-formed UTF-16"))?;
+    if kind == &Utf16::from("iri") {
+        let iri =
+            json_ld::IriBuf::new(text).map_err(|_| error("JSONLD_RDF_TERM", "Invalid RDF IRI"))?;
+        Ok(json_ld::rdf_types::Term::iri(vocabulary.insert_owned(iri)))
+    } else if kind == &Utf16::from("blank") {
+        let blank = json_ld::rdf_types::BlankIdBuf::new(text)
+            .map_err(|_| error("JSONLD_RDF_TERM", "Invalid RDF blank identifier"))?;
+        Ok(json_ld::rdf_types::Term::blank(
+            vocabulary.insert_owned_blank_id(blank),
+        ))
+    } else {
+        Err(error("JSONLD_RDF_TERM", "Expected RDF IRI or blank node"))
+    }
+}
+
+fn rdf_resource(
+    value: &Value,
+    vocabulary: &mut json_ld::rdf_types::vocabulary::IndexVocabulary,
+    ctx: &mut Context<'_>,
+) -> Result<RdfResource, EngineError> {
+    use json_ld::rdf_types::vocabulary::{IriVocabularyMut, LiteralVocabularyMut};
+    let kind = string(field(value, "kind"))
+        .ok_or_else(|| error("JSONLD_RDF_TERM", "RDF term kind is missing"))?;
+    if kind != &Utf16::from("literal") {
+        return iri_resource(value, vocabulary, ctx);
+    }
+    let lexical = string(field(value, "value"))
+        .ok_or_else(|| error("JSONLD_RDF_TERM", "RDF literal value is missing"))?;
+    ctx.charge_text(lexical.len(), Utf16::default())?;
+    let lexical = lexical
+        .to_utf8()
+        .map_err(|_| error("JSONLD_RDF_TERM", "RDF literal is not well-formed UTF-16"))?;
+    let datatype = string(field(value, "datatype"))
+        .ok_or_else(|| error("JSONLD_RDF_TERM", "RDF datatype is missing"))?;
+    ctx.charge_text(datatype.len(), Utf16::default())?;
+    let datatype = datatype
+        .to_utf8()
+        .map_err(|_| error("JSONLD_RDF_TERM", "RDF datatype is not well-formed UTF-16"))?;
+    let language = string(field(value, "language"));
+    let literal_type = if let Some(language) = language.filter(|v| !v.is_empty()) {
+        ctx.charge_text(language.len(), Utf16::default())?;
+        let tag = language
+            .to_utf8()
+            .map_err(|_| error("JSONLD_RDF_TERM", "RDF language is not well-formed UTF-16"))?
+            .parse()
+            .map_err(|_| error("JSONLD_RDF_TERM", "Invalid RDF language tag"))?;
+        json_ld::rdf_types::LiteralType::LangString(tag)
+    } else {
+        let iri = json_ld::IriBuf::new(datatype)
+            .map_err(|_| error("JSONLD_RDF_TERM", "Invalid RDF datatype IRI"))?;
+        json_ld::rdf_types::LiteralType::Any(vocabulary.insert_owned(iri))
+    };
+    let literal = json_ld::rdf_types::Literal::new(lexical, literal_type);
+    Ok(json_ld::rdf_types::Term::Literal(
+        vocabulary.insert_owned_literal(literal),
+    ))
+}
+
+/// Produces an expanded JSON-LD view from a validated RDF dataset.
+pub fn propose_rdf_to_jsonld(
+    rdf_document: &Value,
+    id: &Utf16,
+    base_iri: &Utf16,
+    processing_mode: &Utf16,
+    loss_policy: &Utf16,
+    use_native_types: bool,
+    use_rdf_type: bool,
+    rdf_direction: Option<&Utf16>,
+    rdf_runtime: &crate::rdf::RdfRuntime,
+    jsonld_runtime: &JsonLdRuntime,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    use json_ld::rdf_types::vocabulary::{
+        BlankIdVocabularyMut, IriVocabularyMut, LiteralVocabularyMut,
+    };
+    use json_ld::rdf_types::{
+        dataset::{DatasetMut, DatasetView, IndexedBTreeDataset},
+        interpretation::VocabularyInterpretation,
+        Quad,
+    };
+    use json_ld::syntax::{IntoJsonWithContext, Print};
+
+    if loss_policy != &Utf16::from("report") && loss_policy != &Utf16::from("reject") {
+        return Err(error(
+            "JSONLD_OPTIONS",
+            "lossPolicy must be report or reject",
+        ));
+    }
+    if processing_mode != &Utf16::from("json-ld-1.0")
+        && processing_mode != &Utf16::from("json-ld-1.1")
+    {
+        return Err(error(
+            "JSONLD_OPTIONS",
+            "processingMode must be json-ld-1.0 or json-ld-1.1",
+        ));
+    }
+    if rdf_direction.is_some_and(|direction| {
+        direction != &Utf16::from("i18n-datatype") && direction != &Utf16::from("compound-literal")
+    }) {
+        return Err(error(
+            "JSONLD_OPTIONS",
+            "rdfDirection must be null, i18n-datatype, or compound-literal",
+        ));
+    }
+    if rdf_direction == Some(&Utf16::from("compound-literal")) {
+        return Err(error(
+            "JSONLD_RDF_OPTIONS",
+            "compound-literal direction decoding is not yet supported",
+        ));
+    }
+    let mut report = Value::Object(vec![
+        (Utf16::from("source"), copy_json(rdf_document, ctx)?),
+        (Utf16::from("id"), Value::String(clone_text(id, ctx)?)),
+        (
+            Utf16::from("baseIRI"),
+            Value::String(clone_text(base_iri, ctx)?),
+        ),
+        (
+            Utf16::from("processingMode"),
+            Value::String(clone_text(processing_mode, ctx)?),
+        ),
+        (
+            Utf16::from("lossPolicy"),
+            Value::String(clone_text(loss_policy, ctx)?),
+        ),
+        (Utf16::from("useNativeTypes"), Value::Bool(use_native_types)),
+        (Utf16::from("useRdfType"), Value::Bool(use_rdf_type)),
+        (
+            Utf16::from("rdfDirection"),
+            rdf_direction
+                .map(|value| clone_text(value, ctx).map(Value::String))
+                .transpose()?
+                .unwrap_or(Value::Null),
+        ),
+        (Utf16::from("status"), Value::string_utf8("blocked")),
+        (Utf16::from("complete"), Value::Bool(false)),
+        (Utf16::from("diagnostics"), Value::Array(Vec::new())),
+    ]);
+    let checked = crate::rdf::inspect_rdf_document(rdf_runtime, rdf_document, ctx)?;
+    if !checked.valid
+        || checked
+            .diagnostics
+            .iter()
+            .any(|d| d.code == Utf16::from("RDF_REPRESENTATION"))
+    {
+        ctx.charge_work(checked.diagnostics.len(), Utf16::default())?;
+        let mut diagnostics = Vec::with_capacity(checked.diagnostics.len());
+        for item in checked.diagnostics {
+            diagnostics.push(Value::Object(vec![
+                (
+                    Utf16::from("code"),
+                    Value::String(clone_text(&item.code, ctx)?),
+                ),
+                (
+                    Utf16::from("path"),
+                    Value::String(clone_text(&item.path, ctx)?),
+                ),
+                (
+                    Utf16::from("message"),
+                    Value::String(clone_text(&item.message, ctx)?),
+                ),
+                (
+                    Utf16::from("severity"),
+                    Value::string_utf8(match item.severity {
+                        Severity::Error => "error",
+                        Severity::Warning => "warning",
+                    }),
+                ),
+            ]));
+        }
+        set_field(&mut report, "diagnostics", Value::Array(diagnostics))?;
+        return Ok(report);
+    }
+    let quads_value = crate::rdf::get_rdf_quads(rdf_runtime, rdf_document, ctx)?;
+    let Value::Array(quads) = &quads_value else {
+        return Err(error("JSONLD_RDF_SOURCE", "RDF quads must be an array"));
+    };
+    let mut vocabulary = json_ld::rdf_types::vocabulary::IndexVocabulary::new();
+    let mut dataset = IndexedBTreeDataset::new();
+    ctx.charge_work(quads.len(), Utf16::default())?;
+    for quad in quads {
+        let subject = iri_resource(
+            field(quad, "subject")
+                .ok_or_else(|| error("JSONLD_RDF_SOURCE", "Quad subject missing"))?,
+            &mut vocabulary,
+            ctx,
+        )?
+        .into_id()
+        .ok_or_else(|| error("JSONLD_RDF_SOURCE", "Quad subject must be an identifier"))?;
+        let predicate = iri_resource(
+            field(quad, "predicate")
+                .ok_or_else(|| error("JSONLD_RDF_SOURCE", "Quad predicate missing"))?,
+            &mut vocabulary,
+            ctx,
+        )?
+        .into_id()
+        .ok_or_else(|| error("JSONLD_RDF_SOURCE", "Quad predicate must be an identifier"))?;
+        let object = rdf_resource(
+            field(quad, "object")
+                .ok_or_else(|| error("JSONLD_RDF_SOURCE", "Quad object missing"))?,
+            &mut vocabulary,
+            ctx,
+        )?;
+        let graph_value =
+            field(quad, "graph").ok_or_else(|| error("JSONLD_RDF_SOURCE", "Quad graph missing"))?;
+        let graph = if string(field(graph_value, "kind")) == Some(&Utf16::from("default")) {
+            None
+        } else {
+            Some(
+                iri_resource(graph_value, &mut vocabulary, ctx)?
+                    .into_id()
+                    .ok_or_else(|| error("JSONLD_RDF_SOURCE", "Graph must be an identifier"))?,
+            )
+        };
+        dataset.insert(Quad(subject, predicate, object, graph));
+    }
+    let view = DatasetView {
+        dataset: &dataset,
+        graph: None,
+    };
+    let mut interpretation = VocabularyInterpretation::<_>::new();
+    ctx.charge_work(quads.len(), Utf16::default())?;
+    let expanded = match json_ld::ser::serialize_with(&mut vocabulary, &mut interpretation, &view) {
+        Ok(value) => value,
+        Err(failure) => {
+            let message = failure.to_string();
+            ctx.charge_text(message.encode_utf16().count(), Utf16::default())?;
+            set_field(
+                &mut report,
+                "diagnostics",
+                Value::Array(vec![report_diagnostic(
+                    "JSONLD_FROM_RDF_BLOCKED",
+                    &message,
+                    "error",
+                )]),
+            )?;
+            return Ok(report);
+        }
+    };
+    let json = expanded.into_objects().into_json_with(&vocabulary);
+    let mut writer = BoundedJsonWriter {
+        output: String::new(),
+        units: 0,
+        ctx,
+        failure: None,
+    };
+    let result = write!(&mut writer, "{}", json.compact_print());
+    if let Some(failure) = writer.failure.take() {
+        return Err(failure);
+    }
+    if result.is_err() {
+        return Err(error(
+            "JSONLD_FROM_RDF",
+            "Unable to serialize expanded JSON-LD",
+        ));
+    }
+    // The dataset serializer emits no node for an empty named graph. Preserve
+    // those graph declarations explicitly in the derived JSON-LD view.
+    let named_graphs = crate::rdf::get_rdf_named_graphs(rdf_runtime, rdf_document, writer.ctx)?;
+    let Value::Array(named_graphs) = named_graphs else {
+        return Err(error(
+            "JSONLD_RDF_SOURCE",
+            "Named graph inventory must be an array",
+        ));
+    };
+    let mut empty_graphs = Vec::new();
+    writer.ctx.charge_work(
+        named_graphs.len().saturating_mul(quads.len()),
+        Utf16::default(),
+    )?;
+    for graph in named_graphs {
+        let present = quads.iter().any(|quad| field(quad, "graph") == Some(graph));
+        if present {
+            continue;
+        }
+        let kind = string(field(graph, "kind"));
+        let raw = string(field(graph, "value")).cloned().unwrap_or_default();
+        let id = if kind == Some(&Utf16::from("blank")) {
+            let value = Utf16::from("_:");
+            let mut units = value.units().to_vec();
+            units.extend_from_slice(raw.units());
+            Utf16::new(units)
+        } else {
+            raw
+        };
+        let quoted = serialization::write_json_value(&Value::String(id), Format::Json, writer.ctx)?;
+        let quoted = quoted
+            .to_utf8()
+            .map_err(|_| error("JSONLD_FROM_RDF", "Graph id is not well-formed UTF-16"))?;
+        empty_graphs.push(quoted);
+    }
+    if !empty_graphs.is_empty() {
+        let close = writer.output.pop();
+        if close != Some(']') {
+            return Err(error(
+                "JSONLD_FROM_RDF",
+                "Expanded serializer did not produce a node array",
+            ));
+        }
+        if !writer.output.ends_with('[') {
+            writer
+                .write_str(",")
+                .map_err(|_| error("JSONLD_FROM_RDF", "Output limit exceeded"))?;
+        }
+        for (index, quoted) in empty_graphs.iter().enumerate() {
+            if index != 0 {
+                writer
+                    .write_str(",")
+                    .map_err(|_| error("JSONLD_FROM_RDF", "Output limit exceeded"))?;
+            }
+            writer
+                .write_str("{\"@id\":")
+                .map_err(|_| error("JSONLD_FROM_RDF", "Output limit exceeded"))?;
+            writer
+                .write_str(quoted.trim_end())
+                .map_err(|_| error("JSONLD_FROM_RDF", "Output limit exceeded"))?;
+            writer
+                .write_str(",\"@graph\":[]}")
+                .map_err(|_| error("JSONLD_FROM_RDF", "Output limit exceeded"))?;
+        }
+        writer
+            .write_str("]")
+            .map_err(|_| error("JSONLD_FROM_RDF", "Output limit exceeded"))?;
+    }
+    if let Some(failure) = writer.failure.take() {
+        return Err(failure);
+    }
+    writer.ctx.charge_text(writer.units, Utf16::default())?;
+    let output_source = Utf16::from(writer.output);
+    let mut projected =
+        serialization::read_json_value(output_source.units(), Format::Json, writer.ctx)?;
+    if let Err(failure) = apply_from_rdf_options(
+        &mut projected,
+        use_native_types,
+        use_rdf_type,
+        rdf_direction == Some(&Utf16::from("i18n-datatype")),
+        writer.ctx,
+    ) {
+        if failure.code == "JSONLD_RDF_DIRECTION" {
+            set_field(
+                &mut report,
+                "diagnostics",
+                Value::Array(vec![report_diagnostic(
+                    "JSONLD_RDF_DIRECTION",
+                    &failure.message,
+                    "error",
+                )]),
+            )?;
+            return Ok(report);
+        }
+        return Err(failure);
+    }
+    let output_source = serialization::write_json_value(&projected, Format::Json, writer.ctx)?;
+    let payload = match import_jsonld_document(
+        &output_source,
+        id,
+        base_iri,
+        Some(processing_mode),
+        &[],
+        None,
+        jsonld_runtime,
+        writer.ctx,
+    ) {
+        Ok(payload) => payload,
+        Err(failure) if failure.is_control_failure() || failure.code == "RESOURCE_LIMIT" => {
+            return Err(failure)
+        }
+        Err(failure) => {
+            let diagnostic = Value::Object(vec![
+                (
+                    Utf16::from("code"),
+                    Value::string_utf8("JSONLD_FROM_RDF_BLOCKED"),
+                ),
+                (
+                    Utf16::from("path"),
+                    Value::String(clone_text(&failure.path, writer.ctx)?),
+                ),
+                (
+                    Utf16::from("message"),
+                    Value::String(clone_text(&failure.message, writer.ctx)?),
+                ),
+                (Utf16::from("severity"), Value::string_utf8("error")),
+            ]);
+            set_field(&mut report, "diagnostics", Value::Array(vec![diagnostic]))?;
+            return Ok(report);
+        }
+    };
+    set_field(&mut report, "candidate", payload)?;
+    set_field(&mut report, "status", Value::string_utf8("candidate"))?;
+    set_field(&mut report, "diagnostics", Value::Array(vec![report_diagnostic(
+            "JSONLD_FROM_RDF",
+            "JSON-LD is a derived view; the complete RDF source remains authoritative in the report.",
+            "warning",
+        )]))?;
+    Ok(report)
+}
+
+#[cfg(test)]
+mod jsonld_rdf_projection_tests {
+    use super::*;
+
+    #[test]
+    fn jsonld_rdf_and_back_produce_derived_candidates() {
+        let mut ctx = Context::ordinary();
+        let jsonld_runtime = JsonLdRuntime::new(&mut ctx).unwrap();
+        let rdf_runtime = crate::rdf::RdfRuntime::new(&mut ctx).unwrap();
+        let source = Utf16::from(
+            r#"{"@context":{"name":"https://schema.org/name"},"@id":"https://example.test/alice","name":{"@value":"Ada","@language":"en"}}"#,
+        );
+        let document = import_jsonld_document(
+            &source,
+            &Utf16::from("alice"),
+            &Utf16::from("https://example.test/"),
+            None,
+            &[],
+            None,
+            &jsonld_runtime,
+            &mut ctx,
+        )
+        .unwrap();
+        let to_rdf = propose_jsonld_to_rdf(
+            &document,
+            &Utf16::from("alice-rdf"),
+            false,
+            &Utf16::from("strict"),
+            &Utf16::from("report"),
+            None,
+            &jsonld_runtime,
+            &rdf_runtime,
+            &mut ctx,
+        )
+        .unwrap();
+        assert_eq!(
+            string(field(&to_rdf, "status")),
+            Some(&Utf16::from("candidate"))
+        );
+        let rdf = field(&to_rdf, "candidate").unwrap();
+        let nquads = crate::rdf::export_rdf_nquads(&rdf_runtime, rdf, Some(false), &mut ctx)
+            .unwrap()
+            .to_utf8()
+            .unwrap();
+        assert!(nquads.contains("https://example.test/alice"));
+        assert!(nquads.contains("https://schema.org/name"));
+        assert!(nquads.contains("\"Ada\"@en"));
+
+        let from_rdf = propose_rdf_to_jsonld(
+            rdf,
+            &Utf16::from("alice-view"),
+            &Utf16::from("https://example.test/"),
+            &Utf16::from("json-ld-1.1"),
+            &Utf16::from("report"),
+            false,
+            false,
+            None,
+            &rdf_runtime,
+            &jsonld_runtime,
+            &mut ctx,
+        )
+        .unwrap();
+        assert_eq!(
+            string(field(&from_rdf, "status")),
+            Some(&Utf16::from("candidate"))
+        );
+        let expanded = export_jsonld_document(
+            field(&from_rdf, "candidate").unwrap(),
+            &jsonld_runtime,
+            &mut ctx,
+        )
+        .unwrap()
+        .to_utf8()
+        .unwrap();
+        assert!(expanded.contains("https://schema.org/name"));
+        assert!(expanded.contains("Ada"));
+        assert!(expanded.contains("@language"));
+    }
+
+    #[test]
+    fn strict_jsonld_to_rdf_refuses_exact_number_rounding() {
+        let mut ctx = Context::ordinary();
+        let jsonld_runtime = JsonLdRuntime::new(&mut ctx).unwrap();
+        let rdf_runtime = crate::rdf::RdfRuntime::new(&mut ctx).unwrap();
+        let source = Utf16::from(
+            r#"{"@id":"https://example.test/n","https://schema.org/n":[{"@value":9007199254740993}]}"#,
+        );
+        let document = import_jsonld_document(
+            &source,
+            &Utf16::from("number"),
+            &Utf16::from("https://example.test/"),
+            None,
+            &[],
+            None,
+            &jsonld_runtime,
+            &mut ctx,
+        )
+        .unwrap();
+        let report = propose_jsonld_to_rdf(
+            &document,
+            &Utf16::from("number-rdf"),
+            false,
+            &Utf16::from("strict"),
+            &Utf16::from("report"),
+            None,
+            &jsonld_runtime,
+            &rdf_runtime,
+            &mut ctx,
+        )
+        .unwrap();
+        assert_eq!(
+            string(field(&report, "status")),
+            Some(&Utf16::from("blocked"))
+        );
+        assert!(field(&report, "candidate").is_none());
+        assert!(
+            matches!(field(&report, "diagnostics"), Some(Value::Array(items)) if items.iter().any(|item| string(field(item, "code")) == Some(&Utf16::from("JSONLD_RDF_NUMBER"))))
+        );
+    }
+
+    #[test]
+    fn i18n_direction_uses_the_selected_rdf_datatype_mapping() {
+        let mut ctx = Context::ordinary();
+        let jsonld_runtime = JsonLdRuntime::new(&mut ctx).unwrap();
+        let rdf_runtime = crate::rdf::RdfRuntime::new(&mut ctx).unwrap();
+        let source = Utf16::from(
+            r#"[{"@id":"https://example.test/person","https://schema.org/name":[{"@value":"שלום","@language":"he","@direction":"rtl"}]}]"#,
+        );
+        let document = import_jsonld_document(
+            &source,
+            &Utf16::from("direction"),
+            &Utf16::from("https://example.test/"),
+            None,
+            &[],
+            None,
+            &jsonld_runtime,
+            &mut ctx,
+        )
+        .unwrap();
+        let rdf = propose_jsonld_to_rdf(
+            &document,
+            &Utf16::from("direction-rdf"),
+            false,
+            &Utf16::from("strict"),
+            &Utf16::from("report"),
+            Some(&Utf16::from("i18n-datatype")),
+            &jsonld_runtime,
+            &rdf_runtime,
+            &mut ctx,
+        )
+        .unwrap();
+        let candidate = field(&rdf, "candidate").unwrap();
+        let nquads = crate::rdf::export_rdf_nquads(&rdf_runtime, candidate, Some(false), &mut ctx)
+            .unwrap()
+            .to_utf8()
+            .unwrap();
+        assert!(nquads.contains("https://www.w3.org/ns/i18n#he_rtl"));
+        let jsonld = propose_rdf_to_jsonld(
+            candidate,
+            &Utf16::from("direction-view"),
+            &Utf16::from("https://example.test/"),
+            &Utf16::from("json-ld-1.1"),
+            &Utf16::from("report"),
+            false,
+            false,
+            Some(&Utf16::from("i18n-datatype")),
+            &rdf_runtime,
+            &jsonld_runtime,
+            &mut ctx,
+        )
+        .unwrap();
+        let output = export_jsonld_document(
+            field(&jsonld, "candidate").unwrap(),
+            &jsonld_runtime,
+            &mut ctx,
+        )
+        .unwrap()
+        .to_utf8()
+        .unwrap();
+        assert!(output.contains("\"@direction\":\"rtl\""));
+        assert!(output.contains("\"@language\":\"he\""));
+    }
+}

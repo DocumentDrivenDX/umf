@@ -19,6 +19,8 @@ pub const OPERATIONS: &[&str] = &[
     "jsonld.expand",
     "jsonld.flatten",
     "jsonld.compact",
+    "jsonld.toRdf",
+    "jsonld.fromRdf",
 ];
 
 fn request(message: &str) -> EngineError {
@@ -82,6 +84,28 @@ fn allowed(op: &str) -> Option<&'static [&'static str]> {
             "context",
             "compactArrays",
             "compactToRelative",
+        ],
+        "jsonld.toRdf" => &[
+            "profile",
+            "op",
+            "document",
+            "id",
+            "produceGeneralizedRdf",
+            "numericPolicy",
+            "lossPolicy",
+            "rdfDirection",
+        ],
+        "jsonld.fromRdf" => &[
+            "profile",
+            "op",
+            "document",
+            "id",
+            "baseIRI",
+            "processingMode",
+            "lossPolicy",
+            "useNativeTypes",
+            "useRdfType",
+            "rdfDirection",
         ],
         "jsonld.getNode" => &["profile", "op", "document", "pointer"],
         "jsonld.editNode" => &["profile", "op", "document", "pointer", "replacementJson"],
@@ -199,13 +223,103 @@ fn validate_operation(
             }
         }
         "jsonld.validate" | "jsonld.export" | "jsonld.expand" | "jsonld.flatten"
-        | "jsonld.compact" => {
-            field(request_value, "document").ok_or_else(|| request("document is required"))?;
+        | "jsonld.compact" | "jsonld.toRdf" | "jsonld.fromRdf" => {
+            let document =
+                field(request_value, "document").ok_or_else(|| request("document is required"))?;
+            if matches!(op, "jsonld.toRdf" | "jsonld.fromRdf") {
+                if let Value::Object(members) = document {
+                    ctx.charge_work(members.len(), Utf16::default())?;
+                } else {
+                    return Err(request("document must be an object"));
+                }
+            }
             if matches!(op, "jsonld.expand" | "jsonld.flatten" | "jsonld.compact") {
                 match field(request_value, "lossPolicy") {
                     Some(Value::String(value))
                         if ascii(value, "report") || ascii(value, "reject") => {}
                     _ => return Err(request("lossPolicy must be report or reject")),
+                }
+            }
+            if op == "jsonld.toRdf" {
+                let id = text(field(request_value, "id"), "id")?;
+                if id.is_empty() {
+                    return Err(request("id must not be empty"));
+                }
+                for (name, choices) in [("lossPolicy", &["report", "reject"][..])] {
+                    let value = text(field(request_value, name), name)?;
+                    if !choices.iter().any(|choice| ascii(value, choice)) {
+                        return Err(request("toRdf policy value is unsupported"));
+                    }
+                }
+                if let Some(value) = field(request_value, "numericPolicy") {
+                    let value = text(Some(value), "numericPolicy")?;
+                    if !ascii(value, "strict") && !ascii(value, "binary64") {
+                        return Err(request("numericPolicy must be strict or binary64"));
+                    }
+                }
+                if field(request_value, "produceGeneralizedRdf")
+                    .is_some_and(|v| !matches!(v, Value::Bool(_)))
+                {
+                    return Err(request("produceGeneralizedRdf must be boolean"));
+                }
+                if let Some(direction) = field(request_value, "rdfDirection") {
+                    if !matches!(direction, Value::Null | Value::String(_)) {
+                        return Err(request("rdfDirection must be a string or null"));
+                    }
+                    if matches!(direction, Value::String(value) if !ascii(value, "i18n-datatype") && !ascii(value, "compound-literal"))
+                    {
+                        return Err(request(
+                            "rdfDirection must be i18n-datatype or compound-literal",
+                        ));
+                    }
+                }
+            }
+            if op == "jsonld.fromRdf" {
+                let id = text(field(request_value, "id"), "id")?;
+                let base = text(field(request_value, "baseIRI"), "baseIRI")?;
+                if id.is_empty() || !valid_utf16(base) || base.to_utf8().is_err() {
+                    return Err(request(
+                        "fromRdf requires a non-empty id and well-formed baseIRI",
+                    ));
+                }
+                match field(request_value, "processingMode") {
+                    None | Some(Value::Null) => (),
+                    Some(Value::String(mode))
+                        if ascii(mode, "json-ld-1.0") || ascii(mode, "json-ld-1.1") =>
+                    {
+                        ()
+                    }
+                    _ => return Err(request("processingMode must be json-ld-1.0 or json-ld-1.1")),
+                }
+                if !matches!(field(request_value, "lossPolicy"), Some(Value::String(v)) if ascii(v, "report") || ascii(v, "reject"))
+                {
+                    return Err(request("lossPolicy must be report or reject"));
+                }
+                for name in ["useNativeTypes", "useRdfType"] {
+                    if field(request_value, name).is_some_and(|v| !matches!(v, Value::Bool(_))) {
+                        return Err(request("RDF conversion options must be booleans"));
+                    }
+                }
+                if field(request_value, "rdfDirection")
+                    .is_some_and(|v| !matches!(v, Value::Null | Value::String(_)))
+                {
+                    return Err(request("rdfDirection must be a string or null"));
+                }
+                if let Some(Value::String(direction)) = field(request_value, "rdfDirection") {
+                    if !ascii(direction, "i18n-datatype") && !ascii(direction, "compound-literal") {
+                        return Err(request(
+                            "rdfDirection must be i18n-datatype or compound-literal",
+                        ));
+                    }
+                    if ascii(direction, "compound-literal") {
+                        return Err(request(
+                            "compound-literal direction decoding is not supported by this profile",
+                        ));
+                    }
+                    if matches!(field(request_value, "processingMode"), Some(Value::String(mode)) if ascii(mode, "json-ld-1.0"))
+                    {
+                        return Err(request("rdfDirection conversion requires JSON-LD 1.1"));
+                    }
                 }
             }
             if op == "jsonld.compact" {
@@ -410,6 +524,57 @@ fn execute(request_value: &Value, ctx: &mut Context<'_>) -> Result<Value, Engine
             &runtime,
             ctx,
         ),
+        "jsonld.toRdf" => {
+            let rdf_runtime = umf_core::rdf::RdfRuntime::new(ctx)?;
+            let default_numeric_policy = Utf16::from("strict");
+            jsonld::propose_jsonld_to_rdf(
+                field(request_value, "document").unwrap(),
+                text(field(request_value, "id"), "id")?,
+                matches!(
+                    field(request_value, "produceGeneralizedRdf"),
+                    Some(Value::Bool(true))
+                ),
+                match field(request_value, "numericPolicy") {
+                    Some(Value::String(value)) => value,
+                    _ => &default_numeric_policy,
+                },
+                text(field(request_value, "lossPolicy"), "lossPolicy")?,
+                match field(request_value, "rdfDirection") {
+                    Some(Value::String(value)) => Some(value),
+                    _ => None,
+                },
+                &runtime,
+                &rdf_runtime,
+                ctx,
+            )
+        }
+        "jsonld.fromRdf" => {
+            let rdf_runtime = umf_core::rdf::RdfRuntime::new(ctx)?;
+            let default_processing_mode = Utf16::from("json-ld-1.1");
+            let processing_mode = match field(request_value, "processingMode") {
+                Some(Value::String(value)) => value,
+                _ => &default_processing_mode,
+            };
+            jsonld::propose_rdf_to_jsonld(
+                field(request_value, "document").unwrap(),
+                text(field(request_value, "id"), "id")?,
+                text(field(request_value, "baseIRI"), "baseIRI")?,
+                processing_mode,
+                text(field(request_value, "lossPolicy"), "lossPolicy")?,
+                matches!(
+                    field(request_value, "useNativeTypes"),
+                    Some(Value::Bool(true))
+                ),
+                matches!(field(request_value, "useRdfType"), Some(Value::Bool(true))),
+                match field(request_value, "rdfDirection") {
+                    Some(Value::String(value)) => Some(value),
+                    _ => None,
+                },
+                &rdf_runtime,
+                &runtime,
+                ctx,
+            )
+        }
         "jsonld.getNode" => jsonld::get_jsonld_node(
             field(request_value, "document").unwrap(),
             text(field(request_value, "pointer"), "pointer")?,
@@ -636,5 +801,64 @@ mod tests {
             Some(&Value::string_utf8("candidate"))
         );
         assert!(field(&compacted, "candidate").is_some());
+    }
+
+    #[test]
+    fn rdf_conversion_wire_roundtrips_and_refuses_unimplemented_options() {
+        let document = run(request_value(
+            "jsonld.import",
+            vec![
+                ("id", Value::string_utf8("person")),
+                (
+                    "source",
+                    Value::string_utf8(
+                        r#"{"@context":{"name":"https://schema.org/name"},"@id":"https://example.test/person","name":{"@value":"Ada","@language":"en"}}"#,
+                    ),
+                ),
+                ("baseIRI", Value::string_utf8("https://example.test/")),
+            ],
+        ))
+        .unwrap();
+        let rdf = run(request_value(
+            "jsonld.toRdf",
+            vec![
+                ("document", document),
+                ("id", Value::string_utf8("person-rdf")),
+                ("lossPolicy", Value::string_utf8("report")),
+            ],
+        ))
+        .unwrap();
+        assert_eq!(
+            field(&rdf, "status"),
+            Some(&Value::string_utf8("candidate"))
+        );
+        let candidate = field(&rdf, "candidate").unwrap().clone();
+        let view = run(request_value(
+            "jsonld.fromRdf",
+            vec![
+                ("document", candidate),
+                ("id", Value::string_utf8("person-view")),
+                ("baseIRI", Value::string_utf8("https://example.test/")),
+                ("lossPolicy", Value::string_utf8("report")),
+            ],
+        ))
+        .unwrap();
+        assert_eq!(
+            field(&view, "status"),
+            Some(&Value::string_utf8("candidate"))
+        );
+        assert!(field(&view, "candidate").is_some());
+
+        assert!(run(request_value(
+            "jsonld.fromRdf",
+            vec![
+                ("document", field(&rdf, "candidate").unwrap().clone()),
+                ("id", Value::string_utf8("person-view")),
+                ("baseIRI", Value::string_utf8("https://example.test/")),
+                ("lossPolicy", Value::string_utf8("report")),
+                ("rdfDirection", Value::string_utf8("compound-literal")),
+            ],
+        ))
+        .is_err());
     }
 }

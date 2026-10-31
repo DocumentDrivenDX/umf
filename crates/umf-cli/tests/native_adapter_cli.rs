@@ -72,7 +72,9 @@ fn jsonld_cli_imports_and_expands_with_declared_capabilities() {
     assert_eq!(operations.len(), umf_core_wire::jsonld_binding::OPERATIONS.len());
     assert!(operations.contains(&serde_json::Value::String("jsonld.import".to_owned())));
     assert!(operations.contains(&serde_json::Value::String("jsonld.expand".to_owned())));
-    assert!(!operations.contains(&serde_json::Value::String("jsonld.compact".to_owned())));
+    for operation in ["jsonld.compact", "jsonld.toRdf", "jsonld.fromRdf"] {
+        assert!(operations.contains(&serde_json::Value::String(operation.to_owned())));
+    }
     let wire = umf_core_wire::encode(&Value::Object(vec![
         (Utf16::from("profile"), Value::string_utf8(umf_core_wire::jsonld_binding::PROFILE)),
         (Utf16::from("op"), Value::string_utf8("jsonld.import")),
