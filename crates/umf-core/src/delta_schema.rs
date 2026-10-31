@@ -520,6 +520,29 @@ pub fn inspect_delta_schema(
     validate_document(document, resources, ctx)
 }
 
+pub fn inspect_delta_schema_payload(
+    payload: &Value,
+    resources: &DeltaSchemaResources,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<Diagnostic>, EngineError> {
+    let mut capabilities = DeltaCapabilities { grammar: &resources.grammar };
+    let semantic = SemanticContext {
+        document: Value::Null,
+        source_document: None,
+        source_payload: None,
+        path: Utf16::default(),
+        scope: "element".to_string(),
+    };
+    capabilities
+        .validate_extension_with_context(TOKEN, payload, &semantic, ctx)
+        .map_err(|error| match error {
+            CapabilityError::Engine(error) => error,
+            CapabilityError::Host(message) | CapabilityError::HostPython { message, .. } => {
+                EngineError::new("HOST_CALLBACK", Utf16::default(), message)
+            }
+        })
+}
+
 pub fn export_delta_schema(
     document: &Value,
     resources: &DeltaSchemaResources,

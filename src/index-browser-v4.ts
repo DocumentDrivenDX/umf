@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createPythonClientRustCandidateV4} from './browser-v4';
 import {initializePythonClientRustDefaultV4} from './access/rust-default-v4';
-import {initializeCoreModelRootKindNullabilityWasm,initializeCoreRecordValuesHostInputWasm,createDefaultSemanticTypeRegistry,createCoreCardinalityHostInputEngine,createCoreRecordTypeEngine,createSecurityLogicEngine,createJavascriptNumericEngine,createArrowSchemaEngine,createArrowIpcEngine,createDbtEngine,createGraphqlEngine,createRdfEngine,createNativeFamilyDispatcher,createIcebergSchemaEngine,createIcebergTableEngine,createPostgresqlParserSessionEngine,createParquetCaptureEngine,createProtobufSourceImportEngine,createProtobufSourceExportEngine,UmfError as BindingUmfError,initializeProtobufDescriptorDocumentWasm,initializeBit128Wasm,initializeTemporalWasm,createAccessTemporalEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,isDbtHostError,ACCESS_TEMPORAL_PROFILE as ACCESS_TEMPORAL_PROFILE_RUST} from '../bindings/core/wasm/index.js';
+import {initializeCoreModelRootKindNullabilityWasm,initializeCoreRecordValuesHostInputWasm,createDefaultSemanticTypeRegistry,createCoreCardinalityHostInputEngine,createCoreRecordTypeEngine,createSecurityLogicEngine,createJavascriptNumericEngine,createArrowSchemaEngine,createArrowIpcEngine,createDbtEngine,createGraphqlEngine,createRdfEngine,createNativeFamilyDispatcher,createIcebergSchemaEngine,createIcebergTableEngine,createDeltaSchemaTableEngine,createDeltaLogEngine,createPostgresqlParserSessionEngine,createParquetCaptureEngine,createProtobufSourceImportEngine,createProtobufSourceExportEngine,UmfError as BindingUmfError,initializeProtobufDescriptorDocumentWasm,initializeBit128Wasm,initializeTemporalWasm,createAccessTemporalEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,isDbtHostError,ACCESS_TEMPORAL_PROFILE as ACCESS_TEMPORAL_PROFILE_RUST} from '../bindings/core/wasm/index.js';
 import {CORE_MODEL_RESOURCES} from './access/core-model-resources';
 import {bindCoreCardinalityRust} from './access/rust-cardinality-default';
 import {bindCoreKindNullabilityRust} from './access/rust-kind-nullability-default';
@@ -56,6 +56,8 @@ import {bindParquetCaptureRust} from './adapters/parquet/rust-capture-default';
 import {PARQUET_EXTENSION,PARQUET_MAX_BYTES,parquetPackage} from './adapters/parquet/package';
 import {createIcebergSchemaRustDefault} from './adapters/iceberg/rust-default';
 import {createIcebergTableRustDefault} from './adapters/iceberg/table-rust-default';
+import {createDeltaRustDefault} from './adapters/delta/rust-default';
+import {DELTA_EXTENSION,DELTA_TABLE_EXTENSION,DELTA_LOG_EXTENSION,deltaPackage,deltaTablePackage,deltaLogPackage} from './adapters/delta/package';
 import {ICEBERG_TABLE_EXTENSION,icebergTablePackage} from './adapters/iceberg/table-package';
 import {ICEBERG_EXTENSION,icebergPackage} from './adapters/iceberg/package';
 import {createProtobufSourceRustDefault} from './adapters/protobuf/source-rust-default';
@@ -76,6 +78,9 @@ const rdf=createRdfRustDefault(createRdfEngine(wasmModule),isNativeUmfCoreError,
 const {rdfRegistry,inspectRdfDocument,importRdfNQuads,getRdfQuads,exportRdfNQuads,proposeRdfQuadEdit,proposeRdfIriRename,importRdfTurtle,exportRdfTurtle,getRdfNamedGraphs,importRdfTriG,exportRdfTriG,proposeRdfDatasetMerge,generalizedRdfRegistry,inspectGeneralizedRdfDocument,importGeneralizedRdfDataset,exportGeneralizedRdfDataset,getGeneralizedRdfQuads,proposeGeneralizedRdfQuadEdit}=rdf;
 const {graphqlRegistry,importGraphqlSchema,inspectGraphql,exportGraphqlSchema,getGraphqlAst,editGraphqlAst,exportGraphqlBundle}=graphql;
 const nativeFamilyDispatcher=createNativeFamilyDispatcher(wasmModule);
+const deltaEngine=Object.assign({},createDeltaSchemaTableEngine(wasmModule),createDeltaLogEngine(wasmModule));
+const delta=createDeltaRustDefault(deltaEngine,error=>isNativeUmfCoreError(error)||error instanceof BindingUmfError,()=>new Registry());
+const {deltaRegistry,deltaTableRegistry,deltaLogRegistry,inspectDelta,importDeltaSchema,exportDeltaSchema,getDeltaNode,proposeDeltaNodeEdit,inspectDeltaTable,importDeltaTable,exportDeltaTable,getDeltaTableNode,proposeDeltaTableNodeEdit,renameDeltaMappedField,getDeltaTableSchema,captureDeltaLog,exportDeltaLog,inspectDeltaLog,inspectDeltaActions,reconcileDeltaCommits}=delta;
 const icebergSchema=createIcebergSchemaRustDefault(createIcebergSchemaEngine(wasmModule),error=>isNativeUmfCoreError(error)||error instanceof BindingUmfError,()=>new Registry());
 const {icebergRegistry,inspectIceberg,importIcebergSchema,exportIcebergSchema,getIcebergNode,proposeIcebergNodeEdit}=icebergSchema;
 const icebergTable=createIcebergTableRustDefault(createIcebergTableEngine(wasmModule),error=>isNativeUmfCoreError(error)||error instanceof BindingUmfError,()=>new Registry());
@@ -226,3 +231,17 @@ export {owlRegistry,inspectOwlDocument,importOwlTurtle,exportOwlTurtle,getOwlQua
 export {projectRelationshipToAvro,verifyRelationshipAvroProjection,recoverRelationshipAvroIdeal,recoverRelationshipAvroNative,projectRelationshipToTableSpec,verifyRelationshipTableSpecProjection,recoverRelationshipTableSpecIdeal,recoverRelationshipTableSpecNativeSources,projectRelationshipToSqlServer,verifyRelationshipSqlServerProjection,recoverRelationshipSqlServerIdeal,recoverRelationshipSqlServerBinding,recoverRelationshipSqlServerNative,projectRelationshipToParquet,verifyRelationshipParquetProjection,recoverRelationshipParquetIdeal,recoverRelationshipParquetNative,projectRelationshipToExtra,verifyRelationshipExtra,recoverRelationshipExtraIdeal,recoverRelationshipExtraNative,projectRelationshipsToPostgresql,verifyRelationshipPostgresqlProjection,recoverRelationshipPostgresqlIdeal,recoverRelationshipPostgresqlNative};
 
 export const {importProtobufSources,exportProtobufSources}=protobufSources;
+
+export { DELTA_EXTENSION };
+
+export { DELTA_TABLE_EXTENSION };
+
+export { DELTA_LOG_EXTENSION };
+
+export { deltaPackage };
+
+export { deltaTablePackage };
+
+export { deltaLogPackage };
+
+export {deltaRegistry,deltaTableRegistry,deltaLogRegistry,inspectDelta,importDeltaSchema,exportDeltaSchema,getDeltaNode,proposeDeltaNodeEdit,inspectDeltaTable,importDeltaTable,exportDeltaTable,getDeltaTableNode,proposeDeltaTableNodeEdit,renameDeltaMappedField,getDeltaTableSchema,captureDeltaLog,exportDeltaLog,inspectDeltaLog,inspectDeltaActions,reconcileDeltaCommits};

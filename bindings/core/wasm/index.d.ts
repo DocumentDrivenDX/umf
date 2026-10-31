@@ -189,6 +189,17 @@ export declare function initializeWasm(loader: (() => Promise<any>) | undefined,
 export declare function initializeWasm(loader?: () => Promise<any>, host?: typeof globalThis, resources?: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): Promise<UmfCoreEngine>;
 export declare function createEngine(module: any, resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): UmfCoreDocumentEngine;
 export declare function createEngine(module: any, resources?: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): UmfCoreEngine;
+export type UmfCoreDefaultInput = {state: 'missing'} | {state: 'present'; value: unknown};
+export type UmfCoreDefaultState = {state: 'missing'} | {state: 'present'; value: unknown};
+export interface UmfCoreDefaultResolution {
+  operation: 'resolve-core-default';
+  version: '2.0.0';
+  source: unknown;
+  identity: {module: string; element: string};
+  input: UmfCoreDefaultInput;
+  result: UmfCoreDefaultState;
+  applied: boolean;
+}
 export interface CoreRecordIdentity {module: string; element: string}
 export interface CoreKeyRequest {id: string; name: string; fields: CoreRecordIdentity[]; primary?: boolean}
 export interface CoreKeyInspection {operation: 'inspect-core-keys'; version: '4.0.0'; source: unknown; identity: CoreRecordIdentity; path: string; meaning: {state: 'missing'|'inapplicable'} | {state: 'known'|'partial'; keys: unknown[]; uninterpretedPaths: string[]}; provenance: 'unverified'}
@@ -374,6 +385,15 @@ export declare function initializeCoreKindNullabilityHostInputWasm(resources: Um
 }>;
 export declare const ICEBERG_SCHEMA_PROFILE: 'umf-r5-iceberg-schema/0.1.0';
 export declare const ICEBERG_TABLE_PROFILE: 'umf.iceberg-table-wire/1';
+export declare const DELTA_SCHEMA_TABLE_PROFILE: 'umf-r8-delta-source/0.1.0';
+export declare const DELTA_LOG_PROFILE: 'umf-r8-delta-log/0.1.0';
+export declare function createDeltaSchemaTableEngine(module: unknown, options?: {profile?: 'cooperative'|'hard-isolated'; controls?: UmfCoreControls}): DeltaSchemaTableEngine;
+export interface DeltaSchemaTableEngine {
+  importSchema(source:string,id:string): any; inspectSchema(document:unknown):any; inspectSchemaPayload(payload:unknown):any; exportSchema(document:unknown):string; getSchemaNode(document:unknown,pointer:string):any; editSchemaNode(document:unknown,pointer:string,replacement:string):any;
+  importTable(source:string,id:string):any; inspectTable(document:unknown):any; inspectTablePayload(payload:unknown):any; exportTable(document:unknown):string; getTableNode(document:unknown,pointer:string):any; getTableSchema(document:unknown):any; editTableNode(document:unknown,pointer:string,replacement:string):any; renameMappedField(document:unknown,options:unknown):any;
+}
+export declare function createDeltaLogEngine(module: unknown, options?: {profile?: 'cooperative'|'hard-isolated'; controls?: UmfCoreControls}): DeltaLogEngine;
+export interface DeltaLogEngine {capture(source:string,id:string):any;export(document:unknown):string;inspect(document:unknown):any;inspectActions(document:unknown):any;reconcileCommits(commits:unknown[]):any;}
 export declare function createIcebergTableEngine(module: unknown, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): IcebergTableEngine;
 export interface IcebergTableEngine {
   importTable(source: string, id: string): any;

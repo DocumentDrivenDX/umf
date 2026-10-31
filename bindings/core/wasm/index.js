@@ -61,6 +61,8 @@ export const RFC3339_EXACT_INSTANT_PROFILE = 'umf-rfc3339-exact-instant/1.0.0';
 export const RFC3339_EXACT_INSTANT_MAXIMUM_BYTES = 1_048_576;
 export const ICEBERG_SCHEMA_PROFILE = 'umf-r5-iceberg-schema/0.1.0';
 export const ICEBERG_TABLE_PROFILE = 'umf.iceberg-table-wire/1';
+export const DELTA_SCHEMA_TABLE_PROFILE = 'umf-r8-delta-source/0.1.0';
+export const DELTA_LOG_PROFILE = 'umf-r8-delta-log/0.1.0';
 export const ARROW_SCHEMA_PROFILE = 'umf-r8-arrow-schema/0.1.0';
 export {ARROW_IPC_PROFILE};
 export {PARQUET_CAPTURE_PROFILE};
@@ -1121,6 +1123,45 @@ export function createIcebergTableEngine(module, options = {}) {
     proposeRename(document, fieldId, newName, nextSchemaId) { return call('proposeRename', {document, fieldId, newName, nextSchemaId}); },
     proposePromotion(document, fieldId, targetType, nextSchemaId) { return call('proposePromotion', {document, fieldId, targetType, nextSchemaId}); },
   });
+}
+
+
+/** Create the opt-in Delta schema/table source engine over the closed Rust wire. */
+export function createDeltaSchemaTableEngine(module, options = {}) {
+  const native = module;
+  if (typeof native.executeDeltaSchemaTableWire !== 'function' || typeof native.deltaSchemaTableProfileVersion !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  if (native.deltaSchemaTableProfileVersion() !== DELTA_SCHEMA_TABLE_PROFILE) throw new Error('RUST_WASM_BINDING_PROFILE_MISMATCH');
+  const {controls} = codegenOptions(options);
+  const call = (op, fields) => {
+    const bridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+    const work = admissionWork(bridge); work?.(1);
+    const request = {...fields, profile: DELTA_SCHEMA_TABLE_PROFILE, op};
+    const responseText = native.executeDeltaSchemaTableWire(encodeRequestWire(request, work), bridge);
+    work?.(responseText.length);
+    const envelope = JSON.parse(responseText), failure = resultError(envelope);
+    if (failure) throw nativeCoreError(failure);
+    work?.(envelope.wire.length); return fromWire(JSON.parse(envelope.wire), work);
+  };
+  return Object.freeze({
+    importSchema(source,id) { return call('delta/schema.import',{source,id}); }, inspectSchema(document) { return call('delta/schema.inspect',{document}); }, inspectSchemaPayload(payload) { return call('delta/schema.inspectPayload',{payload}); }, exportSchema(document) { return call('delta/schema.export',{document}); }, getSchemaNode(document,pointer) { return call('delta/schema.getNode',{document,pointer}); }, editSchemaNode(document,pointer,replacement) { return call('delta/schema.proposeNodeEdit',{document,pointer,replacement}); },
+    importTable(source,id) { return call('delta/table.import',{source,id}); }, inspectTable(document) { return call('delta/table.inspect',{document}); }, inspectTablePayload(payload) { return call('delta/table.inspectPayload',{payload}); }, exportTable(document) { return call('delta/table.export',{document}); }, getTableNode(document,pointer) { return call('delta/table.getNode',{document,pointer}); }, getTableSchema(document) { return call('delta/table.getSchema',{document}); }, editTableNode(document,pointer,replacement) { return call('delta/table.proposeNodeEdit',{document,pointer,replacement}); }, renameMappedField(document,options) { return call('delta/table.renameMappedField',{document,options}); },
+  });
+}
+
+/** Create the opt-in Delta JSONL source/action/history engine over the closed Rust wire. */
+export function createDeltaLogEngine(module, options = {}) {
+  const native = module;
+  if (typeof native.executeDeltaLogWire !== 'function' || typeof native.deltaLogProfileVersion !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  if (native.deltaLogProfileVersion() !== DELTA_LOG_PROFILE) throw new Error('RUST_WASM_BINDING_PROFILE_MISMATCH');
+  const {controls} = codegenOptions(options);
+  const call = (op, fields) => {
+    const bridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+    const work = admissionWork(bridge); work?.(1);
+    const responseText = native.executeDeltaLogWire(encodeRequestWire({...fields,profile:DELTA_LOG_PROFILE,op}, work), bridge);
+    work?.(responseText.length); const envelope = JSON.parse(responseText), failure = resultError(envelope);
+    if (failure) throw nativeCoreError(failure); work?.(envelope.wire.length); return fromWire(JSON.parse(envelope.wire), work);
+  };
+  return Object.freeze({ capture(source,id) {return call('delta/log.capture',{source,id});}, export(document) {return call('delta/log.export',{document});}, inspect(document) {return call('delta/log.inspect',{document});}, inspectActions(document) {return call('delta/log.inspectActions',{document});}, reconcileCommits(commits) {return call('delta/log.reconcileCommits',{commits});} });
 }
 
 /** Create the opt-in Arrow integration-schema JSON preservation engine. */

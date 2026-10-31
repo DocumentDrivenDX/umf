@@ -382,6 +382,15 @@ export declare function createCoreKindNullabilityHostInputEngine(resources: UmfC
 };
 export declare const ICEBERG_SCHEMA_PROFILE: 'umf-r5-iceberg-schema/0.1.0';
 export declare const ICEBERG_TABLE_PROFILE: 'umf.iceberg-table-wire/1';
+export declare const DELTA_SCHEMA_TABLE_PROFILE: 'umf-r8-delta-source/0.1.0';
+export declare const DELTA_LOG_PROFILE: 'umf-r8-delta-log/0.1.0';
+export declare function createDeltaSchemaTableEngine(options?: {profile?: 'cooperative'|'hard-isolated'; controls?: UmfCoreControls}): DeltaSchemaTableEngine;
+export interface DeltaSchemaTableEngine {
+  importSchema(source:string,id:string): any; inspectSchema(document:unknown):any; inspectSchemaPayload(payload:unknown):any; exportSchema(document:unknown):string; getSchemaNode(document:unknown,pointer:string):any; editSchemaNode(document:unknown,pointer:string,replacement:string):any;
+  importTable(source:string,id:string):any; inspectTable(document:unknown):any; inspectTablePayload(payload:unknown):any; exportTable(document:unknown):string; getTableNode(document:unknown,pointer:string):any; getTableSchema(document:unknown):any; editTableNode(document:unknown,pointer:string,replacement:string):any; renameMappedField(document:unknown,options:unknown):any;
+}
+export declare function createDeltaLogEngine(options?: {profile?: 'cooperative'|'hard-isolated'; controls?: UmfCoreControls}): DeltaLogEngine;
+export interface DeltaLogEngine {capture(source:string,id:string):any;export(document:unknown):string;inspect(document:unknown):any;inspectActions(document:unknown):any;reconcileCommits(commits:unknown[]):any;}
 export declare function createIcebergTableEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): IcebergTableEngine;
 export interface IcebergTableEngine {
   importTable(source: string, id: string): any;

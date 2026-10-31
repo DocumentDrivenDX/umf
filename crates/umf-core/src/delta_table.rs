@@ -980,6 +980,32 @@ pub fn inspect_delta_table(
     validate(document, resources, ctx)
 }
 
+pub fn inspect_delta_table_payload(
+    payload: &Value,
+    resources: &DeltaTableResources,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<Diagnostic>, EngineError> {
+    let mut capabilities = TableCapabilities {
+        grammar: &resources.grammar,
+        schema: &resources.schema,
+    };
+    let semantic = SemanticContext {
+        document: Value::Null,
+        source_document: None,
+        source_payload: None,
+        path: Utf16::default(),
+        scope: "element".to_string(),
+    };
+    capabilities
+        .validate_extension_with_context(TOKEN, payload, &semantic, ctx)
+        .map_err(|error| match error {
+            CapabilityError::Engine(error) => error,
+            CapabilityError::Host(message) | CapabilityError::HostPython { message, .. } => {
+                EngineError::new("HOST_CALLBACK", Utf16::default(), message)
+            }
+        })
+}
+
 pub fn import_delta_table(
     source: &[u16],
     id: &Utf16,

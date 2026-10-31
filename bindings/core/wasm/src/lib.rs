@@ -752,6 +752,38 @@ pub fn iceberg_schema_profile_version() -> String {
     umf_core_wire::ICEBERG_SCHEMA_PROFILE.to_owned()
 }
 
+#[wasm_bindgen(js_name = executeDeltaSchemaTableWire)]
+pub fn execute_delta_schema_table_wire(
+    wire_json: &str,
+    control_dispatcher: Option<Function>,
+) -> String {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::delta_schema_table::execute_json_with_control(wire_json, &mut hook)
+    } else {
+        umf_core_wire::delta_schema_table::execute_json(wire_json)
+    }
+}
+#[wasm_bindgen(js_name = deltaSchemaTableProfileVersion)]
+pub fn delta_schema_table_profile_version() -> String {
+    umf_core_wire::delta_schema_table::PROFILE.to_owned()
+}
+#[wasm_bindgen(js_name = executeDeltaLogWire)]
+pub fn execute_delta_log_wire(wire_json: &str, control_dispatcher: Option<Function>) -> String {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::delta_log_binding::execute_json_with_control(wire_json, &mut hook)
+    } else {
+        umf_core_wire::delta_log_binding::execute_json(wire_json)
+    }
+}
+#[wasm_bindgen(js_name = deltaLogProfileVersion)]
+pub fn delta_log_profile_version() -> String {
+    umf_core_wire::delta_log_binding::PROFILE.to_owned()
+}
+
 #[wasm_bindgen(js_name = executeArrowSchemaWire)]
 pub fn execute_arrow_schema_wire(wire_json: &str, control_dispatcher: Option<Function>) -> String {
     if let Some(dispatcher) = control_dispatcher {

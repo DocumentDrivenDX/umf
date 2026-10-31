@@ -2,12 +2,12 @@ use napi::{Env, Error, JsFunction, JsString, JsUnknown, Result as NapiResult, Va
 use napi_derive::napi;
 use std::{cell::RefCell, rc::Rc};
 use umf_core::{
-    Capabilities, CapabilityError, Context, Diagnostic, EngineError, ResourceProfile,
-    SemanticContext, Severity, Utf16, Value,
     context::TransportUsage,
     copy_json,
     gregorian_date::{parse_gregorian_date, truncate_gregorian_date},
     rfc3339_exact_instant::parse_rfc3339_exact_instant,
+    Capabilities, CapabilityError, Context, Diagnostic, EngineError, ResourceProfile,
+    SemanticContext, Severity, Utf16, Value,
 };
 
 mod core_key_tuple;
@@ -802,11 +802,11 @@ pub fn execute_iceberg_table_wire(
     if let Some(dispatcher) = control_dispatcher {
         let mut control = NodeControl { env, dispatcher };
         let mut hook = |amount| control.check(amount);
-        Ok(umf_core_wire::iceberg_table_binding::execute_wire_with_control(
-            &wire_json, &mut hook,
-        ))
+        Ok(umf_core_wire::iceberg_table_binding::execute_wire_with_control(&wire_json, &mut hook))
     } else {
-        Ok(umf_core_wire::iceberg_table_binding::execute_wire(&wire_json))
+        Ok(umf_core_wire::iceberg_table_binding::execute_wire(
+            &wire_json,
+        ))
     }
 }
 
@@ -818,6 +818,45 @@ pub fn iceberg_table_profile_version() -> &'static str {
 #[napi(js_name = "icebergSchemaProfileVersion")]
 pub fn iceberg_schema_profile_version() -> &'static str {
     umf_core_wire::ICEBERG_SCHEMA_PROFILE
+}
+
+#[napi(js_name = "executeDeltaSchemaTableWire")]
+pub fn execute_delta_schema_table_wire(
+    env: Env,
+    wire_json: String,
+    control_dispatcher: Option<JsFunction>,
+) -> NapiResult<String> {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = NodeControl { env, dispatcher };
+        let mut hook = |amount| control.check(amount);
+        Ok(umf_core_wire::delta_schema_table::execute_json_with_control(&wire_json, &mut hook))
+    } else {
+        Ok(umf_core_wire::delta_schema_table::execute_json(&wire_json))
+    }
+}
+#[napi(js_name = "deltaSchemaTableProfileVersion")]
+pub fn delta_schema_table_profile_version() -> &'static str {
+    umf_core_wire::delta_schema_table::PROFILE
+}
+#[napi(js_name = "executeDeltaLogWire")]
+pub fn execute_delta_log_wire(
+    env: Env,
+    wire_json: String,
+    control_dispatcher: Option<JsFunction>,
+) -> NapiResult<String> {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = NodeControl { env, dispatcher };
+        let mut hook = |amount| control.check(amount);
+        Ok(umf_core_wire::delta_log_binding::execute_json_with_control(
+            &wire_json, &mut hook,
+        ))
+    } else {
+        Ok(umf_core_wire::delta_log_binding::execute_json(&wire_json))
+    }
+}
+#[napi(js_name = "deltaLogProfileVersion")]
+pub fn delta_log_profile_version() -> &'static str {
+    umf_core_wire::delta_log_binding::PROFILE
 }
 
 #[napi(js_name = "executeArrowSchemaWire")]

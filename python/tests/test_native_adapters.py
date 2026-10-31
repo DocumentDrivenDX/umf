@@ -73,5 +73,28 @@ class NativeAdapterBaseline(unittest.TestCase):
         self.assertEqual(refused.exception.code, "ICEBERG_TABLE_DOCUMENT")
 
 
+    def test_public_delta_source_operations_and_refusal(self):
+        source = '{"type":"struct","fields":[{"name":"before","type":"integer","nullable":true,"metadata":{}}]}'
+        document = execute_adapter("delta-schema", "import", source=source, id="python-delta")
+        edited = execute_adapter("delta-schema", "proposeNodeEdit", document=document,
+                                 pointer="/fields/0/name", replacement='"after"')
+        self.assertTrue(edited["validation"]["valid"])
+        self.assertIn('"after"', execute_adapter("delta-schema", "export", document=edited["document"]))
+        self.assertEqual(execute_adapter("delta-schema", "export", document=document), source)
+        fixture = Path(__file__).resolve().parents[2] / "fixtures/delta/table-context/partitioned.json"
+        table_source = fixture.read_text()
+        table = execute_adapter("delta-table", "import", source=table_source, id="python-delta-table")
+        table_edited = execute_adapter("delta-table", "proposeNodeEdit", document=table,
+                                      pointer="/metaData/description", replacement='"Python table edit"')
+        self.assertTrue(table_edited["validation"]["valid"])
+        self.assertEqual(json.loads(execute_adapter("delta-table", "export", document=table_edited["document"]))["metaData"]["description"], "Python table edit")
+        self.assertEqual(execute_adapter("delta-table", "export", document=table), table_source)
+        log_source = '{"commitInfo":{"timestamp":1}}' + chr(10)
+        log = execute_adapter("delta-log", "capture", source=log_source, id="python-delta-log")
+        self.assertEqual(execute_adapter("delta-log", "export", document=log), log_source)
+        with self.assertRaises(UmfCoreError):
+            execute_adapter("delta-schema", "import", source="{bad", id="invalid")
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -11,6 +11,7 @@ import {checkCoreDistribution} from './check-core-authority';
 import {rustCompileResources} from './metamodel/source-closure';
 import {assertSameSourceInventory} from './rust-migration/r8/source-inventory.mjs';
 import {copySourceSnapshotFile} from './rust-migration/r8/copy-source-snapshot';
+import {normalizeSdkDeclarations} from './sdk-declarations';
 
 const workspaceRoot=process.cwd();
 let root=workspaceRoot;
@@ -129,6 +130,7 @@ try{
   join(root,'bindings/core/node/package.json'),join(root,'bindings/core/wasm/package.json'),
   join(root,'.cargo/config.toml'),
   join(root,'scripts/package-sdk-rust-default.ts'),
+  join(root,'scripts/sdk-declarations.ts'),
   join(root,'scripts/package-sdk.py'),
   join(root,'scripts/package-sdk.ts'),
   join(root,'scripts/build-saga-runtime.ts'),
@@ -261,6 +263,7 @@ try{
   }
  }
  await cp(join(root,'spec'),join(dist,'spec'),{recursive:true});
+ await normalizeSdkDeclarations(dist);
  await cp(join(root,'dist/postgresql'),join(dist,'postgresql'),{recursive:true});
  await cp(join(wasmOut,'umf_core_wasm.js'),join(dist,'umf_core_wasm.js'));
  await cp(join(wasmOut,'umf_core_wasm.d.ts'),join(dist,'umf_core_wasm.d.ts'));

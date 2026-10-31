@@ -1,17 +1,15 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {deltaColumnMappingDiagnostics} from './column-mapping';
-import manifest from '../../../spec/extensions/delta-table/package.json';
+import {DELTA_TABLE_EXTENSION,deltaTablePackage} from './package';
 import grammar from '../../../spec/extensions/delta-table/context-schema.json';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
 import {createValidator} from '../../validation/schema';
 import {copyJson} from '../../model/json';
 import {parseNativeJson,renderTree,nativePointer,treeChild,type NativeJson} from '../../model/native-json';
-import {UmfError,pointer,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../../model/types';
+import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../../model/types';
 import {importDeltaSchema,inspectDelta} from './index';
-export const DELTA_TABLE_EXTENSION='umf.delta.table';
-export const deltaTablePackage=manifest as unknown as ExtensionPackage;
 type Payload={profile:'delta-table-context';root:NativeJson};
 let check:ReturnType<ReturnType<typeof createValidator>['compile']>|undefined;
 function inspect(value:Json):Diagnostic[]{

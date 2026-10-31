@@ -53,6 +53,8 @@ import {bindParquetCaptureRust} from './adapters/parquet/rust-capture-default';
 import {PARQUET_EXTENSION,PARQUET_MAX_BYTES,parquetPackage} from './adapters/parquet/package';
 import {createIcebergSchemaRustDefault} from './adapters/iceberg/rust-default';
 import {createIcebergTableRustDefault} from './adapters/iceberg/table-rust-default';
+import {createDeltaRustDefault} from './adapters/delta/rust-default';
+import {DELTA_EXTENSION,DELTA_TABLE_EXTENSION,DELTA_LOG_EXTENSION,deltaPackage,deltaTablePackage,deltaLogPackage} from './adapters/delta/package';
 import {ICEBERG_TABLE_EXTENSION,icebergTablePackage} from './adapters/iceberg/table-package';
 import {ICEBERG_EXTENSION,icebergPackage} from './adapters/iceberg/package';
 import {createProtobufSourceRustDefault} from './adapters/protobuf/source-rust-default';
@@ -67,7 +69,7 @@ import {CURRENT_CORE_VERSION,SCALAR_TYPES} from './model/types';
 // Module import resolves only after the native engine is ready. The function
 // exported below remains synchronous and never falls back to TypeScript.
 assertPythonClientRustPlatformV4(process.platform,process.arch);
-const [{createCoreModelRootKindNullabilityEngine,createCoreCardinalityHostInputEngine,createCoreRecordValuesHostInputEngine,createDefaultSemanticTypeRegistry,createCoreRecordTypeEngine,createBit128Engine,createTemporalEngine,createAccessTemporalEngine,ACCESS_TEMPORAL_PROFILE:ACCESS_TEMPORAL_PROFILE_RUST,createSecurityLogicEngine,createJavascriptNumericEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,isDbtHostError,createProtobufDescriptorDocumentEngine,createProtobufSourceImportEngine,createProtobufSourceExportEngine,createGraphqlEngine,createRdfEngine,createNativeFamilyDispatcher,createIcebergSchemaEngine,createIcebergTableEngine,createPostgresqlParserSessionEngine,createPostgresqlSqlEngine,createParquetCaptureEngine,createArrowSchemaEngine,createArrowIpcEngine,createDbtEngine,UmfError:BindingUmfError,domainPackSchemaGraphJson,datasetSourceSchemaGraphJson,artifactCollectionSchemaGraphJson,domainPackLoaderSchemaGraphJson,loaderInventorySchemaGraphJson,inspectDomainPackLoaderWire,inspectDomainPackProfileWire,projectSecSubmissionsUtf16Wire,projectSecCompanyFactsUtf16Wire},{CORE_MODEL_RESOURCES},{createPythonClientRustCandidateV4}]=await Promise.all([
+const [{createCoreModelRootKindNullabilityEngine,createCoreCardinalityHostInputEngine,createCoreRecordValuesHostInputEngine,createDefaultSemanticTypeRegistry,createCoreRecordTypeEngine,createBit128Engine,createTemporalEngine,createAccessTemporalEngine,ACCESS_TEMPORAL_PROFILE:ACCESS_TEMPORAL_PROFILE_RUST,createSecurityLogicEngine,createJavascriptNumericEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,isDbtHostError,createProtobufDescriptorDocumentEngine,createProtobufSourceImportEngine,createProtobufSourceExportEngine,createGraphqlEngine,createRdfEngine,createNativeFamilyDispatcher,createIcebergSchemaEngine,createIcebergTableEngine,createDeltaSchemaTableEngine,createDeltaLogEngine,createPostgresqlParserSessionEngine,createPostgresqlSqlEngine,createParquetCaptureEngine,createArrowSchemaEngine,createArrowIpcEngine,createDbtEngine,UmfError:BindingUmfError,domainPackSchemaGraphJson,datasetSourceSchemaGraphJson,artifactCollectionSchemaGraphJson,domainPackLoaderSchemaGraphJson,loaderInventorySchemaGraphJson,inspectDomainPackLoaderWire,inspectDomainPackProfileWire,projectSecSubmissionsUtf16Wire,projectSecCompanyFactsUtf16Wire},{CORE_MODEL_RESOURCES},{createPythonClientRustCandidateV4}]=await Promise.all([
  import('../bindings/core/node/index.js'),
  import('./access/core-model-resources'),
  import('./node-v4'),
@@ -83,6 +85,9 @@ const rdf=createRdfRustDefault(createRdfEngine(),isNativeUmfCoreError,()=>new Re
 const {rdfRegistry,inspectRdfDocument,importRdfNQuads,getRdfQuads,exportRdfNQuads,proposeRdfQuadEdit,proposeRdfIriRename,importRdfTurtle,exportRdfTurtle,getRdfNamedGraphs,importRdfTriG,exportRdfTriG,proposeRdfDatasetMerge,generalizedRdfRegistry,inspectGeneralizedRdfDocument,importGeneralizedRdfDataset,exportGeneralizedRdfDataset,getGeneralizedRdfQuads,proposeGeneralizedRdfQuadEdit}=rdf;
 const {graphqlRegistry,importGraphqlSchema,inspectGraphql,exportGraphqlSchema,getGraphqlAst,editGraphqlAst,exportGraphqlBundle}=graphql;
 const nativeFamilyDispatcher=createNativeFamilyDispatcher();
+const deltaEngine=Object.assign({},createDeltaSchemaTableEngine(),createDeltaLogEngine());
+const delta=createDeltaRustDefault(deltaEngine,error=>isNativeUmfCoreError(error)||error instanceof BindingUmfError,()=>new Registry());
+const {deltaRegistry,deltaTableRegistry,deltaLogRegistry,inspectDelta,importDeltaSchema,exportDeltaSchema,getDeltaNode,proposeDeltaNodeEdit,inspectDeltaTable,importDeltaTable,exportDeltaTable,getDeltaTableNode,proposeDeltaTableNodeEdit,renameDeltaMappedField,getDeltaTableSchema,captureDeltaLog,exportDeltaLog,inspectDeltaLog,inspectDeltaActions,reconcileDeltaCommits}=delta;
 const icebergSchema=createIcebergSchemaRustDefault(createIcebergSchemaEngine(),error=>isNativeUmfCoreError(error)||error instanceof BindingUmfError,()=>new Registry());
 const {icebergRegistry,inspectIceberg,importIcebergSchema,exportIcebergSchema,getIcebergNode,proposeIcebergNodeEdit}=icebergSchema;
 const icebergTable=createIcebergTableRustDefault(createIcebergTableEngine(),error=>isNativeUmfCoreError(error)||error instanceof BindingUmfError,()=>new Registry());
@@ -219,3 +224,17 @@ export {owlRegistry,inspectOwlDocument,importOwlTurtle,exportOwlTurtle,getOwlQua
 export {projectRelationshipToAvro,verifyRelationshipAvroProjection,recoverRelationshipAvroIdeal,recoverRelationshipAvroNative,projectRelationshipToTableSpec,verifyRelationshipTableSpecProjection,recoverRelationshipTableSpecIdeal,recoverRelationshipTableSpecNativeSources,projectRelationshipToSqlServer,verifyRelationshipSqlServerProjection,recoverRelationshipSqlServerIdeal,recoverRelationshipSqlServerBinding,recoverRelationshipSqlServerNative,projectRelationshipToParquet,verifyRelationshipParquetProjection,recoverRelationshipParquetIdeal,recoverRelationshipParquetNative,projectRelationshipToExtra,verifyRelationshipExtra,recoverRelationshipExtraIdeal,recoverRelationshipExtraNative,projectRelationshipsToPostgresql,verifyRelationshipPostgresqlProjection,recoverRelationshipPostgresqlIdeal,recoverRelationshipPostgresqlNative};
 
 export const {importProtobufSources,exportProtobufSources}=protobufSources;
+
+export { DELTA_EXTENSION };
+
+export { DELTA_TABLE_EXTENSION };
+
+export { DELTA_LOG_EXTENSION };
+
+export { deltaPackage };
+
+export { deltaTablePackage };
+
+export { deltaLogPackage };
+
+export {deltaRegistry,deltaTableRegistry,deltaLogRegistry,inspectDelta,importDeltaSchema,exportDeltaSchema,getDeltaNode,proposeDeltaNodeEdit,inspectDeltaTable,importDeltaTable,exportDeltaTable,getDeltaTableNode,proposeDeltaTableNodeEdit,renameDeltaMappedField,getDeltaTableSchema,captureDeltaLog,exportDeltaLog,inspectDeltaLog,inspectDeltaActions,reconcileDeltaCommits};

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 // Check the actual SDK package from an independent Node and browser consumer.
-import {mkdtemp,mkdir,readFile,rm,symlink,writeFile,access} from 'node:fs/promises';
-import {join,resolve,dirname} from 'node:path';
+import {mkdtemp,mkdir,readdir,rm,symlink,writeFile} from 'node:fs/promises';
+import {join,resolve} from 'node:path';
 import {tmpdir} from 'node:os';
 
 if(!process.argv[2])throw new Error('Usage: bun scripts/test-sdk-declarations.ts <extracted-sdk-package>');
@@ -12,16 +12,14 @@ try{
  const modules=join(scratch,'node_modules');
  await mkdir(join(modules,'@umf'),{recursive:true});
  await symlink(sdk,join(modules,'@umf/core'),'dir');
- const manifest=JSON.parse(await readFile(join(sdk,'package.json'),'utf8'));
- // Reuse the locked local dependencies, without exposing repository source to
- // the consumer or requiring registry downloads.
- for(const name of new Set([...Object.keys(manifest.dependencies??{}),'@types/node'])){
-  if(name==='@umf/core')continue;
-  const source=join(root,'node_modules',name);
-  await access(source);
-  const target=join(modules,name);
-  await mkdir(dirname(target),{recursive:true});
-  await symlink(source,target,'dir');
+ // Reuse the complete locked dependency tree, including transitive type
+ // dependencies, without registry downloads or links to project source.
+ for(const name of await readdir(join(root,'node_modules'))){
+  if(name==='@umf'){
+   for(const child of await readdir(join(root,'node_modules',name))){
+    if(child!=='core')await symlink(join(root,'node_modules',name,child),join(modules,name,child));
+   }
+  }else await symlink(join(root,'node_modules',name),join(modules,name));
  }
  await writeFile(join(scratch,'package.json'),JSON.stringify({type:'module',private:true}));
  const common={target:'ES2022',strict:true,noEmit:true,skipLibCheck:false,preserveSymlinks:true};

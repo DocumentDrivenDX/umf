@@ -18,6 +18,9 @@ pub const FAMILIES: &[&str] = &[
     "owl",
     "rdf",
     "iceberg-table",
+    "delta-schema",
+    "delta-table",
+    "delta-log",
 ];
 
 fn bad_family() -> String {
@@ -173,6 +176,40 @@ pub fn metadata_wire(family: &str) -> String {
                 "getDeclarations",
             ],
         ),
+        "delta-schema" => (
+            crate::delta_schema_table::PROFILE,
+            &[
+                "import",
+                "inspect",
+                "inspectPayload",
+                "export",
+                "getNode",
+                "proposeNodeEdit",
+            ],
+        ),
+        "delta-table" => (
+            crate::delta_schema_table::PROFILE,
+            &[
+                "import",
+                "inspect",
+                "inspectPayload",
+                "export",
+                "getNode",
+                "getSchema",
+                "proposeNodeEdit",
+                "renameMappedField",
+            ],
+        ),
+        "delta-log" => (
+            crate::delta_log_binding::PROFILE,
+            &[
+                "capture",
+                "export",
+                "inspect",
+                "inspectActions",
+                "reconcileCommits",
+            ],
+        ),
         "iceberg-table" => (
             crate::iceberg_table_binding::PROFILE,
             &[
@@ -221,6 +258,12 @@ pub fn metadata_wire(family: &str) -> String {
                 (*operation).to_owned()
             } else if family == "iceberg-table" {
                 format!("iceberg.table.{operation}")
+            } else if family == "delta-schema" {
+                format!("delta/schema.{operation}")
+            } else if family == "delta-table" {
+                format!("delta/table.{operation}")
+            } else if family == "delta-log" {
+                format!("delta/log.{operation}")
             } else {
                 format!("{family}.{operation}")
             };
@@ -257,6 +300,10 @@ pub fn execute_wire_with_control(
         "owl" => crate::shacl_owl_binding::execute_owl_wire_with_control(wire, control),
         "rdf" => crate::rdf_binding::execute_wire_with_control(wire, control),
         "iceberg-table" => crate::iceberg_table_binding::execute_wire_with_control(wire, control),
+        "delta-schema" | "delta-table" => {
+            crate::delta_schema_table::execute_json_with_control(wire, control)
+        }
+        "delta-log" => crate::delta_log_binding::execute_json_with_control(wire, control),
         _ => bad_family(),
     }
 }

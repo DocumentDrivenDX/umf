@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Opt-in tagged-wire entrypoint for the bounded Delta schema/table source
-//! operations. This is not registered with a host or default dispatcher.
+//! operations. Host adapters route through the closed native-family dispatcher.
 
 use umf_core::{
-    Context, Diagnostic, EngineError, Severity, Utf16, Value,
     delta_schema::{self, DeltaSchemaResources},
     delta_table::{self, DeltaTableResources},
+    native_json::NativeJsonNode,
+    Context, Diagnostic, EngineError, Severity, Utf16, Value,
 };
 
 pub const PROFILE: &str = "umf-r8-delta-source/0.1.0";
@@ -37,6 +38,7 @@ pub fn execute_json_with_control(
         let schema_ops = [
             "delta/schema.import",
             "delta/schema.inspect",
+            "delta/schema.inspectPayload",
             "delta/schema.export",
             "delta/schema.getNode",
             "delta/schema.proposeNodeEdit",
@@ -44,8 +46,10 @@ pub fn execute_json_with_control(
         let table_ops = [
             "delta/table.import",
             "delta/table.inspect",
+            "delta/table.inspectPayload",
             "delta/table.export",
             "delta/table.getNode",
+            "delta/table.getSchema",
             "delta/table.proposeNodeEdit",
             "delta/table.renameMappedField",
         ];
@@ -90,6 +94,14 @@ fn execute_schema(
             resources,
             ctx,
         )?)),
+        "delta/schema.inspectPayload" => Ok(diagnostics_value(
+            delta_schema::inspect_delta_schema_payload(
+                field(request, "payload")
+                    .ok_or_else(|| fail("REQUEST", "Delta payload is required"))?,
+                resources,
+                ctx,
+            )?,
+        )),
         "delta/schema.getNode" => Ok(delta_schema::get_delta_node(
             document()?,
             text_value(request, "pointer")?,
@@ -139,6 +151,14 @@ fn execute_table(
             resources,
             ctx,
         )?)),
+        "delta/table.inspectPayload" => {
+            Ok(diagnostics_value(delta_table::inspect_delta_table_payload(
+                field(request, "payload")
+                    .ok_or_else(|| fail("REQUEST", "Delta table payload is required"))?,
+                resources,
+                ctx,
+            )?))
+        }
         "delta/table.getNode" => Ok(delta_table::get_delta_table_node(
             document()?,
             text_value(request, "pointer")?,
@@ -146,6 +166,38 @@ fn execute_table(
             ctx,
         )?
         .tagged_value_preserving_extras(ctx)?),
+        "delta/table.getSchema" => {
+            let document = document()?;
+            let pointer = Utf16::from("/metaData/schemaString");
+            let schema_tree =
+                delta_table::get_delta_table_node(document, &pointer, resources, ctx)?;
+            let NativeJsonNode::String(source) = schema_tree.root() else {
+                return Err(fail(
+                    "DELTA_TABLE_SCHEMA",
+                    "Delta metadata schemaString must be a string",
+                ));
+            };
+            let id = field(document, "id")
+                .and_then(as_text)
+                .ok_or_else(|| fail("DELTA_TABLE_SCHEMA", "Document id is required"))?;
+            let suffix = Utf16::from("/schema");
+            let id_units = id.len().saturating_add(suffix.len());
+            ctx.charge_text(id_units, Utf16::from("/id"))?;
+            let mut schema_id_units = Vec::new();
+            schema_id_units.try_reserve(id_units).map_err(|_| {
+                EngineError::new("LIMIT", Utf16::from("/id"), "Text-unit limit exceeded")
+            })?;
+            schema_id_units.extend_from_slice(id.units());
+            schema_id_units.extend_from_slice(suffix.units());
+            let schema_id = Utf16::new(schema_id_units);
+            let schema_resources = DeltaSchemaResources::new(ctx)?;
+            Ok(delta_schema::import_delta_schema(
+                source.units(),
+                &schema_id,
+                &schema_resources,
+                ctx,
+            )?)
+        }
         "delta/table.proposeNodeEdit" => {
             let (document, validation) = delta_table::propose_delta_table_node_edit(
                 document()?,
@@ -213,6 +265,9 @@ fn validation_value(v: umf_core::Validation) -> Value {
             Value::Array(v.diagnostics.into_iter().map(diagnostic_value).collect()),
         ),
     ])
+}
+fn diagnostics_value(items: Vec<Diagnostic>) -> Value {
+    Value::Array(items.into_iter().map(diagnostic_value).collect())
 }
 fn diagnostic_value(d: Diagnostic) -> Value {
     object(vec![
