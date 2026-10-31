@@ -32,6 +32,27 @@ fn invoke(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     match operation {
+        "evaluateActionRule" => {
+            let Value::Object(fields) = request else { return Err(missing_argument()); };
+            let names = ["document", "action", "rule", "phase", "state"];
+            if fields.len() != names.len() || fields.iter().any(|(key, _)| !names.iter().any(|name| key == &Utf16::from(*name))) {
+                return Err(EngineError::new("ACTION_RULE_SOURCE", Utf16::default(), "Expected exact document/action/rule/phase/state request"));
+            }
+            let phase = match field(request, "phase") {
+                Some(Value::String(value)) => value.to_utf8().map_err(|_| missing_argument())?,
+                _ => return Err(missing_argument()),
+            };
+            umf_codegen::actions::evaluation::evaluate_action_rule(
+                engine.resources(),
+                field(request, "document").ok_or_else(missing_argument)?,
+                field(request, "action").ok_or_else(missing_argument)?,
+                field(request, "rule").ok_or_else(missing_argument)?,
+                &phase,
+                field(request, "state").ok_or_else(missing_argument)?,
+                ctx,
+            ).map(Value::Bool)
+        }
+
         "inspectSagas" => {
             engine.inspect_sagas(field(request, "source").ok_or_else(missing_argument)?, ctx)
         }

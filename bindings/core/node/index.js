@@ -3,9 +3,11 @@ import {createRdfOperations, RDF_PROFILE} from './src/rdf.js';
 import {createGraphqlOperations, GRAPHQL_PROFILE} from './src/graphql.js';
 import {createNativeFamilyOperations, NATIVE_FAMILY_PROFILE} from './src/native-family.js';
 import {createPostgresqlParserSessionOperations, POSTGRESQL_PARSER_PROFILE} from './src/postgresql-parser-session.js';
+import {createTypeSpecSessionOperations, TYPESPEC_SESSION_PROFILE} from './src/typespec-session.js';
 import {createJsonLdOperations, JSONLD_PROFILE} from './src/jsonld.js';
 export {NATIVE_FAMILY_PROFILE};
 export {POSTGRESQL_PARSER_PROFILE};
+export {TYPESPEC_SESSION_PROFILE};
 import {createRequire} from 'node:module';
 import {createHostReadResponseFrames, encodeRequestWire, encodeWire, fromWire, resultError, toWire} from './src/wire.js';
 import {createJavascriptNumericEngine as createNumericEngine, JAVASCRIPT_NUMERIC_PROFILE} from './src/javascript-numeric.js';
@@ -59,6 +61,8 @@ const weakSetHas = Function.call.bind(WeakSet.prototype.has);
 const weakSetAdd = Function.call.bind(WeakSet.prototype.add);
 export function isNativeUmfCoreError(error) { return error !== null && (typeof error === 'object' || typeof error === 'function') && weakSetHas(nativeUmfCoreErrors, error); }
 function nativeCoreError(failure) { const error = new UmfCoreError(failure.code, failure.message, failure.path); weakSetAdd(nativeUmfCoreErrors, error); return error; }
+// Host adapters call this constructor only for errors returned by Rust.
+function NativeCoreErrorType(code, message, path) { return nativeCoreError({code, message, path}); }
 
 const require = createRequire(import.meta.url);
 const addon = require('./umf_core_node.node');
@@ -155,7 +159,7 @@ export function createSecurityLogicEngine(options = {}) {
 /** Create the opt-in pure protection-function reference engine. */
 export function createSecurityFunctionsEngine() {
   if (typeof addon.executeSecurityFunctionsWire !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
-  return createSecurityFunctionsEngineWithWire(wire => addon.executeSecurityFunctionsWire(wire), UmfCoreError);
+  return createSecurityFunctionsEngineWithWire(wire => addon.executeSecurityFunctionsWire(wire), NativeCoreErrorType);
 }
 
 /** Create the opt-in protection source identity and transform-reference resolver. */
@@ -167,7 +171,7 @@ export function createSecurityProtectionSourceEngine() {
 /** Create the opt-in Rust engine for bounded protection-query property inspection. */
 export function createSecurityQueryPropertiesEngine() {
   if (typeof addon.executeSecurityQueryPropertiesWire !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
-  return createSecurityQueryPropertiesEngineWithWire(wire => addon.executeSecurityQueryPropertiesWire(wire), UmfCoreError);
+  return createSecurityQueryPropertiesEngineWithWire(wire => addon.executeSecurityQueryPropertiesWire(wire), NativeCoreErrorType);
 }
 
 /** Create the opt-in Rust engine for bounded typed protection-parameter literal admission. */
@@ -1243,6 +1247,25 @@ export function createPostgresqlParserSessionEngine(options = {}) {
   );
 }
 
+/** Create a Rust-owned TypeSpec source/compiler session with explicit pinned host capabilities. */
+export function createTypeSpecSessionEngine({executeCompilerRequest, executeParserRequest, ...options} = {}) {
+  if (typeof addon.TypeSpecSession !== 'function') throw new Error('RUST_TYPESPEC_SESSION_MISSING');
+  if (typeof executeCompilerRequest !== 'function' || typeof executeParserRequest !== 'function') throw new TypeError('Pinned TypeSpec compiler and parser host callbacks are required');
+  const {controls} = codegenOptions(options);
+  const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+  const hostWork = admissionWork(controlBridge);
+  const session = new addon.TypeSpecSession();
+  if (typeof session.executeTypeSpecSessionWire !== 'function' || session.profileVersion() !== TYPESPEC_SESSION_PROFILE) throw new Error('RUST_TYPESPEC_SESSION_PROFILE_MISMATCH');
+  return createTypeSpecSessionOperations(
+    (wire, control) => session.executeTypeSpecSessionWire(wire, control),
+    executeCompilerRequest,
+    executeParserRequest,
+    controlBridge,
+    hostWork,
+    nativeCoreError,
+  );
+}
+
 /** Create the feature-gated native libpg_query raw-SQL engine. */
 export function createPostgresqlSqlEngine(options = {}) {
   if (typeof addon.executePostgresqlNativeSqlWire !== 'function' || typeof addon.postgresqlNativeSqlProfileVersion !== 'function') throw new Error('RUST_POSTGRESQL_NATIVE_BINDING_MISSING');
@@ -1851,6 +1874,7 @@ export function createCodegenEngine(resources, options = {}) {
       const failure = response.error;
       const error = new Error(failure.message);
       error.name = 'UmfCodegenError';
+      weakSetAdd(nativeUmfCoreErrors, error);
       error.code = failure.code;
       for (const key of ['path', 'pointer']) if (Object.hasOwn(failure, key)) error[key] = failure[key];
       throw error;
@@ -1886,6 +1910,7 @@ export function createCodegenEngine(resources, options = {}) {
   return Object.freeze({
     call,
     sagaRegistryProfile() { return fromWire(toWire({actionsPackage: fixedResources.actionsPackage, sagaPackage: fixedResources.sagaPackage})); },
+    evaluateActionRule(document, action, rule, phase, state) { return result('evaluateActionRule', {document, action, rule, phase, state}); },
     inspectSagas(source) { return result('inspectSagas', {source}); },
     declareSaga(source, module, definition) { return result('declareSaga', {source, module, definition}); },
     editSaga(source, identity, replacement) { return result('editSaga', {source, identity, replacement}); },
@@ -1946,6 +1971,7 @@ export function createRetainedCodegenEngine(resources, options = {}) {
     if (!outcome?.ok) {
       const error = new Error(outcome?.error?.message ?? 'Rust codegen failed');
       error.name = 'UmfCodegenError';
+      weakSetAdd(nativeUmfCoreErrors, error);
       error.code = outcome?.error?.code ?? 'RUST_CODEGEN_FAILED';
       for (const key of ['path', 'pointer']) if (Object.hasOwn(outcome?.error ?? {}, key)) error[key] = outcome.error[key];
       throw error;

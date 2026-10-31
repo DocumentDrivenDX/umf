@@ -4,9 +4,10 @@ import {copyJson,LIMITS} from '../../model/json';
 import {UmfError,type Document,type Json} from '../../model/types';
 import {exportTypeSpecSources} from './index';
 import {compileTypeSpecProgram,typeSpecCompilerReport} from './compiler';
+import type {TypeSpecGraphReport} from './report-types';
 export interface TypeSpecSemanticNode {id:string;kind:string;label:string;attributes:Record<string,Json>;edges:{role:string;target:string;name?:string;index?:number}[];location?:{file:string;start:number;end:number};}
 /** Selected compiled graph snapshot; source remains authoritative for omitted compiler state. */
-export async function getTypeSpecSemanticGraph(document:Document,input:{roots:string[]}){
+export async function getTypeSpecSemanticGraph(document:Document,input:{roots:string[]}):Promise<TypeSpecGraphReport>{
  const options=copyJson(input) as unknown as typeof input;
  if(Object.keys(options).some(k=>k!=='roots')||!Array.isArray(options.roots)||!options.roots.length||options.roots.length>1000||options.roots.some(x=>typeof x!=='string'||!x))throw new UmfError('TYPESPEC_GRAPH_OPTIONS','Select 1–1000 native type expressions');
  const bundle=exportTypeSpecSources(document);const program=await compileTypeSpecProgram(bundle.files,bundle.entrypoint,bundle.libraries);const compilation=typeSpecCompilerReport(program,bundle.libraries);
@@ -35,7 +36,7 @@ export async function getTypeSpecSemanticGraph(document:Document,input:{roots:st
   if(type.node){const at=getSourceLocation(type.node);if(at)node.location={file:at.file.path,start:at.pos,end:at.end};}
   const doc=getDoc(program,type);if(doc!==undefined)node.attributes.doc=doc;
   const edge=(role:string,target:Type|undefined,name?:string,index?:number)=>{if(target)node.edges.push({role,target:visit(target),...(name===undefined?{}:{name}),...(index===undefined?{}:{index})});};
-  if('decorators'in type&&type.decorators.length)node.attributes.decorators=type.decorators.map(d=>({name:d.definition?getTypeName(d.definition):d.decorator.name,args:d.args.map(a=>a.value.entityKind==='Value'?{value:value(a.value)}:{type:visit(a.value)})}));
+  if('decorators'in type&&type.decorators.length)node.attributes.decorators=type.decorators.map(d=>({name:d.definition?getTypeName(d.definition):d.decorator.name,args:d.args.map(a=>(a.value.entityKind==='Value'?{value:value(a.value)}:{type:visit(a.value)}) as Json)})) as unknown as Json;
   switch(type.kind){
    case 'Model':
     for(const [name,p]of type.properties)edge('property',p,name);edge('baseModel',type.baseModel);edge('sourceModel',type.sourceModel);

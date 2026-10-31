@@ -9,6 +9,29 @@ from umf._rust import UmfCoreError
 
 
 class NativeAdapterBaseline(unittest.TestCase):
+    def test_public_delta_spark_bundle_and_refusal(self):
+        source = '{"type":"struct","fields":[{"name":"id","type":"long","nullable":false,"metadata":{}}]}'
+        definition = {"profile": "databricks-managed-delta/0.1",
+                      "name": ["catalog", "schema", "items"], "clusterBy": [],
+                      "partitionBy": [], "properties": {"delta.targetFileSize": "67108864",
+                      "delta.parquet.compression.codec": "zstd"}}
+        document = execute_adapter("delta-ddl", "defineTable", source=source,
+                                   definition=definition, id="python-spark-table")
+        target = {"kind": "relation", "relation": ["local_catalog", "local_schema", "items"],
+                  "location": "/tmp/items"}
+        proposal = execute_adapter("delta-ddl", "realizeSparkDelta4", document=document, target=target)
+        self.assertIn("CREATE TABLE `local_catalog`.`local_schema`.`items`", proposal["sql"])
+        self.assertIn("LOCATION '/tmp/items'", proposal["sql"])
+        self.assertEqual(len(proposal["writerSettings"]), 1)
+        self.assertTrue(any(row["outcome"] == "unrealized-performance-hint"
+                            for row in proposal["dispositions"]))
+        bundle = execute_adapter("delta-ddl", "generateBundle", documents=[document])
+        self.assertEqual(len(bundle["tables"]), 1)
+        with self.assertRaises(UmfCoreError):
+            execute_adapter("delta-ddl", "realizeSparkDelta4", document=document,
+                            target={"kind": "delta-path", "path": "https://example.test/items"})
+
+
     def test_public_openapi_roundtrip_and_native_refusal(self):
         self.assertIn("import", adapter_info("openapi")["operations"])
         source = json.dumps({
@@ -94,6 +117,23 @@ class NativeAdapterBaseline(unittest.TestCase):
         self.assertEqual(execute_adapter("delta-log", "export", document=log), log_source)
         with self.assertRaises(UmfCoreError):
             execute_adapter("delta-schema", "import", source="{bad", id="invalid")
+
+
+    def test_public_delta_definition_ddl_and_refusal(self):
+        source = '{"type":"struct","fields":[{"name":"id","type":"long","nullable":false,"metadata":{}}]}'
+        definition = {"profile": "databricks-managed-delta/0.1",
+                      "name": ["catalog", "schema", "items"], "clusterBy": ["id"],
+                      "partitionBy": [], "properties": {"delta.targetFileSize": "67108864"}}
+        document = execute_adapter("delta-ddl", "defineTable", source=source,
+                                   definition=definition, id="python-delta-definition")
+        proposal = execute_adapter("delta-ddl", "generate", document=document)
+        self.assertEqual(json.loads(proposal["schemaJson"]), json.loads(source))
+        self.assertEqual(proposal["definition"], definition)
+        self.assertIn("CREATE TABLE `catalog`.`schema`.`items`", proposal["sql"])
+        with self.assertRaises(UmfCoreError) as refused:
+            execute_adapter("delta-ddl", "defineTable", source=source,
+                            definition={**definition, "futureMeaning": "retained"}, id="invalid")
+        self.assertEqual(refused.exception.code, "DELTA_DDL_UNSUPPORTED")
 
 
 if __name__ == "__main__":

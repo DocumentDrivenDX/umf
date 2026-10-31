@@ -21,6 +21,8 @@ pub const FAMILIES: &[&str] = &[
     "delta-schema",
     "delta-table",
     "delta-log",
+    "delta-ddl",
+    "delta-parquet",
 ];
 
 fn bad_family() -> String {
@@ -200,6 +202,20 @@ pub fn metadata_wire(family: &str) -> String {
                 "renameMappedField",
             ],
         ),
+        "delta-ddl" => (
+            crate::delta_ddl_binding::PROFILE,
+            &[
+                "defineTable",
+                "generate",
+                "generateBundle",
+                "realizeSparkDelta4",
+                "inspectPayload",
+            ],
+        ),
+        "delta-parquet" => (
+            crate::parquet_capture_binding::PROFILE,
+            &["projectActions"],
+        ),
         "delta-log" => (
             crate::delta_log_binding::PROFILE,
             &[
@@ -264,6 +280,10 @@ pub fn metadata_wire(family: &str) -> String {
                 format!("delta/table.{operation}")
             } else if family == "delta-log" {
                 format!("delta/log.{operation}")
+            } else if family == "delta-ddl" {
+                format!("delta.ddl.{operation}")
+            } else if family == "delta-parquet" {
+                format!("delta.parquet.{operation}")
             } else {
                 format!("{family}.{operation}")
             };
@@ -304,6 +324,8 @@ pub fn execute_wire_with_control(
             crate::delta_schema_table::execute_json_with_control(wire, control)
         }
         "delta-log" => crate::delta_log_binding::execute_json_with_control(wire, control),
+        "delta-ddl" => crate::delta_ddl_binding::execute_json_with_control(wire, control),
+        "delta-parquet" => crate::parquet_capture_binding::execute_wire_with_control(wire, control),
         _ => bad_family(),
     }
 }

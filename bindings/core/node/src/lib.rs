@@ -2,12 +2,12 @@ use napi::{Env, Error, JsFunction, JsString, JsUnknown, Result as NapiResult, Va
 use napi_derive::napi;
 use std::{cell::RefCell, rc::Rc};
 use umf_core::{
+    Capabilities, CapabilityError, Context, Diagnostic, EngineError, ResourceProfile,
+    SemanticContext, Severity, Utf16, Value,
     context::TransportUsage,
     copy_json,
     gregorian_date::{parse_gregorian_date, truncate_gregorian_date},
     rfc3339_exact_instant::parse_rfc3339_exact_instant,
-    Capabilities, CapabilityError, Context, Diagnostic, EngineError, ResourceProfile,
-    SemanticContext, Severity, Utf16, Value,
 };
 
 mod core_key_tuple;
@@ -1893,5 +1893,51 @@ fn value_text(value: &Value) -> Option<&Utf16> {
     match value {
         Value::String(value) => Some(value),
         _ => None,
+    }
+}
+
+const TYPESPEC_SESSION_PROFILE: &str = "umf.typespec-source-wire/1";
+
+#[napi]
+pub struct TypeSpecSession {
+    inner: std::sync::Mutex<umf_core_wire::typespec_binding::Session>,
+}
+
+#[napi]
+impl TypeSpecSession {
+    #[napi(constructor)]
+    pub fn new() -> Self {
+        Self {
+            inner: std::sync::Mutex::new(umf_core_wire::typespec_binding::Session::new()),
+        }
+    }
+    #[napi(js_name = "profileVersion")]
+    pub fn profile_version(&self) -> String {
+        TYPESPEC_SESSION_PROFILE.to_owned()
+    }
+    #[napi(js_name = "executeTypeSpecSessionWire")]
+    pub fn execute_wire(
+        &self,
+        env: Env,
+        wire_json: String,
+        control_dispatcher: Option<JsFunction>,
+    ) -> String {
+        let Ok(mut inner) = self.inner.try_lock() else {
+            return umf_core_wire::typespec_binding::busy_session_envelope();
+        };
+        if let Some(dispatcher) = control_dispatcher {
+            let mut control = NodeControl { env, dispatcher };
+            let mut hook = |amount| control.check(amount);
+            umf_core_wire::typespec_binding::execute_wire_with_session(
+                &mut inner, &wire_json, &mut hook,
+            )
+        } else {
+            let mut no_control = |_amount| Ok(());
+            umf_core_wire::typespec_binding::execute_wire_with_session(
+                &mut inner,
+                &wire_json,
+                &mut no_control,
+            )
+        }
     }
 }

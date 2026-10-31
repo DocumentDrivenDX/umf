@@ -520,3 +520,5 @@ export * from './table-authoring/row-scope';
 
 export * from './extensions/actions/saga';
 export {createSagaResources} from './extensions/actions/saga-resources';
+
+export type {TypeSpecCompilerReport,TypeSpecGraphReport,TypeSpecJsonSchemaEmission} from './adapters/typespec/report-types';

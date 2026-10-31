@@ -573,10 +573,11 @@ export declare function initializeJsonSchemaWasm(loader?: () => Promise<any>, ho
 export declare function initializeIcebergSchemaWasm(loader?: () => Promise<any>, host?: typeof globalThis, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): Promise<IcebergSchemaEngine>;
 
 export interface UmfCodegenResources extends UmfCoreResources {tablesPackage: unknown; actionsPackage: unknown; bindingPackage: unknown; stableBindingPackage: unknown; sagaPackage?: unknown}
-export type UmfCodegenOperation = 'inspectSagas' | 'declareSaga' | 'editSaga' | 'assessSaga' | 'generatePythonClient' | 'compileTableDeployment' | 'verifyTableDeployment' | 'compileTableMigration' | 'verifyTableMigration' | 'discoverTableMigrationChanges' | 'normalizeRowScope' | 'generateAccessPackage' | 'diffAccessPackages';
+export type UmfCodegenOperation = 'evaluateActionRule' | 'inspectSagas' | 'declareSaga' | 'editSaga' | 'assessSaga' | 'generatePythonClient' | 'compileTableDeployment' | 'verifyTableDeployment' | 'compileTableMigration' | 'verifyTableMigration' | 'discoverTableMigrationChanges' | 'normalizeRowScope' | 'generateAccessPackage' | 'diffAccessPackages';
 export type UmfCodegenOutcome = {ok: true; result: unknown} | {ok: false; error: {code: string; message: string; path?: string; pointer?: string}};
 export type UmfCodegenHostReadEventV3 = 'InitialPackage' | 'ParseText' | 'ParseFormat' | 'DigestText' | 'SelectRecords' | 'NativeFormat' | 'SelectActions' | 'OutputPackageSuffix' | 'OutputSourceText';
 export interface UmfCodegenEngine {
+  evaluateActionRule(document: unknown, action: unknown, rule: unknown, phase: string, state: unknown): boolean;
   call(operation: UmfCodegenOperation, request: unknown): UmfCodegenOutcome;
   sagaRegistryProfile(): {actionsPackage: unknown; sagaPackage: unknown};
   inspectSagas(source: unknown): unknown;
@@ -677,6 +678,8 @@ export interface NativeFamilyOperations {
  readonly sqlserver: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'columns'|'constraints'|'indexes'|'edit'|'facetType'|'facetPredicate'|'facetConstraints', NativeFamilyOperation>>;
  readonly shacl: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getQuads'|'editQuad'|'getPropertyPath'|'evaluatePropertyPath'|'getTargetNodes'|'getShapeMetadata'|'validate', NativeFamilyOperation>>;
  readonly owl: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getQuads'|'editQuad'|'getOntologyHeaders'|'getExpressionView'|'getListAxioms'|'getSpecialAxioms'|'getAxiomAnnotations'|'getDeclarations', NativeFamilyOperation>>;
+ readonly ['delta-ddl']: Readonly<Record<'defineTable'|'generate'|'generateBundle'|'realizeSparkDelta4'|'inspectPayload', NativeFamilyOperation>>;
+ readonly ['delta-parquet']: Readonly<Record<'projectActions', NativeFamilyOperation>>;
 }
 export declare function createNativeFamilyDispatcher(module: any, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): NativeFamilyOperations;
 export type PostgresqlParserRequest = {token: string; backend: '@libpg-query/parser@17.6.10'; astVersion: 170004; work: 'parse'|'deparse'|'codecRoundTrip'; sql?: string; tree?: unknown};
@@ -712,3 +715,13 @@ export interface JsonLdOperations {
  proposeGeneralizedRdfToJsonLd(document: unknown, options: Record<string, unknown>): Promise<unknown>;
 }
 export declare function createJsonLdEngine(module: any, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): JsonLdOperations;
+
+export declare const TYPESPEC_SESSION_PROFILE:'umf.typespec-source-wire/1';
+export interface TypeSpecSessionOperations {
+ inspectTypeSpec(document:unknown):unknown; importTypeSpecSources(input:unknown,options:unknown):unknown;
+ exportTypeSpecSources(document:unknown):unknown; proposeTypeSpecSourceEdit(document:unknown,path:string,text:string):unknown;
+ getTypeSpecSyntax(document:unknown,path:string):unknown; inspectTypeSpecPayload(payload:unknown):unknown;
+ compileTypeSpecDocument(document:unknown):Promise<unknown>; getTypeSpecSemanticGraph(document:unknown,input:unknown):Promise<unknown>;
+ emitTypeSpecJsonSchema(document:unknown,input:unknown):Promise<unknown>;
+}
+export declare function createTypeSpecSessionEngine(module:unknown,options:{executeCompilerRequest:(request:never)=>Promise<unknown>;executeParserRequest:(request:never)=>unknown;profile?:'cooperative'|'hard-isolated';controls?:UmfCoreControls}):TypeSpecSessionOperations;

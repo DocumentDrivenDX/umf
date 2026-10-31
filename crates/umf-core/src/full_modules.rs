@@ -58,11 +58,16 @@ pub mod domain_pack_schema;
 pub mod domain_pack_sec;
 pub mod domain_pack_source_schema;
 pub mod delta_actions;
+#[cfg(feature = "embedded-adapters")]
+pub mod delta_ddl;
 pub mod delta_log;
+pub mod delta_parquet_actions;
 pub mod delta_reconcile;
 pub mod delta_schema;
 pub mod delta_spark_hash;
 pub mod delta_table;
+#[cfg(feature = "embedded-adapters")]
+pub mod typespec_adapter;
 #[cfg(feature = "embedded-adapters")]
 pub mod dbt;
 #[cfg(feature = "embedded-adapters")]

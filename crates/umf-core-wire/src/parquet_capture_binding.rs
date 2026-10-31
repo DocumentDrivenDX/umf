@@ -2,6 +2,9 @@
 //! Opt-in tagged-wire owner for the bounded Parquet source and footer views.
 
 use umf_core::{
+    delta_actions::DeltaActionResources,
+    delta_log::DeltaLogResources,
+    delta_parquet_actions::project_delta_parquet_actions,
     engine::{Capabilities, Engine, ResourceSet},
     error::{Diagnostic, EngineError},
     parquet_capture_inspection::{
@@ -247,6 +250,7 @@ pub fn execute_wire_with_control(
             | "parquet.decodeLevels"
             | "parquet.decodePhysical"
             | "parquet.decodeValues"
+            | "delta.parquet.projectActions"
             | "parquet.assembleRows"
             | "parquet.repairDictionaryOffsets"
             | "parquet.appendKeyValueMetadata"
@@ -268,6 +272,19 @@ pub fn execute_wire_with_control(
                         &mut capabilities,
                         &mut ctx,
                     )?,
+                    "delta.parquet.projectActions" => {
+                        let log_resources = DeltaLogResources::new(&mut ctx)?;
+                        let action_resources = DeltaActionResources::new(&mut ctx)?;
+                        project_delta_parquet_actions(
+                            document,
+                            &resources.engine,
+                            &resources.registry,
+                            &mut capabilities,
+                            &log_resources,
+                            &action_resources,
+                            &mut ctx,
+                        )?
+                    }
                     "parquet.assembleRows" => assemble_parquet_rows(
                         document,
                         &resources.engine,

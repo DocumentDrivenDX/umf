@@ -3,8 +3,9 @@ import {copyJson} from '../../model/json';
 import {UmfError,type Document,type JsonObject} from '../../model/types';
 import {exportTypeSpecSources} from './index';
 import {compileTypeSpecProgram,typeSpecCompilerReport} from './compiler';
+import type {TypeSpecJsonSchemaEmission} from './report-types';
 /** Native emitter output is evidence for a projection, not a lossless type-model conversion. */
-export async function emitTypeSpecJsonSchema(document:Document,input:{options:JsonObject}){
+export async function emitTypeSpecJsonSchema(document:Document,input:{options:JsonObject}):Promise<TypeSpecJsonSchemaEmission>{
  const policy=copyJson(input) as unknown as typeof input;
  if(Object.keys(policy).some(k=>k!=='options')||!policy.options||Array.isArray(policy.options)||typeof policy.options!=='object'||!['string','number'].includes(policy.options['int64-strategy'] as string))throw new UmfError('TYPESPEC_EMISSION_POLICY','Emitter options must explicitly select int64-strategy string or number');
  if(Object.hasOwn(policy.options,'emitter-output-dir'))throw new UmfError('TYPESPEC_EMISSION_POLICY','Output location is controlled by the memory host');

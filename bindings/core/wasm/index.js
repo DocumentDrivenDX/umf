@@ -3,9 +3,11 @@ import {createRdfOperations, RDF_PROFILE} from './src/rdf.js';
 import {createGraphqlOperations, GRAPHQL_PROFILE} from './src/graphql.js';
 import {createNativeFamilyOperations, NATIVE_FAMILY_PROFILE} from './src/native-family.js';
 import {createPostgresqlParserSessionOperations, POSTGRESQL_PARSER_PROFILE} from './src/postgresql-parser-session.js';
+import {createTypeSpecSessionOperations, TYPESPEC_SESSION_PROFILE} from './src/typespec-session.js';
 import {createJsonLdOperations, JSONLD_PROFILE} from './src/jsonld.js';
 export {NATIVE_FAMILY_PROFILE};
 export {POSTGRESQL_PARSER_PROFILE};
+export {TYPESPEC_SESSION_PROFILE};
 import {createHostReadResponseFrames, encodeRequestWire, encodeWire, fromWire, resultError, toWire} from './src/wire.js';
 import {createJavascriptNumericEngine as createNumericEngine, JAVASCRIPT_NUMERIC_PROFILE} from './src/javascript-numeric.js';
 import {createSecurityLogicEngine as createSecurityLogicEngineWithWire, SECURITY_LOGIC_PROFILE} from './src/security-logic.js';
@@ -48,6 +50,8 @@ const weakSetHas = Function.call.bind(WeakSet.prototype.has);
 const weakSetAdd = Function.call.bind(WeakSet.prototype.add);
 export function isNativeUmfCoreError(error) { return error !== null && (typeof error === 'object' || typeof error === 'function') && weakSetHas(nativeUmfCoreErrors, error); }
 function nativeCoreError(failure) { const error = new UmfCoreError(failure.code, failure.message, failure.path); weakSetAdd(nativeUmfCoreErrors, error); return error; }
+// Host adapters call this constructor only for errors returned by Rust.
+function NativeCoreErrorType(code, message, path) { return nativeCoreError({code, message, path}); }
 export {JAVASCRIPT_NUMERIC_PROFILE};
 export {SECURITY_LOGIC_PROFILE};
 export {SECURITY_FUNCTIONS_PROFILE};
@@ -104,7 +108,7 @@ export function createSecurityProtectionSourceEngine(module) {
 /** Create the opt-in Rust engine for bounded protection-query property inspection. */
 export function createSecurityQueryPropertiesEngine(module) {
   if (typeof module?.executeSecurityQueryPropertiesWire !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
-  return createSecurityQueryPropertiesEngineWithWire(wire => module.executeSecurityQueryPropertiesWire(wire), UmfCoreError);
+  return createSecurityQueryPropertiesEngineWithWire(wire => module.executeSecurityQueryPropertiesWire(wire), NativeCoreErrorType);
 }
 
 /** Create the opt-in Rust engine for bounded typed protection-parameter literal admission. */
@@ -1360,6 +1364,25 @@ export function createPostgresqlParserSessionEngine(module, options = {}) {
   );
 }
 
+/** Create a Rust-owned TypeSpec source/compiler session with explicit pinned host capabilities. */
+export function createTypeSpecSessionEngine(module, {executeCompilerRequest, executeParserRequest, ...options} = {}) {
+  if (typeof module?.TypeSpecSession !== 'function') throw new Error('RUST_TYPESPEC_SESSION_MISSING');
+  if (typeof executeCompilerRequest !== 'function' || typeof executeParserRequest !== 'function') throw new TypeError('Pinned TypeSpec compiler and parser host callbacks are required');
+  const {controls} = codegenOptions(options);
+  const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+  const hostWork = admissionWork(controlBridge);
+  const session = new module.TypeSpecSession();
+  if (typeof session.executeTypeSpecSessionWire !== 'function' || session.profileVersion() !== TYPESPEC_SESSION_PROFILE) throw new Error('RUST_TYPESPEC_SESSION_PROFILE_MISMATCH');
+  return createTypeSpecSessionOperations(
+    (wire, control) => session.executeTypeSpecSessionWire(wire, control),
+    executeCompilerRequest,
+    executeParserRequest,
+    controlBridge,
+    hostWork,
+    nativeCoreError,
+  );
+}
+
 /** Create the opt-in pure reciprocal-rank fusion scorer over WASM. */
 export function createAccessRrfEngine(module, options = {}) {
   if (typeof module?.executeAccessRrfWire !== 'function' || typeof module?.accessRrfProfileVersion !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
@@ -1946,7 +1969,7 @@ export function createSecurityLogicEngine(module, options = {}) {
 /** Create the opt-in pure protection-function reference engine. */
 export function createSecurityFunctionsEngine(module) {
   if (typeof module?.executeSecurityFunctionsWire !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
-  return createSecurityFunctionsEngineWithWire(wire => module.executeSecurityFunctionsWire(wire), UmfCoreError);
+  return createSecurityFunctionsEngineWithWire(wire => module.executeSecurityFunctionsWire(wire), NativeCoreErrorType);
 }
 
 function codegenOptions(options) {
@@ -1997,6 +2020,7 @@ export function createCodegenEngine(module, resources, options = {}) {
       const failure = response.error;
       const error = new Error(failure.message);
       error.name = 'UmfCodegenError';
+      weakSetAdd(nativeUmfCoreErrors, error);
       error.code = failure.code;
       for (const key of ['path', 'pointer']) if (Object.hasOwn(failure, key)) error[key] = failure[key];
       throw error;
@@ -2032,6 +2056,7 @@ export function createCodegenEngine(module, resources, options = {}) {
   return Object.freeze({
     call,
     sagaRegistryProfile() { return fromWire(toWire({actionsPackage: fixedResources.actionsPackage, sagaPackage: fixedResources.sagaPackage})); },
+    evaluateActionRule(document, action, rule, phase, state) { return result('evaluateActionRule', {document, action, rule, phase, state}); },
     inspectSagas(source) { return result('inspectSagas', {source}); },
     declareSaga(source, module, definition) { return result('declareSaga', {source, module, definition}); },
     editSaga(source, identity, replacement) { return result('editSaga', {source, identity, replacement}); },

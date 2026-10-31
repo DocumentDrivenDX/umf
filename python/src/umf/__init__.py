@@ -2,6 +2,7 @@
 """Official Python UMF support; consumer extensions remain consumer-owned."""
 
 from .adapters import adapter_info, execute_adapter
+from .typespec import TypeSpecSession
 from .models import (
     CoreItemTypeReference,
     CoreSemanticTypeReference,
@@ -49,6 +50,7 @@ from .rust_sec_projection import (
 
 __version__ = "0.10.4"
 __all__ = [
+    "TypeSpecSession",
     "adapter_info",
     "execute_adapter",
     "SagaRuntime",

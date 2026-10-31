@@ -32,6 +32,8 @@ pub mod native_family_binding;
 pub mod avro_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod iceberg_table_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod typespec_binding;
 pub mod access_rrf_binding;
 pub mod access_temporal_binding;
 pub mod arrow_ipc_capture_binding {
@@ -149,6 +151,8 @@ mod codegen;
 pub mod core_key_tuple_binding;
 pub mod core_key_verification_binding;
 pub mod core_record_type_verification_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod delta_ddl_binding;
 pub mod delta_log_binding;
 pub mod delta_schema_table;
 pub mod delta_spark_hash;

@@ -7,11 +7,12 @@ import {createValidator} from '../../validation/schema';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
 import {copyJson,LIMITS} from '../../model/json';
-import {UmfError,pointer,type Document,type Diagnostic,type Json,type ExtensionPackage} from '../../model/types';
+import {UmfError,pointer,type Document,type Diagnostic,type Json} from '../../model/types';
 import {checkTypeSpecSources} from './compiler';
-export const TYPESPEC_EXTENSION='umf.typespec';
-export const typespecPackage=manifest as unknown as ExtensionPackage;
-export interface TypeSpecPayload {profile:'typespec-1.16.0-sources';entrypoint:string;files:Record<string,string>;libraries?:Record<string,string>;}
+export {TYPESPEC_EXTENSION,typespecPackage} from './package';
+export type {TypeSpecPayload} from './package';
+import {TYPESPEC_EXTENSION,typespecPackage} from './package';
+import type {TypeSpecPayload} from './package';
 const structure=createValidator().compile(manifest.schema);
 function inspect(value:Json):Diagnostic[]{
  const p=value as unknown as TypeSpecPayload;const out:Diagnostic[]=[];

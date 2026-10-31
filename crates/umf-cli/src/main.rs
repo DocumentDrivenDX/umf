@@ -4,7 +4,7 @@ mod allocator;
 
 use std::{
     env, fs,
-    io::{self, Read},
+    io::{self, BufRead, Read},
     process,
 };
 
@@ -761,6 +761,16 @@ fn value_text(value: &Value) -> Option<Utf16> {
 }
 
 fn run(args: Vec<String>) -> Result<(), String> {
+    #[cfg(feature = "embedded-adapters")]
+    if args.first().map(String::as_str) == Some("adapter") {
+        return adapter_family_run(&args[1..]);
+    }
+
+    #[cfg(feature = "embedded-adapters")]
+    if args.first().map(String::as_str) == Some("typespec") {
+        return typespec_session_run(&args[1..]);
+    }
+
     if args.first().map(String::as_str) == Some("domain-pack") {
         let output = domain_pack_schema_output(&args[1..])?;
         print!("{output}");
@@ -808,6 +818,10 @@ fn run(args: Vec<String>) -> Result<(), String> {
     #[cfg(feature = "embedded-adapters")]
     if args.first().map(String::as_str) == Some("odcs") {
         return odcs_run(&args[1..]);
+    }
+    #[cfg(feature = "embedded-adapters")]
+    if args.first().map(String::as_str) == Some("delta-ddl") {
+        return delta_ddl_run(&args[1..]);
     }
     #[cfg(feature = "embedded-adapters")]
     if args.first().map(String::as_str) == Some("rdf") {
@@ -1575,11 +1589,136 @@ fn odcs_run(args: &[String]) -> Result<(), String> {
 }
 
 #[cfg(feature = "embedded-adapters")]
+fn delta_ddl_run(args: &[String]) -> Result<(), String> {
+    native_adapter_run(
+        "delta-ddl",
+        umf_core_wire::delta_ddl_binding::PROFILE,
+        "[\"delta.ddl.defineTable\",\"delta.ddl.generate\",\"delta.ddl.generateBundle\",\"delta.ddl.realizeSparkDelta4\",\"delta.ddl.inspectPayload\"]",
+        umf_core_wire::delta_ddl_binding::execute_json_with_control,
+        args,
+    )
+}
+
+/// JSONL keeps a single Rust session alive while the external compiler is run
+/// by the caller. Each input line is a tagged wire request, each output an envelope.
+#[cfg(feature = "embedded-adapters")]
+fn typespec_session_run(args: &[String]) -> Result<(), String> {
+    use std::io::Write;
+    if args == ["--version"] {
+        println!(
+            "{{\"profile\":\"{}\",\"version\":\"{}\"}}",
+            umf_core_wire::typespec_binding::PROFILE,
+            env!("CARGO_PKG_VERSION")
+        );
+        return Ok(());
+    }
+    let usage = "usage: umf typespec --stdin-session [--max-work N] [--timeout-ms N]";
+    if args.first().map(String::as_str) != Some("--stdin-session") {
+        return Err(usage.into());
+    }
+    let mut max_work = None;
+    let mut timeout_ms = None;
+    let mut index = 1;
+    while index < args.len() {
+        let target = match args[index].as_str() {
+            "--max-work" if max_work.is_none() => &mut max_work,
+            "--timeout-ms" if timeout_ms.is_none() => &mut timeout_ms,
+            _ => return Err(usage.into()),
+        };
+        index += 1;
+        *target = Some(
+            args.get(index)
+                .ok_or(usage)?
+                .parse::<u64>()
+                .map_err(|_| "session limits require nonnegative integers")?,
+        );
+        index += 1;
+    }
+    let start = std::time::Instant::now();
+    let mut left = max_work.unwrap_or(u64::MAX);
+    let mut control = |amount: usize| {
+        let amount = amount as u64;
+        if amount > left {
+            return Err(umf_core::EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Maximum work exceeded",
+            ));
+        }
+        left -= amount;
+        if timeout_ms.is_some_and(|ms| start.elapsed() >= std::time::Duration::from_millis(ms)) {
+            return Err(umf_core::EngineError::new(
+                "DEADLINE_EXCEEDED",
+                Utf16::default(),
+                "Deadline exceeded",
+            ));
+        }
+        Ok(())
+    };
+    let mut session = umf_core_wire::typespec_binding::Session::new();
+    let mut input = io::stdin().lock();
+    let mut output = io::stdout().lock();
+    loop {
+        // Bound the allocation before read_until, including unterminated lines.
+        let mut line = Vec::new();
+        let read = input
+            .by_ref()
+            .take(MAX_NATIVE_ADAPTER_REQUEST_BYTES as u64 + 1)
+            .read_until(b'\n', &mut line)
+            .map_err(|error| error.to_string())?;
+        if read == 0 {
+            break;
+        }
+        if line.len() > MAX_NATIVE_ADAPTER_REQUEST_BYTES {
+            return Err("TypeSpec session request exceeds the input limit".into());
+        }
+        let wire = std::str::from_utf8(&line).map_err(|_| "wire input is not valid UTF-8")?;
+        let response = umf_core_wire::typespec_binding::execute_wire_with_session(
+            &mut session,
+            wire,
+            &mut control,
+        );
+        writeln!(output, "{response}").map_err(|error| error.to_string())?;
+        output.flush().map_err(|error| error.to_string())?;
+    }
+    Ok(())
+}
+
+/// Generic transport for every registered one-shot native adapter family.
+/// Capabilities are returned in the same tagged result envelope as host bindings;
+/// the Rust registry owns family profiles and operation names.
+#[cfg(feature = "embedded-adapters")]
+fn adapter_family_run(args: &[String]) -> Result<(), String> {
+    let family = args.first().ok_or(
+        "usage: umf adapter FAMILY <--capabilities|--stdin-wire [--max-work N] [--timeout-ms N]>",
+    )?;
+    if !umf_core_wire::native_family_binding::FAMILIES.contains(&family.as_str()) {
+        return Err("Unknown native adapter family".into());
+    }
+    if args[1..] == ["--capabilities"] {
+        println!(
+            "{}",
+            umf_core_wire::native_family_binding::metadata_wire(family)
+        );
+        return Ok(());
+    }
+    native_adapter_run(
+        "adapter FAMILY",
+        umf_core_wire::native_family_binding::PROFILE,
+        "[]",
+        |wire, control| {
+            umf_core_wire::native_family_binding::execute_wire_with_control(family, wire, control)
+        },
+        &args[1..],
+    )
+}
+
+#[cfg(feature = "embedded-adapters")]
 fn native_adapter_run(
     family: &str,
     profile: &str,
     operations: &str,
-    execute: fn(&str, &mut dyn FnMut(usize) -> Result<(), umf_core::EngineError>) -> String,
+    mut execute: impl FnMut(&str, &mut dyn FnMut(usize) -> Result<(), umf_core::EngineError>) -> String,
     args: &[String],
 ) -> Result<(), String> {
     if args == ["--version"] {

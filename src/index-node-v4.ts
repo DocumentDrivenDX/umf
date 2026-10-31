@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import type {Document,Diagnostic,Json} from './model/types';
 import {assertPythonClientRustPlatformV4,initializePythonClientRustDefaultV4} from './access/rust-default-v4';
 import {bindCoreCardinalityRust} from './access/rust-cardinality-default';
 import {bindCoreKindNullabilityRust} from './access/rust-kind-nullability-default';
@@ -20,6 +21,7 @@ import {bindCoreSemanticTypesRust} from './access/rust-core-semantic-types-defau
 import {bindScalarTypesForVersionRust} from './access/rust-scalar-types-for-version-default';
 import {createSecurityNotRustAdapter} from './extensions/security/rust-not-adapter';
 import {createSecurityLogicRustAdapter} from './extensions/security/rust-logic-adapter';
+import {createProtectionRustDefault} from './extensions/security/protection/rust-default';
 import {createRawTableBindingInspector} from './extensions/binding/raw-profiles-inspector';
 import {createAvroRelationshipProjection} from './core-ideals/relationship-avro-projection-factory';
 import {createTableSpecRelationshipProjection} from './core-ideals/relationship-tablespec-projection-factory';
@@ -38,6 +40,9 @@ import {bindArrowSchemaRust} from './adapters/arrow/rust-default';
 import {bindArrowIpcRust} from './adapters/arrow/rust-ipc-default';
 import {bindDbtRust} from './adapters/dbt/rust-default';
 import {createRegistryRustDefault} from './registry/rust-default';
+import {createActionRuleRustDefault} from './extensions/actions/rust-rule-default';
+import {createTableDeploymentRustDefault} from './table-deployment/rust-default';
+import {CODEGEN_RESOURCES} from './access/codegen-resources';
 import {createGraphqlRustDefault} from './adapters/graphql/rust-default';
 import {createJsonLdRustDefault} from './adapters/jsonld/rust-default';
 import {createOpenapiRustDefault} from './adapters/openapi/rust-default';
@@ -54,6 +59,10 @@ import {PARQUET_EXTENSION,PARQUET_MAX_BYTES,parquetPackage} from './adapters/par
 import {createIcebergSchemaRustDefault} from './adapters/iceberg/rust-default';
 import {createIcebergTableRustDefault} from './adapters/iceberg/table-rust-default';
 import {createDeltaRustDefault} from './adapters/delta/rust-default';
+import {createTypeSpecRustDefault} from './adapters/typespec/rust-default';
+import type {TypeSpecOperations} from './adapters/typespec/rust-default';
+import {executeTypeSpecHostRequest} from './adapters/typespec/host-runtime';
+import {executeTypeSpecParserRequest} from './adapters/typespec/typespec-host-parser';
 import {DELTA_EXTENSION,DELTA_TABLE_EXTENSION,DELTA_LOG_EXTENSION,deltaPackage,deltaTablePackage,deltaLogPackage} from './adapters/delta/package';
 import {ICEBERG_TABLE_EXTENSION,icebergTablePackage} from './adapters/iceberg/table-package';
 import {ICEBERG_EXTENSION,icebergPackage} from './adapters/iceberg/package';
@@ -69,7 +78,7 @@ import {CURRENT_CORE_VERSION,SCALAR_TYPES} from './model/types';
 // Module import resolves only after the native engine is ready. The function
 // exported below remains synchronous and never falls back to TypeScript.
 assertPythonClientRustPlatformV4(process.platform,process.arch);
-const [{createCoreModelRootKindNullabilityEngine,createCoreCardinalityHostInputEngine,createCoreRecordValuesHostInputEngine,createDefaultSemanticTypeRegistry,createCoreRecordTypeEngine,createBit128Engine,createTemporalEngine,createAccessTemporalEngine,ACCESS_TEMPORAL_PROFILE:ACCESS_TEMPORAL_PROFILE_RUST,createSecurityLogicEngine,createJavascriptNumericEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,isDbtHostError,createProtobufDescriptorDocumentEngine,createProtobufSourceImportEngine,createProtobufSourceExportEngine,createGraphqlEngine,createRdfEngine,createNativeFamilyDispatcher,createIcebergSchemaEngine,createIcebergTableEngine,createDeltaSchemaTableEngine,createDeltaLogEngine,createPostgresqlParserSessionEngine,createPostgresqlSqlEngine,createParquetCaptureEngine,createArrowSchemaEngine,createArrowIpcEngine,createDbtEngine,UmfError:BindingUmfError,domainPackSchemaGraphJson,datasetSourceSchemaGraphJson,artifactCollectionSchemaGraphJson,domainPackLoaderSchemaGraphJson,loaderInventorySchemaGraphJson,inspectDomainPackLoaderWire,inspectDomainPackProfileWire,projectSecSubmissionsUtf16Wire,projectSecCompanyFactsUtf16Wire},{CORE_MODEL_RESOURCES},{createPythonClientRustCandidateV4}]=await Promise.all([
+const [{createCoreModelRootKindNullabilityEngine,createCoreCardinalityHostInputEngine,createCoreRecordValuesHostInputEngine,createDefaultSemanticTypeRegistry,createCoreRecordTypeEngine,createBit128Engine,createTemporalEngine,createAccessTemporalEngine,ACCESS_TEMPORAL_PROFILE:ACCESS_TEMPORAL_PROFILE_RUST,createSecurityLogicEngine,createSecurityFunctionsEngine,createSecurityQueryPropertiesEngine,createJavascriptNumericEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,isDbtHostError,createProtobufDescriptorDocumentEngine,createProtobufSourceImportEngine,createProtobufSourceExportEngine,createGraphqlEngine,createRdfEngine,createNativeFamilyDispatcher,createCodegenEngine,createIcebergSchemaEngine,createIcebergTableEngine,createDeltaSchemaTableEngine,createDeltaLogEngine,createPostgresqlParserSessionEngine,createPostgresqlSqlEngine,createTypeSpecSessionEngine,createParquetCaptureEngine,createArrowSchemaEngine,createArrowIpcEngine,createDbtEngine,UmfError:BindingUmfError,domainPackSchemaGraphJson,datasetSourceSchemaGraphJson,artifactCollectionSchemaGraphJson,domainPackLoaderSchemaGraphJson,loaderInventorySchemaGraphJson,inspectDomainPackLoaderWire,inspectDomainPackProfileWire,projectSecSubmissionsUtf16Wire,projectSecCompanyFactsUtf16Wire},{CORE_MODEL_RESOURCES},{createPythonClientRustCandidateV4}]=await Promise.all([
  import('../bindings/core/node/index.js'),
  import('./access/core-model-resources'),
  import('./node-v4'),
@@ -85,9 +94,23 @@ const rdf=createRdfRustDefault(createRdfEngine(),isNativeUmfCoreError,()=>new Re
 const {rdfRegistry,inspectRdfDocument,importRdfNQuads,getRdfQuads,exportRdfNQuads,proposeRdfQuadEdit,proposeRdfIriRename,importRdfTurtle,exportRdfTurtle,getRdfNamedGraphs,importRdfTriG,exportRdfTriG,proposeRdfDatasetMerge,generalizedRdfRegistry,inspectGeneralizedRdfDocument,importGeneralizedRdfDataset,exportGeneralizedRdfDataset,getGeneralizedRdfQuads,proposeGeneralizedRdfQuadEdit}=rdf;
 const {graphqlRegistry,importGraphqlSchema,inspectGraphql,exportGraphqlSchema,getGraphqlAst,editGraphqlAst,exportGraphqlBundle}=graphql;
 const nativeFamilyDispatcher=createNativeFamilyDispatcher();
-const deltaEngine=Object.assign({},createDeltaSchemaTableEngine(),createDeltaLogEngine());
+const protection=createProtectionRustDefault(Object.assign({},createSecurityFunctionsEngine(),createSecurityQueryPropertiesEngine()),isNativeUmfCoreError);
+const {inspectProtectionFunction,evaluateProtectionValue,inspectProtectionQueryProperties}=protection;
+const evaluateActionRule=createActionRuleRustDefault(()=>createCodegenEngine(CODEGEN_RESOURCES),error=>isNativeUmfCoreError(error)||isWireAdmissionError(error));
+const tableDeployment=createTableDeploymentRustDefault(()=>createCodegenEngine(CODEGEN_RESOURCES),error=>isNativeUmfCoreError(error)||isWireAdmissionError(error));
+const {compileTableDeployment,verifyTableDeployment}=tableDeployment;
+const deltaDdlOperations=nativeFamilyDispatcher['delta-ddl'];
+const deltaParquetOperations=nativeFamilyDispatcher['delta-parquet'];
+const deltaEngine=Object.assign({},createDeltaSchemaTableEngine(),createDeltaLogEngine(),{
+  inspectDefinitionPayload:(payload:Json)=>deltaDdlOperations.inspectPayload({payload}) as Diagnostic[],
+  defineTable:(source:string,definition:import('./adapters/delta/ddl').DeltaDefinition,id:string)=>deltaDdlOperations.defineTable({source,definition,id}) as Document,
+  generateDdl:(document:Document)=>deltaDdlOperations.generate({document}) as ReturnType<typeof import('./adapters/delta/ddl').generateDeltaDDL>,
+  generateDdlBundle:(documents:readonly Document[])=>deltaDdlOperations.generateBundle({documents}) as ReturnType<typeof import('./adapters/delta/ddl').generateDeltaDDLBundle>,
+  realizeSparkDelta4:(document:Document,target:Parameters<typeof import('./adapters/delta/ddl').realizeSparkDelta4DDL>[1])=>deltaDdlOperations.realizeSparkDelta4({document,target}) as ReturnType<typeof import('./adapters/delta/ddl').realizeSparkDelta4DDL>,
+  projectParquetActions:(document:Document)=>deltaParquetOperations.projectActions({document}) as ReturnType<typeof import('./adapters/delta/parquet').projectDeltaParquetActions>,
+});
 const delta=createDeltaRustDefault(deltaEngine,error=>isNativeUmfCoreError(error)||error instanceof BindingUmfError,()=>new Registry());
-const {deltaRegistry,deltaTableRegistry,deltaLogRegistry,inspectDelta,importDeltaSchema,exportDeltaSchema,getDeltaNode,proposeDeltaNodeEdit,inspectDeltaTable,importDeltaTable,exportDeltaTable,getDeltaTableNode,proposeDeltaTableNodeEdit,renameDeltaMappedField,getDeltaTableSchema,captureDeltaLog,exportDeltaLog,inspectDeltaLog,inspectDeltaActions,reconcileDeltaCommits}=delta;
+const {deltaRegistry,deltaTableRegistry,deltaLogRegistry,inspectDelta,importDeltaSchema,exportDeltaSchema,getDeltaNode,proposeDeltaNodeEdit,inspectDeltaTable,importDeltaTable,exportDeltaTable,getDeltaTableNode,proposeDeltaTableNodeEdit,renameDeltaMappedField,getDeltaTableSchema,captureDeltaLog,exportDeltaLog,inspectDeltaLog,inspectDeltaActions,reconcileDeltaCommits,defineDeltaTable,generateDeltaDDL,generateDeltaDDLBundle,realizeSparkDelta4DDL,projectDeltaParquetActions}=delta;
 const icebergSchema=createIcebergSchemaRustDefault(createIcebergSchemaEngine(),error=>isNativeUmfCoreError(error)||error instanceof BindingUmfError,()=>new Registry());
 const {icebergRegistry,inspectIceberg,importIcebergSchema,exportIcebergSchema,getIcebergNode,proposeIcebergNodeEdit}=icebergSchema;
 const icebergTable=createIcebergTableRustDefault(createIcebergTableEngine(),error=>isNativeUmfCoreError(error)||error instanceof BindingUmfError,()=>new Registry());
@@ -99,6 +122,20 @@ const {captureParquet,importParquetSchema,encodeParquetWire,exportParquetCapture
 function parquetRegistry():Registry{return new Registry().register(parquetPackage);}
 const postgresql=createPostgresqlRustDefault(createPostgresqlParserSessionEngine(),isNativeUmfCoreError,()=>new Registry());
 const {postgresqlRegistry,validatePostgresqlAst,inspectPostgresql,importPostgresqlSql,exportPostgresqlSql,getPostgresqlSource,getPostgresqlNode,proposePostgresqlNodeEdit}=postgresql;
+const rawTypeSpecSession=createTypeSpecSessionEngine({executeCompilerRequest:executeTypeSpecHostRequest,executeParserRequest:executeTypeSpecParserRequest});
+const typespecOperations:TypeSpecOperations={
+ inspectTypeSpec:document=>rawTypeSpecSession.inspectTypeSpec(document) as ReturnType<TypeSpecOperations['inspectTypeSpec']>,
+ importTypeSpecSources:(input,options)=>rawTypeSpecSession.importTypeSpecSources(input,options) as ReturnType<TypeSpecOperations['importTypeSpecSources']>,
+ exportTypeSpecSources:document=>rawTypeSpecSession.exportTypeSpecSources(document) as ReturnType<TypeSpecOperations['exportTypeSpecSources']>,
+ proposeTypeSpecSourceEdit:(document,path,source)=>rawTypeSpecSession.proposeTypeSpecSourceEdit(document,path,source) as ReturnType<TypeSpecOperations['proposeTypeSpecSourceEdit']>,
+ getTypeSpecSyntax:(document,path)=>rawTypeSpecSession.getTypeSpecSyntax(document,path) as ReturnType<TypeSpecOperations['getTypeSpecSyntax']>,
+ inspectTypeSpecPayload:payload=>rawTypeSpecSession.inspectTypeSpecPayload(payload) as ReturnType<TypeSpecOperations['inspectTypeSpecPayload']>,
+ compileTypeSpecDocument:document=>rawTypeSpecSession.compileTypeSpecDocument(document) as ReturnType<TypeSpecOperations['compileTypeSpecDocument']>,
+ getTypeSpecSemanticGraph:(document,input)=>rawTypeSpecSession.getTypeSpecSemanticGraph(document,input) as ReturnType<TypeSpecOperations['getTypeSpecSemanticGraph']>,
+ emitTypeSpecJsonSchema:(document,input)=>rawTypeSpecSession.emitTypeSpecJsonSchema(document,input) as ReturnType<TypeSpecOperations['emitTypeSpecJsonSchema']>,
+};
+const typespec=createTypeSpecRustDefault(typespecOperations,isNativeUmfCoreError,()=>new Registry());
+const {TYPESPEC_EXTENSION,typespecPackage,typespecRegistry,inspectTypeSpec,importTypeSpecSources,exportTypeSpecSources,compileTypeSpecDocument,getTypeSpecSyntax,getTypeSpecSemanticGraph,emitTypeSpecJsonSchema,proposeTypeSpecSourceEdit}=typespec;
 const jsonld=createJsonLdRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError,()=>new Registry());
 const {jsonldRegistry,importJsonLdDocument,inspectJsonLdDocument,exportJsonLdDocument,getJsonLdNode,proposeJsonLdNodeEdit,proposeJsonLdExpansion,proposeJsonLdFlatten,proposeJsonLdCompaction,proposeJsonLdFraming,proposeJsonLdToRdf,proposeRdfToJsonLd,proposeGeneralizedRdfToJsonLd}=jsonld;
 const openapi=createOpenapiRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError,()=>new Registry());
@@ -216,6 +253,9 @@ export {createPostgresqlSqlEngine};
 export {avroRegistry,inspectAvro,importAvroSchema,getAvroFieldMetadata,exportAvroSchema,exportAvroBundle,getAvroNode,editAvroNode,proposeAvroNodeEdit};
 export {PARQUET_EXTENSION,PARQUET_MAX_BYTES,parquetPackage,parquetRegistry,captureParquet,importParquetSchema,encodeParquetWire,exportParquetCapture,inspectParquetFraming,decodeParquetFooter,inspectParquetMetadata,inspectParquetSchema,inspectParquetPages,decodeParquetPageBodies,decodeParquetLevels,decodeParquetPhysical,decodeParquetValues,assembleParquetRows,repairParquetDictionaryOffsets,inspectParquetLogicalTypes,inspectParquetContainers,getParquetFieldMetadata,appendParquetKeyValueMetadata,renameParquetField};
 export {openapiRegistry,importOpenapiDocument,inspectOpenapi,exportOpenapiDocument,getOpenapiNode,lookupOpenapiResource,extractOpenapiSchema,indexOpenapiSchemas,resolveOpenapiSchemaReference,resolveOpenapiDynamicReference,resolveOpenapiObjectReference,exportOpenapiBundle,proposeOpenapiEdit};
+export {TYPESPEC_EXTENSION,typespecPackage,typespecRegistry,inspectTypeSpec,importTypeSpecSources,exportTypeSpecSources,compileTypeSpecDocument,getTypeSpecSyntax,getTypeSpecSemanticGraph,emitTypeSpecJsonSchema,proposeTypeSpecSourceEdit};
+export type {TypeSpecPayload} from './adapters/typespec/package';
+export type {TypeSpecCompilerReport,TypeSpecGraphReport,TypeSpecJsonSchemaEmission} from './adapters/typespec/report-types';
 export {linkmlRegistry,importLinkmlDocument,inspectLinkmlDocument,exportLinkmlDocument,getLinkmlDocumentNode,proposeLinkmlDocumentNodeEdit,inspectLinkmlImportContext,proposeLinkmlImportMerge,inspectLinkmlClassSlots,inspectLinkmlSlotValues,odcsRegistry,importOdcsDocument,inspectOdcsDocument,exportOdcsDocument,getOdcsDocumentNode,proposeOdcsDocumentNodeEdit,resolveOdcsReference,inspectOdcsRelationships,proposeOdcsElementRename};
 export {importTableSpec,inspectTableSpec,exportTableSpec,getTableSpecTable,getTableSpecColumn,editTableSpecTable,editTableSpecColumn,importTableSpecBundle,exportTableSpecBundle};
 export {sqlserverRegistry,importSqlServerCatalog,inspectSqlServer,exportSqlServerCatalog,getSqlServerColumnMetadata,getSqlServerConstraintMetadata,getSqlServerIndexMetadata,proposeSqlServerCatalogEdit,inspectSqlServerFacetType,inspectSqlServerFacetPredicate,inspectSqlServerFacetConstraints};
@@ -237,4 +277,8 @@ export { deltaTablePackage };
 
 export { deltaLogPackage };
 
-export {deltaRegistry,deltaTableRegistry,deltaLogRegistry,inspectDelta,importDeltaSchema,exportDeltaSchema,getDeltaNode,proposeDeltaNodeEdit,inspectDeltaTable,importDeltaTable,exportDeltaTable,getDeltaTableNode,proposeDeltaTableNodeEdit,renameDeltaMappedField,getDeltaTableSchema,captureDeltaLog,exportDeltaLog,inspectDeltaLog,inspectDeltaActions,reconcileDeltaCommits};
+export {deltaRegistry,deltaTableRegistry,deltaLogRegistry,inspectDelta,importDeltaSchema,exportDeltaSchema,getDeltaNode,proposeDeltaNodeEdit,inspectDeltaTable,importDeltaTable,exportDeltaTable,getDeltaTableNode,proposeDeltaTableNodeEdit,renameDeltaMappedField,getDeltaTableSchema,captureDeltaLog,exportDeltaLog,inspectDeltaLog,inspectDeltaActions,reconcileDeltaCommits,defineDeltaTable,generateDeltaDDL,generateDeltaDDLBundle,realizeSparkDelta4DDL,projectDeltaParquetActions};
+
+export {evaluateActionRule,compileTableDeployment,verifyTableDeployment};
+
+export {inspectProtectionFunction,evaluateProtectionValue,inspectProtectionQueryProperties};

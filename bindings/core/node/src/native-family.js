@@ -17,6 +17,8 @@ const FAMILIES=Object.freeze({
  'delta-schema':{profile:'umf-r8-delta-source/0.1.0',operations:['import','inspect','inspectPayload','export','getNode','proposeNodeEdit']},
  'delta-table':{profile:'umf-r8-delta-source/0.1.0',operations:['import','inspect','inspectPayload','export','getNode','getSchema','proposeNodeEdit','renameMappedField']},
  'delta-log':{profile:'umf-r8-delta-log/0.1.0',operations:['capture','export','inspect','inspectActions','reconcileCommits']},
+ 'delta-ddl':{profile:'umf-r8-delta-ddl/0.1.0',operations:['defineTable','generate','generateBundle','realizeSparkDelta4','inspectPayload']},
+ 'delta-parquet':{profile:'umf-r8-parquet-capture-inspection/0.1.0',operations:['projectActions']},
 });
 
 /** Route a closed adapter family and operation to Rust without reinterpreting its payload. */
@@ -35,7 +37,7 @@ export function createNativeFamilyOperations(executeNativeFamilyWire,controlDisp
    Object.defineProperty(request,key,{value:descriptor.value,enumerable:true,writable:true,configurable:true});
   }
   request.profile=spec.profile;
-  request.op=family==='tablespec'?operation:family==='iceberg-table'?`iceberg.table.${operation}`:family==='delta-schema'?`delta/schema.${operation}`:family==='delta-table'?`delta/table.${operation}`:family==='delta-log'?`delta/log.${operation}`:`${family}.${operation}`;
+  request.op=family==='tablespec'?operation:family==='iceberg-table'?`iceberg.table.${operation}`:family==='delta-schema'?`delta/schema.${operation}`:family==='delta-table'?`delta/table.${operation}`:family==='delta-log'?`delta/log.${operation}`:family==='delta-ddl'?`delta.ddl.${operation}`:family==='delta-parquet'?`delta.parquet.${operation}`:`${family}.${operation}`;
   hostWork?.(1);
   const requestWire=encodeRequestWire(request,hostWork);
   const responseText=executeNativeFamilyWire(family,requestWire,controlDispatcher);

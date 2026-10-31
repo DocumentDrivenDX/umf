@@ -102,6 +102,13 @@ class CodegenEngine:
             raise UmfCodegenError(response["error"])
         return response["result"]
 
+    def evaluate_action_rule(self, document: Any, action: Any, rule: Any,
+                             phase: str, state: Any) -> bool:
+        """Compile and evaluate a declared rule through the shared Rust kernel."""
+        return self._result("evaluateActionRule", {
+            "document": document, "action": action, "rule": rule,
+            "phase": phase, "state": state})
+
     def inspect_sagas(self, source: Any) -> Any:
         return self._result("inspectSagas", {"source": source})
 

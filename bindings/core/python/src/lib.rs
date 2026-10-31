@@ -1,4 +1,4 @@
-use std::{cell::RefCell, collections::HashMap, rc::Rc};
+use std::{cell::RefCell, collections::HashMap, rc::Rc, sync::Mutex};
 
 use num_bigint::BigInt;
 use pyo3::{
@@ -1086,6 +1086,70 @@ fn rdf_profile_version() -> &'static str {
     umf_core_wire::rdf_binding::PROFILE
 }
 
+/// Per-instance transport; all pending state and admission live in Rust.
+#[pyclass]
+struct TypeSpecSession {
+    inner: Mutex<umf_core_wire::typespec_binding::Session>,
+}
+
+#[pymethods]
+impl TypeSpecSession {
+    #[new]
+    fn new() -> Self {
+        Self {
+            inner: Mutex::new(umf_core_wire::typespec_binding::Session::new()),
+        }
+    }
+
+    fn profile_version(&self) -> &'static str {
+        umf_core_wire::typespec_binding::PROFILE
+    }
+
+    #[pyo3(signature = (wire_json, control=None))]
+    fn execute(
+        &self,
+        py: Python<'_>,
+        wire_json: &str,
+        control: Option<PyObject>,
+    ) -> PyResult<String> {
+        if control
+            .as_ref()
+            .is_some_and(|value| !value.bind(py).is_callable())
+        {
+            return Err(PyValueError::new_err("control must be callable"));
+        }
+        // Callback reentry must return an envelope rather than borrow-panic or block.
+        let Ok(mut session) = self.inner.try_lock() else {
+            return Ok(umf_core_wire::typespec_binding::busy_session_envelope());
+        };
+        let mut hook = |amount: usize| {
+            let Some(control) = control.as_ref() else {
+                return Ok(());
+            };
+            let outcome = control
+                .bind(py)
+                .call1((amount,))
+                .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+            if outcome.is_none() {
+                return Ok(());
+            }
+            let (code, message, path): (String, String, String) = outcome
+                .extract()
+                .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+            Err(EngineError::new(
+                code,
+                Utf16::from(path),
+                Utf16::from(message),
+            ))
+        };
+        Ok(umf_core_wire::typespec_binding::execute_wire_with_session(
+            &mut session,
+            wire_json,
+            &mut hook,
+        ))
+    }
+}
+
 #[pyfunction]
 fn native_adapter_metadata(family: &str) -> String {
     umf_core_wire::native_family_binding::metadata_wire(family)
@@ -1181,10 +1245,7 @@ fn execute_postgresql_native_sql_wire(
             Utf16::from(message),
         ))
     };
-    Ok(umf_core_wire::postgresql_native_binding::execute_wire_with_control(
-        wire_json,
-        &mut hook,
-    ))
+    Ok(umf_core_wire::postgresql_native_binding::execute_wire_with_control(wire_json, &mut hook))
 }
 
 #[pyfunction]
@@ -1300,12 +1361,12 @@ fn execute_graphql_edit_wire(
                 ));
             }
         };
-        let value = value.downcast::<PyString>().map_err(|error| {
-            py_exception_engine_error(py, "GRAPHQL_CALLBACK", error.into())
-        })?;
-        let output = value.to_str().map_err(|error| {
-            py_exception_engine_error(py, "GRAPHQL_CALLBACK", error)
-        })?;
+        let value = value
+            .downcast::<PyString>()
+            .map_err(|error| py_exception_engine_error(py, "GRAPHQL_CALLBACK", error.into()))?;
+        let output = value
+            .to_str()
+            .map_err(|error| py_exception_engine_error(py, "GRAPHQL_CALLBACK", error))?;
         let units = output.encode_utf16().count();
         if units > 32 * 1024 * 1024 || output.len() > 32 * 1024 * 1024 {
             return Err(EngineError::new(
@@ -6379,6 +6440,7 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
         module
     )?)?;
     module.add_class::<CaptureResourceSession>()?;
+    module.add_class::<TypeSpecSession>()?;
     module.add_function(wrap_pyfunction!(
         access_observe_capture_field_join_tuple,
         module
@@ -6452,9 +6514,15 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(native_adapter_metadata, module)?)?;
     module.add_function(wrap_pyfunction!(execute_native_family_wire, module)?)?;
     #[cfg(feature = "native-postgresql")]
-    module.add_function(wrap_pyfunction!(postgresql_native_sql_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        postgresql_native_sql_profile_version,
+        module
+    )?)?;
     #[cfg(feature = "native-postgresql")]
-    module.add_function(wrap_pyfunction!(execute_postgresql_native_sql_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        execute_postgresql_native_sql_wire,
+        module
+    )?)?;
     module.add_function(wrap_pyfunction!(graphql_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_graphql_wire, module)?)?;
     module.add_function(wrap_pyfunction!(execute_graphql_edit_wire, module)?)?;
