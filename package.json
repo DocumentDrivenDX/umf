@@ -17,6 +17,10 @@
       "types": "./dist/src/index.d.ts",
       "import": "./dist/umf.js"
     },
+    "./runtime/wasm": {
+      "types": "./dist/runtime/wasm/index.d.ts",
+      "import": "./dist/runtime/wasm/index.js"
+    },
     "./rust-codegen-candidate/v2": {
       "types": "./dist/src/node.d.ts",
       "browser": "./dist/umf-rust-codegen-candidate-v2-browser.js",

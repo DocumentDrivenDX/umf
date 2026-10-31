@@ -545,7 +545,7 @@ fn validate_operation_input(
         "kind",
         "replacementJson",
     ];
-    for name in TEXT {
+    for &name in TEXT {
         if let Some(value) = field(req, name) {
             let is_optional = matches!(name, "baseUri" | "resourceUri" | "fromUri")
                 || (name == "format" && op == "openapi.export");

@@ -20,6 +20,8 @@ class PackageManifestTests(unittest.TestCase):
             path = self.root / name
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_bytes(('fixture:' + name).encode())
+        (self.root / 'dist/runtime/wasm/index.js').write_text("import './src/wire.js';\n")
+        (self.root / 'dist/runtime/wasm/src/wire.js').write_text('export {};\n')
         self.package = {
             'name': '@umf/core', 'version': '0.5.6', 'private': True,
             'type': 'module', 'license': 'MIT OR Apache-2.0',
@@ -27,6 +29,8 @@ class PackageManifestTests(unittest.TestCase):
                 '.': {'node': './dist/umf-node.js', 'browser': './dist/umf-browser.js',
                       'import': './dist/umf-browser.js', 'default': './dist/umf-browser.js'},
                 './reference': {'import': './dist/umf.js'},
+                './runtime/wasm': {'types': './dist/runtime/wasm/index.d.ts',
+                                   'import': './dist/runtime/wasm/index.js'},
             },
         }
         (self.root / 'package.json').write_text(json.dumps(self.package))
@@ -40,7 +44,7 @@ class PackageManifestTests(unittest.TestCase):
         external_path.write_bytes(b'locked external wasm fixture')
         manifest = {
             'format': sdk.FORMAT,
-            'api': {'generator': 'synchronous'},
+            'api': {'generator': 'synchronous', 'sagaRuntime': './runtime/wasm'},
             'sourceClosure': {
                 'liveInputs': live, 'capturedLiveSha256': sdk.tree_hash(self.root, live),
                 'fileCount': len(live), 'sha256': 'derived-source-tree',
@@ -61,6 +65,20 @@ class PackageManifestTests(unittest.TestCase):
         manifest, assets = sdk.verify(self.root)
         self.assertEqual(manifest['format'], sdk.FORMAT)
         self.assertEqual(len(assets), len(self.files) - 1)
+    def test_saga_runtime_is_part_of_the_verified_asset_closure(self):
+        manifest, assets = sdk.verify(self.root)
+        self.assertEqual(manifest['api']['sagaRuntime'], './runtime/wasm')
+        self.assertIn('dist/runtime/wasm/pkg/umf_core_wasm_bg.wasm', assets)
+        self.assertIn('dist/runtime/wasm/index.js', assets)
+    def test_missing_saga_runtime_import_refuses(self):
+        wire = self.root / 'dist/runtime/wasm/src/wire.js'
+        wire.write_text("import {missing} from './missing.js';\n")
+        manifest_path = self.root / 'dist/rust-default-manifest.json'
+        manifest = json.loads(manifest_path.read_text())
+        manifest['assets']['dist/runtime/wasm/src/wire.js'] = sdk.sha256(wire.read_bytes())
+        manifest_path.write_text(json.dumps(manifest))
+        with self.assertRaisesRegex(ValueError, 'Saga runtime dependency is missing'):
+            sdk.verify(self.root)
     def test_missing_asset_refuses(self):
         (self.root / 'dist/umf-browser.js').unlink()
         with self.assertRaisesRegex(ValueError, 'required asset missing'):

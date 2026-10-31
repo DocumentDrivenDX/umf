@@ -127,6 +127,9 @@ try{
   join(root,'bindings/core/node/package.json'),join(root,'bindings/core/wasm/package.json'),
   join(root,'.cargo/config.toml'),
   join(root,'scripts/package-sdk-rust-default.ts'),
+  join(root,'scripts/package-sdk.py'),
+  join(root,'scripts/package-sdk.ts'),
+  join(root,'scripts/build-saga-runtime.ts'),
   join(root,'scripts/check-core-authority.ts'),
   join(root,'scripts/core-authority-policy.json'),
   join(root,'scripts/check-unified-client-boundaries.ts'),
@@ -223,6 +226,25 @@ try{
  await mkdir(join(root,'bindings/core/wasm/pkg'),{recursive:true});
  await cp(join(wasmOut,'umf_core_wasm.js'),join(root,'bindings/core/wasm/pkg/umf_core_wasm.js'));
  await cp(join(wasmOut,'umf_core_wasm.d.ts'),join(root,'bindings/core/wasm/pkg/umf_core_wasm.d.ts'));
+ // The public Saga WASM subpath uses this same freshly compiled Rust module.
+ // Copy the complete checked-in host wrapper dependency graph into dist before
+ // the asset manifest is measured; no post-manifest append is permitted.
+ const sagaWasm=join(dist,'runtime/wasm');
+ await mkdir(join(sagaWasm,'pkg'),{recursive:true});
+ await cp(join(root,'bindings/core/wasm/index.js'),join(sagaWasm,'index.js'));
+ await cp(join(root,'bindings/core/wasm/index.d.ts'),join(sagaWasm,'index.d.ts'));
+ for(const source of await filesUnder(join(root,'bindings/core/wasm/src'))){
+  if(!/\.(?:js|d\.ts)$/.test(source)&&!source.endsWith('/shared-sources.json'))continue;
+  const target=join(sagaWasm,'src',relative(join(root,'bindings/core/wasm/src'),source));
+  await mkdir(join(target,'..'),{recursive:true});
+  await cp(source,target);
+ }
+ for(const name of ['umf_core_wasm.js','umf_core_wasm.d.ts','umf_core_wasm_bg.wasm'])
+  await cp(join(wasmOut,name),join(sagaWasm,'pkg',name));
+ const sagaNodeWire=join(dist,'runtime/node/src');
+ await mkdir(sagaNodeWire,{recursive:true});
+ for(const name of ['wire.js','wire.d.ts'])
+  await cp(join(root,'bindings/core/node/src',name),join(sagaNodeWire,name));
  await run([process.execPath,'scripts/build-postgresql.ts']);
  await run([process.execPath,'node_modules/typescript/bin/tsc','--emitDeclarationOnly','--outDir',dist]);
  await cp(join(root,'spec'),join(dist,'spec'),{recursive:true});
@@ -281,9 +303,9 @@ try{
   defaultRouteSource:'V4 synchronous Rust root entry selected by package.json for the supported native and browser hosts',
   packageVersion,
   platform:{os:host,arch:archId,nodeArch:arch,nativeTarget:host==='darwin'?'aarch64-apple-darwin':'x86_64-unknown-linux-gnu',napi:'N-API 8',runtimeCohort:['Node','Bun']},
-  resources:{count:9,identity:'fixed-repository-owned'},
+  resources:{count:10,identity:'fixed-repository-owned'},
   limits:{recordPositions:10000,actionPositions:1000,selectedIdentityUtf16Units:4000000},
-  api:{entry:'.',reference:'./reference',moduleLoad:'top-level-await-initialization',generator:'synchronous'},
+  api:{entry:'.',reference:'./reference',sagaRuntime:'./runtime/wasm',moduleLoad:'top-level-await-initialization',generator:'synchronous'},
   toolchain:{rustc,cargo:await capture(['cargo','--version']),bun:Bun.version,wasmBindgen:'0.2.100',cargoLockSha256:await digest(join(root,'Cargo.lock'))},
   sourceClosure:{sha256:sourceHash,capturedLiveSha256:capturedLiveSourceHash,transform:sourceTransform,coverage:'Repository source closure includes Rust crates, core Node/WASM/Python binding source and Node/WASM binding tests, TypeScript source, schemas, fixture/corpus inputs, builder scripts, and metamodel compiler inputs. The exact external WASM package resource copied by build-postgresql.ts is separately SHA-256 pinned. The model metamodel and action identity generators run inside an isolated source snapshot; generated-input changes are recorded in transform.',fileCount:sourceInputs.length,liveInputs:capturedLiveInputHashes,inputs:sourceInputHashes,externalInputs:externalInputHashes},
   assets:Object.fromEntries(await Promise.all(compiled.map(async path=>[relative(packageRoot,path).split('\\').join('/'),await digest(path)]))),

@@ -2,6 +2,7 @@
 """Verify one source-build manifest and write the canonical SDK archive."""
 from pathlib import Path, PurePosixPath
 import gzip, hashlib, io, json, os, tarfile, tempfile
+import re
 
 OUTPUT = Path('.cache/sdk-distribution')
 FORMAT = 'umf.rust-sdk-package/1'
@@ -13,6 +14,12 @@ REQUIRED = [
     'dist/spec/extensions/actions/schema.json', 'dist/loader-contract.js',
     'dist/spec/extensions/saga/package.json', 'dist/spec/extensions/saga/schema.json',
     'dist/spec/extensions/saga/runtime.schema.json',
+    'dist/runtime/wasm/index.js', 'dist/runtime/wasm/index.d.ts',
+    'dist/runtime/wasm/pkg/umf_core_wasm.js',
+    'dist/runtime/wasm/pkg/umf_core_wasm.d.ts',
+    'dist/runtime/wasm/pkg/umf_core_wasm_bg.wasm',
+    'dist/runtime/wasm/src/wire.js', 'dist/runtime/wasm/src/wire.d.ts',
+    'dist/runtime/node/src/wire.js', 'dist/runtime/node/src/wire.d.ts',
     'dist/postgresql/runtime.js', 'dist/postgresql/libpg-query.wasm',
 ]
 
@@ -58,6 +65,19 @@ def tree_hash(root, inputs):
         digest.update(b'\0')
     return digest.hexdigest()
 
+def verify_runtime_imports(root):
+    runtime = Path(root) / 'dist/runtime/wasm'
+    runtime_root = runtime.resolve(strict=True)
+    import_pattern = re.compile(r'''(?:\bfrom\s*|\bimport\s*\()\s*['"](\.{1,2}/[^'"]+)['"]''')
+    for source in runtime.rglob('*.js'):
+        text = source.read_text(encoding='utf-8', errors='strict')
+        for relative in import_pattern.findall(text):
+            dependency = (source.parent / relative).resolve(strict=False)
+            if not dependency.is_relative_to(runtime_root):
+                raise ValueError(f'SDK_BUILD Saga runtime import escapes its package: {relative}')
+            if not dependency.is_file():
+                raise ValueError(f'SDK_BUILD Saga runtime dependency is missing: {relative}')
+
 def verify_source_closure(root, manifest):
     closure = manifest.get('sourceClosure') or {}
     live_inputs = closure.get('liveInputs') or {}
@@ -90,16 +110,22 @@ def verify(root):
     exports = package.get('exports') or {}
     root_export = exports.get('.') or {}
     reference = exports.get('./reference') or {}
+    saga_runtime = exports.get('./runtime/wasm') or {}
     if (root_export.get('node') != './dist/umf-node.js'
             or root_export.get('browser') != './dist/umf-browser.js'
             or root_export.get('import') != './dist/umf-browser.js'
             or root_export.get('default') != './dist/umf-browser.js'
-            or reference.get('import') != './dist/umf.js'):
+            or reference.get('import') != './dist/umf.js'
+            or saga_runtime.get('types') != './dist/runtime/wasm/index.d.ts'
+            or saga_runtime.get('import') != './dist/runtime/wasm/index.js'):
         raise ValueError('SDK_BUILD root/reference export routing mismatch')
+    if manifest.get('api', {}).get('sagaRuntime') != './runtime/wasm':
+        raise ValueError('SDK_BUILD Saga runtime is absent from the default build manifest')
 
     for name in REQUIRED:
         if not (root / name).is_file():
             raise ValueError(f'SDK_BUILD required asset missing: {name}')
+    verify_runtime_imports(root)
     assets = manifest.get('assets') or {}
     for name in assets:
         if not name.startswith('dist/') or name == 'dist/rust-default-manifest.json':
@@ -160,9 +186,10 @@ def package(root, output=OUTPUT):
     package_bytes = (json.dumps(package_json, indent=2) + '\n').encode()
     readme_bytes = (
         '# UMF SDK\n\n'
-        'The package root uses the synchronous Rust V4 Python-client generator. '
-        'The TypeScript implementation remains available from `@umf/core/reference`. '
-        'This package contains source-built Rust SDK assets.\n'
+        'The package root uses the synchronous Rust V4 entry. The TypeScript reference '
+        'implementation remains available from `@umf/core/reference`. The shared Saga '
+        'WASM host is available from `@umf/core/runtime/wasm`; declarations and resources '
+        'are included in the source-built asset manifest.\n'
     ).encode()
     auxiliary = {
         'package.json': package_bytes,
