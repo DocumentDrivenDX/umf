@@ -100,7 +100,10 @@ or treat locator strings as authenticated evidence.
 ## Technology Rationale
 
 Reuse the explicit Registry, portable JSON copying and JSON/YAML serializer.
-Use TypeScript compiled to browser JavaScript with Bun tooling per ADR-002.
+The public TypeScript package is compiled to browser JavaScript and uses Bun
+tooling under ADR-002. ADR-006 assigns portable action semantics to the shared
+Rust engine; TypeScript presents those operations and does not implement a
+separate evaluator.
 The package adds no database, process API, evaluator, network loader or auth
 provider. Native grammar versions are not adopted by this authored profile.
 
@@ -128,14 +131,16 @@ association Record; they do not settle broader core instance semantics.
 
 ## Traceability and Gaps
 
-STP-900 allocates all nine story criteria to concrete planned tests. US-901, TD-901 and STP-901 allocate the complete bounded reference-consumer
-journey, including EX-01–05 runtime witnesses. Consumer
-execution witnesses are a separate gate and are not a passing library result.
+STP-900 maps all nine story criteria to executable tests. US-901, TD-901 and
+STP-901 define the bounded reference-consumer journey, including EX-01–05 runtime
+witnesses. Consumer execution evidence remains separate from library evidence;
+it applies only to the exact consumer profile and source cohort exercised.
 CONTRACT-901 selects exact bounded rule/selector syntax, invocation variants and
-handler-access requirements. Store adapters, policy/handler implementations and
-sandbox qualification remain consumer-owned, unimplemented work. Broader proposal sections 2–6 (global conformance,
-instance semantics, scalar coverage, canonical keys and authority) are not
-silently adopted by this action slice.
+handler-access requirements. The fixed PostgreSQL reference consumer implements
+a bounded store, policy, handler and sandbox profile. Other stores, arbitrary
+policies or handlers, and broader proposal sections 2–6 (global conformance,
+instance semantics, scalar coverage, canonical keys and authority) remain
+separate consumer claims and are not silently adopted by this action slice.
 
 ## Risks
 

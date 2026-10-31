@@ -38,9 +38,11 @@ Portable completion requires the shared Rust operation family and actual Chromiu
 
 ## Current Acceptance Criteria Test Mapping
 
-The exact fixture IDs below live in `fixtures/saga/portable.json` and run through
+Portable fixture IDs below live in `fixtures/saga/portable.json` and run through
 `scripts/saga-portable/verify.ts` on N-API, actual Chromium WASM, CLI and installed
 Python. Focused Rust checks live in `crates/umf-codegen/src/actions/saga/tests.rs`.
+US-906-AC14 instead maps to the named public native protocol tests, which compare
+runtime history with independent provider observations.
 
 | AC | Current fixture / witness | Required assertion |
 | --- | --- | --- |
@@ -57,11 +59,14 @@ Python. Focused Rust checks live in `crates/umf-codegen/src/actions/saga/tests.r
 | US-906-AC11 | `inert-handler-url`, native/browser fetch traps | Artifact names cause no host lookup/effect; Rust remains the shared semantic owner. |
 | US-906-AC12 | `at-32-steps`, `over-32-steps`, focused Rust limits | At-limit succeeds; explicit overflow refusal, never eligible truncation. |
 | US-906-AC13 | Entire static corpus via native/browser runners | Actual N-API and Chromium satisfy independent expected outcomes and exact diagnostics. |
-| US-906-AC14 | `ordered-baseline` assessment | Compatibility/coordination claims remain distinct from runtime completion; executionVerified is false. |
+| US-906-AC14 | `public success history agrees with independently queried native provider outcomes`; `a rejected allocation unwinds with the original typed output from its prior commit` | Success records `succeeded` with committed forward outcomes; compensated termination records `compensated` with the original committed/rejected/committed history. Independent provider observations agree; neither state claims distributed atomicity. |
 | US-906-AC15 | `unknown-external-profile`, `external-action-meaning` | An inert handler/profile annotation does not enable external effects. |
 | US-906-AC16 | `recipe-declaration`, `recipe-missing-output` | Recipe binding is considered; unavailable output remains a separate error. |
 
-This allocation is not a test-total completion claim. The source-bound
+The `recipe-declaration` assessment allocation independently checks complete
+support claims while keeping `executionVerified:false`; it does not establish
+runtime completion meaning for AC14. This allocation is not a test-total
+completion claim. The source-bound
 [released packet](../../04-build/evidence/sagas/README.md) remains historical;
 the [test-tightening plan](../../04-build/actions-sagas-test-tightening-plan.md)
 governs new oracle/custody controls. Static expected diagnostic code/severity/path

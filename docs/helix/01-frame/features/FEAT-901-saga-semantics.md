@@ -247,7 +247,11 @@ transactional meaning; CONTRACT-904 governs bulk coordination independently.
 CONTRACT-001 owns extension registration and preservation; CONTRACT-040/041/049
 own model references and values. CONTRACT-908 owns the shared
 surface; SD-901, TD-906/905 and STP-906/905 own design and acceptance allocation.
-Schema/formal analysis is distinct from future semantic/native qualification.
+Portable semantic assessment and native consumer execution answer different
+questions. A compatible declaration claim does not qualify a host; each native
+consumer must independently demonstrate its custody, authority and provider
+boundaries. Neither a schema check nor a bounded reference consumer establishes
+production hosting support.
 
 ## Formal validation boundary
 

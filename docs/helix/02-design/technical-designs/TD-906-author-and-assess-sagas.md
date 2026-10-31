@@ -56,25 +56,21 @@ identity. It cannot convert evidence links or action support into coordination
 support, and it always leaves executionVerified false. Bound source/claim tables
 before traversing; a limit yields explicit failure, never a supported prefix.
 
-## Component Changes
+## Component Boundaries
 
-All paths below are planned implementation locations, not delivered source.
-
-| Module | Owned work | Dependency rule |
+| Component | Responsibility | Dependency rule |
 | --- | --- | --- |
-| `crates/umf-codegen/src/actions/saga/mod.rs` | Public Rust saga operation facade and immutable analysis lifetime | Parent action inspection and core values only. |
-| `.../saga/structure.rs` | Package/definition admission and preservation diagnostics | Generated model/package data and existing core admission. |
-| `.../saga/references.rs` | Exact order, parameter identity, availability and mapping checks | Shared action inspection; no native provider types. |
-| `.../saga/assessment.rs` | Claim comparison and deterministic bounded obligations | Immutable analysis; no network, clock, authority or database lookup. |
-| `src/extensions/actions/saga.ts`, core bindings | Typed presentation of the same Rust operations | Shared wire/public engine; no independent semantic evaluator. |
-| Metamodel/package compiler inputs | Promote reviewed shapes into generated packages/types | ADR-005; proposal sources are not handwritten production generated output. |
+| `crates/umf-codegen/src/actions/saga/mod.rs` | Four `CodegenEngine` operations: inspect, declare, edit and assess | Uses shared action inspection and core values; private helpers remain internal. |
+| `crates/umf-codegen/src/actions/mod.rs` | Existing action-analysis integration reused by saga analysis | No saga-specific copy of action parameter or reference semantics. |
+| `crates/umf-core-wire`, `bindings/core`, `src/extensions/actions/saga.ts`, `python/src/umf/saga.py` | Rust-backed transport and typed host APIs | No independent TypeScript or Python semantic evaluator. |
+| `spec/extensions/saga/`, `scripts/build-saga-package.py` | Opt-in package generated from CONTRACT-908 schema inputs | Does not modify core metamodel or default registry membership. |
+| `scripts/saga-portable/`, `tests/saga/`, `crates/umf-codegen/src/actions/saga/tests.rs` | Shared-corpus portable, installed-binding and Rust tests | Static expected outcomes remain independent of the engine result. |
 
-The architecture owns construction and allowed imports. Hosts construct registries
-with exact trusted interpretation. Extending `bun run check:rust-boundaries` must
-add negative controls for saga host APIs, native drivers and wrapper semantic
-forks BEFORE source implementation can claim readiness. Existing checker success
-alone does not cover these new paths. TypeScript reference code may be used only
-as differential evidence until its operation family is retired.
+Trusted registries install the exact action and saga packages explicitly through
+engine resources. `bun run check:rust-boundaries` enforces the shared Rust
+ownership boundary, forbidden host imports and wrapper-fork controls. The
+TypeScript operation surface is a typed presentation of the Rust engine; it is
+not a separate reference evaluator.
 
 ## API/Interface Design
 
@@ -135,10 +131,11 @@ normative; no duplicate local value model or evaluator is authorized.
 
 ## Risks
 
-The existing shared Rust action inspector is generator-internal. Promote only
-its narrow immutable declaration/obligation interface needed by saga analysis;
-do not expose generator internals or fork its rules. Native wrappers need new
-operation-family qualification rather than inheriting unrelated engine evidence.
+The shared Rust action inspector remains an internal dependency. Keep saga's
+public Rust surface limited to the four CONTRACT-908 operations, reuse action
+rules without exposing generator internals, and qualify each installed binding
+against its exact artifact and resource cohort rather than inheriting unrelated
+engine evidence.
 
 ## Irreversible boundary diagnostic
 

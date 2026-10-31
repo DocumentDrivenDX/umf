@@ -1,0 +1,82 @@
+{
+  "schema": "umf.actions-sagas.qualification-release/1",
+  "kind": "qualification-only",
+  "date": "2026-10-31",
+  "repository": "DocumentDrivenDX/umf",
+  "tag": "actions-sagas-qualification-2026-10-31",
+  "qualifiedSourceSha": "d5fdfd606660accc9986c7c1c7c7d3929ed5b732",
+  "implementationMergeSha": "fde8d981208807a9a65be129935801be6c7eae91",
+  "closeoutMergeSha": "9fef3e8b37a7e5b9bf2aef72e43c93b7adb5d5da",
+  "qualificationRun": "https://github.com/DocumentDrivenDX/umf/actions/runs/41228219639",
+  "qualificationConclusion": "success",
+  "artifactId": 13053411948,
+  "originalArtifactZipSha256": "23f426eeabf44a99e4397d2737405e5a37b95c9bcc8758077ab106a77b2000e7",
+  "originalArtifactZipBytes": 97638073,
+  "custodySha256": "a642ae4ea6f66710fd375a868928dc4f921fa4c42ef1c087ae581fdad479b185",
+  "candidateSha256sumsSha256": "88b9d1ffa746fc0920a66b6eac1b25b4a85b6f35e9629803a6af709c2323c141",
+  "qualificationInputs": 42,
+  "retainedFiles": 23,
+  "checksumRows": 24,
+  "tests": {
+    "nativeActions": 125,
+    "nativeActionAssertions": 1997,
+    "portableActions": 63,
+    "portableActionAssertions": 513,
+    "sagaAndOracleControls": 59,
+    "sagaAndOracleAssertions": 743,
+    "portableCasesPerHost": 19,
+    "portableHosts": 5,
+    "sdkExistingCases": 139,
+    "sdkSagaCases": 19,
+    "pythonResourceCases": 35,
+    "pythonArtifactHelperCases": 4,
+    "pythonInstalledPayloadCases": 6,
+    "actualLocalSubstitutionRefusals": 7
+  },
+  "runtimes": {
+    "native": {
+      "bun": "1.4.3",
+      "platform": "linux",
+      "arch": "x64"
+    },
+    "browser": {
+      "browser": "153.0.8010.12",
+      "platform": "linux",
+      "arch": "x64"
+    },
+    "cli": {
+      "platform": "linux",
+      "arch": "x64"
+    },
+    "python": {
+      "python": "3.13.17",
+      "platform": "Linux",
+      "arch": "x86_64"
+    },
+    "python-rebuilt": {
+      "python": "3.13.17",
+      "platform": "Linux",
+      "arch": "x86_64"
+    }
+  },
+  "productVersions": {
+    "releaseSeries": "0.10",
+    "sdkVersion": "0.10.0",
+    "coreVersion": "0.10.0",
+    "actionsVersion": "0.1.0",
+    "sagaVersion": "0.1.0",
+    "ownership": "UMF repository and shared semantic engine; hosts own execution",
+    "pythonVersion": "0.10.4"
+  },
+  "unchangedPublicProducts": {
+    "sdk": "https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.10.0",
+    "python": "https://pypi.org/project/umf-core/0.10.4/",
+    "publicSdkArchiveSha256": "2fb63dea5ca85b32c6bad823703de526875ac79490234dbfea4a8863c7d5fe6c"
+  },
+  "publicationLimits": [
+    "This is a qualification evidence release, not a new SDK or Python product version.",
+    "The unchanged original CI ZIP includes internal candidate wheels retained as evidence; those are not a replacement published Python 0.10.4 cohort.",
+    "No package registry upload, schema vocabulary change, production host qualification or new formal model run is performed.",
+    "Historical published assets, source-bound receipts and formal evidence remain unchanged."
+  ]
+}
