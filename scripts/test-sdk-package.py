@@ -79,6 +79,15 @@ class PackageManifestTests(unittest.TestCase):
         manifest_path.write_text(json.dumps(manifest))
         with self.assertRaisesRegex(ValueError, 'Saga runtime dependency is missing'):
             sdk.verify(self.root)
+    def test_missing_side_effect_saga_runtime_import_refuses(self):
+        wire = self.root / 'dist/runtime/wasm/src/wire.js'
+        wire.write_text("import './missing-side-effect.js';\n")
+        manifest_path = self.root / 'dist/rust-default-manifest.json'
+        manifest = json.loads(manifest_path.read_text())
+        manifest['assets']['dist/runtime/wasm/src/wire.js'] = sdk.sha256(wire.read_bytes())
+        manifest_path.write_text(json.dumps(manifest))
+        with self.assertRaisesRegex(ValueError, 'Saga runtime dependency is missing'):
+            sdk.verify(self.root)
     def test_missing_asset_refuses(self):
         (self.root / 'dist/umf-browser.js').unlink()
         with self.assertRaisesRegex(ValueError, 'required asset missing'):

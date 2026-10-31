@@ -68,7 +68,7 @@ def tree_hash(root, inputs):
 def verify_runtime_imports(root):
     runtime = Path(root) / 'dist/runtime/wasm'
     runtime_root = runtime.resolve(strict=True)
-    import_pattern = re.compile(r'''(?:\bfrom\s*|\bimport\s*\()\s*['"](\.{1,2}/[^'"]+)['"]''')
+    import_pattern = re.compile(r'''(?:\bfrom\s*|\bimport\s*(?:\(\s*|(?=['"])))['"](\.{1,2}/[^'"]+)['"]''')
     for source in runtime.rglob('*.js'):
         text = source.read_text(encoding='utf-8', errors='strict')
         for relative in import_pattern.findall(text):
