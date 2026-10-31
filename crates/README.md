@@ -10,7 +10,7 @@ umf-core = { git = "https://github.com/DocumentDrivenDX/umf.git", tag = "<releas
 
 Add `umf-core-wire` when using the tagged transport. `umf-cli` is a binary-only package, so run it from the checkout (for example, `cargo run --locked -p umf-cli -- graphql --capabilities`) rather than adding it as a Rust library dependency. Use the same repository tag for every UMF Git dependency. The tag above is a placeholder; select a published Rust release tag when one exists.
 
-The workspace’s default Cargo selection includes `umf-core`, `umf-core-wire`, `umf-tagged-wire`, `umf-codegen`, `umf-metamodel`, `umf-metamodel-cli`, `umf-cli` and `umf-graphql`. With Rust 1.90.0 installed, build and test that current selection with:
+The workspace’s default Cargo selection includes `umf-core`, `umf-core-wire`, `umf-tagged-wire`, `umf-codegen`, `umf-metamodel`, `umf-metamodel-cli`, `umf-cli` and `umf-graphql`. With Rust 1.90.0 installed, build and test that current selection using the workspace test profile, which uses optimization level 1 while keeping debug assertions and overflow checks enabled:
 
 ```sh
 cargo build --locked

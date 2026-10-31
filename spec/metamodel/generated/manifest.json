@@ -2,13 +2,13 @@
   "profile": "umf.metamodel.outputs/1",
   "provenance": {
     "modelSha256": "fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f",
-    "compilerSha256": "550e0c963197083c83b1f9425dd8d9d24e6e7eb9bd6b715ee2e5873684477a37"
+    "compilerSha256": "de8dbe05e5c194aeea01f09fd129beecad6682488f5d61110b01777eb01e4d11"
   },
   "sources": {
     "spec/metamodel/umf.yaml": "fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f",
     ".cargo/config.toml": "84fd4fa17fd967cae6006ba1b0dc430904239dec921c1441dd657387ee802d6c",
     "Cargo.lock": "61cffaa63b73d36d7845070cf69d45a3b250a982a959f5185f717d1c3f77aece",
-    "Cargo.toml": "298fb0038cf3b34c8ddd49c117faf53813faa32c76191ad034f515520687ad77",
+    "Cargo.toml": "ad08457ccb4d87a9fd3b31c7abeccd5ac9167f5551b5289699addc3e4e30c428",
     "crates/umf-core/Cargo.toml": "c6da5a4f929d32273632daf5c778a04c9f8e74c33da9ca8bb0cd33f869c8bb2a",
     "crates/umf-core/examples/gregorian_date_oracle.rs": "ac3f6c5b7134bbaeb9c99000eaa91daa5d4bf84ca82678d37a5fa48488c4fbc9",
     "crates/umf-core/examples/r5_cardinality_capture.rs": "e741987e2abb127dadc5eded3443c34be651568509b2192cdf37383c9b67840b",
@@ -547,7 +547,7 @@
     "bindings/core/wasm/tests/record-members-retained.test.js": "07c52f44431ed7e9476516bedf75189ccca0651815f7c75f3f119c442bc81c2f",
     "bindings/core/wasm/tests/semantic-value-browser.mjs": "bcdd852502c739e1735f19430e7bdf82a7288be0d366eb6c923928217fb6b940",
     "bindings/core/wasm/tests/semantic-value-wrapper.test.js": "4c194fbcb81c4b2a0ff148e734c3e9e218bb3a10aa91d7e1788af0b790aaf43f",
-    "crates/README.md": "a4de9d761989580401cd92ce5fb422fdb452c5c1d1bdeb1e81f7b47d9bd41398",
+    "crates/README.md": "62ae22e1d25c1432a33a533b4eb88265b2a902da560c847b4d0303ac9f278520",
     "crates/umf-cli/Cargo.toml": "a2d3c5ddb8ea1a6de4b405d665e8515c1f75e898dde46d46ddc115f551bc1399",
     "crates/umf-cli/src/allocator.rs": "a3e77591864120c7d1a8b0c39c530b67306840b27a2f5159a4873b7df47e525b",
     "crates/umf-cli/src/main.rs": "981e7ed8ceb6ca5b95c449fbac07122d09bd9c4094e64b0ac1aa3c58aab599ce",
@@ -1387,7 +1387,7 @@
   "compilerInputs": {
     ".cargo/config.toml": "84fd4fa17fd967cae6006ba1b0dc430904239dec921c1441dd657387ee802d6c",
     "Cargo.lock": "61cffaa63b73d36d7845070cf69d45a3b250a982a959f5185f717d1c3f77aece",
-    "Cargo.toml": "298fb0038cf3b34c8ddd49c117faf53813faa32c76191ad034f515520687ad77",
+    "Cargo.toml": "ad08457ccb4d87a9fd3b31c7abeccd5ac9167f5551b5289699addc3e4e30c428",
     "crates/umf-core/Cargo.toml": "c6da5a4f929d32273632daf5c778a04c9f8e74c33da9ca8bb0cd33f869c8bb2a",
     "crates/umf-core/examples/gregorian_date_oracle.rs": "ac3f6c5b7134bbaeb9c99000eaa91daa5d4bf84ca82678d37a5fa48488c4fbc9",
     "crates/umf-core/examples/r5_cardinality_capture.rs": "e741987e2abb127dadc5eded3443c34be651568509b2192cdf37383c9b67840b",
@@ -1928,7 +1928,7 @@
     "bindings/core/wasm/tests/record-members-retained.test.js": "07c52f44431ed7e9476516bedf75189ccca0651815f7c75f3f119c442bc81c2f",
     "bindings/core/wasm/tests/semantic-value-browser.mjs": "bcdd852502c739e1735f19430e7bdf82a7288be0d366eb6c923928217fb6b940",
     "bindings/core/wasm/tests/semantic-value-wrapper.test.js": "4c194fbcb81c4b2a0ff148e734c3e9e218bb3a10aa91d7e1788af0b790aaf43f",
-    "crates/README.md": "a4de9d761989580401cd92ce5fb422fdb452c5c1d1bdeb1e81f7b47d9bd41398",
+    "crates/README.md": "62ae22e1d25c1432a33a533b4eb88265b2a902da560c847b4d0303ac9f278520",
     "crates/umf-cli/Cargo.toml": "a2d3c5ddb8ea1a6de4b405d665e8515c1f75e898dde46d46ddc115f551bc1399",
     "crates/umf-cli/src/allocator.rs": "a3e77591864120c7d1a8b0c39c530b67306840b27a2f5159a4873b7df47e525b",
     "crates/umf-cli/src/main.rs": "981e7ed8ceb6ca5b95c449fbac07122d09bd9c4094e64b0ac1aa3c58aab599ce",
@@ -2774,15 +2774,15 @@
   },
   "outputs": {
     "spec/core/schema.json": {
-      "sha256": "e670f29ae6955e2b76f84f1b8651094e06b07d098b0d38e03b5ab4c179d5d6ed",
+      "sha256": "6a2502bcb206e82370d41b90fead9ee27376201fbd187b91174213cd3b4cf111",
       "bytes": 45342
     },
     "spec/core/semantic-type-reference.schema.json": {
-      "sha256": "4f1e3c815af58f60ded935b796509cbeaca1113a5e608fabeaa5ffe036b23774",
+      "sha256": "27436ea3b34ce97f00aebad0595286c0c413949d6679d78f87ea906a71463da4",
       "bytes": 45463
     },
     "spec/core/extension-package.schema.json": {
-      "sha256": "41858aeee4ccd06982885605e4fb796716324805ee5c1c17fdf08c5d87bdda39",
+      "sha256": "1658ceb71bceddf14e7cfc13053792684940afb49697f327c54ee986179946ab",
       "bytes": 45001
     },
     "spec/metamodel/package.json": {
@@ -2790,23 +2790,23 @@
       "bytes": 1376
     },
     "spec/metamodel/generated/core-constraints.json": {
-      "sha256": "363a43e136a6275cc87298d1ed700317b4ece69e2c1184ecd0b51a1c000d8c3e",
+      "sha256": "6f0f8c3cec77cee9f53d08fc0ea1dbeb0e1c2f9c1f81b14b3f66f7923bbb9604",
       "bytes": 190431
     },
     "spec/metamodel/generated/domain-policy.json": {
-      "sha256": "241da72f2d38837cbb1b62eb8778e361a96a528065e0e242d1d9684145ab60fd",
+      "sha256": "46c2c088058721b7d49733c919000e8fef4e9ae0d54bc66209a16afe71c73905",
       "bytes": 14827
     },
     "spec/metamodel/generated/python-shapes.json": {
-      "sha256": "e622dda75322d9342b9cdee63f57d2e4ee8c2a118d9f207b23f51d83e2dfb659",
+      "sha256": "3faddb60220e4a89c01212277f637ff271be22321d137e6bcd1b36db5638426f",
       "bytes": 98734
     },
     "python/umf_access/src/umf_access/generated_core.py": {
-      "sha256": "16cb7778f824ae3ab13a98f63f72d88df80266c65c4d1b093ad9b15ff03a7603",
+      "sha256": "40585d80d676ee61d70ab5c63dccf5a8cff1d2f3496dd28f2ea875020ec69b32",
       "bytes": 360
     },
     "src/generated/core-model.ts": {
-      "sha256": "30aa452f82b11fd51883a3404a85b38f9f76b33c21e4191b239865488b7aa3ae",
+      "sha256": "d12e7fb30d385cdf9ac58e48c48e36f32ab9ee2f1d59b2177f15e5a359bda24b",
       "bytes": 6714
     },
     "spec/core/facet-operation-v3.schema.json": {
@@ -2834,11 +2834,11 @@
       "bytes": 1993
     },
     "src/generated/core-validators.ts": {
-      "sha256": "dac558bea2feb99ff87e60bc2bfab165a4f6ed90d9bdda65b566147bfe3bcb61",
+      "sha256": "df0254e0c0bb3a81f785e4a470ca9c49a84f80d8e72f82fc58501a94f279da9c",
       "bytes": 305070
     },
     "src/generated/core-validators-accounted.ts": {
-      "sha256": "28483ccdeca47247e23da8463ac62c37d80c05836954856a356f1a3dfbc8b12d",
+      "sha256": "f67ce467e659917fc9159f7f6a6a2011432cc0c52afbadfce99568531178b260",
       "bytes": 1525347
     }
   }

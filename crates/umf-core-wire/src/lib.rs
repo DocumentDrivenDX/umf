@@ -6,6 +6,10 @@ pub mod dbt_binding;
 pub mod rdf_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod graphql_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod openapi_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod native_contract_binding;
 pub mod access_rrf_binding;
 pub mod access_temporal_binding;
 pub mod arrow_ipc_capture_binding {

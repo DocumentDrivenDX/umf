@@ -27,3 +27,9 @@ members = [
   "crates/umf-cli",
   "crates/umf-graphql",
 ]
+
+[profile.test]
+# Keep a stable optimized test profile while retaining debug and overflow checks.
+opt-level = 1
+debug-assertions = true
+overflow-checks = true
