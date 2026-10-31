@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import type {Document,Diagnostic} from '../../model/types';
-import type {Json,ExtensionPackage} from '../../model/types';
+import type {Document,Diagnostic,Json,ExtensionPackage} from '../../model/types';
 import type {GraphqlPayload} from './index';
 import {Registry} from '../../registry/registry';
-import manifest from '../../../../spec/extensions/graphql/package.json';
+import manifest from '../../../spec/extensions/graphql/package.json';
+import {UmfError} from '../../model/errors';
 
 export interface GraphqlRustEngine {
   importGraphqlSchema(source:string,options:{id:string;mode?:'schema'|'fragment'}):Document;
@@ -16,14 +16,22 @@ export interface GraphqlRustEngine {
 }
 
 /** Keep the six established GraphQL API signatures on the source-built Rust path. */
-export function createGraphqlRustDefault(engine:GraphqlRustEngine){
+export function createGraphqlRustDefault(engine:GraphqlRustEngine,isNativeUmfCoreError:(error:unknown)=>boolean){
+  const invoke=<T>(operation:()=>T,callbackFailure?:{value:unknown;thrown:boolean}):T=>{
+    try{return operation();}
+    catch(error){if(callbackFailure?.thrown&&error===callbackFailure.value)throw error;if(isNativeUmfCoreError(error)){const native=error as Error&{code:string;path:string};if(native.code.startsWith('GRAPHQL_'))throw new UmfError(native.code,native.message,native.path);}throw error;}
+  };
   return Object.freeze({
-    graphqlRegistry:()=>new Registry().register(manifest as unknown as ExtensionPackage,(payload)=>engine.inspectGraphqlPayload(payload)),
-    importGraphqlSchema:(source:string,options:{id:string;mode?:'schema'|'fragment'})=>engine.importGraphqlSchema(source,options),
-    inspectGraphql:(document:Document)=>engine.inspectGraphql(document),
-    exportGraphqlSchema:(document:Document)=>engine.exportGraphqlSchema(document),
-    getGraphqlAst:(document:Document)=>engine.getGraphqlAst(document),
-    editGraphqlAst:(document:Document,edit:(ast:GraphqlPayload['ast'])=>GraphqlPayload['ast'])=>engine.editGraphqlAst(document,edit),
-    exportGraphqlBundle:(document:Document)=>engine.exportGraphqlBundle(document),
+    graphqlRegistry:()=>new Registry().register(manifest as unknown as ExtensionPackage,(payload)=>invoke(()=>engine.inspectGraphqlPayload(payload))),
+    importGraphqlSchema:(source:string,options:{id:string;mode?:'schema'|'fragment'})=>invoke(()=>engine.importGraphqlSchema(source,options)),
+    inspectGraphql:(document:Document)=>invoke(()=>engine.inspectGraphql(document)),
+    exportGraphqlSchema:(document:Document)=>invoke(()=>engine.exportGraphqlSchema(document)),
+    getGraphqlAst:(document:Document)=>invoke(()=>engine.getGraphqlAst(document)),
+    editGraphqlAst:(document:Document,edit:(ast:GraphqlPayload['ast'])=>GraphqlPayload['ast'])=>{
+      const callbackFailure:{value:unknown;thrown:boolean}={value:undefined,thrown:false};
+      const wrapped=(ast:GraphqlPayload['ast'])=>{try{return edit(ast);}catch(error){callbackFailure.value=error;callbackFailure.thrown=true;throw error;}};
+      return invoke(()=>engine.editGraphqlAst(document,wrapped),callbackFailure);
+    },
+    exportGraphqlBundle:(document:Document)=>invoke(()=>engine.exportGraphqlBundle(document)),
   });
 }

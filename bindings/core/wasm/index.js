@@ -1238,7 +1238,7 @@ export function createGraphqlEngine(module, options = {}) {
   const {controls} = codegenOptions(options);
   const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
   const hostWork = admissionWork(controlBridge);
-  return createGraphqlOperations(module, UmfCoreError, controlBridge, hostWork);
+  return createGraphqlOperations(module, UmfCoreError, controlBridge, hostWork, nativeCoreError);
 }
 
 /** Create the opt-in pure reciprocal-rank fusion scorer over WASM. */

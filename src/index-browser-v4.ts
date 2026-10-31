@@ -53,7 +53,7 @@ import {CURRENT_CORE_VERSION,SCALAR_TYPES,UmfError} from './model/types';
 // function exported below remains synchronous and never falls back to TypeScript.
 const generatePythonClient=await initializePythonClientRustDefaultV4(()=>createPythonClientRustCandidateV4());
 const wasmModule=await import('../bindings/core/wasm/pkg/umf_core_wasm.js');
-const graphql=createGraphqlRustDefault(createGraphqlEngine(wasmModule));
+const graphql=createGraphqlRustDefault(createGraphqlEngine(wasmModule),isNativeUmfCoreError);
 const {graphqlRegistry,importGraphqlSchema,inspectGraphql,exportGraphqlSchema,getGraphqlAst,editGraphqlAst,exportGraphqlBundle}=graphql;
 const accessTemporal=createAccessTemporalEngine(wasmModule);
 export const ACCESS_TEMPORAL_PROFILE=ACCESS_TEMPORAL_PROFILE_RUST;

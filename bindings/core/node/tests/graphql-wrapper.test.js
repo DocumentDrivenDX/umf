@@ -34,6 +34,15 @@ describe('GraphQL Rust host callback wrapper',()=>{
   expect(request.op).toBe('graphql.inspectPayload');
  });
 
+ test('uses the caller branded native error factory for wire failures',()=>{
+  const branded={code:'GRAPHQL_DOCUMENT',path:'/modules/0'};
+  const addon={graphqlProfileVersion:()=>GRAPHQL_PROFILE,executeGraphqlWire(){return failed('GRAPHQL_DOCUMENT');},executeGraphqlEditWire(){}};
+  const engine=createGraphqlOperations(addon,Error,undefined,undefined,()=>branded);
+  let thrown;
+  try{engine.exportGraphqlSchema(document);}catch(error){thrown=error;}
+  expect(thrown).toBe(branded);
+ });
+
  test('calls editor only when Rust invokes the validated host hook and returns edited document',()=>{
   let editorCalls=0;
   const addon={

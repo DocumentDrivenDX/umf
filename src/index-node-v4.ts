@@ -60,7 +60,7 @@ const secProjection=createSecProjectionRustOperations({
 });
 const {projectSecSubmissions,projectSecCompanyFacts}=secProjection;
 const protobufDescriptorDocument=createProtobufDescriptorDocumentRustDefault(options=>createProtobufDescriptorDocumentEngine(options as never) as unknown as ProtobufDescriptorDocumentRustEngine);
-const graphql=createGraphqlRustDefault(createGraphqlEngine());
+const graphql=createGraphqlRustDefault(createGraphqlEngine(),isNativeUmfCoreError);
 const {graphqlRegistry,importGraphqlSchema,inspectGraphql,exportGraphqlSchema,getGraphqlAst,editGraphqlAst,exportGraphqlBundle}=graphql;
 const readDescriptorSetRustCandidate=createReadDescriptorSetRustCandidate(protobufDescriptorDocument,isNativeUmfCoreError);
 const {readDescriptorSet,writeDescriptorSet,importProtobufDescriptorSet,exportProtobufDescriptorSet,getProtobufDescriptorSet,inspectProtobuf,exportProtobufBundle}=protobufDescriptorDocument;
