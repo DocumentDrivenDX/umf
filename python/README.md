@@ -48,8 +48,7 @@ assert read_document(text, format="yaml").to_dict() == document.to_dict()
 
 Use canonical camelCase property names when constructing models. `to_dict()`
 preserves unknown content and field presence; `checked_copy()` revalidates
-mutable model state. Current APIs accept core 0.10.0; retired core dispatch and
-upgrade/rollback paths are removed. Structural checks and ordered core semantic
+mutable model state. Current APIs accept core 0.10.0. Structural checks and ordered core semantic
 constraints use generated data through bounded generic interpreters. Python and TypeScript run the shared core conformance vectors.
 
 Unknown vocabulary versions, labels and qualifiers remain serializable and
@@ -67,6 +66,25 @@ The Rust-backed production hosts and their resource controls are described in
 [bindings/core/README.md](../bindings/core/README.md). Ordinary UMF values retain
 the portable safe-number/UTF-16 profile. Standalone Python consumer-schema
 validation uses a separate native Python value profile.
+
+Shared adapter operations are available through `adapter_info()` and
+`execute_adapter()`. Rust supplies the available operation names and handles
+validation, transformations and native import/export:
+
+```python
+from umf import adapter_info, execute_adapter
+
+operations = adapter_info("openapi")["operations"]
+source_json = '{"openapi":"3.1.0","info":{"title":"Example","version":"1"},"paths":{}}'
+document = execute_adapter(
+    "openapi", "import", source=source_json, id="api", format="json"
+)
+restored = execute_adapter("openapi", "export", document=document, format="json")
+```
+
+Request fields use the shared API's names. Calls accept `max_work`, `meter`,
+`is_cancelled`, `now` and `deadline_ms` controls. Existing typed convenience
+modules remain available.
 
 The Rust compiler is available as `from umf.rust_codegen import CodegenEngine`.
 Construct it with the nine explicit trusted resources described in the binding

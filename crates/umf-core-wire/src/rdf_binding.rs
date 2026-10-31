@@ -190,6 +190,7 @@ fn operation_fields(op: &str) -> Option<&'static [&'static str]> {
         | "rdf.inspectGeneralized"
         | "rdf.exportGeneralizedDataset"
         | "rdf.getGeneralizedQuads" => &["profile", "op", "document"],
+        "rdf.inspectPayload" => &["profile", "op", "family", "payload"],
         "rdf.exportNQuads" => &["profile", "op", "document", "options"],
         "rdf.editQuad" | "rdf.editGeneralizedQuad" => {
             &["profile", "op", "document", "index", "replacement"]
@@ -206,6 +207,15 @@ fn validate_operation_input(
     ctx: &mut Context<'_>,
 ) -> Result<(), EngineError> {
     match op {
+        "rdf.inspectPayload" => {
+            match string_field(request, "family")?.to_utf8().as_deref() {
+                Ok("rdf" | "generalized-rdf") => {}
+                _ => return Err(request_error("family must be rdf or generalized-rdf")),
+            }
+            if field(request, "payload").is_none() {
+                return Err(request_error("payload is required"));
+            }
+        }
         "rdf.importNQuads"
         | "rdf.importTurtle"
         | "rdf.importTriG"
@@ -278,6 +288,23 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
     validate_operation_input(&op, request, ctx)?;
     let runtime = RuntimeCache::shared(ctx)?;
     Ok(match op.as_str() {
+        "rdf.inspectPayload" => {
+            let family = string_field(request, "family")?
+                .to_utf8()
+                .unwrap_or_default();
+            let diagnostics = rdf::inspect_rdf_payload(
+                &runtime,
+                field(request, "payload").unwrap(),
+                family == "generalized-rdf",
+                ctx,
+            )?;
+            Value::Array(
+                diagnostics
+                    .into_iter()
+                    .map(|diagnostic| rdf::rdf_diagnostic_value(&diagnostic))
+                    .collect(),
+            )
+        }
         "rdf.importNQuads" => {
             let options = options(request, true)?.unwrap();
             rdf::import_rdf_nquads(

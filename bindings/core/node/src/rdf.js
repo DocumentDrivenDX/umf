@@ -6,6 +6,7 @@ export function createRdfOperations(call) {
   return Object.freeze({
     profile: RDF_PROFILE,
     capabilities: Object.freeze({profile: RDF_PROFILE, rdf11: true, generalizedJson: true, complete: false}),
+    inspectRdfPayload(payload, family = 'rdf') { return run('inspectPayload', {payload, family}); },
     inspectRdfDocument(document) { return run('inspect', {document}); },
     importRdfNQuads(source, options) { return run('importNQuads', {source, options}); },
     getRdfQuads(document) { return run('getQuads', {document}); },

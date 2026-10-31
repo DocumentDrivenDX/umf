@@ -5,6 +5,8 @@ pub mod dbt_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod rdf_binding;
 #[cfg(feature = "embedded-adapters")]
+pub mod shacl_owl_binding;
+#[cfg(feature = "embedded-adapters")]
 pub mod graphql_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod openapi_binding;
@@ -16,6 +18,12 @@ pub mod jsonld_binding;
 pub mod tablespec_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod sqlserver_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod postgresql_catalog_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod postgresql_sql_binding;
+#[cfg(feature = "embedded-adapters")]
+pub mod postgresql_parser_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod native_family_binding;
 pub mod access_rrf_binding;
@@ -2554,6 +2562,35 @@ fn execute_request_inner(
                 capabilities,
                 &mut operation,
             )?,
+            "validate-extension-payload" => {
+                let id = field(&request, "id")
+                    .and_then(as_utf16)
+                    .ok_or_else(|| fail("REQUEST", "Extension id must be a string"))?;
+                let version = field(&request, "version")
+                    .and_then(as_utf16)
+                    .ok_or_else(|| fail("REQUEST", "Extension version must be a string"))?;
+                let payload = field(&request, "payload")
+                    .ok_or_else(|| fail("REQUEST", "Extension payload is required"))?;
+                let entry = registry
+                    .get(id, version)
+                    .ok_or_else(|| fail("REQUEST", "Extension package is not registered"))?;
+                let errors = entry.schema().validate(payload, &mut operation)?;
+                operation.charge_work(errors.len().saturating_mul(6), Utf16::default())?;
+                Value::Array(
+                    errors
+                        .into_iter()
+                        .map(|error| {
+                            object(vec![
+                                ("instancePath", Value::String(error.instance_path)),
+                                ("schemaPath", Value::String(error.schema_path)),
+                                ("keyword", Value::string_utf8(&error.keyword)),
+                                ("params", error.params),
+                                ("message", Value::String(error.message)),
+                            ])
+                        })
+                        .collect(),
+                )
+            }
             "list-kinds" => registry.list_kinds(&mut operation)?,
             "get-kind" => registry
                 .get_kind(

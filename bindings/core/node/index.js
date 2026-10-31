@@ -1616,6 +1616,7 @@ function createEngineInternal(resources, options, withModel, withSchemaPropertie
   }
   const api = {
     engineVersion,
+    validateExtensionPayload(id, version, payload, registry = []) { return invoke('validate-extension-payload', {id, version, payload}, registry); },
     listKinds(registry = []) { return invoke('list-kinds', {}, registry); },
     getKind(reference, registry = []) { return invoke('get-kind', {reference}, registry) ?? undefined; },
     inspectExtensionKinds(document, registry = []) { return invoke('inspect-kinds', {document}, registry); },

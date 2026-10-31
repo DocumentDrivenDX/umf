@@ -31,6 +31,7 @@ export interface UmfCoreControls {
   deadlineMs?: number;
 }
 export interface UmfCoreDocumentEngine extends UmfCoreEngine {
+  validateExtensionPayload(id: string, version: string, payload: unknown, registry?: UmfCoreRegistration[]): unknown;
   listKinds(registry?: UmfCoreRegistration[]): unknown;
   getKind(reference: unknown, registry?: UmfCoreRegistration[]): unknown;
   inspectExtensionKinds(document: unknown, registry?: UmfCoreRegistration[]): unknown;
@@ -319,7 +320,7 @@ export declare function createCoreModelEngine(module: any, resources: UmfCoreRes
 export declare function createCoreModelRootEngine(module: any, resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): UmfCoreEngine & UmfCoreRootModelEngine;
 export declare function createCoreModelRootKeyTupleEngine(module: any, resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): UmfCoreRootModelEngine & Pick<UmfCoreModelEngine, 'readCoreKeyTupleBytes' | 'prepareCoreKeyTuples'>;
 /** Private opt-in shared retained Engine for model and Kind/Nullability operations. */
-export declare function initializeCoreModelRootKindNullabilityWasm(resources: UmfCoreResources, loader?: () => Promise<any>, host?: typeof globalThis, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): Promise<UmfCoreEngine & UmfCoreRootModelEngine & Pick<UmfCoreModelEngine, 'readCoreKeyTupleBytes' | 'prepareCoreKeyTuples'> & {
+export declare function initializeCoreModelRootKindNullabilityWasm(resources: UmfCoreResources, loader?: () => Promise<any>, host?: typeof globalThis, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): Promise<UmfCoreDocumentEngine & UmfCoreRootModelEngine & Pick<UmfCoreModelEngine, 'readCoreKeyTupleBytes' | 'prepareCoreKeyTuples'> & {
   inspectCoreElementKind(source: unknown, identity: unknown): unknown;
   declareCoreElementKind(source: unknown, identity: unknown, kind: unknown): unknown;
   verifyCoreKindDeclaration(receipt: unknown, current: unknown): unknown;
@@ -592,6 +593,7 @@ export declare const RDF_PROFILE: 'umf-r9-rdf-preservation/0.1.0';
 export interface RdfEngine {
  readonly profile: typeof RDF_PROFILE;
  readonly capabilities: Readonly<{profile: typeof RDF_PROFILE; rdf11: true; generalizedJson: true; complete: false}>;
+  inspectRdfPayload(payload: unknown, family?: 'rdf' | 'generalized-rdf'): unknown[];
  inspectRdfDocument(document: unknown): unknown;
  importRdfNQuads(source: string, options: {id: string; blankNodeScope?: string}): unknown;
  getRdfQuads(document: unknown): unknown[];
@@ -635,6 +637,8 @@ export interface NativeFamilyOperations {
  readonly tablespec: Readonly<Record<'importTableSpec'|'inspectTableSpec'|'exportTableSpec'|'getTableSpecTable'|'getTableSpecColumn'|'editTableSpecTable'|'editTableSpecColumn'|'importTableSpecBundle'|'exportTableSpecBundle', NativeFamilyOperation>>;
  readonly jsonld: Readonly<Record<'import'|'inspectPayload'|'validate'|'export'|'getNode'|'editNode'|'expand'|'flatten'|'compact'|'toRdf'|'fromRdf'|'fromGeneralizedRdf'|'frame', NativeFamilyOperation>>;
  readonly sqlserver: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'columns'|'constraints'|'indexes'|'edit'|'facetType'|'facetPredicate'|'facetConstraints', NativeFamilyOperation>>;
+ readonly shacl: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getQuads'|'editQuad'|'getPropertyPath'|'evaluatePropertyPath'|'getTargetNodes'|'getShapeMetadata'|'validate', NativeFamilyOperation>>;
+ readonly owl: Readonly<Record<'import'|'inspect'|'inspectPayload'|'export'|'getQuads'|'editQuad'|'getOntologyHeaders'|'getExpressionView'|'getListAxioms'|'getSpecialAxioms'|'getAxiomAnnotations'|'getDeclarations', NativeFamilyOperation>>;
 }
 export declare function createNativeFamilyDispatcher(module: any, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): NativeFamilyOperations;
 export declare const JSONLD_PROFILE: 'umf.jsonld-wire/1';

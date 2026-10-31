@@ -29,7 +29,7 @@ type NativeCoreErrorGuard=(error:unknown)=>boolean;
 const CONTROL_CODES=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE']);
 
 /** Route the current SQL Server catalog API through the native wire family. */
-export function createSqlServerRustDefault(engine:SqlServerNativeFamilyEngine,isNativeUmfCoreError:NativeCoreErrorGuard=()=>false){
+export function createSqlServerRustDefault(engine:SqlServerNativeFamilyEngine,isNativeUmfCoreError:NativeCoreErrorGuard=()=>false,createRegistry:()=>Registry=()=>new Registry()){
  const call=<T>(operation:()=>unknown):T=>{
   try{return operation() as T;}
   catch(error){
@@ -40,7 +40,7 @@ export function createSqlServerRustDefault(engine:SqlServerNativeFamilyEngine,is
   }
  };
  return Object.freeze({
-  sqlserverRegistry():Registry{return new Registry().register(manifest as unknown as ExtensionPackage,(payload)=>call<Diagnostic[]>(()=>engine.sqlserver.inspectPayload({payload})));},
+  sqlserverRegistry():Registry{return createRegistry().register(manifest as unknown as ExtensionPackage,(payload)=>call<Diagnostic[]>(()=>engine.sqlserver.inspectPayload({payload})));},
   importSqlServerCatalog(text:string,options:Parameters<typeof importSqlServerCatalog>[1]):ReturnType<typeof importSqlServerCatalog>{return call(()=>engine.sqlserver.import({source:text,id:options.id}) as ReturnType<typeof importSqlServerCatalog>);},
   inspectSqlServer(document:Parameters<typeof inspectSqlServer>[0]):ReturnType<typeof inspectSqlServer>{return call(()=>engine.sqlserver.inspect({document}) as ReturnType<typeof inspectSqlServer>);},
   exportSqlServerCatalog(document:Parameters<typeof exportSqlServerCatalog>[0]):ReturnType<typeof exportSqlServerCatalog>{return call(()=>engine.sqlserver.export({document}) as ReturnType<typeof exportSqlServerCatalog>);},

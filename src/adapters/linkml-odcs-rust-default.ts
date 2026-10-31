@@ -39,7 +39,7 @@ type NativeCoreErrorGuard=(error:unknown)=>boolean;
 const CONTROL_CODES=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE']);
 
 /** Preserve the established synchronous LinkML and ODCS APIs on the Rust wire path. */
-export function createLinkmlOdcsRustDefault(engine:LinkmlOdcsNativeFamilyEngine,isNativeUmfCoreError:NativeCoreErrorGuard=()=>false){
+export function createLinkmlOdcsRustDefault(engine:LinkmlOdcsNativeFamilyEngine,isNativeUmfCoreError:NativeCoreErrorGuard=()=>false,createRegistry:()=>Registry=()=>new Registry()){
  const call=<T>(operation:()=>unknown):T=>{
   try{return operation() as T;}
   catch(error){
@@ -51,7 +51,7 @@ export function createLinkmlOdcsRustDefault(engine:LinkmlOdcsNativeFamilyEngine,
   }
  };
  return Object.freeze({
-  linkmlRegistry():Registry{return new Registry().register(linkmlManifest as unknown as ExtensionPackage,(payload)=>call<Diagnostic[]>(()=>engine.linkml.inspectPayload({payload})));},
+  linkmlRegistry():Registry{return createRegistry().register(linkmlManifest as unknown as ExtensionPackage,(payload)=>call<Diagnostic[]>(()=>engine.linkml.inspectPayload({payload})));},
   importLinkmlDocument(text:string,options:Parameters<typeof importLinkmlDocument>[1]):ReturnType<typeof importLinkmlDocument>{const {id,format,metamodelVersion}=options;return call(()=>engine.linkml.import({source:text,id,format,...(metamodelVersion===undefined?{}:{metamodelVersion})}) as ReturnType<typeof importLinkmlDocument>);},
   inspectLinkmlDocument(document:Parameters<typeof inspectLinkmlDocument>[0]):ReturnType<typeof inspectLinkmlDocument>{return call(()=>engine.linkml.inspect({document}) as ReturnType<typeof inspectLinkmlDocument>);},
   exportLinkmlDocument(document:Parameters<typeof exportLinkmlDocument>[0],format?:Parameters<typeof exportLinkmlDocument>[1]):ReturnType<typeof exportLinkmlDocument>{return call(()=>engine.linkml.export({document,...(format===undefined?{}:{format})}) as ReturnType<typeof exportLinkmlDocument>);},
@@ -62,7 +62,7 @@ export function createLinkmlOdcsRustDefault(engine:LinkmlOdcsNativeFamilyEngine,
   inspectLinkmlClassSlots(document:Parameters<typeof inspectLinkmlClassSlots>[0],className:string):LinkmlClassSlotsReport{return call(()=>engine.linkml.classSlots({document,className}) as LinkmlClassSlotsReport);},
   inspectLinkmlSlotValues(document:Parameters<typeof inspectLinkmlSlotValues>[0],className:string,slotName:string):LinkmlSlotValuesReport{return call(()=>engine.linkml.slotValues({document,className,slotName}) as LinkmlSlotValuesReport);},
   importOdcsDocument(text:string,options:Parameters<typeof importOdcsDocument>[1]):ReturnType<typeof importOdcsDocument>{const {id,format}=options;return call(()=>engine.odcs.import({source:text,id,format}) as ReturnType<typeof importOdcsDocument>);},
-  odcsRegistry():Registry{return new Registry().register(odcsManifest as unknown as ExtensionPackage,(payload)=>call<Diagnostic[]>(()=>engine.odcs.inspectPayload({payload})));},
+  odcsRegistry():Registry{return createRegistry().register(odcsManifest as unknown as ExtensionPackage,(payload)=>call<Diagnostic[]>(()=>engine.odcs.inspectPayload({payload})));},
   inspectOdcsDocument(document:Parameters<typeof inspectOdcsDocument>[0]):ReturnType<typeof inspectOdcsDocument>{return call(()=>engine.odcs.inspect({document}) as ReturnType<typeof inspectOdcsDocument>);},
   exportOdcsDocument(document:Parameters<typeof exportOdcsDocument>[0],format?:Parameters<typeof exportOdcsDocument>[1]):ReturnType<typeof exportOdcsDocument>{return call(()=>engine.odcs.export({document,...(format===undefined?{}:{format})}) as ReturnType<typeof exportOdcsDocument>);},
   getOdcsDocumentNode(document:Parameters<typeof getOdcsDocumentNode>[0],path:Parameters<typeof getOdcsDocumentNode>[1]):ReturnType<typeof getOdcsDocumentNode>{return call(()=>engine.odcs.getNode({document,pointer:path}) as NativeJson as ReturnType<typeof getOdcsDocumentNode>);},

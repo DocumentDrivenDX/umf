@@ -32,7 +32,7 @@ type NativeCoreErrorGuard=(error:unknown)=>boolean;
 const CONTROL_CODES=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE']);
 
 /** Preserve the established JSON-LD API over the native Rust family dispatcher. */
-export function createJsonLdRustDefault(engine:JsonLdNativeFamilyEngine,isNativeUmfCoreError:NativeCoreErrorGuard=()=>false){
+export function createJsonLdRustDefault(engine:JsonLdNativeFamilyEngine,isNativeUmfCoreError:NativeCoreErrorGuard=()=>false,createRegistry:()=>Registry=()=>new Registry()){
  const call=<T>(operation:()=>unknown):T=>{
   try{return operation() as T;}
   catch(error){
@@ -45,7 +45,7 @@ export function createJsonLdRustDefault(engine:JsonLdNativeFamilyEngine,isNative
  };
  return Object.freeze({
   jsonldRegistry():Registry{
-   return new Registry().register(manifest as unknown as ExtensionPackage,(payload)=>call<Diagnostic[]>(()=>engine.jsonld.inspectPayload({payload})));
+   return createRegistry().register(manifest as unknown as ExtensionPackage,(payload)=>call<Diagnostic[]>(()=>engine.jsonld.inspectPayload({payload})));
   },
   importJsonLdDocument(text:string,options:Parameters<typeof importJsonLdDocument>[1]):ReturnType<typeof importJsonLdDocument>{
    const {id,baseIRI,processingMode,contexts,expandContext}=options;

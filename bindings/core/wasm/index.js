@@ -1793,6 +1793,7 @@ function createEngineInternal(module, resources, options, withModel, includeKeyT
     return invoke(module, request, callbacks, profile, controls, withModel, controlBridge, hostWork, retainedRuntime);
   }
   const api = {...base,
+    validateExtensionPayload(id, version, payload, registry = []) { return call('validate-extension-payload', {id, version, payload}, registry); },
     listKinds(registry = []) { return call('list-kinds', {}, registry); },
     getKind(reference, registry = []) { return call('get-kind', {reference}, registry) ?? undefined; },
     inspectExtensionKinds(document, registry = []) { return call('inspect-kinds', {document}, registry); },

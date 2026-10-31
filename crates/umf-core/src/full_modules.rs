@@ -67,6 +67,8 @@ pub mod delta_table;
 pub mod dbt;
 #[cfg(feature = "embedded-adapters")]
 pub mod rdf;
+#[cfg(feature = "embedded-adapters")]
+pub mod shacl_owl_native;
 pub mod document;
 pub mod domain_pack_loader_inspection;
 pub mod domain_pack_profile_inspection;
@@ -87,6 +89,12 @@ pub mod jsonld_source;
 pub mod json_number;
 #[cfg(feature = "embedded-adapters")]
 pub mod sqlserver_adapter;
+#[cfg(feature = "embedded-adapters")]
+pub mod postgresql_catalog;
+#[cfg(feature = "embedded-adapters")]
+pub mod parser_backend_protocol;
+#[cfg(feature = "embedded-adapters")]
+pub mod postgresql_sql_runtime;
 #[cfg(feature = "embedded-adapters")]
 pub mod json_schema_adapter;
 #[cfg(feature = "embedded-adapters")]

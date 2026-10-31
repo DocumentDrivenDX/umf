@@ -10,6 +10,8 @@ const FAMILIES=Object.freeze({
  tablespec:{profile:'umf.tablespec-wire/1',operations:['importTableSpec','inspectTableSpec','exportTableSpec','getTableSpecTable','getTableSpecColumn','editTableSpecTable','editTableSpecColumn','importTableSpecBundle','exportTableSpecBundle']},
  jsonld:{profile:'umf.jsonld-wire/1',operations:['import','inspectPayload','validate','export','getNode','editNode','expand','flatten','compact','toRdf','fromRdf','fromGeneralizedRdf','frame']},
  sqlserver:{profile:'umf.sqlserver-wire/1',operations:['import','inspect','inspectPayload','export','columns','constraints','indexes','edit','facetType','facetPredicate','facetConstraints']},
+ shacl:{profile:'umf.shacl-wire/1',operations:['import','inspect','inspectPayload','export','getQuads','editQuad','getPropertyPath','evaluatePropertyPath','getTargetNodes','getShapeMetadata','validate']},
+ owl:{profile:'umf.owl-wire/1',operations:['import','inspect','inspectPayload','export','getQuads','editQuad','getOntologyHeaders','getExpressionView','getListAxioms','getSpecialAxioms','getAxiomAnnotations','getDeclarations']},
 });
 
 /** Route a closed adapter family and operation to Rust without reinterpreting its payload. */

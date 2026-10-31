@@ -34,7 +34,7 @@ type NativeCoreErrorGuard=(error:unknown)=>boolean;
 const CONTROL_CODES=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE']);
 
 /** Keep the existing synchronous OpenAPI operation signatures on the Rust default path. */
-export function createOpenapiRustDefault(engine:OpenapiNativeFamilyEngine,isNativeUmfCoreError:NativeCoreErrorGuard=()=>false){
+export function createOpenapiRustDefault(engine:OpenapiNativeFamilyEngine,isNativeUmfCoreError:NativeCoreErrorGuard=()=>false,createRegistry:()=>Registry=()=>new Registry()){
  const call=<T>(operation:()=>unknown):T=>{
   try{return operation() as T;}
   catch(error){
@@ -47,7 +47,7 @@ export function createOpenapiRustDefault(engine:OpenapiNativeFamilyEngine,isNati
  };
  return Object.freeze({
   openapiRegistry():Registry{
-   return new Registry().register(manifest as unknown as ExtensionPackage,(payload)=>call<Diagnostic[]>(()=>engine.openapi.inspectPayload({payload})));
+   return createRegistry().register(manifest as unknown as ExtensionPackage,(payload)=>call<Diagnostic[]>(()=>engine.openapi.inspectPayload({payload})));
   },
   importOpenapiDocument(text:string,options:Parameters<typeof importOpenapiDocument>[1]):ReturnType<typeof importOpenapiDocument>{
    const {id,format,baseUri,resources}=options;

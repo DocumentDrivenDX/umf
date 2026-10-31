@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 """Official Python UMF support; consumer extensions remain consumer-owned."""
 
+from .adapters import adapter_info, execute_adapter
 from .models import (
     CoreItemTypeReference,
     CoreSemanticTypeReference,
@@ -47,6 +48,8 @@ from .rust_sec_projection import (
 
 __version__ = "0.10.4"
 __all__ = [
+    "adapter_info",
+    "execute_adapter",
     "SagaRuntime",
     "CoreItemTypeReference",
     "CoreSemanticTypeReference",

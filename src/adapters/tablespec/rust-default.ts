@@ -23,7 +23,7 @@ type NativeCoreErrorGuard=(error:unknown)=>boolean;
 const CONTROL_CODES=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE']);
 
 /** Preserve TableSpec's synchronous public API while routing its semantics through Rust. */
-export function createTableSpecRustDefault(engine:TableSpecNativeFamilyEngine,isNativeUmfCoreError:NativeCoreErrorGuard=()=>false){
+export function createTableSpecRustDefault(engine:TableSpecNativeFamilyEngine,isNativeUmfCoreError:NativeCoreErrorGuard=()=>false,createRegistry:()=>Registry=()=>new Registry()){
  const call=<T>(operation:()=>unknown):T=>{
   try{return operation() as T;}
   catch(error){
@@ -34,7 +34,7 @@ export function createTableSpecRustDefault(engine:TableSpecNativeFamilyEngine,is
   }
  };
  return Object.freeze({
-  tablespecRegistry():Registry{return new Registry().register(manifest as unknown as ExtensionPackage);},
+  tablespecRegistry():Registry{return createRegistry().register(manifest as unknown as ExtensionPackage);},
   importTableSpec(text:string,options:Parameters<typeof importTableSpec>[1]):ReturnType<typeof importTableSpec>{return call(()=>engine.tablespec.importTableSpec({source:text,id:options.id,format:options.format}) as ReturnType<typeof importTableSpec>);},
   exportTableSpec(document:Parameters<typeof exportTableSpec>[0]):ReturnType<typeof exportTableSpec>{return call(()=>engine.tablespec.exportTableSpec({document}) as ReturnType<typeof exportTableSpec>);},
   inspectTableSpec(document:Document):ReturnType<typeof import('./index').inspectTableSpec>{return call(()=>engine.tablespec.inspectTableSpec({document}) as ReturnType<typeof import('./index').inspectTableSpec>);},

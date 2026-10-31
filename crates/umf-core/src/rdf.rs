@@ -884,6 +884,22 @@ pub fn inspect_generalized_rdf_document(
     validate(rt, doc, true, ctx)
 }
 
+/// Inspect one RDF-family payload through the same registered capability used
+/// by whole-document validation. This is the semantic callback for native
+/// public registries.
+pub fn inspect_rdf_payload(
+    rt: &RdfRuntime,
+    payload: &Value,
+    generalized: bool,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<Diagnostic>, EngineError> {
+    Callbacks(rt).inspect(
+        if generalized { GR_TOKEN } else { RDF_TOKEN },
+        payload,
+        ctx,
+    )
+}
+
 fn make_document(ext: &str, id: &Utf16, payload: Value) -> Value {
     object(vec![
         ("umf", Value::string_utf8(CORE_VERSION)),

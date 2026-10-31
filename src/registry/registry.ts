@@ -29,16 +29,25 @@ export class Registry {
     const manifest = copyJson(input) as unknown as ExtensionPackage;
     const request=copyJson(options) as {kinds?:boolean};
     if(!request||typeof request!=='object'||Array.isArray(request)||Object.keys(request).some(k=>k!=='kinds')||request.kinds!==undefined&&typeof request.kinds!=='boolean')throw new UmfError('EXTENSION_KIND_QUERY','Expected only an optional boolean kinds flag');
-    if (!checkPackage(manifest)) throw new UmfError('PACKAGE_STRUCTURE', JSON.stringify(checkPackage.errors));
-    if (this.get(manifest.id, manifest.version)) throw new UmfError('DUPLICATE_VERSION', 'Extension version is already registered');
+    if (!this.kindRuntime && !checkPackage(manifest)) throw new UmfError('PACKAGE_STRUCTURE', JSON.stringify(checkPackage.errors));
+    if (!this.kindRuntime && this.get(manifest.id, manifest.version)) throw new UmfError('DUPLICATE_VERSION', 'Extension version is already registered');
     if(this.kindRuntime)this.kindRuntime.listKinds([...this.registrations(),this.#registration(manifest,semantics,request.kinds)]);
     else if(request.kinds)this.#runtime();
     let structure: ValidateFunction;
     // Shared-runtime admission and document validation own consumer schemas.
     // Do not impose the legacy Ajv profile on a Rust-admitted package.
-    try { structure = this.kindRuntime
-      ? Object.assign(()=>{throw new UmfError('EXTENSION_KIND_RUNTIME_REQUIRED','Use shared-runtime document validation for this registry');},{errors:null}) as unknown as ValidateFunction
-      : createValidator().compile(manifest.schema); }
+    try {
+      if(this.kindRuntime){
+        const runtime=this.kindRuntime;
+        const validate=Object.assign((payload:unknown)=>{
+          if(!runtime.validatePackagePayload)throw new UmfError('EXTENSION_KIND_RUNTIME_REQUIRED','The shared engine must expose package payload validation');
+          const errors=runtime.validatePackagePayload(manifest,payload);
+          validate.errors=errors.length?errors:null;
+          return errors.length===0;
+        },{errors:null as ValidateFunction['errors']});
+        structure=validate as ValidateFunction;
+      }else structure=createValidator().compile(manifest.schema);
+    }
     catch (error) { throw new UmfError('PACKAGE_SCHEMA', String(error)); }
     freeze(manifest);
     const entry: Registration = {manifest, structure, kinds:request.kinds??false, ...(semantics ? {semantics} : {})};

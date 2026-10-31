@@ -16,13 +16,13 @@ export interface GraphqlRustEngine {
 }
 
 /** Keep the six established GraphQL API signatures on the source-built Rust path. */
-export function createGraphqlRustDefault(engine:GraphqlRustEngine,isNativeUmfCoreError:(error:unknown)=>boolean){
+export function createGraphqlRustDefault(engine:GraphqlRustEngine,isNativeUmfCoreError:(error:unknown)=>boolean,createRegistry:()=>Registry=()=>new Registry()){
   const invoke=<T>(operation:()=>T,callbackFailure?:{value:unknown;thrown:boolean}):T=>{
     try{return operation();}
     catch(error){if(callbackFailure?.thrown&&error===callbackFailure.value)throw error;if(isNativeUmfCoreError(error)){const native=error as Error&{code:string;path:string};if(native.code.startsWith('GRAPHQL_'))throw new UmfError(native.code,native.message,native.path);}throw error;}
   };
   return Object.freeze({
-    graphqlRegistry:()=>new Registry().register(manifest as unknown as ExtensionPackage,(payload)=>invoke(()=>engine.inspectGraphqlPayload(payload))),
+    graphqlRegistry:()=>createRegistry().register(manifest as unknown as ExtensionPackage,(payload)=>invoke(()=>engine.inspectGraphqlPayload(payload))),
     importGraphqlSchema:(source:string,options:{id:string;mode?:'schema'|'fragment'})=>invoke(()=>engine.importGraphqlSchema(source,options)),
     inspectGraphql:(document:Document)=>invoke(()=>engine.inspectGraphql(document)),
     exportGraphqlSchema:(document:Document)=>invoke(()=>engine.exportGraphqlSchema(document)),

@@ -1087,6 +1087,11 @@ fn rdf_profile_version() -> &'static str {
 }
 
 #[pyfunction]
+fn native_adapter_metadata(family: &str) -> String {
+    umf_core_wire::native_family_binding::metadata_wire(family)
+}
+
+#[pyfunction]
 fn native_family_profile_version() -> &'static str {
     umf_core_wire::native_family_binding::PROFILE
 }
@@ -6396,6 +6401,7 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(rdf_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_rdf_wire, module)?)?;
     module.add_function(wrap_pyfunction!(native_family_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(native_adapter_metadata, module)?)?;
     module.add_function(wrap_pyfunction!(execute_native_family_wire, module)?)?;
     module.add_function(wrap_pyfunction!(graphql_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_graphql_wire, module)?)?;

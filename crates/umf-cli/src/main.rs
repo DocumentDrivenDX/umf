@@ -782,12 +782,24 @@ fn run(args: Vec<String>) -> Result<(), String> {
         return jsonld_run(&args[1..]);
     }
     #[cfg(feature = "embedded-adapters")]
+    if args.first().map(String::as_str) == Some("shacl") {
+        return shacl_run(&args[1..]);
+    }
+    #[cfg(feature = "embedded-adapters")]
+    if args.first().map(String::as_str) == Some("owl") {
+        return owl_run(&args[1..]);
+    }
+    #[cfg(feature = "embedded-adapters")]
     if args.first().map(String::as_str) == Some("tablespec") {
         return tablespec_run(&args[1..]);
     }
     #[cfg(feature = "embedded-adapters")]
     if args.first().map(String::as_str) == Some("sqlserver") {
         return sqlserver_run(&args[1..]);
+    }
+    #[cfg(feature = "embedded-adapters")]
+    if args.first().map(String::as_str) == Some("postgresql") {
+        return postgresql_run(&args[1..]);
     }
     #[cfg(feature = "embedded-adapters")]
     if args.first().map(String::as_str) == Some("linkml") {
@@ -1426,6 +1438,28 @@ fn jsonld_run(args: &[String]) -> Result<(), String> {
 }
 
 #[cfg(feature = "embedded-adapters")]
+fn shacl_run(args: &[String]) -> Result<(), String> {
+    native_adapter_run(
+        "shacl",
+        umf_core_wire::shacl_owl_binding::SHACL_PROFILE,
+        "[\"shacl.import\",\"shacl.inspect\",\"shacl.inspectPayload\",\"shacl.export\",\"shacl.getQuads\",\"shacl.editQuad\",\"shacl.getPropertyPath\",\"shacl.evaluatePropertyPath\",\"shacl.getTargetNodes\",\"shacl.getShapeMetadata\",\"shacl.validate\"]",
+        umf_core_wire::shacl_owl_binding::execute_shacl_wire_with_control,
+        args,
+    )
+}
+
+#[cfg(feature = "embedded-adapters")]
+fn owl_run(args: &[String]) -> Result<(), String> {
+    native_adapter_run(
+        "owl",
+        umf_core_wire::shacl_owl_binding::OWL_PROFILE,
+        "[\"owl.import\",\"owl.inspect\",\"owl.inspectPayload\",\"owl.export\",\"owl.getQuads\",\"owl.editQuad\",\"owl.getOntologyHeaders\",\"owl.getExpressionView\",\"owl.getListAxioms\",\"owl.getSpecialAxioms\",\"owl.getAxiomAnnotations\",\"owl.getDeclarations\"]",
+        umf_core_wire::shacl_owl_binding::execute_owl_wire_with_control,
+        args,
+    )
+}
+
+#[cfg(feature = "embedded-adapters")]
 fn tablespec_run(args: &[String]) -> Result<(), String> {
     native_adapter_run(
         "tablespec",
@@ -1443,6 +1477,17 @@ fn sqlserver_run(args: &[String]) -> Result<(), String> {
         umf_core_wire::sqlserver_binding::PROFILE,
         "[\"sqlserver.import\",\"sqlserver.inspect\",\"sqlserver.export\",\"sqlserver.columns\",\"sqlserver.constraints\",\"sqlserver.indexes\",\"sqlserver.edit\",\"sqlserver.facetType\",\"sqlserver.facetPredicate\",\"sqlserver.facetConstraints\"]",
         umf_core_wire::sqlserver_binding::execute_wire_with_control,
+        args,
+    )
+}
+
+#[cfg(feature = "embedded-adapters")]
+fn postgresql_run(args: &[String]) -> Result<(), String> {
+    native_adapter_run(
+        "postgresql",
+        umf_core_wire::postgresql_catalog_binding::PROFILE,
+        "[\"postgresql.import\",\"postgresql.inspect\",\"postgresql.export\",\"postgresql.columns\",\"postgresql.getNode\",\"postgresql.findRelation\",\"postgresql.edit\",\"postgresql.reconstruction\",\"postgresql.dependencies\",\"postgresql.facetType\",\"postgresql.facetPredicate\",\"postgresql.facetCatalog\",\"postgresql.cardinalityCatalog\",\"postgresql.cardinalityType\",\"postgresql.keyCatalog\",\"postgresql.resolvedPredicate\",\"postgresql.cardinalityCorrelate\",\"postgresql.facetCorrelate\"]",
+        umf_core_wire::postgresql_catalog_binding::execute_wire_with_control,
         args,
     )
 }
